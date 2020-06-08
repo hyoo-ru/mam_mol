@@ -31,9 +31,9 @@ namespace $ {
 				continue
 			}
 
-			if (context.get_owner(having)) continue
-
 			const having_parts = this.$mol_view_tree2_prop_split(having)
+			if (context.get_method(having_parts)) continue
+
 			this.$mol_view_tree2_method_body(having_parts, context)
 		}
 

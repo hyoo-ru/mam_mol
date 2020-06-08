@@ -17,7 +17,7 @@ namespace $ {
 
 		const type = operator.type
 
-		const index = context.index(having)
+		const index = context.index(having_parts)
 
 		let body: $mol_tree2
 

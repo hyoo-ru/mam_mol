@@ -82,6 +82,27 @@ namespace $ {
 		outerQ() {
 			return this.Cls2().inner()
 		}
+
+		/**
+		 * ```tree
+		 * Indexed!index $mol_view Title => Outer_title!index
+		 * ```
+		 */
+		@ $mol_mem_key
+		Indexed(index: any) {
+			const obj = new this.$.$mol_view()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Outer_title!index
+		 * ```
+		 */
+		Outer_title(index: any) {
+			return this.Indexed(index).Title()
+		}
 	}
 
 }

@@ -31,7 +31,7 @@ namespace $.$$ {
 		for (const file_part of tests) {
 			result[file_part] = async ($: $mol_ambient_context) => {
 				const rec = await compile_module($, 'mol/view/tree2/test/sample/' + file_part)
-				$mol_assert_equal(rec.sample, rec.content)	
+				$mol_assert_equal(rec.sample, rec.script)	
 			}
 		}
 

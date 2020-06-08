@@ -39,7 +39,7 @@ namespace $ {
 
 		const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined
 
-		if (default_value && ! context.get_owner(owner)) {
+		if (default_value && default_value.type !== '-' && ! context.get_method(owner_parts)) {
 			this.$mol_view_tree2_method_body(owner_parts, context.root())
 		}
 

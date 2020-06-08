@@ -9,7 +9,7 @@ namespace $ {
 			protected parents: readonly $mol_view_tree2_prop[],
 			protected locales: $mol_view_tree2_locales,
 			protected methods: $mol_tree2[],
-			protected added_nodes = new Map<string, $mol_tree2>(),
+			protected added_nodes = new Map<string, $mol_view_tree2_prop>(),
 			protected array?: $mol_tree2,
 		) {
 			super()
@@ -44,16 +44,24 @@ namespace $ {
 			return this.clone(this.parents, array)
 		}
 
-		get_owner(owner: $mol_tree2) {
-			const prev = this.added_nodes.get(owner.type)
+		get_method({ name, src, key, next }: $mol_view_tree2_prop) {
+			const prev = this.added_nodes.get(name.value)
+			if (! prev) return
 
-			if (prev) {
-				if ( prev.toString() !== owner.toString() ) return this.$.$mol_fail(
-					err`Can't define property at ${owner.span}, already defined with another default value in ${prev.span}`
-				)
+			if ((prev.key && !key) || (!prev.key && key) || (prev.next && !next) || (!prev.next && next)) return this.$.$mol_fail(
+				err`Method ${src.type} at ${src.span} is not same as ${prev.src.type} at ${prev.src.span}`
+			)
 
-				return prev
-			}
+			const current_default = src.kids.length > 0 ? src.kids[0] : undefined
+			const prev_default = prev.src.kids.length > 0 ? prev.src.kids[0] : undefined
+
+			if ( prev_default?.toString() !== current_default?.toString() ) return this.$.$mol_fail(
+				err`Method ${name.value} at ${
+					current_default?.span ?? name.span
+				} already defined with another default value at ${prev_default?.span ?? prev.name.span}`
+			)
+
+			return prev
 		}
 
 		check_scope_vars({name, key, next}: $mol_view_tree2_prop) {
@@ -82,8 +90,8 @@ namespace $ {
 			)
 		}
 
-		index(owner: $mol_tree2) {
-			this.added_nodes.set(owner.type, owner)
+		index(owner: $mol_view_tree2_prop) {
+			this.added_nodes.set(owner.name.value, owner)
 
 			const index = this.methods.length
 			this.methods.push(undefined!)

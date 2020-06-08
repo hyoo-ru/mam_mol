@@ -187,6 +187,35 @@ namespace $ {
 			if ( v !== undefined ) return v
 			return this.$.$mol_locale.text( '$mol_view_tree2_test_sample_bind_both_loc_outer' )
 		}
+
+		/**
+		 * ```tree
+		 * swipe_to_left?event <=> event_next?event null
+		 * ```
+		 */
+		swipe_to_left(event?: any) {
+			return this.event_next(event)
+		}
+
+		/**
+		 * ```tree
+		 * event_next?event null
+		 * ```
+		 */
+		@ $mol_mem
+		event_next(event?: any) {
+			if ( event !== undefined ) return event
+			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * event_catch?val <=> event_next?val null
+		 * ```
+		 */
+		event_catch(val?: any) {
+			return this.event_next(val)
+		}
 	}
 
 }

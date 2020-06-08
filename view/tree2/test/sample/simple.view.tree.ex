@@ -8,3 +8,5 @@ $mol_view_tree2_test_sample_simple $mol_view
 		\one
 		\two
 	same?val \
+	- commented_node /
+		<= Notes_page_title!tag

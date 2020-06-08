@@ -34,37 +34,37 @@ namespace $ {
 		const having_key = having_parts.key
 
 		if (owner_key && having_key && having_key.data !== owner_key.data) return this.$mol_fail(
-			err`Key at ${owner_key.span} must be equal to key at ${having_key.span}, ${example}`
+			err`Key ${owner_key.value} at ${owner_key.span} must be equal to key ${having_key.span} at ${having_key.span}, ${example}`
 		)
 
 		if (!owner_key && having_key) return this.$mol_fail(
-			err`Name at ${owner_parts.name.span} need a key like at ${having_key.span}, ${example}`
+			err`Name ${owner_parts.name.value} at ${owner_parts.name.span} need a key like ${having_key.value} at ${having_key.span}, ${example}`
 		)
 
-		if (owner_key && !having_key) return this.$mol_fail(
-			err`Can't use key at ${owner_key.span} without key at ${having_parts.name.span}, ${example}`
+		if (owner_key && (! having_key && ! factory.key)) return this.$mol_fail(
+			err`Can't use key ${owner_key.value} at ${owner_key.span} without key at ${having_parts.name.span} or at ${factory.src.span}, ${example}`
 		)
 
 		const owner_next = owner_parts.next
 		const having_next = having_parts.next
 
 		if (owner_next && ! having_next) return this.$mol_fail(
-			err`Can't use next at ${owner_next.span} without next at ${having_parts.name.span}, ${example}`
+			err`Can't use next ${owner_next.value} at ${owner_next.span} without next at ${having_parts.name.span}, ${example}`
 		)
 
-		const prev = context.get_owner(owner)
+		const prev = context.get_method(owner_parts)
 
 		if (prev) return this.$mol_fail(
-			err`Property at ${owner.span} with same default value, already defined at ${prev.span}, ${example}`
+			err`Method ${owner_parts.name.value} at ${owner.span} already defined at ${prev.src.span}, ${example}`
 		)
 
-		const index = context.index(owner)
+		const index = context.index(owner_parts)
 
 		const body = $mol_tree2.struct('block', [
 			$mol_tree2.struct('inline', [
 				owner.data('return this.'),
-				factory.name,
-				owner.data('().'),
+				this.$mol_view_tree2_function_call(factory),
+				owner.data('.'),
 				this.$mol_view_tree2_function_call(having_parts),
 			])
 		])

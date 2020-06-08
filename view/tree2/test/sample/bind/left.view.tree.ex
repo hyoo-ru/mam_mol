@@ -19,3 +19,7 @@ $mol_view_tree2_test_sample_bind_left $mol_view
 			loc <= loc_outer @ \test localize
 		*
 			loc <= loc_outer @ \test localize
+	same2 @ \Some
+	Same
+		<= Sub $mol_view
+			same <= same2 -

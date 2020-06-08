@@ -233,6 +233,38 @@ namespace $ {
 		loc_outer() {
 			return this.$.$mol_locale.text( '$mol_view_tree2_test_sample_bind_left_loc_outer' )
 		}
+
+		/**
+		 * ```tree
+		 * same2 @ \Some
+		 * ```
+		 */
+		same2() {
+			return this.$.$mol_locale.text( '$mol_view_tree2_test_sample_bind_left_same2' )
+		}
+
+		/**
+		 * ```tree
+		 * Same <= Sub $mol_view same <= same2 -
+		 * ```
+		 */
+		Same() {
+			return this.Sub()
+		}
+
+		/**
+		 * ```tree
+		 * Sub $mol_view same <= same2 -
+		 * ```
+		 */
+		@ $mol_mem
+		Sub() {
+			const obj = new this.$.$mol_view()
+
+			obj.same = () => this.same2()
+
+			return obj
+		}
 	}
 
 }

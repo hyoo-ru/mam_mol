@@ -15,3 +15,5 @@ $mol_view_tree2_test_sample_bind_both $mol_view
 			loc?v <=> loc_outer?v @ \test localize
 		*
 			loc?v <=> loc_outer?v @ \test localize
+	swipe_to_left?event <=> event_next?event null
+	event_catch?val <=> event_next?val null

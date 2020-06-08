@@ -90,7 +90,7 @@ namespace $ {
 			const tree = $mol_tree2.fromString( text , new $mol_span(file.path(), 0, 0, text.length) )
 			const res = this.$.$mol_view_tree2_compile( tree )
 
-			script.text( res.content )
+			script.text( res.script )
 			// sourceMap.text( res.map )
 			locale.text( JSON.stringify( res.locales , null , '\t' ) )
 				

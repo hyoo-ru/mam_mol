@@ -1,10 +1,6 @@
 namespace $ {
 	export function $mol_view_tree2_comment(this: $mol_ambient_context, item: $mol_tree2) {
-		const comment = item.kids.length === 1 ? item.kids[0] : undefined
-		const sub = [ item.data('// ') ]
-		if (comment) sub.push(comment.data(comment.type))
-
-		return $mol_tree2.struct('inline', sub)
+		return $mol_tree2.struct('lines', item.kids.map(chunk => item.data('// ' + chunk.type)))
 	}
 
 	export function $mol_view_tree2_comment_doc(this: $mol_ambient_context, item: $mol_tree2) {
