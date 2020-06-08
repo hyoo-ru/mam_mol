@@ -2559,6 +2559,206 @@ var $;
 //unit.test.js.map
 ;
 "use strict";
+//tail.test.js.map
+;
+"use strict";
+//foot.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'config by value'() {
+            const N = $.$mol_data_setup((a) => a, 5);
+            $.$mol_assert_equal(N.config, 5);
+        },
+    });
+})($ || ($ = {}));
+//setup.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'single function'() {
+            const stringify = $.$mol_data_pipe((input) => input.toString());
+            $.$mol_assert_equal(stringify(5), '5');
+        },
+        'two functions'() {
+            const isLong = $.$mol_data_pipe((input) => input.toString(), (input) => input.length > 2);
+            $.$mol_assert_equal(isLong(5.0), false);
+            $.$mol_assert_equal(isLong(5.1), true);
+        },
+        'three functions'() {
+            const pattern = $.$mol_data_pipe((input) => input.toString(), (input) => new RegExp(input), (input) => input.toString());
+            $.$mol_assert_equal(pattern(5), '/5/');
+        },
+        'classes'() {
+            class Box {
+                constructor(value) {
+                    this.value = value;
+                }
+            }
+            const boxify = $.$mol_data_pipe((input) => input.toString(), Box);
+            $.$mol_assert_like(boxify(5), new Box('5'));
+        },
+    });
+})($ || ($ = {}));
+//pipe.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'equal paths'() {
+            const diff = $.$mol_diff_path([1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4]);
+            $.$mol_assert_like(diff, {
+                prefix: [1, 2, 3, 4],
+                suffix: [[], [], []],
+            });
+        },
+        'different suffix'() {
+            const diff = $.$mol_diff_path([1, 2, 3, 4], [1, 2, 3, 5], [1, 2, 5, 4]);
+            $.$mol_assert_like(diff, {
+                prefix: [1, 2],
+                suffix: [[3, 4], [3, 5], [5, 4]],
+            });
+        },
+        'one contains other'() {
+            const diff = $.$mol_diff_path([1, 2, 3, 4], [1, 2], [1, 2, 3]);
+            $.$mol_assert_like(diff, {
+                prefix: [1, 2],
+                suffix: [[3, 4], [], [3]],
+            });
+        },
+        'fully different'() {
+            const diff = $.$mol_diff_path([1, 2], [3, 4], [5, 6]);
+            $.$mol_assert_like(diff, {
+                prefix: [],
+                suffix: [[1, 2], [3, 4], [5, 6]],
+            });
+        },
+    });
+})($ || ($ = {}));
+//path.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'Is string'() {
+            $.$mol_data_string('');
+        },
+        'Is not string'() {
+            $.$mol_assert_fail(() => {
+                $.$mol_data_string(0);
+            }, 'number is not a string');
+        },
+        'Is object string'() {
+            $.$mol_assert_fail(() => {
+                $.$mol_data_string(new String(''));
+            }, 'object is not a string');
+        },
+    });
+})($ || ($ = {}));
+//string.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'Is number'() {
+            $.$mol_data_number(0);
+        },
+        'Is not number'() {
+            $.$mol_assert_fail(() => {
+                $.$mol_data_number('');
+            }, 'string is not a number');
+        },
+        'Is object number'() {
+            $.$mol_assert_fail(() => {
+                $.$mol_data_number(new Number(''));
+            }, 'object is not a number');
+        },
+    });
+})($ || ($ = {}));
+//number.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_data_number = (val) => {
+        if (typeof val === 'number')
+            return val;
+        return $.$mol_fail(new $.$mol_data_error(`${typeof val} is not a number`));
+    };
+})($ || ($ = {}));
+//number.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'Is empty array'() {
+            $.$mol_data_array($.$mol_data_number)([]);
+        },
+        'Is array'() {
+            $.$mol_data_array($.$mol_data_number)([1, 2]);
+        },
+        'Is not array'() {
+            $.$mol_assert_fail(() => {
+                $.$mol_data_array($.$mol_data_number)({ [0]: 1, length: 1, map: () => { } });
+            }, '[object Object] is not an array');
+        },
+        'Has wrong item'() {
+            $.$mol_assert_fail(() => {
+                $.$mol_data_array($.$mol_data_number)([1, '1']);
+            }, '[1] string is not a number');
+        },
+        'Has wrong deep item'() {
+            $.$mol_assert_fail(() => {
+                $.$mol_data_array($.$mol_data_array($.$mol_data_number))([[], [0, 0, false]]);
+            }, '[1] [2] boolean is not a number');
+        },
+    });
+})($ || ($ = {}));
+//array.test.js.map
+;
+"use strict";
+//merge.test.js.map
+;
+"use strict";
+//undefined.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'Fit to record'() {
+            const User = $.$mol_data_record({ age: $.$mol_data_number });
+            User({ age: 0 });
+        },
+        'Extends record'() {
+            const User = $.$mol_data_record({ age: $.$mol_data_number });
+            User({ age: 0, name: 'Jin' });
+        },
+        'Shrinks record'() {
+            $.$mol_assert_fail(() => {
+                const User = $.$mol_data_record({ age: $.$mol_data_number, name: $.$mol_data_string });
+                User({ age: 0 });
+            }, '["name"] undefined is not a string');
+        },
+        'Shrinks deep record'() {
+            $.$mol_assert_fail(() => {
+                const User = $.$mol_data_record({ wife: $.$mol_data_record({ age: $.$mol_data_number }) });
+                User({ wife: {} });
+            }, '["wife"] ["age"] undefined is not a number');
+        },
+    });
+})($ || ($ = {}));
+//record.test.js.map
+;
+"use strict";
 var $;
 (function ($) {
     $.$mol_test({
@@ -2977,90 +3177,5 @@ var $;
     $.$mol_jsx_view = $mol_jsx_view;
 })($ || ($ = {}));
 //view.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'equal paths'() {
-            const diff = $.$mol_diff_path([1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4]);
-            $.$mol_assert_like(diff, {
-                prefix: [1, 2, 3, 4],
-                suffix: [[], [], []],
-            });
-        },
-        'different suffix'() {
-            const diff = $.$mol_diff_path([1, 2, 3, 4], [1, 2, 3, 5], [1, 2, 5, 4]);
-            $.$mol_assert_like(diff, {
-                prefix: [1, 2],
-                suffix: [[3, 4], [3, 5], [5, 4]],
-            });
-        },
-        'one contains other'() {
-            const diff = $.$mol_diff_path([1, 2, 3, 4], [1, 2], [1, 2, 3]);
-            $.$mol_assert_like(diff, {
-                prefix: [1, 2],
-                suffix: [[3, 4], [], [3]],
-            });
-        },
-        'fully different'() {
-            const diff = $.$mol_diff_path([1, 2], [3, 4], [5, 6]);
-            $.$mol_assert_like(diff, {
-                prefix: [],
-                suffix: [[1, 2], [3, 4], [5, 6]],
-            });
-        },
-    });
-})($ || ($ = {}));
-//path.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_diff_path(...paths) {
-        const limit = Math.min(...paths.map(path => path.length));
-        lookup: for (var i = 0; i < limit; ++i) {
-            const first = paths[0][i];
-            for (let j = 1; j < paths.length; ++j) {
-                if (paths[j][i] !== first)
-                    break lookup;
-            }
-        }
-        return {
-            prefix: paths[0].slice(0, i),
-            suffix: paths.map(path => path.slice(i)),
-        };
-    }
-    $.$mol_diff_path = $mol_diff_path;
-})($ || ($ = {}));
-//path.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_error_mix extends Error {
-        constructor(message, ...errors) {
-            super(message);
-            this.errors = errors;
-            if (errors.length) {
-                const stacks = [...errors.map(error => error.message), this.stack];
-                const diff = $.$mol_diff_path(...stacks.map(stack => {
-                    if (!stack)
-                        return [];
-                    return stack.split('\n').reverse();
-                }));
-                const head = diff.prefix.reverse().join('\n');
-                const tails = diff.suffix.map(path => path.reverse().map(line => line.replace(/^(?!\s+at)/, '\tat (.) ')).join('\n')).join('\n\tat (.) -----\n');
-                this.stack = `Error: ${this.constructor.name}\n\tat (.) /"""\\\n${tails}\n\tat (.) \\___/\n${head}`;
-                this.message += errors.map(error => '\n' + error.message).join('');
-            }
-        }
-        toJSON() {
-            return this.message;
-        }
-    }
-    $.$mol_error_mix = $mol_error_mix;
-})($ || ($ = {}));
-//mix.js.map
 
 //# sourceMappingURL=web.test.js.map

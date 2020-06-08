@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_data_number( val : number ) {
+	export let $mol_data_number = ( val : number )=> {
 		
 		if( typeof val === 'number' ) return val
 		

@@ -15764,6 +15764,196 @@ var $;
 //import.js.map
 ;
 "use strict";
+//unary.js.map
+;
+"use strict";
+//tail.js.map
+;
+"use strict";
+//foot.js.map
+;
+"use strict";
+//value.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_setup(value, config) {
+        return Object.assign(value, {
+            config,
+            Value: null
+        });
+    }
+    $.$mol_data_setup = $mol_data_setup;
+})($ || ($ = {}));
+//setup.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_pipe(...funcs) {
+        return $.$mol_data_setup((input) => {
+            let value = input;
+            for (const func of funcs)
+                value = func.prototype ? new func(value) : func(value);
+            return value;
+        }, { funcs });
+    }
+    $.$mol_data_pipe = $mol_data_pipe;
+})($ || ($ = {}));
+//pipe.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_diff_path(...paths) {
+        const limit = Math.min(...paths.map(path => path.length));
+        lookup: for (var i = 0; i < limit; ++i) {
+            const first = paths[0][i];
+            for (let j = 1; j < paths.length; ++j) {
+                if (paths[j][i] !== first)
+                    break lookup;
+            }
+        }
+        return {
+            prefix: paths[0].slice(0, i),
+            suffix: paths.map(path => path.slice(i)),
+        };
+    }
+    $.$mol_diff_path = $mol_diff_path;
+})($ || ($ = {}));
+//path.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_error_mix extends Error {
+        constructor(message, ...errors) {
+            super(message);
+            this.errors = errors;
+            if (errors.length) {
+                const stacks = [...errors.map(error => error.message), this.stack];
+                const diff = $.$mol_diff_path(...stacks.map(stack => {
+                    if (!stack)
+                        return [];
+                    return stack.split('\n').reverse();
+                }));
+                const head = diff.prefix.reverse().join('\n');
+                const tails = diff.suffix.map(path => path.reverse().map(line => line.replace(/^(?!\s+at)/, '\tat (.) ')).join('\n')).join('\n\tat (.) -----\n');
+                this.stack = `Error: ${this.constructor.name}\n\tat (.) /"""\\\n${tails}\n\tat (.) \\___/\n${head}`;
+                this.message += errors.map(error => '\n' + error.message).join('');
+            }
+        }
+        toJSON() {
+            return this.message;
+        }
+    }
+    $.$mol_error_mix = $mol_error_mix;
+})($ || ($ = {}));
+//mix.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_error extends $.$mol_error_mix {
+    }
+    $.$mol_data_error = $mol_data_error;
+})($ || ($ = {}));
+//error.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_data_string = (val) => {
+        if (typeof val === 'string')
+            return val;
+        return $.$mol_fail(new $.$mol_data_error(`${typeof val} is not a string`));
+    };
+})($ || ($ = {}));
+//string.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_array(sub) {
+        return $.$mol_data_setup((val) => {
+            if (!Array.isArray(val))
+                return $.$mol_fail(new $.$mol_data_error(`${val} is not an array`));
+            return val.map((item, index) => {
+                try {
+                    return sub(item);
+                }
+                catch (error) {
+                    if ('then' in error)
+                        return $.$mol_fail_hidden(error);
+                    error.message = `[${index}] ${error.message}`;
+                    return $.$mol_fail(error);
+                }
+            });
+        }, sub);
+    }
+    $.$mol_data_array = $mol_data_array;
+})($ || ($ = {}));
+//array.js.map
+;
+"use strict";
+//merge.js.map
+;
+"use strict";
+//undefined.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_record(sub) {
+        return $.$mol_data_setup((val) => {
+            let res = {};
+            for (const field in sub) {
+                try {
+                    res[field] = sub[field](val[field]);
+                }
+                catch (error) {
+                    if ('then' in error)
+                        return $.$mol_fail_hidden(error);
+                    error.message = `[${JSON.stringify(field)}] ${error.message}`;
+                    return $.$mol_fail(error);
+                }
+            }
+            return res;
+        }, sub);
+    }
+    $.$mol_data_record = $mol_data_record;
+})($ || ($ = {}));
+//record.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const Numb = $.$mol_data_pipe($.$mol_data_string, parseFloat);
+    const Response = $.$mol_data_array($.$mol_data_record({
+        boundingbox: $.$mol_data_array(Numb),
+        lat: Numb,
+        lon: Numb,
+    }));
+    $.$mol_geo_search_attribution = 'https://osm.org/copyright';
+    function $mol_geo_search({ query, count = 1 }) {
+        const url = new URL('https://nominatim.openstreetmap.org/search');
+        url.searchParams.set('q', query);
+        url.searchParams.set('limit', count.toString());
+        url.searchParams.set('format', 'jsonv2');
+        const json = $.$mol_fetch.json(url.toString());
+        return Response(json).map(({ lon, lat, boundingbox: box }) => {
+            return {
+                coord: new $.$mol_vector_2d(lat, lon),
+                box: new $.$mol_vector_2d(new $.$mol_vector_range(box[0], box[1]), new $.$mol_vector_range(box[2], box[3])),
+            };
+        });
+    }
+    $.$mol_geo_search = $mol_geo_search;
+})($ || ($ = {}));
+//search.js.map
+;
+"use strict";
 var $;
 (function ($) {
     $.$mol_style_attach("mol/map/yandex/yandex.view.css", "[mol_map_yandex] {\n\tflex: auto;\n\talign-self: stretch;\n\tbox-shadow: var(--mol_skin_light_outline);\n\tmix-blend-mode: exclusion;\n\tfilter: invert(1) hue-rotate(180deg);\n}\n");
@@ -15787,6 +15977,7 @@ var $;
                     center: [0, 0],
                     zoom: 0,
                 });
+                api.copyrights.add($.$mol_geo_search_attribution);
                 api.controls.remove('fullscreenControl');
                 api.controls.remove('typeSelector');
                 api.events.add(['actionend'], (event) => {
@@ -15800,9 +15991,21 @@ var $;
                 this.zoom(this.api().getZoom());
                 this.center(this.api().getCenter());
             }
+            bounds_updated() {
+                var _a;
+                const box = (_a = this.objects()[0]) === null || _a === void 0 ? void 0 : _a.box();
+                if (box) {
+                    this.api().setBounds([
+                        [box.x.min, box.y.min],
+                        [box.x.max, box.y.max],
+                    ]);
+                }
+                return true;
+            }
             render() {
                 const api = this.api();
                 api.setCenter(this.center(), this.zoom());
+                this.bounds_updated();
                 api.geoObjects.removeAll();
                 for (let obj of this.objects()) {
                     api.geoObjects.add(obj.object());
@@ -15813,6 +16016,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_map_yandex.prototype, "api", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_map_yandex.prototype, "bounds_updated", null);
         $$.$mol_map_yandex = $mol_map_yandex;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -15823,18 +16029,50 @@ var $;
 (function ($) {
     class $mol_map_yandex_mark extends $.$mol_object {
         pos() {
-            return [0, 0];
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_vector_2d(0, 0));
+        }
+        box() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_vector_2d(this.box_lat(), this.box_lon()));
+        }
+        box_lat() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_vector_range(0, 0));
+        }
+        box_lon() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_vector_range(0, 0));
         }
         hint() {
             return "";
         }
         title() {
+            return this.address();
+        }
+        address() {
             return "";
         }
         content() {
             return "";
         }
     }
+    __decorate([
+        $.$mol_mem
+    ], $mol_map_yandex_mark.prototype, "pos", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_map_yandex_mark.prototype, "box", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_map_yandex_mark.prototype, "box_lat", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_map_yandex_mark.prototype, "box_lon", null);
     $.$mol_map_yandex_mark = $mol_map_yandex_mark;
 })($ || ($ = {}));
 //mark.view.tree.js.map
@@ -15855,10 +16093,28 @@ var $;
                     preset: "islands#redStretchyIcon",
                 });
             }
+            found() {
+                var _a;
+                return (_a = $.$mol_geo_search({ query: this.address() })[0]) !== null && _a !== void 0 ? _a : null;
+            }
+            pos() {
+                var _a, _b;
+                return (_b = (_a = this.found()) === null || _a === void 0 ? void 0 : _a.coord) !== null && _b !== void 0 ? _b : super.pos();
+            }
+            box() {
+                var _a, _b;
+                return (_b = (_a = this.found()) === null || _a === void 0 ? void 0 : _a.box) !== null && _b !== void 0 ? _b : super.pos();
+            }
         }
         __decorate([
             $.$mol_mem
         ], $mol_map_yandex_mark.prototype, "object", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_map_yandex_mark.prototype, "found", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_map_yandex_mark.prototype, "box", null);
         $$.$mol_map_yandex_mark = $mol_map_yandex_mark;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -15876,30 +16132,22 @@ var $;
         }
         Map() {
             return ((obj) => {
-                obj.center = (val) => this.center(val);
-                obj.zoom = (val) => this.zoom(val);
                 obj.objects = () => [this.Place()];
                 return obj;
             })(new this.$.$mol_map_yandex());
         }
-        center(val, force) {
-            return (val !== void 0) ? val : [59.9, 30.3];
-        }
-        zoom(val, force) {
-            return (val !== void 0) ? val : 10;
-        }
         Place() {
             return ((obj) => {
-                obj.pos = () => this.place_pos();
                 obj.title = () => this.place_title();
+                obj.address = () => this.place_addres();
                 obj.content = () => this.place_content();
                 return obj;
             })(new this.$.$mol_map_yandex_mark());
         }
-        place_pos() {
-            return [59.9, 30.3];
-        }
         place_title() {
+            return "";
+        }
+        place_addres() {
             return "Saint-Petersburg";
         }
         place_content() {
@@ -15909,12 +16157,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_map_yandex_demo.prototype, "Map", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_map_yandex_demo.prototype, "center", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_map_yandex_demo.prototype, "zoom", null);
     __decorate([
         $.$mol_mem
     ], $mol_map_yandex_demo.prototype, "Place", null);

@@ -1729,27 +1729,28 @@ $mol_map_yandex $mol_view
 	objects /
 
 $mol_map_yandex_mark $mol_object
-	pos /
+	pos $mol_vector_2d /
 		0
 		0
+	box $mol_vector_2d /
+		<= box_lat $mol_vector_range /
+			0
+			0
+		<= box_lon $mol_vector_range /
+			0
+			0
 	hint \
-	title \
+	title <= address \
 	content \
 	
 $mol_map_yandex_demo $mol_demo_large
 	title @ \Simple Yandex Maps wrapper
 	sub /
 		<= Map $mol_map_yandex
-			center?val <=> center?val /
-				59.9
-				30.3
-			zoom?val <=> zoom?val 10
 			objects /
 				<= Place $mol_map_yandex_mark
-					pos <= place_pos /
-						59.9
-						30.3
-					title <= place_title \Saint-Petersburg
+					title <= place_title \
+					address <= place_addres \Saint-Petersburg
 					content <= place_content \It is Russia's second-largest city after Moscow
 
 $mol_text $mol_list
