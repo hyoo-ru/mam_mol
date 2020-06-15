@@ -20,8 +20,9 @@ namespace $.$$ {
 		}
 
 		render() {
-			this.window();
-			return super.render();
+			const node = super.render()
+			this.window()
+			return node
 		}
 
 		allow() {
