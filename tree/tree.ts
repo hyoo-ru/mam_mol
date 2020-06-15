@@ -320,7 +320,8 @@ namespace $ {
 				return new Date( this.value )
 			}
 			
-			if( String( Number( this.type ) ) == this.type.trim() ) return Number( this.type )
+			const numb = Number( this.type ) 
+			if( !Number.isNaN( numb ) || this.type === 'NaN' ) return numb
 			
 			throw new Error( `Unknown type (${this.type}) at ${this.uri}` )
 		}
