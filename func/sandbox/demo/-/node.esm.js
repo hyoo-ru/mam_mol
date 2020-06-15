@@ -2387,12 +2387,12 @@ var $;
             const node = this.dom_node(next);
             try {
                 $.$mol_dom_render_attributes(node, { mol_view_error: null });
-                this.render();
                 for (let plugin of this.plugins()) {
                     if (plugin instanceof $.$mol_plugin) {
                         plugin.render();
                     }
                 }
+                this.render();
             }
             catch (error) {
                 const need_catch = $.$mol_fail_catch(error);
