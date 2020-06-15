@@ -15,10 +15,6 @@ namespace $.$$ {
 			return super.title()
 		}
 
-		theme( next?: '$mol_theme_light' | '$mol_theme_dark' ) {
-			return this.$.$mol_state_local.value( '$mol_app_demo_theme' , next ) || super.theme()
-		}
-		
 		@ $mol_mem
 		names_demo_all() {
 			var next : string[] = []
