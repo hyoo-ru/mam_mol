@@ -25,7 +25,7 @@ namespace $ {
 				Object.defineProperty( GeneratorFunction.prototype , 'constructor' , { value : undefined } )
 
 				for( const Class of [
-					String , Number , Boolean , Array , Object , Promise , Symbol , RegExp , 
+					String , Number , BigInt , Boolean , Array , Object , Promise , Symbol , RegExp , 
 					Error , RangeError , ReferenceError , SyntaxError , TypeError ,
 					Function , AsyncFunction , GeneratorFunction ,
 				] ) {
