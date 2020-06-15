@@ -3,7 +3,7 @@ namespace $.$$ {
 	export class $mol_map_yandex extends $.$mol_map_yandex {
 
 		static api() {
-			return $mol_import.script( `https://api-maps.yandex.ru/2.1/?lang=en` ).ymaps
+			return $mol_import.script( `https://api-maps.yandex.ru/2.1/?lang=${ $mol_locale.lang() }` ).ymaps
 		}
 
 		@ $mol_mem
