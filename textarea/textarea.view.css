@@ -14,11 +14,12 @@
 	white-space: pre-wrap;
 	z-index: 1;
 	box-shadow: none;
+	padding: 0;
 }
 
 [mol_textarea_edit] {
 	z-index: -1 !important;
-	padding: 1.25rem 1.5rem;
+	padding: .5rem .75rem;
 	position: absolute;
 	left: 0;
 	top: 0;
