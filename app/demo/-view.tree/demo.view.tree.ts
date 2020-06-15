@@ -59,13 +59,23 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 
 	/**
 	 *  ```
-	 *  attr * mol_theme <= theme
+	 *  plugins / <= Theme
 	 *  ```
 	 **/
-	attr() {
-		return ({
-			"mol_theme" :  this.theme() ,
-		})
+	plugins() {
+		return [this.Theme()] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  Theme $mol_theme_auto
+	 *  ```
+	 **/
+	@ $mol_mem
+	Theme() {
+		return (( obj )=>{
+			return obj
+		})( new this.$.$mol_theme_auto(  ) )
 	}
 
 	/**
@@ -74,7 +84,6 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 	 *  	hierarchy <= nav_hierarchy
 	 *  	option!id <= nav_option!id
 	 *  	filter?val <=> filter_string?val
-	 *  	theme?val <=> theme?val
 	 *  ```
 	 **/
 	@ $mol_mem
@@ -83,7 +92,6 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 			obj.hierarchy = () => this.nav_hierarchy()
 			obj.option = ( id : any ) => this.nav_option(id)
 			obj.filter = ( val? : any ) => this.filter_string( val )
-			obj.theme = ( val? : any ) => this.theme( val )
 			return obj
 		})( new this.$.$mol_app_demo_menu(  ) )
 	}
@@ -114,16 +122,6 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 	@ $mol_mem
 	filter_string( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
-	}
-
-	/**
-	 *  ```
-	 *  theme?val \$mol_theme_dark
-	 *  ```
-	 **/
-	@ $mol_mem
-	theme( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : "$mol_theme_dark"
 	}
 
 	/**
@@ -368,11 +366,10 @@ namespace $ { export class $mol_app_demo_menu extends $mol_page {
 	 *  sub /
 	 *  	<= Head
 	 *  	<= Nav
-	 *  	<= Themes
 	 *  ```
 	 **/
 	sub() {
-		return [this.Head() , this.Nav() , this.Themes()] as readonly any[]
+		return [this.Head() , this.Nav()] as readonly any[]
 	}
 
 	/**
@@ -409,55 +406,6 @@ namespace $ { export class $mol_app_demo_menu extends $mol_page {
 	 **/
 	option( id : any ) {
 		return null as any
-	}
-
-	/**
-	 *  ```
-	 *  Themes $mol_switch
-	 *  	value?val <=> theme?val
-	 *  	options *
-	 *  		$mol_theme_light <= theme_light_title
-	 *  		$mol_theme_dark <= theme_dark_title
-	 *  ```
-	 **/
-	@ $mol_mem
-	Themes() {
-		return (( obj )=>{
-			obj.value = ( val? : any ) => this.theme( val )
-			obj.options = () => ({
-			"$mol_theme_light" :  this.theme_light_title() ,
-			"$mol_theme_dark" :  this.theme_dark_title() ,
-		})
-			return obj
-		})( new this.$.$mol_switch(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  theme?val \$mol_theme_dark
-	 *  ```
-	 **/
-	@ $mol_mem
-	theme( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : "$mol_theme_dark"
-	}
-
-	/**
-	 *  ```
-	 *  theme_light_title @ \Light theme
-	 *  ```
-	 **/
-	theme_light_title() {
-		return this.$.$mol_locale.text( "$mol_app_demo_menu_theme_light_title" )
-	}
-
-	/**
-	 *  ```
-	 *  theme_dark_title @ \Dark theme
-	 *  ```
-	 **/
-	theme_dark_title() {
-		return this.$.$mol_locale.text( "$mol_app_demo_menu_theme_dark_title" )
 	}
 
 } }

@@ -1770,6 +1770,40 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$mol_test_mocks.push(context => {
+        class $mol_state_local_mock extends $.$mol_state_local {
+            static value(key, next = this.state[key], force) {
+                return this.state[key] = (next || null);
+            }
+        }
+        $mol_state_local_mock.state = {};
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_state_local_mock, "value", null);
+        context.$mol_state_local = $mol_state_local_mock;
+    });
+})($ || ($ = {}));
+//local.mock.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'local get set delete'() {
+            var key = '$mol_state_local_test:' + Math.random();
+            $.$mol_assert_equal($.$mol_state_local.value(key), null);
+            $.$mol_state_local.value(key, 123);
+            $.$mol_assert_equal($.$mol_state_local.value(key), 123);
+            $.$mol_state_local.value(key, null);
+            $.$mol_assert_equal($.$mol_state_local.value(key), null);
+        },
+    });
+})($ || ($ = {}));
+//local.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_style_sheet_test1 extends $.$mol_view {
         Item() { return new $.$mol_view; }
     }
@@ -2069,40 +2103,6 @@ var $;
     });
 })($ || ($ = {}));
 //memo.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test_mocks.push(context => {
-        class $mol_state_local_mock extends $.$mol_state_local {
-            static value(key, next = this.state[key], force) {
-                return this.state[key] = (next || null);
-            }
-        }
-        $mol_state_local_mock.state = {};
-        __decorate([
-            $.$mol_mem_key
-        ], $mol_state_local_mock, "value", null);
-        context.$mol_state_local = $mol_state_local_mock;
-    });
-})($ || ($ = {}));
-//local.mock.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'local get set delete'() {
-            var key = '$mol_state_local_test:' + Math.random();
-            $.$mol_assert_equal($.$mol_state_local.value(key), null);
-            $.$mol_state_local.value(key, 123);
-            $.$mol_assert_equal($.$mol_state_local.value(key), 123);
-            $.$mol_state_local.value(key, null);
-            $.$mol_assert_equal($.$mol_state_local.value(key), null);
-        },
-    });
-})($ || ($ = {}));
-//local.test.js.map
 ;
 "use strict";
 var $;

@@ -93,6 +93,9 @@ $mol_book_page $mol_ghost
 		mol_book_page_focused <= focused
 		mol_book_page_visible <= visible true
 
+$mol_theme_auto $mol_plugin
+	attr * mol_theme <= theme \
+
 $mol_button $mol_view
 	enabled true
 	minimal_height 40

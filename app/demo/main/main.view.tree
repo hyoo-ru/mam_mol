@@ -3,6 +3,7 @@ $mol_app_demo_main $mol_page
 	title \$mol libs for web ui
 	project_uri \https://github.com/eigenmethod/mol/tree/master/
 	tools /
+		<= Lights $mol_lights_toggle
 		<= Project $mol_link_iconed
 			uri <= project_uri
 			title \

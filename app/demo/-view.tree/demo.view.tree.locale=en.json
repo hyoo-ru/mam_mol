@@ -2,8 +2,6 @@
 	"$mol_app_demo_detail_empty_prefix": "No one demo with prefix \"",
 	"$mol_app_demo_detail_empty_postfix": "\"",
 	"$mol_app_demo_menu_title": "Demos",
-	"$mol_app_demo_menu_theme_light_title": "Light theme",
-	"$mol_app_demo_menu_theme_dark_title": "Dark theme",
 	"$mol_app_demo_detail_source_hint": "Source code of this demo",
 	"$mol_app_demo_detail_edit_hint": "Edit this demo online",
 	"$mol_app_demo_detail_close_hint": "Close panel"

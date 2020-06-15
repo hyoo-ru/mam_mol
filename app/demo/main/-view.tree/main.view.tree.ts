@@ -29,11 +29,25 @@ namespace $ { export class $mol_app_demo_main extends $mol_page {
 
 	/**
 	 *  ```
-	 *  tools / <= Project
+	 *  tools /
+	 *  	<= Lights
+	 *  	<= Project
 	 *  ```
 	 **/
 	tools() {
-		return [this.Project()] as readonly any[]
+		return [this.Lights() , this.Project()] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  Lights $mol_lights_toggle
+	 *  ```
+	 **/
+	@ $mol_mem
+	Lights() {
+		return (( obj )=>{
+			return obj
+		})( new this.$.$mol_lights_toggle(  ) )
 	}
 
 	/**

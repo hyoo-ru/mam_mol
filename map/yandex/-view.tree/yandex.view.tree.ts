@@ -24,11 +24,11 @@ namespace $ { export class $mol_map_yandex extends $mol_view {
 
 	/**
 	 *  ```
-	 *  objects /
+	 *  objects /$mol_map_yandex_mark
 	 *  ```
 	 **/
 	objects() {
-		return [] as readonly any[]
+		return [] as readonly ( $mol_map_yandex_mark )[]
 	}
 
 } }

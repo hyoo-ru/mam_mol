@@ -92,4 +92,13 @@ namespace $ { export class $mol_map_yandex_mark extends $mol_object {
 		return ""
 	}
 
+	/**
+	 *  ```
+	 *  object null
+	 *  ```
+	 **/
+	object() {
+		return null as any
+	}
+
 } }

@@ -12,4 +12,5 @@ $mol_map_yandex_mark $mol_object
 	hint \
 	title <= address \
 	content \
+	object null
 	

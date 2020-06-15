@@ -1721,13 +1721,6 @@ $mol_list_demo_tree $mol_demo_large
 		Content <= Row_content!id $mol_list
 			rows <= row_content!id /
 
-$mol_map_yandex $mol_view
-	zoom?val 2
-	center?val /
-		0
-		0
-	objects /
-
 $mol_map_yandex_mark $mol_object
 	pos $mol_vector_2d /
 		0
@@ -1742,7 +1735,15 @@ $mol_map_yandex_mark $mol_object
 	hint \
 	title <= address \
 	content \
+	object null
 	
+$mol_map_yandex $mol_view
+	zoom?val 2
+	center?val /
+		0
+		0
+	objects /$mol_map_yandex_mark
+
 $mol_map_yandex_demo $mol_demo_large
 	title @ \Simple Yandex Maps wrapper
 	sub /
@@ -2368,11 +2369,19 @@ $mol_toolbar_demo $mol_demo_small
 					<= Replace $mol_string
 						hint <= replace_hint @ \Replace...
 			
+$mol_icon_brightness_6 $mol_icon path \M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z
+
+$mol_lights_toggle $mol_check_icon
+	Icon <= Lights_icon $mol_icon_brightness_6
+	hint @ \Toggle lights
+	checked?val <=> lights?val false
+
 $mol_app_demo_main $mol_page
 	minimal_width 400
 	title \$mol libs for web ui
 	project_uri \https://github.com/eigenmethod/mol/tree/master/
 	tools /
+		<= Lights $mol_lights_toggle
 		<= Project $mol_link_iconed
 			uri <= project_uri
 			title \
@@ -2380,6 +2389,9 @@ $mol_app_demo_main $mol_page
 		<= Description $mol_text
 			text <= description \
 			uri_base <= project_uri
+
+$mol_theme_auto $mol_plugin
+	attr * mol_theme <= theme \
 
 $mol_book $mol_view
 	sub <= pages_wrapped /$mol_view
@@ -2655,13 +2667,12 @@ $mol_app_demo $mol_book2
 	source_prefix \https://github.com/eigenmethod/mol/tree/master/
 	Main $mol_app_demo_main
 	pages <= blocks /
-	attr *
-		mol_theme <= theme
+	plugins /
+		<= Theme $mol_theme_auto
 	Menu $mol_app_demo_menu
 		hierarchy <= nav_hierarchy null
 		option!id <= nav_option!id null
 		filter?val <=> filter_string?val \
-		theme?val <=> theme?val \$mol_theme_dark
 	Detail!id $mol_app_demo_detail
 		title <= detail_title
 		source_link <= source_link \
@@ -2702,11 +2713,6 @@ $mol_app_demo_menu $mol_page
 			hierarchy <= hierarchy null
 			record!id <= option!id null
 			needle <= filter?val \
-		<= Themes $mol_switch
-			value?val <=> theme?val \$mol_theme_dark
-			options *
-				$mol_theme_light <= theme_light_title @ \Light theme
-				$mol_theme_dark <= theme_dark_title @ \Dark theme
 		
 $mol_app_demo_detail $mol_page
 	tools /

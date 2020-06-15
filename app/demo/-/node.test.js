@@ -354,7 +354,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/theme/theme.css", "[mol_theme] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n}\n\n@media (prefers-color-scheme: light) {\n\t[mol_theme=\"$mol_theme_auto\"] {\n\t\t--mol_theme_back: hsl( 210 , 50% , 99% );\n\t\t--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );\n\t\t--mol_theme_current: hsl( 210 , 100% , 80% );\n\t\t--mol_theme_text: rgba( 0 , 0 , 0 , .9 );\n\t\t--mol_theme_control: hsla( 210 , 60% , 35% , 1 );\n\t\t--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );\n\t\t--mol_theme_line: rgba( 220 , 220 , 220 , 1 );\n\t\t--mol_theme_focus: hsla( 0 , 60% , 50% , 0.75 );\n\t\t--mol_theme_field: white;\n\t}\n}\n\n@media (prefers-color-scheme: dark) {\n\t[mol_theme=\"$mol_theme_auto\"] {\n\t\t--mol_theme_back: hsl( 210 , 50% , 10% );\n\t\t--mol_theme_hover: #333;\n\t\t--mol_theme_current: hsl( 210 , 100% , 20% );\n\t\t--mol_theme_text: rgba( 255 , 255 , 255 , .8 );\n\t\t--mol_theme_control: hsla( 210 , 60% , 70% , 1 );\n\t\t--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );\n\t\t--mol_theme_line: rgba( 50 , 50 , 50 , 1 );\n\t\t--mol_theme_focus: hsl( 15 , 100% , 60% );\n\t\t--mol_theme_field: black;\n\t}\n}\n\n[mol_theme=\"$mol_theme_light\"] , :root {\n\t--mol_theme_back: hsl( 210 , 50% , 99% );\n\t--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );\n\t--mol_theme_current: hsl( 210 , 100% , 80% );\n\t--mol_theme_text: rgba( 0 , 0 , 0 , .9 );\n\t--mol_theme_control: hsla( 210 , 60% , 35% , 1 );\n\t--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );\n\t--mol_theme_line: rgba( 220 , 220 , 220 , 1 );\n\t--mol_theme_focus: hsla( 0 , 60% , 50% , 0.75 );\n\t--mol_theme_field: white;\n}\n\n[mol_theme=\"$mol_theme_dark\"] {\n\t--mol_theme_back: hsl( 210 , 50% , 10% );\n\t--mol_theme_hover: #333;\n\t--mol_theme_current: hsl( 210 , 100% , 20% );\n\t--mol_theme_text: rgba( 255 , 255 , 255 , .8 );\n\t--mol_theme_control: hsla( 210 , 60% , 70% , 1 );\n\t--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );\n\t--mol_theme_line: rgba( 50 , 50 , 50 , 1 );\n\t--mol_theme_focus: hsl( 15 , 100% , 60% );\n\t--mol_theme_field: black;\n}\n\n[mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_back: hsla( 210 , 60% , 35% , 1 );\n\t--mol_theme_current: hsl( 210 , 100% , 20% );\n\t--mol_theme_text: white;\n\t--mol_theme_line: white;\n\t--mol_theme_control: white;\n}\n\n[mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: hsl( 15 , 60% , 50% );\n\t--mol_theme_hover: hsl( 15 , 60% , 40% );\n\t--mol_theme_text: white;\n\t--mol_theme_line: rgba( 50 , 50 , 50 , 1 );\n\t--mol_theme_control: white;\n}\n");
+    $.$mol_style_attach("mol/theme/theme.css", "[mol_theme] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n}\n\n[mol_theme=\"$mol_theme_light\"] , :root {\n\t--mol_theme_back: hsl( 210 , 50% , 99% );\n\t--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );\n\t--mol_theme_current: hsl( 210 , 100% , 80% );\n\t--mol_theme_text: rgba( 0 , 0 , 0 , .9 );\n\t--mol_theme_control: hsla( 210 , 60% , 35% , 1 );\n\t--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );\n\t--mol_theme_line: rgba( 220 , 220 , 220 , 1 );\n\t--mol_theme_focus: hsla( 0 , 60% , 50% , 0.75 );\n\t--mol_theme_field: white;\n\t--mol_theme_image: none;\n}\n\n[mol_theme=\"$mol_theme_dark\"] {\n\t--mol_theme_back: hsl( 210 , 50% , 10% );\n\t--mol_theme_hover: #333;\n\t--mol_theme_current: hsl( 210 , 100% , 20% );\n\t--mol_theme_text: rgba( 255 , 255 , 255 , .8 );\n\t--mol_theme_control: hsla( 210 , 60% , 70% , 1 );\n\t--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );\n\t--mol_theme_line: rgba( 50 , 50 , 50 , 1 );\n\t--mol_theme_focus: hsl( 15 , 100% , 60% );\n\t--mol_theme_field: black;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n}\n\n[mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_back: hsla( 210 , 60% , 35% , 1 );\n\t--mol_theme_current: hsl( 210 , 100% , 20% );\n\t--mol_theme_text: white;\n\t--mol_theme_line: white;\n\t--mol_theme_control: white;\n}\n\n[mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: hsl( 15 , 60% , 50% );\n\t--mol_theme_hover: hsl( 15 , 60% , 40% );\n\t--mol_theme_text: white;\n\t--mol_theme_line: rgba( 50 , 50 , 50 , 1 );\n\t--mol_theme_control: white;\n}\n");
 })($ || ($ = {}));
 //theme.css.js.map
 ;
@@ -14642,8 +14642,9 @@ var $;
                 }))();
             }
             render() {
+                const node = super.render();
                 this.window();
-                return super.render();
+                return node;
             }
             allow() {
                 return [
@@ -15879,50 +15880,58 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_map_yandex extends $.$mol_view {
-        zoom(val, force) {
-            return (val !== void 0) ? val : 2;
+    class $mol_map_yandex_mark extends $.$mol_object {
+        pos() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_vector_2d(0, 0));
         }
-        center(val, force) {
-            return (val !== void 0) ? val : [0, 0];
+        box() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_vector_2d(this.box_lat(), this.box_lon()));
         }
-        objects() {
-            return [];
+        box_lat() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_vector_range(0, 0));
+        }
+        box_lon() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_vector_range(0, 0));
+        }
+        hint() {
+            return "";
+        }
+        title() {
+            return this.address();
+        }
+        address() {
+            return "";
+        }
+        content() {
+            return "";
+        }
+        object() {
+            return null;
         }
     }
     __decorate([
         $.$mol_mem
-    ], $mol_map_yandex.prototype, "zoom", null);
+    ], $mol_map_yandex_mark.prototype, "pos", null);
     __decorate([
         $.$mol_mem
-    ], $mol_map_yandex.prototype, "center", null);
-    $.$mol_map_yandex = $mol_map_yandex;
-})($ || ($ = {}));
-//yandex.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_import extends $.$mol_object2 {
-        static script(uri) {
-            return $.$mol_fiber_sync(() => {
-                const doc = $.$mol_dom_context.document;
-                const script = doc.createElement('script');
-                script.src = uri;
-                doc.head.appendChild(script);
-                return new Promise((done, fail) => {
-                    script.onload = () => done($.$mol_dom_context);
-                    script.onerror = () => fail(new Error(`Can not import ${uri}`));
-                });
-            })();
-        }
-    }
+    ], $mol_map_yandex_mark.prototype, "box", null);
     __decorate([
-        $.$mol_mem_key
-    ], $mol_import, "script", null);
-    $.$mol_import = $mol_import;
+        $.$mol_mem
+    ], $mol_map_yandex_mark.prototype, "box_lat", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_map_yandex_mark.prototype, "box_lon", null);
+    $.$mol_map_yandex_mark = $mol_map_yandex_mark;
 })($ || ($ = {}));
-//import.js.map
+//mark.view.tree.js.map
 ;
 "use strict";
 //unary.js.map
@@ -16273,130 +16282,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/map/yandex/yandex.view.css", "[mol_map_yandex] {\n\tflex: auto;\n\talign-self: stretch;\n\tbox-shadow: var(--mol_skin_light_outline);\n\tmix-blend-mode: exclusion;\n\tfilter: invert(1) hue-rotate(180deg);\n}\n");
-})($ || ($ = {}));
-//yandex.view.css.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_map_yandex extends $.$mol_map_yandex {
-            static api() {
-                return $.$mol_import.script(`https://api-maps.yandex.ru/2.1/?lang=${$.$mol_locale.lang()}`).ymaps;
-            }
-            api(next, force) {
-                const ymaps = $mol_map_yandex.api();
-                const load_map = $.$mol_fiber_sync(() => new Promise(done => ymaps.ready(done)));
-                load_map();
-                const api = new ymaps.Map(this.dom_node(), {
-                    center: [0, 0],
-                    zoom: 0,
-                });
-                api.copyrights.add($.$mol_geo_search_attribution);
-                api.controls.remove('fullscreenControl');
-                api.controls.remove('typeSelector');
-                api.events.add(['actionend'], (event) => {
-                    new $.$mol_after_frame($.$mol_fiber_root(() => {
-                        this.update(event);
-                    }));
-                });
-                return api;
-            }
-            update(event) {
-                this.zoom(this.api().getZoom());
-                this.center(this.api().getCenter());
-            }
-            bounds_updated() {
-                var _a;
-                const box = (_a = this.objects()[0]) === null || _a === void 0 ? void 0 : _a.box();
-                if (box) {
-                    this.api().setBounds([
-                        [box.x.min, box.y.min],
-                        [box.x.max, box.y.max],
-                    ]);
-                }
-                return true;
-            }
-            render() {
-                const api = this.api();
-                api.setCenter(this.center(), this.zoom());
-                this.bounds_updated();
-                api.geoObjects.removeAll();
-                for (let obj of this.objects()) {
-                    api.geoObjects.add(obj.object());
-                }
-                this.dom_node_actual();
-            }
-        }
-        __decorate([
-            $.$mol_mem
-        ], $mol_map_yandex.prototype, "api", null);
-        __decorate([
-            $.$mol_mem
-        ], $mol_map_yandex.prototype, "bounds_updated", null);
-        $$.$mol_map_yandex = $mol_map_yandex;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//yandex.view.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_map_yandex_mark extends $.$mol_object {
-        pos() {
-            return ((obj) => {
-                return obj;
-            })(new this.$.$mol_vector_2d(0, 0));
-        }
-        box() {
-            return ((obj) => {
-                return obj;
-            })(new this.$.$mol_vector_2d(this.box_lat(), this.box_lon()));
-        }
-        box_lat() {
-            return ((obj) => {
-                return obj;
-            })(new this.$.$mol_vector_range(0, 0));
-        }
-        box_lon() {
-            return ((obj) => {
-                return obj;
-            })(new this.$.$mol_vector_range(0, 0));
-        }
-        hint() {
-            return "";
-        }
-        title() {
-            return this.address();
-        }
-        address() {
-            return "";
-        }
-        content() {
-            return "";
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_map_yandex_mark.prototype, "pos", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_map_yandex_mark.prototype, "box", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_map_yandex_mark.prototype, "box_lat", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_map_yandex_mark.prototype, "box_lon", null);
-    $.$mol_map_yandex_mark = $mol_map_yandex_mark;
-})($ || ($ = {}));
-//mark.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
     var $$;
     (function ($$) {
         class $mol_map_yandex_mark extends $.$mol_map_yandex_mark {
@@ -16436,6 +16321,136 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mark.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_map_yandex extends $.$mol_view {
+        zoom(val, force) {
+            return (val !== void 0) ? val : 2;
+        }
+        center(val, force) {
+            return (val !== void 0) ? val : [0, 0];
+        }
+        objects() {
+            return [];
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_map_yandex.prototype, "zoom", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_map_yandex.prototype, "center", null);
+    $.$mol_map_yandex = $mol_map_yandex;
+})($ || ($ = {}));
+//yandex.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_import extends $.$mol_object2 {
+        static script(uri) {
+            return $.$mol_fiber_sync(() => {
+                const doc = $.$mol_dom_context.document;
+                const script = doc.createElement('script');
+                script.src = uri;
+                doc.head.appendChild(script);
+                return new Promise((done, fail) => {
+                    script.onload = () => done($.$mol_dom_context);
+                    script.onerror = () => fail(new Error(`Can not import ${uri}`));
+                });
+            })();
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_import, "script", null);
+    $.$mol_import = $mol_import;
+})($ || ($ = {}));
+//import.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/map/yandex/yandex.view.css", "[mol_map_yandex] {\n\tflex: auto;\n\talign-self: stretch;\n\tfilter: var(--mol_theme_image);\n}\n");
+})($ || ($ = {}));
+//yandex.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_map_yandex extends $.$mol_map_yandex {
+            static api() {
+                return $.$mol_import.script(`https://api-maps.yandex.ru/2.1/?lang=en`).ymaps;
+            }
+            api(next, force) {
+                const ymaps = $mol_map_yandex.api();
+                const load_map = $.$mol_fiber_sync(() => new Promise(done => ymaps.ready(done)));
+                load_map();
+                const api = new ymaps.Map(this.dom_node(), {
+                    center: [0, 0],
+                    zoom: 0,
+                });
+                api.copyrights.add($.$mol_geo_search_attribution);
+                api.controls.remove('fullscreenControl');
+                api.controls.remove('typeSelector');
+                api.events.add(['actionend'], (event) => {
+                    new $.$mol_after_frame($.$mol_fiber_root(() => {
+                        this.update(event);
+                    }));
+                });
+                return api;
+            }
+            update(event) {
+                this.zoom(this.api().getZoom());
+                this.center(this.api().getCenter());
+            }
+            bounds_updated() {
+                var _a;
+                const box = (_a = this.objects()[0]) === null || _a === void 0 ? void 0 : _a.box();
+                if (box) {
+                    this.api().setBounds([
+                        [box.x.min, box.y.min],
+                        [box.x.max, box.y.max],
+                    ]);
+                }
+                return true;
+            }
+            center(next, force) {
+                var _a;
+                if (next !== undefined)
+                    return next;
+                const pos = (_a = this.objects()[0]) === null || _a === void 0 ? void 0 : _a.pos();
+                if (pos)
+                    return pos;
+                return [0, 0];
+            }
+            render() {
+                const api = this.api();
+                api.setCenter(this.center(), this.zoom());
+                api.geoObjects.removeAll();
+                for (let obj of this.objects()) {
+                    api.geoObjects.add(obj.object());
+                }
+                this.dom_node_actual();
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_map_yandex.prototype, "api", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_map_yandex.prototype, "bounds_updated", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_map_yandex.prototype, "center", null);
+        $$.$mol_map_yandex = $mol_map_yandex;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//yandex.view.js.map
 ;
 "use strict";
 var $;
@@ -20005,6 +20020,86 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_lights(next) {
+        var _a;
+        return (_a = this.$.$mol_state_local.value('$mol_lights', next)) !== null && _a !== void 0 ? _a : $.$mol_dom_context.matchMedia('(prefers-color-scheme: light)').matches;
+    }
+    $.$mol_lights = $mol_lights;
+})($ || ($ = {}));
+//lights.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_brightness_6 extends $.$mol_icon {
+        path() {
+            return "M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z";
+        }
+    }
+    $.$mol_icon_brightness_6 = $mol_icon_brightness_6;
+})($ || ($ = {}));
+//6.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_lights_toggle extends $.$mol_check_icon {
+        Icon() {
+            return this.Lights_icon();
+        }
+        Lights_icon() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_icon_brightness_6());
+        }
+        hint() {
+            return this.$.$mol_locale.text("$mol_lights_toggle_hint");
+        }
+        checked(val, force) {
+            return this.lights(val);
+        }
+        lights(val, force) {
+            return (val !== void 0) ? val : false;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_lights_toggle.prototype, "Lights_icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_lights_toggle.prototype, "checked", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_lights_toggle.prototype, "lights", null);
+    $.$mol_lights_toggle = $mol_lights_toggle;
+})($ || ($ = {}));
+//toggle.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/lights/toggle/toggle.view.css", "[mol_lights_toggle] {\n\ttransform: rotate(-90deg);\n}\n");
+})($ || ($ = {}));
+//toggle.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_lights_toggle extends $.$mol_lights_toggle {
+            lights(next) {
+                return this.$.$mol_lights(next);
+            }
+        }
+        $$.$mol_lights_toggle = $mol_lights_toggle;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//toggle.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_app_demo_main extends $.$mol_page {
         minimal_width() {
             return 400;
@@ -20016,7 +20111,12 @@ var $;
             return "https://github.com/eigenmethod/mol/tree/master/";
         }
         tools() {
-            return [this.Project()];
+            return [this.Lights(), this.Project()];
+        }
+        Lights() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_lights_toggle());
         }
         Project() {
             return ((obj) => {
@@ -20039,6 +20139,9 @@ var $;
             return "";
         }
     }
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_main.prototype, "Lights", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_main.prototype, "Project", null);
@@ -20073,6 +20176,38 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //main.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_theme_auto extends $.$mol_plugin {
+        attr() {
+            return ({
+                "mol_theme": this.theme(),
+            });
+        }
+        theme() {
+            return "";
+        }
+    }
+    $.$mol_theme_auto = $mol_theme_auto;
+})($ || ($ = {}));
+//auto.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_theme_auto extends $.$mol_theme_auto {
+            theme() {
+                return this.$.$mol_lights() ? '$mol_theme_light' : '$mol_theme_dark';
+            }
+        }
+        $$.$mol_theme_auto = $mol_theme_auto;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//auto.view.js.map
 ;
 "use strict";
 var $;
@@ -22123,17 +22258,19 @@ var $;
         blocks() {
             return [];
         }
-        attr() {
-            return ({
-                "mol_theme": this.theme(),
-            });
+        plugins() {
+            return [this.Theme()];
+        }
+        Theme() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_theme_auto());
         }
         Menu() {
             return ((obj) => {
                 obj.hierarchy = () => this.nav_hierarchy();
                 obj.option = (id) => this.nav_option(id);
                 obj.filter = (val) => this.filter_string(val);
-                obj.theme = (val) => this.theme(val);
                 return obj;
             })(new this.$.$mol_app_demo_menu());
         }
@@ -22145,9 +22282,6 @@ var $;
         }
         filter_string(val, force) {
             return (val !== void 0) ? val : "";
-        }
-        theme(val, force) {
-            return (val !== void 0) ? val : "$mol_theme_dark";
         }
         Detail(id) {
             return ((obj) => {
@@ -22233,13 +22367,13 @@ var $;
     ], $mol_app_demo.prototype, "Main", null);
     __decorate([
         $.$mol_mem
+    ], $mol_app_demo.prototype, "Theme", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_app_demo.prototype, "Menu", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_demo.prototype, "filter_string", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo.prototype, "theme", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_app_demo.prototype, "Detail", null);
@@ -22284,7 +22418,7 @@ var $;
             return (val !== void 0) ? val : "";
         }
         sub() {
-            return [this.Head(), this.Nav(), this.Themes()];
+            return [this.Head(), this.Nav()];
         }
         Nav() {
             return ((obj) => {
@@ -22300,25 +22434,6 @@ var $;
         option(id) {
             return null;
         }
-        Themes() {
-            return ((obj) => {
-                obj.value = (val) => this.theme(val);
-                obj.options = () => ({
-                    "$mol_theme_light": this.theme_light_title(),
-                    "$mol_theme_dark": this.theme_dark_title(),
-                });
-                return obj;
-            })(new this.$.$mol_switch());
-        }
-        theme(val, force) {
-            return (val !== void 0) ? val : "$mol_theme_dark";
-        }
-        theme_light_title() {
-            return this.$.$mol_locale.text("$mol_app_demo_menu_theme_light_title");
-        }
-        theme_dark_title() {
-            return this.$.$mol_locale.text("$mol_app_demo_menu_theme_dark_title");
-        }
     }
     __decorate([
         $.$mol_mem
@@ -22329,12 +22444,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_menu.prototype, "Nav", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_menu.prototype, "Themes", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_menu.prototype, "theme", null);
     $.$mol_app_demo_menu = $mol_app_demo_menu;
 })($ || ($ = {}));
 (function ($) {
@@ -22580,9 +22689,6 @@ var $;
                     return `$${selected}`;
                 }
                 return super.title();
-            }
-            theme(next) {
-                return this.$.$mol_state_local.value('$mol_app_demo_theme', next) || super.theme();
             }
             names_demo_all() {
                 var next = [];
