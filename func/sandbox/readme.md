@@ -2,8 +2,6 @@
 
 Sandbox for javascript code from user.
 
-## [Online demo](https://mol.js.org/func/sandbox/demo/)
-
 ## Example
 
 ```
