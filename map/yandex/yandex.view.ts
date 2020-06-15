@@ -3,7 +3,7 @@ namespace $.$$ {
 	export class $mol_map_yandex extends $.$mol_map_yandex {
 
 		static api() {
-			return $mol_import.script( `https://api-maps.yandex.ru/2.1/?lang=${ $mol_locale.lang() }` ).ymaps
+			return $mol_import.script( `https://api-maps.yandex.ru/2.1/?lang=en` ).ymaps
 		}
 
 		@ $mol_mem
@@ -50,12 +50,23 @@ namespace $.$$ {
 			return true
 		}
 
+		@ $mol_mem
+		center( next? : readonly[number,number] , force? : $mol_mem_force ) {
+
+			if ( next !== undefined ) return next
+			
+			const pos = this.objects()[0]?.pos()
+			if( pos ) return pos
+			
+			return [0,0] as readonly[number,number]
+		}
+		
 		render() {
 			const api = this.api()
 			
 			api.setCenter( this.center() , this.zoom() )
 
-			this.bounds_updated()
+			// this.bounds_updated()
 			
 			api.geoObjects.removeAll()
 			for( let obj of this.objects() ) {
