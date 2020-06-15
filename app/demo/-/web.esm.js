@@ -2208,7 +2208,9 @@ var $;
             const nodes = sub.map(child => {
                 if (child == null)
                     return null;
-                return (child instanceof $mol_view) ? child.dom_node_actual() : String(child);
+                return (child instanceof $mol_view)
+                    ? child.dom_node()
+                    : String(child);
             });
             $.$mol_dom_render_children(node, nodes);
             for (const el of sub)
