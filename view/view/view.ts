@@ -181,13 +181,19 @@ namespace $ {
 
 				$mol_dom_render_attributes( node , { mol_view_error : null } )
 
-				for( let plugin of this.plugins() ) {
-					if( plugin instanceof $mol_plugin ) {
-						plugin.render()
-					}
-				}
+				try {
 				
-				this.render()
+					this.render()
+					
+				} finally {
+					
+					for( let plugin of this.plugins() ) {
+						if( plugin instanceof $mol_plugin ) {
+							plugin.dom_tree()
+						}
+					}
+					
+				}
 
 			} catch( error ) {
 				
