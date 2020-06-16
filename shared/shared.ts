@@ -12,7 +12,7 @@ namespace $ {
 					} ,
 					body : JSON.stringify( next , null , '\t' ) ,
 				} ,
-			)
+			) as Value
 		}
 
 	}
