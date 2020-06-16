@@ -3,7 +3,6 @@ $mol_code $mol_view
 		<= Manual $mol_search
 			query?val <=> value?val \
 			hint <= hint <= format \
-			debounce <= debounce 200
 		<= Scan $mol_button
 			event_click?val <=> event_scan?val null
 			sub /

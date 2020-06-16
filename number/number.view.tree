@@ -8,7 +8,6 @@ $mol_number $mol_view
 			value?val <=> value_string?val \
 			hint <= hint \
 			enabled <= string_enabled <= enabled true
-			debounce <= debounce 200
 		<= Dec $mol_button_minor
 			event_click?val <=> event_dec?val null
 			enabled <= dec_enabled <= enabled true
