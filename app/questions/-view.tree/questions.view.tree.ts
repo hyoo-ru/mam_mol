@@ -2,13 +2,23 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 
 	/**
 	 *  ```
-	 *  attr * mol_theme \$mol_theme_auto
+	 *  plugins / <= Themme
 	 *  ```
 	 **/
-	attr() {
-		return ({
-			"mol_theme" :  "$mol_theme_auto" ,
-		})
+	plugins() {
+		return [this.Themme()] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  Themme $mol_theme_auto
+	 *  ```
+	 **/
+	@ $mol_mem
+	Themme() {
+		return (( obj )=>{
+			return obj
+		})( new this.$.$mol_theme_auto(  ) )
 	}
 
 	/**
@@ -41,6 +51,7 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 	 *  Menu $mol_page
 	 *  	title <= title_default
 	 *  	minimal_width 400
+	 *  	tools / <= Source_link
 	 *  	body / <= Menu_links
 	 *  ```
 	 **/
@@ -49,6 +60,7 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 		return (( obj )=>{
 			obj.title = () => this.title_default()
 			obj.minimal_width = () => 400
+			obj.tools = () => [this.Source_link()] as readonly any[]
 			obj.body = () => [this.Menu_links()] as readonly any[]
 			return obj
 		})( new this.$.$mol_page(  ) )
@@ -61,6 +73,19 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 	 **/
 	title_default() {
 		return this.$.$mol_locale.text( "$mol_app_questions_title_default" )
+	}
+
+	/**
+	 *  ```
+	 *  Source_link $mol_link_source uri \https://github.com/eigenmethod/mol/tree/master/app/questions
+	 *  ```
+	 **/
+	@ $mol_mem
+	Source_link() {
+		return (( obj )=>{
+			obj.uri = () => "https://github.com/eigenmethod/mol/tree/master/app/questions"
+			return obj
+		})( new this.$.$mol_link_source(  ) )
 	}
 
 	/**
