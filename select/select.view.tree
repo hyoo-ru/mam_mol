@@ -30,5 +30,5 @@ $mol_select $mol_pop
 	Filter $mol_string
 		value?val <=> filter_pattern?val \
 		hint <= filter_hint <= hint @ \Search..
-		debounce <= debounce 200
+		submit?event <=> submit?event null
 	Trigger_icon $mol_icon_chevron
