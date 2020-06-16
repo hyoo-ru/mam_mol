@@ -65,7 +65,7 @@ namespace $ { export class $mol_search extends $mol_bar {
 	 *  	options_showed <= suggests_showed
 	 *  	options <= suggests
 	 *  	Trigger_icon null
-	 *  	debounce <= debounce
+	 *  	submit?event <=> submit?event
 	 *  ```
 	 **/
 	@ $mol_mem
@@ -78,7 +78,7 @@ namespace $ { export class $mol_search extends $mol_bar {
 			obj.options_showed = () => this.suggests_showed()
 			obj.options = () => this.suggests()
 			obj.Trigger_icon = () => null as any
-			obj.debounce = () => this.debounce()
+			obj.submit = ( event? : any ) => this.submit( event )
 			return obj
 		})( new this.$.$mol_select(  ) )
 	}
@@ -122,11 +122,12 @@ namespace $ { export class $mol_search extends $mol_bar {
 
 	/**
 	 *  ```
-	 *  debounce 200
+	 *  submit?event null
 	 *  ```
 	 **/
-	debounce() {
-		return 200
+	@ $mol_mem
+	submit( event? : any , force? : $mol_mem_force ) {
+		return ( event !== void 0 ) ? event : null as any
 	}
 
 	/**

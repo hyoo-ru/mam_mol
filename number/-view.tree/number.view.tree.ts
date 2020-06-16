@@ -56,7 +56,6 @@ namespace $ { export class $mol_number extends $mol_view {
 	 *  	value?val <=> value_string?val
 	 *  	hint <= hint
 	 *  	enabled <= string_enabled
-	 *  	debounce <= debounce
 	 *  ```
 	 **/
 	@ $mol_mem
@@ -66,7 +65,6 @@ namespace $ { export class $mol_number extends $mol_view {
 			obj.value = ( val? : any ) => this.value_string( val )
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.string_enabled()
-			obj.debounce = () => this.debounce()
 			return obj
 		})( new this.$.$mol_string(  ) )
 	}
@@ -106,15 +104,6 @@ namespace $ { export class $mol_number extends $mol_view {
 	 **/
 	enabled() {
 		return true
-	}
-
-	/**
-	 *  ```
-	 *  debounce 200
-	 *  ```
-	 **/
-	debounce() {
-		return 200
 	}
 
 	/**

@@ -194,4 +194,38 @@ namespace $ { export class $mol_string extends $mol_view {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
+	/**
+	 *  ```
+	 *  plugins / <= Submit
+	 *  ```
+	 **/
+	plugins() {
+		return [this.Submit()] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  Submit $mol_hotkey key * enter?event <=> submit?event
+	 *  ```
+	 **/
+	@ $mol_mem
+	Submit() {
+		return (( obj )=>{
+			obj.key = () => ({
+			"enter" :  ( event? : any )=>  this.submit( event ) ,
+		})
+			return obj
+		})( new this.$.$mol_hotkey(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  submit?event null
+	 *  ```
+	 **/
+	@ $mol_mem
+	submit( event? : any , force? : $mol_mem_force ) {
+		return ( event !== void 0 ) ? event : null as any
+	}
+
 } }

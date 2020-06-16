@@ -78,6 +78,15 @@ $mol_link_iconed $mol_link
 
 $mol_bar $mol_view
 
+$mol_hotkey $mol_plugin
+	event *
+		^
+		keydown?event <=> keydown?event null
+	key *
+	mod_ctrl false
+	mod_alt false
+	mod_shift false
+
 $mol_string $mol_view
 	dom_name \input
 	enabled true
@@ -99,6 +108,9 @@ $mol_string $mol_view
 		^
 		input?event <=> event_change?event null
 		keydown?event <=> event_key_press?event null
+	plugins /
+		<= Submit $mol_hotkey
+			key * enter?event <=> submit?event null
 
 $mol_list $mol_view
 	render_visible_only true

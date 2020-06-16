@@ -89,7 +89,7 @@
 }
 
 [mol_app_demo_detail_list] > [mol_demo_large] {
-	margin: .5rem;
+	margin: .75rem;
 	height: calc( 100vh - 100px );
 	width: calc( 100% - 1rem );
 }

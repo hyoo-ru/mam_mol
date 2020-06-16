@@ -299,7 +299,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  Filter $mol_string
 	 *  	value?val <=> filter_pattern?val
 	 *  	hint <= filter_hint
-	 *  	debounce <= debounce
+	 *  	submit?event <=> submit?event
 	 *  ```
 	 **/
 	@ $mol_mem
@@ -307,7 +307,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 		return (( obj )=>{
 			obj.value = ( val? : any ) => this.filter_pattern( val )
 			obj.hint = () => this.filter_hint()
-			obj.debounce = () => this.debounce()
+			obj.submit = ( event? : any ) => this.submit( event )
 			return obj
 		})( new this.$.$mol_string(  ) )
 	}
@@ -332,11 +332,12 @@ namespace $ { export class $mol_select extends $mol_pop {
 
 	/**
 	 *  ```
-	 *  debounce 200
+	 *  submit?event null
 	 *  ```
 	 **/
-	debounce() {
-		return 200
+	@ $mol_mem
+	submit( event? : any , force? : $mol_mem_force ) {
+		return ( event !== void 0 ) ? event : null as any
 	}
 
 	/**

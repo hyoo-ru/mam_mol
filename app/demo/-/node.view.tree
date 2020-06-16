@@ -151,6 +151,15 @@ $mol_attach_demo $mol_demo_small
 
 $mol_bar $mol_view
 
+$mol_hotkey $mol_plugin
+	event *
+		^
+		keydown?event <=> keydown?event null
+	key *
+	mod_ctrl false
+	mod_alt false
+	mod_shift false
+
 $mol_string $mol_view
 	dom_name \input
 	enabled true
@@ -172,6 +181,9 @@ $mol_string $mol_view
 		^
 		input?event <=> event_change?event null
 		keydown?event <=> event_key_press?event null
+	plugins /
+		<= Submit $mol_hotkey
+			key * enter?event <=> submit?event null
 
 $mol_check $mol_button_minor
 	attr *
@@ -1111,15 +1123,6 @@ $mol_check_icon_demo $mol_demo_small
 			checked true
 			enabled false
 
-$mol_hotkey $mol_plugin
-	event *
-		^
-		keydown?event <=> keydown?event null
-	key *
-	mod_ctrl false
-	mod_alt false
-	mod_shift false
-
 $mol_pop $mol_view
 	event * keydown?event <=> keydown?event null
 	showed?val false
@@ -1199,7 +1202,7 @@ $mol_select $mol_pop
 	Filter $mol_string
 		value?val <=> filter_pattern?val \
 		hint <= filter_hint <= hint @ \Search..
-		debounce <= debounce 200
+		submit?event <=> submit?event null
 	Trigger_icon $mol_icon_chevron
 
 $mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
@@ -1218,7 +1221,7 @@ $mol_search $mol_bar
 			options_showed <= suggests_showed false
 			options <= suggests /string
 			Trigger_icon null
-			debounce <= debounce 200
+			submit?event <=> submit?event null
 		<= Clear $mol_button_minor
 			sub /
 				<= Clear_icon $mol_icon_cross
@@ -1230,7 +1233,6 @@ $mol_code $mol_view
 		<= Manual $mol_search
 			query?val <=> value?val \
 			hint <= hint <= format \
-			debounce <= debounce 200
 		<= Scan $mol_button
 			event_click?val <=> event_scan?val null
 			sub /
@@ -1664,7 +1666,6 @@ $mol_number $mol_view
 			value?val <=> value_string?val \
 			hint <= hint \
 			enabled <= string_enabled <= enabled true
-			debounce <= debounce 200
 		<= Dec $mol_button_minor
 			event_click?val <=> event_dec?val null
 			enabled <= dec_enabled <= enabled true

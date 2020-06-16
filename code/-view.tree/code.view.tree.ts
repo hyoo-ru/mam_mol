@@ -16,7 +16,6 @@ namespace $ { export class $mol_code extends $mol_view {
 	 *  Manual $mol_search
 	 *  	query?val <=> value?val
 	 *  	hint <= hint
-	 *  	debounce <= debounce
 	 *  ```
 	 **/
 	@ $mol_mem
@@ -24,7 +23,6 @@ namespace $ { export class $mol_code extends $mol_view {
 		return (( obj )=>{
 			obj.query = ( val? : any ) => this.value( val )
 			obj.hint = () => this.hint()
-			obj.debounce = () => this.debounce()
 			return obj
 		})( new this.$.$mol_search(  ) )
 	}
@@ -55,15 +53,6 @@ namespace $ { export class $mol_code extends $mol_view {
 	 **/
 	format() {
 		return ""
-	}
-
-	/**
-	 *  ```
-	 *  debounce 200
-	 *  ```
-	 **/
-	debounce() {
-		return 200
 	}
 
 	/**
