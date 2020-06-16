@@ -1,5 +1,5 @@
 [mol_app_questions_menu] {
-	flex: 1 1 400px;
+	flex: 0 0 40rem;
 }
 
 [mol_app_questions_menu_links] {
@@ -27,9 +27,8 @@
 	flex: 1000 1 auto;
 }
 
-[mol_app_questions_placeholder] ,
 [mol_app_questions_details] {
-	flex: 1000 1 600px;
+	flex: 1 0 60rem;
 }
 
 [mol_app_questions_details_descr] {
