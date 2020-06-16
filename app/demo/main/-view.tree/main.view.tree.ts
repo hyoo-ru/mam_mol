@@ -20,15 +20,6 @@ namespace $ { export class $mol_app_demo_main extends $mol_page {
 
 	/**
 	 *  ```
-	 *  project_uri \https://github.com/eigenmethod/mol/tree/master/
-	 *  ```
-	 **/
-	project_uri() {
-		return "https://github.com/eigenmethod/mol/tree/master/"
-	}
-
-	/**
-	 *  ```
 	 *  tools /
 	 *  	<= Lights
 	 *  	<= Project
@@ -52,18 +43,24 @@ namespace $ { export class $mol_app_demo_main extends $mol_page {
 
 	/**
 	 *  ```
-	 *  Project $mol_link_iconed
-	 *  	uri <= project_uri
-	 *  	title \
+	 *  Project $mol_link_source uri <= project_uri
 	 *  ```
 	 **/
 	@ $mol_mem
 	Project() {
 		return (( obj )=>{
 			obj.uri = () => this.project_uri()
-			obj.title = () => ""
 			return obj
-		})( new this.$.$mol_link_iconed(  ) )
+		})( new this.$.$mol_link_source(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  project_uri \https://github.com/eigenmethod/mol/tree/master/
+	 *  ```
+	 **/
+	project_uri() {
+		return "https://github.com/eigenmethod/mol/tree/master/"
 	}
 
 	/**

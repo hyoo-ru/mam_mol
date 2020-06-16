@@ -104,6 +104,7 @@
 	"$mol_link_demo_this_label": "This page",
 	"$mol_link_demo_title": "Some hyperlinks",
 	"$mol_link_iconed_demo_title": "Link with icon",
+	"$mol_link_source_hint": "Source code",
 	"$mol_list_demo_table_editable_title": "Editable",
 	"$mol_list_demo_table_title": "Large list of rows with dynamic content",
 	"$mol_list_demo_tree_title": "Large list of rows with dynamic content",

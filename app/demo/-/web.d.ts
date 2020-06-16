@@ -5712,13 +5712,27 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_icon_github_circle extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_link_source extends $mol_link {
+        hint(): string;
+        sub(): readonly any[];
+        Icon(): $mol_icon_github_circle;
+    }
+}
+
+declare namespace $ {
     class $mol_app_demo_main extends $mol_page {
         minimal_width(): number;
         title(): string;
-        project_uri(): string;
         tools(): readonly any[];
         Lights(): $$.$mol_lights_toggle;
-        Project(): $$.$mol_link_iconed;
+        Project(): $mol_link_source;
+        project_uri(): string;
         body(): readonly any[];
         Description(): $$.$mol_text;
         description(): string;
