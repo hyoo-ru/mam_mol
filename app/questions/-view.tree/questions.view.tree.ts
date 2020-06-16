@@ -1,4 +1,4 @@
-namespace $ { export class $mol_app_questions extends $mol_book {
+namespace $ { export class $mol_app_questions extends $mol_book2 {
 
 	/**
 	 *  ```
@@ -19,31 +19,6 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 		return (( obj )=>{
 			return obj
 		})( new this.$.$mol_theme_auto(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  Placeholder $mol_book_placeholder
-	 *  	minimal_width 600
-	 *  	title <= placeholder
-	 *  ```
-	 **/
-	@ $mol_mem
-	Placeholder() {
-		return (( obj )=>{
-			obj.minimal_width = () => 600
-			obj.title = () => this.placeholder()
-			return obj
-		})( new this.$.$mol_book_placeholder(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  placeholder \Stack Overflow
-	 *  ```
-	 **/
-	placeholder() {
-		return "Stack Overflow"
 	}
 
 	/**
@@ -115,7 +90,6 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 	 *  Details!id $mol_page
 	 *  	minimal_width 600
 	 *  	title <= question_title!id
-	 *  	event_top?val <=> event_front_up?val
 	 *  	tools /
 	 *  		<= Details_permalink!id
 	 *  		<= Details_close!id
@@ -129,7 +103,6 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 		return (( obj )=>{
 			obj.minimal_width = () => 600
 			obj.title = () => this.question_title(id)
-			obj.event_top = ( val? : any ) => this.event_front_up( val )
 			obj.tools = () => [this.Details_permalink(id) , this.Details_close(id)] as readonly any[]
 			obj.body = () => [this.Details_descr(id) , this.Answers(id)] as readonly any[]
 			return obj
