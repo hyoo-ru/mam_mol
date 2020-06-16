@@ -6,7 +6,6 @@ $mol_textarea $mol_view
 			dom_name \textarea
 			value?val <=> value?val \
 			hint <= hint \
-			debounce 0
 			enabled <= enabled true
 		<= View $mol_text
 			text <= text \
