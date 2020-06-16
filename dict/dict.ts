@@ -1,11 +1,11 @@
 namespace $ {
 
-	export function $mol_dict_key( value : any ) {
+	export function $mol_dict_key( value : any ) : any {
 		
 		if( !value ) return value
 		if( typeof value !== 'object' ) return value
 
-		if( Array.isArray( value ) ) return value.join( ' , ' )
+		if( Array.isArray( value ) ) return value.map( $mol_dict_key ).join( ' , ' )
 		if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) === null ) return JSON.stringify( value )
 		
 		return value
