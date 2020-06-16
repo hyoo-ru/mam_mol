@@ -1,6 +1,6 @@
 $mol_app_questions $mol_book
-	attr *
-		mol_theme \$mol_theme_auto
+	plugins /
+		<= Themme $mol_theme_auto
 	Placeholder $mol_book_placeholder
 		minimal_width 600
 		title <= placeholder \Stack Overflow
@@ -8,6 +8,9 @@ $mol_app_questions $mol_book
 	Menu $mol_page
 		title <= title_default @ \Questions
 		minimal_width 400
+		tools /
+			<= Source_link $mol_link_source
+				uri \https://github.com/eigenmethod/mol/tree/master/app/questions
 		body /
 			<= Menu_links $mol_list
 				rows <= menu_rows /
