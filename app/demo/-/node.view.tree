@@ -163,7 +163,6 @@ $mol_hotkey $mol_plugin
 $mol_string $mol_view
 	dom_name \input
 	enabled true
-	debounce 0
 	minimal_height 40
 	autocomplete false
 	field *
@@ -2309,7 +2308,6 @@ $mol_textarea $mol_view
 			dom_name \textarea
 			value?val <=> value?val \
 			hint <= hint \
-			debounce 0
 			enabled <= enabled true
 		<= View $mol_text
 			text <= text \

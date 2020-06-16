@@ -38,7 +38,6 @@ namespace $ { export class $mol_textarea extends $mol_view {
 	 *  	dom_name \textarea
 	 *  	value?val <=> value?val
 	 *  	hint <= hint
-	 *  	debounce 0
 	 *  	enabled <= enabled
 	 *  ```
 	 **/
@@ -48,7 +47,6 @@ namespace $ { export class $mol_textarea extends $mol_view {
 			obj.dom_name = () => "textarea"
 			obj.value = ( val? : any ) => this.value( val )
 			obj.hint = () => this.hint()
-			obj.debounce = () => 0
 			obj.enabled = () => this.enabled()
 			return obj
 		})( new this.$.$mol_string(  ) )

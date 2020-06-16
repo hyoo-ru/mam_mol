@@ -2701,9 +2701,6 @@ var $;
         enabled() {
             return true;
         }
-        debounce() {
-            return 0;
-        }
         minimal_height() {
             return 40;
         }

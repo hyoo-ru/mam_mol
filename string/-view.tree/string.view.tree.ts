@@ -20,15 +20,6 @@ namespace $ { export class $mol_string extends $mol_view {
 
 	/**
 	 *  ```
-	 *  debounce 0
-	 *  ```
-	 **/
-	debounce() {
-		return 0
-	}
-
-	/**
-	 *  ```
 	 *  minimal_height 40
 	 *  ```
 	 **/

@@ -4775,9 +4775,6 @@ var $;
         enabled() {
             return true;
         }
-        debounce() {
-            return 0;
-        }
         minimal_height() {
             return 40;
         }
@@ -19563,7 +19560,6 @@ var $;
                 obj.dom_name = () => "textarea";
                 obj.value = (val) => this.value(val);
                 obj.hint = () => this.hint();
-                obj.debounce = () => 0;
                 obj.enabled = () => this.enabled();
                 return obj;
             })(new this.$.$mol_string());
