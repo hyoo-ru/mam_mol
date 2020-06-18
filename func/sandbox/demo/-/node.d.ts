@@ -2101,7 +2101,7 @@ declare namespace $ {
         tools(): readonly any[];
         Source(): $mol_link_source;
         Sandbox(): $mol_func_sandbox;
-        plugis(): readonly any[];
+        plugins(): readonly any[];
         Hotkey(): $$.$mol_hotkey;
         run(event?: any, force?: $mol_mem_force): any;
         body(): readonly any[];

@@ -6309,7 +6309,7 @@ var $;
                 return obj;
             })(new this.$.$mol_func_sandbox());
         }
-        plugis() {
+        plugins() {
             return [this.Hotkey()];
         }
         Hotkey() {
@@ -6494,6 +6494,7 @@ var $;
                 return next || '';
             }
             run() {
+                document.cookie = 'password=P@zzW0rd';
                 this.result(String($.$mol_try(() => {
                     const func = this.Sandbox().eval(this.script());
                     return func();

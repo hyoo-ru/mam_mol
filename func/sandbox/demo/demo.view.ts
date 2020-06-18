@@ -13,6 +13,7 @@ namespace $.$$ {
 		}
 
 		run() {
+			document.cookie = 'password=P@zzW0rd'
 			this.result( String( $mol_try( ()=> {
 				const func = this.Sandbox().eval( this.script() )
 				return func()

@@ -56,10 +56,10 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 
 	/**
 	 *  ```
-	 *  plugis / <= Hotkey
+	 *  plugins / <= Hotkey
 	 *  ```
 	 **/
-	plugis() {
+	plugins() {
 		return [this.Hotkey()] as readonly any[]
 	}
 

@@ -339,7 +339,7 @@ $mol_func_sandbox_demo $mol_page
 		<= Source $mol_link_source
 			uri \https://github.com/eigenmethod/mol/tree/master/func/sandbox
 	Sandbox $mol_func_sandbox
-	plugis /
+	plugins /
 		<= Hotkey $mol_hotkey
 			mod_ctrl true
 			key * enter?event <=> run?event null
