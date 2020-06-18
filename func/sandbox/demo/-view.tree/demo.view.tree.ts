@@ -2,6 +2,17 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 
 	/**
 	 *  ```
+	 *  attr * mol_heme \$mol_theme_dark
+	 *  ```
+	 **/
+	attr() {
+		return ({
+			"mol_heme" :  "$mol_theme_dark" ,
+		})
+	}
+
+	/**
+	 *  ```
 	 *  title \JavaScript Sandbox Demo
 	 *  ```
 	 **/
@@ -20,18 +31,15 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 
 	/**
 	 *  ```
-	 *  Source $mol_link_iconed
-	 *  	uri \https://github.com/eigenmethod/mol/tree/master/func/sandbox
-	 *  	title \
+	 *  Source $mol_link_source uri \https://github.com/eigenmethod/mol/tree/master/func/sandbox
 	 *  ```
 	 **/
 	@ $mol_mem
 	Source() {
 		return (( obj )=>{
 			obj.uri = () => "https://github.com/eigenmethod/mol/tree/master/func/sandbox"
-			obj.title = () => ""
 			return obj
-		})( new this.$.$mol_link_iconed(  ) )
+		})( new this.$.$mol_link_source(  ) )
 	}
 
 	/**
@@ -48,22 +56,38 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 
 	/**
 	 *  ```
-	 *  event * keydown?event <=> keydown?event
+	 *  plugis / <= Hotkey
 	 *  ```
 	 **/
-	event() {
-		return ({
-			"keydown" :  ( event? : any )=>  this.keydown( event ) ,
-		})
+	plugis() {
+		return [this.Hotkey()] as readonly any[]
 	}
 
 	/**
 	 *  ```
-	 *  keydown?event null
+	 *  Hotkey $mol_hotkey
+	 *  	mod_ctrl true
+	 *  	key * enter?event <=> run?event
 	 *  ```
 	 **/
 	@ $mol_mem
-	keydown( event? : any , force? : $mol_mem_force ) {
+	Hotkey() {
+		return (( obj )=>{
+			obj.mod_ctrl = () => true
+			obj.key = () => ({
+			"enter" :  ( event? : any )=>  this.run( event ) ,
+		})
+			return obj
+		})( new this.$.$mol_hotkey(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  run?event null
+	 *  ```
+	 **/
+	@ $mol_mem
+	run( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -97,14 +121,14 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	/**
 	 *  ```
 	 *  Code $mol_textarea
-	 *  	hint \return document.cookie
+	 *  	hint \return 42
 	 *  	value?val <=> script?val
 	 *  ```
 	 **/
 	@ $mol_mem
 	Code() {
 		return (( obj )=>{
-			obj.hint = () => "return document.cookie"
+			obj.hint = () => "return 42"
 			obj.value = ( val? : any ) => this.script( val )
 			return obj
 		})( new this.$.$mol_textarea(  ) )
@@ -123,27 +147,31 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	/**
 	 *  ```
 	 *  Run $mol_button_major
-	 *  	title \Hack
+	 *  	hint \Run
 	 *  	click?event <=> run?event
+	 *  	sub / <= Run_icon
 	 *  ```
 	 **/
 	@ $mol_mem
 	Run() {
 		return (( obj )=>{
-			obj.title = () => "Hack"
+			obj.hint = () => "Run"
 			obj.click = ( event? : any ) => this.run( event )
+			obj.sub = () => [this.Run_icon()] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_major(  ) )
 	}
 
 	/**
 	 *  ```
-	 *  run?event null
+	 *  Run_icon $mol_icon_play
 	 *  ```
 	 **/
 	@ $mol_mem
-	run( event? : any , force? : $mol_mem_force ) {
-		return ( event !== void 0 ) ? event : null as any
+	Run_icon() {
+		return (( obj )=>{
+			return obj
+		})( new this.$.$mol_icon_play(  ) )
 	}
 
 	/**
@@ -221,16 +249,16 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  		\let evil = eval
 	 *  		\return evil( 'document.cookie' )
 	 *  	\
-	 *  		\let Function = ( ()=>{} ).constructor
+	 *  		\let Function = ( async ()=> {} ).constructor
 	 *  		\let getCookie = Function( 'return document.cookie' )
 	 *  		\return getCookie()
 	 *  	\
-	 *  		\let NumberProto = (0).__proto__
+	 *  		\let NumberProto = (0n).__proto__
 	 *  		\NumberProto.toString = null
 	 *  ```
 	 **/
 	snippet_codes() {
-		return ["return document.cookie" , "let evil = eval\nreturn evil( 'document.cookie' )" , "let Function = ( ()=>{} ).constructor\nlet getCookie = Function( 'return document.cookie' )\nreturn getCookie()" , "let NumberProto = (0).__proto__\nNumberProto.toString = null"] as readonly any[]
+		return ["return document.cookie" , "let evil = eval\nreturn evil( 'document.cookie' )" , "let Function = ( async ()=> {} ).constructor\nlet getCookie = Function( 'return document.cookie' )\nreturn getCookie()" , "let NumberProto = (0n).__proto__\nNumberProto.toString = null"] as readonly any[]
 	}
 
 } }

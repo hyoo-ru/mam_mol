@@ -60,23 +60,41 @@ $mol_link $mol_view
 		^
 		click?event <=> click?event <=> event_click?event null
 
-$mol_image $mol_view
-	dom_name \img
-	field *
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	text_width?text 0
+	font_size 16
+	font_family \
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
 		^
-		src <= uri \
-		alt <= title
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
 
-$mol_link_iconed $mol_link
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
 	sub /
-		<= Icon $mol_image
-			uri <= icon \
-			title \
-	content /
-		<= title <= uri
-	host \
+		<= Path $mol_svg_path
+			geometry <= path \
 
-$mol_bar $mol_view
+$mol_icon_github_circle $mol_icon path \M12,2C6.48,2 2,6.48 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12C22,6.48 17.52,2 12,2Z
+
+$mol_link_source $mol_link
+	hint @ \Source code
+	sub /
+		<= Icon $mol_icon_github_circle
 
 $mol_hotkey $mol_plugin
 	event *
@@ -86,6 +104,8 @@ $mol_hotkey $mol_plugin
 	mod_ctrl false
 	mod_alt false
 	mod_shift false
+
+$mol_bar $mol_view
 
 $mol_string $mol_view
 	dom_name \input
@@ -140,35 +160,6 @@ $mol_check $mol_button_minor
 			<= Title $mol_view
 				sub /
 					<= title \
-
-$mol_svg $mol_view
-	dom_name \svg
-	dom_name_space \http://www.w3.org/2000/svg
-	text_width?text 0
-	font_size 16
-	font_family \
-
-$mol_svg_root $mol_svg
-	dom_name \svg
-	attr *
-		^
-		viewBox <= view_box \0 0 100 100
-		preserveAspectRatio <= aspect \xMidYMid
-
-$mol_svg_path $mol_svg
-	dom_name \path
-	attr *
-		^
-		d <= geometry \
-
-
-$mol_icon $mol_svg_root
-	view_box \0 0 24 24
-	minimal_width 16
-	minimal_height 16
-	sub /
-		<= Path $mol_svg_path
-			geometry <= path \
 
 $mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
 
@@ -244,6 +235,22 @@ $mol_grid_number $mol_grid_cell
 $mol_paragraph $mol_view
 	line_height 24
 	letter_width 8
+
+$mol_image $mol_view
+	dom_name \img
+	field *
+		^
+		src <= uri \
+		alt <= title
+
+$mol_link_iconed $mol_link
+	sub /
+		<= Icon $mol_image
+			uri <= icon \
+			title \
+	content /
+		<= title <= uri
+	host \
 
 $mol_text $mol_list
 	uri_base \
@@ -323,22 +330,29 @@ $mol_button_major $mol_button_typed
 		^
 		mol_theme \$mol_theme_accent
 
+$mol_icon_play $mol_icon path \M8,5.14V19.14L19,12.14L8,5.14Z
+
 $mol_func_sandbox_demo $mol_page
+	attr * mol_heme \$mol_theme_dark
 	title \JavaScript Sandbox Demo
-	tools / <= Source $mol_link_iconed
-		uri \https://github.com/eigenmethod/mol/tree/master/func/sandbox
-		title \
+	tools /
+		<= Source $mol_link_source
+			uri \https://github.com/eigenmethod/mol/tree/master/func/sandbox
 	Sandbox $mol_func_sandbox
-	event *
-		keydown?event <=> keydown?event null
+	plugis /
+		<= Hotkey $mol_hotkey
+			mod_ctrl true
+			key * enter?event <=> run?event null
 	body /
 		<= Input $mol_bar sub /
 			<= Code $mol_textarea
-				hint \return document.cookie
+				hint \return 42
 				value?val <=> script?val \
 			<= Run $mol_button_major
-				title \Hack
+				hint \Run
 				click?event <=> run?event null
+				sub /
+					<= Run_icon $mol_icon_play
 		<= Result $mol_view
 			sub / <= result?val \
 		<= Snippets $mol_list rows <= snippets /
@@ -349,11 +363,11 @@ $mol_func_sandbox_demo $mol_page
 			\let evil = eval
 			\return evil( 'document.cookie' )
 		\
-			\let Function = ( ()=>{} ).constructor
+			\let Function = ( async ()=> {} ).constructor
 			\let getCookie = Function( 'return document.cookie' )
 			\return getCookie()
 		\
-			\let NumberProto = (0).__proto__
+			\let NumberProto = (0n).__proto__
 			\NumberProto.toString = null
 
 $mol_func_sandbox_demo_snippet $mol_link

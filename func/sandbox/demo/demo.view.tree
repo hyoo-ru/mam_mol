@@ -1,19 +1,24 @@
 $mol_func_sandbox_demo $mol_page
+	attr * mol_heme \$mol_theme_dark
 	title \JavaScript Sandbox Demo
-	tools / <= Source $mol_link_iconed
-		uri \https://github.com/eigenmethod/mol/tree/master/func/sandbox
-		title \
+	tools /
+		<= Source $mol_link_source
+			uri \https://github.com/eigenmethod/mol/tree/master/func/sandbox
 	Sandbox $mol_func_sandbox
-	event *
-		keydown?event <=> keydown?event null
+	plugis /
+		<= Hotkey $mol_hotkey
+			mod_ctrl true
+			key * enter?event <=> run?event null
 	body /
 		<= Input $mol_bar sub /
 			<= Code $mol_textarea
-				hint \return document.cookie
+				hint \return 42
 				value?val <=> script?val \
 			<= Run $mol_button_major
-				title \Hack
+				hint \Run
 				click?event <=> run?event null
+				sub /
+					<= Run_icon $mol_icon_play
 		<= Result $mol_view
 			sub / <= result?val \
 		<= Snippets $mol_list rows <= snippets /
@@ -24,11 +29,11 @@ $mol_func_sandbox_demo $mol_page
 			\let evil = eval
 			\return evil( 'document.cookie' )
 		\
-			\let Function = ( ()=>{} ).constructor
+			\let Function = ( async ()=> {} ).constructor
 			\let getCookie = Function( 'return document.cookie' )
 			\return getCookie()
 		\
-			\let NumberProto = (0).__proto__
+			\let NumberProto = (0n).__proto__
 			\NumberProto.toString = null
 
 $mol_func_sandbox_demo_snippet $mol_link

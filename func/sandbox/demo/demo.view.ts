@@ -19,14 +19,6 @@ namespace $.$$ {
 			} ) ) )
 		}
 
-		keydown( event : KeyboardEvent ) {
-			
-			if( event.ctrlKey && event.keyCode === $mol_keyboard_code.enter ) {
-				this.run()
-			}
-
-		}
-
 		snippets() {
 			return this.snippet_codes().map( ( code , index )=> this.Snippet( index ) )
 		}
