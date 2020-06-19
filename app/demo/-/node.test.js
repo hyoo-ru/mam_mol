@@ -20201,13 +20201,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/app/demo/main/main.view.css", "[mol_app_demo_main_description] {\n\tmargin: auto;\n\tbox-shadow: none;\n}\n");
-})($ || ($ = {}));
-//main.view.css.js.map
-;
-"use strict";
-var $;
-(function ($) {
     var $$;
     (function ($$) {
         class $mol_app_demo_main extends $.$mol_app_demo_main {

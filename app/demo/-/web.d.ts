@@ -5738,9 +5738,6 @@ declare namespace $ {
     }
 }
 
-declare namespace $ {
-}
-
 declare namespace $.$$ {
     class $mol_app_demo_main extends $.$mol_app_demo_main {
         description(): string;
