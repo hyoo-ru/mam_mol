@@ -32,6 +32,7 @@
 
 [mol_theme="$mol_theme_base"] {
 	--mol_theme_back: hsla( 210 , 60% , 35% , 1 );
+	--mol_theme_hover: hsla( 210 , 60% , 20% , 1 );
 	--mol_theme_current: hsl( 210 , 100% , 20% );
 	--mol_theme_text: white;
 	--mol_theme_line: white;
