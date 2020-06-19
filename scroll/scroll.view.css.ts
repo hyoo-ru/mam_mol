@@ -20,7 +20,7 @@ namespace $.$$ {
 		webkitOverflowScrolling: 'touch',
 
 		scrollbar: {
-			color: [ $mol_theme.current , 'transparent' ],
+			color: [ $mol_theme.line , 'transparent' ],
 		},
 	
 		'::-webkit-scrollbar': {
@@ -42,7 +42,7 @@ namespace $.$$ {
 
 		'::-webkit-scrollbar-thumb': {
 			background: {
-				color: $mol_theme.current,
+				color: $mol_theme.line,
 			},
 		},
 

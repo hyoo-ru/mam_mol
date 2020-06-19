@@ -3188,7 +3188,7 @@ var $;
             maxWidth: per(100),
             webkitOverflowScrolling: 'touch',
             scrollbar: {
-                color: [$.$mol_theme.current, 'transparent'],
+                color: [$.$mol_theme.line, 'transparent'],
             },
             '::-webkit-scrollbar': {
                 width: rem(.5),
@@ -3206,7 +3206,7 @@ var $;
             },
             '::-webkit-scrollbar-thumb': {
                 background: {
-                    color: $.$mol_theme.current,
+                    color: $.$mol_theme.line,
                 },
             },
             '@media': {
