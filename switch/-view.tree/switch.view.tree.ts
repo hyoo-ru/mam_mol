@@ -11,7 +11,7 @@ namespace $ { export class $mol_switch extends $mol_view {
 
 	/**
 	 *  ```
-	 *  Option!id $mol_check
+	 *  Option!id $mol_switch_option
 	 *  	checked?val <=> option_checked!id?val
 	 *  	label <= option_label!id
 	 *  	enabled <= option_enabled!id
@@ -24,7 +24,7 @@ namespace $ { export class $mol_switch extends $mol_view {
 			obj.label = () => this.option_label(id)
 			obj.enabled = () => this.option_enabled(id)
 			return obj
-		})( new this.$.$mol_check(  ) )
+		})( new this.$.$mol_switch_option(  ) )
 	}
 
 	/**
@@ -118,6 +118,32 @@ namespace $ { export class $mol_switch extends $mol_view {
 	 **/
 	items() {
 		return [] as readonly ( $mol_check )[]
+	}
+
+} }
+namespace $ { export class $mol_switch_option extends $mol_check {
+
+	/**
+	 *  ```
+	 *  attr *
+	 *  	^
+	 *  	mol_theme <= theme
+	 *  ```
+	 **/
+	attr() {
+		return ({
+			...super.attr() ,
+			"mol_theme" :  this.theme() ,
+		})
+	}
+
+	/**
+	 *  ```
+	 *  theme \
+	 *  ```
+	 **/
+	theme() {
+		return ""
 	}
 
 } }

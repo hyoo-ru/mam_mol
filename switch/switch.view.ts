@@ -1,4 +1,5 @@
 namespace $.$$ {
+	
 	export class $mol_switch extends $.$mol_switch {
 
 		value( next? : any ) {
@@ -27,6 +28,15 @@ namespace $.$$ {
 			if( next === void 0 ) return this.value() == key
 			this.value( next ? key : null )
 		}
-		
+
 	}
+
+	export class $mol_switch_option extends $.$mol_switch_option {
+
+		theme() {
+			return this.checked() ? '$mol_theme_base' : ''
+		}
+
+	}
+
 }

@@ -3689,7 +3689,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_switch extends $mol_view {
         minimal_height(): number;
-        Option(id: any): $$.$mol_check;
+        Option(id: any): $$.$mol_switch_option;
         option_checked(id: any, val?: any, force?: $mol_mem_force): any;
         option_label(id: any): readonly any[];
         option_title(id: any): string;
@@ -3700,6 +3700,20 @@ declare namespace $ {
         keys(): readonly string[];
         sub(): readonly $mol_check[];
         items(): readonly $mol_check[];
+    }
+}
+declare namespace $ {
+    class $mol_switch_option extends $mol_check {
+        attr(): {
+            mol_theme: string;
+            mol_check_checked: any;
+            "aria-checked": any;
+            role: string;
+            disabled: boolean;
+            tabindex: number;
+            title: string;
+        };
+        theme(): string;
     }
 }
 
@@ -3713,9 +3727,12 @@ declare namespace $.$$ {
             [key: string]: string;
         };
         keys(): string[];
-        items(): $mol_check[];
+        items(): $mol_switch_option[];
         option_title(key: string): string;
         option_checked(key: string, next?: boolean): boolean | undefined;
+    }
+    class $mol_switch_option extends $.$mol_switch_option {
+        theme(): "" | "$mol_theme_base";
     }
 }
 
