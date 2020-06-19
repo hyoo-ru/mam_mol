@@ -26,16 +26,16 @@ namespace $ {
 		constructor(
 
 			/** Type of structural node, `value` should be empty */
-			readonly type : string ,
+			readonly type : string = '',
 			
 			/** Content of data node, `type` should be empty */
-			readonly value : string ,
+			readonly value : string = '',
 
 			/** Child nodes */
-			readonly kids : readonly $mol_tree2[] ,
+			readonly kids : readonly $mol_tree2[] = [],
 			
 			/** Position in most far source resource */
-			readonly span : $mol_span ,
+			readonly span : $mol_span = $mol_span.unknown,
 
 		) { super() }
 		

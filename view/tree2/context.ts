@@ -9,6 +9,7 @@ namespace $ {
 			protected parents: readonly $mol_view_tree2_prop[],
 			protected locales: $mol_view_tree2_locales,
 			protected methods: $mol_tree2[],
+			readonly types = true,
 			protected added_nodes = new Map<string, $mol_view_tree2_prop>(),
 			protected array?: $mol_tree2,
 		) {
@@ -22,6 +23,7 @@ namespace $ {
 				prefixes,
 				this.locales,
 				this.methods,
+				this.types,
 				this.added_nodes,
 				array
 			)
@@ -119,9 +121,7 @@ namespace $ {
 
 			let key = ''
 
-			const body: $mol_tree2[] = [
-				operator.data('this.$.$mol_locale.text( \'')
-			]
+			const body: $mol_tree2[] = []
 
 			const last = parents.length > 0 ? parents[parents.length - 1] : undefined
 
@@ -132,8 +132,6 @@ namespace $ {
 				body.push(parent.name.data('_'))
 				key += '_'
 			}
-
-			body.push(operator.data('\' )'))
 
 			const prev = this.locale_nodes.get(key)
 

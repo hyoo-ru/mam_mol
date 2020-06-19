@@ -88,7 +88,7 @@ namespace $ {
 			
 			const text = file.text()
 			const tree = $mol_tree2.fromString( text , new $mol_span(file.path(), 0, 0, text.length) )
-			const res = this.$.$mol_view_tree2_compile( tree )
+			const res = this.$.$mol_view_tree2_ts_compile( tree )
 
 			script.text( res.script )
 			// sourceMap.text( res.map )
