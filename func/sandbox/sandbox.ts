@@ -39,9 +39,17 @@ namespace $ {
 
 			let context_default = {}
 
-			for( let name of Object.getOwnPropertyNames( win ) ) {
-				context_default[ name ] = undefined
+			function clean( obj : object ) {
+
+				for( let name of Object.getOwnPropertyNames( obj ) ) {
+					context_default[ name ] = undefined
+				}
+				
+				const proto = Object.getPrototypeOf( obj )
+				if( proto ) clean( proto )
+
 			}
+			clean( win )
 
 			return this._make = ( ( ... contexts : Object[] )=> {
 
