@@ -2,6 +2,8 @@
 
 Sandbox for javascript code from user.
 
+## [Online demo](https://sandbox.js.hyoo.ru/)
+
 ## Example
 
 ```
