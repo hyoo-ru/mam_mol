@@ -54,7 +54,8 @@ var $;
             frame.style.display = 'none';
             $.$mol_dom_context.document.body.appendChild(frame);
             const win = frame.contentWindow;
-            const SafeFunction = win.Function;
+            const SafeFunc = win.Function;
+            const SafeJSON = win.JSON;
             win.eval(`
 
 				var AsyncFunction = AsyncFunction || ( async function() {} ).constructor
@@ -86,16 +87,66 @@ var $;
                     clean(proto);
             }
             clean(win);
+            const is_primitive = (val) => Object(val) !== val;
+            const safe_value = (val) => {
+                if (is_primitive(val))
+                    return val;
+                if (this.blacklist.has(val))
+                    return undefined;
+                if (this.whitelist.has(val))
+                    return val;
+                const str = JSON.stringify(val);
+                if (!str)
+                    return str;
+                val = SafeJSON.parse(str);
+                this.whitelist.add(val);
+                return val;
+            };
+            const safe_derived = (val) => {
+                if (is_primitive(val))
+                    return val;
+                const proxy = new Proxy(val, {
+                    get(val, field) {
+                        if (field === 'valueOf')
+                            return safe_derived(val[field]);
+                        if (field === 'toString')
+                            return safe_derived(val[field]);
+                        return safe_value(val[field]);
+                    },
+                    set() { return false; },
+                    defineProperty() { return false; },
+                    deleteProperty() { return false; },
+                    preventExtensions() { return false; },
+                    apply(val, host, args) {
+                        return safe_value(val.call(host, ...args));
+                    },
+                    construct(val, args) {
+                        return safe_value(new val(...args));
+                    },
+                });
+                this.whitelist.add(proxy);
+                return proxy;
+            };
             return this._make = ((...contexts) => {
                 const context_merged = {};
                 for (let context of contexts) {
                     for (let name of Object.getOwnPropertyNames(context)) {
-                        context_merged[name] = context[name];
+                        context_merged[name] = safe_derived(context[name]);
                     }
                 }
                 const vars = Object.keys(context_merged);
                 const values = vars.map(name => context_merged[name]);
-                return (code) => new SafeFunction(...vars, '"use strict";' + code).bind(null, ...values);
+                return (code) => {
+                    const func = new SafeFunc(...vars, '"use strict";' + code)
+                        .bind(null, ...values);
+                    return () => {
+                        const val = func();
+                        if (is_primitive(val))
+                            return val;
+                        this.whitelist.add(val);
+                        return val;
+                    };
+                };
             }).bind(null, context_default);
         }
         get eval() {
@@ -104,6 +155,15 @@ var $;
             return this._eval = $mol_func_sandbox.make(...this.contexts);
         }
     }
+    $mol_func_sandbox.blacklist = new Set([
+        (function () { }).constructor,
+        (async function () { }).constructor,
+        (function* () { }).constructor,
+        eval,
+        setTimeout,
+        setInterval,
+    ]);
+    $mol_func_sandbox.whitelist = new WeakSet();
     $.$mol_func_sandbox = $mol_func_sandbox;
 })($ || ($ = {}));
 //sandbox.js.map
