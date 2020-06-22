@@ -21,9 +21,6 @@ namespace $ {
 			
 			const frame = $mol_dom_context.document.createElement( 'iframe' )
 
-			// Prevent import() execution
-			frame.setAttribute( 'sandbox' , `allow-same-origin` )
-			
 			frame.style.display = 'none'
 			$mol_dom_context.document.body.appendChild( frame )
 
@@ -55,6 +52,9 @@ namespace $ {
 
 			` )
 
+			// Stop event-loop and break all async operations
+			$mol_dom_context.document.body.removeChild( frame )
+			
 			let context_default = {}
 
 			function clean( obj : object ) {

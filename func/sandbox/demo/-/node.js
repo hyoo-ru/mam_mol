@@ -81,7 +81,6 @@ var $;
             if (this._make)
                 return this._make;
             const frame = $.$mol_dom_context.document.createElement('iframe');
-            frame.setAttribute('sandbox', `allow-same-origin`);
             frame.style.display = 'none';
             $.$mol_dom_context.document.body.appendChild(frame);
             const win = frame.contentWindow;
@@ -110,6 +109,7 @@ var $;
 				for( const key of Object.getOwnPropertyNames( window ) ) delete window[ key ]
 
 			`);
+            $.$mol_dom_context.document.body.removeChild(frame);
             let context_default = {};
             function clean(obj) {
                 for (let name of Object.getOwnPropertyNames(obj)) {
