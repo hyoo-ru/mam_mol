@@ -74,6 +74,7 @@ var $;
             if (this._make)
                 return this._make;
             const frame = $.$mol_dom_context.document.createElement('iframe');
+            frame.setAttribute('sandbox', `allow-same-origin`);
             frame.style.display = 'none';
             $.$mol_dom_context.document.body.appendChild(frame);
             const win = frame.contentWindow;
