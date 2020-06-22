@@ -293,7 +293,7 @@ namespace $ {
 			
 			value = this.$.$mol_conform( value , this.value )
 			
-			if( this.error || !Object.is( this.value , value ) ) {
+			if( this.error !== null || !Object.is( this.value , value ) ) {
 		
 				if( $mol_fiber.logs ) this.$.$mol_log3_done({
 					place : this ,
@@ -391,6 +391,8 @@ namespace $ {
 
 			} catch( error ) {
 
+				if( Object( error ) !== error ) error = new Error( error )
+
 				if( 'then' in error ) {
 					
 					if( !slave ) {
@@ -421,7 +423,7 @@ namespace $ {
 			
 			if( this.cursor > $mol_fiber_status.actual ) this.update()
 
-			if( this.error ) return this.$.$mol_fail_hidden( this.error )
+			if( this.error !== null ) return this.$.$mol_fail_hidden( this.error )
 			
 			return this.value
 
