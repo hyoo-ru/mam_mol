@@ -83,15 +83,17 @@ var $;
 
 				var AsyncFunction = AsyncFunction || ( async function() {} ).constructor
 				var GeneratorFunction = GeneratorFunction || ( function*() {} ).constructor
+				var AsyncGeneratorFunction = AsyncGeneratorFunction || ( async function*() {} ).constructor
 
 				Object.defineProperty( Function.prototype , 'constructor' , { value : undefined } )
 				Object.defineProperty( AsyncFunction.prototype , 'constructor' , { value : undefined } )
 				Object.defineProperty( GeneratorFunction.prototype , 'constructor' , { value : undefined } )
+				Object.defineProperty( AsyncGeneratorFunction.prototype , 'constructor' , { value : undefined } )
 
 				for( const Class of [
 					String , Number , BigInt , Boolean , Array , Object , Promise , Symbol , RegExp , 
 					Error , RangeError , ReferenceError , SyntaxError , TypeError ,
-					Function , AsyncFunction , GeneratorFunction ,
+					Function , AsyncFunction , GeneratorFunction , AsyncGeneratorFunction
 				] ) {
 					Object.freeze( Class )
 					Object.freeze( Class.prototype )
