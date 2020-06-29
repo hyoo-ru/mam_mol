@@ -184,10 +184,10 @@ namespace $ {
 		@ $mol_mem_key
 		sourcesSorted( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const mod = $mol_file.absolute( path )
-			const graph = new $mol_graph< void , { priority : number } >()
+			const graph = new $mol_graph< string , { priority : number } >()
 			const sources = this.sources( { path , exclude } )
 			for( let src of sources ) {
-				graph.nodeEnsure( src.relate( this.root() ) )
+				graph.nodes.add( src.relate( this.root() ) )
 			}
 			for( let src of sources ) {
 				let deps = this.srcDeps( src.path() )
@@ -230,9 +230,9 @@ namespace $ {
 					
 				}
 			}
-			graph.cut_cycles( edge => edge.priority )
+			graph.acyclic( edge => edge.priority )
 			
-			let next = graph.sorted.map( name => this.root().resolve( name ) )
+			let next = [ ... graph.sorted ].map( name => this.root().resolve( name ) )
 			return next
 		}
 		
@@ -628,7 +628,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		graph( { path , exclude } : { path : string , exclude? : string[] } ) {
-			let graph = new $mol_graph< null , { priority : number } >()
+			let graph = new $mol_graph< string , { priority : number } >()
 			let added : { [ path : string ] : boolean } = {}
 			
 			var addMod = ( mod : $mol_file )=> {
@@ -667,7 +667,7 @@ namespace $ {
 					
 					const from = mod.relate( this.root() )
 					const to = dep.relate( this.root() )
-					const edge = graph.edgesOut[ from ] && graph.edgesOut[ from ][ to ]
+					const edge = graph.edges_out[ from ] && graph.edges_out[ from ][ to ]
 					if( !edge || ( deps[ p ] > edge.priority ) ) {
 						graph.link( from , to , { priority : deps[ p ] } )
 					}
@@ -686,7 +686,7 @@ namespace $ {
 
 			addMod( $mol_file.absolute( path ) )
 			
-			graph.cut_cycles( edge => edge.priority )
+			graph.acyclic( edge => edge.priority )
 
 			return graph
 		}
@@ -1301,8 +1301,8 @@ namespace $ {
 			const data = {
 				files : list.map( src => src.relate( this.root() ) ) ,
 				mods : graph.sorted ,
-				edgesIn : graph.edgesIn ,
-				edgesOut : graph.edgesOut ,
+				edgesIn : graph.edges_in ,
+				edgesOut : graph.edges_out ,
 				sloc ,
 				deps
 			} as const
