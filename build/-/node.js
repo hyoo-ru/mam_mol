@@ -3409,66 +3409,70 @@ var $;
 (function ($) {
     class $mol_graph {
         constructor() {
-            this.nodes = {};
-            this.edgesOut = {};
-            this.edgesIn = {};
+            this.nodes = new Set();
+            this.edges_out = new Map();
+            this.edges_in = new Map();
         }
-        nodeEnsure(id) {
-            if (this.nodes.hasOwnProperty(id))
-                return;
-            this.nodes[id] = undefined;
-        }
-        linkOut(from, to, edge) {
-            if (!this.edgesOut[from]) {
-                this.edgesOut[from] = {};
-                this.nodeEnsure(from);
+        link_out(from, to, edge) {
+            let pair = this.edges_out.get(from);
+            if (!pair) {
+                pair = new Map();
+                this.edges_out.set(from, pair);
+                this.nodes.add(from);
             }
-            this.edgesOut[from][to] = edge;
-            this.nodeEnsure(to);
+            pair.set(to, edge);
+            this.nodes.add(to);
         }
-        linkIn(to, from, edge) {
-            if (!this.edgesIn[to]) {
-                this.edgesIn[to] = {};
-                this.nodeEnsure(to);
+        link_in(to, from, edge) {
+            let pair = this.edges_in.get(from);
+            if (!pair) {
+                pair = new Map();
+                this.edges_in.set(from, pair);
+                this.nodes.add(from);
             }
-            this.edgesIn[to][from] = edge;
-            this.nodeEnsure(from);
+            pair.set(to, edge);
+            this.nodes.add(to);
         }
-        edgeOut(from, to) {
-            return this.edgesOut[from] && this.edgesOut[from][to];
+        edge_out(from, to) {
+            var _a, _b;
+            return (_b = (_a = this.edges_out.get(from)) === null || _a === void 0 ? void 0 : _a.get(to)) !== null && _b !== void 0 ? _b : null;
         }
-        edgeIn(to, from) {
-            return this.edgesIn[to] && this.edgesIn[to][from];
+        edge_in(to, from) {
+            var _a, _b;
+            return (_b = (_a = this.edges_in.get(to)) === null || _a === void 0 ? void 0 : _a.get(from)) !== null && _b !== void 0 ? _b : null;
         }
         link(from, to, edge) {
-            this.linkOut(from, to, edge);
-            this.linkIn(to, from, edge);
+            this.link_out(from, to, edge);
+            this.link_in(to, from, edge);
         }
         unlink(from, to) {
-            delete this.edgesIn[to][from];
-            delete this.edgesOut[from][to];
+            var _a, _b;
+            (_a = this.edges_in.get(to)) === null || _a === void 0 ? void 0 : _a.delete(from);
+            (_b = this.edges_out.get(from)) === null || _b === void 0 ? void 0 : _b.delete(to);
         }
-        cut_cycles(get_weight) {
+        acyclic(get_weight) {
             const checked = [];
-            for (const start in this.nodes) {
+            for (const start of this.nodes) {
                 const path = [];
                 const visit = (from) => {
                     if (checked.includes(from))
-                        return Number.POSITIVE_INFINITY;
+                        return Number.MAX_SAFE_INTEGER;
                     const index = path.lastIndexOf(from);
                     if (index > -1) {
                         const cycle = path.slice(index);
-                        return cycle.reduce((weight, id, index) => Math.min(weight, get_weight(this.edgesOut[id][cycle[(index + 1) % cycle.length]])), Number.POSITIVE_INFINITY);
+                        return cycle.reduce((weight, node, index) => Math.min(weight, get_weight(this.edge_out(node, cycle[(index + 1) % cycle.length]))), Number.MAX_SAFE_INTEGER);
                     }
                     path.push(from);
-                    try {
-                        const deps = this.edgesOut[from];
-                        for (const to in deps) {
+                    dive: try {
+                        const deps = this.edges_out.get(from);
+                        if (!deps)
+                            break dive;
+                        for (const [to, edge] of deps) {
                             if (to === from) {
                                 this.unlink(from, to);
                                 continue;
                             }
-                            const weight_out = get_weight(deps[to]);
+                            const weight_out = get_weight(edge);
                             const min = visit(to);
                             if (weight_out > min)
                                 return min;
@@ -3480,23 +3484,26 @@ var $;
                         path.pop();
                     }
                     checked.push(from);
-                    return Number.POSITIVE_INFINITY;
+                    return Number.MAX_SAFE_INTEGER;
                 };
                 visit(start);
             }
         }
         get sorted() {
-            const sorted = [];
-            const visit = (id) => {
-                if (sorted.indexOf(id) !== -1)
+            const sorted = new Set();
+            const visit = (node) => {
+                if (sorted.has(node))
                     return;
-                for (const dep in this.edgesOut[id])
-                    visit(dep);
-                if (sorted.indexOf(id) !== -1)
-                    return;
-                sorted.push(id);
+                const deps = this.edges_out.get(node);
+                if (deps) {
+                    for (const [dep] of deps)
+                        visit(dep);
+                }
+                sorted.add(node);
             };
-            Object.keys(this.nodes).forEach(id => visit(id));
+            for (const node of this.nodes) {
+                visit(node);
+            }
             return sorted;
         }
     }
@@ -3843,7 +3850,7 @@ var $;
             const graph = new $.$mol_graph();
             const sources = this.sources({ path, exclude });
             for (let src of sources) {
-                graph.nodeEnsure(src.relate(this.root()));
+                graph.nodes.add(src.relate(this.root()));
             }
             for (let src of sources) {
                 let deps = this.srcDeps(src.path());
@@ -3886,8 +3893,8 @@ var $;
                     }
                 }
             }
-            graph.cut_cycles(edge => edge.priority);
-            let next = graph.sorted.map(name => this.root().resolve(name));
+            graph.acyclic(edge => edge.priority);
+            let next = [...graph.sorted].map(name => this.root().resolve(name));
             return next;
         }
         sourcesAll({ path, exclude }) {
@@ -4191,7 +4198,7 @@ var $;
                         return;
                     const from = mod.relate(this.root());
                     const to = dep.relate(this.root());
-                    const edge = graph.edgesOut[from] && graph.edgesOut[from][to];
+                    const edge = graph.edges_out[from] && graph.edges_out[from][to];
                     if (!edge || (deps[p] > edge.priority)) {
                         graph.link(from, to, { priority: deps[p] });
                     }
@@ -4204,7 +4211,7 @@ var $;
             };
             this.modEnsure(path);
             addMod($.$mol_file.absolute(path));
-            graph.cut_cycles(edge => edge.priority);
+            graph.acyclic(edge => edge.priority);
             return graph;
         }
         bundleAll({ path }) {
@@ -4642,8 +4649,8 @@ var $;
             const data = {
                 files: list.map(src => src.relate(this.root())),
                 mods: graph.sorted,
-                edgesIn: graph.edgesIn,
-                edgesOut: graph.edgesOut,
+                edgesIn: graph.edges_in,
+                edgesOut: graph.edges_out,
                 sloc,
                 deps
             };

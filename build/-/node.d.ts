@@ -786,28 +786,17 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_graph<Node, Edge> {
-        nodes: {
-            [id: string]: Node | undefined;
-        };
-        edgesOut: {
-            [from: string]: {
-                [to: string]: Edge;
-            };
-        };
-        edgesIn: {
-            [to: string]: {
-                [from: string]: Edge;
-            };
-        };
-        nodeEnsure(id: string): void;
-        linkOut(from: string, to: string, edge: Edge): void;
-        linkIn(to: string, from: string, edge: Edge): void;
-        edgeOut(from: string, to: string): Edge;
-        edgeIn(to: string, from: string): Edge;
-        link(from: string, to: string, edge: Edge): void;
-        unlink(from: string, to: string): void;
-        cut_cycles(get_weight: (edge: Edge) => number): void;
-        get sorted(): string[];
+        nodes: Set<Node>;
+        edges_out: Map<Node, Map<Node, Edge>>;
+        edges_in: Map<Node, Map<Node, Edge>>;
+        link_out(from: Node, to: Node, edge: Edge): void;
+        link_in(to: Node, from: Node, edge: Edge): void;
+        edge_out(from: Node, to: Node): NonNullable<Edge> | null;
+        edge_in(to: Node, from: Node): NonNullable<Edge> | null;
+        link(from: Node, to: Node, edge: Edge): void;
+        unlink(from: Node, to: Node): void;
+        acyclic(get_weight: (edge: Edge) => number): void;
+        get sorted(): Set<Node>;
     }
 }
 
@@ -972,7 +961,7 @@ declare namespace $ {
         graph({ path, exclude }: {
             path: string;
             exclude?: string[];
-        }): $mol_graph<null, {
+        }): $mol_graph<string, {
             priority: number;
         }>;
         bundleAll({ path }: {
