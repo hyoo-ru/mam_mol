@@ -1,6 +1,34 @@
 namespace $ {
 	$mol_test( {
 		
+		'nodes without edges'() {
+
+			var graph = new $mol_graph< string , {} >()
+			
+			graph.nodes.add( 'A' )
+			graph.nodes.add( 'B' )
+			graph.nodes.add( 'C' )
+			graph.nodes.add( 'D' )
+			graph.acyclic( edge => 0 )
+			
+			$mol_assert_equal( [ ... graph.sorted ].join( '' ) , 'ABCD' )
+		} ,
+	
+		'partial ordering'() {
+
+			var graph = new $mol_graph< string , { priority : number } >()
+			
+			graph.nodes.add( 'A' )
+			graph.nodes.add( 'B' )
+			graph.nodes.add( 'C' )
+			graph.nodes.add( 'D' )
+			
+			graph.link( 'B' , 'C' , { priority : 0 } )
+			graph.acyclic( edge => edge.priority )
+			
+			$mol_assert_equal( [ ... graph.sorted ].join( '' ) , 'ACBD' )
+		} ,
+	
 		'sorting must cut cycles at low priority edges A'() {
 
 			var graph = new $mol_graph< string , { priority : number } >()

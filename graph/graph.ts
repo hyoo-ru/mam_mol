@@ -84,9 +84,11 @@ namespace $ {
 
 					path.push( from )
 
-					try {
+					dive: try {
 
-						const deps = this.edges_out.get( from )!
+						const deps = this.edges_out.get( from )
+						if( !deps ) break dive
+
 						for( const [ to , edge ] of deps ) {
 
 							if( to === from ) {
@@ -125,12 +127,13 @@ namespace $ {
 				
 				if( sorted.has( node ) ) return
 
-				for( const [dep] of this.edges_out.get( node )! ) visit( dep )
+				const deps = this.edges_out.get( node )
 
-				if( sorted.has( node ) ) return
+				if( deps ) {
+					for( const [dep] of deps ) visit( dep )
+				}
 
 				sorted.add( node )
-
 			}
 			
 			for( const node of this.nodes ) {
