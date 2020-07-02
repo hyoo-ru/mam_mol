@@ -11,11 +11,11 @@ namespace $ { export class $mol_list extends $mol_view {
 
 	/**
 	 *  ```
-	 *  render_over 0
+	 *  render_over 0.5
 	 *  ```
 	 **/
 	render_over() {
-		return 0
+		return 0.5
 	}
 
 	/**

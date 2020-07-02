@@ -4327,7 +4327,7 @@ var $;
             return true;
         }
         render_over() {
-            return 0;
+            return 0.5;
         }
         sub() {
             return this.rows();
