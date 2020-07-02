@@ -458,6 +458,23 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_after_frame extends $.$mol_object2 {
+        constructor(task) {
+            super();
+            this.task = task;
+            this.id = requestAnimationFrame(task);
+        }
+        destructor() {
+            cancelAnimationFrame(this.id);
+        }
+    }
+    $.$mol_after_frame = $mol_after_frame;
+})($ || ($ = {}));
+//frame.web.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_compare_any(a, b) {
         if (a === b)
             return true;
@@ -832,7 +849,7 @@ var $;
         }
         static schedule() {
             if (!$mol_fiber.scheduled) {
-                $mol_fiber.scheduled = new $.$mol_after_tick(async () => {
+                $mol_fiber.scheduled = new $.$mol_after_frame(async () => {
                     const now = Date.now();
                     let quant = $mol_fiber.quant;
                     if ($mol_fiber.liveline) {
@@ -1857,14 +1874,12 @@ var $;
         for (let name in styles) {
             let val = styles[name];
             const style = el.style;
-            const cur = style[name];
             if (typeof val === 'number') {
-                if (parseFloat(cur) == val)
-                    continue;
                 style[name] = `${val}px`;
             }
-            if (cur !== val)
+            else {
                 style[name] = val;
+            }
         }
     }
     $.$mol_dom_render_styles = $mol_dom_render_styles;
@@ -2297,23 +2312,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_after_frame extends $.$mol_object2 {
-        constructor(task) {
-            super();
-            this.task = task;
-            this.id = requestAnimationFrame(task);
-        }
-        destructor() {
-            cancelAnimationFrame(this.id);
-        }
-    }
-    $.$mol_after_frame = $mol_after_frame;
-})($ || ($ = {}));
-//frame.web.js.map
-;
-"use strict";
-var $;
-(function ($) {
     $.$mol_style_attach("mol/view/view/view.css", "[mol_view] {\n\ttransition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform;\n\ttransition-duration: .2s;\n\ttransition-timing-function: ease-out;\n\t-webkit-appearance: none;\n\tword-break: break-word;\n\tbox-sizing: border-box;\n\tdisplay: flex;\n}\n\n[mol_view] > * {\n\tword-break: inherit;\n}\n\n[mol_view_root] {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 100%;\n\theight: 100%;\n\tbox-sizing: border-box;\n\tfont: var(--mol_skin_font);\n\tbackground: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n\n[mol_view][mol_view_error]:not([mol_view_error=\"Promise\"]) {\n\tbackground-image: repeating-linear-gradient(\n\t\t135deg,\n\t\trgba(255,220,220,1),\n\t\trgba(255,220,220,1) 11px,\n\t\trgba(255,255,220,1) 10px,\n\t\trgba(255,255,220,1) 20px\n\t);\n\tbackground-size: 28px 28px;\n\tcolor: black;\n}\n\n@keyframes mol_view_wait_move {\n\tfrom {\n\t\tbackground-position: 0 0;\n\t}\n\tto {\n\t\tbackground-position: 200vmax 0;\n\t}\n}\n\n@keyframes mol_view_wait_show {\n\tto {\n\t\tbackground-image: repeating-linear-gradient(\n\t\t\t45deg,\n\t\t\thsla( 0 , 0% , 50% , .1 ) 0% ,\n\t\t\thsla( 0 , 0% , 50% , 0 ) 5% ,\n\t\t\thsla( 0 , 0% , 50% , 0 ) 45% ,\n\t\t\thsla( 0 , 0% , 50% , .1 ) 50% ,\n\t\t\thsla( 0 , 0% , 50% , 0 ) 55% ,\n\t\t\thsla( 0 , 0% , 50% , 0 ) 95% ,\n\t\t\thsla( 0 , 0% , 50% , .1 ) 100%\n\t\t);\n\t\tbackground-size: 200vmax 200vmax;\n\t}\n}\n\n[mol_view][mol_view_error=\"Promise\"] {\n\tanimation: mol_view_wait_show .5s .5s linear forwards , mol_view_wait_move 1s linear infinite;\n}\n");
 })($ || ($ = {}));
 //view.css.js.map
@@ -2329,10 +2327,10 @@ var $;
         }));
         function $mol_view_watch() {
             $.$mol_fiber_unlimit(() => {
+                new $.$mol_after_frame($mol_view_watch);
                 for (const view of $.$mol_view.watchers) {
                     view.view_rect_cache(view.dom_node().getBoundingClientRect().toJSON());
                 }
-                new $.$mol_after_frame($mol_view_watch);
             });
         }
         $mol_view_watch();

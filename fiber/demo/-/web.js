@@ -250,24 +250,19 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_after_tick extends $.$mol_object2 {
+    class $mol_after_frame extends $.$mol_object2 {
         constructor(task) {
             super();
             this.task = task;
-            this.cancelled = false;
-            this.promise = Promise.resolve().then(() => {
-                if (this.cancelled)
-                    return;
-                task();
-            });
+            this.id = requestAnimationFrame(task);
         }
         destructor() {
-            this.cancelled = true;
+            cancelAnimationFrame(this.id);
         }
     }
-    $.$mol_after_tick = $mol_after_tick;
+    $.$mol_after_frame = $mol_after_frame;
 })($ || ($ = {}));
-//tick.js.map
+//frame.web.js.map
 ;
 "use strict";
 var $;
@@ -646,7 +641,7 @@ var $;
         }
         static schedule() {
             if (!$mol_fiber.scheduled) {
-                $mol_fiber.scheduled = new $.$mol_after_tick(async () => {
+                $mol_fiber.scheduled = new $.$mol_after_frame(async () => {
                     const now = Date.now();
                     let quant = $mol_fiber.quant;
                     if ($mol_fiber.liveline) {

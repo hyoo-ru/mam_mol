@@ -785,10 +785,10 @@ var $;
 var $;
 (function ($_1) {
     $_1.$mol_test_mocks.push($ => {
-        $.$mol_after_tick = $_1.$mol_after_mock_commmon;
+        $.$mol_after_frame = $_1.$mol_after_mock_commmon;
     });
 })($ || ($ = {}));
-//tick.test.js.map
+//frame.test.js.map
 ;
 "use strict";
 var $;
@@ -1105,32 +1105,6 @@ var $;
     $.$mol_defer = $mol_defer;
 })($ || ($ = {}));
 //defer.js.map
-;
-"use strict";
-var $;
-(function ($_1) {
-    $_1.$mol_test_mocks.push($ => {
-        $.$mol_after_frame = $_1.$mol_after_mock_commmon;
-    });
-})($ || ($ = {}));
-//frame.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_after_frame extends $.$mol_object2 {
-        constructor(task) {
-            super();
-            this.task = task;
-            this.id = requestAnimationFrame(task);
-        }
-        destructor() {
-            cancelAnimationFrame(this.id);
-        }
-    }
-    $.$mol_after_frame = $mol_after_frame;
-})($ || ($ = {}));
-//frame.web.js.map
 ;
 "use strict";
 var $;

@@ -207,6 +207,15 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_after_frame extends $mol_object2 {
+        task: () => void;
+        id: any;
+        constructor(task: () => void);
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
     function $mol_compare_any(a: any, b: any): boolean;
 }
 
@@ -281,7 +290,7 @@ declare namespace $ {
         static deadline: number;
         static liveline: number;
         static current: $mol_fiber<any> | null;
-        static scheduled: $mol_after_tick | null;
+        static scheduled: $mol_after_frame | null;
         static queue: (() => PromiseLike<any>)[];
         static tick(): Promise<void>;
         static schedule(): Promise<any>;
@@ -591,15 +600,6 @@ declare namespace $ {
         plugins(): readonly $mol_view[];
     }
     type $mol_view_all = $mol_type_pick<$mol_ambient_context, typeof $mol_view>;
-}
-
-declare namespace $ {
-    class $mol_after_frame extends $mol_object2 {
-        task: () => void;
-        id: any;
-        constructor(task: () => void);
-        destructor(): void;
-    }
 }
 
 declare namespace $ {
