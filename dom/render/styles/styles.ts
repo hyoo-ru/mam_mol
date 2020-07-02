@@ -8,14 +8,13 @@ namespace $ {
 			let val = styles[ name ]
 			
 			const style = ( el as HTMLElement ).style as any
-			const cur = style[ name ]
 			
 			if( typeof val === 'number' ) {
-				if( parseFloat( cur ) == val ) continue
 				style[ name ] = `${ val }px`
+			} else {
+				style[ name ] = val
 			}
 			
-			if( cur !== val ) style[ name ] = val
 		}
 	}
 
