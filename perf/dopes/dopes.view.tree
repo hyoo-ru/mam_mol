@@ -1,0 +1,20 @@
+$mol_perf_dopes $mol_view
+	title \Dopes
+	sub /
+		<= Speed $mol_view
+			sub /
+				<= speed \{speed} Dopes/s
+		<= Start $mol_button_major
+			title \@ Start
+			click?event <=> start?event null
+		<= Stop $mol_button_major
+			title \@ Stop
+			click?event <=> stop?event null
+		<= Labels $mol_view
+			sub <= labels /
+	Label!index $mol_view
+		style *
+			color <= label_color!index \
+			transform <= label_transform!index \
+		sub /
+			\Dope
