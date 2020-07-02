@@ -43,6 +43,8 @@ namespace $ {
 		/** Parses input and returns found capture groups or null */
 		get parse() { 
 
+			type Token = { [ key in keyof Groups ] : string } & { [ key : number ] : string }
+
 			const self = this
 
 			return function*( str : string , from = 0 ) {
@@ -52,12 +54,18 @@ namespace $ {
 					self.lastIndex = from
 					
 					const res = self.exec( str )
-					if( res === null ) return null
+					if( res === null ) {
+						yield { 0 : str.substring( from ) } as any as Token
+						return null
+					}
 
+					const found = {} as any as Token
+					
+					const skipped = str.slice( from , self.lastIndex - res[0].length )
+					if( skipped ) yield { 0 : skipped } as any as Token
+					
 					from = self.lastIndex
-
-					const found = {} as any as { [ key in keyof Groups ] : string } & { [ key : number ] : string }
-
+					
 					for( let i = 0 ; i < self.groups.length ; ++i ) {
 						const group = self.groups[ i ]
 						found[ group ] = found[ group ] || res[ i + 1 ] || '' as any
@@ -161,7 +169,10 @@ namespace $ {
 				if( source instanceof $mol_regexp ) return source as any
 
 				const test = new $mol_regexp( '|' + source.source )
-				const groups = Array.from( { length : test.exec('')!.length - 1 } , ( _ , i )=> String( i ) )
+				const groups = Array.from(
+					{ length : test.exec('')!.length - 1 } ,
+					( _ , i )=> String( i + 1 ) ,
+				)
 
 				return new $mol_regexp( source.source , source.flags , groups as any )
 

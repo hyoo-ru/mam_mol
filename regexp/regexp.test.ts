@@ -135,6 +135,18 @@ namespace $ {
 
 		},
 
+		'catch skipped'() {
+
+			const regexp = $mol_regexp.from(/(@)(\d?)/g)
+
+			$mol_assert_like( [ ... regexp.parse( '[[@]]' ) ] , [
+				{ 0 : '[[' },
+				{ 1 : '@' , 2 : '' },
+				{ 0 : ']]' },
+			] )
+
+		},
+
 		'enum variants'() {
 
 			enum Sex {
