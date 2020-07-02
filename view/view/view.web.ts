@@ -15,13 +15,13 @@ namespace $ {
 		
 		function $mol_view_watch() {
 			$mol_fiber_unlimit( ()=> {
+				new $mol_after_frame( $mol_view_watch )
 				for( const view of $mol_view.watchers ) {
 					view.view_rect_cache( view.dom_node().getBoundingClientRect().toJSON() )
 				}
-				new $mol_after_frame( $mol_view_watch )
 			} )
 		}
-	
+
 		$mol_view_watch()
 	
 	}
