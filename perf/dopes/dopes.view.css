@@ -1,0 +1,56 @@
+[mol_perf_dopes] {
+	position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+	overflow: hidden;
+	justify-content: center;
+	background-color: black;
+	font-size: 15px;
+	color: white;
+	padding: 10px;
+	overflow: hidden;
+}
+
+[mol_perf_dopes_speed] {
+	background-color: red;
+    position: absolute;
+    top: 20px;
+    width: 180px;
+    padding: 7px;
+	z-index: 1;
+	justify-content: center;
+}
+
+[mol_perf_dopes] [mol_button_major] {
+    position: absolute;
+    bottom: 20px;
+    border: none;
+    color: white;
+    height: 30px;
+    width: 96px;
+    font-size: 15px;
+    z-index: 1;
+}
+
+[mol_perf_dopes_start] {
+	background-color: green;
+}
+[mol_perf_dopes_stop] {
+    background-color: red;
+}
+
+[mol_perf_dopes_labels] {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+[mol_perf_dopes_label] {
+	position: absolute;
+	transition: none;
+}
