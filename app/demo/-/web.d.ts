@@ -4194,6 +4194,7 @@ declare namespace $ {
             allow: string;
         };
         uri(): string;
+        allow(): string;
         fullscreen(): boolean;
         accelerometer(): boolean;
         autoplay(): boolean;

@@ -13,13 +13,13 @@ namespace $ { export class $mol_frame extends $mol_view {
 	 *  ```
 	 *  attr *
 	 *  	src <= uri
-	 *  	allow \
+	 *  	allow <= allow
 	 *  ```
 	 **/
 	attr() {
 		return ({
 			"src" :  this.uri() ,
-			"allow" :  "" ,
+			"allow" :  this.allow() ,
 		})
 	}
 
@@ -29,6 +29,15 @@ namespace $ { export class $mol_frame extends $mol_view {
 	 *  ```
 	 **/
 	uri() {
+		return ""
+	}
+
+	/**
+	 *  ```
+	 *  allow \
+	 *  ```
+	 **/
+	allow() {
 		return ""
 	}
 

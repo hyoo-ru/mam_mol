@@ -14619,10 +14619,13 @@ var $;
         attr() {
             return ({
                 "src": this.uri(),
-                "allow": "",
+                "allow": this.allow(),
             });
         }
         uri() {
+            return "";
+        }
+        allow() {
             return "";
         }
         fullscreen() {
