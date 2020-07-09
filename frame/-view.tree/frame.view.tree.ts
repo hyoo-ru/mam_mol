@@ -14,14 +14,12 @@ namespace $ { export class $mol_frame extends $mol_view {
 	 *  attr *
 	 *  	src <= uri
 	 *  	allow \
-	 *  	allowfullscreen <= fullscreen
 	 *  ```
 	 **/
 	attr() {
 		return ({
 			"src" :  this.uri() ,
 			"allow" :  "" ,
-			"allowfullscreen" :  this.fullscreen() ,
 		})
 	}
 
