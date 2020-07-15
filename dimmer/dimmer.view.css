@@ -6,3 +6,9 @@
 	display: inline;
 	opacity: 0.66;
 }
+
+[mol_dimmer_high] {
+	display: inline;
+	color: var(--mol_theme_focus);
+	text-shadow: 0 0;
+}

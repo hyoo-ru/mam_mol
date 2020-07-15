@@ -3,7 +3,7 @@ namespace $.$$ {
 		
 		parts() {
 			const needle = this.needle()
-			if( !needle ) return [ this.haystack() ]
+			if( needle.length < 2 ) return [ this.haystack() ]
 			
 			let chunks : any[] = []
 			let strings = this.strings()
@@ -11,7 +11,7 @@ namespace $.$$ {
 			for( let index = 0 ; index < strings.length ; index++ ) {
 				if( strings[ index ] === '' ) continue
 				
-				chunks.push( ( index % 2 ) ? strings[ index ] : this.Low( index ) )
+				chunks.push( ( index % 2 ) ? this.High( index ) : this.Low( index ) )
 			}
 			
 			return chunks
