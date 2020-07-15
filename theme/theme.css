@@ -12,7 +12,7 @@
 	--mol_theme_control: hsla( 210 , 60% , 35% , 1 );
 	--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );
 	--mol_theme_line: rgba( 220 , 220 , 220 , 1 );
-	--mol_theme_focus: hsla( 0 , 60% , 50% , 0.75 );
+	--mol_theme_focus: hsl( 290 , 100% , 40% );
 	--mol_theme_field: white;
 	--mol_theme_image: none;
 }
@@ -25,7 +25,7 @@
 	--mol_theme_control: hsla( 210 , 60% , 70% , 1 );
 	--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );
 	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
-	--mol_theme_focus: hsl( 15 , 100% , 60% );
+	--mol_theme_focus: hsl( 70 , 100% , 60% );
 	--mol_theme_field: black;
 	--mol_theme_image: invert(1) hue-rotate(180deg);
 }
@@ -45,4 +45,10 @@
 	--mol_theme_text: white;
 	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
 	--mol_theme_control: white;
+	--mol_theme_focus: black;
+}
+
+[mol_theme="$mol_theme_accent"] [mol_theme="$mol_theme_accent"] {
+	--mol_theme_back: black;
+	--mol_theme_text: white;
 }
