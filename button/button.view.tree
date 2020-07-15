@@ -12,6 +12,7 @@ $mol_button $mol_view
 		disabled <= disabled false
 		role \button
 		tabindex <= tab_index 0
-		title <= hint \
+		title <= hint_or_error <= hint \
 	sub /$mol_view_content
 		<= title
+	Speck $mol_speck

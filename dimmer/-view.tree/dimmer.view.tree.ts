@@ -1,4 +1,4 @@
-namespace $ { export class $mol_dimmer extends $mol_view {
+namespace $ { export class $mol_dimmer extends $mol_paragraph {
 
 	/**
 	 *  ```
@@ -38,7 +38,7 @@ namespace $ { export class $mol_dimmer extends $mol_view {
 
 	/**
 	 *  ```
-	 *  Low!id $mol_view sub / <= string!id
+	 *  Low!id $mol_paragraph sub / <= string!id
 	 *  ```
 	 **/
 	@ $mol_mem_key
@@ -46,7 +46,7 @@ namespace $ { export class $mol_dimmer extends $mol_view {
 		return (( obj )=>{
 			obj.sub = () => [this.string(id)] as readonly any[]
 			return obj
-		})( new this.$.$mol_view(  ) )
+		})( new this.$.$mol_paragraph(  ) )
 	}
 
 	/**
@@ -56,6 +56,19 @@ namespace $ { export class $mol_dimmer extends $mol_view {
 	 **/
 	string( id : any ) {
 		return ""
+	}
+
+	/**
+	 *  ```
+	 *  High!id $mol_paragraph sub / <= string!id
+	 *  ```
+	 **/
+	@ $mol_mem_key
+	High( id : any ) {
+		return (( obj )=>{
+			obj.sub = () => [this.string(id)] as readonly any[]
+			return obj
+		})( new this.$.$mol_paragraph(  ) )
 	}
 
 } }

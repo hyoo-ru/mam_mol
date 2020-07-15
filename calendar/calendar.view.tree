@@ -27,7 +27,7 @@ $mol_calendar $mol_list
 	month_moment $mol_time_moment
 
 $mol_calendar_day $mol_view
-	minimal_height 32
+	minimal_height 28
 	minimal_width 36
 	attr *
 		mol_calendar_holiday <= holiday false

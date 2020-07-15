@@ -48,13 +48,13 @@
 	to {
 		background-image: repeating-linear-gradient(
 			45deg,
-			hsla( 0 , 0% , 50% , .1 ) 0% ,
+			hsla( 0 , 0% , 50% , .25 ) 0% ,
 			hsla( 0 , 0% , 50% , 0 ) 5% ,
 			hsla( 0 , 0% , 50% , 0 ) 45% ,
-			hsla( 0 , 0% , 50% , .1 ) 50% ,
+			hsla( 0 , 0% , 50% , .25 ) 50% ,
 			hsla( 0 , 0% , 50% , 0 ) 55% ,
 			hsla( 0 , 0% , 50% , 0 ) 95% ,
-			hsla( 0 , 0% , 50% , .1 ) 100%
+			hsla( 0 , 0% , 50% , .25 ) 100%
 		);
 		background-size: 200vmax 200vmax;
 	}
@@ -62,4 +62,5 @@
 
 [mol_view][mol_view_error="Promise"] {
 	animation: mol_view_wait_show .5s .5s linear forwards , mol_view_wait_move 1s linear infinite;
+	opacity: .75;
 }

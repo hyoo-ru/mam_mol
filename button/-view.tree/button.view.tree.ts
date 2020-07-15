@@ -81,7 +81,7 @@ namespace $ { export class $mol_button extends $mol_view {
 	 *  	disabled <= disabled
 	 *  	role \button
 	 *  	tabindex <= tab_index
-	 *  	title <= hint
+	 *  	title <= hint_or_error
 	 *  ```
 	 **/
 	attr() {
@@ -90,7 +90,7 @@ namespace $ { export class $mol_button extends $mol_view {
 			"disabled" :  this.disabled() ,
 			"role" :  "button" ,
 			"tabindex" :  this.tab_index() ,
-			"title" :  this.hint() ,
+			"title" :  this.hint_or_error() ,
 		})
 	}
 
@@ -114,6 +114,15 @@ namespace $ { export class $mol_button extends $mol_view {
 
 	/**
 	 *  ```
+	 *  hint_or_error <= hint
+	 *  ```
+	 **/
+	hint_or_error() {
+		return this.hint()
+	}
+
+	/**
+	 *  ```
 	 *  hint \
 	 *  ```
 	 **/
@@ -128,6 +137,18 @@ namespace $ { export class $mol_button extends $mol_view {
 	 **/
 	sub() {
 		return [this.title()] as readonly ( $mol_view_content )[]
+	}
+
+	/**
+	 *  ```
+	 *  Speck $mol_speck
+	 *  ```
+	 **/
+	@ $mol_mem
+	Speck() {
+		return (( obj )=>{
+			return obj
+		})( new this.$.$mol_speck(  ) )
 	}
 
 } }

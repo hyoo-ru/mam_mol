@@ -214,11 +214,11 @@ namespace $ { export class $mol_calendar_day extends $mol_view {
 
 	/**
 	 *  ```
-	 *  minimal_height 32
+	 *  minimal_height 28
 	 *  ```
 	 **/
 	minimal_height() {
-		return 32
+		return 28
 	}
 
 	/**

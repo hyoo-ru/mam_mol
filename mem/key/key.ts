@@ -3,18 +3,20 @@ namespace $ {
 	export function $mol_mem_key<
 		Host extends object ,
 		Field extends keyof Host ,
-		Prop extends Extract< Host[ Field ] , ( id : Key , next? : Value )=> Value >,
-		Key extends $mol_type_param< Prop , 0 >,
-		Value extends $mol_type_result< Prop > ,
+		Prop extends Extract< Host[ Field ] , ( id : any , next? : any )=> any >,
 	>(
 		proto : Host ,
 		name : Field ,
 		descr? : TypedPropertyDescriptor< Prop >
 	) : any {
 
+		type Key = $mol_type_param< Prop , 0 >
+		type Input = $mol_type_param< Prop , 1 >
+		type Output = $mol_type_result< Prop >
+
 		const value = descr!.value!
 		
-		const store = new WeakMap< Host , Map< Key , $mol_atom2<Value> > >()
+		const store = new WeakMap< Host , Map< Key , $mol_atom2<Output> > >()
 
 		Object.defineProperty( proto , name + "()" , {
 			get : function() {
@@ -48,7 +50,7 @@ namespace $ {
 		
 		return {
 			
-			value( key : Key , next? : Value , force? : $mol_mem_force ) {
+			value( key : Key , next? : Input , force? : $mol_mem_force ) {
 				
 				if( next === undefined ) {
 					

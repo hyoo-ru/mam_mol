@@ -339,7 +339,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/theme/theme.css", "[mol_theme] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n}\n\n[mol_theme=\"$mol_theme_light\"] , :root {\n\t--mol_theme_back: hsl( 210 , 50% , 99% );\n\t--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );\n\t--mol_theme_current: hsl( 210 , 100% , 80% );\n\t--mol_theme_text: rgba( 0 , 0 , 0 , .9 );\n\t--mol_theme_control: hsla( 210 , 60% , 35% , 1 );\n\t--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );\n\t--mol_theme_line: rgba( 220 , 220 , 220 , 1 );\n\t--mol_theme_focus: hsla( 0 , 60% , 50% , 0.75 );\n\t--mol_theme_field: white;\n\t--mol_theme_image: none;\n}\n\n[mol_theme=\"$mol_theme_dark\"] {\n\t--mol_theme_back: hsl( 210 , 50% , 10% );\n\t--mol_theme_hover: #333;\n\t--mol_theme_current: hsl( 210 , 100% , 20% );\n\t--mol_theme_text: rgba( 255 , 255 , 255 , .8 );\n\t--mol_theme_control: hsla( 210 , 60% , 70% , 1 );\n\t--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );\n\t--mol_theme_line: rgba( 50 , 50 , 50 , 1 );\n\t--mol_theme_focus: hsl( 15 , 100% , 60% );\n\t--mol_theme_field: black;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n}\n\n[mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_back: hsla( 210 , 60% , 35% , 1 );\n\t--mol_theme_hover: hsla( 210 , 60% , 20% , 1 );\n\t--mol_theme_current: hsl( 210 , 100% , 20% );\n\t--mol_theme_text: white;\n\t--mol_theme_line: white;\n\t--mol_theme_control: white;\n}\n\n[mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: hsl( 15 , 60% , 50% );\n\t--mol_theme_hover: hsl( 15 , 60% , 40% );\n\t--mol_theme_text: white;\n\t--mol_theme_line: rgba( 50 , 50 , 50 , 1 );\n\t--mol_theme_control: white;\n}\n");
+    $.$mol_style_attach("mol/theme/theme.css", "[mol_theme] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n}\n\n[mol_theme=\"$mol_theme_light\"] , :root {\n\t--mol_theme_back: hsl( 210 , 50% , 99% );\n\t--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );\n\t--mol_theme_current: hsl( 210 , 100% , 80% );\n\t--mol_theme_text: rgba( 0 , 0 , 0 , .9 );\n\t--mol_theme_control: hsla( 210 , 60% , 35% , 1 );\n\t--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );\n\t--mol_theme_line: rgba( 220 , 220 , 220 , 1 );\n\t--mol_theme_focus: hsl( 290 , 100% , 40% );\n\t--mol_theme_field: white;\n\t--mol_theme_image: none;\n}\n\n[mol_theme=\"$mol_theme_dark\"] {\n\t--mol_theme_back: hsl( 210 , 50% , 10% );\n\t--mol_theme_hover: #333;\n\t--mol_theme_current: hsl( 210 , 100% , 20% );\n\t--mol_theme_text: rgba( 255 , 255 , 255 , .8 );\n\t--mol_theme_control: hsla( 210 , 60% , 70% , 1 );\n\t--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );\n\t--mol_theme_line: rgba( 50 , 50 , 50 , 1 );\n\t--mol_theme_focus: hsl( 70 , 100% , 60% );\n\t--mol_theme_field: black;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n}\n\n[mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_back: hsla( 210 , 60% , 35% , 1 );\n\t--mol_theme_hover: hsla( 210 , 60% , 20% , 1 );\n\t--mol_theme_current: hsl( 210 , 100% , 20% );\n\t--mol_theme_text: white;\n\t--mol_theme_line: white;\n\t--mol_theme_control: white;\n}\n\n[mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: hsl( 15 , 60% , 50% );\n\t--mol_theme_hover: hsl( 15 , 60% , 40% );\n\t--mol_theme_text: white;\n\t--mol_theme_line: rgba( 50 , 50 , 50 , 1 );\n\t--mol_theme_control: white;\n\t--mol_theme_focus: black;\n}\n\n[mol_theme=\"$mol_theme_accent\"] [mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: black;\n\t--mol_theme_text: white;\n}\n");
 })($ || ($ = {}));
 //theme.css.js.map
 ;
@@ -1510,6 +1510,10 @@ var $;
             master.slaves[slave_index] = master_index;
             this.masters.push(master, this.masters[cursor + 1]);
         }
+        subscribe(promise) {
+            const fresh = this.fresh;
+            return promise.then(fresh, fresh);
+        }
         get() {
             if ($mol_atom2.cached)
                 return this.value;
@@ -1725,6 +1729,9 @@ var $;
 //atom2.js.map
 ;
 "use strict";
+//param.js.map
+;
+"use strict";
 //result.js.map
 ;
 "use strict";
@@ -1812,9 +1819,6 @@ var $;
     $.$mol_mem = $mol_mem;
 })($ || ($ = {}));
 //mem.js.map
-;
-"use strict";
-//param.js.map
 ;
 "use strict";
 var $;
@@ -2223,7 +2227,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/view/view/view.css", "[mol_view] {\n\ttransition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform;\n\ttransition-duration: .2s;\n\ttransition-timing-function: ease-out;\n\t-webkit-appearance: none;\n\tword-break: break-word;\n\tbox-sizing: border-box;\n\tdisplay: flex;\n}\n\n[mol_view] > * {\n\tword-break: inherit;\n}\n\n[mol_view_root] {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 100%;\n\theight: 100%;\n\tbox-sizing: border-box;\n\tfont: var(--mol_skin_font);\n\tbackground: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n\n[mol_view][mol_view_error]:not([mol_view_error=\"Promise\"]) {\n\tbackground-image: repeating-linear-gradient(\n\t\t135deg,\n\t\trgba(255,220,220,1),\n\t\trgba(255,220,220,1) 11px,\n\t\trgba(255,255,220,1) 10px,\n\t\trgba(255,255,220,1) 20px\n\t);\n\tbackground-size: 28px 28px;\n\tcolor: black;\n}\n\n@keyframes mol_view_wait_move {\n\tfrom {\n\t\tbackground-position: 0 0;\n\t}\n\tto {\n\t\tbackground-position: 200vmax 0;\n\t}\n}\n\n@keyframes mol_view_wait_show {\n\tto {\n\t\tbackground-image: repeating-linear-gradient(\n\t\t\t45deg,\n\t\t\thsla( 0 , 0% , 50% , .1 ) 0% ,\n\t\t\thsla( 0 , 0% , 50% , 0 ) 5% ,\n\t\t\thsla( 0 , 0% , 50% , 0 ) 45% ,\n\t\t\thsla( 0 , 0% , 50% , .1 ) 50% ,\n\t\t\thsla( 0 , 0% , 50% , 0 ) 55% ,\n\t\t\thsla( 0 , 0% , 50% , 0 ) 95% ,\n\t\t\thsla( 0 , 0% , 50% , .1 ) 100%\n\t\t);\n\t\tbackground-size: 200vmax 200vmax;\n\t}\n}\n\n[mol_view][mol_view_error=\"Promise\"] {\n\tanimation: mol_view_wait_show .5s .5s linear forwards , mol_view_wait_move 1s linear infinite;\n}\n");
+    $.$mol_style_attach("mol/view/view/view.css", "[mol_view] {\n\ttransition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform;\n\ttransition-duration: .2s;\n\ttransition-timing-function: ease-out;\n\t-webkit-appearance: none;\n\tword-break: break-word;\n\tbox-sizing: border-box;\n\tdisplay: flex;\n}\n\n[mol_view] > * {\n\tword-break: inherit;\n}\n\n[mol_view_root] {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 100%;\n\theight: 100%;\n\tbox-sizing: border-box;\n\tfont: var(--mol_skin_font);\n\tbackground: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n\n[mol_view][mol_view_error]:not([mol_view_error=\"Promise\"]) {\n\tbackground-image: repeating-linear-gradient(\n\t\t135deg,\n\t\trgba(255,220,220,1),\n\t\trgba(255,220,220,1) 11px,\n\t\trgba(255,255,220,1) 10px,\n\t\trgba(255,255,220,1) 20px\n\t);\n\tbackground-size: 28px 28px;\n\tcolor: black;\n}\n\n@keyframes mol_view_wait_move {\n\tfrom {\n\t\tbackground-position: 0 0;\n\t}\n\tto {\n\t\tbackground-position: 200vmax 0;\n\t}\n}\n\n@keyframes mol_view_wait_show {\n\tto {\n\t\tbackground-image: repeating-linear-gradient(\n\t\t\t45deg,\n\t\t\thsla( 0 , 0% , 50% , .25 ) 0% ,\n\t\t\thsla( 0 , 0% , 50% , 0 ) 5% ,\n\t\t\thsla( 0 , 0% , 50% , 0 ) 45% ,\n\t\t\thsla( 0 , 0% , 50% , .25 ) 50% ,\n\t\t\thsla( 0 , 0% , 50% , 0 ) 55% ,\n\t\t\thsla( 0 , 0% , 50% , 0 ) 95% ,\n\t\t\thsla( 0 , 0% , 50% , .25 ) 100%\n\t\t);\n\t\tbackground-size: 200vmax 200vmax;\n\t}\n}\n\n[mol_view][mol_view_error=\"Promise\"] {\n\tanimation: mol_view_wait_show .5s .5s linear forwards , mol_view_wait_move 1s linear infinite;\n\topacity: .75;\n}\n");
 })($ || ($ = {}));
 //view.css.js.map
 ;
@@ -2304,9 +2308,10 @@ var $;
             return this.minimal_width();
         }
         minimal_height() {
+            var _a;
             let min = 0;
             try {
-                for (const view of this.sub()) {
+                for (const view of (_a = this.sub()) !== null && _a !== void 0 ? _a : []) {
                     if (view instanceof $mol_view) {
                         min = Math.max(min, view.minimal_height());
                     }
@@ -2365,8 +2370,10 @@ var $;
                 if (need_catch) {
                     $.$mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
                 }
-                if (error instanceof Promise)
-                    $.$mol_fail_hidden(error);
+                if (error instanceof Promise) {
+                    $.$mol_atom2.current.subscribe(error);
+                    return node;
+                }
                 if (need_catch) {
                     try {
                         void (node.innerText = error.message);
@@ -2379,6 +2386,7 @@ var $;
         }
         dom_node_actual() {
             const node = this.dom_node();
+            node.style.minHeight = this.minimal_height() + 'px';
             const attr = this.attr();
             const style = this.style();
             const fields = this.field();
@@ -2390,6 +2398,8 @@ var $;
         render() {
             const node = this.dom_node_actual();
             const sub = this.sub_visible();
+            if (!sub)
+                return;
             const nodes = sub.map(child => {
                 if (child == null)
                     return null;
@@ -4318,6 +4328,34 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_speck extends $.$mol_view {
+        attr() {
+            return (Object.assign(Object.assign({}, super.attr()), { "mol_theme": "$mol_theme_accent" }));
+        }
+        style() {
+            return (Object.assign(Object.assign({}, super.style()), { "minHeight": "1em" }));
+        }
+        sub() {
+            return [this.value()];
+        }
+        value() {
+            return null;
+        }
+    }
+    $.$mol_speck = $mol_speck;
+})($ || ($ = {}));
+//speck.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/speck/speck.view.css", "[mol_speck] {\n\tfont-size: .75rem;\n\tborder-radius: 1rem;\n\tmargin: 0 -.75em;\n\talign-self: flex-start;\n\tmin-height: 1em;\n\tmin-width: .5em;\n\tvertical-align: sub;\n\tpadding: .25em .5em;\n\tposition: absolute;\n\tz-index: 2;\n    text-align: center;\n    line-height: 1;\n    display: inline-block;\n\ttext-shadow: 1px 1px 0 black;\n}\n");
+})($ || ($ = {}));
+//speck.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_button extends $.$mol_view {
         enabled() {
             return true;
@@ -4341,7 +4379,7 @@ var $;
             return (event !== void 0) ? event : null;
         }
         attr() {
-            return (Object.assign(Object.assign({}, super.attr()), { "disabled": this.disabled(), "role": "button", "tabindex": this.tab_index(), "title": this.hint() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "disabled": this.disabled(), "role": "button", "tabindex": this.tab_index(), "title": this.hint_or_error() }));
         }
         disabled() {
             return false;
@@ -4349,11 +4387,19 @@ var $;
         tab_index() {
             return 0;
         }
+        hint_or_error() {
+            return this.hint();
+        }
         hint() {
             return "";
         }
         sub() {
             return [this.title()];
+        }
+        Speck() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_speck());
         }
     }
     __decorate([
@@ -4368,6 +4414,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_button.prototype, "event_key_press", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_button.prototype, "Speck", null);
     $.$mol_button = $mol_button;
 })($ || ($ = {}));
 //button.view.tree.js.map
@@ -4375,7 +4424,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tbackground-color: none;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n}\n[mol_button]:focus {\n\toutline: none;\n}\n");
+    $.$mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n}\n[mol_button]:focus {\n\toutline: none;\n}\n");
 })($ || ($ = {}));
 //button.view.css.js.map
 ;
@@ -4385,6 +4434,7 @@ var $;
     var $$;
     (function ($$) {
         class $mol_button extends $.$mol_button {
+            fiber(next = null) { return next; }
             disabled() {
                 return !this.enabled();
             }
@@ -4393,8 +4443,12 @@ var $;
                     return;
                 if (!this.enabled())
                     return;
+                this.fiber($.$mol_fiber.current);
                 this.event_click(next);
                 this.click(next);
+                if (this.fiber() === $.$mol_fiber.current) {
+                    this.fiber(null);
+                }
             }
             event_key_press(event) {
                 if (event.keyCode === $.$mol_keyboard_code.enter) {
@@ -4404,7 +4458,32 @@ var $;
             tab_index() {
                 return this.enabled() ? super.tab_index() : -1;
             }
+            error() {
+                var _a, _b;
+                try {
+                    (_a = this.fiber()) === null || _a === void 0 ? void 0 : _a.get();
+                    return '';
+                }
+                catch (error) {
+                    if (error instanceof Promise) {
+                        return $.$mol_fail_hidden(error);
+                    }
+                    return String((_b = error.message) !== null && _b !== void 0 ? _b : error);
+                }
+            }
+            hint_or_error() {
+                return this.error() || super.hint_or_error();
+            }
+            sub_visible() {
+                return [
+                    ...this.error() ? [this.Speck()] : [],
+                    ...this.sub(),
+                ];
+            }
         }
+        __decorate([
+            $.$mol_mem
+        ], $mol_button.prototype, "fiber", null);
         $$.$mol_button = $mol_button;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -4422,7 +4501,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/button/typed/typed.view.css", "[mol_button_typed] {\n\tjustify-content: center;\n\talign-content: center;\n\talign-items: center;\n\tvertical-align: middle;\n\ttext-align: center;\n\tpadding: .5rem .75rem;\n\tborder-radius: var(--mol_skin_round);\n}\n\n[mol_button_typed][disabled] {\n\tcolor: var(--mol_theme_text);\n\tpointer-events: none;\n}\n\n[mol_button_typed]:hover ,\n[mol_button_typed]:focus {\n\tcursor: pointer;\n\tbackground-color: var(--mol_theme_hover);\n}\n");
+    $.$mol_style_attach("mol/button/typed/typed.view.css", "[mol_button_typed] {\n\tdisplay: inline-block;\n\talign-content: center;\n\talign-items: center;\n\tvertical-align: middle;\n\ttext-align: center;\n\tpadding: .5rem .75rem;\n\tborder-radius: var(--mol_skin_round);\n}\n\n[mol_button_typed][disabled] {\n\tcolor: var(--mol_theme_text);\n\tpointer-events: none;\n}\n\n[mol_button_typed]:hover ,\n[mol_button_typed]:focus {\n\tcursor: pointer;\n\tbackground-color: var(--mol_theme_hover);\n}\n");
 })($ || ($ = {}));
 //typed.view.css.js.map
 ;
@@ -5967,7 +6046,64 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_dimmer extends $.$mol_view {
+    class $mol_paragraph extends $.$mol_view {
+        line_height() {
+            return 24;
+        }
+        letter_width() {
+            return 8;
+        }
+    }
+    $.$mol_paragraph = $mol_paragraph;
+})($ || ($ = {}));
+//paragraph.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_paragraph extends $.$mol_paragraph {
+            maximal_width() {
+                let width = 0;
+                const letter = this.letter_width();
+                for (const kid of this.sub()) {
+                    if (!kid)
+                        continue;
+                    if (kid instanceof $.$mol_view) {
+                        width += kid.maximal_width();
+                    }
+                    else if (typeof kid !== 'object') {
+                        width += String(kid).length * letter;
+                    }
+                }
+                return width;
+            }
+            minimal_width() {
+                return Math.max(Math.min(this.$.$mol_window.size().width, this.maximal_width()), this.letter_width());
+            }
+            minimal_height() {
+                return Math.ceil(this.maximal_width() / this.minimal_width()) * this.line_height();
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_paragraph.prototype, "maximal_width", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_paragraph.prototype, "minimal_width", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_paragraph.prototype, "minimal_height", null);
+        $$.$mol_paragraph = $mol_paragraph;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//paragraph.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_dimmer extends $.$mol_paragraph {
         haystack() {
             return "";
         }
@@ -5984,15 +6120,24 @@ var $;
             return ((obj) => {
                 obj.sub = () => [this.string(id)];
                 return obj;
-            })(new this.$.$mol_view());
+            })(new this.$.$mol_paragraph());
         }
         string(id) {
             return "";
+        }
+        High(id) {
+            return ((obj) => {
+                obj.sub = () => [this.string(id)];
+                return obj;
+            })(new this.$.$mol_paragraph());
         }
     }
     __decorate([
         $.$mol_mem_key
     ], $mol_dimmer.prototype, "Low", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_dimmer.prototype, "High", null);
     $.$mol_dimmer = $mol_dimmer;
 })($ || ($ = {}));
 //dimmer.view.tree.js.map
@@ -6000,7 +6145,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/dimmer/dimmer.view.css", "[mol_dimmer] {\n\tdisplay: block;\n}\n\n[mol_dimmer_low] {\n\tdisplay: inline;\n\topacity: 0.66;\n}\n");
+    $.$mol_style_attach("mol/dimmer/dimmer.view.css", "[mol_dimmer] {\n\tdisplay: block;\n}\n\n[mol_dimmer_low] {\n\tdisplay: inline;\n\topacity: 0.66;\n}\n\n[mol_dimmer_high] {\n\tdisplay: inline;\n\tcolor: var(--mol_theme_focus);\n\ttext-shadow: 0 0;\n}\n");
 })($ || ($ = {}));
 //dimmer.view.css.js.map
 ;
@@ -6012,14 +6157,14 @@ var $;
         class $mol_dimmer extends $.$mol_dimmer {
             parts() {
                 const needle = this.needle();
-                if (!needle)
+                if (needle.length < 2)
                     return [this.haystack()];
                 let chunks = [];
                 let strings = this.strings();
                 for (let index = 0; index < strings.length; index++) {
                     if (strings[index] === '')
                         continue;
-                    chunks.push((index % 2) ? strings[index] : this.Low(index));
+                    chunks.push((index % 2) ? this.High(index) : this.Low(index));
                 }
                 return chunks;
             }
@@ -7735,6 +7880,9 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_switch_option extends $.$mol_check {
+        minimal_height() {
+            return 24;
+        }
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_theme": this.theme() }));
         }
@@ -7900,7 +8048,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/section/section.view.css", "[mol_section_head] {\n\tfont-size: 1.5rem;\n\tdisplay: flex;\n\tjustify-content: space-between;\n\talign-items: flex-end;\n\tflex-wrap: wrap;\n}\n");
+    $.$mol_style_attach("mol/section/section.view.css", "[mol_section_head] {\n\tfont-size: 1.5rem;\n\tline-height: 2.5rem;\n\tdisplay: flex;\n\tjustify-content: space-between;\n\talign-items: flex-end;\n\tflex-wrap: wrap;\n}\n");
 })($ || ($ = {}));
 //section.view.css.js.map
 ;
@@ -10543,6 +10691,9 @@ var $;
 //atom2.test.js.map
 ;
 "use strict";
+//param.test.js.map
+;
+"use strict";
 //result.test.js.map
 ;
 "use strict";
@@ -10657,9 +10808,6 @@ var $;
     });
 })($ || ($ = {}));
 //mem.test.js.map
-;
-"use strict";
-//param.test.js.map
 ;
 "use strict";
 var $;

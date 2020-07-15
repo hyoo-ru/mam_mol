@@ -402,6 +402,7 @@ declare namespace $ {
         static reap(atom: $mol_atom2): void;
         slaves: (number | $mol_fiber<any> | undefined)[];
         rescue(master: $mol_atom2, cursor: number): void;
+        subscribe(promise: Promise<unknown>): Promise<void>;
         get(): Value;
         pull(): void;
         _value: Value;
@@ -427,6 +428,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_type_param<Func, Index extends number> = Func extends (...params: infer Params) => any ? Params[Index] : Func extends new (...params: infer Params2) => any ? Params2[Index] : never;
+}
+
+declare namespace $ {
     type $mol_type_result<Func> = Func extends (...params: any) => infer Result ? Result : Func extends new (...params: any) => infer Result ? Result : never;
 }
 
@@ -448,8 +453,8 @@ declare namespace $ {
 declare namespace $ {
     let $mol_mem_cached: typeof $mol_atom2_value;
     function $mol_mem_persist(): void;
-    function $mol_mem<Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (next?: Value) => Value>, Value extends $mol_type_result<Prop>>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Prop>): {
-        value: ((this: Host, next?: Value | undefined, force?: $mol_mem_force | undefined) => any) & {
+    function $mol_mem<Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (next?: any) => any>>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Prop>): {
+        value: ((this: Host, next?: $mol_type_param<Prop, 0> | undefined, force?: $mol_mem_force | undefined) => any) & {
             orig: NonNullable<Prop>;
         };
         enumerable?: boolean | undefined;
@@ -458,10 +463,6 @@ declare namespace $ {
         get?: (() => Prop) | undefined;
         set?: ((value: Prop) => void) | undefined;
     };
-}
-
-declare namespace $ {
-    type $mol_type_param<Func, Index extends number> = Func extends (...params: infer Params) => any ? Params[Index] : Func extends new (...params: infer Params2) => any ? Params2[Index] : never;
 }
 
 declare namespace $ {
@@ -480,7 +481,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_mem_key<Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (id: Key, next?: Value) => Value>, Key extends $mol_type_param<Prop, 0>, Value extends $mol_type_result<Prop>>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Prop>): any;
+    function $mol_mem_key<Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (id: any, next?: any) => any>>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Prop>): any;
 }
 
 declare namespace $ {
@@ -994,6 +995,22 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_speck extends $mol_view {
+        attr(): {
+            mol_theme: string;
+        };
+        style(): {
+            minHeight: string;
+        };
+        sub(): readonly any[];
+        value(): any;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_button extends $mol_view {
         enabled(): boolean;
         minimal_height(): number;
@@ -1013,8 +1030,10 @@ declare namespace $ {
         };
         disabled(): boolean;
         tab_index(): number;
+        hint_or_error(): string;
         hint(): string;
         sub(): readonly (string | number | boolean | $mol_view | Node)[];
+        Speck(): $mol_speck;
     }
 }
 
@@ -1128,10 +1147,14 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_button extends $.$mol_button {
+        fiber(next?: $mol_fiber<any> | null): $mol_fiber<any> | null;
         disabled(): boolean;
         event_activate(next: Event): void;
         event_key_press(event: KeyboardEvent): void;
         tab_index(): number;
+        error(): string;
+        hint_or_error(): string;
+        sub_visible(): (string | number | boolean | $mol_view | Node | $mol_speck)[];
     }
 }
 
@@ -1461,6 +1484,9 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_float extends $mol_view {
+        style(): {
+            minHeight: string;
+        };
     }
 }
 
@@ -1550,13 +1576,29 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_dimmer extends $mol_view {
+    class $mol_paragraph extends $mol_view {
+        line_height(): number;
+        letter_width(): number;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_paragraph extends $.$mol_paragraph {
+        maximal_width(): number;
+        minimal_width(): number;
+        minimal_height(): number;
+    }
+}
+
+declare namespace $ {
+    class $mol_dimmer extends $mol_paragraph {
         haystack(): string;
         needle(): string;
         sub(): readonly (string | number | boolean | $mol_view | Node)[];
         parts(): readonly (string | number | boolean | $mol_view | Node)[];
-        Low(id: any): $mol_view;
+        Low(id: any): $$.$mol_paragraph;
         string(id: any): string;
+        High(id: any): $$.$mol_paragraph;
     }
 }
 
@@ -1671,21 +1713,6 @@ declare namespace $.$$ {
         cell_expanded(id: {
             row: string[];
         }, next?: boolean): boolean | null;
-    }
-}
-
-declare namespace $ {
-    class $mol_paragraph extends $mol_view {
-        line_height(): number;
-        letter_width(): number;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_paragraph extends $.$mol_paragraph {
-        maximal_width(): number;
-        minimal_width(): number;
-        minimal_height(): number;
     }
 }
 

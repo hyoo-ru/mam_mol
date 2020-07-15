@@ -113,7 +113,7 @@ namespace $ {
 			
 			let min = 0
 			try {
-				for( const view of this.sub() ) {
+				for( const view of this.sub() ?? [] ) {
 
 					if( view instanceof $mol_view ) {
 						min = Math.max( min , view.minimal_height() )
@@ -203,7 +203,10 @@ namespace $ {
 					$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
 				}
 				
-				if( error instanceof Promise ) $mol_fail_hidden( error )
+				if( error instanceof Promise ) {
+					$mol_atom2.current!.subscribe( error )
+					return node
+				}
 				
 				if( need_catch ) {
 					try { void( ( node as HTMLElement ).innerText = error.message ) } catch( e ) {}
@@ -218,6 +221,8 @@ namespace $ {
 		@ $mol_mem
 		dom_node_actual() {
 			const node = this.dom_node()
+
+			;( node as HTMLElement ).style.minHeight = this.minimal_height() + 'px'
 
 			const attr = this.attr()
 			const style = this.style()
@@ -235,6 +240,7 @@ namespace $ {
 			const node = this.dom_node_actual()
 
 			const sub = this.sub_visible()
+			if( !sub ) return
 			
 			const nodes = sub.map( child => {
 				if( child == null ) return null

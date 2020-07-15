@@ -2,12 +2,29 @@ namespace $ { export class $mol_speck extends $mol_view {
 
 	/**
 	 *  ```
-	 *  attr * mol_theme \$mol_theme_accent
+	 *  attr *
+	 *  	^
+	 *  	mol_theme \$mol_theme_accent
 	 *  ```
 	 **/
 	attr() {
 		return ({
+			...super.attr() ,
 			"mol_theme" :  "$mol_theme_accent" ,
+		})
+	}
+
+	/**
+	 *  ```
+	 *  style *
+	 *  	^
+	 *  	minHeight \1em
+	 *  ```
+	 **/
+	style() {
+		return ({
+			...super.style() ,
+			"minHeight" :  "1em" ,
 		})
 	}
 

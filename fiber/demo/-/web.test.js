@@ -1482,6 +1482,10 @@ var $;
             master.slaves[slave_index] = master_index;
             this.masters.push(master, this.masters[cursor + 1]);
         }
+        subscribe(promise) {
+            const fresh = this.fresh;
+            return promise.then(fresh, fresh);
+        }
         get() {
             if ($mol_atom2.cached)
                 return this.value;
@@ -1695,6 +1699,12 @@ var $;
     $.$mol_atom2 = $mol_atom2;
 })($ || ($ = {}));
 //atom2.js.map
+;
+"use strict";
+//param.test.js.map
+;
+"use strict";
+//param.js.map
 ;
 "use strict";
 //result.test.js.map

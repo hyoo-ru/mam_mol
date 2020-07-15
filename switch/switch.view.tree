@@ -10,6 +10,7 @@ $mol_switch $mol_view
 	sub <= items /$mol_check
 
 $mol_switch_option $mol_check
+	minimal_height 24
 	attr *
 		^
 		mol_theme <= theme \

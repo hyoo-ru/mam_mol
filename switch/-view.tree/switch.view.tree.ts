@@ -125,6 +125,15 @@ namespace $ { export class $mol_switch_option extends $mol_check {
 
 	/**
 	 *  ```
+	 *  minimal_height 24
+	 *  ```
+	 **/
+	minimal_height() {
+		return 24
+	}
+
+	/**
+	 *  ```
 	 *  attr *
 	 *  	^
 	 *  	mol_theme <= theme

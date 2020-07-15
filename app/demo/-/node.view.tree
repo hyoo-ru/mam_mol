@@ -40,6 +40,16 @@ $mol_link $mol_view
 		^
 		click?event <=> click?event <=> event_click?event null
 
+$mol_speck $mol_view
+	attr *
+		^
+		mol_theme \$mol_theme_accent
+	style *
+		^
+		minHeight \1em
+	sub /
+		<= value null
+
 $mol_button $mol_view
 	enabled true
 	minimal_height 40
@@ -54,9 +64,10 @@ $mol_button $mol_view
 		disabled <= disabled false
 		role \button
 		tabindex <= tab_index 0
-		title <= hint \
+		title <= hint_or_error <= hint \
 	sub /$mol_view_content
 		<= title
+	Speck $mol_speck
 
 $mol_button_typed $mol_button
 
@@ -235,6 +246,9 @@ $mol_scroll $mol_view
 		scroll?event <=> event_scroll?event null
 
 $mol_float $mol_view
+	style *
+		^
+		minHeight \auto
 
 $mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
 
@@ -248,11 +262,18 @@ $mol_check_expand $mol_check
 	checked?val <=> expanded?val false
 	enabled <= expandable false
 
-$mol_dimmer $mol_view
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 8
+
+$mol_dimmer $mol_paragraph
 	haystack \
 	needle \
 	sub <= parts /$mol_view_content
-	Low!id $mol_view
+	Low!id $mol_paragraph
+		sub /
+			<= string!id \
+	High!id $mol_paragraph
 		sub /
 			<= string!id \
 
@@ -427,7 +448,7 @@ $mol_calendar $mol_list
 	month_moment $mol_time_moment
 
 $mol_calendar_day $mol_view
-	minimal_height 32
+	minimal_height 28
 	minimal_width 36
 	attr *
 		mol_calendar_holiday <= holiday false
@@ -1303,6 +1324,7 @@ $mol_switch $mol_view
 	sub <= items /$mol_check
 
 $mol_switch_option $mol_check
+	minimal_height 24
 	attr *
 		^
 		mol_theme <= theme \
@@ -1708,10 +1730,6 @@ $mol_list_demo_table $mol_demo_large
 				value?val <=> row_number!id?val 0
 				enabled <= row_editable!id
 			<= Link!id $mol_link_iconed uri <= row_uri!id \
-
-$mol_paragraph $mol_view
-	line_height 24
-	letter_width 8
 
 $mol_list_demo_tree $mol_demo_large
 	title @ \Large list of rows with dynamic content
@@ -2184,12 +2202,6 @@ $mol_select_demo_priority $mol_demo_small
 				\Medium
 				\Low
 				\Lowest
-
-$mol_speck $mol_view
-	attr *
-		mol_theme \$mol_theme_accent
-	sub /
-		<= value null
 
 $mol_icon_settings $mol_icon path \M12,15.5C10.07,15.5 8.5,13.93 8.5,12C8.5,10.07 10.07,8.5 12,8.5C13.93,8.5 15.5,10.07 15.5,12C15.5,13.93 13.93,15.5 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z
 

@@ -1,7 +1,10 @@
-$mol_dimmer $mol_view
+$mol_dimmer $mol_paragraph
 	haystack \
 	needle \
 	sub <= parts /$mol_view_content
-	Low!id $mol_view
+	Low!id $mol_paragraph
+		sub /
+			<= string!id \
+	High!id $mol_paragraph
 		sub /
 			<= string!id \

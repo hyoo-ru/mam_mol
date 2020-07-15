@@ -336,6 +336,7 @@ declare namespace $ {
         static reap(atom: $mol_atom2): void;
         slaves: (number | $mol_fiber<any> | undefined)[];
         rescue(master: $mol_atom2, cursor: number): void;
+        subscribe(promise: Promise<unknown>): Promise<void>;
         get(): Value;
         pull(): void;
         _value: Value;
@@ -361,6 +362,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_type_param<Func, Index extends number> = Func extends (...params: infer Params) => any ? Params[Index] : Func extends new (...params: infer Params2) => any ? Params2[Index] : never;
+}
+
+declare namespace $ {
     type $mol_type_result<Func> = Func extends (...params: any) => infer Result ? Result : Func extends new (...params: any) => infer Result ? Result : never;
 }
 
@@ -382,8 +387,8 @@ declare namespace $ {
 declare namespace $ {
     let $mol_mem_cached: typeof $mol_atom2_value;
     function $mol_mem_persist(): void;
-    function $mol_mem<Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (next?: Value) => Value>, Value extends $mol_type_result<Prop>>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Prop>): {
-        value: ((this: Host, next?: Value | undefined, force?: $mol_mem_force | undefined) => any) & {
+    function $mol_mem<Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (next?: any) => any>>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Prop>): {
+        value: ((this: Host, next?: $mol_type_param<Prop, 0> | undefined, force?: $mol_mem_force | undefined) => any) & {
             orig: NonNullable<Prop>;
         };
         enumerable?: boolean | undefined;
@@ -427,10 +432,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    type $mol_type_param<Func, Index extends number> = Func extends (...params: infer Params) => any ? Params[Index] : Func extends new (...params: infer Params2) => any ? Params2[Index] : never;
-}
-
-declare namespace $ {
     function $mol_dict_key(value: any): any;
     class $mol_dict<Key, Value> extends Map<Key, Value> {
         get(key: Key): Value | undefined;
@@ -446,7 +447,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_mem_key<Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (id: Key, next?: Value) => Value>, Key extends $mol_type_param<Prop, 0>, Value extends $mol_type_result<Prop>>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Prop>): any;
+    function $mol_mem_key<Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (id: any, next?: any) => any>>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Prop>): any;
 }
 
 declare namespace $ {
