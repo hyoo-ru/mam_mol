@@ -62,6 +62,11 @@ namespace $ {
 			
 		}
 
+		subscribe( promise : Promise<unknown> ) {
+			const fresh = this.fresh
+			return promise.then( fresh , fresh )
+		}
+
 		get() {
 
 			if( $mol_atom2.cached ) return this.value
