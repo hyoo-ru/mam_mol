@@ -63,8 +63,8 @@ namespace $ {
 		}
 
 		subscribe( promise : Promise<unknown> ) {
-			const fresh = this.fresh
-			return promise.then( fresh , fresh )
+			const obsolete = ()=> this.obsolete()
+			return promise.then( obsolete , obsolete )
 		}
 
 		get() {
