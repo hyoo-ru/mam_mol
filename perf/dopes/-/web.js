@@ -1166,8 +1166,8 @@ var $;
             this.masters.push(master, this.masters[cursor + 1]);
         }
         subscribe(promise) {
-            const fresh = this.fresh;
-            return promise.then(fresh, fresh);
+            const obsolete = () => this.obsolete();
+            return promise.then(obsolete, obsolete);
         }
         get() {
             if ($mol_atom2.cached)

@@ -14,6 +14,7 @@
 
 [mol_form_bar_buttons] {
 	box-shadow: none;
+	padding: 0;
 }
 
 [mol_form_bar_buttons] > * {
