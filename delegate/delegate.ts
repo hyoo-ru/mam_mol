@@ -14,7 +14,14 @@ namespace $ {
 
 		const proxy = new Proxy( proto , {
 
-			get: ( _ , field )=> Reflect.get( target() , field ),
+			get: ( _ , field )=> {
+				const obj = target()
+				let val = Reflect.get( obj , field )
+				if( typeof val === 'function' ) {
+					val = val.bind( obj )
+				} 
+				return val
+			},
 			has: ( _ , field )=> Reflect.has( target(), field ),
 			set: ( _ , field , value )=> Reflect.set( target() , field , value ),
 			
