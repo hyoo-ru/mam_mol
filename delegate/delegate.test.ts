@@ -83,5 +83,19 @@ namespace $ {
 
 		},
 
+		'instanceof'() {
+
+			class Foo {}
+
+			const proxy = $mol_delegate(
+				{} ,
+				()=> new Foo,
+			)
+
+			$mol_assert_ok( proxy instanceof Foo )
+			$mol_assert_ok( proxy instanceof $mol_delegate )
+
+		},
+
 	})
 }
