@@ -1,5 +1,7 @@
 namespace $ {
 
+	const instances = new WeakSet< any >()
+
 	/**
 	 * Proxy that delegates all to lazy returned target.
 	 * 
@@ -10,7 +12,7 @@ namespace $ {
 		target : ()=> Value ,
 	) {
 
-		return new Proxy( proto , {
+		const proxy = new Proxy( proto , {
 
 			get: ( _ , field )=> Reflect.get( target() , field ),
 			has: ( _ , field )=> Reflect.has( target(), field ),
@@ -33,6 +35,18 @@ namespace $ {
 
 		} )
 
+		instances.add( proxy )
+
+		return proxy
+
 	}
+
+	Reflect.defineProperty(
+		$mol_delegate ,
+		Symbol.hasInstance ,
+		{
+			value : ( obj : object )=> instances.has( obj ),
+		},
+	)
 
 }
