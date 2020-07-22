@@ -113,12 +113,51 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const instances = new WeakSet();
+    function $mol_delegate(proto, target) {
+        const proxy = new Proxy(proto, {
+            get: (_, field) => {
+                const obj = target();
+                let val = Reflect.get(obj, field);
+                if (typeof val === 'function') {
+                    val = val.bind(obj);
+                }
+                return val;
+            },
+            has: (_, field) => Reflect.has(target(), field),
+            set: (_, field, value) => Reflect.set(target(), field, value),
+            getOwnPropertyDescriptor: (_, field) => Reflect.getOwnPropertyDescriptor(target(), field),
+            ownKeys: () => Reflect.ownKeys(target()),
+            getPrototypeOf: () => Reflect.getPrototypeOf(target()),
+            setPrototypeOf: (_, donor) => Reflect.setPrototypeOf(target(), donor),
+            isExtensible: () => Reflect.isExtensible(target()),
+            preventExtensions: () => Reflect.preventExtensions(target()),
+            apply: (_, self, args) => Reflect.apply(target(), self, args),
+            construct: (_, args, retarget) => Reflect.construct(target(), args, retarget),
+            defineProperty: (_, field, descr) => Reflect.defineProperty(target(), field, descr),
+            deleteProperty: (_, field) => Reflect.deleteProperty(target(), field),
+        });
+        instances.add(proxy);
+        return proxy;
+    }
+    $.$mol_delegate = $mol_delegate;
+    Reflect.defineProperty($mol_delegate, Symbol.hasInstance, {
+        value: (obj) => instances.has(obj),
+    });
+})($ || ($ = {}));
+//delegate.js.map
+;
+"use strict";
+var $;
+(function ($) {
     $.$mol_owning_map = new WeakMap();
     function $mol_owning_allow(having) {
         try {
             if (!having)
                 return false;
             if (typeof having !== 'object')
+                return false;
+            if (having instanceof $.$mol_delegate)
                 return false;
             if (typeof having['destructor'] !== 'function')
                 return false;
@@ -2202,15 +2241,12 @@ var $;
                 }
             }
             catch (error) {
-                const need_catch = $.$mol_fail_catch(error);
-                if (need_catch) {
-                    $.$mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
-                }
+                $.$mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
                 if (error instanceof Promise) {
                     $.$mol_atom2.current.subscribe(error);
                     return node;
                 }
-                if (need_catch) {
+                if ($.$mol_fail_catch(error)) {
                     try {
                         void (node.innerText = error.message);
                     }
@@ -15012,7 +15048,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n\tborder-radius: var(--mol_skin_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n}\n");
+    $.$mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_skin_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n}\n");
 })($ || ($ = {}));
 //image.view.css.js.map
 ;
@@ -15908,9 +15944,6 @@ var $;
 //tail.js.map
 ;
 "use strict";
-//foot.js.map
-;
-"use strict";
 //value.js.map
 ;
 "use strict";
@@ -15925,6 +15958,9 @@ var $;
     $.$mol_data_setup = $mol_data_setup;
 })($ || ($ = {}));
 //setup.js.map
+;
+"use strict";
+//foot.js.map
 ;
 "use strict";
 var $;
@@ -16005,7 +16041,7 @@ var $;
     $.$mol_data_string = (val) => {
         if (typeof val === 'string')
             return val;
-        return $.$mol_fail(new $.$mol_data_error(`${typeof val} is not a string`));
+        return $.$mol_fail(new $.$mol_data_error(`${val} is not a string`));
     };
 })($ || ($ = {}));
 //string.js.map

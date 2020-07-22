@@ -11,6 +11,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_delegate<Value extends object>(proto: Value, target: () => Value): Value;
+}
+
+declare namespace $ {
     const $mol_owning_map: WeakMap<any, any>;
     function $mol_owning_allow<Having>(having: Having): having is Having & {
         destructor(): void;
@@ -1668,9 +1672,9 @@ declare namespace $ {
         readonly second: number | undefined;
         readonly offset: $mol_time_duration | undefined;
         get weekday(): number;
-        private _native;
+        _native: Date | undefined;
         get native(): Date;
-        private _normal;
+        _normal: $mol_time_moment | undefined;
         get normal(): $mol_time_moment;
         merge(config: $mol_time_moment_config): $mol_time_moment;
         shift(config: $mol_time_duration_config): $mol_time_moment;

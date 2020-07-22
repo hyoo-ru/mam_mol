@@ -97,5 +97,19 @@ namespace $ {
 
 		},
 
+		'autobind'() {
+
+			class Foo {}
+
+			const proxy = $mol_delegate(
+				{} ,
+				()=> new Foo,
+			)
+
+			$mol_assert_ok( proxy.valueOf() instanceof Foo )
+			$mol_assert_not( proxy.valueOf() instanceof $mol_delegate )
+
+		},
+
 	})
 }

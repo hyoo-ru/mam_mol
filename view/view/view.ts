@@ -197,18 +197,14 @@ namespace $ {
 
 			} catch( error ) {
 				
-				const need_catch = $mol_fail_catch( error )
-
-				if( need_catch ) {
-					$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
-				}
+				$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
 				
 				if( error instanceof Promise ) {
 					$mol_atom2.current!.subscribe( error )
 					return node
 				}
 				
-				if( need_catch ) {
+				if( $mol_fail_catch( error ) ) {
 					try { void( ( node as HTMLElement ).innerText = error.message ) } catch( e ) {}
 					console.error( error )
 				}
