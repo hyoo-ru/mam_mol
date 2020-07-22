@@ -75,7 +75,7 @@ namespace $ {
 			return ( this.native.getDay() + 6 ) % 7
 		}
 
-		private _native : Date | undefined
+		_native : Date | undefined
 		get native() {
 			if( this._native ) return this._native
 			
@@ -92,7 +92,7 @@ namespace $ {
 			) )
 		}
 
-		private _normal : $mol_time_moment | undefined
+		_normal : $mol_time_moment | undefined
 		get normal() {
 			if( this._normal ) return this._normal
 			
