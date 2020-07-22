@@ -4,7 +4,7 @@ namespace $ {
 		
 		if( typeof val === 'number' ) return val
 		
-		return $mol_fail( new $mol_data_error( `${ typeof val } is not a number` ) )
+		return $mol_fail( new $mol_data_error( `${ val } is not a number` ) )
 		
 	}
 	
