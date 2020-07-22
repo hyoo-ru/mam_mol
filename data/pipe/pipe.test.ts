@@ -20,11 +20,6 @@ namespace $ {
 				( input : number )=> input.toString() ,
 			)
 			
-			type Type = $mol_type_assert<
-				typeof stringify,
-				( input : number )=> string
-			>
-	
 			$mol_assert_equal( stringify( 5 ) , '5' )
 			
 		},
@@ -36,11 +31,6 @@ namespace $ {
 				( input : string )=> input.length > 2  ,
 			)
 			
-			type Type = $mol_type_assert<
-				typeof isLong,
-				( input : number )=> boolean
-			>
-	
 			$mol_assert_equal( isLong( 5.0 ) , false )
 			$mol_assert_equal( isLong( 5.1 ) , true )
 			
@@ -54,11 +44,6 @@ namespace $ {
 				( input : RegExp )=> input.toString()  ,
 			)
 			
-			type Type = $mol_type_assert<
-				typeof pattern,
-				( input : number )=> string
-			>
-	
 			$mol_assert_equal( pattern( 5 ) , '/5/' )
 			
 		},
@@ -74,11 +59,6 @@ namespace $ {
 				Box
 			)
 			
-			type Type = $mol_type_assert<
-				typeof boxify,
-				( input : number )=> Box
-			>
-	
 			$mol_assert_like( boxify( 5 ) , new Box( '5' ) )
 			
 		},

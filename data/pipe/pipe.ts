@@ -33,18 +33,16 @@ namespace $ {
 		Funcs extends $mol_type_unary[]
 	>(
 		... funcs : Funcs & Guard< Funcs >
-	) : (
-		input : $mol_type_param< Funcs[0] , 0 >
-	)=>  $mol_type_result<
-		$mol_type_foot< Funcs >
-	> {
+	) {
 
 		return $mol_data_setup(
-			( input : Funcs[0] )=> {
+			( input :  $mol_type_param< Funcs[0] , 0 > )=> {
 				let value : any = input
 				for( const func of funcs as any ) value = func.prototype ? new func( value ) : func( value )
-				return value
-			} ,
+				return value as $mol_type_result<
+					$mol_type_foot< Funcs >
+				>
+			},
 			{ funcs }
 		)
 
