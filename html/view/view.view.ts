@@ -91,12 +91,25 @@ namespace $.$$ {
 			return node.textContent ?? '???'
 		}
 
+		safe_link( uri : string ) {
+
+			const base =  $mol_dom_context.location.href
+			const url = new $mol_dom_context.URL( uri , base )
+			
+			if( /^\w*script:/i.test( url.protocol ) ) {
+				return this.xss_uri() + uri
+			}
+			
+			return uri
+	
+		}
+
 		link_uri( node : HTMLAnchorElement ) {
-			return node.href
+			return this.safe_link( node.href )
 		}
 
 		image_uri( node : HTMLImageElement ) {
-			return node.src
+			return this.safe_link( node.src )
 		}
 
 		heading_level( node : HTMLHeadingElement ) {

@@ -22,7 +22,9 @@ $mol_html_view_demo $mol_demo_large
 				\ 	<s>strikethrough</s>,
 				\ 	<br />
 				\ 	<code>code</code>,
-				\ 	<a href="https://mol.js.org/">link</a>
+				\ 	<a href="#">safe link</a>,
+				\ 	<a href="javascript:alert(1)">unsafe link</a>,
+				\ 	normal text.
 				\ </p>
 				\ <h2>Media elements</h2>
 				\ <p>
