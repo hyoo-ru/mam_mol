@@ -12,6 +12,7 @@ namespace $ {
 		line: vary('--mol_theme_line'),
 		focus: vary('--mol_theme_focus'),
 		field: vary('--mol_theme_field'),
+		image: vary('--mol_theme_image'),
 	}
 
 }
