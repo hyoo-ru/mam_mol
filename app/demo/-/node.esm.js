@@ -418,6 +418,7 @@ var $;
         line: vary('--mol_theme_line'),
         focus: vary('--mol_theme_focus'),
         field: vary('--mol_theme_field'),
+        image: vary('--mol_theme_image'),
     };
 })($ || ($ = {}));
 //theme.js.map
@@ -14922,6 +14923,519 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_image extends $.$mol_view {
+        dom_name() {
+            return "img";
+        }
+        field() {
+            return (Object.assign(Object.assign({}, super.field()), { "src": this.uri(), "alt": this.title() }));
+        }
+        uri() {
+            return "";
+        }
+    }
+    $.$mol_image = $mol_image;
+})($ || ($ = {}));
+//image.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_skin_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n}\n");
+})($ || ($ = {}));
+//image.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_link_iconed extends $.$mol_link {
+        sub() {
+            return [this.Icon()];
+        }
+        Icon() {
+            return ((obj) => {
+                obj.uri = () => this.icon();
+                obj.title = () => "";
+                return obj;
+            })(new this.$.$mol_image());
+        }
+        icon() {
+            return "";
+        }
+        content() {
+            return [this.title()];
+        }
+        title() {
+            return this.uri();
+        }
+        host() {
+            return "";
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_link_iconed.prototype, "Icon", null);
+    $.$mol_link_iconed = $mol_link_iconed;
+})($ || ($ = {}));
+//iconed.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/link/iconed/iconed.view.css", "[mol_link_iconed] {\n\talign-items: center;\n\tcolor: var(--mol_theme_control);\n\tdisplay: inline;\n\tpadding: .5rem;\n}\n\n[mol_link_iconed_icon] {\n\tbox-shadow: none;\n\tmargin-right: 2px;\n\theight: 1em;\n\twidth: 1em;\n\tvertical-align: -25%;\n\tdisplay: inline-block;\n\tmargin: .25rem;\n}\n\n[mol_theme=\"$mol_theme_dark\"] [mol_link_iconed_icon] {\n\tfilter: invert(1) hue-rotate(180deg);\n}\n");
+})($ || ($ = {}));
+//iconed.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_link_iconed extends $.$mol_link_iconed {
+            icon() {
+                return `https://favicon.yandex.net/favicon/${this.host()}?color=0,0,0,0&size=32&stub=1`;
+            }
+            host() {
+                const url = new URL(this.uri());
+                return url.hostname;
+            }
+            title() {
+                return decodeURIComponent(this.uri().split(this.host(), 2)[1]);
+            }
+            sub() {
+                return [this.Icon(), ...this.content()];
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_link_iconed.prototype, "host", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_link_iconed.prototype, "title", null);
+        $$.$mol_link_iconed = $mol_link_iconed;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//iconed.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_html_view extends $.$mol_list {
+        html() {
+            return "";
+        }
+        dom() {
+            return null;
+        }
+        safe_link(uri) {
+            return "";
+        }
+        xss_uri() {
+            return "https://en.wikipedia.org/wiki/XSS#";
+        }
+        Heading(id) {
+            return ((obj) => {
+                obj.level = () => this.heading_level(id);
+                obj.sub = () => this.content(id);
+                return obj;
+            })(new this.$.$mol_html_view_heading());
+        }
+        heading_level(id) {
+            return 1;
+        }
+        content(id) {
+            return [];
+        }
+        Paragraph(id) {
+            return ((obj) => {
+                obj.sub = () => this.content(id);
+                return obj;
+            })(new this.$.$mol_paragraph());
+        }
+        Quote(id) {
+            return ((obj) => {
+                obj.sub = () => this.content(id);
+                return obj;
+            })(new this.$.$mol_paragraph());
+        }
+        Strong(id) {
+            return ((obj) => {
+                obj.sub = () => this.content(id);
+                return obj;
+            })(new this.$.$mol_paragraph());
+        }
+        Emphasis(id) {
+            return ((obj) => {
+                obj.sub = () => this.content(id);
+                return obj;
+            })(new this.$.$mol_paragraph());
+        }
+        Deleted(id) {
+            return ((obj) => {
+                obj.sub = () => this.content(id);
+                return obj;
+            })(new this.$.$mol_paragraph());
+        }
+        Inserted(id) {
+            return ((obj) => {
+                obj.sub = () => this.content(id);
+                return obj;
+            })(new this.$.$mol_paragraph());
+        }
+        Code(id) {
+            return ((obj) => {
+                obj.sub = () => this.content(id);
+                return obj;
+            })(new this.$.$mol_paragraph());
+        }
+        Link(id) {
+            return ((obj) => {
+                obj.uri = () => this.link_uri(id);
+                obj.content = () => this.content(id);
+                return obj;
+            })(new this.$.$mol_link_iconed());
+        }
+        link_uri(id) {
+            return "";
+        }
+        Image(id) {
+            return ((obj) => {
+                obj.uri = () => this.image_uri(id);
+                return obj;
+            })(new this.$.$mol_image());
+        }
+        image_uri(id) {
+            return "";
+        }
+        Break(id) {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_paragraph());
+        }
+        Text(id) {
+            return ((obj) => {
+                obj.needle = () => this.highlight();
+                obj.haystack = () => this.text(id);
+                return obj;
+            })(new this.$.$mol_dimmer());
+        }
+        highlight() {
+            return "";
+        }
+        text(id) {
+            return "";
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "Heading", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "Paragraph", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "Quote", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "Strong", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "Emphasis", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "Deleted", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "Inserted", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "Code", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "Link", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "Image", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "Break", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "Text", null);
+    $.$mol_html_view = $mol_html_view;
+})($ || ($ = {}));
+(function ($) {
+    class $mol_html_view_heading extends $.$mol_paragraph {
+        attr() {
+            return (Object.assign(Object.assign({}, super.attr()), { "mol_html_view_heading": this.level() }));
+        }
+        level() {
+            return 1;
+        }
+    }
+    $.$mol_html_view_heading = $mol_html_view_heading;
+})($ || ($ = {}));
+//view.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
+        const parser = new $.$mol_dom_context.DOMParser();
+        const doc = parser.parseFromString(text, type);
+        const error = doc.getElementsByTagName('parsererror')[0];
+        if (error)
+            throw new Error(error.textContent);
+        return doc;
+    }
+    $.$mol_dom_parse = $mol_dom_parse;
+})($ || ($ = {}));
+//parse.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const { rem } = $.$mol_style_unit;
+    $.$mol_style_define($.$mol_html_view, {
+        padding: rem(.75),
+        Heading: {
+            padding: rem(.75),
+            '@': {
+                'mol_html_view_heading': {
+                    '1': {
+                        font: {
+                            size: rem(2),
+                        },
+                    },
+                    '2': {
+                        font: {
+                            size: rem(2),
+                            style: 'italic',
+                        },
+                    },
+                    '3': {
+                        font: {
+                            size: rem(1.5),
+                        },
+                    },
+                    '4': {
+                        font: {
+                            size: rem(1.5),
+                            style: 'italic',
+                        },
+                    },
+                    '5': {
+                        font: {
+                            size: rem(1.25),
+                        },
+                    },
+                    '6': {
+                        font: {
+                            size: rem(1.25),
+                            style: 'italic',
+                        },
+                    },
+                },
+            },
+        },
+        Paragraph: {
+            display: 'block',
+            flex: {
+                wrap: 'wrap',
+            },
+            padding: rem(.75),
+        },
+        Quote: {
+            display: 'block',
+            flex: {
+                'wrap': 'wrap',
+            },
+            padding: rem(.75),
+            margin: {
+                left: rem(.75),
+            },
+            box: {
+                shadow: [{
+                        inset: true,
+                        x: rem(.25),
+                        y: 0,
+                        blur: 0,
+                        spread: 0,
+                        color: $.$mol_theme.line,
+                    }],
+            },
+        },
+        Strong: {
+            display: 'inline',
+            color: $.$mol_theme.focus,
+        },
+        Emphasis: {
+            display: 'inline',
+            font: {
+                style: 'italic',
+            },
+        },
+        Deleted: {
+            display: 'inline',
+            color: $.$mol_theme.shade,
+        },
+        Inserted: {
+            display: 'inline',
+            font: {
+                weight: 'bolder',
+            },
+        },
+        Link: {
+            margin: rem(-.5),
+        },
+        Code: {
+            display: 'inline',
+            font: {
+                family: 'monospace',
+            },
+            whiteSpace: 'pre-wrap',
+        },
+        Image: {
+            display: 'inline-block',
+        },
+        Break: {
+            display: 'block',
+        },
+        Text: {
+            display: 'inline',
+        },
+    });
+})($ || ($ = {}));
+//view.view.tree.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_html_view extends $.$mol_html_view {
+            dom() {
+                return this.$.$mol_dom_parse(this.html(), 'text/html').body;
+            }
+            sub() {
+                return this.content(this.dom());
+            }
+            content(node) {
+                const res = [];
+                for (const child of node.childNodes) {
+                    res.push(...this.views(child));
+                }
+                return res;
+            }
+            views(node) {
+                switch (node.nodeName) {
+                    case '#comment':
+                        return [];
+                    case '#text':
+                    case '#cdata-section':
+                        return [this.Text(node)];
+                    case 'H1':
+                    case 'H2':
+                    case 'H3':
+                    case 'H4':
+                    case 'H5':
+                    case 'H6':
+                        return [this.Heading(node)];
+                    case 'P':
+                    case 'DIV':
+                    case 'OL':
+                    case 'UL':
+                    case 'LI':
+                    case 'PRE':
+                        return [this.Paragraph(node)];
+                    case 'BLOCKQUOTE':
+                        return [this.Quote(node)];
+                    case 'STRONG':
+                    case 'B':
+                        return [this.Strong(node)];
+                    case 'EM':
+                    case 'I':
+                        return [this.Emphasis(node)];
+                    case 'DEL':
+                    case 'S':
+                        return [this.Deleted(node)];
+                    case 'INS':
+                    case 'U':
+                        return [this.Inserted(node)];
+                    case 'A':
+                        return [this.Link(node)];
+                    case 'PRE':
+                    case 'CODE':
+                        return [this.Code(node)];
+                    case 'IMG':
+                        return [this.Image(node)];
+                    case 'BR':
+                        return [this.Break(node)];
+                    default:
+                        console.warn(node.nodeName, node);
+                        return this.content(node);
+                }
+            }
+            text(node) {
+                var _a;
+                return (_a = node.textContent) !== null && _a !== void 0 ? _a : '???';
+            }
+            safe_link(uri) {
+                const base = $.$mol_dom_context.location.href;
+                const url = new $.$mol_dom_context.URL(uri, base);
+                if (/^\w*script:/i.test(url.protocol)) {
+                    return this.xss_uri() + uri;
+                }
+                return uri;
+            }
+            link_uri(node) {
+                return this.safe_link(node.href);
+            }
+            image_uri(node) {
+                return this.safe_link(node.src);
+            }
+            heading_level(node) {
+                return Number(node.nodeName.substring(1));
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_html_view.prototype, "dom", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_html_view.prototype, "content", null);
+        $$.$mol_html_view = $mol_html_view;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//view.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_html_view_demo extends $.$mol_demo_large {
+        title() {
+            return this.$.$mol_locale.text("$mol_html_view_demo_title");
+        }
+        sub() {
+            return [this.Html()];
+        }
+        Html() {
+            return ((obj) => {
+                obj.html = () => " <h1>HTML Example</h1>\n <h2>Headings</h2>\n \t<h3>Level 3</h3>\n \t<h4>Level 4</h4>\n \t<h5>Level 5</h5>\n \t<h6>Level 6</h6>\n <h2>Inline elements</h2>\n <p>\n \t<strong>strong</strong>,\n \t<em>emphasis</em>,\n \t<ins>inserted</ins>,\n \t<del>deleted</del>,\n \t<br />\n \t<b>bold</b>,\n \t<i>italic</i>,\n \t<u>underlined</u>,\n \t<s>strikethrough</s>,\n \t<br />\n \t<code>code</code>,\n \t<a href=\"#\">safe link</a>,\n \t<a href=\"javascript:alert(1)\">unsafe link</a>,\n \tnormal text.\n </p>\n <h2>Media elements</h2>\n <p>\n \t<img src=\"https://mol.js.org/logo/logo_128.png\" />\n </p>\n <h2>Block elements</h2>\n <blockquote><p>Block quotation</p></blockquote>\n <pre><code>Block code</code></pre>";
+                return obj;
+            })(new this.$.$mol_html_view());
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_html_view_demo.prototype, "Html", null);
+    $.$mol_html_view_demo = $mol_html_view_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_infinite extends $.$mol_list {
         after(id) {
             return [];
@@ -15192,103 +15706,6 @@ var $;
     $.$mol_link_demo = $mol_link_demo;
 })($ || ($ = {}));
 //demo.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_image extends $.$mol_view {
-        dom_name() {
-            return "img";
-        }
-        field() {
-            return (Object.assign(Object.assign({}, super.field()), { "src": this.uri(), "alt": this.title() }));
-        }
-        uri() {
-            return "";
-        }
-    }
-    $.$mol_image = $mol_image;
-})($ || ($ = {}));
-//image.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_skin_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n}\n");
-})($ || ($ = {}));
-//image.view.css.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_link_iconed extends $.$mol_link {
-        sub() {
-            return [this.Icon()];
-        }
-        Icon() {
-            return ((obj) => {
-                obj.uri = () => this.icon();
-                obj.title = () => "";
-                return obj;
-            })(new this.$.$mol_image());
-        }
-        icon() {
-            return "";
-        }
-        content() {
-            return [this.title()];
-        }
-        title() {
-            return this.uri();
-        }
-        host() {
-            return "";
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_link_iconed.prototype, "Icon", null);
-    $.$mol_link_iconed = $mol_link_iconed;
-})($ || ($ = {}));
-//iconed.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_style_attach("mol/link/iconed/iconed.view.css", "[mol_link_iconed] {\n\talign-items: center;\n\tcolor: var(--mol_theme_control);\n\tdisplay: inline;\n\tpadding: .5rem;\n}\n\n[mol_link_iconed_icon] {\n\tbox-shadow: none;\n\tmargin-right: 2px;\n\theight: 1em;\n\twidth: 1em;\n\tvertical-align: -25%;\n\tdisplay: inline-block;\n\tmargin: .25rem;\n}\n\n[mol_theme=\"$mol_theme_dark\"] [mol_link_iconed_icon] {\n\tfilter: invert(1) hue-rotate(180deg);\n}\n");
-})($ || ($ = {}));
-//iconed.view.css.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_link_iconed extends $.$mol_link_iconed {
-            icon() {
-                return `https://favicon.yandex.net/favicon/${this.host()}?color=0,0,0,0&size=32&stub=1`;
-            }
-            host() {
-                const url = new URL(this.uri());
-                return url.hostname;
-            }
-            title() {
-                return decodeURIComponent(this.uri().split(this.host(), 2)[1]);
-            }
-            sub() {
-                return [this.Icon(), ...this.content()];
-            }
-        }
-        __decorate([
-            $.$mol_mem
-        ], $mol_link_iconed.prototype, "host", null);
-        __decorate([
-            $.$mol_mem
-        ], $mol_link_iconed.prototype, "title", null);
-        $$.$mol_link_iconed = $mol_link_iconed;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//iconed.view.js.map
 ;
 "use strict";
 var $;
@@ -16265,21 +16682,6 @@ var $;
     $.$mol_data_record = $mol_data_record;
 })($ || ($ = {}));
 //record.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
-        const parser = new $.$mol_dom_context.DOMParser();
-        const doc = parser.parseFromString(text, type);
-        const error = doc.getElementsByTagName('parsererror')[0];
-        if (error)
-            throw new Error(error.textContent);
-        return doc;
-    }
-    $.$mol_dom_parse = $mol_dom_parse;
-})($ || ($ = {}));
-//parse.js.map
 ;
 "use strict";
 var $;

@@ -170,6 +170,7 @@ declare namespace $ {
         line: $mol_style_func<"var", "--mol_theme_line">;
         focus: $mol_style_func<"var", "--mol_theme_focus">;
         field: $mol_style_func<"var", "--mol_theme_field">;
+        image: $mol_style_func<"var", "--mol_theme_image">;
     };
 }
 
@@ -920,6 +921,12 @@ declare namespace $ {
                 color: Color;
             }[];
         };
+        font?: {
+            style?: 'normal' | 'italic' | Common;
+            weight?: 'normal' | 'bold' | 'lighter' | 'bolder' | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | Common;
+            size?: 'xx-small' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'xx-large' | 'xxx-large' | 'smaller' | 'larger' | Length | Common;
+            family?: 'serif' | 'sans-serif' | 'monospace' | 'cursive' | 'fantasy' | 'system-ui' | 'ui-serif' | 'ui-sans-serif' | 'ui-monospace' | 'ui-rounded' | 'emoji' | 'math' | 'fangsong' | Common;
+        };
         color?: Color | Common;
         display?: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
         overflow?: Overflow | {
@@ -927,6 +934,7 @@ declare namespace $ {
             y?: Overflow | Common;
             anchor?: 'auto' | 'none' | Common;
         };
+        whiteSpace?: 'normal' | 'nowrap' | 'break-spaces' | 'pre' | 'pre-wrap' | 'pre-line' | Common;
         webkitOverflowScrolling?: 'auto' | 'touch';
         scrollbar: {
             color: [Color, Color] | 'dark' | 'light' | 'auto' | Common;
@@ -4261,6 +4269,107 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_image extends $mol_view {
+        dom_name(): string;
+        field(): {
+            src: string;
+            alt: string;
+        };
+        uri(): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_link_iconed extends $mol_link {
+        sub(): readonly any[];
+        Icon(): $mol_image;
+        icon(): string;
+        content(): readonly any[];
+        title(): string;
+        host(): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_link_iconed extends $.$mol_link_iconed {
+        icon(): string;
+        host(): string;
+        title(): string;
+        sub(): any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_html_view extends $mol_list {
+        html(): string;
+        dom(): any;
+        safe_link(uri: any): string;
+        xss_uri(): string;
+        Heading(id: any): $mol_html_view_heading;
+        heading_level(id: any): number;
+        content(id: any): readonly any[];
+        Paragraph(id: any): $$.$mol_paragraph;
+        Quote(id: any): $$.$mol_paragraph;
+        Strong(id: any): $$.$mol_paragraph;
+        Emphasis(id: any): $$.$mol_paragraph;
+        Deleted(id: any): $$.$mol_paragraph;
+        Inserted(id: any): $$.$mol_paragraph;
+        Code(id: any): $$.$mol_paragraph;
+        Link(id: any): $$.$mol_link_iconed;
+        link_uri(id: any): string;
+        Image(id: any): $mol_image;
+        image_uri(id: any): string;
+        Break(id: any): $$.$mol_paragraph;
+        Text(id: any): $$.$mol_dimmer;
+        highlight(): string;
+        text(id: any): string;
+    }
+}
+declare namespace $ {
+    class $mol_html_view_heading extends $mol_paragraph {
+        attr(): {
+            mol_html_view_heading: number;
+        };
+        level(): number;
+    }
+}
+
+declare namespace $ {
+    function $mol_dom_parse(text: string, type?: SupportedType): Document;
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_html_view extends $.$mol_html_view {
+        dom(): HTMLElement;
+        sub(): $mol_view[];
+        content(node: Node): $mol_view[];
+        views(node: Node): $mol_view[] | $mol_link_iconed[];
+        text(node: Node): string;
+        safe_link(uri: string): string;
+        link_uri(node: HTMLAnchorElement): string;
+        image_uri(node: HTMLImageElement): string;
+        heading_level(node: HTMLHeadingElement): number;
+    }
+}
+
+declare namespace $ {
+    class $mol_html_view_demo extends $mol_demo_large {
+        title(): string;
+        sub(): readonly any[];
+        Html(): $$.$mol_html_view;
+    }
+}
+
+declare namespace $ {
     class $mol_infinite extends $mol_list {
         after(id: any): readonly any[];
         Row(id: any): $mol_view;
@@ -4319,43 +4428,6 @@ declare namespace $ {
         blue_label(): string;
         External(): $$.$mol_link;
         external_hint(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_image extends $mol_view {
-        dom_name(): string;
-        field(): {
-            src: string;
-            alt: string;
-        };
-        uri(): string;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    class $mol_link_iconed extends $mol_link {
-        sub(): readonly any[];
-        Icon(): $mol_image;
-        icon(): string;
-        content(): readonly any[];
-        title(): string;
-        host(): string;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $.$$ {
-    class $mol_link_iconed extends $.$mol_link_iconed {
-        icon(): string;
-        host(): string;
-        title(): string;
-        sub(): any[];
     }
 }
 
@@ -4630,10 +4702,6 @@ declare namespace $ {
         config: Sub;
         Value: Readonly<$mol_type_merge<Partial<{ [key in keyof Sub]: ReturnType<Sub[key]>; }> & Pick<{ [key in keyof Sub]: ReturnType<Sub[key]>; }, { [Field in keyof { [key in keyof Sub]: ReturnType<Sub[key]>; }]: undefined extends { [key in keyof Sub]: ReturnType<Sub[key]>; }[Field] ? never : Field; }[keyof Sub]>>>;
     };
-}
-
-declare namespace $ {
-    function $mol_dom_parse(text: string, type?: SupportedType): Document;
 }
 
 declare namespace $ {

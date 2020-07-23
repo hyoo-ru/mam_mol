@@ -1602,6 +1602,95 @@ $mol_frame_demo $mol_demo_large
 		<= Frame $mol_frame
 			uri \https://mol.js.org/
 
+$mol_image $mol_view
+	dom_name \img
+	field *
+		^
+		src <= uri \
+		alt <= title
+
+$mol_link_iconed $mol_link
+	sub /
+		<= Icon $mol_image
+			uri <= icon \
+			title \
+	content /
+		<= title <= uri
+	host \
+
+$mol_html_view $mol_list
+	html \
+	dom null
+	safe_link!uri \
+	xss_uri \https://en.wikipedia.org/wiki/XSS#
+	Heading!id $mol_html_view_heading
+		level <= heading_level!id 1
+		sub <= content!id /
+	Paragraph!id $mol_paragraph
+		sub <= content!id /
+	Quote!id $mol_paragraph
+		sub <= content!id /
+	Strong!id $mol_paragraph
+		sub <= content!id /
+	Emphasis!id $mol_paragraph
+		sub <= content!id /
+	Deleted!id $mol_paragraph
+		sub <= content!id /
+	Inserted!id $mol_paragraph
+		sub <= content!id /
+	Code!id $mol_paragraph
+		sub <= content!id /
+	Link!id $mol_link_iconed
+		uri <= link_uri!id \
+		content <= content!id /
+	Image!id $mol_image
+		uri <= image_uri!id \
+	Break!id $mol_paragraph
+	Text!id $mol_dimmer
+		needle <= highlight \
+		haystack <= text!id \
+
+$mol_html_view_heading $mol_paragraph
+	attr *
+		^
+		mol_html_view_heading <= level 1
+
+$mol_html_view_demo $mol_demo_large
+	title @ \View raw HTML
+	sub /
+		<= Html $mol_html_view
+			html \
+				\ <h1>HTML Example</h1>
+				\ <h2>Headings</h2>
+				\ 	<h3>Level 3</h3>
+				\ 	<h4>Level 4</h4>
+				\ 	<h5>Level 5</h5>
+				\ 	<h6>Level 6</h6>
+				\ <h2>Inline elements</h2>
+				\ <p>
+				\ 	<strong>strong</strong>,
+				\ 	<em>emphasis</em>,
+				\ 	<ins>inserted</ins>,
+				\ 	<del>deleted</del>,
+				\ 	<br />
+				\ 	<b>bold</b>,
+				\ 	<i>italic</i>,
+				\ 	<u>underlined</u>,
+				\ 	<s>strikethrough</s>,
+				\ 	<br />
+				\ 	<code>code</code>,
+				\ 	<a href="#">safe link</a>,
+				\ 	<a href="javascript:alert(1)">unsafe link</a>,
+				\ 	normal text.
+				\ </p>
+				\ <h2>Media elements</h2>
+				\ <p>
+				\ 	<img src="https://mol.js.org/logo/logo_128.png" />
+				\ </p>
+				\ <h2>Block elements</h2>
+				\ <blockquote><p>Block quotation</p></blockquote>
+				\ <pre><code>Block code</code></pre>
+
 $mol_infinite $mol_list
 	after!id /
 	Row!id $mol_view
@@ -1652,22 +1741,6 @@ $mol_link_demo $mol_demo_small
 			uri \http://example.org
 			title \example.org
 			hint <= external_hint @ \external link
-
-$mol_image $mol_view
-	dom_name \img
-	field *
-		^
-		src <= uri \
-		alt <= title
-
-$mol_link_iconed $mol_link
-	sub /
-		<= Icon $mol_image
-			uri <= icon \
-			title \
-	content /
-		<= title <= uri
-	host \
 
 $mol_link_iconed_demo $mol_demo_small
 	title @ \Link with icon

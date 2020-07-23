@@ -64,6 +64,35 @@ namespace $ {
 
 		}
 
+		font?: {
+
+			/** Whether a font should be styled. */
+			style?: 'normal' | 'italic' | Common
+
+			/** Weight (or boldness) of the font. */
+			weight?:
+			| 'normal' | 'bold' | 'lighter' | 'bolder'
+			| 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+			| Common
+			
+			/** Size of the font. Changing the font size also updates the sizes of the font size-relative length units. */
+			size?:
+			| 'xx-small' | 'x-small' | 'small' | 'medium'
+			| 'large' | 'x-large' | 'xx-large' | 'xxx-large'
+			| 'smaller' | 'larger'
+			| Length
+			| Common
+
+			/** Prioritized list of one or more font family names and/or generic family names. */
+			family?:
+			| 'serif' | 'sans-serif' | 'monospace'
+			| 'cursive' | 'fantasy'
+			| 'system-ui' | 'ui-serif' | 'ui-sans-serif' | 'ui-monospace' | 'ui-rounded'
+			| 'emoji' | 'math' | 'fangsong'
+			| Common
+
+		}
+
 		/** Foreground color value of text and text decorations, and sets the `currentcolor` value. */
 		color?: Color | Common
 
@@ -91,6 +120,12 @@ namespace $ {
 			anchor?: 'auto' | 'none' | Common
 			
 		}
+
+		/** How white space inside an element is handled. */
+		whiteSpace?:
+		| 'normal' | 'nowrap' | 'break-spaces'
+		| 'pre' | 'pre-wrap' | 'pre-line'
+		| Common
 
 		webkitOverflowScrolling?: 'auto' | 'touch'
 

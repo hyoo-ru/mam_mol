@@ -158,6 +158,7 @@ declare namespace $ {
         line: $mol_style_func<"var", "--mol_theme_line">;
         focus: $mol_style_func<"var", "--mol_theme_focus">;
         field: $mol_style_func<"var", "--mol_theme_field">;
+        image: $mol_style_func<"var", "--mol_theme_image">;
     };
 }
 

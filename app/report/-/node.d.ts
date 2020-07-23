@@ -163,6 +163,7 @@ declare namespace $ {
         line: $mol_style_func<"var", "--mol_theme_line">;
         focus: $mol_style_func<"var", "--mol_theme_focus">;
         field: $mol_style_func<"var", "--mol_theme_field">;
+        image: $mol_style_func<"var", "--mol_theme_image">;
     };
 }
 
@@ -816,6 +817,12 @@ declare namespace $ {
                 color: Color;
             }[];
         };
+        font?: {
+            style?: 'normal' | 'italic' | Common;
+            weight?: 'normal' | 'bold' | 'lighter' | 'bolder' | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | Common;
+            size?: 'xx-small' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'xx-large' | 'xxx-large' | 'smaller' | 'larger' | Length | Common;
+            family?: 'serif' | 'sans-serif' | 'monospace' | 'cursive' | 'fantasy' | 'system-ui' | 'ui-serif' | 'ui-sans-serif' | 'ui-monospace' | 'ui-rounded' | 'emoji' | 'math' | 'fangsong' | Common;
+        };
         color?: Color | Common;
         display?: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
         overflow?: Overflow | {
@@ -823,6 +830,7 @@ declare namespace $ {
             y?: Overflow | Common;
             anchor?: 'auto' | 'none' | Common;
         };
+        whiteSpace?: 'normal' | 'nowrap' | 'break-spaces' | 'pre' | 'pre-wrap' | 'pre-line' | Common;
         webkitOverflowScrolling?: 'auto' | 'touch';
         scrollbar: {
             color: [Color, Color] | 'dark' | 'light' | 'auto' | Common;
