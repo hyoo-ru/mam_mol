@@ -13,7 +13,7 @@ Safe virtualized view of raw HTML.
 
 **`html() : string`**
 
-Raw HTML. Unknown tags will be transparent ignored.
+Raw HTML. Unknown tags are transparently ignored.
 
 **`xss_uri() : string`** 
 
