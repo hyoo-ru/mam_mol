@@ -1,6 +1,6 @@
 # $mol_html_view
 
-Save virtualized view of raw HTML.
+Safe virtualized view of raw HTML.
 
 ## Usage example
 
