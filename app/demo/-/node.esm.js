@@ -15417,7 +15417,13 @@ var $;
             return this.$.$mol_locale.text("$mol_html_view_demo_title");
         }
         sub() {
-            return [this.Html()];
+            return [this.Scroll()];
+        }
+        Scroll() {
+            return ((obj) => {
+                obj.sub = () => [this.Html()];
+                return obj;
+            })(new this.$.$mol_scroll());
         }
         Html() {
             return ((obj) => {
@@ -15426,6 +15432,9 @@ var $;
             })(new this.$.$mol_html_view());
         }
     }
+    __decorate([
+        $.$mol_mem
+    ], $mol_html_view_demo.prototype, "Scroll", null);
     __decorate([
         $.$mol_mem
     ], $mol_html_view_demo.prototype, "Html", null);

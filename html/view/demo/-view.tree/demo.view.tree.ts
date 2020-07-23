@@ -11,11 +11,24 @@ namespace $ { export class $mol_html_view_demo extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  sub / <= Html
+	 *  sub / <= Scroll
 	 *  ```
 	 **/
 	sub() {
-		return [this.Html()] as readonly any[]
+		return [this.Scroll()] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  Scroll $mol_scroll sub / <= Html
+	 *  ```
+	 **/
+	@ $mol_mem
+	Scroll() {
+		return (( obj )=>{
+			obj.sub = () => [this.Html()] as readonly any[]
+			return obj
+		})( new this.$.$mol_scroll(  ) )
 	}
 
 	/**

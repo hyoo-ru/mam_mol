@@ -4372,6 +4372,7 @@ declare namespace $ {
     class $mol_html_view_demo extends $mol_demo_large {
         title(): string;
         sub(): readonly any[];
+        Scroll(): $$.$mol_scroll;
         Html(): $$.$mol_html_view;
     }
 }
