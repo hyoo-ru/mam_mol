@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_data_const< Val >( ref : Val ) {
+	export function $mol_data_const< Val extends {} | string | number >( ref : Val ) {
 
 		return $mol_data_setup( ( val : Val ) => {
 			
