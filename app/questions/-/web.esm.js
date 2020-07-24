@@ -4166,7 +4166,9 @@ var $;
                 return new this.$.$mol_state_arg(this.state_key()).link(this.arg());
             }
             current() {
-                if (this.uri() === this.$.$mol_state_arg.href())
+                const base = this.$.$mol_state_arg.href();
+                const target = new URL(this.uri(), base).toString();
+                if (base === target)
                     return true;
                 const args = this.arg();
                 const keys = Object.keys(args).filter(key => args[key] != null);
