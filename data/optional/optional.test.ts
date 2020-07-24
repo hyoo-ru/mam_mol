@@ -15,7 +15,7 @@ namespace $ {
 				const Type = $mol_data_optional( $mol_data_number )
 				Type( null as any )
 
-			} , 'object is not a number' )
+			} , 'null is not a number' )
 		} ,
 
 	})
