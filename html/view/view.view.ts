@@ -41,12 +41,14 @@ namespace $.$$ {
 					return [ this.Heading( node ) ]
 
 				case 'P':
-				case 'DIV':
-				case 'OL':
-				case 'UL':
 				case 'LI':
 				case 'PRE':
 					return [ this.Paragraph( node ) ]
+							
+				case 'DIV':
+				case 'UL':
+				case 'OL':
+					return [ this.List( node ) ]
 				
 				case 'BLOCKQUOTE':
 					return [ this.Quote( node ) ]
