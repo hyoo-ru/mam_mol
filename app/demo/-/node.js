@@ -15323,6 +15323,7 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        const warned = new Set();
         class $mol_html_view extends $.$mol_html_view {
             dom() {
                 return this.$.$mol_dom_parse(this.html(), 'text/html').body;
@@ -15383,7 +15384,15 @@ var $;
                     case 'BR':
                         return [this.Break(node)];
                     default:
-                        console.warn(node.nodeName, node);
+                        if (!warned.has(node.nodeName)) {
+                            this.$.$mol_log3_warn({
+                                place: `${this}.views()`,
+                                message: 'Unsupported tag',
+                                tag: node.nodeName,
+                                hint: 'Add support to $mol_html_view',
+                            });
+                            warned.add(node.nodeName);
+                        }
                         return this.content(node);
                 }
             }

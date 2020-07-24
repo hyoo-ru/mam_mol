@@ -1,4 +1,7 @@
 namespace $.$$ {
+
+	const warned = new Set< string >()
+
 	export class $mol_html_view extends $.$mol_html_view {
 
 		@ $mol_mem
@@ -83,7 +86,17 @@ namespace $.$$ {
 					return [ this.Break( node ) ]
 
 				default:
-					console.warn(node.nodeName, node)
+
+					if( !warned.has( node.nodeName ) ) {
+						this.$.$mol_log3_warn({
+							place: `${this}.views()`,
+							message: 'Unsupported tag',
+							tag: node.nodeName,
+							hint: 'Add support to $mol_html_view',
+						})
+						warned.add( node.nodeName )
+					}
+					
 					return this.content( node )
 				
 			}
