@@ -8,8 +8,10 @@ $mol_html_view $mol_list
 		sub <= content!id /
 	Paragraph!id $mol_paragraph
 		sub <= content!id /
-	Quote!id $mol_paragraph
-		sub <= content!id /
+	List!id $mol_list
+		rows <= content!id /
+	Quote!id $mol_list
+		rows <= content!id /
 	Strong!id $mol_paragraph
 		sub <= content!id /
 	Emphasis!id $mol_paragraph

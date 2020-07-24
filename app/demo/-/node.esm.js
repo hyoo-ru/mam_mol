@@ -2708,7 +2708,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: block;\n\t/* display: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n\n[mol_list] > * {\n\tdisplay: block;\n}\n");
+    $.$mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: block;\n\t/* display: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n\tmin-height: .5rem;\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n\n[mol_list] > * {\n\tdisplay: block;\n}\n");
 })($ || ($ = {}));
 //list.view.css.js.map
 ;
@@ -15052,11 +15052,17 @@ var $;
                 return obj;
             })(new this.$.$mol_paragraph());
         }
+        List(id) {
+            return ((obj) => {
+                obj.rows = () => this.content(id);
+                return obj;
+            })(new this.$.$mol_list());
+        }
         Quote(id) {
             return ((obj) => {
-                obj.sub = () => this.content(id);
+                obj.rows = () => this.content(id);
                 return obj;
-            })(new this.$.$mol_paragraph());
+            })(new this.$.$mol_list());
         }
         Strong(id) {
             return ((obj) => {
@@ -15132,6 +15138,9 @@ var $;
     __decorate([
         $.$mol_mem_key
     ], $mol_html_view.prototype, "Paragraph", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_html_view.prototype, "List", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_html_view.prototype, "Quote", null);
@@ -15300,6 +15309,7 @@ var $;
         },
         Break: {
             display: 'block',
+            height: rem(.5),
         },
         Text: {
             display: 'inline',
@@ -15342,12 +15352,13 @@ var $;
                     case 'H6':
                         return [this.Heading(node)];
                     case 'P':
-                    case 'DIV':
-                    case 'OL':
-                    case 'UL':
                     case 'LI':
                     case 'PRE':
                         return [this.Paragraph(node)];
+                    case 'DIV':
+                    case 'UL':
+                    case 'OL':
+                        return [this.List(node)];
                     case 'BLOCKQUOTE':
                         return [this.Quote(node)];
                     case 'STRONG':

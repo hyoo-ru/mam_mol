@@ -6,6 +6,7 @@
 	align-items: stretch;
 	align-content: stretch; */
 	transition: none;
+	min-height: .5rem;
 }
 
 [mol_list_gap_before] ,

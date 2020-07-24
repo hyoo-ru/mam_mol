@@ -121,6 +121,7 @@ namespace $ {
 
 		Break: {
 			display: 'block',
+			height: rem(.5),
 		},
 
 		Text: {

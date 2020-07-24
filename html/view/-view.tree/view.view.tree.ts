@@ -85,15 +85,28 @@ namespace $ { export class $mol_html_view extends $mol_list {
 
 	/**
 	 *  ```
-	 *  Quote!id $mol_paragraph sub <= content!id
+	 *  List!id $mol_list rows <= content!id
+	 *  ```
+	 **/
+	@ $mol_mem_key
+	List( id : any ) {
+		return (( obj )=>{
+			obj.rows = () => this.content(id)
+			return obj
+		})( new this.$.$mol_list(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  Quote!id $mol_list rows <= content!id
 	 *  ```
 	 **/
 	@ $mol_mem_key
 	Quote( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => this.content(id)
+			obj.rows = () => this.content(id)
 			return obj
-		})( new this.$.$mol_paragraph(  ) )
+		})( new this.$.$mol_list(  ) )
 	}
 
 	/**

@@ -7,7 +7,7 @@ namespace $ {
 
 		'is different number' () {
 			const Five = $mol_data_const( 5 )
-			$mol_assert_fail( ()=> Five( 6 ) , '6 is not 5' )
+			$mol_assert_fail( ()=> Five( 6 as any ) , '6 is not 5' )
 		} ,
 
 	})

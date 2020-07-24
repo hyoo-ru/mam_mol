@@ -4315,7 +4315,8 @@ declare namespace $ {
         heading_level(id: any): number;
         content(id: any): readonly any[];
         Paragraph(id: any): $$.$mol_paragraph;
-        Quote(id: any): $$.$mol_paragraph;
+        List(id: any): $$.$mol_list;
+        Quote(id: any): $$.$mol_list;
         Strong(id: any): $$.$mol_paragraph;
         Emphasis(id: any): $$.$mol_paragraph;
         Deleted(id: any): $$.$mol_paragraph;
