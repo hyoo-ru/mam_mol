@@ -58,6 +58,14 @@ namespace $ {
 			padding: rem(.75),
 		},
 
+		List: {
+			display: 'block',
+			flex: {
+				wrap : 'wrap',
+			},
+			padding: rem(.75),
+		},
+
 		Quote: {
 			display: 'block',
 			flex: {

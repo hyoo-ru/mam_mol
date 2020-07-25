@@ -46,9 +46,9 @@ namespace $.$$ {
 				case 'P':
 				case 'LI':
 				case 'PRE':
+				case 'DIV':
 					return [ this.Paragraph( node ) ]
 							
-				case 'DIV':
 				case 'UL':
 				case 'OL':
 					return [ this.List( node ) ]
@@ -88,13 +88,16 @@ namespace $.$$ {
 				default:
 
 					if( !warned.has( node.nodeName ) ) {
+
 						this.$.$mol_log3_warn({
 							place: `${this}.views()`,
 							message: 'Unsupported tag',
 							tag: node.nodeName,
 							hint: 'Add support to $mol_html_view',
 						})
+						
 						warned.add( node.nodeName )
+						
 					}
 					
 					return this.content( node )

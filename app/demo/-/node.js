@@ -15256,6 +15256,13 @@ var $;
             },
             padding: rem(.75),
         },
+        List: {
+            display: 'block',
+            flex: {
+                wrap: 'wrap',
+            },
+            padding: rem(.75),
+        },
         Quote: {
             display: 'block',
             flex: {
@@ -15357,8 +15364,8 @@ var $;
                     case 'P':
                     case 'LI':
                     case 'PRE':
-                        return [this.Paragraph(node)];
                     case 'DIV':
+                        return [this.Paragraph(node)];
                     case 'UL':
                     case 'OL':
                         return [this.List(node)];
