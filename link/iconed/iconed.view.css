@@ -10,7 +10,8 @@
 	height: 1em;
 	width: 1em;
 	display: inline-block;
-	margin: 0 .25rem 1px;
+	margin: -.25rem .25rem 0;
+	vertical-align: middle;
 }
 
 [mol_theme="$mol_theme_dark"] [mol_link_iconed_icon] {
