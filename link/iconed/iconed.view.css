@@ -1,5 +1,5 @@
 [mol_link_iconed] {
-	align-items: baseline;
+	align-items: center;
 	color: var(--mol_theme_control);
 	display: inline;
 	padding: .5rem;
@@ -7,12 +7,10 @@
 
 [mol_link_iconed_icon] {
 	box-shadow: none;
-	margin-right: 2px;
 	height: 1em;
 	width: 1em;
-	vertical-align: -25%;
 	display: inline-block;
-	margin: 0 .25rem;
+	margin: 0 .25rem 1px;
 }
 
 [mol_theme="$mol_theme_dark"] [mol_link_iconed_icon] {
