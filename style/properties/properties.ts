@@ -25,6 +25,9 @@ namespace $ {
 		left?: Value ,
 	}
 
+	type Span_align = 'none' | 'start' | 'end' | 'center'
+	type Snap_axis = 'x' | 'y' | 'block' | 'inline' | 'both'
+
 	type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common
 
 	interface Overrides {
@@ -129,8 +132,29 @@ namespace $ {
 
 		webkitOverflowScrolling?: 'auto' | 'touch'
 
-		scrollbar: {
-			color: [ Color , Color ] | 'dark' | 'light' | 'auto' | Common
+		scrollbar?: {
+			color?: [ Color , Color ] | 'dark' | 'light' | 'auto' | Common
+		}
+
+		scroll?: {
+
+			snap?: {
+
+				/** How strictly snap points are enforced on the scroll container in case there is one. */
+				type:
+				| 'none'
+				| Snap_axis
+				| [ Snap_axis , 'mandatory' | 'proximity' ]
+				| Common
+				
+				/** Whether the scroll container is allowed to "pass over" possible snap positions. */
+				stop: 'normal' | 'always' | Common
+				
+				/** The box’s snap position as an alignment of its snap area (as the alignment subject) within its snap container’s snapport (as the alignment container). The two values specify the snapping alignment in the block axis and inline axis, respectively. If only one value is specified, the second value defaults to the same value. */
+				align: Span_align | [ Span_align , Span_align ] | Common
+
+			}
+
 		}
 		
 		/** Element's width. By default, it sets the width of the content area, but if `boxSizing` is set to `border-box`, it sets the width of the border area. */
