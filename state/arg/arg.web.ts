@@ -88,9 +88,11 @@ namespace $ {
 		}
 		
 	}
-	
-	self.addEventListener( 'hashchange' , $mol_fiber_root( $mol_log_group( '$mol_state_arg hashchange' , ( event : HashChangeEvent )=> {
+
+	const $mol_state_arg_change = ( event : HashChangeEvent )=> {
 		$mol_state_arg.href( $mol_dom_context.location.href ) 
-	} ) ) )
+	}
+
+	self.addEventListener( 'hashchange' , $mol_fiber_root( $mol_state_arg_change ) )
 	
 }

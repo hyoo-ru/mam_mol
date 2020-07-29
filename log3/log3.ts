@@ -40,7 +40,7 @@ namespace $ {
 	/** Log begin of log group, returns func to close group */
 	export declare let $mol_log3_area : $mol_log3_logger< {} , ()=> void >
 
-	/** Log begin of collapsed group only when som logged inside, returns func to close group */
+	/** Log begin of collapsed group only when some logged inside, returns func to close group */
 	export function $mol_log3_area_lazy(
 		this : $mol_ambient_context ,
 		event : $mol_log3_event<{}> ,

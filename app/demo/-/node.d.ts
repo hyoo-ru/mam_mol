@@ -562,7 +562,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_func_name(func: Function): string;
+    class $mol_memo extends $mol_wrapper {
+        static wrap<This extends object, Value>(task: (this: This, next?: Value) => Value): (this: This, next?: Value | undefined) => Value | undefined;
+    }
+}
+
+declare namespace $ {
+    function $mol_func_name(this: $mol_ambient_context, func: Function): string;
     function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
 }
 
@@ -1817,12 +1823,6 @@ declare namespace $ {
         static value<Value>(key: string, next?: Value): Value;
         prefix(): string;
         value(key: string, next?: Value): Value;
-    }
-}
-
-declare namespace $ {
-    class $mol_memo extends $mol_wrapper {
-        static wrap<This extends object, Value>(task: (this: This, next?: Value) => Value): (this: This, next?: Value | undefined) => Value | undefined;
     }
 }
 
@@ -3868,26 +3868,6 @@ declare namespace $ {
     class $mol_ghost extends $mol_view {
         Sub(): $mol_view;
     }
-}
-
-declare namespace $ {
-    function $mol_log(path: any, ...values: any[]): void;
-}
-
-declare namespace $ {
-    function $mol_log_context(next?: (() => void) | null): (() => void) | null;
-}
-
-declare namespace $ {
-    function $mol_log_debug(next?: () => void): () => void;
-}
-
-declare namespace $ {
-    var $mol_log_filter: (next?: string | null) => string | null;
-}
-
-declare namespace $ {
-    function $mol_log_group<Task extends Function, This>(name: string, task: Task): Task;
 }
 
 declare namespace $ {

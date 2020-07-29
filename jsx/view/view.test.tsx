@@ -65,11 +65,11 @@ namespace $ {
 			
 		} ,
 		
-		async 'Reactive attached view'() {
+		async 'Reactive attached view'($) {
 
 			const doc = $mol_dom_parse( '<html><body id="/foo"></body></html>' )
 			
-			class Task {
+			class Task extends $mol_object2 {
 
 				@ $mol_mem
 				title( next? : string ) { return next || 'foo' }
@@ -93,8 +93,10 @@ namespace $ {
 			}
 
 			const task = new Task
+			task.$ = $
 
-			$mol_atom2_autorun( ()=> $mol_jsx_attach( doc , ()=> <App id="/foo" task={ ()=> task } /> ) )
+			const autorun = $.$mol_atom2_autorun( ()=> $mol_jsx_attach( doc , ()=> <App $={$} id="/foo" task={ ()=> task } /> ) )
+			autorun.$ = $
 			
 			await $mol_fiber_warp()
 			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="/foo">foo</body></html>' )

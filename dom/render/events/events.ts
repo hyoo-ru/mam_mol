@@ -5,7 +5,7 @@ namespace $ {
 		events : { [ key : string ] : ( event : Event )=> any }
 	) {
 		for( let name in events ) {
-			el.addEventListener( name , $mol_log_group( el.id + ' ' + name , events[ name ] ) , { passive : false } as any )
+			el.addEventListener( name , events[ name ] , { passive : false } as any )
 		}
 	}
 	
@@ -14,7 +14,7 @@ namespace $ {
 		events : { [ key : string ] : ( event : Event )=> any }
 	) {
 		for( let name in events ) {
-			el.addEventListener( name , $mol_log_group( el.id + ' ' + name , events[ name ] ) , { passive : true } as any )
+			el.addEventListener( name , events[ name ] , { passive : true } as any )
 		}
 	}
 	

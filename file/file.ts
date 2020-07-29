@@ -57,12 +57,18 @@ namespace $ {
 		
 		@ $mol_mem
 		exists( next? : boolean , force? : $mol_mem_force ) {
+
 			let exists = true
 			try {
 				this.stat()
 			} catch (error) {
-				if (error instanceof $mol_file_not_found) exists = false
-				else return $mol_fail_hidden(error)
+
+				if (error instanceof $mol_file_not_found) {
+					exists = false
+				} else {
+					return $mol_fail_hidden(error)
+				}
+				
 			}
 
 			if( next === undefined ) return exists

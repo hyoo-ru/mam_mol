@@ -1888,7 +1888,7 @@ var $;
     function $mol_dict_key(value) {
         if (!value)
             return JSON.stringify(value);
-        if (typeof value !== 'object')
+        if (typeof value !== 'object' && typeof value !== 'function')
             return JSON.stringify(value);
         if (Array.isArray(value))
             return JSON.stringify(value);
@@ -1954,14 +1954,15 @@ var $;
             let dict = store.get(host);
             if (!dict)
                 store.set(host, dict = new $.$mol_dict);
-            let cache = dict.get(key);
+            const key_str = $.$mol_dict_key(key);
+            let cache = dict.get(key_str);
             if (cache)
                 return cache;
             let cache2 = new $.$mol_atom2;
-            cache2[Symbol.toStringTag] = `${host}.${name}(${$.$mol_dict_key(key)})`;
+            cache2[Symbol.toStringTag] = `${host}.${name}(${key_str})`;
             cache2.calculate = value.bind(host, key);
             cache2.abort = () => {
-                dict.delete(key);
+                dict.delete(key_str);
                 if (dict.size === 0)
                     store.delete(host);
                 cache2.forget();
@@ -1969,7 +1970,7 @@ var $;
             };
             $.$mol_owning_catch(host, cache2);
             cache2[$.$mol_object_field] = name;
-            dict.set(key, cache2);
+            dict.set(key_str, cache2);
             return cache2;
         };
         return {
@@ -2255,13 +2256,33 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_memo extends $.$mol_wrapper {
+        static wrap(task) {
+            const store = new WeakMap();
+            return function (next) {
+                var _a;
+                if (next === undefined && store.has(this))
+                    return store.get(this);
+                const val = (_a = task.call(this, next)) !== null && _a !== void 0 ? _a : next;
+                store.set(this, val);
+                return val;
+            };
+        }
+    }
+    $.$mol_memo = $mol_memo;
+})($ || ($ = {}));
+//memo.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_func_name(func) {
         let name = func.name;
         if ((name === null || name === void 0 ? void 0 : name.length) > 1)
             return name;
-        for (let key in $) {
+        for (let key in this) {
             try {
-                if ($[key] !== func)
+                if (this[key] !== func)
                     continue;
                 name = key;
                 Object.defineProperty(func, 'name', { value: name });
@@ -2491,7 +2512,7 @@ var $;
                 const suffix2 = '_' + suffix[0].toLowerCase() + suffix.substring(1);
                 for (let Class of owner.constructor.view_classes()) {
                     if (suffix in Class.prototype)
-                        names.push($.$mol_func_name(Class) + suffix2);
+                        names.push(this.$.$mol_func_name(Class) + suffix2);
                     else
                         break;
                 }
@@ -2508,7 +2529,7 @@ var $;
                     names.push(name);
             }
             for (let Class of this.constructor.view_classes()) {
-                const name = $.$mol_func_name(Class);
+                const name = this.$.$mol_func_name(Class);
                 if (!name)
                     continue;
                 if (names.indexOf(name) < 0)
@@ -2585,7 +2606,7 @@ var $;
         $.$mol_mem_key
     ], $mol_view, "Root", null);
     __decorate([
-        $.$mol_mem
+        $.$mol_memo.method
     ], $mol_view, "view_classes", null);
     $.$mol_view = $mol_view;
 })($ || ($ = {}));
@@ -3167,7 +3188,7 @@ var $;
 (function ($) {
     function $mol_style_sheet(Component, config0) {
         let rules = [];
-        const block = $.$mol_dom_qname($.$mol_func_name(Component));
+        const block = $.$mol_dom_qname($.$mol_ambient({}).$mol_func_name(Component));
         const kebab = (name) => name.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
         const make_class = (prefix, path, config) => {
             const props = [];
@@ -4382,10 +4403,12 @@ var $;
                 this.stat();
             }
             catch (error) {
-                if (error instanceof $mol_file_not_found)
+                if (error instanceof $mol_file_not_found) {
                     exists = false;
-                else
+                }
+                else {
                     return $.$mol_fail_hidden(error);
+                }
             }
             if (next === undefined)
                 return exists;
@@ -5327,26 +5350,6 @@ var $;
     $.$mol_state_session = $mol_state_session;
 })($ || ($ = {}));
 //session.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_memo extends $.$mol_wrapper {
-        static wrap(task) {
-            const store = new WeakMap();
-            return function (next) {
-                var _a;
-                if (next === undefined && store.has(this))
-                    return store.get(this);
-                const val = (_a = task.call(this, next)) !== null && _a !== void 0 ? _a : next;
-                store.set(this, val);
-                return val;
-            };
-        }
-    }
-    $.$mol_memo = $mol_memo;
-})($ || ($ = {}));
-//memo.js.map
 ;
 "use strict";
 var $;
@@ -13306,104 +13309,15 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_log(path, ...values) {
-        if ($.$mol_log_filter() == null)
-            return;
-        path = String(path);
-        if (path.indexOf($.$mol_log_filter()) === -1)
-            return;
-        const context = $.$mol_log_context();
-        if (context)
-            context();
-        console.debug(path, ...values);
-        if ($.$mol_log_debug() == null)
-            return;
-        if (path.indexOf($.$mol_log_debug()) === -1)
-            return;
-        debugger;
-    }
-    $.$mol_log = $mol_log;
-})($ || ($ = {}));
-//log.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    let context = null;
-    function $mol_log_context(next = context) {
-        return context = next;
-    }
-    $.$mol_log_context = $mol_log_context;
-})($ || ($ = {}));
-//log_context.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    let debug;
-    function $mol_log_debug(next = debug) {
-        return debug = next;
-    }
-    $.$mol_log_debug = $mol_log_debug;
-})($ || ($ = {}));
-//log_debug.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    let filter;
-    $.$mol_log_filter = function $mol_log_filter(next = filter) {
-        return filter = next;
-    };
-})($ || ($ = {}));
-//log_filter.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_log_group(name, task) {
-        const filter = $.$mol_log_filter();
-        if (filter == null)
-            return task;
-        return function $mol_log_group_wrapper(...args) {
-            let started = false;
-            let prev = $.$mol_log_context();
-            $.$mol_log_context(() => {
-                if (prev)
-                    prev();
-                started = true;
-                if (filter || prev)
-                    console.group(name);
-                else
-                    console.groupCollapsed(name);
-                $.$mol_log_context(prev = null);
-            });
-            try {
-                return task.apply(this, args);
-            }
-            finally {
-                if (started)
-                    console.groupEnd();
-                $.$mol_log_context(prev);
-            }
-        };
-    }
-    $.$mol_log_group = $mol_log_group;
-})($ || ($ = {}));
-//log_group.js.map
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_dom_render_events(el, events) {
         for (let name in events) {
-            el.addEventListener(name, $.$mol_log_group(el.id + ' ' + name, events[name]), { passive: false });
+            el.addEventListener(name, events[name], { passive: false });
         }
     }
     $.$mol_dom_render_events = $mol_dom_render_events;
     function $mol_dom_render_events_async(el, events) {
         for (let name in events) {
-            el.addEventListener(name, $.$mol_log_group(el.id + ' ' + name, events[name]), { passive: true });
+            el.addEventListener(name, events[name], { passive: true });
         }
     }
     $.$mol_dom_render_events_async = $mol_dom_render_events_async;

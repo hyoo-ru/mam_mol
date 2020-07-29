@@ -16,7 +16,7 @@ namespace $ {
 			return $mol_fiber_sync( ()=> new Promise< HTMLIFrameElement >( ( done , fail )=> {
 				const frame = this.$.$mol_dom_context.document.createElement( 'iframe' )
 				frame.src = this.uri()
-				frame.onload = $mol_fiber_root( $mol_log_group( `${ this }.frame() load` , event => done( frame ) ) )
+				frame.onload = $mol_fiber_root( event => done( frame ) )
 				frame.style.display = 'none'
 				this.$.$mol_dom_context.document.documentElement.appendChild( frame )
 			} ) ) ()
@@ -29,16 +29,16 @@ namespace $ {
 			
 				const id = `$mol_rpc_client_frame:${ Date.now().toString(16) }`
 				
-				this.frame().contentWindow.postMessage( { id , name , args } , '*' )
+				this.frame().contentWindow!.postMessage( { id , name , args } , '*' )
 				
-				const handle = $mol_log_group( `${ this }.call(${ JSON.stringify({ name , args }) }) message` , ( event : MessageEvent )=> {
+				const handle = ( event : MessageEvent )=> {
 					if( event.data.id !== id ) return
 
 					this.$.$mol_dom_context.removeEventListener( 'message' , handle )
 					
 					if( event.data.error ) fail( new Error( event.data.error ) )
 					else done( event.data.result )
-				} )
+				}
 				this.$.$mol_dom_context.addEventListener( 'message' , $mol_fiber_root( handle ) )
 				
 			} ) ) ()

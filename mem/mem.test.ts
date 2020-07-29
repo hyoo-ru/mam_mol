@@ -1,9 +1,11 @@
 namespace $ {
 	$mol_test( {
 
-		'Property method' () {
+		'Property method' ($) {
 
 			class App extends $mol_object2 {
+
+				static $ = $
 
 				@ $mol_mem
 				static value( next = 1 ) { return next + 1 }
@@ -17,7 +19,7 @@ namespace $ {
 
 		} ,
 
-		'auto sync of properties'() {
+		'auto sync of properties'($) {
 
 			class X extends $mol_object2 {
 
@@ -39,6 +41,8 @@ namespace $ {
 			}
 
 			const x = new X
+			x.$ = $
+
 			$mol_assert_equal( x.bar() , 2 )
 			$mol_assert_equal( x.xxx() , 3 )
 
@@ -61,7 +65,7 @@ namespace $ {
 
 		// } ,
 
-		async 'must be deferred destroyed when no longer referenced'() {
+		async 'must be deferred destroyed when no longer referenced'($) {
 
 			let foo : any
 			let foo_destroyed = false
@@ -91,6 +95,7 @@ namespace $ {
 			}
 
 			var b = new B
+			b.$ = $
 
 			var bar = b.bar()
 			$mol_assert_ok( bar )
@@ -107,7 +112,7 @@ namespace $ {
 			$mol_assert_unique( b.bar() , bar )
 		} ,
 
-		async 'wait for data'() {
+		async 'wait for data'($) {
 
 			class Test extends $mol_object2 {
 
@@ -129,6 +134,7 @@ namespace $ {
 			}
 
 			const t = new Test
+			t.$ = $
 
 			$mol_assert_fail( ()=> t.target().valueOf() , Promise )
 

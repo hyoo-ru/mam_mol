@@ -2,10 +2,11 @@ namespace $.$$ {
 	
 	$mol_test({
 		
-		'handle clicks by default'() {
+		'handle clicks by default'($) {
 			let clicked = false
 			
 			const clicker = $mol_button.make({
+				$,
 				event_click : ( event : MouseEvent )=> { clicked = true } ,
 			})
 			
@@ -18,10 +19,11 @@ namespace $.$$ {
 			$mol_assert_ok( clicked )
 		} ,
 		
-		'no handle clicks if disabled'() {
+		'no handle clicks if disabled'($) {
 			let clicked = false
 			
 			const clicker = $mol_button.make({
+				$,
 				event_click : ( event : MouseEvent )=> { clicked = true } ,
 				enabled : ()=> false ,
 			})

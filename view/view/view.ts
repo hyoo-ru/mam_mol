@@ -251,7 +251,7 @@ namespace $ {
 
 		}
 
-		@ $mol_mem
+		@ $mol_memo.method
 		static view_classes() {
 			const proto = this.prototype
 			
@@ -277,7 +277,7 @@ namespace $ {
 				const suffix2 = '_' + suffix[0].toLowerCase() + suffix.substring(1)
 				
 				for( let Class of ( owner.constructor as typeof $mol_view ).view_classes() ) {
-					if( suffix in Class.prototype ) names.push( $mol_func_name( Class ) + suffix2 )
+					if( suffix in Class.prototype ) names.push( this.$.$mol_func_name( Class ) + suffix2 )
 					else break
 				}
 				
@@ -298,7 +298,7 @@ namespace $ {
 			}
 
 			for( let Class of ( this.constructor as typeof $mol_view ).view_classes() ) {
-				const name = $mol_func_name( Class )
+				const name = this.$.$mol_func_name( Class )
 				if( !name ) continue
 				if( names.indexOf( name ) < 0 ) names.push( name )
 			}

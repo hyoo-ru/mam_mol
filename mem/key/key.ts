@@ -29,21 +29,22 @@ namespace $ {
 			let dict = store.get( host )!
 			if( !dict ) store.set( host , dict = new $mol_dict )
 			
-			let cache = dict.get( key )
+			const key_str = $mol_dict_key(key)
+			let cache = dict.get( key_str )
 			if( cache ) return cache
 
 			let cache2 = new $mol_atom2
-			cache2[ Symbol.toStringTag ] = `${ host }.${ name }(${$mol_dict_key(key)})`
+			cache2[ Symbol.toStringTag ] = `${ host }.${ name }(${key_str})`
 			cache2.calculate = value.bind( host , key )
 			cache2.abort = ()=> {
-				dict.delete( key )
+				dict.delete( key_str )
 				if( dict.size === 0 ) store.delete( host )
 				cache2.forget()
 				return true
 			}
 			$mol_owning_catch( host , cache2 )
 			cache2[ $mol_object_field ] = name
-			dict.set( key , cache2 )
+			dict.set( key_str , cache2 )
 
 			return cache2
 		}
