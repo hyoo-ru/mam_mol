@@ -4108,9 +4108,6 @@ var $;
         dom_name_space() {
             return "http://www.w3.org/2000/svg";
         }
-        text_width(text, force) {
-            return (text !== void 0) ? text : 0;
-        }
         font_size() {
             return 16;
         }
@@ -4118,9 +4115,6 @@ var $;
             return "";
         }
     }
-    __decorate([
-        $.$mol_mem
-    ], $mol_svg.prototype, "text_width", null);
     $.$mol_svg = $mol_svg;
 })($ || ($ = {}));
 //svg.view.tree.js.map
@@ -4149,31 +4143,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    let canvas;
-    function $mol_font_canvas(next = canvas) {
-        if (!next)
-            next = $.$mol_dom_context.document.createElement('canvas').getContext('2d');
-        return canvas = next;
-    }
-    $.$mol_font_canvas = $mol_font_canvas;
-})($ || ($ = {}));
-//canvas.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_font_measure(size, face, text) {
-        const canvas = $.$mol_font_canvas();
-        canvas.font = size + 'px ' + face;
-        return canvas.measureText(text).width;
-    }
-    $.$mol_font_measure = $mol_font_measure;
-})($ || ($ = {}));
-//measure.js.map
-;
-"use strict";
-var $;
-(function ($) {
     var $$;
     (function ($$) {
         class $mol_svg extends $.$mol_svg {
@@ -4189,9 +4158,6 @@ var $;
             }
             font_family() {
                 return this.computed_style()['font-family'];
-            }
-            text_width(text) {
-                return $.$mol_font_measure(this.font_size(), this.font_family(), text);
             }
         }
         __decorate([

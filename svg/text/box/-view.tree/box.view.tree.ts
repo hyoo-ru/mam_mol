@@ -11,6 +11,15 @@ namespace $ { export class $mol_svg_text_box extends $mol_svg_group {
 
 	/**
 	 *  ```
+	 *  width 0
+	 *  ```
+	 **/
+	width() {
+		return 0
+	}
+
+	/**
+	 *  ```
 	 *  sub /
 	 *  	<= Back
 	 *  	<= Text

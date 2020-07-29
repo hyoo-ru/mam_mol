@@ -3817,9 +3817,6 @@ var $;
         dom_name_space() {
             return "http://www.w3.org/2000/svg";
         }
-        text_width(text, force) {
-            return (text !== void 0) ? text : 0;
-        }
         font_size() {
             return 16;
         }
@@ -3827,9 +3824,6 @@ var $;
             return "";
         }
     }
-    __decorate([
-        $.$mol_mem
-    ], $mol_svg.prototype, "text_width", null);
     $.$mol_svg = $mol_svg;
 })($ || ($ = {}));
 //svg.view.tree.js.map
@@ -3858,31 +3852,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    let canvas;
-    function $mol_font_canvas(next = canvas) {
-        if (!next)
-            next = $.$mol_dom_context.document.createElement('canvas').getContext('2d');
-        return canvas = next;
-    }
-    $.$mol_font_canvas = $mol_font_canvas;
-})($ || ($ = {}));
-//canvas.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_font_measure(size, face, text) {
-        const canvas = $.$mol_font_canvas();
-        canvas.font = size + 'px ' + face;
-        return canvas.measureText(text).width;
-    }
-    $.$mol_font_measure = $mol_font_measure;
-})($ || ($ = {}));
-//measure.js.map
-;
-"use strict";
-var $;
-(function ($) {
     var $$;
     (function ($$) {
         class $mol_svg extends $.$mol_svg {
@@ -3898,9 +3867,6 @@ var $;
             }
             font_family() {
                 return this.computed_style()['font-family'];
-            }
-            text_width(text) {
-                return $.$mol_font_measure(this.font_size(), this.font_family(), text);
             }
         }
         __decorate([
@@ -9688,6 +9654,9 @@ var $;
         font_size() {
             return 16;
         }
+        width() {
+            return 0;
+        }
         sub() {
             return [this.Back(), this.Text()];
         }
@@ -9745,6 +9714,31 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    let canvas;
+    function $mol_font_canvas(next = canvas) {
+        if (!next)
+            next = $.$mol_dom_context.document.createElement('canvas').getContext('2d');
+        return canvas = next;
+    }
+    $.$mol_font_canvas = $mol_font_canvas;
+})($ || ($ = {}));
+//canvas.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_font_measure(size, face, text) {
+        const canvas = $.$mol_font_canvas();
+        canvas.font = size + 'px ' + face;
+        return canvas.measureText(text).width;
+    }
+    $.$mol_font_measure = $mol_font_measure;
+})($ || ($ = {}));
+//measure.js.map
+;
+"use strict";
+var $;
+(function ($) {
     $.$mol_style_attach("mol/svg/text/box/box.view.css", "[mol_svg_text_box_back] {\n\tstroke: none;\n\tfill: var(--mol_theme_back);\n}\n");
 })($ || ($ = {}));
 //box.view.css.js.map
@@ -9756,14 +9750,17 @@ var $;
     (function ($$) {
         class $mol_svg_text_box extends $.$mol_svg_text_box {
             box_width() {
-                return this.text_width(this.text());
+                return `${this.width()}px`;
+            }
+            width() {
+                return $.$mol_font_measure(this.font_size(), this.font_family(), this.text());
             }
             box_pos_x() {
                 const align = this.align();
                 if (align === 'end')
-                    return `calc(${this.pos_x()} - ${this.box_width()})`;
+                    return `calc(${this.pos_x()} - ${this.width()})`;
                 if (align === 'middle')
-                    return `calc(${this.pos_x()} - ${Math.round(this.box_width() / 2)})`;
+                    return `calc(${this.pos_x()} - ${Math.round(this.width() / 2)})`;
                 return this.pos_x();
             }
             box_pos_y() {
@@ -9772,7 +9769,7 @@ var $;
         }
         __decorate([
             $.$mol_mem
-        ], $mol_svg_text_box.prototype, "box_width", null);
+        ], $mol_svg_text_box.prototype, "width", null);
         $$.$mol_svg_text_box = $mol_svg_text_box;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -10451,7 +10448,7 @@ var $;
                 const nearest = this.nearest();
                 if (!nearest)
                     return '0';
-                const width = this.text_width(this.title_x());
+                const width = this.Label_x().width();
                 return (nearest.scaled.x - width / 2).toFixed(3);
             }
             title_x_pos_y() {

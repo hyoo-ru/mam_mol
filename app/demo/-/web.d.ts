@@ -1240,7 +1240,6 @@ declare namespace $ {
     class $mol_svg extends $mol_view {
         dom_name(): string;
         dom_name_space(): string;
-        text_width(text?: any, force?: $mol_mem_force): any;
         font_size(): number;
         font_family(): string;
     }
@@ -1252,20 +1251,11 @@ declare namespace $ {
     }
 }
 
-declare namespace $ {
-    function $mol_font_canvas(next?: CanvasRenderingContext2D): CanvasRenderingContext2D;
-}
-
-declare namespace $ {
-    function $mol_font_measure(size: number, face: string, text: string): number;
-}
-
 declare namespace $.$$ {
     class $mol_svg extends $.$mol_svg {
         computed_style(): CSSStyleDeclaration;
         font_size(): number;
         font_family(): any;
-        text_width(text: string): number;
     }
 }
 
@@ -3024,6 +3014,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_svg_text_box extends $mol_svg_group {
         font_size(): number;
+        width(): number;
         sub(): readonly any[];
         Back(): $$.$mol_svg_rect;
         box_width(): string;
@@ -3039,11 +3030,20 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_font_canvas(next?: CanvasRenderingContext2D): CanvasRenderingContext2D;
+}
+
+declare namespace $ {
+    function $mol_font_measure(size: number, face: string, text: string): number;
+}
+
+declare namespace $ {
 }
 
 declare namespace $.$$ {
     class $mol_svg_text_box extends $.$mol_svg_text_box {
-        box_width(): any;
+        box_width(): string;
+        width(): number;
         box_pos_x(): string;
         box_pos_y(): string;
     }
