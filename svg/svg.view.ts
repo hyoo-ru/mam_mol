@@ -20,8 +20,5 @@ namespace $.$$ {
 			return this.computed_style()['font-family']
 		}
 
-		text_width(text: string): number {
-			return $mol_font_measure(this.font_size(), this.font_family(), text)
-		}
 	}
 }
