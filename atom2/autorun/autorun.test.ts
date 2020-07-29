@@ -2,9 +2,11 @@ namespace $ {
 
 	$mol_test({
 
-		async 'Autorun' () {
+		async 'Autorun' ($) {
 
 			class App extends $mol_object2 {
+
+				static $ = $
 
 				@ $mol_atom2_field
 				static state = 1
@@ -20,6 +22,7 @@ namespace $ {
 			}
 
 			const autorun = $mol_atom2_autorun( ()=> App.init )
+			autorun.$ = $
 
 			try {
 

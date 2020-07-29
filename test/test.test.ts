@@ -9,7 +9,7 @@ namespace $ {
 			const code = set[ name ]
 			const test = ( typeof code === 'string' ) ? new Function( '' , code ) as ()=> void : code
 			
-			$mol_test_all.push( $mol_log_group( name , test ) )
+			$mol_test_all.push( test )
 		}
 
 		$mol_test_schedule()
@@ -43,10 +43,10 @@ namespace $ {
 		if( scheduled ) return
 		scheduled = true
 
-		setTimeout( $mol_log_group( '$mol_test' , ()=> {
+		setTimeout( ()=> {
 			scheduled = false
  			$mol_test_run()
-		} ) , 0 )
+		} , 0 )
 		
 	}
 

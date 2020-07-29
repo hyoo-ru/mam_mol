@@ -10,7 +10,7 @@ namespace $ {
 
 		let rules = [] as string[]
 
-		const block = $mol_dom_qname( $mol_func_name( Component ) )
+		const block = $mol_dom_qname( $mol_ambient({}).$mol_func_name( Component ) )
 		const kebab = ( name : string )=> name.replace( /[A-Z]/g , letter => '-' + letter.toLowerCase() )
 
 		const make_class = ( prefix : string , path : string[] , config : typeof config0 )=> {

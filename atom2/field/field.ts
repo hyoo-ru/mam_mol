@@ -36,6 +36,7 @@ namespace $ {
 					cache!.forget()
 					return true
 				}
+				$mol_owning_catch( host , cache )
 				store.set( host , cache )
 			}
 

@@ -14,9 +14,11 @@ namespace $ {
 		}
 		
 	}
-	
-	self.addEventListener( 'resize' , $mol_fiber_root( $mol_log_group( `$mol_window resize` , ()=> {
+
+	const $mol_window_resize = ()=> {
 		$mol_window.size( undefined , $mol_mem_force_cache )
-	} ) ) )
+	}
+	
+	self.addEventListener( 'resize' , $mol_fiber_root( $mol_window_resize ) )
 	
 }

@@ -1,11 +1,13 @@
 namespace $ {
 	$mol_test( {
 		
-		'id auto generation'() {
+		'id auto generation'($) {
 				
 			class $mol_view_test_item extends $mol_view { }
 			
 			class $mol_view_test_block extends $mol_view {
+
+				static $ = $
 				
 				@ $mol_mem_key
 				element( id : number ) {
@@ -21,15 +23,16 @@ namespace $ {
 			
 		} ,
 		
-		'caching ref to dom node'() {
+		'caching ref to dom node'($) {
 			
 			var x = new class extends $mol_view { }
+			x.$ = $
 			
 			$mol_assert_equal( x.dom_node() , x.dom_node() )
 			
 		} ,
 		
-		'content render'() {
+		'content render'($) {
 				
 			class $mol_view_test extends $mol_view {
 				sub() {
@@ -38,6 +41,7 @@ namespace $ {
 			}
 			
 			var x = new $mol_view_test()
+			x.$ = $
 			
 			var node = x.dom_tree()
 			
@@ -45,7 +49,7 @@ namespace $ {
 			
 		} ,
 		
-		'bem attributes generation'() {
+		'bem attributes generation'($) {
 				
 			class $mol_view_test_item extends $mol_view { }
 			
@@ -59,6 +63,7 @@ namespace $ {
 			}
 			
 			var x = new $mol_view_test_block()
+			x.$ = $
 			
 			$mol_assert_equal( x.dom_node().getAttribute( 'mol_view_test_block' ) , '' )
 			$mol_assert_equal( x.dom_node().getAttribute( 'mol_view' ) , '' )
@@ -70,7 +75,7 @@ namespace $ {
 			
 		} ,
 		
-		'render custom attributes'() {
+		'render custom attributes'($) {
 			
 			class $mol_view_test extends $mol_view {
 				attr() {
@@ -83,6 +88,7 @@ namespace $ {
 			}
 			
 			var x = new $mol_view_test()
+			x.$ = $
 			
 			var node = x.dom_tree()
 			
@@ -92,7 +98,7 @@ namespace $ {
 			
 		} ,
 		
-		'render custom fields'() {
+		'render custom fields'($) {
 				
 			class $mol_view_test extends $mol_view {
 				field() {
@@ -103,6 +109,7 @@ namespace $ {
 			}
 			
 			var x = new $mol_view_test()
+			x.$ = $
 			
 			var node = x.dom_tree() as HTMLElement
 			
@@ -110,7 +117,7 @@ namespace $ {
 			
 		} ,
 		
-		'attach event handlers'() {
+		'attach event handlers'($) {
 				
 			var clicked = false
 			
@@ -127,6 +134,7 @@ namespace $ {
 			}
 			
 			var x = new $mol_view_test()
+			x.$ = $
 			
 			var node = x.dom_node() as HTMLElement
 			node.click()
