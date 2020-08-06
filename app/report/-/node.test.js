@@ -3145,13 +3145,16 @@ var $;
             return (val !== void 0) ? val : null;
         }
         field() {
-            return (Object.assign(Object.assign({}, super.field()), { "scrollTop": this.scroll_top(), "scrollLeft": this.scroll_left() }));
+            return (Object.assign(Object.assign({}, super.field()), { "scrollTop": this.scroll_top(), "scrollLeft": this.scroll_left(), "tabIndex": this.tabindex() }));
         }
         scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
         }
         scroll_left(val, force) {
             return (val !== void 0) ? val : 0;
+        }
+        tabindex() {
+            return -1;
         }
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "scroll": (event) => this.event_scroll(event) }));

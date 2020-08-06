@@ -25,6 +25,7 @@ namespace $ { export class $mol_scroll extends $mol_view {
 	 *  	^
 	 *  	scrollTop <= scroll_top?val
 	 *  	scrollLeft <= scroll_left?val
+	 *  	tabIndex <= tabindex
 	 *  ```
 	 **/
 	field() {
@@ -32,6 +33,7 @@ namespace $ { export class $mol_scroll extends $mol_view {
 			...super.field() ,
 			"scrollTop" :  this.scroll_top() ,
 			"scrollLeft" :  this.scroll_left() ,
+			"tabIndex" :  this.tabindex() ,
 		})
 	}
 
@@ -53,6 +55,15 @@ namespace $ { export class $mol_scroll extends $mol_view {
 	@ $mol_mem
 	scroll_left( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
+	}
+
+	/**
+	 *  ```
+	 *  tabindex -1
+	 *  ```
+	 **/
+	tabindex() {
+		return -1
 	}
 
 	/**

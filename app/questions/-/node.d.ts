@@ -914,9 +914,11 @@ declare namespace $ {
         field(): {
             scrollTop: any;
             scrollLeft: any;
+            tabIndex: number;
         };
         scroll_top(val?: any, force?: $mol_mem_force): any;
         scroll_left(val?: any, force?: $mol_mem_force): any;
+        tabindex(): number;
         event(): {
             scroll: (event?: any) => any;
         };
