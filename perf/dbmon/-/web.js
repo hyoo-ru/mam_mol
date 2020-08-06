@@ -2967,7 +2967,20 @@ var $;
                 return next;
             }
             minimal_height() {
-                return this.sub().reduce((sum, view) => sum + view.minimal_height(), 0);
+                return this.sub().reduce((sum, view) => {
+                    try {
+                        return sum + view.minimal_height();
+                    }
+                    catch (error) {
+                        if (error instanceof Promise) {
+                            $.$mol_atom2.current.subscribe(error);
+                        }
+                        else if ($.$mol_fail_catch(error)) {
+                            console.error(error);
+                        }
+                        return sum;
+                    }
+                }, 0);
             }
         }
         __decorate([
