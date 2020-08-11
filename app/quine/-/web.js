@@ -3412,6 +3412,12 @@ var $;
             }
             return found;
         }
+        size() {
+            switch (this.type()) {
+                case 'file': return this.stat().size;
+                default: return 0;
+            }
+        }
     }
     __decorate([
         $.$mol_mem

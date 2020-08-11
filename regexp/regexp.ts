@@ -59,6 +59,10 @@ namespace $ {
 						return null
 					}
 
+					if( from === self.lastIndex ) {
+						$mol_fail( new Error( 'Captured empty substring' ) )
+					}
+
 					const found = {} as any as Token
 					
 					const skipped = str.slice( from , self.lastIndex - res[0].length )

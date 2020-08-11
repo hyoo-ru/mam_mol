@@ -4210,6 +4210,12 @@ var $;
             }
             return found;
         }
+        size() {
+            switch (this.type()) {
+                case 'file': return this.stat().size;
+                default: return 0;
+            }
+        }
     }
     __decorate([
         $.$mol_mem
@@ -6720,6 +6726,18 @@ var $;
                 minute: this.minute === undefined ? undefined : native.getMinutes(),
                 second: this.second === undefined ? undefined : native.getSeconds() + native.getMilliseconds() / 1000,
                 offset: this.offset,
+            });
+        }
+        mask(config) {
+            const mask = new $mol_time_moment(config);
+            return new $mol_time_moment({
+                year: mask.year === undefined ? undefined : this.year,
+                month: mask.month === undefined ? undefined : this.month,
+                day: mask.day === undefined ? undefined : this.day,
+                hour: mask.hour === undefined ? undefined : this.hour,
+                minute: mask.minute === undefined ? undefined : this.minute,
+                second: mask.second === undefined ? undefined : this.second,
+                offset: mask.offset === undefined ? undefined : this.offset,
             });
         }
         toOffset(config) {

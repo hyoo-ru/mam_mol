@@ -1253,6 +1253,7 @@ declare namespace $ {
         abstract relate(base?: $mol_file): string;
         abstract append(next: Uint8Array | string): void;
         find(include?: RegExp, exclude?: RegExp): $mol_file[];
+        size(): number;
     }
 }
 
