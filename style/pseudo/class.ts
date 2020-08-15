@@ -17,6 +17,8 @@ namespace $ {
 	| ':first-of-type'
 	| ':fullscreen'
 	| ':focus'
+	| ':focus-visible'
+	| ':focus-within'
 	| ':hover'
 	| ':indeterminate'
 	| ':in-range'
