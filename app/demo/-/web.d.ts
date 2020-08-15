@@ -5598,7 +5598,7 @@ declare namespace $ {
         static text(): string;
         commands_skip(next?: number): number;
         render(): null;
-        event_catch(found?: string[]): void;
+        event_catch(found?: string[]): boolean;
         patterns(): readonly string[];
         matchers(): RegExp[];
         prefix(): string;

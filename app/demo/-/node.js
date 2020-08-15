@@ -19717,8 +19717,9 @@ var $;
                     if (!found)
                         continue;
                     new $.$mol_defer(() => {
-                        this.commands_skip(i + 1);
-                        this.event_catch(found.slice(1));
+                        if (this.event_catch(found.slice(1))) {
+                            this.commands_skip(i + 1);
+                        }
                     });
                     return null;
                 }
@@ -19727,6 +19728,7 @@ var $;
         }
         event_catch(found) {
             console.log(found);
+            return false;
         }
         patterns() {
             return [];
