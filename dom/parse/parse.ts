@@ -2,7 +2,7 @@ namespace $ {
 
 	export function $mol_dom_parse(
 		text : string ,
-		type : SupportedType = 'application/xhtml+xml' ,
+		type : DOMParserSupportedType = 'application/xhtml+xml' ,
 	) {
 
 		const parser = new $mol_dom_context.DOMParser()
