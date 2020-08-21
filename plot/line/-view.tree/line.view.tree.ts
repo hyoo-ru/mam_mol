@@ -2,11 +2,11 @@ namespace $ { export class $mol_plot_line extends $mol_plot_graph {
 
 	/**
 	 *  ```
-	 *  threshold 4
+	 *  threshold 1
 	 *  ```
 	 **/
 	threshold() {
-		return 4
+		return 1
 	}
 
 	/**

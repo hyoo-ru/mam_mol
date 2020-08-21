@@ -9102,7 +9102,7 @@ var $;
 (function ($) {
     class $mol_plot_line extends $.$mol_plot_graph {
         threshold() {
-            return 4;
+            return 1;
         }
         spacing() {
             return 2;
