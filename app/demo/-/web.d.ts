@@ -306,11 +306,15 @@ declare namespace $ {
         static queue: (() => PromiseLike<any>)[];
         static tick(): Promise<void>;
         static schedule(): Promise<any>;
-        value: Value;
-        error: Error | PromiseLike<Value> | null;
         cursor: $mol_fiber_status;
         masters: (number | $mol_fiber<any> | undefined)[];
         calculate: () => Value;
+        _value: Value;
+        get value(): Value;
+        set value(next: Value);
+        _error: Error | PromiseLike<Value> | null;
+        get error(): null | Error | PromiseLike<Value>;
+        set error(next: null | Error | PromiseLike<Value>);
         schedule(): void;
         wake(): Value | undefined;
         push(value: Value): Value;
@@ -351,10 +355,8 @@ declare namespace $ {
         subscribe(promise: Promise<unknown>): Promise<void>;
         get(): Value;
         pull(): void;
-        _value: Value;
         get value(): Value;
         set value(next: Value);
-        _error: Error | PromiseLike<Value> | null;
         get error(): null | Error | PromiseLike<Value>;
         set error(next: null | Error | PromiseLike<Value>);
         put(next: Value): Value;
@@ -1464,7 +1466,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_dom_parse(text: string, type?: SupportedType): Document;
+    function $mol_dom_parse(text: string, type?: DOMParserSupportedType): Document;
 }
 
 declare namespace $ {
@@ -5576,13 +5578,13 @@ declare namespace $ {
         static speaking(next?: boolean): boolean;
         static hearer(): SpeechRecognition;
         static hearing(next?: boolean): boolean;
-        static event_result(event?: null | (Event & {
+        static event_result(event?: null | Event & {
             results: Array<{
                 transcript: string;
             }[] & {
                 isFinal: boolean;
             }>;
-        })): (Event & {
+        }): (Event & {
             results: Array<{
                 transcript: string;
             }[] & {

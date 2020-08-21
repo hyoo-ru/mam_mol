@@ -36,7 +36,7 @@ module $ {
 			class Source extends $mol_object2 {
 				
 				// Because context sets after field initializer
-				$ = $
+				get $() { return $ }
 
 				@ $mol_atom2_field
 				value = 1
@@ -47,7 +47,7 @@ module $ {
 
 			class App extends $mol_object2 {
 
-				static $ = $
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static get source() { return Source.create() }
@@ -68,7 +68,7 @@ module $ {
 
 			class App extends $mol_object2 {
 
-				static $ = $
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static get value() { return 1 }
@@ -86,7 +86,7 @@ module $ {
 
 			class App extends $mol_object2 {
 
-				static $ = $
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static first = [1]
@@ -109,7 +109,7 @@ module $ {
 
 			class App extends $mol_object2 {
 
-				static $ = $
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static first = 1
@@ -135,7 +135,7 @@ module $ {
 
 			class App extends $mol_object2 {
 
-				static $ = $
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static first = 1
@@ -167,7 +167,7 @@ module $ {
 
 			class App extends $mol_object2 {
 				
-				static $ = $
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static first = 1
@@ -201,7 +201,7 @@ module $ {
 
 			class App extends $mol_object2 {
 				
-				static $ = $
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static first = 1
@@ -225,7 +225,7 @@ module $ {
 
 			class App extends $mol_object2 {
 				
-				static $ = $
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static first = 1
@@ -248,7 +248,7 @@ module $ {
 
 			class App extends $mol_object2 {
 				
-				static $ = $
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static get first() : number { return this.second - 1 }
@@ -266,7 +266,7 @@ module $ {
 
 			class App extends $mol_object2 {
 
-				static $ = $
+				static get $() { return $ }
 				static counter = 0
 
 				@ $mol_fiber.method
@@ -297,7 +297,7 @@ module $ {
 
 			class App extends $mol_object2 {
 
-				static $ = $
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static get having() { return Having.create() }
@@ -328,7 +328,7 @@ module $ {
 
 			class App extends $mol_object2 {
 
-				static $ = $
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static source : number
@@ -359,7 +359,7 @@ module $ {
 
 			class App extends $mol_object2 {
 
-				static $ = $
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static condition = false

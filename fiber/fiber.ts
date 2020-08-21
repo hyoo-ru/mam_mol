@@ -261,12 +261,22 @@ namespace $ {
 
 		}
 
-		value = undefined as unknown as Value
-		error = null as null | Error | PromiseLike< Value >
 		cursor = $mol_fiber_status.obsolete
 		masters = [] as ( $mol_fiber | number | undefined )[]
 		calculate! : ()=> Value
 		
+		_value = undefined as unknown as Value
+		get value() { return this._value }
+		set value( next : Value ) {
+			this._value = next
+		}
+
+		_error = null as null | Error | PromiseLike< Value >
+		get error() { return this._error }
+		set error( next : null | Error | PromiseLike< Value > ) {
+			this._error = next
+		}
+
 		schedule() {
 			$mol_fiber.schedule().then( ()=> this.wake() )
 		}

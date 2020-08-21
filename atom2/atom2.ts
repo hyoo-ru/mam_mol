@@ -119,7 +119,6 @@ namespace $ {
 
 		}
 		
-		_value = undefined as unknown as Value
 		get value() { return this._value }
 		set value( next : Value ) {
 
@@ -135,7 +134,6 @@ namespace $ {
 			this._value = next
 		}
 
-		_error = null as null | Error | PromiseLike< Value >
 		get error() { return this._error }
 		set error( next : null | Error | PromiseLike< Value > ) {
 

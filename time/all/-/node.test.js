@@ -2917,10 +2917,10 @@ var $;
     class $mol_fiber extends $.$mol_wrapper {
         constructor() {
             super(...arguments);
-            this.value = undefined;
-            this.error = null;
             this.cursor = 0;
             this.masters = [];
+            this._value = undefined;
+            this._error = null;
         }
         static wrap(task) {
             return function $mol_fiber_wrapper(...args) {
@@ -2963,6 +2963,14 @@ var $;
             }
             const promise = new this.$.Promise(done => this.queue.push(() => (done(), promise)));
             return promise;
+        }
+        get value() { return this._value; }
+        set value(next) {
+            this._value = next;
+        }
+        get error() { return this._error; }
+        set error(next) {
+            this._error = next;
         }
         schedule() {
             $mol_fiber.schedule().then(() => this.wake());
@@ -3245,19 +3253,19 @@ var $;
             class Source extends $_1.$mol_object2 {
                 constructor() {
                     super(...arguments);
-                    this.$ = $;
                     this.value = 1;
                 }
+                get $() { return $; }
                 destructor() { }
             }
             __decorate([
                 $_1.$mol_atom2_field
             ], Source.prototype, "value", void 0);
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static get source() { return Source.create(); }
                 static get value() { return this.source.value + 1; }
             }
-            App.$ = $;
             __decorate([
                 $_1.$mol_atom2_field
             ], App, "source", null);
@@ -3270,9 +3278,9 @@ var $;
         },
         'Access to cached value'($) {
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static get value() { return 1; }
             }
-            App.$ = $;
             __decorate([
                 $_1.$mol_atom2_field
             ], App, "value", null);
@@ -3282,9 +3290,9 @@ var $;
         },
         'Do not recalc slaves on equal changes'($) {
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static get result() { return this.first[0] + this.counter++; }
             }
-            App.$ = $;
             App.first = [1];
             App.counter = 0;
             __decorate([
@@ -3299,10 +3307,10 @@ var $;
         },
         'Do not recalc grand slave on equal direct slave result '($) {
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static get second() { return Math.abs(this.first); }
                 static get result() { return this.second + ++this.counter; }
             }
-            App.$ = $;
             App.first = 1;
             App.counter = 0;
             __decorate([
@@ -3320,13 +3328,13 @@ var $;
         },
         'Recalc when [not changed master] changes [following master]'($) {
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static get second() {
                     this.third = this.first;
                     return 0;
                 }
                 static get result() { return this.second + this.third + ++this.counter; }
             }
-            App.$ = $;
             App.first = 1;
             App.third = 0;
             App.counter = 0;
@@ -3348,12 +3356,12 @@ var $;
         },
         'Branch switching'($) {
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static get second() { return 2; }
                 static get result() {
                     return (this.condition ? this.first : this.second) + this.counter++;
                 }
             }
-            App.$ = $;
             App.first = 1;
             App.condition = true;
             App.counter = 0;
@@ -3377,13 +3385,13 @@ var $;
         },
         'Forbidden self invalidation'($) {
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static get second() { return this.first + 1; }
                 static get result() {
                     this.second;
                     return this.first++;
                 }
             }
-            App.$ = $;
             App.first = 1;
             __decorate([
                 $_1.$mol_atom2_field
@@ -3398,12 +3406,12 @@ var $;
         },
         'Side effect inside computation'($) {
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static increase() { return ++this.first; }
                 static get result() {
                     return this.increase() + 1;
                 }
             }
-            App.$ = $;
             App.first = 1;
             __decorate([
                 $_1.$mol_atom2_field
@@ -3418,10 +3426,10 @@ var $;
         },
         'Forbidden cyclic dependency'($) {
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static get first() { return this.second - 1; }
                 static get second() { return this.first + 1; }
             }
-            App.$ = $;
             __decorate([
                 $_1.$mol_atom2_field
             ], App, "first", null);
@@ -3432,10 +3440,10 @@ var $;
         },
         'Forget sub fibers on complete'($) {
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static count() { return this.counter++; }
                 static get result() { return this.count() + this.data; }
             }
-            App.$ = $;
             App.counter = 0;
             App.data = 1;
             __decorate([
@@ -3457,6 +3465,7 @@ var $;
                 destructor() { counter++; }
             }
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static get having() { return Having.create(); }
                 static get result() {
                     if (this.condition)
@@ -3464,7 +3473,6 @@ var $;
                     return 0;
                 }
             }
-            App.$ = $;
             App.condition = true;
             __decorate([
                 $_1.$mol_atom2_field
@@ -3484,11 +3492,11 @@ var $;
         },
         async 'Do not destroy putted value'($) {
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static get target() {
                     return this.condition ? this.source : 0;
                 }
             }
-            App.$ = $;
             App.condition = true;
             __decorate([
                 $_1.$mol_atom2_field
@@ -3509,6 +3517,7 @@ var $;
         },
         'Restore after error'($) {
             class App extends $_1.$mol_object2 {
+                static get $() { return $; }
                 static get broken() {
                     if (this.condition)
                         $_1.$mol_fail(new Error('test error'));
@@ -3516,7 +3525,6 @@ var $;
                 }
                 static get result() { return this.broken; }
             }
-            App.$ = $;
             App.condition = false;
             __decorate([
                 $_1.$mol_atom2_field
@@ -3576,8 +3584,6 @@ var $;
         constructor() {
             super(...arguments);
             this.slaves = [];
-            this._value = undefined;
-            this._error = null;
         }
         static get current() {
             const atom = $.$mol_fiber.current;
