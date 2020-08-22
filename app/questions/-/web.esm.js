@@ -3397,7 +3397,7 @@ var $;
                 background: {
                     color: $.$mol_theme.back,
                 },
-                boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)`,
+                boxShadow: `0 -0.5rem 0.5rem -0.5rem hsla(0,0%,0%,.25)`,
                 zIndex: 1,
             },
         });
