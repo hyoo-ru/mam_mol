@@ -21,10 +21,7 @@ namespace $ {
 
 		if (type === 'false' || type === 'true') return value.data(type)
 
-		if (type === 'null') return $mol_tree2.struct('inline', [
-			value.data(value.type),
-			value.data(' as any'),
-		])
+		if (type === 'null') return value.data(type)
 
 		if (Number(type).toString() === type) return value.data(type)
 
