@@ -21,7 +21,8 @@ namespace $.$$ {
 		classes_static() {
 			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tdom_name \\\n\n'
 			const source = view_tree + $mol_fetch.text( 'web.view.tree' )
-			return this.$.$mol_view_tree2_classes( $mol_tree2.fromString( source, $mol_span.entire('web.view.tree', source.length) ) )
+			const span = $mol_span.entire( 'web.view.tree', source.length )
+			return this.$.$mol_view_tree2_classes( $mol_tree2.fromString( source, span ) )
 		}
 		
 		@ $mol_mem
@@ -37,12 +38,13 @@ namespace $.$$ {
 				this.classes( this.classes().insert( next , name ) )
 			}
 			const klass = this.classes().select( name )
+			if( klass.kids.length == 0 ) return null
 
 			return this.$.$mol_view_tree2_child(klass)
 		}
 
 		class_self( next? : $mol_tree2 ) {
-			return this.class( this.class_name_self() , next )
+			return this.class( this.class_name_self() , next )!
 		}
 
 		@ $mol_mem_key
