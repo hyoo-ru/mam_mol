@@ -60,7 +60,7 @@ $mol_app_demo_detail $mol_page
 					hint <= source_hint @ \Source code of this demo
 					sub /
 						<= Source_icon $mol_icon_code_braces
-		<= Edit $mol_link
+		- <= Edit $mol_link
 			hint <= edit_hint @ \Edit this demo online
 			sub /
 				<= Edit_speck $mol_speck
