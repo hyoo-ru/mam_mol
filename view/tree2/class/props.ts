@@ -5,11 +5,11 @@ namespace $ {
 		this: $mol_ambient_context,
 		klass : $mol_tree2,
 	) {
-		const subclass = this.$mol_view_tree2_class_super( klass )
+		const props = this.$mol_view_tree2_class_super( klass )
 
 		const props_inner = [] as $mol_tree2[]
 
-		const props_root = subclass.select('').hack({
+		const props_root = props.hack({
 
 			'<=': ( operator, belt )=> {
 				
