@@ -1,7 +1,7 @@
 namespace $ {
 	const err = $mol_view_tree2_error_str
 
-	export function $mol_view_tree2_class_sub(
+	export function $mol_view_tree2_class_super(
 		this: $mol_ambient_context,
 		klass: $mol_tree2
 	) {

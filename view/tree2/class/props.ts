@@ -1,49 +1,51 @@
 namespace $ {
 	const err = $mol_view_tree2_error_str
 
-	export function $mol_view_tree2_class_props(this: $mol_ambient_context, klass : $mol_tree2 ) {
-		const subclass = this.$mol_view_tree2_class_sub(klass)
-		const context = { kids: [] as $mol_tree2[] }
-
-		for (const kid of subclass.kids) {
-			if (kid.type === '-') continue
-			this.$mol_view_tree2_class_props_flatten(kid, context)
-		}
-
-		return klass.list(context.kids)
-	}
-
-	export function $mol_view_tree2_class_props_flatten(
+	export function $mol_view_tree2_class_props(
 		this: $mol_ambient_context,
-		prop: $mol_tree2,
-		context: {
-			kids: $mol_tree2[]
-		}
+		klass : $mol_tree2,
 	) {
-		const t = prop.type
-		const operator = this.$mol_view_tree2_child(prop)
+		const subclass = this.$mol_view_tree2_class_super( klass )
 
-		if (operator.type === '-') return
+		const props_inner = [] as $mol_tree2[]
 
-		const index = context.kids.length
-		context.kids.push(undefined!)
+		const props_root = subclass.select('').hack({
 
-		let value: $mol_tree2
+			'<=': ( operator, belt )=> {
+				
+				const prop = this.$mol_view_tree2_child( operator )
+				
+				const defs = prop.hack( belt )
+				if( defs.length ) props_inner.push( prop.clone( defs ) )
+				
+				return [ operator.clone([ prop.clone([]) ]) ]
+			},
+			
+			'<=>': ( operator, belt )=> {
+				
+				const prop = this.$mol_view_tree2_child( operator )
+				
+				const defs = prop.hack( belt )
+				if( defs.length ) props_inner.push( prop.clone( defs ) )
+				
+				return [ operator.clone([ prop.clone([]) ]) ]
+			},
 
-		if (operator.type !== '<=' && operator.type !== '<=>' && t !== '=>') {
-			for (const kid of operator.kids) {
-				this.$mol_view_tree2_class_props_flatten(kid, context)
-			}
+			'=>': ( operator, belt )=> {
+				
+				const prop = this.$mol_view_tree2_child( operator )
 
-			value = operator.clone(operator.kids)
-		} else {
-			const child = this.$mol_view_tree2_child(operator)
+				return [ operator.clone([ prop.clone([]) ]) ]
 
-			this.$mol_view_tree2_class_props_flatten(child, context)
-	
-			value = operator.clone([ child.clone( [] ) ])
-		}
+			},
 
-		context.kids[index] = prop.clone([ value ])
+			'': ( node, belt )=> {
+				return [ node.clone( node.hack( belt ) ) ]
+			},
+
+		})
+
+		return klass.list([ ... props_root , ... props_inner ])
 	}
+
 }

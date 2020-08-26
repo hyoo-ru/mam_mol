@@ -4,7 +4,7 @@ namespace $ {
 		klass: $mol_tree2,
 		locales: $mol_view_tree2_locales
 	) {
-		const subclass = this.$mol_view_tree2_class_sub(klass)
+		const subclass = this.$mol_view_tree2_class_super(klass)
 		const body: $mol_tree2[] = []
 		const class_parts = this.$mol_view_tree2_prop_split(klass)
 		const context = new $mol_view_tree2_context(this, [ class_parts ], locales, body)
