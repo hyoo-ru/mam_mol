@@ -25,6 +25,9 @@ namespace $ {
 		left?: Value ,
 	}
 
+	type Span_align = 'none' | 'start' | 'end' | 'center'
+	type Snap_axis = 'x' | 'y' | 'block' | 'inline' | 'both'
+
 	type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common
 
 	interface Overrides {
@@ -64,6 +67,35 @@ namespace $ {
 
 		}
 
+		font?: {
+
+			/** Whether a font should be styled. */
+			style?: 'normal' | 'italic' | Common
+
+			/** Weight (or boldness) of the font. */
+			weight?:
+			| 'normal' | 'bold' | 'lighter' | 'bolder'
+			| 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+			| Common
+			
+			/** Size of the font. Changing the font size also updates the sizes of the font size-relative length units. */
+			size?:
+			| 'xx-small' | 'x-small' | 'small' | 'medium'
+			| 'large' | 'x-large' | 'xx-large' | 'xxx-large'
+			| 'smaller' | 'larger'
+			| Length
+			| Common
+
+			/** Prioritized list of one or more font family names and/or generic family names. */
+			family?:
+			| 'serif' | 'sans-serif' | 'monospace'
+			| 'cursive' | 'fantasy'
+			| 'system-ui' | 'ui-serif' | 'ui-sans-serif' | 'ui-monospace' | 'ui-rounded'
+			| 'emoji' | 'math' | 'fangsong'
+			| Common
+
+		}
+
 		/** Foreground color value of text and text decorations, and sets the `currentcolor` value. */
 		color?: Color | Common
 
@@ -92,10 +124,37 @@ namespace $ {
 			
 		}
 
+		/** How white space inside an element is handled. */
+		whiteSpace?:
+		| 'normal' | 'nowrap' | 'break-spaces'
+		| 'pre' | 'pre-wrap' | 'pre-line'
+		| Common
+
 		webkitOverflowScrolling?: 'auto' | 'touch'
 
-		scrollbar: {
-			color: [ Color , Color ] | 'dark' | 'light' | 'auto' | Common
+		scrollbar?: {
+			color?: [ Color , Color ] | 'dark' | 'light' | 'auto' | Common
+		}
+
+		scroll?: {
+
+			snap?: {
+
+				/** How strictly snap points are enforced on the scroll container in case there is one. */
+				type:
+				| 'none'
+				| Snap_axis
+				| [ Snap_axis , 'mandatory' | 'proximity' ]
+				| Common
+				
+				/** Whether the scroll container is allowed to "pass over" possible snap positions. */
+				stop: 'normal' | 'always' | Common
+				
+				/** The box’s snap position as an alignment of its snap area (as the alignment subject) within its snap container’s snapport (as the alignment container). The two values specify the snapping alignment in the block axis and inline axis, respectively. If only one value is specified, the second value defaults to the same value. */
+				align: Span_align | [ Span_align , Span_align ] | Common
+
+			}
+
 		}
 		
 		/** Element's width. By default, it sets the width of the content area, but if `boxSizing` is set to `border-box`, it sets the width of the border area. */

@@ -1,8 +1,16 @@
 $mol_map_yandex_mark $mol_object
-	pos /
+	pos $mol_vector_2d /
 		0
 		0
+	box $mol_vector_2d /
+		<= box_lat $mol_vector_range /
+			0
+			0
+		<= box_lon $mol_vector_range /
+			0
+			0
 	hint \
-	title \
+	title <= address \
 	content \
+	object null
 	

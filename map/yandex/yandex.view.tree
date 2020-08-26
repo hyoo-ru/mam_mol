@@ -3,4 +3,4 @@ $mol_map_yandex $mol_view
 	center?val /
 		0
 		0
-	objects /
+	objects /$mol_map_yandex_mark

@@ -211,7 +211,7 @@ namespace $ {
 
 		static current = null as null | $mol_fiber
 		
-		static scheduled = null as null | $mol_after_tick
+		static scheduled = null as null | $mol_after_frame
 		static queue = [] as ( ()=> PromiseLike< any > )[]
 		
 		static async tick() {
@@ -237,7 +237,7 @@ namespace $ {
 
 			if( !$mol_fiber.scheduled ) {
 
-				$mol_fiber.scheduled = new $mol_after_tick( async ()=> {
+				$mol_fiber.scheduled = new $mol_after_frame( async ()=> {
 					
 					const now = Date.now()
 					let quant = $mol_fiber.quant
@@ -261,12 +261,22 @@ namespace $ {
 
 		}
 
-		value = undefined as unknown as Value
-		error = null as null | Error | PromiseLike< Value >
 		cursor = $mol_fiber_status.obsolete
 		masters = [] as ( $mol_fiber | number | undefined )[]
 		calculate! : ()=> Value
 		
+		_value = undefined as unknown as Value
+		get value() { return this._value }
+		set value( next : Value ) {
+			this._value = next
+		}
+
+		_error = null as null | Error | PromiseLike< Value >
+		get error() { return this._error }
+		set error( next : null | Error | PromiseLike< Value > ) {
+			this._error = next
+		}
+
 		schedule() {
 			$mol_fiber.schedule().then( ()=> this.wake() )
 		}
@@ -293,7 +303,7 @@ namespace $ {
 			
 			value = this.$.$mol_conform( value , this.value )
 			
-			if( this.error || !Object.is( this.value , value ) ) {
+			if( this.error !== null || !Object.is( this.value , value ) ) {
 		
 				if( $mol_fiber.logs ) this.$.$mol_log3_done({
 					place : this ,
@@ -391,6 +401,8 @@ namespace $ {
 
 			} catch( error ) {
 
+				if( Object( error ) !== error ) error = new Error( error )
+
 				if( 'then' in error ) {
 					
 					if( !slave ) {
@@ -421,7 +433,7 @@ namespace $ {
 			
 			if( this.cursor > $mol_fiber_status.actual ) this.update()
 
-			if( this.error ) return this.$.$mol_fail_hidden( this.error )
+			if( this.error !== null ) return this.$.$mol_fail_hidden( this.error )
 			
 			return this.value
 

@@ -7,12 +7,11 @@
 
 [mol_link_iconed_icon] {
 	box-shadow: none;
-	margin-right: 2px;
 	height: 1em;
 	width: 1em;
-	vertical-align: -25%;
 	display: inline-block;
-	margin: .25rem;
+	margin: -.25rem .25rem 0;
+	vertical-align: middle;
 }
 
 [mol_theme="$mol_theme_dark"] [mol_link_iconed_icon] {

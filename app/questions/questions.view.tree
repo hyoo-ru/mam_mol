@@ -1,13 +1,13 @@
-$mol_app_questions $mol_book
-	attr *
-		mol_theme \$mol_theme_auto
-	Placeholder $mol_book_placeholder
-		minimal_width 600
-		title <= placeholder \Stack Overflow
+$mol_app_questions $mol_book2
+	plugins /
+		<= Themme $mol_theme_auto
 	-
 	Menu $mol_page
 		title <= title_default @ \Questions
 		minimal_width 400
+		tools /
+			<= Source_link $mol_link_source
+				uri \https://github.com/eigenmethod/mol/tree/master/app/questions
 		body /
 			<= Menu_links $mol_list
 				rows <= menu_rows /
@@ -15,7 +15,6 @@ $mol_app_questions $mol_book
 	Details!id $mol_page
 		minimal_width 600
 		title <= question_title!id \
-		event_top?val <=> event_front_up?val
 		tools /
 			<= Details_permalink!id $mol_link
 				uri <= question_permalink!id \

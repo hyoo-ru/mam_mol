@@ -1,6 +1,5 @@
 $mol_svg $mol_view
 	dom_name \svg
 	dom_name_space \http://www.w3.org/2000/svg
-	text_width?text 0
 	font_size 16
 	font_family \

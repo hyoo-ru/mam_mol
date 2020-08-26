@@ -3,18 +3,20 @@ namespace $ {
 	export function $mol_mem_key<
 		Host extends object ,
 		Field extends keyof Host ,
-		Prop extends Extract< Host[ Field ] , ( id : Key , next? : Value )=> Value >,
-		Key extends $mol_type_param< Prop , 0 >,
-		Value extends $mol_type_result< Prop > ,
+		Prop extends Extract< Host[ Field ] , ( id : any , next? : any )=> any >,
 	>(
 		proto : Host ,
 		name : Field ,
 		descr? : TypedPropertyDescriptor< Prop >
 	) : any {
 
+		type Key = $mol_type_param< Prop , 0 >
+		type Input = $mol_type_param< Prop , 1 >
+		type Output = $mol_type_result< Prop >
+
 		const value = descr!.value!
 		
-		const store = new WeakMap< Host , Map< Key , $mol_atom2<Value> > >()
+		const store = new WeakMap< Host , Map< Key , $mol_atom2<Output> > >()
 
 		Object.defineProperty( proto , name + "()" , {
 			get : function() {
@@ -27,28 +29,29 @@ namespace $ {
 			let dict = store.get( host )!
 			if( !dict ) store.set( host , dict = new $mol_dict )
 			
-			let cache = dict.get( key )
+			const key_str = $mol_dict_key(key)
+			let cache = dict.get( key_str )
 			if( cache ) return cache
 
 			let cache2 = new $mol_atom2
-			cache2[ Symbol.toStringTag ] = `${ host }.${ name }(${$mol_dict_key(key)})`
+			cache2[ Symbol.toStringTag ] = `${ host }.${ name }(${key_str})`
 			cache2.calculate = value.bind( host , key )
 			cache2.abort = ()=> {
-				dict.delete( key )
+				dict.delete( key_str )
 				if( dict.size === 0 ) store.delete( host )
 				cache2.forget()
 				return true
 			}
 			$mol_owning_catch( host , cache2 )
 			cache2[ $mol_object_field ] = name
-			dict.set( key , cache2 )
+			dict.set( key_str , cache2 )
 
 			return cache2
 		}
 		
 		return {
 			
-			value( key : Key , next? : Value , force? : $mol_mem_force ) {
+			value( key : Key , next? : Input , force? : $mol_mem_force ) {
 				
 				if( next === undefined ) {
 					

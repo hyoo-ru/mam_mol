@@ -2,7 +2,7 @@
 
 Sandbox for javascript code from user.
 
-## [Online demo](https://mol.js.org/func/sandbox/demo/)
+## [Online demo](https://sandbox.js.hyoo.ru/)
 
 ## Example
 

@@ -3,7 +3,6 @@
 	flex: 0 1 8rem;
 	width: 8rem;
 	max-height: calc( 1rem + 1.5em );
-	min-height: .5rem;
 	align-self: stretch;
 	vertical-align: inherit;
 	border-radius: var(--mol_skin_round);
@@ -12,6 +11,7 @@
 }
 
 [mol_portion_indicator] {
+	padding: .25rem 0;
 	background-color: var(--mol_skin_base);
 	color: var(--mol_theme_control);
 	border-radius: var(--mol_skin_round);

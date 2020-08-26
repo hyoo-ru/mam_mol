@@ -1,6 +1,6 @@
 $mol_switch $mol_view
 	minimal_height 40
-	Option!id $mol_check
+	Option!id $mol_switch_option
 		checked?val <=> option_checked!id?val false
 		label <= option_label!id / <= option_title!id \
 		enabled <= option_enabled!id <= enabled true
@@ -8,3 +8,9 @@ $mol_switch $mol_view
 	options *
 	keys /string
 	sub <= items /$mol_check
+
+$mol_switch_option $mol_check
+	minimal_height 24
+	attr *
+		^
+		mol_theme <= theme \

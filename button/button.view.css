@@ -1,7 +1,6 @@
 [mol_button] {
 	border: none;
 	font: inherit;
-	background-color: none;
 	display: inline-flex;
 	flex-shrink: 0;
 	text-decoration: inherit;

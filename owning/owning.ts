@@ -10,6 +10,7 @@ namespace $ {
 		try {
 			if( !having ) return false
 			if( typeof having !== 'object' ) return false
+			if( having instanceof $mol_delegate ) return false
 			if( typeof having['destructor'] !== 'function' ) return false
 			return true
 		} catch {

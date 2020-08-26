@@ -19,6 +19,8 @@ namespace $.$$ {
 				zoom : 0 ,
 			} )
 
+			api.copyrights.add( $mol_geo_search_attribution );
+
 			api.controls.remove( 'fullscreenControl' )
 			api.controls.remove( 'typeSelector' )
 
@@ -36,10 +38,35 @@ namespace $.$$ {
 			this.center( this.api().getCenter() )
 		}
 
+		@ $mol_mem
+		bounds_updated() {
+			const box = this.objects()[0]?.box()
+			if( box ) {
+				this.api().setBounds([
+					[box.x.min,box.y.min],
+					[box.x.max,box.y.max],
+				])
+			}
+			return true
+		}
+
+		@ $mol_mem
+		center( next? : readonly[number,number] , force? : $mol_mem_force ) {
+
+			if ( next !== undefined ) return next
+			
+			const pos = this.objects()[0]?.pos()
+			if( pos ) return pos
+			
+			return [0,0] as readonly[number,number]
+		}
+		
 		render() {
 			const api = this.api()
 			
 			api.setCenter( this.center() , this.zoom() )
+
+			// this.bounds_updated()
 			
 			api.geoObjects.removeAll()
 			for( let obj of this.objects() ) {

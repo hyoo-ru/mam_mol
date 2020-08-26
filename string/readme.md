@@ -26,7 +26,3 @@ To display placeholder text on our `$mol_string` element we should use `hint` pr
 **`enabled() : boolean`**
 
 To turn off `$mol_string` we should use `enabled` property and set it to `false`. And if you don't want to turn off any element of `$mol_string` just write nothing.
-
-**`debounce() : number`**
-
-Debounce for value changing.

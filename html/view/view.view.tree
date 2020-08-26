@@ -1,0 +1,38 @@
+$mol_html_view $mol_list
+	html \
+	dom null
+	safe_link!uri \
+	xss_uri \https://en.wikipedia.org/wiki/XSS#
+	Heading!id $mol_html_view_heading
+		level <= heading_level!id 1
+		sub <= content!id /
+	Paragraph!id $mol_paragraph
+		sub <= content!id /
+	List!id $mol_list
+		rows <= content!id /
+	Quote!id $mol_list
+		rows <= content!id /
+	Strong!id $mol_paragraph
+		sub <= content!id /
+	Emphasis!id $mol_paragraph
+		sub <= content!id /
+	Deleted!id $mol_paragraph
+		sub <= content!id /
+	Inserted!id $mol_paragraph
+		sub <= content!id /
+	Code!id $mol_paragraph
+		sub <= content!id /
+	Link!id $mol_link_iconed
+		uri <= link_uri!id \
+		content <= content!id /
+	Image!id $mol_image
+		uri <= image_uri!id \
+	Break!id $mol_paragraph
+	Text!id $mol_dimmer
+		needle <= highlight \
+		haystack <= text!id \
+
+$mol_html_view_heading $mol_paragraph
+	attr *
+		^
+		mol_html_view_heading <= level 1

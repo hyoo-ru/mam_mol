@@ -1,5 +1,6 @@
 $mol_svg_text_box $mol_svg_group
 	font_size 16
+	width 0
 	sub /
 		<= Back $mol_svg_rect
 			width <= box_width \0.5rem

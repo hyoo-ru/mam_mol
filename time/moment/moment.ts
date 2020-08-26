@@ -75,7 +75,7 @@ namespace $ {
 			return ( this.native.getDay() + 6 ) % 7
 		}
 
-		private _native : Date | undefined
+		_native : Date | undefined
 		get native() {
 			if( this._native ) return this._native
 			
@@ -92,7 +92,7 @@ namespace $ {
 			) )
 		}
 
-		private _normal : $mol_time_moment | undefined
+		_normal : $mol_time_moment | undefined
 		get normal() {
 			if( this._normal ) return this._normal
 			
@@ -156,6 +156,22 @@ namespace $ {
 				second : this.second === undefined ? undefined : native.getSeconds() + native.getMilliseconds() / 1000,
 				offset : this.offset,
 			})
+		}
+
+		mask( config : $mol_time_duration_config ) {
+
+			const mask = new $mol_time_moment( config )
+			
+			return new $mol_time_moment({
+				year : mask.year === undefined ? undefined : this.year ,
+				month : mask.month === undefined ? undefined : this.month ,
+				day : mask.day === undefined ? undefined : this.day ,
+				hour : mask.hour === undefined ? undefined : this.hour ,
+				minute : mask.minute === undefined ? undefined : this.minute ,
+				second : mask.second === undefined ? undefined : this.second ,
+				offset : mask.offset === undefined ? undefined : this.offset ,
+			})
+			
 		}
 
 		toOffset( config : $mol_time_duration_config ) {

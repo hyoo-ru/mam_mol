@@ -12,7 +12,7 @@ $mol_search $mol_bar
 			options_showed <= suggests_showed false
 			options <= suggests /string
 			Trigger_icon null
-			debounce <= debounce 200
+			submit?event <=> submit?event null
 		<= Clear $mol_button_minor
 			sub /
 				<= Clear_icon $mol_icon_cross

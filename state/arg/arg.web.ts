@@ -42,13 +42,16 @@ namespace $ {
 		
 		@ $mol_mem_key
 		static value( key : string , next? : string | null ) {
-			const nextDict = ( next === void 0 ) ? void 0 : $mol_merge_dict( this.dict() , { [ key ] : next } ) 
+			const nextDict = ( next === void 0 ) ? void 0 : { ... this.dict() , [ key ] : next }
 			const next2 = this.dict( nextDict )[ key ]
 			return ( next2 == null ) ? null : next2
 		}
 		
 		static link( next : { [ key : string ] : string } ) {
-			return this.make_link( $mol_merge_dict( this.dict_cut( Object.keys( next ) ) , next ) )
+			return this.make_link({
+				... this.dict_cut( Object.keys( next ) ),
+				... next,
+			})
 		}
 		
 		static make_link( next : { [ key : string ] : string | null } ) {
@@ -88,9 +91,11 @@ namespace $ {
 		}
 		
 	}
-	
-	self.addEventListener( 'hashchange' , $mol_fiber_root( $mol_log_group( '$mol_state_arg hashchange' , ( event : HashChangeEvent )=> {
+
+	const $mol_state_arg_change = ( event : HashChangeEvent )=> {
 		$mol_state_arg.href( $mol_dom_context.location.href ) 
-	} ) ) )
+	}
+
+	self.addEventListener( 'hashchange' , $mol_fiber_root( $mol_state_arg_change ) )
 	
 }

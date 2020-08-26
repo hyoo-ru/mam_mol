@@ -3,13 +3,12 @@ $mol_app_demo $mol_book2
 	source_prefix \https://github.com/eigenmethod/mol/tree/master/
 	Main $mol_app_demo_main
 	pages <= blocks /
-	attr *
-		mol_theme <= theme
+	plugins /
+		<= Theme $mol_theme_auto
 	Menu $mol_app_demo_menu
 		hierarchy <= nav_hierarchy null
 		option!id <= nav_option!id null
 		filter?val <=> filter_string?val \
-		theme?val <=> theme?val \$mol_theme_dark
 	Detail!id $mol_app_demo_detail
 		title <= detail_title
 		source_link <= source_link \
@@ -50,11 +49,6 @@ $mol_app_demo_menu $mol_page
 			hierarchy <= hierarchy null
 			record!id <= option!id null
 			needle <= filter?val \
-		<= Themes $mol_switch
-			value?val <=> theme?val \$mol_theme_dark
-			options *
-				$mol_theme_light <= theme_light_title @ \Light theme
-				$mol_theme_dark <= theme_dark_title @ \Dark theme
 		
 $mol_app_demo_detail $mol_page
 	tools /

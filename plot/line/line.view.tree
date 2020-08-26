@@ -1,5 +1,5 @@
 $mol_plot_line $mol_plot_graph
-	threshold 4
+	threshold 1
 	spacing 2
 	color_fill \none
 	sub /

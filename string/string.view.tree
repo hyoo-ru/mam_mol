@@ -1,7 +1,6 @@
 $mol_string $mol_view
 	dom_name \input
 	enabled true
-	debounce 0
 	minimal_height 40
 	autocomplete false
 	field *
@@ -19,3 +18,6 @@ $mol_string $mol_view
 		^
 		input?event <=> event_change?event null
 		keydown?event <=> event_key_press?event null
+	plugins /
+		<= Submit $mol_hotkey
+			key * enter?event <=> submit?event null

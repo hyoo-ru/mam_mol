@@ -61,7 +61,11 @@ namespace $ {
 			const uri = this.uri()
 			const cache =  $mol_model.cache< Raw >()
 
-			return cache[ uri ] = $mol_merge_dict( cache[ uri ] || {} as Raw , patch )
+			return cache[ uri ] = {
+				... cache[ uri ] || {} as Raw,
+				... patch,
+			}
+
 		}
 
 	}

@@ -26,12 +26,20 @@ namespace $ {
 			}
 		},
 
+		':focus-within': {
+			outline: 'none',
+			background: {
+				color: $mol_theme.hover,
+			}
+		},
+
 		'@': {
 			mol_link_current: {
 				'true': {
 					background: {
 						color: $mol_theme.back,
 					},
+					color: $mol_theme.text,
 				}
 			}
 		},

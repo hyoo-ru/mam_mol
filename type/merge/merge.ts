@@ -7,10 +7,18 @@ namespace $ {
 	 * 	$mol_type_merge< { a : 1 } & { b : 2 } >
 	 */
 	export type $mol_type_merge< Intersection > =
-		keyof Intersection extends string
-			? {
-				[ Key in keyof Intersection ] : $mol_type_merge< Intersection[ Key ] >
-			}
-			: Intersection
+	
+		Intersection extends (...a:any[])=> any
+		? Intersection
+		
+		: Intersection extends new (...a:any[])=> any
+		? Intersection
+		
+		: Intersection extends object
+		? {
+			[ Key in keyof Intersection ] : $mol_type_merge< Intersection[ Key ] >
+		}
+		
+		: Intersection
 
 }

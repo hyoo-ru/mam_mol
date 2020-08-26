@@ -31,16 +31,23 @@ module $ {
 
 		} ,
 
-		'Instant actualization' () {
+		'Instant actualization'( $ ) {
 
 			class Source extends $mol_object2 {
+				
+				// Because context sets after field initializer
+				get $() { return $ }
 
 				@ $mol_atom2_field
 				value = 1
 
+				destructor() {}
+
 			}
 
 			class App extends $mol_object2 {
+
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static get source() { return Source.create() }
@@ -57,9 +64,11 @@ module $ {
 
 		} ,
 
-		'Access to cached value' () {
+		'Access to cached value'( $ ) {
 
 			class App extends $mol_object2 {
+
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static get value() { return 1 }
@@ -73,9 +82,11 @@ module $ {
 
 		} ,
 
-		'Do not recalc slaves on equal changes' () {
+		'Do not recalc slaves on equal changes'( $ ) {
 
 			class App extends $mol_object2 {
+
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static first = [1]
@@ -94,9 +105,11 @@ module $ {
 
 		} ,
 
-		'Do not recalc grand slave on equal direct slave result ' () {
+		'Do not recalc grand slave on equal direct slave result '( $ ) {
 
 			class App extends $mol_object2 {
+
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static first = 1
@@ -118,9 +131,11 @@ module $ {
 
 		} ,
 
-		'Recalc when [not changed master] changes [following master]' () {
+		'Recalc when [not changed master] changes [following master]'( $ ) {
 
 			class App extends $mol_object2 {
+
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static first = 1
@@ -148,10 +163,12 @@ module $ {
 
 		} ,
 
-		'Branch switching' () {
+		'Branch switching'( $ ) {
 
 			class App extends $mol_object2 {
 				
+				static get $() { return $ }
+
 				@ $mol_atom2_field
 				static first = 1
 				
@@ -180,10 +197,12 @@ module $ {
 
 		} ,
 
-		'Forbidden self invalidation' () {
+		'Forbidden self invalidation'( $ ) {
 
 			class App extends $mol_object2 {
 				
+				static get $() { return $ }
+
 				@ $mol_atom2_field
 				static first = 1
 
@@ -202,10 +221,12 @@ module $ {
 
 		} ,
 
-		'Side effect inside computation' () {
+		'Side effect inside computation'( $ ) {
 
 			class App extends $mol_object2 {
 				
+				static get $() { return $ }
+
 				@ $mol_atom2_field
 				static first = 1
 
@@ -223,10 +244,12 @@ module $ {
 
 		} ,
 
-		'Forbidden cyclic dependency' () {
+		'Forbidden cyclic dependency'( $ ) {
 
 			class App extends $mol_object2 {
 				
+				static get $() { return $ }
+
 				@ $mol_atom2_field
 				static get first() : number { return this.second - 1 }
 
@@ -239,10 +262,11 @@ module $ {
 
 		} ,
 
-		'Forget sub fibers on complete' () {
+		'Forget sub fibers on complete'( $ ) {
 
 			class App extends $mol_object2 {
 
+				static get $() { return $ }
 				static counter = 0
 
 				@ $mol_fiber.method
@@ -263,7 +287,7 @@ module $ {
 
 		} ,
 
-		async 'Automatic destroy owned value on self destruction' () {
+		async 'Automatic destroy owned value on self destruction'( $ ) {
 
 			let counter = 0
 
@@ -272,6 +296,8 @@ module $ {
 			}
 
 			class App extends $mol_object2 {
+
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static get having() { return Having.create() }
@@ -298,9 +324,11 @@ module $ {
 
 		} ,
 
-		async 'Do not destroy putted value' () {
+		async 'Do not destroy putted value'( $ ) {
 
 			class App extends $mol_object2 {
+
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static source : number
@@ -327,9 +355,11 @@ module $ {
 
 		} ,
 
-		'Restore after error' () {
+		'Restore after error'( $ ) {
 
 			class App extends $mol_object2 {
+
+				static get $() { return $ }
 
 				@ $mol_atom2_field
 				static condition = false
@@ -360,6 +390,7 @@ module $ {
 			let state = 1
 
 			const monitor = new $.$mol_atom2
+			monitor.$ = $
 			monitor.calculate = ()=> {
 				new $.$mol_after_frame( $mol_atom2.current!.fresh )
 				return state
