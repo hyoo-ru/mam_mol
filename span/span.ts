@@ -24,7 +24,7 @@ namespace $ {
 		}
 
 		toString() {
-			return `${ this.uri }#${ this.row }:${ this.col }-${ this.length }`
+			return `${ this.uri }#${ this.row }:${ this.col }/${ this.length }`
 		}
 
 		toJSON() {

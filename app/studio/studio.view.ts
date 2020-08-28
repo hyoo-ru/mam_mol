@@ -307,7 +307,7 @@ namespace $.$$ {
 		}
 		
 		prop_add( name : string ) {
-			this.prop( [ name ] , $mol_tree2.struct(name , [ new $mol_tree2 ]) )
+			this.prop( [ name ] , $mol_tree2.struct(name , [ new $mol_tree2_empty ]) )
 		}
 
 		speech_enabled( next? : boolean ) {
