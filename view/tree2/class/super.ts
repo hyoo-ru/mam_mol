@@ -9,17 +9,17 @@ namespace $ {
 			err `Wrong class name at ${klass.span}` 
 		)
 
-		const subclass = klass.kids.length === 1 ? klass.kids[0] : undefined
+		const superclass = klass.kids.length === 1 ? klass.kids[0] : undefined
 
-		if (! subclass) return this.$mol_fail(
+		if (! superclass) return this.$mol_fail(
 			err`No subclass at ${klass.span}`
 		)
 
-		if( !class_regex.test( subclass.type ) ) return this.$mol_fail(
-			err`Wrong subclass name at ${subclass.span}`
+		if( !class_regex.test( superclass.type ) ) return this.$mol_fail(
+			err`Wrong subclass name at ${superclass.span}`
 		)
 
-		return subclass
+		return superclass
 	}
 
 	const class_regex = /^\$\w+$/

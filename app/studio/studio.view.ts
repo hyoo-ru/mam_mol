@@ -67,7 +67,7 @@ namespace $.$$ {
 				for( const prop of props.kids ) props_all[ prop.type ] = undefined as any
 				
 				const sup = this.class( name )
-				if( sup ) collect( this.$.$mol_view_tree2_super_name( sup ) )
+				if( sup ) collect( this.$.$mol_view_tree2_class_super( sup ).type )
 
 				for( const prop of props.kids ) props_all[ prop.type ] = prop
 			}
