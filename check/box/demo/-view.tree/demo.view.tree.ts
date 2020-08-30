@@ -1,166 +1,202 @@
-namespace $ { export class $mol_check_box_demo extends $mol_demo_small {
+namespace $ {
+	export class $mol_check_box_demo extends $mol_demo_small {
 
-	/**
-	 *  ```
-	 *  title @ \Checkboxes in various states
-	 *  ```
-	 **/
-	title() {
-		return this.$.$mol_locale.text( "$mol_check_box_demo_title" )
-	}
+		/**
+		 * ```tree
+		 * title @ \Checkboxes in various states
+		 * ```
+		 */
+		title() {
+			return this.$.$mol_locale.text( '$mol_check_box_demo_title' )
+		}
 
-	/**
-	 *  ```
-	 *  sub /
-	 *  	<= Labeled_base
-	 *  	<= Labeled_checked
-	 *  	<= Labeled_disabled
-	 *  	<= Alone_base
-	 *  	<= Alone_checked
-	 *  	<= Alone_disabled
-	 *  ```
-	 **/
-	sub() {
-		return [this.Labeled_base() , this.Labeled_checked() , this.Labeled_disabled() , this.Alone_base() , this.Alone_checked() , this.Alone_disabled()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Labeled_base $mol_check_box
+		 * 		checked?val <=> base_checked?val false
+		 * 		title <= c1Label @ \Base
+		 * 	-
+		 * 	<= Labeled_checked $mol_check_box
+		 * 		title <= c2Label @ \Checked
+		 * 		checked?val <=> checked_checked?val true
+		 * 	-
+		 * 	<= Labeled_disabled $mol_check_box
+		 * 		title <= c6Label @ \Disabled
+		 * 		checked true
+		 * 		enabled false
+		 * 	-
+		 * 	<= Alone_base $mol_check_box checked?val <=> base_checked?val false
+		 * 	-
+		 * 	<= Alone_checked $mol_check_box checked?val <=> checked_checked?val true
+		 * 	-
+		 * 	<= Alone_disabled $mol_check_box
+		 * 		checked true
+		 * 		enabled false
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Labeled_base(),
 
-	/**
-	 *  ```
-	 *  Labeled_base $mol_check_box
-	 *  	checked?val <=> base_checked?val
-	 *  	title <= c1Label
-	 *  ```
-	 **/
-	@ $mol_mem
-	Labeled_base() {
-		return (( obj )=>{
-			obj.checked = ( val? : any ) => this.base_checked( val )
+				this.Labeled_checked(),
+
+				this.Labeled_disabled(),
+
+				this.Alone_base(),
+
+				this.Alone_checked(),
+
+				this.Alone_disabled()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Labeled_base $mol_check_box
+		 * 	checked?val <=> base_checked?val false
+		 * 	title <= c1Label @ \Base
+		 * ```
+		 */
+		@ $mol_mem
+		Labeled_base() {
+			const obj = new this.$.$mol_check_box()
+
+			obj.checked = (val?: any) => this.base_checked(val)
 			obj.title = () => this.c1Label()
+
 			return obj
-		})( new this.$.$mol_check_box(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  base_checked?val false
-	 *  ```
-	 **/
-	@ $mol_mem
-	base_checked( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : false
-	}
+		/**
+		 * ```tree
+		 * base_checked?val false
+		 * ```
+		 */
+		@ $mol_mem
+		base_checked(val?: any) {
+			if ( val !== undefined ) return val
+			return false
+		}
 
-	/**
-	 *  ```
-	 *  c1Label @ \Base
-	 *  ```
-	 **/
-	c1Label() {
-		return this.$.$mol_locale.text( "$mol_check_box_demo_c1Label" )
-	}
+		/**
+		 * ```tree
+		 * c1Label @ \Base
+		 * ```
+		 */
+		c1Label() {
+			return this.$.$mol_locale.text( '$mol_check_box_demo_c1Label' )
+		}
 
-	/**
-	 *  ```
-	 *  Labeled_checked $mol_check_box
-	 *  	title <= c2Label
-	 *  	checked?val <=> checked_checked?val
-	 *  ```
-	 **/
-	@ $mol_mem
-	Labeled_checked() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Labeled_checked $mol_check_box
+		 * 	title <= c2Label @ \Checked
+		 * 	checked?val <=> checked_checked?val true
+		 * ```
+		 */
+		@ $mol_mem
+		Labeled_checked() {
+			const obj = new this.$.$mol_check_box()
+
 			obj.title = () => this.c2Label()
-			obj.checked = ( val? : any ) => this.checked_checked( val )
+			obj.checked = (val?: any) => this.checked_checked(val)
+
 			return obj
-		})( new this.$.$mol_check_box(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  c2Label @ \Checked
-	 *  ```
-	 **/
-	c2Label() {
-		return this.$.$mol_locale.text( "$mol_check_box_demo_c2Label" )
-	}
+		/**
+		 * ```tree
+		 * c2Label @ \Checked
+		 * ```
+		 */
+		c2Label() {
+			return this.$.$mol_locale.text( '$mol_check_box_demo_c2Label' )
+		}
 
-	/**
-	 *  ```
-	 *  checked_checked?val true
-	 *  ```
-	 **/
-	@ $mol_mem
-	checked_checked( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : true
-	}
+		/**
+		 * ```tree
+		 * checked_checked?val true
+		 * ```
+		 */
+		@ $mol_mem
+		checked_checked(val?: any) {
+			if ( val !== undefined ) return val
+			return true
+		}
 
-	/**
-	 *  ```
-	 *  Labeled_disabled $mol_check_box
-	 *  	title <= c6Label
-	 *  	checked true
-	 *  	enabled false
-	 *  ```
-	 **/
-	@ $mol_mem
-	Labeled_disabled() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Labeled_disabled $mol_check_box
+		 * 	title <= c6Label @ \Disabled
+		 * 	checked true
+		 * 	enabled false
+		 * ```
+		 */
+		@ $mol_mem
+		Labeled_disabled() {
+			const obj = new this.$.$mol_check_box()
+
 			obj.title = () => this.c6Label()
 			obj.checked = () => true
 			obj.enabled = () => false
+
 			return obj
-		})( new this.$.$mol_check_box(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  c6Label @ \Disabled
-	 *  ```
-	 **/
-	c6Label() {
-		return this.$.$mol_locale.text( "$mol_check_box_demo_c6Label" )
-	}
+		/**
+		 * ```tree
+		 * c6Label @ \Disabled
+		 * ```
+		 */
+		c6Label() {
+			return this.$.$mol_locale.text( '$mol_check_box_demo_c6Label' )
+		}
 
-	/**
-	 *  ```
-	 *  Alone_base $mol_check_box checked?val <=> base_checked?val
-	 *  ```
-	 **/
-	@ $mol_mem
-	Alone_base() {
-		return (( obj )=>{
-			obj.checked = ( val? : any ) => this.base_checked( val )
+		/**
+		 * ```tree
+		 * Alone_base $mol_check_box checked?val <=> base_checked?val false
+		 * ```
+		 */
+		@ $mol_mem
+		Alone_base() {
+			const obj = new this.$.$mol_check_box()
+
+			obj.checked = (val?: any) => this.base_checked(val)
+
 			return obj
-		})( new this.$.$mol_check_box(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Alone_checked $mol_check_box checked?val <=> checked_checked?val
-	 *  ```
-	 **/
-	@ $mol_mem
-	Alone_checked() {
-		return (( obj )=>{
-			obj.checked = ( val? : any ) => this.checked_checked( val )
+		/**
+		 * ```tree
+		 * Alone_checked $mol_check_box checked?val <=> checked_checked?val true
+		 * ```
+		 */
+		@ $mol_mem
+		Alone_checked() {
+			const obj = new this.$.$mol_check_box()
+
+			obj.checked = (val?: any) => this.checked_checked(val)
+
 			return obj
-		})( new this.$.$mol_check_box(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Alone_disabled $mol_check_box
-	 *  	checked true
-	 *  	enabled false
-	 *  ```
-	 **/
-	@ $mol_mem
-	Alone_disabled() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Alone_disabled $mol_check_box
+		 * 	checked true
+		 * 	enabled false
+		 * ```
+		 */
+		@ $mol_mem
+		Alone_disabled() {
+			const obj = new this.$.$mol_check_box()
+
 			obj.checked = () => true
 			obj.enabled = () => false
+
 			return obj
-		})( new this.$.$mol_check_box(  ) )
+		}
 	}
 
-} }
+}

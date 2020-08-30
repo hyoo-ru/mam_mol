@@ -1,143 +1,148 @@
-namespace $ { export class $mol_link extends $mol_view {
+namespace $ {
+	export class $mol_link extends $mol_view {
 
-	/**
-	 *  ```
-	 *  dom_name \a
-	 *  ```
-	 **/
-	dom_name() {
-		return "a"
+		/**
+		 * ```tree
+		 * dom_name \a
+		 * ```
+		 */
+		dom_name() {
+			return "a"
+		}
+
+		/**
+		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	href <= uri \
+		 * 	title <= hint \
+		 * 	target <= target \_self
+		 * 	download <= file_name \
+		 * 	mol_link_current <= current false
+		 * 	mol_theme <= theme null
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				href: this.uri(),
+				title: this.hint(),
+				target: this.target(),
+				download: this.file_name(),
+				mol_link_current: this.current(),
+				mol_theme: this.theme()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * uri \
+		 * ```
+		 */
+		uri() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * hint \
+		 * ```
+		 */
+		hint() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * target \_self
+		 * ```
+		 */
+		target() {
+			return "_self"
+		}
+
+		/**
+		 * ```tree
+		 * file_name \
+		 * ```
+		 */
+		file_name() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * current false
+		 * ```
+		 */
+		current() {
+			return false
+		}
+
+		/**
+		 * ```tree
+		 * theme null
+		 * ```
+		 */
+		theme() {
+			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * sub /$mol_view_content <= title
+		 * ```
+		 */
+		sub() {
+			return [
+				this.title()
+			] as readonly $mol_view_content[]
+		}
+
+		/**
+		 * ```tree
+		 * arg *
+		 * ```
+		 */
+		arg() {
+			return {
+
+			}
+		}
+
+		/**
+		 * ```tree
+		 * event *
+		 * 	^
+		 * 	click?event <=> click?event <=> event_click?event null
+		 * ```
+		 */
+		event() {
+			return {
+				...super.event(),
+				click: (event?: any) => this.click(event)
+			}
+		}
+
+		/**
+		 * ```tree
+		 * click?event <=> event_click?event null
+		 * ```
+		 */
+		click(event?: any) {
+			return this.event_click(event)
+		}
+
+		/**
+		 * ```tree
+		 * event_click?event null
+		 * ```
+		 */
+		@ $mol_mem
+		event_click(event?: any) {
+			if ( event !== undefined ) return event
+			return null as any
+		}
 	}
 
-	/**
-	 *  ```
-	 *  attr *
-	 *  	^
-	 *  	href <= uri
-	 *  	title <= hint
-	 *  	target <= target
-	 *  	download <= file_name
-	 *  	mol_link_current <= current
-	 *  	mol_theme <= theme
-	 *  ```
-	 **/
-	attr() {
-		return ({
-			...super.attr() ,
-			"href" :  this.uri() ,
-			"title" :  this.hint() ,
-			"target" :  this.target() ,
-			"download" :  this.file_name() ,
-			"mol_link_current" :  this.current() ,
-			"mol_theme" :  this.theme() ,
-		})
-	}
-
-	/**
-	 *  ```
-	 *  uri \
-	 *  ```
-	 **/
-	uri() {
-		return ""
-	}
-
-	/**
-	 *  ```
-	 *  hint \
-	 *  ```
-	 **/
-	hint() {
-		return ""
-	}
-
-	/**
-	 *  ```
-	 *  target \_self
-	 *  ```
-	 **/
-	target() {
-		return "_self"
-	}
-
-	/**
-	 *  ```
-	 *  file_name \
-	 *  ```
-	 **/
-	file_name() {
-		return ""
-	}
-
-	/**
-	 *  ```
-	 *  current false
-	 *  ```
-	 **/
-	current() {
-		return false
-	}
-
-	/**
-	 *  ```
-	 *  theme null
-	 *  ```
-	 **/
-	theme() {
-		return null as any
-	}
-
-	/**
-	 *  ```
-	 *  sub /$mol_view_content <= title
-	 *  ```
-	 **/
-	sub() {
-		return [this.title()] as readonly ( $mol_view_content )[]
-	}
-
-	/**
-	 *  ```
-	 *  arg *
-	 *  ```
-	 **/
-	arg() {
-		return ({
-		})
-	}
-
-	/**
-	 *  ```
-	 *  event *
-	 *  	^
-	 *  	click?event <=> click?event
-	 *  ```
-	 **/
-	event() {
-		return ({
-			...super.event() ,
-			"click" :  ( event? : any )=>  this.click( event ) ,
-		})
-	}
-
-	/**
-	 *  ```
-	 *  click?event <=> event_click?event
-	 *  ```
-	 **/
-	@ $mol_mem
-	click( event? : any , force? : $mol_mem_force ) {
-		return this.event_click( event )
-	}
-
-	/**
-	 *  ```
-	 *  event_click?event null
-	 *  ```
-	 **/
-	@ $mol_mem
-	event_click( event? : any , force? : $mol_mem_force ) {
-		return ( event !== void 0 ) ? event : null as any
-	}
-
-} }
+}

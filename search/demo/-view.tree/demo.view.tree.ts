@@ -1,49 +1,63 @@
-namespace $ { export class $mol_search_demo extends $mol_demo_small {
+namespace $ {
+	export class $mol_search_demo extends $mol_demo_small {
 
-	/**
-	 *  ```
-	 *  title @ \Simple search field with suggest
-	 *  ```
-	 **/
-	title() {
-		return this.$.$mol_locale.text( "$mol_search_demo_title" )
-	}
+		/**
+		 * ```tree
+		 * title @ \Simple search field with suggest
+		 * ```
+		 */
+		title() {
+			return this.$.$mol_locale.text( '$mol_search_demo_title' )
+		}
 
-	/**
-	 *  ```
-	 *  sub / <= Search
-	 *  ```
-	 **/
-	sub() {
-		return [this.Search()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * sub / <= Search $mol_search
+		 * 	query => query
+		 * 	suggests <= suggests /
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Search()
+			] as readonly any[]
+		}
 
-	query() {
-		return this.Search().query(  )
-	}
+		/**
+		 * ```tree
+		 * Search $mol_search
+		 * 	query => query
+		 * 	suggests <= suggests /
+		 * ```
+		 */
+		@ $mol_mem
+		Search() {
+			const obj = new this.$.$mol_search()
 
-	/**
-	 *  ```
-	 *  Search $mol_search
-	 *  	query => query
-	 *  	suggests <= suggests
-	 *  ```
-	 **/
-	@ $mol_mem
-	Search() {
-		return (( obj )=>{
 			obj.suggests = () => this.suggests()
+
 			return obj
-		})( new this.$.$mol_search(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * query
+		 * ```
+		 */
+		query() {
+			return this.Search().query()
+		}
+
+		/**
+		 * ```tree
+		 * suggests /
+		 * ```
+		 */
+		suggests() {
+			return [
+
+			] as readonly any[]
+		}
 	}
 
-	/**
-	 *  ```
-	 *  suggests /
-	 *  ```
-	 **/
-	suggests() {
-		return [] as readonly any[]
-	}
-
-} }
+}

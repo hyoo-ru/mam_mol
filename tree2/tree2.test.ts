@@ -53,7 +53,7 @@ namespace $ {
 				bar \t
 			` , $mol_span.begin( 'test' ) )
 
-			$mol_assert_like( errors , [ 'Syntax error\nbar \t\ntest#3:0-5' ] )
+			$mol_assert_like( errors , [ 'Syntax error\nbar \t\ntest#3:0/5' ] )
 
 		},
 

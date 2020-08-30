@@ -47,7 +47,7 @@ $mol_text_link $mol_link_iconed
 		^
 		mol_text_type <= type?val \
 	uri <= link?val \
-	content <= content?val /
+	content?val /
 
 $mol_text_image $mol_view
 	dom_name \object

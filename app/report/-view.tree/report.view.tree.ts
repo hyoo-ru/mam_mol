@@ -1,342 +1,373 @@
-namespace $ { export class $mol_app_report extends $mol_page {
+namespace $ {
+	export class $mol_app_report extends $mol_page {
 
-	/**
-	 *  ```
-	 *  title @ \Pump #1337 - Technical passport
-	 *  ```
-	 **/
-	title() {
-		return this.$.$mol_locale.text( "$mol_app_report_title" )
-	}
+		/**
+		 * ```tree
+		 * title @ \Pump #1337 - Technical passport
+		 * ```
+		 */
+		title() {
+			return this.$.$mol_locale.text( '$mol_app_report_title' )
+		}
 
-	/**
-	 *  ```
-	 *  body /
-	 *  	<= descriptor
-	 *  	<= tabler
-	 *  ```
-	 **/
-	body() {
-		return [this.descriptor() , this.tabler()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * body /
+		 * 	<= descriptor $mol_view sub / <= description \
+		 * 	<= tabler $mol_app_report_tabler rows <= rows / <= headRower $mol_app_report_rower cells <= headCells /
+		 * ```
+		 */
+		body() {
+			return [
+				this.descriptor(),
+				this.tabler()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  descriptor $mol_view sub / <= description
-	 *  ```
-	 **/
-	@ $mol_mem
-	descriptor() {
-		return (( obj )=>{
-			obj.sub = () => [this.description()] as readonly any[]
+		/**
+		 * ```tree
+		 * descriptor $mol_view sub / <= description \
+		 * ```
+		 */
+		@ $mol_mem
+		descriptor() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.description()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  description \
-	 *  ```
-	 **/
-	description() {
-		return ""
-	}
+		/**
+		 * ```tree
+		 * description \
+		 * ```
+		 */
+		description() {
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  tabler $mol_app_report_tabler rows <= rows
-	 *  ```
-	 **/
-	@ $mol_mem
-	tabler() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * tabler $mol_app_report_tabler rows <= rows / <= headRower $mol_app_report_rower cells <= headCells /
+		 * ```
+		 */
+		@ $mol_mem
+		tabler() {
+			const obj = new this.$.$mol_app_report_tabler()
+
 			obj.rows = () => this.rows()
+
 			return obj
-		})( new this.$.$mol_app_report_tabler(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  rows / <= headRower
-	 *  ```
-	 **/
-	rows() {
-		return [this.headRower()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * rows / <= headRower $mol_app_report_rower cells <= headCells /
+		 * ```
+		 */
+		rows() {
+			return [
+				this.headRower()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  headRower $mol_app_report_rower cells <= headCells
-	 *  ```
-	 **/
-	@ $mol_mem
-	headRower() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * headRower $mol_app_report_rower cells <= headCells /
+		 * ```
+		 */
+		@ $mol_mem
+		headRower() {
+			const obj = new this.$.$mol_app_report_rower()
+
 			obj.cells = () => this.headCells()
+
 			return obj
-		})( new this.$.$mol_app_report_rower(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  headCells /
-	 *  ```
-	 **/
-	headCells() {
-		return [] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * headCells /
+		 * ```
+		 */
+		headCells() {
+			return [
 
-	/**
-	 *  ```
-	 *  rower!id $mol_app_report_rower cells <= rowerCells!id
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	rower( id : any ) {
-		return (( obj )=>{
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * rower!id $mol_app_report_rower cells <= rowerCells!id /
+		 * ```
+		 */
+		@ $mol_mem_key
+		rower(id: any) {
+			const obj = new this.$.$mol_app_report_rower()
+
 			obj.cells = () => this.rowerCells(id)
+
 			return obj
-		})( new this.$.$mol_app_report_rower(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  rowerCells!id /
-	 *  ```
-	 **/
-	rowerCells( id : any ) {
-		return [] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * rowerCells!id /
+		 * ```
+		 */
+		rowerCells(id: any) {
+			return [
 
-	/**
-	 *  ```
-	 *  cell!id $mol_app_report_cell
-	 *  	content <= cell_content!id
-	 *  	rows <= cellrows!id
-	 *  	cols <= cellCols!id
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	cell( id : any ) {
-		return (( obj )=>{
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * cell!id $mol_app_report_cell
+		 * 	content <= cell_content!id null
+		 * 	rows <= cellrows!id 1
+		 * 	cols <= cellCols!id 1
+		 * ```
+		 */
+		@ $mol_mem_key
+		cell(id: any) {
+			const obj = new this.$.$mol_app_report_cell()
+
 			obj.content = () => this.cell_content(id)
 			obj.rows = () => this.cellrows(id)
 			obj.cols = () => this.cellCols(id)
+
 			return obj
-		})( new this.$.$mol_app_report_cell(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  cell_content!id null
-	 *  ```
-	 **/
-	cell_content( id : any ) {
-		return null as any
-	}
+		/**
+		 * ```tree
+		 * cell_content!id null
+		 * ```
+		 */
+		cell_content(id: any) {
+			return null as any
+		}
 
-	/**
-	 *  ```
-	 *  cellrows!id 1
-	 *  ```
-	 **/
-	cellrows( id : any ) {
-		return 1
-	}
+		/**
+		 * ```tree
+		 * cellrows!id 1
+		 * ```
+		 */
+		cellrows(id: any) {
+			return 1
+		}
 
-	/**
-	 *  ```
-	 *  cellCols!id 1
-	 *  ```
-	 **/
-	cellCols( id : any ) {
-		return 1
-	}
+		/**
+		 * ```tree
+		 * cellCols!id 1
+		 * ```
+		 */
+		cellCols(id: any) {
+			return 1
+		}
 
-	/**
-	 *  ```
-	 *  texter!id $mol_view sub / <= cell_value!id?val
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	texter( id : any ) {
-		return (( obj )=>{
-			obj.sub = () => [this.cell_value(id)] as readonly any[]
+		/**
+		 * ```tree
+		 * texter!id $mol_view sub / <= cell_value!id?val null
+		 * ```
+		 */
+		@ $mol_mem_key
+		texter(id: any) {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.cell_value(id)
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  cell_value!id?val null
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	cell_value( id : any , val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : null as any
-	}
+		/**
+		 * ```tree
+		 * cell_value!id?val null
+		 * ```
+		 */
+		@ $mol_mem_key
+		cell_value(id: any, val?: any) {
+			if ( val !== undefined ) return val
+			return null as any
+		}
 
-	/**
-	 *  ```
-	 *  select!id $mol_select
-	 *  	value?val <=> cell_value!id?val
-	 *  	dictionary <= cell_options!id
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	select( id : any ) {
-		return (( obj )=>{
-			obj.value = ( val? : any ) => this.cell_value(id , val )
+		/**
+		 * ```tree
+		 * select!id $mol_select
+		 * 	value?val <=> cell_value!id?val null
+		 * 	dictionary <= cell_options!id *
+		 * ```
+		 */
+		@ $mol_mem_key
+		select(id: any) {
+			const obj = new this.$.$mol_select()
+
+			obj.value = (val?: any) => this.cell_value(id, val)
 			obj.dictionary = () => this.cell_options(id)
+
 			return obj
-		})( new this.$.$mol_select(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  cell_options!id *
-	 *  ```
-	 **/
-	cell_options( id : any ) {
-		return ({
-		})
-	}
+		/**
+		 * ```tree
+		 * cell_options!id *
+		 * ```
+		 */
+		cell_options(id: any) {
+			return {
 
-	/**
-	 *  ```
-	 *  number!id $mol_number value?val <=> cell_value!id?val
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	number( id : any ) {
-		return (( obj )=>{
-			obj.value = ( val? : any ) => this.cell_value(id , val )
+			}
+		}
+
+		/**
+		 * ```tree
+		 * number!id $mol_number value?val <=> cell_value!id?val null
+		 * ```
+		 */
+		@ $mol_mem_key
+		number(id: any) {
+			const obj = new this.$.$mol_number()
+
+			obj.value = (val?: any) => this.cell_value(id, val)
+
 			return obj
-		})( new this.$.$mol_number(  ) )
+		}
 	}
 
-} }
-namespace $ { export class $mol_app_report_tabler extends $mol_view {
+	export class $mol_app_report_tabler extends $mol_view {
 
-	/**
-	 *  ```
-	 *  dom_name \table
-	 *  ```
-	 **/
-	dom_name() {
-		return "table"
+		/**
+		 * ```tree
+		 * dom_name \table
+		 * ```
+		 */
+		dom_name() {
+			return "table"
+		}
+
+		/**
+		 * ```tree
+		 * sub <= rows /
+		 * ```
+		 */
+		sub() {
+			return this.rows()
+		}
+
+		/**
+		 * ```tree
+		 * rows /
+		 * ```
+		 */
+		rows() {
+			return [
+
+			] as readonly any[]
+		}
 	}
 
-	/**
-	 *  ```
-	 *  sub <= rows
-	 *  ```
-	 **/
-	sub() {
-		return this.rows()
+	export class $mol_app_report_rower extends $mol_view {
+
+		/**
+		 * ```tree
+		 * dom_name \tr
+		 * ```
+		 */
+		dom_name() {
+			return "tr"
+		}
+
+		/**
+		 * ```tree
+		 * sub <= cells /
+		 * ```
+		 */
+		sub() {
+			return this.cells()
+		}
+
+		/**
+		 * ```tree
+		 * cells /
+		 * ```
+		 */
+		cells() {
+			return [
+
+			] as readonly any[]
+		}
 	}
 
-	/**
-	 *  ```
-	 *  rows /
-	 *  ```
-	 **/
-	rows() {
-		return [] as readonly any[]
+	export class $mol_app_report_cell extends $mol_view {
+
+		/**
+		 * ```tree
+		 * dom_name \td
+		 * ```
+		 */
+		dom_name() {
+			return "td"
+		}
+
+		/**
+		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	colspan <= cols 1
+		 * 	rowspan <= rows 1
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				colspan: this.cols(),
+				rowspan: this.rows()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * cols 1
+		 * ```
+		 */
+		cols() {
+			return 1
+		}
+
+		/**
+		 * ```tree
+		 * rows 1
+		 * ```
+		 */
+		rows() {
+			return 1
+		}
+
+		/**
+		 * ```tree
+		 * sub / <= content null
+		 * ```
+		 */
+		sub() {
+			return [
+				this.content()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * content null
+		 * ```
+		 */
+		content() {
+			return null as any
+		}
 	}
 
-} }
-namespace $ { export class $mol_app_report_rower extends $mol_view {
-
-	/**
-	 *  ```
-	 *  dom_name \tr
-	 *  ```
-	 **/
-	dom_name() {
-		return "tr"
-	}
-
-	/**
-	 *  ```
-	 *  sub <= cells
-	 *  ```
-	 **/
-	sub() {
-		return this.cells()
-	}
-
-	/**
-	 *  ```
-	 *  cells /
-	 *  ```
-	 **/
-	cells() {
-		return [] as readonly any[]
-	}
-
-} }
-namespace $ { export class $mol_app_report_cell extends $mol_view {
-
-	/**
-	 *  ```
-	 *  dom_name \td
-	 *  ```
-	 **/
-	dom_name() {
-		return "td"
-	}
-
-	/**
-	 *  ```
-	 *  attr *
-	 *  	^
-	 *  	colspan <= cols
-	 *  	rowspan <= rows
-	 *  ```
-	 **/
-	attr() {
-		return ({
-			...super.attr() ,
-			"colspan" :  this.cols() ,
-			"rowspan" :  this.rows() ,
-		})
-	}
-
-	/**
-	 *  ```
-	 *  cols 1
-	 *  ```
-	 **/
-	cols() {
-		return 1
-	}
-
-	/**
-	 *  ```
-	 *  rows 1
-	 *  ```
-	 **/
-	rows() {
-		return 1
-	}
-
-	/**
-	 *  ```
-	 *  sub / <= content
-	 *  ```
-	 **/
-	sub() {
-		return [this.content()] as readonly any[]
-	}
-
-	/**
-	 *  ```
-	 *  content null
-	 *  ```
-	 **/
-	content() {
-		return null as any
-	}
-
-} }
+}

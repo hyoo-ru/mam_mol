@@ -3019,6 +3019,142 @@ var $;
 ;
 "use strict";
 var $;
+(function ($_1) {
+    $_1.$mol_test({
+        'span for same uri'($) {
+            const span = new $_1.$mol_span('test.ts', 1, 3, 4);
+            const child = span.span(4, 5, 8);
+            $_1.$mol_assert_equal(child.uri, 'test.ts');
+            $_1.$mol_assert_equal(child.row, 4);
+            $_1.$mol_assert_equal(child.col, 5);
+            $_1.$mol_assert_equal(child.length, 8);
+        },
+        'span after of given position'($) {
+            const span = new $_1.$mol_span('test.ts', 1, 3, 4);
+            const child = span.after(11);
+            $_1.$mol_assert_equal(child.uri, 'test.ts');
+            $_1.$mol_assert_equal(child.row, 1);
+            $_1.$mol_assert_equal(child.col, 7);
+            $_1.$mol_assert_equal(child.length, 11);
+        },
+        'slice span - regular'($) {
+            const span = new $_1.$mol_span('test.ts', 1, 3, 5);
+            const child = span.slice(1, 3);
+            $_1.$mol_assert_equal(child.row, 1);
+            $_1.$mol_assert_equal(child.col, 4);
+            $_1.$mol_assert_equal(child.length, 3);
+            const child2 = span.slice(2, 2);
+            $_1.$mol_assert_equal(child2.col, 5);
+            $_1.$mol_assert_equal(child2.length, 2);
+        },
+        'slice span - out of range'($) {
+            const span = new $_1.$mol_span('test.ts', 1, 3, 5);
+            $_1.$mol_assert_fail(() => span.slice(-1, 4));
+            $_1.$mol_assert_fail(() => span.slice(1, 6));
+            $_1.$mol_assert_fail(() => span.slice(1, 10));
+            $_1.$mol_assert_fail(() => span.slice(1, -1));
+        },
+        'error handling'($) {
+            const span = new $_1.$mol_span('test.ts', 1, 3, 4);
+            const error = span.error('some error');
+            $_1.$mol_assert_equal(error.message, 'some error\ntest.ts#1:3/4');
+        }
+    });
+})($ || ($ = {}));
+//span.test.js.map
+;
+"use strict";
+var $;
+(function ($_1) {
+    $_1.$mol_test({
+        'tree parsing'() {
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString("foo\nbar\n").kids.length, 2);
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString("foo\nbar\n").kids[1].type, "bar");
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString("foo\n\n\n").kids.length, 1);
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString("=foo\n\\bar\n").kids.length, 2);
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString("=foo\n\\bar\n").kids[1].value, "bar");
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString("foo bar \\pol").kids[0].kids[0].kids[0].value, "pol");
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString("foo bar\n\t\\pol\n\t\\men").kids[0].kids[0].kids[1].value, "men");
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString('foo bar \\text\n').toString(), 'foo bar \\text\n');
+        },
+        'inserting'() {
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString('a b c d').insert($_1.$mol_tree2.struct('x'), 'a', 'b', 'c').toString(), 'a b x\n');
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString('a b').insert($_1.$mol_tree2.struct('x'), 'a', 'b', 'c', 'd').toString(), 'a b c x\n');
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString('a b c d').insert($_1.$mol_tree2.struct('x'), 0, 0, 0).toString(), 'a b x\n');
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString('a b').insert($_1.$mol_tree2.struct('x'), 0, 0, 0, 0).toString(), 'a b \\\n\tx\n');
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString('a b c d').insert($_1.$mol_tree2.struct('x'), null, null, null).toString(), 'a b x\n');
+            $_1.$mol_assert_equal($_1.$mol_tree2.fromString('a b').insert($_1.$mol_tree2.struct('x'), null, null, null, null).toString(), 'a b \\\n\tx\n');
+        },
+        'hack'() {
+            const res = $_1.$mol_tree2.fromString(`foo bar xxx`).hack({
+                '': (tree, context) => [tree.clone(tree.hack(context))],
+                'bar': (tree, context) => [tree.struct('777', tree.hack(context))],
+            });
+            $_1.$mol_assert_equal(res.toString(), 'foo 777 xxx\n');
+        },
+        'errors handling'($) {
+            const errors = [];
+            class Tree extends $_1.$mol_tree2 {
+            }
+            Tree.$ = $.$mol_ambient({
+                $mol_fail: error => errors.push(error.message)
+            });
+            Tree.fromString(`
+				foo
+				bar \t
+			`, $_1.$mol_span.begin('test'));
+            $_1.$mol_assert_like(errors, ['Syntax error\nbar \t\ntest#3:0/5']);
+        },
+    });
+})($ || ($ = {}));
+//tree2.test.js.map
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        const src = `
+		$${''}my_test $${''}my_super
+			title @ \\title
+			sub /
+				<= Title $${''}mol_view
+					sub /
+						<= title
+				<= Close $${''}mol_button
+					title \close
+					click?event <=> close?event null
+			plugins /
+				<= Speech $${''}mol_speech
+					text => speech
+	`;
+        const dest = `
+		title @ \\title
+		sub /
+			<= Title
+			<= Close
+		plugins / <= Speech
+		Title $${''}mol_view sub / <= title
+		close?event null
+		Close $${''}mol_button
+			title \close
+			click?event <=> close?event
+		Speech $${''}mol_speech text => speech
+	`.replace(/^\t\t/mg, '').trim() + '\n';
+        $_1.$mol_test({
+            'props'($) {
+                const span = $_1.$mol_span.entire('/mol/view/tree2/class/props.test.ts', src.length);
+                const mod = $_1.$mol_tree2.fromString(src, span);
+                const result = $.$mol_view_tree2_class_props(mod.kids[0]).toString();
+                $_1.$mol_assert_equal(result, dest);
+            }
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+//props.test.js.map
+;
+"use strict";
+var $;
 (function ($) {
     $.$mol_test({
         'Makes reactive value by key'() {

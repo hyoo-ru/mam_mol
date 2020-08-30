@@ -2472,5 +2472,131 @@ var $;
     $.$mol_error_mix = $mol_error_mix;
 })($ || ($ = {}));
 //mix.js.map
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $_1.$mol_test({
+            'simple props'($) {
+                const app = $_1.$mol_view_tree_test_simple.make({ $ });
+                $_1.$mol_assert_equal(app.some(), 1);
+                $_1.$mol_assert_equal(app.bool(), true);
+                $_1.$mol_assert_equal(app.str(), 'test');
+                $_1.$mol_assert_ok(Array.isArray(app.arr()));
+                $_1.$mol_assert_ok(Array.isArray(app.arr_string()));
+            },
+            'default value'($) {
+                const app = $_1.$mol_view_tree_test_binding.make({ $ });
+                $_1.$mol_assert_equal(app.value(), '123');
+            },
+            'both binding'($) {
+                const app = $_1.$mol_view_tree_test_binding.make({ $ });
+                $_1.$mol_assert_ok(app.value() !== 1);
+                app.value(1);
+                $_1.$mol_assert_equal(app.value(), 1);
+            },
+            'left binding'($) {
+                const app = $_1.$mol_view_tree_test_binding.make({ $ });
+                $_1.$mol_assert_not(app.head_complete_enabled());
+                $_1.$mol_assert_not(app.enabled());
+            },
+            'sub component'($) {
+                const app = $_1.$mol_view_tree_test_binding_right.make({ $ });
+                $_1.$mol_assert_ok(app.Test() instanceof $_1.$mol_view_tree_test_binding_right_test);
+            },
+            'right binding - change owner property'($) {
+                const app = $_1.$mol_view_tree_test_binding_right.make({ $ });
+                const val = 123;
+                $_1.$mol_assert_ok(app.outer_width() !== val);
+                $_1.$mol_assert_ok(app.Test().width() !== val);
+                app.outer_width(val);
+                $_1.$mol_assert_equal(app.outer_width(), val);
+                $_1.$mol_assert_equal(app.Test().width(), val);
+            },
+            'right binding - change part property'($) {
+                const app = $_1.$mol_view_tree_test_binding_right.make({ $ });
+                const val = 123;
+                $_1.$mol_assert_ok(app.outer_width() !== val);
+                $_1.$mol_assert_ok(app.Test().width() !== val);
+                app.Test().width(val);
+                $_1.$mol_assert_equal(app.Test().width(), val);
+                $_1.$mol_assert_equal(app.outer_width(), val);
+            },
+            'attributes merging'($) {
+                const app = $_1.$mol_view_tree_test_attributes.make({ $ });
+                $_1.$mol_assert_like(app.some(), { a: 1, b: 2 });
+            },
+            'subcomponent indexed'($) {
+                const app = $_1.$mol_view_tree_test_attributes_subcomponent.make({ $ });
+                const val = 123;
+                app.page = (index) => index;
+                $_1.$mol_assert_equal(app.Page(val).Sub(), val);
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+//tree.test.js.map
+;
+"use strict";
+var $;
+(function ($_1) {
+    $_1.$mol_test({
+        'tree parsing'() {
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString("foo\nbar\n").sub.length, 2);
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString("foo\nbar\n").sub[1].type, "bar");
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString("foo\n\n\n").sub.length, 1);
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString("=foo\n\\bar\n").sub.length, 2);
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString("=foo\n\\bar\n").sub[1].data, "bar");
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString("foo bar \\pol").sub[0].sub[0].sub[0].data, "pol");
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString("foo bar\n\t\\pol\n\t\\men").sub[0].sub[0].sub[1].data, "men");
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString('foo bar \\text\n').toString(), 'foo bar \\text\n');
+        },
+        'inserting'() {
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString('a b c d').insert(new $_1.$mol_tree, 'a', 'b', 'c').toString(), 'a b \\\n');
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString('a b').insert(new $_1.$mol_tree, 'a', 'b', 'c', 'd').toString(), 'a b c \\\n');
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString('a b c d').insert(new $_1.$mol_tree, 0, 0, 0).toString(), 'a b \\\n');
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString('a b').insert(new $_1.$mol_tree, 0, 0, 0, 0).toString(), 'a b \\\n\t\\\n');
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString('a b c d').insert(new $_1.$mol_tree, null, null, null).toString(), 'a b \\\n');
+            $_1.$mol_assert_equal($_1.$mol_tree.fromString('a b').insert(new $_1.$mol_tree, null, null, null, null).toString(), 'a b \\\n\t\\\n');
+        },
+        'fromJSON'() {
+            $_1.$mol_assert_equal($_1.$mol_tree.fromJSON([]).toString(), '/\n');
+            $_1.$mol_assert_equal($_1.$mol_tree.fromJSON([false, true]).toString(), '/\n\tfalse\n\ttrue\n');
+            $_1.$mol_assert_equal($_1.$mol_tree.fromJSON([0, 1, 2.3]).toString(), '/\n\t0\n\t1\n\t2.3\n');
+            $_1.$mol_assert_equal($_1.$mol_tree.fromJSON(['', 'foo', 'bar\nbaz']).toString(), '/\n\t\\\n\t\\foo\n\t\\\n\t\t\\bar\n\t\t\\baz\n');
+            $_1.$mol_assert_equal($_1.$mol_tree.fromJSON({ 'foo': false, 'bar\nbaz': 'lol' }).toString(), '*\n\tfoo false\n\t\\\n\t\t\\bar\n\t\t\\baz\n\t\t\\lol\n');
+        },
+        'toJSON'() {
+            $_1.$mol_assert_equal(JSON.stringify($_1.$mol_tree.fromString('/\n').sub[0]), '[]');
+            $_1.$mol_assert_equal(JSON.stringify($_1.$mol_tree.fromString('/\n\tfalse\n\ttrue\n').sub[0]), '[false,true]');
+            $_1.$mol_assert_equal(JSON.stringify($_1.$mol_tree.fromString('/\n\t0\n\t1\n\t2.3\n').sub[0]), '[0,1,2.3]');
+            $_1.$mol_assert_equal(JSON.stringify($_1.$mol_tree.fromString('/\n\t\\\n\t\\foo\n\t\\\n\t\t\\bar\n\t\t\\baz\n').sub[0]), '["","foo","bar\\nbaz"]');
+            $_1.$mol_assert_equal(JSON.stringify($_1.$mol_tree.fromString('*\n\tfoo false\n\t\\\n\t\t\\bar\n\t\t\\baz\n\t\t\\lol\n').sub[0]), '{"foo":false,"bar\\nbaz":"lol"}');
+        },
+        'hack'() {
+            const res = $_1.$mol_tree.fromString(`foo bar xxx`).hack({
+                '': (tree, context) => [tree.hack(context)],
+                'bar': (tree, context) => [tree.hack(context).clone({ type: '777' })],
+            });
+            $_1.$mol_assert_equal(res.toString(), new $_1.$mol_tree({ type: 'foo 777 xxx' }).toString());
+        },
+        'errors handling'($) {
+            const errors = [];
+            class Tree extends $_1.$mol_tree {
+            }
+            Tree.$ = $.$mol_ambient({
+                $mol_fail: error => errors.push(error.message)
+            });
+            Tree.fromString(`
+				\t \tfoo
+				bar \\data
+			`, 'test');
+            $_1.$mol_assert_like(errors, ['Syntax error at test:2\n \tfoo']);
+        },
+    });
+})($ || ($ = {}));
+//tree.test.js.map
 
 //# sourceMappingURL=web.test.js.map

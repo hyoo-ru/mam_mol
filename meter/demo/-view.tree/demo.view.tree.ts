@@ -1,84 +1,115 @@
-namespace $ { export class $mol_meter_demo extends $mol_demo_small {
+namespace $ {
+	export class $mol_meter_demo extends $mol_demo_small {
 
-	/**
-	 *  ```
-	 *  title @ \Real time offset and size metering
-	 *  ```
-	 **/
-	title() {
-		return this.$.$mol_locale.text( "$mol_meter_demo_title" )
-	}
+		/**
+		 * ```tree
+		 * title @ \Real time offset and size metering
+		 * ```
+		 */
+		title() {
+			return this.$.$mol_locale.text( '$mol_meter_demo_title' )
+		}
 
-	/**
-	 *  ```
-	 *  plugins / <= Meter
-	 *  ```
-	 **/
-	plugins() {
-		return [this.Meter()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * plugins / <= Meter $mol_meter
+		 * 	top => top
+		 * 	height => height
+		 * ```
+		 */
+		plugins() {
+			return [
+				this.Meter()
+			] as readonly any[]
+		}
 
-	top() {
-		return this.Meter().top(  )
-	}
+		/**
+		 * ```tree
+		 * Meter $mol_meter
+		 * 	top => top
+		 * 	height => height
+		 * ```
+		 */
+		@ $mol_mem
+		Meter() {
+			const obj = new this.$.$mol_meter()
 
-	height() {
-		return this.Meter().height(  )
-	}
-
-	/**
-	 *  ```
-	 *  Meter $mol_meter
-	 *  	top => top
-	 *  	height => height
-	 *  ```
-	 **/
-	@ $mol_mem
-	Meter() {
-		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_meter(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  sub /
-	 *  	<= Top
-	 *  	<= Height
-	 *  ```
-	 **/
-	sub() {
-		return [this.Top() , this.Height()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * top
+		 * ```
+		 */
+		top() {
+			return this.Meter().top()
+		}
 
-	/**
-	 *  ```
-	 *  Top $mol_view sub /
-	 *  	\Offset from top: 
-	 *  	<= top
-	 *  ```
-	 **/
-	@ $mol_mem
-	Top() {
-		return (( obj )=>{
-			obj.sub = () => ["Offset from top: " , this.top()] as readonly any[]
+		/**
+		 * ```tree
+		 * height
+		 * ```
+		 */
+		height() {
+			return this.Meter().height()
+		}
+
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Top $mol_view sub /
+		 * 		\Offset from top: 
+		 * 		<= top
+		 * 	<= Height $mol_view sub /
+		 * 		\Component height: 
+		 * 		<= height
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Top(),
+				this.Height()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Top $mol_view sub /
+		 * 	\Offset from top: 
+		 * 	<= top
+		 * ```
+		 */
+		@ $mol_mem
+		Top() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				"Offset from top: ",
+				this.top()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Height $mol_view sub /
-	 *  	\Component height: 
-	 *  	<= height
-	 *  ```
-	 **/
-	@ $mol_mem
-	Height() {
-		return (( obj )=>{
-			obj.sub = () => ["Component height: " , this.height()] as readonly any[]
+		/**
+		 * ```tree
+		 * Height $mol_view sub /
+		 * 	\Component height: 
+		 * 	<= height
+		 * ```
+		 */
+		@ $mol_mem
+		Height() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				"Component height: ",
+				this.height()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
+		}
 	}
 
-} }
+}

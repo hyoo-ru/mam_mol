@@ -784,8 +784,6 @@ declare namespace $ {
         hue(): number;
         Sample(): any;
     }
-}
-declare namespace $ {
     class $mol_plot_graph_sample extends $mol_view {
         attr(): {
             mol_plot_graph_type: string;
@@ -828,12 +826,12 @@ declare namespace $ {
 declare namespace $ {
     class $mol_meter extends $mol_plugin {
         zoom(): number;
-        width(val?: any, force?: $mol_mem_force): any;
-        height(val?: any, force?: $mol_mem_force): any;
-        left(val?: any, force?: $mol_mem_force): any;
-        right(val?: any, force?: $mol_mem_force): any;
-        bottom(val?: any, force?: $mol_mem_force): any;
-        top(val?: any, force?: $mol_mem_force): any;
+        width(val?: any): any;
+        height(val?: any): any;
+        left(val?: any): any;
+        right(val?: any): any;
+        bottom(val?: any): any;
+        top(val?: any): any;
     }
 }
 
@@ -860,26 +858,26 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_touch extends $mol_plugin {
-        start_zoom(val?: any, force?: $mol_mem_force): any;
-        start_distance(val?: any, force?: $mol_mem_force): any;
-        zoom(val?: any, force?: $mol_mem_force): any;
-        start_pan(val?: any, force?: $mol_mem_force): any;
-        pan(val?: any, force?: $mol_mem_force): any;
-        pos(val?: any, force?: $mol_mem_force): any;
-        start_pos(val?: any, force?: $mol_mem_force): any;
+        start_zoom(val?: any): any;
+        start_distance(val?: any): any;
+        zoom(val?: any): any;
+        start_pan(val?: any): any;
+        pan(val?: any): any;
+        pos(val?: any): any;
+        start_pos(val?: any): any;
         swipe_precision(): number;
-        swipe_right(val?: any, force?: $mol_mem_force): any;
-        swipe_bottom(val?: any, force?: $mol_mem_force): any;
-        swipe_left(val?: any, force?: $mol_mem_force): any;
-        swipe_top(val?: any, force?: $mol_mem_force): any;
-        swipe_from_right(val?: any, force?: $mol_mem_force): any;
-        swipe_from_bottom(val?: any, force?: $mol_mem_force): any;
-        swipe_from_left(val?: any, force?: $mol_mem_force): any;
-        swipe_from_top(val?: any, force?: $mol_mem_force): any;
-        swipe_to_right(val?: any, force?: $mol_mem_force): any;
-        swipe_to_bottom(val?: any, force?: $mol_mem_force): any;
-        swipe_to_left(val?: any, force?: $mol_mem_force): any;
-        swipe_to_top(val?: any, force?: $mol_mem_force): any;
+        swipe_right(val?: any): any;
+        swipe_bottom(val?: any): any;
+        swipe_left(val?: any): any;
+        swipe_top(val?: any): any;
+        swipe_from_right(val?: any): any;
+        swipe_from_bottom(val?: any): any;
+        swipe_from_left(val?: any): any;
+        swipe_from_top(val?: any): any;
+        swipe_to_right(val?: any): any;
+        swipe_to_bottom(val?: any): any;
+        swipe_to_left(val?: any): any;
+        swipe_to_top(val?: any): any;
         style(): {
             "touch-action": string;
             "overscroll-behavior": string;
@@ -894,11 +892,11 @@ declare namespace $ {
             mouseleave: (event?: any) => any;
             wheel: (event?: any) => any;
         };
-        event_start(event?: any, force?: $mol_mem_force): any;
-        event_move(event?: any, force?: $mol_mem_force): any;
-        event_end(event?: any, force?: $mol_mem_force): any;
-        event_leave(event?: any, force?: $mol_mem_force): any;
-        event_wheel(event?: any, force?: $mol_mem_force): any;
+        event_start(event?: any): any;
+        event_move(event?: any): any;
+        event_end(event?: any): any;
+        event_leave(event?: any): any;
+        event_wheel(event?: any): any;
     }
 }
 
@@ -920,8 +918,8 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_plot_pane extends $mol_svg_root {
         aspect(): string;
-        hue_base(val?: any, force?: $mol_mem_force): any;
-        hue_shift(val?: any, force?: $mol_mem_force): any;
+        hue_base(val?: any): any;
+        hue_shift(val?: any): any;
         gap_hor(): number;
         gap_vert(): number;
         gap_left(): number;
@@ -935,14 +933,14 @@ declare namespace $ {
         shift_limit_x(): $mol_vector_range<number>;
         shift_limit_y(): $mol_vector_range<number>;
         shift_default(): readonly number[];
-        shift(val?: any, force?: $mol_mem_force): any;
+        shift(val?: any): any;
         scale_limit(): $mol_vector_2d<$mol_vector_range<number>>;
         scale_limit_x(): $mol_vector_range<number>;
         scale_limit_y(): $mol_vector_range<number>;
         scale_default(): readonly number[];
-        scale(val?: any, force?: $mol_mem_force): any;
-        scale_x(val?: any, force?: $mol_mem_force): any;
-        scale_y(val?: any, force?: $mol_mem_force): any;
+        scale(val?: any): any;
+        scale_x(val?: any): any;
+        scale_y(val?: any): any;
         size(): $mol_vector_2d<number>;
         size_real(): $mol_vector_2d<number>;
         dimensions_viewport(): $mol_vector_2d<$mol_vector_range<number>>;
@@ -956,16 +954,16 @@ declare namespace $ {
         graphs_colored(): readonly $mol_plot_graph[];
         graphs_positioned(): readonly $mol_plot_graph[];
         graphs(): readonly $mol_plot_graph[];
-        cursor_position(val?: any, force?: $mol_mem_force): any;
+        cursor_position(val?: any): any;
         plugins(): readonly any[];
+        Meter(): $$.$mol_meter;
         width(): number;
         height(): number;
-        Meter(): $$.$mol_meter;
         Touch(): $$.$mol_touch;
         event(): {
             dblclick: (event?: any) => any;
         };
-        reset(event?: any, force?: $mol_mem_force): any;
+        reset(event?: any): any;
     }
 }
 
@@ -1228,7 +1226,7 @@ declare namespace $ {
         dimensions_axis(): $mol_vector_range<number>;
         viewport_axis(): $mol_vector_range<number>;
         axis_points(): readonly number[];
-        normalize(val?: any, force?: $mol_mem_force): any;
+        normalize(val?: any): any;
         precision(): number;
         sub(): readonly any[];
         Background(): $$.$mol_svg_rect;
@@ -1330,4 +1328,175 @@ declare namespace $.$$ {
 
 declare namespace $ {
     function $mol_exec(this: $mol_ambient_context, dir: string, command: string, ...args: string[]): any;
+}
+
+declare namespace $ {
+    class $mol_view_tree_test_attributes_super extends $mol_view {
+        some(): {
+            a: number;
+            b: number;
+        };
+    }
+    class $mol_view_tree_test_attributes extends $mol_view_tree_test_attributes_super {
+        some(): {
+            a: number;
+            b: number;
+        };
+    }
+}
+
+declare namespace $ {
+    class $mol_view_tree_test_binding extends $mol_view {
+        value(val?: any): any;
+        task_title_new(val?: any): any;
+        enabled(): boolean;
+        head_complete_enabled(): boolean;
+    }
+}
+
+declare namespace $ {
+    class $mol_view_tree_test_binding_right extends $mol_view {
+        Test(): $mol_view_tree_test_binding_right_test;
+        outer_width(v?: any): any;
+    }
+    class $mol_view_tree_test_binding_right_test extends $mol_view {
+        width(val?: any): any;
+    }
+}
+
+declare namespace $ {
+    class $mol_view_tree_test_simple extends $mol_view {
+        some(): number;
+        bool(): boolean;
+        str(): string;
+        arr(): readonly any[];
+        arr_string(): readonly string[];
+    }
+}
+
+declare namespace $ {
+    class $mol_view_tree_test_attributes_subcomponent extends $mol_view {
+        Page(index: any): $mol_view_tree_test_attributes_subcomponent_page;
+        page(index: any): any;
+    }
+    class $mol_view_tree_test_attributes_subcomponent_page extends $mol_view {
+        Sub(): any;
+    }
+}
+
+declare namespace $ {
+    class $mol_state_local<Value> extends $mol_object {
+        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+        static native(): Storage | {
+            getItem(key: string): any;
+            setItem(key: string, value: string): void;
+            removeItem(key: string): void;
+        };
+        static value<Value>(key: string, next?: Value, force?: $mol_mem_force): Value | null;
+        prefix(): string;
+        value(key: string, next?: Value): Value | null;
+    }
+}
+
+declare namespace $ {
+    type $mol_charset_encoding = 'utf8' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
+    function $mol_charset_decode(value: Uint8Array, code?: $mol_charset_encoding): string;
+}
+
+declare namespace $ {
+    function $mol_charset_encode(value: string): Uint8Array;
+}
+
+declare namespace $ {
+    type $mol_file_type = 'file' | 'dir' | 'link';
+    interface $mol_file_stat {
+        type: $mol_file_type;
+        size: number;
+        atime: Date;
+        mtime: Date;
+        ctime: Date;
+    }
+    class $mol_file_not_found extends Error {
+    }
+    abstract class $mol_file extends $mol_object {
+        static absolute(path: string): $mol_file;
+        static relative(path: string): $mol_file;
+        path(): string;
+        parent(): $mol_file;
+        abstract stat(next?: $mol_file_stat, force?: $mol_mem_force): $mol_file_stat;
+        reset(): void;
+        version(): string;
+        abstract ensure(next?: boolean): boolean;
+        watcher(): {
+            destructor(): void;
+        };
+        exists(next?: boolean, force?: $mol_mem_force): boolean;
+        type(): $mol_file_type;
+        name(): string;
+        ext(): string;
+        abstract buffer(next?: Uint8Array, force?: $mol_mem_force): Uint8Array;
+        text(next?: string, force?: $mol_mem_force): string;
+        fail(error: Error): void;
+        buffer_cached(buffer: Uint8Array): void;
+        text_cached(content: string): void;
+        abstract sub(): $mol_file[];
+        abstract resolve(path: string): $mol_file;
+        abstract relate(base?: $mol_file): string;
+        abstract append(next: Uint8Array | string): void;
+        find(include?: RegExp, exclude?: RegExp): $mol_file[];
+        size(): number;
+    }
+}
+
+declare namespace $ {
+    function $mol_compare_array<Value extends ArrayLike<unknown>>(a: Value, b: Value): boolean;
+}
+
+declare namespace $ {
+    class $mol_file_node extends $mol_file {
+        static absolute(path: string): $mol_file_node;
+        static relative(path: string): $mol_file_node;
+        watcher(): {
+            destructor(): void;
+        };
+        stat(next?: $mol_file_stat, force?: $mol_mem_force): $mol_file_stat;
+        ensure(next?: boolean): boolean;
+        buffer(next?: Uint8Array, force?: $mol_mem_force): Uint8Array;
+        sub(): $mol_file[];
+        resolve(path: string): $mol_file;
+        relate(base?: $mol_file): any;
+        append(next: Uint8Array | string): undefined;
+    }
+}
+
+declare namespace $ {
+    interface $mol_locale_dict {
+        [key: string]: string;
+    }
+    class $mol_locale extends $mol_object {
+        static lang_default(): string;
+        static lang(next?: string): string;
+        static source(lang: string): any;
+        static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
+        static text(key: string): string;
+    }
+}
+
+declare namespace $ {
+    function $mol_view_tree_trim_remarks(def: $mol_tree): $mol_tree;
+    function $mol_view_tree_classes(defs: $mol_tree): $mol_tree;
+    function $mol_view_tree_class_name(val: $mol_tree): string;
+    function $mol_view_tree_super_name(val: $mol_tree): string;
+    function $mol_view_tree_class_props(def: $mol_tree): $mol_tree;
+    function $mol_view_tree_prop_name(prop: $mol_tree): string;
+    function $mol_view_tree_prop_key(prop: $mol_tree): string;
+    function $mol_view_tree_prop_next(prop: $mol_tree): string;
+    function $mol_view_tree_prop_value(prop: $mol_tree): $mol_tree;
+    function $mol_view_tree_value_type(val: $mol_tree): "string" | "object" | "number" | "null" | "locale" | "bool" | "dict" | "get" | "bind" | "put" | "list";
+    function $mol_view_tree_compile(tree: $mol_tree): {
+        script: string;
+        locales: {
+            [key: string]: string;
+        };
+    };
 }

@@ -1,78 +1,93 @@
-namespace $ { export class $mol_card_demo extends $mol_demo_small {
+namespace $ {
+	export class $mol_card_demo extends $mol_demo_small {
 
-	/**
-	 *  ```
-	 *  title @ \Cards with optional status
-	 *  ```
-	 **/
-	title() {
-		return this.$.$mol_locale.text( "$mol_card_demo_title" )
-	}
+		/**
+		 * ```tree
+		 * title @ \Cards with optional status
+		 * ```
+		 */
+		title() {
+			return this.$.$mol_locale.text( '$mol_card_demo_title' )
+		}
 
-	/**
-	 *  ```
-	 *  sub /
-	 *  	<= Simple
-	 *  	<= Pending
-	 *  ```
-	 **/
-	sub() {
-		return [this.Simple() , this.Pending()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Simple $mol_card Content <= Simple_content $mol_row sub / \Hello world!
+		 * 	<= Pending $mol_card
+		 * 		Content <= Pending_content $mol_row sub / \Hello pending!
+		 * 		status \pending
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Simple(),
+				this.Pending()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  Simple $mol_card Content <= Simple_content
-	 *  ```
-	 **/
-	@ $mol_mem
-	Simple() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Simple $mol_card Content <= Simple_content $mol_row sub / \Hello world!
+		 * ```
+		 */
+		@ $mol_mem
+		Simple() {
+			const obj = new this.$.$mol_card()
+
 			obj.Content = () => this.Simple_content()
-			return obj
-		})( new this.$.$mol_card(  ) )
-	}
 
-	/**
-	 *  ```
-	 *  Simple_content $mol_row sub / \Hello world!
-	 *  ```
-	 **/
-	@ $mol_mem
-	Simple_content() {
-		return (( obj )=>{
-			obj.sub = () => ["Hello world!"] as readonly any[]
 			return obj
-		})( new this.$.$mol_row(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Pending $mol_card
-	 *  	Content <= Pending_content
-	 *  	status \pending
-	 *  ```
-	 **/
-	@ $mol_mem
-	Pending() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Simple_content $mol_row sub / \Hello world!
+		 * ```
+		 */
+		@ $mol_mem
+		Simple_content() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				"Hello world!"
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Pending $mol_card
+		 * 	Content <= Pending_content $mol_row sub / \Hello pending!
+		 * 	status \pending
+		 * ```
+		 */
+		@ $mol_mem
+		Pending() {
+			const obj = new this.$.$mol_card()
+
 			obj.Content = () => this.Pending_content()
 			obj.status = () => "pending"
+
 			return obj
-		})( new this.$.$mol_card(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * Pending_content $mol_row sub / \Hello pending!
+		 * ```
+		 */
+		@ $mol_mem
+		Pending_content() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				"Hello pending!"
+			] as readonly any[]
+
+			return obj
+		}
 	}
 
-	/**
-	 *  ```
-	 *  Pending_content $mol_row sub / \Hello pending!
-	 *  ```
-	 **/
-	@ $mol_mem
-	Pending_content() {
-		return (( obj )=>{
-			obj.sub = () => ["Hello pending!"] as readonly any[]
-			return obj
-		})( new this.$.$mol_row(  ) )
-	}
-
-} }
+}

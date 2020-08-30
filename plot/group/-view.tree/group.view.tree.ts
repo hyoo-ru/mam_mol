@@ -1,52 +1,59 @@
-namespace $ { export class $mol_plot_group extends $mol_plot_graph {
+namespace $ {
+	export class $mol_plot_group extends $mol_plot_graph {
 
-	/**
-	 *  ```
-	 *  sub <= graphs_enriched
-	 *  ```
-	 **/
-	sub() {
-		return this.graphs_enriched()
-	}
+		/**
+		 * ```tree
+		 * sub <= graphs_enriched <= graphs /$mol_plot_graph
+		 * ```
+		 */
+		sub() {
+			return this.graphs_enriched()
+		}
 
-	/**
-	 *  ```
-	 *  graphs_enriched <= graphs
-	 *  ```
-	 **/
-	graphs_enriched() {
-		return this.graphs()
-	}
+		/**
+		 * ```tree
+		 * graphs_enriched <= graphs /$mol_plot_graph
+		 * ```
+		 */
+		graphs_enriched() {
+			return this.graphs()
+		}
 
-	/**
-	 *  ```
-	 *  graphs /$mol_plot_graph
-	 *  ```
-	 **/
-	graphs() {
-		return [] as readonly ( $mol_plot_graph )[]
-	}
+		/**
+		 * ```tree
+		 * graphs /$mol_plot_graph
+		 * ```
+		 */
+		graphs() {
+			return [
 
-	/**
-	 *  ```
-	 *  Sample $mol_plot_graph_sample sub <= graph_samples
-	 *  ```
-	 **/
-	@ $mol_mem
-	Sample() {
-		return (( obj )=>{
+			] as readonly $mol_plot_graph[]
+		}
+
+		/**
+		 * ```tree
+		 * Sample $mol_plot_graph_sample sub <= graph_samples /$mol_view
+		 * ```
+		 */
+		@ $mol_mem
+		Sample() {
+			const obj = new this.$.$mol_plot_graph_sample()
+
 			obj.sub = () => this.graph_samples()
+
 			return obj
-		})( new this.$.$mol_plot_graph_sample(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * graph_samples /$mol_view
+		 * ```
+		 */
+		graph_samples() {
+			return [
+
+			] as readonly $mol_view[]
+		}
 	}
 
-	/**
-	 *  ```
-	 *  graph_samples /$mol_view
-	 *  ```
-	 **/
-	graph_samples() {
-		return [] as readonly ( $mol_view )[]
-	}
-
-} }
+}

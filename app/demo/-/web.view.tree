@@ -755,8 +755,8 @@ $mol_chart $mol_view
 			gap_top <= gap_top
 			graphs <= graphs
 			graphs_colored => graphs_colored
-			hue_base?val <= hue_base 140
-			hue_shift?val <= hue_shift 111
+			hue_base <= hue_base 140
+			hue_shift <= hue_shift 111
 
 $mol_plot_bar $mol_plot_graph
 	style *
@@ -1903,7 +1903,7 @@ $mol_text_link $mol_link_iconed
 		^
 		mol_text_type <= type?val \
 	uri <= link?val \
-	content <= content?val /
+	content?val /
 
 $mol_text_image $mol_view
 	dom_name \object
@@ -2491,6 +2491,39 @@ $mol_app_demo_main $mol_page
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
 
+$mol_status $mol_view
+	status null
+	minimal_height 24
+	minimal_width 0
+	sub /
+		<= message \
+
+$mol_chat $mol_list
+	rows /
+		<= posts /
+		<= Add_status $mol_status status <= adding?next null
+		<= Add $mol_bar
+			sub /
+				<= Add_body $mol_string
+					hint <= add_hint @ \New message...
+					value?val <=> add_body?val \
+				<= Add_submit $mol_button_major
+					enabled <= add_submit_enabled false
+					title <= add_submit_label @ \Post
+					event_click?event <=> add?event null
+	Post!index $mol_message
+		name <= post_user_name!index \
+		moment <= post_updated!index $mol_time_moment
+		avatar_link <= post_user_link!index \
+		avatar <= post_user_ava!index \
+		text <= post_body!index \
+	repository $mol_github_repository
+	repository_name \
+	link \
+	seed \
+	teaser \
+	issue $mol_github_issue
+
 $mol_book $mol_view
 	sub <= pages_wrapped /$mol_view
 	minimal_width 0
@@ -2651,6 +2684,7 @@ $mol_view_tree_test_simple $mol_view
 	arr_string /string
 
 $mol_view_tree_test_attributes_subcomponent $mol_view
+	- Comment
 	Page!index $mol_view_tree_test_attributes_subcomponent_page
 		Sub <= page!index null
 
@@ -2731,8 +2765,8 @@ $mol_app_studio $mol_book
 	-
 	Prop!id $mol_app_studio_field
 		path <= prop_path!id /
-		prop!path?val <=> prop_default!path?val $mol_tree
-		props!name?val <=> props_all!name?val $mol_tree
+		prop!path?val <=> prop_default!path?val $mol_tree2_empty
+		props!name?val <=> props_all!name?val $mol_tree2_empty
 		prop_arg!id <= prop_arg!id *
 		prop_value!id <= prop_value_base!id null
 		bind_options <= prop_options /
@@ -2740,23 +2774,16 @@ $mol_app_studio $mol_book
 		prop_add?val <=> prop_add?val \
 		highlight <= prop_filter
 	-
-	class_name_self?val \App
+	class_name_self?val \$mol_app_studio_generated
 	class_name_base?val \$mol_view
-	class_self?val $mol_tree
-	classes $mol_tree
+	class_self?val $mol_tree2_empty
+	classes $mol_tree2_empty
 
 $mol_app_studio_selector $mol_view
 	event *
 		contextmenu?event <=> select?event null
 		dblclick?event <=> select?event null
 	path?val /
-
-$mol_status $mol_view
-	status null
-	minimal_height 24
-	minimal_width 0
-	sub /
-		<= message \
 
 $mol_icon_code_braces $mol_icon path \M8,3C6.9,3 6,3.9 6,5V9C6,10.1 5.1,11 4,11H3V13H4C5.1,13 6,13.9 6,15V19C6,20.1 6.9,21 8,21H10V19H8V14C8,12.9 7.1,12 6,12C7.1,12 8,11.1 8,10V5H10V3M16,3C17.1,3 18,3.9 18,5V9C18,10.1 18.9,11 20,11H21V13H20C18.9,13 18,13.9 18,15V19C18,20.1 17.1,21 16,21H14V19H16V14C16,12.9 16.9,12 18,12C16.9,12 16,11.1 16,10V5H14V3H16Z
 
@@ -2822,7 +2849,7 @@ $mol_app_demo_detail $mol_page
 					hint <= source_hint @ \Source code of this demo
 					sub /
 						<= Source_icon $mol_icon_code_braces
-		<= Edit $mol_link
+		- <= Edit $mol_link
 			hint <= edit_hint @ \Edit this demo online
 			sub /
 				<= Edit_speck $mol_speck

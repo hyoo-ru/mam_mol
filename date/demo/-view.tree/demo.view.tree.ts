@@ -1,74 +1,89 @@
-namespace $ { export class $mol_date_demo extends $mol_demo_small {
+namespace $ {
+	export class $mol_date_demo extends $mol_demo_small {
 
-	/**
-	 *  ```
-	 *  sub / <= View
-	 *  ```
-	 **/
-	sub() {
-		return [this.View()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * sub / <= View $mol_view sub /
+		 * 	<= Date $mol_date value_moment?val <=> date?val $mol_time_moment
+		 * 	<= Formatted $mol_view sub / <= formatted \
+		 * ```
+		 */
+		sub() {
+			return [
+				this.View()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  View $mol_view sub /
-	 *  	<= Date
-	 *  	<= Formatted
-	 *  ```
-	 **/
-	@ $mol_mem
-	View() {
-		return (( obj )=>{
-			obj.sub = () => [this.Date() , this.Formatted()] as readonly any[]
+		/**
+		 * ```tree
+		 * View $mol_view sub /
+		 * 	<= Date $mol_date value_moment?val <=> date?val $mol_time_moment
+		 * 	<= Formatted $mol_view sub / <= formatted \
+		 * ```
+		 */
+		@ $mol_mem
+		View() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.Date(),
+				this.Formatted()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Date $mol_date value_moment?val <=> date?val
-	 *  ```
-	 **/
-	@ $mol_mem
-	Date() {
-		return (( obj )=>{
-			obj.value_moment = ( val? : any ) => this.date( val )
+		/**
+		 * ```tree
+		 * Date $mol_date value_moment?val <=> date?val $mol_time_moment
+		 * ```
+		 */
+		@ $mol_mem
+		Date() {
+			const obj = new this.$.$mol_date()
+
+			obj.value_moment = (val?: any) => this.date(val)
+
 			return obj
-		})( new this.$.$mol_date(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  date?val $mol_time_moment
-	 *  ```
-	 **/
-	@ $mol_mem
-	date( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : (( obj )=>{
+		/**
+		 * ```tree
+		 * date?val $mol_time_moment
+		 * ```
+		 */
+		@ $mol_mem
+		date(val?: any) {
+			if ( val !== undefined ) return val
+			const obj = new this.$.$mol_time_moment()
+
 			return obj
-		})( new this.$.$mol_time_moment(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Formatted $mol_view sub / <= formatted
-	 *  ```
-	 **/
-	@ $mol_mem
-	Formatted() {
-		return (( obj )=>{
-			obj.sub = () => [this.formatted()] as readonly any[]
+		/**
+		 * ```tree
+		 * Formatted $mol_view sub / <= formatted \
+		 * ```
+		 */
+		@ $mol_mem
+		Formatted() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.formatted()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * formatted \
+		 * ```
+		 */
+		formatted() {
+			return ""
+		}
 	}
 
-	/**
-	 *  ```
-	 *  formatted \
-	 *  ```
-	 **/
-	formatted() {
-		return ""
-	}
-
-} }
+}

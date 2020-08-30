@@ -1,12 +1,16 @@
-namespace $ { export class $mol_plot_mark_hor extends $mol_plot_ruler_hor {
+namespace $ {
+	export class $mol_plot_mark_hor extends $mol_plot_ruler_hor {
 
-	/**
-	 *  ```
-	 *  labels /string
-	 *  ```
-	 **/
-	labels() {
-		return [] as readonly ( string )[]
+		/**
+		 * ```tree
+		 * labels /string
+		 * ```
+		 */
+		labels() {
+			return [
+
+			] as readonly string[]
+		}
 	}
 
-} }
+}

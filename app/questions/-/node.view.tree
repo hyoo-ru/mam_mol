@@ -295,7 +295,7 @@ $mol_text_link $mol_link_iconed
 		^
 		mol_text_type <= type?val \
 	uri <= link?val \
-	content <= content?val /
+	content?val /
 
 $mol_text_image $mol_view
 	dom_name \object
@@ -356,3 +356,39 @@ $mol_app_questions $mol_book2
 	Tag!id $mol_view
 		sub /
 			<= tag_name!id \ 
+
+$mol_view_tree_test_attributes_super $mol_view
+	some *
+		a 0
+		b 2
+
+$mol_view_tree_test_attributes $mol_view_tree_test_attributes_super
+	some *
+		^
+		a 1
+
+$mol_view_tree_test_binding $mol_view
+	value?val <=> task_title_new?val \123
+	enabled <= head_complete_enabled false
+
+$mol_view_tree_test_binding_right $mol_view
+	Test $mol_view_tree_test_binding_right_test
+		width?v => outer_width?v
+
+$mol_view_tree_test_binding_right_test $mol_view
+	width?val 0
+
+$mol_view_tree_test_simple $mol_view
+	some 1
+	bool true
+	str \test
+	arr /
+	arr_string /string
+
+$mol_view_tree_test_attributes_subcomponent $mol_view
+	- Comment
+	Page!index $mol_view_tree_test_attributes_subcomponent_page
+		Sub <= page!index null
+
+$mol_view_tree_test_attributes_subcomponent_page $mol_view
+	Sub null

@@ -1,63 +1,71 @@
-namespace $ { export class $mol_form_field extends $mol_labeler {
+namespace $ {
+	export class $mol_form_field extends $mol_labeler {
 
-	/**
-	 *  ```
-	 *  label /
-	 *  	<= name
-	 *  	<= Bid
-	 *  ```
-	 **/
-	label() {
-		return [this.name() , this.Bid()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * label /
+		 * 	<= name \
+		 * 	<= Bid $mol_view sub / <= bid \
+		 * ```
+		 */
+		label() {
+			return [
+				this.name(),
+				this.Bid()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  name \
-	 *  ```
-	 **/
-	name() {
-		return ""
-	}
+		/**
+		 * ```tree
+		 * name \
+		 * ```
+		 */
+		name() {
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  Bid $mol_view sub / <= bid
-	 *  ```
-	 **/
-	@ $mol_mem
-	Bid() {
-		return (( obj )=>{
-			obj.sub = () => [this.bid()] as readonly any[]
+		/**
+		 * ```tree
+		 * Bid $mol_view sub / <= bid \
+		 * ```
+		 */
+		@ $mol_mem
+		Bid() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.bid()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * bid \
+		 * ```
+		 */
+		bid() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Content <= control null
+		 * ```
+		 */
+		Content() {
+			return this.control()
+		}
+
+		/**
+		 * ```tree
+		 * control null
+		 * ```
+		 */
+		control() {
+			return null as any
+		}
 	}
 
-	/**
-	 *  ```
-	 *  bid \
-	 *  ```
-	 **/
-	bid() {
-		return ""
-	}
-
-	/**
-	 *  ```
-	 *  Content <= control
-	 *  ```
-	 **/
-	Content() {
-		return this.control()
-	}
-
-	/**
-	 *  ```
-	 *  control null
-	 *  ```
-	 **/
-	control() {
-		return null as any
-	}
-
-} }
+}

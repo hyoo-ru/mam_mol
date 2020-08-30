@@ -1,74 +1,82 @@
-namespace $ { export class $mol_plot_fill extends $mol_plot_graph {
+namespace $ {
+	export class $mol_plot_fill extends $mol_plot_graph {
 
-	/**
-	 *  ```
-	 *  points /readonly[number,number]
-	 *  ```
-	 **/
-	points() {
-		return [] as readonly ( readonly[number,number] )[]
-	}
+		/**
+		 * ```tree
+		 * points /readonly[number,number]
+		 * ```
+		 */
+		points() {
+			return [
 
-	/**
-	 *  ```
-	 *  threshold 4
-	 *  ```
-	 **/
-	threshold() {
-		return 4
-	}
+			] as readonly (readonly[number,number])[]
+		}
 
-	/**
-	 *  ```
-	 *  spacing 2
-	 *  ```
-	 **/
-	spacing() {
-		return 2
-	}
+		/**
+		 * ```tree
+		 * threshold 4
+		 * ```
+		 */
+		threshold() {
+			return 4
+		}
 
-	/**
-	 *  ```
-	 *  sub / <= Curve
-	 *  ```
-	 **/
-	sub() {
-		return [this.Curve()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * spacing 2
+		 * ```
+		 */
+		spacing() {
+			return 2
+		}
 
-	/**
-	 *  ```
-	 *  Curve $mol_svg_path geometry <= curve
-	 *  ```
-	 **/
-	@ $mol_mem
-	Curve() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * sub / <= Curve $mol_svg_path geometry <= curve \
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Curve()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Curve $mol_svg_path geometry <= curve \
+		 * ```
+		 */
+		@ $mol_mem
+		Curve() {
+			const obj = new this.$.$mol_svg_path()
+
 			obj.geometry = () => this.curve()
+
 			return obj
-		})( new this.$.$mol_svg_path(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  curve \
-	 *  ```
-	 **/
-	curve() {
-		return ""
-	}
+		/**
+		 * ```tree
+		 * curve \
+		 * ```
+		 */
+		curve() {
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  Sample $mol_plot_graph_sample color <= color
-	 *  ```
-	 **/
-	@ $mol_mem
-	Sample() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Sample $mol_plot_graph_sample color <= color
+		 * ```
+		 */
+		@ $mol_mem
+		Sample() {
+			const obj = new this.$.$mol_plot_graph_sample()
+
 			obj.color = () => this.color()
+
 			return obj
-		})( new this.$.$mol_plot_graph_sample(  ) )
+		}
 	}
 
-} }
+}

@@ -24,7 +24,16 @@ namespace $ {
 		}
 
 		toString() {
-			return `${ this.uri }#${ this.row }:${ this.col }-${ this.length }`
+			return `${ this.uri }#${ this.row }:${ this.col }/${ this.length }`
+		}
+
+		toJSON() {
+			return {
+				uri: this.uri,
+				row: this.row,
+				col: this.col,
+				length: this.length
+			}
 		}
 
 		/** Makes new error for this span. */

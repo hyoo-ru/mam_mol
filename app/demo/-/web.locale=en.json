@@ -1,6 +1,5 @@
 {
 	"$mol_app_demo_detail_close_hint": "Close panel",
-	"$mol_app_demo_detail_edit_hint": "Edit this demo online",
 	"$mol_app_demo_detail_empty_postfix": "\"",
 	"$mol_app_demo_detail_empty_prefix": "No one demo with prefix \"",
 	"$mol_app_demo_detail_source_hint": "Source code of this demo",
@@ -48,6 +47,8 @@
 	"$mol_chart_demo_styles_taxes_title": "Taxes",
 	"$mol_chart_demo_styles_title": "Chart with various styles of graphs.",
 	"$mol_chart_demo_styles_waste_title": "Waste",
+	"$mol_chat_add_hint": "New message...",
+	"$mol_chat_add_submit_label": "Post",
 	"$mol_check_box_demo_c1Label": "Base",
 	"$mol_check_box_demo_c2Label": "Checked",
 	"$mol_check_box_demo_c6Label": "Disabled",

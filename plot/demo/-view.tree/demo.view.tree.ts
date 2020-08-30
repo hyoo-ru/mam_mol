@@ -1,218 +1,269 @@
-namespace $ { export class $mol_plot_demo extends $mol_demo_large {
+namespace $ {
+	export class $mol_plot_demo extends $mol_demo_large {
 
-	/**
-	 *  ```
-	 *  title @ \Dynamic lightweight graphs
-	 *  ```
-	 **/
-	title() {
-		return this.$.$mol_locale.text( "$mol_plot_demo_title" )
-	}
+		/**
+		 * ```tree
+		 * title @ \Dynamic lightweight graphs
+		 * ```
+		 */
+		title() {
+			return this.$.$mol_locale.text( '$mol_plot_demo_title' )
+		}
 
-	/**
-	 *  ```
-	 *  count?val 20
-	 *  ```
-	 **/
-	@ $mol_mem
-	count( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : 20
-	}
+		/**
+		 * ```tree
+		 * count?val 20
+		 * ```
+		 */
+		@ $mol_mem
+		count(val?: any) {
+			if ( val !== undefined ) return val
+			return 20
+		}
 
-	/**
-	 *  ```
-	 *  sub / <= Plot
-	 *  ```
-	 **/
-	sub() {
-		return [this.Plot()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * sub / <= Plot $mol_plot_pane graphs /
+		 * 	<= Saturation $mol_plot_group
+		 * 		series_y <= saturation_series /
+		 * 		graphs /
+		 * 			<= Saturation_fill $mol_plot_fill
+		 * 			<= Saturation_line $mol_plot_line type \dashed
+		 * 	<= Input $mol_plot_group
+		 * 		series_y <= input_series /
+		 * 		graphs /
+		 * 			<= Input_line $mol_plot_line
+		 * 			<= Input_dots $mol_plot_dot
+		 * 	<= Output $mol_plot_bar series_y <= output_series /
+		 * 	<= Voltage $mol_plot_ruler_vert title <= Voltage_title @ \V
+		 * 	<= Time $mol_plot_ruler_hor title <= Time_title @ \ms
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Plot()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  Plot $mol_plot_pane graphs /
-	 *  	<= Saturation
-	 *  	<= Input
-	 *  	<= Output
-	 *  	<= Voltage
-	 *  	<= Time
-	 *  ```
-	 **/
-	@ $mol_mem
-	Plot() {
-		return (( obj )=>{
-			obj.graphs = () => [this.Saturation() , this.Input() , this.Output() , this.Voltage() , this.Time()] as readonly any[]
+		/**
+		 * ```tree
+		 * Plot $mol_plot_pane graphs /
+		 * 	<= Saturation $mol_plot_group
+		 * 		series_y <= saturation_series /
+		 * 		graphs /
+		 * 			<= Saturation_fill $mol_plot_fill
+		 * 			<= Saturation_line $mol_plot_line type \dashed
+		 * 	<= Input $mol_plot_group
+		 * 		series_y <= input_series /
+		 * 		graphs /
+		 * 			<= Input_line $mol_plot_line
+		 * 			<= Input_dots $mol_plot_dot
+		 * 	<= Output $mol_plot_bar series_y <= output_series /
+		 * 	<= Voltage $mol_plot_ruler_vert title <= Voltage_title @ \V
+		 * 	<= Time $mol_plot_ruler_hor title <= Time_title @ \ms
+		 * ```
+		 */
+		@ $mol_mem
+		Plot() {
+			const obj = new this.$.$mol_plot_pane()
+
+			obj.graphs = () => [
+				this.Saturation(),
+				this.Input(),
+				this.Output(),
+				this.Voltage(),
+				this.Time()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_plot_pane(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Saturation $mol_plot_group
-	 *  	series_y <= saturation_series
-	 *  	graphs /
-	 *  		<= Saturation_fill
-	 *  		<= Saturation_line
-	 *  ```
-	 **/
-	@ $mol_mem
-	Saturation() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Saturation $mol_plot_group
+		 * 	series_y <= saturation_series /
+		 * 	graphs /
+		 * 		<= Saturation_fill $mol_plot_fill
+		 * 		<= Saturation_line $mol_plot_line type \dashed
+		 * ```
+		 */
+		@ $mol_mem
+		Saturation() {
+			const obj = new this.$.$mol_plot_group()
+
 			obj.series_y = () => this.saturation_series()
-			obj.graphs = () => [this.Saturation_fill() , this.Saturation_line()] as readonly any[]
+			obj.graphs = () => [
+				this.Saturation_fill(),
+				this.Saturation_line()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_plot_group(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  saturation_series /
-	 *  ```
-	 **/
-	saturation_series() {
-		return [] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * saturation_series /
+		 * ```
+		 */
+		saturation_series() {
+			return [
 
-	/**
-	 *  ```
-	 *  Saturation_fill $mol_plot_fill
-	 *  ```
-	 **/
-	@ $mol_mem
-	Saturation_fill() {
-		return (( obj )=>{
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Saturation_fill $mol_plot_fill
+		 * ```
+		 */
+		@ $mol_mem
+		Saturation_fill() {
+			const obj = new this.$.$mol_plot_fill()
+
 			return obj
-		})( new this.$.$mol_plot_fill(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Saturation_line $mol_plot_line type \dashed
-	 *  ```
-	 **/
-	@ $mol_mem
-	Saturation_line() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Saturation_line $mol_plot_line type \dashed
+		 * ```
+		 */
+		@ $mol_mem
+		Saturation_line() {
+			const obj = new this.$.$mol_plot_line()
+
 			obj.type = () => "dashed"
-			return obj
-		})( new this.$.$mol_plot_line(  ) )
-	}
 
-	/**
-	 *  ```
-	 *  Input $mol_plot_group
-	 *  	series_y <= input_series
-	 *  	graphs /
-	 *  		<= Input_line
-	 *  		<= Input_dots
-	 *  ```
-	 **/
-	@ $mol_mem
-	Input() {
-		return (( obj )=>{
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Input $mol_plot_group
+		 * 	series_y <= input_series /
+		 * 	graphs /
+		 * 		<= Input_line $mol_plot_line
+		 * 		<= Input_dots $mol_plot_dot
+		 * ```
+		 */
+		@ $mol_mem
+		Input() {
+			const obj = new this.$.$mol_plot_group()
+
 			obj.series_y = () => this.input_series()
-			obj.graphs = () => [this.Input_line() , this.Input_dots()] as readonly any[]
+			obj.graphs = () => [
+				this.Input_line(),
+				this.Input_dots()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_plot_group(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  input_series /
-	 *  ```
-	 **/
-	input_series() {
-		return [] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * input_series /
+		 * ```
+		 */
+		input_series() {
+			return [
 
-	/**
-	 *  ```
-	 *  Input_line $mol_plot_line
-	 *  ```
-	 **/
-	@ $mol_mem
-	Input_line() {
-		return (( obj )=>{
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Input_line $mol_plot_line
+		 * ```
+		 */
+		@ $mol_mem
+		Input_line() {
+			const obj = new this.$.$mol_plot_line()
+
 			return obj
-		})( new this.$.$mol_plot_line(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Input_dots $mol_plot_dot
-	 *  ```
-	 **/
-	@ $mol_mem
-	Input_dots() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Input_dots $mol_plot_dot
+		 * ```
+		 */
+		@ $mol_mem
+		Input_dots() {
+			const obj = new this.$.$mol_plot_dot()
+
 			return obj
-		})( new this.$.$mol_plot_dot(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Output $mol_plot_bar series_y <= output_series
-	 *  ```
-	 **/
-	@ $mol_mem
-	Output() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Output $mol_plot_bar series_y <= output_series /
+		 * ```
+		 */
+		@ $mol_mem
+		Output() {
+			const obj = new this.$.$mol_plot_bar()
+
 			obj.series_y = () => this.output_series()
+
 			return obj
-		})( new this.$.$mol_plot_bar(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  output_series /
-	 *  ```
-	 **/
-	output_series() {
-		return [] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * output_series /
+		 * ```
+		 */
+		output_series() {
+			return [
 
-	/**
-	 *  ```
-	 *  Voltage $mol_plot_ruler_vert title <= Voltage_title
-	 *  ```
-	 **/
-	@ $mol_mem
-	Voltage() {
-		return (( obj )=>{
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Voltage $mol_plot_ruler_vert title <= Voltage_title @ \V
+		 * ```
+		 */
+		@ $mol_mem
+		Voltage() {
+			const obj = new this.$.$mol_plot_ruler_vert()
+
 			obj.title = () => this.Voltage_title()
+
 			return obj
-		})( new this.$.$mol_plot_ruler_vert(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Voltage_title @ \V
-	 *  ```
-	 **/
-	Voltage_title() {
-		return this.$.$mol_locale.text( "$mol_plot_demo_Voltage_title" )
-	}
+		/**
+		 * ```tree
+		 * Voltage_title @ \V
+		 * ```
+		 */
+		Voltage_title() {
+			return this.$.$mol_locale.text( '$mol_plot_demo_Voltage_title' )
+		}
 
-	/**
-	 *  ```
-	 *  Time $mol_plot_ruler_hor title <= Time_title
-	 *  ```
-	 **/
-	@ $mol_mem
-	Time() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Time $mol_plot_ruler_hor title <= Time_title @ \ms
+		 * ```
+		 */
+		@ $mol_mem
+		Time() {
+			const obj = new this.$.$mol_plot_ruler_hor()
+
 			obj.title = () => this.Time_title()
+
 			return obj
-		})( new this.$.$mol_plot_ruler_hor(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * Time_title @ \ms
+		 * ```
+		 */
+		Time_title() {
+			return this.$.$mol_locale.text( '$mol_plot_demo_Time_title' )
+		}
 	}
 
-	/**
-	 *  ```
-	 *  Time_title @ \ms
-	 *  ```
-	 **/
-	Time_title() {
-		return this.$.$mol_locale.text( "$mol_plot_demo_Time_title" )
-	}
-
-} }
+}

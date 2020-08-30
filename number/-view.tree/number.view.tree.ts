@@ -1,207 +1,234 @@
-namespace $ { export class $mol_number extends $mol_view {
+namespace $ {
+	export class $mol_number extends $mol_view {
 
-	/**
-	 *  ```
-	 *  precision_view <= precision
-	 *  ```
-	 **/
-	precision_view() {
-		return this.precision()
-	}
+		/**
+		 * ```tree
+		 * precision_view <= precision 1
+		 * ```
+		 */
+		precision_view() {
+			return this.precision()
+		}
 
-	/**
-	 *  ```
-	 *  precision 1
-	 *  ```
-	 **/
-	precision() {
-		return 1
-	}
+		/**
+		 * ```tree
+		 * precision 1
+		 * ```
+		 */
+		precision() {
+			return 1
+		}
 
-	/**
-	 *  ```
-	 *  precision_change <= precision
-	 *  ```
-	 **/
-	precision_change() {
-		return this.precision()
-	}
+		/**
+		 * ```tree
+		 * precision_change <= precision 1
+		 * ```
+		 */
+		precision_change() {
+			return this.precision()
+		}
 
-	/**
-	 *  ```
-	 *  value?val NaN
-	 *  ```
-	 **/
-	@ $mol_mem
-	value( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : NaN
-	}
+		/**
+		 * ```tree
+		 * value?val NaN
+		 * ```
+		 */
+		@ $mol_mem
+		value(val?: any) {
+			if ( val !== undefined ) return val
+			return NaN
+		}
 
-	/**
-	 *  ```
-	 *  sub /
-	 *  	<= String
-	 *  	<= Dec
-	 *  	<= Inc
-	 *  ```
-	 **/
-	sub() {
-		return [this.String() , this.Dec() , this.Inc()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= String $mol_string
+		 * 		type \number
+		 * 		value?val <=> value_string?val \
+		 * 		hint <= hint \
+		 * 		enabled <= string_enabled <= enabled true
+		 * 	<= Dec $mol_button_minor
+		 * 		event_click?val <=> event_dec?val null
+		 * 		enabled <= dec_enabled <= enabled true
+		 * 		sub / <= dec_icon $mol_icon_minus
+		 * 	<= Inc $mol_button_minor
+		 * 		event_click?val <=> event_inc?val null
+		 * 		enabled <= inc_enabled <= enabled true
+		 * 		sub / <= inc_icon $mol_icon_plus
+		 * ```
+		 */
+		sub() {
+			return [
+				this.String(),
+				this.Dec(),
+				this.Inc()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  String $mol_string
-	 *  	type \number
-	 *  	value?val <=> value_string?val
-	 *  	hint <= hint
-	 *  	enabled <= string_enabled
-	 *  ```
-	 **/
-	@ $mol_mem
-	String() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * String $mol_string
+		 * 	type \number
+		 * 	value?val <=> value_string?val \
+		 * 	hint <= hint \
+		 * 	enabled <= string_enabled <= enabled true
+		 * ```
+		 */
+		@ $mol_mem
+		String() {
+			const obj = new this.$.$mol_string()
+
 			obj.type = () => "number"
-			obj.value = ( val? : any ) => this.value_string( val )
+			obj.value = (val?: any) => this.value_string(val)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.string_enabled()
+
 			return obj
-		})( new this.$.$mol_string(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  value_string?val \
-	 *  ```
-	 **/
-	@ $mol_mem
-	value_string( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : ""
-	}
+		/**
+		 * ```tree
+		 * value_string?val \
+		 * ```
+		 */
+		@ $mol_mem
+		value_string(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  hint \
-	 *  ```
-	 **/
-	hint() {
-		return ""
-	}
+		/**
+		 * ```tree
+		 * hint \
+		 * ```
+		 */
+		hint() {
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  string_enabled <= enabled
-	 *  ```
-	 **/
-	string_enabled() {
-		return this.enabled()
-	}
+		/**
+		 * ```tree
+		 * string_enabled <= enabled true
+		 * ```
+		 */
+		string_enabled() {
+			return this.enabled()
+		}
 
-	/**
-	 *  ```
-	 *  enabled true
-	 *  ```
-	 **/
-	enabled() {
-		return true
-	}
+		/**
+		 * ```tree
+		 * enabled true
+		 * ```
+		 */
+		enabled() {
+			return true
+		}
 
-	/**
-	 *  ```
-	 *  Dec $mol_button_minor
-	 *  	event_click?val <=> event_dec?val
-	 *  	enabled <= dec_enabled
-	 *  	sub / <= dec_icon
-	 *  ```
-	 **/
-	@ $mol_mem
-	Dec() {
-		return (( obj )=>{
-			obj.event_click = ( val? : any ) => this.event_dec( val )
+		/**
+		 * ```tree
+		 * Dec $mol_button_minor
+		 * 	event_click?val <=> event_dec?val null
+		 * 	enabled <= dec_enabled <= enabled true
+		 * 	sub / <= dec_icon $mol_icon_minus
+		 * ```
+		 */
+		@ $mol_mem
+		Dec() {
+			const obj = new this.$.$mol_button_minor()
+
+			obj.event_click = (val?: any) => this.event_dec(val)
 			obj.enabled = () => this.dec_enabled()
-			obj.sub = () => [this.dec_icon()] as readonly any[]
+			obj.sub = () => [
+				this.dec_icon()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_button_minor(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  event_dec?val null
-	 *  ```
-	 **/
-	@ $mol_mem
-	event_dec( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : null as any
-	}
+		/**
+		 * ```tree
+		 * event_dec?val null
+		 * ```
+		 */
+		@ $mol_mem
+		event_dec(val?: any) {
+			if ( val !== undefined ) return val
+			return null as any
+		}
 
-	/**
-	 *  ```
-	 *  dec_enabled <= enabled
-	 *  ```
-	 **/
-	dec_enabled() {
-		return this.enabled()
-	}
+		/**
+		 * ```tree
+		 * dec_enabled <= enabled true
+		 * ```
+		 */
+		dec_enabled() {
+			return this.enabled()
+		}
 
-	/**
-	 *  ```
-	 *  dec_icon $mol_icon_minus
-	 *  ```
-	 **/
-	@ $mol_mem
-	dec_icon() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * dec_icon $mol_icon_minus
+		 * ```
+		 */
+		@ $mol_mem
+		dec_icon() {
+			const obj = new this.$.$mol_icon_minus()
+
 			return obj
-		})( new this.$.$mol_icon_minus(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Inc $mol_button_minor
-	 *  	event_click?val <=> event_inc?val
-	 *  	enabled <= inc_enabled
-	 *  	sub / <= inc_icon
-	 *  ```
-	 **/
-	@ $mol_mem
-	Inc() {
-		return (( obj )=>{
-			obj.event_click = ( val? : any ) => this.event_inc( val )
+		/**
+		 * ```tree
+		 * Inc $mol_button_minor
+		 * 	event_click?val <=> event_inc?val null
+		 * 	enabled <= inc_enabled <= enabled true
+		 * 	sub / <= inc_icon $mol_icon_plus
+		 * ```
+		 */
+		@ $mol_mem
+		Inc() {
+			const obj = new this.$.$mol_button_minor()
+
+			obj.event_click = (val?: any) => this.event_inc(val)
 			obj.enabled = () => this.inc_enabled()
-			obj.sub = () => [this.inc_icon()] as readonly any[]
+			obj.sub = () => [
+				this.inc_icon()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_button_minor(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  event_inc?val null
-	 *  ```
-	 **/
-	@ $mol_mem
-	event_inc( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : null as any
-	}
+		/**
+		 * ```tree
+		 * event_inc?val null
+		 * ```
+		 */
+		@ $mol_mem
+		event_inc(val?: any) {
+			if ( val !== undefined ) return val
+			return null as any
+		}
 
-	/**
-	 *  ```
-	 *  inc_enabled <= enabled
-	 *  ```
-	 **/
-	inc_enabled() {
-		return this.enabled()
-	}
+		/**
+		 * ```tree
+		 * inc_enabled <= enabled true
+		 * ```
+		 */
+		inc_enabled() {
+			return this.enabled()
+		}
 
-	/**
-	 *  ```
-	 *  inc_icon $mol_icon_plus
-	 *  ```
-	 **/
-	@ $mol_mem
-	inc_icon() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * inc_icon $mol_icon_plus
+		 * ```
+		 */
+		@ $mol_mem
+		inc_icon() {
+			const obj = new this.$.$mol_icon_plus()
+
 			return obj
-		})( new this.$.$mol_icon_plus(  ) )
+		}
 	}
 
-} }
+}

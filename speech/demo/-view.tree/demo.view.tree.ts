@@ -1,101 +1,120 @@
-namespace $ { export class $mol_speech_demo extends $mol_demo_small {
+namespace $ {
+	export class $mol_speech_demo extends $mol_demo_small {
 
-	/**
-	 *  ```
-	 *  sub /
-	 *  	<= Toggle
-	 *  	<= Message
-	 *  	<= Speak
-	 *  ```
-	 **/
-	sub() {
-		return [this.Toggle() , this.Message() , this.Speak()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Toggle $mol_check_icon
+		 * 		Icon <= Toggle_icon $mol_icon_microphone
+		 * 		checked?val <=> hearing?val false
+		 * 	<= Message $mol_view sub / <= message \
+		 * 	<= Speak $mol_button_major
+		 * 		click?val <=> speak?val false
+		 * 		sub / \Speak
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Toggle(),
+				this.Message(),
+				this.Speak()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  Toggle $mol_check_icon
-	 *  	Icon <= Toggle_icon
-	 *  	checked?val <=> hearing?val
-	 *  ```
-	 **/
-	@ $mol_mem
-	Toggle() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Toggle $mol_check_icon
+		 * 	Icon <= Toggle_icon $mol_icon_microphone
+		 * 	checked?val <=> hearing?val false
+		 * ```
+		 */
+		@ $mol_mem
+		Toggle() {
+			const obj = new this.$.$mol_check_icon()
+
 			obj.Icon = () => this.Toggle_icon()
-			obj.checked = ( val? : any ) => this.hearing( val )
+			obj.checked = (val?: any) => this.hearing(val)
+
 			return obj
-		})( new this.$.$mol_check_icon(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Toggle_icon $mol_icon_microphone
-	 *  ```
-	 **/
-	@ $mol_mem
-	Toggle_icon() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Toggle_icon $mol_icon_microphone
+		 * ```
+		 */
+		@ $mol_mem
+		Toggle_icon() {
+			const obj = new this.$.$mol_icon_microphone()
+
 			return obj
-		})( new this.$.$mol_icon_microphone(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  hearing?val false
-	 *  ```
-	 **/
-	@ $mol_mem
-	hearing( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : false
-	}
+		/**
+		 * ```tree
+		 * hearing?val false
+		 * ```
+		 */
+		@ $mol_mem
+		hearing(val?: any) {
+			if ( val !== undefined ) return val
+			return false
+		}
 
-	/**
-	 *  ```
-	 *  Message $mol_view sub / <= message
-	 *  ```
-	 **/
-	@ $mol_mem
-	Message() {
-		return (( obj )=>{
-			obj.sub = () => [this.message()] as readonly any[]
+		/**
+		 * ```tree
+		 * Message $mol_view sub / <= message \
+		 * ```
+		 */
+		@ $mol_mem
+		Message() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.message()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  message \
-	 *  ```
-	 **/
-	message() {
-		return ""
-	}
+		/**
+		 * ```tree
+		 * message \
+		 * ```
+		 */
+		message() {
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  Speak $mol_button_major
-	 *  	click?val <=> speak?val
-	 *  	sub / \Speak
-	 *  ```
-	 **/
-	@ $mol_mem
-	Speak() {
-		return (( obj )=>{
-			obj.click = ( val? : any ) => this.speak( val )
-			obj.sub = () => ["Speak"] as readonly any[]
+		/**
+		 * ```tree
+		 * Speak $mol_button_major
+		 * 	click?val <=> speak?val false
+		 * 	sub / \Speak
+		 * ```
+		 */
+		@ $mol_mem
+		Speak() {
+			const obj = new this.$.$mol_button_major()
+
+			obj.click = (val?: any) => this.speak(val)
+			obj.sub = () => [
+				"Speak"
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_button_major(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * speak?val false
+		 * ```
+		 */
+		@ $mol_mem
+		speak(val?: any) {
+			if ( val !== undefined ) return val
+			return false
+		}
 	}
 
-	/**
-	 *  ```
-	 *  speak?val false
-	 *  ```
-	 **/
-	@ $mol_mem
-	speak( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : false
-	}
-
-} }
+}

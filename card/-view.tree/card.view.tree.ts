@@ -1,84 +1,97 @@
-namespace $ { export class $mol_card extends $mol_list {
+namespace $ {
+	export class $mol_card extends $mol_list {
 
-	/**
-	 *  ```
-	 *  attr *
-	 *  	^
-	 *  	mol_card_status_type <= status
-	 *  ```
-	 **/
-	attr() {
-		return ({
-			...super.attr() ,
-			"mol_card_status_type" :  this.status() ,
-		})
-	}
+		/**
+		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	mol_card_status_type <= status \
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				mol_card_status_type: this.status()
+			}
+		}
 
-	/**
-	 *  ```
-	 *  status \
-	 *  ```
-	 **/
-	status() {
-		return ""
-	}
+		/**
+		 * ```tree
+		 * status \
+		 * ```
+		 */
+		status() {
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  rows /$mol_view
-	 *  	<= Content
-	 *  	<= Status
-	 *  ```
-	 **/
-	rows() {
-		return [this.Content() , this.Status()] as readonly ( $mol_view )[]
-	}
+		/**
+		 * ```tree
+		 * rows /$mol_view
+		 * 	<= Content $mol_view sub <= content /$mol_view_content
+		 * 	<= Status $mol_view
+		 * 		minimal_height 30
+		 * 		sub / <= status_text <= status \
+		 * ```
+		 */
+		rows() {
+			return [
+				this.Content(),
+				this.Status()
+			] as readonly $mol_view[]
+		}
 
-	/**
-	 *  ```
-	 *  Content $mol_view sub <= content
-	 *  ```
-	 **/
-	@ $mol_mem
-	Content() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Content $mol_view sub <= content /$mol_view_content
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
+			const obj = new this.$.$mol_view()
+
 			obj.sub = () => this.content()
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  content /$mol_view_content
-	 *  ```
-	 **/
-	content() {
-		return [] as readonly ( $mol_view_content )[]
-	}
+		/**
+		 * ```tree
+		 * content /$mol_view_content
+		 * ```
+		 */
+		content() {
+			return [
 
-	/**
-	 *  ```
-	 *  Status $mol_view
-	 *  	minimal_height 30
-	 *  	sub / <= status_text
-	 *  ```
-	 **/
-	@ $mol_mem
-	Status() {
-		return (( obj )=>{
+			] as readonly $mol_view_content[]
+		}
+
+		/**
+		 * ```tree
+		 * Status $mol_view
+		 * 	minimal_height 30
+		 * 	sub / <= status_text <= status \
+		 * ```
+		 */
+		@ $mol_mem
+		Status() {
+			const obj = new this.$.$mol_view()
+
 			obj.minimal_height = () => 30
-			obj.sub = () => [this.status_text()] as readonly any[]
+			obj.sub = () => [
+				this.status_text()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * status_text <= status \
+		 * ```
+		 */
+		status_text() {
+			return this.status()
+		}
 	}
 
-	/**
-	 *  ```
-	 *  status_text <= status
-	 *  ```
-	 **/
-	status_text() {
-		return this.status()
-	}
-
-} }
+}

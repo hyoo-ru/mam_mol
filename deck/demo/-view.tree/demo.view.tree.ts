@@ -1,211 +1,253 @@
-namespace $ { export class $mol_deck_demo extends $mol_demo_small {
+namespace $ {
+	export class $mol_deck_demo extends $mol_demo_small {
 
-	/**
-	 *  ```
-	 *  title @ \Simple deck with tabbar
-	 *  ```
-	 **/
-	title() {
-		return this.$.$mol_locale.text( "$mol_deck_demo_title" )
-	}
+		/**
+		 * ```tree
+		 * title @ \Simple deck with tabbar
+		 * ```
+		 */
+		title() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_title' )
+		}
 
-	/**
-	 *  ```
-	 *  sub / <= Deck
-	 *  ```
-	 **/
-	sub() {
-		return [this.Deck()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * sub / <= Deck $mol_deck items /
+		 * 	<= greeterItem *
+		 * 		title <= greeterLabel @ \Greeting
+		 * 		Content <= greeterContent $mol_row sub / <= greeterMessager $mol_view sub / <= greeterMessage @ \Hello, world!
+		 * 	<= questerItem *
+		 * 		title <= questerLabel @ \Question
+		 * 		Content <= questerContent $mol_row sub / <= questerMessager $mol_view sub / <= questerMessage @ \How are you?
+		 * 	<= commanderItem *
+		 * 		title <= commanderLabel @ \Command
+		 * 		Content <= commanderContent $mol_row sub / <= commanderMessager $mol_view sub / <= commanderMessage @ \Let us do it right!
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Deck()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  Deck $mol_deck items /
-	 *  	<= greeterItem
-	 *  	<= questerItem
-	 *  	<= commanderItem
-	 *  ```
-	 **/
-	@ $mol_mem
-	Deck() {
-		return (( obj )=>{
-			obj.items = () => [this.greeterItem() , this.questerItem() , this.commanderItem()] as readonly any[]
+		/**
+		 * ```tree
+		 * Deck $mol_deck items /
+		 * 	<= greeterItem *
+		 * 		title <= greeterLabel @ \Greeting
+		 * 		Content <= greeterContent $mol_row sub / <= greeterMessager $mol_view sub / <= greeterMessage @ \Hello, world!
+		 * 	<= questerItem *
+		 * 		title <= questerLabel @ \Question
+		 * 		Content <= questerContent $mol_row sub / <= questerMessager $mol_view sub / <= questerMessage @ \How are you?
+		 * 	<= commanderItem *
+		 * 		title <= commanderLabel @ \Command
+		 * 		Content <= commanderContent $mol_row sub / <= commanderMessager $mol_view sub / <= commanderMessage @ \Let us do it right!
+		 * ```
+		 */
+		@ $mol_mem
+		Deck() {
+			const obj = new this.$.$mol_deck()
+
+			obj.items = () => [
+				this.greeterItem(),
+				this.questerItem(),
+				this.commanderItem()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_deck(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  greeterItem *
-	 *  	title <= greeterLabel
-	 *  	Content <= greeterContent
-	 *  ```
-	 **/
-	greeterItem() {
-		return ({
-			"title" :  this.greeterLabel() ,
-			"Content" :  this.greeterContent() ,
-		})
-	}
+		/**
+		 * ```tree
+		 * greeterItem *
+		 * 	title <= greeterLabel @ \Greeting
+		 * 	Content <= greeterContent $mol_row sub / <= greeterMessager $mol_view sub / <= greeterMessage @ \Hello, world!
+		 * ```
+		 */
+		greeterItem() {
+			return {
+				title: this.greeterLabel(),
+				Content: this.greeterContent()
+			}
+		}
 
-	/**
-	 *  ```
-	 *  greeterLabel @ \Greeting
-	 *  ```
-	 **/
-	greeterLabel() {
-		return this.$.$mol_locale.text( "$mol_deck_demo_greeterLabel" )
-	}
+		/**
+		 * ```tree
+		 * greeterLabel @ \Greeting
+		 * ```
+		 */
+		greeterLabel() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_greeterLabel' )
+		}
 
-	/**
-	 *  ```
-	 *  greeterContent $mol_row sub / <= greeterMessager
-	 *  ```
-	 **/
-	@ $mol_mem
-	greeterContent() {
-		return (( obj )=>{
-			obj.sub = () => [this.greeterMessager()] as readonly any[]
+		/**
+		 * ```tree
+		 * greeterContent $mol_row sub / <= greeterMessager $mol_view sub / <= greeterMessage @ \Hello, world!
+		 * ```
+		 */
+		@ $mol_mem
+		greeterContent() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				this.greeterMessager()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_row(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  greeterMessager $mol_view sub / <= greeterMessage
-	 *  ```
-	 **/
-	@ $mol_mem
-	greeterMessager() {
-		return (( obj )=>{
-			obj.sub = () => [this.greeterMessage()] as readonly any[]
+		/**
+		 * ```tree
+		 * greeterMessager $mol_view sub / <= greeterMessage @ \Hello, world!
+		 * ```
+		 */
+		@ $mol_mem
+		greeterMessager() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.greeterMessage()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  greeterMessage @ \Hello, world!
-	 *  ```
-	 **/
-	greeterMessage() {
-		return this.$.$mol_locale.text( "$mol_deck_demo_greeterMessage" )
-	}
+		/**
+		 * ```tree
+		 * greeterMessage @ \Hello, world!
+		 * ```
+		 */
+		greeterMessage() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_greeterMessage' )
+		}
 
-	/**
-	 *  ```
-	 *  questerItem *
-	 *  	title <= questerLabel
-	 *  	Content <= questerContent
-	 *  ```
-	 **/
-	questerItem() {
-		return ({
-			"title" :  this.questerLabel() ,
-			"Content" :  this.questerContent() ,
-		})
-	}
+		/**
+		 * ```tree
+		 * questerItem *
+		 * 	title <= questerLabel @ \Question
+		 * 	Content <= questerContent $mol_row sub / <= questerMessager $mol_view sub / <= questerMessage @ \How are you?
+		 * ```
+		 */
+		questerItem() {
+			return {
+				title: this.questerLabel(),
+				Content: this.questerContent()
+			}
+		}
 
-	/**
-	 *  ```
-	 *  questerLabel @ \Question
-	 *  ```
-	 **/
-	questerLabel() {
-		return this.$.$mol_locale.text( "$mol_deck_demo_questerLabel" )
-	}
+		/**
+		 * ```tree
+		 * questerLabel @ \Question
+		 * ```
+		 */
+		questerLabel() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_questerLabel' )
+		}
 
-	/**
-	 *  ```
-	 *  questerContent $mol_row sub / <= questerMessager
-	 *  ```
-	 **/
-	@ $mol_mem
-	questerContent() {
-		return (( obj )=>{
-			obj.sub = () => [this.questerMessager()] as readonly any[]
+		/**
+		 * ```tree
+		 * questerContent $mol_row sub / <= questerMessager $mol_view sub / <= questerMessage @ \How are you?
+		 * ```
+		 */
+		@ $mol_mem
+		questerContent() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				this.questerMessager()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_row(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  questerMessager $mol_view sub / <= questerMessage
-	 *  ```
-	 **/
-	@ $mol_mem
-	questerMessager() {
-		return (( obj )=>{
-			obj.sub = () => [this.questerMessage()] as readonly any[]
+		/**
+		 * ```tree
+		 * questerMessager $mol_view sub / <= questerMessage @ \How are you?
+		 * ```
+		 */
+		@ $mol_mem
+		questerMessager() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.questerMessage()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  questerMessage @ \How are you?
-	 *  ```
-	 **/
-	questerMessage() {
-		return this.$.$mol_locale.text( "$mol_deck_demo_questerMessage" )
-	}
+		/**
+		 * ```tree
+		 * questerMessage @ \How are you?
+		 * ```
+		 */
+		questerMessage() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_questerMessage' )
+		}
 
-	/**
-	 *  ```
-	 *  commanderItem *
-	 *  	title <= commanderLabel
-	 *  	Content <= commanderContent
-	 *  ```
-	 **/
-	commanderItem() {
-		return ({
-			"title" :  this.commanderLabel() ,
-			"Content" :  this.commanderContent() ,
-		})
-	}
+		/**
+		 * ```tree
+		 * commanderItem *
+		 * 	title <= commanderLabel @ \Command
+		 * 	Content <= commanderContent $mol_row sub / <= commanderMessager $mol_view sub / <= commanderMessage @ \Let us do it right!
+		 * ```
+		 */
+		commanderItem() {
+			return {
+				title: this.commanderLabel(),
+				Content: this.commanderContent()
+			}
+		}
 
-	/**
-	 *  ```
-	 *  commanderLabel @ \Command
-	 *  ```
-	 **/
-	commanderLabel() {
-		return this.$.$mol_locale.text( "$mol_deck_demo_commanderLabel" )
-	}
+		/**
+		 * ```tree
+		 * commanderLabel @ \Command
+		 * ```
+		 */
+		commanderLabel() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_commanderLabel' )
+		}
 
-	/**
-	 *  ```
-	 *  commanderContent $mol_row sub / <= commanderMessager
-	 *  ```
-	 **/
-	@ $mol_mem
-	commanderContent() {
-		return (( obj )=>{
-			obj.sub = () => [this.commanderMessager()] as readonly any[]
+		/**
+		 * ```tree
+		 * commanderContent $mol_row sub / <= commanderMessager $mol_view sub / <= commanderMessage @ \Let us do it right!
+		 * ```
+		 */
+		@ $mol_mem
+		commanderContent() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				this.commanderMessager()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_row(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  commanderMessager $mol_view sub / <= commanderMessage
-	 *  ```
-	 **/
-	@ $mol_mem
-	commanderMessager() {
-		return (( obj )=>{
-			obj.sub = () => [this.commanderMessage()] as readonly any[]
+		/**
+		 * ```tree
+		 * commanderMessager $mol_view sub / <= commanderMessage @ \Let us do it right!
+		 * ```
+		 */
+		@ $mol_mem
+		commanderMessager() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.commanderMessage()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * commanderMessage @ \Let us do it right!
+		 * ```
+		 */
+		commanderMessage() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_commanderMessage' )
+		}
 	}
 
-	/**
-	 *  ```
-	 *  commanderMessage @ \Let us do it right!
-	 *  ```
-	 **/
-	commanderMessage() {
-		return this.$.$mol_locale.text( "$mol_deck_demo_commanderMessage" )
-	}
-
-} }
+}

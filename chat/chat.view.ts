@@ -27,7 +27,7 @@ namespace $.$$ {
 			if( issue ) return issue
 
 			const issue_json = this.service().issue_add( this.repository().uri() , this.title() , this.teaser() )
-			issue = $mol_github_issue.item( issue_json.url )
+			issue = $mol_github_issue.item( issue_json.url! )
 			issue.json_update( issue_json )
 
 			return this.issue( issue )
@@ -65,7 +65,7 @@ namespace $.$$ {
 		}
 
 		post_user_link( index: number ) {
-			return this.posts_data()[ index ].user().link()
+			return this.posts_data()[ index ].user().link()!
 		}
 
 		post_body( index: number ) {
@@ -89,11 +89,11 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		adding( text : string , force? : $mol_mem_force ) {
-			if( !text ) return
+		adding( text?: string , force? : $mol_mem_force ) {
+			if( text === undefined) return ''
 
 			const comment_json = this.service().comment_add( this.issue_ensured().uri() , text )
-			const comment = $mol_github_comment.item( comment_json.url )
+			const comment = $mol_github_comment.item( comment_json.url! )
 			comment.json_update( comment_json )
 
 			this.issue_ensured().comments().items( [ ... this.issue_ensured().comments().items() , comment ] , $mol_mem_force_cache )

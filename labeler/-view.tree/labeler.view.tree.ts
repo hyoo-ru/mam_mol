@@ -1,64 +1,79 @@
-namespace $ { export class $mol_labeler extends $mol_list {
+namespace $ {
+	export class $mol_labeler extends $mol_list {
 
-	/**
-	 *  ```
-	 *  rows /
-	 *  	<= Title
-	 *  	<= Content
-	 *  ```
-	 **/
-	rows() {
-		return [this.Title() , this.Content()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * rows /
+		 * 	<= Title $mol_view
+		 * 		minimal_height 21
+		 * 		sub <= label /$mol_view_content <= title
+		 * 	<= Content $mol_view
+		 * 		minimal_height 24
+		 * 		sub <= content /
+		 * ```
+		 */
+		rows() {
+			return [
+				this.Title(),
+				this.Content()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  Title $mol_view
-	 *  	minimal_height 21
-	 *  	sub <= label
-	 *  ```
-	 **/
-	@ $mol_mem
-	Title() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Title $mol_view
+		 * 	minimal_height 21
+		 * 	sub <= label /$mol_view_content <= title
+		 * ```
+		 */
+		@ $mol_mem
+		Title() {
+			const obj = new this.$.$mol_view()
+
 			obj.minimal_height = () => 21
 			obj.sub = () => this.label()
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  label /$mol_view_content <= title
-	 *  ```
-	 **/
-	label() {
-		return [this.title()] as readonly ( $mol_view_content )[]
-	}
+		/**
+		 * ```tree
+		 * label /$mol_view_content <= title
+		 * ```
+		 */
+		label() {
+			return [
+				this.title()
+			] as readonly $mol_view_content[]
+		}
 
-	/**
-	 *  ```
-	 *  Content $mol_view
-	 *  	minimal_height 24
-	 *  	sub <= content
-	 *  ```
-	 **/
-	@ $mol_mem
-	Content() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Content $mol_view
+		 * 	minimal_height 24
+		 * 	sub <= content /
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
+			const obj = new this.$.$mol_view()
+
 			obj.minimal_height = () => 24
 			obj.sub = () => this.content()
+
 			return obj
-		})( new this.$.$mol_view(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * content /
+		 * ```
+		 */
+		content() {
+			return [
+
+			] as readonly any[]
+		}
 	}
 
-	/**
-	 *  ```
-	 *  content /
-	 *  ```
-	 **/
-	content() {
-		return [] as readonly any[]
-	}
-
-} }
+}

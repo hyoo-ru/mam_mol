@@ -1,77 +1,84 @@
-namespace $ { export class $mol_plot_line extends $mol_plot_graph {
+namespace $ {
+	export class $mol_plot_line extends $mol_plot_graph {
 
-	/**
-	 *  ```
-	 *  threshold 1
-	 *  ```
-	 **/
-	threshold() {
-		return 1
-	}
+		/**
+		 * ```tree
+		 * threshold 1
+		 * ```
+		 */
+		threshold() {
+			return 1
+		}
 
-	/**
-	 *  ```
-	 *  spacing 2
-	 *  ```
-	 **/
-	spacing() {
-		return 2
-	}
+		/**
+		 * ```tree
+		 * spacing 2
+		 * ```
+		 */
+		spacing() {
+			return 2
+		}
 
-	/**
-	 *  ```
-	 *  color_fill \none
-	 *  ```
-	 **/
-	color_fill() {
-		return "none"
-	}
+		/**
+		 * ```tree
+		 * color_fill \none
+		 * ```
+		 */
+		color_fill() {
+			return "none"
+		}
 
-	/**
-	 *  ```
-	 *  sub / <= Curve
-	 *  ```
-	 **/
-	sub() {
-		return [this.Curve()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * sub / <= Curve $mol_svg_path geometry <= curve \
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Curve()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  Curve $mol_svg_path geometry <= curve
-	 *  ```
-	 **/
-	@ $mol_mem
-	Curve() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Curve $mol_svg_path geometry <= curve \
+		 * ```
+		 */
+		@ $mol_mem
+		Curve() {
+			const obj = new this.$.$mol_svg_path()
+
 			obj.geometry = () => this.curve()
+
 			return obj
-		})( new this.$.$mol_svg_path(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  curve \
-	 *  ```
-	 **/
-	curve() {
-		return ""
-	}
+		/**
+		 * ```tree
+		 * curve \
+		 * ```
+		 */
+		curve() {
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  Sample $mol_plot_graph_sample
-	 *  	color <= color
-	 *  	type <= type
-	 *  ```
-	 **/
-	@ $mol_mem
-	Sample() {
-		return (( obj )=>{
+
+		/**
+		 * ```tree
+		 * Sample $mol_plot_graph_sample
+		 * 	color <= color
+		 * 	type <= type
+		 * ```
+		 */
+		@ $mol_mem
+		Sample() {
+			const obj = new this.$.$mol_plot_graph_sample()
+
 			obj.color = () => this.color()
 			obj.type = () => this.type()
+
 			return obj
-		})( new this.$.$mol_plot_graph_sample(  ) )
+		}
 	}
 
-} }
+}

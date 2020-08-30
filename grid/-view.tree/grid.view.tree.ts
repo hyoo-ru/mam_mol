@@ -1,401 +1,439 @@
-namespace $ { export class $mol_grid extends $mol_scroll {
+namespace $ {
+	export class $mol_grid extends $mol_scroll {
 
-	/**
-	 *  ```
-	 *  row_height 40
-	 *  ```
-	 **/
-	row_height() {
-		return 40
-	}
+		/**
+		 * ```tree
+		 * row_height 40
+		 * ```
+		 */
+		row_height() {
+			return 40
+		}
 
-	/**
-	 *  ```
-	 *  row_ids /string[]
-	 *  ```
-	 **/
-	row_ids() {
-		return [] as readonly ( string[] )[]
-	}
+		/**
+		 * ```tree
+		 * row_ids /string[]
+		 * ```
+		 */
+		row_ids() {
+			return [
 
-	/**
-	 *  ```
-	 *  row_id!index null
-	 *  ```
-	 **/
-	row_id( index : any ) {
-		return null as any
-	}
+			] as readonly (string[])[]
+		}
 
-	/**
-	 *  ```
-	 *  col_ids /
-	 *  ```
-	 **/
-	col_ids() {
-		return [] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * row_id!index null
+		 * ```
+		 */
+		row_id(index: any) {
+			return null as any
+		}
 
-	/**
-	 *  ```
-	 *  records *
-	 *  ```
-	 **/
-	records() {
-		return ({
-		})
-	}
+		/**
+		 * ```tree
+		 * col_ids /
+		 * ```
+		 */
+		col_ids() {
+			return [
 
-	/**
-	 *  ```
-	 *  record!id null
-	 *  ```
-	 **/
-	record( id : any ) {
-		return null as any
-	}
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  hierarchy null
-	 *  ```
-	 **/
-	hierarchy() {
-		return null as any
-	}
+		/**
+		 * ```tree
+		 * records *
+		 * ```
+		 */
+		records() {
+			return {
 
-	/**
-	 *  ```
-	 *  hierarchy_col \
-	 *  ```
-	 **/
-	hierarchy_col() {
-		return ""
-	}
+			}
+		}
 
-	/**
-	 *  ```
-	 *  sub /
-	 *  	<= Head
-	 *  	<= Table
-	 *  ```
-	 **/
-	sub() {
-		return [this.Head() , this.Table()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * record!id null
+		 * ```
+		 */
+		record(id: any) {
+			return null as any
+		}
 
-	/**
-	 *  ```
-	 *  Table $mol_grid_table sub <= rows
-	 *  ```
-	 **/
-	@ $mol_mem
-	Table() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * hierarchy null
+		 * ```
+		 */
+		hierarchy() {
+			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * hierarchy_col \
+		 * ```
+		 */
+		hierarchy_col() {
+			return ""
+		}
+
+
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Head
+		 * 	<= Table $mol_grid_table sub <= rows /$mol_view
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Head(),
+				this.Table()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Table $mol_grid_table sub <= rows /$mol_view
+		 * ```
+		 */
+		@ $mol_mem
+		Table() {
+			const obj = new this.$.$mol_grid_table()
+
 			obj.sub = () => this.rows()
+
 			return obj
-		})( new this.$.$mol_grid_table(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  rows /$mol_view
-	 *  ```
-	 **/
-	rows() {
-		return [] as readonly ( $mol_view )[]
-	}
+		/**
+		 * ```tree
+		 * rows /$mol_view
+		 * ```
+		 */
+		rows() {
+			return [
 
-	/**
-	 *  ```
-	 *  Head $mol_grid_row cells <= head_cells
-	 *  ```
-	 **/
-	@ $mol_mem
-	Head() {
-		return (( obj )=>{
+			] as readonly $mol_view[]
+		}
+
+		/**
+		 * ```tree
+		 * Head $mol_grid_row cells <= head_cells /$mol_view
+		 * ```
+		 */
+		@ $mol_mem
+		Head() {
+			const obj = new this.$.$mol_grid_row()
+
 			obj.cells = () => this.head_cells()
+
 			return obj
-		})( new this.$.$mol_grid_row(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  head_cells /$mol_view
-	 *  ```
-	 **/
-	head_cells() {
-		return [] as readonly ( $mol_view )[]
-	}
+		/**
+		 * ```tree
+		 * head_cells /$mol_view
+		 * ```
+		 */
+		head_cells() {
+			return [
 
-	/**
-	 *  ```
-	 *  Row!id $mol_grid_row
-	 *  	minimal_height <= row_height
-	 *  	cells <= cells!id
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	Row( id : any ) {
-		return (( obj )=>{
+			] as readonly $mol_view[]
+		}
+
+		/**
+		 * ```tree
+		 * Row!id $mol_grid_row
+		 * 	minimal_height <= row_height
+		 * 	cells <= cells!id /$mol_view
+		 * ```
+		 */
+		@ $mol_mem_key
+		Row(id: any) {
+			const obj = new this.$.$mol_grid_row()
+
 			obj.minimal_height = () => this.row_height()
 			obj.cells = () => this.cells(id)
+
 			return obj
-		})( new this.$.$mol_grid_row(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  cells!id /$mol_view
-	 *  ```
-	 **/
-	cells( id : any ) {
-		return [] as readonly ( $mol_view )[]
-	}
+		/**
+		 * ```tree
+		 * cells!id /$mol_view
+		 * ```
+		 */
+		cells(id: any) {
+			return [
 
-	/**
-	 *  ```
-	 *  Cell!id $mol_view
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	Cell( id : any ) {
-		return (( obj )=>{
+			] as readonly $mol_view[]
+		}
+
+
+		/**
+		 * ```tree
+		 * Cell!id $mol_view
+		 * ```
+		 */
+		@ $mol_mem_key
+		Cell(id: any) {
+			const obj = new this.$.$mol_view()
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  cell!id null
-	 *  ```
-	 **/
-	cell( id : any ) {
-		return null as any
-	}
+		/**
+		 * ```tree
+		 * cell!id null
+		 * ```
+		 */
+		cell(id: any) {
+			return null as any
+		}
 
-	/**
-	 *  ```
-	 *  Cell_text!id $mol_grid_cell sub <= cell_content_text!id
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	Cell_text( id : any ) {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Cell_text!id $mol_grid_cell sub <= cell_content_text!id <= cell_content!id /$mol_view_content
+		 * ```
+		 */
+		@ $mol_mem_key
+		Cell_text(id: any) {
+			const obj = new this.$.$mol_grid_cell()
+
 			obj.sub = () => this.cell_content_text(id)
+
 			return obj
-		})( new this.$.$mol_grid_cell(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  cell_content_text!id <= cell_content!id
-	 *  ```
-	 **/
-	cell_content_text( id : any ) {
-		return this.cell_content(id)
-	}
+		/**
+		 * ```tree
+		 * cell_content_text!id <= cell_content!id /$mol_view_content
+		 * ```
+		 */
+		cell_content_text(id: any) {
+			return this.cell_content(id)
+		}
 
-	/**
-	 *  ```
-	 *  cell_content!id /$mol_view_content
-	 *  ```
-	 **/
-	cell_content( id : any ) {
-		return [] as readonly ( $mol_view_content )[]
-	}
+		/**
+		 * ```tree
+		 * cell_content!id /$mol_view_content
+		 * ```
+		 */
+		cell_content(id: any) {
+			return [
 
-	/**
-	 *  ```
-	 *  Cell_number!id $mol_grid_number sub <= cell_content_number!id
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	Cell_number( id : any ) {
-		return (( obj )=>{
+			] as readonly $mol_view_content[]
+		}
+
+		/**
+		 * ```tree
+		 * Cell_number!id $mol_grid_number sub <= cell_content_number!id <= cell_content!id /$mol_view_content
+		 * ```
+		 */
+		@ $mol_mem_key
+		Cell_number(id: any) {
+			const obj = new this.$.$mol_grid_number()
+
 			obj.sub = () => this.cell_content_number(id)
+
 			return obj
-		})( new this.$.$mol_grid_number(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  cell_content_number!id <= cell_content!id
-	 *  ```
-	 **/
-	cell_content_number( id : any ) {
-		return this.cell_content(id)
-	}
+		/**
+		 * ```tree
+		 * cell_content_number!id <= cell_content!id /$mol_view_content
+		 * ```
+		 */
+		cell_content_number(id: any) {
+			return this.cell_content(id)
+		}
 
-	/**
-	 *  ```
-	 *  Col_head!id $mol_float
-	 *  	dom_name \th
-	 *  	sub <= col_head_content!id
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	Col_head( id : any ) {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Col_head!id $mol_float
+		 * 	dom_name \th
+		 * 	sub <= col_head_content!id /$mol_view_content
+		 * ```
+		 */
+		@ $mol_mem_key
+		Col_head(id: any) {
+			const obj = new this.$.$mol_float()
+
 			obj.dom_name = () => "th"
 			obj.sub = () => this.col_head_content(id)
+
 			return obj
-		})( new this.$.$mol_float(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  col_head_content!id /$mol_view_content
-	 *  ```
-	 **/
-	col_head_content( id : any ) {
-		return [] as readonly ( $mol_view_content )[]
-	}
+		/**
+		 * ```tree
+		 * col_head_content!id /$mol_view_content
+		 * ```
+		 */
+		col_head_content(id: any) {
+			return [
 
-	/**
-	 *  ```
-	 *  Cell_branch!id $mol_check_expand
-	 *  	level <= cell_level!id
-	 *  	label <= cell_content!id
-	 *  	expanded?val <=> cell_expanded!id?val
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	Cell_branch( id : any ) {
-		return (( obj )=>{
+			] as readonly $mol_view_content[]
+		}
+
+		/**
+		 * ```tree
+		 * Cell_branch!id $mol_check_expand
+		 * 	level <= cell_level!id 0
+		 * 	label <= cell_content!id /$mol_view_content
+		 * 	expanded?val <=> cell_expanded!id?val false
+		 * ```
+		 */
+		@ $mol_mem_key
+		Cell_branch(id: any) {
+			const obj = new this.$.$mol_check_expand()
+
 			obj.level = () => this.cell_level(id)
 			obj.label = () => this.cell_content(id)
-			obj.expanded = ( val? : any ) => this.cell_expanded(id , val )
+			obj.expanded = (val?: any) => this.cell_expanded(id, val)
+
 			return obj
-		})( new this.$.$mol_check_expand(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  cell_level!id 0
-	 *  ```
-	 **/
-	cell_level( id : any ) {
-		return 0
-	}
+		/**
+		 * ```tree
+		 * cell_level!id 0
+		 * ```
+		 */
+		cell_level(id: any) {
+			return 0
+		}
 
-	/**
-	 *  ```
-	 *  cell_expanded!id?val false
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	cell_expanded( id : any , val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : false
-	}
+		/**
+		 * ```tree
+		 * cell_expanded!id?val false
+		 * ```
+		 */
+		@ $mol_mem_key
+		cell_expanded(id: any, val?: any) {
+			if ( val !== undefined ) return val
+			return false
+		}
 
-	/**
-	 *  ```
-	 *  Cell_content!id / <= Cell_dimmer!id
-	 *  ```
-	 **/
-	Cell_content( id : any ) {
-		return [this.Cell_dimmer(id)] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * Cell_content!id / <= Cell_dimmer!id $mol_dimmer
+		 * 	needle <= needle \
+		 * 	haystack <= cell_value!id \
+		 * ```
+		 */
+		Cell_content(id: any) {
+			return [
+				this.Cell_dimmer(id)
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  Cell_dimmer!id $mol_dimmer
-	 *  	needle <= needle
-	 *  	haystack <= cell_value!id
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	Cell_dimmer( id : any ) {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Cell_dimmer!id $mol_dimmer
+		 * 	needle <= needle \
+		 * 	haystack <= cell_value!id \
+		 * ```
+		 */
+		@ $mol_mem_key
+		Cell_dimmer(id: any) {
+			const obj = new this.$.$mol_dimmer()
+
 			obj.needle = () => this.needle()
 			obj.haystack = () => this.cell_value(id)
+
 			return obj
-		})( new this.$.$mol_dimmer(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * needle \
+		 * ```
+		 */
+		needle() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * cell_value!id \
+		 * ```
+		 */
+		cell_value(id: any) {
+			return ""
+		}
 	}
 
-	/**
-	 *  ```
-	 *  needle \
-	 *  ```
-	 **/
-	needle() {
-		return ""
+	export class $mol_grid_table extends $mol_list {
+
+		/**
+		 * ```tree
+		 * dom_name \table
+		 * ```
+		 */
+		dom_name() {
+			return "table"
+		}
 	}
 
-	/**
-	 *  ```
-	 *  cell_value!id \
-	 *  ```
-	 **/
-	cell_value( id : any ) {
-		return ""
+	export class $mol_grid_row extends $mol_view {
+
+		/**
+		 * ```tree
+		 * dom_name \tr
+		 * ```
+		 */
+		dom_name() {
+			return "tr"
+		}
+
+		/**
+		 * ```tree
+		 * sub <= cells /$mol_view
+		 * ```
+		 */
+		sub() {
+			return this.cells()
+		}
+
+		/**
+		 * ```tree
+		 * cells /$mol_view
+		 * ```
+		 */
+		cells() {
+			return [
+
+			] as readonly $mol_view[]
+		}
 	}
 
-} }
-namespace $ { export class $mol_grid_table extends $mol_list {
+	export class $mol_grid_cell extends $mol_view {
 
-	/**
-	 *  ```
-	 *  dom_name \table
-	 *  ```
-	 **/
-	dom_name() {
-		return "table"
+		/**
+		 * ```tree
+		 * dom_name \td
+		 * ```
+		 */
+		dom_name() {
+			return "td"
+		}
+
+		/**
+		 * ```tree
+		 * minimal_height 40
+		 * ```
+		 */
+		minimal_height() {
+			return 40
+		}
 	}
 
-} }
-namespace $ { export class $mol_grid_row extends $mol_view {
+	export class $mol_grid_number extends $mol_grid_cell {
 
-	/**
-	 *  ```
-	 *  dom_name \tr
-	 *  ```
-	 **/
-	dom_name() {
-		return "tr"
 	}
 
-	/**
-	 *  ```
-	 *  sub <= cells
-	 *  ```
-	 **/
-	sub() {
-		return this.cells()
-	}
-
-	/**
-	 *  ```
-	 *  cells /$mol_view
-	 *  ```
-	 **/
-	cells() {
-		return [] as readonly ( $mol_view )[]
-	}
-
-} }
-namespace $ { export class $mol_grid_cell extends $mol_view {
-
-	/**
-	 *  ```
-	 *  dom_name \td
-	 *  ```
-	 **/
-	dom_name() {
-		return "td"
-	}
-
-	/**
-	 *  ```
-	 *  minimal_height 40
-	 *  ```
-	 **/
-	minimal_height() {
-		return 40
-	}
-
-} }
-namespace $ { export class $mol_grid_number extends $mol_grid_cell {
-
-} }
+}

@@ -1,32 +1,40 @@
-namespace $ { export class $mol_view_tree_test_binding_right extends $mol_view {
+namespace $ {
+	export class $mol_view_tree_test_binding_right extends $mol_view {
 
-	outer_width( v? : any ) {
-		return this.Test().width( v )
-	}
+		/**
+		 * ```tree
+		 * Test $mol_view_tree_test_binding_right_test width?v => outer_width?v
+		 * ```
+		 */
+		@ $mol_mem
+		Test() {
+			const obj = new this.$.$mol_view_tree_test_binding_right_test()
 
-	/**
-	 *  ```
-	 *  Test $mol_view_tree_test_binding_right_test width?v => outer_width?v
-	 *  ```
-	 **/
-	@ $mol_mem
-	Test() {
-		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_view_tree_test_binding_right_test(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * outer_width?v
+		 * ```
+		 */
+		outer_width(v?: any) {
+			return this.Test().width(v)
+		}
 	}
 
-} }
-namespace $ { export class $mol_view_tree_test_binding_right_test extends $mol_view {
+	export class $mol_view_tree_test_binding_right_test extends $mol_view {
 
-	/**
-	 *  ```
-	 *  width?val 0
-	 *  ```
-	 **/
-	@ $mol_mem
-	width( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : 0
+		/**
+		 * ```tree
+		 * width?val 0
+		 * ```
+		 */
+		@ $mol_mem
+		width(val?: any) {
+			if ( val !== undefined ) return val
+			return 0
+		}
 	}
 
-} }
+}

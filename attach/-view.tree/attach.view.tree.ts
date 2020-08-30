@@ -1,341 +1,363 @@
-namespace $ { export class $mol_attach extends $mol_card {
+namespace $ {
+	export class $mol_attach extends $mol_card {
 
-	/**
-	 *  ```
-	 *  Content $mol_tiler items <= content
-	 *  ```
-	 **/
-	@ $mol_mem
-	Content() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Content $mol_tiler items <= content /$mol_view
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
+			const obj = new this.$.$mol_tiler()
+
 			obj.items = () => this.content()
+
 			return obj
-		})( new this.$.$mol_tiler(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  content /$mol_view
-	 *  ```
-	 **/
-	content() {
-		return [] as readonly ( $mol_view )[]
-	}
+		/**
+		 * ```tree
+		 * content /$mol_view
+		 * ```
+		 */
+		content() {
+			return [
 
-	/**
-	 *  ```
-	 *  items?val /$mol_view
-	 *  ```
-	 **/
-	@ $mol_mem
-	items( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [] as readonly ( $mol_view )[]
-	}
+			] as readonly $mol_view[]
+		}
 
-	/**
-	 *  ```
-	 *  Add $mol_attach_add file_new?val <=> attach_new?val
-	 *  ```
-	 **/
-	@ $mol_mem
-	Add() {
-		return (( obj )=>{
-			obj.file_new = ( val? : any ) => this.attach_new( val )
+		/**
+		 * ```tree
+		 * items?val /$mol_view
+		 * ```
+		 */
+		@ $mol_mem
+		items(val?: any) {
+			if ( val !== undefined ) return val
+			return [
+
+			] as readonly $mol_view[]
+		}
+
+		/**
+		 * ```tree
+		 * Add $mol_attach_add file_new?val <=> attach_new?val \
+		 * ```
+		 */
+		@ $mol_mem
+		Add() {
+			const obj = new this.$.$mol_attach_add()
+
+			obj.file_new = (val?: any) => this.attach_new(val)
+
 			return obj
-		})( new this.$.$mol_attach_add(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  attach_new?val \
-	 *  ```
-	 **/
-	@ $mol_mem
-	attach_new( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : ""
-	}
+		/**
+		 * ```tree
+		 * attach_new?val \
+		 * ```
+		 */
+		@ $mol_mem
+		attach_new(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  Item!id $mol_attach_item title <= attach_title
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	Item( id : any ) {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Item!id $mol_attach_item title <= attach_title \
+		 * ```
+		 */
+		@ $mol_mem_key
+		Item(id: any) {
+			const obj = new this.$.$mol_attach_item()
+
 			obj.title = () => this.attach_title()
+
 			return obj
-		})( new this.$.$mol_attach_item(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * attach_title \
+		 * ```
+		 */
+		attach_title() {
+			return ""
+		}
 	}
 
-	/**
-	 *  ```
-	 *  attach_title \
-	 *  ```
-	 **/
-	attach_title() {
-		return ""
+	export class $mol_attach_item extends $mol_link {
+
+		/**
+		 * ```tree
+		 * url_thumb?val \
+		 * ```
+		 */
+		@ $mol_mem
+		url_thumb(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * uri?val <=> url_load?val \
+		 * ```
+		 */
+		uri(val?: any) {
+			return this.url_load(val)
+		}
+
+		/**
+		 * ```tree
+		 * url_load?val \
+		 * ```
+		 */
+		@ $mol_mem
+		url_load(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * style *
+		 * 	^
+		 * 	backgroundImage <= style_bg \
+		 * ```
+		 */
+		style() {
+			return {
+				...super.style(),
+				backgroundImage: this.style_bg()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * style_bg \
+		 * ```
+		 */
+		style_bg() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	download <= title \
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				download: this.title()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * title \
+		 * ```
+		 */
+		title() {
+			return ""
+		}
 	}
 
-} }
-namespace $ { export class $mol_attach_item extends $mol_link {
+	export class $mol_attach_add extends $mol_button_minor {
 
-	/**
-	 *  ```
-	 *  url_thumb?val \
-	 *  ```
-	 **/
-	@ $mol_mem
-	url_thumb( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : ""
-	}
+		/**
+		 * ```tree
+		 * minimal_height 60
+		 * ```
+		 */
+		minimal_height() {
+			return 60
+		}
 
-	/**
-	 *  ```
-	 *  uri?val <=> url_load?val
-	 *  ```
-	 **/
-	@ $mol_mem
-	uri( val? : any , force? : $mol_mem_force ) {
-		return this.url_load( val )
-	}
+		/**
+		 * ```tree
+		 * file_new?val \
+		 * ```
+		 */
+		@ $mol_mem
+		file_new(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  url_load?val \
-	 *  ```
-	 **/
-	@ $mol_mem
-	url_load( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : ""
-	}
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Icon $mol_icon_attach
+		 * 	<= Input $mol_attach_add_input
+		 * 		event_capture?val <=> event_capture?val null
+		 * 		event_picked?val <=> event_picked?val null
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Icon(),
+				this.Input()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  style *
-	 *  	^
-	 *  	backgroundImage <= style_bg
-	 *  ```
-	 **/
-	style() {
-		return ({
-			...super.style() ,
-			"backgroundImage" :  this.style_bg() ,
-		})
-	}
+		/**
+		 * ```tree
+		 * Icon $mol_icon_attach
+		 * ```
+		 */
+		@ $mol_mem
+		Icon() {
+			const obj = new this.$.$mol_icon_attach()
 
-	/**
-	 *  ```
-	 *  style_bg \
-	 *  ```
-	 **/
-	style_bg() {
-		return ""
-	}
-
-	/**
-	 *  ```
-	 *  attr *
-	 *  	^
-	 *  	download <= title
-	 *  ```
-	 **/
-	attr() {
-		return ({
-			...super.attr() ,
-			"download" :  this.title() ,
-		})
-	}
-
-	/**
-	 *  ```
-	 *  title \
-	 *  ```
-	 **/
-	title() {
-		return ""
-	}
-
-} }
-namespace $ { export class $mol_attach_add extends $mol_button_minor {
-
-	/**
-	 *  ```
-	 *  minimal_height 60
-	 *  ```
-	 **/
-	minimal_height() {
-		return 60
-	}
-
-	/**
-	 *  ```
-	 *  file_new?val \
-	 *  ```
-	 **/
-	@ $mol_mem
-	file_new( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : ""
-	}
-
-	/**
-	 *  ```
-	 *  sub /
-	 *  	<= Icon
-	 *  	<= Input
-	 *  ```
-	 **/
-	sub() {
-		return [this.Icon() , this.Input()] as readonly any[]
-	}
-
-	/**
-	 *  ```
-	 *  Icon $mol_icon_attach
-	 *  ```
-	 **/
-	@ $mol_mem
-	Icon() {
-		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_icon_attach(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Input $mol_attach_add_input
-	 *  	event_capture?val <=> event_capture?val
-	 *  	event_picked?val <=> event_picked?val
-	 *  ```
-	 **/
-	@ $mol_mem
-	Input() {
-		return (( obj )=>{
-			obj.event_capture = ( val? : any ) => this.event_capture( val )
-			obj.event_picked = ( val? : any ) => this.event_picked( val )
+		/**
+		 * ```tree
+		 * Input $mol_attach_add_input
+		 * 	event_capture?val <=> event_capture?val null
+		 * 	event_picked?val <=> event_picked?val null
+		 * ```
+		 */
+		@ $mol_mem
+		Input() {
+			const obj = new this.$.$mol_attach_add_input()
+
+			obj.event_capture = (val?: any) => this.event_capture(val)
+			obj.event_picked = (val?: any) => this.event_picked(val)
+
 			return obj
-		})( new this.$.$mol_attach_add_input(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * event_capture?val null
+		 * ```
+		 */
+		@ $mol_mem
+		event_capture(val?: any) {
+			if ( val !== undefined ) return val
+			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * event_picked?val null
+		 * ```
+		 */
+		@ $mol_mem
+		event_picked(val?: any) {
+			if ( val !== undefined ) return val
+			return null as any
+		}
 	}
 
-	/**
-	 *  ```
-	 *  event_capture?val null
-	 *  ```
-	 **/
-	@ $mol_mem
-	event_capture( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : null as any
+	export class $mol_attach_add_input extends $mol_view {
+
+		/**
+		 * ```tree
+		 * dom_name \input
+		 * ```
+		 */
+		dom_name() {
+			return "input"
+		}
+
+		/**
+		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	type <= type \file
+		 * 	accept <= accept \image/*;capture=camera
+		 * 	multiple <= multiple true
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				type: this.type(),
+				accept: this.accept(),
+				multiple: this.multiple()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * type \file
+		 * ```
+		 */
+		type() {
+			return "file"
+		}
+
+		/**
+		 * ```tree
+		 * accept \image/*;capture=camera
+		 * ```
+		 */
+		accept() {
+			return "image/*;capture=camera"
+		}
+
+		/**
+		 * ```tree
+		 * multiple true
+		 * ```
+		 */
+		multiple() {
+			return true
+		}
+
+		/**
+		 * ```tree
+		 * event_click?val <=> event_capture?val null
+		 * ```
+		 */
+		event_click(val?: any) {
+			return this.event_capture(val)
+		}
+
+		/**
+		 * ```tree
+		 * event_capture?val null
+		 * ```
+		 */
+		@ $mol_mem
+		event_capture(val?: any) {
+			if ( val !== undefined ) return val
+			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * event *
+		 * 	^
+		 * 	change?val <=> event_picked?val null
+		 * ```
+		 */
+		event() {
+			return {
+				...super.event(),
+				change: (val?: any) => this.event_picked(val)
+			}
+		}
+
+		/**
+		 * ```tree
+		 * event_picked?val null
+		 * ```
+		 */
+		@ $mol_mem
+		event_picked(val?: any) {
+			if ( val !== undefined ) return val
+			return null as any
+		}
 	}
 
-	/**
-	 *  ```
-	 *  event_picked?val null
-	 *  ```
-	 **/
-	@ $mol_mem
-	event_picked( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : null as any
-	}
-
-} }
-namespace $ { export class $mol_attach_add_input extends $mol_view {
-
-	/**
-	 *  ```
-	 *  dom_name \input
-	 *  ```
-	 **/
-	dom_name() {
-		return "input"
-	}
-
-	/**
-	 *  ```
-	 *  attr *
-	 *  	^
-	 *  	type <= type
-	 *  	accept <= accept
-	 *  	multiple <= multiple
-	 *  ```
-	 **/
-	attr() {
-		return ({
-			...super.attr() ,
-			"type" :  this.type() ,
-			"accept" :  this.accept() ,
-			"multiple" :  this.multiple() ,
-		})
-	}
-
-	/**
-	 *  ```
-	 *  type \file
-	 *  ```
-	 **/
-	type() {
-		return "file"
-	}
-
-	/**
-	 *  ```
-	 *  accept \image/*;capture=camera
-	 *  ```
-	 **/
-	accept() {
-		return "image/*;capture=camera"
-	}
-
-	/**
-	 *  ```
-	 *  multiple true
-	 *  ```
-	 **/
-	multiple() {
-		return true
-	}
-
-	/**
-	 *  ```
-	 *  event_click?val <=> event_capture?val
-	 *  ```
-	 **/
-	@ $mol_mem
-	event_click( val? : any , force? : $mol_mem_force ) {
-		return this.event_capture( val )
-	}
-
-	/**
-	 *  ```
-	 *  event_capture?val null
-	 *  ```
-	 **/
-	@ $mol_mem
-	event_capture( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : null as any
-	}
-
-	/**
-	 *  ```
-	 *  event *
-	 *  	^
-	 *  	change?val <=> event_picked?val
-	 *  ```
-	 **/
-	event() {
-		return ({
-			...super.event() ,
-			"change" :  ( val? : any )=>  this.event_picked( val ) ,
-		})
-	}
-
-	/**
-	 *  ```
-	 *  event_picked?val null
-	 *  ```
-	 **/
-	@ $mol_mem
-	event_picked( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : null as any
-	}
-
-} }
+}

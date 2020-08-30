@@ -1,73 +1,83 @@
-namespace $ { export class $mol_toolbar extends $mol_view {
+namespace $ {
+	export class $mol_toolbar extends $mol_view {
 
-	/**
-	 *  ```
-	 *  attr *
-	 *  	^
-	 *  	mol_toolbar_expanded <= expanded
-	 *  ```
-	 **/
-	attr() {
-		return ({
-			...super.attr() ,
-			"mol_toolbar_expanded" :  this.expanded() ,
-		})
-	}
+		/**
+		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	mol_toolbar_expanded <= expanded
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				mol_toolbar_expanded: this.expanded()
+			}
+		}
 
-	/**
-	 *  ```
-	 *  sub /
-	 *  	<= Bar
-	 *  	<= Expand
-	 *  ```
-	 **/
-	sub() {
-		return [this.Bar() , this.Expand()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Bar $mol_view sub <= items /$mol_view
+		 * 	<= Expand $mol_check_expand checked?val <=> expanded?val false
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Bar(),
+				this.Expand()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  Bar $mol_view sub <= items
-	 *  ```
-	 **/
-	@ $mol_mem
-	Bar() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Bar $mol_view sub <= items /$mol_view
+		 * ```
+		 */
+		@ $mol_mem
+		Bar() {
+			const obj = new this.$.$mol_view()
+
 			obj.sub = () => this.items()
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  items /$mol_view
-	 *  ```
-	 **/
-	items() {
-		return [] as readonly ( $mol_view )[]
-	}
+		/**
+		 * ```tree
+		 * items /$mol_view
+		 * ```
+		 */
+		items() {
+			return [
 
-	/**
-	 *  ```
-	 *  Expand $mol_check_expand checked?val <=> expanded?val
-	 *  ```
-	 **/
-	@ $mol_mem
-	Expand() {
-		return (( obj )=>{
-			obj.checked = ( val? : any ) => this.expanded( val )
+			] as readonly $mol_view[]
+		}
+
+		/**
+		 * ```tree
+		 * Expand $mol_check_expand checked?val <=> expanded?val false
+		 * ```
+		 */
+		@ $mol_mem
+		Expand() {
+			const obj = new this.$.$mol_check_expand()
+
+			obj.checked = (val?: any) => this.expanded(val)
+
 			return obj
-		})( new this.$.$mol_check_expand(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * expanded?val false
+		 * ```
+		 */
+		@ $mol_mem
+		expanded(val?: any) {
+			if ( val !== undefined ) return val
+			return false
+		}
 	}
 
-	/**
-	 *  ```
-	 *  expanded?val false
-	 *  ```
-	 **/
-	@ $mol_mem
-	expanded( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : false
-	}
-
-} }
+}

@@ -1,231 +1,288 @@
-namespace $ { export class $mol_pop_over_demo extends $mol_demo_small {
+namespace $ {
+	export class $mol_pop_over_demo extends $mol_demo_small {
 
-	/**
-	 *  ```
-	 *  title @ \Menu that opens on mouse over
-	 *  ```
-	 **/
-	title() {
-		return this.$.$mol_locale.text( "$mol_pop_over_demo_title" )
-	}
+		/**
+		 * ```tree
+		 * title @ \Menu that opens on mouse over
+		 * ```
+		 */
+		title() {
+			return this.$.$mol_locale.text( '$mol_pop_over_demo_title' )
+		}
 
-	/**
-	 *  ```
-	 *  sub / <= Menu
-	 *  ```
-	 **/
-	sub() {
-		return [this.Menu()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * sub / <= Menu $mol_row sub /
+		 * 	<= File $mol_pop_over
+		 * 		align \bottom_right
+		 * 		Anchor <= file_title @ \File
+		 * 		bubble_content / <= File_menu $mol_list rows /
+		 * 			<= Open $mol_button_minor title <= open_title @ \Open
+		 * 			<= Export $mol_button_minor title <= export_title @ \Export
+		 * 			<= Save $mol_button_minor title <= save_title @ \Save
+		 * 	<= Help $mol_pop_over
+		 * 		align \bottom_right
+		 * 		Anchor <= help_title @ \About
+		 * 		bubble_content / <= Help_menu $mol_list rows /
+		 * 			<= Updates $mol_button_minor title <= updates_title @ \Updates
+		 * 			<= About $mol_button_minor title <= about_title @ \About
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Menu()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  Menu $mol_row sub /
-	 *  	<= File
-	 *  	<= Help
-	 *  ```
-	 **/
-	@ $mol_mem
-	Menu() {
-		return (( obj )=>{
-			obj.sub = () => [this.File() , this.Help()] as readonly any[]
+		/**
+		 * ```tree
+		 * Menu $mol_row sub /
+		 * 	<= File $mol_pop_over
+		 * 		align \bottom_right
+		 * 		Anchor <= file_title @ \File
+		 * 		bubble_content / <= File_menu $mol_list rows /
+		 * 			<= Open $mol_button_minor title <= open_title @ \Open
+		 * 			<= Export $mol_button_minor title <= export_title @ \Export
+		 * 			<= Save $mol_button_minor title <= save_title @ \Save
+		 * 	<= Help $mol_pop_over
+		 * 		align \bottom_right
+		 * 		Anchor <= help_title @ \About
+		 * 		bubble_content / <= Help_menu $mol_list rows /
+		 * 			<= Updates $mol_button_minor title <= updates_title @ \Updates
+		 * 			<= About $mol_button_minor title <= about_title @ \About
+		 * ```
+		 */
+		@ $mol_mem
+		Menu() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				this.File(),
+				this.Help()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_row(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  File $mol_pop_over
-	 *  	align \bottom_right
-	 *  	Anchor <= file_title
-	 *  	bubble_content / <= File_menu
-	 *  ```
-	 **/
-	@ $mol_mem
-	File() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * File $mol_pop_over
+		 * 	align \bottom_right
+		 * 	Anchor <= file_title @ \File
+		 * 	bubble_content / <= File_menu $mol_list rows /
+		 * 		<= Open $mol_button_minor title <= open_title @ \Open
+		 * 		<= Export $mol_button_minor title <= export_title @ \Export
+		 * 		<= Save $mol_button_minor title <= save_title @ \Save
+		 * ```
+		 */
+		@ $mol_mem
+		File() {
+			const obj = new this.$.$mol_pop_over()
+
 			obj.align = () => "bottom_right"
 			obj.Anchor = () => this.file_title()
-			obj.bubble_content = () => [this.File_menu()] as readonly any[]
+			obj.bubble_content = () => [
+				this.File_menu()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_pop_over(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  file_title @ \File
-	 *  ```
-	 **/
-	file_title() {
-		return this.$.$mol_locale.text( "$mol_pop_over_demo_file_title" )
-	}
+		/**
+		 * ```tree
+		 * file_title @ \File
+		 * ```
+		 */
+		file_title() {
+			return this.$.$mol_locale.text( '$mol_pop_over_demo_file_title' )
+		}
 
-	/**
-	 *  ```
-	 *  File_menu $mol_list rows /
-	 *  	<= Open
-	 *  	<= Export
-	 *  	<= Save
-	 *  ```
-	 **/
-	@ $mol_mem
-	File_menu() {
-		return (( obj )=>{
-			obj.rows = () => [this.Open() , this.Export() , this.Save()] as readonly any[]
+		/**
+		 * ```tree
+		 * File_menu $mol_list rows /
+		 * 	<= Open $mol_button_minor title <= open_title @ \Open
+		 * 	<= Export $mol_button_minor title <= export_title @ \Export
+		 * 	<= Save $mol_button_minor title <= save_title @ \Save
+		 * ```
+		 */
+		@ $mol_mem
+		File_menu() {
+			const obj = new this.$.$mol_list()
+
+			obj.rows = () => [
+				this.Open(),
+				this.Export(),
+				this.Save()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_list(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Open $mol_button_minor title <= open_title
-	 *  ```
-	 **/
-	@ $mol_mem
-	Open() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Open $mol_button_minor title <= open_title @ \Open
+		 * ```
+		 */
+		@ $mol_mem
+		Open() {
+			const obj = new this.$.$mol_button_minor()
+
 			obj.title = () => this.open_title()
+
 			return obj
-		})( new this.$.$mol_button_minor(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  open_title @ \Open
-	 *  ```
-	 **/
-	open_title() {
-		return this.$.$mol_locale.text( "$mol_pop_over_demo_open_title" )
-	}
+		/**
+		 * ```tree
+		 * open_title @ \Open
+		 * ```
+		 */
+		open_title() {
+			return this.$.$mol_locale.text( '$mol_pop_over_demo_open_title' )
+		}
 
-	/**
-	 *  ```
-	 *  Export $mol_button_minor title <= export_title
-	 *  ```
-	 **/
-	@ $mol_mem
-	Export() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Export $mol_button_minor title <= export_title @ \Export
+		 * ```
+		 */
+		@ $mol_mem
+		Export() {
+			const obj = new this.$.$mol_button_minor()
+
 			obj.title = () => this.export_title()
+
 			return obj
-		})( new this.$.$mol_button_minor(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  export_title @ \Export
-	 *  ```
-	 **/
-	export_title() {
-		return this.$.$mol_locale.text( "$mol_pop_over_demo_export_title" )
-	}
+		/**
+		 * ```tree
+		 * export_title @ \Export
+		 * ```
+		 */
+		export_title() {
+			return this.$.$mol_locale.text( '$mol_pop_over_demo_export_title' )
+		}
 
-	/**
-	 *  ```
-	 *  Save $mol_button_minor title <= save_title
-	 *  ```
-	 **/
-	@ $mol_mem
-	Save() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Save $mol_button_minor title <= save_title @ \Save
+		 * ```
+		 */
+		@ $mol_mem
+		Save() {
+			const obj = new this.$.$mol_button_minor()
+
 			obj.title = () => this.save_title()
+
 			return obj
-		})( new this.$.$mol_button_minor(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  save_title @ \Save
-	 *  ```
-	 **/
-	save_title() {
-		return this.$.$mol_locale.text( "$mol_pop_over_demo_save_title" )
-	}
+		/**
+		 * ```tree
+		 * save_title @ \Save
+		 * ```
+		 */
+		save_title() {
+			return this.$.$mol_locale.text( '$mol_pop_over_demo_save_title' )
+		}
 
-	/**
-	 *  ```
-	 *  Help $mol_pop_over
-	 *  	align \bottom_right
-	 *  	Anchor <= help_title
-	 *  	bubble_content / <= Help_menu
-	 *  ```
-	 **/
-	@ $mol_mem
-	Help() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Help $mol_pop_over
+		 * 	align \bottom_right
+		 * 	Anchor <= help_title @ \About
+		 * 	bubble_content / <= Help_menu $mol_list rows /
+		 * 		<= Updates $mol_button_minor title <= updates_title @ \Updates
+		 * 		<= About $mol_button_minor title <= about_title @ \About
+		 * ```
+		 */
+		@ $mol_mem
+		Help() {
+			const obj = new this.$.$mol_pop_over()
+
 			obj.align = () => "bottom_right"
 			obj.Anchor = () => this.help_title()
-			obj.bubble_content = () => [this.Help_menu()] as readonly any[]
+			obj.bubble_content = () => [
+				this.Help_menu()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_pop_over(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  help_title @ \About
-	 *  ```
-	 **/
-	help_title() {
-		return this.$.$mol_locale.text( "$mol_pop_over_demo_help_title" )
-	}
+		/**
+		 * ```tree
+		 * help_title @ \About
+		 * ```
+		 */
+		help_title() {
+			return this.$.$mol_locale.text( '$mol_pop_over_demo_help_title' )
+		}
 
-	/**
-	 *  ```
-	 *  Help_menu $mol_list rows /
-	 *  	<= Updates
-	 *  	<= About
-	 *  ```
-	 **/
-	@ $mol_mem
-	Help_menu() {
-		return (( obj )=>{
-			obj.rows = () => [this.Updates() , this.About()] as readonly any[]
+		/**
+		 * ```tree
+		 * Help_menu $mol_list rows /
+		 * 	<= Updates $mol_button_minor title <= updates_title @ \Updates
+		 * 	<= About $mol_button_minor title <= about_title @ \About
+		 * ```
+		 */
+		@ $mol_mem
+		Help_menu() {
+			const obj = new this.$.$mol_list()
+
+			obj.rows = () => [
+				this.Updates(),
+				this.About()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_list(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  Updates $mol_button_minor title <= updates_title
-	 *  ```
-	 **/
-	@ $mol_mem
-	Updates() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Updates $mol_button_minor title <= updates_title @ \Updates
+		 * ```
+		 */
+		@ $mol_mem
+		Updates() {
+			const obj = new this.$.$mol_button_minor()
+
 			obj.title = () => this.updates_title()
+
 			return obj
-		})( new this.$.$mol_button_minor(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  updates_title @ \Updates
-	 *  ```
-	 **/
-	updates_title() {
-		return this.$.$mol_locale.text( "$mol_pop_over_demo_updates_title" )
-	}
+		/**
+		 * ```tree
+		 * updates_title @ \Updates
+		 * ```
+		 */
+		updates_title() {
+			return this.$.$mol_locale.text( '$mol_pop_over_demo_updates_title' )
+		}
 
-	/**
-	 *  ```
-	 *  About $mol_button_minor title <= about_title
-	 *  ```
-	 **/
-	@ $mol_mem
-	About() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * About $mol_button_minor title <= about_title @ \About
+		 * ```
+		 */
+		@ $mol_mem
+		About() {
+			const obj = new this.$.$mol_button_minor()
+
 			obj.title = () => this.about_title()
+
 			return obj
-		})( new this.$.$mol_button_minor(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * about_title @ \About
+		 * ```
+		 */
+		about_title() {
+			return this.$.$mol_locale.text( '$mol_pop_over_demo_about_title' )
+		}
 	}
 
-	/**
-	 *  ```
-	 *  about_title @ \About
-	 *  ```
-	 **/
-	about_title() {
-		return this.$.$mol_locale.text( "$mol_pop_over_demo_about_title" )
-	}
-
-} }
+}

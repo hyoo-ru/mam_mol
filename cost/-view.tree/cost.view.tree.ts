@@ -1,90 +1,105 @@
-namespace $ { export class $mol_cost extends $mol_view {
+namespace $ {
+	export class $mol_cost extends $mol_view {
 
-	/**
-	 *  ```
-	 *  value null
-	 *  ```
-	 **/
-	value() {
-		return null as any
-	}
+		/**
+		 * ```tree
+		 * value null
+		 * ```
+		 */
+		value() {
+			return null as any
+		}
 
-	/**
-	 *  ```
-	 *  sub /
-	 *  	<= Prefix
-	 *  	<= Value
-	 *  	<= Postfix
-	 *  ```
-	 **/
-	sub() {
-		return [this.Prefix() , this.Value() , this.Postfix()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Prefix $mol_view sub / <= prefix \
+		 * 	<= Value $mol_view sub / <= value_view \
+		 * 	<= Postfix $mol_view sub / <= postfix \
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Prefix(),
+				this.Value(),
+				this.Postfix()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  Prefix $mol_view sub / <= prefix
-	 *  ```
-	 **/
-	@ $mol_mem
-	Prefix() {
-		return (( obj )=>{
-			obj.sub = () => [this.prefix()] as readonly any[]
+		/**
+		 * ```tree
+		 * Prefix $mol_view sub / <= prefix \
+		 * ```
+		 */
+		@ $mol_mem
+		Prefix() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.prefix()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  prefix \
-	 *  ```
-	 **/
-	prefix() {
-		return ""
-	}
+		/**
+		 * ```tree
+		 * prefix \
+		 * ```
+		 */
+		prefix() {
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  Value $mol_view sub / <= value_view
-	 *  ```
-	 **/
-	@ $mol_mem
-	Value() {
-		return (( obj )=>{
-			obj.sub = () => [this.value_view()] as readonly any[]
+		/**
+		 * ```tree
+		 * Value $mol_view sub / <= value_view \
+		 * ```
+		 */
+		@ $mol_mem
+		Value() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.value_view()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  value_view \
-	 *  ```
-	 **/
-	value_view() {
-		return ""
-	}
+		/**
+		 * ```tree
+		 * value_view \
+		 * ```
+		 */
+		value_view() {
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  Postfix $mol_view sub / <= postfix
-	 *  ```
-	 **/
-	@ $mol_mem
-	Postfix() {
-		return (( obj )=>{
-			obj.sub = () => [this.postfix()] as readonly any[]
+		/**
+		 * ```tree
+		 * Postfix $mol_view sub / <= postfix \
+		 * ```
+		 */
+		@ $mol_mem
+		Postfix() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.postfix()
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_view(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * postfix \
+		 * ```
+		 */
+		postfix() {
+			return ""
+		}
 	}
 
-	/**
-	 *  ```
-	 *  postfix \
-	 *  ```
-	 **/
-	postfix() {
-		return ""
-	}
-
-} }
+}

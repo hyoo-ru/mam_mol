@@ -1,94 +1,96 @@
-namespace $ { export class $mol_check_expand extends $mol_check {
+namespace $ {
+	export class $mol_check_expand extends $mol_check {
 
-	/**
-	 *  ```
-	 *  minimal_height 40
-	 *  ```
-	 **/
-	minimal_height() {
-		return 40
-	}
+		/**
+		 * ```tree
+		 * minimal_height 40
+		 * ```
+		 */
+		minimal_height() {
+			return 40
+		}
 
-	/**
-	 *  ```
-	 *  Icon $mol_icon_chevron
-	 *  ```
-	 **/
-	@ $mol_mem
-	Icon() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Icon $mol_icon_chevron
+		 * ```
+		 */
+		@ $mol_mem
+		Icon() {
+			const obj = new this.$.$mol_icon_chevron()
+
 			return obj
-		})( new this.$.$mol_icon_chevron(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * level 0
+		 * ```
+		 */
+		level() {
+			return 0
+		}
+
+		/**
+		 * ```tree
+		 * style *
+		 * 	^
+		 * 	paddingLeft <= level_style \0px
+		 * ```
+		 */
+		style() {
+			return {
+				...super.style(),
+				paddingLeft: this.level_style()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * level_style \0px
+		 * ```
+		 */
+		level_style() {
+			return "0px"
+		}
+
+		/**
+		 * ```tree
+		 * checked?val <=> expanded?val false
+		 * ```
+		 */
+		checked(val?: any) {
+			return this.expanded(val)
+		}
+
+		/**
+		 * ```tree
+		 * expanded?val false
+		 * ```
+		 */
+		@ $mol_mem
+		expanded(val?: any) {
+			if ( val !== undefined ) return val
+			return false
+		}
+
+		/**
+		 * ```tree
+		 * enabled <= expandable false
+		 * ```
+		 */
+		enabled() {
+			return this.expandable()
+		}
+
+		/**
+		 * ```tree
+		 * expandable false
+		 * ```
+		 */
+		expandable() {
+			return false
+		}
 	}
 
-	/**
-	 *  ```
-	 *  level 0
-	 *  ```
-	 **/
-	level() {
-		return 0
-	}
-
-	/**
-	 *  ```
-	 *  style *
-	 *  	^
-	 *  	paddingLeft <= level_style
-	 *  ```
-	 **/
-	style() {
-		return ({
-			...super.style() ,
-			"paddingLeft" :  this.level_style() ,
-		})
-	}
-
-	/**
-	 *  ```
-	 *  level_style \0px
-	 *  ```
-	 **/
-	level_style() {
-		return "0px"
-	}
-
-	/**
-	 *  ```
-	 *  checked?val <=> expanded?val
-	 *  ```
-	 **/
-	@ $mol_mem
-	checked( val? : any , force? : $mol_mem_force ) {
-		return this.expanded( val )
-	}
-
-	/**
-	 *  ```
-	 *  expanded?val false
-	 *  ```
-	 **/
-	@ $mol_mem
-	expanded( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : false
-	}
-
-	/**
-	 *  ```
-	 *  enabled <= expandable
-	 *  ```
-	 **/
-	enabled() {
-		return this.expandable()
-	}
-
-	/**
-	 *  ```
-	 *  expandable false
-	 *  ```
-	 **/
-	expandable() {
-		return false
-	}
-
-} }
+}

@@ -1,45 +1,53 @@
-namespace $ { export class $mol_section extends $mol_list {
+namespace $ {
+	export class $mol_section extends $mol_list {
 
-	/**
-	 *  ```
-	 *  rows /
-	 *  	<= Head
-	 *  	<= Content
-	 *  ```
-	 **/
-	rows() {
-		return [this.Head() , this.Content()] as readonly any[]
-	}
+		/**
+		 * ```tree
+		 * rows /
+		 * 	<= Head $mol_view sub <= head /
+		 * 	<= Content null
+		 * ```
+		 */
+		rows() {
+			return [
+				this.Head(),
+				this.Content()
+			] as readonly any[]
+		}
 
-	/**
-	 *  ```
-	 *  Head $mol_view sub <= head
-	 *  ```
-	 **/
-	@ $mol_mem
-	Head() {
-		return (( obj )=>{
+		/**
+		 * ```tree
+		 * Head $mol_view sub <= head /
+		 * ```
+		 */
+		@ $mol_mem
+		Head() {
+			const obj = new this.$.$mol_view()
+
 			obj.sub = () => this.head()
+
 			return obj
-		})( new this.$.$mol_view(  ) )
+		}
+
+		/**
+		 * ```tree
+		 * head /
+		 * ```
+		 */
+		head() {
+			return [
+
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Content null
+		 * ```
+		 */
+		Content() {
+			return null as any
+		}
 	}
 
-	/**
-	 *  ```
-	 *  head /
-	 *  ```
-	 **/
-	head() {
-		return [] as readonly any[]
-	}
-
-	/**
-	 *  ```
-	 *  Content null
-	 *  ```
-	 **/
-	Content() {
-		return null as any
-	}
-
-} }
+}

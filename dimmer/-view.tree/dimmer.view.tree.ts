@@ -1,74 +1,84 @@
-namespace $ { export class $mol_dimmer extends $mol_paragraph {
+namespace $ {
+	export class $mol_dimmer extends $mol_paragraph {
 
-	/**
-	 *  ```
-	 *  haystack \
-	 *  ```
-	 **/
-	haystack() {
-		return ""
-	}
+		/**
+		 * ```tree
+		 * haystack \
+		 * ```
+		 */
+		haystack() {
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  needle \
-	 *  ```
-	 **/
-	needle() {
-		return ""
-	}
+		/**
+		 * ```tree
+		 * needle \
+		 * ```
+		 */
+		needle() {
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  sub <= parts
-	 *  ```
-	 **/
-	sub() {
-		return this.parts()
-	}
+		/**
+		 * ```tree
+		 * sub <= parts /$mol_view_content
+		 * ```
+		 */
+		sub() {
+			return this.parts()
+		}
 
-	/**
-	 *  ```
-	 *  parts /$mol_view_content
-	 *  ```
-	 **/
-	parts() {
-		return [] as readonly ( $mol_view_content )[]
-	}
+		/**
+		 * ```tree
+		 * parts /$mol_view_content
+		 * ```
+		 */
+		parts() {
+			return [
 
-	/**
-	 *  ```
-	 *  Low!id $mol_paragraph sub / <= string!id
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	Low( id : any ) {
-		return (( obj )=>{
-			obj.sub = () => [this.string(id)] as readonly any[]
+			] as readonly $mol_view_content[]
+		}
+
+		/**
+		 * ```tree
+		 * Low!id $mol_paragraph sub / <= string!id \
+		 * ```
+		 */
+		@ $mol_mem_key
+		Low(id: any) {
+			const obj = new this.$.$mol_paragraph()
+
+			obj.sub = () => [
+				this.string(id)
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_paragraph(  ) )
-	}
+		}
 
-	/**
-	 *  ```
-	 *  string!id \
-	 *  ```
-	 **/
-	string( id : any ) {
-		return ""
-	}
+		/**
+		 * ```tree
+		 * string!id \
+		 * ```
+		 */
+		string(id: any) {
+			return ""
+		}
 
-	/**
-	 *  ```
-	 *  High!id $mol_paragraph sub / <= string!id
-	 *  ```
-	 **/
-	@ $mol_mem_key
-	High( id : any ) {
-		return (( obj )=>{
-			obj.sub = () => [this.string(id)] as readonly any[]
+		/**
+		 * ```tree
+		 * High!id $mol_paragraph sub / <= string!id \
+		 * ```
+		 */
+		@ $mol_mem_key
+		High(id: any) {
+			const obj = new this.$.$mol_paragraph()
+
+			obj.sub = () => [
+				this.string(id)
+			] as readonly any[]
+
 			return obj
-		})( new this.$.$mol_paragraph(  ) )
+		}
 	}
 
-} }
+}

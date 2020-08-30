@@ -86,8 +86,9 @@ namespace $ {
 			const sourceMap = file.parent().resolve( `-view.tree/${ name }.map` )
 			const locale = file.parent().resolve( `-view.tree/${ name }.locale=en.json` )
 			
-			const tree = $mol_tree.fromString( file.text() , file.path() )
-			const res = $mol_view_tree_compile( tree )
+			const text = file.text()
+			const tree = $mol_tree2.fromString( text , new $mol_span(file.path(), 0, 0, text.length) )
+			const res = this.$.$mol_view_tree2_ts_compile( tree )
 
 			script.text( res.script )
 			// sourceMap.text( res.map )
@@ -447,13 +448,14 @@ namespace $ {
 
 			var sources = this.sourcesAll( { path , exclude } )
 			
-			const image_types = {
+			const types = {
 				'svg' : 'image/svg+xml' ,
 				'png' : 'image/png' ,
 				'jpg' : 'image/jpeg' ,
 				'jpeg' : 'image/jpeg' ,
 				'gif' : 'image/gif' ,
 				'webp' : 'image/webp' ,
+				'bin' : 'application/octet-stream' ,
 			}
 
 			this.tsTranspile({ path , exclude , bundle : 'web' })
@@ -463,15 +465,13 @@ namespace $ {
 
 					const ext = src.ext().replace( /^.*\./ , '' )
 
-					if( image_types[ ext ] ) {
+					if( types[ ext ] ) {
 
-						const ext = src.ext()
-
-						const script = src.parent().resolve( `-image/${ src.name() }.js` )
-						const payload = $mol_base64_encode(src.buffer())
+						const script = src.parent().resolve( `-bin/${ src.name() }.js` )
+						const payload = $mol_base64_encode( src.buffer() )
 
 						const path = src.relate( this.root() )
-						const uri = `data:${ image_types[ext] };base64,${ payload }`
+						const uri = `data:${ types[ext] };base64,${ payload }`
 						script.text( `var $node = $node || {} ; $node[ ${ JSON.stringify( '/' + path ) } ] = ${ JSON.stringify( uri ) }\n` )
 						
 						return script

@@ -1,21 +1,25 @@
-namespace $ { export class $mol_check_group extends $mol_check_box {
+namespace $ {
+	export class $mol_check_group extends $mol_check_box {
 
-	/**
-	 *  ```
-	 *  checks /$mol_check
-	 *  ```
-	 **/
-	checks() {
-		return [] as readonly ( $mol_check )[]
+		/**
+		 * ```tree
+		 * checks /$mol_check
+		 * ```
+		 */
+		checks() {
+			return [
+
+			] as readonly $mol_check[]
+		}
+
+		/**
+		 * ```tree
+		 * full true
+		 * ```
+		 */
+		full() {
+			return true
+		}
 	}
 
-	/**
-	 *  ```
-	 *  full true
-	 *  ```
-	 **/
-	full() {
-		return true
-	}
-
-} }
+}

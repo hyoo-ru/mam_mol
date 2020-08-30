@@ -1,98 +1,100 @@
-namespace $ { export class $mol_frame extends $mol_view {
+namespace $ {
+	export class $mol_frame extends $mol_view {
 
-	/**
-	 *  ```
-	 *  dom_name \iframe
-	 *  ```
-	 **/
-	dom_name() {
-		return "iframe"
+		/**
+		 * ```tree
+		 * dom_name \iframe
+		 * ```
+		 */
+		dom_name() {
+			return "iframe"
+		}
+
+		/**
+		 * ```tree
+		 * attr *
+		 * 	src <= uri \
+		 * 	allow <= allow \
+		 * ```
+		 */
+		attr() {
+			return {
+				src: this.uri(),
+				allow: this.allow()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * uri \
+		 * ```
+		 */
+		uri() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * allow \
+		 * ```
+		 */
+		allow() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * fullscreen true
+		 * ```
+		 */
+		fullscreen() {
+			return true
+		}
+
+		/**
+		 * ```tree
+		 * accelerometer true
+		 * ```
+		 */
+		accelerometer() {
+			return true
+		}
+
+		/**
+		 * ```tree
+		 * autoplay true
+		 * ```
+		 */
+		autoplay() {
+			return true
+		}
+
+		/**
+		 * ```tree
+		 * encription true
+		 * ```
+		 */
+		encription() {
+			return true
+		}
+
+		/**
+		 * ```tree
+		 * gyroscope true
+		 * ```
+		 */
+		gyroscope() {
+			return true
+		}
+
+		/**
+		 * ```tree
+		 * pip true
+		 * ```
+		 */
+		pip() {
+			return true
+		}
 	}
 
-	/**
-	 *  ```
-	 *  attr *
-	 *  	src <= uri
-	 *  	allow <= allow
-	 *  ```
-	 **/
-	attr() {
-		return ({
-			"src" :  this.uri() ,
-			"allow" :  this.allow() ,
-		})
-	}
-
-	/**
-	 *  ```
-	 *  uri \
-	 *  ```
-	 **/
-	uri() {
-		return ""
-	}
-
-	/**
-	 *  ```
-	 *  allow \
-	 *  ```
-	 **/
-	allow() {
-		return ""
-	}
-
-	/**
-	 *  ```
-	 *  fullscreen true
-	 *  ```
-	 **/
-	fullscreen() {
-		return true
-	}
-
-	/**
-	 *  ```
-	 *  accelerometer true
-	 *  ```
-	 **/
-	accelerometer() {
-		return true
-	}
-
-	/**
-	 *  ```
-	 *  autoplay true
-	 *  ```
-	 **/
-	autoplay() {
-		return true
-	}
-
-	/**
-	 *  ```
-	 *  encription true
-	 *  ```
-	 **/
-	encription() {
-		return true
-	}
-
-	/**
-	 *  ```
-	 *  gyroscope true
-	 *  ```
-	 **/
-	gyroscope() {
-		return true
-	}
-
-	/**
-	 *  ```
-	 *  pip true
-	 *  ```
-	 **/
-	pip() {
-		return true
-	}
-
-} }
+}
