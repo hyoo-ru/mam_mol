@@ -2,7 +2,7 @@ namespace $ {
 	
 	export class $mol_build_server extends $mol_server {
 
-		static log = false
+		static trace = false
 
 		expressGenerator() {
 			return $mol_fiber_root( (
@@ -35,12 +35,15 @@ namespace $ {
 						res.send( script ).end()
 
 					} else {
-						error.message += '\n' + 'Set $mol_build_server.log = true for stacktraces'
+						if (! this.$.$mol_build_server.trace) {
+							error.message += '\n' + 'Set $mol_build_server.trace = true for stacktraces'
+						}
+
 						res.status(500).send( error.toString() ).end()
 						this.$.$mol_log3_fail({
 							place: `${this}.expressGenerator()`,
 							uri: req.path,
-							stack: this.$.$mol_build_server.log ? error.stack : undefined,
+							stack: this.$.$mol_build_server.trace ? error.stack : undefined,
 							message: error.message,
 						})
 					}

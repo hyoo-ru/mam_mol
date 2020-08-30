@@ -16,5 +16,5 @@ $mol_chart $mol_view
 			gap_top <= gap_top
 			graphs <= graphs
 			graphs_colored => graphs_colored
-			hue_base?val <= hue_base 140
-			hue_shift?val <= hue_shift 111
+			hue_base <= hue_base 140
+			hue_shift <= hue_shift 111

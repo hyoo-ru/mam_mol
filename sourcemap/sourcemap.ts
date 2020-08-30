@@ -11,7 +11,7 @@ namespace $ {
 		names: string[]
 		sourceRoot?: string
 		sourcesContent?: (string|null)[]
-		mappings: string
+		mappings: string | SourceMapLine[]
 		file: string
 	}
 
@@ -114,7 +114,7 @@ namespace $ {
 			let sourceRoot = file ? path.dirname(file) : (raw.sourceRoot || '')
 			if (sourceRoot === '.') sourceRoot = ''
 			else if (sourceRoot) sourceRoot += '/'
-			const lines = sourcemap_codec.decode(raw.mappings)
+			const lines = typeof raw.mappings === 'string' ? sourcemap_codec.decode(raw.mappings) : raw.mappings
 			for (let line of lines) {
 				const mergedLine: SourceMapLine = []
 				for (let segment of line) {

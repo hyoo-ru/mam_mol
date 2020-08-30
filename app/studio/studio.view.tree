@@ -72,8 +72,8 @@ $mol_app_studio $mol_book
 	-
 	Prop!id $mol_app_studio_field
 		path <= prop_path!id /
-		prop!path?val <=> prop_default!path?val $mol_tree
-		props!name?val <=> props_all!name?val $mol_tree
+		prop!path?val <=> prop_default!path?val $mol_tree2_empty
+		props!name?val <=> props_all!name?val $mol_tree2_empty
 		prop_arg!id <= prop_arg!id *
 		prop_value!id <= prop_value_base!id null
 		bind_options <= prop_options /
@@ -81,10 +81,10 @@ $mol_app_studio $mol_book
 		prop_add?val <=> prop_add?val \
 		highlight <= prop_filter
 	-
-	class_name_self?val \App
+	class_name_self?val \$mol_app_studio_generated
 	class_name_base?val \$mol_view
-	class_self?val $mol_tree
-	classes $mol_tree
+	class_self?val $mol_tree2_empty
+	classes $mol_tree2_empty
 
 $mol_app_studio_selector $mol_view
 	event *

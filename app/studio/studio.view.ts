@@ -21,61 +21,65 @@ namespace $.$$ {
 		classes_static() {
 			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tdom_name \\\n\n'
 			const source = view_tree + $mol_fetch.text( 'web.view.tree' )
-			return $mol_view_tree_classes( $mol_tree.fromString( source ) )
+			const span = $mol_span.entire( 'web.view.tree', source.length )
+			return this.$.$mol_view_tree2_classes( $mol_tree2.fromString( source, span ) )
 		}
 		
 		@ $mol_mem
-		classes( next? : $mol_tree ) {
+		classes( next? : $mol_tree2 ) {
 			if( next ) return next
 			
-			return this.classes_static().insert( new $mol_tree({ type : this.class_name_base() }) , this.class_name_self() , null )
+			return this.classes_static().insert( $mol_tree2.struct(this.class_name_base()) , this.class_name_self() , null )
 		}
 		
 		@ $mol_mem_key
-		class( name : string , next? : $mol_tree ) {
-			if( next !== undefined ) {
+		class( name : string , next? : $mol_tree2) {
+			if( next ) {
 				this.classes( this.classes().insert( next , name ) )
 			}
-			return this.classes().select( name ).sub[0] || null
+			const klass = this.classes().select( name )
+			if( klass.kids.length == 0 ) return null
+
+			return this.$.$mol_view_tree2_child(klass)
 		}
 
-		class_self( next? : $mol_tree ) {
-			return this.class( this.class_name_self() , next )
+		class_self( next? : $mol_tree2 ) {
+			return this.class( this.class_name_self() , next )!
 		}
 
 		@ $mol_mem_key
 		props_self( name : string ) {
 			const def = this.class( name )
-			if( !def ) return new $mol_tree
+			if( !def ) return $mol_tree2.list([])
 			
-			return $mol_view_tree_class_props( def )
+			return this.$.$mol_view_tree2_class_props( def )
 		}
 		
 		@ $mol_mem_key
-		props_all( name : string , next? : $mol_tree , force? : $mol_mem_force ) {
+		props_all( name : string , next? : $mol_tree2 , force? : $mol_mem_force ) {
 			if( next ) return next
 			
-			const props_all : { [ name : string ] : $mol_tree } = {}
+			const props_all : { [ name : string ] : $mol_tree2 } = {}
 
 			const collect = ( name : string )=> {
 
 				const props = this.props_self( name )
-				for( let prop of props.sub ) props_all[ prop.type ] = undefined as any
+				for( const prop of props.kids ) props_all[ prop.type ] = undefined as any
 				
 				const sup = this.class( name )
-				if( sup ) collect( $mol_view_tree_super_name( sup ) )
+				if( sup ) collect( this.$.$mol_view_tree2_class_super( sup ).type )
 
-				for( let prop of props.sub ) props_all[ prop.type ] = prop
+				for( const prop of props.kids ) props_all[ prop.type ] = prop
 			}
 
 			collect( name )
 			
-			return this.classes().clone({ type : '' , sub : Object.keys( props_all ).map( name => props_all[ name ] ) })
+			return this.classes().list(Object.keys( props_all ).map( name => props_all[ name ] ))
 		}
 		
 		view_class( name : string ) {
 			if( !$[ name ] ) throw new Error( `View class not found: ${name}` )
-			return $[ name ]
+			return $[ name ] as new () => $mol_view
 		}
 
 		filter_bar_items() {
@@ -87,69 +91,80 @@ namespace $.$$ {
 		
 		fields() {
 			const path = this.path()
-			return this.props_all( this.prop_class( path ) ).sub
-			.filter( prop => !$mol_view_tree_prop_key( prop ) )
-			.filter( $mol_match_text( this.prop_filter() , ( prop : $mol_tree )=> [ $mol_view_tree_prop_name( prop ) ] ) )
-			.map( prop => this.Prop([ ... path , prop.type , null ]) )
+
+			return this.props_all( this.prop_class( path ) ).kids
+				.filter( prop => !this.$.$mol_view_tree2_prop_key( prop ) )
+				.filter( $mol_match_text( this.prop_filter() , ( prop : $mol_tree2 )=> [ this.$.$mol_view_tree2_prop_name( prop ) ] ) )
+				.map( prop => this.Prop([ ... path , prop.type , null ]) )
 		}
 
-		prop_overs( path : $mol_tree_path ) {
-			return this.prop_default( path ).sub.map( over => over.type )
+		prop_overs( path : $mol_tree2_path ) {
+			return this.prop_default( path )?.kids.map( over => over.type ) ?? []
 		}
 
-		prop_path( path : $mol_tree_path ) {
+		prop_path( path : $mol_tree2_path ) {
 			return path
 		}
 		
-		prop_title( path : $mol_tree_path ) {
+		prop_title( path : $mol_tree2_path ) {
 			return path[ path.length - 1 ]
 		}
 
-		prop_arg( path : $mol_tree_path ) {
+		prop_arg( path : $mol_tree2_path ) {
 			return { path : path.join( ',' ) }
 		}
 		
 		@ $mol_mem_key
-		prop( path : $mol_tree_path , next? : $mol_tree ) {
+		prop( path : $mol_tree2_path , next? : $mol_tree2 | null) {
 			const props = this.props_all( this.class_name_self() )
-			let prop = props.select( path[0] ).sub[0] || new $mol_tree({ type : String( path[0] ) })
+			const sub = props.select( path[0] ).kids
+			let prop = sub.length > 0 ? sub[0] : $mol_tree2.struct(String( path[0] ) )
 			if( next ) {
 				prop = prop.insert( next , ... path.slice(1) )
 				this.class_self( this.class_self().insert( prop , 0 , path[0] ) )
 				this.props_all( this.class_name_self() , undefined , $mol_mem_force_cache )
 			}
-			return prop.select( ... path.slice(1) ).sub[0] || null
+			const kids = prop.select( ... path.slice(1) ).kids
+
+			return kids.length > 0 ? kids[0] : null
 		}
 		
 		@ $mol_mem_key
-		prop_self( path : $mol_tree_path ) {
-			return this.class_self().select( null , ... path ).sub[0] || null
+		prop_self( path : $mol_tree2_path ) {
+			const kids = this.class_self().select( null , ... path ).kids
+
+			return kids.length > 0 ? kids[0] : null
 		}
 		
 		@ $mol_mem_key
-		prop_type( path : $mol_tree_path ) {
+		prop_type( path : $mol_tree2_path ) {
 			const prop = this.prop( path )
-			return ( prop && prop.type !== '-' ) ? $mol_view_tree_value_type( prop ) : null
+
+			return ( prop && prop.type !== '-' ) ? this.$.$mol_view_tree2_value_type( prop ) : null
 		}
 
 		@ $mol_mem_key
-		prop_key( path : $mol_tree_path , next? : string ) {
-			return $mol_view_tree_prop_key( this.prop( path.slice( 0 , path.length - 1 ) ) )
+		prop_key( path : $mol_tree2_path , next? : string ) {
+			const prop = this.prop( path.slice( 0 , path.length - 1 ) )
+
+			return prop ? this.$.$mol_view_tree2_prop_key( prop ) ?? '' : ''
 		}
 
 		@ $mol_mem_key
-		prop_next( path : $mol_tree_path , next? : string ) {
-			return $mol_view_tree_prop_next( this.prop( path.slice( 0 , path.length - 1 ) ) )
+		prop_next( path : $mol_tree2_path , next? : string ) {
+			const prop = this.prop( path.slice( 0 , path.length - 1 ) )
+
+			return prop ? this.$.$mol_view_tree2_prop_next( prop ) ?? '' : ''
 		}
 
 		@ $mol_mem_key
-		prop_default( path : $mol_tree_path , next? : $mol_tree ) {
+		prop_default( path : $mol_tree2_path , next? : $mol_tree2 | null) {
 			return this.prop( path , next )
 		}
 
-		path( next? : $mol_tree_path ) : $mol_tree_path {
-			const str = $mol_state_arg.value( this.state_key( 'path' ) , next && next.join( ',' ) )
-			return ( str == null ) ? [] : ( str ? str.split( ',' ) : [] )
+		path( next? : $mol_tree2_path ) : $mol_tree2_path {
+			const str = $mol_state_arg.value( this.state_key( 'path' ) , next?.join( ',' ))
+			return str?.split( ',' ) ?? []
 		}
 		
 		@ $mol_mem
@@ -168,7 +183,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		prop_options() {
-			return this.props_all( this.class_name_self() ).sub.map( prop => prop.type )
+			return this.props_all( this.class_name_self() ).kids.map( prop => prop.type )
 		}
 
 		@ $mol_mem
@@ -181,7 +196,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
-		prop_value_base( path : $mol_tree_path , next? : any ) : any {
+		prop_value_base( path : $mol_tree2_path , next? : any ) : any {
 			const path2 = path.slice()
 			
 			while( path2[ path2.length - 1 ] === null ) path2.pop()
@@ -200,12 +215,10 @@ namespace $.$$ {
 				}
 			}
 
-			if( val === undefined ) val = null
-
-			return val
+			return val ?? null
 		}
 
-		prop_class( path : $mol_tree_path , next? : string ) : string {
+		prop_class( path : $mol_tree2_path , next? : string ) : string {
 			if( path.length === 0 ) return this.class_name_self()
 			
 			const over = this.overrided( `prop_class(${ JSON.stringify( path ) })` , next )
@@ -215,44 +228,53 @@ namespace $.$$ {
 				case 'get' : 
 				case 'bind' : 
 				case 'object' :
-					const def = this.prop_default( path )
-					return def && def.type
+					return this.prop_default( path )?.type ?? ''
 			}
 			
 			throw new Error( `Wrong type ${ this.prop_type( path ) }` )
 		}
 
-		prop_value_view( path : $mol_tree_path , next? : string ) : any {
+		prop_value_view( path : $mol_tree2_path , next? : string ) : any {
 			const over = this.prop_self( path )
 			
 			switch( this.prop_type( path ) ) {
-				case 'bool' : return over && ( over.type === 'true' )
-				case 'string' : return over && over.value
-				case 'locale' : return over && over.sub[0].value
-				case 'number' : return over && over.type
+				case 'bool' : return over?.type === 'true'
+				case 'string' : return over?.value
+				case 'locale' : return over?.kids.length ? over.kids[0].value : undefined
+				case 'number' : return over?.type
 				case 'get' :
-				case 'bind' : return over && this.prop_value_view([ over.sub[0].type , null ])
+				case 'bind' : return over ? this.prop_value_view([ over.kids[0].type , null ]) : undefined
 				case 'object' : return this.Element( path )
-				case 'list' : return over && over.sub.map( ( item , index )=> this.prop_value_view([ ... path , index ]) )
-				case 'dict' : return over && over.sub.reduce( ( dict , item )=> ({ ... dict , [ item.type ] : this.prop_value_view([ ... path , item.type , null ]) }) , {} )
+				case 'list' : return over?.kids.map( ( item , index )=> this.prop_value_view([ ... path , index ]) )
+				case 'dict' : return over?.kids.reduce(
+					( dict , item )=> ({
+						... dict ,
+						[ item.type ] : this.prop_value_view([
+							... path ,
+							item.type ,
+							null
+						])
+					}),
+					{}
+				)
 			}
 
 			return null
 		}
 
 		@ $mol_mem_key
-		Element( path : $mol_tree_path ) : $mol_view {
-
+		Element( path : $mol_tree2_path ) : $mol_view {
 			const prop_self = this.prop_self( path )
-			const obj = ( path.length && !prop_self )
+
+			const obj = ( path.length > 0 && !prop_self )
 				? this.prop_value_base( path )
-				: new( this.view_class( path.length === 0 ? this.class_name_base() : prop_self.type ) )
+				: new( this.view_class( path.length === 0 || !prop_self ? this.class_name_base() : prop_self.type ) )
 			
 			if( !obj || typeof obj !== 'object' ) return obj
 
 			const props = this.props_all( this.prop_class( path ) )
 			
-			for( let prop of props.sub ) {
+			for( let prop of props.kids ) {
 				if( this.prop_key( [ ... path , prop.type ] ) ) continue
 				
 				const field = prop.type.replace( /[?!].*/ , '' )
@@ -285,7 +307,7 @@ namespace $.$$ {
 		}
 		
 		prop_add( name : string ) {
-			this.prop( [ name ] , new $mol_tree({ type : name , sub : [ new $mol_tree ] }) )
+			this.prop( [ name ] , $mol_tree2.struct(name , [ new $mol_tree2_empty ]) )
 		}
 
 		speech_enabled( next? : boolean ) {
