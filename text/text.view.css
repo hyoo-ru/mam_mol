@@ -129,7 +129,7 @@
 }
 
 [mol_text_type="code-punctuation"] {
-	opacity: .5;
+	color: hsl( 0, 0%, 50% );
 }
 
 [mol_text_type="code-string"] {

@@ -8,7 +8,7 @@
 	--mol_theme_back: hsl( 210 , 50% , 99% );
 	--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );
 	--mol_theme_current: hsl( 210 , 100% , 80% );
-	--mol_theme_text: rgba( 0 , 0 , 0 , .9 );
+	--mol_theme_text: hsl( 0 , 0% , 0% );
 	--mol_theme_control: hsla( 210 , 60% , 35% , 1 );
 	--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );
 	--mol_theme_line: rgba( 220 , 220 , 220 , 1 );
@@ -21,7 +21,7 @@
 	--mol_theme_back: hsl( 210 , 50% , 10% );
 	--mol_theme_hover: #333;
 	--mol_theme_current: hsl( 210 , 100% , 20% );
-	--mol_theme_text: rgba( 255 , 255 , 255 , .8 );
+	--mol_theme_text: hsl( 0 , 0% , 80% );
 	--mol_theme_control: hsla( 210 , 60% , 70% , 1 );
 	--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );
 	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
