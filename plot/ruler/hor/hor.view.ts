@@ -38,6 +38,10 @@ namespace $.$$ {
 			return String(this.size_real()[1] - this.font_size())
 		}
 
+		title_pos_y() {
+			return String(this.size_real()[1])
+		}
+
 		background_height() {
 			return String(this.font_size())
 		}

@@ -3134,6 +3134,7 @@ declare namespace $.$$ {
         curve(): string;
         label_pos_x(index: number): string;
         background_y(): string;
+        title_pos_y(): string;
         background_height(): string;
     }
 }
