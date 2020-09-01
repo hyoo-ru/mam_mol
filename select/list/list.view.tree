@@ -1,0 +1,13 @@
+$mol_select_list $mol_bar
+	value?val /string
+	dictionary *
+	Badge!key $mol_button_minor
+		title <= option_title!key \badge
+		click?event <=> remove!key?event null
+		hint <= badge_hint @ \Drop
+		enabled <= enabled true
+	Pick $mol_select
+		options <= options_pickable <= options /string
+		value?val <=> pick?val \
+		option_label!key <= option_title!key
+		hint <= pick_hint @ \Add..

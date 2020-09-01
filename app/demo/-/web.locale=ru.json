@@ -18,5 +18,7 @@
 	"$mol_search_clear_hint": "Очистить",
 	"$mol_search_hint": "Поиск..",
 	"$mol_select_hint": "Поиск..",
+	"$mol_select_list_badge_hint": "Убрать",
+	"$mol_select_list_pick_hint": "Добавить..",
 	"$mol_select_no_options_message": "Нет вариантов"
 }

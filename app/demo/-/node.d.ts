@@ -5521,6 +5521,58 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_select_list extends $mol_bar {
+        value(val?: any): any;
+        dictionary(): {};
+        Badge(key: any): $mol_button_minor;
+        option_title(key: any): string;
+        remove(key: any, event?: any): any;
+        badge_hint(): string;
+        enabled(): boolean;
+        Pick(): $$.$mol_select;
+        options_pickable(): readonly string[];
+        options(): readonly string[];
+        pick(val?: any): any;
+        pick_hint(): string;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $.$$ {
+    class $mol_select_list extends $.$mol_select_list {
+        value(val?: string[]): string[];
+        pick(key: string): void;
+        options(): string[];
+        options_pickable(): string[];
+        option_title(key: string): string;
+        sub(): ($mol_button_minor | $mol_select)[];
+        remove(key: string): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_select_list_demo extends $mol_demo_small {
+        title(): string;
+        sub(): readonly any[];
+        Friends(): $$.$mol_select_list;
+        friends(val?: any): any;
+        suggestions(): {
+            jocker: string;
+            harley: string;
+            penguin: string;
+            riddler: string;
+            bane: string;
+            freeze: string;
+            clay: string;
+            mask: string;
+        };
+        Friends_disabled(): $$.$mol_select_list;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_settings extends $mol_icon {
         path(): string;
     }

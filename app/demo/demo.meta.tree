@@ -59,6 +59,7 @@ include \/mol/section/demo
 include \/mol/select/demo/colors
 include \/mol/select/demo/month
 include \/mol/select/demo/priority
+include \/mol/select/list/demo
 include \/mol/speck/demo
 include \/mol/speech/demo
 include \/mol/string/demo

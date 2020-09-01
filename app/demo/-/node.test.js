@@ -20042,6 +20042,206 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_select_list extends $.$mol_bar {
+        value(val) {
+            if (val !== undefined)
+                return val;
+            return [];
+        }
+        dictionary() {
+            return {};
+        }
+        Badge(key) {
+            const obj = new this.$.$mol_button_minor();
+            obj.title = () => this.option_title(key);
+            obj.click = (event) => this.remove(key, event);
+            obj.hint = () => this.badge_hint();
+            obj.enabled = () => this.enabled();
+            return obj;
+        }
+        option_title(key) {
+            return "badge";
+        }
+        remove(key, event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        badge_hint() {
+            return this.$.$mol_locale.text('$mol_select_list_badge_hint');
+        }
+        enabled() {
+            return true;
+        }
+        Pick() {
+            const obj = new this.$.$mol_select();
+            obj.options = () => this.options_pickable();
+            obj.value = (val) => this.pick(val);
+            obj.option_label = (key) => this.option_title(key);
+            obj.hint = () => this.pick_hint();
+            return obj;
+        }
+        options_pickable() {
+            return this.options();
+        }
+        options() {
+            return [];
+        }
+        pick(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        pick_hint() {
+            return this.$.$mol_locale.text('$mol_select_list_pick_hint');
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_select_list.prototype, "value", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_select_list.prototype, "Badge", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_select_list.prototype, "remove", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_select_list.prototype, "Pick", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_select_list.prototype, "pick", null);
+    $.$mol_select_list = $mol_select_list;
+})($ || ($ = {}));
+//list.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const { rem } = $.$mol_style_unit;
+        $.$mol_style_define($$.$mol_select_list, {
+            flex: {
+                wrap: 'wrap',
+                shrink: 1,
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//list.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_select_list extends $.$mol_select_list {
+            value(val) {
+                return super.value(val);
+            }
+            pick(key) {
+                if (!key)
+                    return;
+                this.value([...this.value(), key]);
+            }
+            options() {
+                return Object.keys(this.dictionary());
+            }
+            options_pickable() {
+                if (!this.enabled())
+                    return [];
+                const exists = new Set(this.value());
+                return this.options().filter(key => !exists.has(key));
+            }
+            option_title(key) {
+                const value = this.dictionary()[key];
+                return value == null ? key : value;
+            }
+            sub() {
+                return [
+                    ...this.value().map(key => this.Badge(key)),
+                    ...this.options_pickable().length ? [this.Pick()] : [],
+                ];
+            }
+            remove(key) {
+                this.value(this.value().filter(val => val !== key));
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_select_list.prototype, "options", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_select_list.prototype, "options_pickable", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_select_list.prototype, "sub", null);
+        $$.$mol_select_list = $mol_select_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//list.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_select_list_demo extends $.$mol_demo_small {
+        title() {
+            return this.$.$mol_locale.text('$mol_select_list_demo_title');
+        }
+        sub() {
+            return [
+                this.Friends(),
+                this.Friends_disabled()
+            ];
+        }
+        Friends() {
+            const obj = new this.$.$mol_select_list();
+            obj.value = (val) => this.friends(val);
+            obj.dictionary = () => this.suggestions();
+            return obj;
+        }
+        friends(val) {
+            if (val !== undefined)
+                return val;
+            return [];
+        }
+        suggestions() {
+            return {
+                jocker: "Jocker",
+                harley: "Harley Quinn",
+                penguin: "Penguin",
+                riddler: "Riddler",
+                bane: "Bane",
+                freeze: "Mister Freeze",
+                clay: "Clayface",
+                mask: "Black Mask"
+            };
+        }
+        Friends_disabled() {
+            const obj = new this.$.$mol_select_list();
+            obj.value = (val) => this.friends(val);
+            obj.dictionary = () => this.suggestions();
+            obj.enabled = () => false;
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_select_list_demo.prototype, "Friends", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_select_list_demo.prototype, "friends", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_select_list_demo.prototype, "Friends_disabled", null);
+    $.$mol_select_list_demo = $mol_select_list_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_settings extends $.$mol_icon {
         path() {
             return "M12,15.5C10.07,15.5 8.5,13.93 8.5,12C8.5,10.07 10.07,8.5 12,8.5C13.93,8.5 15.5,10.07 15.5,12C15.5,13.93 13.93,15.5 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z";
