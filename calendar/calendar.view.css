@@ -4,9 +4,12 @@
 	font-family: var(--mol_skin_font_monospace);
 }
 
-[mol_calendar_title] {
+[mol_calendar_head] {
 	display: table-caption;
-	text-align: center;
+}
+
+[mol_calendar_title] {
+	justify-content: center;
 }
 
 [mol_calendar_weekdays] ,
@@ -33,10 +36,4 @@
 
 [mol_calendar_ghost] {
 	opacity: .25;
-}
-
-[mol_calendar_selected] {
-	background: var(--mol_skin_base);
-	color: var(--mol_skin_base_text);
-	border-radius: var(--mol_skin_round);
 }

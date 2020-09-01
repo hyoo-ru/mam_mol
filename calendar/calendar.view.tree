@@ -1,9 +1,11 @@
 $mol_calendar $mol_list
 	sub /
-		<= Title $mol_view
-			minimal_height 24
-			sub /
-				<= title \
+		<= Head $mol_view
+			sub <= head /
+				<= Title $mol_view
+					minimal_height 24
+					sub /
+						<= title \
 		<= Weekdays $mol_hor
 			sub <= weekdays /$mol_view
 	weeks /$mol_view
@@ -20,6 +22,7 @@ $mol_calendar $mol_list
 		ghost <= day_ghost!day false
 		holiday <= day_holiday!day false
 		selected <= day_selected!day false
+		theme <= day_theme!day \
 		sub <= day_content!day /
 			<= day_text!day \
 	-
@@ -27,9 +30,10 @@ $mol_calendar $mol_list
 	month_moment $mol_time_moment
 
 $mol_calendar_day $mol_view
-	minimal_height 28
+	minimal_height 24
 	minimal_width 36
 	attr *
 		mol_calendar_holiday <= holiday false
 		mol_calendar_ghost <= ghost false
 		mol_calendar_selected <= selected false
+		mol_theme <= theme \

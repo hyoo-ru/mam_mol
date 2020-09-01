@@ -6,6 +6,15 @@
 	padding: .5rem;
 }
 
+[mol_date_prev] ,
+[mol_date_next] {
+	flex-grow: 1;
+}
+
+[mol_date_calendar_title] {
+	padding: .5rem .75rem;
+}
+
 [mol_date_calendar_day] {
 	padding: 0;
 }
