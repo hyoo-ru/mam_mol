@@ -19937,6 +19937,10 @@ var $;
                 if (!key)
                     return;
                 this.value([...this.value(), key]);
+                $.$mol_fiber_defer(() => {
+                    this.Pick().Filter().focused(true);
+                    this.Pick().open();
+                });
             }
             options() {
                 return Object.keys(this.dictionary());
