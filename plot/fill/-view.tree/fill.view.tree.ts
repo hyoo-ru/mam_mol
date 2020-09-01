@@ -3,17 +3,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * points /readonly[number,number]
-		 * ```
-		 */
-		points() {
-			return [
-
-			] as readonly (readonly[number,number])[]
-		}
-
-		/**
-		 * ```tree
 		 * threshold 4
 		 * ```
 		 */

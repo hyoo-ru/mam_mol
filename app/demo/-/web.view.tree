@@ -951,7 +951,6 @@ $mol_chart_demo_simple $mol_demo_large
 						<= Fact_dots
 
 $mol_plot_fill $mol_plot_graph
-	points /readonly[number,number]
 	threshold 4
 	spacing 2
 	sub /

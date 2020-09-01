@@ -4183,9 +4183,6 @@ var $;
 var $;
 (function ($) {
     class $mol_plot_fill extends $.$mol_plot_graph {
-        points() {
-            return [];
-        }
         threshold() {
             return 4;
         }

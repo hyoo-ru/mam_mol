@@ -3220,7 +3220,6 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_plot_fill extends $mol_plot_graph {
-        points(): readonly (readonly [number, number])[];
         threshold(): number;
         spacing(): number;
         sub(): readonly any[];

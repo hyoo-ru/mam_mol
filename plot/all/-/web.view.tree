@@ -271,7 +271,6 @@ $mol_plot_dot $mol_plot_graph
 		color <= color
 
 $mol_plot_fill $mol_plot_graph
-	points /readonly[number,number]
 	threshold 4
 	spacing 2
 	sub /
