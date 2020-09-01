@@ -7,7 +7,7 @@ namespace $.$$ {
 			const moment1 = $mol_try( ()=> val && new $mol_time_moment( val.replace( /-$/ , '' ) ) ) || null
 			if( moment1 instanceof Error ) return val || ''
 
-			const moment2 = this.value_moment( moment1 )
+			const moment2 = this.value_moment( val === undefined ? undefined : moment1 )
 			return moment2 && moment2.toString( 'YYYY-MM-DD' ) || ''
 		}
 

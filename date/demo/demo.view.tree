@@ -4,7 +4,6 @@ $mol_date_demo $mol_demo_small
 			sub /
 				<= Date $mol_date
 					value_moment?val <=> date?val $mol_time_moment
-					- showed true
-				- <= Formatted $mol_view
+				<= Formatted $mol_view
 					sub /
 						<= formatted \

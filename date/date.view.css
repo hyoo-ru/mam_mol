@@ -24,4 +24,5 @@
 	padding: .25rem .5rem;
 	justify-content: center;
 	cursor: pointer;
+	color: inherit;
 }
