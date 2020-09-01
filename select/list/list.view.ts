@@ -8,6 +8,10 @@ namespace $.$$ {
 		pick( key : string ) {
 			if( !key ) return
 			this.value([ ... this.value() , key ])
+			$mol_fiber_defer(()=> {
+				this.Pick().Filter().focused( true )
+				this.Pick().open()
+			})
 		}
 
 		@ $mol_mem
