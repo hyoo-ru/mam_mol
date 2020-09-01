@@ -61,6 +61,8 @@
 	"$mol_check_icon_demo_title": "Iconic checkboxes in various states",
 	"$mol_code_demo_title": "Barcode scanner with various formats support",
 	"$mol_code_scan_label": "Scan",
+	"$mol_date_next_hint": "Next month",
+	"$mol_date_prev_hint": "Previous month",
 	"$mol_deck_demo_commanderLabel": "Command",
 	"$mol_deck_demo_commanderMessage": "Let us do it right!",
 	"$mol_deck_demo_greeterLabel": "Greeting",

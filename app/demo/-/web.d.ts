@@ -2344,6 +2344,8 @@ declare namespace $ {
 declare namespace $ {
     class $mol_calendar extends $mol_list {
         sub(): readonly any[];
+        Head(): $mol_view;
+        head(): readonly any[];
         Title(): $mol_view;
         title(): string;
         Weekdays(): $$.$mol_hor;
@@ -2358,6 +2360,7 @@ declare namespace $ {
         day_ghost(day: any): boolean;
         day_holiday(day: any): boolean;
         day_selected(day: any): boolean;
+        day_theme(day: any): string;
         day_content(day: any): readonly any[];
         day_text(day: any): string;
         month_string(): string;
@@ -2370,10 +2373,12 @@ declare namespace $ {
             mol_calendar_holiday: boolean;
             mol_calendar_ghost: boolean;
             mol_calendar_selected: boolean;
+            mol_theme: string;
         };
         holiday(): boolean;
         ghost(): boolean;
         selected(): boolean;
+        theme(): string;
     }
 }
 
@@ -2417,6 +2422,7 @@ declare namespace $.$mol {
         day_holiday(day: string): boolean;
         day_ghost(day: string): boolean;
         day_selected(day: string): boolean;
+        day_theme(day: string): string;
     }
 }
 
@@ -3679,6 +3685,18 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_chevron_left extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_chevron_right extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_date extends $mol_pop {
         Anchor(): $$.$mol_string;
         Input(): $$.$mol_string;
@@ -3687,14 +3705,25 @@ declare namespace $ {
         enabled(): boolean;
         bubble_content(): readonly any[];
         Calendar(): $mol_date_calendar;
+        month_moment(): any;
         day_selected(day: any): boolean;
         day_click(day: any, event?: any): any;
+        Calendar_title(): $mol_view;
+        Calendar_tools(): $mol_view;
+        Prev(): $mol_button_minor;
+        prev_hint(): string;
+        prev(event?: any): any;
+        Prev_icon(): $mol_icon_chevron_left;
+        Next(): $mol_button_minor;
+        next_hint(): string;
+        next(event?: any): any;
+        Next_icon(): $mol_icon_chevron_right;
         value_number(val?: any): any;
         value_moment(val?: any): any;
     }
     class $mol_date_calendar extends $mol_calendar {
         day_content(day: any): readonly any[];
-        Day_button(day: any): $$.$mol_button;
+        Day_button(day: any): $mol_button_minor;
         day_click(day: any, event?: any): any;
     }
 }
@@ -3710,9 +3739,12 @@ declare namespace $.$$ {
     class $mol_date extends $.$mol_date {
         value(val?: string): string;
         value_moment(val?: $mol_time_moment | null): $mol_time_moment | null;
+        month_moment(next?: $mol_time_moment): $mol_time_moment;
         showed(next?: boolean): boolean;
         day_selected(day: string): boolean;
         day_click(day: string): void;
+        prev(): void;
+        next(): void;
     }
 }
 

@@ -7,15 +7,31 @@ $mol_date $mol_pop
 	-
 	bubble_content /
 		<= Calendar $mol_date_calendar
-			month_string <= value
+			month_moment <= month_moment <= value
 			day_selected!day <= day_selected!day false
 			day_click!day?event <=> day_click!day?event null
+			Title => Calendar_title
+			head /
+				<= Calendar_tools $mol_view
+					sub /
+						<= Prev $mol_button_minor
+							hint <= prev_hint @ \Previous month
+							click?event <=> prev?event null
+							sub /
+								<= Prev_icon $mol_icon_chevron_left
+						<= Calendar_title
+						<= Next $mol_button_minor
+							hint <= next_hint @ \Next month
+							click?event <=> next?event null
+							sub /
+								<= Next_icon $mol_icon_chevron_right
 	-
 	value_number?val NaN
 	value_moment?val $mol_time_moment
 
 $mol_date_calendar $mol_calendar
 	day_content!day /
-		<= Day_button!day $mol_button
+		<= Day_button!day $mol_button_minor
 			title <= day_text!day
 			event_click?event <=> day_click!day?event null
+			minimal_height 24

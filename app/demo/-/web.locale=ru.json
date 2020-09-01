@@ -13,6 +13,8 @@
 	"$mol_bench_head_hint": "Щёлкните для сортировки по этой колонке",
 	"$mol_chat_add_hint": "Новое сообщение...",
 	"$mol_chat_add_submit_label": "Отправить",
+	"$mol_date_next_hint": "Следующий месяц",
+	"$mol_date_prev_hint": "Предыдущий месяц",
 	"$mol_lights_toggle_hint": "Переключатель света",
 	"$mol_link_source_hint": "Исходные коды",
 	"$mol_search_clear_hint": "Очистить",

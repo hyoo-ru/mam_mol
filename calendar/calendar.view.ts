@@ -110,6 +110,10 @@ namespace $.$mol {
 			return new $mol_time_moment().toString( 'YYYY-MM-DD' ) === day
 		}
 
+		day_theme( day : string ) {
+			return this.day_selected( day ) ? '$mol_theme_base' : super.day_theme( day )
+		}
+
 	 }
 
 }

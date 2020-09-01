@@ -7209,8 +7209,18 @@ var $;
     class $mol_calendar extends $.$mol_list {
         sub() {
             return [
-                this.Title(),
+                this.Head(),
                 this.Weekdays()
+            ];
+        }
+        Head() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => this.head();
+            return obj;
+        }
+        head() {
+            return [
+                this.Title()
             ];
         }
         Title() {
@@ -7262,6 +7272,7 @@ var $;
             obj.ghost = () => this.day_ghost(day);
             obj.holiday = () => this.day_holiday(day);
             obj.selected = () => this.day_selected(day);
+            obj.theme = () => this.day_theme(day);
             obj.sub = () => this.day_content(day);
             return obj;
         }
@@ -7273,6 +7284,9 @@ var $;
         }
         day_selected(day) {
             return false;
+        }
+        day_theme(day) {
+            return "";
         }
         day_content(day) {
             return [
@@ -7290,6 +7304,9 @@ var $;
             return obj;
         }
     }
+    __decorate([
+        $.$mol_mem
+    ], $mol_calendar.prototype, "Head", null);
     __decorate([
         $.$mol_mem
     ], $mol_calendar.prototype, "Title", null);
@@ -7311,7 +7328,7 @@ var $;
     $.$mol_calendar = $mol_calendar;
     class $mol_calendar_day extends $.$mol_view {
         minimal_height() {
-            return 28;
+            return 24;
         }
         minimal_width() {
             return 36;
@@ -7320,7 +7337,8 @@ var $;
             return {
                 mol_calendar_holiday: this.holiday(),
                 mol_calendar_ghost: this.ghost(),
-                mol_calendar_selected: this.selected()
+                mol_calendar_selected: this.selected(),
+                mol_theme: this.theme()
             };
         }
         holiday() {
@@ -7331,6 +7349,9 @@ var $;
         }
         selected() {
             return false;
+        }
+        theme() {
+            return "";
         }
     }
     $.$mol_calendar_day = $mol_calendar_day;
@@ -7403,7 +7424,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/calendar/calendar.view.css", "[mol_calendar] {\n\tdisplay: table;\n\tfont-family: monospace;\n\tfont-family: var(--mol_skin_font_monospace);\n}\n\n[mol_calendar_title] {\n\tdisplay: table-caption;\n\ttext-align: center;\n}\n\n[mol_calendar_weekdays] ,\n[mol_calendar_week] {\n\tdisplay: table-row;\n\tpadding: 0;\n}\n\n[mol_calendar_day] {\n\tdisplay: table-cell;\n\tpadding: .25rem .5rem;\n\ttext-align: center;\n\tword-break: normal;\n\tbox-shadow: none;\n}\n\n[mol_calendar_weekday] {\n\tborder-bottom: 1px solid var(--mol_theme_line);\n}\n\n[mol_calendar_holiday] {\n\tcolor: var(--mol_skin_base);\n}\n\n[mol_calendar_ghost] {\n\topacity: .25;\n}\n\n[mol_calendar_selected] {\n\tbackground: var(--mol_skin_base);\n\tcolor: var(--mol_skin_base_text);\n\tborder-radius: var(--mol_skin_round);\n}\n");
+    $.$mol_style_attach("mol/calendar/calendar.view.css", "[mol_calendar] {\n\tdisplay: table;\n\tfont-family: monospace;\n\tfont-family: var(--mol_skin_font_monospace);\n}\n\n[mol_calendar_head] {\n\tdisplay: table-caption;\n}\n\n[mol_calendar_title] {\n\tjustify-content: center;\n}\n\n[mol_calendar_weekdays] ,\n[mol_calendar_week] {\n\tdisplay: table-row;\n\tpadding: 0;\n}\n\n[mol_calendar_day] {\n\tdisplay: table-cell;\n\tpadding: .25rem .5rem;\n\ttext-align: center;\n\tword-break: normal;\n\tbox-shadow: none;\n}\n\n[mol_calendar_weekday] {\n\tborder-bottom: 1px solid var(--mol_theme_line);\n}\n\n[mol_calendar_holiday] {\n\tcolor: var(--mol_skin_base);\n}\n\n[mol_calendar_ghost] {\n\topacity: .25;\n}\n");
 })($ || ($ = {}));
 //calendar.view.css.js.map
 ;
@@ -7483,6 +7504,9 @@ var $;
             }
             day_selected(day) {
                 return new $.$mol_time_moment().toString('YYYY-MM-DD') === day;
+            }
+            day_theme(day) {
+                return this.day_selected(day) ? '$mol_theme_base' : super.day_theme(day);
             }
         }
         __decorate([
@@ -12999,6 +13023,30 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_chevron_left extends $.$mol_icon {
+        path() {
+            return "M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z";
+        }
+    }
+    $.$mol_icon_chevron_left = $mol_icon_chevron_left;
+})($ || ($ = {}));
+//left.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_chevron_right extends $.$mol_icon {
+        path() {
+            return "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z";
+        }
+    }
+    $.$mol_icon_chevron_right = $mol_icon_chevron_right;
+})($ || ($ = {}));
+//right.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_date extends $.$mol_pop {
         Anchor() {
             return this.Input();
@@ -13029,10 +13077,16 @@ var $;
         }
         Calendar() {
             const obj = new this.$.$mol_date_calendar();
-            obj.month_string = () => this.value();
+            obj.month_moment = () => this.month_moment();
             obj.day_selected = (day) => this.day_selected(day);
             obj.day_click = (day, event) => this.day_click(day, event);
+            obj.head = () => [
+                this.Calendar_tools()
+            ];
             return obj;
+        }
+        month_moment() {
+            return this.value();
         }
         day_selected(day) {
             return false;
@@ -13041,6 +13095,60 @@ var $;
             if (event !== undefined)
                 return event;
             return null;
+        }
+        Calendar_title() {
+            return this.Calendar().Title();
+        }
+        Calendar_tools() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.Prev(),
+                this.Calendar_title(),
+                this.Next()
+            ];
+            return obj;
+        }
+        Prev() {
+            const obj = new this.$.$mol_button_minor();
+            obj.hint = () => this.prev_hint();
+            obj.click = (event) => this.prev(event);
+            obj.sub = () => [
+                this.Prev_icon()
+            ];
+            return obj;
+        }
+        prev_hint() {
+            return this.$.$mol_locale.text('$mol_date_prev_hint');
+        }
+        prev(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        Prev_icon() {
+            const obj = new this.$.$mol_icon_chevron_left();
+            return obj;
+        }
+        Next() {
+            const obj = new this.$.$mol_button_minor();
+            obj.hint = () => this.next_hint();
+            obj.click = (event) => this.next(event);
+            obj.sub = () => [
+                this.Next_icon()
+            ];
+            return obj;
+        }
+        next_hint() {
+            return this.$.$mol_locale.text('$mol_date_next_hint');
+        }
+        next(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        Next_icon() {
+            const obj = new this.$.$mol_icon_chevron_right();
+            return obj;
         }
         value_number(val) {
             if (val !== undefined)
@@ -13068,6 +13176,27 @@ var $;
     ], $mol_date.prototype, "day_click", null);
     __decorate([
         $.$mol_mem
+    ], $mol_date.prototype, "Calendar_tools", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_date.prototype, "Prev", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_date.prototype, "prev", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_date.prototype, "Prev_icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_date.prototype, "Next", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_date.prototype, "next", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_date.prototype, "Next_icon", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_date.prototype, "value_number", null);
     __decorate([
         $.$mol_mem
@@ -13080,9 +13209,10 @@ var $;
             ];
         }
         Day_button(day) {
-            const obj = new this.$.$mol_button();
+            const obj = new this.$.$mol_button_minor();
             obj.title = () => this.day_text(day);
             obj.event_click = (event) => this.day_click(day, event);
+            obj.minimal_height = () => 24;
             return obj;
         }
         day_click(day, event) {
@@ -13119,7 +13249,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/date/date.view.css", "[mol_date_input] {\n\twidth: 13ch;\n}\n\n[mol_date_bubble] {\n\tpadding: .5rem;\n}\n\n[mol_date_calendar_day] {\n\tpadding: 0;\n}\n\n[mol_date_calendar_day_button] {\n\twidth: 100%;\n\tpadding: .25rem .5rem;\n\tjustify-content: center;\n\tcursor: pointer;\n}\n");
+    $.$mol_style_attach("mol/date/date.view.css", "[mol_date_input] {\n\twidth: 13ch;\n}\n\n[mol_date_bubble] {\n\tpadding: .5rem;\n}\n\n[mol_date_prev] ,\n[mol_date_next] {\n\tflex-grow: 1;\n}\n\n[mol_date_calendar_title] {\n\tpadding: .5rem .75rem;\n}\n\n[mol_date_calendar_day] {\n\tpadding: 0;\n}\n\n[mol_date_calendar_day_button] {\n\twidth: 100%;\n\tpadding: .25rem .5rem;\n\tjustify-content: center;\n\tcursor: pointer;\n\tcolor: inherit;\n}\n");
 })($ || ($ = {}));
 //date.view.css.js.map
 ;
@@ -13133,24 +13263,26 @@ var $;
                 const moment1 = $.$mol_try(() => val && new $.$mol_time_moment(val.replace(/-$/, ''))) || null;
                 if (moment1 instanceof Error)
                     return val || '';
-                const moment2 = this.value_moment(moment1);
+                const moment2 = this.value_moment(val === undefined ? undefined : moment1);
                 return moment2 && moment2.toString('YYYY-MM-DD') || '';
             }
             value_moment(val) {
                 const stamp = this.value_number(val && val.valueOf());
                 return isNaN(stamp) ? null : new $.$mol_time_moment(stamp);
             }
+            month_moment(next) {
+                if (next)
+                    return next;
+                let moment = $.$mol_try(() => new $.$mol_time_moment(this.value()));
+                if (moment instanceof Error || !moment.year)
+                    return new $.$mol_time_moment;
+                if (moment.month === undefined) {
+                    moment = moment.merge({ month: 0 });
+                }
+                return moment;
+            }
             showed(next) {
-                const moment = $.$mol_try(() => new $.$mol_time_moment(this.value()));
-                if (moment instanceof Error)
-                    return false;
-                if (moment.year === undefined)
-                    return false;
-                if (moment.month === undefined)
-                    return false;
-                if (!this.focused(next))
-                    return false;
-                return true;
+                return this.focused(next);
             }
             day_selected(day) {
                 return this.value() === day;
@@ -13159,6 +13291,12 @@ var $;
                 this.value(day);
                 this.showed(false);
             }
+            prev() {
+                this.month_moment(this.month_moment().shift({ month: -1 }));
+            }
+            next() {
+                this.month_moment(this.month_moment().shift({ month: +1 }));
+            }
         }
         __decorate([
             $.$mol_mem
@@ -13166,6 +13304,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_date.prototype, "value_moment", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_date.prototype, "month_moment", null);
         $$.$mol_date = $mol_date;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -13240,7 +13381,8 @@ var $;
     (function ($$) {
         class $mol_date_demo extends $.$mol_date_demo {
             formatted() {
-                return this.date() && this.date().toString('DD Month YYYY');
+                var _a;
+                return (_a = this.date()) === null || _a === void 0 ? void 0 : _a.toString('DD Month YYYY');
             }
         }
         $$.$mol_date_demo = $mol_date_demo;

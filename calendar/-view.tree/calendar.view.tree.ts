@@ -4,7 +4,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Title $mol_view
+		 * 	<= Head $mol_view sub <= head / <= Title $mol_view
 		 * 		minimal_height 24
 		 * 		sub / <= title \
 		 * 	<= Weekdays $mol_hor sub <= weekdays /$mol_view
@@ -12,8 +12,37 @@ namespace $ {
 		 */
 		sub() {
 			return [
-				this.Title(),
+				this.Head(),
 				this.Weekdays()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Head $mol_view sub <= head / <= Title $mol_view
+		 * 	minimal_height 24
+		 * 	sub / <= title \
+		 * ```
+		 */
+		@ $mol_mem
+		Head() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => this.head()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * head / <= Title $mol_view
+		 * 	minimal_height 24
+		 * 	sub / <= title \
+		 * ```
+		 */
+		head() {
+			return [
+				this.Title()
 			] as readonly any[]
 		}
 
@@ -152,6 +181,7 @@ namespace $ {
 		 * 	ghost <= day_ghost!day false
 		 * 	holiday <= day_holiday!day false
 		 * 	selected <= day_selected!day false
+		 * 	theme <= day_theme!day \
 		 * 	sub <= day_content!day / <= day_text!day \
 		 * ```
 		 */
@@ -162,6 +192,7 @@ namespace $ {
 			obj.ghost = () => this.day_ghost(day)
 			obj.holiday = () => this.day_holiday(day)
 			obj.selected = () => this.day_selected(day)
+			obj.theme = () => this.day_theme(day)
 			obj.sub = () => this.day_content(day)
 
 			return obj
@@ -192,6 +223,15 @@ namespace $ {
 		 */
 		day_selected(day: any) {
 			return false
+		}
+
+		/**
+		 * ```tree
+		 * day_theme!day \
+		 * ```
+		 */
+		day_theme(day: any) {
+			return ""
 		}
 
 		/**
@@ -241,11 +281,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * minimal_height 28
+		 * minimal_height 24
 		 * ```
 		 */
 		minimal_height() {
-			return 28
+			return 24
 		}
 
 		/**
@@ -263,13 +303,15 @@ namespace $ {
 		 * 	mol_calendar_holiday <= holiday false
 		 * 	mol_calendar_ghost <= ghost false
 		 * 	mol_calendar_selected <= selected false
+		 * 	mol_theme <= theme \
 		 * ```
 		 */
 		attr() {
 			return {
 				mol_calendar_holiday: this.holiday(),
 				mol_calendar_ghost: this.ghost(),
-				mol_calendar_selected: this.selected()
+				mol_calendar_selected: this.selected(),
+				mol_theme: this.theme()
 			}
 		}
 
@@ -298,6 +340,15 @@ namespace $ {
 		 */
 		selected() {
 			return false
+		}
+
+		/**
+		 * ```tree
+		 * theme \
+		 * ```
+		 */
+		theme() {
+			return ""
 		}
 	}
 
