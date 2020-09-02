@@ -13,15 +13,15 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Qr $mol_code format \QR_CODE
-		 * 	<= Matrix $mol_code format \DATA_MATRIX
-		 * 	<= Upc_e $mol_code format \UPC_E
-		 * 	<= Upc_a $mol_code format \UPC_A
-		 * 	<= Ean_8 $mol_code format \EAN_8
-		 * 	<= Ean_13 $mol_code format \EAN_13
-		 * 	<= Code_128 $mol_code format \CODE_128
-		 * 	<= Code_39 $mol_code format \CODE_39
-		 * 	<= Itf $mol_code format \ITF
+		 * 	<= Qr
+		 * 	<= Matrix
+		 * 	<= Upc_e
+		 * 	<= Upc_a
+		 * 	<= Ean_8
+		 * 	<= Ean_13
+		 * 	<= Code_128
+		 * 	<= Code_39
+		 * 	<= Itf
 		 * ```
 		 */
 		sub() {

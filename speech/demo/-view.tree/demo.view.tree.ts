@@ -4,13 +4,9 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Toggle $mol_check_icon
-		 * 		Icon <= Toggle_icon $mol_icon_microphone
-		 * 		checked?val <=> hearing?val false
-		 * 	<= Message $mol_view sub / <= message \
-		 * 	<= Speak $mol_button_major
-		 * 		click?val <=> speak?val false
-		 * 		sub / \Speak
+		 * 	<= Toggle
+		 * 	<= Message
+		 * 	<= Speak
 		 * ```
 		 */
 		sub() {
@@ -19,23 +15,6 @@ namespace $ {
 				this.Message(),
 				this.Speak()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Toggle $mol_check_icon
-		 * 	Icon <= Toggle_icon $mol_icon_microphone
-		 * 	checked?val <=> hearing?val false
-		 * ```
-		 */
-		@ $mol_mem
-		Toggle() {
-			const obj = new this.$.$mol_check_icon()
-
-			obj.Icon = () => this.Toggle_icon()
-			obj.checked = (val?: any) => this.hearing(val)
-
-			return obj
 		}
 
 		/**
@@ -63,16 +42,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Message $mol_view sub / <= message \
+		 * Toggle $mol_check_icon
+		 * 	Icon <= Toggle_icon
+		 * 	checked?val <=> hearing?val
 		 * ```
 		 */
 		@ $mol_mem
-		Message() {
-			const obj = new this.$.$mol_view()
+		Toggle() {
+			const obj = new this.$.$mol_check_icon()
 
-			obj.sub = () => [
-				this.message()
-			] as readonly any[]
+			obj.Icon = () => this.Toggle_icon()
+			obj.checked = (val?: any) => this.hearing(val)
 
 			return obj
 		}
@@ -88,18 +68,15 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Speak $mol_button_major
-		 * 	click?val <=> speak?val false
-		 * 	sub / \Speak
+		 * Message $mol_view sub / <= message
 		 * ```
 		 */
 		@ $mol_mem
-		Speak() {
-			const obj = new this.$.$mol_button_major()
+		Message() {
+			const obj = new this.$.$mol_view()
 
-			obj.click = (val?: any) => this.speak(val)
 			obj.sub = () => [
-				"Speak"
+				this.message()
 			] as readonly any[]
 
 			return obj
@@ -114,6 +91,25 @@ namespace $ {
 		speak(val?: any) {
 			if ( val !== undefined ) return val
 			return false
+		}
+
+		/**
+		 * ```tree
+		 * Speak $mol_button_major
+		 * 	click?val <=> speak?val
+		 * 	sub / \Speak
+		 * ```
+		 */
+		@ $mol_mem
+		Speak() {
+			const obj = new this.$.$mol_button_major()
+
+			obj.click = (val?: any) => this.speak(val)
+			obj.sub = () => [
+				"Speak"
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

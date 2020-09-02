@@ -13,17 +13,13 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Major_enabled $mol_button_major title <= major_label @ \Click me!
+		 * 	<= Major_enabled
 		 * 	-
-		 * 	<= Major_disabled $mol_button_major
-		 * 		title <= major_label @ \Click me!
-		 * 		enabled false
+		 * 	<= Major_disabled
 		 * 	-
-		 * 	<= Minor_enabled $mol_button_minor title <= minor_label @ \Or click me..
+		 * 	<= Minor_enabled
 		 * 	-
-		 * 	<= Minor_disabled $mol_button_minor
-		 * 		title <= minor_label @ \Or click me..
-		 * 		enabled false
+		 * 	<= Minor_disabled
 		 * ```
 		 */
 		sub() {
@@ -40,7 +36,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Major_enabled $mol_button_major title <= major_label @ \Click me!
+		 * major_label @ \Click me!
+		 * ```
+		 */
+		major_label() {
+			return this.$.$mol_locale.text( '$mol_button_demo_major_label' )
+		}
+
+		/**
+		 * ```tree
+		 * Major_enabled $mol_button_major title <= major_label
 		 * ```
 		 */
 		@ $mol_mem
@@ -54,17 +59,8 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * major_label @ \Click me!
-		 * ```
-		 */
-		major_label() {
-			return this.$.$mol_locale.text( '$mol_button_demo_major_label' )
-		}
-
-		/**
-		 * ```tree
 		 * Major_disabled $mol_button_major
-		 * 	title <= major_label @ \Click me!
+		 * 	title <= major_label
 		 * 	enabled false
 		 * ```
 		 */
@@ -80,7 +76,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Minor_enabled $mol_button_minor title <= minor_label @ \Or click me..
+		 * minor_label @ \Or click me..
+		 * ```
+		 */
+		minor_label() {
+			return this.$.$mol_locale.text( '$mol_button_demo_minor_label' )
+		}
+
+		/**
+		 * ```tree
+		 * Minor_enabled $mol_button_minor title <= minor_label
 		 * ```
 		 */
 		@ $mol_mem
@@ -94,17 +99,8 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * minor_label @ \Or click me..
-		 * ```
-		 */
-		minor_label() {
-			return this.$.$mol_locale.text( '$mol_button_demo_minor_label' )
-		}
-
-		/**
-		 * ```tree
 		 * Minor_disabled $mol_button_minor
-		 * 	title <= minor_label @ \Or click me..
+		 * 	title <= minor_label
 		 * 	enabled false
 		 * ```
 		 */

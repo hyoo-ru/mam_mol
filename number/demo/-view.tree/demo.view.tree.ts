@@ -13,33 +13,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= zero $mol_number
-		 * 	<= one $mol_number value?val <=> year?val NaN
-		 * 	<= two $mol_number
-		 * 		value?val <=> year?val NaN
-		 * 		hint \2016
-		 * 	<= three $mol_number
-		 * 		value?val <=> age?val 32
-		 * 		hint \18-99
-		 * 		enabled false
-		 * 	<= four $mol_number
-		 * 		value?val <=> year?val NaN
-		 * 		string_enabled false
-		 * 	<= five $mol_number
-		 * 		value?val <=> age?val 32
-		 * 		dec_enabled false
-		 * 	<= six $mol_number
-		 * 		value?val <=> year?val NaN
-		 * 		inc_enabled false
-		 * 	<= seven $mol_number
-		 * 		value?val <=> year?val NaN
-		 * 		precision_change 10
-		 * 	<= eight $mol_number
-		 * 		value?val <=> year?val NaN
-		 * 		precision_view 0.01
-		 * 	<= nine $mol_number
-		 * 		value?val <=> year?val NaN
-		 * 		precision 1000
+		 * 	<= zero
+		 * 	<= one
+		 * 	<= two
+		 * 	<= three
+		 * 	<= four
+		 * 	<= five
+		 * 	<= six
+		 * 	<= seven
+		 * 	<= eight
+		 * 	<= nine
 		 * ```
 		 */
 		sub() {
@@ -71,7 +54,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * one $mol_number value?val <=> year?val NaN
+		 * year?val NaN
+		 * ```
+		 */
+		@ $mol_mem
+		year(val?: any) {
+			if ( val !== undefined ) return val
+			return NaN
+		}
+
+		/**
+		 * ```tree
+		 * one $mol_number value?val <=> year?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -85,19 +79,8 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * year?val NaN
-		 * ```
-		 */
-		@ $mol_mem
-		year(val?: any) {
-			if ( val !== undefined ) return val
-			return NaN
-		}
-
-		/**
-		 * ```tree
 		 * two $mol_number
-		 * 	value?val <=> year?val NaN
+		 * 	value?val <=> year?val
 		 * 	hint \2016
 		 * ```
 		 */
@@ -107,25 +90,6 @@ namespace $ {
 
 			obj.value = (val?: any) => this.year(val)
 			obj.hint = () => "2016"
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * three $mol_number
-		 * 	value?val <=> age?val 32
-		 * 	hint \18-99
-		 * 	enabled false
-		 * ```
-		 */
-		@ $mol_mem
-		three() {
-			const obj = new this.$.$mol_number()
-
-			obj.value = (val?: any) => this.age(val)
-			obj.hint = () => "18-99"
-			obj.enabled = () => false
 
 			return obj
 		}
@@ -143,8 +107,27 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * three $mol_number
+		 * 	value?val <=> age?val
+		 * 	hint \18-99
+		 * 	enabled false
+		 * ```
+		 */
+		@ $mol_mem
+		three() {
+			const obj = new this.$.$mol_number()
+
+			obj.value = (val?: any) => this.age(val)
+			obj.hint = () => "18-99"
+			obj.enabled = () => false
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * four $mol_number
-		 * 	value?val <=> year?val NaN
+		 * 	value?val <=> year?val
 		 * 	string_enabled false
 		 * ```
 		 */
@@ -161,7 +144,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * five $mol_number
-		 * 	value?val <=> age?val 32
+		 * 	value?val <=> age?val
 		 * 	dec_enabled false
 		 * ```
 		 */
@@ -178,7 +161,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * six $mol_number
-		 * 	value?val <=> year?val NaN
+		 * 	value?val <=> year?val
 		 * 	inc_enabled false
 		 * ```
 		 */
@@ -195,7 +178,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * seven $mol_number
-		 * 	value?val <=> year?val NaN
+		 * 	value?val <=> year?val
 		 * 	precision_change 10
 		 * ```
 		 */
@@ -212,7 +195,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * eight $mol_number
-		 * 	value?val <=> year?val NaN
+		 * 	value?val <=> year?val
 		 * 	precision_view 0.01
 		 * ```
 		 */
@@ -229,7 +212,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * nine $mol_number
-		 * 	value?val <=> year?val NaN
+		 * 	value?val <=> year?val
 		 * 	precision 1000
 		 * ```
 		 */

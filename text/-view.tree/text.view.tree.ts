@@ -32,7 +32,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Quote!id $mol_text text <= quote_text!id \
+		 * Quote!id $mol_text text <= quote_text!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -46,18 +46,9 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * quote_text!id \
-		 * ```
-		 */
-		quote_text(id: any) {
-			return ""
-		}
-
-		/**
-		 * ```tree
 		 * Row!id $mol_text_row
-		 * 	sub <= block_content!id /
-		 * 	type <= block_type!id \
+		 * 	sub <= block_content!id
+		 * 	type <= block_type!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -68,26 +59,6 @@ namespace $ {
 			obj.type = () => this.block_type(id)
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * block_content!id /
-		 * ```
-		 */
-		block_content(id: any) {
-			return [
-
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * block_type!id \
-		 * ```
-		 */
-		block_type(id: any) {
-			return ""
 		}
 
 		/**
@@ -129,8 +100,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Header!id $mol_text_header
-		 * 	level <= header_level!id 0
-		 * 	content <= header_content!id /
+		 * 	level <= header_level!id
+		 * 	content <= header_content!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -141,6 +112,94 @@ namespace $ {
 			obj.content = () => this.header_content(id)
 
 			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Table!id $mol_grid
+		 * 	head_cells <= table_head_cells!id
+		 * 	rows <= table_rows!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Table(id: any) {
+			const obj = new this.$.$mol_grid()
+
+			obj.head_cells = () => this.table_head_cells(id)
+			obj.rows = () => this.table_rows(id)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Table_row!id $mol_grid_row cells <= table_cells!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Table_row(id: any) {
+			const obj = new this.$.$mol_grid_row()
+
+			obj.cells = () => this.table_cells(id)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Table_cell!id $mol_grid_cell sub <= table_cell_content!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Table_cell(id: any) {
+			const obj = new this.$.$mol_grid_cell()
+
+			obj.sub = () => this.table_cell_content(id)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Table_cell_head!id $mol_float sub <= table_cell_content!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Table_cell_head(id: any) {
+			const obj = new this.$.$mol_float()
+
+			obj.sub = () => this.table_cell_content(id)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * quote_text!id \
+		 * ```
+		 */
+		quote_text(id: any) {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * block_content!id /
+		 * ```
+		 */
+		block_content(id: any) {
+			return [
+
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * block_type!id \
+		 * ```
+		 */
+		block_type(id: any) {
+			return ""
 		}
 
 		/**
@@ -161,23 +220,6 @@ namespace $ {
 			return [
 
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Table!id $mol_grid
-		 * 	head_cells <= table_head_cells!id /
-		 * 	rows <= table_rows!id /
-		 * ```
-		 */
-		@ $mol_mem_key
-		Table(id: any) {
-			const obj = new this.$.$mol_grid()
-
-			obj.head_cells = () => this.table_head_cells(id)
-			obj.rows = () => this.table_rows(id)
-
-			return obj
 		}
 
 		/**
@@ -204,20 +246,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Table_row!id $mol_grid_row cells <= table_cells!id /
-		 * ```
-		 */
-		@ $mol_mem_key
-		Table_row(id: any) {
-			const obj = new this.$.$mol_grid_row()
-
-			obj.cells = () => this.table_cells(id)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * table_cells!id /
 		 * ```
 		 */
@@ -225,20 +253,6 @@ namespace $ {
 			return [
 
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Table_cell!id $mol_grid_cell sub <= table_cell_content!id /
-		 * ```
-		 */
-		@ $mol_mem_key
-		Table_cell(id: any) {
-			const obj = new this.$.$mol_grid_cell()
-
-			obj.sub = () => this.table_cell_content(id)
-
-			return obj
 		}
 
 		/**
@@ -251,20 +265,6 @@ namespace $ {
 
 			] as readonly any[]
 		}
-
-		/**
-		 * ```tree
-		 * Table_cell_head!id $mol_float sub <= table_cell_content!id /
-		 * ```
-		 */
-		@ $mol_mem_key
-		Table_cell_head(id: any) {
-			const obj = new this.$.$mol_float()
-
-			obj.sub = () => this.table_cell_content(id)
-
-			return obj
-		}
 	}
 
 	export class $mol_text_row extends $mol_paragraph {
@@ -273,7 +273,7 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	mol_text_type <= type \
+		 * 	mol_text_type <= type
 		 * ```
 		 */
 		attr() {
@@ -308,7 +308,7 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	mol_text_header_level <= level?val 0
+		 * 	mol_text_header_level <= level?val
 		 * ```
 		 */
 		attr() {
@@ -320,6 +320,15 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * sub <= content
+		 * ```
+		 */
+		sub() {
+			return this.content()
+		}
+
+		/**
+		 * ```tree
 		 * level?val 0
 		 * ```
 		 */
@@ -327,15 +336,6 @@ namespace $ {
 		level(val?: any) {
 			if ( val !== undefined ) return val
 			return 0
-		}
-
-		/**
-		 * ```tree
-		 * sub <= content /
-		 * ```
-		 */
-		sub() {
-			return this.content()
 		}
 
 		/**
@@ -365,7 +365,7 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	mol_text_type <= type?val \
+		 * 	mol_text_type <= type?val
 		 * ```
 		 */
 		attr() {
@@ -377,6 +377,15 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * sub <= content?val
+		 * ```
+		 */
+		sub() {
+			return this.content()
+		}
+
+		/**
+		 * ```tree
 		 * type?val \
 		 * ```
 		 */
@@ -384,15 +393,6 @@ namespace $ {
 		type(val?: any) {
 			if ( val !== undefined ) return val
 			return ""
-		}
-
-		/**
-		 * ```tree
-		 * sub <= content?val /
-		 * ```
-		 */
-		sub() {
-			return this.content()
 		}
 
 		/**
@@ -415,7 +415,7 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	mol_text_type <= type?val \
+		 * 	mol_text_type <= type?val
 		 * ```
 		 */
 		attr() {
@@ -423,6 +423,28 @@ namespace $ {
 				...super.attr(),
 				mol_text_type: this.type()
 			}
+		}
+
+		/**
+		 * ```tree
+		 * uri <= link?val
+		 * ```
+		 */
+		uri() {
+			return this.link()
+		}
+
+		/**
+		 * ```tree
+		 * content?val /
+		 * ```
+		 */
+		@ $mol_mem
+		content(val?: any) {
+			if ( val !== undefined ) return val
+			return [
+
+			] as readonly any[]
 		}
 
 		/**
@@ -438,15 +460,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * uri <= link?val \
-		 * ```
-		 */
-		uri() {
-			return this.link()
-		}
-
-		/**
-		 * ```tree
 		 * link?val \
 		 * ```
 		 */
@@ -454,19 +467,6 @@ namespace $ {
 		link(val?: any) {
 			if ( val !== undefined ) return val
 			return ""
-		}
-
-		/**
-		 * ```tree
-		 * content?val /
-		 * ```
-		 */
-		@ $mol_mem
-		content(val?: any) {
-			if ( val !== undefined ) return val
-			return [
-
-			] as readonly any[]
 		}
 	}
 
@@ -486,8 +486,8 @@ namespace $ {
 		 * attr *
 		 * 	^
 		 * 	allowfullscreen true
-		 * 	mol_text_type <= type?val \
-		 * 	data <= link?val \
+		 * 	mol_text_type <= type?val
+		 * 	data <= link?val
 		 * ```
 		 */
 		attr() {
@@ -497,6 +497,17 @@ namespace $ {
 				mol_text_type: this.type(),
 				data: this.link()
 			}
+		}
+
+		/**
+		 * ```tree
+		 * sub / <= title?val
+		 * ```
+		 */
+		sub() {
+			return [
+				this.title()
+			] as readonly any[]
 		}
 
 		/**
@@ -519,17 +530,6 @@ namespace $ {
 		link(val?: any) {
 			if ( val !== undefined ) return val
 			return ""
-		}
-
-		/**
-		 * ```tree
-		 * sub / <= title?val \
-		 * ```
-		 */
-		sub() {
-			return [
-				this.title()
-			] as readonly any[]
 		}
 
 		/**

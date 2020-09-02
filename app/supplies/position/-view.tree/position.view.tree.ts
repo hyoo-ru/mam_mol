@@ -24,119 +24,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Content <= Row $mol_view sub /
-		 * 	<= Main_group $mol_row sub /
-		 * 		<= Product_item $mol_labeler
-		 * 			title <= product_title @ \Product
-		 * 			content / <= product_name \
-		 * 		<= Cost_item $mol_labeler
-		 * 			title <= cost_title @ \Cost
-		 * 			content / <= Cost $mol_cost value <= cost $mol_unit_money valueOf 0
-		 * 	<= Addon_group $mol_row sub /
-		 * 		<= Division_item $mol_labeler
-		 * 			title <= division_title @ \Division
-		 * 			content / <= division_name \
-		 * 		<= Price_item $mol_labeler
-		 * 			title <= price_label @ \Price
-		 * 			content / <= Price $mol_cost value <= price $mol_unit_money valueOf 0
-		 * 	<= Supply_group $mol_row sub /
-		 * 		<= Quantity_item $mol_labeler
-		 * 			title <= quantity_title @ \Quantity
-		 * 			content / <= quantity \
-		 * 		<= Supply_date_item $mol_labeler
-		 * 			title <= supply_date_title @ \Supply date
-		 * 			content / <= supply_date \
-		 * 		<= Store_item $mol_labeler
-		 * 			title <= store_title @ \Store
-		 * 			content / <= store_name \
+		 * Content <= Row
 		 * ```
 		 */
 		Content() {
 			return this.Row()
-		}
-
-		/**
-		 * ```tree
-		 * Row $mol_view sub /
-		 * 	<= Main_group $mol_row sub /
-		 * 		<= Product_item $mol_labeler
-		 * 			title <= product_title @ \Product
-		 * 			content / <= product_name \
-		 * 		<= Cost_item $mol_labeler
-		 * 			title <= cost_title @ \Cost
-		 * 			content / <= Cost $mol_cost value <= cost $mol_unit_money valueOf 0
-		 * 	<= Addon_group $mol_row sub /
-		 * 		<= Division_item $mol_labeler
-		 * 			title <= division_title @ \Division
-		 * 			content / <= division_name \
-		 * 		<= Price_item $mol_labeler
-		 * 			title <= price_label @ \Price
-		 * 			content / <= Price $mol_cost value <= price $mol_unit_money valueOf 0
-		 * 	<= Supply_group $mol_row sub /
-		 * 		<= Quantity_item $mol_labeler
-		 * 			title <= quantity_title @ \Quantity
-		 * 			content / <= quantity \
-		 * 		<= Supply_date_item $mol_labeler
-		 * 			title <= supply_date_title @ \Supply date
-		 * 			content / <= supply_date \
-		 * 		<= Store_item $mol_labeler
-		 * 			title <= store_title @ \Store
-		 * 			content / <= store_name \
-		 * ```
-		 */
-		@ $mol_mem
-		Row() {
-			const obj = new this.$.$mol_view()
-
-			obj.sub = () => [
-				this.Main_group(),
-				this.Addon_group(),
-				this.Supply_group()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Main_group $mol_row sub /
-		 * 	<= Product_item $mol_labeler
-		 * 		title <= product_title @ \Product
-		 * 		content / <= product_name \
-		 * 	<= Cost_item $mol_labeler
-		 * 		title <= cost_title @ \Cost
-		 * 		content / <= Cost $mol_cost value <= cost $mol_unit_money valueOf 0
-		 * ```
-		 */
-		@ $mol_mem
-		Main_group() {
-			const obj = new this.$.$mol_row()
-
-			obj.sub = () => [
-				this.Product_item(),
-				this.Cost_item()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Product_item $mol_labeler
-		 * 	title <= product_title @ \Product
-		 * 	content / <= product_name \
-		 * ```
-		 */
-		@ $mol_mem
-		Product_item() {
-			const obj = new this.$.$mol_labeler()
-
-			obj.title = () => this.product_title()
-			obj.content = () => [
-				this.product_name()
-			] as readonly any[]
-
-			return obj
 		}
 
 		/**
@@ -159,18 +51,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Cost_item $mol_labeler
-		 * 	title <= cost_title @ \Cost
-		 * 	content / <= Cost $mol_cost value <= cost $mol_unit_money valueOf 0
+		 * Product_item $mol_labeler
+		 * 	title <= product_title
+		 * 	content / <= product_name
 		 * ```
 		 */
 		@ $mol_mem
-		Cost_item() {
+		Product_item() {
 			const obj = new this.$.$mol_labeler()
 
-			obj.title = () => this.cost_title()
+			obj.title = () => this.product_title()
 			obj.content = () => [
-				this.Cost()
+				this.product_name()
 			] as readonly any[]
 
 			return obj
@@ -183,20 +75,6 @@ namespace $ {
 		 */
 		cost_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_position_cost_title' )
-		}
-
-		/**
-		 * ```tree
-		 * Cost $mol_cost value <= cost $mol_unit_money valueOf 0
-		 * ```
-		 */
-		@ $mol_mem
-		Cost() {
-			const obj = new this.$.$mol_cost()
-
-			obj.value = () => this.cost()
-
-			return obj
 		}
 
 		/**
@@ -215,22 +93,32 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Addon_group $mol_row sub /
-		 * 	<= Division_item $mol_labeler
-		 * 		title <= division_title @ \Division
-		 * 		content / <= division_name \
-		 * 	<= Price_item $mol_labeler
-		 * 		title <= price_label @ \Price
-		 * 		content / <= Price $mol_cost value <= price $mol_unit_money valueOf 0
+		 * Cost $mol_cost value <= cost
 		 * ```
 		 */
 		@ $mol_mem
-		Addon_group() {
-			const obj = new this.$.$mol_row()
+		Cost() {
+			const obj = new this.$.$mol_cost()
 
-			obj.sub = () => [
-				this.Division_item(),
-				this.Price_item()
+			obj.value = () => this.cost()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Cost_item $mol_labeler
+		 * 	title <= cost_title
+		 * 	content / <= Cost
+		 * ```
+		 */
+		@ $mol_mem
+		Cost_item() {
+			const obj = new this.$.$mol_labeler()
+
+			obj.title = () => this.cost_title()
+			obj.content = () => [
+				this.Cost()
 			] as readonly any[]
 
 			return obj
@@ -238,18 +126,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Division_item $mol_labeler
-		 * 	title <= division_title @ \Division
-		 * 	content / <= division_name \
+		 * Main_group $mol_row sub /
+		 * 	<= Product_item
+		 * 	<= Cost_item
 		 * ```
 		 */
 		@ $mol_mem
-		Division_item() {
-			const obj = new this.$.$mol_labeler()
+		Main_group() {
+			const obj = new this.$.$mol_row()
 
-			obj.title = () => this.division_title()
-			obj.content = () => [
-				this.division_name()
+			obj.sub = () => [
+				this.Product_item(),
+				this.Cost_item()
 			] as readonly any[]
 
 			return obj
@@ -275,18 +163,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Price_item $mol_labeler
-		 * 	title <= price_label @ \Price
-		 * 	content / <= Price $mol_cost value <= price $mol_unit_money valueOf 0
+		 * Division_item $mol_labeler
+		 * 	title <= division_title
+		 * 	content / <= division_name
 		 * ```
 		 */
 		@ $mol_mem
-		Price_item() {
+		Division_item() {
 			const obj = new this.$.$mol_labeler()
 
-			obj.title = () => this.price_label()
+			obj.title = () => this.division_title()
 			obj.content = () => [
-				this.Price()
+				this.division_name()
 			] as readonly any[]
 
 			return obj
@@ -299,20 +187,6 @@ namespace $ {
 		 */
 		price_label() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_position_price_label' )
-		}
-
-		/**
-		 * ```tree
-		 * Price $mol_cost value <= price $mol_unit_money valueOf 0
-		 * ```
-		 */
-		@ $mol_mem
-		Price() {
-			const obj = new this.$.$mol_cost()
-
-			obj.value = () => this.price()
-
-			return obj
 		}
 
 		/**
@@ -331,26 +205,32 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Supply_group $mol_row sub /
-		 * 	<= Quantity_item $mol_labeler
-		 * 		title <= quantity_title @ \Quantity
-		 * 		content / <= quantity \
-		 * 	<= Supply_date_item $mol_labeler
-		 * 		title <= supply_date_title @ \Supply date
-		 * 		content / <= supply_date \
-		 * 	<= Store_item $mol_labeler
-		 * 		title <= store_title @ \Store
-		 * 		content / <= store_name \
+		 * Price $mol_cost value <= price
 		 * ```
 		 */
 		@ $mol_mem
-		Supply_group() {
-			const obj = new this.$.$mol_row()
+		Price() {
+			const obj = new this.$.$mol_cost()
 
-			obj.sub = () => [
-				this.Quantity_item(),
-				this.Supply_date_item(),
-				this.Store_item()
+			obj.value = () => this.price()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Price_item $mol_labeler
+		 * 	title <= price_label
+		 * 	content / <= Price
+		 * ```
+		 */
+		@ $mol_mem
+		Price_item() {
+			const obj = new this.$.$mol_labeler()
+
+			obj.title = () => this.price_label()
+			obj.content = () => [
+				this.Price()
 			] as readonly any[]
 
 			return obj
@@ -358,18 +238,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Quantity_item $mol_labeler
-		 * 	title <= quantity_title @ \Quantity
-		 * 	content / <= quantity \
+		 * Addon_group $mol_row sub /
+		 * 	<= Division_item
+		 * 	<= Price_item
 		 * ```
 		 */
 		@ $mol_mem
-		Quantity_item() {
-			const obj = new this.$.$mol_labeler()
+		Addon_group() {
+			const obj = new this.$.$mol_row()
 
-			obj.title = () => this.quantity_title()
-			obj.content = () => [
-				this.quantity()
+			obj.sub = () => [
+				this.Division_item(),
+				this.Price_item()
 			] as readonly any[]
 
 			return obj
@@ -395,18 +275,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Supply_date_item $mol_labeler
-		 * 	title <= supply_date_title @ \Supply date
-		 * 	content / <= supply_date \
+		 * Quantity_item $mol_labeler
+		 * 	title <= quantity_title
+		 * 	content / <= quantity
 		 * ```
 		 */
 		@ $mol_mem
-		Supply_date_item() {
+		Quantity_item() {
 			const obj = new this.$.$mol_labeler()
 
-			obj.title = () => this.supply_date_title()
+			obj.title = () => this.quantity_title()
 			obj.content = () => [
-				this.supply_date()
+				this.quantity()
 			] as readonly any[]
 
 			return obj
@@ -432,18 +312,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Store_item $mol_labeler
-		 * 	title <= store_title @ \Store
-		 * 	content / <= store_name \
+		 * Supply_date_item $mol_labeler
+		 * 	title <= supply_date_title
+		 * 	content / <= supply_date
 		 * ```
 		 */
 		@ $mol_mem
-		Store_item() {
+		Supply_date_item() {
 			const obj = new this.$.$mol_labeler()
 
-			obj.title = () => this.store_title()
+			obj.title = () => this.supply_date_title()
 			obj.content = () => [
-				this.store_name()
+				this.supply_date()
 			] as readonly any[]
 
 			return obj
@@ -465,6 +345,67 @@ namespace $ {
 		 */
 		store_name() {
 			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Store_item $mol_labeler
+		 * 	title <= store_title
+		 * 	content / <= store_name
+		 * ```
+		 */
+		@ $mol_mem
+		Store_item() {
+			const obj = new this.$.$mol_labeler()
+
+			obj.title = () => this.store_title()
+			obj.content = () => [
+				this.store_name()
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Supply_group $mol_row sub /
+		 * 	<= Quantity_item
+		 * 	<= Supply_date_item
+		 * 	<= Store_item
+		 * ```
+		 */
+		@ $mol_mem
+		Supply_group() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				this.Quantity_item(),
+				this.Supply_date_item(),
+				this.Store_item()
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Row $mol_view sub /
+		 * 	<= Main_group
+		 * 	<= Addon_group
+		 * 	<= Supply_group
+		 * ```
+		 */
+		@ $mol_mem
+		Row() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.Main_group(),
+				this.Addon_group(),
+				this.Supply_group()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

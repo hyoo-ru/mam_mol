@@ -25,9 +25,9 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	x <= pos_x \
-		 * 	y <= pos_y \
-		 * 	text-anchor <= align \middle
+		 * 	x <= pos_x
+		 * 	y <= pos_y
+		 * 	text-anchor <= align
 		 * ```
 		 */
 		attr() {
@@ -37,6 +37,17 @@ namespace $ {
 				y: this.pos_y(),
 				"text-anchor": this.align()
 			}
+		}
+
+		/**
+		 * ```tree
+		 * sub / <= text
+		 * ```
+		 */
+		sub() {
+			return [
+				this.text()
+			] as readonly any[]
 		}
 
 		/**
@@ -64,17 +75,6 @@ namespace $ {
 		 */
 		align() {
 			return "middle"
-		}
-
-		/**
-		 * ```tree
-		 * sub / <= text \
-		 * ```
-		 */
-		sub() {
-			return [
-				this.text()
-			] as readonly any[]
 		}
 
 		/**

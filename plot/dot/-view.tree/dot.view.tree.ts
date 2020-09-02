@@ -14,7 +14,7 @@ namespace $ {
 		 * ```tree
 		 * style *
 		 * 	^
-		 * 	stroke-width <= diameter 8
+		 * 	stroke-width <= diameter
 		 * ```
 		 */
 		style() {
@@ -26,45 +26,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * diameter 8
-		 * ```
-		 */
-		diameter() {
-			return 8
-		}
-
-		/**
-		 * ```tree
-		 * sub / <= Curve $mol_svg_path geometry <= curve \
+		 * sub / <= Curve
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Curve()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Curve $mol_svg_path geometry <= curve \
-		 * ```
-		 */
-		@ $mol_mem
-		Curve() {
-			const obj = new this.$.$mol_svg_path()
-
-			obj.geometry = () => this.curve()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * curve \
-		 * ```
-		 */
-		curve() {
-			return ""
 		}
 
 
@@ -78,6 +46,38 @@ namespace $ {
 			const obj = new this.$.$mol_plot_graph_sample()
 
 			obj.color = () => this.color()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * diameter 8
+		 * ```
+		 */
+		diameter() {
+			return 8
+		}
+
+		/**
+		 * ```tree
+		 * curve \
+		 * ```
+		 */
+		curve() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Curve $mol_svg_path geometry <= curve
+		 * ```
+		 */
+		@ $mol_mem
+		Curve() {
+			const obj = new this.$.$mol_svg_path()
+
+			obj.geometry = () => this.curve()
 
 			return obj
 		}

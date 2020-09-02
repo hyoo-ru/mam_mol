@@ -4,15 +4,9 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Backward $mol_button_minor
-		 * 		hint <= backward_hint @ \Назад
-		 * 		click?event <=> backward?event null
-		 * 		sub / <= Backward_icon $mol_icon_chevron
-		 * 	<= Value $mol_view sub / <= value?val 0
-		 * 	<= Forward $mol_button_minor
-		 * 		hint <= forward_hint @ \Вперёд
-		 * 		click?event <=> forward?event null
-		 * 		sub / <= Forward_icon $mol_icon_chevron
+		 * 	<= Backward
+		 * 	<= Value
+		 * 	<= Forward
 		 * ```
 		 */
 		sub() {
@@ -21,27 +15,6 @@ namespace $ {
 				this.Value(),
 				this.Forward()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Backward $mol_button_minor
-		 * 	hint <= backward_hint @ \Назад
-		 * 	click?event <=> backward?event null
-		 * 	sub / <= Backward_icon $mol_icon_chevron
-		 * ```
-		 */
-		@ $mol_mem
-		Backward() {
-			const obj = new this.$.$mol_button_minor()
-
-			obj.hint = () => this.backward_hint()
-			obj.click = (event?: any) => this.backward(event)
-			obj.sub = () => [
-				this.Backward_icon()
-			] as readonly any[]
-
-			return obj
 		}
 
 		/**
@@ -78,15 +51,20 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Value $mol_view sub / <= value?val 0
+		 * Backward $mol_button_minor
+		 * 	hint <= backward_hint
+		 * 	click?event <=> backward?event
+		 * 	sub / <= Backward_icon
 		 * ```
 		 */
 		@ $mol_mem
-		Value() {
-			const obj = new this.$.$mol_view()
+		Backward() {
+			const obj = new this.$.$mol_button_minor()
 
+			obj.hint = () => this.backward_hint()
+			obj.click = (event?: any) => this.backward(event)
 			obj.sub = () => [
-				this.value()
+				this.Backward_icon()
 			] as readonly any[]
 
 			return obj
@@ -105,20 +83,15 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Forward $mol_button_minor
-		 * 	hint <= forward_hint @ \Вперёд
-		 * 	click?event <=> forward?event null
-		 * 	sub / <= Forward_icon $mol_icon_chevron
+		 * Value $mol_view sub / <= value?val
 		 * ```
 		 */
 		@ $mol_mem
-		Forward() {
-			const obj = new this.$.$mol_button_minor()
+		Value() {
+			const obj = new this.$.$mol_view()
 
-			obj.hint = () => this.forward_hint()
-			obj.click = (event?: any) => this.forward(event)
 			obj.sub = () => [
-				this.Forward_icon()
+				this.value()
 			] as readonly any[]
 
 			return obj
@@ -152,6 +125,27 @@ namespace $ {
 		@ $mol_mem
 		Forward_icon() {
 			const obj = new this.$.$mol_icon_chevron()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Forward $mol_button_minor
+		 * 	hint <= forward_hint
+		 * 	click?event <=> forward?event
+		 * 	sub / <= Forward_icon
+		 * ```
+		 */
+		@ $mol_mem
+		Forward() {
+			const obj = new this.$.$mol_button_minor()
+
+			obj.hint = () => this.forward_hint()
+			obj.click = (event?: any) => this.forward(event)
+			obj.sub = () => [
+				this.Forward_icon()
+			] as readonly any[]
 
 			return obj
 		}

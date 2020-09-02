@@ -21,22 +21,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub <= rows /$mol_view
+		 * sub <= rows
 		 * ```
 		 */
 		sub() {
 			return this.rows()
-		}
-
-		/**
-		 * ```tree
-		 * rows /$mol_view
-		 * ```
-		 */
-		rows() {
-			return [
-
-			] as readonly $mol_view[]
 		}
 
 		/**
@@ -53,7 +42,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Gap_before $mol_view style * paddingTop <= gap_before 0
+		 * Gap_before $mol_view style * paddingTop <= gap_before
 		 * ```
 		 */
 		@ $mol_mem
@@ -69,16 +58,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * gap_before 0
-		 * ```
-		 */
-		gap_before() {
-			return 0
-		}
-
-		/**
-		 * ```tree
-		 * Gap_after $mol_view style * paddingTop <= gap_after 0
+		 * Gap_after $mol_view style * paddingTop <= gap_after
 		 * ```
 		 */
 		@ $mol_mem
@@ -94,15 +74,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * gap_after 0
-		 * ```
-		 */
-		gap_after() {
-			return 0
-		}
-
-		/**
-		 * ```tree
 		 * view_window /
 		 * 	0
 		 * 	0
@@ -113,6 +84,35 @@ namespace $ {
 				0,
 				0
 			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * rows /$mol_view
+		 * ```
+		 */
+		rows() {
+			return [
+
+			] as readonly $mol_view[]
+		}
+
+		/**
+		 * ```tree
+		 * gap_before 0
+		 * ```
+		 */
+		gap_before() {
+			return 0
+		}
+
+		/**
+		 * ```tree
+		 * gap_after 0
+		 * ```
+		 */
+		gap_after() {
+			return 0
 		}
 	}
 

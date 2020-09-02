@@ -21,7 +21,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Scroll $mol_scroll sub / <= Rows $mol_list rows <= rows /
+		 * sub / <= Scroll
 		 * ```
 		 */
 		sub() {
@@ -32,30 +32,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Scroll $mol_scroll sub / <= Rows $mol_list rows <= rows /
+		 * Row!id $mol_row sub <= row_content!id
 		 * ```
 		 */
-		@ $mol_mem
-		Scroll() {
-			const obj = new this.$.$mol_scroll()
+		@ $mol_mem_key
+		Row(id: any) {
+			const obj = new this.$.$mol_row()
 
-			obj.sub = () => [
-				this.Rows()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Rows $mol_list rows <= rows /
-		 * ```
-		 */
-		@ $mol_mem
-		Rows() {
-			const obj = new this.$.$mol_list()
-
-			obj.rows = () => this.rows()
+			obj.sub = () => this.row_content(id)
 
 			return obj
 		}
@@ -73,84 +57,29 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Row!id $mol_row sub <= row_content!id /
-		 * 	<= Id!id $mol_view sub / <= row_id!id \
-		 * 	<= Title!id $mol_view sub / <= row_title!id \
-		 * 	<= Editable!id $mol_check_box
-		 * 		title <= editable_title @ \Editable
-		 * 		checked?val <=> row_editable!id?val false
-		 * 	<= Priority!id $mol_switch
-		 * 		enabled <= row_editable!id
-		 * 		value?val <=> row_priority!id?val \
-		 * 		options *
-		 * 			minor \Minor
-		 * 			major \Major
-		 * 			critical \Critical
-		 * 	<= Date!id $mol_date
-		 * 		value_moment?val <=> row_moment!id?val $mol_time_moment
-		 * 		enabled <= row_editable!id
-		 * 	<= Number!id $mol_number
-		 * 		value?val <=> row_number!id?val 0
-		 * 		enabled <= row_editable!id
-		 * 	<= Link!id $mol_link_iconed uri <= row_uri!id \
+		 * Rows $mol_list rows <= rows
 		 * ```
 		 */
-		@ $mol_mem_key
-		Row(id: any) {
-			const obj = new this.$.$mol_row()
+		@ $mol_mem
+		Rows() {
+			const obj = new this.$.$mol_list()
 
-			obj.sub = () => this.row_content(id)
+			obj.rows = () => this.rows()
 
 			return obj
 		}
 
 		/**
 		 * ```tree
-		 * row_content!id /
-		 * 	<= Id!id $mol_view sub / <= row_id!id \
-		 * 	<= Title!id $mol_view sub / <= row_title!id \
-		 * 	<= Editable!id $mol_check_box
-		 * 		title <= editable_title @ \Editable
-		 * 		checked?val <=> row_editable!id?val false
-		 * 	<= Priority!id $mol_switch
-		 * 		enabled <= row_editable!id
-		 * 		value?val <=> row_priority!id?val \
-		 * 		options *
-		 * 			minor \Minor
-		 * 			major \Major
-		 * 			critical \Critical
-		 * 	<= Date!id $mol_date
-		 * 		value_moment?val <=> row_moment!id?val $mol_time_moment
-		 * 		enabled <= row_editable!id
-		 * 	<= Number!id $mol_number
-		 * 		value?val <=> row_number!id?val 0
-		 * 		enabled <= row_editable!id
-		 * 	<= Link!id $mol_link_iconed uri <= row_uri!id \
+		 * Scroll $mol_scroll sub / <= Rows
 		 * ```
 		 */
-		row_content(id: any) {
-			return [
-				this.Id(id),
-				this.Title(id),
-				this.Editable(id),
-				this.Priority(id),
-				this.Date(id),
-				this.Number(id),
-				this.Link(id)
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Id!id $mol_view sub / <= row_id!id \
-		 * ```
-		 */
-		@ $mol_mem_key
-		Id(id: any) {
-			const obj = new this.$.$mol_view()
+		@ $mol_mem
+		Scroll() {
+			const obj = new this.$.$mol_scroll()
 
 			obj.sub = () => [
-				this.row_id(id)
+				this.Rows()
 			] as readonly any[]
 
 			return obj
@@ -167,15 +96,15 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Title!id $mol_view sub / <= row_title!id \
+		 * Id!id $mol_view sub / <= row_id!id
 		 * ```
 		 */
 		@ $mol_mem_key
-		Title(id: any) {
+		Id(id: any) {
 			const obj = new this.$.$mol_view()
 
 			obj.sub = () => [
-				this.row_title(id)
+				this.row_id(id)
 			] as readonly any[]
 
 			return obj
@@ -192,17 +121,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Editable!id $mol_check_box
-		 * 	title <= editable_title @ \Editable
-		 * 	checked?val <=> row_editable!id?val false
+		 * Title!id $mol_view sub / <= row_title!id
 		 * ```
 		 */
 		@ $mol_mem_key
-		Editable(id: any) {
-			const obj = new this.$.$mol_check_box()
+		Title(id: any) {
+			const obj = new this.$.$mol_view()
 
-			obj.title = () => this.editable_title()
-			obj.checked = (val?: any) => this.row_editable(id, val)
+			obj.sub = () => [
+				this.row_title(id)
+			] as readonly any[]
 
 			return obj
 		}
@@ -229,9 +157,37 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Editable!id $mol_check_box
+		 * 	title <= editable_title
+		 * 	checked?val <=> row_editable!id?val
+		 * ```
+		 */
+		@ $mol_mem_key
+		Editable(id: any) {
+			const obj = new this.$.$mol_check_box()
+
+			obj.title = () => this.editable_title()
+			obj.checked = (val?: any) => this.row_editable(id, val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * row_priority!id?val \
+		 * ```
+		 */
+		@ $mol_mem_key
+		row_priority(id: any, val?: any) {
+			if ( val !== undefined ) return val
+			return ""
+		}
+
+		/**
+		 * ```tree
 		 * Priority!id $mol_switch
 		 * 	enabled <= row_editable!id
-		 * 	value?val <=> row_priority!id?val \
+		 * 	value?val <=> row_priority!id?val
 		 * 	options *
 		 * 		minor \Minor
 		 * 		major \Major
@@ -255,34 +211,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * row_priority!id?val \
-		 * ```
-		 */
-		@ $mol_mem_key
-		row_priority(id: any, val?: any) {
-			if ( val !== undefined ) return val
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * Date!id $mol_date
-		 * 	value_moment?val <=> row_moment!id?val $mol_time_moment
-		 * 	enabled <= row_editable!id
-		 * ```
-		 */
-		@ $mol_mem_key
-		Date(id: any) {
-			const obj = new this.$.$mol_date()
-
-			obj.value_moment = (val?: any) => this.row_moment(id, val)
-			obj.enabled = () => this.row_editable(id)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * row_moment!id?val $mol_time_moment
 		 * ```
 		 */
@@ -296,16 +224,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Number!id $mol_number
-		 * 	value?val <=> row_number!id?val 0
+		 * Date!id $mol_date
+		 * 	value_moment?val <=> row_moment!id?val
 		 * 	enabled <= row_editable!id
 		 * ```
 		 */
 		@ $mol_mem_key
-		Number(id: any) {
-			const obj = new this.$.$mol_number()
+		Date(id: any) {
+			const obj = new this.$.$mol_date()
 
-			obj.value = (val?: any) => this.row_number(id, val)
+			obj.value_moment = (val?: any) => this.row_moment(id, val)
 			obj.enabled = () => this.row_editable(id)
 
 			return obj
@@ -324,7 +252,33 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Link!id $mol_link_iconed uri <= row_uri!id \
+		 * Number!id $mol_number
+		 * 	value?val <=> row_number!id?val
+		 * 	enabled <= row_editable!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Number(id: any) {
+			const obj = new this.$.$mol_number()
+
+			obj.value = (val?: any) => this.row_number(id, val)
+			obj.enabled = () => this.row_editable(id)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * row_uri!id \
+		 * ```
+		 */
+		row_uri(id: any) {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Link!id $mol_link_iconed uri <= row_uri!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -338,11 +292,26 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * row_uri!id \
+		 * row_content!id /
+		 * 	<= Id!id
+		 * 	<= Title!id
+		 * 	<= Editable!id
+		 * 	<= Priority!id
+		 * 	<= Date!id
+		 * 	<= Number!id
+		 * 	<= Link!id
 		 * ```
 		 */
-		row_uri(id: any) {
-			return ""
+		row_content(id: any) {
+			return [
+				this.Id(id),
+				this.Title(id),
+				this.Editable(id),
+				this.Priority(id),
+				this.Date(id),
+				this.Number(id),
+				this.Link(id)
+			] as readonly any[]
 		}
 	}
 

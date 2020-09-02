@@ -1,6 +1,7 @@
 {
 	"$mol_app_studio_preview_title": "Preview: ",
 	"$mol_app_studio_editor_title": "Properties",
+	"$mol_app_studio_speech_toggle_hint": "Speech contol",
 	"$mol_app_studio_filter_hint": "Filter properties",
 	"$mol_app_studio_prop_add_hint": "Add this property",
 	"$mol_app_studio_source_title": "Source code"

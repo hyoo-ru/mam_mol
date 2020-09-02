@@ -12,7 +12,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Icon $mol_icon_github_circle
+		 * sub / <= Icon
 		 * ```
 		 */
 		sub() {

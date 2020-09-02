@@ -3,23 +3,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Icon <= Lights_icon $mol_icon_brightness_6
+		 * Icon <= Lights_icon
 		 * ```
 		 */
 		Icon() {
 			return this.Lights_icon()
-		}
-
-		/**
-		 * ```tree
-		 * Lights_icon $mol_icon_brightness_6
-		 * ```
-		 */
-		@ $mol_mem
-		Lights_icon() {
-			const obj = new this.$.$mol_icon_brightness_6()
-
-			return obj
 		}
 
 		/**
@@ -33,11 +21,23 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * checked?val <=> lights?val false
+		 * checked?val <=> lights?val
 		 * ```
 		 */
 		checked(val?: any) {
 			return this.lights(val)
+		}
+
+		/**
+		 * ```tree
+		 * Lights_icon $mol_icon_brightness_6
+		 * ```
+		 */
+		@ $mol_mem
+		Lights_icon() {
+			const obj = new this.$.$mol_icon_brightness_6()
+
+			return obj
 		}
 
 		/**

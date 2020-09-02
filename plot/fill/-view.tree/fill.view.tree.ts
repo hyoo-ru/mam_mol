@@ -21,7 +21,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Curve $mol_svg_path geometry <= curve \
+		 * sub / <= Curve
 		 * ```
 		 */
 		sub() {
@@ -32,14 +32,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Curve $mol_svg_path geometry <= curve \
+		 * Sample $mol_plot_graph_sample color <= color
 		 * ```
 		 */
 		@ $mol_mem
-		Curve() {
-			const obj = new this.$.$mol_svg_path()
+		Sample() {
+			const obj = new this.$.$mol_plot_graph_sample()
 
-			obj.geometry = () => this.curve()
+			obj.color = () => this.color()
 
 			return obj
 		}
@@ -55,14 +55,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Sample $mol_plot_graph_sample color <= color
+		 * Curve $mol_svg_path geometry <= curve
 		 * ```
 		 */
 		@ $mol_mem
-		Sample() {
-			const obj = new this.$.$mol_plot_graph_sample()
+		Curve() {
+			const obj = new this.$.$mol_svg_path()
 
-			obj.color = () => this.color()
+			obj.geometry = () => this.curve()
 
 			return obj
 		}

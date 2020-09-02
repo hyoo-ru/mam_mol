@@ -14,7 +14,7 @@ namespace $ {
 		 * ```tree
 		 * event *
 		 * 	^
-		 * 	keydown?event <=> keydown?event null
+		 * 	keydown?event <=> keydown?event
 		 * ```
 		 */
 		event() {
@@ -22,17 +22,6 @@ namespace $ {
 				...super.event(),
 				keydown: (event?: any) => this.keydown(event)
 			}
-		}
-
-		/**
-		 * ```tree
-		 * keydown?event null
-		 * ```
-		 */
-		@ $mol_mem
-		keydown(event?: any) {
-			if ( event !== undefined ) return event
-			return null as any
 		}
 
 		/**
@@ -49,8 +38,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Bar_fields $mol_view sub <= form_fields /$mol_form_field
-		 * 	<= Bar_buttons $mol_row sub <= buttons /$mol_view
+		 * 	<= Bar_fields
+		 * 	<= Bar_buttons
 		 * ```
 		 */
 		sub() {
@@ -62,16 +51,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Bar_fields $mol_view sub <= form_fields /$mol_form_field
+		 * keydown?event null
 		 * ```
 		 */
 		@ $mol_mem
-		Bar_fields() {
-			const obj = new this.$.$mol_view()
-
-			obj.sub = () => this.form_fields()
-
-			return obj
+		keydown(event?: any) {
+			if ( event !== undefined ) return event
+			return null as any
 		}
 
 		/**
@@ -87,14 +73,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Bar_buttons $mol_row sub <= buttons /$mol_view
+		 * Bar_fields $mol_view sub <= form_fields
 		 * ```
 		 */
 		@ $mol_mem
-		Bar_buttons() {
-			const obj = new this.$.$mol_row()
+		Bar_fields() {
+			const obj = new this.$.$mol_view()
 
-			obj.sub = () => this.buttons()
+			obj.sub = () => this.form_fields()
 
 			return obj
 		}
@@ -108,6 +94,20 @@ namespace $ {
 			return [
 
 			] as readonly $mol_view[]
+		}
+
+		/**
+		 * ```tree
+		 * Bar_buttons $mol_row sub <= buttons
+		 * ```
+		 */
+		@ $mol_mem
+		Bar_buttons() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => this.buttons()
+
+			return obj
 		}
 	}
 

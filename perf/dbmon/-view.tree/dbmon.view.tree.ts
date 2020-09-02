@@ -12,7 +12,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Databases $mol_list rows <= databases /
+		 * sub / <= Databases
 		 * ```
 		 */
 		sub() {
@@ -23,14 +23,33 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Databases $mol_list rows <= databases /
+		 * Database!id $mol_view sub <= database!id
 		 * ```
 		 */
-		@ $mol_mem
-		Databases() {
-			const obj = new this.$.$mol_list()
+		@ $mol_mem_key
+		Database(id: any) {
+			const obj = new this.$.$mol_view()
 
-			obj.rows = () => this.databases()
+			obj.sub = () => this.database(id)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Query!id $mol_perf_dbmon_query
+		 * 	elapsed <= query_elapsed!id
+		 * 	elapsed_mod <= query_elapsed_mod!id
+		 * 	value <= query_value!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Query(id: any) {
+			const obj = new this.$.$mol_perf_dbmon_query()
+
+			obj.elapsed = () => this.query_elapsed(id)
+			obj.elapsed_mod = () => this.query_elapsed_mod(id)
+			obj.value = () => this.query_value(id)
 
 			return obj
 		}
@@ -48,53 +67,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Database!id $mol_view sub <= database!id /
-		 * 	<= Name!id $mol_view sub / <= name!id \
-		 * 	<= Query_count!id $mol_perf_dbmon_query_count
-		 * 		label_mod <= query_count_label_mod!id \
-		 * 		count <= query_count!id 0
-		 * 	<= top_queries!id /
+		 * Databases $mol_list rows <= databases
 		 * ```
 		 */
-		@ $mol_mem_key
-		Database(id: any) {
-			const obj = new this.$.$mol_view()
+		@ $mol_mem
+		Databases() {
+			const obj = new this.$.$mol_list()
 
-			obj.sub = () => this.database(id)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * database!id /
-		 * 	<= Name!id $mol_view sub / <= name!id \
-		 * 	<= Query_count!id $mol_perf_dbmon_query_count
-		 * 		label_mod <= query_count_label_mod!id \
-		 * 		count <= query_count!id 0
-		 * 	<= top_queries!id /
-		 * ```
-		 */
-		database(id: any) {
-			return [
-				this.Name(id),
-				this.Query_count(id),
-				this.top_queries(id)
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Name!id $mol_view sub / <= name!id \
-		 * ```
-		 */
-		@ $mol_mem_key
-		Name(id: any) {
-			const obj = new this.$.$mol_view()
-
-			obj.sub = () => [
-				this.name(id)
-			] as readonly any[]
+			obj.rows = () => this.databases()
 
 			return obj
 		}
@@ -110,17 +90,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Query_count!id $mol_perf_dbmon_query_count
-		 * 	label_mod <= query_count_label_mod!id \
-		 * 	count <= query_count!id 0
+		 * Name!id $mol_view sub / <= name!id
 		 * ```
 		 */
 		@ $mol_mem_key
-		Query_count(id: any) {
-			const obj = new this.$.$mol_perf_dbmon_query_count()
+		Name(id: any) {
+			const obj = new this.$.$mol_view()
 
-			obj.label_mod = () => this.query_count_label_mod(id)
-			obj.count = () => this.query_count(id)
+			obj.sub = () => [
+				this.name(id)
+			] as readonly any[]
 
 			return obj
 		}
@@ -145,6 +124,23 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Query_count!id $mol_perf_dbmon_query_count
+		 * 	label_mod <= query_count_label_mod!id
+		 * 	count <= query_count!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Query_count(id: any) {
+			const obj = new this.$.$mol_perf_dbmon_query_count()
+
+			obj.label_mod = () => this.query_count_label_mod(id)
+			obj.count = () => this.query_count(id)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * top_queries!id /
 		 * ```
 		 */
@@ -156,21 +152,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Query!id $mol_perf_dbmon_query
-		 * 	elapsed <= query_elapsed!id \
-		 * 	elapsed_mod <= query_elapsed_mod!id \
-		 * 	value <= query_value!id \
+		 * database!id /
+		 * 	<= Name!id
+		 * 	<= Query_count!id
+		 * 	<= top_queries!id
 		 * ```
 		 */
-		@ $mol_mem_key
-		Query(id: any) {
-			const obj = new this.$.$mol_perf_dbmon_query()
-
-			obj.elapsed = () => this.query_elapsed(id)
-			obj.elapsed_mod = () => this.query_elapsed_mod(id)
-			obj.value = () => this.query_value(id)
-
-			return obj
+		database(id: any) {
+			return [
+				this.Name(id),
+				this.Query_count(id),
+				this.top_queries(id)
+			] as readonly any[]
 		}
 
 		/**
@@ -205,36 +198,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Label $mol_view
-		 * 	attr * mol_perf_dbmon_query_count_label <= label_mod \
-		 * 	sub / <= count 0
+		 * sub / <= Label
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Label()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Label $mol_view
-		 * 	attr * mol_perf_dbmon_query_count_label <= label_mod \
-		 * 	sub / <= count 0
-		 * ```
-		 */
-		@ $mol_mem
-		Label() {
-			const obj = new this.$.$mol_view()
-
-			obj.attr = () => ({
-				mol_perf_dbmon_query_count_label: this.label_mod()
-			})
-			obj.sub = () => [
-				this.count()
-			] as readonly any[]
-
-			return obj
 		}
 
 		/**
@@ -254,6 +224,27 @@ namespace $ {
 		count() {
 			return 0
 		}
+
+		/**
+		 * ```tree
+		 * Label $mol_view
+		 * 	attr * mol_perf_dbmon_query_count_label <= label_mod
+		 * 	sub / <= count
+		 * ```
+		 */
+		@ $mol_mem
+		Label() {
+			const obj = new this.$.$mol_view()
+
+			obj.attr = () => ({
+				mol_perf_dbmon_query_count_label: this.label_mod()
+			})
+			obj.sub = () => [
+				this.count()
+			] as readonly any[]
+
+			return obj
+		}
 	}
 
 	export class $mol_perf_dbmon_query extends $mol_pop_over {
@@ -269,9 +260,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Anchor <= Elapsed $mol_view
-		 * 	attr * mol_perf_dbmon_query_elapsed <= elapsed_mod \
-		 * 	sub / <= elapsed \
+		 * Anchor <= Elapsed
 		 * ```
 		 */
 		Anchor() {
@@ -280,23 +269,22 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Elapsed $mol_view
-		 * 	attr * mol_perf_dbmon_query_elapsed <= elapsed_mod \
-		 * 	sub / <= elapsed \
+		 * bubble_content / <= value
 		 * ```
 		 */
-		@ $mol_mem
-		Elapsed() {
-			const obj = new this.$.$mol_view()
-
-			obj.attr = () => ({
-				mol_perf_dbmon_query_elapsed: this.elapsed_mod()
-			})
-			obj.sub = () => [
-				this.elapsed()
+		bubble_content() {
+			return [
+				this.value()
 			] as readonly any[]
+		}
 
-			return obj
+		/**
+		 * ```tree
+		 * align \left_center
+		 * ```
+		 */
+		align() {
+			return "left_center"
 		}
 
 		/**
@@ -319,13 +307,23 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * bubble_content / <= value \
+		 * Elapsed $mol_view
+		 * 	attr * mol_perf_dbmon_query_elapsed <= elapsed_mod
+		 * 	sub / <= elapsed
 		 * ```
 		 */
-		bubble_content() {
-			return [
-				this.value()
+		@ $mol_mem
+		Elapsed() {
+			const obj = new this.$.$mol_view()
+
+			obj.attr = () => ({
+				mol_perf_dbmon_query_elapsed: this.elapsed_mod()
+			})
+			obj.sub = () => [
+				this.elapsed()
 			] as readonly any[]
+
+			return obj
 		}
 
 		/**
@@ -335,15 +333,6 @@ namespace $ {
 		 */
 		value() {
 			return ""
-		}
-
-		/**
-		 * ```tree
-		 * align \left_center
-		 * ```
-		 */
-		align() {
-			return "left_center"
 		}
 	}
 

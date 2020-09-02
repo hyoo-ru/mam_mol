@@ -18,7 +18,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * enter $mol_app_supplies_enter entered?val <=> entered?val false
+		 * enter $mol_app_supplies_enter entered?val <=> entered?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -30,26 +30,15 @@ namespace $ {
 			return obj
 		}
 
-		/**
-		 * ```tree
-		 * entered?val false
-		 * ```
-		 */
-		@ $mol_mem
-		entered(val?: any) {
-			if ( val !== undefined ) return val
-			return false
-		}
-
 
 		/**
 		 * ```tree
 		 * List $mol_app_supplies_list
 		 * 	minimal_width 600
-		 * 	supplies <= supplies /$mol_app_supplies_domain_supply
-		 * 	tools <= tools_root /
-		 * 	title <= list_title @ \Supplies
-		 * 	search_query?val <=> supply_id?val \
+		 * 	supplies <= supplies
+		 * 	tools <= tools_root
+		 * 	title <= list_title
+		 * 	search_query?val <=> supply_id?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -63,6 +52,35 @@ namespace $ {
 			obj.search_query = (val?: any) => this.supply_id(val)
 
 			return obj
+		}
+
+
+		/**
+		 * ```tree
+		 * Detail!id $mol_app_supplies_detail
+		 * 	minimal_width 800
+		 * 	supply <= supply
+		 * ```
+		 */
+		@ $mol_mem_key
+		Detail(id: any) {
+			const obj = new this.$.$mol_app_supplies_detail()
+
+			obj.minimal_width = () => 800
+			obj.supply = () => this.supply()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * entered?val false
+		 * ```
+		 */
+		@ $mol_mem
+		entered(val?: any) {
+			if ( val !== undefined ) return val
+			return false
 		}
 
 		/**
@@ -105,24 +123,6 @@ namespace $ {
 		supply_id(val?: any) {
 			if ( val !== undefined ) return val
 			return ""
-		}
-
-
-		/**
-		 * ```tree
-		 * Detail!id $mol_app_supplies_detail
-		 * 	minimal_width 800
-		 * 	supply <= supply null
-		 * ```
-		 */
-		@ $mol_mem_key
-		Detail(id: any) {
-			const obj = new this.$.$mol_app_supplies_detail()
-
-			obj.minimal_width = () => 800
-			obj.supply = () => this.supply()
-
-			return obj
 		}
 
 		/**

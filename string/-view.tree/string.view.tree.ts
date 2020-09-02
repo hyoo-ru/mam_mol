@@ -41,12 +41,12 @@ namespace $ {
 		 * ```tree
 		 * field *
 		 * 	^
-		 * 	disabled <= disabled false
-		 * 	value <= value_changed?val <=> value?val \
-		 * 	placeholder <= hint \
-		 * 	type <= type?val \text
-		 * 	spellcheck <= spellcheck false
-		 * 	autocomplete <= autocomplete_native \
+		 * 	disabled <= disabled
+		 * 	value <= value_changed?val
+		 * 	placeholder <= hint
+		 * 	type <= type?val
+		 * 	spellcheck <= spellcheck
+		 * 	autocomplete <= autocomplete_native
 		 * ```
 		 */
 		field() {
@@ -63,20 +63,52 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	maxlength <= length_max
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				maxlength: this.length_max()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * event *
+		 * 	^
+		 * 	input?event <=> event_change?event
+		 * 	keydown?event <=> event_key_press?event
+		 * ```
+		 */
+		event() {
+			return {
+				...super.event(),
+				input: (event?: any) => this.event_change(event),
+				keydown: (event?: any) => this.event_key_press(event)
+			}
+		}
+
+		/**
+		 * ```tree
+		 * plugins / <= Submit
+		 * ```
+		 */
+		plugins() {
+			return [
+				this.Submit()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
 		 * disabled false
 		 * ```
 		 */
 		disabled() {
 			return false
-		}
-
-		/**
-		 * ```tree
-		 * value_changed?val <=> value?val \
-		 * ```
-		 */
-		value_changed(val?: any) {
-			return this.value(val)
 		}
 
 		/**
@@ -88,6 +120,15 @@ namespace $ {
 		value(val?: any) {
 			if ( val !== undefined ) return val
 			return ""
+		}
+
+		/**
+		 * ```tree
+		 * value_changed?val <=> value?val
+		 * ```
+		 */
+		value_changed(val?: any) {
+			return this.value(val)
 		}
 
 		/**
@@ -130,41 +171,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * attr *
-		 * 	^
-		 * 	maxlength <= length_max Infinity
-		 * ```
-		 */
-		attr() {
-			return {
-				...super.attr(),
-				maxlength: this.length_max()
-			}
-		}
-
-		/**
-		 * ```tree
 		 * length_max Infinity
 		 * ```
 		 */
 		length_max() {
 			return Infinity
-		}
-
-		/**
-		 * ```tree
-		 * event *
-		 * 	^
-		 * 	input?event <=> event_change?event null
-		 * 	keydown?event <=> event_key_press?event null
-		 * ```
-		 */
-		event() {
-			return {
-				...super.event(),
-				input: (event?: any) => this.event_change(event),
-				keydown: (event?: any) => this.event_key_press(event)
-			}
 		}
 
 		/**
@@ -191,18 +202,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * plugins / <= Submit $mol_hotkey key * enter?event <=> submit?event null
+		 * submit?event null
 		 * ```
 		 */
-		plugins() {
-			return [
-				this.Submit()
-			] as readonly any[]
+		@ $mol_mem
+		submit(event?: any) {
+			if ( event !== undefined ) return event
+			return null as any
 		}
 
 		/**
 		 * ```tree
-		 * Submit $mol_hotkey key * enter?event <=> submit?event null
+		 * Submit $mol_hotkey key * enter?event <=> submit?event
 		 * ```
 		 */
 		@ $mol_mem
@@ -214,17 +225,6 @@ namespace $ {
 			})
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * submit?event null
-		 * ```
-		 */
-		@ $mol_mem
-		submit(event?: any) {
-			if ( event !== undefined ) return event
-			return null as any
 		}
 	}
 

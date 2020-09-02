@@ -4,12 +4,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * rows /
-		 * 	<= Label $mol_view sub /
-		 * 		<= Trigger $mol_check_expand
-		 * 			checked?val <=> expanded?val false
-		 * 			label <= label / <= title
-		 * 		<= Tools null
-		 * 	<= Content $mol_view sub <= content /
+		 * 	<= Label
+		 * 	<= Content
 		 * ```
 		 */
 		rows() {
@@ -17,44 +13,6 @@ namespace $ {
 				this.Label(),
 				this.Content()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Label $mol_view sub /
-		 * 	<= Trigger $mol_check_expand
-		 * 		checked?val <=> expanded?val false
-		 * 		label <= label / <= title
-		 * 	<= Tools null
-		 * ```
-		 */
-		@ $mol_mem
-		Label() {
-			const obj = new this.$.$mol_view()
-
-			obj.sub = () => [
-				this.Trigger(),
-				this.Tools()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Trigger $mol_check_expand
-		 * 	checked?val <=> expanded?val false
-		 * 	label <= label / <= title
-		 * ```
-		 */
-		@ $mol_mem
-		Trigger() {
-			const obj = new this.$.$mol_check_expand()
-
-			obj.checked = (val?: any) => this.expanded(val)
-			obj.label = () => this.label()
-
-			return obj
 		}
 
 		/**
@@ -81,6 +39,23 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Trigger $mol_check_expand
+		 * 	checked?val <=> expanded?val
+		 * 	label <= label
+		 * ```
+		 */
+		@ $mol_mem
+		Trigger() {
+			const obj = new this.$.$mol_check_expand()
+
+			obj.checked = (val?: any) => this.expanded(val)
+			obj.label = () => this.label()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * Tools null
 		 * ```
 		 */
@@ -90,14 +65,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Content $mol_view sub <= content /
+		 * Label $mol_view sub /
+		 * 	<= Trigger
+		 * 	<= Tools
 		 * ```
 		 */
 		@ $mol_mem
-		Content() {
+		Label() {
 			const obj = new this.$.$mol_view()
 
-			obj.sub = () => this.content()
+			obj.sub = () => [
+				this.Trigger(),
+				this.Tools()
+			] as readonly any[]
 
 			return obj
 		}
@@ -111,6 +91,20 @@ namespace $ {
 			return [
 
 			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Content $mol_view sub <= content
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => this.content()
+
+			return obj
 		}
 	}
 

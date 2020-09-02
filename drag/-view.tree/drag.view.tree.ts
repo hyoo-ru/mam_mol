@@ -4,9 +4,9 @@ namespace $ {
 		/**
 		 * ```tree
 		 * event *
-		 * 	dragstart?event <=> start?event null
-		 * 	drag?event <=> move?event null
-		 * 	dragend?event <=> end?event null
+		 * 	dragstart?event <=> start?event
+		 * 	drag?event <=> move?event
+		 * 	dragend?event <=> end?event
 		 * ```
 		 */
 		event() {
@@ -19,42 +19,9 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * start?event null
-		 * ```
-		 */
-		@ $mol_mem
-		start(event?: any) {
-			if ( event !== undefined ) return event
-			return null as any
-		}
-
-		/**
-		 * ```tree
-		 * move?event null
-		 * ```
-		 */
-		@ $mol_mem
-		move(event?: any) {
-			if ( event !== undefined ) return event
-			return null as any
-		}
-
-		/**
-		 * ```tree
-		 * end?event null
-		 * ```
-		 */
-		@ $mol_mem
-		end(event?: any) {
-			if ( event !== undefined ) return event
-			return null as any
-		}
-
-		/**
-		 * ```tree
 		 * attr *
 		 * 	draggable true
-		 * 	mol_drag_status <= status?val \ready
+		 * 	mol_drag_status <= status?val
 		 * ```
 		 */
 		attr() {
@@ -62,17 +29,6 @@ namespace $ {
 				draggable: true,
 				mol_drag_status: this.status()
 			}
-		}
-
-		/**
-		 * ```tree
-		 * status?val \ready
-		 * ```
-		 */
-		@ $mol_mem
-		status(val?: any) {
-			if ( val !== undefined ) return val
-			return "ready"
 		}
 
 		/**
@@ -125,6 +81,50 @@ namespace $ {
 		 */
 		image() {
 			return this.dom_node()
+		}
+
+		/**
+		 * ```tree
+		 * start?event null
+		 * ```
+		 */
+		@ $mol_mem
+		start(event?: any) {
+			if ( event !== undefined ) return event
+			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * move?event null
+		 * ```
+		 */
+		@ $mol_mem
+		move(event?: any) {
+			if ( event !== undefined ) return event
+			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * end?event null
+		 * ```
+		 */
+		@ $mol_mem
+		end(event?: any) {
+			if ( event !== undefined ) return event
+			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * status?val \ready
+		 * ```
+		 */
+		@ $mol_mem
+		status(val?: any) {
+			if ( val !== undefined ) return val
+			return "ready"
 		}
 	}
 

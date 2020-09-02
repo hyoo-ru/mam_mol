@@ -5,8 +5,8 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	mol_check_checked <= checked?val false
-		 * 	aria-checked <= checked?val false
+		 * 	mol_check_checked <= checked?val
+		 * 	aria-checked <= checked?val
 		 * 	role \checkbox
 		 * ```
 		 */
@@ -17,6 +17,20 @@ namespace $ {
 				"aria-checked": this.checked(),
 				role: "checkbox"
 			}
+		}
+
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Icon
+		 * 	<= label
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Icon(),
+				this.label()
+			] as readonly any[]
 		}
 
 		/**
@@ -32,20 +46,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Icon null
-		 * 	<= label / <= Title $mol_view sub / <= title \
-		 * ```
-		 */
-		sub() {
-			return [
-				this.Icon(),
-				this.label()
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
 		 * Icon null
 		 * ```
 		 */
@@ -55,18 +55,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * label / <= Title $mol_view sub / <= title \
+		 * title \
 		 * ```
 		 */
-		label() {
-			return [
-				this.Title()
-			] as readonly any[]
+		title() {
+			return ""
 		}
 
 		/**
 		 * ```tree
-		 * Title $mol_view sub / <= title \
+		 * Title $mol_view sub / <= title
 		 * ```
 		 */
 		@ $mol_mem
@@ -82,11 +80,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * title \
+		 * label / <= Title
 		 * ```
 		 */
-		title() {
-			return ""
+		label() {
+			return [
+				this.Title()
+			] as readonly any[]
 		}
 	}
 

@@ -667,20 +667,20 @@ declare namespace $ {
             click: (event?: any) => any;
             keypress: (event?: any) => any;
         };
-        event_activate(event?: any): any;
-        event_key_press(event?: any): any;
         attr(): {
             disabled: boolean;
             role: string;
             tabindex: number;
             title: string;
         };
-        disabled(): boolean;
-        tab_index(): number;
-        hint_or_error(): string;
-        hint(): string;
         sub(): readonly $mol_view_content[];
         Speck(): $mol_speck;
+        event_activate(event?: any): any;
+        event_key_press(event?: any): any;
+        disabled(): boolean;
+        tab_index(): number;
+        hint(): string;
+        hint_or_error(): string;
     }
 }
 
@@ -832,15 +832,15 @@ declare namespace $ {
     class $mol_perf_dopes extends $mol_view {
         title(): string;
         sub(): readonly any[];
-        Speed(): $mol_view;
-        speed(): string;
-        Start(): $mol_button_major;
-        start(event?: any): any;
-        Stop(): $mol_button_major;
-        stop(event?: any): any;
-        Labels(): $mol_view;
-        labels(): readonly any[];
         Label(index: any): $mol_view;
+        speed(): string;
+        Speed(): $mol_view;
+        start(event?: any): any;
+        Start(): $mol_button_major;
+        stop(event?: any): any;
+        Stop(): $mol_button_major;
+        labels(): readonly any[];
+        Labels(): $mol_view;
         label_color(index: any): string;
         label_transform(index: any): string;
     }
@@ -909,8 +909,8 @@ declare namespace $ {
 declare namespace $ {
     class $mol_view_tree_test_binding extends $mol_view {
         value(val?: any): any;
-        task_title_new(val?: any): any;
         enabled(): boolean;
+        task_title_new(val?: any): any;
         head_complete_enabled(): boolean;
     }
 }

@@ -22,14 +22,25 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tools /
-		 * 	<= Lights $mol_lights_toggle
-		 * 	<= Project $mol_link_source uri <= project_uri \https://github.com/eigenmethod/mol/tree/master/
+		 * 	<= Lights
+		 * 	<= Project
 		 * ```
 		 */
 		tools() {
 			return [
 				this.Lights(),
 				this.Project()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * body / <= Description
+		 * ```
+		 */
+		body() {
+			return [
+				this.Description()
 			] as readonly any[]
 		}
 
@@ -47,7 +58,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Project $mol_link_source uri <= project_uri \https://github.com/eigenmethod/mol/tree/master/
+		 * project_uri \https://github.com/eigenmethod/mol/tree/master/
+		 * ```
+		 */
+		project_uri() {
+			return "https://github.com/eigenmethod/mol/tree/master/"
+		}
+
+		/**
+		 * ```tree
+		 * Project $mol_link_source uri <= project_uri
 		 * ```
 		 */
 		@ $mol_mem
@@ -61,30 +81,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * project_uri \https://github.com/eigenmethod/mol/tree/master/
+		 * description \
 		 * ```
 		 */
-		project_uri() {
-			return "https://github.com/eigenmethod/mol/tree/master/"
-		}
-
-		/**
-		 * ```tree
-		 * body / <= Description $mol_text
-		 * 	text <= description \
-		 * 	uri_base <= project_uri
-		 * ```
-		 */
-		body() {
-			return [
-				this.Description()
-			] as readonly any[]
+		description() {
+			return ""
 		}
 
 		/**
 		 * ```tree
 		 * Description $mol_text
-		 * 	text <= description \
+		 * 	text <= description
 		 * 	uri_base <= project_uri
 		 * ```
 		 */
@@ -96,15 +103,6 @@ namespace $ {
 			obj.uri_base = () => this.project_uri()
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * description \
-		 * ```
-		 */
-		description() {
-			return ""
 		}
 	}
 

@@ -21,56 +21,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Scroll $mol_scroll sub / <= List $mol_infinite
-		 * 	after!anchor_id <= after!anchor_id /
-		 * 	Row!id <= Item!id $mol_row
-		 * 		minimal_height 40
-		 * 		sub / <= item_title!id \
+		 * sub / <= Scroll
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Scroll()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Scroll $mol_scroll sub / <= List $mol_infinite
-		 * 	after!anchor_id <= after!anchor_id /
-		 * 	Row!id <= Item!id $mol_row
-		 * 		minimal_height 40
-		 * 		sub / <= item_title!id \
-		 * ```
-		 */
-		@ $mol_mem
-		Scroll() {
-			const obj = new this.$.$mol_scroll()
-
-			obj.sub = () => [
-				this.List()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * List $mol_infinite
-		 * 	after!anchor_id <= after!anchor_id /
-		 * 	Row!id <= Item!id $mol_row
-		 * 		minimal_height 40
-		 * 		sub / <= item_title!id \
-		 * ```
-		 */
-		@ $mol_mem
-		List() {
-			const obj = new this.$.$mol_infinite()
-
-			obj.after = (anchor_id: any) => this.after(anchor_id)
-			obj.Row = (id: any) => this.Item(id)
-
-			return obj
 		}
 
 		/**
@@ -86,9 +43,18 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * item_title!id \
+		 * ```
+		 */
+		item_title(id: any) {
+			return ""
+		}
+
+		/**
+		 * ```tree
 		 * Item!id $mol_row
 		 * 	minimal_height 40
-		 * 	sub / <= item_title!id \
+		 * 	sub / <= item_title!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -105,11 +71,35 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * item_title!id \
+		 * List $mol_infinite
+		 * 	after!anchor_id <= after!anchor_id
+		 * 	Row!id <= Item!id
 		 * ```
 		 */
-		item_title(id: any) {
-			return ""
+		@ $mol_mem
+		List() {
+			const obj = new this.$.$mol_infinite()
+
+			obj.after = (anchor_id: any) => this.after(anchor_id)
+			obj.Row = (id: any) => this.Item(id)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Scroll $mol_scroll sub / <= List
+		 * ```
+		 */
+		@ $mol_mem
+		Scroll() {
+			const obj = new this.$.$mol_scroll()
+
+			obj.sub = () => [
+				this.List()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

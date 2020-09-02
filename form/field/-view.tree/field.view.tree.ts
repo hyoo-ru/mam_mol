@@ -4,8 +4,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * label /
-		 * 	<= name \
-		 * 	<= Bid $mol_view sub / <= bid \
+		 * 	<= name
+		 * 	<= Bid
 		 * ```
 		 */
 		label() {
@@ -13,6 +13,15 @@ namespace $ {
 				this.name(),
 				this.Bid()
 			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Content <= control
+		 * ```
+		 */
+		Content() {
+			return this.control()
 		}
 
 		/**
@@ -26,7 +35,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Bid $mol_view sub / <= bid \
+		 * bid \
+		 * ```
+		 */
+		bid() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Bid $mol_view sub / <= bid
 		 * ```
 		 */
 		@ $mol_mem
@@ -38,24 +56,6 @@ namespace $ {
 			] as readonly any[]
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * bid \
-		 * ```
-		 */
-		bid() {
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * Content <= control null
-		 * ```
-		 */
-		Content() {
-			return this.control()
 		}
 
 		/**

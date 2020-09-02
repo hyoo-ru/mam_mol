@@ -94,52 +94,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Form $mol_form
-		 * 		submit?val <=> submit?val null
-		 * 		form_fields /
-		 * 			-
-		 * 			<= Name_first_field $mol_form_field
-		 * 				name <= name_first_label @ \First Name
-		 * 				bid <= name_first_bid \
-		 * 				control <= Name_first_control $mol_string
-		 * 					hint <= name_first_hint @ \Jack
-		 * 					value?val <=> name_first?val \
-		 * 			-
-		 * 			<= Name_nick_field $mol_form_field
-		 * 				name <= name_nick_label @ \Nick Name
-		 * 				bid <= name_nick_bid \
-		 * 				control <= Name_nick_control $mol_string
-		 * 					hint <= name_nick_hint @ \Capitan
-		 * 					value?val <=> name_nick?val \
-		 * 			-
-		 * 			<= Name_second_field $mol_form_field
-		 * 				name <= name_second_label @ \Second Name
-		 * 				bid <= name_second_bid \
-		 * 				control <= Name_second_control $mol_string
-		 * 					hint <= name_second_hint @ \Sparrow
-		 * 					value?val <=> name_second?val \
-		 * 			-
-		 * 			<= Sex_field $mol_form_field
-		 * 				name <= sex_label @ \Sex
-		 * 				bid <= sex_bid \
-		 * 				control <= Sex_control $mol_switch
-		 * 					value?val <=> sex?val \
-		 * 					options <= sex_options *
-		 * 						male <= sex_option_male @ \Male
-		 * 						intersex <= sex_option_intersex @ \Intersex
-		 * 						female <= sex_option_female @ \Female
-		 * 			-
-		 * 			<= Mail_field $mol_form_field
-		 * 				name <= mail_label @ \E-mail
-		 * 				bid <= mail_bid \
-		 * 				control <= Mail_control $mol_string
-		 * 					hint <= mail_hint @ \name@domain.com
-		 * 					value?val <=> mail?val \
-		 * 		buttons / <= Submit $mol_button_major
-		 * 			sub / <= submit_text @ \Sign Up
-		 * 			click?val <=> submit?val null
-		 * 			enabled <= submit_allowed true
-		 * 	<= Message $mol_view sub / <= message?val \
+		 * 	<= Form
+		 * 	<= Message
 		 * ```
 		 */
 		sub() {
@@ -151,79 +107,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Form $mol_form
-		 * 	submit?val <=> submit?val null
-		 * 	form_fields /
-		 * 		-
-		 * 		<= Name_first_field $mol_form_field
-		 * 			name <= name_first_label @ \First Name
-		 * 			bid <= name_first_bid \
-		 * 			control <= Name_first_control $mol_string
-		 * 				hint <= name_first_hint @ \Jack
-		 * 				value?val <=> name_first?val \
-		 * 		-
-		 * 		<= Name_nick_field $mol_form_field
-		 * 			name <= name_nick_label @ \Nick Name
-		 * 			bid <= name_nick_bid \
-		 * 			control <= Name_nick_control $mol_string
-		 * 				hint <= name_nick_hint @ \Capitan
-		 * 				value?val <=> name_nick?val \
-		 * 		-
-		 * 		<= Name_second_field $mol_form_field
-		 * 			name <= name_second_label @ \Second Name
-		 * 			bid <= name_second_bid \
-		 * 			control <= Name_second_control $mol_string
-		 * 				hint <= name_second_hint @ \Sparrow
-		 * 				value?val <=> name_second?val \
-		 * 		-
-		 * 		<= Sex_field $mol_form_field
-		 * 			name <= sex_label @ \Sex
-		 * 			bid <= sex_bid \
-		 * 			control <= Sex_control $mol_switch
-		 * 				value?val <=> sex?val \
-		 * 				options <= sex_options *
-		 * 					male <= sex_option_male @ \Male
-		 * 					intersex <= sex_option_intersex @ \Intersex
-		 * 					female <= sex_option_female @ \Female
-		 * 		-
-		 * 		<= Mail_field $mol_form_field
-		 * 			name <= mail_label @ \E-mail
-		 * 			bid <= mail_bid \
-		 * 			control <= Mail_control $mol_string
-		 * 				hint <= mail_hint @ \name@domain.com
-		 * 				value?val <=> mail?val \
-		 * 	buttons / <= Submit $mol_button_major
-		 * 		sub / <= submit_text @ \Sign Up
-		 * 		click?val <=> submit?val null
-		 * 		enabled <= submit_allowed true
-		 * ```
-		 */
-		@ $mol_mem
-		Form() {
-			const obj = new this.$.$mol_form()
-
-			obj.submit = (val?: any) => this.submit(val)
-			obj.form_fields = () => [
-
-				this.Name_first_field(),
-
-				this.Name_nick_field(),
-
-				this.Name_second_field(),
-
-				this.Sex_field(),
-
-				this.Mail_field()
-			] as readonly any[]
-			obj.buttons = () => [
-				this.Submit()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * submit?val null
 		 * ```
 		 */
@@ -231,27 +114,6 @@ namespace $ {
 		submit(val?: any) {
 			if ( val !== undefined ) return val
 			return null as any
-		}
-
-		/**
-		 * ```tree
-		 * Name_first_field $mol_form_field
-		 * 	name <= name_first_label @ \First Name
-		 * 	bid <= name_first_bid \
-		 * 	control <= Name_first_control $mol_string
-		 * 		hint <= name_first_hint @ \Jack
-		 * 		value?val <=> name_first?val \
-		 * ```
-		 */
-		@ $mol_mem
-		Name_first_field() {
-			const obj = new this.$.$mol_form_field()
-
-			obj.name = () => this.name_first_label()
-			obj.bid = () => this.name_first_bid()
-			obj.control = () => this.Name_first_control()
-
-			return obj
 		}
 
 		/**
@@ -270,23 +132,6 @@ namespace $ {
 		 */
 		name_first_bid() {
 			return ""
-		}
-
-		/**
-		 * ```tree
-		 * Name_first_control $mol_string
-		 * 	hint <= name_first_hint @ \Jack
-		 * 	value?val <=> name_first?val \
-		 * ```
-		 */
-		@ $mol_mem
-		Name_first_control() {
-			const obj = new this.$.$mol_string()
-
-			obj.hint = () => this.name_first_hint()
-			obj.value = (val?: any) => this.name_first(val)
-
-			return obj
 		}
 
 		/**
@@ -311,21 +156,36 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Name_nick_field $mol_form_field
-		 * 	name <= name_nick_label @ \Nick Name
-		 * 	bid <= name_nick_bid \
-		 * 	control <= Name_nick_control $mol_string
-		 * 		hint <= name_nick_hint @ \Capitan
-		 * 		value?val <=> name_nick?val \
+		 * Name_first_control $mol_string
+		 * 	hint <= name_first_hint
+		 * 	value?val <=> name_first?val
 		 * ```
 		 */
 		@ $mol_mem
-		Name_nick_field() {
+		Name_first_control() {
+			const obj = new this.$.$mol_string()
+
+			obj.hint = () => this.name_first_hint()
+			obj.value = (val?: any) => this.name_first(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Name_first_field $mol_form_field
+		 * 	name <= name_first_label
+		 * 	bid <= name_first_bid
+		 * 	control <= Name_first_control
+		 * ```
+		 */
+		@ $mol_mem
+		Name_first_field() {
 			const obj = new this.$.$mol_form_field()
 
-			obj.name = () => this.name_nick_label()
-			obj.bid = () => this.name_nick_bid()
-			obj.control = () => this.Name_nick_control()
+			obj.name = () => this.name_first_label()
+			obj.bid = () => this.name_first_bid()
+			obj.control = () => this.Name_first_control()
 
 			return obj
 		}
@@ -350,23 +210,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Name_nick_control $mol_string
-		 * 	hint <= name_nick_hint @ \Capitan
-		 * 	value?val <=> name_nick?val \
-		 * ```
-		 */
-		@ $mol_mem
-		Name_nick_control() {
-			const obj = new this.$.$mol_string()
-
-			obj.hint = () => this.name_nick_hint()
-			obj.value = (val?: any) => this.name_nick(val)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * name_nick_hint @ \Capitan
 		 * ```
 		 */
@@ -387,21 +230,36 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Name_second_field $mol_form_field
-		 * 	name <= name_second_label @ \Second Name
-		 * 	bid <= name_second_bid \
-		 * 	control <= Name_second_control $mol_string
-		 * 		hint <= name_second_hint @ \Sparrow
-		 * 		value?val <=> name_second?val \
+		 * Name_nick_control $mol_string
+		 * 	hint <= name_nick_hint
+		 * 	value?val <=> name_nick?val
 		 * ```
 		 */
 		@ $mol_mem
-		Name_second_field() {
+		Name_nick_control() {
+			const obj = new this.$.$mol_string()
+
+			obj.hint = () => this.name_nick_hint()
+			obj.value = (val?: any) => this.name_nick(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Name_nick_field $mol_form_field
+		 * 	name <= name_nick_label
+		 * 	bid <= name_nick_bid
+		 * 	control <= Name_nick_control
+		 * ```
+		 */
+		@ $mol_mem
+		Name_nick_field() {
 			const obj = new this.$.$mol_form_field()
 
-			obj.name = () => this.name_second_label()
-			obj.bid = () => this.name_second_bid()
-			obj.control = () => this.Name_second_control()
+			obj.name = () => this.name_nick_label()
+			obj.bid = () => this.name_nick_bid()
+			obj.control = () => this.Name_nick_control()
 
 			return obj
 		}
@@ -426,23 +284,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Name_second_control $mol_string
-		 * 	hint <= name_second_hint @ \Sparrow
-		 * 	value?val <=> name_second?val \
-		 * ```
-		 */
-		@ $mol_mem
-		Name_second_control() {
-			const obj = new this.$.$mol_string()
-
-			obj.hint = () => this.name_second_hint()
-			obj.value = (val?: any) => this.name_second(val)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * name_second_hint @ \Sparrow
 		 * ```
 		 */
@@ -463,24 +304,36 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Sex_field $mol_form_field
-		 * 	name <= sex_label @ \Sex
-		 * 	bid <= sex_bid \
-		 * 	control <= Sex_control $mol_switch
-		 * 		value?val <=> sex?val \
-		 * 		options <= sex_options *
-		 * 			male <= sex_option_male @ \Male
-		 * 			intersex <= sex_option_intersex @ \Intersex
-		 * 			female <= sex_option_female @ \Female
+		 * Name_second_control $mol_string
+		 * 	hint <= name_second_hint
+		 * 	value?val <=> name_second?val
 		 * ```
 		 */
 		@ $mol_mem
-		Sex_field() {
+		Name_second_control() {
+			const obj = new this.$.$mol_string()
+
+			obj.hint = () => this.name_second_hint()
+			obj.value = (val?: any) => this.name_second(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Name_second_field $mol_form_field
+		 * 	name <= name_second_label
+		 * 	bid <= name_second_bid
+		 * 	control <= Name_second_control
+		 * ```
+		 */
+		@ $mol_mem
+		Name_second_field() {
 			const obj = new this.$.$mol_form_field()
 
-			obj.name = () => this.sex_label()
-			obj.bid = () => this.sex_bid()
-			obj.control = () => this.Sex_control()
+			obj.name = () => this.name_second_label()
+			obj.bid = () => this.name_second_bid()
+			obj.control = () => this.Name_second_control()
 
 			return obj
 		}
@@ -505,26 +358,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Sex_control $mol_switch
-		 * 	value?val <=> sex?val \
-		 * 	options <= sex_options *
-		 * 		male <= sex_option_male @ \Male
-		 * 		intersex <= sex_option_intersex @ \Intersex
-		 * 		female <= sex_option_female @ \Female
-		 * ```
-		 */
-		@ $mol_mem
-		Sex_control() {
-			const obj = new this.$.$mol_switch()
-
-			obj.value = (val?: any) => this.sex(val)
-			obj.options = () => this.sex_options()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * sex?val \
 		 * ```
 		 */
@@ -532,22 +365,6 @@ namespace $ {
 		sex(val?: any) {
 			if ( val !== undefined ) return val
 			return ""
-		}
-
-		/**
-		 * ```tree
-		 * sex_options *
-		 * 	male <= sex_option_male @ \Male
-		 * 	intersex <= sex_option_intersex @ \Intersex
-		 * 	female <= sex_option_female @ \Female
-		 * ```
-		 */
-		sex_options() {
-			return {
-				male: this.sex_option_male(),
-				intersex: this.sex_option_intersex(),
-				female: this.sex_option_female()
-			}
 		}
 
 		/**
@@ -579,21 +396,52 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Mail_field $mol_form_field
-		 * 	name <= mail_label @ \E-mail
-		 * 	bid <= mail_bid \
-		 * 	control <= Mail_control $mol_string
-		 * 		hint <= mail_hint @ \name@domain.com
-		 * 		value?val <=> mail?val \
+		 * sex_options *
+		 * 	male <= sex_option_male
+		 * 	intersex <= sex_option_intersex
+		 * 	female <= sex_option_female
+		 * ```
+		 */
+		sex_options() {
+			return {
+				male: this.sex_option_male(),
+				intersex: this.sex_option_intersex(),
+				female: this.sex_option_female()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * Sex_control $mol_switch
+		 * 	value?val <=> sex?val
+		 * 	options <= sex_options
 		 * ```
 		 */
 		@ $mol_mem
-		Mail_field() {
+		Sex_control() {
+			const obj = new this.$.$mol_switch()
+
+			obj.value = (val?: any) => this.sex(val)
+			obj.options = () => this.sex_options()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Sex_field $mol_form_field
+		 * 	name <= sex_label
+		 * 	bid <= sex_bid
+		 * 	control <= Sex_control
+		 * ```
+		 */
+		@ $mol_mem
+		Sex_field() {
 			const obj = new this.$.$mol_form_field()
 
-			obj.name = () => this.mail_label()
-			obj.bid = () => this.mail_bid()
-			obj.control = () => this.Mail_control()
+			obj.name = () => this.sex_label()
+			obj.bid = () => this.sex_bid()
+			obj.control = () => this.Sex_control()
 
 			return obj
 		}
@@ -618,23 +466,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Mail_control $mol_string
-		 * 	hint <= mail_hint @ \name@domain.com
-		 * 	value?val <=> mail?val \
-		 * ```
-		 */
-		@ $mol_mem
-		Mail_control() {
-			const obj = new this.$.$mol_string()
-
-			obj.hint = () => this.mail_hint()
-			obj.value = (val?: any) => this.mail(val)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * mail_hint @ \name@domain.com
 		 * ```
 		 */
@@ -655,21 +486,36 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Submit $mol_button_major
-		 * 	sub / <= submit_text @ \Sign Up
-		 * 	click?val <=> submit?val null
-		 * 	enabled <= submit_allowed true
+		 * Mail_control $mol_string
+		 * 	hint <= mail_hint
+		 * 	value?val <=> mail?val
 		 * ```
 		 */
 		@ $mol_mem
-		Submit() {
-			const obj = new this.$.$mol_button_major()
+		Mail_control() {
+			const obj = new this.$.$mol_string()
 
-			obj.sub = () => [
-				this.submit_text()
-			] as readonly any[]
-			obj.click = (val?: any) => this.submit(val)
-			obj.enabled = () => this.submit_allowed()
+			obj.hint = () => this.mail_hint()
+			obj.value = (val?: any) => this.mail(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Mail_field $mol_form_field
+		 * 	name <= mail_label
+		 * 	bid <= mail_bid
+		 * 	control <= Mail_control
+		 * ```
+		 */
+		@ $mol_mem
+		Mail_field() {
+			const obj = new this.$.$mol_form_field()
+
+			obj.name = () => this.mail_label()
+			obj.bid = () => this.mail_bid()
+			obj.control = () => this.Mail_control()
 
 			return obj
 		}
@@ -694,15 +540,62 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Message $mol_view sub / <= message?val \
+		 * Submit $mol_button_major
+		 * 	sub / <= submit_text
+		 * 	click?val <=> submit?val
+		 * 	enabled <= submit_allowed
 		 * ```
 		 */
 		@ $mol_mem
-		Message() {
-			const obj = new this.$.$mol_view()
+		Submit() {
+			const obj = new this.$.$mol_button_major()
 
 			obj.sub = () => [
-				this.message()
+				this.submit_text()
+			] as readonly any[]
+			obj.click = (val?: any) => this.submit(val)
+			obj.enabled = () => this.submit_allowed()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Form $mol_form
+		 * 	submit?val <=> submit?val
+		 * 	form_fields /
+		 * 		-
+		 * 		<= Name_first_field
+		 * 		-
+		 * 		<= Name_nick_field
+		 * 		-
+		 * 		<= Name_second_field
+		 * 		-
+		 * 		<= Sex_field
+		 * 		-
+		 * 		<= Mail_field
+		 * 	buttons / <= Submit
+		 * ```
+		 */
+		@ $mol_mem
+		Form() {
+			const obj = new this.$.$mol_form()
+
+			obj.submit = (val?: any) => this.submit(val)
+			obj.form_fields = () => [
+
+				this.Name_first_field(),
+
+				this.Name_nick_field(),
+
+				this.Name_second_field(),
+
+				this.Sex_field(),
+
+				this.Mail_field()
+			] as readonly any[]
+			obj.buttons = () => [
+				this.Submit()
 			] as readonly any[]
 
 			return obj
@@ -717,6 +610,22 @@ namespace $ {
 		message(val?: any) {
 			if ( val !== undefined ) return val
 			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Message $mol_view sub / <= message?val
+		 * ```
+		 */
+		@ $mol_mem
+		Message() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.message()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

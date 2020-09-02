@@ -50,32 +50,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Calendar $mol_calendar
-		 * 	month_string <= month \2018-01
-		 * 	day_holiday!day <= holiday!day false
+		 * sub / <= Calendar
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Calendar()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Calendar $mol_calendar
-		 * 	month_string <= month \2018-01
-		 * 	day_holiday!day <= holiday!day false
-		 * ```
-		 */
-		@ $mol_mem
-		Calendar() {
-			const obj = new this.$.$mol_calendar()
-
-			obj.month_string = () => this.month()
-			obj.day_holiday = (day: any) => this.holiday(day)
-
-			return obj
 		}
 
 		/**
@@ -94,6 +75,23 @@ namespace $ {
 		 */
 		holiday(day: any) {
 			return false
+		}
+
+		/**
+		 * ```tree
+		 * Calendar $mol_calendar
+		 * 	month_string <= month
+		 * 	day_holiday!day <= holiday!day
+		 * ```
+		 */
+		@ $mol_mem
+		Calendar() {
+			const obj = new this.$.$mol_calendar()
+
+			obj.month_string = () => this.month()
+			obj.day_holiday = (day: any) => this.holiday(day)
+
+			return obj
 		}
 	}
 

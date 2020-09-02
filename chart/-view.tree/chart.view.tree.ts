@@ -69,16 +69,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Legend $mol_chart_legend graphs <= graphs_colored
-		 * 	<= Plot $mol_plot_pane
-		 * 		gap_left <= gap_left
-		 * 		gap_right <= gap_right
-		 * 		gap_bottom <= gap_bottom
-		 * 		gap_top <= gap_top
-		 * 		graphs <= graphs
-		 * 		graphs_colored => graphs_colored
-		 * 		hue_base <= hue_base 140
-		 * 		hue_shift <= hue_shift 111
+		 * 	<= Legend
+		 * 	<= Plot
 		 * ```
 		 */
 		sub() {
@@ -104,6 +96,24 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * hue_base 140
+		 * ```
+		 */
+		hue_base() {
+			return 140
+		}
+
+		/**
+		 * ```tree
+		 * hue_shift 111
+		 * ```
+		 */
+		hue_shift() {
+			return 111
+		}
+
+		/**
+		 * ```tree
 		 * Plot $mol_plot_pane
 		 * 	gap_left <= gap_left
 		 * 	gap_right <= gap_right
@@ -111,8 +121,8 @@ namespace $ {
 		 * 	gap_top <= gap_top
 		 * 	graphs <= graphs
 		 * 	graphs_colored => graphs_colored
-		 * 	hue_base <= hue_base 140
-		 * 	hue_shift <= hue_shift 111
+		 * 	hue_base <= hue_base
+		 * 	hue_shift <= hue_shift
 		 * ```
 		 */
 		@ $mol_mem
@@ -137,24 +147,6 @@ namespace $ {
 		 */
 		graphs_colored() {
 			return this.Plot().graphs_colored()
-		}
-
-		/**
-		 * ```tree
-		 * hue_base 140
-		 * ```
-		 */
-		hue_base() {
-			return 140
-		}
-
-		/**
-		 * ```tree
-		 * hue_shift 111
-		 * ```
-		 */
-		hue_shift() {
-			return 111
 		}
 	}
 

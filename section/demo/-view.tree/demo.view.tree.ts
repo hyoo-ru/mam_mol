@@ -12,9 +12,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Text $mol_row sub / <= Section $mol_section
-		 * 	head / \Section header
-		 * 	Content <= Section_content $mol_filler
+		 * sub / <= Text
 		 * ```
 		 */
 		sub() {
@@ -25,18 +23,12 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Text $mol_row sub / <= Section $mol_section
-		 * 	head / \Section header
-		 * 	Content <= Section_content $mol_filler
+		 * Section_content $mol_filler
 		 * ```
 		 */
 		@ $mol_mem
-		Text() {
-			const obj = new this.$.$mol_row()
-
-			obj.sub = () => [
-				this.Section()
-			] as readonly any[]
+		Section_content() {
+			const obj = new this.$.$mol_filler()
 
 			return obj
 		}
@@ -45,7 +37,7 @@ namespace $ {
 		 * ```tree
 		 * Section $mol_section
 		 * 	head / \Section header
-		 * 	Content <= Section_content $mol_filler
+		 * 	Content <= Section_content
 		 * ```
 		 */
 		@ $mol_mem
@@ -62,12 +54,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Section_content $mol_filler
+		 * Text $mol_row sub / <= Section
 		 * ```
 		 */
 		@ $mol_mem
-		Section_content() {
-			const obj = new this.$.$mol_filler()
+		Text() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				this.Section()
+			] as readonly any[]
 
 			return obj
 		}

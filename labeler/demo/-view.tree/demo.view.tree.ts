@@ -13,14 +13,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Provider $mol_labeler
-		 * 		title \Provider
-		 * 		content / \ACME Provider Inc.
-		 * 	<= Name $mol_labeler
-		 * 		title \User name
-		 * 		Content <= Name_control $mol_string
-		 * 			hint \Jack Sparrow
-		 * 			value?val <=> user_name?val \
+		 * 	<= Provider
+		 * 	<= Name
 		 * ```
 		 */
 		sub() {
@@ -51,28 +45,20 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Name $mol_labeler
-		 * 	title \User name
-		 * 	Content <= Name_control $mol_string
-		 * 		hint \Jack Sparrow
-		 * 		value?val <=> user_name?val \
+		 * user_name?val \
 		 * ```
 		 */
 		@ $mol_mem
-		Name() {
-			const obj = new this.$.$mol_labeler()
-
-			obj.title = () => "User name"
-			obj.Content = () => this.Name_control()
-
-			return obj
+		user_name(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
 		}
 
 		/**
 		 * ```tree
 		 * Name_control $mol_string
 		 * 	hint \Jack Sparrow
-		 * 	value?val <=> user_name?val \
+		 * 	value?val <=> user_name?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -87,13 +73,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * user_name?val \
+		 * Name $mol_labeler
+		 * 	title \User name
+		 * 	Content <= Name_control
 		 * ```
 		 */
 		@ $mol_mem
-		user_name(val?: any) {
-			if ( val !== undefined ) return val
-			return ""
+		Name() {
+			const obj = new this.$.$mol_labeler()
+
+			obj.title = () => "User name"
+			obj.Content = () => this.Name_control()
+
+			return obj
 		}
 	}
 

@@ -1,5 +1,6 @@
 {
 	"$mol_app_demo_detail_close_hint": "Close panel",
+	"$mol_app_demo_detail_edit_hint": "Edit this demo online",
 	"$mol_app_demo_detail_empty_postfix": "\"",
 	"$mol_app_demo_detail_empty_prefix": "No one demo with prefix \"",
 	"$mol_app_demo_detail_source_hint": "Source code of this demo",
@@ -16,6 +17,7 @@
 	"$mol_app_studio_preview_title": "Preview: ",
 	"$mol_app_studio_prop_add_hint": "Add this property",
 	"$mol_app_studio_source_title": "Source code",
+	"$mol_app_studio_speech_toggle_hint": "Speech contol",
 	"$mol_attach_demo_title": "Attach files an show them",
 	"$mol_bar_demo_title": "Group of controls as one control",
 	"$mol_bench_demo_title": "Benchmarking results visualization",

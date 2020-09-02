@@ -45,8 +45,8 @@ namespace $ {
 		 * ```tree
 		 * event *
 		 * 	^
-		 * 	click?event <=> event_activate?event null
-		 * 	keypress?event <=> event_key_press?event null
+		 * 	click?event <=> event_activate?event
+		 * 	keypress?event <=> event_key_press?event
 		 * ```
 		 */
 		event() {
@@ -55,6 +55,49 @@ namespace $ {
 				click: (event?: any) => this.event_activate(event),
 				keypress: (event?: any) => this.event_key_press(event)
 			}
+		}
+
+		/**
+		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	disabled <= disabled
+		 * 	role \button
+		 * 	tabindex <= tab_index
+		 * 	title <= hint_or_error
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				disabled: this.disabled(),
+				role: "button",
+				tabindex: this.tab_index(),
+				title: this.hint_or_error()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * sub /$mol_view_content <= title
+		 * ```
+		 */
+		sub() {
+			return [
+				this.title()
+			] as readonly $mol_view_content[]
+		}
+
+		/**
+		 * ```tree
+		 * Speck $mol_speck
+		 * ```
+		 */
+		@ $mol_mem
+		Speck() {
+			const obj = new this.$.$mol_speck()
+
+			return obj
 		}
 
 		/**
@@ -81,26 +124,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * attr *
-		 * 	^
-		 * 	disabled <= disabled false
-		 * 	role \button
-		 * 	tabindex <= tab_index 0
-		 * 	title <= hint_or_error <= hint \
-		 * ```
-		 */
-		attr() {
-			return {
-				...super.attr(),
-				disabled: this.disabled(),
-				role: "button",
-				tabindex: this.tab_index(),
-				title: this.hint_or_error()
-			}
-		}
-
-		/**
-		 * ```tree
 		 * disabled false
 		 * ```
 		 */
@@ -119,15 +142,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * hint_or_error <= hint \
-		 * ```
-		 */
-		hint_or_error() {
-			return this.hint()
-		}
-
-		/**
-		 * ```tree
 		 * hint \
 		 * ```
 		 */
@@ -137,25 +151,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub /$mol_view_content <= title
+		 * hint_or_error <= hint
 		 * ```
 		 */
-		sub() {
-			return [
-				this.title()
-			] as readonly $mol_view_content[]
-		}
-
-		/**
-		 * ```tree
-		 * Speck $mol_speck
-		 * ```
-		 */
-		@ $mol_mem
-		Speck() {
-			const obj = new this.$.$mol_speck()
-
-			return obj
+		hint_or_error() {
+			return this.hint()
 		}
 	}
 

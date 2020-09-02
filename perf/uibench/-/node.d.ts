@@ -918,12 +918,12 @@ declare namespace $ {
             scrollLeft: any;
             tabIndex: number;
         };
-        scroll_top(val?: any): any;
-        scroll_left(val?: any): any;
-        tabindex(): number;
         event(): {
             scroll: (event?: any) => any;
         };
+        scroll_top(val?: any): any;
+        scroll_left(val?: any): any;
+        tabindex(): number;
         event_scroll(event?: any): any;
     }
 }
@@ -959,13 +959,13 @@ declare namespace $ {
         render_visible_only(): boolean;
         render_over(): number;
         sub(): readonly $mol_view[];
-        rows(): readonly $mol_view[];
         Empty(): $mol_view;
         Gap_before(): $mol_view;
-        gap_before(): number;
         Gap_after(): $mol_view;
-        gap_after(): number;
         view_window(): readonly any[];
+        rows(): readonly $mol_view[];
+        gap_before(): number;
+        gap_after(): number;
     }
 }
 
@@ -1015,8 +1015,8 @@ declare namespace $ {
             class: string;
         };
         sub(): readonly any[];
-        rows(): readonly any[];
         Row(index: any): $$.$mol_perf_uibench_table_row;
+        rows(): readonly any[];
         row_state(index: any): any;
     }
     class $mol_perf_uibench_table_row extends $mol_view {
@@ -1027,13 +1027,13 @@ declare namespace $ {
             class: string;
             "data-id": number;
         };
+        sub(): readonly any[];
+        Cell(index: any): $$.$mol_perf_uibench_table_cell;
         classes(): string;
         id(): number;
-        sub(): readonly any[];
-        Head(): $$.$mol_perf_uibench_table_cell;
         head_text(): string;
+        Head(): $$.$mol_perf_uibench_table_cell;
         cells(): readonly any[];
-        Cell(index: any): $$.$mol_perf_uibench_table_cell;
         cell_state(index: any): any;
     }
     class $mol_perf_uibench_table_cell extends $mol_view {
@@ -1044,8 +1044,8 @@ declare namespace $ {
         event(): {
             click: (val?: any) => any;
         };
-        click(val?: any): any;
         sub(): readonly any[];
+        click(val?: any): any;
         text(): string;
     }
 }
@@ -1085,8 +1085,8 @@ declare namespace $ {
             class: string;
         };
         sub(): readonly any[];
-        boxes(): readonly any[];
         Box(index: any): $$.$mol_perf_uibench_anim_box;
+        boxes(): readonly any[];
         box_state(index: any): any;
     }
     class $mol_perf_uibench_anim_box extends $mol_view {
@@ -1095,11 +1095,11 @@ declare namespace $ {
             class: string;
             "data-id": string;
         };
-        id(): string;
         style(): {
             borderRadius: string;
             background: string;
         };
+        id(): string;
         style_radius(): string;
         style_color(): string;
     }
@@ -1132,8 +1132,8 @@ declare namespace $ {
             class: string;
         };
         sub(): readonly any[];
-        Root(): $$.$mol_perf_uibench_tree_branch;
         root_state(): any;
+        Root(): $$.$mol_perf_uibench_tree_branch;
     }
     class $mol_perf_uibench_tree_branch extends $mol_list {
         state(): any;
@@ -1142,8 +1142,8 @@ declare namespace $ {
             class: string;
         };
         Branch(index: any): $$.$mol_perf_uibench_tree_branch;
-        branch_state(index: any): any;
         Leaf(index: any): $mol_perf_uibench_tree_leaf;
+        branch_state(index: any): any;
         leaf_state(index: any): any;
     }
     class $mol_perf_uibench_tree_leaf extends $mol_view {
@@ -1180,12 +1180,12 @@ declare namespace $ {
             class: string;
         };
         sub(): readonly any[];
-        Table(): $$.$mol_perf_uibench_table;
         table_state(): any;
-        Anim(): $$.$mol_perf_uibench_anim;
+        Table(): $$.$mol_perf_uibench_table;
         anim_state(): any;
-        Tree(): $$.$mol_perf_uibench_tree;
+        Anim(): $$.$mol_perf_uibench_anim;
         tree_state(): any;
+        Tree(): $$.$mol_perf_uibench_tree;
     }
 }
 
@@ -1218,8 +1218,8 @@ declare namespace $ {
 declare namespace $ {
     class $mol_view_tree_test_binding extends $mol_view {
         value(val?: any): any;
-        task_title_new(val?: any): any;
         enabled(): boolean;
+        task_title_new(val?: any): any;
         head_complete_enabled(): boolean;
     }
 }

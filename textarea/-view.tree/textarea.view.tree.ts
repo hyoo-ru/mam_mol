@@ -3,7 +3,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * event * keydown?event <=> press?event null
+		 * event * keydown?event <=> press?event
 		 * ```
 		 */
 		event() {
@@ -14,24 +14,9 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * press?event null
-		 * ```
-		 */
-		@ $mol_mem
-		press(event?: any) {
-			if ( event !== undefined ) return event
-			return null as any
-		}
-
-		/**
-		 * ```tree
 		 * sub /
-		 * 	<= Edit $mol_string
-		 * 		dom_name \textarea
-		 * 		value?val <=> value?val \
-		 * 		hint <= hint \
-		 * 		enabled <= enabled true
-		 * 	<= View $mol_text text <= text \
+		 * 	<= Edit
+		 * 	<= View
 		 * ```
 		 */
 		sub() {
@@ -43,23 +28,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Edit $mol_string
-		 * 	dom_name \textarea
-		 * 	value?val <=> value?val \
-		 * 	hint <= hint \
-		 * 	enabled <= enabled true
+		 * press?event null
 		 * ```
 		 */
 		@ $mol_mem
-		Edit() {
-			const obj = new this.$.$mol_string()
-
-			obj.dom_name = () => "textarea"
-			obj.value = (val?: any) => this.value(val)
-			obj.hint = () => this.hint()
-			obj.enabled = () => this.enabled()
-
-			return obj
+		press(event?: any) {
+			if ( event !== undefined ) return event
+			return null as any
 		}
 
 		/**
@@ -93,14 +68,21 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * View $mol_text text <= text \
+		 * Edit $mol_string
+		 * 	dom_name \textarea
+		 * 	value?val <=> value?val
+		 * 	hint <= hint
+		 * 	enabled <= enabled
 		 * ```
 		 */
 		@ $mol_mem
-		View() {
-			const obj = new this.$.$mol_text()
+		Edit() {
+			const obj = new this.$.$mol_string()
 
-			obj.text = () => this.text()
+			obj.dom_name = () => "textarea"
+			obj.value = (val?: any) => this.value(val)
+			obj.hint = () => this.hint()
+			obj.enabled = () => this.enabled()
 
 			return obj
 		}
@@ -112,6 +94,20 @@ namespace $ {
 		 */
 		text() {
 			return ""
+		}
+
+		/**
+		 * ```tree
+		 * View $mol_text text <= text
+		 * ```
+		 */
+		@ $mol_mem
+		View() {
+			const obj = new this.$.$mol_text()
+
+			obj.text = () => this.text()
+
+			return obj
 		}
 	}
 

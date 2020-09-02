@@ -30,88 +30,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Chart $mol_chart graphs /
-		 * 	<= Forces_left $mol_plot_dot
-		 * 		title <= forces_left_title @ \Left wheel
-		 * 		series_x <= forces_left_x /number
-		 * 		series_y <= forces_left_y /number
-		 * 		points_max <= points_max
-		 * 	<= Forces_right $mol_plot_dot
-		 * 		title <= forces_right_title @ \Right wheel
-		 * 		series_x <= forces_right_x /number
-		 * 		series_y <= forces_right_y /number
-		 * 		points_max <= points_max
-		 * 	<= Vert_ruler $mol_plot_ruler_vert title <= vert_title @ \kN
-		 * 	<= Hor_ruler $mol_plot_ruler_hor
-		 * 		title <= hor_title @ \cm
-		 * 		series_x <= forces_left_x
-		 * 	<= Cross $mol_plot_mark_cross graphs /
-		 * 		<= Forces_left
-		 * 		<= Forces_right
+		 * sub / <= Chart
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Chart()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Chart $mol_chart graphs /
-		 * 	<= Forces_left $mol_plot_dot
-		 * 		title <= forces_left_title @ \Left wheel
-		 * 		series_x <= forces_left_x /number
-		 * 		series_y <= forces_left_y /number
-		 * 		points_max <= points_max
-		 * 	<= Forces_right $mol_plot_dot
-		 * 		title <= forces_right_title @ \Right wheel
-		 * 		series_x <= forces_right_x /number
-		 * 		series_y <= forces_right_y /number
-		 * 		points_max <= points_max
-		 * 	<= Vert_ruler $mol_plot_ruler_vert title <= vert_title @ \kN
-		 * 	<= Hor_ruler $mol_plot_ruler_hor
-		 * 		title <= hor_title @ \cm
-		 * 		series_x <= forces_left_x
-		 * 	<= Cross $mol_plot_mark_cross graphs /
-		 * 		<= Forces_left
-		 * 		<= Forces_right
-		 * ```
-		 */
-		@ $mol_mem
-		Chart() {
-			const obj = new this.$.$mol_chart()
-
-			obj.graphs = () => [
-				this.Forces_left(),
-				this.Forces_right(),
-				this.Vert_ruler(),
-				this.Hor_ruler(),
-				this.Cross()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Forces_left $mol_plot_dot
-		 * 	title <= forces_left_title @ \Left wheel
-		 * 	series_x <= forces_left_x /number
-		 * 	series_y <= forces_left_y /number
-		 * 	points_max <= points_max
-		 * ```
-		 */
-		@ $mol_mem
-		Forces_left() {
-			const obj = new this.$.$mol_plot_dot()
-
-			obj.title = () => this.forces_left_title()
-			obj.series_x = () => this.forces_left_x()
-			obj.series_y = () => this.forces_left_y()
-			obj.points_max = () => this.points_max()
-
-			return obj
 		}
 
 		/**
@@ -147,20 +72,20 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Forces_right $mol_plot_dot
-		 * 	title <= forces_right_title @ \Right wheel
-		 * 	series_x <= forces_right_x /number
-		 * 	series_y <= forces_right_y /number
+		 * Forces_left $mol_plot_dot
+		 * 	title <= forces_left_title
+		 * 	series_x <= forces_left_x
+		 * 	series_y <= forces_left_y
 		 * 	points_max <= points_max
 		 * ```
 		 */
 		@ $mol_mem
-		Forces_right() {
+		Forces_left() {
 			const obj = new this.$.$mol_plot_dot()
 
-			obj.title = () => this.forces_right_title()
-			obj.series_x = () => this.forces_right_x()
-			obj.series_y = () => this.forces_right_y()
+			obj.title = () => this.forces_left_title()
+			obj.series_x = () => this.forces_left_x()
+			obj.series_y = () => this.forces_left_y()
 			obj.points_max = () => this.points_max()
 
 			return obj
@@ -199,14 +124,21 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Vert_ruler $mol_plot_ruler_vert title <= vert_title @ \kN
+		 * Forces_right $mol_plot_dot
+		 * 	title <= forces_right_title
+		 * 	series_x <= forces_right_x
+		 * 	series_y <= forces_right_y
+		 * 	points_max <= points_max
 		 * ```
 		 */
 		@ $mol_mem
-		Vert_ruler() {
-			const obj = new this.$.$mol_plot_ruler_vert()
+		Forces_right() {
+			const obj = new this.$.$mol_plot_dot()
 
-			obj.title = () => this.vert_title()
+			obj.title = () => this.forces_right_title()
+			obj.series_x = () => this.forces_right_x()
+			obj.series_y = () => this.forces_right_y()
+			obj.points_max = () => this.points_max()
 
 			return obj
 		}
@@ -222,17 +154,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Hor_ruler $mol_plot_ruler_hor
-		 * 	title <= hor_title @ \cm
-		 * 	series_x <= forces_left_x
+		 * Vert_ruler $mol_plot_ruler_vert title <= vert_title
 		 * ```
 		 */
 		@ $mol_mem
-		Hor_ruler() {
-			const obj = new this.$.$mol_plot_ruler_hor()
+		Vert_ruler() {
+			const obj = new this.$.$mol_plot_ruler_vert()
 
-			obj.title = () => this.hor_title()
-			obj.series_x = () => this.forces_left_x()
+			obj.title = () => this.vert_title()
 
 			return obj
 		}
@@ -244,6 +173,23 @@ namespace $ {
 		 */
 		hor_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_forces_hor_title' )
+		}
+
+		/**
+		 * ```tree
+		 * Hor_ruler $mol_plot_ruler_hor
+		 * 	title <= hor_title
+		 * 	series_x <= forces_left_x
+		 * ```
+		 */
+		@ $mol_mem
+		Hor_ruler() {
+			const obj = new this.$.$mol_plot_ruler_hor()
+
+			obj.title = () => this.hor_title()
+			obj.series_x = () => this.forces_left_x()
+
+			return obj
 		}
 
 		/**
@@ -260,6 +206,31 @@ namespace $ {
 			obj.graphs = () => [
 				this.Forces_left(),
 				this.Forces_right()
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Chart $mol_chart graphs /
+		 * 	<= Forces_left
+		 * 	<= Forces_right
+		 * 	<= Vert_ruler
+		 * 	<= Hor_ruler
+		 * 	<= Cross
+		 * ```
+		 */
+		@ $mol_mem
+		Chart() {
+			const obj = new this.$.$mol_chart()
+
+			obj.graphs = () => [
+				this.Forces_left(),
+				this.Forces_right(),
+				this.Vert_ruler(),
+				this.Hor_ruler(),
+				this.Cross()
 			] as readonly any[]
 
 			return obj

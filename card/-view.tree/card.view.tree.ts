@@ -5,7 +5,7 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	mol_card_status_type <= status \
+		 * 	mol_card_status_type <= status
 		 * ```
 		 */
 		attr() {
@@ -17,20 +17,9 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * status \
-		 * ```
-		 */
-		status() {
-			return ""
-		}
-
-		/**
-		 * ```tree
 		 * rows /$mol_view
-		 * 	<= Content $mol_view sub <= content /$mol_view_content
-		 * 	<= Status $mol_view
-		 * 		minimal_height 30
-		 * 		sub / <= status_text <= status \
+		 * 	<= Content
+		 * 	<= Status
 		 * ```
 		 */
 		rows() {
@@ -42,16 +31,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Content $mol_view sub <= content /$mol_view_content
+		 * status \
 		 * ```
 		 */
-		@ $mol_mem
-		Content() {
-			const obj = new this.$.$mol_view()
-
-			obj.sub = () => this.content()
-
-			return obj
+		status() {
+			return ""
 		}
 
 		/**
@@ -67,9 +51,32 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Content $mol_view sub <= content
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => this.content()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * status_text <= status
+		 * ```
+		 */
+		status_text() {
+			return this.status()
+		}
+
+		/**
+		 * ```tree
 		 * Status $mol_view
 		 * 	minimal_height 30
-		 * 	sub / <= status_text <= status \
+		 * 	sub / <= status_text
 		 * ```
 		 */
 		@ $mol_mem
@@ -82,15 +89,6 @@ namespace $ {
 			] as readonly any[]
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * status_text <= status \
-		 * ```
-		 */
-		status_text() {
-			return this.status()
 		}
 	}
 

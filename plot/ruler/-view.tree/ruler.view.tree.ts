@@ -105,18 +105,10 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Background $mol_svg_rect
-		 * 		pos_x <= background_x \0
-		 * 		pos_y <= background_y \0
-		 * 		width <= background_width \100%
-		 * 		height <= background_height \14
-		 * 	<= Curve $mol_svg_path geometry <= curve \
-		 * 	<= labels_formatted /
-		 * 	<= Title $mol_svg_text_box
-		 * 		pos_x <= title_pos_x \0
-		 * 		pos_y <= title_pos_y \100%
-		 * 		align <= title_align \start
-		 * 		text <= title
+		 * 	<= Background
+		 * 	<= Curve
+		 * 	<= labels_formatted
+		 * 	<= Title
 		 * ```
 		 */
 		sub() {
@@ -130,21 +122,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Background $mol_svg_rect
-		 * 	pos_x <= background_x \0
-		 * 	pos_y <= background_y \0
-		 * 	width <= background_width \100%
-		 * 	height <= background_height \14
+		 * Label!index $mol_svg_text
+		 * 	pos <= label_pos!index
+		 * 	text <= label_text!index
+		 * 	align <= label_align
 		 * ```
 		 */
-		@ $mol_mem
-		Background() {
-			const obj = new this.$.$mol_svg_rect()
+		@ $mol_mem_key
+		Label(index: any) {
+			const obj = new this.$.$mol_svg_text()
 
-			obj.pos_x = () => this.background_x()
-			obj.pos_y = () => this.background_y()
-			obj.width = () => this.background_width()
-			obj.height = () => this.background_height()
+			obj.pos = () => this.label_pos(index)
+			obj.text = () => this.label_text(index)
+			obj.align = () => this.label_align()
 
 			return obj
 		}
@@ -187,14 +177,21 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Curve $mol_svg_path geometry <= curve \
+		 * Background $mol_svg_rect
+		 * 	pos_x <= background_x
+		 * 	pos_y <= background_y
+		 * 	width <= background_width
+		 * 	height <= background_height
 		 * ```
 		 */
 		@ $mol_mem
-		Curve() {
-			const obj = new this.$.$mol_svg_path()
+		Background() {
+			const obj = new this.$.$mol_svg_rect()
 
-			obj.geometry = () => this.curve()
+			obj.pos_x = () => this.background_x()
+			obj.pos_y = () => this.background_y()
+			obj.width = () => this.background_width()
+			obj.height = () => this.background_height()
 
 			return obj
 		}
@@ -210,6 +207,20 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Curve $mol_svg_path geometry <= curve
+		 * ```
+		 */
+		@ $mol_mem
+		Curve() {
+			const obj = new this.$.$mol_svg_path()
+
+			obj.geometry = () => this.curve()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * labels_formatted /
 		 * ```
 		 */
@@ -217,27 +228,6 @@ namespace $ {
 			return [
 
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Title $mol_svg_text_box
-		 * 	pos_x <= title_pos_x \0
-		 * 	pos_y <= title_pos_y \100%
-		 * 	align <= title_align \start
-		 * 	text <= title
-		 * ```
-		 */
-		@ $mol_mem
-		Title() {
-			const obj = new this.$.$mol_svg_text_box()
-
-			obj.pos_x = () => this.title_pos_x()
-			obj.pos_y = () => this.title_pos_y()
-			obj.align = () => this.title_align()
-			obj.text = () => this.title()
-
-			return obj
 		}
 
 		/**
@@ -269,37 +259,23 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Label!index $mol_svg_text
-		 * 	pos <= label_pos!index /
-		 * 		<= label_pos_x!index \
-		 * 		<= label_pos_y!index \
-		 * 	text <= label_text!index \
-		 * 	align <= label_align \
+		 * Title $mol_svg_text_box
+		 * 	pos_x <= title_pos_x
+		 * 	pos_y <= title_pos_y
+		 * 	align <= title_align
+		 * 	text <= title
 		 * ```
 		 */
-		@ $mol_mem_key
-		Label(index: any) {
-			const obj = new this.$.$mol_svg_text()
+		@ $mol_mem
+		Title() {
+			const obj = new this.$.$mol_svg_text_box()
 
-			obj.pos = () => this.label_pos(index)
-			obj.text = () => this.label_text(index)
-			obj.align = () => this.label_align()
+			obj.pos_x = () => this.title_pos_x()
+			obj.pos_y = () => this.title_pos_y()
+			obj.align = () => this.title_align()
+			obj.text = () => this.title()
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * label_pos!index /
-		 * 	<= label_pos_x!index \
-		 * 	<= label_pos_y!index \
-		 * ```
-		 */
-		label_pos(index: any) {
-			return [
-				this.label_pos_x(index),
-				this.label_pos_y(index)
-			] as readonly any[]
 		}
 
 		/**
@@ -318,6 +294,20 @@ namespace $ {
 		 */
 		label_pos_y(index: any) {
 			return ""
+		}
+
+		/**
+		 * ```tree
+		 * label_pos!index /
+		 * 	<= label_pos_x!index
+		 * 	<= label_pos_y!index
+		 * ```
+		 */
+		label_pos(index: any) {
+			return [
+				this.label_pos_x(index),
+				this.label_pos_y(index)
+			] as readonly any[]
 		}
 
 		/**

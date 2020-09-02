@@ -12,52 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * body / <= Content $mol_row sub / <= Text $mol_text text <= content \
+		 * body / <= Content
 		 * ```
 		 */
 		body() {
 			return [
 				this.Content()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Content $mol_row sub / <= Text $mol_text text <= content \
-		 * ```
-		 */
-		@ $mol_mem
-		Content() {
-			const obj = new this.$.$mol_row()
-
-			obj.sub = () => [
-				this.Text()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Text $mol_text text <= content \
-		 * ```
-		 */
-		@ $mol_mem
-		Text() {
-			const obj = new this.$.$mol_text()
-
-			obj.text = () => this.content()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * content \
-		 * ```
-		 */
-		content() {
-			return ""
 		}
 
 
@@ -77,6 +38,45 @@ namespace $ {
 				"mol/app/quine/index.html",
 				"mol/app/quine/quine.locale=ru.json"
 			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * content \
+		 * ```
+		 */
+		content() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Text $mol_text text <= content
+		 * ```
+		 */
+		@ $mol_mem
+		Text() {
+			const obj = new this.$.$mol_text()
+
+			obj.text = () => this.content()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Content $mol_row sub / <= Text
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				this.Text()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

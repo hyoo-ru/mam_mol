@@ -18,8 +18,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Bar $mol_view sub <= items /$mol_view
-		 * 	<= Expand $mol_check_expand checked?val <=> expanded?val false
+		 * 	<= Bar
+		 * 	<= Expand
 		 * ```
 		 */
 		sub() {
@@ -27,20 +27,6 @@ namespace $ {
 				this.Bar(),
 				this.Expand()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Bar $mol_view sub <= items /$mol_view
-		 * ```
-		 */
-		@ $mol_mem
-		Bar() {
-			const obj = new this.$.$mol_view()
-
-			obj.sub = () => this.items()
-
-			return obj
 		}
 
 		/**
@@ -56,14 +42,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Expand $mol_check_expand checked?val <=> expanded?val false
+		 * Bar $mol_view sub <= items
 		 * ```
 		 */
 		@ $mol_mem
-		Expand() {
-			const obj = new this.$.$mol_check_expand()
+		Bar() {
+			const obj = new this.$.$mol_view()
 
-			obj.checked = (val?: any) => this.expanded(val)
+			obj.sub = () => this.items()
 
 			return obj
 		}
@@ -77,6 +63,20 @@ namespace $ {
 		expanded(val?: any) {
 			if ( val !== undefined ) return val
 			return false
+		}
+
+		/**
+		 * ```tree
+		 * Expand $mol_check_expand checked?val <=> expanded?val
+		 * ```
+		 */
+		@ $mol_mem
+		Expand() {
+			const obj = new this.$.$mol_check_expand()
+
+			obj.checked = (val?: any) => this.expanded(val)
+
+			return obj
 		}
 	}
 

@@ -3,22 +3,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * records <= result *
+		 * records <= result
 		 * ```
 		 */
 		records() {
 			return this.result()
-		}
-
-		/**
-		 * ```tree
-		 * result *
-		 * ```
-		 */
-		result() {
-			return {
-
-			}
 		}
 
 		/**
@@ -36,10 +25,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Col_head!id $mol_bench_head
-		 * 	event_click?val <=> event_sort_toggle!id?val null
-		 * 	sub <= col_head_content!id /
-		 * 		<= col_head_title!id \
-		 * 		<= Col_head_sort!id $mol_icon_sort_asc
+		 * 	event_click?val <=> event_sort_toggle!id?val
+		 * 	sub <= col_head_content!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -52,6 +39,32 @@ namespace $ {
 			return obj
 		}
 
+
+		/**
+		 * ```tree
+		 * cell_content_number!id /
+		 * 	<= result_value!id
+		 * 	<= Result_portion!id
+		 * ```
+		 */
+		cell_content_number(id: any) {
+			return [
+				this.result_value(id),
+				this.Result_portion(id)
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * result *
+		 * ```
+		 */
+		result() {
+			return {
+
+			}
+		}
+
 		/**
 		 * ```tree
 		 * event_sort_toggle!id?val null
@@ -61,20 +74,6 @@ namespace $ {
 		event_sort_toggle(id: any, val?: any) {
 			if ( val !== undefined ) return val
 			return null as any
-		}
-
-		/**
-		 * ```tree
-		 * col_head_content!id /
-		 * 	<= col_head_title!id \
-		 * 	<= Col_head_sort!id $mol_icon_sort_asc
-		 * ```
-		 */
-		col_head_content(id: any) {
-			return [
-				this.col_head_title(id),
-				this.Col_head_sort(id)
-			] as readonly any[]
 		}
 
 		/**
@@ -98,18 +97,17 @@ namespace $ {
 			return obj
 		}
 
-
 		/**
 		 * ```tree
-		 * cell_content_number!id /
-		 * 	<= result_value!id \
-		 * 	<= Result_portion!id $mol_portion portion <= result_portion!id 0
+		 * col_head_content!id /
+		 * 	<= col_head_title!id
+		 * 	<= Col_head_sort!id
 		 * ```
 		 */
-		cell_content_number(id: any) {
+		col_head_content(id: any) {
 			return [
-				this.result_value(id),
-				this.Result_portion(id)
+				this.col_head_title(id),
+				this.Col_head_sort(id)
 			] as readonly any[]
 		}
 
@@ -124,7 +122,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Result_portion!id $mol_portion portion <= result_portion!id 0
+		 * result_portion!id 0
+		 * ```
+		 */
+		result_portion(id: any) {
+			return 0
+		}
+
+		/**
+		 * ```tree
+		 * Result_portion!id $mol_portion portion <= result_portion!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -134,15 +141,6 @@ namespace $ {
 			obj.portion = () => this.result_portion(id)
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * result_portion!id 0
-		 * ```
-		 */
-		result_portion(id: any) {
-			return 0
 		}
 	}
 
@@ -161,13 +159,27 @@ namespace $ {
 		 * ```tree
 		 * event *
 		 * 	^
-		 * 	click?val <=> event_click?val null
+		 * 	click?val <=> event_click?val
 		 * ```
 		 */
 		event() {
 			return {
 				...super.event(),
 				click: (val?: any) => this.event_click(val)
+			}
+		}
+
+		/**
+		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	title <= hint
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				title: this.hint()
 			}
 		}
 
@@ -180,20 +192,6 @@ namespace $ {
 		event_click(val?: any) {
 			if ( val !== undefined ) return val
 			return null as any
-		}
-
-		/**
-		 * ```tree
-		 * attr *
-		 * 	^
-		 * 	title <= hint @ \Click to sort by this column
-		 * ```
-		 */
-		attr() {
-			return {
-				...super.attr(),
-				title: this.hint()
-			}
 		}
 
 		/**

@@ -13,16 +13,9 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Empty_descr $mol_textarea
-		 * 		hint \source code
-		 * 		value?val <=> empty_descr?val \
-		 * 	<= Filled_descr $mol_textarea value?val <=> filled_descr?val \
-		 * 		\function hello( name = 'World' ) {
-		 * 		\	return `Hello, ${ name }!`
-		 * 		\}
-		 * 	<= Disabled $mol_textarea
-		 * 		enabled false
-		 * 		value?val <=> filled_descr?val
+		 * 	<= Empty_descr
+		 * 	<= Filled_descr
+		 * 	<= Disabled
 		 * ```
 		 */
 		sub() {
@@ -31,23 +24,6 @@ namespace $ {
 				this.Filled_descr(),
 				this.Disabled()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Empty_descr $mol_textarea
-		 * 	hint \source code
-		 * 	value?val <=> empty_descr?val \
-		 * ```
-		 */
-		@ $mol_mem
-		Empty_descr() {
-			const obj = new this.$.$mol_textarea()
-
-			obj.hint = () => "source code"
-			obj.value = (val?: any) => this.empty_descr(val)
-
-			return obj
 		}
 
 		/**
@@ -63,17 +39,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Filled_descr $mol_textarea value?val <=> filled_descr?val \
-		 * 	\function hello( name = 'World' ) {
-		 * 	\	return `Hello, ${ name }!`
-		 * 	\}
+		 * Empty_descr $mol_textarea
+		 * 	hint \source code
+		 * 	value?val <=> empty_descr?val
 		 * ```
 		 */
 		@ $mol_mem
-		Filled_descr() {
+		Empty_descr() {
 			const obj = new this.$.$mol_textarea()
 
-			obj.value = (val?: any) => this.filled_descr(val)
+			obj.hint = () => "source code"
+			obj.value = (val?: any) => this.empty_descr(val)
 
 			return obj
 		}
@@ -90,6 +66,20 @@ namespace $ {
 		filled_descr(val?: any) {
 			if ( val !== undefined ) return val
 			return "function hello( name = 'World' ) {\n\treturn `Hello, ${ name }!`\n}"
+		}
+
+		/**
+		 * ```tree
+		 * Filled_descr $mol_textarea value?val <=> filled_descr?val
+		 * ```
+		 */
+		@ $mol_mem
+		Filled_descr() {
+			const obj = new this.$.$mol_textarea()
+
+			obj.value = (val?: any) => this.filled_descr(val)
+
+			return obj
 		}
 
 		/**

@@ -26,32 +26,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Calendar $mol_calendar
-		 * 	month_string <= month \2018-01
-		 * 	day_selected!day <= selected!day false
+		 * sub / <= Calendar
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Calendar()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Calendar $mol_calendar
-		 * 	month_string <= month \2018-01
-		 * 	day_selected!day <= selected!day false
-		 * ```
-		 */
-		@ $mol_mem
-		Calendar() {
-			const obj = new this.$.$mol_calendar()
-
-			obj.month_string = () => this.month()
-			obj.day_selected = (day: any) => this.selected(day)
-
-			return obj
 		}
 
 		/**
@@ -70,6 +51,23 @@ namespace $ {
 		 */
 		selected(day: any) {
 			return false
+		}
+
+		/**
+		 * ```tree
+		 * Calendar $mol_calendar
+		 * 	month_string <= month
+		 * 	day_selected!day <= selected!day
+		 * ```
+		 */
+		@ $mol_mem
+		Calendar() {
+			const obj = new this.$.$mol_calendar()
+
+			obj.month_string = () => this.month()
+			obj.day_selected = (day: any) => this.selected(day)
+
+			return obj
 		}
 	}
 

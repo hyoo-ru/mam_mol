@@ -28,7 +28,7 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	mol_plot_graph_type <= type \solid
+		 * 	mol_plot_graph_type <= type
 		 * ```
 		 */
 		attr() {
@@ -38,21 +38,12 @@ namespace $ {
 			}
 		}
 
-		/**
-		 * ```tree
-		 * type \solid
-		 * ```
-		 */
-		type() {
-			return "solid"
-		}
-
 
 		/**
 		 * ```tree
 		 * style *
 		 * 	^
-		 * 	color <= color \
+		 * 	color <= color
 		 * ```
 		 */
 		style() {
@@ -62,25 +53,12 @@ namespace $ {
 			}
 		}
 
-		/**
-		 * ```tree
-		 * color \
-		 * ```
-		 */
-		color() {
-			return ""
-		}
-
 
 		/**
 		 * ```tree
 		 * viewport $mol_vector_2d /
-		 * 	<= viewport_x $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
-		 * 	<= viewport_y $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
+		 * 	<= viewport_x
+		 * 	<= viewport_y
 		 * ```
 		 */
 		@ $mol_mem
@@ -88,40 +66,6 @@ namespace $ {
 			const obj = new this.$.$mol_vector_2d(
 				this.viewport_x(),
 				this.viewport_y()
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * viewport_x $mol_vector_range /
-		 * 	Infinity
-		 * 	-Infinity
-		 * ```
-		 */
-		@ $mol_mem
-		viewport_x() {
-			const obj = new this.$.$mol_vector_range(
-				Infinity,
-				-Infinity
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * viewport_y $mol_vector_range /
-		 * 	Infinity
-		 * 	-Infinity
-		 * ```
-		 */
-		@ $mol_mem
-		viewport_y() {
-			const obj = new this.$.$mol_vector_range(
-				Infinity,
-				-Infinity
 			)
 
 			return obj
@@ -175,12 +119,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * dimensions_pane $mol_vector_2d /
-		 * 	<= dimensions_pane_x $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
-		 * 	<= dimensions_pane_y $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
+		 * 	<= dimensions_pane_x
+		 * 	<= dimensions_pane_y
 		 * ```
 		 */
 		@ $mol_mem
@@ -195,47 +135,9 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * dimensions_pane_x $mol_vector_range /
-		 * 	Infinity
-		 * 	-Infinity
-		 * ```
-		 */
-		@ $mol_mem
-		dimensions_pane_x() {
-			const obj = new this.$.$mol_vector_range(
-				Infinity,
-				-Infinity
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * dimensions_pane_y $mol_vector_range /
-		 * 	Infinity
-		 * 	-Infinity
-		 * ```
-		 */
-		@ $mol_mem
-		dimensions_pane_y() {
-			const obj = new this.$.$mol_vector_range(
-				Infinity,
-				-Infinity
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * dimensions $mol_vector_2d /
-		 * 	<= dimensions_x $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
-		 * 	<= dimensions_y $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
+		 * 	<= dimensions_x
+		 * 	<= dimensions_y
 		 * ```
 		 */
 		@ $mol_mem
@@ -243,40 +145,6 @@ namespace $ {
 			const obj = new this.$.$mol_vector_2d(
 				this.dimensions_x(),
 				this.dimensions_y()
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * dimensions_x $mol_vector_range /
-		 * 	Infinity
-		 * 	-Infinity
-		 * ```
-		 */
-		@ $mol_mem
-		dimensions_x() {
-			const obj = new this.$.$mol_vector_range(
-				Infinity,
-				-Infinity
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * dimensions_y $mol_vector_range /
-		 * 	Infinity
-		 * 	-Infinity
-		 * ```
-		 */
-		@ $mol_mem
-		dimensions_y() {
-			const obj = new this.$.$mol_vector_range(
-				Infinity,
-				-Infinity
 			)
 
 			return obj
@@ -302,12 +170,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * gap $mol_vector_2d /
-		 * 	<= gap_x $mol_vector_range /
-		 * 		0
-		 * 		0
-		 * 	<= gap_y $mol_vector_range /
-		 * 		0
-		 * 		0
+		 * 	<= gap_x
+		 * 	<= gap_y
 		 * ```
 		 */
 		@ $mol_mem
@@ -315,40 +179,6 @@ namespace $ {
 			const obj = new this.$.$mol_vector_2d(
 				this.gap_x(),
 				this.gap_y()
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * gap_x $mol_vector_range /
-		 * 	0
-		 * 	0
-		 * ```
-		 */
-		@ $mol_mem
-		gap_x() {
-			const obj = new this.$.$mol_vector_range(
-				0,
-				0
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * gap_y $mol_vector_range /
-		 * 	0
-		 * 	0
-		 * ```
-		 */
-		@ $mol_mem
-		gap_y() {
-			const obj = new this.$.$mol_vector_range(
-				0,
-				0
 			)
 
 			return obj
@@ -415,23 +245,6 @@ namespace $ {
 		Sample() {
 			return null as any
 		}
-	}
-
-	export class $mol_plot_graph_sample extends $mol_view {
-
-		/**
-		 * ```tree
-		 * attr *
-		 * 	^
-		 * 	mol_plot_graph_type <= type \solid
-		 * ```
-		 */
-		attr() {
-			return {
-				...super.attr(),
-				mol_plot_graph_type: this.type()
-			}
-		}
 
 		/**
 		 * ```tree
@@ -444,9 +257,171 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * color \
+		 * ```
+		 */
+		color() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * viewport_x $mol_vector_range /
+		 * 	Infinity
+		 * 	-Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		viewport_x() {
+			const obj = new this.$.$mol_vector_range(
+				Infinity,
+				-Infinity
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * viewport_y $mol_vector_range /
+		 * 	Infinity
+		 * 	-Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		viewport_y() {
+			const obj = new this.$.$mol_vector_range(
+				Infinity,
+				-Infinity
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * dimensions_pane_x $mol_vector_range /
+		 * 	Infinity
+		 * 	-Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		dimensions_pane_x() {
+			const obj = new this.$.$mol_vector_range(
+				Infinity,
+				-Infinity
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * dimensions_pane_y $mol_vector_range /
+		 * 	Infinity
+		 * 	-Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		dimensions_pane_y() {
+			const obj = new this.$.$mol_vector_range(
+				Infinity,
+				-Infinity
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * dimensions_x $mol_vector_range /
+		 * 	Infinity
+		 * 	-Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		dimensions_x() {
+			const obj = new this.$.$mol_vector_range(
+				Infinity,
+				-Infinity
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * dimensions_y $mol_vector_range /
+		 * 	Infinity
+		 * 	-Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		dimensions_y() {
+			const obj = new this.$.$mol_vector_range(
+				Infinity,
+				-Infinity
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * gap_x $mol_vector_range /
+		 * 	0
+		 * 	0
+		 * ```
+		 */
+		@ $mol_mem
+		gap_x() {
+			const obj = new this.$.$mol_vector_range(
+				0,
+				0
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * gap_y $mol_vector_range /
+		 * 	0
+		 * 	0
+		 * ```
+		 */
+		@ $mol_mem
+		gap_y() {
+			const obj = new this.$.$mol_vector_range(
+				0,
+				0
+			)
+
+			return obj
+		}
+	}
+
+	export class $mol_plot_graph_sample extends $mol_view {
+
+		/**
+		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	mol_plot_graph_type <= type
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				mol_plot_graph_type: this.type()
+			}
+		}
+
+		/**
+		 * ```tree
 		 * style *
 		 * 	^
-		 * 	color <= color \black
+		 * 	color <= color
 		 * ```
 		 */
 		style() {
@@ -454,6 +429,15 @@ namespace $ {
 				...super.style(),
 				color: this.color()
 			}
+		}
+
+		/**
+		 * ```tree
+		 * type \solid
+		 * ```
+		 */
+		type() {
+			return "solid"
 		}
 
 		/**

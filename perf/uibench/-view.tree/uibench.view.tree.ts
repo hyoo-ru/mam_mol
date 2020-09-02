@@ -18,9 +18,9 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Table $mol_perf_uibench_table state <= table_state null
-		 * 	<= Anim $mol_perf_uibench_anim state <= anim_state null
-		 * 	<= Tree $mol_perf_uibench_tree state <= tree_state null
+		 * 	<= Table
+		 * 	<= Anim
+		 * 	<= Tree
 		 * ```
 		 */
 		sub() {
@@ -29,20 +29,6 @@ namespace $ {
 				this.Anim(),
 				this.Tree()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Table $mol_perf_uibench_table state <= table_state null
-		 * ```
-		 */
-		@ $mol_mem
-		Table() {
-			const obj = new this.$.$mol_perf_uibench_table()
-
-			obj.state = () => this.table_state()
-
-			return obj
 		}
 
 		/**
@@ -56,14 +42,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Anim $mol_perf_uibench_anim state <= anim_state null
+		 * Table $mol_perf_uibench_table state <= table_state
 		 * ```
 		 */
 		@ $mol_mem
-		Anim() {
-			const obj = new this.$.$mol_perf_uibench_anim()
+		Table() {
+			const obj = new this.$.$mol_perf_uibench_table()
 
-			obj.state = () => this.anim_state()
+			obj.state = () => this.table_state()
 
 			return obj
 		}
@@ -79,14 +65,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Tree $mol_perf_uibench_tree state <= tree_state null
+		 * Anim $mol_perf_uibench_anim state <= anim_state
 		 * ```
 		 */
 		@ $mol_mem
-		Tree() {
-			const obj = new this.$.$mol_perf_uibench_tree()
+		Anim() {
+			const obj = new this.$.$mol_perf_uibench_anim()
 
-			obj.state = () => this.tree_state()
+			obj.state = () => this.anim_state()
 
 			return obj
 		}
@@ -98,6 +84,20 @@ namespace $ {
 		 */
 		tree_state() {
 			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * Tree $mol_perf_uibench_tree state <= tree_state
+		 * ```
+		 */
+		@ $mol_mem
+		Tree() {
+			const obj = new this.$.$mol_perf_uibench_tree()
+
+			obj.state = () => this.tree_state()
+
+			return obj
 		}
 	}
 

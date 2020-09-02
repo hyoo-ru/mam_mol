@@ -13,9 +13,9 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Prefix $mol_view sub / <= prefix \
-		 * 	<= Value $mol_view sub / <= value_view \
-		 * 	<= Postfix $mol_view sub / <= postfix \
+		 * 	<= Prefix
+		 * 	<= Value
+		 * 	<= Postfix
 		 * ```
 		 */
 		sub() {
@@ -24,22 +24,6 @@ namespace $ {
 				this.Value(),
 				this.Postfix()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Prefix $mol_view sub / <= prefix \
-		 * ```
-		 */
-		@ $mol_mem
-		Prefix() {
-			const obj = new this.$.$mol_view()
-
-			obj.sub = () => [
-				this.prefix()
-			] as readonly any[]
-
-			return obj
 		}
 
 		/**
@@ -53,15 +37,15 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Value $mol_view sub / <= value_view \
+		 * Prefix $mol_view sub / <= prefix
 		 * ```
 		 */
 		@ $mol_mem
-		Value() {
+		Prefix() {
 			const obj = new this.$.$mol_view()
 
 			obj.sub = () => [
-				this.value_view()
+				this.prefix()
 			] as readonly any[]
 
 			return obj
@@ -78,15 +62,15 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Postfix $mol_view sub / <= postfix \
+		 * Value $mol_view sub / <= value_view
 		 * ```
 		 */
 		@ $mol_mem
-		Postfix() {
+		Value() {
 			const obj = new this.$.$mol_view()
 
 			obj.sub = () => [
-				this.postfix()
+				this.value_view()
 			] as readonly any[]
 
 			return obj
@@ -99,6 +83,22 @@ namespace $ {
 		 */
 		postfix() {
 			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Postfix $mol_view sub / <= postfix
+		 * ```
+		 */
+		@ $mol_mem
+		Postfix() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.postfix()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

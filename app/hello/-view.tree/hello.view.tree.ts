@@ -4,10 +4,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Name $mol_string
-		 * 		hint <= name_hint \Name
-		 * 		value?val <=> name?val \
-		 * 	<= Greeting $mol_view sub / <= greeting \
+		 * 	<= Name
+		 * 	<= Greeting
 		 * ```
 		 */
 		sub() {
@@ -15,23 +13,6 @@ namespace $ {
 				this.Name(),
 				this.Greeting()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Name $mol_string
-		 * 	hint <= name_hint \Name
-		 * 	value?val <=> name?val \
-		 * ```
-		 */
-		@ $mol_mem
-		Name() {
-			const obj = new this.$.$mol_string()
-
-			obj.hint = () => this.name_hint()
-			obj.value = (val?: any) => this.name(val)
-
-			return obj
 		}
 
 		/**
@@ -56,16 +37,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Greeting $mol_view sub / <= greeting \
+		 * Name $mol_string
+		 * 	hint <= name_hint
+		 * 	value?val <=> name?val
 		 * ```
 		 */
 		@ $mol_mem
-		Greeting() {
-			const obj = new this.$.$mol_view()
+		Name() {
+			const obj = new this.$.$mol_string()
 
-			obj.sub = () => [
-				this.greeting()
-			] as readonly any[]
+			obj.hint = () => this.name_hint()
+			obj.value = (val?: any) => this.name(val)
 
 			return obj
 		}
@@ -77,6 +59,22 @@ namespace $ {
 		 */
 		greeting() {
 			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Greeting $mol_view sub / <= greeting
+		 * ```
+		 */
+		@ $mol_mem
+		Greeting() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.greeting()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

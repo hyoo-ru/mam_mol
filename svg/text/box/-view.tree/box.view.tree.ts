@@ -22,18 +22,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Back $mol_svg_rect
-		 * 		width <= box_width \0.5rem
-		 * 		height <= box_height \1rem
-		 * 		pos /
-		 * 			<= box_pos_x <= pos_x
-		 * 			<= box_pos_y \0
-		 * 	<= Text $mol_svg_text
-		 * 		pos /
-		 * 			<= pos_x \0
-		 * 			<= pos_y \100%
-		 * 		align <= align \start
-		 * 		sub / <= text \
+		 * 	<= Back
+		 * 	<= Text
 		 * ```
 		 */
 		sub() {
@@ -41,30 +31,6 @@ namespace $ {
 				this.Back(),
 				this.Text()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Back $mol_svg_rect
-		 * 	width <= box_width \0.5rem
-		 * 	height <= box_height \1rem
-		 * 	pos /
-		 * 		<= box_pos_x <= pos_x
-		 * 		<= box_pos_y \0
-		 * ```
-		 */
-		@ $mol_mem
-		Back() {
-			const obj = new this.$.$mol_svg_rect()
-
-			obj.width = () => this.box_width()
-			obj.height = () => this.box_height()
-			obj.pos = () => [
-				this.box_pos_x(),
-				this.box_pos_y()
-			] as readonly any[]
-
-			return obj
 		}
 
 		/**
@@ -105,25 +71,23 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Text $mol_svg_text
+		 * Back $mol_svg_rect
+		 * 	width <= box_width
+		 * 	height <= box_height
 		 * 	pos /
-		 * 		<= pos_x \0
-		 * 		<= pos_y \100%
-		 * 	align <= align \start
-		 * 	sub / <= text \
+		 * 		<= box_pos_x
+		 * 		<= box_pos_y
 		 * ```
 		 */
 		@ $mol_mem
-		Text() {
-			const obj = new this.$.$mol_svg_text()
+		Back() {
+			const obj = new this.$.$mol_svg_rect()
 
+			obj.width = () => this.box_width()
+			obj.height = () => this.box_height()
 			obj.pos = () => [
-				this.pos_x(),
-				this.pos_y()
-			] as readonly any[]
-			obj.align = () => this.align()
-			obj.sub = () => [
-				this.text()
+				this.box_pos_x(),
+				this.box_pos_y()
 			] as readonly any[]
 
 			return obj
@@ -163,6 +127,32 @@ namespace $ {
 		 */
 		text() {
 			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Text $mol_svg_text
+		 * 	pos /
+		 * 		<= pos_x
+		 * 		<= pos_y
+		 * 	align <= align
+		 * 	sub / <= text
+		 * ```
+		 */
+		@ $mol_mem
+		Text() {
+			const obj = new this.$.$mol_svg_text()
+
+			obj.pos = () => [
+				this.pos_x(),
+				this.pos_y()
+			] as readonly any[]
+			obj.align = () => this.align()
+			obj.sub = () => [
+				this.text()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

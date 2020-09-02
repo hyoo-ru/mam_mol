@@ -2664,30 +2664,8 @@ var $;
         event() {
             return Object.assign(Object.assign({}, super.event()), { click: (event) => this.event_activate(event), keypress: (event) => this.event_key_press(event) });
         }
-        event_activate(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        event_key_press(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
         attr() {
             return Object.assign(Object.assign({}, super.attr()), { disabled: this.disabled(), role: "button", tabindex: this.tab_index(), title: this.hint_or_error() });
-        }
-        disabled() {
-            return false;
-        }
-        tab_index() {
-            return 0;
-        }
-        hint_or_error() {
-            return this.hint();
-        }
-        hint() {
-            return "";
         }
         sub() {
             return [
@@ -2698,6 +2676,28 @@ var $;
             const obj = new this.$.$mol_speck();
             return obj;
         }
+        event_activate(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        event_key_press(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        disabled() {
+            return false;
+        }
+        tab_index() {
+            return 0;
+        }
+        hint() {
+            return "";
+        }
+        hint_or_error() {
+            return this.hint();
+        }
     }
     __decorate([
         $.$mol_mem
@@ -2707,13 +2707,13 @@ var $;
     ], $mol_button.prototype, "event_click", null);
     __decorate([
         $.$mol_mem
+    ], $mol_button.prototype, "Speck", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_button.prototype, "event_activate", null);
     __decorate([
         $.$mol_mem
     ], $mol_button.prototype, "event_key_press", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_button.prototype, "Speck", null);
     $.$mol_button = $mol_button;
 })($ || ($ = {}));
 //button.view.tree.js.map
@@ -2945,46 +2945,6 @@ var $;
                 this.Labels()
             ];
         }
-        Speed() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => [
-                this.speed()
-            ];
-            return obj;
-        }
-        speed() {
-            return "{speed} Dopes/s";
-        }
-        Start() {
-            const obj = new this.$.$mol_button_major();
-            obj.title = () => "@ Start";
-            obj.click = (event) => this.start(event);
-            return obj;
-        }
-        start(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        Stop() {
-            const obj = new this.$.$mol_button_major();
-            obj.title = () => "@ Stop";
-            obj.click = (event) => this.stop(event);
-            return obj;
-        }
-        stop(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        Labels() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => this.labels();
-            return obj;
-        }
-        labels() {
-            return [];
-        }
         Label(index) {
             const obj = new this.$.$mol_view();
             obj.style = () => ({
@@ -2996,6 +2956,46 @@ var $;
             ];
             return obj;
         }
+        speed() {
+            return "{speed} Dopes/s";
+        }
+        Speed() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.speed()
+            ];
+            return obj;
+        }
+        start(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        Start() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "@ Start";
+            obj.click = (event) => this.start(event);
+            return obj;
+        }
+        stop(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        Stop() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "@ Stop";
+            obj.click = (event) => this.stop(event);
+            return obj;
+        }
+        labels() {
+            return [];
+        }
+        Labels() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => this.labels();
+            return obj;
+        }
         label_color(index) {
             return "";
         }
@@ -3004,26 +3004,26 @@ var $;
         }
     }
     __decorate([
-        $.$mol_mem
-    ], $mol_perf_dopes.prototype, "Speed", null);
+        $.$mol_mem_key
+    ], $mol_perf_dopes.prototype, "Label", null);
     __decorate([
         $.$mol_mem
-    ], $mol_perf_dopes.prototype, "Start", null);
+    ], $mol_perf_dopes.prototype, "Speed", null);
     __decorate([
         $.$mol_mem
     ], $mol_perf_dopes.prototype, "start", null);
     __decorate([
         $.$mol_mem
-    ], $mol_perf_dopes.prototype, "Stop", null);
+    ], $mol_perf_dopes.prototype, "Start", null);
     __decorate([
         $.$mol_mem
     ], $mol_perf_dopes.prototype, "stop", null);
     __decorate([
         $.$mol_mem
-    ], $mol_perf_dopes.prototype, "Labels", null);
+    ], $mol_perf_dopes.prototype, "Stop", null);
     __decorate([
-        $.$mol_mem_key
-    ], $mol_perf_dopes.prototype, "Label", null);
+        $.$mol_mem
+    ], $mol_perf_dopes.prototype, "Labels", null);
     $.$mol_perf_dopes = $mol_perf_dopes;
 })($ || ($ = {}));
 //dopes.view.tree.js.map
@@ -3214,13 +3214,13 @@ var $;
         value(val) {
             return this.task_title_new(val);
         }
+        enabled() {
+            return this.head_complete_enabled();
+        }
         task_title_new(val) {
             if (val !== undefined)
                 return val;
             return "123";
-        }
-        enabled() {
-            return this.head_complete_enabled();
         }
         head_complete_enabled() {
             return false;

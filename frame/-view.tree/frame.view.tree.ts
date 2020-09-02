@@ -13,8 +13,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * attr *
-		 * 	src <= uri \
-		 * 	allow <= allow \
+		 * 	src <= uri
+		 * 	allow <= allow
 		 * ```
 		 */
 		attr() {
@@ -22,24 +22,6 @@ namespace $ {
 				src: this.uri(),
 				allow: this.allow()
 			}
-		}
-
-		/**
-		 * ```tree
-		 * uri \
-		 * ```
-		 */
-		uri() {
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * allow \
-		 * ```
-		 */
-		allow() {
-			return ""
 		}
 
 		/**
@@ -94,6 +76,24 @@ namespace $ {
 		 */
 		pip() {
 			return true
+		}
+
+		/**
+		 * ```tree
+		 * uri \
+		 * ```
+		 */
+		uri() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * allow \
+		 * ```
+		 */
+		allow() {
+			return ""
 		}
 	}
 

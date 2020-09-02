@@ -17,9 +17,7 @@ namespace $ {
 		 * head /
 		 * 	<= Title
 		 * 	<= Tools
-		 * 	<= Search $mol_code
-		 * 		hint <= search_hint @ \Search supply by bar code
-		 * 		value?val <=> search_query?val \
+		 * 	<= Search
 		 * ```
 		 */
 		head() {
@@ -32,17 +30,29 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Search $mol_code
-		 * 	hint <= search_hint @ \Search supply by bar code
-		 * 	value?val <=> search_query?val \
+		 * body / <= Supply_rows
 		 * ```
 		 */
-		@ $mol_mem
-		Search() {
-			const obj = new this.$.$mol_code()
+		body() {
+			return [
+				this.Supply_rows()
+			] as readonly any[]
+		}
 
-			obj.hint = () => this.search_hint()
-			obj.value = (val?: any) => this.search_query(val)
+
+		/**
+		 * ```tree
+		 * Supply_row!index $mol_app_supplies_card
+		 * 	supply <= supply!index
+		 * 	arg <= supply_arg!index
+		 * ```
+		 */
+		@ $mol_mem_key
+		Supply_row(index: any) {
+			const obj = new this.$.$mol_app_supplies_card()
+
+			obj.supply = () => this.supply(index)
+			obj.arg = () => this.supply_arg(index)
 
 			return obj
 		}
@@ -69,25 +79,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * body / <= Supply_rows $mol_list rows <= supply_rows /$mol_view
-		 * ```
-		 */
-		body() {
-			return [
-				this.Supply_rows()
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Supply_rows $mol_list rows <= supply_rows /$mol_view
+		 * Search $mol_code
+		 * 	hint <= search_hint
+		 * 	value?val <=> search_query?val
 		 * ```
 		 */
 		@ $mol_mem
-		Supply_rows() {
-			const obj = new this.$.$mol_list()
+		Search() {
+			const obj = new this.$.$mol_code()
 
-			obj.rows = () => this.supply_rows()
+			obj.hint = () => this.search_hint()
+			obj.value = (val?: any) => this.search_query(val)
 
 			return obj
 		}
@@ -103,20 +105,16 @@ namespace $ {
 			] as readonly $mol_view[]
 		}
 
-
 		/**
 		 * ```tree
-		 * Supply_row!index $mol_app_supplies_card
-		 * 	supply <= supply!index null
-		 * 	arg <= supply_arg!index * supply <= supply_id!index \
+		 * Supply_rows $mol_list rows <= supply_rows
 		 * ```
 		 */
-		@ $mol_mem_key
-		Supply_row(index: any) {
-			const obj = new this.$.$mol_app_supplies_card()
+		@ $mol_mem
+		Supply_rows() {
+			const obj = new this.$.$mol_list()
 
-			obj.supply = () => this.supply(index)
-			obj.arg = () => this.supply_arg(index)
+			obj.rows = () => this.supply_rows()
 
 			return obj
 		}
@@ -132,22 +130,22 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * supply_arg!index * supply <= supply_id!index \
+		 * supply_id!index \
+		 * ```
+		 */
+		supply_id(index: any) {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * supply_arg!index * supply <= supply_id!index
 		 * ```
 		 */
 		supply_arg(index: any) {
 			return {
 				supply: this.supply_id(index)
 			}
-		}
-
-		/**
-		 * ```tree
-		 * supply_id!index \
-		 * ```
-		 */
-		supply_id(index: any) {
-			return ""
 		}
 	}
 

@@ -12,54 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Map $mol_map_yandex objects / <= Place $mol_map_yandex_mark
-		 * 	title <= place_title \
-		 * 	address <= place_addres \Saint-Petersburg
-		 * 	content <= place_content \It is Russia's second-largest city after Moscow
+		 * sub / <= Map
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Map()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Map $mol_map_yandex objects / <= Place $mol_map_yandex_mark
-		 * 	title <= place_title \
-		 * 	address <= place_addres \Saint-Petersburg
-		 * 	content <= place_content \It is Russia's second-largest city after Moscow
-		 * ```
-		 */
-		@ $mol_mem
-		Map() {
-			const obj = new this.$.$mol_map_yandex()
-
-			obj.objects = () => [
-				this.Place()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Place $mol_map_yandex_mark
-		 * 	title <= place_title \
-		 * 	address <= place_addres \Saint-Petersburg
-		 * 	content <= place_content \It is Russia's second-largest city after Moscow
-		 * ```
-		 */
-		@ $mol_mem
-		Place() {
-			const obj = new this.$.$mol_map_yandex_mark()
-
-			obj.title = () => this.place_title()
-			obj.address = () => this.place_addres()
-			obj.content = () => this.place_content()
-
-			return obj
 		}
 
 		/**
@@ -87,6 +46,41 @@ namespace $ {
 		 */
 		place_content() {
 			return "It is Russia's second-largest city after Moscow"
+		}
+
+		/**
+		 * ```tree
+		 * Place $mol_map_yandex_mark
+		 * 	title <= place_title
+		 * 	address <= place_addres
+		 * 	content <= place_content
+		 * ```
+		 */
+		@ $mol_mem
+		Place() {
+			const obj = new this.$.$mol_map_yandex_mark()
+
+			obj.title = () => this.place_title()
+			obj.address = () => this.place_addres()
+			obj.content = () => this.place_content()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Map $mol_map_yandex objects / <= Place
+		 * ```
+		 */
+		@ $mol_mem
+		Map() {
+			const obj = new this.$.$mol_map_yandex()
+
+			obj.objects = () => [
+				this.Place()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

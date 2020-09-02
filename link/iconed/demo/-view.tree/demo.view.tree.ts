@@ -13,8 +13,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Input $mol_string value?val <=> uri?val \https://www.google.com/search?q=%24mol
-		 * 	<= Output $mol_link_iconed uri <= uri?val
+		 * 	<= Input
+		 * 	<= Output
 		 * ```
 		 */
 		sub() {
@@ -26,7 +26,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Input $mol_string value?val <=> uri?val \https://www.google.com/search?q=%24mol
+		 * uri?val \https://www.google.com/search?q=%24mol
+		 * ```
+		 */
+		@ $mol_mem
+		uri(val?: any) {
+			if ( val !== undefined ) return val
+			return "https://www.google.com/search?q=%24mol"
+		}
+
+		/**
+		 * ```tree
+		 * Input $mol_string value?val <=> uri?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -36,17 +47,6 @@ namespace $ {
 			obj.value = (val?: any) => this.uri(val)
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * uri?val \https://www.google.com/search?q=%24mol
-		 * ```
-		 */
-		@ $mol_mem
-		uri(val?: any) {
-			if ( val !== undefined ) return val
-			return "https://www.google.com/search?q=%24mol"
 		}
 
 		/**

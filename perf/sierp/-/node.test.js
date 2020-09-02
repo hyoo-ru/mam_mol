@@ -2613,21 +2613,10 @@ var $;
                 transform: this.transform()
             };
         }
-        transform() {
-            return "";
-        }
         sub() {
             return [
                 this.Dots()
             ];
-        }
-        Dots() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => this.dots();
-            return obj;
-        }
-        dots() {
-            return [];
         }
         Dot(id) {
             const obj = new this.$.$mol_perf_sierp_dot();
@@ -2635,6 +2624,17 @@ var $;
             obj.top = () => this.top(id);
             obj.size = () => this.size(id);
             obj.text = () => this.text();
+            return obj;
+        }
+        transform() {
+            return "";
+        }
+        dots() {
+            return [];
+        }
+        Dots() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => this.dots();
             return obj;
         }
         left(id) {
@@ -2654,11 +2654,11 @@ var $;
         $.$mol_mem
     ], $mol_perf_sierp.prototype, "elapsed", null);
     __decorate([
-        $.$mol_mem
-    ], $mol_perf_sierp.prototype, "Dots", null);
-    __decorate([
         $.$mol_mem_key
     ], $mol_perf_sierp.prototype, "Dot", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_perf_sierp.prototype, "Dots", null);
     $.$mol_perf_sierp = $mol_perf_sierp;
     class $mol_perf_sierp_dot extends $.$mol_view {
         size() {
@@ -2677,9 +2677,6 @@ var $;
                 this.text()
             ];
         }
-        text() {
-            return "";
-        }
         style() {
             return {
                 width: this.width(),
@@ -2690,6 +2687,12 @@ var $;
                 lineHeight: this.size_px(),
                 background: this.color()
             };
+        }
+        event() {
+            return Object.assign(Object.assign({}, super.event()), { mouseenter: (val) => this.enter(val), mouseleave: (val) => this.leave(val) });
+        }
+        text() {
+            return "";
         }
         width() {
             return this.size();
@@ -2708,9 +2711,6 @@ var $;
         }
         color() {
             return "";
-        }
-        event() {
-            return Object.assign(Object.assign({}, super.event()), { mouseenter: (val) => this.enter(val), mouseleave: (val) => this.leave(val) });
         }
         enter(val) {
             if (val !== undefined)
@@ -2877,13 +2877,13 @@ var $;
         value(val) {
             return this.task_title_new(val);
         }
+        enabled() {
+            return this.head_complete_enabled();
+        }
         task_title_new(val) {
             if (val !== undefined)
                 return val;
             return "123";
-        }
-        enabled() {
-            return this.head_complete_enabled();
         }
         head_complete_enabled() {
             return false;

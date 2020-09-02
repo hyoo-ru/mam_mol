@@ -13,18 +13,11 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Base $mol_check_icon
-		 * 		Icon <= Base_icon $mol_icon_microphone
-		 * 		checked?val <=> base_checked?val false
+		 * 	<= Base
 		 * 	-
-		 * 	<= Checked $mol_check_icon
-		 * 		Icon <= Checked_icon $mol_icon_microphone
-		 * 		checked?val <=> checked_checked?val true
+		 * 	<= Checked
 		 * 	-
-		 * 	<= Disabled $mol_check_box
-		 * 		Icon <= Disabled_icon $mol_icon_microphone
-		 * 		checked true
-		 * 		enabled false
+		 * 	<= Disabled
 		 * ```
 		 */
 		sub() {
@@ -35,23 +28,6 @@ namespace $ {
 
 				this.Disabled()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Base $mol_check_icon
-		 * 	Icon <= Base_icon $mol_icon_microphone
-		 * 	checked?val <=> base_checked?val false
-		 * ```
-		 */
-		@ $mol_mem
-		Base() {
-			const obj = new this.$.$mol_check_icon()
-
-			obj.Icon = () => this.Base_icon()
-			obj.checked = (val?: any) => this.base_checked(val)
-
-			return obj
 		}
 
 		/**
@@ -79,17 +55,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Checked $mol_check_icon
-		 * 	Icon <= Checked_icon $mol_icon_microphone
-		 * 	checked?val <=> checked_checked?val true
+		 * Base $mol_check_icon
+		 * 	Icon <= Base_icon
+		 * 	checked?val <=> base_checked?val
 		 * ```
 		 */
 		@ $mol_mem
-		Checked() {
+		Base() {
 			const obj = new this.$.$mol_check_icon()
 
-			obj.Icon = () => this.Checked_icon()
-			obj.checked = (val?: any) => this.checked_checked(val)
+			obj.Icon = () => this.Base_icon()
+			obj.checked = (val?: any) => this.base_checked(val)
 
 			return obj
 		}
@@ -119,19 +95,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Disabled $mol_check_box
-		 * 	Icon <= Disabled_icon $mol_icon_microphone
-		 * 	checked true
-		 * 	enabled false
+		 * Checked $mol_check_icon
+		 * 	Icon <= Checked_icon
+		 * 	checked?val <=> checked_checked?val
 		 * ```
 		 */
 		@ $mol_mem
-		Disabled() {
-			const obj = new this.$.$mol_check_box()
+		Checked() {
+			const obj = new this.$.$mol_check_icon()
 
-			obj.Icon = () => this.Disabled_icon()
-			obj.checked = () => true
-			obj.enabled = () => false
+			obj.Icon = () => this.Checked_icon()
+			obj.checked = (val?: any) => this.checked_checked(val)
 
 			return obj
 		}
@@ -144,6 +118,25 @@ namespace $ {
 		@ $mol_mem
 		Disabled_icon() {
 			const obj = new this.$.$mol_icon_microphone()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Disabled $mol_check_box
+		 * 	Icon <= Disabled_icon
+		 * 	checked true
+		 * 	enabled false
+		 * ```
+		 */
+		@ $mol_mem
+		Disabled() {
+			const obj = new this.$.$mol_check_box()
+
+			obj.Icon = () => this.Disabled_icon()
+			obj.checked = () => true
+			obj.enabled = () => false
 
 			return obj
 		}

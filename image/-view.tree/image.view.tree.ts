@@ -14,7 +14,7 @@ namespace $ {
 		 * ```tree
 		 * field *
 		 * 	^
-		 * 	src <= uri \
+		 * 	src <= uri
 		 * 	alt <= title
 		 * ```
 		 */

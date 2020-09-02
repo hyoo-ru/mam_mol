@@ -139,7 +139,7 @@ namespace $ {
 		 * ```tree
 		 * event *
 		 * 	^
-		 * 	keydown?event <=> event_key?event null
+		 * 	keydown?event <=> event_key?event
 		 * ```
 		 */
 		event() {

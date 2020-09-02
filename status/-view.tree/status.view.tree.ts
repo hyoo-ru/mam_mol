@@ -30,7 +30,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= message \
+		 * sub / <= message
 		 * ```
 		 */
 		sub() {

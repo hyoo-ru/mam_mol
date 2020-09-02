@@ -12,46 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Color $mol_select
-		 * 	value?val <=> color?val \
-		 * 	dictionary <= colors *
-		 * 	option_label!id <= color_name!id \
-		 * 	option_content!id <= option_content!id / <= Color_option!id $mol_row
-		 * 		sub /
-		 * 			<= Color_preview!id $mol_select_colors_color_preview color <= option_color!id \
-		 * 			<= color_name!id \
-		 * 		minimal_height 40
+		 * sub / <= Color
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Color()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Color $mol_select
-		 * 	value?val <=> color?val \
-		 * 	dictionary <= colors *
-		 * 	option_label!id <= color_name!id \
-		 * 	option_content!id <= option_content!id / <= Color_option!id $mol_row
-		 * 		sub /
-		 * 			<= Color_preview!id $mol_select_colors_color_preview color <= option_color!id \
-		 * 			<= color_name!id \
-		 * 		minimal_height 40
-		 * ```
-		 */
-		@ $mol_mem
-		Color() {
-			const obj = new this.$.$mol_select()
-
-			obj.value = (val?: any) => this.color(val)
-			obj.dictionary = () => this.colors()
-			obj.option_label = (id: any) => this.color_name(id)
-			obj.option_content = (id: any) => this.option_content(id)
-
-			return obj
 		}
 
 		/**
@@ -87,25 +54,33 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * option_content!id / <= Color_option!id $mol_row
-		 * 	sub /
-		 * 		<= Color_preview!id $mol_select_colors_color_preview color <= option_color!id \
-		 * 		<= color_name!id \
-		 * 	minimal_height 40
+		 * option_color!id \
 		 * ```
 		 */
-		option_content(id: any) {
-			return [
-				this.Color_option(id)
-			] as readonly any[]
+		option_color(id: any) {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Color_preview!id $mol_select_colors_color_preview color <= option_color!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Color_preview(id: any) {
+			const obj = new this.$.$mol_select_colors_color_preview()
+
+			obj.color = () => this.option_color(id)
+
+			return obj
 		}
 
 		/**
 		 * ```tree
 		 * Color_option!id $mol_row
 		 * 	sub /
-		 * 		<= Color_preview!id $mol_select_colors_color_preview color <= option_color!id \
-		 * 		<= color_name!id \
+		 * 		<= Color_preview!id
+		 * 		<= color_name!id
 		 * 	minimal_height 40
 		 * ```
 		 */
@@ -124,25 +99,34 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Color_preview!id $mol_select_colors_color_preview color <= option_color!id \
+		 * option_content!id / <= Color_option!id
 		 * ```
 		 */
-		@ $mol_mem_key
-		Color_preview(id: any) {
-			const obj = new this.$.$mol_select_colors_color_preview()
-
-			obj.color = () => this.option_color(id)
-
-			return obj
+		option_content(id: any) {
+			return [
+				this.Color_option(id)
+			] as readonly any[]
 		}
 
 		/**
 		 * ```tree
-		 * option_color!id \
+		 * Color $mol_select
+		 * 	value?val <=> color?val
+		 * 	dictionary <= colors
+		 * 	option_label!id <= color_name!id
+		 * 	option_content!id <= option_content!id
 		 * ```
 		 */
-		option_color(id: any) {
-			return ""
+		@ $mol_mem
+		Color() {
+			const obj = new this.$.$mol_select()
+
+			obj.value = (val?: any) => this.color(val)
+			obj.dictionary = () => this.colors()
+			obj.option_label = (id: any) => this.color_name(id)
+			obj.option_content = (id: any) => this.option_content(id)
+
+			return obj
 		}
 	}
 
@@ -152,7 +136,7 @@ namespace $ {
 		 * ```tree
 		 * style *
 		 * 	^
-		 * 	background <= color \
+		 * 	background <= color
 		 * ```
 		 */
 		style() {

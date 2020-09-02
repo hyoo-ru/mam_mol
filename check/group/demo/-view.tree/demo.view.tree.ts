@@ -13,38 +13,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= All $mol_check_group
-		 * 		title \SPECIAL
-		 * 		checks /
-		 * 			<= Strength
-		 * 			<= Perception
-		 * 			<= Endurance
-		 * 			<= Charisma
-		 * 			<= Intelligence
-		 * 			<= Agility
-		 * 			<= Luck
-		 * 	<= Partial $mol_list rows /
-		 * 		<= Strength $mol_check_box
-		 * 			title <= strength_title \Strength
-		 * 			checked?val <=> strength?val false
-		 * 		<= Perception $mol_check_box
-		 * 			title <= perception_title \Perception
-		 * 			checked?val <=> perception?val true
-		 * 		<= Endurance $mol_check_box
-		 * 			title <= endurance_title \Endurance
-		 * 			checked?val <=> endurance?val false
-		 * 		<= Charisma $mol_check_box
-		 * 			title <= charisma_title \Charisma
-		 * 			checked?val <=> charisma?val false
-		 * 		<= Intelligence $mol_check_box
-		 * 			title <= intelligence_title \Intelligence
-		 * 			checked?val <=> intelligence?val true
-		 * 		<= Agility $mol_check_box
-		 * 			title <= agility_title \Agility
-		 * 			checked?val <=> agility?val true
-		 * 		<= Luck $mol_check_box
-		 * 			title <= luck_title \Luck
-		 * 			checked?val <=> luck?val true
+		 * 	<= All
+		 * 	<= Partial
 		 * ```
 		 */
 		sub() {
@@ -88,66 +58,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Partial $mol_list rows /
-		 * 	<= Strength $mol_check_box
-		 * 		title <= strength_title \Strength
-		 * 		checked?val <=> strength?val false
-		 * 	<= Perception $mol_check_box
-		 * 		title <= perception_title \Perception
-		 * 		checked?val <=> perception?val true
-		 * 	<= Endurance $mol_check_box
-		 * 		title <= endurance_title \Endurance
-		 * 		checked?val <=> endurance?val false
-		 * 	<= Charisma $mol_check_box
-		 * 		title <= charisma_title \Charisma
-		 * 		checked?val <=> charisma?val false
-		 * 	<= Intelligence $mol_check_box
-		 * 		title <= intelligence_title \Intelligence
-		 * 		checked?val <=> intelligence?val true
-		 * 	<= Agility $mol_check_box
-		 * 		title <= agility_title \Agility
-		 * 		checked?val <=> agility?val true
-		 * 	<= Luck $mol_check_box
-		 * 		title <= luck_title \Luck
-		 * 		checked?val <=> luck?val true
-		 * ```
-		 */
-		@ $mol_mem
-		Partial() {
-			const obj = new this.$.$mol_list()
-
-			obj.rows = () => [
-				this.Strength(),
-				this.Perception(),
-				this.Endurance(),
-				this.Charisma(),
-				this.Intelligence(),
-				this.Agility(),
-				this.Luck()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Strength $mol_check_box
-		 * 	title <= strength_title \Strength
-		 * 	checked?val <=> strength?val false
-		 * ```
-		 */
-		@ $mol_mem
-		Strength() {
-			const obj = new this.$.$mol_check_box()
-
-			obj.title = () => this.strength_title()
-			obj.checked = (val?: any) => this.strength(val)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * strength_title \Strength
 		 * ```
 		 */
@@ -168,17 +78,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Perception $mol_check_box
-		 * 	title <= perception_title \Perception
-		 * 	checked?val <=> perception?val true
+		 * Strength $mol_check_box
+		 * 	title <= strength_title
+		 * 	checked?val <=> strength?val
 		 * ```
 		 */
 		@ $mol_mem
-		Perception() {
+		Strength() {
 			const obj = new this.$.$mol_check_box()
 
-			obj.title = () => this.perception_title()
-			obj.checked = (val?: any) => this.perception(val)
+			obj.title = () => this.strength_title()
+			obj.checked = (val?: any) => this.strength(val)
 
 			return obj
 		}
@@ -205,17 +115,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Endurance $mol_check_box
-		 * 	title <= endurance_title \Endurance
-		 * 	checked?val <=> endurance?val false
+		 * Perception $mol_check_box
+		 * 	title <= perception_title
+		 * 	checked?val <=> perception?val
 		 * ```
 		 */
 		@ $mol_mem
-		Endurance() {
+		Perception() {
 			const obj = new this.$.$mol_check_box()
 
-			obj.title = () => this.endurance_title()
-			obj.checked = (val?: any) => this.endurance(val)
+			obj.title = () => this.perception_title()
+			obj.checked = (val?: any) => this.perception(val)
 
 			return obj
 		}
@@ -242,17 +152,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Charisma $mol_check_box
-		 * 	title <= charisma_title \Charisma
-		 * 	checked?val <=> charisma?val false
+		 * Endurance $mol_check_box
+		 * 	title <= endurance_title
+		 * 	checked?val <=> endurance?val
 		 * ```
 		 */
 		@ $mol_mem
-		Charisma() {
+		Endurance() {
 			const obj = new this.$.$mol_check_box()
 
-			obj.title = () => this.charisma_title()
-			obj.checked = (val?: any) => this.charisma(val)
+			obj.title = () => this.endurance_title()
+			obj.checked = (val?: any) => this.endurance(val)
 
 			return obj
 		}
@@ -279,17 +189,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Intelligence $mol_check_box
-		 * 	title <= intelligence_title \Intelligence
-		 * 	checked?val <=> intelligence?val true
+		 * Charisma $mol_check_box
+		 * 	title <= charisma_title
+		 * 	checked?val <=> charisma?val
 		 * ```
 		 */
 		@ $mol_mem
-		Intelligence() {
+		Charisma() {
 			const obj = new this.$.$mol_check_box()
 
-			obj.title = () => this.intelligence_title()
-			obj.checked = (val?: any) => this.intelligence(val)
+			obj.title = () => this.charisma_title()
+			obj.checked = (val?: any) => this.charisma(val)
 
 			return obj
 		}
@@ -316,17 +226,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Agility $mol_check_box
-		 * 	title <= agility_title \Agility
-		 * 	checked?val <=> agility?val true
+		 * Intelligence $mol_check_box
+		 * 	title <= intelligence_title
+		 * 	checked?val <=> intelligence?val
 		 * ```
 		 */
 		@ $mol_mem
-		Agility() {
+		Intelligence() {
 			const obj = new this.$.$mol_check_box()
 
-			obj.title = () => this.agility_title()
-			obj.checked = (val?: any) => this.agility(val)
+			obj.title = () => this.intelligence_title()
+			obj.checked = (val?: any) => this.intelligence(val)
 
 			return obj
 		}
@@ -353,17 +263,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Luck $mol_check_box
-		 * 	title <= luck_title \Luck
-		 * 	checked?val <=> luck?val true
+		 * Agility $mol_check_box
+		 * 	title <= agility_title
+		 * 	checked?val <=> agility?val
 		 * ```
 		 */
 		@ $mol_mem
-		Luck() {
+		Agility() {
 			const obj = new this.$.$mol_check_box()
 
-			obj.title = () => this.luck_title()
-			obj.checked = (val?: any) => this.luck(val)
+			obj.title = () => this.agility_title()
+			obj.checked = (val?: any) => this.agility(val)
 
 			return obj
 		}
@@ -386,6 +296,52 @@ namespace $ {
 		luck(val?: any) {
 			if ( val !== undefined ) return val
 			return true
+		}
+
+		/**
+		 * ```tree
+		 * Luck $mol_check_box
+		 * 	title <= luck_title
+		 * 	checked?val <=> luck?val
+		 * ```
+		 */
+		@ $mol_mem
+		Luck() {
+			const obj = new this.$.$mol_check_box()
+
+			obj.title = () => this.luck_title()
+			obj.checked = (val?: any) => this.luck(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Partial $mol_list rows /
+		 * 	<= Strength
+		 * 	<= Perception
+		 * 	<= Endurance
+		 * 	<= Charisma
+		 * 	<= Intelligence
+		 * 	<= Agility
+		 * 	<= Luck
+		 * ```
+		 */
+		@ $mol_mem
+		Partial() {
+			const obj = new this.$.$mol_list()
+
+			obj.rows = () => [
+				this.Strength(),
+				this.Perception(),
+				this.Endurance(),
+				this.Charisma(),
+				this.Intelligence(),
+				this.Agility(),
+				this.Luck()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

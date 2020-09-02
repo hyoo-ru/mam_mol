@@ -12,67 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Toolbar $mol_toolbar items /
-		 * 	<= Approve $mol_button_major title <= approve_label @ \Approve
-		 * 	<= Decline $mol_button_minor title <= decline_label @ \Decline
-		 * 	<= Copy $mol_button_minor sub / <= Copy_icon $mol_icon_content_copy
-		 * 	<= Cut $mol_button_minor sub / <= Cut_icon $mol_icon_content_cut
-		 * 	<= Paste $mol_button_minor sub / <= Paste_icon $mol_icon_content_paste
-		 * 	<= Delete $mol_button_minor sub / <= Delete_icon $mol_icon_delete
-		 * 	<= Modify $mol_bar sub /
-		 * 		<= Search $mol_string hint <= search_hint @ \Search...
-		 * 		<= Replace $mol_string hint <= replace_hint @ \Replace...
+		 * sub / <= Toolbar
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Toolbar()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Toolbar $mol_toolbar items /
-		 * 	<= Approve $mol_button_major title <= approve_label @ \Approve
-		 * 	<= Decline $mol_button_minor title <= decline_label @ \Decline
-		 * 	<= Copy $mol_button_minor sub / <= Copy_icon $mol_icon_content_copy
-		 * 	<= Cut $mol_button_minor sub / <= Cut_icon $mol_icon_content_cut
-		 * 	<= Paste $mol_button_minor sub / <= Paste_icon $mol_icon_content_paste
-		 * 	<= Delete $mol_button_minor sub / <= Delete_icon $mol_icon_delete
-		 * 	<= Modify $mol_bar sub /
-		 * 		<= Search $mol_string hint <= search_hint @ \Search...
-		 * 		<= Replace $mol_string hint <= replace_hint @ \Replace...
-		 * ```
-		 */
-		@ $mol_mem
-		Toolbar() {
-			const obj = new this.$.$mol_toolbar()
-
-			obj.items = () => [
-				this.Approve(),
-				this.Decline(),
-				this.Copy(),
-				this.Cut(),
-				this.Paste(),
-				this.Delete(),
-				this.Modify()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Approve $mol_button_major title <= approve_label @ \Approve
-		 * ```
-		 */
-		@ $mol_mem
-		Approve() {
-			const obj = new this.$.$mol_button_major()
-
-			obj.title = () => this.approve_label()
-
-			return obj
 		}
 
 		/**
@@ -86,14 +32,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Decline $mol_button_minor title <= decline_label @ \Decline
+		 * Approve $mol_button_major title <= approve_label
 		 * ```
 		 */
 		@ $mol_mem
-		Decline() {
-			const obj = new this.$.$mol_button_minor()
+		Approve() {
+			const obj = new this.$.$mol_button_major()
 
-			obj.title = () => this.decline_label()
+			obj.title = () => this.approve_label()
 
 			return obj
 		}
@@ -109,16 +55,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Copy $mol_button_minor sub / <= Copy_icon $mol_icon_content_copy
+		 * Decline $mol_button_minor title <= decline_label
 		 * ```
 		 */
 		@ $mol_mem
-		Copy() {
+		Decline() {
 			const obj = new this.$.$mol_button_minor()
 
-			obj.sub = () => [
-				this.Copy_icon()
-			] as readonly any[]
+			obj.title = () => this.decline_label()
 
 			return obj
 		}
@@ -137,15 +81,15 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Cut $mol_button_minor sub / <= Cut_icon $mol_icon_content_cut
+		 * Copy $mol_button_minor sub / <= Copy_icon
 		 * ```
 		 */
 		@ $mol_mem
-		Cut() {
+		Copy() {
 			const obj = new this.$.$mol_button_minor()
 
 			obj.sub = () => [
-				this.Cut_icon()
+				this.Copy_icon()
 			] as readonly any[]
 
 			return obj
@@ -165,15 +109,15 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Paste $mol_button_minor sub / <= Paste_icon $mol_icon_content_paste
+		 * Cut $mol_button_minor sub / <= Cut_icon
 		 * ```
 		 */
 		@ $mol_mem
-		Paste() {
+		Cut() {
 			const obj = new this.$.$mol_button_minor()
 
 			obj.sub = () => [
-				this.Paste_icon()
+				this.Cut_icon()
 			] as readonly any[]
 
 			return obj
@@ -193,15 +137,15 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Delete $mol_button_minor sub / <= Delete_icon $mol_icon_delete
+		 * Paste $mol_button_minor sub / <= Paste_icon
 		 * ```
 		 */
 		@ $mol_mem
-		Delete() {
+		Paste() {
 			const obj = new this.$.$mol_button_minor()
 
 			obj.sub = () => [
-				this.Delete_icon()
+				this.Paste_icon()
 			] as readonly any[]
 
 			return obj
@@ -221,9 +165,71 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Delete $mol_button_minor sub / <= Delete_icon
+		 * ```
+		 */
+		@ $mol_mem
+		Delete() {
+			const obj = new this.$.$mol_button_minor()
+
+			obj.sub = () => [
+				this.Delete_icon()
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * search_hint @ \Search...
+		 * ```
+		 */
+		search_hint() {
+			return this.$.$mol_locale.text( '$mol_toolbar_demo_search_hint' )
+		}
+
+		/**
+		 * ```tree
+		 * Search $mol_string hint <= search_hint
+		 * ```
+		 */
+		@ $mol_mem
+		Search() {
+			const obj = new this.$.$mol_string()
+
+			obj.hint = () => this.search_hint()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * replace_hint @ \Replace...
+		 * ```
+		 */
+		replace_hint() {
+			return this.$.$mol_locale.text( '$mol_toolbar_demo_replace_hint' )
+		}
+
+		/**
+		 * ```tree
+		 * Replace $mol_string hint <= replace_hint
+		 * ```
+		 */
+		@ $mol_mem
+		Replace() {
+			const obj = new this.$.$mol_string()
+
+			obj.hint = () => this.replace_hint()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * Modify $mol_bar sub /
-		 * 	<= Search $mol_string hint <= search_hint @ \Search...
-		 * 	<= Replace $mol_string hint <= replace_hint @ \Replace...
+		 * 	<= Search
+		 * 	<= Replace
 		 * ```
 		 */
 		@ $mol_mem
@@ -240,48 +246,31 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Search $mol_string hint <= search_hint @ \Search...
+		 * Toolbar $mol_toolbar items /
+		 * 	<= Approve
+		 * 	<= Decline
+		 * 	<= Copy
+		 * 	<= Cut
+		 * 	<= Paste
+		 * 	<= Delete
+		 * 	<= Modify
 		 * ```
 		 */
 		@ $mol_mem
-		Search() {
-			const obj = new this.$.$mol_string()
+		Toolbar() {
+			const obj = new this.$.$mol_toolbar()
 
-			obj.hint = () => this.search_hint()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * search_hint @ \Search...
-		 * ```
-		 */
-		search_hint() {
-			return this.$.$mol_locale.text( '$mol_toolbar_demo_search_hint' )
-		}
-
-		/**
-		 * ```tree
-		 * Replace $mol_string hint <= replace_hint @ \Replace...
-		 * ```
-		 */
-		@ $mol_mem
-		Replace() {
-			const obj = new this.$.$mol_string()
-
-			obj.hint = () => this.replace_hint()
+			obj.items = () => [
+				this.Approve(),
+				this.Decline(),
+				this.Copy(),
+				this.Cut(),
+				this.Paste(),
+				this.Delete(),
+				this.Modify()
+			] as readonly any[]
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * replace_hint @ \Replace...
-		 * ```
-		 */
-		replace_hint() {
-			return this.$.$mol_locale.text( '$mol_toolbar_demo_replace_hint' )
 		}
 	}
 

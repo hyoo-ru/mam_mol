@@ -612,11 +612,11 @@ declare namespace $ {
         style(): {
             transform: string;
         };
-        transform(): string;
         sub(): readonly any[];
-        Dots(): $mol_view;
-        dots(): readonly any[];
         Dot(id: any): $$.$mol_perf_sierp_dot;
+        transform(): string;
+        dots(): readonly any[];
+        Dots(): $mol_view;
         left(id: any): number;
         top(id: any): number;
         size(id: any): number;
@@ -627,7 +627,6 @@ declare namespace $ {
         size_px(): string;
         hover(val?: any): any;
         sub(): readonly any[];
-        text(): string;
         style(): {
             width: number;
             height: number;
@@ -637,16 +636,17 @@ declare namespace $ {
             lineHeight: string;
             background: string;
         };
+        event(): {
+            mouseenter: (val?: any) => any;
+            mouseleave: (val?: any) => any;
+        };
+        text(): string;
         width(): number;
         height(): number;
         left(): number;
         top(): number;
         radius(): number;
         color(): string;
-        event(): {
-            mouseenter: (val?: any) => any;
-            mouseleave: (val?: any) => any;
-        };
         enter(val?: any): any;
         leave(val?: any): any;
     }
@@ -712,8 +712,8 @@ declare namespace $ {
 declare namespace $ {
     class $mol_view_tree_test_binding extends $mol_view {
         value(val?: any): any;
-        task_title_new(val?: any): any;
         enabled(): boolean;
+        task_title_new(val?: any): any;
         head_complete_enabled(): boolean;
     }
 }

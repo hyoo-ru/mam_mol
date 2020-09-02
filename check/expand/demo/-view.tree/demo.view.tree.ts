@@ -13,21 +13,15 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Labeled_base $mol_check_expand
-		 * 		checked?val <=> base_expanded?val false
-		 * 		title <= c1Label @ \Base
+		 * 	<= Labeled_base
 		 * 	-
-		 * 	<= Labeled_expanded $mol_check_expand
-		 * 		title <= c2Label @ \Expanded
-		 * 		checked?val <=> expanded_expanded?val true
+		 * 	<= Labeled_expanded
 		 * 	-
-		 * 	<= Empty_base $mol_check_expand checked?val <=> base_expanded?val false
+		 * 	<= Empty_base
 		 * 	-
-		 * 	<= Empty_expanded $mol_check_expand checked?val <=> expanded_expanded?val true
+		 * 	<= Empty_expanded
 		 * 	-
-		 * 	<= Disabled $mol_check_expand
-		 * 		title <= c5Label @ \Non expandable
-		 * 		disabled true
+		 * 	<= Disabled
 		 * ```
 		 */
 		sub() {
@@ -42,23 +36,6 @@ namespace $ {
 
 				this.Disabled()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Labeled_base $mol_check_expand
-		 * 	checked?val <=> base_expanded?val false
-		 * 	title <= c1Label @ \Base
-		 * ```
-		 */
-		@ $mol_mem
-		Labeled_base() {
-			const obj = new this.$.$mol_check_expand()
-
-			obj.checked = (val?: any) => this.base_expanded(val)
-			obj.title = () => this.c1Label()
-
-			return obj
 		}
 
 		/**
@@ -83,17 +60,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Labeled_expanded $mol_check_expand
-		 * 	title <= c2Label @ \Expanded
-		 * 	checked?val <=> expanded_expanded?val true
+		 * Labeled_base $mol_check_expand
+		 * 	checked?val <=> base_expanded?val
+		 * 	title <= c1Label
 		 * ```
 		 */
 		@ $mol_mem
-		Labeled_expanded() {
+		Labeled_base() {
 			const obj = new this.$.$mol_check_expand()
 
-			obj.title = () => this.c2Label()
-			obj.checked = (val?: any) => this.expanded_expanded(val)
+			obj.checked = (val?: any) => this.base_expanded(val)
+			obj.title = () => this.c1Label()
 
 			return obj
 		}
@@ -120,7 +97,24 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Empty_base $mol_check_expand checked?val <=> base_expanded?val false
+		 * Labeled_expanded $mol_check_expand
+		 * 	title <= c2Label
+		 * 	checked?val <=> expanded_expanded?val
+		 * ```
+		 */
+		@ $mol_mem
+		Labeled_expanded() {
+			const obj = new this.$.$mol_check_expand()
+
+			obj.title = () => this.c2Label()
+			obj.checked = (val?: any) => this.expanded_expanded(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Empty_base $mol_check_expand checked?val <=> base_expanded?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -134,7 +128,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Empty_expanded $mol_check_expand checked?val <=> expanded_expanded?val true
+		 * Empty_expanded $mol_check_expand checked?val <=> expanded_expanded?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -148,8 +142,17 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * c5Label @ \Non expandable
+		 * ```
+		 */
+		c5Label() {
+			return this.$.$mol_locale.text( '$mol_check_expand_demo_c5Label' )
+		}
+
+		/**
+		 * ```tree
 		 * Disabled $mol_check_expand
-		 * 	title <= c5Label @ \Non expandable
+		 * 	title <= c5Label
 		 * 	disabled true
 		 * ```
 		 */
@@ -161,15 +164,6 @@ namespace $ {
 			obj.disabled = () => true
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * c5Label @ \Non expandable
-		 * ```
-		 */
-		c5Label() {
-			return this.$.$mol_locale.text( '$mol_check_expand_demo_c5Label' )
 		}
 	}
 

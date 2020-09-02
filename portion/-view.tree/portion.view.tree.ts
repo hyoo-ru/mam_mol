@@ -5,7 +5,7 @@ namespace $ {
 		 * ```tree
 		 * style *
 		 * 	^
-		 * 	width <= width_style \0
+		 * 	width <= width_style
 		 * ```
 		 */
 		style() {
@@ -38,7 +38,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= indicator $mol_portion_indicator width_style <= indicator_width_style \0
+		 * sub / <= indicator
 		 * ```
 		 */
 		sub() {
@@ -49,7 +49,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * indicator $mol_portion_indicator width_style <= indicator_width_style \0
+		 * indicator_width_style \0
+		 * ```
+		 */
+		indicator_width_style() {
+			return "0"
+		}
+
+		/**
+		 * ```tree
+		 * indicator $mol_portion_indicator width_style <= indicator_width_style
 		 * ```
 		 */
 		@ $mol_mem
@@ -59,15 +68,6 @@ namespace $ {
 			obj.width_style = () => this.indicator_width_style()
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * indicator_width_style \0
-		 * ```
-		 */
-		indicator_width_style() {
-			return "0"
 		}
 	}
 

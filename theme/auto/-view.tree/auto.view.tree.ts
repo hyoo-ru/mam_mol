@@ -3,7 +3,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * attr * mol_theme <= theme \
+		 * attr * mol_theme <= theme
 		 * ```
 		 */
 		attr() {

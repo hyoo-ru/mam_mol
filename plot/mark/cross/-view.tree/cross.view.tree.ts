@@ -44,12 +44,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * dimensions $mol_vector_2d /
-		 * 	<= dimensions_x $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
-		 * 	<= dimensions_y $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
+		 * 	<= dimensions_x
+		 * 	<= dimensions_y
 		 * ```
 		 */
 		@ $mol_mem
@@ -60,6 +56,22 @@ namespace $ {
 			)
 
 			return obj
+		}
+
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Curve
+		 * 	<= Label_x
+		 * 	<= Label_y
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Curve(),
+				this.Label_x(),
+				this.Label_y()
+			] as readonly any[]
 		}
 
 		/**
@@ -98,42 +110,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Curve $mol_svg_path geometry <= curve \
-		 * 	<= Label_x $mol_svg_text_box
-		 * 		pos_x <= title_x_pos_x \0
-		 * 		pos_y <= title_x_pos_y \100%
-		 * 		text <= title_x \
-		 * 	<= Label_y $mol_svg_text_box
-		 * 		pos_x <= title_y_pos_x \0
-		 * 		pos_y <= title_y_pos_y \0
-		 * 		text <= title_y \
-		 * ```
-		 */
-		sub() {
-			return [
-				this.Curve(),
-				this.Label_x(),
-				this.Label_y()
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Curve $mol_svg_path geometry <= curve \
-		 * ```
-		 */
-		@ $mol_mem
-		Curve() {
-			const obj = new this.$.$mol_svg_path()
-
-			obj.geometry = () => this.curve()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * curve \
 		 * ```
 		 */
@@ -143,19 +119,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Label_x $mol_svg_text_box
-		 * 	pos_x <= title_x_pos_x \0
-		 * 	pos_y <= title_x_pos_y \100%
-		 * 	text <= title_x \
+		 * Curve $mol_svg_path geometry <= curve
 		 * ```
 		 */
 		@ $mol_mem
-		Label_x() {
-			const obj = new this.$.$mol_svg_text_box()
+		Curve() {
+			const obj = new this.$.$mol_svg_path()
 
-			obj.pos_x = () => this.title_x_pos_x()
-			obj.pos_y = () => this.title_x_pos_y()
-			obj.text = () => this.title_x()
+			obj.geometry = () => this.curve()
 
 			return obj
 		}
@@ -189,19 +160,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Label_y $mol_svg_text_box
-		 * 	pos_x <= title_y_pos_x \0
-		 * 	pos_y <= title_y_pos_y \0
-		 * 	text <= title_y \
+		 * Label_x $mol_svg_text_box
+		 * 	pos_x <= title_x_pos_x
+		 * 	pos_y <= title_x_pos_y
+		 * 	text <= title_x
 		 * ```
 		 */
 		@ $mol_mem
-		Label_y() {
+		Label_x() {
 			const obj = new this.$.$mol_svg_text_box()
 
-			obj.pos_x = () => this.title_y_pos_x()
-			obj.pos_y = () => this.title_y_pos_y()
-			obj.text = () => this.title_y()
+			obj.pos_x = () => this.title_x_pos_x()
+			obj.pos_y = () => this.title_x_pos_y()
+			obj.text = () => this.title_x()
 
 			return obj
 		}
@@ -231,6 +202,25 @@ namespace $ {
 		 */
 		title_y() {
 			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Label_y $mol_svg_text_box
+		 * 	pos_x <= title_y_pos_x
+		 * 	pos_y <= title_y_pos_y
+		 * 	text <= title_y
+		 * ```
+		 */
+		@ $mol_mem
+		Label_y() {
+			const obj = new this.$.$mol_svg_text_box()
+
+			obj.pos_x = () => this.title_y_pos_x()
+			obj.pos_y = () => this.title_y_pos_y()
+			obj.text = () => this.title_y()
+
+			return obj
 		}
 	}
 

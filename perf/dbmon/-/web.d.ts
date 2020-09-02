@@ -889,12 +889,12 @@ declare namespace $ {
             scrollLeft: any;
             tabIndex: number;
         };
-        scroll_top(val?: any): any;
-        scroll_left(val?: any): any;
-        tabindex(): number;
         event(): {
             scroll: (event?: any) => any;
         };
+        scroll_top(val?: any): any;
+        scroll_left(val?: any): any;
+        tabindex(): number;
         event_scroll(event?: any): any;
     }
 }
@@ -930,13 +930,13 @@ declare namespace $ {
         render_visible_only(): boolean;
         render_over(): number;
         sub(): readonly $mol_view[];
-        rows(): readonly $mol_view[];
         Empty(): $mol_view;
         Gap_before(): $mol_view;
-        gap_before(): number;
         Gap_after(): $mol_view;
-        gap_after(): number;
         view_window(): readonly any[];
+        rows(): readonly $mol_view[];
+        gap_before(): number;
+        gap_after(): number;
     }
 }
 
@@ -1029,32 +1029,32 @@ declare namespace $ {
         event(): {
             keydown: (event?: any) => any;
         };
-        keydown(event?: any): any;
         showed(val?: any): any;
         plugins(): readonly $mol_plugin[];
+        sub(): readonly any[];
+        keydown(event?: any): any;
         Meter(): $$.$mol_meter;
         top(): number;
         bottom(): number;
         left(): number;
         right(): number;
-        sub(): readonly any[];
         Anchor(): any;
-        Bubble(): $mol_pop_bubble;
         align(): string;
         bubble_content(): readonly (string | number | boolean | $mol_view | Node)[];
         height_max(): number;
+        Bubble(): $mol_pop_bubble;
     }
     class $mol_pop_bubble extends $mol_scroll {
         sub(): readonly (string | number | boolean | $mol_view | Node)[];
-        content(): readonly (string | number | boolean | $mol_view | Node)[];
         style(): {
             maxHeight: number;
         };
-        height_max(): number;
         attr(): {
             mol_pop_align: string;
             tabindex: number;
         };
+        content(): readonly (string | number | boolean | $mol_view | Node)[];
+        height_max(): number;
         align(): string;
     }
 }
@@ -1179,7 +1179,6 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_pop_over extends $mol_pop {
         showed(): any;
-        hovered(val?: any): any;
         attr(): {
             tabindex: number;
         };
@@ -1188,6 +1187,7 @@ declare namespace $ {
             mouseleave: (event?: any) => any;
             keydown: (event?: any) => any;
         };
+        hovered(val?: any): any;
         event_show(event?: any): any;
         event_hide(event?: any): any;
     }
@@ -1208,36 +1208,36 @@ declare namespace $ {
     class $mol_perf_dbmon extends $mol_scroll {
         title(): string;
         sub(): readonly any[];
-        Databases(): $$.$mol_list;
-        databases(): readonly any[];
         Database(id: any): $mol_view;
-        database(id: any): readonly any[];
-        Name(id: any): $mol_view;
+        Query(id: any): $mol_perf_dbmon_query;
+        databases(): readonly any[];
+        Databases(): $$.$mol_list;
         name(id: any): string;
-        Query_count(id: any): $mol_perf_dbmon_query_count;
+        Name(id: any): $mol_view;
         query_count_label_mod(id: any): string;
         query_count(id: any): number;
+        Query_count(id: any): $mol_perf_dbmon_query_count;
         top_queries(id: any): readonly any[];
-        Query(id: any): $mol_perf_dbmon_query;
+        database(id: any): readonly any[];
         query_elapsed(id: any): string;
         query_elapsed_mod(id: any): string;
         query_value(id: any): string;
     }
     class $mol_perf_dbmon_query_count extends $mol_view {
         sub(): readonly any[];
-        Label(): $mol_view;
         label_mod(): string;
         count(): number;
+        Label(): $mol_view;
     }
     class $mol_perf_dbmon_query extends $mol_pop_over {
         minimal_height(): number;
         Anchor(): $mol_view;
-        Elapsed(): $mol_view;
+        bubble_content(): readonly any[];
+        align(): string;
         elapsed_mod(): string;
         elapsed(): string;
-        bubble_content(): readonly any[];
+        Elapsed(): $mol_view;
         value(): string;
-        align(): string;
     }
 }
 
@@ -1256,7 +1256,7 @@ declare namespace $.$$ {
     class $mol_perf_dbmon extends $.$mol_perf_dbmon {
         data(): any;
         databases(): $mol_view[];
-        database(id: string): ($mol_view | $mol_perf_dbmon_query_count | $mol_perf_dbmon_query)[];
+        database(id: string): ($mol_view | $mol_perf_dbmon_query | $mol_perf_dbmon_query_count)[];
         name(id: string): any;
         last_sample(id: string): any;
         query_count(id: string): any;
@@ -1300,8 +1300,8 @@ declare namespace $ {
 declare namespace $ {
     class $mol_view_tree_test_binding extends $mol_view {
         value(val?: any): any;
-        task_title_new(val?: any): any;
         enabled(): boolean;
+        task_title_new(val?: any): any;
         head_complete_enabled(): boolean;
     }
 }

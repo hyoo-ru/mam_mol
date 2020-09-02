@@ -12,16 +12,28 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * plugins / <= Nav $mol_nav
-		 * 	keys_x <= tab_list
-		 * 	current_x?val <=> tab_current?val
-		 * 	keys_y <= row_list
-		 * 	current_y?val <=> row_current?val
+		 * plugins / <= Nav
 		 * ```
 		 */
 		plugins() {
 			return [
 				this.Nav()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Hint
+		 * 	<= Tab_list
+		 * 	<= Row_list
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Hint(),
+				this.Tab_list(),
+				this.Row_list()
 			] as readonly any[]
 		}
 
@@ -48,35 +60,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Hint $mol_view sub / <= hint @ \Select option and use keys to switch
-		 * 	<= Tab_list $mol_switch
-		 * 		keys => tab_list
-		 * 		value?val <=> tab_current?val \
-		 * 		options *
-		 * 			first \First
-		 * 			second \Second
-		 * 			third \Third
-		 * 	<= Row_list $mol_switch
-		 * 		keys => row_list
-		 * 		value?val <=> row_current?val \
-		 * 		options *
-		 * 			first \First
-		 * 			second \Second
-		 * 			third \Third
+		 * hint @ \Select option and use keys to switch
 		 * ```
 		 */
-		sub() {
-			return [
-				this.Hint(),
-				this.Tab_list(),
-				this.Row_list()
-			] as readonly any[]
+		hint() {
+			return this.$.$mol_locale.text( '$mol_nav_demo_hint' )
 		}
 
 		/**
 		 * ```tree
-		 * Hint $mol_view sub / <= hint @ \Select option and use keys to switch
+		 * Hint $mol_view sub / <= hint
 		 * ```
 		 */
 		@ $mol_mem
@@ -92,18 +85,20 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * hint @ \Select option and use keys to switch
+		 * tab_current?val \
 		 * ```
 		 */
-		hint() {
-			return this.$.$mol_locale.text( '$mol_nav_demo_hint' )
+		@ $mol_mem
+		tab_current(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
 		}
 
 		/**
 		 * ```tree
 		 * Tab_list $mol_switch
 		 * 	keys => tab_list
-		 * 	value?val <=> tab_current?val \
+		 * 	value?val <=> tab_current?val
 		 * 	options *
 		 * 		first \First
 		 * 		second \Second
@@ -135,11 +130,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * tab_current?val \
+		 * row_current?val \
 		 * ```
 		 */
 		@ $mol_mem
-		tab_current(val?: any) {
+		row_current(val?: any) {
 			if ( val !== undefined ) return val
 			return ""
 		}
@@ -148,7 +143,7 @@ namespace $ {
 		 * ```tree
 		 * Row_list $mol_switch
 		 * 	keys => row_list
-		 * 	value?val <=> row_current?val \
+		 * 	value?val <=> row_current?val
 		 * 	options *
 		 * 		first \First
 		 * 		second \Second
@@ -176,17 +171,6 @@ namespace $ {
 		 */
 		row_list() {
 			return this.Row_list().keys()
-		}
-
-		/**
-		 * ```tree
-		 * row_current?val \
-		 * ```
-		 */
-		@ $mol_mem
-		row_current(val?: any) {
-			if ( val !== undefined ) return val
-			return ""
 		}
 	}
 

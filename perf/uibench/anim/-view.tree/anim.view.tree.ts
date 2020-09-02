@@ -26,11 +26,25 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub <= boxes /
+		 * sub <= boxes
 		 * ```
 		 */
 		sub() {
 			return this.boxes()
+		}
+
+		/**
+		 * ```tree
+		 * Box!index $mol_perf_uibench_anim_box state <= box_state!index
+		 * ```
+		 */
+		@ $mol_mem_key
+		Box(index: any) {
+			const obj = new this.$.$mol_perf_uibench_anim_box()
+
+			obj.state = () => this.box_state(index)
+
+			return obj
 		}
 
 		/**
@@ -42,20 +56,6 @@ namespace $ {
 			return [
 
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Box!index $mol_perf_uibench_anim_box state <= box_state!index null
-		 * ```
-		 */
-		@ $mol_mem_key
-		Box(index: any) {
-			const obj = new this.$.$mol_perf_uibench_anim_box()
-
-			obj.state = () => this.box_state(index)
-
-			return obj
 		}
 
 		/**
@@ -84,7 +84,7 @@ namespace $ {
 		 * attr *
 		 * 	^
 		 * 	class \AnimBox
-		 * 	data-id <= id \
+		 * 	data-id <= id
 		 * ```
 		 */
 		attr() {
@@ -97,19 +97,10 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * id \
-		 * ```
-		 */
-		id() {
-			return ""
-		}
-
-		/**
-		 * ```tree
 		 * style *
 		 * 	^
-		 * 	borderRadius <= style_radius \
-		 * 	background <= style_color \
+		 * 	borderRadius <= style_radius
+		 * 	background <= style_color
 		 * ```
 		 */
 		style() {
@@ -118,6 +109,15 @@ namespace $ {
 				borderRadius: this.style_radius(),
 				background: this.style_color()
 			}
+		}
+
+		/**
+		 * ```tree
+		 * id \
+		 * ```
+		 */
+		id() {
+			return ""
 		}
 
 		/**

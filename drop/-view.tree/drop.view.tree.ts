@@ -4,10 +4,10 @@ namespace $ {
 		/**
 		 * ```tree
 		 * event *
-		 * 	dragenter?event <=> enter?event null
-		 * 	dragover?event <=> move?event null
-		 * 	dragleave?event <=> leave?event null
-		 * 	drop?event <=> drop?event null
+		 * 	dragenter?event <=> enter?event
+		 * 	dragover?event <=> move?event
+		 * 	dragleave?event <=> leave?event
+		 * 	drop?event <=> drop?event
 		 * ```
 		 */
 		event() {
@@ -17,6 +17,41 @@ namespace $ {
 				dragleave: (event?: any) => this.leave(event),
 				drop: (event?: any) => this.drop(event)
 			}
+		}
+
+		/**
+		 * ```tree
+		 * attr * mol_drop_status <= status?val
+		 * ```
+		 */
+		attr() {
+			return {
+				mol_drop_status: this.status()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * adopt?transfer *
+		 * ```
+		 */
+		@ $mol_mem
+		adopt(transfer?: any) {
+			if ( transfer !== undefined ) return transfer
+			return {
+
+			}
+		}
+
+		/**
+		 * ```tree
+		 * receive?transfer null
+		 * ```
+		 */
+		@ $mol_mem
+		receive(transfer?: any) {
+			if ( transfer !== undefined ) return transfer
+			return null as any
 		}
 
 		/**
@@ -65,17 +100,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * attr * mol_drop_status <= status?val \ready
-		 * ```
-		 */
-		attr() {
-			return {
-				mol_drop_status: this.status()
-			}
-		}
-
-		/**
-		 * ```tree
 		 * status?val \ready
 		 * ```
 		 */
@@ -83,30 +107,6 @@ namespace $ {
 		status(val?: any) {
 			if ( val !== undefined ) return val
 			return "ready"
-		}
-
-		/**
-		 * ```tree
-		 * adopt?transfer *
-		 * ```
-		 */
-		@ $mol_mem
-		adopt(transfer?: any) {
-			if ( transfer !== undefined ) return transfer
-			return {
-
-			}
-		}
-
-		/**
-		 * ```tree
-		 * receive?transfer null
-		 * ```
-		 */
-		@ $mol_mem
-		receive(transfer?: any) {
-			if ( transfer !== undefined ) return transfer
-			return null as any
 		}
 	}
 

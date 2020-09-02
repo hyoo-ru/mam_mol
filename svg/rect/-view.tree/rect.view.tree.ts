@@ -25,10 +25,10 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	width <= width \0
-		 * 	height <= height \0
-		 * 	x <= pos_x \
-		 * 	y <= pos_y \
+		 * 	width <= width
+		 * 	height <= height
+		 * 	x <= pos_x
+		 * 	y <= pos_y
 		 * ```
 		 */
 		attr() {

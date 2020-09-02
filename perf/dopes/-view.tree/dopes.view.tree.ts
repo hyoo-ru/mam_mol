@@ -13,14 +13,10 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Speed $mol_view sub / <= speed \{speed} Dopes/s
-		 * 	<= Start $mol_button_major
-		 * 		title \@ Start
-		 * 		click?event <=> start?event null
-		 * 	<= Stop $mol_button_major
-		 * 		title \@ Stop
-		 * 		click?event <=> stop?event null
-		 * 	<= Labels $mol_view sub <= labels /
+		 * 	<= Speed
+		 * 	<= Start
+		 * 	<= Stop
+		 * 	<= Labels
 		 * ```
 		 */
 		sub() {
@@ -34,15 +30,23 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Speed $mol_view sub / <= speed \{speed} Dopes/s
+		 * Label!index $mol_view
+		 * 	style *
+		 * 		color <= label_color!index
+		 * 		transform <= label_transform!index
+		 * 	sub / \Dope
 		 * ```
 		 */
-		@ $mol_mem
-		Speed() {
+		@ $mol_mem_key
+		Label(index: any) {
 			const obj = new this.$.$mol_view()
 
+			obj.style = () => ({
+				color: this.label_color(index),
+				transform: this.label_transform(index)
+			})
 			obj.sub = () => [
-				this.speed()
+				"Dope"
 			] as readonly any[]
 
 			return obj
@@ -59,17 +63,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Start $mol_button_major
-		 * 	title \@ Start
-		 * 	click?event <=> start?event null
+		 * Speed $mol_view sub / <= speed
 		 * ```
 		 */
 		@ $mol_mem
-		Start() {
-			const obj = new this.$.$mol_button_major()
+		Speed() {
+			const obj = new this.$.$mol_view()
 
-			obj.title = () => "@ Start"
-			obj.click = (event?: any) => this.start(event)
+			obj.sub = () => [
+				this.speed()
+			] as readonly any[]
 
 			return obj
 		}
@@ -87,17 +90,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Stop $mol_button_major
-		 * 	title \@ Stop
-		 * 	click?event <=> stop?event null
+		 * Start $mol_button_major
+		 * 	title \@ Start
+		 * 	click?event <=> start?event
 		 * ```
 		 */
 		@ $mol_mem
-		Stop() {
+		Start() {
 			const obj = new this.$.$mol_button_major()
 
-			obj.title = () => "@ Stop"
-			obj.click = (event?: any) => this.stop(event)
+			obj.title = () => "@ Start"
+			obj.click = (event?: any) => this.start(event)
 
 			return obj
 		}
@@ -115,14 +118,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Labels $mol_view sub <= labels /
+		 * Stop $mol_button_major
+		 * 	title \@ Stop
+		 * 	click?event <=> stop?event
 		 * ```
 		 */
 		@ $mol_mem
-		Labels() {
-			const obj = new this.$.$mol_view()
+		Stop() {
+			const obj = new this.$.$mol_button_major()
 
-			obj.sub = () => this.labels()
+			obj.title = () => "@ Stop"
+			obj.click = (event?: any) => this.stop(event)
 
 			return obj
 		}
@@ -140,24 +146,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Label!index $mol_view
-		 * 	style *
-		 * 		color <= label_color!index \
-		 * 		transform <= label_transform!index \
-		 * 	sub / \Dope
+		 * Labels $mol_view sub <= labels
 		 * ```
 		 */
-		@ $mol_mem_key
-		Label(index: any) {
+		@ $mol_mem
+		Labels() {
 			const obj = new this.$.$mol_view()
 
-			obj.style = () => ({
-				color: this.label_color(index),
-				transform: this.label_transform(index)
-			})
-			obj.sub = () => [
-				"Dope"
-			] as readonly any[]
+			obj.sub = () => this.labels()
 
 			return obj
 		}

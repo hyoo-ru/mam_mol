@@ -12,59 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Month $mol_select
-		 * 	no_options_message \Not found
-		 * 	value?val <=> month?val \jan
-		 * 	dictionary <= months *
-		 * 		jan \January
-		 * 		feb \February
-		 * 		mar \March
-		 * 		apr \April
-		 * 		may \May
-		 * 		jun \June
-		 * 		jul \July
-		 * 		aug \August
-		 * 		sep \September
-		 * 		oct \October
-		 * 		nov \November
-		 * 		dec \December
+		 * sub / <= Month
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Month()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Month $mol_select
-		 * 	no_options_message \Not found
-		 * 	value?val <=> month?val \jan
-		 * 	dictionary <= months *
-		 * 		jan \January
-		 * 		feb \February
-		 * 		mar \March
-		 * 		apr \April
-		 * 		may \May
-		 * 		jun \June
-		 * 		jul \July
-		 * 		aug \August
-		 * 		sep \September
-		 * 		oct \October
-		 * 		nov \November
-		 * 		dec \December
-		 * ```
-		 */
-		@ $mol_mem
-		Month() {
-			const obj = new this.$.$mol_select()
-
-			obj.no_options_message = () => "Not found"
-			obj.value = (val?: any) => this.month(val)
-			obj.dictionary = () => this.months()
-
-			return obj
 		}
 
 		/**
@@ -110,6 +64,25 @@ namespace $ {
 				nov: "November",
 				dec: "December"
 			}
+		}
+
+		/**
+		 * ```tree
+		 * Month $mol_select
+		 * 	no_options_message \Not found
+		 * 	value?val <=> month?val
+		 * 	dictionary <= months
+		 * ```
+		 */
+		@ $mol_mem
+		Month() {
+			const obj = new this.$.$mol_select()
+
+			obj.no_options_message = () => "Not found"
+			obj.value = (val?: any) => this.month(val)
+			obj.dictionary = () => this.months()
+
+			return obj
 		}
 	}
 

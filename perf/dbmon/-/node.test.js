@@ -2882,6 +2882,9 @@ var $;
         field() {
             return Object.assign(Object.assign({}, super.field()), { scrollTop: this.scroll_top(), scrollLeft: this.scroll_left(), tabIndex: this.tabindex() });
         }
+        event() {
+            return Object.assign(Object.assign({}, super.event()), { scroll: (event) => this.event_scroll(event) });
+        }
         scroll_top(val) {
             if (val !== undefined)
                 return val;
@@ -2894,9 +2897,6 @@ var $;
         }
         tabindex() {
             return -1;
-        }
-        event() {
-            return Object.assign(Object.assign({}, super.event()), { scroll: (event) => this.event_scroll(event) });
         }
         event_scroll(event) {
             if (event !== undefined)
@@ -3077,9 +3077,6 @@ var $;
         sub() {
             return this.rows();
         }
-        rows() {
-            return [];
-        }
         Empty() {
             const obj = new this.$.$mol_view();
             return obj;
@@ -3091,9 +3088,6 @@ var $;
             });
             return obj;
         }
-        gap_before() {
-            return 0;
-        }
         Gap_after() {
             const obj = new this.$.$mol_view();
             obj.style = () => ({
@@ -3101,14 +3095,20 @@ var $;
             });
             return obj;
         }
-        gap_after() {
-            return 0;
-        }
         view_window() {
             return [
                 0,
                 0
             ];
+        }
+        rows() {
+            return [];
+        }
+        gap_before() {
+            return 0;
+        }
+        gap_after() {
+            return 0;
         }
     }
     __decorate([
@@ -3493,11 +3493,6 @@ var $;
                 keydown: (event) => this.keydown(event)
             };
         }
-        keydown(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
         showed(val) {
             if (val !== undefined)
                 return val;
@@ -3507,6 +3502,17 @@ var $;
             return [
                 this.Meter()
             ];
+        }
+        sub() {
+            return [
+                this.Anchor(),
+                this.Bubble()
+            ];
+        }
+        keydown(event) {
+            if (event !== undefined)
+                return event;
+            return null;
         }
         Meter() {
             const obj = new this.$.$mol_meter();
@@ -3524,21 +3530,8 @@ var $;
         right() {
             return this.Meter().right();
         }
-        sub() {
-            return [
-                this.Anchor(),
-                this.Bubble()
-            ];
-        }
         Anchor() {
             return null;
-        }
-        Bubble() {
-            const obj = new this.$.$mol_pop_bubble();
-            obj.align = () => this.align();
-            obj.content = () => this.bubble_content();
-            obj.height_max = () => this.height_max();
-            return obj;
         }
         align() {
             return "bottom_center";
@@ -3549,13 +3542,20 @@ var $;
         height_max() {
             return 9999;
         }
+        Bubble() {
+            const obj = new this.$.$mol_pop_bubble();
+            obj.align = () => this.align();
+            obj.content = () => this.bubble_content();
+            obj.height_max = () => this.height_max();
+            return obj;
+        }
     }
     __decorate([
         $.$mol_mem
-    ], $mol_pop.prototype, "keydown", null);
+    ], $mol_pop.prototype, "showed", null);
     __decorate([
         $.$mol_mem
-    ], $mol_pop.prototype, "showed", null);
+    ], $mol_pop.prototype, "keydown", null);
     __decorate([
         $.$mol_mem
     ], $mol_pop.prototype, "Meter", null);
@@ -3567,17 +3567,17 @@ var $;
         sub() {
             return this.content();
         }
-        content() {
-            return [];
-        }
         style() {
             return Object.assign(Object.assign({}, super.style()), { maxHeight: this.height_max() });
         }
-        height_max() {
-            return 9999;
-        }
         attr() {
             return Object.assign(Object.assign({}, super.attr()), { mol_pop_align: this.align(), tabindex: 0 });
+        }
+        content() {
+            return [];
+        }
+        height_max() {
+            return 9999;
         }
         align() {
             return "";
@@ -3747,16 +3747,16 @@ var $;
         showed() {
             return this.hovered();
         }
-        hovered(val) {
-            if (val !== undefined)
-                return val;
-            return false;
-        }
         attr() {
             return Object.assign(Object.assign({}, super.attr()), { tabindex: 0 });
         }
         event() {
             return Object.assign(Object.assign({}, super.event()), { mouseenter: (event) => this.event_show(event), mouseleave: (event) => this.event_hide(event) });
+        }
+        hovered(val) {
+            if (val !== undefined)
+                return val;
+            return false;
         }
         event_show(event) {
             if (event !== undefined)
@@ -3822,25 +3822,28 @@ var $;
                 this.Databases()
             ];
         }
-        Databases() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => this.databases();
-            return obj;
-        }
-        databases() {
-            return [];
-        }
         Database(id) {
             const obj = new this.$.$mol_view();
             obj.sub = () => this.database(id);
             return obj;
         }
-        database(id) {
-            return [
-                this.Name(id),
-                this.Query_count(id),
-                this.top_queries(id)
-            ];
+        Query(id) {
+            const obj = new this.$.$mol_perf_dbmon_query();
+            obj.elapsed = () => this.query_elapsed(id);
+            obj.elapsed_mod = () => this.query_elapsed_mod(id);
+            obj.value = () => this.query_value(id);
+            return obj;
+        }
+        databases() {
+            return [];
+        }
+        Databases() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => this.databases();
+            return obj;
+        }
+        name(id) {
+            return "";
         }
         Name(id) {
             const obj = new this.$.$mol_view();
@@ -3849,8 +3852,11 @@ var $;
             ];
             return obj;
         }
-        name(id) {
+        query_count_label_mod(id) {
             return "";
+        }
+        query_count(id) {
+            return 0;
         }
         Query_count(id) {
             const obj = new this.$.$mol_perf_dbmon_query_count();
@@ -3858,21 +3864,15 @@ var $;
             obj.count = () => this.query_count(id);
             return obj;
         }
-        query_count_label_mod(id) {
-            return "";
-        }
-        query_count(id) {
-            return 0;
-        }
         top_queries(id) {
             return [];
         }
-        Query(id) {
-            const obj = new this.$.$mol_perf_dbmon_query();
-            obj.elapsed = () => this.query_elapsed(id);
-            obj.elapsed_mod = () => this.query_elapsed_mod(id);
-            obj.value = () => this.query_value(id);
-            return obj;
+        database(id) {
+            return [
+                this.Name(id),
+                this.Query_count(id),
+                this.top_queries(id)
+            ];
         }
         query_elapsed(id) {
             return "";
@@ -3885,26 +3885,32 @@ var $;
         }
     }
     __decorate([
-        $.$mol_mem
-    ], $mol_perf_dbmon.prototype, "Databases", null);
-    __decorate([
         $.$mol_mem_key
     ], $mol_perf_dbmon.prototype, "Database", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_perf_dbmon.prototype, "Query", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_perf_dbmon.prototype, "Databases", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_perf_dbmon.prototype, "Name", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_perf_dbmon.prototype, "Query_count", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_perf_dbmon.prototype, "Query", null);
     $.$mol_perf_dbmon = $mol_perf_dbmon;
     class $mol_perf_dbmon_query_count extends $.$mol_view {
         sub() {
             return [
                 this.Label()
             ];
+        }
+        label_mod() {
+            return "";
+        }
+        count() {
+            return 0;
         }
         Label() {
             const obj = new this.$.$mol_view();
@@ -3915,12 +3921,6 @@ var $;
                 this.count()
             ];
             return obj;
-        }
-        label_mod() {
-            return "";
-        }
-        count() {
-            return 0;
         }
     }
     __decorate([
@@ -3934,6 +3934,20 @@ var $;
         Anchor() {
             return this.Elapsed();
         }
+        bubble_content() {
+            return [
+                this.value()
+            ];
+        }
+        align() {
+            return "left_center";
+        }
+        elapsed_mod() {
+            return "";
+        }
+        elapsed() {
+            return "";
+        }
         Elapsed() {
             const obj = new this.$.$mol_view();
             obj.attr = () => ({
@@ -3944,22 +3958,8 @@ var $;
             ];
             return obj;
         }
-        elapsed_mod() {
-            return "";
-        }
-        elapsed() {
-            return "";
-        }
-        bubble_content() {
-            return [
-                this.value()
-            ];
-        }
         value() {
             return "";
-        }
-        align() {
-            return "left_center";
         }
     }
     __decorate([
@@ -4120,13 +4120,13 @@ var $;
         value(val) {
             return this.task_title_new(val);
         }
+        enabled() {
+            return this.head_complete_enabled();
+        }
         task_title_new(val) {
             if (val !== undefined)
                 return val;
             return "123";
-        }
-        enabled() {
-            return this.head_complete_enabled();
         }
         head_complete_enabled() {
             return false;

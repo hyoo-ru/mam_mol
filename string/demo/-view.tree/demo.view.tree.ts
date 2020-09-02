@@ -13,14 +13,10 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Simple $mol_string value?val <=> name?val \
-		 * 	<= Hint $mol_string
-		 * 		hint \Batman
-		 * 		value?val <=> name?val \
-		 * 	<= Filled $mol_string value?val <=> name2?val \Jocker
-		 * 	<= Disabled $mol_string
-		 * 		disabled true
-		 * 		value?val <=> name2?val
+		 * 	<= Simple
+		 * 	<= Hint
+		 * 	<= Filled
+		 * 	<= Disabled
 		 * ```
 		 */
 		sub() {
@@ -30,20 +26,6 @@ namespace $ {
 				this.Filled(),
 				this.Disabled()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Simple $mol_string value?val <=> name?val \
-		 * ```
-		 */
-		@ $mol_mem
-		Simple() {
-			const obj = new this.$.$mol_string()
-
-			obj.value = (val?: any) => this.name(val)
-
-			return obj
 		}
 
 		/**
@@ -59,9 +41,23 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Simple $mol_string value?val <=> name?val
+		 * ```
+		 */
+		@ $mol_mem
+		Simple() {
+			const obj = new this.$.$mol_string()
+
+			obj.value = (val?: any) => this.name(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * Hint $mol_string
 		 * 	hint \Batman
-		 * 	value?val <=> name?val \
+		 * 	value?val <=> name?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -76,7 +72,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Filled $mol_string value?val <=> name2?val \Jocker
+		 * name2?val \Jocker
+		 * ```
+		 */
+		@ $mol_mem
+		name2(val?: any) {
+			if ( val !== undefined ) return val
+			return "Jocker"
+		}
+
+		/**
+		 * ```tree
+		 * Filled $mol_string value?val <=> name2?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -86,17 +93,6 @@ namespace $ {
 			obj.value = (val?: any) => this.name2(val)
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * name2?val \Jocker
-		 * ```
-		 */
-		@ $mol_mem
-		name2(val?: any) {
-			if ( val !== undefined ) return val
-			return "Jocker"
 		}
 
 		/**

@@ -55,8 +55,6 @@ $mol_page $mol_view
 		<= Foot $mol_view
 			sub <= foot /$mol_view
 
-$mol_row $mol_view
-
 $mol_list $mol_view
 	render_visible_only true
 	render_over 0.5
@@ -289,6 +287,8 @@ $mol_text_image $mol_view
 		data <= link?val \
 	sub /
 		<= title?val \
+
+$mol_row $mol_view
 
 $mol_app_quine $mol_page
 	title @ \Quine - Application that prints self sources

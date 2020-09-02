@@ -12,15 +12,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Priority $mol_select
-		 * 	Filter null
-		 * 	value?val <=> priority?val \Lowest
-		 * 	options /
-		 * 		\Highest 
-		 * 		\High
-		 * 		\Medium
-		 * 		\Low
-		 * 		\Lowest
+		 * sub / <= Priority
 		 * ```
 		 */
 		sub() {
@@ -31,9 +23,20 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * priority?val \Lowest
+		 * ```
+		 */
+		@ $mol_mem
+		priority(val?: any) {
+			if ( val !== undefined ) return val
+			return "Lowest"
+		}
+
+		/**
+		 * ```tree
 		 * Priority $mol_select
 		 * 	Filter null
-		 * 	value?val <=> priority?val \Lowest
+		 * 	value?val <=> priority?val
 		 * 	options /
 		 * 		\Highest 
 		 * 		\High
@@ -57,17 +60,6 @@ namespace $ {
 			] as readonly any[]
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * priority?val \Lowest
-		 * ```
-		 */
-		@ $mol_mem
-		priority(val?: any) {
-			if ( val !== undefined ) return val
-			return "Lowest"
 		}
 	}
 

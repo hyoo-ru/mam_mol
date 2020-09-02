@@ -84,7 +84,7 @@ namespace $ {
 		 * ```tree
 		 * sub /
 		 * 	<= Head
-		 * 	<= Table $mol_grid_table sub <= rows /$mol_view
+		 * 	<= Table
 		 * ```
 		 */
 		sub() {
@@ -96,32 +96,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Table $mol_grid_table sub <= rows /$mol_view
-		 * ```
-		 */
-		@ $mol_mem
-		Table() {
-			const obj = new this.$.$mol_grid_table()
-
-			obj.sub = () => this.rows()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * rows /$mol_view
-		 * ```
-		 */
-		rows() {
-			return [
-
-			] as readonly $mol_view[]
-		}
-
-		/**
-		 * ```tree
-		 * Head $mol_grid_row cells <= head_cells /$mol_view
+		 * Head $mol_grid_row cells <= head_cells
 		 * ```
 		 */
 		@ $mol_mem
@@ -135,20 +110,9 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * head_cells /$mol_view
-		 * ```
-		 */
-		head_cells() {
-			return [
-
-			] as readonly $mol_view[]
-		}
-
-		/**
-		 * ```tree
 		 * Row!id $mol_grid_row
 		 * 	minimal_height <= row_height
-		 * 	cells <= cells!id /$mol_view
+		 * 	cells <= cells!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -159,17 +123,6 @@ namespace $ {
 			obj.cells = () => this.cells(id)
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * cells!id /$mol_view
-		 * ```
-		 */
-		cells(id: any) {
-			return [
-
-			] as readonly $mol_view[]
 		}
 
 
@@ -196,7 +149,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Cell_text!id $mol_grid_cell sub <= cell_content_text!id <= cell_content!id /$mol_view_content
+		 * Cell_text!id $mol_grid_cell sub <= cell_content_text!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -210,11 +163,110 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * cell_content_text!id <= cell_content!id /$mol_view_content
+		 * Cell_number!id $mol_grid_number sub <= cell_content_number!id
 		 * ```
 		 */
-		cell_content_text(id: any) {
-			return this.cell_content(id)
+		@ $mol_mem_key
+		Cell_number(id: any) {
+			const obj = new this.$.$mol_grid_number()
+
+			obj.sub = () => this.cell_content_number(id)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Col_head!id $mol_float
+		 * 	dom_name \th
+		 * 	sub <= col_head_content!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Col_head(id: any) {
+			const obj = new this.$.$mol_float()
+
+			obj.dom_name = () => "th"
+			obj.sub = () => this.col_head_content(id)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Cell_branch!id $mol_check_expand
+		 * 	level <= cell_level!id
+		 * 	label <= cell_content!id
+		 * 	expanded?val <=> cell_expanded!id?val
+		 * ```
+		 */
+		@ $mol_mem_key
+		Cell_branch(id: any) {
+			const obj = new this.$.$mol_check_expand()
+
+			obj.level = () => this.cell_level(id)
+			obj.label = () => this.cell_content(id)
+			obj.expanded = (val?: any) => this.cell_expanded(id, val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Cell_content!id / <= Cell_dimmer!id
+		 * ```
+		 */
+		Cell_content(id: any) {
+			return [
+				this.Cell_dimmer(id)
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * rows /$mol_view
+		 * ```
+		 */
+		rows() {
+			return [
+
+			] as readonly $mol_view[]
+		}
+
+		/**
+		 * ```tree
+		 * Table $mol_grid_table sub <= rows
+		 * ```
+		 */
+		@ $mol_mem
+		Table() {
+			const obj = new this.$.$mol_grid_table()
+
+			obj.sub = () => this.rows()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * head_cells /$mol_view
+		 * ```
+		 */
+		head_cells() {
+			return [
+
+			] as readonly $mol_view[]
+		}
+
+		/**
+		 * ```tree
+		 * cells!id /$mol_view
+		 * ```
+		 */
+		cells(id: any) {
+			return [
+
+			] as readonly $mol_view[]
 		}
 
 		/**
@@ -230,42 +282,20 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Cell_number!id $mol_grid_number sub <= cell_content_number!id <= cell_content!id /$mol_view_content
+		 * cell_content_text!id <= cell_content!id
 		 * ```
 		 */
-		@ $mol_mem_key
-		Cell_number(id: any) {
-			const obj = new this.$.$mol_grid_number()
-
-			obj.sub = () => this.cell_content_number(id)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * cell_content_number!id <= cell_content!id /$mol_view_content
-		 * ```
-		 */
-		cell_content_number(id: any) {
+		cell_content_text(id: any) {
 			return this.cell_content(id)
 		}
 
 		/**
 		 * ```tree
-		 * Col_head!id $mol_float
-		 * 	dom_name \th
-		 * 	sub <= col_head_content!id /$mol_view_content
+		 * cell_content_number!id <= cell_content!id
 		 * ```
 		 */
-		@ $mol_mem_key
-		Col_head(id: any) {
-			const obj = new this.$.$mol_float()
-
-			obj.dom_name = () => "th"
-			obj.sub = () => this.col_head_content(id)
-
-			return obj
+		cell_content_number(id: any) {
+			return this.cell_content(id)
 		}
 
 		/**
@@ -277,25 +307,6 @@ namespace $ {
 			return [
 
 			] as readonly $mol_view_content[]
-		}
-
-		/**
-		 * ```tree
-		 * Cell_branch!id $mol_check_expand
-		 * 	level <= cell_level!id 0
-		 * 	label <= cell_content!id /$mol_view_content
-		 * 	expanded?val <=> cell_expanded!id?val false
-		 * ```
-		 */
-		@ $mol_mem_key
-		Cell_branch(id: any) {
-			const obj = new this.$.$mol_check_expand()
-
-			obj.level = () => this.cell_level(id)
-			obj.label = () => this.cell_content(id)
-			obj.expanded = (val?: any) => this.cell_expanded(id, val)
-
-			return obj
 		}
 
 		/**
@@ -320,36 +331,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Cell_content!id / <= Cell_dimmer!id $mol_dimmer
-		 * 	needle <= needle \
-		 * 	haystack <= cell_value!id \
-		 * ```
-		 */
-		Cell_content(id: any) {
-			return [
-				this.Cell_dimmer(id)
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Cell_dimmer!id $mol_dimmer
-		 * 	needle <= needle \
-		 * 	haystack <= cell_value!id \
-		 * ```
-		 */
-		@ $mol_mem_key
-		Cell_dimmer(id: any) {
-			const obj = new this.$.$mol_dimmer()
-
-			obj.needle = () => this.needle()
-			obj.haystack = () => this.cell_value(id)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * needle \
 		 * ```
 		 */
@@ -364,6 +345,23 @@ namespace $ {
 		 */
 		cell_value(id: any) {
 			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Cell_dimmer!id $mol_dimmer
+		 * 	needle <= needle
+		 * 	haystack <= cell_value!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Cell_dimmer(id: any) {
+			const obj = new this.$.$mol_dimmer()
+
+			obj.needle = () => this.needle()
+			obj.haystack = () => this.cell_value(id)
+
+			return obj
 		}
 	}
 
@@ -392,7 +390,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub <= cells /$mol_view
+		 * sub <= cells
 		 * ```
 		 */
 		sub() {

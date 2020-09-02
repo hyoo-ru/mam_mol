@@ -12,7 +12,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Scroll $mol_scroll sub / <= Content $mol_list rows <= root_rows /
+		 * sub / <= Scroll
 		 * ```
 		 */
 		sub() {
@@ -23,51 +23,10 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Scroll $mol_scroll sub / <= Content $mol_list rows <= root_rows /
-		 * ```
-		 */
-		@ $mol_mem
-		Scroll() {
-			const obj = new this.$.$mol_scroll()
-
-			obj.sub = () => [
-				this.Content()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Content $mol_list rows <= root_rows /
-		 * ```
-		 */
-		@ $mol_mem
-		Content() {
-			const obj = new this.$.$mol_list()
-
-			obj.rows = () => this.root_rows()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * root_rows /
-		 * ```
-		 */
-		root_rows() {
-			return [
-
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
 		 * Row!id $mol_expander
-		 * 	label / <= Row_title!id $mol_paragraph sub / <= row_title!id \
-		 * 	expanded?val <=> row_expanded!id?val false
-		 * 	Content <= Row_content!id $mol_list rows <= row_content!id /
+		 * 	label / <= Row_title!id
+		 * 	expanded?val <=> row_expanded!id?val
+		 * 	Content <= Row_content!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -85,15 +44,40 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Row_title!id $mol_paragraph sub / <= row_title!id \
+		 * root_rows /
 		 * ```
 		 */
-		@ $mol_mem_key
-		Row_title(id: any) {
-			const obj = new this.$.$mol_paragraph()
+		root_rows() {
+			return [
+
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Content $mol_list rows <= root_rows
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
+			const obj = new this.$.$mol_list()
+
+			obj.rows = () => this.root_rows()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Scroll $mol_scroll sub / <= Content
+		 * ```
+		 */
+		@ $mol_mem
+		Scroll() {
+			const obj = new this.$.$mol_scroll()
 
 			obj.sub = () => [
-				this.row_title(id)
+				this.Content()
 			] as readonly any[]
 
 			return obj
@@ -110,6 +94,22 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Row_title!id $mol_paragraph sub / <= row_title!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Row_title(id: any) {
+			const obj = new this.$.$mol_paragraph()
+
+			obj.sub = () => [
+				this.row_title(id)
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * row_expanded!id?val false
 		 * ```
 		 */
@@ -121,7 +121,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Row_content!id $mol_list rows <= row_content!id /
+		 * row_content!id /
+		 * ```
+		 */
+		row_content(id: any) {
+			return [
+
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Row_content!id $mol_list rows <= row_content!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -131,17 +142,6 @@ namespace $ {
 			obj.rows = () => this.row_content(id)
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * row_content!id /
-		 * ```
-		 */
-		row_content(id: any) {
-			return [
-
-			] as readonly any[]
 		}
 	}
 

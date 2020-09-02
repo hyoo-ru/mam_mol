@@ -31,7 +31,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= value null
+		 * sub / <= value
 		 * ```
 		 */
 		sub() {

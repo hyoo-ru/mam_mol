@@ -2633,11 +2633,6 @@ var $;
         event() {
             return Object.assign(Object.assign({}, super.event()), { keydown: (event) => this.keydown(event) });
         }
-        keydown(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
         key() {
             return {};
         }
@@ -2649,6 +2644,11 @@ var $;
         }
         mod_shift() {
             return false;
+        }
+        keydown(event) {
+            if (event !== undefined)
+                return event;
+            return null;
         }
     }
     __decorate([
@@ -2817,16 +2817,27 @@ var $;
         field() {
             return Object.assign(Object.assign({}, super.field()), { disabled: this.disabled(), value: this.value_changed(), placeholder: this.hint(), type: this.type(), spellcheck: this.spellcheck(), autocomplete: this.autocomplete_native() });
         }
+        attr() {
+            return Object.assign(Object.assign({}, super.attr()), { maxlength: this.length_max() });
+        }
+        event() {
+            return Object.assign(Object.assign({}, super.event()), { input: (event) => this.event_change(event), keydown: (event) => this.event_key_press(event) });
+        }
+        plugins() {
+            return [
+                this.Submit()
+            ];
+        }
         disabled() {
             return false;
-        }
-        value_changed(val) {
-            return this.value(val);
         }
         value(val) {
             if (val !== undefined)
                 return val;
             return "";
+        }
+        value_changed(val) {
+            return this.value(val);
         }
         hint() {
             return "";
@@ -2842,14 +2853,8 @@ var $;
         autocomplete_native() {
             return "";
         }
-        attr() {
-            return Object.assign(Object.assign({}, super.attr()), { maxlength: this.length_max() });
-        }
         length_max() {
             return Infinity;
-        }
-        event() {
-            return Object.assign(Object.assign({}, super.event()), { input: (event) => this.event_change(event), keydown: (event) => this.event_key_press(event) });
         }
         event_change(event) {
             if (event !== undefined)
@@ -2861,10 +2866,10 @@ var $;
                 return event;
             return null;
         }
-        plugins() {
-            return [
-                this.Submit()
-            ];
+        submit(event) {
+            if (event !== undefined)
+                return event;
+            return null;
         }
         Submit() {
             const obj = new this.$.$mol_hotkey();
@@ -2872,11 +2877,6 @@ var $;
                 enter: (event) => this.submit(event)
             });
             return obj;
-        }
-        submit(event) {
-            if (event !== undefined)
-                return event;
-            return null;
         }
     }
     __decorate([
@@ -2893,10 +2893,10 @@ var $;
     ], $mol_string.prototype, "event_key_press", null);
     __decorate([
         $.$mol_mem
-    ], $mol_string.prototype, "Submit", null);
+    ], $mol_string.prototype, "submit", null);
     __decorate([
         $.$mol_mem
-    ], $mol_string.prototype, "submit", null);
+    ], $mol_string.prototype, "Submit", null);
     $.$mol_string = $mol_string;
 })($ || ($ = {}));
 //string.view.tree.js.map
@@ -2941,18 +2941,21 @@ var $;
                 this.Greeting()
             ];
         }
-        Name() {
-            const obj = new this.$.$mol_string();
-            obj.hint = () => this.name_hint();
-            obj.value = (val) => this.name(val);
-            return obj;
-        }
         name_hint() {
             return "Name";
         }
         name(val) {
             if (val !== undefined)
                 return val;
+            return "";
+        }
+        Name() {
+            const obj = new this.$.$mol_string();
+            obj.hint = () => this.name_hint();
+            obj.value = (val) => this.name(val);
+            return obj;
+        }
+        greeting() {
             return "";
         }
         Greeting() {
@@ -2962,16 +2965,13 @@ var $;
             ];
             return obj;
         }
-        greeting() {
-            return "";
-        }
     }
     __decorate([
         $.$mol_mem
-    ], $mol_app_hello.prototype, "Name", null);
+    ], $mol_app_hello.prototype, "name", null);
     __decorate([
         $.$mol_mem
-    ], $mol_app_hello.prototype, "name", null);
+    ], $mol_app_hello.prototype, "Name", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_hello.prototype, "Greeting", null);
@@ -3059,13 +3059,13 @@ var $;
         value(val) {
             return this.task_title_new(val);
         }
+        enabled() {
+            return this.head_complete_enabled();
+        }
         task_title_new(val) {
             if (val !== undefined)
                 return val;
             return "123";
-        }
-        enabled() {
-            return this.head_complete_enabled();
         }
         head_complete_enabled() {
             return false;

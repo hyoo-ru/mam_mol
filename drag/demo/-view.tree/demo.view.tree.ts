@@ -12,17 +12,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= List_drop $mol_drop
-		 * 	adopt?transfer <=> transfer_adopt?transfer null
-		 * 	receive?obj <=> receive?obj null
-		 * 	Sub <= Scroll $mol_scroll sub /
-		 * 		<= Trash_drop $mol_drop
-		 * 			adopt?transfer <=> transfer_adopt?transfer null
-		 * 			receive?obj <=> receive_trash?obj null
-		 * 			Sub <= Trash $mol_float sub /
-		 * 				<= Trash_icon $mol_icon_trash_can_outline
-		 * 				\Trash
-		 * 		<= List $mol_list rows <= task_rows /
+		 * sub / <= List_drop
 		 * ```
 		 */
 		sub() {
@@ -33,26 +23,24 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * List_drop $mol_drop
-		 * 	adopt?transfer <=> transfer_adopt?transfer null
-		 * 	receive?obj <=> receive?obj null
-		 * 	Sub <= Scroll $mol_scroll sub /
-		 * 		<= Trash_drop $mol_drop
-		 * 			adopt?transfer <=> transfer_adopt?transfer null
-		 * 			receive?obj <=> receive_trash?obj null
-		 * 			Sub <= Trash $mol_float sub /
-		 * 				<= Trash_icon $mol_icon_trash_can_outline
-		 * 				\Trash
-		 * 		<= List $mol_list rows <= task_rows /
+		 * Task_row!task $mol_drag
+		 * 	transfer *
+		 * 		text/plain <= task_title!task
+		 * 		text/html <= task_html!task
+		 * 		text/uri-list <= task_uri!task
+		 * 	Sub <= Task_drop!task
 		 * ```
 		 */
-		@ $mol_mem
-		List_drop() {
-			const obj = new this.$.$mol_drop()
+		@ $mol_mem_key
+		Task_row(task: any) {
+			const obj = new this.$.$mol_drag()
 
-			obj.adopt = (transfer?: any) => this.transfer_adopt(transfer)
-			obj.receive = (obj?: any) => this.receive(obj)
-			obj.Sub = () => this.Scroll()
+			obj.transfer = () => ({
+				"text/plain": this.task_title(task),
+				"text/html": this.task_html(task),
+				"text/uri-list": this.task_uri(task)
+			})
+			obj.Sub = () => this.Task_drop(task)
 
 			return obj
 		}
@@ -81,51 +69,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Scroll $mol_scroll sub /
-		 * 	<= Trash_drop $mol_drop
-		 * 		adopt?transfer <=> transfer_adopt?transfer null
-		 * 		receive?obj <=> receive_trash?obj null
-		 * 		Sub <= Trash $mol_float sub /
-		 * 			<= Trash_icon $mol_icon_trash_can_outline
-		 * 			\Trash
-		 * 	<= List $mol_list rows <= task_rows /
-		 * ```
-		 */
-		@ $mol_mem
-		Scroll() {
-			const obj = new this.$.$mol_scroll()
-
-			obj.sub = () => [
-				this.Trash_drop(),
-				this.List()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Trash_drop $mol_drop
-		 * 	adopt?transfer <=> transfer_adopt?transfer null
-		 * 	receive?obj <=> receive_trash?obj null
-		 * 	Sub <= Trash $mol_float sub /
-		 * 		<= Trash_icon $mol_icon_trash_can_outline
-		 * 		\Trash
-		 * ```
-		 */
-		@ $mol_mem
-		Trash_drop() {
-			const obj = new this.$.$mol_drop()
-
-			obj.adopt = (transfer?: any) => this.transfer_adopt(transfer)
-			obj.receive = (obj?: any) => this.receive_trash(obj)
-			obj.Sub = () => this.Trash()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * receive_trash?obj null
 		 * ```
 		 */
@@ -137,8 +80,20 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Trash_icon $mol_icon_trash_can_outline
+		 * ```
+		 */
+		@ $mol_mem
+		Trash_icon() {
+			const obj = new this.$.$mol_icon_trash_can_outline()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * Trash $mol_float sub /
-		 * 	<= Trash_icon $mol_icon_trash_can_outline
+		 * 	<= Trash_icon
 		 * 	\Trash
 		 * ```
 		 */
@@ -156,26 +111,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Trash_icon $mol_icon_trash_can_outline
+		 * Trash_drop $mol_drop
+		 * 	adopt?transfer <=> transfer_adopt?transfer
+		 * 	receive?obj <=> receive_trash?obj
+		 * 	Sub <= Trash
 		 * ```
 		 */
 		@ $mol_mem
-		Trash_icon() {
-			const obj = new this.$.$mol_icon_trash_can_outline()
+		Trash_drop() {
+			const obj = new this.$.$mol_drop()
 
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * List $mol_list rows <= task_rows /
-		 * ```
-		 */
-		@ $mol_mem
-		List() {
-			const obj = new this.$.$mol_list()
-
-			obj.rows = () => this.task_rows()
+			obj.adopt = (transfer?: any) => this.transfer_adopt(transfer)
+			obj.receive = (obj?: any) => this.receive_trash(obj)
+			obj.Sub = () => this.Trash()
 
 			return obj
 		}
@@ -193,29 +141,52 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Task_row!task $mol_drag
-		 * 	transfer *
-		 * 		text/plain <= task_title!task \
-		 * 		text/html <= task_html!task \
-		 * 		text/uri-list <= task_uri!task \
-		 * 	Sub <= Task_drop!task $mol_drop
-		 * 		adopt?transfer <=> transfer_adopt?transfer null
-		 * 		receive?obj <=> receive_before!task?obj null
-		 * 		Sub <= Task_link!task $mol_link
-		 * 			uri <= task_uri!task \
-		 * 			sub / <= task_title!task \
+		 * List $mol_list rows <= task_rows
 		 * ```
 		 */
-		@ $mol_mem_key
-		Task_row(task: any) {
-			const obj = new this.$.$mol_drag()
+		@ $mol_mem
+		List() {
+			const obj = new this.$.$mol_list()
 
-			obj.transfer = () => ({
-				"text/plain": this.task_title(task),
-				"text/html": this.task_html(task),
-				"text/uri-list": this.task_uri(task)
-			})
-			obj.Sub = () => this.Task_drop(task)
+			obj.rows = () => this.task_rows()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Scroll $mol_scroll sub /
+		 * 	<= Trash_drop
+		 * 	<= List
+		 * ```
+		 */
+		@ $mol_mem
+		Scroll() {
+			const obj = new this.$.$mol_scroll()
+
+			obj.sub = () => [
+				this.Trash_drop(),
+				this.List()
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * List_drop $mol_drop
+		 * 	adopt?transfer <=> transfer_adopt?transfer
+		 * 	receive?obj <=> receive?obj
+		 * 	Sub <= Scroll
+		 * ```
+		 */
+		@ $mol_mem
+		List_drop() {
+			const obj = new this.$.$mol_drop()
+
+			obj.adopt = (transfer?: any) => this.transfer_adopt(transfer)
+			obj.receive = (obj?: any) => this.receive(obj)
+			obj.Sub = () => this.Scroll()
 
 			return obj
 		}
@@ -249,27 +220,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Task_drop!task $mol_drop
-		 * 	adopt?transfer <=> transfer_adopt?transfer null
-		 * 	receive?obj <=> receive_before!task?obj null
-		 * 	Sub <= Task_link!task $mol_link
-		 * 		uri <= task_uri!task \
-		 * 		sub / <= task_title!task \
-		 * ```
-		 */
-		@ $mol_mem_key
-		Task_drop(task: any) {
-			const obj = new this.$.$mol_drop()
-
-			obj.adopt = (transfer?: any) => this.transfer_adopt(transfer)
-			obj.receive = (obj?: any) => this.receive_before(task, obj)
-			obj.Sub = () => this.Task_link(task)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * receive_before!task?obj null
 		 * ```
 		 */
@@ -282,8 +232,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Task_link!task $mol_link
-		 * 	uri <= task_uri!task \
-		 * 	sub / <= task_title!task \
+		 * 	uri <= task_uri!task
+		 * 	sub / <= task_title!task
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -294,6 +244,25 @@ namespace $ {
 			obj.sub = () => [
 				this.task_title(task)
 			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Task_drop!task $mol_drop
+		 * 	adopt?transfer <=> transfer_adopt?transfer
+		 * 	receive?obj <=> receive_before!task?obj
+		 * 	Sub <= Task_link!task
+		 * ```
+		 */
+		@ $mol_mem_key
+		Task_drop(task: any) {
+			const obj = new this.$.$mol_drop()
+
+			obj.adopt = (transfer?: any) => this.transfer_adopt(transfer)
+			obj.receive = (obj?: any) => this.receive_before(task, obj)
+			obj.Sub = () => this.Task_link(task)
 
 			return obj
 		}

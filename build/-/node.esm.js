@@ -2444,7 +2444,7 @@ var $;
         }
         hack(belt, context) {
             return [].concat(...this.kids.map(child => {
-                const handle = belt[child.type] || belt[''];
+                const handle = belt[Reflect.ownKeys(belt).includes(child.type) ? child.type : ''];
                 if (!handle) {
                     this.$.$mol_fail(child.error(`Hack not found.\nAllowed: ${Object.keys(belt)}`));
                 }
@@ -2718,10 +2718,6 @@ var $;
                 const defs = prop.hack(belt);
                 if (defs.length)
                     props_inner.push(prop.clone(defs));
-                return [operator.clone([prop.clone([])])];
-            },
-            '=>': (operator, belt) => {
-                const prop = this.$mol_view_tree2_child(operator);
                 return [operator.clone([prop.clone([])])];
             },
             '': (node, belt) => {
@@ -3200,7 +3196,8 @@ var $;
         const body = [];
         const class_parts = this.$mol_view_tree2_prop_split(klass);
         const context = new $.$mol_view_tree2_context(this, [class_parts], locales, body);
-        for (const having of superclass.kids) {
+        const props = this.$mol_view_tree2_class_props(klass);
+        for (const having of props.kids) {
             if (having.type === '-') {
                 body.push(this.$mol_view_tree2_ts_comment(having));
                 continue;

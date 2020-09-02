@@ -4,12 +4,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * rows /
-		 * 	<= Title $mol_view
-		 * 		minimal_height 21
-		 * 		sub <= label /$mol_view_content <= title
-		 * 	<= Content $mol_view
-		 * 		minimal_height 24
-		 * 		sub <= content /
+		 * 	<= Title
+		 * 	<= Content
 		 * ```
 		 */
 		rows() {
@@ -17,23 +13,6 @@ namespace $ {
 				this.Title(),
 				this.Content()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Title $mol_view
-		 * 	minimal_height 21
-		 * 	sub <= label /$mol_view_content <= title
-		 * ```
-		 */
-		@ $mol_mem
-		Title() {
-			const obj = new this.$.$mol_view()
-
-			obj.minimal_height = () => 21
-			obj.sub = () => this.label()
-
-			return obj
 		}
 
 		/**
@@ -49,17 +28,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Content $mol_view
-		 * 	minimal_height 24
-		 * 	sub <= content /
+		 * Title $mol_view
+		 * 	minimal_height 21
+		 * 	sub <= label
 		 * ```
 		 */
 		@ $mol_mem
-		Content() {
+		Title() {
 			const obj = new this.$.$mol_view()
 
-			obj.minimal_height = () => 24
-			obj.sub = () => this.content()
+			obj.minimal_height = () => 21
+			obj.sub = () => this.label()
 
 			return obj
 		}
@@ -73,6 +52,23 @@ namespace $ {
 			return [
 
 			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Content $mol_view
+		 * 	minimal_height 24
+		 * 	sub <= content
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
+			const obj = new this.$.$mol_view()
+
+			obj.minimal_height = () => 24
+			obj.sub = () => this.content()
+
+			return obj
 		}
 	}
 

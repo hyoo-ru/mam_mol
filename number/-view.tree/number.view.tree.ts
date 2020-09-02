@@ -3,7 +3,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * precision_view <= precision 1
+		 * precision_view <= precision
 		 * ```
 		 */
 		precision_view() {
@@ -12,16 +12,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * precision 1
-		 * ```
-		 */
-		precision() {
-			return 1
-		}
-
-		/**
-		 * ```tree
-		 * precision_change <= precision 1
+		 * precision_change <= precision
 		 * ```
 		 */
 		precision_change() {
@@ -42,19 +33,9 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= String $mol_string
-		 * 		type \number
-		 * 		value?val <=> value_string?val \
-		 * 		hint <= hint \
-		 * 		enabled <= string_enabled <= enabled true
-		 * 	<= Dec $mol_button_minor
-		 * 		event_click?val <=> event_dec?val null
-		 * 		enabled <= dec_enabled <= enabled true
-		 * 		sub / <= dec_icon $mol_icon_minus
-		 * 	<= Inc $mol_button_minor
-		 * 		event_click?val <=> event_inc?val null
-		 * 		enabled <= inc_enabled <= enabled true
-		 * 		sub / <= inc_icon $mol_icon_plus
+		 * 	<= String
+		 * 	<= Dec
+		 * 	<= Inc
 		 * ```
 		 */
 		sub() {
@@ -67,23 +48,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * String $mol_string
-		 * 	type \number
-		 * 	value?val <=> value_string?val \
-		 * 	hint <= hint \
-		 * 	enabled <= string_enabled <= enabled true
+		 * precision 1
 		 * ```
 		 */
-		@ $mol_mem
-		String() {
-			const obj = new this.$.$mol_string()
-
-			obj.type = () => "number"
-			obj.value = (val?: any) => this.value_string(val)
-			obj.hint = () => this.hint()
-			obj.enabled = () => this.string_enabled()
-
-			return obj
+		precision() {
+			return 1
 		}
 
 		/**
@@ -108,15 +77,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * string_enabled <= enabled true
-		 * ```
-		 */
-		string_enabled() {
-			return this.enabled()
-		}
-
-		/**
-		 * ```tree
 		 * enabled true
 		 * ```
 		 */
@@ -126,21 +86,30 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Dec $mol_button_minor
-		 * 	event_click?val <=> event_dec?val null
-		 * 	enabled <= dec_enabled <= enabled true
-		 * 	sub / <= dec_icon $mol_icon_minus
+		 * string_enabled <= enabled
+		 * ```
+		 */
+		string_enabled() {
+			return this.enabled()
+		}
+
+		/**
+		 * ```tree
+		 * String $mol_string
+		 * 	type \number
+		 * 	value?val <=> value_string?val
+		 * 	hint <= hint
+		 * 	enabled <= string_enabled
 		 * ```
 		 */
 		@ $mol_mem
-		Dec() {
-			const obj = new this.$.$mol_button_minor()
+		String() {
+			const obj = new this.$.$mol_string()
 
-			obj.event_click = (val?: any) => this.event_dec(val)
-			obj.enabled = () => this.dec_enabled()
-			obj.sub = () => [
-				this.dec_icon()
-			] as readonly any[]
+			obj.type = () => "number"
+			obj.value = (val?: any) => this.value_string(val)
+			obj.hint = () => this.hint()
+			obj.enabled = () => this.string_enabled()
 
 			return obj
 		}
@@ -158,7 +127,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * dec_enabled <= enabled true
+		 * dec_enabled <= enabled
 		 * ```
 		 */
 		dec_enabled() {
@@ -179,20 +148,20 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Inc $mol_button_minor
-		 * 	event_click?val <=> event_inc?val null
-		 * 	enabled <= inc_enabled <= enabled true
-		 * 	sub / <= inc_icon $mol_icon_plus
+		 * Dec $mol_button_minor
+		 * 	event_click?val <=> event_dec?val
+		 * 	enabled <= dec_enabled
+		 * 	sub / <= dec_icon
 		 * ```
 		 */
 		@ $mol_mem
-		Inc() {
+		Dec() {
 			const obj = new this.$.$mol_button_minor()
 
-			obj.event_click = (val?: any) => this.event_inc(val)
-			obj.enabled = () => this.inc_enabled()
+			obj.event_click = (val?: any) => this.event_dec(val)
+			obj.enabled = () => this.dec_enabled()
 			obj.sub = () => [
-				this.inc_icon()
+				this.dec_icon()
 			] as readonly any[]
 
 			return obj
@@ -211,7 +180,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * inc_enabled <= enabled true
+		 * inc_enabled <= enabled
 		 * ```
 		 */
 		inc_enabled() {
@@ -226,6 +195,27 @@ namespace $ {
 		@ $mol_mem
 		inc_icon() {
 			const obj = new this.$.$mol_icon_plus()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Inc $mol_button_minor
+		 * 	event_click?val <=> event_inc?val
+		 * 	enabled <= inc_enabled
+		 * 	sub / <= inc_icon
+		 * ```
+		 */
+		@ $mol_mem
+		Inc() {
+			const obj = new this.$.$mol_button_minor()
+
+			obj.event_click = (val?: any) => this.event_inc(val)
+			obj.enabled = () => this.inc_enabled()
+			obj.sub = () => [
+				this.inc_icon()
+			] as readonly any[]
 
 			return obj
 		}

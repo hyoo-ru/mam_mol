@@ -3,9 +3,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Icon $mol_image
-		 * 	uri <= icon \
-		 * 	title \
+		 * sub / <= Icon
 		 * ```
 		 */
 		sub() {
@@ -16,8 +14,37 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * content / <= title
+		 * ```
+		 */
+		content() {
+			return [
+				this.title()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * host \
+		 * ```
+		 */
+		host() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * icon \
+		 * ```
+		 */
+		icon() {
+			return ""
+		}
+
+		/**
+		 * ```tree
 		 * Icon $mol_image
-		 * 	uri <= icon \
+		 * 	uri <= icon
 		 * 	title \
 		 * ```
 		 */
@@ -33,40 +60,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * icon \
-		 * ```
-		 */
-		icon() {
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * content / <= title <= uri
-		 * ```
-		 */
-		content() {
-			return [
-				this.title()
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
 		 * title <= uri
 		 * ```
 		 */
 		title() {
 			return this.uri()
-		}
-
-		/**
-		 * ```tree
-		 * host \
-		 * ```
-		 */
-		host() {
-			return ""
 		}
 	}
 

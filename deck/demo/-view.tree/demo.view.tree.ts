@@ -12,63 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Deck $mol_deck items /
-		 * 	<= greeterItem *
-		 * 		title <= greeterLabel @ \Greeting
-		 * 		Content <= greeterContent $mol_row sub / <= greeterMessager $mol_view sub / <= greeterMessage @ \Hello, world!
-		 * 	<= questerItem *
-		 * 		title <= questerLabel @ \Question
-		 * 		Content <= questerContent $mol_row sub / <= questerMessager $mol_view sub / <= questerMessage @ \How are you?
-		 * 	<= commanderItem *
-		 * 		title <= commanderLabel @ \Command
-		 * 		Content <= commanderContent $mol_row sub / <= commanderMessager $mol_view sub / <= commanderMessage @ \Let us do it right!
+		 * sub / <= Deck
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Deck()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Deck $mol_deck items /
-		 * 	<= greeterItem *
-		 * 		title <= greeterLabel @ \Greeting
-		 * 		Content <= greeterContent $mol_row sub / <= greeterMessager $mol_view sub / <= greeterMessage @ \Hello, world!
-		 * 	<= questerItem *
-		 * 		title <= questerLabel @ \Question
-		 * 		Content <= questerContent $mol_row sub / <= questerMessager $mol_view sub / <= questerMessage @ \How are you?
-		 * 	<= commanderItem *
-		 * 		title <= commanderLabel @ \Command
-		 * 		Content <= commanderContent $mol_row sub / <= commanderMessager $mol_view sub / <= commanderMessage @ \Let us do it right!
-		 * ```
-		 */
-		@ $mol_mem
-		Deck() {
-			const obj = new this.$.$mol_deck()
-
-			obj.items = () => [
-				this.greeterItem(),
-				this.questerItem(),
-				this.commanderItem()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * greeterItem *
-		 * 	title <= greeterLabel @ \Greeting
-		 * 	Content <= greeterContent $mol_row sub / <= greeterMessager $mol_view sub / <= greeterMessage @ \Hello, world!
-		 * ```
-		 */
-		greeterItem() {
-			return {
-				title: this.greeterLabel(),
-				Content: this.greeterContent()
-			}
 		}
 
 		/**
@@ -82,23 +32,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * greeterContent $mol_row sub / <= greeterMessager $mol_view sub / <= greeterMessage @ \Hello, world!
+		 * greeterMessage @ \Hello, world!
 		 * ```
 		 */
-		@ $mol_mem
-		greeterContent() {
-			const obj = new this.$.$mol_row()
-
-			obj.sub = () => [
-				this.greeterMessager()
-			] as readonly any[]
-
-			return obj
+		greeterMessage() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_greeterMessage' )
 		}
 
 		/**
 		 * ```tree
-		 * greeterMessager $mol_view sub / <= greeterMessage @ \Hello, world!
+		 * greeterMessager $mol_view sub / <= greeterMessage
 		 * ```
 		 */
 		@ $mol_mem
@@ -114,24 +57,31 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * greeterMessage @ \Hello, world!
+		 * greeterContent $mol_row sub / <= greeterMessager
 		 * ```
 		 */
-		greeterMessage() {
-			return this.$.$mol_locale.text( '$mol_deck_demo_greeterMessage' )
+		@ $mol_mem
+		greeterContent() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				this.greeterMessager()
+			] as readonly any[]
+
+			return obj
 		}
 
 		/**
 		 * ```tree
-		 * questerItem *
-		 * 	title <= questerLabel @ \Question
-		 * 	Content <= questerContent $mol_row sub / <= questerMessager $mol_view sub / <= questerMessage @ \How are you?
+		 * greeterItem *
+		 * 	title <= greeterLabel
+		 * 	Content <= greeterContent
 		 * ```
 		 */
-		questerItem() {
+		greeterItem() {
 			return {
-				title: this.questerLabel(),
-				Content: this.questerContent()
+				title: this.greeterLabel(),
+				Content: this.greeterContent()
 			}
 		}
 
@@ -146,23 +96,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * questerContent $mol_row sub / <= questerMessager $mol_view sub / <= questerMessage @ \How are you?
+		 * questerMessage @ \How are you?
 		 * ```
 		 */
-		@ $mol_mem
-		questerContent() {
-			const obj = new this.$.$mol_row()
-
-			obj.sub = () => [
-				this.questerMessager()
-			] as readonly any[]
-
-			return obj
+		questerMessage() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_questerMessage' )
 		}
 
 		/**
 		 * ```tree
-		 * questerMessager $mol_view sub / <= questerMessage @ \How are you?
+		 * questerMessager $mol_view sub / <= questerMessage
 		 * ```
 		 */
 		@ $mol_mem
@@ -178,24 +121,31 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * questerMessage @ \How are you?
+		 * questerContent $mol_row sub / <= questerMessager
 		 * ```
 		 */
-		questerMessage() {
-			return this.$.$mol_locale.text( '$mol_deck_demo_questerMessage' )
+		@ $mol_mem
+		questerContent() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				this.questerMessager()
+			] as readonly any[]
+
+			return obj
 		}
 
 		/**
 		 * ```tree
-		 * commanderItem *
-		 * 	title <= commanderLabel @ \Command
-		 * 	Content <= commanderContent $mol_row sub / <= commanderMessager $mol_view sub / <= commanderMessage @ \Let us do it right!
+		 * questerItem *
+		 * 	title <= questerLabel
+		 * 	Content <= questerContent
 		 * ```
 		 */
-		commanderItem() {
+		questerItem() {
 			return {
-				title: this.commanderLabel(),
-				Content: this.commanderContent()
+				title: this.questerLabel(),
+				Content: this.questerContent()
 			}
 		}
 
@@ -210,23 +160,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * commanderContent $mol_row sub / <= commanderMessager $mol_view sub / <= commanderMessage @ \Let us do it right!
+		 * commanderMessage @ \Let us do it right!
 		 * ```
 		 */
-		@ $mol_mem
-		commanderContent() {
-			const obj = new this.$.$mol_row()
-
-			obj.sub = () => [
-				this.commanderMessager()
-			] as readonly any[]
-
-			return obj
+		commanderMessage() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_commanderMessage' )
 		}
 
 		/**
 		 * ```tree
-		 * commanderMessager $mol_view sub / <= commanderMessage @ \Let us do it right!
+		 * commanderMessager $mol_view sub / <= commanderMessage
 		 * ```
 		 */
 		@ $mol_mem
@@ -242,11 +185,53 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * commanderMessage @ \Let us do it right!
+		 * commanderContent $mol_row sub / <= commanderMessager
 		 * ```
 		 */
-		commanderMessage() {
-			return this.$.$mol_locale.text( '$mol_deck_demo_commanderMessage' )
+		@ $mol_mem
+		commanderContent() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				this.commanderMessager()
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * commanderItem *
+		 * 	title <= commanderLabel
+		 * 	Content <= commanderContent
+		 * ```
+		 */
+		commanderItem() {
+			return {
+				title: this.commanderLabel(),
+				Content: this.commanderContent()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * Deck $mol_deck items /
+		 * 	<= greeterItem
+		 * 	<= questerItem
+		 * 	<= commanderItem
+		 * ```
+		 */
+		@ $mol_mem
+		Deck() {
+			const obj = new this.$.$mol_deck()
+
+			obj.items = () => [
+				this.greeterItem(),
+				this.questerItem(),
+				this.commanderItem()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

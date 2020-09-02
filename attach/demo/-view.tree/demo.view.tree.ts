@@ -12,68 +12,12 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Filled $mol_attach items?val <=> filled_items?val /
-		 * 	<= Item1 $mol_attach_item
-		 * 		url_thumb \mol/logo/logo.svg
-		 * 		url_load \logo/logo.svg
-		 * 	<= Item2 $mol_attach_item
-		 * 		url_thumb \mol/logo/logo.svg
-		 * 		url_load \logo/logo.svg
-		 * 	<= Item3 $mol_attach_item
-		 * 		url_thumb \mol/logo/logo.svg
-		 * 		url_load \logo/logo.svg
+		 * sub / <= Filled
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Filled()
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Filled $mol_attach items?val <=> filled_items?val /
-		 * 	<= Item1 $mol_attach_item
-		 * 		url_thumb \mol/logo/logo.svg
-		 * 		url_load \logo/logo.svg
-		 * 	<= Item2 $mol_attach_item
-		 * 		url_thumb \mol/logo/logo.svg
-		 * 		url_load \logo/logo.svg
-		 * 	<= Item3 $mol_attach_item
-		 * 		url_thumb \mol/logo/logo.svg
-		 * 		url_load \logo/logo.svg
-		 * ```
-		 */
-		@ $mol_mem
-		Filled() {
-			const obj = new this.$.$mol_attach()
-
-			obj.items = (val?: any) => this.filled_items(val)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * filled_items?val /
-		 * 	<= Item1 $mol_attach_item
-		 * 		url_thumb \mol/logo/logo.svg
-		 * 		url_load \logo/logo.svg
-		 * 	<= Item2 $mol_attach_item
-		 * 		url_thumb \mol/logo/logo.svg
-		 * 		url_load \logo/logo.svg
-		 * 	<= Item3 $mol_attach_item
-		 * 		url_thumb \mol/logo/logo.svg
-		 * 		url_load \logo/logo.svg
-		 * ```
-		 */
-		@ $mol_mem
-		filled_items(val?: any) {
-			if ( val !== undefined ) return val
-			return [
-				this.Item1(),
-				this.Item2(),
-				this.Item3()
 			] as readonly any[]
 		}
 
@@ -124,6 +68,38 @@ namespace $ {
 
 			obj.url_thumb = () => "mol/logo/logo.svg"
 			obj.url_load = () => "logo/logo.svg"
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * filled_items?val /
+		 * 	<= Item1
+		 * 	<= Item2
+		 * 	<= Item3
+		 * ```
+		 */
+		@ $mol_mem
+		filled_items(val?: any) {
+			if ( val !== undefined ) return val
+			return [
+				this.Item1(),
+				this.Item2(),
+				this.Item3()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Filled $mol_attach items?val <=> filled_items?val
+		 * ```
+		 */
+		@ $mol_mem
+		Filled() {
+			const obj = new this.$.$mol_attach()
+
+			obj.items = (val?: any) => this.filled_items(val)
 
 			return obj
 		}

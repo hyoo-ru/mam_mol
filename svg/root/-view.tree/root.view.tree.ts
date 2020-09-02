@@ -14,8 +14,8 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	viewBox <= view_box \0 0 100 100
-		 * 	preserveAspectRatio <= aspect \xMidYMid
+		 * 	viewBox <= view_box
+		 * 	preserveAspectRatio <= aspect
 		 * ```
 		 */
 		attr() {

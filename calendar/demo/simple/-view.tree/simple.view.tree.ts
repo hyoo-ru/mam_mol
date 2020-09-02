@@ -12,7 +12,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Calendar $mol_calendar month_moment <= today $mol_time_moment
+		 * sub / <= Calendar
 		 * ```
 		 */
 		sub() {
@@ -23,7 +23,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Calendar $mol_calendar month_moment <= today $mol_time_moment
+		 * today $mol_time_moment
+		 * ```
+		 */
+		@ $mol_mem
+		today() {
+			const obj = new this.$.$mol_time_moment()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Calendar $mol_calendar month_moment <= today
 		 * ```
 		 */
 		@ $mol_mem
@@ -31,18 +43,6 @@ namespace $ {
 			const obj = new this.$.$mol_calendar()
 
 			obj.month_moment = () => this.today()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * today $mol_time_moment
-		 * ```
-		 */
-		@ $mol_mem
-		today() {
-			const obj = new this.$.$mol_time_moment()
 
 			return obj
 		}

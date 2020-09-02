@@ -12,37 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= View $mol_book2 pages /
-		 * 	<= First $mol_view sub / \ First
-		 * 	<= Second $mol_view sub / \ Second
-		 * 	<= Third $mol_view sub / \ Third
+		 * sub / <= View
 		 * ```
 		 */
 		sub() {
 			return [
 				this.View()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * View $mol_book2 pages /
-		 * 	<= First $mol_view sub / \ First
-		 * 	<= Second $mol_view sub / \ Second
-		 * 	<= Third $mol_view sub / \ Third
-		 * ```
-		 */
-		@ $mol_mem
-		View() {
-			const obj = new this.$.$mol_book2()
-
-			obj.pages = () => [
-				this.First(),
-				this.Second(),
-				this.Third()
-			] as readonly any[]
-
-			return obj
 		}
 
 		/**
@@ -88,6 +64,27 @@ namespace $ {
 
 			obj.sub = () => [
 				" Third"
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * View $mol_book2 pages /
+		 * 	<= First
+		 * 	<= Second
+		 * 	<= Third
+		 * ```
+		 */
+		@ $mol_mem
+		View() {
+			const obj = new this.$.$mol_book2()
+
+			obj.pages = () => [
+				this.First(),
+				this.Second(),
+				this.Third()
 			] as readonly any[]
 
 			return obj

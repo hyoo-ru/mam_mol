@@ -24,7 +24,7 @@ namespace $ {
 		 * Product!id $mol_card
 		 * 	minimal_width 140
 		 * 	minimal_height 100
-		 * 	content / <= product_title!id \
+		 * 	content / <= product_title!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -42,16 +42,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * product_title!id \
-		 * ```
-		 */
-		product_title(id: any) {
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * sub / <= Catalog $mol_scroll sub / <= Products $mol_row sub <= products /
+		 * sub / <= Catalog
 		 * ```
 		 */
 		sub() {
@@ -62,23 +53,27 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Catalog $mol_scroll sub / <= Products $mol_row sub <= products /
+		 * product_title!id \
 		 * ```
 		 */
-		@ $mol_mem
-		Catalog() {
-			const obj = new this.$.$mol_scroll()
-
-			obj.sub = () => [
-				this.Products()
-			] as readonly any[]
-
-			return obj
+		product_title(id: any) {
+			return ""
 		}
 
 		/**
 		 * ```tree
-		 * Products $mol_row sub <= products /
+		 * products /
+		 * ```
+		 */
+		products() {
+			return [
+
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Products $mol_row sub <= products
 		 * ```
 		 */
 		@ $mol_mem
@@ -92,13 +87,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * products /
+		 * Catalog $mol_scroll sub / <= Products
 		 * ```
 		 */
-		products() {
-			return [
+		@ $mol_mem
+		Catalog() {
+			const obj = new this.$.$mol_scroll()
 
+			obj.sub = () => [
+				this.Products()
 			] as readonly any[]
+
+			return obj
 		}
 	}
 

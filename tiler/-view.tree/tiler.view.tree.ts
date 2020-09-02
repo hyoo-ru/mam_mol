@@ -3,7 +3,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub <= items /$mol_view
+		 * sub <= items
 		 * ```
 		 */
 		sub() {

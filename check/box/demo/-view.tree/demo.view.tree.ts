@@ -13,26 +13,17 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Labeled_base $mol_check_box
-		 * 		checked?val <=> base_checked?val false
-		 * 		title <= c1Label @ \Base
+		 * 	<= Labeled_base
 		 * 	-
-		 * 	<= Labeled_checked $mol_check_box
-		 * 		title <= c2Label @ \Checked
-		 * 		checked?val <=> checked_checked?val true
+		 * 	<= Labeled_checked
 		 * 	-
-		 * 	<= Labeled_disabled $mol_check_box
-		 * 		title <= c6Label @ \Disabled
-		 * 		checked true
-		 * 		enabled false
+		 * 	<= Labeled_disabled
 		 * 	-
-		 * 	<= Alone_base $mol_check_box checked?val <=> base_checked?val false
+		 * 	<= Alone_base
 		 * 	-
-		 * 	<= Alone_checked $mol_check_box checked?val <=> checked_checked?val true
+		 * 	<= Alone_checked
 		 * 	-
-		 * 	<= Alone_disabled $mol_check_box
-		 * 		checked true
-		 * 		enabled false
+		 * 	<= Alone_disabled
 		 * ```
 		 */
 		sub() {
@@ -49,23 +40,6 @@ namespace $ {
 
 				this.Alone_disabled()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Labeled_base $mol_check_box
-		 * 	checked?val <=> base_checked?val false
-		 * 	title <= c1Label @ \Base
-		 * ```
-		 */
-		@ $mol_mem
-		Labeled_base() {
-			const obj = new this.$.$mol_check_box()
-
-			obj.checked = (val?: any) => this.base_checked(val)
-			obj.title = () => this.c1Label()
-
-			return obj
 		}
 
 		/**
@@ -90,17 +64,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Labeled_checked $mol_check_box
-		 * 	title <= c2Label @ \Checked
-		 * 	checked?val <=> checked_checked?val true
+		 * Labeled_base $mol_check_box
+		 * 	checked?val <=> base_checked?val
+		 * 	title <= c1Label
 		 * ```
 		 */
 		@ $mol_mem
-		Labeled_checked() {
+		Labeled_base() {
 			const obj = new this.$.$mol_check_box()
 
-			obj.title = () => this.c2Label()
-			obj.checked = (val?: any) => this.checked_checked(val)
+			obj.checked = (val?: any) => this.base_checked(val)
+			obj.title = () => this.c1Label()
 
 			return obj
 		}
@@ -127,8 +101,34 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Labeled_checked $mol_check_box
+		 * 	title <= c2Label
+		 * 	checked?val <=> checked_checked?val
+		 * ```
+		 */
+		@ $mol_mem
+		Labeled_checked() {
+			const obj = new this.$.$mol_check_box()
+
+			obj.title = () => this.c2Label()
+			obj.checked = (val?: any) => this.checked_checked(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * c6Label @ \Disabled
+		 * ```
+		 */
+		c6Label() {
+			return this.$.$mol_locale.text( '$mol_check_box_demo_c6Label' )
+		}
+
+		/**
+		 * ```tree
 		 * Labeled_disabled $mol_check_box
-		 * 	title <= c6Label @ \Disabled
+		 * 	title <= c6Label
 		 * 	checked true
 		 * 	enabled false
 		 * ```
@@ -146,16 +146,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * c6Label @ \Disabled
-		 * ```
-		 */
-		c6Label() {
-			return this.$.$mol_locale.text( '$mol_check_box_demo_c6Label' )
-		}
-
-		/**
-		 * ```tree
-		 * Alone_base $mol_check_box checked?val <=> base_checked?val false
+		 * Alone_base $mol_check_box checked?val <=> base_checked?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -169,7 +160,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Alone_checked $mol_check_box checked?val <=> checked_checked?val true
+		 * Alone_checked $mol_check_box checked?val <=> checked_checked?val
 		 * ```
 		 */
 		@ $mol_mem

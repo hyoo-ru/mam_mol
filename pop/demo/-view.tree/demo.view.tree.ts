@@ -12,51 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Pop $mol_pop
-		 * 	Anchor <= Show $mol_button_minor title <= show_text @ \?
-		 * 	showed <= showed <= focused
-		 * 	bubble_content / <= Content $mol_row sub / <= bubble_hint @ \This is $mol_pop
+		 * sub / <= Pop
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Pop()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Pop $mol_pop
-		 * 	Anchor <= Show $mol_button_minor title <= show_text @ \?
-		 * 	showed <= showed <= focused
-		 * 	bubble_content / <= Content $mol_row sub / <= bubble_hint @ \This is $mol_pop
-		 * ```
-		 */
-		@ $mol_mem
-		Pop() {
-			const obj = new this.$.$mol_pop()
-
-			obj.Anchor = () => this.Show()
-			obj.showed = () => this.showed()
-			obj.bubble_content = () => [
-				this.Content()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Show $mol_button_minor title <= show_text @ \?
-		 * ```
-		 */
-		@ $mol_mem
-		Show() {
-			const obj = new this.$.$mol_button_minor()
-
-			obj.title = () => this.show_text()
-
-			return obj
 		}
 
 		/**
@@ -70,6 +32,20 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Show $mol_button_minor title <= show_text
+		 * ```
+		 */
+		@ $mol_mem
+		Show() {
+			const obj = new this.$.$mol_button_minor()
+
+			obj.title = () => this.show_text()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * showed <= focused
 		 * ```
 		 */
@@ -79,7 +55,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Content $mol_row sub / <= bubble_hint @ \This is $mol_pop
+		 * bubble_hint @ \This is $mol_pop
+		 * ```
+		 */
+		bubble_hint() {
+			return this.$.$mol_locale.text( '$mol_pop_demo_bubble_hint' )
+		}
+
+		/**
+		 * ```tree
+		 * Content $mol_row sub / <= bubble_hint
 		 * ```
 		 */
 		@ $mol_mem
@@ -95,11 +80,23 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * bubble_hint @ \This is $mol_pop
+		 * Pop $mol_pop
+		 * 	Anchor <= Show
+		 * 	showed <= showed
+		 * 	bubble_content / <= Content
 		 * ```
 		 */
-		bubble_hint() {
-			return this.$.$mol_locale.text( '$mol_pop_demo_bubble_hint' )
+		@ $mol_mem
+		Pop() {
+			const obj = new this.$.$mol_pop()
+
+			obj.Anchor = () => this.Show()
+			obj.showed = () => this.showed()
+			obj.bubble_content = () => [
+				this.Content()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

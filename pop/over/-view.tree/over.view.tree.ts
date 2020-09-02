@@ -3,22 +3,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * showed <= hovered?val false
+		 * showed <= hovered?val
 		 * ```
 		 */
 		showed() {
 			return this.hovered()
-		}
-
-		/**
-		 * ```tree
-		 * hovered?val false
-		 * ```
-		 */
-		@ $mol_mem
-		hovered(val?: any) {
-			if ( val !== undefined ) return val
-			return false
 		}
 
 		/**
@@ -39,8 +28,8 @@ namespace $ {
 		 * ```tree
 		 * event *
 		 * 	^
-		 * 	mouseenter?event <=> event_show?event null
-		 * 	mouseleave?event <=> event_hide?event null
+		 * 	mouseenter?event <=> event_show?event
+		 * 	mouseleave?event <=> event_hide?event
 		 * ```
 		 */
 		event() {
@@ -49,6 +38,17 @@ namespace $ {
 				mouseenter: (event?: any) => this.event_show(event),
 				mouseleave: (event?: any) => this.event_hide(event)
 			}
+		}
+
+		/**
+		 * ```tree
+		 * hovered?val false
+		 * ```
+		 */
+		@ $mol_mem
+		hovered(val?: any) {
+			if ( val !== undefined ) return val
+			return false
 		}
 
 		/**

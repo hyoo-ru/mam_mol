@@ -31,14 +31,6 @@ namespace $ {
 				return [ operator.clone([ prop.clone([]) ]) ]
 			},
 
-			'=>': ( operator, belt )=> {
-				
-				const prop = this.$mol_view_tree2_child( operator )
-
-				return [ operator.clone([ prop.clone([]) ]) ]
-
-			},
-
 			'': ( node, belt )=> {
 				return [ node.clone( node.hack( belt ) ) ]
 			},

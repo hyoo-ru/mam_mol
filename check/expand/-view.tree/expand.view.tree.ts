@@ -35,7 +35,7 @@ namespace $ {
 		 * ```tree
 		 * style *
 		 * 	^
-		 * 	paddingLeft <= level_style \0px
+		 * 	paddingLeft <= level_style
 		 * ```
 		 */
 		style() {
@@ -43,6 +43,24 @@ namespace $ {
 				...super.style(),
 				paddingLeft: this.level_style()
 			}
+		}
+
+		/**
+		 * ```tree
+		 * checked?val <=> expanded?val
+		 * ```
+		 */
+		checked(val?: any) {
+			return this.expanded(val)
+		}
+
+		/**
+		 * ```tree
+		 * enabled <= expandable
+		 * ```
+		 */
+		enabled() {
+			return this.expandable()
 		}
 
 		/**
@@ -56,15 +74,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * checked?val <=> expanded?val false
-		 * ```
-		 */
-		checked(val?: any) {
-			return this.expanded(val)
-		}
-
-		/**
-		 * ```tree
 		 * expanded?val false
 		 * ```
 		 */
@@ -72,15 +81,6 @@ namespace $ {
 		expanded(val?: any) {
 			if ( val !== undefined ) return val
 			return false
-		}
-
-		/**
-		 * ```tree
-		 * enabled <= expandable false
-		 * ```
-		 */
-		enabled() {
-			return this.expandable()
 		}
 
 		/**

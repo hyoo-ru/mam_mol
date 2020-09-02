@@ -13,9 +13,9 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Empty $mol_portion portion <= fist 0
-		 * 	<= Partial $mol_portion portion <= second 0.5
-		 * 	<= Full $mol_portion portion <= third 1
+		 * 	<= Empty
+		 * 	<= Partial
+		 * 	<= Full
 		 * ```
 		 */
 		sub() {
@@ -24,20 +24,6 @@ namespace $ {
 				this.Partial(),
 				this.Full()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Empty $mol_portion portion <= fist 0
-		 * ```
-		 */
-		@ $mol_mem
-		Empty() {
-			const obj = new this.$.$mol_portion()
-
-			obj.portion = () => this.fist()
-
-			return obj
 		}
 
 		/**
@@ -51,14 +37,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Partial $mol_portion portion <= second 0.5
+		 * Empty $mol_portion portion <= fist
 		 * ```
 		 */
 		@ $mol_mem
-		Partial() {
+		Empty() {
 			const obj = new this.$.$mol_portion()
 
-			obj.portion = () => this.second()
+			obj.portion = () => this.fist()
 
 			return obj
 		}
@@ -74,14 +60,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Full $mol_portion portion <= third 1
+		 * Partial $mol_portion portion <= second
 		 * ```
 		 */
 		@ $mol_mem
-		Full() {
+		Partial() {
 			const obj = new this.$.$mol_portion()
 
-			obj.portion = () => this.third()
+			obj.portion = () => this.second()
 
 			return obj
 		}
@@ -93,6 +79,20 @@ namespace $ {
 		 */
 		third() {
 			return 1
+		}
+
+		/**
+		 * ```tree
+		 * Full $mol_portion portion <= third
+		 * ```
+		 */
+		@ $mol_mem
+		Full() {
+			const obj = new this.$.$mol_portion()
+
+			obj.portion = () => this.third()
+
+			return obj
 		}
 	}
 

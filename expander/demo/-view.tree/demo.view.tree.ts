@@ -12,9 +12,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Expander $mol_expander
-		 * 	title \Lorem Ipsum
-		 * 	Content <= Content $mol_filler
+		 * sub / <= Expander
 		 * ```
 		 */
 		sub() {
@@ -25,9 +23,21 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Content $mol_filler
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
+			const obj = new this.$.$mol_filler()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * Expander $mol_expander
 		 * 	title \Lorem Ipsum
-		 * 	Content <= Content $mol_filler
+		 * 	Content <= Content
 		 * ```
 		 */
 		@ $mol_mem
@@ -36,18 +46,6 @@ namespace $ {
 
 			obj.title = () => "Lorem Ipsum"
 			obj.Content = () => this.Content()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Content $mol_filler
-		 * ```
-		 */
-		@ $mol_mem
-		Content() {
-			const obj = new this.$.$mol_filler()
 
 			return obj
 		}

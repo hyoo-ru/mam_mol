@@ -3,7 +3,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Content $mol_tiler items <= content /$mol_view
+		 * Content $mol_tiler items <= content
 		 * ```
 		 */
 		@ $mol_mem
@@ -13,17 +13,6 @@ namespace $ {
 			obj.items = () => this.content()
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * content /$mol_view
-		 * ```
-		 */
-		content() {
-			return [
-
-			] as readonly $mol_view[]
 		}
 
 		/**
@@ -41,7 +30,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Add $mol_attach_add file_new?val <=> attach_new?val \
+		 * Add $mol_attach_add file_new?val <=> attach_new?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -55,18 +44,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * attach_new?val \
-		 * ```
-		 */
-		@ $mol_mem
-		attach_new(val?: any) {
-			if ( val !== undefined ) return val
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * Item!id $mol_attach_item title <= attach_title \
+		 * Item!id $mol_attach_item title <= attach_title
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -76,6 +54,28 @@ namespace $ {
 			obj.title = () => this.attach_title()
 
 			return obj
+		}
+
+		/**
+		 * ```tree
+		 * content /$mol_view
+		 * ```
+		 */
+		content() {
+			return [
+
+			] as readonly $mol_view[]
+		}
+
+		/**
+		 * ```tree
+		 * attach_new?val \
+		 * ```
+		 */
+		@ $mol_mem
+		attach_new(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
 		}
 
 		/**
@@ -103,11 +103,39 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * uri?val <=> url_load?val \
+		 * uri?val <=> url_load?val
 		 * ```
 		 */
 		uri(val?: any) {
 			return this.url_load(val)
+		}
+
+		/**
+		 * ```tree
+		 * style *
+		 * 	^
+		 * 	backgroundImage <= style_bg
+		 * ```
+		 */
+		style() {
+			return {
+				...super.style(),
+				backgroundImage: this.style_bg()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	download <= title
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				download: this.title()
+			}
 		}
 
 		/**
@@ -123,39 +151,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * style *
-		 * 	^
-		 * 	backgroundImage <= style_bg \
-		 * ```
-		 */
-		style() {
-			return {
-				...super.style(),
-				backgroundImage: this.style_bg()
-			}
-		}
-
-		/**
-		 * ```tree
 		 * style_bg \
 		 * ```
 		 */
 		style_bg() {
 			return ""
-		}
-
-		/**
-		 * ```tree
-		 * attr *
-		 * 	^
-		 * 	download <= title \
-		 * ```
-		 */
-		attr() {
-			return {
-				...super.attr(),
-				download: this.title()
-			}
 		}
 
 		/**
@@ -193,10 +193,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Icon $mol_icon_attach
-		 * 	<= Input $mol_attach_add_input
-		 * 		event_capture?val <=> event_capture?val null
-		 * 		event_picked?val <=> event_picked?val null
+		 * 	<= Icon
+		 * 	<= Input
 		 * ```
 		 */
 		sub() {
@@ -214,23 +212,6 @@ namespace $ {
 		@ $mol_mem
 		Icon() {
 			const obj = new this.$.$mol_icon_attach()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Input $mol_attach_add_input
-		 * 	event_capture?val <=> event_capture?val null
-		 * 	event_picked?val <=> event_picked?val null
-		 * ```
-		 */
-		@ $mol_mem
-		Input() {
-			const obj = new this.$.$mol_attach_add_input()
-
-			obj.event_capture = (val?: any) => this.event_capture(val)
-			obj.event_picked = (val?: any) => this.event_picked(val)
 
 			return obj
 		}
@@ -256,6 +237,23 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
+
+		/**
+		 * ```tree
+		 * Input $mol_attach_add_input
+		 * 	event_capture?val <=> event_capture?val
+		 * 	event_picked?val <=> event_picked?val
+		 * ```
+		 */
+		@ $mol_mem
+		Input() {
+			const obj = new this.$.$mol_attach_add_input()
+
+			obj.event_capture = (val?: any) => this.event_capture(val)
+			obj.event_picked = (val?: any) => this.event_picked(val)
+
+			return obj
+		}
 	}
 
 	export class $mol_attach_add_input extends $mol_view {
@@ -273,9 +271,9 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	type <= type \file
-		 * 	accept <= accept \image/*;capture=camera
-		 * 	multiple <= multiple true
+		 * 	type <= type
+		 * 	accept <= accept
+		 * 	multiple <= multiple
 		 * ```
 		 */
 		attr() {
@@ -284,6 +282,29 @@ namespace $ {
 				type: this.type(),
 				accept: this.accept(),
 				multiple: this.multiple()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * event_click?val <=> event_capture?val
+		 * ```
+		 */
+		event_click(val?: any) {
+			return this.event_capture(val)
+		}
+
+		/**
+		 * ```tree
+		 * event *
+		 * 	^
+		 * 	change?val <=> event_picked?val
+		 * ```
+		 */
+		event() {
+			return {
+				...super.event(),
+				change: (val?: any) => this.event_picked(val)
 			}
 		}
 
@@ -316,15 +337,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * event_click?val <=> event_capture?val null
-		 * ```
-		 */
-		event_click(val?: any) {
-			return this.event_capture(val)
-		}
-
-		/**
-		 * ```tree
 		 * event_capture?val null
 		 * ```
 		 */
@@ -332,20 +344,6 @@ namespace $ {
 		event_capture(val?: any) {
 			if ( val !== undefined ) return val
 			return null as any
-		}
-
-		/**
-		 * ```tree
-		 * event *
-		 * 	^
-		 * 	change?val <=> event_picked?val null
-		 * ```
-		 */
-		event() {
-			return {
-				...super.event(),
-				change: (val?: any) => this.event_picked(val)
-			}
 		}
 
 		/**

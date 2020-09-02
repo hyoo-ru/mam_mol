@@ -3,48 +3,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= View $mol_view sub /
-		 * 	<= Date $mol_date value_moment?val <=> date?val $mol_time_moment
-		 * 	<= Formatted $mol_view sub / <= formatted \
+		 * sub / <= View
 		 * ```
 		 */
 		sub() {
 			return [
 				this.View()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * View $mol_view sub /
-		 * 	<= Date $mol_date value_moment?val <=> date?val $mol_time_moment
-		 * 	<= Formatted $mol_view sub / <= formatted \
-		 * ```
-		 */
-		@ $mol_mem
-		View() {
-			const obj = new this.$.$mol_view()
-
-			obj.sub = () => [
-				this.Date(),
-				this.Formatted()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Date $mol_date value_moment?val <=> date?val $mol_time_moment
-		 * ```
-		 */
-		@ $mol_mem
-		Date() {
-			const obj = new this.$.$mol_date()
-
-			obj.value_moment = (val?: any) => this.date(val)
-
-			return obj
 		}
 
 		/**
@@ -62,7 +27,30 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Formatted $mol_view sub / <= formatted \
+		 * Date $mol_date value_moment?val <=> date?val
+		 * ```
+		 */
+		@ $mol_mem
+		Date() {
+			const obj = new this.$.$mol_date()
+
+			obj.value_moment = (val?: any) => this.date(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * formatted \
+		 * ```
+		 */
+		formatted() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Formatted $mol_view sub / <= formatted
 		 * ```
 		 */
 		@ $mol_mem
@@ -78,11 +66,21 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * formatted \
+		 * View $mol_view sub /
+		 * 	<= Date
+		 * 	<= Formatted
 		 * ```
 		 */
-		formatted() {
-			return ""
+		@ $mol_mem
+		View() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => [
+				this.Date(),
+				this.Formatted()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

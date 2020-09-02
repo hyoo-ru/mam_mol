@@ -15,10 +15,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Trigger $mol_app_studio_field_title
-		 * 	checked?val <=> expanded?val false
-		 * 	Title <= Trigger_label $mol_dimmer
-		 * 		needle <= highlight \
-		 * 		haystack <= title
+		 * 	checked?val <=> expanded?val
+		 * 	Title <= Trigger_label
 		 * 	type <= type
 		 * ```
 		 */
@@ -29,6 +27,134 @@ namespace $ {
 			obj.checked = (val?: any) => this.expanded(val)
 			obj.Title = () => this.Trigger_label()
 			obj.type = () => this.type()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Tools $mol_view sub <= tools
+		 * ```
+		 */
+		@ $mol_mem
+		Tools() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => this.tools()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * content /
+		 * 	<= Bool
+		 * 	<= Number
+		 * 	<= String
+		 * 	<= Bind
+		 * 	<= List
+		 * 	<= Dict
+		 * 	<= Overs
+		 * ```
+		 */
+		content() {
+			return [
+				this.Bool(),
+				this.Number(),
+				this.String(),
+				this.Bind(),
+				this.List(),
+				this.Dict(),
+				this.Overs()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Add $mol_select
+		 * 	hint <= add_hint
+		 * 	value?val <=> add_item?val
+		 * 	dictionary <= item_types
+		 * 	Trigger_icon <= List_trigger_icon
+		 * ```
+		 */
+		@ $mol_mem
+		Add() {
+			const obj = new this.$.$mol_select()
+
+			obj.hint = () => this.add_hint()
+			obj.value = (val?: any) => this.add_item(val)
+			obj.dictionary = () => this.item_types()
+			obj.Trigger_icon = () => this.List_trigger_icon()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Add_pair $mol_bar sub /
+		 * 	<= Add_pair_key
+		 * 	<= Add_pair_submit
+		 * ```
+		 */
+		@ $mol_mem
+		Add_pair() {
+			const obj = new this.$.$mol_bar()
+
+			obj.sub = () => [
+				this.Add_pair_key(),
+				this.Add_pair_submit()
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Add_over $mol_select
+		 * 	hint <= add_over_hint
+		 * 	value?val <=> add_over?val
+		 * 	Trigger_icon <= Overs_trigger_icon
+		 * 	options <= over_options
+		 * ```
+		 */
+		@ $mol_mem
+		Add_over() {
+			const obj = new this.$.$mol_select()
+
+			obj.hint = () => this.add_over_hint()
+			obj.value = (val?: any) => this.add_over(val)
+			obj.Trigger_icon = () => this.Overs_trigger_icon()
+			obj.options = () => this.over_options()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Prop!id $mol_app_studio_field
+		 * 	path <= prop_path!id
+		 * 	prop_arg!id <= prop_arg!id
+		 * 	prop!path?val <=> prop!path?val
+		 * 	props!name?val <=> props!name?val
+		 * 	prop_value!id <= prop_value!id
+		 * 	bind_options <= bind_options
+		 * 	prop_add?val <=> prop_add?val
+		 * 	object_options <= object_options
+		 * ```
+		 */
+		@ $mol_mem_key
+		Prop(id: any) {
+			const obj = new this.$.$mol_app_studio_field()
+
+			obj.path = () => this.prop_path(id)
+			obj.prop_arg = (id: any) => this.prop_arg(id)
+			obj.prop = (path: any, val?: any) => this.prop(path, val)
+			obj.props = (name: any, val?: any) => this.props(name, val)
+			obj.prop_value = (id: any) => this.prop_value(id)
+			obj.bind_options = () => this.bind_options()
+			obj.prop_add = (val?: any) => this.prop_add(val)
+			obj.object_options = () => this.object_options()
 
 			return obj
 		}
@@ -46,23 +172,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Trigger_label $mol_dimmer
-		 * 	needle <= highlight \
-		 * 	haystack <= title
-		 * ```
-		 */
-		@ $mol_mem
-		Trigger_label() {
-			const obj = new this.$.$mol_dimmer()
-
-			obj.needle = () => this.highlight()
-			obj.haystack = () => this.title()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * highlight \
 		 * ```
 		 */
@@ -72,97 +181,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Tools $mol_view sub <= tools /
-		 * 	<= Type $mol_select
-		 * 		value?val <=> type?val \null
-		 * 		hint <= type_hint @ \Type...
-		 * 		Trigger_icon null
-		 * 		dictionary <= types *
-		 * 			get \<=
-		 * 			bind \<=>
-		 * 			object \Object
-		 * 			string \Text
-		 * 			locale \Localization
-		 * 			number \Number
-		 * 			bool \Flag
-		 * 			list \List
-		 * 			dict \Dictionary
-		 * 			null \None
-		 * 	<= Object $mol_select
-		 * 		value?val <=> class?val null
-		 * 		options <= object_options /
-		 * 		hint <= object_hint @ \Class...
-		 * 		Trigger_icon null
+		 * Trigger_label $mol_dimmer
+		 * 	needle <= highlight
+		 * 	haystack <= title
 		 * ```
 		 */
 		@ $mol_mem
-		Tools() {
-			const obj = new this.$.$mol_view()
+		Trigger_label() {
+			const obj = new this.$.$mol_dimmer()
 
-			obj.sub = () => this.tools()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * tools /
-		 * 	<= Type $mol_select
-		 * 		value?val <=> type?val \null
-		 * 		hint <= type_hint @ \Type...
-		 * 		Trigger_icon null
-		 * 		dictionary <= types *
-		 * 			get \<=
-		 * 			bind \<=>
-		 * 			object \Object
-		 * 			string \Text
-		 * 			locale \Localization
-		 * 			number \Number
-		 * 			bool \Flag
-		 * 			list \List
-		 * 			dict \Dictionary
-		 * 			null \None
-		 * 	<= Object $mol_select
-		 * 		value?val <=> class?val null
-		 * 		options <= object_options /
-		 * 		hint <= object_hint @ \Class...
-		 * 		Trigger_icon null
-		 * ```
-		 */
-		tools() {
-			return [
-				this.Type(),
-				this.Object()
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Type $mol_select
-		 * 	value?val <=> type?val \null
-		 * 	hint <= type_hint @ \Type...
-		 * 	Trigger_icon null
-		 * 	dictionary <= types *
-		 * 		get \<=
-		 * 		bind \<=>
-		 * 		object \Object
-		 * 		string \Text
-		 * 		locale \Localization
-		 * 		number \Number
-		 * 		bool \Flag
-		 * 		list \List
-		 * 		dict \Dictionary
-		 * 		null \None
-		 * ```
-		 */
-		@ $mol_mem
-		Type() {
-			const obj = new this.$.$mol_select()
-
-			obj.value = (val?: any) => this.type(val)
-			obj.hint = () => this.type_hint()
-			obj.Trigger_icon = () => null as any
-			obj.dictionary = () => this.types()
+			obj.needle = () => this.highlight()
+			obj.haystack = () => this.title()
 
 			return obj
 		}
@@ -219,21 +248,21 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Object $mol_select
-		 * 	value?val <=> class?val null
-		 * 	options <= object_options /
-		 * 	hint <= object_hint @ \Class...
+		 * Type $mol_select
+		 * 	value?val <=> type?val
+		 * 	hint <= type_hint
 		 * 	Trigger_icon null
+		 * 	dictionary <= types
 		 * ```
 		 */
 		@ $mol_mem
-		Object() {
+		Type() {
 			const obj = new this.$.$mol_select()
 
-			obj.value = (val?: any) => this.class(val)
-			obj.options = () => this.object_options()
-			obj.hint = () => this.object_hint()
+			obj.value = (val?: any) => this.type(val)
+			obj.hint = () => this.type_hint()
 			obj.Trigger_icon = () => null as any
+			obj.dictionary = () => this.types()
 
 			return obj
 		}
@@ -271,63 +300,37 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * content /
-		 * 	<= Bool $mol_switch
-		 * 		value?val <=> value_bool?val null
-		 * 		options *
-		 * 			true \True
-		 * 			false \False
-		 * 	<= Number $mol_number
-		 * 		value?val <=> value_number?val NaN
-		 * 		hint <= hint \
-		 * 	<= String $mol_textarea
-		 * 		value?val <=> value_string?val null
-		 * 		hint <= hint \
-		 * 	<= Bind $mol_select
-		 * 		value?val <=> bind?val null
-		 * 		options <= bind_options /
-		 * 		hint <= bind_hint @ \Property..
-		 * 		No_options <= Prop_add $mol_button_minor
-		 * 			title <= prop_add_label @ \Add property
-		 * 			event_click?val <=> event_prop_add?val null
-		 * 		Trigger_icon null
-		 * 	<= List $mol_list rows <= list_rows /
-		 * 	<= Dict $mol_list rows <= pairs /
-		 * 	<= Overs $mol_list rows <= overs /
+		 * Object $mol_select
+		 * 	value?val <=> class?val
+		 * 	options <= object_options
+		 * 	hint <= object_hint
+		 * 	Trigger_icon null
 		 * ```
 		 */
-		content() {
-			return [
-				this.Bool(),
-				this.Number(),
-				this.String(),
-				this.Bind(),
-				this.List(),
-				this.Dict(),
-				this.Overs()
-			] as readonly any[]
+		@ $mol_mem
+		Object() {
+			const obj = new this.$.$mol_select()
+
+			obj.value = (val?: any) => this.class(val)
+			obj.options = () => this.object_options()
+			obj.hint = () => this.object_hint()
+			obj.Trigger_icon = () => null as any
+
+			return obj
 		}
 
 		/**
 		 * ```tree
-		 * Bool $mol_switch
-		 * 	value?val <=> value_bool?val null
-		 * 	options *
-		 * 		true \True
-		 * 		false \False
+		 * tools /
+		 * 	<= Type
+		 * 	<= Object
 		 * ```
 		 */
-		@ $mol_mem
-		Bool() {
-			const obj = new this.$.$mol_switch()
-
-			obj.value = (val?: any) => this.value_bool(val)
-			obj.options = () => ({
-				true: "True",
-				false: "False"
-			})
-
-			return obj
+		tools() {
+			return [
+				this.Type(),
+				this.Object()
+			] as readonly any[]
 		}
 
 		/**
@@ -343,17 +346,22 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Number $mol_number
-		 * 	value?val <=> value_number?val NaN
-		 * 	hint <= hint \
+		 * Bool $mol_switch
+		 * 	value?val <=> value_bool?val
+		 * 	options *
+		 * 		true \True
+		 * 		false \False
 		 * ```
 		 */
 		@ $mol_mem
-		Number() {
-			const obj = new this.$.$mol_number()
+		Bool() {
+			const obj = new this.$.$mol_switch()
 
-			obj.value = (val?: any) => this.value_number(val)
-			obj.hint = () => this.hint()
+			obj.value = (val?: any) => this.value_bool(val)
+			obj.options = () => ({
+				true: "True",
+				false: "False"
+			})
 
 			return obj
 		}
@@ -380,16 +388,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * String $mol_textarea
-		 * 	value?val <=> value_string?val null
-		 * 	hint <= hint \
+		 * Number $mol_number
+		 * 	value?val <=> value_number?val
+		 * 	hint <= hint
 		 * ```
 		 */
 		@ $mol_mem
-		String() {
-			const obj = new this.$.$mol_textarea()
+		Number() {
+			const obj = new this.$.$mol_number()
 
-			obj.value = (val?: any) => this.value_string(val)
+			obj.value = (val?: any) => this.value_number(val)
 			obj.hint = () => this.hint()
 
 			return obj
@@ -408,25 +416,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Bind $mol_select
-		 * 	value?val <=> bind?val null
-		 * 	options <= bind_options /
-		 * 	hint <= bind_hint @ \Property..
-		 * 	No_options <= Prop_add $mol_button_minor
-		 * 		title <= prop_add_label @ \Add property
-		 * 		event_click?val <=> event_prop_add?val null
-		 * 	Trigger_icon null
+		 * String $mol_textarea
+		 * 	value?val <=> value_string?val
+		 * 	hint <= hint
 		 * ```
 		 */
 		@ $mol_mem
-		Bind() {
-			const obj = new this.$.$mol_select()
+		String() {
+			const obj = new this.$.$mol_textarea()
 
-			obj.value = (val?: any) => this.bind(val)
-			obj.options = () => this.bind_options()
-			obj.hint = () => this.bind_hint()
-			obj.No_options = () => this.Prop_add()
-			obj.Trigger_icon = () => null as any
+			obj.value = (val?: any) => this.value_string(val)
+			obj.hint = () => this.hint()
 
 			return obj
 		}
@@ -464,23 +464,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Prop_add $mol_button_minor
-		 * 	title <= prop_add_label @ \Add property
-		 * 	event_click?val <=> event_prop_add?val null
-		 * ```
-		 */
-		@ $mol_mem
-		Prop_add() {
-			const obj = new this.$.$mol_button_minor()
-
-			obj.title = () => this.prop_add_label()
-			obj.event_click = (val?: any) => this.event_prop_add(val)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * prop_add_label @ \Add property
 		 * ```
 		 */
@@ -501,14 +484,40 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * List $mol_list rows <= list_rows /
+		 * Prop_add $mol_button_minor
+		 * 	title <= prop_add_label
+		 * 	event_click?val <=> event_prop_add?val
 		 * ```
 		 */
 		@ $mol_mem
-		List() {
-			const obj = new this.$.$mol_list()
+		Prop_add() {
+			const obj = new this.$.$mol_button_minor()
 
-			obj.rows = () => this.list_rows()
+			obj.title = () => this.prop_add_label()
+			obj.event_click = (val?: any) => this.event_prop_add(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Bind $mol_select
+		 * 	value?val <=> bind?val
+		 * 	options <= bind_options
+		 * 	hint <= bind_hint
+		 * 	No_options <= Prop_add
+		 * 	Trigger_icon null
+		 * ```
+		 */
+		@ $mol_mem
+		Bind() {
+			const obj = new this.$.$mol_select()
+
+			obj.value = (val?: any) => this.bind(val)
+			obj.options = () => this.bind_options()
+			obj.hint = () => this.bind_hint()
+			obj.No_options = () => this.Prop_add()
+			obj.Trigger_icon = () => null as any
 
 			return obj
 		}
@@ -526,14 +535,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Dict $mol_list rows <= pairs /
+		 * List $mol_list rows <= list_rows
 		 * ```
 		 */
 		@ $mol_mem
-		Dict() {
+		List() {
 			const obj = new this.$.$mol_list()
 
-			obj.rows = () => this.pairs()
+			obj.rows = () => this.list_rows()
 
 			return obj
 		}
@@ -551,14 +560,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Overs $mol_list rows <= overs /
+		 * Dict $mol_list rows <= pairs
 		 * ```
 		 */
 		@ $mol_mem
-		Overs() {
+		Dict() {
 			const obj = new this.$.$mol_list()
 
-			obj.rows = () => this.overs()
+			obj.rows = () => this.pairs()
 
 			return obj
 		}
@@ -576,28 +585,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Add $mol_select
-		 * 	hint <= add_hint @ \Add item..
-		 * 	value?val <=> add_item?val \
-		 * 	dictionary <= item_types *
-		 * 		get \<=
-		 * 		string \Text
-		 * 		number \Number
-		 * 		bool \Flag
-		 * 		list \List
-		 * 		dict \Dictionary
-		 * 		null \None
-		 * 	Trigger_icon <= List_trigger_icon $mol_icon_plus
+		 * Overs $mol_list rows <= overs
 		 * ```
 		 */
 		@ $mol_mem
-		Add() {
-			const obj = new this.$.$mol_select()
+		Overs() {
+			const obj = new this.$.$mol_list()
 
-			obj.hint = () => this.add_hint()
-			obj.value = (val?: any) => this.add_item(val)
-			obj.dictionary = () => this.item_types()
-			obj.Trigger_icon = () => this.List_trigger_icon()
+			obj.rows = () => this.overs()
 
 			return obj
 		}
@@ -660,49 +655,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Add_pair $mol_bar sub /
-		 * 	<= Add_pair_key $mol_search
-		 * 		hint <= add_pair_hint @ \Add key..
-		 * 		query?val <=> add_pair_key?val \
-		 * 		suggests <= key_suggests /
-		 * 	<= Add_pair_submit $mol_button_minor
-		 * 		event_click?val <=> add_pair?val \
-		 * 		sub / <= Add_pair_submit_icon $mol_icon_plus
-		 * ```
-		 */
-		@ $mol_mem
-		Add_pair() {
-			const obj = new this.$.$mol_bar()
-
-			obj.sub = () => [
-				this.Add_pair_key(),
-				this.Add_pair_submit()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Add_pair_key $mol_search
-		 * 	hint <= add_pair_hint @ \Add key..
-		 * 	query?val <=> add_pair_key?val \
-		 * 	suggests <= key_suggests /
-		 * ```
-		 */
-		@ $mol_mem
-		Add_pair_key() {
-			const obj = new this.$.$mol_search()
-
-			obj.hint = () => this.add_pair_hint()
-			obj.query = (val?: any) => this.add_pair_key(val)
-			obj.suggests = () => this.key_suggests()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * add_pair_hint @ \Add key..
 		 * ```
 		 */
@@ -734,19 +686,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Add_pair_submit $mol_button_minor
-		 * 	event_click?val <=> add_pair?val \
-		 * 	sub / <= Add_pair_submit_icon $mol_icon_plus
+		 * Add_pair_key $mol_search
+		 * 	hint <= add_pair_hint
+		 * 	query?val <=> add_pair_key?val
+		 * 	suggests <= key_suggests
 		 * ```
 		 */
 		@ $mol_mem
-		Add_pair_submit() {
-			const obj = new this.$.$mol_button_minor()
+		Add_pair_key() {
+			const obj = new this.$.$mol_search()
 
-			obj.event_click = (val?: any) => this.add_pair(val)
-			obj.sub = () => [
-				this.Add_pair_submit_icon()
-			] as readonly any[]
+			obj.hint = () => this.add_pair_hint()
+			obj.query = (val?: any) => this.add_pair_key(val)
+			obj.suggests = () => this.key_suggests()
 
 			return obj
 		}
@@ -776,21 +728,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Add_over $mol_select
-		 * 	hint <= add_over_hint @ \Add override..
-		 * 	value?val <=> add_over?val \
-		 * 	Trigger_icon <= Overs_trigger_icon $mol_icon_plus
-		 * 	options <= over_options /
+		 * Add_pair_submit $mol_button_minor
+		 * 	event_click?val <=> add_pair?val
+		 * 	sub / <= Add_pair_submit_icon
 		 * ```
 		 */
 		@ $mol_mem
-		Add_over() {
-			const obj = new this.$.$mol_select()
+		Add_pair_submit() {
+			const obj = new this.$.$mol_button_minor()
 
-			obj.hint = () => this.add_over_hint()
-			obj.value = (val?: any) => this.add_over(val)
-			obj.Trigger_icon = () => this.Overs_trigger_icon()
-			obj.options = () => this.over_options()
+			obj.event_click = (val?: any) => this.add_pair(val)
+			obj.sub = () => [
+				this.Add_pair_submit_icon()
+			] as readonly any[]
 
 			return obj
 		}
@@ -836,35 +786,6 @@ namespace $ {
 			return [
 
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Prop!id $mol_app_studio_field
-		 * 	path <= prop_path!id /
-		 * 	prop_arg!id <= prop_arg!id *
-		 * 	prop!path?val <=> prop!path?val $mol_tree
-		 * 	props!name?val <=> props!name?val $mol_tree
-		 * 	prop_value!id <= prop_value!id null
-		 * 	bind_options <= bind_options /
-		 * 	prop_add?val <=> prop_add?val null
-		 * 	object_options <= object_options /
-		 * ```
-		 */
-		@ $mol_mem_key
-		Prop(id: any) {
-			const obj = new this.$.$mol_app_studio_field()
-
-			obj.path = () => this.prop_path(id)
-			obj.prop_arg = (id: any) => this.prop_arg(id)
-			obj.prop = (path: any, val?: any) => this.prop(path, val)
-			obj.props = (name: any, val?: any) => this.props(name, val)
-			obj.prop_value = (id: any) => this.prop_value(id)
-			obj.bind_options = () => this.bind_options()
-			obj.prop_add = (val?: any) => this.prop_add(val)
-			obj.object_options = () => this.object_options()
-
-			return obj
 		}
 
 		/**
@@ -942,7 +863,7 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	mol_app_studio_field_title_type <= type \null
+		 * 	mol_app_studio_field_title_type <= type
 		 * ```
 		 */
 		attr() {

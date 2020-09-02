@@ -2882,6 +2882,9 @@ var $;
         field() {
             return Object.assign(Object.assign({}, super.field()), { scrollTop: this.scroll_top(), scrollLeft: this.scroll_left(), tabIndex: this.tabindex() });
         }
+        event() {
+            return Object.assign(Object.assign({}, super.event()), { scroll: (event) => this.event_scroll(event) });
+        }
         scroll_top(val) {
             if (val !== undefined)
                 return val;
@@ -2894,9 +2897,6 @@ var $;
         }
         tabindex() {
             return -1;
-        }
-        event() {
-            return Object.assign(Object.assign({}, super.event()), { scroll: (event) => this.event_scroll(event) });
         }
         event_scroll(event) {
             if (event !== undefined)
@@ -3077,9 +3077,6 @@ var $;
         sub() {
             return this.rows();
         }
-        rows() {
-            return [];
-        }
         Empty() {
             const obj = new this.$.$mol_view();
             return obj;
@@ -3091,9 +3088,6 @@ var $;
             });
             return obj;
         }
-        gap_before() {
-            return 0;
-        }
         Gap_after() {
             const obj = new this.$.$mol_view();
             obj.style = () => ({
@@ -3101,14 +3095,20 @@ var $;
             });
             return obj;
         }
-        gap_after() {
-            return 0;
-        }
         view_window() {
             return [
                 0,
                 0
             ];
+        }
+        rows() {
+            return [];
+        }
+        gap_before() {
+            return 0;
+        }
+        gap_after() {
+            return 0;
         }
     }
     __decorate([
@@ -3330,13 +3330,13 @@ var $;
         sub() {
             return this.rows();
         }
-        rows() {
-            return [];
-        }
         Row(index) {
             const obj = new this.$.$mol_perf_uibench_table_row();
             obj.state = () => this.row_state(index);
             return obj;
+        }
+        rows() {
+            return [];
         }
         row_state(index) {
             return null;
@@ -3359,44 +3359,44 @@ var $;
         attr() {
             return Object.assign(Object.assign({}, super.attr()), { class: this.classes(), "data-id": this.id() });
         }
-        classes() {
-            return "TableRow";
-        }
-        id() {
-            return 0;
-        }
         sub() {
             return [
                 this.Head(),
                 this.cells()
             ];
         }
+        Cell(index) {
+            const obj = new this.$.$mol_perf_uibench_table_cell();
+            obj.text = () => this.cell_state(index);
+            return obj;
+        }
+        classes() {
+            return "TableRow";
+        }
+        id() {
+            return 0;
+        }
+        head_text() {
+            return "";
+        }
         Head() {
             const obj = new this.$.$mol_perf_uibench_table_cell();
             obj.text = () => this.head_text();
             return obj;
         }
-        head_text() {
-            return "";
-        }
         cells() {
             return [];
-        }
-        Cell(index) {
-            const obj = new this.$.$mol_perf_uibench_table_cell();
-            obj.text = () => this.cell_state(index);
-            return obj;
         }
         cell_state(index) {
             return null;
         }
     }
     __decorate([
-        $.$mol_mem
-    ], $mol_perf_uibench_table_row.prototype, "Head", null);
-    __decorate([
         $.$mol_mem_key
     ], $mol_perf_uibench_table_row.prototype, "Cell", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_perf_uibench_table_row.prototype, "Head", null);
     $.$mol_perf_uibench_table_row = $mol_perf_uibench_table_row;
     class $mol_perf_uibench_table_cell extends $.$mol_view {
         dom_name() {
@@ -3408,15 +3408,15 @@ var $;
         event() {
             return Object.assign(Object.assign({}, super.event()), { click: (val) => this.click(val) });
         }
-        click(val) {
-            if (val !== undefined)
-                return val;
-            return null;
-        }
         sub() {
             return [
                 this.text()
             ];
+        }
+        click(val) {
+            if (val !== undefined)
+                return val;
+            return null;
         }
         text() {
             return "";
@@ -3524,13 +3524,13 @@ var $;
         sub() {
             return this.boxes();
         }
-        boxes() {
-            return [];
-        }
         Box(index) {
             const obj = new this.$.$mol_perf_uibench_anim_box();
             obj.state = () => this.box_state(index);
             return obj;
+        }
+        boxes() {
+            return [];
         }
         box_state(index) {
             return null;
@@ -3547,11 +3547,11 @@ var $;
         attr() {
             return Object.assign(Object.assign({}, super.attr()), { class: "AnimBox", "data-id": this.id() });
         }
-        id() {
-            return "";
-        }
         style() {
             return Object.assign(Object.assign({}, super.style()), { borderRadius: this.style_radius(), background: this.style_color() });
+        }
+        id() {
+            return "";
         }
         style_radius() {
             return "";
@@ -3621,13 +3621,13 @@ var $;
                 this.Root()
             ];
         }
+        root_state() {
+            return null;
+        }
         Root() {
             const obj = new this.$.$mol_perf_uibench_tree_branch();
             obj.state = () => this.root_state();
             return obj;
-        }
-        root_state() {
-            return null;
         }
     }
     __decorate([
@@ -3649,13 +3649,13 @@ var $;
             obj.state = () => this.branch_state(index);
             return obj;
         }
-        branch_state(index) {
-            return null;
-        }
         Leaf(index) {
             const obj = new this.$.$mol_perf_uibench_tree_leaf();
             obj.text = () => this.leaf_state(index);
             return obj;
+        }
+        branch_state(index) {
+            return null;
         }
         leaf_state(index) {
             return null;
@@ -3749,12 +3749,15 @@ var $;
                 this.Tree()
             ];
         }
+        table_state() {
+            return null;
+        }
         Table() {
             const obj = new this.$.$mol_perf_uibench_table();
             obj.state = () => this.table_state();
             return obj;
         }
-        table_state() {
+        anim_state() {
             return null;
         }
         Anim() {
@@ -3762,16 +3765,13 @@ var $;
             obj.state = () => this.anim_state();
             return obj;
         }
-        anim_state() {
+        tree_state() {
             return null;
         }
         Tree() {
             const obj = new this.$.$mol_perf_uibench_tree();
             obj.state = () => this.tree_state();
             return obj;
-        }
-        tree_state() {
-            return null;
         }
     }
     __decorate([
@@ -3868,13 +3868,13 @@ var $;
         value(val) {
             return this.task_title_new(val);
         }
+        enabled() {
+            return this.head_complete_enabled();
+        }
         task_title_new(val) {
             if (val !== undefined)
                 return val;
             return "123";
-        }
-        enabled() {
-            return this.head_complete_enabled();
         }
         head_complete_enabled() {
             return false;

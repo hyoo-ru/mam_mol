@@ -12,27 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Pages $mol_paginator value?val <=> page?val 0
+		 * sub / <= Pages
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Pages()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Pages $mol_paginator value?val <=> page?val 0
-		 * ```
-		 */
-		@ $mol_mem
-		Pages() {
-			const obj = new this.$.$mol_paginator()
-
-			obj.value = (val?: any) => this.page(val)
-
-			return obj
 		}
 
 		/**
@@ -44,6 +30,20 @@ namespace $ {
 		page(val?: any) {
 			if ( val !== undefined ) return val
 			return 0
+		}
+
+		/**
+		 * ```tree
+		 * Pages $mol_paginator value?val <=> page?val
+		 * ```
+		 */
+		@ $mol_mem
+		Pages() {
+			const obj = new this.$.$mol_paginator()
+
+			obj.value = (val?: any) => this.page(val)
+
+			return obj
 		}
 	}
 

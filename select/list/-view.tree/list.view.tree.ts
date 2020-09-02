@@ -28,10 +28,10 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Badge!key $mol_button_minor
-		 * 	title <= option_title!key \badge
-		 * 	click?event <=> remove!key?event null
-		 * 	hint <= badge_hint @ \Drop
-		 * 	enabled <= enabled true
+		 * 	title <= option_title!key
+		 * 	click?event <=> remove!key?event
+		 * 	hint <= badge_hint
+		 * 	enabled <= enabled
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -42,6 +42,27 @@ namespace $ {
 			obj.click = (event?: any) => this.remove(key, event)
 			obj.hint = () => this.badge_hint()
 			obj.enabled = () => this.enabled()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Pick $mol_select
+		 * 	options <= options_pickable
+		 * 	value?val <=> pick?val
+		 * 	option_label!key <= option_title!key
+		 * 	hint <= pick_hint
+		 * ```
+		 */
+		@ $mol_mem
+		Pick() {
+			const obj = new this.$.$mol_select()
+
+			obj.options = () => this.options_pickable()
+			obj.value = (val?: any) => this.pick(val)
+			obj.option_label = (key: any) => this.option_title(key)
+			obj.hint = () => this.pick_hint()
 
 			return obj
 		}
@@ -86,36 +107,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Pick $mol_select
-		 * 	options <= options_pickable <= options /string
-		 * 	value?val <=> pick?val \
-		 * 	option_label!key <= option_title!key
-		 * 	hint <= pick_hint @ \Add..
-		 * ```
-		 */
-		@ $mol_mem
-		Pick() {
-			const obj = new this.$.$mol_select()
-
-			obj.options = () => this.options_pickable()
-			obj.value = (val?: any) => this.pick(val)
-			obj.option_label = (key: any) => this.option_title(key)
-			obj.hint = () => this.pick_hint()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * options_pickable <= options /string
-		 * ```
-		 */
-		options_pickable() {
-			return this.options()
-		}
-
-		/**
-		 * ```tree
 		 * options /string
 		 * ```
 		 */
@@ -123,6 +114,15 @@ namespace $ {
 			return [
 
 			] as readonly string[]
+		}
+
+		/**
+		 * ```tree
+		 * options_pickable <= options
+		 * ```
+		 */
+		options_pickable() {
+			return this.options()
 		}
 
 		/**

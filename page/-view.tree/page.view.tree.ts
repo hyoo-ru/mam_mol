@@ -4,15 +4,9 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Head $mol_view sub <= head /
-		 * 		<= Title $mol_button
-		 * 			sub / <= title
-		 * 			event_click?val <=> event_top?val null
-		 * 		<= Tools $mol_view sub <= tools /$mol_view_content
-		 * 	<= Body $mol_scroll
-		 * 		scroll_top?val <=> body_scroll_top?val 0
-		 * 		sub <= body /$mol_view_content
-		 * 	<= Foot $mol_view sub <= foot /$mol_view
+		 * 	<= Head
+		 * 	<= Body
+		 * 	<= Foot
 		 * ```
 		 */
 		sub() {
@@ -21,59 +15,6 @@ namespace $ {
 				this.Body(),
 				this.Foot()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Head $mol_view sub <= head /
-		 * 	<= Title $mol_button
-		 * 		sub / <= title
-		 * 		event_click?val <=> event_top?val null
-		 * 	<= Tools $mol_view sub <= tools /$mol_view_content
-		 * ```
-		 */
-		@ $mol_mem
-		Head() {
-			const obj = new this.$.$mol_view()
-
-			obj.sub = () => this.head()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * head /
-		 * 	<= Title $mol_button
-		 * 		sub / <= title
-		 * 		event_click?val <=> event_top?val null
-		 * 	<= Tools $mol_view sub <= tools /$mol_view_content
-		 * ```
-		 */
-		head() {
-			return [
-				this.Title(),
-				this.Tools()
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Title $mol_button
-		 * 	sub / <= title
-		 * 	event_click?val <=> event_top?val null
-		 * ```
-		 */
-		@ $mol_mem
-		Title() {
-			const obj = new this.$.$mol_button()
-
-			obj.sub = () => [
-				this.title()
-			] as readonly any[]
-			obj.event_click = (val?: any) => this.event_top(val)
-
-			return obj
 		}
 
 		/**
@@ -89,14 +30,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Tools $mol_view sub <= tools /$mol_view_content
+		 * Title $mol_button
+		 * 	sub / <= title
+		 * 	event_click?val <=> event_top?val
 		 * ```
 		 */
 		@ $mol_mem
-		Tools() {
-			const obj = new this.$.$mol_view()
+		Title() {
+			const obj = new this.$.$mol_button()
 
-			obj.sub = () => this.tools()
+			obj.sub = () => [
+				this.title()
+			] as readonly any[]
+			obj.event_click = (val?: any) => this.event_top(val)
 
 			return obj
 		}
@@ -114,17 +60,42 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Body $mol_scroll
-		 * 	scroll_top?val <=> body_scroll_top?val 0
-		 * 	sub <= body /$mol_view_content
+		 * Tools $mol_view sub <= tools
 		 * ```
 		 */
 		@ $mol_mem
-		Body() {
-			const obj = new this.$.$mol_scroll()
+		Tools() {
+			const obj = new this.$.$mol_view()
 
-			obj.scroll_top = (val?: any) => this.body_scroll_top(val)
-			obj.sub = () => this.body()
+			obj.sub = () => this.tools()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * head /
+		 * 	<= Title
+		 * 	<= Tools
+		 * ```
+		 */
+		head() {
+			return [
+				this.Title(),
+				this.Tools()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Head $mol_view sub <= head
+		 * ```
+		 */
+		@ $mol_mem
+		Head() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => this.head()
 
 			return obj
 		}
@@ -153,14 +124,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Foot $mol_view sub <= foot /$mol_view
+		 * Body $mol_scroll
+		 * 	scroll_top?val <=> body_scroll_top?val
+		 * 	sub <= body
 		 * ```
 		 */
 		@ $mol_mem
-		Foot() {
-			const obj = new this.$.$mol_view()
+		Body() {
+			const obj = new this.$.$mol_scroll()
 
-			obj.sub = () => this.foot()
+			obj.scroll_top = (val?: any) => this.body_scroll_top(val)
+			obj.sub = () => this.body()
 
 			return obj
 		}
@@ -174,6 +148,20 @@ namespace $ {
 			return [
 
 			] as readonly $mol_view[]
+		}
+
+		/**
+		 * ```tree
+		 * Foot $mol_view sub <= foot
+		 * ```
+		 */
+		@ $mol_mem
+		Foot() {
+			const obj = new this.$.$mol_view()
+
+			obj.sub = () => this.foot()
+
+			return obj
 		}
 	}
 

@@ -12,9 +12,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Search $mol_search
-		 * 	query => query
-		 * 	suggests <= suggests /
+		 * sub / <= Search
 		 * ```
 		 */
 		sub() {
@@ -25,9 +23,20 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * suggests /
+		 * ```
+		 */
+		suggests() {
+			return [
+
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
 		 * Search $mol_search
 		 * 	query => query
-		 * 	suggests <= suggests /
+		 * 	suggests <= suggests
 		 * ```
 		 */
 		@ $mol_mem
@@ -46,17 +55,6 @@ namespace $ {
 		 */
 		query() {
 			return this.Search().query()
-		}
-
-		/**
-		 * ```tree
-		 * suggests /
-		 * ```
-		 */
-		suggests() {
-			return [
-
-			] as readonly any[]
 		}
 	}
 

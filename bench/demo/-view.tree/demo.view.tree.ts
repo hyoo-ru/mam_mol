@@ -12,32 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= View $mol_bench
-		 * 	col_sort?val <=> col_sort?val \mid
-		 * 	result <= result *
+		 * sub / <= View
 		 * ```
 		 */
 		sub() {
 			return [
 				this.View()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * View $mol_bench
-		 * 	col_sort?val <=> col_sort?val \mid
-		 * 	result <= result *
-		 * ```
-		 */
-		@ $mol_mem
-		View() {
-			const obj = new this.$.$mol_bench()
-
-			obj.col_sort = (val?: any) => this.col_sort(val)
-			obj.result = () => this.result()
-
-			return obj
 		}
 
 		/**
@@ -60,6 +41,23 @@ namespace $ {
 			return {
 
 			}
+		}
+
+		/**
+		 * ```tree
+		 * View $mol_bench
+		 * 	col_sort?val <=> col_sort?val
+		 * 	result <= result
+		 * ```
+		 */
+		@ $mol_mem
+		View() {
+			const obj = new this.$.$mol_bench()
+
+			obj.col_sort = (val?: any) => this.col_sort(val)
+			obj.result = () => this.result()
+
+			return obj
 		}
 	}
 

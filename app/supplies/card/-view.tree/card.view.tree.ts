@@ -21,18 +21,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Card $mol_card
-		 * 	status <= status \
-		 * 	Content <= Group $mol_row sub <= items /
-		 * 		<= Code_item $mol_labeler
-		 * 			title <= code_title @ \Code
-		 * 			content / <= code \
-		 * 		<= Cost_item $mol_labeler
-		 * 			title <= cost_title @ \Cost
-		 * 			content / <= Cost $mol_cost value <= cost $mol_unit_money valueOf 0
-		 * 		<= Provider_item $mol_labeler
-		 * 			title <= provider_title @ \Provider
-		 * 			content / <= provider_name \
+		 * sub / <= Card
 		 * ```
 		 */
 		sub() {
@@ -43,101 +32,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Card $mol_card
-		 * 	status <= status \
-		 * 	Content <= Group $mol_row sub <= items /
-		 * 		<= Code_item $mol_labeler
-		 * 			title <= code_title @ \Code
-		 * 			content / <= code \
-		 * 		<= Cost_item $mol_labeler
-		 * 			title <= cost_title @ \Cost
-		 * 			content / <= Cost $mol_cost value <= cost $mol_unit_money valueOf 0
-		 * 		<= Provider_item $mol_labeler
-		 * 			title <= provider_title @ \Provider
-		 * 			content / <= provider_name \
-		 * ```
-		 */
-		@ $mol_mem
-		Card() {
-			const obj = new this.$.$mol_card()
-
-			obj.status = () => this.status()
-			obj.Content = () => this.Group()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * status \
 		 * ```
 		 */
 		status() {
 			return ""
-		}
-
-		/**
-		 * ```tree
-		 * Group $mol_row sub <= items /
-		 * 	<= Code_item $mol_labeler
-		 * 		title <= code_title @ \Code
-		 * 		content / <= code \
-		 * 	<= Cost_item $mol_labeler
-		 * 		title <= cost_title @ \Cost
-		 * 		content / <= Cost $mol_cost value <= cost $mol_unit_money valueOf 0
-		 * 	<= Provider_item $mol_labeler
-		 * 		title <= provider_title @ \Provider
-		 * 		content / <= provider_name \
-		 * ```
-		 */
-		@ $mol_mem
-		Group() {
-			const obj = new this.$.$mol_row()
-
-			obj.sub = () => this.items()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * items /
-		 * 	<= Code_item $mol_labeler
-		 * 		title <= code_title @ \Code
-		 * 		content / <= code \
-		 * 	<= Cost_item $mol_labeler
-		 * 		title <= cost_title @ \Cost
-		 * 		content / <= Cost $mol_cost value <= cost $mol_unit_money valueOf 0
-		 * 	<= Provider_item $mol_labeler
-		 * 		title <= provider_title @ \Provider
-		 * 		content / <= provider_name \
-		 * ```
-		 */
-		items() {
-			return [
-				this.Code_item(),
-				this.Cost_item(),
-				this.Provider_item()
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Code_item $mol_labeler
-		 * 	title <= code_title @ \Code
-		 * 	content / <= code \
-		 * ```
-		 */
-		@ $mol_mem
-		Code_item() {
-			const obj = new this.$.$mol_labeler()
-
-			obj.title = () => this.code_title()
-			obj.content = () => [
-				this.code()
-			] as readonly any[]
-
-			return obj
 		}
 
 		/**
@@ -160,18 +59,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Cost_item $mol_labeler
-		 * 	title <= cost_title @ \Cost
-		 * 	content / <= Cost $mol_cost value <= cost $mol_unit_money valueOf 0
+		 * Code_item $mol_labeler
+		 * 	title <= code_title
+		 * 	content / <= code
 		 * ```
 		 */
 		@ $mol_mem
-		Cost_item() {
+		Code_item() {
 			const obj = new this.$.$mol_labeler()
 
-			obj.title = () => this.cost_title()
+			obj.title = () => this.code_title()
 			obj.content = () => [
-				this.Cost()
+				this.code()
 			] as readonly any[]
 
 			return obj
@@ -184,20 +83,6 @@ namespace $ {
 		 */
 		cost_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_card_cost_title' )
-		}
-
-		/**
-		 * ```tree
-		 * Cost $mol_cost value <= cost $mol_unit_money valueOf 0
-		 * ```
-		 */
-		@ $mol_mem
-		Cost() {
-			const obj = new this.$.$mol_cost()
-
-			obj.value = () => this.cost()
-
-			return obj
 		}
 
 		/**
@@ -216,18 +101,32 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Provider_item $mol_labeler
-		 * 	title <= provider_title @ \Provider
-		 * 	content / <= provider_name \
+		 * Cost $mol_cost value <= cost
 		 * ```
 		 */
 		@ $mol_mem
-		Provider_item() {
+		Cost() {
+			const obj = new this.$.$mol_cost()
+
+			obj.value = () => this.cost()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Cost_item $mol_labeler
+		 * 	title <= cost_title
+		 * 	content / <= Cost
+		 * ```
+		 */
+		@ $mol_mem
+		Cost_item() {
 			const obj = new this.$.$mol_labeler()
 
-			obj.title = () => this.provider_title()
+			obj.title = () => this.cost_title()
 			obj.content = () => [
-				this.provider_name()
+				this.Cost()
 			] as readonly any[]
 
 			return obj
@@ -249,6 +148,72 @@ namespace $ {
 		 */
 		provider_name() {
 			return ""
+		}
+
+		/**
+		 * ```tree
+		 * Provider_item $mol_labeler
+		 * 	title <= provider_title
+		 * 	content / <= provider_name
+		 * ```
+		 */
+		@ $mol_mem
+		Provider_item() {
+			const obj = new this.$.$mol_labeler()
+
+			obj.title = () => this.provider_title()
+			obj.content = () => [
+				this.provider_name()
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * items /
+		 * 	<= Code_item
+		 * 	<= Cost_item
+		 * 	<= Provider_item
+		 * ```
+		 */
+		items() {
+			return [
+				this.Code_item(),
+				this.Cost_item(),
+				this.Provider_item()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Group $mol_row sub <= items
+		 * ```
+		 */
+		@ $mol_mem
+		Group() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => this.items()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Card $mol_card
+		 * 	status <= status
+		 * 	Content <= Group
+		 * ```
+		 */
+		@ $mol_mem
+		Card() {
+			const obj = new this.$.$mol_card()
+
+			obj.status = () => this.status()
+			obj.Content = () => this.Group()
+
+			return obj
 		}
 	}
 

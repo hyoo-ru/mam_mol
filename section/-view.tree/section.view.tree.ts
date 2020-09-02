@@ -4,8 +4,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * rows /
-		 * 	<= Head $mol_view sub <= head /
-		 * 	<= Content null
+		 * 	<= Head
+		 * 	<= Content
 		 * ```
 		 */
 		rows() {
@@ -17,7 +17,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Head $mol_view sub <= head /
+		 * head /
+		 * ```
+		 */
+		head() {
+			return [
+
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Head $mol_view sub <= head
 		 * ```
 		 */
 		@ $mol_mem
@@ -27,17 +38,6 @@ namespace $ {
 			obj.sub = () => this.head()
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * head /
-		 * ```
-		 */
-		head() {
-			return [
-
-			] as readonly any[]
 		}
 
 		/**

@@ -23,20 +23,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= form $mol_form
-		 * 	form_fields /
-		 * 		<= loginField $mol_form_field
-		 * 			name <= loginLabel @ \User name
-		 * 			control <= loginControl $mol_string value?val <=> login?val \
-		 * 		<= passwordField $mol_form_field
-		 * 			name <= passwordLabel @ \Pass word
-		 * 			control <= passControl $mol_string
-		 * 				value?val <=> password?val \
-		 * 				type \password
-		 * 	buttons / <= submit $mol_button_major
-		 * 		sub / <= submitLabel @ \Log In
-		 * 		click?val <=> event_submit?val null
-		 * 		disabled <= submit_blocked false
+		 * sub / <= form
 		 * ```
 		 */
 		sub() {
@@ -47,75 +34,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * form $mol_form
-		 * 	form_fields /
-		 * 		<= loginField $mol_form_field
-		 * 			name <= loginLabel @ \User name
-		 * 			control <= loginControl $mol_string value?val <=> login?val \
-		 * 		<= passwordField $mol_form_field
-		 * 			name <= passwordLabel @ \Pass word
-		 * 			control <= passControl $mol_string
-		 * 				value?val <=> password?val \
-		 * 				type \password
-		 * 	buttons / <= submit $mol_button_major
-		 * 		sub / <= submitLabel @ \Log In
-		 * 		click?val <=> event_submit?val null
-		 * 		disabled <= submit_blocked false
-		 * ```
-		 */
-		@ $mol_mem
-		form() {
-			const obj = new this.$.$mol_form()
-
-			obj.form_fields = () => [
-				this.loginField(),
-				this.passwordField()
-			] as readonly any[]
-			obj.buttons = () => [
-				this.submit()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * loginField $mol_form_field
-		 * 	name <= loginLabel @ \User name
-		 * 	control <= loginControl $mol_string value?val <=> login?val \
-		 * ```
-		 */
-		@ $mol_mem
-		loginField() {
-			const obj = new this.$.$mol_form_field()
-
-			obj.name = () => this.loginLabel()
-			obj.control = () => this.loginControl()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * loginLabel @ \User name
 		 * ```
 		 */
 		loginLabel() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_enter_loginLabel' )
-		}
-
-		/**
-		 * ```tree
-		 * loginControl $mol_string value?val <=> login?val \
-		 * ```
-		 */
-		@ $mol_mem
-		loginControl() {
-			const obj = new this.$.$mol_string()
-
-			obj.value = (val?: any) => this.login(val)
-
-			return obj
 		}
 
 		/**
@@ -131,19 +54,31 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * passwordField $mol_form_field
-		 * 	name <= passwordLabel @ \Pass word
-		 * 	control <= passControl $mol_string
-		 * 		value?val <=> password?val \
-		 * 		type \password
+		 * loginControl $mol_string value?val <=> login?val
 		 * ```
 		 */
 		@ $mol_mem
-		passwordField() {
+		loginControl() {
+			const obj = new this.$.$mol_string()
+
+			obj.value = (val?: any) => this.login(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * loginField $mol_form_field
+		 * 	name <= loginLabel
+		 * 	control <= loginControl
+		 * ```
+		 */
+		@ $mol_mem
+		loginField() {
 			const obj = new this.$.$mol_form_field()
 
-			obj.name = () => this.passwordLabel()
-			obj.control = () => this.passControl()
+			obj.name = () => this.loginLabel()
+			obj.control = () => this.loginControl()
 
 			return obj
 		}
@@ -159,8 +94,19 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * password?val \
+		 * ```
+		 */
+		@ $mol_mem
+		password(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
+		}
+
+		/**
+		 * ```tree
 		 * passControl $mol_string
-		 * 	value?val <=> password?val \
+		 * 	value?val <=> password?val
 		 * 	type \password
 		 * ```
 		 */
@@ -176,32 +122,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * password?val \
+		 * passwordField $mol_form_field
+		 * 	name <= passwordLabel
+		 * 	control <= passControl
 		 * ```
 		 */
 		@ $mol_mem
-		password(val?: any) {
-			if ( val !== undefined ) return val
-			return ""
-		}
+		passwordField() {
+			const obj = new this.$.$mol_form_field()
 
-		/**
-		 * ```tree
-		 * submit $mol_button_major
-		 * 	sub / <= submitLabel @ \Log In
-		 * 	click?val <=> event_submit?val null
-		 * 	disabled <= submit_blocked false
-		 * ```
-		 */
-		@ $mol_mem
-		submit() {
-			const obj = new this.$.$mol_button_major()
-
-			obj.sub = () => [
-				this.submitLabel()
-			] as readonly any[]
-			obj.click = (val?: any) => this.event_submit(val)
-			obj.disabled = () => this.submit_blocked()
+			obj.name = () => this.passwordLabel()
+			obj.control = () => this.passControl()
 
 			return obj
 		}
@@ -233,6 +164,51 @@ namespace $ {
 		 */
 		submit_blocked() {
 			return false
+		}
+
+		/**
+		 * ```tree
+		 * submit $mol_button_major
+		 * 	sub / <= submitLabel
+		 * 	click?val <=> event_submit?val
+		 * 	disabled <= submit_blocked
+		 * ```
+		 */
+		@ $mol_mem
+		submit() {
+			const obj = new this.$.$mol_button_major()
+
+			obj.sub = () => [
+				this.submitLabel()
+			] as readonly any[]
+			obj.click = (val?: any) => this.event_submit(val)
+			obj.disabled = () => this.submit_blocked()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * form $mol_form
+		 * 	form_fields /
+		 * 		<= loginField
+		 * 		<= passwordField
+		 * 	buttons / <= submit
+		 * ```
+		 */
+		@ $mol_mem
+		form() {
+			const obj = new this.$.$mol_form()
+
+			obj.form_fields = () => [
+				this.loginField(),
+				this.passwordField()
+			] as readonly any[]
+			obj.buttons = () => [
+				this.submit()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

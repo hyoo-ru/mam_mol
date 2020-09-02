@@ -4,18 +4,10 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Link $mol_link sub /
-		 * 		<= Link_speck $mol_speck value \β
-		 * 		<= Link_icon $mol_icon_settings
-		 * 	<= String $mol_view sub /
-		 * 		<= String_speck $mol_speck value <= string_speck @ \New
-		 * 		<= String_field $mol_string
-		 * 	<= Button $mol_button_minor sub /
-		 * 		<= Button_speck $mol_speck value <= notification_count 8
-		 * 		<= Button_icon $mol_icon_menu
-		 * 	<= Card $mol_card
-		 * 		content / <= Card_speck $mol_speck
-		 * 		status <= card_status @ \Created
+		 * 	<= Link
+		 * 	<= String
+		 * 	<= Button
+		 * 	<= Card
 		 * ```
 		 */
 		sub() {
@@ -25,25 +17,6 @@ namespace $ {
 				this.Button(),
 				this.Card()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Link $mol_link sub /
-		 * 	<= Link_speck $mol_speck value \β
-		 * 	<= Link_icon $mol_icon_settings
-		 * ```
-		 */
-		@ $mol_mem
-		Link() {
-			const obj = new this.$.$mol_link()
-
-			obj.sub = () => [
-				this.Link_speck(),
-				this.Link_icon()
-			] as readonly any[]
-
-			return obj
 		}
 
 		/**
@@ -74,33 +47,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * String $mol_view sub /
-		 * 	<= String_speck $mol_speck value <= string_speck @ \New
-		 * 	<= String_field $mol_string
+		 * Link $mol_link sub /
+		 * 	<= Link_speck
+		 * 	<= Link_icon
 		 * ```
 		 */
 		@ $mol_mem
-		String() {
-			const obj = new this.$.$mol_view()
+		Link() {
+			const obj = new this.$.$mol_link()
 
 			obj.sub = () => [
-				this.String_speck(),
-				this.String_field()
+				this.Link_speck(),
+				this.Link_icon()
 			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * String_speck $mol_speck value <= string_speck @ \New
-		 * ```
-		 */
-		@ $mol_mem
-		String_speck() {
-			const obj = new this.$.$mol_speck()
-
-			obj.value = () => this.string_speck()
 
 			return obj
 		}
@@ -112,6 +71,20 @@ namespace $ {
 		 */
 		string_speck() {
 			return this.$.$mol_locale.text( '$mol_speck_demo_string_speck' )
+		}
+
+		/**
+		 * ```tree
+		 * String_speck $mol_speck value <= string_speck
+		 * ```
+		 */
+		@ $mol_mem
+		String_speck() {
+			const obj = new this.$.$mol_speck()
+
+			obj.value = () => this.string_speck()
+
+			return obj
 		}
 
 		/**
@@ -128,33 +101,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Button $mol_button_minor sub /
-		 * 	<= Button_speck $mol_speck value <= notification_count 8
-		 * 	<= Button_icon $mol_icon_menu
+		 * String $mol_view sub /
+		 * 	<= String_speck
+		 * 	<= String_field
 		 * ```
 		 */
 		@ $mol_mem
-		Button() {
-			const obj = new this.$.$mol_button_minor()
+		String() {
+			const obj = new this.$.$mol_view()
 
 			obj.sub = () => [
-				this.Button_speck(),
-				this.Button_icon()
+				this.String_speck(),
+				this.String_field()
 			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Button_speck $mol_speck value <= notification_count 8
-		 * ```
-		 */
-		@ $mol_mem
-		Button_speck() {
-			const obj = new this.$.$mol_speck()
-
-			obj.value = () => this.notification_count()
 
 			return obj
 		}
@@ -166,6 +125,20 @@ namespace $ {
 		 */
 		notification_count() {
 			return 8
+		}
+
+		/**
+		 * ```tree
+		 * Button_speck $mol_speck value <= notification_count
+		 * ```
+		 */
+		@ $mol_mem
+		Button_speck() {
+			const obj = new this.$.$mol_speck()
+
+			obj.value = () => this.notification_count()
+
+			return obj
 		}
 
 		/**
@@ -182,19 +155,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Card $mol_card
-		 * 	content / <= Card_speck $mol_speck
-		 * 	status <= card_status @ \Created
+		 * Button $mol_button_minor sub /
+		 * 	<= Button_speck
+		 * 	<= Button_icon
 		 * ```
 		 */
 		@ $mol_mem
-		Card() {
-			const obj = new this.$.$mol_card()
+		Button() {
+			const obj = new this.$.$mol_button_minor()
 
-			obj.content = () => [
-				this.Card_speck()
+			obj.sub = () => [
+				this.Button_speck(),
+				this.Button_icon()
 			] as readonly any[]
-			obj.status = () => this.card_status()
 
 			return obj
 		}
@@ -218,6 +191,25 @@ namespace $ {
 		 */
 		card_status() {
 			return this.$.$mol_locale.text( '$mol_speck_demo_card_status' )
+		}
+
+		/**
+		 * ```tree
+		 * Card $mol_card
+		 * 	content / <= Card_speck
+		 * 	status <= card_status
+		 * ```
+		 */
+		@ $mol_mem
+		Card() {
+			const obj = new this.$.$mol_card()
+
+			obj.content = () => [
+				this.Card_speck()
+			] as readonly any[]
+			obj.status = () => this.card_status()
+
+			return obj
 		}
 	}
 

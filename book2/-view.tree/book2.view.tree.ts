@@ -3,22 +3,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub <= pages /$mol_view
+		 * sub <= pages
 		 * ```
 		 */
 		sub() {
 			return this.pages()
-		}
-
-		/**
-		 * ```tree
-		 * pages /$mol_view
-		 * ```
-		 */
-		pages() {
-			return [
-
-			] as readonly $mol_view[]
 		}
 
 		/**
@@ -40,6 +29,17 @@ namespace $ {
 			const obj = new this.$.$mol_view()
 
 			return obj
+		}
+
+		/**
+		 * ```tree
+		 * pages /$mol_view
+		 * ```
+		 */
+		pages() {
+			return [
+
+			] as readonly $mol_view[]
 		}
 	}
 

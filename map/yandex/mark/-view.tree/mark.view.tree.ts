@@ -21,12 +21,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * box $mol_vector_2d /
-		 * 	<= box_lat $mol_vector_range /
-		 * 		0
-		 * 		0
-		 * 	<= box_lon $mol_vector_range /
-		 * 		0
-		 * 		0
+		 * 	<= box_lat
+		 * 	<= box_lon
 		 * ```
 		 */
 		@ $mol_mem
@@ -37,6 +33,42 @@ namespace $ {
 			)
 
 			return obj
+		}
+
+		/**
+		 * ```tree
+		 * hint \
+		 * ```
+		 */
+		hint() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * title <= address
+		 * ```
+		 */
+		title() {
+			return this.address()
+		}
+
+		/**
+		 * ```tree
+		 * content \
+		 * ```
+		 */
+		content() {
+			return ""
+		}
+
+		/**
+		 * ```tree
+		 * object null
+		 * ```
+		 */
+		object() {
+			return null as any
 		}
 
 		/**
@@ -75,47 +107,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * hint \
-		 * ```
-		 */
-		hint() {
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * title <= address \
-		 * ```
-		 */
-		title() {
-			return this.address()
-		}
-
-		/**
-		 * ```tree
 		 * address \
 		 * ```
 		 */
 		address() {
 			return ""
-		}
-
-		/**
-		 * ```tree
-		 * content \
-		 * ```
-		 */
-		content() {
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * object null
-		 * ```
-		 */
-		object() {
-			return null as any
 		}
 	}
 

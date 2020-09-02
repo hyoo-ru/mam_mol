@@ -14,30 +14,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub <= graph_legends /$mol_view
+		 * sub <= graph_legends
 		 * ```
 		 */
 		sub() {
 			return this.graph_legends()
 		}
 
-		/**
-		 * ```tree
-		 * graph_legends /$mol_view
-		 * ```
-		 */
-		graph_legends() {
-			return [
-
-			] as readonly $mol_view[]
-		}
-
 
 		/**
 		 * ```tree
 		 * Graph_legend!id $mol_view sub /
-		 * 	<= Graph_sample_box!id $mol_view sub / <= Graph_sample!id null
-		 * 	<= Graph_title!id $mol_view sub / <= graph_title!id \
+		 * 	<= Graph_sample_box!id
+		 * 	<= Graph_title!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -54,7 +43,27 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Graph_sample_box!id $mol_view sub / <= Graph_sample!id null
+		 * graph_legends /$mol_view
+		 * ```
+		 */
+		graph_legends() {
+			return [
+
+			] as readonly $mol_view[]
+		}
+
+		/**
+		 * ```tree
+		 * Graph_sample!id null
+		 * ```
+		 */
+		Graph_sample(id: any) {
+			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * Graph_sample_box!id $mol_view sub / <= Graph_sample!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -70,16 +79,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Graph_sample!id null
+		 * graph_title!id \
 		 * ```
 		 */
-		Graph_sample(id: any) {
-			return null as any
+		graph_title(id: any) {
+			return ""
 		}
 
 		/**
 		 * ```tree
-		 * Graph_title!id $mol_view sub / <= graph_title!id \
+		 * Graph_title!id $mol_view sub / <= graph_title!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -91,15 +100,6 @@ namespace $ {
 			] as readonly any[]
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * graph_title!id \
-		 * ```
-		 */
-		graph_title(id: any) {
-			return ""
 		}
 	}
 

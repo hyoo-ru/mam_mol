@@ -5,7 +5,7 @@ namespace $ {
 		 * ```tree
 		 * items / *
 		 * 	title \
-		 * 	Content <= Content $mol_view
+		 * 	Content <= Content
 		 * ```
 		 */
 		items() {
@@ -19,22 +19,8 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Content $mol_view
-		 * ```
-		 */
-		@ $mol_mem
-		Content() {
-			const obj = new this.$.$mol_view()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * rows /$mol_view
-		 * 	<= Switch $mol_switch
-		 * 		value?val <=> current?val \0
-		 * 		options <= switch_options *
+		 * 	<= Switch
 		 * 	<= Content
 		 * ```
 		 */
@@ -47,17 +33,12 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Switch $mol_switch
-		 * 	value?val <=> current?val \0
-		 * 	options <= switch_options *
+		 * Content $mol_view
 		 * ```
 		 */
 		@ $mol_mem
-		Switch() {
-			const obj = new this.$.$mol_switch()
-
-			obj.value = (val?: any) => this.current(val)
-			obj.options = () => this.switch_options()
+		Content() {
+			const obj = new this.$.$mol_view()
 
 			return obj
 		}
@@ -82,6 +63,23 @@ namespace $ {
 			return {
 
 			}
+		}
+
+		/**
+		 * ```tree
+		 * Switch $mol_switch
+		 * 	value?val <=> current?val
+		 * 	options <= switch_options
+		 * ```
+		 */
+		@ $mol_mem
+		Switch() {
+			const obj = new this.$.$mol_switch()
+
+			obj.value = (val?: any) => this.current(val)
+			obj.options = () => this.switch_options()
+
+			return obj
 		}
 	}
 

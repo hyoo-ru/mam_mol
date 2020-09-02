@@ -12,85 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Row $mol_row sub /
-		 * 	<= Name $mol_search
-		 * 		hint <= name_hint @ \Jack Sparrow
-		 * 		query?val <=> name?val \
-		 * 		suggests /
-		 * 			<= suggest1 @ \Jack Sparrow
-		 * 			<= suggest2 @ \Bruce Wayne
-		 * 	<= Count $mol_number
-		 * 		hint <= count_hint @ \Count
-		 * 		value?val <=> count?val null
-		 * 	<= Progress $mol_portion portion <= progress 0.33
-		 * 	<= Publish $mol_check_box
-		 * 		title <= publish_label @ \Shared
-		 * 		checked?val <=> publish?val false
-		 * 	<= Drop $mol_button_minor title <= drop_title @ \Drop
+		 * sub / <= Row
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Row()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Row $mol_row sub /
-		 * 	<= Name $mol_search
-		 * 		hint <= name_hint @ \Jack Sparrow
-		 * 		query?val <=> name?val \
-		 * 		suggests /
-		 * 			<= suggest1 @ \Jack Sparrow
-		 * 			<= suggest2 @ \Bruce Wayne
-		 * 	<= Count $mol_number
-		 * 		hint <= count_hint @ \Count
-		 * 		value?val <=> count?val null
-		 * 	<= Progress $mol_portion portion <= progress 0.33
-		 * 	<= Publish $mol_check_box
-		 * 		title <= publish_label @ \Shared
-		 * 		checked?val <=> publish?val false
-		 * 	<= Drop $mol_button_minor title <= drop_title @ \Drop
-		 * ```
-		 */
-		@ $mol_mem
-		Row() {
-			const obj = new this.$.$mol_row()
-
-			obj.sub = () => [
-				this.Name(),
-				this.Count(),
-				this.Progress(),
-				this.Publish(),
-				this.Drop()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Name $mol_search
-		 * 	hint <= name_hint @ \Jack Sparrow
-		 * 	query?val <=> name?val \
-		 * 	suggests /
-		 * 		<= suggest1 @ \Jack Sparrow
-		 * 		<= suggest2 @ \Bruce Wayne
-		 * ```
-		 */
-		@ $mol_mem
-		Name() {
-			const obj = new this.$.$mol_search()
-
-			obj.hint = () => this.name_hint()
-			obj.query = (val?: any) => this.name(val)
-			obj.suggests = () => [
-				this.suggest1(),
-				this.suggest2()
-			] as readonly any[]
-
-			return obj
 		}
 
 		/**
@@ -133,17 +61,24 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Count $mol_number
-		 * 	hint <= count_hint @ \Count
-		 * 	value?val <=> count?val null
+		 * Name $mol_search
+		 * 	hint <= name_hint
+		 * 	query?val <=> name?val
+		 * 	suggests /
+		 * 		<= suggest1
+		 * 		<= suggest2
 		 * ```
 		 */
 		@ $mol_mem
-		Count() {
-			const obj = new this.$.$mol_number()
+		Name() {
+			const obj = new this.$.$mol_search()
 
-			obj.hint = () => this.count_hint()
-			obj.value = (val?: any) => this.count(val)
+			obj.hint = () => this.name_hint()
+			obj.query = (val?: any) => this.name(val)
+			obj.suggests = () => [
+				this.suggest1(),
+				this.suggest2()
+			] as readonly any[]
 
 			return obj
 		}
@@ -170,14 +105,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Progress $mol_portion portion <= progress 0.33
+		 * Count $mol_number
+		 * 	hint <= count_hint
+		 * 	value?val <=> count?val
 		 * ```
 		 */
 		@ $mol_mem
-		Progress() {
-			const obj = new this.$.$mol_portion()
+		Count() {
+			const obj = new this.$.$mol_number()
 
-			obj.portion = () => this.progress()
+			obj.hint = () => this.count_hint()
+			obj.value = (val?: any) => this.count(val)
 
 			return obj
 		}
@@ -193,17 +131,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Publish $mol_check_box
-		 * 	title <= publish_label @ \Shared
-		 * 	checked?val <=> publish?val false
+		 * Progress $mol_portion portion <= progress
 		 * ```
 		 */
 		@ $mol_mem
-		Publish() {
-			const obj = new this.$.$mol_check_box()
+		Progress() {
+			const obj = new this.$.$mol_portion()
 
-			obj.title = () => this.publish_label()
-			obj.checked = (val?: any) => this.publish(val)
+			obj.portion = () => this.progress()
 
 			return obj
 		}
@@ -230,7 +165,33 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Drop $mol_button_minor title <= drop_title @ \Drop
+		 * Publish $mol_check_box
+		 * 	title <= publish_label
+		 * 	checked?val <=> publish?val
+		 * ```
+		 */
+		@ $mol_mem
+		Publish() {
+			const obj = new this.$.$mol_check_box()
+
+			obj.title = () => this.publish_label()
+			obj.checked = (val?: any) => this.publish(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * drop_title @ \Drop
+		 * ```
+		 */
+		drop_title() {
+			return this.$.$mol_locale.text( '$mol_row_demo_form_drop_title' )
+		}
+
+		/**
+		 * ```tree
+		 * Drop $mol_button_minor title <= drop_title
 		 * ```
 		 */
 		@ $mol_mem
@@ -244,11 +205,27 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * drop_title @ \Drop
+		 * Row $mol_row sub /
+		 * 	<= Name
+		 * 	<= Count
+		 * 	<= Progress
+		 * 	<= Publish
+		 * 	<= Drop
 		 * ```
 		 */
-		drop_title() {
-			return this.$.$mol_locale.text( '$mol_row_demo_form_drop_title' )
+		@ $mol_mem
+		Row() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				this.Name(),
+				this.Count(),
+				this.Progress(),
+				this.Publish(),
+				this.Drop()
+			] as readonly any[]
+
+			return obj
 		}
 	}
 

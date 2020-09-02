@@ -13,20 +13,11 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= This $mol_link sub / <= this_label @ \This page
-		 * 	<= Red $mol_link
-		 * 		arg * color \red
-		 * 		sub / <= red_label @ \Red
-		 * 	<= Green $mol_link
-		 * 		arg * color \green
-		 * 		sub / <= green_label @ \Green
-		 * 	<= Blue $mol_link
-		 * 		arg * color \blue
-		 * 		sub / <= blue_label @ \Blue
-		 * 	<= External $mol_link
-		 * 		uri \http://example.org
-		 * 		title \example.org
-		 * 		hint <= external_hint @ \external link
+		 * 	<= This
+		 * 	<= Red
+		 * 	<= Green
+		 * 	<= Blue
+		 * 	<= External
 		 * ```
 		 */
 		sub() {
@@ -41,7 +32,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * This $mol_link sub / <= this_label @ \This page
+		 * this_label @ \This page
+		 * ```
+		 */
+		this_label() {
+			return this.$.$mol_locale.text( '$mol_link_demo_this_label' )
+		}
+
+		/**
+		 * ```tree
+		 * This $mol_link sub / <= this_label
 		 * ```
 		 */
 		@ $mol_mem
@@ -57,18 +57,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * this_label @ \This page
+		 * red_label @ \Red
 		 * ```
 		 */
-		this_label() {
-			return this.$.$mol_locale.text( '$mol_link_demo_this_label' )
+		red_label() {
+			return this.$.$mol_locale.text( '$mol_link_demo_red_label' )
 		}
 
 		/**
 		 * ```tree
 		 * Red $mol_link
 		 * 	arg * color \red
-		 * 	sub / <= red_label @ \Red
+		 * 	sub / <= red_label
 		 * ```
 		 */
 		@ $mol_mem
@@ -87,18 +87,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * red_label @ \Red
+		 * green_label @ \Green
 		 * ```
 		 */
-		red_label() {
-			return this.$.$mol_locale.text( '$mol_link_demo_red_label' )
+		green_label() {
+			return this.$.$mol_locale.text( '$mol_link_demo_green_label' )
 		}
 
 		/**
 		 * ```tree
 		 * Green $mol_link
 		 * 	arg * color \green
-		 * 	sub / <= green_label @ \Green
+		 * 	sub / <= green_label
 		 * ```
 		 */
 		@ $mol_mem
@@ -117,18 +117,18 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * green_label @ \Green
+		 * blue_label @ \Blue
 		 * ```
 		 */
-		green_label() {
-			return this.$.$mol_locale.text( '$mol_link_demo_green_label' )
+		blue_label() {
+			return this.$.$mol_locale.text( '$mol_link_demo_blue_label' )
 		}
 
 		/**
 		 * ```tree
 		 * Blue $mol_link
 		 * 	arg * color \blue
-		 * 	sub / <= blue_label @ \Blue
+		 * 	sub / <= blue_label
 		 * ```
 		 */
 		@ $mol_mem
@@ -147,11 +147,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * blue_label @ \Blue
+		 * external_hint @ \external link
 		 * ```
 		 */
-		blue_label() {
-			return this.$.$mol_locale.text( '$mol_link_demo_blue_label' )
+		external_hint() {
+			return this.$.$mol_locale.text( '$mol_link_demo_external_hint' )
 		}
 
 		/**
@@ -159,7 +159,7 @@ namespace $ {
 		 * External $mol_link
 		 * 	uri \http://example.org
 		 * 	title \example.org
-		 * 	hint <= external_hint @ \external link
+		 * 	hint <= external_hint
 		 * ```
 		 */
 		@ $mol_mem
@@ -171,15 +171,6 @@ namespace $ {
 			obj.hint = () => this.external_hint()
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * external_hint @ \external link
-		 * ```
-		 */
-		external_hint() {
-			return this.$.$mol_locale.text( '$mol_link_demo_external_hint' )
 		}
 	}
 

@@ -261,14 +261,14 @@ namespace $ {
 		 * ```tree
 		 * event *
 		 * 	^
-		 * 	touchstart?event <=> event_start?event null
-		 * 	touchmove?event <=> event_move?event null
-		 * 	touchend?event <=> event_end?event null
-		 * 	mousedown?event <=> event_start?event null
-		 * 	mousemove?event <=> event_move?event null
-		 * 	mouseup?event <=> event_end?event null
-		 * 	mouseleave?event <=> event_leave?event null
-		 * 	wheel?event <=> event_wheel?event null
+		 * 	touchstart?event <=> event_start?event
+		 * 	touchmove?event <=> event_move?event
+		 * 	touchend?event <=> event_end?event
+		 * 	mousedown?event <=> event_start?event
+		 * 	mousemove?event <=> event_move?event
+		 * 	mouseup?event <=> event_end?event
+		 * 	mouseleave?event <=> event_leave?event
+		 * 	wheel?event <=> event_wheel?event
 		 * ```
 		 */
 		event() {

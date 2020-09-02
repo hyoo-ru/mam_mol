@@ -91,12 +91,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * gap $mol_vector_2d /
-		 * 	<= gap_x $mol_vector_range /
-		 * 		<= gap_left
-		 * 		<= gap_right
-		 * 	<= gap_y $mol_vector_range /
-		 * 		<= gap_bottom
-		 * 		<= gap_top
+		 * 	<= gap_x
+		 * 	<= gap_y
 		 * ```
 		 */
 		@ $mol_mem
@@ -109,50 +105,12 @@ namespace $ {
 			return obj
 		}
 
-		/**
-		 * ```tree
-		 * gap_x $mol_vector_range /
-		 * 	<= gap_left
-		 * 	<= gap_right
-		 * ```
-		 */
-		@ $mol_mem
-		gap_x() {
-			const obj = new this.$.$mol_vector_range(
-				this.gap_left(),
-				this.gap_right()
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * gap_y $mol_vector_range /
-		 * 	<= gap_bottom
-		 * 	<= gap_top
-		 * ```
-		 */
-		@ $mol_mem
-		gap_y() {
-			const obj = new this.$.$mol_vector_range(
-				this.gap_bottom(),
-				this.gap_top()
-			)
-
-			return obj
-		}
-
 
 		/**
 		 * ```tree
 		 * shift_limit $mol_vector_2d /
-		 * 	<= shift_limit_x $mol_vector_range /
-		 * 		0
-		 * 		0
-		 * 	<= shift_limit_y $mol_vector_range /
-		 * 		0
-		 * 		0
+		 * 	<= shift_limit_x
+		 * 	<= shift_limit_y
 		 * ```
 		 */
 		@ $mol_mem
@@ -160,40 +118,6 @@ namespace $ {
 			const obj = new this.$.$mol_vector_2d(
 				this.shift_limit_x(),
 				this.shift_limit_y()
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * shift_limit_x $mol_vector_range /
-		 * 	0
-		 * 	0
-		 * ```
-		 */
-		@ $mol_mem
-		shift_limit_x() {
-			const obj = new this.$.$mol_vector_range(
-				0,
-				0
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * shift_limit_y $mol_vector_range /
-		 * 	0
-		 * 	0
-		 * ```
-		 */
-		@ $mol_mem
-		shift_limit_y() {
-			const obj = new this.$.$mol_vector_range(
-				0,
-				0
 			)
 
 			return obj
@@ -232,12 +156,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * scale_limit $mol_vector_2d /
-		 * 	<= scale_limit_x $mol_vector_range /
-		 * 		0
-		 * 		Infinity
-		 * 	<= scale_limit_y $mol_vector_range /
-		 * 		0
-		 * 		Infinity
+		 * 	<= scale_limit_x
+		 * 	<= scale_limit_y
 		 * ```
 		 */
 		@ $mol_mem
@@ -245,40 +165,6 @@ namespace $ {
 			const obj = new this.$.$mol_vector_2d(
 				this.scale_limit_x(),
 				this.scale_limit_y()
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * scale_limit_x $mol_vector_range /
-		 * 	0
-		 * 	Infinity
-		 * ```
-		 */
-		@ $mol_mem
-		scale_limit_x() {
-			const obj = new this.$.$mol_vector_range(
-				0,
-				Infinity
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * scale_limit_y $mol_vector_range /
-		 * 	0
-		 * 	Infinity
-		 * ```
-		 */
-		@ $mol_mem
-		scale_limit_y() {
-			const obj = new this.$.$mol_vector_range(
-				0,
-				Infinity
 			)
 
 			return obj
@@ -373,12 +259,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * dimensions_viewport $mol_vector_2d /
-		 * 	<= dimensions_viewport_x $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
-		 * 	<= dimensions_viewport_y $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
+		 * 	<= dimensions_viewport_x
+		 * 	<= dimensions_viewport_y
 		 * ```
 		 */
 		@ $mol_mem
@@ -386,6 +268,193 @@ namespace $ {
 			const obj = new this.$.$mol_vector_2d(
 				this.dimensions_viewport_x(),
 				this.dimensions_viewport_y()
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * dimensions $mol_vector_2d /
+		 * 	<= dimensions_x
+		 * 	<= dimensions_y
+		 * ```
+		 */
+		@ $mol_mem
+		dimensions() {
+			const obj = new this.$.$mol_vector_2d(
+				this.dimensions_x(),
+				this.dimensions_y()
+			)
+
+			return obj
+		}
+
+
+		/**
+		 * ```tree
+		 * sub <= graphs_sorted
+		 * ```
+		 */
+		sub() {
+			return this.graphs_sorted()
+		}
+
+		/**
+		 * ```tree
+		 * graphs_colored <= graphs_positioned
+		 * ```
+		 */
+		graphs_colored() {
+			return this.graphs_positioned()
+		}
+
+		/**
+		 * ```tree
+		 * cursor_position?val $mol_vector_2d /
+		 * 	NaN
+		 * 	NaN
+		 * ```
+		 */
+		@ $mol_mem
+		cursor_position(val?: any) {
+			if ( val !== undefined ) return val
+			const obj = new this.$.$mol_vector_2d(
+				NaN,
+				NaN
+			)
+
+			return obj
+		}
+
+
+		/**
+		 * ```tree
+		 * plugins /
+		 * 	^
+		 * 	<= Meter
+		 * 	<= Touch
+		 * ```
+		 */
+		plugins() {
+			return [
+				...super.plugins(),
+				this.Meter(),
+				this.Touch()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * event *
+		 * 	^
+		 * 	dblclick?event <=> reset?event
+		 * ```
+		 */
+		event() {
+			return {
+				...super.event(),
+				dblclick: (event?: any) => this.reset(event)
+			}
+		}
+
+		/**
+		 * ```tree
+		 * gap_x $mol_vector_range /
+		 * 	<= gap_left
+		 * 	<= gap_right
+		 * ```
+		 */
+		@ $mol_mem
+		gap_x() {
+			const obj = new this.$.$mol_vector_range(
+				this.gap_left(),
+				this.gap_right()
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * gap_y $mol_vector_range /
+		 * 	<= gap_bottom
+		 * 	<= gap_top
+		 * ```
+		 */
+		@ $mol_mem
+		gap_y() {
+			const obj = new this.$.$mol_vector_range(
+				this.gap_bottom(),
+				this.gap_top()
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * shift_limit_x $mol_vector_range /
+		 * 	0
+		 * 	0
+		 * ```
+		 */
+		@ $mol_mem
+		shift_limit_x() {
+			const obj = new this.$.$mol_vector_range(
+				0,
+				0
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * shift_limit_y $mol_vector_range /
+		 * 	0
+		 * 	0
+		 * ```
+		 */
+		@ $mol_mem
+		shift_limit_y() {
+			const obj = new this.$.$mol_vector_range(
+				0,
+				0
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * scale_limit_x $mol_vector_range /
+		 * 	0
+		 * 	Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		scale_limit_x() {
+			const obj = new this.$.$mol_vector_range(
+				0,
+				Infinity
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * scale_limit_y $mol_vector_range /
+		 * 	0
+		 * 	Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		scale_limit_y() {
+			const obj = new this.$.$mol_vector_range(
+				0,
+				Infinity
 			)
 
 			return obj
@@ -427,27 +496,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * dimensions $mol_vector_2d /
-		 * 	<= dimensions_x $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
-		 * 	<= dimensions_y $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
-		 * ```
-		 */
-		@ $mol_mem
-		dimensions() {
-			const obj = new this.$.$mol_vector_2d(
-				this.dimensions_x(),
-				this.dimensions_y()
-			)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * dimensions_x $mol_vector_range /
 		 * 	Infinity
 		 * 	-Infinity
@@ -480,16 +528,6 @@ namespace $ {
 			return obj
 		}
 
-
-		/**
-		 * ```tree
-		 * sub <= graphs_sorted /$mol_svg
-		 * ```
-		 */
-		sub() {
-			return this.graphs_sorted()
-		}
-
 		/**
 		 * ```tree
 		 * graphs_sorted /$mol_svg
@@ -499,24 +537,6 @@ namespace $ {
 			return [
 
 			] as readonly $mol_svg[]
-		}
-
-		/**
-		 * ```tree
-		 * graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
-		 * ```
-		 */
-		graphs_colored() {
-			return this.graphs_positioned()
-		}
-
-		/**
-		 * ```tree
-		 * graphs_positioned <= graphs /$mol_plot_graph
-		 * ```
-		 */
-		graphs_positioned() {
-			return this.graphs()
 		}
 
 		/**
@@ -532,42 +552,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * cursor_position?val $mol_vector_2d /
-		 * 	NaN
-		 * 	NaN
+		 * graphs_positioned <= graphs
 		 * ```
 		 */
-		@ $mol_mem
-		cursor_position(val?: any) {
-			if ( val !== undefined ) return val
-			const obj = new this.$.$mol_vector_2d(
-				NaN,
-				NaN
-			)
-
-			return obj
-		}
-
-
-		/**
-		 * ```tree
-		 * plugins /
-		 * 	^
-		 * 	<= Meter $mol_meter
-		 * 		width => width
-		 * 		height => height
-		 * 	<= Touch $mol_touch
-		 * 		zoom?val <=> scale_x?val
-		 * 		pan?val <=> shift?val
-		 * 		pos?val <=> cursor_position?val
-		 * ```
-		 */
-		plugins() {
-			return [
-				...super.plugins(),
-				this.Meter(),
-				this.Touch()
-			] as readonly any[]
+		graphs_positioned() {
+			return this.graphs()
 		}
 
 		/**
@@ -619,20 +608,6 @@ namespace $ {
 			obj.pos = (val?: any) => this.cursor_position(val)
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * event *
-		 * 	^
-		 * 	dblclick?event <=> reset?event null
-		 * ```
-		 */
-		event() {
-			return {
-				...super.event(),
-				dblclick: (event?: any) => this.reset(event)
-			}
 		}
 
 		/**

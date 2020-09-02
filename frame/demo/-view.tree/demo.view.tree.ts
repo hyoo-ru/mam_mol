@@ -12,7 +12,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Frame $mol_frame uri \https://mol.js.org/
+		 * sub / <= Frame
 		 * ```
 		 */
 		sub() {

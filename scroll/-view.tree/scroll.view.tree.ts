@@ -25,9 +25,9 @@ namespace $ {
 		 * ```tree
 		 * field *
 		 * 	^
-		 * 	scrollTop <= scroll_top?val 0
-		 * 	scrollLeft <= scroll_left?val 0
-		 * 	tabIndex <= tabindex -1
+		 * 	scrollTop <= scroll_top?val
+		 * 	scrollLeft <= scroll_left?val
+		 * 	tabIndex <= tabindex
 		 * ```
 		 */
 		field() {
@@ -36,6 +36,20 @@ namespace $ {
 				scrollTop: this.scroll_top(),
 				scrollLeft: this.scroll_left(),
 				tabIndex: this.tabindex()
+			}
+		}
+
+		/**
+		 * ```tree
+		 * event *
+		 * 	^
+		 * 	scroll?event <=> event_scroll?event
+		 * ```
+		 */
+		event() {
+			return {
+				...super.event(),
+				scroll: (event?: any) => this.event_scroll(event)
 			}
 		}
 
@@ -68,20 +82,6 @@ namespace $ {
 		 */
 		tabindex() {
 			return -1
-		}
-
-		/**
-		 * ```tree
-		 * event *
-		 * 	^
-		 * 	scroll?event <=> event_scroll?event null
-		 * ```
-		 */
-		event() {
-			return {
-				...super.event(),
-				scroll: (event?: any) => this.event_scroll(event)
-			}
 		}
 
 		/**

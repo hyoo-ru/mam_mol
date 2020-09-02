@@ -35,11 +35,25 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub <= rows /
+		 * sub <= rows
 		 * ```
 		 */
 		sub() {
 			return this.rows()
+		}
+
+		/**
+		 * ```tree
+		 * Row!index $mol_perf_uibench_table_row state <= row_state!index
+		 * ```
+		 */
+		@ $mol_mem_key
+		Row(index: any) {
+			const obj = new this.$.$mol_perf_uibench_table_row()
+
+			obj.state = () => this.row_state(index)
+
+			return obj
 		}
 
 		/**
@@ -51,20 +65,6 @@ namespace $ {
 			return [
 
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Row!index $mol_perf_uibench_table_row state <= row_state!index null
-		 * ```
-		 */
-		@ $mol_mem_key
-		Row(index: any) {
-			const obj = new this.$.$mol_perf_uibench_table_row()
-
-			obj.state = () => this.row_state(index)
-
-			return obj
 		}
 
 		/**
@@ -110,8 +110,8 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	class <= classes \TableRow
-		 * 	data-id <= id 0
+		 * 	class <= classes
+		 * 	data-id <= id
 		 * ```
 		 */
 		attr() {
@@ -120,6 +120,34 @@ namespace $ {
 				class: this.classes(),
 				"data-id": this.id()
 			}
+		}
+
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Head
+		 * 	<= cells
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Head(),
+				this.cells()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Cell!index $mol_perf_uibench_table_cell text <= cell_state!index
+		 * ```
+		 */
+		@ $mol_mem_key
+		Cell(index: any) {
+			const obj = new this.$.$mol_perf_uibench_table_cell()
+
+			obj.text = () => this.cell_state(index)
+
+			return obj
 		}
 
 		/**
@@ -142,21 +170,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Head $mol_perf_uibench_table_cell text <= head_text \
-		 * 	<= cells /
+		 * head_text \
 		 * ```
 		 */
-		sub() {
-			return [
-				this.Head(),
-				this.cells()
-			] as readonly any[]
+		head_text() {
+			return ""
 		}
 
 		/**
 		 * ```tree
-		 * Head $mol_perf_uibench_table_cell text <= head_text \
+		 * Head $mol_perf_uibench_table_cell text <= head_text
 		 * ```
 		 */
 		@ $mol_mem
@@ -170,15 +193,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * head_text \
-		 * ```
-		 */
-		head_text() {
-			return ""
-		}
-
-		/**
-		 * ```tree
 		 * cells /
 		 * ```
 		 */
@@ -186,20 +200,6 @@ namespace $ {
 			return [
 
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Cell!index $mol_perf_uibench_table_cell text <= cell_state!index null
-		 * ```
-		 */
-		@ $mol_mem_key
-		Cell(index: any) {
-			const obj = new this.$.$mol_perf_uibench_table_cell()
-
-			obj.text = () => this.cell_state(index)
-
-			return obj
 		}
 
 		/**
@@ -241,7 +241,7 @@ namespace $ {
 		 * ```tree
 		 * event *
 		 * 	^
-		 * 	click?val <=> click?val null
+		 * 	click?val <=> click?val
 		 * ```
 		 */
 		event() {
@@ -253,6 +253,17 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * sub / <= text
+		 * ```
+		 */
+		sub() {
+			return [
+				this.text()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
 		 * click?val null
 		 * ```
 		 */
@@ -260,17 +271,6 @@ namespace $ {
 		click(val?: any) {
 			if ( val !== undefined ) return val
 			return null as any
-		}
-
-		/**
-		 * ```tree
-		 * sub / <= text \
-		 * ```
-		 */
-		sub() {
-			return [
-				this.text()
-			] as readonly any[]
 		}
 
 		/**

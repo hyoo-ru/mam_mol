@@ -23,7 +23,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * style * transform <= transform \
+		 * style * transform <= transform
 		 * ```
 		 */
 		style() {
@@ -34,16 +34,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * transform \
-		 * ```
-		 */
-		transform() {
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * sub / <= Dots $mol_view sub <= dots /
+		 * sub / <= Dots
 		 * ```
 		 */
 		sub() {
@@ -54,16 +45,32 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Dots $mol_view sub <= dots /
+		 * Dot!id $mol_perf_sierp_dot
+		 * 	left <= left!id
+		 * 	top <= top!id
+		 * 	size <= size!id
+		 * 	text <= text
 		 * ```
 		 */
-		@ $mol_mem
-		Dots() {
-			const obj = new this.$.$mol_view()
+		@ $mol_mem_key
+		Dot(id: any) {
+			const obj = new this.$.$mol_perf_sierp_dot()
 
-			obj.sub = () => this.dots()
+			obj.left = () => this.left(id)
+			obj.top = () => this.top(id)
+			obj.size = () => this.size(id)
+			obj.text = () => this.text()
 
 			return obj
+		}
+
+		/**
+		 * ```tree
+		 * transform \
+		 * ```
+		 */
+		transform() {
+			return ""
 		}
 
 		/**
@@ -79,21 +86,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Dot!id $mol_perf_sierp_dot
-		 * 	left <= left!id 0
-		 * 	top <= top!id 0
-		 * 	size <= size!id 25
-		 * 	text <= text \
+		 * Dots $mol_view sub <= dots
 		 * ```
 		 */
-		@ $mol_mem_key
-		Dot(id: any) {
-			const obj = new this.$.$mol_perf_sierp_dot()
+		@ $mol_mem
+		Dots() {
+			const obj = new this.$.$mol_view()
 
-			obj.left = () => this.left(id)
-			obj.top = () => this.top(id)
-			obj.size = () => this.size(id)
-			obj.text = () => this.text()
+			obj.sub = () => this.dots()
 
 			return obj
 		}
@@ -168,7 +168,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= text \
+		 * sub / <= text
 		 * ```
 		 */
 		sub() {
@@ -179,23 +179,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * text \
-		 * ```
-		 */
-		text() {
-			return ""
-		}
-
-		/**
-		 * ```tree
 		 * style *
-		 * 	width <= width <= size
-		 * 	height <= height <= size
-		 * 	left <= left 0
-		 * 	top <= top 0
-		 * 	borderRadius <= radius <= size
+		 * 	width <= width
+		 * 	height <= height
+		 * 	left <= left
+		 * 	top <= top
+		 * 	borderRadius <= radius
 		 * 	lineHeight <= size_px
-		 * 	background <= color \
+		 * 	background <= color
 		 * ```
 		 */
 		style() {
@@ -208,6 +199,31 @@ namespace $ {
 				lineHeight: this.size_px(),
 				background: this.color()
 			}
+		}
+
+		/**
+		 * ```tree
+		 * event *
+		 * 	^
+		 * 	mouseenter?val <=> enter?val
+		 * 	mouseleave?val <=> leave?val
+		 * ```
+		 */
+		event() {
+			return {
+				...super.event(),
+				mouseenter: (val?: any) => this.enter(val),
+				mouseleave: (val?: any) => this.leave(val)
+			}
+		}
+
+		/**
+		 * ```tree
+		 * text \
+		 * ```
+		 */
+		text() {
+			return ""
 		}
 
 		/**
@@ -262,22 +278,6 @@ namespace $ {
 		 */
 		color() {
 			return ""
-		}
-
-		/**
-		 * ```tree
-		 * event *
-		 * 	^
-		 * 	mouseenter?val <=> enter?val null
-		 * 	mouseleave?val <=> leave?val null
-		 * ```
-		 */
-		event() {
-			return {
-				...super.event(),
-				mouseenter: (val?: any) => this.enter(val),
-				mouseleave: (val?: any) => this.leave(val)
-			}
 		}
 
 		/**

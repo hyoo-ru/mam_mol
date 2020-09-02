@@ -12,112 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Chart $mol_chart graphs /
-		 * 	<= Plan $mol_plot_bar
-		 * 		title <= plan_title @ \Plan
-		 * 		series_y <= plan /
-		 * 			10
-		 * 			20
-		 * 			30
-		 * 			40
-		 * 	<= Fact $mol_plot_group
-		 * 		title <= fact_title @ \Fact
-		 * 		series_y <= facts /
-		 * 			5
-		 * 			10
-		 * 			30
-		 * 		graphs /
-		 * 			<= Fact_line $mol_plot_line
-		 * 			<= Fact_dots $mol_plot_dot
-		 * 	<= Vert_ruler $mol_plot_ruler_vert title <= vert_title @ \pcs
-		 * 	<= Marker_hor $mol_plot_mark_hor
-		 * 		title <= marker_hor_title @ \Months
-		 * 		labels <= months /string
-		 * 			\January
-		 * 			\February
-		 * 			\March
-		 * 			\April
-		 * 	<= Marker_cross $mol_plot_mark_cross
-		 * 		labels <= months
-		 * 		graphs /
-		 * 			<= Plan
-		 * 			<= Fact_dots
+		 * sub / <= Chart
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Chart()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Chart $mol_chart graphs /
-		 * 	<= Plan $mol_plot_bar
-		 * 		title <= plan_title @ \Plan
-		 * 		series_y <= plan /
-		 * 			10
-		 * 			20
-		 * 			30
-		 * 			40
-		 * 	<= Fact $mol_plot_group
-		 * 		title <= fact_title @ \Fact
-		 * 		series_y <= facts /
-		 * 			5
-		 * 			10
-		 * 			30
-		 * 		graphs /
-		 * 			<= Fact_line $mol_plot_line
-		 * 			<= Fact_dots $mol_plot_dot
-		 * 	<= Vert_ruler $mol_plot_ruler_vert title <= vert_title @ \pcs
-		 * 	<= Marker_hor $mol_plot_mark_hor
-		 * 		title <= marker_hor_title @ \Months
-		 * 		labels <= months /string
-		 * 			\January
-		 * 			\February
-		 * 			\March
-		 * 			\April
-		 * 	<= Marker_cross $mol_plot_mark_cross
-		 * 		labels <= months
-		 * 		graphs /
-		 * 			<= Plan
-		 * 			<= Fact_dots
-		 * ```
-		 */
-		@ $mol_mem
-		Chart() {
-			const obj = new this.$.$mol_chart()
-
-			obj.graphs = () => [
-				this.Plan(),
-				this.Fact(),
-				this.Vert_ruler(),
-				this.Marker_hor(),
-				this.Marker_cross()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Plan $mol_plot_bar
-		 * 	title <= plan_title @ \Plan
-		 * 	series_y <= plan /
-		 * 		10
-		 * 		20
-		 * 		30
-		 * 		40
-		 * ```
-		 */
-		@ $mol_mem
-		Plan() {
-			const obj = new this.$.$mol_plot_bar()
-
-			obj.title = () => this.plan_title()
-			obj.series_y = () => this.plan()
-
-			return obj
 		}
 
 		/**
@@ -149,27 +50,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Fact $mol_plot_group
-		 * 	title <= fact_title @ \Fact
-		 * 	series_y <= facts /
-		 * 		5
-		 * 		10
-		 * 		30
-		 * 	graphs /
-		 * 		<= Fact_line $mol_plot_line
-		 * 		<= Fact_dots $mol_plot_dot
+		 * Plan $mol_plot_bar
+		 * 	title <= plan_title
+		 * 	series_y <= plan
 		 * ```
 		 */
 		@ $mol_mem
-		Fact() {
-			const obj = new this.$.$mol_plot_group()
+		Plan() {
+			const obj = new this.$.$mol_plot_bar()
 
-			obj.title = () => this.fact_title()
-			obj.series_y = () => this.facts()
-			obj.graphs = () => [
-				this.Fact_line(),
-				this.Fact_dots()
-			] as readonly any[]
+			obj.title = () => this.plan_title()
+			obj.series_y = () => this.plan()
 
 			return obj
 		}
@@ -225,14 +116,24 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Vert_ruler $mol_plot_ruler_vert title <= vert_title @ \pcs
+		 * Fact $mol_plot_group
+		 * 	title <= fact_title
+		 * 	series_y <= facts
+		 * 	graphs /
+		 * 		<= Fact_line
+		 * 		<= Fact_dots
 		 * ```
 		 */
 		@ $mol_mem
-		Vert_ruler() {
-			const obj = new this.$.$mol_plot_ruler_vert()
+		Fact() {
+			const obj = new this.$.$mol_plot_group()
 
-			obj.title = () => this.vert_title()
+			obj.title = () => this.fact_title()
+			obj.series_y = () => this.facts()
+			obj.graphs = () => [
+				this.Fact_line(),
+				this.Fact_dots()
+			] as readonly any[]
 
 			return obj
 		}
@@ -248,21 +149,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Marker_hor $mol_plot_mark_hor
-		 * 	title <= marker_hor_title @ \Months
-		 * 	labels <= months /string
-		 * 		\January
-		 * 		\February
-		 * 		\March
-		 * 		\April
+		 * Vert_ruler $mol_plot_ruler_vert title <= vert_title
 		 * ```
 		 */
 		@ $mol_mem
-		Marker_hor() {
-			const obj = new this.$.$mol_plot_mark_hor()
+		Vert_ruler() {
+			const obj = new this.$.$mol_plot_ruler_vert()
 
-			obj.title = () => this.marker_hor_title()
-			obj.labels = () => this.months()
+			obj.title = () => this.vert_title()
 
 			return obj
 		}
@@ -296,6 +190,23 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Marker_hor $mol_plot_mark_hor
+		 * 	title <= marker_hor_title
+		 * 	labels <= months
+		 * ```
+		 */
+		@ $mol_mem
+		Marker_hor() {
+			const obj = new this.$.$mol_plot_mark_hor()
+
+			obj.title = () => this.marker_hor_title()
+			obj.labels = () => this.months()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * Marker_cross $mol_plot_mark_cross
 		 * 	labels <= months
 		 * 	graphs /
@@ -311,6 +222,31 @@ namespace $ {
 			obj.graphs = () => [
 				this.Plan(),
 				this.Fact_dots()
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Chart $mol_chart graphs /
+		 * 	<= Plan
+		 * 	<= Fact
+		 * 	<= Vert_ruler
+		 * 	<= Marker_hor
+		 * 	<= Marker_cross
+		 * ```
+		 */
+		@ $mol_mem
+		Chart() {
+			const obj = new this.$.$mol_chart()
+
+			obj.graphs = () => [
+				this.Plan(),
+				this.Fact(),
+				this.Vert_ruler(),
+				this.Marker_hor(),
+				this.Marker_cross()
 			] as readonly any[]
 
 			return obj

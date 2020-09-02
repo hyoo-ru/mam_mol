@@ -13,21 +13,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Friends $mol_select_list
-		 * 		value?val <=> friends?val /
-		 * 		dictionary <= suggestions *
-		 * 			jocker \Jocker
-		 * 			harley \Harley Quinn
-		 * 			penguin \Penguin
-		 * 			riddler \Riddler
-		 * 			bane \Bane
-		 * 			freeze \Mister Freeze
-		 * 			clay \Clayface
-		 * 			mask \Black Mask
-		 * 	<= Friends_disabled $mol_select_list
-		 * 		value?val <=> friends?val /
-		 * 		dictionary <= suggestions
-		 * 		enabled false
+		 * 	<= Friends
+		 * 	<= Friends_disabled
 		 * ```
 		 */
 		sub() {
@@ -35,31 +22,6 @@ namespace $ {
 				this.Friends(),
 				this.Friends_disabled()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Friends $mol_select_list
-		 * 	value?val <=> friends?val /
-		 * 	dictionary <= suggestions *
-		 * 		jocker \Jocker
-		 * 		harley \Harley Quinn
-		 * 		penguin \Penguin
-		 * 		riddler \Riddler
-		 * 		bane \Bane
-		 * 		freeze \Mister Freeze
-		 * 		clay \Clayface
-		 * 		mask \Black Mask
-		 * ```
-		 */
-		@ $mol_mem
-		Friends() {
-			const obj = new this.$.$mol_select_list()
-
-			obj.value = (val?: any) => this.friends(val)
-			obj.dictionary = () => this.suggestions()
-
-			return obj
 		}
 
 		/**
@@ -103,8 +65,25 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Friends $mol_select_list
+		 * 	value?val <=> friends?val
+		 * 	dictionary <= suggestions
+		 * ```
+		 */
+		@ $mol_mem
+		Friends() {
+			const obj = new this.$.$mol_select_list()
+
+			obj.value = (val?: any) => this.friends(val)
+			obj.dictionary = () => this.suggestions()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * Friends_disabled $mol_select_list
-		 * 	value?val <=> friends?val /
+		 * 	value?val <=> friends?val
 		 * 	dictionary <= suggestions
 		 * 	enabled false
 		 * ```

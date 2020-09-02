@@ -3,7 +3,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub <= graphs_enriched <= graphs /$mol_plot_graph
+		 * sub <= graphs_enriched
 		 * ```
 		 */
 		sub() {
@@ -12,11 +12,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * graphs_enriched <= graphs /$mol_plot_graph
+		 * Sample $mol_plot_graph_sample sub <= graph_samples
 		 * ```
 		 */
-		graphs_enriched() {
-			return this.graphs()
+		@ $mol_mem
+		Sample() {
+			const obj = new this.$.$mol_plot_graph_sample()
+
+			obj.sub = () => this.graph_samples()
+
+			return obj
 		}
 
 		/**
@@ -32,16 +37,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Sample $mol_plot_graph_sample sub <= graph_samples /$mol_view
+		 * graphs_enriched <= graphs
 		 * ```
 		 */
-		@ $mol_mem
-		Sample() {
-			const obj = new this.$.$mol_plot_graph_sample()
-
-			obj.sub = () => this.graph_samples()
-
-			return obj
+		graphs_enriched() {
+			return this.graphs()
 		}
 
 		/**

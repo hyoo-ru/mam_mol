@@ -21,175 +21,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Chart $mol_chart graphs <= graphs /
-		 * 	<= Receipts $mol_plot_bar
-		 * 		title <= receipts_title @ \Receipts
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_2_y /number
-		 * 	<= Receipts_confirmed $mol_plot_bar
-		 * 		title <= receipts_confirmed_title @ \Confirmed receipts
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_3_y /number
-		 * 	<= Maximum $mol_plot_dot
-		 * 		title <= maximum_title @ \Maximum
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_1_y /number
-		 * 	<= Waste $mol_plot_line
-		 * 		type \dashed
-		 * 		title <= waste_title @ \Waste
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_4_y /number
-		 * 	<= Purchases $mol_plot_group
-		 * 		title <= purchases_title @ \Purchases
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_5_y /number
-		 * 		graphs /
-		 * 			<= Purchases_fill $mol_plot_fill
-		 * 			<= Purchases_line $mol_plot_line
-		 * 			<= Purchases_dots $mol_plot_dot
-		 * 	<= Taxes $mol_plot_group
-		 * 		title <= taxes_title @ \Taxes
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_6_y /number
-		 * 		graphs /
-		 * 			<= Taxes_fill $mol_plot_fill
-		 * 			<= Taxes_line $mol_plot_line type \dashed
-		 * 			<= Taxes_dots $mol_plot_dot
-		 * 	<= Energy $mol_plot_ruler_vert title <= energy_title @ \kJ
-		 * 	<= Day $mol_plot_mark_hor
-		 * 		title <= day_title @ \Day
-		 * 		series_x <= series_x /number
+		 * sub / <= Chart
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Chart()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Chart $mol_chart graphs <= graphs /
-		 * 	<= Receipts $mol_plot_bar
-		 * 		title <= receipts_title @ \Receipts
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_2_y /number
-		 * 	<= Receipts_confirmed $mol_plot_bar
-		 * 		title <= receipts_confirmed_title @ \Confirmed receipts
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_3_y /number
-		 * 	<= Maximum $mol_plot_dot
-		 * 		title <= maximum_title @ \Maximum
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_1_y /number
-		 * 	<= Waste $mol_plot_line
-		 * 		type \dashed
-		 * 		title <= waste_title @ \Waste
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_4_y /number
-		 * 	<= Purchases $mol_plot_group
-		 * 		title <= purchases_title @ \Purchases
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_5_y /number
-		 * 		graphs /
-		 * 			<= Purchases_fill $mol_plot_fill
-		 * 			<= Purchases_line $mol_plot_line
-		 * 			<= Purchases_dots $mol_plot_dot
-		 * 	<= Taxes $mol_plot_group
-		 * 		title <= taxes_title @ \Taxes
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_6_y /number
-		 * 		graphs /
-		 * 			<= Taxes_fill $mol_plot_fill
-		 * 			<= Taxes_line $mol_plot_line type \dashed
-		 * 			<= Taxes_dots $mol_plot_dot
-		 * 	<= Energy $mol_plot_ruler_vert title <= energy_title @ \kJ
-		 * 	<= Day $mol_plot_mark_hor
-		 * 		title <= day_title @ \Day
-		 * 		series_x <= series_x /number
-		 * ```
-		 */
-		@ $mol_mem
-		Chart() {
-			const obj = new this.$.$mol_chart()
-
-			obj.graphs = () => this.graphs()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * graphs /
-		 * 	<= Receipts $mol_plot_bar
-		 * 		title <= receipts_title @ \Receipts
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_2_y /number
-		 * 	<= Receipts_confirmed $mol_plot_bar
-		 * 		title <= receipts_confirmed_title @ \Confirmed receipts
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_3_y /number
-		 * 	<= Maximum $mol_plot_dot
-		 * 		title <= maximum_title @ \Maximum
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_1_y /number
-		 * 	<= Waste $mol_plot_line
-		 * 		type \dashed
-		 * 		title <= waste_title @ \Waste
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_4_y /number
-		 * 	<= Purchases $mol_plot_group
-		 * 		title <= purchases_title @ \Purchases
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_5_y /number
-		 * 		graphs /
-		 * 			<= Purchases_fill $mol_plot_fill
-		 * 			<= Purchases_line $mol_plot_line
-		 * 			<= Purchases_dots $mol_plot_dot
-		 * 	<= Taxes $mol_plot_group
-		 * 		title <= taxes_title @ \Taxes
-		 * 		series_x <= series_x /number
-		 * 		series_y <= series_6_y /number
-		 * 		graphs /
-		 * 			<= Taxes_fill $mol_plot_fill
-		 * 			<= Taxes_line $mol_plot_line type \dashed
-		 * 			<= Taxes_dots $mol_plot_dot
-		 * 	<= Energy $mol_plot_ruler_vert title <= energy_title @ \kJ
-		 * 	<= Day $mol_plot_mark_hor
-		 * 		title <= day_title @ \Day
-		 * 		series_x <= series_x /number
-		 * ```
-		 */
-		graphs() {
-			return [
-				this.Receipts(),
-				this.Receipts_confirmed(),
-				this.Maximum(),
-				this.Waste(),
-				this.Purchases(),
-				this.Taxes(),
-				this.Energy(),
-				this.Day()
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Receipts $mol_plot_bar
-		 * 	title <= receipts_title @ \Receipts
-		 * 	series_x <= series_x /number
-		 * 	series_y <= series_2_y /number
-		 * ```
-		 */
-		@ $mol_mem
-		Receipts() {
-			const obj = new this.$.$mol_plot_bar()
-
-			obj.title = () => this.receipts_title()
-			obj.series_x = () => this.series_x()
-			obj.series_y = () => this.series_2_y()
-
-			return obj
 		}
 
 		/**
@@ -225,19 +63,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Receipts_confirmed $mol_plot_bar
-		 * 	title <= receipts_confirmed_title @ \Confirmed receipts
-		 * 	series_x <= series_x /number
-		 * 	series_y <= series_3_y /number
+		 * Receipts $mol_plot_bar
+		 * 	title <= receipts_title
+		 * 	series_x <= series_x
+		 * 	series_y <= series_2_y
 		 * ```
 		 */
 		@ $mol_mem
-		Receipts_confirmed() {
+		Receipts() {
 			const obj = new this.$.$mol_plot_bar()
 
-			obj.title = () => this.receipts_confirmed_title()
+			obj.title = () => this.receipts_title()
 			obj.series_x = () => this.series_x()
-			obj.series_y = () => this.series_3_y()
+			obj.series_y = () => this.series_2_y()
 
 			return obj
 		}
@@ -264,19 +102,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Maximum $mol_plot_dot
-		 * 	title <= maximum_title @ \Maximum
-		 * 	series_x <= series_x /number
-		 * 	series_y <= series_1_y /number
+		 * Receipts_confirmed $mol_plot_bar
+		 * 	title <= receipts_confirmed_title
+		 * 	series_x <= series_x
+		 * 	series_y <= series_3_y
 		 * ```
 		 */
 		@ $mol_mem
-		Maximum() {
-			const obj = new this.$.$mol_plot_dot()
+		Receipts_confirmed() {
+			const obj = new this.$.$mol_plot_bar()
 
-			obj.title = () => this.maximum_title()
+			obj.title = () => this.receipts_confirmed_title()
 			obj.series_x = () => this.series_x()
-			obj.series_y = () => this.series_1_y()
+			obj.series_y = () => this.series_3_y()
 
 			return obj
 		}
@@ -303,21 +141,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Waste $mol_plot_line
-		 * 	type \dashed
-		 * 	title <= waste_title @ \Waste
-		 * 	series_x <= series_x /number
-		 * 	series_y <= series_4_y /number
+		 * Maximum $mol_plot_dot
+		 * 	title <= maximum_title
+		 * 	series_x <= series_x
+		 * 	series_y <= series_1_y
 		 * ```
 		 */
 		@ $mol_mem
-		Waste() {
-			const obj = new this.$.$mol_plot_line()
+		Maximum() {
+			const obj = new this.$.$mol_plot_dot()
 
-			obj.type = () => "dashed"
-			obj.title = () => this.waste_title()
+			obj.title = () => this.maximum_title()
 			obj.series_x = () => this.series_x()
-			obj.series_y = () => this.series_4_y()
+			obj.series_y = () => this.series_1_y()
 
 			return obj
 		}
@@ -344,28 +180,21 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Purchases $mol_plot_group
-		 * 	title <= purchases_title @ \Purchases
-		 * 	series_x <= series_x /number
-		 * 	series_y <= series_5_y /number
-		 * 	graphs /
-		 * 		<= Purchases_fill $mol_plot_fill
-		 * 		<= Purchases_line $mol_plot_line
-		 * 		<= Purchases_dots $mol_plot_dot
+		 * Waste $mol_plot_line
+		 * 	type \dashed
+		 * 	title <= waste_title
+		 * 	series_x <= series_x
+		 * 	series_y <= series_4_y
 		 * ```
 		 */
 		@ $mol_mem
-		Purchases() {
-			const obj = new this.$.$mol_plot_group()
+		Waste() {
+			const obj = new this.$.$mol_plot_line()
 
-			obj.title = () => this.purchases_title()
+			obj.type = () => "dashed"
+			obj.title = () => this.waste_title()
 			obj.series_x = () => this.series_x()
-			obj.series_y = () => this.series_5_y()
-			obj.graphs = () => [
-				this.Purchases_fill(),
-				this.Purchases_line(),
-				this.Purchases_dots()
-			] as readonly any[]
+			obj.series_y = () => this.series_4_y()
 
 			return obj
 		}
@@ -428,27 +257,27 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Taxes $mol_plot_group
-		 * 	title <= taxes_title @ \Taxes
-		 * 	series_x <= series_x /number
-		 * 	series_y <= series_6_y /number
+		 * Purchases $mol_plot_group
+		 * 	title <= purchases_title
+		 * 	series_x <= series_x
+		 * 	series_y <= series_5_y
 		 * 	graphs /
-		 * 		<= Taxes_fill $mol_plot_fill
-		 * 		<= Taxes_line $mol_plot_line type \dashed
-		 * 		<= Taxes_dots $mol_plot_dot
+		 * 		<= Purchases_fill
+		 * 		<= Purchases_line
+		 * 		<= Purchases_dots
 		 * ```
 		 */
 		@ $mol_mem
-		Taxes() {
+		Purchases() {
 			const obj = new this.$.$mol_plot_group()
 
-			obj.title = () => this.taxes_title()
+			obj.title = () => this.purchases_title()
 			obj.series_x = () => this.series_x()
-			obj.series_y = () => this.series_6_y()
+			obj.series_y = () => this.series_5_y()
 			obj.graphs = () => [
-				this.Taxes_fill(),
-				this.Taxes_line(),
-				this.Taxes_dots()
+				this.Purchases_fill(),
+				this.Purchases_line(),
+				this.Purchases_dots()
 			] as readonly any[]
 
 			return obj
@@ -514,14 +343,28 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Energy $mol_plot_ruler_vert title <= energy_title @ \kJ
+		 * Taxes $mol_plot_group
+		 * 	title <= taxes_title
+		 * 	series_x <= series_x
+		 * 	series_y <= series_6_y
+		 * 	graphs /
+		 * 		<= Taxes_fill
+		 * 		<= Taxes_line
+		 * 		<= Taxes_dots
 		 * ```
 		 */
 		@ $mol_mem
-		Energy() {
-			const obj = new this.$.$mol_plot_ruler_vert()
+		Taxes() {
+			const obj = new this.$.$mol_plot_group()
 
-			obj.title = () => this.energy_title()
+			obj.title = () => this.taxes_title()
+			obj.series_x = () => this.series_x()
+			obj.series_y = () => this.series_6_y()
+			obj.graphs = () => [
+				this.Taxes_fill(),
+				this.Taxes_line(),
+				this.Taxes_dots()
+			] as readonly any[]
 
 			return obj
 		}
@@ -537,9 +380,32 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Energy $mol_plot_ruler_vert title <= energy_title
+		 * ```
+		 */
+		@ $mol_mem
+		Energy() {
+			const obj = new this.$.$mol_plot_ruler_vert()
+
+			obj.title = () => this.energy_title()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * day_title @ \Day
+		 * ```
+		 */
+		day_title() {
+			return this.$.$mol_locale.text( '$mol_chart_demo_styles_day_title' )
+		}
+
+		/**
+		 * ```tree
 		 * Day $mol_plot_mark_hor
-		 * 	title <= day_title @ \Day
-		 * 	series_x <= series_x /number
+		 * 	title <= day_title
+		 * 	series_x <= series_x
 		 * ```
 		 */
 		@ $mol_mem
@@ -554,11 +420,42 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * day_title @ \Day
+		 * graphs /
+		 * 	<= Receipts
+		 * 	<= Receipts_confirmed
+		 * 	<= Maximum
+		 * 	<= Waste
+		 * 	<= Purchases
+		 * 	<= Taxes
+		 * 	<= Energy
+		 * 	<= Day
 		 * ```
 		 */
-		day_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_styles_day_title' )
+		graphs() {
+			return [
+				this.Receipts(),
+				this.Receipts_confirmed(),
+				this.Maximum(),
+				this.Waste(),
+				this.Purchases(),
+				this.Taxes(),
+				this.Energy(),
+				this.Day()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Chart $mol_chart graphs <= graphs
+		 * ```
+		 */
+		@ $mol_mem
+		Chart() {
+			const obj = new this.$.$mol_chart()
+
+			obj.graphs = () => this.graphs()
+
+			return obj
 		}
 	}
 

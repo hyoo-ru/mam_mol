@@ -3,22 +3,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub <= pages_wrapped /$mol_view
+		 * sub <= pages_wrapped
 		 * ```
 		 */
 		sub() {
 			return this.pages_wrapped()
-		}
-
-		/**
-		 * ```tree
-		 * pages_wrapped /$mol_view
-		 * ```
-		 */
-		pages_wrapped() {
-			return [
-
-			] as readonly $mol_view[]
 		}
 
 		/**
@@ -44,10 +33,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * plugins /$mol_plugin
-		 * 	<= Meter $mol_meter width => width
-		 * 	<= Touch $mol_touch
-		 * 		swipe_from_left?val <=> event_front_up?val null
-		 * 		swipe_to_left?val <=> event_front_down?val null
+		 * 	<= Meter
+		 * 	<= Touch
 		 * ```
 		 */
 		plugins() {
@@ -55,6 +42,48 @@ namespace $ {
 				this.Meter(),
 				this.Touch()
 			] as readonly $mol_plugin[]
+		}
+
+		/**
+		 * ```tree
+		 * Page!index $mol_book_page
+		 * 	Sub <= page!index
+		 * 	visible <= page_visible!index
+		 * ```
+		 */
+		@ $mol_mem_key
+		Page(index: any) {
+			const obj = new this.$.$mol_book_page()
+
+			obj.Sub = () => this.page(index)
+			obj.visible = () => this.page_visible(index)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Placeholder $mol_book_placeholder title <= title
+		 * ```
+		 */
+		@ $mol_mem
+		Placeholder() {
+			const obj = new this.$.$mol_book_placeholder()
+
+			obj.title = () => this.title()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * pages_wrapped /$mol_view
+		 * ```
+		 */
+		pages_wrapped() {
+			return [
+
+			] as readonly $mol_view[]
 		}
 
 		/**
@@ -76,23 +105,6 @@ namespace $ {
 		 */
 		width() {
 			return this.Meter().width()
-		}
-
-		/**
-		 * ```tree
-		 * Touch $mol_touch
-		 * 	swipe_from_left?val <=> event_front_up?val null
-		 * 	swipe_to_left?val <=> event_front_down?val null
-		 * ```
-		 */
-		@ $mol_mem
-		Touch() {
-			const obj = new this.$.$mol_touch()
-
-			obj.swipe_from_left = (val?: any) => this.event_front_up(val)
-			obj.swipe_to_left = (val?: any) => this.event_front_down(val)
-
-			return obj
 		}
 
 		/**
@@ -119,17 +131,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Page!index $mol_book_page
-		 * 	Sub <= page!index null
-		 * 	visible <= page_visible!index true
+		 * Touch $mol_touch
+		 * 	swipe_from_left?val <=> event_front_up?val
+		 * 	swipe_to_left?val <=> event_front_down?val
 		 * ```
 		 */
-		@ $mol_mem_key
-		Page(index: any) {
-			const obj = new this.$.$mol_book_page()
+		@ $mol_mem
+		Touch() {
+			const obj = new this.$.$mol_touch()
 
-			obj.Sub = () => this.page(index)
-			obj.visible = () => this.page_visible(index)
+			obj.swipe_from_left = (val?: any) => this.event_front_up(val)
+			obj.swipe_to_left = (val?: any) => this.event_front_down(val)
 
 			return obj
 		}
@@ -150,20 +162,6 @@ namespace $ {
 		 */
 		page_visible(index: any) {
 			return true
-		}
-
-		/**
-		 * ```tree
-		 * Placeholder $mol_book_placeholder title <= title
-		 * ```
-		 */
-		@ $mol_mem
-		Placeholder() {
-			const obj = new this.$.$mol_book_placeholder()
-
-			obj.title = () => this.title()
-
-			return obj
 		}
 	}
 
@@ -216,7 +214,7 @@ namespace $ {
 		 * attr *
 		 * 	^
 		 * 	mol_book_page_focused <= focused
-		 * 	mol_book_page_visible <= visible true
+		 * 	mol_book_page_visible <= visible
 		 * ```
 		 */
 		attr() {

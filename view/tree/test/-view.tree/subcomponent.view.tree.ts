@@ -4,7 +4,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Page!index $mol_view_tree_test_attributes_subcomponent_page Sub <= page!index null
+		 * Page!index $mol_view_tree_test_attributes_subcomponent_page Sub <= page!index
 		 * ```
 		 */
 		@ $mol_mem_key

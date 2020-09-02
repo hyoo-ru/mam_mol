@@ -21,7 +21,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub <= parts /$mol_view_content
+		 * sub <= parts
 		 * ```
 		 */
 		sub() {
@@ -30,18 +30,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * parts /$mol_view_content
-		 * ```
-		 */
-		parts() {
-			return [
-
-			] as readonly $mol_view_content[]
-		}
-
-		/**
-		 * ```tree
-		 * Low!id $mol_paragraph sub / <= string!id \
+		 * Low!id $mol_paragraph sub / <= string!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -57,16 +46,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * string!id \
-		 * ```
-		 */
-		string(id: any) {
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * High!id $mol_paragraph sub / <= string!id \
+		 * High!id $mol_paragraph sub / <= string!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -78,6 +58,26 @@ namespace $ {
 			] as readonly any[]
 
 			return obj
+		}
+
+		/**
+		 * ```tree
+		 * parts /$mol_view_content
+		 * ```
+		 */
+		parts() {
+			return [
+
+			] as readonly $mol_view_content[]
+		}
+
+		/**
+		 * ```tree
+		 * string!id \
+		 * ```
+		 */
+		string(id: any) {
+			return ""
 		}
 	}
 

@@ -26,7 +26,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Root $mol_perf_uibench_tree_branch state <= root_state null
+		 * sub / <= Root
 		 * ```
 		 */
 		sub() {
@@ -37,7 +37,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Root $mol_perf_uibench_tree_branch state <= root_state null
+		 * root_state null
+		 * ```
+		 */
+		root_state() {
+			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * Root $mol_perf_uibench_tree_branch state <= root_state
 		 * ```
 		 */
 		@ $mol_mem
@@ -47,15 +56,6 @@ namespace $ {
 			obj.state = () => this.root_state()
 
 			return obj
-		}
-
-		/**
-		 * ```tree
-		 * root_state null
-		 * ```
-		 */
-		root_state() {
-			return null as any
 		}
 	}
 
@@ -95,7 +95,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Branch!index $mol_perf_uibench_tree_branch state <= branch_state!index null
+		 * Branch!index $mol_perf_uibench_tree_branch state <= branch_state!index
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -109,16 +109,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * branch_state!index null
-		 * ```
-		 */
-		branch_state(index: any) {
-			return null as any
-		}
-
-		/**
-		 * ```tree
-		 * Leaf!index $mol_perf_uibench_tree_leaf text <= leaf_state!index null
+		 * Leaf!index $mol_perf_uibench_tree_leaf text <= leaf_state!index
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -128,6 +119,15 @@ namespace $ {
 			obj.text = () => this.leaf_state(index)
 
 			return obj
+		}
+
+		/**
+		 * ```tree
+		 * branch_state!index null
+		 * ```
+		 */
+		branch_state(index: any) {
+			return null as any
 		}
 
 		/**
@@ -176,7 +176,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= text \
+		 * sub / <= text
 		 * ```
 		 */
 		sub() {

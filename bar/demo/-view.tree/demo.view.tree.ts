@@ -13,19 +13,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Two $mol_bar sub /
-		 * 		<= Two_mail $mol_string
-		 * 			hint <= mail_hint \E-mail
-		 * 			value?val <=> mail?val \
-		 * 		<= Two_submit $mol_button_minor title <= submit_title \Submit
-		 * 	<= Three $mol_bar sub /
-		 * 		<= Three_mail $mol_string
-		 * 			hint <= mail_hint \E-mail
-		 * 			value?val <=> mail?val \
-		 * 		<= Three_confirm $mol_check_box
-		 * 			title <= confirm_title \Confirm
-		 * 			checked?val <=> confirmed?val false
-		 * 		<= Three_submit $mol_button_minor title <= submit_title \Submit
+		 * 	<= Two
+		 * 	<= Three
 		 * ```
 		 */
 		sub() {
@@ -33,44 +22,6 @@ namespace $ {
 				this.Two(),
 				this.Three()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Two $mol_bar sub /
-		 * 	<= Two_mail $mol_string
-		 * 		hint <= mail_hint \E-mail
-		 * 		value?val <=> mail?val \
-		 * 	<= Two_submit $mol_button_minor title <= submit_title \Submit
-		 * ```
-		 */
-		@ $mol_mem
-		Two() {
-			const obj = new this.$.$mol_bar()
-
-			obj.sub = () => [
-				this.Two_mail(),
-				this.Two_submit()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Two_mail $mol_string
-		 * 	hint <= mail_hint \E-mail
-		 * 	value?val <=> mail?val \
-		 * ```
-		 */
-		@ $mol_mem
-		Two_mail() {
-			const obj = new this.$.$mol_string()
-
-			obj.hint = () => this.mail_hint()
-			obj.value = (val?: any) => this.mail(val)
-
-			return obj
 		}
 
 		/**
@@ -95,14 +46,17 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Two_submit $mol_button_minor title <= submit_title \Submit
+		 * Two_mail $mol_string
+		 * 	hint <= mail_hint
+		 * 	value?val <=> mail?val
 		 * ```
 		 */
 		@ $mol_mem
-		Two_submit() {
-			const obj = new this.$.$mol_button_minor()
+		Two_mail() {
+			const obj = new this.$.$mol_string()
 
-			obj.title = () => this.submit_title()
+			obj.hint = () => this.mail_hint()
+			obj.value = (val?: any) => this.mail(val)
 
 			return obj
 		}
@@ -118,24 +72,32 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Three $mol_bar sub /
-		 * 	<= Three_mail $mol_string
-		 * 		hint <= mail_hint \E-mail
-		 * 		value?val <=> mail?val \
-		 * 	<= Three_confirm $mol_check_box
-		 * 		title <= confirm_title \Confirm
-		 * 		checked?val <=> confirmed?val false
-		 * 	<= Three_submit $mol_button_minor title <= submit_title \Submit
+		 * Two_submit $mol_button_minor title <= submit_title
 		 * ```
 		 */
 		@ $mol_mem
-		Three() {
+		Two_submit() {
+			const obj = new this.$.$mol_button_minor()
+
+			obj.title = () => this.submit_title()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Two $mol_bar sub /
+		 * 	<= Two_mail
+		 * 	<= Two_submit
+		 * ```
+		 */
+		@ $mol_mem
+		Two() {
 			const obj = new this.$.$mol_bar()
 
 			obj.sub = () => [
-				this.Three_mail(),
-				this.Three_confirm(),
-				this.Three_submit()
+				this.Two_mail(),
+				this.Two_submit()
 			] as readonly any[]
 
 			return obj
@@ -144,8 +106,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Three_mail $mol_string
-		 * 	hint <= mail_hint \E-mail
-		 * 	value?val <=> mail?val \
+		 * 	hint <= mail_hint
+		 * 	value?val <=> mail?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -154,23 +116,6 @@ namespace $ {
 
 			obj.hint = () => this.mail_hint()
 			obj.value = (val?: any) => this.mail(val)
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Three_confirm $mol_check_box
-		 * 	title <= confirm_title \Confirm
-		 * 	checked?val <=> confirmed?val false
-		 * ```
-		 */
-		@ $mol_mem
-		Three_confirm() {
-			const obj = new this.$.$mol_check_box()
-
-			obj.title = () => this.confirm_title()
-			obj.checked = (val?: any) => this.confirmed(val)
 
 			return obj
 		}
@@ -197,7 +142,24 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Three_submit $mol_button_minor title <= submit_title \Submit
+		 * Three_confirm $mol_check_box
+		 * 	title <= confirm_title
+		 * 	checked?val <=> confirmed?val
+		 * ```
+		 */
+		@ $mol_mem
+		Three_confirm() {
+			const obj = new this.$.$mol_check_box()
+
+			obj.title = () => this.confirm_title()
+			obj.checked = (val?: any) => this.confirmed(val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Three_submit $mol_button_minor title <= submit_title
 		 * ```
 		 */
 		@ $mol_mem
@@ -205,6 +167,27 @@ namespace $ {
 			const obj = new this.$.$mol_button_minor()
 
 			obj.title = () => this.submit_title()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Three $mol_bar sub /
+		 * 	<= Three_mail
+		 * 	<= Three_confirm
+		 * 	<= Three_submit
+		 * ```
+		 */
+		@ $mol_mem
+		Three() {
+			const obj = new this.$.$mol_bar()
+
+			obj.sub = () => [
+				this.Three_mail(),
+				this.Three_confirm(),
+				this.Three_submit()
+			] as readonly any[]
 
 			return obj
 		}

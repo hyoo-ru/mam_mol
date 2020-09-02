@@ -14,7 +14,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * plugins / <= Hotkey $mol_hotkey key * escape?val <=> event_clear?val null
+		 * plugins / <= Hotkey
 		 * ```
 		 */
 		plugins() {
@@ -25,18 +25,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Hotkey $mol_hotkey key * escape?val <=> event_clear?val null
+		 * sub /
+		 * 	<= Suggest
+		 * 	<= Clear
 		 * ```
 		 */
-		@ $mol_mem
-		Hotkey() {
-			const obj = new this.$.$mol_hotkey()
-
-			obj.key = () => ({
-				escape: (val?: any) => this.event_clear(val)
-			})
-
-			return obj
+		sub() {
+			return [
+				this.Suggest(),
+				this.Clear()
+			] as readonly any[]
 		}
 
 		/**
@@ -52,54 +50,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Suggest $mol_select
-		 * 		value?val <=> suggest_selected?val \
-		 * 		filter_pattern?val <=> suggest_selected?val \
-		 * 		hint <= hint @ \Search...
-		 * 		filter_pattern?val <=> query?val
-		 * 		options_showed <= suggests_showed false
-		 * 		options <= suggests /string
-		 * 		Trigger_icon null
-		 * 		submit?event <=> submit?event null
-		 * 	<= Clear $mol_button_minor
-		 * 		sub / <= Clear_icon $mol_icon_cross
-		 * 		event_click?val <=> event_clear?val null
-		 * 		hint <= clear_hint @ \Clear
-		 * ```
-		 */
-		sub() {
-			return [
-				this.Suggest(),
-				this.Clear()
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Suggest $mol_select
-		 * 	value?val <=> suggest_selected?val \
-		 * 	filter_pattern?val <=> suggest_selected?val \
-		 * 	hint <= hint @ \Search...
-		 * 	filter_pattern?val <=> query?val
-		 * 	options_showed <= suggests_showed false
-		 * 	options <= suggests /string
-		 * 	Trigger_icon null
-		 * 	submit?event <=> submit?event null
+		 * Hotkey $mol_hotkey key * escape?val <=> event_clear?val
 		 * ```
 		 */
 		@ $mol_mem
-		Suggest() {
-			const obj = new this.$.$mol_select()
+		Hotkey() {
+			const obj = new this.$.$mol_hotkey()
 
-			obj.value = (val?: any) => this.suggest_selected(val)
-			obj.filter_pattern = (val?: any) => this.suggest_selected(val)
-			obj.hint = () => this.hint()
-			obj.filter_pattern = (val?: any) => this.query(val)
-			obj.options_showed = () => this.suggests_showed()
-			obj.options = () => this.suggests()
-			obj.Trigger_icon = () => null as any
-			obj.submit = (event?: any) => this.submit(event)
+			obj.key = () => ({
+				escape: (val?: any) => this.event_clear(val)
+			})
 
 			return obj
 		}
@@ -157,21 +117,29 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Clear $mol_button_minor
-		 * 	sub / <= Clear_icon $mol_icon_cross
-		 * 	event_click?val <=> event_clear?val null
-		 * 	hint <= clear_hint @ \Clear
+		 * Suggest $mol_select
+		 * 	value?val <=> suggest_selected?val
+		 * 	filter_pattern?val <=> suggest_selected?val
+		 * 	hint <= hint
+		 * 	filter_pattern?val <=> query?val
+		 * 	options_showed <= suggests_showed
+		 * 	options <= suggests
+		 * 	Trigger_icon null
+		 * 	submit?event <=> submit?event
 		 * ```
 		 */
 		@ $mol_mem
-		Clear() {
-			const obj = new this.$.$mol_button_minor()
+		Suggest() {
+			const obj = new this.$.$mol_select()
 
-			obj.sub = () => [
-				this.Clear_icon()
-			] as readonly any[]
-			obj.event_click = (val?: any) => this.event_clear(val)
-			obj.hint = () => this.clear_hint()
+			obj.value = (val?: any) => this.suggest_selected(val)
+			obj.filter_pattern = (val?: any) => this.suggest_selected(val)
+			obj.hint = () => this.hint()
+			obj.filter_pattern = (val?: any) => this.query(val)
+			obj.options_showed = () => this.suggests_showed()
+			obj.options = () => this.suggests()
+			obj.Trigger_icon = () => null as any
+			obj.submit = (event?: any) => this.submit(event)
 
 			return obj
 		}
@@ -195,6 +163,27 @@ namespace $ {
 		 */
 		clear_hint() {
 			return this.$.$mol_locale.text( '$mol_search_clear_hint' )
+		}
+
+		/**
+		 * ```tree
+		 * Clear $mol_button_minor
+		 * 	sub / <= Clear_icon
+		 * 	event_click?val <=> event_clear?val
+		 * 	hint <= clear_hint
+		 * ```
+		 */
+		@ $mol_mem
+		Clear() {
+			const obj = new this.$.$mol_button_minor()
+
+			obj.sub = () => [
+				this.Clear_icon()
+			] as readonly any[]
+			obj.event_click = (val?: any) => this.event_clear(val)
+			obj.hint = () => this.clear_hint()
+
+			return obj
 		}
 	}
 

@@ -5,7 +5,7 @@ namespace $ {
 		 * ```tree
 		 * event *
 		 * 	^
-		 * 	keydown?event <=> keydown?event null
+		 * 	keydown?event <=> keydown?event
 		 * ```
 		 */
 		event() {
@@ -13,17 +13,6 @@ namespace $ {
 				...super.event(),
 				keydown: (event?: any) => this.keydown(event)
 			}
-		}
-
-		/**
-		 * ```tree
-		 * keydown?event null
-		 * ```
-		 */
-		@ $mol_mem
-		keydown(event?: any) {
-			if ( event !== undefined ) return event
-			return null as any
 		}
 
 		/**
@@ -62,6 +51,17 @@ namespace $ {
 		 */
 		mod_shift() {
 			return false
+		}
+
+		/**
+		 * ```tree
+		 * keydown?event null
+		 * ```
+		 */
+		@ $mol_mem
+		keydown(event?: any) {
+			if ( event !== undefined ) return event
+			return null as any
 		}
 	}
 

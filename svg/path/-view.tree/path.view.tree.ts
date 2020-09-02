@@ -14,7 +14,7 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	d <= geometry \
+		 * 	d <= geometry
 		 * ```
 		 */
 		attr() {

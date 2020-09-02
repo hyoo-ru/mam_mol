@@ -5,7 +5,7 @@ namespace $ {
 		 * ```tree
 		 * style *
 		 * 	^
-		 * 	stroke-width <= stroke_width \1rem
+		 * 	stroke-width <= stroke_width
 		 * ```
 		 */
 		style() {
@@ -13,6 +13,31 @@ namespace $ {
 				...super.style(),
 				"stroke-width": this.stroke_width()
 			}
+		}
+
+		/**
+		 * ```tree
+		 * sub / <= Curve
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Curve()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Sample $mol_plot_graph_sample color <= color
+		 * ```
+		 */
+		@ $mol_mem
+		Sample() {
+			const obj = new this.$.$mol_plot_graph_sample()
+
+			obj.color = () => this.color()
+
+			return obj
 		}
 
 		/**
@@ -26,31 +51,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Curve $mol_svg_path geometry <= curve \
-		 * ```
-		 */
-		sub() {
-			return [
-				this.Curve()
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Curve $mol_svg_path geometry <= curve \
-		 * ```
-		 */
-		@ $mol_mem
-		Curve() {
-			const obj = new this.$.$mol_svg_path()
-
-			obj.geometry = () => this.curve()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * curve \
 		 * ```
 		 */
@@ -60,14 +60,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Sample $mol_plot_graph_sample color <= color
+		 * Curve $mol_svg_path geometry <= curve
 		 * ```
 		 */
 		@ $mol_mem
-		Sample() {
-			const obj = new this.$.$mol_plot_graph_sample()
+		Curve() {
+			const obj = new this.$.$mol_svg_path()
 
-			obj.color = () => this.color()
+			obj.geometry = () => this.curve()
 
 			return obj
 		}

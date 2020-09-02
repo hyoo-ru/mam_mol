@@ -12,56 +12,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * sub / <= Scroll $mol_scroll sub / <= Content $mol_row sub /
-		 * 	<= One $mol_filler
-		 * 	<= Two $mol_filler
-		 * 	<= Tree $mol_filler
+		 * sub / <= Scroll
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Scroll()
 			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * Scroll $mol_scroll sub / <= Content $mol_row sub /
-		 * 	<= One $mol_filler
-		 * 	<= Two $mol_filler
-		 * 	<= Tree $mol_filler
-		 * ```
-		 */
-		@ $mol_mem
-		Scroll() {
-			const obj = new this.$.$mol_scroll()
-
-			obj.sub = () => [
-				this.Content()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Content $mol_row sub /
-		 * 	<= One $mol_filler
-		 * 	<= Two $mol_filler
-		 * 	<= Tree $mol_filler
-		 * ```
-		 */
-		@ $mol_mem
-		Content() {
-			const obj = new this.$.$mol_row()
-
-			obj.sub = () => [
-				this.One(),
-				this.Two(),
-				this.Tree()
-			] as readonly any[]
-
-			return obj
 		}
 
 		/**
@@ -96,6 +53,43 @@ namespace $ {
 		@ $mol_mem
 		Tree() {
 			const obj = new this.$.$mol_filler()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Content $mol_row sub /
+		 * 	<= One
+		 * 	<= Two
+		 * 	<= Tree
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
+			const obj = new this.$.$mol_row()
+
+			obj.sub = () => [
+				this.One(),
+				this.Two(),
+				this.Tree()
+			] as readonly any[]
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Scroll $mol_scroll sub / <= Content
+		 * ```
+		 */
+		@ $mol_mem
+		Scroll() {
+			const obj = new this.$.$mol_scroll()
+
+			obj.sub = () => [
+				this.Content()
+			] as readonly any[]
 
 			return obj
 		}

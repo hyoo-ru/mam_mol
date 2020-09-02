@@ -12,14 +12,26 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * plugins / <= Meter $mol_meter
-		 * 	top => top
-		 * 	height => height
+		 * plugins / <= Meter
 		 * ```
 		 */
 		plugins() {
 			return [
 				this.Meter()
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Top
+		 * 	<= Height
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Top(),
+				this.Height()
 			] as readonly any[]
 		}
 
@@ -53,24 +65,6 @@ namespace $ {
 		 */
 		height() {
 			return this.Meter().height()
-		}
-
-		/**
-		 * ```tree
-		 * sub /
-		 * 	<= Top $mol_view sub /
-		 * 		\Offset from top: 
-		 * 		<= top
-		 * 	<= Height $mol_view sub /
-		 * 		\Component height: 
-		 * 		<= height
-		 * ```
-		 */
-		sub() {
-			return [
-				this.Top(),
-				this.Height()
-			] as readonly any[]
 		}
 
 		/**

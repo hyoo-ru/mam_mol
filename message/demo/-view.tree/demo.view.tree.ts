@@ -13,17 +13,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Message_short $mol_message
-		 * 		name \Jin
-		 * 		moment <= created $mol_time_moment
-		 * 		avatar \https://avatars3.githubusercontent.com/u/442988?v=4
-		 * 		avatar_link \https://github.com/nin-jin
-		 * 		text \Hello, **everybody!**
-		 * 	<= Message_long $mol_message
-		 * 		name \Great Teacher Onizuka
-		 * 		moment <= created $mol_time_moment
-		 * 		avatar_link \https://en.wikipedia.org/wiki/Great_Teacher_Onizuka
-		 * 		text \The story focuses on 22-year-old ex-[bōsōzoku](https://en.wikipedia.org/wiki/Bōsōzoku) member Eikichi Onizuka, who becomes a teacher at a private middle school, Holy Forest Academy, in [Tokyo](https://en.wikipedia.org/wiki/Tokyo), [Japan](https://en.wikipedia.org/wiki/Japan). It won the 1998 [Kodansha Manga Award](https://en.wikipedia.org/wiki/Kodansha_Manga_Award) for shōnen and is a continuation of Tohru Fujisawa's other manga series [Shonan Junai Gumi](https://en.wikipedia.org/wiki/Shonan_Junai_Gumi) (lit. "Shōnan True Love Group") and Bad Company, both of which focus on the life of Onizuka before he becomes a teacher in Great Teacher Onizuka.
+		 * 	<= Message_short
+		 * 	<= Message_long
 		 * ```
 		 */
 		sub() {
@@ -35,9 +26,21 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * created $mol_time_moment
+		 * ```
+		 */
+		@ $mol_mem
+		created() {
+			const obj = new this.$.$mol_time_moment()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * Message_short $mol_message
 		 * 	name \Jin
-		 * 	moment <= created $mol_time_moment
+		 * 	moment <= created
 		 * 	avatar \https://avatars3.githubusercontent.com/u/442988?v=4
 		 * 	avatar_link \https://github.com/nin-jin
 		 * 	text \Hello, **everybody!**
@@ -58,21 +61,9 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * created $mol_time_moment
-		 * ```
-		 */
-		@ $mol_mem
-		created() {
-			const obj = new this.$.$mol_time_moment()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
 		 * Message_long $mol_message
 		 * 	name \Great Teacher Onizuka
-		 * 	moment <= created $mol_time_moment
+		 * 	moment <= created
 		 * 	avatar_link \https://en.wikipedia.org/wiki/Great_Teacher_Onizuka
 		 * 	text \The story focuses on 22-year-old ex-[bōsōzoku](https://en.wikipedia.org/wiki/Bōsōzoku) member Eikichi Onizuka, who becomes a teacher at a private middle school, Holy Forest Academy, in [Tokyo](https://en.wikipedia.org/wiki/Tokyo), [Japan](https://en.wikipedia.org/wiki/Japan). It won the 1998 [Kodansha Manga Award](https://en.wikipedia.org/wiki/Kodansha_Manga_Award) for shōnen and is a continuation of Tohru Fujisawa's other manga series [Shonan Junai Gumi](https://en.wikipedia.org/wiki/Shonan_Junai_Gumi) (lit. "Shōnan True Love Group") and Bad Company, both of which focus on the life of Onizuka before he becomes a teacher in Great Teacher Onizuka.
 		 * ```

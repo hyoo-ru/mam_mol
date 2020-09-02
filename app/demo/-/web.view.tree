@@ -772,11 +772,6 @@ $mol_plot_bar $mol_plot_graph
 	Sample $mol_plot_graph_sample
 		color <= color
 
-$mol_plot_group $mol_plot_graph
-	sub <= graphs_enriched <= graphs /$mol_plot_graph
-	Sample $mol_plot_graph_sample
-		sub <= graph_samples /$mol_view
-
 $mol_plot_line $mol_plot_graph
 	threshold 1
 	spacing 2
@@ -801,15 +796,10 @@ $mol_plot_dot $mol_plot_graph
 	Sample $mol_plot_graph_sample
 		color <= color
 
-$mol_svg_rect $mol_svg
-	dom_name \rect
-	pos /
-	attr *
-		^
-		width <= width \0
-		height <= height \0
-		x <= pos_x \
-		y <= pos_y \
+$mol_plot_group $mol_plot_graph
+	sub <= graphs_enriched <= graphs /$mol_plot_graph
+	Sample $mol_plot_graph_sample
+		sub <= graph_samples /$mol_view
 
 $mol_svg_text $mol_svg
 	dom_name \text
@@ -821,6 +811,16 @@ $mol_svg_text $mol_svg
 		text-anchor <= align \middle
 	sub /
 		<= text \
+
+$mol_svg_rect $mol_svg
+	dom_name \rect
+	pos /
+	attr *
+		^
+		width <= width \0
+		height <= height \0
+		x <= pos_x \
+		y <= pos_y \
 
 $mol_svg_text_box $mol_svg_group
 	font_size 16
@@ -1429,6 +1429,10 @@ $mol_drag $mol_ghost
 	allow_move true
 	image <= dom_node
 
+$mol_icon_trash_can $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z
+
+$mol_icon_trash_can_outline $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z
+
 $mol_drop $mol_ghost
 	event *
 		dragenter?event <=> enter?event null
@@ -1438,10 +1442,6 @@ $mol_drop $mol_ghost
 	attr * mol_drop_status <= status?val \ready
 	adopt?transfer *
 	receive?transfer null
-
-$mol_icon_trash_can $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z
-
-$mol_icon_trash_can_outline $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z
 
 $mol_drag_demo $mol_demo_large
 	task_count 100
@@ -2544,42 +2544,6 @@ $mol_app_demo_main $mol_page
 			text <= description \
 			uri_base <= project_uri
 
-$mol_theme_auto $mol_plugin
-	attr * mol_theme <= theme \
-
-$mol_status $mol_view
-	status null
-	minimal_height 24
-	minimal_width 0
-	sub /
-		<= message \
-
-$mol_chat $mol_list
-	rows /
-		<= posts /
-		<= Add_status $mol_status status <= adding?next null
-		<= Add $mol_bar
-			sub /
-				<= Add_body $mol_string
-					hint <= add_hint @ \New message...
-					value?val <=> add_body?val \
-				<= Add_submit $mol_button_major
-					enabled <= add_submit_enabled false
-					title <= add_submit_label @ \Post
-					event_click?event <=> add?event null
-	Post!index $mol_message
-		name <= post_user_name!index \
-		moment <= post_updated!index $mol_time_moment
-		avatar_link <= post_user_link!index \
-		avatar <= post_user_ava!index \
-		text <= post_body!index \
-	repository $mol_github_repository
-	repository_name \
-	link \
-	seed \
-	teaser \
-	issue $mol_github_issue
-
 $mol_book $mol_view
 	sub <= pages_wrapped /$mol_view
 	minimal_width 0
@@ -2611,8 +2575,6 @@ $mol_book_page $mol_ghost
 		^
 		mol_book_page_focused <= focused
 		mol_book_page_visible <= visible true
-
-$mol_icon_source $mol_icon path \M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z
 
 $mol_app_studio_field $mol_expander
 	path /
@@ -2747,6 +2709,8 @@ $mol_view_tree_test_attributes_subcomponent $mol_view
 $mol_view_tree_test_attributes_subcomponent_page $mol_view
 	Sub null
 
+$mol_icon_source $mol_icon path \M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z
+
 $mol_app_studio $mol_book
 	value_overrided!id?val null
 	-
@@ -2840,6 +2804,42 @@ $mol_app_studio_selector $mol_view
 		contextmenu?event <=> select?event null
 		dblclick?event <=> select?event null
 	path?val /
+
+$mol_status $mol_view
+	status null
+	minimal_height 24
+	minimal_width 0
+	sub /
+		<= message \
+
+$mol_theme_auto $mol_plugin
+	attr * mol_theme <= theme \
+
+$mol_chat $mol_list
+	rows /
+		<= posts /
+		<= Add_status $mol_status status <= adding?next null
+		<= Add $mol_bar
+			sub /
+				<= Add_body $mol_string
+					hint <= add_hint @ \New message...
+					value?val <=> add_body?val \
+				<= Add_submit $mol_button_major
+					enabled <= add_submit_enabled false
+					title <= add_submit_label @ \Post
+					event_click?event <=> add?event null
+	Post!index $mol_message
+		name <= post_user_name!index \
+		moment <= post_updated!index $mol_time_moment
+		avatar_link <= post_user_link!index \
+		avatar <= post_user_ava!index \
+		text <= post_body!index \
+	repository $mol_github_repository
+	repository_name \
+	link \
+	seed \
+	teaser \
+	issue $mol_github_issue
 
 $mol_icon_code_braces $mol_icon path \M8,3C6.9,3 6,3.9 6,5V9C6,10.1 5.1,11 4,11H3V13H4C5.1,13 6,13.9 6,15V19C6,20.1 6.9,21 8,21H10V19H8V14C8,12.9 7.1,12 6,12C7.1,12 8,11.1 8,10V5H10V3M16,3C17.1,3 18,3.9 18,5V9C18,10.1 18.9,11 20,11H21V13H20C18.9,13 18,13.9 18,15V19C18,20.1 17.1,21 16,21H14V19H16V14C16,12.9 16.9,12 18,12C16.9,12 16,11.1 16,10V5H14V3H16Z
 

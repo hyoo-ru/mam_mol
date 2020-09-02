@@ -3,11 +3,20 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * value?val <=> task_title_new?val \123
+		 * value?val <=> task_title_new?val
 		 * ```
 		 */
 		value(val?: any) {
 			return this.task_title_new(val)
+		}
+
+		/**
+		 * ```tree
+		 * enabled <= head_complete_enabled
+		 * ```
+		 */
+		enabled() {
+			return this.head_complete_enabled()
 		}
 
 		/**
@@ -19,15 +28,6 @@ namespace $ {
 		task_title_new(val?: any) {
 			if ( val !== undefined ) return val
 			return "123"
-		}
-
-		/**
-		 * ```tree
-		 * enabled <= head_complete_enabled false
-		 * ```
-		 */
-		enabled() {
-			return this.head_complete_enabled()
 		}
 
 		/**
