@@ -345,7 +345,7 @@ namespace $ {
 			
 			return ( [] as readonly $mol_tree2[] ).concat( ... this.kids.map( child => {
 
-				const handle = belt[ child.type ] || belt[ '' ]
+				const handle = belt[ Reflect.ownKeys( belt ).includes( child.type ) ? child.type : '' ]
 				if( !handle ) {
 					this.$.$mol_fail( child.error( `Hack not found.\nAllowed: ${ Object.keys( belt )}` ) )
 				}
