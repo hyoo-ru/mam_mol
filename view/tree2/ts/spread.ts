@@ -11,7 +11,7 @@ namespace $ {
 
 		return $mol_tree2.struct('inline', [
 			spread_prop.data('...this.'),
-			this.$.$mol_view_tree2_ts_function_call(spread_prop_parts)
+			this.$mol_view_tree2_ts_function_call(spread_prop_parts)
 		])
 	}
 

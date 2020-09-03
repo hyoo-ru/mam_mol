@@ -6,6 +6,7 @@
   "browser": "web.js",
   "types": "web.d.ts",
   "dependencies": {
+    "require": "*",
     "jsdom": "*",
     "colorette": "*",
     "chokidar": "*",

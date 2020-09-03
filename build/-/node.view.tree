@@ -1,14 +1,3 @@
-$mol_view_tree_test_simple $mol_view
-	some 1
-	bool true
-	str \test
-	arr /
-	arr_string /string
-
-$mol_view_tree_test_binding $mol_view
-	value?val <=> task_title_new?val \123
-	enabled <= head_complete_enabled false
-
 $mol_view_tree_test_attributes_super $mol_view
 	some *
 		a 0
@@ -19,12 +8,23 @@ $mol_view_tree_test_attributes $mol_view_tree_test_attributes_super
 		^
 		a 1
 
+$mol_view_tree_test_binding $mol_view
+	value?val <=> task_title_new?val \123
+	enabled <= head_complete_enabled false
+
 $mol_view_tree_test_binding_right $mol_view
 	Test $mol_view_tree_test_binding_right_test
 		width?v => outer_width?v
 
 $mol_view_tree_test_binding_right_test $mol_view
 	width?val 0
+
+$mol_view_tree_test_simple $mol_view
+	some 1
+	bool true
+	str \test
+	arr /
+	arr_string /string
 
 $mol_view_tree_test_attributes_subcomponent $mol_view
 	- Comment

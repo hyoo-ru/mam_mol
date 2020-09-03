@@ -31,10 +31,12 @@ declare namespace $ {
     let $mol_log3_stack: (() => void)[];
 }
 
+/// <reference types="node" />
 interface $node {
     [key: string]: any;
 }
 declare var $node: $node;
+declare const $node_require: NodeRequire;
 
 declare namespace $ {
     function $mol_delegate<Value extends object>(proto: Value, target: () => Value): Value;

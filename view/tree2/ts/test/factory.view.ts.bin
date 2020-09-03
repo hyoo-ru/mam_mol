@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_view_tree2_ts_test_sample_factory extends $mol_view {
+	export class $mol_view_tree2_ts_test_factory extends $mol_view {
 
 		/**
 		 * ```tree
@@ -19,7 +19,7 @@ namespace $ {
 			obj.num = () => 12317
 			obj.bool = () => true
 			obj.nul = () => null as any
-			obj.localized = () => this.$.$mol_locale.text( '$mol_view_tree2_ts_test_sample_factory_Simple_localized' )
+			obj.localized = () => this.$.$mol_locale.text( '$mol_view_tree2_ts_test_factory_Simple_localized' )
 
 			return obj
 		}
@@ -45,7 +45,7 @@ namespace $ {
 			] as readonly any[]
 			obj.dict = () => ({
 				str: "some2",
-				localized: this.$.$mol_locale.text( '$mol_view_tree2_ts_test_sample_factory_Complex_dict_localized' )
+				localized: this.$.$mol_locale.text( '$mol_view_tree2_ts_test_factory_Complex_dict_localized' )
 			})
 
 			return obj
@@ -54,12 +54,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Arr $mol_vector_2d /
-		 * 	<= viewport_x $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
-		 * 	<= viewport_y $mol_vector_range /
-		 * 		Infinity
-		 * 		-Infinity
+		 * 	<= viewport_x
+		 * 	<= viewport_y
 		 * ```
 		 */
 		@ $mol_mem

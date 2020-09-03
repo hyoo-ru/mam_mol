@@ -220,12 +220,15 @@ var $;
 //context.js.map
 ;
 "use strict";
-var $node = new Proxy({}, { get(target, name, wrapper) {
-        const path = require('path');
-        const fs = require('fs');
-        const mod = require('module');
+var $node = new Proxy({}, {
+    get(target, name, wrapper) {
+        if (target[name])
+            return target[name];
+        const mod = $node_require('module');
         if (mod.builtinModules.indexOf(name) >= 0)
-            return require(name);
+            return $node_require(name);
+        const path = $node_require('path');
+        const fs = $node_require('fs');
         let dir = path.resolve('.');
         const suffix = `./node_modules/${name}`;
         const $$ = $;
@@ -243,8 +246,17 @@ var $node = new Proxy({}, { get(target, name, wrapper) {
                 dir = parent;
             }
         }
-        return require(name);
-    } });
+        return $node_require(name);
+    },
+    set(target, name, value) {
+        target[name] = value;
+        return true;
+    },
+});
+const $node_require = require;
+require = (req => Object.assign(function require(name) {
+    return $node[name];
+}, $node_require))(require);
 //node.node.js.map
 ;
 "use strict";

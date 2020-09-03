@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_view_tree2_ts_test_sample_simple extends $mol_view {
+	export class $mol_view_tree2_ts_test_simple extends $mol_view {
 
 		/**
 		 * ```tree
@@ -43,7 +43,7 @@ namespace $ {
 		 * ```
 		 */
 		localized() {
-			return this.$.$mol_locale.text( '$mol_view_tree2_ts_test_sample_simple_localized' )
+			return this.$.$mol_locale.text( '$mol_view_tree2_ts_test_simple_localized' )
 		}
 
 		/**

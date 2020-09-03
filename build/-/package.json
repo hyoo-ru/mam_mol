@@ -1,22 +1,23 @@
 {
   "name": "mam",
-  "version": "1.11.19",
+  "version": "1.11.20",
   "main": "node.js",
   "module": "node.esm.js",
   "browser": "web.js",
   "types": "web.d.ts",
   "dependencies": {
+    "require": "*",
     "colorette": "*",
     "jsdom": "*",
     "chokidar": "*",
-    "sourcemap-codec": "*",
-    "typescript": "*",
     "express": "*",
     "portastic": "*",
     "ws": "*",
     "compression": "*",
     "body-parser": "*",
-    "serve-index": "*"
+    "serve-index": "*",
+    "sourcemap-codec": "*",
+    "typescript": "*"
   },
   "bin": {
     "mam": "./bin/mam"
