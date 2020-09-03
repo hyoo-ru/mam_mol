@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_view_tree2_ts_test_sample_bind_right extends $mol_view {
+	export class $mol_view_tree2_ts_test_bind_right extends $mol_view {
 
 		/**
 		 * ```tree
@@ -55,32 +55,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * q <= Cls2 $mol_view inner => outerQ
+		 * q <= Cls2
 		 * ```
 		 */
 		q() {
 			return this.Cls2()
-		}
-
-		/**
-		 * ```tree
-		 * Cls2 $mol_view inner => outerQ
-		 * ```
-		 */
-		@ $mol_mem
-		Cls2() {
-			const obj = new this.$.$mol_view()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * outerQ
-		 * ```
-		 */
-		outerQ() {
-			return this.Cls2().inner()
 		}
 
 		/**
@@ -102,6 +81,27 @@ namespace $ {
 		 */
 		Outer_title(index: any) {
 			return this.Indexed(index).Title()
+		}
+
+		/**
+		 * ```tree
+		 * Cls2 $mol_view inner => outerQ
+		 * ```
+		 */
+		@ $mol_mem
+		Cls2() {
+			const obj = new this.$.$mol_view()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * outerQ
+		 * ```
+		 */
+		outerQ() {
+			return this.Cls2().inner()
 		}
 	}
 

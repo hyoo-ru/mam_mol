@@ -57,6 +57,8 @@ namespace $ {
 			const current_default = src.kids.length > 0 ? src.kids[0] : undefined
 			const prev_default = prev.src.kids.length > 0 ? prev.src.kids[0] : undefined
 
+			if (current_default?.type === '-' ) return prev
+
 			if ( prev_default?.toString() !== current_default?.toString() ) return this.$.$mol_fail(
 				err`Method ${name.value} at ${
 					current_default?.span ?? name.span

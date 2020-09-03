@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_view_tree2_ts_test_sample_dictionary extends $mol_view {
+	export class $mol_view_tree2_ts_test_dictionary extends $mol_view {
 
 		/**
 		 * ```tree
@@ -35,7 +35,7 @@ namespace $ {
 				"n-um": 12317,
 				bool: true,
 				nul: null as any,
-				localized: this.$.$mol_locale.text( '$mol_view_tree2_ts_test_sample_dictionary_simple_localized' )
+				localized: this.$.$mol_locale.text( '$mol_view_tree2_ts_test_dictionary_simple_localized' )
 			}
 		}
 
@@ -64,7 +64,7 @@ namespace $ {
 					num: 12317,
 					bool: true,
 					nul: null as any,
-					localized: this.$.$mol_locale.text( '$mol_view_tree2_ts_test_sample_dictionary_complex_child_localized' )
+					localized: this.$.$mol_locale.text( '$mol_view_tree2_ts_test_dictionary_complex_child_localized' )
 				}
 			}
 		}

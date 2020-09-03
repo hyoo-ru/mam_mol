@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_view_tree2_ts_test_sample_array extends $mol_view {
+	export class $mol_view_tree2_ts_test_array extends $mol_view {
 
 		/**
 		 * ```tree
