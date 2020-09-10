@@ -37,7 +37,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		value< Value >( key : string , next? : Value , force? : $mol_atom_force_cache ) {
+		value< Value >( key : string , next? : Value ) {
 			
 			if( next === undefined ) return JSON.parse( this.native().getItem( key ) || 'null' )
 			
