@@ -2,14 +2,15 @@ namespace $ {
 
 	export class $mol_store< Data > extends $mol_object2 {
 
-		constructor( data? : Data ) {
+		constructor(
+			public data_default? : Data
+		) {
 			super()
-			if( data !== undefined ) this.data( data )
 		}
 
 		@ $mol_mem
 		data( next? : Data ) {
-			return next!
+			return next === undefined ? this.data_default! : next
 		}
 
 		snapshot( next? : string ) {
@@ -20,8 +21,10 @@ namespace $ {
 			
 			const data = this.data()
 			if( next === undefined ) return data[ key ]!
+
+			const Constr = Reflect.getPrototypeOf( data as any ).constructor as new ()=> Data
 			
-			this.data( Object.assign( {} , data , { [ key ] : next } ) )
+			this.data( Object.assign( new Constr , data , { [ key ] : next } ) )
 
 			return next!
 		}
@@ -33,8 +36,11 @@ namespace $ {
 
 			if( !lens ) lens = new $mol_store< Data[ Key ] >() as any
 
+			const data = lens!.data
 			lens!.data = next => {
-				if( next == undefined ) return this.value( key )
+				if( next == undefined ) {
+					return this.value( key ) ?? lens!.data_default!
+				}
 				return this.value( key , next )
 			}
 

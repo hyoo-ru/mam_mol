@@ -21,6 +21,8 @@ namespace $ {
 
 			const store = new $mol_store({ foo , bar })
 
+			store.data({ foo , bar })
+
 			store.data({
 				foo : { foo : 1 } ,
 				bar : { bar : 3 } ,
