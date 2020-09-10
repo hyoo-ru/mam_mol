@@ -30,14 +30,15 @@
 	top: 0;
 	display: none;
 	z-index: 1;
+	padding: .5rem;
 }
 
 [mol_number_inc] {
-	left: calc( 100% - .75rem );
+	left: calc( 100% - .5rem );
 }
 
 [mol_number_dec] {
-	right: calc( 100% - .75rem );
+	right: calc( 100% - .5rem );
 }
 
 [mol_number]:focus-within [mol_number_inc]:not([disabled]) ,
