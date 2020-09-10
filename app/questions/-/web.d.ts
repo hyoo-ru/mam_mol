@@ -796,7 +796,7 @@ declare namespace $ {
                 blur: Length;
                 spread: Length;
                 color: Color;
-            }[] | Common;
+            }[] | 'none' | Common;
         };
         font?: {
             style?: 'normal' | 'italic' | Common;
