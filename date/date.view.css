@@ -1,5 +1,6 @@
 [mol_date_input] {
 	width: 13ch;
+	flex-grow: 1;
 }
 
 [mol_date_bubble] {
