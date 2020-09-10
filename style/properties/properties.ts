@@ -63,7 +63,7 @@ namespace $ {
 				blur: Length
 				spread: Length
 				color: Color
-			}[]
+			}[] | Common
 
 		}
 
