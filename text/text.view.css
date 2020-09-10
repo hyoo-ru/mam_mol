@@ -15,6 +15,7 @@
 	margin: .5rem .75rem;
 	overflow: auto;
 	max-width: 100%;
+	display: block;
 }
 
 [mol_text_span] {
