@@ -158,7 +158,7 @@ namespace $ {
 			})
 		}
 
-		mask( config : $mol_time_duration_config ) {
+		mask( config : $mol_time_moment_config ) {
 
 			const mask = new $mol_time_moment( config )
 			
