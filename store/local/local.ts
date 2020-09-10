@@ -37,7 +37,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		value< Value >( key : string , next? : Value ) {
+		value< Value >( key : string , next? : Value , force? : $mol_mem_force_cache ) {
 			
 			if( next === undefined ) return JSON.parse( this.native().getItem( key ) || 'null' )
 			
