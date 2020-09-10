@@ -2740,7 +2740,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: block;\n\t/* display: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n\tmin-height: .5rem;\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n\n[mol_list] > * {\n\tdisplay: block;\n}\n");
+    $.$mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: block;\n\t/* display: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n\tmin-height: .5rem;\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n \n[mol_list] > * {\n\tdisplay: flex;\n}\n");
 })($ || ($ = {}));
 //list.view.css.js.map
 ;
@@ -13261,7 +13261,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/date/date.view.css", "[mol_date_input] {\n\twidth: 13ch;\n}\n\n[mol_date_bubble] {\n\tpadding: .5rem;\n}\n\n[mol_date_prev] ,\n[mol_date_next] {\n\tflex-grow: 1;\n}\n\n[mol_date_calendar_title] {\n\tpadding: .5rem .75rem;\n}\n\n[mol_date_calendar_day] {\n\tpadding: 0;\n}\n\n[mol_date_calendar_day_button] {\n\twidth: 100%;\n\tpadding: .25rem .5rem;\n\tjustify-content: center;\n\tcursor: pointer;\n\tcolor: inherit;\n}\n");
+    $.$mol_style_attach("mol/date/date.view.css", "[mol_date_input] {\n\twidth: 13ch;\n\tflex-grow: 1;\n}\n\n[mol_date_bubble] {\n\tpadding: .5rem;\n}\n\n[mol_date_prev] ,\n[mol_date_next] {\n\tflex-grow: 1;\n}\n\n[mol_date_calendar_title] {\n\tpadding: .5rem .75rem;\n}\n\n[mol_date_calendar_day] {\n\tpadding: 0;\n}\n\n[mol_date_calendar_day_button] {\n\twidth: 100%;\n\tpadding: .25rem .5rem;\n\tjustify-content: center;\n\tcursor: pointer;\n\tcolor: inherit;\n}\n");
 })($ || ($ = {}));
 //date.view.css.js.map
 ;
@@ -14774,7 +14774,7 @@ var $;
         }
         Title() {
             const obj = new this.$.$mol_view();
-            obj.minimal_height = () => 21;
+            obj.minimal_height = () => 24;
             obj.sub = () => this.label();
             return obj;
         }
@@ -14801,7 +14801,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_title] {\n\tcolor: var(--mol_theme_shade);\n\tfont-size: .875rem;\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n}\n");
+    $.$mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_title] {\n\tcolor: var(--mol_theme_shade);\n\tfont-size: .875rem;\n\tpadding: 0 .75rem;\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n}\n");
 })($ || ($ = {}));
 //labeler.view.css.js.map
 ;
