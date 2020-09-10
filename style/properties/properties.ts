@@ -56,14 +56,16 @@ namespace $ {
 		box?: {
 
 			/** Shadow effects around an element's frame. */
-			shadow?: readonly {
+			shadow?:
+			| readonly {
 				inset?: boolean
 				x: Length
 				y: Length
 				blur: Length
 				spread: Length
 				color: Color
-			}[] | Common
+			}[]
+			| 'none' | Common
 
 		}
 
