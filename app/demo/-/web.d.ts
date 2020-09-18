@@ -6318,6 +6318,24 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_view_tree2_error extends Error {
+        readonly spans: readonly $mol_span[];
+        constructor(message: string, spans: readonly $mol_span[]);
+        toJSON(): {
+            message: string;
+            spans: readonly $mol_span[];
+        };
+    }
+    class $mol_view_tree2_error_suggestions {
+        readonly suggestions: readonly string[];
+        constructor(suggestions: readonly string[]);
+        toString(): string;
+        toJSON(): readonly string[];
+    }
+    function $mol_view_tree2_error_str(strings: readonly string[], ...parts: readonly ($mol_span | readonly $mol_span[] | string | number | $mol_view_tree2_error_suggestions)[]): $mol_view_tree2_error;
+}
+
+declare namespace $ {
     function $mol_view_tree2_child(this: $mol_ambient_context, tree: $mol_tree2): $mol_tree2;
 }
 
@@ -6364,25 +6382,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_view_tree2_error extends Error {
-        readonly spans: readonly $mol_span[];
-        constructor(message: string, spans: readonly $mol_span[]);
-        toJSON(): {
-            message: string;
-            spans: readonly $mol_span[];
-        };
-    }
-    class $mol_view_tree2_error_suggestions {
-        readonly suggestions: readonly string[];
-        constructor(suggestions: readonly string[]);
-        toString(): string;
-        toJSON(): readonly string[];
-    }
-    function $mol_view_tree2_error_str(strings: readonly string[], ...parts: readonly ($mol_span | readonly $mol_span[] | string | number | $mol_view_tree2_error_suggestions)[]): $mol_view_tree2_error;
+    function $mol_view_tree2_serialize(this: $mol_ambient_context, node: $mol_tree2, prefix?: string, parent_is_inline?: boolean): string;
 }
 
 declare namespace $ {
-    function $mol_view_tree2_serialize(this: $mol_ambient_context, node: $mol_tree2, prefix?: string, parent_is_inline?: boolean): string;
+    function $mol_view_tree2_class_super(this: $mol_ambient_context, klass: $mol_tree2): $mol_tree2;
 }
 
 declare namespace $ {
@@ -6390,7 +6394,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_class_super(this: $mol_ambient_context, klass: $mol_tree2): $mol_tree2;
+    function $mol_view_tree2_prop_split(this: $mol_ambient_context, src: $mol_tree2): {
+        src: $mol_tree2;
+        name: $mol_tree2;
+        key: $mol_tree2 | undefined;
+        next: $mol_tree2 | undefined;
+    };
 }
 
 declare namespace $ {
@@ -6402,15 +6411,6 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_view_tree2_prop_quote(name: $mol_tree2): $mol_tree2;
-}
-
-declare namespace $ {
-    function $mol_view_tree2_prop_split(this: $mol_ambient_context, src: $mol_tree2): {
-        src: $mol_tree2;
-        name: $mol_tree2;
-        key: $mol_tree2 | undefined;
-        next: $mol_tree2 | undefined;
-    };
 }
 
 declare namespace $ {

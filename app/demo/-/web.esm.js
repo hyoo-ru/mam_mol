@@ -23647,6 +23647,65 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_view_tree2_error extends Error {
+        constructor(message, spans) {
+            super(message);
+            this.spans = spans;
+        }
+        toJSON() {
+            return {
+                message: this.message,
+                spans: this.spans
+            };
+        }
+    }
+    $.$mol_view_tree2_error = $mol_view_tree2_error;
+    class $mol_view_tree2_error_suggestions {
+        constructor(suggestions) {
+            this.suggestions = suggestions;
+        }
+        toString() {
+            return this.suggestions.map(suggestion => `\`${suggestion}\``).join(', ');
+        }
+        toJSON() {
+            return this.suggestions;
+        }
+    }
+    $.$mol_view_tree2_error_suggestions = $mol_view_tree2_error_suggestions;
+    function $mol_view_tree2_error_str(strings, ...parts) {
+        const spans = [];
+        let suggestions;
+        for (const part of parts) {
+            if (part instanceof $.$mol_span)
+                spans.push(part);
+            if (Array.isArray(part) && part.length > 0 && part[0] instanceof $.$mol_span)
+                spans.push(...part);
+        }
+        return new $mol_view_tree2_error(join(strings, parts), spans);
+    }
+    $.$mol_view_tree2_error_str = $mol_view_tree2_error_str;
+    function join(strings, objects) {
+        let result = '';
+        let obj_pos = 0;
+        let obj_len = objects.length;
+        for (const str of strings) {
+            result += str;
+            if (obj_pos < obj_len) {
+                const obj = objects[obj_pos++];
+                if (Array.isArray(obj))
+                    result += obj.map(item => `\`${item}\``).join(', ');
+                else
+                    result += `\`${String(obj)}\``;
+            }
+        }
+        return result;
+    }
+})($ || ($ = {}));
+//error.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_view_tree2_child(tree) {
         if (tree.kids.length === 0) {
             return this.$mol_fail($.$mol_view_tree2_error_str `Required one child at ${tree.span}`);
@@ -23782,65 +23841,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_view_tree2_error extends Error {
-        constructor(message, spans) {
-            super(message);
-            this.spans = spans;
-        }
-        toJSON() {
-            return {
-                message: this.message,
-                spans: this.spans
-            };
-        }
-    }
-    $.$mol_view_tree2_error = $mol_view_tree2_error;
-    class $mol_view_tree2_error_suggestions {
-        constructor(suggestions) {
-            this.suggestions = suggestions;
-        }
-        toString() {
-            return this.suggestions.map(suggestion => `\`${suggestion}\``).join(', ');
-        }
-        toJSON() {
-            return this.suggestions;
-        }
-    }
-    $.$mol_view_tree2_error_suggestions = $mol_view_tree2_error_suggestions;
-    function $mol_view_tree2_error_str(strings, ...parts) {
-        const spans = [];
-        let suggestions;
-        for (const part of parts) {
-            if (part instanceof $.$mol_span)
-                spans.push(part);
-            if (Array.isArray(part) && part.length > 0 && part[0] instanceof $.$mol_span)
-                spans.push(...part);
-        }
-        return new $mol_view_tree2_error(join(strings, parts), spans);
-    }
-    $.$mol_view_tree2_error_str = $mol_view_tree2_error_str;
-    function join(strings, objects) {
-        let result = '';
-        let obj_pos = 0;
-        let obj_len = objects.length;
-        for (const str of strings) {
-            result += str;
-            if (obj_pos < obj_len) {
-                const obj = objects[obj_pos++];
-                if (Array.isArray(obj))
-                    result += obj.map(item => `\`${item}\``).join(', ');
-                else
-                    result += `\`${String(obj)}\``;
-            }
-        }
-        return result;
-    }
-})($ || ($ = {}));
-//error.js.map
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_view_tree2_serialize(node, prefix = '', parent_is_inline = false) {
         const { type, kids, value } = node;
         if (!value && !type)
@@ -23859,6 +23859,25 @@ var $;
     $.$mol_view_tree2_serialize = $mol_view_tree2_serialize;
 })($ || ($ = {}));
 //serialize.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const err = $.$mol_view_tree2_error_str;
+    function $mol_view_tree2_class_super(klass) {
+        if (!class_regex.test(klass.type))
+            return this.$mol_fail(err `Wrong class name at ${klass.span}`);
+        const superclass = klass.kids.length === 1 ? klass.kids[0] : undefined;
+        if (!superclass)
+            return this.$mol_fail(err `No subclass at ${klass.span}`);
+        if (!class_regex.test(superclass.type))
+            return this.$mol_fail(err `Wrong subclass name at ${superclass.span}`);
+        return superclass;
+    }
+    $.$mol_view_tree2_class_super = $mol_view_tree2_class_super;
+    const class_regex = /^\$\w+$/;
+})($ || ($ = {}));
+//super.js.map
 ;
 "use strict";
 var $;
@@ -23891,58 +23910,6 @@ var $;
     $.$mol_view_tree2_class_props = $mol_view_tree2_class_props;
 })($ || ($ = {}));
 //props.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $.$mol_view_tree2_error_str;
-    function $mol_view_tree2_class_super(klass) {
-        if (!class_regex.test(klass.type))
-            return this.$mol_fail(err `Wrong class name at ${klass.span}`);
-        const superclass = klass.kids.length === 1 ? klass.kids[0] : undefined;
-        if (!superclass)
-            return this.$mol_fail(err `No subclass at ${klass.span}`);
-        if (!class_regex.test(superclass.type))
-            return this.$mol_fail(err `Wrong subclass name at ${superclass.span}`);
-        return superclass;
-    }
-    $.$mol_view_tree2_class_super = $mol_view_tree2_class_super;
-    const class_regex = /^\$\w+$/;
-})($ || ($ = {}));
-//super.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_prop_name(prop) {
-        return this.$mol_view_tree2_prop_split(prop).name.value;
-    }
-    $.$mol_view_tree2_prop_name = $mol_view_tree2_prop_name;
-    function $mol_view_tree2_prop_key(prop) {
-        var _a;
-        return (_a = this.$mol_view_tree2_prop_split(prop).key) === null || _a === void 0 ? void 0 : _a.value;
-    }
-    $.$mol_view_tree2_prop_key = $mol_view_tree2_prop_key;
-    function $mol_view_tree2_prop_next(prop) {
-        var _a;
-        return (_a = this.$mol_view_tree2_prop_split(prop).next) === null || _a === void 0 ? void 0 : _a.value;
-    }
-    $.$mol_view_tree2_prop_next = $mol_view_tree2_prop_next;
-})($ || ($ = {}));
-//prop.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    const regular_regex = /^\w+$/;
-    function $mol_view_tree2_prop_quote(name) {
-        if (regular_regex.test(name.value))
-            return name;
-        return name.data(JSON.stringify(name.value));
-    }
-    $.$mol_view_tree2_prop_quote = $mol_view_tree2_prop_quote;
-})($ || ($ = {}));
-//quote.js.map
 ;
 "use strict";
 var $;
@@ -23983,6 +23950,39 @@ var $;
     ]);
 })($ || ($ = {}));
 //split.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_view_tree2_prop_name(prop) {
+        return this.$mol_view_tree2_prop_split(prop).name.value;
+    }
+    $.$mol_view_tree2_prop_name = $mol_view_tree2_prop_name;
+    function $mol_view_tree2_prop_key(prop) {
+        var _a;
+        return (_a = this.$mol_view_tree2_prop_split(prop).key) === null || _a === void 0 ? void 0 : _a.value;
+    }
+    $.$mol_view_tree2_prop_key = $mol_view_tree2_prop_key;
+    function $mol_view_tree2_prop_next(prop) {
+        var _a;
+        return (_a = this.$mol_view_tree2_prop_split(prop).next) === null || _a === void 0 ? void 0 : _a.value;
+    }
+    $.$mol_view_tree2_prop_next = $mol_view_tree2_prop_next;
+})($ || ($ = {}));
+//prop.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const regular_regex = /^\w+$/;
+    function $mol_view_tree2_prop_quote(name) {
+        if (regular_regex.test(name.value))
+            return name;
+        return name.data(JSON.stringify(name.value));
+    }
+    $.$mol_view_tree2_prop_quote = $mol_view_tree2_prop_quote;
+})($ || ($ = {}));
+//quote.js.map
 ;
 "use strict";
 var $;

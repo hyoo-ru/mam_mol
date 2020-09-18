@@ -4510,10 +4510,10 @@ var $;
                         if (file === this.root())
                             continue;
                         const from = src.relate(this.root());
-                        if (!(from in graph.nodes))
+                        if (!graph.nodes.has(from))
                             continue;
                         const to = file.relate(this.root());
-                        if (!(to in graph.nodes))
+                        if (!graph.nodes.has(to))
                             continue;
                         graph.link(from, to, { priority: deps[p] });
                     }
@@ -4796,8 +4796,9 @@ var $;
                 if (added[mod.path()])
                     return;
                 added[mod.path()] = true;
-                graph.nodes[mod.relate(this.root())] = null;
+                graph.nodes.add(mod.relate(this.root()));
                 const checkDep = (p) => {
+                    var _a;
                     const isFile = /\.\w+$/.test(p);
                     var dep = (p[0] === '/')
                         ? this.root().resolve(p + (isFile ? '' : '/' + p.replace(/.*\//, '')))
@@ -4824,7 +4825,7 @@ var $;
                         return;
                     const from = mod.relate(this.root());
                     const to = dep.relate(this.root());
-                    const edge = graph.edges_out[from] && graph.edges_out[from][to];
+                    const edge = (_a = graph.edges_out.get(from)) === null || _a === void 0 ? void 0 : _a.get(to);
                     if (!edge || (deps[p] > edge.priority)) {
                         graph.link(from, to, { priority: deps[p] });
                     }
@@ -5269,14 +5270,32 @@ var $;
             }
             const graph = this.graph({ path, exclude });
             const deps = {};
-            for (let dep in graph.nodes) {
+            for (let dep of graph.nodes) {
                 deps[dep] = this.dependencies({ path: this.root().resolve(dep).path(), exclude });
+            }
+            const deps_in = {};
+            for (const [dep, pair] of graph.edges_in) {
+                if (!deps_in[dep]) {
+                    deps_in[dep] = {};
+                }
+                for (const [mod, edge] of pair) {
+                    deps_in[dep][mod] = edge.priority;
+                }
+            }
+            const deps_out = {};
+            for (const [mod, pair] of graph.edges_out) {
+                if (!deps_out[mod]) {
+                    deps_out[mod] = {};
+                }
+                for (const [dep, edge] of pair) {
+                    deps_out[mod][dep] = edge.priority;
+                }
             }
             const data = {
                 files: list.map(src => src.relate(this.root())),
                 mods: graph.sorted,
-                edgesIn: graph.edges_in,
-                edgesOut: graph.edges_out,
+                deps_in,
+                deps_out,
                 sloc,
                 deps
             };
