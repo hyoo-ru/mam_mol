@@ -221,10 +221,10 @@ namespace $ {
 						if( file === this.root() ) continue
 
 						const from = src.relate( this.root() )
-						if(!( from in graph.nodes )) continue
+						if( !graph.nodes.has( from ) ) continue
 					
 						const to = file.relate( this.root() )
-						if(!( to in graph.nodes )) continue
+						if( !graph.nodes.has( to ) ) continue
 					
 						graph.link( from , to , { priority : deps[ p ] } )
 					}
@@ -236,7 +236,6 @@ namespace $ {
 			let next = [ ... graph.sorted ].map( name => this.root().resolve( name ) )
 			return next
 		}
-		
 		
 		@ $mol_mem_key
 		sourcesAll( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
@@ -635,7 +634,7 @@ namespace $ {
 				if( added[ mod.path() ] ) return
 				added[ mod.path() ] = true
 				
-				graph.nodes[ mod.relate( this.root() ) ] = null
+				graph.nodes.add( mod.relate( this.root() ) )
 				
 				const checkDep = ( p : string )=> {
 
@@ -667,7 +666,7 @@ namespace $ {
 					
 					const from = mod.relate( this.root() )
 					const to = dep.relate( this.root() )
-					const edge = graph.edges_out[ from ] && graph.edges_out[ from ][ to ]
+					const edge = graph.edges_out.get( from )?.get( to )
 					if( !edge || ( deps[ p ] > edge.priority ) ) {
 						graph.link( from , to , { priority : deps[ p ] } )
 					}
@@ -1294,15 +1293,41 @@ namespace $ {
 			const graph = this.graph( { path , exclude } )
 			
 			const deps = {} as Record<string, Record<string, number>>
-			for( let dep in graph.nodes ) {
+			for( let dep of graph.nodes ) {
 				deps[ dep ] = this.dependencies( { path : this.root().resolve( dep ).path() , exclude } )
 			}
 			
+			const deps_in = {} as Record< string , Record< string , number > >
+			for( const [ dep , pair ] of graph.edges_in ) {
+
+				if( !deps_in[ dep ] ) {
+					deps_in[ dep ] = {}
+				}
+
+				for( const [ mod , edge ] of pair ) {
+					deps_in[ dep ][ mod ] = edge.priority
+				}
+
+			}
+
+			const deps_out = {} as Record< string , Record< string , number > >
+			for( const [ mod , pair ] of graph.edges_out ) {
+
+				if( !deps_out[ mod ] ) {
+					deps_out[ mod ] = {}
+				}
+
+				for( const [ dep , edge ] of pair ) {
+					deps_out[ mod ][ dep ] = edge.priority
+				}
+
+			}
+
 			const data = {
 				files : list.map( src => src.relate( this.root() ) ) ,
 				mods : graph.sorted ,
-				edgesIn : graph.edges_in ,
-				edgesOut : graph.edges_out ,
+				deps_in ,
+				deps_out ,
 				sloc ,
 				deps
 			} as const
