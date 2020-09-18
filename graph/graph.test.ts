@@ -1,5 +1,19 @@
 namespace $ {
 	$mol_test( {
+
+		'ordered links'() {
+
+			var graph = new $mol_graph< string , 'E' >()
+			
+			graph.link( 'A' , 'B' , 'E' )
+			
+			$mol_assert_equal( graph.edge_out( 'A' , 'B' ) , 'E' )
+			$mol_assert_equal( graph.edge_in( 'B' , 'A' ) , 'E' )
+			
+			$mol_assert_equal( graph.edge_out( 'B' , 'A' ) , null )
+			$mol_assert_equal( graph.edge_in( 'A' , 'B' ) , null )
+
+		},
 		
 		'nodes without edges'() {
 

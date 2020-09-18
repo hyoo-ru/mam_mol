@@ -24,15 +24,15 @@ namespace $ {
 		
 		link_in( to : Node , from : Node , edge : Edge ) {
 
-			let pair = this.edges_in.get( from )
+			let pair = this.edges_in.get( to )
 			
 			if( !pair ) {
 				pair = new Map< Node , Edge >()
-				this.edges_in.set( from , pair )
-				this.nodes.add( from )
+				this.edges_in.set( to , pair )
+				this.nodes.add( to )
 			}
 			
-			pair.set( to , edge )
+			pair.set( from , edge )
 			this.nodes.add( to )
 
 		}
