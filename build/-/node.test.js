@@ -4098,13 +4098,13 @@ var $;
             this.nodes.add(to);
         }
         link_in(to, from, edge) {
-            let pair = this.edges_in.get(from);
+            let pair = this.edges_in.get(to);
             if (!pair) {
                 pair = new Map();
-                this.edges_in.set(from, pair);
-                this.nodes.add(from);
+                this.edges_in.set(to, pair);
+                this.nodes.add(to);
             }
-            pair.set(to, edge);
+            pair.set(from, edge);
             this.nodes.add(to);
         }
         edge_out(from, to) {
@@ -8793,6 +8793,14 @@ var $;
 var $;
 (function ($) {
     $.$mol_test({
+        'ordered links'() {
+            var graph = new $.$mol_graph();
+            graph.link('A', 'B', 'E');
+            $.$mol_assert_equal(graph.edge_out('A', 'B'), 'E');
+            $.$mol_assert_equal(graph.edge_in('B', 'A'), 'E');
+            $.$mol_assert_equal(graph.edge_out('B', 'A'), null);
+            $.$mol_assert_equal(graph.edge_in('A', 'B'), null);
+        },
         'nodes without edges'() {
             var graph = new $.$mol_graph();
             graph.nodes.add('A');
