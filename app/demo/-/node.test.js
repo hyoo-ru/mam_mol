@@ -17527,10 +17527,26 @@ var $;
                 });
             })();
         }
+        static style(uri) {
+            return $.$mol_fiber_sync(() => {
+                const doc = $.$mol_dom_context.document;
+                const style = doc.createElement('link');
+                style.rel = 'stylesheet';
+                style.href = uri;
+                doc.head.appendChild(style);
+                return new Promise((done, fail) => {
+                    style.onload = () => done(style.sheet);
+                    style.onerror = () => fail(new Error(`Can not import ${uri}`));
+                });
+            })();
+        }
     }
     __decorate([
         $.$mol_mem_key
     ], $mol_import, "script", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_import, "style", null);
     $.$mol_import = $mol_import;
 })($ || ($ = {}));
 //import.js.map

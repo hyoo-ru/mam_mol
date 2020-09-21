@@ -4740,6 +4740,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_import extends $mol_object2 {
         static script(uri: string): any;
+        static style(uri: string): any;
     }
 }
 

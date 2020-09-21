@@ -22,6 +22,27 @@ namespace $ {
 
 		}
 
+		@ $mol_mem_key
+		static style( uri : string ) : any {
+			
+			return $mol_fiber_sync( ()=> {
+
+				const doc = $mol_dom_context.document
+				
+				const style = doc.createElement( 'link' )
+				style.rel = 'stylesheet'
+				style.href = uri
+				doc.head.appendChild( style )
+				
+				return new Promise< CSSStyleSheet >( ( done , fail ) => {
+					style.onload = ()=> done( style.sheet! )
+					style.onerror = ()=> fail( new Error( `Can not import ${ uri }` ) )
+				} )
+
+			} )()
+
+		}
+
 	}
 
 }
