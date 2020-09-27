@@ -13,12 +13,18 @@ undefined is not a number
 ## Entities
 
 ```typescript
-const UserDTO = $mol_data_record({
+// Base Type
+const PersonDTO = $mol_data_record({
 	name : $mol_data_string ,
 	age : $mol_data_optional( $mol_data_integer ) ,
 	birthday : $mol_data_pipe( $mol_data_string , $mol_time_moment ) ,
-	phone : $mol_data_variant( $mol_data_string , $mol_data_integer ) ,
-	mail : $mol_data_email ,
+})
+
+// Derived Type
+const UserDTO = $mol_data_record({
+	... PersonDTO.config,
+	phone: $mol_data_variant( $mol_data_string , $mol_data_integer ),
+	mail: $mol_data_email,
 })
 
 // Ensure this is a User
@@ -51,7 +57,7 @@ const json = {
 	age : 33 ,
 	birthday : '1984-08-04T12:00:00Z' ,
 	phone : 791234567890,
-	mail : '</script>' ,
+	mail : '</script>' , // !
 } as any
 
 // Runtime error: ["mail"] </script> is not a /.+@.+/
