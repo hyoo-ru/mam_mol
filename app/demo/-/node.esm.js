@@ -7074,28 +7074,88 @@ var $;
                 return '';
             return String(moment.year % 100);
         },
-        'Month': (moment) => {
+        'Month': (pattern => (moment) => {
             if (moment.month == null)
                 return '';
-            return moment.native.toLocaleString(undefined, { month: 'long' });
-        },
-        'DD Month': (moment) => {
-            return moment.native.toLocaleString(undefined, { day: '2-digit', month: 'long' });
-        },
-        'D Month': (moment) => {
-            return moment.native.toLocaleString(undefined, { day: 'numeric', month: 'long' });
-        },
-        'Mon': (moment) => {
+            return pattern.format(moment.native);
+        })(new Intl.DateTimeFormat(undefined, { month: 'long' })),
+        'DD Month': (pattern => (moment) => {
+            if (moment.month == null) {
+                if (moment.day == null) {
+                    return '';
+                }
+                else {
+                    return $mol_time_moment.patterns['DD'](moment);
+                }
+            }
+            else {
+                if (moment.day == null) {
+                    return $mol_time_moment.patterns['Month'](moment);
+                }
+                else {
+                    return pattern.format(moment.native);
+                }
+            }
+        })(new Intl.DateTimeFormat(undefined, { day: '2-digit', month: 'long' })),
+        'D Month': (pattern => (moment) => {
+            if (moment.month == null) {
+                if (moment.day == null) {
+                    return '';
+                }
+                else {
+                    return $mol_time_moment.patterns['D'](moment);
+                }
+            }
+            else {
+                if (moment.day == null) {
+                    return $mol_time_moment.patterns['Month'](moment);
+                }
+                else {
+                    return pattern.format(moment.native);
+                }
+            }
+        })(new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'long' })),
+        'Mon': (pattern => (moment) => {
             if (moment.month == null)
                 return '';
-            return moment.native.toLocaleString(undefined, { month: 'short' });
-        },
-        'DD Mon': (moment) => {
-            return moment.native.toLocaleString(undefined, { day: '2-digit', month: 'short' });
-        },
-        'D Mon': (moment) => {
-            return moment.native.toLocaleString(undefined, { day: 'numeric', month: 'short' });
-        },
+            return pattern.format(moment.native);
+        })(new Intl.DateTimeFormat(undefined, { month: 'short' })),
+        'DD Mon': (pattern => (moment) => {
+            if (moment.month == null) {
+                if (moment.day == null) {
+                    return '';
+                }
+                else {
+                    return $mol_time_moment.patterns['DD'](moment);
+                }
+            }
+            else {
+                if (moment.day == null) {
+                    return $mol_time_moment.patterns['Mon'](moment);
+                }
+                else {
+                    return pattern.format(moment.native);
+                }
+            }
+        })(new Intl.DateTimeFormat(undefined, { day: '2-digit', month: 'short' })),
+        'D Mon': (pattern => (moment) => {
+            if (moment.month == null) {
+                if (moment.day == null) {
+                    return '';
+                }
+                else {
+                    return $mol_time_moment.patterns['D'](moment);
+                }
+            }
+            else {
+                if (moment.day == null) {
+                    return $mol_time_moment.patterns['Mon'](moment);
+                }
+                else {
+                    return pattern.format(moment.native);
+                }
+            }
+        })(new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short' })),
         '-MM': (moment) => {
             if (moment.month == null)
                 return '';
@@ -7114,16 +7174,24 @@ var $;
                 return '';
             return String(moment.month + 1);
         },
-        'WeekDay': (moment) => {
-            if (moment.weekday == null)
+        'WeekDay': (pattern => (moment) => {
+            if (moment.day == null)
                 return '';
-            return moment.native.toLocaleString(undefined, { weekday: 'long' });
-        },
-        'WD': (moment) => {
-            if (moment.weekday == null)
+            if (moment.month == null)
                 return '';
-            return moment.native.toLocaleString(undefined, { weekday: 'short' });
-        },
+            if (moment.year == null)
+                return '';
+            return pattern.format(moment.native);
+        })(new Intl.DateTimeFormat(undefined, { weekday: 'long' })),
+        'WD': (pattern => (moment) => {
+            if (moment.day == null)
+                return '';
+            if (moment.month == null)
+                return '';
+            if (moment.year == null)
+                return '';
+            return pattern.format(moment.native);
+        })(new Intl.DateTimeFormat(undefined, { weekday: 'short' })),
         '-DD': (moment) => {
             if (moment.day == null)
                 return '';

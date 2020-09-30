@@ -118,30 +118,37 @@ namespace $ {
 		}
 
 		static patterns = {
+
 			'#Y' : ( duration : $mol_time_duration )=> {
 				if( !duration.year ) return ''
 				return duration.year + 'Y'
 			} ,
+			
 			'#M' : ( duration : $mol_time_duration )=> {
 				if( !duration.month ) return ''
 				return duration.month + 'M'
 			} ,
+			
 			'#D' : ( duration : $mol_time_duration )=> {
 				if( !duration.day ) return ''
 				return duration.day + 'D'
 			} ,
+			
 			'#h' : ( duration : $mol_time_duration )=> {
 				if( !duration.hour ) return ''
 				return duration.hour + 'H'
 			} ,
+			
 			'#m' : ( duration : $mol_time_duration )=> {
 				if( !duration.minute ) return ''
 				return duration.minute + 'M'
 			} ,
+			
 			'#s' : ( duration : $mol_time_duration )=> {
 				if( !duration.second ) return ''
 				return duration.second + 'S'
 			} ,
+			
 			'+hh' : ( duration : $mol_time_duration )=> {
 				var hour = duration.hour
 				var sign = '+'
@@ -153,11 +160,13 @@ namespace $ {
 						? ( sign + '0' + hour )
 						: ( sign + hour )
 			} ,
+			
 			'mm' : ( duration : $mol_time_duration )=> {
 				return ( duration.minute < 10 )
 					? ( '0' + duration.minute )
 					: String( duration.minute )
 			} ,
+			
 		}
 
 	}
