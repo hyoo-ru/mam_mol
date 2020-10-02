@@ -6,7 +6,6 @@
 	word-break: break-word;
 	box-sizing: border-box;
 	display: flex;
-	flex-shrink: 0;
 }
 
 [mol_view] > * {
