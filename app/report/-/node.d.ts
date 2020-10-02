@@ -1533,6 +1533,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_after_work extends $mol_after_timeout {
+    }
+}
+
+declare namespace $ {
     class $mol_state_time extends $mol_object {
         static now(precision?: number, next?: number): number;
     }

@@ -1334,12 +1334,26 @@ var $;
         constructor(task) {
             super();
             this.task = task;
-            this.id = requestAnimationFrame(task);
+            this.cancelled = false;
+            this.promise = $mol_after_frame.promise.then(() => {
+                if (this.cancelled)
+                    return;
+                task();
+            });
+        }
+        static get promise() {
+            if (this._promise)
+                return this._promise;
+            return this._promise = new Promise(done => requestAnimationFrame(() => {
+                this._promise = null;
+                done();
+            }));
         }
         destructor() {
-            cancelAnimationFrame(this.id);
+            this.cancelled = true;
         }
     }
+    $mol_after_frame._promise = null;
     $.$mol_after_frame = $mol_after_frame;
 })($ || ($ = {}));
 //frame.web.js.map

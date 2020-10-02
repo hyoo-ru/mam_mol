@@ -6837,13 +6837,22 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_after_work extends $.$mol_after_timeout {
+    }
+    $.$mol_after_work = $mol_after_work;
+})($ || ($ = {}));
+//work.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_state_time extends $.$mol_object {
         static now(precision = 0, next) {
             if (precision > 0) {
                 new $.$mol_after_timeout(precision, $.$mol_atom2.current.fresh);
             }
             else {
-                new $.$mol_after_frame($.$mol_atom2.current.fresh);
+                new $.$mol_after_work(16, $.$mol_atom2.current.fresh);
             }
             return Date.now();
         }
@@ -12408,6 +12417,15 @@ var $;
     });
 })($ || ($ = {}));
 //unit.test.js.map
+;
+"use strict";
+var $;
+(function ($_1) {
+    $_1.$mol_test_mocks.push($ => {
+        $.$mol_after_work = $_1.$mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+//work.test.js.map
 ;
 "use strict";
 var $;

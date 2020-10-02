@@ -214,7 +214,10 @@ declare namespace $ {
 declare namespace $ {
     class $mol_after_frame extends $mol_object2 {
         task: () => void;
-        id: any;
+        static _promise: Promise<void> | null;
+        static get promise(): Promise<void>;
+        cancelled: boolean;
+        promise: Promise<void>;
         constructor(task: () => void);
         destructor(): void;
     }
@@ -1238,6 +1241,16 @@ declare namespace $ {
         elapsed(): string;
         Elapsed(): $mol_view;
         value(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_after_work extends $mol_object2 {
+        delay: number;
+        task: () => void;
+        id: any;
+        constructor(delay: number, task: () => void);
+        destructor(): void;
     }
 }
 

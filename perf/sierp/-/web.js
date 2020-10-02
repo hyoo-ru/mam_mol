@@ -502,12 +502,26 @@ var $;
         constructor(task) {
             super();
             this.task = task;
-            this.id = requestAnimationFrame(task);
+            this.cancelled = false;
+            this.promise = $mol_after_frame.promise.then(() => {
+                if (this.cancelled)
+                    return;
+                task();
+            });
+        }
+        static get promise() {
+            if (this._promise)
+                return this._promise;
+            return this._promise = new Promise(done => requestAnimationFrame(() => {
+                this._promise = null;
+                done();
+            }));
         }
         destructor() {
-            cancelAnimationFrame(this.id);
+            this.cancelled = true;
         }
     }
+    $mol_after_frame._promise = null;
     $.$mol_after_frame = $mol_after_frame;
 })($ || ($ = {}));
 //frame.web.js.map
@@ -2446,13 +2460,31 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_after_work extends $.$mol_object2 {
+        constructor(delay, task) {
+            super();
+            this.delay = delay;
+            this.task = task;
+            this.id = requestIdleCallback(task, { timeout: delay });
+        }
+        destructor() {
+            cancelIdleCallback(this.id);
+        }
+    }
+    $.$mol_after_work = $mol_after_work;
+})($ || ($ = {}));
+//work.web.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_state_time extends $.$mol_object {
         static now(precision = 0, next) {
             if (precision > 0) {
                 new $.$mol_after_timeout(precision, $.$mol_atom2.current.fresh);
             }
             else {
-                new $.$mol_after_frame($.$mol_atom2.current.fresh);
+                new $.$mol_after_work(16, $.$mol_atom2.current.fresh);
             }
             return Date.now();
         }

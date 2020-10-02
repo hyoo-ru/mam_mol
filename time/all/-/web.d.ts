@@ -3,8 +3,8 @@ export = $;
 
 declare namespace $ {
     class $mol_time_base {
-        static patterns: any;
-        static formatter(pattern: string): any;
+        static patterns: Record<string, (arg: any) => string>;
+        static formatter(pattern: string): (arg: any) => string;
         toString(pattern: string): string;
     }
 }
