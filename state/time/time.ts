@@ -8,7 +8,7 @@ namespace $ {
 			if( precision > 0 ) {
 				new $mol_after_timeout( precision , $mol_atom2.current!.fresh )
 			} else {
-				new $mol_after_frame( $mol_atom2.current!.fresh )
+				new $mol_after_work( 16 , $mol_atom2.current!.fresh )
 			}
 		
 			return Date.now()
