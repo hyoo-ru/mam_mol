@@ -4890,8 +4890,10 @@ var $;
         $.$mol_style_define($$.$mol_page, {
             display: 'flex',
             margin: 0,
-            flexDirection: 'column',
-            flex: 'auto',
+            flex: {
+                basis: 'auto',
+                direction: 'column',
+            },
             position: 'relative',
             alignSelf: 'stretch',
             maxWidth: per(100),
