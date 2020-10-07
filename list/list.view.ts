@@ -8,6 +8,7 @@ namespace $.$$ {
 			return ( rows.length === 0 ) ? [ this.Empty() ] : rows
 		}
 
+		@ $mol_memo.method
 		render_visible_only() {
 			if ( !$mol_dom_context.CSS ) return false
 			return $mol_dom_context.CSS.supports( 'overflow-anchor:auto' )
@@ -37,8 +38,8 @@ namespace $.$$ {
 			const gap_before = $mol_mem_cached( ()=> this.gap_before() ) ?? 0
 			const gap_after = $mol_mem_cached( ()=> this.gap_after() ) ?? 0
 
-			let top = ( rect?.top ?? 0 ) + gap_before
-			let bottom = ( rect?.bottom ?? 0 ) - gap_after
+			let top = Math.ceil( rect?.top ?? 0 ) + gap_before
+			let bottom = Math.ceil( rect?.bottom ?? 0 ) - gap_after
 
 			// change nothing when already covers all limits
 			if( top <= limit_top && bottom >= limit_bottom ) {
@@ -49,7 +50,7 @@ namespace $.$$ {
 			if( anchoring && (( bottom < limit_top )||( top > limit_bottom )) ) {
 
 				min = 0
-				top = ( rect?.top ?? 0 )
+				top = Math.ceil( rect?.top ?? 0 )
 				
 				while( min < ( kids.length - 1 ) ) {
 					
