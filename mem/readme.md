@@ -152,6 +152,8 @@ jins() {
 }
 ```
 
+## [Online sandbox](https://repl.it/@ninjin/molatom2#index.ts)
+
 ## Articles
 
 * [$mol_atom: теория и практика реактивности](https://habrahabr.ru/post/317360/) - Object oriented reactive programming
