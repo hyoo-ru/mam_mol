@@ -1642,6 +1642,8 @@ var $;
     }
     $.$mol_mem_persist = $mol_mem_persist;
     function $mol_mem(proto, name, descr) {
+        if (!descr)
+            descr = Reflect.getOwnPropertyDescriptor(proto, name);
         const orig = descr.value;
         const store = new WeakMap();
         Object.defineProperty(proto, name + "()", {
@@ -1751,6 +1753,8 @@ var $;
 var $;
 (function ($) {
     function $mol_mem_key(proto, name, descr) {
+        if (!descr)
+            descr = Reflect.getOwnPropertyDescriptor(proto, name);
         const value = descr.value;
         const store = new WeakMap();
         Object.defineProperty(proto, name + "()", {
