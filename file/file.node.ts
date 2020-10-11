@@ -106,6 +106,8 @@ namespace $ {
 			let stat = next
 			const path = this.path()
 
+			this.parent().watcher()
+			
 			try {
 				stat = next ?? stat_convert($node.fs.statSync( path ))
 			} catch (error) {
@@ -114,8 +116,6 @@ namespace $ {
 				return this.$.$mol_fail_hidden(error)
 			}
 
-			this.parent().watcher()
-			
 			return stat
 		}
 

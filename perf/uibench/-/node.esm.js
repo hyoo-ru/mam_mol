@@ -4304,6 +4304,7 @@ var $;
         stat(next, force) {
             let stat = next;
             const path = this.path();
+            this.parent().watcher();
             try {
                 stat = next !== null && next !== void 0 ? next : stat_convert($node.fs.statSync(path));
             }
@@ -4313,7 +4314,6 @@ var $;
                 error.message += '\n' + path;
                 return this.$.$mol_fail_hidden(error);
             }
-            this.parent().watcher();
             return stat;
         }
         ensure(next) {

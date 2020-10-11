@@ -1303,9 +1303,6 @@ var $;
 //fiber.js.map
 ;
 "use strict";
-//deep.js.map
-;
-"use strict";
 var $;
 (function ($) {
 })($ || ($ = {}));
@@ -1317,21 +1314,6 @@ var $;
     $.$mol_dom_context = new $node.jsdom.JSDOM('', { url: 'https://localhost/' }).window;
 })($ || ($ = {}));
 //context.node.js.map
-;
-"use strict";
-//jsx d.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_jsx_prefix = '';
-    $.$mol_jsx_booked = null;
-    $.$mol_jsx_document = {
-        getElementById: () => null,
-        createElement: (name) => $.$mol_dom_context.document.createElement(name)
-    };
-})($ || ($ = {}));
-//jsx.js.map
 ;
 "use strict";
 var $;
@@ -1389,9 +1371,18 @@ var $;
 //children.js.map
 ;
 "use strict";
+//deep.js.map
+;
+"use strict";
 var $;
 (function ($) {
-    function $mol_jsx_make(Elem, props, ...childNodes) {
+    $.$mol_jsx_prefix = '';
+    $.$mol_jsx_booked = null;
+    $.$mol_jsx_document = {
+        getElementById: () => null,
+        createElement: (name) => $.$mol_dom_context.document.createElement(name)
+    };
+    function $mol_jsx(Elem, props, ...childNodes) {
         const id = props && props.id || '';
         if ($.$mol_jsx_booked) {
             if ($.$mol_jsx_booked.has(id)) {
@@ -1448,9 +1439,9 @@ var $;
             node.id = guid;
         return node;
     }
-    $.$mol_jsx_make = $mol_jsx_make;
+    $.$mol_jsx = $mol_jsx;
 })($ || ($ = {}));
-//make.js.map
+//jsx.js.map
 ;
 "use strict";
 var $;
@@ -1459,7 +1450,7 @@ var $;
         static step(sandbox) {
             if (Math.random() > .999)
                 throw new Error('Test error');
-            sandbox.appendChild($.$mol_jsx_make("video", null));
+            sandbox.appendChild($.$mol_jsx("video", null));
         }
         static walk(sandbox) {
             try {

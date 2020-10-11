@@ -7,7 +7,7 @@ JSX view base class.
 ### Interactive view
 
 ```tsx
-/** @jsx $mol_jsx_make */
+/** @jsx $mol_jsx */
 
 class $my_app extends $mol_jsx_view {
 
@@ -46,7 +46,7 @@ After click:
 ### Reactive view
 
 ```tsx
-/** @jsx $mol_jsx_make */
+/** @jsx $mol_jsx */
 
 class $my_app extends $mol_jsx_view {
 

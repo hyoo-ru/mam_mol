@@ -273,44 +273,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    type $mol_type_partial_deep<Val> = {
-        [field in keyof Val]?: $mol_type_partial_deep<Val[field]>;
-    };
-}
-
-declare namespace $ {
     var $mol_dom_context: typeof globalThis;
 }
 
 declare namespace $ {
-}
-
-declare namespace JSX {
-    interface Element extends HTMLElement {
-    }
-    interface ElementClass {
-        attributes: {};
-        ownerDocument: Pick<Document, 'getElementById' | 'createElement'>;
-        childNodes: Array<Node | string>;
-        valueOf(): Element;
-    }
-    type IntrinsicElements = {
-        [key in keyof HTMLElementTagNameMap]?: $.$mol_type_partial_deep<HTMLElementTagNameMap[key]>;
-    };
-    interface IntrinsicAttributes {
-        id?: string;
-    }
-    interface ElementAttributesProperty {
-        attributes: {};
-    }
-    interface ElementChildrenAttribute {
-    }
-}
-
-declare namespace $ {
-    let $mol_jsx_prefix: string;
-    let $mol_jsx_booked: Set<string> | null;
-    let $mol_jsx_document: JSX.ElementClass['ownerDocument'];
 }
 
 declare namespace $ {
@@ -318,9 +284,39 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_jsx_make<Props extends {
+    type $mol_type_partial_deep<Val> = {
+        [field in keyof Val]?: $mol_type_partial_deep<Val[field]>;
+    };
+}
+
+declare namespace $ {
+    let $mol_jsx_prefix: string;
+    let $mol_jsx_booked: Set<string> | null;
+    let $mol_jsx_document: $mol_jsx.JSX.ElementClass['ownerDocument'];
+    function $mol_jsx<Props extends {
         id?: string;
     }, Children extends Array<Node | string>>(Elem: string | ((props: Props, ...children: Children) => Element) | typeof $mol_jsx_view, props: Props, ...childNodes: Children): Element;
+    namespace $mol_jsx.JSX {
+        interface Element extends HTMLElement {
+        }
+        interface ElementClass {
+            attributes: {};
+            ownerDocument: Pick<Document, 'getElementById' | 'createElement'>;
+            childNodes: Array<Node | string>;
+            valueOf(): Element;
+        }
+        type IntrinsicElements = {
+            [key in keyof HTMLElementTagNameMap]?: $.$mol_type_partial_deep<HTMLElementTagNameMap[key]>;
+        };
+        interface IntrinsicAttributes {
+            id?: string;
+        }
+        interface ElementAttributesProperty {
+            attributes: {};
+        }
+        interface ElementChildrenAttribute {
+        }
+    }
 }
 
 declare namespace $ {
