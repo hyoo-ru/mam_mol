@@ -1,4 +1,4 @@
-/** @jsx $mol_jsx_make */
+/** @jsx $mol_jsx */
 namespace $ {
 
 	$mol_test({

@@ -5,7 +5,7 @@ Defines `$mol_jsx_document` for inner JSX instructions. DOM nodes are reusing fr
 ## Usage example
 
 ```tsx
-/** @jsx $mol_jsx_make */
+/** @jsx $mol_jsx */
 
 const $my_message = ()=> <div>Hello!</div>
 

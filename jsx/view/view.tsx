@@ -1,4 +1,4 @@
-/** @jsx $mol_jsx_make */
+/** @jsx $mol_jsx */
 namespace $ {
 
 	export class $mol_jsx_view extends $mol_object2 {
