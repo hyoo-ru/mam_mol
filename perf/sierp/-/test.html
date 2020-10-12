@@ -14,8 +14,17 @@
 				<script src="/mol/build/client/client.js" charset="utf-8"></script>
 				<script>
 					setTimeout( ()=> {
-						document.head.appendChild( document.createElement( 'script' ) ).src = 'web.test.js'
-					},250)
+
+						const test = document.createElement( 'script' )
+						test.src = 'web.test.js'
+						
+						const audit =  document.createElement( 'script' )
+						audit.src = 'web.audit.js'
+						
+						test.onload = ()=> document.head.appendChild( audit )
+						document.head.appendChild( test )
+
+					}, 250 )
 				</script>
 				</body>
 </html>

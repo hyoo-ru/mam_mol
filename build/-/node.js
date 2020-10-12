@@ -4607,7 +4607,7 @@ var $;
                         getCanonicalFileName: (path) => path.toLowerCase(),
                         getNewLine: () => '\n',
                     }));
-                    this.js_error(diagnostic.file.getSourceFile().fileName.replace(/\.tsx?$/, '.js'), error);
+                    this.js_error(diagnostic.file.getSourceFile().fileName, error);
                 }
                 else {
                     this.$.$mol_log3_fail({
@@ -4623,7 +4623,7 @@ var $;
                     for (const path of paths) {
                         const version = $node.fs.statSync(path).mtime.valueOf();
                         if (versions[path] && versions[path] !== version) {
-                            this.js_error(path.replace(/\.tsx?$/, '.js'), null);
+                            this.js_error(path, null);
                             const watcher = watchers.get(path);
                             if (watcher)
                                 watcher(path, 2);
@@ -4861,12 +4861,14 @@ var $;
             this.bundle({ path, bundle: 'web.test.js' });
             this.bundle({ path, bundle: 'web.test.html' });
             this.bundle({ path, bundle: 'web.d.ts' });
+            this.bundle({ path, bundle: 'web.audit.js' });
             this.bundle({ path, bundle: 'web.view.tree' });
             this.bundle({ path, bundle: 'web.locale=en.json' });
             this.bundle({ path, bundle: 'node.deps.json' });
             this.bundle({ path, bundle: 'node.js' });
             this.bundle({ path, bundle: 'node.test.js' });
             this.bundle({ path, bundle: 'node.d.ts' });
+            this.bundle({ path, bundle: 'node.audit.js' });
             this.bundle({ path, bundle: 'node.view.tree' });
             this.bundle({ path, bundle: 'node.locale=en.json' });
             this.bundle({ path, bundle: 'package.json' });
@@ -4880,7 +4882,7 @@ var $;
             var stages = ['test', 'dev'];
             var moduleTargets = ['', 'esm'];
             if (bundle) {
-                var [bundle, tags, type, locale] = /^(.*?)(?:\.(test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(bundle);
+                var [bundle, tags, type, locale] = /^(.*?)(?:\.(audit\.js|test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(bundle);
                 tags.split('.').forEach(tag => {
                     if (envsDef.indexOf(tag) !== -1)
                         envs = [tag];
@@ -4902,6 +4904,9 @@ var $;
                 }
                 if (!type || type === 'test.js') {
                     res = res.concat(this.bundleTestJS({ path, exclude, bundle: env }));
+                }
+                if (!type || type === 'audit.js') {
+                    res = res.concat(this.bundleAuditJS({ path, exclude, bundle: env }));
                 }
                 if (!type || type === 'd.ts') {
                     res = res.concat(this.bundleDTS({ path, exclude, bundle: env }));
@@ -4991,8 +4996,31 @@ var $;
                 $.$mol_fail_hidden(new $.$mol_error_mix(`Build fail ${path}`, ...errors));
             return [target, targetMap];
         }
-        bundleTestJS({ path, exclude, bundle }) {
+        bundleAuditJS({ path, exclude, bundle }) {
             var _a;
+            const start = Date.now();
+            var pack = $.$mol_file.absolute(path);
+            var target = pack.resolve(`-/${bundle}.audit.js`);
+            var exclude_ext = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
+            (_a = this.tsService({ path, exclude: exclude_ext, bundle })) === null || _a === void 0 ? void 0 : _a.recheck();
+            const errors = [];
+            const paths = this.tsPaths({ path, exclude: exclude_ext, bundle });
+            for (const path of paths) {
+                const src = this.$.$mol_file.absolute(path);
+                src.text();
+                const error = this.js_error(path);
+                if (!error)
+                    continue;
+                errors.push(error);
+            }
+            this.logBundle(target, Date.now() - start);
+            if (errors.length) {
+                $.$mol_fail_hidden(new $.$mol_error_mix(`Build fail ${path}`, ...errors));
+            }
+            target.text('console.info("Audit passed")');
+            return [target];
+        }
+        bundleTestJS({ path, exclude, bundle }) {
             const start = Date.now();
             var pack = $.$mol_file.absolute(path);
             var root = this.root();
@@ -5013,15 +5041,7 @@ var $;
             }
             if (sources.length === 0)
                 return [];
-            (_a = this.tsService({ path, exclude: exclude_ext, bundle })) === null || _a === void 0 ? void 0 : _a.recheck();
             const errors = [];
-            for (const src of sources) {
-                src.text();
-                const error = this.js_error(src.path());
-                if (!error)
-                    continue;
-                errors.push(error);
-            }
             sourcesTest.forEach((src) => {
                 if (bundle === 'node') {
                     if (/node_modules\//.test(src.relate(root))) {
@@ -5058,8 +5078,17 @@ var $;
 				<script src="/mol/build/client/client.js" charset="utf-8"></script>
 				<script>
 					setTimeout( ()=> {
-						document.head.appendChild( document.createElement( 'script' ) ).src = 'web.test.js'
-					},250)
+
+						const test = document.createElement( 'script' )
+						test.src = 'web.test.js'
+						
+						const audit =  document.createElement( 'script' )
+						audit.src = 'web.audit.js'
+						
+						test.onload = ()=> document.head.appendChild( audit )
+						document.head.appendChild( test )
+
+					}, 250 )
 				</script>
 				$1`);
             target.text(content);
@@ -5402,6 +5431,9 @@ var $;
     __decorate([
         $.$mol_mem_key
     ], $mol_build.prototype, "bundleJS", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_build.prototype, "bundleAuditJS", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_build.prototype, "bundleTestJS", null);

@@ -361,7 +361,7 @@ namespace $ {
 							getNewLine : ()=> '\n' ,
 						}) )
 						
-						this.js_error( diagnostic.file.getSourceFile().fileName.replace( /\.tsx?$/ , '.js' ) , error )
+						this.js_error( diagnostic.file.getSourceFile().fileName , error )
 						
 					} else {
 						this.$.$mol_log3_fail({
@@ -385,7 +385,7 @@ namespace $ {
 					for( const path of paths ) {
 						const version = $node.fs.statSync( path ).mtime.valueOf()
 						if( versions[ path ] && versions[ path ] !== version ) {
-							this.js_error(path.replace( /\.tsx?$/ , '.js' ),null)
+							this.js_error( path, null )
 							const watcher = watchers.get( path )
 							if( watcher ) watcher( path , 2 )
 						}
@@ -701,6 +701,7 @@ namespace $ {
 			this.bundle({ path , bundle : 'web.test.js' })
 			this.bundle({ path , bundle : 'web.test.html' })
 			this.bundle({ path , bundle : 'web.d.ts' })
+			this.bundle({ path , bundle : 'web.audit.js' })
 			this.bundle({ path , bundle : 'web.view.tree' })
 			this.bundle({ path , bundle : 'web.locale=en.json' })
 
@@ -708,6 +709,7 @@ namespace $ {
 			this.bundle({ path , bundle : 'node.js' })
 			this.bundle({ path , bundle : 'node.test.js' })
 			this.bundle({ path , bundle : 'node.d.ts' })
+			this.bundle({ path , bundle : 'node.audit.js' })
 			this.bundle({ path , bundle : 'node.view.tree' })
 			this.bundle({ path , bundle : 'node.locale=en.json' })
 
@@ -729,7 +731,7 @@ namespace $ {
 			var moduleTargets = ['', 'esm']
 			if( bundle ) {
 				
-				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(
+				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(audit\.js|test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(
 					bundle
 				)!
 				
@@ -761,6 +763,9 @@ namespace $ {
 					}
 					if( !type || type === 'test.js' ) {
 						res = res.concat( this.bundleTestJS( { path , exclude , bundle : env } ) )
+					}
+					if( !type || type === 'audit.js' ) {
+						res = res.concat( this.bundleAuditJS( { path , exclude , bundle : env } ) )
 					}
 					if( !type || type === 'd.ts' ) {
 						res = res.concat( this.bundleDTS( { path , exclude , bundle : env } ) )
@@ -878,6 +883,44 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
+		bundleAuditJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
+
+			const start = Date.now()
+			var pack = $mol_file.absolute( path )
+			
+			var target = pack.resolve( `-/${bundle}.audit.js` )
+			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
+
+			this.tsService({ path , exclude : exclude_ext , bundle })?.recheck()
+			
+			const errors = [] as Error[]
+
+			const paths = this.tsPaths({ path , exclude: exclude_ext , bundle })
+
+			for( const path of paths ) {
+
+				const src = this.$.$mol_file.absolute( path ) 
+
+				src.text() // recheck on file change
+
+				const error = this.js_error( path )
+				if( !error ) continue
+				
+				errors.push( error )
+			}
+			
+			this.logBundle( target , Date.now() - start )
+			
+			if( errors.length ) {
+				$mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ... errors ) )
+			}
+
+			target.text( 'console.info("Audit passed")' )
+			
+			return [ target ]
+		}
+
+		@ $mol_mem_key
 		bundleTestJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
@@ -901,17 +944,8 @@ namespace $ {
 			}
 			if( sources.length === 0 ) return []
 			
-			this.tsService({ path , exclude : exclude_ext , bundle })?.recheck()
-			
 			const errors = [] as Error[]
 
-			for( const src of sources ) {
-				src.text()
-				const error = this.js_error( src.path() )
-				if( !error ) continue
-				errors.push( error )
-			}
-			
 			sourcesTest.forEach(
 				( src )=> {
 					if( bundle === 'node' ) {
@@ -960,8 +994,17 @@ namespace $ {
 				<script src="/mol/build/client/client.js" charset="utf-8"></script>
 				<script>
 					setTimeout( ()=> {
-						document.head.appendChild( document.createElement( 'script' ) ).src = 'web.test.js'
-					},250)
+
+						const test = document.createElement( 'script' )
+						test.src = 'web.test.js'
+						
+						const audit =  document.createElement( 'script' )
+						audit.src = 'web.audit.js'
+						
+						test.onload = ()=> document.head.appendChild( audit )
+						document.head.appendChild( test )
+
+					}, 250 )
 				</script>
 				$1`,
 			)

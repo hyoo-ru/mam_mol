@@ -1015,6 +1015,11 @@ declare namespace $ {
             bundle: string;
             moduleTarget?: string;
         }): $mol_file[];
+        bundleAuditJS({ path, exclude, bundle }: {
+            path: string;
+            exclude: string[];
+            bundle: string;
+        }): $mol_file[];
         bundleTestJS({ path, exclude, bundle }: {
             path: string;
             exclude: string[];
