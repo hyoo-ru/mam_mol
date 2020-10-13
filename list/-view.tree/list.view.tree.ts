@@ -12,11 +12,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * render_over 0.5
+		 * render_over 0
 		 * ```
 		 */
 		render_over() {
-			return 0.5
+			return 0
 		}
 
 		/**
