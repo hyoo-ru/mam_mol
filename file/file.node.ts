@@ -35,6 +35,7 @@ namespace $ {
 		
 		@ $mol_mem
 		watcher() {
+
 			const watcher = $node.chokidar.watch( this.path() , {
 				persistent : true ,
 				ignored : /(^\.|___$)/ ,
@@ -45,52 +46,21 @@ namespace $ {
 				},
 			} )
 
-			const handler = ( type : string , path : string )=> $mol_fiber_unlimit( ()=> {
+			watcher
+			.on( 'all' , ( type , path )=> {
 				
 				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
 
+				file.reset()
+				
 				if( type === 'change' ) {
-
-					const cached = $mol_mem_cached( ()=> file.buffer() )
-					const path = file.path()
-					let actual: Uint8Array
-
-					try {
-						actual = buffer_normalize($node.fs.readFileSync( path ))
-					} catch (e) {
-						e.message += '\n' + path
-						return this.$.$mol_fail_hidden(e)
-					}
-
-					if( cached && $mol_compare_array( cached , actual ) ) return
-
-					this.$.$mol_log3_rise({
-						place: `$mol_file:watcher`,
-						message: type ,
-						path: file.relate() ,
-					})
-
-					file.reset()
-					file.buffer( actual , $mol_mem_force_cache )
-
+					file.buffer( undefined , $mol_mem_force_update )
 				} else {
-
-					this.$.$mol_log3_rise({
-						place: `${this}.watcher()`,
-						message: type ,
-						path: file.relate() ,
-					})
-					
-					file.reset()
 					file.parent().reset()
-					
 				}
 
 			} )
-
-			watcher.on( 'all' , handler )
-
-			watcher.on( 'error' , ( error : Error )=> {
+			.on( 'error' , ( error : Error )=> {
 				this.stat( error as any , $mol_mem_force_fail )
 			} )
 			
@@ -99,6 +69,7 @@ namespace $ {
 					watcher.close()
 				}
 			}
+
 		}
 
 		@ $mol_mem
@@ -134,25 +105,49 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		buffer( next? : Uint8Array , force? : $mol_mem_force ) {
+		buffer( next? : Uint8Array, force? : $mol_mem_force ) {
+
 			const path = this.path()
 			if( next === undefined ) {
+
 				this.stat()
+				
 				try {
-					return buffer_normalize($node.fs.readFileSync( path ))
-				} catch (e) {
-					e.message += '\n' + path
-					return this.$.$mol_fail_hidden(e)
+
+					const prev = $mol_mem_cached( ()=> this.buffer() )
+					
+					next = buffer_normalize( $node.fs.readFileSync( path ) )
+
+					if( prev !== undefined && !$mol_compare_array( prev, next ) ) {
+						this.$.$mol_log3_rise({
+							place: `$mol_file_node..buffer()`,
+							message: 'Changed' ,
+							path: this.relate() ,
+						})
+					}
+
+					return next
+
+				} catch( error ) {
+
+					error.message += '\n' + path
+					return this.$.$mol_fail_hidden( error )
+
 				}
+				
 			}
 			
 			this.parent().exists( true )
 
 			try {
-				$node.fs.writeFileSync( path , next )
-			} catch (e) {
-				e.message += '\n' + path
-				return this.$.$mol_fail_hidden(e)
+
+				$node.fs.writeFileSync( path, next )
+
+			} catch( error ) {
+
+				error.message += '\n' + path
+				return this.$.$mol_fail_hidden( error )
+
 			}
 			
 			return next
