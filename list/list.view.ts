@@ -13,7 +13,7 @@ namespace $.$$ {
 			if ( !$mol_dom_context.CSS ) return false
 			return $mol_dom_context.CSS.supports( 'overflow-anchor:auto' )
 		}
-		
+
 		@ $mol_mem
 		view_window() : [ number , number ] {
 			
@@ -34,6 +34,7 @@ namespace $.$$ {
 			const limit_bottom = window_height + over
 
 			const rect = this.view_rect()
+			if( !rect ) return [0,0]
  
 			const gap_before = $mol_mem_cached( ()=> this.gap_before() ) ?? 0
 			const gap_after = $mol_mem_cached( ()=> this.gap_after() ) ?? 0
@@ -72,13 +73,13 @@ namespace $.$$ {
 			let bottom2 = bottom
 
 			// force recalc min when overlapse top limit
-			if( anchoring && ( top <= limit_top ) ) {
+			if( anchoring && ( top <= limit_top ) && ( bottom2 < limit_bottom ) ) {
 				min2 = max
 				top2 = bottom
 			}
 
 			// force recalc max when overlapse bottom limit
-			if( bottom >= limit_bottom ) {
+			if( ( bottom >= limit_bottom ) && ( top2 >= limit_top ) ) {
 				max2 = min
 				bottom2 = top
 			}

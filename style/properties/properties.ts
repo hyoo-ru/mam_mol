@@ -30,6 +30,8 @@ namespace $ {
 
 	type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common
 
+	type ContainRule = 'size' | 'layout' | 'style' | 'paint'
+
 	interface Overrides {
 
 		/** Distribution of space between and around content items along a flexbox's cross-axis or a grid's block axis. */
@@ -125,6 +127,12 @@ namespace $ {
 			anchor?: 'auto' | 'none' | Common
 			
 		}
+
+		/** Indicate that an element and its contents are, as much as possible, independent of the rest of the document tree. This allows the browser to recalculate layout, style, paint, size, or any combination of them for a limited area of the DOM and not the entire page, leading to obvious performance benefits. */
+		contain?:
+		| 'none' | 'strict' | 'content'
+		| ContainRule | ContainRule[]
+		| Common
 
 		/** How white space inside an element is handled. */
 		whiteSpace?:

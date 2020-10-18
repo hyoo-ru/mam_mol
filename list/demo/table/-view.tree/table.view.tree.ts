@@ -12,11 +12,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * count 100
+		 * count 1000
 		 * ```
 		 */
 		count() {
-			return 100
+			return 1000
 		}
 
 		/**
@@ -32,13 +32,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Row!id $mol_row sub <= row_content!id
+		 * Row!id $mol_row
+		 * 	minimal_height 40
+		 * 	sub <= row_content!id
 		 * ```
 		 */
 		@ $mol_mem_key
 		Row(id: any) {
 			const obj = new this.$.$mol_row()
 
+			obj.minimal_height = () => 40
 			obj.sub = () => this.row_content(id)
 
 			return obj

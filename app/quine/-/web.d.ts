@@ -785,6 +785,7 @@ declare namespace $ {
     type Span_align = 'none' | 'start' | 'end' | 'center';
     type Snap_axis = 'x' | 'y' | 'block' | 'inline' | 'both';
     type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
+    type ContainRule = 'size' | 'layout' | 'style' | 'paint';
     interface Overrides {
         alignContent?: 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | ['first' | 'last', 'baseline'] | ['safe' | 'unsafe', 'start' | 'end' | 'flex-start' | 'flex-end'] | Common;
         background?: 'none' | {
@@ -814,6 +815,7 @@ declare namespace $ {
             y?: Overflow | Common;
             anchor?: 'auto' | 'none' | Common;
         };
+        contain?: 'none' | 'strict' | 'content' | ContainRule | ContainRule[] | Common;
         whiteSpace?: 'normal' | 'nowrap' | 'break-spaces' | 'pre' | 'pre-wrap' | 'pre-line' | Common;
         webkitOverflowScrolling?: 'auto' | 'touch';
         scrollbar?: {
