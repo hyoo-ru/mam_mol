@@ -1,6 +1,6 @@
 $mol_list_demo_table $mol_demo_large
 	title @ \Large list of rows with dynamic content
-	count 1000
+	count 10000
 	sub /
 		<= Scroll $mol_scroll
 			sub /
