@@ -5442,7 +5442,7 @@ var $;
             maxHeight: per(100),
             maxWidth: per(100),
             webkitOverflowScrolling: 'touch',
-            contain: 'strict',
+            contain: 'content',
             '>': {
                 $mol_view: {
                     transform: 'translateZ(0)',
