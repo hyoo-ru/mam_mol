@@ -20,12 +20,12 @@ namespace $.$$ {
 		},
 
 		Id: {
-			textAlign: 'right',
+			justifyContent: 'flex-end',
 			padding: rem(.5),
 			flex: {
 				grow: 0,
 				shrink: 0,
-				basis: rem(3),
+				basis: rem(3.5),
 			},
 		},
 		

@@ -16597,7 +16597,7 @@ var $;
             return this.$.$mol_locale.text('$mol_list_demo_table_title');
         }
         count() {
-            return 1000;
+            return 10000;
         }
         sub() {
             return [
@@ -16928,12 +16928,12 @@ var $;
                 },
             },
             Id: {
-                textAlign: 'right',
+                justifyContent: 'flex-end',
                 padding: rem(.5),
                 flex: {
                     grow: 0,
                     shrink: 0,
-                    basis: rem(3),
+                    basis: rem(3.5),
                 },
             },
             Title: {
