@@ -3238,8 +3238,6 @@ var $;
                 const limit_top = -over;
                 const limit_bottom = window_height + over;
                 const rect = this.view_rect();
-                if (!rect)
-                    return [0, 0];
                 const gap_before = (_b = $.$mol_mem_cached(() => this.gap_before())) !== null && _b !== void 0 ? _b : 0;
                 const gap_after = (_c = $.$mol_mem_cached(() => this.gap_after())) !== null && _c !== void 0 ? _c : 0;
                 let top = Math.ceil((_d = rect === null || rect === void 0 ? void 0 : rect.top) !== null && _d !== void 0 ? _d : 0) + gap_before;
