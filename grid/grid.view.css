@@ -25,7 +25,6 @@
 [mol_grid_head] > * ,
 [mol_grid_table] > * > * {
 	display: table-cell;
-	transform: translateZ(0);
 	padding: .5rem .75rem;
 	white-space: nowrap;
 	vertical-align: middle;
