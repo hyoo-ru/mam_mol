@@ -34,7 +34,6 @@ namespace $.$$ {
 			const limit_bottom = window_height + over
 
 			const rect = this.view_rect()
-			if( !rect ) return [0,0]
  
 			const gap_before = $mol_mem_cached( ()=> this.gap_before() ) ?? 0
 			const gap_after = $mol_mem_cached( ()=> this.gap_after() ) ?? 0
