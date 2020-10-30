@@ -3,14 +3,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Content $mol_tiler items <= content
+		 * Content $mol_view sub <= content
 		 * ```
 		 */
 		@ $mol_mem
 		Content() {
-			const obj = new this.$.$mol_tiler()
+			const obj = new this.$.$mol_view()
 
-			obj.items = () => this.content()
+			obj.sub = () => this.content()
 
 			return obj
 		}

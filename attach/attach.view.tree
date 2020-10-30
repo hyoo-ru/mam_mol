@@ -1,6 +1,6 @@
 $mol_attach $mol_card
-	Content $mol_tiler
-		items <= content /$mol_view
+	Content $mol_view
+		sub <= content /$mol_view
 	items?val /$mol_view
 	Add $mol_attach_add file_new?val <=> attach_new?val \
 	Item!id $mol_attach_item

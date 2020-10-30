@@ -13,6 +13,7 @@ $mol_search $mol_bar
 			options <= suggests /string
 			Trigger_icon null
 			submit?event <=> submit?event null
+			No_options null
 		<= Clear $mol_button_minor
 			sub /
 				<= Clear_icon $mol_icon_cross

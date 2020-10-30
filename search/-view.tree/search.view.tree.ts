@@ -126,6 +126,7 @@ namespace $ {
 		 * 	options <= suggests
 		 * 	Trigger_icon null
 		 * 	submit?event <=> submit?event
+		 * 	No_options null
 		 * ```
 		 */
 		@ $mol_mem
@@ -140,6 +141,7 @@ namespace $ {
 			obj.options = () => this.suggests()
 			obj.Trigger_icon = () => null as any
 			obj.submit = (event?: any) => this.submit(event)
+			obj.No_options = () => null as any
 
 			return obj
 		}
