@@ -9,7 +9,7 @@
 	border-radius: var(--mol_skin_round);
 	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	background-size: cover;
-	flex: 1 0 5rem;
+	flex: 0 0 5rem;
 }
 
 [mol_attach_add] {
