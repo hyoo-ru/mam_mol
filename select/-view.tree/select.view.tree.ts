@@ -136,6 +136,7 @@ namespace $ {
 		 * 	value?val <=> filter_pattern?val
 		 * 	hint <= filter_hint
 		 * 	submit?event <=> submit?event
+		 * 	enabled <= enabled
 		 * ```
 		 */
 		@ $mol_mem
@@ -145,6 +146,7 @@ namespace $ {
 			obj.value = (val?: any) => this.filter_pattern(val)
 			obj.hint = () => this.filter_hint()
 			obj.submit = (event?: any) => this.submit(event)
+			obj.enabled = () => this.enabled()
 
 			return obj
 		}
@@ -385,6 +387,15 @@ namespace $ {
 		submit(event?: any) {
 			if ( event !== undefined ) return event
 			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * enabled true
+		 * ```
+		 */
+		enabled() {
+			return true
 		}
 	}
 

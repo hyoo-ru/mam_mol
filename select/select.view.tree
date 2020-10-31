@@ -31,4 +31,5 @@ $mol_select $mol_pop
 		value?val <=> filter_pattern?val \
 		hint <= filter_hint <= hint @ \Search..
 		submit?event <=> submit?event null
+		enabled <= enabled true
 	Trigger_icon $mol_icon_chevron

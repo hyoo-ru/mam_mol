@@ -5175,6 +5175,7 @@ var $;
             obj.value = (val) => this.filter_pattern(val);
             obj.hint = () => this.filter_hint();
             obj.submit = (event) => this.submit(event);
+            obj.enabled = () => this.enabled();
             return obj;
         }
         Trigger_icon() {
@@ -5266,6 +5267,9 @@ var $;
             if (event !== undefined)
                 return event;
             return null;
+        }
+        enabled() {
+            return true;
         }
     }
     __decorate([

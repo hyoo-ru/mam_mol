@@ -1756,6 +1756,7 @@ declare namespace $ {
         hint(): string;
         filter_hint(): string;
         submit(event?: any): any;
+        enabled(): boolean;
     }
 }
 

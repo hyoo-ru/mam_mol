@@ -117,6 +117,15 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * enabled true
+		 * ```
+		 */
+		enabled() {
+			return true
+		}
+
+		/**
+		 * ```tree
 		 * Suggest $mol_select
 		 * 	value?val <=> suggest_selected?val
 		 * 	filter_pattern?val <=> suggest_selected?val
@@ -127,6 +136,7 @@ namespace $ {
 		 * 	Trigger_icon null
 		 * 	submit?event <=> submit?event
 		 * 	No_options null
+		 * 	enabled <= enabled
 		 * ```
 		 */
 		@ $mol_mem
@@ -142,6 +152,7 @@ namespace $ {
 			obj.Trigger_icon = () => null as any
 			obj.submit = (event?: any) => this.submit(event)
 			obj.No_options = () => null as any
+			obj.enabled = () => this.enabled()
 
 			return obj
 		}
