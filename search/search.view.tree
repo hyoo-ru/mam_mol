@@ -14,6 +14,7 @@ $mol_search $mol_bar
 			Trigger_icon null
 			submit?event <=> submit?event null
 			No_options null
+			enabled <= enabled true
 		<= Clear $mol_button_minor
 			sub /
 				<= Clear_icon $mol_icon_cross
