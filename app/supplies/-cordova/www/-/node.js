@@ -8518,8 +8518,9 @@ var $;
             attach_new(next) {
                 const items = this.items();
                 const item = this.Item(items.length);
-                item.url_thumb(next);
-                item.url_load(next);
+                const url = URL.createObjectURL(next);
+                item.url_thumb(url);
+                item.url_load(url);
                 this.items(items.concat(item));
             }
             content() {
@@ -8541,18 +8542,11 @@ var $;
                 if (!$.$mol_cordova_camera())
                     return;
                 next.preventDefault();
-                $.$mol_cordova_camera().getPicture((url) => {
-                    this.file_new(url);
-                }, (error) => {
-                    this.file_new(error, $.$mol_mem_force_fail);
-                }, {
-                    quality: 50
-                });
             }
             event_picked(next) {
                 var files = [].slice.call(next.target.files);
                 for (var file of files) {
-                    this.file_new(URL.createObjectURL(file));
+                    this.file_new(file);
                 }
             }
         }

@@ -2562,14 +2562,14 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_attach extends $.$mol_attach {
-        attach_new(next?: string): void;
+        attach_new(next?: File): void;
         content(): any[];
     }
     class $mol_attach_item extends $.$mol_attach_item {
         style_bg(): string;
     }
     class $mol_attach_add extends $.$mol_attach_add {
-        file_new(next?: string, force?: $mol_mem_force_fail): string | undefined;
+        file_new(next?: File, force?: $mol_mem_force_fail): File | undefined;
         event_capture(next: Event): void;
         event_picked(next: Event): void;
     }
