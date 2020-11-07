@@ -4,11 +4,11 @@ namespace $ {
 	
 	$mol_style_define( $mol_html_view , {
 
-		padding: rem(.75),
+		padding: $mol_gap.block,
 
 		Heading: {
 
-			padding: rem(.75),
+			padding: $mol_gap.block,
 			
 			'@': {
 				'mol_html_view_heading': {
@@ -55,7 +55,7 @@ namespace $ {
 			flex: {
 				wrap : 'wrap',
 			},
-			padding: rem(.75),
+			padding: $mol_gap.text,
 		},
 
 		List: {
@@ -63,7 +63,7 @@ namespace $ {
 			flex: {
 				wrap : 'wrap',
 			},
-			padding: rem(.75),
+			padding: $mol_gap.block,
 		},
 
 		Quote: {
@@ -71,9 +71,9 @@ namespace $ {
 			flex: {
 				'wrap' : 'wrap',
 			},
-			padding: rem(.75),
+			padding: $mol_gap.block,
 			margin: {
-				left: rem(.75),
+				left: rem(.5),
 			},
 			box: {
 				shadow: [{
@@ -129,7 +129,7 @@ namespace $ {
 
 		Break: {
 			display: 'block',
-			height: rem(.5),
+			height: $mol_gap.block,
 		},
 
 		Text: {

@@ -77,7 +77,6 @@ $mol_app_demo_detail $mol_page
 				demo null
 
 $mol_app_demo_nav $mol_grid
-	row_height 40
 	hierarchy_col \title
 	Head null
 	-

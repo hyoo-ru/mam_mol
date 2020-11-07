@@ -6,13 +6,13 @@ namespace $.$$ {
 
 		Row: {
 
-			padding: 0,
+			padding: rem(.25),
 			boxShadow: `0 0 0 .5px ${ $mol_theme.line }`,
 
 			'>': {
 				
 				$mol_view: {
-					margin: 0,
+					margin: rem(.25),
 				},
 
 			},
@@ -21,7 +21,7 @@ namespace $.$$ {
 
 		Id: {
 			justifyContent: 'flex-end',
-			padding: rem(.5),
+			padding: $mol_gap.text,
 			flex: {
 				grow: 0,
 				shrink: 0,
@@ -34,18 +34,17 @@ namespace $.$$ {
 			flex: {
 				grow: 1,
 				shrink: 1,
-				basis: rem(20),
+				basis: rem(10),
 			},
-			padding: rem(.5),
+			padding: $mol_gap.text,
 		},
 		
 		Link: {
 			flex: {
-				grow: 1000,
+				grow: 1,
 				shrink: 1,
-				basis: rem(10),
+				basis: rem(3),
 			},
-			padding: [ rem(.5) , rem(1) ],
 		},
 
 		Editable: {
@@ -55,14 +54,8 @@ namespace $.$$ {
 		},
 
 		Priority: {
-			
 			flex: 'none',
-			padding: rem(.5),
-			
-			Option: {
-				padding: [ 0 , rem(.5) ],
-			},
-			
+			padding: [ 0 , rem(.5) ],
 		},
 
 	})

@@ -9,7 +9,7 @@ namespace $ {
 	| 'transparent' | 'currentcolor'
 	| $mol_style_func< 'hsla' | 'rgba' | 'var' >
 	
-	type Length = 0 | $mol_style_unit< $mol_style_unit_length > | $mol_style_func<'calc'>
+	type Length = 0 | $mol_style_unit< $mol_style_unit_length > | $mol_style_func< 'calc' | 'var' >
 
 	type Size =
 	| 'auto' | 'max-content' | 'min-content' | 'fit-content'
@@ -17,7 +17,7 @@ namespace $ {
 
 	type Directions< Value > =
 	| Value
-	| [ Value , Value ]
+	| readonly [ Value , Value ]
 	| {
 		top?: Value ,
 		right?: Value ,
@@ -38,8 +38,8 @@ namespace $ {
 		alignContent? :
 		| 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end'
 		| 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch'
-		| [ 'first' | 'last' , 'baseline' ]
-		| [ 'safe' | 'unsafe' , 'start' | 'end' | 'flex-start' | 'flex-end' ]
+		| readonly [ 'first' | 'last' , 'baseline' ]
+		| readonly [ 'safe' | 'unsafe' , 'start' | 'end' | 'flex-start' | 'flex-end' ]
 		| Common
 
 		/** All background style properties. */
@@ -51,7 +51,7 @@ namespace $ {
 			color?: Color | Common
 			
 			/** Background images. */
-			image?: [ $mol_style_func<'url'> ][]
+			image?: readonly( readonly [ $mol_style_func<'url'> ] )[]
 
 		}
 
@@ -131,7 +131,7 @@ namespace $ {
 		/** Indicate that an element and its contents are, as much as possible, independent of the rest of the document tree. This allows the browser to recalculate layout, style, paint, size, or any combination of them for a limited area of the DOM and not the entire page, leading to obvious performance benefits. */
 		contain?:
 		| 'none' | 'strict' | 'content'
-		| ContainRule | ContainRule[]
+		| ContainRule | readonly ContainRule[]
 		| Common
 
 		/** How white space inside an element is handled. */
@@ -143,7 +143,7 @@ namespace $ {
 		webkitOverflowScrolling?: 'auto' | 'touch'
 
 		scrollbar?: {
-			color?: [ Color , Color ] | 'dark' | 'light' | 'auto' | Common
+			color?: readonly [ Color , Color ] | 'dark' | 'light' | 'auto' | Common
 		}
 
 		scroll?: {
@@ -154,14 +154,14 @@ namespace $ {
 				type:
 				| 'none'
 				| Snap_axis
-				| [ Snap_axis , 'mandatory' | 'proximity' ]
+				| readonly [ Snap_axis , 'mandatory' | 'proximity' ]
 				| Common
 				
 				/** Whether the scroll container is allowed to "pass over" possible snap positions. */
 				stop: 'normal' | 'always' | Common
 				
 				/** The box’s snap position as an alignment of its snap area (as the alignment subject) within its snap container’s snapport (as the alignment container). The two values specify the snapping alignment in the block axis and inline axis, respectively. If only one value is specified, the second value defaults to the same value. */
-				align: Span_align | [ Span_align , Span_align ] | Common
+				align: Span_align | readonly [ Span_align , Span_align ] | Common
 
 			}
 

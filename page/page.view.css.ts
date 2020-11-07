@@ -34,7 +34,7 @@ namespace $.$$ {
 			position: 'relative' ,
 			margin: 0 ,
 			minHeight: rem(4),
-			padding: rem(.75) ,
+			padding: $mol_gap.block ,
 			background: {
 				color: $mol_theme.back ,
 			},
@@ -50,7 +50,7 @@ namespace $.$$ {
 				basis: per(50),
 			},
 			minHeight: rem(2),
-			padding: [ rem(.5) , rem(.75) ],
+			padding: $mol_gap.text,
 			wordBreak: 'normal',
 			cursor: 'default',
 			textShadow: '0 0',

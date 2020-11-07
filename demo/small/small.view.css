@@ -10,10 +10,10 @@
 	background: var(--mol_theme_back);
 	color: var(--mol_theme_text);
 	box-shadow: inset 0 0 0 .5px var(--mol_theme_line);
-	margin: .75rem;
-	padding: .75rem;
+	margin: .5rem;
+	padding: .5rem;
 }
 
 [mol_demo_small] > * {
-	margin: .75rem;
+	margin: .5rem;
 }

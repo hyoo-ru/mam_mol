@@ -2,7 +2,7 @@
 	align-items: center;
 	color: var(--mol_theme_control);
 	display: inline;
-	padding: .5rem;
+	padding: var(--mol_gap_text);
 }
 
 [mol_link_iconed_icon] {
@@ -10,7 +10,7 @@
 	height: 1em;
 	width: 1em;
 	display: inline-block;
-	margin: -.25rem .25rem 0;
+	margin: -.25rem .25rem 0 0;
 	vertical-align: middle;
 }
 

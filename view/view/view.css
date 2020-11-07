@@ -6,6 +6,7 @@
 	word-break: break-word;
 	box-sizing: border-box;
 	display: flex;
+	contain: layout style;
 }
 
 [mol_view] > * {
@@ -26,7 +27,7 @@
 [mol_view][mol_view_error]:not([mol_view_error="Promise"]) {
 	background-image: repeating-linear-gradient(
 		135deg,
-		rgba(255,220,220,1),
+		rgb(162, 90, 90),
 		rgba(255,220,220,1) 11px,
 		rgba(255,255,220,1) 10px,
 		rgba(255,255,220,1) 20px

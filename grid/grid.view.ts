@@ -133,7 +133,7 @@ namespace $.$$ {
 		}
 		
 		row_expanded_default( row_id : string[] ) {
-			return row_id.length < 3
+			return true
 		}
 		
 		cell_expanded( id : { row : string[] } , next? : boolean ) {

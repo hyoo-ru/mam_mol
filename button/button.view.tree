@@ -1,6 +1,6 @@
 $mol_button $mol_view
 	enabled true
-	minimal_height 40
+	minimal_height 32
 	click?event null
 	event_click?event null
 	event *

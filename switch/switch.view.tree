@@ -1,5 +1,4 @@
 $mol_switch $mol_view
-	minimal_height 40
 	Option!id $mol_switch_option
 		checked?val <=> option_checked!id?val false
 		label <= option_label!id / <= option_title!id \
