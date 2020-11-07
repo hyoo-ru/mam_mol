@@ -36,15 +36,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * minimal_height 40
-		 * ```
-		 */
-		minimal_height() {
-			return 40
-		}
-
-		/**
-		 * ```tree
 		 * Option_row!id $mol_button_minor
 		 * 	event_click?event <=> event_select!id?event
 		 * 	sub <= option_content!id
@@ -197,7 +188,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Option_label!id $mol_dimmer
-		 * 	minimal_height 40
 		 * 	haystack <= option_label!id
 		 * 	needle <= filter_pattern?val
 		 * ```
@@ -206,7 +196,6 @@ namespace $ {
 		Option_label(id: any) {
 			const obj = new this.$.$mol_dimmer()
 
-			obj.minimal_height = () => 40
 			obj.haystack = () => this.option_label(id)
 			obj.needle = () => this.filter_pattern()
 

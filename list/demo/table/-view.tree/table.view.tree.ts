@@ -33,7 +33,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Row!id $mol_row
-		 * 	minimal_height 40
+		 * 	minimal_height 48
 		 * 	sub <= row_content!id
 		 * ```
 		 */
@@ -41,7 +41,7 @@ namespace $ {
 		Row(id: any) {
 			const obj = new this.$.$mol_row()
 
-			obj.minimal_height = () => 40
+			obj.minimal_height = () => 48
 			obj.sub = () => this.row_content(id)
 
 			return obj

@@ -50,7 +50,7 @@ $mol_speck $mol_view
 
 $mol_button $mol_view
 	enabled true
-	minimal_height 40
+	minimal_height 32
 	click?event null
 	event_click?event null
 	event *
@@ -171,7 +171,7 @@ $mol_hotkey $mol_plugin
 $mol_string $mol_view
 	dom_name \input
 	enabled true
-	minimal_height 40
+	minimal_height 32
 	autocomplete false
 	field *
 		^
@@ -251,7 +251,7 @@ $mol_float $mol_view
 $mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
 
 $mol_check_expand $mol_check
-	minimal_height 40
+	minimal_height 32
 	Icon $mol_icon_chevron
 	level 0
 	style *
@@ -276,7 +276,7 @@ $mol_dimmer $mol_paragraph
 			<= string!id \
 
 $mol_grid $mol_scroll
-	row_height 40
+	row_height 32
 	row_ids /string[]
 	row_id!index null
 	col_ids /
@@ -322,7 +322,7 @@ $mol_grid_row $mol_view
 
 $mol_grid_cell $mol_view
 	dom_name \td
-	minimal_height 40
+	minimal_height 32
 
 $mol_grid_number $mol_grid_cell
 
@@ -1196,12 +1196,10 @@ $mol_select $mol_pop
 	dictionary *
 	options /string
 	value?val \
-	minimal_height 40
 	Option_row!id $mol_button_minor
 		event_click?event <=> event_select!id?event null
 		sub <= option_content!id /
 			<= Option_label!id $mol_dimmer
-				minimal_height 40
 				haystack <= option_label!id \
 				needle <= filter_pattern?val \
 	No_options $mol_view
@@ -1338,7 +1336,6 @@ $mol_date_demo $mol_demo_small
 						<= formatted \
 
 $mol_switch $mol_view
-	minimal_height 40
 	Option!id $mol_switch_option
 		checked?val <=> option_checked!id?val false
 		label <= option_label!id / <= option_title!id \
@@ -1373,20 +1370,17 @@ $mol_deck_demo $mol_demo_small
 				title <= greeterLabel @ \Greeting
 				Content <= greeterContent $mol_row
 					sub /
-						<= greeterMessager $mol_view sub /
-							<= greeterMessage @ \Hello, world!
+						<= greeterMessage @ \Hello, world!
 			<= questerItem *
 				title <= questerLabel @ \Question
 				Content <= questerContent $mol_row
 					sub /
-						<= questerMessager $mol_view sub /
-							<= questerMessage @ \How are you?
+						<= questerMessage @ \How are you?
 			<= commanderItem *
 				title <= commanderLabel @ \Command
 				Content <= commanderContent $mol_row
 					sub /
-						<= commanderMessager $mol_view sub /
-							<= commanderMessage @ \Let us do it right!
+						<= commanderMessage @ \Let us do it right!
 
 $mol_dimmer_demo $mol_demo_small
 	title @ \Text with highlighted found substring
@@ -1811,7 +1805,7 @@ $mol_list_demo_table $mol_demo_large
 				<= Rows $mol_list
 					rows <= rows /
 	Row!id $mol_row
-		minimal_height 40
+		minimal_height 48
 		sub <= row_content!id /
 			<= Id!id $mol_view sub / <= row_id!id \
 			<= Title!id $mol_view sub / <= row_title!id \
@@ -2227,10 +2221,17 @@ $mol_scroll_demo $mol_demo_large
 	sub /
 		<= Scroll $mol_scroll
 			sub /
-				<= Content $mol_row sub /
-					<= One $mol_filler
-					<= Two $mol_filler
-					<= Tree $mol_filler
+				<= Content $mol_list rows /
+					<= Filler0 $mol_filler
+					<= Filler1 $mol_filler
+					<= Filler2 $mol_filler
+					<= Filler3 $mol_filler
+					<= Filler4 $mol_filler
+					<= Filler5 $mol_filler
+					<= Filler6 $mol_filler
+					<= Filler7 $mol_filler
+					<= Filler8 $mol_filler
+					<= Filler9 $mol_filler
 
 $mol_search_demo $mol_demo_small
 	title @ \Simple search field with suggest 
@@ -2265,7 +2266,7 @@ $mol_select_demo_colors $mol_demo_small
 						<= Color_preview!id $mol_select_colors_color_preview
 							color <= option_color!id \
 						<= color_name!id \
-					minimal_height 40
+					minimal_height 32
 
 $mol_select_colors_color_preview $mol_view
 	style *
@@ -2502,6 +2503,10 @@ $mol_toolbar_demo $mol_demo_small
 	sub /
 		<= Toolbar $mol_toolbar
 			items /
+				<= Search $mol_string
+					hint <= search_hint @ \Search...
+				<= Replace $mol_string
+					hint <= replace_hint @ \Replace...
 				<= Approve $mol_button_major
 					title <= approve_label @ \Approve
 				<= Decline $mol_button_minor
@@ -2514,11 +2519,6 @@ $mol_toolbar_demo $mol_demo_small
 					<= Paste_icon $mol_icon_content_paste
 				<= Delete $mol_button_minor sub /
 					<= Delete_icon $mol_icon_delete
-				<= Modify $mol_bar sub /
-					<= Search $mol_string
-						hint <= search_hint @ \Search...
-					<= Replace $mol_string
-						hint <= replace_hint @ \Replace...
 			
 $mol_icon_brightness_6 $mol_icon path \M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z
 
@@ -2924,7 +2924,6 @@ $mol_app_demo_detail $mol_page
 				demo null
 
 $mol_app_demo_nav $mol_grid
-	row_height 40
 	hierarchy_col \title
 	Head null
 	-

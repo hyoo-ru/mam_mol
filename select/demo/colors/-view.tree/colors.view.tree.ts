@@ -81,7 +81,7 @@ namespace $ {
 		 * 	sub /
 		 * 		<= Color_preview!id
 		 * 		<= color_name!id
-		 * 	minimal_height 40
+		 * 	minimal_height 32
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -92,7 +92,7 @@ namespace $ {
 				this.Color_preview(id),
 				this.color_name(id)
 			] as readonly any[]
-			obj.minimal_height = () => 40
+			obj.minimal_height = () => 32
 
 			return obj
 		}

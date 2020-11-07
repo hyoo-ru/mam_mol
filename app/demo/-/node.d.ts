@@ -885,9 +885,9 @@ declare namespace $ {
     export type $mol_style_properties = Partial<$mol_type_override<CSSStyleDeclaration, Overrides>>;
     type Common = 'inherit' | 'initial' | 'unset';
     type Color = keyof typeof $mol_colors | 'transparent' | 'currentcolor' | $mol_style_func<'hsla' | 'rgba' | 'var'>;
-    type Length = 0 | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>;
+    type Length = 0 | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc' | 'var'>;
     type Size = 'auto' | 'max-content' | 'min-content' | 'fit-content' | Length | Common;
-    type Directions<Value> = Value | [Value, Value] | {
+    type Directions<Value> = Value | readonly [Value, Value] | {
         top?: Value;
         right?: Value;
         bottom?: Value;
@@ -898,10 +898,10 @@ declare namespace $ {
     type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
     type ContainRule = 'size' | 'layout' | 'style' | 'paint';
     interface Overrides {
-        alignContent?: 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | ['first' | 'last', 'baseline'] | ['safe' | 'unsafe', 'start' | 'end' | 'flex-start' | 'flex-end'] | Common;
+        alignContent?: 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | readonly ['first' | 'last', 'baseline'] | readonly ['safe' | 'unsafe', 'start' | 'end' | 'flex-start' | 'flex-end'] | Common;
         background?: 'none' | {
             color?: Color | Common;
-            image?: [$mol_style_func<'url'>][];
+            image?: readonly (readonly [$mol_style_func<'url'>])[];
         };
         box?: {
             shadow?: readonly {
@@ -926,17 +926,17 @@ declare namespace $ {
             y?: Overflow | Common;
             anchor?: 'auto' | 'none' | Common;
         };
-        contain?: 'none' | 'strict' | 'content' | ContainRule | ContainRule[] | Common;
+        contain?: 'none' | 'strict' | 'content' | ContainRule | readonly ContainRule[] | Common;
         whiteSpace?: 'normal' | 'nowrap' | 'break-spaces' | 'pre' | 'pre-wrap' | 'pre-line' | Common;
         webkitOverflowScrolling?: 'auto' | 'touch';
         scrollbar?: {
-            color?: [Color, Color] | 'dark' | 'light' | 'auto' | Common;
+            color?: readonly [Color, Color] | 'dark' | 'light' | 'auto' | Common;
         };
         scroll?: {
             snap?: {
-                type: 'none' | Snap_axis | [Snap_axis, 'mandatory' | 'proximity'] | Common;
+                type: 'none' | Snap_axis | readonly [Snap_axis, 'mandatory' | 'proximity'] | Common;
                 stop: 'normal' | 'always' | Common;
-                align: Span_align | [Span_align, Span_align] | Common;
+                align: Span_align | readonly [Span_align, Span_align] | Common;
             };
         };
         width?: Size;
@@ -994,6 +994,16 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_style_define<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config: Config): HTMLStyleElement | null;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    let $mol_gap: {
+        readonly block: $mol_style_func<"var", "--mol_gap_block">;
+        readonly text: $mol_style_func<"var", "--mol_gap_text">;
+    };
 }
 
 declare namespace $ {
@@ -3531,7 +3541,6 @@ declare namespace $ {
         dictionary(): {};
         options(): readonly string[];
         value(val?: any): any;
-        minimal_height(): number;
         Option_row(id: any): $mol_button_minor;
         No_options(): $mol_view;
         plugins(): readonly any[];
@@ -3753,7 +3762,6 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_switch extends $mol_view {
-        minimal_height(): number;
         Option(id: any): $$.$mol_switch_option;
         value(val?: any): any;
         options(): {};
@@ -3825,7 +3833,6 @@ declare namespace $ {
         sub(): readonly any[];
         greeterLabel(): string;
         greeterMessage(): string;
-        greeterMessager(): $mol_view;
         greeterContent(): $mol_row;
         greeterItem(): {
             title: string;
@@ -3833,7 +3840,6 @@ declare namespace $ {
         };
         questerLabel(): string;
         questerMessage(): string;
-        questerMessager(): $mol_view;
         questerContent(): $mol_row;
         questerItem(): {
             title: string;
@@ -3841,7 +3847,6 @@ declare namespace $ {
         };
         commanderLabel(): string;
         commanderMessage(): string;
-        commanderMessager(): $mol_view;
         commanderContent(): $mol_row;
         commanderItem(): {
             title: string;
@@ -5284,10 +5289,17 @@ declare namespace $ {
     class $mol_scroll_demo extends $mol_demo_large {
         title(): string;
         sub(): readonly any[];
-        One(): $mol_filler;
-        Two(): $mol_filler;
-        Tree(): $mol_filler;
-        Content(): $mol_row;
+        Filler0(): $mol_filler;
+        Filler1(): $mol_filler;
+        Filler2(): $mol_filler;
+        Filler3(): $mol_filler;
+        Filler4(): $mol_filler;
+        Filler5(): $mol_filler;
+        Filler6(): $mol_filler;
+        Filler7(): $mol_filler;
+        Filler8(): $mol_filler;
+        Filler9(): $mol_filler;
+        Content(): $$.$mol_list;
         Scroll(): $$.$mol_scroll;
     }
 }
@@ -5816,6 +5828,10 @@ declare namespace $ {
     class $mol_toolbar_demo extends $mol_demo_small {
         title(): string;
         sub(): readonly any[];
+        search_hint(): string;
+        Search(): $$.$mol_string;
+        replace_hint(): string;
+        Replace(): $$.$mol_string;
         approve_label(): string;
         Approve(): $mol_button_major;
         decline_label(): string;
@@ -5828,11 +5844,6 @@ declare namespace $ {
         Paste(): $mol_button_minor;
         Delete_icon(): $mol_icon_delete;
         Delete(): $mol_button_minor;
-        search_hint(): string;
-        Search(): $$.$mol_string;
-        replace_hint(): string;
-        Replace(): $$.$mol_string;
-        Modify(): $mol_bar;
         Toolbar(): $$.$mol_toolbar;
     }
 }
@@ -6883,7 +6894,6 @@ declare namespace $ {
         Close(): $$.$mol_link;
     }
     class $mol_app_demo_nav extends $mol_grid {
-        row_height(): number;
         hierarchy_col(): string;
         Head(): any;
         Option(id: any): $$.$mol_link;

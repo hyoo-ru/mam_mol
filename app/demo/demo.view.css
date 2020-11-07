@@ -15,6 +15,7 @@
 	display: flex;
 	flex-direction: column;
 	align-self: stretch;
+	padding: var(--mol_gap_block);
 }
 
 [mol_app_demo_main],

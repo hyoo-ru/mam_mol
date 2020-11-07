@@ -30,7 +30,7 @@
 	top: 0;
 	display: none;
 	z-index: 1;
-	padding: .5rem;
+	padding: var(--mol_gap_text);
 }
 
 [mol_number_inc] {

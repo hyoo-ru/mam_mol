@@ -42,7 +42,8 @@ namespace $.$$ {
 			margin: {
 				right: rem(2),
 			},
-			maxHeight: rem(2.5),
+			minWidth: 0,
+			maxHeight: rem(2),
 			background: {
 				color: $mol_theme.back,
 			},
@@ -51,9 +52,9 @@ namespace $.$$ {
 
 		Expand: {
 
-			height: rem(2.5),
+			height: rem(2),
 			margin: {
-				top: rem(-2.5),
+				top: rem(-2),
 				left: rem(-2),
 			},
 

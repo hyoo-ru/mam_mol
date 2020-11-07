@@ -1,5 +1,5 @@
 $mol_grid $mol_scroll
-	row_height 40
+	row_height 32
 	row_ids /string[]
 	row_id!index null
 	col_ids /
@@ -45,6 +45,6 @@ $mol_grid_row $mol_view
 
 $mol_grid_cell $mol_view
 	dom_name \td
-	minimal_height 40
+	minimal_height 32
 
 $mol_grid_number $mol_grid_cell

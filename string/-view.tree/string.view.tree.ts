@@ -21,11 +21,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * minimal_height 40
+		 * minimal_height 32
 		 * ```
 		 */
 		minimal_height() {
-			return 40
+			return 32
 		}
 
 		/**

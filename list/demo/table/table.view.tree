@@ -7,7 +7,7 @@ $mol_list_demo_table $mol_demo_large
 				<= Rows $mol_list
 					rows <= rows /
 	Row!id $mol_row
-		minimal_height 40
+		minimal_height 48
 		sub <= row_content!id /
 			<= Id!id $mol_view sub / <= row_id!id \
 			<= Title!id $mol_view sub / <= row_title!id \

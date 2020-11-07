@@ -23,6 +23,52 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * search_hint @ \Search...
+		 * ```
+		 */
+		search_hint() {
+			return this.$.$mol_locale.text( '$mol_toolbar_demo_search_hint' )
+		}
+
+		/**
+		 * ```tree
+		 * Search $mol_string hint <= search_hint
+		 * ```
+		 */
+		@ $mol_mem
+		Search() {
+			const obj = new this.$.$mol_string()
+
+			obj.hint = () => this.search_hint()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * replace_hint @ \Replace...
+		 * ```
+		 */
+		replace_hint() {
+			return this.$.$mol_locale.text( '$mol_toolbar_demo_replace_hint' )
+		}
+
+		/**
+		 * ```tree
+		 * Replace $mol_string hint <= replace_hint
+		 * ```
+		 */
+		@ $mol_mem
+		Replace() {
+			const obj = new this.$.$mol_string()
+
+			obj.hint = () => this.replace_hint()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * approve_label @ \Approve
 		 * ```
 		 */
@@ -181,79 +227,15 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * search_hint @ \Search...
-		 * ```
-		 */
-		search_hint() {
-			return this.$.$mol_locale.text( '$mol_toolbar_demo_search_hint' )
-		}
-
-		/**
-		 * ```tree
-		 * Search $mol_string hint <= search_hint
-		 * ```
-		 */
-		@ $mol_mem
-		Search() {
-			const obj = new this.$.$mol_string()
-
-			obj.hint = () => this.search_hint()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * replace_hint @ \Replace...
-		 * ```
-		 */
-		replace_hint() {
-			return this.$.$mol_locale.text( '$mol_toolbar_demo_replace_hint' )
-		}
-
-		/**
-		 * ```tree
-		 * Replace $mol_string hint <= replace_hint
-		 * ```
-		 */
-		@ $mol_mem
-		Replace() {
-			const obj = new this.$.$mol_string()
-
-			obj.hint = () => this.replace_hint()
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Modify $mol_bar sub /
+		 * Toolbar $mol_toolbar items /
 		 * 	<= Search
 		 * 	<= Replace
-		 * ```
-		 */
-		@ $mol_mem
-		Modify() {
-			const obj = new this.$.$mol_bar()
-
-			obj.sub = () => [
-				this.Search(),
-				this.Replace()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Toolbar $mol_toolbar items /
 		 * 	<= Approve
 		 * 	<= Decline
 		 * 	<= Copy
 		 * 	<= Cut
 		 * 	<= Paste
 		 * 	<= Delete
-		 * 	<= Modify
 		 * ```
 		 */
 		@ $mol_mem
@@ -261,13 +243,14 @@ namespace $ {
 			const obj = new this.$.$mol_toolbar()
 
 			obj.items = () => [
+				this.Search(),
+				this.Replace(),
 				this.Approve(),
 				this.Decline(),
 				this.Copy(),
 				this.Cut(),
 				this.Paste(),
-				this.Delete(),
-				this.Modify()
+				this.Delete()
 			] as readonly any[]
 
 			return obj

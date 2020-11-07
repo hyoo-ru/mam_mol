@@ -18,7 +18,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		row_expanded( id : number[] , next = id.length < 3 ) {
+		row_expanded( id : number[] , next = id.length < 4 ) {
 			return next
 		}
 

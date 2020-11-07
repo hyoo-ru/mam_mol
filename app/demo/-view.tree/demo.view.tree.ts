@@ -686,15 +686,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * row_height 40
-		 * ```
-		 */
-		row_height() {
-			return 40
-		}
-
-		/**
-		 * ```tree
 		 * hierarchy_col \title
 		 * ```
 		 */

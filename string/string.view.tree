@@ -1,7 +1,7 @@
 $mol_string $mol_view
 	dom_name \input
 	enabled true
-	minimal_height 40
+	minimal_height 32
 	autocomplete false
 	field *
 		^

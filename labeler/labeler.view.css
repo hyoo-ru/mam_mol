@@ -7,8 +7,6 @@
 
 [mol_labeler_title] {
 	color: var(--mol_theme_shade);
-	font-size: .875rem;
-	padding: 0 .75rem;
 }
 
 [mol_labeler_content] {

@@ -30,7 +30,7 @@ $mol_hotkey $mol_plugin
 $mol_string $mol_view
 	dom_name \input
 	enabled true
-	minimal_height 40
+	minimal_height 32
 	autocomplete false
 	field *
 		^
@@ -91,7 +91,7 @@ $mol_speck $mol_view
 
 $mol_button $mol_view
 	enabled true
-	minimal_height 40
+	minimal_height 32
 	click?event null
 	event_click?event null
 	event *
@@ -337,12 +337,10 @@ $mol_select $mol_pop
 	dictionary *
 	options /string
 	value?val \
-	minimal_height 40
 	Option_row!id $mol_button_minor
 		event_click?event <=> event_select!id?event null
 		sub <= option_content!id /
 			<= Option_label!id $mol_dimmer
-				minimal_height 40
 				haystack <= option_label!id \
 				needle <= filter_pattern?val \
 	No_options $mol_view
@@ -520,7 +518,6 @@ $mol_check $mol_button_minor
 					<= title \
 
 $mol_switch $mol_view
-	minimal_height 40
 	Option!id $mol_switch_option
 		checked?val <=> option_checked!id?val false
 		label <= option_label!id / <= option_title!id \

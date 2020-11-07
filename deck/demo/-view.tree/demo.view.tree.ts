@@ -41,23 +41,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * greeterMessager $mol_view sub / <= greeterMessage
-		 * ```
-		 */
-		@ $mol_mem
-		greeterMessager() {
-			const obj = new this.$.$mol_view()
-
-			obj.sub = () => [
-				this.greeterMessage()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * greeterContent $mol_row sub / <= greeterMessager
+		 * greeterContent $mol_row sub / <= greeterMessage
 		 * ```
 		 */
 		@ $mol_mem
@@ -65,7 +49,7 @@ namespace $ {
 			const obj = new this.$.$mol_row()
 
 			obj.sub = () => [
-				this.greeterMessager()
+				this.greeterMessage()
 			] as readonly any[]
 
 			return obj
@@ -105,23 +89,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * questerMessager $mol_view sub / <= questerMessage
-		 * ```
-		 */
-		@ $mol_mem
-		questerMessager() {
-			const obj = new this.$.$mol_view()
-
-			obj.sub = () => [
-				this.questerMessage()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * questerContent $mol_row sub / <= questerMessager
+		 * questerContent $mol_row sub / <= questerMessage
 		 * ```
 		 */
 		@ $mol_mem
@@ -129,7 +97,7 @@ namespace $ {
 			const obj = new this.$.$mol_row()
 
 			obj.sub = () => [
-				this.questerMessager()
+				this.questerMessage()
 			] as readonly any[]
 
 			return obj
@@ -169,23 +137,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * commanderMessager $mol_view sub / <= commanderMessage
-		 * ```
-		 */
-		@ $mol_mem
-		commanderMessager() {
-			const obj = new this.$.$mol_view()
-
-			obj.sub = () => [
-				this.commanderMessage()
-			] as readonly any[]
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * commanderContent $mol_row sub / <= commanderMessager
+		 * commanderContent $mol_row sub / <= commanderMessage
 		 * ```
 		 */
 		@ $mol_mem
@@ -193,7 +145,7 @@ namespace $ {
 			const obj = new this.$.$mol_row()
 
 			obj.sub = () => [
-				this.commanderMessager()
+				this.commanderMessage()
 			] as readonly any[]
 
 			return obj

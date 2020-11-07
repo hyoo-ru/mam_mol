@@ -3,7 +3,7 @@ namespace $.$$ {
 	export class $mol_check_expand extends $.$mol_check_expand {
 		
 		level_style() {
-			return `${ this.level() * 1.25 - 1 }rem`
+			return `${ this.level() * 1 - 1 }rem`
 		}
 		
 		expandable() {

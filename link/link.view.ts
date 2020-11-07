@@ -38,7 +38,7 @@ namespace $.$$ {
 		}
 
 		minimal_height() {
-			return Math.max( super.minimal_height() || 40 )
+			return Math.max( super.minimal_height() || 32 )
 		}
 
 		theme() {

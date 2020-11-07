@@ -3,15 +3,6 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * minimal_height 40
-		 * ```
-		 */
-		minimal_height() {
-			return 40
-		}
-
-		/**
-		 * ```tree
 		 * Option!id $mol_switch_option
 		 * 	checked?val <=> option_checked!id?val
 		 * 	label <= option_label!id
