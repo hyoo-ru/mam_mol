@@ -1,6 +1,7 @@
 namespace $ {
 
-	export function $mol_override< Sup >( sup : { prototype : Sup } ) {
+	function $mol_override< Sup >( sup : new()=> Sup ) {
+
 		return <
 			Field extends keyof Sup ,
 			Proto extends { [ key in Field ] : Sup[ Field ] } ,
@@ -9,6 +10,7 @@ namespace $ {
 			field : Field ,
 			descr : TypedPropertyDescriptor< Sup[ Field ] > ,
 		)=> {}
+		
 	}
 	
 }

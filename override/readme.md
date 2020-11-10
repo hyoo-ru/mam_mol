@@ -5,9 +5,9 @@ Checks method is override of same method of some superclass.
 ## Sample
 
 ```typescript
-class Foo {
+class Foo1 {
 
-    bar( a : number ) {
+    bar1( a : number ) {
         return a 
     }
 
@@ -17,37 +17,27 @@ class Foo {
 
 }
 
-class Foo2 {
+class Foo2 extends Foo1 {
     
-    @$mol_override( Foo )
-    bar( a : number ) {
-        return 1
-    }
-
-    @$mol_override( Foo )
+    @$mol_override( Foo1 )
     bar2( a : number , b : number ) {
         return 1 
     }
-
-    xxx() { return '777' }
 
 }
 
 class Foo3 extends Foo2 {
 
-    @$mol_override( Foo ) // OK
-    bar( a : number ) { return 5 }
+    @ $mol_override( Foo2 ) // OK
+    bar1( a : number ) { return 5 }
 
-    @$mol_override( Foo ) // Error: less args than should
+    @ $mol_override( Foo2 ) // Error: less args than should
     bar2( a : number ) { return 5 }
 
-    @$mol_override( Foo ) // Error: accidental override Foo2
-    xxx() { return '666' }
-
-    @$mol_override( Foo ) // Error: override of absent method
-    yyy() { return 0 }
+    @ $mol_override( Foo2 ) // Error: override of absent method
+    bar3() { return 0 }
 
 }
 ```
 
-[Playground](https://www.typescriptlang.org/play?#code/MYGwhgzhAEBiD29oG8CwAoD1vQEZgCcAKaMaALmgDsBXAW1wFMDoBKFLHLgxgFxoJVS0TtgC+GUXkIAmEmUq0GzaABo8FavSYt2adF258BQslImZ0FjKEgwE8GRwM4pAAQAkdeCAD68ADdmAgBLABNGEgc2KXxiYUVtFT0pI35BaABGc0kXbE9vP0Dg8Mi4RBi86QI5BK1lFnVcTSUdNmdDHB50oUyRKusqgA8Roj1obpNoAHIAdnnp6EHB2yhy+ABmaEYh3kYqMPtEJ313Lx9-IIJQiKiK9gB6B+gAeQBpWMJ5FqTdFAnjBkAKxLXJcAoXYrXUp3JCPZ4AUWu8AIlBAjDWhAA5jBeAALMBCCB4+A0EBhT41b6JBrtZAAnrQEGDcHnIpXG5laLw6BIggoyhgYDAUpUXhgEDQKGc9YyKQjIZjf6TDLTABsGsWLJwEPZJVu63aT15yNRUo5pSlADNSLgIPteNA6HwSRSqgBPT1K+kqoQABlBlkGVpoVGAvBC8CEbMu+sYAB5oABlGgAB2gAD4SBA05p6an+bx4Lx3anGJoU+mxHSpL7oPHUjhYCFGOTtrt9odoABrRju+A2ytqRvYAAKhaQOz2Bxg9IA2j2+9AQkJm62wtAALoVtMLtdt7fV1RSLMj6AF4tISjjy-DqpcK0ttuUfcb4-3nARCDAFiUAAqpaMGEN5lgQJYACIYj+ISpkWBCJpWe5Phu24ZneXCsAAvGhyAWBYQA)
+[Playground](https://www.typescriptlang.org/play?#code/MYGwhgzhAEBiD28CM0DeBYAUF6voCMwAnJACmjGgC5oA7AVwFt8BTI6ASjRz16JYAu9IrQrQeuAL5YJBYgCZylGg2ZtoAGgLU6TVuy4ZMvPoOGjKs6dkzWsoSDATx50FgA8BLWgBMniFCNeWQABABJGeBAAfXgANzYiAEsfFnJnFA5ZQiJFMRU9dS18HVV9Tm5jE1x+IRFoFCsZW2aHKDhEAGY3T28-DpdK0OgIqNiEomTU9MRXLgB6eegAeQBpbOIyfN01AzRoWvNoAFZoOyrcEJHImPjElLSBuehF6ABRSfgiGhAWduIAOYwAQACzAoggIPg9BAPg2uSUpUKe1QBzM9VO514V1GtwmU0ezmerw+RC+NDukwe0HgADMKPgIN4BNBGIIoXCLnIiJ1SIY0XVRAAGM7Nc60+i0YACJLwUS48b3VIAHmgAGV6AAHaAAPnIEC1pRYAHc+QBeHXqw2GWSHerK2S8WBJFiwnpeXwwADWLAAnnSrdqNI68AAFMkCeDuvowVEAbWgPt90CSomdrp80AAujoNZqE+m3TnJJpZHqQ7hNRGozRw-BI6WubxaS63TRC5ng028KkIMB2DQACq+zUsHx10dEAS+gAif37SU1kaIqrzBdbmZzlq7vA4FrQ1msQA)
