@@ -1,6 +1,6 @@
 # $mol_override
 
-Checks method is override of same method of some superclass.
+Checks them member is override of same member of superclass.
 
 ## Sample
 
