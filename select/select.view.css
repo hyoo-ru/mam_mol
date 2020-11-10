@@ -28,7 +28,7 @@
 }
 
 [mol_select_option_label] {
-	padding: .25rem .5rem;
+	padding: var(--mol_gap_text);
 	text-align: left;
 	min-height: 1.5em;
 	display: block;
@@ -42,7 +42,7 @@
 }
 
 [mol_select_no_options] {
-	padding: .25em .5rem;
+	padding: var(--mol_gap_text);
 	text-align: left;
 	display: block;
 	color: var(--mol_theme_shade);

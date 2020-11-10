@@ -19,7 +19,7 @@
 
 [mol_textarea_edit] {
 	z-index: -1 !important;
-	padding: .25rem .5rem;
+	padding: var(--mol_gap_text);
 	position: absolute;
 	left: 0;
 	top: 0;

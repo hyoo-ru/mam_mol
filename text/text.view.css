@@ -2,7 +2,7 @@
 	line-height: 1.5em;
 	box-sizing: border-box;
 	max-width: 60rem;
-	padding: .5rem;
+	padding: var(--mol_gap_block);
 	border-radius: var(--mol_skin_round);
 	white-space: pre-line;
 	display: flex;
@@ -12,7 +12,7 @@
 }
 
 [mol_text_row] {
-	margin: .25rem .5rem;
+	margin: var(--mol_gap_text);
 	overflow: auto;
 	max-width: 100%;
 	display: block;

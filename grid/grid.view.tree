@@ -45,6 +45,6 @@ $mol_grid_row $mol_view
 
 $mol_grid_cell $mol_view
 	dom_name \td
-	minimal_height 32
+	minimal_height 40
 
 $mol_grid_number $mol_grid_cell

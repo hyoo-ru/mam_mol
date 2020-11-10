@@ -35,7 +35,7 @@ namespace $.$$ {
 		},
 		
 		Trash: {
-			padding: rem(1),
+			padding: $mol_gap.block,
 			display: 'block',
 		},
 

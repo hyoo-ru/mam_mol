@@ -20,7 +20,7 @@ namespace $.$$ {
 
 	$mol_style_define( $mol_infinite_demo , {
 		List : {
-			padding: rem(.5),
+			padding: $mol_gap.block,
 		}
 	} )
 
