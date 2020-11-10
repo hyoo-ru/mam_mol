@@ -6,13 +6,13 @@ namespace $.$$ {
 
 		Row: {
 
-			padding: rem(.25),
-			boxShadow: `0 0 0 .5px ${ $mol_theme.line }`,
+			padding: 0,
+			// boxShadow: `0 0 0 .5px ${ $mol_theme.line }`,
 
 			'>': {
 				
 				$mol_view: {
-					margin: rem(.25),
+					margin: 0,
 				},
 
 			},

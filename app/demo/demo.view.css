@@ -66,7 +66,7 @@
 [mol_app_demo_list] {
 	display: flex;
 	flex-wrap: wrap;
-	padding: .5rem;
+	padding: var(--mol_gap_block);
 	align-content: flex-start;
 	align-items: flex-start;
 }
@@ -86,11 +86,11 @@
 	flex: 1 0 auto;
 	display: flex;
 	flex-direction: column;
-	margin: .5rem;
+	margin: var(--mol_gap_block);
 }
 
 [mol_app_demo_detail_list] > [mol_demo_large] {
-	margin: .75rem;
+	margin: var(--mol_gap_block);
 	height: calc( 100vh - 100px );
 	width: calc( 100% - 1rem );
 }

@@ -40,10 +40,10 @@ namespace $.$$ {
 				wrap: 'wrap',
 			},
 			margin: {
-				right: rem(2),
+				right: rem(2.5),
 			},
 			minWidth: 0,
-			maxHeight: rem(2),
+			maxHeight: rem(2.5),
 			background: {
 				color: $mol_theme.back,
 			},
@@ -52,10 +52,10 @@ namespace $.$$ {
 
 		Expand: {
 
-			height: rem(2),
+			height: rem(2.5),
 			margin: {
-				top: rem(-2),
-				left: rem(-2),
+				top: rem(-2.5),
+				left: rem(-2.5),
 			},
 
 			Icon: {

@@ -73,7 +73,7 @@ namespace $ {
 			},
 			padding: $mol_gap.block,
 			margin: {
-				left: rem(.5),
+				left: rem(.75),
 			},
 			box: {
 				shadow: [{

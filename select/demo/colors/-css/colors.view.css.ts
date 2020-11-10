@@ -1,3 +1,3 @@
 namespace $ { $mol_style_attach( "mol/select/demo/colors/colors.view.css",
- "[mol_select_demo_colors_color_option] {\n\tflex-wrap: nowrap;\n\tjustify-content: flex-start;\n\tpadding: 0 1rem 0 0;\n\tbox-shadow: none;\n\talign-items: center;\n\tmin-height: 2.5rem;\n}\n\n[mol_select_demo_colors_color_preview] {\n\tborder-radius: var(--mol_skin_round);\n\ttext-align: start;\n\tmargin: 0 .5rem 0 0;\n\tpadding: .25rem;\n\talign-self: stretch;\n}\n"
+ "[mol_select_demo_colors_color_option] {\n\tflex-wrap: nowrap;\n\tjustify-content: flex-start;\n\tpadding: 0 .75rem 0 0;\n\tbox-shadow: none;\n\talign-items: center;\n}\n\n[mol_select_demo_colors_color_preview] {\n\tborder-radius: var(--mol_skin_round);\n\ttext-align: start;\n\tmargin: 0 .25rem 0 0;\n\tpadding: .25rem;\n\talign-self: stretch;\n}\n"
 ) }
