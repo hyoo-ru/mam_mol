@@ -1,0 +1,6 @@
+$mol_text_code_demo $mol_demo_large
+	title @ \Markdow visualization example
+	sub /
+		<= Scroll $mol_scroll
+			sub /
+				<= Text $mol_text_code text <= source \
