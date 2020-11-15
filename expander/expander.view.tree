@@ -1,6 +1,6 @@
 $mol_expander $mol_list
 	rows /
-		<= Label $mol_view
+		<= Label $mol_float
 			sub /
 				<= Trigger $mol_check_expand
 					checked?val <=> expanded?val false

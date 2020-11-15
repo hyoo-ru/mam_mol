@@ -1,6 +1,7 @@
 [mol_expander] {
 	flex-direction: column;
 	flex: 1 1 auto;
+	contain: content;
 }
 
 [mol_expander_label] {
