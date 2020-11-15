@@ -1,0 +1,15 @@
+$mol_text_code $mol_list
+	text \
+	text_lines /string
+	Row!id $mol_view
+		sub <= row_content!id /
+		minimal_height 24
+	Token!id $mol_text_code_token
+		type <= token_type!id \
+		content <= token_content!id /
+
+$mol_text_code_token $mol_view
+	attr *
+		^
+		mol_text_code_token_type <= type \
+	sub <= content /

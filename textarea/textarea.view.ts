@@ -2,21 +2,19 @@ namespace $.$$ {
 
 	export class $mol_textarea extends $.$mol_textarea {
 
-		text() {
-			return this.value().replace( /^/mg , '\t' )
-		}
-
 		indent_inc() {
+
+			document.execCommand( 'insertText', false, '\t' )
 			
-			const el = this.Edit().dom_node() as HTMLTextAreaElement
-			const pos = el.selectionStart
+			// const el = this.Edit().dom_node() as HTMLTextAreaElement
+			// const pos = el.selectionStart
 
-			let text = this.value()
-			text = text.substring( 0 , pos ) + '\t' + text.substring( el.selectionEnd )
+			// let text = this.value()
+			// text = text.substring( 0 , pos ) + '\t' + text.substring( el.selectionEnd )
 
-			this.value( text )
-			el.value = text
-			el.selectionStart = el.selectionEnd = pos + 1
+			// this.value( text )
+			// el.value = text
+			// el.selectionStart = el.selectionEnd = pos + 1
 		}
 
 		indent_dec() {

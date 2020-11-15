@@ -211,6 +211,9 @@ namespace $ {
 
 		/** Z-order of a positioned element and its descendants or flex items. Overlapping elements with a larger z-index cover those with a smaller one. */
 		zIndex: number
+
+		/** Degree to which content behind an element is hidden, and is the opposite of transparency. */
+		opacity: number
 		
 	}
 

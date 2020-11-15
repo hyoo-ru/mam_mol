@@ -167,6 +167,7 @@
 	"$mol_switch_demo_option_green": "Green",
 	"$mol_switch_demo_option_red": "Red",
 	"$mol_switch_demo_title": "Color switchers in various state",
+	"$mol_text_code_demo_title": "Markdow visualization example",
 	"$mol_text_demo_title": "Markdow visualization example",
 	"$mol_textarea_demo_title": "Text input field in various states",
 	"$mol_toolbar_demo_approve_label": "Approve",

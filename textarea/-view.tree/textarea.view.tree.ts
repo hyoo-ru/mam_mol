@@ -89,23 +89,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * text \
-		 * ```
-		 */
-		text() {
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * View $mol_text text <= text
+		 * View $mol_text_code text <= value
 		 * ```
 		 */
 		@ $mol_mem
 		View() {
-			const obj = new this.$.$mol_text()
+			const obj = new this.$.$mol_text_code()
 
-			obj.text = () => this.text()
+			obj.text = () => this.value()
 
 			return obj
 		}

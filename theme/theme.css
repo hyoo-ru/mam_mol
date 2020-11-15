@@ -20,7 +20,7 @@
 [mol_theme="$mol_theme_dark"] {
 	--mol_theme_back: hsl( 210 , 50% , 10% );
 	--mol_theme_hover: #333;
-	--mol_theme_current: hsl( 210 , 100% , 20% );
+	--mol_theme_current: hsl( 210 , 100% , 30% );
 	--mol_theme_text: hsl( 0 , 0% , 80% );
 	--mol_theme_control: hsla( 210 , 60% , 70% , 1 );
 	--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );

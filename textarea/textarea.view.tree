@@ -7,5 +7,5 @@ $mol_textarea $mol_view
 			value?val <=> value?val \
 			hint <= hint \
 			enabled <= enabled true
-		<= View $mol_text
-			text <= text \
+		<= View $mol_text_code
+			text <= value

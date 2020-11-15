@@ -3,21 +3,20 @@
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	font-family: var(--mol_skin_font_monospace);
 	z-index: 0;
 	vertical-align: top;
+	min-width: max-content;
+	min-height: max-content;
 }
 
 [mol_textarea_view] {
-	max-width: none;
 	pointer-events: none;
-	white-space: pre-wrap;
 	z-index: 1;
-	box-shadow: none;
-	padding: 0;
+	white-space: pre;
 }
 
 [mol_textarea_edit] {
+	font-family: monospace;
 	z-index: -1 !important;
 	padding: var(--mol_gap_text);
 	position: absolute;
@@ -28,10 +27,7 @@
 	color: transparent;
 	caret-color: var(--mol_theme_text);
 	resize: none;
-	white-space: pre-wrap;
+	white-space: pre;
 	tab-size: 4;
-}
-
-[mol_textarea_edit][mol_textarea_edit] {
-	/* background: none; */
+	overflow-anchor: none;
 }
