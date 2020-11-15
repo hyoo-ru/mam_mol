@@ -5758,7 +5758,7 @@ declare namespace $.$$ {
             found: string;
             chunks: string[];
         }[];
-        text_lines(): string[];
+        text_lines(): readonly string[];
         rows(): $mol_view[];
         row_content(path: number[]): (string | $mol_text_code_token)[];
         token_type(path: number[]): string;
