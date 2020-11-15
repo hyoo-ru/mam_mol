@@ -3591,7 +3591,7 @@ var $;
                 flex: {
                     grow: 1000,
                     shrink: 1,
-                    basis: per(50),
+                    basis: 'auto',
                 },
                 minHeight: rem(2),
                 padding: $.$mol_gap.text,

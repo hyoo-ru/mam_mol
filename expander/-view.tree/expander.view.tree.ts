@@ -65,14 +65,14 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Label $mol_view sub /
+		 * Label $mol_float sub /
 		 * 	<= Trigger
 		 * 	<= Tools
 		 * ```
 		 */
 		@ $mol_mem
 		Label() {
-			const obj = new this.$.$mol_view()
+			const obj = new this.$.$mol_float()
 
 			obj.sub = () => [
 				this.Trigger(),

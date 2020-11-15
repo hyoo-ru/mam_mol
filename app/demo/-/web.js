@@ -14356,7 +14356,7 @@ var $;
             return null;
         }
         Label() {
-            const obj = new this.$.$mol_view();
+            const obj = new this.$.$mol_float();
             obj.sub = () => [
                 this.Trigger(),
                 this.Tools()
@@ -14391,7 +14391,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/expander/expander.view.css", "[mol_expander] {\n\tflex-direction: column;\n\tflex: 1 1 auto;\n}\n\n[mol_expander_label] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n[mol_expander_trigger] {\n\tflex: auto;\n}\n");
+    $.$mol_style_attach("mol/expander/expander.view.css", "[mol_expander] {\n\tflex-direction: column;\n\tflex: 1 1 auto;\n\tcontain: content;\n}\n\n[mol_expander_label] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n[mol_expander_trigger] {\n\tflex: auto;\n}\n");
 })($ || ($ = {}));
 //expander.view.css.js.map
 ;
@@ -18465,7 +18465,7 @@ var $;
                 flex: {
                     grow: 1000,
                     shrink: 1,
-                    basis: per(50),
+                    basis: 'auto',
                 },
                 minHeight: rem(2),
                 padding: $.$mol_gap.text,
