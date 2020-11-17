@@ -2,11 +2,15 @@ namespace $.$$ {
 
 	export class $mol_paginator extends $.$mol_paginator {
 		
-		backward() {
+		backward( event: Event ) {
+			if( event.defaultPrevented ) return
+			event.preventDefault()
 			this.value( this.value() - 1 )
 		}
-
-		forward() {
+		
+		forward( event: Event ) {
+			if( event.defaultPrevented ) return
+			event.preventDefault()
 			this.value( this.value() + 1 )
 		}
 
