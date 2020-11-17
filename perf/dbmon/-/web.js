@@ -1130,10 +1130,11 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_atom2_value(task) {
+    function $mol_atom2_value(task, next) {
         const cached = $mol_atom2.cached;
         try {
             $mol_atom2.cached = true;
+            $mol_atom2.cached_next = next;
             return task();
         }
         finally {
@@ -1181,8 +1182,13 @@ var $;
             return promise.then(obsolete, obsolete);
         }
         get() {
-            if ($mol_atom2.cached)
+            if ($mol_atom2.cached) {
+                if ($mol_atom2.cached_next !== undefined) {
+                    this.push($mol_atom2.cached_next);
+                    $mol_atom2.cached_next = undefined;
+                }
                 return this.value;
+            }
             const value = super.get();
             if (value === undefined)
                 $.$mol_fail(new Error(`Not defined: ${this}`));
@@ -1388,6 +1394,7 @@ var $;
     }
     $mol_atom2.logs = false;
     $mol_atom2.cached = false;
+    $mol_atom2.cached_next = undefined;
     $mol_atom2.reap_task = null;
     $mol_atom2.reap_queue = [];
     $.$mol_atom2 = $mol_atom2;
@@ -2243,6 +2250,47 @@ var $;
         [$.$mol_dev_format_head]() {
             return $.$mol_dev_format_span({}, $.$mol_dev_format_native(this), $.$mol_dev_format_shade('/'), $.$mol_dev_format_auto($.$mol_mem_cached(() => this.sub())));
         }
+        *view_find(check, path = []) {
+            path = [...path, this];
+            if (check('', path))
+                return yield this;
+            for (const item of this.sub()) {
+                if (item instanceof $mol_view) {
+                    yield* item.view_find(check, path);
+                }
+            }
+        }
+        force_render(path) {
+            const kids = this.sub();
+            const index = kids.findIndex(item => {
+                if (item instanceof $mol_view) {
+                    return path.has(item);
+                }
+                else {
+                    return false;
+                }
+            });
+            if (index >= 0) {
+                kids[index].force_render(path);
+            }
+            return index;
+        }
+        ensure_visible(view) {
+            this.view_find((_, path) => {
+                if (path[path.length - 1] !== view)
+                    return false;
+                $.$mol_fiber_defer(() => {
+                    this.force_render(new Set(path));
+                    $.$mol_fiber_defer(() => {
+                        view.dom_node().scrollIntoView({
+                            block: 'center',
+                            inline: 'center',
+                        });
+                    });
+                });
+                return true;
+            }).next().value;
+        }
     }
     $mol_view.watchers = new Set();
     __decorate([
@@ -3020,6 +3068,16 @@ var $;
                         return sum;
                     }
                 }, 0);
+            }
+            force_render(path) {
+                const index = super.force_render(path);
+                if (index) {
+                    const win = this.view_window();
+                    if (index < win[0] || index >= win[1]) {
+                        $.$mol_mem_cached(() => this.view_window(), [index, index + 1]);
+                    }
+                }
+                return index;
             }
         }
         __decorate([

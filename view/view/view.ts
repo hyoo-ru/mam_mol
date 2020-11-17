@@ -347,6 +347,72 @@ namespace $ {
 			)
 		}
 
+		/** Deep search view by predicate. */
+		*view_find(
+			check: ( text: string, path : $mol_view[] )=> boolean,
+			path = [] as $mol_view[],
+		): Generator< $mol_view > {
+
+			path = [ ... path, this ]
+			
+			if( check( '', path ) ) return yield this
+			
+			for( const item of this.sub() ) {
+				if( item instanceof $mol_view ) {
+					yield* item.view_find( check, path )
+				}
+			}
+			
+		}
+
+		/** Renders path of views to DOM. */
+		force_render(
+			path : Set< $mol_view >,
+		): number {
+
+			const kids = this.sub()
+
+			const index = kids.findIndex( item => {
+				if( item instanceof $mol_view ) {
+					return path.has( item )
+				} else {
+					return false
+				}
+			})
+
+			if( index >= 0 ) {
+				( kids[ index ] as $mol_view ).force_render( path )
+			}
+			
+			return index
+		}
+
+		/** Renders view to DOM and scroll to it. */
+		ensure_visible( view: $mol_view ) {
+			
+			this.view_find( ( _, path ) => {
+
+				if( path[ path.length - 1 ] !== view ) return false
+
+				$mol_fiber_defer( ()=> {
+				
+					this.force_render( new Set( path ) )
+	
+					$mol_fiber_defer( ()=> {
+						view.dom_node().scrollIntoView({
+							block: 'center',
+							inline: 'center',
+						})
+					})
+	
+				})
+
+				return true
+	
+			} ).next().value
+
+		}
+
 	}
 
 	export type $mol_view_all = $mol_type_pick< $mol_ambient_context , typeof $mol_view >

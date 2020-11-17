@@ -345,11 +345,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_atom2_value<Value>(task: () => Value): Value | undefined;
+    function $mol_atom2_value<Value>(task: () => Value, next?: Value): Value | undefined;
     class $mol_atom2<Value = any> extends $mol_fiber<Value> {
         static logs: boolean;
         static get current(): $mol_atom2<any> | null;
         static cached: boolean;
+        static cached_next: any;
         static reap_task: $mol_fiber<any> | null;
         static reap_queue: $mol_atom2<any>[];
         static reap(atom: $mol_atom2): void;
@@ -602,6 +603,9 @@ declare namespace $ {
             [key: string]: (event: Event) => void;
         };
         plugins(): readonly $mol_view[];
+        view_find(check: (text: string, path: $mol_view[]) => boolean, path?: $mol_view[]): Generator<$mol_view>;
+        force_render(path: Set<$mol_view>): number;
+        ensure_visible(view: $mol_view): void;
     }
     type $mol_view_all = $mol_type_pick<$mol_ambient_context, typeof $mol_view>;
 }

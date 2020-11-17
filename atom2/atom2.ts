@@ -1,9 +1,10 @@
 namespace $ {
 
-	export function $mol_atom2_value< Value >( task : ()=> Value ) : Value | undefined {
+	export function $mol_atom2_value< Value >( task : ()=> Value, next?: Value ) : Value | undefined {
 		const cached = $mol_atom2.cached
 		try {
 			$mol_atom2.cached = true
+			$mol_atom2.cached_next = next
 			return task()
 		} finally {
 			$mol_atom2.cached = cached
@@ -21,6 +22,7 @@ namespace $ {
 		}
 
 		static cached = false
+		static cached_next = undefined as any
 
 		static reap_task = null as null | $mol_fiber
 		static reap_queue = [] as $mol_atom2[]
@@ -69,7 +71,15 @@ namespace $ {
 
 		get() {
 
-			if( $mol_atom2.cached ) return this.value
+			if( $mol_atom2.cached ) {
+
+				if( $mol_atom2.cached_next !== undefined ) {
+					this.push( $mol_atom2.cached_next )
+					$mol_atom2.cached_next = undefined
+				}
+				
+				return this.value
+			}
 			
 			const value = super.get()
 			if( value === undefined ) $mol_fail( new Error( `Not defined: ${ this }` ) )

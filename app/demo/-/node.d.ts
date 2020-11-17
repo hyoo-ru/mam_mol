@@ -410,11 +410,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_atom2_value<Value>(task: () => Value): Value | undefined;
+    function $mol_atom2_value<Value>(task: () => Value, next?: Value): Value | undefined;
     class $mol_atom2<Value = any> extends $mol_fiber<Value> {
         static logs: boolean;
         static get current(): $mol_atom2<any> | null;
         static cached: boolean;
+        static cached_next: any;
         static reap_task: $mol_fiber<any> | null;
         static reap_queue: $mol_atom2<any>[];
         static reap(atom: $mol_atom2): void;
@@ -639,6 +640,9 @@ declare namespace $ {
             [key: string]: (event: Event) => void;
         };
         plugins(): readonly $mol_view[];
+        view_find(check: (text: string, path: $mol_view[]) => boolean, path?: $mol_view[]): Generator<$mol_view>;
+        force_render(path: Set<$mol_view>): number;
+        ensure_visible(view: $mol_view): void;
     }
     type $mol_view_all = $mol_type_pick<$mol_ambient_context, typeof $mol_view>;
 }
@@ -693,6 +697,7 @@ declare namespace $.$$ {
         gap_after(): number;
         sub_visible(): $mol_view[];
         minimal_height(): number;
+        force_render(path: Set<$mol_view>): number;
     }
 }
 
@@ -1897,6 +1902,48 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_type_intersect<Union> = (Union extends any ? (_: Union) => void : never) extends ((_: infer Intersection) => void) ? Intersection : never;
+}
+
+declare namespace $ {
+    type $mol_regexp_source = string | RegExp | {
+        [key in string]: $mol_regexp_source;
+    } | readonly [$mol_regexp_source, ...$mol_regexp_source[]];
+    type $mol_regexp_groups<Source extends $mol_regexp_source> = Source extends string ? never : Source extends $mol_regexp<infer G> ? G : Source extends $mol_regexp_source[] ? $mol_type_intersect<{
+        [key in Extract<keyof Source, number>]: $mol_regexp_groups<Source[key]>;
+    }[Extract<keyof Source, number>]> : Source extends RegExp ? never : Source extends {
+        readonly [key in string]: $mol_regexp_source;
+    } ? Extract<$mol_type_intersect<{
+        [key in Extract<keyof Source, string>]: string;
+    } | {
+        [key in keyof Source]: $mol_regexp_groups<Source[key]>;
+    }[keyof Source]>, Record<string, string>> : never;
+    class $mol_regexp<Groups extends Record<string, string>> extends RegExp {
+        readonly groups: (Extract<keyof Groups, string>)[];
+        constructor(source: string, flags?: string, groups?: (Extract<keyof Groups, string>)[]);
+        get parse(): (str: string, from?: number) => Generator<{ [key in keyof Groups]: string; } & {
+            [key: number]: string;
+        }, null | undefined, unknown>;
+        static repeat(source: $mol_regexp_source, min?: number, max?: number): $mol_regexp<Record<string, string>>;
+        static repeat_greedy(source: $mol_regexp_source, min?: number, max?: number): $mol_regexp<Record<string, string>>;
+        static optional(source: $mol_regexp_source): $mol_regexp<Record<string, string>>;
+        static force_after(source: $mol_regexp_source): $mol_regexp<Record<string, string>>;
+        static forbid_after(source: $mol_regexp_source): $mol_regexp<Record<string, string>>;
+        static from<Source extends $mol_regexp_source>(source: Source, { ignoreCase, multiline }?: Partial<Pick<RegExp, 'ignoreCase' | 'multiline'>>): $mol_regexp<$mol_regexp_groups<Source>>;
+        static char_code(code: number): $mol_regexp<Record<string, string>>;
+        static byte: $mol_regexp<never>;
+        static digit: $mol_regexp<never>;
+        static letter: $mol_regexp<never>;
+        static space: $mol_regexp<never>;
+        static word_break: $mol_regexp<never>;
+        static line_end: $mol_regexp<never>;
+        static begin: $mol_regexp<never>;
+        static end: $mol_regexp<never>;
+        static or: $mol_regexp<never>;
+    }
+}
+
+declare namespace $ {
 }
 
 declare namespace $.$$ {
@@ -1904,6 +1951,7 @@ declare namespace $.$$ {
         parts(): any[];
         strings(): string[];
         string(index: number): string;
+        view_find(check: (text: string, path: $mol_view[]) => boolean, path?: $mol_view[]): Generator<this, void, unknown>;
     }
 }
 
@@ -5763,7 +5811,7 @@ declare namespace $.$$ {
         token_type(path: number[]): string;
         token_content(path: number[]): (string | $mol_text_code_token)[];
         token_text(path: number[]): string;
-        view_path(check: (text: string, path: $mol_view[]) => boolean, path?: $mol_view[]): Generator<$mol_view[]>;
+        view_find(check: (text: string, path: $mol_view[]) => boolean, path?: $mol_view[]): Generator<this, void, unknown>;
     }
 }
 

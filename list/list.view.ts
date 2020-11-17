@@ -147,5 +147,21 @@ namespace $.$$ {
 
 		}
 
+		force_render(
+			path : Set< $mol_view >,
+		) {
+
+			const index = super.force_render( path )
+
+			if( index ) {
+				const win = this.view_window()
+				if( index < win[0] || index >= win[1] ) { 
+					$mol_mem_cached( ()=> this.view_window(), [ index, index + 1 ] )
+				}
+			}
+			
+			return index
+		}
+
 	}
 }
