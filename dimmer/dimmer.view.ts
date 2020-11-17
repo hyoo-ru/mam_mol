@@ -19,12 +19,24 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		strings() {
-			return this.haystack().split( new RegExp( `(${ this.needle() })` , 'gi' ) )
+			const regexp = $mol_regexp.from( { needle: this.needle() } , { ignoreCase: true } )
+			return this.haystack().split( regexp )
 		}
 		
 		string( index: number ) {
 			return this.strings()[ index ]
 		}
 		
+		*view_find(
+			check: ( text: string, path : $mol_view[] )=> boolean,
+			path = [] as $mol_view[],
+		) {
+
+			path = [ ... path, this ]
+			
+			if( check( this.haystack(), path ) ) yield this
+			
+		}
+
 	}
 }
