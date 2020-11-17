@@ -46,7 +46,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 # Benchmarks
 
 - [$hyoo_bench_list](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/list) - Frameworks comparison ([online](https://bench.hyoo.ru/list/#sort=fill/sample=angular-1-5-5~mol~native-html~react-15-3-2~native-dom))
-- [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark) ([online](https://eigenmethod.github.io/todomvc/benchmark/#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
+- [ToDoMVC benchmark](https://github.com/hyoo-ru/todomvc/tree/master/benchmark) ([online](https://hyoo-ru.github.io/todomvc/benchmark/#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
 - [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
 - [Line charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/rope) ([online](https://bench.hyoo.ru/chart/rope/#sort=fill/sample=hcharts~mol))
 - [Bar charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/bar) ([online](https://bench.hyoo.ru/chart/bar/#sort=fill/sample=hcharts~mol))
@@ -67,10 +67,10 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 ## Create MAM project
 
-Easy way is checkout this [preconfigured MAM repository](http://github.com/eigenmethod/mam) and start dev server:
+Easy way is checkout this [preconfigured MAM repository](http://github.com/hyoo-ru/mam) and start dev server:
 
 ```sh
-git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
+git clone https://github.com/hyoo-ru/mam.git ./mam && cd mam
 npm install && npm start
 ```
 
@@ -229,7 +229,7 @@ Add **styles** at `./my/hello/hello.view.css`:
 ## Zero configuration
 Instead of ensuring configurable under any wanting, we better concentrate on, that all would worked good directly from the box and does not bother $mol's developer by a typical configure. (But, nevertheless it does not excludes setup for your needs if it is required)
 
-For example if you download **[base MAM-project](http://github.com/eigenmethod/mam)** you'd have got that:
+For example if you download **[base MAM-project](http://github.com/hyoo-ru/mam)** you'd have got that:
 
 **Building of JS and CSS bundles for different platforms.** A bundle can be built for any module. In this bundle would be sources of that module and sources all other modules from which the module depends on. Also there would not redundant modules in the bundle.  
 
@@ -502,12 +502,12 @@ This project exists thanks to all the people who contribute.
 - [zerkalica](https://github.com/zerkalica)
 - [muleronko](https://github.com/muleronko)
 - [slava-viktorov](https://github.com/slava-viktorov)
-- [CONTRIBUTING](https://github.com/eigenmethod/mol/blob/master/CONTRIBUTING.md)
+- [CONTRIBUTING](https://github.com/hyoo-ru/mol/blob/master/CONTRIBUTING.md)
 
 # Cool stuff
 
-- **[Commits visualization](http://ghv.artzub.com/#repo=mol&user=eigenmethod&climit=100000)**
-- **[Sources visualization](http://veniversum.me/git-visualizer/?owner=eigenmethod&repo=mol)**
+- **[Commits visualization](http://ghv.artzub.com/#repo=mam_mol&user=hyoo-ru&climit=100000)**
+- **[Sources visualization](http://veniversum.me/git-visualizer/?owner=hyoo-ru&repo=mam_mol)**
 
 # Donate
 
