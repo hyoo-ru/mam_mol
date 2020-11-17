@@ -23,113 +23,37 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Row!id $mol_view
-		 * 	sub <= row_content!id
-		 * 	minimal_height 24
+		 * Row!id $mol_text_code_row
+		 * 	text <= row_text!id
+		 * 	highlight <= highlight
 		 * ```
 		 */
 		@ $mol_mem_key
 		Row(id: any) {
-			const obj = new this.$.$mol_view()
+			const obj = new this.$.$mol_text_code_row()
 
-			obj.sub = () => this.row_content(id)
-			obj.minimal_height = () => 24
-
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * Token!id $mol_text_code_token
-		 * 	type <= token_type!id
-		 * 	content <= token_content!id
-		 * ```
-		 */
-		@ $mol_mem_key
-		Token(id: any) {
-			const obj = new this.$.$mol_text_code_token()
-
-			obj.type = () => this.token_type(id)
-			obj.content = () => this.token_content(id)
+			obj.text = () => this.row_text(id)
+			obj.highlight = () => this.highlight()
 
 			return obj
 		}
 
 		/**
 		 * ```tree
-		 * row_content!id /
+		 * row_text!id \
 		 * ```
 		 */
-		row_content(id: any) {
-			return [
-
-			] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * token_type!id \
-		 * ```
-		 */
-		token_type(id: any) {
+		row_text(id: any) {
 			return ""
 		}
 
 		/**
 		 * ```tree
-		 * token_content!id /
+		 * highlight \
 		 * ```
 		 */
-		token_content(id: any) {
-			return [
-
-			] as readonly any[]
-		}
-	}
-
-	export class $mol_text_code_token extends $mol_view {
-
-		/**
-		 * ```tree
-		 * attr *
-		 * 	^
-		 * 	mol_text_code_token_type <= type
-		 * ```
-		 */
-		attr() {
-			return {
-				...super.attr(),
-				mol_text_code_token_type: this.type()
-			}
-		}
-
-		/**
-		 * ```tree
-		 * sub <= content
-		 * ```
-		 */
-		sub() {
-			return this.content()
-		}
-
-		/**
-		 * ```tree
-		 * type \
-		 * ```
-		 */
-		type() {
+		highlight() {
 			return ""
-		}
-
-		/**
-		 * ```tree
-		 * content /
-		 * ```
-		 */
-		content() {
-			return [
-
-			] as readonly any[]
 		}
 	}
 

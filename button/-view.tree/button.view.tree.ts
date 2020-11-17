@@ -46,14 +46,14 @@ namespace $ {
 		 * event *
 		 * 	^
 		 * 	click?event <=> event_activate?event
-		 * 	keypress?event <=> event_key_press?event
+		 * 	keydown?event <=> event_key_press?event
 		 * ```
 		 */
 		event() {
 			return {
 				...super.event(),
 				click: (event?: any) => this.event_activate(event),
-				keypress: (event?: any) => this.event_key_press(event)
+				keydown: (event?: any) => this.event_key_press(event)
 			}
 		}
 

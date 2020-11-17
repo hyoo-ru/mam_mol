@@ -984,7 +984,7 @@ declare namespace $ {
         event_click(event?: any): any;
         event(): {
             click: (event?: any) => any;
-            keypress: (event?: any) => any;
+            keydown: (event?: any) => any;
         };
         attr(): {
             disabled: boolean;

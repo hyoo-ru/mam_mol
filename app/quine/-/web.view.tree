@@ -16,7 +16,7 @@ $mol_button $mol_view
 	event *
 		^
 		click?event <=> event_activate?event null
-		keypress?event <=> event_key_press?event null 
+		keydown?event <=> event_key_press?event null 
 	attr *
 		^
 		disabled <= disabled false

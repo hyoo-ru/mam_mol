@@ -3275,7 +3275,7 @@ var $;
             return null;
         }
         event() {
-            return Object.assign(Object.assign({}, super.event()), { click: (event) => this.event_activate(event), keypress: (event) => this.event_key_press(event) });
+            return Object.assign(Object.assign({}, super.event()), { click: (event) => this.event_activate(event), keydown: (event) => this.event_key_press(event) });
         }
         attr() {
             return Object.assign(Object.assign({}, super.attr()), { disabled: this.disabled(), role: "button", tabindex: this.tab_index(), title: this.hint_or_error() });
@@ -4670,11 +4670,11 @@ var $;
                 if (event.defaultPrevented)
                     return;
                 let name = $.$mol_keyboard_code[event.keyCode];
-                if (this.mod_ctrl() && !event.ctrlKey)
+                if (this.mod_ctrl() !== event.ctrlKey)
                     return;
-                if (this.mod_alt() && !event.altKey)
+                if (this.mod_alt() !== event.altKey)
                     return;
-                if (this.mod_shift() && !event.shiftKey)
+                if (this.mod_shift() !== event.shiftKey)
                     return;
                 const handle = this.key()[name];
                 if (handle)
@@ -17660,10 +17660,10 @@ var $;
         'code-call': /\.?\w+(?=\()/,
         'code-field': /(?:\.\w+|[\w-]+\??\s*:(?!\/\/))/,
         'code-keyword': /\b(throw|readonly|unknown|keyof|typeof|never|from|class|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|let|const|for|do|while|until|in|of|new|if|then|else|switch|case|this|return|async|await|try|catch|break|continue|get|set|public|private|protected|string|boolean|number|null|undefined|true|false|void)\b/,
-        'code-global': /[$]\w*|\b[A-Z]\w*/,
+        'code-global': /[$]+\w*|\b[A-Z]\w*/,
         'code-decorator': /@\s*\S+/,
         'code-tag': /<\/?[\w-]+\/?>?|&\w+;/,
-        'code-punctuation': /[\-\[\]\{\}\(\)<=>`~!\?@#\$%&\*_\+\\\/\|'";:\.,\^]+/,
+        'code-punctuation': /[\-\[\]\{\}\(\)<=>`~!\?@#%&\*_\+\\\/\|'";:\.,\^]+/,
     });
 })($ || ($ = {}));
 //md.js.map
@@ -18618,7 +18618,7 @@ var $;
             return null;
         }
         Backward_icon() {
-            const obj = new this.$.$mol_icon_chevron();
+            const obj = new this.$.$mol_icon_chevron_left();
             return obj;
         }
         Backward() {
@@ -18651,7 +18651,7 @@ var $;
             return null;
         }
         Forward_icon() {
-            const obj = new this.$.$mol_icon_chevron();
+            const obj = new this.$.$mol_icon_chevron_right();
             return obj;
         }
         Forward() {
@@ -18695,7 +18695,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/paginator/paginator.view.css", "[mol_paginator] {\n\tdisplay: flex;\n}\n\n[mol_paginator_backward] ,\n[mol_paginator_forward] {\n\tpadding: .5rem;\n\tmargin: 0 -.5rem;\n\ttransform: scale( 0 , 0 );\n}\n\n[mol_paginator_value] {\n\tpadding: .5rem;\n\tdisplay: flex;\n    align-items: center;\n}\n\n[mol_paginator]:hover [mol_paginator_backward] ,\n[mol_paginator_backward]:focus {\n\ttransform: scale( -1 , 1 );\n}\n\n[mol_paginator]:hover [mol_paginator_forward] ,\n[mol_paginator_forward]:focus {\n\ttransform: scale( 1 , 1 );\n}\n");
+    $.$mol_style_attach("mol/paginator/paginator.view.css", "[mol_paginator_value] {\n\tpadding: .5rem 0;\n}\n");
 })($ || ($ = {}));
 //paginator.view.css.js.map
 ;
@@ -18705,10 +18705,16 @@ var $;
     var $$;
     (function ($$) {
         class $mol_paginator extends $.$mol_paginator {
-            backward() {
+            backward(event) {
+                if (event.defaultPrevented)
+                    return;
+                event.preventDefault();
                 this.value(this.value() - 1);
             }
-            forward() {
+            forward(event) {
+                if (event.defaultPrevented)
+                    return;
+                event.preventDefault();
                 this.value(this.value() + 1);
             }
         }
@@ -20699,76 +20705,24 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_text_code extends $.$mol_list {
-        text() {
-            return "";
-        }
-        text_lines() {
-            return [];
-        }
-        Row(id) {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => this.row_content(id);
-            obj.minimal_height = () => 24;
-            return obj;
-        }
-        Token(id) {
-            const obj = new this.$.$mol_text_code_token();
-            obj.type = () => this.token_type(id);
-            obj.content = () => this.token_content(id);
-            return obj;
-        }
-        row_content(id) {
-            return [];
-        }
-        token_type(id) {
-            return "";
-        }
-        token_content(id) {
-            return [];
-        }
-    }
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_text_code.prototype, "Row", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_text_code.prototype, "Token", null);
-    $.$mol_text_code = $mol_text_code;
-    class $mol_text_code_token extends $.$mol_view {
+    class $mol_text_code_token extends $.$mol_dimmer {
         attr() {
             return Object.assign(Object.assign({}, super.attr()), { mol_text_code_token_type: this.type() });
-        }
-        sub() {
-            return this.content();
         }
         type() {
             return "";
         }
-        content() {
-            return [];
-        }
     }
     $.$mol_text_code_token = $mol_text_code_token;
 })($ || ($ = {}));
-//code.view.tree.js.map
+//token.view.tree.js.map
 ;
 "use strict";
 var $;
 (function ($) {
     var $$;
     (function ($$) {
-        const { vary, hsla } = $.$mol_style_func;
-        $.$mol_style_define($$.$mol_text_code, {
-            padding: $.$mol_gap.text,
-            whiteSpace: 'pre-wrap',
-            font: {
-                family: 'monospace',
-            },
-            Row: {
-                display: 'block',
-            },
-        });
+        const { hsla } = $.$mol_style_func;
         $.$mol_style_define($.$mol_text_code_token, {
             display: 'inline',
             '@': {
@@ -20817,30 +20771,61 @@ var $;
         });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-//code.view.css.js.map
+//token.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_text_code_row extends $.$mol_paragraph {
+        text() {
+            return "";
+        }
+        Token(id) {
+            const obj = new this.$.$mol_text_code_token();
+            obj.type = () => this.token_type(id);
+            obj.haystack = () => this.token_text(id);
+            obj.needle = () => this.highlight();
+            return obj;
+        }
+        token_type(id) {
+            return "";
+        }
+        token_text(id) {
+            return "";
+        }
+        highlight() {
+            return "";
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_text_code_row.prototype, "Token", null);
+    $.$mol_text_code_row = $mol_text_code_row;
+})($ || ($ = {}));
+//row.view.tree.js.map
 ;
 "use strict";
 var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $mol_text_code extends $.$mol_text_code {
+        class $mol_text_code_row extends $.$mol_text_code_row {
+            maximal_width() {
+                return this.text().length * this.letter_width();
+            }
             tokens(path) {
                 const tokens = [];
-                const text = (path.length > 1)
+                const text = (path.length > 0)
                     ? this.tokens(path.slice(0, path.length - 1))[path[path.length - 1]].found.slice(1, -1)
-                    : this.text_lines()[path[0]];
+                    : this.text();
                 this.$.$mol_syntax2_md_code.tokenize(text, (name, found, chunks) => tokens.push({ name, found, chunks }));
                 return tokens;
             }
-            text_lines() {
-                return this.text().split('\n');
-            }
-            rows() {
-                return this.text_lines().map((_, index) => this.Row([index]));
+            sub() {
+                return this.row_content([]);
             }
             row_content(path) {
-                return this.tokens(path).map((t, i) => t.name ? this.Token([...path, i]) : t.found);
+                return this.tokens(path).map((t, i) => this.Token([...path, i]));
             }
             token_type(path) {
                 return this.tokens([...path.slice(0, path.length - 1)])[path[path.length - 1]].name;
@@ -20857,10 +20842,102 @@ var $;
                     default: return [token.found];
                 }
             }
+            token_text(path) {
+                const tokens = this.tokens([...path.slice(0, path.length - 1)]);
+                const token = tokens[path[path.length - 1]];
+                return token.found;
+            }
+            *view_path(check, path = []) {
+                path = [...path, this];
+                if (check(this.text(), path))
+                    yield path;
+            }
         }
         __decorate([
             $.$mol_mem_key
-        ], $mol_text_code.prototype, "tokens", null);
+        ], $mol_text_code_row.prototype, "tokens", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_text_code_row.prototype, "row_content", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_text_code_row.prototype, "token_type", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_text_code_row.prototype, "token_content", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_text_code_row.prototype, "token_text", null);
+        $$.$mol_text_code_row = $mol_text_code_row;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//row.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_text_code extends $.$mol_list {
+        text() {
+            return "";
+        }
+        text_lines() {
+            return [];
+        }
+        Row(id) {
+            const obj = new this.$.$mol_text_code_row();
+            obj.text = () => this.row_text(id);
+            obj.highlight = () => this.highlight();
+            return obj;
+        }
+        row_text(id) {
+            return "";
+        }
+        highlight() {
+            return "";
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_text_code.prototype, "Row", null);
+    $.$mol_text_code = $mol_text_code;
+})($ || ($ = {}));
+//code.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $.$mol_style_define($$.$mol_text_code, {
+            padding: $.$mol_gap.text,
+            whiteSpace: 'pre-wrap',
+            font: {
+                family: 'monospace',
+            },
+            Row: {
+                display: 'block',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//code.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_text_code extends $.$mol_text_code {
+            text_lines() {
+                return this.text().split('\n');
+            }
+            rows() {
+                return this.text_lines().map((_, index) => this.Row(index));
+            }
+            row_text(index) {
+                return this.text_lines()[index];
+            }
+        }
         __decorate([
             $.$mol_mem
         ], $mol_text_code.prototype, "text_lines", null);
@@ -20869,13 +20946,7 @@ var $;
         ], $mol_text_code.prototype, "rows", null);
         __decorate([
             $.$mol_mem_key
-        ], $mol_text_code.prototype, "row_content", null);
-        __decorate([
-            $.$mol_mem_key
-        ], $mol_text_code.prototype, "token_type", null);
-        __decorate([
-            $.$mol_mem_key
-        ], $mol_text_code.prototype, "token_content", null);
+        ], $mol_text_code.prototype, "row_text", null);
         $$.$mol_text_code = $mol_text_code;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

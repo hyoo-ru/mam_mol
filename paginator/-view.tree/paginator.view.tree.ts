@@ -39,12 +39,12 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Backward_icon $mol_icon_chevron
+		 * Backward_icon $mol_icon_chevron_left
 		 * ```
 		 */
 		@ $mol_mem
 		Backward_icon() {
-			const obj = new this.$.$mol_icon_chevron()
+			const obj = new this.$.$mol_icon_chevron_left()
 
 			return obj
 		}
@@ -119,12 +119,12 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Forward_icon $mol_icon_chevron
+		 * Forward_icon $mol_icon_chevron_right
 		 * ```
 		 */
 		@ $mol_mem
 		Forward_icon() {
-			const obj = new this.$.$mol_icon_chevron()
+			const obj = new this.$.$mol_icon_chevron_right()
 
 			return obj
 		}

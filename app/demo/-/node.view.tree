@@ -56,7 +56,7 @@ $mol_button $mol_view
 	event *
 		^
 		click?event <=> event_activate?event null
-		keypress?event <=> event_key_press?event null 
+		keydown?event <=> event_key_press?event null 
 	attr *
 		^
 		disabled <= disabled false
@@ -2082,12 +2082,12 @@ $mol_paginator $mol_view
 		<= Backward $mol_button_minor
 			hint <= backward_hint @ \Назад
 			click?event <=> backward?event null
-			sub / <= Backward_icon $mol_icon_chevron
+			sub / <= Backward_icon $mol_icon_chevron_left
 		<= Value $mol_view sub / <= value?val 0
 		<= Forward $mol_button_minor
 			hint <= forward_hint @ \Вперёд
 			click?event <=> forward?event null
-			sub / <= Forward_icon $mol_icon_chevron
+			sub / <= Forward_icon $mol_icon_chevron_right
 
 $mol_paginator_demo $mol_demo_small
 	title @ \Page switcher
@@ -2409,21 +2409,24 @@ $mol_switch_demo $mol_demo_small
 				green <= option_green @ \Green
 				blue <= option_blue @ \Blue
 
-$mol_text_code $mol_list
-	text \
-	text_lines /string
-	Row!id $mol_view
-		sub <= row_content!id /
-		minimal_height 24
-	Token!id $mol_text_code_token
-		type <= token_type!id \
-		content <= token_content!id /
-
-$mol_text_code_token $mol_view
+$mol_text_code_token $mol_dimmer
 	attr *
 		^
 		mol_text_code_token_type <= type \
-	sub <= content /
+
+$mol_text_code_row $mol_paragraph
+	text \
+	Token!id $mol_text_code_token
+		type <= token_type!id \
+		haystack <= token_text!id \
+		needle <= highlight \
+
+$mol_text_code $mol_list
+	text \
+	text_lines /string
+	Row!id $mol_text_code_row
+		text <= row_text!id \
+		highlight <= highlight \
 
 $mol_text_code_demo $mol_demo_large
 	title @ \Markdow visualization example

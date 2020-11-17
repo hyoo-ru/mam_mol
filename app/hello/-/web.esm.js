@@ -2507,11 +2507,11 @@ var $;
                 if (event.defaultPrevented)
                     return;
                 let name = $.$mol_keyboard_code[event.keyCode];
-                if (this.mod_ctrl() && !event.ctrlKey)
+                if (this.mod_ctrl() !== event.ctrlKey)
                     return;
-                if (this.mod_alt() && !event.altKey)
+                if (this.mod_alt() !== event.altKey)
                     return;
-                if (this.mod_shift() && !event.shiftKey)
+                if (this.mod_shift() !== event.shiftKey)
                     return;
                 const handle = this.key()[name];
                 if (handle)

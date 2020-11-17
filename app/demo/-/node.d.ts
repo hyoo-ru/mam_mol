@@ -1095,7 +1095,7 @@ declare namespace $ {
         event_click(event?: any): any;
         event(): {
             click: (event?: any) => any;
-            keypress: (event?: any) => any;
+            keydown: (event?: any) => any;
         };
         attr(): {
             disabled: boolean;
@@ -5094,13 +5094,13 @@ declare namespace $ {
         sub(): readonly any[];
         backward_hint(): string;
         backward(event?: any): any;
-        Backward_icon(): $mol_icon_chevron;
+        Backward_icon(): $mol_icon_chevron_left;
         Backward(): $mol_button_minor;
         value(val?: any): any;
         Value(): $mol_view;
         forward_hint(): string;
         forward(event?: any): any;
-        Forward_icon(): $mol_icon_chevron;
+        Forward_icon(): $mol_icon_chevron_right;
         Forward(): $mol_button_minor;
     }
 }
@@ -5110,8 +5110,8 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_paginator extends $.$mol_paginator {
-        backward(): void;
-        forward(): void;
+        backward(event: Event): void;
+        forward(event: Event): void;
     }
 }
 
@@ -5729,22 +5729,51 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_text_code extends $mol_list {
-        text(): string;
-        text_lines(): readonly string[];
-        Row(id: any): $mol_view;
-        Token(id: any): $mol_text_code_token;
-        row_content(id: any): readonly any[];
-        token_type(id: any): string;
-        token_content(id: any): readonly any[];
-    }
-    class $mol_text_code_token extends $mol_view {
+    class $mol_text_code_token extends $mol_dimmer {
         attr(): {
             mol_text_code_token_type: string;
         };
-        sub(): readonly any[];
         type(): string;
-        content(): readonly any[];
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+    class $mol_text_code_row extends $mol_paragraph {
+        text(): string;
+        Token(id: any): $mol_text_code_token;
+        token_type(id: any): string;
+        token_text(id: any): string;
+        highlight(): string;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_text_code_row extends $.$mol_text_code_row {
+        maximal_width(): number;
+        tokens(path: number[]): readonly {
+            name: string;
+            found: string;
+            chunks: string[];
+        }[];
+        sub(): $mol_text_code_token[];
+        row_content(path: number[]): $mol_text_code_token[];
+        token_type(path: number[]): string;
+        token_content(path: number[]): (string | $mol_text_code_token)[];
+        token_text(path: number[]): string;
+        view_path(check: (text: string, path: $mol_view[]) => boolean, path?: $mol_view[]): Generator<$mol_view[]>;
+    }
+}
+
+declare namespace $ {
+    class $mol_text_code extends $mol_list {
+        text(): string;
+        text_lines(): readonly string[];
+        Row(id: any): $$.$mol_text_code_row;
+        row_text(id: any): string;
+        highlight(): string;
     }
 }
 
@@ -5753,16 +5782,9 @@ declare namespace $.$$ {
 
 declare namespace $.$$ {
     class $mol_text_code extends $.$mol_text_code {
-        tokens(path: number[]): readonly {
-            name: string;
-            found: string;
-            chunks: string[];
-        }[];
         text_lines(): readonly string[];
-        rows(): $mol_view[];
-        row_content(path: number[]): (string | $mol_text_code_token)[];
-        token_type(path: number[]): string;
-        token_content(path: number[]): (string | $mol_text_code_token)[];
+        rows(): $mol_text_code_row[];
+        row_text(index: number): string;
     }
 }
 
