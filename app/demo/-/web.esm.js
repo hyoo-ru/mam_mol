@@ -5455,7 +5455,7 @@ var $;
                 return Math.max(Math.min(this.$.$mol_window.size().width, this.maximal_width()), this.letter_width());
             }
             minimal_height() {
-                return Math.ceil(this.maximal_width() / this.minimal_width()) * this.line_height();
+                return Math.max(1, Math.ceil(this.maximal_width() / this.minimal_width())) * this.line_height();
             }
         }
         __decorate([
@@ -15356,7 +15356,9 @@ var $;
 var $;
 (function ($) {
     $.$mol_style_define($.$mol_frame, {
-        border: 'none',
+        border: {
+            style: 'none',
+        },
         flex: 'auto',
     });
 })($ || ($ = {}));

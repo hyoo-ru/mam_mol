@@ -187,6 +187,22 @@ namespace $ {
 		/** Padding area on all four sides of an element. */
 		padding?: Directions< Length | 'auto' >
 
+		border?: {
+
+			/** Rounds the corners of an element's outer border edge. You can set a single radius to make circular corners, or two radii to make elliptical corners. */
+			radius?: Length | [ Length, Length ]
+
+			/** Line style for all four sides of an element's border. */
+			style?: 
+			| 'none' | 'hidden'
+			| 'dotted' | 'dashed'
+			| 'solid' | 'double'
+			| 'groove' | 'ridge'
+			| 'inset' | 'outset'
+			| Common
+
+		}
+
 		/** How a flex item will grow or shrink to fit the space available in its flex container. It is a shorthand for `flexGrow`, `flexShrink`, and `flexBasis`. */
 		flex?:
 		| 'none' | 'auto'

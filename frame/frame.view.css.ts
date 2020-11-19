@@ -1,6 +1,8 @@
 namespace $ {
 	$mol_style_define( $mol_frame , {
-		border: 'none',
+		border: {
+			style: 'none',
+		},
 		flex: 'auto',
 	} )
 }
