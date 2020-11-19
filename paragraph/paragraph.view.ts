@@ -31,7 +31,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		minimal_height() {
-			return Math.ceil( this.maximal_width() / this.minimal_width() ) * this.line_height()
+			return Math.max( 1 , Math.ceil( this.maximal_width() / this.minimal_width() ) ) * this.line_height()
 		}
 
 	}
