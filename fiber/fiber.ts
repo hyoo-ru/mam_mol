@@ -256,7 +256,7 @@ namespace $ {
 
 			}
 
-			const promise : Promise< any > = new this.$.Promise( done => this.queue.push( ()=> ( done() , promise ) ) )
+			const promise : Promise< any > = new this.$.Promise( done => this.queue.push( ()=> ( done( null ) , promise ) ) )
 			return promise
 
 		}

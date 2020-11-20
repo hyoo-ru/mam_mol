@@ -22,7 +22,7 @@ namespace $.$$ {
 
 			let effectAllowed = effects[0].toLowerCase() + effects.slice(1).join('')
 			if( effectAllowed === 'copyLinkMove' ) effectAllowed = 'all'
-			event.dataTransfer!.effectAllowed = effectAllowed
+			event.dataTransfer!.effectAllowed = effectAllowed as DataTransfer['effectAllowed']
 			
 		}
 
