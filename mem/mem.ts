@@ -27,7 +27,7 @@ namespace $ {
 		type Output = $mol_type_result< Prop >
 
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( proto , name )
-		const orig = descr!.value!
+		const orig = descr!.value! as Function
 		
 		const store = new WeakMap< Host , $mol_atom2< Output > >()
 
