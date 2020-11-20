@@ -151,16 +151,18 @@ namespace $.$$ {
 			path : Set< $mol_view >,
 		) {
 
-			const index = super.force_render( path )
+			const kids = this.rows()
 
-			if( index ) {
+			const index = kids.findIndex( item => path.has( item ) )
+
+			if( index >= 0 ) {
 				const win = this.view_window()
-				if( index < win[0] || index >= win[1] ) { 
+				if( index < win[0] || index >= win[1] ) {
 					$mol_mem_cached( ()=> this.view_window(), [ index, index + 1 ] )
 				}
+				( kids[ index ] as $mol_view ).force_render( path )
 			}
 			
-			return index
 		}
 
 	}

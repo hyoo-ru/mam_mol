@@ -8,7 +8,7 @@ namespace $.$$ {
 			if( needle.length < 2 ) return []
 			
 			const regexp = $mol_regexp.from( { needle } , { ignoreCase: true } )
-			return [ ... this.Root().view_find( text => regexp.test( text ) ) ]
+			return [ ... this.Root().view_find( ( _, text = '' ) => regexp.test( text ) ) ]
 			
 		}
 
@@ -26,7 +26,7 @@ namespace $.$$ {
 			if( index! < 0 ) index = all.length - 1
 			
 			if( next !== undefined ) {
-				this.Root().ensure_visible( all[ index! ] )
+				this.Root().ensure_visible( all[ index! ][ all[ index! ].length - 1 ] )
 			}
 			
 			return index
