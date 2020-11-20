@@ -25333,6 +25333,9 @@ var $;
         author() {
             return $.$mol_github_user.item(this.json().user.url);
         }
+        number() {
+            return this.json().number;
+        }
         title() {
             return this.json().title;
         }

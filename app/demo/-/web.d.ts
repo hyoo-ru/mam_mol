@@ -6783,6 +6783,7 @@ declare namespace $ {
         json_update(patch: Partial<$mol_github_issue_json>): $mol_github_issue_json;
         repository(): $mol_github_repository;
         author(): $mol_github_user;
+        number(): number;
         title(): string;
         text(): string;
         closer(): $mol_github_user;
