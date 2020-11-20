@@ -68,13 +68,13 @@ namespace $.$$ {
 		}
 		
 		*view_find(
-			check: ( text: string, path : $mol_view[] )=> boolean,
+			check: ( path : $mol_view, text?: string )=> boolean,
 			path = [] as $mol_view[],
-		) {
+		): Generator< $mol_view[] > {
 
-			path = [ ... path, this ]
-			
-			if( check( this.text(), path ) ) yield this
+			if( check( this, this.text() ) ) {
+				yield [ ... path, this ]
+			}
 			
 		}
 

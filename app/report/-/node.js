@@ -2579,12 +2579,11 @@ var $;
             return $.$mol_dev_format_span({}, $.$mol_dev_format_native(this), $.$mol_dev_format_shade('/'), $.$mol_dev_format_auto($.$mol_mem_cached(() => this.sub())));
         }
         *view_find(check, path = []) {
-            path = [...path, this];
-            if (check('', path))
-                return yield this;
+            if (check(this))
+                return yield [...path, this];
             for (const item of this.sub()) {
                 if (item instanceof $mol_view) {
-                    yield* item.view_find(check, path);
+                    yield* item.view_find(check, [...path, this]);
                 }
             }
         }
@@ -2601,23 +2600,12 @@ var $;
             if (index >= 0) {
                 kids[index].force_render(path);
             }
-            return index;
         }
-        ensure_visible(view) {
-            this.view_find((_, path) => {
-                if (path[path.length - 1] !== view)
-                    return false;
-                $.$mol_fiber_defer(() => {
-                    this.force_render(new Set(path));
-                    $.$mol_fiber_defer(() => {
-                        view.dom_node().scrollIntoView({
-                            block: 'center',
-                            inline: 'center',
-                        });
-                    });
-                });
-                return true;
-            }).next().value;
+        async ensure_visible(view) {
+            const path = this.view_find(v => v === view).next().value;
+            this.force_render(new Set(path));
+            await $.$mol_fiber_warp();
+            view.dom_node().scrollIntoView();
         }
     }
     $mol_view.watchers = new Set();
@@ -5081,9 +5069,9 @@ var $;
                 return this.strings()[index];
             }
             *view_find(check, path = []) {
-                path = [...path, this];
-                if (check(this.haystack(), path))
-                    yield this;
+                if (check(this, this.haystack())) {
+                    yield [...path, this];
+                }
             }
         }
         __decorate([
@@ -5522,14 +5510,15 @@ var $;
                 }, 0);
             }
             force_render(path) {
-                const index = super.force_render(path);
-                if (index) {
+                const kids = this.rows();
+                const index = kids.findIndex(item => path.has(item));
+                if (index >= 0) {
                     const win = this.view_window();
                     if (index < win[0] || index >= win[1]) {
                         $.$mol_mem_cached(() => this.view_window(), [index, index + 1]);
                     }
+                    kids[index].force_render(path);
                 }
-                return index;
             }
         }
         __decorate([
