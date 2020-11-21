@@ -152,10 +152,9 @@ $mol_page $mol_view
 	sub /
 		<= Head $mol_view
 			sub <= head /
-				<= Title $mol_button
+				<= Title $mol_view
 					sub /
 						<= title
-					event_click?val <=> event_top?val null
 				<= Tools $mol_view
 					sub <= tools /$mol_view_content
 		<= Body $mol_scroll

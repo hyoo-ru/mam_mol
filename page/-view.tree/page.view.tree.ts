@@ -19,30 +19,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * event_top?val null
-		 * ```
-		 */
-		@ $mol_mem
-		event_top(val?: any) {
-			if ( val !== undefined ) return val
-			return null as any
-		}
-
-		/**
-		 * ```tree
-		 * Title $mol_button
-		 * 	sub / <= title
-		 * 	event_click?val <=> event_top?val
+		 * Title $mol_view sub / <= title
 		 * ```
 		 */
 		@ $mol_mem
 		Title() {
-			const obj = new this.$.$mol_button()
+			const obj = new this.$.$mol_view()
 
 			obj.sub = () => [
 				this.title()
 			] as readonly any[]
-			obj.event_click = (val?: any) => this.event_top(val)
 
 			return obj
 		}

@@ -33,7 +33,6 @@ $mol_app_studio $mol_book
 					patterns <= speech_filter_patterns /
 						\find (.+?)
 			title <= editor_title @ \Properties
-			event_top?val <=> event_front_up?val
 			tools /
 				- <= Speech_toggle $mol_check_icon
 					Icon <= Speech_toggle_icon $mol_icon_microphone

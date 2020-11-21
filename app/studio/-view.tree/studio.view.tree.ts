@@ -593,7 +593,6 @@ namespace $ {
 		 * Editor_page $mol_page
 		 * 	plugins / <= Speech_filter
 		 * 	title <= editor_title
-		 * 	event_top?val <=> event_front_up?val
 		 * 	tools /
 		 * 		- <= Speech_toggle
 		 * 		<= Editor_close
@@ -611,7 +610,6 @@ namespace $ {
 				this.Speech_filter()
 			] as readonly any[]
 			obj.title = () => this.editor_title()
-			obj.event_top = (val?: any) => this.event_front_up(val)
 			obj.tools = () => [
 				// <=
 				this.Editor_close()

@@ -18846,17 +18846,11 @@ var $;
                 this.Foot()
             ];
         }
-        event_top(val) {
-            if (val !== undefined)
-                return val;
-            return null;
-        }
         Title() {
-            const obj = new this.$.$mol_button();
+            const obj = new this.$.$mol_view();
             obj.sub = () => [
                 this.title()
             ];
-            obj.event_click = (val) => this.event_top(val);
             return obj;
         }
         tools() {
@@ -18901,9 +18895,6 @@ var $;
             return obj;
         }
     }
-    __decorate([
-        $.$mol_mem
-    ], $mol_page.prototype, "event_top", null);
     __decorate([
         $.$mol_mem
     ], $mol_page.prototype, "Title", null);
@@ -18977,7 +18968,6 @@ var $;
                 minHeight: rem(2),
                 padding: $.$mol_gap.text,
                 wordBreak: 'normal',
-                cursor: 'default',
                 textShadow: '0 0',
             },
             Tools: {
@@ -23989,7 +23979,6 @@ var $;
                 this.Speech_filter()
             ];
             obj.title = () => this.editor_title();
-            obj.event_top = (val) => this.event_front_up(val);
             obj.tools = () => [
                 this.Editor_close()
             ];

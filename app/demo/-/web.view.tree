@@ -2047,10 +2047,9 @@ $mol_page $mol_view
 	sub /
 		<= Head $mol_view
 			sub <= head /
-				<= Title $mol_button
+				<= Title $mol_view
 					sub /
 						<= title
-					event_click?val <=> event_top?val null
 				<= Tools $mol_view
 					sub <= tools /$mol_view_content
 		<= Body $mol_scroll
@@ -2775,7 +2774,6 @@ $mol_app_studio $mol_book
 					patterns <= speech_filter_patterns /
 						\find (.+?)
 			title <= editor_title @ \Properties
-			event_top?val <=> event_front_up?val
 			tools /
 				- <= Speech_toggle $mol_check_icon
 					Icon <= Speech_toggle_icon $mol_icon_microphone
