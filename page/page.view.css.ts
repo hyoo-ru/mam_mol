@@ -52,7 +52,6 @@ namespace $.$$ {
 			minHeight: rem(2),
 			padding: $mol_gap.text,
 			wordBreak: 'normal',
-			cursor: 'default',
 			textShadow: '0 0',
 
 		},
