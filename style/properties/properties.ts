@@ -187,6 +187,14 @@ namespace $ {
 		/** Padding area on all four sides of an element. */
 		padding?: Directions< Length | 'auto' >
 
+		/** How an element is positioned in a document. The `top`, `right`, `bottom`, and `left` properties determine the final location of positioned elements. */
+		position?: 'static' | 'relative' | 'absolute' | 'sticky' | 'fixed'
+
+		top?: Length | 'auto' | Common
+		right?: Length | 'auto' | Common
+		bottom?: Length | 'auto' | Common
+		left?: Length | 'auto' | Common
+
 		border?: {
 
 			/** Rounds the corners of an element's outer border edge. You can set a single radius to make circular corners, or two radii to make elliptical corners. */
