@@ -5,7 +5,7 @@
 	cursor: inherit;
 }
 
-[mol_labeler_title] {
+[mol_labeler_label] {
 	color: var(--mol_theme_shade);
 }
 

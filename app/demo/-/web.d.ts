@@ -4167,7 +4167,7 @@ declare namespace $ {
     class $mol_labeler extends $mol_list {
         rows(): readonly any[];
         label(): readonly (string | number | boolean | Node | $mol_view)[];
-        Title(): $mol_view;
+        Label(): $mol_view;
         content(): readonly any[];
         Content(): $mol_view;
     }

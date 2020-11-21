@@ -4077,7 +4077,7 @@ var $;
     class $mol_labeler extends $.$mol_list {
         rows() {
             return [
-                this.Title(),
+                this.Label(),
                 this.Content()
             ];
         }
@@ -4086,7 +4086,7 @@ var $;
                 this.title()
             ];
         }
-        Title() {
+        Label() {
             const obj = new this.$.$mol_view();
             obj.minimal_height = () => 24;
             obj.sub = () => this.label();
@@ -4104,7 +4104,7 @@ var $;
     }
     __decorate([
         $.$mol_mem
-    ], $mol_labeler.prototype, "Title", null);
+    ], $mol_labeler.prototype, "Label", null);
     __decorate([
         $.$mol_mem
     ], $mol_labeler.prototype, "Content", null);
@@ -4115,7 +4115,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_title] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n}\n");
+    $.$mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_label] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n}\n");
 })($ || ($ = {}));
 //labeler.view.css.js.map
 ;

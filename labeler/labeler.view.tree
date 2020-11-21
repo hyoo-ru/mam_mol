@@ -1,6 +1,6 @@
 $mol_labeler $mol_list
 	rows /
-		<= Title $mol_view
+		<= Label $mol_view
 			minimal_height 24
 			sub <= label /$mol_view_content
 				<= title

@@ -4,13 +4,13 @@ namespace $ {
 		/**
 		 * ```tree
 		 * rows /
-		 * 	<= Title
+		 * 	<= Label
 		 * 	<= Content
 		 * ```
 		 */
 		rows() {
 			return [
-				this.Title(),
+				this.Label(),
 				this.Content()
 			] as readonly any[]
 		}
@@ -28,13 +28,13 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Title $mol_view
+		 * Label $mol_view
 		 * 	minimal_height 24
 		 * 	sub <= label
 		 * ```
 		 */
 		@ $mol_mem
-		Title() {
+		Label() {
 			const obj = new this.$.$mol_view()
 
 			obj.minimal_height = () => 24
