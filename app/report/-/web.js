@@ -2961,7 +2961,7 @@ var $;
             Head: {
                 display: 'flex',
                 flexWrap: 'wrap',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-end',
                 flex: 'none',
                 position: 'relative',
                 margin: 0,
@@ -2985,7 +2985,11 @@ var $;
                 textShadow: '0 0',
             },
             Tools: {
-                flex: 'auto',
+                flex: {
+                    basis: 'auto',
+                    grow: 0,
+                    shrink: 1,
+                },
                 display: 'flex',
                 justifyContent: 'flex-end',
                 alignItems: 'flex-start',
