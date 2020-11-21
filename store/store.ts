@@ -20,7 +20,7 @@ namespace $ {
 		value< Key extends keyof Data >( key : Key , next? : Data[ Key ] ) {
 			
 			const data = this.data()
-			if( next === undefined ) return data[ key ]!
+			if( next === undefined ) return data && data[ key ]!
 
 			const Constr = Reflect.getPrototypeOf( data as any ).constructor as new ()=> Data
 			
