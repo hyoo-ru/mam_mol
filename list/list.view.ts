@@ -8,10 +8,8 @@ namespace $.$$ {
 			return ( rows.length === 0 ) ? [ this.Empty() ] : rows
 		}
 
-		@ $mol_memo.method
 		render_visible_only() {
-			if ( !$mol_dom_context.CSS ) return false
-			return $mol_dom_context.CSS.supports( 'overflow-anchor:auto' )
+			return this.$.$mol_support_css_overflow_anchor()
 		}
 
 		@ $mol_mem
