@@ -1,5 +1,5 @@
 :root {
-	--mol_skin_font: 1rem/1.5rem sans-serif;
+	--mol_skin_font: 16px/24px sans-serif;
 	/* --mol_skin_font_monospace: Monaco, monospace; */
 	--mol_skin_font_monospace: monospace;
 }
