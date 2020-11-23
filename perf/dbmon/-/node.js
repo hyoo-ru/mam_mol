@@ -4099,10 +4099,10 @@ var $;
         class $mol_perf_dbmon extends $.$mol_perf_dbmon {
             data() {
                 $.$mol_state_time.now(ENV.timeout || 15);
+                Monitoring.renderRate.ping();
                 return ENV.generateData().toArray();
             }
             databases() {
-                Monitoring.renderRate.ping();
                 return Object.keys(this.data()).map(index => this.Database(index));
             }
             database(id) {
