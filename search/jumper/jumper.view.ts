@@ -22,11 +22,12 @@ namespace $.$$ {
 			
 			let index: number = next ?? super.index()
 			
-			if( index! >= all.length ) index = 0
-			if( index! < 0 ) index = all.length - 1
+			if( index! > all.length ) index = 1
+			if( index! <= 0 ) index = all.length
 			
 			if( next !== undefined ) {
-				this.Root().ensure_visible( all[ index! ][ all[ index! ].length - 1 ] )
+				const path = all[ index! - 1 ]
+				this.Root().ensure_visible( path[ path.length - 1 ] )
 			}
 			
 			return index
