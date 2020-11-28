@@ -43,10 +43,16 @@ namespace $ {
 				const text = this.texts( lang )[ key ]
 				if( text ) return text
 
-				console.warn( `Not translated to "${ lang }": ${ key }` )
+				this.warn( key )
 			}
 						
 			return `<${ key }>`
+		}
+		
+		@ $mol_mem_key
+		static warn( key : string ) {
+			console.warn( `Not translated to "${ this.lang() }": ${ key }` )
+			return null
 		}
 		
 	}
