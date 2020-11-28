@@ -4480,9 +4480,13 @@ var $;
                 const text = this.texts(lang)[key];
                 if (text)
                     return text;
-                console.warn(`Not translated to "${lang}": ${key}`);
+                this.warn(key);
             }
             return `<${key}>`;
+        }
+        static warn(key) {
+            console.warn(`Not translated to "${this.lang()}": ${key}`);
+            return null;
         }
     }
     __decorate([
@@ -4500,6 +4504,9 @@ var $;
     __decorate([
         $.$mol_mem_key
     ], $mol_locale, "text", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_locale, "warn", null);
     $.$mol_locale = $mol_locale;
 })($ || ($ = {}));
 //locale.js.map
