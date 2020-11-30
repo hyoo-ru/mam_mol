@@ -48,6 +48,10 @@ namespace $ {
 
 		}
 
+		reset() {
+			this.data( this.data_default! )
+		}
+
 	}
 
 }
