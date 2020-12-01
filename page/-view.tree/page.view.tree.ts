@@ -74,13 +74,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Head $mol_view sub <= head
+		 * Head $mol_view
+		 * 	minimal_height 64
+		 * 	sub <= head
 		 * ```
 		 */
 		@ $mol_mem
 		Head() {
 			const obj = new this.$.$mol_view()
 
+			obj.minimal_height = () => 64
 			obj.sub = () => this.head()
 
 			return obj

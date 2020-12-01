@@ -18882,6 +18882,7 @@ var $;
         }
         Head() {
             const obj = new this.$.$mol_view();
+            obj.minimal_height = () => 64;
             obj.sub = () => this.head();
             return obj;
         }
