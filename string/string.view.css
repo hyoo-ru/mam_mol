@@ -13,7 +13,7 @@
 	flex: 0 1 auto;
 	background: var(--mol_theme_field);
 	color: var(--mol_theme_text);
-	box-shadow: inset 0 0 0 .5px var(--mol_theme_line);
+	box-shadow: inset 0 0 0 1px var(--mol_theme_line);
 }
 
 [mol_string]:disabled {
@@ -23,7 +23,7 @@
 [mol_string]:focus {
 	outline: none;
 	z-index: 1;
-	box-shadow: inset 0 0 0 .5px var(--mol_theme_focus);
+	box-shadow: inset 0 0 0 1px var(--mol_theme_focus);
 }
 
 [mol_string]::-ms-clear {
