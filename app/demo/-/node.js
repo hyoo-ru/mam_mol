@@ -14280,8 +14280,6 @@ var $;
             enter(event) {
                 if (event.defaultPrevented)
                     return;
-                if (event.target !== this.dom_node())
-                    return;
                 setTimeout(() => this.status('drag'));
                 event.dataTransfer.dropEffect = 'move';
                 event.preventDefault();
@@ -14293,9 +14291,7 @@ var $;
                 event.preventDefault();
             }
             leave(event) {
-                if (event.target !== this.dom_node())
-                    return;
-                setTimeout(() => this.status('ready'));
+                this.status('ready');
             }
             receive(transfer) {
                 return transfer;
