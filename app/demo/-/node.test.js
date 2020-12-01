@@ -24300,7 +24300,6 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
-    const err = $_1.$mol_view_tree2_error_str;
     class $mol_view_tree2_context extends $_1.$mol_object2 {
         constructor($, parents, locales, methods, types = true, added_nodes = new Map(), array) {
             super();
@@ -24335,13 +24334,13 @@ var $;
             if (!prev)
                 return;
             if ((prev.key && !key) || (!prev.key && key) || (prev.next && !next) || (!prev.next && next))
-                return this.$.$mol_fail(err `Method ${src.type} at ${src.span} is not same as ${prev.src.type} at ${prev.src.span}`);
+                return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Method ${src.type} at ${src.span} is not same as ${prev.src.type} at ${prev.src.span}`);
             const current_default = src.kids.length > 0 ? src.kids[0] : undefined;
             const prev_default = prev.src.kids.length > 0 ? prev.src.kids[0] : undefined;
             if ((current_default === null || current_default === void 0 ? void 0 : current_default.type) === '-')
                 return prev;
             if ((prev_default === null || prev_default === void 0 ? void 0 : prev_default.toString()) !== (current_default === null || current_default === void 0 ? void 0 : current_default.toString()))
-                return this.$.$mol_fail(err `Method ${name.value} at ${(_a = current_default === null || current_default === void 0 ? void 0 : current_default.span) !== null && _a !== void 0 ? _a : name.span} already defined with another default value at ${(_b = prev_default === null || prev_default === void 0 ? void 0 : prev_default.span) !== null && _b !== void 0 ? _b : prev.name.span}`);
+                return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Method ${name.value} at ${(_a = current_default === null || current_default === void 0 ? void 0 : current_default.span) !== null && _a !== void 0 ? _a : name.span} already defined with another default value at ${(_b = prev_default === null || prev_default === void 0 ? void 0 : prev_default.span) !== null && _b !== void 0 ? _b : prev.name.span}`);
             return prev;
         }
         check_scope_vars({ name, key, next }) {
@@ -24357,12 +24356,12 @@ var $;
                     finded_next = parent.next;
             }
             if (key && !finded_key)
-                return this.$.$mol_fail(err `Key ${key.value} at ${key.span} not found at ${this.parents.map(parent => parent.src.span)}`);
+                return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Key ${key.value} at ${key.span} not found at ${this.parents.map(parent => parent.src.span)}`);
             if (next && !finded_next)
-                return this.$.$mol_fail(err `Next ${next.value} at ${next.span} not found at ${this.parents.map(parent => parent.src.span)}`);
+                return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Next ${next.value} at ${next.span} not found at ${this.parents.map(parent => parent.src.span)}`);
             const first_method = parents.length > 1 ? parents[1] : undefined;
             if (name.value === (first_method === null || first_method === void 0 ? void 0 : first_method.name.value))
-                return this.$.$mol_fail(err `Method ${name.value} at ${name.span} already defined at ${first_method.name.span}`);
+                return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Method ${name.value} at ${name.span} already defined at ${first_method.name.span}`);
         }
         index(owner) {
             this.added_nodes.set(owner.name.value, owner);
@@ -24377,9 +24376,9 @@ var $;
             const parents = this.parents;
             const val = operator.kids.length === 1 ? operator.kids[0] : undefined;
             if (!val)
-                return this.$.$mol_fail(err `Need a one child at ${operator.span}, use \`some @ \\localized value\``);
+                return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Need a one child at ${operator.span}, use \`some @ \\localized value\``);
             if (this.array)
-                return this.$.$mol_fail(err `Can\'t use \`@\` at ${operator.span} inside array at ${this.array.span}`);
+                return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Can\'t use \`@\` at ${operator.span} inside array at ${this.array.span}`);
             let key = '';
             const body = [];
             const last = parents.length > 0 ? parents[parents.length - 1] : undefined;
@@ -24393,7 +24392,7 @@ var $;
             }
             const prev = this.locale_nodes.get(key);
             if (prev)
-                return this.$.$mol_fail(err `Locale key \`${key}\` at ${operator.span} conflicts with same at ${prev.span}`);
+                return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Locale key \`${key}\` at ${operator.span} conflicts with same at ${prev.span}`);
             this.locale_nodes.set(key, val);
             this.locales[key] = val.value;
             return $_1.$mol_tree2.struct('inline', body);
