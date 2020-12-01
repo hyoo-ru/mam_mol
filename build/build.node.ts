@@ -568,7 +568,7 @@ namespace $ {
 			
 			if( mod.exists() ) {
 				const git_dir = mod.resolve( '.git' )
-				if( mod.type() === 'dir' ) {
+				if( mod.exists() ) {
 					try {
 						if( git_dir.exists() && git_dir.type() === 'dir' ) {
 							//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )

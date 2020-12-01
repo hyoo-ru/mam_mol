@@ -1,8 +1,6 @@
 namespace $ {
 	export type $mol_view_tree2_locales = Record<string, string>
 
-	const err = $mol_view_tree2_error_str
-
 	export class $mol_view_tree2_context extends $mol_object2 {
 		constructor(
 			$: $mol_ambient_context,
@@ -51,7 +49,7 @@ namespace $ {
 			if (! prev) return
 
 			if ((prev.key && !key) || (!prev.key && key) || (prev.next && !next) || (!prev.next && next)) return this.$.$mol_fail(
-				err`Method ${src.type} at ${src.span} is not same as ${prev.src.type} at ${prev.src.span}`
+				$mol_view_tree2_error_str`Method ${src.type} at ${src.span} is not same as ${prev.src.type} at ${prev.src.span}`
 			)
 
 			const current_default = src.kids.length > 0 ? src.kids[0] : undefined
@@ -60,7 +58,7 @@ namespace $ {
 			if (current_default?.type === '-' ) return prev
 
 			if ( prev_default?.toString() !== current_default?.toString() ) return this.$.$mol_fail(
-				err`Method ${name.value} at ${
+				$mol_view_tree2_error_str`Method ${name.value} at ${
 					current_default?.span ?? name.span
 				} already defined with another default value at ${prev_default?.span ?? prev.name.span}`
 			)
@@ -80,17 +78,17 @@ namespace $ {
 			}
 
 			if (key && ! finded_key) return this.$.$mol_fail(
-				err`Key ${key.value} at ${key.span} not found at ${this.parents.map(parent => parent.src.span)}`
+				$mol_view_tree2_error_str`Key ${key.value} at ${key.span} not found at ${this.parents.map(parent => parent.src.span)}`
 			)
 
 			if (next && ! finded_next) return this.$.$mol_fail(
-				err`Next ${next.value} at ${next.span} not found at ${this.parents.map(parent => parent.src.span)}`
+				$mol_view_tree2_error_str`Next ${next.value} at ${next.span} not found at ${this.parents.map(parent => parent.src.span)}`
 			)
 
 			const first_method = parents.length > 1 ? parents[1] : undefined
 
 			if (name.value === first_method?.name.value) return this.$.$mol_fail(
-				err`Method ${name.value} at ${name.span} already defined at ${first_method.name.span}`
+				$mol_view_tree2_error_str`Method ${name.value} at ${name.span} already defined at ${first_method.name.span}`
 			)
 		}
 
@@ -114,11 +112,11 @@ namespace $ {
 			const val = operator.kids.length === 1 ? operator.kids[0] : undefined
 
 			if (! val) return this.$.$mol_fail(
-				err`Need a one child at ${operator.span}, use \`some @ \\localized value\``
+				$mol_view_tree2_error_str`Need a one child at ${operator.span}, use \`some @ \\localized value\``
 			)
 
 			if (this.array) return this.$.$mol_fail(
-				err`Can\'t use \`@\` at ${operator.span} inside array at ${this.array.span}`
+				$mol_view_tree2_error_str`Can\'t use \`@\` at ${operator.span} inside array at ${this.array.span}`
 			)
 
 			let key = ''
@@ -138,7 +136,7 @@ namespace $ {
 			const prev = this.locale_nodes.get(key)
 
 			if (prev) return this.$.$mol_fail(
-				err`Locale key \`${key}\` at ${operator.span} conflicts with same at ${prev.span}`
+				$mol_view_tree2_error_str`Locale key \`${key}\` at ${operator.span} conflicts with same at ${prev.span}`
 			)
 
 			this.locale_nodes.set(key, val)
