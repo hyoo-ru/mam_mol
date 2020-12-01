@@ -23,6 +23,7 @@ namespace $ {
 							place: `${this}.expressGenerator()`,
 							uri: req.path,
 							message: error.message,
+							stack: error.stack,
 						})
 					}
 					
