@@ -4,12 +4,15 @@ namespace $.$$ {
 		@ $mol_mem
 		status( next = 'ready' as 'ready' | 'drag' ) { return next }
 
+		_target = null as EventTarget | null
+
 		enter( event : DragEvent ) {
 
 			if( event.defaultPrevented ) return
 			// if( !this.adopt( event.dataTransfer! ) ) return
 
-			setTimeout( ()=> this.status( 'drag' ) )
+			this.status( 'drag' )
+			this._target = event.target
 			
 			event.dataTransfer!.dropEffect = 'move'
 			event.preventDefault()
@@ -28,7 +31,9 @@ namespace $.$$ {
 		}
 
 		leave( event : DragEvent ) {
-			this.status( 'ready' )
+			if( this._target === event.target ) {
+				this.status( 'ready' )
+			}
 		}
 
 		receive( transfer : DataTransfer ) {

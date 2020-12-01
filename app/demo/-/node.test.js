@@ -14269,11 +14269,16 @@ var $;
     var $$;
     (function ($$) {
         class $mol_drop extends $.$mol_drop {
+            constructor() {
+                super(...arguments);
+                this._target = null;
+            }
             status(next = 'ready') { return next; }
             enter(event) {
                 if (event.defaultPrevented)
                     return;
-                setTimeout(() => this.status('drag'));
+                this.status('drag');
+                this._target = event.target;
                 event.dataTransfer.dropEffect = 'move';
                 event.preventDefault();
             }
@@ -14284,7 +14289,9 @@ var $;
                 event.preventDefault();
             }
             leave(event) {
-                this.status('ready');
+                if (this._target === event.target) {
+                    this.status('ready');
+                }
             }
             receive(transfer) {
                 return transfer;

@@ -4029,6 +4029,7 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_drop extends $.$mol_drop {
         status(next?: "ready" | "drag"): "ready" | "drag";
+        _target: EventTarget | null;
         enter(event: DragEvent): void;
         move(event: DragEvent): void;
         leave(event: DragEvent): void;
