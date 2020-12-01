@@ -12,7 +12,6 @@
 
 [mol_number_string] {
 	appearance: textfield;
-	text-align: right;
 	position: relative;
 	flex: 1 1 7rem;
 	width: 7rem;
@@ -30,7 +29,7 @@
 	top: 0;
 	display: none;
 	z-index: 1;
-	padding: var(--mol_gap_text);
+	padding: .5rem;
 }
 
 [mol_number_inc] {
