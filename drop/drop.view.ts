@@ -7,7 +7,6 @@ namespace $.$$ {
 		enter( event : DragEvent ) {
 
 			if( event.defaultPrevented ) return
-			if( event.target !== this.dom_node() ) return
 			// if( !this.adopt( event.dataTransfer! ) ) return
 
 			setTimeout( ()=> this.status( 'drag' ) )
@@ -29,11 +28,7 @@ namespace $.$$ {
 		}
 
 		leave( event : DragEvent ) {
-			
-			if( event.target !== this.dom_node() ) return
-			
-			setTimeout( ()=> this.status( 'ready' ) )
-			
+			this.status( 'ready' )
 		}
 
 		receive( transfer : DataTransfer ) {
