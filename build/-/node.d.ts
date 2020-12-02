@@ -457,60 +457,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_server extends $mol_object {
-        express(): any;
-        http(): any;
-        socket(): any;
-        expressHandlers(): any[];
-        expressCompressor(): unknown;
-        expressBodier(): any;
-        expressFiler(): any;
-        expressDirector(): unknown;
-        expressIndex(): (req: typeof $node.express.request, res: typeof $node.express.response, next: () => void) => void;
-        expressGenerator(): (req: any, res: any, next: () => void) => void;
-        bodyLimit(): string;
-        cacheTime(): number;
-        port(): number;
-        rootPublic(): string;
-    }
-}
-
-declare namespace $ {
-    function $mol_fail_catch(error: object): boolean;
-}
-
-declare namespace $ {
-    function $mol_diff_path<Item>(...paths: Item[][]): {
-        prefix: Item[];
-        suffix: Item[][];
-    };
-}
-
-declare namespace $ {
-    class $mol_error_mix extends Error {
-        errors: Error[];
-        constructor(message: string, ...errors: Error[]);
-        toJSON(): string;
-    }
-}
-
-declare namespace $ {
-    function $mol_compare_deep<Value>(a: Value, b: Value): boolean;
-}
-
-declare namespace $ {
-    class $mol_build_server extends $mol_server {
-        static trace: boolean;
-        expressGenerator(): (req: typeof $node.express.request, res: typeof $node.express.response, next: () => any) => Promise<any> | undefined;
-        build(): $mol_build;
-        generate(url: string): $mol_file[];
-        expressIndex(): (req: typeof $node.express.request, res: typeof $node.express.response, next: () => void) => void;
-        port(): number;
-        start(): any;
-    }
-}
-
-declare namespace $ {
     function $mol_exec(this: $mol_ambient_context, dir: string, command: string, ...args: string[]): any;
 }
 
@@ -570,6 +516,24 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_view_tree2_error extends Error {
+        readonly spans: readonly $mol_span[];
+        constructor(message: string, spans: readonly $mol_span[]);
+        toJSON(): {
+            message: string;
+            spans: readonly $mol_span[];
+        };
+    }
+    class $mol_view_tree2_error_suggestions {
+        readonly suggestions: readonly string[];
+        constructor(suggestions: readonly string[]);
+        toString(): string;
+        toJSON(): readonly string[];
+    }
+    function $mol_view_tree2_error_str(strings: readonly string[], ...parts: readonly ($mol_span | readonly $mol_span[] | string | number | $mol_view_tree2_error_suggestions)[]): $mol_view_tree2_error;
+}
+
+declare namespace $ {
     function $mol_view_tree2_child(this: $mol_ambient_context, tree: $mol_tree2): $mol_tree2;
 }
 
@@ -616,25 +580,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_view_tree2_error extends Error {
-        readonly spans: readonly $mol_span[];
-        constructor(message: string, spans: readonly $mol_span[]);
-        toJSON(): {
-            message: string;
-            spans: readonly $mol_span[];
-        };
-    }
-    class $mol_view_tree2_error_suggestions {
-        readonly suggestions: readonly string[];
-        constructor(suggestions: readonly string[]);
-        toString(): string;
-        toJSON(): readonly string[];
-    }
-    function $mol_view_tree2_error_str(strings: readonly string[], ...parts: readonly ($mol_span | readonly $mol_span[] | string | number | $mol_view_tree2_error_suggestions)[]): $mol_view_tree2_error;
+    function $mol_view_tree2_serialize(this: $mol_ambient_context, node: $mol_tree2, prefix?: string, parent_is_inline?: boolean): string;
 }
 
 declare namespace $ {
-    function $mol_view_tree2_serialize(this: $mol_ambient_context, node: $mol_tree2, prefix?: string, parent_is_inline?: boolean): string;
+    function $mol_view_tree2_class_super(this: $mol_ambient_context, klass: $mol_tree2): $mol_tree2;
 }
 
 declare namespace $ {
@@ -642,7 +592,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_class_super(this: $mol_ambient_context, klass: $mol_tree2): $mol_tree2;
+    function $mol_view_tree2_prop_split(this: $mol_ambient_context, src: $mol_tree2): {
+        src: $mol_tree2;
+        name: $mol_tree2;
+        key: $mol_tree2 | undefined;
+        next: $mol_tree2 | undefined;
+    };
 }
 
 declare namespace $ {
@@ -654,15 +609,6 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_view_tree2_prop_quote(name: $mol_tree2): $mol_tree2;
-}
-
-declare namespace $ {
-    function $mol_view_tree2_prop_split(this: $mol_ambient_context, src: $mol_tree2): {
-        src: $mol_tree2;
-        name: $mol_tree2;
-        key: $mol_tree2 | undefined;
-        next: $mol_tree2 | undefined;
-    };
 }
 
 declare namespace $ {
@@ -719,22 +665,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_ts_array(this: $mol_ambient_context, operator: $mol_tree2, context: $mol_view_tree2_context, super_method?: $mol_view_tree2_prop | undefined): $mol_tree2;
-}
-
-declare namespace $ {
-    function $mol_view_tree2_ts_array_body(this: $mol_ambient_context, operator: $mol_tree2, parent_context: $mol_view_tree2_context, super_method?: $mol_view_tree2_prop): $mol_tree2;
-}
-
-declare namespace $ {
-    function $mol_view_tree2_ts_method_body(this: $mol_ambient_context, having_parts: $mol_view_tree2_prop, parent_context: $mol_view_tree2_context): undefined;
-}
-
-declare namespace $ {
-    function $mol_view_tree2_ts_method(this: $mol_ambient_context, owner_parts: $mol_view_tree2_prop, body: $mol_tree2, types?: boolean): $mol_tree2;
-}
-
-declare namespace $ {
     var $mol_dom_context: typeof globalThis;
 }
 
@@ -778,12 +708,16 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_view_tree2_ts_comment(this: $mol_ambient_context, item: $mol_tree2): $mol_tree2;
+    function $mol_view_tree2_ts_comment_doc(this: $mol_ambient_context, item: $mol_tree2): $mol_tree2;
+}
+
+declare namespace $ {
     function $mol_view_tree2_ts_class(this: $mol_ambient_context, klass: $mol_tree2, locales: $mol_view_tree2_locales): $mol_tree2;
 }
 
 declare namespace $ {
-    function $mol_view_tree2_ts_comment(this: $mol_ambient_context, item: $mol_tree2): $mol_tree2;
-    function $mol_view_tree2_ts_comment_doc(this: $mol_ambient_context, item: $mol_tree2): $mol_tree2;
+    function $mol_view_tree2_ts_module(this: $mol_ambient_context, tree2_module: $mol_tree2, locales: $mol_view_tree2_locales): $mol_tree2;
 }
 
 declare namespace $ {
@@ -794,24 +728,8 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_ts_dictionary(this: $mol_ambient_context, dictionary: $mol_tree2, dictionary_context: $mol_view_tree2_context, super_method?: $mol_view_tree2_prop): $mol_tree2;
-}
-
-declare namespace $ {
-    function $mol_view_tree2_ts_factory(this: $mol_ambient_context, klass: $mol_tree2, factory: $mol_view_tree2_prop, factory_context: $mol_view_tree2_context): $mol_tree2;
-}
-
-declare namespace $ {
     function $mol_view_tree2_ts_function_declaration({ name, key, next }: Pick<$mol_view_tree2_prop, 'name' | 'key' | 'next'>, types?: boolean): $mol_tree2;
     function $mol_view_tree2_ts_function_call({ name, key, next }: Pick<$mol_view_tree2_prop, 'name' | 'key' | 'next'>): $mol_tree2;
-}
-
-declare namespace $ {
-    function $mol_view_tree2_ts_locale(operator: $mol_tree2, context: $mol_view_tree2_context): $mol_tree2;
-}
-
-declare namespace $ {
-    function $mol_view_tree2_ts_module(this: $mol_ambient_context, tree2_module: $mol_tree2, locales: $mol_view_tree2_locales): $mol_tree2;
 }
 
 declare namespace $ {
@@ -835,7 +753,19 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_view_tree2_ts_locale(operator: $mol_tree2, context: $mol_view_tree2_context): $mol_tree2;
+}
+
+declare namespace $ {
     function $mol_view_tree2_ts_value(this: $mol_ambient_context, src: $mol_tree2): $mol_tree2;
+}
+
+declare namespace $ {
+    function $mol_view_tree2_ts_dictionary(this: $mol_ambient_context, dictionary: $mol_tree2, dictionary_context: $mol_view_tree2_context, super_method?: $mol_view_tree2_prop): $mol_tree2;
+}
+
+declare namespace $ {
+    function $mol_view_tree2_ts_factory(this: $mol_ambient_context, klass: $mol_tree2, factory: $mol_view_tree2_prop, factory_context: $mol_view_tree2_context): $mol_tree2;
 }
 
 declare namespace $ {
@@ -897,6 +827,21 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_base64_encode_node(str: string | Uint8Array): string;
+}
+
+declare namespace $ {
+    function $mol_diff_path<Item>(...paths: Item[][]): {
+        prefix: Item[];
+        suffix: Item[][];
+    };
+}
+
+declare namespace $ {
+    class $mol_error_mix extends Error {
+        errors: Error[];
+        constructor(message: string, ...errors: Error[]);
+        toJSON(): string;
+    }
 }
 
 declare namespace $ {
@@ -1075,6 +1020,45 @@ declare namespace $ {
             exclude?: string[];
             bundle: string;
         }): $mol_file[];
+    }
+}
+
+declare namespace $ {
+    class $mol_server extends $mol_object {
+        express(): any;
+        http(): any;
+        socket(): any;
+        expressHandlers(): any[];
+        expressCompressor(): unknown;
+        expressBodier(): any;
+        expressFiler(): any;
+        expressDirector(): unknown;
+        expressIndex(): (req: typeof $node.express.request, res: typeof $node.express.response, next: () => void) => void;
+        expressGenerator(): (req: any, res: any, next: () => void) => void;
+        bodyLimit(): string;
+        cacheTime(): number;
+        port(): number;
+        rootPublic(): string;
+    }
+}
+
+declare namespace $ {
+    function $mol_fail_catch(error: object): boolean;
+}
+
+declare namespace $ {
+    function $mol_compare_deep<Value>(a: Value, b: Value): boolean;
+}
+
+declare namespace $ {
+    class $mol_build_server extends $mol_server {
+        static trace: boolean;
+        expressGenerator(): (req: typeof $node.express.request, res: typeof $node.express.response, next: () => any) => Promise<any> | undefined;
+        build(): $mol_build;
+        generate(url: string): $mol_file[];
+        expressIndex(): (req: typeof $node.express.request, res: typeof $node.express.response, next: () => void) => void;
+        port(): number;
+        start(): any;
     }
 }
 
@@ -1406,4 +1390,20 @@ declare namespace $ {
         };
         render(): void;
     }
+}
+
+declare namespace $ {
+    function $mol_view_tree2_ts_array_body(this: $mol_ambient_context, operator: $mol_tree2, parent_context: $mol_view_tree2_context, super_method?: $mol_view_tree2_prop): $mol_tree2;
+}
+
+declare namespace $ {
+    function $mol_view_tree2_ts_array(this: $mol_ambient_context, operator: $mol_tree2, context: $mol_view_tree2_context, super_method?: $mol_view_tree2_prop | undefined): $mol_tree2;
+}
+
+declare namespace $ {
+    function $mol_view_tree2_ts_method_body(this: $mol_ambient_context, having_parts: $mol_view_tree2_prop, parent_context: $mol_view_tree2_context): undefined;
+}
+
+declare namespace $ {
+    function $mol_view_tree2_ts_method(this: $mol_ambient_context, owner_parts: $mol_view_tree2_prop, body: $mol_tree2, types?: boolean): $mol_tree2;
 }
