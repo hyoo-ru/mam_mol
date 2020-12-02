@@ -4757,27 +4757,25 @@ var $;
             var mapping = this.modMeta(parent.path());
             if (mod.exists()) {
                 const git_dir = mod.resolve('.git');
-                if (mod.exists()) {
-                    try {
-                        if (git_dir.exists() && git_dir.type() === 'dir') {
-                        }
-                        else {
-                            for (let repo of mapping.select('pack', mod.name(), 'git').sub) {
-                                this.$.$mol_exec(mod.path(), 'git', 'init');
-                                this.$.$mol_exec(mod.path(), 'git', 'remote', 'add', '--track', 'master', 'origin', repo.value);
-                                this.$.$mol_exec(mod.path(), 'git', 'pull');
-                                mod.reset();
-                                return true;
-                            }
+                try {
+                    if (git_dir.exists()) {
+                    }
+                    else {
+                        for (let repo of mapping.select('pack', mod.name(), 'git').sub) {
+                            this.$.$mol_exec(mod.path(), 'git', 'init');
+                            this.$.$mol_exec(mod.path(), 'git', 'remote', 'add', '--track', 'master', 'origin', repo.value);
+                            this.$.$mol_exec(mod.path(), 'git', 'pull');
+                            mod.reset();
+                            return true;
                         }
                     }
-                    catch (error) {
-                        this.$.$mol_log3_fail({
-                            place: `${this}.modEnsure()`,
-                            path,
-                            message: error.message,
-                        });
-                    }
+                }
+                catch (error) {
+                    this.$.$mol_log3_fail({
+                        place: `${this}.modEnsure()`,
+                        path,
+                        message: error.message,
+                    });
                 }
                 return false;
             }
