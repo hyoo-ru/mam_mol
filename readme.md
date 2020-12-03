@@ -21,8 +21,8 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 # Levels
 
 1. **Library.** $mol is just set of small libs. Honor libs: jQuery, React, Redux, MobX.
-2. **Low level framework.** $mol very flexible, but simple. Honor low fw: Angular, Vue, Ember.
-3. **high level framework.** $mol has many costomizable ui components. Honor high fw: Ext, OpenUI5.
+2. **Low level framework.** $mol is very flexible, but simple. Honor low level fw: Angular, Vue, Ember.
+3. **high level framework.** $mol has many costomizable ui components. Honor high level fw: Ext, OpenUI5.
 4. **Platform.** $mol doesn't fit it yet. Honor platforms: Drupal, SAP, 1C.
 
 # Features
@@ -32,12 +32,12 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Full reactivity](#reactivity) in all application layers. Not only between View and ViewModel.
 - [Automatic dependency tracking](#reactivity) between reactive containers. No need to manual publish/subscribe/unsubscribe and streams routing.
 - [Effective state synchronization](mem) in right way. 
-- Automatic include modules to package at compile time. No need to manual import them. [Just use it](#zero-configuration).
+- Automatic inclusion of modules in package at compile time. No need for manually importing them. [Just use it](#zero-configuration).
 - Very small modules. [All of them are optional](#zero-configuration).
 - Cross platform. [Support any environment](#zero-configuration) (NodeJS, Web browsers, Cordova).
 - Static typing ([TypeScript](https://www.typescriptlang.org/)). Full IDE support.
-- Full customization. No implementation hiding. [All aspects are overridable](#lego-components).
-- [Lifecycle management](#reactivity). Automatic destroy of unnecessary objects.
+- Full customization. No hidden implementation. [All aspects are overridable](#lego-components).
+- [Lifecycle management](#reactivity). Automatic destruction of unnecessary objects.
 - [Easy debugging](#debugging). User friendly id's of all objects. Quick access to all objects from console.
 - Easy [user friendly logging](#debugging) of all state changes.
 - Pseudosynchronous code. [Asynchrony is abstracted by reactivity](#reactivity). No callbacks/promises/streams hell. No async/await/yield virus.
@@ -54,8 +54,8 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Articles
 
-- [$mol — лучшее средство от геморроя](https://habr.com/ru/post/341146/) - Quick intoduction to $mol
-- [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/) - Сomprehensive $mol review
+- [$mol — лучшее средство от геморроя](https://habr.com/ru/post/341146/) - Quick introduction to $mol
+- [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/) - Comprehensive $mol review
 - [Объектное Реактивное Программирование](https://habrahabr.ru/post/330466/) - Features of Object Reactive Programming
 - [Концепции автоматического тестирования](https://habr.com/ru/post/351430/) - Testing principles
 - [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/) - Problems of popular frameworks
@@ -67,7 +67,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 ## Create MAM project
 
-Easy way is checkout this [preconfigured MAM repository](http://github.com/hyoo-ru/mam) and start dev server:
+The easiest way is to checkout this [preconfigured MAM repository](http://github.com/hyoo-ru/mam) and start a dev server:
 
 ```sh
 git clone https://github.com/hyoo-ru/mam.git ./mam && cd mam
@@ -79,11 +79,11 @@ npm install && npm start
 - Use MAM directory as root of your project in editor
 - [Install VScode intellisense plugin for *.view.tree files](https://marketplace.visualstudio.com/items?itemName=valikov.tree-language-service)
 - [Install plugin for *.tree files](https://github.com/nin-jin/tree.d#ide-support)
-- [Install .editorconfig plugin](https://editorconfig.org/#download) or use this preferences: **TABs for indents, LF for line endings**.
+- [Install .editorconfig plugin](https://editorconfig.org/#download) or use these preferences: **TABs for indents, LF for line endings**.
 
 ## Create your application component
 
-In examples we will use namespace `my` and application name `hello`, but you could use your own namespace and application name.
+Examples use namespace `my` and application name `hello`, but you can use your own namespace and application name.
 
 Add **web entry point** at `./my/hello/index.html`:
 
@@ -120,7 +120,7 @@ $my_hello $mol_view
 		<= message \
 ```
 
-That will be automaticaly compiled to typescript code like this:
+That will be automatically compiled to typescript code like this:
 
 ```typescript
 namespace $ { export class $my_hello extends $mol_view {
@@ -227,13 +227,13 @@ Add **styles** at `./my/hello/hello.view.css`:
 # Rationale
 
 ## Zero configuration
-Instead of ensuring configurable under any wanting, we better concentrate on, that all would worked good directly from the box and does not bother $mol's developer by a typical configure. (But, nevertheless it does not excludes setup for your needs if it is required)
+Instead of ensuring configurability by any means, $mol concentrates on everything working good directly out of the box and does not bother $mol's developer by a typical configuration process. (Nevertheless, this doesn't exclude setup for your needs if required)
 
-For example if you download **[base MAM-project](http://github.com/hyoo-ru/mam)** you'd have got that:
+For example if you download **[base MAM-project](http://github.com/hyoo-ru/mam)** you'll get this:
 
-**Building of JS and CSS bundles for different platforms.** A bundle can be built for any module. In this bundle would be sources of that module and sources all other modules from which the module depends on. Also there would not redundant modules in the bundle.  
+**Building of JS and CSS bundles for different platforms.** A bundle can be built for any module. This bundle would contain sources of that module and sources of all other modules on which that module depends on. There also would not be any redundant modules in the bundle.  
 
-There are the full set of supports bundles:
+Here is a full set of supported bundles:
 
 - `-/web.js` - JS for browser
 - `-/web.d.ts` - TypeScript definitions
@@ -246,20 +246,20 @@ There are the full set of supports bundles:
 
 **Support of Source Maps**. Sources are compiled and integrate to maps, they are fully self-sufficient.
 
-**Development server**, witch would be compile bundles as needed. For example, when requested `http://localhost:9080/hyoo/todomvc/-/web.js` the `js` bundle is being built of `hyoo/todomvc` for `web` environment. Rebuilding would be occur only if some source file would be changed.
+**Development server**, which compiles bundles as needed. For example, when `http://localhost:9080/hyoo/todomvc/-/web.js` is requested, the `js` bundle is built from `hyoo/todomvc` for `web` environment. Rebuilding occurs only if any source files are changed.
 
 **Transpilling of modern CSS into CSS supported by browsers** ([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): vendor prefixes and variables etc.
 
 **Transpilling [TypeScript](https://github.com/Microsoft/TypeScript) into JS**. 
-In TS configuration enabled support decorators and disabled implicit `any` type, for prevent missing typing by change.
+In TS configuration enabled support decorators and disabled implicit `any` type, to prevent missing typing by change.
 
-**Watching dependencies by fact of using** and inclusion the needed modules automatically at further bundle. You don't need to write `include` and `require` everything you need is to refer for essence by full name like `$mol_state_arg` and `$mol.state.arg` (looking at its definition) in `*.ts`, `*.view.ts`, `*.view.tree` and `*.jam.js` files. At CSS files its dependencies are looked for by entries like `[mol_check_checked]` , `[mol_check_checked=` and `.mol_check_checked`.
+**Watching dependencies by fact of using** and automatic inclusion of the needed modules on further bundling. You don't need to write `include` and `require`. All you need is to refer instance by full name like `$mol_state_arg` and `$mol.state.arg` (depending on its definition) in `*.ts`, `*.view.ts`, `*.view.tree` and `*.jam.js` files. Dependencies in CSS files are looked for by entries like `[mol_check_checked]` , `[mol_check_checked=` and `.mol_check_checked`.
 
 ## Lego components
 
-At $mol is used the component approach to the building of interface, however **every component is self-sufficient** and can be used as the self-sufficient application. Small components are aggregated inside of larger components etc.
+$mol uses the component approach to building interfaces, however **every component is self-sufficient** and can be used as a self-sufficient application. Small components are aggregated inside larger components etc.
 
-Unlike another frameworks the $mol does not seek to isolate the insides of the components. Vice versa, there is comfortable mechanism is provided for developers for configuration them, it is not required from the creator of the component to do any additional gestures.
+Unlike another frameworks, $mol does not isolate the internals of its components. Vice versa, a comfortable mechanism is provided for developers to configure them, the creator of the component doesn't have to do any additional actions.
 
 For example, to set the list of sub components you need to redefine `sub` property in view.tree
 
@@ -269,7 +269,7 @@ Confirm_delte $mol_row sub /
 	<= No $mol_button_major title \No
 ```
 
-Or the same code through TypeScript would be:
+Or the same code in TypeScript would be:
 
 ```typescript
 @ $mol_mem
@@ -280,29 +280,29 @@ Confirm_delete() {
 }
 ```
 
-In both variants the compiler would verify existence of the property and accordance of the signature. In normal mode you don't need to work with fields of the object directly, so all definable properties 
+In both variants the compiler would verify the existence of the property and correspondence of the signature. Normally you don't need to work with fields of the object directly, all definable properties 
 are public and can be safely overloaded.
 
 Details about viewers and `view.tree` language: [$mol_view](view).
 
 ## Lazyness
 
-[$mol_view](view) implements lazy rendering. [$mol_scroll](scroll) is watching scroll's position and suggest to the embedded components about the view height. [$mol_list](list) knowing about the view height and minimal sizes of the embedded components, it excludes from rendering process the components that is not got into viewport for sure. And all other components can suggest it about their minimal size through `minimal_height` property.
+[$mol_view](view) implements lazy rendering. [$mol_scroll](scroll) watches scroll position and suggests the view height to embedded components. [$mol_list](list) knows the view height and minimal sizes of the embedded components, it excludes components definitely outside viewport from rendering. And all other components report their minimal size through `minimal_height` property.
 
 ```
 $my_icon $mol_view
 	minimal_height 16
 ```
 
-At the result it come out than opening any window occur while instant time. It's independent of output data size. And since data would not be rendered, then any requests would not be proceeded. It's allowed us to download them partly, when they are needed. That features are possible due to reactive architecture, that are penetrated all layers of application.
+As the result opening of any window occurs instantly. It's independent from output data size. And since data would not be rendered, any requests would not be proceeded. This allows us to download them partly, when they are needed. Such a feature is possible due to reactive architecture, that penetrates through all layers of the application.
 
 ## Reactivity
 
-Unlike the control-flow architectures, in $mol was implemented the data-flow architecture. All applications are described as a set of classes, having properties. Every property is described as some function from another property (and properties of another classes too). Properties, to which were appealed while function processing were saved as dependencies of our property. In case of changing their values, all dependant on them properties would be invalidated cascaded. And appealing to non relevant property would lead to its pre-actualization.
+Unlike control-flow architectures, $mol implements the data-flow architecture. All applications are defined as a set of classes having properties. Every property is defined as some function from another property (and properties of another classes too). Properties, which were called while processing a function are saved as dependencies of current property. When their values change, all dependent properties would be invalidated cascading. Calling a non relevant property would lead to its pre-actualization.
 
-In this way the whole application at the execution stage represents a huge tree of dependencies, at the root of the tree is located the special property, which in case of invalidation would actualize itself automatically. And as any property always knows, whether something depends from it or not, then it is given a simple and reliable mechanism of controlling lifecycle of objects - they creates if the dependence appears and are destroyed when nothing depend from it. It's solved two fundamental problem: resources leaks and cache invalidation. 
+In this way the whole application at the execution stage represents a huge tree of dependencies, with a special property at the root of the tree, which in case of invalidation would actualize itself automatically. And as any property always knows, whether something depends on it or not, then it is given a simple and reliable mechanism of controlling lifecycle of objects - they are created when dependence appears and are destroyed when nothing depends on them. This solves two fundamental problems: resources leaks and cache invalidation. 
 
-Besides, the reactive architecture allows us to abstract code elegantly from asynchronous operations. If the function can't return value at once, it can throws the `Promise`, it is marked part of the tree as "waiting of results". When the result would be retrieved - it could be inserted into property directly and application would be reconstructed for the new state.
+Besides, the reactive architecture allows us to abstract code elegantly from asynchronous operations. If the function can't return value at the moment, it can throw `Promise` and is marked as part of the tree as "waiting of results". When result is retrieved, it can be inserted into property directly and an application would be reconstructed for the new state.
 
 ```typescript
 namespace $ {
@@ -322,9 +322,9 @@ Details: [$mol_mem](mem), [$mol_atom2](atom2).
 
 ## Debugging
 
-A special attention is payed while developing $mol to debugging possibilities and researching of code's working process.
+$mol pays special attention to debugging possibilities and research of how its code works.
 
-For every DOM-element is formed a people friendly `id` automatically like `$hyoo_todomvc.root(0).taskRow(0).titler()`, which is valid javascript code, this one could be executed at a console, received a link to the component, whom the component is corresponds to. Unfolding the content of the component you'd see names and values its fields like:
+A human friendly `id` is automatically formed for every DOM-element, e.g. `$hyoo_todomvc.root(0).taskRow(0).titler()`, which is a valid javascript code, that could be executed in a console, returning a link to the component, which the DOM-element corresponds to. Unfolding the content of the component you'd see names and values for its fields like:
 
 ```
 $hyoo_todomvc
@@ -336,7 +336,7 @@ $hyoo_todomvc
     taskrows() : Array[2]
 ```
 
-The name of the field corresponds to calling the property, the content of the field would be available through. And thanks to naming classes and functions through underscoring you'd always get to know which class instance in front of you and could briefly find it at code by default searching by the substring.
+The name of the field corresponds to calling the property, the content of the field would be available through. And thanks to naming classes and functions by underscoring, you always know which class instance you're looking at and can briefly find it in the code by searching the substring.
 
 # Modules
 
@@ -363,7 +363,7 @@ The name of the field corresponds to calling the property, the content of the fi
 - **[$mol_range2](range2)** - lazy array
 - **[$mol_maybe](maybe)** - [maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
 - **[$mol_conform](conform)** - object tree reconciler
-- **[$mol_dict](dict)** - usefull native `Map` extension
+- **[$mol_dict](dict)** - useful native `Map` extension
 
 ## [State modules](state)
 
@@ -441,7 +441,7 @@ The name of the field corresponds to calling the property, the content of the fi
 
 ## Data formats
 
-- **[$mol_tree](tree)** - [tree format](https://github.com/nin-jin/tree.d) (`view.tree` language descripted at [$mol_view](view))
+- **[$mol_tree](tree)** - [tree format](https://github.com/nin-jin/tree.d) (`view.tree` language described at [$mol_view](view))
 
 ## Math
 
