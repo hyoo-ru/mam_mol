@@ -2488,6 +2488,7 @@ $mol_textarea $mol_view
 			value?val <=> value?val \
 			hint <= hint \
 			enabled <= enabled true
+			length_max <= length_max Infinity
 		<= View $mol_text_code
 			text <= value
 

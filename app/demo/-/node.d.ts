@@ -5885,6 +5885,7 @@ declare namespace $ {
         value(val?: any): any;
         hint(): string;
         enabled(): boolean;
+        length_max(): number;
         Edit(): $$.$mol_string;
         View(): $$.$mol_text_code;
     }

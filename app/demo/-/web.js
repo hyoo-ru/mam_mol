@@ -21263,12 +21263,16 @@ var $;
         enabled() {
             return true;
         }
+        length_max() {
+            return Infinity;
+        }
         Edit() {
             const obj = new this.$.$mol_string();
             obj.dom_name = () => "textarea";
             obj.value = (val) => this.value(val);
             obj.hint = () => this.hint();
             obj.enabled = () => this.enabled();
+            obj.length_max = () => this.length_max();
             return obj;
         }
         View() {

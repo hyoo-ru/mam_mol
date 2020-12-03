@@ -68,11 +68,21 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * length_max Infinity
+		 * ```
+		 */
+		length_max() {
+			return Infinity
+		}
+
+		/**
+		 * ```tree
 		 * Edit $mol_string
 		 * 	dom_name \textarea
 		 * 	value?val <=> value?val
 		 * 	hint <= hint
 		 * 	enabled <= enabled
+		 * 	length_max <= length_max
 		 * ```
 		 */
 		@ $mol_mem
@@ -83,6 +93,7 @@ namespace $ {
 			obj.value = (val?: any) => this.value(val)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.enabled()
+			obj.length_max = () => this.length_max()
 
 			return obj
 		}
