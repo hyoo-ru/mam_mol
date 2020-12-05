@@ -1,3 +1,4 @@
 [mol_button_major][disabled] {
 	opacity: .5;
+	filter: grayscale();
 }
