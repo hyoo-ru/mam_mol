@@ -2,7 +2,7 @@
 
 Hyperlink with icon. 
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_link_iconed_demo)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_link_iconed_demo)
 
 ## Usage example
 

@@ -2,7 +2,7 @@
 
 Component to see progress state of any operation.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_portion)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_portion)
 
 ## Usage example
 ```

@@ -2,7 +2,7 @@
 
 Allow user to select value from various options and displays current value.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_select)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_select)
 
 ## Usage example
 

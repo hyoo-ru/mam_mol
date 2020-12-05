@@ -2,7 +2,7 @@
 
 Scrolling pane.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_scroll)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_scroll)
 
 ## Usage example
 

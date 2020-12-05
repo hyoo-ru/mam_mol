@@ -2,7 +2,7 @@
 
 Input field to enter multiple line text.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_textarea_demo)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_textarea_demo)
 
 ## Usage example
 

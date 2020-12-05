@@ -2,7 +2,7 @@
 
 Plugin for touch gestures
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_touch_demo)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_touch_demo)
 
 ## Usage example
 

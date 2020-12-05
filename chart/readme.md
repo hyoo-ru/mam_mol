@@ -2,7 +2,7 @@
 
 Plot pane with legend.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_chart)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_chart)
 
 ## Properties
 
