@@ -41,10 +41,6 @@ namespace $.$$ {
 			return Math.max( super.minimal_height() || 32 )
 		}
 
-		theme() {
-			return this.current() ? '$mol_theme_base' : null
-		}
-		
 	}
 	
 }

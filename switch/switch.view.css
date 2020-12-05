@@ -8,3 +8,8 @@
 [mol_switch_option] {
 	flex: 0 1 auto;
 }
+
+[mol_switch_option][mol_check_checked="true"] {
+	color: var(--mol_theme_text);
+	text-shadow: 0 0;
+}
