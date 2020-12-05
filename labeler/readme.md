@@ -2,7 +2,7 @@
 
 Provides label before the content.
 
-##[Online demo](http://eigenmethod.github.io/mol/#demo=mol_labeler)
+##[Online demo](https://mol.js.org/app/demo/-/#demo=mol_labeler)
 
 ## Usage examples
 

@@ -2,7 +2,7 @@
 
 Date presenter and picker.
  
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_date)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_date)
 
 ## Properties
 

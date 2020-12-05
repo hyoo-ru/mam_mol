@@ -2,7 +2,7 @@
 
 Benchmark results visualisator.
  
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_bench)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_bench)
 
 ## Usage example
 

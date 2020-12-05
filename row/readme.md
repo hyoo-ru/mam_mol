@@ -2,7 +2,7 @@
 
 Horizontal list of blocks with margins between and around that can wraps to next line.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_row)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_row)
 
 ## Usage example
 

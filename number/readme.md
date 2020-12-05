@@ -2,7 +2,7 @@
 
 Component to view and edit some number value.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_number)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_number)
 
 ## Usage example
 

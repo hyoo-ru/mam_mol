@@ -2,7 +2,7 @@
 
 The component which contains head and content.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_section)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_section)
 
 ## Usage example
 

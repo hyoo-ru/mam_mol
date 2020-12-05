@@ -2,7 +2,7 @@
 
 Component for lazy add and/or remove pages depending on the container size. Supports pop left of front page that hides when it blurs.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_book_demo)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_book_demo)
 
 ## Usage example
 

@@ -2,7 +2,7 @@
 
 Root component for adaptivity to various sreen sizes. Implements booklet UX.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_book2_demo)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_book2_demo)
 
 ## Usage example
 

@@ -2,7 +2,7 @@
 
 The component for grouping several components in one composite control.
 
-##[Online demo](http://eigenmethod.github.io/mol/#demo=mol_bar)
+##[Online demo](https://mol.js.org/app/demo/-/#demo=mol_bar)
 
 ## Usage examples
 ```

@@ -2,7 +2,7 @@
 
 Plugin which can navigate in list of items
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_nav_demo)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_nav_demo)
 
 ## Usage example
 ```

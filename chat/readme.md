@@ -4,7 +4,7 @@ GitHub based comments.
 
 **Proof of concept, do not use it**
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_chat)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_chat)
 
 ## Repository preparing
 

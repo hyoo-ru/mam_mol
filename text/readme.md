@@ -2,7 +2,7 @@
 
 Component that can show text which can be written in markdown format.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_text)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_text)
 
 ## Usage example
 

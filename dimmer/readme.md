@@ -2,7 +2,7 @@
 
 Output text with dimmed not matched substrings.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_dimmer)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_dimmer)
 
 ## Usage example
 

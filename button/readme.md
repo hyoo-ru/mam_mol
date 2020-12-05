@@ -2,7 +2,7 @@
 
 Simple button.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_button)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_button)
 
 ## Usage example
 ```

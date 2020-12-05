@@ -2,7 +2,7 @@
 
 Bar graph.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_plot)
+## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_plot)
 
 ## Usage example
 
