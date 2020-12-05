@@ -6,6 +6,28 @@ namespace $.$$ {
 
 	$mol_test( {
 		
+		async 'compiled'( $ ) {
+
+			const samples = new Map([
+				[
+					text( require( '/mol/view/tree/ts/test/simple.view.tree.bin' ) ),
+					{
+						dts: text( require( '/mol/view/tree/ts/test/simple.view.d.ts.bin' ) ),
+						js: text( require( '/mol/view/tree/ts/test/simple.view.js.bin' ) ),
+					},
+				],
+			])
+			
+			for( const [ view , { js, dts } ] of samples ) {
+
+				const tree = $mol_tree2.fromString( view, $mol_span.entire( 'factory.view.tree', view.length ) )
+				const res = $.$mol_view_tree2_ts_compile( tree )
+
+				$mol_assert_equal( res.script, js )
+			}
+			
+		},
+/*
 		async 'localized - simple'( $ ) {
 
 			const view = text( require( '/mol/view/tree2/ts/test/simple.view.tree.bin' ) )
@@ -83,7 +105,7 @@ namespace $.$$ {
 			}
 			
 		},
-
+*/
 	} )
 
 }

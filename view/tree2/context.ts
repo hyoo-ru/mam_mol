@@ -1,15 +1,19 @@
 namespace $ {
 	export type $mol_view_tree2_locales = Record<string, string>
 
+	export type $mol_view_tree2_context_item = {
+		body: $mol_tree2
+		decorators?: $mol_tree2
+	}
+
 	const err = $mol_view_tree2_error_str
 
-	export class $mol_view_tree2_context extends $mol_object2 {
+	export class $mol_view_tree2_context<Method extends $mol_view_tree2_context_item> extends $mol_object2 {
 		constructor(
 			$: $mol_ambient_context,
 			protected parents: readonly $mol_view_tree2_prop[],
 			protected locales: $mol_view_tree2_locales,
-			protected methods: $mol_tree2[],
-			readonly types = true,
+			protected methods: Method[],
 			protected added_nodes = new Map<string, $mol_view_tree2_prop>(),
 			protected array?: $mol_tree2,
 		) {
@@ -23,10 +27,13 @@ namespace $ {
 				prefixes,
 				this.locales,
 				this.methods,
-				this.types,
 				this.added_nodes,
 				array
 			)
+		}
+
+		klass() {
+			return this.parents[0]
 		}
 
 		parent(prefix: $mol_view_tree2_prop) {
@@ -46,7 +53,7 @@ namespace $ {
 			return this.clone(this.parents, array)
 		}
 
-		get_method({ name, src, key, next }: $mol_view_tree2_prop) {
+		get_method_owner({ name, src, key, next }: $mol_view_tree2_prop) {
 			const prev = this.added_nodes.get(name.value)
 			if (! prev) return
 
@@ -103,7 +110,7 @@ namespace $ {
 			return index
 		}
 
-		method(index: number, method: $mol_tree2) {
+		method(index: number, method: Method) {
 			this.methods[index] = method
 		}
 

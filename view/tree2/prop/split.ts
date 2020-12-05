@@ -8,7 +8,8 @@ namespace $ {
 		const prop_name = src.type
 
 		let key_pos = prop_name.indexOf('!')
-		let next_pos = prop_name.indexOf('?')
+		const quest_pos = prop_name.indexOf('?')
+		let next_pos = quest_pos
 		if (next_pos === -1) next_pos = prop_name.length
 		if (key_pos === -1) key_pos = next_pos
 
@@ -30,20 +31,22 @@ namespace $ {
 		return {
 			src,
 			name: $mol_tree2.data(name, [], src.span.slice(0, name.length)),
-			key: key ? $mol_tree2.data(key, [], src.span.slice(key_pos, key.length)) : undefined,
-			next: next ? $mol_tree2.data(next, [], src.span.slice(next_pos, next.length)) : undefined
+			key: key ? $mol_tree2.data('k', [], ) : undefined,
+			key_type: key ? $mol_tree2.data(key, [], src.span.slice(key_pos, key.length + 1)) : undefined,
+			next: next || quest_pos ? $mol_tree2.data('v', [], src.span.slice(next_pos, next.length + 1)) : undefined,
+			next_type: next ? $mol_tree2.data(next, [], src.span.slice(next_pos, next.length + 1)) : undefined
 		}
 	}
 
 	const regular_regex = /^\w+$/
 
 	const example1 = new $mol_view_tree2_error_suggestions([
-		'having!key?next <= owner!key?next'
+		'having!any?string <= owner!any?string'
 	])
 
 	const example2 = new $mol_view_tree2_error_suggestions([
-		'having!key',
-		'having!key?next',
+		'having!any',
+		'having!any?string',
 		'having',
 	])
 }

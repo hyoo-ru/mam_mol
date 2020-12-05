@@ -11,8 +11,8 @@ namespace $ {
 		this: $mol_ambient_context,
 		klass: $mol_tree2,
 		factory: $mol_view_tree2_prop,
-		factory_context: $mol_view_tree2_context,
-	) {
+		factory_context: $mol_view_tree2_ts_context,
+	): $mol_view_tree2_ts_method_body_type {
 		if (klass.type[0] !== '$') return this.$mol_fail(
 			err`Need a valid class name at ${klass.span}, use ${example}`
 		)
@@ -39,14 +39,14 @@ namespace $ {
 					err`Only one \`/\` operator allowed in factory at ${child.span}, prev at ${last_array.span}`
 				)
 				last_array = child
-				constructor_args = this.$mol_view_tree2_ts_array_body(child, context)
+				constructor_args = this.$mol_view_tree2_ts_array_body(child, context).code
 				continue
 			}
 
 			const operator = this.$mol_view_tree2_child(child)
 			const type = operator.type
 
-			let value: $mol_tree2
+			let value: $mol_view_tree2_ts_method_body_type
 
 			if (type === '<=') value = this.$mol_view_tree2_ts_bind_left(operator, context, child_parts)
 			else if (type === '<=>') value = this.$mol_view_tree2_ts_bind_both(operator, context)
@@ -55,12 +55,17 @@ namespace $ {
 				continue
 			}
 			else if (type === '@') value = this.$mol_view_tree2_ts_locale(operator, context)
-			else if (type === '*') value = $mol_tree2.struct('inline', [
-				child.data('('),
-				this.$mol_view_tree2_ts_dictionary(operator, context),
-				child.data(')'),
-			])
-			else if (type[0] === '/') value = this.$mol_view_tree2_ts_array(operator, context)
+			else if (type === '*') {
+				const dict = this.$mol_view_tree2_ts_dictionary(operator, context)
+				value = {
+					result_type: dict.result_type,
+					code: $mol_tree2.struct('inline', [
+						child.data('('),
+						dict.code,
+						child.data(')'),
+					])
+				}
+			} else if (type[0] === '/') value = this.$mol_view_tree2_ts_array(operator, context)
 			else value = this.$mol_view_tree2_ts_value(operator)
 
 			const call = $mol_tree2.struct('inline', [
@@ -68,9 +73,9 @@ namespace $ {
 				child.data('.'),
 				child_parts.name,
 				child_parts.name.data(' = '),
-				$mol_view_tree2_ts_function_declaration(child_parts, context.types),
+				$mol_view_tree2_ts_function_declaration(child_parts),
 				child.data(' => '),
-				value,
+				value.code,
 			])
 
 			body.push(call)
@@ -107,7 +112,9 @@ namespace $ {
 			])
 		)
 
-		return $mol_tree2.struct('block', sub)
+		const result_type = klass.data(klass.type)
+
+		return { code: $mol_tree2.struct('block', sub), result_type }
 	}
 
 	const example = new $mol_view_tree2_error_suggestions([

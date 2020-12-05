@@ -3,7 +3,7 @@ namespace $ {
 		const locales: $mol_view_tree2_locales = {}
 		const ts_module = this.$mol_view_tree2_ts_module(tree2_module, locales)
 
-		const script = this.$mol_view_tree2_serialize(ts_module)
+		const script = this.$mol_view_tree2_serialize(ts_module.js)
 
 		return { script, locales }
 	}

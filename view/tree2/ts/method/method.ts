@@ -1,10 +1,14 @@
 namespace $ {
+	export type $mol_view_tree2_ts_method_body_type = {
+		code: $mol_tree2
+		result_type: $mol_tree2;
+	}
 
 	export function $mol_view_tree2_ts_method(
 		this: $mol_ambient_context,
 		owner_parts: $mol_view_tree2_prop,
-		body: $mol_tree2,
-		types = false
+		body: $mol_view_tree2_ts_method_body_type,
+		klass_name: $mol_tree2,
 	) {
 		const { name, key, next, src } = owner_parts
 		const operator = src.kids.length === 1 ? src.kids[0] : undefined
@@ -21,13 +25,22 @@ namespace $ {
 			this.$mol_view_tree2_ts_comment_doc(src),
 		]
 
-		if (need_cache && key) sub.push(name.data(`@ $${''}mol_mem_key`)) 
-		if (need_cache && ! key) sub.push(name.data(`@ $${''}mol_mem`))
+		const decorators = need_cache
+			? name.struct('inline', [
+				name.data('__decorate([ '),
+				name.data(key ? '$mol_mem_key' : '$mol_mem'),
+				name.data('], '),
+				klass_name,
+				name.data('.prototype, '),
+				name.data(JSON.stringify(name.value)),
+				name.data(', null)')
+			])
+			: undefined
 
 		sub.push(
 			name.struct('inline', [
 				name,
-				$mol_view_tree2_ts_function_declaration(owner_parts, types),
+				$mol_view_tree2_ts_function_declaration(owner_parts),
 				name.data(' {'),
 			])
 		)
@@ -43,8 +56,12 @@ namespace $ {
 			])
 		)
 
-		sub.push(body, name.data('}'))
+		sub.push(body.code, name.data('}'))
 
-		return name.struct('lines', sub)
+		const body_dts = $mol_view_tree2_ts_function_type(owner_parts, body.result_type)
+
+		return { body: name.struct('lines', sub), decorators, body_dts }
 	}
+
+	export type $mol_view_tree2_ts_method_type = Partial<ReturnType<typeof $mol_view_tree2_ts_method>> & { body: $mol_tree2 }
 }
