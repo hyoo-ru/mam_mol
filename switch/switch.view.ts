@@ -31,12 +31,4 @@ namespace $.$$ {
 
 	}
 
-	export class $mol_switch_option extends $.$mol_switch_option {
-
-		theme() {
-			return this.checked() ? '$mol_theme_base' : ''
-		}
-
-	}
-
 }

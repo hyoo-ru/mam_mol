@@ -37,6 +37,7 @@ namespace $ {
 						color: $mol_theme.back,
 					},
 					color: $mol_theme.text,
+					textShadow: '0 0',
 				}
 			}
 		},

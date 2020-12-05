@@ -19,7 +19,6 @@ namespace $ {
 		 * 	target <= target
 		 * 	download <= file_name
 		 * 	mol_link_current <= current
-		 * 	mol_theme <= theme
 		 * ```
 		 */
 		attr() {
@@ -29,8 +28,7 @@ namespace $ {
 				title: this.hint(),
 				target: this.target(),
 				download: this.file_name(),
-				mol_link_current: this.current(),
-				mol_theme: this.theme()
+				mol_link_current: this.current()
 			}
 		}
 
@@ -113,15 +111,6 @@ namespace $ {
 		 */
 		current() {
 			return false
-		}
-
-		/**
-		 * ```tree
-		 * theme null
-		 * ```
-		 */
-		theme() {
-			return null as any
 		}
 
 		/**

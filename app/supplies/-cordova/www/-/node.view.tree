@@ -173,7 +173,6 @@ $mol_link $mol_view
 		target <= target \_self
 		download <= file_name \
 		mol_link_current <= current false
-		mol_theme <= theme null
 	sub /$mol_view_content
 		<= title
 	arg *
@@ -518,20 +517,15 @@ $mol_check $mol_button_minor
 					<= title \
 
 $mol_switch $mol_view
-	Option!id $mol_switch_option
+	Option!id $mol_check
 		checked?val <=> option_checked!id?val false
 		label <= option_label!id / <= option_title!id \
 		enabled <= option_enabled!id <= enabled true
+		minimal_height 24
 	value?val null
 	options *
 	keys /string
 	sub <= items /$mol_check
-
-$mol_switch_option $mol_check
-	minimal_height 24
-	attr *
-		^
-		mol_theme <= theme \
 
 $mol_deck $mol_list
 	items /

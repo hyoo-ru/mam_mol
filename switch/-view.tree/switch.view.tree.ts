@@ -3,19 +3,21 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Option!id $mol_switch_option
+		 * Option!id $mol_check
 		 * 	checked?val <=> option_checked!id?val
 		 * 	label <= option_label!id
 		 * 	enabled <= option_enabled!id
+		 * 	minimal_height 24
 		 * ```
 		 */
 		@ $mol_mem_key
 		Option(id: any) {
-			const obj = new this.$.$mol_switch_option()
+			const obj = new this.$.$mol_check()
 
 			obj.checked = (val?: any) => this.option_checked(id, val)
 			obj.label = () => this.option_label(id)
 			obj.enabled = () => this.option_enabled(id)
+			obj.minimal_height = () => 24
 
 			return obj
 		}
@@ -120,41 +122,6 @@ namespace $ {
 			return [
 
 			] as readonly $mol_check[]
-		}
-	}
-
-	export class $mol_switch_option extends $mol_check {
-
-		/**
-		 * ```tree
-		 * minimal_height 24
-		 * ```
-		 */
-		minimal_height() {
-			return 24
-		}
-
-		/**
-		 * ```tree
-		 * attr *
-		 * 	^
-		 * 	mol_theme <= theme
-		 * ```
-		 */
-		attr() {
-			return {
-				...super.attr(),
-				mol_theme: this.theme()
-			}
-		}
-
-		/**
-		 * ```tree
-		 * theme \
-		 * ```
-		 */
-		theme() {
-			return ""
 		}
 	}
 

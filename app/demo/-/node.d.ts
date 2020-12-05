@@ -1034,7 +1034,6 @@ declare namespace $ {
             target: string;
             download: string;
             mol_link_current: boolean;
-            mol_theme: any;
         };
         sub(): readonly (string | number | boolean | $mol_view | Node)[];
         arg(): {};
@@ -1046,7 +1045,6 @@ declare namespace $ {
         target(): string;
         file_name(): string;
         current(): boolean;
-        theme(): any;
         event_click(event?: any): any;
         click(event?: any): any;
     }
@@ -1085,7 +1083,6 @@ declare namespace $.$$ {
         event_click(event?: Event): void;
         file_name(): string;
         minimal_height(): number;
-        theme(): "$mol_theme_base" | null;
     }
 }
 
@@ -1364,7 +1361,6 @@ declare namespace $ {
             title: string;
             target: string;
             mol_link_current: boolean;
-            mol_theme: any;
         };
         url_load(val?: any): any;
         style_bg(): string;
@@ -3825,7 +3821,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_switch extends $mol_view {
-        Option(id: any): $$.$mol_switch_option;
+        Option(id: any): $$.$mol_check;
         value(val?: any): any;
         options(): {};
         keys(): readonly string[];
@@ -3836,19 +3832,6 @@ declare namespace $ {
         enabled(): boolean;
         option_enabled(id: any): boolean;
         items(): readonly $mol_check[];
-    }
-    class $mol_switch_option extends $mol_check {
-        minimal_height(): number;
-        attr(): {
-            mol_theme: string;
-            mol_check_checked: any;
-            "aria-checked": any;
-            role: string;
-            disabled: boolean;
-            tabindex: number;
-            title: string;
-        };
-        theme(): string;
     }
 }
 
@@ -3862,12 +3845,9 @@ declare namespace $.$$ {
             [key: string]: string;
         };
         keys(): string[];
-        items(): $mol_switch_option[];
+        items(): $mol_check[];
         option_title(key: string): string;
         option_checked(key: string, next?: boolean): boolean | undefined;
-    }
-    class $mol_switch_option extends $.$mol_switch_option {
-        theme(): "" | "$mol_theme_base";
     }
 }
 
@@ -4910,7 +4890,6 @@ declare namespace $ {
             target: string;
             download: string;
             mol_link_current: boolean;
-            mol_theme: any;
         };
         uri(): any;
         content(val?: any): any;
