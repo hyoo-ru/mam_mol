@@ -7,4 +7,3 @@ $mol_calendar_demo_selection $mol_demo_small
 		<= Calendar $mol_calendar
 			month_string <= month \2018-01
 			day_selected!day <= selected!day false
-			
