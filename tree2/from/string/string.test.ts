@@ -62,5 +62,28 @@ namespace $ {
 
 		},
 
+		'Errors skip and collect'( $ ) {
+
+			const tree = `foo  bar`
+			const errors = [] as string[]
+
+			const $$ = $.$mol_ambient({
+				$mol_fail: ( error: any ) => {
+					errors.push( error.message )
+					return null as never
+				}
+			})
+
+			const res = $$.$mol_tree2_from_string( tree , $mol_span.begin( 'test' ) )
+
+			$mol_assert_like( errors, [
+				'Wrong nodes separator\ntest#1:4/2',
+				'Undexpected EOF, LF required\ntest#1:9/0',
+			] )
+
+			$mol_assert_equal( res.toString(), 'foo bar\n' )
+
+		},
+
 	} )	
 }
