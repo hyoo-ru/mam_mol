@@ -1,7 +1,5 @@
 namespace $ {
 
-	export namespace $$ { let $ }
-	
 	export function $mol_test( set : { [ name : string ] : string | ( ( context : $mol_ambient_context )=> void ) } ) {
 		
 		for( let name in set ) {
