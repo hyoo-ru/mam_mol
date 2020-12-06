@@ -2,6 +2,8 @@ name: mol_regexp
 
 on:
   push:
+    branches: 
+    - master
   pull_request:
   schedule:
   - cron: "0 7 * * *"
@@ -23,6 +25,7 @@ jobs:
         modules: regexp
     
 #    - uses: JS-DevTools/npm-publish@v1
+#      if: github.ref == 'refs/heads/master'
 #      with:
 #        token: ${{ secrets.NPM_AUTH_TOKEN }}
 #        package: ./mol/regexp/-/package.json
