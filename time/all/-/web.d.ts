@@ -1,5 +1,17 @@
-declare namespace $ { }
-export = $;
+declare let _$_: {
+    new (): {};
+} & typeof globalThis;
+declare class $ extends _$_ {
+}
+declare namespace $ {
+    export type $ = typeof $$;
+    export class $$ extends $ {
+    }
+    namespace $$ {
+        type $$ = $;
+    }
+    export {};
+}
 
 declare namespace $ {
     class $mol_time_base {

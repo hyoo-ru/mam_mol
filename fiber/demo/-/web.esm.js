@@ -19,9 +19,11 @@ var $node = $node || {}
 void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "../mol/" ) ] }; 
 ;
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 Error.stackTraceLimit = Infinity;
-module.exports;
+var $;
+(function ($) {
+})($ || ($ = {}));
+module.exports = $;
 //mol.js.map
 ;
 
@@ -30,9 +32,6 @@ $node[ "../mol/mol" ] = $node[ "../mol/mol.js" ] = module.exports }.call( {} , {
 "use strict";
 var $;
 (function ($) {
-    let $$;
-    (function ($$_1) {
-    })($$ = $.$$ || ($.$$ = {}));
     $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
     function $mol_ambient(overrides) {
         return Object.setPrototypeOf(overrides, this || $);

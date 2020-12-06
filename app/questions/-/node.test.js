@@ -17,17 +17,16 @@ $.$mol = $  // deprecated
 
 ;
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 Error.stackTraceLimit = Infinity;
-module.exports;
+var $;
+(function ($) {
+})($ || ($ = {}));
+module.exports = $;
 //mol.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    let $$;
-    (function ($$_1) {
-    })($$ = $.$$ || ($.$$ = {}));
     $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
     function $mol_ambient(overrides) {
         return Object.setPrototypeOf(overrides, this || $);
@@ -5900,7 +5899,7 @@ var $;
 (function ($) {
     function $mol_lights(next) {
         var _a;
-        return (_a = this.$.$mol_state_local.value('$mol_lights', next)) !== null && _a !== void 0 ? _a : $.$mol_dom_context.matchMedia('(prefers-color-scheme: light)').matches;
+        return (_a = this.$mol_state_local.value('$mol_lights', next)) !== null && _a !== void 0 ? _a : $.$mol_dom_context.matchMedia('(prefers-color-scheme: light)').matches;
     }
     $.$mol_lights = $mol_lights;
 })($ || ($ = {}));
@@ -7320,10 +7319,6 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
-    let $$;
-    (function ($$) {
-        let $;
-    })($$ = $_1.$$ || ($_1.$$ = {}));
     function $mol_test(set) {
         for (let name in set) {
             const code = set[name];
@@ -7337,7 +7332,7 @@ var $;
     $_1.$mol_test_all = [];
     async function $mol_test_run() {
         for (var test of $_1.$mol_test_all) {
-            let context = Object.create($$);
+            let context = Object.create($_1.$$);
             for (let mock of $_1.$mol_test_mocks)
                 await mock(context);
             await test(context);

@@ -1,12 +1,21 @@
-declare namespace $ { }
-export = $;
+declare let _$_: {
+    new (): {};
+} & typeof globalThis;
+declare class $ extends _$_ {
+}
+declare namespace $ {
+    export type $ = typeof $$;
+    export class $$ extends $ {
+    }
+    namespace $$ {
+        type $$ = $;
+    }
+    export {};
+}
 
 declare namespace $ {
-    namespace $$ {
-        let $$: typeof $;
-    }
     const $mol_ambient_ref: unique symbol;
-    type $mol_ambient_context = (typeof globalThis) & (typeof $.$$) & (typeof $);
+    type $mol_ambient_context = $;
     function $mol_ambient(this: $mol_ambient_context | void, overrides: Partial<$mol_ambient_context>): $mol_ambient_context;
 }
 
@@ -44,8 +53,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_object2 {
-        static $: $mol_ambient_context;
-        [$mol_ambient_ref]: $mol_ambient_context;
+        static $: typeof $$;
+        [$mol_ambient_ref]: typeof $$;
         get $(): $mol_ambient_context;
         set $(next: $mol_ambient_context);
         constructor(init?: (obj: any) => void);
@@ -2106,7 +2115,7 @@ declare namespace $ {
     function $mol_view_tree_prop_key(prop: $mol_tree): string;
     function $mol_view_tree_prop_next(prop: $mol_tree): string;
     function $mol_view_tree_prop_value(prop: $mol_tree): $mol_tree;
-    function $mol_view_tree_value_type(val: $mol_tree): "locale" | "number" | "string" | "object" | "null" | "bool" | "dict" | "get" | "bind" | "put" | "list";
+    function $mol_view_tree_value_type(val: $mol_tree): "locale" | "number" | "string" | "object" | "bool" | "null" | "dict" | "get" | "bind" | "put" | "list";
     function $mol_view_tree_compile(tree: $mol_tree): {
         script: string;
         locales: {

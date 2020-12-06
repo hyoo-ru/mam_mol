@@ -19,9 +19,11 @@ var $node = $node || {}
 void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "../mol/" ) ] }; 
 ;
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 Error.stackTraceLimit = Infinity;
-module.exports;
+var $;
+(function ($) {
+})($ || ($ = {}));
+module.exports = $;
 //mol.js.map
 ;
 

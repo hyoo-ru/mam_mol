@@ -17,9 +17,11 @@ $.$mol = $  // deprecated
 
 ;
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 Error.stackTraceLimit = Infinity;
-module.exports;
+var $;
+(function ($) {
+})($ || ($ = {}));
+module.exports = $;
 //mol.js.map
 ;
 "use strict";
