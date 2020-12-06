@@ -36,17 +36,25 @@ namespace $ {
 
 				const sp = span.span( row, 1, pos - line_start )
 
-				if( indent < 0 ) {
-					if( str.length > pos ) {
-						this.$mol_fail( new SyntaxError( `Too few tabs\n${sp}` ) )
-					}
-				} else {
-					this.$mol_fail( new SyntaxError( `Too many tabs\n${sp}` ) )
-				}
-
 				// skip error line
 				while( str.length > pos && str[ pos ] != '\n' ) {
 					pos++
+				}
+
+				if( indent < 0 ) {
+					if( str.length > pos ) {
+						this.$mol_fail( new this.$mol_error_syntax(
+							`Too few tabs`,
+							str.substring( line_start, pos ),
+							sp,
+						) )
+					}
+				} else {
+					this.$mol_fail( new this.$mol_error_syntax(
+						`Too many tabs`,
+						str.substring( line_start, pos ),
+						sp,
+					) )
 				}
 
 			}
@@ -64,9 +72,14 @@ namespace $ {
 				}
 
 				if( pos > error_start ) {
-					const end = str.indexOf( '\n' , pos )
+					let line_end = str.indexOf( '\n' , pos )
+					if( line_end === -1 ) line_end = str.length
 					const sp = span.span( row, error_start - line_start, pos - error_start + 1 )
-					this.$mol_fail( new SyntaxError( `Wrong nodes separator\n${sp}` ) )
+					this.$mol_fail( new this.$mol_error_syntax(
+						`Wrong nodes separator`,
+						str.substring( line_start, line_end ),
+						sp,
+					) )
 				}
 
 				// read type
@@ -117,8 +130,12 @@ namespace $ {
 
 			// now must be end of text
 			if( str.length === pos && stack.length > 0 ) {
-				const sp = span.span( row, pos - line_start + 1, 0 )
-				this.$mol_fail( new SyntaxError( `Undexpected EOF, LF required\n${sp}` ) )
+				const sp = span.span( row, pos - line_start + 1, 1 )
+				this.$mol_fail( new this.$mol_error_syntax(
+					`Undexpected EOF, LF required`,
+					str.substring( line_start, str.length ),
+					sp,
+				) )
 			}
 
 			stack.push( parent )

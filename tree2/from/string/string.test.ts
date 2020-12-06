@@ -25,7 +25,7 @@ namespace $ {
 
 			$mol_assert_fail( ()=> {
 				$.$mol_tree2_from_string( tree , $mol_span.begin( 'test' ) )
-			}, 'Too many tabs\ntest#3:1/6' )
+			}, 'Too many tabs\ntest#3:1/6\n!!!!!!\n\t\t\t\t\t\tbar' )
 
 		},
 
@@ -38,7 +38,7 @@ namespace $ {
 
 			$mol_assert_fail( ()=> {
 				$.$mol_tree2_from_string( tree , $mol_span.begin( 'test' ) )
-			}, 'Too few tabs\ntest#3:1/4' )
+			}, 'Too few tabs\ntest#3:1/4\n!!!!\n\t\t\t\tbar' )
 
 		},
 
@@ -48,7 +48,7 @@ namespace $ {
 
 			$mol_assert_fail( ()=> {
 				$.$mol_tree2_from_string( tree , $mol_span.begin( 'test' ) )
-			}, 'Wrong nodes separator\ntest#1:4/2' )
+			}, 'Wrong nodes separator\ntest#1:4/2\n   !!\nfoo  bar' )
 
 		},
 
@@ -58,7 +58,7 @@ namespace $ {
 
 			$mol_assert_fail( ()=> {
 				$.$mol_tree2_from_string( tree , $mol_span.begin( 'test' ) )
-			}, 'Undexpected EOF, LF required\ntest#1:5/0' )
+			}, 'Undexpected EOF, LF required\ntest#1:5/1\n	   !\n	foo' )
 
 		},
 
@@ -77,8 +77,8 @@ namespace $ {
 			const res = $$.$mol_tree2_from_string( tree , $mol_span.begin( 'test' ) )
 
 			$mol_assert_like( errors, [
-				'Wrong nodes separator\ntest#1:4/2',
-				'Undexpected EOF, LF required\ntest#1:9/0',
+				'Wrong nodes separator\ntest#1:4/2\n   !!\nfoo  bar',
+				'Undexpected EOF, LF required\ntest#1:9/1\n        !\nfoo  bar',
 			] )
 
 			$mol_assert_equal( res.toString(), 'foo bar\n' )
