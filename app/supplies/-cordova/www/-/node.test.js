@@ -10664,13 +10664,12 @@ var $;
         catch (error) {
             if (!ErrorRight)
                 return error;
+            $.$mol_fail = fail;
             if (typeof ErrorRight === 'string') {
-                if (error.message !== ErrorRight)
-                    throw error;
+                $mol_assert_equal(error.message, ErrorRight);
             }
             else {
-                if (!(error instanceof ErrorRight))
-                    throw error;
+                $mol_assert_ok(error instanceof ErrorRight);
             }
             return error;
         }
