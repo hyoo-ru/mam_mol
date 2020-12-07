@@ -4,7 +4,7 @@ namespace $ {
 	/*
 	 * Extract property parts: page!index?next
 	 */
-	export function $mol_view_tree2_prop_split(this: $mol_ambient_context, src: $mol_tree2) {
+	export function $mol_view_tree2_prop_split(this: $, src: $mol_tree2) {
 		const prop_name = src.type
 
 		let key_pos = prop_name.indexOf('!')

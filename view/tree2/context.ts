@@ -3,7 +3,7 @@ namespace $ {
 
 	export class $mol_view_tree2_context extends $mol_object2 {
 		constructor(
-			$: $mol_ambient_context,
+			$: $,
 			protected parents: readonly $mol_view_tree2_prop[],
 			protected locales: $mol_view_tree2_locales,
 			protected methods: $mol_tree2[],

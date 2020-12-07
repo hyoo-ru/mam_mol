@@ -16,7 +16,7 @@ declare namespace $ {
 declare namespace $ {
     const $mol_ambient_ref: unique symbol;
     type $mol_ambient_context = $;
-    function $mol_ambient(this: $mol_ambient_context | void, overrides: Partial<$mol_ambient_context>): $mol_ambient_context;
+    function $mol_ambient(this: $ | void, overrides: Partial<$>): $;
 }
 
 declare namespace $ {
@@ -27,7 +27,7 @@ declare namespace $ {
         place: unknown;
         message: string;
     } & Fields;
-    type $mol_log3_logger<Fields, Res = void> = (this: $mol_ambient_context, event: $mol_log3_event<Fields>) => Res;
+    type $mol_log3_logger<Fields, Res = void> = (this: $, event: $mol_log3_event<Fields>) => Res;
     let $mol_log3_come: $mol_log3_logger<{}>;
     let $mol_log3_done: $mol_log3_logger<{}>;
     let $mol_log3_fail: $mol_log3_logger<{}>;
@@ -36,12 +36,12 @@ declare namespace $ {
     }>;
     let $mol_log3_rise: $mol_log3_logger<{}>;
     let $mol_log3_area: $mol_log3_logger<{}, () => void>;
-    function $mol_log3_area_lazy(this: $mol_ambient_context, event: $mol_log3_event<{}>): () => void;
+    function $mol_log3_area_lazy(this: $, event: $mol_log3_event<{}>): () => void;
     let $mol_log3_stack: (() => void)[];
 }
 
 declare namespace $ {
-    function $mol_log3_web_make<Close>(level: keyof Console, color: string): (this: $mol_ambient_context, event: $mol_log3_event<{}>) => () => void;
+    function $mol_log3_web_make<Close>(level: keyof Console, color: string): (this: $, event: $mol_log3_event<{}>) => () => void;
 }
 
 declare namespace $ {
@@ -80,8 +80,8 @@ declare namespace $ {
     class $mol_object2 {
         static $: typeof $$;
         [$mol_ambient_ref]: typeof $$;
-        get $(): $mol_ambient_context;
-        set $(next: $mol_ambient_context);
+        get $(): $;
+        set $(next: $);
         constructor(init?: (obj: any) => void);
         static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
         static toString(): any;

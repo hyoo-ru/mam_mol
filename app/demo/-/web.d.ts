@@ -31,7 +31,7 @@ declare namespace $ {
 declare namespace $ {
     const $mol_ambient_ref: unique symbol;
     type $mol_ambient_context = $;
-    function $mol_ambient(this: $mol_ambient_context | void, overrides: Partial<$mol_ambient_context>): $mol_ambient_context;
+    function $mol_ambient(this: $ | void, overrides: Partial<$>): $;
 }
 
 declare namespace $ {
@@ -62,8 +62,8 @@ declare namespace $ {
     class $mol_object2 {
         static $: typeof $$;
         [$mol_ambient_ref]: typeof $$;
-        get $(): $mol_ambient_context;
-        set $(next: $mol_ambient_context);
+        get $(): $;
+        set $(next: $);
         constructor(init?: (obj: any) => void);
         static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
         static toString(): any;
@@ -199,7 +199,7 @@ declare namespace $ {
         place: unknown;
         message: string;
     } & Fields;
-    type $mol_log3_logger<Fields, Res = void> = (this: $mol_ambient_context, event: $mol_log3_event<Fields>) => Res;
+    type $mol_log3_logger<Fields, Res = void> = (this: $, event: $mol_log3_event<Fields>) => Res;
     let $mol_log3_come: $mol_log3_logger<{}>;
     let $mol_log3_done: $mol_log3_logger<{}>;
     let $mol_log3_fail: $mol_log3_logger<{}>;
@@ -208,12 +208,12 @@ declare namespace $ {
     }>;
     let $mol_log3_rise: $mol_log3_logger<{}>;
     let $mol_log3_area: $mol_log3_logger<{}, () => void>;
-    function $mol_log3_area_lazy(this: $mol_ambient_context, event: $mol_log3_event<{}>): () => void;
+    function $mol_log3_area_lazy(this: $, event: $mol_log3_event<{}>): () => void;
     let $mol_log3_stack: (() => void)[];
 }
 
 declare namespace $ {
-    function $mol_log3_web_make<Close>(level: keyof Console, color: string): (this: $mol_ambient_context, event: $mol_log3_event<{}>) => () => void;
+    function $mol_log3_web_make<Close>(level: keyof Console, color: string): (this: $, event: $mol_log3_event<{}>) => () => void;
 }
 
 declare namespace $ {
@@ -542,13 +542,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_func_name(this: $mol_ambient_context, func: Function): string;
+    function $mol_func_name(this: $, func: Function): string;
     function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
 }
 
 declare namespace $ {
     function $mol_deprecated(message: string): <Method extends (this: Host, ...args: readonly any[]) => any, Host extends { [key in Field]: Method; } & {
-        $: $mol_ambient_context;
+        $: $;
     }, Field extends keyof Host>(host: Host, field: Field, descr: TypedPropertyDescriptor<Method>) => void;
 }
 
@@ -616,7 +616,7 @@ declare namespace $ {
         force_render(path: Set<$mol_view>): void;
         ensure_visible(view: $mol_view): Promise<void>;
     }
-    type $mol_view_all = $mol_type_pick<$mol_ambient_context, typeof $mol_view>;
+    type $mol_view_all = $mol_type_pick<$, typeof $mol_view>;
 }
 
 declare namespace $ {
@@ -644,7 +644,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_support_css_overflow_anchor(this: $mol_ambient_context): boolean;
+    function $mol_support_css_overflow_anchor(this: $): boolean;
 }
 
 declare namespace $ {
@@ -5961,7 +5961,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    function $mol_lights(this: $mol_ambient_context, next?: boolean): boolean;
+    function $mol_lights(this: $, next?: boolean): boolean;
 }
 
 declare namespace $ {
@@ -6471,7 +6471,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_child(this: $mol_ambient_context, tree: $mol_tree2): $mol_tree2;
+    function $mol_view_tree2_child(this: $, tree: $mol_tree2): $mol_tree2;
 }
 
 declare namespace $ {
@@ -6492,7 +6492,7 @@ declare namespace $ {
             next: $mol_tree2 | undefined;
         }>;
         protected array?: $mol_tree2 | undefined;
-        constructor($: $mol_ambient_context, parents: readonly $mol_view_tree2_prop[], locales: $mol_view_tree2_locales, methods: $mol_tree2[], types?: boolean, added_nodes?: Map<string, {
+        constructor($: $, parents: readonly $mol_view_tree2_prop[], locales: $mol_view_tree2_locales, methods: $mol_tree2[], types?: boolean, added_nodes?: Map<string, {
             src: $mol_tree2;
             name: $mol_tree2;
             key: $mol_tree2 | undefined;
@@ -6517,7 +6517,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_serialize(this: $mol_ambient_context, node: $mol_tree2, prefix?: string, parent_is_inline?: boolean): string;
+    function $mol_view_tree2_serialize(this: $, node: $mol_tree2, prefix?: string, parent_is_inline?: boolean): string;
 }
 
 declare namespace $ {
@@ -6534,15 +6534,15 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_class_super(this: $mol_ambient_context, klass: $mol_tree2): $mol_tree2;
+    function $mol_view_tree2_class_super(this: $, klass: $mol_tree2): $mol_tree2;
 }
 
 declare namespace $ {
-    function $mol_view_tree2_class_props(this: $mol_ambient_context, klass: $mol_tree2): $mol_tree2;
+    function $mol_view_tree2_class_props(this: $, klass: $mol_tree2): $mol_tree2;
 }
 
 declare namespace $ {
-    function $mol_view_tree2_prop_split(this: $mol_ambient_context, src: $mol_tree2): {
+    function $mol_view_tree2_prop_split(this: $, src: $mol_tree2): {
         src: $mol_tree2;
         name: $mol_tree2;
         key: $mol_tree2 | undefined;
@@ -6552,9 +6552,9 @@ declare namespace $ {
 
 declare namespace $ {
     type $mol_view_tree2_prop = ReturnType<typeof $mol_view_tree2_prop_split>;
-    function $mol_view_tree2_prop_name(this: $mol_ambient_context, prop: $mol_tree2): string;
-    function $mol_view_tree2_prop_key(this: $mol_ambient_context, prop: $mol_tree2): string | undefined;
-    function $mol_view_tree2_prop_next(this: $mol_ambient_context, prop: $mol_tree2): string | undefined;
+    function $mol_view_tree2_prop_name(this: $, prop: $mol_tree2): string;
+    function $mol_view_tree2_prop_key(this: $, prop: $mol_tree2): string | undefined;
+    function $mol_view_tree2_prop_next(this: $, prop: $mol_tree2): string | undefined;
 }
 
 declare namespace $ {
@@ -6562,11 +6562,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_value_type(this: $mol_ambient_context, val: $mol_tree2): "locale" | "bool" | "null" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | "number";
+    function $mol_view_tree2_value_type(this: $, val: $mol_tree2): "locale" | "bool" | "null" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | "number";
 }
 
 declare namespace $ {
-    function $mol_view_tree2_value(this: $mol_ambient_context, value: $mol_tree2): $mol_tree2;
+    function $mol_view_tree2_value(this: $, value: $mol_tree2): $mol_tree2;
 }
 
 declare namespace $ {

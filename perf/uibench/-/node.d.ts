@@ -67,7 +67,7 @@ declare namespace $ {
 declare namespace $ {
     const $mol_ambient_ref: unique symbol;
     type $mol_ambient_context = $;
-    function $mol_ambient(this: $mol_ambient_context | void, overrides: Partial<$mol_ambient_context>): $mol_ambient_context;
+    function $mol_ambient(this: $ | void, overrides: Partial<$>): $;
 }
 
 declare namespace $ {
@@ -106,8 +106,8 @@ declare namespace $ {
     class $mol_object2 {
         static $: typeof $$;
         [$mol_ambient_ref]: typeof $$;
-        get $(): $mol_ambient_context;
-        set $(next: $mol_ambient_context);
+        get $(): $;
+        set $(next: $);
         constructor(init?: (obj: any) => void);
         static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
         static toString(): any;
@@ -211,7 +211,7 @@ declare namespace $ {
         place: unknown;
         message: string;
     } & Fields;
-    type $mol_log3_logger<Fields, Res = void> = (this: $mol_ambient_context, event: $mol_log3_event<Fields>) => Res;
+    type $mol_log3_logger<Fields, Res = void> = (this: $, event: $mol_log3_event<Fields>) => Res;
     let $mol_log3_come: $mol_log3_logger<{}>;
     let $mol_log3_done: $mol_log3_logger<{}>;
     let $mol_log3_fail: $mol_log3_logger<{}>;
@@ -220,13 +220,13 @@ declare namespace $ {
     }>;
     let $mol_log3_rise: $mol_log3_logger<{}>;
     let $mol_log3_area: $mol_log3_logger<{}, () => void>;
-    function $mol_log3_area_lazy(this: $mol_ambient_context, event: $mol_log3_event<{}>): () => void;
+    function $mol_log3_area_lazy(this: $, event: $mol_log3_event<{}>): () => void;
     let $mol_log3_stack: (() => void)[];
 }
 
 declare namespace $ {
     function $mol_deprecated(message: string): <Method extends (this: Host, ...args: readonly any[]) => any, Host extends { [key in Field]: Method; } & {
-        $: $mol_ambient_context;
+        $: $;
     }, Field extends keyof Host>(host: Host, field: Field, descr: TypedPropertyDescriptor<Method>) => void;
 }
 
@@ -266,7 +266,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_log3_node_make(level: keyof Console, output: 'stdout' | 'stderr', type: string, color: keyof typeof $node.colorette): (this: $mol_ambient_context, event: $mol_log3_event<{}>) => () => void;
+    function $mol_log3_node_make(level: keyof Console, output: 'stdout' | 'stderr', type: string, color: keyof typeof $node.colorette): (this: $, event: $mol_log3_event<{}>) => () => void;
 }
 
 declare namespace $ {
@@ -575,7 +575,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_func_name(this: $mol_ambient_context, func: Function): string;
+    function $mol_func_name(this: $, func: Function): string;
     function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
 }
 
@@ -646,7 +646,7 @@ declare namespace $ {
         force_render(path: Set<$mol_view>): void;
         ensure_visible(view: $mol_view): Promise<void>;
     }
-    type $mol_view_all = $mol_type_pick<$mol_ambient_context, typeof $mol_view>;
+    type $mol_view_all = $mol_type_pick<$, typeof $mol_view>;
 }
 
 declare namespace $ {
@@ -997,7 +997,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_support_css_overflow_anchor(this: $mol_ambient_context): boolean;
+    function $mol_support_css_overflow_anchor(this: $): boolean;
 }
 
 declare namespace $ {

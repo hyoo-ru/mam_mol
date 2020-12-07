@@ -2,7 +2,7 @@ namespace $ {
 	const err = $mol_view_tree2_error_str
 
 	export function $mol_view_tree2_bind_left_parts(
-		this: $mol_ambient_context,
+		this: $,
 		operator: $mol_tree2,
 		having_parts?: $mol_view_tree2_prop
 	) {

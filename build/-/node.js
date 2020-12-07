@@ -34,17 +34,6 @@ $node[ "../mol/mol" ] = $node[ "../mol/mol.js" ] = module.exports }.call( {} , {
 "use strict";
 var $;
 (function ($) {
-    $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
-    function $mol_ambient(overrides) {
-        return Object.setPrototypeOf(overrides, this || $);
-    }
-    $.$mol_ambient = $mol_ambient;
-})($ || ($ = {}));
-//ambient.js.map
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_log3_area_lazy(event) {
         const self = this;
         const stack = self.$mol_log3_stack;
@@ -105,6 +94,17 @@ require = (req => Object.assign(function require(name) {
     return $node[name];
 }, $node_require))(require);
 //node.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
+    function $mol_ambient(overrides) {
+        return Object.setPrototypeOf(overrides, this || $);
+    }
+    $.$mol_ambient = $mol_ambient;
+})($ || ($ = {}));
+//ambient.js.map
 ;
 "use strict";
 var $;

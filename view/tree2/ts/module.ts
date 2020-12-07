@@ -1,6 +1,6 @@
 namespace $ {
 	export function $mol_view_tree2_ts_module(
-		this: $mol_ambient_context,
+		this: $,
 		tree2_module: $mol_tree2,
 		locales: $mol_view_tree2_locales
 	) {

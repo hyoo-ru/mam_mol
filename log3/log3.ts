@@ -18,7 +18,7 @@ namespace $ {
 
 	/** Logger function */
 	export type $mol_log3_logger< Fields , Res = void > = (
-		this : $mol_ambient_context ,
+		this : $ ,
 		event : $mol_log3_event< Fields > ,
 	)=> Res
 
@@ -42,7 +42,7 @@ namespace $ {
 
 	/** Log begin of collapsed group only when some logged inside, returns func to close group */
 	export function $mol_log3_area_lazy(
-		this : $mol_ambient_context ,
+		this : $ ,
 		event : $mol_log3_event<{}> ,
 	) {
 
