@@ -1,7 +1,7 @@
 namespace $ {
 
 	export function $mol_view_tree2_child(
-		this: $mol_ambient_context,
+		this: $,
 		tree: $mol_tree2,
 	) {
 

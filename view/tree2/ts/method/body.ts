@@ -3,7 +3,7 @@ namespace $ {
 	const err = $mol_view_tree2_error_str
 
 	export function $mol_view_tree2_ts_method_body(
-		this: $mol_ambient_context,
+		this: $,
 		having_parts: $mol_view_tree2_prop,
 		parent_context: $mol_view_tree2_context
 	) {

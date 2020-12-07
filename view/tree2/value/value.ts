@@ -3,7 +3,7 @@ namespace $ {
 	const err = $mol_view_tree2_error_str
 
 	export function $mol_view_tree2_value(
-		this: $mol_ambient_context,
+		this: $,
 		value: $mol_tree2,
 	) {
 		const type = value.type

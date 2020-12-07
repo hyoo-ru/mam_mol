@@ -4,7 +4,7 @@ namespace $ {
 
 		static current = null as null | $mol_log2
 
-		static wrap< This extends { $ : $mol_ambient_context } , Args extends any[] , Result >( task : ( this : This , ... args : Args )=> Result ) {
+		static wrap< This extends { $ : $ } , Args extends any[] , Result >( task : ( this : This , ... args : Args )=> Result ) {
 
 			const Inner = this
 
@@ -99,7 +99,7 @@ namespace $ {
 
 	export class $mol_log2_indent extends $mol_wrapper {
 
-		static wrap< This extends { $ : $mol_ambient_context } , Args extends any[] , Result >( task : ( this : This , ... args : Args )=> Result ) {
+		static wrap< This extends { $ : $ } , Args extends any[] , Result >( task : ( this : This , ... args : Args )=> Result ) {
 
 			const Inner = this
 

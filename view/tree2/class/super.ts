@@ -2,7 +2,7 @@ namespace $ {
 	const err = $mol_view_tree2_error_str
 
 	export function $mol_view_tree2_class_super(
-		this: $mol_ambient_context,
+		this: $,
 		klass: $mol_tree2
 	) {
 		if( !class_regex.test( klass.type ) ) return this.$mol_fail(

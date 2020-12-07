@@ -8,7 +8,7 @@ namespace $ {
 	 * ```
 	 */
 	export function $mol_view_tree2_bind_both_parts(
-		this: $mol_ambient_context,
+		this: $,
 		operator: $mol_tree2
 	) {
 		if (operator.type !== '<=>') return this.$mol_fail(

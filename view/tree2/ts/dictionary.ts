@@ -15,7 +15,7 @@ namespace $ {
 	 * ```
 	 */
 	export function $mol_view_tree2_ts_dictionary(
-		this: $mol_ambient_context,
+		this: $,
 		dictionary: $mol_tree2,
 		dictionary_context: $mol_view_tree2_context,
 		super_method?: $mol_view_tree2_prop

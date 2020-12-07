@@ -6,7 +6,7 @@ namespace $ {
 			Host extends {
 				[key in Field] : Method
 			} & {
-				$ : $mol_ambient_context
+				$ : $
 			},
 			Field extends keyof Host ,
 		>(

@@ -9,7 +9,7 @@ namespace $ {
 	 * ```
 	 */
 	export function $mol_view_tree2_ts_array_body(
-		this: $mol_ambient_context,
+		this: $,
 		operator: $mol_tree2,
 		parent_context: $mol_view_tree2_context,
 		super_method?: $mol_view_tree2_prop

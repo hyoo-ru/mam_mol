@@ -1,6 +1,6 @@
 namespace $ {
 	export function $mol_view_tree2_serialize(
-		this: $mol_ambient_context,
+		this: $,
 		node: $mol_tree2,
 		prefix = '',
 		parent_is_inline = false
