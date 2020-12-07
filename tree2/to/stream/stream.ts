@@ -15,27 +15,31 @@ namespace $ {
 			} )
 		}
 
+		let out = ''
+
 		if( tree.type.length ) {
 			
 			if( !prefix.length ) {
 				prefix = "\t";
 			}
 
-			output.write( tree.type )
+			out += tree.type
 
 			if( tree.kids.length == 1 ) {
-				output.write( ' ' )
+				output.write( out + ' ' )
 				await $mol_tree2_to_stream( tree.kids[ 0 ], output, prefix )
 				return
 			}
 
-			output.write( "\n" )
+			out += "\n"
 
 		} else if( tree.value.length || prefix.length ) {
 
-			output.write( "\\" + tree.value + "\n" )
+			out += "\\" + tree.value + "\n"
 
 		}
+
+		output.write( out )
 
 		for( const kid of tree.kids ) {
 			if( !output.write( prefix ) ) await pause()
