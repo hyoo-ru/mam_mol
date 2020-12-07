@@ -2190,6 +2190,25 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_env() {
+        return {};
+    }
+    $.$mol_env = $mol_env;
+})($ || ($ = {}));
+//env.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_env = function $mol_env() {
+        return this.process.env;
+    };
+})($ || ($ = {}));
+//env.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_exec(dir, command, ...args) {
         let [app, ...args0] = command.split(' ');
         args = [...args0, ...args];
@@ -2202,11 +2221,12 @@ var $;
         var res = $node['child_process'].spawnSync(app, args, {
             cwd: $node.path.resolve(dir),
             shell: true,
+            env: this.$mol_env(),
         });
         if (res.status || res.error)
             return $.$mol_fail(res.error || new Error(res.stderr.toString()));
         if (!res.stdout)
-            res.stdout = new Buffer('');
+            res.stdout = Buffer.from([]);
         return res;
     }
     $.$mol_exec = $mol_exec;
@@ -2253,10 +2273,10 @@ var $;
         slice(begin, end) {
             let len = this.length;
             if (begin < 0 || begin > len)
-                return this.$.$mol_fail(`Begin value '${begin}' out of range ${this}`);
+                this.$.$mol_fail(`Begin value '${begin}' out of range ${this}`);
             len = len - begin;
             if (end < 0 || end > len)
-                return this.$.$mol_fail(`End value '${end}' out of range ${this}`);
+                this.$.$mol_fail(`End value '${end}' out of range ${this}`);
             return this.span(this.row, this.col + begin, end);
         }
     }
@@ -2288,7 +2308,7 @@ var $;
                 let kid_span = span.span(span.row, span.col, 0);
                 const data = chunks.map(chunk => {
                     kid_span = kid_span.after(chunk.length);
-                    return new $mol_tree2('', value, [], kid_span);
+                    return new $mol_tree2('', chunk, [], kid_span);
                 });
                 kids = [...data, ...kids];
                 value = '';
@@ -2320,73 +2340,10 @@ var $;
             return this.value + values.join('\n');
         }
         static fromString(str, span = $.$mol_span.unknown) {
-            const root = $mol_tree2.data('', [], span);
-            const stack = [root];
-            let row = 0;
-            const prefix = str.replace(/^\n?(\t*)[\s\S]*/, '$1');
-            const lines = str.replace(new RegExp('^\\t{0,' + prefix.length + '}', 'mg'), '').split('\n');
-            for (const line of lines) {
-                ++row;
-                const line_span = span.span(row, 0, line.length);
-                const chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?(.*?)(?:$|\n)/m.exec(line);
-                if (!chunks || chunks[4]) {
-                    this.$.$mol_fail(line_span.error(`Syntax error\n${line}`, SyntaxError));
-                    continue;
-                }
-                const indent = chunks[1];
-                const path = chunks[2];
-                const value = chunks[3];
-                const deep = indent.length;
-                const types = path ? path.replace(/ $/, '').split(/ +/) : [];
-                if (stack.length <= deep) {
-                    this.$.$mol_fail(line_span.error(`Too many tabs\n${line}`, SyntaxError));
-                    continue;
-                }
-                stack.length = deep + 1;
-                let parent = stack[deep];
-                let col = deep;
-                for (const type of types) {
-                    const type_span = span.span(row, col, type.length);
-                    if (!type) {
-                        this.$.$mol_fail(type_span.error(`Unexpected space symbol\n${line}`, SyntaxError));
-                    }
-                    const next = $mol_tree2.struct(type, [], type_span);
-                    const parent_sub = parent.kids;
-                    parent_sub.push(next);
-                    parent = next;
-                    col += type.length + 1;
-                }
-                if (value) {
-                    const value_span = span.span(row, col, value.length);
-                    const next = new $mol_tree2('', value.substring(1), [], value_span);
-                    const parent_sub = parent.kids;
-                    parent_sub.push(next);
-                    parent = next;
-                }
-                stack.push(parent);
-            }
-            return root;
+            return this.$.$mol_tree2_from_string(str, span);
         }
-        toString(prefix = '') {
-            let output = '';
-            if (this.type.length) {
-                if (!prefix.length) {
-                    prefix = "\t";
-                }
-                output += this.type;
-                if (this.kids.length == 1) {
-                    return output + ' ' + this.kids[0].toString(prefix);
-                }
-                output += "\n";
-            }
-            else if (this.value.length || prefix.length) {
-                output += "\\" + this.value + "\n";
-            }
-            for (var child of this.kids) {
-                output += prefix;
-                output += child.toString(prefix + "\t");
-            }
-            return output;
+        toString() {
+            return this.$.$mol_tree2_to_string(this);
         }
         insert(value, ...path) {
             if (path.length === 0)
@@ -2476,6 +2433,109 @@ var $;
     $.$mol_tree2_empty = $mol_tree2_empty;
 })($ || ($ = {}));
 //tree2.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_error_syntax extends SyntaxError {
+        constructor(reason, line, span) {
+            super(`${reason}\n${span}\n${line.substring(0, span.col - 1).replace(/\S/g, ' ')}${''.padEnd(span.length, '!')}\n${line}`);
+            this.reason = reason;
+            this.line = line;
+            this.span = span;
+        }
+    }
+    $.$mol_error_syntax = $mol_error_syntax;
+})($ || ($ = {}));
+//syntax.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_tree2_from_string(str, span = $.$mol_span.unknown) {
+        var root = $.$mol_tree2.list([], span);
+        var stack = [root];
+        var pos = 0, row = 0, min_indent = 0;
+        while (str.length > pos) {
+            var indent = 0;
+            var line_start = pos;
+            row++;
+            while (str.length > pos && str[pos] == '\t') {
+                indent++;
+                pos++;
+            }
+            if (!root.kids.length) {
+                min_indent = indent;
+            }
+            indent -= min_indent;
+            if (indent < 0 || indent >= stack.length) {
+                const sp = span.span(row, 1, pos - line_start);
+                while (str.length > pos && str[pos] != '\n') {
+                    pos++;
+                }
+                if (indent < 0) {
+                    if (str.length > pos) {
+                        this.$mol_fail(new this.$mol_error_syntax(`Too few tabs`, str.substring(line_start, pos), sp));
+                    }
+                }
+                else {
+                    this.$mol_fail(new this.$mol_error_syntax(`Too many tabs`, str.substring(line_start, pos), sp));
+                }
+            }
+            stack.length = indent + 1;
+            var parent = stack[indent];
+            while (str.length > pos && str[pos] != '\\' && str[pos] != '\n') {
+                var error_start = pos;
+                while (str.length > pos && (str[pos] == ' ' || str[pos] == '\t')) {
+                    pos++;
+                }
+                if (pos > error_start) {
+                    let line_end = str.indexOf('\n', pos);
+                    if (line_end === -1)
+                        line_end = str.length;
+                    const sp = span.span(row, error_start - line_start, pos - error_start + 1);
+                    this.$mol_fail(new this.$mol_error_syntax(`Wrong nodes separator`, str.substring(line_start, line_end), sp));
+                }
+                var type_start = pos;
+                while (str.length > pos &&
+                    str[pos] != '\\' &&
+                    str[pos] != ' ' &&
+                    str[pos] != '\t' &&
+                    str[pos] != '\n') {
+                    pos++;
+                }
+                if (pos > type_start) {
+                    let next = new $.$mol_tree2(str.slice(type_start, pos), '', [], span.span(row, type_start - line_start, pos - type_start));
+                    const parent_kids = parent.kids;
+                    parent_kids.push(next);
+                    parent = next;
+                }
+                if (str.length > pos && str[pos] == ' ') {
+                    pos++;
+                }
+            }
+            if (str.length > pos && str[pos] == '\\') {
+                var data_start = pos;
+                while (str.length > pos && str[pos] != '\n') {
+                    pos++;
+                }
+                let next = new $.$mol_tree2('', str.slice(data_start + 1, pos), [], span.span(row, data_start - line_start, pos - data_start - 1));
+                const parent_kids = parent.kids;
+                parent_kids.push(next);
+                parent = next;
+            }
+            if (str.length === pos && stack.length > 0) {
+                const sp = span.span(row, pos - line_start + 1, 1);
+                this.$mol_fail(new this.$mol_error_syntax(`Undexpected EOF, LF required`, str.substring(line_start, str.length), sp));
+            }
+            stack.push(parent);
+            pos++;
+        }
+        return root;
+    }
+    $.$mol_tree2_from_string = $mol_tree2_from_string;
+})($ || ($ = {}));
+//string.js.map
 ;
 "use strict";
 var $;
@@ -4564,7 +4624,7 @@ var $;
             if (errors.length)
                 $.$mol_fail_hidden(new $.$mol_error_mix(`Build fail ${path}`, ...errors));
             if (bundle === 'node') {
-                this.$.$mol_exec(this.root().path(), 'node', target.path()).stdout.toString();
+                this.$.$mol_exec(this.root().path(), 'node', target.path());
             }
             return [target, targetMap];
         }
@@ -5416,6 +5476,39 @@ var $;
     $.$mol_build_server = $mol_build_server;
 })($ || ($ = {}));
 //server.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_tree2_to_string(tree) {
+        let output = [];
+        function dump(tree, prefix = '') {
+            if (tree.type.length) {
+                if (!prefix.length) {
+                    prefix = "\t";
+                }
+                output.push(tree.type);
+                if (tree.kids.length == 1) {
+                    output.push(' ');
+                    dump(tree.kids[0], prefix);
+                    return;
+                }
+                output.push("\n");
+            }
+            else if (tree.value.length || prefix.length) {
+                output.push("\\" + tree.value + "\n");
+            }
+            for (const kid of tree.kids) {
+                output.push(prefix);
+                dump(kid, prefix + "\t");
+            }
+        }
+        dump(tree);
+        return output.join('');
+    }
+    $.$mol_tree2_to_string = $mol_tree2_to_string;
+})($ || ($ = {}));
+//string.js.map
 ;
 "use strict";
 var $;

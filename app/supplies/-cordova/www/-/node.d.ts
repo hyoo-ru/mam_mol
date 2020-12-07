@@ -2890,7 +2890,14 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    function $mol_exec(this: $mol_ambient_context, dir: string, command: string, ...args: string[]): any;
+    function $mol_env(): Record<string, string | undefined>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    function $mol_exec(this: $, dir: string, command: string, ...args: string[]): any;
 }
 
 declare namespace $ {

@@ -14,7 +14,7 @@ namespace $.$$ {
 					text => speech
 	`
 	
-	const dest = `
+	const dest = $$.$mol_tree2_from_string(`
 		title @ \\title
 		sub /
 			<= Title
@@ -26,7 +26,7 @@ namespace $.$$ {
 			title \close
 			click?event <=> close?event
 		Speech $${''}mol_speech text => speech
-	`.replace(/^\t\t/mg,'').trim() + '\n'
+	`)
 
 	$mol_test({
 		'props'($) {
@@ -34,7 +34,7 @@ namespace $.$$ {
 			const mod = $mol_tree2.fromString( src, span )
 			const result = $.$mol_view_tree2_class_props(mod.kids[0]).toString()
 
-			$mol_assert_equal(result, dest)
+			$mol_assert_equal(result, dest.toString())
 		} 
 	})
 }

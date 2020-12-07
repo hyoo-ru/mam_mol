@@ -772,6 +772,25 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_env() {
+        return {};
+    }
+    $.$mol_env = $mol_env;
+})($ || ($ = {}));
+//env.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_env = function $mol_env() {
+        return this.process.env;
+    };
+})($ || ($ = {}));
+//env.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_exec(dir, command, ...args) {
         let [app, ...args0] = command.split(' ');
         args = [...args0, ...args];
@@ -784,11 +803,12 @@ var $;
         var res = $node['child_process'].spawnSync(app, args, {
             cwd: $node.path.resolve(dir),
             shell: true,
+            env: this.$mol_env(),
         });
         if (res.status || res.error)
             return $.$mol_fail(res.error || new Error(res.stderr.toString()));
         if (!res.stdout)
-            res.stdout = new Buffer('');
+            res.stdout = Buffer.from([]);
         return res;
     }
     $.$mol_exec = $mol_exec;

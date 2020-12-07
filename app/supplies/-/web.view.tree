@@ -577,7 +577,7 @@ $mol_app_supplies_detail $mol_page
 											content / <= supply_group_name \
 										<= Ballance_unit_item $mol_labeler
 											title <= ballance_unit_title @ \Ballance Unit
-											content /  <= ballance_unit_name \
+											content / <= ballance_unit_name \
 							<= Cons *
 								title <= cons_title @ \Consumer
 								Content <= Cons_content $mol_row

@@ -1,6 +1,6 @@
 namespace $ {
 	export function $mol_exec(
-		this : $mol_ambient_context ,
+		this : $ ,
 		dir : string ,
 		command : string ,
 		...args : string[]
@@ -22,11 +22,12 @@ namespace $ {
 			{
 				cwd : $node.path.resolve( dir ) ,
 				shell : true ,
+				env: this.$mol_env(),
 			}
 		)
 		
 		if( res.status || res.error ) return $mol_fail( res.error || new Error( res.stderr.toString() ) )
-		if( !res.stdout ) res.stdout = new Buffer('')
+		if( !res.stdout ) res.stdout = Buffer.from([])
 
 		return res
 	}

@@ -55,11 +55,11 @@ namespace $ {
 		slice(begin: number, end: number) {
 			let len = this.length
 
-			if (begin < 0 || begin > len) return this.$.$mol_fail(`Begin value '${begin}' out of range ${this}`)
+			if (begin < 0 || begin > len) this.$.$mol_fail(`Begin value '${begin}' out of range ${this}`)
 
 			len = len - begin
 
-			if (end < 0 || end > len) return this.$.$mol_fail(`End value '${end}' out of range ${this}`)
+			if (end < 0 || end > len) this.$.$mol_fail(`End value '${end}' out of range ${this}`)
 
 			return this.span( this.row , this.col + begin , end )
 		}

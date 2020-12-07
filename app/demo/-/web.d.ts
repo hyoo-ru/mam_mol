@@ -6356,7 +6356,7 @@ declare namespace $ {
         clone(kids: readonly $mol_tree2[]): $mol_tree2;
         text(): string;
         static fromString(str: string, span?: $mol_span): $mol_tree2;
-        toString(prefix?: string): string;
+        toString(): string;
         insert(value: $mol_tree2, ...path: $mol_tree2_path): $mol_tree2;
         select(...path: $mol_tree2_path): $mol_tree2;
         filter(path: string[], value?: string): $mol_tree2;
@@ -6518,6 +6518,19 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_view_tree2_serialize(this: $mol_ambient_context, node: $mol_tree2, prefix?: string, parent_is_inline?: boolean): string;
+}
+
+declare namespace $ {
+    class $mol_error_syntax extends SyntaxError {
+        reason: string;
+        line: string;
+        span: $mol_span;
+        constructor(reason: string, line: string, span: $mol_span);
+    }
+}
+
+declare namespace $ {
+    function $mol_tree2_from_string(this: $, str: string, span?: $mol_span): $mol_tree2;
 }
 
 declare namespace $ {
@@ -7093,4 +7106,8 @@ declare namespace $.$$ {
             demo: string;
         };
     }
+}
+
+declare namespace $ {
+    function $mol_tree2_to_string(this: $, tree: $mol_tree2): string;
 }
