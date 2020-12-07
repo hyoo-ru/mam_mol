@@ -11,29 +11,38 @@ namespace $ {
 		const buf = await res.arrayBuffer()
 		$node.fs.writeFileSync( 'mol/tree2/bench/-big.json', Buffer.from( buf ) )
 
-		console.time('JSON.parse')
+		console.time('json <= JSON.parse <= file')
 			json = JSON.parse( $node.fs.readFileSync('mol/tree2/bench/-big.json').toString() )
-		console.timeEnd('JSON.parse')
+		console.timeEnd('json <= JSON.parse <= file')
 
-		console.time('JSON => tree')
+		console.time('json => JSON.stringify => file')
+			$node.fs.writeFileSync( 'mol/tree2/bench/-big.json', JSON.stringify( json, null, '\t' ) )
+		console.timeEnd('json => JSON.stringify => file')
+
+		console.time('tree <= json')
 			let tree = $mol_tree2_from_json( json )
-		console.timeEnd('JSON => tree')
+		console.timeEnd('tree <= json')
 		json = null
 
-		console.time('tree dump')
+		console.time('tree => string => file')
+			$node.fs.writeFileSync( 'mol/tree2/bench/-big.tree', tree.toString() )
+		console.timeEnd('tree => string => file')
+
+		console.time('tree => file stream')
+			// $node.fs.writeFileSync( 'mol/tree2/bench/-big.tree', tree.toString() )
 			out = $node.fs.createWriteStream('mol/tree2/bench/-big.tree')
 			await $mol_tree2_to_stream( tree, out )
 			await new Promise( done => out.end( ()=> done( null ) ) )
-		console.timeEnd('tree dump')
+		console.timeEnd('tree => file stream')
 		out = null!
 		tree = null!
 
-		console.time('tree parse')
+		console.time('tree <= string <= file')
 			tree = $$.$mol_tree2_from_string(
 				$node.fs.readFileSync('mol/tree2/bench/-big.tree').toString(),
 				$mol_span.begin( 'mol/tree2/bench/-big.tree' ),
 			)
-		console.timeEnd('tree parse')
+		console.timeEnd('tree <= string <= file')
 		tree = null!
 
 	}
