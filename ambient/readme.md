@@ -48,7 +48,7 @@ bar.Foo().logger.log( 'noop' )
 Global functions inherits context automatically:
 
 ```typescript
-function $my_hello( this : $mol_ambient_context , name : string ) {
+function $my_hello( this : $ , name : string ) {
 	this.console.log( `Hello, ${ name }!` )
 }
 
