@@ -69,7 +69,7 @@ namespace $ {
 
 				const data = chunks.map( chunk => {
 					kid_span = kid_span.after( chunk.length )
-					return new $mol_tree2( '' , value , [] , kid_span )
+					return new $mol_tree2( '' , chunk , [] , kid_span )
 				} )
 
 				kids = [ ... data , ... kids ]
@@ -134,111 +134,12 @@ namespace $ {
 		
 		/** Parses tree format. */
 		static fromString( str : string , span = $mol_span.unknown ) {
-			
-			const root = $mol_tree2.data( '' , [] , span )
-			const stack = [ root ]
-			
-			let row = 0
-			const prefix = str.replace( /^\n?(\t*)[\s\S]*/ , '$1' )
-			const lines = str.replace( new RegExp( '^\\t{0,' + prefix.length + '}' , 'mg' ) , '' ).split( '\n' )
-
-			for( const line of lines ) {
-
-				++row
-				const line_span = span.span( row , 0 , line.length )
-				
-				const chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?(.*?)(?:$|\n)/m.exec( line )
-				if( !chunks || chunks[4] ) {
-					this.$.$mol_fail( line_span.error( `Syntax error\n${line}` , SyntaxError ) )
-					continue
-				}
-				
-				const indent = chunks[ 1 ]
-				const path = chunks[ 2 ]
-				const value = chunks[ 3 ]
-				
-				const deep = indent.length
-				const types = path ? path.replace( / $/ , '' ).split( / +/ ) : []
-				
-				if( stack.length <= deep ) {
-					this.$.$mol_fail( line_span.error( `Too many tabs\n${line}` , SyntaxError ) )
-					continue
-				}
-				
-				stack.length = deep + 1
-				let parent = stack[ deep ];
-				
-				let col = deep
-				for( const type of types ) {
-
-					const type_span = span.span( row , col , type.length )
-
-					if( !type ) {
-						this.$.$mol_fail( type_span.error( `Unexpected space symbol\n${line}` , SyntaxError ) )
-					}
-					
-					const next = $mol_tree2.struct( type , [] , type_span )
-					
-					const parent_sub = parent.kids as $mol_tree2[]
-					parent_sub.push( next )	
-					
-					parent = next
-					col += type.length + 1
-
-				}
-				
-				if( value ) {
-
-					const value_span = span.span( row , col , value.length )
-					
-					const next = new $mol_tree2( '' , value.substring( 1 ) , [] , value_span )
-
-					const parent_sub = parent.kids as $mol_tree2[]
-					parent_sub.push( next )
-					
-					parent = next
-
-				}
-				
-				stack.push( parent )
-				
-			}
-			
-			return root
+			return this.$.$mol_tree2_from_string( str, span )
 		}
-		
-		/** Serializas to tree format. */
-		toString( prefix = '' ) : string {
 
-			let output = ''
-			
-			if( this.type.length ) {
-				
-				if( !prefix.length ) {
-					prefix = "\t";
-				}
-
-				output += this.type
-
-				if( this.kids.length == 1 ) {
-					return output + ' ' + this.kids[ 0 ].toString( prefix )
-				}
-
-				output += "\n"
-
-			} else if( this.value.length || prefix.length ) {
-
-				output += "\\" + this.value + "\n"
-
-			}
-
-			for( var child of this.kids ) {
-				output += prefix
-				output += child.toString( prefix + "\t" )
-			}
-			
-			return output
-
+		/** Serializes to tree format. */
+		toString() : string {
+			return this.$.$mol_tree2_to_string( this )
 		}
 		
 		/** Makes new tree with node overrided by path. */
