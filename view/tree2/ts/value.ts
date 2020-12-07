@@ -1,6 +1,6 @@
 namespace $ {
 	export function $mol_view_tree2_ts_value(
-		this: $mol_ambient_context,
+		this: $,
 		src: $mol_tree2
 	) {
 		const converted = this.$mol_view_tree2_value(src)

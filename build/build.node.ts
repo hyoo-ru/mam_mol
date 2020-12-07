@@ -1,7 +1,7 @@
 namespace $ {
 	
 	export function $mol_build_start(
-		this: $mol_ambient_context,
+		this: $,
 		paths : string[],
 	) {
 		var build = $mol_build.relative( '.' )

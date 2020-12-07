@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export function $mol_func_name( this : $mol_ambient_context , func : Function ) : string {
+	export function $mol_func_name( this : $ , func : Function ) : string {
 		
 		let name = func.name
 		if( name?.length > 1 ) return name

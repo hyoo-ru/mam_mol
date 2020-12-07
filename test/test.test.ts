@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_test( set : { [ name : string ] : string | ( ( context : $mol_ambient_context )=> void ) } ) {
+	export function $mol_test( set : { [ name : string ] : string | ( ( context : $ )=> void ) } ) {
 		
 		for( let name in set ) {
 
@@ -13,9 +13,9 @@ namespace $ {
 		$mol_test_schedule()
 	}
 
-	export let $mol_test_mocks = [] as Array< ( context : $mol_ambient_context )=> void >
+	export let $mol_test_mocks = [] as Array< ( context : $ )=> void >
 
-	export const $mol_test_all = [] as Array< ( context : $mol_ambient_context )=> void >
+	export const $mol_test_all = [] as Array< ( context : $ )=> void >
 
 	export async function $mol_test_run() {
 

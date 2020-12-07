@@ -1,9 +1,9 @@
 namespace $ {
 
 	export function $mol_ambient_make< Obj >(
-		this : $mol_ambient_context ,
+		this : $ ,
 		Obj : new( ... args : any[] )=> Obj ,
-		overrides : Partial< $mol_ambient_context > ,
+		overrides : Partial< $ > ,
 	) {
 		const obj = new Obj
 		obj[ $mol_ambient_ref ] = this.$mol_ambient( overrides )

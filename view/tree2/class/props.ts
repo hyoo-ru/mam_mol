@@ -2,7 +2,7 @@ namespace $ {
 	const err = $mol_view_tree2_error_str
 
 	export function $mol_view_tree2_class_props(
-		this: $mol_ambient_context,
+		this: $,
 		klass : $mol_tree2,
 	) {
 		const props = this.$mol_view_tree2_class_super( klass )

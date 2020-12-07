@@ -6,7 +6,7 @@ namespace $ {
 	 * ^ name
 	 * ```
 	 */
-	export function $mol_view_tree2_ts_spread(this: $mol_ambient_context, spread_prop: $mol_tree2) {
+	export function $mol_view_tree2_ts_spread(this: $, spread_prop: $mol_tree2) {
 		const spread_prop_parts = this.$mol_view_tree2_prop_split(spread_prop)
 
 		return $mol_tree2.struct('inline', [
@@ -19,7 +19,7 @@ namespace $ {
 		protected super_spread: $mol_tree2 | undefined = undefined
 
 		constructor(
-			$: $mol_ambient_context,
+			$: $,
 			protected prop_parts?: $mol_view_tree2_prop
 		) {
 			super()

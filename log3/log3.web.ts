@@ -6,7 +6,7 @@ namespace $ {
 	) {
 
 		return function $mol_log3_logger(
-			this : $mol_ambient_context ,
+			this : $ ,
 			event : $mol_log3_event<{}> ,
 		) {
 

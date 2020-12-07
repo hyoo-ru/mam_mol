@@ -8,7 +8,7 @@ namespace $ {
 	 * ```
 	 */
 	export function $mol_view_tree2_ts_factory(
-		this: $mol_ambient_context,
+		this: $,
 		klass: $mol_tree2,
 		factory: $mol_view_tree2_prop,
 		factory_context: $mol_view_tree2_context,

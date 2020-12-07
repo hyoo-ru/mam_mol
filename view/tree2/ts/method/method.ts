@@ -1,7 +1,7 @@
 namespace $ {
 
 	export function $mol_view_tree2_ts_method(
-		this: $mol_ambient_context,
+		this: $,
 		owner_parts: $mol_view_tree2_prop,
 		body: $mol_tree2,
 		types = false
