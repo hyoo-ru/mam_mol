@@ -1,5 +1,7 @@
 namespace $ {
 
+	const { rem } = $mol_style_unit
+
 	$mol_style_define( $mol_link , {
 		
 		textDecoration: 'none',
@@ -9,6 +11,7 @@ namespace $ {
 		padding: $mol_gap.text,
 		boxSizing: 'border-box',
 		position: 'relative',
+		minWidth: rem(2.5),
 
 		':hover': {
 			background: {
