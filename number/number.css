@@ -30,6 +30,7 @@
 	display: none;
 	z-index: 1;
 	padding: .5rem;
+	min-width: 1.5rem;
 }
 
 [mol_number_inc] {
