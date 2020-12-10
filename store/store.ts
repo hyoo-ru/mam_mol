@@ -31,7 +31,7 @@ namespace $ {
 
 		sub<
 			Key extends keyof Data ,
-			Lens extends $mol_store< Data[ Key ] > = $mol_store< Data[ Key ] >
+			Lens extends $mol_store< Data[ Key ] > = $mol_store< NonNullable<Data[ Key ]> >
 		>( key : Key , lens? : Lens ) {
 
 			if( !lens ) lens = new $mol_store< Data[ Key ] >() as any

@@ -4521,7 +4521,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n}\n[mol_button]:focus {\n\toutline: none;\n}\n");
+    $.$mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\tmin-width: 2.5rem;\n}\n[mol_button]:focus {\n\toutline: none;\n}\n");
 })($ || ($ = {}));
 //button.view.css.js.map
 ;
@@ -6172,6 +6172,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const { rem } = $.$mol_style_unit;
     $.$mol_style_define($.$mol_link, {
         textDecoration: 'none',
         color: $.$mol_theme.control,
@@ -6180,6 +6181,7 @@ var $;
         padding: $.$mol_gap.text,
         boxSizing: 'border-box',
         position: 'relative',
+        minWidth: rem(2.5),
         ':hover': {
             background: {
                 color: $.$mol_theme.hover,
