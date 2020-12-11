@@ -52,6 +52,10 @@ namespace $ {
 			this.data( this.data_default! )
 		}
 
+		active() {
+			return true
+		}
+
 	}
 
 }
