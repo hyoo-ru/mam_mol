@@ -19,13 +19,16 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * Title $mol_view sub / <= title
+		 * Title $mol_view
+		 * 	dom_name \h1
+		 * 	sub / <= title
 		 * ```
 		 */
 		@ $mol_mem
 		Title() {
 			const obj = new this.$.$mol_view()
 
+			obj.dom_name = () => "h1"
 			obj.sub = () => [
 				this.title()
 			] as readonly any[]

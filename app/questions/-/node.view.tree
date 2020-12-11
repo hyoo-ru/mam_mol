@@ -21,6 +21,7 @@ $mol_page $mol_view
 			minimal_height 64
 			sub <= head /
 				<= Title $mol_view
+					dom_name \h1
 					sub /
 						<= title
 				<= Tools $mol_view
