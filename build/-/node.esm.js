@@ -5147,6 +5147,10 @@ var $;
 var $;
 (function ($) {
     class $mol_server extends $.$mol_object {
+        constructor() {
+            super(...arguments);
+            this.connections = new Set();
+        }
         express() {
             var express = $node['express']();
             this.expressHandlers().forEach(plugin => express.use(plugin));
@@ -5181,6 +5185,16 @@ var $;
                         chunkSize: 10 * 1024
                     },
                 }
+            });
+            socket.on('connection', line => {
+                this.connections.add(line);
+                line.on('message', message => {
+                    for (const other of this.connections) {
+                        if (line === other)
+                            continue;
+                        other.send(message);
+                    }
+                });
             });
             return socket;
         }

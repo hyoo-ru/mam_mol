@@ -1056,6 +1056,7 @@ declare namespace $ {
     class $mol_server extends $mol_object {
         express(): any;
         http(): any;
+        connections: Set<any>;
         socket(): any;
         expressHandlers(): any[];
         expressCompressor(): unknown;

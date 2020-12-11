@@ -37,6 +37,8 @@ namespace $ {
 
 		}
 
+		connections = new Set< InstanceType<$node['ws']> >()
+
 		@ $mol_mem
 		socket() {
 
@@ -54,9 +56,20 @@ namespace $ {
 				}
 			})
 
-//			socket.on( 'connection' , line => {
-//				line.on( 'message' , message => line.send( message ) )
-//			} )
+			socket.on( 'connection' , line => {
+
+				this.connections.add( line )
+				
+				line.on( 'message' , message => {
+
+					for( const other of this.connections ) {
+						if( line === other ) continue
+						other.send( message )
+					}
+					
+				} )
+
+			} )
 
 			return socket
 
