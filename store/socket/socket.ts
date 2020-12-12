@@ -8,10 +8,10 @@ namespace $ {
 
 		@ $mol_mem
 		socket() {
+			const atom = $mol_atom2.current!
 			return $mol_fiber_sync( ()=> new Promise< WebSocket >( done => {
 
 				const socket = new $mol_dom_context.WebSocket( this.base() )
-				
 				socket.onopen = ()=> done( socket )
 				socket.onmessage = event => {
 
@@ -23,6 +23,14 @@ namespace $ {
 
 					$mol_mem_cached( ()=> this.value( message[0] ), message[1] )
 
+				}
+
+				socket.onclose = socket.onerror = ()=> {
+					new this.$.$mol_after_timeout( 1000, ()=> {
+						atom.complete()
+						atom.obsolete()
+						atom.schedule()
+					} )
 				}
 				
 				return socket
