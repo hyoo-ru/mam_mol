@@ -3,7 +3,8 @@ namespace $ {
 	export class $mol_store_socket extends $mol_store< Record< string , any > > {
 
 		base() {
-			return $mol_dom_context.document.location.origin.replace( /^\w+:/ , 'ws:' )
+			// return $mol_dom_context.document.location.origin.replace( /^\w+:/ , 'ws:' )
+			return `wss://sync-hyoo-ru.herokuapp.com/`
 		}
 
 		@ $mol_mem
