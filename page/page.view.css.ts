@@ -52,6 +52,7 @@ namespace $.$$ {
 
 			font: {
 				size: 'inherit',
+				weight: 'normal',
 			},
 	
 			flex: {
