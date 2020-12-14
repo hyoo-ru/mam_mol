@@ -2138,6 +2138,20 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const cacthed = new WeakMap();
+    function $mol_fail_catch(error) {
+        if (cacthed.get(error))
+            return false;
+        cacthed.set(error, true);
+        return true;
+    }
+    $.$mol_fail_catch = $mol_fail_catch;
+})($ || ($ = {}));
+//catch.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_const(value) {
         var getter = (() => value);
         getter['()'] = value;
@@ -2170,20 +2184,6 @@ var $;
     $.$mol_dom_render_attributes = $mol_dom_render_attributes;
 })($ || ($ = {}));
 //attributes.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    const cacthed = new WeakMap();
-    function $mol_fail_catch(error) {
-        if (cacthed.get(error))
-            return false;
-        cacthed.set(error, true);
-        return true;
-    }
-    $.$mol_fail_catch = $mol_fail_catch;
-})($ || ($ = {}));
-//catch.js.map
 ;
 "use strict";
 var $;
@@ -2422,8 +2422,13 @@ var $;
                 }
             }
             catch (error) {
-                if ('then' in error)
-                    $.$mol_fail_hidden(error);
+                if (error instanceof Promise) {
+                    $.$mol_atom2.current.subscribe(error);
+                }
+                else if ($.$mol_fail_catch(error)) {
+                    console.error(error);
+                }
+                return 24;
             }
             return min;
         }

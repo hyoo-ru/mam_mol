@@ -121,9 +121,14 @@ namespace $ {
 					
 				} 
 			} catch( error ) {
-				if( 'then' in error ) $mol_fail_hidden( error )
+				if( error instanceof Promise ) {
+					$mol_atom2.current!.subscribe( error )
+				} else if( $mol_fail_catch( error ) ) {
+					console.error( error )
+				}
+				return 24
 			}
-			
+
 			return min
 		}
 
