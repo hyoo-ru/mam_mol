@@ -4,13 +4,13 @@ namespace $ {
 
 		static cache< Value >( key : string , next? : Value ) {
 			return this.$.$mol_fetch.json(
-				'https://shared-cache.herokuapp.com/' + key ,
+				'https://sync-hyoo-ru.herokuapp.com/' + key ,
 				next && {
 					method : 'PUT' ,
 					headers : {
 						'content-type' : 'application/json' ,
 					} ,
-					body : JSON.stringify( next , null , '\t' ) ,
+					body : JSON.stringify( next ) ,
 				} ,
 			) as Value
 		}
