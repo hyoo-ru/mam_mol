@@ -12,11 +12,11 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * source_prefix \https://github.com/eigenmethod/mol/tree/master/
+		 * source_prefix \https://github.com/hyoo-ru/mam_mol/tree/master/
 		 * ```
 		 */
 		source_prefix() {
-			return "https://github.com/eigenmethod/mol/tree/master/"
+			return "https://github.com/hyoo-ru/mam_mol/tree/master/"
 		}
 
 		/**

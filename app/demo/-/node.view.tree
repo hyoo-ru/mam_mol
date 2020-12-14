@@ -2869,7 +2869,7 @@ $mol_icon_code_braces $mol_icon path \M8,3C6.9,3 6,3.9 6,5V9C6,10.1 5.1,11 4,11H
 
 $mol_app_demo $mol_book2
 	editor_title <= detail_title \$mol
-	source_prefix \https://github.com/eigenmethod/mol/tree/master/
+	source_prefix \https://github.com/hyoo-ru/mam_mol/tree/master/
 	Main $mol_app_demo_main
 	pages <= blocks /
 	plugins /

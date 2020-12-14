@@ -25883,7 +25883,7 @@ var $;
             return this.detail_title();
         }
         source_prefix() {
-            return "https://github.com/eigenmethod/mol/tree/master/";
+            return "https://github.com/hyoo-ru/mam_mol/tree/master/";
         }
         Main() {
             const obj = new this.$.$mol_app_demo_main();
