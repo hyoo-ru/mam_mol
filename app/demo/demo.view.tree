@@ -1,6 +1,6 @@
 $mol_app_demo $mol_book2
 	editor_title <= detail_title \$mol
-	source_prefix \https://github.com/eigenmethod/mol/tree/master/
+	source_prefix \https://github.com/hyoo-ru/mam_mol/tree/master/
 	Main $mol_app_demo_main
 	pages <= blocks /
 	plugins /
