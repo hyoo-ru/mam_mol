@@ -62,7 +62,7 @@ namespace $ {
 					const a_next = a_iter.next()
 					const b_next = b_iter.next()
 
-					if( a_next.done !== a_next.done ) return result = false
+					if( a_next.done !== b_next.done ) return result = false
 					if( a_next.done ) break
 
 					if( !$mol_compare_deep( a_next.value , b_next.value ) ) return result = false
