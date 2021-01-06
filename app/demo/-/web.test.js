@@ -400,7 +400,7 @@ var $;
                 while (true) {
                     const a_next = a_iter.next();
                     const b_next = b_iter.next();
-                    if (a_next.done !== a_next.done)
+                    if (a_next.done !== b_next.done)
                         return result = false;
                     if (a_next.done)
                         break;
@@ -2375,7 +2375,7 @@ var $;
         },
         'only groups'() {
             const regexp = $.$mol_regexp.from({ dog: '@' });
-            $.$mol_assert_like([...regexp.parse('#')], []);
+            $.$mol_assert_like([...regexp.parse('#')], [{ 0: '#' }]);
             $.$mol_assert_like([...regexp.parse('@')], [{ dog: '@' }]);
         },
         'catch skipped'() {
@@ -2463,7 +2463,7 @@ var $;
             const sexism = $.$mol_regexp.from([begin, 'sex = ', [{ sex: 'male' }, or, { sex: 'female' }], end]);
             $.$mol_assert_like([...sexism.parse('sex = male')], [{ sex: 'male' }]);
             $.$mol_assert_like([...sexism.parse('sex = female')], [{ sex: 'female' }]);
-            $.$mol_assert_like([...sexism.parse('sex = malefemale')], []);
+            $.$mol_assert_like([...sexism.parse('sex = malefemale')], [{ 0: 'sex = malefemale' }]);
         },
         'force after'() {
             const { letter, force_after } = $.$mol_regexp;
