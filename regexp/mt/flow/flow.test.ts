@@ -73,13 +73,13 @@ namespace $ {
 			
 			const text = `
 				- foo
-				  - bar
+				  + bar
 				- lol
 			`.slice(1).replace( /^\t+/gm, '' )
 
 			const res = [ ... $mol_regexp_mt_flow.parse( text ) ]
 			
-			$mol_assert_equal( res[0].list, '- foo\n  - bar\n- lol\n' )
+			$mol_assert_equal( res[0].list, '- foo\n  + bar\n- lol\n' )
 			
 		},
 
