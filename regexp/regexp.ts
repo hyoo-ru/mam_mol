@@ -9,10 +9,10 @@ namespace $ {
 	export type $mol_regexp_groups< Source extends $mol_regexp_source >
 	
 		= Source extends string
-		? never
+		? {}
 		
-		: Source extends $mol_regexp< infer G >
-		? G
+		: Source extends $mol_regexp< infer Groups >
+		? Groups
 		
 		: Source extends $mol_regexp_source[]
 		? $mol_type_intersect<
@@ -22,7 +22,7 @@ namespace $ {
 		>
 		
 		: Source extends RegExp
-		? never
+		? {}
 		
 		: Source extends { readonly [ key in string ] : $mol_regexp_source }
 		? Extract< $mol_type_intersect<
@@ -83,11 +83,13 @@ namespace $ {
 		}
 
 		/** Makes regexp that non-greedy repeats this pattern from min to max count */
-		static repeat(
-			source : $mol_regexp_source ,
+		static repeat<
+			Source extends $mol_regexp_source
+		>(
+			source : Source ,
 			min = 0 ,
 			max = Number.POSITIVE_INFINITY ,
-		) {
+		) : $mol_regexp< $mol_regexp_groups< Source > > {
 	
 			const regexp = $mol_regexp.from( source )
 			const upper = Number.isFinite( max ) ? max : ''
@@ -101,11 +103,13 @@ namespace $ {
 		}
 
 		/** Makes regexp that greedy repeats this pattern from min to max count */
-		static repeat_greedy(
-			source : $mol_regexp_source ,
+		static repeat_greedy<
+			Source extends $mol_regexp_source
+		>(
+			source : Source ,
 			min = 0 ,
 			max = Number.POSITIVE_INFINITY ,
-		) {
+		) : $mol_regexp< $mol_regexp_groups< Source > > {
 	
 			const regexp = $mol_regexp.from( source )
 			const upper = Number.isFinite( max ) ? max : ''
@@ -119,7 +123,9 @@ namespace $ {
 		}
 
 		/** Makes regexp that allow absent of this pattern */
-		static optional( source : $mol_regexp_source ) {
+		static optional<
+			Source extends $mol_regexp_source
+		>( source : Source ) {
 			return $mol_regexp.repeat_greedy( source , 0 , 1 )
 		}
 
@@ -166,7 +172,7 @@ namespace $ {
 
 			if( typeof source === 'string' ) {
 
-				return new this( source.replace( /[.*+?^${}()|[\]\\]/g , '\\$&' ) , flags )
+				return new $mol_regexp( source.replace( /[.*+?^${}()|[\]\\]/g , '\\$&' ) , flags )
 
 			} else if( source instanceof RegExp ) {
 
@@ -203,7 +209,7 @@ namespace $ {
 		
 				}
 				
-				return new this( `(?:${ sources.join( '' ) })` , flags , groups )
+				return new $mol_regexp( sources.join( '' ) , flags , groups )
 		
 			} else {
 
@@ -220,7 +226,7 @@ namespace $ {
 
 				} ) as any as readonly[ $mol_regexp_source , ... $mol_regexp_source[] ]
 
-				return new this( `(?:${ chunks.join('|') })` , flags , groups as any[] )
+				return new $mol_regexp( `(?:${ chunks.join('|') })` , flags , groups as any[] )
 
 			}
 	
@@ -228,13 +234,22 @@ namespace $ {
 
 		/** Makes regexp for char code */
 		static char_code( code : number ) {
-			return new this( `\\u${ code.toString(16).padStart( 4 , '0' ) }` )
+			return new $mol_regexp( `\\u${ code.toString(16).padStart( 4 , '0' ) }` )
+		}
+
+		static byte_except(
+			... forbidden: readonly [ $mol_regexp_source, ... $mol_regexp_source[] ]
+		): $mol_regexp< never> {
+			const regexp = forbidden.map( f => $mol_regexp.from( f ).source ).join('')
+			return new $mol_regexp( `[^${ regexp }]` )
 		}
 
 		static byte = $mol_regexp.from( /[\s\S]/ )
 		static digit = $mol_regexp.from( /\d/ )
 		static letter = $mol_regexp.from( /\w/ )
 		static space = $mol_regexp.from( /\s/ )
+		static tab = $mol_regexp.from( /\t/ )
+		static slash_back = $mol_regexp.from( /\\/ )
 		static word_break = $mol_regexp.from( /\b/ )
 		static line_end = $mol_regexp.from( /\r?\n/ )
 		static begin = $mol_regexp.from( /^/ )

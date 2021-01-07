@@ -1673,9 +1673,9 @@ declare namespace $ {
     type $mol_regexp_source = string | RegExp | {
         [key in string]: $mol_regexp_source;
     } | readonly [$mol_regexp_source, ...$mol_regexp_source[]];
-    type $mol_regexp_groups<Source extends $mol_regexp_source> = Source extends string ? never : Source extends $mol_regexp<infer G> ? G : Source extends $mol_regexp_source[] ? $mol_type_intersect<{
+    type $mol_regexp_groups<Source extends $mol_regexp_source> = Source extends string ? {} : Source extends $mol_regexp<infer Groups> ? Groups : Source extends $mol_regexp_source[] ? $mol_type_intersect<{
         [key in Extract<keyof Source, number>]: $mol_regexp_groups<Source[key]>;
-    }[Extract<keyof Source, number>]> : Source extends RegExp ? never : Source extends {
+    }[Extract<keyof Source, number>]> : Source extends RegExp ? {} : Source extends {
         readonly [key in string]: $mol_regexp_source;
     } ? Extract<$mol_type_intersect<{
         [key in Extract<keyof Source, string>]: string;
@@ -1688,22 +1688,25 @@ declare namespace $ {
         get parse(): (str: string, from?: number) => Generator<{ [key in keyof Groups]: string; } & {
             [key: number]: string;
         }, null | undefined, unknown>;
-        static repeat(source: $mol_regexp_source, min?: number, max?: number): $mol_regexp<Record<string, string>>;
-        static repeat_greedy(source: $mol_regexp_source, min?: number, max?: number): $mol_regexp<Record<string, string>>;
-        static optional(source: $mol_regexp_source): $mol_regexp<Record<string, string>>;
+        static repeat<Source extends $mol_regexp_source>(source: Source, min?: number, max?: number): $mol_regexp<$mol_regexp_groups<Source>>;
+        static repeat_greedy<Source extends $mol_regexp_source>(source: Source, min?: number, max?: number): $mol_regexp<$mol_regexp_groups<Source>>;
+        static optional<Source extends $mol_regexp_source>(source: Source): $mol_regexp<$mol_regexp_groups<Source>>;
         static force_after(source: $mol_regexp_source): $mol_regexp<Record<string, string>>;
         static forbid_after(source: $mol_regexp_source): $mol_regexp<Record<string, string>>;
         static from<Source extends $mol_regexp_source>(source: Source, { ignoreCase, multiline }?: Partial<Pick<RegExp, 'ignoreCase' | 'multiline'>>): $mol_regexp<$mol_regexp_groups<Source>>;
         static char_code(code: number): $mol_regexp<Record<string, string>>;
-        static byte: $mol_regexp<never>;
-        static digit: $mol_regexp<never>;
-        static letter: $mol_regexp<never>;
-        static space: $mol_regexp<never>;
-        static word_break: $mol_regexp<never>;
-        static line_end: $mol_regexp<never>;
-        static begin: $mol_regexp<never>;
-        static end: $mol_regexp<never>;
-        static or: $mol_regexp<never>;
+        static byte_except(...forbidden: readonly [$mol_regexp_source, ...$mol_regexp_source[]]): $mol_regexp<never>;
+        static byte: $mol_regexp<{}>;
+        static digit: $mol_regexp<{}>;
+        static letter: $mol_regexp<{}>;
+        static space: $mol_regexp<{}>;
+        static tab: $mol_regexp<{}>;
+        static slash_back: $mol_regexp<{}>;
+        static word_break: $mol_regexp<{}>;
+        static line_end: $mol_regexp<{}>;
+        static begin: $mol_regexp<{}>;
+        static end: $mol_regexp<{}>;
+        static or: $mol_regexp<{}>;
     }
 }
 

@@ -4758,7 +4758,7 @@ var $;
             if (ignoreCase)
                 flags += 'i';
             if (typeof source === 'string') {
-                return new this(source.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+                return new $mol_regexp(source.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
             }
             else if (source instanceof RegExp) {
                 if (source instanceof $mol_regexp)
@@ -4783,7 +4783,7 @@ var $;
                         }
                     }
                 }
-                return new this(`(?:${sources.join('')})`, flags, groups);
+                return new $mol_regexp(sources.join(''), flags, groups);
             }
             else {
                 const groups = [];
@@ -4793,17 +4793,23 @@ var $;
                     groups.push(...regexp.groups);
                     return `(${regexp.source})`;
                 });
-                return new this(`(?:${chunks.join('|')})`, flags, groups);
+                return new $mol_regexp(`(?:${chunks.join('|')})`, flags, groups);
             }
         }
         static char_code(code) {
-            return new this(`\\u${code.toString(16).padStart(4, '0')}`);
+            return new $mol_regexp(`\\u${code.toString(16).padStart(4, '0')}`);
+        }
+        static byte_except(...forbidden) {
+            const regexp = forbidden.map(f => $mol_regexp.from(f).source).join('');
+            return new $mol_regexp(`[^${regexp}]`);
         }
     }
     $mol_regexp.byte = $mol_regexp.from(/[\s\S]/);
     $mol_regexp.digit = $mol_regexp.from(/\d/);
     $mol_regexp.letter = $mol_regexp.from(/\w/);
     $mol_regexp.space = $mol_regexp.from(/\s/);
+    $mol_regexp.tab = $mol_regexp.from(/\t/);
+    $mol_regexp.slash_back = $mol_regexp.from(/\\/);
     $mol_regexp.word_break = $mol_regexp.from(/\b/);
     $mol_regexp.line_end = $mol_regexp.from(/\r?\n/);
     $mol_regexp.begin = $mol_regexp.from(/^/);
