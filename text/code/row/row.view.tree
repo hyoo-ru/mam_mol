@@ -1,5 +1,6 @@
 $mol_text_code_row $mol_paragraph
 	text \
+	minimal_height 24
 	Token!id $mol_text_code_token
 		type <= token_type!id \
 		haystack <= token_text!id \
