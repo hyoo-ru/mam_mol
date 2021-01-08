@@ -12,6 +12,15 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * minimal_height 24
+		 * ```
+		 */
+		minimal_height() {
+			return 24
+		}
+
+		/**
+		 * ```tree
 		 * Token!id $mol_text_code_token
 		 * 	type <= token_type!id
 		 * 	haystack <= token_text!id

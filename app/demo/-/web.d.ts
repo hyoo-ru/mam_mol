@@ -5778,6 +5778,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_text_code_row extends $mol_paragraph {
         text(): string;
+        minimal_height(): number;
         Token(id: any): $mol_text_code_token;
         token_type(id: any): string;
         token_text(id: any): string;

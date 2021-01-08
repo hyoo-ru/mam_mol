@@ -20965,6 +20965,9 @@ var $;
         text() {
             return "";
         }
+        minimal_height() {
+            return 24;
+        }
         Token(id) {
             const obj = new this.$.$mol_text_code_token();
             obj.type = () => this.token_type(id);
