@@ -4,6 +4,7 @@ namespace $ {
 		[
 			$mol_regexp.begin,
 			{
+				cut: $mol_regexp_mt_cut,
 				header: $mol_regexp_mt_header,
 				list: $mol_regexp_mt_list,
 				quote: $mol_regexp_mt_quote,
