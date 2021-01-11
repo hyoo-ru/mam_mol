@@ -1,6 +1,6 @@
 # $mol_text
 
-Component that can show text which can be written in markdown format.
+Markdown visualizer.
 
 ## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_text)
 
