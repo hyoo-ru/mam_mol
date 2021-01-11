@@ -3,7 +3,7 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * title @ \Markdow visualization example
+		 * title @ \Markdown visualization example
 		 * ```
 		 */
 		title() {
