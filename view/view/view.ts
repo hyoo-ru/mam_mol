@@ -223,7 +223,7 @@ namespace $ {
 		dom_node_actual() {
 			const node = this.dom_node()
 
-			;( node as HTMLElement ).style.minHeight = this.minimal_height() + 'px'
+			$mol_dom_render_styles( node, { minHeight: this.minimal_height() } )
 
 			const attr = this.attr()
 			const style = this.style()
