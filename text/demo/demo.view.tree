@@ -1,5 +1,5 @@
 $mol_text_demo $mol_demo_large
-	title @ \Markdow visualization example
+	title @ \Markdown visualization example
 	sub /
 		<= Scroll $mol_scroll
 			sub /
