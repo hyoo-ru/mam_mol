@@ -57,6 +57,7 @@ namespace $.$$ {
 		'@media' : {
 			'print' : {
 				overflow: 'visible',
+				contain: 'none',
 			},
 		},
 
