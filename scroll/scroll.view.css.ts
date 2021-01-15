@@ -58,6 +58,7 @@ namespace $.$$ {
 			'print' : {
 				overflow: 'visible',
 				contain: 'none',
+				maxHeight: 'unset',
 			},
 		},
 

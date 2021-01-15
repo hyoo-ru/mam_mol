@@ -31,6 +31,10 @@ namespace $.$$ {
 			} ) ) )
 
 		}
+
+		minimal_height() {
+			return this.$.$mol_print.active() ? null! : 0
+		}
 		
 	}
 
