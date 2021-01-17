@@ -10,3 +10,4 @@ $mol_textarea $mol_view
 			length_max <= length_max Infinity
 		<= View $mol_text_code
 			text <= value
+			render_visible_only false
