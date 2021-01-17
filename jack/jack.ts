@@ -47,7 +47,7 @@ namespace $ {
 				const results = cases.map( Case => Case.hack( jack ) )
 		
 				try {
-					$mol_assert_equal( ... results.map( String ) )
+					$mol_assert_equal( ... results.map( String ) as [ string, string, ...string[] ] )
 				} catch( error ) {
 					return $mol_fail_hidden( input.error( error.message ) )
 				}
