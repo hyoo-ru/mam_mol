@@ -18,6 +18,15 @@ namespace $ {
 		letter_width() {
 			return 8
 		}
+
+		/**
+		 * ```tree
+		 * width_limit Infinity
+		 * ```
+		 */
+		width_limit() {
+			return Infinity
+		}
 	}
 
 }

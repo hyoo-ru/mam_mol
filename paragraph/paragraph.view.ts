@@ -24,9 +24,13 @@ namespace $.$$ {
 
 		}
 
+		width_limit() {
+			return this.$.$mol_window.size().width
+		}
+
 		@ $mol_mem
 		minimal_width() {
-			return Math.max( Math.min( this.$.$mol_window.size().width , this.maximal_width() ) , this.letter_width() )
+			return Math.max( Math.min( this.width_limit() , this.maximal_width() ) , this.letter_width() )
 		}
 
 		@ $mol_mem

@@ -163,6 +163,7 @@ $mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
 $mol_paragraph $mol_view
 	line_height 24
 	letter_width 8
+	width_limit Infinity
 
 $mol_dimmer $mol_paragraph
 	haystack \

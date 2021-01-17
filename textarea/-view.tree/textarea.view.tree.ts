@@ -100,7 +100,9 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * View $mol_text_code text <= value
+		 * View $mol_text_code
+		 * 	text <= value
+		 * 	render_visible_only false
 		 * ```
 		 */
 		@ $mol_mem
@@ -108,6 +110,7 @@ namespace $ {
 			const obj = new this.$.$mol_text_code()
 
 			obj.text = () => this.value()
+			obj.render_visible_only = () => false
 
 			return obj
 		}

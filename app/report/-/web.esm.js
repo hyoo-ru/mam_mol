@@ -4658,6 +4658,9 @@ var $;
         letter_width() {
             return 8;
         }
+        width_limit() {
+            return Infinity;
+        }
     }
     $.$mol_paragraph = $mol_paragraph;
 })($ || ($ = {}));
@@ -4684,8 +4687,11 @@ var $;
                 }
                 return width;
             }
+            width_limit() {
+                return this.$.$mol_window.size().width;
+            }
             minimal_width() {
-                return Math.max(Math.min(this.$.$mol_window.size().width, this.maximal_width()), this.letter_width());
+                return Math.max(Math.min(this.width_limit(), this.maximal_width()), this.letter_width());
             }
             minimal_height() {
                 return Math.max(1, Math.ceil(this.maximal_width() / this.minimal_width())) * this.line_height();
