@@ -6327,6 +6327,7 @@ declare namespace $ {
         constructor(uri: string, row: number, col: number, length: number);
         static unknown: $mol_span;
         static begin(uri: string): $mol_span;
+        static end(uri: string, length: number): $mol_span;
         static entire(uri: string, length: number): $mol_span;
         toString(): string;
         toJSON(): {

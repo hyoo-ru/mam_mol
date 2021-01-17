@@ -18,6 +18,11 @@ namespace $ {
 			return new $mol_span( uri , 0 , 0 , 0 )
 		}
 
+		/** Makes new span for end of resource. */
+		static end( uri : string , length : number ) {
+			return new $mol_span( uri , 0 , length , length )
+		}
+
 		/** Makes new span for entire resource. */
 		static entire( uri : string , length : number ) {
 			return new $mol_span( uri , 0 , 0 , length )
@@ -56,12 +61,9 @@ namespace $ {
 			let len = this.length
 
 			if (begin < 0 || begin > len) this.$.$mol_fail(`Begin value '${begin}' out of range ${this}`)
-
-			len = len - begin
-
 			if (end < 0 || end > len) this.$.$mol_fail(`End value '${end}' out of range ${this}`)
 
-			return this.span( this.row , this.col + begin , end )
+			return this.span( this.row , this.col + begin , end - begin )
 		}
 
 	}

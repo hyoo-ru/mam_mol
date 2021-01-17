@@ -3229,13 +3229,13 @@ var $;
         },
         'slice span - regular'($) {
             const span = new $_1.$mol_span('test.ts', 1, 3, 5);
-            const child = span.slice(1, 3);
+            const child = span.slice(1, 4);
             $_1.$mol_assert_equal(child.row, 1);
             $_1.$mol_assert_equal(child.col, 4);
             $_1.$mol_assert_equal(child.length, 3);
             const child2 = span.slice(2, 2);
             $_1.$mol_assert_equal(child2.col, 5);
-            $_1.$mol_assert_equal(child2.length, 2);
+            $_1.$mol_assert_equal(child2.length, 0);
         },
         'slice span - out of range'($) {
             const span = new $_1.$mol_span('test.ts', 1, 3, 5);
@@ -3280,8 +3280,8 @@ var $;
         'hack'() {
             const res = $.$mol_tree2.fromString(`foo bar xxx\n`)
                 .hack({
-                '': (tree, context) => [tree.clone(tree.hack(context))],
-                'bar': (tree, context) => [tree.struct('777', tree.hack(context))],
+                '': (tree, belt) => [tree.clone(tree.hack(belt))],
+                'bar': (tree, belt) => [tree.struct('777', tree.hack(belt))],
             });
             $.$mol_assert_equal(res.toString(), 'foo 777 xxx\n');
         },
