@@ -974,6 +974,7 @@ declare namespace $ {
             radius?: Length | [Length, Length];
             style?: 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | Common;
             color?: Directions<Color> | Common;
+            width?: Directions<Length> | Common;
         };
         flex?: 'none' | 'auto' | {
             grow?: number | Common;

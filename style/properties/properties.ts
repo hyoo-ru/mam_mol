@@ -209,8 +209,11 @@ namespace $ {
 			| 'inset' | 'outset'
 			| Common
 
-			/** Color of an element's border. */
+			/** Color of element's border. */
 			color?: Directions< Color > | Common
+
+			/** Width of element's border. */
+			width?: Directions< Length > | Common
 
 		}
 
