@@ -4693,6 +4693,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_func_is_class(func: Function): boolean;
+}
+
+declare namespace $ {
     type $mol_type_foot<Tuple extends readonly any[]> = Tuple['length'] extends 0 ? never : Tuple[$mol_type_tail<Tuple>['length']];
 }
 
