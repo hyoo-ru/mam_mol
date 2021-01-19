@@ -209,6 +209,9 @@ namespace $ {
 			| 'inset' | 'outset'
 			| Common
 
+			/** Color of an element's border. */
+			color?: Directions< Color > | Common
+
 		}
 
 		/** How a flex item will grow or shrink to fit the space available in its flex container. It is a shorthand for `flexGrow`, `flexShrink`, and `flexBasis`. */
