@@ -42,6 +42,15 @@ namespace $ {
 		| readonly [ 'safe' | 'unsafe' , 'start' | 'end' | 'flex-start' | 'flex-end' ]
 		| Common
 
+		/** How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container. */
+		justifyContent?:
+		| 'start' | 'end'
+		| 'flex-start' | 'flex-end'
+		| 'left' | 'right'
+		| 'space-between' | 'space-around' | 'space-evenly'
+		| 'normal' | 'stretch' | 'center'
+		| Common
+
 		/** All background style properties. */
 		background?:
 		| 'none'
