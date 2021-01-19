@@ -12,7 +12,7 @@ namespace $ {
 	export class $mol_range_common< Value > /*implements ReadonlyArray< Value >*/ {
 		
 		item( id : number ) : Value {
-			return
+			return undefined as any
 		}
 		
 		get length() {
@@ -32,7 +32,7 @@ namespace $ {
 		
 		valueOf() : Value[] {
 			const list : Value[] = []
-			this.forEach( val => list.push( val ) )
+			this.forEach( val => list.push( val! ) )
 			return list
 		}
 		
@@ -49,7 +49,7 @@ namespace $ {
 					return source.item( id + start )
 				} ,
 				get length() {
-					return Math.min( end , source.length ) - start
+					return Math.min( end ?? source.length , source.length ) - start
 				}
 			} )
 		}
@@ -68,7 +68,7 @@ namespace $ {
 		
 		join( delim = ',' ) {
 			const list : Value[] = []
-			this.forEach( val => list.push( val ) )
+			this.forEach( val => list.push( val! ) )
 			return list.join( delim )
 		}
 		
@@ -77,7 +77,7 @@ namespace $ {
 			this.forEach(
 				( val , id ) => {
 					if( !res ) return
-					res = check( val , id )
+					res = check( val! , id! )
 				}
 			)
 			return res
@@ -88,7 +88,7 @@ namespace $ {
 			this.forEach(
 				( val , id ) => {
 					if( res ) return
-					res = check( val , id )
+					res = check( val! , id! )
 				}
 			)
 			return res
@@ -100,7 +100,7 @@ namespace $ {
 		
 		constructor(
 			private source = {
-				item( id : number ) { return undefined as Value } ,
+				item( id : number ) { return undefined as any as Value } ,
 				length : 0
 			}
 		) {
