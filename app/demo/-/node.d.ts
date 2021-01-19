@@ -973,6 +973,7 @@ declare namespace $ {
         border?: {
             radius?: Length | [Length, Length];
             style?: 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | Common;
+            color?: Directions<Color> | Common;
         };
         flex?: 'none' | 'auto' | {
             grow?: number | Common;
