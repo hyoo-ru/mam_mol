@@ -26,8 +26,8 @@ namespace $ {
 			mappings.push(
 				$mol_vlq_encode( offset ) +
 				$mol_vlq_encode( index - prev_index ) +
-				$mol_vlq_encode( chunk.span.row - ( prev?.row ?? 0 ) ) +
-				$mol_vlq_encode( chunk.span.col - ( prev?.col ?? 0 ) )
+				$mol_vlq_encode( chunk.span.row - ( prev?.row ?? 1 ) ) +
+				$mol_vlq_encode( chunk.span.col - ( prev?.col ?? 1 ) )
 			)
 			
 			const text = chunk.text()

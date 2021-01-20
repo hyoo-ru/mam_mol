@@ -27,7 +27,7 @@ namespace $ {
 						"script1",
 						"script2"
 					],
-					"mappings": "AAAI,aAAJ,gBCAA,gBDCA;"
+					"mappings": "AADG,aAAJ,gBCAA,gBDCA;"
 				}
 			)
 
