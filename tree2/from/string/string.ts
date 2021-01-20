@@ -98,7 +98,7 @@ namespace $ {
 						str.slice( type_start , pos ),
 						'',
 						[],
-						span.span( row, type_start - line_start, pos - type_start ),
+						span.span( row, type_start - line_start + 1, pos - type_start ),
 					)
 					const parent_kids = parent.kids as $mol_tree2[]
 					parent_kids.push( next )
@@ -121,7 +121,7 @@ namespace $ {
 					'',
 					str.slice( data_start + 1 , pos ),
 					[],
-					span.span( row, data_start - line_start, pos - data_start - 1 ),
+					span.span( row, data_start - line_start + 1, pos - data_start - 1 ),
 				)
 				const parent_kids = parent.kids as $mol_tree2[]
 				parent_kids.push( next )
