@@ -2410,11 +2410,22 @@ $mol_text_code_token $mol_dimmer
 		^
 		mol_text_code_token_type <= type \
 
+$mol_text_code_token_link $mol_text_code_token
+	dom_name \a
+	type \code-link
+	attr *
+		^
+		href <= haystack \
+		target \_blank
+
 $mol_text_code_row $mol_paragraph
 	text \
 	minimal_height 24
 	Token!id $mol_text_code_token
 		type <= token_type!id \
+		haystack <= token_text!id \
+		needle <= highlight \
+	Token_link!id $mol_text_code_token_link
 		haystack <= token_text!id \
 		needle <= highlight \
 

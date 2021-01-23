@@ -40,6 +40,23 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * Token_link!id $mol_text_code_token_link
+		 * 	haystack <= token_text!id
+		 * 	needle <= highlight
+		 * ```
+		 */
+		@ $mol_mem_key
+		Token_link(id: any) {
+			const obj = new this.$.$mol_text_code_token_link()
+
+			obj.haystack = () => this.token_text(id)
+			obj.needle = () => this.highlight()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * token_type!id \
 		 * ```
 		 */

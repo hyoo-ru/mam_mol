@@ -5,3 +5,6 @@ $mol_text_code_row $mol_paragraph
 		type <= token_type!id \
 		haystack <= token_text!id \
 		needle <= highlight \
+	Token_link!id $mol_text_code_token_link
+		haystack <= token_text!id \
+		needle <= highlight \

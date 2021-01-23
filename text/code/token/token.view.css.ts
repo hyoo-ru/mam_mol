@@ -5,6 +5,7 @@ namespace $.$$ {
 	$mol_style_define( $mol_text_code_token, {
 
 		display: 'inline',
+		textDecoration: 'none',
 
 		'@': {
 			mol_text_code_token_type: {

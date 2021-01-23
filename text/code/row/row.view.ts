@@ -32,6 +32,10 @@ namespace $.$$ {
 		row_content( path: number[] ) {
 			return this.tokens( path ).map( (t,i)=> this.Token([ ... path, i ]) )
 		}
+
+		Token( path: number[] ) {
+			return this.token_type( path ) === 'code-link' ? this.Token_link( path ) : super.Token( path )
+		}
 		
 		@ $mol_mem_key
 		token_type( path: number[] ) {
