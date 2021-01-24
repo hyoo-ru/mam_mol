@@ -479,14 +479,16 @@ declare namespace $ {
 declare namespace $ {
     class $mol_span extends $mol_object2 {
         readonly uri: string;
+        readonly source: string;
         readonly row: number;
         readonly col: number;
         readonly length: number;
-        constructor(uri: string, row: number, col: number, length: number);
+        constructor(uri: string, source: string, row: number, col: number, length: number);
+        [Symbol.toStringTag]: string;
         static unknown: $mol_span;
-        static begin(uri: string): $mol_span;
-        static end(uri: string, length: number): $mol_span;
-        static entire(uri: string, length: number): $mol_span;
+        static begin(uri: string, source?: string): $mol_span;
+        static end(uri: string, source: string): $mol_span;
+        static entire(uri: string, source: string): $mol_span;
         toString(): string;
         toJSON(): {
             uri: string;
@@ -496,8 +498,8 @@ declare namespace $ {
         };
         error(message: string, Class?: ErrorConstructor): Error;
         span(row: number, col: number, length: number): $mol_span;
-        after(length: number): $mol_span;
-        slice(begin: number, end: number): $mol_span;
+        after(length?: number): $mol_span;
+        slice(begin: number, end?: number): $mol_span;
     }
 }
 

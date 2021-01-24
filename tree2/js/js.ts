@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_tree2_js_to_text( js: $mol_tree2 ) {
+	export function $mol_tree2_js_to_text( this: $, js: $mol_tree2 ) {
 
 		function sequence( open?: string, separator?: string, close?: string ) {
 			return ( input: $mol_tree2, context: Record< string, $mol_tree2_hack< never > > )=> [
@@ -37,7 +37,7 @@ namespace $ {
 			]
 		}
 
-		return js.list( js.hack({
+		return js.list([ js.struct( 'line', js.hack({
 
 			'+': sequence( '+' ),
 			'-': sequence( '-' ),
@@ -184,7 +184,7 @@ namespace $ {
 
 			},
 
-		}) )
+		}) ) ])
 
 	}
 

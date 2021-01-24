@@ -87,7 +87,7 @@ namespace $ {
 			const locale = file.parent().resolve( `-view.tree/${ name }.locale=en.json` )
 			
 			const text = file.text()
-			const tree = $mol_tree2.fromString( text , new $mol_span(file.path(), 0, 0, text.length) )
+			const tree = $mol_tree2.fromString( text , $mol_span.entire( file.path(), text ) )
 			const res = this.$.$mol_view_tree2_ts_compile( tree )
 
 			script.text( res.script )

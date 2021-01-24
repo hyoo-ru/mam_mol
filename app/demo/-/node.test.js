@@ -23534,24 +23534,26 @@ var $;
 var $;
 (function ($) {
     class $mol_span extends $.$mol_object2 {
-        constructor(uri, row, col, length) {
+        constructor(uri, source, row, col, length) {
             super();
             this.uri = uri;
+            this.source = source;
             this.row = row;
             this.col = col;
             this.length = length;
+            this[Symbol.toStringTag] = `${this.uri}#${this.row}:${this.col}/${this.length}`;
         }
-        static begin(uri) {
-            return new $mol_span(uri, 0, 0, 0);
+        static begin(uri, source = '') {
+            return new $mol_span(uri, source, 1, 1, 0);
         }
-        static end(uri, length) {
-            return new $mol_span(uri, 0, length, length);
+        static end(uri, source) {
+            return new $mol_span(uri, source, 1, source.length + 1, length);
         }
-        static entire(uri, length) {
-            return new $mol_span(uri, 0, 0, length);
+        static entire(uri, source) {
+            return new $mol_span(uri, source, 1, 1, source.length);
         }
         toString() {
-            return `${this.uri}#${this.row}:${this.col}/${this.length}`;
+            return this[Symbol.toStringTag];
         }
         toJSON() {
             return {
@@ -23565,17 +23567,23 @@ var $;
             return new Class(`${message}\n${this}`);
         }
         span(row, col, length) {
-            return new $mol_span(this.uri, row, col, length);
+            return new $mol_span(this.uri, this.source, row, col, length);
         }
-        after(length) {
-            return new $mol_span(this.uri, this.row, this.col + this.length, length);
+        after(length = 0) {
+            return new $mol_span(this.uri, this.source, this.row, this.col + this.length, length);
         }
-        slice(begin, end) {
+        slice(begin, end = -1) {
             let len = this.length;
+            if (begin < 0)
+                begin += len;
+            if (end < 0)
+                end += len;
             if (begin < 0 || begin > len)
                 this.$.$mol_fail(`Begin value '${begin}' out of range ${this}`);
             if (end < 0 || end > len)
                 this.$.$mol_fail(`End value '${end}' out of range ${this}`);
+            if (end < begin)
+                this.$.$mol_fail(`End value '${end}' can't be less than begin value ${this}`);
             return this.span(this.row, this.col + begin, end - begin);
         }
     }
@@ -23594,6 +23602,7 @@ var $;
             this.value = value;
             this.kids = kids;
             this.span = span;
+            this[Symbol.toStringTag] = type || '\\' + value;
         }
         static list(kids, span = $.$mol_span.unknown) {
             return new $mol_tree2('', '', kids, span);
@@ -24598,8 +24607,8 @@ var $;
         return {
             src,
             name: $.$mol_tree2.data(name, [], src.span.slice(0, name.length)),
-            key: key ? $.$mol_tree2.data(key, [], src.span.slice(key_pos, key.length)) : undefined,
-            next: next ? $.$mol_tree2.data(next, [], src.span.slice(next_pos, next.length)) : undefined
+            key: key ? $.$mol_tree2.data(key, [], src.span.slice(key_pos, key_pos + key.length)) : undefined,
+            next: next ? $.$mol_tree2.data(next, [], src.span.slice(next_pos, next_pos + next.length)) : undefined
         };
     }
     $.$mol_view_tree2_prop_split = $mol_view_tree2_prop_split;
@@ -24739,7 +24748,7 @@ var $;
             classes_static() {
                 const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tdom_name \\\n\n';
                 const source = view_tree + $.$mol_fetch.text('web.view.tree');
-                const span = $.$mol_span.entire('web.view.tree', source.length);
+                const span = $.$mol_span.entire('web.view.tree', source);
                 return this.$.$mol_view_tree2_classes($.$mol_tree2.fromString(source, span));
             }
             classes(next) {
@@ -29885,7 +29894,7 @@ var $;
 (function ($_1) {
     $_1.$mol_test({
         'span for same uri'($) {
-            const span = new $_1.$mol_span('test.ts', 1, 3, 4);
+            const span = new $_1.$mol_span('test.ts', '', 1, 3, 4);
             const child = span.span(4, 5, 8);
             $_1.$mol_assert_equal(child.uri, 'test.ts');
             $_1.$mol_assert_equal(child.row, 4);
@@ -29893,7 +29902,7 @@ var $;
             $_1.$mol_assert_equal(child.length, 8);
         },
         'span after of given position'($) {
-            const span = new $_1.$mol_span('test.ts', 1, 3, 4);
+            const span = new $_1.$mol_span('test.ts', '', 1, 3, 4);
             const child = span.after(11);
             $_1.$mol_assert_equal(child.uri, 'test.ts');
             $_1.$mol_assert_equal(child.row, 1);
@@ -29901,7 +29910,7 @@ var $;
             $_1.$mol_assert_equal(child.length, 11);
         },
         'slice span - regular'($) {
-            const span = new $_1.$mol_span('test.ts', 1, 3, 5);
+            const span = new $_1.$mol_span('test.ts', '', 1, 3, 5);
             const child = span.slice(1, 4);
             $_1.$mol_assert_equal(child.row, 1);
             $_1.$mol_assert_equal(child.col, 4);
@@ -29910,15 +29919,21 @@ var $;
             $_1.$mol_assert_equal(child2.col, 5);
             $_1.$mol_assert_equal(child2.length, 0);
         },
+        'slice span - negative'($) {
+            const span = new $_1.$mol_span('test.ts', '', 1, 3, 5);
+            const child = span.slice(-3, -1);
+            $_1.$mol_assert_equal(child.row, 1);
+            $_1.$mol_assert_equal(child.col, 5);
+            $_1.$mol_assert_equal(child.length, 2);
+        },
         'slice span - out of range'($) {
-            const span = new $_1.$mol_span('test.ts', 1, 3, 5);
-            $_1.$mol_assert_fail(() => span.slice(-1, 4));
+            const span = new $_1.$mol_span('test.ts', '', 1, 3, 5);
+            $_1.$mol_assert_fail(() => span.slice(-1, 3));
             $_1.$mol_assert_fail(() => span.slice(1, 6));
             $_1.$mol_assert_fail(() => span.slice(1, 10));
-            $_1.$mol_assert_fail(() => span.slice(1, -1));
         },
         'error handling'($) {
-            const span = new $_1.$mol_span('test.ts', 1, 3, 4);
+            const span = new $_1.$mol_span('test.ts', '', 1, 3, 4);
             const error = span.error('some error');
             $_1.$mol_assert_equal(error.message, 'some error\ntest.ts#1:3/4');
         }
@@ -30060,7 +30075,7 @@ var $;
 	`);
         $_1.$mol_test({
             'props'($) {
-                const span = $_1.$mol_span.entire('/mol/view/tree2/class/props.test.ts', src.length);
+                const span = $_1.$mol_span.entire('/mol/view/tree2/class/props.test.ts', src);
                 const mod = $_1.$mol_tree2.fromString(src, span);
                 const result = $.$mol_view_tree2_class_props(mod.kids[0]).toString();
                 $_1.$mol_assert_equal(result, dest.toString());
