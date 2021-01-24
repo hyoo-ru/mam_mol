@@ -13,7 +13,7 @@ namespace $ {
 				convert(`
 					true
 				`),
-				'true',
+				'true\n',
 			)
 		},
 		
@@ -23,28 +23,28 @@ namespace $ {
 				convert(`
 					1.2
 				`),
-				'1.2',
+				'1.2\n',
 			)
 			
 			$mol_assert_equal(
 				convert(`
 					1e+2
 				`),
-				'1e+2',
+				'1e+2\n',
 			)
 			
 			$mol_assert_equal(
 				convert(`
 					-Infinity
 				`),
-				'-Infinity',
+				'-Infinity\n',
 			)
 			
 			$mol_assert_equal(
 				convert(`
 					NaN
 				`),
-				'NaN',
+				'NaN\n',
 			)
 			
 		},
@@ -55,21 +55,21 @@ namespace $ {
 				convert(`
 					a
 				`),
-				'a',
+				'a\n',
 			)
 
 			$mol_assert_equal(
 				convert(`
 					$
 				`),
-				'$',
+				'$\n',
 			)
 
 			$mol_assert_equal(
 				convert(`
 					a0
 				`),
-				'a0',
+				'a0\n',
 			)
 
 		},
@@ -82,7 +82,7 @@ namespace $ {
 						\\foo
 						\\bar
 				`),
-				'"foo\\nbar"',
+				'"foo\\nbar"\n',
 			)
 			
 			$mol_assert_equal(
@@ -91,7 +91,7 @@ namespace $ {
 						\\foo
 						bar
 				`),
-				'`foo${bar}`',
+				'`foo${bar}`\n',
 			)
 
 		},
@@ -111,7 +111,7 @@ namespace $ {
 				convert(`
 					[,]
 				`),
-				'[]',
+				'[]\n',
 			)
 			
 			$mol_assert_equal(
@@ -120,7 +120,7 @@ namespace $ {
 						1
 						2
 				`),
-				'[1,2]',
+				'[1,2]\n',
 			)
 			
 		},
@@ -133,7 +133,7 @@ namespace $ {
 						1
 						2
 				`),
-				'(1,2)',
+				'(1,2)\n',
 			)
 			
 		},
@@ -146,7 +146,7 @@ namespace $ {
 						1
 						2
 				`),
-				'{1;2}',
+				'{1;2}\n',
 			)
 			
 		},
@@ -157,7 +157,7 @@ namespace $ {
 				convert(`
 					{,}
 				`),
-				'{}',
+				'{}\n',
 			)
 			
 			$mol_assert_equal(
@@ -166,7 +166,7 @@ namespace $ {
 						foo
 						bar
 				`),
-				'{foo,bar}',
+				'{foo,bar}\n',
 			)
 			
 			$mol_assert_equal(
@@ -179,7 +179,7 @@ namespace $ {
 							bar
 							2
 				`),
-				'{["foo"]:1,[bar]:2}',
+				'{["foo"]:1,[bar]:2}\n',
 			)
 			
 		},
@@ -194,7 +194,7 @@ namespace $ {
 						.ignoreCase
 						.global
 				`),
-				'/foo\\\\n/mig',
+				'/foo\\\\n/mig\n',
 			)
 			
 		},
@@ -205,7 +205,7 @@ namespace $ {
 				convert(`
 					void yield* yield await ~ ! - + 1
 				`),
-				'void yield* yield await ~!-+1',
+				'void yield* yield await ~!-+1\n',
 			)
 			
 		},
@@ -219,14 +219,14 @@ namespace $ {
 						2
 						3
 				`),
-				'(1+2+3)',
+				'(1+2+3)\n',
 			)
 			
 			$mol_assert_equal(
 				convert(`
 					@++ foo
 				`),
-				'foo++',
+				'foo++\n',
 			)
 			
 		},
@@ -240,7 +240,7 @@ namespace $ {
 						[,] \\bar
 						[,] 1
 				`),
-				'(foo["bar"][1])',
+				'(foo["bar"][1])\n',
 			)
 			
 			$mol_assert_equal(
@@ -250,7 +250,7 @@ namespace $ {
 						[,] 1
 						(,)
 				`),
-				'(foo[1]())',
+				'(foo[1]())\n',
 			)
 			
 			$mol_assert_equal(
@@ -262,7 +262,7 @@ namespace $ {
 							2
 							3
 				`),
-				'([0][1](2,3))',
+				'([0][1](2,3))\n',
 			)
 			
 		},
@@ -275,7 +275,7 @@ namespace $ {
 						(,)
 						1
 				`),
-				'()=>1',
+				'()=>1\n',
 			)
 			
 			$mol_assert_equal(
@@ -284,7 +284,7 @@ namespace $ {
 						(,)
 						1
 				`),
-				'async ()=>1',
+				'async ()=>1\n',
 			)
 			
 			$mol_assert_equal(
@@ -294,7 +294,7 @@ namespace $ {
 						(,)
 						{;}
 				`),
-				'function foo(){}',
+				'function foo(){}\n',
 			)
 			
 			$mol_assert_equal(
@@ -303,7 +303,7 @@ namespace $ {
 						(,) foo
 						{;} debugger
 				`),
-				'function (foo){debugger}',
+				'function (foo){debugger}\n',
 			)
 			
 			$mol_assert_equal(
@@ -312,7 +312,7 @@ namespace $ {
 						(,)
 						{;}
 				`),
-				'function* (){}',
+				'function* (){}\n',
 			)
 			
 			$mol_assert_equal(
@@ -321,7 +321,7 @@ namespace $ {
 						(,)
 						{;}
 				`),
-				'async function (){}',
+				'async function (){}\n',
 			)
 			
 			$mol_assert_equal(
@@ -330,7 +330,7 @@ namespace $ {
 						(,) foo
 						{;} debugger
 				`),
-				'async function* (foo){debugger}',
+				'async function* (foo){debugger}\n',
 			)
 			
 		},
@@ -345,7 +345,7 @@ namespace $ {
 							(,)
 							{;}
 				`),
-				'class {["foo"](){}}',
+				'class {["foo"](){}}\n',
 			)
 			
 			$mol_assert_equal(
@@ -356,7 +356,7 @@ namespace $ {
 							(,)
 							{;}
 				`),
-				'class {static ["foo"](){}}',
+				'class {static ["foo"](){}}\n',
 			)
 			
 			$mol_assert_equal(
@@ -367,7 +367,7 @@ namespace $ {
 							(,)
 							{;}
 				`),
-				'class {get ["foo"](){}}',
+				'class {get ["foo"](){}}\n',
 			)
 			
 			$mol_assert_equal(
@@ -378,7 +378,7 @@ namespace $ {
 							(,) bar
 							{;}
 				`),
-				'class {set ["foo"](bar){}}',
+				'class {set ["foo"](bar){}}\n',
 			)
 			
 		},
@@ -392,7 +392,7 @@ namespace $ {
 						2
 						3
 				`),
-				'1?2:3',
+				'1?2:3\n',
 			)
 			
 			$mol_assert_equal(
@@ -401,7 +401,7 @@ namespace $ {
 						() 1
 						{;} 2
 				`),
-				'if(1){2}',
+				'if(1){2}\n',
 			)
 
 			$mol_assert_equal(
@@ -411,7 +411,7 @@ namespace $ {
 						{;} 2
 						{;} 3
 				`),
-				'if(1){2}else{3}',
+				'if(1){2}else{3}\n',
 			)
 
 		},
@@ -424,7 +424,7 @@ namespace $ {
 						foo
 						bar
 				`),
-				'foo=bar',
+				'foo=bar\n',
 			)
 			
 			$mol_assert_equal(
@@ -437,14 +437,14 @@ namespace $ {
 							1
 							2
 				`),
-				'[foo,bar]=[1,2]',
+				'[foo,bar]=[1,2]\n',
 			)
 			
 			$mol_assert_equal(
 				convert(`
 					let foo
 				`),
-				'let foo',
+				'let foo\n',
 			)
 			
 			$mol_assert_equal(
@@ -453,7 +453,7 @@ namespace $ {
 						foo
 						bar
 				`),
-				'let foo=bar',
+				'let foo=bar\n',
 			)
 			
 			$mol_assert_equal(
@@ -462,40 +462,11 @@ namespace $ {
 						foo
 						bar
 				`),
-				'foo+=bar',
+				'foo+=bar\n',
 			)
 			
 		},
 
 	})
-
-	// const source = `
-	// 	{;}
-	// 		const
-	// 			foo
-	// 			=>
-	// 				(,) =
-	// 					bar
-	// 					1
-	// 				{;} ()
-	// 					console
-	// 					[,] \\log
-	// 					(,) bar
-	// 		()
-	// 			foo
-	// 			(,) 2
-	// `
-	// const js = $$.$mol_tree2_from_string( source, $mol_span.entire( 'xxx.js.tree', source.length ) )
-	// const text = $.$mol_tree2_js_to_text( js )
-	// const code = $.$mol_tree2_text_to_string( text )
-	// const map = {
-	// 	... $.$mol_tree2_text_to_sourcemap( text ),
-	// 	sourcesContent: [ source ],
-	// }
-	// const uri = [
-	// 	'https://sokra.github.io/source-map-visualization/#base64',
-	// 	btoa( code ), btoa( JSON.stringify( map ) ), ... map.sourcesContent.map( btoa ),
-	// ].join( ',' )
-	// console.log( uri )
 
 }
