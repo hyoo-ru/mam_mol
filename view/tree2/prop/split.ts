@@ -30,8 +30,8 @@ namespace $ {
 		return {
 			src,
 			name: $mol_tree2.data(name, [], src.span.slice(0, name.length)),
-			key: key ? $mol_tree2.data(key, [], src.span.slice(key_pos, key.length)) : undefined,
-			next: next ? $mol_tree2.data(next, [], src.span.slice(next_pos, next.length)) : undefined
+			key: key ? $mol_tree2.data(key, [], src.span.slice(key_pos, key_pos + key.length)) : undefined,
+			next: next ? $mol_tree2.data(next, [], src.span.slice(next_pos, next_pos + next.length)) : undefined
 		}
 	}
 
