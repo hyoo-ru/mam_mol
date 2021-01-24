@@ -37,8 +37,11 @@ namespace $ {
 			/** Position in most far source resource */
 			readonly span : $mol_span,
 
-		) { super() }
-		
+		) {
+			super()
+			this[ Symbol.toStringTag ] = type || '\\' + value
+		}
+
 		/** Makes collection node. */
 		static list(
 			kids : readonly $mol_tree2[] ,
