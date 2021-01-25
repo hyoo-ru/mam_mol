@@ -29,6 +29,8 @@ namespace $ {
 		}
 
 		visit( grammar )
+
+		return grammar
 	}
 
 }
