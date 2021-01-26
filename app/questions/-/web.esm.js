@@ -6435,7 +6435,7 @@ var $;
     }
     $.$mol_html_decode = $mol_html_decode;
 })($ || ($ = {}));
-//html.js.map
+//decode.js.map
 ;
 "use strict";
 var $;
