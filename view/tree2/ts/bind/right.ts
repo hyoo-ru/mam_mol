@@ -24,8 +24,8 @@ namespace $ {
 
 		const index = context.index(owner_parts)
 
-		const body = $mol_tree2.struct('block', [
-			$mol_tree2.struct('inline', [
+		const body = operator.struct('block', [
+			operator.struct('inline', [
 				owner_parts.name.data('return this.'),
 				this.$mol_view_tree2_ts_function_call(factory),
 				owner_parts.name.data('.'),
@@ -33,9 +33,9 @@ namespace $ {
 			])
 		])
 
-		const method = $mol_tree2.struct('lines', [
+		const method = operator.struct('lines', [
 			this.$mol_view_tree2_ts_comment_doc(owner_parts.src),
-			$mol_tree2.struct('inline', [
+			operator.struct('inline', [
 				owner_parts.name,
 				$mol_view_tree2_ts_function_declaration(owner_parts, context.types),
 				owner_parts.name.data(' {'),

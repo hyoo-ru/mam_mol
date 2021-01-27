@@ -3417,7 +3417,7 @@ var $;
 			title \close
 			click?event <=> close?event
 		Speech $${''}mol_speech text => speech
-	`);
+	`, 'reference');
         $_1.$mol_test({
             'props'($) {
                 const mod = $.$mol_tree2_from_string(src, '/mol/view/tree2/class/props.test.ts');

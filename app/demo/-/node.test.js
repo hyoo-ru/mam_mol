@@ -24406,7 +24406,7 @@ var $;
                 return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Locale key \`${key}\` at ${operator.span} conflicts with same at ${prev.span}`);
             this.locale_nodes.set(key, val);
             this.locales[key] = val.value;
-            return $_1.$mol_tree2.struct('inline', body);
+            return operator.struct('inline', body);
         }
     }
     $_1.$mol_view_tree2_context = $mol_view_tree2_context;
@@ -30073,7 +30073,7 @@ var $;
 			title \close
 			click?event <=> close?event
 		Speech $${''}mol_speech text => speech
-	`);
+	`, 'reference');
         $_1.$mol_test({
             'props'($) {
                 const mod = $.$mol_tree2_from_string(src, '/mol/view/tree2/class/props.test.ts');

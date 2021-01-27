@@ -46,9 +46,9 @@ namespace $ {
 
 			if (opt !== last) child_sub.push(value.data(','))
 
-			sub.push($mol_tree2.struct('inline', child_sub))
+			sub.push(opt.struct('inline', child_sub))
 		}
 
-		return $mol_tree2.struct('block', sub)
+		return operator.struct('block', sub)
 	}
 }

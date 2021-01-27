@@ -55,7 +55,7 @@ namespace $ {
 				continue
 			}
 			else if (type === '@') value = this.$mol_view_tree2_ts_locale(operator, context)
-			else if (type === '*') value = $mol_tree2.struct('inline', [
+			else if (type === '*') value = child.struct('inline', [
 				child.data('('),
 				this.$mol_view_tree2_ts_dictionary(operator, context),
 				child.data(')'),
@@ -63,7 +63,7 @@ namespace $ {
 			else if (type[0] === '/') value = this.$mol_view_tree2_ts_array(operator, context)
 			else value = this.$mol_view_tree2_ts_value(operator)
 
-			const call = $mol_tree2.struct('inline', [
+			const call = child.struct('inline', [
 				obj_node,
 				child.data('.'),
 				child_parts.name,
@@ -84,7 +84,7 @@ namespace $ {
 		]
 
 		if (constructor_args) init.push(
-			$mol_tree2.struct('lines', [
+			klass.struct('lines', [
 				klass.data('('),
 				constructor_args,
 				klass.data(')'),
@@ -93,21 +93,21 @@ namespace $ {
 		else init.push(klass.data('()'))
 
 		const sub = [
-			$mol_tree2.struct('inline', init),
+			klass.struct('inline', init),
 			klass.data(''),
 		]
-		if (body.length > 0) sub.push($mol_tree2.struct('lines', body))
+		if (body.length > 0) sub.push(klass.struct('lines', body))
 
 		if (body.length > 0 && ! constructor_args) sub.push(klass.data(''))
 
 		sub.push(
-			$mol_tree2.struct('inline', [
+			obj_node.struct('inline', [
 				klass.data('return '),
 				obj_node
 			])
 		)
 
-		return $mol_tree2.struct('block', sub)
+		return klass.struct('block', sub)
 	}
 
 	const example = new $mol_view_tree2_error_suggestions([

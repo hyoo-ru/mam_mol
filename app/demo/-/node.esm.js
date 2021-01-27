@@ -24413,7 +24413,7 @@ var $;
                 return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Locale key \`${key}\` at ${operator.span} conflicts with same at ${prev.span}`);
             this.locale_nodes.set(key, val);
             this.locales[key] = val.value;
-            return $_1.$mol_tree2.struct('inline', body);
+            return operator.struct('inline', body);
         }
     }
     $_1.$mol_view_tree2_context = $mol_view_tree2_context;

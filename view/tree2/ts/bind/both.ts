@@ -18,7 +18,7 @@ namespace $ {
 			this.$mol_view_tree2_ts_method_body(owner_parts, context.root())
 		}
 
-		return $mol_tree2.struct('inline', [
+		return operator.struct('inline', [
 			owner_parts.name.data('this.'),
 			this.$mol_view_tree2_ts_function_call(owner_parts),
 		])

@@ -2733,7 +2733,7 @@ var $;
                 return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Locale key \`${key}\` at ${operator.span} conflicts with same at ${prev.span}`);
             this.locale_nodes.set(key, val);
             this.locales[key] = val.value;
-            return $_1.$mol_tree2.struct('inline', body);
+            return operator.struct('inline', body);
         }
     }
     $_1.$mol_view_tree2_context = $mol_view_tree2_context;
@@ -2990,7 +2990,7 @@ var $;
         if (default_value && default_value.type !== '-' && !context.get_method(owner_parts)) {
             this.$mol_view_tree2_ts_method_body(owner_parts, context.root());
         }
-        return $.$mol_tree2.struct('inline', [
+        return operator.struct('inline', [
             owner_parts.name.data('this.'),
             this.$mol_view_tree2_ts_function_call(owner_parts),
         ]);
@@ -3014,7 +3014,7 @@ var $;
         if (default_value && default_value.type !== '-' && !context.get_method(owner_parts)) {
             this.$mol_view_tree2_ts_method_body(owner_parts, context.root());
         }
-        return $.$mol_tree2.struct('inline', [
+        return operator.struct('inline', [
             owner_parts.name.data('this.'),
             this.$mol_view_tree2_ts_function_call(owner_call_parts),
         ]);
@@ -3033,17 +3033,17 @@ var $;
         if (prev)
             return this.$mol_fail(err `Method ${owner_parts.name.value} at ${owner_parts.name.span} already defined at ${prev.src.span}, ${example}`);
         const index = context.index(owner_parts);
-        const body = $.$mol_tree2.struct('block', [
-            $.$mol_tree2.struct('inline', [
+        const body = operator.struct('block', [
+            operator.struct('inline', [
                 owner_parts.name.data('return this.'),
                 this.$mol_view_tree2_ts_function_call(factory),
                 owner_parts.name.data('.'),
                 this.$mol_view_tree2_ts_function_call(having_parts),
             ])
         ]);
-        const method = $.$mol_tree2.struct('lines', [
+        const method = operator.struct('lines', [
             this.$mol_view_tree2_ts_comment_doc(owner_parts.src),
-            $.$mol_tree2.struct('inline', [
+            operator.struct('inline', [
                 owner_parts.name,
                 $.$mol_view_tree2_ts_function_declaration(owner_parts, context.types),
                 owner_parts.name.data(' {'),
@@ -3262,7 +3262,7 @@ var $;
     $.$mol_view_tree2_ts_comment = $mol_view_tree2_ts_comment;
     function $mol_view_tree2_ts_comment_doc(item) {
         const chunks = item.toString().trim().split('\n');
-        return $.$mol_tree2.struct('lines', [
+        return item.struct('lines', [
             item.data(''),
             item.data('/**'),
             item.data(' * ```tree'),
@@ -3294,15 +3294,15 @@ var $;
                 continue;
             this.$mol_view_tree2_ts_method_body(having_parts, context);
         }
-        return $.$mol_tree2.struct('block', [
-            $.$mol_tree2.struct('inline', [
+        return klass.struct('block', [
+            klass.struct('inline', [
                 klass.data('export class '),
                 klass.data(klass.type),
                 klass.data(' extends '),
                 superclass.data(superclass.type),
                 klass.data(' {'),
             ]),
-            $.$mol_tree2.struct('block', body),
+            klass.struct('block', body),
             klass.data('}'),
             klass.data(''),
         ]);
@@ -3391,7 +3391,7 @@ var $;
     const err = $_1.$mol_view_tree2_error_str;
     function $mol_view_tree2_ts_spread(spread_prop) {
         const spread_prop_parts = this.$mol_view_tree2_prop_split(spread_prop);
-        return $_1.$mol_tree2.struct('inline', [
+        return spread_prop.struct('inline', [
             spread_prop.data('...this.'),
             this.$mol_view_tree2_ts_function_call(spread_prop_parts)
         ]);
@@ -3413,7 +3413,7 @@ var $;
                 return this.$.$mol_fail(err `Only one \`^\` operator allowed at ${prop.span}, first was at ${super_spread.span}`);
             if (!this.prop_parts)
                 return this.$.$mol_fail(err `Operator \`^\` not allowed at ${prop.span}`);
-            this.super_spread = $_1.$mol_tree2.struct('inline', [
+            this.super_spread = prop.struct('inline', [
                 prop.data('...super.'),
                 this.$.$mol_view_tree2_ts_function_call(this.prop_parts)
             ]);
@@ -3444,7 +3444,7 @@ var $;
     function $mol_view_tree2_ts_value(src) {
         const converted = this.$mol_view_tree2_value(src);
         if (src.type === 'null')
-            return $.$mol_tree2.struct('inline', [
+            return converted.struct('inline', [
                 converted.data(converted.value),
                 converted.data(' as any'),
             ]);
@@ -3476,7 +3476,7 @@ var $;
                 const child_sub = [spread_factory.create(opt)];
                 if (opt !== last)
                     child_sub.push(opt.data(','));
-                sub.push($.$mol_tree2.struct('inline', child_sub));
+                sub.push(opt.struct('inline', child_sub));
                 continue;
             }
             const context = dictionary_context.parent(info);
@@ -3505,11 +3505,11 @@ var $;
             child_sub.push(value);
             if (opt !== last)
                 child_sub.push(opt.data(','));
-            sub.push($.$mol_tree2.struct('inline', child_sub));
+            sub.push(opt.struct('inline', child_sub));
         }
-        return $.$mol_tree2.struct('lines', [
+        return dictionary.struct('lines', [
             dictionary.data('{'),
-            $.$mol_tree2.struct('block', sub),
+            dictionary.struct('block', sub),
             dictionary.data('}'),
         ]);
     }
@@ -3556,7 +3556,7 @@ var $;
             else if (type === '@')
                 value = this.$mol_view_tree2_ts_locale(operator, context);
             else if (type === '*')
-                value = $.$mol_tree2.struct('inline', [
+                value = child.struct('inline', [
                     child.data('('),
                     this.$mol_view_tree2_ts_dictionary(operator, context),
                     child.data(')'),
@@ -3565,7 +3565,7 @@ var $;
                 value = this.$mol_view_tree2_ts_array(operator, context);
             else
                 value = this.$mol_view_tree2_ts_value(operator);
-            const call = $.$mol_tree2.struct('inline', [
+            const call = child.struct('inline', [
                 obj_node,
                 child.data('.'),
                 child_parts.name,
@@ -3583,7 +3583,7 @@ var $;
             klass.data(klass.type),
         ];
         if (constructor_args)
-            init.push($.$mol_tree2.struct('lines', [
+            init.push(klass.struct('lines', [
                 klass.data('('),
                 constructor_args,
                 klass.data(')'),
@@ -3591,18 +3591,18 @@ var $;
         else
             init.push(klass.data('()'));
         const sub = [
-            $.$mol_tree2.struct('inline', init),
+            klass.struct('inline', init),
             klass.data(''),
         ];
         if (body.length > 0)
-            sub.push($.$mol_tree2.struct('lines', body));
+            sub.push(klass.struct('lines', body));
         if (body.length > 0 && !constructor_args)
             sub.push(klass.data(''));
-        sub.push($.$mol_tree2.struct('inline', [
+        sub.push(obj_node.struct('inline', [
             klass.data('return '),
             obj_node
         ]));
-        return $.$mol_tree2.struct('block', sub);
+        return klass.struct('block', sub);
     }
     $.$mol_view_tree2_ts_factory = $mol_view_tree2_ts_factory;
     const example = new $.$mol_view_tree2_error_suggestions([
@@ -6797,9 +6797,9 @@ var $;
             const child_sub = [value];
             if (opt !== last)
                 child_sub.push(value.data(','));
-            sub.push($.$mol_tree2.struct('inline', child_sub));
+            sub.push(opt.struct('inline', child_sub));
         }
-        return $.$mol_tree2.struct('block', sub);
+        return operator.struct('block', sub);
     }
     $.$mol_view_tree2_ts_array_body = $mol_view_tree2_ts_array_body;
 })($ || ($ = {}));
@@ -6834,10 +6834,10 @@ var $;
             type_body.push(operator.data('[]'));
         }
         const body = this.$mol_view_tree2_ts_array_body(operator, context, super_method);
-        return $.$mol_tree2.struct('lines', [
+        return operator.struct('lines', [
             operator.data('['),
             body,
-            $.$mol_tree2.struct('inline', type_body)
+            operator.struct('inline', type_body)
         ]);
     }
     $.$mol_view_tree2_ts_array = $mol_view_tree2_ts_array;
@@ -6876,8 +6876,8 @@ var $;
     }
     $.$mol_view_tree2_ts_method_body = $mol_view_tree2_ts_method_body;
     function add_return(value) {
-        return $.$mol_tree2.struct('block', [
-            $.$mol_tree2.struct('inline', [
+        return value.struct('block', [
+            value.struct('inline', [
                 value.data('return '),
                 value
             ])
@@ -8838,7 +8838,7 @@ var $;
 			title \close
 			click?event <=> close?event
 		Speech $${''}mol_speech text => speech
-	`);
+	`, 'reference');
         $_1.$mol_test({
             'props'($) {
                 const mod = $.$mol_tree2_from_string(src, '/mol/view/tree2/class/props.test.ts');

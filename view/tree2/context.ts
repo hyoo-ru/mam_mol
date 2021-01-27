@@ -143,7 +143,7 @@ namespace $ {
 
 			this.locales[key] = val.value
 
-			return $mol_tree2.struct('inline', body)
+			return operator.struct('inline', body)
 		}
 	}
 }

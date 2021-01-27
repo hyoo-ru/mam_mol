@@ -35,8 +35,8 @@ namespace $ {
 	}
 
 	function add_return(value: $mol_tree2) {
-		return $mol_tree2.struct('block', [
-			$mol_tree2.struct('inline', [
+		return value.struct('block', [
+			value.struct('inline', [
 				value.data('return '),
 				value
 			])

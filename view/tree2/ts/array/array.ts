@@ -41,10 +41,10 @@ namespace $ {
 
 		const body = this.$mol_view_tree2_ts_array_body(operator, context, super_method)
 
-		return $mol_tree2.struct('lines', [
+		return operator.struct('lines', [
 			operator.data('['),
 			body,
-			$mol_tree2.struct('inline', type_body)
+			operator.struct('inline', type_body)
 		])
 	}
 }
