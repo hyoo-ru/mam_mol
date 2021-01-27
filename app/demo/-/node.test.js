@@ -23635,8 +23635,8 @@ var $;
         struct(type, kids = []) {
             return $mol_tree2.struct(type, kids, this.span);
         }
-        clone(kids) {
-            return new $mol_tree2(this.type, this.value, kids, this.span);
+        clone(kids, span = this.span) {
+            return new $mol_tree2(this.type, this.value, kids, span);
         }
         text() {
             var values = [];
@@ -23647,8 +23647,8 @@ var $;
             }
             return this.value + values.join('\n');
         }
-        static fromString(str, span = $.$mol_span.unknown) {
-            return this.$.$mol_tree2_from_string(str, span);
+        static fromString(str, uri = 'unknown') {
+            return this.$.$mol_tree2_from_string(str, uri);
         }
         toString() {
             return this.$.$mol_tree2_to_string(this);
@@ -23719,11 +23719,13 @@ var $;
             });
             return this.clone(sub);
         }
-        hack(belt, context) {
+        hack(belt, context = {}) {
             return [].concat(...this.kids.map(child => {
-                const handle = belt[Reflect.ownKeys(belt).includes(child.type) ? child.type : ''];
+                let handle = belt[Reflect.ownKeys(belt).includes(child.type) ? child.type : ''];
                 if (!handle) {
-                    this.$.$mol_fail(child.error(`Hack not found.\nAllowed: ${Object.keys(belt)}`));
+                    handle = (input, belt, context) => [
+                        input.clone(input.hack(belt, context), context.span)
+                    ];
                 }
                 return handle(child, belt, context);
             }));
@@ -23732,6 +23734,9 @@ var $;
             return this.span.error(`${message}\n${this}`, Class);
         }
     }
+    __decorate([
+        $.$mol_deprecated('Use $mol_tree2_from_string')
+    ], $mol_tree2, "fromString", null);
     $.$mol_tree2 = $mol_tree2;
     class $mol_tree2_empty extends $mol_tree2 {
         constructor() {
@@ -24448,7 +24453,8 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_tree2_from_string(str, span = $.$mol_span.unknown) {
+    function $mol_tree2_from_string(str, uri = 'unknown') {
+        const span = $.$mol_span.entire(uri, str);
         var root = $.$mol_tree2.list([], span);
         var stack = [root];
         var pos = 0, row = 0, min_indent = 0;
@@ -24573,9 +24579,6 @@ var $;
                 if (defs.length)
                     props_inner.push(prop.clone(defs));
                 return [operator.clone([prop.clone([])])];
-            },
-            '': (node, belt) => {
-                return [node.clone(node.hack(belt))];
             },
         });
         return klass.list([...props_root, ...props_inner]);
@@ -24748,8 +24751,7 @@ var $;
             classes_static() {
                 const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tdom_name \\\n\n';
                 const source = view_tree + $.$mol_fetch.text('web.view.tree');
-                const span = $.$mol_span.entire('web.view.tree', source);
-                return this.$.$mol_view_tree2_classes($.$mol_tree2.fromString(source, span));
+                return this.$.$mol_view_tree2_classes(this.$.$mol_tree2_from_string(source, 'web.view.tree'));
             }
             classes(next) {
                 if (next)
@@ -29943,35 +29945,34 @@ var $;
 ;
 "use strict";
 var $;
-(function ($) {
-    $.$mol_test({
-        'inserting'() {
-            $.$mol_assert_equal($.$mol_tree2.fromString('a b c d\n')
-                .insert($.$mol_tree2.struct('x'), 'a', 'b', 'c')
+(function ($_1) {
+    $_1.$mol_test({
+        'inserting'($) {
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b c d\n')
+                .insert($_1.$mol_tree2.struct('x'), 'a', 'b', 'c')
                 .toString(), 'a b x\n');
-            $.$mol_assert_equal($.$mol_tree2.fromString('a b\n')
-                .insert($.$mol_tree2.struct('x'), 'a', 'b', 'c', 'd')
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b\n')
+                .insert($_1.$mol_tree2.struct('x'), 'a', 'b', 'c', 'd')
                 .toString(), 'a b c x\n');
-            $.$mol_assert_equal($.$mol_tree2.fromString('a b c d\n')
-                .insert($.$mol_tree2.struct('x'), 0, 0, 0)
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b c d\n')
+                .insert($_1.$mol_tree2.struct('x'), 0, 0, 0)
                 .toString(), 'a b x\n');
-            $.$mol_assert_equal($.$mol_tree2.fromString('a b\n')
-                .insert($.$mol_tree2.struct('x'), 0, 0, 0, 0)
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b\n')
+                .insert($_1.$mol_tree2.struct('x'), 0, 0, 0, 0)
                 .toString(), 'a b \\\n\tx\n');
-            $.$mol_assert_equal($.$mol_tree2.fromString('a b c d\n')
-                .insert($.$mol_tree2.struct('x'), null, null, null)
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b c d\n')
+                .insert($_1.$mol_tree2.struct('x'), null, null, null)
                 .toString(), 'a b x\n');
-            $.$mol_assert_equal($.$mol_tree2.fromString('a b\n')
-                .insert($.$mol_tree2.struct('x'), null, null, null, null)
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b\n')
+                .insert($_1.$mol_tree2.struct('x'), null, null, null, null)
                 .toString(), 'a b \\\n\tx\n');
         },
-        'hack'() {
-            const res = $.$mol_tree2.fromString(`foo bar xxx\n`)
+        'hack'($) {
+            const res = $.$mol_tree2_from_string(`foo bar xxx\n`)
                 .hack({
-                '': (tree, belt) => [tree.clone(tree.hack(belt))],
-                'bar': (tree, belt) => [tree.struct('777', tree.hack(belt))],
+                'bar': (input, belt) => [input.struct('777', input.hack(belt))],
             });
-            $.$mol_assert_equal(res.toString(), 'foo 777 xxx\n');
+            $_1.$mol_assert_equal(res.toString(), 'foo 777 xxx\n');
         },
     });
 })($ || ($ = {}));
@@ -29997,7 +29998,7 @@ var $;
 						bar
 			`;
             $_1.$mol_assert_fail(() => {
-                $.$mol_tree2_from_string(tree, $_1.$mol_span.begin('test'));
+                $.$mol_tree2_from_string(tree, 'test');
             }, 'Too many tabs\ntest#3:1/6\n!!!!!!\n\t\t\t\t\t\tbar');
         },
         'Too few tabs'($) {
@@ -30006,19 +30007,19 @@ var $;
 				bar
 			`;
             $_1.$mol_assert_fail(() => {
-                $.$mol_tree2_from_string(tree, $_1.$mol_span.begin('test'));
+                $.$mol_tree2_from_string(tree, 'test');
             }, 'Too few tabs\ntest#3:1/4\n!!!!\n\t\t\t\tbar');
         },
         'Wrong nodes separator'($) {
             const tree = `foo  bar\n`;
             $_1.$mol_assert_fail(() => {
-                $.$mol_tree2_from_string(tree, $_1.$mol_span.begin('test'));
+                $.$mol_tree2_from_string(tree, 'test');
             }, 'Wrong nodes separator\ntest#1:4/2\n   !!\nfoo  bar');
         },
         'Undexpected EOF, LF required'($) {
             const tree = `	foo`;
             $_1.$mol_assert_fail(() => {
-                $.$mol_tree2_from_string(tree, $_1.$mol_span.begin('test'));
+                $.$mol_tree2_from_string(tree, 'test');
             }, 'Undexpected EOF, LF required\ntest#1:5/1\n	   !\n	foo');
         },
         'Errors skip and collect'($) {
@@ -30030,7 +30031,7 @@ var $;
                     return null;
                 }
             });
-            const res = $$.$mol_tree2_from_string(tree, $_1.$mol_span.begin('test'));
+            const res = $$.$mol_tree2_from_string(tree, 'test');
             $_1.$mol_assert_like(errors, [
                 'Wrong nodes separator\ntest#1:4/2\n   !!\nfoo  bar',
                 'Undexpected EOF, LF required\ntest#1:9/1\n        !\nfoo  bar',
@@ -30075,8 +30076,7 @@ var $;
 	`);
         $_1.$mol_test({
             'props'($) {
-                const span = $_1.$mol_span.entire('/mol/view/tree2/class/props.test.ts', src);
-                const mod = $_1.$mol_tree2.fromString(src, span);
+                const mod = $.$mol_tree2_from_string(src, '/mol/view/tree2/class/props.test.ts');
                 const result = $.$mol_view_tree2_class_props(mod.kids[0]).toString();
                 $_1.$mol_assert_equal(result, dest.toString());
             }

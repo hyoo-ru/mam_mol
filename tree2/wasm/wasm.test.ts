@@ -2,9 +2,9 @@ namespace $ {
 
 	$mol_test({
 
-		'module'() {
+		'module'($) {
 
-			const code = $mol_tree2.fromString( 'wasm.module' )
+			const code = $.$mol_tree2_from_string( 'wasm.module' )
 
 			$mol_assert_like(
 				new Uint8Array( $mol_tree2_wasm_to_module( code ).buffer ) ,
@@ -13,9 +13,9 @@ namespace $ {
 
 		} ,
 
-		'section'() {
+		'section'($) {
 
-			const code = $mol_tree2.fromString( `
+			const code = $.$mol_tree2_from_string( `
 				wasm.module
 					wasm.section
 						wasm.id wasm.type

@@ -3289,35 +3289,34 @@ var $;
 ;
 "use strict";
 var $;
-(function ($) {
-    $.$mol_test({
-        'inserting'() {
-            $.$mol_assert_equal($.$mol_tree2.fromString('a b c d\n')
-                .insert($.$mol_tree2.struct('x'), 'a', 'b', 'c')
+(function ($_1) {
+    $_1.$mol_test({
+        'inserting'($) {
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b c d\n')
+                .insert($_1.$mol_tree2.struct('x'), 'a', 'b', 'c')
                 .toString(), 'a b x\n');
-            $.$mol_assert_equal($.$mol_tree2.fromString('a b\n')
-                .insert($.$mol_tree2.struct('x'), 'a', 'b', 'c', 'd')
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b\n')
+                .insert($_1.$mol_tree2.struct('x'), 'a', 'b', 'c', 'd')
                 .toString(), 'a b c x\n');
-            $.$mol_assert_equal($.$mol_tree2.fromString('a b c d\n')
-                .insert($.$mol_tree2.struct('x'), 0, 0, 0)
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b c d\n')
+                .insert($_1.$mol_tree2.struct('x'), 0, 0, 0)
                 .toString(), 'a b x\n');
-            $.$mol_assert_equal($.$mol_tree2.fromString('a b\n')
-                .insert($.$mol_tree2.struct('x'), 0, 0, 0, 0)
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b\n')
+                .insert($_1.$mol_tree2.struct('x'), 0, 0, 0, 0)
                 .toString(), 'a b \\\n\tx\n');
-            $.$mol_assert_equal($.$mol_tree2.fromString('a b c d\n')
-                .insert($.$mol_tree2.struct('x'), null, null, null)
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b c d\n')
+                .insert($_1.$mol_tree2.struct('x'), null, null, null)
                 .toString(), 'a b x\n');
-            $.$mol_assert_equal($.$mol_tree2.fromString('a b\n')
-                .insert($.$mol_tree2.struct('x'), null, null, null, null)
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b\n')
+                .insert($_1.$mol_tree2.struct('x'), null, null, null, null)
                 .toString(), 'a b \\\n\tx\n');
         },
-        'hack'() {
-            const res = $.$mol_tree2.fromString(`foo bar xxx\n`)
+        'hack'($) {
+            const res = $.$mol_tree2_from_string(`foo bar xxx\n`)
                 .hack({
-                '': (tree, belt) => [tree.clone(tree.hack(belt))],
-                'bar': (tree, belt) => [tree.struct('777', tree.hack(belt))],
+                'bar': (input, belt) => [input.struct('777', input.hack(belt))],
             });
-            $.$mol_assert_equal(res.toString(), 'foo 777 xxx\n');
+            $_1.$mol_assert_equal(res.toString(), 'foo 777 xxx\n');
         },
     });
 })($ || ($ = {}));
@@ -3343,7 +3342,7 @@ var $;
 						bar
 			`;
             $_1.$mol_assert_fail(() => {
-                $.$mol_tree2_from_string(tree, $_1.$mol_span.begin('test'));
+                $.$mol_tree2_from_string(tree, 'test');
             }, 'Too many tabs\ntest#3:1/6\n!!!!!!\n\t\t\t\t\t\tbar');
         },
         'Too few tabs'($) {
@@ -3352,19 +3351,19 @@ var $;
 				bar
 			`;
             $_1.$mol_assert_fail(() => {
-                $.$mol_tree2_from_string(tree, $_1.$mol_span.begin('test'));
+                $.$mol_tree2_from_string(tree, 'test');
             }, 'Too few tabs\ntest#3:1/4\n!!!!\n\t\t\t\tbar');
         },
         'Wrong nodes separator'($) {
             const tree = `foo  bar\n`;
             $_1.$mol_assert_fail(() => {
-                $.$mol_tree2_from_string(tree, $_1.$mol_span.begin('test'));
+                $.$mol_tree2_from_string(tree, 'test');
             }, 'Wrong nodes separator\ntest#1:4/2\n   !!\nfoo  bar');
         },
         'Undexpected EOF, LF required'($) {
             const tree = `	foo`;
             $_1.$mol_assert_fail(() => {
-                $.$mol_tree2_from_string(tree, $_1.$mol_span.begin('test'));
+                $.$mol_tree2_from_string(tree, 'test');
             }, 'Undexpected EOF, LF required\ntest#1:5/1\n	   !\n	foo');
         },
         'Errors skip and collect'($) {
@@ -3376,7 +3375,7 @@ var $;
                     return null;
                 }
             });
-            const res = $$.$mol_tree2_from_string(tree, $_1.$mol_span.begin('test'));
+            const res = $$.$mol_tree2_from_string(tree, 'test');
             $_1.$mol_assert_like(errors, [
                 'Wrong nodes separator\ntest#1:4/2\n   !!\nfoo  bar',
                 'Undexpected EOF, LF required\ntest#1:9/1\n        !\nfoo  bar',
@@ -3421,8 +3420,7 @@ var $;
 	`);
         $_1.$mol_test({
             'props'($) {
-                const span = $_1.$mol_span.entire('/mol/view/tree2/class/props.test.ts', src);
-                const mod = $_1.$mol_tree2.fromString(src, span);
+                const mod = $.$mol_tree2_from_string(src, '/mol/view/tree2/class/props.test.ts');
                 const result = $.$mol_view_tree2_class_props(mod.kids[0]).toString();
                 $_1.$mol_assert_equal(result, dest.toString());
             }

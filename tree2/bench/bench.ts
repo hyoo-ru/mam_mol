@@ -47,7 +47,7 @@ namespace $ {
 		await measure( 'tree <= string <= file', async()=> {
 			tree = $$.$mol_tree2_from_string(
 				$node.fs.readFileSync('mol/tree2/bench/-big.tree').toString(),
-				$mol_span.begin( 'mol/tree2/bench/-big.tree' ),
+				'mol/tree2/bench/-big.tree',
 			)
 		} )
 

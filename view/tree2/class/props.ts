@@ -31,10 +31,6 @@ namespace $ {
 				return [ operator.clone([ prop.clone([]) ]) ]
 			},
 
-			'': ( node, belt )=> {
-				return [ node.clone( node.hack( belt ) ) ]
-			},
-
 		})
 
 		return klass.list([ ... props_root , ... props_inner ])

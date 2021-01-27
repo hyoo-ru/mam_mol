@@ -24,7 +24,7 @@ namespace $ {
 			`
 
 			$mol_assert_fail( ()=> {
-				$.$mol_tree2_from_string( tree , $mol_span.begin( 'test' ) )
+				$.$mol_tree2_from_string( tree , 'test' )
 			}, 'Too many tabs\ntest#3:1/6\n!!!!!!\n\t\t\t\t\t\tbar' )
 
 		},
@@ -37,7 +37,7 @@ namespace $ {
 			`
 
 			$mol_assert_fail( ()=> {
-				$.$mol_tree2_from_string( tree , $mol_span.begin( 'test' ) )
+				$.$mol_tree2_from_string( tree , 'test' )
 			}, 'Too few tabs\ntest#3:1/4\n!!!!\n\t\t\t\tbar' )
 
 		},
@@ -47,7 +47,7 @@ namespace $ {
 			const tree = `foo  bar\n`
 
 			$mol_assert_fail( ()=> {
-				$.$mol_tree2_from_string( tree , $mol_span.begin( 'test' ) )
+				$.$mol_tree2_from_string( tree , 'test' )
 			}, 'Wrong nodes separator\ntest#1:4/2\n   !!\nfoo  bar' )
 
 		},
@@ -57,7 +57,7 @@ namespace $ {
 			const tree = `	foo`
 
 			$mol_assert_fail( ()=> {
-				$.$mol_tree2_from_string( tree , $mol_span.begin( 'test' ) )
+				$.$mol_tree2_from_string( tree , 'test' )
 			}, 'Undexpected EOF, LF required\ntest#1:5/1\n	   !\n	foo' )
 
 		},
@@ -74,7 +74,7 @@ namespace $ {
 				}
 			})
 
-			const res = $$.$mol_tree2_from_string( tree , $mol_span.begin( 'test' ) )
+			const res = $$.$mol_tree2_from_string( tree , 'test' )
 
 			$mol_assert_like( errors, [
 				'Wrong nodes separator\ntest#1:4/2\n   !!\nfoo  bar',

@@ -6365,14 +6365,17 @@ declare namespace $ {
         data(value: string, kids?: readonly $mol_tree2[]): $mol_tree2;
         static struct(type: string, kids?: readonly $mol_tree2[], span?: $mol_span): $mol_tree2;
         struct(type: string, kids?: readonly $mol_tree2[]): $mol_tree2;
-        clone(kids: readonly $mol_tree2[]): $mol_tree2;
+        clone(kids: readonly $mol_tree2[], span?: $mol_span): $mol_tree2;
         text(): string;
-        static fromString(str: string, span?: $mol_span): $mol_tree2;
+        static fromString(str: string, uri?: string): $mol_tree2;
         toString(): string;
         insert(value: $mol_tree2, ...path: $mol_tree2_path): $mol_tree2;
         select(...path: $mol_tree2_path): $mol_tree2;
         filter(path: string[], value?: string): $mol_tree2;
-        hack<Context = never>(belt: $mol_tree2_belt<Context>, context?: Context): $mol_tree2[];
+        hack<Context extends {
+            span?: $mol_span;
+            [key: string]: unknown;
+        } = {}>(belt: $mol_tree2_belt<Context>, context?: Context): $mol_tree2[];
         error(message: string, Class?: ErrorConstructor): Error;
     }
     class $mol_tree2_empty extends $mol_tree2 {
@@ -6542,7 +6545,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_tree2_from_string(this: $, str: string, span?: $mol_span): $mol_tree2;
+    function $mol_tree2_from_string(this: $, str: string, uri?: string): $mol_tree2;
 }
 
 declare namespace $ {

@@ -23633,8 +23633,8 @@ var $;
         struct(type, kids = []) {
             return $mol_tree2.struct(type, kids, this.span);
         }
-        clone(kids) {
-            return new $mol_tree2(this.type, this.value, kids, this.span);
+        clone(kids, span = this.span) {
+            return new $mol_tree2(this.type, this.value, kids, span);
         }
         text() {
             var values = [];
@@ -23645,8 +23645,8 @@ var $;
             }
             return this.value + values.join('\n');
         }
-        static fromString(str, span = $.$mol_span.unknown) {
-            return this.$.$mol_tree2_from_string(str, span);
+        static fromString(str, uri = 'unknown') {
+            return this.$.$mol_tree2_from_string(str, uri);
         }
         toString() {
             return this.$.$mol_tree2_to_string(this);
@@ -23717,11 +23717,13 @@ var $;
             });
             return this.clone(sub);
         }
-        hack(belt, context) {
+        hack(belt, context = {}) {
             return [].concat(...this.kids.map(child => {
-                const handle = belt[Reflect.ownKeys(belt).includes(child.type) ? child.type : ''];
+                let handle = belt[Reflect.ownKeys(belt).includes(child.type) ? child.type : ''];
                 if (!handle) {
-                    this.$.$mol_fail(child.error(`Hack not found.\nAllowed: ${Object.keys(belt)}`));
+                    handle = (input, belt, context) => [
+                        input.clone(input.hack(belt, context), context.span)
+                    ];
                 }
                 return handle(child, belt, context);
             }));
@@ -23730,6 +23732,9 @@ var $;
             return this.span.error(`${message}\n${this}`, Class);
         }
     }
+    __decorate([
+        $.$mol_deprecated('Use $mol_tree2_from_string')
+    ], $mol_tree2, "fromString", null);
     $.$mol_tree2 = $mol_tree2;
     class $mol_tree2_empty extends $mol_tree2 {
         constructor() {
@@ -24446,7 +24451,8 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_tree2_from_string(str, span = $.$mol_span.unknown) {
+    function $mol_tree2_from_string(str, uri = 'unknown') {
+        const span = $.$mol_span.entire(uri, str);
         var root = $.$mol_tree2.list([], span);
         var stack = [root];
         var pos = 0, row = 0, min_indent = 0;
@@ -24571,9 +24577,6 @@ var $;
                 if (defs.length)
                     props_inner.push(prop.clone(defs));
                 return [operator.clone([prop.clone([])])];
-            },
-            '': (node, belt) => {
-                return [node.clone(node.hack(belt))];
             },
         });
         return klass.list([...props_root, ...props_inner]);
@@ -24746,8 +24749,7 @@ var $;
             classes_static() {
                 const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tdom_name \\\n\n';
                 const source = view_tree + $.$mol_fetch.text('web.view.tree');
-                const span = $.$mol_span.entire('web.view.tree', source);
-                return this.$.$mol_view_tree2_classes($.$mol_tree2.fromString(source, span));
+                return this.$.$mol_view_tree2_classes(this.$.$mol_tree2_from_string(source, 'web.view.tree'));
             }
             classes(next) {
                 if (next)
