@@ -3,9 +3,11 @@ namespace $ {
 	/** Parses tree format from string. */
 	export function $mol_tree2_from_string(
 		this: $,
-		str : string,
-		span = $mol_span.unknown,
+		str: string,
+		uri = 'unknown',
 	) : $mol_tree2 {
+
+		const span = $mol_span.entire( uri, str )
 
 		var root = $mol_tree2.list( [], span )
 		var stack = [ root ]

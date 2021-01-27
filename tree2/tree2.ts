@@ -117,8 +117,8 @@ namespace $ {
 		}
 
 		/** Makes new derived node with different kids id defined. */
-		clone( kids : readonly $mol_tree2[] ) {
-			return new $mol_tree2( this.type , this.value , kids , this.span )
+		clone( kids : readonly $mol_tree2[], span = this.span ) {
+			return new $mol_tree2( this.type , this.value , kids , span )
 		}
 
 		/** Returns multiline text content. */
@@ -136,8 +136,9 @@ namespace $ {
 		}
 		
 		/** Parses tree format. */
-		static fromString( str : string , span = $mol_span.unknown ) {
-			return this.$.$mol_tree2_from_string( str, span )
+		@ $mol_deprecated( 'Use $mol_tree2_from_string' )
+		static fromString( str : string , uri = 'unknown' ) {
+			return this.$.$mol_tree2_from_string( str, uri )
 		}
 
 		/** Serializes to tree format. */
@@ -245,13 +246,18 @@ namespace $ {
 		}
 
 		/** Transform tree through context with transformers */
-		hack< Context = never >( belt : $mol_tree2_belt< Context > , context? : Context ) {
+		hack< Context extends { span?: $mol_span; [ key: string ]: unknown } = {} >(
+			belt: $mol_tree2_belt< Context >,
+			context = {} as Context,
+		) {
 			
 			return ( [] as readonly $mol_tree2[] ).concat( ... this.kids.map( child => {
 
-				const handle = belt[ Reflect.ownKeys( belt ).includes( child.type ) ? child.type : '' ]
+				let handle = belt[ Reflect.ownKeys( belt ).includes( child.type ) ? child.type : '' ]
 				if( !handle ) {
-					this.$.$mol_fail( child.error( `Hack not found.\nAllowed: ${ Object.keys( belt )}` ) )
+					handle = ( input, belt, context )=> [
+						input.clone( input.hack( belt, context ), context.span )
+					]
 				}
 				
 				return handle( child , belt , context! )

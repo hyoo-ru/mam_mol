@@ -3,12 +3,12 @@ namespace $ {
 	export function $mol_tree2_js_to_text( this: $, js: $mol_tree2 ) {
 
 		function sequence( open?: string, separator?: string, close?: string ) {
-			return ( input: $mol_tree2, context: Record< string, $mol_tree2_hack< never > > )=> [
+			return ( input: $mol_tree2, belt: $mol_tree2_belt< never > )=> [
 				... open ? [ input.data( open ) ] : [],
 				... ( [] as $mol_tree2[] ).concat(
 					... input.kids.map( ( kid, index ) => [
 						... ( index && separator ) ? [ kid.data( separator ) ] : [],
-						... kid.list([ kid ]).hack( context ),
+						... kid.list([ kid ]).hack( belt ),
 					] ),
 				),
 				... close ? [ input.data( close ) ] : [],
@@ -16,23 +16,23 @@ namespace $ {
 		}
 
 		function duplet( open?: string, separator?: string, close?: string ) {
-			return ( input: $mol_tree2, context: Record< string, $mol_tree2_hack< never > > )=> [
+			return ( input: $mol_tree2, belt:  $mol_tree2_belt< never > )=> [
 				... open ? [ input.data( open ) ] : [],
-				... input.list( input.kids.slice( 0, 1 ) ).hack( context ),
+				... input.list( input.kids.slice( 0, 1 ) ).hack( belt ),
 				... ( separator && input.kids.length > 1 ) ? [ input.data( separator ) ] : [],
-				... input.list( input.kids.slice( 1, 2 ) ).hack( context ),
+				... input.list( input.kids.slice( 1, 2 ) ).hack( belt ),
 				... close ? [ input.data( close ) ] : [],
 			]
 		}
 
 		function triplet( open?: string, separator12?: string, separator23?: string, close?: string ) {
-			return ( input: $mol_tree2, context: Record< string, $mol_tree2_hack< never > > )=> [
+			return ( input: $mol_tree2, belt:  $mol_tree2_belt< never > )=> [
 				... open ? [ input.data( open ) ] : [],
-				... input.list( input.kids.slice( 0, 1 ) ).hack( context ),
+				... input.list( input.kids.slice( 0, 1 ) ).hack( belt ),
 				... ( separator12 && input.kids.length > 1 ) ? [ input.data( separator12 ) ] : [],
-				... input.list( input.kids.slice( 1, 2 ) ).hack( context ),
+				... input.list( input.kids.slice( 1, 2 ) ).hack( belt ),
 				... ( separator23 && input.kids.length > 2 ) ? [ input.data( separator23 ) ] : [],
-				... input.list( input.kids.slice( 2, 3 ) ).hack( context ),
+				... input.list( input.kids.slice( 2, 3 ) ).hack( belt ),
 				... close ? [ input.data( close ) ] : [],
 			]
 		}
@@ -136,20 +136,20 @@ namespace $ {
 			'.global': sequence( 'g' ),
 			'.multiline': sequence( 'm' ),
 			'.ignoreCase': sequence( 'i' ),
-			'.source': ( input, context )=> [
+			'.source': ( input, belt )=> [
 				input.data( '/' ),
 				input.data( JSON.stringify( input.text() ).slice( 1, -1 ) ),
 				input.data( '/' ),
 			],
 
-			'``': ( input, context )=> {
+			'``': ( input, belt )=> {
 				return [
 					input.data( '`' ),
 					... ( [] as $mol_tree2[] ).concat( ... input.kids.map( kid => {
 						if( kid.type ) {
 							return [
 								kid.data( '${' ),
-								... kid.list([ kid ]).hack( context ),
+								... kid.list([ kid ]).hack( belt ),
 								kid.data( '}' ),
 							]
 						} else {
@@ -162,7 +162,7 @@ namespace $ {
 				]
 			},
 
-			'': ( input, context )=> {
+			'': ( input, belt )=> {
 
 				// string
 				if( !input.type ) return [

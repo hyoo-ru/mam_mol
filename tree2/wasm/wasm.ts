@@ -12,7 +12,7 @@ namespace $ {
 	
 		return code.list( code.hack({
 
-			'' : ( input , context )=> $mol_fail( input.error( `Unknown wasm node` ) ) ,
+			'' : ( input , belt )=> $mol_fail( input.error( `Unknown wasm node` ) ) ,
 			
 			'wasm.module' : ( input , belt )=> {
 

@@ -11,7 +11,7 @@ namespace $.$$ {
 			const view = text( require( '/mol/view/tree2/ts/test/simple.view.tree.bin' ) )
 			const ts = text( require( '/mol/view/tree2/ts/test/simple.view.ts.bin' ) )
 			
-			const tree = $mol_tree2.fromString( view, $mol_span.entire( 'factory.view.tree', view ) )
+			const tree = $.$mol_tree2_from_string( view, 'factory.view.tree' )
 			const res = $.$mol_view_tree2_ts_compile( tree )
 			
 			$mol_assert_equal( res.locales['$mol_view_tree2_ts_test_simple_localized'], 'localized value' )
@@ -24,7 +24,7 @@ namespace $.$$ {
 			const view = text( require( '/mol/view/tree2/ts/test/factory.view.tree.bin' ) )
 			const ts = text( require( '/mol/view/tree2/ts/test/factory.view.ts.bin' ) )
 			
-			const tree = $mol_tree2.fromString( view, $mol_span.entire( 'factory.view.tree', view ) )
+			const tree = $.$mol_tree2_from_string( view, 'factory.view.tree' )
 			const res = $.$mol_view_tree2_ts_compile( tree )
 			
 			$mol_assert_equal( res.locales['$mol_view_tree2_ts_test_factory_Simple_localized'], 'localized value' )
@@ -75,7 +75,7 @@ namespace $.$$ {
 			
 			for( const [ view , ts ] of samples ) {
 
-				const tree = $mol_tree2.fromString( view, $mol_span.entire( 'factory.view.tree', view ) )
+				const tree = $.$mol_tree2_from_string( view, 'factory.view.tree' )
 				const res = $.$mol_view_tree2_ts_compile( tree )
 
 				$mol_assert_equal( res.script, ts )

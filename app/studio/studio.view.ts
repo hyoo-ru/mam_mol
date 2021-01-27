@@ -21,8 +21,7 @@ namespace $.$$ {
 		classes_static() {
 			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tdom_name \\\n\n'
 			const source = view_tree + $mol_fetch.text( 'web.view.tree' )
-			const span = $mol_span.entire( 'web.view.tree', source )
-			return this.$.$mol_view_tree2_classes( $mol_tree2.fromString( source, span ) )
+			return this.$.$mol_view_tree2_classes( this.$.$mol_tree2_from_string( source, 'web.view.tree' ) )
 		}
 		
 		@ $mol_mem
