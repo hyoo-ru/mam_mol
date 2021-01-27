@@ -22,8 +22,8 @@ namespace $ {
 			this.$mol_view_tree2_ts_method_body(having_parts, context)
 		}
 
-		return $mol_tree2.struct('block', [
-			$mol_tree2.struct('inline', [
+		return klass.struct('block', [
+			klass.struct('inline', [
 				klass.data('export class '),
 				klass.data(klass.type),
 				klass.data(' extends '),
@@ -31,7 +31,7 @@ namespace $ {
 				klass.data(' {'),
 			]),
 
-			$mol_tree2.struct('block', body),
+			klass.struct('block', body),
 
 			klass.data('}'),
 			klass.data(''),

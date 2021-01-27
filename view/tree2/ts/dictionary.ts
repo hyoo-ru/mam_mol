@@ -43,7 +43,7 @@ namespace $ {
 			if (opt.type === '^') {
 				const child_sub = [ spread_factory.create(opt) ]
 				if (opt !== last) child_sub.push(opt.data(','))
-				sub.push($mol_tree2.struct('inline', child_sub))
+				sub.push(opt.struct('inline', child_sub))
 				continue
 			}
 
@@ -76,12 +76,12 @@ namespace $ {
 
 			if (opt !== last) child_sub.push(opt.data(','))
 
-			sub.push($mol_tree2.struct('inline', child_sub))
+			sub.push(opt.struct('inline', child_sub))
 		}
 
-		return $mol_tree2.struct('lines', [
+		return dictionary.struct('lines', [
 			dictionary.data('{'),
-			$mol_tree2.struct('block', sub),
+			dictionary.struct('block', sub),
 			dictionary.data('}'),
 		])
 	}

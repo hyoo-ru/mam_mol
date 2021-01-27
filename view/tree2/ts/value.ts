@@ -5,7 +5,7 @@ namespace $ {
 	) {
 		const converted = this.$mol_view_tree2_value(src)
 
-		if (src.type === 'null') return $mol_tree2.struct('inline', [
+		if (src.type === 'null') return converted.struct('inline', [
 			converted.data(converted.value),
 			converted.data(' as any'),
 		])

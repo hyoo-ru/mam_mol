@@ -6,7 +6,7 @@ namespace $ {
 	export function $mol_view_tree2_ts_comment_doc(this: $, item: $mol_tree2) {
 		const chunks = item.toString().trim().split('\n')
 
-		return $mol_tree2.struct('lines', [
+		return item.struct('lines', [
 			item.data(''),
 			item.data('/**'),
 			item.data(' * ```tree'),

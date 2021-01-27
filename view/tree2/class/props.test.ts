@@ -26,7 +26,7 @@ namespace $.$$ {
 			title \close
 			click?event <=> close?event
 		Speech $${''}mol_speech text => speech
-	`)
+	`, 'reference')
 
 	$mol_test({
 		'props'($) {
