@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_app_quine extends $mol_page {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Quine - Application that prints self sources
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_app_quine_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * body / <= Content
@@ -20,8 +20,7 @@ namespace $ {
 				this.Content()
 			] as readonly any[]
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * paths /
@@ -39,7 +38,7 @@ namespace $ {
 				"mol/app/quine/quine.locale=ru.json"
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * content \
@@ -48,7 +47,7 @@ namespace $ {
 		content() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Text $mol_text text <= content
@@ -57,12 +56,12 @@ namespace $ {
 		@ $mol_mem
 		Text() {
 			const obj = new this.$.$mol_text()
-
+			
 			obj.text = () => this.content()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Content $mol_row sub / <= Text
@@ -71,13 +70,14 @@ namespace $ {
 		@ $mol_mem
 		Content() {
 			const obj = new this.$.$mol_row()
-
+			
 			obj.sub = () => [
 				this.Text()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

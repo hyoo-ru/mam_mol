@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_nav_demo extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Number input control with various configuration
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_nav_demo_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * plugins / <= Nav
@@ -20,7 +20,7 @@ namespace $ {
 				this.Nav()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -36,7 +36,7 @@ namespace $ {
 				this.Row_list()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Nav $mol_nav
@@ -49,15 +49,15 @@ namespace $ {
 		@ $mol_mem
 		Nav() {
 			const obj = new this.$.$mol_nav()
-
+			
 			obj.keys_x = () => this.tab_list()
 			obj.current_x = (val?: any) => this.tab_current(val)
 			obj.keys_y = () => this.row_list()
 			obj.current_y = (val?: any) => this.row_current(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint @ \Select option and use keys to switch
@@ -66,7 +66,7 @@ namespace $ {
 		hint() {
 			return this.$.$mol_locale.text( '$mol_nav_demo_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Hint $mol_view sub / <= hint
@@ -75,14 +75,14 @@ namespace $ {
 		@ $mol_mem
 		Hint() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.hint()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * tab_current?val \
@@ -93,7 +93,16 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
+		/**
+		 * ```tree
+		 * tab_list
+		 * ```
+		 */
+		tab_list() {
+			return this.Tab_list().keys()
+		}
+		
 		/**
 		 * ```tree
 		 * Tab_list $mol_switch
@@ -108,26 +117,17 @@ namespace $ {
 		@ $mol_mem
 		Tab_list() {
 			const obj = new this.$.$mol_switch()
-
+			
 			obj.value = (val?: any) => this.tab_current(val)
 			obj.options = () => ({
 				first: "First",
 				second: "Second",
 				third: "Third"
 			})
-
+			
 			return obj
 		}
-
-		/**
-		 * ```tree
-		 * tab_list
-		 * ```
-		 */
-		tab_list() {
-			return this.Tab_list().keys()
-		}
-
+		
 		/**
 		 * ```tree
 		 * row_current?val \
@@ -138,7 +138,16 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
+		/**
+		 * ```tree
+		 * row_list
+		 * ```
+		 */
+		row_list() {
+			return this.Row_list().keys()
+		}
+		
 		/**
 		 * ```tree
 		 * Row_list $mol_switch
@@ -153,25 +162,17 @@ namespace $ {
 		@ $mol_mem
 		Row_list() {
 			const obj = new this.$.$mol_switch()
-
+			
 			obj.value = (val?: any) => this.row_current(val)
 			obj.options = () => ({
 				first: "First",
 				second: "Second",
 				third: "Third"
 			})
-
+			
 			return obj
 		}
-
-		/**
-		 * ```tree
-		 * row_list
-		 * ```
-		 */
-		row_list() {
-			return this.Row_list().keys()
-		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_svg_rect extends $mol_svg {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \rect
@@ -9,7 +9,7 @@ namespace $ {
 		dom_name() {
 			return "rect"
 		}
-
+		
 		/**
 		 * ```tree
 		 * pos /
@@ -17,10 +17,9 @@ namespace $ {
 		 */
 		pos() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -40,7 +39,7 @@ namespace $ {
 				y: this.pos_y()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * width \0
@@ -49,7 +48,7 @@ namespace $ {
 		width() {
 			return "0"
 		}
-
+		
 		/**
 		 * ```tree
 		 * height \0
@@ -58,7 +57,7 @@ namespace $ {
 		height() {
 			return "0"
 		}
-
+		
 		/**
 		 * ```tree
 		 * pos_x \
@@ -67,7 +66,7 @@ namespace $ {
 		pos_x() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * pos_y \
@@ -77,5 +76,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_app_hello extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -14,7 +14,7 @@ namespace $ {
 				this.Greeting()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * name_hint \Name
@@ -23,7 +23,7 @@ namespace $ {
 		name_hint() {
 			return "Name"
 		}
-
+		
 		/**
 		 * ```tree
 		 * name?val \
@@ -34,7 +34,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Name $mol_string
@@ -45,13 +45,13 @@ namespace $ {
 		@ $mol_mem
 		Name() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.hint = () => this.name_hint()
 			obj.value = (val?: any) => this.name(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * greeting \
@@ -60,7 +60,7 @@ namespace $ {
 		greeting() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Greeting $mol_view sub / <= greeting
@@ -69,13 +69,14 @@ namespace $ {
 		@ $mol_mem
 		Greeting() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.greeting()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

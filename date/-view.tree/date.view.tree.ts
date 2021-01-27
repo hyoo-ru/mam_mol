@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_date extends $mol_pop {
-
+		
 		/**
 		 * ```tree
 		 * Anchor <= Input
@@ -9,8 +9,7 @@ namespace $ {
 		Anchor() {
 			return this.Input()
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * bubble_content / <= Calendar
@@ -21,8 +20,7 @@ namespace $ {
 				this.Calendar()
 			] as readonly any[]
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * value_number?val NaN
@@ -33,7 +31,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return NaN
 		}
-
+		
 		/**
 		 * ```tree
 		 * value_moment?val $mol_time_moment
@@ -43,10 +41,10 @@ namespace $ {
 		value_moment(val?: any) {
 			if ( val !== undefined ) return val
 			const obj = new this.$.$mol_time_moment()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * value?val \
@@ -57,7 +55,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint \YYYY-MM-DD
@@ -66,7 +64,7 @@ namespace $ {
 		hint() {
 			return "YYYY-MM-DD"
 		}
-
+		
 		/**
 		 * ```tree
 		 * enabled true
@@ -75,7 +73,7 @@ namespace $ {
 		enabled() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * Input $mol_string
@@ -88,15 +86,15 @@ namespace $ {
 		@ $mol_mem
 		Input() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.value = (val?: any) => this.value(val)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.enabled()
 			obj.length_max = () => 10
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * month_moment <= value
@@ -105,7 +103,7 @@ namespace $ {
 		month_moment() {
 			return this.value()
 		}
-
+		
 		/**
 		 * ```tree
 		 * day_selected!day false
@@ -114,7 +112,7 @@ namespace $ {
 		day_selected(day: any) {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * day_click!day?event null
@@ -125,7 +123,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * prev_hint @ \Previous month
@@ -134,7 +132,7 @@ namespace $ {
 		prev_hint() {
 			return this.$.$mol_locale.text( '$mol_date_prev_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * prev?event null
@@ -145,7 +143,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Prev_icon $mol_icon_chevron_left
@@ -154,10 +152,10 @@ namespace $ {
 		@ $mol_mem
 		Prev_icon() {
 			const obj = new this.$.$mol_icon_chevron_left()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Prev $mol_button_minor
@@ -169,16 +167,16 @@ namespace $ {
 		@ $mol_mem
 		Prev() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.hint = () => this.prev_hint()
 			obj.click = (event?: any) => this.prev(event)
 			obj.sub = () => [
 				this.Prev_icon()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * next_hint @ \Next month
@@ -187,7 +185,7 @@ namespace $ {
 		next_hint() {
 			return this.$.$mol_locale.text( '$mol_date_next_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * next?event null
@@ -198,7 +196,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Next_icon $mol_icon_chevron_right
@@ -207,10 +205,10 @@ namespace $ {
 		@ $mol_mem
 		Next_icon() {
 			const obj = new this.$.$mol_icon_chevron_right()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Next $mol_button_minor
@@ -222,16 +220,16 @@ namespace $ {
 		@ $mol_mem
 		Next() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.hint = () => this.next_hint()
 			obj.click = (event?: any) => this.next(event)
 			obj.sub = () => [
 				this.Next_icon()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Calendar_tools $mol_view sub /
@@ -243,16 +241,25 @@ namespace $ {
 		@ $mol_mem
 		Calendar_tools() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.Prev(),
 				this.Calendar_title(),
 				this.Next()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
+		/**
+		 * ```tree
+		 * Calendar_title
+		 * ```
+		 */
+		Calendar_title() {
+			return this.Calendar().Title()
+		}
+		
 		/**
 		 * ```tree
 		 * Calendar $mol_date_calendar
@@ -266,29 +273,20 @@ namespace $ {
 		@ $mol_mem
 		Calendar() {
 			const obj = new this.$.$mol_date_calendar()
-
+			
 			obj.month_moment = () => this.month_moment()
 			obj.day_selected = (day: any) => this.day_selected(day)
 			obj.day_click = (day: any, event?: any) => this.day_click(day, event)
 			obj.head = () => [
 				this.Calendar_tools()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
-		/**
-		 * ```tree
-		 * Calendar_title
-		 * ```
-		 */
-		Calendar_title() {
-			return this.Calendar().Title()
-		}
 	}
-
+	
 	export class $mol_date_calendar extends $mol_calendar {
-
+		
 		/**
 		 * ```tree
 		 * day_content!day / <= Day_button!day
@@ -299,7 +297,7 @@ namespace $ {
 				this.Day_button(day)
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * day_click!day?event null
@@ -310,7 +308,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Day_button!day $mol_button_minor
@@ -322,13 +320,14 @@ namespace $ {
 		@ $mol_mem_key
 		Day_button(day: any) {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.title = () => this.day_text(day)
 			obj.event_click = (event?: any) => this.day_click(day, event)
 			obj.minimal_height = () => 24
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

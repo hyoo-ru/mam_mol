@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_svg_root extends $mol_svg {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \svg
@@ -9,7 +9,7 @@ namespace $ {
 		dom_name() {
 			return "svg"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -25,7 +25,7 @@ namespace $ {
 				preserveAspectRatio: this.aspect()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * view_box \0 0 100 100
@@ -34,7 +34,7 @@ namespace $ {
 		view_box() {
 			return "0 0 100 100"
 		}
-
+		
 		/**
 		 * ```tree
 		 * aspect \xMidYMid
@@ -44,5 +44,6 @@ namespace $ {
 			return "xMidYMid"
 		}
 	}
-
+	
 }
+

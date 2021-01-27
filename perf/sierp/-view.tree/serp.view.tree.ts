@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_perf_sierp extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * size_target 25
@@ -9,7 +9,7 @@ namespace $ {
 		size_target() {
 			return 25
 		}
-
+		
 		/**
 		 * ```tree
 		 * elapsed?val 0
@@ -20,7 +20,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * style * transform <= transform
@@ -31,7 +31,7 @@ namespace $ {
 				transform: this.transform()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Dots
@@ -42,7 +42,7 @@ namespace $ {
 				this.Dots()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Dot!id $mol_perf_sierp_dot
@@ -55,15 +55,15 @@ namespace $ {
 		@ $mol_mem_key
 		Dot(id: any) {
 			const obj = new this.$.$mol_perf_sierp_dot()
-
+			
 			obj.left = () => this.left(id)
 			obj.top = () => this.top(id)
 			obj.size = () => this.size(id)
 			obj.text = () => this.text()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * transform \
@@ -72,7 +72,7 @@ namespace $ {
 		transform() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * dots /
@@ -80,10 +80,9 @@ namespace $ {
 		 */
 		dots() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Dots $mol_view sub <= dots
@@ -92,12 +91,12 @@ namespace $ {
 		@ $mol_mem
 		Dots() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => this.dots()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * left!id 0
@@ -106,7 +105,7 @@ namespace $ {
 		left(id: any) {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * top!id 0
@@ -115,7 +114,7 @@ namespace $ {
 		top(id: any) {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * size!id 25
@@ -124,7 +123,7 @@ namespace $ {
 		size(id: any) {
 			return 25
 		}
-
+		
 		/**
 		 * ```tree
 		 * text \
@@ -134,9 +133,9 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 	export class $mol_perf_sierp_dot extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * size 25
@@ -145,7 +144,7 @@ namespace $ {
 		size() {
 			return 25
 		}
-
+		
 		/**
 		 * ```tree
 		 * size_px \25px
@@ -154,7 +153,7 @@ namespace $ {
 		size_px() {
 			return "25px"
 		}
-
+		
 		/**
 		 * ```tree
 		 * hover?val false
@@ -165,7 +164,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= text
@@ -176,7 +175,7 @@ namespace $ {
 				this.text()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * style *
@@ -200,7 +199,7 @@ namespace $ {
 				background: this.color()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -216,7 +215,7 @@ namespace $ {
 				mouseleave: (val?: any) => this.leave(val)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * text \
@@ -225,7 +224,7 @@ namespace $ {
 		text() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * width <= size
@@ -234,7 +233,7 @@ namespace $ {
 		width() {
 			return this.size()
 		}
-
+		
 		/**
 		 * ```tree
 		 * height <= size
@@ -243,7 +242,7 @@ namespace $ {
 		height() {
 			return this.size()
 		}
-
+		
 		/**
 		 * ```tree
 		 * left 0
@@ -252,7 +251,7 @@ namespace $ {
 		left() {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * top 0
@@ -261,7 +260,7 @@ namespace $ {
 		top() {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * radius <= size
@@ -270,7 +269,7 @@ namespace $ {
 		radius() {
 			return this.size()
 		}
-
+		
 		/**
 		 * ```tree
 		 * color \
@@ -279,7 +278,7 @@ namespace $ {
 		color() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * enter?val null
@@ -290,7 +289,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * leave?val null
@@ -302,5 +301,6 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 }
+

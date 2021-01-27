@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_button_major extends $mol_button_typed {
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -15,5 +15,6 @@ namespace $ {
 			}
 		}
 	}
-
+	
 }
+

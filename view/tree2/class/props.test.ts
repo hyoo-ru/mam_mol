@@ -31,7 +31,7 @@ namespace $.$$ {
 	$mol_test({
 		'props'($) {
 			const mod = $.$mol_tree2_from_string( src, '/mol/view/tree2/class/props.test.ts' )
-			const result = $.$mol_view_tree2_class_props(mod.kids[0]).toString()
+			const result = $.$mol_view_tree2_class_props(mod.kids[0]).join('')
 
 			$mol_assert_equal(result, dest.toString())
 		} 

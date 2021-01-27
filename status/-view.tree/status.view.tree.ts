@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_status extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * status null
@@ -9,7 +9,7 @@ namespace $ {
 		status() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * minimal_height 24
@@ -18,7 +18,7 @@ namespace $ {
 		minimal_height() {
 			return 24
 		}
-
+		
 		/**
 		 * ```tree
 		 * minimal_width 0
@@ -27,7 +27,7 @@ namespace $ {
 		minimal_width() {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= message
@@ -38,7 +38,7 @@ namespace $ {
 				this.message()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * message \
@@ -48,5 +48,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

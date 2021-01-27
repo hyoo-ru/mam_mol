@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_speck extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -14,7 +14,7 @@ namespace $ {
 				mol_theme: "$mol_theme_accent"
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * style *
@@ -28,7 +28,7 @@ namespace $ {
 				minHeight: "1em"
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= value
@@ -39,7 +39,7 @@ namespace $ {
 				this.value()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * value null
@@ -49,5 +49,6 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 }
+

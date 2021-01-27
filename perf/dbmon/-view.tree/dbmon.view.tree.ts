@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_perf_dbmon extends $mol_scroll {
-
+		
 		/**
 		 * ```tree
 		 * title \dbmon ($mol)
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return "dbmon ($mol)"
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Databases
@@ -20,7 +20,7 @@ namespace $ {
 				this.Databases()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Database!id $mol_view sub <= database!id
@@ -29,12 +29,12 @@ namespace $ {
 		@ $mol_mem_key
 		Database(id: any) {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => this.database(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Query!id $mol_perf_dbmon_query
@@ -46,14 +46,14 @@ namespace $ {
 		@ $mol_mem_key
 		Query(id: any) {
 			const obj = new this.$.$mol_perf_dbmon_query()
-
+			
 			obj.elapsed = () => this.query_elapsed(id)
 			obj.elapsed_mod = () => this.query_elapsed_mod(id)
 			obj.value = () => this.query_value(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * databases /
@@ -61,10 +61,9 @@ namespace $ {
 		 */
 		databases() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Databases $mol_list rows <= databases
@@ -73,12 +72,12 @@ namespace $ {
 		@ $mol_mem
 		Databases() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => this.databases()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * name!id \
@@ -87,7 +86,7 @@ namespace $ {
 		name(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Name!id $mol_view sub / <= name!id
@@ -96,14 +95,14 @@ namespace $ {
 		@ $mol_mem_key
 		Name(id: any) {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.name(id)
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * query_count_label_mod!id \
@@ -112,7 +111,7 @@ namespace $ {
 		query_count_label_mod(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * query_count!id 0
@@ -121,7 +120,7 @@ namespace $ {
 		query_count(id: any) {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * Query_count!id $mol_perf_dbmon_query_count
@@ -132,13 +131,13 @@ namespace $ {
 		@ $mol_mem_key
 		Query_count(id: any) {
 			const obj = new this.$.$mol_perf_dbmon_query_count()
-
+			
 			obj.label_mod = () => this.query_count_label_mod(id)
 			obj.count = () => this.query_count(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * top_queries!id /
@@ -146,10 +145,9 @@ namespace $ {
 		 */
 		top_queries(id: any) {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * database!id /
@@ -165,7 +163,7 @@ namespace $ {
 				this.top_queries(id)
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * query_elapsed!id \
@@ -174,7 +172,7 @@ namespace $ {
 		query_elapsed(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * query_elapsed_mod!id \
@@ -183,7 +181,7 @@ namespace $ {
 		query_elapsed_mod(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * query_value!id \
@@ -193,9 +191,9 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 	export class $mol_perf_dbmon_query_count extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Label
@@ -206,7 +204,7 @@ namespace $ {
 				this.Label()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * label_mod \
@@ -215,7 +213,7 @@ namespace $ {
 		label_mod() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * count 0
@@ -224,7 +222,7 @@ namespace $ {
 		count() {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * Label $mol_view
@@ -235,20 +233,20 @@ namespace $ {
 		@ $mol_mem
 		Label() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.attr = () => ({
 				mol_perf_dbmon_query_count_label: this.label_mod()
 			})
 			obj.sub = () => [
 				this.count()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 	export class $mol_perf_dbmon_query extends $mol_pop_over {
-
+		
 		/**
 		 * ```tree
 		 * minimal_height 40
@@ -257,7 +255,7 @@ namespace $ {
 		minimal_height() {
 			return 40
 		}
-
+		
 		/**
 		 * ```tree
 		 * Anchor <= Elapsed
@@ -266,7 +264,7 @@ namespace $ {
 		Anchor() {
 			return this.Elapsed()
 		}
-
+		
 		/**
 		 * ```tree
 		 * bubble_content / <= value
@@ -277,7 +275,7 @@ namespace $ {
 				this.value()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * align \left_center
@@ -286,7 +284,7 @@ namespace $ {
 		align() {
 			return "left_center"
 		}
-
+		
 		/**
 		 * ```tree
 		 * elapsed_mod \
@@ -295,7 +293,7 @@ namespace $ {
 		elapsed_mod() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * elapsed \
@@ -304,7 +302,7 @@ namespace $ {
 		elapsed() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Elapsed $mol_view
@@ -315,17 +313,17 @@ namespace $ {
 		@ $mol_mem
 		Elapsed() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.attr = () => ({
 				mol_perf_dbmon_query_elapsed: this.elapsed_mod()
 			})
 			obj.sub = () => [
 				this.elapsed()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * value \
@@ -335,5 +333,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

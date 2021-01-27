@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_link_iconed extends $mol_link {
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Icon
@@ -11,7 +11,7 @@ namespace $ {
 				this.Icon()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * content / <= title
@@ -22,7 +22,7 @@ namespace $ {
 				this.title()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * host \
@@ -31,7 +31,7 @@ namespace $ {
 		host() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * icon \
@@ -40,7 +40,7 @@ namespace $ {
 		icon() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Icon $mol_image
@@ -51,13 +51,13 @@ namespace $ {
 		@ $mol_mem
 		Icon() {
 			const obj = new this.$.$mol_image()
-
+			
 			obj.uri = () => this.icon()
 			obj.title = () => ""
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * title <= uri
@@ -67,5 +67,6 @@ namespace $ {
 			return this.uri()
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_cost extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * value null
@@ -9,7 +9,7 @@ namespace $ {
 		value() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -25,7 +25,7 @@ namespace $ {
 				this.Postfix()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * prefix \
@@ -34,7 +34,7 @@ namespace $ {
 		prefix() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Prefix $mol_view sub / <= prefix
@@ -43,14 +43,14 @@ namespace $ {
 		@ $mol_mem
 		Prefix() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.prefix()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * value_view \
@@ -59,7 +59,7 @@ namespace $ {
 		value_view() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Value $mol_view sub / <= value_view
@@ -68,14 +68,14 @@ namespace $ {
 		@ $mol_mem
 		Value() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.value_view()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * postfix \
@@ -84,7 +84,7 @@ namespace $ {
 		postfix() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Postfix $mol_view sub / <= postfix
@@ -93,13 +93,14 @@ namespace $ {
 		@ $mol_mem
 		Postfix() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.postfix()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

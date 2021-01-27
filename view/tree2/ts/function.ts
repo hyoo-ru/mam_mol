@@ -12,7 +12,7 @@ namespace $ {
 		if (types && next) sub.push(next.data( '?: any'))
 		sub.push(name.data(')'))
 
-		return name.struct('inline', sub)
+		return name.struct('line', sub)
 	}
 
 	export function $mol_view_tree2_ts_function_call(
@@ -29,6 +29,6 @@ namespace $ {
 
 		sub.push(name.data(')'))
 
-		return name.struct('inline', sub)
+		return name.struct('line', sub)
 	}
 }

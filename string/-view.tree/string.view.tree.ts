@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_string extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \input
@@ -9,7 +9,7 @@ namespace $ {
 		dom_name() {
 			return "input"
 		}
-
+		
 		/**
 		 * ```tree
 		 * enabled true
@@ -18,7 +18,7 @@ namespace $ {
 		enabled() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * minimal_height 40
@@ -27,7 +27,7 @@ namespace $ {
 		minimal_height() {
 			return 40
 		}
-
+		
 		/**
 		 * ```tree
 		 * autocomplete false
@@ -36,7 +36,7 @@ namespace $ {
 		autocomplete() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * field *
@@ -60,7 +60,7 @@ namespace $ {
 				autocomplete: this.autocomplete_native()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -74,7 +74,7 @@ namespace $ {
 				maxlength: this.length_max()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -90,7 +90,7 @@ namespace $ {
 				keydown: (event?: any) => this.event_key_press(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * plugins / <= Submit
@@ -101,7 +101,7 @@ namespace $ {
 				this.Submit()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * disabled false
@@ -110,7 +110,7 @@ namespace $ {
 		disabled() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * value?val \
@@ -121,7 +121,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * value_changed?val <=> value?val
@@ -130,7 +130,7 @@ namespace $ {
 		value_changed(val?: any) {
 			return this.value(val)
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint \
@@ -139,7 +139,7 @@ namespace $ {
 		hint() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * type?val \text
@@ -150,7 +150,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return "text"
 		}
-
+		
 		/**
 		 * ```tree
 		 * spellcheck false
@@ -159,7 +159,7 @@ namespace $ {
 		spellcheck() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * autocomplete_native \
@@ -168,7 +168,7 @@ namespace $ {
 		autocomplete_native() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * length_max Infinity
@@ -177,7 +177,7 @@ namespace $ {
 		length_max() {
 			return Infinity
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_change?event null
@@ -188,7 +188,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_key_press?event null
@@ -199,7 +199,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * submit?event null
@@ -210,7 +210,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Submit $mol_hotkey key * enter?event <=> submit?event
@@ -219,13 +219,14 @@ namespace $ {
 		@ $mol_mem
 		Submit() {
 			const obj = new this.$.$mol_hotkey()
-
+			
 			obj.key = () => ({
 				enter: (event?: any) => this.submit(event)
 			})
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

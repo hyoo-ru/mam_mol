@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_code extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -14,7 +14,7 @@ namespace $ {
 				this.Scan()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * value?val \
@@ -25,7 +25,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * format \
@@ -34,7 +34,7 @@ namespace $ {
 		format() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint <= format
@@ -43,7 +43,7 @@ namespace $ {
 		hint() {
 			return this.format()
 		}
-
+		
 		/**
 		 * ```tree
 		 * Manual $mol_search
@@ -54,13 +54,13 @@ namespace $ {
 		@ $mol_mem
 		Manual() {
 			const obj = new this.$.$mol_search()
-
+			
 			obj.query = (val?: any) => this.value(val)
 			obj.hint = () => this.hint()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_scan?val null
@@ -71,7 +71,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * scan_label @ \Scan
@@ -80,7 +80,7 @@ namespace $ {
 		scan_label() {
 			return this.$.$mol_locale.text( '$mol_code_scan_label' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Scan $mol_button
@@ -91,14 +91,15 @@ namespace $ {
 		@ $mol_mem
 		Scan() {
 			const obj = new this.$.$mol_button()
-
+			
 			obj.event_click = (val?: any) => this.event_scan(val)
 			obj.sub = () => [
 				this.scan_label()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_plot_graph extends $mol_svg_group {
-
+		
 		/**
 		 * ```tree
 		 * series_x /number
@@ -8,10 +8,9 @@ namespace $ {
 		 */
 		series_x() {
 			return [
-
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * series_y /number
@@ -19,11 +18,9 @@ namespace $ {
 		 */
 		series_y() {
 			return [
-
 			] as readonly number[]
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -37,8 +34,7 @@ namespace $ {
 				mol_plot_graph_type: this.type()
 			}
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * style *
@@ -52,8 +48,7 @@ namespace $ {
 				color: this.color()
 			}
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * viewport $mol_vector_2d /
@@ -67,10 +62,10 @@ namespace $ {
 				this.viewport_x(),
 				this.viewport_y()
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * shift /number
@@ -84,7 +79,7 @@ namespace $ {
 				0
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * scale /number
@@ -98,7 +93,7 @@ namespace $ {
 				1
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * cursor_position $mol_vector_2d /
@@ -112,10 +107,10 @@ namespace $ {
 				NaN,
 				NaN
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions_pane $mol_vector_2d /
@@ -129,10 +124,10 @@ namespace $ {
 				this.dimensions_pane_x(),
 				this.dimensions_pane_y()
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions $mol_vector_2d /
@@ -146,10 +141,10 @@ namespace $ {
 				this.dimensions_x(),
 				this.dimensions_y()
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * size_real $mol_vector_2d /
@@ -163,10 +158,10 @@ namespace $ {
 				0,
 				0
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap $mol_vector_2d /
@@ -180,10 +175,10 @@ namespace $ {
 				this.gap_x(),
 				this.gap_y()
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * indexes /number
@@ -191,10 +186,9 @@ namespace $ {
 		 */
 		indexes() {
 			return [
-
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * points /readonly(number)[]
@@ -202,10 +196,9 @@ namespace $ {
 		 */
 		points() {
 			return [
-
 			] as readonly (readonly(number)[])[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * front /$mol_svg
@@ -213,10 +206,9 @@ namespace $ {
 		 */
 		front() {
 			return [
-
 			] as readonly $mol_svg[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * back /$mol_svg
@@ -224,10 +216,9 @@ namespace $ {
 		 */
 		back() {
 			return [
-
 			] as readonly $mol_svg[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * hue NaN
@@ -236,7 +227,7 @@ namespace $ {
 		hue() {
 			return NaN
 		}
-
+		
 		/**
 		 * ```tree
 		 * Sample null
@@ -245,7 +236,7 @@ namespace $ {
 		Sample() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * type \solid
@@ -254,7 +245,7 @@ namespace $ {
 		type() {
 			return "solid"
 		}
-
+		
 		/**
 		 * ```tree
 		 * color \
@@ -263,7 +254,7 @@ namespace $ {
 		color() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * viewport_x $mol_vector_range /
@@ -277,10 +268,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * viewport_y $mol_vector_range /
@@ -294,10 +285,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions_pane_x $mol_vector_range /
@@ -311,10 +302,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions_pane_y $mol_vector_range /
@@ -328,10 +319,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions_x $mol_vector_range /
@@ -345,10 +336,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions_y $mol_vector_range /
@@ -362,10 +353,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_x $mol_vector_range /
@@ -379,10 +370,10 @@ namespace $ {
 				0,
 				0
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_y $mol_vector_range /
@@ -396,13 +387,13 @@ namespace $ {
 				0,
 				0
 			)
-
+			
 			return obj
 		}
 	}
-
+	
 	export class $mol_plot_graph_sample extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -416,7 +407,7 @@ namespace $ {
 				mol_plot_graph_type: this.type()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * style *
@@ -430,7 +421,7 @@ namespace $ {
 				color: this.color()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * type \solid
@@ -439,7 +430,7 @@ namespace $ {
 		type() {
 			return "solid"
 		}
-
+		
 		/**
 		 * ```tree
 		 * color \black
@@ -449,5 +440,6 @@ namespace $ {
 			return "black"
 		}
 	}
-
+	
 }
+

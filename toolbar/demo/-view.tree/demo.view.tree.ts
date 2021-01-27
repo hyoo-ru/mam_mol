@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_toolbar_demo extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Foldable toolbar demo
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_toolbar_demo_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Toolbar
@@ -20,7 +20,7 @@ namespace $ {
 				this.Toolbar()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * search_hint @ \Search...
@@ -29,7 +29,7 @@ namespace $ {
 		search_hint() {
 			return this.$.$mol_locale.text( '$mol_toolbar_demo_search_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Search $mol_string hint <= search_hint
@@ -38,12 +38,12 @@ namespace $ {
 		@ $mol_mem
 		Search() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.hint = () => this.search_hint()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * replace_hint @ \Replace...
@@ -52,7 +52,7 @@ namespace $ {
 		replace_hint() {
 			return this.$.$mol_locale.text( '$mol_toolbar_demo_replace_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Replace $mol_string hint <= replace_hint
@@ -61,12 +61,12 @@ namespace $ {
 		@ $mol_mem
 		Replace() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.hint = () => this.replace_hint()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * approve_label @ \Approve
@@ -75,7 +75,7 @@ namespace $ {
 		approve_label() {
 			return this.$.$mol_locale.text( '$mol_toolbar_demo_approve_label' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Approve $mol_button_major title <= approve_label
@@ -84,12 +84,12 @@ namespace $ {
 		@ $mol_mem
 		Approve() {
 			const obj = new this.$.$mol_button_major()
-
+			
 			obj.title = () => this.approve_label()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * decline_label @ \Decline
@@ -98,7 +98,7 @@ namespace $ {
 		decline_label() {
 			return this.$.$mol_locale.text( '$mol_toolbar_demo_decline_label' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Decline $mol_button_minor title <= decline_label
@@ -107,12 +107,12 @@ namespace $ {
 		@ $mol_mem
 		Decline() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.title = () => this.decline_label()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Copy_icon $mol_icon_content_copy
@@ -121,10 +121,10 @@ namespace $ {
 		@ $mol_mem
 		Copy_icon() {
 			const obj = new this.$.$mol_icon_content_copy()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Copy $mol_button_minor sub / <= Copy_icon
@@ -133,14 +133,14 @@ namespace $ {
 		@ $mol_mem
 		Copy() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.sub = () => [
 				this.Copy_icon()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cut_icon $mol_icon_content_cut
@@ -149,10 +149,10 @@ namespace $ {
 		@ $mol_mem
 		Cut_icon() {
 			const obj = new this.$.$mol_icon_content_cut()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cut $mol_button_minor sub / <= Cut_icon
@@ -161,14 +161,14 @@ namespace $ {
 		@ $mol_mem
 		Cut() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.sub = () => [
 				this.Cut_icon()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Paste_icon $mol_icon_content_paste
@@ -177,10 +177,10 @@ namespace $ {
 		@ $mol_mem
 		Paste_icon() {
 			const obj = new this.$.$mol_icon_content_paste()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Paste $mol_button_minor sub / <= Paste_icon
@@ -189,14 +189,14 @@ namespace $ {
 		@ $mol_mem
 		Paste() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.sub = () => [
 				this.Paste_icon()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Delete_icon $mol_icon_delete
@@ -205,10 +205,10 @@ namespace $ {
 		@ $mol_mem
 		Delete_icon() {
 			const obj = new this.$.$mol_icon_delete()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Delete $mol_button_minor sub / <= Delete_icon
@@ -217,14 +217,14 @@ namespace $ {
 		@ $mol_mem
 		Delete() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.sub = () => [
 				this.Delete_icon()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Toolbar $mol_toolbar items /
@@ -241,7 +241,7 @@ namespace $ {
 		@ $mol_mem
 		Toolbar() {
 			const obj = new this.$.$mol_toolbar()
-
+			
 			obj.items = () => [
 				this.Search(),
 				this.Replace(),
@@ -252,9 +252,10 @@ namespace $ {
 				this.Paste(),
 				this.Delete()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

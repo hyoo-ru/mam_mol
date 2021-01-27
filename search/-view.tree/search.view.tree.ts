@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_search extends $mol_bar {
-
+		
 		/**
 		 * ```tree
 		 * query?val \
@@ -11,7 +11,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * plugins / <= Hotkey
@@ -22,7 +22,7 @@ namespace $ {
 				this.Hotkey()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -36,7 +36,7 @@ namespace $ {
 				this.Clear()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_clear?val null
@@ -47,7 +47,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Hotkey $mol_hotkey key * escape?val <=> event_clear?val
@@ -56,14 +56,14 @@ namespace $ {
 		@ $mol_mem
 		Hotkey() {
 			const obj = new this.$.$mol_hotkey()
-
+			
 			obj.key = () => ({
 				escape: (val?: any) => this.event_clear(val)
 			})
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * suggest_selected?val \
@@ -74,7 +74,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint @ \Search...
@@ -83,7 +83,7 @@ namespace $ {
 		hint() {
 			return this.$.$mol_locale.text( '$mol_search_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * suggests_showed false
@@ -92,7 +92,7 @@ namespace $ {
 		suggests_showed() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * suggests /string
@@ -100,10 +100,9 @@ namespace $ {
 		 */
 		suggests() {
 			return [
-
 			] as readonly string[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * submit?event null
@@ -114,7 +113,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * enabled true
@@ -123,7 +122,7 @@ namespace $ {
 		enabled() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * Suggest $mol_select
@@ -142,7 +141,7 @@ namespace $ {
 		@ $mol_mem
 		Suggest() {
 			const obj = new this.$.$mol_select()
-
+			
 			obj.value = (val?: any) => this.suggest_selected(val)
 			obj.filter_pattern = (val?: any) => this.suggest_selected(val)
 			obj.hint = () => this.hint()
@@ -153,10 +152,10 @@ namespace $ {
 			obj.submit = (event?: any) => this.submit(event)
 			obj.No_options = () => null as any
 			obj.enabled = () => this.enabled()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Clear_icon $mol_icon_cross
@@ -165,10 +164,10 @@ namespace $ {
 		@ $mol_mem
 		Clear_icon() {
 			const obj = new this.$.$mol_icon_cross()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * clear_hint @ \Clear
@@ -177,7 +176,7 @@ namespace $ {
 		clear_hint() {
 			return this.$.$mol_locale.text( '$mol_search_clear_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Clear $mol_button_minor
@@ -189,15 +188,16 @@ namespace $ {
 		@ $mol_mem
 		Clear() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.sub = () => [
 				this.Clear_icon()
 			] as readonly any[]
 			obj.event_click = (val?: any) => this.event_clear(val)
 			obj.hint = () => this.clear_hint()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

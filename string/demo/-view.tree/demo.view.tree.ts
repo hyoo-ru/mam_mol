@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_string_demo extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \String input field in various states
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_string_demo_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -27,7 +27,7 @@ namespace $ {
 				this.Disabled()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * name?val \
@@ -38,7 +38,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Simple $mol_string value?val <=> name?val
@@ -47,12 +47,12 @@ namespace $ {
 		@ $mol_mem
 		Simple() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.value = (val?: any) => this.name(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Hint $mol_string
@@ -63,13 +63,13 @@ namespace $ {
 		@ $mol_mem
 		Hint() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.hint = () => "Batman"
 			obj.value = (val?: any) => this.name(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * name2?val \Jocker
@@ -80,7 +80,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return "Jocker"
 		}
-
+		
 		/**
 		 * ```tree
 		 * Filled $mol_string value?val <=> name2?val
@@ -89,12 +89,12 @@ namespace $ {
 		@ $mol_mem
 		Filled() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.value = (val?: any) => this.name2(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Disabled $mol_string
@@ -105,12 +105,13 @@ namespace $ {
 		@ $mol_mem
 		Disabled() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.disabled = () => true
 			obj.value = (val?: any) => this.name2(val)
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

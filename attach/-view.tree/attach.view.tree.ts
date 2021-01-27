@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_attach extends $mol_card {
-
+		
 		/**
 		 * ```tree
 		 * Content $mol_view sub <= content
@@ -9,12 +9,12 @@ namespace $ {
 		@ $mol_mem
 		Content() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => this.content()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * items?val /$mol_view
@@ -24,10 +24,9 @@ namespace $ {
 		items(val?: any) {
 			if ( val !== undefined ) return val
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Add $mol_attach_add file_new?val <=> attach_new?val
@@ -36,12 +35,12 @@ namespace $ {
 		@ $mol_mem
 		Add() {
 			const obj = new this.$.$mol_attach_add()
-
+			
 			obj.file_new = (val?: any) => this.attach_new(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Item!id $mol_attach_item title <= attach_title
@@ -50,12 +49,12 @@ namespace $ {
 		@ $mol_mem_key
 		Item(id: any) {
 			const obj = new this.$.$mol_attach_item()
-
+			
 			obj.title = () => this.attach_title()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * content /$mol_view
@@ -63,10 +62,9 @@ namespace $ {
 		 */
 		content() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * attach_new?val \
@@ -77,7 +75,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * attach_title \
@@ -87,9 +85,9 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 	export class $mol_attach_item extends $mol_link {
-
+		
 		/**
 		 * ```tree
 		 * url_thumb?val \
@@ -100,7 +98,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * uri?val <=> url_load?val
@@ -109,7 +107,7 @@ namespace $ {
 		uri(val?: any) {
 			return this.url_load(val)
 		}
-
+		
 		/**
 		 * ```tree
 		 * style *
@@ -123,7 +121,7 @@ namespace $ {
 				backgroundImage: this.style_bg()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -137,7 +135,7 @@ namespace $ {
 				download: this.title()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * url_load?val \
@@ -148,7 +146,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * style_bg \
@@ -157,7 +155,7 @@ namespace $ {
 		style_bg() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * title \
@@ -167,9 +165,9 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 	export class $mol_attach_add extends $mol_button_minor {
-
+		
 		/**
 		 * ```tree
 		 * minimal_height 60
@@ -178,7 +176,7 @@ namespace $ {
 		minimal_height() {
 			return 60
 		}
-
+		
 		/**
 		 * ```tree
 		 * file_new?val \
@@ -189,7 +187,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -203,7 +201,7 @@ namespace $ {
 				this.Input()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Icon $mol_icon_attach
@@ -212,10 +210,10 @@ namespace $ {
 		@ $mol_mem
 		Icon() {
 			const obj = new this.$.$mol_icon_attach()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_capture?val null
@@ -226,7 +224,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_picked?val null
@@ -237,7 +235,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Input $mol_attach_add_input
@@ -248,16 +246,16 @@ namespace $ {
 		@ $mol_mem
 		Input() {
 			const obj = new this.$.$mol_attach_add_input()
-
+			
 			obj.event_capture = (val?: any) => this.event_capture(val)
 			obj.event_picked = (val?: any) => this.event_picked(val)
-
+			
 			return obj
 		}
 	}
-
+	
 	export class $mol_attach_add_input extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \input
@@ -266,7 +264,7 @@ namespace $ {
 		dom_name() {
 			return "input"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -284,7 +282,7 @@ namespace $ {
 				multiple: this.multiple()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_click?val <=> event_capture?val
@@ -293,7 +291,7 @@ namespace $ {
 		event_click(val?: any) {
 			return this.event_capture(val)
 		}
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -307,7 +305,7 @@ namespace $ {
 				change: (val?: any) => this.event_picked(val)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * type \file
@@ -316,7 +314,7 @@ namespace $ {
 		type() {
 			return "file"
 		}
-
+		
 		/**
 		 * ```tree
 		 * accept \image/*;capture=camera
@@ -325,7 +323,7 @@ namespace $ {
 		accept() {
 			return "image/*;capture=camera"
 		}
-
+		
 		/**
 		 * ```tree
 		 * multiple true
@@ -334,7 +332,7 @@ namespace $ {
 		multiple() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_capture?val null
@@ -345,7 +343,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_picked?val null
@@ -357,5 +355,6 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 }
+

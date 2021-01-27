@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_image extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \img
@@ -9,7 +9,7 @@ namespace $ {
 		dom_name() {
 			return "img"
 		}
-
+		
 		/**
 		 * ```tree
 		 * field *
@@ -25,7 +25,7 @@ namespace $ {
 				alt: this.title()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * uri \
@@ -35,5 +35,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

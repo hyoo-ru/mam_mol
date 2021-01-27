@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_map_yandex_mark extends $mol_object {
-
+		
 		/**
 		 * ```tree
 		 * pos $mol_vector_2d /
@@ -14,10 +14,10 @@ namespace $ {
 				0,
 				0
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * box $mol_vector_2d /
@@ -31,10 +31,10 @@ namespace $ {
 				this.box_lat(),
 				this.box_lon()
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint \
@@ -43,7 +43,7 @@ namespace $ {
 		hint() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * title <= address
@@ -52,7 +52,7 @@ namespace $ {
 		title() {
 			return this.address()
 		}
-
+		
 		/**
 		 * ```tree
 		 * content \
@@ -61,7 +61,7 @@ namespace $ {
 		content() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * object null
@@ -70,7 +70,7 @@ namespace $ {
 		object() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * box_lat $mol_vector_range /
@@ -84,10 +84,10 @@ namespace $ {
 				0,
 				0
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * box_lon $mol_vector_range /
@@ -101,10 +101,10 @@ namespace $ {
 				0,
 				0
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * address \
@@ -114,5 +114,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

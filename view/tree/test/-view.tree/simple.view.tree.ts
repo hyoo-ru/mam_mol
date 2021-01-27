@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_view_tree_test_simple extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * some 1
@@ -9,7 +9,7 @@ namespace $ {
 		some() {
 			return 1
 		}
-
+		
 		/**
 		 * ```tree
 		 * bool true
@@ -18,7 +18,7 @@ namespace $ {
 		bool() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * str \test
@@ -27,7 +27,7 @@ namespace $ {
 		str() {
 			return "test"
 		}
-
+		
 		/**
 		 * ```tree
 		 * arr /
@@ -35,10 +35,9 @@ namespace $ {
 		 */
 		arr() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * arr_string /string
@@ -46,9 +45,9 @@ namespace $ {
 		 */
 		arr_string() {
 			return [
-
 			] as readonly string[]
 		}
 	}
-
+	
 }
+

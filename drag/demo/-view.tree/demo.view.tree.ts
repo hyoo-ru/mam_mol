@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_drag_demo extends $mol_demo_large {
-
+		
 		/**
 		 * ```tree
 		 * task_count 100
@@ -9,7 +9,7 @@ namespace $ {
 		task_count() {
 			return 100
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= List_drop
@@ -20,7 +20,7 @@ namespace $ {
 				this.List_drop()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Task_row!task $mol_drag
@@ -34,17 +34,17 @@ namespace $ {
 		@ $mol_mem_key
 		Task_row(task: any) {
 			const obj = new this.$.$mol_drag()
-
+			
 			obj.transfer = () => ({
 				"text/plain": this.task_title(task),
 				"text/html": this.task_html(task),
 				"text/uri-list": this.task_uri(task)
 			})
 			obj.Sub = () => this.Task_drop(task)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * transfer_adopt?transfer null
@@ -55,7 +55,7 @@ namespace $ {
 			if ( transfer !== undefined ) return transfer
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * receive?obj null
@@ -66,7 +66,7 @@ namespace $ {
 			if ( obj !== undefined ) return obj
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * receive_trash?obj null
@@ -77,7 +77,7 @@ namespace $ {
 			if ( obj !== undefined ) return obj
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Trash_icon $mol_icon_trash_can_outline
@@ -86,10 +86,10 @@ namespace $ {
 		@ $mol_mem
 		Trash_icon() {
 			const obj = new this.$.$mol_icon_trash_can_outline()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Trash $mol_float sub /
@@ -100,15 +100,15 @@ namespace $ {
 		@ $mol_mem
 		Trash() {
 			const obj = new this.$.$mol_float()
-
+			
 			obj.sub = () => [
 				this.Trash_icon(),
 				"Trash"
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Trash_drop $mol_drop
@@ -120,14 +120,14 @@ namespace $ {
 		@ $mol_mem
 		Trash_drop() {
 			const obj = new this.$.$mol_drop()
-
+			
 			obj.adopt = (transfer?: any) => this.transfer_adopt(transfer)
 			obj.receive = (obj?: any) => this.receive_trash(obj)
 			obj.Sub = () => this.Trash()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * task_rows /
@@ -135,10 +135,9 @@ namespace $ {
 		 */
 		task_rows() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * List $mol_list rows <= task_rows
@@ -147,12 +146,12 @@ namespace $ {
 		@ $mol_mem
 		List() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => this.task_rows()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Scroll $mol_scroll sub /
@@ -163,15 +162,15 @@ namespace $ {
 		@ $mol_mem
 		Scroll() {
 			const obj = new this.$.$mol_scroll()
-
+			
 			obj.sub = () => [
 				this.Trash_drop(),
 				this.List()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * List_drop $mol_drop
@@ -183,14 +182,14 @@ namespace $ {
 		@ $mol_mem
 		List_drop() {
 			const obj = new this.$.$mol_drop()
-
+			
 			obj.adopt = (transfer?: any) => this.transfer_adopt(transfer)
 			obj.receive = (obj?: any) => this.receive(obj)
 			obj.Sub = () => this.Scroll()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * task_title!task \
@@ -199,7 +198,7 @@ namespace $ {
 		task_title(task: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * task_html!task \
@@ -208,7 +207,7 @@ namespace $ {
 		task_html(task: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * task_uri!task \
@@ -217,7 +216,7 @@ namespace $ {
 		task_uri(task: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * receive_before!task?obj null
@@ -228,7 +227,7 @@ namespace $ {
 			if ( obj !== undefined ) return obj
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Task_link!task $mol_link
@@ -239,15 +238,15 @@ namespace $ {
 		@ $mol_mem_key
 		Task_link(task: any) {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.uri = () => this.task_uri(task)
 			obj.sub = () => [
 				this.task_title(task)
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Task_drop!task $mol_drop
@@ -259,13 +258,14 @@ namespace $ {
 		@ $mol_mem_key
 		Task_drop(task: any) {
 			const obj = new this.$.$mol_drop()
-
+			
 			obj.adopt = (transfer?: any) => this.transfer_adopt(transfer)
 			obj.receive = (obj?: any) => this.receive_before(task, obj)
 			obj.Sub = () => this.Task_link(task)
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

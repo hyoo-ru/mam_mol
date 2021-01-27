@@ -27,7 +27,7 @@ namespace $ {
 
 		for (const child of klass.kids) {
 			if (child.type === '-') {
-				body.push(this.$mol_view_tree2_ts_comment(child))
+				body.push(...this.$mol_view_tree2_ts_comment(child))
 				continue
 			}
 
@@ -46,7 +46,7 @@ namespace $ {
 			const operator = this.$mol_view_tree2_child(child)
 			const type = operator.type
 
-			let value: $mol_tree2
+			let value: $mol_tree2[]
 
 			if (type === '<=') value = this.$mol_view_tree2_ts_bind_left(operator, context, child_parts)
 			else if (type === '<=>') value = this.$mol_view_tree2_ts_bind_both(operator, context)
@@ -55,22 +55,22 @@ namespace $ {
 				continue
 			}
 			else if (type === '@') value = this.$mol_view_tree2_ts_locale(operator, context)
-			else if (type === '*') value = child.struct('inline', [
+			else if (type === '*') value = [ child.struct('line', [
 				child.data('('),
-				this.$mol_view_tree2_ts_dictionary(operator, context),
+				... this.$mol_view_tree2_ts_dictionary(operator, context),
 				child.data(')'),
-			])
+			]) ]
 			else if (type[0] === '/') value = this.$mol_view_tree2_ts_array(operator, context)
 			else value = this.$mol_view_tree2_ts_value(operator)
 
-			const call = child.struct('inline', [
+			const call = child.struct('line', [
 				obj_node,
 				child.data('.'),
 				child_parts.name,
 				child_parts.name.data(' = '),
 				$mol_view_tree2_ts_function_declaration(child_parts, context.types),
 				child.data(' => '),
-				value,
+				... value,
 			])
 
 			body.push(call)
@@ -84,30 +84,28 @@ namespace $ {
 		]
 
 		if (constructor_args) init.push(
-			klass.struct('lines', [
-				klass.data('('),
-				constructor_args,
-				klass.data(')'),
-			])
+			klass.data('('),
+			constructor_args,
+			klass.data(')'),
 		)
 		else init.push(klass.data('()'))
 
 		const sub = [
-			klass.struct('inline', init),
+			klass.struct('line', init),
 			klass.data(''),
 		]
-		if (body.length > 0) sub.push(klass.struct('lines', body))
+		if (body.length > 0) sub.push(...body)
 
 		if (body.length > 0 && ! constructor_args) sub.push(klass.data(''))
 
 		sub.push(
-			obj_node.struct('inline', [
+			obj_node.struct('line', [
 				klass.data('return '),
 				obj_node
 			])
 		)
 
-		return klass.struct('block', sub)
+		return klass.struct('indent', sub)
 	}
 
 	const example = new $mol_view_tree2_error_suggestions([

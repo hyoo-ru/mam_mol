@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_filler extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * minimal_height 500
@@ -9,7 +9,7 @@ namespace $ {
 		minimal_height() {
 			return 500
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -36,5 +36,6 @@ namespace $ {
 			] as readonly any[]
 		}
 	}
-
+	
 }
+

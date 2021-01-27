@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_select_demo_colors extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Color picker with filter and custom rows
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_select_demo_colors_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Color
@@ -20,7 +20,7 @@ namespace $ {
 				this.Color()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * color?val \
@@ -31,7 +31,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * colors *
@@ -39,10 +39,9 @@ namespace $ {
 		 */
 		colors() {
 			return {
-
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * color_name!id \
@@ -51,7 +50,7 @@ namespace $ {
 		color_name(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * option_color!id \
@@ -60,7 +59,7 @@ namespace $ {
 		option_color(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Color_preview!id $mol_select_colors_color_preview color <= option_color!id
@@ -69,12 +68,12 @@ namespace $ {
 		@ $mol_mem_key
 		Color_preview(id: any) {
 			const obj = new this.$.$mol_select_colors_color_preview()
-
+			
 			obj.color = () => this.option_color(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Color_option!id $mol_row
@@ -87,16 +86,16 @@ namespace $ {
 		@ $mol_mem_key
 		Color_option(id: any) {
 			const obj = new this.$.$mol_row()
-
+			
 			obj.sub = () => [
 				this.Color_preview(id),
 				this.color_name(id)
 			] as readonly any[]
 			obj.minimal_height = () => 40
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * option_content!id / <= Color_option!id
@@ -107,7 +106,7 @@ namespace $ {
 				this.Color_option(id)
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Color $mol_select
@@ -120,18 +119,18 @@ namespace $ {
 		@ $mol_mem
 		Color() {
 			const obj = new this.$.$mol_select()
-
+			
 			obj.value = (val?: any) => this.color(val)
 			obj.dictionary = () => this.colors()
 			obj.option_label = (id: any) => this.color_name(id)
 			obj.option_content = (id: any) => this.option_content(id)
-
+			
 			return obj
 		}
 	}
-
+	
 	export class $mol_select_colors_color_preview extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * style *
@@ -145,7 +144,7 @@ namespace $ {
 				background: this.color()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * color \
@@ -155,5 +154,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_calendar extends $mol_list {
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -14,7 +14,7 @@ namespace $ {
 				this.Weekdays()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * weeks /$mol_view
@@ -22,11 +22,9 @@ namespace $ {
 		 */
 		weeks() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * Weekday!index $mol_calendar_day
@@ -37,16 +35,15 @@ namespace $ {
 		@ $mol_mem_key
 		Weekday(index: any) {
 			const obj = new this.$.$mol_calendar_day()
-
+			
 			obj.holiday = () => this.weekend(index)
 			obj.sub = () => [
 				this.weekday(index)
 			] as readonly any[]
-
+			
 			return obj
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * Week!row $mol_hor sub <= week_days!row
@@ -55,13 +52,12 @@ namespace $ {
 		@ $mol_mem_key
 		Week(row: any) {
 			const obj = new this.$.$mol_hor()
-
+			
 			obj.sub = () => this.week_days(row)
-
+			
 			return obj
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * Day!day $mol_calendar_day
@@ -75,17 +71,16 @@ namespace $ {
 		@ $mol_mem_key
 		Day(day: any) {
 			const obj = new this.$.$mol_calendar_day()
-
+			
 			obj.ghost = () => this.day_ghost(day)
 			obj.holiday = () => this.day_holiday(day)
 			obj.selected = () => this.day_selected(day)
 			obj.theme = () => this.day_theme(day)
 			obj.sub = () => this.day_content(day)
-
+			
 			return obj
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * month_string \
@@ -94,7 +89,7 @@ namespace $ {
 		month_string() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * month_moment $mol_time_moment
@@ -103,10 +98,10 @@ namespace $ {
 		@ $mol_mem
 		month_moment() {
 			const obj = new this.$.$mol_time_moment()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * title \
@@ -115,7 +110,7 @@ namespace $ {
 		title() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Title $mol_view
@@ -126,15 +121,15 @@ namespace $ {
 		@ $mol_mem
 		Title() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.minimal_height = () => 24
 			obj.sub = () => [
 				this.title()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * head / <= Title
@@ -145,7 +140,7 @@ namespace $ {
 				this.Title()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Head $mol_view sub <= head
@@ -154,12 +149,12 @@ namespace $ {
 		@ $mol_mem
 		Head() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => this.head()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * weekdays /$mol_view
@@ -167,10 +162,9 @@ namespace $ {
 		 */
 		weekdays() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Weekdays $mol_hor sub <= weekdays
@@ -179,12 +173,12 @@ namespace $ {
 		@ $mol_mem
 		Weekdays() {
 			const obj = new this.$.$mol_hor()
-
+			
 			obj.sub = () => this.weekdays()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * weekend!index false
@@ -193,7 +187,7 @@ namespace $ {
 		weekend(index: any) {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * weekday!index \
@@ -202,7 +196,7 @@ namespace $ {
 		weekday(index: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * week_days!row /$mol_view
@@ -210,10 +204,9 @@ namespace $ {
 		 */
 		week_days(row: any) {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * day_ghost!day false
@@ -222,7 +215,7 @@ namespace $ {
 		day_ghost(day: any) {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * day_holiday!day false
@@ -231,7 +224,7 @@ namespace $ {
 		day_holiday(day: any) {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * day_selected!day false
@@ -240,7 +233,7 @@ namespace $ {
 		day_selected(day: any) {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * day_theme!day \
@@ -249,7 +242,7 @@ namespace $ {
 		day_theme(day: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * day_text!day \
@@ -258,7 +251,7 @@ namespace $ {
 		day_text(day: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * day_content!day / <= day_text!day
@@ -270,9 +263,9 @@ namespace $ {
 			] as readonly any[]
 		}
 	}
-
+	
 	export class $mol_calendar_day extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * minimal_height 24
@@ -281,7 +274,7 @@ namespace $ {
 		minimal_height() {
 			return 24
 		}
-
+		
 		/**
 		 * ```tree
 		 * minimal_width 36
@@ -290,7 +283,7 @@ namespace $ {
 		minimal_width() {
 			return 36
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -308,7 +301,7 @@ namespace $ {
 				mol_theme: this.theme()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * holiday false
@@ -317,7 +310,7 @@ namespace $ {
 		holiday() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * ghost false
@@ -326,7 +319,7 @@ namespace $ {
 		ghost() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * selected false
@@ -335,7 +328,7 @@ namespace $ {
 		selected() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * theme \
@@ -345,5 +338,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

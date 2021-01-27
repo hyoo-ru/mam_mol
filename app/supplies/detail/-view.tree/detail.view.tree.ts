@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_app_supplies_detail extends $mol_page {
-
+		
 		/**
 		 * ```tree
 		 * supply null
@@ -9,7 +9,7 @@ namespace $ {
 		supply() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * title @ \Supply
@@ -18,7 +18,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * tools / <= Close
@@ -29,7 +29,7 @@ namespace $ {
 				this.Close()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * body / <= Content
@@ -40,7 +40,7 @@ namespace $ {
 				this.Content()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * foot / <= Actions
@@ -51,8 +51,7 @@ namespace $ {
 				this.Actions()
 			] as readonly any[]
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * Position!index $mol_app_supplies_position position <= position!index
@@ -61,13 +60,12 @@ namespace $ {
 		@ $mol_mem_key
 		Position(index: any) {
 			const obj = new this.$.$mol_app_supplies_position()
-
+			
 			obj.position = () => this.position(index)
-
+			
 			return obj
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * Attachment!index $mol_attach_item
@@ -78,13 +76,13 @@ namespace $ {
 		@ $mol_mem_key
 		Attachment(index: any) {
 			const obj = new this.$.$mol_attach_item()
-
+			
 			obj.url_thumb = () => this.attachment_thumb(index)
 			obj.url_load = () => this.attachment_load(index)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Close_icon $mol_icon_cross
@@ -93,10 +91,10 @@ namespace $ {
 		@ $mol_mem
 		Close_icon() {
 			const obj = new this.$.$mol_icon_cross()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * close_arg * supply null
@@ -107,7 +105,7 @@ namespace $ {
 				supply: null as any
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Close $mol_link
@@ -118,15 +116,15 @@ namespace $ {
 		@ $mol_mem
 		Close() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.sub = () => [
 				this.Close_icon()
 			] as readonly any[]
 			obj.arg = () => this.close_arg()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * org_title @ \Organization
@@ -135,7 +133,7 @@ namespace $ {
 		org_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_org_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * provider_title @ \Provider
@@ -144,7 +142,7 @@ namespace $ {
 		provider_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_provider_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * provider_name \
@@ -153,7 +151,7 @@ namespace $ {
 		provider_name() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Provider $mol_labeler
@@ -164,15 +162,15 @@ namespace $ {
 		@ $mol_mem
 		Provider() {
 			const obj = new this.$.$mol_labeler()
-
+			
 			obj.title = () => this.provider_title()
 			obj.content = () => [
 				this.provider_name()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * customer_label @ \Consumer
@@ -181,7 +179,7 @@ namespace $ {
 		customer_label() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_customer_label' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * consumer_name \
@@ -190,7 +188,7 @@ namespace $ {
 		consumer_name() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Consumer $mol_labeler
@@ -201,15 +199,15 @@ namespace $ {
 		@ $mol_mem
 		Consumer() {
 			const obj = new this.$.$mol_labeler()
-
+			
 			obj.title = () => this.customer_label()
 			obj.content = () => [
 				this.consumer_name()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * supply_group_title @ \Supply Group
@@ -218,7 +216,7 @@ namespace $ {
 		supply_group_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_supply_group_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * supply_group_name \
@@ -227,7 +225,7 @@ namespace $ {
 		supply_group_name() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Supply_group $mol_labeler
@@ -238,15 +236,15 @@ namespace $ {
 		@ $mol_mem
 		Supply_group() {
 			const obj = new this.$.$mol_labeler()
-
+			
 			obj.title = () => this.supply_group_title()
 			obj.content = () => [
 				this.supply_group_name()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * ballance_unit_title @ \Ballance Unit
@@ -255,7 +253,7 @@ namespace $ {
 		ballance_unit_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_ballance_unit_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * ballance_unit_name \
@@ -264,7 +262,7 @@ namespace $ {
 		ballance_unit_name() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Ballance_unit_item $mol_labeler
@@ -275,15 +273,15 @@ namespace $ {
 		@ $mol_mem
 		Ballance_unit_item() {
 			const obj = new this.$.$mol_labeler()
-
+			
 			obj.title = () => this.ballance_unit_title()
 			obj.content = () => [
 				this.ballance_unit_name()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * org_items /
@@ -301,7 +299,7 @@ namespace $ {
 				this.Ballance_unit_item()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Org_content $mol_row sub <= org_items
@@ -310,12 +308,12 @@ namespace $ {
 		@ $mol_mem
 		Org_content() {
 			const obj = new this.$.$mol_row()
-
+			
 			obj.sub = () => this.org_items()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Org *
@@ -329,7 +327,7 @@ namespace $ {
 				Content: this.Org_content()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * cons_title @ \Consumer
@@ -338,7 +336,7 @@ namespace $ {
 		cons_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_cons_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * contract_title @ \Contract
@@ -347,7 +345,7 @@ namespace $ {
 		contract_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_contract_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * contract_id \
@@ -356,7 +354,7 @@ namespace $ {
 		contract_id() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Contract $mol_labeler
@@ -367,15 +365,15 @@ namespace $ {
 		@ $mol_mem
 		Contract() {
 			const obj = new this.$.$mol_labeler()
-
+			
 			obj.title = () => this.contract_title()
 			obj.content = () => [
 				this.contract_id()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * pay_method_title @ \Pay Method
@@ -384,7 +382,7 @@ namespace $ {
 		pay_method_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_pay_method_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * pay_method_name \
@@ -393,7 +391,7 @@ namespace $ {
 		pay_method_name() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Pay_method $mol_labeler
@@ -404,15 +402,15 @@ namespace $ {
 		@ $mol_mem
 		Pay_method() {
 			const obj = new this.$.$mol_labeler()
-
+			
 			obj.title = () => this.pay_method_title()
 			obj.content = () => [
 				this.pay_method_name()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * manager_title @ \Manager
@@ -421,7 +419,7 @@ namespace $ {
 		manager_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_manager_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * manager_name \
@@ -430,7 +428,7 @@ namespace $ {
 		manager_name() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Manager $mol_labeler
@@ -441,15 +439,15 @@ namespace $ {
 		@ $mol_mem
 		Manager() {
 			const obj = new this.$.$mol_labeler()
-
+			
 			obj.title = () => this.manager_title()
 			obj.content = () => [
 				this.manager_name()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * debitod_title @ \Debitor
@@ -458,7 +456,7 @@ namespace $ {
 		debitod_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_debitod_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * debitor_name \
@@ -467,7 +465,7 @@ namespace $ {
 		debitor_name() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Debitor $mol_labeler
@@ -478,15 +476,15 @@ namespace $ {
 		@ $mol_mem
 		Debitor() {
 			const obj = new this.$.$mol_labeler()
-
+			
 			obj.title = () => this.debitod_title()
 			obj.content = () => [
 				this.debitor_name()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * cons_items /
@@ -504,7 +502,7 @@ namespace $ {
 				this.Debitor()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cons_content $mol_row sub <= cons_items
@@ -513,12 +511,12 @@ namespace $ {
 		@ $mol_mem
 		Cons_content() {
 			const obj = new this.$.$mol_row()
-
+			
 			obj.sub = () => this.cons_items()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cons *
@@ -532,7 +530,7 @@ namespace $ {
 				Content: this.Cons_content()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Descr_deck $mol_deck items /
@@ -543,15 +541,15 @@ namespace $ {
 		@ $mol_mem
 		Descr_deck() {
 			const obj = new this.$.$mol_deck()
-
+			
 			obj.items = () => [
 				this.Org(),
 				this.Cons()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Descr_card $mol_card Content <= Descr_deck
@@ -560,12 +558,12 @@ namespace $ {
 		@ $mol_mem
 		Descr_card() {
 			const obj = new this.$.$mol_card()
-
+			
 			obj.Content = () => this.Descr_deck()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * attach_title @ \Attachments
@@ -574,7 +572,7 @@ namespace $ {
 		attach_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_attach_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * attachments /$mol_view
@@ -582,10 +580,9 @@ namespace $ {
 		 */
 		attachments() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * attach_new?val null
@@ -596,7 +593,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Attach $mol_attach
@@ -607,13 +604,13 @@ namespace $ {
 		@ $mol_mem
 		Attach() {
 			const obj = new this.$.$mol_attach()
-
+			
 			obj.items = () => this.attachments()
 			obj.attach_new = (val?: any) => this.attach_new(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Attach_section $mol_section
@@ -624,15 +621,15 @@ namespace $ {
 		@ $mol_mem
 		Attach_section() {
 			const obj = new this.$.$mol_section()
-
+			
 			obj.head = () => [
 				this.attach_title()
 			] as readonly any[]
 			obj.Content = () => this.Attach()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * positions_title @ \Positions
@@ -641,7 +638,7 @@ namespace $ {
 		positions_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_positions_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * cost_title @ \Cost
@@ -650,7 +647,7 @@ namespace $ {
 		cost_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_cost_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * cost $mol_unit_money valueOf 0
@@ -659,12 +656,12 @@ namespace $ {
 		@ $mol_mem
 		cost() {
 			const obj = new this.$.$mol_unit_money()
-
+			
 			obj.valueOf = () => 0
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cost_value $mol_cost value <= cost
@@ -673,12 +670,12 @@ namespace $ {
 		@ $mol_mem
 		Cost_value() {
 			const obj = new this.$.$mol_cost()
-
+			
 			obj.value = () => this.cost()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cost $mol_labeler
@@ -689,15 +686,15 @@ namespace $ {
 		@ $mol_mem
 		Cost() {
 			const obj = new this.$.$mol_labeler()
-
+			
 			obj.title = () => this.cost_title()
 			obj.content = () => [
 				this.Cost_value()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * positions_head /
@@ -711,7 +708,7 @@ namespace $ {
 				this.Cost()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * positions /$mol_view
@@ -719,10 +716,9 @@ namespace $ {
 		 */
 		positions() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Positions $mol_list rows <= positions
@@ -731,12 +727,12 @@ namespace $ {
 		@ $mol_mem
 		Positions() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => this.positions()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Positions_section $mol_section
@@ -747,13 +743,13 @@ namespace $ {
 		@ $mol_mem
 		Positions_section() {
 			const obj = new this.$.$mol_section()
-
+			
 			obj.head = () => this.positions_head()
 			obj.Content = () => this.Positions()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Content $mol_list rows /
@@ -765,16 +761,16 @@ namespace $ {
 		@ $mol_mem
 		Content() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => [
 				this.Descr_card(),
 				this.Attach_section(),
 				this.Positions_section()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * approved?val false
@@ -785,7 +781,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * approved_title @ \Approved
@@ -794,7 +790,7 @@ namespace $ {
 		approved_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_detail_approved_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Approve $mol_check_box
@@ -805,13 +801,13 @@ namespace $ {
 		@ $mol_mem
 		Approve() {
 			const obj = new this.$.$mol_check_box()
-
+			
 			obj.checked = (val?: any) => this.approved(val)
 			obj.title = () => this.approved_title()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * actions / <= Approve
@@ -822,7 +818,7 @@ namespace $ {
 				this.Approve()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Actions $mol_row sub <= actions
@@ -831,12 +827,12 @@ namespace $ {
 		@ $mol_mem
 		Actions() {
 			const obj = new this.$.$mol_row()
-
+			
 			obj.sub = () => this.actions()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * position!index null
@@ -845,7 +841,7 @@ namespace $ {
 		position(index: any) {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * attachment_thumb!index \
@@ -854,7 +850,7 @@ namespace $ {
 		attachment_thumb(index: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * attachment_load!index \
@@ -864,5 +860,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

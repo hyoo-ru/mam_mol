@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_touch extends $mol_plugin {
-
+		
 		/**
 		 * ```tree
 		 * start_zoom?val 0
@@ -11,7 +11,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * start_distance?val 0
@@ -22,7 +22,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * zoom?val 1
@@ -33,8 +33,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 1
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * start_pan?val /
@@ -50,7 +49,7 @@ namespace $ {
 				0
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * pan?val /
@@ -66,7 +65,7 @@ namespace $ {
 				0
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * pos?val /
@@ -82,8 +81,7 @@ namespace $ {
 				NaN
 			] as readonly any[]
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * start_pos?val null
@@ -94,7 +92,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * swipe_precision 16
@@ -103,8 +101,7 @@ namespace $ {
 		swipe_precision() {
 			return 16
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * swipe_right?val null
@@ -115,7 +112,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * swipe_bottom?val null
@@ -126,7 +123,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * swipe_left?val null
@@ -137,7 +134,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * swipe_top?val null
@@ -148,8 +145,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * swipe_from_right?val null
@@ -160,7 +156,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * swipe_from_bottom?val null
@@ -171,7 +167,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * swipe_from_left?val null
@@ -182,7 +178,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * swipe_from_top?val null
@@ -193,8 +189,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * swipe_to_right?val null
@@ -205,7 +200,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * swipe_to_bottom?val null
@@ -216,7 +211,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * swipe_to_left?val null
@@ -227,7 +222,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * swipe_to_top?val null
@@ -238,8 +233,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * style *
@@ -255,8 +249,7 @@ namespace $ {
 				"overscroll-behavior": "none"
 			}
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -284,7 +277,7 @@ namespace $ {
 				wheel: (event?: any) => this.event_wheel(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_start?event null
@@ -295,7 +288,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_move?event null
@@ -306,7 +299,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_end?event null
@@ -317,7 +310,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_leave?event null
@@ -328,7 +321,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_wheel?event null
@@ -340,5 +333,6 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 }
+

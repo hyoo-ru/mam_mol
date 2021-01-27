@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_view_tree2_ts_test_factory extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * Simple $mol_view
@@ -14,16 +14,16 @@ namespace $ {
 		@ $mol_mem
 		Simple() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.str = () => "some"
 			obj.num = () => 12317
 			obj.bool = () => true
 			obj.nul = () => null as any
 			obj.localized = () => this.$.$mol_locale.text( '$mol_view_tree2_ts_test_factory_Simple_localized' )
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Complex $mol_view
@@ -38,7 +38,7 @@ namespace $ {
 		@ $mol_mem
 		Complex() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.arr = () => [
 				"test1",
 				"test2"
@@ -47,10 +47,10 @@ namespace $ {
 				str: "some2",
 				localized: this.$.$mol_locale.text( '$mol_view_tree2_ts_test_factory_Complex_dict_localized' )
 			})
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Arr $mol_vector_2d /
@@ -64,10 +64,10 @@ namespace $ {
 				this.viewport_x(),
 				this.viewport_y()
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * viewport_x $mol_vector_range /
@@ -81,10 +81,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * viewport_y $mol_vector_range /
@@ -98,9 +98,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

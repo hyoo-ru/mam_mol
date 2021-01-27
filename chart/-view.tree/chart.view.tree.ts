@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_chart extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * gap_hor 48
@@ -9,7 +9,7 @@ namespace $ {
 		gap_hor() {
 			return 48
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_vert 24
@@ -18,7 +18,7 @@ namespace $ {
 		gap_vert() {
 			return 24
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_left <= gap_hor
@@ -27,7 +27,7 @@ namespace $ {
 		gap_left() {
 			return this.gap_hor()
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_right <= gap_hor
@@ -36,7 +36,7 @@ namespace $ {
 		gap_right() {
 			return this.gap_hor()
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_bottom <= gap_vert
@@ -45,7 +45,7 @@ namespace $ {
 		gap_bottom() {
 			return this.gap_vert()
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_top <= gap_vert
@@ -54,7 +54,7 @@ namespace $ {
 		gap_top() {
 			return this.gap_vert()
 		}
-
+		
 		/**
 		 * ```tree
 		 * graphs /$mol_plot_graph
@@ -62,10 +62,9 @@ namespace $ {
 		 */
 		graphs() {
 			return [
-
 			] as readonly $mol_plot_graph[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -79,7 +78,7 @@ namespace $ {
 				this.Plot()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Legend $mol_chart_legend graphs <= graphs_colored
@@ -88,12 +87,12 @@ namespace $ {
 		@ $mol_mem
 		Legend() {
 			const obj = new this.$.$mol_chart_legend()
-
+			
 			obj.graphs = () => this.graphs_colored()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * hue_base 140
@@ -102,7 +101,7 @@ namespace $ {
 		hue_base() {
 			return 140
 		}
-
+		
 		/**
 		 * ```tree
 		 * hue_shift 111
@@ -111,7 +110,16 @@ namespace $ {
 		hue_shift() {
 			return 111
 		}
-
+		
+		/**
+		 * ```tree
+		 * graphs_colored
+		 * ```
+		 */
+		graphs_colored() {
+			return this.Plot().graphs_colored()
+		}
+		
 		/**
 		 * ```tree
 		 * Plot $mol_plot_pane
@@ -128,7 +136,7 @@ namespace $ {
 		@ $mol_mem
 		Plot() {
 			const obj = new this.$.$mol_plot_pane()
-
+			
 			obj.gap_left = () => this.gap_left()
 			obj.gap_right = () => this.gap_right()
 			obj.gap_bottom = () => this.gap_bottom()
@@ -136,18 +144,10 @@ namespace $ {
 			obj.graphs = () => this.graphs()
 			obj.hue_base = () => this.hue_base()
 			obj.hue_shift = () => this.hue_shift()
-
+			
 			return obj
 		}
-
-		/**
-		 * ```tree
-		 * graphs_colored
-		 * ```
-		 */
-		graphs_colored() {
-			return this.Plot().graphs_colored()
-		}
 	}
-
+	
 }
+

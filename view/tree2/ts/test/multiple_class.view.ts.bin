@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_view_tree2_ts_test_multiple_class_a extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * str \some
@@ -10,9 +10,9 @@ namespace $ {
 			return "some"
 		}
 	}
-
+	
 	export class $mol_view_tree2_ts_test_multiple_class_b extends $mol_view_tree2_ts_test_multiple_class_a {
-
+		
 		/**
 		 * ```tree
 		 * str \some2
@@ -22,5 +22,6 @@ namespace $ {
 			return "some2"
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_perf_uibench extends $mol_scroll {
-
+		
 		/**
 		 * ```tree
 		 * attr_static *
@@ -14,7 +14,7 @@ namespace $ {
 				class: "Main"
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -30,7 +30,7 @@ namespace $ {
 				this.Tree()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * table_state null
@@ -39,7 +39,7 @@ namespace $ {
 		table_state() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Table $mol_perf_uibench_table state <= table_state
@@ -48,12 +48,12 @@ namespace $ {
 		@ $mol_mem
 		Table() {
 			const obj = new this.$.$mol_perf_uibench_table()
-
+			
 			obj.state = () => this.table_state()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * anim_state null
@@ -62,7 +62,7 @@ namespace $ {
 		anim_state() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Anim $mol_perf_uibench_anim state <= anim_state
@@ -71,12 +71,12 @@ namespace $ {
 		@ $mol_mem
 		Anim() {
 			const obj = new this.$.$mol_perf_uibench_anim()
-
+			
 			obj.state = () => this.anim_state()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * tree_state null
@@ -85,7 +85,7 @@ namespace $ {
 		tree_state() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Tree $mol_perf_uibench_tree state <= tree_state
@@ -94,11 +94,12 @@ namespace $ {
 		@ $mol_mem
 		Tree() {
 			const obj = new this.$.$mol_perf_uibench_tree()
-
+			
 			obj.state = () => this.tree_state()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

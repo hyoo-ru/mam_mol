@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_chart_demo_simple extends $mol_demo_large {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Simple chart with hadcoded series
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_simple_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Chart
@@ -20,7 +20,7 @@ namespace $ {
 				this.Chart()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * plan_title @ \Plan
@@ -29,7 +29,7 @@ namespace $ {
 		plan_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_simple_plan_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * plan /
@@ -47,7 +47,7 @@ namespace $ {
 				40
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Plan $mol_plot_bar
@@ -58,13 +58,13 @@ namespace $ {
 		@ $mol_mem
 		Plan() {
 			const obj = new this.$.$mol_plot_bar()
-
+			
 			obj.title = () => this.plan_title()
 			obj.series_y = () => this.plan()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * fact_title @ \Fact
@@ -73,7 +73,7 @@ namespace $ {
 		fact_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_simple_fact_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * facts /
@@ -89,7 +89,7 @@ namespace $ {
 				30
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Fact_line $mol_plot_line
@@ -98,10 +98,10 @@ namespace $ {
 		@ $mol_mem
 		Fact_line() {
 			const obj = new this.$.$mol_plot_line()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Fact_dots $mol_plot_dot
@@ -110,10 +110,10 @@ namespace $ {
 		@ $mol_mem
 		Fact_dots() {
 			const obj = new this.$.$mol_plot_dot()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Fact $mol_plot_group
@@ -127,17 +127,17 @@ namespace $ {
 		@ $mol_mem
 		Fact() {
 			const obj = new this.$.$mol_plot_group()
-
+			
 			obj.title = () => this.fact_title()
 			obj.series_y = () => this.facts()
 			obj.graphs = () => [
 				this.Fact_line(),
 				this.Fact_dots()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * vert_title @ \pcs
@@ -146,7 +146,7 @@ namespace $ {
 		vert_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_simple_vert_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Vert_ruler $mol_plot_ruler_vert title <= vert_title
@@ -155,12 +155,12 @@ namespace $ {
 		@ $mol_mem
 		Vert_ruler() {
 			const obj = new this.$.$mol_plot_ruler_vert()
-
+			
 			obj.title = () => this.vert_title()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * marker_hor_title @ \Months
@@ -169,7 +169,7 @@ namespace $ {
 		marker_hor_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_simple_marker_hor_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * months /string
@@ -187,7 +187,7 @@ namespace $ {
 				"April"
 			] as readonly string[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Marker_hor $mol_plot_mark_hor
@@ -198,13 +198,13 @@ namespace $ {
 		@ $mol_mem
 		Marker_hor() {
 			const obj = new this.$.$mol_plot_mark_hor()
-
+			
 			obj.title = () => this.marker_hor_title()
 			obj.labels = () => this.months()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Marker_cross $mol_plot_mark_cross
@@ -217,16 +217,16 @@ namespace $ {
 		@ $mol_mem
 		Marker_cross() {
 			const obj = new this.$.$mol_plot_mark_cross()
-
+			
 			obj.labels = () => this.months()
 			obj.graphs = () => [
 				this.Plan(),
 				this.Fact_dots()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Chart $mol_chart graphs /
@@ -240,7 +240,7 @@ namespace $ {
 		@ $mol_mem
 		Chart() {
 			const obj = new this.$.$mol_chart()
-
+			
 			obj.graphs = () => [
 				this.Plan(),
 				this.Fact(),
@@ -248,9 +248,10 @@ namespace $ {
 				this.Marker_hor(),
 				this.Marker_cross()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

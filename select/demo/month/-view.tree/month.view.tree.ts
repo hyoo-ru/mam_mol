@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_select_demo_month extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Month picker with filter
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_select_demo_month_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Month
@@ -20,7 +20,7 @@ namespace $ {
 				this.Month()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * month?val \jan
@@ -31,7 +31,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return "jan"
 		}
-
+		
 		/**
 		 * ```tree
 		 * months *
@@ -65,7 +65,7 @@ namespace $ {
 				dec: "December"
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Month $mol_select
@@ -77,13 +77,14 @@ namespace $ {
 		@ $mol_mem
 		Month() {
 			const obj = new this.$.$mol_select()
-
+			
 			obj.no_options_message = () => "Not found"
 			obj.value = (val?: any) => this.month(val)
 			obj.dictionary = () => this.months()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

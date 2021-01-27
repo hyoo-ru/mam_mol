@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_dimmer extends $mol_paragraph {
-
+		
 		/**
 		 * ```tree
 		 * haystack \
@@ -9,7 +9,7 @@ namespace $ {
 		haystack() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * needle \
@@ -18,7 +18,7 @@ namespace $ {
 		needle() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub <= parts
@@ -27,7 +27,7 @@ namespace $ {
 		sub() {
 			return this.parts()
 		}
-
+		
 		/**
 		 * ```tree
 		 * Low!id $mol_paragraph sub / <= string!id
@@ -36,14 +36,14 @@ namespace $ {
 		@ $mol_mem_key
 		Low(id: any) {
 			const obj = new this.$.$mol_paragraph()
-
+			
 			obj.sub = () => [
 				this.string(id)
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * High!id $mol_paragraph sub / <= string!id
@@ -52,14 +52,14 @@ namespace $ {
 		@ $mol_mem_key
 		High(id: any) {
 			const obj = new this.$.$mol_paragraph()
-
+			
 			obj.sub = () => [
 				this.string(id)
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * parts /$mol_view_content
@@ -67,10 +67,9 @@ namespace $ {
 		 */
 		parts() {
 			return [
-
 			] as readonly $mol_view_content[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * string!id \
@@ -80,5 +79,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

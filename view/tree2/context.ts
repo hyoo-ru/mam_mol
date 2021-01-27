@@ -96,13 +96,12 @@ namespace $ {
 			this.added_nodes.set(owner.name.value, owner)
 
 			const index = this.methods.length
-			this.methods.push(undefined!)
 
 			return index
 		}
 
-		method(index: number, method: $mol_tree2) {
-			this.methods[index] = method
+		method(index: number, method: $mol_tree2[]) {
+			this.methods.push( ... method )
 		}
 
 		protected locale_nodes = new Map<string, $mol_tree2>()
@@ -143,7 +142,7 @@ namespace $ {
 
 			this.locales[key] = val.value
 
-			return operator.struct('inline', body)
+			return operator.struct('line', body)
 		}
 	}
 }

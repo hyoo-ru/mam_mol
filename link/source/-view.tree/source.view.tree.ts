@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_link_source extends $mol_link {
-
+		
 		/**
 		 * ```tree
 		 * hint @ \Source code
@@ -9,7 +9,7 @@ namespace $ {
 		hint() {
 			return this.$.$mol_locale.text( '$mol_link_source_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Icon
@@ -20,7 +20,7 @@ namespace $ {
 				this.Icon()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Icon $mol_icon_github_circle
@@ -29,9 +29,10 @@ namespace $ {
 		@ $mol_mem
 		Icon() {
 			const obj = new this.$.$mol_icon_github_circle()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

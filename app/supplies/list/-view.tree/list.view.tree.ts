@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_app_supplies_list extends $mol_page {
-
+		
 		/**
 		 * ```tree
 		 * supplies /$mol_app_supplies_domain_supply
@@ -8,10 +8,9 @@ namespace $ {
 		 */
 		supplies() {
 			return [
-
 			] as readonly $mol_app_supplies_domain_supply[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * head /
@@ -27,7 +26,7 @@ namespace $ {
 				this.Search()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * body / <= Supply_rows
@@ -38,8 +37,7 @@ namespace $ {
 				this.Supply_rows()
 			] as readonly any[]
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * Supply_row!index $mol_app_supplies_card
@@ -50,13 +48,13 @@ namespace $ {
 		@ $mol_mem_key
 		Supply_row(index: any) {
 			const obj = new this.$.$mol_app_supplies_card()
-
+			
 			obj.supply = () => this.supply(index)
 			obj.arg = () => this.supply_arg(index)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * search_hint @ \Search supply by bar code
@@ -65,7 +63,7 @@ namespace $ {
 		search_hint() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_list_search_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * search_query?val \
@@ -76,7 +74,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Search $mol_code
@@ -87,13 +85,13 @@ namespace $ {
 		@ $mol_mem
 		Search() {
 			const obj = new this.$.$mol_code()
-
+			
 			obj.hint = () => this.search_hint()
 			obj.value = (val?: any) => this.search_query(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * supply_rows /$mol_view
@@ -101,10 +99,9 @@ namespace $ {
 		 */
 		supply_rows() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Supply_rows $mol_list rows <= supply_rows
@@ -113,12 +110,12 @@ namespace $ {
 		@ $mol_mem
 		Supply_rows() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => this.supply_rows()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * supply!index null
@@ -127,7 +124,7 @@ namespace $ {
 		supply(index: any) {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * supply_id!index \
@@ -136,7 +133,7 @@ namespace $ {
 		supply_id(index: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * supply_arg!index * supply <= supply_id!index
@@ -148,5 +145,6 @@ namespace $ {
 			}
 		}
 	}
-
+	
 }
+

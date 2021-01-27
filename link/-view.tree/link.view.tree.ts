@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_link extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \a
@@ -9,7 +9,7 @@ namespace $ {
 		dom_name() {
 			return "a"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -31,7 +31,7 @@ namespace $ {
 				mol_link_current: this.current()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /$mol_view_content <= title
@@ -42,7 +42,7 @@ namespace $ {
 				this.title()
 			] as readonly $mol_view_content[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * arg *
@@ -50,10 +50,9 @@ namespace $ {
 		 */
 		arg() {
 			return {
-
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -67,7 +66,7 @@ namespace $ {
 				click: (event?: any) => this.click(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * uri \
@@ -76,7 +75,7 @@ namespace $ {
 		uri() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint \
@@ -85,7 +84,7 @@ namespace $ {
 		hint() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * target \_self
@@ -94,7 +93,7 @@ namespace $ {
 		target() {
 			return "_self"
 		}
-
+		
 		/**
 		 * ```tree
 		 * file_name \
@@ -103,7 +102,7 @@ namespace $ {
 		file_name() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * current false
@@ -112,7 +111,7 @@ namespace $ {
 		current() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_click?event null
@@ -123,7 +122,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * click?event <=> event_click?event
@@ -133,5 +132,6 @@ namespace $ {
 			return this.event_click(event)
 		}
 	}
-
+	
 }
+

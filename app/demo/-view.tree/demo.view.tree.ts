@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_app_demo extends $mol_book2 {
-
+		
 		/**
 		 * ```tree
 		 * editor_title <= detail_title
@@ -9,7 +9,7 @@ namespace $ {
 		editor_title() {
 			return this.detail_title()
 		}
-
+		
 		/**
 		 * ```tree
 		 * source_prefix \https://github.com/hyoo-ru/mam_mol/tree/master/
@@ -18,7 +18,7 @@ namespace $ {
 		source_prefix() {
 			return "https://github.com/hyoo-ru/mam_mol/tree/master/"
 		}
-
+		
 		/**
 		 * ```tree
 		 * Main $mol_app_demo_main
@@ -27,10 +27,10 @@ namespace $ {
 		@ $mol_mem
 		Main() {
 			const obj = new this.$.$mol_app_demo_main()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * pages <= blocks
@@ -39,7 +39,7 @@ namespace $ {
 		pages() {
 			return this.blocks()
 		}
-
+		
 		/**
 		 * ```tree
 		 * plugins / <= Theme
@@ -50,7 +50,7 @@ namespace $ {
 				this.Theme()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Menu $mol_app_demo_menu
@@ -62,14 +62,14 @@ namespace $ {
 		@ $mol_mem
 		Menu() {
 			const obj = new this.$.$mol_app_demo_menu()
-
+			
 			obj.hierarchy = () => this.nav_hierarchy()
 			obj.option = (id: any) => this.nav_option(id)
 			obj.filter = (val?: any) => this.filter_string(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Detail!id $mol_app_demo_detail
@@ -83,17 +83,17 @@ namespace $ {
 		@ $mol_mem_key
 		Detail(id: any) {
 			const obj = new this.$.$mol_app_demo_detail()
-
+			
 			obj.title = () => this.detail_title()
 			obj.source_link = () => this.source_link()
 			obj.body = () => [
 				this.Detail_list(),
 				// <=
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Editor!id $mol_app_studio
@@ -105,16 +105,16 @@ namespace $ {
 		@ $mol_mem_key
 		Editor(id: any) {
 			const obj = new this.$.$mol_app_studio()
-
+			
 			obj.title = () => this.editor_title()
 			obj.class_name_base = () => this.selected_class_name()
 			obj.tools_main = () => [
 				this.Close()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Welcome $mol_scroll sub / <= Welcome_text
@@ -123,14 +123,14 @@ namespace $ {
 		@ $mol_mem
 		Welcome() {
 			const obj = new this.$.$mol_scroll()
-
+			
 			obj.sub = () => [
 				this.Welcome_text()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Detail_empty_message $mol_status sub /
@@ -142,16 +142,16 @@ namespace $ {
 		@ $mol_mem
 		Detail_empty_message() {
 			const obj = new this.$.$mol_status()
-
+			
 			obj.sub = () => [
 				this.detail_empty_prefix(),
 				this.selected(),
 				this.detail_empty_postfix()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * detail_title \$mol
@@ -160,7 +160,7 @@ namespace $ {
 		detail_title() {
 			return "$mol"
 		}
-
+		
 		/**
 		 * ```tree
 		 * blocks /
@@ -168,10 +168,9 @@ namespace $ {
 		 */
 		blocks() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Theme $mol_theme_auto
@@ -180,10 +179,10 @@ namespace $ {
 		@ $mol_mem
 		Theme() {
 			const obj = new this.$.$mol_theme_auto()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * nav_hierarchy null
@@ -192,7 +191,7 @@ namespace $ {
 		nav_hierarchy() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * nav_option!id null
@@ -201,7 +200,7 @@ namespace $ {
 		nav_option(id: any) {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * filter_string?val \
@@ -212,7 +211,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * source_link \
@@ -221,7 +220,7 @@ namespace $ {
 		source_link() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * main_content /
@@ -229,10 +228,9 @@ namespace $ {
 		 */
 		main_content() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Detail_list $mol_list rows <= main_content
@@ -241,12 +239,12 @@ namespace $ {
 		@ $mol_mem
 		Detail_list() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => this.main_content()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * chat_link \
@@ -255,7 +253,7 @@ namespace $ {
 		chat_link() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Chat $mol_chat
@@ -267,14 +265,14 @@ namespace $ {
 		@ $mol_mem
 		Chat() {
 			const obj = new this.$.$mol_chat()
-
+			
 			obj.repository_name = () => "nin-jin/mol_chat"
 			obj.title = () => this.title()
 			obj.link = () => this.chat_link()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * selected_class_name \
@@ -283,7 +281,7 @@ namespace $ {
 		selected_class_name() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Close_icon $mol_icon_cross
@@ -292,10 +290,10 @@ namespace $ {
 		@ $mol_mem
 		Close_icon() {
 			const obj = new this.$.$mol_icon_cross()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * close_arg * edit null
@@ -306,7 +304,7 @@ namespace $ {
 				edit: null as any
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Close $mol_link
@@ -317,15 +315,15 @@ namespace $ {
 		@ $mol_mem
 		Close() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.sub = () => [
 				this.Close_icon()
 			] as readonly any[]
 			obj.arg = () => this.close_arg()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * welcome_text \
@@ -334,7 +332,7 @@ namespace $ {
 		welcome_text() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Welcome_text $mol_text text <= welcome_text
@@ -343,12 +341,12 @@ namespace $ {
 		@ $mol_mem
 		Welcome_text() {
 			const obj = new this.$.$mol_text()
-
+			
 			obj.text = () => this.welcome_text()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * detail_empty_prefix @ \No one demo with prefix "
@@ -357,7 +355,7 @@ namespace $ {
 		detail_empty_prefix() {
 			return this.$.$mol_locale.text( '$mol_app_demo_detail_empty_prefix' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * selected \
@@ -366,7 +364,7 @@ namespace $ {
 		selected() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * detail_empty_postfix @ \"
@@ -376,9 +374,9 @@ namespace $ {
 			return this.$.$mol_locale.text( '$mol_app_demo_detail_empty_postfix' )
 		}
 	}
-
+	
 	export class $mol_app_demo_menu extends $mol_page {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Demos
@@ -387,7 +385,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_app_demo_menu_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * tools / <= Filter
@@ -398,7 +396,7 @@ namespace $ {
 				this.Filter()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -412,7 +410,7 @@ namespace $ {
 				this.Nav()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * filter?val \
@@ -423,7 +421,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Filter $mol_search query?val <=> filter?val
@@ -432,12 +430,12 @@ namespace $ {
 		@ $mol_mem
 		Filter() {
 			const obj = new this.$.$mol_search()
-
+			
 			obj.query = (val?: any) => this.filter(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * hierarchy null
@@ -446,7 +444,7 @@ namespace $ {
 		hierarchy() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * option!id null
@@ -455,7 +453,7 @@ namespace $ {
 		option(id: any) {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Nav $mol_app_demo_nav
@@ -467,17 +465,17 @@ namespace $ {
 		@ $mol_mem
 		Nav() {
 			const obj = new this.$.$mol_app_demo_nav()
-
+			
 			obj.hierarchy = () => this.hierarchy()
 			obj.record = (id: any) => this.option(id)
 			obj.needle = () => this.filter()
-
+			
 			return obj
 		}
 	}
-
+	
 	export class $mol_app_demo_detail extends $mol_page {
-
+		
 		/**
 		 * ```tree
 		 * tools /
@@ -493,7 +491,7 @@ namespace $ {
 				this.Close()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * source_link \
@@ -502,7 +500,7 @@ namespace $ {
 		source_link() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * source_hint @ \Source code of this demo
@@ -511,7 +509,7 @@ namespace $ {
 		source_hint() {
 			return this.$.$mol_locale.text( '$mol_app_demo_detail_source_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Source_icon $mol_icon_code_braces
@@ -520,10 +518,10 @@ namespace $ {
 		@ $mol_mem
 		Source_icon() {
 			const obj = new this.$.$mol_icon_code_braces()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Source_button $mol_button_major
@@ -534,15 +532,15 @@ namespace $ {
 		@ $mol_mem
 		Source_button() {
 			const obj = new this.$.$mol_button_major()
-
+			
 			obj.hint = () => this.source_hint()
 			obj.sub = () => [
 				this.Source_icon()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Source_link $mol_link
@@ -554,16 +552,16 @@ namespace $ {
 		@ $mol_mem
 		Source_link() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.uri = () => this.source_link()
 			obj.target = () => "_blank"
 			obj.sub = () => [
 				this.Source_button()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * edit_hint @ \Edit this demo online
@@ -572,7 +570,7 @@ namespace $ {
 		edit_hint() {
 			return this.$.$mol_locale.text( '$mol_app_demo_detail_edit_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Edit_speck $mol_speck value \β
@@ -581,12 +579,12 @@ namespace $ {
 		@ $mol_mem
 		Edit_speck() {
 			const obj = new this.$.$mol_speck()
-
+			
 			obj.value = () => "β"
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Edit_icon $mol_icon_settings
@@ -595,10 +593,10 @@ namespace $ {
 		@ $mol_mem
 		Edit_icon() {
 			const obj = new this.$.$mol_icon_settings()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Edit $mol_link
@@ -614,7 +612,7 @@ namespace $ {
 		@ $mol_mem
 		Edit() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.hint = () => this.edit_hint()
 			obj.sub = () => [
 				this.Edit_speck(),
@@ -624,10 +622,10 @@ namespace $ {
 				edit: "",
 				path: ""
 			})
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * close_hint @ \Close panel
@@ -636,7 +634,7 @@ namespace $ {
 		close_hint() {
 			return this.$.$mol_locale.text( '$mol_app_demo_detail_close_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Close_icon $mol_icon_cross
@@ -645,10 +643,10 @@ namespace $ {
 		@ $mol_mem
 		Close_icon() {
 			const obj = new this.$.$mol_icon_cross()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * close_arg * demo null
@@ -659,7 +657,7 @@ namespace $ {
 				demo: null as any
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Close $mol_link
@@ -671,19 +669,19 @@ namespace $ {
 		@ $mol_mem
 		Close() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.hint = () => this.close_hint()
 			obj.sub = () => [
 				this.Close_icon()
 			] as readonly any[]
 			obj.arg = () => this.close_arg()
-
+			
 			return obj
 		}
 	}
-
+	
 	export class $mol_app_demo_nav extends $mol_grid {
-
+		
 		/**
 		 * ```tree
 		 * hierarchy_col \title
@@ -692,7 +690,7 @@ namespace $ {
 		hierarchy_col() {
 			return "title"
 		}
-
+		
 		/**
 		 * ```tree
 		 * Head null
@@ -701,8 +699,7 @@ namespace $ {
 		Head() {
 			return null as any
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * Option!id $mol_link
@@ -715,16 +712,16 @@ namespace $ {
 		@ $mol_mem_key
 		Option(id: any) {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.arg = () => this.arg(id)
 			obj.sub = () => [
 				this.Expand(id),
 				this.Content(id)
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * arg!id *
@@ -732,10 +729,9 @@ namespace $ {
 		 */
 		arg(id: any) {
 			return {
-
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Expand!id $mol_check_expand
@@ -746,13 +742,13 @@ namespace $ {
 		@ $mol_mem_key
 		Expand(id: any) {
 			const obj = new this.$.$mol_check_expand()
-
+			
 			obj.expanded = (val?: any) => this.cell_expanded(id, val)
 			obj.level = () => this.cell_level(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Content!id $mol_view sub / <= cell_content!id
@@ -761,13 +757,14 @@ namespace $ {
 		@ $mol_mem_key
 		Content(id: any) {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.cell_content(id)
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

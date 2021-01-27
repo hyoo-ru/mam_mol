@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_lights_toggle extends $mol_check_icon {
-
+		
 		/**
 		 * ```tree
 		 * Icon <= Lights_icon
@@ -9,7 +9,7 @@ namespace $ {
 		Icon() {
 			return this.Lights_icon()
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint @ \Toggle lights
@@ -18,7 +18,7 @@ namespace $ {
 		hint() {
 			return this.$.$mol_locale.text( '$mol_lights_toggle_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * checked?val <=> lights?val
@@ -27,7 +27,7 @@ namespace $ {
 		checked(val?: any) {
 			return this.lights(val)
 		}
-
+		
 		/**
 		 * ```tree
 		 * Lights_icon $mol_icon_brightness_6
@@ -36,10 +36,10 @@ namespace $ {
 		@ $mol_mem
 		Lights_icon() {
 			const obj = new this.$.$mol_icon_brightness_6()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * lights?val false
@@ -51,5 +51,6 @@ namespace $ {
 			return false
 		}
 	}
-
+	
 }
+

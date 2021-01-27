@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_expander_demo extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Simple spoiler
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_expander_demo_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Expander
@@ -20,7 +20,7 @@ namespace $ {
 				this.Expander()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Content $mol_filler
@@ -29,10 +29,10 @@ namespace $ {
 		@ $mol_mem
 		Content() {
 			const obj = new this.$.$mol_filler()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Expander $mol_expander
@@ -43,12 +43,13 @@ namespace $ {
 		@ $mol_mem
 		Expander() {
 			const obj = new this.$.$mol_expander()
-
+			
 			obj.title = () => "Lorem Ipsum"
 			obj.Content = () => this.Content()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_check_expand extends $mol_check {
-
+		
 		/**
 		 * ```tree
 		 * minimal_height 40
@@ -9,7 +9,7 @@ namespace $ {
 		minimal_height() {
 			return 40
 		}
-
+		
 		/**
 		 * ```tree
 		 * Icon $mol_icon_chevron
@@ -18,10 +18,10 @@ namespace $ {
 		@ $mol_mem
 		Icon() {
 			const obj = new this.$.$mol_icon_chevron()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * level 0
@@ -30,7 +30,7 @@ namespace $ {
 		level() {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * style *
@@ -44,7 +44,7 @@ namespace $ {
 				paddingLeft: this.level_style()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * checked?val <=> expanded?val
@@ -53,7 +53,7 @@ namespace $ {
 		checked(val?: any) {
 			return this.expanded(val)
 		}
-
+		
 		/**
 		 * ```tree
 		 * enabled <= expandable
@@ -62,7 +62,7 @@ namespace $ {
 		enabled() {
 			return this.expandable()
 		}
-
+		
 		/**
 		 * ```tree
 		 * level_style \0px
@@ -71,7 +71,7 @@ namespace $ {
 		level_style() {
 			return "0px"
 		}
-
+		
 		/**
 		 * ```tree
 		 * expanded?val false
@@ -82,7 +82,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * expandable false
@@ -92,5 +92,6 @@ namespace $ {
 			return false
 		}
 	}
-
+	
 }
+

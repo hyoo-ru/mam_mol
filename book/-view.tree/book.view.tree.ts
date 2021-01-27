@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_book extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * sub <= pages_wrapped
@@ -9,7 +9,7 @@ namespace $ {
 		sub() {
 			return this.pages_wrapped()
 		}
-
+		
 		/**
 		 * ```tree
 		 * minimal_width 0
@@ -18,7 +18,7 @@ namespace $ {
 		minimal_width() {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * pages /$mol_view
@@ -26,10 +26,9 @@ namespace $ {
 		 */
 		pages() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * plugins /$mol_plugin
@@ -43,7 +42,7 @@ namespace $ {
 				this.Touch()
 			] as readonly $mol_plugin[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Page!index $mol_book_page
@@ -54,13 +53,13 @@ namespace $ {
 		@ $mol_mem_key
 		Page(index: any) {
 			const obj = new this.$.$mol_book_page()
-
+			
 			obj.Sub = () => this.page(index)
 			obj.visible = () => this.page_visible(index)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Placeholder $mol_book_placeholder title <= title
@@ -69,12 +68,12 @@ namespace $ {
 		@ $mol_mem
 		Placeholder() {
 			const obj = new this.$.$mol_book_placeholder()
-
+			
 			obj.title = () => this.title()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * pages_wrapped /$mol_view
@@ -82,22 +81,9 @@ namespace $ {
 		 */
 		pages_wrapped() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
-		/**
-		 * ```tree
-		 * Meter $mol_meter width => width
-		 * ```
-		 */
-		@ $mol_mem
-		Meter() {
-			const obj = new this.$.$mol_meter()
-
-			return obj
-		}
-
+		
 		/**
 		 * ```tree
 		 * width
@@ -106,7 +92,19 @@ namespace $ {
 		width() {
 			return this.Meter().width()
 		}
-
+		
+		/**
+		 * ```tree
+		 * Meter $mol_meter width => width
+		 * ```
+		 */
+		@ $mol_mem
+		Meter() {
+			const obj = new this.$.$mol_meter()
+			
+			return obj
+		}
+		
 		/**
 		 * ```tree
 		 * event_front_up?val null
@@ -117,7 +115,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_front_down?val null
@@ -128,7 +126,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Touch $mol_touch
@@ -139,13 +137,13 @@ namespace $ {
 		@ $mol_mem
 		Touch() {
 			const obj = new this.$.$mol_touch()
-
+			
 			obj.swipe_from_left = (val?: any) => this.event_front_up(val)
 			obj.swipe_to_left = (val?: any) => this.event_front_down(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * page!index null
@@ -154,7 +152,7 @@ namespace $ {
 		page(index: any) {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * page_visible!index true
@@ -164,9 +162,9 @@ namespace $ {
 			return true
 		}
 	}
-
+	
 	export class $mol_book_placeholder extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * minimal_width 400
@@ -175,7 +173,7 @@ namespace $ {
 		minimal_width() {
 			return 400
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -190,9 +188,9 @@ namespace $ {
 			}
 		}
 	}
-
+	
 	export class $mol_book_page extends $mol_ghost {
-
+		
 		/**
 		 * ```tree
 		 * attr_static *
@@ -208,7 +206,7 @@ namespace $ {
 				mol_book_page_visible: true
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -224,7 +222,7 @@ namespace $ {
 				mol_book_page_visible: this.visible()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * visible true
@@ -234,5 +232,6 @@ namespace $ {
 			return true
 		}
 	}
-
+	
 }
+

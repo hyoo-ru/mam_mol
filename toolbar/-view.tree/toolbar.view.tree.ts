@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_toolbar extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -14,7 +14,7 @@ namespace $ {
 				mol_toolbar_expanded: this.expanded()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -28,7 +28,7 @@ namespace $ {
 				this.Expand()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * items /$mol_view
@@ -36,10 +36,9 @@ namespace $ {
 		 */
 		items() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Bar $mol_view sub <= items
@@ -48,12 +47,12 @@ namespace $ {
 		@ $mol_mem
 		Bar() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => this.items()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * expanded?val false
@@ -64,7 +63,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * Expand $mol_check_expand checked?val <=> expanded?val
@@ -73,11 +72,12 @@ namespace $ {
 		@ $mol_mem
 		Expand() {
 			const obj = new this.$.$mol_check_expand()
-
+			
 			obj.checked = (val?: any) => this.expanded(val)
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

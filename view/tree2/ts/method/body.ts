@@ -21,24 +21,24 @@ namespace $ {
 
 		let body: $mol_tree2
 
-		if (type === '<=') body = add_return(this.$mol_view_tree2_ts_bind_left(operator, context, having_parts))
-		else if (type === '<=>') body = add_return(this.$mol_view_tree2_ts_bind_both(operator, context))
-		else if (type === '@') body = add_return(this.$mol_view_tree2_ts_locale(operator, context))
-		else if (type === '*') body = add_return(this.$mol_view_tree2_ts_dictionary(operator, context, having_parts))
-		else if (type[0] === '/') body = add_return(this.$mol_view_tree2_ts_array(operator, context, having_parts))
+		if (type === '<=') body = add_return(operator, this.$mol_view_tree2_ts_bind_left(operator, context, having_parts))
+		else if (type === '<=>') body = add_return(operator, this.$mol_view_tree2_ts_bind_both(operator, context))
+		else if (type === '@') body = add_return(operator, this.$mol_view_tree2_ts_locale(operator, context))
+		else if (type === '*') body = add_return(operator, this.$mol_view_tree2_ts_dictionary(operator, context, having_parts))
+		else if (type[0] === '/') body = add_return(operator, this.$mol_view_tree2_ts_array(operator, context, having_parts))
 		else if (type[0] === '$') body = this.$mol_view_tree2_ts_factory(operator, having_parts, context)
-		else body = add_return(this.$mol_view_tree2_ts_value(operator))
+		else body = add_return(operator, this.$mol_view_tree2_ts_value(operator))
 
 		const method = this.$mol_view_tree2_ts_method(having_parts, body, context.types)
 
 		context.method(index, method)	
 	}
 
-	function add_return(value: $mol_tree2) {
-		return value.struct('block', [
-			value.struct('inline', [
-				value.data('return '),
-				value
+	function add_return(op: $mol_tree2, value: $mol_tree2[]) {
+		return op.struct('indent', [
+			op.struct('line', [
+				op.data('return '),
+				... value
 			])
 		])
 	}

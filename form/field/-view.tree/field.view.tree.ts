@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_form_field extends $mol_labeler {
-
+		
 		/**
 		 * ```tree
 		 * label /
@@ -14,7 +14,7 @@ namespace $ {
 				this.Bid()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Content <= control
@@ -23,7 +23,7 @@ namespace $ {
 		Content() {
 			return this.control()
 		}
-
+		
 		/**
 		 * ```tree
 		 * name \
@@ -32,7 +32,7 @@ namespace $ {
 		name() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * bid \
@@ -41,7 +41,7 @@ namespace $ {
 		bid() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Bid $mol_view sub / <= bid
@@ -50,14 +50,14 @@ namespace $ {
 		@ $mol_mem
 		Bid() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.bid()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * control null
@@ -67,5 +67,6 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_plot_dot extends $mol_plot_graph {
-
+		
 		/**
 		 * ```tree
 		 * points_max Infinity
@@ -9,7 +9,7 @@ namespace $ {
 		points_max() {
 			return Infinity
 		}
-
+		
 		/**
 		 * ```tree
 		 * style *
@@ -23,7 +23,7 @@ namespace $ {
 				"stroke-width": this.diameter()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Curve
@@ -34,8 +34,7 @@ namespace $ {
 				this.Curve()
 			] as readonly any[]
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * Sample $mol_plot_graph_sample color <= color
@@ -44,12 +43,12 @@ namespace $ {
 		@ $mol_mem
 		Sample() {
 			const obj = new this.$.$mol_plot_graph_sample()
-
+			
 			obj.color = () => this.color()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * diameter 8
@@ -58,7 +57,7 @@ namespace $ {
 		diameter() {
 			return 8
 		}
-
+		
 		/**
 		 * ```tree
 		 * curve \
@@ -67,7 +66,7 @@ namespace $ {
 		curve() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Curve $mol_svg_path geometry <= curve
@@ -76,11 +75,12 @@ namespace $ {
 		@ $mol_mem
 		Curve() {
 			const obj = new this.$.$mol_svg_path()
-
+			
 			obj.geometry = () => this.curve()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

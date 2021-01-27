@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_text extends $mol_list {
-
+		
 		/**
 		 * ```tree
 		 * uri_base \
@@ -9,7 +9,7 @@ namespace $ {
 		uri_base() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * text \
@@ -18,7 +18,7 @@ namespace $ {
 		text() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * tokens /
@@ -26,10 +26,9 @@ namespace $ {
 		 */
 		tokens() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Quote!id $mol_text text <= quote_text!id
@@ -38,12 +37,12 @@ namespace $ {
 		@ $mol_mem_key
 		Quote(id: any) {
 			const obj = new this.$.$mol_text()
-
+			
 			obj.text = () => this.quote_text(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Row!id $mol_text_row
@@ -54,13 +53,13 @@ namespace $ {
 		@ $mol_mem_key
 		Row(id: any) {
 			const obj = new this.$.$mol_text_row()
-
+			
 			obj.sub = () => this.block_content(id)
 			obj.type = () => this.block_type(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Span!id $mol_text_span
@@ -69,10 +68,10 @@ namespace $ {
 		@ $mol_mem_key
 		Span(id: any) {
 			const obj = new this.$.$mol_text_span()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Link!id $mol_text_link
@@ -81,10 +80,10 @@ namespace $ {
 		@ $mol_mem_key
 		Link(id: any) {
 			const obj = new this.$.$mol_text_link()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Image!id $mol_text_image
@@ -93,10 +92,10 @@ namespace $ {
 		@ $mol_mem_key
 		Image(id: any) {
 			const obj = new this.$.$mol_text_image()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Header!id $mol_text_header
@@ -107,13 +106,13 @@ namespace $ {
 		@ $mol_mem_key
 		Header(id: any) {
 			const obj = new this.$.$mol_text_header()
-
+			
 			obj.level = () => this.header_level(id)
 			obj.content = () => this.header_content(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Table!id $mol_grid
@@ -124,13 +123,13 @@ namespace $ {
 		@ $mol_mem_key
 		Table(id: any) {
 			const obj = new this.$.$mol_grid()
-
+			
 			obj.head_cells = () => this.table_head_cells(id)
 			obj.rows = () => this.table_rows(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Table_row!id $mol_grid_row cells <= table_cells!id
@@ -139,12 +138,12 @@ namespace $ {
 		@ $mol_mem_key
 		Table_row(id: any) {
 			const obj = new this.$.$mol_grid_row()
-
+			
 			obj.cells = () => this.table_cells(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Table_cell!id $mol_grid_cell sub <= table_cell_content!id
@@ -153,12 +152,12 @@ namespace $ {
 		@ $mol_mem_key
 		Table_cell(id: any) {
 			const obj = new this.$.$mol_grid_cell()
-
+			
 			obj.sub = () => this.table_cell_content(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Table_cell_head!id $mol_float sub <= table_cell_content!id
@@ -167,12 +166,12 @@ namespace $ {
 		@ $mol_mem_key
 		Table_cell_head(id: any) {
 			const obj = new this.$.$mol_float()
-
+			
 			obj.sub = () => this.table_cell_content(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * quote_text!id \
@@ -181,7 +180,7 @@ namespace $ {
 		quote_text(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * block_content!id /
@@ -189,10 +188,9 @@ namespace $ {
 		 */
 		block_content(id: any) {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * block_type!id \
@@ -201,7 +199,7 @@ namespace $ {
 		block_type(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * header_level!id 0
@@ -210,7 +208,7 @@ namespace $ {
 		header_level(id: any) {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * header_content!id /
@@ -218,10 +216,9 @@ namespace $ {
 		 */
 		header_content(id: any) {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * table_head_cells!id /
@@ -229,10 +226,9 @@ namespace $ {
 		 */
 		table_head_cells(id: any) {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * table_rows!id /
@@ -240,10 +236,9 @@ namespace $ {
 		 */
 		table_rows(id: any) {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * table_cells!id /
@@ -251,10 +246,9 @@ namespace $ {
 		 */
 		table_cells(id: any) {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * table_cell_content!id /
@@ -262,13 +256,12 @@ namespace $ {
 		 */
 		table_cell_content(id: any) {
 			return [
-
 			] as readonly any[]
 		}
 	}
-
+	
 	export class $mol_text_row extends $mol_paragraph {
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -282,7 +275,7 @@ namespace $ {
 				mol_text_type: this.type()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * type \
@@ -292,9 +285,9 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 	export class $mol_text_header extends $mol_paragraph {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \h
@@ -303,7 +296,7 @@ namespace $ {
 		dom_name() {
 			return "h"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -317,7 +310,7 @@ namespace $ {
 				mol_text_header_level: this.level()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub <= content
@@ -326,7 +319,7 @@ namespace $ {
 		sub() {
 			return this.content()
 		}
-
+		
 		/**
 		 * ```tree
 		 * level?val 0
@@ -337,7 +330,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * content /
@@ -345,13 +338,12 @@ namespace $ {
 		 */
 		content() {
 			return [
-
 			] as readonly any[]
 		}
 	}
-
+	
 	export class $mol_text_span extends $mol_paragraph {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \span
@@ -360,7 +352,7 @@ namespace $ {
 		dom_name() {
 			return "span"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -374,7 +366,7 @@ namespace $ {
 				mol_text_type: this.type()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub <= content?val
@@ -383,7 +375,7 @@ namespace $ {
 		sub() {
 			return this.content()
 		}
-
+		
 		/**
 		 * ```tree
 		 * type?val \
@@ -394,7 +386,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * content?val /
@@ -404,13 +396,12 @@ namespace $ {
 		content(val?: any) {
 			if ( val !== undefined ) return val
 			return [
-
 			] as readonly any[]
 		}
 	}
-
+	
 	export class $mol_text_link extends $mol_link_iconed {
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -424,7 +415,7 @@ namespace $ {
 				mol_text_type: this.type()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * uri <= link?val
@@ -433,7 +424,7 @@ namespace $ {
 		uri() {
 			return this.link()
 		}
-
+		
 		/**
 		 * ```tree
 		 * content?val /
@@ -443,10 +434,9 @@ namespace $ {
 		content(val?: any) {
 			if ( val !== undefined ) return val
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * type?val \
@@ -457,7 +447,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * link?val \
@@ -469,9 +459,9 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 	export class $mol_text_image extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \object
@@ -480,7 +470,7 @@ namespace $ {
 		dom_name() {
 			return "object"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -498,7 +488,7 @@ namespace $ {
 				data: this.link()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= title?val
@@ -509,7 +499,7 @@ namespace $ {
 				this.title()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * type?val \
@@ -520,7 +510,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * link?val \
@@ -531,7 +521,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * title?val \
@@ -543,5 +533,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

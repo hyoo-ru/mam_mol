@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_text_code_row extends $mol_paragraph {
-
+		
 		/**
 		 * ```tree
 		 * text \
@@ -9,7 +9,7 @@ namespace $ {
 		text() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * minimal_height 24
@@ -18,7 +18,7 @@ namespace $ {
 		minimal_height() {
 			return 24
 		}
-
+		
 		/**
 		 * ```tree
 		 * Token!id $mol_text_code_token
@@ -30,14 +30,14 @@ namespace $ {
 		@ $mol_mem_key
 		Token(id: any) {
 			const obj = new this.$.$mol_text_code_token()
-
+			
 			obj.type = () => this.token_type(id)
 			obj.haystack = () => this.token_text(id)
 			obj.needle = () => this.highlight()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Token_link!id $mol_text_code_token_link
@@ -48,13 +48,13 @@ namespace $ {
 		@ $mol_mem_key
 		Token_link(id: any) {
 			const obj = new this.$.$mol_text_code_token_link()
-
+			
 			obj.haystack = () => this.token_text(id)
 			obj.needle = () => this.highlight()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * token_type!id \
@@ -63,7 +63,7 @@ namespace $ {
 		token_type(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * token_text!id \
@@ -72,7 +72,7 @@ namespace $ {
 		token_text(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * highlight \
@@ -82,5 +82,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

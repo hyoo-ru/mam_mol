@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_plot_fill extends $mol_plot_graph {
-
+		
 		/**
 		 * ```tree
 		 * threshold 4
@@ -9,7 +9,7 @@ namespace $ {
 		threshold() {
 			return 4
 		}
-
+		
 		/**
 		 * ```tree
 		 * spacing 2
@@ -18,7 +18,7 @@ namespace $ {
 		spacing() {
 			return 2
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Curve
@@ -29,7 +29,7 @@ namespace $ {
 				this.Curve()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Sample $mol_plot_graph_sample color <= color
@@ -38,12 +38,12 @@ namespace $ {
 		@ $mol_mem
 		Sample() {
 			const obj = new this.$.$mol_plot_graph_sample()
-
+			
 			obj.color = () => this.color()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * curve \
@@ -52,7 +52,7 @@ namespace $ {
 		curve() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Curve $mol_svg_path geometry <= curve
@@ -61,11 +61,12 @@ namespace $ {
 		@ $mol_mem
 		Curve() {
 			const obj = new this.$.$mol_svg_path()
-
+			
 			obj.geometry = () => this.curve()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

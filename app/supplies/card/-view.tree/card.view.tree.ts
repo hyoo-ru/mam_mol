@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_app_supplies_card extends $mol_link {
-
+		
 		/**
 		 * ```tree
 		 * supply null
@@ -9,7 +9,7 @@ namespace $ {
 		supply() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * minimal_height 125
@@ -18,7 +18,7 @@ namespace $ {
 		minimal_height() {
 			return 125
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Card
@@ -29,7 +29,7 @@ namespace $ {
 				this.Card()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * status \
@@ -38,7 +38,7 @@ namespace $ {
 		status() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * code_title @ \Code
@@ -47,7 +47,7 @@ namespace $ {
 		code_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_card_code_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * code \
@@ -56,7 +56,7 @@ namespace $ {
 		code() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Code_item $mol_labeler
@@ -67,15 +67,15 @@ namespace $ {
 		@ $mol_mem
 		Code_item() {
 			const obj = new this.$.$mol_labeler()
-
+			
 			obj.title = () => this.code_title()
 			obj.content = () => [
 				this.code()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * cost_title @ \Cost
@@ -84,7 +84,7 @@ namespace $ {
 		cost_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_card_cost_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * cost $mol_unit_money valueOf 0
@@ -93,12 +93,12 @@ namespace $ {
 		@ $mol_mem
 		cost() {
 			const obj = new this.$.$mol_unit_money()
-
+			
 			obj.valueOf = () => 0
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cost $mol_cost value <= cost
@@ -107,12 +107,12 @@ namespace $ {
 		@ $mol_mem
 		Cost() {
 			const obj = new this.$.$mol_cost()
-
+			
 			obj.value = () => this.cost()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cost_item $mol_labeler
@@ -123,15 +123,15 @@ namespace $ {
 		@ $mol_mem
 		Cost_item() {
 			const obj = new this.$.$mol_labeler()
-
+			
 			obj.title = () => this.cost_title()
 			obj.content = () => [
 				this.Cost()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * provider_title @ \Provider
@@ -140,7 +140,7 @@ namespace $ {
 		provider_title() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_card_provider_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * provider_name \
@@ -149,7 +149,7 @@ namespace $ {
 		provider_name() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Provider_item $mol_labeler
@@ -160,15 +160,15 @@ namespace $ {
 		@ $mol_mem
 		Provider_item() {
 			const obj = new this.$.$mol_labeler()
-
+			
 			obj.title = () => this.provider_title()
 			obj.content = () => [
 				this.provider_name()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * items /
@@ -184,7 +184,7 @@ namespace $ {
 				this.Provider_item()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Group $mol_row sub <= items
@@ -193,12 +193,12 @@ namespace $ {
 		@ $mol_mem
 		Group() {
 			const obj = new this.$.$mol_row()
-
+			
 			obj.sub = () => this.items()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Card $mol_card
@@ -209,12 +209,13 @@ namespace $ {
 		@ $mol_mem
 		Card() {
 			const obj = new this.$.$mol_card()
-
+			
 			obj.status = () => this.status()
 			obj.Content = () => this.Group()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

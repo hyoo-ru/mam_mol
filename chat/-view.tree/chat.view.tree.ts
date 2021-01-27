@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_chat extends $mol_list {
-
+		
 		/**
 		 * ```tree
 		 * rows /
@@ -16,7 +16,7 @@ namespace $ {
 				this.Add()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Post!index $mol_message
@@ -30,16 +30,16 @@ namespace $ {
 		@ $mol_mem_key
 		Post(index: any) {
 			const obj = new this.$.$mol_message()
-
+			
 			obj.name = () => this.post_user_name(index)
 			obj.moment = () => this.post_updated(index)
 			obj.avatar_link = () => this.post_user_link(index)
 			obj.avatar = () => this.post_user_ava(index)
 			obj.text = () => this.post_body(index)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * repository $mol_github_repository
@@ -48,10 +48,10 @@ namespace $ {
 		@ $mol_mem
 		repository() {
 			const obj = new this.$.$mol_github_repository()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * repository_name \
@@ -60,7 +60,7 @@ namespace $ {
 		repository_name() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * link \
@@ -69,7 +69,7 @@ namespace $ {
 		link() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * seed \
@@ -78,7 +78,7 @@ namespace $ {
 		seed() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * teaser \
@@ -87,7 +87,7 @@ namespace $ {
 		teaser() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * issue $mol_github_issue
@@ -96,10 +96,10 @@ namespace $ {
 		@ $mol_mem
 		issue() {
 			const obj = new this.$.$mol_github_issue()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * posts /
@@ -107,10 +107,9 @@ namespace $ {
 		 */
 		posts() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * adding?next null
@@ -121,7 +120,7 @@ namespace $ {
 			if ( next !== undefined ) return next
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Add_status $mol_status status <= adding?next
@@ -130,12 +129,12 @@ namespace $ {
 		@ $mol_mem
 		Add_status() {
 			const obj = new this.$.$mol_status()
-
+			
 			obj.status = () => this.adding()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * add_hint @ \New message...
@@ -144,7 +143,7 @@ namespace $ {
 		add_hint() {
 			return this.$.$mol_locale.text( '$mol_chat_add_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * add_body?val \
@@ -155,7 +154,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Add_body $mol_string
@@ -166,13 +165,13 @@ namespace $ {
 		@ $mol_mem
 		Add_body() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.hint = () => this.add_hint()
 			obj.value = (val?: any) => this.add_body(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * add_submit_enabled false
@@ -181,7 +180,7 @@ namespace $ {
 		add_submit_enabled() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * add_submit_label @ \Post
@@ -190,7 +189,7 @@ namespace $ {
 		add_submit_label() {
 			return this.$.$mol_locale.text( '$mol_chat_add_submit_label' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * add?event null
@@ -201,7 +200,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Add_submit $mol_button_major
@@ -213,14 +212,14 @@ namespace $ {
 		@ $mol_mem
 		Add_submit() {
 			const obj = new this.$.$mol_button_major()
-
+			
 			obj.enabled = () => this.add_submit_enabled()
 			obj.title = () => this.add_submit_label()
 			obj.event_click = (event?: any) => this.add(event)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Add $mol_bar sub /
@@ -231,15 +230,15 @@ namespace $ {
 		@ $mol_mem
 		Add() {
 			const obj = new this.$.$mol_bar()
-
+			
 			obj.sub = () => [
 				this.Add_body(),
 				this.Add_submit()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * post_user_name!index \
@@ -248,7 +247,7 @@ namespace $ {
 		post_user_name(index: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * post_updated!index $mol_time_moment
@@ -257,10 +256,10 @@ namespace $ {
 		@ $mol_mem_key
 		post_updated(index: any) {
 			const obj = new this.$.$mol_time_moment()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * post_user_link!index \
@@ -269,7 +268,7 @@ namespace $ {
 		post_user_link(index: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * post_user_ava!index \
@@ -278,7 +277,7 @@ namespace $ {
 		post_user_ava(index: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * post_body!index \
@@ -288,5 +287,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

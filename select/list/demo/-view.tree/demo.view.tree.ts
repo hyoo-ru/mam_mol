@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_select_list_demo extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Friends picker
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_select_list_demo_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -23,7 +23,7 @@ namespace $ {
 				this.Friends_disabled()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * friends?val /
@@ -33,10 +33,9 @@ namespace $ {
 		friends(val?: any) {
 			if ( val !== undefined ) return val
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * suggestions *
@@ -62,7 +61,7 @@ namespace $ {
 				mask: "Black Mask"
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Friends $mol_select_list
@@ -73,13 +72,13 @@ namespace $ {
 		@ $mol_mem
 		Friends() {
 			const obj = new this.$.$mol_select_list()
-
+			
 			obj.value = (val?: any) => this.friends(val)
 			obj.dictionary = () => this.suggestions()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Friends_disabled $mol_select_list
@@ -91,13 +90,14 @@ namespace $ {
 		@ $mol_mem
 		Friends_disabled() {
 			const obj = new this.$.$mol_select_list()
-
+			
 			obj.value = (val?: any) => this.friends(val)
 			obj.dictionary = () => this.suggestions()
 			obj.enabled = () => false
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_select_demo_priority extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Priority picker
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_select_demo_priority_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Priority
@@ -20,7 +20,7 @@ namespace $ {
 				this.Priority()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * priority?val \Lowest
@@ -31,7 +31,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return "Lowest"
 		}
-
+		
 		/**
 		 * ```tree
 		 * Priority $mol_select
@@ -48,7 +48,7 @@ namespace $ {
 		@ $mol_mem
 		Priority() {
 			const obj = new this.$.$mol_select()
-
+			
 			obj.Filter = () => null as any
 			obj.value = (val?: any) => this.priority(val)
 			obj.options = () => [
@@ -58,9 +58,10 @@ namespace $ {
 				"Low",
 				"Lowest"
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_check extends $mol_button_minor {
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -18,7 +18,7 @@ namespace $ {
 				role: "checkbox"
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -32,7 +32,7 @@ namespace $ {
 				this.label()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * checked?val false
@@ -43,7 +43,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * Icon null
@@ -52,7 +52,7 @@ namespace $ {
 		Icon() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * title \
@@ -61,7 +61,7 @@ namespace $ {
 		title() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Title $mol_view sub / <= title
@@ -70,14 +70,14 @@ namespace $ {
 		@ $mol_mem
 		Title() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.title()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * label / <= Title
@@ -89,5 +89,6 @@ namespace $ {
 			] as readonly any[]
 		}
 	}
-
+	
 }
+

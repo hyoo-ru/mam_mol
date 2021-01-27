@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_pop extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * event * keydown?event <=> keydown?event
@@ -11,7 +11,7 @@ namespace $ {
 				keydown: (event?: any) => this.keydown(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * showed?val false
@@ -22,7 +22,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * plugins /$mol_plugin <= Meter
@@ -33,7 +33,7 @@ namespace $ {
 				this.Meter()
 			] as readonly $mol_plugin[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -47,7 +47,7 @@ namespace $ {
 				this.Bubble()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * keydown?event null
@@ -58,7 +58,43 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
+		/**
+		 * ```tree
+		 * top
+		 * ```
+		 */
+		top() {
+			return this.Meter().top()
+		}
+		
+		/**
+		 * ```tree
+		 * bottom
+		 * ```
+		 */
+		bottom() {
+			return this.Meter().bottom()
+		}
+		
+		/**
+		 * ```tree
+		 * left
+		 * ```
+		 */
+		left() {
+			return this.Meter().left()
+		}
+		
+		/**
+		 * ```tree
+		 * right
+		 * ```
+		 */
+		right() {
+			return this.Meter().right()
+		}
+		
 		/**
 		 * ```tree
 		 * Meter $mol_meter
@@ -71,46 +107,10 @@ namespace $ {
 		@ $mol_mem
 		Meter() {
 			const obj = new this.$.$mol_meter()
-
+			
 			return obj
 		}
-
-		/**
-		 * ```tree
-		 * top
-		 * ```
-		 */
-		top() {
-			return this.Meter().top()
-		}
-
-		/**
-		 * ```tree
-		 * bottom
-		 * ```
-		 */
-		bottom() {
-			return this.Meter().bottom()
-		}
-
-		/**
-		 * ```tree
-		 * left
-		 * ```
-		 */
-		left() {
-			return this.Meter().left()
-		}
-
-		/**
-		 * ```tree
-		 * right
-		 * ```
-		 */
-		right() {
-			return this.Meter().right()
-		}
-
+		
 		/**
 		 * ```tree
 		 * Anchor null
@@ -119,7 +119,7 @@ namespace $ {
 		Anchor() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * align \bottom_center
@@ -128,7 +128,7 @@ namespace $ {
 		align() {
 			return "bottom_center"
 		}
-
+		
 		/**
 		 * ```tree
 		 * bubble_content /$mol_view_content
@@ -136,10 +136,9 @@ namespace $ {
 		 */
 		bubble_content() {
 			return [
-
 			] as readonly $mol_view_content[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * height_max 9999
@@ -148,7 +147,7 @@ namespace $ {
 		height_max() {
 			return 9999
 		}
-
+		
 		/**
 		 * ```tree
 		 * Bubble $mol_pop_bubble
@@ -160,17 +159,17 @@ namespace $ {
 		@ $mol_mem
 		Bubble() {
 			const obj = new this.$.$mol_pop_bubble()
-
+			
 			obj.align = () => this.align()
 			obj.content = () => this.bubble_content()
 			obj.height_max = () => this.height_max()
-
+			
 			return obj
 		}
 	}
-
+	
 	export class $mol_pop_bubble extends $mol_scroll {
-
+		
 		/**
 		 * ```tree
 		 * sub <= content
@@ -179,7 +178,7 @@ namespace $ {
 		sub() {
 			return this.content()
 		}
-
+		
 		/**
 		 * ```tree
 		 * style *
@@ -193,7 +192,7 @@ namespace $ {
 				maxHeight: this.height_max()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -209,7 +208,7 @@ namespace $ {
 				tabindex: 0
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * content /$mol_view_content
@@ -217,10 +216,9 @@ namespace $ {
 		 */
 		content() {
 			return [
-
 			] as readonly $mol_view_content[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * height_max 9999
@@ -229,7 +227,7 @@ namespace $ {
 		height_max() {
 			return 9999
 		}
-
+		
 		/**
 		 * ```tree
 		 * align \
@@ -239,5 +237,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

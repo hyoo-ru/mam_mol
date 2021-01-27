@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_view_tree_test_attributes_super extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * some *
@@ -15,9 +15,9 @@ namespace $ {
 			}
 		}
 	}
-
+	
 	export class $mol_view_tree_test_attributes extends $mol_view_tree_test_attributes_super {
-
+		
 		/**
 		 * ```tree
 		 * some *
@@ -32,5 +32,6 @@ namespace $ {
 			}
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_grid extends $mol_scroll {
-
+		
 		/**
 		 * ```tree
 		 * row_height 32
@@ -9,7 +9,7 @@ namespace $ {
 		row_height() {
 			return 32
 		}
-
+		
 		/**
 		 * ```tree
 		 * row_ids /string[]
@@ -17,10 +17,9 @@ namespace $ {
 		 */
 		row_ids() {
 			return [
-
 			] as readonly (string[])[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * row_id!index null
@@ -29,7 +28,7 @@ namespace $ {
 		row_id(index: any) {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * col_ids /
@@ -37,10 +36,9 @@ namespace $ {
 		 */
 		col_ids() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * records *
@@ -48,10 +46,9 @@ namespace $ {
 		 */
 		records() {
 			return {
-
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * record!id null
@@ -60,7 +57,7 @@ namespace $ {
 		record(id: any) {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * hierarchy null
@@ -69,7 +66,7 @@ namespace $ {
 		hierarchy() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * hierarchy_col \
@@ -78,8 +75,7 @@ namespace $ {
 		hierarchy_col() {
 			return ""
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -93,7 +89,7 @@ namespace $ {
 				this.Table()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Head $mol_grid_row cells <= head_cells
@@ -102,12 +98,12 @@ namespace $ {
 		@ $mol_mem
 		Head() {
 			const obj = new this.$.$mol_grid_row()
-
+			
 			obj.cells = () => this.head_cells()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Row!id $mol_grid_row
@@ -118,14 +114,13 @@ namespace $ {
 		@ $mol_mem_key
 		Row(id: any) {
 			const obj = new this.$.$mol_grid_row()
-
+			
 			obj.minimal_height = () => this.row_height()
 			obj.cells = () => this.cells(id)
-
+			
 			return obj
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * Cell!id $mol_view
@@ -134,10 +129,10 @@ namespace $ {
 		@ $mol_mem_key
 		Cell(id: any) {
 			const obj = new this.$.$mol_view()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * cell!id null
@@ -146,7 +141,7 @@ namespace $ {
 		cell(id: any) {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cell_text!id $mol_grid_cell sub <= cell_content_text!id
@@ -155,12 +150,12 @@ namespace $ {
 		@ $mol_mem_key
 		Cell_text(id: any) {
 			const obj = new this.$.$mol_grid_cell()
-
+			
 			obj.sub = () => this.cell_content_text(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cell_number!id $mol_grid_number sub <= cell_content_number!id
@@ -169,12 +164,12 @@ namespace $ {
 		@ $mol_mem_key
 		Cell_number(id: any) {
 			const obj = new this.$.$mol_grid_number()
-
+			
 			obj.sub = () => this.cell_content_number(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Col_head!id $mol_float
@@ -185,13 +180,13 @@ namespace $ {
 		@ $mol_mem_key
 		Col_head(id: any) {
 			const obj = new this.$.$mol_float()
-
+			
 			obj.dom_name = () => "th"
 			obj.sub = () => this.col_head_content(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cell_branch!id $mol_check_expand
@@ -203,14 +198,14 @@ namespace $ {
 		@ $mol_mem_key
 		Cell_branch(id: any) {
 			const obj = new this.$.$mol_check_expand()
-
+			
 			obj.level = () => this.cell_level(id)
 			obj.label = () => this.cell_content(id)
 			obj.expanded = (val?: any) => this.cell_expanded(id, val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cell_content!id / <= Cell_dimmer!id
@@ -221,7 +216,7 @@ namespace $ {
 				this.Cell_dimmer(id)
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * rows /$mol_view
@@ -229,10 +224,9 @@ namespace $ {
 		 */
 		rows() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Table $mol_grid_table sub <= rows
@@ -241,12 +235,12 @@ namespace $ {
 		@ $mol_mem
 		Table() {
 			const obj = new this.$.$mol_grid_table()
-
+			
 			obj.sub = () => this.rows()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * head_cells /$mol_view
@@ -254,10 +248,9 @@ namespace $ {
 		 */
 		head_cells() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * cells!id /$mol_view
@@ -265,10 +258,9 @@ namespace $ {
 		 */
 		cells(id: any) {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * cell_content!id /$mol_view_content
@@ -276,10 +268,9 @@ namespace $ {
 		 */
 		cell_content(id: any) {
 			return [
-
 			] as readonly $mol_view_content[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * cell_content_text!id <= cell_content!id
@@ -288,7 +279,7 @@ namespace $ {
 		cell_content_text(id: any) {
 			return this.cell_content(id)
 		}
-
+		
 		/**
 		 * ```tree
 		 * cell_content_number!id <= cell_content!id
@@ -297,7 +288,7 @@ namespace $ {
 		cell_content_number(id: any) {
 			return this.cell_content(id)
 		}
-
+		
 		/**
 		 * ```tree
 		 * col_head_content!id /$mol_view_content
@@ -305,10 +296,9 @@ namespace $ {
 		 */
 		col_head_content(id: any) {
 			return [
-
 			] as readonly $mol_view_content[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * cell_level!id 0
@@ -317,7 +307,7 @@ namespace $ {
 		cell_level(id: any) {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * cell_expanded!id?val false
@@ -328,7 +318,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * needle \
@@ -337,7 +327,7 @@ namespace $ {
 		needle() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * cell_value!id \
@@ -346,7 +336,7 @@ namespace $ {
 		cell_value(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cell_dimmer!id $mol_dimmer
@@ -357,16 +347,16 @@ namespace $ {
 		@ $mol_mem_key
 		Cell_dimmer(id: any) {
 			const obj = new this.$.$mol_dimmer()
-
+			
 			obj.needle = () => this.needle()
 			obj.haystack = () => this.cell_value(id)
-
+			
 			return obj
 		}
 	}
-
+	
 	export class $mol_grid_table extends $mol_list {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \table
@@ -376,9 +366,9 @@ namespace $ {
 			return "table"
 		}
 	}
-
+	
 	export class $mol_grid_row extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \tr
@@ -387,7 +377,7 @@ namespace $ {
 		dom_name() {
 			return "tr"
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub <= cells
@@ -396,7 +386,7 @@ namespace $ {
 		sub() {
 			return this.cells()
 		}
-
+		
 		/**
 		 * ```tree
 		 * cells /$mol_view
@@ -404,13 +394,12 @@ namespace $ {
 		 */
 		cells() {
 			return [
-
 			] as readonly $mol_view[]
 		}
 	}
-
+	
 	export class $mol_grid_cell extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \td
@@ -419,7 +408,7 @@ namespace $ {
 		dom_name() {
 			return "td"
 		}
-
+		
 		/**
 		 * ```tree
 		 * minimal_height 40
@@ -429,9 +418,9 @@ namespace $ {
 			return 40
 		}
 	}
-
+	
 	export class $mol_grid_number extends $mol_grid_cell {
-
 	}
-
+	
 }
+

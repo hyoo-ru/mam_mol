@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_select_list extends $mol_bar {
-
+		
 		/**
 		 * ```tree
 		 * value?val /string
@@ -10,10 +10,9 @@ namespace $ {
 		value(val?: any) {
 			if ( val !== undefined ) return val
 			return [
-
 			] as readonly string[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * dictionary *
@@ -21,10 +20,9 @@ namespace $ {
 		 */
 		dictionary() {
 			return {
-
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Badge!key $mol_button_minor
@@ -37,15 +35,15 @@ namespace $ {
 		@ $mol_mem_key
 		Badge(key: any) {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.title = () => this.option_title(key)
 			obj.click = (event?: any) => this.remove(key, event)
 			obj.hint = () => this.badge_hint()
 			obj.enabled = () => this.enabled()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Pick $mol_select
@@ -58,15 +56,15 @@ namespace $ {
 		@ $mol_mem
 		Pick() {
 			const obj = new this.$.$mol_select()
-
+			
 			obj.options = () => this.options_pickable()
 			obj.value = (val?: any) => this.pick(val)
 			obj.option_label = (key: any) => this.option_title(key)
 			obj.hint = () => this.pick_hint()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * option_title!key \badge
@@ -75,7 +73,7 @@ namespace $ {
 		option_title(key: any) {
 			return "badge"
 		}
-
+		
 		/**
 		 * ```tree
 		 * remove!key?event null
@@ -86,7 +84,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * badge_hint @ \Drop
@@ -95,7 +93,7 @@ namespace $ {
 		badge_hint() {
 			return this.$.$mol_locale.text( '$mol_select_list_badge_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * enabled true
@@ -104,7 +102,7 @@ namespace $ {
 		enabled() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * options /string
@@ -112,10 +110,9 @@ namespace $ {
 		 */
 		options() {
 			return [
-
 			] as readonly string[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * options_pickable <= options
@@ -124,7 +121,7 @@ namespace $ {
 		options_pickable() {
 			return this.options()
 		}
-
+		
 		/**
 		 * ```tree
 		 * pick?val \
@@ -135,7 +132,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * pick_hint @ \Add..
@@ -145,5 +142,6 @@ namespace $ {
 			return this.$.$mol_locale.text( '$mol_select_list_pick_hint' )
 		}
 	}
-
+	
 }
+

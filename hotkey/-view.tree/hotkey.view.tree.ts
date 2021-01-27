@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_hotkey extends $mol_plugin {
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -14,7 +14,7 @@ namespace $ {
 				keydown: (event?: any) => this.keydown(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * key *
@@ -22,10 +22,9 @@ namespace $ {
 		 */
 		key() {
 			return {
-
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * mod_ctrl false
@@ -34,7 +33,7 @@ namespace $ {
 		mod_ctrl() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * mod_alt false
@@ -43,7 +42,7 @@ namespace $ {
 		mod_alt() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * mod_shift false
@@ -52,7 +51,7 @@ namespace $ {
 		mod_shift() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * keydown?event null
@@ -64,5 +63,6 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 }
+

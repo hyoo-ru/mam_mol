@@ -34,7 +34,6 @@ namespace $ {
 		...parts: readonly ($mol_span | readonly $mol_span[] | string | number | $mol_view_tree2_error_suggestions)[]
 	) {
 		const spans: $mol_span[] = []
-		let suggestions: $mol_view_tree2_error_suggestions | undefined
 
 		for (const part of parts) {
 			if (part instanceof $mol_span) spans.push(part)

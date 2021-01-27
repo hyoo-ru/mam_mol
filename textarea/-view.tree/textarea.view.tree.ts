@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_textarea extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * event * keydown?event <=> press?event
@@ -11,7 +11,7 @@ namespace $ {
 				keydown: (event?: any) => this.press(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -25,7 +25,7 @@ namespace $ {
 				this.View()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * press?event null
@@ -36,7 +36,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * value?val \
@@ -47,7 +47,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint \
@@ -56,7 +56,7 @@ namespace $ {
 		hint() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * enabled true
@@ -65,7 +65,7 @@ namespace $ {
 		enabled() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * length_max Infinity
@@ -74,7 +74,7 @@ namespace $ {
 		length_max() {
 			return Infinity
 		}
-
+		
 		/**
 		 * ```tree
 		 * Edit $mol_string
@@ -88,16 +88,16 @@ namespace $ {
 		@ $mol_mem
 		Edit() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.dom_name = () => "textarea"
 			obj.value = (val?: any) => this.value(val)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.enabled()
 			obj.length_max = () => this.length_max()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * View $mol_text_code
@@ -108,12 +108,13 @@ namespace $ {
 		@ $mol_mem
 		View() {
 			const obj = new this.$.$mol_text_code()
-
+			
 			obj.text = () => this.value()
 			obj.render_visible_only = () => false
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

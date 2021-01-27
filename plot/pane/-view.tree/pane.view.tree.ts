@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_plot_pane extends $mol_svg_root {
-
+		
 		/**
 		 * ```tree
 		 * aspect \none
@@ -9,8 +9,7 @@ namespace $ {
 		aspect() {
 			return "none"
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * hue_base?val NaN
@@ -21,7 +20,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return NaN
 		}
-
+		
 		/**
 		 * ```tree
 		 * hue_shift?val 111
@@ -32,8 +31,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 111
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * gap_hor 48
@@ -42,7 +40,7 @@ namespace $ {
 		gap_hor() {
 			return 48
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_vert 24
@@ -51,7 +49,7 @@ namespace $ {
 		gap_vert() {
 			return 24
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_left <= gap_hor
@@ -60,7 +58,7 @@ namespace $ {
 		gap_left() {
 			return this.gap_hor()
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_right <= gap_hor
@@ -69,7 +67,7 @@ namespace $ {
 		gap_right() {
 			return this.gap_hor()
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_top <= gap_vert
@@ -78,7 +76,7 @@ namespace $ {
 		gap_top() {
 			return this.gap_vert()
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_bottom <= gap_vert
@@ -87,7 +85,7 @@ namespace $ {
 		gap_bottom() {
 			return this.gap_vert()
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap $mol_vector_2d /
@@ -101,11 +99,10 @@ namespace $ {
 				this.gap_x(),
 				this.gap_y()
 			)
-
+			
 			return obj
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * shift_limit $mol_vector_2d /
@@ -119,10 +116,10 @@ namespace $ {
 				this.shift_limit_x(),
 				this.shift_limit_y()
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * shift_default /number
@@ -136,7 +133,7 @@ namespace $ {
 				0
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * shift?val /number
@@ -152,7 +149,7 @@ namespace $ {
 				0
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * scale_limit $mol_vector_2d /
@@ -166,10 +163,10 @@ namespace $ {
 				this.scale_limit_x(),
 				this.scale_limit_y()
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * scale_default /number
@@ -183,7 +180,7 @@ namespace $ {
 				0
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * scale?val /number
@@ -199,7 +196,7 @@ namespace $ {
 				1
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * scale_x?val 0
@@ -210,7 +207,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * scale_y?val 0
@@ -221,7 +218,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * size $mol_vector_2d /
@@ -235,10 +232,10 @@ namespace $ {
 				0,
 				0
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * size_real $mol_vector_2d /
@@ -252,10 +249,10 @@ namespace $ {
 				1,
 				1
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions_viewport $mol_vector_2d /
@@ -269,10 +266,10 @@ namespace $ {
 				this.dimensions_viewport_x(),
 				this.dimensions_viewport_y()
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions $mol_vector_2d /
@@ -286,11 +283,10 @@ namespace $ {
 				this.dimensions_x(),
 				this.dimensions_y()
 			)
-
+			
 			return obj
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * sub <= graphs_sorted
@@ -299,7 +295,7 @@ namespace $ {
 		sub() {
 			return this.graphs_sorted()
 		}
-
+		
 		/**
 		 * ```tree
 		 * graphs_colored <= graphs_positioned
@@ -308,7 +304,7 @@ namespace $ {
 		graphs_colored() {
 			return this.graphs_positioned()
 		}
-
+		
 		/**
 		 * ```tree
 		 * cursor_position?val $mol_vector_2d /
@@ -323,11 +319,10 @@ namespace $ {
 				NaN,
 				NaN
 			)
-
+			
 			return obj
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * plugins /
@@ -343,7 +338,7 @@ namespace $ {
 				this.Touch()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -357,7 +352,7 @@ namespace $ {
 				dblclick: (event?: any) => this.reset(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_x $mol_vector_range /
@@ -371,10 +366,10 @@ namespace $ {
 				this.gap_left(),
 				this.gap_right()
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * gap_y $mol_vector_range /
@@ -388,10 +383,10 @@ namespace $ {
 				this.gap_bottom(),
 				this.gap_top()
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * shift_limit_x $mol_vector_range /
@@ -405,10 +400,10 @@ namespace $ {
 				0,
 				0
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * shift_limit_y $mol_vector_range /
@@ -422,10 +417,10 @@ namespace $ {
 				0,
 				0
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * scale_limit_x $mol_vector_range /
@@ -439,10 +434,10 @@ namespace $ {
 				0,
 				Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * scale_limit_y $mol_vector_range /
@@ -456,10 +451,10 @@ namespace $ {
 				0,
 				Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions_viewport_x $mol_vector_range /
@@ -473,10 +468,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions_viewport_y $mol_vector_range /
@@ -490,10 +485,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions_x $mol_vector_range /
@@ -507,10 +502,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions_y $mol_vector_range /
@@ -524,10 +519,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * graphs_sorted /$mol_svg
@@ -535,10 +530,9 @@ namespace $ {
 		 */
 		graphs_sorted() {
 			return [
-
 			] as readonly $mol_svg[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * graphs /$mol_plot_graph
@@ -546,10 +540,9 @@ namespace $ {
 		 */
 		graphs() {
 			return [
-
 			] as readonly $mol_plot_graph[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * graphs_positioned <= graphs
@@ -558,7 +551,25 @@ namespace $ {
 		graphs_positioned() {
 			return this.graphs()
 		}
-
+		
+		/**
+		 * ```tree
+		 * width
+		 * ```
+		 */
+		width() {
+			return this.Meter().width()
+		}
+		
+		/**
+		 * ```tree
+		 * height
+		 * ```
+		 */
+		height() {
+			return this.Meter().height()
+		}
+		
 		/**
 		 * ```tree
 		 * Meter $mol_meter
@@ -569,28 +580,10 @@ namespace $ {
 		@ $mol_mem
 		Meter() {
 			const obj = new this.$.$mol_meter()
-
+			
 			return obj
 		}
-
-		/**
-		 * ```tree
-		 * width
-		 * ```
-		 */
-		width() {
-			return this.Meter().width()
-		}
-
-		/**
-		 * ```tree
-		 * height
-		 * ```
-		 */
-		height() {
-			return this.Meter().height()
-		}
-
+		
 		/**
 		 * ```tree
 		 * Touch $mol_touch
@@ -602,14 +595,14 @@ namespace $ {
 		@ $mol_mem
 		Touch() {
 			const obj = new this.$.$mol_touch()
-
+			
 			obj.zoom = (val?: any) => this.scale_x(val)
 			obj.pan = (val?: any) => this.shift(val)
 			obj.pos = (val?: any) => this.cursor_position(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * reset?event null
@@ -621,5 +614,6 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 }
+

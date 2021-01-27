@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_meter extends $mol_plugin {
-
+		
 		/**
 		 * ```tree
 		 * zoom 1
@@ -9,8 +9,7 @@ namespace $ {
 		zoom() {
 			return 1
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * width?val 0
@@ -21,7 +20,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * height?val 0
@@ -32,8 +31,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * left?val 0
@@ -44,7 +42,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * right?val 0
@@ -55,7 +53,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * bottom?val 0
@@ -66,7 +64,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * top?val 0
@@ -78,5 +76,6 @@ namespace $ {
 			return 0
 		}
 	}
-
+	
 }
+

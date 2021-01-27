@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_check_group_demo extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Group of checkboxes
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_check_group_demo_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -23,7 +23,7 @@ namespace $ {
 				this.Partial()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * All $mol_check_group
@@ -41,7 +41,7 @@ namespace $ {
 		@ $mol_mem
 		All() {
 			const obj = new this.$.$mol_check_group()
-
+			
 			obj.title = () => "SPECIAL"
 			obj.checks = () => [
 				this.Strength(),
@@ -52,10 +52,10 @@ namespace $ {
 				this.Agility(),
 				this.Luck()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * strength_title \Strength
@@ -64,7 +64,7 @@ namespace $ {
 		strength_title() {
 			return "Strength"
 		}
-
+		
 		/**
 		 * ```tree
 		 * strength?val false
@@ -75,7 +75,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * Strength $mol_check_box
@@ -86,13 +86,13 @@ namespace $ {
 		@ $mol_mem
 		Strength() {
 			const obj = new this.$.$mol_check_box()
-
+			
 			obj.title = () => this.strength_title()
 			obj.checked = (val?: any) => this.strength(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * perception_title \Perception
@@ -101,7 +101,7 @@ namespace $ {
 		perception_title() {
 			return "Perception"
 		}
-
+		
 		/**
 		 * ```tree
 		 * perception?val true
@@ -112,7 +112,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * Perception $mol_check_box
@@ -123,13 +123,13 @@ namespace $ {
 		@ $mol_mem
 		Perception() {
 			const obj = new this.$.$mol_check_box()
-
+			
 			obj.title = () => this.perception_title()
 			obj.checked = (val?: any) => this.perception(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * endurance_title \Endurance
@@ -138,7 +138,7 @@ namespace $ {
 		endurance_title() {
 			return "Endurance"
 		}
-
+		
 		/**
 		 * ```tree
 		 * endurance?val false
@@ -149,7 +149,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * Endurance $mol_check_box
@@ -160,13 +160,13 @@ namespace $ {
 		@ $mol_mem
 		Endurance() {
 			const obj = new this.$.$mol_check_box()
-
+			
 			obj.title = () => this.endurance_title()
 			obj.checked = (val?: any) => this.endurance(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * charisma_title \Charisma
@@ -175,7 +175,7 @@ namespace $ {
 		charisma_title() {
 			return "Charisma"
 		}
-
+		
 		/**
 		 * ```tree
 		 * charisma?val false
@@ -186,7 +186,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * Charisma $mol_check_box
@@ -197,13 +197,13 @@ namespace $ {
 		@ $mol_mem
 		Charisma() {
 			const obj = new this.$.$mol_check_box()
-
+			
 			obj.title = () => this.charisma_title()
 			obj.checked = (val?: any) => this.charisma(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * intelligence_title \Intelligence
@@ -212,7 +212,7 @@ namespace $ {
 		intelligence_title() {
 			return "Intelligence"
 		}
-
+		
 		/**
 		 * ```tree
 		 * intelligence?val true
@@ -223,7 +223,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * Intelligence $mol_check_box
@@ -234,13 +234,13 @@ namespace $ {
 		@ $mol_mem
 		Intelligence() {
 			const obj = new this.$.$mol_check_box()
-
+			
 			obj.title = () => this.intelligence_title()
 			obj.checked = (val?: any) => this.intelligence(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * agility_title \Agility
@@ -249,7 +249,7 @@ namespace $ {
 		agility_title() {
 			return "Agility"
 		}
-
+		
 		/**
 		 * ```tree
 		 * agility?val true
@@ -260,7 +260,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * Agility $mol_check_box
@@ -271,13 +271,13 @@ namespace $ {
 		@ $mol_mem
 		Agility() {
 			const obj = new this.$.$mol_check_box()
-
+			
 			obj.title = () => this.agility_title()
 			obj.checked = (val?: any) => this.agility(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * luck_title \Luck
@@ -286,7 +286,7 @@ namespace $ {
 		luck_title() {
 			return "Luck"
 		}
-
+		
 		/**
 		 * ```tree
 		 * luck?val true
@@ -297,7 +297,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * Luck $mol_check_box
@@ -308,13 +308,13 @@ namespace $ {
 		@ $mol_mem
 		Luck() {
 			const obj = new this.$.$mol_check_box()
-
+			
 			obj.title = () => this.luck_title()
 			obj.checked = (val?: any) => this.luck(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Partial $mol_list rows /
@@ -330,7 +330,7 @@ namespace $ {
 		@ $mol_mem
 		Partial() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => [
 				this.Strength(),
 				this.Perception(),
@@ -340,9 +340,10 @@ namespace $ {
 				this.Agility(),
 				this.Luck()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

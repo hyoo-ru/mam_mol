@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_plot_ruler_vert extends $mol_plot_ruler {
-
+		
 		/**
 		 * ```tree
 		 * title_align \end
@@ -9,7 +9,7 @@ namespace $ {
 		title_align() {
 			return "end"
 		}
-
+		
 		/**
 		 * ```tree
 		 * label_align \end
@@ -18,7 +18,7 @@ namespace $ {
 		label_align() {
 			return "end"
 		}
-
+		
 		/**
 		 * ```tree
 		 * title_pos_y \14
@@ -27,7 +27,7 @@ namespace $ {
 		title_pos_y() {
 			return "14"
 		}
-
+		
 		/**
 		 * ```tree
 		 * label_pos_x!v <= title_pos_x
@@ -36,7 +36,7 @@ namespace $ {
 		label_pos_x(v: any) {
 			return this.title_pos_x()
 		}
-
+		
 		/**
 		 * ```tree
 		 * background_height \100%
@@ -45,7 +45,7 @@ namespace $ {
 		background_height() {
 			return "100%"
 		}
-
+		
 		/**
 		 * ```tree
 		 * background_width <= title_pos_x
@@ -55,5 +55,6 @@ namespace $ {
 			return this.title_pos_x()
 		}
 	}
-
+	
 }
+

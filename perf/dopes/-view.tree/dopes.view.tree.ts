@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_perf_dopes extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * title \Dopes
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return "Dopes"
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -27,7 +27,7 @@ namespace $ {
 				this.Labels()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Label!index $mol_view
@@ -40,7 +40,7 @@ namespace $ {
 		@ $mol_mem_key
 		Label(index: any) {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.style = () => ({
 				color: this.label_color(index),
 				transform: this.label_transform(index)
@@ -48,10 +48,10 @@ namespace $ {
 			obj.sub = () => [
 				"Dope"
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * speed \{speed} Dopes/s
@@ -60,7 +60,7 @@ namespace $ {
 		speed() {
 			return "{speed} Dopes/s"
 		}
-
+		
 		/**
 		 * ```tree
 		 * Speed $mol_view sub / <= speed
@@ -69,14 +69,14 @@ namespace $ {
 		@ $mol_mem
 		Speed() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.speed()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * start?event null
@@ -87,7 +87,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Start $mol_button_major
@@ -98,13 +98,13 @@ namespace $ {
 		@ $mol_mem
 		Start() {
 			const obj = new this.$.$mol_button_major()
-
+			
 			obj.title = () => "@ Start"
 			obj.click = (event?: any) => this.start(event)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * stop?event null
@@ -115,7 +115,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Stop $mol_button_major
@@ -126,13 +126,13 @@ namespace $ {
 		@ $mol_mem
 		Stop() {
 			const obj = new this.$.$mol_button_major()
-
+			
 			obj.title = () => "@ Stop"
 			obj.click = (event?: any) => this.stop(event)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * labels /
@@ -140,10 +140,9 @@ namespace $ {
 		 */
 		labels() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Labels $mol_view sub <= labels
@@ -152,12 +151,12 @@ namespace $ {
 		@ $mol_mem
 		Labels() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => this.labels()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * label_color!index \
@@ -166,7 +165,7 @@ namespace $ {
 		label_color(index: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * label_transform!index \
@@ -176,5 +175,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

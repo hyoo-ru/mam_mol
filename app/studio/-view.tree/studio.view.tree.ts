@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_app_studio extends $mol_book {
-
+		
 		/**
 		 * ```tree
 		 * value_overrided!id?val null
@@ -11,8 +11,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * tools_main /
@@ -20,10 +19,9 @@ namespace $ {
 		 */
 		tools_main() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * pages /
@@ -39,7 +37,7 @@ namespace $ {
 				this.Source_page()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Placeholder null
@@ -48,8 +46,7 @@ namespace $ {
 		Placeholder() {
 			return null as any
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * Prop!id $mol_app_studio_field
@@ -67,7 +64,7 @@ namespace $ {
 		@ $mol_mem_key
 		Prop(id: any) {
 			const obj = new this.$.$mol_app_studio_field()
-
+			
 			obj.path = () => this.prop_path(id)
 			obj.prop = (path: any, val?: any) => this.prop_default(path, val)
 			obj.props = (name: any, val?: any) => this.props_all(name, val)
@@ -77,11 +74,10 @@ namespace $ {
 			obj.object_options = () => this.view_options()
 			obj.prop_add = (val?: any) => this.prop_add(val)
 			obj.highlight = () => this.prop_filter()
-
+			
 			return obj
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * class_name_self?val \$mol_app_studio_generated
@@ -92,7 +88,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return "$mol_app_studio_generated"
 		}
-
+		
 		/**
 		 * ```tree
 		 * class_name_base?val \$mol_view
@@ -103,7 +99,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return "$mol_view"
 		}
-
+		
 		/**
 		 * ```tree
 		 * class_self?val $mol_tree2_empty
@@ -113,10 +109,10 @@ namespace $ {
 		class_self(val?: any) {
 			if ( val !== undefined ) return val
 			const obj = new this.$.$mol_tree2_empty()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * classes $mol_tree2_empty
@@ -125,10 +121,10 @@ namespace $ {
 		@ $mol_mem
 		classes() {
 			const obj = new this.$.$mol_tree2_empty()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * preview_title @ \Preview:
@@ -137,7 +133,7 @@ namespace $ {
 		preview_title() {
 			return this.$.$mol_locale.text( '$mol_app_studio_preview_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Source_icon $mol_icon_source
@@ -146,10 +142,10 @@ namespace $ {
 		@ $mol_mem
 		Source_icon() {
 			const obj = new this.$.$mol_icon_source()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * source_arg *
@@ -163,7 +159,7 @@ namespace $ {
 				path: null as any
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Source_link $mol_link
@@ -175,16 +171,16 @@ namespace $ {
 		@ $mol_mem
 		Source_link() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.hint = () => this.source_title()
 			obj.sub = () => [
 				this.Source_icon()
 			] as readonly any[]
 			obj.arg = () => this.source_arg()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Edit_icon $mol_icon_settings
@@ -193,10 +189,10 @@ namespace $ {
 		@ $mol_mem
 		Edit_icon() {
 			const obj = new this.$.$mol_icon_settings()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Edit $mol_link
@@ -210,7 +206,7 @@ namespace $ {
 		@ $mol_mem
 		Edit() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.hint = () => this.editor_title()
 			obj.sub = () => [
 				this.Edit_icon()
@@ -219,10 +215,10 @@ namespace $ {
 				path: "",
 				source: null as any
 			})
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * preview_tools /
@@ -236,7 +232,7 @@ namespace $ {
 				this.Edit()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Block $mol_view
@@ -245,10 +241,10 @@ namespace $ {
 		@ $mol_mem
 		Block() {
 			const obj = new this.$.$mol_view()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * path?val /
@@ -258,10 +254,9 @@ namespace $ {
 		path(val?: any) {
 			if ( val !== undefined ) return val
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Selector $mol_app_studio_selector
@@ -272,15 +267,15 @@ namespace $ {
 		@ $mol_mem
 		Selector() {
 			const obj = new this.$.$mol_app_studio_selector()
-
+			
 			obj.sub = () => [
 				this.Block()
 			] as readonly any[]
 			obj.path = (val?: any) => this.path(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Preview_page $mol_page
@@ -293,17 +288,17 @@ namespace $ {
 		@ $mol_mem
 		Preview_page() {
 			const obj = new this.$.$mol_page()
-
+			
 			obj.title = () => this.preview_title()
 			obj.tools = () => this.preview_tools()
 			obj.body = () => [
 				this.Selector()
 			] as readonly any[]
 			obj.minimal_width = () => 400
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * speech_filter?val null
@@ -314,7 +309,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * speech_filter_patterns / \find (.+?)
@@ -325,7 +320,7 @@ namespace $ {
 				"find (.+?)"
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Speech_filter $mol_speech
@@ -336,13 +331,13 @@ namespace $ {
 		@ $mol_mem
 		Speech_filter() {
 			const obj = new this.$.$mol_speech()
-
+			
 			obj.event_catch = (val?: any) => this.speech_filter(val)
 			obj.patterns = () => this.speech_filter_patterns()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * editor_title @ \Properties
@@ -351,7 +346,7 @@ namespace $ {
 		editor_title() {
 			return this.$.$mol_locale.text( '$mol_app_studio_editor_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Speech_toggle_icon $mol_icon_microphone
@@ -360,10 +355,10 @@ namespace $ {
 		@ $mol_mem
 		Speech_toggle_icon() {
 			const obj = new this.$.$mol_icon_microphone()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * speech_enabled?val false
@@ -374,7 +369,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * speech_toggle_hint @ \Speech contol
@@ -383,7 +378,7 @@ namespace $ {
 		speech_toggle_hint() {
 			return this.$.$mol_locale.text( '$mol_app_studio_speech_toggle_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Speech_toggle $mol_check_icon
@@ -395,14 +390,14 @@ namespace $ {
 		@ $mol_mem
 		Speech_toggle() {
 			const obj = new this.$.$mol_check_icon()
-
+			
 			obj.Icon = () => this.Speech_toggle_icon()
 			obj.checked = (val?: any) => this.speech_enabled(val)
 			obj.hint = () => this.speech_toggle_hint()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Editor_close_icon $mol_icon_cross
@@ -411,10 +406,10 @@ namespace $ {
 		@ $mol_mem
 		Editor_close_icon() {
 			const obj = new this.$.$mol_icon_cross()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * editor_close_arg * path null
@@ -425,7 +420,7 @@ namespace $ {
 				path: null as any
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Editor_close $mol_link
@@ -436,15 +431,15 @@ namespace $ {
 		@ $mol_mem
 		Editor_close() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.sub = () => [
 				this.Editor_close_icon()
 			] as readonly any[]
 			obj.arg = () => this.editor_close_arg()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * filter_hint @ \Filter properties
@@ -453,7 +448,7 @@ namespace $ {
 		filter_hint() {
 			return this.$.$mol_locale.text( '$mol_app_studio_filter_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_filter?val \
@@ -464,7 +459,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Filter $mol_search
@@ -475,13 +470,13 @@ namespace $ {
 		@ $mol_mem
 		Filter() {
 			const obj = new this.$.$mol_search()
-
+			
 			obj.hint = () => this.filter_hint()
 			obj.query = (val?: any) => this.prop_filter(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_add?val null
@@ -492,7 +487,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Prop_add_icon $mol_icon_plus
@@ -501,10 +496,10 @@ namespace $ {
 		@ $mol_mem
 		Prop_add_icon() {
 			const obj = new this.$.$mol_icon_plus()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_add_hint @ \Add this property
@@ -513,7 +508,7 @@ namespace $ {
 		prop_add_hint() {
 			return this.$.$mol_locale.text( '$mol_app_studio_prop_add_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Prop_add $mol_button_minor
@@ -525,16 +520,16 @@ namespace $ {
 		@ $mol_mem
 		Prop_add() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.event_click = (val?: any) => this.event_add(val)
 			obj.sub = () => [
 				this.Prop_add_icon()
 			] as readonly any[]
 			obj.hint = () => this.prop_add_hint()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * filter_bar_items /
@@ -548,7 +543,7 @@ namespace $ {
 				this.Prop_add()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Filter_bar $mol_bar sub <= filter_bar_items
@@ -557,12 +552,12 @@ namespace $ {
 		@ $mol_mem
 		Filter_bar() {
 			const obj = new this.$.$mol_bar()
-
+			
 			obj.sub = () => this.filter_bar_items()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * fields /
@@ -570,10 +565,9 @@ namespace $ {
 		 */
 		fields() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Fields $mol_list rows <= fields
@@ -582,12 +576,12 @@ namespace $ {
 		@ $mol_mem
 		Fields() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => this.fields()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Editor_page $mol_page
@@ -605,7 +599,7 @@ namespace $ {
 		@ $mol_mem
 		Editor_page() {
 			const obj = new this.$.$mol_page()
-
+			
 			obj.plugins = () => [
 				this.Speech_filter()
 			] as readonly any[]
@@ -619,10 +613,10 @@ namespace $ {
 				this.Fields()
 			] as readonly any[]
 			obj.minimal_width = () => 400
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * source_title @ \Source code
@@ -631,7 +625,7 @@ namespace $ {
 		source_title() {
 			return this.$.$mol_locale.text( '$mol_app_studio_source_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Source_close_icon $mol_icon_cross
@@ -640,10 +634,10 @@ namespace $ {
 		@ $mol_mem
 		Source_close_icon() {
 			const obj = new this.$.$mol_icon_cross()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * source_close_arg * source null
@@ -654,7 +648,7 @@ namespace $ {
 				source: null as any
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Source_close $mol_link
@@ -665,15 +659,15 @@ namespace $ {
 		@ $mol_mem
 		Source_close() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.sub = () => [
 				this.Source_close_icon()
 			] as readonly any[]
 			obj.arg = () => this.source_close_arg()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * source \
@@ -682,7 +676,7 @@ namespace $ {
 		source() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Source $mol_text text <= source
@@ -691,12 +685,12 @@ namespace $ {
 		@ $mol_mem
 		Source() {
 			const obj = new this.$.$mol_text()
-
+			
 			obj.text = () => this.source()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Source_page $mol_page
@@ -709,7 +703,7 @@ namespace $ {
 		@ $mol_mem
 		Source_page() {
 			const obj = new this.$.$mol_page()
-
+			
 			obj.title = () => this.source_title()
 			obj.minimal_width = () => 400
 			obj.tools = () => [
@@ -718,10 +712,10 @@ namespace $ {
 			obj.body = () => [
 				this.Source()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_path!id /
@@ -729,10 +723,9 @@ namespace $ {
 		 */
 		prop_path(id: any) {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_default!path?val $mol_tree2_empty
@@ -742,10 +735,10 @@ namespace $ {
 		prop_default(path: any, val?: any) {
 			if ( val !== undefined ) return val
 			const obj = new this.$.$mol_tree2_empty()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * props_all!name?val $mol_tree2_empty
@@ -755,10 +748,10 @@ namespace $ {
 		props_all(name: any, val?: any) {
 			if ( val !== undefined ) return val
 			const obj = new this.$.$mol_tree2_empty()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_arg!id *
@@ -766,10 +759,9 @@ namespace $ {
 		 */
 		prop_arg(id: any) {
 			return {
-
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_value_base!id null
@@ -778,7 +770,7 @@ namespace $ {
 		prop_value_base(id: any) {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_options /
@@ -786,10 +778,9 @@ namespace $ {
 		 */
 		prop_options() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * view_options /
@@ -797,10 +788,9 @@ namespace $ {
 		 */
 		view_options() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_add?val \
@@ -812,9 +802,9 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 	export class $mol_app_studio_selector extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -828,7 +818,7 @@ namespace $ {
 				dblclick: (event?: any) => this.select(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * path?val /
@@ -838,10 +828,9 @@ namespace $ {
 		path(val?: any) {
 			if ( val !== undefined ) return val
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * select?event null
@@ -853,5 +842,6 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 }
+

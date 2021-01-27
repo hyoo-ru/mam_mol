@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_deck_demo extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Simple deck with tabbar
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_deck_demo_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Deck
@@ -20,7 +20,7 @@ namespace $ {
 				this.Deck()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * greeterLabel @ \Greeting
@@ -29,7 +29,7 @@ namespace $ {
 		greeterLabel() {
 			return this.$.$mol_locale.text( '$mol_deck_demo_greeterLabel' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * greeterMessage @ \Hello, world!
@@ -38,7 +38,7 @@ namespace $ {
 		greeterMessage() {
 			return this.$.$mol_locale.text( '$mol_deck_demo_greeterMessage' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * greeterContent $mol_row sub / <= greeterMessage
@@ -47,14 +47,14 @@ namespace $ {
 		@ $mol_mem
 		greeterContent() {
 			const obj = new this.$.$mol_row()
-
+			
 			obj.sub = () => [
 				this.greeterMessage()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * greeterItem *
@@ -68,7 +68,7 @@ namespace $ {
 				Content: this.greeterContent()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * questerLabel @ \Question
@@ -77,7 +77,7 @@ namespace $ {
 		questerLabel() {
 			return this.$.$mol_locale.text( '$mol_deck_demo_questerLabel' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * questerMessage @ \How are you?
@@ -86,7 +86,7 @@ namespace $ {
 		questerMessage() {
 			return this.$.$mol_locale.text( '$mol_deck_demo_questerMessage' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * questerContent $mol_row sub / <= questerMessage
@@ -95,14 +95,14 @@ namespace $ {
 		@ $mol_mem
 		questerContent() {
 			const obj = new this.$.$mol_row()
-
+			
 			obj.sub = () => [
 				this.questerMessage()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * questerItem *
@@ -116,7 +116,7 @@ namespace $ {
 				Content: this.questerContent()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * commanderLabel @ \Command
@@ -125,7 +125,7 @@ namespace $ {
 		commanderLabel() {
 			return this.$.$mol_locale.text( '$mol_deck_demo_commanderLabel' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * commanderMessage @ \Let us do it right!
@@ -134,7 +134,7 @@ namespace $ {
 		commanderMessage() {
 			return this.$.$mol_locale.text( '$mol_deck_demo_commanderMessage' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * commanderContent $mol_row sub / <= commanderMessage
@@ -143,14 +143,14 @@ namespace $ {
 		@ $mol_mem
 		commanderContent() {
 			const obj = new this.$.$mol_row()
-
+			
 			obj.sub = () => [
 				this.commanderMessage()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * commanderItem *
@@ -164,7 +164,7 @@ namespace $ {
 				Content: this.commanderContent()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Deck $mol_deck items /
@@ -176,15 +176,16 @@ namespace $ {
 		@ $mol_mem
 		Deck() {
 			const obj = new this.$.$mol_deck()
-
+			
 			obj.items = () => [
 				this.greeterItem(),
 				this.questerItem(),
 				this.commanderItem()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

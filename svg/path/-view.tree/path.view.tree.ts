@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_svg_path extends $mol_svg {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \path
@@ -9,7 +9,7 @@ namespace $ {
 		dom_name() {
 			return "path"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -23,7 +23,7 @@ namespace $ {
 				d: this.geometry()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * geometry \
@@ -33,5 +33,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

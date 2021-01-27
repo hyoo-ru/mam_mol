@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_svg_text_box extends $mol_svg_group {
-
+		
 		/**
 		 * ```tree
 		 * font_size 16
@@ -9,7 +9,7 @@ namespace $ {
 		font_size() {
 			return 16
 		}
-
+		
 		/**
 		 * ```tree
 		 * width 0
@@ -18,7 +18,7 @@ namespace $ {
 		width() {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -32,7 +32,7 @@ namespace $ {
 				this.Text()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * box_width \0.5rem
@@ -41,7 +41,7 @@ namespace $ {
 		box_width() {
 			return "0.5rem"
 		}
-
+		
 		/**
 		 * ```tree
 		 * box_height \1rem
@@ -50,7 +50,7 @@ namespace $ {
 		box_height() {
 			return "1rem"
 		}
-
+		
 		/**
 		 * ```tree
 		 * box_pos_x <= pos_x
@@ -59,7 +59,7 @@ namespace $ {
 		box_pos_x() {
 			return this.pos_x()
 		}
-
+		
 		/**
 		 * ```tree
 		 * box_pos_y \0
@@ -68,7 +68,7 @@ namespace $ {
 		box_pos_y() {
 			return "0"
 		}
-
+		
 		/**
 		 * ```tree
 		 * Back $mol_svg_rect
@@ -82,17 +82,17 @@ namespace $ {
 		@ $mol_mem
 		Back() {
 			const obj = new this.$.$mol_svg_rect()
-
+			
 			obj.width = () => this.box_width()
 			obj.height = () => this.box_height()
 			obj.pos = () => [
 				this.box_pos_x(),
 				this.box_pos_y()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * pos_x \0
@@ -101,7 +101,7 @@ namespace $ {
 		pos_x() {
 			return "0"
 		}
-
+		
 		/**
 		 * ```tree
 		 * pos_y \100%
@@ -110,7 +110,7 @@ namespace $ {
 		pos_y() {
 			return "100%"
 		}
-
+		
 		/**
 		 * ```tree
 		 * align \start
@@ -119,7 +119,7 @@ namespace $ {
 		align() {
 			return "start"
 		}
-
+		
 		/**
 		 * ```tree
 		 * text \
@@ -128,7 +128,7 @@ namespace $ {
 		text() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Text $mol_svg_text
@@ -142,7 +142,7 @@ namespace $ {
 		@ $mol_mem
 		Text() {
 			const obj = new this.$.$mol_svg_text()
-
+			
 			obj.pos = () => [
 				this.pos_x(),
 				this.pos_y()
@@ -151,9 +151,10 @@ namespace $ {
 			obj.sub = () => [
 				this.text()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

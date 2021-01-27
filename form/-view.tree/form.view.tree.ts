@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_form extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * submit_blocked false
@@ -9,7 +9,7 @@ namespace $ {
 		submit_blocked() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -23,7 +23,7 @@ namespace $ {
 				keydown: (event?: any) => this.keydown(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * submit?event null
@@ -34,7 +34,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -48,7 +48,7 @@ namespace $ {
 				this.Bar_buttons()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * keydown?event null
@@ -59,7 +59,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * form_fields /$mol_form_field
@@ -67,10 +67,9 @@ namespace $ {
 		 */
 		form_fields() {
 			return [
-
 			] as readonly $mol_form_field[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Bar_fields $mol_view sub <= form_fields
@@ -79,12 +78,12 @@ namespace $ {
 		@ $mol_mem
 		Bar_fields() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => this.form_fields()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * buttons /$mol_view
@@ -92,10 +91,9 @@ namespace $ {
 		 */
 		buttons() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Bar_buttons $mol_row sub <= buttons
@@ -104,11 +102,12 @@ namespace $ {
 		@ $mol_mem
 		Bar_buttons() {
 			const obj = new this.$.$mol_row()
-
+			
 			obj.sub = () => this.buttons()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

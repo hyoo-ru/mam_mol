@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_paragraph extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * line_height 24
@@ -9,7 +9,7 @@ namespace $ {
 		line_height() {
 			return 24
 		}
-
+		
 		/**
 		 * ```tree
 		 * letter_width 8
@@ -18,7 +18,7 @@ namespace $ {
 		letter_width() {
 			return 8
 		}
-
+		
 		/**
 		 * ```tree
 		 * width_limit Infinity
@@ -28,5 +28,6 @@ namespace $ {
 			return Infinity
 		}
 	}
-
+	
 }
+

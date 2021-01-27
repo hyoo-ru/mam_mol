@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_card extends $mol_list {
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -14,7 +14,7 @@ namespace $ {
 				mol_card_status_type: this.status()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * rows /$mol_view
@@ -28,7 +28,7 @@ namespace $ {
 				this.Status()
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * status \
@@ -37,7 +37,7 @@ namespace $ {
 		status() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * content /$mol_view_content
@@ -45,10 +45,9 @@ namespace $ {
 		 */
 		content() {
 			return [
-
 			] as readonly $mol_view_content[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Content $mol_view sub <= content
@@ -57,12 +56,12 @@ namespace $ {
 		@ $mol_mem
 		Content() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => this.content()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * status_text <= status
@@ -71,7 +70,7 @@ namespace $ {
 		status_text() {
 			return this.status()
 		}
-
+		
 		/**
 		 * ```tree
 		 * Status $mol_view
@@ -82,14 +81,15 @@ namespace $ {
 		@ $mol_mem
 		Status() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.minimal_height = () => 30
 			obj.sub = () => [
 				this.status_text()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

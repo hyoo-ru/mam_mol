@@ -9132,15 +9132,15 @@ var $;
         graphs_positioned() {
             return this.graphs();
         }
-        Meter() {
-            const obj = new this.$.$mol_meter();
-            return obj;
-        }
         width() {
             return this.Meter().width();
         }
         height() {
             return this.Meter().height();
+        }
+        Meter() {
+            const obj = new this.$.$mol_meter();
+            return obj;
         }
         Touch() {
             const obj = new this.$.$mol_touch();
@@ -9450,6 +9450,9 @@ var $;
         hue_shift() {
             return 111;
         }
+        graphs_colored() {
+            return this.Plot().graphs_colored();
+        }
         Plot() {
             const obj = new this.$.$mol_plot_pane();
             obj.gap_left = () => this.gap_left();
@@ -9460,9 +9463,6 @@ var $;
             obj.hue_base = () => this.hue_base();
             obj.hue_shift = () => this.hue_shift();
             return obj;
-        }
-        graphs_colored() {
-            return this.Plot().graphs_colored();
         }
     }
     __decorate([
@@ -12248,10 +12248,6 @@ var $;
                 return event;
             return null;
         }
-        Meter() {
-            const obj = new this.$.$mol_meter();
-            return obj;
-        }
         top() {
             return this.Meter().top();
         }
@@ -12263,6 +12259,10 @@ var $;
         }
         right() {
             return this.Meter().right();
+        }
+        Meter() {
+            const obj = new this.$.$mol_meter();
+            return obj;
         }
         Anchor() {
             return null;
@@ -13369,6 +13369,9 @@ var $;
             ];
             return obj;
         }
+        Calendar_title() {
+            return this.Calendar().Title();
+        }
         Calendar() {
             const obj = new this.$.$mol_date_calendar();
             obj.month_moment = () => this.month_moment();
@@ -13378,9 +13381,6 @@ var $;
                 this.Calendar_tools()
             ];
             return obj;
-        }
-        Calendar_title() {
-            return this.Calendar().Title();
         }
     }
     __decorate([
@@ -18569,15 +18569,15 @@ var $;
                 this.Height()
             ];
         }
-        Meter() {
-            const obj = new this.$.$mol_meter();
-            return obj;
-        }
         top() {
             return this.Meter().top();
         }
         height() {
             return this.Meter().height();
+        }
+        Meter() {
+            const obj = new this.$.$mol_meter();
+            return obj;
         }
         Top() {
             const obj = new this.$.$mol_view();
@@ -18658,6 +18658,9 @@ var $;
                 return val;
             return "";
         }
+        tab_list() {
+            return this.Tab_list().keys();
+        }
         Tab_list() {
             const obj = new this.$.$mol_switch();
             obj.value = (val) => this.tab_current(val);
@@ -18668,13 +18671,13 @@ var $;
             });
             return obj;
         }
-        tab_list() {
-            return this.Tab_list().keys();
-        }
         row_current(val) {
             if (val !== undefined)
                 return val;
             return "";
+        }
+        row_list() {
+            return this.Row_list().keys();
         }
         Row_list() {
             const obj = new this.$.$mol_switch();
@@ -18685,9 +18688,6 @@ var $;
                 third: "Third"
             });
             return obj;
-        }
-        row_list() {
-            return this.Row_list().keys();
         }
     }
     __decorate([
@@ -20128,13 +20128,13 @@ var $;
         suggests() {
             return [];
         }
+        query() {
+            return this.Search().query();
+        }
         Search() {
             const obj = new this.$.$mol_search();
             obj.suggests = () => this.suggests();
             return obj;
-        }
-        query() {
-            return this.Search().query();
         }
     }
     __decorate([
@@ -22327,12 +22327,12 @@ var $;
         pages_wrapped() {
             return [];
         }
+        width() {
+            return this.Meter().width();
+        }
         Meter() {
             const obj = new this.$.$mol_meter();
             return obj;
-        }
-        width() {
-            return this.Meter().width();
         }
         event_front_up(val) {
             if (val !== undefined)
@@ -22989,12 +22989,12 @@ var $;
 var $;
 (function ($) {
     class $mol_view_tree_test_binding_right extends $.$mol_view {
+        outer_width(v) {
+            return this.Test().width(v);
+        }
         Test() {
             const obj = new this.$.$mol_view_tree_test_binding_right_test();
             return obj;
-        }
-        outer_width(v) {
-            return this.Test().width(v);
         }
     }
     __decorate([
@@ -24250,7 +24250,6 @@ var $;
     $.$mol_view_tree2_error_suggestions = $mol_view_tree2_error_suggestions;
     function $mol_view_tree2_error_str(strings, ...parts) {
         const spans = [];
-        let suggestions;
         for (const part of parts) {
             if (part instanceof $.$mol_span)
                 spans.push(part);
@@ -24377,11 +24376,10 @@ var $;
         index(owner) {
             this.added_nodes.set(owner.name.value, owner);
             const index = this.methods.length;
-            this.methods.push(undefined);
             return index;
         }
         method(index, method) {
-            this.methods[index] = method;
+            this.methods.push(...method);
         }
         locale(operator) {
             const parents = this.parents;
@@ -24406,34 +24404,12 @@ var $;
                 return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Locale key \`${key}\` at ${operator.span} conflicts with same at ${prev.span}`);
             this.locale_nodes.set(key, val);
             this.locales[key] = val.value;
-            return operator.struct('inline', body);
+            return operator.struct('line', body);
         }
     }
     $_1.$mol_view_tree2_context = $mol_view_tree2_context;
 })($ || ($ = {}));
 //context.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_serialize(node, prefix = '', parent_is_inline = false) {
-        const { type, kids, value } = node;
-        if (!value && !type)
-            return kids.map(child => this.$mol_view_tree2_serialize(child, prefix)).join('\n');
-        if (type === 'block') {
-            const child_prefix = prefix + '\t';
-            return kids.map((child, index) => this.$mol_view_tree2_serialize(child, child_prefix, index === 0 && parent_is_inline)).join('\n');
-        }
-        if (type === 'lines')
-            return kids.map((child, index) => this.$mol_view_tree2_serialize(child, prefix, index === 0 && parent_is_inline)).join('\n');
-        const current_prefix = parent_is_inline ? '' : prefix;
-        if (type === 'inline')
-            return current_prefix + kids.map(child => this.$mol_view_tree2_serialize(child, prefix, true)).join('');
-        return current_prefix + value;
-    }
-    $.$mol_view_tree2_serialize = $mol_view_tree2_serialize;
-})($ || ($ = {}));
-//serialize.js.map
 ;
 "use strict";
 var $;
@@ -24581,7 +24557,7 @@ var $;
                 return [operator.clone([prop.clone([])])];
             },
         });
-        return klass.list([...props_root, ...props_inner]);
+        return [...props_root, ...props_inner];
     }
     $.$mol_view_tree2_class_props = $mol_view_tree2_class_props;
 })($ || ($ = {}));
@@ -24774,7 +24750,7 @@ var $;
                 const def = this.class(name);
                 if (!def)
                     return $.$mol_tree2.list([]);
-                return this.$.$mol_view_tree2_class_props(def);
+                return $.$mol_tree2.list(this.$.$mol_view_tree2_class_props(def));
             }
             props_all(name, next, force) {
                 if (next)
@@ -30077,7 +30053,7 @@ var $;
         $_1.$mol_test({
             'props'($) {
                 const mod = $.$mol_tree2_from_string(src, '/mol/view/tree2/class/props.test.ts');
-                const result = $.$mol_view_tree2_class_props(mod.kids[0]).toString();
+                const result = $.$mol_view_tree2_class_props(mod.kids[0]).join('');
                 $_1.$mol_assert_equal(result, dest.toString());
             }
         });

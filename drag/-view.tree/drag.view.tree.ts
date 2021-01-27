@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_drag extends $mol_ghost {
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -16,7 +16,7 @@ namespace $ {
 				dragend: (event?: any) => this.end(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -30,7 +30,7 @@ namespace $ {
 				mol_drag_status: this.status()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * transfer *
@@ -46,7 +46,7 @@ namespace $ {
 				"text/uri-list": ""
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * allow_copy true
@@ -55,7 +55,7 @@ namespace $ {
 		allow_copy() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * allow_link true
@@ -64,7 +64,7 @@ namespace $ {
 		allow_link() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * allow_move true
@@ -73,7 +73,7 @@ namespace $ {
 		allow_move() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * image <= dom_node
@@ -82,7 +82,7 @@ namespace $ {
 		image() {
 			return this.dom_node()
 		}
-
+		
 		/**
 		 * ```tree
 		 * start?event null
@@ -93,7 +93,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * move?event null
@@ -104,7 +104,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * end?event null
@@ -115,7 +115,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * status?val \ready
@@ -127,5 +127,6 @@ namespace $ {
 			return "ready"
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_section extends $mol_list {
-
+		
 		/**
 		 * ```tree
 		 * rows /
@@ -14,7 +14,7 @@ namespace $ {
 				this.Content()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * head /
@@ -22,10 +22,9 @@ namespace $ {
 		 */
 		head() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Head $mol_view sub <= head
@@ -34,12 +33,12 @@ namespace $ {
 		@ $mol_mem
 		Head() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => this.head()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Content null
@@ -49,5 +48,6 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 }
+

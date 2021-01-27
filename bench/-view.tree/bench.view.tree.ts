@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_bench extends $mol_grid {
-
+		
 		/**
 		 * ```tree
 		 * records <= result
@@ -9,7 +9,7 @@ namespace $ {
 		records() {
 			return this.result()
 		}
-
+		
 		/**
 		 * ```tree
 		 * col_sort?val \
@@ -20,8 +20,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * Col_head!id $mol_bench_head
@@ -32,14 +31,13 @@ namespace $ {
 		@ $mol_mem_key
 		Col_head(id: any) {
 			const obj = new this.$.$mol_bench_head()
-
+			
 			obj.event_click = (val?: any) => this.event_sort_toggle(id, val)
 			obj.sub = () => this.col_head_content(id)
-
+			
 			return obj
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * cell_content_number!id /
@@ -53,7 +51,7 @@ namespace $ {
 				this.Result_portion(id)
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * result *
@@ -61,10 +59,9 @@ namespace $ {
 		 */
 		result() {
 			return {
-
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_sort_toggle!id?val null
@@ -75,7 +72,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * col_head_title!id \
@@ -84,7 +81,7 @@ namespace $ {
 		col_head_title(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Col_head_sort!id $mol_icon_sort_asc
@@ -93,10 +90,10 @@ namespace $ {
 		@ $mol_mem_key
 		Col_head_sort(id: any) {
 			const obj = new this.$.$mol_icon_sort_asc()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * col_head_content!id /
@@ -110,7 +107,7 @@ namespace $ {
 				this.Col_head_sort(id)
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * result_value!id \
@@ -119,7 +116,7 @@ namespace $ {
 		result_value(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * result_portion!id 0
@@ -128,7 +125,7 @@ namespace $ {
 		result_portion(id: any) {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * Result_portion!id $mol_portion portion <= result_portion!id
@@ -137,15 +134,15 @@ namespace $ {
 		@ $mol_mem_key
 		Result_portion(id: any) {
 			const obj = new this.$.$mol_portion()
-
+			
 			obj.portion = () => this.result_portion(id)
-
+			
 			return obj
 		}
 	}
-
+	
 	export class $mol_bench_head extends $mol_float {
-
+		
 		/**
 		 * ```tree
 		 * horizontal false
@@ -154,7 +151,7 @@ namespace $ {
 		horizontal() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -168,7 +165,7 @@ namespace $ {
 				click: (val?: any) => this.event_click(val)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -182,7 +179,7 @@ namespace $ {
 				title: this.hint()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_click?val null
@@ -193,7 +190,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint @ \Click to sort by this column
@@ -203,5 +200,6 @@ namespace $ {
 			return this.$.$mol_locale.text( '$mol_bench_head_hint' )
 		}
 	}
-
+	
 }
+

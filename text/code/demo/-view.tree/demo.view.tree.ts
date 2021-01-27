@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_text_code_demo extends $mol_demo_large {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Markdow visualization example
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_text_code_demo_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Scroll
@@ -20,7 +20,7 @@ namespace $ {
 				this.Scroll()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * source \
@@ -29,7 +29,7 @@ namespace $ {
 		source() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Text $mol_text_code text <= source
@@ -38,12 +38,12 @@ namespace $ {
 		@ $mol_mem
 		Text() {
 			const obj = new this.$.$mol_text_code()
-
+			
 			obj.text = () => this.source()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Scroll $mol_scroll sub / <= Text
@@ -52,13 +52,14 @@ namespace $ {
 		@ $mol_mem
 		Scroll() {
 			const obj = new this.$.$mol_scroll()
-
+			
 			obj.sub = () => [
 				this.Text()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

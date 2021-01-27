@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_theme_auto extends $mol_plugin {
-
+		
 		/**
 		 * ```tree
 		 * attr * mol_theme <= theme
@@ -11,7 +11,7 @@ namespace $ {
 				mol_theme: this.theme()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * theme \
@@ -21,5 +21,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

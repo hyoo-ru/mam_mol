@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_speech_demo extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -16,7 +16,7 @@ namespace $ {
 				this.Speak()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Toggle_icon $mol_icon_microphone
@@ -25,10 +25,10 @@ namespace $ {
 		@ $mol_mem
 		Toggle_icon() {
 			const obj = new this.$.$mol_icon_microphone()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * hearing?val false
@@ -39,7 +39,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * Toggle $mol_check_icon
@@ -50,13 +50,13 @@ namespace $ {
 		@ $mol_mem
 		Toggle() {
 			const obj = new this.$.$mol_check_icon()
-
+			
 			obj.Icon = () => this.Toggle_icon()
 			obj.checked = (val?: any) => this.hearing(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * message \
@@ -65,7 +65,7 @@ namespace $ {
 		message() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Message $mol_view sub / <= message
@@ -74,14 +74,14 @@ namespace $ {
 		@ $mol_mem
 		Message() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.message()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * speak?val false
@@ -92,7 +92,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * Speak $mol_button_major
@@ -103,14 +103,15 @@ namespace $ {
 		@ $mol_mem
 		Speak() {
 			const obj = new this.$.$mol_button_major()
-
+			
 			obj.click = (val?: any) => this.speak(val)
 			obj.sub = () => [
 				"Speak"
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

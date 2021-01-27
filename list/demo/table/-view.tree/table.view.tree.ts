@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_list_demo_table extends $mol_demo_large {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Large list of rows with dynamic content
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_list_demo_table_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * count 10000
@@ -18,7 +18,7 @@ namespace $ {
 		count() {
 			return 10000
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Scroll
@@ -29,7 +29,7 @@ namespace $ {
 				this.Scroll()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Row!id $mol_row
@@ -40,13 +40,13 @@ namespace $ {
 		@ $mol_mem_key
 		Row(id: any) {
 			const obj = new this.$.$mol_row()
-
+			
 			obj.minimal_height = () => 40
 			obj.sub = () => this.row_content(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * rows /
@@ -54,10 +54,9 @@ namespace $ {
 		 */
 		rows() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Rows $mol_list rows <= rows
@@ -66,12 +65,12 @@ namespace $ {
 		@ $mol_mem
 		Rows() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => this.rows()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Scroll $mol_scroll sub / <= Rows
@@ -80,14 +79,14 @@ namespace $ {
 		@ $mol_mem
 		Scroll() {
 			const obj = new this.$.$mol_scroll()
-
+			
 			obj.sub = () => [
 				this.Rows()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * row_id!id \
@@ -96,7 +95,7 @@ namespace $ {
 		row_id(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Id!id $mol_view sub / <= row_id!id
@@ -105,14 +104,14 @@ namespace $ {
 		@ $mol_mem_key
 		Id(id: any) {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.row_id(id)
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * row_title!id \
@@ -121,7 +120,7 @@ namespace $ {
 		row_title(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Title!id $mol_view sub / <= row_title!id
@@ -130,14 +129,14 @@ namespace $ {
 		@ $mol_mem_key
 		Title(id: any) {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.row_title(id)
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * editable_title @ \Editable
@@ -146,7 +145,7 @@ namespace $ {
 		editable_title() {
 			return this.$.$mol_locale.text( '$mol_list_demo_table_editable_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * row_editable!id?val false
@@ -157,7 +156,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * Editable!id $mol_check_box
@@ -168,13 +167,13 @@ namespace $ {
 		@ $mol_mem_key
 		Editable(id: any) {
 			const obj = new this.$.$mol_check_box()
-
+			
 			obj.title = () => this.editable_title()
 			obj.checked = (val?: any) => this.row_editable(id, val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * row_priority!id?val \
@@ -185,7 +184,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Priority!id $mol_switch
@@ -200,7 +199,7 @@ namespace $ {
 		@ $mol_mem_key
 		Priority(id: any) {
 			const obj = new this.$.$mol_switch()
-
+			
 			obj.enabled = () => this.row_editable(id)
 			obj.value = (val?: any) => this.row_priority(id, val)
 			obj.options = () => ({
@@ -208,10 +207,10 @@ namespace $ {
 				major: "Major",
 				critical: "Critical"
 			})
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * row_moment!id?val $mol_time_moment
@@ -221,10 +220,10 @@ namespace $ {
 		row_moment(id: any, val?: any) {
 			if ( val !== undefined ) return val
 			const obj = new this.$.$mol_time_moment()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Date!id $mol_date
@@ -235,13 +234,13 @@ namespace $ {
 		@ $mol_mem_key
 		Date(id: any) {
 			const obj = new this.$.$mol_date()
-
+			
 			obj.value_moment = (val?: any) => this.row_moment(id, val)
 			obj.enabled = () => this.row_editable(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * row_number!id?val 0
@@ -252,7 +251,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * Number!id $mol_number
@@ -263,13 +262,13 @@ namespace $ {
 		@ $mol_mem_key
 		Number(id: any) {
 			const obj = new this.$.$mol_number()
-
+			
 			obj.value = (val?: any) => this.row_number(id, val)
 			obj.enabled = () => this.row_editable(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * row_uri!id \
@@ -278,7 +277,7 @@ namespace $ {
 		row_uri(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Link!id $mol_link_iconed uri <= row_uri!id
@@ -287,12 +286,12 @@ namespace $ {
 		@ $mol_mem_key
 		Link(id: any) {
 			const obj = new this.$.$mol_link_iconed()
-
+			
 			obj.uri = () => this.row_uri(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * row_content!id /
@@ -317,5 +316,6 @@ namespace $ {
 			] as readonly any[]
 		}
 	}
-
+	
 }
+

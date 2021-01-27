@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_bench_demo extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Benchmarking results visualization
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_bench_demo_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= View
@@ -20,7 +20,7 @@ namespace $ {
 				this.View()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * col_sort?val \mid
@@ -31,7 +31,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return "mid"
 		}
-
+		
 		/**
 		 * ```tree
 		 * result *
@@ -39,10 +39,9 @@ namespace $ {
 		 */
 		result() {
 			return {
-
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * View $mol_bench
@@ -53,12 +52,13 @@ namespace $ {
 		@ $mol_mem
 		View() {
 			const obj = new this.$.$mol_bench()
-
+			
 			obj.col_sort = (val?: any) => this.col_sort(val)
 			obj.result = () => this.result()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

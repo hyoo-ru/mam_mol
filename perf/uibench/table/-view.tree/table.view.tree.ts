@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_perf_uibench_table extends $mol_list {
-
+		
 		/**
 		 * ```tree
 		 * state null
@@ -9,7 +9,7 @@ namespace $ {
 		state() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * dom_name \table
@@ -18,7 +18,7 @@ namespace $ {
 		dom_name() {
 			return "table"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr_static *
@@ -32,7 +32,7 @@ namespace $ {
 				class: "Table"
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub <= rows
@@ -41,7 +41,7 @@ namespace $ {
 		sub() {
 			return this.rows()
 		}
-
+		
 		/**
 		 * ```tree
 		 * Row!index $mol_perf_uibench_table_row state <= row_state!index
@@ -50,12 +50,12 @@ namespace $ {
 		@ $mol_mem_key
 		Row(index: any) {
 			const obj = new this.$.$mol_perf_uibench_table_row()
-
+			
 			obj.state = () => this.row_state(index)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * rows /
@@ -63,10 +63,9 @@ namespace $ {
 		 */
 		rows() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * row_state!index null
@@ -76,9 +75,9 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 	export class $mol_perf_uibench_table_row extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * state null
@@ -87,7 +86,7 @@ namespace $ {
 		state() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * minimal_height 18
@@ -96,7 +95,7 @@ namespace $ {
 		minimal_height() {
 			return 18
 		}
-
+		
 		/**
 		 * ```tree
 		 * dom_name \tr
@@ -105,7 +104,7 @@ namespace $ {
 		dom_name() {
 			return "tr"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -121,7 +120,7 @@ namespace $ {
 				"data-id": this.id()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -135,7 +134,7 @@ namespace $ {
 				this.cells()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Cell!index $mol_perf_uibench_table_cell text <= cell_state!index
@@ -144,12 +143,12 @@ namespace $ {
 		@ $mol_mem_key
 		Cell(index: any) {
 			const obj = new this.$.$mol_perf_uibench_table_cell()
-
+			
 			obj.text = () => this.cell_state(index)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * classes \TableRow
@@ -158,7 +157,7 @@ namespace $ {
 		classes() {
 			return "TableRow"
 		}
-
+		
 		/**
 		 * ```tree
 		 * id 0
@@ -167,7 +166,7 @@ namespace $ {
 		id() {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * head_text \
@@ -176,7 +175,7 @@ namespace $ {
 		head_text() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Head $mol_perf_uibench_table_cell text <= head_text
@@ -185,12 +184,12 @@ namespace $ {
 		@ $mol_mem
 		Head() {
 			const obj = new this.$.$mol_perf_uibench_table_cell()
-
+			
 			obj.text = () => this.head_text()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * cells /
@@ -198,10 +197,9 @@ namespace $ {
 		 */
 		cells() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * cell_state!index null
@@ -211,9 +209,9 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 	export class $mol_perf_uibench_table_cell extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \td
@@ -222,7 +220,7 @@ namespace $ {
 		dom_name() {
 			return "td"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr_static *
@@ -236,7 +234,7 @@ namespace $ {
 				class: "TableCell"
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -250,7 +248,7 @@ namespace $ {
 				click: (val?: any) => this.click(val)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= text
@@ -261,7 +259,7 @@ namespace $ {
 				this.text()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * click?val null
@@ -272,7 +270,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * text \
@@ -282,5 +280,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

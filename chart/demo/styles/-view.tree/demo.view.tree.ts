@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_chart_demo_styles extends $mol_demo_large {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Chart with various styles of graphs.
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_styles_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * samples_count 15
@@ -18,7 +18,7 @@ namespace $ {
 		samples_count() {
 			return 15
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Chart
@@ -29,7 +29,7 @@ namespace $ {
 				this.Chart()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * receipts_title @ \Receipts
@@ -38,7 +38,7 @@ namespace $ {
 		receipts_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_styles_receipts_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * series_x /number
@@ -46,10 +46,9 @@ namespace $ {
 		 */
 		series_x() {
 			return [
-
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * series_2_y /number
@@ -57,10 +56,9 @@ namespace $ {
 		 */
 		series_2_y() {
 			return [
-
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Receipts $mol_plot_bar
@@ -72,14 +70,14 @@ namespace $ {
 		@ $mol_mem
 		Receipts() {
 			const obj = new this.$.$mol_plot_bar()
-
+			
 			obj.title = () => this.receipts_title()
 			obj.series_x = () => this.series_x()
 			obj.series_y = () => this.series_2_y()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * receipts_confirmed_title @ \Confirmed receipts
@@ -88,7 +86,7 @@ namespace $ {
 		receipts_confirmed_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_styles_receipts_confirmed_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * series_3_y /number
@@ -96,10 +94,9 @@ namespace $ {
 		 */
 		series_3_y() {
 			return [
-
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Receipts_confirmed $mol_plot_bar
@@ -111,14 +108,14 @@ namespace $ {
 		@ $mol_mem
 		Receipts_confirmed() {
 			const obj = new this.$.$mol_plot_bar()
-
+			
 			obj.title = () => this.receipts_confirmed_title()
 			obj.series_x = () => this.series_x()
 			obj.series_y = () => this.series_3_y()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * maximum_title @ \Maximum
@@ -127,7 +124,7 @@ namespace $ {
 		maximum_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_styles_maximum_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * series_1_y /number
@@ -135,10 +132,9 @@ namespace $ {
 		 */
 		series_1_y() {
 			return [
-
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Maximum $mol_plot_dot
@@ -150,14 +146,14 @@ namespace $ {
 		@ $mol_mem
 		Maximum() {
 			const obj = new this.$.$mol_plot_dot()
-
+			
 			obj.title = () => this.maximum_title()
 			obj.series_x = () => this.series_x()
 			obj.series_y = () => this.series_1_y()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * waste_title @ \Waste
@@ -166,7 +162,7 @@ namespace $ {
 		waste_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_styles_waste_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * series_4_y /number
@@ -174,10 +170,9 @@ namespace $ {
 		 */
 		series_4_y() {
 			return [
-
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Waste $mol_plot_line
@@ -190,15 +185,15 @@ namespace $ {
 		@ $mol_mem
 		Waste() {
 			const obj = new this.$.$mol_plot_line()
-
+			
 			obj.type = () => "dashed"
 			obj.title = () => this.waste_title()
 			obj.series_x = () => this.series_x()
 			obj.series_y = () => this.series_4_y()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * purchases_title @ \Purchases
@@ -207,7 +202,7 @@ namespace $ {
 		purchases_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_styles_purchases_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * series_5_y /number
@@ -215,10 +210,9 @@ namespace $ {
 		 */
 		series_5_y() {
 			return [
-
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Purchases_fill $mol_plot_fill
@@ -227,10 +221,10 @@ namespace $ {
 		@ $mol_mem
 		Purchases_fill() {
 			const obj = new this.$.$mol_plot_fill()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Purchases_line $mol_plot_line
@@ -239,10 +233,10 @@ namespace $ {
 		@ $mol_mem
 		Purchases_line() {
 			const obj = new this.$.$mol_plot_line()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Purchases_dots $mol_plot_dot
@@ -251,10 +245,10 @@ namespace $ {
 		@ $mol_mem
 		Purchases_dots() {
 			const obj = new this.$.$mol_plot_dot()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Purchases $mol_plot_group
@@ -270,7 +264,7 @@ namespace $ {
 		@ $mol_mem
 		Purchases() {
 			const obj = new this.$.$mol_plot_group()
-
+			
 			obj.title = () => this.purchases_title()
 			obj.series_x = () => this.series_x()
 			obj.series_y = () => this.series_5_y()
@@ -279,10 +273,10 @@ namespace $ {
 				this.Purchases_line(),
 				this.Purchases_dots()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * taxes_title @ \Taxes
@@ -291,7 +285,7 @@ namespace $ {
 		taxes_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_styles_taxes_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * series_6_y /number
@@ -299,10 +293,9 @@ namespace $ {
 		 */
 		series_6_y() {
 			return [
-
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Taxes_fill $mol_plot_fill
@@ -311,10 +304,10 @@ namespace $ {
 		@ $mol_mem
 		Taxes_fill() {
 			const obj = new this.$.$mol_plot_fill()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Taxes_line $mol_plot_line type \dashed
@@ -323,12 +316,12 @@ namespace $ {
 		@ $mol_mem
 		Taxes_line() {
 			const obj = new this.$.$mol_plot_line()
-
+			
 			obj.type = () => "dashed"
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Taxes_dots $mol_plot_dot
@@ -337,10 +330,10 @@ namespace $ {
 		@ $mol_mem
 		Taxes_dots() {
 			const obj = new this.$.$mol_plot_dot()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Taxes $mol_plot_group
@@ -356,7 +349,7 @@ namespace $ {
 		@ $mol_mem
 		Taxes() {
 			const obj = new this.$.$mol_plot_group()
-
+			
 			obj.title = () => this.taxes_title()
 			obj.series_x = () => this.series_x()
 			obj.series_y = () => this.series_6_y()
@@ -365,10 +358,10 @@ namespace $ {
 				this.Taxes_line(),
 				this.Taxes_dots()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * energy_title @ \kJ
@@ -377,7 +370,7 @@ namespace $ {
 		energy_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_styles_energy_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Energy $mol_plot_ruler_vert title <= energy_title
@@ -386,12 +379,12 @@ namespace $ {
 		@ $mol_mem
 		Energy() {
 			const obj = new this.$.$mol_plot_ruler_vert()
-
+			
 			obj.title = () => this.energy_title()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * day_title @ \Day
@@ -400,7 +393,7 @@ namespace $ {
 		day_title() {
 			return this.$.$mol_locale.text( '$mol_chart_demo_styles_day_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Day $mol_plot_mark_hor
@@ -411,13 +404,13 @@ namespace $ {
 		@ $mol_mem
 		Day() {
 			const obj = new this.$.$mol_plot_mark_hor()
-
+			
 			obj.title = () => this.day_title()
 			obj.series_x = () => this.series_x()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * graphs /
@@ -443,7 +436,7 @@ namespace $ {
 				this.Day()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Chart $mol_chart graphs <= graphs
@@ -452,11 +445,12 @@ namespace $ {
 		@ $mol_mem
 		Chart() {
 			const obj = new this.$.$mol_chart()
-
+			
 			obj.graphs = () => this.graphs()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_view_tree_test_binding extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * value?val <=> task_title_new?val
@@ -9,7 +9,7 @@ namespace $ {
 		value(val?: any) {
 			return this.task_title_new(val)
 		}
-
+		
 		/**
 		 * ```tree
 		 * enabled <= head_complete_enabled
@@ -18,7 +18,7 @@ namespace $ {
 		enabled() {
 			return this.head_complete_enabled()
 		}
-
+		
 		/**
 		 * ```tree
 		 * task_title_new?val \123
@@ -29,7 +29,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return "123"
 		}
-
+		
 		/**
 		 * ```tree
 		 * head_complete_enabled false
@@ -39,5 +39,6 @@ namespace $ {
 			return false
 		}
 	}
-
+	
 }
+

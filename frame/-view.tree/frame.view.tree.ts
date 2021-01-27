@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_frame extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \iframe
@@ -9,7 +9,7 @@ namespace $ {
 		dom_name() {
 			return "iframe"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -23,7 +23,7 @@ namespace $ {
 				allow: this.allow()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * fullscreen true
@@ -32,7 +32,7 @@ namespace $ {
 		fullscreen() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * accelerometer true
@@ -41,7 +41,7 @@ namespace $ {
 		accelerometer() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * autoplay true
@@ -50,7 +50,7 @@ namespace $ {
 		autoplay() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * encription true
@@ -59,7 +59,7 @@ namespace $ {
 		encription() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * gyroscope true
@@ -68,7 +68,7 @@ namespace $ {
 		gyroscope() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * pip true
@@ -77,7 +77,7 @@ namespace $ {
 		pip() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * uri \
@@ -86,7 +86,7 @@ namespace $ {
 		uri() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * allow \
@@ -96,5 +96,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

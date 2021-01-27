@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_app_report extends $mol_page {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Pump #1337 - Technical passport
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_app_report_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * body /
@@ -23,7 +23,7 @@ namespace $ {
 				this.tabler()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * rower!id $mol_app_report_rower cells <= rowerCells!id
@@ -32,12 +32,12 @@ namespace $ {
 		@ $mol_mem_key
 		rower(id: any) {
 			const obj = new this.$.$mol_app_report_rower()
-
+			
 			obj.cells = () => this.rowerCells(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * cell!id $mol_app_report_cell
@@ -49,14 +49,14 @@ namespace $ {
 		@ $mol_mem_key
 		cell(id: any) {
 			const obj = new this.$.$mol_app_report_cell()
-
+			
 			obj.content = () => this.cell_content(id)
 			obj.rows = () => this.cellrows(id)
 			obj.cols = () => this.cellCols(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * texter!id $mol_view sub / <= cell_value!id?val
@@ -65,14 +65,14 @@ namespace $ {
 		@ $mol_mem_key
 		texter(id: any) {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.cell_value(id)
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * select!id $mol_select
@@ -83,13 +83,13 @@ namespace $ {
 		@ $mol_mem_key
 		select(id: any) {
 			const obj = new this.$.$mol_select()
-
+			
 			obj.value = (val?: any) => this.cell_value(id, val)
 			obj.dictionary = () => this.cell_options(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * number!id $mol_number value?val <=> cell_value!id?val
@@ -98,12 +98,12 @@ namespace $ {
 		@ $mol_mem_key
 		number(id: any) {
 			const obj = new this.$.$mol_number()
-
+			
 			obj.value = (val?: any) => this.cell_value(id, val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * description \
@@ -112,7 +112,7 @@ namespace $ {
 		description() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * descriptor $mol_view sub / <= description
@@ -121,14 +121,14 @@ namespace $ {
 		@ $mol_mem
 		descriptor() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.description()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * headCells /
@@ -136,10 +136,9 @@ namespace $ {
 		 */
 		headCells() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * headRower $mol_app_report_rower cells <= headCells
@@ -148,12 +147,12 @@ namespace $ {
 		@ $mol_mem
 		headRower() {
 			const obj = new this.$.$mol_app_report_rower()
-
+			
 			obj.cells = () => this.headCells()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * rows / <= headRower
@@ -164,7 +163,7 @@ namespace $ {
 				this.headRower()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * tabler $mol_app_report_tabler rows <= rows
@@ -173,12 +172,12 @@ namespace $ {
 		@ $mol_mem
 		tabler() {
 			const obj = new this.$.$mol_app_report_tabler()
-
+			
 			obj.rows = () => this.rows()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * rowerCells!id /
@@ -186,10 +185,9 @@ namespace $ {
 		 */
 		rowerCells(id: any) {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * cell_content!id null
@@ -198,7 +196,7 @@ namespace $ {
 		cell_content(id: any) {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * cellrows!id 1
@@ -207,7 +205,7 @@ namespace $ {
 		cellrows(id: any) {
 			return 1
 		}
-
+		
 		/**
 		 * ```tree
 		 * cellCols!id 1
@@ -216,7 +214,7 @@ namespace $ {
 		cellCols(id: any) {
 			return 1
 		}
-
+		
 		/**
 		 * ```tree
 		 * cell_value!id?val null
@@ -227,7 +225,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * cell_options!id *
@@ -235,13 +233,12 @@ namespace $ {
 		 */
 		cell_options(id: any) {
 			return {
-
 			}
 		}
 	}
-
+	
 	export class $mol_app_report_tabler extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \table
@@ -250,7 +247,7 @@ namespace $ {
 		dom_name() {
 			return "table"
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub <= rows
@@ -259,7 +256,7 @@ namespace $ {
 		sub() {
 			return this.rows()
 		}
-
+		
 		/**
 		 * ```tree
 		 * rows /
@@ -267,13 +264,12 @@ namespace $ {
 		 */
 		rows() {
 			return [
-
 			] as readonly any[]
 		}
 	}
-
+	
 	export class $mol_app_report_rower extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \tr
@@ -282,7 +278,7 @@ namespace $ {
 		dom_name() {
 			return "tr"
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub <= cells
@@ -291,7 +287,7 @@ namespace $ {
 		sub() {
 			return this.cells()
 		}
-
+		
 		/**
 		 * ```tree
 		 * cells /
@@ -299,13 +295,12 @@ namespace $ {
 		 */
 		cells() {
 			return [
-
 			] as readonly any[]
 		}
 	}
-
+	
 	export class $mol_app_report_cell extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \td
@@ -314,7 +309,7 @@ namespace $ {
 		dom_name() {
 			return "td"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -330,7 +325,7 @@ namespace $ {
 				rowspan: this.rows()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= content
@@ -341,7 +336,7 @@ namespace $ {
 				this.content()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * cols 1
@@ -350,7 +345,7 @@ namespace $ {
 		cols() {
 			return 1
 		}
-
+		
 		/**
 		 * ```tree
 		 * rows 1
@@ -359,7 +354,7 @@ namespace $ {
 		rows() {
 			return 1
 		}
-
+		
 		/**
 		 * ```tree
 		 * content null
@@ -369,5 +364,6 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_button extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * enabled true
@@ -9,7 +9,7 @@ namespace $ {
 		enabled() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * minimal_height 40
@@ -18,7 +18,7 @@ namespace $ {
 		minimal_height() {
 			return 40
 		}
-
+		
 		/**
 		 * ```tree
 		 * click?event null
@@ -29,7 +29,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_click?event null
@@ -40,7 +40,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -56,7 +56,7 @@ namespace $ {
 				keydown: (event?: any) => this.event_key_press(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -76,7 +76,7 @@ namespace $ {
 				title: this.hint_or_error()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /$mol_view_content <= title
@@ -87,7 +87,7 @@ namespace $ {
 				this.title()
 			] as readonly $mol_view_content[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Speck $mol_speck
@@ -96,10 +96,10 @@ namespace $ {
 		@ $mol_mem
 		Speck() {
 			const obj = new this.$.$mol_speck()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_activate?event null
@@ -110,7 +110,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_key_press?event null
@@ -121,7 +121,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * disabled false
@@ -130,7 +130,7 @@ namespace $ {
 		disabled() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * tab_index 0
@@ -139,7 +139,7 @@ namespace $ {
 		tab_index() {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint \
@@ -148,7 +148,7 @@ namespace $ {
 		hint() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint_or_error <= hint
@@ -158,5 +158,6 @@ namespace $ {
 			return this.hint()
 		}
 	}
-
+	
 }
+

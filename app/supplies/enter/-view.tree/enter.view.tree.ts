@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_app_supplies_enter extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * entered?val false
@@ -11,7 +11,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * minimal_width 400
@@ -20,7 +20,7 @@ namespace $ {
 		minimal_width() {
 			return 400
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= form
@@ -31,7 +31,7 @@ namespace $ {
 				this.form()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * loginLabel @ \User name
@@ -40,7 +40,7 @@ namespace $ {
 		loginLabel() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_enter_loginLabel' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * login?val \
@@ -51,7 +51,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * loginControl $mol_string value?val <=> login?val
@@ -60,12 +60,12 @@ namespace $ {
 		@ $mol_mem
 		loginControl() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.value = (val?: any) => this.login(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * loginField $mol_form_field
@@ -76,13 +76,13 @@ namespace $ {
 		@ $mol_mem
 		loginField() {
 			const obj = new this.$.$mol_form_field()
-
+			
 			obj.name = () => this.loginLabel()
 			obj.control = () => this.loginControl()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * passwordLabel @ \Pass word
@@ -91,7 +91,7 @@ namespace $ {
 		passwordLabel() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_enter_passwordLabel' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * password?val \
@@ -102,7 +102,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * passControl $mol_string
@@ -113,13 +113,13 @@ namespace $ {
 		@ $mol_mem
 		passControl() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.value = (val?: any) => this.password(val)
 			obj.type = () => "password"
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * passwordField $mol_form_field
@@ -130,13 +130,13 @@ namespace $ {
 		@ $mol_mem
 		passwordField() {
 			const obj = new this.$.$mol_form_field()
-
+			
 			obj.name = () => this.passwordLabel()
 			obj.control = () => this.passControl()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * submitLabel @ \Log In
@@ -145,7 +145,7 @@ namespace $ {
 		submitLabel() {
 			return this.$.$mol_locale.text( '$mol_app_supplies_enter_submitLabel' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_submit?val null
@@ -156,7 +156,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * submit_blocked false
@@ -165,7 +165,7 @@ namespace $ {
 		submit_blocked() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * submit $mol_button_major
@@ -177,16 +177,16 @@ namespace $ {
 		@ $mol_mem
 		submit() {
 			const obj = new this.$.$mol_button_major()
-
+			
 			obj.sub = () => [
 				this.submitLabel()
 			] as readonly any[]
 			obj.click = (val?: any) => this.event_submit(val)
 			obj.disabled = () => this.submit_blocked()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * form $mol_form
@@ -199,7 +199,7 @@ namespace $ {
 		@ $mol_mem
 		form() {
 			const obj = new this.$.$mol_form()
-
+			
 			obj.form_fields = () => [
 				this.loginField(),
 				this.passwordField()
@@ -207,9 +207,10 @@ namespace $ {
 			obj.buttons = () => [
 				this.submit()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

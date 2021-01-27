@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_link_demo extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Some hyperlinks
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_link_demo_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -29,7 +29,7 @@ namespace $ {
 				this.External()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * this_label @ \This page
@@ -38,7 +38,7 @@ namespace $ {
 		this_label() {
 			return this.$.$mol_locale.text( '$mol_link_demo_this_label' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * This $mol_link sub / <= this_label
@@ -47,14 +47,14 @@ namespace $ {
 		@ $mol_mem
 		This() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.sub = () => [
 				this.this_label()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * red_label @ \Red
@@ -63,7 +63,7 @@ namespace $ {
 		red_label() {
 			return this.$.$mol_locale.text( '$mol_link_demo_red_label' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Red $mol_link
@@ -74,17 +74,17 @@ namespace $ {
 		@ $mol_mem
 		Red() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.arg = () => ({
 				color: "red"
 			})
 			obj.sub = () => [
 				this.red_label()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * green_label @ \Green
@@ -93,7 +93,7 @@ namespace $ {
 		green_label() {
 			return this.$.$mol_locale.text( '$mol_link_demo_green_label' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Green $mol_link
@@ -104,17 +104,17 @@ namespace $ {
 		@ $mol_mem
 		Green() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.arg = () => ({
 				color: "green"
 			})
 			obj.sub = () => [
 				this.green_label()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * blue_label @ \Blue
@@ -123,7 +123,7 @@ namespace $ {
 		blue_label() {
 			return this.$.$mol_locale.text( '$mol_link_demo_blue_label' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Blue $mol_link
@@ -134,17 +134,17 @@ namespace $ {
 		@ $mol_mem
 		Blue() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.arg = () => ({
 				color: "blue"
 			})
 			obj.sub = () => [
 				this.blue_label()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * external_hint @ \external link
@@ -153,7 +153,7 @@ namespace $ {
 		external_hint() {
 			return this.$.$mol_locale.text( '$mol_link_demo_external_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * External $mol_link
@@ -165,13 +165,14 @@ namespace $ {
 		@ $mol_mem
 		External() {
 			const obj = new this.$.$mol_link()
-
+			
 			obj.uri = () => "http://example.org"
 			obj.title = () => "example.org"
 			obj.hint = () => this.external_hint()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

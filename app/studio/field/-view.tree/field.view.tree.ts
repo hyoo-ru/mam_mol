@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_app_studio_field extends $mol_expander {
-
+		
 		/**
 		 * ```tree
 		 * path /
@@ -8,10 +8,9 @@ namespace $ {
 		 */
 		path() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Trigger $mol_app_studio_field_title
@@ -23,14 +22,14 @@ namespace $ {
 		@ $mol_mem
 		Trigger() {
 			const obj = new this.$.$mol_app_studio_field_title()
-
+			
 			obj.checked = (val?: any) => this.expanded(val)
 			obj.Title = () => this.Trigger_label()
 			obj.type = () => this.type()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Tools $mol_view sub <= tools
@@ -39,12 +38,12 @@ namespace $ {
 		@ $mol_mem
 		Tools() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => this.tools()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * content /
@@ -68,7 +67,7 @@ namespace $ {
 				this.Overs()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Add $mol_select
@@ -81,15 +80,15 @@ namespace $ {
 		@ $mol_mem
 		Add() {
 			const obj = new this.$.$mol_select()
-
+			
 			obj.hint = () => this.add_hint()
 			obj.value = (val?: any) => this.add_item(val)
 			obj.dictionary = () => this.item_types()
 			obj.Trigger_icon = () => this.List_trigger_icon()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Add_pair $mol_bar sub /
@@ -100,15 +99,15 @@ namespace $ {
 		@ $mol_mem
 		Add_pair() {
 			const obj = new this.$.$mol_bar()
-
+			
 			obj.sub = () => [
 				this.Add_pair_key(),
 				this.Add_pair_submit()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Add_over $mol_select
@@ -121,15 +120,15 @@ namespace $ {
 		@ $mol_mem
 		Add_over() {
 			const obj = new this.$.$mol_select()
-
+			
 			obj.hint = () => this.add_over_hint()
 			obj.value = (val?: any) => this.add_over(val)
 			obj.Trigger_icon = () => this.Overs_trigger_icon()
 			obj.options = () => this.over_options()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Prop!id $mol_app_studio_field
@@ -146,7 +145,7 @@ namespace $ {
 		@ $mol_mem_key
 		Prop(id: any) {
 			const obj = new this.$.$mol_app_studio_field()
-
+			
 			obj.path = () => this.prop_path(id)
 			obj.prop_arg = (id: any) => this.prop_arg(id)
 			obj.prop = (path: any, val?: any) => this.prop(path, val)
@@ -155,10 +154,10 @@ namespace $ {
 			obj.bind_options = () => this.bind_options()
 			obj.prop_add = (val?: any) => this.prop_add(val)
 			obj.object_options = () => this.object_options()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * expanded?val false
@@ -169,7 +168,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * highlight \
@@ -178,7 +177,7 @@ namespace $ {
 		highlight() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Trigger_label $mol_dimmer
@@ -189,13 +188,13 @@ namespace $ {
 		@ $mol_mem
 		Trigger_label() {
 			const obj = new this.$.$mol_dimmer()
-
+			
 			obj.needle = () => this.highlight()
 			obj.haystack = () => this.title()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * type?val \null
@@ -206,7 +205,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return "null"
 		}
-
+		
 		/**
 		 * ```tree
 		 * type_hint @ \Type...
@@ -215,7 +214,7 @@ namespace $ {
 		type_hint() {
 			return this.$.$mol_locale.text( '$mol_app_studio_field_type_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * types *
@@ -245,7 +244,7 @@ namespace $ {
 				null: "None"
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * Type $mol_select
@@ -258,15 +257,15 @@ namespace $ {
 		@ $mol_mem
 		Type() {
 			const obj = new this.$.$mol_select()
-
+			
 			obj.value = (val?: any) => this.type(val)
 			obj.hint = () => this.type_hint()
 			obj.Trigger_icon = () => null as any
 			obj.dictionary = () => this.types()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * class?val null
@@ -277,7 +276,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * object_options /
@@ -285,10 +284,9 @@ namespace $ {
 		 */
 		object_options() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * object_hint @ \Class...
@@ -297,7 +295,7 @@ namespace $ {
 		object_hint() {
 			return this.$.$mol_locale.text( '$mol_app_studio_field_object_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * Object $mol_select
@@ -310,15 +308,15 @@ namespace $ {
 		@ $mol_mem
 		Object() {
 			const obj = new this.$.$mol_select()
-
+			
 			obj.value = (val?: any) => this.class(val)
 			obj.options = () => this.object_options()
 			obj.hint = () => this.object_hint()
 			obj.Trigger_icon = () => null as any
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * tools /
@@ -332,7 +330,7 @@ namespace $ {
 				this.Object()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * value_bool?val null
@@ -343,7 +341,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Bool $mol_switch
@@ -356,16 +354,16 @@ namespace $ {
 		@ $mol_mem
 		Bool() {
 			const obj = new this.$.$mol_switch()
-
+			
 			obj.value = (val?: any) => this.value_bool(val)
 			obj.options = () => ({
 				true: "True",
 				false: "False"
 			})
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * value_number?val NaN
@@ -376,7 +374,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return NaN
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint \
@@ -385,7 +383,7 @@ namespace $ {
 		hint() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Number $mol_number
@@ -396,13 +394,13 @@ namespace $ {
 		@ $mol_mem
 		Number() {
 			const obj = new this.$.$mol_number()
-
+			
 			obj.value = (val?: any) => this.value_number(val)
 			obj.hint = () => this.hint()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * value_string?val null
@@ -413,7 +411,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * String $mol_textarea
@@ -424,13 +422,13 @@ namespace $ {
 		@ $mol_mem
 		String() {
 			const obj = new this.$.$mol_textarea()
-
+			
 			obj.value = (val?: any) => this.value_string(val)
 			obj.hint = () => this.hint()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * bind?val null
@@ -441,7 +439,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * bind_options /
@@ -449,10 +447,9 @@ namespace $ {
 		 */
 		bind_options() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * bind_hint @ \Property..
@@ -461,7 +458,7 @@ namespace $ {
 		bind_hint() {
 			return this.$.$mol_locale.text( '$mol_app_studio_field_bind_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_add_label @ \Add property
@@ -470,7 +467,7 @@ namespace $ {
 		prop_add_label() {
 			return this.$.$mol_locale.text( '$mol_app_studio_field_prop_add_label' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_prop_add?val null
@@ -481,7 +478,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * Prop_add $mol_button_minor
@@ -492,13 +489,13 @@ namespace $ {
 		@ $mol_mem
 		Prop_add() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.title = () => this.prop_add_label()
 			obj.event_click = (val?: any) => this.event_prop_add(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Bind $mol_select
@@ -512,16 +509,16 @@ namespace $ {
 		@ $mol_mem
 		Bind() {
 			const obj = new this.$.$mol_select()
-
+			
 			obj.value = (val?: any) => this.bind(val)
 			obj.options = () => this.bind_options()
 			obj.hint = () => this.bind_hint()
 			obj.No_options = () => this.Prop_add()
 			obj.Trigger_icon = () => null as any
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * list_rows /
@@ -529,10 +526,9 @@ namespace $ {
 		 */
 		list_rows() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * List $mol_list rows <= list_rows
@@ -541,12 +537,12 @@ namespace $ {
 		@ $mol_mem
 		List() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => this.list_rows()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * pairs /
@@ -554,10 +550,9 @@ namespace $ {
 		 */
 		pairs() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Dict $mol_list rows <= pairs
@@ -566,12 +561,12 @@ namespace $ {
 		@ $mol_mem
 		Dict() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => this.pairs()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * overs /
@@ -579,10 +574,9 @@ namespace $ {
 		 */
 		overs() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Overs $mol_list rows <= overs
@@ -591,12 +585,12 @@ namespace $ {
 		@ $mol_mem
 		Overs() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => this.overs()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * add_hint @ \Add item..
@@ -605,7 +599,7 @@ namespace $ {
 		add_hint() {
 			return this.$.$mol_locale.text( '$mol_app_studio_field_add_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * add_item?val \
@@ -616,7 +610,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * item_types *
@@ -640,7 +634,7 @@ namespace $ {
 				null: "None"
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * List_trigger_icon $mol_icon_plus
@@ -649,10 +643,10 @@ namespace $ {
 		@ $mol_mem
 		List_trigger_icon() {
 			const obj = new this.$.$mol_icon_plus()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * add_pair_hint @ \Add key..
@@ -661,7 +655,7 @@ namespace $ {
 		add_pair_hint() {
 			return this.$.$mol_locale.text( '$mol_app_studio_field_add_pair_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * add_pair_key?val \
@@ -672,7 +666,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * key_suggests /
@@ -680,10 +674,9 @@ namespace $ {
 		 */
 		key_suggests() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Add_pair_key $mol_search
@@ -695,14 +688,14 @@ namespace $ {
 		@ $mol_mem
 		Add_pair_key() {
 			const obj = new this.$.$mol_search()
-
+			
 			obj.hint = () => this.add_pair_hint()
 			obj.query = (val?: any) => this.add_pair_key(val)
 			obj.suggests = () => this.key_suggests()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * add_pair?val \
@@ -713,7 +706,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Add_pair_submit_icon $mol_icon_plus
@@ -722,10 +715,10 @@ namespace $ {
 		@ $mol_mem
 		Add_pair_submit_icon() {
 			const obj = new this.$.$mol_icon_plus()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Add_pair_submit $mol_button_minor
@@ -736,15 +729,15 @@ namespace $ {
 		@ $mol_mem
 		Add_pair_submit() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.event_click = (val?: any) => this.add_pair(val)
 			obj.sub = () => [
 				this.Add_pair_submit_icon()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * add_over_hint @ \Add override..
@@ -753,7 +746,7 @@ namespace $ {
 		add_over_hint() {
 			return this.$.$mol_locale.text( '$mol_app_studio_field_add_over_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * add_over?val \
@@ -764,7 +757,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Overs_trigger_icon $mol_icon_plus
@@ -773,10 +766,10 @@ namespace $ {
 		@ $mol_mem
 		Overs_trigger_icon() {
 			const obj = new this.$.$mol_icon_plus()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * over_options /
@@ -784,10 +777,9 @@ namespace $ {
 		 */
 		over_options() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_path!id /
@@ -795,10 +787,9 @@ namespace $ {
 		 */
 		prop_path(id: any) {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_arg!id *
@@ -806,10 +797,9 @@ namespace $ {
 		 */
 		prop_arg(id: any) {
 			return {
-
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop!path?val $mol_tree
@@ -819,10 +809,10 @@ namespace $ {
 		prop(path: any, val?: any) {
 			if ( val !== undefined ) return val
 			const obj = new this.$.$mol_tree()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * props!name?val $mol_tree
@@ -832,10 +822,10 @@ namespace $ {
 		props(name: any, val?: any) {
 			if ( val !== undefined ) return val
 			const obj = new this.$.$mol_tree()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_value!id null
@@ -844,7 +834,7 @@ namespace $ {
 		prop_value(id: any) {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * prop_add?val null
@@ -856,9 +846,9 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 	export class $mol_app_studio_field_title extends $mol_check_expand {
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -872,7 +862,7 @@ namespace $ {
 				mol_app_studio_field_title_type: this.type()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * type \null
@@ -882,5 +872,6 @@ namespace $ {
 			return "null"
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_pop_over extends $mol_pop {
-
+		
 		/**
 		 * ```tree
 		 * showed <= hovered?val
@@ -9,7 +9,7 @@ namespace $ {
 		showed() {
 			return this.hovered()
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -23,7 +23,7 @@ namespace $ {
 				tabindex: 0
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -39,7 +39,7 @@ namespace $ {
 				mouseleave: (event?: any) => this.event_hide(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * hovered?val false
@@ -50,7 +50,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_show?event null
@@ -61,7 +61,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_hide?event null
@@ -73,5 +73,6 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 }
+

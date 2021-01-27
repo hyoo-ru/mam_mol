@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_select extends $mol_pop {
-
+		
 		/**
 		 * ```tree
 		 * dictionary *
@@ -8,10 +8,9 @@ namespace $ {
 		 */
 		dictionary() {
 			return {
-
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * options /string
@@ -19,10 +18,9 @@ namespace $ {
 		 */
 		options() {
 			return [
-
 			] as readonly string[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * value?val \
@@ -33,7 +31,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Option_row!id $mol_button_minor
@@ -44,13 +42,13 @@ namespace $ {
 		@ $mol_mem_key
 		Option_row(id: any) {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.event_click = (event?: any) => this.event_select(id, event)
 			obj.sub = () => this.option_content(id)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * No_options $mol_view sub / <= no_options_message
@@ -59,14 +57,14 @@ namespace $ {
 		@ $mol_mem
 		No_options() {
 			const obj = new this.$.$mol_view()
-
+			
 			obj.sub = () => [
 				this.no_options_message()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * plugins /
@@ -80,7 +78,7 @@ namespace $ {
 				this.Nav()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * showed?val <=> options_showed?val
@@ -89,7 +87,7 @@ namespace $ {
 		showed(val?: any) {
 			return this.options_showed(val)
 		}
-
+		
 		/**
 		 * ```tree
 		 * Anchor <= Trigger
@@ -98,7 +96,7 @@ namespace $ {
 		Anchor() {
 			return this.Trigger()
 		}
-
+		
 		/**
 		 * ```tree
 		 * bubble_content / <= Menu
@@ -109,7 +107,7 @@ namespace $ {
 				this.Menu()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * option_content_current /$mol_view_content
@@ -117,10 +115,9 @@ namespace $ {
 		 */
 		option_content_current() {
 			return [
-
 			] as readonly $mol_view_content[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Filter $mol_string
@@ -133,15 +130,15 @@ namespace $ {
 		@ $mol_mem
 		Filter() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.value = (val?: any) => this.filter_pattern(val)
 			obj.hint = () => this.filter_hint()
 			obj.submit = (event?: any) => this.submit(event)
 			obj.enabled = () => this.enabled()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Trigger_icon $mol_icon_chevron
@@ -150,10 +147,10 @@ namespace $ {
 		@ $mol_mem
 		Trigger_icon() {
 			const obj = new this.$.$mol_icon_chevron()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_select!id?event null
@@ -164,7 +161,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * option_label!id \
@@ -173,7 +170,7 @@ namespace $ {
 		option_label(id: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * filter_pattern?val \
@@ -184,7 +181,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Option_label!id $mol_dimmer
@@ -195,13 +192,13 @@ namespace $ {
 		@ $mol_mem_key
 		Option_label(id: any) {
 			const obj = new this.$.$mol_dimmer()
-
+			
 			obj.haystack = () => this.option_label(id)
 			obj.needle = () => this.filter_pattern()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * option_content!id / <= Option_label!id
@@ -212,7 +209,7 @@ namespace $ {
 				this.Option_label(id)
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * no_options_message @ \No options
@@ -221,7 +218,7 @@ namespace $ {
 		no_options_message() {
 			return this.$.$mol_locale.text( '$mol_select_no_options_message' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * nav_components /$mol_view
@@ -229,10 +226,9 @@ namespace $ {
 		 */
 		nav_components() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * option_focused?component null
@@ -243,7 +239,7 @@ namespace $ {
 			if ( component !== undefined ) return component
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * nav_cycle?val true
@@ -254,7 +250,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * Nav $mol_nav
@@ -266,14 +262,14 @@ namespace $ {
 		@ $mol_mem
 		Nav() {
 			const obj = new this.$.$mol_nav()
-
+			
 			obj.keys_y = () => this.nav_components()
 			obj.current_y = (component?: any) => this.option_focused(component)
 			obj.cycle = (val?: any) => this.nav_cycle(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * options_showed?val false
@@ -284,7 +280,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * open?event null
@@ -295,7 +291,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * trigger_content /$mol_view_content
@@ -303,10 +299,9 @@ namespace $ {
 		 */
 		trigger_content() {
 			return [
-
 			] as readonly $mol_view_content[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Trigger $mol_button_minor
@@ -317,13 +312,13 @@ namespace $ {
 		@ $mol_mem
 		Trigger() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.click = (event?: any) => this.open(event)
 			obj.sub = () => this.trigger_content()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * menu_content /$mol_view
@@ -331,10 +326,9 @@ namespace $ {
 		 */
 		menu_content() {
 			return [
-
 			] as readonly $mol_view[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Menu $mol_list rows <= menu_content
@@ -343,12 +337,12 @@ namespace $ {
 		@ $mol_mem
 		Menu() {
 			const obj = new this.$.$mol_list()
-
+			
 			obj.rows = () => this.menu_content()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint @ \Search..
@@ -357,7 +351,7 @@ namespace $ {
 		hint() {
 			return this.$.$mol_locale.text( '$mol_select_hint' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * filter_hint <= hint
@@ -366,7 +360,7 @@ namespace $ {
 		filter_hint() {
 			return this.hint()
 		}
-
+		
 		/**
 		 * ```tree
 		 * submit?event null
@@ -377,7 +371,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * enabled true
@@ -387,5 +381,6 @@ namespace $ {
 			return true
 		}
 	}
-
+	
 }
+

@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_app_demo_main extends $mol_page {
-
+		
 		/**
 		 * ```tree
 		 * minimal_width 400
@@ -9,7 +9,7 @@ namespace $ {
 		minimal_width() {
 			return 400
 		}
-
+		
 		/**
 		 * ```tree
 		 * title \$mol libs for web ui
@@ -18,7 +18,7 @@ namespace $ {
 		title() {
 			return "$mol libs for web ui"
 		}
-
+		
 		/**
 		 * ```tree
 		 * tools /
@@ -32,7 +32,7 @@ namespace $ {
 				this.Project()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * body / <= Description
@@ -43,7 +43,7 @@ namespace $ {
 				this.Description()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Lights $mol_lights_toggle
@@ -52,10 +52,10 @@ namespace $ {
 		@ $mol_mem
 		Lights() {
 			const obj = new this.$.$mol_lights_toggle()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * project_uri \https://github.com/eigenmethod/mol/tree/master/
@@ -64,7 +64,7 @@ namespace $ {
 		project_uri() {
 			return "https://github.com/eigenmethod/mol/tree/master/"
 		}
-
+		
 		/**
 		 * ```tree
 		 * Project $mol_link_source uri <= project_uri
@@ -73,12 +73,12 @@ namespace $ {
 		@ $mol_mem
 		Project() {
 			const obj = new this.$.$mol_link_source()
-
+			
 			obj.uri = () => this.project_uri()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * description \
@@ -87,7 +87,7 @@ namespace $ {
 		description() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Description $mol_text
@@ -98,12 +98,13 @@ namespace $ {
 		@ $mol_mem
 		Description() {
 			const obj = new this.$.$mol_text()
-
+			
 			obj.text = () => this.description()
 			obj.uri_base = () => this.project_uri()
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

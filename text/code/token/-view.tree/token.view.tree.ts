@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_text_code_token extends $mol_dimmer {
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -14,7 +14,7 @@ namespace $ {
 				mol_text_code_token_type: this.type()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * type \
@@ -24,9 +24,9 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 	export class $mol_text_code_token_link extends $mol_text_code_token {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \a
@@ -35,7 +35,7 @@ namespace $ {
 		dom_name() {
 			return "a"
 		}
-
+		
 		/**
 		 * ```tree
 		 * type \code-link
@@ -44,7 +44,7 @@ namespace $ {
 		type() {
 			return "code-link"
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -60,7 +60,7 @@ namespace $ {
 				target: "_blank"
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * haystack \
@@ -70,5 +70,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

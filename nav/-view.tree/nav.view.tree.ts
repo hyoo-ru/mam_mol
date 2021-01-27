@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_nav extends $mol_plugin {
-
+		
 		/**
 		 * ```tree
 		 * cycle?val false
@@ -11,8 +11,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return false
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * mod_ctrl false
@@ -21,7 +20,7 @@ namespace $ {
 		mod_ctrl() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * mod_shift false
@@ -30,7 +29,7 @@ namespace $ {
 		mod_shift() {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * mod_alt false
@@ -39,8 +38,7 @@ namespace $ {
 		mod_alt() {
 			return false
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * keys_x?val /
@@ -50,10 +48,9 @@ namespace $ {
 		keys_x(val?: any) {
 			if ( val !== undefined ) return val
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * keys_y?val /
@@ -63,11 +60,9 @@ namespace $ {
 		keys_y(val?: any) {
 			if ( val !== undefined ) return val
 			return [
-
 			] as readonly any[]
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * current_x?val \
@@ -78,7 +73,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * current_y?val \
@@ -89,8 +84,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
-
+		
 		/**
 		 * ```tree
 		 * event_up?event null
@@ -101,7 +95,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_down?event null
@@ -112,7 +106,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_left?event null
@@ -123,7 +117,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_right?event null
@@ -134,7 +128,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -148,7 +142,7 @@ namespace $ {
 				keydown: (event?: any) => this.event_key(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_key?event null
@@ -160,5 +154,6 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 }
+

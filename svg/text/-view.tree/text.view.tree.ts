@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_svg_text extends $mol_svg {
-
+		
 		/**
 		 * ```tree
 		 * dom_name \text
@@ -9,7 +9,7 @@ namespace $ {
 		dom_name() {
 			return "text"
 		}
-
+		
 		/**
 		 * ```tree
 		 * pos /
@@ -17,10 +17,9 @@ namespace $ {
 		 */
 		pos() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -38,7 +37,7 @@ namespace $ {
 				"text-anchor": this.align()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= text
@@ -49,7 +48,7 @@ namespace $ {
 				this.text()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * pos_x \
@@ -58,7 +57,7 @@ namespace $ {
 		pos_x() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * pos_y \
@@ -67,7 +66,7 @@ namespace $ {
 		pos_y() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * align \middle
@@ -76,7 +75,7 @@ namespace $ {
 		align() {
 			return "middle"
 		}
-
+		
 		/**
 		 * ```tree
 		 * text \
@@ -86,5 +85,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

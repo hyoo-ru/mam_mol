@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_calendar_demo_holiday extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Days of month 2018-01 with custom holidays
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_calendar_demo_holiday_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * holidays /
@@ -47,7 +47,7 @@ namespace $ {
 				"2018-01-28"
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub / <= Calendar
@@ -58,7 +58,7 @@ namespace $ {
 				this.Calendar()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * month \2018-01
@@ -67,7 +67,7 @@ namespace $ {
 		month() {
 			return "2018-01"
 		}
-
+		
 		/**
 		 * ```tree
 		 * holiday!day false
@@ -76,7 +76,7 @@ namespace $ {
 		holiday(day: any) {
 			return false
 		}
-
+		
 		/**
 		 * ```tree
 		 * Calendar $mol_calendar
@@ -87,12 +87,13 @@ namespace $ {
 		@ $mol_mem
 		Calendar() {
 			const obj = new this.$.$mol_calendar()
-
+			
 			obj.month_string = () => this.month()
 			obj.day_holiday = (day: any) => this.holiday(day)
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

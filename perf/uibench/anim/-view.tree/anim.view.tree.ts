@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_perf_uibench_anim extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * state null
@@ -9,7 +9,7 @@ namespace $ {
 		state() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr_static *
@@ -23,7 +23,7 @@ namespace $ {
 				class: "Anim"
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub <= boxes
@@ -32,7 +32,7 @@ namespace $ {
 		sub() {
 			return this.boxes()
 		}
-
+		
 		/**
 		 * ```tree
 		 * Box!index $mol_perf_uibench_anim_box state <= box_state!index
@@ -41,12 +41,12 @@ namespace $ {
 		@ $mol_mem_key
 		Box(index: any) {
 			const obj = new this.$.$mol_perf_uibench_anim_box()
-
+			
 			obj.state = () => this.box_state(index)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * boxes /
@@ -54,10 +54,9 @@ namespace $ {
 		 */
 		boxes() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * box_state!index null
@@ -67,9 +66,9 @@ namespace $ {
 			return null as any
 		}
 	}
-
+	
 	export class $mol_perf_uibench_anim_box extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * state null
@@ -78,7 +77,7 @@ namespace $ {
 		state() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr *
@@ -94,7 +93,7 @@ namespace $ {
 				"data-id": this.id()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * style *
@@ -110,7 +109,7 @@ namespace $ {
 				background: this.style_color()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * id \
@@ -119,7 +118,7 @@ namespace $ {
 		id() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * style_radius \
@@ -128,7 +127,7 @@ namespace $ {
 		style_radius() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * style_color \
@@ -138,5 +137,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

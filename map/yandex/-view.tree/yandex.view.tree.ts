@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_map_yandex extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * zoom?val 2
@@ -11,7 +11,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 2
 		}
-
+		
 		/**
 		 * ```tree
 		 * center?val /
@@ -27,7 +27,7 @@ namespace $ {
 				0
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * objects /$mol_map_yandex_mark
@@ -35,9 +35,9 @@ namespace $ {
 		 */
 		objects() {
 			return [
-
 			] as readonly $mol_map_yandex_mark[]
 		}
 	}
-
+	
 }
+

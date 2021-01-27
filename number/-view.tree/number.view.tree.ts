@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_number extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * precision_view <= precision
@@ -9,7 +9,7 @@ namespace $ {
 		precision_view() {
 			return this.precision()
 		}
-
+		
 		/**
 		 * ```tree
 		 * precision_change <= precision
@@ -18,7 +18,7 @@ namespace $ {
 		precision_change() {
 			return this.precision()
 		}
-
+		
 		/**
 		 * ```tree
 		 * value?val NaN
@@ -29,7 +29,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return NaN
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -45,7 +45,7 @@ namespace $ {
 				this.Inc()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * precision 1
@@ -54,7 +54,7 @@ namespace $ {
 		precision() {
 			return 1
 		}
-
+		
 		/**
 		 * ```tree
 		 * value_string?val \
@@ -65,7 +65,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * hint \
@@ -74,7 +74,7 @@ namespace $ {
 		hint() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * enabled true
@@ -83,7 +83,7 @@ namespace $ {
 		enabled() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * string_enabled <= enabled
@@ -92,7 +92,7 @@ namespace $ {
 		string_enabled() {
 			return this.enabled()
 		}
-
+		
 		/**
 		 * ```tree
 		 * String $mol_string
@@ -105,15 +105,15 @@ namespace $ {
 		@ $mol_mem
 		String() {
 			const obj = new this.$.$mol_string()
-
+			
 			obj.type = () => "number"
 			obj.value = (val?: any) => this.value_string(val)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.string_enabled()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_dec?val null
@@ -124,7 +124,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * dec_enabled <= enabled
@@ -133,7 +133,7 @@ namespace $ {
 		dec_enabled() {
 			return this.enabled()
 		}
-
+		
 		/**
 		 * ```tree
 		 * dec_icon $mol_icon_minus
@@ -142,10 +142,10 @@ namespace $ {
 		@ $mol_mem
 		dec_icon() {
 			const obj = new this.$.$mol_icon_minus()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Dec $mol_button_minor
@@ -157,16 +157,16 @@ namespace $ {
 		@ $mol_mem
 		Dec() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.event_click = (val?: any) => this.event_dec(val)
 			obj.enabled = () => this.dec_enabled()
 			obj.sub = () => [
 				this.dec_icon()
 			] as readonly any[]
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * event_inc?val null
@@ -177,7 +177,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * inc_enabled <= enabled
@@ -186,7 +186,7 @@ namespace $ {
 		inc_enabled() {
 			return this.enabled()
 		}
-
+		
 		/**
 		 * ```tree
 		 * inc_icon $mol_icon_plus
@@ -195,10 +195,10 @@ namespace $ {
 		@ $mol_mem
 		inc_icon() {
 			const obj = new this.$.$mol_icon_plus()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * Inc $mol_button_minor
@@ -210,15 +210,16 @@ namespace $ {
 		@ $mol_mem
 		Inc() {
 			const obj = new this.$.$mol_button_minor()
-
+			
 			obj.event_click = (val?: any) => this.event_inc(val)
 			obj.enabled = () => this.inc_enabled()
 			obj.sub = () => [
 				this.inc_icon()
 			] as readonly any[]
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

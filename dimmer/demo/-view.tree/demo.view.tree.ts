@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_dimmer_demo extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Text with highlighted found substring
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_dimmer_demo_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -31,7 +31,7 @@ namespace $ {
 				this.six()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * one $mol_dimmer
@@ -42,13 +42,13 @@ namespace $ {
 		@ $mol_mem
 		one() {
 			const obj = new this.$.$mol_dimmer()
-
+			
 			obj.haystack = () => "Don't put all your eggs in one basket"
 			obj.needle = () => "eggs"
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * two $mol_dimmer
@@ -59,13 +59,13 @@ namespace $ {
 		@ $mol_mem
 		two() {
 			const obj = new this.$.$mol_dimmer()
-
+			
 			obj.haystack = () => "Don't look a gift horse in the mouth."
 			obj.needle = () => "oo"
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * three $mol_dimmer
@@ -76,13 +76,13 @@ namespace $ {
 		@ $mol_mem
 		three() {
 			const obj = new this.$.$mol_dimmer()
-
+			
 			obj.haystack = () => "There is no word you are looking for"
 			obj.needle = () => "luck"
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * four $mol_dimmer
@@ -93,13 +93,13 @@ namespace $ {
 		@ $mol_mem
 		four() {
 			const obj = new this.$.$mol_dimmer()
-
+			
 			obj.haystack = () => "ooAAooAAoo"
 			obj.needle = () => "oo"
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * five $mol_dimmer
@@ -110,13 +110,13 @@ namespace $ {
 		@ $mol_mem
 		five() {
 			const obj = new this.$.$mol_dimmer()
-
+			
 			obj.haystack = () => "Let's search this string"
 			obj.needle = () => "Let's search this string"
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * six $mol_dimmer
@@ -127,12 +127,13 @@ namespace $ {
 		@ $mol_mem
 		six() {
 			const obj = new this.$.$mol_dimmer()
-
+			
 			obj.haystack = () => "Let's search nothing"
 			obj.needle = () => ""
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

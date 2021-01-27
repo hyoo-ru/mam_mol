@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_number_demo extends $mol_demo_small {
-
+		
 		/**
 		 * ```tree
 		 * title @ \Number input control with various configuration
@@ -9,7 +9,7 @@ namespace $ {
 		title() {
 			return this.$.$mol_locale.text( '$mol_number_demo_title' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -39,7 +39,7 @@ namespace $ {
 				this.nine()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * zero $mol_number
@@ -48,10 +48,10 @@ namespace $ {
 		@ $mol_mem
 		zero() {
 			const obj = new this.$.$mol_number()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * year?val NaN
@@ -62,7 +62,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return NaN
 		}
-
+		
 		/**
 		 * ```tree
 		 * one $mol_number value?val <=> year?val
@@ -71,12 +71,12 @@ namespace $ {
 		@ $mol_mem
 		one() {
 			const obj = new this.$.$mol_number()
-
+			
 			obj.value = (val?: any) => this.year(val)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * two $mol_number
@@ -87,13 +87,13 @@ namespace $ {
 		@ $mol_mem
 		two() {
 			const obj = new this.$.$mol_number()
-
+			
 			obj.value = (val?: any) => this.year(val)
 			obj.hint = () => "2016"
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * age?val 32
@@ -104,7 +104,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 32
 		}
-
+		
 		/**
 		 * ```tree
 		 * three $mol_number
@@ -116,14 +116,14 @@ namespace $ {
 		@ $mol_mem
 		three() {
 			const obj = new this.$.$mol_number()
-
+			
 			obj.value = (val?: any) => this.age(val)
 			obj.hint = () => "18-99"
 			obj.enabled = () => false
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * four $mol_number
@@ -134,13 +134,13 @@ namespace $ {
 		@ $mol_mem
 		four() {
 			const obj = new this.$.$mol_number()
-
+			
 			obj.value = (val?: any) => this.year(val)
 			obj.string_enabled = () => false
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * five $mol_number
@@ -151,13 +151,13 @@ namespace $ {
 		@ $mol_mem
 		five() {
 			const obj = new this.$.$mol_number()
-
+			
 			obj.value = (val?: any) => this.age(val)
 			obj.dec_enabled = () => false
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * six $mol_number
@@ -168,13 +168,13 @@ namespace $ {
 		@ $mol_mem
 		six() {
 			const obj = new this.$.$mol_number()
-
+			
 			obj.value = (val?: any) => this.year(val)
 			obj.inc_enabled = () => false
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * seven $mol_number
@@ -185,13 +185,13 @@ namespace $ {
 		@ $mol_mem
 		seven() {
 			const obj = new this.$.$mol_number()
-
+			
 			obj.value = (val?: any) => this.year(val)
 			obj.precision_change = () => 10
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * eight $mol_number
@@ -202,13 +202,13 @@ namespace $ {
 		@ $mol_mem
 		eight() {
 			const obj = new this.$.$mol_number()
-
+			
 			obj.value = (val?: any) => this.year(val)
 			obj.precision_view = () => 0.01
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * nine $mol_number
@@ -219,12 +219,13 @@ namespace $ {
 		@ $mol_mem
 		nine() {
 			const obj = new this.$.$mol_number()
-
+			
 			obj.value = (val?: any) => this.year(val)
 			obj.precision = () => 1000
-
+			
 			return obj
 		}
 	}
-
+	
 }
+

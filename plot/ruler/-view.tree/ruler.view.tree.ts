@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_plot_ruler extends $mol_plot_graph {
-
+		
 		/**
 		 * ```tree
 		 * step 0
@@ -9,7 +9,7 @@ namespace $ {
 		step() {
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * scale_axis 1
@@ -18,7 +18,7 @@ namespace $ {
 		scale_axis() {
 			return 1
 		}
-
+		
 		/**
 		 * ```tree
 		 * scale_step 1
@@ -27,7 +27,7 @@ namespace $ {
 		scale_step() {
 			return 1
 		}
-
+		
 		/**
 		 * ```tree
 		 * shift_axis 1
@@ -36,7 +36,7 @@ namespace $ {
 		shift_axis() {
 			return 1
 		}
-
+		
 		/**
 		 * ```tree
 		 * dimensions_axis $mol_vector_range /
@@ -50,10 +50,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * viewport_axis $mol_vector_range /
@@ -67,10 +67,10 @@ namespace $ {
 				Infinity,
 				-Infinity
 			)
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * axis_points /number
@@ -78,10 +78,9 @@ namespace $ {
 		 */
 		axis_points() {
 			return [
-
 			] as readonly number[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * normalize?val 0
@@ -92,7 +91,7 @@ namespace $ {
 			if ( val !== undefined ) return val
 			return 0
 		}
-
+		
 		/**
 		 * ```tree
 		 * precision 1
@@ -101,7 +100,7 @@ namespace $ {
 		precision() {
 			return 1
 		}
-
+		
 		/**
 		 * ```tree
 		 * sub /
@@ -119,7 +118,7 @@ namespace $ {
 				this.Title()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * Label!index $mol_svg_text
@@ -131,14 +130,14 @@ namespace $ {
 		@ $mol_mem_key
 		Label(index: any) {
 			const obj = new this.$.$mol_svg_text()
-
+			
 			obj.pos = () => this.label_pos(index)
 			obj.text = () => this.label_text(index)
 			obj.align = () => this.label_align()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * background_x \0
@@ -147,7 +146,7 @@ namespace $ {
 		background_x() {
 			return "0"
 		}
-
+		
 		/**
 		 * ```tree
 		 * background_y \0
@@ -156,7 +155,7 @@ namespace $ {
 		background_y() {
 			return "0"
 		}
-
+		
 		/**
 		 * ```tree
 		 * background_width \100%
@@ -165,7 +164,7 @@ namespace $ {
 		background_width() {
 			return "100%"
 		}
-
+		
 		/**
 		 * ```tree
 		 * background_height \14
@@ -174,7 +173,7 @@ namespace $ {
 		background_height() {
 			return "14"
 		}
-
+		
 		/**
 		 * ```tree
 		 * Background $mol_svg_rect
@@ -187,15 +186,15 @@ namespace $ {
 		@ $mol_mem
 		Background() {
 			const obj = new this.$.$mol_svg_rect()
-
+			
 			obj.pos_x = () => this.background_x()
 			obj.pos_y = () => this.background_y()
 			obj.width = () => this.background_width()
 			obj.height = () => this.background_height()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * curve \
@@ -204,7 +203,7 @@ namespace $ {
 		curve() {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * Curve $mol_svg_path geometry <= curve
@@ -213,12 +212,12 @@ namespace $ {
 		@ $mol_mem
 		Curve() {
 			const obj = new this.$.$mol_svg_path()
-
+			
 			obj.geometry = () => this.curve()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * labels_formatted /
@@ -226,10 +225,9 @@ namespace $ {
 		 */
 		labels_formatted() {
 			return [
-
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * title_pos_x \0
@@ -238,7 +236,7 @@ namespace $ {
 		title_pos_x() {
 			return "0"
 		}
-
+		
 		/**
 		 * ```tree
 		 * title_pos_y \100%
@@ -247,7 +245,7 @@ namespace $ {
 		title_pos_y() {
 			return "100%"
 		}
-
+		
 		/**
 		 * ```tree
 		 * title_align \start
@@ -256,7 +254,7 @@ namespace $ {
 		title_align() {
 			return "start"
 		}
-
+		
 		/**
 		 * ```tree
 		 * Title $mol_svg_text_box
@@ -269,15 +267,15 @@ namespace $ {
 		@ $mol_mem
 		Title() {
 			const obj = new this.$.$mol_svg_text_box()
-
+			
 			obj.pos_x = () => this.title_pos_x()
 			obj.pos_y = () => this.title_pos_y()
 			obj.align = () => this.title_align()
 			obj.text = () => this.title()
-
+			
 			return obj
 		}
-
+		
 		/**
 		 * ```tree
 		 * label_pos_x!index \
@@ -286,7 +284,7 @@ namespace $ {
 		label_pos_x(index: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * label_pos_y!index \
@@ -295,7 +293,7 @@ namespace $ {
 		label_pos_y(index: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * label_pos!index /
@@ -309,7 +307,7 @@ namespace $ {
 				this.label_pos_y(index)
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * label_text!index \
@@ -318,7 +316,7 @@ namespace $ {
 		label_text(index: any) {
 			return ""
 		}
-
+		
 		/**
 		 * ```tree
 		 * label_align \
@@ -328,5 +326,6 @@ namespace $ {
 			return ""
 		}
 	}
-
+	
 }
+

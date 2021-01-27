@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_drop extends $mol_ghost {
-
+		
 		/**
 		 * ```tree
 		 * event *
@@ -18,7 +18,7 @@ namespace $ {
 				drop: (event?: any) => this.drop(event)
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * attr * mol_drop_status <= status?val
@@ -29,7 +29,7 @@ namespace $ {
 				mol_drop_status: this.status()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * adopt?transfer *
@@ -39,10 +39,9 @@ namespace $ {
 		adopt(transfer?: any) {
 			if ( transfer !== undefined ) return transfer
 			return {
-
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * receive?transfer null
@@ -53,7 +52,7 @@ namespace $ {
 			if ( transfer !== undefined ) return transfer
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * enter?event null
@@ -64,7 +63,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * move?event null
@@ -75,7 +74,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * leave?event null
@@ -86,7 +85,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * drop?event null
@@ -97,7 +96,7 @@ namespace $ {
 			if ( event !== undefined ) return event
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * status?val \ready
@@ -109,5 +108,6 @@ namespace $ {
 			return "ready"
 		}
 	}
-
+	
 }
+
