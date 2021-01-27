@@ -9,7 +9,7 @@ namespace $ {
 	export function $mol_view_tree2_ts_spread(this: $, spread_prop: $mol_tree2) {
 		const spread_prop_parts = this.$mol_view_tree2_prop_split(spread_prop)
 
-		return spread_prop.struct('inline', [
+		return spread_prop.struct('line', [
 			spread_prop.data('...this.'),
 			this.$mol_view_tree2_ts_function_call(spread_prop_parts)
 		])
@@ -41,7 +41,7 @@ namespace $ {
 				err`Operator \`^\` not allowed at ${prop.span}`
 			)
 
-			this.super_spread = prop.struct('inline', [
+			this.super_spread = prop.struct('line', [
 				prop.data('...super.'),
 				this.$.$mol_view_tree2_ts_function_call(this.prop_parts)
 			])

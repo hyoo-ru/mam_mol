@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_view_tree2_ts_test_array extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * typed /string
@@ -14,7 +14,7 @@ namespace $ {
 				"some2"
 			] as readonly string[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * const /const
@@ -28,7 +28,7 @@ namespace $ {
 				"some2"
 			] as const
 		}
-
+		
 		/**
 		 * ```tree
 		 * super_prop /
@@ -46,7 +46,7 @@ namespace $ {
 				...this.test()
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * simple /
@@ -64,7 +64,7 @@ namespace $ {
 				null as any
 			] as readonly any[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * arr /readonly(number)[]
@@ -72,10 +72,9 @@ namespace $ {
 		 */
 		arr() {
 			return [
-
 			] as readonly (readonly(number)[])[]
 		}
-
+		
 		/**
 		 * ```tree
 		 * complex /
@@ -100,5 +99,6 @@ namespace $ {
 			] as readonly any[]
 		}
 	}
-
+	
 }
+

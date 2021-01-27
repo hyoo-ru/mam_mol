@@ -33,7 +33,7 @@ namespace $ {
 
 		})
 
-		return klass.list([ ... props_root , ... props_inner ])
+		return [ ... props_root , ... props_inner ]
 	}
 
 }

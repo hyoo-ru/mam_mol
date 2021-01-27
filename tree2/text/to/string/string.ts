@@ -12,7 +12,7 @@ namespace $ {
 				for( let kid of text.kids ) {
 					visit( kid, prefix + '\t', false )
 				}
-				if( inline ) res += prefix.slice( 0, -1 )
+				if( inline ) res += prefix
 
 			} else if( text.type === 'line' ) {
 				

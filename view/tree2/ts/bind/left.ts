@@ -20,9 +20,9 @@ namespace $ {
 			this.$mol_view_tree2_ts_method_body(owner_parts, context.root())
 		}
 
-		return operator.struct('inline', [
+		return [ operator.struct('line', [
 			owner_parts.name.data('this.'),
 			this.$mol_view_tree2_ts_function_call(owner_call_parts),
-		])
+		]) ]
 	}
 }

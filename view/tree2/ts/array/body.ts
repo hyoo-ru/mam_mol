@@ -30,25 +30,25 @@ namespace $ {
 			const type = opt.type
 
 			if (type === '-') {
-				sub.push(this.$mol_view_tree2_ts_comment(opt))
+				sub.push(...this.$mol_view_tree2_ts_comment(opt))
 				continue
 			}
 
-			let value: $mol_tree2
+			let value: $mol_tree2[]
 
-			if (type === '^') value = spread.create(opt)
+			if (type === '^') value = [ spread.create(opt) ]
 			else if (type === '<=') value = this.$mol_view_tree2_ts_bind_left(opt, context)
 			else if (type === '*') value = this.$mol_view_tree2_ts_dictionary(opt, context)
 			else if (type[0] === '/') value = this.$mol_view_tree2_ts_array(opt, context)
 			else value = this.$mol_view_tree2_ts_value(opt)
 
-			const child_sub = [ value ]
+			const child_sub = value
 
-			if (opt !== last) child_sub.push(value.data(','))
+			if (opt !== last) child_sub.push(operator.data(','))
 
-			sub.push(opt.struct('inline', child_sub))
+			sub.push(opt.struct('line', child_sub))
 		}
 
-		return operator.struct('block', sub)
+		return operator.struct('indent', sub)
 	}
 }

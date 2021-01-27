@@ -32,18 +32,18 @@ namespace $ {
 
 		for (const opt of kids) {
 			if (opt.type === '-') {
-				sub.push(this.$mol_view_tree2_ts_comment(opt))
+				sub.push(...this.$mol_view_tree2_ts_comment(opt))
 				continue
 			}
 
-			let value: $mol_tree2
+			let value: $mol_tree2[]
 
 			const info = this.$mol_view_tree2_prop_split(opt)
 
 			if (opt.type === '^') {
 				const child_sub = [ spread_factory.create(opt) ]
 				if (opt !== last) child_sub.push(opt.data(','))
-				sub.push(opt.struct('inline', child_sub))
+				sub.push(opt.struct('line', child_sub))
 				continue
 			}
 
@@ -72,18 +72,18 @@ namespace $ {
 				opt.data(' => '),
 			)
 
-			child_sub.push( value )
+			child_sub.push( ... value )
 
 			if (opt !== last) child_sub.push(opt.data(','))
 
-			sub.push(opt.struct('inline', child_sub))
+			sub.push(opt.struct('line', child_sub))
 		}
 
-		return dictionary.struct('lines', [
+		return [
 			dictionary.data('{'),
-			dictionary.struct('block', sub),
+			dictionary.struct('indent', sub),
 			dictionary.data('}'),
-		])
+		]
 	}
 
 }

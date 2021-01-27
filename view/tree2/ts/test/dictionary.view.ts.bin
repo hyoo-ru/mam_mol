@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_view_tree2_ts_test_dictionary extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * super_prop *
@@ -18,7 +18,7 @@ namespace $ {
 				...this.test()
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * simple *
@@ -38,7 +38,7 @@ namespace $ {
 				localized: this.$.$mol_locale.text( '$mol_view_tree2_ts_test_dictionary_simple_localized' )
 			}
 		}
-
+		
 		/**
 		 * ```tree
 		 * complex *
@@ -69,5 +69,6 @@ namespace $ {
 			}
 		}
 	}
-
+	
 }
+

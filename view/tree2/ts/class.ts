@@ -10,9 +10,9 @@ namespace $ {
 		const context = new $mol_view_tree2_context(this, [ class_parts ], locales, body)
 		const props = this.$mol_view_tree2_class_props(klass)
 
-		for (const having of props.kids) {
+		for (const having of props) {
 			if (having.type === '-') {
-				body.push(this.$mol_view_tree2_ts_comment(having))
+				body.push(...this.$mol_view_tree2_ts_comment(having))
 				continue
 			}
 
@@ -22,8 +22,8 @@ namespace $ {
 			this.$mol_view_tree2_ts_method_body(having_parts, context)
 		}
 
-		return klass.struct('block', [
-			klass.struct('inline', [
+		return klass.struct('indent', [
+			klass.struct('line', [
 				klass.data('export class '),
 				klass.data(klass.type),
 				klass.data(' extends '),
@@ -31,7 +31,7 @@ namespace $ {
 				klass.data(' {'),
 			]),
 
-			klass.struct('block', body),
+			klass.struct('indent', body),
 
 			klass.data('}'),
 			klass.data(''),

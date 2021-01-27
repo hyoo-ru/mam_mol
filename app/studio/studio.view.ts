@@ -51,7 +51,7 @@ namespace $.$$ {
 			const def = this.class( name )
 			if( !def ) return $mol_tree2.list([])
 			
-			return this.$.$mol_view_tree2_class_props( def )
+			return $mol_tree2.list( this.$.$mol_view_tree2_class_props( def ) )
 		}
 		
 		@ $mol_mem_key

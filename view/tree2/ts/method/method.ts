@@ -17,15 +17,13 @@ namespace $ {
 		else if (next !== undefined) need_cache = true
 		else if (is_class) need_cache = true
 
-		const sub: $mol_tree2[] = [
-			this.$mol_view_tree2_ts_comment_doc(src),
-		]
+		const sub: $mol_tree2[] = this.$mol_view_tree2_ts_comment_doc(src)
 
 		if (need_cache && key) sub.push(name.data(`@ $${''}mol_mem_key`)) 
 		if (need_cache && ! key) sub.push(name.data(`@ $${''}mol_mem`))
 
 		sub.push(
-			name.struct('inline', [
+			name.struct('line', [
 				name,
 				$mol_view_tree2_ts_function_declaration(owner_parts, types),
 				name.data(' {'),
@@ -33,8 +31,8 @@ namespace $ {
 		)
 
 		if (next && need_cache) sub.push(
-			next.struct('block', [
-				next.struct('inline', [
+			next.struct('indent', [
+				next.struct('line', [
 					next.data('if ( '),
 					next,
 					next.data(' !== undefined ) return '),
@@ -45,6 +43,6 @@ namespace $ {
 
 		sub.push(body, name.data('}'))
 
-		return name.struct('lines', sub)
+		return sub
 	}
 }

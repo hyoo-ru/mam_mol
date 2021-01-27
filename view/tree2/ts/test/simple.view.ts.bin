@@ -1,6 +1,6 @@
 namespace $ {
 	export class $mol_view_tree2_ts_test_simple extends $mol_view {
-
+		
 		/**
 		 * ```tree
 		 * str \some
@@ -9,7 +9,7 @@ namespace $ {
 		str() {
 			return "some"
 		}
-
+		
 		/**
 		 * ```tree
 		 * num 12317
@@ -18,7 +18,7 @@ namespace $ {
 		num() {
 			return 12317
 		}
-
+		
 		/**
 		 * ```tree
 		 * bool true
@@ -27,7 +27,7 @@ namespace $ {
 		bool() {
 			return true
 		}
-
+		
 		/**
 		 * ```tree
 		 * nul null
@@ -36,7 +36,7 @@ namespace $ {
 		nul() {
 			return null as any
 		}
-
+		
 		/**
 		 * ```tree
 		 * localized @ \localized value
@@ -45,7 +45,7 @@ namespace $ {
 		localized() {
 			return this.$.$mol_locale.text( '$mol_view_tree2_ts_test_simple_localized' )
 		}
-
+		
 		/**
 		 * ```tree
 		 * multi_str \
@@ -56,7 +56,7 @@ namespace $ {
 		multi_str() {
 			return "one\ntwo"
 		}
-
+		
 		/**
 		 * ```tree
 		 * same?val \
@@ -69,5 +69,6 @@ namespace $ {
 		}
 		// commented_node
 	}
-
+	
 }
+
