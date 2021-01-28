@@ -18,8 +18,8 @@ namespace $ {
 					$mol_tree2.data( 'console.log(11);', [], span.script1.slice( 0, 1 ) ),
 					$mol_tree2.data( 'console.log(21);', [], span.script2 ),
 					$mol_tree2.data( 'console.log(12);', [], span.script1.span( 2, 1, 1 ) ),
-				] ),
-			])
+				], span.script1 ),
+			], span.script1 )
 
 			$mol_assert_like(
 				$.$mol_tree2_text_to_string( tree ),
@@ -35,7 +35,7 @@ namespace $ {
 						"script2"
 					],
 					"sourcesContent": [ source.script1, source.script2 ],
-					"mappings": "AAAI,aAAJ,gBCAA,gBDCA"
+					"mappings": "AAAA,AAAI,aAAJ,gBCAA,gBDCA,;"
 				}
 			)
 

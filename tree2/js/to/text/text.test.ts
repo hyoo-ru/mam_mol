@@ -120,7 +120,7 @@ namespace $ {
 						1
 						2
 				`),
-				'[1,2]\n',
+				'[\n\t1,\n\t2\n]\n',
 			)
 			
 		},
@@ -133,7 +133,7 @@ namespace $ {
 						1
 						2
 				`),
-				'(1,2)\n',
+				'(\n\t1,\n\t2\n)\n',
 			)
 			
 		},
@@ -146,7 +146,7 @@ namespace $ {
 						1
 						2
 				`),
-				'{1;2}\n',
+				'{\n\t1;\n\t2\n}\n',
 			)
 			
 		},
@@ -166,7 +166,7 @@ namespace $ {
 						foo
 						bar
 				`),
-				'{foo,bar}\n',
+				'{\n\tfoo,\n\tbar\n}\n',
 			)
 			
 			$mol_assert_equal(
@@ -179,7 +179,7 @@ namespace $ {
 							bar
 							2
 				`),
-				'{["foo"]:1,[bar]:2}\n',
+				'{\n\t["foo"]: 1,\n\t[bar]: 2\n}\n',
 			)
 			
 		},
@@ -219,7 +219,7 @@ namespace $ {
 						2
 						3
 				`),
-				'(1+2+3)\n',
+				'(\n\t1 + \n\t2 + \n\t3\n)\n',
 			)
 			
 			$mol_assert_equal(
@@ -262,7 +262,7 @@ namespace $ {
 							2
 							3
 				`),
-				'([0][1](2,3))\n',
+				'([0][1](\n\t2,\n\t3\n))\n',
 			)
 			
 		},
@@ -275,7 +275,7 @@ namespace $ {
 						(,)
 						1
 				`),
-				'()=>1\n',
+				'() => 1\n',
 			)
 			
 			$mol_assert_equal(
@@ -284,7 +284,7 @@ namespace $ {
 						(,)
 						1
 				`),
-				'async ()=>1\n',
+				'async () => 1\n',
 			)
 			
 			$mol_assert_equal(
@@ -392,7 +392,7 @@ namespace $ {
 						2
 						3
 				`),
-				'1?2:3\n',
+				'1 ? 2 : 3\n',
 			)
 			
 			$mol_assert_equal(
@@ -424,7 +424,7 @@ namespace $ {
 						foo
 						bar
 				`),
-				'foo=bar\n',
+				'foo = bar\n',
 			)
 			
 			$mol_assert_equal(
@@ -437,7 +437,7 @@ namespace $ {
 							1
 							2
 				`),
-				'[foo,bar]=[1,2]\n',
+				'[\n\tfoo,\n\tbar\n] = [\n\t1,\n\t2\n]\n',
 			)
 			
 			$mol_assert_equal(
@@ -453,7 +453,7 @@ namespace $ {
 						foo
 						bar
 				`),
-				'let foo=bar\n',
+				'let foo = bar\n',
 			)
 			
 			$mol_assert_equal(
@@ -462,7 +462,7 @@ namespace $ {
 						foo
 						bar
 				`),
-				'foo+=bar\n',
+				'foo += bar\n',
 			)
 			
 		},

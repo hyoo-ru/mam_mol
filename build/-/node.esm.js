@@ -2290,7 +2290,7 @@ var $;
             return this.span(this.row, this.col + begin, end - begin);
         }
     }
-    $mol_span.unknown = $mol_span.begin('');
+    $mol_span.unknown = $mol_span.begin('unknown');
     $.$mol_span = $mol_span;
 })($ || ($ = {}));
 //span.js.map
