@@ -31,9 +31,9 @@ namespace $ {
 				col += prefix
 			}
 	
-			if( text.type === 'indent' && inline ) next_line()
+			if( inline && text.type === 'indent' ) next_line()
 			
-			if( prev_span !== text.span ) {
+			if( prev_span !== text.span || col === 1 ) {
 
 				const index = span2index( text.span )
 				
