@@ -33,61 +33,67 @@ namespace $ {
 	}
 	
 	export function $mol_tree2_xml_to_text( xml: $mol_tree2 ) {
-		return xml.list([
-			xml.struct( 'line',
-				xml.hack({
+		return xml.list(
+			xml.hack({
 
-					'@': ( input, belt )=> [],
+				'@': ( input, belt )=> [],
 
-					'--': ( input, belt )=> [
+				'--': ( input, belt )=> [
+					xml.struct( 'line', [
 						input.data( '<!-- ' ),
 						... input.hack( belt ),
 						input.data( ' -->' ),
-					],
+					] ),
+				],
 
-					'?': ( input, belt )=> [
+				'?': ( input, belt )=> [
+					xml.struct( 'line', [
 						input.data( '<?' ),
 						input.kids[0].data( input.kids[0].type ),
 						... input.kids[0].hack( attrs_belt( '=' ) ),
 						input.data( '?>' ),
-					],
+					] ),
+				],
 
-					'!': ( input, belt )=> [
+				'!': ( input, belt )=> [
+					xml.struct( 'line', [
 						input.data( '<!' ),
 						input.kids[0].data( input.kids[0].type ),
 						... input.kids[0].hack( attrs_belt( ' ' ) ),
 						input.data( '>' ),
-					],
+					] ),
+				],
 
-					'': ( input, belt )=> {
+				'': ( input, belt )=> {
 
-						if( !input.type ) return [
-							input.data( $mol_html_encode( input.text() ) ),
-						]
+					if( !input.type ) return [
+						input.data( $mol_html_encode( input.text() ) ),
+					]
 
-						const attrs = input.select( '@', '' ).hack( attrs_belt( '=' ) )
-						const content = input.hack( belt )
-						
-						return [
+					const attrs = input.select( '@', '' ).hack( attrs_belt( '=' ) )
+					const content = input.hack( belt )
+					
+					return [
+						input.struct( 'line', [
 							input.data( `<` ),
 							input.data( input.type ),
 							... attrs,
 							... content.length ? [
 								input.data( `>` ),
-								... content,
+								input.struct( 'indent', content ),
 								input.data( `</` ),
 								input.data( input.type ),
 								input.data( `>` ),
 							] : [
 								input.data( ` />` ),
 							]
-						]
+						] ),
+					]
 
-					},
+				},
 
-				}),
-			),
-		])
+			}),
+		)
 	}
 
 }

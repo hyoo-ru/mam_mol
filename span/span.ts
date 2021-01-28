@@ -16,7 +16,7 @@ namespace $ {
 		[ Symbol.toStringTag ] = `${ this.uri }#${ this.row }:${ this.col }/${ this.length }`
 
 		/** Span for begin of unknown resource */
-		static unknown = $mol_span.begin('')
+		static unknown = $mol_span.begin('unknown')
 
 		/** Makes new span for begin of resource. */
 		static begin( uri: string, source = '' ) {
