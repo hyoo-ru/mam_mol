@@ -1,7 +1,7 @@
 namespace $ {
 
 	export function $mol_tree2_bin_to_bytes( tree : $mol_tree2 ) {
-		return Uint8Array.from( tree.kids , kid => parseInt( kid.type , 16 ) )
+		return Uint8Array.from( tree.kids , kid => parseInt( kid.value , 16 ) )
 	}
 
 	export function $mol_tree2_bin_from_bytes(
@@ -10,7 +10,7 @@ namespace $ {
 	) {
 		
 		return $mol_tree2.list( Array.from( bytes , code => {
-			return $mol_tree2.struct( code.toString( 16 ).padStart( 2 , '0' ) , [] , span )
+			return $mol_tree2.data( code.toString( 16 ).padStart( 2 , '0' ) , [] , span )
 		} ) , span )
 		
 	}
