@@ -13,6 +13,10 @@ namespace $ {
 		const prolog = [ 0 , 0x61 , 0x73 , 0x6d ]
 		const version = [ 0x1 , 0 , 0 , 0 ]
 		
+		const pending = ( input: $mol_tree2 )=> {
+			return $mol_fail( input.error( 'pending to impement' ) )
+		}
+		
 		const section = (
 			name: typeof $mol_wasm_section_types[ number ],
 		)=> {
@@ -37,30 +41,6 @@ namespace $ {
 				return [
 					... bytes( [ $mol_wasm_section_types[ name ] ], input.span ),
 					... dyn( input.hack( belt, context ), input.span ),
-				]
-	
-			}
-		}
-		
-		const import_ = (
-			name: typeof $mol_wasm_import_types[ number ],
-		)=> {
-			return <
-				Belt extends $mol_tree2_belt<any>,
-				Context extends { up: string },
-			>(
-				input: $mol_tree2,
-				belt: Belt,
-				context: Context,
-			) => {
-
-				if( context.up !== 'import' ) {
-					$mol_fail( input.error( `${ name } should be in import` ) )
-				}
-				
-				return [
-					... bytes( [ $mol_wasm_import_types[ name ] ], input.span ),
-					... int( Number( input.kids[0].type ), input.span ),
 				]
 	
 			}
@@ -108,11 +88,26 @@ namespace $ {
 							... ext.type.split( '.' ).map( name => str( name, ext.span ) )
 						),
 						... ext.hack( {
-							'': ( input , belt )=> $mol_fail( input.error( `Unknown import type` ) ) ,
-							func: import_( 'func' ),
-							table: import_( 'table' ),
-							mem: import_( 'mem' ),
-							global: import_( 'global' ),
+							
+							'': ( input )=> $mol_fail( input.error( `Unknown import type` ) ) ,
+							
+							func: ( input, belt, context )=> {
+				
+								if( context.up !== 'import' ) {
+									$mol_fail( input.error( `${ name } should be in import` ) )
+								}
+								
+								return [
+									... bytes( [ $mol_wasm_import_types.func ], input.span ),
+									... int( Number( input.kids[0].type ), input.span ),
+								]
+					
+							},
+							
+							table: pending,
+							mem: pending,
+							global: pending,
+							
 						}, context ),
 					]
 					
