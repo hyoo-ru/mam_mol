@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_tree2_wasm_to_bin( code : $mol_tree2 ) {
+	export function $mol_tree2_wasm_to_bin( this: $, code : $mol_tree2 ) {
 
 		const bytes = ( bytes : ArrayLike< number > , span : $mol_span ) => $mol_tree2_bin_from_bytes( bytes , span ).kids
 
@@ -9,126 +9,126 @@ namespace $ {
 		const dyn = ( items : readonly $mol_tree2[] , span : $mol_span ) => [ ... int( items.length , span ) , ... items ]
 	
 		const str = ( str : string , span : $mol_span ) => dyn( $mol_tree2_bin_from_string( str , span ).kids , span )
-	
-		const prolog = [ 0 , 0x61 , 0x73 , 0x6d ]
-		const version = [ 0x1 , 0 , 0 , 0 ]
 		
-		const pending = ( input: $mol_tree2 )=> {
-			return $mol_fail( input.error( 'pending to impement' ) )
+		const array_prolog = ( input: $mol_tree2, span = input.span )=> int( input.kids.length, span )
+	
+		const pending = ( input: $mol_tree2 )=> $mol_fail( input.error( 'pending to impement' ) )
+		
+		const prolog = this.$mol_tree2_from_string( `
+			\\00
+			\\61
+			\\73
+			\\6D
+			\\01
+			\\00
+			\\00
+			\\00
+		`, '$mol_tree2_wasm_to_bin_prolog' )
+				
+		const body = [] as $mol_tree2[]
+		const types_mapping = new Map< string, number >()
+
+		customs: {
+			
+			const customs = code.select( 'custom' )
+			for( const custom of customs.kids ) {
+				
+				const name = custom.kids[0]
+				const section = [] as $mol_tree2[]
+				section.push( ... str( name.type, name.span ) )
+				
+				body.push( ... bytes( [ $mol_wasm_section_types.custom ], custom.span ) )
+				body.push( ... dyn( section, custom.span ) )
+				
+			}
+			
 		}
 		
-		const section = (
-			name: typeof $mol_wasm_section_types[ number ],
-		)=> {
-			return <
-				Belt extends $mol_tree2_belt<any>,
-				Context extends { up: string },
-			>(
-				input: $mol_tree2,
-				belt: Belt,
-				context: Context,
-			) => {
-
-				if( context.up !== 'module' ) {
-					$mol_fail( input.error( `${ name } should be in module` ) )
+		types: {
+			
+			const types = code.select( 'type' )
+			if( types.kids.length === 0 ) break types
+			
+			const section = [] as $mol_tree2[]
+			
+			for( const type of types.kids ) {
+				
+				section.push( ... bytes( [ 0x60 ], type.span ) )
+				
+				const name = type.kids[0]
+				types_mapping.set( name.type, types_mapping.size )
+				
+				const params = name.select( '=>', '' )
+				section.push( ... array_prolog( params ) )
+				for( const param of params.kids ) {
+					section.push( ... bytes( [ $mol_wasm_value_types[ param.type ] ], param.span ) )
 				}
 				
-				context = {
-					... context,
-					up: input.type,
+				const results = name.select( '<=', '' )
+				section.push( ... array_prolog( results ) )
+				for( const result of results.kids ) {
+					section.push(
+						... bytes( [ $mol_wasm_value_types[ result.type ] ], result.span ),
+					)
 				}
 				
-				return [
-					... bytes( [ $mol_wasm_section_types[ name ] ], input.span ),
-					... dyn( input.hack( belt, context ), input.span ),
-				]
-	
 			}
+			
+			body.push(
+				... bytes( [ $mol_wasm_section_types.type ], prolog.span ),
+				... dyn( [
+					... array_prolog( types, prolog.span ),
+					... section,
+				], prolog.span ),
+			)
+			
+		}
+		
+		imports: {
+			
+			const imports = code.select( 'import' )
+			if( imports.kids.length === 0 ) break imports
+			
+			const section = [] as $mol_tree2[]
+			
+			for( const import_ of imports.kids ) {
+				
+				const path = import_.kids[0]
+				const kind = path.kids[0]
+				
+				for( const name of path.type.split('.') ) {
+					section.push( ... str( name, path.span ) )
+				}
+				
+				if( kind.type === 'func' ) {
+					
+					const name = kind.kids[0]
+					
+					const index = types_mapping.get( name.type )
+					if( index === undefined ) this.$mol_fail( name.error( 'unknown type' ) )
+					
+					section.push(
+						... bytes( [ $mol_wasm_import_types.func ], kind.span ),
+						... int( index, name.span ),
+					)
+					
+				}
+				
+			}
+			
+			body.push(
+				... bytes( [ $mol_wasm_section_types.import ], prolog.span ),
+				... dyn( [
+					... array_prolog( imports, prolog.span ),
+					... section,
+				], prolog.span ),
+			)
+			
 		}
 		
 		return code.list([
-			... bytes( prolog , code.span ) ,
-			... bytes( version , code.span ) ,
-			... code.hack({
-
-				'' : ( input , belt )=> $mol_fail( input.error( `Unknown wasm node` ) ) ,
-				
-				'customsec' : section( 'custom' ) ,
-				'typesec' : section( 'type' ) ,
-				'importsec' : section( 'import' ) ,
-		
-				'functype': ( input, belt, context )=> {
-
-					if( context.up !== 'typesec' ) {
-						$mol_fail( input.error( `functype should be in typesec` ) )
-					}
-					
-					return [
-						... bytes( [ 0x60 ], input.span ),
-						... input.hack( belt, context ),
-					]
-		
-				} ,
-		
-				'import': ( input, belt, context )=> {
-
-					if( context.up !== 'importsec' ) {
-						$mol_fail( input.error( `import should be in importsec` ) )
-					}
-					
-					context = {
-						... context,
-						up: input.type,
-					}
-					
-					const ext = input.kids[0]
-					
-					return [
-						... ( [] as $mol_tree2[] ).concat(
-							... ext.type.split( '.' ).map( name => str( name, ext.span ) )
-						),
-						... ext.hack( {
-							
-							'': ( input )=> $mol_fail( input.error( `Unknown import type` ) ) ,
-							
-							func: ( input, belt, context )=> {
-				
-								if( context.up !== 'import' ) {
-									$mol_fail( input.error( `${ name } should be in import` ) )
-								}
-								
-								return [
-									... bytes( [ $mol_wasm_import_types.func ], input.span ),
-									... int( Number( input.kids[0].type ), input.span ),
-								]
-					
-							},
-							
-							table: pending,
-							mem: pending,
-							global: pending,
-							
-						}, context ),
-					]
-					
-				} ,
-		
-				'vec': ( input, belt, context )=> [
-					... int( input.kids.length, input.span ),
-					... input.hack( belt, context )
-				],
-		
-				'name': input => str( input.text(), input.span ),
-		
-				'i32': input => bytes( [ 0x7F ], input.span ),
-				'i64': input => bytes( [ 0x7E ], input.span ),
-				'f32': input => bytes( [ 0x7D ], input.span ),
-				'f64': input => bytes( [ 0x7C ], input.span ),
-
-			} , {
-				up: 'module',
-				section: '',
-			} )
+			... prolog.kids ,
+			... body,
 		])
 
 	}

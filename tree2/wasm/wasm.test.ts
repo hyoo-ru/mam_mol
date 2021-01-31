@@ -16,8 +16,7 @@ namespace $ {
 		'custom section'($) {
 
 			const code = $.$mol_tree2_from_string(`
-				customsec
-					name \\xxx
+				custom xxx
 			`)
 
 			$mol_assert_like(
@@ -30,14 +29,11 @@ namespace $ {
 		'type section with value types'($) {
 
 			const code = $.$mol_tree2_from_string(`
-				typesec vec
-					functype
-						vec
-							i32
-							i64
-							f32
-						vec
-							f64
+				type xxx
+					=> i32
+					=> i64
+					=> f32
+					<= f64
 			`)
 
 			$mol_assert_like(
@@ -50,12 +46,8 @@ namespace $ {
 		'import section'($) {
 
 			const code = $.$mol_tree2_from_string(`
-				typesec vec
-					functype
-						vec
-						vec
-				importsec vec
-					import foo.bar func 0
+				type xxx
+				import foo.bar func xxx
 			`)
 
 			$mol_assert_like(
