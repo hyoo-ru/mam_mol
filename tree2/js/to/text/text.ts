@@ -184,7 +184,7 @@ namespace $ {
 					input.data( input.type )
 				]
 
-				throw new SyntaxError( `Wrong node type ${ JSON.stringify( input.type ) }` )
+				this.$mol_fail( input.error( `wrong node type` ) )
 
 			},
 
