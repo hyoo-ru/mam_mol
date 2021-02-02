@@ -1,17 +1,16 @@
 namespace $ {
 	$mol_test({
 
-		'test'() {
+		'test'( $ ) {
 
-			const root : $mol_tree_context = {
-				'' : $mol_jack.meta.list ,
-				'foo' : ()=> [ new $mol_tree({ type : '777' }) ] ,
-				'test' : $mol_jack.meta.test ,
+			const root: $mol_tree2_belt<{}> = {
+				'foo': input=> [ input.struct( '777' ) ],
+				'test': $mol_jack.meta.test,
 			}
 
 			$mol_assert_like(
 
-				$mol_tree.fromString( `
+				$.$mol_tree2_from_string( `
 					test
 						case foo
 						case 777
@@ -19,7 +18,7 @@ namespace $ {
 				.hack( root )
 				.toString() ,
 
-				$mol_tree.fromString( `
+				$.$mol_tree2_from_string( `
 					test
 						case foo
 						case 777
@@ -29,19 +28,26 @@ namespace $ {
 			)
 
 			$mol_assert_fail( ()=> {
-				$mol_tree.fromString( `
+				$.$mol_tree2_from_string( `
 					test
-						case \foo
-						case \bar
+						case \\foo
+						case \\bar
 				` )
 				.hack( root )
 			} )
 
 		} ,
 
-		'jack test'() {
+		'jack test'( $ ) {
 
-			const tests = $mol_tree.fromString(`
+			const tests = $.$mol_tree2_from_string(`
+				test
+					name \\commented code
+					case
+						one
+						no two
+					case tree
+						ONE
 				test
 					name \\name of struct node as value node
 					case type
@@ -82,36 +88,34 @@ namespace $ {
 					case tree head
 						\\
 						\\one
-						two
-					case make
-						type \\head
-						sub
-							make
-							make value type tree one
-							make type type tree two
+							\\two
+						three
+					case struct
+						\\head
+						struct \\
+						data
+							\\one
+							\\two
+						struct \\three
 				test
 					name \\evaluated jack code
-					case jack
-						let ambient
-						out tree head
-							one
-							two
-							three
+					case jack head
+						one
+						two
+						three
 					case tree ONE
 				test
 					name \\define and use custom simple macro
 					case jack
-						let tree
-							tree ambient
-							PI tree float 3.14
-							pi PI
-						out tree pi
-					case tree float 3.14
-				tree test
+						hack PI float 3.14
+						hack pi PI
+						pi
+					case float 3.14
+				test
 					name \\define and use custom macro with arguments
 					case jack
-						let tree tail head reversed from
-						out tree tail tree
+						hack tail head reversed from
+						tail
 							one
 							two
 							three
@@ -123,14 +127,14 @@ namespace $ {
 				... $mol_jack.meta ,
 				
 				// Should processed
-				'one' : input => [ input.clone({ type : 'ONE' }) ] ,
-				'two' : input => [ input.clone({ type : 'TWO' }) ] ,
-				'three' : input => [ input.clone({ type : 'THREE' }) ] ,
+				'one' : input => [ input.struct( 'ONE' ) ] ,
+				'two' : input => [ input.struct( 'TWO' ) ] ,
+				'three' : input => [ input.struct( 'THREE' ) ] ,
 				
 				// Shouldn't processed
-				'ONE' : input => [ input.clone({ type : 'XXX' }) ] ,
-				'TWO' : input => [ input.clone({ type : 'XXX' }) ] ,
-				'THREE' : input => [ input.clone({ type : 'XXX' }) ] ,
+				'ONE' : input => [ input.struct( 'XXX' ) ] ,
+				'TWO' : input => [ input.struct( 'XXX' ) ] ,
+				'THREE' : input => [ input.struct( 'XXX' ) ] ,
 
 			})
 
