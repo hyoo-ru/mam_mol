@@ -184,7 +184,7 @@ namespace $ {
 					input.data( input.type )
 				]
 
-				this.$mol_fail( input.error( `wrong node type` ) )
+				$mol_fail( input.error( `wrong node type` ) )
 
 			},
 
