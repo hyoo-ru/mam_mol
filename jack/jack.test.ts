@@ -57,6 +57,10 @@ namespace $ {
 						\\ONE
 						\\
 				test
+					name \\kids of struct node
+					case kids tree one two
+					case tree two
+				test
 					name \\first element of list
 					case head
 						one
