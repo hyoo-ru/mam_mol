@@ -96,10 +96,14 @@ namespace $ {
 
 		abstract buffer( next? : Uint8Array , force? : $mol_mem_force ): Uint8Array
 
-		@ $mol_mem
 		text(next?: string, force?: $mol_mem_force) {
-			const buffer = next === undefined ? undefined : $mol_charset_encode( next )
-			return $mol_charset_decode( this.buffer( buffer, force ) )
+			if( next === undefined ) {
+				return $mol_charset_decode( this.buffer( undefined, force ) )	
+			} else {
+				const buffer = next === undefined ? undefined : $mol_charset_encode( next )
+				this.buffer( buffer, force )
+				return next
+			}
 		}
 
 		fail(error: Error) {
