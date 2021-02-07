@@ -18,7 +18,10 @@ namespace $.$$ {
 		}
 
 		sub() {
-			return [ this.Icon() , ... this.content() ]
+			return [
+				... this.host() ? [ this.Icon() ] : [],
+				... this.content(),
+			]
 		}
 
 	}
