@@ -19012,7 +19012,7 @@ var $;
                 flex: {
                     grow: 1000,
                     shrink: 1,
-                    basis: 'auto',
+                    basis: per(50),
                 },
             },
             Tools: {
