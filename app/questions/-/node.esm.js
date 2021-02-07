@@ -5285,7 +5285,10 @@ var $;
                 return decodeURIComponent(this.uri().split(this.host(), 2)[1]);
             }
             sub() {
-                return [this.Icon(), ...this.content()];
+                return [
+                    ...this.host() ? [this.Icon()] : [],
+                    ...this.content(),
+                ];
             }
         }
         __decorate([
