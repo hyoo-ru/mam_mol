@@ -2950,8 +2950,6 @@ var $;
         const owner = operator.kids.length === 1 ? operator.kids[0] : undefined;
         if (!owner)
             return this.$mol_fail(err `Need an owner part at ${operator.span}`);
-        if (having_parts === null || having_parts === void 0 ? void 0 : having_parts.next)
-            return this.$mol_fail(err `Do not use next value in \`<=\` operator at ${having_parts.next.span}`);
         if (owner.kids.length > 1)
             return this.$mol_fail(err `Owner at ${owner.span} can't have more that 1 value, given ${owner.kids.map(node => node.span)}`);
         const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined;
