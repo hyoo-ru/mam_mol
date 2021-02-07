@@ -5735,6 +5735,7 @@ var $;
         }
         Link(id) {
             const obj = new this.$.$mol_text_link();
+            obj.target = () => this.link_target(id);
             return obj;
         }
         Image(id) {
@@ -5776,6 +5777,9 @@ var $;
         }
         block_type(id) {
             return "";
+        }
+        link_target(id) {
+            return "_blank";
         }
         header_level(id) {
             return 0;

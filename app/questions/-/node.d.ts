@@ -1718,6 +1718,7 @@ declare namespace $ {
         quote_text(id: any): string;
         block_content(id: any): readonly any[];
         block_type(id: any): string;
+        link_target(id: any): string;
         header_level(id: any): number;
         header_content(id: any): readonly any[];
         table_head_cells(id: any): readonly any[];

@@ -244,6 +244,7 @@ $mol_text $mol_list
 		type <= block_type!id \
 	Span!id $mol_text_span
 	Link!id $mol_text_link
+		target <= link_target!id \_blank
 	Image!id $mol_text_image
 	Header!id $mol_text_header
 		level <= header_level!id 0

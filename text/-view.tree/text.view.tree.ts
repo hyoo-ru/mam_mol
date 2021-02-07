@@ -74,12 +74,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Link!id $mol_text_link
+		 * Link!id $mol_text_link target <= link_target!id
 		 * ```
 		 */
 		@ $mol_mem_key
 		Link(id: any) {
 			const obj = new this.$.$mol_text_link()
+			
+			obj.target = () => this.link_target(id)
 			
 			return obj
 		}
@@ -198,6 +200,15 @@ namespace $ {
 		 */
 		block_type(id: any) {
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * link_target!id \_blank
+		 * ```
+		 */
+		link_target(id: any) {
+			return "_blank"
 		}
 		
 		/**
