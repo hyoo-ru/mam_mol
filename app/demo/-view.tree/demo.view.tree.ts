@@ -21,18 +21,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Main $mol_app_demo_main
-		 * ```
-		 */
-		@ $mol_mem
-		Main() {
-			const obj = new this.$.$mol_app_demo_main()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * pages <= blocks
 		 * ```
 		 */
@@ -379,7 +367,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Demos
+		 * title @ \$mol components
 		 * ```
 		 */
 		title() {
@@ -388,12 +376,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tools / <= Filter
+		 * tools /
+		 * 	<= Sources
+		 * 	<= Lights
 		 * ```
 		 */
 		tools() {
 			return [
-				this.Filter()
+				this.Sources(),
+				this.Lights()
 			] as readonly any[]
 		}
 		
@@ -401,14 +392,51 @@ namespace $ {
 		 * ```tree
 		 * sub /
 		 * 	<= Head
+		 * 	<= Filter
 		 * 	<= Nav
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Head(),
+				this.Filter(),
 				this.Nav()
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * sources_uri \https://github.com/hyoo-ru/mam_mol/tree/master/
+		 * ```
+		 */
+		sources_uri() {
+			return "https://github.com/hyoo-ru/mam_mol/tree/master/"
+		}
+		
+		/**
+		 * ```tree
+		 * Sources $mol_link_source uri <= sources_uri
+		 * ```
+		 */
+		@ $mol_mem
+		Sources() {
+			const obj = new this.$.$mol_link_source()
+			
+			obj.uri = () => this.sources_uri()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Lights $mol_lights_toggle
+		 * ```
+		 */
+		@ $mol_mem
+		Lights() {
+			const obj = new this.$.$mol_lights_toggle()
+			
+			return obj
 		}
 		
 		/**

@@ -22119,194 +22119,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_lights(next) {
-        var _a;
-        return (_a = this.$mol_state_local.value('$mol_lights', next)) !== null && _a !== void 0 ? _a : $.$mol_dom_context.matchMedia('(prefers-color-scheme: light)').matches;
-    }
-    $.$mol_lights = $mol_lights;
-})($ || ($ = {}));
-//lights.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_brightness_6 extends $.$mol_icon {
-        path() {
-            return "M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z";
-        }
-    }
-    $.$mol_icon_brightness_6 = $mol_icon_brightness_6;
-})($ || ($ = {}));
-//6.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_lights_toggle extends $.$mol_check_icon {
-        Icon() {
-            return this.Lights_icon();
-        }
-        hint() {
-            return this.$.$mol_locale.text('$mol_lights_toggle_hint');
-        }
-        checked(val) {
-            return this.lights(val);
-        }
-        Lights_icon() {
-            const obj = new this.$.$mol_icon_brightness_6();
-            return obj;
-        }
-        lights(val) {
-            if (val !== undefined)
-                return val;
-            return false;
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_lights_toggle.prototype, "Lights_icon", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_lights_toggle.prototype, "lights", null);
-    $.$mol_lights_toggle = $mol_lights_toggle;
-})($ || ($ = {}));
-//toggle.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_style_attach("mol/lights/toggle/toggle.view.css", "[mol_lights_toggle] {\n\ttransform: rotate(-90deg);\n}\n");
-})($ || ($ = {}));
-//toggle.view.css.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_lights_toggle extends $.$mol_lights_toggle {
-            lights(next) {
-                return this.$.$mol_lights(next);
-            }
-        }
-        $$.$mol_lights_toggle = $mol_lights_toggle;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//toggle.view.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_github_circle extends $.$mol_icon {
-        path() {
-            return "M12,2C6.48,2 2,6.48 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12C22,6.48 17.52,2 12,2Z";
-        }
-    }
-    $.$mol_icon_github_circle = $mol_icon_github_circle;
-})($ || ($ = {}));
-//circle.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_link_source extends $.$mol_link {
-        hint() {
-            return this.$.$mol_locale.text('$mol_link_source_hint');
-        }
-        sub() {
-            return [
-                this.Icon()
-            ];
-        }
-        Icon() {
-            const obj = new this.$.$mol_icon_github_circle();
-            return obj;
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_link_source.prototype, "Icon", null);
-    $.$mol_link_source = $mol_link_source;
-})($ || ($ = {}));
-//source.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_app_demo_main extends $.$mol_page {
-        minimal_width() {
-            return 400;
-        }
-        title() {
-            return "$mol libs for web ui";
-        }
-        tools() {
-            return [
-                this.Lights(),
-                this.Project()
-            ];
-        }
-        body() {
-            return [
-                this.Description()
-            ];
-        }
-        Lights() {
-            const obj = new this.$.$mol_lights_toggle();
-            return obj;
-        }
-        project_uri() {
-            return "https://github.com/eigenmethod/mol/tree/master/";
-        }
-        Project() {
-            const obj = new this.$.$mol_link_source();
-            obj.uri = () => this.project_uri();
-            return obj;
-        }
-        description() {
-            return "";
-        }
-        Description() {
-            const obj = new this.$.$mol_text();
-            obj.text = () => this.description();
-            obj.uri_base = () => this.project_uri();
-            return obj;
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_main.prototype, "Lights", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_main.prototype, "Project", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_main.prototype, "Description", null);
-    $.$mol_app_demo_main = $mol_app_demo_main;
-})($ || ($ = {}));
-//main.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_app_demo_main extends $.$mol_app_demo_main {
-            description() {
-                return $.$mol_file.relative('mol/readme.md').text();
-            }
-        }
-        __decorate([
-            $.$mol_mem
-        ], $mol_app_demo_main.prototype, "description", null);
-        $$.$mol_app_demo_main = $mol_app_demo_main;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//main.view.js.map
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_book extends $.$mol_view {
         sub() {
             return this.pages_wrapped();
@@ -25121,6 +24933,17 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_lights(next) {
+        var _a;
+        return (_a = this.$mol_state_local.value('$mol_lights', next)) !== null && _a !== void 0 ? _a : $.$mol_dom_context.matchMedia('(prefers-color-scheme: light)').matches;
+    }
+    $.$mol_lights = $mol_lights;
+})($ || ($ = {}));
+//lights.js.map
+;
+"use strict";
+var $;
+(function ($) {
     var $$;
     (function ($$) {
         class $mol_theme_auto extends $.$mol_theme_auto {
@@ -25929,6 +25752,109 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_github_circle extends $.$mol_icon {
+        path() {
+            return "M12,2C6.48,2 2,6.48 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12C22,6.48 17.52,2 12,2Z";
+        }
+    }
+    $.$mol_icon_github_circle = $mol_icon_github_circle;
+})($ || ($ = {}));
+//circle.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_link_source extends $.$mol_link {
+        hint() {
+            return this.$.$mol_locale.text('$mol_link_source_hint');
+        }
+        sub() {
+            return [
+                this.Icon()
+            ];
+        }
+        Icon() {
+            const obj = new this.$.$mol_icon_github_circle();
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_link_source.prototype, "Icon", null);
+    $.$mol_link_source = $mol_link_source;
+})($ || ($ = {}));
+//source.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_brightness_6 extends $.$mol_icon {
+        path() {
+            return "M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z";
+        }
+    }
+    $.$mol_icon_brightness_6 = $mol_icon_brightness_6;
+})($ || ($ = {}));
+//6.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_lights_toggle extends $.$mol_check_icon {
+        Icon() {
+            return this.Lights_icon();
+        }
+        hint() {
+            return this.$.$mol_locale.text('$mol_lights_toggle_hint');
+        }
+        checked(val) {
+            return this.lights(val);
+        }
+        Lights_icon() {
+            const obj = new this.$.$mol_icon_brightness_6();
+            return obj;
+        }
+        lights(val) {
+            if (val !== undefined)
+                return val;
+            return false;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_lights_toggle.prototype, "Lights_icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_lights_toggle.prototype, "lights", null);
+    $.$mol_lights_toggle = $mol_lights_toggle;
+})($ || ($ = {}));
+//toggle.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/lights/toggle/toggle.view.css", "[mol_lights_toggle] {\n\ttransform: rotate(-90deg);\n}\n");
+})($ || ($ = {}));
+//toggle.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_lights_toggle extends $.$mol_lights_toggle {
+            lights(next) {
+                return this.$.$mol_lights(next);
+            }
+        }
+        $$.$mol_lights_toggle = $mol_lights_toggle;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//toggle.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_code_braces extends $.$mol_icon {
         path() {
             return "M8,3C6.9,3 6,3.9 6,5V9C6,10.1 5.1,11 4,11H3V13H4C5.1,13 6,13.9 6,15V19C6,20.1 6.9,21 8,21H10V19H8V14C8,12.9 7.1,12 6,12C7.1,12 8,11.1 8,10V5H10V3M16,3C17.1,3 18,3.9 18,5V9C18,10.1 18.9,11 20,11H21V13H20C18.9,13 18,13.9 18,15V19C18,20.1 17.1,21 16,21H14V19H16V14C16,12.9 16.9,12 18,12C16.9,12 16,11.1 16,10V5H14V3H16Z";
@@ -25947,10 +25873,6 @@ var $;
         }
         source_prefix() {
             return "https://github.com/hyoo-ru/mam_mol/tree/master/";
-        }
-        Main() {
-            const obj = new this.$.$mol_app_demo_main();
-            return obj;
         }
         pages() {
             return this.blocks();
@@ -26083,9 +26005,6 @@ var $;
     }
     __decorate([
         $.$mol_mem
-    ], $mol_app_demo.prototype, "Main", null);
-    __decorate([
-        $.$mol_mem
     ], $mol_app_demo.prototype, "Menu", null);
     __decorate([
         $.$mol_mem_key
@@ -26127,14 +26046,28 @@ var $;
         }
         tools() {
             return [
-                this.Filter()
+                this.Sources(),
+                this.Lights()
             ];
         }
         sub() {
             return [
                 this.Head(),
+                this.Filter(),
                 this.Nav()
             ];
+        }
+        sources_uri() {
+            return "https://github.com/hyoo-ru/mam_mol/tree/master/";
+        }
+        Sources() {
+            const obj = new this.$.$mol_link_source();
+            obj.uri = () => this.sources_uri();
+            return obj;
+        }
+        Lights() {
+            const obj = new this.$.$mol_lights_toggle();
+            return obj;
         }
         filter(val) {
             if (val !== undefined)
@@ -26160,6 +26093,12 @@ var $;
             return obj;
         }
     }
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_menu.prototype, "Sources", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_menu.prototype, "Lights", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_menu.prototype, "filter", null);
@@ -26325,6 +26264,80 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_app_demo_main extends $.$mol_page {
+        minimal_width() {
+            return 400;
+        }
+        title() {
+            return "$mol libs for web ui";
+        }
+        tools() {
+            return [
+                this.Lights(),
+                this.Project()
+            ];
+        }
+        body() {
+            return [
+                this.Description()
+            ];
+        }
+        Lights() {
+            const obj = new this.$.$mol_lights_toggle();
+            return obj;
+        }
+        project_uri() {
+            return "https://github.com/eigenmethod/mol/tree/master/";
+        }
+        Project() {
+            const obj = new this.$.$mol_link_source();
+            obj.uri = () => this.project_uri();
+            return obj;
+        }
+        description() {
+            return "";
+        }
+        Description() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => this.description();
+            obj.uri_base = () => this.project_uri();
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_main.prototype, "Lights", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_main.prototype, "Project", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_main.prototype, "Description", null);
+    $.$mol_app_demo_main = $mol_app_demo_main;
+})($ || ($ = {}));
+//main.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_app_demo_main extends $.$mol_app_demo_main {
+            description() {
+                return $.$mol_file.relative('mol/readme.md').text();
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_app_demo_main.prototype, "description", null);
+        $$.$mol_app_demo_main = $mol_app_demo_main;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//main.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_atom2_dict(config) {
         const store = new $.$mol_object2;
         let keys;
@@ -26396,7 +26409,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/app/demo/demo.view.css", "[mol_app_demo_menu] {\n\tflex: 1 0 15rem;\n}\n\n[mol_app_demo_menu_head] {\n\tflex-direction: column;\n}\n\n[mol_app_demo_menu_tools] {\n\tpadding: 0;\n}\n\n[mol_app_demo_menu_nav] {\n\tflex: auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-self: stretch;\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_app_demo_main],\n[mol_app_demo_detail],\n[mol_app_empty_message] {\n\tflex: 1000 0 60rem;\n}\n\n[mol_app_demo_detail] {\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_app_demo_menu_filter] {\n\talign-self: stretch;\n}\n\n[mol_app_demo_nav_table] {\n\twidth: 100%;\n\tbox-sizing: border-box;\n}\n\n[mol_app_demo_nav_row] {\n\tdisplay: flex;\n}\n\n[mol_app_demo_nav_option] {\n\tpadding: 0 .5rem 0 0;\n\tdisplay: flex;\n\tflex: 1;\n\talign-items: center;\n\tbox-shadow: none;\n}\n\n[mol_app_demo_nav_expand] {\n\talign-self: stretch;\n\talign-items: center;\n\tpadding-right: .25rem;\n}\n\n[mol_app_demo_nav_content] {\n\tflex-grow: 1;\n}\n\n[mol_app_demo_menu_themes] {\n\tflex: none;\n}\n\n[mol_app_demo_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tpadding: var(--mol_gap_block);\n\talign-content: flex-start;\n\talign-items: flex-start;\n}\n\n[mol_app_demo_screen] {\n\tmax-height: 45%;\n}\n\n[mol_app_demo_detail_body] {\n\tdisplay: flex;\n\talign-items: stretch;\n\tjustify-content: flex-start;\n\tflex-direction: column;\n}\n\n[mol_app_demo_detail_list] {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\tmargin: var(--mol_gap_block);\n}\n\n[mol_app_demo_detail_list] > [mol_demo_large] {\n\tmargin: var(--mol_gap_block);\n\theight: calc( 100vh - 100px );\n\twidth: calc( 100% - 1rem );\n}\n\n[mol_app_demo_page_close] {\n\tcolor: inherit;\n\talign-items: center;\n\tpadding: 1rem;\n}\n\n[mol_app_demo_welcome] {\n\tflex: 1 1 auto;\n}\n\n[mol_app_demo_option_link] {\n\tpadding: 0;\n}\n\n[mol_app_demo_sample_large] {\n\tbox-sizing: border-box;\n}\n\n[mol_app_demo_detail_empty_message] {\n\tmargin: auto;\n}\n\n[mol_app_demo_chat] {\n\tflex: none;\n}\n\n[mol_app_demo_detail_source_link] {\n\tpadding: 0;\n}\n");
+    $.$mol_style_attach("mol/app/demo/demo.view.css", "[mol_app_demo_menu] {\n\tflex: 0 0 15rem;\n}\n\n[mol_app_demo_menu_tools] {\n\tpadding: 0;\n}\n\n[mol_app_demo_menu_nav] {\n\tflex: auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-self: stretch;\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_app_demo_main],\n[mol_app_demo_detail],\n[mol_app_empty_message] {\n\tflex: 1000 0 60rem;\n}\n\n[mol_app_demo_detail] {\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_app_demo_menu_filter] {\n\talign-self: stretch;\n\tflex: 0 0 auto;\n}\n\n[mol_app_demo_nav_table] {\n\twidth: 100%;\n\tbox-sizing: border-box;\n}\n\n[mol_app_demo_nav_row] {\n\tdisplay: flex;\n}\n\n[mol_app_demo_nav_option] {\n\tpadding: 0 .5rem 0 0;\n\tdisplay: flex;\n\tflex: 1;\n\talign-items: center;\n\tbox-shadow: none;\n}\n\n[mol_app_demo_nav_expand] {\n\talign-self: stretch;\n\talign-items: center;\n\tpadding-right: .25rem;\n}\n\n[mol_app_demo_nav_content] {\n\tflex-grow: 1;\n}\n\n[mol_app_demo_menu_themes] {\n\tflex: none;\n}\n\n[mol_app_demo_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tpadding: var(--mol_gap_block);\n\talign-content: flex-start;\n\talign-items: flex-start;\n}\n\n[mol_app_demo_screen] {\n\tmax-height: 45%;\n}\n\n[mol_app_demo_detail_body] {\n\tdisplay: flex;\n\talign-items: stretch;\n\tjustify-content: flex-start;\n\tflex-direction: column;\n}\n\n[mol_app_demo_detail_list] {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\tmargin: var(--mol_gap_block);\n}\n\n[mol_app_demo_detail_list] > [mol_demo_large] {\n\tmargin: var(--mol_gap_block);\n\theight: calc( 100vh - 100px );\n\twidth: calc( 100% - 1rem );\n}\n\n[mol_app_demo_page_close] {\n\tcolor: inherit;\n\talign-items: center;\n\tpadding: 1rem;\n}\n\n[mol_app_demo_welcome] {\n\tflex: 1 1 auto;\n}\n\n[mol_app_demo_option_link] {\n\tpadding: 0;\n}\n\n[mol_app_demo_sample_large] {\n\tbox-sizing: border-box;\n}\n\n[mol_app_demo_detail_empty_message] {\n\tmargin: auto;\n}\n\n[mol_app_demo_chat] {\n\tflex: none;\n}\n\n[mol_app_demo_detail_source_link] {\n\tpadding: 0;\n}\n");
 })($ || ($ = {}));
 //demo.view.css.js.map
 ;
@@ -26529,9 +26542,6 @@ var $;
                         sub.push(...this.Editor(this.selected()).pages());
                     else
                         sub.push(this.Detail(this.selected()));
-                }
-                else {
-                    sub.push(this.Main());
                 }
                 return sub;
             }

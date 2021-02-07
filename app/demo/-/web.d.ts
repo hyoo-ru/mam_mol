@@ -5988,69 +5988,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    function $mol_lights(this: $, next?: boolean): boolean;
-}
-
-declare namespace $ {
-    class $mol_icon_brightness_6 extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_lights_toggle extends $mol_check_icon {
-        Icon(): $mol_icon_brightness_6;
-        hint(): string;
-        checked(val?: any): any;
-        Lights_icon(): $mol_icon_brightness_6;
-        lights(val?: any): any;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $.$$ {
-    class $mol_lights_toggle extends $.$mol_lights_toggle {
-        lights(next?: boolean): boolean;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_github_circle extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_link_source extends $mol_link {
-        hint(): string;
-        sub(): readonly any[];
-        Icon(): $mol_icon_github_circle;
-    }
-}
-
-declare namespace $ {
-    class $mol_app_demo_main extends $mol_page {
-        minimal_width(): number;
-        title(): string;
-        tools(): readonly any[];
-        body(): readonly any[];
-        Lights(): $$.$mol_lights_toggle;
-        project_uri(): string;
-        Project(): $mol_link_source;
-        description(): string;
-        Description(): $$.$mol_text;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_app_demo_main extends $.$mol_app_demo_main {
-        description(): string;
-    }
-}
-
-declare namespace $ {
     class $mol_book extends $mol_view {
         sub(): readonly $mol_view[];
         minimal_width(): number;
@@ -6681,6 +6618,10 @@ declare namespace $ {
     }
 }
 
+declare namespace $ {
+    function $mol_lights(this: $, next?: boolean): boolean;
+}
+
 declare namespace $.$$ {
     class $mol_theme_auto extends $.$mol_theme_auto {
         theme(): "$mol_theme_light" | "$mol_theme_dark";
@@ -7012,6 +6953,45 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_icon_github_circle extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_link_source extends $mol_link {
+        hint(): string;
+        sub(): readonly any[];
+        Icon(): $mol_icon_github_circle;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_brightness_6 extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_lights_toggle extends $mol_check_icon {
+        Icon(): $mol_icon_brightness_6;
+        hint(): string;
+        checked(val?: any): any;
+        Lights_icon(): $mol_icon_brightness_6;
+        lights(val?: any): any;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_lights_toggle extends $.$mol_lights_toggle {
+        lights(next?: boolean): boolean;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_code_braces extends $mol_icon {
         path(): string;
     }
@@ -7021,7 +7001,6 @@ declare namespace $ {
     class $mol_app_demo extends $mol_book2 {
         editor_title(): string;
         source_prefix(): string;
-        Main(): $$.$mol_app_demo_main;
         pages(): readonly any[];
         plugins(): readonly any[];
         Menu(): $mol_app_demo_menu;
@@ -7056,6 +7035,9 @@ declare namespace $ {
         title(): string;
         tools(): readonly any[];
         sub(): readonly any[];
+        sources_uri(): string;
+        Sources(): $mol_link_source;
+        Lights(): $$.$mol_lights_toggle;
         filter(val?: any): any;
         Filter(): $$.$mol_search;
         hierarchy(): any;
@@ -7087,6 +7069,26 @@ declare namespace $ {
         arg(id: any): {};
         Expand(id: any): $$.$mol_check_expand;
         Content(id: any): $mol_view;
+    }
+}
+
+declare namespace $ {
+    class $mol_app_demo_main extends $mol_page {
+        minimal_width(): number;
+        title(): string;
+        tools(): readonly any[];
+        body(): readonly any[];
+        Lights(): $$.$mol_lights_toggle;
+        project_uri(): string;
+        Project(): $mol_link_source;
+        description(): string;
+        Description(): $$.$mol_text;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_app_demo_main extends $.$mol_app_demo_main {
+        description(): string;
     }
 }
 

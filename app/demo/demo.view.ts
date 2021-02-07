@@ -145,8 +145,6 @@ namespace $.$$ {
 			if( this.selected() ) {
 				if( this.editing() && this.names_demo().length === 1 ) sub.push( ... this.Editor( this.selected() ).pages() )
 				else sub.push( this.Detail( this.selected() ) )
-			} else {
-				sub.push( this.Main() )
 			}
 			
 			return sub
