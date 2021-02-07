@@ -3,7 +3,7 @@ namespace $.$$ {
 	export class $mol_book2 extends $.$mol_book2 {
 		
 		title() {
-			return this.pages().map( page => page.title() ).reverse().join( ' | ' )
+			return this.pages().map( page => page?.title() ).reverse().filter( Boolean ).join( ' | ' )
 		}
 
 		@ $mol_mem
