@@ -16,10 +16,6 @@ namespace $ {
 			err`Need an owner part at ${operator.span}`
 		)
 
-		if (having_parts?.next) return this.$mol_fail(
-			err`Do not use next value in \`<=\` operator at ${having_parts.next.span}`
-		)
-
 		if (owner.kids.length > 1) return this.$mol_fail(
 			err`Owner at ${owner.span} can't have more that 1 value, given ${owner.kids.map(node => node.span)}`
 		)
