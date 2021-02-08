@@ -27,9 +27,8 @@
 
 [mol_text_header] {
 	display: block;
-	padding: .75rem .5rem;
+	padding: var(--mol_gap_block);
 	font-weight: 500;
-	margin: 0;
 }
 
 [mol_text_header_level="1"] {
