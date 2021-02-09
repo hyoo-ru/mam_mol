@@ -31,31 +31,38 @@ namespace $ {
 
 		@ $mol_mem
 		static code( next? : string , force? : $mol_mem_force ) : string {
-			const win = $mol_dom_context.open( `${ this.code_uri() }?client_id=${ this.id() }&scope=${ this.scopes() }` , '$mol_github' )!
-
-			win.focus()
 			
-			const timer = setInterval( ()=> {
-				try { win.location.href } catch( error ) { return }
-
-				const search = win.location.search
+			const url = `${ this.code_uri() }?client_id=${ this.id() }&scope=${ this.scopes() }`
+			
+			return $mol_fiber_sync( ()=> new Promise< string >( ( done, fail )=> {
 				
-				if( search !== undefined ) {
-					const found = search.match( /\bcode=([^&]+)/ )
-					if( !found ) return
-					this.code( found[1] , $mol_mem_force_cache )
-				} else {
-					this.code( new Error( 'Can not get auth code' ) as any , $mol_mem_force_cache )
-				}
-				
-				clearInterval( timer )
+				const win = $mol_dom_context.open( url , '$mol_github' )!
 
-				win.close()
-				$mol_dom_context.focus()
+				win.focus()
 				
-			} , 16 )
+				const timer = setInterval( ()=> {
+					
+					try { win.location.href } catch( error ) { return }
+	
+					const search = win.location.search
+					
+					if( search !== undefined ) {
+						const found = search.match( /\bcode=([^&]+)/ )
+						if( !found ) return
+						done( found[1] )
+					} else {
+						fail( new Error( 'Can not get auth code' ) )
+					}
+					
+					clearInterval( timer )
+	
+					win.close()
+					$mol_dom_context.focus()
+					
+				} , 16 )
+					
+			} ) )()
 
-			throw new $mol_atom_wait( 'Request auth code...' )
 		}
 
 		@ $mol_mem

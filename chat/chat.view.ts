@@ -20,18 +20,22 @@ namespace $.$$ {
 			
 			return issues[0] || null
 		}
-
-		@ $mol_mem
-		issue_ensured() {
-			let issue = this.issue()
-			if( issue ) return issue
-
-			const issue_json = this.service().issue_add( this.repository().uri() , this.title() , this.teaser() )
-			issue = $mol_github_issue.item( issue_json.url! )
-			issue.json_update( issue_json )
-
-			return this.issue( issue )
+		
+		add_uri() {
+			return this.issue().web_uri() + `#issue-comment-box`
 		}
+
+		// @ $mol_mem
+		// issue_ensured() {
+		// 	let issue = this.issue()
+		// 	if( issue ) return issue
+
+		// 	const issue_json = this.service().issue_add( this.repository().uri() , this.title() , this.teaser() )
+		// 	issue = $mol_github_issue.item( issue_json.url! )
+		// 	issue.json_update( issue_json )
+
+		// 	return this.issue( issue )
+		// }
 
 		seed() {
 			return btoa( this.link() )
@@ -46,14 +50,28 @@ namespace $.$$ {
 			const issue = this.issue()
 			if( !issue ) return []
 
-			const comments_json = this.service().comment_list( issue.uri() )
-			issue.comments().json_update( comments_json )
+			// const comments_json = this.service().comment_list( issue.uri() )
+			// issue.comments().json_update( comments_json )
 
 			return issue.comments().items()
 		}
+		
+		@ $mol_mem
+		rows() {
+			return [
+				... this.posts_data().map( ( _ , index )=> this.Post( index ) ),
+				// this.Add_status(),
+				// this.Add(),
+				this.Add_link(),
+			]
+		}
 
-		posts() {
-			return this.posts_data().map( ( _ , index )=> this.Post( index ) )
+		@ $mol_mem
+		add_content() {
+			return [
+				this.Add_body(),
+				... this.add_body() ? [ this.Add_submit() ] : [],
+			]
 		}
 
 		post_user_ava( index: number ) {
@@ -80,32 +98,32 @@ namespace $.$$ {
 			return this.add_body().trim().length > 0
 		}
 
-		service() {
-			return this.$.$mol_rpc_client_frame.item( '//mol.js.org/chat/service/' ).proxy() as {
-				issue_add : ( repo_uri : string , title : string , text : string )=> $mol_github_issue_json
-				comment_add : ( issue_uri : string , text : string )=> $mol_github_comment_json
-				comment_list : ( issue_uri : string )=> $mol_github_comment_json[]
-			}
-		}
+		// service() {
+		// 	return this.$.$mol_rpc_client_frame.item( '//localhost:9080/mol/chat/service/' ).proxy() as {
+		// 		issue_add : ( repo_uri : string , title : string , text : string )=> $mol_github_issue_json
+		// 		comment_add : ( issue_uri : string , text : string )=> $mol_github_comment_json
+		// 		comment_list : ( issue_uri : string )=> $mol_github_comment_json[]
+		// 	}
+		// }
 
-		@ $mol_mem
-		adding( text?: string , force? : $mol_mem_force ) {
-			if( text === undefined) return ''
-
-			const comment_json = this.service().comment_add( this.issue_ensured().uri() , text )
-			const comment = $mol_github_comment.item( comment_json.url! )
-			comment.json_update( comment_json )
-
-			this.issue_ensured().comments().items( [ ... this.issue_ensured().comments().items() , comment ] , $mol_mem_force_cache )
+		// @ $mol_fiber.method
+		// add() {
 			
-			this.add_body( '' )
-			
-			return text
-		}
+		// 	const text = this.add_body()
+		// 	const issue = this.issue_ensured()
 
-		add() {
-			this.adding( this.add_body() , $mol_mem_force_update )
-		}
+		// 	const comment_json = this.service().comment_add( issue.uri() , text )
+		// 	console.log(comment_json)
+		// 	const comment = $mol_github_comment.item( comment_json.url! )
+		// 	comment.json_update( comment_json )
+
+		// 	const comments = issue.comments()
+		// 	comments.items( [ ... comments.items() , comment ] , $mol_mem_force_cache )
+			
+		// 	this.add_body( '' )
+			
+		// 	return text
+		// }
 
 	}
 

@@ -5,6 +5,7 @@ namespace $ {
 		labels_url : string
 		comments_url : string
 		events_url : string
+		html_url : string
 		number : number
 		title : string
 		user : $mol_github_user_json
@@ -45,6 +46,10 @@ namespace $ {
 
 		repository() {
 			return $mol_github_repository.item( this.uri().replace( /\/[^\/]*\/[^\/]*$/ , '' ) )
+		}
+		
+		web_uri() {
+			return this.json().html_url
 		}
 
 		author() {
@@ -134,7 +139,7 @@ namespace $ {
 			} catch( error ) {
 				
 				if( error.message === 'Unauthorized' ) {
-					$mol_github_auth.token_last( undefined , $mol_mem_force_update ).valueOf()
+					$mol_github_auth.token_last( undefined , $mol_mem_force_update )
 				}
 				
 				throw error

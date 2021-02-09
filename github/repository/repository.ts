@@ -142,7 +142,7 @@ namespace $ {
 			} catch( error ) {
 				
 				if( error.message === 'Unauthorized' ) {
-					$mol_github_auth.token_last( undefined , $mol_mem_force_update ).valueOf()
+					$mol_github_auth.token_last( undefined , $mol_mem_force_update )
 				}
 				
 				throw error
