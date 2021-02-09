@@ -1,19 +1,22 @@
 [mol_chat] {
-	box-shadow: var(--mol_skin_light_outline);
-	min-height: 1rem;
 }
 
 [mol_chat_post] {
-	margin: 1rem;
+	margin: var(--mol_gap_block);
 }
 
 [mol_chat_add_status] {
-	margin: 1rem;
+	margin: var(--mol_gap_block);
 	max-width: 58rem;
 	box-sizing: border-box;
 }
 
 [mol_chat_add] {
-	margin: 1rem;
+	margin: var(--mol_gap_block);
+	align-items: flex-end;
 	max-width: 58rem;
+}
+
+[mol_chat_add_link] {
+	margin: var(--mol_gap_block);
 }

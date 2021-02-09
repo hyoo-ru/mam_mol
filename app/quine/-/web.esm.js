@@ -5343,9 +5343,13 @@ var $;
             uri() {
                 return new this.$.$mol_state_arg(this.state_key()).link(this.arg());
             }
+            uri_native() {
+                const base = this.$.$mol_state_arg.href();
+                return new URL(this.uri(), base);
+            }
             current() {
                 const base = this.$.$mol_state_arg.href();
-                const target = new URL(this.uri(), base).toString();
+                const target = this.uri_native().toString();
                 if (base === target)
                     return true;
                 const args = this.arg();
@@ -5369,10 +5373,16 @@ var $;
             minimal_height() {
                 return Math.max(super.minimal_height() || 32);
             }
+            target() {
+                return (this.uri_native().origin === $.$mol_dom_context.location.origin) ? '_self' : '_blank';
+            }
         }
         __decorate([
             $.$mol_mem
         ], $mol_link.prototype, "uri", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_link.prototype, "uri_native", null);
         __decorate([
             $.$mol_mem
         ], $mol_link.prototype, "current", null);

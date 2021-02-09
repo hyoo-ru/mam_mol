@@ -4,16 +4,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * rows /
-		 * 	<= posts
-		 * 	<= Add_status
-		 * 	<= Add
+		 * 	<= Add_link
+		 * 	- <= Add_status
+		 * 	- <= Add
 		 * ```
 		 */
 		rows() {
 			return [
-				this.posts(),
-				this.Add_status(),
-				this.Add()
+				this.Add_link(),
+				// <=
+				// <=
 			] as readonly any[]
 		}
 		
@@ -102,12 +102,37 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * posts /
+		 * add_uri \
 		 * ```
 		 */
-		posts() {
-			return [
-			] as readonly any[]
+		add_uri() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * add_label @ \Add comment..
+		 * ```
+		 */
+		add_label() {
+			return this.$.$mol_locale.text( '$mol_chat_add_label' )
+		}
+		
+		/**
+		 * ```tree
+		 * Add_link $mol_link
+		 * 	uri <= add_uri
+		 * 	title <= add_label
+		 * ```
+		 */
+		@ $mol_mem
+		Add_link() {
+			const obj = new this.$.$mol_link()
+			
+			obj.uri = () => this.add_uri()
+			obj.title = () => this.add_label()
+			
+			return obj
 		}
 		
 		/**
@@ -137,7 +162,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * add_hint @ \New message...
+		 * add_hint @ \New message..
 		 * ```
 		 */
 		add_hint() {
@@ -157,14 +182,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Add_body $mol_string
+		 * Add_body $mol_textarea
 		 * 	hint <= add_hint
 		 * 	value?val <=> add_body?val
 		 * ```
 		 */
 		@ $mol_mem
 		Add_body() {
-			const obj = new this.$.$mol_string()
+			const obj = new this.$.$mol_textarea()
 			
 			obj.hint = () => this.add_hint()
 			obj.value = (val?: any) => this.add_body(val)
@@ -222,19 +247,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Add $mol_bar sub /
+		 * add_content /
 		 * 	<= Add_body
 		 * 	<= Add_submit
 		 * ```
 		 */
-		@ $mol_mem
-		Add() {
-			const obj = new this.$.$mol_bar()
-			
-			obj.sub = () => [
+		add_content() {
+			return [
 				this.Add_body(),
 				this.Add_submit()
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Add $mol_view sub <= add_content
+		 * ```
+		 */
+		@ $mol_mem
+		Add() {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => this.add_content()
 			
 			return obj
 		}

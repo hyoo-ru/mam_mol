@@ -3489,9 +3489,13 @@ var $;
             uri() {
                 return new this.$.$mol_state_arg(this.state_key()).link(this.arg());
             }
+            uri_native() {
+                const base = this.$.$mol_state_arg.href();
+                return new URL(this.uri(), base);
+            }
             current() {
                 const base = this.$.$mol_state_arg.href();
-                const target = new URL(this.uri(), base).toString();
+                const target = this.uri_native().toString();
                 if (base === target)
                     return true;
                 const args = this.arg();
@@ -3515,10 +3519,16 @@ var $;
             minimal_height() {
                 return Math.max(super.minimal_height() || 32);
             }
+            target() {
+                return (this.uri_native().origin === $.$mol_dom_context.location.origin) ? '_self' : '_blank';
+            }
         }
         __decorate([
             $.$mol_mem
         ], $mol_link.prototype, "uri", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_link.prototype, "uri_native", null);
         __decorate([
             $.$mol_mem
         ], $mol_link.prototype, "current", null);
@@ -18412,9 +18422,20 @@ var $;
         sub() {
             return [
                 this.Info(),
-                this.Avatar_link(),
                 this.Text()
             ];
+        }
+        avatar_link() {
+            return "";
+        }
+        avatar() {
+            return "";
+        }
+        Avatar() {
+            const obj = new this.$.$mol_image();
+            obj.title = () => "";
+            obj.uri = () => this.avatar();
+            return obj;
         }
         name() {
             return " ";
@@ -18423,6 +18444,15 @@ var $;
             const obj = new this.$.$mol_view();
             obj.sub = () => [
                 this.name()
+            ];
+            return obj;
+        }
+        Author() {
+            const obj = new this.$.$mol_link();
+            obj.uri = () => this.avatar_link();
+            obj.sub = () => [
+                this.Avatar(),
+                this.Name()
             ];
             return obj;
         }
@@ -18439,28 +18469,8 @@ var $;
         Info() {
             const obj = new this.$.$mol_row();
             obj.sub = () => [
-                this.Name(),
+                this.Author(),
                 this.Moment()
-            ];
-            return obj;
-        }
-        avatar_link() {
-            return "";
-        }
-        avatar() {
-            return "";
-        }
-        Avatar() {
-            const obj = new this.$.$mol_image();
-            obj.title = () => "";
-            obj.uri = () => this.avatar();
-            return obj;
-        }
-        Avatar_link() {
-            const obj = new this.$.$mol_link();
-            obj.uri = () => this.avatar_link();
-            obj.sub = () => [
-                this.Avatar()
             ];
             return obj;
         }
@@ -18478,19 +18488,19 @@ var $;
     ], $mol_message.prototype, "moment", null);
     __decorate([
         $.$mol_mem
+    ], $mol_message.prototype, "Avatar", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_message.prototype, "Name", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_message.prototype, "Author", null);
     __decorate([
         $.$mol_mem
     ], $mol_message.prototype, "Moment", null);
     __decorate([
         $.$mol_mem
     ], $mol_message.prototype, "Info", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_message.prototype, "Avatar", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_message.prototype, "Avatar_link", null);
     __decorate([
         $.$mol_mem
     ], $mol_message.prototype, "Text", null);
@@ -18501,7 +18511,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/message/message.view.css", "[mol_message] {\n\tmax-width: 58rem;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n}\n\n[mol_message_avatar_link] {\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex: none;\n\tpadding: 0;\n}\n\n[mol_message_avatar] {\n\twidth: 3.5rem;\n\theight: 3.5rem;\n}\n\n[mol_message_text] {\n\tflex: 1000 1 10rem;\n}\n\n[mol_message_info] {\n\tflex: 1 1 100%;\n\tpadding: 0;\n\tbox-shadow: none;\n\tdisplay: flex;\n\talign-items: baseline;\n\tjustify-content: space-between;\n\tfont-size: .75rem;\n\tline-height: 1rem;\n}\n\n[mol_message_info] > * {\n\tmargin: 0;\n}\n\n[mol_message_name] {\n\tfont-weight: bolder;\n}\n");
+    $.$mol_style_attach("mol/message/message.view.css", "[mol_message] {\n\tmax-width: 58rem;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n}\n\n[mol_message_avatar] {\n\twidth: 1.5rem;\n\theight: 1.5rem;\n}\n\n[mol_message_text] {\n\tflex: 1000 1 10rem;\n\tpadding: 0;\n}\n\n[mol_message_info] {\n\tpadding: .5rem;\n\tflex: 1 1 100%;\n\tbox-shadow: none;\n\tdisplay: flex;\n\tjustify-content: space-between;\n}\n\n[mol_message_info] > * {\n\tmargin: .25rem;\n}\n\n[mol_message_author] {\n\tmargin: 0;\n\tpadding: 0;\n}\n\n[mol_message_author] > * {\n\tmargin: .25rem;\n}\n\n[mol_message_name] {\n\tfont-weight: bolder;\n}\n\n[mol_message_moment] {\n\tcolor: var(--mol_theme_shade);\n}\n");
 })($ || ($ = {}));
 //message.view.css.js.map
 ;
@@ -25041,21 +25051,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    console.warn('$mol_atom_wait is deprecated. Use $mol_fiber_sync instead.');
-    class $mol_atom_wait extends Promise {
-        constructor(message = 'Wait...') {
-            super(() => { });
-            this.message = message;
-        }
-    }
-    $.$mol_atom_wait = $mol_atom_wait;
-    $mol_atom_wait.prototype.constructor = Promise;
-})($ || ($ = {}));
-//wait.js.map
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_github_auth extends $.$mol_object {
         static id() { return '07c88ba2782884016182'; }
         static secret() { return '5874d66181f987a8bb2dc07bd431aad1c7a5cb38'; }
@@ -25076,30 +25071,32 @@ var $;
             return scopes;
         }
         static code(next, force) {
-            const win = $.$mol_dom_context.open(`${this.code_uri()}?client_id=${this.id()}&scope=${this.scopes()}`, '$mol_github');
-            win.focus();
-            const timer = setInterval(() => {
-                try {
-                    win.location.href;
-                }
-                catch (error) {
-                    return;
-                }
-                const search = win.location.search;
-                if (search !== undefined) {
-                    const found = search.match(/\bcode=([^&]+)/);
-                    if (!found)
+            const url = `${this.code_uri()}?client_id=${this.id()}&scope=${this.scopes()}`;
+            return $.$mol_fiber_sync(() => new Promise((done, fail) => {
+                const win = $.$mol_dom_context.open(url, '$mol_github');
+                win.focus();
+                const timer = setInterval(() => {
+                    try {
+                        win.location.href;
+                    }
+                    catch (error) {
                         return;
-                    this.code(found[1], $.$mol_mem_force_cache);
-                }
-                else {
-                    this.code(new Error('Can not get auth code'), $.$mol_mem_force_cache);
-                }
-                clearInterval(timer);
-                win.close();
-                $.$mol_dom_context.focus();
-            }, 16);
-            throw new $.$mol_atom_wait('Request auth code...');
+                    }
+                    const search = win.location.search;
+                    if (search !== undefined) {
+                        const found = search.match(/\bcode=([^&]+)/);
+                        if (!found)
+                            return;
+                        done(found[1]);
+                    }
+                    else {
+                        fail(new Error('Can not get auth code'));
+                    }
+                    clearInterval(timer);
+                    win.close();
+                    $.$mol_dom_context.focus();
+                }, 16);
+            }))();
         }
         static token_last(next, force) {
             const cache = this.cache();
@@ -25255,6 +25252,9 @@ var $;
         repository() {
             return $.$mol_github_repository.item(this.uri().replace(/\/[^\/]*\/[^\/]*$/, ''));
         }
+        web_uri() {
+            return this.json().html_url;
+        }
         author() {
             return $.$mol_github_user.item(this.json().user.url);
         }
@@ -25328,7 +25328,7 @@ var $;
             }
             catch (error) {
                 if (error.message === 'Unauthorized') {
-                    $.$mol_github_auth.token_last(undefined, $.$mol_mem_force_update).valueOf();
+                    $.$mol_github_auth.token_last(undefined, $.$mol_mem_force_update);
                 }
                 throw error;
             }
@@ -25402,7 +25402,7 @@ var $;
             }
             catch (error) {
                 if (error.message === 'Unauthorized') {
-                    $.$mol_github_auth.token_last(undefined, $.$mol_mem_force_update).valueOf();
+                    $.$mol_github_auth.token_last(undefined, $.$mol_mem_force_update);
                 }
                 throw error;
             }
@@ -25424,9 +25424,7 @@ var $;
     class $mol_chat extends $.$mol_list {
         rows() {
             return [
-                this.posts(),
-                this.Add_status(),
-                this.Add()
+                this.Add_link(),
             ];
         }
         Post(index) {
@@ -25458,8 +25456,17 @@ var $;
             const obj = new this.$.$mol_github_issue();
             return obj;
         }
-        posts() {
-            return [];
+        add_uri() {
+            return "";
+        }
+        add_label() {
+            return this.$.$mol_locale.text('$mol_chat_add_label');
+        }
+        Add_link() {
+            const obj = new this.$.$mol_link();
+            obj.uri = () => this.add_uri();
+            obj.title = () => this.add_label();
+            return obj;
         }
         adding(next) {
             if (next !== undefined)
@@ -25480,7 +25487,7 @@ var $;
             return "";
         }
         Add_body() {
-            const obj = new this.$.$mol_string();
+            const obj = new this.$.$mol_textarea();
             obj.hint = () => this.add_hint();
             obj.value = (val) => this.add_body(val);
             return obj;
@@ -25503,12 +25510,15 @@ var $;
             obj.event_click = (event) => this.add(event);
             return obj;
         }
-        Add() {
-            const obj = new this.$.$mol_bar();
-            obj.sub = () => [
+        add_content() {
+            return [
                 this.Add_body(),
                 this.Add_submit()
             ];
+        }
+        Add() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => this.add_content();
             return obj;
         }
         post_user_name(index) {
@@ -25537,6 +25547,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_chat.prototype, "issue", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_chat.prototype, "Add_link", null);
     __decorate([
         $.$mol_mem
     ], $mol_chat.prototype, "adding", null);
@@ -25595,66 +25608,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_rpc_client_frame extends $.$mol_object {
-        static item(uri) {
-            return this.make({ uri: $.$mol_const(uri) });
-        }
-        uri() {
-            return '';
-        }
-        frame() {
-            return $.$mol_fiber_sync(() => new Promise((done, fail) => {
-                const frame = this.$.$mol_dom_context.document.createElement('iframe');
-                frame.src = this.uri();
-                frame.onload = $.$mol_fiber_root(event => done(frame));
-                frame.style.display = 'none';
-                this.$.$mol_dom_context.document.documentElement.appendChild(frame);
-            }))();
-        }
-        call({ name, args }) {
-            return $.$mol_fiber_sync(() => new Promise((done, fail) => {
-                const id = `$mol_rpc_client_frame:${Date.now().toString(16)}`;
-                this.frame().contentWindow.postMessage({ id, name, args }, '*');
-                const handle = (event) => {
-                    if (event.data.id !== id)
-                        return;
-                    this.$.$mol_dom_context.removeEventListener('message', handle);
-                    if (event.data.error)
-                        fail(new Error(event.data.error));
-                    else
-                        done(event.data.result);
-                };
-                this.$.$mol_dom_context.addEventListener('message', $.$mol_fiber_root(handle));
-            }))();
-        }
-        proxy() {
-            return new Proxy({}, {
-                get: (target, name) => {
-                    return (...args) => this.call({ name, args });
-                }
-            });
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_rpc_client_frame.prototype, "frame", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_rpc_client_frame.prototype, "call", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_rpc_client_frame.prototype, "proxy", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_rpc_client_frame, "item", null);
-    $.$mol_rpc_client_frame = $mol_rpc_client_frame;
-})($ || ($ = {}));
-//frame.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_style_attach("mol/chat/chat.view.css", "[mol_chat] {\n\tbox-shadow: var(--mol_skin_light_outline);\n\tmin-height: 1rem;\n}\n\n[mol_chat_post] {\n\tmargin: 1rem;\n}\n\n[mol_chat_add_status] {\n\tmargin: 1rem;\n\tmax-width: 58rem;\n\tbox-sizing: border-box;\n}\n\n[mol_chat_add] {\n\tmargin: 1rem;\n\tmax-width: 58rem;\n}\n");
+    $.$mol_style_attach("mol/chat/chat.view.css", "[mol_chat] {\n}\n\n[mol_chat_post] {\n\tmargin: var(--mol_gap_block);\n}\n\n[mol_chat_add_status] {\n\tmargin: var(--mol_gap_block);\n\tmax-width: 58rem;\n\tbox-sizing: border-box;\n}\n\n[mol_chat_add] {\n\tmargin: var(--mol_gap_block);\n\talign-items: flex-end;\n\tmax-width: 58rem;\n}\n\n[mol_chat_add_link] {\n\tmargin: var(--mol_gap_block);\n}\n");
 })($ || ($ = {}));
 //chat.view.css.js.map
 ;
@@ -25675,14 +25629,8 @@ var $;
                 const issues = $.$mol_github_search_issues.item(search_uri).items(undefined, force);
                 return issues[0] || null;
             }
-            issue_ensured() {
-                let issue = this.issue();
-                if (issue)
-                    return issue;
-                const issue_json = this.service().issue_add(this.repository().uri(), this.title(), this.teaser());
-                issue = $.$mol_github_issue.item(issue_json.url);
-                issue.json_update(issue_json);
-                return this.issue(issue);
+            add_uri() {
+                return this.issue().web_uri() + `#issue-comment-box`;
             }
             seed() {
                 return btoa(this.link());
@@ -25694,12 +25642,19 @@ var $;
                 const issue = this.issue();
                 if (!issue)
                     return [];
-                const comments_json = this.service().comment_list(issue.uri());
-                issue.comments().json_update(comments_json);
                 return issue.comments().items();
             }
-            posts() {
-                return this.posts_data().map((_, index) => this.Post(index));
+            rows() {
+                return [
+                    ...this.posts_data().map((_, index) => this.Post(index)),
+                    this.Add_link(),
+                ];
+            }
+            add_content() {
+                return [
+                    this.Add_body(),
+                    ...this.add_body() ? [this.Add_submit()] : [],
+                ];
             }
             post_user_ava(index) {
                 return this.posts_data()[index].user().avatar();
@@ -25719,22 +25674,6 @@ var $;
             add_submit_enabled() {
                 return this.add_body().trim().length > 0;
             }
-            service() {
-                return this.$.$mol_rpc_client_frame.item('//mol.js.org/chat/service/').proxy();
-            }
-            adding(text, force) {
-                if (text === undefined)
-                    return '';
-                const comment_json = this.service().comment_add(this.issue_ensured().uri(), text);
-                const comment = $.$mol_github_comment.item(comment_json.url);
-                comment.json_update(comment_json);
-                this.issue_ensured().comments().items([...this.issue_ensured().comments().items(), comment], $.$mol_mem_force_cache);
-                this.add_body('');
-                return text;
-            }
-            add() {
-                this.adding(this.add_body(), $.$mol_mem_force_update);
-            }
         }
         __decorate([
             $.$mol_mem
@@ -25744,13 +25683,13 @@ var $;
         ], $mol_chat.prototype, "issue", null);
         __decorate([
             $.$mol_mem
-        ], $mol_chat.prototype, "issue_ensured", null);
-        __decorate([
-            $.$mol_mem
         ], $mol_chat.prototype, "posts_data", null);
         __decorate([
             $.$mol_mem
-        ], $mol_chat.prototype, "adding", null);
+        ], $mol_chat.prototype, "rows", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_chat.prototype, "add_content", null);
         $$.$mol_chat = $mol_chat;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

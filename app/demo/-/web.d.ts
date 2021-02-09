@@ -1069,10 +1069,12 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_link extends $.$mol_link {
         uri(): string;
+        uri_native(): URL;
         current(): boolean;
         event_click(event?: Event): void;
         file_name(): string;
         minimal_height(): number;
+        target(): "_self" | "_blank";
     }
 }
 
@@ -5009,15 +5011,15 @@ declare namespace $ {
     class $mol_message extends $mol_view {
         moment(): $mol_time_moment;
         sub(): readonly any[];
-        name(): string;
-        Name(): $mol_view;
-        moment_string(): string;
-        Moment(): $mol_view;
-        Info(): $mol_row;
         avatar_link(): string;
         avatar(): string;
         Avatar(): $mol_image;
-        Avatar_link(): $$.$mol_link;
+        name(): string;
+        Name(): $mol_view;
+        Author(): $$.$mol_link;
+        moment_string(): string;
+        Moment(): $mol_view;
+        Info(): $mol_row;
         text(): string;
         Text(): $$.$mol_text;
     }
@@ -6644,13 +6646,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_atom_wait extends Promise<void> {
-        message: string;
-        constructor(message?: string);
-    }
-}
-
-declare namespace $ {
     class $mol_github_auth extends $mol_object {
         static id(): string;
         static secret(): string;
@@ -6745,6 +6740,7 @@ declare namespace $ {
         labels_url: string;
         comments_url: string;
         events_url: string;
+        html_url: string;
         number: number;
         title: string;
         user: $mol_github_user_json;
@@ -6764,6 +6760,7 @@ declare namespace $ {
     class $mol_github_issue extends $mol_model<$mol_github_issue_json> {
         json_update(patch: Partial<$mol_github_issue_json>): $mol_github_issue_json;
         repository(): $mol_github_repository;
+        web_uri(): string;
         author(): $mol_github_user;
         number(): number;
         title(): string;
@@ -6879,17 +6876,20 @@ declare namespace $ {
         seed(): string;
         teaser(): string;
         issue(): $mol_github_issue;
-        posts(): readonly any[];
+        add_uri(): string;
+        add_label(): string;
+        Add_link(): $$.$mol_link;
         adding(next?: any): any;
         Add_status(): $$.$mol_status;
         add_hint(): string;
         add_body(val?: any): any;
-        Add_body(): $$.$mol_string;
+        Add_body(): $$.$mol_textarea;
         add_submit_enabled(): boolean;
         add_submit_label(): string;
         add(event?: any): any;
         Add_submit(): $mol_button_major;
-        Add(): $mol_bar;
+        add_content(): readonly any[];
+        Add(): $mol_view;
         post_user_name(index: any): string;
         post_updated(index: any): $mol_time_moment;
         post_user_link(index: any): string;
@@ -6912,43 +6912,24 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_rpc_client_frame<Handlers> extends $mol_object {
-        static item<Handlers>(uri: string): $mol_rpc_client_frame<Handlers>;
-        uri(): string;
-        frame(): HTMLIFrameElement;
-        call({ name, args }: {
-            name: string;
-            args: any[];
-        }): unknown;
-        proxy(): any;
-    }
-}
-
-declare namespace $ {
 }
 
 declare namespace $.$$ {
     class $mol_chat extends $.$mol_chat {
         repository(): $mol_github_repository;
         issue(next?: $mol_github_issue, force?: $mol_mem_force): $mol_github_issue;
-        issue_ensured(): $mol_github_issue;
+        add_uri(): string;
         seed(): string;
         teaser(): string;
         posts_data(): $mol_github_comment[];
-        posts(): $mol_message[];
+        rows(): ($mol_link | $mol_message)[];
+        add_content(): ($mol_button_major | $mol_textarea)[];
         post_user_ava(index: number): string;
         post_user_name(index: number): string;
         post_user_link(index: number): string;
         post_body(index: number): string;
         post_updated(index: number): $mol_time_moment;
         add_submit_enabled(): boolean;
-        service(): {
-            issue_add: (repo_uri: string, title: string, text: string) => $mol_github_issue_json;
-            comment_add: (issue_uri: string, text: string) => $mol_github_comment_json;
-            comment_list: (issue_uri: string) => $mol_github_comment_json[];
-        };
-        adding(text?: string, force?: $mol_mem_force): string;
-        add(): void;
     }
 }
 

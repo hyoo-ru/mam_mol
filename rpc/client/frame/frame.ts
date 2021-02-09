@@ -22,24 +22,26 @@ namespace $ {
 			} ) ) ()
 		}
 
-		@ $mol_mem_key
+		@ $mol_fiber.method
 		call( { name , args } : { name : string , args : any[] } ) {
 
+			const frame = this.frame()
 			return $mol_fiber_sync( ()=> new Promise( ( done , fail )=> {
 			
 				const id = `$mol_rpc_client_frame:${ Date.now().toString(16) }`
 				
-				this.frame().contentWindow!.postMessage( { id , name , args } , '*' )
+				frame.contentWindow!.postMessage( { id , name , args } , '*' )
 				
-				const handle = ( event : MessageEvent )=> {
+				const handle = $mol_fiber_root( ( event : MessageEvent )=> {
 					if( event.data.id !== id ) return
 
 					this.$.$mol_dom_context.removeEventListener( 'message' , handle )
 					
 					if( event.data.error ) fail( new Error( event.data.error ) )
 					else done( event.data.result )
-				}
-				this.$.$mol_dom_context.addEventListener( 'message' , $mol_fiber_root( handle ) )
+				} )
+				
+				this.$.$mol_dom_context.addEventListener( 'message' , handle )
 				
 			} ) ) ()
 

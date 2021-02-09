@@ -6,18 +6,18 @@ namespace $ {
 			return {
 
 				issue_add : ( repo_uri : string , title : string , text : string )=> {
-					this.guard_repo( repo_uri ).valueOf()
+					this.guard_repo( repo_uri )
 
 					const repo = $mol_github_repository.item( repo_uri )
 					const issue = repo.issues().add({ title , text })
 
-					return issue.json()
+					return issue!.json()
 				} ,
 				
 				comment_add : ( issue_uri : string , text : string )=> {
-					this.guard_issue( issue_uri ).valueOf()
+					this.guard_issue( issue_uri )
 
-					return $mol_github_issue.item( issue_uri ).comments().add({ text }).json()
+					return $mol_github_issue.item( issue_uri ).comments().add({ text })!.json()
 				} ,
 
 				comment_list : ( issue_uri : string )=> {

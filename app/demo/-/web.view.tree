@@ -1935,18 +1935,18 @@ $mol_message $mol_view
 	sub /
 		<= Info $mol_row
 			sub /
-				<= Name $mol_view
+				<= Author $mol_link
+					uri <= avatar_link \
 					sub /
-						<= name \ 
+						<= Avatar $mol_image
+							title \
+							uri <= avatar \
+						<= Name $mol_view
+							sub /
+								<= name \ 
 				<= Moment $mol_view
 					sub /
 						<= moment_string \
-		<= Avatar_link $mol_link
-			uri <= avatar_link \
-			sub /
-				<= Avatar $mol_image
-					title \
-					uri <= avatar \
 		<= Text $mol_text
 			text <= text \
 
@@ -2830,12 +2830,14 @@ $mol_theme_auto $mol_plugin
 
 $mol_chat $mol_list
 	rows /
-		<= posts /
-		<= Add_status $mol_status status <= adding?next null
-		<= Add $mol_bar
-			sub /
-				<= Add_body $mol_string
-					hint <= add_hint @ \New message...
+		<= Add_link $mol_link
+			uri <= add_uri \
+			title <= add_label @ \Add comment..
+		- <= Add_status $mol_status status <= adding?next null
+		- <= Add $mol_view
+			sub <= add_content /
+				<= Add_body $mol_textarea
+					hint <= add_hint @ \New message..
 					value?val <=> add_body?val \
 				<= Add_submit $mol_button_major
 					enabled <= add_submit_enabled false
