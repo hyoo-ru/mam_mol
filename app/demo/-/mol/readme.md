@@ -216,7 +216,7 @@ Add **styles** at `./my/hello/hello.view.css`:
 }
 ```
 
-[That is all!](https://mol.js.org/app/hello/)
+[That is all!](https://mol.js.org/app/hello/-)
 
 # Tutorials
 
