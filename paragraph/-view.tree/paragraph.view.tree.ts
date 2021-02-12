@@ -27,6 +27,17 @@ namespace $ {
 		width_limit() {
 			return Infinity
 		}
+		
+		/**
+		 * ```tree
+		 * sub / <= title
+		 * ```
+		 */
+		sub() {
+			return [
+				this.title()
+			] as readonly any[]
+		}
 	}
 	
 }

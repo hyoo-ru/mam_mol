@@ -1904,6 +1904,7 @@ declare namespace $ {
         line_height(): number;
         letter_width(): number;
         width_limit(): number;
+        sub(): readonly any[];
     }
 }
 
@@ -4409,7 +4410,7 @@ declare namespace $.$$ {
         dom(): HTMLElement;
         sub(): $mol_view[];
         content(node: Node): $mol_view[];
-        views(node: Node): $mol_view[] | $mol_link_iconed[];
+        views(node: Node): $mol_view[] | $mol_paragraph[] | $mol_link_iconed[];
         text(node: Node): string;
         safe_link(uri: string): string;
         link_uri(node: HTMLAnchorElement): string;
