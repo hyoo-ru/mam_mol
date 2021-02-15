@@ -63,9 +63,7 @@ namespace $ {
 		 * Detail!id $mol_app_demo_detail
 		 * 	title <= detail_title
 		 * 	source_link <= source_link
-		 * 	body /
-		 * 		<= Detail_list
-		 * 		- <= Chat
+		 * 	body / <= Detail_list
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -75,8 +73,7 @@ namespace $ {
 			obj.title = () => this.detail_title()
 			obj.source_link = () => this.source_link()
 			obj.body = () => [
-				this.Detail_list(),
-				// <=
+				this.Detail_list()
 			] as readonly any[]
 			
 			return obj
@@ -229,34 +226,6 @@ namespace $ {
 			const obj = new this.$.$mol_list()
 			
 			obj.rows = () => this.main_content()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * chat_link \
-		 * ```
-		 */
-		chat_link() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Chat $mol_chat
-		 * 	repository_name \nin-jin/mol_chat
-		 * 	title <= title
-		 * 	link <= chat_link
-		 * ```
-		 */
-		@ $mol_mem
-		Chat() {
-			const obj = new this.$.$mol_chat()
-			
-			obj.repository_name = () => "nin-jin/mol_chat"
-			obj.title = () => this.title()
-			obj.link = () => this.chat_link()
 			
 			return obj
 		}
@@ -508,14 +477,12 @@ namespace $ {
 		 * ```tree
 		 * tools /
 		 * 	<= Source_link
-		 * 	- <= Edit
 		 * 	<= Close
 		 * ```
 		 */
 		tools() {
 			return [
 				this.Source_link(),
-				// <=
 				this.Close()
 			] as readonly any[]
 		}
@@ -586,70 +553,6 @@ namespace $ {
 			obj.sub = () => [
 				this.Source_button()
 			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * edit_hint @ \Edit this demo online
-		 * ```
-		 */
-		edit_hint() {
-			return this.$.$mol_locale.text( '$mol_app_demo_detail_edit_hint' )
-		}
-		
-		/**
-		 * ```tree
-		 * Edit_speck $mol_speck value \β
-		 * ```
-		 */
-		@ $mol_mem
-		Edit_speck() {
-			const obj = new this.$.$mol_speck()
-			
-			obj.value = () => "β"
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Edit_icon $mol_icon_settings
-		 * ```
-		 */
-		@ $mol_mem
-		Edit_icon() {
-			const obj = new this.$.$mol_icon_settings()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Edit $mol_link
-		 * 	hint <= edit_hint
-		 * 	sub /
-		 * 		<= Edit_speck
-		 * 		<= Edit_icon
-		 * 	arg *
-		 * 		edit \
-		 * 		path \
-		 * ```
-		 */
-		@ $mol_mem
-		Edit() {
-			const obj = new this.$.$mol_link()
-			
-			obj.hint = () => this.edit_hint()
-			obj.sub = () => [
-				this.Edit_speck(),
-				this.Edit_icon()
-			] as readonly any[]
-			obj.arg = () => ({
-				edit: "",
-				path: ""
-			})
 			
 			return obj
 		}

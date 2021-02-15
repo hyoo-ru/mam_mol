@@ -743,12 +743,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_ts_comment(this: $, item: $mol_tree2): $mol_tree2[];
-    function $mol_view_tree2_ts_comment_doc(this: $, item: $mol_tree2): $mol_tree2[];
+    function $mol_view_tree2_ts_class(this: $, klass: $mol_tree2, locales: $mol_view_tree2_locales): $mol_tree2;
 }
 
 declare namespace $ {
-    function $mol_view_tree2_ts_class(this: $, klass: $mol_tree2, locales: $mol_view_tree2_locales): $mol_tree2;
+    function $mol_view_tree2_ts_comment(this: $, item: $mol_tree2): $mol_tree2[];
+    function $mol_view_tree2_ts_comment_doc(this: $, item: $mol_tree2): $mol_tree2[];
 }
 
 declare namespace $ {

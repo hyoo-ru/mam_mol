@@ -349,57 +349,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Speech_toggle_icon $mol_icon_microphone
-		 * ```
-		 */
-		@ $mol_mem
-		Speech_toggle_icon() {
-			const obj = new this.$.$mol_icon_microphone()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * speech_enabled?val false
-		 * ```
-		 */
-		@ $mol_mem
-		speech_enabled(val?: any) {
-			if ( val !== undefined ) return val
-			return false
-		}
-		
-		/**
-		 * ```tree
-		 * speech_toggle_hint @ \Speech contol
-		 * ```
-		 */
-		speech_toggle_hint() {
-			return this.$.$mol_locale.text( '$mol_app_studio_speech_toggle_hint' )
-		}
-		
-		/**
-		 * ```tree
-		 * Speech_toggle $mol_check_icon
-		 * 	Icon <= Speech_toggle_icon
-		 * 	checked?val <=> speech_enabled?val
-		 * 	hint <= speech_toggle_hint
-		 * ```
-		 */
-		@ $mol_mem
-		Speech_toggle() {
-			const obj = new this.$.$mol_check_icon()
-			
-			obj.Icon = () => this.Speech_toggle_icon()
-			obj.checked = (val?: any) => this.speech_enabled(val)
-			obj.hint = () => this.speech_toggle_hint()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * Editor_close_icon $mol_icon_cross
 		 * ```
 		 */
@@ -587,9 +536,7 @@ namespace $ {
 		 * Editor_page $mol_page
 		 * 	plugins / <= Speech_filter
 		 * 	title <= editor_title
-		 * 	tools /
-		 * 		- <= Speech_toggle
-		 * 		<= Editor_close
+		 * 	tools / <= Editor_close
 		 * 	body /
 		 * 		<= Filter_bar
 		 * 		<= Fields
@@ -605,7 +552,6 @@ namespace $ {
 			] as readonly any[]
 			obj.title = () => this.editor_title()
 			obj.tools = () => [
-				// <=
 				this.Editor_close()
 			] as readonly any[]
 			obj.body = () => [

@@ -14,11 +14,8 @@ namespace $ {
 		 * ```tree
 		 * sub /
 		 * 	<= Major_enabled
-		 * 	-
 		 * 	<= Major_disabled
-		 * 	-
 		 * 	<= Minor_enabled
-		 * 	-
 		 * 	<= Minor_disabled
 		 * ```
 		 */

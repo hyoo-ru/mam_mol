@@ -564,15 +564,10 @@ namespace $ {
 		 * Form $mol_form
 		 * 	submit?val <=> submit?val
 		 * 	form_fields /
-		 * 		-
 		 * 		<= Name_first_field
-		 * 		-
 		 * 		<= Name_nick_field
-		 * 		-
 		 * 		<= Name_second_field
-		 * 		-
 		 * 		<= Sex_field
-		 * 		-
 		 * 		<= Mail_field
 		 * 	buttons / <= Submit
 		 * ```

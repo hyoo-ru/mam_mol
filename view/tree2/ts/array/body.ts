@@ -29,11 +29,6 @@ namespace $ {
 		for (const opt of kids) {
 			const type = opt.type
 
-			if (type === '-') {
-				sub.push(...this.$mol_view_tree2_ts_comment(opt))
-				continue
-			}
-
 			let value: $mol_tree2[]
 
 			if (type === '^') value = [ spread.create(opt) ]

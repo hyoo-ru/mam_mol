@@ -1,6 +1,5 @@
 namespace $ {
 	export class $mol_view_tree_test_attributes_subcomponent extends $mol_view {
-		// Comment
 		
 		/**
 		 * ```tree

@@ -2629,8 +2629,7 @@ var $;
 (function ($) {
     function $mol_view_tree2_classes(defs) {
         return defs.clone(defs.hack({
-            '-': () => [],
-            '': node => [node]
+            '-': () => []
         }));
     }
     $.$mol_view_tree2_classes = $mol_view_tree2_classes;
@@ -2677,8 +2676,6 @@ var $;
                 return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Method ${src.type} at ${src.span} is not same as ${prev.src.type} at ${prev.src.span}`);
             const current_default = src.kids.length > 0 ? src.kids[0] : undefined;
             const prev_default = prev.src.kids.length > 0 ? prev.src.kids[0] : undefined;
-            if ((current_default === null || current_default === void 0 ? void 0 : current_default.type) === '-')
-                return prev;
             if ((prev_default === null || prev_default === void 0 ? void 0 : prev_default.toString()) !== (current_default === null || current_default === void 0 ? void 0 : current_default.toString()))
                 return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Method ${name.value} at ${(_a = current_default === null || current_default === void 0 ? void 0 : current_default.span) !== null && _a !== void 0 ? _a : name.span} already defined with another default value at ${(_b = prev_default === null || prev_default === void 0 ? void 0 : prev_default.span) !== null && _b !== void 0 ? _b : prev.name.span}`);
             return prev;
@@ -3005,7 +3002,7 @@ var $;
     function $mol_view_tree2_ts_bind_both(operator, context) {
         const { owner_parts, default_value } = this.$mol_view_tree2_bind_both_parts(operator);
         context.check_scope_vars(owner_parts);
-        if (default_value && default_value.type !== '-' && !context.get_method(owner_parts)) {
+        if (default_value && !context.get_method(owner_parts)) {
             this.$mol_view_tree2_ts_method_body(owner_parts, context.root());
         }
         return [operator.struct('line', [
@@ -3029,7 +3026,7 @@ var $;
     function $mol_view_tree2_ts_bind_left(operator, context, having_parts) {
         const { default_value, owner_parts, owner_call_parts } = this.$mol_view_tree2_bind_left_parts(operator, having_parts);
         context.check_scope_vars(owner_call_parts);
-        if (default_value && default_value.type !== '-' && !context.get_method(owner_parts)) {
+        if (default_value && !context.get_method(owner_parts)) {
             this.$mol_view_tree2_ts_method_body(owner_parts, context.root());
         }
         return [operator.struct('line', [
@@ -3274,28 +3271,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_view_tree2_ts_comment(item) {
-        return item.kids.map(chunk => item.data('// ' + chunk.type));
-    }
-    $.$mol_view_tree2_ts_comment = $mol_view_tree2_ts_comment;
-    function $mol_view_tree2_ts_comment_doc(item) {
-        const chunks = item.toString().trim().split('\n');
-        return [
-            item.data(''),
-            item.data('/**'),
-            item.data(' * ```tree'),
-            ...chunks.map(chunk => item.data(' * ' + chunk)),
-            item.data(' * ```'),
-            item.data(' */'),
-        ];
-    }
-    $.$mol_view_tree2_ts_comment_doc = $mol_view_tree2_ts_comment_doc;
-})($ || ($ = {}));
-//comment.js.map
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_view_tree2_ts_class(klass, locales) {
         const superclass = this.$mol_view_tree2_class_super(klass);
         const body = [];
@@ -3303,10 +3278,6 @@ var $;
         const context = new $.$mol_view_tree2_context(this, [class_parts], locales, body);
         const props = this.$mol_view_tree2_class_props(klass);
         for (const having of props) {
-            if (having.type === '-') {
-                body.push(...this.$mol_view_tree2_ts_comment(having));
-                continue;
-            }
             const having_parts = this.$mol_view_tree2_prop_split(having);
             if (context.get_method(having_parts))
                 continue;
@@ -3332,16 +3303,35 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_view_tree2_ts_comment(item) {
+        return item.kids.map(chunk => item.data('// ' + chunk.type));
+    }
+    $.$mol_view_tree2_ts_comment = $mol_view_tree2_ts_comment;
+    function $mol_view_tree2_ts_comment_doc(item) {
+        const chunks = item.toString().trim().split('\n');
+        return [
+            item.data(''),
+            item.data('/**'),
+            item.data(' * ```tree'),
+            ...chunks.map(chunk => item.data(' * ' + chunk)),
+            item.data(' * ```'),
+            item.data(' */'),
+        ];
+    }
+    $.$mol_view_tree2_ts_comment_doc = $mol_view_tree2_ts_comment_doc;
+})($ || ($ = {}));
+//comment.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_view_tree2_ts_module(tree2_module, locales) {
+        tree2_module = $.$mol_view_tree2_classes(tree2_module);
         const classes = [
             tree2_module.data('namespace $ {')
         ];
         let has_data = false;
         for (const item of tree2_module.kids) {
-            if (item.type === '-') {
-                classes.push(...this.$mol_view_tree2_ts_comment(item));
-                continue;
-            }
             const class_node = this.$mol_view_tree2_ts_class(item, locales);
             classes.push(class_node);
             has_data = true;
@@ -3484,10 +3474,6 @@ var $;
         const last = kids.length > 0 ? kids[kids.length - 1] : undefined;
         const spread_factory = new this.$mol_view_tree2_ts_spread_factory(this, super_method);
         for (const opt of kids) {
-            if (opt.type === '-') {
-                sub.push(...this.$mol_view_tree2_ts_comment(opt));
-                continue;
-            }
             let value;
             const info = this.$mol_view_tree2_prop_split(opt);
             if (opt.type === '^') {
@@ -3547,10 +3533,6 @@ var $;
         let last_array;
         let constructor_args;
         for (const child of klass.kids) {
-            if (child.type === '-') {
-                body.push(...this.$mol_view_tree2_ts_comment(child));
-                continue;
-            }
             const child_parts = this.$mol_view_tree2_prop_split(child);
             const context = factory_context.parent(child_parts);
             if (child.type[0] === '/') {
@@ -6793,10 +6775,6 @@ var $;
         const sub = [];
         for (const opt of kids) {
             const type = opt.type;
-            if (type === '-') {
-                sub.push(...this.$mol_view_tree2_ts_comment(opt));
-                continue;
-            }
             let value;
             if (type === '^')
                 value = [spread.create(opt)];
@@ -8936,7 +8914,7 @@ var $;
 var $node = $node || {} ; $node[ "/mol/view/tree2/ts/test/simple.view.tree.bin" ] = "data:application/octet-stream;base64,JG1vbF92aWV3X3RyZWUyX3RzX3Rlc3Rfc2ltcGxlICRtb2xfdmlldwoJc3RyIFxzb21lCgludW0gMTIzMTcKCWJvb2wgdHJ1ZQoJbnVsIG51bGwKCWxvY2FsaXplZCBAIFxsb2NhbGl6ZWQgdmFsdWUKCW11bHRpX3N0ciBcCgkJXG9uZQoJCVx0d28KCXNhbWU/dmFsIFwKCS0gY29tbWVudGVkX25vZGUgLwoJCTw9IE5vdGVzX3BhZ2VfdGl0bGUhdGFnCg=="
 
 ;
-var $node = $node || {} ; $node[ "/mol/view/tree2/ts/test/simple.view.ts.bin" ] = "data:application/octet-stream;base64,bmFtZXNwYWNlICQgewoJZXhwb3J0IGNsYXNzICRtb2xfdmlld190cmVlMl90c190ZXN0X3NpbXBsZSBleHRlbmRzICRtb2xfdmlldyB7CgkJCgkJLyoqCgkJICogYGBgdHJlZQoJCSAqIHN0ciBcc29tZQoJCSAqIGBgYAoJCSAqLwoJCXN0cigpIHsKCQkJcmV0dXJuICJzb21lIgoJCX0KCQkKCQkvKioKCQkgKiBgYGB0cmVlCgkJICogbnVtIDEyMzE3CgkJICogYGBgCgkJICovCgkJbnVtKCkgewoJCQlyZXR1cm4gMTIzMTcKCQl9CgkJCgkJLyoqCgkJICogYGBgdHJlZQoJCSAqIGJvb2wgdHJ1ZQoJCSAqIGBgYAoJCSAqLwoJCWJvb2woKSB7CgkJCXJldHVybiB0cnVlCgkJfQoJCQoJCS8qKgoJCSAqIGBgYHRyZWUKCQkgKiBudWwgbnVsbAoJCSAqIGBgYAoJCSAqLwoJCW51bCgpIHsKCQkJcmV0dXJuIG51bGwgYXMgYW55CgkJfQoJCQoJCS8qKgoJCSAqIGBgYHRyZWUKCQkgKiBsb2NhbGl6ZWQgQCBcbG9jYWxpemVkIHZhbHVlCgkJICogYGBgCgkJICovCgkJbG9jYWxpemVkKCkgewoJCQlyZXR1cm4gdGhpcy4kLiRtb2xfbG9jYWxlLnRleHQoICckbW9sX3ZpZXdfdHJlZTJfdHNfdGVzdF9zaW1wbGVfbG9jYWxpemVkJyApCgkJfQoJCQoJCS8qKgoJCSAqIGBgYHRyZWUKCQkgKiBtdWx0aV9zdHIgXAoJCSAqIAlcb25lCgkJICogCVx0d28KCQkgKiBgYGAKCQkgKi8KCQltdWx0aV9zdHIoKSB7CgkJCXJldHVybiAib25lXG50d28iCgkJfQoJCQoJCS8qKgoJCSAqIGBgYHRyZWUKCQkgKiBzYW1lP3ZhbCBcCgkJICogYGBgCgkJICovCgkJQCAkbW9sX21lbQoJCXNhbWUodmFsPzogYW55KSB7CgkJCWlmICggdmFsICE9PSB1bmRlZmluZWQgKSByZXR1cm4gdmFsCgkJCXJldHVybiAiIgoJCX0KCQkvLyBjb21tZW50ZWRfbm9kZQoJfQoJCn0KCg=="
+var $node = $node || {} ; $node[ "/mol/view/tree2/ts/test/simple.view.ts.bin" ] = "data:application/octet-stream;base64,bmFtZXNwYWNlICQgewoJZXhwb3J0IGNsYXNzICRtb2xfdmlld190cmVlMl90c190ZXN0X3NpbXBsZSBleHRlbmRzICRtb2xfdmlldyB7CgkJCgkJLyoqCgkJICogYGBgdHJlZQoJCSAqIHN0ciBcc29tZQoJCSAqIGBgYAoJCSAqLwoJCXN0cigpIHsKCQkJcmV0dXJuICJzb21lIgoJCX0KCQkKCQkvKioKCQkgKiBgYGB0cmVlCgkJICogbnVtIDEyMzE3CgkJICogYGBgCgkJICovCgkJbnVtKCkgewoJCQlyZXR1cm4gMTIzMTcKCQl9CgkJCgkJLyoqCgkJICogYGBgdHJlZQoJCSAqIGJvb2wgdHJ1ZQoJCSAqIGBgYAoJCSAqLwoJCWJvb2woKSB7CgkJCXJldHVybiB0cnVlCgkJfQoJCQoJCS8qKgoJCSAqIGBgYHRyZWUKCQkgKiBudWwgbnVsbAoJCSAqIGBgYAoJCSAqLwoJCW51bCgpIHsKCQkJcmV0dXJuIG51bGwgYXMgYW55CgkJfQoJCQoJCS8qKgoJCSAqIGBgYHRyZWUKCQkgKiBsb2NhbGl6ZWQgQCBcbG9jYWxpemVkIHZhbHVlCgkJICogYGBgCgkJICovCgkJbG9jYWxpemVkKCkgewoJCQlyZXR1cm4gdGhpcy4kLiRtb2xfbG9jYWxlLnRleHQoICckbW9sX3ZpZXdfdHJlZTJfdHNfdGVzdF9zaW1wbGVfbG9jYWxpemVkJyApCgkJfQoJCQoJCS8qKgoJCSAqIGBgYHRyZWUKCQkgKiBtdWx0aV9zdHIgXAoJCSAqIAlcb25lCgkJICogCVx0d28KCQkgKiBgYGAKCQkgKi8KCQltdWx0aV9zdHIoKSB7CgkJCXJldHVybiAib25lXG50d28iCgkJfQoJCQoJCS8qKgoJCSAqIGBgYHRyZWUKCQkgKiBzYW1lP3ZhbCBcCgkJICogYGBgCgkJICovCgkJQCAkbW9sX21lbQoJCXNhbWUodmFsPzogYW55KSB7CgkJCWlmICggdmFsICE9PSB1bmRlZmluZWQgKSByZXR1cm4gdmFsCgkJCXJldHVybiAiIgoJCX0KCX0KCQp9Cgo="
 
 ;
 var $node = $node || {} ; $node[ "/mol/view/tree2/ts/test/array.view.tree.bin" ] = "data:application/octet-stream;base64,JG1vbF92aWV3X3RyZWUyX3RzX3Rlc3RfYXJyYXkgJG1vbF92aWV3Cgl0eXBlZCAvc3RyaW5nCgkJXHNvbWUxCgkJXHNvbWUyCgljb25zdCAvY29uc3QKCQlcc29tZTEKCQlcc29tZTIKCXN1cGVyX3Byb3AgLwoJCVxzb21lMQoJCV4KCQlcc29tZTIKCQleIHRlc3QKCXNpbXBsZSAvCgkJXHNvbWUKCQkxMjMxNwoJCXRydWUKCQludWxsCglhcnIgL3JlYWRvbmx5KG51bWJlcilbXQoJY29tcGxleCAvCgkJLwoJCQlcdGVzdDEKCQkJXHRlc3QyCgkJKgoJCQlzdHIgXHNvbWUKCQkJbnVsIG51bGwK"

@@ -14,13 +14,9 @@ namespace $ {
 		 * ```tree
 		 * sub /
 		 * 	<= Labeled_base
-		 * 	-
 		 * 	<= Labeled_expanded
-		 * 	-
 		 * 	<= Empty_base
-		 * 	-
 		 * 	<= Empty_expanded
-		 * 	-
 		 * 	<= Disabled
 		 * ```
 		 */

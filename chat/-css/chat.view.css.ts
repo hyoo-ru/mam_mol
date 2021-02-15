@@ -1,3 +1,0 @@
-namespace $ { $mol_style_attach( "mol/chat/chat.view.css",
- "[mol_chat] {\n}\n\n[mol_chat_post] {\n\tmargin: var(--mol_gap_block);\n}\n\n[mol_chat_add_status] {\n\tmargin: var(--mol_gap_block);\n\tmax-width: 58rem;\n\tbox-sizing: border-box;\n}\n\n[mol_chat_add] {\n\tmargin: var(--mol_gap_block);\n\talign-items: flex-end;\n\tmax-width: 58rem;\n}\n\n[mol_chat_add_link] {\n\tmargin: var(--mol_gap_block);\n}\n"
-) }

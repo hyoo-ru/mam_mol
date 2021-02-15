@@ -14,15 +14,10 @@ namespace $ {
 		 * ```tree
 		 * sub /
 		 * 	<= Labeled_base
-		 * 	-
 		 * 	<= Labeled_checked
-		 * 	-
 		 * 	<= Labeled_disabled
-		 * 	-
 		 * 	<= Alone_base
-		 * 	-
 		 * 	<= Alone_checked
-		 * 	-
 		 * 	<= Alone_disabled
 		 * ```
 		 */

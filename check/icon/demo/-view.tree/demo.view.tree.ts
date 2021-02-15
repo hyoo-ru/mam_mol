@@ -14,9 +14,7 @@ namespace $ {
 		 * ```tree
 		 * sub /
 		 * 	<= Base
-		 * 	-
 		 * 	<= Checked
-		 * 	-
 		 * 	<= Disabled
 		 * ```
 		 */
