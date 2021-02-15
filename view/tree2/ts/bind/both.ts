@@ -14,7 +14,7 @@ namespace $ {
 	) {
 		const { owner_parts, default_value } = this.$mol_view_tree2_bind_both_parts(operator)
 		context.check_scope_vars(owner_parts)
-		if (default_value && default_value.type !== '-' && ! context.get_method(owner_parts)) {
+		if (default_value && !context.get_method(owner_parts)) {
 			this.$mol_view_tree2_ts_method_body(owner_parts, context.root())
 		}
 

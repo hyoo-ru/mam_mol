@@ -31,10 +31,6 @@ namespace $ {
 		const spread_factory = new this.$mol_view_tree2_ts_spread_factory(this, super_method)
 
 		for (const opt of kids) {
-			if (opt.type === '-') {
-				sub.push(...this.$mol_view_tree2_ts_comment(opt))
-				continue
-			}
 
 			let value: $mol_tree2[]
 

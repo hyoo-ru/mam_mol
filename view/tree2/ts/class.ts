@@ -11,10 +11,6 @@ namespace $ {
 		const props = this.$mol_view_tree2_class_props(klass)
 
 		for (const having of props) {
-			if (having.type === '-') {
-				body.push(...this.$mol_view_tree2_ts_comment(having))
-				continue
-			}
 
 			const having_parts = this.$mol_view_tree2_prop_split(having)
 			if (context.get_method(having_parts)) continue

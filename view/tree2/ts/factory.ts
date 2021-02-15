@@ -26,10 +26,6 @@ namespace $ {
 		let constructor_args: $mol_tree2 | undefined
 
 		for (const child of klass.kids) {
-			if (child.type === '-') {
-				body.push(...this.$mol_view_tree2_ts_comment(child))
-				continue
-			}
 
 			const child_parts = this.$mol_view_tree2_prop_split(child)
 			const context = factory_context.parent(child_parts)
