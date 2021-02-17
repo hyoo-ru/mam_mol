@@ -50,7 +50,7 @@ namespace $ {
 		return wrapper
 	}
 
-	export function $mol_fiber_method< Host , Value >(
+	export function $mol_fiber_method< Host extends object , Value >(
 		obj : Host ,
 		name : keyof Host ,
 		descr : TypedPropertyDescriptor< ( this : Host , ... args : any[] )=> Value >
