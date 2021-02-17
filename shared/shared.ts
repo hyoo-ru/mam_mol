@@ -6,22 +6,24 @@ namespace $ {
 		static value< Value >( key : string , next? : Value ) {
 			return this.$.$mol_fetch.json(
 				'https://sync-hyoo-ru.herokuapp.com/' + key ,
-				next && {
-					method : 'PUT' ,
-					headers : {
-						'content-type' : 'application/json' ,
+				next === undefined
+					? undefined
+					: {
+						method : 'PUT' ,
+						headers : {
+							'content-type' : 'application/json' ,
+						} ,
+						body : JSON.stringify( next ) ,
 					} ,
-					body : JSON.stringify( next ) ,
-				} ,
 			) as Value
 		}
 
 		@ $mol_fiber.method
-		static daily< Value >( key: string, request: ()=> Value ) {
+		static daily< Value >( key: string, request: ()=> Value, refresh = false ) {
 			
 			const today  = new this.$.$mol_time_moment().mask('0000-00-00')
 
-			try {
+			if( !refresh ) try {
 
 				const cache = this.value<{ date : string, value : Value }>( key ) ?? {}
 
