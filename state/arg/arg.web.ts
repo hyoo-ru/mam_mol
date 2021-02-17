@@ -4,8 +4,17 @@ namespace $ {
 		
 		@ $mol_mem
 		static href( next? : string , force? : $mol_mem_force ) {
-			if( next === undefined ) return $mol_dom_context.location.href
-			history.replaceState( history.state , $mol_dom_context.document.title , next )
+			
+			if( next === undefined ) {
+				next = $mol_dom_context.location.href
+			} else {
+				history.replaceState( history.state , $mol_dom_context.document.title , next )
+			}
+			
+			if( $mol_dom_context.parent !== $mol_dom_context.self ) {
+				$mol_dom_context.parent.postMessage( [ 'hashchange', next ], '*' )
+			}
+			
 			return next
 		}
 		
