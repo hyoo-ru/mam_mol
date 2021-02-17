@@ -39,15 +39,10 @@ namespace $ {
 
 		static get method() {
 			
-			return <
-				Host ,
-				Field extends keyof Host ,
-				Args extends any[] ,
-				Result ,
-			>(
-				obj : Host ,
-				name : Field ,
-				descr : TypedPropertyDescriptor< ( this : Host , ... args : Args )=> Result >
+			return (
+				obj : object,
+				name : PropertyKey,
+				descr : PropertyDescriptor,
 			) => {
 				descr.value = this.func( descr.value! )
 				return descr
