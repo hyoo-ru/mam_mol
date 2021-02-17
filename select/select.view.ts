@@ -3,7 +3,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		filter_pattern( next? : string ) {
-			if( !this.focused() ) return ''
+			this.focused()
 			
 			return next || ''
 		}
