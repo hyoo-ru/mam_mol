@@ -4,9 +4,7 @@ namespace $.$$ {
 		
 		message() {
 			try {
-				let status = this.status()
-				if( status ) status.valueOf()
-				return null
+				return this.status() ?? null
 			} catch( error ) {
 				if( error instanceof Promise ) $mol_fail_hidden( error )
 				return error.message

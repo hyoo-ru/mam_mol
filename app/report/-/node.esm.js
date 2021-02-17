@@ -5821,8 +5821,7 @@ var $;
     (function ($$) {
         class $mol_select extends $.$mol_select {
             filter_pattern(next) {
-                if (!this.focused())
-                    return '';
+                this.focused();
                 return next || '';
             }
             open() {

@@ -12822,8 +12822,7 @@ var $;
     (function ($$) {
         class $mol_select extends $.$mol_select {
             filter_pattern(next) {
-                if (!this.focused())
-                    return '';
+                this.focused();
                 return next || '';
             }
             open() {
@@ -24886,11 +24885,9 @@ var $;
     (function ($$) {
         class $mol_status extends $.$mol_status {
             message() {
+                var _a;
                 try {
-                    let status = this.status();
-                    if (status)
-                        status.valueOf();
-                    return null;
+                    return (_a = this.status()) !== null && _a !== void 0 ? _a : null;
                 }
                 catch (error) {
                     if (error instanceof Promise)

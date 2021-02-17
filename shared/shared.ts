@@ -2,7 +2,8 @@ namespace $ {
 
 	export class $mol_shared extends $mol_object2 {
 
-		static cache< Value >( key : string , next? : Value ) {
+		@ $mol_fiber.method
+		static value< Value >( key : string , next? : Value ) {
 			return this.$.$mol_fetch.json(
 				'https://sync-hyoo-ru.herokuapp.com/' + key ,
 				next && {
@@ -15,6 +16,46 @@ namespace $ {
 			) as Value
 		}
 
+		@ $mol_fiber.method
+		static daily< Value >( key: string, request: ()=> Value ) {
+			
+			const today  = new this.$.$mol_time_moment().mask('0000-00-00')
+
+			try {
+
+				const cache = this.value<{ date : string, value : Value }>( key ) ?? {}
+
+				if( cache.date ) {
+					const interval = new this.$.$mol_time_interval({
+						start: cache.date,
+						end: today,
+					})
+					const age = interval.duration.count( 'P1D' )
+					if( age < 1 ) return cache.value
+				}
+
+			} catch( error ) {
+				if( error instanceof Promise ) return $mol_fail_hidden( error )
+				console.error( error )
+			}
+
+			const value = request()
+
+			try {
+
+				this.$.$mol_shared.value( key , {
+					date : today.toString() ,
+					value ,
+				} )
+
+			} catch( error ) {
+				if( error instanceof Promise ) return $mol_fail_hidden( error )
+				console.error( error )
+			}
+			
+			return value
+		}
+		
 	}
 
 }
