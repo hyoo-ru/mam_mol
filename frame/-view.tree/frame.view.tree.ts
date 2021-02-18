@@ -13,7 +13,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * attr *
-		 * 	src <= uri
+		 * 	src <= uri?val
 		 * 	allow <= allow
 		 * ```
 		 */
@@ -80,10 +80,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * uri \
+		 * uri?val \
 		 * ```
 		 */
-		uri() {
+		@ $mol_mem
+		uri(val?: any) {
+			if ( val !== undefined ) return val
 			return ""
 		}
 		

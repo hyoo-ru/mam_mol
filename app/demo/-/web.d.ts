@@ -4306,7 +4306,7 @@ declare namespace $ {
     class $mol_frame extends $mol_view {
         dom_name(): string;
         attr(): {
-            src: string;
+            src: any;
             allow: string;
         };
         fullscreen(): boolean;
@@ -4315,7 +4315,7 @@ declare namespace $ {
         encription(): boolean;
         gyroscope(): boolean;
         pip(): boolean;
-        uri(): string;
+        uri(val?: any): any;
         allow(): string;
     }
 }
@@ -4327,6 +4327,8 @@ declare namespace $.$$ {
     class $mol_frame extends $.$mol_frame {
         dom_node: (next?: HTMLIFrameElement) => HTMLIFrameElement;
         window(): unknown;
+        uri_resource(): any;
+        uri_listener(): $mol_dom_listener;
         render(): void;
         allow(): string;
     }
