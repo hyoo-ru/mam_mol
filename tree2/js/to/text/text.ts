@@ -5,7 +5,7 @@ namespace $ {
 		function sequence( open?: string, separator?: string, close?: string ) {
 			return ( input: $mol_tree2, belt: $mol_tree2_belt< never > )=> [
 				... open ? [ input.data( open ) ] : [],
-				input.struct( separator && input.kids.length > 1 ? 'indent' : 'line',
+				input.struct( separator && input.kids.length > 2 ? 'indent' : 'line',
 					( [] as $mol_tree2[] ).concat(
 						... input.kids.map( ( kid, index ) => [
 							kid.struct( 'line', [
@@ -89,10 +89,10 @@ namespace $ {
 			
 			'(&&)': sequence( '(', ' && ', ')' ),
 			'(||)': sequence( '(', ' || ', ')' ),
-			'(,)': sequence( '(', ',', ')' ),
-			'{;}': sequence( '{', ';', '}' ),
-			'[,]': sequence( '[', ',', ']' ),
-			'{,}': sequence( '{', ',', '}' ),
+			'(,)': sequence( '(', ', ', ')' ),
+			'{;}': sequence( '{', '; ', '}' ),
+			'[,]': sequence( '[', ', ', ']' ),
+			'{,}': sequence( '{', ', ', '}' ),
 			':': duplet( '[', ']: ' ),
 
 			'()': sequence( '(', '', ')' ),
