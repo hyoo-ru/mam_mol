@@ -14,6 +14,9 @@
 	z-index: 1;
 	white-space: inherit;
 }
+[mol_textarea_clickable] > [mol_textarea_view] {
+	pointer-events: all;
+}
 
 [mol_textarea_edit] {
 	font-family: monospace;

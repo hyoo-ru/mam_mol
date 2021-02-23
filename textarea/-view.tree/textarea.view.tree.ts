@@ -3,12 +3,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * event * keydown?event <=> press?event
+		 * attr * mol_textarea_clickable <= clickable?val
+		 * ```
+		 */
+		attr() {
+			return {
+				mol_textarea_clickable: this.clickable()
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * event *
+		 * 	keydown?event <=> press?event
+		 * 	pointermove?event <=> hover?event
 		 * ```
 		 */
 		event() {
 			return {
-				keydown: (event?: any) => this.press(event)
+				keydown: (event?: any) => this.press(event),
+				pointermove: (event?: any) => this.hover(event)
 			}
 		}
 		
@@ -28,11 +42,33 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * clickable?val false
+		 * ```
+		 */
+		@ $mol_mem
+		clickable(val?: any) {
+			if ( val !== undefined ) return val
+			return false
+		}
+		
+		/**
+		 * ```tree
 		 * press?event null
 		 * ```
 		 */
 		@ $mol_mem
 		press(event?: any) {
+			if ( event !== undefined ) return event
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * hover?event null
+		 * ```
+		 */
+		@ $mol_mem
+		hover(event?: any) {
 			if ( event !== undefined ) return event
 			return null as any
 		}

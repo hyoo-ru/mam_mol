@@ -2490,8 +2490,11 @@ $mol_text_demo $mol_demo_large
 					\
 
 $mol_textarea $mol_view
+	attr *
+		mol_textarea_clickable <= clickable?val false
 	event *
 		keydown?event <=> press?event null
+		pointermove?event <=> hover?event null
 	sub /
 		<= Edit $mol_string
 			dom_name \textarea
