@@ -20,7 +20,11 @@ namespace $.$$ {
 		indent_dec() {
 
 		}
-
+		
+		hover( event : PointerEvent ) {
+			this.clickable( event.ctrlKey )
+		}
+		
 		press( event : KeyboardEvent ) {
 
 			switch( event.keyCode ) {
