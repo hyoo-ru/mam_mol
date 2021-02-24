@@ -29,9 +29,9 @@ namespace $ {
 		}
 
 		toString( pattern : string ) : string {
-			var Base = this.constructor as typeof $mol_time_base
-			var formatter = Base.formatter( pattern )
-			return formatter.call( Base , this )
+			const Base = this.constructor as typeof $mol_time_base
+			const formatter = Base.formatter( pattern )
+			return formatter( this )
 		}
 
 	}

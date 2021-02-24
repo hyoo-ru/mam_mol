@@ -306,8 +306,7 @@ namespace $ {
 			
 			'MM' : ( moment : $mol_time_moment )=> {
 				if( moment.month == null ) return ''
-				const month = moment.month + 1
-				return String( month ).padStart( 2, '0' )
+				return String( 100 + moment.month + 1 ).slice(1)
 			} ,
 			
 			'M' : ( moment : $mol_time_moment )=> {
@@ -336,8 +335,7 @@ namespace $ {
 			
 			'DD' : ( moment : $mol_time_moment )=> {
 				if( moment.day == null ) return ''
-				const day = moment.day + 1
-				return String( day ).padStart( 2, '0' )
+				return String( 100 + moment.day + 1 ).slice(1)
 			} ,
 			
 			'D' : ( moment : $mol_time_moment )=> {
@@ -352,7 +350,7 @@ namespace $ {
 			
 			'hh' : ( moment : $mol_time_moment )=> {
 				if( moment.hour == null ) return ''
-				return String( moment.hour ).padStart( 2, '0' )
+				return String( 100 + moment.hour ).slice(1)
 			} ,
 			
 			'h' : ( moment : $mol_time_moment )=> {
@@ -367,7 +365,7 @@ namespace $ {
 			
 			'mm' : ( moment : $mol_time_moment )=> {
 				if( moment.minute == null ) return ''
-				return String( moment.minute ).padStart( 2, '0' )
+				return String( 100 + moment.minute ).slice(1)
 			} ,
 			
 			'm' : ( moment : $mol_time_moment )=> {
@@ -382,32 +380,40 @@ namespace $ {
 			
 			'ss' : ( moment : $mol_time_moment )=> {
 				if( moment.second == null ) return ''
-				const second = Math.floor( moment.second )
-				return String( second ).padStart( 2, '0' )
+				return String( 100 + moment.second | 0 ).slice(1)
 			},
 			
 			's' : ( moment : $mol_time_moment )=> {
 				if( moment.second == null ) return ''
-				return String( Math.floor( moment.second ) )
+				return String( moment.second | 0 )
 			} ,
 			
 			'.sss' : ( moment : $mol_time_moment )=> {
 				if( moment.second == null ) return ''
-				if( moment.second - Math.floor( moment.second ) === 0 ) return ''
+				if( moment.second === ( moment.second | 0 ) ) return ''
 				return '.' + $mol_time_moment.patterns[ 'sss' ]( moment )
 			},
 			
 			'sss' : ( moment : $mol_time_moment )=> {
 				if( moment.second == null ) return ''
 				const millisecond = Math.floor( ( moment.second - Math.floor( moment.second ) ) * 1000 )
-				return String( millisecond ).padStart( 3, '0' )
+				return String( 1000 + millisecond ).slice(1)
 			},
 			
 			'Z' : ( moment : $mol_time_moment )=> {
+				
 				const offset = moment.offset
 				if( !offset ) return ''
+				
+				let hour = offset.hour
 
-				return offset.toString( '+hh:mm' )
+				let sign = '+'
+				if( hour < 0 ) {
+					sign = '-'
+					hour = -hour
+				}
+				
+				return sign + String( 100 + hour ).slice(1) + ':' + String( 100 + offset.minute ).slice(1)
 			}
 
 		}

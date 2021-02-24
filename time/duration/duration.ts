@@ -149,20 +149,6 @@ namespace $ {
 				return duration.second + 'S'
 			} ,
 			
-			'+hh' : ( duration : $mol_time_duration )=> {
-				var hour = duration.hour
-				var sign = '+'
-				if( hour < 0 ) {
-					sign = '-'
-					hour = -hour
-				}
-				return String( hour ).padStart( 2, '0' )
-			} ,
-			
-			'mm' : ( duration : $mol_time_duration )=> {
-				return String( duration.minute ).padStart( 2, '0' )
-			} ,
-			
 		}
 
 	}
