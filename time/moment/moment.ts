@@ -307,9 +307,7 @@ namespace $ {
 			'MM' : ( moment : $mol_time_moment )=> {
 				if( moment.month == null ) return ''
 				const month = moment.month + 1
-				return ( month < 10 )
-					? ( '0' + month )
-					: ( '' + month )
+				return String( month ).padStart( 2, '0' )
 			} ,
 			
 			'M' : ( moment : $mol_time_moment )=> {
@@ -339,9 +337,7 @@ namespace $ {
 			'DD' : ( moment : $mol_time_moment )=> {
 				if( moment.day == null ) return ''
 				const day = moment.day + 1
-				return ( day < 10 )
-					? ( '0' + day )
-					: String( day )
+				return String( day ).padStart( 2, '0' )
 			} ,
 			
 			'D' : ( moment : $mol_time_moment )=> {
@@ -356,9 +352,7 @@ namespace $ {
 			
 			'hh' : ( moment : $mol_time_moment )=> {
 				if( moment.hour == null ) return ''
-				return ( moment.hour < 10 )
-					? ( '0' + moment.hour )
-					: String( moment.hour )
+				return String( moment.hour ).padStart( 2, '0' )
 			} ,
 			
 			'h' : ( moment : $mol_time_moment )=> {
@@ -373,9 +367,7 @@ namespace $ {
 			
 			'mm' : ( moment : $mol_time_moment )=> {
 				if( moment.minute == null ) return ''
-				return ( moment.minute < 10 )
-					? ( '0' + moment.minute )
-					: String( moment.minute )
+				return String( moment.minute ).padStart( 2, '0' )
 			} ,
 			
 			'm' : ( moment : $mol_time_moment )=> {
@@ -391,9 +383,7 @@ namespace $ {
 			'ss' : ( moment : $mol_time_moment )=> {
 				if( moment.second == null ) return ''
 				const second = Math.floor( moment.second )
-				return ( second < 10 )
-					? ( '0' + second )
-					: String( second )
+				return String( second ).padStart( 2, '0' )
 			},
 			
 			's' : ( moment : $mol_time_moment )=> {
@@ -410,11 +400,7 @@ namespace $ {
 			'sss' : ( moment : $mol_time_moment )=> {
 				if( moment.second == null ) return ''
 				const millisecond = Math.floor( ( moment.second - Math.floor( moment.second ) ) * 1000 )
-				return ( millisecond < 10 )
-					? ( '00' + millisecond )
-					: ( millisecond < 100 )
-					? ( '0' + millisecond )
-					: String( millisecond )
+				return String( millisecond ).padStart( 3, '0' )
 			},
 			
 			'Z' : ( moment : $mol_time_moment )=> {

@@ -156,15 +156,11 @@ namespace $ {
 					sign = '-'
 					hour = -hour
 				}
-				return ( hour < 10 )
-						? ( sign + '0' + hour )
-						: ( sign + hour )
+				return String( hour ).padStart( 2, '0' )
 			} ,
 			
 			'mm' : ( duration : $mol_time_duration )=> {
-				return ( duration.minute < 10 )
-					? ( '0' + duration.minute )
-					: String( duration.minute )
+				return String( duration.minute ).padStart( 2, '0' )
 			} ,
 			
 		}
