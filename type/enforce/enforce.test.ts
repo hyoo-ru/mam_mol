@@ -7,7 +7,7 @@ namespace $ {
 
 	// Negative
 
-	// type supertype = $mol_type_assert_never< number, 666 >
-	// type different = $mol_type_assert_never< '666', 666 >
+	type supertype = $mol_type_enforce< number, 666 >
+	type different = $mol_type_enforce< '666', 666 >
 	
 }
