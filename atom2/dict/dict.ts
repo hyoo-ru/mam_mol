@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_atom2_dict< Key extends string | symbol , Value >( config : {
+	export function $mol_atom2_dict< Key extends PropertyKey , Value >( config : {
 		get? : ( key : Key , dict : Record< Key , Value > )=> Value
 		set? : ( value : Value , key : Key , dict : Record< Key , Value > )=> Value
 		abort? : ( value : Value , key : Key , dict : Record< Key , Value > )=> boolean
@@ -44,17 +44,17 @@ namespace $ {
 		
 		const proxy = new Proxy( store , {
 
-			get( store , key : Key , proxy ) {
+			get( store , key : Exclude< Key, number > , proxy ) {
 				if( typeof key === 'symbol' ) return store[ key ]
-				if( key in $mol_object2.prototype ) return store[ key ]
+				if( key as string in $mol_object2.prototype ) return store[ key ]
 				return get_cache( key ).get()
 			} ,
 
-			set( store , key : Key , value : Value , proxy ) {
+			set( store , key : Exclude< Key, number > , value : Value , proxy ) {
 
 				if( typeof key === 'symbol' ) {
 					store[ key ] = value as any
-				} else if( key in $mol_object2.prototype ) {
+				} else if( key as string in $mol_object2.prototype ) {
 					store[ key ] = value as any
 				} else {
 					if( config.set ) value = config.set.call( null , value , key , proxy )
