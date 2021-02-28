@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_atom2_dict< Key extends string | number | symbol , Value >( config : {
+	export function $mol_atom2_dict< Key extends string | symbol , Value >( config : {
 		get? : ( key : Key , dict : Record< Key , Value > )=> Value
 		set? : ( value : Value , key : Key , dict : Record< Key , Value > )=> Value
 		abort? : ( value : Value , key : Key , dict : Record< Key , Value > )=> boolean
