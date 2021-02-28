@@ -4864,9 +4864,9 @@ var $;
             };
         }
         toString(pattern) {
-            var Base = this.constructor;
-            var formatter = Base.formatter(pattern);
-            return formatter.call(Base, this);
+            const Base = this.constructor;
+            const formatter = Base.formatter(pattern);
+            return formatter(this);
         }
     }
     $mol_time_base.patterns = {};
@@ -5000,22 +5000,6 @@ var $;
             if (!duration.second)
                 return '';
             return duration.second + 'S';
-        },
-        '+hh': (duration) => {
-            var hour = duration.hour;
-            var sign = '+';
-            if (hour < 0) {
-                sign = '-';
-                hour = -hour;
-            }
-            return (hour < 10)
-                ? (sign + '0' + hour)
-                : (sign + hour);
-        },
-        'mm': (duration) => {
-            return (duration.minute < 10)
-                ? ('0' + duration.minute)
-                : String(duration.minute);
         },
     };
     $.$mol_time_duration = $mol_time_duration;
@@ -5270,10 +5254,7 @@ var $;
         'MM': (moment) => {
             if (moment.month == null)
                 return '';
-            const month = moment.month + 1;
-            return (month < 10)
-                ? ('0' + month)
-                : ('' + month);
+            return String(100 + moment.month + 1).slice(1);
         },
         'M': (moment) => {
             if (moment.month == null)
@@ -5306,10 +5287,7 @@ var $;
         'DD': (moment) => {
             if (moment.day == null)
                 return '';
-            const day = moment.day + 1;
-            return (day < 10)
-                ? ('0' + day)
-                : String(day);
+            return String(100 + moment.day + 1).slice(1);
         },
         'D': (moment) => {
             if (moment.day == null)
@@ -5324,9 +5302,7 @@ var $;
         'hh': (moment) => {
             if (moment.hour == null)
                 return '';
-            return (moment.hour < 10)
-                ? ('0' + moment.hour)
-                : String(moment.hour);
+            return String(100 + moment.hour).slice(1);
         },
         'h': (moment) => {
             if (moment.hour == null)
@@ -5341,9 +5317,7 @@ var $;
         'mm': (moment) => {
             if (moment.minute == null)
                 return '';
-            return (moment.minute < 10)
-                ? ('0' + moment.minute)
-                : String(moment.minute);
+            return String(100 + moment.minute).slice(1);
         },
         'm': (moment) => {
             if (moment.minute == null)
@@ -5358,20 +5332,17 @@ var $;
         'ss': (moment) => {
             if (moment.second == null)
                 return '';
-            const second = Math.floor(moment.second);
-            return (second < 10)
-                ? ('0' + second)
-                : String(second);
+            return String(100 + moment.second | 0).slice(1);
         },
         's': (moment) => {
             if (moment.second == null)
                 return '';
-            return String(Math.floor(moment.second));
+            return String(moment.second | 0);
         },
         '.sss': (moment) => {
             if (moment.second == null)
                 return '';
-            if (moment.second - Math.floor(moment.second) === 0)
+            if (moment.second === (moment.second | 0))
                 return '';
             return '.' + $mol_time_moment.patterns['sss'](moment);
         },
@@ -5379,17 +5350,19 @@ var $;
             if (moment.second == null)
                 return '';
             const millisecond = Math.floor((moment.second - Math.floor(moment.second)) * 1000);
-            return (millisecond < 10)
-                ? ('00' + millisecond)
-                : (millisecond < 100)
-                    ? ('0' + millisecond)
-                    : String(millisecond);
+            return String(1000 + millisecond).slice(1);
         },
         'Z': (moment) => {
             const offset = moment.offset;
             if (!offset)
                 return '';
-            return offset.toString('+hh:mm');
+            let hour = offset.hour;
+            let sign = '+';
+            if (hour < 0) {
+                sign = '-';
+                hour = -hour;
+            }
+            return sign + String(100 + hour).slice(1) + ':' + String(100 + offset.minute).slice(1);
         }
     };
     $.$mol_time_moment = $mol_time_moment;

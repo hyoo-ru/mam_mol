@@ -51,8 +51,6 @@ declare namespace $ {
             '#h': (duration: $mol_time_duration) => string;
             '#m': (duration: $mol_time_duration) => string;
             '#s': (duration: $mol_time_duration) => string;
-            '+hh': (duration: $mol_time_duration) => string;
-            mm: (duration: $mol_time_duration) => string;
         };
     }
 }
