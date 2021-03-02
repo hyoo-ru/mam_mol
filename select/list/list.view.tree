@@ -11,3 +11,4 @@ $mol_select_list $mol_bar
 		value?val <=> pick?val \
 		option_label!key <= option_title!key
 		hint <= pick_hint @ \Add..
+		Trigger_icon <= Pick_icon $mol_icon_plus

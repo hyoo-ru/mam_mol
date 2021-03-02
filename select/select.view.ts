@@ -54,7 +54,7 @@ namespace $.$$ {
 					if( comp && comp.focused() ) return comp
 				}
 				
-				return this.Filter()
+				return null
 			}
 			
 			if( this.options_showed() ) {
@@ -73,18 +73,15 @@ namespace $.$$ {
 			return [ this.Filter() , ... this.option_rows() ]
 		}
 
-		option_content_current() {
-			return this.option_content( this.value() )
-		}
-		
 		trigger_content() {
-			return ( !this.value() && this.Filter() )
-				? [ this.Filter() ]
-				: [ ... this.option_content_current() , this.Trigger_icon() ]
+			return [
+				... this.option_content( this.value() ),
+				this.Trigger_icon(),
+			]
 		}
 		
 		menu_content() {
-			return ( this.value() && this.Filter() )
+			return ( this.options().length > 1 && this.Filter() )
 				? [ this.Filter() , ... this.option_rows() ]
 				: this.option_rows()
 		}

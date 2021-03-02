@@ -52,15 +52,14 @@
 	padding: 0;
 	flex: 1 1 auto;
 	display: flex;
-	justify-content: flex-end;
 }
 
-[mol_select_trigger_icon] {
-	transform: rotateZ(90deg);
-	margin: .5rem .5rem .5rem -.5rem;
+[mol_select_trigger] > * {
+	margin-right: -.75rem;
 }
-:hover > [mol_select_trigger_icon] {
-	transform: rotateZ(90deg) scale(1.25);
+
+[mol_select_trigger] > *:last-child {
+	margin-right: 0;
 }
 
 [mol_select_menu] {
