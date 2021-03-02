@@ -1172,6 +1172,8 @@ $mol_pop_bubble $mol_scroll
 		mol_pop_align <= align \
 		tabindex 0
 
+$mol_icon_dots_vertical $mol_icon path \M12,16C13.1,16 14,16.9 14,18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18C10,16.9 10.9,16 12,16M12,10C13.1,10 14,10.9 14,12C14,13.1 13.1,14 12,14C10.9,14 10,13.1 10,12C10,10.9 10.9,10 12,10M12,4C13.1,4 14,4.9 14,6C14,7.1 13.1,8 12,8C10.9,8 10,7.1 10,6C10,4.9 10.9,4 12,4Z
+
 $mol_nav $mol_plugin
 	cycle?val false
 	-
@@ -1215,17 +1217,17 @@ $mol_select $mol_pop
 	showed?val <=> options_showed?val false
 	Anchor <= Trigger $mol_button_minor
 		click?event <=> open?event null
-		sub <= trigger_content /$mol_view_content
+		sub <= trigger_content /
+		hint <= hint @ \Pick..
 	bubble_content /
 		<= Menu $mol_list
 			rows <= menu_content /$mol_view
-	option_content_current /$mol_view_content
 	Filter $mol_string
 		value?val <=> filter_pattern?val \
-		hint <= filter_hint <= hint @ \Search..
+		hint @ \Filter..
 		submit?event <=> submit?event null
 		enabled <= enabled true
-	Trigger_icon $mol_icon_chevron
+	Trigger_icon $mol_icon_dots_vertical
 
 $mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
 
@@ -1242,10 +1244,14 @@ $mol_search $mol_bar
 			filter_pattern?val <=> query?val
 			options_showed <= suggests_showed false
 			options <= suggests /string
-			Trigger_icon null
 			submit?event <=> submit?event null
 			No_options null
 			enabled <= enabled true
+			Filter => Suggest_filter
+			option_rows => suggest_option_rows
+			menu_content <= suggest_option_rows
+			trigger_content /
+				<= Suggest_filter
 		<= Clear $mol_button_minor
 			sub /
 				<= Clear_icon $mol_icon_cross
@@ -2255,15 +2261,18 @@ $mol_select_demo_colors $mol_demo_small
 	title @ \Color picker with filter and custom rows
 	sub /
 		<= Color $mol_select
+			filter_pattern => color_filter
 			value?val <=> color?val \
 			dictionary <= colors *
 			option_label!id <= color_name!id \
 			option_content!id <= option_content!id /
-				<= Color_option!id $mol_row
+				<= Color_option!id $mol_view
 					sub /
 						<= Color_preview!id $mol_select_colors_color_preview
 							color <= option_color!id \
-						<= color_name!id \
+						<= Color_name!id $mol_dimmer
+							haystack <= color_name!id \
+							needle <= color_filter
 					minimal_height 40
 
 $mol_select_colors_color_preview $mol_view
@@ -2317,6 +2326,7 @@ $mol_select_list $mol_bar
 		value?val <=> pick?val \
 		option_label!key <= option_title!key
 		hint <= pick_hint @ \Add..
+		Trigger_icon <= Pick_icon $mol_icon_plus
 
 $mol_select_list_demo $mol_demo_small
 	title @ \Friends picker

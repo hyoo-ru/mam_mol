@@ -51,6 +51,7 @@ namespace $ {
 		 * 	value?val <=> pick?val
 		 * 	option_label!key <= option_title!key
 		 * 	hint <= pick_hint
+		 * 	Trigger_icon <= Pick_icon
 		 * ```
 		 */
 		@ $mol_mem
@@ -61,6 +62,7 @@ namespace $ {
 			obj.value = (val?: any) => this.pick(val)
 			obj.option_label = (key: any) => this.option_title(key)
 			obj.hint = () => this.pick_hint()
+			obj.Trigger_icon = () => this.Pick_icon()
 			
 			return obj
 		}
@@ -140,6 +142,18 @@ namespace $ {
 		 */
 		pick_hint() {
 			return this.$.$mol_locale.text( '$mol_select_list_pick_hint' )
+		}
+		
+		/**
+		 * ```tree
+		 * Pick_icon $mol_icon_plus
+		 * ```
+		 */
+		@ $mol_mem
+		Pick_icon() {
+			const obj = new this.$.$mol_icon_plus()
+			
+			return obj
 		}
 	}
 	

@@ -2,15 +2,18 @@ $mol_select_demo_colors $mol_demo_small
 	title @ \Color picker with filter and custom rows
 	sub /
 		<= Color $mol_select
+			filter_pattern => color_filter
 			value?val <=> color?val \
 			dictionary <= colors *
 			option_label!id <= color_name!id \
 			option_content!id <= option_content!id /
-				<= Color_option!id $mol_row
+				<= Color_option!id $mol_view
 					sub /
 						<= Color_preview!id $mol_select_colors_color_preview
 							color <= option_color!id \
-						<= color_name!id \
+						<= Color_name!id $mol_dimmer
+							haystack <= color_name!id \
+							needle <= color_filter
 					minimal_height 40
 
 $mol_select_colors_color_preview $mol_view

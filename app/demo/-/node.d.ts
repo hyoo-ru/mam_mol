@@ -3582,6 +3582,12 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_icon_dots_vertical extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_nav extends $mol_plugin {
         cycle(val?: any): any;
         mod_ctrl(): boolean;
@@ -3625,9 +3631,8 @@ declare namespace $ {
         showed(val?: any): any;
         Anchor(): $mol_button_minor;
         bubble_content(): readonly any[];
-        option_content_current(): readonly $mol_view_content[];
         Filter(): $$.$mol_string;
-        Trigger_icon(): $mol_icon_chevron;
+        Trigger_icon(): $mol_icon_dots_vertical;
         event_select(id: any, event?: any): any;
         option_label(id: any): string;
         filter_pattern(val?: any): any;
@@ -3640,12 +3645,11 @@ declare namespace $ {
         Nav(): $$.$mol_nav;
         options_showed(val?: any): any;
         open(event?: any): any;
-        trigger_content(): readonly $mol_view_content[];
+        trigger_content(): readonly any[];
+        hint(): string;
         Trigger(): $mol_button_minor;
         menu_content(): readonly $mol_view[];
         Menu(): $$.$mol_list;
-        hint(): string;
-        filter_hint(): string;
         submit(event?: any): any;
         enabled(): boolean;
     }
@@ -3667,11 +3671,10 @@ declare namespace $.$$ {
         options_filtered(): readonly string[];
         option_label(id: string): any;
         option_rows(): $mol_view[];
-        option_focused(component?: $mol_view): $mol_view | $mol_string;
+        option_focused(component?: $mol_view): $mol_view | $mol_string | null;
         event_select(id: string, event?: MouseEvent): void;
         nav_components(): ($mol_view | $mol_string)[];
-        option_content_current(): readonly any[];
-        trigger_content(): any[];
+        trigger_content(): readonly $mol_view_content[];
         menu_content(): ($mol_view | $mol_string)[];
     }
 }
@@ -3695,6 +3698,8 @@ declare namespace $ {
         suggests(): readonly string[];
         submit(event?: any): any;
         enabled(): boolean;
+        Suggest_filter(): $$.$mol_string;
+        suggest_option_rows(): $mol_view[];
         Suggest(): $$.$mol_select;
         Clear_icon(): $mol_icon_cross;
         clear_hint(): string;
@@ -5419,8 +5424,10 @@ declare namespace $ {
         color_name(id: any): string;
         option_color(id: any): string;
         Color_preview(id: any): $mol_select_colors_color_preview;
-        Color_option(id: any): $mol_row;
+        Color_name(id: any): $$.$mol_dimmer;
+        Color_option(id: any): $mol_view;
         option_content(id: any): readonly any[];
+        color_filter(): string;
         Color(): $$.$mol_select;
     }
     class $mol_select_colors_color_preview extends $mol_view {
@@ -5436,7 +5443,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_select_demo_colors extends $.$mol_select_demo_colors {
-        color_name(id: string): string;
+        color_name(id: string): any;
         option_color(id: string): any;
         colors(): {
             aliceblue: "#f0f8ff";
@@ -5637,6 +5644,7 @@ declare namespace $ {
         options_pickable(): readonly string[];
         pick(val?: any): any;
         pick_hint(): string;
+        Pick_icon(): $mol_icon_plus;
     }
 }
 
@@ -5646,7 +5654,7 @@ declare namespace $.$$ {
 declare namespace $.$$ {
     class $mol_select_list extends $.$mol_select_list {
         value(val?: string[]): string[];
-        pick(key: string): void;
+        pick(key: string): string;
         options(): string[];
         options_pickable(): string[];
         option_title(key: string): string;

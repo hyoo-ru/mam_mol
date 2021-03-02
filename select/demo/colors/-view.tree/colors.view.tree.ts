@@ -76,20 +76,37 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Color_option!id $mol_row
+		 * Color_name!id $mol_dimmer
+		 * 	haystack <= color_name!id
+		 * 	needle <= color_filter
+		 * ```
+		 */
+		@ $mol_mem_key
+		Color_name(id: any) {
+			const obj = new this.$.$mol_dimmer()
+			
+			obj.haystack = () => this.color_name(id)
+			obj.needle = () => this.color_filter()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Color_option!id $mol_view
 		 * 	sub /
 		 * 		<= Color_preview!id
-		 * 		<= color_name!id
+		 * 		<= Color_name!id
 		 * 	minimal_height 40
 		 * ```
 		 */
 		@ $mol_mem_key
 		Color_option(id: any) {
-			const obj = new this.$.$mol_row()
+			const obj = new this.$.$mol_view()
 			
 			obj.sub = () => [
 				this.Color_preview(id),
-				this.color_name(id)
+				this.Color_name(id)
 			] as readonly any[]
 			obj.minimal_height = () => 40
 			
@@ -109,7 +126,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * color_filter
+		 * ```
+		 */
+		color_filter() {
+			return this.Color().filter_pattern()
+		}
+		
+		/**
+		 * ```tree
 		 * Color $mol_select
+		 * 	filter_pattern => color_filter
 		 * 	value?val <=> color?val
 		 * 	dictionary <= colors
 		 * 	option_label!id <= color_name!id

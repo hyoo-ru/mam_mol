@@ -110,19 +110,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_content_current /$mol_view_content
-		 * ```
-		 */
-		option_content_current() {
-			return [
-			] as readonly $mol_view_content[]
-		}
-		
-		/**
-		 * ```tree
 		 * Filter $mol_string
 		 * 	value?val <=> filter_pattern?val
-		 * 	hint <= filter_hint
+		 * 	hint @ \Filter..
 		 * 	submit?event <=> submit?event
 		 * 	enabled <= enabled
 		 * ```
@@ -132,7 +122,7 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.value = (val?: any) => this.filter_pattern(val)
-			obj.hint = () => this.filter_hint()
+			obj.hint = () => this.$.$mol_locale.text( '$mol_select_Filter_hint' )
 			obj.submit = (event?: any) => this.submit(event)
 			obj.enabled = () => this.enabled()
 			
@@ -141,12 +131,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Trigger_icon $mol_icon_chevron
+		 * Trigger_icon $mol_icon_dots_vertical
 		 * ```
 		 */
 		@ $mol_mem
 		Trigger_icon() {
-			const obj = new this.$.$mol_icon_chevron()
+			const obj = new this.$.$mol_icon_dots_vertical()
 			
 			return obj
 		}
@@ -294,12 +284,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * trigger_content /$mol_view_content
+		 * trigger_content /
 		 * ```
 		 */
 		trigger_content() {
 			return [
-			] as readonly $mol_view_content[]
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * hint @ \Pick..
+		 * ```
+		 */
+		hint() {
+			return this.$.$mol_locale.text( '$mol_select_hint' )
 		}
 		
 		/**
@@ -307,6 +306,7 @@ namespace $ {
 		 * Trigger $mol_button_minor
 		 * 	click?event <=> open?event
 		 * 	sub <= trigger_content
+		 * 	hint <= hint
 		 * ```
 		 */
 		@ $mol_mem
@@ -315,6 +315,7 @@ namespace $ {
 			
 			obj.click = (event?: any) => this.open(event)
 			obj.sub = () => this.trigger_content()
+			obj.hint = () => this.hint()
 			
 			return obj
 		}
@@ -341,24 +342,6 @@ namespace $ {
 			obj.rows = () => this.menu_content()
 			
 			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * hint @ \Search..
-		 * ```
-		 */
-		hint() {
-			return this.$.$mol_locale.text( '$mol_select_hint' )
-		}
-		
-		/**
-		 * ```tree
-		 * filter_hint <= hint
-		 * ```
-		 */
-		filter_hint() {
-			return this.hint()
 		}
 		
 		/**

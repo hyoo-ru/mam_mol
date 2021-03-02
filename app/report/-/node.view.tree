@@ -158,7 +158,7 @@ $mol_icon $mol_svg_root
 		<= Path $mol_svg_path
 			geometry <= path \
 
-$mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
+$mol_icon_dots_vertical $mol_icon path \M12,16C13.1,16 14,16.9 14,18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18C10,16.9 10.9,16 12,16M12,10C13.1,10 14,10.9 14,12C14,13.1 13.1,14 12,14C10.9,14 10,13.1 10,12C10,10.9 10.9,10 12,10M12,4C13.1,4 14,4.9 14,6C14,7.1 13.1,8 12,8C10.9,8 10,7.1 10,6C10,4.9 10.9,4 12,4Z
 
 $mol_paragraph $mol_view
 	line_height 24
@@ -231,17 +231,17 @@ $mol_select $mol_pop
 	showed?val <=> options_showed?val false
 	Anchor <= Trigger $mol_button_minor
 		click?event <=> open?event null
-		sub <= trigger_content /$mol_view_content
+		sub <= trigger_content /
+		hint <= hint @ \Pick..
 	bubble_content /
 		<= Menu $mol_list
 			rows <= menu_content /$mol_view
-	option_content_current /$mol_view_content
 	Filter $mol_string
 		value?val <=> filter_pattern?val \
-		hint <= filter_hint <= hint @ \Search..
+		hint @ \Filter..
 		submit?event <=> submit?event null
 		enabled <= enabled true
-	Trigger_icon $mol_icon_chevron
+	Trigger_icon $mol_icon_dots_vertical
 
 $mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
 

@@ -4876,14 +4876,14 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_chevron extends $.$mol_icon {
+    class $mol_icon_dots_vertical extends $.$mol_icon {
         path() {
-            return "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z";
+            return "M12,16C13.1,16 14,16.9 14,18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18C10,16.9 10.9,16 12,16M12,10C13.1,10 14,10.9 14,12C14,13.1 13.1,14 12,14C10.9,14 10,13.1 10,12C10,10.9 10.9,10 12,10M12,4C13.1,4 14,4.9 14,6C14,7.1 13.1,8 12,8C10.9,8 10,7.1 10,6C10,4.9 10.9,4 12,4Z";
         }
     }
-    $.$mol_icon_chevron = $mol_icon_chevron;
+    $.$mol_icon_dots_vertical = $mol_icon_dots_vertical;
 })($ || ($ = {}));
-//chevron.view.tree.js.map
+//vertical.view.tree.js.map
 ;
 "use strict";
 var $;
@@ -5635,19 +5635,16 @@ var $;
                 this.Menu()
             ];
         }
-        option_content_current() {
-            return [];
-        }
         Filter() {
             const obj = new this.$.$mol_string();
             obj.value = (val) => this.filter_pattern(val);
-            obj.hint = () => this.filter_hint();
+            obj.hint = () => this.$.$mol_locale.text('$mol_select_Filter_hint');
             obj.submit = (event) => this.submit(event);
             obj.enabled = () => this.enabled();
             return obj;
         }
         Trigger_icon() {
-            const obj = new this.$.$mol_icon_chevron();
+            const obj = new this.$.$mol_icon_dots_vertical();
             return obj;
         }
         event_select(id, event) {
@@ -5710,10 +5707,14 @@ var $;
         trigger_content() {
             return [];
         }
+        hint() {
+            return this.$.$mol_locale.text('$mol_select_hint');
+        }
         Trigger() {
             const obj = new this.$.$mol_button_minor();
             obj.click = (event) => this.open(event);
             obj.sub = () => this.trigger_content();
+            obj.hint = () => this.hint();
             return obj;
         }
         menu_content() {
@@ -5723,12 +5724,6 @@ var $;
             const obj = new this.$.$mol_list();
             obj.rows = () => this.menu_content();
             return obj;
-        }
-        hint() {
-            return this.$.$mol_locale.text('$mol_select_hint');
-        }
-        filter_hint() {
-            return this.hint();
         }
         submit(event) {
             if (event !== undefined)
@@ -5810,7 +5805,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/select/select.view.css", "[mol_select] {\n\tdisplay: flex;\n\tword-break: normal;\n\talign-self: flex-start;\n}\n\n[mol_select_anchor] {\n\tdisplay: flex;\n\tflex: 1 1 auto;\n\tjustify-content: space-between;\n}\n\n[mol_select_option_row] {\n\tmin-width: 100%;\n\tpadding: 0;\n\tjustify-content: flex-start;\n}\n\n[mol_select_bubble] {\n\tmin-width: 100%;\n}\n\n[mol_select_filter] {\n\tz-index: 2;\n\topacity: 1 !important;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n}\n\n[mol_select_option_label] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tmin-height: 1.5em;\n\tdisplay: block;\n}\n\n[mol_select_clear_option_content] {\n\tpadding: .5em 1rem .5rem 0;\n\ttext-align: left;\n\tbox-shadow: var(--mol_theme_line);\n\tflex: 1 0 auto;\n}\n\n[mol_select_no_options] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tdisplay: block;\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_select_trigger] {\n\tpadding: 0;\n\tflex: 1 1 auto;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n}\n\n[mol_select_trigger_icon] {\n\ttransform: rotateZ(90deg);\n\tmargin: .5rem .5rem .5rem -.5rem;\n}\n:hover > [mol_select_trigger_icon] {\n\ttransform: rotateZ(90deg) scale(1.25);\n}\n\n[mol_select_menu] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n");
+    $.$mol_style_attach("mol/select/select.view.css", "[mol_select] {\n\tdisplay: flex;\n\tword-break: normal;\n\talign-self: flex-start;\n}\n\n[mol_select_anchor] {\n\tdisplay: flex;\n\tflex: 1 1 auto;\n\tjustify-content: space-between;\n}\n\n[mol_select_option_row] {\n\tmin-width: 100%;\n\tpadding: 0;\n\tjustify-content: flex-start;\n}\n\n[mol_select_bubble] {\n\tmin-width: 100%;\n}\n\n[mol_select_filter] {\n\tz-index: 2;\n\topacity: 1 !important;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n}\n\n[mol_select_option_label] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tmin-height: 1.5em;\n\tdisplay: block;\n}\n\n[mol_select_clear_option_content] {\n\tpadding: .5em 1rem .5rem 0;\n\ttext-align: left;\n\tbox-shadow: var(--mol_theme_line);\n\tflex: 1 0 auto;\n}\n\n[mol_select_no_options] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tdisplay: block;\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_select_trigger] {\n\tpadding: 0;\n\tflex: 1 1 auto;\n\tdisplay: flex;\n}\n\n[mol_select_trigger] > * {\n\tmargin-right: -.75rem;\n}\n\n[mol_select_trigger] > *:last-child {\n\tmargin-right: 0;\n}\n\n[mol_select_menu] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n");
 })($ || ($ = {}));
 //select.view.css.js.map
 ;
@@ -5858,7 +5853,7 @@ var $;
                         if (comp && comp.focused())
                             return comp;
                     }
-                    return this.Filter();
+                    return null;
                 }
                 if (this.options_showed()) {
                     component.focused(true);
@@ -5872,16 +5867,14 @@ var $;
             nav_components() {
                 return [this.Filter(), ...this.option_rows()];
             }
-            option_content_current() {
-                return this.option_content(this.value());
-            }
             trigger_content() {
-                return (!this.value() && this.Filter())
-                    ? [this.Filter()]
-                    : [...this.option_content_current(), this.Trigger_icon()];
+                return [
+                    ...this.option_content(this.value()),
+                    this.Trigger_icon(),
+                ];
             }
             menu_content() {
-                return (this.value() && this.Filter())
+                return (this.options().length > 1 && this.Filter())
                     ? [this.Filter(), ...this.option_rows()]
                     : this.option_rows();
             }

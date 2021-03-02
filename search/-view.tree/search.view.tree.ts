@@ -125,6 +125,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Suggest_filter
+		 * ```
+		 */
+		Suggest_filter() {
+			return this.Suggest().Filter()
+		}
+		
+		/**
+		 * ```tree
+		 * suggest_option_rows
+		 * ```
+		 */
+		suggest_option_rows() {
+			return this.Suggest().option_rows()
+		}
+		
+		/**
+		 * ```tree
 		 * Suggest $mol_select
 		 * 	value?val <=> suggest_selected?val
 		 * 	filter_pattern?val <=> suggest_selected?val
@@ -132,10 +150,13 @@ namespace $ {
 		 * 	filter_pattern?val <=> query?val
 		 * 	options_showed <= suggests_showed
 		 * 	options <= suggests
-		 * 	Trigger_icon null
 		 * 	submit?event <=> submit?event
 		 * 	No_options null
 		 * 	enabled <= enabled
+		 * 	Filter => Suggest_filter
+		 * 	option_rows => suggest_option_rows
+		 * 	menu_content <= suggest_option_rows
+		 * 	trigger_content / <= Suggest_filter
 		 * ```
 		 */
 		@ $mol_mem
@@ -148,10 +169,13 @@ namespace $ {
 			obj.filter_pattern = (val?: any) => this.query(val)
 			obj.options_showed = () => this.suggests_showed()
 			obj.options = () => this.suggests()
-			obj.Trigger_icon = () => null as any
 			obj.submit = (event?: any) => this.submit(event)
 			obj.No_options = () => null as any
 			obj.enabled = () => this.enabled()
+			obj.menu_content = () => this.suggest_option_rows()
+			obj.trigger_content = () => [
+				this.Suggest_filter()
+			] as readonly any[]
 			
 			return obj
 		}
