@@ -20,7 +20,7 @@ $mol_select $mol_pop
 	showed?val <=> options_showed?val false
 	Anchor <= Trigger $mol_button_minor
 		click?event <=> open?event null
-		sub <= trigger_content /$mol_view_content
+		sub <= trigger_content /
 		hint <= hint @ \Pick..
 	bubble_content /
 		<= Menu $mol_list

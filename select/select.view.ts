@@ -77,7 +77,7 @@ namespace $.$$ {
 			return [
 				... this.option_content( this.value() ),
 				this.Trigger_icon(),
-			]
+			] as readonly $mol_view_content[]
 		}
 		
 		menu_content() {
