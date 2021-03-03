@@ -66,13 +66,13 @@ namespace $.$$ {
 			]
 		}
 
-		@ $mol_mem
-		add_content() {
-			return [
-				this.Add_body(),
-				... this.add_body() ? [ this.Add_submit() ] : [],
-			]
-		}
+		// @ $mol_mem
+		// add_content() {
+		// 	return [
+		// 		this.Add_body(),
+		// 		... this.add_body() ? [ this.Add_submit() ] : [],
+		// 	]
+		// }
 
 		post_user_ava( index: number ) {
 			return this.posts_data()[ index ].user().avatar()
@@ -94,9 +94,9 @@ namespace $.$$ {
 			return this.posts_data()[ index ].moment_updated()
 		}
 
-		add_submit_enabled() {
-			return this.add_body().trim().length > 0
-		}
+		// add_submit_enabled() {
+		// 	return this.add_body().trim().length > 0
+		// }
 
 		// service() {
 		// 	return this.$.$mol_rpc_client_frame.item( '//localhost:9080/mol/chat/service/' ).proxy() as {
