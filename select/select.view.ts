@@ -40,11 +40,7 @@ namespace $.$$ {
 		}
 		
 		option_rows() {
-			if( this.options_filtered().length === 0 ) return [ this.No_options() ]
-			
-			let options = this.options_filtered().map( ( option : string ) => this.Option_row( option ) )
-			
-			return options
+			return this.options_filtered().map( ( option : string ) => this.Option_row( option ) )
 		}
 		
 		@ $mol_mem
@@ -70,7 +66,11 @@ namespace $.$$ {
 		}
 		
 		nav_components() {
-			return [ this.Filter() , ... this.option_rows() ]
+			if( this.options().length > 1 && this.Filter() ) {
+				return [ this.Filter() , ... this.option_rows() ]
+			} else {
+				return this.option_rows()
+			}
 		}
 
 		trigger_content() {
@@ -81,9 +81,10 @@ namespace $.$$ {
 		}
 		
 		menu_content() {
-			return ( this.options().length > 1 && this.Filter() )
-				? [ this.Filter() , ... this.option_rows() ]
-				: this.option_rows()
+			return [
+				... this.nav_components(),
+				... ( this.options_filtered().length === 0 ) ? [ this.No_options() ] : []
+			]
 		}
 		
 	}
