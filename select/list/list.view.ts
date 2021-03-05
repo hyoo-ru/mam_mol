@@ -43,6 +43,11 @@ namespace $.$$ {
 			]
 		}
 
+		@ $mol_mem
+		title() {
+			return this.value().map( key => this.option_title( key ) ).join( ' + ' )
+		}
+
 		remove( key : string ) {
 			this.value( this.value().filter( val => val !== key ) )
 		}
