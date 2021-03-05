@@ -28,6 +28,10 @@
 	outline: none;
 }
 
+[mol_pop_align="suspense"] {
+	display: none;
+}
+
 [mol_pop_align="left_top"] {
 	transform: translate(-100%);
 	left: 0;

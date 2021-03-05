@@ -25,17 +25,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * plugins /$mol_plugin <= Meter
-		 * ```
-		 */
-		plugins() {
-			return [
-				this.Meter()
-			] as readonly $mol_plugin[]
-		}
-		
-		/**
-		 * ```tree
 		 * sub /
 		 * 	<= Anchor
 		 * 	<= Bubble
@@ -57,58 +46,6 @@ namespace $ {
 		keydown(event?: any) {
 			if ( event !== undefined ) return event
 			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * top
-		 * ```
-		 */
-		top() {
-			return this.Meter().top()
-		}
-		
-		/**
-		 * ```tree
-		 * bottom
-		 * ```
-		 */
-		bottom() {
-			return this.Meter().bottom()
-		}
-		
-		/**
-		 * ```tree
-		 * left
-		 * ```
-		 */
-		left() {
-			return this.Meter().left()
-		}
-		
-		/**
-		 * ```tree
-		 * right
-		 * ```
-		 */
-		right() {
-			return this.Meter().right()
-		}
-		
-		/**
-		 * ```tree
-		 * Meter $mol_meter
-		 * 	top => top
-		 * 	bottom => bottom
-		 * 	left => left
-		 * 	right => right
-		 * ```
-		 */
-		@ $mol_mem
-		Meter() {
-			const obj = new this.$.$mol_meter()
-			
-			return obj
 		}
 		
 		/**

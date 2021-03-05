@@ -3540,14 +3540,8 @@ declare namespace $ {
             keydown: (event?: any) => any;
         };
         showed(val?: any): any;
-        plugins(): readonly $mol_plugin[];
         sub(): readonly any[];
         keydown(event?: any): any;
-        top(): number;
-        bottom(): number;
-        left(): number;
-        right(): number;
-        Meter(): $$.$mol_meter;
         Anchor(): any;
         align(): string;
         bubble_content(): readonly $mol_view_content[];

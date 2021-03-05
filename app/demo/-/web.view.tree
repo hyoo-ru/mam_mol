@@ -1149,12 +1149,6 @@ $mol_check_icon_demo $mol_demo_small
 $mol_pop $mol_view
 	event * keydown?event <=> keydown?event null
 	showed?val false
-	plugins /$mol_plugin
-		<= Meter $mol_meter
-			top => top
-			bottom => bottom
-			left => left
-			right => right
 	sub /
 		<= Anchor null
 		<= Bubble $mol_pop_bubble
