@@ -20567,6 +20567,7 @@ var $;
             flex: {
                 wrap: 'wrap',
                 shrink: 1,
+                grow: 1,
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
@@ -20611,6 +20612,9 @@ var $;
                     ...this.options_pickable().length ? [this.Pick()] : [],
                 ];
             }
+            title() {
+                return this.value().map(key => this.option_title(key)).join(' + ');
+            }
             remove(key) {
                 this.value(this.value().filter(val => val !== key));
             }
@@ -20624,6 +20628,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_select_list.prototype, "sub", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_select_list.prototype, "title", null);
         $$.$mol_select_list = $mol_select_list;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

@@ -5635,6 +5635,7 @@ declare namespace $.$$ {
         options_pickable(): string[];
         option_title(key: string): string;
         sub(): ($mol_button_minor | $mol_select)[];
+        title(): string;
         remove(key: string): void;
     }
 }

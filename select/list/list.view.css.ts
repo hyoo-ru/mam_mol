@@ -7,6 +7,7 @@ namespace $.$$ {
 		flex: {
 			wrap: 'wrap',
 			shrink: 1,
+			grow: 1,
 		},
 		
 	} )
