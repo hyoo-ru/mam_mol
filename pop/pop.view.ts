@@ -15,8 +15,11 @@ namespace $.$$ {
 		align() {
 			const viewport = this.$.$mol_window.size()
 			
-			const vert = this.top() > ( viewport.height - this.bottom() ) ? 'top' : 'bottom'
-			const hor = this.left() > ( viewport.width - this.right() ) ? 'left' : 'right'
+			const rect_bubble = this.view_rect()
+			if( !rect_bubble ) return 'suspense'
+			
+			const vert = rect_bubble.top > ( viewport.height - rect_bubble.bottom ) ? 'top' : 'bottom'
+			const hor = rect_bubble.left > ( viewport.width - rect_bubble.right ) ? 'left' : 'right'
 			
 			return `${ vert }_${ hor }`
 		}
