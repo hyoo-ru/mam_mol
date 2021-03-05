@@ -1,7 +1,6 @@
 namespace $.$$ {
 
 	const { per , rem } = $mol_style_unit
-	const { calc } = $mol_style_func
 
 	$mol_style_define( $mol_page , {
 
@@ -20,7 +19,7 @@ namespace $.$$ {
 			color: $mol_theme.back ,
 		},
 		color: $mol_theme.text ,
-		zIndex: 0 ,
+		// zIndex: 0 ,
 
 		':focus': {
 			outline: 'none',
@@ -39,7 +38,7 @@ namespace $.$$ {
 				color: $mol_theme.back ,
 			},
 			boxShadow: `0 0.5rem 0.5rem -0.5rem hsla(0,0%,0%,.25)` ,
-			zIndex: 1,
+			// zIndex: 1,
 		},
 
 		Title: {
