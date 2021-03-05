@@ -20476,7 +20476,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_select_list extends $.$mol_bar {
+    class $mol_select_list extends $.$mol_view {
         value(val) {
             if (val !== undefined)
                 return val;
@@ -20567,18 +20567,6 @@ var $;
             flex: {
                 wrap: 'wrap',
                 shrink: 1,
-            },
-            '>': {
-                $mol_view: {
-                    margin: {
-                        right: rem(-.75),
-                    },
-                    ':last-child': {
-                        margin: {
-                            right: 0,
-                        },
-                    },
-                },
             },
         });
     })($$ = $.$$ || ($.$$ = {}));

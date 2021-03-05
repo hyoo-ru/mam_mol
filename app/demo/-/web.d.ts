@@ -5607,7 +5607,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_select_list extends $mol_bar {
+    class $mol_select_list extends $mol_view {
         value(val?: any): any;
         dictionary(): {};
         Badge(key: any): $mol_button_minor;

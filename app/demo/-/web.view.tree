@@ -2307,7 +2307,7 @@ $mol_select_demo_priority $mol_demo_small
 				\Low
 				\Lowest
 
-$mol_select_list $mol_bar
+$mol_select_list $mol_view
 	value?val /string
 	dictionary *
 	Badge!key $mol_button_minor
