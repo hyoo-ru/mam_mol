@@ -3664,10 +3664,10 @@ declare namespace $.$$ {
         options(): readonly string[];
         options_filtered(): readonly string[];
         option_label(id: string): any;
-        option_rows(): $mol_view[];
+        option_rows(): $mol_button_minor[];
         option_focused(component?: $mol_view): $mol_view | $mol_string | null;
         event_select(id: string, event?: MouseEvent): void;
-        nav_components(): ($mol_view | $mol_string)[];
+        nav_components(): ($mol_button_minor | $mol_string)[];
         trigger_content(): readonly $mol_view_content[];
         menu_content(): ($mol_view | $mol_string)[];
     }
@@ -3693,7 +3693,7 @@ declare namespace $ {
         submit(event?: any): any;
         enabled(): boolean;
         Suggest_filter(): $$.$mol_string;
-        suggest_option_rows(): $mol_view[];
+        suggest_option_rows(): $mol_button_minor[];
         Suggest(): $$.$mol_select;
         Clear_icon(): $mol_icon_cross;
         clear_hint(): string;
@@ -5628,15 +5628,16 @@ declare namespace $ {
     class $mol_select_list extends $mol_view {
         value(val?: any): any;
         dictionary(): {};
-        Badge(key: any): $mol_button_minor;
+        Badge(index: any): $mol_button_minor;
         Pick(): $$.$mol_select;
-        option_title(key: any): string;
-        remove(key: any, event?: any): any;
+        badge_title(index: any): string;
+        remove(index: any, event?: any): any;
         badge_hint(): string;
         enabled(): boolean;
         options(): readonly string[];
         options_pickable(): readonly string[];
         pick(val?: any): any;
+        option_title(key: any): string;
         pick_hint(): string;
         Pick_icon(): $mol_icon_plus;
     }
@@ -5647,14 +5648,15 @@ declare namespace $.$$ {
 
 declare namespace $.$$ {
     class $mol_select_list extends $.$mol_select_list {
-        value(val?: string[]): string[];
+        value(val?: string[]): readonly string[];
         pick(key: string): string;
         options(): string[];
-        options_pickable(): string[];
+        options_pickable(): readonly string[];
         option_title(key: string): string;
+        badge_title(index: number): string;
         sub(): ($mol_button_minor | $mol_select)[];
         title(): string;
-        remove(key: string): void;
+        remove(index: number): void;
     }
 }
 

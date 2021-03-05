@@ -2383,10 +2383,10 @@ declare namespace $.$$ {
         options(): readonly string[];
         options_filtered(): readonly string[];
         option_label(id: string): any;
-        option_rows(): $mol_view[];
+        option_rows(): $mol_button_minor[];
         option_focused(component?: $mol_view): $mol_view | $mol_string | null;
         event_select(id: string, event?: MouseEvent): void;
-        nav_components(): ($mol_view | $mol_string)[];
+        nav_components(): ($mol_string | $mol_button_minor)[];
         trigger_content(): readonly $mol_view_content[];
         menu_content(): ($mol_view | $mol_string)[];
     }
@@ -2412,7 +2412,7 @@ declare namespace $ {
         submit(event?: any): any;
         enabled(): boolean;
         Suggest_filter(): $$.$mol_string;
-        suggest_option_rows(): $mol_view[];
+        suggest_option_rows(): $mol_button_minor[];
         Suggest(): $$.$mol_select;
         Clear_icon(): $mol_icon_cross;
         clear_hint(): string;

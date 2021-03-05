@@ -23,7 +23,7 @@ namespace $.$$ {
 			if( !event ) return event
 
 			const keys = this.keys_y()
-			if( keys.length < 2 ) return
+			if( keys.length < 1 ) return
 			
 			const index_y = this.index_y();
 			
@@ -41,7 +41,7 @@ namespace $.$$ {
 			if( !event ) return event
 
 			const keys = this.keys_y()
-			if( keys.length < 2 ) return
+			if( keys.length < 1 ) return
 			
 			const index_y = this.index_y();
 			
@@ -59,7 +59,7 @@ namespace $.$$ {
 			if( !event ) return event
 
 			const keys = this.keys_x()
-			if( keys.length < 2 ) return
+			if( keys.length < 1 ) return
 			
 			const index_x = this.index_x();
 			
@@ -77,7 +77,7 @@ namespace $.$$ {
 			if( !event ) return event
 
 			const keys = this.keys_x()
-			if( keys.length < 2 ) return
+			if( keys.length < 1 ) return
 			
 			const index_x = this.index_x();
 			

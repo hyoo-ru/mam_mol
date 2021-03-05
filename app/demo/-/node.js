@@ -12485,7 +12485,7 @@ var $;
                 if (!event)
                     return event;
                 const keys = this.keys_y();
-                if (keys.length < 2)
+                if (keys.length < 1)
                     return;
                 const index_y = this.index_y();
                 const index_old = index_y === null ? 0 : index_y;
@@ -12499,7 +12499,7 @@ var $;
                 if (!event)
                     return event;
                 const keys = this.keys_y();
-                if (keys.length < 2)
+                if (keys.length < 1)
                     return;
                 const index_y = this.index_y();
                 const index_old = index_y === null ? keys.length - 1 : index_y;
@@ -12513,7 +12513,7 @@ var $;
                 if (!event)
                     return event;
                 const keys = this.keys_x();
-                if (keys.length < 2)
+                if (keys.length < 1)
                     return;
                 const index_x = this.index_x();
                 const index_old = index_x === null ? 0 : index_x;
@@ -12527,7 +12527,7 @@ var $;
                 if (!event)
                     return event;
                 const keys = this.keys_x();
-                if (keys.length < 2)
+                if (keys.length < 1)
                     return;
                 const index_x = this.index_x();
                 const index_old = index_x === null ? keys.length - 1 : index_x;
@@ -12807,10 +12807,7 @@ var $;
                 return value == null ? id : value;
             }
             option_rows() {
-                if (this.options_filtered().length === 0)
-                    return [this.No_options()];
-                let options = this.options_filtered().map((option) => this.Option_row(option));
-                return options;
+                return this.options_filtered().map((option) => this.Option_row(option));
             }
             option_focused(component) {
                 if (component == null) {
@@ -12830,7 +12827,12 @@ var $;
                 this.focused(false);
             }
             nav_components() {
-                return [this.Filter(), ...this.option_rows()];
+                if (this.options().length > 1 && this.Filter()) {
+                    return [this.Filter(), ...this.option_rows()];
+                }
+                else {
+                    return this.option_rows();
+                }
             }
             trigger_content() {
                 return [
@@ -12839,9 +12841,10 @@ var $;
                 ];
             }
             menu_content() {
-                return (this.options().length > 1 && this.Filter())
-                    ? [this.Filter(), ...this.option_rows()]
-                    : this.option_rows();
+                return [
+                    ...this.nav_components(),
+                    ...(this.options_filtered().length === 0) ? [this.No_options()] : []
+                ];
             }
         }
         __decorate([
@@ -20492,10 +20495,10 @@ var $;
         dictionary() {
             return {};
         }
-        Badge(key) {
+        Badge(index) {
             const obj = new this.$.$mol_button_minor();
-            obj.title = () => this.option_title(key);
-            obj.click = (event) => this.remove(key, event);
+            obj.title = () => this.badge_title(index);
+            obj.click = (event) => this.remove(index, event);
             obj.hint = () => this.badge_hint();
             obj.enabled = () => this.enabled();
             return obj;
@@ -20509,10 +20512,10 @@ var $;
             obj.Trigger_icon = () => this.Pick_icon();
             return obj;
         }
-        option_title(key) {
+        badge_title(index) {
             return "badge";
         }
-        remove(key, event) {
+        remove(index, event) {
             if (event !== undefined)
                 return event;
             return null;
@@ -20532,6 +20535,9 @@ var $;
         pick(val) {
             if (val !== undefined)
                 return val;
+            return "";
+        }
+        option_title(key) {
             return "";
         }
         pick_hint() {
@@ -20613,17 +20619,24 @@ var $;
                 const value = this.dictionary()[key];
                 return value == null ? key : value;
             }
+            badge_title(index) {
+                return this.option_title(this.value()[index]);
+            }
             sub() {
                 return [
-                    ...this.value().map(key => this.Badge(key)),
+                    ...this.value().map((_, index) => this.Badge(index)),
                     ...this.options_pickable().length ? [this.Pick()] : [],
                 ];
             }
             title() {
                 return this.value().map(key => this.option_title(key)).join(' + ');
             }
-            remove(key) {
-                this.value(this.value().filter(val => val !== key));
+            remove(index) {
+                const value = this.value();
+                this.value([
+                    ...value.slice(0, index),
+                    ...value.slice(index + 1),
+                ]);
             }
         }
         __decorate([

@@ -25,19 +25,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Badge!key $mol_button_minor
-		 * 	title <= option_title!key
-		 * 	click?event <=> remove!key?event
+		 * Badge!index $mol_button_minor
+		 * 	title <= badge_title!index
+		 * 	click?event <=> remove!index?event
 		 * 	hint <= badge_hint
 		 * 	enabled <= enabled
 		 * ```
 		 */
 		@ $mol_mem_key
-		Badge(key: any) {
+		Badge(index: any) {
 			const obj = new this.$.$mol_button_minor()
 			
-			obj.title = () => this.option_title(key)
-			obj.click = (event?: any) => this.remove(key, event)
+			obj.title = () => this.badge_title(index)
+			obj.click = (event?: any) => this.remove(index, event)
 			obj.hint = () => this.badge_hint()
 			obj.enabled = () => this.enabled()
 			
@@ -69,20 +69,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_title!key \badge
+		 * badge_title!index \badge
 		 * ```
 		 */
-		option_title(key: any) {
+		badge_title(index: any) {
 			return "badge"
 		}
 		
 		/**
 		 * ```tree
-		 * remove!key?event null
+		 * remove!index?event null
 		 * ```
 		 */
 		@ $mol_mem_key
-		remove(key: any, event?: any) {
+		remove(index: any, event?: any) {
 			if ( event !== undefined ) return event
 			return null as any
 		}
@@ -132,6 +132,15 @@ namespace $ {
 		@ $mol_mem
 		pick(val?: any) {
 			if ( val !== undefined ) return val
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * option_title!key \
+		 * ```
+		 */
+		option_title(key: any) {
 			return ""
 		}
 		
