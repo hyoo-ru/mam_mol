@@ -23,9 +23,9 @@
 	z-index: -1 !important;
 	padding: var(--mol_gap_text);
 	position: absolute;
-	left: 0;
+	left: 3rem;
 	top: 0;
-	width: 100%;
+	width: calc( 100% - 3rem );
 	height: 100%;
 	color: transparent;
 	caret-color: var(--mol_theme_text);

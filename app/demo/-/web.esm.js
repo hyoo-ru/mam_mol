@@ -21063,6 +21063,9 @@ var $;
 var $;
 (function ($) {
     class $mol_text_code_row extends $.$mol_paragraph {
+        attr() {
+            return Object.assign(Object.assign({}, super.attr()), { mol_text_code_row_numb: this.numb() });
+        }
         text() {
             return "";
         }
@@ -21081,6 +21084,9 @@ var $;
             obj.haystack = () => this.token_text(id);
             obj.needle = () => this.highlight();
             return obj;
+        }
+        numb() {
+            return 0;
         }
         token_type(id) {
             return "";
@@ -21101,6 +21107,36 @@ var $;
     $.$mol_text_code_row = $mol_text_code_row;
 })($ || ($ = {}));
 //row.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const { rem } = $.$mol_style_unit;
+        $.$mol_style_define($$.$mol_text_code_row, {
+            display: 'block',
+            margin: {
+                left: rem(3),
+            },
+            '::before': {
+                content: 'attr(mol_text_code_row_numb)',
+                textAlign: 'right',
+                color: $.$mol_theme.shade,
+                width: rem(1.5),
+                padding: {
+                    right: rem(1.5),
+                },
+                margin: {
+                    left: rem(-3),
+                },
+                display: 'inline-block',
+                whiteSpace: 'nowrap',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//row.view.css.js.map
 ;
 "use strict";
 var $;
@@ -21186,9 +21222,13 @@ var $;
         }
         Row(id) {
             const obj = new this.$.$mol_text_code_row();
+            obj.numb = () => this.row_numb(id);
             obj.text = () => this.row_text(id);
             obj.highlight = () => this.highlight();
             return obj;
+        }
+        row_numb(id) {
+            return 0;
         }
         row_text(id) {
             return "";
@@ -21215,9 +21255,6 @@ var $;
             font: {
                 family: 'monospace',
             },
-            Row: {
-                display: 'block',
-            },
         });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -21233,10 +21270,13 @@ var $;
                 return this.text().split('\n');
             }
             rows() {
-                return this.text_lines().map((_, index) => this.Row(index));
+                return this.text_lines().map((_, index) => this.Row(index + 1));
             }
             row_text(index) {
-                return this.text_lines()[index];
+                return this.text_lines()[index - 1];
+            }
+            row_numb(index) {
+                return index;
             }
         }
         __decorate([
@@ -21435,7 +21475,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/textarea/textarea.view.css", "[mol_textarea] {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\tposition: relative;\n\tz-index: 0;\n\tvertical-align: top;\n\tmin-height: max-content;\n\twhite-space: pre-wrap;\n}\n\n[mol_textarea_view] {\n\tpointer-events: none;\n\tz-index: 1;\n\twhite-space: inherit;\n}\n[mol_textarea_clickable] > [mol_textarea_view] {\n\tpointer-events: all;\n}\n\n[mol_textarea_edit] {\n\tfont-family: monospace;\n\tz-index: -1 !important;\n\tpadding: var(--mol_gap_text);\n\tposition: absolute;\n\tleft: 0;\n\ttop: 0;\n\twidth: 100%;\n\theight: 100%;\n\tcolor: transparent;\n\tcaret-color: var(--mol_theme_text);\n\tresize: none;\n\twhite-space: inherit;\n\ttab-size: 4;\n\toverflow-anchor: none;\n}\n");
+    $.$mol_style_attach("mol/textarea/textarea.view.css", "[mol_textarea] {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\tposition: relative;\n\tz-index: 0;\n\tvertical-align: top;\n\tmin-height: max-content;\n\twhite-space: pre-wrap;\n}\n\n[mol_textarea_view] {\n\tpointer-events: none;\n\tz-index: 1;\n\twhite-space: inherit;\n}\n[mol_textarea_clickable] > [mol_textarea_view] {\n\tpointer-events: all;\n}\n\n[mol_textarea_edit] {\n\tfont-family: monospace;\n\tz-index: -1 !important;\n\tpadding: var(--mol_gap_text);\n\tposition: absolute;\n\tleft: 3rem;\n\ttop: 0;\n\twidth: calc( 100% - 3rem );\n\theight: 100%;\n\tcolor: transparent;\n\tcaret-color: var(--mol_theme_text);\n\tresize: none;\n\twhite-space: inherit;\n\ttab-size: 4;\n\toverflow-anchor: none;\n}\n");
 })($ || ($ = {}));
 //textarea.view.css.js.map
 ;

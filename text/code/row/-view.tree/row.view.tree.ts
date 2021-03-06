@@ -3,6 +3,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	mol_text_code_row_numb <= numb
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				mol_text_code_row_numb: this.numb()
+			}
+		}
+		
+		/**
+		 * ```tree
 		 * text \
 		 * ```
 		 */
@@ -53,6 +67,15 @@ namespace $ {
 			obj.needle = () => this.highlight()
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * numb 0
+		 * ```
+		 */
+		numb() {
+			return 0
 		}
 		
 		/**

@@ -8,12 +8,16 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		rows() {
-			return this.text_lines().map( ( _ , index )=> this.Row( index ) )
+			return this.text_lines().map( ( _ , index )=> this.Row( index + 1 ) )
 		}
 
 		@ $mol_mem_key
 		row_text( index: number ) {
-			return this.text_lines()[ index ]
+			return this.text_lines()[ index - 1 ]
+		}
+		
+		row_numb( index: number ) {
+			return index
 		}
 		
 	}

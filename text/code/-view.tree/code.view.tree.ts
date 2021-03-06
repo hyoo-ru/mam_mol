@@ -23,6 +23,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Row!id $mol_text_code_row
+		 * 	numb <= row_numb!id
 		 * 	text <= row_text!id
 		 * 	highlight <= highlight
 		 * ```
@@ -31,10 +32,20 @@ namespace $ {
 		Row(id: any) {
 			const obj = new this.$.$mol_text_code_row()
 			
+			obj.numb = () => this.row_numb(id)
 			obj.text = () => this.row_text(id)
 			obj.highlight = () => this.highlight()
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * row_numb!id 0
+		 * ```
+		 */
+		row_numb(id: any) {
+			return 0
 		}
 		
 		/**

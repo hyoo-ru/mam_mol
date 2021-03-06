@@ -2425,6 +2425,9 @@ $mol_text_code_token_link $mol_text_code_token
 		target \_blank
 
 $mol_text_code_row $mol_paragraph
+	attr *
+		^
+		mol_text_code_row_numb <= numb 0
 	text \
 	minimal_height 24
 	Token!id $mol_text_code_token
@@ -2439,6 +2442,7 @@ $mol_text_code $mol_list
 	text \
 	text_lines /string
 	Row!id $mol_text_code_row
+		numb <= row_numb!id 0
 		text <= row_text!id \
 		highlight <= highlight \
 
