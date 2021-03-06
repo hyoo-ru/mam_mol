@@ -4,12 +4,9 @@ namespace $.$$ {
 
 		padding: $mol_gap.text,
 		whiteSpace: 'pre-wrap',
+		
 		font: {
 			family: 'monospace',
-		},
-
-		Row: {
-			display: 'block',
 		},
 
 	} )
