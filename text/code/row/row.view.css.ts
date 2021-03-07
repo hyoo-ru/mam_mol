@@ -13,6 +13,9 @@ namespace $.$$ {
 			padding: {
 				right: rem(1.5),
 			},
+			margin: {
+				left: rem(-3),
+			},
 			display: 'inline-block',
 			whiteSpace: 'nowrap',
 			userSelect: 'none',

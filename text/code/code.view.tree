@@ -1,8 +1,11 @@
 $mol_text_code $mol_list
+	attr *
+		^
+		mol_text_code_sidebar_showed <= sidebar_showed false
 	text \
 	text_lines /string
 	Row!id $mol_text_code_row
-		numb_showed <= sidebar_showed false
+		numb_showed <= sidebar_showed
 		numb <= row_numb!id 0
 		text <= row_text!id \
 		highlight <= highlight \

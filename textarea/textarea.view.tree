@@ -1,5 +1,6 @@
 $mol_textarea $mol_view
 	attr *
+		^
 		mol_textarea_clickable <= clickable?val false
 		mol_textarea_sidebar_showed <= sidebar_showed false
 	event *
