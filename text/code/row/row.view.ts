@@ -25,7 +25,10 @@ namespace $.$$ {
 		}
 
 		sub() {
-			return this.row_content([])
+			return [
+				... this.numb_showed() ? [ this.Numb() ] : [],
+				... this.row_content([])
+			]
 		}
 
 		@ $mol_mem_key

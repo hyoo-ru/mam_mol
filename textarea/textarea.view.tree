@@ -1,6 +1,7 @@
 $mol_textarea $mol_view
 	attr *
 		mol_textarea_clickable <= clickable?val false
+		mol_textarea_sidebar_showed <= sidebar_showed true
 	event *
 		keydown?event <=> press?event null
 		pointermove?event <=> hover?event null
@@ -14,3 +15,5 @@ $mol_textarea $mol_view
 		<= View $mol_text_code
 			text <= value
 			render_visible_only false
+			row_numb!index <= row_numb!index 0
+			sidebar_showed <= sidebar_showed
