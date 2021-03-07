@@ -4,8 +4,9 @@ namespace $ {
 		'test'( $ ) {
 
 			const root: $mol_tree2_belt<{}> = {
-				'foo': input=> [ input.struct( '777' ) ],
-				'test': $mol_jack.meta.test,
+				... $mol_jack,
+				'foo': input=> [ input.struct( 'FOO' ) ],
+				'FOO': input=> [ input.struct( 'FAIL' ) ],
 			}
 
 			$mol_assert_like(
@@ -13,7 +14,7 @@ namespace $ {
 				$.$mol_tree2_from_string( `
 					test
 						case foo
-						case 777
+						case tree FOO
 				` )
 				.hack( root )
 				.toString() ,
@@ -21,7 +22,7 @@ namespace $ {
 				$.$mol_tree2_from_string( `
 					test
 						case foo
-						case 777
+						case tree FOO
 				` )
 				.toString() ,
 

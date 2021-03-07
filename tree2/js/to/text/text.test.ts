@@ -101,7 +101,7 @@ namespace $ {
 				()=> convert(`
 					foo+bar
 				`),
-				'wrong node type\nfoo+bar\n\nunknown#2:6/7',
+				'Wrong node type\nfoo+bar\nunknown#2:6/7',
 			)
 		},
 

@@ -53,9 +53,9 @@ namespace $ {
 
 		'error handling'( $ ) {
 			const span = new $mol_span('test.ts', '', 1, 3, 4)
-			const error = span.error('some error')
+			const error = span.error('Some error\n')
 
-			$mol_assert_equal(error.message, 'some error\ntest.ts#1:3/4')
+			$mol_assert_equal(error.message, 'Some error\ntest.ts#1:3/4')
 		}
 
 	} )

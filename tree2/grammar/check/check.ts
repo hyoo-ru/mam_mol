@@ -19,7 +19,7 @@ namespace $ {
 			check: {
 				if( keywords.has( node.type ) ) break check
 				if( grammar.select( node.type ).kids.length ) break check
-				$mol_fail( node.error( `wrong pattern name` ) )
+				$mol_fail( node.error( `Wrong pattern name` ) )
 			}
 			
 			for( const kid of node.kids ) {

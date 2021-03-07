@@ -48,7 +48,7 @@ namespace $ {
 
 		/** Makes new error for this span. */
 		error( message : string , Class = Error ) {
-			return new Class( `${message}\n${this}` )
+			return new Class( `${message}${this}` )
 		}
 
 		/** Makes new span for same uri. */

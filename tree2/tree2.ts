@@ -253,14 +253,20 @@ namespace $ {
 			
 			return ( [] as readonly $mol_tree2[] ).concat( ... this.kids.map( child => {
 
-				let handle = belt[ Reflect.ownKeys( belt ).includes( child.type ) ? child.type : '' ]
+				let handle = belt[ child.type ] || belt[ '' ]
+				
 				if( !handle ) {
 					handle = ( input, belt, context )=> [
 						input.clone( input.hack( belt, context ), context.span )
 					]
 				}
 				
-				return handle( child , belt , context! )
+				try {
+					return handle( child , belt , context! )
+				} catch( error ) {
+					error.message += `\n${ child.clone([]) }${ child.span }`
+					$mol_fail_hidden( error )
+				}
 
 			} ) )
 
@@ -268,7 +274,7 @@ namespace $ {
 
 		/** Makes Error with node coordinates. */
 		error( message : string , Class = Error ) {
-			return this.span.error( `${message}\n${this}` , Class )
+			return this.span.error( `${ message }\n${ this.clone([]) }` , Class )
 		}
 
 	}
