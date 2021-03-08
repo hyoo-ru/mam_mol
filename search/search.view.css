@@ -3,14 +3,15 @@
 	flex: auto;
 }
 
+[mol_search_query] {
+	flex-grow: 1;
+}
+
+[mol_search_menu] {
+	min-height: .75rem;
+	display: flex;
+}
+
 [mol_search_suggest] {
-	flex: 1 1 auto;
-}
-
-[mol_search_clear] {
-	margin: 0;
-	flex: none;
-}
-
-[mol_search_clear_icon] {
+	text-align: left;
 }

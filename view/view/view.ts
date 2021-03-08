@@ -390,7 +390,7 @@ namespace $ {
 		}
 
 		/** Renders view to DOM and scroll to it. */
-		async ensure_visible( view: $mol_view ) {
+		async ensure_visible( view: $mol_view, align: ScrollLogicalPosition = "start" ) {
 			
 			const path = this.view_find( v => v === view ).next().value
 			
@@ -398,7 +398,7 @@ namespace $ {
 			
 			await $mol_fiber_warp()
 
-			view.dom_node().scrollIntoView()
+			view.dom_node().scrollIntoView({ block: align })
 
 		}
 

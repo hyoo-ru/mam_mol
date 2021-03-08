@@ -1,26 +1,25 @@
-$mol_search $mol_bar
+$mol_search $mol_pop
 	query?val \
-	plugins /
+	suggests /string
+	plugins /$mol_plugin
+		^
 		<= Hotkey $mol_hotkey
-			key * escape?val <=> event_clear?val null
-	sub /
-		<= Suggest $mol_select
-			value?val <=> suggest_selected?val \
-			filter_pattern?val <=> suggest_selected?val \
-			hint <= hint @ \Search...
-			filter_pattern?val <=> query?val
-			options_showed <= suggests_showed false
-			options <= suggests /string
-			submit?event <=> submit?event null
-			No_options null
-			enabled <= enabled true
-			Filter => Suggest_filter
-			option_rows => suggest_option_rows
-			menu_content <= suggest_option_rows
-			trigger_content /
-				<= Suggest_filter
-		<= Clear $mol_button_minor
-			sub /
-				<= Clear_icon $mol_icon_cross
-			event_click?val <=> event_clear?val null
-			hint <= clear_hint @ \Clear
+			key * escape?val <=> clear?val null
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y?component <=> nav_focused?component null
+	showed?val <=> suggests_showed?val false
+	Anchor <= Query $mol_string
+		value?val <=> query?val \
+		hint <= hint @ \Search...
+		submit?event <=> submit?event null
+		enabled <= enabled true
+	bubble_content /$mol_view_content
+		<= Menu $mol_list
+			rows <= menu_items /$mol_view
+	Suggest!id $mol_button_minor
+		click?event <=> suggest_select!id?event null
+		sub <= suggest_content!id /$mol_view_content
+			<= Suggest_label!id $mol_dimmer
+				haystack <= suggest_label!id \
+				needle <= query?val \

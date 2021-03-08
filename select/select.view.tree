@@ -23,6 +23,7 @@ $mol_select $mol_pop
 		sub <= trigger_content /
 		hint <= hint @ \Pick..
 	bubble_content /
+		<= Filter
 		<= Menu $mol_list
 			rows <= menu_content /$mol_view
 	Filter $mol_string
