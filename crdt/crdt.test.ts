@@ -11,8 +11,8 @@ namespace $ {
 				.toJSON(),
 				
 				{
-					foo: 100001,
-					bar: 200001,
+					foo: +100001,
+					bar: +200001,
 				},
 				
 			)
@@ -29,7 +29,7 @@ namespace $ {
 				.toJSON(),
 				
 				{
-					foo: 200001,
+					foo: +200001,
 				},
 				
 			)
@@ -47,9 +47,9 @@ namespace $ {
 				.toJSON(),
 				
 				{
-					foo: 100001,
-					xxx: 300001,
-					bar: 200001,
+					foo: +100001,
+					xxx: +300001,
+					bar: +200001,
 				},
 				
 			)
@@ -66,8 +66,8 @@ namespace $ {
 				.toJSON(),
 				
 				{
-					bar: 200001,
-					foo: 100001
+					bar: +200001,
+					foo: +100001
 				},
 				
 			)
@@ -85,7 +85,7 @@ namespace $ {
 				.toJSON(),
 				
 				{
-					bar: 200001,
+					bar: +200001,
 					foo: -300001,
 				},
 				
@@ -152,10 +152,10 @@ namespace $ {
 				.toJSON(),
 				
 				{
-					foo: 100001,
-					xxx: 100002,
-					bar: 200001,
-					yyy: 200002,
+					foo: +100001,
+					xxx: +100002,
+					bar: +200001,
+					yyy: +200002,
 				},
 				
 			)
@@ -168,27 +168,91 @@ namespace $ {
 			.put( 'foo' )
 			.put( 'bar' )
 			
-			const left = base.fork( 2 )
-			const right = base.fork( 3 )
+			const left = base.fork( 2 ).put( 'xxx', 1 )
+			const right = base.fork( 3 ).put( 'yyy', 1 )
 			
-			const patch_left = left.put( 'xxx', 1 )
-			const patch_right = right.put( 'yyy', 1 )
+			const left_event = left.fork()
+			const right_event = right.fork()
 			
 			$mol_assert_like(
 				
 				left
-				.merge( patch_right )
+				.merge( right_event )
 				.toJSON(),
 				
 				right
-				.merge( patch_left )
+				.merge( left_event )
 				.toJSON(),
 				
 				{
-					foo: 100001,
-					xxx: 300002,
-					yyy: 300003,
-					bar: 200001,
+					foo: +100001,
+					xxx: +300002,
+					yyy: +300003,
+					bar: +200001,
+				},
+				
+			)
+			
+		},
+		
+		'Insert before moved'() {
+			
+			const base = new $mol_crdt_list( 1 )
+			.put( 'foo' )
+			.put( 'bar' )
+			
+			const left = base.fork( 2 ).put( 'xxx', 0 )
+			const right = base.fork( 3 ).put( 'foo', 2 )
+			
+			const left_event = left.fork()
+			const right_event = right.fork()
+			
+			$mol_assert_like(
+				
+				left
+				.merge( right_event )
+				.toJSON(),
+				
+				right
+				.merge( left_event )
+				.toJSON(),
+				
+				{
+					xxx: +300002,
+					bar: +200001,
+					foo: +300003,
+				},
+				
+			)
+			
+		},
+		
+		'Insert before kicked'() {
+			
+			const base = new $mol_crdt_list( 1 )
+			.put( 'foo' )
+			.put( 'bar' )
+			
+			const left = base.fork( 2 ).put( 'xxx', 0 )
+			const right = base.fork( 3 ).kick( 'foo' )
+			
+			const left_event = left.fork()
+			const right_event = right.fork()
+			
+			$mol_assert_like(
+				
+				left
+				.merge( right_event )
+				.toJSON(),
+				
+				right
+				.merge( left_event )
+				.toJSON(),
+				
+				{
+					xxx: +300002,
+					bar: +200001,
+					foo: -300003,
 				},
 				
 			)
