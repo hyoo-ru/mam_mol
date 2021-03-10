@@ -11,18 +11,33 @@ namespace $ {
 		protected readonly actor: number
 		protected readonly array: string[]
 		protected readonly stamps: Record< string, number | undefined >
+		protected version_last: number
 		
 		constructor(
 			actor?: number,
 			stamps = Object.create( null ) as Record< string, number | undefined >,
 		) {
 			
-			this.actor = actor
+			actor = this.actor = actor
 				? actor % $mol_crdt_list.concurrency
 				: Math.floor( $mol_crdt_list.concurrency * Math.random() )
 			
 			this.stamps = stamps
-			this.array = Object.keys( stamps ).filter( id => stamps[ id ]! > 0 )
+
+			let max = 0
+			
+			this.array = Object.keys( stamps ).filter( id => {
+				
+				let version = stamps[ id ] ?? 0
+				if( version < 0 ) version = - version
+				
+				if( version > max ) max = version
+				
+				return version > 0
+				
+			} )
+			
+			this.version_last = Math.floor( max / $mol_crdt_list.concurrency ) * $mol_crdt_list.concurrency + actor
 			
 		}
 		
@@ -36,18 +51,6 @@ namespace $ {
 		
 		version( val: string ) {
 			return Math.abs( this.stamps[ val ] ?? 0 )
-		}
-		
-		version_last() {
-			
-			let max = 0
-			
-			for( let stamp of Object.values( this.stamps ) ) {
-				if( stamp! < 0 ) stamp = -stamp!
-				if( stamp! > max ) max = stamp!
-			}
-			
-			return Math.floor( max / $mol_crdt_list.concurrency ) * $mol_crdt_list.concurrency + this.actor
 		}
 		
 		toJSON() {
@@ -79,7 +82,7 @@ namespace $ {
 			const exists = this.array[ pos ]
 			if( exists === id ) return this
 				
-			patch[ id ] = this.version_last() + $mol_crdt_list.concurrency
+			patch[ id ] = this.version_last + $mol_crdt_list.concurrency
 			if( exists ) patch[ exists ] = this.stamps[ exists ]!
 				
 			return this.merge( new $mol_crdt_list( this.actor, patch ) )
@@ -94,7 +97,7 @@ namespace $ {
 			const stamp = this.stamps[ id ] ?? 0
 			if( stamp <= 0 ) return this
 			
-			patch[ id ] = - this.version_last() - $mol_crdt_list.concurrency
+			patch[ id ] = - this.version_last - $mol_crdt_list.concurrency
 			
 			return this.merge( new $mol_crdt_list( this.actor, patch ) )
 		}
@@ -112,6 +115,9 @@ namespace $ {
 				if( this.version( current_id ) >= patch.version( current_id ) ) continue
 				
 				this.stamps[ current_id ] = current_patch_stamp
+				if( current_patch_version > this.version_last ) {
+					this.version_last = Math.floor( current_patch_version / $mol_crdt_list.concurrency ) * $mol_crdt_list.concurrency + this.actor
+				}
 				
 				if( current_patch_stamp <= 0 ) {
 					
