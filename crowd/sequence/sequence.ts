@@ -1,10 +1,10 @@
 namespace $ {
 	
 	/** JSON representation of Ordered Set */
-	export type $mol_crdt_seq_data< Key extends string | number > = readonly $mol_crdt_reg_data< Key >[]
+	export type $mol_crowd_sequence_data< Key extends string | number > = readonly $mol_crowd_register_data< Key >[]
 	
 	/** Conflict Free Mergeable Ordered Set */
-	export class $mol_crdt_seq< Key extends string | number > extends $mol_crdt_base {
+	export class $mol_crowd_sequence< Key extends string | number > extends $mol_crowd_base {
 		
 		protected readonly array: Key[]
 		protected readonly stamps: Map< Key, number >
@@ -12,7 +12,7 @@ namespace $ {
 		
 		constructor(
 			actor?: number,
-			stamps = [] as $mol_crdt_seq_data< Key >,
+			stamps = [] as $mol_crowd_sequence_data< Key >,
 		) {
 			
 			super( actor )
@@ -62,7 +62,7 @@ namespace $ {
 				res.push([ key, stamp ])
 			}
 			
-			return res as $mol_crdt_seq_data< Key >
+			return res as $mol_crowd_sequence_data< Key >
 		}
 		
 		put(
@@ -78,7 +78,7 @@ namespace $ {
 			patch.push([ key, this.version_next ])
 			if( exists ) patch.push([ exists, this.stamps.get( exists )! ])
 				
-			this.merge( new $mol_crdt_seq( this.actor, patch ) )
+			this.merge( new $mol_crowd_sequence( this.actor, patch ) )
 			
 			return this
 		}
@@ -94,13 +94,13 @@ namespace $ {
 			
 			patch.push([ key, - this.version_next ])
 			
-			this.merge( new $mol_crdt_seq( this.actor, patch ) )
+			this.merge( new $mol_crowd_sequence( this.actor, patch ) )
 			
 			return this
 		}
 		
 		merge(
-			patch: $mol_crdt_seq< Key >,
+			patch: $mol_crowd_sequence< Key >,
 		) {
 			
 			for( let current_key of [ ... patch.stamps.keys() ].reverse() ) {
@@ -178,7 +178,7 @@ namespace $ {
 		}
 		
 		fork( actor = this.actor ) {
-			return new $mol_crdt_seq( actor, this.toJSON() )
+			return new $mol_crowd_sequence( actor, this.toJSON() )
 		}
 		
 	}

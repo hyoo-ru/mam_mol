@@ -1,15 +1,15 @@
 namespace $ {
 	
 	/** JSON representation of Register */
-	export type $mol_crdt_reg_data< Val extends string | number | boolean > = readonly[ Val, number ]
+	export type $mol_crowd_register_data< Val extends string | number | boolean > = readonly[ Val, number ]
 	
 	/** Conflict Free Mergeable Register */
-	export class $mol_crdt_reg< Val extends string | number > extends $mol_crdt_base {
+	export class $mol_crowd_register< Val extends string | number > extends $mol_crowd_base {
 		
 		constructor(
 			actor: number,
 			protected value: Val,
-			protected stamp: number,
+			protected stamp = 0,
 		) {
 			super( actor )
 		}
@@ -19,16 +19,17 @@ namespace $ {
 		}
 		
 		toJSON() {
-			return [ this.value, this.stamp ] as $mol_crdt_reg_data< Val >
+			return [ this.value, this.stamp ] as $mol_crowd_register_data< Val >
 		}
 		
 		put( val: Val ) {
 			this.value = val
 			this.stamp = this.version_increase( this.stamp )
+			return this
 		}
 		
 		merge(
-			[ val, stamp ]: $mol_crdt_reg_data< Val >,
+			[ val, stamp ]: $mol_crowd_register_data< Val >,
 		) {
 			
 			if( stamp <= this.stamp ) return this
@@ -40,7 +41,7 @@ namespace $ {
 		}
 		
 		fork( actor = this.actor ) {
-			return new $mol_crdt_reg( actor, ... this.toJSON() )
+			return new $mol_crowd_register( actor, ... this.toJSON() )
 		}
 		
 	}

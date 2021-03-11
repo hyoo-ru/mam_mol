@@ -2,7 +2,7 @@ namespace $ {
 	
 	const concurrency = 100_000
 	
-	export class $mol_crdt_base {
+	export class $mol_crowd_base {
 		
 		protected readonly actor: number
 		
