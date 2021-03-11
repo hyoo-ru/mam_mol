@@ -3,6 +3,11 @@ namespace $ {
 	export class $mol_import extends $mol_object2 {
 		
 		@ $mol_mem_key
+		static module( uri : string ) : any {
+			return $mol_fiber_sync( ()=> import( uri ) )()
+		}
+
+		@ $mol_mem_key
 		static script( uri : string ) : any {
 			
 			return $mol_fiber_sync( ()=> {
