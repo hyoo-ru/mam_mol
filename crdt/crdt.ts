@@ -1,41 +1,42 @@
 namespace $ {
 	
 	/** JSON representation of Ordered Set */
-	export type $mol_crdt_data = Readonly< Record< string, number > >
+	export type $mol_crdt_data< Key extends string | number > = readonly (readonly[ Key, number ])[]
 	
 	/** Conflict Free Mergeable Ordered Set */
-	export class $mol_crdt_seq {
+	export class $mol_crdt_seq< Key extends string | number > {
 		
 		static readonly concurrency = 100_000;
 		
 		protected readonly actor: number
-		protected readonly array: string[]
-		protected readonly stamps: Record< string, number | undefined >
+		protected readonly array: Key[]
+		protected readonly stamps: Map< Key, number >
 		protected version_last: number
 		
 		constructor(
 			actor?: number,
-			stamps = Object.create( null ) as Record< string, number | undefined >,
+			stamps = [] as $mol_crdt_data< Key >,
 		) {
 			
 			actor = this.actor = actor
 				? actor % $mol_crdt_seq.concurrency
 				: Math.floor( $mol_crdt_seq.concurrency * Math.random() )
 			
-			this.stamps = stamps
+			this.stamps = new Map( stamps )
 
 			let max = 0
 			
-			this.array = Object.keys( stamps ).filter( id => {
+			this.array = []
+			
+			for( let [ key, stamp ] of stamps ) {
 				
-				let version = stamps[ id ] ?? 0
-				if( version < 0 ) version = - version
+				if( stamp > 0 ) this.array.push( key )
 				
-				if( version > max ) max = version
+				if( stamp > max ) {
+					max = Math.max( Math.abs( stamp ), max )
+				}
 				
-				return version > 0
-				
-			} )
+			}
 			
 			this.version_last = Math.floor( max / $mol_crdt_seq.concurrency ) * $mol_crdt_seq.concurrency + actor
 			
@@ -45,76 +46,77 @@ namespace $ {
 			return this.array as readonly string[]
 		}
 		
-		has( val: string ) {
-			return this.stamps[ val ]! > 0
+		has( val: Key ) {
+			return this.stamps.get( val )! > 0
 		}
 		
-		version( val: string ) {
-			return Math.abs( this.stamps[ val ] ?? 0 )
+		version( val: Key ) {
+			return Math.abs( this.stamps.get( val ) ?? 0 )
 		}
 		
 		toJSON() {
 			
-			const res = {} as Record< string, number >
+			const res = [] as [ Key, number ][]
 			
-			for( const id of this.array ) {
-				res[ id ] = this.stamps[ id ]!
+			for( const key of this.array ) {
+				res.push([ key, this.stamps.get( key )! ])
 			}
 			
-			for( const id in this.stamps ) {
-				
-				const stamp = this.stamps[ id ]!
+			for( const [ key, stamp ] of this.stamps ) {
 				if( stamp > 0 ) continue
-				
-				res[ id ] = stamp
+				res.push([ key, stamp ])
 			}
 			
-			return res as $mol_crdt_data
+			return res as $mol_crdt_data< Key >
 		}
 		
 		put(
-			id: string,
+			key: Key,
 			pos: number = this.array.length,
 		) {
 			
-			const patch = Object.create( null ) as Record< string, number >
-
 			const exists = this.array[ pos ]
-			if( exists === id ) return this
+			if( exists === key ) return this
+			
+			const patch = [] as [ Key, number ][]
 				
-			patch[ id ] = this.version_last + $mol_crdt_seq.concurrency
-			if( exists ) patch[ exists ] = this.stamps[ exists ]!
+			patch.push([ key, this.version_last + $mol_crdt_seq.concurrency ])
+			if( exists ) patch.push([ exists, this.stamps.get( exists )! ])
 				
-			return this.merge( new $mol_crdt_seq( this.actor, patch ) )
+			this.merge( new $mol_crdt_seq( this.actor, patch ) )
+			
+			return this
 		}
 		
 		kick(
-			id: string
+			key: Key
 		) {
 			
-			const patch = Object.create( null ) as Record< string, number >
-
-			const stamp = this.stamps[ id ] ?? 0
+			const stamp = this.stamps.get( key ) ?? 0
 			if( stamp <= 0 ) return this
 			
-			patch[ id ] = - this.version_last - $mol_crdt_seq.concurrency
+			const patch = [] as [ Key, number ][]
 			
-			return this.merge( new $mol_crdt_seq( this.actor, patch ) )
+			patch.push([ key, - this.version_last - $mol_crdt_seq.concurrency ])
+			
+			this.merge( new $mol_crdt_seq( this.actor, patch ) )
+			
+			return this
 		}
 		
 		merge(
-			patch: $mol_crdt_seq,
+			patch: $mol_crdt_seq< Key >,
 		) {
 			
-			for( let current_id of Object.keys( patch.stamps ).reverse() ) {
+			for( let current_key of [ ... patch.stamps.keys() ].reverse() ) {
 				
-				const current_self_stamp = this.stamps[ current_id ] ?? 0
-				const current_patch_stamp = patch.stamps[ current_id ]!
-				const current_patch_version = patch.version( current_id )
+				const current_self_stamp = this.stamps.get( current_key ) ?? 0
+				const current_patch_stamp = patch.stamps.get( current_key )!
+				const current_patch_version = patch.version( current_key )
 				
-				if( this.version( current_id ) >= patch.version( current_id ) ) continue
+				if( this.version( current_key ) >= patch.version( current_key ) ) continue
 				
-				this.stamps[ current_id ] = current_patch_stamp
+				this.stamps.set( current_key, current_patch_stamp )
 				if( current_patch_version > this.version_last ) {
 					this.version_last = Math.floor( current_patch_version / $mol_crdt_seq.concurrency ) * $mol_crdt_seq.concurrency + this.actor
 				}
@@ -122,23 +124,23 @@ namespace $ {
 				if( current_patch_stamp <= 0 ) {
 					
 					if( current_self_stamp > 0 ) {
-						this.array.splice( this.array.indexOf( current_id ), 1 )
+						this.array.splice( this.array.indexOf( current_key ), 1 )
 					}
 					
 					continue
 				}
 				
-				for( let anchor = patch.array.indexOf( current_id ) + 1 ;; anchor ++ ) {
+				for( let anchor = patch.array.indexOf( current_key ) + 1 ;; anchor ++ ) {
 					
-					const anchor_id = patch.array[ anchor ]
+					const anchor_key = patch.array[ anchor ]
 					
 					if( anchor < patch.array.length ) {
-						const anchor_self_version = this.version( anchor_id )
+						const anchor_self_version = this.version( anchor_key )
 						if( anchor_self_version === 0 ) continue
-						if( anchor_self_version > patch.version( anchor_id ) ) continue
+						if( anchor_self_version > patch.version( anchor_key ) ) continue
 					}
 					
-					let next_pos = anchor_id ? this.array.indexOf( anchor_id ) : this.array.length
+					let next_pos = anchor_key ? this.array.indexOf( anchor_key ) : this.array.length
 					
 					while( next_pos > 0 ) {
 						if( this.version( this.array[ next_pos - 1 ] ) <= current_patch_version ) break
@@ -146,11 +148,11 @@ namespace $ {
 					}
 					
 					if( current_self_stamp <= 0 ) {
-						this.array.splice( next_pos, 0, current_id )
+						this.array.splice( next_pos, 0, current_key )
 						break
 					}
 					
-					const current_pos = this.array.indexOf( current_id )
+					const current_pos = this.array.indexOf( current_key )
 					
 					if( current_pos === next_pos ) break
 					
@@ -159,7 +161,7 @@ namespace $ {
 						this.array.splice(
 							next_pos,
 							current_pos - next_pos + 1,
-							current_id, ... this.array.slice( next_pos, current_pos )
+							current_key, ... this.array.slice( next_pos, current_pos )
 						)
 						
 					} else {
@@ -167,7 +169,7 @@ namespace $ {
 						this.array.splice(
 							current_pos,
 							next_pos - current_pos + 1,
-							... this.array.slice( current_pos + 1, next_pos + 1 ), current_id
+							... this.array.slice( current_pos + 1, next_pos + 1 ), current_key
 						)
 						
 					}
