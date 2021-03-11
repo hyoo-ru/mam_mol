@@ -1,7 +1,3 @@
 {
-	"$mol_search_clear_hint": "Очистить",
-	"$mol_search_hint": "Поиск..",
-	"$mol_select_Filter_hint": "Фильтр..",
-	"$mol_select_hint": "Выбрать..",
-	"$mol_select_no_options_message": "Нет вариантов"
+	"$mol_search_hint": "Поиск.."
 }

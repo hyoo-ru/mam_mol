@@ -6,15 +6,10 @@ namespace $.$$ {
 
 		display: 'block',
 		
-		margin: {
-			left: rem(3),
-		},
-		
-		'::before': {
-			content: 'attr(mol_text_code_row_numb)',
+		Numb: {
 			textAlign: 'right',
 			color: $mol_theme.shade,
-			width: rem(1.5),
+			width: rem(3),
 			padding: {
 				right: rem(1.5),
 			},
@@ -23,6 +18,7 @@ namespace $.$$ {
 			},
 			display: 'inline-block',
 			whiteSpace: 'nowrap',
+			userSelect: 'none',
 		},
 
 	} )

@@ -4,10 +4,13 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		suggests() {
+			
 			const query = this.query()
 			if( query.length < 2 ) return []
 			
-			return $mol_stub_strings( this.query() , 30 )
+			this.$.$mol_wait_timeout( 500 )
+			
+			return $mol_stub_strings( query , 30 )
 		}
 		
 	}

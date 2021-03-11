@@ -44,7 +44,6 @@ namespace $ {
 		 * 	disabled <= disabled
 		 * 	value <= value_changed?val
 		 * 	placeholder <= hint
-		 * 	type <= type?val
 		 * 	spellcheck <= spellcheck
 		 * 	autocomplete <= autocomplete_native
 		 * ```
@@ -55,7 +54,6 @@ namespace $ {
 				disabled: this.disabled(),
 				value: this.value_changed(),
 				placeholder: this.hint(),
-				type: this.type(),
 				spellcheck: this.spellcheck(),
 				autocomplete: this.autocomplete_native()
 			}
@@ -66,12 +64,14 @@ namespace $ {
 		 * attr *
 		 * 	^
 		 * 	maxlength <= length_max
+		 * 	type <= type?val
 		 * ```
 		 */
 		attr() {
 			return {
 				...super.attr(),
-				maxlength: this.length_max()
+				maxlength: this.length_max(),
+				type: this.type()
 			}
 		}
 		
@@ -142,17 +142,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * type?val \text
-		 * ```
-		 */
-		@ $mol_mem
-		type(val?: any) {
-			if ( val !== undefined ) return val
-			return "text"
-		}
-		
-		/**
-		 * ```tree
 		 * spellcheck false
 		 * ```
 		 */
@@ -176,6 +165,17 @@ namespace $ {
 		 */
 		length_max() {
 			return Infinity
+		}
+		
+		/**
+		 * ```tree
+		 * type?val \text
+		 * ```
+		 */
+		@ $mol_mem
+		type(val?: any) {
+			if ( val !== undefined ) return val
+			return "text"
 		}
 		
 		/**

@@ -3,20 +3,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * attr *
-		 * 	^
-		 * 	mol_text_code_row_numb <= numb
-		 * ```
-		 */
-		attr() {
-			return {
-				...super.attr(),
-				mol_text_code_row_numb: this.numb()
-			}
-		}
-		
-		/**
-		 * ```tree
 		 * text \
 		 * ```
 		 */
@@ -31,6 +17,31 @@ namespace $ {
 		 */
 		minimal_height() {
 			return 24
+		}
+		
+		/**
+		 * ```tree
+		 * numb_showed true
+		 * ```
+		 */
+		numb_showed() {
+			return true
+		}
+		
+		/**
+		 * ```tree
+		 * Numb $mol_view sub / <= numb
+		 * ```
+		 */
+		@ $mol_mem
+		Numb() {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => [
+				this.numb()
+			] as readonly any[]
+			
+			return obj
 		}
 		
 		/**

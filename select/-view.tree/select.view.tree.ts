@@ -99,11 +99,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * bubble_content / <= Menu
+		 * bubble_content /
+		 * 	<= Filter
+		 * 	<= Menu
 		 * ```
 		 */
 		bubble_content() {
 			return [
+				this.Filter(),
 				this.Menu()
 			] as readonly any[]
 		}

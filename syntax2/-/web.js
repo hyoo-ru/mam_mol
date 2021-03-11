@@ -1,3 +1,4 @@
+"use strict";
 function require( path ){ return $node[ path ] };
 "use strict"
 

@@ -1,5 +1,5 @@
+"use strict";
 require( "source-map-support" ).install(); var exports = void 0;
-;
 process.on( 'unhandledRejection' , up => { throw up } );
 "use strict"
 

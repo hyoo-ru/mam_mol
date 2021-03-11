@@ -82,7 +82,7 @@ namespace $.$$ {
 		
 		menu_content() {
 			return [
-				... this.nav_components(),
+				... this.option_rows(),
 				... ( this.options_filtered().length === 0 ) ? [ this.No_options() ] : []
 			]
 		}

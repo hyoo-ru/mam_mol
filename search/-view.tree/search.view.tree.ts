@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_search extends $mol_bar {
+	export class $mol_search extends $mol_pop {
 		
 		/**
 		 * ```tree
@@ -14,43 +14,90 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * plugins / <= Hotkey
+		 * suggests /string
+		 * ```
+		 */
+		suggests() {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * plugins /$mol_plugin
+		 * 	^
+		 * 	<= Hotkey
+		 * 	<= Nav
 		 * ```
 		 */
 		plugins() {
 			return [
-				this.Hotkey()
-			] as readonly any[]
+				...super.plugins(),
+				this.Hotkey(),
+				this.Nav()
+			] as readonly $mol_plugin[]
 		}
 		
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Suggest
-		 * 	<= Clear
+		 * showed?val <=> suggests_showed?val
 		 * ```
 		 */
-		sub() {
-			return [
-				this.Suggest(),
-				this.Clear()
-			] as readonly any[]
+		showed(val?: any) {
+			return this.suggests_showed(val)
 		}
 		
 		/**
 		 * ```tree
-		 * event_clear?val null
+		 * Anchor <= Query
+		 * ```
+		 */
+		Anchor() {
+			return this.Query()
+		}
+		
+		/**
+		 * ```tree
+		 * bubble_content /$mol_view_content <= Menu
+		 * ```
+		 */
+		bubble_content() {
+			return [
+				this.Menu()
+			] as readonly $mol_view_content[]
+		}
+		
+		/**
+		 * ```tree
+		 * Suggest!id $mol_button_minor
+		 * 	click?event <=> suggest_select!id?event
+		 * 	sub <= suggest_content!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Suggest(id: any) {
+			const obj = new this.$.$mol_button_minor()
+			
+			obj.click = (event?: any) => this.suggest_select(id, event)
+			obj.sub = () => this.suggest_content(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * clear?val null
 		 * ```
 		 */
 		@ $mol_mem
-		event_clear(val?: any) {
+		clear(val?: any) {
 			if ( val !== undefined ) return val
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * Hotkey $mol_hotkey key * escape?val <=> event_clear?val
+		 * Hotkey $mol_hotkey key * escape?val <=> clear?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -58,7 +105,7 @@ namespace $ {
 			const obj = new this.$.$mol_hotkey()
 			
 			obj.key = () => ({
-				escape: (val?: any) => this.event_clear(val)
+				escape: (val?: any) => this.clear(val)
 			})
 			
 			return obj
@@ -66,13 +113,51 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * suggest_selected?val \
+		 * nav_components /$mol_view
+		 * ```
+		 */
+		nav_components() {
+			return [
+			] as readonly $mol_view[]
+		}
+		
+		/**
+		 * ```tree
+		 * nav_focused?component null
 		 * ```
 		 */
 		@ $mol_mem
-		suggest_selected(val?: any) {
+		nav_focused(component?: any) {
+			if ( component !== undefined ) return component
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * Nav $mol_nav
+		 * 	keys_y <= nav_components
+		 * 	current_y?component <=> nav_focused?component
+		 * ```
+		 */
+		@ $mol_mem
+		Nav() {
+			const obj = new this.$.$mol_nav()
+			
+			obj.keys_y = () => this.nav_components()
+			obj.current_y = (component?: any) => this.nav_focused(component)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * suggests_showed?val false
+		 * ```
+		 */
+		@ $mol_mem
+		suggests_showed(val?: any) {
 			if ( val !== undefined ) return val
-			return ""
+			return false
 		}
 		
 		/**
@@ -82,25 +167,6 @@ namespace $ {
 		 */
 		hint() {
 			return this.$.$mol_locale.text( '$mol_search_hint' )
-		}
-		
-		/**
-		 * ```tree
-		 * suggests_showed false
-		 * ```
-		 */
-		suggests_showed() {
-			return false
-		}
-		
-		/**
-		 * ```tree
-		 * suggests /string
-		 * ```
-		 */
-		suggests() {
-			return [
-			] as readonly string[]
 		}
 		
 		/**
@@ -125,101 +191,95 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Suggest_filter
-		 * ```
-		 */
-		Suggest_filter() {
-			return this.Suggest().Filter()
-		}
-		
-		/**
-		 * ```tree
-		 * suggest_option_rows
-		 * ```
-		 */
-		suggest_option_rows() {
-			return this.Suggest().option_rows()
-		}
-		
-		/**
-		 * ```tree
-		 * Suggest $mol_select
-		 * 	value?val <=> suggest_selected?val
-		 * 	filter_pattern?val <=> suggest_selected?val
+		 * Query $mol_string
+		 * 	value?val <=> query?val
 		 * 	hint <= hint
-		 * 	filter_pattern?val <=> query?val
-		 * 	options_showed <= suggests_showed
-		 * 	options <= suggests
 		 * 	submit?event <=> submit?event
-		 * 	No_options null
 		 * 	enabled <= enabled
-		 * 	Filter => Suggest_filter
-		 * 	option_rows => suggest_option_rows
-		 * 	menu_content <= suggest_option_rows
-		 * 	trigger_content / <= Suggest_filter
 		 * ```
 		 */
 		@ $mol_mem
-		Suggest() {
-			const obj = new this.$.$mol_select()
+		Query() {
+			const obj = new this.$.$mol_string()
 			
-			obj.value = (val?: any) => this.suggest_selected(val)
-			obj.filter_pattern = (val?: any) => this.suggest_selected(val)
+			obj.value = (val?: any) => this.query(val)
 			obj.hint = () => this.hint()
-			obj.filter_pattern = (val?: any) => this.query(val)
-			obj.options_showed = () => this.suggests_showed()
-			obj.options = () => this.suggests()
 			obj.submit = (event?: any) => this.submit(event)
-			obj.No_options = () => null as any
 			obj.enabled = () => this.enabled()
-			obj.menu_content = () => this.suggest_option_rows()
-			obj.trigger_content = () => [
-				this.Suggest_filter()
-			] as readonly any[]
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * Clear_icon $mol_icon_cross
+		 * menu_items /$mol_view
+		 * ```
+		 */
+		menu_items() {
+			return [
+			] as readonly $mol_view[]
+		}
+		
+		/**
+		 * ```tree
+		 * Menu $mol_list rows <= menu_items
 		 * ```
 		 */
 		@ $mol_mem
-		Clear_icon() {
-			const obj = new this.$.$mol_icon_cross()
+		Menu() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => this.menu_items()
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * clear_hint @ \Clear
+		 * suggest_select!id?event null
 		 * ```
 		 */
-		clear_hint() {
-			return this.$.$mol_locale.text( '$mol_search_clear_hint' )
+		@ $mol_mem_key
+		suggest_select(id: any, event?: any) {
+			if ( event !== undefined ) return event
+			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * Clear $mol_button_minor
-		 * 	sub / <= Clear_icon
-		 * 	event_click?val <=> event_clear?val
-		 * 	hint <= clear_hint
+		 * suggest_label!id \
 		 * ```
 		 */
-		@ $mol_mem
-		Clear() {
-			const obj = new this.$.$mol_button_minor()
+		suggest_label(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Suggest_label!id $mol_dimmer
+		 * 	haystack <= suggest_label!id
+		 * 	needle <= query?val
+		 * ```
+		 */
+		@ $mol_mem_key
+		Suggest_label(id: any) {
+			const obj = new this.$.$mol_dimmer()
 			
-			obj.sub = () => [
-				this.Clear_icon()
-			] as readonly any[]
-			obj.event_click = (val?: any) => this.event_clear(val)
-			obj.hint = () => this.clear_hint()
+			obj.haystack = () => this.suggest_label(id)
+			obj.needle = () => this.query()
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * suggest_content!id /$mol_view_content <= Suggest_label!id
+		 * ```
+		 */
+		suggest_content(id: any) {
+			return [
+				this.Suggest_label(id)
+			] as readonly $mol_view_content[]
 		}
 	}
 	

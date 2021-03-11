@@ -22,7 +22,7 @@ namespace $ {
 							input.data( '"' ),
 						]
 
-						$mol_fail( input.error( 'Wrong attribute value' ) )
+						$mol_fail( new SyntaxError( 'Wrong attribute value' ) )
 
 					},
 

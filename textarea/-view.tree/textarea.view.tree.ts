@@ -3,12 +3,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * attr * mol_textarea_clickable <= clickable?val
+		 * attr *
+		 * 	^
+		 * 	mol_textarea_clickable <= clickable?val
+		 * 	mol_textarea_sidebar_showed <= sidebar_showed
 		 * ```
 		 */
 		attr() {
 			return {
-				mol_textarea_clickable: this.clickable()
+				...super.attr(),
+				mol_textarea_clickable: this.clickable(),
+				mol_textarea_sidebar_showed: this.sidebar_showed()
 			}
 		}
 		
@@ -48,6 +53,15 @@ namespace $ {
 		@ $mol_mem
 		clickable(val?: any) {
 			if ( val !== undefined ) return val
+			return false
+		}
+		
+		/**
+		 * ```tree
+		 * sidebar_showed false
+		 * ```
+		 */
+		sidebar_showed() {
 			return false
 		}
 		
@@ -136,9 +150,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * row_numb!index 0
+		 * ```
+		 */
+		row_numb(index: any) {
+			return 0
+		}
+		
+		/**
+		 * ```tree
 		 * View $mol_text_code
 		 * 	text <= value
 		 * 	render_visible_only false
+		 * 	row_numb!index <= row_numb!index
+		 * 	sidebar_showed <= sidebar_showed
 		 * ```
 		 */
 		@ $mol_mem
@@ -147,6 +172,8 @@ namespace $ {
 			
 			obj.text = () => this.value()
 			obj.render_visible_only = () => false
+			obj.row_numb = (index: any) => this.row_numb(index)
+			obj.sidebar_showed = () => this.sidebar_showed()
 			
 			return obj
 		}

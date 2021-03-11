@@ -99,12 +99,12 @@ $mol_string $mol_view
 		disabled <= disabled false
 		value <= value_changed?val <=> value?val \
 		placeholder <= hint \
-		type <= type?val \text
 		spellcheck <= spellcheck false
 		autocomplete <= autocomplete_native \
 	attr *
 		^
 		maxlength <= length_max Infinity
+		type <= type?val \text
 	event *
 		^
 		input?event <=> event_change?event null
@@ -217,6 +217,7 @@ $mol_select $mol_pop
 		sub <= trigger_content /
 		hint <= hint @ \Pick..
 	bubble_content /
+		<= Filter
 		<= Menu $mol_list
 			rows <= menu_content /$mol_view
 	Filter $mol_string

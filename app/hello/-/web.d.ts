@@ -607,7 +607,7 @@ declare namespace $ {
         plugins(): readonly $mol_view[];
         view_find(check: (path: $mol_view, text?: string) => boolean, path?: $mol_view[]): Generator<$mol_view[]>;
         force_render(path: Set<$mol_view>): void;
-        ensure_visible(view: $mol_view): Promise<void>;
+        ensure_visible(view: $mol_view, align?: ScrollLogicalPosition): Promise<void>;
     }
     type $mol_view_all = $mol_type_pick<$, typeof $mol_view>;
 }
@@ -871,12 +871,12 @@ declare namespace $ {
             disabled: boolean;
             value: any;
             placeholder: string;
-            type: any;
             spellcheck: boolean;
             autocomplete: string;
         };
         attr(): {
             maxlength: number;
+            type: any;
         };
         event(): {
             input: (event?: any) => any;
@@ -887,10 +887,10 @@ declare namespace $ {
         value(val?: any): any;
         value_changed(val?: any): any;
         hint(): string;
-        type(val?: any): any;
         spellcheck(): boolean;
         autocomplete_native(): string;
         length_max(): number;
+        type(val?: any): any;
         event_change(event?: any): any;
         event_key_press(event?: any): any;
         submit(event?: any): any;

@@ -3,6 +3,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	mol_text_code_sidebar_showed <= sidebar_showed
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				mol_text_code_sidebar_showed: this.sidebar_showed()
+			}
+		}
+		
+		/**
+		 * ```tree
 		 * text \
 		 * ```
 		 */
@@ -23,6 +37,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Row!id $mol_text_code_row
+		 * 	numb_showed <= sidebar_showed
 		 * 	numb <= row_numb!id
 		 * 	text <= row_text!id
 		 * 	highlight <= highlight
@@ -32,11 +47,21 @@ namespace $ {
 		Row(id: any) {
 			const obj = new this.$.$mol_text_code_row()
 			
+			obj.numb_showed = () => this.sidebar_showed()
 			obj.numb = () => this.row_numb(id)
 			obj.text = () => this.row_text(id)
 			obj.highlight = () => this.highlight()
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * sidebar_showed false
+		 * ```
+		 */
+		sidebar_showed() {
+			return false
 		}
 		
 		/**

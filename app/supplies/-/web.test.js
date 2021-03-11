@@ -1,3 +1,4 @@
+"use strict";
 function require( path ){ return $node[ path ] };
 "use strict";
 var $;
@@ -409,8 +410,9 @@ var $;
                 }
                 return result = true;
             }
-            let count = 0;
+            const keys = [];
             for (let key in a) {
+                keys.push(key);
                 try {
                     if (!$mol_compare_deep(a[key], b[key]))
                         return result = false;
@@ -418,13 +420,15 @@ var $;
                 catch (error) {
                     $.$mol_fail_hidden(new $.$mol_error_mix(`Failed ${JSON.stringify(key)} fields comparison of ${a} and ${b}`, error));
                 }
-                ++count;
             }
             for (let key in b) {
-                --count;
-                if (count < 0)
+                if (keys.length === 0)
+                    return result = false;
+                if (keys.shift() !== key)
                     return result = false;
             }
+            if (keys.length !== 0)
+                return result = false;
             const a_val = a['valueOf']();
             if (Object.is(a_val, a))
                 return result = true;
@@ -2366,15 +2370,6 @@ var $;
 //arg.web.test.js.map
 ;
 "use strict";
-var $;
-(function ($_1) {
-    $_1.$mol_test_mocks.push($ => {
-        $.$mol_after_work = $_1.$mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-//work.test.js.map
-;
-"use strict";
 //intersect.test.js.map
 ;
 "use strict";
@@ -2568,6 +2563,15 @@ var $;
     });
 })($ || ($ = {}));
 //regexp.test.js.map
+;
+"use strict";
+var $;
+(function ($_1) {
+    $_1.$mol_test_mocks.push($ => {
+        $.$mol_after_work = $_1.$mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+//work.test.js.map
 ;
 "use strict";
 var $;

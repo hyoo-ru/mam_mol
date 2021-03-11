@@ -17,12 +17,12 @@ $mol_string $mol_view
 		disabled <= disabled false
 		value <= value_changed?val <=> value?val \
 		placeholder <= hint \
-		type <= type?val \text
 		spellcheck <= spellcheck false
 		autocomplete <= autocomplete_native \
 	attr *
 		^
 		maxlength <= length_max Infinity
+		type <= type?val \text
 	event *
 		^
 		input?event <=> event_change?event null

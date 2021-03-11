@@ -12,7 +12,7 @@ namespace $ {
 		
 		const array_prolog = ( input: $mol_tree2, span = input.span )=> int( input.kids.length, span )
 	
-		const pending = ( input: $mol_tree2 )=> $mol_fail( input.error( 'pending to impement' ) )
+		const pending = ( input: $mol_tree2 )=> $mol_fail( input.error( 'Pending implementation' ) )
 		
 		const prolog = this.$mol_tree2_from_string( `
 			\\00
@@ -105,7 +105,7 @@ namespace $ {
 					const name = kind.kids[0]
 					
 					const index = types_mapping.get( name.type )
-					if( index === undefined ) this.$mol_fail( name.error( 'unknown type' ) )
+					if( index === undefined ) this.$mol_fail( name.error( 'Unknown type' ) )
 					
 					section.push(
 						... bytes( [ $mol_wasm_import_types.func ], kind.span ),

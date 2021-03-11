@@ -834,9 +834,10 @@ namespace $ {
 			if( sources.length === 0 ) return []
 			
 			var concater = new $mol_sourcemap_builder( target.name(), ';')
+			concater.add( '"use strict"' )
 
 			if( bundle === 'node' ) {
-				concater.add( 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
+				concater.add( 'require'+'( "source-map-support" ).install(); var exports = void 0' )
 				concater.add( "process.on( 'unhandledRejection' , up => { throw up } )" )
 			} else {
 				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
@@ -933,13 +934,14 @@ namespace $ {
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
 			var concater = new $mol_sourcemap_builder( target.name(), ';')
+			concater.add( '"use strict"' )
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 			var sources = this.sourcesJS( { path , exclude : exclude_ext } )
 			var sourcesNoTest = this.sourcesJS( { path , exclude } )
 			var sourcesTest = sources.filter( src => sourcesNoTest.indexOf( src ) === -1 )
 			if( bundle === 'node' ) {
-				concater.add( 'require'+'( "source-map-support" ).install()\n' )
+				concater.add( 'require'+'( "source-map-support" ).install()' )
 				concater.add( "process.on( 'unhandledRejection' , up => { throw up } )" )
 				sourcesTest = [ ... sourcesNoTest , ... sourcesTest ]
 			} else {

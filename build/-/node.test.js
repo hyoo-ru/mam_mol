@@ -2263,7 +2263,7 @@ var $;
             };
         }
         error(message, Class = Error) {
-            return new Class(`${message}\n${this}`);
+            return new Class(`${message}${this}`);
         }
         span(row, col, length) {
             return new $mol_span(this.uri, this.source, row, col, length);
@@ -2420,17 +2420,23 @@ var $;
         }
         hack(belt, context = {}) {
             return [].concat(...this.kids.map(child => {
-                let handle = belt[Reflect.ownKeys(belt).includes(child.type) ? child.type : ''];
-                if (!handle) {
+                let handle = belt[child.type] || belt[''];
+                if (!handle || handle === Object.prototype[child.type]) {
                     handle = (input, belt, context) => [
                         input.clone(input.hack(belt, context), context.span)
                     ];
                 }
-                return handle(child, belt, context);
+                try {
+                    return handle(child, belt, context);
+                }
+                catch (error) {
+                    error.message += `\n${child.clone([])}${child.span}`;
+                    $.$mol_fail_hidden(error);
+                }
             }));
         }
         error(message, Class = Error) {
-            return this.span.error(`${message}\n${this}`, Class);
+            return this.span.error(`${message}\n${this.clone([])}`, Class);
         }
     }
     __decorate([
@@ -4520,8 +4526,9 @@ var $;
             if (sources.length === 0)
                 return [];
             var concater = new $.$mol_sourcemap_builder(target.name(), ';');
+            concater.add('"use strict"');
             if (bundle === 'node') {
-                concater.add('require' + '( "source-map-support" ).install(); var exports = void 0;\n');
+                concater.add('require' + '( "source-map-support" ).install(); var exports = void 0');
                 concater.add("process.on( 'unhandledRejection' , up => { throw up } )");
             }
             else {
@@ -4592,12 +4599,13 @@ var $;
             var target = pack.resolve(`-/${bundle}.test.js`);
             var targetMap = pack.resolve(`-/${bundle}.test.js.map`);
             var concater = new $.$mol_sourcemap_builder(target.name(), ';');
+            concater.add('"use strict"');
             var exclude_ext = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
             var sources = this.sourcesJS({ path, exclude: exclude_ext });
             var sourcesNoTest = this.sourcesJS({ path, exclude });
             var sourcesTest = sources.filter(src => sourcesNoTest.indexOf(src) === -1);
             if (bundle === 'node') {
-                concater.add('require' + '( "source-map-support" ).install()\n');
+                concater.add('require' + '( "source-map-support" ).install()');
                 concater.add("process.on( 'unhandledRejection' , up => { throw up } )");
                 sourcesTest = [...sourcesNoTest, ...sourcesTest];
             }
@@ -5333,8 +5341,9 @@ var $;
                 }
                 return result = true;
             }
-            let count = 0;
+            const keys = [];
             for (let key in a) {
+                keys.push(key);
                 try {
                     if (!$mol_compare_deep(a[key], b[key]))
                         return result = false;
@@ -5342,13 +5351,15 @@ var $;
                 catch (error) {
                     $.$mol_fail_hidden(new $.$mol_error_mix(`Failed ${JSON.stringify(key)} fields comparison of ${a} and ${b}`, error));
                 }
-                ++count;
             }
             for (let key in b) {
-                --count;
-                if (count < 0)
+                if (keys.length === 0)
+                    return result = false;
+                if (keys.shift() !== key)
                     return result = false;
             }
+            if (keys.length !== 0)
+                return result = false;
             const a_val = a['valueOf']();
             if (Object.is(a_val, a))
                 return result = true;
@@ -6269,11 +6280,11 @@ var $;
                 kids[index].force_render(path);
             }
         }
-        async ensure_visible(view) {
+        async ensure_visible(view, align = "start") {
             const path = this.view_find(v => v === view).next().value;
             this.force_render(new Set(path));
             await $.$mol_fiber_warp();
-            view.dom_node().scrollIntoView();
+            view.dom_node().scrollIntoView({ block: align });
         }
     }
     $mol_view.watchers = new Set();
@@ -8691,8 +8702,8 @@ var $;
         },
         'error handling'($) {
             const span = new $_1.$mol_span('test.ts', '', 1, 3, 4);
-            const error = span.error('some error');
-            $_1.$mol_assert_equal(error.message, 'some error\ntest.ts#1:3/4');
+            const error = span.error('Some error\n');
+            $_1.$mol_assert_equal(error.message, 'Some error\ntest.ts#1:3/4');
         }
     });
 })($ || ($ = {}));

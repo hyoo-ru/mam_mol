@@ -1,5 +1,5 @@
-require( "source-map-support" ).install()
-;
+"use strict";
+require( "source-map-support" ).install();
 process.on( 'unhandledRejection' , up => { throw up } );
 "use strict"
 
@@ -1294,8 +1294,9 @@ var $;
                 }
                 return result = true;
             }
-            let count = 0;
+            const keys = [];
             for (let key in a) {
+                keys.push(key);
                 try {
                     if (!$mol_compare_deep(a[key], b[key]))
                         return result = false;
@@ -1303,13 +1304,15 @@ var $;
                 catch (error) {
                     $.$mol_fail_hidden(new $.$mol_error_mix(`Failed ${JSON.stringify(key)} fields comparison of ${a} and ${b}`, error));
                 }
-                ++count;
             }
             for (let key in b) {
-                --count;
-                if (count < 0)
+                if (keys.length === 0)
+                    return result = false;
+                if (keys.shift() !== key)
                     return result = false;
             }
+            if (keys.length !== 0)
+                return result = false;
             const a_val = a['valueOf']();
             if (Object.is(a_val, a))
                 return result = true;

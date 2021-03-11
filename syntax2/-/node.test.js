@@ -1,5 +1,5 @@
-require( "source-map-support" ).install()
-;
+"use strict";
+require( "source-map-support" ).install();
 process.on( 'unhandledRejection' , up => { throw up } );
 "use strict"
 

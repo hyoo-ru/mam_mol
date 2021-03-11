@@ -177,12 +177,12 @@ $mol_string $mol_view
 		disabled <= disabled false
 		value <= value_changed?val <=> value?val \
 		placeholder <= hint \
-		type <= type?val \text
 		spellcheck <= spellcheck false
 		autocomplete <= autocomplete_native \
 	attr *
 		^
 		maxlength <= length_max Infinity
+		type <= type?val \text
 	event *
 		^
 		input?event <=> event_change?event null
@@ -1166,8 +1166,6 @@ $mol_pop_bubble $mol_scroll
 		mol_pop_align <= align \
 		tabindex 0
 
-$mol_icon_dots_vertical $mol_icon path \M12,16C13.1,16 14,16.9 14,18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18C10,16.9 10.9,16 12,16M12,10C13.1,10 14,10.9 14,12C14,13.1 13.1,14 12,14C10.9,14 10,13.1 10,12C10,10.9 10.9,10 12,10M12,4C13.1,4 14,4.9 14,6C14,7.1 13.1,8 12,8C10.9,8 10,7.1 10,6C10,4.9 10.9,4 12,4Z
-
 $mol_nav $mol_plugin
 	cycle?val false
 	-
@@ -1189,68 +1187,31 @@ $mol_nav $mol_plugin
 		^
 		keydown?event <=> event_key?event null
 
-$mol_select $mol_pop
-	dictionary *
-	options /string
-	value?val \
-	Option_row!id $mol_button_minor
-		event_click?event <=> event_select!id?event null
-		sub <= option_content!id /
-			<= Option_label!id $mol_dimmer
-				haystack <= option_label!id \
-				needle <= filter_pattern?val \
-	No_options $mol_view
-		sub /
-			<= no_options_message @ \No options
-	plugins /
+$mol_search $mol_pop
+	query?val \
+	suggests /string
+	plugins /$mol_plugin
 		^
+		<= Hotkey $mol_hotkey
+			key * escape?val <=> clear?val null
 		<= Nav $mol_nav
 			keys_y <= nav_components /$mol_view
-			current_y?component <=> option_focused?component null
-			cycle?val <=> nav_cycle?val true
-	showed?val <=> options_showed?val false
-	Anchor <= Trigger $mol_button_minor
-		click?event <=> open?event null
-		sub <= trigger_content /
-		hint <= hint @ \Pick..
-	bubble_content /
-		<= Menu $mol_list
-			rows <= menu_content /$mol_view
-	Filter $mol_string
-		value?val <=> filter_pattern?val \
-		hint @ \Filter..
+			current_y?component <=> nav_focused?component null
+	showed?val <=> suggests_showed?val false
+	Anchor <= Query $mol_string
+		value?val <=> query?val \
+		hint <= hint @ \Search...
 		submit?event <=> submit?event null
 		enabled <= enabled true
-	Trigger_icon $mol_icon_dots_vertical
-
-$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
-
-$mol_search $mol_bar
-	query?val \
-	plugins /
-		<= Hotkey $mol_hotkey
-			key * escape?val <=> event_clear?val null
-	sub /
-		<= Suggest $mol_select
-			value?val <=> suggest_selected?val \
-			filter_pattern?val <=> suggest_selected?val \
-			hint <= hint @ \Search...
-			filter_pattern?val <=> query?val
-			options_showed <= suggests_showed false
-			options <= suggests /string
-			submit?event <=> submit?event null
-			No_options null
-			enabled <= enabled true
-			Filter => Suggest_filter
-			option_rows => suggest_option_rows
-			menu_content <= suggest_option_rows
-			trigger_content /
-				<= Suggest_filter
-		<= Clear $mol_button_minor
-			sub /
-				<= Clear_icon $mol_icon_cross
-			event_click?val <=> event_clear?val null
-			hint <= clear_hint @ \Clear
+	bubble_content /$mol_view_content
+		<= Menu $mol_list
+			rows <= menu_items /$mol_view
+	Suggest!id $mol_button_minor
+		click?event <=> suggest_select!id?event null
+		sub <= suggest_content!id /$mol_view_content
+			<= Suggest_label!id $mol_dimmer
+				haystack <= suggest_label!id \
+				needle <= query?val \
 
 $mol_code $mol_view
 	sub /
@@ -2251,6 +2212,43 @@ $mol_section_demo $mol_demo_large
 				head / \Section header
 				Content <= Section_content $mol_filler
 
+$mol_icon_dots_vertical $mol_icon path \M12,16C13.1,16 14,16.9 14,18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18C10,16.9 10.9,16 12,16M12,10C13.1,10 14,10.9 14,12C14,13.1 13.1,14 12,14C10.9,14 10,13.1 10,12C10,10.9 10.9,10 12,10M12,4C13.1,4 14,4.9 14,6C14,7.1 13.1,8 12,8C10.9,8 10,7.1 10,6C10,4.9 10.9,4 12,4Z
+
+$mol_select $mol_pop
+	dictionary *
+	options /string
+	value?val \
+	Option_row!id $mol_button_minor
+		event_click?event <=> event_select!id?event null
+		sub <= option_content!id /
+			<= Option_label!id $mol_dimmer
+				haystack <= option_label!id \
+				needle <= filter_pattern?val \
+	No_options $mol_view
+		sub /
+			<= no_options_message @ \No options
+	plugins /
+		^
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y?component <=> option_focused?component null
+			cycle?val <=> nav_cycle?val true
+	showed?val <=> options_showed?val false
+	Anchor <= Trigger $mol_button_minor
+		click?event <=> open?event null
+		sub <= trigger_content /
+		hint <= hint @ \Pick..
+	bubble_content /
+		<= Filter
+		<= Menu $mol_list
+			rows <= menu_content /$mol_view
+	Filter $mol_string
+		value?val <=> filter_pattern?val \
+		hint @ \Filter..
+		submit?event <=> submit?event null
+		enabled <= enabled true
+	Trigger_icon $mol_icon_dots_vertical
+
 $mol_select_demo_colors $mol_demo_small
 	title @ \Color picker with filter and custom rows
 	sub /
@@ -2425,11 +2423,12 @@ $mol_text_code_token_link $mol_text_code_token
 		target \_blank
 
 $mol_text_code_row $mol_paragraph
-	attr *
-		^
-		mol_text_code_row_numb <= numb 0
 	text \
 	minimal_height 24
+	numb_showed true
+	Numb $mol_view
+		sub /
+			<= numb 0
 	Token!id $mol_text_code_token
 		type <= token_type!id \
 		haystack <= token_text!id \
@@ -2439,9 +2438,13 @@ $mol_text_code_row $mol_paragraph
 		needle <= highlight \
 
 $mol_text_code $mol_list
+	attr *
+		^
+		mol_text_code_sidebar_showed <= sidebar_showed false
 	text \
 	text_lines /string
 	Row!id $mol_text_code_row
+		numb_showed <= sidebar_showed
 		numb <= row_numb!id 0
 		text <= row_text!id \
 		highlight <= highlight \
@@ -2499,7 +2502,9 @@ $mol_text_demo $mol_demo_large
 
 $mol_textarea $mol_view
 	attr *
+		^
 		mol_textarea_clickable <= clickable?val false
+		mol_textarea_sidebar_showed <= sidebar_showed false
 	event *
 		keydown?event <=> press?event null
 		pointermove?event <=> hover?event null
@@ -2513,6 +2518,8 @@ $mol_textarea $mol_view
 		<= View $mol_text_code
 			text <= value
 			render_visible_only false
+			row_numb!index <= row_numb!index 0
+			sidebar_showed <= sidebar_showed
 
 $mol_textarea_demo $mol_demo_large
 	title @ \Text input field in various states
@@ -2736,6 +2743,8 @@ $mol_view_tree_test_attributes_subcomponent_page $mol_view
 	Sub null
 
 $mol_icon_source $mol_icon path \M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z
+
+$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
 
 $mol_app_studio $mol_book
 	value_overrided!id?val null

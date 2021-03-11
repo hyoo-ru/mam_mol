@@ -2,10 +2,14 @@ namespace $.$$ {
 	
 	export class $mol_search extends $.$mol_search {
 		
-		suggests_showed() {
+		@ $mol_mem
+		suggests_showed( next = true ) {
+			
+			this.query()
+			console.log( $mol_view_selection.focused())
 			if( !this.focused() ) return false
 
-			return this.suggests().length > 1
+			return next
 		}
 
 		suggest_selected( next? : string ) {
@@ -13,20 +17,55 @@ namespace $.$$ {
 			
 			this.query( next )
 			
-			$mol_fiber_defer( ()=>
-				this.Suggest_filter().focused( true )
-			)
+			$mol_fiber_defer( ()=> {
+				this.Query().focused( true )
+			} )
 			
 		}
 		
-		sub() {
+		nav_components() {
 			return [
-				this.Suggest() ,
-				... ( this.query().length > 0 ) ? [ this.Clear() ] : [] ,
+				this.Query(),
+				... this.menu_items(),
 			]
 		}
 		
-		event_clear( event? : Event ) {
+		@ $mol_mem
+		nav_focused( component? : $mol_view ) {
+			
+			if( !this.focused() ) return null
+			
+			if( component == null ) {
+				
+				for( let comp of this.nav_components() ) {
+					if( comp && comp.focused() ) return comp
+				}
+				
+				return null
+			}
+			
+			if( this.suggests_showed() ) {
+				this.ensure_visible( component, "center" )
+				component.focused( true )
+			}
+			
+			return component
+		}
+		
+		suggest_label( key: string ) {
+			return key
+		}
+		
+		menu_items() {
+			return this.suggests().map( ( suggest : string ) => this.Suggest( suggest ) )
+		}
+		
+		suggest_select( id : string , event? : MouseEvent ) {
+			this.query( id )
+			this.Query().focused( false )
+		}
+		
+		clear( event? : Event ) {
 			this.query( '' )
 		}
 		

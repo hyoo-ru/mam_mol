@@ -44,7 +44,7 @@ namespace $.$$ {
 		}
 
 		minimal_height() {
-			return Math.max( super.minimal_height() || 32 )
+			return Math.max( super.minimal_height(), 40 )
 		}
 		
 		target() {
