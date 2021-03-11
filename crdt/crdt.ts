@@ -4,7 +4,7 @@ namespace $ {
 	export type $mol_crdt_data = Readonly< Record< string, number > >
 	
 	/** Conflict Free Mergeable Ordered Set */
-	export class $mol_crdt_list {
+	export class $mol_crdt_seq {
 		
 		static readonly concurrency = 100_000;
 		
@@ -19,8 +19,8 @@ namespace $ {
 		) {
 			
 			actor = this.actor = actor
-				? actor % $mol_crdt_list.concurrency
-				: Math.floor( $mol_crdt_list.concurrency * Math.random() )
+				? actor % $mol_crdt_seq.concurrency
+				: Math.floor( $mol_crdt_seq.concurrency * Math.random() )
 			
 			this.stamps = stamps
 
@@ -37,7 +37,7 @@ namespace $ {
 				
 			} )
 			
-			this.version_last = Math.floor( max / $mol_crdt_list.concurrency ) * $mol_crdt_list.concurrency + actor
+			this.version_last = Math.floor( max / $mol_crdt_seq.concurrency ) * $mol_crdt_seq.concurrency + actor
 			
 		}
 		
@@ -82,10 +82,10 @@ namespace $ {
 			const exists = this.array[ pos ]
 			if( exists === id ) return this
 				
-			patch[ id ] = this.version_last + $mol_crdt_list.concurrency
+			patch[ id ] = this.version_last + $mol_crdt_seq.concurrency
 			if( exists ) patch[ exists ] = this.stamps[ exists ]!
 				
-			return this.merge( new $mol_crdt_list( this.actor, patch ) )
+			return this.merge( new $mol_crdt_seq( this.actor, patch ) )
 		}
 		
 		kick(
@@ -97,13 +97,13 @@ namespace $ {
 			const stamp = this.stamps[ id ] ?? 0
 			if( stamp <= 0 ) return this
 			
-			patch[ id ] = - this.version_last - $mol_crdt_list.concurrency
+			patch[ id ] = - this.version_last - $mol_crdt_seq.concurrency
 			
-			return this.merge( new $mol_crdt_list( this.actor, patch ) )
+			return this.merge( new $mol_crdt_seq( this.actor, patch ) )
 		}
 		
 		merge(
-			patch: $mol_crdt_list,
+			patch: $mol_crdt_seq,
 		) {
 			
 			for( let current_id of Object.keys( patch.stamps ).reverse() ) {
@@ -116,7 +116,7 @@ namespace $ {
 				
 				this.stamps[ current_id ] = current_patch_stamp
 				if( current_patch_version > this.version_last ) {
-					this.version_last = Math.floor( current_patch_version / $mol_crdt_list.concurrency ) * $mol_crdt_list.concurrency + this.actor
+					this.version_last = Math.floor( current_patch_version / $mol_crdt_seq.concurrency ) * $mol_crdt_seq.concurrency + this.actor
 				}
 				
 				if( current_patch_stamp <= 0 ) {
@@ -181,7 +181,7 @@ namespace $ {
 		}
 		
 		fork( actor = this.actor ) {
-			return new $mol_crdt_list( actor, this.toJSON() )
+			return new $mol_crdt_seq( actor, this.toJSON() )
 		}
 		
 	}
