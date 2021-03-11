@@ -1,26 +1,21 @@
 namespace $ {
 	
 	/** JSON representation of Ordered Set */
-	export type $mol_crdt_data< Key extends string | number > = readonly (readonly[ Key, number ])[]
+	export type $mol_crowd_sequence_data< Key extends string | number > = readonly $mol_crowd_register_data< Key >[]
 	
 	/** Conflict Free Mergeable Ordered Set */
-	export class $mol_crdt_seq< Key extends string | number > {
+	export class $mol_crowd_sequence< Key extends string | number > extends $mol_crowd_base {
 		
-		static readonly concurrency = 100_000;
-		
-		protected readonly actor: number
 		protected readonly array: Key[]
 		protected readonly stamps: Map< Key, number >
-		protected version_last: number
+		protected version_next: number
 		
 		constructor(
 			actor?: number,
-			stamps = [] as $mol_crdt_data< Key >,
+			stamps = [] as $mol_crowd_sequence_data< Key >,
 		) {
 			
-			actor = this.actor = actor
-				? actor % $mol_crdt_seq.concurrency
-				: Math.floor( $mol_crdt_seq.concurrency * Math.random() )
+			super( actor )
 			
 			this.stamps = new Map( stamps )
 
@@ -38,7 +33,7 @@ namespace $ {
 				
 			}
 			
-			this.version_last = Math.floor( max / $mol_crdt_seq.concurrency ) * $mol_crdt_seq.concurrency + actor
+			this.version_next = this.version_increase( max )
 			
 		}
 		
@@ -67,7 +62,7 @@ namespace $ {
 				res.push([ key, stamp ])
 			}
 			
-			return res as $mol_crdt_data< Key >
+			return res as $mol_crowd_sequence_data< Key >
 		}
 		
 		put(
@@ -80,10 +75,10 @@ namespace $ {
 			
 			const patch = [] as [ Key, number ][]
 				
-			patch.push([ key, this.version_last + $mol_crdt_seq.concurrency ])
+			patch.push([ key, this.version_next ])
 			if( exists ) patch.push([ exists, this.stamps.get( exists )! ])
 				
-			this.merge( new $mol_crdt_seq( this.actor, patch ) )
+			this.merge( new $mol_crowd_sequence( this.actor, patch ) )
 			
 			return this
 		}
@@ -97,15 +92,15 @@ namespace $ {
 			
 			const patch = [] as [ Key, number ][]
 			
-			patch.push([ key, - this.version_last - $mol_crdt_seq.concurrency ])
+			patch.push([ key, - this.version_next ])
 			
-			this.merge( new $mol_crdt_seq( this.actor, patch ) )
+			this.merge( new $mol_crowd_sequence( this.actor, patch ) )
 			
 			return this
 		}
 		
 		merge(
-			patch: $mol_crdt_seq< Key >,
+			patch: $mol_crowd_sequence< Key >,
 		) {
 			
 			for( let current_key of [ ... patch.stamps.keys() ].reverse() ) {
@@ -117,8 +112,8 @@ namespace $ {
 				if( this.version( current_key ) >= patch.version( current_key ) ) continue
 				
 				this.stamps.set( current_key, current_patch_stamp )
-				if( current_patch_version > this.version_last ) {
-					this.version_last = Math.floor( current_patch_version / $mol_crdt_seq.concurrency ) * $mol_crdt_seq.concurrency + this.actor
+				if( current_patch_version >= this.version_next ) {
+					this.version_next = this.version_increase( current_patch_version )
 				}
 				
 				if( current_patch_stamp <= 0 ) {
@@ -183,7 +178,7 @@ namespace $ {
 		}
 		
 		fork( actor = this.actor ) {
-			return new $mol_crdt_seq( actor, this.toJSON() )
+			return new $mol_crowd_sequence( actor, this.toJSON() )
 		}
 		
 	}

@@ -5,7 +5,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crdt_seq( 1 )
+				new $mol_crowd_sequence( 1 )
 				.put( 'foo' )
 				.put( 'bar' )
 				.toJSON(),
@@ -23,7 +23,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crdt_seq( 1 )
+				new $mol_crowd_sequence( 1 )
 				.put( 'foo' )
 				.put( 'foo' )
 				.toJSON(),
@@ -40,7 +40,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crdt_seq( 1 )
+				new $mol_crowd_sequence( 1 )
 				.put( 'foo' )
 				.put( 'bar' )
 				.put( 'xxx', 1 )
@@ -60,7 +60,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crdt_seq( 1 )
+				new $mol_crowd_sequence( 1 )
 				.put( 'foo' )
 				.put( 'bar', 0 )
 				.toJSON(),
@@ -78,7 +78,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crdt_seq( 1 )
+				new $mol_crowd_sequence( 1 )
 				.put( 'foo' )
 				.put( 'bar' )
 				.kick( 'foo' )
@@ -97,7 +97,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crdt_seq( 1 )
+				new $mol_crowd_sequence( 1 )
 				.put( 'foo' )
 				.kick( 'foo' )
 				.kick( 'foo' )
@@ -115,7 +115,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crdt_seq( 1 )
+				new $mol_crowd_sequence( 1 )
 				.put( 'foo' )
 				.put( 'bar', 0 )
 				.put( 'xxx' )
@@ -130,11 +130,11 @@ namespace $ {
 		
 		'Merge different sets'() {
 			
-			const left = new $mol_crdt_seq( 1 )
+			const left = new $mol_crowd_sequence( 1 )
 			.put( 'foo' )
 			.put( 'bar' )
 			
-			const right = new $mol_crdt_seq( 2 )
+			const right = new $mol_crowd_sequence( 2 )
 			.put( 'xxx' )
 			.put( 'yyy' )
 			
@@ -164,7 +164,7 @@ namespace $ {
 		
 		'Insertion conflict'() {
 			
-			const base = new $mol_crdt_seq( 1 )
+			const base = new $mol_crowd_sequence( 1 )
 			.put( 'foo' )
 			.put( 'bar' )
 			
@@ -197,7 +197,7 @@ namespace $ {
 		
 		'Insert before moved'() {
 			
-			const base = new $mol_crdt_seq( 1 )
+			const base = new $mol_crowd_sequence( 1 )
 			.put( 'foo' )
 			.put( 'bar' )
 			
@@ -229,7 +229,7 @@ namespace $ {
 		
 		'Insert before kicked'() {
 			
-			const base = new $mol_crdt_seq( 1 )
+			const base = new $mol_crowd_sequence( 1 )
 			.put( 'foo' )
 			.put( 'bar' )
 			
@@ -263,7 +263,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crdt_seq( 1 )
+				new $mol_crowd_sequence( 1 )
 				.put( 1 )
 				.put( 2 )
 				.put( 3, 1 )
