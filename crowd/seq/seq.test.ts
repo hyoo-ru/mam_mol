@@ -5,7 +5,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crowd_sequence( 1 )
+				new $mol_crowd_seq(1)
 				.bring( 'foo' )
 				.bring( 'bar' )
 				.toJSON(),
@@ -23,7 +23,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crowd_sequence( 1 )
+				new $mol_crowd_seq(1)
 				.bring( 'foo' )
 				.bring( 'foo' )
 				.toJSON(),
@@ -40,7 +40,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crowd_sequence( 1 )
+				new $mol_crowd_seq(1)
 				.bring( 'foo' )
 				.bring( 'bar' )
 				.bring( 'xxx', 1 )
@@ -60,7 +60,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crowd_sequence( 1 )
+				new $mol_crowd_seq(1)
 				.bring( 'foo' )
 				.bring( 'bar', 0 )
 				.toJSON(),
@@ -78,7 +78,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crowd_sequence( 1 )
+				new $mol_crowd_seq(1)
 				.bring( 'foo' )
 				.bring( 'bar' )
 				.kick( 'foo' )
@@ -97,7 +97,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crowd_sequence( 1 )
+				new $mol_crowd_seq(1)
 				.bring( 'foo' )
 				.kick( 'foo' )
 				.kick( 'foo' )
@@ -115,7 +115,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crowd_sequence( 1 )
+				new $mol_crowd_seq(1)
 				.bring( 'foo' )
 				.bring( 'bar', 0 )
 				.bring( 'xxx' )
@@ -130,11 +130,11 @@ namespace $ {
 		
 		'Merge different sequences'() {
 			
-			const left = new $mol_crowd_sequence( 1 )
+			const left = new $mol_crowd_seq(1)
 			.bring( 'foo' )
 			.bring( 'bar' )
 			
-			const right = new $mol_crowd_sequence( 2 )
+			const right = new $mol_crowd_seq(2)
 			.bring( 'xxx' )
 			.bring( 'yyy' )
 			
@@ -164,12 +164,12 @@ namespace $ {
 		
 		'Insertion conflict'() {
 			
-			const base = new $mol_crowd_sequence( 1 )
+			const base = new $mol_crowd_seq(1)
 			.bring( 'foo' )
 			.bring( 'bar' )
 			
-			const left = base.fork( 2 ).bring( 'xxx', 1 )
-			const right = base.fork( 3 ).bring( 'yyy', 1 )
+			const left = base.fork(2).bring( 'xxx', 1 )
+			const right = base.fork(3).bring( 'yyy', 1 )
 			
 			const left_event = left.toJSON()
 			const right_event = right.toJSON()
@@ -197,12 +197,12 @@ namespace $ {
 		
 		'Insert before moved'() {
 			
-			const base = new $mol_crowd_sequence( 1 )
+			const base = new $mol_crowd_seq(1)
 			.bring( 'foo' )
 			.bring( 'bar' )
 			
-			const left = base.fork( 2 ).bring( 'xxx', 0 )
-			const right = base.fork( 3 ).bring( 'foo', 2 )
+			const left = base.fork(2).bring( 'xxx', 0 )
+			const right = base.fork(3).bring( 'foo', 2 )
 			
 			const left_event = left.toJSON()
 			const right_event = right.toJSON()
@@ -229,12 +229,12 @@ namespace $ {
 		
 		'Insert before kicked'() {
 			
-			const base = new $mol_crowd_sequence( 1 )
+			const base = new $mol_crowd_seq(1)
 			.bring( 'foo' )
 			.bring( 'bar' )
 			
-			const left = base.fork( 2 ).bring( 'xxx', 0 )
-			const right = base.fork( 3 ).kick( 'foo' )
+			const left = base.fork(2).bring( 'xxx', 0 )
+			const right = base.fork(3).kick( 'foo' )
 			
 			const left_event = left.toJSON()
 			const right_event = right.toJSON()
@@ -263,7 +263,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				
-				new $mol_crowd_sequence( 1 )
+				new $mol_crowd_seq(1)
 				.bring( 1 )
 				.bring( 2 )
 				.bring( 3, 1 )
