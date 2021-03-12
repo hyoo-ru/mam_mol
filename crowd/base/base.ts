@@ -4,7 +4,8 @@ namespace $ {
 	
 	export class $mol_crowd_base {
 		
-		protected readonly actor: number
+		readonly actor: number
+		public version_max = 0
 		
 		constructor(
 			actor?: number,
@@ -16,8 +17,13 @@ namespace $ {
 		
 		}
 		
-		version_increase( stamp: number ) {
-			return ( Math.floor( Math.abs( stamp ) / concurrency ) + 1 ) * concurrency + this.actor
+		version_feed( version: number ) {
+			if( this.version_max > version ) return
+			this.version_max = version
+		}
+		
+		version_gen() {
+			return this.version_max = ( Math.floor( this.version_max / concurrency ) + 1 ) * concurrency + this.actor
 		}
 		
 	}
