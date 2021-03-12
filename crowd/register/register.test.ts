@@ -1,13 +1,22 @@
 namespace $ {
 	$mol_test({
 		
+		'Default state'() {
+			
+			$mol_assert_like(
+				new $mol_crowd_register(1).toJSON(),
+				[ null, 0 ],
+			)
+			
+		},
+		
 		'Serial changes'() {
 			
 			$mol_assert_like(
 				
-				new $mol_crowd_register<string>( 1, '' )
-				.put( 'foo' )
-				.put( 'bar' )
+				new $mol_crowd_register(1)
+				.set( 'foo' )
+				.set( 'bar' )
 				.toJSON(),
 				
 				[ 'bar', +200001 ],
@@ -18,10 +27,10 @@ namespace $ {
 		
 		'Conflicted changes'() {
 			
-			const base = new $mol_crowd_register<string>( 1, '' ).put( 'foo' )
+			const base = new $mol_crowd_register(1).set( 'foo' )
 			
-			const left = base.fork( 2 ).put( 'bar' )
-			const right = base.fork( 3 ).put( 'xxx' )
+			const left = base.fork( 2 ).set( 'bar' )
+			const right = base.fork( 3 ).set( 'xxx' )
 			
 			const left_event = left.toJSON()
 			const right_event = right.toJSON()
