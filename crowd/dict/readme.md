@@ -22,11 +22,9 @@ Patch is partial state dump like:
 ]
 ```
 
-## Mutations
+## Access to stores
 
-- `put( path: ':string', value: string | number | boolean )` - Put to Register
-- `insert( path: '!string', key: string | number, pos = 0 )` - Insert to Ordered Set
-- `cut( path: '!string', key: string | number )` - Cut from Ordered Set
-- `add( path: '?string', key: string | number )` - Add to Unordered Set
-- `remove( path: '?string', key: string | number )` - Remove from Unordered Set
+- `reg( path: string )` Returns [CROWD Register](../reg) for path
+- `list( path: string )` - Returns [CROWD Ordered Set](../list) for path
+- `set( path: string )` - Returns [CROWD Unordered Set](../set) for path
 
