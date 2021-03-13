@@ -1,6 +1,6 @@
 namespace $ {
 	
-	const concurrency = 100_000
+	const concurrency = 1000
 	
 	export class $mol_crowd_base {
 		

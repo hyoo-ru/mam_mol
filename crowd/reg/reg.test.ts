@@ -19,7 +19,7 @@ namespace $ {
 				.set( 'bar' )
 				.toJSON(),
 				
-				[ 'bar', +200001 ],
+				[ 'bar', +2001 ],
 				
 			)
 			
@@ -38,7 +38,7 @@ namespace $ {
 			$mol_assert_like(
 				left.merge( right_event ).toJSON(),
 				right.merge( left_event ).toJSON(),
-				[ 'xxx', +200003 ],
+				[ 'xxx', +2003 ],
 			)
 			
 		},
