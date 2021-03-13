@@ -1,7 +1,7 @@
 namespace $ {
 	
 	/** Types that can be stored in the Crowd Dictionary */
-	export type $mol_crowd_dict_store = $mol_crowd_reg | $mol_crowd_seq | $mol_crowd_set
+	export type $mol_crowd_dict_store = $mol_crowd_reg | $mol_crowd_list | $mol_crowd_set
 	
 	/** JSON representation of Crowd Dictionary */
 	export type $mol_crowd_dict_data = readonly( readonly[ string, ReturnType< $mol_crowd_dict_store["toJSON"] > ] )[]
@@ -21,7 +21,7 @@ namespace $ {
 
 		toJSON() {
 			
-			const res = [] as ( readonly[ string, $mol_crowd_reg_data | $mol_crowd_seq_data ] )[]
+			const res = [] as ( readonly[ string, $mol_crowd_reg_data | $mol_crowd_list_data ] )[]
 			
 			for( const [ key, value ] of this.stores ) {
 				res.push([ key, value.toJSON() ] as const )
@@ -64,20 +64,20 @@ namespace $ {
 			return this
 		}
 		
-		insert( id: `!${ string }`, key: $mol_crowd_seq_key, pos?: number ) {
+		insert( id: `!${ string }`, key: $mol_crowd_list_key, pos?: number ) {
 			
 			this.mutate(
-				this.store( id, $mol_crowd_seq ),
+				this.store( id, $mol_crowd_list ),
 				store => store.insert( key, pos ),
 			)
 			
 			return this
 		}
 		
-		cut( id: `!${ string }`, key: $mol_crowd_seq_key ) {
+		cut( id: `!${ string }`, key: $mol_crowd_list_key ) {
 			
 			this.mutate(
-				this.store( id, $mol_crowd_seq ),
+				this.store( id, $mol_crowd_list ),
 				store => store.cut( key ),
 			)
 			

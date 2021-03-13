@@ -1,20 +1,20 @@
 namespace $ {
 	
 	/** Types that can be stored in the Crowd Ordered Set */
-	export type $mol_crowd_seq_key = string | number
+	export type $mol_crowd_list_key = string | number
 	
 	/** JSON representation of Crowd Ordered Set */
-	export type $mol_crowd_seq_data = readonly( readonly[ $mol_crowd_seq_key, number ] )[]
+	export type $mol_crowd_list_data = readonly( readonly[ $mol_crowd_list_key, number ] )[]
 	
 	/** Conflict-free Crowd Ordered Set */
-	export class $mol_crowd_seq extends $mol_crowd_base {
+	export class $mol_crowd_list extends $mol_crowd_base {
 		
-		protected readonly array: $mol_crowd_seq_key[]
-		protected readonly stamps: Map< $mol_crowd_seq_key, number >
+		protected readonly array: $mol_crowd_list_key[]
+		protected readonly stamps: Map< $mol_crowd_list_key, number >
 		
 		constructor(
 			actor?: number,
-			stamps = [] as $mol_crowd_seq_data,
+			stamps = [] as $mol_crowd_list_data,
 		) {
 			
 			super( actor )
@@ -33,17 +33,17 @@ namespace $ {
 			return this.array as readonly string[]
 		}
 		
-		has( val: $mol_crowd_seq_key ) {
+		has( val: $mol_crowd_list_key ) {
 			return this.stamps.get( val )! > 0
 		}
 		
-		version_item( val: $mol_crowd_seq_key ) {
+		version_item( val: $mol_crowd_list_key ) {
 			return Math.abs( this.stamps.get( val ) ?? 0 )
 		}
 		
 		toJSON() {
 			
-			const res = [] as [ $mol_crowd_seq_key, number ][]
+			const res = [] as [ $mol_crowd_list_key, number ][]
 			
 			for( const key of this.array ) {
 				res.push([ key, this.stamps.get( key )! ])
@@ -54,18 +54,18 @@ namespace $ {
 				res.push([ key, stamp ])
 			}
 			
-			return res as $mol_crowd_seq_data
+			return res as $mol_crowd_list_data
 		}
 		
 		insert(
-			key: $mol_crowd_seq_key,
+			key: $mol_crowd_list_key,
 			pos: number = this.array.length,
 		) {
 			
 			const exists = this.array[ pos ]
 			if( exists === key ) return this
 			
-			const patch = [] as [ $mol_crowd_seq_key, number ][]
+			const patch = [] as [ $mol_crowd_list_key, number ][]
 				
 			patch.push([ key, this.version_gen() ])
 			if( exists ) patch.push([ exists, this.stamps.get( exists )! ])
@@ -76,13 +76,13 @@ namespace $ {
 		}
 		
 		cut(
-			key: $mol_crowd_seq_key
+			key: $mol_crowd_list_key
 		) {
 			
 			const stamp = this.stamps.get( key ) ?? 0
 			if( stamp <= 0 ) return this
 			
-			const patch = [] as [ $mol_crowd_seq_key, number ][]
+			const patch = [] as [ $mol_crowd_list_key, number ][]
 			
 			patch.push([ key, - this.version_gen() ])
 			
@@ -92,10 +92,10 @@ namespace $ {
 		}
 		
 		merge(
-			data: $mol_crowd_seq_data,
+			data: $mol_crowd_list_data,
 		) {
 			
-			const patch = new $mol_crowd_seq( this.actor, data )
+			const patch = new $mol_crowd_list( this.actor, data )
 			
 			for( let current_key of [ ... patch.stamps.keys() ].reverse() ) {
 				
@@ -170,7 +170,7 @@ namespace $ {
 		}
 		
 		fork( actor = this.actor ) {
-			const fork = new $mol_crowd_seq( actor, this.toJSON() )
+			const fork = new $mol_crowd_list( actor, this.toJSON() )
 			fork.version_max = this.version_max
 			return fork
 		}
