@@ -13,14 +13,14 @@ namespace $ {
 		
 		constructor(
 			actor?: number,
-			stamps = [] as $mol_crowd_set_data,
+			data = [] as $mol_crowd_set_data,
 		) {
 			
 			super( actor )
 			
-			this.stamps = new Map( stamps )
+			this.stamps = new Map( data )
 			
-			for( let [, stamp ] of stamps ) {
+			for( let [, stamp ] of data ) {
 				this.version_feed( Math.abs( stamp ) )
 			}
 			

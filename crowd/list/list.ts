@@ -15,15 +15,15 @@ namespace $ {
 		
 		constructor(
 			actor?: number,
-			stamps = [] as $mol_crowd_list_data,
+			data = [] as $mol_crowd_list_data,
 		) {
 			
 			super( actor )
 			
-			this.stamps = new Map( stamps )
+			this.stamps = new Map( data )
 			this.array = []
 			
-			for( let [ key, stamp ] of stamps ) {
+			for( let [ key, stamp ] of data ) {
 				if( stamp > 0 ) this.array.push( key )
 				this.version_feed( Math.abs( stamp ) )
 			}
