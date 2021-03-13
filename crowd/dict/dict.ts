@@ -1,7 +1,7 @@
 namespace $ {
 	
 	/** Types that can be stored in the Crowd Dictionary */
-	export type $mol_crowd_dict_store = $mol_crowd_reg | $mol_crowd_seq
+	export type $mol_crowd_dict_store = $mol_crowd_reg | $mol_crowd_list | $mol_crowd_set
 	
 	/** JSON representation of Crowd Dictionary */
 	export type $mol_crowd_dict_data = readonly( readonly[ string, ReturnType< $mol_crowd_dict_store["toJSON"] > ] )[]
@@ -9,7 +9,7 @@ namespace $ {
 	/** Conflict-free Crowd Dictionary */
 	export class $mol_crowd_dict extends $mol_crowd_base {
 		
-		stores = new Map< string, $mol_crowd_reg | $mol_crowd_seq >()
+		stores = new Map< string, $mol_crowd_dict_store >()
 		
 		constructor(
 			actor?: number,
@@ -21,7 +21,7 @@ namespace $ {
 
 		toJSON() {
 			
-			const res = [] as ( readonly[ string, $mol_crowd_reg_data | $mol_crowd_seq_data ] )[]
+			const res = [] as ( readonly[ string, $mol_crowd_reg_data | $mol_crowd_list_data ] )[]
 			
 			for( const [ key, value ] of this.stores ) {
 				res.push([ key, value.toJSON() ] as const )
@@ -64,21 +64,41 @@ namespace $ {
 			return this
 		}
 		
-		bring( id: `=${ string }`, key: $mol_crowd_seq_key, pos?: number ) {
+		insert( id: `!${ string }`, key: $mol_crowd_list_key, pos?: number ) {
 			
 			this.mutate(
-				this.store( id, $mol_crowd_seq ),
-				store => store.bring( key, pos ),
+				this.store( id, $mol_crowd_list ),
+				store => store.insert( key, pos ),
 			)
 			
 			return this
 		}
 		
-		kick( id: `=${ string }`, key: $mol_crowd_seq_key ) {
+		cut( id: `!${ string }`, key: $mol_crowd_list_key ) {
 			
 			this.mutate(
-				this.store( id, $mol_crowd_seq ),
-				store => store.kick( key ),
+				this.store( id, $mol_crowd_list ),
+				store => store.cut( key ),
+			)
+			
+			return this
+		}
+		
+		add( id: `?${ string }`, key: $mol_crowd_set_key ) {
+			
+			this.mutate(
+				this.store( id, $mol_crowd_set ),
+				store => store.add( key ),
+			)
+			
+			return this
+		}
+		
+		remove( id: `?${ string }`, key: $mol_crowd_set_key ) {
+			
+			this.mutate(
+				this.store( id, $mol_crowd_set ),
+				store => store.remove( key ),
 			)
 			
 			return this
