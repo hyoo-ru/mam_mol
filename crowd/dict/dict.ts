@@ -7,16 +7,15 @@ namespace $ {
 	export type $mol_crowd_dict_data = readonly( readonly[ string, ReturnType< $mol_crowd_dict_store["toJSON"] > ] )[]
 	
 	/** Conflict-free Crowd Dictionary */
-	export class $mol_crowd_dict extends $mol_crowd_base {
+	export class $mol_crowd_dict {
 		
 		stores = new Map< string, $mol_crowd_dict_store >()
 		
 		constructor(
-			actor?: number,
-			stores = [] as readonly( readonly[ string, $mol_crowd_dict_store ] )[],
+			data = [] as $mol_crowd_dict_data,
+			protected stamper = new $mol_crowd_stamper,
 		) {
-			super( actor )
-			this.stores = new Map( stores )
+			this.merge( data )
 		}
 
 		toJSON( version_min = 0 ) {
@@ -36,101 +35,68 @@ namespace $ {
 		
 		store<
 			Store extends $mol_crowd_dict_store
-		>( id: string, Store: new( actor: number )=> Store ) {
+		>(
+			path: string,
+			Store: new( data: [], stamper: $mol_crowd_stamper )=> Store,
+		) {
 			
-			let store = this.stores.get( id ) as any as Store
+			let store = this.stores.get( path ) as any as Store
 			if( store ) return store
 			
-			store = new Store( this.actor )
-			this.stores.set( id, store )
+			store = new Store( [], this.stamper )
+			this.stores.set( path, store )
 			
 			return store
 		}
 		
-		mutate<
-			Store extends $mol_crowd_dict_store
-		>( store: Store, action: ( store: Store )=> void ) {
-			
-			store.version_max = this.version_max
-			
-			action( store )
-			
-			this.version_max = store.version_max
+		reg( path: `:${ string }` ) {
+			return this.store( path, $mol_crowd_reg )
 		}
 		
-		put( id: `:${ string }`, val: $mol_crowd_reg_value ) {
-			
-			this.mutate(
-				this.store( id, $mol_crowd_reg ),
-				store => store.set( val ),
-			)
-			
-			return this
+		set( path: `?${ string }` ) {
+			return this.store( path, $mol_crowd_set )
 		}
 		
-		insert( id: `!${ string }`, key: $mol_crowd_list_key, pos?: number ) {
-			
-			this.mutate(
-				this.store( id, $mol_crowd_list ),
-				store => store.insert( key, pos ),
-			)
-			
-			return this
-		}
-		
-		cut( id: `!${ string }`, key: $mol_crowd_list_key ) {
-			
-			this.mutate(
-				this.store( id, $mol_crowd_list ),
-				store => store.cut( key ),
-			)
-			
-			return this
-		}
-		
-		add( id: `?${ string }`, key: $mol_crowd_set_key ) {
-			
-			this.mutate(
-				this.store( id, $mol_crowd_set ),
-				store => store.add( key ),
-			)
-			
-			return this
-		}
-		
-		remove( id: `?${ string }`, key: $mol_crowd_set_key ) {
-			
-			this.mutate(
-				this.store( id, $mol_crowd_set ),
-				store => store.remove( key ),
-			)
-			
-			return this
+		list( path: `!${ string }` ) {
+			return this.store( path, $mol_crowd_list )
 		}
 		
 		merge(
-			patch: $mol_crowd_dict,
+			data: $mol_crowd_dict_data,
 		) {
 			
-			for( const [ id, store ] of patch.stores ) {
+			for( const [ path, patch ] of data ) {
 				
-				const self = this.stores.get( id )
+				let store = this.stores.get( path )
 				
-				if( !self ) {
-					this.stores.set( id, store )
-					this.version_feed( store.version_max )
-				} else if( self !== store ) {
-					this.mutate( self, self => self.merge( store.toJSON() as any ) )
+				if( !store ) {
+					
+					const Stores = {
+						':': $mol_crowd_reg,
+						'?': $mol_crowd_set,
+						'!': $mol_crowd_list,
+					}
+					
+					const Store = Stores[ path[0] ]
+					if( !Store ) $mol_fail( new Error( `Wrong path prefix: ${ path }` ) )
+
+					store = this.store( path, Store )
+					this.stores.set( path, store )
 				}
+				
+				store.merge( patch as any )
 				
 			}
 			
 			return this
 		}
 		
-		// fork( actor = this.actor ) {
-		// 	return new $mol_crowd_document( actor, [ ... this.stores.entries() ] )
-		// }
+		fork( actor: number ) {
+			return new $mol_crowd_dict(
+				this.toJSON(),
+				this.stamper.fork( actor ),
+			)
+		}
 		
 	}
 	

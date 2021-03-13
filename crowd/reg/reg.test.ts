@@ -3,43 +3,26 @@ namespace $ {
 		
 		'Default state'() {
 			
-			$mol_assert_like(
-				new $mol_crowd_reg(1).toJSON(),
-				[],
-			)
+			const val = new $mol_crowd_reg()
 			
-			$mol_assert_like(
-				new $mol_crowd_reg(1).value,
-				null,
-			)
-			
-			$mol_assert_like(
-				new $mol_crowd_reg(1).stamp,
-				0,
-			)
+			$mol_assert_like( val.toJSON(), [] )
+			$mol_assert_like( val.value, null )
+			$mol_assert_like( val.stamp, 0 )
 			
 		},
 		
 		'Serial changes'() {
 			
 			$mol_assert_like(
-				
-				new $mol_crowd_reg(1)
-				.set( 'foo' )
-				.set( 'bar' )
-				.toJSON(),
-				
+				new $mol_crowd_reg().fork(1).put( 'foo' ).put( 'bar' ).toJSON(),
 				[[ 'bar', +2001 ]],
-				
 			)
 			
 		},
 		
 		'Slice after version'() {
 			
-			const val = new $mol_crowd_reg(1)
-			.set( 'foo' )
-			.set( 'bar' )
+			const val = new $mol_crowd_reg().fork(1).put( 'foo' ).put( 'bar' )
 
 			$mol_assert_like( val.toJSON( +1001 ), [
 				[ 'bar', +2001 ],
@@ -51,10 +34,10 @@ namespace $ {
 		
 		'Conflicted changes'() {
 			
-			const base = new $mol_crowd_reg(1).set( 'foo' )
+			const base = new $mol_crowd_reg().fork(1).put( 'foo' )
 			
-			const left = base.fork(2).set( 'bar' )
-			const right = base.fork(3).set( 'xxx' )
+			const left = base.fork(2).put( 'bar' )
+			const right = base.fork(3).put( 'xxx' )
 			
 			const left_event = left.toJSON()
 			const right_event = right.toJSON()

@@ -7,18 +7,16 @@ namespace $ {
 	export type $mol_crowd_list_data = readonly( readonly[ $mol_crowd_list_key, number ] )[]
 	
 	/** Conflict-free Crowd Ordered Set */
-	export class $mol_crowd_list extends $mol_crowd_base {
+	export class $mol_crowd_list {
 		
 		protected version = 0
 		protected readonly array: $mol_crowd_list_key[]
 		protected readonly stamps: Map< $mol_crowd_list_key, number >
 		
 		constructor(
-			actor?: number,
 			data = [] as $mol_crowd_list_data,
+			readonly stamper = new $mol_crowd_stamper,
 		) {
-			
-			super( actor )
 			
 			this.stamps = new Map( data )
 			this.array = []
@@ -44,7 +42,7 @@ namespace $ {
 		
 		version_feed( version: number ) {
 			
-			super.version_feed( version )
+			this.stamper.feed( version )
 			
 			if( version <= this.version ) return
 			this.version = version
@@ -79,7 +77,7 @@ namespace $ {
 			
 			const patch = [] as [ $mol_crowd_list_key, number ][]
 				
-			patch.push([ key, this.version_gen() ])
+			patch.push([ key, this.stamper.genegate() ])
 			if( exists ) patch.push([ exists, this.stamps.get( exists )! ])
 				
 			this.merge( patch )
@@ -96,7 +94,7 @@ namespace $ {
 			
 			const patch = [] as [ $mol_crowd_list_key, number ][]
 			
-			patch.push([ key, - this.version_gen() ])
+			patch.push([ key, - this.stamper.genegate() ])
 			
 			this.merge( patch )
 			
@@ -107,7 +105,7 @@ namespace $ {
 			data: $mol_crowd_list_data,
 		) {
 			
-			const patch = new $mol_crowd_list( this.actor, data )
+			const patch = new $mol_crowd_list( data )
 			
 			for( let current_key of [ ... patch.stamps.keys() ].reverse() ) {
 				
@@ -181,10 +179,11 @@ namespace $ {
 			return this
 		}
 		
-		fork( actor = this.actor ) {
-			const fork = new $mol_crowd_list( actor, this.toJSON() )
-			fork.version_max = this.version_max
-			return fork
+		fork( actor: number ) {
+			return new $mol_crowd_list(
+				this.toJSON(),
+				this.stamper.fork( actor ),
+			)
 		}
 		
 	}
