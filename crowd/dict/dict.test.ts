@@ -1,7 +1,7 @@
 namespace $ {
 	$mol_test({
 		
-		'Put values'() {
+		'Registers'() {
 			
 			$mol_assert_like(
 				
@@ -20,23 +20,48 @@ namespace $ {
 			
 		},
 		
-		'Bring and kick keys'() {
+		'Ordered Sets'() {
 			
 			$mol_assert_like(
 				
 				new $mol_crowd_dict(1)
-				.bring( '=foo', 666 )
-				.bring( '=bar', 777 )
-				.bring( '=foo', 888, 0 )
-				.kick( '=bar', 777 )
+				.insert( '!foo', 666 )
+				.insert( '!bar', 777 )
+				.insert( '!foo', 888, 0 )
+				.cut( '!bar', 777 )
 				.toJSON(),
 				
 				[
-					[ '=foo', [
+					[ '!foo', [
 						[ 888, 3001 ],
 						[ 666, 1001 ],
 					] ],
-					[ '=bar', [
+					[ '!bar', [
+						[ 777, -4001 ]
+					] ],
+				],
+				
+			)
+			
+		},
+		
+		'Unordered Sets'() {
+			
+			$mol_assert_like(
+				
+				new $mol_crowd_dict(1)
+				.add( '?foo', 666 )
+				.add( '?bar', 777 )
+				.add( '?foo', 555 )
+				.remove( '?bar', 777 )
+				.toJSON(),
+				
+				[
+					[ '?foo', [
+						[ 666, 1001 ],
+						[ 555, 3001 ],
+					] ],
+					[ '?bar', [
 						[ 777, -4001 ]
 					] ],
 				],
@@ -49,18 +74,18 @@ namespace $ {
 			
 			const left = new $mol_crowd_dict(1)
 			.put( ':foo', 666 )
-			.bring( '=bar', 'xxx' )
+			.insert( '!bar', 'xxx' )
 			
 			const right = new $mol_crowd_dict(2)
 			.put( ':foo', 777 )
-			.bring( '=bar', 'yyy' )
-			.bring( '=bar', 'zzz' )
+			.insert( '!bar', 'yyy' )
+			.insert( '!bar', 'zzz' )
 			
 			$mol_assert_like(
 				left.merge( right ).toJSON(),
 				[
 					[ ':foo', [ 777, 1002 ] ],
-					[ '=bar', [
+					[ '!bar', [
 						[ 'xxx', 2001 ],
 						[ 'yyy', 2002 ],
 						[ 'zzz', 3002 ],
@@ -73,7 +98,7 @@ namespace $ {
 		'Merge increases versions'() {
 			
 			const left = new $mol_crowd_dict(1)
-			.bring( '=foo', 'xxx' )
+			.insert( '!foo', 'xxx' )
 			
 			const right = new $mol_crowd_dict(2)
 			.put( ':bar', 17 )
@@ -82,11 +107,11 @@ namespace $ {
 			$mol_assert_like(
 				
 				left.merge( right )
-				.bring( '=foo', 'yyy' )
+				.insert( '!foo', 'yyy' )
 				.toJSON(),
 				
 				[
-					[ '=foo', [
+					[ '!foo', [
 						[ 'xxx', 1001 ],
 						[ 'yyy', 3001 ],
 					] ],

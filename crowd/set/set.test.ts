@@ -43,7 +43,7 @@ namespace $ {
 				new $mol_crowd_set(1)
 				.add( 'foo' )
 				.add( 'bar' )
-				.kick( 'foo' )
+				.remove( 'foo' )
 				.toJSON(),
 				
 				[
@@ -61,8 +61,8 @@ namespace $ {
 				
 				new $mol_crowd_set(1)
 				.add( 'foo' )
-				.kick( 'foo' )
-				.kick( 'foo' )
+				.remove( 'foo' )
+				.remove( 'foo' )
 				.toJSON(),
 				
 				[
@@ -81,7 +81,7 @@ namespace $ {
 					new $mol_crowd_set(1)
 					.add( 'foo' )
 					.add( 'xxx' )
-					.kick( 'foo' )
+					.remove( 'foo' )
 					.items
 				],
 				
@@ -164,7 +164,7 @@ namespace $ {
 			.add( 'foo' )
 			
 			const left = base.fork(2).add( 'bar' )
-			const right = base.fork(3).kick( 'bar' )
+			const right = base.fork(3).remove( 'bar' )
 			
 			const left_event = left.toJSON()
 			const right_event = right.toJSON()

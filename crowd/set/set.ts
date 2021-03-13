@@ -54,7 +54,7 @@ namespace $ {
 			return this
 		}
 		
-		kick(
+		remove(
 			key: $mol_crowd_set_key
 		) {
 			this.merge([[ key, - this.version_gen() ]])

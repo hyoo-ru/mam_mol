@@ -57,7 +57,7 @@ namespace $ {
 			return res as $mol_crowd_seq_data
 		}
 		
-		bring(
+		insert(
 			key: $mol_crowd_seq_key,
 			pos: number = this.array.length,
 		) {
@@ -75,7 +75,7 @@ namespace $ {
 			return this
 		}
 		
-		kick(
+		cut(
 			key: $mol_crowd_seq_key
 		) {
 			
