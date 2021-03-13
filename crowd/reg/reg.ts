@@ -7,17 +7,16 @@ namespace $ {
 	export type $mol_crowd_reg_data = readonly( readonly[ $mol_crowd_reg_value, number ] )[]
 	
 	/** Conflict-free Crowd Register */
-	export class $mol_crowd_reg extends $mol_crowd_base {
+	export class $mol_crowd_reg {
 		
 		value = null as $mol_crowd_reg_value | null
 		stamp = 0
 		
 		constructor(
-			actor: number,
-			data?: $mol_crowd_reg_data,
+			data = [] as $mol_crowd_reg_data,
+			readonly stamper = new $mol_crowd_stamper,
 		) {
-			super( actor )
-			if( data ) this.merge( data )
+			this.merge( data )
 		}
 		
 		get version() {
@@ -28,9 +27,9 @@ namespace $ {
 			return this.version > version_min ? [ [ this.value, this.stamp ] ] : []
 		}
 				
-		set( val: $mol_crowd_reg_value ) {
+		put( val: $mol_crowd_reg_value ) {
 			this.value = val
-			this.stamp = this.version_gen()
+			this.stamp = this.stamper.genegate()
 			return this
 		}
 		
@@ -45,16 +44,17 @@ namespace $ {
 				this.value = val
 				this.stamp = stamp
 				
-				this.version_feed( stamp )
+				this.stamper.feed( stamp )
 			}
 			
 			return this
 		}
 		
-		fork( actor = this.actor ) {
-			const fork = new $mol_crowd_reg( actor, this.toJSON() )
-			fork.version_max = this.version_max
-			return fork
+		fork( actor: number ) {
+			return new $mol_crowd_reg(
+				this.toJSON(),
+				this.stamper.fork( actor ),
+			)
 		}
 		
 	}

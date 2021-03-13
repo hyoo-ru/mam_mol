@@ -4,17 +4,11 @@ namespace $ {
 		'Put values to end'() {
 			
 			$mol_assert_like(
-				
-				new $mol_crowd_list(1)
-				.insert( 'foo' )
-				.insert( 'bar' )
-				.toJSON(),
-				
+				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' ).toJSON(),
 				[
 					[ 'foo', +1001 ],
 					[ 'bar', +2001 ],
 				],
-				
 			)
 			
 		},
@@ -22,25 +16,17 @@ namespace $ {
 		'Ignore existen values'() {
 			
 			$mol_assert_like(
-				
-				new $mol_crowd_list(1)
-				.insert( 'foo' )
-				.insert( 'foo' )
-				.toJSON(),
-				
+				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'foo' ).toJSON(),
 				[
 					[ 'foo', +2001 ],
 				],
-				
 			)
 			
 		},
 		
 		'Slice after version'() {
 			
-			const val = new $mol_crowd_list(1)
-			.insert( 'foo' )
-			.insert( 'bar' )
+			const val = new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' )
 
 			$mol_assert_like( val.toJSON( +1001 ), [
 				[ 'foo', +1001 ],
@@ -54,19 +40,12 @@ namespace $ {
 		'Put value to middle'() {
 			
 			$mol_assert_like(
-				
-				new $mol_crowd_list(1)
-				.insert( 'foo' )
-				.insert( 'bar' )
-				.insert( 'xxx', 1 )
-				.toJSON(),
-				
+				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' ).insert( 'xxx', 1 ).toJSON(),
 				[
 					[ 'foo', +1001 ],
 					[ 'xxx', +3001 ],
 					[ 'bar', +2001 ],
 				],
-				
 			)
 			
 		},
@@ -74,17 +53,11 @@ namespace $ {
 		'Put value to start'() {
 			
 			$mol_assert_like(
-				
-				new $mol_crowd_list(1)
-				.insert( 'foo' )
-				.insert( 'bar', 0 )
-				.toJSON(),
-				
+				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar', 0 ).toJSON(),
 				[
 					[ 'bar', +2001 ],
 					[ 'foo', +1001 ],
 				],
-				
 			)
 			
 		},
@@ -92,18 +65,11 @@ namespace $ {
 		'Partial delete values'() {
 			
 			$mol_assert_like(
-				
-				new $mol_crowd_list(1)
-				.insert( 'foo' )
-				.insert( 'bar' )
-				.cut( 'foo' )
-				.toJSON(),
-				
+				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' ).cut( 'foo' ).toJSON(),
 				[
 					[ 'bar', +2001 ],
 					[ 'foo', -3001 ],
 				],
-				
 			)
 			
 		},
@@ -111,17 +77,10 @@ namespace $ {
 		'Ignore already kicked values'() {
 			
 			$mol_assert_like(
-				
-				new $mol_crowd_list(1)
-				.insert( 'foo' )
-				.cut( 'foo' )
-				.cut( 'foo' )
-				.toJSON(),
-				
+				new $mol_crowd_list().fork(1).insert( 'foo' ).cut( 'foo' ).cut( 'foo' ).toJSON(),
 				[
 					[ 'foo', -2001 ],
 				],
-				
 			)
 			
 		},
@@ -129,59 +88,37 @@ namespace $ {
 		'Convert to native array'() {
 			
 			$mol_assert_like(
-				
-				new $mol_crowd_list(1)
-				.insert( 'foo' )
-				.insert( 'bar', 0 )
-				.insert( 'xxx' )
-				.cut( 'foo' )
-				.items,
-				
+				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar', 0 ).insert( 'xxx' ).cut( 'foo' ).items,
 				[ "bar", "xxx" ],
-				
 			)
 			
 		},
 		
 		'Merge different sequences'() {
 			
-			const left = new $mol_crowd_list(1)
-			.insert( 'foo' )
-			.insert( 'bar' )
-			
-			const right = new $mol_crowd_list(2)
-			.insert( 'xxx' )
-			.insert( 'yyy' )
+			const base = new $mol_crowd_list().fork(1)
+			const left = base.fork(2).insert( 'foo' ).insert( 'bar' )
+			const right = base.fork(3).insert( 'xxx' ).insert( 'yyy' )
 			
 			const left_event = left.toJSON()
 			const right_event = right.toJSON()
 			
 			$mol_assert_like(
-				
-				left
-				.merge( right_event )
-				.toJSON(),
-				
-				right
-				.merge( left_event )
-				.toJSON(),
-				
+				left.merge( right_event ).toJSON(),
+				right.merge( left_event ).toJSON(),
 				[
-					[ 'foo', +1001 ],
-					[ 'xxx', +1002 ],
-					[ 'bar', +2001 ],
-					[ 'yyy', +2002 ],
+					[ 'foo', +1002 ],
+					[ 'xxx', +1003 ],
+					[ 'bar', +2002 ],
+					[ 'yyy', +2003 ],
 				],
-				
 			)
 			
 		},
 		
 		'Insertion conflict'() {
 			
-			const base = new $mol_crowd_list(1)
-			.insert( 'foo' )
-			.insert( 'bar' )
+			const base = new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' )
 			
 			const left = base.fork(2).insert( 'xxx', 1 )
 			const right = base.fork(3).insert( 'yyy', 1 )
@@ -190,31 +127,21 @@ namespace $ {
 			const right_event = right.toJSON()
 			
 			$mol_assert_like(
-				
-				left
-				.merge( right_event )
-				.toJSON(),
-				
-				right
-				.merge( left_event )
-				.toJSON(),
-				
+				left.merge( right_event ).toJSON(),
+				right.merge( left_event ).toJSON(),
 				[
 					[ 'foo', +1001 ],
 					[ 'xxx', +3002 ],
 					[ 'yyy', +3003 ],
 					[ 'bar', +2001 ],
 				],
-				
 			)
 			
 		},
 		
 		'Insert before moved'() {
 			
-			const base = new $mol_crowd_list(1)
-			.insert( 'foo' )
-			.insert( 'bar' )
+			const base = new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' )
 			
 			const left = base.fork(2).insert( 'xxx', 0 )
 			const right = base.fork(3).insert( 'foo', 2 )
@@ -223,30 +150,20 @@ namespace $ {
 			const right_event = right.toJSON()
 			
 			$mol_assert_like(
-				
-				left
-				.merge( right_event )
-				.toJSON(),
-				
-				right
-				.merge( left_event )
-				.toJSON(),
-				
+				left.merge( right_event ).toJSON(),
+				right.merge( left_event ).toJSON(),
 				[
 					[ 'xxx', +3002 ],
 					[ 'bar', +2001 ],
 					[ 'foo', +3003 ],
 				],
-				
 			)
 			
 		},
 		
 		'Insert before kicked'() {
 			
-			const base = new $mol_crowd_list(1)
-			.insert( 'foo' )
-			.insert( 'bar' )
+			const base = new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' )
 			
 			const left = base.fork(2).insert( 'xxx', 0 )
 			const right = base.fork(3).cut( 'foo' )
@@ -255,21 +172,13 @@ namespace $ {
 			const right_event = right.toJSON()
 			
 			$mol_assert_like(
-				
-				left
-				.merge( right_event )
-				.toJSON(),
-				
-				right
-				.merge( left_event )
-				.toJSON(),
-				
+				left.merge( right_event ).toJSON(),
+				right.merge( left_event ).toJSON(),
 				[
 					[ 'xxx', +3002 ],
 					[ 'bar', +2001 ],
 					[ 'foo', -3003 ],
 				],
-				
 			)
 			
 		},
@@ -277,19 +186,12 @@ namespace $ {
 		'Number ids support'() {
 			
 			$mol_assert_like(
-				
-				new $mol_crowd_list(1)
-				.insert( 1 )
-				.insert( 2 )
-				.insert( 3, 1 )
-				.toJSON(),
-				
+				new $mol_crowd_list().fork(1).insert( 1 ).insert( 2 ).insert( 3, 1 ).toJSON(),
 				[
 					[ 1, +1001 ],
 					[ 3, +3001 ],
 					[ 2, +2001 ],
 				],
-				
 			)
 			
 		},

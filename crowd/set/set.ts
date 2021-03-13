@@ -7,21 +7,19 @@ namespace $ {
 	export type $mol_crowd_set_data = readonly( readonly[ $mol_crowd_set_key, number ] )[]
 	
 	/** CROWD Unordered Set */
-	export class $mol_crowd_set extends $mol_crowd_base {
+	export class $mol_crowd_set {
 		
 		protected readonly stamps: Map< $mol_crowd_set_key, number >
 		
 		constructor(
-			actor?: number,
-			stamps = [] as $mol_crowd_set_data,
+			data = [] as $mol_crowd_set_data,
+			readonly stamper = new $mol_crowd_stamper,
 		) {
 			
-			super( actor )
+			this.stamps = new Map( data )
 			
-			this.stamps = new Map( stamps )
-			
-			for( let [, stamp ] of stamps ) {
-				this.version_feed( Math.abs( stamp ) )
+			for( let [, stamp ] of data ) {
+				this.stamper.feed( Math.abs( stamp ) )
 			}
 			
 		}
@@ -51,14 +49,14 @@ namespace $ {
 		add(
 			key: $mol_crowd_set_key,
 		) {
-			this.merge([[ key, this.version_gen() ]])
+			this.merge([[ key, this.stamper.genegate() ]])
 			return this
 		}
 		
 		remove(
 			key: $mol_crowd_set_key
 		) {
-			this.merge([[ key, - this.version_gen() ]])
+			this.merge([[ key, - this.stamper.genegate() ]])
 			return this
 		}
 		
@@ -72,17 +70,18 @@ namespace $ {
 				if( this.version_item( key ) >= version ) continue
 				
 				this.stamps.set( key, stamp )
-				this.version_feed( version )
+				this.stamper.feed( version )
 				
 			}
 			
 			return this
 		}
 		
-		fork( actor = this.actor ) {
-			const fork = new $mol_crowd_set( actor, this.toJSON() )
-			fork.version_max = this.version_max
-			return fork
+		fork( actor: number ) {
+			return new $mol_crowd_set(
+				this.toJSON(),
+				this.stamper.fork( actor ),
+			)
 		}
 		
 	}

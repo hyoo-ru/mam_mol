@@ -13,3 +13,7 @@
 - [CROWD Unordered Set](./set) - Equivalent of dCRDT LWW-Element-Set with same properties.
 - [CROWD Ordered Set](./list) - No CRDT alternatives.
 - [CROWD Dictionary](./dict) - No CRDT alternatives.
+
+## Common API
+
+- `toJSON( version_min = 0 )` - returns patch to remove gap between `version_min` and current that can be applied to actor that saw state until `version_min` from this actor.
