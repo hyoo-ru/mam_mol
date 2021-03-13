@@ -36,6 +36,21 @@ namespace $ {
 			
 		},
 		
+		'Slice after version'() {
+			
+			const val = new $mol_crowd_list(1)
+			.insert( 'foo' )
+			.insert( 'bar' )
+
+			$mol_assert_like( val.toJSON( +1001 ), [
+				[ 'foo', +1001 ],
+				[ 'bar', +2001 ],
+			] )
+			
+			$mol_assert_like( val.toJSON( +2001 ), [] )
+			
+		},
+		
 		'Put value to middle'() {
 			
 			$mol_assert_like(

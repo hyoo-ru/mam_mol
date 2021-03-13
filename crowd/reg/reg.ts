@@ -4,31 +4,30 @@ namespace $ {
 	export type $mol_crowd_reg_value = string | number | boolean | null
 	
 	/** JSON representation of Crowd Register */
-	export type $mol_crowd_reg_data = readonly[ $mol_crowd_reg_value, number ]
+	export type $mol_crowd_reg_data = readonly( readonly[ $mol_crowd_reg_value, number ] )[]
 	
 	/** Conflict-free Crowd Register */
 	export class $mol_crowd_reg extends $mol_crowd_base {
 		
-		protected value: $mol_crowd_reg_value | null
-		protected stamp: number
+		value = null as $mol_crowd_reg_value | null
+		stamp = 0
 		
 		constructor(
 			actor: number,
-			data?: readonly[ $mol_crowd_reg_value, number ],
+			data?: $mol_crowd_reg_data,
 		) {
 			super( actor )
-			this.value = data ? data[0] : null
-			this.stamp = data ? data[1] : 0
+			if( data ) this.merge( data )
 		}
 		
 		get version() {
 			return this.stamp
 		}
 		
-		toJSON() {
-			return [ this.value, this.stamp ] as $mol_crowd_reg_data
+		toJSON( version_min = 0 ) : $mol_crowd_reg_data {
+			return this.version > version_min ? [ [ this.value, this.stamp ] ] : []
 		}
-		
+				
 		set( val: $mol_crowd_reg_value ) {
 			this.value = val
 			this.stamp = this.version_gen()
@@ -36,15 +35,18 @@ namespace $ {
 		}
 		
 		merge(
-			[ val, stamp ]: $mol_crowd_reg_data,
+			data: $mol_crowd_reg_data,
 		) {
 			
-			if( stamp <= this.stamp ) return this
+			for( const [ val, stamp ] of data ) {
 			
-			this.value = val
-			this.stamp = stamp
-			
-			this.version_feed( stamp )
+				if( stamp <= this.stamp ) continue
+				
+				this.value = val
+				this.stamp = stamp
+				
+				this.version_feed( stamp )
+			}
 			
 			return this
 		}

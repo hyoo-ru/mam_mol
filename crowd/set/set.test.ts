@@ -19,6 +19,20 @@ namespace $ {
 			
 		},
 		
+		'Slice after version'() {
+			
+			const val = new $mol_crowd_set(1)
+			.add( 'foo' )
+			.add( 'bar' )
+			
+			$mol_assert_like( val.toJSON( +1001 ), [
+				[ 'bar', +2001 ],
+			] )
+			
+			$mol_assert_like( val.toJSON( +2001 ), [] )
+			
+		},
+		
 		'Ignore existen keys'() {
 			
 			$mol_assert_like(
