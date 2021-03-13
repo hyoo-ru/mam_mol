@@ -49,16 +49,16 @@ namespace $ {
 			return store
 		}
 		
-		reg( path: `:${ string }` ) {
-			return this.store( path, $mol_crowd_reg )
+		reg( path: string ) {
+			return this.store( ':' + path, $mol_crowd_reg )
 		}
 		
-		set( path: `?${ string }` ) {
-			return this.store( path, $mol_crowd_set )
+		set( path: string ) {
+			return this.store( '?' + path, $mol_crowd_set )
 		}
 		
-		list( path: `!${ string }` ) {
-			return this.store( path, $mol_crowd_list )
+		list( path: string ) {
+			return this.store( '!' + path, $mol_crowd_list )
 		}
 		
 		merge(
