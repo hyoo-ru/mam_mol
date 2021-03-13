@@ -27,3 +27,4 @@ Patch is partial state dump like:
 
 - `add( key: string | number )`
 - `remove( key: string | number )`
+- `has( key: string | number )`

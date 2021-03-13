@@ -16,4 +16,6 @@
 
 ## Common API
 
-- `toJSON( version_min = 0 )` - returns patch to remove gap between `version_min` and current that can be applied to actor that saw state until `version_min` from this actor.
+- `toJSON( version_min = 0 )` Returns patch to remove gap between `version_min` and current that can be applied to actor that saw state until `version_min` from this actor.
+- `merge( data )` Merges incremental patch to current state.
+- `fork( actor: number )` Makes independent clone with fixed actor id for testing purposes.

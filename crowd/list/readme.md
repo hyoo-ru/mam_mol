@@ -22,3 +22,4 @@ Patch is full state dump.
 
 - `insert( key: string | number, pos = 0 )`
 - `cut( key: string | number )`
+- `has( key: string | number )`
