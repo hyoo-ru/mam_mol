@@ -9,12 +9,16 @@ namespace $ {
 	/** Conflict-free Crowd Register */
 	export class $mol_crowd_reg extends $mol_crowd_base {
 		
+		protected value: $mol_crowd_reg_value | null
+		protected stamp: number
+		
 		constructor(
 			actor: number,
-			protected value: $mol_crowd_reg_value | null = null,
-			protected stamp = 0,
+			data?: readonly[ $mol_crowd_reg_value, number ],
 		) {
 			super( actor )
+			this.value = data ? data[0] : null
+			this.stamp = data ? data[1] : 0
 		}
 		
 		get version() {
@@ -46,7 +50,7 @@ namespace $ {
 		}
 		
 		fork( actor = this.actor ) {
-			const fork = new $mol_crowd_reg( actor, ... this.toJSON() )
+			const fork = new $mol_crowd_reg( actor, this.toJSON() )
 			fork.version_max = this.version_max
 			return fork
 		}
