@@ -9,6 +9,7 @@ namespace $ {
 	/** Conflict-free Crowd Ordered Set */
 	export class $mol_crowd_list extends $mol_crowd_base {
 		
+		protected version = 0
 		protected readonly array: $mol_crowd_list_key[]
 		protected readonly stamps: Map< $mol_crowd_list_key, number >
 		
@@ -41,7 +42,18 @@ namespace $ {
 			return Math.abs( this.stamps.get( val ) ?? 0 )
 		}
 		
-		toJSON() {
+		version_feed( version: number ) {
+			
+			super.version_feed( version )
+			
+			if( version <= this.version ) return
+			this.version = version
+			
+		}
+		
+		toJSON( version_min = 0 ): $mol_crowd_list_data {
+			
+			if( this.version <= version_min ) return []
 			
 			const res = [] as [ $mol_crowd_list_key, number ][]
 			
@@ -54,7 +66,7 @@ namespace $ {
 				res.push([ key, stamp ])
 			}
 			
-			return res as $mol_crowd_list_data
+			return res
 		}
 		
 		insert(

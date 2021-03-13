@@ -5,7 +5,17 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_reg(1).toJSON(),
-				[ null, 0 ],
+				[],
+			)
+			
+			$mol_assert_like(
+				new $mol_crowd_reg(1).value,
+				null,
+			)
+			
+			$mol_assert_like(
+				new $mol_crowd_reg(1).stamp,
+				0,
 			)
 			
 		},
@@ -19,9 +29,23 @@ namespace $ {
 				.set( 'bar' )
 				.toJSON(),
 				
-				[ 'bar', +2001 ],
+				[[ 'bar', +2001 ]],
 				
 			)
+			
+		},
+		
+		'Slice after version'() {
+			
+			const val = new $mol_crowd_reg(1)
+			.set( 'foo' )
+			.set( 'bar' )
+
+			$mol_assert_like( val.toJSON( +1001 ), [
+				[ 'bar', +2001 ],
+			] )
+			
+			$mol_assert_like( val.toJSON( +2001 ), [] )
 			
 		},
 		
@@ -38,7 +62,7 @@ namespace $ {
 			$mol_assert_like(
 				left.merge( right_event ).toJSON(),
 				right.merge( left_event ).toJSON(),
-				[ 'xxx', +2003 ],
+				[[ 'xxx', +2003 ]],
 			)
 			
 		},

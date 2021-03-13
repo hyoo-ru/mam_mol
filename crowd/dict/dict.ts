@@ -19,12 +19,16 @@ namespace $ {
 			this.stores = new Map( stores )
 		}
 
-		toJSON() {
+		toJSON( version_min = 0 ) {
 			
 			const res = [] as ( readonly[ string, $mol_crowd_reg_data | $mol_crowd_list_data ] )[]
 			
 			for( const [ key, value ] of this.stores ) {
-				res.push([ key, value.toJSON() ] as const )
+				
+				const patch = value.toJSON( version_min )
+				if( patch.length === 0 ) continue
+				
+				res.push([ key, patch ] as const )
 			}
 			
 			return res as $mol_crowd_dict_data

@@ -12,8 +12,12 @@ namespace $ {
 				.toJSON(),
 				
 				[
-					[ ':foo', [ 888, 3001 ] ],
-					[ ':bar', [ 777, 2001 ] ],
+					[ ':foo', [
+						[ 888, 3001 ],
+					] ],
+					[ ':bar', [
+						[ 777, 2001 ],
+					] ],
 				],
 				
 			)
@@ -70,6 +74,35 @@ namespace $ {
 			
 		},
 		
+		'Slice after version'() {
+			
+			const val = new $mol_crowd_dict(1)
+			
+			.put( ':foo', 1 )
+			.insert( '!bar', 2 )
+			.add( '?xxx', 3 )
+			
+			.put( ':foo', 4 )
+			.insert( '!bar', 5 )
+			.add( '?xxx', 6 )
+
+			$mol_assert_like( val.toJSON( +3001 ), [
+				[ ':foo', [
+					[ 4, +4001 ],
+				] ],
+				[ '!bar', [
+					[ 2, +2001 ],
+					[ 5, +5001 ],
+				] ],
+				[ '?xxx', [
+					[ 6, +6001 ],
+				] ],
+			] )
+			
+			$mol_assert_like( val.toJSON( +6001 ), [] )
+			
+		},
+		
 		'Merge different documents'() {
 			
 			const left = new $mol_crowd_dict(1)
@@ -84,7 +117,9 @@ namespace $ {
 			$mol_assert_like(
 				left.merge( right ).toJSON(),
 				[
-					[ ':foo', [ 777, 1002 ] ],
+					[ ':foo', [
+						[ 777, 1002 ],
+					] ],
 					[ '!bar', [
 						[ 'xxx', 2001 ],
 						[ 'yyy', 2002 ],
@@ -115,7 +150,9 @@ namespace $ {
 						[ 'xxx', 1001 ],
 						[ 'yyy', 3001 ],
 					] ],
-					[ ':bar', [ 18, 2002 ] ],
+					[ ':bar', [
+						[ 18, 2002 ],
+					] ],
 				],
 				
 			)

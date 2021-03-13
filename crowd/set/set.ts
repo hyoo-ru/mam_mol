@@ -42,8 +42,9 @@ namespace $ {
 			return Math.abs( this.stamps.get( val ) ?? 0 )
 		}
 		
-		toJSON() {
+		toJSON( version_min = 0 ) {
 			return [ ... this.stamps.entries() ]
+			.filter( ([ key, stamp ])=> Math.abs( stamp ) > version_min )
 			.sort( ( a, b )=> Math.abs( a[1] ) - Math.abs( b[1] ) ) as $mol_crowd_set_data
 		}
 		
