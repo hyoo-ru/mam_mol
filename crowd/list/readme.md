@@ -27,3 +27,8 @@ Delta is full state dump.
 - `insert( key: string | number, pos = 0 )`
 - `cut( key: string | number )`
 - `has( key: string | number )`
+
+## Can be reinterpreted as
+
+- [CROWD Register](../reg) then last value wins.
+- [CROWD Unordered Set](./set) with reordering by version.
