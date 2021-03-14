@@ -17,6 +17,10 @@ namespace $ {
 		
 		}
 		
+		actor_from( stamp: number ) {
+			return Math.abs( stamp ) % concurrency
+		}
+		
 		feed( version: number ) {
 			if( this.version_max > version ) return
 			this.version_max = version
