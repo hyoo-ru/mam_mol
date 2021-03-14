@@ -1,5 +1,7 @@
 # CROWD Ordered Set
 
+Ordered list of unique keys.
+
 ## State format
 
 ```javascript

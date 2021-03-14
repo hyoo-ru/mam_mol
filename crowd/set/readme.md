@@ -1,5 +1,7 @@
 # CROWD Unordered Set
 
+Unordered list of unique keys. Equivalent of dCRDT LWW-Element-Set with same properties.
+
 ## State format
 
 ```javascript

@@ -2,6 +2,7 @@ namespace $ {
 	
 	const concurrency = 1000
 	
+	/** Manages versions through connected CROWD stores */
 	export class $mol_crowd_stamper {
 		
 		readonly actor: number
@@ -15,6 +16,10 @@ namespace $ {
 				? actor % concurrency
 				: Math.floor( concurrency * Math.random() )
 		
+		}
+		
+		actor_from( stamp: number ) {
+			return Math.abs( stamp ) % concurrency
 		}
 		
 		feed( version: number ) {

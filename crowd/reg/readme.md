@@ -1,5 +1,7 @@
 # CROWD Register
 
+Single value store. Just CvRDT LWW-Register with same properties.
+
 ## State format
 
 ```javascript
