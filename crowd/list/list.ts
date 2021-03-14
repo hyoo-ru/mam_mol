@@ -29,7 +29,7 @@ namespace $ {
 		}
 		
 		get items() {
-			return this.array as readonly $mol_crowd_list_key[]
+			return this.array.slice() as readonly $mol_crowd_list_key[]
 		}
 		
 		has( val: $mol_crowd_list_key ) {
@@ -77,8 +77,12 @@ namespace $ {
 			
 			const patch = [] as [ $mol_crowd_list_key, number ][]
 				
+			if( pos > 0 ) {
+				const anchor = this.array[ pos - 1 ]
+				patch.push([ anchor, this.stamps.get( anchor )! ])
+			}
+			
 			patch.push([ key, this.stamper.genegate() ])
-			if( exists ) patch.push([ exists, this.stamps.get( exists )! ])
 				
 			this.merge( patch )
 			
@@ -104,10 +108,10 @@ namespace $ {
 		merge(
 			data: $mol_crowd_list_data,
 		) {
-			
+
 			const patch = new $mol_crowd_list( data )
 			
-			for( let current_key of [ ... patch.stamps.keys() ].reverse() ) {
+			for( let current_key of patch.stamps.keys() ) {
 				
 				const current_self_stamp = this.stamps.get( current_key ) ?? 0
 				const current_patch_stamp = patch.stamps.get( current_key )!
@@ -127,21 +131,21 @@ namespace $ {
 					continue
 				}
 				
-				for( let anchor = patch.array.indexOf( current_key ) + 1 ;; anchor ++ ) {
+				for( let anchor = patch.array.indexOf( current_key ) - 1 ;; anchor -- ) {
 					
 					const anchor_key = patch.array[ anchor ]
 					
-					if( anchor < patch.array.length ) {
+					if( anchor > 0 ) {
 						const anchor_self_version = this.version_item( anchor_key )
 						if( anchor_self_version === 0 ) continue
 						if( anchor_self_version > patch.version_item( anchor_key ) ) continue
 					}
 					
-					let next_pos = anchor_key ? this.array.indexOf( anchor_key ) : this.array.length
+					let next_pos = anchor_key !== undefined ? this.array.indexOf( anchor_key ) + 1 : 0
 					
-					while( next_pos > 0 ) {
-						if( this.version_item( this.array[ next_pos - 1 ] ) <= current_patch_version ) break
-						next_pos --
+					while( next_pos < this.array.length ) {
+						if( this.version_item( this.array[ next_pos ] ) <= current_patch_version ) break
+						next_pos ++
 					}
 					
 					if( current_self_stamp <= 0 ) {
