@@ -16,7 +16,6 @@ Ordered list of unique keys.
 
 Items with negative stamps - tombstones.
 
-
 Size = Size( AddedAndRemovedKeys ) + 8B * Count( AddedAndRemovedKeys )
 
 ## Patch format

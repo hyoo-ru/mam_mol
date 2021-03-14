@@ -34,11 +34,11 @@ Size = Size( ChangedPaths ) + Size( InnerStorePatches )
 
 ## Type Prefixes
 
-`#` - [CROWD Counter](../numb)
-`:` - [CROWD Register](../reg)
-`!` - [CROWD Ordered Set](../list)
-`?` - [CROWD Unordered Set](../set)
-`&` - [CROWD Dictionary](../dict)
+- `#` - [CROWD Counter](../numb)
+- `:` - [CROWD Register](../reg)
+- `!` - [CROWD Ordered Set](../list)
+- `?` - [CROWD Unordered Set](../set)
+- `&` - [CROWD Dictionary](../dict)
 
 ## Access to Stores
 
