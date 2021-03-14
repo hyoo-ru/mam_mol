@@ -6,17 +6,10 @@ namespace $ {
 	)[]
 	
 	/** CROWD Counter */
-	export class $mol_crowd_numb {
+	export class $mol_crowd_numb extends $mol_crowd_store< $mol_crowd_numb_data > {
 		
 		stores = new Map< number, $mol_crowd_reg >()
 		
-		constructor(
-			data = [] as $mol_crowd_numb_data,
-			protected stamper = new $mol_crowd_stamper,
-		) {
-			this.merge( data )
-		}
-
 		get value() {
 			
 			let res = 0
@@ -51,7 +44,7 @@ namespace $ {
 			let store = this.stores.get( path )
 			if( store ) return store
 			
-			store = new $mol_crowd_reg( [], this.stamper )
+			store = new $mol_crowd_reg( this.stamper )
 			this.stores.set( path, store )
 			
 			return store
@@ -77,15 +70,6 @@ namespace $ {
 			}
 			
 			return this
-		}
-		
-		fork( actor: number ) {
-			
-			return new $mol_crowd_numb(
-				this.toJSON(),
-				this.stamper.fork( actor ),
-			) as this
-			
 		}
 		
 	}

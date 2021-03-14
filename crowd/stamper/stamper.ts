@@ -18,6 +18,10 @@ namespace $ {
 		
 		}
 		
+		version_from( stamp: number ) {
+			return Math.abs( stamp )
+		}
+		
 		actor_from( stamp: number ) {
 			return Math.abs( stamp ) % concurrency
 		}

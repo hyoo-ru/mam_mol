@@ -7,22 +7,9 @@ namespace $ {
 	export type $mol_crowd_set_data = readonly( readonly[ $mol_crowd_set_key, number ] )[]
 	
 	/** CROWD Unordered Set */
-	export class $mol_crowd_set {
+	export class $mol_crowd_set extends $mol_crowd_store< $mol_crowd_set_data > {
 		
-		protected readonly stamps: Map< $mol_crowd_set_key, number >
-		
-		constructor(
-			data = [] as $mol_crowd_set_data,
-			readonly stamper = new $mol_crowd_stamper,
-		) {
-			
-			this.stamps = new Map( data )
-			
-			for( let [, stamp ] of data ) {
-				this.stamper.feed( Math.abs( stamp ) )
-			}
-			
-		}
+		protected readonly stamps = new Map< $mol_crowd_set_key, number >()
 		
 		get items() {
 			return new Set(
@@ -75,13 +62,6 @@ namespace $ {
 			}
 			
 			return this
-		}
-		
-		fork( actor: number ) {
-			return new $mol_crowd_set(
-				this.toJSON(),
-				this.stamper.fork( actor ),
-			)
 		}
 		
 	}

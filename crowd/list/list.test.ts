@@ -107,10 +107,10 @@ namespace $ {
 				left.merge( right_event ).toJSON(),
 				right.merge( left_event ).toJSON(),
 				[
-					[ 'foo', +1002 ],
 					[ 'xxx', +1003 ],
-					[ 'bar', +2002 ],
 					[ 'yyy', +2003 ],
+					[ 'foo', +1002 ],
+					[ 'bar', +2002 ],
 				],
 			)
 			
@@ -131,8 +131,8 @@ namespace $ {
 				right.merge( left_event ).toJSON(),
 				[
 					[ 'foo', +1001 ],
-					[ 'xxx', +3002 ],
 					[ 'yyy', +3003 ],
+					[ 'xxx', +3002 ],
 					[ 'bar', +2001 ],
 				],
 			)

@@ -20,17 +20,10 @@ namespace $ {
 	)[]
 	
 	/** CROWD Dictionary */
-	export class $mol_crowd_dict {
+	export class $mol_crowd_dict extends $mol_crowd_store< $mol_crowd_dict_data > {
 		
 		stores = new Map< string, $mol_crowd_dict_store >()
 		
-		constructor(
-			data = [] as $mol_crowd_dict_data,
-			protected stamper = new $mol_crowd_stamper,
-		) {
-			this.merge( data )
-		}
-
 		toJSON( version_min = 0 ) {
 			
 			const res = [] as $mol_crowd_dict_data[number][]
@@ -50,13 +43,13 @@ namespace $ {
 			Store extends $mol_crowd_dict_store
 		>(
 			path: string,
-			Store: new( data: [], stamper: $mol_crowd_stamper )=> Store,
+			Store: new( stamper: $mol_crowd_stamper )=> Store,
 		) {
 			
 			let store = this.stores.get( path ) as any as Store
 			if( store ) return store
 			
-			store = new Store( [], this.stamper )
+			store = new Store( this.stamper )
 			this.stores.set( path, store )
 			
 			return store
@@ -111,13 +104,6 @@ namespace $ {
 			}
 			
 			return this
-		}
-		
-		fork( actor: number ) {
-			return new $mol_crowd_dict(
-				this.toJSON(),
-				this.stamper.fork( actor ),
-			)
 		}
 		
 	}
