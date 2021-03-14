@@ -15,11 +15,11 @@ Number that can be shifted by any value. Merges without data lost. Equivalent of
 
 Stamp is always non negative.
 
-Size = 16B * ActorsInState
+Size = 16 * ActorsInState
 
-## Patch format
+## Delta format
 
-Patch is partial state dump like:
+Delta is partial state dump like:
 
 ```javascript
 [ //actor stamp
@@ -28,7 +28,7 @@ Patch is partial state dump like:
 ]
 ```
 
-Size = 16B * ActorsInDelta
+Size = 16 * ActorsInDelta
 
 ## Mutations
 

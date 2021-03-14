@@ -75,7 +75,7 @@ namespace $ {
 			return this.store( '&' + path, $mol_crowd_dict )
 		}
 		
-		merge(
+		apply(
 			data: $mol_crowd_dict_data,
 		) {
 			
@@ -99,7 +99,7 @@ namespace $ {
 					store = this.store( path, Store )
 				}
 				
-				store.merge( patch as any )
+				store.apply( patch as any )
 				
 			}
 			

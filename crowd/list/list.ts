@@ -69,7 +69,7 @@ namespace $ {
 			
 			patch.push([ key, this.stamper.genegate() ])
 				
-			this.merge( patch )
+			this.apply( patch )
 			
 			return this
 		}
@@ -85,12 +85,12 @@ namespace $ {
 			
 			patch.push([ key, - this.stamper.genegate() ])
 			
-			this.merge( patch )
+			this.apply( patch )
 			
 			return this
 		}
 		
-		merge(
+		apply(
 			data: $mol_crowd_list_data,
 		) {
 
@@ -98,6 +98,7 @@ namespace $ {
 			const patch_stamps = new Map< $mol_crowd_list_key, number >()
 			
 			for( let [ key, stamp ] of data ) {
+				patch_stamps.set( key, stamp )
 				if( stamp > 0 ) patch_array.push( key )
 			}
 			
@@ -124,7 +125,7 @@ namespace $ {
 					
 					const anchor_key = patch_array[ anchor ]
 					
-					if( anchor > 0 ) {
+					if( anchor >= 0 ) {
 						const anchor_self_version = this.version_item( anchor_key )
 						if( anchor_self_version === 0 ) continue
 						if( anchor_self_version > this.stamper.version_from( patch_stamps.get( anchor_key )! ) ) continue

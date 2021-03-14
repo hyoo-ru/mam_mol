@@ -16,6 +16,18 @@ namespace $ {
 			return this.stamp
 		}
 		
+		get str() {
+			return String( this.value ?? '' )
+		}
+		
+		get numb() {
+			return Number( this.value ?? 0 )
+		}
+		
+		get bool() {
+			return Boolean( this.value ?? false )
+		}
+		
 		toJSON( version_min = 0 ) : $mol_crowd_reg_data {
 			return this.version > version_min ? [ [ this.value, this.stamp ] ] : []
 		}
@@ -26,7 +38,7 @@ namespace $ {
 			return this
 		}
 		
-		merge(
+		apply(
 			data: $mol_crowd_reg_data,
 		) {
 			

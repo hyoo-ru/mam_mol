@@ -16,21 +16,21 @@ Map string path to another CROWD Store.
 
 Size = Size( Paths ) + Size( InnerStores )
 
-## Patch Format
+## Delta Format
 
-Patch is partial state dump like:
+Delta is partial state dump like:
 
 ```javascript
 [
-	[ "#path", [ /* Counter Patches */ ] ],
-	[ ":path", [ /* Register Patches */ ] ],
-	[ "!path", [ /* Ordered Set Patches */ ] ],
-	[ "?path", [ /* Unordered Set Patches */ ] ],
-	[ "&path", [ /* Dictionary Patches */ ] ],
+	[ "#path", [ /* Counter Deltas */ ] ],
+	[ ":path", [ /* Register Deltas */ ] ],
+	[ "!path", [ /* Ordered Set Deltas */ ] ],
+	[ "?path", [ /* Unordered Set Deltas */ ] ],
+	[ "&path", [ /* Dictionary Deltas */ ] ],
 ]
 ```
 
-Size = Size( ChangedPaths ) + Size( InnerStorePatches )
+Size = Size( ChangedPaths ) + Size( InnerStoreDeltas )
 
 ## Type Prefixes
 

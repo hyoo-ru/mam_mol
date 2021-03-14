@@ -102,7 +102,7 @@ namespace $ {
 			right.list( 'bar' ).insert( 'zzz' )
 			
 			$mol_assert_like(
-				left.merge( right.toJSON() ).toJSON(),
+				left.apply( right.toJSON() ).toJSON(),
 				[
 					[ ':foo', [
 						[ 777, 1002 ],
@@ -128,7 +128,7 @@ namespace $ {
 			right.reg( 'bar' ).put( 17 )
 			right.reg( 'bar' ).put( 18 )
 			
-			left.merge( right.toJSON() )
+			left.apply( right.toJSON() )
 			left.list( 'foo' ).insert( 'yyy' )
 			
 			$mol_assert_like( left.toJSON(), [

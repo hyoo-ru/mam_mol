@@ -41,18 +41,18 @@ namespace $ {
 			
 		},
 		
-		'Concurent changes'() {
+		'Concurrent changes'() {
 			
 			const base = new $mol_crowd_numb().fork(1).shift( +5 )
 			
 			const left = base.fork(2).shift( +3 ).shift( +1 )
 			const right = base.fork(3).shift( -2 ).shift( +1 )
 			
-			const left_event = left.toJSON()
-			const right_event = right.toJSON()
+			const left_event = left.delta( base )
+			const right_event = right.delta( base )
 			
-			left.merge( right_event )
-			right.merge( left_event )
+			left.apply( right_event )
+			right.apply( left_event )
 			
 			$mol_assert_like(
 				left.toJSON(),
