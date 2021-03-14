@@ -43,36 +43,38 @@ namespace $ {
 			Store extends $mol_crowd_dict_store
 		>(
 			path: string,
-			Store: new( stamper: $mol_crowd_stamper )=> Store,
+			Store?: new( stamper: $mol_crowd_stamper )=> Store,
 		) {
 			
 			let store = this.stores.get( path ) as any as Store
 			if( store ) return store
 			
-			store = new Store( this.stamper )
-			this.stores.set( path, store )
+			if( Store ) {
+				store = new Store( this.stamper )
+				this.stores.set( path, store )
+			}
 			
-			return store
+			return store as Store
 		}
 		
-		numb( path: string ) {
-			return this.store( '#' + path, $mol_crowd_reg )
+		numb( path: string, ensure = true ) {
+			return this.store( '#' + path, ensure ? $mol_crowd_numb : undefined )
 		}
 		
-		reg( path: string ) {
-			return this.store( ':' + path, $mol_crowd_reg )
+		reg( path: string, ensure = true ) {
+			return this.store( ':' + path, ensure ? $mol_crowd_reg : undefined )
 		}
 		
-		set( path: string ) {
-			return this.store( '?' + path, $mol_crowd_set )
+		set( path: string, ensure = true ) {
+			return this.store( '?' + path, ensure ? $mol_crowd_set : undefined )
 		}
 		
-		list( path: string ) {
-			return this.store( '!' + path, $mol_crowd_list )
+		list( path: string, ensure = true ) {
+			return this.store( '!' + path, ensure ? $mol_crowd_list : undefined )
 		}
 		
-		dict( path: string ) {
-			return this.store( '&' + path, $mol_crowd_dict )
+		dict( path: string, ensure = true ) {
+			return this.store( '&' + path, ensure ? $mol_crowd_dict : undefined )
 		}
 		
 		apply(
