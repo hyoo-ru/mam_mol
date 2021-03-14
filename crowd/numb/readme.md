@@ -15,6 +15,8 @@ Number that can be shifted by any value. Merges without data lost. Equivalent of
 
 Stamp is always non negative.
 
+Size = 16B * ActorsInState
+
 ## Patch format
 
 Patch is partial state dump like:
@@ -25,6 +27,8 @@ Patch is partial state dump like:
 	[ -1, +3003 ], // Carol changed after +1001.
 ]
 ```
+
+Size = 16B * ActorsInDelta
 
 ## Mutations
 

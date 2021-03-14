@@ -14,6 +14,8 @@ Map string path to another CROWD Store.
 ]
 ```
 
+Size = Size( Paths ) + Size( InnerStores )
+
 ## Patch Format
 
 Patch is partial state dump like:
@@ -27,6 +29,8 @@ Patch is partial state dump like:
 	[ "&path", [ /* Dictionary Patches */ ] ],
 ]
 ```
+
+Size = Size( ChangedPaths ) + Size( InnerStorePatches )
 
 ## Type Prefixes
 
