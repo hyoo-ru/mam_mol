@@ -2,6 +2,7 @@ namespace $ {
 	
 	const concurrency = 1000
 	
+	/** Manages versions through connected CROWD stores */
 	export class $mol_crowd_stamper {
 		
 		readonly actor: number

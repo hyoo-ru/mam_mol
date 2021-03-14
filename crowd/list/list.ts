@@ -29,7 +29,7 @@ namespace $ {
 		}
 		
 		get items() {
-			return this.array as readonly string[]
+			return this.array as readonly $mol_crowd_list_key[]
 		}
 		
 		has( val: $mol_crowd_list_key ) {

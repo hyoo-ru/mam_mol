@@ -30,7 +30,7 @@ namespace $ {
 		
 		toJSON( version_min = 0 ) {
 			
-			const res = [] as ( readonly[ number, number ] )[]
+			const res = [] as $mol_crowd_numb_data[number][]
 			
 			const sorted = [ ... this.stores.entries() ]
 			.sort( ( a, b )=> a[0] - b[0] )

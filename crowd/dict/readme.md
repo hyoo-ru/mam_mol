@@ -1,5 +1,7 @@
 # CROWD Dictionary
 
+Map string path to another CROWD Store.
+
 ## State Format
 
 ```javascript

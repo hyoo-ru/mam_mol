@@ -1,5 +1,7 @@
 # CROWD Counter
 
+Number that can be shifted by any value. Merges without data lost. Equivalent of dCRDT PN-Counter with same properties.
+
 ## State format
 
 ```javascript
