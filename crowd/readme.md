@@ -26,8 +26,15 @@
 ### Washed
 
 - Historical data isn't stored (except tombstones).
+- Small footprint. Metadata size ~ user data size.
 - Past state can't be reproduced.
 - Garbage collection isn't required.
+
+### Data
+
+- Closest to user data as more as possible. Just values with stamps.
+- Deltas are simple slices of full state.
+- Deltas can be merged together to reduce transmit size.
 
 ## Available Stores
 
