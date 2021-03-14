@@ -7,17 +7,10 @@ namespace $ {
 	export type $mol_crowd_reg_data = readonly( readonly[ $mol_crowd_reg_value, number ] )[]
 	
 	/** CROWD Register */
-	export class $mol_crowd_reg {
+	export class $mol_crowd_reg extends $mol_crowd_store< $mol_crowd_reg_data > {
 		
 		value = null as $mol_crowd_reg_value | null
 		stamp = 0
-		
-		constructor(
-			data = [] as $mol_crowd_reg_data,
-			readonly stamper = new $mol_crowd_stamper,
-		) {
-			this.merge( data )
-		}
 		
 		get version() {
 			return this.stamp
@@ -48,13 +41,6 @@ namespace $ {
 			}
 			
 			return this
-		}
-		
-		fork( actor: number ) {
-			return new $mol_crowd_reg(
-				this.toJSON(),
-				this.stamper.fork( actor ),
-			)
 		}
 		
 	}

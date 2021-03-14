@@ -7,26 +7,11 @@ namespace $ {
 	export type $mol_crowd_list_data = readonly( readonly[ $mol_crowd_list_key, number ] )[]
 	
 	/** CROWD Ordered Set */
-	export class $mol_crowd_list {
+	export class $mol_crowd_list extends $mol_crowd_store< $mol_crowd_list_data > {
 		
 		protected version = 0
-		protected readonly array: $mol_crowd_list_key[]
-		protected readonly stamps: Map< $mol_crowd_list_key, number >
-		
-		constructor(
-			data = [] as $mol_crowd_list_data,
-			readonly stamper = new $mol_crowd_stamper,
-		) {
-			
-			this.stamps = new Map( data )
-			this.array = []
-			
-			for( let [ key, stamp ] of data ) {
-				if( stamp > 0 ) this.array.push( key )
-				this.version_feed( Math.abs( stamp ) )
-			}
-			
-		}
+		protected readonly array = [] as $mol_crowd_list_key[]
+		protected readonly stamps = new Map< $mol_crowd_list_key, number >()
 		
 		get items() {
 			return this.array.slice() as readonly $mol_crowd_list_key[]
@@ -109,18 +94,22 @@ namespace $ {
 			data: $mol_crowd_list_data,
 		) {
 
-			const patch = new $mol_crowd_list( data )
+			const patch_array = [] as $mol_crowd_list_key[]
+			const patch_stamps = new Map< $mol_crowd_list_key, number >()
 			
-			for( let current_key of patch.stamps.keys() ) {
+			for( let [ key, stamp ] of data ) {
+				if( stamp > 0 ) patch_array.push( key )
+			}
+			
+			for( let [ current_key, current_patch_stamp ] of data ) {
 				
 				const current_self_stamp = this.stamps.get( current_key ) ?? 0
-				const current_patch_stamp = patch.stamps.get( current_key )!
-				const current_patch_version = patch.version_item( current_key )
+				const current_patch_version = this.stamper.version_from( current_patch_stamp )
 				
-				if( this.version_item( current_key ) >= patch.version_item( current_key ) ) continue
+				if( this.version_item( current_key ) >= current_patch_version ) continue
 				
 				this.stamps.set( current_key, current_patch_stamp )
-				this.version_feed( Math.max( current_patch_version ) )
+				this.version_feed( current_patch_version )
 				
 				if( current_patch_stamp <= 0 ) {
 					
@@ -131,14 +120,14 @@ namespace $ {
 					continue
 				}
 				
-				for( let anchor = patch.array.indexOf( current_key ) - 1 ;; anchor -- ) {
+				for( let anchor = patch_array.indexOf( current_key ) - 1 ;; anchor -- ) {
 					
-					const anchor_key = patch.array[ anchor ]
+					const anchor_key = patch_array[ anchor ]
 					
 					if( anchor > 0 ) {
 						const anchor_self_version = this.version_item( anchor_key )
 						if( anchor_self_version === 0 ) continue
-						if( anchor_self_version > patch.version_item( anchor_key ) ) continue
+						if( anchor_self_version > this.stamper.version_from( patch_stamps.get( anchor_key )! ) ) continue
 					}
 					
 					let next_pos = anchor_key !== undefined ? this.array.indexOf( anchor_key ) + 1 : 0
@@ -181,13 +170,6 @@ namespace $ {
 			}
 			
 			return this
-		}
-		
-		fork( actor: number ) {
-			return new $mol_crowd_list(
-				this.toJSON(),
-				this.stamper.fork( actor ),
-			)
 		}
 		
 	}
