@@ -1,5 +1,7 @@
 # Conflict-free Replicable Ordered Washed Data (CROWD)
 
+![](https://habrastorage.org/webt/lz/d_/kh/lzd_khq4fnql2hgo3zlhfwkebg4.png)
+
 ## Key Properties
 
 - **Conflict-free**. Any states can merged without conflicts. Strong Eventual Consistency.
