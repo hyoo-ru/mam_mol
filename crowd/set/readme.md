@@ -8,7 +8,7 @@ Unordered list of unique keys. Equivalent of dCRDT LWW-Element-Set with same pro
 [ //   key   stamp
 	[ "foo", +1001 ], // Alice adds "foo".
 	[ "bar", +1002 ], // Bob adds "bar".
-	[ "kek", -3002 ], // Alice adds "bar", but Bob removes it.
+	[ "kek", -3002 ], // Alice adds "kek", but Bob removes it.
 ]
 // items === new Set([ "foo", "bar" ])
 ```
@@ -38,4 +38,4 @@ Size = Size( ChangedKeys ) + 8 * Count( ChangedKeys )
 ## Can be reinterpreted as
 
 - [CROWD Register](../reg) then last value wins.
-- [CROWD Ordered Set](./list)
+- [CROWD Ordered Set](../list)

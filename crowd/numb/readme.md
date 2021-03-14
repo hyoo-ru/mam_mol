@@ -37,5 +37,5 @@ Size = 16 * ActorsInDelta
 ## Can be reinterpreted as
 
 - [CROWD Register](../reg) then last value wins.
-- [CROWD Unordered Set](./set) as set of summands.
-- [CROWD Ordered Set](./list) as set of summands.
+- [CROWD Unordered Set](../set) as set of summands.
+- [CROWD Ordered Set](../list) as set of summands.
