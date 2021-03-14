@@ -7,7 +7,7 @@
 - **Conflict-free**. Any states can merged without conflicts. Strong Eventual Consistency.
 - **Replicable**. Merge result independent of merge order on different actors. Branch merge is semilattice.
 - **Ordered**. Changes from same actor always ordered and can't be reordered. Patches aren't commutative but are idempotent.
-- **Washed**. Historical data is not stored (except tombstones). Past state can't be reproduced.
+- **Washed**. Historical data isn't stored (except tombstones). Past state can't be reproduced. So garbage collecting isn't required.
 
 ## Available Stores
 
