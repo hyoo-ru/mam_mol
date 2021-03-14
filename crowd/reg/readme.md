@@ -26,5 +26,5 @@ Delta is full state dump.
 ## Can be reinterpreted as
 
 - [CROWD Counter](../numb)
-- [CROWD Unordered Set](./set)
-- [CROWD Ordered Set](./list)
+- [CROWD Unordered Set](../set)
+- [CROWD Ordered Set](../list)
