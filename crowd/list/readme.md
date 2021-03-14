@@ -2,6 +2,12 @@
 
 Ordered list of unique keys.
 
+# Properties
+
+- Left precedence. Key position relies on keys from left, non from right.
+- Anchor to stable. Key position doesn't relies on key that moved after this.
+- No interleaving. Sequence of left-to-right inserted keys will stay together after merge.
+
 ## State format
 
 ```javascript
