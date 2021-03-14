@@ -1,12 +1,12 @@
 namespace $ {
 	
-	/** Types that can be stored in the Crowd Register */
+	/** Types that can be stored in the CROWD Register */
 	export type $mol_crowd_reg_value = string | number | boolean | null
 	
-	/** JSON representation of Crowd Register */
+	/** JSON representation of CROWD Register */
 	export type $mol_crowd_reg_data = readonly( readonly[ $mol_crowd_reg_value, number ] )[]
 	
-	/** Conflict-free Crowd Register */
+	/** CROWD Register */
 	export class $mol_crowd_reg {
 		
 		value = null as $mol_crowd_reg_value | null

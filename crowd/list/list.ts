@@ -1,12 +1,12 @@
 namespace $ {
 	
-	/** Types that can be stored in the Crowd Ordered Set */
+	/** Types that can be stored in the CROWD Ordered Set */
 	export type $mol_crowd_list_key = string | number
 	
-	/** JSON representation of Crowd Ordered Set */
+	/** JSON representation of CROWD Ordered Set */
 	export type $mol_crowd_list_data = readonly( readonly[ $mol_crowd_list_key, number ] )[]
 	
-	/** Conflict-free Crowd Ordered Set */
+	/** CROWD Ordered Set */
 	export class $mol_crowd_list {
 		
 		protected version = 0
