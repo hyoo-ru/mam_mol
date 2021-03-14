@@ -60,13 +60,13 @@ namespace $ {
 			return this
 		}
 		
-		merge(
+		apply(
 			data: $mol_crowd_numb_data,
 		) {
 			
 			for( const patch of data ) {
 				const actor = this.stamper.actor_from( patch[1] )
-				this.reg( actor ).merge([ patch ])
+				this.reg( actor ).apply([ patch ])
 			}
 			
 			return this

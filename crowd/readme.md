@@ -1,4 +1,4 @@
-# Conflict-free Replicable Ordered Washed Data
+# Conflict-free Replicable Ordered Washed Data (CROWD)
 
 ## Key Properties
 
@@ -15,8 +15,14 @@
 - [CROWD Ordered Set](./list) - No CRDT alternatives.
 - [CROWD Dictionary](./dict) - No CRDT alternatives.
 
+## Utilites
+
+- [CROWD Store](./store) - Base store class with common CROWD API.
+- [CROWD Stamper](./stamper) - Manages versions through composed CROWD Stores.
+
 ## Common API
 
-- `toJSON( version_min = 0 )` Returns patch to remove gap between `version_min` and current that can be applied to actor that saw state until `version_min` from this actor.
-- `merge( data )` Merges incremental patch to current state.
+- `toJSON( version_min = 0 )` Returns delta between `version_min` and current.
+- `apply( delta )` Merges delta to current state.
+- `delta( store )` Returns delta between base fork and current.
 - `fork( actor: number )` Makes independent clone with fixed actor id for testing purposes.

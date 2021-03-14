@@ -36,7 +36,7 @@ namespace $ {
 			
 		},
 		
-		'Partial removed keys'() {
+		'Partial remove keys'() {
 			
 			$mol_assert_like(
 				new $mol_crowd_set().fork(1).add( 'foo' ).add( 'bar' ).remove( 'foo' ).toJSON(),
@@ -61,26 +61,23 @@ namespace $ {
 		
 		'Convert to native Set'() {
 			
-			$mol_assert_like(
-				[ ... new $mol_crowd_set().fork(1).add( 'foo' ).add( 'xxx' ).remove( 'foo' ).items ],
-				[ "xxx" ],
-			)
+			const store = new $mol_crowd_set().fork(1).add( 'foo' ).add( 'xxx' ).remove( 'foo' )
+			
+			$mol_assert_like( [ ... store.items ], [ "xxx" ] )
 			
 		},
 		
 		'Merge different sets'() {
 			
-			const base = new $mol_crowd_set().fork(1)
-			
-			const left = base.fork(2).add( 'foo' ).add( 'bar' )
-			const right = base.fork(3).add( 'xxx' ).add( 'yyy' )
+			const left = new $mol_crowd_set().fork(2).add( 'foo' ).add( 'bar' )
+			const right = new $mol_crowd_set().fork(3).add( 'xxx' ).add( 'yyy' )
 			
 			const left_event = left.toJSON()
 			const right_event = right.toJSON()
 			
 			$mol_assert_like(
-				left.merge( right_event ).toJSON(),
-				right.merge( left_event ).toJSON(),
+				left.apply( right_event ).toJSON(),
+				right.apply( left_event ).toJSON(),
 				[
 					[ 'foo', +1002 ],
 					[ 'xxx', +1003 ],
@@ -98,12 +95,12 @@ namespace $ {
 			const left = base.fork(2).add( 'xxx' )
 			const right = base.fork(3).add( 'yyy' )
 			
-			const left_event = left.toJSON()
-			const right_event = right.toJSON()
+			const left_event = left.delta( base )
+			const right_event = right.delta( base )
 			
 			$mol_assert_like(
-				left.merge( right_event ).toJSON(),
-				right.merge( left_event ).toJSON(),
+				left.apply( right_event ).toJSON(),
+				right.apply( left_event ).toJSON(),
 				[
 					[ 'foo', +1001 ],
 					[ 'bar', +2001 ],
@@ -114,19 +111,19 @@ namespace $ {
 			
 		},
 		
-		'Add conflicted with remove'() {
+		'Concurrent Add and Remove'() {
 			
 			const base = new $mol_crowd_set().fork(1).add( 'foo' )
 			
 			const left = base.fork(2).add( 'bar' )
 			const right = base.fork(3).remove( 'bar' )
 			
-			const left_event = left.toJSON()
-			const right_event = right.toJSON()
+			const left_event = left.delta( base )
+			const right_event = right.delta( base )
 			
 			$mol_assert_like(
-				left.merge( right_event ).toJSON(),
-				right.merge( left_event ).toJSON(),
+				left.apply( right_event ).toJSON(),
+				right.apply( left_event ).toJSON(),
 				[
 					[ 'foo', +1001 ],
 					[ 'bar', -2003 ],

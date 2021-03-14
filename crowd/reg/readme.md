@@ -13,11 +13,11 @@ Single value store. Just CvRDT LWW-Register with same properties.
 
 Stamp is always non negative.
 
-Size = Size( Value ) + 8B
+Size = Size( Value ) + 8
 
-## Patch format
+## Delta Format
 
-Patch is full state dump.
+Delta is full state dump.
 
 ## Mutations
 

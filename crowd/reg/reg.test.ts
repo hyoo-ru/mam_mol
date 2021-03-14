@@ -32,19 +32,19 @@ namespace $ {
 			
 		},
 		
-		'Conflicted changes'() {
+		'Cuncurrent changes'() {
 			
 			const base = new $mol_crowd_reg().fork(1).put( 'foo' )
 			
 			const left = base.fork(2).put( 'bar' )
 			const right = base.fork(3).put( 'xxx' )
 			
-			const left_event = left.toJSON()
-			const right_event = right.toJSON()
+			const left_event = left.delta( base )
+			const right_event = right.delta( base )
 			
 			$mol_assert_like(
-				left.merge( right_event ).toJSON(),
-				right.merge( left_event ).toJSON(),
+				left.apply( right_event ).toJSON(),
+				right.apply( left_event ).toJSON(),
 				[[ 'xxx', +2003 ]],
 			)
 			

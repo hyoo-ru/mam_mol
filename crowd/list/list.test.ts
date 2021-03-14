@@ -37,7 +37,7 @@ namespace $ {
 			
 		},
 		
-		'Put value to middle'() {
+		'Put value to the middle'() {
 			
 			$mol_assert_like(
 				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' ).insert( 'xxx', 1 ).toJSON(),
@@ -50,7 +50,7 @@ namespace $ {
 			
 		},
 		
-		'Put value to start'() {
+		'Put value to the start'() {
 			
 			$mol_assert_like(
 				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar', 0 ).toJSON(),
@@ -62,7 +62,7 @@ namespace $ {
 			
 		},
 		
-		'Partial delete values'() {
+		'Partial cut values'() {
 			
 			$mol_assert_like(
 				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' ).cut( 'foo' ).toJSON(),
@@ -74,7 +74,7 @@ namespace $ {
 			
 		},
 		
-		'Ignore already kicked values'() {
+		'Ignore already cutted values'() {
 			
 			$mol_assert_like(
 				new $mol_crowd_list().fork(1).insert( 'foo' ).cut( 'foo' ).cut( 'foo' ).toJSON(),
@@ -87,48 +87,50 @@ namespace $ {
 		
 		'Convert to native array'() {
 			
-			$mol_assert_like(
-				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar', 0 ).insert( 'xxx' ).cut( 'foo' ).items,
-				[ "bar", "xxx" ],
-			)
+			const store = new $mol_crowd_list().fork(1)
+			.insert( 'foo' )
+			.insert( 'bar', 0 )
+			.insert( 'xxx' )
+			.cut( 'foo' )
+			
+			$mol_assert_like( store.items, [ "bar", "xxx" ] )
 			
 		},
 		
 		'Merge different sequences'() {
 			
-			const base = new $mol_crowd_list().fork(1)
-			const left = base.fork(2).insert( 'foo' ).insert( 'bar' )
-			const right = base.fork(3).insert( 'xxx' ).insert( 'yyy' )
+			const left = new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' )
+			const right = new $mol_crowd_list().fork(2).insert( 'xxx' ).insert( 'yyy' )
 			
 			const left_event = left.toJSON()
 			const right_event = right.toJSON()
 			
 			$mol_assert_like(
-				left.merge( right_event ).toJSON(),
-				right.merge( left_event ).toJSON(),
+				left.apply( right_event ).toJSON(),
+				right.apply( left_event ).toJSON(),
 				[
-					[ 'xxx', +1003 ],
-					[ 'yyy', +2003 ],
-					[ 'foo', +1002 ],
-					[ 'bar', +2002 ],
+					[ 'xxx', +1002 ],
+					[ 'yyy', +2002 ],
+					[ 'foo', +1001 ],
+					[ 'bar', +2001 ],
 				],
 			)
 			
 		},
 		
-		'Insertion conflict'() {
+		'Insert in the same place'() {
 			
 			const base = new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' )
 			
 			const left = base.fork(2).insert( 'xxx', 1 )
 			const right = base.fork(3).insert( 'yyy', 1 )
 			
-			const left_event = left.toJSON()
-			const right_event = right.toJSON()
+			const left_event = left.delta( base )
+			const right_event = right.delta( base )
 			
 			$mol_assert_like(
-				left.merge( right_event ).toJSON(),
-				right.merge( left_event ).toJSON(),
+				left.apply( right_event ).toJSON(),
+				right.apply( left_event ).toJSON(),
 				[
 					[ 'foo', +1001 ],
 					[ 'yyy', +3003 ],
@@ -139,19 +141,19 @@ namespace $ {
 			
 		},
 		
-		'Insert before moved'() {
+		'Insert after moved'() {
 			
 			const base = new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' )
 			
-			const left = base.fork(2).insert( 'xxx', 0 )
+			const left = base.fork(2).insert( 'xxx', 1 )
 			const right = base.fork(3).insert( 'foo', 2 )
 			
-			const left_event = left.toJSON()
-			const right_event = right.toJSON()
+			const left_event = left.delta( base )
+			const right_event = right.delta( base )
 			
 			$mol_assert_like(
-				left.merge( right_event ).toJSON(),
-				right.merge( left_event ).toJSON(),
+				left.apply( right_event ).toJSON(),
+				right.apply( left_event ).toJSON(),
 				[
 					[ 'xxx', +3002 ],
 					[ 'bar', +2001 ],
@@ -161,19 +163,19 @@ namespace $ {
 			
 		},
 		
-		'Insert before kicked'() {
+		'Insert after cutted'() {
 			
 			const base = new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' )
 			
-			const left = base.fork(2).insert( 'xxx', 0 )
+			const left = base.fork(2).insert( 'xxx', 1 )
 			const right = base.fork(3).cut( 'foo' )
 			
-			const left_event = left.toJSON()
-			const right_event = right.toJSON()
+			const left_event = left.delta( base )
+			const right_event = right.delta( base )
 			
 			$mol_assert_like(
-				left.merge( right_event ).toJSON(),
-				right.merge( left_event ).toJSON(),
+				left.apply( right_event ).toJSON(),
+				right.apply( left_event ).toJSON(),
 				[
 					[ 'xxx', +3002 ],
 					[ 'bar', +2001 ],

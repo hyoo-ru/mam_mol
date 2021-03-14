@@ -36,18 +36,18 @@ namespace $ {
 		add(
 			key: $mol_crowd_set_key,
 		) {
-			this.merge([[ key, this.stamper.genegate() ]])
+			this.apply([[ key, this.stamper.genegate() ]])
 			return this
 		}
 		
 		remove(
 			key: $mol_crowd_set_key
 		) {
-			this.merge([[ key, - this.stamper.genegate() ]])
+			this.apply([[ key, - this.stamper.genegate() ]])
 			return this
 		}
 		
-		merge(
+		apply(
 			data: $mol_crowd_set_data,
 		) {
 			

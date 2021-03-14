@@ -16,11 +16,11 @@ Ordered list of unique keys.
 
 Items with negative stamps - tombstones.
 
-Size = Size( AddedAndRemovedKeys ) + 8B * Count( AddedAndRemovedKeys )
+Size = Size( AddedAndRemovedKeys ) + 8 * Count( AddedAndRemovedKeys )
 
-## Patch format
+## Delta format
 
-Patch is full state dump.
+Delta is full state dump.
 
 ## Mutations
 

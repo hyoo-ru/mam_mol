@@ -15,11 +15,11 @@ Unordered list of unique keys. Equivalent of dCRDT LWW-Element-Set with same pro
 
 Items with negative stamps - tombstones.
 
-Size = Size( AddedAndRemovedKeys ) + 8B * Count( AddedAndRemovedKeys )
+Size = Size( AddedAndRemovedKeys ) + 8 * Count( AddedAndRemovedKeys )
 
-## Patch format
+## Delta Format
 
-Patch is partial state dump like:
+Delta is partial state dump like:
 
 ```javascript
 [ //   key   stamp
@@ -27,7 +27,7 @@ Patch is partial state dump like:
 ]
 ```
 
-Size = Size( ChangedKeys ) + 8B * Count( ChangedKeys )
+Size = Size( ChangedKeys ) + 8 * Count( ChangedKeys )
 
 ## Mutations
 
