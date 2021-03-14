@@ -4,10 +4,30 @@
 
 ## Key Properties
 
-- **Conflict-free**. Any states can merged without conflicts. Strong Eventual Consistency.
-- **Replicable**. Merge result independent of merge order on different actors. Branch merge is semilattice.
-- **Ordered**. Changes from same actor always ordered and can't be reordered. Deltas from same actor aren't commutative but are idempotent.
-- **Washed**. Historical data isn't stored (except tombstones). Past state can't be reproduced. So garbage collecting isn't required.
+### Conflict-free
+
+- Any states can merged without conflicts.
+- Strong Eventual Consistency.
+- Merge result independent of merge order on different actors.
+- Branch merge is semilattice.
+
+### Reinterpretable
+
+- Same state can be reinterpreted as any CROWD Storage.
+- CROWD Storage type can be changed dynamicaly without data migration.
+- Cross-merge available through different CROWD Storages.
+
+### Ordered
+
+- Changes from same actor always ordered and can't be reordered.
+- Deltas from same actor aren't commutative.
+- All deltas are idempotent.
+
+### Washed
+
+- Historical data isn't stored (except tombstones).
+- Past state can't be reproduced.
+- Garbage collection isn't required.
 
 ## Available Stores
 

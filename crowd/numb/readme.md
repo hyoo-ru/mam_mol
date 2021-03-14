@@ -33,3 +33,9 @@ Size = 16 * ActorsInDelta
 ## Mutations
 
 - `shift( diff: number )`
+
+## Can be reinterpreted as
+
+- [CROWD Register](../reg) then last value wins.
+- [CROWD Unordered Set](./set) as set of summands.
+- [CROWD Ordered Set](./list) as set of summands.

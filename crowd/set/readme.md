@@ -34,3 +34,8 @@ Size = Size( ChangedKeys ) + 8 * Count( ChangedKeys )
 - `add( key: string | number )`
 - `remove( key: string | number )`
 - `has( key: string | number )`
+
+## Can be reinterpreted as
+
+- [CROWD Register](../reg) then last value wins.
+- [CROWD Ordered Set](./list)
