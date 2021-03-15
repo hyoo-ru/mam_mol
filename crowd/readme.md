@@ -36,6 +36,19 @@
 - Deltas are simple slices of full state.
 - Deltas can be merged together to reduce transmit size.
 
+## Coparison
+
+### With CRDT
+
+- CRDT has stronger guarantees for events commutativity. This gives a strong restriction for deleting old data. CROWD slightly weakens the guarantees, which gives more compact data representation without garbage collection and compactification.
+- Some CROWD storages is accidentally dCRDT too.
+- Stored CROWD data can be reinterpredeted by different CROWD Storages. CRDT structures are incompatible in general.
+
+### With OT
+
+- OT stores full edit history which is redundant. CROWD competely erases history. For history navigation purposes periodically snapshots is better solution for both.
+- OT requires history rebase for convergence. This is too slow and complex. CROWD merge is very simple and fast.
+
 ## Available Stores
 
 - [CROWD Counter](./numb) - Equivalent of dCRDT PN-Counter with same properties.
