@@ -1,32 +1,41 @@
 namespace $ {
 	
-	/** Types that can be stored in the CROWD Dictionary */
-	export type $mol_crowd_dict_store =
-	| $mol_crowd_numb
-	| $mol_crowd_reg
-	| $mol_crowd_list
-	| $mol_crowd_set
-	| $mol_crowd_dict
-	
 	/** JSON representation of CROWD Dictionary */
-	export type $mol_crowd_dict_data = readonly(
-		readonly[ string,
-			| $mol_crowd_numb_data
-			| $mol_crowd_reg_data
-			| $mol_crowd_list_data
-			| $mol_crowd_set_data
-			| $mol_crowd_dict_data
-		]
+	export type $mol_crowd_dict_data< Value > = readonly(
+		readonly[ string, Value ]
 	)[]
 	
 	/** CROWD Dictionary */
-	export class $mol_crowd_dict extends $mol_crowd_store< $mol_crowd_dict_data > {
+	export class $mol_crowd_dict<
+		Value extends $mol_crowd_store< Value_data >,
+		Value_data extends readonly unknown[],
+	> extends $mol_crowd_store< $mol_crowd_dict_data< Value_data > > {
 		
-		stores = new Map< string, $mol_crowd_dict_store >()
+		stores = new Map< string, Value >()
+		
+		constructor(
+			public Value: new( stamper: $mol_crowd_stamper )=> Value,
+			stamper = new $mol_crowd_stamper,
+		) {
+			super( stamper )
+		}
+		
+		fork( actor: number ): this {
+			
+			const Fork = this.constructor as new(
+				Value: new( stamper: $mol_crowd_stamper )=> Value,
+				stamper: $mol_crowd_stamper
+			)=> this
+			
+			const fork = new Fork( this.Value, this.stamper.fork( actor ) ) as this
+			fork.apply( this.toJSON() )
+			
+			return fork
+		}
 		
 		toJSON( version_min = 0 ) {
 			
-			const res = [] as $mol_crowd_dict_data[number][]
+			const res = [] as $mol_crowd_dict_data< Value_data >[number][]
 			
 			for( const [ key, value ] of this.stores ) {
 				
@@ -36,73 +45,28 @@ namespace $ {
 				res.push([ key, patch ])
 			}
 			
-			return res as $mol_crowd_dict_data
+			return res as $mol_crowd_dict_data< Value_data >
 		}
 		
-		store<
-			Store extends $mol_crowd_dict_store
-		>(
-			path: string,
-			Store?: new( stamper: $mol_crowd_stamper )=> Store,
-		) {
+		has( key: string ) {
+			return this.stores.has( key )
+		}
+		
+		get( key: string ) {
 			
-			let store = this.stores.get( path ) as any as Store
+			let store = this.stores.get( key )
 			if( store ) return store
 			
-			if( Store ) {
-				store = new Store( this.stamper )
-				this.stores.set( path, store )
-			}
+			store = new this.Value( this.stamper )
+			this.stores.set( key, store )
 			
-			return store as Store
+			return store
 		}
 		
-		numb( path: string, ensure = true ) {
-			return this.store( '#' + path, ensure ? $mol_crowd_numb : undefined )
-		}
-		
-		reg( path: string, ensure = true ) {
-			return this.store( ':' + path, ensure ? $mol_crowd_reg : undefined )
-		}
-		
-		set( path: string, ensure = true ) {
-			return this.store( '?' + path, ensure ? $mol_crowd_set : undefined )
-		}
-		
-		list( path: string, ensure = true ) {
-			return this.store( '!' + path, ensure ? $mol_crowd_list : undefined )
-		}
-		
-		dict( path: string, ensure = true ) {
-			return this.store( '&' + path, ensure ? $mol_crowd_dict : undefined )
-		}
-		
-		apply(
-			data: $mol_crowd_dict_data,
-		) {
+		apply( data: $mol_crowd_dict_data< Value_data > ) {
 			
-			for( const [ path, patch ] of data ) {
-				
-				let store = this.stores.get( path )
-				
-				if( !store ) {
-					
-					const Stores = {
-						'#': $mol_crowd_numb,
-						':': $mol_crowd_reg,
-						'?': $mol_crowd_set,
-						'!': $mol_crowd_list,
-						'&': $mol_crowd_dict,
-					}
-					
-					const Store = Stores[ path[0] ]
-					if( !Store ) $mol_fail( new Error( `Wrong path prefix: ${ path }` ) )
-
-					store = this.store( path, Store )
-				}
-				
-				store.apply( patch as any )
-				
+			for( const [ key, patch ] of data ) {
+				this.get( key ).apply( patch )
 			}
 			
 			return this
