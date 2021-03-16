@@ -2,41 +2,30 @@ namespace $ {
 	
 	/** CROWD Register */
 	export class $mol_crowd_union<
-		Types extends Record< string,
-			new( stamper: $mol_crowd_stamper )=> Value
-		>,
-		Value extends $mol_crowd_store,
+		Types extends Record< string, typeof $mol_crowd_store >
 	> extends $mol_crowd_store {
 		
-		protected type_store = new $mol_crowd_reg( this.stamper )
-		protected value_store?: Value
-		
-		constructor(
-			public Types: Types,
-			stamper = new $mol_crowd_stamper,
+		static of<
+			Types extends Record< string, typeof $mol_crowd_store >
+		>(
+			Types: Types,
 		) {
-			super( stamper )
+			return class Union extends this<Types> {
+				Types = Types
+			}
 		}
 		
-		fork( actor: number ): this {
-			
-			const Fork = this.constructor as new(
-				Values: Types,
-				stamper: $mol_crowd_stamper
-			)=> this
-			
-			const fork = new Fork( this.Types, this.stamper.fork( actor ) ) as this
-			fork.apply( this.toJSON() )
-			
-			return fork
-		}
+		Types!: Types
+		
+		type_store = new $mol_crowd_reg( this.stamper )
+		value_store?: InstanceType< Types[string] >
 		
 		get type() {
 			const type = this.type_store.value
-			return type as Extract< keyof Types, string > | null
+			return type as keyof Types | null
 		}
 		
-		as< Type extends Extract< keyof Types, string > >( type: Type ): InstanceType< Types[ Type ] > | null {
+		as< Type extends keyof Types >( type: Type ): InstanceType< Types[ Type ] > | null {
 			
 			if( this.type !== type ) return null
 			if( this.value_store ) return this.value_store as InstanceType< Types[ Type ] >
@@ -44,13 +33,13 @@ namespace $ {
 			return this.to( type )
 		}
 		
-		to< Type extends Extract< keyof Types, string > >( type: Type, stamp?: number ): InstanceType< Types[ Type ] > {
+		to< Type extends keyof Types >( type: Type, stamp?: number ): InstanceType< Types[ Type ] > {
 			
 			if( this.type === type ) return this.as( type )!
 			
 			this.type_store.apply(
 				$mol_crowd_delta(
-					[ type ],
+					[ type as string ],
 					[ stamp || this.stamper.genegate() ],
 				)
 			)
