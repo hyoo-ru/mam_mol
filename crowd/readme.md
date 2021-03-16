@@ -56,7 +56,7 @@
 - [CROWD Unordered Set](./set) - Equivalent of dCRDT LWW-Element-Set with same properties.
 - [CROWD Ordered Set](./list) - No CRDT alternatives.
 - [CROWD Dictionary](./dict) - No CRDT alternatives.
-- [CROWD Discriminated Union](./union) - No CRDT alternatives.
+- [CROWD Tagged Union](./union) - No CRDT alternatives.
 
 ## Utilites
 
