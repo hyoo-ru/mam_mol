@@ -5,10 +5,13 @@ Single value store. Just CvRDT LWW-Register with same properties.
 ## State format
 
 ```javascript
-[ //   key   stamp
-	[ "bar", +2002 ], // Alice puts "foo" then Bob puts "bar".
-]
-// value === "bar"
+{
+	"values": [ "bar" ],
+	"stamps": [ +2002 ],
+}
+// Alice puts "foo" then Bob puts "bar".
+
+.value === "bar"
 ```
 
 Stamp is always non negative.
@@ -21,7 +24,7 @@ Delta is full state dump.
 
 ## Mutations
 
-- `put( value: string | number | boolean )`
+- `put( value )`
 
 ## Can be reinterpreted as
 

@@ -1,59 +1,77 @@
 namespace $ {
 	
-	/** Types that can be stored in the CROWD Unordered Set */
-	export type $mol_crowd_set_key = string | number
-	
-	/** JSON representation of CROWD Unordered Set */
-	export type $mol_crowd_set_data = readonly( readonly[ $mol_crowd_set_key, number ] )[]
-	
 	/** CROWD Unordered Set */
-	export class $mol_crowd_set extends $mol_crowd_store< $mol_crowd_set_data > {
+	export class $mol_crowd_set extends $mol_crowd_store {
 		
-		protected readonly stamps = new Map< $mol_crowd_set_key, number >()
+		protected readonly stamps = new Map< $mol_crowd_delta_value, number >()
 		
 		get items() {
+			const delta = this.toJSON()
 			return new Set(
-				this.toJSON()
-				.filter( ([ key, stamp ])=> stamp > 0 )
-				.map( ([ key ])=> key )
+				delta.values.filter(
+					( _, index )=> delta.stamps[ index ] > 0
+				)
 			)
 		}
 		
-		has( val: $mol_crowd_set_key ) {
+		has( val: $mol_crowd_delta_value ) {
 			return this.stamps.get( val )! > 0
 		}
 		
-		version_item( val: $mol_crowd_set_key ) {
+		version_item( val: $mol_crowd_delta_value ) {
 			return Math.abs( this.stamps.get( val ) ?? 0 )
 		}
 		
 		toJSON( version_min = 0 ) {
-			return [ ... this.stamps.entries() ]
-			.filter( ([ key, stamp ])=> Math.abs( stamp ) > version_min )
-			.sort( ( a, b )=> Math.abs( a[1] ) - Math.abs( b[1] ) ) as $mol_crowd_set_data
+			
+			const delta = $mol_crowd_delta([],[])
+			
+			for( const [ key, stamp ] of this.stamps ) {
+				
+				if( this.stamper.version_from( stamp ) <= version_min ) continue
+				
+				delta.values.push( key )
+				delta.stamps.push( stamp )
+				
+			}
+			
+			return delta
 		}
 		
 		add(
-			key: $mol_crowd_set_key,
+			key: $mol_crowd_delta_value,
 		) {
-			this.apply([[ key, this.stamper.genegate() ]])
+			
+			this.apply( $mol_crowd_delta(
+				[ key ],
+				[ this.stamper.genegate() ],
+			) )
+			
 			return this
 		}
 		
 		remove(
-			key: $mol_crowd_set_key
+			key: $mol_crowd_delta_value
 		) {
-			this.apply([[ key, - this.stamper.genegate() ]])
+			
+			this.apply( $mol_crowd_delta(
+				[ key ],
+				[ - this.stamper.genegate() ],
+			) )
+			
 			return this
 		}
 		
 		apply(
-			data: $mol_crowd_set_data,
+			delta: ReturnType< typeof $mol_crowd_delta >,
 		) {
 			
-			for( let [ key, stamp ] of data ) {
+			for( let i = 0; i < delta.values.length; ++i ) {
 				
-				const version = Math.abs( stamp )
+				const key = delta.values[i]
+				const stamp = delta.stamps[i]
+				
+				const version = this.stamper.version_from( stamp )
 				if( this.version_item( key ) >= version ) continue
 				
 				this.stamps.set( key, stamp )

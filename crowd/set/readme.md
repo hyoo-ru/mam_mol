@@ -5,12 +5,15 @@ Unordered list of unique keys. Equivalent of dCRDT LWW-Element-Set with same pro
 ## State format
 
 ```javascript
-[ //   key   stamp
-	[ "foo", +1001 ], // Alice adds "foo".
-	[ "bar", +1002 ], // Bob adds "bar".
-	[ "kek", -3002 ], // Alice adds "kek", but Bob removes it.
-]
-// items === new Set([ "foo", "bar" ])
+{
+	"values": [ "foo", "bar", "kek" ],
+	"stamps": [ +1001, +1002, -3002 ],
+}
+// Alice adds "foo".
+// Bob adds "bar".
+// Alice adds "kek", but Bob removes it.
+
+.items === new Set([ "foo", "bar" ])
 ```
 
 Items with negative stamps - tombstones.
@@ -22,18 +25,20 @@ Size = Size( AddedAndRemovedKeys ) + 8 * Count( AddedAndRemovedKeys )
 Delta is partial state dump like:
 
 ```javascript
-[ //   key   stamp
-	[ "kek", -3002 ], // Only two changes after +1002
-]
+{
+	"values": [ "kek" ],
+	"stamps": [ -3002 ],
+}
+// Alice adds "kek", but Bob removes it.
 ```
 
 Size = Size( ChangedKeys ) + 8 * Count( ChangedKeys )
 
 ## Mutations
 
-- `add( key: string | number )`
-- `remove( key: string | number )`
-- `has( key: string | number )`
+- `add( key )`
+- `remove( key )`
+- `has( key )`
 
 ## Can be reinterpreted as
 

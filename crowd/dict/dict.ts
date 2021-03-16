@@ -1,17 +1,11 @@
 namespace $ {
 	
-	/** JSON representation of CROWD Dictionary */
-	export type $mol_crowd_dict_data< Value > = readonly(
-		readonly[ string, Value ]
-	)[]
-	
 	/** CROWD Dictionary */
 	export class $mol_crowd_dict<
-		Value extends $mol_crowd_store< Value_data >,
-		Value_data extends readonly unknown[],
-	> extends $mol_crowd_store< $mol_crowd_dict_data< Value_data > > {
+		Value extends $mol_crowd_store,
+	> extends $mol_crowd_store {
 		
-		stores = new Map< string, Value >()
+		stores = new Map< $mol_crowd_delta_value, Value >()
 		
 		constructor(
 			public Value: new( stamper: $mol_crowd_stamper )=> Value,
@@ -35,24 +29,26 @@ namespace $ {
 		
 		toJSON( version_min = 0 ) {
 			
-			const res = [] as $mol_crowd_dict_data< Value_data >[number][]
+			const delta = $mol_crowd_delta([],[])
 			
 			for( const [ key, value ] of this.stores ) {
 				
 				const patch = value.toJSON( version_min )
-				if( patch.length === 0 ) continue
+				if( patch.values.length === 0 ) continue
 				
-				res.push([ key, patch ])
+				delta.values.push( key, ... patch.values )
+				delta.stamps.push( 0, ... patch.stamps )
+				
 			}
 			
-			return res as $mol_crowd_dict_data< Value_data >
+			return delta
 		}
 		
-		has( key: string ) {
+		has( key: $mol_crowd_delta_value ) {
 			return this.stores.has( key )
 		}
 		
-		get( key: string ) {
+		get( key: $mol_crowd_delta_value ) {
 			
 			let store = this.stores.get( key )
 			if( store ) return store
@@ -63,11 +59,37 @@ namespace $ {
 			return store
 		}
 		
-		apply( data: $mol_crowd_dict_data< Value_data > ) {
+		apply(
+			delta: ReturnType< typeof $mol_crowd_delta >
+		) {
 			
-			for( const [ key, patch ] of data ) {
+			let key: $mol_crowd_delta_value
+			
+			let patch = $mol_crowd_delta([],[])
+			
+			const dump = ()=> {
+				if( patch.values.length === 0 ) return
 				this.get( key ).apply( patch )
+				patch = $mol_crowd_delta([],[])
 			}
+			
+			for( let i = 0; i < delta.values.length; ++i ) {
+				
+				const val = delta.values[i]
+				const stamp = delta.stamps[i]
+				
+				if( stamp === 0 ) {
+					dump()
+					key = val
+					continue
+				} else {
+					patch.values.push( val )
+					patch.stamps.push( stamp )
+				}
+				
+			}
+			
+			dump()
 			
 			return this
 		}

@@ -5,26 +5,24 @@ Map key to another CROWD Store.
 ## State Format
 
 ```javascript
-[ //   key        value
-	[ null,  [ /* Value Data */ ] ],
-	[ 1,     [ /* Value Data */ ] ],
-	[ "foo", [ /* Value Data */ ] ],
-]
+{
+	"values": [ key1, ... values1, key2, ... values2, ... ],
+	"stamps": [ 0, ... stamps1, 0, ... stamps2, ... ],
+}
 ```
 
-Size = Size( Keys ) + Size( InnerStoreData )
+Size = Size( Keys ) + 8 * Count( Keys ) + Size( InnerStoreData )
 
 ## Delta Format
 
 Delta is partial state dump like:
 
 ```javascript
-[ //   key        value
-	[ null,  [ /* Value Data */ ] ],
-	[ 1,     [ /* Value Data */ ] ],
-	[ "foo", [ /* Value Data */ ] ],
-]
+{
+	"values": [ key5, ... values5, key3, ... values3, ... ],
+	"stamps": [ 0, ... stamps5, 0, ... stamps3, ... ],
+}
 ```
 
-Size = Size( ChangedKeys ) + Size( InnerStoreDeltas )
+Size = Size( ChangedKeys ) + 8 * Count( ChangedKeys ) + Size( InnerStoreDeltas )
 

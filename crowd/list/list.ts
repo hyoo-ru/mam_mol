@@ -1,27 +1,21 @@
 namespace $ {
 	
-	/** Types that can be stored in the CROWD Ordered Set */
-	export type $mol_crowd_list_key = string | number
-	
-	/** JSON representation of CROWD Ordered Set */
-	export type $mol_crowd_list_data = readonly( readonly[ $mol_crowd_list_key, number ] )[]
-	
 	/** CROWD Ordered Set */
-	export class $mol_crowd_list extends $mol_crowd_store< $mol_crowd_list_data > {
+	export class $mol_crowd_list extends $mol_crowd_store {
 		
 		protected version = 0
-		protected readonly array = [] as $mol_crowd_list_key[]
-		protected readonly stamps = new Map< $mol_crowd_list_key, number >()
+		protected readonly array = [] as $mol_crowd_delta_value[]
+		protected readonly stamps = new Map< $mol_crowd_delta_value, number >()
 		
 		get items() {
-			return this.array.slice() as readonly $mol_crowd_list_key[]
+			return this.array.slice() as readonly $mol_crowd_delta_value[]
 		}
 		
-		has( val: $mol_crowd_list_key ) {
+		has( val: $mol_crowd_delta_value ) {
 			return this.stamps.get( val )! > 0
 		}
 		
-		version_item( val: $mol_crowd_list_key ) {
+		version_item( val: $mol_crowd_delta_value ) {
 			return Math.abs( this.stamps.get( val ) ?? 0 )
 		}
 		
@@ -34,75 +28,82 @@ namespace $ {
 			
 		}
 		
-		toJSON( version_min = 0 ): $mol_crowd_list_data {
+		toJSON( version_min = 0 ): ReturnType< typeof $mol_crowd_delta > {
 			
-			if( this.version <= version_min ) return []
-			
-			const res = [] as [ $mol_crowd_list_key, number ][]
+			const delta = $mol_crowd_delta([],[])
+			if( this.version <= version_min ) return delta
 			
 			for( const key of this.array ) {
-				res.push([ key, this.stamps.get( key )! ])
+				delta.values.push( key )
+				delta.stamps.push( this.stamps.get( key )! )
 			}
 			
 			for( const [ key, stamp ] of this.stamps ) {
 				if( stamp > 0 ) continue
-				res.push([ key, stamp ])
+				delta.values.push( key )
+				delta.stamps.push( stamp )
 			}
 			
-			return res
+			return delta
 		}
 		
 		insert(
-			key: $mol_crowd_list_key,
+			key: $mol_crowd_delta_value,
 			pos: number = this.array.length,
 		) {
 			
 			const exists = this.array[ pos ]
 			if( exists === key ) return this
 			
-			const patch = [] as [ $mol_crowd_list_key, number ][]
+			const delta = $mol_crowd_delta([],[])
 				
 			if( pos > 0 ) {
 				const anchor = this.array[ pos - 1 ]
-				patch.push([ anchor, this.stamps.get( anchor )! ])
+				delta.values.push( anchor )
+				delta.stamps.push( this.stamps.get( anchor )! )
 			}
 			
-			patch.push([ key, this.stamper.genegate() ])
+			delta.values.push( key )
+			delta.stamps.push( this.stamper.genegate() )
 				
-			this.apply( patch )
+			this.apply( delta )
 			
 			return this
 		}
 		
 		cut(
-			key: $mol_crowd_list_key
+			key: $mol_crowd_delta_value
 		) {
 			
 			const stamp = this.stamps.get( key ) ?? 0
 			if( stamp <= 0 ) return this
 			
-			const patch = [] as [ $mol_crowd_list_key, number ][]
-			
-			patch.push([ key, - this.stamper.genegate() ])
-			
-			this.apply( patch )
+			this.apply( $mol_crowd_delta(
+				[ key ],
+				[ - this.stamper.genegate() ]
+			) )
 			
 			return this
 		}
 		
 		apply(
-			data: $mol_crowd_list_data,
+			delta: ReturnType< typeof $mol_crowd_delta >,
 		) {
 
-			const patch_array = [] as $mol_crowd_list_key[]
-			const patch_stamps = new Map< $mol_crowd_list_key, number >()
+			const patch_array = [] as $mol_crowd_delta_value[]
+			const patch_stamps = new Map< $mol_crowd_delta_value, number >()
 			
-			for( let [ key, stamp ] of data ) {
+			for( let i = 0; i < delta.values.length; ++i ) {
+				const key = delta.values[i]
+				const stamp = delta.stamps[i]
 				patch_stamps.set( key, stamp )
 				if( stamp > 0 ) patch_array.push( key )
 			}
 			
-			for( let [ current_key, current_patch_stamp ] of data ) {
+			for( let i = 0; i < delta.values.length; ++i ) {
+				
+				const current_key = delta.values[i]
+				const current_patch_stamp = delta.stamps[i]
 				
 				const current_self_stamp = this.stamps.get( current_key ) ?? 0
 				const current_patch_version = this.stamper.version_from( current_patch_stamp )
