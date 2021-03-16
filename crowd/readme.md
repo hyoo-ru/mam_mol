@@ -13,7 +13,7 @@
 
 ### Reinterpretable
 
-- Same state can be reinterpreted as any CROWD Storage (except CROWD Dictionary).
+- Same state can be reinterpreted as any CROWD Storage.
 - CROWD Storage type can be changed dynamicaly without data migration.
 - Cross-merge available through different CROWD Storages.
 
