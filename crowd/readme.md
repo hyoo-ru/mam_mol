@@ -15,7 +15,7 @@
 
 - Same state can be reinterpreted as any CROWD Storage.
 - CROWD Storage type can be changed dynamicaly without data migration.
-- Cross-merge available through different CROWD Storages.
+- Cross-merge available between different CROWD Storages.
 
 ### Ordered
 
@@ -36,7 +36,7 @@
 - Deltas are simple slices of full state.
 - Deltas can be merged together to reduce transmit size.
 
-## Coparison
+## Comparison
 
 ### With CRDT
 
