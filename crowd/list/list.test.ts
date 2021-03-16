@@ -5,10 +5,10 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' ).toJSON(),
-				[
-					[ 'foo', +1001 ],
-					[ 'bar', +2001 ],
-				],
+				$mol_crowd_delta(
+					[ 'foo', 'bar' ],
+					[ +1001, +2001 ],
+				),
 			)
 			
 		},
@@ -17,23 +17,24 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'foo' ).toJSON(),
-				[
-					[ 'foo', +2001 ],
-				],
+				$mol_crowd_delta(
+					[ 'foo' ],
+					[ +2001 ],
+				),
 			)
 			
 		},
 		
 		'Slice after version'() {
 			
-			const val = new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' )
+			const store = new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' )
 
-			$mol_assert_like( val.toJSON( +1001 ), [
-				[ 'foo', +1001 ],
-				[ 'bar', +2001 ],
-			] )
+			$mol_assert_like( store.toJSON( +1001 ), $mol_crowd_delta(
+				[ 'foo', 'bar' ],
+				[ +1001, +2001 ],
+			) )
 			
-			$mol_assert_like( val.toJSON( +2001 ), [] )
+			$mol_assert_like( store.toJSON( +2001 ), $mol_crowd_delta([],[]) )
 			
 		},
 		
@@ -41,11 +42,10 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' ).insert( 'xxx', 1 ).toJSON(),
-				[
-					[ 'foo', +1001 ],
-					[ 'xxx', +3001 ],
-					[ 'bar', +2001 ],
-				],
+				$mol_crowd_delta(
+					[ 'foo', 'xxx', 'bar' ],
+					[ +1001, +3001, +2001 ],
+				),
 			)
 			
 		},
@@ -54,10 +54,10 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar', 0 ).toJSON(),
-				[
-					[ 'bar', +2001 ],
-					[ 'foo', +1001 ],
-				],
+				$mol_crowd_delta(
+					[ 'bar', 'foo' ],
+					[ +2001, +1001 ],
+				),
 			)
 			
 		},
@@ -66,10 +66,10 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' ).cut( 'foo' ).toJSON(),
-				[
-					[ 'bar', +2001 ],
-					[ 'foo', -3001 ],
-				],
+				$mol_crowd_delta(
+					[ 'bar', 'foo' ],
+					[ +2001, -3001 ],
+				),
 			)
 			
 		},
@@ -78,9 +78,10 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_list().fork(1).insert( 'foo' ).cut( 'foo' ).cut( 'foo' ).toJSON(),
-				[
-					[ 'foo', -2001 ],
-				],
+				$mol_crowd_delta(
+					[ 'foo' ],
+					[ -2001 ],
+				),
 			)
 			
 		},
@@ -108,12 +109,10 @@ namespace $ {
 			$mol_assert_like(
 				left.apply( right_event ).toJSON(),
 				right.apply( left_event ).toJSON(),
-				[
-					[ 'xxx', +1002 ],
-					[ 'yyy', +2002 ],
-					[ 'foo', +1001 ],
-					[ 'bar', +2001 ],
-				],
+				$mol_crowd_delta(
+					[ 'xxx', 'yyy', 'foo', 'bar' ],
+					[ +1002, +2002, +1001, +2001 ],
+				),
 			)
 			
 		},
@@ -131,12 +130,10 @@ namespace $ {
 			$mol_assert_like(
 				left.apply( right_event ).toJSON(),
 				right.apply( left_event ).toJSON(),
-				[
-					[ 'foo', +1001 ],
-					[ 'yyy', +3003 ],
-					[ 'xxx', +3002 ],
-					[ 'bar', +2001 ],
-				],
+				$mol_crowd_delta(
+					[ 'foo', 'yyy', 'xxx', 'bar' ],
+					[ +1001, +3003, +3002, +2001 ],
+				),
 			)
 			
 		},
@@ -154,11 +151,10 @@ namespace $ {
 			$mol_assert_like(
 				left.apply( right_event ).toJSON(),
 				right.apply( left_event ).toJSON(),
-				[
-					[ 'xxx', +3002 ],
-					[ 'bar', +2001 ],
-					[ 'foo', +3003 ],
-				],
+				$mol_crowd_delta(
+					[ 'xxx', 'bar', 'foo' ],
+					[ +3002, +2001, +3003 ],
+				),
 			)
 			
 		},
@@ -176,11 +172,10 @@ namespace $ {
 			$mol_assert_like(
 				left.apply( right_event ).toJSON(),
 				right.apply( left_event ).toJSON(),
-				[
-					[ 'xxx', +3002 ],
-					[ 'bar', +2001 ],
-					[ 'foo', -3003 ],
-				],
+				$mol_crowd_delta(
+					[ 'xxx', 'bar', 'foo' ],
+					[ +3002, +2001, -3003 ],
+				),
 			)
 			
 		},
@@ -189,11 +184,10 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_list().fork(1).insert( 1 ).insert( 2 ).insert( 3, 1 ).toJSON(),
-				[
-					[ 1, +1001 ],
-					[ 3, +3001 ],
-					[ 2, +2001 ],
-				],
+				$mol_crowd_delta(
+					[ 1, 3, 2 ],
+					[ +1001, +3001, +2001 ],
+				),
 			)
 			
 		},

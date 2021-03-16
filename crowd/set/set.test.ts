@@ -5,10 +5,10 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_set().fork(1).add( 'foo' ).add( 'bar' ).toJSON(),
-				[
-					[ 'foo', +1001 ],
-					[ 'bar', +2001 ],
-				],
+				$mol_crowd_delta(
+					[ 'foo', 'bar' ],
+					[ +1001, +2001 ],
+				),
 			)
 			
 		},
@@ -17,11 +17,12 @@ namespace $ {
 			
 			const val = new $mol_crowd_set().fork(1).add( 'foo' ).add( 'bar' )
 			
-			$mol_assert_like( val.toJSON( +1001 ), [
-				[ 'bar', +2001 ],
-			] )
+			$mol_assert_like( val.toJSON( +1001 ), $mol_crowd_delta(
+				[ 'bar' ],
+				[ +2001 ],
+			 ) )
 			
-			$mol_assert_like( val.toJSON( +2001 ), [] )
+			$mol_assert_like( val.toJSON( +2001 ), $mol_crowd_delta([],[]) )
 			
 		},
 		
@@ -29,9 +30,10 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_set().fork(1).add( 'foo' ).add( 'foo' ).toJSON(),
-				[
-					[ 'foo', +2001 ],
-				],
+				$mol_crowd_delta(
+					[ 'foo' ],
+					[ +2001 ],
+				),
 			)
 			
 		},
@@ -40,10 +42,10 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_set().fork(1).add( 'foo' ).add( 'bar' ).remove( 'foo' ).toJSON(),
-				[
-					[ 'bar', +2001 ],
-					[ 'foo', -3001 ],
-				],
+				$mol_crowd_delta(
+					[ 'foo', 'bar' ],
+					[ -3001, +2001 ],
+				),
 			)
 			
 		},
@@ -52,9 +54,10 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_set().fork(1).add( 'foo' ).remove( 'foo' ).remove( 'foo' ).toJSON(),
-				[
-					[ 'foo', -3001 ],
-				],
+				$mol_crowd_delta(
+					[ 'foo' ],
+					[ -3001 ],
+				),
 			)
 			
 		},
@@ -70,20 +73,15 @@ namespace $ {
 		'Merge different sets'() {
 			
 			const left = new $mol_crowd_set().fork(2).add( 'foo' ).add( 'bar' )
-			const right = new $mol_crowd_set().fork(3).add( 'xxx' ).add( 'yyy' )
+			const right = new $mol_crowd_set().fork(3).add( 'xxx' ).add( 'yyy' ).remove( 'xxx' )
 			
 			const left_event = left.toJSON()
 			const right_event = right.toJSON()
 			
 			$mol_assert_like(
-				left.apply( right_event ).toJSON(),
-				right.apply( left_event ).toJSON(),
-				[
-					[ 'foo', +1002 ],
-					[ 'xxx', +1003 ],
-					[ 'bar', +2002 ],
-					[ 'yyy', +2003 ],
-				],
+				[ ... left.apply( right_event ).items ].sort(),
+				[ ... right.apply( left_event ).items ].sort(),
+				[ 'bar', 'foo', 'yyy' ],
 			)
 			
 		},
@@ -93,20 +91,15 @@ namespace $ {
 			const base = new $mol_crowd_set().fork(1).add( 'foo' ).add( 'bar' )
 			
 			const left = base.fork(2).add( 'xxx' )
-			const right = base.fork(3).add( 'yyy' )
+			const right = base.fork(3).remove( 'foo' )
 			
 			const left_event = left.delta( base )
 			const right_event = right.delta( base )
 			
 			$mol_assert_like(
-				left.apply( right_event ).toJSON(),
-				right.apply( left_event ).toJSON(),
-				[
-					[ 'foo', +1001 ],
-					[ 'bar', +2001 ],
-					[ 'xxx', +3002 ],
-					[ 'yyy', +3003 ],
-				],
+				[ ... left.apply( right_event ).items ].sort(),
+				[ ... right.apply( left_event ).items ].sort(),
+				[ 'bar', 'xxx' ],
 			)
 			
 		},
@@ -115,19 +108,16 @@ namespace $ {
 			
 			const base = new $mol_crowd_set().fork(1).add( 'foo' )
 			
-			const left = base.fork(2).add( 'bar' )
-			const right = base.fork(3).remove( 'bar' )
+			const left = base.fork(2).add( 'bar' ).remove( 'xxx' )
+			const right = base.fork(3).remove( 'bar' ).add( 'xxx' )
 			
 			const left_event = left.delta( base )
 			const right_event = right.delta( base )
 			
 			$mol_assert_like(
-				left.apply( right_event ).toJSON(),
-				right.apply( left_event ).toJSON(),
-				[
-					[ 'foo', +1001 ],
-					[ 'bar', -2003 ],
-				],
+				[ ... left.apply( right_event ).items ],
+				[ ... right.apply( left_event ).items ],
+				[ 'foo', 'xxx' ],
 			)
 			
 		},
@@ -136,10 +126,10 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_set().fork(1).add( 1 ).add( 2 ).add( 2 ).toJSON(),
-				[
-					[ 1, +1001 ],
-					[ 2, +3001 ],
-				],
+				$mol_crowd_delta(
+					[ 1, 2 ],
+					[ +1001, +3001 ],
+				),
 			)
 			
 		},

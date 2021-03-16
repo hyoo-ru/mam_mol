@@ -1,12 +1,7 @@
 namespace $ {
 	
-	/** JSON representation of CROWD Counter */
-	export type $mol_crowd_numb_data = readonly(
-		readonly[ number, number ]
-	)[]
-	
 	/** CROWD Counter */
-	export class $mol_crowd_numb extends $mol_crowd_store< $mol_crowd_numb_data > {
+	export class $mol_crowd_numb extends $mol_crowd_store {
 		
 		stores = new Map< number, $mol_crowd_reg >()
 		
@@ -15,7 +10,7 @@ namespace $ {
 			let res = 0
 			
 			for( const store of this.stores.values() ) {
-				res += Number( store.value )
+				res += Number( store.value ) || 0
 			}
 			
 			return res
@@ -23,20 +18,18 @@ namespace $ {
 		
 		toJSON( version_min = 0 ) {
 			
-			const res = [] as $mol_crowd_numb_data[number][]
+			const delta = $mol_crowd_delta([],[])
 			
-			const sorted = [ ... this.stores.entries() ]
-			.sort( ( a, b )=> a[0] - b[0] )
-			
-			for( const [, store ] of sorted ) {
+			for( const store of this.stores.values() ) {
 				
 				const patch = store.toJSON( version_min )
-				if( patch.length === 0 ) continue
+				if( patch.values.length === 0 ) continue
 				
-				res.push( ... patch as any )
+				delta.values.push( ... patch.values )
+				delta.stamps.push( ... patch.stamps )
 			}
 			
-			return res as $mol_crowd_numb_data
+			return delta
 		}
 		
 		reg( path: number ) {
@@ -61,12 +54,20 @@ namespace $ {
 		}
 		
 		apply(
-			data: $mol_crowd_numb_data,
+			delta: ReturnType< typeof $mol_crowd_delta >,
 		) {
 			
-			for( const patch of data ) {
-				const actor = this.stamper.actor_from( patch[1] )
-				this.reg( actor ).apply([ patch ])
+			for( let i = 0 ; i < delta.values.length; ++ i ) {
+				
+				const actor = this.stamper.actor_from( delta.stamps[i] )
+				
+				this.reg( actor ).apply(
+					$mol_crowd_delta(
+						[ delta.values[i] ],
+						[ delta.stamps[i] ],
+					)
+				)
+				
 			}
 			
 			return this

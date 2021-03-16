@@ -1,15 +1,9 @@
 namespace $ {
 	
-	/** Types that can be stored in the CROWD Register */
-	export type $mol_crowd_reg_value = string | number | boolean | null
-	
-	/** JSON representation of CROWD Register */
-	export type $mol_crowd_reg_data = readonly( readonly[ $mol_crowd_reg_value, number ] )[]
-	
 	/** CROWD Register */
-	export class $mol_crowd_reg extends $mol_crowd_store< $mol_crowd_reg_data > {
+	export class $mol_crowd_reg extends $mol_crowd_store {
 		
-		value = null as $mol_crowd_reg_value | null
+		value = null as $mol_crowd_delta_value | null
 		stamp = 0
 		
 		get version() {
@@ -28,21 +22,25 @@ namespace $ {
 			return Boolean( this.value ?? false )
 		}
 		
-		toJSON( version_min = 0 ) : $mol_crowd_reg_data {
-			return this.version > version_min ? [ [ this.value, this.stamp ] ] : []
+		toJSON( version_min = 0 ) {
+			if( this.version <= version_min ) return $mol_crowd_delta([],[])
+			return $mol_crowd_delta( [ this.value ], [ this.stamp ] )
 		}
 				
-		put( val: $mol_crowd_reg_value ) {
+		put( val: $mol_crowd_delta_value ) {
 			this.value = val
 			this.stamp = this.stamper.genegate()
 			return this
 		}
 		
 		apply(
-			data: $mol_crowd_reg_data,
+			delta: ReturnType< typeof $mol_crowd_delta >,
 		) {
 			
-			for( const [ val, stamp ] of data ) {
+			for( let i = 0; i < delta.values.length; ++i ) {
+				
+				const val = delta.values[i]
+				const stamp = delta.stamps[i]
 			
 				if( stamp <= this.stamp ) continue
 				

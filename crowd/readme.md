@@ -13,7 +13,7 @@
 
 ### Reinterpretable
 
-- Same state can be reinterpreted as any CROWD Storage.
+- Same state can be reinterpreted as any CROWD Storage (except CROWD Dictionary).
 - CROWD Storage type can be changed dynamicaly without data migration.
 - Cross-merge available through different CROWD Storages.
 
@@ -26,13 +26,13 @@
 ### Washed
 
 - Historical data isn't stored (except tombstones).
-- Small footprint. Metadata size ~ user data size.
+- Small footprint. Metadata size ~= user data size.
 - Past state can't be reproduced.
 - Garbage collection isn't required.
 
 ### Data
 
-- Closest to user data as more as possible. Just values with stamps.
+- Closest to user data as more as possible. Just list of values and list of stamps.
 - Deltas are simple slices of full state.
 - Deltas can be merged together to reduce transmit size.
 
@@ -42,7 +42,7 @@
 
 - CRDT has stronger guarantees for events commutativity. This gives a strong restriction for deleting old data. CROWD slightly weakens the guarantees, which gives more compact data representation without garbage collection and compactification.
 - Some CROWD storages is accidentally dCRDT too.
-- Stored CROWD data can be reinterpredeted by different CROWD Storages. CRDT structures are incompatible in general.
+- Stored CROWD State can be reinterpredeted by different CROWD Storages. CRDT structures are incompatible in general.
 
 ### With OT
 
@@ -68,3 +68,12 @@
 - `apply( delta )` Merges delta to current state.
 - `delta( store )` Returns delta between base fork and current.
 - `fork( actor: number )` Makes independent clone with fixed actor id for testing purposes.
+
+## State/Delta Format
+
+```javascript
+{
+	"values": ( string | number | boolean | null )[]
+	"stamps": number[] // ints
+}
+```

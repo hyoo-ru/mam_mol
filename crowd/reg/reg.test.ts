@@ -5,7 +5,7 @@ namespace $ {
 			
 			const val = new $mol_crowd_reg()
 			
-			$mol_assert_like( val.toJSON(), [] )
+			$mol_assert_like( val.toJSON(), $mol_crowd_delta([],[]) )
 			$mol_assert_like( val.value, null )
 			$mol_assert_like( val.stamp, 0 )
 			
@@ -15,7 +15,10 @@ namespace $ {
 			
 			$mol_assert_like(
 				new $mol_crowd_reg().fork(1).put( 'foo' ).put( 'bar' ).toJSON(),
-				[[ 'bar', +2001 ]],
+				$mol_crowd_delta(
+					[ 'bar' ],
+					[ +2001 ],
+				)
 			)
 			
 		},
@@ -24,11 +27,15 @@ namespace $ {
 			
 			const val = new $mol_crowd_reg().fork(1).put( 'foo' ).put( 'bar' )
 
-			$mol_assert_like( val.toJSON( +1001 ), [
-				[ 'bar', +2001 ],
-			] )
+			$mol_assert_like(
+				val.toJSON( +1001 ),
+				$mol_crowd_delta(
+					[ 'bar' ],
+					[ +2001 ],
+				)
+			)
 			
-			$mol_assert_like( val.toJSON( +2001 ), [] )
+			$mol_assert_like( val.toJSON( +2001 ), $mol_crowd_delta([],[]) )
 			
 		},
 		
@@ -45,7 +52,10 @@ namespace $ {
 			$mol_assert_like(
 				left.apply( right_event ).toJSON(),
 				right.apply( left_event ).toJSON(),
-				[[ 'xxx', +2003 ]],
+				{
+					values: [ 'xxx' ],
+					stamps: [ +2003 ],
+				},
 			)
 			
 		},
