@@ -7365,7 +7365,6 @@ var $;
         class $mol_search extends $.$mol_search {
             suggests_showed(next = true) {
                 this.query();
-                console.log($.$mol_view_selection.focused());
                 if (!this.focused())
                     return false;
                 return next;
