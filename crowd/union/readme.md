@@ -1,6 +1,6 @@
-# CROWD Discriminated Union
+# CROWD Tagged Union
 
-Discriminated Union of CROWD Stores.
+Tagged Union of CROWD Stores.
 
 # Properties
 
