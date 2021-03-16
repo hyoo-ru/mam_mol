@@ -3,11 +3,11 @@ namespace $ {
 		
 		'Change by different keys'() {
 			
-			const val = new $mol_crowd_dict( $mol_crowd_list ).fork(1)
-			val.get( 'foo' ).insert( 666 )
-			val.get( 'bar' ).insert( 777 )
-			val.get( 'foo' ).insert( 888, 0 )
-			val.get( 'bar' ).cut( 777 )
+			const val = $mol_crowd_dict.of( $mol_crowd_list ).make().fork(1)
+			val.for( 'foo' ).insert( 666 )
+			val.for( 'bar' ).insert( 777 )
+			val.for( 'foo' ).insert( 888, 0 )
+			val.for( 'bar' ).cut( 777 )
 			
 			$mol_assert_like( val.toJSON(), $mol_crowd_delta(
 				[ 'foo', 888, 666, 'bar', 777 ],
@@ -18,15 +18,15 @@ namespace $ {
 		
 		'Slice after version'() {
 			
-			const val = new $mol_crowd_dict( $mol_crowd_set ).fork(1)
+			const val = $mol_crowd_dict.of( $mol_crowd_set ).make().fork(1)
 			
-			val.get( 'foo' ).add( 1 )
-			val.get( 'bar' ).add( 2 )
-			val.get( 'xxx' ).add( 3 )
+			val.for( 'foo' ).add( 1 )
+			val.for( 'bar' ).add( 2 )
+			val.for( 'xxx' ).add( 3 )
 			
-			val.get( 'foo' ).add( 4 )
-			val.get( 'bar' ).add( 5 )
-			val.get( 'xxx' ).add( 6 )
+			val.for( 'foo' ).add( 4 )
+			val.for( 'bar' ).add( 5 )
+			val.for( 'xxx' ).add( 6 )
 
 			$mol_assert_like( val.toJSON( +3001 ), $mol_crowd_delta(
 				[ 'foo', 4, 'bar', 5, 'xxx', 6 ],
@@ -39,14 +39,14 @@ namespace $ {
 		
 		'Merge different documents'() {
 			
-			const left = new $mol_crowd_dict( $mol_crowd_list ).fork(1)
-			left.get( 'foo' ).insert( 666 )
-			left.get( 'bar' ).insert( 'xxx' )
+			const left = $mol_crowd_dict.of( $mol_crowd_list ).make().fork(1)
+			left.for( 'foo' ).insert( 666 )
+			left.for( 'bar' ).insert( 'xxx' )
 			
-			const right = new $mol_crowd_dict( $mol_crowd_list ).fork(2)
-			right.get( 'foo' ).insert( 777 )
-			right.get( 'bar' ).insert( 'yyy' )
-			right.get( 'bar' ).insert( 'zzz' )
+			const right = $mol_crowd_dict.of( $mol_crowd_list ).make().fork(2)
+			right.for( 'foo' ).insert( 777 )
+			right.for( 'bar' ).insert( 'yyy' )
+			right.for( 'bar' ).insert( 'zzz' )
 			
 			const left_event = left.toJSON() 
 			const right_event = right.toJSON() 
@@ -64,17 +64,17 @@ namespace $ {
 		
 		'Merge increases versions'() {
 			
-			const base = new $mol_crowd_dict( $mol_crowd_list )
+			const base = $mol_crowd_dict.of( $mol_crowd_list ).make()
 			
 			const left = base.fork(1)
-			left.get( 'foo' ).insert( 'xxx' )
+			left.for( 'foo' ).insert( 'xxx' )
 			
 			const right = base.fork(2)
-			right.get( 'bar' ).insert( 17 )
-			right.get( 'bar' ).insert( 18 )
+			right.for( 'bar' ).insert( 17 )
+			right.for( 'bar' ).insert( 18 )
 			
 			left.apply( right.toJSON() )
-			left.get( 'foo' ).insert( 'yyy' )
+			left.for( 'foo' ).insert( 'yyy' )
 			
 			$mol_assert_like( left.toJSON(), $mol_crowd_delta(
 				[ 'foo', 'xxx', 'yyy', 'bar', 17, 18 ],
@@ -82,6 +82,34 @@ namespace $ {
 			) )
 			
 		},
+		
+		'Dictionary of Union'() {
+			
+			const base = $mol_crowd_dict.of( $mol_crowd_union.of({
+				string: $mol_crowd_reg,
+				array: $mol_crowd_list,
+				object: $mol_crowd_set,
+			}) ).make()
+
+			const left = base.fork(1)
+			const right = base.fork(2)
+			
+			left.for( 'foo' ).to( 'string' ).put( 'bar' )
+			right.for( 'foo' ).to( 'array' ).insert( 'xxx' )
+			
+			const left_event = left.delta( base )
+			const right_event = right.delta( base )
+			
+			$mol_assert_like(
+				left.apply( right_event ).toJSON(),
+				right.apply( left_event ).toJSON(),
+				$mol_crowd_delta(
+					[ 'foo', 'array', 'xxx', 'bar' ],
+					[ 0, 1002, 2002, 2001 ],
+				),
+			)
+			
+		}
 		
 	})
 }

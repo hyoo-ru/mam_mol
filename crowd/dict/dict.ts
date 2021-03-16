@@ -2,30 +2,22 @@ namespace $ {
 	
 	/** CROWD Dictionary */
 	export class $mol_crowd_dict<
-		Value extends $mol_crowd_store,
+		Value extends typeof $mol_crowd_store,
 	> extends $mol_crowd_store {
 		
-		stores = new Map< $mol_crowd_delta_value, Value >()
-		
-		constructor(
-			public Value: new( stamper: $mol_crowd_stamper )=> Value,
-			stamper = new $mol_crowd_stamper,
+		static of<
+			Value extends typeof $mol_crowd_store
+		>(
+			Value: Value,
 		) {
-			super( stamper )
+			return class Dictionary extends this<Value> {
+				Value = Value
+			}
 		}
 		
-		fork( actor: number ): this {
-			
-			const Fork = this.constructor as new(
-				Value: new( stamper: $mol_crowd_stamper )=> Value,
-				stamper: $mol_crowd_stamper
-			)=> this
-			
-			const fork = new Fork( this.Value, this.stamper.fork( actor ) ) as this
-			fork.apply( this.toJSON() )
-			
-			return fork
-		}
+		Value!: Value
+		
+		stores = new Map< $mol_crowd_delta_value, InstanceType< Value > >()
 		
 		toJSON( version_min = 0 ) {
 			
@@ -48,12 +40,12 @@ namespace $ {
 			return this.stores.has( key )
 		}
 		
-		get( key: $mol_crowd_delta_value ) {
+		for( key: $mol_crowd_delta_value ) {
 			
 			let store = this.stores.get( key )
 			if( store ) return store
 			
-			store = new this.Value( this.stamper )
+			store = new this.Value( this.stamper ) as InstanceType<Value>
 			this.stores.set( key, store )
 			
 			return store
@@ -69,7 +61,7 @@ namespace $ {
 			
 			const dump = ()=> {
 				if( patch.values.length === 0 ) return
-				this.get( key ).apply( patch )
+				this.for( key ).apply( patch )
 				patch = $mol_crowd_delta([],[])
 			}
 			

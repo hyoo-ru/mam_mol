@@ -32,3 +32,6 @@ Delta is partial state dump like:
 
 Size = Size( TypeName ) + 8 + Size( InnerStoreDeltas )
 
+## Mutations
+
+- `to( type )`

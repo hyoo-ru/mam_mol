@@ -3,10 +3,10 @@ namespace $ {
 		
 		'Default state'() {
 			
-			const store = new $mol_crowd_union({
+			const store = $mol_crowd_union.of({
 				counter: $mol_crowd_numb,
 				string: $mol_crowd_reg,
-			})
+			}).make()
 			
 			$mol_assert_like( store.toJSON(), $mol_crowd_delta([],[]) )
 			$mol_assert_like( store.type, null )
@@ -17,12 +17,12 @@ namespace $ {
 		
 		'Change type with default value'() {
 			
-			const store = new $mol_crowd_union({
+			const store = $mol_crowd_union.of({
 				counter: $mol_crowd_numb,
 				string: $mol_crowd_reg,
 				object: $mol_crowd_set,
 				array: $mol_crowd_list,
-			})
+			}).make()
 			
 			store.to( 'counter' )
 			
@@ -33,12 +33,12 @@ namespace $ {
 		
 		'Change value'() {
 			
-			const store = new $mol_crowd_union({
+			const store = $mol_crowd_union.of({
 				counter: $mol_crowd_numb,
 				string: $mol_crowd_reg,
 				object: $mol_crowd_set,
 				array: $mol_crowd_list,
-			}).fork(1)
+			}).make().fork(1)
 			
 			store.to( 'counter' )!.shift( +5 ).shift( -2 )
 						
@@ -51,12 +51,12 @@ namespace $ {
 		
 		'Slice after version'() {
 			
-			const store = new $mol_crowd_union({
+			const store = $mol_crowd_union.of({
 				counter: $mol_crowd_numb,
 				string: $mol_crowd_reg,
 				object: $mol_crowd_set,
 				array: $mol_crowd_list,
-			}).fork(1)
+			}).make().fork(1)
 			
 			store.to( 'object' ).add( 'foo' ).add( 'bar' )
 						
@@ -71,12 +71,12 @@ namespace $ {
 		
 		'Reinterpret list as reg'() {
 			
-			const store = new $mol_crowd_union({
+			const store = $mol_crowd_union.of({
 				counter: $mol_crowd_numb,
 				string: $mol_crowd_reg,
 				object: $mol_crowd_set,
 				array: $mol_crowd_list,
-			}).fork(1)
+			}).make().fork(1)
 			
 			store.to( 'string' ).put( 'foo' ).put( 'bar' )
 			$mol_assert_like( store.to( 'array' ).items, [ 'bar' ] )
@@ -88,12 +88,12 @@ namespace $ {
 		
 		'Cross merge list and register'() {
 			
-			const base = new $mol_crowd_union({
+			const base = $mol_crowd_union.of({
 				counter: $mol_crowd_numb,
 				string: $mol_crowd_reg,
 				object: $mol_crowd_set,
 				array: $mol_crowd_list,
-			}).fork(1)
+			}).make().fork(1)
 			
 			base.to( 'string' ).put( 'foo' )
 			
