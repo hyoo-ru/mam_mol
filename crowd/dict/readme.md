@@ -4,7 +4,6 @@ Map key to another CROWD Store.
 
 # Properties
 
-- Can't contain other CROWD Dictionaries. Use flat representation of graphs.
 - Can't contain different CROWD Stores. Use [CROWD Union](../union) to store its.
 
 ## State Format

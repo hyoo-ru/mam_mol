@@ -11,7 +11,7 @@ namespace $ {
 			
 			$mol_assert_like( val.toJSON(), $mol_crowd_delta(
 				[ 'foo', 888, 666, 'bar', 777 ],
-				[ 0, 3001, 1001, 0, -4001 ],
+				[ 2, 3001, 1001, 1, -4001 ],
 			) )
 			
 		},
@@ -30,7 +30,7 @@ namespace $ {
 
 			$mol_assert_like( val.toJSON( +3001 ), $mol_crowd_delta(
 				[ 'foo', 4, 'bar', 5, 'xxx', 6 ],
-				[ 0, +4001, 0, +5001, 0, +6001 ],
+				[ 1, +4001, 1, +5001, 1, +6001 ],
 			) )
 			
 			$mol_assert_like( val.toJSON( +6001 ), $mol_crowd_delta([],[]) )
@@ -56,7 +56,7 @@ namespace $ {
 				right.apply( left_delta ).toJSON(),
 				$mol_crowd_delta(
 					[ 'foo', 777, 666, 'bar', 'yyy', 'zzz', 'xxx' ],
-					[ 0, 1002, 1001, 0, 2002, 3002, 2001 ],
+					[ 2, 1002, 1001, 3, 2002, 3002, 2001 ],
 				),
 			)
 			
@@ -78,7 +78,7 @@ namespace $ {
 			
 			$mol_assert_like( left.toJSON(), $mol_crowd_delta(
 				[ 'foo', 'xxx', 'yyy', 'bar', 17, 18 ],
-				[ 0, 1001, 3001, 0, 1002, 2002 ],
+				[ 2, 1001, 3001, 2, 1002, 2002 ],
 			) )
 			
 		},
@@ -105,8 +105,38 @@ namespace $ {
 				right.apply( left_delta ).toJSON(),
 				$mol_crowd_delta(
 					[ 'foo', 'array', 'xxx', 'bar' ],
-					[ 0, 1002, 2002, 2001 ],
+					[ 3, 1002, 2002, 2001 ],
 				),
+			)
+			
+		},
+		
+		'Dictionary of Dictionary'() {
+			
+			const base = $mol_crowd_dict.of( $mol_crowd_dict.of( $mol_crowd_reg ) ).make()
+
+			const left = base.fork(1)
+			const right = base.fork(2)
+			
+			left.for( 'foo' ).for( 'xxx' ).str = '321'
+			right.for( 'foo' ).for( 'yyy' ).str = '123'
+			
+			const left_delta = left.delta( base )
+			const right_delta = right.delta( base )
+			
+			left.apply( right_delta )
+			right.apply( left_delta )
+			
+			$mol_assert_like(
+				left.for( 'foo' ).for( 'xxx' ).str,
+				right.for( 'foo' ).for( 'xxx' ).str,
+				'321',
+			)
+			
+			$mol_assert_like(
+				left.for( 'foo' ).for( 'yyy' ).str,
+				right.for( 'foo' ).for( 'yyy' ).str,
+				'123',
 			)
 			
 		},
