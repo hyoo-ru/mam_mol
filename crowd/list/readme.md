@@ -21,21 +21,25 @@ Ordered list of unique keys.
 // Bob inserts "kek" at the end then cut it.
 
 .items === [ "bar", "lol", "foo" ]
+
+Size = Size( AddedAndRemovedKeys ) + 8 * Count( AddedAndRemovedKeys )
 ```
 
 Items with negative stamps - tombstones.
-
-Size = Size( AddedAndRemovedKeys ) + 8 * Count( AddedAndRemovedKeys )
 
 ## Delta format
 
 Delta is full state dump.
 
+## Views
+
+- `items` Array of keys.
+- `has( key )`
+
 ## Mutations
 
 - `insert( key, pos? )` Pos points to the end by default.
 - `cut( key )`
-- `has( key )`
 
 ## Can be reinterpreted as
 
