@@ -81,3 +81,65 @@
 	"stamps": number[] // ints
 }
 ```
+
+## Usage Example
+
+```typescript
+import {
+  $mol_crowd_numb,
+  $mol_crowd_reg,
+  $mol_crowd_set
+  $mol_crowd_list,
+  $mol_crowd_union,
+  $mol_crowd_dict,
+} from 'mol_crowd_all'
+
+// Dynamic typing in custom store
+const MyStore = $mol_crowd_dict.of(
+  $mol_crowd_union.of({
+    counter: $mol_crowd_numb,
+    boolean: $mol_crowd_reg,
+    number: $mol_crowd_reg,
+    string: $mol_crowd_reg,
+    sequence: $mol_crowd_list
+  })
+);
+
+// Normal store creation
+const base = MyStore.make();
+
+// Marke independent forks for testng
+const alice = base.fork(1);
+const bob = base.fork(2);
+const carol = base.fork(3);
+
+// Twice change register named "foo"
+alice.for("foo").to("string").str = "A1";
+alice.for("foo").to("string").str = "A2";
+
+// Change register named "foo" then converts it to register and insert value
+bob.for("foo").to("string").str = "B1";
+bob.for("foo").to("sequence").insert("B2").insert("B3");
+
+// Serial insert to sequence named "foo"
+carol.for("foo").to("sequence").insert("C1").insert("C2");
+
+// Make deltas
+const alice_delta = alice.delta(base);
+const bob_delta = bob.delta(base);
+const carol_delta = carol.delta(base);
+
+// Cross merge all of them
+alice.apply(bob_delta).apply(carol_delta);
+bob.apply(alice_delta).apply(carol_delta);
+carol.apply(bob_delta).apply(alice_delta);
+
+// ["A2","C1","C2","B1","B2","B3"]
+console.log(
+  alice.for("foo").as("sequence").items,
+  bob.for("foo").as("sequence").items,
+  carol.for("foo").as("sequence").items
+);
+```
+
+[Sandbox](https://codepen.io/nin-jin/pen/JjbqRYX?editors=0011)
