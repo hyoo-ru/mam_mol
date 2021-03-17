@@ -20,11 +20,11 @@ Unordered list of unique keys. Equivalent of dCRDT LWW-Element-Set with same pro
 // Alice adds "kek", but Bob removes it.
 
 .items === new Set([ "foo", "bar" ])
+
+Size = Size( AddedAndRemovedKeys ) + 8 * Count( AddedAndRemovedKeys )
 ```
 
 Items with negative stamps - tombstones.
-
-Size = Size( AddedAndRemovedKeys ) + 8 * Count( AddedAndRemovedKeys )
 
 ## Delta Format
 
@@ -36,15 +36,19 @@ Delta is partial state dump like:
 	"stamps": [ -3002 ],
 }
 // Alice adds "kek", but Bob removes it.
-```
 
 Size = Size( ChangedKeys ) + 8 * Count( ChangedKeys )
+```
+
+## Views
+
+- `items` Array of keys.
+- `has( key )`
 
 ## Mutations
 
 - `add( key )`
 - `remove( key )`
-- `has( key )`
 
 ## Can be reinterpreted as
 
