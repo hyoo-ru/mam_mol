@@ -57,9 +57,10 @@
 - [CROWD Ordered Set](./list) - No CRDT alternatives.
 - [CROWD Tagged Union](./union) - No CRDT alternatives.
 - [CROWD Dictionary](./dict) - No CRDT alternatives.
-- CROWD Graph - Coming soon.
-- CROWD JSON - Coming soon.
+- CROWD Tuple - Coming soon.
 - CROWD Text - Coming soon.
+- CROWD JSON - Coming soon.
+- CROWD Graph - Coming soon.
 
 ## Utilites
 
