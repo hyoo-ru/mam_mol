@@ -40,6 +40,8 @@ namespace $ {
 			key: $mol_crowd_delta_value,
 		) {
 			
+			if( this.has( key ) ) return this
+			
 			this.apply( $mol_crowd_delta(
 				[ key ],
 				[ this.stamper.genegate() ],
@@ -51,6 +53,8 @@ namespace $ {
 		remove(
 			key: $mol_crowd_delta_value
 		) {
+			
+			if( !this.has( key ) ) return this
 			
 			this.apply( $mol_crowd_delta(
 				[ key ],
