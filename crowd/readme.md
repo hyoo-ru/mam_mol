@@ -36,7 +36,7 @@
 - Deltas are simple slices of full state.
 - Deltas can be merged together to reduce transmit size.
 
-## Comparison
+## Comparison of Approaches
 
 ### With CRDT
 
@@ -143,3 +143,9 @@ console.log(
 ```
 
 [Sandbox](https://codepen.io/nin-jin/pen/JjbqRYX?editors=0011)
+
+# Comparison of Libraries
+
+|                     | $mol_crowd | Automerge | YJS   | delta-crdt
+|---------------------|------------|-----------|-------|-----------
+| Gzipped Bundle Size | [3 KB](https://bundlephobia.com/result?p=mol_crowd_all@1.0.1)       | [60 KB](https://bundlephobia.com/result?p=automerge@0.14.2)     | [23 KB](https://bundlephobia.com/result?p=yjs@13.5.2) | [43 KB](https://bundlephobia.com/result?p=delta-crdts@0.10.3)
