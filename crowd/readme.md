@@ -42,7 +42,7 @@
 
 - CRDT has stronger guarantees for events commutativity. This gives a strong restriction for deleting old data. CROWD slightly weakens the guarantees, which gives more compact data representation without garbage collection and compactification.
 - Some CROWD storages is accidentally dCRDT too.
-- Stored CROWD State can be reinterpredeted by different CROWD Storages. CRDT structures are incompatible in general.
+- Stored CROWD State can be reinterpredeted by different CROWD Storages. Different CROWD Storages may be cross merged. CRDT structures are incompatible in general.
 
 ### With OT
 
