@@ -13,9 +13,9 @@
 
 ### Reinterpretable
 
-- Same state can be reinterpreted as any CROWD Storage (except CROWD Dictionary).
+- Same state can be reinterpreted as any CROWD Storage.
 - CROWD Storage type can be changed dynamicaly without data migration.
-- Cross-merge available through different CROWD Storages.
+- Cross-merge available between different CROWD Storages.
 
 ### Ordered
 
@@ -36,7 +36,7 @@
 - Deltas are simple slices of full state.
 - Deltas can be merged together to reduce transmit size.
 
-## Coparison
+## Comparison
 
 ### With CRDT
 
@@ -55,8 +55,11 @@
 - [CROWD Register](./reg) - Just CvRDT LWW-Register with same properties.
 - [CROWD Unordered Set](./set) - Equivalent of dCRDT LWW-Element-Set with same properties.
 - [CROWD Ordered Set](./list) - No CRDT alternatives.
-- [CROWD Dictionary](./dict) - No CRDT alternatives.
 - [CROWD Tagged Union](./union) - No CRDT alternatives.
+- [CROWD Dictionary](./dict) - No CRDT alternatives.
+- CROWD Graph - Coming soon.
+- CROWD JSON - Coming soon.
+- CROWD Text - Coming soon.
 
 ## Utilites
 
