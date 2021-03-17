@@ -2,6 +2,12 @@
 
 Unordered list of unique keys. Equivalent of dCRDT LWW-Element-Set with same properties.
 
+# Properties
+
+- Last Add/Remove Wins.
+- Adding of already added do nothing.
+- Removing of already removed or non existent do nothing.
+
 ## State format
 
 ```javascript
