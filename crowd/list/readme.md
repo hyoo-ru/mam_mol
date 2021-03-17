@@ -27,7 +27,7 @@ Size = Size( AddedAndRemovedKeys ) + 8 * Count( AddedAndRemovedKeys )
 
 Items with negative stamps - tombstones.
 
-## Delta format
+## Delta Format
 
 Delta is full state dump.
 
@@ -44,4 +44,4 @@ Delta is full state dump.
 ## Can be reinterpreted as
 
 - [CROWD Register](../reg) then last value wins.
-- [CROWD Unordered Set](../set) with reordering by version.
+- [CROWD Unordered Set](../set)

@@ -6,7 +6,7 @@
 
 ### Conflict-free
 
-- Any states can merged without conflicts.
+- Any states can be merged without conflicts.
 - Strong Eventual Consistency.
 - Merge result independent of merge order on different actors.
 - Branch merge is semilattice.
@@ -36,13 +36,13 @@
 - Deltas are simple slices of full state.
 - Deltas can be merged together to reduce transmit size.
 
-## Comparison
+## Comparison of Approaches
 
 ### With CRDT
 
 - CRDT has stronger guarantees for events commutativity. This gives a strong restriction for deleting old data. CROWD slightly weakens the guarantees, which gives more compact data representation without garbage collection and compactification.
 - Some CROWD storages is accidentally dCRDT too.
-- Stored CROWD State can be reinterpredeted by different CROWD Storages. CRDT structures are incompatible in general.
+- Stored CROWD State can be reinterpredeted by different CROWD Storages. Different CROWD Storages may be cross merged. CRDT structures are incompatible in general.
 
 ### With OT
 
@@ -57,9 +57,10 @@
 - [CROWD Ordered Set](./list) - No CRDT alternatives.
 - [CROWD Tagged Union](./union) - No CRDT alternatives.
 - [CROWD Dictionary](./dict) - No CRDT alternatives.
-- CROWD Graph - Coming soon.
-- CROWD JSON - Coming soon.
+- CROWD Tuple - Coming soon.
 - CROWD Text - Coming soon.
+- CROWD JSON - Coming soon.
+- CROWD Graph - Coming soon.
 
 ## Utilites
 
@@ -82,7 +83,7 @@
 }
 ```
 
-## Example
+## Usage Example
 
 ```typescript
 import {
@@ -108,7 +109,7 @@ const MyStore = $mol_crowd_dict.of(
 // Normal store creation
 const base = MyStore.make();
 
-// Marke independent forks for testng
+// Make independent forks for testng
 const alice = base.fork(1);
 const bob = base.fork(2);
 const carol = base.fork(3);
@@ -117,7 +118,7 @@ const carol = base.fork(3);
 alice.for("foo").to("string").str = "A1";
 alice.for("foo").to("string").str = "A2";
 
-// Change register named "foo" then converts it to register and insert value
+// Change register named "foo" then converts it to sequence and insert value
 bob.for("foo").to("string").str = "B1";
 bob.for("foo").to("sequence").insert("B2").insert("B3");
 
@@ -143,3 +144,15 @@ console.log(
 ```
 
 [Sandbox](https://codepen.io/nin-jin/pen/JjbqRYX?editors=0011)
+
+# Comparison of Libraries
+
+|                     | [$mol_crowd](https://github.com/hyoo-ru/mam_mol/tree/master/crowd) | [Automerge](https://github.com/automerge/automerge) | [YJS](https://github.com/yjs/yjs)   | [delta-crdt](https://github.com/peer-base/js-delta-crdts)
+|---------------------|------------|-----------|-------|-----------
+| Approach            | CROWD      | CRDT      | CRDT  | CRDT
+| Gzipped Bundle Size | [3 KB](https://bundlephobia.com/result?p=mol_crowd_all@1.0.1)       | [60 KB](https://bundlephobia.com/result?p=automerge@0.14.2)     | [23 KB](https://bundlephobia.com/result?p=yjs@13.5.2) | [43 KB](https://bundlephobia.com/result?p=delta-crdts@0.10.3)
+
+## Benchmarks
+
+- [$mol_crowd vs Automerge](https://perf.js.hyoo.ru/#prefixes=%5B%22%24mol_import.script%28'https%3A%2F%2Funpkg.com%2Fmol_crowd_all%401.0.1%2Fweb.js'%29%5Cnlet%20doc%3D%20%24mol_crowd_dict.of%28%5Cn%5Ct%24mol_crowd_union.of%28%7B%5Cn%5Ct%5Ctseq%3A%20%24mol_crowd_list%5Cn%5Ct%7D%29%5Cn%29.make%28%29%22%2C%22%24mol_import.script%28'https%3A%2F%2Funpkg.com%2Fautomerge%400.14.2%2Fdist%2Fautomerge.js'%29%5Cnlet%20doc%20%3D%20Automerge.from%28%7B%20list%3A%20%5B%5D%20%7D%29%22%5D/sources=%5B%22%7B%5Cn%5Ctconst%20list%20%3D%20doc.for%28%20'list'%20%29.to%28%20'seq'%20%29%5Cn%5Ctlist.insert%28%7B%23%7D%29%5Cn%5Ctif%28%20%7B%23%7D%20%3E%20max_count%20%29%20list.cut%28%20list.items%5B0%5D%20%29%5Cn%7D%22%2C%22doc%20%3D%20Automerge.change%28%20doc%2C%20'op'%2C%20doc%20%3D%3E%20%7B%5Cn%5Ctdoc.list.push%28%7B%23%7D%29%5Cn%5Ctif%28%20%7B%23%7D%20%3E%20max_count%20%29%20doc.list.shift%28%29%5Cn%7D%20%29%22%5D/prefix=const%20max_count%20%3D%20100)
+- [Automerge vs YJS vs delta-crdt](https://github.com/dmonad/crdt-benchmarks)
