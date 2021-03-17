@@ -148,4 +148,9 @@ console.log(
 
 |                     | $mol_crowd | Automerge | YJS   | delta-crdt
 |---------------------|------------|-----------|-------|-----------
+| Approach            | CROWD      | CRDT      | CRDT  | CRDT
 | Gzipped Bundle Size | [3 KB](https://bundlephobia.com/result?p=mol_crowd_all@1.0.1)       | [60 KB](https://bundlephobia.com/result?p=automerge@0.14.2)     | [23 KB](https://bundlephobia.com/result?p=yjs@13.5.2) | [43 KB](https://bundlephobia.com/result?p=delta-crdts@0.10.3)
+
+## Benchmarks
+
+- [$mol_crowd vs Automerge](https://perf.js.hyoo.ru/#prefixes=%5B%22%24mol_import.script%28'https%3A%2F%2Funpkg.com%2Fmol_crowd_all%401.0.1%2Fweb.js'%29%5Cnlet%20doc%3D%20%24mol_crowd_dict.of%28%5Cn%5Ct%24mol_crowd_union.of%28%7B%5Cn%5Ct%5Ctseq%3A%20%24mol_crowd_list%5Cn%5Ct%7D%29%5Cn%29.make%28%29%22%2C%22%24mol_import.script%28'https%3A%2F%2Funpkg.com%2Fautomerge%400.14.2%2Fdist%2Fautomerge.js'%29%5Cnlet%20doc%20%3D%20Automerge.from%28%7B%20list%3A%20%5B%5D%20%7D%29%22%5D/sources=%5B%22doc.for%28%20'list'%20%29.to%28%20'seq'%20%29%5Cn.insert%28%7B%23%7D%29%22%2C%22doc%20%3D%20Automerge.change%28%20doc%2C%20'op'%2C%20doc%20%3D%3E%20%7B%5Cn%20%20doc.list.push%28%7B%23%7D%29%5Cn%7D%20%29%22%5D)
