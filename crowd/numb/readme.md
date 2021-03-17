@@ -1,6 +1,13 @@
 # CROWD Counter
 
-Number that can be shifted by any value. Merges without lost of changes. Equivalent of dCRDT PN-Counter with same properties.
+Number that can be shifted by any value. Equivalent of dCRDT PN-Counter with same properties.
+
+
+## Properties
+
+- Merges without lost of changes.
+- Allows increase/decrease by any number.
+- Allows negative and float values.
 
 ## State format
 
