@@ -1,6 +1,13 @@
 # CROWD Counter
 
-Number that can be shifted by any value. Merges without lost of changes. Equivalent of dCRDT PN-Counter with same properties.
+Number that can be shifted by any value. Equivalent of dCRDT PN-Counter with same properties.
+
+
+## Properties
+
+- Merges without lost of changes.
+- Allows increase/decrease by any number.
+- Allows negative and float values.
 
 ## State format
 
@@ -14,11 +21,11 @@ Number that can be shifted by any value. Merges without lost of changes. Equival
 // Carol decreases by 2 then increases by 1.
 
 .value === 8
+
+Size = 16 * ActorsInState
 ```
 
 Stamp is always non negative.
-
-Size = 16 * ActorsInState
 
 ## Delta format
 
@@ -31,9 +38,13 @@ Delta is partial state dump like:
 }
 // Bob increases by 3 then increases by 1.
 // Carol decreases by 2 then increases by 1.
-```
 
 Size = 16 * ActorsInDelta
+```
+
+## Views
+
+- `value` Current value or `0` by default.
 
 ## Mutations
 
