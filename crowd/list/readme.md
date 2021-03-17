@@ -27,7 +27,7 @@ Size = Size( AddedAndRemovedKeys ) + 8 * Count( AddedAndRemovedKeys )
 
 Items with negative stamps - tombstones.
 
-## Delta format
+## Delta Format
 
 Delta is full state dump.
 
