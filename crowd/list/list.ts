@@ -7,8 +7,15 @@ namespace $ {
 		protected readonly array = [] as $mol_crowd_delta_value[]
 		protected readonly stamps = new Map< $mol_crowd_delta_value, number >()
 		
+		get count() {
+			return this.array.length
+		}
+		
 		get items() {
-			return this.array.slice() as readonly $mol_crowd_delta_value[]
+			return this.array.slice() as $mol_crowd_delta_value[]
+		}
+		get items_internal() {
+			return this.array as readonly $mol_crowd_delta_value[]
 		}
 		
 		has( val: $mol_crowd_delta_value ) {
