@@ -3,38 +3,49 @@ namespace $ {
 	/** CROWD Register */
 	export class $mol_crowd_reg extends $mol_crowd_store {
 		
-		value = null as $mol_crowd_delta_value | null
-		stamp = 0
+		protected _value = null as $mol_crowd_delta_value | null
+		protected _stamp = 0
 		
 		get version() {
-			return this.stamp
+			return this._stamp
 		}
 		
 		get str() {
-			return String( this.value ?? '' )
+			return String( this._value ?? '' )
+		}
+		set str( next: string ) {
+			this.value = next
 		}
 		
 		get numb() {
-			return Number( this.value ?? 0 )
+			return Number( this._value ?? 0 )
+		}
+		set numb( next: number ) {
+			this.value = next
 		}
 		
 		get bool() {
-			return Boolean( this.value ?? false )
+			return Boolean( this._value ?? false )
+		}
+		set bool( next: boolean ) {
+			this.value = next
 		}
 		
 		toJSON( version_min = 0 ) {
 			if( this.version <= version_min ) return $mol_crowd_delta([],[])
-			return $mol_crowd_delta( [ this.value ], [ this.stamp ] )
+			return $mol_crowd_delta( [ this._value ], [ this._stamp ] )
 		}
-				
-		put( val: $mol_crowd_delta_value ) {
+		
+		get value() {
+			return this._value
+		}
+		set value( val: $mol_crowd_delta_value ) {
 			
-			if( this.value === val ) return this
+			if( this._value === val ) return
 			
-			this.value = val
-			this.stamp = this.stamper.genegate()
-			
-			return this
+			this._value = val
+			this._stamp = this.stamper.genegate()
+
 		}
 		
 		apply(
@@ -46,10 +57,10 @@ namespace $ {
 				const val = delta.values[i]
 				const stamp = delta.stamps[i]
 			
-				if( stamp <= this.stamp ) continue
+				if( stamp <= this._stamp ) continue
 				
-				this.value = val
-				this.stamp = stamp
+				this._value = val
+				this._stamp = stamp
 				
 				this.stamper.feed( stamp )
 			}

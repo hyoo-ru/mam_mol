@@ -78,11 +78,12 @@ namespace $ {
 				array: $mol_crowd_list,
 			}).make().fork(1)
 			
-			store.to( 'string' ).put( 'foo' ).put( 'bar' )
+			store.to( 'string' ).str = 'foo'
+			store.to( 'string' ).str = 'bar'
 			$mol_assert_like( store.to( 'array' ).items, [ 'bar' ] )
 			
 			store.as( 'array' )!.insert( 'xxx' )
-			$mol_assert_like( store.to( 'string' ).value, 'xxx' )
+			$mol_assert_like( store.to( 'string' ).str, 'xxx' )
 			
 		},
 		
@@ -95,10 +96,10 @@ namespace $ {
 				array: $mol_crowd_list,
 			}).make().fork(1)
 			
-			base.to( 'string' ).put( 'foo' )
+			base.to( 'string' ).str = 'foo'
 			
 			const left = base.fork(2)
-			left.as( 'string' )!.put( 'bar' )
+			left.as( 'string' )!.str = 'bar'
 			
 			const right = base.fork(3)
 			right.to( 'array' ).insert( 'xxx' )

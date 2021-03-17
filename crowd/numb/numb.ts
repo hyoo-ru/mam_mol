@@ -10,7 +10,7 @@ namespace $ {
 			let res = 0
 			
 			for( const store of this.stores.values() ) {
-				res += Number( store.value ) || 0
+				res += store.numb
 			}
 			
 			return res
@@ -46,9 +46,9 @@ namespace $ {
 		shift( diff = 1 ) {
 			
 			const store = this.reg( this.stamper.actor )
-			const prev = Number( store.value ?? 0 )
+			const prev = Number( store.numb )
 			
-			store.put( prev + diff )
+			store.numb = prev + diff
 			
 			return this
 		}
