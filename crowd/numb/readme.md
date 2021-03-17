@@ -21,11 +21,11 @@ Number that can be shifted by any value. Equivalent of dCRDT PN-Counter with sam
 // Carol decreases by 2 then increases by 1.
 
 .value === 8
+
+Size = 16 * ActorsInState
 ```
 
 Stamp is always non negative.
-
-Size = 16 * ActorsInState
 
 ## Delta format
 
@@ -38,9 +38,13 @@ Delta is partial state dump like:
 }
 // Bob increases by 3 then increases by 1.
 // Carol decreases by 2 then increases by 1.
-```
 
 Size = 16 * ActorsInDelta
+```
+
+## Views
+
+- `value` Current value or `null` by default.
 
 ## Mutations
 
