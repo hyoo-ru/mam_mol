@@ -82,7 +82,7 @@
 }
 ```
 
-## Usage Example
+## Example
 
 ```typescript
 import {
