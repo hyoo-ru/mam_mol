@@ -103,12 +103,12 @@ namespace $ {
 			const left = new $mol_crowd_list().fork(1).insert( 'foo' ).insert( 'bar' )
 			const right = new $mol_crowd_list().fork(2).insert( 'xxx' ).insert( 'yyy' )
 			
-			const left_event = left.toJSON()
-			const right_event = right.toJSON()
+			const left_delta = left.toJSON()
+			const right_delta = right.toJSON()
 			
 			$mol_assert_like(
-				left.apply( right_event ).toJSON(),
-				right.apply( left_event ).toJSON(),
+				left.apply( right_delta ).toJSON(),
+				right.apply( left_delta ).toJSON(),
 				$mol_crowd_delta(
 					[ 'xxx', 'yyy', 'foo', 'bar' ],
 					[ +1002, +2002, +1001, +2001 ],
@@ -124,12 +124,12 @@ namespace $ {
 			const left = base.fork(2).insert( 'xxx', 1 )
 			const right = base.fork(3).insert( 'yyy', 1 )
 			
-			const left_event = left.delta( base )
-			const right_event = right.delta( base )
+			const left_delta = left.delta( base )
+			const right_delta = right.delta( base )
 			
 			$mol_assert_like(
-				left.apply( right_event ).toJSON(),
-				right.apply( left_event ).toJSON(),
+				left.apply( right_delta ).toJSON(),
+				right.apply( left_delta ).toJSON(),
 				$mol_crowd_delta(
 					[ 'foo', 'yyy', 'xxx', 'bar' ],
 					[ +1001, +3003, +3002, +2001 ],
@@ -145,12 +145,12 @@ namespace $ {
 			const left = base.fork(2).insert( 'xxx', 1 )
 			const right = base.fork(3).insert( 'foo', 2 )
 			
-			const left_event = left.delta( base )
-			const right_event = right.delta( base )
+			const left_delta = left.delta( base )
+			const right_delta = right.delta( base )
 			
 			$mol_assert_like(
-				left.apply( right_event ).toJSON(),
-				right.apply( left_event ).toJSON(),
+				left.apply( right_delta ).toJSON(),
+				right.apply( left_delta ).toJSON(),
 				$mol_crowd_delta(
 					[ 'xxx', 'bar', 'foo' ],
 					[ +3002, +2001, +3003 ],
@@ -166,12 +166,12 @@ namespace $ {
 			const left = base.fork(2).insert( 'xxx', 1 )
 			const right = base.fork(3).cut( 'foo' )
 			
-			const left_event = left.delta( base )
-			const right_event = right.delta( base )
+			const left_delta = left.delta( base )
+			const right_delta = right.delta( base )
 			
 			$mol_assert_like(
-				left.apply( right_event ).toJSON(),
-				right.apply( left_event ).toJSON(),
+				left.apply( right_delta ).toJSON(),
+				right.apply( left_delta ).toJSON(),
 				$mol_crowd_delta(
 					[ 'xxx', 'bar', 'foo' ],
 					[ +3002, +2001, -3003 ],
