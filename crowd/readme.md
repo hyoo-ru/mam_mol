@@ -82,7 +82,7 @@
 }
 ```
 
-## Example
+## Usage Example
 
 ```typescript
 import {
@@ -108,7 +108,7 @@ const MyStore = $mol_crowd_dict.of(
 // Normal store creation
 const base = MyStore.make();
 
-// Marke independent forks for testng
+// Make independent forks for testng
 const alice = base.fork(1);
 const bob = base.fork(2);
 const carol = base.fork(3);
