@@ -44,4 +44,4 @@ Delta is full state dump.
 ## Can be reinterpreted as
 
 - [CROWD Register](../reg) then last value wins.
-- [CROWD Unordered Set](../set) with reordering by version.
+- [CROWD Unordered Set](../set)
