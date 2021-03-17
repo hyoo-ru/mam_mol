@@ -29,7 +29,7 @@ namespace $ {
 				if( patch.values.length === 0 ) continue
 				
 				delta.values.push( key, ... patch.values )
-				delta.stamps.push( patch.values.length, ... patch.stamps )
+				delta.stamps.push( - patch.values.length, ... patch.stamps )
 				
 			}
 			
@@ -74,7 +74,7 @@ namespace $ {
 					
 					dump()
 					key = val
-					count = stamp
+					count = - stamp
 					continue
 					
 				} else {

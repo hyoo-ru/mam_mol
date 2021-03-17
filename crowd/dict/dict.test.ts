@@ -11,7 +11,7 @@ namespace $ {
 			
 			$mol_assert_like( val.toJSON(), $mol_crowd_delta(
 				[ 'foo', 888, 666, 'bar', 777 ],
-				[ 2, 3001, 1001, 1, -4001 ],
+				[ -2, 3001, 1001, -1, -4001 ],
 			) )
 			
 		},
@@ -30,7 +30,7 @@ namespace $ {
 
 			$mol_assert_like( val.toJSON( +3001 ), $mol_crowd_delta(
 				[ 'foo', 4, 'bar', 5, 'xxx', 6 ],
-				[ 1, +4001, 1, +5001, 1, +6001 ],
+				[ -1, +4001, -1, +5001, -1, +6001 ],
 			) )
 			
 			$mol_assert_like( val.toJSON( +6001 ), $mol_crowd_delta([],[]) )
@@ -56,7 +56,7 @@ namespace $ {
 				right.apply( left_delta ).toJSON(),
 				$mol_crowd_delta(
 					[ 'foo', 777, 666, 'bar', 'yyy', 'zzz', 'xxx' ],
-					[ 2, 1002, 1001, 3, 2002, 3002, 2001 ],
+					[ -2, 1002, 1001, -3, 2002, 3002, 2001 ],
 				),
 			)
 			
@@ -78,7 +78,7 @@ namespace $ {
 			
 			$mol_assert_like( left.toJSON(), $mol_crowd_delta(
 				[ 'foo', 'xxx', 'yyy', 'bar', 17, 18 ],
-				[ 2, 1001, 3001, 2, 1002, 2002 ],
+				[ -2, 1001, 3001, -2, 1002, 2002 ],
 			) )
 			
 		},
@@ -105,7 +105,7 @@ namespace $ {
 				right.apply( left_delta ).toJSON(),
 				$mol_crowd_delta(
 					[ 'foo', 'array', 'xxx', 'bar' ],
-					[ 3, 1002, 2002, 2001 ],
+					[ -3, 1002, 2002, 2001 ],
 				),
 			)
 			
