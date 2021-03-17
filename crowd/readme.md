@@ -117,7 +117,7 @@ const carol = base.fork(3);
 alice.for("foo").to("string").str = "A1";
 alice.for("foo").to("string").str = "A2";
 
-// Change register named "foo" then converts it to register and insert value
+// Change register named "foo" then converts it to sequence and insert value
 bob.for("foo").to("string").str = "B1";
 bob.for("foo").to("sequence").insert("B2").insert("B3");
 
