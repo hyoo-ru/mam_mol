@@ -72,12 +72,10 @@ namespace $ {
 				return result = true
 
 			}
-			
-			const keys = [] as string[]
+
+			let count = 0
 
 			for( let key in a ) {
-				
-				keys.push( key )
 
 				try {
 
@@ -89,14 +87,17 @@ namespace $ {
 
 				}
 				
+				++ count
+
 			}
 	
 			for( let key in b ) {
-				if( keys.length === 0 ) return result = false
-				if( keys.shift() !== key ) return result = false
+
+				--count
+				
+				if( count < 0 ) return result = false
+				
 			}
-			
-			if( keys.length !== 0 ) return result = false
 	
 			const a_val = a['valueOf']()
 			if( Object.is( a_val , a ) ) return result = true
