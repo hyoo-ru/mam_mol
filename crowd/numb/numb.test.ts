@@ -50,11 +50,11 @@ namespace $ {
 			const left = base.fork(2).shift( +3 ).shift( +1 )
 			const right = base.fork(3).shift( -2 ).shift( +1 )
 			
-			const left_event = left.delta( base )
-			const right_event = right.delta( base )
+			const left_delta = left.delta( base )
+			const right_delta = right.delta( base )
 			
-			left.apply( right_event )
-			right.apply( left_event )
+			left.apply( right_delta )
+			right.apply( left_delta )
 			
 			$mol_assert_like(
 				left.value,

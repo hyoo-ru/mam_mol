@@ -48,12 +48,12 @@ namespace $ {
 			right.for( 'bar' ).insert( 'yyy' )
 			right.for( 'bar' ).insert( 'zzz' )
 			
-			const left_event = left.toJSON() 
-			const right_event = right.toJSON() 
+			const left_delta = left.toJSON() 
+			const right_delta = right.toJSON() 
 			
 			$mol_assert_like(
-				left.apply( right_event ).toJSON(),
-				right.apply( left_event ).toJSON(),
+				left.apply( right_delta ).toJSON(),
+				right.apply( left_delta ).toJSON(),
 				$mol_crowd_delta(
 					[ 'foo', 777, 666, 'bar', 'yyy', 'zzz', 'xxx' ],
 					[ 0, 1002, 1001, 0, 2002, 3002, 2001 ],
@@ -97,19 +97,19 @@ namespace $ {
 			left.for( 'foo' ).to( 'string' ).str = 'bar'
 			right.for( 'foo' ).to( 'array' ).insert( 'xxx' )
 			
-			const left_event = left.delta( base )
-			const right_event = right.delta( base )
+			const left_delta = left.delta( base )
+			const right_delta = right.delta( base )
 			
 			$mol_assert_like(
-				left.apply( right_event ).toJSON(),
-				right.apply( left_event ).toJSON(),
+				left.apply( right_delta ).toJSON(),
+				right.apply( left_delta ).toJSON(),
 				$mol_crowd_delta(
 					[ 'foo', 'array', 'xxx', 'bar' ],
 					[ 0, 1002, 2002, 2001 ],
 				),
 			)
 			
-		}
+		},
 		
 	})
 }
