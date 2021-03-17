@@ -94,7 +94,7 @@ namespace $ {
 			const left = base.fork(1)
 			const right = base.fork(2)
 			
-			left.for( 'foo' ).to( 'string' ).put( 'bar' )
+			left.for( 'foo' ).to( 'string' ).str = 'bar'
 			right.for( 'foo' ).to( 'array' ).insert( 'xxx' )
 			
 			const left_event = left.delta( base )
