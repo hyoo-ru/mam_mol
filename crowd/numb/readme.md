@@ -44,7 +44,7 @@ Size = 16 * ActorsInDelta
 
 ## Views
 
-- `value` Current value or `null` by default.
+- `value` Current value or `0` by default.
 
 ## Mutations
 
