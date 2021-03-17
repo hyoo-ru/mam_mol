@@ -28,8 +28,12 @@ namespace $ {
 		}
 				
 		put( val: $mol_crowd_delta_value ) {
+			
+			if( this.value === val ) return this
+			
 			this.value = val
 			this.stamp = this.stamper.genegate()
+			
 			return this
 		}
 		

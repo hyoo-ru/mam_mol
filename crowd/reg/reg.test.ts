@@ -23,6 +23,18 @@ namespace $ {
 			
 		},
 		
+		'Ignore same changes'() {
+			
+			$mol_assert_like(
+				new $mol_crowd_reg().fork(1).put( 'foo' ).put( 'foo' ).toJSON(),
+				$mol_crowd_delta(
+					[ 'foo' ],
+					[ +1001 ],
+				)
+			)
+			
+		},
+		
 		'Slice after version'() {
 			
 			const val = new $mol_crowd_reg().fork(1).put( 'foo' ).put( 'bar' )
