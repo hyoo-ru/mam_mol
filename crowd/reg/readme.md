@@ -12,15 +12,19 @@ Single value store. Just CvRDT LWW-Register with same properties.
 // Alice puts "foo" then Bob puts "bar".
 
 .value === "bar"
+
+Size = Size( Value ) + 8
 ```
 
 Stamp is always non negative.
 
-Size = Size( Value ) + 8
-
 ## Delta Format
 
 Delta is full state dump.
+
+## Views
+
+- `value` Current value or `null` by default.
 
 ## Mutations
 
