@@ -6,7 +6,7 @@
 
 ### Conflict-free
 
-- Any states can merged without conflicts.
+- Any states can be merged without conflicts.
 - Strong Eventual Consistency.
 - Merge result independent of merge order on different actors.
 - Branch merge is semilattice.
