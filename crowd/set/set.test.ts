@@ -66,7 +66,7 @@ namespace $ {
 			
 			const store = new $mol_crowd_set().fork(1).add( 'foo' ).add( 'xxx' ).remove( 'foo' )
 			
-			$mol_assert_like( [ ... store.items ], [ "xxx" ] )
+			$mol_assert_like( store.items, [ "xxx" ] )
 			
 		},
 		
@@ -79,8 +79,8 @@ namespace $ {
 			const right_event = right.toJSON()
 			
 			$mol_assert_like(
-				[ ... left.apply( right_event ).items ].sort(),
-				[ ... right.apply( left_event ).items ].sort(),
+				left.apply( right_event ).items.sort(),
+				right.apply( left_event ).items.sort(),
 				[ 'bar', 'foo', 'yyy' ],
 			)
 			
@@ -97,8 +97,8 @@ namespace $ {
 			const right_event = right.delta( base )
 			
 			$mol_assert_like(
-				[ ... left.apply( right_event ).items ].sort(),
-				[ ... right.apply( left_event ).items ].sort(),
+				left.apply( right_event ).items.sort(),
+				right.apply( left_event ).items.sort(),
 				[ 'bar', 'xxx' ],
 			)
 			
@@ -115,8 +115,8 @@ namespace $ {
 			const right_event = right.delta( base )
 			
 			$mol_assert_like(
-				[ ... left.apply( right_event ).items ],
-				[ ... right.apply( left_event ).items ],
+				left.apply( right_event ).items,
+				right.apply( left_event ).items,
 				[ 'foo', 'xxx' ],
 			)
 			

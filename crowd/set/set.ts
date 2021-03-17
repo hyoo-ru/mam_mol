@@ -7,10 +7,8 @@ namespace $ {
 		
 		get items() {
 			const delta = this.toJSON()
-			return new Set(
-				delta.values.filter(
-					( _, index )=> delta.stamps[ index ] > 0
-				)
+			return delta.values.filter(
+				( _, index )=> delta.stamps[ index ] > 0
 			)
 		}
 		
