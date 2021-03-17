@@ -29,7 +29,7 @@ namespace $ {
 				if( patch.values.length === 0 ) continue
 				
 				delta.values.push( key, ... patch.values )
-				delta.stamps.push( 0, ... patch.stamps )
+				delta.stamps.push( patch.values.length, ... patch.stamps )
 				
 			}
 			
@@ -56,7 +56,7 @@ namespace $ {
 		) {
 			
 			let key: $mol_crowd_delta_value
-			
+			let count = 0
 			let patch = $mol_crowd_delta([],[])
 			
 			const dump = ()=> {
@@ -70,13 +70,19 @@ namespace $ {
 				const val = delta.values[i]
 				const stamp = delta.stamps[i]
 				
-				if( stamp === 0 ) {
+				if( count === 0 ) {
+					
 					dump()
 					key = val
+					count = stamp
 					continue
+					
 				} else {
+					
 					patch.values.push( val )
 					patch.stamps.push( stamp )
+					-- count
+					
 				}
 				
 			}
