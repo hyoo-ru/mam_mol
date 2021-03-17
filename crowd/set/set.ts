@@ -5,6 +5,10 @@ namespace $ {
 		
 		protected readonly stamps = new Map< $mol_crowd_delta_value, number >()
 		
+		get count() {
+			return this.items.length
+		}
+		
 		get items() {
 			const delta = this.toJSON()
 			return delta.values.filter(
