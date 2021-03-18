@@ -31,3 +31,7 @@ All fields always exists in state.
 ## Views
 
 - `for( field )` Returns inner store for `field`.
+
+## Can be reinterpreted as
+
+- [CROWD Dictionary](../dict)
