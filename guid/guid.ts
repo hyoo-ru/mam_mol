@@ -1,13 +1,14 @@
 namespace $ {
 
-	/** Generates 8 byte unique identifier. */
+	/** Generates unique identifier. */
 	export function $mol_guid(
-		exists: ( id: string )=> boolean = ()=> false
+		length = 8,
+		exists: ( id: string )=> boolean = ()=> false,
 	) {
 
 		for(;;) {
 
-			let id = Math.random().toString( 36 ).substring( 2, 10 ).toUpperCase()
+			let id = Math.random().toString( 36 ).substring( 2, length + 2 ).toUpperCase()
 			if( exists( id ) ) continue
 			
 			return id
