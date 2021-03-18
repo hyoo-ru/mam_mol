@@ -10,7 +10,7 @@ namespace $ {
 		>(
 			Types: Types,
 		) {
-			return class Union extends this<Types> {
+			return class Tuple extends this<Types> {
 				Fields = Types
 			}
 		}
@@ -35,10 +35,13 @@ namespace $ {
 			const delta = $mol_crowd_delta([],[])
 			
 			for( let field in this.Fields ) {
+				
 				const patch = this.for( field ).toJSON( version_min )
 				if( patch.values.length === 0 ) continue
+				
 				delta.values.push( field, ... patch.values )
 				delta.stamps.push( - patch.values.length, ... patch.stamps )
+				
 			}
 			
 			return delta
