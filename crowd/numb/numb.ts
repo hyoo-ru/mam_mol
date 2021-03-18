@@ -16,6 +16,10 @@ namespace $ {
 			return res
 		}
 		
+		get numb() {
+			return this.value
+		}
+		
 		toJSON( version_min = 0 ) {
 			
 			const delta = $mol_crowd_delta([],[])

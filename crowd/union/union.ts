@@ -1,6 +1,6 @@
 namespace $ {
 	
-	/** CROWD Register */
+	/** CROWD Tagged Union */
 	export class $mol_crowd_union<
 		Types extends Record< string, typeof $mol_crowd_store >
 	> extends $mol_crowd_store {

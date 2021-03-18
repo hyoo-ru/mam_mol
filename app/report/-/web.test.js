@@ -528,7 +528,7 @@ var $;
                 if (Number.isNaN(args[i]) && Number.isNaN(args[j]))
                     continue;
                 if (args[i] !== args[j])
-                    $.$mol_fail(new Error(`Not equal\n${args[i]}\n${args[j]}`));
+                    $.$mol_fail(new Error(`Not equal (${i + 1}:${j + 1})\n${args[i]}\n${args[j]}`));
             }
         }
     }
@@ -546,11 +546,8 @@ var $;
     }
     $.$mol_assert_unique = $mol_assert_unique;
     function $mol_assert_like(head, ...tail) {
-        for (let value of tail) {
-            if ($.$mol_compare_deep(value, head)) {
-                head = value;
-            }
-            else {
+        for (let [index, value] of Object.entries(tail)) {
+            if (!$.$mol_compare_deep(value, head)) {
                 const print = (val) => {
                     if (!val)
                         return val;
@@ -560,7 +557,7 @@ var $;
                         return val.outerHTML;
                     return JSON.stringify(val);
                 };
-                return $.$mol_fail(new Error(`Not like\n${print(head)}\n---\n${print(value)}`));
+                return $.$mol_fail(new Error(`Not like (1:${+index + 2})\n${print(head)}\n---\n${print(value)}`));
             }
         }
     }
