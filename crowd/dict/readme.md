@@ -11,7 +11,7 @@ Map key to another CROWD Store.
 ```javascript
 {
 	"values": [ key1, ... values1, key2, ... values2, ... ],
-	"stamps": [ 0, ... stamps1, 0, ... stamps2, ... ],
+	"stamps": [ size1, ... stamps1, szie2, ... stamps2, ... ],
 }
 
 Size = Size( Keys ) + 8 * Count( Keys ) + Size( InnerStoreData )
@@ -24,8 +24,12 @@ Delta is partial state dump like:
 ```javascript
 {
 	"values": [ key5, ... values5, key3, ... values3, ... ],
-	"stamps": [ 0, ... stamps5, 0, ... stamps3, ... ],
+	"stamps": [ size5, ... stamps5, size3, ... stamps3, ... ],
 }
 
 Size = Size( ChangedKeys ) + 8 * Count( ChangedKeys ) + Size( InnerStoreDeltas )
 ```
+
+## Views
+
+- `for( key )` Returns inner store for `key`.
