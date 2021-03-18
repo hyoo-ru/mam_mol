@@ -45,7 +45,7 @@ namespace $ {
 			for( let j = 0 ; j < args.length ; ++j ) {
 				if( i === j ) continue
 				if( Number.isNaN( args[i] as any as number ) && Number.isNaN( args[j] as any as number ) ) continue
-				if( args[i] !== args[j] ) $mol_fail( new Error( `Not equal\n${ args[i] }\n${ args[j] }` ) )
+				if( args[i] !== args[j] ) $mol_fail( new Error( `Not equal (${i+1}:${j+1})\n${ args[i] }\n${ args[j] }` ) )
 			}
 		}
 	}
@@ -61,12 +61,10 @@ namespace $ {
 		}
 	}
 	
-	export function $mol_assert_like< Value >( head : Value , ... tail : Value[] ) {
-		for( let value of tail ) {
+	export function $mol_assert_like< Value >( head : Value, ... tail : Value[]) {
+		for( let [ index, value ] of Object.entries( tail ) ) {
 
-			if( $mol_compare_deep( value , head ) ) {
-				head = value
-			} else {
+			if( !$mol_compare_deep( value , head ) ) {
 
 				const print = ( val : any ) => {
 					if( !val ) return val
@@ -75,7 +73,7 @@ namespace $ {
 					return JSON.stringify( val )
 				}
 				
-				return $mol_fail( new Error( `Not like\n${ print( head ) }\n---\n${ print( value ) }` ) )
+				return $mol_fail( new Error( `Not like (1:${ + index + 2 })\n${ print( head ) }\n---\n${ print( value ) }` ) )
 
 			}
 
