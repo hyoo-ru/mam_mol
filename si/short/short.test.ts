@@ -1,6 +1,13 @@
 namespace $ {
 	$mol_test({
 		
+		'Special'() {
+			$mol_assert_equal( $mol_si_short( 0 ), '0' )
+			$mol_assert_equal( $mol_si_short( 1/0 ), '∞' )
+			$mol_assert_equal( $mol_si_short( -1/0 ), '-∞' )
+			$mol_assert_equal( $mol_si_short( 0/0 ), '∅' )
+		},
+		
 		'M'() {
 			$mol_assert_equal( $mol_si_short( 0 ), '0' )
 			$mol_assert_equal( $mol_si_short( 0.999500 ), '1.00' )
@@ -38,6 +45,9 @@ namespace $ {
 		},
 		
 		'With unit'() {
+			$mol_assert_equal( $mol_si_short( 0, 's' ), '0 s' )
+			$mol_assert_equal( $mol_si_short( 1/0, 's' ), '∞ s' )
+			$mol_assert_equal( $mol_si_short( 0/0, 's' ), '∅ s' )
 			$mol_assert_equal( $mol_si_short( 123, 'Hz' ), '123 Hz' )
 			$mol_assert_equal( $mol_si_short( 1234, 'g' ), '1.23 kg' )
 		},
