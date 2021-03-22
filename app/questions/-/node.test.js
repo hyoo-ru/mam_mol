@@ -4479,7 +4479,7 @@ var $;
         }
         get parse() {
             const self = this;
-            return function* (str, from = 0) {
+            return function* parsing(str, from = 0) {
                 while (from < str.length) {
                     self.lastIndex = from;
                     const res = self.exec(str);
