@@ -47,7 +47,7 @@ namespace $ {
 
 			const self = this
 
-			return function*( str : string , from = 0 ) {
+			return function* parsing( str : string , from = 0 ) {
 
 				while( from < str.length ) {
 
