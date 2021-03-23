@@ -80,12 +80,10 @@ declare namespace $ {
     var $mol_dom_context: typeof globalThis;
 }
 
-/// <reference types="node" />
 interface $node {
     [key: string]: any;
 }
 declare var $node: $node;
-declare const $node_require: NodeRequire;
 
 declare namespace $ {
 }

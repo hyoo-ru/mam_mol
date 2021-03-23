@@ -717,6 +717,7 @@ namespace $ {
 			this.bundle({ path , bundle : 'node.locale=en.json' })
 
 			this.bundle({ path , bundle : 'package.json' })
+			this.bundle({ path , bundle : 'readme.md' })
 
 			this.bundleFiles( { path , exclude : [ 'node' ] } )
 			this.bundleCordova( { path , exclude : [ 'node' ] } )
@@ -792,6 +793,10 @@ namespace $ {
 			
 			if( !bundle || bundle === 'package.json' ) {
 				res = res.concat( this.bundlePackageJSON( { path , exclude : [ 'web' ] } ) )
+			}
+			
+			if( !bundle || bundle === 'readme.md' ) {
+				res = res.concat( this.bundleReadmeMd( { path , exclude : [ 'web' ] } ) )
 			}
 			
 			if( !bundle || bundle === 'index.html' ) {
@@ -1083,6 +1088,25 @@ namespace $ {
 
 		}
 
+		@ $mol_mem_key
+		bundleReadmeMd( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
+			
+			const pack = $mol_file.absolute( path )
+			
+			const start = Date.now()
+			let source = pack.resolve( 'readme.md' )
+			
+			while( source != this.root() && !source.exists() ) {
+				source = source.resolve( '../../readme.md' )
+			}
+
+			const target = pack.resolve( '-/readme.md' )
+			target.text( source?.text() ?? path )
+			this.logBundle( target , Date.now() - start )
+			
+			return [ target ]
+		}
+		
 		@ $mol_mem_key
 		bundlePackageJSON( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
 			const start = Date.now()

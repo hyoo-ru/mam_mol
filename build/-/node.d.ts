@@ -34,12 +34,10 @@ declare namespace $ {
     let $mol_log3_stack: (() => void)[];
 }
 
-/// <reference types="node" />
 interface $node {
     [key: string]: any;
 }
 declare var $node: $node;
-declare const $node_require: NodeRequire;
 
 declare namespace $ {
     const $mol_ambient_ref: unique symbol;
@@ -1024,6 +1022,10 @@ declare namespace $ {
             path: string;
             exclude: string[];
         }): string[];
+        bundleReadmeMd({ path, exclude }: {
+            path: string;
+            exclude: string[];
+        }): $mol_file[];
         bundlePackageJSON({ path, exclude }: {
             path: string;
             exclude: string[];

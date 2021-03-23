@@ -49,15 +49,15 @@ var $;
 //log3.js.map
 ;
 "use strict";
-var $node = new Proxy({}, {
+var $node = new Proxy({ require }, {
     get(target, name, wrapper) {
         if (target[name])
             return target[name];
-        const mod = $node_require('module');
+        const mod = target.require('module');
         if (mod.builtinModules.indexOf(name) >= 0)
-            return $node_require(name);
-        const path = $node_require('path');
-        const fs = $node_require('fs');
+            return target.require(name);
+        const path = target.require('path');
+        const fs = target.require('fs');
         let dir = path.resolve('.');
         const suffix = `./node_modules/${name}`;
         const $$ = $;
@@ -75,17 +75,16 @@ var $node = new Proxy({}, {
                 dir = parent;
             }
         }
-        return $node_require(name);
+        return target.require(name);
     },
     set(target, name, value) {
         target[name] = value;
         return true;
     },
 });
-const $node_require = require;
 require = (req => Object.assign(function require(name) {
     return $node[name];
-}, $node_require))(require);
+}, req))(require);
 //node.node.js.map
 ;
 "use strict";
@@ -4443,6 +4442,7 @@ var $;
             this.bundle({ path, bundle: 'node.view.tree' });
             this.bundle({ path, bundle: 'node.locale=en.json' });
             this.bundle({ path, bundle: 'package.json' });
+            this.bundle({ path, bundle: 'readme.md' });
             this.bundleFiles({ path, exclude: ['node'] });
             this.bundleCordova({ path, exclude: ['node'] });
         }
@@ -4495,6 +4495,9 @@ var $;
             });
             if (!bundle || bundle === 'package.json') {
                 res = res.concat(this.bundlePackageJSON({ path, exclude: ['web'] }));
+            }
+            if (!bundle || bundle === 'readme.md') {
+                res = res.concat(this.bundleReadmeMd({ path, exclude: ['web'] }));
             }
             if (!bundle || bundle === 'index.html') {
                 res = res.concat(this.bundleIndexHtml({ path }));
@@ -4707,6 +4710,19 @@ var $;
                 }
             }
             return [...res];
+        }
+        bundleReadmeMd({ path, exclude }) {
+            var _a;
+            const pack = $.$mol_file.absolute(path);
+            const start = Date.now();
+            let source = pack.resolve('readme.md');
+            while (source != this.root() && !source.exists()) {
+                source = source.resolve('../../readme.md');
+            }
+            const target = pack.resolve('-/readme.md');
+            target.text((_a = source === null || source === void 0 ? void 0 : source.text()) !== null && _a !== void 0 ? _a : path);
+            this.logBundle(target, Date.now() - start);
+            return [target];
         }
         bundlePackageJSON({ path, exclude }) {
             const start = Date.now();
@@ -5019,6 +5035,9 @@ var $;
     __decorate([
         $.$mol_mem_key
     ], $mol_build.prototype, "nodeDeps", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_build.prototype, "bundleReadmeMd", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_build.prototype, "bundlePackageJSON", null);

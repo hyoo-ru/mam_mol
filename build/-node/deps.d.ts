@@ -1,6 +1,5 @@
 interface $node {
- 	"require" : typeof import( "require" )
-	"colorette" : typeof import( "colorette" )
+ 	"colorette" : typeof import( "colorette" )
 	"jsdom" : typeof import( "jsdom" )
 	"util" : typeof import( "util" )
 	"fs" : typeof import( "fs" )
