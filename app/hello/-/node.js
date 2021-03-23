@@ -1,6 +1,5 @@
 "use strict";
-require( "source-map-support" ).install(); var exports = void 0;
-process.on( 'unhandledRejection' , up => { throw up } );
+var exports = void 0;
 "use strict"
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
