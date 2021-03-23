@@ -837,8 +837,7 @@ namespace $ {
 			concater.add( '"use strict"' )
 
 			if( bundle === 'node' ) {
-				concater.add( 'require'+'( "source-map-support" ).install(); var exports = void 0' )
-				concater.add( "process.on( 'unhandledRejection' , up => { throw up } )" )
+				concater.add( 'var exports = void 0' )
 			} else {
 				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
 			}
@@ -941,8 +940,6 @@ namespace $ {
 			var sourcesNoTest = this.sourcesJS( { path , exclude } )
 			var sourcesTest = sources.filter( src => sourcesNoTest.indexOf( src ) === -1 )
 			if( bundle === 'node' ) {
-				concater.add( 'require'+'( "source-map-support" ).install()' )
-				concater.add( "process.on( 'unhandledRejection' , up => { throw up } )" )
 				sourcesTest = [ ... sourcesNoTest , ... sourcesTest ]
 			} else {
 				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
