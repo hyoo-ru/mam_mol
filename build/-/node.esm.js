@@ -4725,6 +4725,7 @@ var $;
             let source = pack.resolve('readme.md');
             while (source != this.root() && !source.exists()) {
                 source = source.resolve('../../readme.md');
+                console.log(source.path());
             }
             const target = pack.resolve('-/readme.md');
             target.text((_a = source === null || source === void 0 ? void 0 : source.text()) !== null && _a !== void 0 ? _a : path);
