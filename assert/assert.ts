@@ -67,10 +67,18 @@ namespace $ {
 			if( !$mol_compare_deep( value , head ) ) {
 
 				const print = ( val : any ) => {
+					
 					if( !val ) return val
 					if( typeof val !== 'object' ) return val
 					if( 'outerHTML' in val ) return val.outerHTML
-					return JSON.stringify( val )
+					
+					try {
+						return JSON.stringify( val )
+					} catch( error ) {
+						console.error( error )
+						return val
+					}
+					
 				}
 				
 				return $mol_fail( new Error( `Not like (1:${ + index + 2 })\n${ print( head ) }\n---\n${ print( value ) }` ) )
