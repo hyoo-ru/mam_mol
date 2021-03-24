@@ -1098,6 +1098,7 @@ namespace $ {
 			
 			while( source != this.root() && !source.exists() ) {
 				source = source.resolve( '../../readme.md' )
+				console.log(source.path())
 			}
 
 			const target = pack.resolve( '-/readme.md' )
