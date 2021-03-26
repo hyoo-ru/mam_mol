@@ -8,20 +8,42 @@ namespace $.$$ {
 			]
 		}
 		
+		@ $mol_mem
 		height_max() {
-			return this.$.$mol_window.size().height * 0.33;
+			
+			const viewport = this.$.$mol_window.size()
+			const rect_bubble = this.view_rect()!
+			const align = this.align_vert()
+			
+			if( align === 'bottom' ) return viewport.height - rect_bubble.bottom
+			if( align === 'top' ) return rect_bubble.top
+			
+			return 0
 		}
 
+		@ $mol_mem
 		align() {
+			return `${ this.align_vert() }_${ this.align_hor() }`
+		}
+
+		@ $mol_mem
+		align_vert() {
 			const viewport = this.$.$mol_window.size()
 			
 			const rect_bubble = this.view_rect()
 			if( !rect_bubble ) return 'suspense'
 			
-			const vert = rect_bubble.top > ( viewport.height - rect_bubble.bottom ) ? 'top' : 'bottom'
-			const hor = rect_bubble.left > ( viewport.width - rect_bubble.right ) ? 'left' : 'right'
+			return rect_bubble.top > ( viewport.height - rect_bubble.bottom ) ? 'top' : 'bottom'
+		}
+
+		@ $mol_mem
+		align_hor() {
+			const viewport = this.$.$mol_window.size()
 			
-			return `${ vert }_${ hor }`
+			const rect_bubble = this.view_rect()
+			if( !rect_bubble ) return 'suspense'
+			
+			return rect_bubble.left > ( viewport.width - rect_bubble.right ) ? 'left' : 'right'
 		}
 
 		keydown( event : KeyboardEvent ) {
