@@ -1,0 +1,6 @@
+$mol_pick $mol_pop
+	Anchor <= Trigger $mol_check
+		enabled <= enabled true
+		checked?event <=> showed?event false
+		sub <= trigger_content /
+		hint <= hint \

@@ -1,4 +1,4 @@
-$mol_select $mol_pop
+$mol_select $mol_pick
 	dictionary *
 	options /string
 	value?val \
@@ -17,7 +17,6 @@ $mol_select $mol_pop
 			keys_y <= nav_components /$mol_view
 			current_y?component <=> option_focused?component null
 			cycle?val <=> nav_cycle?val true
-	showed?val <=> options_showed?val false
 	Anchor <= Trigger $mol_button_minor
 		click?event <=> open?event null
 		sub <= trigger_content /

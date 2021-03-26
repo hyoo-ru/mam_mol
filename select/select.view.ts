@@ -9,13 +9,7 @@ namespace $.$$ {
 		}
 
 		open() {
-			this.options_showed( true )
-		}
-		
-		@ $mol_mem
-		options_showed( next = false ) {
-			this.focused()
-			return next
+			this.showed( true )
 		}
 		
 		@ $mol_mem
@@ -53,7 +47,7 @@ namespace $.$$ {
 				return null
 			}
 			
-			if( this.options_showed() ) {
+			if( this.showed() ) {
 				component.focused( true )
 			}
 			

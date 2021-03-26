@@ -1,6 +1,12 @@
 namespace $.$$ {
 	export class $mol_pop extends $.$mol_pop {
 		
+		@ $mol_mem
+		showed( next = false ) {
+			this.focused()
+			return next
+		}
+
 		sub() {
 			return [
 				this.Anchor() ,
