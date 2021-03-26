@@ -3569,6 +3569,8 @@ declare namespace $.$$ {
         sub(): any[];
         height_max(): number;
         align(): string;
+        align_vert(): "suspense" | "top" | "bottom";
+        align_hor(): "suspense" | "left" | "right";
         keydown(event: KeyboardEvent): void;
     }
 }

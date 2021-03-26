@@ -200,27 +200,43 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_fail(error) {
+        throw error;
+    }
+    $.$mol_fail = $mol_fail;
+})($ || ($ = {}));
+//fail.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function numb(str, max) {
+        const numb = Number(str);
+        if (numb < max)
+            return numb;
+        $.$mol_fail(new Error(`Wrong time component ${str}`));
+    }
     class $mol_time_moment extends $.$mol_time_base {
         constructor(config = new Date) {
             super();
             if (typeof config === 'number')
                 config = new Date(config);
             if (typeof config === 'string') {
-                const parsed = /^(?:(\d\d\d\d)(?:-?(\d\d)(?:-?(\d\d))?)?)?(?:[T ](\d\d)(?::?(\d\d)(?::?(\d\d(?:\.\d+)?))?)?(Z|[\+\-]\d\d(?::?(?:\d\d)?)?)?)?$/.exec(config);
+                const parsed = /^(?:(\d\d?\d?\d?)(?:-?(\d\d?)(?:-?(\d\d?))?)?)?(?:[T ](\d\d?)(?::?(\d\d?)(?::?(\d\d?(?:\.\d+)?))?)?(Z|[\+\-]\d\d?(?::?(?:\d\d?)?)?)?)?$/.exec(config);
                 if (!parsed)
                     throw new Error(`Can not parse time moment (${config})`);
                 if (parsed[1])
-                    this.year = Number(parsed[1]);
+                    this.year = numb(parsed[1], 9999);
                 if (parsed[2])
-                    this.month = Number(parsed[2]) - 1;
+                    this.month = numb(parsed[2], 13) - 1;
                 if (parsed[3])
-                    this.day = Number(parsed[3]) - 1;
+                    this.day = numb(parsed[3], 32) - 1;
                 if (parsed[4])
-                    this.hour = Number(parsed[4]);
+                    this.hour = numb(parsed[4], 60);
                 if (parsed[5])
-                    this.minute = Number(parsed[5]);
+                    this.minute = numb(parsed[5], 60);
                 if (parsed[6])
-                    this.second = Number(parsed[6]);
+                    this.second = numb(parsed[6], 60);
                 if (parsed[7])
                     this.offset = new $.$mol_time_duration(parsed[7]);
                 return;

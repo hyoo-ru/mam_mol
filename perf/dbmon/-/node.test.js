@@ -3606,16 +3606,31 @@ var $;
                 ];
             }
             height_max() {
-                return this.$.$mol_window.size().height * 0.33;
+                const viewport = this.$.$mol_window.size();
+                const rect_bubble = this.view_rect();
+                const align = this.align_vert();
+                if (align === 'bottom')
+                    return viewport.height - rect_bubble.bottom;
+                if (align === 'top')
+                    return rect_bubble.top;
+                return 0;
             }
             align() {
+                return `${this.align_vert()}_${this.align_hor()}`;
+            }
+            align_vert() {
                 const viewport = this.$.$mol_window.size();
                 const rect_bubble = this.view_rect();
                 if (!rect_bubble)
                     return 'suspense';
-                const vert = rect_bubble.top > (viewport.height - rect_bubble.bottom) ? 'top' : 'bottom';
-                const hor = rect_bubble.left > (viewport.width - rect_bubble.right) ? 'left' : 'right';
-                return `${vert}_${hor}`;
+                return rect_bubble.top > (viewport.height - rect_bubble.bottom) ? 'top' : 'bottom';
+            }
+            align_hor() {
+                const viewport = this.$.$mol_window.size();
+                const rect_bubble = this.view_rect();
+                if (!rect_bubble)
+                    return 'suspense';
+                return rect_bubble.left > (viewport.width - rect_bubble.right) ? 'left' : 'right';
             }
             keydown(event) {
                 if (event.defaultPrevented)
@@ -3628,6 +3643,18 @@ var $;
                 }
             }
         }
+        __decorate([
+            $.$mol_mem
+        ], $mol_pop.prototype, "height_max", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_pop.prototype, "align", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_pop.prototype, "align_vert", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_pop.prototype, "align_hor", null);
         $$.$mol_pop = $mol_pop;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

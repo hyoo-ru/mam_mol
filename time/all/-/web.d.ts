@@ -56,6 +56,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_fail(error: any): never;
+}
+
+declare namespace $ {
     type $mol_time_moment_config = number | Date | string | {
         year?: number;
         month?: number;
