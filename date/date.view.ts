@@ -42,11 +42,12 @@ namespace $.$$ {
 		}
 
 		day_selected( day : string ) {
-			return this.value() === day
+			return this.value_moment()?.toString( 'YYYY-MM-DD' ) === day
 		}
 
 		day_click( day : string ) {
-			this.value( day )
+			const moment = new $mol_time_moment( day )
+			this.value_moment( this.value_moment()?.merge( moment ) ?? moment )
 			this.showed( false )
 		}
 
