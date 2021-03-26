@@ -3,20 +3,35 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Anchor <= Input
+		 * Icon $mol_icon_calendar
 		 * ```
 		 */
-		Anchor() {
-			return this.Input()
+		@ $mol_mem
+		Icon() {
+			const obj = new this.$.$mol_icon_calendar()
+			
+			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * bubble_content / <= Calendar
+		 * Anchor <= View
+		 * ```
+		 */
+		Anchor() {
+			return this.View()
+		}
+		
+		/**
+		 * ```tree
+		 * bubble_content /
+		 * 	<= Manual
+		 * 	<= Calendar
 		 * ```
 		 */
 		bubble_content() {
 			return [
+				this.Manual(),
 				this.Calendar()
 			] as readonly any[]
 		}
@@ -47,11 +62,35 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value?val \
+		 * view_content /
+		 * ```
+		 */
+		view_content() {
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * View $mol_button_minor sub <= view_content
 		 * ```
 		 */
 		@ $mol_mem
-		value(val?: any) {
+		View() {
+			const obj = new this.$.$mol_button_minor()
+			
+			obj.sub = () => this.view_content()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * date?val \
+		 * ```
+		 */
+		@ $mol_mem
+		date(val?: any) {
 			if ( val !== undefined ) return val
 			return ""
 		}
@@ -76,18 +115,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Input $mol_string
-		 * 	value?val <=> value?val
+		 * Date_input $mol_string
+		 * 	value?val <=> date?val
 		 * 	hint <= hint
 		 * 	enabled <= enabled
 		 * 	length_max 10
 		 * ```
 		 */
 		@ $mol_mem
-		Input() {
+		Date_input() {
 			const obj = new this.$.$mol_string()
 			
-			obj.value = (val?: any) => this.value(val)
+			obj.value = (val?: any) => this.date(val)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.enabled()
 			obj.length_max = () => 10
@@ -97,11 +136,71 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * month_moment <= value
+		 * time?val \
+		 * ```
+		 */
+		@ $mol_mem
+		time(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * time_hint \hh:mm
+		 * ```
+		 */
+		time_hint() {
+			return "hh:mm"
+		}
+		
+		/**
+		 * ```tree
+		 * Time_input $mol_string
+		 * 	value?val <=> time?val
+		 * 	hint <= time_hint
+		 * 	enabled <= enabled
+		 * 	length_max 10
+		 * ```
+		 */
+		@ $mol_mem
+		Time_input() {
+			const obj = new this.$.$mol_string()
+			
+			obj.value = (val?: any) => this.time(val)
+			obj.hint = () => this.time_hint()
+			obj.enabled = () => this.enabled()
+			obj.length_max = () => 10
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Manual $mol_view sub /
+		 * 	<= Date_input
+		 * 	<= Time_input
+		 * ```
+		 */
+		@ $mol_mem
+		Manual() {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => [
+				this.Date_input(),
+				this.Time_input()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * month_moment <= value_moment
 		 * ```
 		 */
 		month_moment() {
-			return this.value()
+			return this.value_moment()
 		}
 		
 		/**

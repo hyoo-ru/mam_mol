@@ -3693,6 +3693,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_calendar extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_chevron_left extends $mol_icon {
         path(): string;
     }
@@ -3706,14 +3712,21 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_date extends $mol_pop {
-        Anchor(): $$.$mol_string;
+        Icon(): $mol_icon_calendar;
+        Anchor(): $mol_button_minor;
         bubble_content(): readonly any[];
         value_number(val?: any): any;
         value_moment(val?: any): any;
-        value(val?: any): any;
+        view_content(): readonly any[];
+        View(): $mol_button_minor;
+        date(val?: any): any;
         hint(): string;
         enabled(): boolean;
-        Input(): $$.$mol_string;
+        Date_input(): $$.$mol_string;
+        time(val?: any): any;
+        time_hint(): string;
+        Time_input(): $$.$mol_string;
+        Manual(): $mol_view;
         month_moment(): any;
         day_selected(day: any): boolean;
         day_click(day: any, event?: any): any;
@@ -3745,7 +3758,9 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_date extends $.$mol_date {
-        value(val?: string): string;
+        view_content(): (string | $mol_icon_calendar)[];
+        date(val?: string): string;
+        time(val?: string): string;
         value_moment(val?: $mol_time_moment | null): $mol_time_moment | null;
         month_moment(next?: $mol_time_moment): $mol_time_moment;
         showed(next?: boolean): boolean;

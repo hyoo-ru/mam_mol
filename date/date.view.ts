@@ -1,14 +1,48 @@
 namespace $.$$ {
  	export class $mol_date extends $.$mol_date {
+		 
+		view_content() {
+			return [ this.value_moment()?.toString( 'YYYY-MM-DD hh:mm' ) ?? this.Icon() ]
+		}
 
 		@ $mol_mem
-		value( val? : string ) {
+		date( val? : string ) {
 			
-			const moment1 = $mol_try( ()=> val && new $mol_time_moment( val.replace( /-$/ , '' ) ) ) || null
-			if( moment1 instanceof Error ) return val || ''
+			let moment = this.value_moment()
+			
+			if( val === undefined ) return moment?.toString( 'YYYY-MM-DD' ) ?? ''
+				
+			let date = $mol_try( ()=> val && new $mol_time_moment( val.replace( /-$/ , '' ) ) ) || null
+			if( date instanceof Error ) return val
+			
+			if( moment ) {
+				if( date ) moment = moment.merge( date )
+				else moment = moment.mask( 'T11:11' )
+			}
+						
+			this.value_moment( moment ?? date )
+			
+			return val
+		}
 
-			const moment2 = this.value_moment( val === undefined ? undefined : moment1 )
-			return moment2 && moment2.toString( 'YYYY-MM-DD' ) || ''
+		@ $mol_mem
+		time( val? : string ) {
+			
+			let moment = this.value_moment()
+			
+			if( val === undefined ) return moment?.toString( 'hh:mm' ) ?? ''
+				
+			let time = $mol_try( ()=> val && new $mol_time_moment( 'T' + val.replace( /:$/ , '' ) ) ) || null
+			if( time instanceof Error ) return val
+			
+			if( moment ) {
+				if( time ) moment = moment.merge( time )
+				else moment = moment.mask( '1111-11-11' )
+			}
+			
+			this.value_moment( moment ?? time )
+			
+			return val
 		}
 
 		@ $mol_mem
@@ -22,7 +56,7 @@ namespace $.$$ {
 
 			if( next ) return next
 
-			let moment = $mol_try( ()=> new $mol_time_moment( this.value() ) ) 
+			let moment = $mol_try( ()=> new $mol_time_moment( this.date() ) ) 
 			if( moment instanceof Error || !moment.year ) return new $mol_time_moment
 
 			if( moment.month === undefined ) {
@@ -37,11 +71,11 @@ namespace $.$$ {
 		}
 
 		day_selected( day : string ) {
-			return this.value() === day
+			return this.date() === day
 		}
 
 		day_click( day : string ) {
-			this.value( day )
+			this.date( day )
 			this.showed( false )
 		}
 

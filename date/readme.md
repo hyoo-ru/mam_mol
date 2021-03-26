@@ -6,12 +6,20 @@ Date presenter and picker.
 
 ## Properties
 
-**`value( next? : string ) : string`**
+**`date( next? : string ) : string`**
 
 Date in YYYY-MM-DD format.
 ```
 <= Birth_day $mol_date
-	value?val <=> birth_day?val \2017-04-01
+	date?val <=> birth_day?val \2017-04-01
+```
+
+**`time( next? : string ) : string`**
+
+Time in hh:mm format.
+```
+<= Begin $mol_date
+	time?val <=> begin?val \09:00
 ```
 
 **`value_number( next? : number ) : number`**
