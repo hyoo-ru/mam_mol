@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_date extends $mol_pop {
+	export class $mol_date extends $mol_pick {
 		
 		/**
 		 * ```tree
@@ -15,23 +15,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Anchor <= View
-		 * ```
-		 */
-		Anchor() {
-			return this.View()
-		}
-		
-		/**
-		 * ```tree
 		 * bubble_content /
-		 * 	<= Manual
+		 * 	<= Input
 		 * 	<= Calendar
 		 * ```
 		 */
 		bubble_content() {
 			return [
-				this.Manual(),
+				this.Input(),
 				this.Calendar()
 			] as readonly any[]
 		}
@@ -62,46 +53,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * view_content /
-		 * ```
-		 */
-		view_content() {
-			return [
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * View $mol_button_minor sub <= view_content
+		 * value?val \
 		 * ```
 		 */
 		@ $mol_mem
-		View() {
-			const obj = new this.$.$mol_button_minor()
-			
-			obj.sub = () => this.view_content()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * date?val \
-		 * ```
-		 */
-		@ $mol_mem
-		date(val?: any) {
+		value(val?: any) {
 			if ( val !== undefined ) return val
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * hint \YYYY-MM-DD
+		 * hint \YYYY-MM-DD hh:mm
 		 * ```
 		 */
 		hint() {
-			return "YYYY-MM-DD"
+			return "YYYY-MM-DD hh:mm"
 		}
 		
 		/**
@@ -115,81 +82,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Date_input $mol_string
-		 * 	value?val <=> date?val
+		 * Input $mol_string
+		 * 	value?val <=> value?val
 		 * 	hint <= hint
 		 * 	enabled <= enabled
-		 * 	length_max 10
 		 * ```
 		 */
 		@ $mol_mem
-		Date_input() {
+		Input() {
 			const obj = new this.$.$mol_string()
 			
-			obj.value = (val?: any) => this.date(val)
+			obj.value = (val?: any) => this.value(val)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.enabled()
-			obj.length_max = () => 10
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * time?val \
-		 * ```
-		 */
-		@ $mol_mem
-		time(val?: any) {
-			if ( val !== undefined ) return val
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * time_hint \hh:mm
-		 * ```
-		 */
-		time_hint() {
-			return "hh:mm"
-		}
-		
-		/**
-		 * ```tree
-		 * Time_input $mol_string
-		 * 	value?val <=> time?val
-		 * 	hint <= time_hint
-		 * 	enabled <= enabled
-		 * 	length_max 10
-		 * ```
-		 */
-		@ $mol_mem
-		Time_input() {
-			const obj = new this.$.$mol_string()
-			
-			obj.value = (val?: any) => this.time(val)
-			obj.hint = () => this.time_hint()
-			obj.enabled = () => this.enabled()
-			obj.length_max = () => 10
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Manual $mol_view sub /
-		 * 	<= Date_input
-		 * 	<= Time_input
-		 * ```
-		 */
-		@ $mol_mem
-		Manual() {
-			const obj = new this.$.$mol_view()
-			
-			obj.sub = () => [
-				this.Date_input(),
-				this.Time_input()
-			] as readonly any[]
 			
 			return obj
 		}

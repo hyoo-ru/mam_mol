@@ -80,6 +80,26 @@ $mol_button_typed $mol_button
 
 $mol_button_minor $mol_button_typed
 
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked?val false
+		aria-checked <= checked?val false
+		role \checkbox
+	sub /$mol_view_content
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_pick $mol_pop
+	Anchor <= Trigger $mol_check
+		enabled <= enabled true
+		checked?event <=> showed?event
+		sub <= trigger_content /$mol_view_content
+		hint <= hint \
+
 $mol_hotkey $mol_plugin
 	event *
 		^
@@ -192,7 +212,7 @@ $mol_list $mol_view
 		0
 		0
 
-$mol_select $mol_pop
+$mol_select $mol_pick
 	dictionary *
 	options /string
 	value?val \
@@ -211,11 +231,7 @@ $mol_select $mol_pop
 			keys_y <= nav_components /$mol_view
 			current_y?component <=> option_focused?component null
 			cycle?val <=> nav_cycle?val true
-	showed?val <=> options_showed?val false
-	Anchor <= Trigger $mol_button_minor
-		click?event <=> open?event null
-		sub <= trigger_content /
-		hint <= hint @ \Pick..
+	hint @ \Pick..
 	bubble_content /
 		<= Filter
 		<= Menu $mol_list

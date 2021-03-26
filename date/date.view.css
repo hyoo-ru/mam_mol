@@ -2,13 +2,6 @@
 	padding: .5rem;
 }
 
-[mol_date_date_input] {
-	width: 12ch;
-}
-[mol_date_time_input] {
-	width: 12ch;
-}
-
 [mol_date_prev] ,
 [mol_date_next] {
 	flex-grow: 1;

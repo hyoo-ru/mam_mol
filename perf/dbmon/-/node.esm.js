@@ -3607,6 +3607,10 @@ var $;
     var $$;
     (function ($$) {
         class $mol_pop extends $.$mol_pop {
+            showed(next = false) {
+                this.focused();
+                return next;
+            }
             sub() {
                 return [
                     this.Anchor(),
@@ -3618,9 +3622,9 @@ var $;
                 const rect_bubble = this.view_rect();
                 const align = this.align_vert();
                 if (align === 'bottom')
-                    return viewport.height - rect_bubble.bottom;
+                    return (viewport.height - rect_bubble.bottom) * .66;
                 if (align === 'top')
-                    return rect_bubble.top;
+                    return rect_bubble.top * .66;
                 return 0;
             }
             align() {
@@ -3651,6 +3655,9 @@ var $;
                 }
             }
         }
+        __decorate([
+            $.$mol_mem
+        ], $mol_pop.prototype, "showed", null);
         __decorate([
             $.$mol_mem
         ], $mol_pop.prototype, "height_max", null);

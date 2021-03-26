@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_select extends $mol_pop {
+	export class $mol_select extends $mol_pick {
 		
 		/**
 		 * ```tree
@@ -81,20 +81,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * showed?val <=> options_showed?val
+		 * hint @ \Pick..
 		 * ```
 		 */
-		showed(val?: any) {
-			return this.options_showed(val)
-		}
-		
-		/**
-		 * ```tree
-		 * Anchor <= Trigger
-		 * ```
-		 */
-		Anchor() {
-			return this.Trigger()
+		hint() {
+			return this.$.$mol_locale.text( '$mol_select_hint' )
 		}
 		
 		/**
@@ -259,66 +250,6 @@ namespace $ {
 			obj.keys_y = () => this.nav_components()
 			obj.current_y = (component?: any) => this.option_focused(component)
 			obj.cycle = (val?: any) => this.nav_cycle(val)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * options_showed?val false
-		 * ```
-		 */
-		@ $mol_mem
-		options_showed(val?: any) {
-			if ( val !== undefined ) return val
-			return false
-		}
-		
-		/**
-		 * ```tree
-		 * open?event null
-		 * ```
-		 */
-		@ $mol_mem
-		open(event?: any) {
-			if ( event !== undefined ) return event
-			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * trigger_content /
-		 * ```
-		 */
-		trigger_content() {
-			return [
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * hint @ \Pick..
-		 * ```
-		 */
-		hint() {
-			return this.$.$mol_locale.text( '$mol_select_hint' )
-		}
-		
-		/**
-		 * ```tree
-		 * Trigger $mol_button_minor
-		 * 	click?event <=> open?event
-		 * 	sub <= trigger_content
-		 * 	hint <= hint
-		 * ```
-		 */
-		@ $mol_mem
-		Trigger() {
-			const obj = new this.$.$mol_button_minor()
-			
-			obj.click = (event?: any) => this.open(event)
-			obj.sub = () => this.trigger_content()
-			obj.hint = () => this.hint()
 			
 			return obj
 		}

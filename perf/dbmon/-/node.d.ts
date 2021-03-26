@@ -1180,6 +1180,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_pop extends $.$mol_pop {
+        showed(next?: boolean): boolean;
         sub(): any[];
         height_max(): number;
         align(): string;

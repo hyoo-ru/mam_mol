@@ -1,20 +1,11 @@
-$mol_date $mol_pop
+$mol_date $mol_pick
 	Icon $mol_icon_calendar
-	Anchor <= View $mol_button_minor
-		sub <= view_content /
 	-
 	bubble_content /
-		<= Manual $mol_view sub /
-			<= Date_input $mol_string
-				value?val <=> date?val \
-				hint <= hint \YYYY-MM-DD
-				enabled <= enabled true
-				length_max 10
-			<= Time_input $mol_string
-				value?val <=> time?val \
-				hint <= time_hint \hh:mm
-				enabled <= enabled true
-				length_max 10
+		<= Input $mol_string
+			value?val <=> value?val \
+			hint <= hint \YYYY-MM-DD hh:mm
+			enabled <= enabled true
 		<= Calendar $mol_date_calendar
 			month_moment <= month_moment <= value_moment
 			day_selected!day <= day_selected!day false

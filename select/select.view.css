@@ -4,12 +4,6 @@
 	align-self: flex-start;
 }
 
-[mol_select_anchor] {
-	display: flex;
-	flex: 1 1 auto;
-	justify-content: space-between;
-}
-
 [mol_select_option_row] {
 	min-width: 100%;
 	padding: 0;
@@ -23,7 +17,7 @@
 [mol_select_filter] {
 	z-index: 2;
 	opacity: 1 !important;
-	flex: 1 1 auto;
+	flex: 1 0 auto;
 	align-self: stretch;
 }
 

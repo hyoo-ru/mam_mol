@@ -12304,6 +12304,10 @@ var $;
     var $$;
     (function ($$) {
         class $mol_pop extends $.$mol_pop {
+            showed(next = false) {
+                this.focused();
+                return next;
+            }
             sub() {
                 return [
                     this.Anchor(),
@@ -12315,9 +12319,9 @@ var $;
                 const rect_bubble = this.view_rect();
                 const align = this.align_vert();
                 if (align === 'bottom')
-                    return viewport.height - rect_bubble.bottom;
+                    return (viewport.height - rect_bubble.bottom) * .66;
                 if (align === 'top')
-                    return rect_bubble.top;
+                    return rect_bubble.top * .66;
                 return 0;
             }
             align() {
@@ -12348,6 +12352,9 @@ var $;
                 }
             }
         }
+        __decorate([
+            $.$mol_mem
+        ], $mol_pop.prototype, "showed", null);
         __decorate([
             $.$mol_mem
         ], $mol_pop.prototype, "height_max", null);
@@ -12991,6 +12998,45 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_pick extends $.$mol_pop {
+        Anchor() {
+            return this.Trigger();
+        }
+        enabled() {
+            return true;
+        }
+        trigger_content() {
+            return [];
+        }
+        hint() {
+            return "";
+        }
+        Trigger() {
+            const obj = new this.$.$mol_check();
+            obj.enabled = () => this.enabled();
+            obj.checked = (event) => this.showed(event);
+            obj.sub = () => this.trigger_content();
+            obj.hint = () => this.hint();
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_pick.prototype, "Trigger", null);
+    $.$mol_pick = $mol_pick;
+})($ || ($ = {}));
+//pick.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/pick/pick.view.css", "[mol_pick_trigger] {\n\talign-items: center;\n}\n");
+})($ || ($ = {}));
+//pick.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_calendar extends $.$mol_icon {
         path() {
             return "M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z";
@@ -13027,17 +13073,14 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_date extends $.$mol_pop {
+    class $mol_date extends $.$mol_pick {
         Icon() {
             const obj = new this.$.$mol_icon_calendar();
             return obj;
         }
-        Anchor() {
-            return this.View();
-        }
         bubble_content() {
             return [
-                this.Manual(),
+                this.Input(),
                 this.Calendar()
             ];
         }
@@ -13052,55 +13095,22 @@ var $;
             const obj = new this.$.$mol_time_moment();
             return obj;
         }
-        view_content() {
-            return [];
-        }
-        View() {
-            const obj = new this.$.$mol_button_minor();
-            obj.sub = () => this.view_content();
-            return obj;
-        }
-        date(val) {
+        value(val) {
             if (val !== undefined)
                 return val;
             return "";
         }
         hint() {
-            return "YYYY-MM-DD";
+            return "YYYY-MM-DD hh:mm";
         }
         enabled() {
             return true;
         }
-        Date_input() {
+        Input() {
             const obj = new this.$.$mol_string();
-            obj.value = (val) => this.date(val);
+            obj.value = (val) => this.value(val);
             obj.hint = () => this.hint();
             obj.enabled = () => this.enabled();
-            obj.length_max = () => 10;
-            return obj;
-        }
-        time(val) {
-            if (val !== undefined)
-                return val;
-            return "";
-        }
-        time_hint() {
-            return "hh:mm";
-        }
-        Time_input() {
-            const obj = new this.$.$mol_string();
-            obj.value = (val) => this.time(val);
-            obj.hint = () => this.time_hint();
-            obj.enabled = () => this.enabled();
-            obj.length_max = () => 10;
-            return obj;
-        }
-        Manual() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => [
-                this.Date_input(),
-                this.Time_input()
-            ];
             return obj;
         }
         month_moment() {
@@ -13190,22 +13200,10 @@ var $;
     ], $mol_date.prototype, "value_moment", null);
     __decorate([
         $.$mol_mem
-    ], $mol_date.prototype, "View", null);
+    ], $mol_date.prototype, "value", null);
     __decorate([
         $.$mol_mem
-    ], $mol_date.prototype, "date", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_date.prototype, "Date_input", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_date.prototype, "time", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_date.prototype, "Time_input", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_date.prototype, "Manual", null);
+    ], $mol_date.prototype, "Input", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_date.prototype, "day_click", null);
@@ -13281,7 +13279,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/date/date.view.css", "[mol_date_bubble] {\n\tpadding: .5rem;\n}\n\n[mol_date_date_input] {\n\twidth: 12ch;\n}\n[mol_date_time_input] {\n\twidth: 12ch;\n}\n\n[mol_date_prev] ,\n[mol_date_next] {\n\tflex-grow: 1;\n}\n\n[mol_date_calendar_title] {\n\tpadding: var(--mol_gap_text);\n}\n\n[mol_date_calendar_day] {\n\tpadding: 0;\n}\n\n[mol_date_calendar_day_button] {\n\twidth: 100%;\n\tpadding: .25rem .5rem;\n\tjustify-content: center;\n\tcursor: pointer;\n\tcolor: inherit;\n}\n");
+    $.$mol_style_attach("mol/date/date.view.css", "[mol_date_bubble] {\n\tpadding: .5rem;\n}\n\n[mol_date_prev] ,\n[mol_date_next] {\n\tflex-grow: 1;\n}\n\n[mol_date_calendar_title] {\n\tpadding: var(--mol_gap_text);\n}\n\n[mol_date_calendar_day] {\n\tpadding: 0;\n}\n\n[mol_date_calendar_day_button] {\n\twidth: 100%;\n\tpadding: .25rem .5rem;\n\tjustify-content: center;\n\tcursor: pointer;\n\tcolor: inherit;\n}\n");
 })($ || ($ = {}));
 //date.view.css.js.map
 ;
@@ -13291,42 +13289,19 @@ var $;
     var $$;
     (function ($$) {
         class $mol_date extends $.$mol_date {
-            view_content() {
+            trigger_content() {
                 var _a, _b;
                 return [(_b = (_a = this.value_moment()) === null || _a === void 0 ? void 0 : _a.toString('YYYY-MM-DD hh:mm')) !== null && _b !== void 0 ? _b : this.Icon()];
             }
-            date(val) {
+            value(val) {
                 var _a;
-                let moment = this.value_moment();
+                const moment = this.value_moment();
                 if (val === undefined)
-                    return (_a = moment === null || moment === void 0 ? void 0 : moment.toString('YYYY-MM-DD')) !== null && _a !== void 0 ? _a : '';
-                let date = $.$mol_try(() => val && new $.$mol_time_moment(val.replace(/-$/, ''))) || null;
-                if (date instanceof Error)
+                    return (_a = moment === null || moment === void 0 ? void 0 : moment.toString('YYYY-MM-DD hh:mm')) !== null && _a !== void 0 ? _a : '';
+                const moment2 = $.$mol_try(() => val && new $.$mol_time_moment(val)) || null;
+                if (moment2 instanceof Error)
                     return val;
-                if (moment) {
-                    if (date)
-                        moment = moment.merge(date);
-                    else
-                        moment = moment.mask('T11:11');
-                }
-                this.value_moment(moment !== null && moment !== void 0 ? moment : date);
-                return val;
-            }
-            time(val) {
-                var _a;
-                let moment = this.value_moment();
-                if (val === undefined)
-                    return (_a = moment === null || moment === void 0 ? void 0 : moment.toString('hh:mm')) !== null && _a !== void 0 ? _a : '';
-                let time = $.$mol_try(() => val && new $.$mol_time_moment('T' + val.replace(/:$/, ''))) || null;
-                if (time instanceof Error)
-                    return val;
-                if (moment) {
-                    if (time)
-                        moment = moment.merge(time);
-                    else
-                        moment = moment.mask('1111-11-11');
-                }
-                this.value_moment(moment !== null && moment !== void 0 ? moment : time);
+                this.value_moment(moment2);
                 return val;
             }
             value_moment(val) {
@@ -13336,7 +13311,7 @@ var $;
             month_moment(next) {
                 if (next)
                     return next;
-                let moment = $.$mol_try(() => new $.$mol_time_moment(this.date()));
+                let moment = $.$mol_try(() => new $.$mol_time_moment(this.value()));
                 if (moment instanceof Error || !moment.year)
                     return new $.$mol_time_moment;
                 if (moment.month === undefined) {
@@ -13344,14 +13319,11 @@ var $;
                 }
                 return moment;
             }
-            showed(next) {
-                return this.focused(next);
-            }
             day_selected(day) {
-                return this.date() === day;
+                return this.value() === day;
             }
             day_click(day) {
-                this.date(day);
+                this.value(day);
                 this.showed(false);
             }
             prev() {
@@ -13363,10 +13335,7 @@ var $;
         }
         __decorate([
             $.$mol_mem
-        ], $mol_date.prototype, "date", null);
-        __decorate([
-            $.$mol_mem
-        ], $mol_date.prototype, "time", null);
+        ], $mol_date.prototype, "value", null);
         __decorate([
             $.$mol_mem
         ], $mol_date.prototype, "value_moment", null);
@@ -20153,7 +20122,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_select extends $.$mol_pop {
+    class $mol_select extends $.$mol_pick {
         dictionary() {
             return {};
         }
@@ -20184,11 +20153,8 @@ var $;
                 this.Nav()
             ];
         }
-        showed(val) {
-            return this.options_showed(val);
-        }
-        Anchor() {
-            return this.Trigger();
+        hint() {
+            return this.$.$mol_locale.text('$mol_select_hint');
         }
         bubble_content() {
             return [
@@ -20255,29 +20221,6 @@ var $;
             obj.cycle = (val) => this.nav_cycle(val);
             return obj;
         }
-        options_showed(val) {
-            if (val !== undefined)
-                return val;
-            return false;
-        }
-        open(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        trigger_content() {
-            return [];
-        }
-        hint() {
-            return this.$.$mol_locale.text('$mol_select_hint');
-        }
-        Trigger() {
-            const obj = new this.$.$mol_button_minor();
-            obj.click = (event) => this.open(event);
-            obj.sub = () => this.trigger_content();
-            obj.hint = () => this.hint();
-            return obj;
-        }
         menu_content() {
             return [];
         }
@@ -20330,15 +20273,6 @@ var $;
     ], $mol_select.prototype, "Nav", null);
     __decorate([
         $.$mol_mem
-    ], $mol_select.prototype, "options_showed", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_select.prototype, "open", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_select.prototype, "Trigger", null);
-    __decorate([
-        $.$mol_mem
     ], $mol_select.prototype, "Menu", null);
     __decorate([
         $.$mol_mem
@@ -20366,7 +20300,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/select/select.view.css", "[mol_select] {\n\tdisplay: flex;\n\tword-break: normal;\n\talign-self: flex-start;\n}\n\n[mol_select_anchor] {\n\tdisplay: flex;\n\tflex: 1 1 auto;\n\tjustify-content: space-between;\n}\n\n[mol_select_option_row] {\n\tmin-width: 100%;\n\tpadding: 0;\n\tjustify-content: flex-start;\n}\n\n[mol_select_bubble] {\n\tmin-width: 100%;\n}\n\n[mol_select_filter] {\n\tz-index: 2;\n\topacity: 1 !important;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n}\n\n[mol_select_option_label] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tmin-height: 1.5em;\n\tdisplay: block;\n\twhite-space: nowrap;\n}\n\n[mol_select_clear_option_content] {\n\tpadding: .5em 1rem .5rem 0;\n\ttext-align: left;\n\tbox-shadow: var(--mol_theme_line);\n\tflex: 1 0 auto;\n}\n\n[mol_select_no_options] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tdisplay: block;\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_select_trigger] {\n\tpadding: 0;\n\tflex: 1 1 auto;\n\tdisplay: flex;\n}\n\n[mol_select_trigger] > * {\n\tmargin-right: -.75rem;\n}\n\n[mol_select_trigger] > *:last-child {\n\tmargin-right: 0;\n}\n\n[mol_select_menu] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n");
+    $.$mol_style_attach("mol/select/select.view.css", "[mol_select] {\n\tdisplay: flex;\n\tword-break: normal;\n\talign-self: flex-start;\n}\n\n[mol_select_option_row] {\n\tmin-width: 100%;\n\tpadding: 0;\n\tjustify-content: flex-start;\n}\n\n[mol_select_bubble] {\n\tmin-width: 100%;\n}\n\n[mol_select_filter] {\n\tz-index: 2;\n\topacity: 1 !important;\n\tflex: 1 0 auto;\n\talign-self: stretch;\n}\n\n[mol_select_option_label] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tmin-height: 1.5em;\n\tdisplay: block;\n\twhite-space: nowrap;\n}\n\n[mol_select_clear_option_content] {\n\tpadding: .5em 1rem .5rem 0;\n\ttext-align: left;\n\tbox-shadow: var(--mol_theme_line);\n\tflex: 1 0 auto;\n}\n\n[mol_select_no_options] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tdisplay: block;\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_select_trigger] {\n\tpadding: 0;\n\tflex: 1 1 auto;\n\tdisplay: flex;\n}\n\n[mol_select_trigger] > * {\n\tmargin-right: -.75rem;\n}\n\n[mol_select_trigger] > *:last-child {\n\tmargin-right: 0;\n}\n\n[mol_select_menu] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n");
 })($ || ($ = {}));
 //select.view.css.js.map
 ;
@@ -20381,11 +20315,7 @@ var $;
                 return next || '';
             }
             open() {
-                this.options_showed(true);
-            }
-            options_showed(next = false) {
-                this.focused();
-                return next;
+                this.showed(true);
             }
             options() {
                 return Object.keys(this.dictionary());
@@ -20413,7 +20343,7 @@ var $;
                     }
                     return null;
                 }
-                if (this.options_showed()) {
+                if (this.showed()) {
                     component.focused(true);
                 }
                 return component;
@@ -20446,9 +20376,6 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_select.prototype, "filter_pattern", null);
-        __decorate([
-            $.$mol_mem
-        ], $mol_select.prototype, "options_showed", null);
         __decorate([
             $.$mol_mem
         ], $mol_select.prototype, "options", null);

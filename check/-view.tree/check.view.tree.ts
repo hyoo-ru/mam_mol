@@ -21,7 +21,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
+		 * sub /$mol_view_content
 		 * 	<= Icon
 		 * 	<= label
 		 * ```
@@ -30,7 +30,7 @@ namespace $ {
 			return [
 				this.Icon(),
 				this.label()
-			] as readonly any[]
+			] as readonly $mol_view_content[]
 		}
 		
 		/**
