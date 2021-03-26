@@ -13328,10 +13328,13 @@ var $;
                 return moment;
             }
             day_selected(day) {
-                return this.value() === day;
+                var _a;
+                return ((_a = this.value_moment()) === null || _a === void 0 ? void 0 : _a.toString('YYYY-MM-DD')) === day;
             }
             day_click(day) {
-                this.value(day);
+                var _a, _b;
+                const moment = new $.$mol_time_moment(day);
+                this.value_moment((_b = (_a = this.value_moment()) === null || _a === void 0 ? void 0 : _a.merge(moment)) !== null && _b !== void 0 ? _b : moment);
                 this.showed(false);
             }
             prev() {
