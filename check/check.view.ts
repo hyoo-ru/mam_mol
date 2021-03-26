@@ -10,7 +10,7 @@ namespace $.$$ {
 			return [
 				... $mol_maybe( this.Icon() ) ,
 				... this.label() ,
-			]
+			] as readonly $mol_view_content[]
 		}
 
 		label() {
