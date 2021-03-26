@@ -1,10 +1,12 @@
-[mol_date_input] {
-	width: 13.5ch;
-	flex-grow: 1;
-}
-
 [mol_date_bubble] {
 	padding: .5rem;
+}
+
+[mol_date_date_input] {
+	width: 12ch;
+}
+[mol_date_time_input] {
+	width: 12ch;
 }
 
 [mol_date_prev] ,
@@ -13,7 +15,7 @@
 }
 
 [mol_date_calendar_title] {
-	padding: .25rem .5rem;
+	padding: var(--mol_gap_text);
 }
 
 [mol_date_calendar_day] {
