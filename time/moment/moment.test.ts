@@ -58,7 +58,7 @@ namespace $ {
 		
 		'normalization'() {
 			$mol_assert_equal(
-				new $mol_time_moment( '2015-07-35' ).normal.toString() ,
+				new $mol_time_moment({ year: 2015, month: 6, day: 34 }).normal.toString() ,
 				'2015-08-04'
 			)
 		} , 
