@@ -17,10 +17,7 @@ $mol_select $mol_pick
 			keys_y <= nav_components /$mol_view
 			current_y?component <=> option_focused?component null
 			cycle?val <=> nav_cycle?val true
-	Anchor <= Trigger $mol_button_minor
-		click?event <=> open?event null
-		sub <= trigger_content /
-		hint <= hint @ \Pick..
+	hint @ \Pick..
 	bubble_content /
 		<= Filter
 		<= Menu $mol_list

@@ -21,8 +21,8 @@ namespace $.$$ {
 			const rect_bubble = this.view_rect()!
 			const align = this.align_vert()
 			
-			if( align === 'bottom' ) return viewport.height - rect_bubble.bottom
-			if( align === 'top' ) return rect_bubble.top
+			if( align === 'bottom' ) return ( viewport.height - rect_bubble.bottom ) * .66
+			if( align === 'top' ) return rect_bubble.top * .66
 			
 			return 0
 		}
