@@ -7,7 +7,7 @@ Code inside fibers must be idempotent because it may be restarted for continuati
 
 ## $mol_fiber2_sync
 
-Returns proxy that converts all asynchronous functions (that returns a Promise) to synchronous (that instantly returns a result).
+Returns proxy that converts all asynchronous methods (that returns a Promise) to synchronous (that instantly returns a result).
 
 ```typescript
 const User = {
@@ -21,7 +21,7 @@ const User = {
 
 ## $mol_fiber2_async
 
-Returns proxy that converts all synchronous functions (that can access to fibers) to asynchronous (that returns a Promise).
+Returns proxy that converts all synchronous methods (that can access to fibers) to asynchronous (that returns a Promise).
 
 ```typescript
 const name_promise = $mol_fiber2_async( user ).name()
