@@ -105,10 +105,6 @@ namespace $ {
 		
 		sync() {
 			
-			if( !$mol_wire_auto ) {
-				$mol_fail( new Error( 'Sync execution of fiber available only inside $mol_fiber2_async' ) )
-			}
-			
 			this.run()
 			
 			if( this.result instanceof Error ) {
@@ -116,6 +112,11 @@ namespace $ {
 			}
 			
 			if( this.result instanceof Promise ) {
+				
+				if( !$mol_wire_auto || !( $mol_wire_auto instanceof $mol_fiber2 ) ) {
+					$mol_fail( new Error( 'Sync execution of fiber available only inside $mol_fiber2_async' ) )
+				}
+				
 				return $mol_fail_hidden( this.result )
 			}
 			
