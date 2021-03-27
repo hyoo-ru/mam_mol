@@ -6,19 +6,25 @@ namespace $ {
 	export type $mol_wire_pub_sub = {
 		
 		/**
+		 * Returns next publisher in this subscriber.
+		 * Can be user to reuse an existen publisher instead of creating new.
+		 */
+		wire_next(): $mol_wire_pub | null
+		
+		/**
 		 * Promote new publisher to subscriber.
 		 */
-		promo( pub: $mol_wire_pub ): void
+		wire_promo< Pub extends $mol_wire_pub >( pub: Pub ): Pub
 		
 		/**
 		 * Notify about changes in the provider.
 		 */
-		stale( pub_pos: number ): void
+		wire_absorb( quant?: unknown ): void
 		
 		/**
-		 * Notify about changes subscriber position
+		 * Notify about changes subscriber position in the publisher
 		 */
-		repos( pub_pos: number, sub_pos: number ): void
+		wire_sub_repos( pub_pos: number, sub_pos: number ): void
 		
 	}
 	
@@ -26,56 +32,49 @@ namespace $ {
 	 * Collects subscribers in compact array.
 	 * Use `$mol_wire_auto?.promo( pub )` to auto wire.
 	 */
-	export class $mol_wire_pub {
+	export class $mol_wire_pub extends $mol_object2 {
 		
-		protected subscribers = [] as $mol_wire_pub_sub[]
-		protected subscribers_pos = [] as number[]
-		
-		/**
-		 * Ability to reuse an existen publisher at same position.
-		 */
-		reuse( pub: $mol_wire_pub ) {
-			return this
-		}
+		protected wire_subs = [] as $mol_wire_pub_sub[]
+		protected wire_subs_pos = [] as number[]
 		
 		/**
 		 * Subscribe subscriber to this publisher events and return position of subscriber that required to unsubscribe.
 		 */
-		on( sub: $mol_wire_pub_sub, sub_pos: number ) {
-			const pos = this.subscribers.length
-			this.subscribers[ pos ] = sub
-			this.subscribers_pos[ pos ] = sub_pos
+		wire_on( sub: $mol_wire_pub_sub, sub_pos: number ) {
+			const pos = this.wire_subs.length
+			this.wire_subs[ pos ] = sub
+			this.wire_subs_pos[ pos ] = sub_pos
 			return pos
 		}
 		
 		/**
-		 * Notify subscribers about changes.
+		 * Notify subscribers about something.
 		 */
-		emit() {
-			for( const [ index, sub ] of this.subscribers.entries() ) {
-				sub?.stale( this.subscribers_pos[ index ] )
+		wire_emit( quant: unknown = this ) {
+			for( const sub of this.wire_subs ) {
+				sub?.wire_absorb( quant )
 			}
 		}
 		
 		/**
 		 * Unsubscribe subscriber from this publisher events by subscriber position provided by `on(pub)`.
 		 */
-		off( pos: number ) {
+		wire_off( sub_pos: number ) {
 			
-			if(!( pos < this.subscribers.length )) {
-				$mol_fail( new Error( `Wrong pos ${ pos }` ) )
+			if(!( sub_pos < this.wire_subs.length )) {
+				$mol_fail( new Error( `Wrong pos ${ sub_pos }` ) )
 			}
 			
-			const end = this.subscribers.length - 1
-			if( pos !== end ) {
-				const sub = this.subscribers[ end ]
-				this.subscribers[ pos ] = sub
-				this.subscribers_pos[ pos ] = this.subscribers_pos[ end ]
-				sub.repos( end, pos )
+			const end = this.wire_subs.length - 1
+			if( sub_pos !== end ) {
+				const sub = this.wire_subs[ end ]
+				this.wire_subs[ sub_pos ] = sub
+				this.wire_subs_pos[ sub_pos ] = this.wire_subs_pos[ end ]
+				sub.wire_sub_repos( end, sub_pos )
 			}
 			
-			this.subscribers.pop()
-			this.subscribers_pos.pop()
+			this.wire_subs.pop()
+			this.wire_subs_pos.pop()
 			
 		}
 		

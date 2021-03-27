@@ -2,114 +2,108 @@ namespace $ {
 
 	$mol_test({
 		
-		async 'sync'() {
+		'Prevent potential tnrown promise leakage'() {
 
-			const result = await $mol_fiber2.async( ()=> {
-				return 777
-			} )
-
-			$mol_assert_equal( result , 777 )
-
-		},
-
-		async 'async'() {
-
-			const result = await $mol_fiber2.async( ()=> {
-				return $mol_fiber2.wait( async ()=> 777 )
-			} )
-
-			$mol_assert_equal( result , 777 )
-
-		},
-
-		async 'async serie'() {
-
-			const result = await $mol_fiber2.async( ()=> {
+			class Leaked extends $mol_object2 {
 				
-				const a = $mol_fiber2.wait( async ()=> 333 )
-				const b = $mol_fiber2.wait( async ()=> 444 )
+				@ $mol_fiber2_method
+				static calc() {
+					return 0
+				}
 				
-				return a + b
-				
-			} )
-
-			$mol_assert_equal( result , 777 )
-
-		},
-
-		async 'idempotence'() {
-
-			let counter = 0
-			const increment = $mol_fiber2.func( ()=> counter += 111 )
-
-			const result = await $mol_fiber2.async( ()=> {
-
-				increment()
-				
-				return $mol_fiber2.wait( async ()=> 777 )
-
-			} )
-
-			$mol_assert_equal( counter , 111 )
-			$mol_assert_equal( result , 777 )
-
-		},
-
-		async 'nested idempotence'() {
-
-			let counter = 0
+			}
 			
-			const increment = $mol_fiber2.func( ()=> counter += 111 )
+			$mol_assert_fail(
+				()=> Leaked.calc(),
+				'Sync execution of fiber available only inside $mol_fiber2_async',
+			)
+			
+		},
 
-			const calculate = $mol_fiber2.func( ()=> {
+		async 'async <=> sync'() {
+			
+			class SyncAsync extends $mol_object2 {
 				
-				increment()
+				static async val( a: number ) {
+					return a
+				}
 				
-				return counter + $mol_fiber2.wait( async ()=> 222 )
-
-			} )
-
-			const result = await $mol_fiber2.async( ()=> {
-
-				increment()
-
-				return calculate() + $mol_fiber2.wait( async ()=> 333 )
-
-			} )
-
-			$mol_assert_equal( counter , 222 )
-			$mol_assert_equal( result , 777 )
+				static sum( a: number, b: number ) {
+					const syn = $mol_fiber2_sync( this )
+					return syn.val( a ) + syn.val( b )
+				}
+				
+				static async calc( a: number, b: number ) {
+					return 5 + await $mol_fiber2_async( this ).sum( a, b )
+				}
+				
+			}
+			
+			$mol_assert_equal( await SyncAsync.calc( 1, 2 ), 8 )
 
 		},
 
-		'idempotence outside fiber'() {
+		async 'Idempotence control'() {
 
-			const fiberized = $mol_fiber2.func( ()=> {} )
+			class Idempotence extends $mol_object2 {
 				
-			$mol_assert_fail( ()=> fiberized() , 'Fiberized code should be executed in $mol_fiber2.run' )
+				static logs_idemp = 0
+				static logs_unidemp = 0
+				
+				@ $mol_fiber2_method
+				static log_idemp() {
+					this.logs_idemp += 1
+				}
+				
+				static log_unidemp() {
+					this.logs_unidemp += 1
+				}
+				
+				static async val( a: number ) {
+					return a
+				}
+				
+				static sum( a: number, b: number ) {
+					this.log_idemp()
+					this.log_unidemp()
+					const syn = $mol_fiber2_sync( this )
+					return syn.val( a ) + syn.val( b )
+				}
+				
+				static async calc( a: number, b: number ) {
+					return 5 + await $mol_fiber2_async( this ).sum( a, b )
+				}
+				
+			}
+			
+			$mol_assert_equal( await Idempotence.calc( 1, 2 ), 8 )
+			$mol_assert_equal( Idempotence.logs_idemp, 1 )
+			$mol_assert_equal( Idempotence.logs_unidemp, 3 )
 
 		},
 
-		// async 'unidempotence'() {
-
-		// 	let counter = 0
-		// 	const fiberized = $mol_fiber2.func( ( n : number )=> n )
-
-		// 	const result = await $mol_fiber2.async( ()=> {
-
-		// 		// breaks idempotence
-		// 		if( counter === 0 ) fiberized( counter ++ )
-
-		// 		fiberized( counter )
+		async 'Error handling'() {
+			
+			class Handle extends $mol_object2 {
 				
-		// 		return $mol_fiber2.wait( async ()=> 777 )
-
-		// 	} )
-
-		// 	$mol_assert_equal( counter , 1 )
-		// 	$mol_assert_equal( result , 777 )
-
-		// },
+				static async sum( a: number, b: number ){
+					$mol_fail( new Error( 'test error ' + ( a + b ) ) )
+				}
+				
+				static check() {
+					try {
+						return $mol_fiber2_sync( Handle ).sum( 1, 2 )
+					} catch( error ) {
+						if( error instanceof Promise ) $mol_fail_hidden( error )
+						$mol_assert_equal( error.message, 'test error 3' )
+					}
+				}
+				
+			}
+				
+			await $mol_fiber2_async( Handle ).check()
+			
+		},
 
 	})
 	

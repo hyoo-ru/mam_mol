@@ -1,118 +1,197 @@
 namespace $ {
+	
+	const handled = new WeakSet< Promise< unknown > >()
 
-	export class $mol_fiber2 extends $mol_wrapper {
-
-		cursor = -1
-		stack = [] as unknown[]
-
-		get cached() {
-
-			const result = this.stack[ this.cursor ]
-					
-			if( result instanceof Error || result instanceof Promise ) {
-				return $mol_fail_hidden( result )
-			}
+	export class $mol_fiber2<
+		Host,
+		Args extends readonly unknown[],
+		Result,
+	> extends $mol_wire_sub {
+		
+		protected result: Result | Error | Promise< Result > = undefined as any
+		
+		host: Host
+		task: ( this : Host , ... args : Args )=> Result
+		args: Args
+		
+		constructor(
+			host: Host,
+			task: ( this : Host , ... args : Args )=> Result,
+			... args: Args
+		) {
+			super()
 			
-			return result
-
-		}
-		set cached( next : unknown ) {
-			this.stack[ this.cursor ] = next
-		}
-
-		tick() {
-			return ++ this.cursor
-		}
-
-		shrink( cursor : number ) {
-			this.cursor = cursor
-			this.stack.length = cursor + 1
+			this.host = host
+			this.task = task
+			this.args = args
+			
+			this[ Symbol.toStringTag ] = String( host ) + '.' + $$.$mol_func_name( task )
+			
+			const existen = $mol_wire_auto?.wire_next()
+			if( !existen ) return
+			if(!( existen instanceof $mol_fiber2 )) return
+			
+			if( existen.host !== host ) return
+			if( existen.task !== task ) return
+			if( !$mol_compare_deep( existen.args, this.args ) ) return
+			
+			return existen
 		}
 		
-		static current = null as null | $mol_fiber2
-
-		static wrap<
-			This,
-			Task extends ( this : This , ... args : readonly unknown[] )=> unknown,
-		>(
-			task : Task
-		) {
-			return function( this : This , ... args : Parameters< Task > ) {
-
-				const fiber = $mol_fiber2.current
-				if( !fiber ) $mol_fail( new Error( 'Fiberized code should be executed in $mol_fiber2.run' ) )
-
-				const cursor = fiber.tick()
-				const cached = fiber.cached
-				
-				if( cached !== undefined ) return fiber.cached
-
-				const result = task.call( this , ... args ) ?? null
-				
-				fiber.shrink( cursor )
-				fiber.cached = result
-
-				return result
-
-			}
-		}
-
-		static wait< Result >( task : ()=> Promise< Result > ) : Result {
+		wire_absorb( quant: unknown ) {
 			
-			return $mol_fiber2.run( ()=> {
+			if( this.wire_cursor < 0 ) return
+			this.wire_cursor = -1
 
-				const fiber = $mol_fiber2.current
-				
-				const promise = task()
-
-				promise.then( res => fiber.cached = res , err => fiber.cached = err )
-				
-				$mol_fail_hidden( promise )
-
-			})
-
+			if( this.wire_subs.length ) {
+				this.wire_emit( quant )
+			} else {
+				new $mol_after_frame( ()=> this.run() )
+			}
+			
 		}
+		
+		run() {
+			
+			$mol_wire_auto?.wire_promo( this )
+			
+			if( this.wire_cursor >= 0 ) return
+			
+			const bu = this.wire_begin()
 
-		static async async<
-			Result,
-			Task extends ()=> Result,
-		>(
-			task : Task
-		) {
-
-			const next = new $mol_fiber2
-
-			while( true ) {
-
-				const prev = $mol_fiber2.current
-
-				try {
+			try {
+				
+				this.result = this.task.call( this.host, ... this.args )
+				
+				if( this.result instanceof Promise ) {
 					
-					$mol_fiber2.current = next
-					next.cursor = -1
-
-					const result = task()
-
-					$mol_fiber2.current = prev
-
-					return result
-
-				} catch( error ) {
-
-					$mol_fiber2.current = prev
+					if( handled.has( this.result ) ) return
 					
-					if( typeof error.then !== 'function' ) {
-						return $mol_fail_hidden( error )
-					}
+					this.result = this.result.then(
+						res => {
+							this.result = res
+							this.wire_emit()
+							return res
+						},
+						error => {
+							this.result = error
+							this.wire_emit()
+						},
+					)
 					
-					try { await error } catch { }
+					handled.add( this.result )
 
 				}
-
+				
+			} catch( error ) {
+				
+				this.result = error
+				
+				if( handled.has( error ) ) return
+				handled.add( error )
+				
+				if( error instanceof Promise ) {
+					error.then(
+						res => this.wire_absorb( res ),
+						err => this.wire_absorb( err ),
+					)
+				}
+				
+			} finally {
+				this.wire_end( bu )
 			}
+
+		}
 		
+		sync() {
+			
+			if( !$mol_wire_auto ) {
+				$mol_fail( new Error( 'Sync execution of fiber available only inside $mol_fiber2_async' ) )
+			}
+			
+			this.run()
+			
+			if( this.result instanceof Error ) {
+				return $mol_fail_hidden( this.result )
+			}
+			
+			if( this.result instanceof Promise ) {
+				return $mol_fail_hidden( this.result )
+			}
+			
+			return this.result as Result extends Promise< infer Res > ? Res : Result
+		}
+
+		async async() {
+			
+			while( true ) {
+				
+				this.run()
+				
+				if( this.result instanceof Error ) throw this.result
+				
+				if( this.result instanceof Promise ) await this.result
+				else break
+				
+			}
+			
+			return this.result
 		}
 
 	}
-
+	
+	export function $mol_fiber2_method<
+		Host extends object,
+		Args extends any[],
+		Result,
+	>(
+		host : Host,
+		field : PropertyKey,
+		descr : TypedPropertyDescriptor< ( ... args: Args )=> Result >,
+	) {
+		return {
+			... descr,
+			value: function( this: Host, ... args: Args ) {
+				const fiber = new $mol_fiber2( this ?? null as any, descr.value!, ... args )
+				return fiber.sync() as Result
+			}
+		}
+	}
+	
+	export function $mol_fiber2_sync< Host extends object >( obj: Host ) {
+		return new Proxy( obj, {
+			get( obj, field ) {
+				const val = obj[ field ]
+				if( typeof val !== 'function' ) return val
+				return function( this: Host, ... args: any[] ) {
+					const fiber = new $mol_fiber2( obj, val, ... args )
+					return fiber.sync()
+				}
+			}
+		} ) as any as {
+			[ key in keyof Host ]: Host[ key ] extends ( ... args: infer Args )=> Promise< infer Res >
+				? ( ... args: Args )=> Res
+				: Host[ key ]
+		}
+	}
+	
+	export function $mol_fiber2_async< Host extends object >( obj: Host ) {
+		return new Proxy( obj, {
+			get( obj, field ) {
+				const val = obj[ field ]
+				if( typeof val !== 'function' ) return val
+				return function( this: Host, ... args: any[] ) {
+					const fiber = new $mol_fiber2( obj, val, ... args )
+					return fiber.async()
+				}
+			}
+		} ) as any as {
+			[ key in keyof Host ]: Host[ key ] extends ( ... args: infer Args )=> infer Res
+				? Res extends Promise<any>
+					? Host[ key ]
+					: ( ... args: Args )=> Promise< Res >
+				: Host[ key ]
+		}
+	}
+	
 }
