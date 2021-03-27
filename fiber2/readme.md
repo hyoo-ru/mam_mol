@@ -1,42 +1,51 @@
 # $mol_fiber2
 
 Pausable synchronous executions.
-Fibers must be idempotent because its may be restarted for continuation.
+Code inside fibers must be idempotent because it may be restarted for continuation.
 
 **[Unstable]**
 
-## $mol_fiber2.async
+## $mol_fiber2_sync
 
-Starts sync function in new fiber. Returns `Promise`.
+Returns proxy that converts all asynchronous methods (that returns a Promise) to synchronous (that instantly returns a result).
 
 ```typescript
-const result_promise = $mol_fiber2.async( ()=> {
-	return fibered_fetch_json( '/profile' ).user_name
-} )
+const User = {
+	name() {
+		const response = $mol_fiber2_sync( window ).fetch( '/profile' )
+		const json = $mol_fiber2_sync( response ).json()
+		return json.user_name
+	}
+}
 ```
 
-## $mol_fiber.wait
+## $mol_fiber2_async
 
-Starts async function and waits it completition. 
+Returns proxy that converts all synchronous methods (that can access to fibers) to asynchronous (that returns a Promise).
 
 ```typescript
-const result_promise = $mol_fiber2.async( ()=> {
-	const response = $mol_fiber2.wait( ()=> fetch( '/profile' ) )
-	const json = $mol_fiber2.wait( ()=> response.json() )
-	return json.user_name
-} )
+const name_promise = $mol_fiber2_async( User ).name()
 ```
 
-## $mol_fiber.func
+## $mol_fiber2_method
 
-Converts unindempotent function to idempotent.
+Decorates method to fiber to ensure it is idempotent inside fiber.
 
 ```typescript
-const log = $mol_fiber2.func( console.log )
+class App {
 
-$mol_fiber2.async( ()=> {
-	log( 'Started' )
-	log( fibered_fetch_json( '/profile' ) )
-	log( 'Finished' )
-} )
+	@ $mol_fiber2_method
+	log( ... args: any[] ) {
+		console.log( ... args )
+	}
+
+	@ $mol_fiber2_method
+	run() {
+		this.log( 'Started' )
+		this.log( User.name() )
+		this.log( 'Finished' )
+	}
+}
+
+$mol_fiber2_async( App ).run() // It must be async at top level
 ```
