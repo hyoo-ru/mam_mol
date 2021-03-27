@@ -39,11 +39,13 @@ class App {
 		console.log( ... args )
 	}
 
-	$mol_fiber2_method
+	@ $mol_fiber2_method
 	run() {
 		this.log( 'Started' )
 		this.log( User.name() )
 		this.log( 'Finished' )
 	}
 }
+
+$mol_fiber2_async( App ).run() // It must be async at top level
 ```
