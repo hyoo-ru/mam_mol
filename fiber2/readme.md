@@ -24,7 +24,7 @@ const User = {
 Returns proxy that converts all synchronous methods (that can access to fibers) to asynchronous (that returns a Promise).
 
 ```typescript
-const name_promise = $mol_fiber2_async( user ).name()
+const name_promise = $mol_fiber2_async( User ).name()
 ```
 
 ## $mol_fiber2_method
