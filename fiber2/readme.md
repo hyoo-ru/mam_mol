@@ -5,7 +5,7 @@ Code inside fibers must be idempotent because it may be restarted for continuati
 
 **[Unstable]**
 
-## $mol_fiber_sync
+## $mol_fiber2_sync
 
 Returns proxy that converts all asynchronous functions (that returns a Promise) to synchronous (that instantly returns a result).
 
@@ -27,7 +27,7 @@ Returns proxy that converts all synchronous functions (that can access to fibers
 const name_promise = $mol_fiber2_async( user ).name()
 ```
 
-## $mol_fiber_method
+## $mol_fiber2_method
 
 Decorates method to fiber to ensure it is idempotent inside fiber.
 
