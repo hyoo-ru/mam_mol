@@ -2,13 +2,33 @@ namespace $ {
 
 	$mol_test({
 		
+		'Sync execution'() {
+
+			class Sync extends $mol_object2 {
+				
+				@ $mol_fiber2_method
+				static calc( a: number, b: number ) {
+					return a + b
+				}
+				
+			}
+			
+			$mol_assert_equal( Sync.calc( 1, 2 ), 3 )
+			
+		},
+
 		'Prevent potential tnrown promise leakage'() {
 
 			class Leaked extends $mol_object2 {
 				
+				static async val( a: number ) {
+					return a
+				}
+				
 				@ $mol_fiber2_method
 				static calc() {
-					return 0
+					const syn = $mol_fiber2_sync( this )
+					return syn.val( 1 ) + syn.val( 2 )
 				}
 				
 			}
