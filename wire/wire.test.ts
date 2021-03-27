@@ -6,42 +6,42 @@ namespace $ {
 			const pub1 = new class extends $mol_wire_pub { p = 1 }
 			const pub2 = new class extends $mol_wire_pub { p = 2 }
 			
-			let emited = [] as number[]
+			let absorbed = [] as unknown[]
 			const sub = new class extends $mol_wire_sub {
-				stale( pub_pos: number ) {
-					emited.push( pub_pos )
+				wire_absorb( pub: unknown ) {
+					absorbed.push( pub )
 				}
 			}
 			
-			const bu1 = sub.begin()
+			const bu1 = sub.wire_begin()
 			try {
-				$mol_wire_auto?.promo( pub1 )
-				$mol_wire_auto?.promo( pub2 )
-				$mol_wire_auto?.promo( pub2 )
+				$mol_wire_auto?.wire_promo( pub1 )
+				$mol_wire_auto?.wire_promo( pub2 )
+				$mol_wire_auto?.wire_promo( pub2 )
 			} finally {
-				sub.end( bu1 )
+				sub.wire_end( bu1 )
 			}
 			
-			pub1.emit()
-			pub2.emit()
+			pub1.wire_emit()
+			pub2.wire_emit()
 			
-			$mol_assert_like( emited, [ 0, 1, 2 ] )
+			$mol_assert_like( absorbed, [ pub1, pub2, pub2 ] )
 			
-			emited = []
+			absorbed = []
 			
-			const bu2 = sub.begin()
+			const bu2 = sub.wire_begin()
 			try {
-				$mol_wire_auto?.promo( pub1 )
-				$mol_wire_auto?.promo( pub1 )
-				$mol_wire_auto?.promo( pub2 )
+				$mol_wire_auto?.wire_promo( pub1 )
+				$mol_wire_auto?.wire_promo( pub1 )
+				$mol_wire_auto?.wire_promo( pub2 )
 			} finally {
-				sub.end( bu2 )
+				sub.wire_end( bu2 )
 			}
 			
-			pub1.emit()
-			pub2.emit()
+			pub1.wire_emit()
+			pub2.wire_emit()
 			
-			$mol_assert_like( emited, [ 0, 1, 2 ] )
+			$mol_assert_like( absorbed, [ pub1, pub1, pub2 ] )
 			
 		},
 		
