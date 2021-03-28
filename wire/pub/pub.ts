@@ -1,32 +1,8 @@
 namespace $ {
-	
-	/**
-	 * Common interface of all subscribers.
-	 */
-	export type $mol_wire_pub_sub = {
-		
-		/**
-		 * Returns next publisher in this subscriber.
-		 * Can be user to reuse an existen publisher instead of creating new.
-		 */
-		wire_next(): $mol_wire_pub | null
-		
-		/**
-		 * Promote new publisher to subscriber.
-		 */
-		wire_promo< Pub extends $mol_wire_pub >( pub: Pub ): Pub
-		
-		/**
-		 * Notify about changes in the provider.
-		 */
-		wire_absorb( quant?: unknown ): void
-		
-		/**
-		 * Notify about changes subscriber position in the publisher
-		 */
-		wire_sub_repos( pub_pos: number, sub_pos: number ): void
-		
-	}
+
+	// P1 P2 P3 P4 P5 P6 S1 S2 S3
+	//    ^              ^
+	//    Cursor         Subs From
 	
 	/**
 	 * Collects subscribers in compact array.
@@ -34,16 +10,45 @@ namespace $ {
 	 */
 	export class $mol_wire_pub extends $mol_object2 {
 		
-		protected wire_subs = [] as $mol_wire_pub_sub[]
-		protected wire_subs_pos = [] as number[]
+		protected wire_peers = [] as $mol_wire_pub[]
+		protected wire_pos = [] as number[]
+		protected wire_subs_from = 0
+		
+		/**
+		 * Updates self position in the peer.
+		 */
+		wire_repos( peer_pos: number, self_pos: number ) {
+			this.wire_pos[ peer_pos ] = self_pos
+		}
+		
+		/**
+		 * Moves peer from one position to another. Doesn't clear data at old position!
+		 */
+		wire_move( from_pos: number, to_pos: number ) {
+			
+			const peer = this.wire_peers[ from_pos ]
+			const self_pos = this.wire_pos[ from_pos ]
+			
+			this.wire_peers[ to_pos ] = peer
+			this.wire_pos[ to_pos ] = self_pos
+			
+			peer.wire_repos( self_pos, to_pos )
+		}
+		
+		wire_next() {
+			return null as null | $mol_wire_pub
+		}
+		
+		wire_promo( pub: $mol_wire_pub ) {
+		}
 		
 		/**
 		 * Subscribe subscriber to this publisher events and return position of subscriber that required to unsubscribe.
 		 */
-		wire_on( sub: $mol_wire_pub_sub, sub_pos: number ) {
-			const pos = this.wire_subs.length
-			this.wire_subs[ pos ] = sub
-			this.wire_subs_pos[ pos ] = sub_pos
+		wire_on( sub: $mol_wire_pub, sub_pos: number ) {
+			const pos = this.wire_peers.length
+			this.wire_peers[ pos ] = sub
+			this.wire_pos[ pos ] = sub_pos
 			return pos
 		}
 		
@@ -51,30 +56,32 @@ namespace $ {
 		 * Notify subscribers about something.
 		 */
 		wire_emit( quant: unknown = this ) {
-			for( const sub of this.wire_subs ) {
-				sub?.wire_absorb( quant )
+			for( let i = this.wire_subs_from; i < this.wire_peers.length; ++i ) {
+				this.wire_peers[i]?.wire_absorb( quant )
 			}
 		}
+		
+		/**
+		 * Notify about changes in the provider.
+		 */
+		wire_absorb( quant?: unknown ) {}
 		
 		/**
 		 * Unsubscribe subscriber from this publisher events by subscriber position provided by `on(pub)`.
 		 */
 		wire_off( sub_pos: number ) {
 			
-			if(!( sub_pos < this.wire_subs.length )) {
+			if(!( sub_pos < this.wire_peers.length )) {
 				$mol_fail( new Error( `Wrong pos ${ sub_pos }` ) )
 			}
 			
-			const end = this.wire_subs.length - 1
+			const end = this.wire_peers.length - 1
 			if( sub_pos !== end ) {
-				const sub = this.wire_subs[ end ]
-				this.wire_subs[ sub_pos ] = sub
-				this.wire_subs_pos[ sub_pos ] = this.wire_subs_pos[ end ]
-				sub.wire_sub_repos( end, sub_pos )
+				this.wire_move( end, sub_pos )
 			}
 			
-			this.wire_subs.pop()
-			this.wire_subs_pos.pop()
+			this.wire_peers.pop()
+			this.wire_pos.pop()
 			
 		}
 		

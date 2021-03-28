@@ -15,9 +15,9 @@ namespace $ {
 			
 			const bu1 = sub.wire_begin()
 			try {
-				$mol_wire_auto?.wire_promo( pub1 )
-				$mol_wire_auto?.wire_promo( pub2 )
-				$mol_wire_auto?.wire_promo( pub2 )
+				$mol_wire?.wire_promo( pub1 )
+				$mol_wire?.wire_promo( pub2 )
+				$mol_wire?.wire_promo( pub2 )
 			} finally {
 				sub.wire_end( bu1 )
 			}
@@ -31,9 +31,9 @@ namespace $ {
 			
 			const bu2 = sub.wire_begin()
 			try {
-				$mol_wire_auto?.wire_promo( pub1 )
-				$mol_wire_auto?.wire_promo( pub1 )
-				$mol_wire_auto?.wire_promo( pub2 )
+				$mol_wire?.wire_promo( pub1 )
+				$mol_wire?.wire_promo( pub1 )
+				$mol_wire?.wire_promo( pub2 )
 			} finally {
 				sub.wire_end( bu2 )
 			}
