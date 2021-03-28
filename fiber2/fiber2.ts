@@ -27,7 +27,7 @@ namespace $ {
 			
 			this[ Symbol.toStringTag ] = String( host ) + '.' + $$.$mol_func_name( task )
 			
-			const existen = $mol_wire_auto?.wire_next()
+			const existen = $mol_wire?.wire_next()
 			if( !existen ) return
 			if(!( existen instanceof $mol_fiber2 )) return
 			
@@ -40,10 +40,10 @@ namespace $ {
 		
 		wire_absorb( quant: unknown ) {
 			
-			if( this.wire_cursor < 0 ) return
-			this.wire_cursor = -1
+			if( this.wire_pubs_cursor < 0 ) return
+			this.wire_pubs_cursor = -1
 
-			if( this.wire_subs.length ) {
+			if( this.wire_peers.length ) {
 				this.wire_emit( quant )
 			} else {
 				new $mol_after_frame( ()=> this.run() )
@@ -53,9 +53,9 @@ namespace $ {
 		
 		run() {
 			
-			$mol_wire_auto?.wire_promo( this )
+			$mol_wire?.wire_promo( this )
 			
-			if( this.wire_cursor >= 0 ) return
+			if( this.wire_pubs_cursor >= 0 ) return
 			
 			const bu = this.wire_begin()
 
@@ -113,7 +113,7 @@ namespace $ {
 			
 			if( this.result instanceof Promise ) {
 				
-				if( !$mol_wire_auto || !( $mol_wire_auto instanceof $mol_fiber2 ) ) {
+				if( !$mol_wire || !( $mol_wire instanceof $mol_fiber2 ) ) {
 					$mol_fail( new Error( 'Sync execution of fiber available only inside $mol_fiber2_async' ) )
 				}
 				

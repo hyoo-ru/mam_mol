@@ -3,57 +3,87 @@ namespace $ {
 	/**
 	 * Auto collects publishers
 	 */
-	export class $mol_wire_sub extends $mol_wire_pub implements $mol_wire_pub_sub {
+	export class $mol_wire_sub extends $mol_wire_pub implements $mol_wire_pub {
 		
-		protected wire_subs!: $mol_wire_sub[]
-		
-		protected wire_pubs = [] as $mol_wire_pub[]
-		protected wire_pubs_pos = [] as number[]
-		protected wire_cursor = -1
+		protected wire_pubs_cursor = -1
 		
 		/**
 		 * Begin auto wire to publishers.
 		 */
 		wire_begin() {
-			this.wire_cursor = 0
-			const sub = $mol_wire_auto
-			$mol_wire_auto = this
+			this.wire_pubs_cursor = 0
+			const sub = $mol_wire
+			$mol_wire = this
 			return sub
 		}
 		
 		wire_next() {
-			return this.wire_pubs[ this.wire_cursor ] ?? null
+			if( this.wire_pubs_cursor >= this.wire_subs_from ) return null
+			return this.wire_peers[ this.wire_pubs_cursor ]
 		}
 		
 		/**
 		 * Pomote publisher to wire its togeter.
 		 */
-		wire_promo< Pub extends $mol_wire_pub >( pub: Pub ): Pub {
+		wire_promo( pub: $mol_wire_pub ) {
 			
-			const next = this.wire_pubs[ this.wire_cursor ]
+			if( this.wire_pubs_cursor < this.wire_subs_from ) {
+			
+ 				const next = this.wire_peers[ this.wire_pubs_cursor ]
 				
-			if( next ) {
-				this.wire_pubs.push( next )
-				this.wire_pubs_pos.push( this.wire_pubs_pos[ this.wire_cursor ] )
-			}
+				if( next === pub ) {
+					++ this.wire_pubs_cursor
+					return
+				}
+
+				next.wire_off( this.wire_pos[ this.wire_pubs_cursor ] )
+				
+			} else {
+				
+				if( this.wire_subs_from < this.wire_peers.length ) {
+					this.wire_move( this.wire_subs_from, this.wire_peers.length )
+				}
+				
+				++ this.wire_subs_from
+				
+			}			
 			
-			this.wire_pubs[ this.wire_cursor ] = pub
-			this.wire_pubs_pos[ this.wire_cursor ] = pub.wire_on( this, this.wire_cursor )
+			this.wire_peers[ this.wire_pubs_cursor ] = pub
+			this.wire_pos[ this.wire_pubs_cursor ] = pub.wire_on( this as $mol_wire_pub, this.wire_pubs_cursor )
 			
-			++ this.wire_cursor
-			return pub
+			++ this.wire_pubs_cursor
 		}
 		
 		/**
 		 * Ends auto wire to publishers and unsubscribes from unpromoted publishers.
 		 */
-		wire_end( sub: $mol_wire_pub_sub | null ) {
+		wire_end( sub: $mol_wire_pub | null ) {
 			
-			while( this.wire_cursor < this.wire_pubs.length ) {
-				this.wire_pubs.pop()!.wire_off( this.wire_pubs_pos.pop()! )
+			let tail = 0
+			
+			for(
+				let cursor = this.wire_pubs_cursor;
+				cursor < this.wire_subs_from;
+				++ cursor
+			) {
+				
+				const pub = this.wire_peers[ cursor ]
+				pub.wire_off( this.wire_pos[ cursor ] )
+				
+				if( this.wire_subs_from < this.wire_peers.length ) {
+					pub.wire_move( cursor, this.wire_peers.length - 1 )
+				} else {
+					++ tail
+				}
+				
 			}
 			
-			$mol_wire_auto = sub
+			const count = this.wire_pubs_cursor + this.wire_peers.length - this.wire_subs_from
+			while( this.wire_peers.length > count ) this.wire_peers.pop()
+			
+			this.wire_subs_from = this.wire_pubs_cursor
+			
+			$mol_wire = sub
 			
 		}
 		
@@ -61,13 +91,6 @@ namespace $ {
 		 * Handles events from publishers.
 		 */
 		wire_absorb( quant: unknown ) { }
-		
-		/**
-		 * Updates position of subscriber in the publisher.
-		 */
-		wire_sub_repos( pub_pos: number, sub_pos: number ) {
-			this.wire_pubs_pos[ pub_pos ] = sub_pos
-		}
 		
 	}
 	
