@@ -10,7 +10,7 @@ namespace $ {
 						... input.kids.map( ( kid, index ) => [
 							kid.struct( 'line', [
 								... kid.list([ kid ]).hack( belt ),
-								... ( separator && index < input.kids.length - 1 ) ? [ kid.data( separator ) ] : [],
+								... ( separator && index < input.kids.length - 1 ) ? [ input.data( separator ) ] : [],
 							] ),
 						] ),
 					)
