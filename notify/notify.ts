@@ -1,0 +1,78 @@
+namespace $ {
+	
+	export class $mol_notify {
+		
+		@ $mol_mem
+		static allowed( next?: boolean ) {
+			
+			let perm = Notification.permission
+			if( next === undefined ) return perm === 'granted'
+			
+			if( perm === 'granted' ) return true
+			
+			perm = $mol_fiber_sync( ()=>
+				new Promise< NotificationPermission >( done =>
+					Notification.requestPermission( perm => {
+						done( perm )
+					} )
+				)
+			)()
+			
+			return perm === 'granted'
+		}
+		
+		@ $mol_fiber.method
+		static show( info: {
+			context: string,
+			message: string,
+			uri: string
+		} ) {
+			navigator.serviceWorker.controller!.postMessage( info )
+		}
+		
+	}
+	
+	if( typeof window === 'undefined' ) {
+		
+		self.addEventListener( 'message', async event => {
+			
+			let { context: title, message: body, uri: data } = event.data
+			const tag = title
+			
+			const existen = await $mol_service().getNotifications({ tag })
+			
+			for( const not of existen ) {
+				
+				if( not.body.indexOf( body ) !== -1 ) body = not.body
+				else if( body.indexOf( not.body ) === -1 ) body = not.body + '\n' + body
+				
+				not.close()
+			}
+			
+			const vibrate = [500,110,500,110,450,110,200,110,170,40,450,110,200,110,170,40,500]
+			
+			await $mol_service().showNotification( title, { body, data, vibrate, tag } )
+			
+		} )
+		
+		self.addEventListener('notificationclick', $mol_service_handler( async ( event: any )=> {
+			
+			const clients: any[] = await self['clients'].matchAll({ includeUncontrolled: true })
+
+			if( clients.length ) {
+				
+				const last = clients[ 0 ]
+				last.focus()
+				last.navigate( event.notification.data )
+				
+			} else {
+				
+				await self['clients'].openWindow( event.notification.data )
+				
+			}
+			
+		} ) )
+		
+	}
+	
+}
