@@ -55,9 +55,10 @@ namespace $ {
 			
 		} )
 		
-		self.addEventListener('notificationclick', $mol_service_handler( async ( event: any )=> {
+		self.addEventListener( 'notificationclick', $mol_service_handler( async ( event: any )=> {
 			
 			const clients: any[] = await self['clients'].matchAll({ includeUncontrolled: true })
+			event.notification.close()
 
 			if( clients.length ) {
 				
