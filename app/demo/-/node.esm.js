@@ -7190,12 +7190,6 @@ var $;
             });
         }
         toOffset(config) {
-            if (this.hour === undefined)
-                return this;
-            if (this.minute === undefined)
-                return this;
-            if (this.second === undefined)
-                return this;
             const duration = new $.$mol_time_duration(config);
             const offset = this.offset || new $mol_time_moment().offset;
             const moment = this.shift(duration.summ(offset.mult(-1)));

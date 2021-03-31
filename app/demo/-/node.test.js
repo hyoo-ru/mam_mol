@@ -7182,12 +7182,6 @@ var $;
             });
         }
         toOffset(config) {
-            if (this.hour === undefined)
-                return this;
-            if (this.minute === undefined)
-                return this;
-            if (this.second === undefined)
-                return this;
             const duration = new $.$mol_time_duration(config);
             const offset = this.offset || new $mol_time_moment().offset;
             const moment = this.shift(duration.summ(offset.mult(-1)));
@@ -28634,11 +28628,11 @@ var $;
             $.$mol_assert_equal(new $.$mol_time_moment('2014-01').shift('PT-8760h').toString(), '2013-01');
         },
         'normalization'() {
-            $.$mol_assert_equal(new $.$mol_time_moment({ year: 2015, month: 6, day: 34 }).normal.toString(), '2015-08-04');
+            $.$mol_assert_equal(new $.$mol_time_moment({ year: 2015, month: 6, day: 34 }).normal.toString(), '2015-08-03');
         },
         'iso week day'() {
-            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-17').weekday, 6);
-            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-18').weekday, 0);
+            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-18').weekday, 6);
+            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-19').weekday, 0);
         },
     });
 })($ || ($ = {}));

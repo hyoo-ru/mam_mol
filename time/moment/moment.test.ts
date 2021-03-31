@@ -59,13 +59,13 @@ namespace $ {
 		'normalization'() {
 			$mol_assert_equal(
 				new $mol_time_moment({ year: 2015, month: 6, day: 34 }).normal.toString() ,
-				'2015-08-04'
+				'2015-08-03'
 			)
 		} , 
 	
 		'iso week day'() {
-			$mol_assert_equal( new $mol_time_moment( '2017-09-17' ).weekday , 6 )
-			$mol_assert_equal( new $mol_time_moment( '2017-09-18' ).weekday , 0 )
+			$mol_assert_equal( new $mol_time_moment( '2017-09-18' ).weekday , 6 )
+			$mol_assert_equal( new $mol_time_moment( '2017-09-19' ).weekday , 0 )
 		} ,
 
 	} )
