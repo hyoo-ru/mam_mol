@@ -43,11 +43,13 @@ namespace $ {
 			belt[ def.type ] = ( arg, belt_inner, context )=> {
 				return def.hack(
 					Object.create( Object.assign( Object.create( belt ), {
+						
 						from: ( input: $mol_tree2, b: $mol_tree2_belt<{}>, c: {} )=> {
 							return arg.hack( Object.assign( Object.create( belt_inner ), b ), c )
-						}
+						},
+						
 					} ) ),
-					context,
+					{ ... context, span: arg.span },
 				)
 			}
 			
