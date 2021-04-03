@@ -7,6 +7,7 @@ namespace $ {
 		let prev_index = 0
 		let prev_col = 1
 		let mappings = ''
+		let line = [] as string[]
 
 		const file_indexes = new Map< string, number >()
 		const file_sources = new Map< string, string >()
@@ -20,7 +21,9 @@ namespace $ {
 		}
 		
 		function next_line() {
-			mappings += ';'
+			if( !line.length ) return
+			mappings += line.join(',') + ';'
+			line = []
 			col = 1
 			prev_col = 1
 		}
@@ -37,12 +40,12 @@ namespace $ {
 
 				const index = span2index( text.span )
 				
-				mappings +=
+				line.push(
 					$mol_vlq_encode( col - prev_col ) + 
 					$mol_vlq_encode( index - prev_index ) +
 					$mol_vlq_encode( text.span.row - ( prev_span?.row ?? 1 ) ) +
-					$mol_vlq_encode( text.span.col - ( prev_span?.col ?? 1 ) ) +
-					','
+					$mol_vlq_encode( text.span.col - ( prev_span?.col ?? 1 ) )
+				)
 				
 				prev_col = col
 				prev_span = text.span
@@ -83,6 +86,7 @@ namespace $ {
 		for( let kid of tree.kids ) {
 			visit( kid, 0, false )
 		}
+		next_line()
 		
 		const map = {
 			version: 3,

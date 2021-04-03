@@ -25,7 +25,7 @@ namespace $ {
 				$.$mol_tree2_text_to_string( tree ),
 				'"use strict";console.log(11);console.log(21);console.log(12);\n',
 			)
-
+			
 			$mol_assert_like(
 				$.$mol_tree2_text_to_sourcemap( tree ),
 				{
@@ -35,7 +35,7 @@ namespace $ {
 						"script2"
 					],
 					"sourcesContent": [ source.script1, source.script2 ],
-					"mappings": "AAAA,AAAI,aAAJ,gBCAA,gBDCA,;"
+					"mappings": "AAAA,AAAI,aAAJ,gBCAA,gBDCA;"
 				}
 			)
 
