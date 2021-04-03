@@ -4,6 +4,7 @@ namespace $ {
 		
 		const code = this.$mol_tree2_text_to_string( text )
 		const map = this.$mol_tree2_text_to_sourcemap( text )
+		map.mappings = ';;' + map.mappings
 		
 		let res = code
 		
