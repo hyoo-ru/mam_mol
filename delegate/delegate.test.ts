@@ -106,8 +106,8 @@ namespace $ {
 				()=> new Foo,
 			)
 
-			$mol_assert_ok( proxy.valueOf() instanceof Foo )
-			$mol_assert_not( proxy.valueOf() instanceof $mol_delegate )
+			$mol_assert_ok( proxy instanceof Foo )
+			$mol_assert_ok( proxy instanceof $mol_delegate )
 
 		},
 

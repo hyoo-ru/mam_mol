@@ -62,7 +62,7 @@ namespace $ {
 	$mol_conform_handler( Uint16Array , $mol_conform_array )
 	$mol_conform_handler( Uint32Array , $mol_conform_array )
 
-	$mol_conform_handler( Object , ( target , source )=> {
+	$mol_conform_handler( ({})['constructor'] as any , ( target: Object, source )=> {
 
 		let count = 0
 		let equal = true

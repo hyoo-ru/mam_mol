@@ -388,7 +388,14 @@ var $;
         static create(init) {
             return new this(init);
         }
-        static toString() { return this[Symbol.toStringTag] || this.name; }
+        static [(_a = $.$mol_ambient_ref, Symbol.toPrimitive)]() {
+            return this.toString();
+        }
+        static toString() {
+            if (Symbol.toStringTag in this)
+                return this[Symbol.toStringTag];
+            return this.name;
+        }
         destructor() { }
         toString() {
             return this[Symbol.toStringTag] || this.constructor.name + '()';
@@ -397,7 +404,6 @@ var $;
             return this.toString();
         }
     }
-    _a = $.$mol_ambient_ref;
     $mol_object2.$ = $;
     $.$mol_object2 = $mol_object2;
 })($ || ($ = {}));

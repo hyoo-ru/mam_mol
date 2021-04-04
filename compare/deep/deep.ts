@@ -14,7 +14,7 @@ namespace $ {
 
 		if( a_type !== b_type ) return false
 
-		if( a_type === 'function' ) return String( a ) === String( b )
+		if( a_type === 'function' ) return a['toString']() === b['toString']()
 		if( a_type !== 'object' ) return false
 
 		if( !a || !b ) return false
@@ -22,7 +22,7 @@ namespace $ {
 		if( a instanceof Error ) return false
 		if( a['constructor'] !== b['constructor'] ) return false
 
-		if( a instanceof RegExp ) return Object.is( String( a ) , String( b ) )
+		if( a instanceof RegExp ) return a.toString() === b['toString']()
 
 		const ref = a_stack.indexOf( a )
 		
@@ -52,7 +52,7 @@ namespace $ {
 
 		try {
 
-			if( a[ Symbol.iterator ] ) {
+			if( Symbol.iterator in a ) {
 				
 				const a_iter = a[ Symbol.iterator ]()
 				const b_iter = b[ Symbol.iterator ]()
@@ -98,12 +98,10 @@ namespace $ {
 				if( count < 0 ) return result = false
 				
 			}
-	
-			const a_val = a['valueOf']()
-			if( Object.is( a_val , a ) ) return result = true
 			
-			const b_val = b['valueOf']()
-			if( !Object.is( a_val , b_val ) ) return result = false
+			if( a instanceof Number || a instanceof String || a instanceof Symbol || a instanceof Boolean || a instanceof Date ) {
+				if( !Object.is( a['valueOf'](), b['valueOf']() ) ) return result = false
+			}
 
 			return result = true
 

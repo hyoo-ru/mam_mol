@@ -194,7 +194,7 @@ var $;
             $.$mol_assert_equal(dom.value, '123');
         },
         'Define classes'() {
-            const dom = $.$mol_jsx("div", { classList: ['foo bar'] });
+            const dom = $.$mol_jsx("div", { class: 'foo bar' });
             $.$mol_assert_equal(dom.outerHTML, '<div class="foo bar"></div>');
         },
         'Define styles'() {
@@ -269,7 +269,7 @@ var $;
         const guid = $.$mol_jsx_prefix + id;
         let node = guid && $.$mol_jsx_document.getElementById(guid);
         if (typeof Elem !== 'string') {
-            if (Elem.prototype) {
+            if ('prototype' in Elem) {
                 const view = node && node[Elem] || new Elem;
                 Object.assign(view, props);
                 view[Symbol.toStringTag] = guid;
@@ -301,7 +301,9 @@ var $;
             if (typeof props[key] === 'string') {
                 node.setAttribute(key, props[key]);
             }
-            else if (props[key] && props[key]['constructor'] === Object) {
+            else if (props[key] &&
+                typeof props[key] === 'object' &&
+                Reflect.getPrototypeOf(props[key]) === Reflect.getPrototypeOf({})) {
                 if (typeof node[key] === 'object') {
                     Object.assign(node[key], props[key]);
                     continue;
@@ -453,7 +455,7 @@ var $;
         if (a_type !== b_type)
             return false;
         if (a_type === 'function')
-            return String(a) === String(b);
+            return a['toString']() === b['toString']();
         if (a_type !== 'object')
             return false;
         if (!a || !b)
@@ -463,7 +465,7 @@ var $;
         if (a['constructor'] !== b['constructor'])
             return false;
         if (a instanceof RegExp)
-            return Object.is(String(a), String(b));
+            return a.toString() === b['toString']();
         const ref = a_stack.indexOf(a);
         if (ref >= 0) {
             return Object.is(b_stack[ref], b);
@@ -484,7 +486,7 @@ var $;
         b_stack.push(b);
         let result;
         try {
-            if (a[Symbol.iterator]) {
+            if (Symbol.iterator in a) {
                 const a_iter = a[Symbol.iterator]();
                 const b_iter = b[Symbol.iterator]();
                 while (true) {
@@ -515,12 +517,10 @@ var $;
                 if (count < 0)
                     return result = false;
             }
-            const a_val = a['valueOf']();
-            if (Object.is(a_val, a))
-                return result = true;
-            const b_val = b['valueOf']();
-            if (!Object.is(a_val, b_val))
-                return result = false;
+            if (a instanceof Number || a instanceof String || a instanceof Symbol || a instanceof Boolean || a instanceof Date) {
+                if (!Object.is(a['valueOf'](), b['valueOf']()))
+                    return result = false;
+            }
             return result = true;
         }
         finally {
@@ -819,9 +819,9 @@ var $;
     function $mol_dom_parse(text, type = 'application/xhtml+xml') {
         const parser = new $.$mol_dom_context.DOMParser();
         const doc = parser.parseFromString(text, type);
-        const error = doc.getElementsByTagName('parsererror')[0];
-        if (error)
-            throw new Error(error.textContent);
+        const error = doc.getElementsByTagName('parsererror');
+        if (error.length)
+            throw new Error(error[0].textContent);
         return doc;
     }
     $.$mol_dom_parse = $mol_dom_parse;
@@ -914,8 +914,8 @@ var $;
             class Foo {
             }
             const proxy = $.$mol_delegate({}, () => new Foo);
-            $.$mol_assert_ok(proxy.valueOf() instanceof Foo);
-            $.$mol_assert_not(proxy.valueOf() instanceof $.$mol_delegate);
+            $.$mol_assert_ok(proxy instanceof Foo);
+            $.$mol_assert_ok(proxy instanceof $.$mol_delegate);
         },
     });
 })($ || ($ = {}));
@@ -1044,7 +1044,14 @@ var $;
         static create(init) {
             return new this(init);
         }
-        static toString() { return this[Symbol.toStringTag] || this.name; }
+        static [(_a = $.$mol_ambient_ref, Symbol.toPrimitive)]() {
+            return this.toString();
+        }
+        static toString() {
+            if (Symbol.toStringTag in this)
+                return this[Symbol.toStringTag];
+            return this.name;
+        }
         destructor() { }
         toString() {
             return this[Symbol.toStringTag] || this.constructor.name + '()';
@@ -1053,7 +1060,6 @@ var $;
             return this.toString();
         }
     }
-    _a = $.$mol_ambient_ref;
     $mol_object2.$ = $;
     $.$mol_object2 = $mol_object2;
 })($ || ($ = {}));
@@ -1542,7 +1548,7 @@ var $;
     $mol_conform_handler(Uint8Array, $mol_conform_array);
     $mol_conform_handler(Uint16Array, $mol_conform_array);
     $mol_conform_handler(Uint32Array, $mol_conform_array);
-    $mol_conform_handler(Object, (target, source) => {
+    $mol_conform_handler(({})['constructor'], (target, source) => {
         let count = 0;
         let equal = true;
         for (let key in target) {
@@ -2040,13 +2046,13 @@ var $;
             this.$.$mol_fail_hidden($mol_fiber.schedule());
         }
         get master() {
-            return this.masters[this.cursor];
+            return (this.cursor < this.masters.length ? this.masters[this.cursor] : undefined);
         }
         set master(next) {
             if (this.cursor === -1)
                 return;
             const cursor = this.cursor;
-            const prev = this.masters[this.cursor];
+            const prev = this.master;
             if (prev !== next) {
                 if (prev)
                     this.rescue(prev, cursor);
@@ -3105,7 +3111,12 @@ var $;
             atom.calculate = calculate;
             atom.obsolete_slaves = atom.schedule;
             atom.doubt_slaves = atom.schedule;
-            atom[Symbol.toStringTag] = calculate[Symbol.toStringTag] || calculate.name || '$mol_atom2_autorun';
+            if (Symbol.toStringTag in calculate) {
+                atom[Symbol.toStringTag] = calculate[Symbol.toStringTag];
+            }
+            else {
+                atom[Symbol.toStringTag] = calculate.name || '$mol_atom2_autorun';
+            }
             atom.schedule();
         });
     }

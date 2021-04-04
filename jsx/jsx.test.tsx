@@ -18,7 +18,7 @@ namespace $ {
 		
 		'Define classes'() {
 			
-			const dom = <div classList={[ 'foo bar' ]} />
+			const dom = <div class={ 'foo bar' } />
 			
 			$mol_assert_equal( dom.outerHTML , '<div class="foo bar"></div>' )
 

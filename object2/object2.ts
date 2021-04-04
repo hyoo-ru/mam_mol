@@ -26,7 +26,14 @@ namespace $ {
 			return new this( init )
 		}
 		
-		static toString() { return this[ Symbol.toStringTag ] || this.name }
+		static [ Symbol.toPrimitive ]() {
+			return this.toString()
+		}
+		
+		static toString() {
+			if( Symbol.toStringTag in this ) return this[ Symbol.toStringTag ]
+			return this.name
+		}
 
 		destructor() { }
 

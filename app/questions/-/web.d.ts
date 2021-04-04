@@ -59,6 +59,7 @@ declare namespace $ {
         set $(next: $);
         constructor(init?: (obj: any) => void);
         static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
+        static [Symbol.toPrimitive](): any;
         static toString(): any;
         destructor(): void;
         toString(): any;
