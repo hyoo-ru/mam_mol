@@ -33,7 +33,7 @@ namespace $ {
 
 		if( typeof Elem !== 'string' ) {
 
-			if( Elem.prototype ) {
+			if( 'prototype' in Elem ) {
 
 				const view : $mol_jsx_view = node && node[ Elem as any ] || new ( Elem as any )
 				
@@ -83,7 +83,11 @@ namespace $ {
 
 				node.setAttribute( key , props[ key as any ] )
 
-			} else if( props[ key ] && props[ key ]['constructor'] === Object ) {
+			} else if(
+				props[ key ] &&
+				typeof props[ key ] === 'object' &&
+				Reflect.getPrototypeOf( props[ key ] as any ) === Reflect.getPrototypeOf({})
+			) {
 
 				if( typeof node[ key as any ] === 'object' ) {
 					Object.assign( ( node as any )[ key ] , props[ key ] )
@@ -104,7 +108,9 @@ namespace $ {
 
 	export declare namespace $mol_jsx.JSX {
 
-		export interface Element extends HTMLElement {}
+		export interface Element extends HTMLElement {
+			class?: string
+		}
 		
 		export interface ElementClass {
 			attributes : {}
@@ -115,7 +121,7 @@ namespace $ {
 		
 		/** Props for html elements */
 		export type IntrinsicElements = {
-			[ key in keyof HTMLElementTagNameMap ]? : $.$mol_type_partial_deep< HTMLElementTagNameMap[ key ] >
+			[ key in keyof HTMLElementTagNameMap ]? : $.$mol_type_partial_deep< Element & HTMLElementTagNameMap[ key ] >
 		}
 		
 		/** Additional undeclared props */

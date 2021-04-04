@@ -450,14 +450,14 @@ namespace $ {
 		}
 
 		get master() {
-			return this.masters[ this.cursor ] as $mol_fiber
+			return ( this.cursor < this.masters.length ? this.masters[ this.cursor ] : undefined ) as $mol_fiber
 		}
 		set master( next : $mol_fiber ) {
 
 			if( this.cursor === $mol_fiber_status.doubt ) return
 			
 			const cursor = this.cursor
-			const prev = this.masters[ this.cursor ]
+			const prev = this.master
 			
 			if( prev !== next ) {
 				if( prev ) this.rescue( prev as $mol_fiber , cursor )
