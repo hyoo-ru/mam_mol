@@ -2,15 +2,11 @@ namespace $ {
 	
 	// Prevent implicit cast objects to primitive (except boolean).
 	
-	export function $mol_strict_cast() {
+	Object.prototype[ Symbol.toPrimitive ] = function() {
 		return $.$mol_fail(
 			new TypeError( `Field Symbol(Symbol.toPrimitive) is not defined` )
 		)
 	}
-	
-	Object.prototype.toString = $mol_strict_cast
-	Object.prototype.valueOf = $mol_strict_cast
-	Object.prototype[ Symbol.toPrimitive ] = $mol_strict_cast
 	
 	// Prevent return undefined for fields which isn't defined.
 	// Works for every classes derived from Object but not for Object (including all literals).
