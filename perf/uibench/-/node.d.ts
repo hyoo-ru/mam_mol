@@ -113,6 +113,7 @@ declare namespace $ {
         static [Symbol.toPrimitive](): any;
         static toString(): any;
         destructor(): void;
+        [Symbol.toPrimitive](): any;
         toString(): any;
         toJSON(): any;
     }

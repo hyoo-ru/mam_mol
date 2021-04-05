@@ -3,11 +3,14 @@ namespace $ {
 	// Prevent implicit cast objects to primitive (except boolean).
 	
 	export function $mol_strict_cast() {
-		return $.$mol_fail( new TypeError( 'Implicit type cast is forbidden by default' ) )
+		return $.$mol_fail(
+			new TypeError( 'Implicit type cast is forbidden by default' )
+		)
 	}
 	
-	Object.prototype.valueOf = $mol_strict_cast
 	Object.prototype.toString = $mol_strict_cast
+	Object.prototype.valueOf = $mol_strict_cast
+	Object.prototype[ Symbol.toPrimitive ] = $mol_strict_cast
 	
 	// Prevent return undefined for fields which isn't defined.
 	// Works for every classes derived from Object but not for Object (including all literals).
@@ -32,7 +35,7 @@ namespace $ {
 	// Replace Object.prototype by $mol_strict_object for all global classes
 	for( const name of Reflect.ownKeys( $ ) ) {
 		
-		const func = $[ name ]
+		const func = Reflect.getOwnPropertyDescriptor( $, name )!.value
 		if( typeof func !== 'function' ) continue
 		if(!( 'prototype' in func )) continue
 		if( name === 'CSSStyleDeclaration' ) continue

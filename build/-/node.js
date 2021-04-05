@@ -254,6 +254,9 @@ var $;
             return this.name;
         }
         destructor() { }
+        [Symbol.toPrimitive]() {
+            return this.toString();
+        }
         toString() {
             return this[Symbol.toStringTag] || this.constructor.name + '()';
         }
