@@ -1,0 +1,28 @@
+name: mol_strict
+
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+    - master
+  pull_request:
+  schedule:
+  - cron: "0 7 * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - name: Build apps
+      uses: hyoo-ru/mam_build@master2
+      with:
+        package: mol/strict
+    
+    - uses: JS-DevTools/npm-publish@v1
+      if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'workflow_dispatch' }}
+      with:
+        token: ${{ secrets.NPM_AUTH_TOKEN }}
+        package: ./mol/strict/-/package.json
