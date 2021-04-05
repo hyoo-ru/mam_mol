@@ -3,9 +3,15 @@ namespace $ {
 		
 		'object to primitive'( $ ) {
 			
-			$mol_assert_equal( ( { valueOf: ()=> 1 } as number ) + 1, 2 )
-			$mol_assert_equal( { valueOf: ()=> 'xxx' } + '!', 'xxx!' )
-			$mol_assert_equal( `${ { toString: ()=> 'xxx' } }!`, 'xxx!' )
+			class Foo extends Object {
+				[ Symbol.toPrimitive ]( hint: string ) { return 321 }
+				valueOf() { return 123 }
+				toString() { return 'foo' }
+			}
+			
+			$mol_assert_equal( ( new Foo as any ) - 1, 320 )
+			$mol_assert_equal( new Foo + '!', '321!' )
+			$mol_assert_equal( `${ new Foo }!`, '321!' )
 			
 			$mol_assert_fail( ()=> ( {} as number ) + 1, 'Implicit type cast is forbidden by default' )
 			$mol_assert_fail( ()=> ({}) + '!', 'Implicit type cast is forbidden by default' )
