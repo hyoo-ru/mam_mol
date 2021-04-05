@@ -13,9 +13,9 @@ namespace $ {
 			$mol_assert_equal( new Foo + '!', '321!' )
 			$mol_assert_equal( `${ new Foo }!`, '321!' )
 			
-			$mol_assert_fail( ()=> ( {} as number ) + 1, 'Implicit type cast is forbidden by default' )
-			$mol_assert_fail( ()=> ({}) + '!', 'Implicit type cast is forbidden by default' )
-			$mol_assert_fail( ()=> `${ {} }!`, 'Implicit type cast is forbidden by default' )
+			$mol_assert_fail( ()=> ( {} as number ) + 1, 'Field Symbol(Symbol.toPrimitive) is not defined' )
+			$mol_assert_fail( ()=> ({}) + '!', 'Field Symbol(Symbol.toPrimitive) is not defined' )
+			$mol_assert_fail( ()=> `${ {} }!`, 'Field Symbol(Symbol.toPrimitive) is not defined' )
 			
 		},
 		
