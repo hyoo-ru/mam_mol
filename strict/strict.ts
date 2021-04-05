@@ -4,7 +4,7 @@ namespace $ {
 	
 	export function $mol_strict_cast() {
 		return $.$mol_fail(
-			new TypeError( 'Implicit type cast is forbidden by default' )
+			new TypeError( `Field Symbol(Symbol.toPrimitive) is not defined` )
 		)
 	}
 	
