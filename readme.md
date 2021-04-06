@@ -6,7 +6,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 - [Levels](#levels)
 - [Features](#features)
-- [Applications](https://showcase.hyoo.ru/)
+- [Applications](https://apps.hyoo.ru/)
 - [Benchmarks](#benchmarks)
 - [Articles](#articles)
 - [Discussions](https://teleg.run/mam_mol)
@@ -492,6 +492,28 @@ The name of the field corresponds to calling the property, the content of the fi
 
 - **[$mol_build](build)** - MAM builder
 - **[$mol_build_server](build/server)** - MAM developer server
+
+## Usage from NPM ecosystem
+
+You can manually build any $mol module as standalone lib:
+
+```
+git clone https://github.com/hyoo-ru/mam.git ./mam
+cd mam
+npm install
+npm start path/to/module
+cp path/to/module/-/* your/build/directory
+```
+
+Some libs are already published to NPM:
+
+- [$mol_data](data) - Static typed DTO with strict runtime validation and user friendly error messages.
+- [$mol_strict](strict) - Makes JS runtime more strict.
+- [$mol_time](time) - Proper date/time/duration/interval arithmetic.
+- [$mol_type](type) - TypeScript meta types for complex logic.
+- [$hyoo_crowd](https://github.com/hyoo-ru/crowd.hyoo.ru) - Conflict-free Reinterpretable Ordered Washed Data.
+
+All of them are very small, powerfull and fastest. Use it for your pleasure.
 
 # Contributors
 
