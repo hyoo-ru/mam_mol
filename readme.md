@@ -6,7 +6,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 - [Levels](#levels)
 - [Features](#features)
-- [Applications](https://showcase.hyoo.ru/)
+- [Applications](https://apps.hyoo.ru/)
 - [Benchmarks](#benchmarks)
 - [Articles](#articles)
 - [Discussions](https://teleg.run/mam_mol)
