@@ -53,3 +53,7 @@ include \/mol/strict
 ```javascript
 import "mol_strict"
 ```
+
+## Articles
+
+- [$mol_strict: Как же меня `[object Object]` этот ваш `undefined` `NaN`!](https://habhub.hyoo.ru/#author=nin-jin/repo=HabHub/article=43)
