@@ -93,11 +93,21 @@ namespace $ {
 			'{;}': sequence( '{', '; ', '}' ),
 			'[,]': sequence( '[', ', ', ']' ),
 			'{,}': sequence( '{', ', ', '}' ),
-			':': duplet( '[', ']: ' ),
 
 			'()': sequence( '(', '', ')' ),
-			'[]': sequence( '[', '', ']' ),
 			'{}': sequence( '{', '', '}' ),
+			
+			'[]': ( input, belt )=> {
+				const first = input.kids[0]
+				if( first.type ) return sequence( '[', '', ']' )( input, belt )
+				else return [ input.data( '.' + first.text() ) ]
+			},
+			
+			':': ( input, belt )=> {
+				const first = input.kids[0]
+				if( first.type ) return duplet( '[', ']: ' )( input, belt )
+				else return duplet( '', ': ' )( input, belt )
+			},
 			
 			'let': duplet( 'let ', ' = ' ),
 			'const': duplet( 'const ', ' = ' ),
