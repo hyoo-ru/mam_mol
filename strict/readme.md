@@ -5,7 +5,9 @@ Makes JS runtime more strict.
 ## Without $mol_strict
 
 ```javascript
-class Foo extends Object {}
+class Foo extends Object {
+	get name(){ return 'Jin' }
+}
 const foo = new Foo
 
 `Hello, ${ foo }!`
@@ -19,12 +21,21 @@ const foo = new Foo
 
 `There are still ${ foo.length - 1 } goals left and you will achieve success.`
 // "There are still NaN goals left and you will achieve success."
+
+`There are still ${ foo.length - 1 } goals left and you will achieve success.`
+// "There are still NaN goals left and you will achieve success."
+
+foo.__proto__= { name: 'moron' };
+`See you later, ${ foo.name }.`
+// "See you later, moron."
 ```
 
 ## With $mol_strict
 
 ```javascript
-class Foo extends Object {}
+class Foo extends Object {
+	get name(){ return 'Jin' }
+}
 const foo = new Foo
 
 `Hello, ${ foo }!`
@@ -38,6 +49,10 @@ const foo = new Foo
 
 `There are still ${ foo.length - 1 } goals left and you will achieve success.`
 // TypeError: Field "length" is not defined
+
+foo.__proto__= { name: 'moron' };
+`See you later, ${ foo.name }.`
+// "See you later, Jin."
 ```
 
 ## Usage from MAM
