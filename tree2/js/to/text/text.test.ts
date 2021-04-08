@@ -237,17 +237,17 @@ namespace $ {
 				convert(`
 					()
 						foo
-						[,] \\bar
-						[,] 1
+						[] \\bar
+						[] 1
 				`),
-				'(foo["bar"][1])\n',
+				'(foo.bar[1])\n',
 			)
 			
 			$mol_assert_equal(
 				convert(`
 					()
 						foo
-						[,] 1
+						[] 1
 						(,)
 				`),
 				'(foo[1]())\n',
@@ -257,7 +257,7 @@ namespace $ {
 				convert(`
 					()
 						[,] 0
-						[,] 1
+						[] 1
 						(,)
 							2
 							3
