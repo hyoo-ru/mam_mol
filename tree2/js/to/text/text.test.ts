@@ -179,7 +179,7 @@ namespace $ {
 							bar
 							2
 				`),
-				'{["foo"]: 1, [bar]: 2}\n',
+				'{"foo": 1, [bar]: 2}\n',
 			)
 			
 		},
