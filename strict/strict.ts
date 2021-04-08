@@ -1,12 +1,14 @@
 namespace $ {
 	
 	// Prevent implicit cast objects to primitive (except boolean).
-	
 	Object.prototype[ Symbol.toPrimitive ] = function() {
 		return $.$mol_fail(
 			new TypeError( `Field Symbol(Symbol.toPrimitive) is not defined` )
 		)
 	}
+	
+	// Prevent prototype pollution
+	delete Object.prototype['__proto__']
 	
 	// Prevent return undefined for fields which isn't defined.
 	// Works for every classes derived from Object but not for Object (including all literals).

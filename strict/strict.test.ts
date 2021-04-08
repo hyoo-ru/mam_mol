@@ -43,5 +43,16 @@ namespace $ {
 			
 		},
 		
+		'prototype pollution'( $ ) {
+			
+			const obj = { foo: 123 } as any
+			obj.__proto__ = { bar: 321 }
+			
+			$mol_assert_equal( Reflect.getPrototypeOf( obj ), Reflect.getPrototypeOf({}) )
+			$mol_assert_like( obj.__proto__, { bar: 321 } )
+			$mol_assert_equal( obj.bar, undefined )
+			
+		},
+		
 	})
 }
