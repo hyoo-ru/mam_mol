@@ -3,7 +3,7 @@ namespace $ {
 	export const $mol_jack : $mol_tree2_belt<{}> = {
 
 		no: ( input, belt )=> [],
-			
+		
 		list: ( input, belt )=> input.hack( belt ),
 		
 		tree: input => input.kids,
@@ -47,6 +47,10 @@ namespace $ {
 						from: ( input: $mol_tree2, b: $mol_tree2_belt<{}>, c: {} )=> {
 							return arg.hack( Object.assign( Object.create( belt_inner ), b ), c )
 						},
+						
+						clone: ( input: $mol_tree2, b: $mol_tree2_belt<{}>, c: {} )=> [
+							arg.clone( input.hack( b, c ) ),
+						],
 						
 					} ) ),
 					{ ... context, span: arg.span },
