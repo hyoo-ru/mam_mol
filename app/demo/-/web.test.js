@@ -3049,6 +3049,9 @@ var $;
 //array.test.js.map
 ;
 "use strict";
+//equals.test.js.map
+;
+"use strict";
 //merge.test.js.map
 ;
 "use strict";
@@ -3691,11 +3694,5 @@ var $;
     $.$mol_jsx_view = $mol_jsx_view;
 })($ || ($ = {}));
 //view.js.map
-;
-"use strict";
-//equals.test.js.map
-;
-"use strict";
-//equals.js.map
 
 //# sourceMappingURL=web.test.js.map
