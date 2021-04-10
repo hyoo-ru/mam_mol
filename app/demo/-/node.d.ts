@@ -69,7 +69,7 @@ declare namespace $ {
         static [Symbol.toPrimitive](): any;
         static toString(): any;
         destructor(): void;
-        [Symbol.toPrimitive](): any;
+        [Symbol.toPrimitive](hint: string): any;
         toString(): any;
         toJSON(): any;
     }
@@ -2050,7 +2050,7 @@ declare namespace $.$$ {
         col_head_content(colId: string): readonly string[];
         rows(): readonly $mol_view[];
         cells(row_id: string[]): readonly $mol_view[];
-        col_type(col_id: string): "text" | "number" | "branch";
+        col_type(col_id: string): "number" | "text" | "branch";
         Cell(id: {
             row: string[];
             col: string;
@@ -2167,7 +2167,7 @@ declare namespace $.$$ {
         }): number;
         col_head_title(col: string): string;
         event_sort_toggle(col: string, next?: Event): void;
-        col_type(col: string): "text" | "number" | "branch";
+        col_type(col: string): "number" | "text" | "branch";
         cell_content_number(id: {
             row: string[];
             col: string;
@@ -2346,6 +2346,15 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    enum $mol_time_moment_weekdays {
+        monday = 0,
+        tuesday = 1,
+        wednesday = 2,
+        thursday = 3,
+        friday = 4,
+        saturday = 5,
+        sunday = 6
+    }
     type $mol_time_moment_config = number | Date | string | {
         year?: number;
         month?: number;
@@ -6273,7 +6282,7 @@ declare namespace $ {
     function $mol_view_tree_prop_key(prop: $mol_tree): string;
     function $mol_view_tree_prop_next(prop: $mol_tree): string;
     function $mol_view_tree_prop_value(prop: $mol_tree): $mol_tree;
-    function $mol_view_tree_value_type(val: $mol_tree): "locale" | "bool" | "null" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | "number";
+    function $mol_view_tree_value_type(val: $mol_tree): "number" | "locale" | "bool" | "null" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object";
     function $mol_view_tree_compile(tree: $mol_tree): {
         script: string;
         locales: {
@@ -6291,7 +6300,7 @@ declare namespace $.$$ {
         title(): string;
         title_arg(): {};
         value(next?: $mol_tree): $mol_tree;
-        type(next?: string): "locale" | "bool" | "null" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | "number" | null;
+        type(next?: string): "number" | "locale" | "bool" | "null" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | null;
         expanded(next?: boolean): boolean;
         class(next?: string): string;
         bind(next?: string): string;
@@ -6568,7 +6577,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_value_type(this: $, val: $mol_tree2): "locale" | "bool" | "null" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | "number";
+    function $mol_view_tree2_value_type(this: $, val: $mol_tree2): "number" | "locale" | "bool" | "null" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object";
 }
 
 declare namespace $ {
@@ -6599,7 +6608,7 @@ declare namespace $.$$ {
         };
         prop(path: $mol_tree2_path, next?: $mol_tree2 | null): $mol_tree2 | null;
         prop_self(path: $mol_tree2_path): $mol_tree2 | null;
-        prop_type(path: $mol_tree2_path): "locale" | "bool" | "null" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | "number" | null;
+        prop_type(path: $mol_tree2_path): "number" | "locale" | "bool" | "null" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | null;
         prop_key(path: $mol_tree2_path, next?: string): string;
         prop_next(path: $mol_tree2_path, next?: string): string;
         prop_default(path: $mol_tree2_path, next?: $mol_tree2 | null): $mol_tree2 | null;

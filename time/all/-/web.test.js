@@ -723,12 +723,15 @@ var $;
             $.$mol_assert_equal(new $.$mol_time_moment('2014-01').shift('PT-8760h').toString(), '2013-01');
         },
         'normalization'() {
-            $.$mol_assert_equal(new $.$mol_time_moment({ year: 2015, month: 6, day: 34 }).normal.toString(), '2015-08-03');
+            $.$mol_assert_equal(new $.$mol_time_moment({ year: 2015, month: 6, day: 34 }).normal.toString(), '2015-08-04');
         },
         'iso week day'() {
-            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-18').weekday, 6);
-            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-19').weekday, 0);
+            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-17').weekday, $.$mol_time_moment_weekdays.sunday);
+            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-18').weekday, $.$mol_time_moment_weekdays.monday);
         },
+        'change offset'() {
+            $.$mol_assert_equal(new $.$mol_time_moment('2021-04-10 +03:00').toOffset('Z').toString(), '2021-04-09T21:00:00+00:00');
+        }
     });
 })($ || ($ = {}));
 //moment.test.js.map
@@ -1053,8 +1056,8 @@ var $;
             return this.name;
         }
         destructor() { }
-        [Symbol.toPrimitive]() {
-            return this.toString();
+        [Symbol.toPrimitive](hint) {
+            return hint === 'number' ? this.valueOf() : this.toString();
         }
         toString() {
             return this[Symbol.toStringTag] || this.constructor.name + '()';

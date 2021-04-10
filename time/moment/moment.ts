@@ -1,5 +1,15 @@
 namespace $ {
 
+	export enum $mol_time_moment_weekdays {
+		monday,
+		tuesday,
+		wednesday,
+		thursday,
+		friday,
+		saturday,
+		sunday
+	}
+	
 	export type $mol_time_moment_config = number | Date | string | {
 		year? : number
 		month? : number
@@ -26,7 +36,7 @@ namespace $ {
 			
 			if( typeof config === 'string' ) {
 				
-				const parsed = /^(?:(\d\d?\d?\d?)(?:-?(\d\d?)(?:-?(\d\d?))?)?)?(?:[T ](\d\d?)(?::?(\d\d?)(?::?(\d\d?(?:\.\d+)?))?)?(Z|[\+\-]\d\d?(?::?(?:\d\d?)?)?)?)?$/.exec( config )
+				const parsed = /^(?:(\d\d?\d?\d?)(?:-?(\d\d?)(?:-?(\d\d?))?)?)?(?:[T ](?:(\d\d?)(?::?(\d\d?)(?::?(\d\d?(?:\.\d+)?))?)?)?(Z|[\+\-]\d\d?(?::?(?:\d\d?)?)?)?)?$/.exec( config )
 				if( !parsed ) throw new Error( `Can not parse time moment (${ config })` )
 
 				if( parsed[1] ) this.year = numb( parsed[1], 9999 )
@@ -184,7 +194,9 @@ namespace $ {
 			
 			const duration = new $mol_time_duration( config )
 			const offset = this.offset || new $mol_time_moment().offset!
-		 	const moment = this.shift( duration.summ( offset.mult( -1 ) ) )
+			
+			let with_time = new $mol_time_moment( 'T00:00:00' ).merge( this ) 
+		 	const moment = with_time.shift( duration.summ( offset.mult( -1 ) ) )
 
 			return moment.merge({ offset : duration })
 		}

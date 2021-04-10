@@ -197,8 +197,8 @@ var $;
             return this.name;
         }
         destructor() { }
-        [Symbol.toPrimitive]() {
-            return this.toString();
+        [Symbol.toPrimitive](hint) {
+            return hint === 'number' ? this.valueOf() : this.toString();
         }
         toString() {
             return this[Symbol.toStringTag] || this.constructor.name + '()';
@@ -7068,6 +7068,16 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    let $mol_time_moment_weekdays;
+    (function ($mol_time_moment_weekdays) {
+        $mol_time_moment_weekdays[$mol_time_moment_weekdays["monday"] = 0] = "monday";
+        $mol_time_moment_weekdays[$mol_time_moment_weekdays["tuesday"] = 1] = "tuesday";
+        $mol_time_moment_weekdays[$mol_time_moment_weekdays["wednesday"] = 2] = "wednesday";
+        $mol_time_moment_weekdays[$mol_time_moment_weekdays["thursday"] = 3] = "thursday";
+        $mol_time_moment_weekdays[$mol_time_moment_weekdays["friday"] = 4] = "friday";
+        $mol_time_moment_weekdays[$mol_time_moment_weekdays["saturday"] = 5] = "saturday";
+        $mol_time_moment_weekdays[$mol_time_moment_weekdays["sunday"] = 6] = "sunday";
+    })($mol_time_moment_weekdays = $.$mol_time_moment_weekdays || ($.$mol_time_moment_weekdays = {}));
     function numb(str, max) {
         const numb = Number(str);
         if (numb < max)
@@ -7080,7 +7090,7 @@ var $;
             if (typeof config === 'number')
                 config = new Date(config);
             if (typeof config === 'string') {
-                const parsed = /^(?:(\d\d?\d?\d?)(?:-?(\d\d?)(?:-?(\d\d?))?)?)?(?:[T ](\d\d?)(?::?(\d\d?)(?::?(\d\d?(?:\.\d+)?))?)?(Z|[\+\-]\d\d?(?::?(?:\d\d?)?)?)?)?$/.exec(config);
+                const parsed = /^(?:(\d\d?\d?\d?)(?:-?(\d\d?)(?:-?(\d\d?))?)?)?(?:[T ](?:(\d\d?)(?::?(\d\d?)(?::?(\d\d?(?:\.\d+)?))?)?)?(Z|[\+\-]\d\d?(?::?(?:\d\d?)?)?)?)?$/.exec(config);
                 if (!parsed)
                     throw new Error(`Can not parse time moment (${config})`);
                 if (parsed[1])
@@ -7198,7 +7208,8 @@ var $;
         toOffset(config) {
             const duration = new $.$mol_time_duration(config);
             const offset = this.offset || new $mol_time_moment().offset;
-            const moment = this.shift(duration.summ(offset.mult(-1)));
+            let with_time = new $mol_time_moment('T00:00:00').merge(this);
+            const moment = with_time.shift(duration.summ(offset.mult(-1)));
             return moment.merge({ offset: duration });
         }
         valueOf() { return this.native.getTime(); }
@@ -28642,12 +28653,15 @@ var $;
             $.$mol_assert_equal(new $.$mol_time_moment('2014-01').shift('PT-8760h').toString(), '2013-01');
         },
         'normalization'() {
-            $.$mol_assert_equal(new $.$mol_time_moment({ year: 2015, month: 6, day: 34 }).normal.toString(), '2015-08-03');
+            $.$mol_assert_equal(new $.$mol_time_moment({ year: 2015, month: 6, day: 34 }).normal.toString(), '2015-08-04');
         },
         'iso week day'() {
-            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-18').weekday, 6);
-            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-19').weekday, 0);
+            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-17').weekday, $.$mol_time_moment_weekdays.sunday);
+            $.$mol_assert_equal(new $.$mol_time_moment('2017-09-18').weekday, $.$mol_time_moment_weekdays.monday);
         },
+        'change offset'() {
+            $.$mol_assert_equal(new $.$mol_time_moment('2021-04-10 +03:00').toOffset('Z').toString(), '2021-04-09T21:00:00+00:00');
+        }
     });
 })($ || ($ = {}));
 //moment.test.js.map
@@ -28922,7 +28936,7 @@ var $;
             var unit = new $.$mol_unit_money_usd(5);
             $.$mol_assert_equal(unit.valueOf(), 5);
             $.$mol_assert_equal(unit * 2, 10);
-            $.$mol_assert_equal(unit + '', '5');
+            $.$mol_assert_equal(unit + '', '$5');
             $.$mol_assert_equal(`${unit}`, '$5');
             $.$mol_assert_equal(unit.toString(), '$5');
             $.$mol_assert_equal(String(unit), '$5');

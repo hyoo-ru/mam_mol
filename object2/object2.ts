@@ -37,8 +37,8 @@ namespace $ {
 		
 		destructor() { }
 		
-		[ Symbol.toPrimitive ]() {
-			return this.toString()
+		[ Symbol.toPrimitive ]( hint: string ) {
+			return hint === 'number' ? this.valueOf() : this.toString()
 		}
 		
 		toString() {
