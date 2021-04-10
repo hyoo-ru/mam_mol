@@ -26,8 +26,8 @@ namespace $ {
 	>
 
 	type same_sets = $mol_type_assert<
-		$mol_type_merge< { a: Set<1> }&{ b: Map<1,2> } > ,
-		{ a: Set<1>, b: Map<1,2> }
+		$mol_type_merge< { a: Set<1> }&{ b: History } > ,
+		{ a: Set<1>, b: History }
 	>
 
 }
