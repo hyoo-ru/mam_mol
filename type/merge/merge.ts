@@ -3,8 +3,8 @@ namespace $ {
 	/**
 	 * Reqursive converts intersection of records to record of intersections
 	 * 
-	 * 	// { a : 1 & 2 }
-	 * 	$mol_type_merge< { a : 1 } & { b : 2 } >
+	 * 	// { a : { x : 1 , y : 2 } }
+	 * 	$mol_type_merge< { a : { x : 1 } }&{ a : { y : 2 } } >
 	 */
 	export type $mol_type_merge< Intersection > =
 	
@@ -15,10 +15,22 @@ namespace $ {
 		? Intersection
 		
 		: Intersection extends object
-		? {
-			[ Key in keyof Intersection ] : $mol_type_merge< Intersection[ Key ] >
-		}
-		
+		? $mol_type_merge_object< Intersection > extends Intersection
+			? {
+				[ Key in keyof Intersection ]: $mol_type_merge< Intersection[ Key ] >
+			}
+			: Intersection
+			
 		: Intersection
-
+	
+	/**
+	 * Flat converts intersection of records to record of intersections
+	 * 
+	 * 	// { a: 1, b: 2 }
+	 * 	$mol_type_merge< { a: 1 } & { b: 2 } >
+	 */
+	 export type $mol_type_merge_object< Intersection > = {
+		[ Key in keyof Intersection ]: Intersection[ Key ]
+	}
+	
 }
