@@ -2111,3 +2111,5 @@ declare namespace $ {
         render(): void;
     }
 }
+
+export = $;

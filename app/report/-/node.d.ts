@@ -2103,3 +2103,5 @@ declare namespace $ {
         };
     };
 }
+
+export = $;

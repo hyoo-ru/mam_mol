@@ -6887,3 +6887,5 @@ declare namespace $.$$ {
 declare namespace $ {
     function $mol_tree2_to_string(this: $, tree: $mol_tree2): string;
 }
+
+export = $;

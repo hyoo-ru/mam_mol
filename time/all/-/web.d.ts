@@ -151,3 +151,5 @@ declare namespace $ {
         toString(): string;
     }
 }
+
+export = $;

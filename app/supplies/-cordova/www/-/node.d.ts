@@ -2891,3 +2891,5 @@ declare namespace $ {
         };
     };
 }
+
+export = $;

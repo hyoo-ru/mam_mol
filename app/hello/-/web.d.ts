@@ -1177,3 +1177,5 @@ declare namespace $ {
         };
     };
 }
+
+export = $;

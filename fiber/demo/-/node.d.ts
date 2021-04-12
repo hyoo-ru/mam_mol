@@ -366,3 +366,5 @@ declare namespace $ {
         render(): HTMLElement;
     }
 }
+
+export = $;

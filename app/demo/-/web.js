@@ -23827,7 +23827,7 @@ var $;
                     switch (typeof (type)) {
                         case 'string':
                             for (var child of item.kids) {
-                                if (!type || (child.type == type)) {
+                                if (child.type == type) {
                                     next.push(child);
                                 }
                             }
@@ -24619,7 +24619,7 @@ var $;
                 while (str.length > pos && str[pos] != '\n') {
                     pos++;
                 }
-                let next = new $.$mol_tree2('', str.slice(data_start + 1, pos), [], span.span(row, data_start - line_start + 1, pos - data_start - 1));
+                let next = new $.$mol_tree2('', str.slice(data_start + 1, pos), [], span.span(row, data_start - line_start + 2, pos - data_start - 1));
                 const parent_kids = parent.kids;
                 parent_kids.push(next);
                 parent = next;

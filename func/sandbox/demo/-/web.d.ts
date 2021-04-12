@@ -32,3 +32,5 @@ declare namespace $ {
         get eval(): (code: string) => () => any;
     }
 }
+
+export = $;

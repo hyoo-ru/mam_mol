@@ -35,3 +35,5 @@ declare namespace $ {
         }): void;
     }
 }
+
+export = $;

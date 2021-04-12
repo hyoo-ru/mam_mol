@@ -1043,7 +1043,7 @@ namespace $ {
 				}
 			)
 			
-			target.text( concater.content )
+			target.text( concater.content + '\nexport = $;' )
 			
 			this.logBundle( target , Date.now() - start )
 			

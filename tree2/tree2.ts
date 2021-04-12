@@ -204,7 +204,7 @@ namespace $ {
 						case 'string' :
 
 							for( var child of item.kids ) {
-								if( !type || ( child.type == type ) ) {
+								if( child.type == type ) {
 									next.push( child )
 								}
 							}
