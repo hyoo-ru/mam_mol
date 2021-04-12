@@ -216,6 +216,8 @@ namespace $ {
 				
 			}
 			
+			this.auto()
+			
 			return node
 		}
 
@@ -235,6 +237,8 @@ namespace $ {
 
 			return node
 		}
+		
+		auto() { }
 
 		render() {
 
