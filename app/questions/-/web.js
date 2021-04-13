@@ -4779,7 +4779,7 @@ var $;
             return next;
         }
         static dict(next) {
-            var href = this.href(next && this.make_link(next)).split(/#/)[1] || '';
+            var href = this.href(next && this.make_link(next)).split(/#!?/)[1] || '';
             var chunks = href.split(/[\/\?#&;]/g);
             var params = {};
             chunks.forEach(chunk => {
@@ -4816,7 +4816,7 @@ var $;
                 const val = next[key];
                 chunks.push([key].concat(val ? [val] : []).map(this.encode).join('='));
             }
-            return new URL('#' + chunks.join('/'), $.$mol_dom_context.location.href).toString();
+            return new URL('#!' + chunks.join('/'), $.$mol_dom_context.location.href).toString();
         }
         static encode(str) {
             return encodeURIComponent(str).replace(/\(/g, '%28').replace(/\)/g, '%29');

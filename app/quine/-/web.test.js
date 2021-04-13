@@ -2458,21 +2458,21 @@ var $;
     });
     $_1.$mol_test({
         'args as dictionary'($) {
-            $.$mol_state_arg.href('#foo=bar/xxx');
+            $.$mol_state_arg.href('#!foo=bar/xxx');
             $_1.$mol_assert_like($.$mol_state_arg.dict(), { foo: 'bar', xxx: '' });
             $.$mol_state_arg.dict({ foo: null, yyy: '', lol: '123' });
-            $_1.$mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#yyy/lol=123');
+            $_1.$mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!yyy/lol=123');
         },
         'one value from args'($) {
-            $.$mol_state_arg.href('#foo=bar/xxx');
+            $.$mol_state_arg.href('#!foo=bar/xxx');
             $_1.$mol_assert_equal($.$mol_state_arg.value('foo'), 'bar');
             $_1.$mol_assert_equal($.$mol_state_arg.value('xxx'), '');
             $.$mol_state_arg.value('foo', 'lol');
-            $_1.$mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#foo=lol/xxx');
+            $_1.$mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo=lol/xxx');
             $.$mol_state_arg.value('foo', '');
-            $_1.$mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#foo/xxx');
+            $_1.$mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo/xxx');
             $.$mol_state_arg.value('foo', null);
-            $_1.$mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#xxx');
+            $_1.$mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!xxx');
         },
         'nested args'($) {
             const base = new $.$mol_state_arg('nested.');
@@ -2482,11 +2482,11 @@ var $;
                 }
             }
             Nested.value = (key, next) => base.value(key, next);
-            $.$mol_state_arg.href('#foo=bar/nested.xxx=123');
+            $.$mol_state_arg.href('#!foo=bar/nested.xxx=123');
             $_1.$mol_assert_equal(Nested.value('foo'), null);
             $_1.$mol_assert_equal(Nested.value('xxx'), '123');
             Nested.value('foo', 'lol');
-            $_1.$mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#foo=bar/nested.xxx=123/nested.foo=lol');
+            $_1.$mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo=bar/nested.xxx=123/nested.foo=lol');
         },
     });
 })($ || ($ = {}));

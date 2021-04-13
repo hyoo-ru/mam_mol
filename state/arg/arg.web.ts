@@ -20,7 +20,7 @@ namespace $ {
 		
 		@ $mol_mem
 		static dict( next? : { [ key : string ] : string | null } ) {
-			var href = this.href( next && this.make_link( next ) ).split( /#/ )[1] || ''
+			var href = this.href( next && this.make_link( next ) ).split( /#!?/ )[1] || ''
 			var chunks = href.split( /[\/\?#&;]/g )
 			
 			var params : { [ key : string ] : string } = {}
@@ -71,7 +71,7 @@ namespace $ {
 				chunks.push( [ key ].concat( val ? [ val ] : [] ).map( this.encode ).join( '=' ) )
 			}
 			
-			return new URL( '#' + chunks.join( '/' ) , $mol_dom_context.location.href ).toString()
+			return new URL( '#!' + chunks.join( '/' ) , $mol_dom_context.location.href ).toString()
 		}
 
 		static encode( str : string ) {
