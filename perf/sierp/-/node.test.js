@@ -2125,7 +2125,7 @@ var $;
 var $;
 (function ($) {
     function $mol_dom_qname(name) {
-        return name.replace(/\W/, '').replace(/^(?=\d+)/, '_');
+        return name.replace(/\W/g, '').replace(/^(?=\d+)/, '_');
     }
     $.$mol_dom_qname = $mol_dom_qname;
 })($ || ($ = {}));

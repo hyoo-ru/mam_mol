@@ -1827,7 +1827,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_select extends $mol_pick {
-        dictionary(): {};
+        dictionary(val?: any): any;
         options(): readonly string[];
         value(val?: any): any;
         Option_row(id: any): $mol_button_minor;

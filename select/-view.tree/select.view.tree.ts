@@ -3,10 +3,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * dictionary *
+		 * dictionary?val *
 		 * ```
 		 */
-		dictionary() {
+		@ $mol_mem
+		dictionary(val?: any) {
+			if ( val !== undefined ) return val
 			return {
 			}
 		}

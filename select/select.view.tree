@@ -1,5 +1,5 @@
 $mol_select $mol_pick
-	dictionary *
+	dictionary?val *
 	options /string
 	value?val \
 	Option_row!id $mol_button_minor
