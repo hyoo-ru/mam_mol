@@ -38,7 +38,7 @@ element.view.value()
 
 ## Watching for changes
 
-Exxample:
+Example:
 
 ```typescript
 const watcher = $mol_atom2_autorun( ()=> {
