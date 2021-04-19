@@ -1,7 +1,7 @@
 [mol_cost] {
 	white-space: nowrap;
 	font-weight: normal;
-	display: inline-flex;
+	display: inline;
 }
 
 [mol_cost_main] {
@@ -10,6 +10,10 @@
 
 [mol_cost_prefix] {
 	font-weight: lighter;
+	display: inline;
+}
+
+[mol_cost_value] {
 	display: inline;
 }
 
