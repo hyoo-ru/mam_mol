@@ -2,6 +2,7 @@ include \/mol/type/assert
 include \/mol/type/append
 include \/mol/type/equals
 include \/mol/type/head
+include \/mol/type/int
 include \/mol/type/intersect
 include \/mol/type/keys/exclude
 include \/mol/type/keys/extract
