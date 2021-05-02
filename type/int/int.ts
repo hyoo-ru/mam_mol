@@ -48,8 +48,8 @@ namespace $ {
 
 	/** Number literal which is sum of two another */
 	export type $mol_type_int_plus<
-		Left extends number,
-		Right extends number,
+		Left extends number | string,
+		Right extends number | string,
 	> = $mol_type_int_down<
 		Plus<[
 			Parse<`${Left}`>,
@@ -63,8 +63,8 @@ namespace $ {
 
 	/** Number literal which is subtract of two another */
 	export type $mol_type_int_minus<
-		Left extends number,
-		Right extends number,
+		Left extends number | string,
+		Right extends number | string,
 	> = $mol_type_int_down<
 		Minus<[
 			Parse<`${Left}`>,
@@ -80,8 +80,8 @@ namespace $ {
 
 	/** Number literal which is multiply of two another */
 	export type $mol_type_int_mult<
-		Left extends number,
-		Right extends number,
+		Left extends number | string,
+		Right extends number | string,
 	> = $mol_type_int_down<
 		Mult<[
 			Parse<`${Left}`>,
@@ -101,8 +101,8 @@ namespace $ {
 
 	/** Number literal which is power one to another */
 	export type $mol_type_int_pow<
-		Left extends number,
-		Right extends number,
+		Left extends number | string,
+		Right extends number | string,
 	> = $mol_type_int_down<
 		IntPow<[
 			Parse<`${Left}`>,
@@ -122,8 +122,8 @@ namespace $ {
 
 	/** Unknown when number literals is ordered */
 	export type $mol_type_int_ordered<
-		Left extends number,
-		Right extends number,
+		Left extends number | string,
+		Right extends number | string,
 	> = $mol_type_int_minus< Right, Left > extends never
 		? never
 		: unknown
