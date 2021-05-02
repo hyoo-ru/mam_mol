@@ -4,17 +4,23 @@ Registers [View](..) as [Web Component](https://developer.mozilla.org/en-US/docs
 
 ## Register
 
+**`$mol_view_component( View: typeof $mol_view )`**
+
+Example:
+
 ```typescript
 $mol_view_component( $mol_select )
 ```
 
 ## Instantiate
 
+Example:
+
 ```html
 <mol-select dictionary='{ "xxx": "yyy" }'></mol-select>
 ```
 
-All attributes contains JSON, that will be parsed and pushed to property with same name. Like:
+All attributes contains JSON, that will be automatically parsed and pushed to property with same name. Like:
 
 ```typescript
 element.view.dictionary({ xxx: 'yyy' })
@@ -22,11 +28,28 @@ element.view.dictionary({ xxx: 'yyy' })
 
 ## Runtime access
 
+Example:
+
 ```typescript
 element.view.value()
 ```
 
 `view` property returns `$mol_view` instance that controls web component-content.
+
+## Watching for changes
+
+Example:
+
+```typescript
+const watcher = $mol_atom2_autorun( ()=> {
+    const current_value = element.view.value()
+    // do something for every new value
+} )
+
+// ...
+
+watcher.destructor()
+```
 
 ## Styling
 
