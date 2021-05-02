@@ -16,27 +16,27 @@ namespace $ {
 	type Digits = { '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9 }
 	type Digit<
 		Letter extends string
-	> = $mol_type_int_up<
+	> = Up<
 		Digits[ Extract< Letter, keyof Digits> ]
 	>
 
-	type Int = $mol_type_int_up< any, any >
+	type Int = Up< any, any >
 	type Pair = [ Int, Int ]
 
 	type Zero = []
 	type One = [0]
-	type Ten = $mol_type_int_up<10>
+	type Ten = Up<10>
 
-	type $mol_type_int_down<
-		Value extends $mol_type_int_up< any, any >,
+	type Down<
+		Value extends Up< any, any >,
 	> = Extract< Value, any[] >["length"]
 	
-	type $mol_type_int_up<
+	type Up<
 		Value extends number,
 		Res extends Int = Zero,
-	> = Value extends $mol_type_int_down<Res>
+	> = Value extends Down<Res>
 		? Res
-		: $mol_type_int_up< Value, Next< Res > >
+		: Up< Value, Next< Res > >
 
 	type Next<
 		Value extends Int
@@ -50,7 +50,7 @@ namespace $ {
 	export type $mol_type_int_plus<
 		Left extends number | string,
 		Right extends number | string,
-	> = $mol_type_int_down<
+	> = Down<
 		Plus<[
 			Parse<`${Left}`>,
 			Parse<`${Right}`>,
@@ -65,7 +65,7 @@ namespace $ {
 	export type $mol_type_int_minus<
 		Left extends number | string,
 		Right extends number | string,
-	> = $mol_type_int_down<
+	> = Down<
 		Minus<[
 			Parse<`${Left}`>,
 			Parse<`${Right}`>,
@@ -82,7 +82,7 @@ namespace $ {
 	export type $mol_type_int_mult<
 		Left extends number | string,
 		Right extends number | string,
-	> = $mol_type_int_down<
+	> = Down<
 		Mult<[
 			Parse<`${Left}`>,
 			Parse<`${Right}`>,
@@ -103,7 +103,7 @@ namespace $ {
 	export type $mol_type_int_pow<
 		Left extends number | string,
 		Right extends number | string,
-	> = $mol_type_int_down<
+	> = Down<
 		IntPow<[
 			Parse<`${Left}`>,
 			Parse<`${Right}`>,
