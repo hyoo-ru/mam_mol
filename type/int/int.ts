@@ -104,18 +104,18 @@ namespace $ {
 		Left extends number | string,
 		Right extends number | string,
 	> = Down<
-		IntPow<[
+		Pow<[
 			Parse<`${Left}`>,
 			Parse<`${Right}`>,
 		]>
 	>
 		
-	type IntPow<
+	type Pow<
 		Arg extends Pair,
 		Res extends Int = One,
 	> = Arg[1] extends Zero
 		? Res
-		: IntPow<
+		: Pow<
 			[ Arg[0], Prev< Arg[1] > ],
 			Mult<[ Res, Arg[0] ]>
 		>
