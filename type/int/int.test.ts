@@ -1,5 +1,7 @@
 namespace $ {
 
+	// type wrong_ints = $mol_type_int_plus< 'b40', '60b' >,
+
 	type plus = $mol_type_assert<
 		$mol_type_int_plus< 40, '60' >,
 		100

@@ -12,6 +12,11 @@ namespace $ {
 			]>
 		>
 		: Res
+		
+	type Check< Value > =
+		Parse<`${ Extract< Value, number | string > }`> extends never
+			? $mol_type_error< 'Is not Int' >
+			: number | string
 
 	type Digits = { '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9 }
 	type Digit<
@@ -48,8 +53,8 @@ namespace $ {
 
 	/** Number literal which is sum of two another */
 	export type $mol_type_int_plus<
-		Left extends number | string,
-		Right extends number | string,
+		Left extends Check< Left >,
+		Right extends Check< Right >,
 	> = Down<
 		Plus<[
 			Parse<`${Left}`>,
@@ -63,8 +68,8 @@ namespace $ {
 
 	/** Number literal which is subtract of two another */
 	export type $mol_type_int_minus<
-		Left extends number | string,
-		Right extends number | string,
+		Left extends Check< Left >,
+		Right extends Check< Right >,
 	> = Down<
 		Minus<[
 			Parse<`${Left}`>,
@@ -80,8 +85,8 @@ namespace $ {
 
 	/** Number literal which is multiply of two another */
 	export type $mol_type_int_mult<
-		Left extends number | string,
-		Right extends number | string,
+		Left extends Check< Left >,
+		Right extends Check< Right >,
 	> = Down<
 		Mult<[
 			Parse<`${Left}`>,
@@ -101,8 +106,8 @@ namespace $ {
 
 	/** Number literal which is power one to another */
 	export type $mol_type_int_pow<
-		Left extends number | string,
-		Right extends number | string,
+		Left extends Check< Left >,
+		Right extends Check< Right >,
 	> = Down<
 		Pow<[
 			Parse<`${Left}`>,
@@ -122,8 +127,8 @@ namespace $ {
 
 	/** Unknown when number literals is ordered */
 	export type $mol_type_int_ordered<
-		Left extends number | string,
-		Right extends number | string,
+		Left extends Check< Left >,
+		Right extends Check< Right >,
 	> = $mol_type_int_minus< Right, Left > extends never
 		? never
 		: unknown
