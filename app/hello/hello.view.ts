@@ -3,8 +3,9 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		greeting() {
+			super.greeting
 			let name = this.name()
-			return name && `Hello, ${name}!`
+			return name && `Hello, ${name}!` || ''
 		}
 		
 	}
