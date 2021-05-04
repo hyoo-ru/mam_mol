@@ -3088,8 +3088,9 @@ var $;
     (function ($$) {
         class $mol_app_hello extends $.$mol_app_hello {
             greeting() {
+                super.greeting;
                 let name = this.name();
-                return name && `Hello, ${name}!`;
+                return name && `Hello, ${name}!` || '';
             }
         }
         __decorate([
