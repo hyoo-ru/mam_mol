@@ -50,9 +50,11 @@ namespace $ {
 
 		@ $mol_mem_key
 		value( key: string, next?: any ) {
+			
+			const socket = this.socket()
 
 			$mol_fiber.run( ()=> {
-				this.socket().send(
+				socket.send(
 					JSON.stringify([
 						key,
 						... next === undefined ? [] : [ next ]
