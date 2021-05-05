@@ -49,18 +49,21 @@ namespace $ {
 		_handlers = new Map< string, ( a: any )=> void >()
 
 		@ $mol_mem_key
-		value( key: string, next?: any ) {
+		value( key: string, next?: any ): any {
 			
 			const socket = this.socket()
-
-			$mol_fiber.run( ()=> {
-				socket.send(
-					JSON.stringify([
-						key,
-						... next === undefined ? [] : [ next ]
-					])
-				)
-			})
+			
+			const request = ()=> socket.send(
+				JSON.stringify([
+					key,
+					... next === undefined ? [] : [ next ]
+				])
+			)
+				
+			const prev = $mol_mem_cached( ()=> this.value( key ) )
+			
+			if( prev === undefined ) $mol_fiber.run( request )
+			else request()
 
 			if( !next ) {
 				return $mol_fiber_sync( ()=> new Promise( done => {
@@ -68,7 +71,7 @@ namespace $ {
 				} ) )()
 			}
 
-			return next ?? null
+			return next ?? prev ?? null
 		}
 
 		active() {
