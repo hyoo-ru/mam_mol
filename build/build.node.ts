@@ -18,6 +18,7 @@ namespace $ {
 				this.$mol_log3_fail({
 					place: '$mol_build_start' , 
 					message: error.message,
+					trace: error.stack,
 				})
 				process.exit(1)
 			}
@@ -533,7 +534,9 @@ namespace $ {
 		@ $mol_mem_key
 		modDeps( { path , exclude } : { path : string , exclude? : string[] } ) {
 			const mod = $mol_file.absolute( path )
-			const depends : { [ index : string ] : number } = { '..' : Number.MIN_SAFE_INTEGER }
+			const depends : { [ index : string ] : number } = mod === this.root()
+				? {}
+				: { '..' : Number.MIN_SAFE_INTEGER }
 			for( var src of this.sources( { path , exclude } ) ) {
 				$mol_build_depsMerge( depends , this.srcDeps( src.path() ) )
 			}
@@ -665,7 +668,6 @@ namespace $ {
 					
 					//if( dep.type() === 'file' ) dep = dep.parent()
 					if( mod === dep ) return
-					if( dep === this.root() ) return
 					
 					const from = mod.relate( this.root() )
 					const to = dep.relate( this.root() )

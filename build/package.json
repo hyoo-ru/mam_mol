@@ -9,7 +9,6 @@
     "mam": "./bin/mam"
   },
   "dependencies": {
-    "colorette": "*",
-    "source-map-support": "*"
+    "colorette": "*"
   }
 }
