@@ -204,6 +204,7 @@ var $;
         (function () { }).constructor,
         (async function () { }).constructor,
         (function* () { }).constructor,
+        (function () { return __asyncGenerator(this, arguments, function* () { }); }).constructor,
         eval,
         setTimeout,
         setInterval,

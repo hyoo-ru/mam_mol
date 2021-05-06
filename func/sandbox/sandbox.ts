@@ -6,6 +6,7 @@ namespace $ {
 			( function() {} ).constructor ,
 			( async function() {} ).constructor ,
 			( function*() {} ).constructor ,
+			( async function*() {} ).constructor ,
 			eval ,
 			setTimeout ,
 			setInterval ,
