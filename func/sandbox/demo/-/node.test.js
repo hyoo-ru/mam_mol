@@ -11,7 +11,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var globalThis = globalThis || ( typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : this )
 var $ = ( typeof module === 'object' ) ? Object.setPrototypeOf( module['export'+'s'] , globalThis ) : globalThis
 $.$$ = $
-$.$mol = $  // deprecated
 
 ;
 "use strict";
@@ -20,7 +19,7 @@ var $;
 (function ($) {
 })($ || ($ = {}));
 module.exports = $;
-//mol.js.map
+//mam.js.map
 ;
 "use strict";
 var $;
@@ -100,10 +99,12 @@ var $;
 				Object.defineProperty( AsyncFunction.prototype , 'constructor' , { value : undefined } )
 				Object.defineProperty( GeneratorFunction.prototype , 'constructor' , { value : undefined } )
 				Object.defineProperty( AsyncGeneratorFunction.prototype , 'constructor' , { value : undefined } )
+				
+				delete Object.prototype.__proto__
 
 				for( const Class of [
 					String , Number , BigInt , Boolean , Array , Object , Promise , Symbol , RegExp , 
-					Error , RangeError , ReferenceError , SyntaxError , TypeError ,
+					Window, Error , RangeError , ReferenceError , SyntaxError , TypeError ,
 					Function , AsyncFunction , GeneratorFunction , AsyncGeneratorFunction
 				] ) {
 					Object.freeze( Class )

@@ -1,6 +1,5 @@
-require( "source-map-support" ).install(); var exports = void 0;
-;
-process.on( 'unhandledRejection' , up => { throw up } );
+"use strict";
+var exports = void 0;
 "use strict"
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13,12 +12,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var globalThis = globalThis || ( typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : this )
 var $ = ( typeof module === 'object' ) ? Object.setPrototypeOf( module['export'+'s'] , globalThis ) : globalThis
 $.$$ = $
-$.$mol = $  // deprecated
 
 ;
 
 var $node = $node || {}
-void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "../mol/" ) ] }; 
+void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "../" ) ] }; 
 ;
 "use strict";
 Error.stackTraceLimit = Infinity;
@@ -26,10 +24,10 @@ var $;
 (function ($) {
 })($ || ($ = {}));
 module.exports = $;
-//mol.js.map
+//mam.js.map
 ;
 
-$node[ "../mol/mol" ] = $node[ "../mol/mol.js" ] = module.exports }.call( {} , {} )
+$node[ "../mam" ] = $node[ "../mam.js" ] = module.exports }.call( {} , {} )
 ;
 "use strict";
 var $;
@@ -3973,6 +3971,7 @@ var $;
                 this.$mol_log3_fail({
                     place: '$mol_build_start',
                     message: error.message,
+                    trace: error.stack,
                 });
                 process.exit(1);
             }
@@ -4318,7 +4317,9 @@ var $;
         }
         modDeps({ path, exclude }) {
             const mod = $.$mol_file.absolute(path);
-            const depends = { '..': Number.MIN_SAFE_INTEGER };
+            const depends = mod === this.root()
+                ? {}
+                : { '..': Number.MIN_SAFE_INTEGER };
             for (var src of this.sources({ path, exclude })) {
                 $mol_build_depsMerge(depends, this.srcDeps(src.path()));
             }
@@ -4422,8 +4423,6 @@ var $;
                             dep = index;
                     }
                     if (mod === dep)
-                        return;
-                    if (dep === this.root())
                         return;
                     const from = mod.relate(this.root());
                     const to = dep.relate(this.root());
@@ -6419,12 +6418,12 @@ var $;
 var $;
 (function ($) {
     class $mol_view_tree_test_binding_right extends $.$mol_view {
+        outer_width(v) {
+            return this.Test().width(v);
+        }
         Test() {
             const obj = new this.$.$mol_view_tree_test_binding_right_test();
             return obj;
-        }
-        outer_width(v) {
-            return this.Test().width(v);
         }
     }
     __decorate([

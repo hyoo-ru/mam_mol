@@ -1,3 +1,4 @@
+"use strict";
 function require( path ){ return $node[ path ] };
 "use strict"
 
@@ -11,12 +12,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var globalThis = globalThis || ( typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : this )
 var $ = ( typeof module === 'object' ) ? Object.setPrototypeOf( module['export'+'s'] , globalThis ) : globalThis
 $.$$ = $
-$.$mol = $  // deprecated
 
 ;
 
 var $node = $node || {}
-void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "../mol/" ) ] }; 
+void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "../" ) ] }; 
 ;
 "use strict";
 Error.stackTraceLimit = Infinity;
@@ -24,9 +24,9 @@ var $;
 (function ($) {
 })($ || ($ = {}));
 module.exports = $;
-//mol.js.map
+//mam.js.map
 ;
 
-$node[ "../mol/mol" ] = $node[ "../mol/mol.js" ] = module.exports }.call( {} , {} )
+$node[ "../mam" ] = $node[ "../mam.js" ] = module.exports }.call( {} , {} )
 
 //# sourceMappingURL=web.js.map

@@ -1,6 +1,4 @@
-require( "source-map-support" ).install()
-;
-process.on( 'unhandledRejection' , up => { throw up } );
+"use strict";
 "use strict"
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -13,7 +11,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var globalThis = globalThis || ( typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : this )
 var $ = ( typeof module === 'object' ) ? Object.setPrototypeOf( module['export'+'s'] , globalThis ) : globalThis
 $.$$ = $
-$.$mol = $  // deprecated
 
 ;
 "use strict";
@@ -22,7 +19,7 @@ var $;
 (function ($) {
 })($ || ($ = {}));
 module.exports = $;
-//mol.js.map
+//mam.js.map
 ;
 "use strict";
 var $;
@@ -3966,6 +3963,7 @@ var $;
                 this.$mol_log3_fail({
                     place: '$mol_build_start',
                     message: error.message,
+                    trace: error.stack,
                 });
                 process.exit(1);
             }
@@ -4311,7 +4309,9 @@ var $;
         }
         modDeps({ path, exclude }) {
             const mod = $.$mol_file.absolute(path);
-            const depends = { '..': Number.MIN_SAFE_INTEGER };
+            const depends = mod === this.root()
+                ? {}
+                : { '..': Number.MIN_SAFE_INTEGER };
             for (var src of this.sources({ path, exclude })) {
                 $mol_build_depsMerge(depends, this.srcDeps(src.path()));
             }
@@ -4415,8 +4415,6 @@ var $;
                             dep = index;
                     }
                     if (mod === dep)
-                        return;
-                    if (dep === this.root())
                         return;
                     const from = mod.relate(this.root());
                     const to = dep.relate(this.root());
@@ -6412,12 +6410,12 @@ var $;
 var $;
 (function ($) {
     class $mol_view_tree_test_binding_right extends $.$mol_view {
+        outer_width(v) {
+            return this.Test().width(v);
+        }
         Test() {
             const obj = new this.$.$mol_view_tree_test_binding_right_test();
             return obj;
-        }
-        outer_width(v) {
-            return this.Test().width(v);
         }
     }
     __decorate([

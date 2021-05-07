@@ -1377,8 +1377,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_view_tree_test_binding_right extends $mol_view {
-        Test(): $mol_view_tree_test_binding_right_test;
         outer_width(v?: any): any;
+        Test(): $mol_view_tree_test_binding_right_test;
     }
     class $mol_view_tree_test_binding_right_test extends $mol_view {
         width(val?: any): any;
@@ -1452,3 +1452,5 @@ declare namespace $ {
 declare namespace $ {
     function $mol_view_tree2_ts_method(this: $, owner_parts: $mol_view_tree2_prop, body: $mol_tree2, types?: boolean): $mol_tree2[];
 }
+
+export = $;

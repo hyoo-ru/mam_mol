@@ -39,10 +39,12 @@ namespace $ {
 				Object.defineProperty( AsyncFunction.prototype , 'constructor' , { value : undefined } )
 				Object.defineProperty( GeneratorFunction.prototype , 'constructor' , { value : undefined } )
 				Object.defineProperty( AsyncGeneratorFunction.prototype , 'constructor' , { value : undefined } )
+				
+				delete Object.prototype.__proto__
 
 				for( const Class of [
 					String , Number , BigInt , Boolean , Array , Object , Promise , Symbol , RegExp , 
-					Error , RangeError , ReferenceError , SyntaxError , TypeError ,
+					Window, Error , RangeError , ReferenceError , SyntaxError , TypeError ,
 					Function , AsyncFunction , GeneratorFunction , AsyncGeneratorFunction
 				] ) {
 					Object.freeze( Class )
