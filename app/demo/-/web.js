@@ -7500,8 +7500,8 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    var $mol;
-    (function ($mol) {
+    var $$;
+    (function ($$) {
         class $mol_calendar extends $.$mol_calendar {
             month_moment() {
                 const moment = new $.$mol_time_moment(this.month_string() || undefined);
@@ -7620,8 +7620,8 @@ var $;
         __decorate([
             $.$mol_mem_key
         ], $mol_calendar.prototype, "day_selected", null);
-        $mol.$mol_calendar = $mol_calendar;
-    })($mol = $.$mol || ($.$mol = {}));
+        $$.$mol_calendar = $mol_calendar;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //calendar.view.js.map
 ;

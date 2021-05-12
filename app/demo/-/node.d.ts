@@ -2483,7 +2483,7 @@ declare namespace $ {
 declare namespace $ {
 }
 
-declare namespace $.$mol {
+declare namespace $.$$ {
     class $mol_calendar extends $.$mol_calendar {
         month_moment(): $mol_time_moment;
         title(): string;
@@ -2512,7 +2512,7 @@ declare namespace $ {
         sub(): readonly any[];
         month(): string;
         holiday(day: any): boolean;
-        Calendar(): $mol_calendar;
+        Calendar(): $$.$mol_calendar;
     }
 }
 
@@ -2532,7 +2532,7 @@ declare namespace $ {
         sub(): readonly any[];
         month(): string;
         selected(day: any): boolean;
-        Calendar(): $mol_calendar;
+        Calendar(): $$.$mol_calendar;
     }
 }
 
@@ -2548,7 +2548,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         today(): $mol_time_moment;
-        Calendar(): $mol_calendar;
+        Calendar(): $$.$mol_calendar;
     }
 }
 

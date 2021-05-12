@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
  	export class $mol_calendar extends $.$mol_calendar {
 
