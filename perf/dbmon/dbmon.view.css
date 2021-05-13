@@ -19,6 +19,10 @@
 	background: #f9f9f9;
 }
 
+[mol_perf_dbmon_query_count] {
+	width: 2.75rem;
+}
+
 [mol_perf_dbmon_query_count_label] {
 	border-radius: .25em;
 	color: #fff;
@@ -26,6 +30,7 @@
 	font-weight: 700;
 	line-height: 1;
 	padding: .25em .5em;
+	justify-content: flex-end;
 }
 
 [mol_perf_dbmon_query_count_label~="label-success"] {
