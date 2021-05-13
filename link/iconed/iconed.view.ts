@@ -8,7 +8,8 @@ namespace $.$$ {
 
 		@ $mol_mem
 		host() {
-			const url = new URL( this.uri() )
+			const base = this.$.$mol_state_arg.href()
+			const url = new URL( this.uri() , base )
 			return url.hostname
 		}
 		

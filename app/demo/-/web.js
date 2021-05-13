@@ -15397,7 +15397,8 @@ var $;
                 return `https://favicon.yandex.net/favicon/${this.host()}?color=0,0,0,0&size=32&stub=1`;
             }
             host() {
-                const url = new URL(this.uri());
+                const base = this.$.$mol_state_arg.href();
+                const url = new URL(this.uri(), base);
                 return url.hostname;
             }
             title() {
@@ -15496,6 +15497,7 @@ var $;
         }
         Break(id) {
             const obj = new this.$.$mol_paragraph();
+            obj.sub = () => [];
             return obj;
         }
         Text(id) {
@@ -15725,6 +15727,8 @@ var $;
                         return [];
                     case '#text':
                     case '#cdata-section':
+                        if (!node.textContent.trim())
+                            return [];
                         return [this.Text(node)];
                     case 'H1':
                     case 'H2':

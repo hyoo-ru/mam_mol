@@ -199,12 +199,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Break!id $mol_paragraph
+		 * Break!id $mol_paragraph sub /
 		 * ```
 		 */
 		@ $mol_mem_key
 		Break(id: any) {
 			const obj = new this.$.$mol_paragraph()
+			
+			obj.sub = () => [
+			] as readonly any[]
 			
 			return obj
 		}
