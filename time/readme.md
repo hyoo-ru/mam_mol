@@ -41,4 +41,5 @@ console.log( new Moment().toString() ) // logs current time
 
 # Articles
 
-- [$mol_time — работаем с датами и временем правильно](https://habrahabr.ru/post/263041/)
+- [$mol_time — работаем с датами и временем правильно](https://habhub.hyoo.ru/#!author=nin-jin/repo=HabHub/article=28)
+- [JavaScript нанобенчмарки и преждевременные тормоза](https://habhub.hyoo.ru/#!author=nin-jin/repo=HabHub/article=42)
