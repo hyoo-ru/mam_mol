@@ -33,6 +33,7 @@ namespace $.$$ {
 				
 				case '#text':
 				case '#cdata-section':
+					if( !node.textContent!.trim() ) return []
 					return [ this.Text( node ) ]
 				
 				case 'H1':

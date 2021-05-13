@@ -28,6 +28,7 @@ $mol_html_view $mol_list
 	Image!id $mol_image
 		uri <= image_uri!id \
 	Break!id $mol_paragraph
+		sub /
 	Text!id $mol_dimmer
 		needle <= highlight \
 		haystack <= text!id \
