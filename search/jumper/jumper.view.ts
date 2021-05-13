@@ -35,7 +35,7 @@ namespace $.$$ {
 
 		sub() {
 			return [
-				this.Suggest() ,
+				this.Query() ,
 				... ( this.query().length > 0 ) ? [
 // 					this.Clear(),
 					this.Index(),
