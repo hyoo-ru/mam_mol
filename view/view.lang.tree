@@ -1,0 +1,20 @@
+view kind
+	[] - comment
+	[: $ class
+	[] * struct
+	[: / struct
+	[] ^ operator
+	[] @ operator
+	[] <= operator
+	[] => operator
+	[] <=> operator
+	[] NaN number
+	[: + number
+	[: - number
+	[] true keyword
+	[] false keyword
+	[] null keyword
+	[] \
+		string
+	[: \
+		property
