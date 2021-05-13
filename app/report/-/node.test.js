@@ -5110,12 +5110,19 @@ var $;
         static char_code(code) {
             return new $mol_regexp(`\\u${code.toString(16).padStart(4, '0')}`);
         }
-        static byte_except(...forbidden) {
+        static char_range(from, to) {
+            return new $mol_regexp(`${$mol_regexp.char_code(from)}..${$mol_regexp.char_code(to)}`);
+        }
+        static char_only(...allowed) {
+            const regexp = allowed.map(f => $mol_regexp.from(f).source).join('');
+            return new $mol_regexp(`[${regexp}]`);
+        }
+        static char_except(...forbidden) {
             const regexp = forbidden.map(f => $mol_regexp.from(f).source).join('');
             return new $mol_regexp(`[^${regexp}]`);
         }
     }
-    $mol_regexp.byte = $mol_regexp.from(/[\s\S]/);
+    $mol_regexp.char_any = $mol_regexp.from(/[\s\S]/);
     $mol_regexp.digit = $mol_regexp.from(/\d/);
     $mol_regexp.letter = $mol_regexp.from(/\w/);
     $mol_regexp.space = $mol_regexp.from(/\s/);
@@ -9419,7 +9426,7 @@ var $;
             $.$mol_assert_equal(regexp.exec('x5')[0], 'x');
         },
         'byte except'() {
-            const { byte_except, letter, tab } = $.$mol_regexp;
+            const { char_except: byte_except, letter, tab } = $.$mol_regexp;
             const name = byte_except(letter, tab);
             $.$mol_assert_equal(name.exec('a'), null);
             $.$mol_assert_equal(name.exec('\t'), null);

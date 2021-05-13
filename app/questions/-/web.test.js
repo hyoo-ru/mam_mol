@@ -2368,7 +2368,7 @@ var $;
             $.$mol_assert_equal(regexp.exec('x5')[0], 'x');
         },
         'byte except'() {
-            const { byte_except, letter, tab } = $.$mol_regexp;
+            const { char_except: byte_except, letter, tab } = $.$mol_regexp;
             const name = byte_except(letter, tab);
             $.$mol_assert_equal(name.exec('a'), null);
             $.$mol_assert_equal(name.exec('\t'), null);

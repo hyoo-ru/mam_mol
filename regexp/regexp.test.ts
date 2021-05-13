@@ -283,7 +283,7 @@ namespace $ {
 
 		'byte except'() {
 
-			const { byte_except , letter, tab } = $mol_regexp
+			const { char_except: byte_except , letter, tab } = $mol_regexp
 
 			const name = byte_except( letter, tab )
 

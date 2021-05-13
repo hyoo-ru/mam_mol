@@ -8,11 +8,37 @@ namespace $ {
 		Result,
 	> extends $mol_wire_sub {
 		
-		protected result: Result | Error | Promise< Result > = undefined as any
+		public result: Result | Error | Promise< Result > = undefined as any
 		
 		host: Host
 		task: ( this : Host , ... args : Args )=> Result
 		args: Args
+		
+		static make<
+			Host,
+			Args extends readonly unknown[],
+			Result,
+		>(
+			host: Host,
+			task: ( this : Host , ... args : Args )=> Result,
+			... args: Args
+		): $mol_fiber2< Host, [ ... Args ], Result > {
+			
+			const existen = $mol_wire?.wire_next()
+			
+			reuse: if( existen ) {
+				
+				if(!( existen instanceof $mol_fiber2 )) break reuse
+			
+				if( existen.host !== host ) break reuse
+				if( existen.task !== task ) break reuse
+				if( !$mol_compare_deep( existen.args, args ) ) break reuse
+				
+				return existen				
+			}
+			
+			return new this( host, task, ... args )
+		}
 		
 		constructor(
 			host: Host,
@@ -27,15 +53,6 @@ namespace $ {
 			
 			this[ Symbol.toStringTag ] = String( host ) + '.' + $$.$mol_func_name( task )
 			
-			const existen = $mol_wire?.wire_next()
-			if( !existen ) return
-			if(!( existen instanceof $mol_fiber2 )) return
-			
-			if( existen.host !== host ) return
-			if( existen.task !== task ) return
-			if( !$mol_compare_deep( existen.args, this.args ) ) return
-			
-			return existen
 		}
 		
 		wire_absorb( quant: unknown ) {
@@ -103,6 +120,11 @@ namespace $ {
 
 		}
 		
+		push( next: Result | Error | Promise< Result > ) {
+			this.result = next
+			this.wire_emit()
+		}
+		
 		sync() {
 			
 			this.run()
@@ -153,7 +175,7 @@ namespace $ {
 		return {
 			... descr,
 			value: function( this: Host, ... args: Args ) {
-				const fiber = new $mol_fiber2( this ?? null as any, descr.value!, ... args )
+				const fiber = $mol_fiber2.make( this ?? null as any, descr.value!, ... args )
 				return fiber.sync() as Result
 			}
 		}
@@ -165,7 +187,7 @@ namespace $ {
 				const val = obj[ field ]
 				if( typeof val !== 'function' ) return val
 				return function( this: Host, ... args: any[] ) {
-					const fiber = new $mol_fiber2( obj, val, ... args )
+					const fiber = $mol_fiber2.make( obj, val, ... args )
 					return fiber.sync()
 				}
 			}
@@ -182,7 +204,7 @@ namespace $ {
 				const val = obj[ field ]
 				if( typeof val !== 'function' ) return val
 				return function( this: Host, ... args: any[] ) {
-					const fiber = new $mol_fiber2( obj, val, ... args )
+					const fiber = $mol_fiber2.make( obj, val, ... args )
 					return fiber.async()
 				}
 			}
@@ -193,6 +215,59 @@ namespace $ {
 					: ( ... args: Args )=> Promise< Res >
 				: Host[ key ]
 		}
+	}
+	
+	export function $mol_fiber2_chan<
+		Host extends object ,
+		Field extends keyof Host ,
+		Prop extends Extract< Host[ Field ] , ( next? : any )=> any >,
+	>(
+		proto : Host ,
+		name : Field ,
+		descr? : TypedPropertyDescriptor< Prop >
+	) {
+
+		type Input = $mol_type_param< Prop , 0 >
+		type Output = $mol_type_result< Prop >
+
+		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( proto , name )
+		const orig = descr!.value!
+		
+		const key = name instanceof Symbol ? name : Symbol( name as string | number )
+
+		;( proto as any )[ key ] = null
+
+		const cached = ( host : Host ): $mol_fiber2< Host, readonly Input[], Output > => {
+			
+			let cache = ( host as any )[ key ]
+			if( cache ) return cache
+
+			let cache2 = new $mol_fiber2( host, orig )
+			;( host as any )[ key ] = cache2
+
+			return cache2
+		}
+		
+		function value( this : Host , next? : Input ) {
+			
+			const cache = cached( this )
+			
+			if( next === undefined ) {
+				return cache.sync()
+			}  else {
+				const fiber = $mol_fiber2.make( this, orig, next )
+				const res = fiber.sync()
+				cache.push( res )
+				return res
+			}
+			
+		}
+		
+		const descr2 = { ... descr, value }
+		Reflect.defineProperty( proto, name, descr2 )
+		
+		return descr2
+
 	}
 	
 }

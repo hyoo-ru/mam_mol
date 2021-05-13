@@ -1739,8 +1739,10 @@ declare namespace $ {
         static forbid_after(source: $mol_regexp_source): $mol_regexp<Record<string, string>>;
         static from<Source extends $mol_regexp_source>(source: Source, { ignoreCase, multiline }?: Partial<Pick<RegExp, 'ignoreCase' | 'multiline'>>): $mol_regexp<$mol_regexp_groups<Source>>;
         static char_code(code: number): $mol_regexp<Record<string, string>>;
-        static byte_except(...forbidden: readonly [$mol_regexp_source, ...$mol_regexp_source[]]): $mol_regexp<never>;
-        static byte: $mol_regexp<{}>;
+        static char_range(from: number, to: number): $mol_regexp<never>;
+        static char_only(...allowed: readonly [$mol_regexp_source, ...$mol_regexp_source[]]): $mol_regexp<never>;
+        static char_except(...forbidden: readonly [$mol_regexp_source, ...$mol_regexp_source[]]): $mol_regexp<never>;
+        static char_any: $mol_regexp<{}>;
         static digit: $mol_regexp<{}>;
         static letter: $mol_regexp<{}>;
         static space: $mol_regexp<{}>;

@@ -234,17 +234,35 @@ namespace $ {
 
 		/** Makes regexp for char code */
 		static char_code( code : number ) {
-			return new $mol_regexp( `\\u${ code.toString(16).padStart( 4 , '0' ) }` )
+			return new $mol_regexp(
+				`\\u${ code.toString(16).padStart( 4 , '0' ) }`
+			)
 		}
 
-		static byte_except(
+		static char_range(
+			from: number,
+			to: number,
+		): $mol_regexp< never> {
+			return new $mol_regexp(
+				`${ $mol_regexp.char_code( from ) }..${ $mol_regexp.char_code( to ) }`
+			)
+		}
+
+		static char_only(
+			... allowed: readonly [ $mol_regexp_source, ... $mol_regexp_source[] ]
+		): $mol_regexp< never> {
+			const regexp = allowed.map( f => $mol_regexp.from( f ).source ).join('')
+			return new $mol_regexp( `[${ regexp }]` )
+		}
+
+		static char_except(
 			... forbidden: readonly [ $mol_regexp_source, ... $mol_regexp_source[] ]
 		): $mol_regexp< never> {
 			const regexp = forbidden.map( f => $mol_regexp.from( f ).source ).join('')
 			return new $mol_regexp( `[^${ regexp }]` )
 		}
 
-		static byte = $mol_regexp.from( /[\s\S]/ )
+		static char_any = $mol_regexp.from( /[\s\S]/ )
 		static digit = $mol_regexp.from( /\d/ )
 		static letter = $mol_regexp.from( /\w/ )
 		static space = $mol_regexp.from( /\s/ )
