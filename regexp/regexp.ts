@@ -239,6 +239,20 @@ namespace $ {
 			)
 		}
 
+		/** Makes regexp which includes only unicode category */
+		static unicode_only( ... category: $mol_unicode_category ) {
+			return new $mol_regexp(
+				`\\p{${ category.join( '=' ) }}`
+			)
+		}
+
+		/** Makes regexp which excludes unicode category */
+		static unicode_except( ... category: $mol_unicode_category ) {
+			return new $mol_regexp(
+				`\\P{${ category.join( '=' ) }}`
+			)
+		}
+
 		static char_range(
 			from: number,
 			to: number,
@@ -269,7 +283,7 @@ namespace $ {
 		static tab = $mol_regexp.from( /\t/ )
 		static slash_back = $mol_regexp.from( /\\/ )
 		static word_break = $mol_regexp.from( /\b/ )
-		static line_end = $mol_regexp.from( /\r?\n/ )
+		static line_end = $mol_regexp.from( /(?:\r?\n|\r)/ )
 		static begin = $mol_regexp.from( /^/ )
 		static end = $mol_regexp.from( /$/ )
 		static or = $mol_regexp.from( /|/ )
