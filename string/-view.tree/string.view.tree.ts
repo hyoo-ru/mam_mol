@@ -39,6 +39,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * auto / <= selection_watcher
+		 * ```
+		 */
+		auto() {
+			return [
+				this.selection_watcher()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * field *
 		 * 	^
 		 * 	disabled <= disabled
@@ -46,6 +57,8 @@ namespace $ {
 		 * 	placeholder <= hint
 		 * 	spellcheck <= spellcheck
 		 * 	autocomplete <= autocomplete_native
+		 * 	selectionEnd <= selection_end?val
+		 * 	selectionStart <= selection_start?val
 		 * ```
 		 */
 		field() {
@@ -55,7 +68,9 @@ namespace $ {
 				value: this.value_changed(),
 				placeholder: this.hint(),
 				spellcheck: this.spellcheck(),
-				autocomplete: this.autocomplete_native()
+				autocomplete: this.autocomplete_native(),
+				selectionEnd: this.selection_end(),
+				selectionStart: this.selection_start()
 			}
 		}
 		
@@ -100,6 +115,15 @@ namespace $ {
 			return [
 				this.Submit()
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * selection_watcher null
+		 * ```
+		 */
+		selection_watcher() {
+			return null as any
 		}
 		
 		/**
@@ -156,6 +180,28 @@ namespace $ {
 		 */
 		autocomplete_native() {
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * selection_end?val 0
+		 * ```
+		 */
+		@ $mol_mem
+		selection_end(val?: any) {
+			if ( val !== undefined ) return val
+			return 0
+		}
+		
+		/**
+		 * ```tree
+		 * selection_start?val 0
+		 * ```
+		 */
+		@ $mol_mem
+		selection_start(val?: any) {
+			if ( val !== undefined ) return val
+			return 0
 		}
 		
 		/**

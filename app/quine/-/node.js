@@ -4893,6 +4893,9 @@ var $;
 //intersect.js.map
 ;
 "use strict";
+//unicode.js.map
+;
+"use strict";
 var $;
 (function ($) {
     class $mol_regexp extends RegExp {
@@ -4998,6 +5001,12 @@ var $;
         static char_code(code) {
             return new $mol_regexp(`\\u${code.toString(16).padStart(4, '0')}`);
         }
+        static unicode_only(...category) {
+            return new $mol_regexp(`\\p{${category.join('=')}}`);
+        }
+        static unicode_except(...category) {
+            return new $mol_regexp(`\\P{${category.join('=')}}`);
+        }
         static char_range(from, to) {
             return new $mol_regexp(`${$mol_regexp.char_code(from)}..${$mol_regexp.char_code(to)}`);
         }
@@ -5017,7 +5026,7 @@ var $;
     $mol_regexp.tab = $mol_regexp.from(/\t/);
     $mol_regexp.slash_back = $mol_regexp.from(/\\/);
     $mol_regexp.word_break = $mol_regexp.from(/\b/);
-    $mol_regexp.line_end = $mol_regexp.from(/\r?\n/);
+    $mol_regexp.line_end = $mol_regexp.from(/(?:\r?\n|\r)/);
     $mol_regexp.begin = $mol_regexp.from(/^/);
     $mol_regexp.end = $mol_regexp.from(/$/);
     $mol_regexp.or = $mol_regexp.from(/|/);

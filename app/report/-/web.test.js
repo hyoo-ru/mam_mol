@@ -2433,11 +2433,21 @@ var $;
             $.$mol_assert_equal(regexp.exec('x5')[0], 'x');
         },
         'byte except'() {
-            const { char_except: byte_except, letter, tab } = $.$mol_regexp;
-            const name = byte_except(letter, tab);
+            const { char_except, letter, tab } = $.$mol_regexp;
+            const name = char_except(letter, tab);
             $.$mol_assert_equal(name.exec('a'), null);
             $.$mol_assert_equal(name.exec('\t'), null);
             $.$mol_assert_equal(name.exec('(')[0], '(');
+        },
+        'unicode only'() {
+            const { unicode_only } = $.$mol_regexp;
+            const name = $.$mol_regexp.from([
+                unicode_only('Script', 'Cyrillic'),
+                unicode_only('Hex_Digit'),
+            ]);
+            $.$mol_assert_equal(name.exec('FF'), null);
+            $.$mol_assert_equal(name.exec('ФG'), null);
+            $.$mol_assert_equal(name.exec('ФF')[0], 'ФF');
         },
     });
 })($ || ($ = {}));

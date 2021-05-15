@@ -4885,6 +4885,9 @@ var $;
 //intersect.js.map
 ;
 "use strict";
+//unicode.js.map
+;
+"use strict";
 var $;
 (function ($) {
     class $mol_regexp extends RegExp {
@@ -4990,6 +4993,12 @@ var $;
         static char_code(code) {
             return new $mol_regexp(`\\u${code.toString(16).padStart(4, '0')}`);
         }
+        static unicode_only(...category) {
+            return new $mol_regexp(`\\p{${category.join('=')}}`);
+        }
+        static unicode_except(...category) {
+            return new $mol_regexp(`\\P{${category.join('=')}}`);
+        }
         static char_range(from, to) {
             return new $mol_regexp(`${$mol_regexp.char_code(from)}..${$mol_regexp.char_code(to)}`);
         }
@@ -5009,7 +5018,7 @@ var $;
     $mol_regexp.tab = $mol_regexp.from(/\t/);
     $mol_regexp.slash_back = $mol_regexp.from(/\\/);
     $mol_regexp.word_break = $mol_regexp.from(/\b/);
-    $mol_regexp.line_end = $mol_regexp.from(/\r?\n/);
+    $mol_regexp.line_end = $mol_regexp.from(/(?:\r?\n|\r)/);
     $mol_regexp.begin = $mol_regexp.from(/^/);
     $mol_regexp.end = $mol_regexp.from(/$/);
     $mol_regexp.or = $mol_regexp.from(/|/);
@@ -9296,11 +9305,21 @@ var $;
             $.$mol_assert_equal(regexp.exec('x5')[0], 'x');
         },
         'byte except'() {
-            const { char_except: byte_except, letter, tab } = $.$mol_regexp;
-            const name = byte_except(letter, tab);
+            const { char_except, letter, tab } = $.$mol_regexp;
+            const name = char_except(letter, tab);
             $.$mol_assert_equal(name.exec('a'), null);
             $.$mol_assert_equal(name.exec('\t'), null);
             $.$mol_assert_equal(name.exec('(')[0], '(');
+        },
+        'unicode only'() {
+            const { unicode_only } = $.$mol_regexp;
+            const name = $.$mol_regexp.from([
+                unicode_only('Script', 'Cyrillic'),
+                unicode_only('Hex_Digit'),
+            ]);
+            $.$mol_assert_equal(name.exec('FF'), null);
+            $.$mol_assert_equal(name.exec('ФG'), null);
+            $.$mol_assert_equal(name.exec('ФF')[0], 'ФF');
         },
     });
 })($ || ($ = {}));

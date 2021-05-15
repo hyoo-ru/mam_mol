@@ -896,12 +896,15 @@ declare namespace $ {
         enabled(): boolean;
         minimal_height(): number;
         autocomplete(): boolean;
+        auto(): readonly any[];
         field(): {
             disabled: boolean;
             value: any;
             placeholder: string;
             spellcheck: boolean;
             autocomplete: string;
+            selectionEnd: any;
+            selectionStart: any;
         };
         attr(): {
             maxlength: number;
@@ -912,12 +915,15 @@ declare namespace $ {
             keydown: (event?: any) => any;
         };
         plugins(): readonly any[];
+        selection_watcher(): any;
         disabled(): boolean;
         value(val?: any): any;
         value_changed(val?: any): any;
         hint(): string;
         spellcheck(): boolean;
         autocomplete_native(): string;
+        selection_end(val?: any): any;
+        selection_start(val?: any): any;
         length_max(): number;
         type(val?: any): any;
         event_change(event?: any): any;
@@ -938,6 +944,21 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_dom_listener extends $mol_object {
+        _node: any;
+        _event: string;
+        _handler: (event: any) => any;
+        _config: boolean | {
+            passive: boolean;
+        };
+        constructor(_node: any, _event: string, _handler: (event: any) => any, _config?: boolean | {
+            passive: boolean;
+        });
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
 }
 
 declare namespace $.$$ {
@@ -945,6 +966,8 @@ declare namespace $.$$ {
         event_change(next?: Event): void;
         disabled(): boolean;
         autocomplete_native(): "on" | "off";
+        selection_watcher(): $mol_dom_listener;
+        selection_change(event: Event): void;
     }
 }
 
