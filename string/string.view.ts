@@ -5,7 +5,8 @@ namespace $.$$ {
 		
 		event_change( next? : Event ) {
 			if( !next ) return
-			this.value( ( next.target as HTMLInputElement ).value ) 
+			this.value( ( next.target as HTMLInputElement ).value )
+			this.selection_change( next )
 		}
 		
 		disabled() {
