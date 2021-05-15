@@ -1,6 +1,6 @@
 namespace $ {
 
-	function stat_convert(stat: ReturnType<typeof $node.fs.statSync>): $mol_file_stat {
+	function stat_convert(stat: NonNullable<ReturnType<typeof $node.fs.statSync>>): $mol_file_stat {
 		let type: $mol_file_type | undefined
 		if (stat.isDirectory()) type = 'dir'
 		if (stat.isFile()) type = 'file'
