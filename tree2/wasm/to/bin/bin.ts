@@ -58,13 +58,13 @@ namespace $ {
 				const name = type.kids[0]
 				types_mapping.set( name.type, types_mapping.size )
 				
-				const params = name.select( '=>', '' )
+				const params = name.select( '=>', null )
 				section.push( ... array_prolog( params ) )
 				for( const param of params.kids ) {
 					section.push( ... bytes( [ $mol_wasm_value_types[ param.type ] ], param.span ) )
 				}
 				
-				const results = name.select( '<=', '' )
+				const results = name.select( '<=', null )
 				section.push( ... array_prolog( results ) )
 				for( const result of results.kids ) {
 					section.push(
