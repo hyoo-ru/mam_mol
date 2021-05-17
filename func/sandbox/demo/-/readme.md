@@ -12,6 +12,11 @@ This is base **MAM** project.
 * **Build anyone module as standalone bundle**. You can develope thousand of modules in one project.
 * **Cordova project generation**. Simply add `config.xml` to module and `-cordova` dir with cordova project will have generated.
 
+# Cloud usage
+
+[![Gitpod Online Dev Workspace](https://img.shields.io/badge/Gitpod-Online--Dev--Workspace-blue?logo=gitpod)](https://gitpod.io/#https://github.com/hyoo-ru/mam)
+
+
 # Installation
 
 **Checkout this repo (~2s):**
