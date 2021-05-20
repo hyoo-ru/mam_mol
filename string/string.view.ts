@@ -28,8 +28,18 @@ namespace $.$$ {
 		
 		selection_change( event: Event ) {
 			const el = this.dom_node() as HTMLInputElement
-			this.selection_start( el.selectionStart )
-			this.selection_end( el.selectionEnd )
+			this.selection([
+				el.selectionStart,
+				el.selectionEnd,
+			])
+		}
+		
+		selection_start() {
+			return this.selection()[0]
+		}
+
+		selection_end() {
+			return this.selection()[1]
 		}
 
 	}
