@@ -114,6 +114,7 @@ $mol_string $mol_view
 	enabled true
 	minimal_height 40
 	autocomplete false
+	selection?val /number
 	auto /
 		<= selection_watcher null
 	field *
@@ -123,8 +124,8 @@ $mol_string $mol_view
 		placeholder <= hint \
 		spellcheck <= spellcheck false
 		autocomplete <= autocomplete_native \
-		selectionEnd <= selection_end?val 0
-		selectionStart <= selection_start?val 0
+		selectionEnd <= selection_end 0
+		selectionStart <= selection_start 0
 	attr *
 		^
 		maxlength <= length_max Infinity
@@ -257,7 +258,7 @@ $mol_number $mol_view
 	value?val NaN
 	sub /
 		<= String $mol_string
-			type \number
+			type \tel
 			value?val <=> value_string?val \
 			hint <= hint \
 			enabled <= string_enabled <= enabled true

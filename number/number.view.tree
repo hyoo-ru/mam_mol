@@ -4,7 +4,7 @@ $mol_number $mol_view
 	value?val NaN
 	sub /
 		<= String $mol_string
-			type \number
+			type \tel
 			value?val <=> value_string?val \
 			hint <= hint \
 			enabled <= string_enabled <= enabled true
