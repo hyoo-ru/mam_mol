@@ -13,6 +13,7 @@ $mol_textarea $mol_view
 			hint <= hint \
 			enabled <= enabled true
 			length_max <= length_max Infinity
+			selection?val <=> selection?val /number
 		<= View $mol_text_code
 			text <= value
 			render_visible_only false
