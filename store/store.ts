@@ -29,6 +29,13 @@ namespace $ {
 			return next!
 		}
 
+		@ $mol_mem_key
+		selection<
+			Key extends keyof Data
+		>( key: Key, next = [ 0, 0 ] ) {
+			return next
+		}
+			
 		sub<
 			Key extends keyof Data ,
 			Lens extends $mol_store< Data[ Key ] > = $mol_store< NonNullable<Data[ Key ]> >

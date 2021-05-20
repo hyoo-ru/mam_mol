@@ -74,6 +74,40 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
+		selection<
+			Key extends keyof $mol_store_shared_data
+		>( key: Key, next?: number[] ) {
+			
+			let [ prefix, ... tail ] = key.split( '/' )
+			let suffix = tail.join( '/' )
+			
+			if( !suffix ) {
+				suffix = prefix
+				prefix = ''
+			}
+			
+			const store = this.store( prefix )
+			const text = store.for( suffix ).to( 'text' )
+			
+			this.value( key )
+			
+			if( next ) {
+				this.selection_range( key, next.map( offset => text.point_by_offset( offset ) ) )
+				return next
+			} else {
+				return this.selection_range( key ).map( point => text.offset_by_point( point ) )
+			}
+			
+		}
+		
+		@ $mol_mem_key
+		selection_range<
+			Key extends keyof $mol_store_shared_data
+		>( key: Key, next?: number[][] ) {
+			return next ?? [ [0,0], [0,0] ]
+		}
+		
+		@ $mol_mem_key
 		sub<
 			Key extends string ,
 			Lens extends $mol_store< any > = $mol_store< $mol_store_shared_data >
@@ -85,11 +119,16 @@ namespace $ {
 				lens3.data_default = lens2!.data_default && lens2!.data_default[ prefix ] || lens3.data_default
 				return lens3
 			}
+			
 			lens2.value = ( suffix, next )=> {
 				return this.value( key ? key + '/' + suffix : String( suffix ), next )
 				?? ( lens2!.data_default && lens2!.data_default[ suffix ] )
 			}
-				
+			
+			lens2.selection = ( suffix, next )=> {
+				return this.selection( key ? key + '/' + suffix : String( suffix ), next )
+			}
+			
 			return lens2!
 		}
 		
