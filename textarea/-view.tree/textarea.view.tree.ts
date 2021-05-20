@@ -127,12 +127,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * selection?val /number
+		 * ```
+		 */
+		@ $mol_mem
+		selection(val?: any) {
+			if ( val !== undefined ) return val
+			return [
+			] as readonly number[]
+		}
+		
+		/**
+		 * ```tree
 		 * Edit $mol_string
 		 * 	dom_name \textarea
 		 * 	value?val <=> value?val
 		 * 	hint <= hint
 		 * 	enabled <= enabled
 		 * 	length_max <= length_max
+		 * 	selection?val <=> selection?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -144,6 +157,7 @@ namespace $ {
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.enabled()
 			obj.length_max = () => this.length_max()
+			obj.selection = (val?: any) => this.selection(val)
 			
 			return obj
 		}
