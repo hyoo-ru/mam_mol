@@ -11,4 +11,4 @@ Shared local-first offline-ready store with [CROWD](https://github.com/hyoo-ru/c
 | Crypto encryption   | Not yet                     | Single user
 | What is stored      | Actual state, O(state size) | Total history, O(changes count)
 | Long offline        | Supported                   | Rejected
-| Persistent storage  | Local storage               | IndexedDB, Cookies, etc
+| Persistent storage  | Local storage               | IndexedDB / Cookies / custom
