@@ -39,18 +39,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * selection?val /number
-		 * ```
-		 */
-		@ $mol_mem
-		selection(val?: any) {
-			if ( val !== undefined ) return val
-			return [
-			] as readonly number[]
-		}
-		
-		/**
-		 * ```tree
 		 * auto / <= selection_watcher
 		 * ```
 		 */
@@ -69,8 +57,8 @@ namespace $ {
 		 * 	placeholder <= hint
 		 * 	spellcheck <= spellcheck
 		 * 	autocomplete <= autocomplete_native
-		 * 	selectionEnd <= selection_end
-		 * 	selectionStart <= selection_start
+		 * 	selectionEnd <= selection_end?val
+		 * 	selectionStart <= selection_start?val
 		 * ```
 		 */
 		field() {
@@ -196,19 +184,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * selection_end 0
+		 * selection_end?val 0
 		 * ```
 		 */
-		selection_end() {
+		@ $mol_mem
+		selection_end(val?: any) {
+			if ( val !== undefined ) return val
 			return 0
 		}
 		
 		/**
 		 * ```tree
-		 * selection_start 0
+		 * selection_start?val 0
 		 * ```
 		 */
-		selection_start() {
+		@ $mol_mem
+		selection_start(val?: any) {
+			if ( val !== undefined ) return val
 			return 0
 		}
 		
