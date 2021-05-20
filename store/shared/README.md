@@ -1,6 +1,6 @@
 # $mol_store_shared
 
-Shared local-first offline-ready store with [CROWD](https://github.com/hyoo-ru/crowd.hyoo.ru) resulution.
+Shared local-first offline-ready store with [CROWD](https://github.com/hyoo-ru/crowd.hyoo.ru) conflict resulution.
 
 ## Comparison
 
