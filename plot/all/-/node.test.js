@@ -556,7 +556,13 @@ var $;
             });
         }
         make(config) {
-            return new $mol_tree(Object.assign({ baseUri: this.baseUri, row: this.row, col: this.col, length: this.length }, config));
+            return new $mol_tree({
+                baseUri: this.baseUri,
+                row: this.row,
+                col: this.col,
+                length: this.length,
+                ...config,
+            });
         }
         make_data(value, sub) {
             return this.make({ value, sub });
@@ -637,7 +643,7 @@ var $;
                     }
                     if (json instanceof Error) {
                         const { name, message, stack } = json;
-                        json = Object.assign(Object.assign({}, json), { name, message, stack });
+                        json = { ...json, name, message, stack };
                     }
                     var sub = [];
                     for (var key in json) {
@@ -833,7 +839,7 @@ var $;
     function $mol_log3_node_make(level, output, type, color) {
         return function $mol_log3_logger(event) {
             if (!event.time)
-                event = Object.assign({ time: new Date().toISOString() }, event);
+                event = { time: new Date().toISOString(), ...event };
             const tree = this.$mol_tree.fromJSON(event).clone({ type });
             let str = tree.toString();
             if (process[output].isTTY) {
@@ -1113,7 +1119,10 @@ var $;
     }
     $.$mol_dev_format_element = $mol_dev_format_element;
     function $mol_dev_format_span(style, ...content) {
-        return $mol_dev_format_element('span', Object.assign({ 'vertical-align': '8%' }, style), ...content);
+        return $mol_dev_format_element('span', {
+            'vertical-align': '8%',
+            ...style,
+        }, ...content);
     }
     $.$mol_dev_format_span = $mol_dev_format_span;
     $.$mol_dev_format_div = $mol_dev_format_element.bind(null, 'div');
@@ -1885,7 +1894,10 @@ var $;
                 return get_cache(this).put(next);
             });
         }
-        return Object.assign(Object.assign({}, descr || {}), { value: Object.assign(value, { orig }) });
+        return {
+            ...descr || {},
+            value: Object.assign(value, { orig })
+        };
     }
     $.$mol_mem = $mol_mem;
 })($ || ($ = {}));
@@ -2757,7 +2769,11 @@ var $;
             return "svg";
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { viewBox: this.view_box(), preserveAspectRatio: this.aspect() });
+            return {
+                ...super.attr(),
+                viewBox: this.view_box(),
+                preserveAspectRatio: this.aspect()
+            };
         }
         view_box() {
             return "0 0 100 100";
@@ -2887,10 +2903,16 @@ var $;
             return [];
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_plot_graph_type: this.type() });
+            return {
+                ...super.attr(),
+                mol_plot_graph_type: this.type()
+            };
         }
         style() {
-            return Object.assign(Object.assign({}, super.style()), { color: this.color() });
+            return {
+                ...super.style(),
+                color: this.color()
+            };
         }
         viewport() {
             const obj = new this.$.$mol_vector_2d(this.viewport_x(), this.viewport_y());
@@ -3030,10 +3052,16 @@ var $;
     $.$mol_plot_graph = $mol_plot_graph;
     class $mol_plot_graph_sample extends $.$mol_view {
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_plot_graph_type: this.type() });
+            return {
+                ...super.attr(),
+                mol_plot_graph_type: this.type()
+            };
         }
         style() {
-            return Object.assign(Object.assign({}, super.style()), { color: this.color() });
+            return {
+                ...super.style(),
+                color: this.color()
+            };
         }
         type() {
             return "solid";
@@ -3387,10 +3415,24 @@ var $;
             return null;
         }
         style() {
-            return Object.assign(Object.assign({}, super.style()), { "touch-action": "none", "overscroll-behavior": "none" });
+            return {
+                ...super.style(),
+                "touch-action": "none",
+                "overscroll-behavior": "none"
+            };
         }
         event() {
-            return Object.assign(Object.assign({}, super.event()), { touchstart: (event) => this.event_start(event), touchmove: (event) => this.event_move(event), touchend: (event) => this.event_end(event), mousedown: (event) => this.event_start(event), mousemove: (event) => this.event_move(event), mouseup: (event) => this.event_end(event), mouseleave: (event) => this.event_leave(event), wheel: (event) => this.event_wheel(event) });
+            return {
+                ...super.event(),
+                touchstart: (event) => this.event_start(event),
+                touchmove: (event) => this.event_move(event),
+                touchend: (event) => this.event_end(event),
+                mousedown: (event) => this.event_start(event),
+                mousemove: (event) => this.event_move(event),
+                mouseup: (event) => this.event_end(event),
+                mouseleave: (event) => this.event_leave(event),
+                wheel: (event) => this.event_wheel(event)
+            };
         }
         event_start(event) {
             if (event !== undefined)
@@ -3797,7 +3839,10 @@ var $;
             ];
         }
         event() {
-            return Object.assign(Object.assign({}, super.event()), { dblclick: (event) => this.reset(event) });
+            return {
+                ...super.event(),
+                dblclick: (event) => this.reset(event)
+            };
         }
         gap_x() {
             const obj = new this.$.$mol_vector_range(this.gap_left(), this.gap_right());
@@ -4132,7 +4177,10 @@ var $;
             return "path";
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { d: this.geometry() });
+            return {
+                ...super.attr(),
+                d: this.geometry()
+            };
         }
         geometry() {
             return "";
@@ -4280,7 +4328,10 @@ var $;
 (function ($) {
     class $mol_plot_bar extends $.$mol_plot_graph {
         style() {
-            return Object.assign(Object.assign({}, super.style()), { "stroke-width": this.stroke_width() });
+            return {
+                ...super.style(),
+                "stroke-width": this.stroke_width()
+            };
         }
         sub() {
             return [
@@ -4411,7 +4462,10 @@ var $;
             return Infinity;
         }
         style() {
-            return Object.assign(Object.assign({}, super.style()), { "stroke-width": this.diameter() });
+            return {
+                ...super.style(),
+                "stroke-width": this.diameter()
+            };
         }
         sub() {
             return [
@@ -4782,7 +4836,12 @@ var $;
             return [];
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { x: this.pos_x(), y: this.pos_y(), "text-anchor": this.align() });
+            return {
+                ...super.attr(),
+                x: this.pos_x(),
+                y: this.pos_y(),
+                "text-anchor": this.align()
+            };
         }
         sub() {
             return [
@@ -4842,7 +4901,13 @@ var $;
             return [];
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { width: this.width(), height: this.height(), x: this.pos_x(), y: this.pos_y() });
+            return {
+                ...super.attr(),
+                width: this.width(),
+                height: this.height(),
+                x: this.pos_x(),
+                y: this.pos_y()
+            };
         }
         width() {
             return "0";
@@ -5482,7 +5547,10 @@ var $;
     $.$mol_view_tree_test_attributes_super = $mol_view_tree_test_attributes_super;
     class $mol_view_tree_test_attributes extends $mol_view_tree_test_attributes_super {
         some() {
-            return Object.assign(Object.assign({}, super.some()), { a: 1 });
+            return {
+                ...super.some(),
+                a: 1
+            };
         }
     }
     $.$mol_view_tree_test_attributes = $mol_view_tree_test_attributes;

@@ -332,7 +332,13 @@ var $;
             });
         }
         make(config) {
-            return new $mol_tree(Object.assign({ baseUri: this.baseUri, row: this.row, col: this.col, length: this.length }, config));
+            return new $mol_tree({
+                baseUri: this.baseUri,
+                row: this.row,
+                col: this.col,
+                length: this.length,
+                ...config,
+            });
         }
         make_data(value, sub) {
             return this.make({ value, sub });
@@ -413,7 +419,7 @@ var $;
                     }
                     if (json instanceof Error) {
                         const { name, message, stack } = json;
-                        json = Object.assign(Object.assign({}, json), { name, message, stack });
+                        json = { ...json, name, message, stack };
                     }
                     var sub = [];
                     for (var key in json) {
@@ -609,7 +615,7 @@ var $;
     function $mol_log3_node_make(level, output, type, color) {
         return function $mol_log3_logger(event) {
             if (!event.time)
-                event = Object.assign({ time: new Date().toISOString() }, event);
+                event = { time: new Date().toISOString(), ...event };
             const tree = this.$mol_tree.fromJSON(event).clone({ type });
             let str = tree.toString();
             if (process[output].isTTY) {
@@ -889,7 +895,10 @@ var $;
     }
     $.$mol_dev_format_element = $mol_dev_format_element;
     function $mol_dev_format_span(style, ...content) {
-        return $mol_dev_format_element('span', Object.assign({ 'vertical-align': '8%' }, style), ...content);
+        return $mol_dev_format_element('span', {
+            'vertical-align': '8%',
+            ...style,
+        }, ...content);
     }
     $.$mol_dev_format_span = $mol_dev_format_span;
     $.$mol_dev_format_div = $mol_dev_format_element.bind(null, 'div');
@@ -1702,7 +1711,10 @@ var $;
                 return get_cache(this).put(next);
             });
         }
-        return Object.assign(Object.assign({}, descr || {}), { value: Object.assign(value, { orig }) });
+        return {
+            ...descr || {},
+            value: Object.assign(value, { orig })
+        };
     }
     $.$mol_mem = $mol_mem;
 })($ || ($ = {}));
@@ -2961,7 +2973,8 @@ var $;
         const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined;
         const owner_parts = this.$mol_view_tree2_prop_split(owner);
         const owner_call_parts = owner_parts.next
-            ? Object.assign(Object.assign({}, owner_parts), { next: undefined }) : owner_parts;
+            ? { ...owner_parts, next: undefined }
+            : owner_parts;
         return {
             default_value,
             owner_call_parts,
@@ -4177,14 +4190,22 @@ var $;
                 return null;
             const watchers = new Map();
             let run = () => { };
-            var host = $node.typescript.createWatchCompilerHost(paths, Object.assign(Object.assign({}, this.tsOptions()), { noEmit: true }), Object.assign(Object.assign({}, $node.typescript.sys), { writeFile: (path, data) => {
+            var host = $node.typescript.createWatchCompilerHost(paths, {
+                ...this.tsOptions(),
+                noEmit: true,
+            }, {
+                ...$node.typescript.sys,
+                writeFile: (path, data) => {
                     return $.$mol_fail(new Error('Write forbidden'));
-                }, setTimeout: (cb) => {
+                },
+                setTimeout: (cb) => {
                     run = cb;
-                }, watchFile: (path, cb) => {
+                },
+                watchFile: (path, cb) => {
                     watchers.set(path, cb);
                     return { close() { } };
-                } }), $node.typescript.createSemanticDiagnosticsBuilderProgram, (diagnostic) => {
+                },
+            }, $node.typescript.createSemanticDiagnosticsBuilderProgram, (diagnostic) => {
                 if (diagnostic.file) {
                     const error = new Error($node.typescript.formatDiagnostic(diagnostic, {
                         getCurrentDirectory: () => this.root().path(),
@@ -6373,7 +6394,10 @@ var $;
     $.$mol_view_tree_test_attributes_super = $mol_view_tree_test_attributes_super;
     class $mol_view_tree_test_attributes extends $mol_view_tree_test_attributes_super {
         some() {
-            return Object.assign(Object.assign({}, super.some()), { a: 1 });
+            return {
+                ...super.some(),
+                a: 1
+            };
         }
     }
     $.$mol_view_tree_test_attributes = $mol_view_tree_test_attributes;

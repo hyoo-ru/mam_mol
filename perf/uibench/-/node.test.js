@@ -556,7 +556,13 @@ var $;
             });
         }
         make(config) {
-            return new $mol_tree(Object.assign({ baseUri: this.baseUri, row: this.row, col: this.col, length: this.length }, config));
+            return new $mol_tree({
+                baseUri: this.baseUri,
+                row: this.row,
+                col: this.col,
+                length: this.length,
+                ...config,
+            });
         }
         make_data(value, sub) {
             return this.make({ value, sub });
@@ -637,7 +643,7 @@ var $;
                     }
                     if (json instanceof Error) {
                         const { name, message, stack } = json;
-                        json = Object.assign(Object.assign({}, json), { name, message, stack });
+                        json = { ...json, name, message, stack };
                     }
                     var sub = [];
                     for (var key in json) {
@@ -833,7 +839,7 @@ var $;
     function $mol_log3_node_make(level, output, type, color) {
         return function $mol_log3_logger(event) {
             if (!event.time)
-                event = Object.assign({ time: new Date().toISOString() }, event);
+                event = { time: new Date().toISOString(), ...event };
             const tree = this.$mol_tree.fromJSON(event).clone({ type });
             let str = tree.toString();
             if (process[output].isTTY) {
@@ -1113,7 +1119,10 @@ var $;
     }
     $.$mol_dev_format_element = $mol_dev_format_element;
     function $mol_dev_format_span(style, ...content) {
-        return $mol_dev_format_element('span', Object.assign({ 'vertical-align': '8%' }, style), ...content);
+        return $mol_dev_format_element('span', {
+            'vertical-align': '8%',
+            ...style,
+        }, ...content);
     }
     $.$mol_dev_format_span = $mol_dev_format_span;
     $.$mol_dev_format_div = $mol_dev_format_element.bind(null, 'div');
@@ -1885,7 +1894,10 @@ var $;
                 return get_cache(this).put(next);
             });
         }
-        return Object.assign(Object.assign({}, descr || {}), { value: Object.assign(value, { orig }) });
+        return {
+            ...descr || {},
+            value: Object.assign(value, { orig })
+        };
     }
     $.$mol_mem = $mol_mem;
 })($ || ($ = {}));
@@ -2948,10 +2960,18 @@ var $;
             return null;
         }
         field() {
-            return Object.assign(Object.assign({}, super.field()), { scrollTop: this.scroll_top(), scrollLeft: this.scroll_left(), tabIndex: this.tabindex() });
+            return {
+                ...super.field(),
+                scrollTop: this.scroll_top(),
+                scrollLeft: this.scroll_left(),
+                tabIndex: this.tabindex()
+            };
         }
         event() {
-            return Object.assign(Object.assign({}, super.event()), { scroll: (event) => this.event_scroll(event) });
+            return {
+                ...super.event(),
+                scroll: (event) => this.event_scroll(event)
+            };
         }
         scroll_top(val) {
             if (val !== undefined)
@@ -3424,7 +3444,10 @@ var $;
             return "table";
         }
         attr_static() {
-            return Object.assign(Object.assign({}, super.attr_static()), { class: "Table" });
+            return {
+                ...super.attr_static(),
+                class: "Table"
+            };
         }
         sub() {
             return this.rows();
@@ -3456,7 +3479,11 @@ var $;
             return "tr";
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { class: this.classes(), "data-id": this.id() });
+            return {
+                ...super.attr(),
+                class: this.classes(),
+                "data-id": this.id()
+            };
         }
         sub() {
             return [
@@ -3502,10 +3529,16 @@ var $;
             return "td";
         }
         attr_static() {
-            return Object.assign(Object.assign({}, super.attr_static()), { class: "TableCell" });
+            return {
+                ...super.attr_static(),
+                class: "TableCell"
+            };
         }
         event() {
-            return Object.assign(Object.assign({}, super.event()), { click: (val) => this.click(val) });
+            return {
+                ...super.event(),
+                click: (val) => this.click(val)
+            };
         }
         sub() {
             return [
@@ -3618,7 +3651,10 @@ var $;
             return null;
         }
         attr_static() {
-            return Object.assign(Object.assign({}, super.attr_static()), { class: "Anim" });
+            return {
+                ...super.attr_static(),
+                class: "Anim"
+            };
         }
         sub() {
             return this.boxes();
@@ -3644,10 +3680,18 @@ var $;
             return null;
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { class: "AnimBox", "data-id": this.id() });
+            return {
+                ...super.attr(),
+                class: "AnimBox",
+                "data-id": this.id()
+            };
         }
         style() {
-            return Object.assign(Object.assign({}, super.style()), { borderRadius: this.style_radius(), background: this.style_color() });
+            return {
+                ...super.style(),
+                borderRadius: this.style_radius(),
+                background: this.style_color()
+            };
         }
         id() {
             return "";
@@ -3713,7 +3757,10 @@ var $;
             return null;
         }
         attr_static() {
-            return Object.assign(Object.assign({}, super.attr_static()), { class: "Tree" });
+            return {
+                ...super.attr_static(),
+                class: "Tree"
+            };
         }
         sub() {
             return [
@@ -3741,7 +3788,10 @@ var $;
             return "ul";
         }
         attr_static() {
-            return Object.assign(Object.assign({}, super.attr_static()), { class: "TreeNode" });
+            return {
+                ...super.attr_static(),
+                class: "TreeNode"
+            };
         }
         Branch(index) {
             const obj = new this.$.$mol_perf_uibench_tree_branch();
@@ -3775,7 +3825,10 @@ var $;
             return "li";
         }
         attr_static() {
-            return Object.assign(Object.assign({}, super.attr_static()), { class: "TreeLeaf" });
+            return {
+                ...super.attr_static(),
+                class: "TreeLeaf"
+            };
         }
         sub() {
             return [
@@ -3839,7 +3892,10 @@ var $;
 (function ($) {
     class $mol_perf_uibench extends $.$mol_scroll {
         attr_static() {
-            return Object.assign(Object.assign({}, super.attr_static()), { class: "Main" });
+            return {
+                ...super.attr_static(),
+                class: "Main"
+            };
         }
         sub() {
             return [
@@ -3953,7 +4009,10 @@ var $;
     $.$mol_view_tree_test_attributes_super = $mol_view_tree_test_attributes_super;
     class $mol_view_tree_test_attributes extends $mol_view_tree_test_attributes_super {
         some() {
-            return Object.assign(Object.assign({}, super.some()), { a: 1 });
+            return {
+                ...super.some(),
+                a: 1
+            };
         }
     }
     $.$mol_view_tree_test_attributes = $mol_view_tree_test_attributes;
