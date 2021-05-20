@@ -1,0 +1,6 @@
+{
+	"$mol_locale_demo_title": "Демо локализации",
+	"$mol_locale_demo_i_have_foxes": "У меня %{count} лисица |||| У меня %{count} лисицы |||| У меня %{count} лисиц",
+	"$mol_locale_demo_total_rows": "Всего: %{item_rows} строка |||| Всего: %{item_rows} строки |||| Всего: %{item_rows} строк",
+	"$mol_locale_demo_row_text": "У меня %{index} лисица |||| У меня %{index} лисицы |||| У меня %{index} лисиц"
+}

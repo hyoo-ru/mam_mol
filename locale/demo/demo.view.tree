@@ -1,0 +1,35 @@
+$mol_locale_demo $mol_demo_small
+	title @ \Locale demo
+	sub /
+		<= Language $mol_select
+			Filter null
+			value?lang <=> language?lang \en
+			dictionary <= languages *
+				en \English
+				ru \Русский
+				cs \Chezh
+		<= header $mol_paragraph title @ \ %{title} :: %{language}
+		<= number $mol_number
+			value?val <=> count?val 26
+		<= exmaple $mol_view
+			style *
+				flex-direction \column
+			sub /
+				<= i_have_foxes @ \I have %{count} fox |||| I have %{count} foxes
+				<= sep_foxes $mol_local_demo_separator
+				<= List $mol_list
+					rows <= item_rows /$mol_locale_demo_row
+				<= sep_rows $mol_local_demo_separator
+				<= total_rows @ \Total: %{item_rows} row |||| Total: %{item_rows} rows
+	Row!index $mol_locale_demo_row
+		index?val <= identity!index 0
+
+$mol_locale_demo_row $mol_view
+	index?val 0
+	style *
+		^
+		background <= getColor \
+	sub /
+		<= text @ \I have %{index} fox |||| I have %{index} foxes
+
+$mol_local_demo_separator $mol_view

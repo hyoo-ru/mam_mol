@@ -10,12 +10,13 @@ namespace $ {
 		const operator = src.kids.length === 1 ? src.kids[0] : undefined
 		const type = operator?.type
 		const is_class = type && type[0] === '$'
+		const is_locale = type == '@'
 		const is_delegate = type === '<=' || type === '<=>'
 
 		let need_cache = false
 		if (is_delegate) need_cache = false
 		else if (next !== undefined) need_cache = true
-		else if (is_class) need_cache = true
+		else if (is_class || is_locale) need_cache = true
 
 		const sub: $mol_tree2[] = this.$mol_view_tree2_ts_comment_doc(src)
 

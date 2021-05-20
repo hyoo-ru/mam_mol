@@ -1,0 +1,6 @@
+{
+	"$mol_locale_demo_title": "Locale demo",
+	"$mol_locale_demo_i_have_foxes": "I have %{count} fox |||| I have %{count} foxes",
+	"$mol_locale_demo_total_rows": "Total: %{item_rows} row |||| Total: %{item_rows} rows",
+	"$mol_locale_demo_row_text": "I have %{index} fox |||| I have %{index} foxes"
+}

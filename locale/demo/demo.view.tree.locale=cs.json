@@ -1,0 +1,6 @@
+{
+	"$mol_locale_demo_title": "Ukázka lokalizace",
+	"$mol_locale_demo_i_have_foxes": "Mám %{count} lišku |||| Mám %{count} lišky |||| Mám %{count} lišek",
+	"$mol_locale_demo_total_rows": "Celkem: %{item_rows} řádek |||| Celkem: %{item_rows} řádky |||| Celkem: %{item_rows} řádků",
+	"$mol_locale_demo_row_text": "Mám %{index} lišku |||| Mám %{index} lišky |||| Mám %{index} lišek"
+}
