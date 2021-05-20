@@ -16768,7 +16768,9 @@ var $;
                 }
                 const precisionView = this.precision_view();
                 const value = next ? Number(next) : this.value();
-                if (value === null)
+                if (value === 0)
+                    return '0';
+                if (!value)
                     return '';
                 if (precisionView >= 1) {
                     return (value / precisionView).toFixed();
