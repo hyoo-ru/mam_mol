@@ -410,7 +410,7 @@ declare namespace $ {
     let $mol_mem_cached: typeof $mol_atom2_value;
     function $mol_mem_persist(): void;
     function $mol_mem<Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (next?: any) => any>>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Prop>): {
-        value: ((this: Host, next?: (Prop extends (...params: infer Params) => any ? Params[0] : Prop extends new (...params: infer Params2) => any ? Params2[0] : never) | undefined, force?: $mol_mem_force | undefined) => any) & {
+        value: ((this: Host, next?: $mol_type_param<Prop, 0> | undefined, force?: $mol_mem_force | undefined) => any) & {
             orig: Function;
         };
         enumerable?: boolean | undefined;
