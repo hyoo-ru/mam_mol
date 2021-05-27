@@ -8628,6 +8628,8 @@ var $;
     (function ($$) {
         class $mol_check extends $.$mol_check {
             click(next) {
+                if (next === null || next === void 0 ? void 0 : next.defaultPrevented)
+                    return;
                 this.checked(!this.checked());
                 if (next)
                     next.preventDefault();
