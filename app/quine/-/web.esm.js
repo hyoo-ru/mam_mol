@@ -3813,13 +3813,11 @@ var $;
                 return Math.max(0, skipped.reduce((sum, view) => sum + view.minimal_height(), 0));
             }
             sub_visible() {
-                var sub = this.sub();
-                const next = sub.slice(...this.view_window());
-                if (this.gap_before())
-                    next.unshift(this.Gap_before());
-                if (this.gap_after())
-                    next.push(this.Gap_after());
-                return next;
+                return [
+                    ...this.gap_before() ? [this.Gap_before()] : [],
+                    ...this.sub().slice(...this.view_window()),
+                    ...this.gap_after() ? [this.Gap_after()] : [],
+                ];
             }
             minimal_height() {
                 return this.sub().reduce((sum, view) => {
