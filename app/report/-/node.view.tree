@@ -95,7 +95,7 @@ $mol_check $mol_button_minor
 
 $mol_pick $mol_pop
 	Anchor <= Trigger $mol_check
-		enabled <= enabled true
+		enabled <= trigger_enabled true
 		checked?event <=> showed?event
 		sub <= trigger_content /$mol_view_content
 		hint <= hint \

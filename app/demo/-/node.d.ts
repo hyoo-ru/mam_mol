@@ -3730,7 +3730,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_pick extends $mol_pop {
         Anchor(): $$.$mol_check;
-        enabled(): boolean;
+        trigger_enabled(): boolean;
         trigger_content(): readonly $mol_view_content[];
         hint(): string;
         Trigger(): $$.$mol_check;

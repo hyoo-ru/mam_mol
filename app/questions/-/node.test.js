@@ -3458,6 +3458,7 @@ var $;
                     basis: per(100),
                 },
                 margin: 0,
+                padding: $.$mol_gap.block,
             },
             Foot: {
                 display: 'flex',

@@ -13085,7 +13085,7 @@ var $;
         Anchor() {
             return this.Trigger();
         }
-        enabled() {
+        trigger_enabled() {
             return true;
         }
         trigger_content() {
@@ -13096,7 +13096,7 @@ var $;
         }
         Trigger() {
             const obj = new this.$.$mol_check();
-            obj.enabled = () => this.enabled();
+            obj.enabled = () => this.trigger_enabled();
             obj.checked = (event) => this.showed(event);
             obj.sub = () => this.trigger_content();
             obj.hint = () => this.hint();
@@ -18850,6 +18850,7 @@ var $;
                     basis: per(100),
                 },
                 margin: 0,
+                padding: $.$mol_gap.block,
             },
             Foot: {
                 display: 'flex',

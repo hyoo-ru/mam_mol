@@ -12,10 +12,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * enabled true
+		 * trigger_enabled true
 		 * ```
 		 */
-		enabled() {
+		trigger_enabled() {
 			return true
 		}
 		
@@ -41,7 +41,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Trigger $mol_check
-		 * 	enabled <= enabled
+		 * 	enabled <= trigger_enabled
 		 * 	checked?event <=> showed?event
 		 * 	sub <= trigger_content
 		 * 	hint <= hint
@@ -51,7 +51,7 @@ namespace $ {
 		Trigger() {
 			const obj = new this.$.$mol_check()
 			
-			obj.enabled = () => this.enabled()
+			obj.enabled = () => this.trigger_enabled()
 			obj.checked = (event?: any) => this.showed(event)
 			obj.sub = () => this.trigger_content()
 			obj.hint = () => this.hint()
