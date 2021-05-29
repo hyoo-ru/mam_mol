@@ -29,6 +29,8 @@ namespace $.$$ {
 			return this.uri().replace( /#.*/, '' )
 		}
 		
+		_uri_sync: $mol_fiber | undefined
+		
 		@ $mol_mem
 		uri_listener() {
 			const node = this.dom_node()
@@ -39,6 +41,9 @@ namespace $.$$ {
 					if( event.source !== node.contentWindow ) return
 					if( !Array.isArray( event.data ) ) return
 					if( event.data[0] !== 'hashchange' ) return
+					this._uri_sync?.destructor()
+					this._uri_sync = $mol_fiber.current!
+					$mol_wait_timeout( 1000 )
 					this.uri( event.data[1] )
 				} )
 			)
