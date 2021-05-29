@@ -15450,6 +15450,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$mol_wait_timeout = $.$mol_fiber_sync((timeout) => new Promise(done => new $.$mol_after_timeout(timeout, () => done(null))));
+})($ || ($ = {}));
+//timeout.js.map
+;
+"use strict";
+var $;
+(function ($) {
     $.$mol_style_define($.$mol_frame, {
         border: {
             style: 'none',
@@ -15483,12 +15490,16 @@ var $;
             uri_listener() {
                 const node = this.dom_node();
                 return new $.$mol_dom_listener($.$mol_dom_context, 'message', $.$mol_fiber_root((event) => {
+                    var _a;
                     if (event.source !== node.contentWindow)
                         return;
                     if (!Array.isArray(event.data))
                         return;
                     if (event.data[0] !== 'hashchange')
                         return;
+                    (_a = this._uri_sync) === null || _a === void 0 ? void 0 : _a.destructor();
+                    this._uri_sync = $.$mol_fiber.current;
+                    $.$mol_wait_timeout(1000);
                     this.uri(event.data[1]);
                 }));
             }
@@ -19985,13 +19996,6 @@ var $;
     $.$mol_search_demo = $mol_search_demo;
 })($ || ($ = {}));
 //demo.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_wait_timeout = $.$mol_fiber_sync((timeout) => new Promise(done => new $.$mol_after_timeout(timeout, () => done(null))));
-})($ || ($ = {}));
-//timeout.js.map
 ;
 "use strict";
 var $;
