@@ -70,7 +70,7 @@ namespace $ {
 						input.data( $mol_html_encode( input.text() ) ),
 					]
 
-					const attrs = input.select( '@', '' ).hack( attrs_belt( '=' ) )
+					const attrs = input.select( '@', null ).hack( attrs_belt( '=' ) )
 					const content = input.hack( belt )
 					
 					return [
