@@ -38,11 +38,9 @@ namespace $ {
 		? {}
 		
 		: Source extends $mol_regexp2_source[]
-		? $mol_type_intersect<
-			{
-				[ key in Extract< keyof Source , number > ] : $mol_regexp2_groups< Source[ key ] >
-			}[ Extract< keyof Source , number > ]
-		>
+		? {
+			[ key in Extract< keyof Source , number > ] : $mol_regexp2_groups< Source[ key ] >
+		}[ Extract< keyof Source , number > ]
 		
 		: Source extends RegExp
 		? NonNullable< NonNullable< ReturnType< Source['exec'] > >[ 'groups' ] >
