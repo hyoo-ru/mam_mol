@@ -50,9 +50,21 @@ namespace $ {
 		: Source extends { readonly [ key in string ] : $mol_regexp2_source }
 		? {
 			[ key in keyof Source ] :
-				$mol_type_override< Record< Extract< keyof Source , string >, undefined >,
-				& { [ k in key ]: string }>
-				& $mol_regexp2_groups< Source[ key ] >
+				$mol_type_merge<
+					& $mol_type_override<
+						Record<
+							Extract< keyof Source , string >,
+							undefined 
+						>,
+						{
+							[ k in key ]:
+								Source[ key ] extends string
+									? Source[ key ]
+									: string
+						}
+					>
+					& $mol_regexp2_groups< Source[ key ] >
+				>
 		}[ keyof Source ]
 
 		: never
