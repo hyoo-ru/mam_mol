@@ -23,10 +23,11 @@ namespace $ {
 	};	
 
 	export type $mol_regexp2_source =
+	| number
 	| string
 	| RegExp
 	| { [ key in string ] : $mol_regexp2_source }
-	| readonly[ $mol_regexp2_source , ... $mol_regexp2_source[] ]
+	| readonly $mol_regexp2_source[]
 	
 	export type $mol_regexp2_strict<
 		Source extends $mol_regexp2_source
@@ -61,7 +62,10 @@ namespace $ {
 	
 	export type $mol_regexp2_groups< Source extends $mol_regexp2_source >
 	
-		= Source extends string
+		= Source extends number
+		? {}
+		
+		: Source extends string
 		? {}
 		
 		: Source extends [ $mol_regexp2_source, ... $mol_regexp2_source[] ]
@@ -111,7 +115,14 @@ namespace $ {
 		if( multiline ) flags += 'm'
 		if( ignoreCase ) flags += 'i'
 
-		if( typeof source === 'string' ) {
+		if( typeof source === 'number' ) {
+
+			const src = `\\u{${ source.toString(16).padStart( 4 , '0' ) }}`
+			const regexp = new RegExp( src , flags ) as $mol_regexp2_strict< Source >
+			regexp.generate = ()=> src
+			return regexp
+
+		} if( typeof source === 'string' ) {
 
 			const src = source.replace( /[.*+?^${}()|[\]\\]/g , '\\$&' )
 			const regexp = new RegExp( src , flags ) as $mol_regexp2_strict< Source >
@@ -230,11 +241,6 @@ namespace $ {
 		return regexp2 as $mol_regexp2_strict< Source >
 	}
 
-	/** Makes regexp for char code */
-	export function $mol_regexp2_char_code( code : number ) {
-		return new RegExp( `\\u{${ code.toString(16).padStart( 4 , '0' ) }}`, 'gsu' )
-	}
-
 	/** Makes regexp which includes only unicode category */
 	export function $mol_regexp2_unicode_only( ... category: $mol_unicode_category ) {
 		return new RegExp( `\\p{${ category.join( '=' ) }}`, 'gsu' )
@@ -251,14 +257,14 @@ namespace $ {
 		to: number,
 	) {
 		return new RegExp(
-			`${ $mol_regexp2_char_code( from ) }..${ $mol_regexp2_char_code( to ) }`,
+			`${ $mol_regexp2( from ).source }-${ $mol_regexp2( to ).source }`,
 			'gsu'
 		)
 	}
 
 	/** Makes regexp which includes only characters */
 	export function $mol_regexp2_char_only(
-		... allowed: readonly [ $mol_regexp2_source, ... $mol_regexp2_source[] ]
+		... allowed: readonly $mol_regexp2_source[]
 	) {
 		return new RegExp( `[${ $mol_regexp2( allowed ).source }]`, 'gsu' )
 	}

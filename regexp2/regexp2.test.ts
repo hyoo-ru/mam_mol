@@ -11,7 +11,7 @@ namespace $ {
 
 		'char code' () {
 
-			const space = $mol_regexp2_char_code( 32 )
+			const space = $mol_regexp2( 32 )
 			$mol_assert_equal( ' '.match( space )![0] , ' ' )
 
 		},
@@ -309,6 +309,58 @@ namespace $ {
 			$mol_assert_equal( animals.generate({ fox: true }) , '#^&' )
 			$mol_assert_equal( animals.generate({ dog: '$' }) , '#^$' )
 
+		},
+		
+		'complex example'() {
+			
+			const atom_char = $mol_regexp2_char_only(
+				$mol_regexp2_latin_only,
+				"!#$%&'*+/=?^`{|}~-",
+			)
+
+			const atom = $mol_regexp2_repeat_greedy( atom_char, 1 )
+			const dot_atom = [ atom, $mol_regexp2_repeat_greedy([ '.', atom ]) ]
+			
+			const name_letter = $mol_regexp2_char_only(
+				$mol_regexp2_char_range( 0x01, 0x08 ),
+				0x0b, 0x0c,
+				$mol_regexp2_char_range( 0x0e, 0x1f ),
+				0x21,
+				$mol_regexp2_char_range( 0x23, 0x5b ),
+				$mol_regexp2_char_range( 0x5d, 0x7f ),
+			)
+			
+			const quoted_pair = [
+				$mol_regexp2_slash_back,
+				$mol_regexp2_char_only(
+					$mol_regexp2_char_range( 0x01, 0x09 ),
+					0x0b, 0x0c,
+					$mol_regexp2_char_range( 0x0e, 0x7f ),
+				)
+			]
+			
+			const name = $mol_regexp2_repeat_greedy({ name_letter, quoted_pair })
+			const quoted_name = [ '"', {name}, '"' ]
+			
+			const local_part = { dot_atom, quoted_name }
+			const domain = dot_atom
+			
+			const mail = $mol_regexp2([
+				$mol_regexp2_begin,
+				local_part, '@', {domain},
+				$mol_regexp2_end,
+			])
+			
+			$mol_assert_equal( 'foo..bar@hyoo.ru'.matchAll( mail ).next().value, undefined )
+			$mol_assert_equal( 'foo..bar"@hyoo.ru'.matchAll( mail ).next().value, undefined )
+			
+			$mol_assert_equal( 'foo.bar@hyoo.ru'.matchAll( mail ).next().value!.groups.dot_atom, 'foo.bar' )
+			$mol_assert_equal( 'foo.bar@hyoo.ru'.matchAll( mail ).next().value!.groups.domain, 'hyoo.ru' )
+			$mol_assert_equal( '"foo..bar"@hyoo.ru'.matchAll( mail ).next().value!.groups.name, 'foo..bar' )
+			
+			$mol_assert_equal( mail.generate({ dot_atom: 'foo.bar', domain: 'hyoo.ru' }) , 'foo.bar@hyoo.ru' )
+			$mol_assert_equal( mail.generate({ name: 'foo..bar', domain: 'hyoo.ru' }) , '"foo..bar"@hyoo.ru' )
+			
 		},
 
 	})
