@@ -8,17 +8,6 @@ namespace $ {
 	export type $mol_type_append<
 		Tuple extends readonly any[] ,
 		Item extends any
-	> = (
-		( head : any , ... tail : Tuple ) => void
-	) extends (
-		( ... extended : infer Extended ) => void
-	)
-		? {
-			[ Index in keyof Extended ] :
-				Index extends keyof Tuple
-					? Tuple[ Index ]
-					: Item
-		}
-		: never
+	> = [ ... Tuple, Item ]
 
 }
