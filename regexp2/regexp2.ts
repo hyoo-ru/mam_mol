@@ -1,15 +1,15 @@
 interface String {
 	
-	match< REMA extends RegExpMatchArray >(
-		matcher: {
-			[Symbol.match](string: string): REMA | null
-		}
-	): REMA | null
+	match< RE extends RegExp >(regexp: RE): NonNullable<
+		ReturnType<
+			RE[ typeof Symbol.match ]
+		>
+	>
 	
     matchAll< RE extends RegExp >(regexp: RE): IterableIterator<
 		NonNullable<
 			ReturnType<
-				RE['exec']
+				RE[ typeof Symbol.match ]
 			>
 		>
 	>
@@ -39,17 +39,20 @@ namespace $ {
 			>
 			| null
 		
-		exec( string: string ):
-			| $mol_type_override<
-				RegExpExecArray,
-				{ groups: $mol_regexp2_groups< Source > }
-			>
-			| null
+		// useless because default overload matches first 
+		// exec( string: string ):
+		// 	| $mol_type_override<
+		// 		RegExpExecArray,
+		// 		{ groups: $mol_regexp2_groups< Source > }
+		// 	>
+		// 	| null
 		
 		generate(
 			params: Groups_to_params<
-				$mol_type_intersect<
-					$mol_regexp2_groups< Source >
+				$mol_type_merge< 
+					$mol_type_intersect<
+						$mol_regexp2_groups< Source >
+					>
 				>
 			>
 		): string | null
@@ -61,13 +64,15 @@ namespace $ {
 		= Source extends string
 		? {}
 		
-		: Source extends $mol_regexp2_source[]
-		? {
+		: Source extends [ $mol_regexp2_source, ... $mol_regexp2_source[] ]
+		? $mol_type_intersect< {
 			[ key in Extract< keyof Source , number > ] : $mol_regexp2_groups< Source[ key ] >
-		}[ Extract< keyof Source , number > ]
+		}[ Extract< keyof Source , number > ] >
 		
 		: Source extends RegExp
-		? Exclude< NonNullable< NonNullable< ReturnType< Source['exec'] > >[ 'groups' ] >, Record< string, string > >
+		? Record< string, string > extends NonNullable< NonNullable< ReturnType< Source['exec'] > >[ 'groups' ] >
+			? {}
+			: NonNullable< NonNullable< ReturnType< Source['exec'] > >[ 'groups' ] >
 		
 		: Source extends { readonly [ key in string ] : $mol_regexp2_source }
 		? {
@@ -76,10 +81,10 @@ namespace $ {
 					& $mol_type_override<
 						Record<
 							Extract< keyof Source , string >,
-							undefined 
+							undefined | string
 						>,
 						{
-							[ k in key ]:
+							readonly [ k in key ]:
 								Source[ key ] extends string
 									? Source[ key ]
 									: string
