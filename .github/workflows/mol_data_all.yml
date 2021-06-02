@@ -2,12 +2,14 @@ name: mol_data_all
 
 on:
   workflow_dispatch:
-  # push:
-  #  branches: 
-  #  - master
-  # pull_request:
-  # schedule:
-  # - cron: "0 7 * * *"
+  push:
+    branches: 
+    - master
+	paths:
+    - './mol/data/**'
+  pull_request:
+  schedule:
+  - cron: "0 7 * * *"
 
 jobs:
   build:
