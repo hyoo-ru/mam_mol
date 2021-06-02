@@ -5,6 +5,9 @@ on:
   push:
     branches: 
       - master
+    paths:
+      - '.github/workflows/mol_data_all.yml'
+      - 'data/**'
   pull_request:
   schedule:
     - cron: "0 7 * * *"
