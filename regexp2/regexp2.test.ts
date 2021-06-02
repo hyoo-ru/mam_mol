@@ -147,8 +147,8 @@ namespace $ {
 			$mol_assert_like(
 				parse_groups( sexism, 'male female' ),
 				[
-					{ male : 'male' , female : undefined },
-					{ male : undefined , female : 'female' },
+					{ male : 'male' , female : undefined as any },
+					{ male : undefined as any, female : 'female' },
 				]
 			)
 
@@ -168,8 +168,8 @@ namespace $ {
 			$mol_assert_like(
 				parse_groups( sexism, 'male female' ),
 				[
-					{ Sex : 'male' , male : 'male' , female : undefined },
-					{ Sex : 'female' , male : undefined , female : 'female' },
+					{ Sex : 'male' , male : 'male' , female : undefined as any },
+					{ Sex : 'female' , male : undefined as any, female : 'female' },
 				]
 			)
 

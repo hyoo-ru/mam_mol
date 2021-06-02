@@ -17,6 +17,10 @@ interface String {
 }
 
 namespace $ {
+	
+	type Groups_to_params<T> = {
+		[P in keyof T]?: T[P] | boolean | undefined;
+	};	
 
 	export type $mol_regexp2_source =
 	| string
@@ -42,7 +46,13 @@ namespace $ {
 			>
 			| null
 		
-		generate( params: $mol_regexp2_groups< Source > ): string | null
+		generate(
+			params: Groups_to_params<
+				$mol_type_intersect<
+					$mol_regexp2_groups< Source >
+				>
+			>
+		): string | null
 		
 	} >
 	
@@ -57,7 +67,7 @@ namespace $ {
 		}[ Extract< keyof Source , number > ]
 		
 		: Source extends RegExp
-		? NonNullable< NonNullable< ReturnType< Source['exec'] > >[ 'groups' ] >
+		? Exclude< NonNullable< NonNullable< ReturnType< Source['exec'] > >[ 'groups' ] >, Record< string, string > >
 		
 		: Source extends { readonly [ key in string ] : $mol_regexp2_source }
 		? {
