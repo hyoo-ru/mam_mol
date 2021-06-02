@@ -157,9 +157,11 @@ namespace $ {
 				for( let option in source ) {
 					if( params[ option as any ] ) {
 						if( typeof params[ option as any ] !== 'boolean' ) return String( params[ option as any ] )
-						const res = $mol_regexp2( source[ option as any ] ).generate( params )
-						if( res ) return res
+					} else {
+						if( typeof source[ option as any ] !== 'object' ) continue
 					}
+					const res = $mol_regexp2( source[ option as any ] ).generate( params )
+					if( res ) return res
 				}
 				return null
 			}
