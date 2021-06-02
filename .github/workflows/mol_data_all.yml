@@ -6,7 +6,7 @@ on:
     branches: 
     - master
     paths:
-    - 'mol/data/**'
+    - 'data/**'
   pull_request:
   schedule:
   - cron: "0 7 * * *"
