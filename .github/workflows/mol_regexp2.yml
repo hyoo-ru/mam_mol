@@ -1,4 +1,4 @@
-name: mol_strict
+name: mol_regexp2
 
 on:
   workflow_dispatch:
@@ -6,8 +6,8 @@ on:
     branches: 
       - master
     paths:
-      - '.github/workflows/mol_strict.yml'
-      - 'strict/**'
+      - '.github/workflows/mol_regexp2.yml'
+      - 'regexp2/**'
   pull_request:
   schedule:
     - cron: "0 7 * * *"
@@ -19,14 +19,17 @@ jobs:
     
     steps:
     
+    - name: Environment Printer
+      uses: managedkaos/print-env@v1.0
+    
     - name: Build apps
       uses: hyoo-ru/mam_build@master2
       with:
         package: mol
-        modules: strict
+        modules: regexp2
     
     - uses: JS-DevTools/npm-publish@v1
       if: ${{ github.ref == 'refs/heads/master' }}
       with:
         token: ${{ secrets.NPM_AUTH_TOKEN }}
-        package: ./mol/strict/-/package.json
+        package: ./mol/regexp2/-/package.json

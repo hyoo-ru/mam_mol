@@ -1,12 +1,16 @@
 name: mol_regexp
 
 on:
+  workflow_dispatch:
   push:
     branches: 
-    - master
+      - master
+    paths:
+      - '.github/workflows/mol_regexp.yml'
+      - 'regexp/**'
   pull_request:
   schedule:
-  - cron: "0 7 * * *"
+    - cron: "0 7 * * *"
 
 jobs:
   build:
@@ -24,8 +28,8 @@ jobs:
         package: mol
         modules: regexp
     
-#    - uses: JS-DevTools/npm-publish@v1
-#      if: github.ref == 'refs/heads/master'
-#      with:
-#        token: ${{ secrets.NPM_AUTH_TOKEN }}
-#        package: ./mol/regexp/-/package.json
+    - uses: JS-DevTools/npm-publish@v1
+      if: ${{ github.ref == 'refs/heads/master' }}
+      with:
+        token: ${{ secrets.NPM_AUTH_TOKEN }}
+        package: ./mol/regexp/-/package.json
