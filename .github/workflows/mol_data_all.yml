@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
   push:
     branches: 
-    - master
+      - master
     paths:
-    - 'data/**'
+      - 'data/**'
   pull_request:
   schedule:
-  - cron: "0 7 * * *"
+    - cron: "0 7 * * *"
 
 jobs:
   build:
