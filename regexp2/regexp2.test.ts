@@ -1,9 +1,5 @@
 namespace $ {
 
-	function parse_groups< RE extends $mol_regexp2_strict<any> >( regexp: RE, str: string ) {
-		return [ ... str.matchAll( regexp ) ].map( r => ({ ... r.groups }) )
-	} 
-
 	$mol_test({
 
 		'escape' () {
@@ -129,7 +125,7 @@ namespace $ {
 
 			const regexp = $mol_regexp2({ dog : '@' })
 
-			$mol_assert_like( parse_groups( regexp, '#@' ) , [{ dog : '@' }] )
+			$mol_assert_like( [ ... '#@'.matchAll( regexp ) ].map( f => ({ ... f.groups }) ) , [{ dog : '@' }] )
 
 		},
 
@@ -142,10 +138,10 @@ namespace $ {
 
 			const sexism = $mol_regexp2( Sex )
 			
-			$mol_assert_like( parse_groups( sexism, '' ), [] )
+			$mol_assert_like( [ ... ''.matchAll( sexism ) ].map( f => ({ ... f.groups }) ), [] )
 			
 			$mol_assert_like(
-				parse_groups( sexism, 'male female' ),
+				[ ... 'male female'.matchAll( sexism ) ].map( f => ({ ... f.groups }) ),
 				[
 					{ male : 'male' , female : undefined as any },
 					{ male : undefined as any, female : 'female' },
@@ -163,10 +159,10 @@ namespace $ {
 
 			const sexism = $mol_regexp2({ Sex })
 
-			$mol_assert_like( parse_groups( sexism, '' ), [] )
+			$mol_assert_like( [ ... ''.matchAll( sexism ) ].map( f => ({ ... f.groups }) ), [] )
 			
 			$mol_assert_like(
-				parse_groups( sexism, 'male female' ),
+				[ ... 'male female'.matchAll( sexism ) ].map( f => ({ ... f.groups }) ),
 				[
 					{ Sex : 'male' , male : 'male' , female : undefined as any },
 					{ Sex : 'female' , male : undefined as any, female : 'female' },
@@ -188,7 +184,7 @@ namespace $ {
 				$mol_regexp2_end,
 			])
 			
-			const found = parse_groups( regexp, '2020-01-02' )
+			const found = [ ... '2020-01-02'.matchAll( regexp ) ].map( f => ({ ... f.groups }) )
 
 			$mol_assert_like( found , [{
 				year : '2020' ,
@@ -212,7 +208,7 @@ namespace $ {
 				$mol_regexp2_end,
 			])
 			
-			const found = parse_groups( regexp, '2020-01-02' )
+			const found = [ ... '2020-01-02'.matchAll( regexp ) ].map( f => ({ ... f.groups }) )
 
 			$mol_assert_like( found , [{
 				date : '2020-01' ,
@@ -227,7 +223,7 @@ namespace $ {
 
 			const regexp = $mol_regexp2({ $mol_regexp2_decimal_only })
 
-			$mol_assert_like( parse_groups( regexp, '123' ) , [
+			$mol_assert_like( [ ... '123'.matchAll( regexp ) ].map( f => ({ ... f.groups }) ) , [
 				{ $mol_regexp2_decimal_only : '1' },
 				{ $mol_regexp2_decimal_only : '2' },
 				{ $mol_regexp2_decimal_only : '3' },
