@@ -106,7 +106,7 @@ namespace $ {
 		} else if( source instanceof RegExp ) {
 
 			const regexp = source as any
-			regexp.inject = ()=> ''
+			regexp.generate = ()=> ''
 			return regexp
 
 		} if( Array.isArray( source ) ) {
