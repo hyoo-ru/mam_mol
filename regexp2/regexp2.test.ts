@@ -1,6 +1,6 @@
 namespace $ {
 
-	function parse_groups< RE extends $mol_regexp2_strict<{}> >( regexp: RE, str: string ) {
+	function parse_groups< RE extends $mol_regexp2_strict<any> >( regexp: RE, str: string ) {
 		return [ ... str.matchAll( regexp ) ].map( r => ({ ... r.groups }) )
 	} 
 
@@ -16,7 +16,7 @@ namespace $ {
 		'char code' () {
 
 			const space = $mol_regexp2_char_code( 32 )
-			$mol_assert_equal( space.exec(' ')![0] , ' ' )
+			$mol_assert_equal( ' '.match( space )![0] , ' ' )
 
 		},
 
@@ -28,14 +28,14 @@ namespace $ {
 				4,
 			)
 			
-			$mol_assert_equal( year.exec( '#2020#' )![0] , '2020' )
+			$mol_assert_equal( '#2020#'.match( year )![0] , '2020' )
 
 		},
 
 		'greedy repeat'() {
 
-			$mol_assert_equal( $mol_regexp2_repeat( $mol_regexp2_latin_only ).exec( 'abc' )![0] , '' )
-			$mol_assert_equal( $mol_regexp2_repeat_greedy( $mol_regexp2_latin_only ).exec( 'abc' )![0] , 'abc' )
+			$mol_assert_equal( 'abc'.match( $mol_regexp2_repeat( $mol_regexp2_latin_only ) )![0] , '' )
+			$mol_assert_equal( 'abc'.match( $mol_regexp2_repeat_greedy( $mol_regexp2_latin_only ) )![0] , 'abc' )
 
 		},
 
@@ -43,10 +43,10 @@ namespace $ {
 
 			const year = $mol_regexp2_repeat_greedy( $mol_regexp2_decimal_only , 2 , 4 )
 			
-			$mol_assert_equal( year.exec( '#2#' ) , null )
-			$mol_assert_equal( year.exec( '#20#' )![0] , '20' )
-			$mol_assert_equal( year.exec( '#2020#' )![0] , '2020' )
-			$mol_assert_equal( year.exec( '#20201#' )![0] , '2020' )
+			$mol_assert_equal( '#2#'.match( year ) , null )
+			$mol_assert_equal( '#20#'.match( year )![0] , '20' )
+			$mol_assert_equal( '#2020#'.match( year )![0] , '2020' )
+			$mol_assert_equal( '#20201#'.match( year )![0] , '2020' )
 
 		},
 
@@ -54,20 +54,10 @@ namespace $ {
 
 			const name = $mol_regexp2_repeat_greedy( $mol_regexp2_latin_only , 2 )
 
-			$mol_assert_equal( name.exec( '##' ) , null )
-			$mol_assert_equal( name.exec( '#a#' ) , null )
-			$mol_assert_equal( name.exec( '#ab#' )![0] , 'ab' )
-			$mol_assert_equal( name.exec( '#abc#' )![0] , 'abc' )
-
-		},
-
-		'optional'() {
-
-			const name = $mol_regexp2_optional( $mol_regexp2_latin_only )
-
-			$mol_assert_equal( name.exec( '' )![0] , '' )
-			$mol_assert_equal( name.exec( 'a' )![0] , 'a' )
-			$mol_assert_equal( name.exec( 'ab' )![0] , 'a' )
+			$mol_assert_equal( '##'.match( name ) , null )
+			$mol_assert_equal( '#a#'.match( name ) , null )
+			$mol_assert_equal( '#ab#'.match( name )![0], 'ab' )
+			$mol_assert_equal( '#abc#'.match( name )![0] , 'abc' )
 
 		},
 
@@ -94,8 +84,8 @@ namespace $ {
 			const xxx = $mol_regexp2( 'x' , { ignoreCase : true } )
 
 			$mol_assert_like( xxx.flags , 'gisu' )
-			$mol_assert_like( xxx.exec( 'xx' )![0] , 'x' )
-			$mol_assert_like( xxx.exec( 'XX' )![0] , 'X' )
+			$mol_assert_like( 'xx'.match( xxx )![0] , 'x' )
+			$mol_assert_like( 'XX'.match( xxx )![0] , 'X' )
 
 		},
 
@@ -103,7 +93,7 @@ namespace $ {
 
 			const xxx = $mol_regexp2( [ 'x' , $mol_regexp2_end ] , { multiline : true } )
 
-			$mol_assert_like( xxx.exec( 'x\ny' )![0] , 'x' )
+			$mol_assert_like( 'x\ny'.match( xxx )![0] , 'x' )
 			$mol_assert_like( xxx.flags , 'gmsu' )
 
 		},
@@ -121,8 +111,17 @@ namespace $ {
 				$mol_regexp2_end
 			] , { ignoreCase : true } )
 
-			$mol_assert_like( date.exec( '2020-01-02' )![0] , '2020-01-02' )
+			$mol_assert_like( '2020-01-02'.match( date )![0] , '2020-01-02' )
 			$mol_assert_like( date.ignoreCase , true )
+
+		},
+
+		'optional'() {
+
+			const name = $mol_regexp2([ 'A', ['4'] ])
+
+			$mol_assert_equal( 'AB'.match( name )![0] , 'A' )
+			$mol_assert_equal( 'A4'.match( name )![0] , 'A4' )
 
 		},
 
@@ -243,8 +242,8 @@ namespace $ {
 				$mol_regexp2_force_after( '.' ),
 			])
 
-			$mol_assert_equal( regexp.exec( 'x.' )![0] , 'x' )
-			$mol_assert_equal( regexp.exec( 'x5' ) , null )
+			$mol_assert_equal( 'x.'.match( regexp )![0] , 'x' )
+			$mol_assert_equal( 'x5'.match( regexp ) , null )
 
 		},
 
@@ -255,8 +254,8 @@ namespace $ {
 				$mol_regexp2_forbid_after( '.' ),
 			])
 
-			$mol_assert_equal( regexp.exec( 'x.' ) , null )
-			$mol_assert_equal( regexp.exec( 'x5' )![0] , 'x' )
+			$mol_assert_equal( 'x.'.match( regexp ) , null )
+			$mol_assert_equal( 'x5'.match( regexp )![0] , 'x' )
 
 		},
 
@@ -267,9 +266,9 @@ namespace $ {
 				$mol_regexp2_tab,
 			)
 
-			$mol_assert_equal( name.exec( 'a' ) , null )
-			$mol_assert_equal( name.exec( '\t' ) , null )
-			$mol_assert_equal( name.exec( '(' )![0] , '(' )
+			$mol_assert_equal( 'a'.match( name ) , null )
+			$mol_assert_equal( '\t'.match( name ) , null )
+			$mol_assert_equal( '('.match( name )![0] , '(' )
 
 		},
 
@@ -280,9 +279,24 @@ namespace $ {
 				$mol_regexp2_unicode_only( 'Hex_Digit' ),
 			])
 
-			$mol_assert_equal( name.exec( 'FF' ) , null )
-			$mol_assert_equal( name.exec( 'ФG' ) , null )
-			$mol_assert_equal( name.exec( 'ФF' )![0] , 'ФF' )
+			$mol_assert_equal( 'FF'.match( name ) , null )
+			$mol_assert_equal( 'ФG'.match( name ) , null )
+			$mol_assert_equal( 'ФF'.match( name )![0] , 'ФF' )
+
+		},
+		
+		'generate by optional with inner group'() {
+
+			const animals = $mol_regexp2([
+				$mol_regexp2_begin,
+				'#', [ '^', { dog : '@' } ],
+				$mol_regexp2_end,
+			])
+
+			$mol_assert_equal( animals.generate({}) , '#' )
+			$mol_assert_equal( animals.generate({ dog: false }) , '#' )
+			$mol_assert_equal( animals.generate({ dog: true }) , '#^@' )
+			$mol_assert_equal( animals.generate({ dog: '$' }) , '#^$' )
 
 		},
 
