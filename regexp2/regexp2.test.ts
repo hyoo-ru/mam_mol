@@ -296,6 +296,21 @@ namespace $ {
 
 		},
 
+		'generate by optional with inner group with variants'() {
+
+			const animals = $mol_regexp2([
+				$mol_regexp2_begin,
+				'#', [ '^', { animal: { dog : '@', fox: '&' } } ],
+				$mol_regexp2_end,
+			])
+
+			$mol_assert_equal( animals.generate({}) , '#' )
+			$mol_assert_equal( animals.generate({ dog: true }) , '#^@' )
+			$mol_assert_equal( animals.generate({ fox: true }) , '#^&' )
+			$mol_assert_equal( animals.generate({ dog: '$' }) , '#^$' )
+
+		},
+
 	})
 
 }
