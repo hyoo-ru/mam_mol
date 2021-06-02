@@ -25,7 +25,7 @@ jobs:
         modules: data/all
     
     - uses: JS-DevTools/npm-publish@v1
-      if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'workflow_dispatch' }}
+      if: ${{ github.ref == 'refs/heads/master' }}
       with:
         token: ${{ secrets.NPM_AUTH_TOKEN }}
         package: ./mol/data/all/-/package.json
