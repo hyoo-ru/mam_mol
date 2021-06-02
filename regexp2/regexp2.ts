@@ -21,15 +21,29 @@ namespace $ {
 	export type $mol_regexp2_source =
 	| string
 	| RegExp
-	| $mol_regexp2_strict<{}>
 	| { [ key in string ] : $mol_regexp2_source }
 	| readonly[ $mol_regexp2_source , ... $mol_regexp2_source[] ]
 	
 	export type $mol_regexp2_strict<
-		Groups extends Record< string, string >
+		Source extends $mol_regexp2_source
 	> = $mol_type_merge< RegExp & {
-		[ Symbol.match ]( string: string ): $mol_type_override< RegExpMatchArray, { groups: Groups } > | null
-		exec( string: string ): $mol_type_override< RegExpExecArray, { groups: Groups } > | null
+		
+		[ Symbol.match ]( string: string ):
+			| $mol_type_override<
+				RegExpMatchArray,
+				{ groups: $mol_regexp2_groups< Source > }
+			>
+			| null
+		
+		exec( string: string ):
+			| $mol_type_override<
+				RegExpExecArray,
+				{ groups: $mol_regexp2_groups< Source > }
+			>
+			| null
+		
+		generate( params: $mol_regexp2_groups< Source > ): string | null
+		
 	} >
 	
 	export type $mol_regexp2_groups< Source extends $mol_regexp2_source >
@@ -76,7 +90,7 @@ namespace $ {
 			ignoreCase : false ,
 			multiline : false ,
 		} ,
-	): $mol_regexp2_strict< $mol_regexp2_groups< Source > > {
+	): $mol_regexp2_strict< Source > {
 
 		let flags = 'gsu'
 		if( multiline ) flags += 'm'
@@ -84,18 +98,38 @@ namespace $ {
 
 		if( typeof source === 'string' ) {
 
-			const regexp = new RegExp( source.replace( /[.*+?^${}()|[\]\\]/g , '\\$&' ) , flags )
-			return regexp as $mol_regexp2_strict< $mol_regexp2_groups< Source > >
+			const src = source.replace( /[.*+?^${}()|[\]\\]/g , '\\$&' )
+			const regexp = new RegExp( src , flags ) as $mol_regexp2_strict< Source >
+			regexp.generate = ()=> source
+			return regexp
 
 		} else if( source instanceof RegExp ) {
 
-			return source as any
+			const regexp = source as any
+			regexp.inject = ()=> ''
+			return regexp
 
 		} if( Array.isArray( source ) ) {
 
-			const chunks = source.map( src => $mol_regexp2( src ).source )
-			const regexp = new RegExp( chunks.join( '' ) , flags ) as any
-			return regexp as $mol_regexp2_strict< $mol_regexp2_groups< Source > >
+			const patterns = source.map( src => Array.isArray( src )
+				? $mol_regexp2_optional( src as any )
+				: $mol_regexp2( src )
+			)
+			
+			const chunks = patterns.map( pattern => pattern.source )
+			const regexp = new RegExp( chunks.join( '' ) , flags ) as $mol_regexp2_strict< Source >
+			
+			regexp.generate = params => {
+				let res = ''
+				for( const pattern of patterns ) {
+					let sub = pattern.generate( params )
+					if( sub === null ) return ''
+					res += sub
+				}
+				return res
+			}
+			
+			return regexp
 	
 		} else {
 
@@ -103,8 +137,18 @@ namespace $ {
 				`(?<${ name }>${ $mol_regexp2( source[ name ] ).source })`
 			)
 			
-			const regexp = new RegExp( `(?:${ chunks.join('|') })` , flags )
-			return regexp as $mol_regexp2_strict< $mol_regexp2_groups< Source > >
+			const regexp = new RegExp( `(?:${ chunks.join('|') })` , flags ) as $mol_regexp2_strict< Source >
+			regexp.generate = params => {
+				for( let option in source ) {
+					if( params[ option as any ] ) {
+						if( typeof params[ option as any ] !== 'boolean' ) return String( params[ option as any ] )
+						const res = $mol_regexp2( source[ option as any ] ).generate( params )
+						if( res ) return res
+					}
+				}
+				return null
+			}
+			return regexp
 
 		}
 
@@ -123,7 +167,7 @@ namespace $ {
 		const upper = Number.isFinite( max ) ? max : ''
 		
 		const regexp2 = new RegExp( `(?:${ regexp.source }){${ min },${ upper }}?`, regexp.flags )
-		return regexp2 as $mol_regexp2_strict< $mol_regexp2_groups< Source > >
+		return regexp2 as $mol_regexp2_strict< Source >
 	}
 
 	/** Makes regexp that greedy repeats this pattern from min to max count */
@@ -137,9 +181,11 @@ namespace $ {
 
 		const regexp = $mol_regexp2( source )
 		const upper = Number.isFinite( max ) ? max : ''
-		
-		const regexp2 = new RegExp( `(?:${ regexp.source }){${ min },${ upper }}`, regexp.flags )
-		return regexp2 as $mol_regexp2_strict< $mol_regexp2_groups< Source > >
+
+		const str = `(?:${ regexp.source }){${ min },${ upper }}`
+		const regexp2 = new RegExp( str, regexp.flags ) as $mol_regexp2_strict< Source >
+		regexp2.generate = params => regexp.generate( params ) || ''
+		return regexp2
 	}
 
 	/** Makes regexp that allow absent of this pattern */
@@ -155,7 +201,7 @@ namespace $ {
 	>( source : Source ) {
 		const regexp = $mol_regexp2( source )
 		const regexp2 = new RegExp( `(?=${ regexp.source })`, regexp.flags )
-		return regexp2 as $mol_regexp2_strict< $mol_regexp2_groups< Source > >
+		return regexp2 as $mol_regexp2_strict< Source >
 	}
 
 	/** Makes regexp that look ahead for pattern */
@@ -164,7 +210,7 @@ namespace $ {
 	>( source : Source ) {
 		const regexp = $mol_regexp2( source )
 		const regexp2 = new RegExp( `(?!${ regexp.source })`, regexp.flags )
-		return regexp2 as $mol_regexp2_strict< $mol_regexp2_groups< Source > >
+		return regexp2 as $mol_regexp2_strict< Source >
 	}
 
 	/** Makes regexp for char code */
