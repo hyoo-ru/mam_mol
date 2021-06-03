@@ -290,9 +290,11 @@ namespace $ {
 			])
 
 			$mol_assert_equal( animals.generate({}) , '#' )
+			
 			$mol_assert_equal( animals.generate({ dog: false }) , '#' )
 			$mol_assert_equal( animals.generate({ dog: true }) , '#^@' )
-			$mol_assert_equal( animals.generate({ dog: '$' }) , '#^$' )
+			
+			$mol_assert_fail( ()=> animals.generate({ dog: '$' }) , 'Wrong param: dog=$' )
 
 		},
 
@@ -305,9 +307,11 @@ namespace $ {
 			])
 
 			$mol_assert_equal( animals.generate({}) , '#' )
+			
 			$mol_assert_equal( animals.generate({ dog: true }) , '#^@' )
 			$mol_assert_equal( animals.generate({ fox: true }) , '#^&' )
-			$mol_assert_equal( animals.generate({ dog: '$' }) , '#^$' )
+			
+			$mol_assert_fail( ()=> animals.generate({ dog: '$' }) , 'Wrong param: dog=$' )
 
 		},
 		
