@@ -167,7 +167,11 @@ namespace $ {
 			regexp.generate = params => {
 				for( let option in source ) {
 					if( params[ option as any ] ) {
-						if( typeof params[ option as any ] !== 'boolean' ) return String( params[ option as any ] )
+						if( typeof params[ option as any ] !== 'boolean' ) {
+							const str = String( params[ option as any ] )
+							if( str.match( regexp ) ) return str
+							$mol_fail( new Error( `Wrong param: ${option}=${str}` ) )
+						}
 					} else {
 						if( typeof source[ option as any ] !== 'object' ) continue
 					}
