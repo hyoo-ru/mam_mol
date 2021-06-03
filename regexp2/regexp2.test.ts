@@ -365,6 +365,11 @@ namespace $ {
 			$mol_assert_equal( mail.generate({ dot_atom: 'foo.bar', domain: 'hyoo.ru' }) , 'foo.bar@hyoo.ru' )
 			$mol_assert_equal( mail.generate({ name: 'foo..bar', domain: 'hyoo.ru' }) , '"foo..bar"@hyoo.ru' )
 			
+			$mol_assert_fail(
+				()=> mail.generate({ dot_atom: 'foo..bar', domain: 'hyoo.ru' }),
+				'Wrong param: dot_atom=foo..bar',
+			)
+			
 		},
 
 	})
