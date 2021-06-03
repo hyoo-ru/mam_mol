@@ -117,7 +117,7 @@ namespace $ {
 
 		if( typeof source === 'number' ) {
 
-			const src = `\\u{${ source.toString(16).padStart( 4 , '0' ) }}`
+			const src = `\\u{${ source.toString(16) }}`
 			const regexp = new RegExp( src , flags ) as $mol_regexp2_strict< Source >
 			regexp.generate = ()=> src
 			return regexp
@@ -159,8 +159,9 @@ namespace $ {
 	
 		} else {
 
-			const chunks = Object.keys( source ).map( name =>
-				`(?<${ name }>${ $mol_regexp2( source[ name ] ).source })`
+			const chunks = Object.keys( source ).map( name => ( name[0] === '_' )
+				? `${ $mol_regexp2( source[ name ] ).source }`
+				: `(?<${ name }>${ $mol_regexp2( source[ name ] ).source })`
 			)
 			
 			const regexp = new RegExp( `(?:${ chunks.join('|') })` , flags ) as $mol_regexp2_strict< Source >
@@ -280,9 +281,11 @@ namespace $ {
 	) {
 		return new RegExp( `[^${ $mol_regexp2( forbidden ).source }]`, 'gsu' )
 	}
-
-	export const $mol_regexp2_char_any = $mol_regexp2( /./ )
-	export const $mol_regexp2_line_end = $mol_regexp2( /(?:\r?\n|\r)/ )
+	
+	export const $mol_regexp2_line_end = $mol_regexp2({
+		_win: [ [ '\r' ], '\n' ],
+		_mac: '\r',
+	})
 	
 	export const $mol_regexp2_decimal_only = $mol_regexp2( /\d/ )
 	export const $mol_regexp2_decimal_except = $mol_regexp2( /\D/ )
@@ -302,5 +305,6 @@ namespace $ {
 	
 	export const $mol_regexp2_begin = $mol_regexp2( /^/ )
 	export const $mol_regexp2_end = $mol_regexp2( /$/ )
+	export const $mol_regexp2_char_any = $mol_regexp2( /./ )
 	
 }
