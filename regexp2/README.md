@@ -121,7 +121,7 @@ enum Sex {
 }
 
 // /(?:(?<Sex>(?:(?<male>male)|(?<female>female))))/gsu
-const sex = $mol_regexp2( Sex )
+const sex = $mol_regexp2( {Sex} )
 ```
 
 | Matches | Sex    | male      | female
