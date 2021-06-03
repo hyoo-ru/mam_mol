@@ -1093,16 +1093,28 @@ namespace $ {
 		@ $mol_mem_key
 		bundleReadmeMd( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
 			
-			const pack = $mol_file.absolute( path )
-			
 			const start = Date.now()
-			let source = pack.resolve( 'readme.md' )
 			
-			while( source != this.root() && !source.exists() ) {
-				source = source.resolve( '../../README.md' )
+			const root = this.root()
+			const pack  = $mol_file.absolute( path )
+			
+			let mod = pack
+			let source
+			
+			while( true ) {
+				
+				source = mod.resolve( 'README.md' )
+				if( source.exists() ) break
+				
+				source = mod.resolve( 'readme.md' )
+				if( source.exists() ) break
+				
+				if( mod === root ) break
+				mod = mod.parent()
+				
 			}
 
-			const target = pack.resolve( '-/readme.md' )
+			const target = mod.resolve( '-/README.md' )
 			target.text( source?.text() ?? path )
 			this.logBundle( target , Date.now() - start )
 			
