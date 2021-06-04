@@ -65,7 +65,7 @@ var $node = new Proxy({ require }, {
                 try {
                     $$.$mol_exec('.', 'npm', 'install', '@types/' + name);
                 }
-                catch (_a) { }
+                catch { }
                 break;
             }
             else {
@@ -148,7 +148,7 @@ var $;
                 return false;
             return true;
         }
-        catch (_a) {
+        catch {
             return false;
         }
     }
@@ -225,7 +225,7 @@ var $;
             if (this[$.$mol_ambient_ref])
                 return this[$.$mol_ambient_ref];
             const owner = $.$mol_owning_get(this);
-            return this[$.$mol_ambient_ref] = (owner === null || owner === void 0 ? void 0 : owner.$) || $mol_object2.$;
+            return this[$.$mol_ambient_ref] = owner?.$ || $mol_object2.$;
         }
         set $(next) {
             if (this[$.$mol_ambient_ref])
@@ -1441,7 +1441,7 @@ var $;
                 try {
                     next[Symbol.toStringTag] = this[Symbol.toStringTag];
                 }
-                catch (_a) { }
+                catch { }
                 next[$.$mol_object_field] = this[$.$mol_object_field];
             }
             this._value = next;
@@ -1854,8 +1854,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    var _a;
-    const TextDecoder = (_a = globalThis.TextDecoder) !== null && _a !== void 0 ? _a : $node.util.TextDecoder;
+    const TextDecoder = globalThis.TextDecoder ?? $node.util.TextDecoder;
     function $mol_charset_decode(value, code = 'utf8') {
         return new TextDecoder(code).decode(value);
     }
@@ -1866,8 +1865,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    var _a;
-    const TextEncoder = (_a = globalThis.TextEncoder) !== null && _a !== void 0 ? _a : $node.util.TextEncoder;
+    const TextEncoder = globalThis.TextEncoder ?? $node.util.TextEncoder;
     const encoder = new TextEncoder();
     function $mol_charset_encode(value) {
         return encoder.encode(value);
@@ -2097,7 +2095,7 @@ var $;
             const path = this.path();
             this.parent().watcher();
             try {
-                stat = next !== null && next !== void 0 ? next : stat_convert($node.fs.statSync(path));
+                stat = next ?? stat_convert($node.fs.statSync(path));
             }
             catch (error) {
                 if (error.code === 'ENOENT')
@@ -2698,7 +2696,6 @@ var $;
             return this.clone(this.parents, array);
         }
         get_method({ name, src, key, next }) {
-            var _a, _b;
             const prev = this.added_nodes.get(name.value);
             if (!prev)
                 return;
@@ -2706,20 +2703,19 @@ var $;
                 return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Method ${src.type} at ${src.span} is not same as ${prev.src.type} at ${prev.src.span}`);
             const current_default = src.kids.length > 0 ? src.kids[0] : undefined;
             const prev_default = prev.src.kids.length > 0 ? prev.src.kids[0] : undefined;
-            if ((prev_default === null || prev_default === void 0 ? void 0 : prev_default.toString()) !== (current_default === null || current_default === void 0 ? void 0 : current_default.toString()))
-                return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Method ${name.value} at ${(_a = current_default === null || current_default === void 0 ? void 0 : current_default.span) !== null && _a !== void 0 ? _a : name.span} already defined with another default value at ${(_b = prev_default === null || prev_default === void 0 ? void 0 : prev_default.span) !== null && _b !== void 0 ? _b : prev.name.span}`);
+            if (prev_default?.toString() !== current_default?.toString())
+                return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Method ${name.value} at ${current_default?.span ?? name.span} already defined with another default value at ${prev_default?.span ?? prev.name.span}`);
             return prev;
         }
         check_scope_vars({ name, key, next }) {
-            var _a, _b;
             let finded_key;
             let finded_next;
             const parents = this.parents;
             for (let i = 1; i < parents.length; i++) {
                 const parent = parents[i];
-                if (key && key.value === ((_a = parent.key) === null || _a === void 0 ? void 0 : _a.value))
+                if (key && key.value === parent.key?.value)
                     finded_key = parent.key;
-                if (next && next.value === ((_b = parent.next) === null || _b === void 0 ? void 0 : _b.value))
+                if (next && next.value === parent.next?.value)
                     finded_next = parent.next;
             }
             if (key && !finded_key)
@@ -2727,7 +2723,7 @@ var $;
             if (next && !finded_next)
                 return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Next ${next.value} at ${next.span} not found at ${this.parents.map(parent => parent.src.span)}`);
             const first_method = parents.length > 1 ? parents[1] : undefined;
-            if (name.value === (first_method === null || first_method === void 0 ? void 0 : first_method.name.value))
+            if (name.value === first_method?.name.value)
                 return this.$.$mol_fail($_1.$mol_view_tree2_error_str `Method ${name.value} at ${name.span} already defined at ${first_method.name.span}`);
         }
         index(owner) {
@@ -2864,13 +2860,11 @@ var $;
     }
     $.$mol_view_tree2_prop_name = $mol_view_tree2_prop_name;
     function $mol_view_tree2_prop_key(prop) {
-        var _a;
-        return (_a = this.$mol_view_tree2_prop_split(prop).key) === null || _a === void 0 ? void 0 : _a.value;
+        return this.$mol_view_tree2_prop_split(prop).key?.value;
     }
     $.$mol_view_tree2_prop_key = $mol_view_tree2_prop_key;
     function $mol_view_tree2_prop_next(prop) {
-        var _a;
-        return (_a = this.$mol_view_tree2_prop_split(prop).next) === null || _a === void 0 ? void 0 : _a.value;
+        return this.$mol_view_tree2_prop_split(prop).next?.value;
     }
     $.$mol_view_tree2_prop_next = $mol_view_tree2_prop_next;
 })($ || ($ = {}));
@@ -3668,21 +3662,18 @@ var $;
             this.nodes.add(to);
         }
         edge_out(from, to) {
-            var _a, _b;
-            return (_b = (_a = this.edges_out.get(from)) === null || _a === void 0 ? void 0 : _a.get(to)) !== null && _b !== void 0 ? _b : null;
+            return this.edges_out.get(from)?.get(to) ?? null;
         }
         edge_in(to, from) {
-            var _a, _b;
-            return (_b = (_a = this.edges_in.get(to)) === null || _a === void 0 ? void 0 : _a.get(from)) !== null && _b !== void 0 ? _b : null;
+            return this.edges_in.get(to)?.get(from) ?? null;
         }
         link(from, to, edge) {
             this.link_out(from, to, edge);
             this.link_in(to, from, edge);
         }
         unlink(from, to) {
-            var _a, _b;
-            (_a = this.edges_in.get(to)) === null || _a === void 0 ? void 0 : _a.delete(from);
-            (_b = this.edges_out.get(from)) === null || _b === void 0 ? void 0 : _b.delete(to);
+            this.edges_in.get(to)?.delete(from);
+            this.edges_out.get(from)?.delete(to);
         }
         acyclic(get_weight) {
             const checked = [];
@@ -4246,11 +4237,10 @@ var $;
             return next;
         }
         js_content(path) {
-            var _a;
             const src = $.$mol_file.absolute(path);
             if (/\.tsx?$/.test(src.name())) {
                 const res = $node.typescript.transpileModule(src.text(), { compilerOptions: this.tsOptions() });
-                if ((_a = res.diagnostics) === null || _a === void 0 ? void 0 : _a.length) {
+                if (res.diagnostics?.length) {
                     return $.$mol_fail(new Error($node.typescript.formatDiagnostic(res.diagnostics[0], {
                         getCurrentDirectory: () => this.root().path(),
                         getCanonicalFileName: (path) => path.toLowerCase(),
@@ -4416,7 +4406,6 @@ var $;
                 added[mod.path()] = true;
                 graph.nodes.add(mod.relate(this.root()));
                 const checkDep = (p) => {
-                    var _a;
                     const isFile = /\.\w+$/.test(p);
                     var dep = (p[0] === '/')
                         ? this.root().resolve(p + (isFile ? '' : '/' + p.replace(/.*\//, '')))
@@ -4441,7 +4430,7 @@ var $;
                         return;
                     const from = mod.relate(this.root());
                     const to = dep.relate(this.root());
-                    const edge = (_a = graph.edges_out.get(from)) === null || _a === void 0 ? void 0 : _a.get(to);
+                    const edge = graph.edges_out.get(from)?.get(to);
                     if (!edge || (deps[p] > edge.priority)) {
                         graph.link(from, to, { priority: deps[p] });
                     }
@@ -4606,12 +4595,11 @@ var $;
             return [target, targetMap];
         }
         bundleAuditJS({ path, exclude, bundle }) {
-            var _a;
             const start = Date.now();
             var pack = $.$mol_file.absolute(path);
             var target = pack.resolve(`-/${bundle}.audit.js`);
             var exclude_ext = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
-            (_a = this.tsService({ path, exclude: exclude_ext, bundle })) === null || _a === void 0 ? void 0 : _a.recheck();
+            this.tsService({ path, exclude: exclude_ext, bundle })?.recheck();
             const errors = [];
             const paths = this.tsPaths({ path, exclude: exclude_ext, bundle });
             for (const path of paths) {
@@ -4747,7 +4735,6 @@ var $;
             return [...res];
         }
         bundleReadmeMd({ path, exclude }) {
-            var _a;
             const start = Date.now();
             const root = this.root();
             const pack = $.$mol_file.absolute(path);
@@ -4765,7 +4752,7 @@ var $;
                 mod = mod.parent();
             }
             const target = mod.resolve('-/README.md');
-            target.text((_a = source === null || source === void 0 ? void 0 : source.text()) !== null && _a !== void 0 ? _a : path);
+            target.text(source?.text() ?? path);
             this.logBundle(target, Date.now() - start);
             return [target];
         }
@@ -4794,7 +4781,7 @@ var $;
             try {
                 version[2] = this.$.$mol_exec('', 'npm', 'view', name, 'version').stdout.toString().trim().split('.')[2];
             }
-            catch (_a) { }
+            catch { }
             version[2] = String(Number(version[2]) + 1);
             json.version = version.join('.');
             json.dependencies = {};
@@ -5502,7 +5489,6 @@ var $;
         }
         expressIndex() {
             return (req, res, next) => {
-                var _a;
                 const match = req.url.match(/(.*[^\-]\/)([\?#].*)?$/);
                 if (!match)
                     return next();
@@ -5510,7 +5496,7 @@ var $;
                     .resolve(`${req.path}index.html`);
                 if (!file.exists())
                     return next();
-                res.redirect(301, `${match[1]}-/test.html${(_a = match[2]) !== null && _a !== void 0 ? _a : ''}`);
+                res.redirect(301, `${match[1]}-/test.html${match[2] ?? ''}`);
             };
         }
         port() {
@@ -6004,10 +5990,9 @@ var $;
         static wrap(task) {
             const store = new WeakMap();
             return function (next) {
-                var _a;
                 if (next === undefined && store.has(this))
                     return store.get(this);
-                const val = (_a = task.call(this, next)) !== null && _a !== void 0 ? _a : next;
+                const val = task.call(this, next) ?? next;
                 store.set(this, val);
                 return val;
             };
@@ -6022,7 +6007,7 @@ var $;
 (function ($) {
     function $mol_func_name(func) {
         let name = func.name;
-        if ((name === null || name === void 0 ? void 0 : name.length) > 1)
+        if (name?.length > 1)
             return name;
         for (let key in this) {
             try {
@@ -6032,7 +6017,7 @@ var $;
                 Object.defineProperty(func, 'name', { value: name });
                 break;
             }
-            catch (_a) { }
+            catch { }
         }
         return name;
     }
@@ -6135,10 +6120,9 @@ var $;
             return this.minimal_width();
         }
         minimal_height() {
-            var _a;
             let min = 0;
             try {
-                for (const view of (_a = this.sub()) !== null && _a !== void 0 ? _a : []) {
+                for (const view of this.sub() ?? []) {
                     if (view instanceof $mol_view) {
                         min = Math.max(min, view.minimal_height());
                     }
@@ -6956,7 +6940,7 @@ var $;
     function $mol_view_tree2_ts_method(owner_parts, body, types = false) {
         const { name, key, next, src } = owner_parts;
         const operator = src.kids.length === 1 ? src.kids[0] : undefined;
-        const type = operator === null || operator === void 0 ? void 0 : operator.type;
+        const type = operator?.type;
         const is_class = type && type[0] === '$';
         const is_delegate = type === '<=' || type === '<=>';
         let need_cache = false;

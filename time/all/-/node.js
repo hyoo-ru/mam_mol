@@ -276,11 +276,10 @@ var $;
             return (this.native.getDay() + 6) % 7;
         }
         get native() {
-            var _a, _b, _c, _d, _e;
             if (this._native)
                 return this._native;
             const utc = this.toOffset('Z');
-            return this._native = new Date(Date.UTC((_a = utc.year) !== null && _a !== void 0 ? _a : 0, (_b = utc.month) !== null && _b !== void 0 ? _b : 0, ((_c = utc.day) !== null && _c !== void 0 ? _c : 0) + 1, (_d = utc.hour) !== null && _d !== void 0 ? _d : 0, (_e = utc.minute) !== null && _e !== void 0 ? _e : 0, utc.second != undefined ? Math.floor(utc.second) : 0, utc.second != undefined ? Math.floor((utc.second - Math.floor(utc.second)) * 1000) : 0));
+            return this._native = new Date(Date.UTC(utc.year ?? 0, utc.month ?? 0, (utc.day ?? 0) + 1, utc.hour ?? 0, utc.minute ?? 0, utc.second != undefined ? Math.floor(utc.second) : 0, utc.second != undefined ? Math.floor((utc.second - Math.floor(utc.second)) * 1000) : 0));
         }
         get normal() {
             if (this._normal)
@@ -309,19 +308,18 @@ var $;
             });
         }
         shift(config) {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
             const duration = new $.$mol_time_duration(config);
             const moment = new $mol_time_moment().merge({
                 year: this.year,
                 month: this.month,
                 day: this.day,
-                hour: (_a = this.hour) !== null && _a !== void 0 ? _a : 0,
-                minute: (_b = this.minute) !== null && _b !== void 0 ? _b : 0,
-                second: (_c = this.second) !== null && _c !== void 0 ? _c : 0,
-                offset: (_d = this.offset) !== null && _d !== void 0 ? _d : 0
+                hour: this.hour ?? 0,
+                minute: this.minute ?? 0,
+                second: this.second ?? 0,
+                offset: this.offset ?? 0
             });
-            const second = moment.second + ((_e = duration.second) !== null && _e !== void 0 ? _e : 0);
-            const native = new Date(moment.year + ((_f = duration.year) !== null && _f !== void 0 ? _f : 0), moment.month + ((_g = duration.month) !== null && _g !== void 0 ? _g : 0), moment.day + 1 + ((_h = duration.day) !== null && _h !== void 0 ? _h : 0), moment.hour + ((_j = duration.hour) !== null && _j !== void 0 ? _j : 0), moment.minute + ((_k = duration.minute) !== null && _k !== void 0 ? _k : 0), Math.floor(second), (second - Math.floor(second)) * 1000);
+            const second = moment.second + (duration.second ?? 0);
+            const native = new Date(moment.year + (duration.year ?? 0), moment.month + (duration.month ?? 0), moment.day + 1 + (duration.day ?? 0), moment.hour + (duration.hour ?? 0), moment.minute + (duration.minute ?? 0), Math.floor(second), (second - Math.floor(second)) * 1000);
             if (isNaN(native.valueOf()))
                 throw new Error('Wrong time');
             return new $mol_time_moment({

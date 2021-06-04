@@ -1,6 +1,23 @@
+interface String {
+	
+	match< RE extends RegExp >( regexp: RE ): ReturnType<
+		RE[ typeof Symbol.match ]
+	>
+	
+    matchAll< RE extends RegExp >( regexp: RE ): ReturnType<
+		RE[ typeof Symbol.matchAll ]
+	>
+	
+}
+
 namespace $ {
+	
+	type Groups_to_params<T> = {
+		[P in keyof T]?: T[P] | boolean | undefined;
+	};	
 
 	export type $mol_regexp_source =
+	| number
 	| string
 	| RegExp
 	| { [ key in string ] : $mol_regexp_source }
@@ -8,78 +25,112 @@ namespace $ {
 
 	export type $mol_regexp_groups< Source extends $mol_regexp_source >
 	
-		= Source extends string
+		= Source extends number
 		? {}
 		
-		: Source extends $mol_regexp< infer Groups >
-		? Groups
+		: Source extends string
+		? {}
 		
 		: Source extends $mol_regexp_source[]
-		? $mol_type_intersect<
-			{
-				[ key in Extract< keyof Source , number > ] : $mol_regexp_groups< Source[ key ] >
-			}[ Extract< keyof Source , number > ]
-		>
+		? $mol_type_merge< $mol_type_intersect< {
+			[ key in Extract< keyof Source , number > ] : $mol_regexp_groups< Source[ key ] >
+		}[ Extract< keyof Source , number > ] > >
 		
 		: Source extends RegExp
-		? {}
+		? Record< string, string > extends NonNullable< NonNullable< ReturnType< Source['exec'] > >[ 'groups' ] >
+			? {}
+			: NonNullable< NonNullable< ReturnType< Source['exec'] > >[ 'groups' ] >
 		
 		: Source extends { readonly [ key in string ] : $mol_regexp_source }
-		? Extract< $mol_type_intersect<
-			| { [ key in Extract< keyof Source , string > ] : string }
-			| { [ key in keyof Source ] : $mol_regexp_groups< Source[ key ] > }[ keyof Source ]
-		> , Record< string , string > >
+		? $mol_type_merge< $mol_type_intersect< {
+			[ key in keyof Source ] :
+				$mol_type_merge<
+					& $mol_type_override<
+						{
+							readonly [ k in Extract< keyof Source , string > ]: string
+						},
+						{
+							readonly [ k in key ]:
+								Source[ key ] extends string
+									? Source[ key ]
+									: string
+						}
+					>
+					& $mol_regexp_groups< Source[ key ] >
+				>
+		}[ keyof Source ] > >
 
 		: never
-
+		
 	/** Type safe reguar expression builder */
 	export class $mol_regexp< Groups extends Record< string , string > > extends RegExp {
 		
 		/** Prefer to use $mol_regexp.from */
-		constructor( source : string , flags : string = '' , readonly groups : ( Extract< keyof Groups , string > )[] = [] ) {
+		constructor( source : string , flags : string = 'gsu' , readonly groups : ( Extract< keyof Groups , string > )[] = [] ) {
 			super( source , flags )
 		}
-
+		
+		*[Symbol.matchAll] (str:string): IterableIterator< $mol_type_override< RegExpExecArray, { groups?: { [ key in keyof Groups ] : string } } > > {
+			const index = this.lastIndex
+			this.lastIndex = 0
+			while ( this.lastIndex < str.length ) {
+				const found = this.exec(str)
+				if( !found ) break
+				yield found
+			}
+			this.lastIndex = index
+		}
+		
+		
 		/** Parses input and returns found capture groups or null */
-		get parse() { 
-
-			type Token = { [ key in keyof Groups ] : string } & { [ key : number ] : string }
-
-			const self = this
-
-			return function* parsing( str : string , from = 0 ) {
-
-				while( from < str.length ) {
-
-					self.lastIndex = from
-					
-					const res = self.exec( str )
-					if( res === null ) {
-						yield { 0 : str.substring( from ) } as any as Token
-						return null
-					}
-
-					if( from === self.lastIndex ) {
-						$mol_fail( new Error( 'Captured empty substring' ) )
-					}
-
-					const found = {} as any as Token
-					
-					const skipped = str.slice( from , self.lastIndex - res[0].length )
-					if( skipped ) yield { 0 : skipped } as any as Token
-					
-					from = self.lastIndex
-					
-					for( let i = 0 ; i < self.groups.length ; ++i ) {
-						const group = self.groups[ i ]
-						found[ group ] = found[ group ] || res[ i + 1 ] || '' as any
-					}
-
-					yield found
-				}
-
+		[ Symbol.match ]( str : string ): null | string[] {
+			const res = [ ... this[Symbol.matchAll]( str ) ].filter( r => r.groups ).map( r => r[0] )
+			if( !res.length ) return null
+			return res
+		}
+		
+		exec( str : string ): $mol_type_override< RegExpExecArray , { groups?: { [ key in keyof Groups ] : string } } > | null {
+			
+			const from = this.lastIndex
+			
+			const res = super.exec( str )
+			if( res === null ) {
+				this.lastIndex = str.length
+				if( !str ) return null
+				return Object.assign( [ str.slice( from ) ], {
+					index: from,
+					input: str,
+				} )
 			}
 
+			if( from === this.lastIndex ) {
+				$mol_fail( new Error( 'Captured empty substring' ) )
+			}
+
+			type Token = { [ key in keyof Groups ] : string } & { [ key : number ] : string }
+			const groups = {} as Token
+			
+			const skipped = str.slice( from , this.lastIndex - res[0].length )
+			if( skipped ) {
+				this.lastIndex = this.lastIndex - res[0].length
+				return Object.assign( [ skipped ], {
+					index: from,
+					input: res.input,
+				} )
+			}
+			
+			for( let i = 0 ; i < this.groups.length ; ++i ) {
+				const group = this.groups[ i ]
+				groups[ group ] = groups[ group ] || res[ i + 1 ] || '' as any
+			}
+
+			return Object.assign( res, { groups } )
+		}
+		
+		generate(
+			params: Groups_to_params< Groups >
+		): string | null {
+			return null
 		}
 
 		/** Makes regexp that non-greedy repeats this pattern from min to max count */
@@ -94,11 +145,17 @@ namespace $ {
 			const regexp = $mol_regexp.from( source )
 			const upper = Number.isFinite( max ) ? max : ''
 			
-			return new $mol_regexp(
-				`(?:${ regexp.source }){${ min },${ upper }}?` ,
-				regexp.flags ,
-				regexp.groups ,
-			)
+			const str = `(?:${ regexp.source }){${ min },${ upper }}?`
+			const regexp2 =  new $mol_regexp( str , regexp.flags , regexp.groups )
+			
+			regexp2.generate = params => {
+				const res = regexp.generate( params )
+				if( res ) return res
+				if( min > 0 ) return res
+				return ''
+			}
+	
+			return regexp2
 	
 		}
 
@@ -114,12 +171,17 @@ namespace $ {
 			const regexp = $mol_regexp.from( source )
 			const upper = Number.isFinite( max ) ? max : ''
 			
-			return new $mol_regexp(
-				`(?:${ regexp.source }){${ min },${ upper }}` ,
-				regexp.flags ,
-				regexp.groups ,
-			)
+			const str = `(?:${ regexp.source }){${ min },${ upper }}`
+			const regexp2 =  new $mol_regexp( str , regexp.flags , regexp.groups )
+			
+			regexp2.generate = params => {
+				const res = regexp.generate( params )
+				if( res ) return res
+				if( min > 0 ) return res
+				return ''
+			}
 	
+			return regexp2
 		}
 
 		/** Makes regexp that allow absent of this pattern */
@@ -166,40 +228,60 @@ namespace $ {
 			} ,
 		) : $mol_regexp< $mol_regexp_groups< Source > > {
 
-			let flags = 'gu'
+			let flags = 'gsu'
 			if( multiline ) flags += 'm'
 			if( ignoreCase ) flags += 'i'
 
-			if( typeof source === 'string' ) {
+			if( typeof source === 'number' ) {
 
-				return new $mol_regexp( source.replace( /[.*+?^${}()|[\]\\]/g , '\\$&' ) , flags )
+				const src = `\\u{${ source.toString(16) }}`
+				const regexp = new $mol_regexp< $mol_regexp_groups< Source > >( src , flags )
+				regexp.generate = ()=> src
+				return regexp
+
+			} if( typeof source === 'string' ) {
+
+				const src = source.replace( /[.*+?^${}()|[\]\\]/g , '\\$&' ) 
+				const regexp = new $mol_regexp< $mol_regexp_groups< Source > >( src , flags )
+				regexp.generate = ()=> source
+				return regexp
 
 			} else if( source instanceof RegExp ) {
 
 				if( source instanceof $mol_regexp ) return source as any
 
-				const test = new $mol_regexp( '|' + source.source )
+				const test = new RegExp( '|' + source.source )
 				const groups = Array.from(
 					{ length : test.exec('')!.length - 1 } ,
 					( _ , i )=> String( i + 1 ) ,
 				)
 
-				return new $mol_regexp( source.source , source.flags , groups as any )
+				const regexp = new $mol_regexp< $mol_regexp_groups< Source > >(
+					source.source ,
+					source.flags ,
+					groups as any ,
+				)
+				
+				regexp.generate = ()=> ''
+
+				return regexp
 
 			} if( Array.isArray( source ) ) {
 
-				const sources = [] as string[]
+				const patterns = source.map( src => Array.isArray( src )
+					? $mol_regexp.optional( src as any )
+					: $mol_regexp.from( src )
+				)
+				
+				const chunks = patterns.map( pattern => pattern.source )
+				
 				const groups = [] as ( Extract< keyof $mol_regexp_groups< Source > , string > )[]
 
 				let index = 0
 		
-				for( const item of source ) {
+				for( const pattern of patterns ) {
 					
-					const regexp = $mol_regexp.from( item )
-		
-					sources.push( regexp.source )
-
-					for( let group of regexp.groups ) {
+					for( let group of pattern.groups ) {
 						if( Number( group ) >= 0 ) {
 							groups.push( String( index ++ ) as any )
 						} else {
@@ -209,7 +291,19 @@ namespace $ {
 		
 				}
 				
-				return new $mol_regexp( sources.join( '' ) , flags , groups )
+				const regexp = new $mol_regexp( chunks.join( '' ) , flags , groups )
+				
+				regexp.generate = params => {
+					let res = ''
+					for( const pattern of patterns ) {
+						let sub = pattern.generate( params )
+						if( sub === null ) return ''
+						res += sub
+					}
+					return res
+				}
+				
+				return regexp
 		
 			} else {
 
@@ -226,17 +320,43 @@ namespace $ {
 
 				} ) as any as readonly[ $mol_regexp_source , ... $mol_regexp_source[] ]
 
-				return new $mol_regexp( `(?:${ chunks.join('|') })` , flags , groups as any[] )
+				const regexp = new $mol_regexp< $mol_regexp_groups< Source > >(
+					`(?:${ chunks.join('|') })` ,
+					flags ,
+					groups as any[] ,
+				)
+				
+				const validator = new RegExp( '^' + regexp.source + '$', flags )
+				regexp.generate = params => {
+					
+					for( let option in source ) {
+						
+						if( params[ option as any ] ) {
+							
+							if( typeof params[ option as any ] !== 'boolean' ) {
+								
+								const str = String( params[ option as any ] )
+								if( str.match( validator ) ) return str
+								
+								$mol_fail( new Error( `Wrong param: ${option}=${str}` ) )
+							}
+							
+						} else {
+							if( typeof source[ option as any ] !== 'object' ) continue
+						}
+						
+						const res = $mol_regexp.from( source[ option as any ] ).generate( params )
+						if( res ) return res
+						
+					}
+					
+					return null
+				}
+				
+				return regexp
 
 			}
 	
-		}
-
-		/** Makes regexp for char code */
-		static char_code( code : number ) {
-			return new $mol_regexp(
-				`\\u${ code.toString(16).padStart( 4 , '0' ) }`
-			)
 		}
 
 		/** Makes regexp which includes only unicode category */
@@ -256,37 +376,52 @@ namespace $ {
 		static char_range(
 			from: number,
 			to: number,
-		): $mol_regexp< never> {
+		): $mol_regexp<{}> {
 			return new $mol_regexp(
-				`${ $mol_regexp.char_code( from ) }..${ $mol_regexp.char_code( to ) }`
+				`${ $mol_regexp.from( from ).source }-${ $mol_regexp.from( to ).source }`
 			)
 		}
 
 		static char_only(
 			... allowed: readonly [ $mol_regexp_source, ... $mol_regexp_source[] ]
-		): $mol_regexp< never> {
+		): $mol_regexp<{}> {
 			const regexp = allowed.map( f => $mol_regexp.from( f ).source ).join('')
 			return new $mol_regexp( `[${ regexp }]` )
 		}
 
 		static char_except(
 			... forbidden: readonly [ $mol_regexp_source, ... $mol_regexp_source[] ]
-		): $mol_regexp< never> {
+		): $mol_regexp<{}> {
 			const regexp = forbidden.map( f => $mol_regexp.from( f ).source ).join('')
 			return new $mol_regexp( `[^${ regexp }]` )
 		}
 
-		static char_any = $mol_regexp.from( /[\s\S]/ )
-		static digit = $mol_regexp.from( /\d/ )
-		static letter = $mol_regexp.from( /\w/ )
-		static space = $mol_regexp.from( /\s/ )
-		static tab = $mol_regexp.from( /\t/ )
-		static slash_back = $mol_regexp.from( /\\/ )
-		static word_break = $mol_regexp.from( /\b/ )
-		static line_end = $mol_regexp.from( /(?:\r?\n|\r)/ )
-		static begin = $mol_regexp.from( /^/ )
-		static end = $mol_regexp.from( /$/ )
-		static or = $mol_regexp.from( /|/ )
+		static decimal_only = $mol_regexp.from( /\d/gsu )
+		static decimal_except = $mol_regexp.from( /\D/gsu )
+		
+		static latin_only = $mol_regexp.from( /\w/gsu )
+		static latin_except = $mol_regexp.from( /\W/gsu )
+		
+		static space_only = $mol_regexp.from( /\s/gsu )
+		static space_except = $mol_regexp.from( /\S/gsu )
+		
+		static word_break_only = $mol_regexp.from( /\b/gsu )
+		static word_break_except = $mol_regexp.from( /\B/gsu )
+		
+		static tab = $mol_regexp.from( /\t/gsu )
+		static slash_back = $mol_regexp.from( /\\/gsu )
+		static nul = $mol_regexp.from( /\0/gsu )
+		
+		static char_any = $mol_regexp.from( /./gsu )
+		static begin = $mol_regexp.from( /^/gsu )
+		static end = $mol_regexp.from( /$/gsu )
+		static or = $mol_regexp.from( /|/gsu )
+		
+		static line_end = $mol_regexp.from([
+			[ [ '\r' ], '\n' ],
+			$mol_regexp.or,
+			'\r',
+		])
 		
 	}
 	
