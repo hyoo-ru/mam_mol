@@ -96,23 +96,6 @@ const life_years = $mol_regexp.from([ {from}, [ '..', {to} ] ])
 | 95..99  | 95   | 99
 | 2020    | 2020 | 
 
-### Non-catch variants
-
-```typescript
-// /(?:(?:\r){0,1}\n){0,1}|\r/gsu
-const new_line = $mol_regexp.from([
-	[ [ '\r' ], '\n' ],
-	$mol_regexp.or,
-	'\r',
-])
-```
-
-| Matches
-|--------
-| \r\n 
-| \n
-| \r
-
 ### Сatch variants
 
 ```typescript
@@ -123,6 +106,9 @@ enum Sex {
 
 // /(?:((?:(male)|(female))))/gsu
 const sex = $mol_regexp.from( {Sex} )
+
+// { Sex: string, male: string, female: string } | undefined
+const res = [ ... text.matchAll( sex ) ][0].groups
 ```
 
 | Matches | Sex    | male      | female
