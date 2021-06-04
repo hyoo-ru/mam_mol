@@ -2,10 +2,6 @@
 	flex: 0 0 40rem;
 }
 
-[mol_app_questions_menu_links] {
-	padding: .5rem;
-}
-
 [mol_app_questions_question_link] {
 	display: block;
 	justify-content: flex-start;
