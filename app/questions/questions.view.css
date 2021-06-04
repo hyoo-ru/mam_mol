@@ -27,8 +27,8 @@
 	flex: 1 0 60rem;
 }
 
-[mol_app_questions_details_descr] {
-	margin: 1rem;
+[mol_app_questions_details_body] {
+	padding: 0;
 }
 
 [mol_app_questions_answer] {
