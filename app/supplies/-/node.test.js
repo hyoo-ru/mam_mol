@@ -7437,7 +7437,7 @@ var $;
     $mol_regexp.end = $mol_regexp.from(/$/gsu);
     $mol_regexp.or = $mol_regexp.from(/|/gsu);
     $mol_regexp.line_end = $mol_regexp.from([
-        [['\r'], '\n'],
+        ['\r'], '\n',
         $mol_regexp.or,
         '\r',
     ]);
