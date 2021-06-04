@@ -14,7 +14,7 @@
 }
 
 [mol_book2] > * {
-	flex: none;
+/* 	flex: none; */
 	scroll-snap-stop: always;
 	scroll-snap-align: end;
 	position: relative;
