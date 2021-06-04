@@ -1,6 +1,6 @@
 namespace $ {
 	
-	const { begin, end, letter, optional, repeat_greedy } = $mol_regexp
+	const { begin, end, latin_only: letter, optional, repeat_greedy } = $mol_regexp
 	
 	const prop_signature = $mol_regexp.from([
 		begin,
@@ -11,12 +11,12 @@ namespace $ {
 	])
 	
 	function name_of( prop: $mol_tree2 ) {
-		return prop_signature.parse( prop.type ).next().value!.name
+		return prop_signature.exec( prop.type )!.groups!.name
 	}
 	
 	function params_of( prop: $mol_tree2, ... val: $mol_tree2[] ) {
 		
-		const { key, next } = prop_signature.parse( prop.type ).next().value!
+		const { key, next } = [ ... prop.type.matchAll( prop_signature ) ][0].groups!
 		
 		return prop.struct( 'line', [
 			prop.data('( '),
@@ -57,7 +57,7 @@ namespace $ {
 				] ),
 				... props.map( prop => {
 					
-					const { name, key, next } = prop_signature.parse( prop.type ).next().value!
+					const { name, key, next } = prop_signature.exec( prop.type )!.groups!
 					
 					const bind_res = ( bind: $mol_tree2 )=> [
 						bind.data( 'ReturnType< ' ),
