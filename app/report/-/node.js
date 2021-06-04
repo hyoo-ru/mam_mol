@@ -5360,11 +5360,10 @@ var $;
     $mol_regexp.begin = $mol_regexp.from(/^/gsu);
     $mol_regexp.end = $mol_regexp.from(/$/gsu);
     $mol_regexp.or = $mol_regexp.from(/|/gsu);
-    $mol_regexp.line_end = $mol_regexp.from([
-        ['\r'], '\n',
-        $mol_regexp.or,
-        '\r',
-    ]);
+    $mol_regexp.line_end = $mol_regexp.from({
+        win_end: [['\r'], '\n'],
+        mac_end: '\r',
+    });
     $.$mol_regexp = $mol_regexp;
 })($ || ($ = {}));
 //regexp.js.map

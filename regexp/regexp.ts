@@ -417,11 +417,10 @@ namespace $ {
 		static end = $mol_regexp.from( /$/gsu )
 		static or = $mol_regexp.from( /|/gsu )
 		
-		static line_end = $mol_regexp.from([
-			[ '\r' ], '\n',
-			$mol_regexp.or,
-			'\r',
-		])
+		static line_end = $mol_regexp.from({
+			win_end: [ [ '\r' ], '\n' ],
+			mac_end: '\r',
+		})
 		
 	}
 	
