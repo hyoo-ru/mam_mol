@@ -32,6 +32,8 @@ namespace $ {
 
 	type ContainRule = 'size' | 'layout' | 'style' | 'paint'
 
+	type Repeat = 'repeat-x' | 'repeat-y' | 'repeat' | 'space' | 'round' | 'no-repeat'
+
 	interface Overrides {
 
 		/** Distribution of space between and around content items along a flexbox's cross-axis or a grid's block axis. */
@@ -61,7 +63,13 @@ namespace $ {
 			
 			/** Background images. */
 			image?: readonly( readonly [ $mol_style_func<'url'> ] )[]
-
+			
+			/** How background images are repeated. */
+			repeat?: Repeat | [ Repeat, Repeat ] | Common
+			
+			// @TODO add more variants
+			position?: 'left' | 'right' | 'top' | 'bottom' | 'center'
+			
 		}
 
 		box?: {
