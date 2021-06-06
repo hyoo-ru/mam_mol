@@ -7347,9 +7347,12 @@ var $;
                 regexp.generate = () => source;
                 return regexp;
             }
-            else if (source instanceof RegExp) {
-                if (source instanceof $mol_regexp)
-                    return source;
+            else if (source instanceof $mol_regexp) {
+                const regexp = new $mol_regexp(source.source, flags, source.groups);
+                regexp.generate = params => source.generate(params);
+                return regexp;
+            }
+            if (source instanceof RegExp) {
                 const test = new RegExp('|' + source.source);
                 const groups = Array.from({ length: test.exec('').length - 1 }, (_, i) => String(i + 1));
                 const regexp = new $mol_regexp(source.source, source.flags, groups);
