@@ -4,6 +4,36 @@ Builds native RegExp and generates new strings by regexp and substitution params
 
 ## Build
 
+### Fixed string
+
+```typescript
+// /:\)/gsu
+const smile = $mol_regexp.from( ':)' )
+```
+
+### Flags
+
+```typescript
+// /hello/gimsu
+const hello = $mol_regexp.from( 'hello', {
+	ignoreCase: true,
+	multiline: true,
+} )
+```
+
+### From Other Regexp
+
+```typescript
+// /.../gmsu
+const triplet = $mol_regexp.from(
+	$mol_regexp.from(
+		/.../,
+		{ ignoreCase: true },
+	),
+	{ multiline: true },
+)
+```
+
 ### Char by code point
 
 ```typescript

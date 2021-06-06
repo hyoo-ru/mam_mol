@@ -99,6 +99,20 @@ namespace $ {
 
 		},
 
+		'flags override'() {
+
+			const triplet = $mol_regexp.from(
+				$mol_regexp.from(
+					/.../,
+					{ ignoreCase: true },
+				),
+				{ multiline: true },
+			)
+			
+			$mol_assert_like( triplet.toString() , '/.../gmsu' )
+
+		},
+
 		'sequence'() {
 
 			const { begin , end , decimal_only: digit , repeat , from } = $mol_regexp
