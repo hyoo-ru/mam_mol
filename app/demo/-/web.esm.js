@@ -17050,7 +17050,7 @@ var $;
                 flex: {
                     grow: 0,
                     shrink: 0,
-                    basis: rem(3.5),
+                    basis: rem(4),
                 },
             },
             Title: {
