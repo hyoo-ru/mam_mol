@@ -280,3 +280,11 @@ const mail = from([ begin, local_part, '@', {domain}, end ])
 |-----------|--------|----------|------|-------------|-------------|------------
 | a.b@c.d   | c.d    | a.b      |      |             |             |
 | "a\n"@c.d | c.d    |          | a\n  |             | "a\n"       | \n
+
+## Usage from NPM
+
+```javascript
+import { $mol_regexp } from 'mol_regexp'
+```
+
+[Sandbox](https://codepen.io/nin-jin/pen/YzZvERo?editors=0011)
