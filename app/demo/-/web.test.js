@@ -2496,7 +2496,7 @@ var $;
             $.$mol_assert_like('x.'.match(regexp), null);
             $.$mol_assert_like('x,'.match(regexp), ['x']);
         },
-        'byte except'() {
+        'char except'() {
             const { char_except, latin_only, tab } = $.$mol_regexp;
             const name = char_except(latin_only, tab);
             $.$mol_assert_like('a'.match(name), null);
@@ -2533,38 +2533,38 @@ var $;
             const { begin, end, char_only, char_range, latin_only, slash_back, repeat_greedy, from, } = $.$mol_regexp;
             const atom_char = char_only(latin_only, "!#$%&'*+/=?^`{|}~-");
             const atom = repeat_greedy(atom_char, 1);
-            const dot_atom = [atom, repeat_greedy(['.', atom])];
+            const dot_atom = from([atom, repeat_greedy(['.', atom])]);
             const name_letter = char_only(char_range(0x01, 0x08), 0x0b, 0x0c, char_range(0x0e, 0x1f), 0x21, char_range(0x23, 0x5b), char_range(0x5d, 0x7f));
-            const quoted_pair = [
+            const quoted_pair = from([
                 slash_back,
                 char_only(char_range(0x01, 0x09), 0x0b, 0x0c, char_range(0x0e, 0x7f))
-            ];
+            ]);
             const name = repeat_greedy({ name_letter, quoted_pair });
             const quoted_name = from(['"', { name }, '"']);
-            const local_part = { dot_atom, quoted_name };
+            const local_part = from({ dot_atom, quoted_name });
             const domain = dot_atom;
             const mail = from([begin, local_part, '@', { domain }, end]);
-            $.$mol_assert_equal('foo..bar@hyoo.ru'.match(mail), null);
-            $.$mol_assert_equal('foo..bar"@hyoo.ru'.match(mail), null);
-            $.$mol_assert_like([...'foo.bar@hyoo.ru'.matchAll(mail)][0].groups, {
-                domain: "hyoo.ru",
+            $.$mol_assert_equal('foo..bar@example.org'.match(mail), null);
+            $.$mol_assert_equal('foo..bar"@example.org'.match(mail), null);
+            $.$mol_assert_like([...'foo.bar@example.org'.matchAll(mail)][0].groups, {
+                domain: "example.org",
                 dot_atom: "foo.bar",
                 name: "",
                 name_letter: "",
                 quoted_name: "",
                 quoted_pair: "",
             });
-            $.$mol_assert_like([...'"foo..bar"@hyoo.ru'.matchAll(mail)][0].groups, {
+            $.$mol_assert_like([...'"foo..bar"@example.org'.matchAll(mail)][0].groups, {
                 dot_atom: "",
                 quoted_name: '"foo..bar"',
                 name: "foo..bar",
                 name_letter: "r",
                 quoted_pair: "",
-                domain: "hyoo.ru",
+                domain: "example.org",
             });
-            $.$mol_assert_equal(mail.generate({ dot_atom: 'foo.bar', domain: 'hyoo.ru' }), 'foo.bar@hyoo.ru');
-            $.$mol_assert_equal(mail.generate({ name: 'foo..bar', domain: 'hyoo.ru' }), '"foo..bar"@hyoo.ru');
-            $.$mol_assert_fail(() => mail.generate({ dot_atom: 'foo..bar', domain: 'hyoo.ru' }), 'Wrong param: dot_atom=foo..bar');
+            $.$mol_assert_equal(mail.generate({ dot_atom: 'foo.bar', domain: 'example.org' }), 'foo.bar@example.org');
+            $.$mol_assert_equal(mail.generate({ name: 'foo..bar', domain: 'example.org' }), '"foo..bar"@example.org');
+            $.$mol_assert_fail(() => mail.generate({ dot_atom: 'foo..bar', domain: 'example.org' }), 'Wrong param: dot_atom=foo..bar');
         },
     });
 })($ || ($ = {}));
