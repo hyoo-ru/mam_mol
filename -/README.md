@@ -14,6 +14,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Tutorials](#tutorials)
 - [Rationale](#rationale)
 - [Modules](#modules)
+- [Usage from NPM](#usage-from-npm-ecosystem)
 - [Contributors](#contributors)
 - [Cool stuff](#cool-stuff)
 - [Donate](#donate)
@@ -511,6 +512,7 @@ Some libs are already published to NPM:
 - [$mol_strict](strict) - Makes JS runtime more strict.
 - [$mol_time](time) - Proper date/time/duration/interval arithmetic.
 - [$mol_type](type) - TypeScript meta types for complex logic.
+- [$mol_regexp](regexp) - Regular Expressions builder.
 - [$hyoo_crowd](https://github.com/hyoo-ru/crowd.hyoo.ru) - Conflict-free Reinterpretable Ordered Washed Data.
 
 All of them are very small, powerfull and fastest. Use it for your pleasure.
