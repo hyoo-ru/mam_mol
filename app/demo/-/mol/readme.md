@@ -347,11 +347,18 @@ The name of the field corresponds to calling the property, the content of the fi
 - **[$mol_atom2](atom2)** - reactive container
 - **[$mol_log2](log2)** - logging
 - **[$mol_import](import)** - dynamic sources import
+- **[$mol_after](after)** - scheduled callbacks with unified api
+- **[$mol_fail](fail)** - throws all exceptions in one place to increase debug experience
 
 ## Object model
 
 - **[$mol_mem](mem)** - reactive property decorator
 - **[$mol_object](object)** - components base class
+
+## Lifecycle
+
+- **[$mol_ambient] - makes derived context
+- **[$mol_owning] - owning relation between objects
 
 ## Functions
 
@@ -365,6 +372,8 @@ The name of the field corresponds to calling the property, the content of the fi
 - **[$mol_maybe](maybe)** - [maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
 - **[$mol_conform](conform)** - object tree reconciler
 - **[$mol_dict](dict)** - useful native `Map` extension
+- **[$mol_array_chunks](array/chunks)** - splits array by different chunks
+- **[$mol_array_trim](array/trim)** - shortens array without memory reallocation
 
 ## [State modules](state)
 
@@ -461,6 +470,7 @@ The name of the field corresponds to calling the property, the content of the fi
 
 - **[$mol_test](test)** - unit testing
 - **[$mol_stub](stub)** - stub data generators
+- **[$mol_assert](assert)** - assertion functions
 
 ## API
 
