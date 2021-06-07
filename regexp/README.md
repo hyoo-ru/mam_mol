@@ -283,6 +283,12 @@ const mail = from([ begin, local_part, '@', {domain}, end ])
 
 ## Usage from NPM
 
+```
+npm install mol_regexp
+```
+
+[![](https://badgen.net/bundlephobia/minzip/mol_regexp)](https://bundlephobia.com/package/mol_regexp)
+
 ```javascript
 import { $mol_regexp } from 'mol_regexp'
 ```
