@@ -92,6 +92,7 @@ namespace $ {
 		exec( str : string ): $mol_type_override< RegExpExecArray , { groups?: { [ key in keyof Groups ] : string } } > | null {
 			
 			const from = this.lastIndex
+			if( from >= str.length ) return null
 			
 			const res = super.exec( str )
 			if( res === null ) {
@@ -336,9 +337,13 @@ namespace $ {
 					
 					for( let option in source ) {
 						
-						if( params[ option as any ] ) {
+						if( option in params ) {
 							
-							if( typeof params[ option as any ] !== 'boolean' ) {
+							if( typeof params[ option as any ] === 'boolean' ) {
+								
+								if( !params[ option as any ] ) continue
+								
+							} else {
 								
 								const str = String( params[ option as any ] )
 								if( str.match( validator ) ) return str
