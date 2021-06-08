@@ -7254,6 +7254,8 @@ var $;
         }
         exec(str) {
             const from = this.lastIndex;
+            if (from >= str.length)
+                return null;
             const res = super.exec(str);
             if (res === null) {
                 this.lastIndex = str.length;
@@ -7401,8 +7403,12 @@ var $;
                 const validator = new RegExp('^' + regexp.source + '$', flags);
                 regexp.generate = params => {
                     for (let option in source) {
-                        if (params[option]) {
-                            if (typeof params[option] !== 'boolean') {
+                        if (option in params) {
+                            if (typeof params[option] === 'boolean') {
+                                if (!params[option])
+                                    continue;
+                            }
+                            else {
                                 const str = String(params[option]);
                                 if (str.match(validator))
                                     return str;

@@ -1,6 +1,6 @@
 # $mol_regexp
 
-Builds native RegExp and generates new strings by regexp and substitution params.
+Builds composable regular expression, which compiles to native RegExp. And generates a matching string for it.
 
 ## Instance API
 
