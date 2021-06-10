@@ -81,11 +81,27 @@ namespace $ {
 			this.lastIndex = index
 		}
 		
-		
 		/** Parses input and returns found capture groups or null */
 		[ Symbol.match ]( str : string ): null | string[] {
 			const res = [ ... this[Symbol.matchAll]( str ) ].filter( r => r.groups ).map( r => r[0] )
 			if( !res.length ) return null
+			return res
+		}
+		
+		/** Splits string by regexp edges */
+		[ Symbol.split ]( str : string ): string[] {
+			
+			const res = [] as string[]
+			let token_last = null
+			
+			for( let token of this[Symbol.matchAll]( str ) ) {
+				if( token.groups && ( token_last ? token_last.groups : true ) ) res.push( '' )
+				res.push( token[0] )
+				token_last = token
+			}
+			
+			if( !res.length ) res.push( '' )
+			
 			return res
 		}
 		
