@@ -559,13 +559,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_dom_render_fields(el: Element, fields: {
-        [key: string]: any;
-    }): void;
+    function $mol_dom_render_children(el: Element, childNodes: NodeList | Array<Node | string | null>): void;
 }
 
 declare namespace $ {
-    function $mol_dom_render_children(el: Element, childNodes: NodeList | Array<Node | string | null>): void;
+    function $mol_dom_render_fields(el: Element, fields: {
+        [key: string]: any;
+    }): void;
 }
 
 declare namespace $ {

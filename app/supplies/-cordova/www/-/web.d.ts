@@ -521,13 +521,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_dom_render_fields(el: Element, fields: {
-        [key: string]: any;
-    }): void;
+    function $mol_dom_render_children(el: Element, childNodes: NodeList | Array<Node | string | null>): void;
 }
 
 declare namespace $ {
-    function $mol_dom_render_children(el: Element, childNodes: NodeList | Array<Node | string | null>): void;
+    function $mol_dom_render_fields(el: Element, fields: {
+        [key: string]: any;
+    }): void;
 }
 
 declare namespace $ {
@@ -2274,6 +2274,7 @@ declare namespace $ {
             };
         }>>;
         [Symbol.match](str: string): null | string[];
+        [Symbol.split](str: string): string[];
         exec(str: string): $mol_type_override<RegExpExecArray, {
             groups?: {
                 [key in keyof Groups]: string;

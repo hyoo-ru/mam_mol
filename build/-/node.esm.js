@@ -5924,21 +5924,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_dom_render_fields(el, fields) {
-        for (let key in fields) {
-            const val = fields[key];
-            if (val === undefined)
-                continue;
-            el[key] = val;
-        }
-    }
-    $.$mol_dom_render_fields = $mol_dom_render_fields;
-})($ || ($ = {}));
-//fields.js.map
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_dom_render_children(el, childNodes) {
         const node_set = new Set(childNodes);
         let nextNode = el.firstChild;
@@ -5990,6 +5975,21 @@ var $;
     $.$mol_dom_render_children = $mol_dom_render_children;
 })($ || ($ = {}));
 //children.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_render_fields(el, fields) {
+        for (let key in fields) {
+            const val = fields[key];
+            if (val === undefined)
+                continue;
+            el[key] = val;
+        }
+    }
+    $.$mol_dom_render_fields = $mol_dom_render_fields;
+})($ || ($ = {}));
+//fields.js.map
 ;
 "use strict";
 var $;
@@ -6214,7 +6214,6 @@ var $;
             const fields = this.field();
             $.$mol_dom_render_attributes(node, attr);
             $.$mol_dom_render_styles(node, style);
-            $.$mol_dom_render_fields(node, fields);
             return node;
         }
         auto() { }
@@ -6234,6 +6233,7 @@ var $;
             for (const el of sub)
                 if (el && typeof el === 'object' && 'dom_tree' in el)
                     el['dom_tree']();
+            $.$mol_dom_render_fields(node, this.field());
         }
         static view_classes() {
             const proto = this.prototype;

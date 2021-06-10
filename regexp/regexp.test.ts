@@ -78,6 +78,17 @@ namespace $ {
 
 		},
 
+		'split'() {
+			
+			const regexp = $mol_regexp.from( ';' )
+			
+			$mol_assert_like( 'aaa;bbb;ccc'.split( regexp ) , [ 'aaa', ';', 'bbb', ';', 'ccc' ] )
+			$mol_assert_like( 'aaa;;ccc'.split( regexp ) , [ 'aaa', ';', '', ';', 'ccc' ] )
+			$mol_assert_like( 'aaa'.split( regexp ) , [ 'aaa' ] )
+			$mol_assert_like( ''.split( regexp ) , [''] )
+
+		},
+
 		'case ignoring'() {
 
 			const xxx = $mol_regexp.from( 'x' , { ignoreCase : true } )

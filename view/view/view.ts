@@ -233,7 +233,6 @@ namespace $ {
 
 			$mol_dom_render_attributes( node , attr )
 			$mol_dom_render_styles( node , style )
-			$mol_dom_render_fields( node , fields )
 
 			return node
 		}
@@ -258,6 +257,8 @@ namespace $ {
 
 			for( const el of sub ) if( el && typeof el === 'object' && 'dom_tree' in el ) el['dom_tree']()
 
+			$mol_dom_render_fields( node , this.field() )
+			
 		}
 
 		@ $mol_memo.method
