@@ -161,7 +161,7 @@ namespace $ {
 
 			} )
 
-			socket.onclose = socket.onerror = $mol_fiber.func( ()=> {
+			socket.onclose = $mol_fiber.func( ()=> {
 				new this.$.$mol_after_timeout( 5000, atom.fresh )
 			} )
 			
