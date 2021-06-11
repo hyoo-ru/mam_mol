@@ -8,6 +8,7 @@ namespace $ {
 	| keyof typeof $mol_colors
 	| 'transparent' | 'currentcolor'
 	| $mol_style_func< 'hsla' | 'rgba' | 'var' >
+	| `#${string}`
 	
 	type Length = 0 | $mol_style_unit< $mol_style_unit_length > | $mol_style_func< 'calc' | 'var' >
 
