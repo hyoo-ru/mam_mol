@@ -138,7 +138,22 @@ namespace $ {
 		}
 		
 		@ $mol_mem
+		heartbeat() {
+			
+			const timer = this.$.setInterval( ()=> {
+				this.socket().send('')
+			}, 30000 )
+			
+			return {
+				destructor: ()=> clearInterval( timer )
+			}
+			
+		}
+		
+		@ $mol_mem
 		socket() {
+			
+			this.heartbeat()
 			
 			const atom = $mol_atom2.current!
 			const socket = new $mol_dom_context.WebSocket( this.server() )
