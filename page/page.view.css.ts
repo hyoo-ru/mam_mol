@@ -37,8 +37,11 @@ namespace $.$$ {
 			background: {
 				color: $mol_theme.back ,
 			},
+			border: {
+				radius: $mol_gap.round,
+			},
 			boxShadow: `0 0.5rem 0.5rem -0.5rem hsla(0,0%,0%,.25)` ,
-			// zIndex: 1,
+			zIndex: 2,
 		},
 
 		Title: {
@@ -94,6 +97,9 @@ namespace $.$$ {
 			overflow: 'hidden',
 			background: {
 				color: $mol_theme.back ,
+			},
+			border: {
+				radius: $mol_gap.round,
 			},
 			boxShadow: `0 -0.5rem 0.5rem -0.5rem hsla(0,0%,0%,.25)` ,
 			zIndex: 1,

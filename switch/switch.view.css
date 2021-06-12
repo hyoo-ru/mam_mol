@@ -2,7 +2,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	flex: 1 1 auto;
-	border-radius: var(--mol_skin_round);
+	border-radius: var(--mol_gap_round);
 }
 
 [mol_switch_option] {

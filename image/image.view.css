@@ -1,5 +1,5 @@
 [mol_image] {
-	border-radius: var(--mol_skin_round);
+	border-radius: var(--mol_gap_round);
 	overflow: hidden;
 	flex: 0 1 auto;
 	max-width: 100%;

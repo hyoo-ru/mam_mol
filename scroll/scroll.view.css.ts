@@ -52,6 +52,9 @@ namespace $.$$ {
 			background: {
 				color: $mol_theme.line,
 			},
+			border: {
+				radius: $mol_gap.round,
+			},
 		},
 
 		'@media' : {

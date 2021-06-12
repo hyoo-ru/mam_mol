@@ -9,14 +9,14 @@
 
 [mol_pop_bubble] {
 	box-shadow: 0 0 1rem hsla(0,0%,0%,.5);
-	border-radius: var(--mol_skin_round);
+	border-radius: var(--mol_gap_round);
 	position: absolute;
 	z-index: 3;
 	background: var(--mol_theme_back);
 	max-width: none;
 	max-height: none;
 	overflow: hidden;
-	overflow-y: auto;
+	overflow-y: overlay;
 	word-break: normal;
 }
 

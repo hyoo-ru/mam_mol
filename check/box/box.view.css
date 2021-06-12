@@ -1,5 +1,5 @@
 [mol_check_box_icon] {
-	border-radius: var(--mol_skin_round);
+	border-radius: var(--mol_gap_round);
 	box-shadow: 0 0 0 1px var(--mol_theme_line);
 }
 
