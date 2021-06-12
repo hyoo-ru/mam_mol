@@ -5,8 +5,4 @@ $mol_embed_native $mol_view
 		data <= uri \
 		type <= mime \
 	sub /
-		<= Open $mol_link
-			uri <= uri \
-			sub /
-				<= Open_button $mol_button_major
-					title <= open_label @ \Open
+		\

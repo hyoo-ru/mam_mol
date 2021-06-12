@@ -1,6 +1,6 @@
 namespace $.$$ {
 	
-	export class $mol_embed extends $.$mol_embed {
+	export class $mol_embed_any extends $.$mol_embed {
 		
 		Sub() {
 			if( this.mime() === 'application/pdf' ) {
