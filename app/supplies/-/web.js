@@ -7060,14 +7060,7 @@ var $;
             return res;
         }
         test(str) {
-            const index = this.lastIndex;
-            this.lastIndex = 0;
-            try {
-                return Boolean(this.exec(str)?.groups);
-            }
-            finally {
-                this.lastIndex = index;
-            }
+            return Boolean(str.match(this));
         }
         exec(str) {
             const from = this.lastIndex;

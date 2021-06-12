@@ -4592,14 +4592,7 @@ var $;
             return res;
         }
         test(str) {
-            const index = this.lastIndex;
-            this.lastIndex = 0;
-            try {
-                return Boolean(this.exec(str)?.groups);
-            }
-            finally {
-                this.lastIndex = index;
-            }
+            return Boolean(str.match(this));
         }
         exec(str) {
             const from = this.lastIndex;
@@ -9915,6 +9908,7 @@ var $;
             $.$mol_assert_like(regexp.test('fo'), false);
             $.$mol_assert_like(regexp.test('foo'), true);
             $.$mol_assert_like(regexp.test('foobar'), true);
+            $.$mol_assert_like(regexp.test('barfoo'), true);
         },
         'case ignoring'() {
             const xxx = $.$mol_regexp.from('x', { ignoreCase: true });

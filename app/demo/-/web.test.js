@@ -2367,6 +2367,7 @@ var $;
             $.$mol_assert_like(regexp.test('fo'), false);
             $.$mol_assert_like(regexp.test('foo'), true);
             $.$mol_assert_like(regexp.test('foobar'), true);
+            $.$mol_assert_like(regexp.test('barfoo'), true);
         },
         'case ignoring'() {
             const xxx = $.$mol_regexp.from('x', { ignoreCase: true });
