@@ -121,7 +121,7 @@
 }
 
 [mol_text_type="code-global"] {
-	color: hsl(210, 80%, 60%);
+	color: hsl(210, 80%, 40%);
 }
 
 [mol_text_type="code-decorator"] {
@@ -133,7 +133,7 @@
 }
 
 [mol_text_type="code-string"] {
-	color: hsl(90, 40%, 50%);
+	color: hsl(90, 40%, 40%);
 }
 
 [mol_text_type="code-number"] {

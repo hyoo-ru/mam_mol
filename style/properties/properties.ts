@@ -34,6 +34,7 @@ namespace $ {
 	type ContainRule = 'size' | 'layout' | 'style' | 'paint'
 
 	type Repeat = 'repeat-x' | 'repeat-y' | 'repeat' | 'space' | 'round' | 'no-repeat'
+	type BG_size = Length | 'auto' | 'contain' | 'cover'
 
 	interface Overrides {
 
@@ -70,6 +71,8 @@ namespace $ {
 			
 			// @TODO add more variants
 			position?: 'left' | 'right' | 'top' | 'bottom' | 'center'
+			
+			size?: ( BG_size | [ BG_size, BG_size ] )[]
 			
 		}
 
