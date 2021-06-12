@@ -73,12 +73,15 @@ namespace $ {
 		*[Symbol.matchAll] (str:string): IterableIterator< $mol_type_override< RegExpExecArray, { groups?: { [ key in keyof Groups ] : string } } > > {
 			const index = this.lastIndex
 			this.lastIndex = 0
-			while ( this.lastIndex < str.length ) {
-				const found = this.exec(str)
-				if( !found ) break
-				yield found
+			try {
+				while ( this.lastIndex < str.length ) {
+					const found = this.exec(str)
+					if( !found ) break
+					yield found
+				}
+			} finally {
+				this.lastIndex = index
 			}
-			this.lastIndex = index
 		}
 		
 		/** Parses input and returns found capture groups or null */
@@ -103,6 +106,16 @@ namespace $ {
 			if( !res.length ) res.push( '' )
 			
 			return res
+		}
+		
+		test( str : string ) {
+			const index = this.lastIndex
+			this.lastIndex = 0
+			try {
+				return Boolean( this.exec( str )?.groups )
+			} finally {
+				this.lastIndex = index
+			}
 		}
 		
 		exec( str : string ): $mol_type_override< RegExpExecArray , { groups?: { [ key in keyof Groups ] : string } } > | null {

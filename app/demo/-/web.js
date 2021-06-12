@@ -3238,6 +3238,9 @@ var $;
         boxSizing: 'border-box',
         position: 'relative',
         minWidth: rem(2.5),
+        border: {
+            radius: $.$mol_gap.round,
+        },
         ':hover': {
             background: {
                 color: $.$mol_theme.hover,
@@ -5736,13 +5739,17 @@ var $;
         *[Symbol.matchAll](str) {
             const index = this.lastIndex;
             this.lastIndex = 0;
-            while (this.lastIndex < str.length) {
-                const found = this.exec(str);
-                if (!found)
-                    break;
-                yield found;
+            try {
+                while (this.lastIndex < str.length) {
+                    const found = this.exec(str);
+                    if (!found)
+                        break;
+                    yield found;
+                }
             }
-            this.lastIndex = index;
+            finally {
+                this.lastIndex = index;
+            }
         }
         [Symbol.match](str) {
             const res = [...this[Symbol.matchAll](str)].filter(r => r.groups).map(r => r[0]);
@@ -5762,6 +5769,16 @@ var $;
             if (!res.length)
                 res.push('');
             return res;
+        }
+        test(str) {
+            const index = this.lastIndex;
+            this.lastIndex = 0;
+            try {
+                return Boolean(this.exec(str)?.groups);
+            }
+            finally {
+                this.lastIndex = index;
+            }
         }
         exec(str) {
             const from = this.lastIndex;
@@ -6780,7 +6797,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/demo/large/large.view.css", "[mol_demo_large] {\n\theight: 100%;\n\twidth: 100%;\n\toverflow: hidden;\n\tbox-shadow: 0 0 0 .5px var(--mol_theme_line);\n\tbackground: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n\tposition: relative;\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\talign-items: stretch;\n\tbox-sizing: border-box;\n\talign-self: stretch;\n}\n");
+    $.$mol_style_attach("mol/demo/large/large.view.css", "[mol_demo_large] {\n\theight: 100%;\n\twidth: 100%;\n\toverflow: hidden;\n\tbox-shadow: 0 0 0 .5px var(--mol_theme_line);\n\tborder-radius: var(--mol_gap_round);\n\tbackground: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n\tposition: relative;\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\talign-items: stretch;\n\tbox-sizing: border-box;\n\talign-self: stretch;\n}\n");
 })($ || ($ = {}));
 //large.view.css.js.map
 ;

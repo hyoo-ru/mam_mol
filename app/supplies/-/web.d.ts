@@ -2276,6 +2276,7 @@ declare namespace $ {
         }>>;
         [Symbol.match](str: string): null | string[];
         [Symbol.split](str: string): string[];
+        test(str: string): boolean;
         exec(str: string): $mol_type_override<RegExpExecArray, {
             groups?: {
                 [key in keyof Groups]: string;

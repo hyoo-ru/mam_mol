@@ -4568,13 +4568,17 @@ var $;
         *[Symbol.matchAll](str) {
             const index = this.lastIndex;
             this.lastIndex = 0;
-            while (this.lastIndex < str.length) {
-                const found = this.exec(str);
-                if (!found)
-                    break;
-                yield found;
+            try {
+                while (this.lastIndex < str.length) {
+                    const found = this.exec(str);
+                    if (!found)
+                        break;
+                    yield found;
+                }
             }
-            this.lastIndex = index;
+            finally {
+                this.lastIndex = index;
+            }
         }
         [Symbol.match](str) {
             const res = [...this[Symbol.matchAll](str)].filter(r => r.groups).map(r => r[0]);
@@ -4594,6 +4598,16 @@ var $;
             if (!res.length)
                 res.push('');
             return res;
+        }
+        test(str) {
+            const index = this.lastIndex;
+            this.lastIndex = 0;
+            try {
+                return Boolean(this.exec(str)?.groups);
+            }
+            finally {
+                this.lastIndex = index;
+            }
         }
         exec(str) {
             const from = this.lastIndex;
@@ -5342,6 +5356,9 @@ var $;
         boxSizing: 'border-box',
         position: 'relative',
         minWidth: rem(2.5),
+        border: {
+            radius: $.$mol_gap.round,
+        },
         ':hover': {
             background: {
                 color: $.$mol_theme.hover,

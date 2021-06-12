@@ -2361,6 +2361,13 @@ var $;
             $.$mol_assert_like('aaa'.split(regexp), ['aaa']);
             $.$mol_assert_like(''.split(regexp), ['']);
         },
+        'test for matching'() {
+            const regexp = $.$mol_regexp.from('foo');
+            $.$mol_assert_like(regexp.test(''), false);
+            $.$mol_assert_like(regexp.test('fo'), false);
+            $.$mol_assert_like(regexp.test('foo'), true);
+            $.$mol_assert_like(regexp.test('foobar'), true);
+        },
         'case ignoring'() {
             const xxx = $.$mol_regexp.from('x', { ignoreCase: true });
             $.$mol_assert_like(xxx.flags, 'gisu');

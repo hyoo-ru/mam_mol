@@ -3,6 +3,7 @@
 	width: 100%;
 	overflow: hidden;
 	box-shadow: 0 0 0 .5px var(--mol_theme_line);
+	border-radius: var(--mol_gap_round);
 	background: var(--mol_theme_back);
 	color: var(--mol_theme_text);
 	position: relative;
