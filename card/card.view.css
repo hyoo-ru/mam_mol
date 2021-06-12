@@ -2,7 +2,7 @@
 	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	background: var(--mol_theme_back);
 	color: var(--mol_theme_text);
-	border-radius: var(--mol_skin_round);
+	border-radius: var(--mol_gap_round);
 	display: flex;
 	flex: 0 1 auto;
 	flex-direction: column;
@@ -10,7 +10,7 @@
 
 [mol_card_content] {
 	flex: 1 1 auto;
-	border-radius: var(--mol_skin_round);
+	border-radius: var(--mol_gap_round);
 	margin: 0;
 }
 

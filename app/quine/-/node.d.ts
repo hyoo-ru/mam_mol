@@ -950,6 +950,7 @@ declare namespace $ {
     let $mol_gap: {
         readonly block: $mol_style_func<"var", "--mol_gap_block">;
         readonly text: $mol_style_func<"var", "--mol_gap_text">;
+        readonly round: $mol_style_func<"var", "--mol_gap_round">;
     };
 }
 

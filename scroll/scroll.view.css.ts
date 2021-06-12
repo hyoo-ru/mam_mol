@@ -5,7 +5,7 @@ namespace $.$$ {
 	$mol_style_define( $mol_scroll , {
 
 		display: 'flex',
-		overflow: 'auto',
+		overflow: 'overlay',
 		flex: {
 			direction: 'column',
 			grow: 1,
@@ -32,8 +32,8 @@ namespace $.$$ {
 		},
 	
 		'::-webkit-scrollbar': {
-			width: rem(.5),
-			height: rem(.5),
+			width: rem(.25),
+			height: rem(.25),
 		},
 		
 		'::-webkit-scrollbar-corner': {
@@ -51,6 +51,9 @@ namespace $.$$ {
 		'::-webkit-scrollbar-thumb': {
 			background: {
 				color: $mol_theme.line,
+			},
+			border: {
+				radius: $mol_gap.round,
 			},
 		},
 

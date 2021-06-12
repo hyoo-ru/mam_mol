@@ -2,7 +2,7 @@
 	box-sizing: border-box;
 	outline-offset: 0;
 	border: none;
-	border-radius: var(--mol_skin_round);
+	border-radius: var(--mol_gap_round);
 	white-space: nowrap;
 	overflow: hidden;
 	padding: var(--mol_gap_text);

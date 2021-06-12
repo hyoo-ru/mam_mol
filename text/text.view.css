@@ -3,7 +3,7 @@
 	box-sizing: border-box;
 	max-width: 60rem;
 	padding: var(--mol_gap_block);
-	border-radius: var(--mol_skin_round);
+	border-radius: var(--mol_gap_round);
 	white-space: pre-line;
 	display: flex;
 	flex-direction: column;
@@ -75,7 +75,7 @@
 [mol_text_type="code"] {
 	font-family: var(--mol_skin_font_monospace);
 	white-space: pre-wrap;
-	border-radius: var(--mol_skin_round);
+	border-radius: var(--mol_gap_round);
 }
 
 [mol_text_type="text-link"] {

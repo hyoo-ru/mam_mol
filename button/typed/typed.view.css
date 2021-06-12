@@ -5,7 +5,7 @@
 	vertical-align: middle;
 	text-align: center;
 	padding: var(--mol_gap_text);
-	border-radius: var(--mol_skin_round);
+	border-radius: var(--mol_gap_round);
 }
 
 [mol_button_typed][disabled] {
