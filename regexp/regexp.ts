@@ -109,13 +109,7 @@ namespace $ {
 		}
 		
 		test( str : string ) {
-			const index = this.lastIndex
-			this.lastIndex = 0
-			try {
-				return Boolean( this.exec( str )?.groups )
-			} finally {
-				this.lastIndex = index
-			}
+			return Boolean( str.match( this) )
 		}
 		
 		exec( str : string ): $mol_type_override< RegExpExecArray , { groups?: { [ key in keyof Groups ] : string } } > | null {
