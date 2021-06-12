@@ -108,7 +108,7 @@ namespace $ {
 			return res
 		}
 		
-		test( str : string ) {
+		test( str : string ): boolean {
 			return Boolean( str.match( this) )
 		}
 		
