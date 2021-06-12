@@ -7,4 +7,5 @@
 	background: var(--mol_theme_shade);
 	object-position: top left;
 	border-radius: var(--mol_gap_round);
+	aspect-ratio: 4/3;
 }
