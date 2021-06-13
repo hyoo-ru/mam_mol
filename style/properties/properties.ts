@@ -64,7 +64,9 @@ namespace $ {
 			color?: Color | Common
 			
 			/** Background images. */
-			image?: readonly( readonly [ $mol_style_func<'url'> ] )[]
+			image?:
+			| readonly( readonly [ $mol_style_func<'url'> ] )[]
+			| 'none' | Common
 			
 			/** How background images are repeated. */
 			repeat?: Repeat | [ Repeat, Repeat ] | Common
