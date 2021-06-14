@@ -10,4 +10,6 @@ $mol_search_jumper $mol_search
 			mod_shift true
 			key * enter?event <=> backward?event
 		<= Forward $mol_hotkey
-			key * enter?event <=> forward?event
+			key *
+				enter?event <=> forward?event
+				escape?val <=> escape?val null
