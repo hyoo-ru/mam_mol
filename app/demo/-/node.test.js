@@ -22364,12 +22364,16 @@ var $;
         row_numb(index) {
             return 0;
         }
+        highlight() {
+            return "";
+        }
         View() {
             const obj = new this.$.$mol_text_code();
             obj.text = () => this.value();
             obj.render_visible_only = () => false;
             obj.row_numb = (index) => this.row_numb(index);
             obj.sidebar_showed = () => this.sidebar_showed();
+            obj.highlight = () => this.highlight();
             return obj;
         }
     }

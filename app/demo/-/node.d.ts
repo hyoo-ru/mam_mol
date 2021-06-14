@@ -6030,6 +6030,7 @@ declare namespace $ {
         selection(val?: any): any;
         Edit(): $$.$mol_string;
         row_numb(index: any): number;
+        highlight(): string;
         View(): $$.$mol_text_code;
     }
 }

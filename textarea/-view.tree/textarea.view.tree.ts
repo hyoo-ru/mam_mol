@@ -173,11 +173,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * highlight \
+		 * ```
+		 */
+		highlight() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * View $mol_text_code
 		 * 	text <= value
 		 * 	render_visible_only false
 		 * 	row_numb!index <= row_numb!index
 		 * 	sidebar_showed <= sidebar_showed
+		 * 	highlight <= highlight
 		 * ```
 		 */
 		@ $mol_mem
@@ -188,6 +198,7 @@ namespace $ {
 			obj.render_visible_only = () => false
 			obj.row_numb = (index: any) => this.row_numb(index)
 			obj.sidebar_showed = () => this.sidebar_showed()
+			obj.highlight = () => this.highlight()
 			
 			return obj
 		}

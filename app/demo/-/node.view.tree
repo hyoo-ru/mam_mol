@@ -2532,6 +2532,7 @@ $mol_textarea $mol_view
 			render_visible_only false
 			row_numb!index <= row_numb!index 0
 			sidebar_showed <= sidebar_showed
+			highlight <= highlight \
 
 $mol_textarea_demo $mol_demo_large
 	title @ \Text input field in various states
