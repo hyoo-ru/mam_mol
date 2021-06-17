@@ -14,7 +14,7 @@ $.$$ = $
 
 ;
 "use strict";
-Error.stackTraceLimit = Infinity;
+Error.stackTraceLimit = 50;
 var $;
 (function ($) {
 })($ || ($ = {}));
@@ -25234,7 +25234,7 @@ var $;
             return value.data(JSON.stringify(kids.map(node => node.value).join('\n')));
         }
         if (kids.length !== 0)
-            return this.$mol_fail(err `Childs not allowed at ${value.span}, use ${example}`);
+            return this.$mol_fail(err `Kids are not allowed at ${value.span}, use ${example}`);
         if (type === 'false' || type === 'true')
             return value.data(type);
         if (type === 'null')
@@ -25245,7 +25245,7 @@ var $;
     }
     $.$mol_view_tree2_value = $mol_view_tree2_value;
     const example = new $.$mol_view_tree2_error_suggestions([
-        'fales',
+        'false',
         'true',
         '123',
         'null',
