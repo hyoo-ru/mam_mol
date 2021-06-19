@@ -62,9 +62,9 @@ namespace $ {
 
 			if( clients.length ) {
 				
-				const last = clients[ 0 ]
-				last.focus()
-				last.navigate( event.notification.data )
+				const last = clients[ clients.length - 1 ]
+				await last.focus()
+				await last.navigate( event.notification.data )
 				
 			} else {
 				

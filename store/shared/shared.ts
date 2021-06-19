@@ -173,14 +173,20 @@ namespace $ {
 				
 				this.$.$mol_store_local.value( prefix, store.delta() )
 				this.version_last( prefix, store.clock.version_max )
+				
+				new $mol_after_timeout( 1000, $mol_fiber_warp )
 
 			} )
 
-			socket.onclose = $mol_fiber.func( ()=> {
-				new this.$.$mol_after_timeout( 5000, atom.fresh )
-			} )
+			socket.onclose = ()=> this.scheduled_enforcer( null )
 			
 			return socket
+		}
+		
+		@ $mol_mem
+		scheduled_enforcer( next?: null ) {
+			// use case: system notification for invisible page
+			return new $mol_after_timeout( 1000, $mol_fiber_warp )
 		}
 		
 		@ $mol_fiber.method
