@@ -16,7 +16,7 @@ namespace $ {
 		}
 
 		if (kids.length !== 0) return this.$mol_fail(
-			err`Childs not allowed at ${value.span}, use ${example}`
+			err`Kids are not allowed at ${value.span}, use ${example}`
 		)
 
 		if (type === 'false' || type === 'true') return value.data(type)
@@ -31,7 +31,7 @@ namespace $ {
 	}
 
 	const example = new $mol_view_tree2_error_suggestions([
-		'fales',
+		'false',
 		'true',
 		'123',
 		'null',
