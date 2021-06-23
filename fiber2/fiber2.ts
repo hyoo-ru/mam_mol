@@ -6,7 +6,7 @@ namespace $ {
 		Host,
 		Args extends readonly unknown[],
 		Result,
-	> extends $mol_wire_sub {
+	> extends $mol_wire_pub_sub {
 		
 		public result: Result | Error | Promise< Result > = undefined as any
 		
