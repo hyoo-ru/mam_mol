@@ -3,9 +3,9 @@ namespace $ {
 	/**
 	 * Publisher that can auto collect other publishers.
 	 * 
-	 * P1 P2 P3 P4 P5 P6 S1 S2 S3
-	 *    ^              ^
-	 *    pubs_cursor    subs_from
+	 * 	P1 P2 P3 P4 P5 P6 S1 S2 S3
+	 * 	   ^              ^
+	 * 	   pubs_cursor    subs_from
 	 */
 	export class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
 		

@@ -71,7 +71,7 @@ namespace $ {
 		/**
 		 * Updates self position in the peer.
 		 */
-		 repos( peer_pos: number, self_pos: number ) {
+		repos( peer_pos: number, self_pos: number ) {
 			this.wire_pos[ peer_pos ] = self_pos
 		}
 		
