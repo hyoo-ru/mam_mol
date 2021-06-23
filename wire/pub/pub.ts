@@ -17,14 +17,14 @@ namespace $ {
 		/**
 		 * Updates self position in the peer.
 		 */
-		wire_repos( peer_pos: number, self_pos: number ) {
+		repos( peer_pos: number, self_pos: number ) {
 			this.wire_pos[ peer_pos ] = self_pos
 		}
 		
 		/**
 		 * Moves peer from one position to another. Doesn't clear data at old position!
 		 */
-		wire_move( from_pos: number, to_pos: number ) {
+		move( from_pos: number, to_pos: number ) {
 			
 			const peer = this.wire_peers[ from_pos ]
 			const self_pos = this.wire_pos[ from_pos ]
@@ -32,14 +32,14 @@ namespace $ {
 			this.wire_peers[ to_pos ] = peer
 			this.wire_pos[ to_pos ] = self_pos
 			
-			peer.wire_repos( self_pos, to_pos )
+			peer.repos( self_pos, to_pos )
 		}
 		
-		wire_next() {
+		next() {
 			return null as null | $mol_wire_pub
 		}
 		
-		wire_promo( pub: $mol_wire_pub ) {
+		promo( pub: $mol_wire_pub ) {
 		}
 		
 		/**
@@ -55,21 +55,23 @@ namespace $ {
 		/**
 		 * Notify subscribers about something.
 		 */
-		wire_emit( quant: unknown = this ) {
+		emit( quant: unknown = this ) {
 			for( let i = this.wire_subs_from; i < this.wire_peers.length; ++i ) {
-				this.wire_peers[i]?.wire_absorb( quant )
+				this.wire_peers[i]?.absorb( quant )
 			}
 		}
 		
 		/**
 		 * Notify about changes in the provider.
 		 */
-		wire_absorb( quant?: unknown ) {}
+		absorb( quant?: unknown ) {
+			this.emit( quant )
+		}
 		
 		/**
 		 * Unsubscribe subscriber from this publisher events by subscriber position provided by `on(pub)`.
 		 */
-		wire_off( sub_pos: number ) {
+		off( sub_pos: number ) {
 			
 			if(!( sub_pos < this.wire_peers.length )) {
 				$mol_fail( new Error( `Wrong pos ${ sub_pos }` ) )
@@ -77,7 +79,7 @@ namespace $ {
 			
 			const end = this.wire_peers.length - 1
 			if( sub_pos !== end ) {
-				this.wire_move( end, sub_pos )
+				this.move( end, sub_pos )
 			}
 			
 			this.wire_peers.pop()

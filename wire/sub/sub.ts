@@ -10,14 +10,14 @@ namespace $ {
 		/**
 		 * Begin auto wire to publishers.
 		 */
-		wire_begin() {
+		begin() {
 			this.wire_pubs_cursor = 0
 			const sub = $mol_wire
 			$mol_wire = this
 			return sub
 		}
 		
-		wire_next() {
+		next() {
 			if( this.wire_pubs_cursor >= this.wire_subs_from ) return null
 			return this.wire_peers[ this.wire_pubs_cursor ]
 		}
@@ -25,7 +25,7 @@ namespace $ {
 		/**
 		 * Pomote publisher to wire its togeter.
 		 */
-		wire_promo( pub: $mol_wire_pub ) {
+		promo( pub: $mol_wire_pub ) {
 			
 			if( this.wire_pubs_cursor < this.wire_subs_from ) {
 			
@@ -36,12 +36,12 @@ namespace $ {
 					return
 				}
 
-				next.wire_off( this.wire_pos[ this.wire_pubs_cursor ] )
+				next.off( this.wire_pos[ this.wire_pubs_cursor ] )
 				
 			} else {
 				
 				if( this.wire_subs_from < this.wire_peers.length ) {
-					this.wire_move( this.wire_subs_from, this.wire_peers.length )
+					this.move( this.wire_subs_from, this.wire_peers.length )
 				}
 				
 				++ this.wire_subs_from
@@ -57,7 +57,7 @@ namespace $ {
 		/**
 		 * Ends auto wire to publishers and unsubscribes from unpromoted publishers.
 		 */
-		wire_end( sub: $mol_wire_pub | null ) {
+		end( sub: $mol_wire_pub | null ) {
 			
 			let tail = 0
 			
@@ -68,10 +68,10 @@ namespace $ {
 			) {
 				
 				const pub = this.wire_peers[ cursor ]
-				pub.wire_off( this.wire_pos[ cursor ] )
+				pub.off( this.wire_pos[ cursor ] )
 				
 				if( this.wire_subs_from < this.wire_peers.length ) {
-					pub.wire_move( cursor, this.wire_peers.length - 1 )
+					pub.move( cursor, this.wire_peers.length - 1 )
 				} else {
 					++ tail
 				}
@@ -90,7 +90,7 @@ namespace $ {
 		/**
 		 * Handles events from publishers.
 		 */
-		wire_absorb( quant: unknown ) { }
+		absorb( quant: unknown ) { }
 		
 	}
 	

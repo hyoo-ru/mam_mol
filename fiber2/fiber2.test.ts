@@ -125,45 +125,6 @@ namespace $ {
 			
 		},
 		
-		'xxx'( $ ) {
-			
-			class X extends $mol_object2 {
-
-				@ $mol_fiber2_chan
-				foo( next? : number ) {
-					return next || 1
-				}
-
-				@ $mol_fiber2_chan
-				bar() {
-					return this.foo() + 1
-				}
-
-				@ $mol_fiber2_chan
-				xxx() {
-					return this.bar() + 1
-				}
-
-			}
-			
-			const x = new X
-			x.$ = $
-
-			$mol_assert_equal( x.bar() , 2 )
-			$mol_assert_equal( x.xxx() , 3 )
-
-			x.foo( 5 )
-			$mol_assert_equal( x.xxx() , 7 )
-			
-			window['gc']()
-			let mem = -performance.memory.usedJSHeapSize
-			const arr = Array.from( { length: 1000}, ()=> {const x=new X();x.xxx();return x} )
-			window['gc']()
-			mem += performance.memory.usedJSHeapSize
-			console.log('MMM',mem.toLocaleString(), arr)
-			
-		}
-
 	})
 	
 }
