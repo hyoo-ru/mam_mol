@@ -24,7 +24,7 @@ namespace $ {
 			... args: Args
 		): $mol_fiber2< Host, [ ... Args ], Result > {
 			
-			const existen = $mol_wire?.wire_next()
+			const existen = $mol_wire?.next()
 			
 			reuse: if( existen ) {
 				
@@ -55,13 +55,13 @@ namespace $ {
 			
 		}
 		
-		wire_absorb( quant: unknown ) {
+		absorb( quant: unknown ) {
 			
 			if( this.wire_pubs_cursor < 0 ) return
 			this.wire_pubs_cursor = -1
 
-			if( this.wire_peers.length ) {
-				this.wire_emit( quant )
+			if( this.wire_subs_from < this.wire_peers.length ) {
+				this.emit( quant )
 			} else {
 				new $mol_after_frame( ()=> this.run() )
 			}
@@ -70,11 +70,11 @@ namespace $ {
 		
 		run() {
 			
-			$mol_wire?.wire_promo( this )
+			$mol_wire?.promo( this )
 			
 			if( this.wire_pubs_cursor >= 0 ) return
 			
-			const bu = this.wire_begin()
+			const bu = this.begin()
 
 			try {
 				
@@ -87,12 +87,12 @@ namespace $ {
 					this.result = this.result.then(
 						res => {
 							this.result = res
-							this.wire_emit()
+							this.emit()
 							return res
 						},
 						error => {
 							this.result = error
-							this.wire_emit()
+							this.emit()
 						},
 					)
 					
@@ -109,20 +109,20 @@ namespace $ {
 				
 				if( error instanceof Promise ) {
 					error.then(
-						res => this.wire_absorb( res ),
-						err => this.wire_absorb( err ),
+						res => this.absorb( res ),
+						err => this.absorb( err ),
 					)
 				}
 				
 			} finally {
-				this.wire_end( bu )
+				this.end( bu )
 			}
 
 		}
 		
 		push( next: Result | Error | Promise< Result > ) {
 			this.result = next
-			this.wire_emit()
+			this.emit()
 		}
 		
 		sync() {
@@ -215,59 +215,6 @@ namespace $ {
 					: ( ... args: Args )=> Promise< Res >
 				: Host[ key ]
 		}
-	}
-	
-	export function $mol_fiber2_chan<
-		Host extends object ,
-		Field extends keyof Host ,
-		Prop extends Extract< Host[ Field ] , ( next? : any )=> any >,
-	>(
-		proto : Host ,
-		name : Field ,
-		descr? : TypedPropertyDescriptor< Prop >
-	) {
-
-		type Input = $mol_type_param< Prop , 0 >
-		type Output = $mol_type_result< Prop >
-
-		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( proto , name )
-		const orig = descr!.value!
-		
-		const key = name instanceof Symbol ? name : Symbol( name as string | number )
-
-		;( proto as any )[ key ] = null
-
-		const cached = ( host : Host ): $mol_fiber2< Host, readonly Input[], Output > => {
-			
-			let cache = ( host as any )[ key ]
-			if( cache ) return cache
-
-			let cache2 = new $mol_fiber2( host, orig )
-			;( host as any )[ key ] = cache2
-
-			return cache2
-		}
-		
-		function value( this : Host , next? : Input ) {
-			
-			const cache = cached( this )
-			
-			if( next === undefined ) {
-				return cache.sync()
-			}  else {
-				const fiber = $mol_fiber2.make( this, orig, next )
-				const res = fiber.sync()
-				cache.push( res )
-				return res
-			}
-			
-		}
-		
-		const descr2 = { ... descr, value }
-		Reflect.defineProperty( proto, name, descr2 )
-		
-		return descr2
-
 	}
 	
 }
