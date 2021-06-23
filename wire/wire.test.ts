@@ -7,7 +7,7 @@ namespace $ {
 			const pub2 = new class extends $mol_wire_pub { p = 2 }
 			
 			let absorbed = [] as unknown[]
-			const sub = new class extends $mol_wire_sub {
+			const sub = new class extends $mol_wire_pub_sub {
 				absorb( pub: unknown ) {
 					absorbed.push( pub )
 				}
