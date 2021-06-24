@@ -140,7 +140,7 @@ namespace $ {
 		@ $mol_mem
 		heartbeat() {
 			
-			const timer = this.$.setInterval( ()=> {
+			const timer = setInterval( ()=> {
 				this.socket().send('')
 			}, 30000 )
 			
