@@ -339,6 +339,25 @@ namespace $ {
 
 			$mol_assert_equal(
 				convert(`
+					class
+						Foo
+						{}
+				`),
+				'class Foo {}\n',
+			)
+			
+			$mol_assert_equal(
+				convert(`
+					class
+						Foo
+						extends Bar
+						{}
+				`),
+				'class Foo extends Bar {}\n',
+			)
+			
+			$mol_assert_equal(
+				convert(`
 					class {}
 						.
 							\\foo
