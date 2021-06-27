@@ -78,7 +78,9 @@ namespace $ {
 			'(>)': sequence( '(', ' > ', ')' ),
 			'(>=)': sequence( '(', ' >= ', ')' ),
 			'(==)': sequence( '(', ' == ', ')' ),
+			'(!=)': sequence( '(', ' != ', ')' ),
 			'(===)': sequence( '(', ' === ', ')' ),
+			'(!==)': sequence( '(', ' !== ', ')' ),
 			
 			'(<<)': sequence( '(', ' << ', ')' ),
 			'(>>)': sequence( '(', ' >> ', ')' ),
@@ -91,6 +93,7 @@ namespace $ {
 			'(||)': sequence( '(', ' || ', ')' ),
 			'(,)': sequence( '(', ', ', ')' ),
 			'{;}': sequence( '{', '; ', '}' ),
+			';': sequence( '', ';', '' ),
 			'[,]': sequence( '[', ', ', ']' ),
 			'{,}': sequence( '{', ', ', '}' ),
 
@@ -139,10 +142,18 @@ namespace $ {
 			'class': triplet( 'class ', ' ' ),
 			'extends': sequence( 'extends ', '', ' ' ),
 
-			'if': triplet( 'if', '', 'else' ),
+			'if': triplet( 'if', ' ', 'else' ),
 			'?:': triplet( '', ' ? ', ' : ' ),
 
-			'.': triplet( '[', ']' ),
+			'.': ( input, belt )=> {
+				const first = input.kids[0]
+				if( first.type ) return triplet( '[', ']' )( input, belt )
+				else return [
+					input.data( first.text() ),
+					... input.list( input.kids.slice(1) ).hack( belt ),
+				]
+			},
+
 			'get': triplet( 'get [', ']' ),
 			'set': triplet( 'set [', ']' ),
 			'static': triplet( 'static [', ']' ),
