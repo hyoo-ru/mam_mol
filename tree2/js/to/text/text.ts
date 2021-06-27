@@ -136,7 +136,8 @@ namespace $ {
 			'async': triplet( 'async function ' ),
 			'async*': triplet( 'async function* ' ),
 
-			'class': triplet( 'class ' ),
+			'class': triplet( 'class ', ' ' ),
+			'extends': sequence( 'extends ', '', ' ' ),
 
 			'if': triplet( 'if', '', 'else' ),
 			'?:': triplet( '', ' ? ', ' : ' ),
