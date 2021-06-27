@@ -1,4 +1,4 @@
-$mol_app_studio $mol_book
+$mol_app_studio $mol_book2
 	value_overrided!id?val null
 	-
 	tools_main /
@@ -81,7 +81,7 @@ $mol_app_studio $mol_book
 		highlight <= prop_filter
 	-
 	class_name_self?val \$mol_app_studio_generated
-	class_name_base?val \$mol_view
+	class_name_base?val \$mol_select
 	class_self?val $mol_tree2_empty
 	classes $mol_tree2_empty
 

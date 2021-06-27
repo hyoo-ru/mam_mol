@@ -19,7 +19,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		classes_static() {
-			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tdom_name \\\n\n'
+			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tfield *\n\tdom_name \\\n\n'
 			const source = view_tree + $mol_fetch.text( 'web.view.tree' )
 			return this.$.$mol_view_tree2_classes( this.$.$mol_tree2_from_string( source, 'web.view.tree' ) )
 		}
@@ -61,14 +61,13 @@ namespace $.$$ {
 			const props_all : { [ name : string ] : $mol_tree2 } = {}
 
 			const collect = ( name : string )=> {
-
-				const props = this.props_self( name )
-				for( const prop of props.kids ) props_all[ prop.type ] = undefined as any
 				
 				const sup = this.class( name )
 				if( sup ) collect( this.$.$mol_view_tree2_class_super( sup ).type )
-
+				
+				const props = this.props_self( name )
 				for( const prop of props.kids ) props_all[ prop.type ] = prop
+				
 			}
 
 			collect( name )
@@ -88,6 +87,7 @@ namespace $.$$ {
 			]
 		}
 		
+		@ $mol_mem
 		fields() {
 			const path = this.path()
 
