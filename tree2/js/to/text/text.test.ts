@@ -364,7 +364,7 @@ namespace $ {
 							(,)
 							{;}
 				`),
-				'class {["foo"](){}}\n',
+				'class {foo(){}}\n',
 			)
 			
 			$mol_assert_equal(
@@ -420,7 +420,7 @@ namespace $ {
 						() 1
 						{;} 2
 				`),
-				'if(1){2}\n',
+				'if(1) {2}\n',
 			)
 
 			$mol_assert_equal(
@@ -430,7 +430,7 @@ namespace $ {
 						{;} 2
 						{;} 3
 				`),
-				'if(1){2}else{3}\n',
+				'if(1) {2}else{3}\n',
 			)
 
 		},
