@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_app_studio_field extends $mol_expander {
+	export class $mol_app_studio_field extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -13,58 +13,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Trigger $mol_app_studio_field_title
-		 * 	checked?val <=> expanded?val
-		 * 	Title <= Trigger_label
-		 * 	type <= type
+		 * rows /
+		 * 	<= Label
+		 * 	<= Value
 		 * ```
 		 */
-		@ $mol_mem
-		Trigger() {
-			const obj = new this.$.$mol_app_studio_field_title()
-			
-			obj.checked = (val?: any) => this.expanded(val)
-			obj.Title = () => this.Trigger_label()
-			obj.type = () => this.type()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Tools $mol_view sub <= tools
-		 * ```
-		 */
-		@ $mol_mem
-		Tools() {
-			const obj = new this.$.$mol_view()
-			
-			obj.sub = () => this.tools()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * content /
-		 * 	<= Bool
-		 * 	<= Number
-		 * 	<= String
-		 * 	<= Bind
-		 * 	<= List
-		 * 	<= Dict
-		 * 	<= Overs
-		 * ```
-		 */
-		content() {
+		rows() {
 			return [
-				this.Bool(),
-				this.Number(),
-				this.String(),
-				this.Bind(),
-				this.List(),
-				this.Dict(),
-				this.Overs()
+				this.Label(),
+				this.Value()
 			] as readonly any[]
 		}
 		
@@ -197,13 +154,34 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * type?val \null
+		 * Trigger $mol_app_studio_field_title
+		 * 	checked?val <=> expanded?val
+		 * 	label / <= Trigger_label
+		 * 	type <= type
+		 * ```
+		 */
+		@ $mol_mem
+		Trigger() {
+			const obj = new this.$.$mol_app_studio_field_title()
+			
+			obj.checked = (val?: any) => this.expanded(val)
+			obj.label = () => [
+				this.Trigger_label()
+			] as readonly any[]
+			obj.type = () => this.type()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * type?val \
 		 * ```
 		 */
 		@ $mol_mem
 		type(val?: any) {
 			if ( val !== undefined ) return val
-			return "null"
+			return ""
 		}
 		
 		/**
@@ -329,6 +307,39 @@ namespace $ {
 				this.Type(),
 				this.Object()
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Tools $mol_view sub <= tools
+		 * ```
+		 */
+		@ $mol_mem
+		Tools() {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => this.tools()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Label $mol_view sub /
+		 * 	<= Trigger
+		 * 	<= Tools
+		 * ```
+		 */
+		@ $mol_mem
+		Label() {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => [
+				this.Trigger(),
+				this.Tools()
+			] as readonly any[]
+			
+			return obj
 		}
 		
 		/**
@@ -587,6 +598,44 @@ namespace $ {
 			const obj = new this.$.$mol_list()
 			
 			obj.rows = () => this.overs()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * content /
+		 * 	<= Bool
+		 * 	<= Number
+		 * 	<= String
+		 * 	<= Bind
+		 * 	<= List
+		 * 	<= Dict
+		 * 	<= Overs
+		 * ```
+		 */
+		content() {
+			return [
+				this.Bool(),
+				this.Number(),
+				this.String(),
+				this.Bind(),
+				this.List(),
+				this.Dict(),
+				this.Overs()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Value $mol_view sub <= content
+		 * ```
+		 */
+		@ $mol_mem
+		Value() {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => this.content()
 			
 			return obj
 		}

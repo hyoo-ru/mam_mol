@@ -7,7 +7,7 @@ namespace $ {
 			
 			if( next === undefined ) {
 				next = $mol_dom_context.location.href
-			} else {
+			} else if( !/^about:srcdoc/.test( next ) ) {
 				history.replaceState( history.state , $mol_dom_context.document.title , next )
 			}
 			

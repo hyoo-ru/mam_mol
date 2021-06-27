@@ -14,12 +14,14 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	src <= uri?val
+		 * 	srcdoc <= html
 		 * 	allow <= allow
 		 * ```
 		 */
 		attr() {
 			return {
 				src: this.uri(),
+				srcdoc: this.html(),
 				allow: this.allow()
 			}
 		}
@@ -87,6 +89,15 @@ namespace $ {
 		uri(val?: any) {
 			if ( val !== undefined ) return val
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * html null
+		 * ```
+		 */
+		html() {
+			return null as any
 		}
 		
 		/**

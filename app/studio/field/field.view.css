@@ -1,5 +1,6 @@
 [mol_app_studio_field] {
 	flex: 1 1 100%;
+	margin: .75rem;
 }
 
 [mol_app_studio_field_label] {
@@ -15,13 +16,13 @@
 	margin: .75rem 0;
 }
 
-[mol_app_studio_field_content] {
+[mol_app_studio_field_value] {
 	display: flex;
 	flex-wrap: wrap;
 }
 
 [mol_app_studio_field_title] {
-	flex: 0 1 auto;
+	flex: 1 1 auto;
 }
 
 [mol_app_studio_field_title_type="null"] ,
@@ -90,14 +91,6 @@
 [mol_app_studio_field_dict] ,
 [mol_app_studio_field_overs] {
 	flex: 1 1 100%;
-}
-
-[mol_app_studio_field_dict] > * ,
-[mol_app_studio_field_overs] > * {
-	margin: 1rem;
-}
-
-[mol_app_studio_field_item] {
 }
 
 [mol_app_studio_field_add] {

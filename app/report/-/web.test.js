@@ -2773,6 +2773,136 @@ var $;
 ;
 "use strict";
 var $;
+(function ($) {
+    class $mol_view_tree_test_attributes_super extends $.$mol_view {
+        some() {
+            return {
+                a: 0,
+                b: 2
+            };
+        }
+    }
+    $.$mol_view_tree_test_attributes_super = $mol_view_tree_test_attributes_super;
+    class $mol_view_tree_test_attributes extends $mol_view_tree_test_attributes_super {
+        some() {
+            return {
+                ...super.some(),
+                a: 1
+            };
+        }
+    }
+    $.$mol_view_tree_test_attributes = $mol_view_tree_test_attributes;
+})($ || ($ = {}));
+//attributes.test.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_view_tree_test_binding extends $.$mol_view {
+        value(val) {
+            return this.task_title_new(val);
+        }
+        enabled() {
+            return this.head_complete_enabled();
+        }
+        task_title_new(val) {
+            if (val !== undefined)
+                return val;
+            return "123";
+        }
+        head_complete_enabled() {
+            return false;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_view_tree_test_binding.prototype, "task_title_new", null);
+    $.$mol_view_tree_test_binding = $mol_view_tree_test_binding;
+})($ || ($ = {}));
+//binding.test.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_view_tree_test_binding_right extends $.$mol_view {
+        outer_width(v) {
+            return this.Test().width(v);
+        }
+        Test() {
+            const obj = new this.$.$mol_view_tree_test_binding_right_test();
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_view_tree_test_binding_right.prototype, "Test", null);
+    $.$mol_view_tree_test_binding_right = $mol_view_tree_test_binding_right;
+    class $mol_view_tree_test_binding_right_test extends $.$mol_view {
+        width(val) {
+            if (val !== undefined)
+                return val;
+            return 0;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_view_tree_test_binding_right_test.prototype, "width", null);
+    $.$mol_view_tree_test_binding_right_test = $mol_view_tree_test_binding_right_test;
+})($ || ($ = {}));
+//binding_right.test.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_view_tree_test_simple extends $.$mol_view {
+        some() {
+            return 1;
+        }
+        bool() {
+            return true;
+        }
+        str() {
+            return "test";
+        }
+        arr() {
+            return [];
+        }
+        arr_string() {
+            return [];
+        }
+    }
+    $.$mol_view_tree_test_simple = $mol_view_tree_test_simple;
+})($ || ($ = {}));
+//simple.test.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_view_tree_test_attributes_subcomponent extends $.$mol_view {
+        Page(index) {
+            const obj = new this.$.$mol_view_tree_test_attributes_subcomponent_page();
+            obj.Sub = () => this.page(index);
+            return obj;
+        }
+        page(index) {
+            return null;
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_view_tree_test_attributes_subcomponent.prototype, "Page", null);
+    $.$mol_view_tree_test_attributes_subcomponent = $mol_view_tree_test_attributes_subcomponent;
+    class $mol_view_tree_test_attributes_subcomponent_page extends $.$mol_view {
+        Sub() {
+            return null;
+        }
+    }
+    $.$mol_view_tree_test_attributes_subcomponent_page = $mol_view_tree_test_attributes_subcomponent_page;
+})($ || ($ = {}));
+//subcomponent.test.view.tree.js.map
+;
+"use strict";
+var $;
 (function ($_1) {
     var $$;
     (function ($$) {
@@ -2896,5 +3026,612 @@ var $;
     });
 })($ || ($ = {}));
 //tree.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_tree_convert = Symbol('$mol_tree_convert');
+    class $mol_tree extends $.$mol_object2 {
+        constructor(config = {}) {
+            super();
+            this.type = config.type || '';
+            if (config.value !== undefined) {
+                var sub = $mol_tree.values(config.value);
+                if (config.type || sub.length > 1) {
+                    this.sub = [...sub, ...(config.sub || [])];
+                    this.data = config.data || '';
+                }
+                else {
+                    this.data = sub[0].data;
+                    this.sub = config.sub || [];
+                }
+            }
+            else {
+                this.data = config.data || '';
+                this.sub = config.sub || [];
+            }
+            this.baseUri = config.baseUri || '';
+            this.row = config.row || 0;
+            this.col = config.col || 0;
+            this.length = config.length || 0;
+        }
+        static values(str, baseUri) {
+            return str.split('\n').map((data, index) => new $mol_tree({
+                data: data,
+                baseUri: baseUri,
+                row: index + 1,
+                length: data.length,
+            }));
+        }
+        clone(config = {}) {
+            return new $mol_tree({
+                type: ('type' in config) ? config.type : this.type,
+                data: ('data' in config) ? config.data : this.data,
+                sub: ('sub' in config) ? config.sub : this.sub,
+                baseUri: ('baseUri' in config) ? config.baseUri : this.baseUri,
+                row: ('row' in config) ? config.row : this.row,
+                col: ('col' in config) ? config.col : this.col,
+                length: ('length' in config) ? config.length : this.length,
+                value: config.value
+            });
+        }
+        make(config) {
+            return new $mol_tree({
+                baseUri: this.baseUri,
+                row: this.row,
+                col: this.col,
+                length: this.length,
+                ...config,
+            });
+        }
+        make_data(value, sub) {
+            return this.make({ value, sub });
+        }
+        make_struct(type, sub) {
+            return this.make({ type, sub });
+        }
+        static fromString(str, baseUri) {
+            var root = new $mol_tree({ baseUri: baseUri });
+            var stack = [root];
+            var row = 0;
+            var prefix = str.replace(/^\n?(\t*)[\s\S]*/, '$1');
+            var lines = str.replace(new RegExp('^\\t{0,' + prefix.length + '}', 'mg'), '').split('\n');
+            lines.forEach(line => {
+                ++row;
+                var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?(.*?)(?:$|\n)/m.exec(line);
+                if (!chunks || chunks[4])
+                    return this.$.$mol_fail(new Error(`Syntax error at ${baseUri}:${row}\n${line}`));
+                var indent = chunks[1];
+                var path = chunks[2];
+                var data = chunks[3];
+                var deep = indent.length;
+                var types = path ? path.replace(/ $/, '').split(/ +/) : [];
+                if (stack.length <= deep)
+                    return this.$.$mol_fail(new Error(`Too many tabs at ${baseUri}:${row}\n${line}`));
+                stack.length = deep + 1;
+                var parent = stack[deep];
+                let col = deep;
+                types.forEach(type => {
+                    if (!type)
+                        return this.$.$mol_fail(new Error(`Unexpected space symbol ${baseUri}:${row}\n${line}`));
+                    var next = new $mol_tree({ type, baseUri, row, col, length: type.length });
+                    const parent_sub = parent.sub;
+                    parent_sub.push(next);
+                    parent = next;
+                    col += type.length + 1;
+                });
+                if (data) {
+                    var next = new $mol_tree({ data: data.substring(1), baseUri, row, col, length: data.length });
+                    const parent_sub = parent.sub;
+                    parent_sub.push(next);
+                    parent = next;
+                }
+                stack.push(parent);
+            });
+            return root;
+        }
+        static fromJSON(json, baseUri = '') {
+            switch (true) {
+                case typeof json === 'boolean':
+                case typeof json === 'number':
+                case json === null:
+                    return new $mol_tree({
+                        type: String(json),
+                        baseUri: baseUri
+                    });
+                case typeof json === 'string':
+                    return new $mol_tree({
+                        value: json,
+                        baseUri: baseUri
+                    });
+                case Array.isArray(json):
+                    return new $mol_tree({
+                        type: "/",
+                        sub: json.map(json => $mol_tree.fromJSON(json, baseUri))
+                    });
+                case json instanceof Date:
+                    return new $mol_tree({
+                        value: json.toISOString(),
+                        baseUri: baseUri
+                    });
+                default:
+                    if (typeof json[$.$mol_tree_convert] === 'function') {
+                        return json[$.$mol_tree_convert]();
+                    }
+                    if (typeof json.toJSON === 'function') {
+                        return $mol_tree.fromJSON(json.toJSON());
+                    }
+                    if (json instanceof Error) {
+                        const { name, message, stack } = json;
+                        json = { ...json, name, message, stack };
+                    }
+                    var sub = [];
+                    for (var key in json) {
+                        if (json[key] === undefined)
+                            continue;
+                        const subsub = $mol_tree.fromJSON(json[key], baseUri);
+                        if (/^[^\n\t\\ ]+$/.test(key)) {
+                            var child = new $mol_tree({
+                                type: key,
+                                baseUri: baseUri,
+                                sub: [subsub],
+                            });
+                        }
+                        else {
+                            var child = new $mol_tree({
+                                value: key,
+                                baseUri: baseUri,
+                                sub: [subsub],
+                            });
+                        }
+                        sub.push(child);
+                    }
+                    return new $mol_tree({
+                        type: "*",
+                        sub: sub,
+                        baseUri: baseUri
+                    });
+            }
+        }
+        get uri() {
+            return this.baseUri + '#' + this.row + ':' + this.col;
+        }
+        toString(prefix = '') {
+            var output = '';
+            if (this.type.length) {
+                if (!prefix.length) {
+                    prefix = "\t";
+                }
+                output += this.type;
+                if (this.sub.length == 1) {
+                    return output + ' ' + this.sub[0].toString(prefix);
+                }
+                output += "\n";
+            }
+            else if (this.data.length || prefix.length) {
+                output += "\\" + this.data + "\n";
+            }
+            for (var child of this.sub) {
+                output += prefix;
+                output += child.toString(prefix + "\t");
+            }
+            return output;
+        }
+        toJSON() {
+            if (!this.type)
+                return this.value;
+            if (this.type === 'true')
+                return true;
+            if (this.type === 'false')
+                return false;
+            if (this.type === 'null')
+                return null;
+            if (this.type === '*') {
+                var obj = {};
+                for (var child of this.sub) {
+                    if (child.type === '-')
+                        continue;
+                    var key = child.type || child.clone({ sub: child.sub.slice(0, child.sub.length - 1) }).value;
+                    var val = child.sub[child.sub.length - 1].toJSON();
+                    if (val !== undefined)
+                        obj[key] = val;
+                }
+                return obj;
+            }
+            if (this.type === '/') {
+                var res = [];
+                this.sub.forEach(child => {
+                    if (child.type === '-')
+                        return;
+                    var val = child.toJSON();
+                    if (val !== undefined)
+                        res.push(val);
+                });
+                return res;
+            }
+            if (this.type === 'time') {
+                return new Date(this.value);
+            }
+            const numb = Number(this.type);
+            if (!Number.isNaN(numb) || this.type === 'NaN')
+                return numb;
+            throw new Error(`Unknown type (${this.type}) at ${this.uri}`);
+        }
+        get value() {
+            var values = [];
+            for (var child of this.sub) {
+                if (child.type)
+                    continue;
+                values.push(child.value);
+            }
+            return this.data + values.join("\n");
+        }
+        insert(value, ...path) {
+            if (path.length === 0)
+                return value;
+            const type = path[0];
+            if (typeof type === 'string') {
+                let replaced = false;
+                const sub = this.sub.map((item, index) => {
+                    if (item.type !== type)
+                        return item;
+                    replaced = true;
+                    return item.insert(value, ...path.slice(1));
+                });
+                if (!replaced)
+                    sub.push(new $mol_tree({ type }).insert(value, ...path.slice(1)));
+                return this.clone({ sub });
+            }
+            else if (typeof type === 'number') {
+                const sub = this.sub.slice();
+                sub[type] = (sub[type] || new $mol_tree).insert(value, ...path.slice(1));
+                return this.clone({ sub });
+            }
+            else {
+                return this.clone({ sub: ((this.sub.length === 0) ? [new $mol_tree()] : this.sub).map(item => item.insert(value, ...path.slice(1))) });
+            }
+        }
+        select(...path) {
+            var next = [this];
+            for (var type of path) {
+                if (!next.length)
+                    break;
+                var prev = next;
+                next = [];
+                for (var item of prev) {
+                    switch (typeof (type)) {
+                        case 'string':
+                            for (var child of item.sub) {
+                                if (!type || (child.type == type)) {
+                                    next.push(child);
+                                }
+                            }
+                            break;
+                        case 'number':
+                            if (type < item.sub.length)
+                                next.push(item.sub[type]);
+                            break;
+                        default: next.push(...item.sub);
+                    }
+                }
+            }
+            return new $mol_tree({ sub: next });
+        }
+        filter(path, value) {
+            var sub = this.sub.filter(function (item) {
+                var found = item.select(...path);
+                if (value == null) {
+                    return Boolean(found.sub.length);
+                }
+                else {
+                    return found.sub.some(child => child.value == value);
+                }
+            });
+            return new $mol_tree({ sub: sub });
+        }
+        transform(visit, stack = []) {
+            const sub_stack = [this, ...stack];
+            return visit(sub_stack, () => this.sub.map(node => node.transform(visit, sub_stack)).filter(n => n));
+        }
+        hack(context) {
+            const sub = [].concat(...this.sub.map(child => {
+                const handle = context[child.type] || context[''];
+                if (!handle)
+                    $.$mol_fail(child.error('Handler not defined'));
+                return handle(child, context);
+            }));
+            return this.clone({ sub });
+        }
+        error(message) {
+            return new Error(`${message}:\n${this} ${this.baseUri}:${this.row}:${this.col}`);
+        }
+    }
+    __decorate([
+        $.$mol_deprecated('Use $mol_tree:hack')
+    ], $mol_tree.prototype, "transform", null);
+    $.$mol_tree = $mol_tree;
+})($ || ($ = {}));
+//tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_view_tree_trim_remarks(def) {
+        return def.transform(([node], sub) => (node.type === '-') ? null : node.clone({ sub: sub() }));
+    }
+    $.$mol_view_tree_trim_remarks = $mol_view_tree_trim_remarks;
+    function $mol_view_tree_classes(defs) {
+        return $mol_view_tree_trim_remarks(defs);
+    }
+    $.$mol_view_tree_classes = $mol_view_tree_classes;
+    function $mol_view_tree_class_name(val) {
+        return val.type;
+    }
+    $.$mol_view_tree_class_name = $mol_view_tree_class_name;
+    function $mol_view_tree_super_name(val) {
+        if (val.sub.length != 1)
+            throw val.error('Wrong sub count');
+        return val.sub[0].type;
+    }
+    $.$mol_view_tree_super_name = $mol_view_tree_super_name;
+    function $mol_view_tree_class_props(def) {
+        const props = {};
+        const catch_prop = (prop, type = '') => {
+            let def = prop;
+            if (type === '=>') {
+                if (prop.sub[0])
+                    throw prop.error('Right binding can not have default value');
+            }
+            else {
+                if (prop.sub.length === 0)
+                    return;
+                if (prop.sub[0].type === '-')
+                    return;
+                props[prop.type] = props[prop.type];
+                def = prop.clone({
+                    sub: [prop.sub[0].transform(([node, ...stack], sub) => {
+                            if (['<=', '<=>', '=>'].indexOf(node.type) === -1)
+                                return node.clone({ sub: sub() });
+                            catch_prop(node.sub[0], node.type);
+                            return node.clone({
+                                sub: [node.sub[0].clone({
+                                        sub: []
+                                    })]
+                            });
+                        })]
+                });
+            }
+            if (props[prop.type]) {
+                if (props[prop.type].toString() !== def.toString()) {
+                    throw def.error('Property already defined with another default value' + props[prop.type].error('').message + '\n---');
+                }
+            }
+            else {
+                props[prop.type] = def;
+            }
+        };
+        def.sub[0].sub.map(sub => catch_prop(sub));
+        return def.clone({
+            type: '',
+            sub: Object.keys(props).map(name => props[name]),
+        });
+    }
+    $.$mol_view_tree_class_props = $mol_view_tree_class_props;
+    function $mol_view_tree_prop_name(prop) {
+        return (prop.type.match(/^\w+/) || [])[0] || '';
+    }
+    $.$mol_view_tree_prop_name = $mol_view_tree_prop_name;
+    function $mol_view_tree_prop_key(prop) {
+        return (prop.type.match(/!(\w+)$/) || [])[1] || '';
+    }
+    $.$mol_view_tree_prop_key = $mol_view_tree_prop_key;
+    function $mol_view_tree_prop_next(prop) {
+        return (prop.type.match(/\?(\w+)$/) || [])[1] || '';
+    }
+    $.$mol_view_tree_prop_next = $mol_view_tree_prop_next;
+    function $mol_view_tree_prop_value(prop) {
+        if (prop.sub.length != 1)
+            throw prop.error(`Wrong sub count (${prop.sub.length})`);
+        return prop.sub[0];
+    }
+    $.$mol_view_tree_prop_value = $mol_view_tree_prop_value;
+    function $mol_view_tree_value_type(val) {
+        switch (val.type) {
+            case 'true': return 'bool';
+            case 'false': return 'bool';
+            case 'null': return 'null';
+            case '*': return 'dict';
+            case '@': return 'locale';
+            case '': return 'string';
+            case '<=': return 'get';
+            case '<=>': return 'bind';
+            case '=>': return 'put';
+        }
+        switch (val.type[0]) {
+            case '/': return 'list';
+            case '$': return 'object';
+        }
+        if (Number(val.type).toString() == val.type)
+            return 'number';
+        throw val.error('Wrong value');
+    }
+    $.$mol_view_tree_value_type = $mol_view_tree_value_type;
+    function $mol_view_tree_compile(tree) {
+        const splittedUri = tree.uri.split(/[#\\\/]/);
+        splittedUri.pop();
+        const fileName = splittedUri.pop();
+        const SourceNode = (row, col, fileName, text) => text;
+        var content = [];
+        var locales = {};
+        for (let def of $mol_view_tree_classes(tree).sub) {
+            if (!/^\$\w+$/.test(def.type))
+                throw def.error('Wrong component name');
+            var parent = def.sub[0];
+            var members = {};
+            for (let param of $mol_view_tree_class_props(def).sub) {
+                try {
+                    var needSet = false;
+                    var needCache = false;
+                    if (param.type === '<=>') {
+                        param = param.sub[0];
+                    }
+                    if (param.type === '<=') {
+                        param = param.sub[0];
+                    }
+                    var propName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec(param.type);
+                    if (propName[3]) {
+                        needSet = true;
+                        needCache = true;
+                    }
+                    const getValue = (value, definition) => {
+                        try {
+                            switch (true) {
+                                case (value.type === ''):
+                                    return [JSON.stringify(value.value)];
+                                case (value.type === '@'):
+                                    const key = `${def.type}_${param.type.replace(/[?!].*/, '')}`;
+                                    locales[key] = value.value;
+                                    return [`this.$.$mol_locale.text( ${JSON.stringify(key)} )`];
+                                case (value.type === '-'):
+                                    return null;
+                                case (value.type[0] === '/'):
+                                    const item_type = value.type.substring(1);
+                                    var items = [];
+                                    value.sub.forEach(item => {
+                                        if (item.type === '-')
+                                            return;
+                                        if (item.type === '^') {
+                                            items.push(`...super.${param.type}()`);
+                                            return;
+                                        }
+                                        var val = getValue(item);
+                                        if (val)
+                                            items.push(val.join(""));
+                                    });
+                                    return [`[`, items.join(' , '), `]`, (item_type ? ` as readonly ( ${item_type} )[]` : ` as readonly any[]`)];
+                                case (value.type[0] === '$'):
+                                    if (!definition)
+                                        throw value.error('Objects should be bound');
+                                    needCache = true;
+                                    var overs = [];
+                                    value.sub.forEach(over => {
+                                        if (/^[-\/]?$/.test(over.type))
+                                            return '';
+                                        var overName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec(over.type);
+                                        var ns = needSet;
+                                        if (over.sub[0].type === '=>') {
+                                            if (over.sub[0].sub.length === 1) {
+                                                const [, own_name, own_key, own_next] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec(over.sub[0].sub[0].type);
+                                                let own_args = [];
+                                                if (own_key)
+                                                    own_args.push(` ${own_key} : any `);
+                                                if (own_next)
+                                                    own_args.push(` ${own_next}? : any `);
+                                                let [, their_name, ...their_args] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec(over.type);
+                                                their_args = their_args.filter(Boolean);
+                                                members[own_name] = [`\t${own_name}(${own_args.join(',')}) {\n\t\treturn this.${propName[1]}(${propName[2] || ''}).${their_name}( ${their_args.join(' , ')} )\n\t}\n\n`];
+                                                return;
+                                            }
+                                        }
+                                        var v = getValue(over.sub[0]);
+                                        let args = [];
+                                        if (overName[2])
+                                            args.push(` ${overName[2]} : any `);
+                                        if (overName[3])
+                                            args.push(` ${overName[3]}? : any `);
+                                        overs.push(...['\t\t\tobj.', SourceNode(over.row, over.col, fileName, overName[1]), ' = (', args.join(','), ') => ', ...(v || []), '\n']);
+                                        needSet = ns;
+                                    });
+                                    const object_args = value.select('/', '').sub.map(arg => getValue(arg)).join(' , ');
+                                    return ['(( obj )=>{\n', ...overs, '\t\t\treturn obj\n\t\t})( new this.$.', SourceNode(value.row, value.col, fileName, value.type), '( ', object_args, ' ) )'];
+                                case (value.type === '*'):
+                                    var opts = [];
+                                    value.sub.forEach(opt => {
+                                        if (opt.type === '-')
+                                            return '';
+                                        if (opt.type === '^') {
+                                            opts.push(`\t\t\t...super.${param.type}() ,\n`);
+                                            return;
+                                        }
+                                        var key = /(.*?)(?:\?(\w+))?$/.exec(opt.type);
+                                        var ns = needSet;
+                                        var v = getValue(opt.sub[0]);
+                                        var arg = key[2] ? ` ( ${key[2]}? : any )=> ` : '';
+                                        opts.push(...['\t\t\t"', SourceNode(opt.row, opt.col, fileName, key[1] + '" : '), arg, ' ', ...(v || []), ' ,\n']);
+                                        needSet = ns;
+                                    });
+                                    return ['({\n', opts.join(''), '\t\t})'];
+                                case (value.type === '<=>'):
+                                    if (value.sub.length === 1) {
+                                        var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))$/.exec(value.sub[0].type);
+                                        return ['this.' + type[1] + '(' + (type[2] ? type[2] + ' ,' : '') + ' ' + type[3] + ' )'];
+                                    }
+                                    break;
+                                case (value.type === '<='):
+                                    if (value.sub.length === 1) {
+                                        var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec(value.sub[0].type);
+                                        return ['this.' + type[1] + '(' + (type[2] ? type[2] : '') + ')'];
+                                    }
+                                    break;
+                            }
+                            switch (value.type) {
+                                case 'true':
+                                case 'false':
+                                    return [value.type];
+                                case 'null':
+                                    return ['null as any'];
+                            }
+                            if (Number(value.type).toString() == value.type)
+                                return [value.type];
+                            throw value.error('Wrong value');
+                        }
+                        catch (err) {
+                            throw err;
+                        }
+                    };
+                    if (param.sub.length > 1)
+                        throw new Error('Too more sub');
+                    param.sub.forEach(child => {
+                        var val = getValue(child, true);
+                        if (!val)
+                            return;
+                        var args = [];
+                        if (propName[2])
+                            args.push(` ${propName[2]} : any `);
+                        if (propName[3])
+                            args.push(` ${propName[3]}? : any , force? : $${''}mol_mem_force `);
+                        if (needSet)
+                            val = [
+                                `( ${propName[3]} !== void 0 ) ? ${propName[3]} : `,
+                                ...val
+                            ];
+                        val = ['return ', ...val];
+                        var decl = ['\t', SourceNode(param.row, param.col, fileName, propName[1]), '(', args.join(','), ') {\n\t\t', ...val, '\n\t}\n\n'];
+                        if (needCache) {
+                            if (propName[2])
+                                decl = ['\t@ $', 'mol_mem_key\n', ...decl];
+                            else
+                                decl = ['\t@ $', 'mol_mem\n', ...decl];
+                        }
+                        decl = ['\t/**\n\t *  ```\n', param.toString().trim().replace(/^/mg, '\t *  '), '\n\t *  ```\n\t **/\n', ...decl];
+                        members[propName[1]] = decl;
+                    });
+                }
+                catch (err) {
+                    throw err;
+                }
+            }
+            var body = Object.keys(members).reduce(function (acc, name) {
+                const items = members[name] ? members[name] : ['\t', name, '() { return null as any }\n\t}\n'];
+                return [...acc, ...items];
+            }, []);
+            var classes = ['namespace $ { export class ', SourceNode(def.row, def.col, fileName, def.type), ' extends ', SourceNode(parent.row, parent.col, fileName, parent.type), ' {\n\n', ...body, '} }\n'];
+            content = [...content, ...classes];
+        }
+        return { script: content.join(''), locales };
+    }
+    $.$mol_view_tree_compile = $mol_view_tree_compile;
+})($ || ($ = {}));
+//tree.js.map
 
 //# sourceMappingURL=web.test.js.map

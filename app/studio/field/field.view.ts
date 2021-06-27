@@ -1,9 +1,16 @@
 namespace $.$$ {
 	
 	export class $mol_app_studio_field extends $.$mol_app_studio_field {
+		
+		rows() {
+			return [
+				this.Label(),
+				... this.expanded() ? [ this.Value() ] : [],
+			]
+		}
 
-		prop_current( next? : $mol_tree ) {
-			return this.prop( this.path() , next ) as $mol_tree
+		prop_current( next? : $mol_tree2 ) {
+			return this.prop( this.path() , next ) as $mol_tree2
 		}
 
 		title() {
@@ -16,24 +23,25 @@ namespace $.$$ {
 			return this.prop_arg( this.path() )
 		}
 
-		value( next? : $mol_tree ) {
+		value( next? : $mol_tree2 ) {
 			return this.prop_current( next )
 		}
 
+		@ $mol_mem
 		type( next? : string ) {
 			if( next ) {
 				let val
 				switch( next ) {
-					case 'null' : val = new $mol_tree({ type : 'null' }); break
-					case 'bool' : val = new $mol_tree({ type : 'false' }); break
-					case 'number' : val = new $mol_tree({ type : 'NaN' }); break
-					case 'string' : val = new $mol_tree({}); break
-					case 'locale' : val = new $mol_tree({ type : '@' , sub : [ new $mol_tree({}) ] }); break
-					case 'get' : val = new $mol_tree({ type : '<=' , sub : [ new $mol_tree({ type : '?' }) ] }); break
-					case 'bind' : val = new $mol_tree({ type : '<=>' , sub : [ new $mol_tree({ type : '?' }) ] }); break
-					case 'list' : val = new $mol_tree({ type : '/' }); break
-					case 'dict' : val = new $mol_tree({ type : '*' }); break
-					case 'object' : val = new $mol_tree({ type : '$mol_view' }); break
+					case 'null' : val = $mol_tree2.struct( 'null' ); break
+					case 'bool' : val = $mol_tree2.struct( 'false' ); break
+					case 'number' : val = $mol_tree2.struct( 'NaN' ); break
+					case 'string' : val = $mol_tree2.data(''); break
+					case 'locale' : val = $mol_tree2.struct( '@' , [ $mol_tree2.struct('') ] ); break
+					case 'get' : val = $mol_tree2.struct( '<=' , [ $mol_tree2.struct( '?' ) ] ); break
+					case 'bind' : val = $mol_tree2.struct( '<=>' , [ $mol_tree2.struct( '?' ) ] ); break
+					case 'list' : val = $mol_tree2.struct( '/' ); break
+					case 'dict' : val = $mol_tree2.struct( '*' ); break
+					case 'object' : val = $mol_tree2.struct( '$mol_view' ); break
 					default : throw new Error( `Unsupported type: ${ next }` )
 				}
 				this.value( val )
@@ -41,7 +49,7 @@ namespace $.$$ {
 			const val = this.value()
 			if( !val || val.type === '-' ) return null
 			
-			return $mol_view_tree_value_type( this.value() )
+			return this.$.$mol_view_tree2_value_type( this.value() )
 		}
 
 		@ $mol_mem
@@ -50,36 +58,44 @@ namespace $.$$ {
 		}
 
 		class( next? : string ) {
-			return this.value( next && new $mol_tree({ type : next }) || undefined ).type
+			return this.value(
+				next && $mol_tree2.struct( next ) || undefined
+			).type
 		}
 
 		bind( next? : string ) {
-			return this.value( next && this.value().clone({ sub : [ new $mol_tree({ type : next , sub : [ new $mol_tree({ type : '-' }) ] }) ] }) || undefined ).sub[0].type
+			return this.value(
+				next && this.value().clone([ $mol_tree2.struct( next ) ]) || undefined
+			).kids[0].type
 		}
 
 		value_bool( next? : string ) {
-			return this.value( next && new $mol_tree({ type : String( next ) }) || undefined ).type
+			return this.value(
+				next && $mol_tree2.struct( String( next ) ) || undefined
+			).type
 		}
 
 		value_number( next? : string ) {
-			return this.value( next && new $mol_tree({ type : String( next ) }) || undefined ).type
+			return this.value(
+				next && $mol_tree2.struct( String( next ) ) || undefined
+			).type
 		}
 
 		value_string( next? : string ) {
 			let next2
 			if( next !== undefined ) {
-				next2 = new $mol_tree({ value : next })
-				if( this.type() === 'locale' ) next2 = new $mol_tree({ type : '@' , sub : [ next2 ] })
+				next2 = $mol_tree2.data( next )
+				if( this.type() === 'locale' ) next2 = $mol_tree2.struct( '@', [ next2 ] )
 			}
 			return this.value( next2 ).value
 		}
 
 		pairs() {
-			return [ ... this.value().sub.map( pair => this.Prop([ ... this.path() , pair.type , null ]) ) , this.Add_pair() ]
+			return [ ... this.value().kids.map( pair => this.Prop([ ... this.path() , pair.type , null ]) ) , this.Add_pair() ]
 		}
 
 		overs() {
-			return [ ... this.value().sub.map( over => this.Prop([ ... this.path() , over.type , null ]) ) , this.Add_over() ]
+			return [ ... this.value().kids.map( over => this.Prop([ ... this.path() , over.type , null ]) ) , this.Add_over() ]
 		}
 
 		hint() {
@@ -122,10 +138,10 @@ namespace $.$$ {
 
 		@ $mol_mem
 		list_rows() {
-			return [ ... this.value().sub.map( ( item , index )=> this.Prop([ ... this.path() , index ]) ) , this.Add() ]
+			return [ ... this.value().kids.map( ( item , index )=> this.Prop([ ... this.path() , index ]) ) , this.Add() ]
 		}
 
-		prop_path( path : $mol_tree_path ) {
+		prop_path( path : $mol_tree2_path ) {
 			return path
 		}
 
@@ -133,21 +149,19 @@ namespace $.$$ {
 			if( !type ) return null
 			
 			const items = this.value()
-			this.value( items.insert( new $mol_tree({ type }) , items.sub.length ) )
-
-			// this.list_rows()[ items.sub.length ].type( type )
+			this.Prop([ ... this.path() , items.kids.length ]).type( type )
 
 			return null
 		}
 
 		over_options() {
-			return ( this.props( this.class() ) as $mol_tree ).sub.map( item => item.type )
+			return ( this.props( this.class() ) as $mol_tree2 ).kids.map( item => item.type )
 		}
 
 		add_over( name? : string ) {
 			if( !name ) return
 			
-			this.value( this.value().insert( new $mol_tree({ type : name }) , name ) )
+			this.value( this.value().insert( $mol_tree2.struct( name ), name ) )
 		}
 
 		add_pair( event? : Event ) {
@@ -155,7 +169,7 @@ namespace $.$$ {
 			
 			const name = this.add_pair_key()
 			this.add_pair_key( '' )
-			this.value( this.value().insert( new $mol_tree , name , null ) )
+			this.value( this.value().insert( $mol_tree2.data('') , name , null ) )
 		}
 
 		event_prop_add( event? : Event ) {

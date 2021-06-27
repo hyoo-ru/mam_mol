@@ -8,6 +8,7 @@ namespace $ {
 		class Component extends HTMLElement {
 			
 			view = new View
+			static tag = View.name.replace( /\W/g , '' ).replace( /^(?=\d+)/ , '-' ).replace( /_/g , '-' )
 			auto?: $mol_atom2 | undefined
 			
 			connectedCallback() {
@@ -58,8 +59,7 @@ namespace $ {
 		
 		attributes_observe( View.prototype )
 
-		const name = View.name.replace( /\W/g , '' ).replace( /^(?=\d+)/ , '-' ).replace( /_/g , '-' )
-		customElements.define( name, Component )
+		customElements.define( Component.tag, Component )
 		
 	}
 

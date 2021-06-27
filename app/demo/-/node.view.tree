@@ -1578,6 +1578,7 @@ $mol_frame $mol_view
 	dom_name \iframe
 	attr *
 		src <= uri?val \
+		srcdoc <= html null
 		allow <= allow \
 	fullscreen true
 	accelerometer true
@@ -2590,93 +2591,66 @@ $mol_toolbar_demo $mol_demo_small
 				<= Delete $mol_button_minor sub /
 					<= Delete_icon $mol_icon_delete
 
-$mol_book $mol_view
-	sub <= pages_wrapped /$mol_view
-	minimal_width 0
-	pages /$mol_view
-	plugins /$mol_plugin
-		<= Meter $mol_meter
-			width => width
-		<= Touch $mol_touch
-			swipe_from_left?val <=> event_front_up?val null
-			swipe_to_left?val <=> event_front_down?val null
-	Page!index $mol_book_page
-		Sub <= page!index null
-		visible <= page_visible!index true
-	Placeholder $mol_book_placeholder
-		title <= title
-
-$mol_book_placeholder $mol_view
-	minimal_width 400
-	attr *
-		^
-		tabindex null
-
-$mol_book_page $mol_ghost
-	attr_static *
-		^
-		tabindex 0
-		mol_book_page_visible true
-	attr *
-		^
-		mol_book_page_focused <= focused
-		mol_book_page_visible <= visible true
-
-$mol_app_studio_field $mol_expander
+$mol_app_studio_field $mol_list
 	path /
-	Trigger $mol_app_studio_field_title
-		checked?val <=> expanded?val false
-		Title <= Trigger_label $mol_dimmer
-			needle <= highlight \
-			haystack <= title
-		type <= type
-	Tools $mol_view sub <= tools /
-		<= Type $mol_select
-			value?val <=> type?val \null
-			hint <= type_hint @ \Type...
-			Trigger_icon null
-			dictionary <= types *
-				get \<=
-				bind \<=>
-				object \Object
-				string \Text
-				locale \Localization
-				number \Number
-				bool \Flag
-				list \List
-				dict \Dictionary
-				null \None
-		<= Object $mol_select
-			value?val <=> class?val null
-			options <= object_options /
-			hint <= object_hint @ \Class...
-			Trigger_icon null
-	content /
-		<= Bool $mol_switch
-			value?val <=> value_bool?val null
-			options *
-				true \True
-				false \False
-		<= Number $mol_number
-			value?val <=> value_number?val NaN
-			hint <= hint \
-		<= String $mol_textarea
-			value?val <=> value_string?val null
-			hint <= hint \
-		<= Bind $mol_select
-			value?val <=> bind?val null
-			options <= bind_options /
-			hint <= bind_hint @ \Property..
-			No_options <= Prop_add $mol_button_minor
-				title <= prop_add_label @ \Add property
-				event_click?val <=> event_prop_add?val null
-			Trigger_icon null
-		<= List $mol_list
-			rows <= list_rows /
-		<= Dict $mol_list
-			rows <= pairs /
-		<= Overs $mol_list
-			rows <= overs /
+	rows /
+		<= Label $mol_view
+			sub /
+				<= Trigger $mol_app_studio_field_title
+					checked?val <=> expanded?val false
+					label /
+						<= Trigger_label $mol_dimmer
+							needle <= highlight \
+							haystack <= title
+					type <= type
+				<= Tools $mol_view sub <= tools /
+					<= Type $mol_select
+						value?val <=> type?val \
+						hint <= type_hint @ \Type...
+						Trigger_icon null
+						dictionary <= types *
+							get \<=
+							bind \<=>
+							object \Object
+							string \Text
+							locale \Localization
+							number \Number
+							bool \Flag
+							list \List
+							dict \Dictionary
+							null \None
+					<= Object $mol_select
+						value?val <=> class?val null
+						options <= object_options /
+						hint <= object_hint @ \Class...
+						Trigger_icon null
+		<= Value $mol_view
+			sub <= content /
+				<= Bool $mol_switch
+					value?val <=> value_bool?val null
+					options *
+						true \True
+						false \False
+				<= Number $mol_number
+					value?val <=> value_number?val NaN
+					hint <= hint \
+				<= String $mol_textarea
+					value?val <=> value_string?val null
+					hint <= hint \
+				<= Bind $mol_select
+					value?val <=> bind?val null
+					options <= bind_options /
+					hint <= bind_hint @ \Property..
+					No_options <= Prop_add $mol_button_minor
+						title <= prop_add_label @ \Add property
+						event_click?val <=> event_prop_add?val null
+					Trigger_icon null
+				<= List $mol_list
+					rows <= list_rows /
+				<= Dict $mol_list
+					rows <= pairs /
+				<= Overs $mol_list
+					rows <= overs /
 	Add $mol_select
 		hint <= add_hint @ \Add item..
 		value?val <=> add_item?val \
@@ -2719,47 +2693,11 @@ $mol_app_studio_field_title $mol_check_expand
 		^
 		mol_app_studio_field_title_type <= type \null
 
-$mol_view_tree_test_attributes_super $mol_view
-	some *
-		a 0
-		b 2
-
-$mol_view_tree_test_attributes $mol_view_tree_test_attributes_super
-	some *
-		^
-		a 1
-
-$mol_view_tree_test_binding $mol_view
-	value?val <=> task_title_new?val \123
-	enabled <= head_complete_enabled false
-
-$mol_view_tree_test_binding_right $mol_view
-	Test $mol_view_tree_test_binding_right_test
-		width?v => outer_width?v
-
-$mol_view_tree_test_binding_right_test $mol_view
-	width?val 0
-
-$mol_view_tree_test_simple $mol_view
-	some 1
-	bool true
-	str \test
-	arr /
-	arr_string /string
-
-$mol_view_tree_test_attributes_subcomponent $mol_view
-	- Comment
-	Page!index $mol_view_tree_test_attributes_subcomponent_page
-		Sub <= page!index null
-
-$mol_view_tree_test_attributes_subcomponent_page $mol_view
-	Sub null
-
 $mol_icon_source $mol_icon path \M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z
 
 $mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
 
-$mol_app_studio $mol_book
+$mol_app_studio $mol_book2
 	value_overrided!id?val null
 	-
 	tools_main /
@@ -2842,7 +2780,7 @@ $mol_app_studio $mol_book
 		highlight <= prop_filter
 	-
 	class_name_self?val \$mol_app_studio_generated
-	class_name_base?val \$mol_view
+	class_name_base?val \$mol_select
 	class_self?val $mol_tree2_empty
 	classes $mol_tree2_empty
 

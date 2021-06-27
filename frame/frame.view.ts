@@ -10,10 +10,10 @@ namespace $.$$ {
 			
 			this.uri_resource()
 			
-			return $mol_fiber_sync( () => new Promise( ( done, fail )=> {
+			return $mol_fiber_sync( () => new Promise< Window >( ( done, fail )=> {
 				
 				node.onload = () => {
-					done( node.contentWindow )
+					done( node.contentWindow! )
 				}
 				
 				node.onerror = ( event : Event | string ) => {

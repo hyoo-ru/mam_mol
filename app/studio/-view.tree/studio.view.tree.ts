@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_app_studio extends $mol_book {
+	export class $mol_app_studio extends $mol_book2 {
 		
 		/**
 		 * ```tree
@@ -91,13 +91,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * class_name_base?val \$mol_view
+		 * class_name_base?val \$mol_select
 		 * ```
 		 */
 		@ $mol_mem
 		class_name_base(val?: any) {
 			if ( val !== undefined ) return val
-			return "$mol_view"
+			return "$mol_select"
 		}
 		
 		/**
