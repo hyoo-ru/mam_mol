@@ -12,11 +12,11 @@ namespace $ {
 		const superclass = klass.kids.length === 1 ? klass.kids[0] : undefined
 
 		if (! superclass) return this.$mol_fail(
-			err`No subclass at ${klass.span}`
+			err`No super class at ${klass.span}`
 		)
 
 		if( !class_regex.test( superclass.type ) ) return this.$mol_fail(
-			err`Wrong subclass name at ${superclass.span}`
+			err`Wrong super class name at ${superclass.span}`
 		)
 
 		return superclass
