@@ -1,6 +1,6 @@
 namespace $ {
 	
-	$mol_style_define( $mol_row , {
+	$mol_style_define( $mol_hor , {
 		display: 'flex',
 		alignItems: 'flex-start',
 		alignContent: 'flex-start',
