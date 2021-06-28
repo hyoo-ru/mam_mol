@@ -2352,14 +2352,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_row extends $mol_view {
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_hor extends $mol_view {
     }
 }
@@ -2625,6 +2617,14 @@ declare namespace $.$$ {
     class $mol_calendar_demo_simple extends $.$mol_calendar_demo_simple {
         month_name(): string;
     }
+}
+
+declare namespace $ {
+    class $mol_row extends $mol_view {
+    }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
