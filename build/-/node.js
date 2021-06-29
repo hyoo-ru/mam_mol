@@ -4577,7 +4577,7 @@ var $;
                 }
                 try {
                     const content = this.js_content(src.path());
-                    const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test(content.text);
+                    const isCommonJs = /typeof +exports|module\.exports|\bexports\.\w+\s*=/.test(content.text);
                     if (isCommonJs) {
                         concater.add(`\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate(this.root().resolve('node_modules')) + `/" ) ] }; \n`, '-');
                     }
