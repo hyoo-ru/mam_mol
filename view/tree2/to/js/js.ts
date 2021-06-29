@@ -1,22 +1,12 @@
 namespace $ {
 	
-	const { begin, end, latin_only: letter, optional, repeat_greedy } = $mol_regexp
-	
-	const prop_signature = $mol_regexp.from([
-		begin,
-		{ name: repeat_greedy( letter, 1 ) },
-		{ key: optional([ '!', repeat_greedy( letter, 0 ) ]) },
-		{ next: optional([ '?', repeat_greedy( letter, 0 ) ]) },
-		end,
-	])
-	
 	function name_of( prop: $mol_tree2 ) {
-		return [ ... prop.type.matchAll( prop_signature ) ][0].groups!.name
+		return [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!.name
 	}
 	
 	function params_of( prop: $mol_tree2 ) {
 		
-		const { key, next } = [ ... prop.type.matchAll( prop_signature ) ][0].groups!
+		const { key, next } = [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
 		
 		return prop.struct( '(,)', [
 			... key ? [ prop.struct( key.slice(1) || 'key' ) ] : [],
@@ -40,7 +30,7 @@ namespace $ {
 			
 			for( const prop of props ) {
 				
-				const { name, key, next } = [ ... prop.type.matchAll( prop_signature ) ][0].groups!
+				const { name, key, next } = [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
 				
 				const bind_res = ( bind: $mol_tree2 )=> {
 					const res = bind.kids[0]
