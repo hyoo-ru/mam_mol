@@ -15,15 +15,15 @@ namespace $.$$ {
 			const moment2 = $mol_try( ()=> val && new $mol_time_moment( val ) ) || null
 			if( moment2 instanceof Error ) return val
 			
-			this.value_moment( moment2 )
+			this.value_moment( moment2! )
 			
 			return val
 		}
 
 		@ $mol_mem
-		value_moment( val? : $mol_time_moment | null ) {
+		value_moment( val? : $mol_time_moment ) {
 			const stamp = this.value_number( val && val.valueOf() )
-			return isNaN( stamp ) ? null : new $mol_time_moment( stamp )
+			return isNaN( stamp ) ? null! : new $mol_time_moment( stamp )
 		}
 
 		@ $mol_mem

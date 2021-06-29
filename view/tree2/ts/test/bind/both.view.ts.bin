@@ -53,7 +53,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		class_indexed(key: any, val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_view()
 			
 			obj.expanded = () => this.cell_expanded(key, val)
@@ -113,7 +113,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		writable_default_owner(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -124,7 +124,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		class_owner(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_view()
 			
 			return obj
@@ -137,7 +137,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		indexed_owner(key: any, val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -148,7 +148,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		localized_owner(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return this.$.$mol_locale.text( '$mol_view_tree2_ts_test_bind_both_localized_owner' )
 		}
 		
@@ -159,7 +159,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		chain2(v?: any) {
-			if ( v !== undefined ) return v
+			if ( v !== undefined ) return v as never
 			return null as any
 		}
 		
@@ -182,7 +182,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		class_writable_owner(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_view()
 			
 			obj.some = (val?: any) => this.twice(val)
@@ -199,7 +199,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		loc_outer(v?: any) {
-			if ( v !== undefined ) return v
+			if ( v !== undefined ) return v as never
 			return this.$.$mol_locale.text( '$mol_view_tree2_ts_test_bind_both_loc_outer' )
 		}
 		
@@ -210,7 +210,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_next(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 	}

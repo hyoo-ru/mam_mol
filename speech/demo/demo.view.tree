@@ -7,6 +7,6 @@ $mol_speech_demo $mol_demo_small
 			sub /
 				<= message \
 		<= Speak $mol_button_major
-			click?val <=> speak?val false
+			click?val <=> speak?val null
 			sub / \Speak
 		

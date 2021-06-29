@@ -27,7 +27,7 @@ namespace $.$$ {
 
 			}
 
-			return next
+			return next as readonly $mol_view[]
 		}
 
 	}

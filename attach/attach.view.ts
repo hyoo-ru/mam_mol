@@ -28,7 +28,7 @@ namespace $.$$ {
 	export class $mol_attach_add extends $.$mol_attach_add {
 
 		file_new( next? : File , force? : $mol_mem_force_fail ) {
-			return next
+			return next!
 		}
 		
 		event_capture( next : Event ) {
