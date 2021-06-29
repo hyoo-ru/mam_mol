@@ -2,9 +2,7 @@
 	background: transparent;
 	color: var(--mol_theme_control);
 	box-shadow: none;
-	width: 0;
     min-width: 0;
-    flex: 1 0 10ch;
 	text-overflow: ellipsis;
 }
 
