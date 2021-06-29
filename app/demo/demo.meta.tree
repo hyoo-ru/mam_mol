@@ -63,6 +63,7 @@ include \/mol/select/list/demo
 include \/mol/speck/demo
 include \/mol/speech/demo
 include \/mol/string/demo
+include \/mol/string/button/demo
 include \/mol/switch/demo
 include \/mol/text/code/demo
 include \/mol/text/demo
