@@ -4880,7 +4880,7 @@ var $;
                 return true;
             }
             cell_expanded(id, next) {
-                return Boolean(this.row_expanded(id.row, next));
+                return this.row_expanded(id.row, next);
             }
         }
         __decorate([

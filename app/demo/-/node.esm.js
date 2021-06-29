@@ -6522,7 +6522,7 @@ var $;
                 return true;
             }
             cell_expanded(id, next) {
-                return Boolean(this.row_expanded(id.row, next));
+                return this.row_expanded(id.row, next);
             }
         }
         __decorate([
@@ -21792,6 +21792,95 @@ var $;
     $.$mol_style_attach("mol/string/demo/demo.view.css", "[mol_string_demo]>* {\n\tmargin: .5rem\n}\n");
 })($ || ($ = {}));
 //demo.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_string_button extends $.$mol_string {
+        hint() {
+            return " ";
+        }
+    }
+    $.$mol_string_button = $mol_string_button;
+})($ || ($ = {}));
+//button.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/string/button/button.view.css", "[mol_string_button] {\n\tbackground: transparent;\n\tcolor: var(--mol_theme_control);\n\tbox-shadow: none;\n\twidth: 0;\n    min-width: 0;\n    flex: 1 0 10ch;\n\ttext-overflow: ellipsis;\n}\n\n[mol_string_button]:placeholder-shown {\n\tbackground: var(--mol_theme_field);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n}\n\n[mol_string_button]:disabled {\n\tbackground: transparent;\n\tcolor: var(--mol_theme_text);\n}\n\n[mol_string_button]:focus {\n\tbackground: var(--mol_theme_field);\n\tcolor: var(--mol_theme_text);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_focus);\n}\n");
+})($ || ($ = {}));
+//button.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_string_button_demo extends $.$mol_demo_small {
+        title() {
+            return this.$.$mol_locale.text('$mol_string_button_demo_title');
+        }
+        sub() {
+            return [
+                this.Simple(),
+                this.Hint(),
+                this.Filled(),
+                this.Disabled()
+            ];
+        }
+        name(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        Simple() {
+            const obj = new this.$.$mol_string_button();
+            obj.value = (val) => this.name(val);
+            return obj;
+        }
+        Hint() {
+            const obj = new this.$.$mol_string_button();
+            obj.hint = () => "Batman";
+            obj.value = (val) => this.name(val);
+            return obj;
+        }
+        name2(val) {
+            if (val !== undefined)
+                return val;
+            return "Jocker";
+        }
+        Filled() {
+            const obj = new this.$.$mol_string_button();
+            obj.value = (val) => this.name2(val);
+            return obj;
+        }
+        Disabled() {
+            const obj = new this.$.$mol_string_button();
+            obj.disabled = () => true;
+            obj.value = (val) => this.name2(val);
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_string_button_demo.prototype, "name", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_string_button_demo.prototype, "Simple", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_string_button_demo.prototype, "Hint", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_string_button_demo.prototype, "name2", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_string_button_demo.prototype, "Filled", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_string_button_demo.prototype, "Disabled", null);
+    $.$mol_string_button_demo = $mol_string_button_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
 ;
 "use strict";
 var $;

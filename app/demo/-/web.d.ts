@@ -5872,6 +5872,28 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_string_button extends $mol_string {
+        hint(): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_string_button_demo extends $mol_demo_small {
+        title(): string;
+        sub(): readonly any[];
+        name(val?: any): string;
+        Simple(): $mol_string_button;
+        Hint(): $mol_string_button;
+        name2(val?: any): string;
+        Filled(): $mol_string_button;
+        Disabled(): $mol_string_button;
+    }
+}
+
+declare namespace $ {
     class $mol_switch_demo extends $mol_demo_small {
         title(): string;
         sub(): readonly any[];
