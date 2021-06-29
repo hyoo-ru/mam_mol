@@ -40,6 +40,25 @@ namespace $ {
 					.toString(),
 				'a b \\\n\tx\n',
 			)
+			
+		},
+		
+		'deleting'($) {
+
+			$mol_assert_equal(
+				$.$mol_tree2_from_string( 'a b c d\n' )
+					.insert( null , 'a' , 'b' , 'c' )
+					.toString(),
+				'a b\n',
+			)
+			
+			$mol_assert_equal(
+				$.$mol_tree2_from_string( 'a b c d\n' )
+					.insert( null , 0, 0, 0 )
+					.toString(),
+				'a b\n',
+			)
+			
 		} ,
 
 		'hack'($) {
