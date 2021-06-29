@@ -72,7 +72,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		strength(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -109,7 +109,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		perception(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return true
 		}
 		
@@ -146,7 +146,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		endurance(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -183,7 +183,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		charisma(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -220,7 +220,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		intelligence(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return true
 		}
 		
@@ -257,7 +257,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		agility(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return true
 		}
 		
@@ -294,7 +294,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		luck(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return true
 		}
 		

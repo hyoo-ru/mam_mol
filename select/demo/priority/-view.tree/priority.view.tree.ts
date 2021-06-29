@@ -28,7 +28,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		priority(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return "Lowest"
 		}
 		

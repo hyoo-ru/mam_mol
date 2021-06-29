@@ -60,7 +60,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		expanded(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		

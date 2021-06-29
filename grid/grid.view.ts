@@ -137,7 +137,7 @@ namespace $.$$ {
 		}
 		
 		cell_expanded( id : { row : string[] } , next? : boolean ) {
-			return this.row_expanded( id.row , next )
+			return Boolean( this.row_expanded( id.row , next ) )
 		}
 		
 	}

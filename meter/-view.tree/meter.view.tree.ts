@@ -17,7 +17,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		width(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -28,7 +28,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		height(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -39,7 +39,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		left(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -50,7 +50,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		right(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -61,7 +61,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		bottom(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -72,7 +72,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		top(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 	}

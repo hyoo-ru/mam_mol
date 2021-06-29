@@ -153,7 +153,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		row_editable(id: any, val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -181,7 +181,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		row_priority(id: any, val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -218,7 +218,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		row_moment(id: any, val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_time_moment()
 			
 			return obj
@@ -248,7 +248,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		row_number(id: any, val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		

@@ -31,7 +31,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		uri(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return "https://www.google.com/search?q=%24mol"
 		}
 		

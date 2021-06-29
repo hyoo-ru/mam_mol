@@ -45,7 +45,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		base_checked(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -85,7 +85,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		checked_checked(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return true
 		}
 		

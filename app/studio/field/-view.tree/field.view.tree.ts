@@ -122,7 +122,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		expanded(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -180,7 +180,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		type(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -251,7 +251,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		class(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -349,7 +349,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value_bool(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -382,7 +382,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value_number(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return NaN
 		}
 		
@@ -419,7 +419,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value_string(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -447,7 +447,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		bind(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -486,7 +486,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_prop_add(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -656,7 +656,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		add_item(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -712,7 +712,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		add_pair_key(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -752,7 +752,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		add_pair(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -803,7 +803,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		add_over(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -851,26 +851,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * prop!path?val $mol_tree
+		 * prop!path?val $mol_tree2_empty
 		 * ```
 		 */
 		@ $mol_mem_key
 		prop(path: any, val?: any) {
-			if ( val !== undefined ) return val
-			const obj = new this.$.$mol_tree()
+			if ( val !== undefined ) return val as never
+			const obj = new this.$.$mol_tree2_empty()
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * props!name?val $mol_tree
+		 * props!name?val $mol_tree2_empty
 		 * ```
 		 */
 		@ $mol_mem_key
 		props(name: any, val?: any) {
-			if ( val !== undefined ) return val
-			const obj = new this.$.$mol_tree()
+			if ( val !== undefined ) return val as never
+			const obj = new this.$.$mol_tree2_empty()
 			
 			return obj
 		}
@@ -891,7 +891,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		prop_add(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 	}

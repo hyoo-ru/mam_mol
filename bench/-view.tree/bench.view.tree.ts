@@ -17,7 +17,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		col_sort(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -69,7 +69,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		event_sort_toggle(id: any, val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -187,7 +187,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_click(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		

@@ -71,7 +71,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		search_query(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		

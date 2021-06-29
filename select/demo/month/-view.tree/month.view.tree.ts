@@ -28,7 +28,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		month(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return "jan"
 		}
 		

@@ -37,7 +37,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		base_expanded(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -83,7 +83,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		expanded_expanded(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return true
 		}
 		

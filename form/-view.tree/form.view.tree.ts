@@ -31,7 +31,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		submit(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -56,7 +56,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		keydown(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		

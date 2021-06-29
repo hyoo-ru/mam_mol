@@ -338,7 +338,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		level(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -394,7 +394,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		type(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -405,7 +405,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		content(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 			] as readonly any[]
 		}
@@ -443,7 +443,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		content(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 			] as readonly any[]
 		}
@@ -455,7 +455,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		type(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -466,7 +466,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		link(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 	}
@@ -518,7 +518,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		type(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -529,7 +529,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		link(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -540,7 +540,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		title(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 	}

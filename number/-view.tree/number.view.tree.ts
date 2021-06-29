@@ -26,7 +26,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return NaN
 		}
 		
@@ -62,7 +62,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value_string(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -121,7 +121,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_dec(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -174,7 +174,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_inc(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		

@@ -19,7 +19,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		date(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_time_moment()
 			
 			return obj

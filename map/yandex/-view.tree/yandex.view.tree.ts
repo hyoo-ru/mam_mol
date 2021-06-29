@@ -8,7 +8,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		zoom(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 2
 		}
 		
@@ -21,7 +21,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		center(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 				0,
 				0

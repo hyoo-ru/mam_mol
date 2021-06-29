@@ -52,7 +52,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		transfer_adopt(transfer?: any) {
-			if ( transfer !== undefined ) return transfer
+			if ( transfer !== undefined ) return transfer as never
 			return null as any
 		}
 		
@@ -63,7 +63,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		receive(obj?: any) {
-			if ( obj !== undefined ) return obj
+			if ( obj !== undefined ) return obj as never
 			return null as any
 		}
 		
@@ -74,7 +74,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		receive_trash(obj?: any) {
-			if ( obj !== undefined ) return obj
+			if ( obj !== undefined ) return obj as never
 			return null as any
 		}
 		
@@ -224,7 +224,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		receive_before(task: any, obj?: any) {
-			if ( obj !== undefined ) return obj
+			if ( obj !== undefined ) return obj as never
 			return null as any
 		}
 		

@@ -29,7 +29,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -69,7 +69,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		option_checked(id: any, val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		

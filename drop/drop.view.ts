@@ -36,7 +36,7 @@ namespace $.$$ {
 			}
 		}
 
-		receive( transfer : DataTransfer ) {
+		receive( transfer : unknown ) {
 			return transfer as unknown
 		}
 

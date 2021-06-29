@@ -32,7 +32,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		width(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 	}

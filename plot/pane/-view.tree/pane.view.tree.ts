@@ -17,7 +17,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		hue_base(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return NaN
 		}
 		
@@ -28,7 +28,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		hue_shift(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 111
 		}
 		
@@ -143,7 +143,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		shift(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 				0,
 				0
@@ -190,7 +190,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		scale(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 				1,
 				1
@@ -204,7 +204,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		scale_x(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -215,7 +215,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		scale_y(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -314,7 +314,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		cursor_position(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_vector_2d(
 				NaN,
 				NaN
@@ -610,7 +610,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		reset(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 	}

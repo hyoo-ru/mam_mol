@@ -19,10 +19,10 @@ namespace $.$$ {
 		'both binding'( $ ) {
 			const app = $mol_view_tree_test_binding.make({ $ })
 
-			$mol_assert_ok( app.value() !== 1 )
+			$mol_assert_ok( app.value() !== '1' )
 
-			app.value(1)
-			$mol_assert_equal( app.value() , 1 )
+			app.value('1')
+			$mol_assert_equal( app.value() , '1' )
 		},
 
 		'left binding'( $ ) {

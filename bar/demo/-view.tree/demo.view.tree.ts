@@ -40,7 +40,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		mail(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -136,7 +136,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		confirmed(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		

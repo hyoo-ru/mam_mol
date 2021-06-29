@@ -17,7 +17,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		count(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 20
 		}
 		

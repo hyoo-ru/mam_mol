@@ -50,7 +50,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		user_name(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		

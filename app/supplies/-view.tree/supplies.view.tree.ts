@@ -76,7 +76,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		entered(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -116,7 +116,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		supply_id(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		

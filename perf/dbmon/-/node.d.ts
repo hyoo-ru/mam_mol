@@ -961,15 +961,15 @@ declare namespace $ {
         minimal_height(): number;
         _event_scroll_timer(val?: any): any;
         field(): {
-            scrollTop: any;
-            scrollLeft: any;
+            scrollTop: number;
+            scrollLeft: number;
             tabIndex: number;
         };
         event(): {
             scroll: (event?: any) => any;
         };
-        scroll_top(val?: any): any;
-        scroll_left(val?: any): any;
+        scroll_top(val?: any): number;
+        scroll_left(val?: any): number;
         tabindex(): number;
         event_scroll(event?: any): any;
     }
@@ -1065,7 +1065,7 @@ declare namespace $ {
         event(): {
             keydown: (event?: any) => any;
         };
-        showed(val?: any): any;
+        showed(val?: any): boolean;
         sub(): readonly any[];
         keydown(event?: any): any;
         Anchor(): any;
@@ -1211,7 +1211,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_pop_over extends $mol_pop {
-        showed(): any;
+        showed(): boolean;
         attr(): {
             tabindex: number;
         };
@@ -1220,7 +1220,7 @@ declare namespace $ {
             mouseleave: (event?: any) => any;
             keydown: (event?: any) => any;
         };
-        hovered(val?: any): any;
+        hovered(val?: any): boolean;
         event_show(event?: any): any;
         event_hide(event?: any): any;
     }
@@ -1233,7 +1233,7 @@ declare namespace $.$$ {
     class $mol_pop_over extends $.$mol_pop_over {
         event_show(event?: MouseEvent): void;
         event_hide(event?: MouseEvent): void;
-        showed(): any;
+        showed(): boolean;
     }
 }
 

@@ -22,7 +22,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -68,7 +68,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_scan(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		

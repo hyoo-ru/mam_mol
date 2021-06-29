@@ -263,8 +263,8 @@ $mol_nav $mol_plugin
 	keys_x?val /
 	keys_y?val /
 	-
-	current_x?val \
-	current_y?val \
+	current_x?val null
+	current_y?val null
 	-
 	event_up?event null
 	event_down?event null
@@ -422,7 +422,7 @@ $mol_attach $mol_card
 	Content $mol_view
 		sub <= content /$mol_view
 	items?val /$mol_view
-	Add $mol_attach_add file_new?val <=> attach_new?val \
+	Add $mol_attach_add file_new?val <=> attach_new?val null
 	Item!id $mol_attach_item
 		title <= attach_title \
 
@@ -438,7 +438,7 @@ $mol_attach_item $mol_link
 
 $mol_attach_add $mol_button_minor
 	minimal_height 60
-	file_new?val \
+	file_new?val null
 	sub /
 		<= Icon $mol_icon_attach
 		<= Input $mol_attach_add_input

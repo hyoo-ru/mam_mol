@@ -112,7 +112,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		submit(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -150,7 +150,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		name_first(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -224,7 +224,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		name_nick(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -298,7 +298,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		name_second(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -363,7 +363,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		sex(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -480,7 +480,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		mail(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -598,7 +598,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		message(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		

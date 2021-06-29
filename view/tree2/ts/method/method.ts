@@ -37,6 +37,7 @@ namespace $ {
 					next,
 					next.data(' !== undefined ) return '),
 					next,
+					next.data(' as never'),
 				])
 			])
 		)

@@ -90,7 +90,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		tab_current(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -135,7 +135,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		row_current(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		

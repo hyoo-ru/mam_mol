@@ -27,6 +27,7 @@ namespace $.$$ {
 		option_checked( key : string , next? : boolean ) {
 			if( next === void 0 ) return this.value() == key
 			this.value( next ? key : null )
+			return next
 		}
 
 	}

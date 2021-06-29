@@ -37,7 +37,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		name(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -99,7 +99,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		count(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -159,7 +159,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		publish(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		

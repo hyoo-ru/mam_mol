@@ -36,7 +36,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		hearing(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -84,13 +84,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * speak?val false
+		 * speak?val null
 		 * ```
 		 */
 		@ $mol_mem
 		speak(val?: any) {
-			if ( val !== undefined ) return val
-			return false
+			if ( val !== undefined ) return val as never
+			return null as any
 		}
 		
 		/**

@@ -193,7 +193,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		filter_string(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -415,7 +415,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		filter(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		

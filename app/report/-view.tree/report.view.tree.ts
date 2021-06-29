@@ -222,7 +222,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		cell_value(id: any, val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		

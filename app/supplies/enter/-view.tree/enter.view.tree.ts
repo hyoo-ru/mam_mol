@@ -8,7 +8,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		entered(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -48,7 +48,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		login(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -99,7 +99,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		password(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -153,7 +153,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_submit(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		

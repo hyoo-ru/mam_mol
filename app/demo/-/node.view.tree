@@ -104,7 +104,7 @@ $mol_attach $mol_card
 	Content $mol_view
 		sub <= content /$mol_view
 	items?val /$mol_view
-	Add $mol_attach_add file_new?val <=> attach_new?val \
+	Add $mol_attach_add file_new?val <=> attach_new?val null
 	Item!id $mol_attach_item
 		title <= attach_title \
 
@@ -120,7 +120,7 @@ $mol_attach_item $mol_link
 
 $mol_attach_add $mol_button_minor
 	minimal_height 60
-	file_new?val \
+	file_new?val null
 	sub /
 		<= Icon $mol_icon_attach
 		<= Input $mol_attach_add_input
@@ -1181,8 +1181,8 @@ $mol_nav $mol_plugin
 	keys_x?val /
 	keys_y?val /
 	-
-	current_x?val \
-	current_y?val \
+	current_x?val null
+	current_y?val null
 	-
 	event_up?event null
 	event_down?event null
@@ -2386,7 +2386,7 @@ $mol_speech_demo $mol_demo_small
 			sub /
 				<= message \
 		<= Speak $mol_button_major
-			click?val <=> speak?val false
+			click?val <=> speak?val null
 			sub / \Speak
 		
 
@@ -2681,8 +2681,8 @@ $mol_app_studio_field $mol_list
 	Prop!id $mol_app_studio_field
 		path <= prop_path!id /
 		prop_arg!id <= prop_arg!id *
-		prop!path?val <=> prop!path?val $mol_tree
-		props!name?val <=> props!name?val $mol_tree
+		prop!path?val <=> prop!path?val $mol_tree2_empty
+		props!name?val <=> props!name?val $mol_tree2_empty
 		prop_value!id <= prop_value!id null
 		bind_options <= bind_options /
 		prop_add?val <=> prop_add?val null

@@ -17,7 +17,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		elapsed(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -161,7 +161,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		hover(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -286,7 +286,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		enter(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -297,7 +297,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		leave(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 	}

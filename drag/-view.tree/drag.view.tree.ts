@@ -90,7 +90,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		start(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -101,7 +101,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		move(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -112,7 +112,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		end(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -123,7 +123,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		status(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return "ready"
 		}
 	}

@@ -47,7 +47,7 @@ namespace $.$$ {
 				this.value( val )
 			}
 			const val = this.value()
-			if( !val || val.type === '-' ) return null
+			if( !val || val.type === '-' ) return ''
 			
 			return this.$.$mol_view_tree2_value_type( this.value() )
 		}
@@ -76,9 +76,9 @@ namespace $.$$ {
 		}
 
 		value_number( next? : string ) {
-			return this.value(
+			return Number( this.value(
 				next && $mol_tree2.struct( String( next ) ) || undefined
-			).type
+			).type )
 		}
 
 		value_string( next? : string ) {
@@ -146,30 +146,33 @@ namespace $.$$ {
 		}
 
 		add_item( type? : string ) {
-			if( !type ) return null
+			if( !type ) return ''
 			
 			const items = this.value()
 			this.Prop([ ... this.path() , items.kids.length ]).type( type )
 
-			return null
+			return ''
 		}
 
 		over_options() {
-			return ( this.props( this.class() ) as $mol_tree2 ).kids.map( item => item.type )
+			return this.props( this.class() ).kids.map( item => item.type )
 		}
 
 		add_over( name? : string ) {
-			if( !name ) return
+			if( !name ) return ''
 			
 			this.value( this.value().insert( $mol_tree2.struct( name ), name ) )
+			return ''
 		}
 
 		add_pair( event? : Event ) {
-			if( !event ) return
+			if( !event ) return ''
 			
 			const name = this.add_pair_key()
 			this.add_pair_key( '' )
 			this.value( this.value().insert( $mol_tree2.data('') , name , null ) )
+			
+			return ''
 		}
 
 		event_prop_add( event? : Event ) {

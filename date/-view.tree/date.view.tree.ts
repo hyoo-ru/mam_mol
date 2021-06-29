@@ -34,7 +34,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value_number(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return NaN
 		}
 		
@@ -45,7 +45,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value_moment(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_time_moment()
 			
 			return obj
@@ -58,7 +58,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -124,7 +124,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		day_click(day: any, event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -144,7 +144,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		prev(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -197,7 +197,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		next(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -309,7 +309,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		day_click(day: any, event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		

@@ -59,7 +59,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		year(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return NaN
 		}
 		
@@ -101,7 +101,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		age(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 32
 		}
 		

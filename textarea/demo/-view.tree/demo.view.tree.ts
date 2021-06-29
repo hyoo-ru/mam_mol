@@ -28,7 +28,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		empty_descr(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -59,7 +59,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		filled_descr(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return "function hello( name = 'World' ) {\n\treturn `Hello, ${ name }!`\n}"
 		}
 		

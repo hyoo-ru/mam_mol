@@ -84,7 +84,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		start(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -112,7 +112,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		stop(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		

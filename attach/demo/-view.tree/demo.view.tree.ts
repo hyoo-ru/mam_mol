@@ -82,7 +82,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		filled_items(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 				this.Item1(),
 				this.Item2(),

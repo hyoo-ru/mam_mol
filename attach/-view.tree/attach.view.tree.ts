@@ -22,7 +22,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		items(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 			] as readonly $mol_view[]
 		}
@@ -67,13 +67,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * attach_new?val \
+		 * attach_new?val null
 		 * ```
 		 */
 		@ $mol_mem
 		attach_new(val?: any) {
-			if ( val !== undefined ) return val
-			return ""
+			if ( val !== undefined ) return val as never
+			return null as any
 		}
 		
 		/**
@@ -95,7 +95,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		url_thumb(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -143,7 +143,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		url_load(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -179,13 +179,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * file_new?val \
+		 * file_new?val null
 		 * ```
 		 */
 		@ $mol_mem
 		file_new(val?: any) {
-			if ( val !== undefined ) return val
-			return ""
+			if ( val !== undefined ) return val as never
+			return null as any
 		}
 		
 		/**
@@ -221,7 +221,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_capture(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -232,7 +232,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_picked(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -340,7 +340,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_capture(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -351,7 +351,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_picked(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 	}

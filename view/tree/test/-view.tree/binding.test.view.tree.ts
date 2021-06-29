@@ -26,7 +26,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		task_title_new(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return "123"
 		}
 		

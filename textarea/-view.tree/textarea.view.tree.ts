@@ -52,7 +52,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		clickable(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -72,7 +72,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		press(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -83,7 +83,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		hover(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -94,7 +94,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -132,7 +132,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		selection(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 			] as readonly number[]
 		}

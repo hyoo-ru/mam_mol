@@ -148,7 +148,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		writable_owner(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -159,7 +159,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		same(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		

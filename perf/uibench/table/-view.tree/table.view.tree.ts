@@ -267,7 +267,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		click(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		

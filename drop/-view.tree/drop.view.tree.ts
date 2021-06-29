@@ -37,7 +37,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		adopt(transfer?: any) {
-			if ( transfer !== undefined ) return transfer
+			if ( transfer !== undefined ) return transfer as never
 			return {
 			}
 		}
@@ -49,7 +49,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		receive(transfer?: any) {
-			if ( transfer !== undefined ) return transfer
+			if ( transfer !== undefined ) return transfer as never
 			return null as any
 		}
 		
@@ -60,7 +60,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		enter(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -71,7 +71,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		move(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -82,7 +82,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		leave(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -93,7 +93,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		drop(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -104,7 +104,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		status(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return "ready"
 		}
 	}

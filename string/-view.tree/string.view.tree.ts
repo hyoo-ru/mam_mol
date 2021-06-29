@@ -44,7 +44,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		selection(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 			] as readonly number[]
 		}
@@ -154,7 +154,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -228,7 +228,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		type(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return "text"
 		}
 		
@@ -239,7 +239,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_change(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -250,7 +250,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_key_press(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -261,7 +261,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		submit(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		

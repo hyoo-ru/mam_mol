@@ -26,7 +26,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		click(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -37,7 +37,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_click(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -107,7 +107,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_activate(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -118,7 +118,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_key_press(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		

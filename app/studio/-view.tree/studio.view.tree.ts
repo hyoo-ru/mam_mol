@@ -8,7 +8,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		value_overrided(id: any, val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -85,7 +85,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		class_name_self(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return "$mol_app_studio_generated"
 		}
 		
@@ -96,7 +96,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		class_name_base(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return "$mol_select"
 		}
 		
@@ -107,7 +107,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		class_self(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_tree2_empty()
 			
 			return obj
@@ -252,7 +252,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		path(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 			] as readonly any[]
 		}
@@ -306,7 +306,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		speech_filter(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -405,7 +405,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		prop_filter(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -433,7 +433,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_add(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -679,7 +679,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		prop_default(path: any, val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_tree2_empty()
 			
 			return obj
@@ -692,7 +692,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		props_all(name: any, val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_tree2_empty()
 			
 			return obj
@@ -744,7 +744,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		prop_add(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 	}
@@ -772,7 +772,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		path(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 			] as readonly any[]
 		}
@@ -784,7 +784,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		select(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 	}

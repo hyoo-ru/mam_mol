@@ -158,7 +158,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		prop_default( path : $mol_tree2_path , next? : $mol_tree2 | null) {
-			return this.prop( path , next )
+			return this.prop( path , next )!
 		}
 
 		path( next? : $mol_tree2_path ) : $mol_tree2_path {
@@ -307,6 +307,7 @@ namespace $.$$ {
 		
 		prop_add( name : string ) {
 			this.prop( [ name ] , $mol_tree2.struct(name , [ new $mol_tree2_empty ]) )
+			return ''
 		}
 
 		speech_enabled( next? : boolean ) {

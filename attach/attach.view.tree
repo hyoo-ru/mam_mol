@@ -2,7 +2,7 @@ $mol_attach $mol_card
 	Content $mol_view
 		sub <= content /$mol_view
 	items?val /$mol_view
-	Add $mol_attach_add file_new?val <=> attach_new?val \
+	Add $mol_attach_add file_new?val <=> attach_new?val null
 	Item!id $mol_attach_item
 		title <= attach_title \
 
@@ -18,7 +18,7 @@ $mol_attach_item $mol_link
 
 $mol_attach_add $mol_button_minor
 	minimal_height 60
-	file_new?val \
+	file_new?val null
 	sub /
 		<= Icon $mol_icon_attach
 		<= Input $mol_attach_add_input

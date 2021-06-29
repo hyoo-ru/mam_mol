@@ -31,7 +31,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		friends(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 			] as readonly any[]
 		}

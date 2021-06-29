@@ -826,12 +826,12 @@ declare namespace $ {
 declare namespace $ {
     class $mol_meter extends $mol_plugin {
         zoom(): number;
-        width(val?: any): any;
-        height(val?: any): any;
-        left(val?: any): any;
-        right(val?: any): any;
-        bottom(val?: any): any;
-        top(val?: any): any;
+        width(val?: any): number;
+        height(val?: any): number;
+        left(val?: any): number;
+        right(val?: any): number;
+        bottom(val?: any): number;
+        top(val?: any): number;
     }
 }
 
@@ -858,12 +858,12 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_touch extends $mol_plugin {
-        start_zoom(val?: any): any;
-        start_distance(val?: any): any;
-        zoom(val?: any): any;
-        start_pan(val?: any): any;
-        pan(val?: any): any;
-        pos(val?: any): any;
+        start_zoom(val?: any): number;
+        start_distance(val?: any): number;
+        zoom(val?: any): number;
+        start_pan(val?: any): readonly any[];
+        pan(val?: any): readonly any[];
+        pos(val?: any): readonly any[];
         start_pos(val?: any): any;
         swipe_precision(): number;
         swipe_right(val?: any): any;
@@ -918,8 +918,8 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_plot_pane extends $mol_svg_root {
         aspect(): string;
-        hue_base(val?: any): any;
-        hue_shift(val?: any): any;
+        hue_base(val?: any): number;
+        hue_shift(val?: any): number;
         gap_hor(): number;
         gap_vert(): number;
         gap_left(): number;
@@ -929,19 +929,19 @@ declare namespace $ {
         gap(): $mol_vector_2d<$mol_vector_range<number>>;
         shift_limit(): $mol_vector_2d<$mol_vector_range<number>>;
         shift_default(): readonly number[];
-        shift(val?: any): any;
+        shift(val?: any): readonly number[];
         scale_limit(): $mol_vector_2d<$mol_vector_range<number>>;
         scale_default(): readonly number[];
-        scale(val?: any): any;
-        scale_x(val?: any): any;
-        scale_y(val?: any): any;
+        scale(val?: any): readonly number[];
+        scale_x(val?: any): number;
+        scale_y(val?: any): number;
         size(): $mol_vector_2d<number>;
         size_real(): $mol_vector_2d<number>;
         dimensions_viewport(): $mol_vector_2d<$mol_vector_range<number>>;
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
         sub(): readonly $mol_svg[];
         graphs_colored(): readonly $mol_plot_graph[];
-        cursor_position(val?: any): any;
+        cursor_position(val?: any): $mol_vector_2d<number>;
         plugins(): readonly any[];
         event(): {
             dblclick: (event?: any) => any;
@@ -1225,7 +1225,7 @@ declare namespace $ {
         dimensions_axis(): $mol_vector_range<number>;
         viewport_axis(): $mol_vector_range<number>;
         axis_points(): readonly number[];
-        normalize(val?: any): any;
+        normalize(val?: any): number;
         precision(): number;
         sub(): readonly any[];
         Label(index: any): $$.$mol_svg_text;

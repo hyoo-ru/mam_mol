@@ -627,7 +627,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_perf_sierp extends $mol_view {
         size_target(): number;
-        elapsed(val?: any): any;
+        elapsed(val?: any): number;
         style(): {
             transform: string;
         };
@@ -644,7 +644,7 @@ declare namespace $ {
     class $mol_perf_sierp_dot extends $mol_view {
         size(): number;
         size_px(): string;
-        hover(val?: any): any;
+        hover(val?: any): boolean;
         sub(): readonly any[];
         style(): {
             width: number;

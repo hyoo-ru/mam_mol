@@ -8,7 +8,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		dictionary(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return {
 			}
 		}
@@ -30,7 +30,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		value(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -144,7 +144,7 @@ namespace $ {
 		 */
 		@ $mol_mem_key
 		event_select(id: any, event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -164,7 +164,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		filter_pattern(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -222,7 +222,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		option_focused(component?: any) {
-			if ( component !== undefined ) return component
+			if ( component !== undefined ) return component as never
 			return null as any
 		}
 		
@@ -233,7 +233,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		nav_cycle(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return true
 		}
 		
@@ -287,7 +287,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		submit(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		

@@ -17,7 +17,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		_event_scroll_timer(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -60,7 +60,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		scroll_top(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -71,7 +71,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		scroll_left(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -91,7 +91,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_scroll(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 	}

@@ -590,7 +590,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		attach_new(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -778,7 +778,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		approved(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		

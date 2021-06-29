@@ -19,7 +19,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		showed(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -44,7 +44,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		keydown(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		

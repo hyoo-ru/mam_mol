@@ -8,7 +8,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		start_zoom(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -19,7 +19,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		start_distance(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		
@@ -30,7 +30,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		zoom(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 1
 		}
 		
@@ -43,7 +43,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		start_pan(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 				0,
 				0
@@ -59,7 +59,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		pan(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 				0,
 				0
@@ -75,7 +75,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		pos(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 				NaN,
 				NaN
@@ -89,7 +89,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		start_pos(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -109,7 +109,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		swipe_right(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -120,7 +120,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		swipe_bottom(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -131,7 +131,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		swipe_left(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -142,7 +142,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		swipe_top(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -153,7 +153,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		swipe_from_right(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -164,7 +164,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		swipe_from_bottom(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -175,7 +175,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		swipe_from_left(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -186,7 +186,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		swipe_from_top(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -197,7 +197,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		swipe_to_right(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -208,7 +208,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		swipe_to_bottom(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -219,7 +219,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		swipe_to_left(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -230,7 +230,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		swipe_to_top(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
@@ -285,7 +285,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_start(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -296,7 +296,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_move(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -307,7 +307,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_end(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -318,7 +318,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_leave(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -329,7 +329,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_wheel(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 	}

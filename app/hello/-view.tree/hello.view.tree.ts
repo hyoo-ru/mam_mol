@@ -31,7 +31,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		name(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		

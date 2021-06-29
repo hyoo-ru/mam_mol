@@ -98,7 +98,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		body_scroll_top(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return 0
 		}
 		

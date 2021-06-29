@@ -8,7 +8,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		cycle(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return false
 		}
 		
@@ -46,7 +46,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		keys_x(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 			] as readonly any[]
 		}
@@ -58,31 +58,31 @@ namespace $ {
 		 */
 		@ $mol_mem
 		keys_y(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return [
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * current_x?val \
+		 * current_x?val null
 		 * ```
 		 */
 		@ $mol_mem
 		current_x(val?: any) {
-			if ( val !== undefined ) return val
-			return ""
+			if ( val !== undefined ) return val as never
+			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * current_y?val \
+		 * current_y?val null
 		 * ```
 		 */
 		@ $mol_mem
 		current_y(val?: any) {
-			if ( val !== undefined ) return val
-			return ""
+			if ( val !== undefined ) return val as never
+			return null as any
 		}
 		
 		/**
@@ -92,7 +92,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_up(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -103,7 +103,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_down(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -114,7 +114,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_left(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -125,7 +125,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_right(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
@@ -150,7 +150,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_key(event?: any) {
-			if ( event !== undefined ) return event
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 	}

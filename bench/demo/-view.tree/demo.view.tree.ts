@@ -28,7 +28,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		col_sort(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return "mid"
 		}
 		

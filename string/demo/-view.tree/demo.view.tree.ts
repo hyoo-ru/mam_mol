@@ -35,7 +35,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		name(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
@@ -77,7 +77,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		name2(val?: any) {
-			if ( val !== undefined ) return val
+			if ( val !== undefined ) return val as never
 			return "Jocker"
 		}
 		
