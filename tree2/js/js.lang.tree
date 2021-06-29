@@ -1,0 +1,25 @@
+js kind
+	[] function keyword
+	[] null enum
+	[] undefined enum
+	[] true enum
+	[] false enum
+	[] {;} operator
+	[] {,} operator
+	[] [,] operator
+	[] [] operator
+	[] (*) operator
+	[] (,) operator
+	[] () operator
+	[] `` operator
+	[] /./ operator
+	[] = operator
+	[] += operator
+	[] : operator
+	[] ... operator
+	[] .source keyword
+	[] .multiline keyword
+	[] .ignoreCase keyword
+	[] .global keyword
+	[] \
+		string
