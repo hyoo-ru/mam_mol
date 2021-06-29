@@ -3342,6 +3342,14 @@ var $;
                 .insert($_1.$mol_tree2.struct('x'), null, null, null, null)
                 .toString(), 'a b \\\n\tx\n');
         },
+        'deleting'($) {
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b c d\n')
+                .insert(null, 'a', 'b', 'c')
+                .toString(), 'a b\n');
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b c d\n')
+                .insert(null, 0, 0, 0)
+                .toString(), 'a b\n');
+        },
         'hack'($) {
             const res = $.$mol_tree2_from_string(`foo bar xxx\n`)
                 .hack({

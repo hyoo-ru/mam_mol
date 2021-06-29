@@ -523,7 +523,7 @@ declare namespace $ {
         text(): string;
         static fromString(str: string, uri?: string): $mol_tree2;
         toString(): string;
-        insert(value: $mol_tree2, ...path: $mol_tree2_path): $mol_tree2;
+        insert(value: $mol_tree2 | null, ...path: $mol_tree2_path): $mol_tree2;
         select(...path: $mol_tree2_path): $mol_tree2;
         filter(path: string[], value?: string): $mol_tree2;
         hack<Context extends {

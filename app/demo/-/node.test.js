@@ -23474,20 +23474,22 @@ var $;
                         return item;
                     replaced = true;
                     return item.insert(value, ...path.slice(1));
-                });
-                if (!replaced) {
+                }).filter(Boolean);
+                if (!replaced && value) {
                     sub.push(this.struct(type, []).insert(value, ...path.slice(1)));
                 }
                 return this.clone(sub);
             }
             else if (typeof type === 'number') {
                 const sub = this.kids.slice();
-                sub[type] = (sub[type] || this.list([])).insert(value, ...path.slice(1));
-                return this.clone(sub);
+                sub[type] = (sub[type] || this.list([]))
+                    .insert(value, ...path.slice(1));
+                return this.clone(sub.filter(Boolean));
             }
             else {
                 const kids = ((this.kids.length === 0) ? [this.list([])] : this.kids)
-                    .map(item => item.insert(value, ...path.slice(1)));
+                    .map(item => item.insert(value, ...path.slice(1)))
+                    .filter(Boolean);
                 return this.clone(kids);
             }
         }
@@ -29320,6 +29322,14 @@ var $;
             $_1.$mol_assert_equal($.$mol_tree2_from_string('a b\n')
                 .insert($_1.$mol_tree2.struct('x'), null, null, null, null)
                 .toString(), 'a b \\\n\tx\n');
+        },
+        'deleting'($) {
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b c d\n')
+                .insert(null, 'a', 'b', 'c')
+                .toString(), 'a b\n');
+            $_1.$mol_assert_equal($.$mol_tree2_from_string('a b c d\n')
+                .insert(null, 0, 0, 0)
+                .toString(), 'a b\n');
         },
         'hack'($) {
             const res = $.$mol_tree2_from_string(`foo bar xxx\n`)

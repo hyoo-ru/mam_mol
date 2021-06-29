@@ -2393,20 +2393,22 @@ var $;
                         return item;
                     replaced = true;
                     return item.insert(value, ...path.slice(1));
-                });
-                if (!replaced) {
+                }).filter(Boolean);
+                if (!replaced && value) {
                     sub.push(this.struct(type, []).insert(value, ...path.slice(1)));
                 }
                 return this.clone(sub);
             }
             else if (typeof type === 'number') {
                 const sub = this.kids.slice();
-                sub[type] = (sub[type] || this.list([])).insert(value, ...path.slice(1));
-                return this.clone(sub);
+                sub[type] = (sub[type] || this.list([]))
+                    .insert(value, ...path.slice(1));
+                return this.clone(sub.filter(Boolean));
             }
             else {
                 const kids = ((this.kids.length === 0) ? [this.list([])] : this.kids)
-                    .map(item => item.insert(value, ...path.slice(1)));
+                    .map(item => item.insert(value, ...path.slice(1)))
+                    .filter(Boolean);
                 return this.clone(kids);
             }
         }

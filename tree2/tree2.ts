@@ -147,9 +147,9 @@ namespace $ {
 		}
 		
 		/** Makes new tree with node overrided by path. */
-		insert( value : $mol_tree2 , ...path : $mol_tree2_path ) : $mol_tree2 {
+		insert( value : $mol_tree2 | null , ...path : $mol_tree2_path ) : $mol_tree2 {
 
-			if( path.length === 0 ) return value
+			if( path.length === 0 ) return value!
 			
 			const type = path[0]
 			if( typeof type === 'string' ) {
@@ -159,9 +159,9 @@ namespace $ {
 					if( item.type !== type ) return item
 					replaced = true
 					return item.insert( value , ... path.slice( 1 ) )
-				} )
+				} ).filter( Boolean )
 				
-				if( !replaced ) {
+				if( !replaced && value ) {
 					sub.push( this.struct( type , [] ).insert( value , ... path.slice( 1 ) ) )
 				}
 				
@@ -170,14 +170,16 @@ namespace $ {
 			} else if( typeof type === 'number' ) {
 				
 				const sub = this.kids.slice()
-				sub[ type ] = ( sub[ type ] || this.list([]) ).insert( value , ... path.slice( 1 ) )
+				sub[ type ] = ( sub[ type ] || this.list([]) )
+					.insert( value , ... path.slice( 1 ) )
 				
-				return this.clone( sub )
+				return this.clone( sub.filter( Boolean ) )
 
 			} else {
 				
 				const kids = ( ( this.kids.length === 0 ) ? [ this.list([]) ] : this.kids )
 				.map( item => item.insert( value , ... path.slice( 1 ) ) )
+				.filter( Boolean )
 
 				return this.clone( kids )
 
