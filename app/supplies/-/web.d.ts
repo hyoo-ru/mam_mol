@@ -2113,6 +2113,8 @@ declare namespace $ {
             keydown: (event?: any) => any;
         };
         showed(val?: any): boolean;
+        align_vert(): string;
+        align_hor(): string;
         sub(): readonly any[];
         keydown(event?: any): any;
         Anchor(): any;

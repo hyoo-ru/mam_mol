@@ -1154,6 +1154,8 @@ $mol_check_icon_demo $mol_demo_small
 $mol_pop $mol_view
 	event * keydown?event <=> keydown?event null
 	showed?val false
+	align_vert \
+	align_hor \
 	sub /
 		<= Anchor null
 		<= Bubble $mol_pop_bubble

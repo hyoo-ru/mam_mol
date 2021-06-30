@@ -25,6 +25,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * align_vert \
+		 * ```
+		 */
+		align_vert() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * align_hor \
+		 * ```
+		 */
+		align_hor() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * sub /
 		 * 	<= Anchor
 		 * 	<= Bubble
