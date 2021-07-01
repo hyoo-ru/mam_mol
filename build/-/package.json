@@ -15,6 +15,7 @@
     "portastic": "*",
     "ws": "*",
     "compression": "*",
+    "cors": "*",
     "body-parser": "*",
     "serve-index": "*"
   },

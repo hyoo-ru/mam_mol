@@ -25395,6 +25395,7 @@ var $;
             const obj = new this.$.$mol_app_demo_detail();
             obj.title = () => this.detail_title();
             obj.source_link = () => this.source_link();
+            obj.edit_uri = () => this.edit_uri();
             obj.body = () => [
                 this.Detail_list()
             ];
@@ -25447,6 +25448,9 @@ var $;
             return "";
         }
         source_link() {
+            return "";
+        }
+        edit_uri() {
             return "";
         }
         main_content() {
@@ -25602,6 +25606,7 @@ var $;
         tools() {
             return [
                 this.Source_link(),
+                this.Edit(),
                 this.Close()
             ];
         }
@@ -25630,6 +25635,31 @@ var $;
             obj.sub = () => [
                 this.Source_button()
             ];
+            return obj;
+        }
+        edit_hint() {
+            return this.$.$mol_locale.text('$mol_app_demo_detail_edit_hint');
+        }
+        Edit_speck() {
+            const obj = new this.$.$mol_speck();
+            obj.value = () => "β";
+            return obj;
+        }
+        Edit_icon() {
+            const obj = new this.$.$mol_icon_settings();
+            return obj;
+        }
+        edit_uri() {
+            return "";
+        }
+        Edit() {
+            const obj = new this.$.$mol_link();
+            obj.hint = () => this.edit_hint();
+            obj.sub = () => [
+                this.Edit_speck(),
+                this.Edit_icon()
+            ];
+            obj.uri = () => this.edit_uri();
             return obj;
         }
         close_hint() {
@@ -25663,6 +25693,15 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_detail.prototype, "Source_link", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_detail.prototype, "Edit_speck", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_detail.prototype, "Edit_icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_detail.prototype, "Edit", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_detail.prototype, "Close_icon", null);
@@ -25952,9 +25991,6 @@ var $;
             selected_class_name() {
                 return '$' + this.selected();
             }
-            editing() {
-                return $.$mol_state_arg.value('edit') != null;
-            }
             Widget() {
                 return $.$mol_atom2_dict({
                     get: (name) => {
@@ -25993,10 +26029,7 @@ var $;
                 let sub = [];
                 sub.push(this.Menu());
                 if (this.selected()) {
-                    if (this.editing() && this.names_demo().length === 1)
-                        sub.push(...this.Editor(this.selected()).pages());
-                    else
-                        sub.push(this.Detail(this.selected()));
+                    sub.push(this.Detail(this.selected()));
                 }
                 return sub;
             }
@@ -26023,6 +26056,11 @@ var $;
             chat_link() {
                 return $.$mol_state_arg.make_link({ demo: this.selected() });
             }
+            edit_uri() {
+                const source = encodeURIComponent(`$${''}my_app $${this.selected()}`);
+                const pack = encodeURIComponent(this.$.$mol_state_arg.make_link({}));
+                return `https://studio.hyoo.ru/#!pack=${pack}/source=${source}/preview`;
+            }
         }
         __decorate([
             $.$mol_mem
@@ -26042,6 +26080,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_app_demo.prototype, "main_content", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_app_demo.prototype, "edit_uri", null);
         $$.$mol_app_demo = $mol_app_demo;
         class $mol_app_demo_nav extends $.$mol_app_demo_nav {
             Cell(id) {

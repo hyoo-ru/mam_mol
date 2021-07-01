@@ -77,6 +77,7 @@ namespace $ {
 
 		expressHandlers() : any[] {
 			return [
+				this.expressCors() ,
 				this.expressCompressor() ,
 				this.expressBodier() ,
 				this.expressGenerator() ,
@@ -88,6 +89,10 @@ namespace $ {
 		
 		expressCompressor() {
 			return $node['compression']() as unknown
+		}
+		
+		expressCors() {
+			return $node.cors() as unknown
 		}
 		
 		expressBodier() {

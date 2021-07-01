@@ -80,7 +80,7 @@ var $;
                 event.prompt();
             });
         }
-        else {
+        if (location.protocol !== 'about:') {
             if (navigator.serviceWorker)
                 navigator.serviceWorker.register(uri);
             else if (location.protocol === 'http:')

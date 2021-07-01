@@ -13,6 +13,7 @@ interface $node {
 	"portastic" : typeof import( "portastic" )
 	"ws" : typeof import( "ws" )
 	"compression" : typeof import( "compression" )
+	"cors" : typeof import( "cors" )
 	"body-parser" : typeof import( "body-parser" )
 	"serve-index" : typeof import( "serve-index" )
 }

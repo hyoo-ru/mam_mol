@@ -5572,6 +5572,7 @@ var $;
         }
         expressHandlers() {
             return [
+                this.expressCors(),
                 this.expressCompressor(),
                 this.expressBodier(),
                 this.expressGenerator(),
@@ -5582,6 +5583,9 @@ var $;
         }
         expressCompressor() {
             return $node['compression']();
+        }
+        expressCors() {
+            return $node.cors();
         }
         expressBodier() {
             return $node['body-parser'].json({

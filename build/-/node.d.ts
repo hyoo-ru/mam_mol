@@ -1183,6 +1183,7 @@ declare namespace $ {
         socket(): any;
         expressHandlers(): any[];
         expressCompressor(): unknown;
+        expressCors(): unknown;
         expressBodier(): any;
         expressFiler(): any;
         expressDirector(): unknown;

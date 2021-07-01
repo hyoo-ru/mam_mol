@@ -6724,6 +6724,7 @@ declare namespace $ {
         nav_option(id: any): any;
         filter_string(val?: any): string;
         source_link(): string;
+        edit_uri(): string;
         main_content(): readonly any[];
         Detail_list(): $$.$mol_list;
         selected_class_name(): string;
@@ -6758,6 +6759,11 @@ declare namespace $ {
         Source_icon(): $mol_icon_code_braces;
         Source_button(): $mol_button_major;
         Source_link(): $$.$mol_link;
+        edit_hint(): string;
+        Edit_speck(): $mol_speck;
+        Edit_icon(): $mol_icon_settings;
+        edit_uri(): string;
+        Edit(): $$.$mol_link;
         close_hint(): string;
         Close_icon(): $mol_icon_cross;
         close_arg(): {
@@ -6819,7 +6825,6 @@ declare namespace $.$$ {
         };
         selected(): string;
         selected_class_name(): string;
-        editing(): boolean;
         Widget(): Record<string, $mol_view>;
         names_demo(): string[];
         blocks(): $mol_view[];
@@ -6827,6 +6832,7 @@ declare namespace $.$$ {
         logo_uri(): string;
         source_link(): string;
         chat_link(): string;
+        edit_uri(): string;
     }
     class $mol_app_demo_nav extends $.$mol_app_demo_nav {
         Cell(id: {

@@ -2848,6 +2848,7 @@ $mol_app_demo $mol_book2
 	Detail!id $mol_app_demo_detail
 		title <= detail_title
 		source_link <= source_link \
+		edit_uri <= edit_uri \
 		body /
 			<= Detail_list $mol_list
 				rows <= main_content /
@@ -2899,15 +2900,13 @@ $mol_app_demo_detail $mol_page
 					hint <= source_hint @ \Source code of this demo
 					sub /
 						<= Source_icon $mol_icon_code_braces
-		- <= Edit $mol_link
-			hint <= edit_hint @ \Edit this demo online
+		<= Edit $mol_link
+			hint <= edit_hint @ \Edit this demo in studio
 			sub /
 				<= Edit_speck $mol_speck
 					value \β
 				<= Edit_icon $mol_icon_settings
-			arg *
-				edit \
-				path \
+			uri <= edit_uri \
 		<= Close $mol_link 
 			hint <= close_hint @ \Close panel
 			sub /

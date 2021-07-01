@@ -63,6 +63,7 @@ namespace $ {
 		 * Detail!id $mol_app_demo_detail
 		 * 	title <= detail_title
 		 * 	source_link <= source_link
+		 * 	edit_uri <= edit_uri
 		 * 	body / <= Detail_list
 		 * ```
 		 */
@@ -72,6 +73,7 @@ namespace $ {
 			
 			obj.title = () => this.detail_title()
 			obj.source_link = () => this.source_link()
+			obj.edit_uri = () => this.edit_uri()
 			obj.body = () => [
 				this.Detail_list()
 			] as readonly any[]
@@ -203,6 +205,15 @@ namespace $ {
 		 * ```
 		 */
 		source_link() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * edit_uri \
+		 * ```
+		 */
+		edit_uri() {
 			return ""
 		}
 		
@@ -477,12 +488,14 @@ namespace $ {
 		 * ```tree
 		 * tools /
 		 * 	<= Source_link
+		 * 	<= Edit
 		 * 	<= Close
 		 * ```
 		 */
 		tools() {
 			return [
 				this.Source_link(),
+				this.Edit(),
 				this.Close()
 			] as readonly any[]
 		}
@@ -553,6 +566,74 @@ namespace $ {
 			obj.sub = () => [
 				this.Source_button()
 			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * edit_hint @ \Edit this demo in studio
+		 * ```
+		 */
+		edit_hint() {
+			return this.$.$mol_locale.text( '$mol_app_demo_detail_edit_hint' )
+		}
+		
+		/**
+		 * ```tree
+		 * Edit_speck $mol_speck value \β
+		 * ```
+		 */
+		@ $mol_mem
+		Edit_speck() {
+			const obj = new this.$.$mol_speck()
+			
+			obj.value = () => "β"
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Edit_icon $mol_icon_settings
+		 * ```
+		 */
+		@ $mol_mem
+		Edit_icon() {
+			const obj = new this.$.$mol_icon_settings()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * edit_uri \
+		 * ```
+		 */
+		edit_uri() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Edit $mol_link
+		 * 	hint <= edit_hint
+		 * 	sub /
+		 * 		<= Edit_speck
+		 * 		<= Edit_icon
+		 * 	uri <= edit_uri
+		 * ```
+		 */
+		@ $mol_mem
+		Edit() {
+			const obj = new this.$.$mol_link()
+			
+			obj.hint = () => this.edit_hint()
+			obj.sub = () => [
+				this.Edit_speck(),
+				this.Edit_icon()
+			] as readonly any[]
+			obj.uri = () => this.edit_uri()
 			
 			return obj
 		}
