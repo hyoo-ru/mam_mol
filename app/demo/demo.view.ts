@@ -177,7 +177,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		edit_uri() {
-			const source = encodeURIComponent( `$my_app $${ this.selected() }` )
+			const source = encodeURIComponent( `$${''}my_app $${ this.selected() }` )
 			const pack = encodeURIComponent( this.$.$mol_state_arg.make_link({}) )
 			return `https://studio.hyoo.ru/#!pack=${ pack }/source=${ source }/preview`
 		}
