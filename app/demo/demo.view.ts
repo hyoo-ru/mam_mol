@@ -97,10 +97,6 @@ namespace $.$$ {
 			return '$' + this.selected()
 		}
 
-		editing() {
-			return $mol_state_arg.value( 'edit' ) != null
-		}
-
 		@ $mol_mem
 		Widget() {
 			return $mol_atom2_dict({
@@ -143,8 +139,7 @@ namespace $.$$ {
 			sub.push( this.Menu() )
 			
 			if( this.selected() ) {
-				if( this.editing() && this.names_demo().length === 1 ) sub.push( ... this.Editor( this.selected() ).pages() )
-				else sub.push( this.Detail( this.selected() ) )
+				sub.push( this.Detail( this.selected() ) )
 			}
 			
 			return sub
@@ -165,7 +160,7 @@ namespace $.$$ {
 			return $mol_file.relative( '/mol/logo/logo.svg' ).path()
 		}
 
-		source_link(){
+		source_link() {
 			
 			const demo = $mol_state_arg.value('demo')
 			if( !demo ) return this.source_prefix()
@@ -178,6 +173,13 @@ namespace $.$$ {
 
 		chat_link() {
 			return $mol_state_arg.make_link({ demo : this.selected() })
+		}
+		
+		@ $mol_mem
+		edit_uri() {
+			const source = encodeURIComponent( `$my_app $${ this.selected() }` )
+			const pack = encodeURIComponent( this.$.$mol_state_arg.make_link({}) )
+			return `https://studio.hyoo.ru/#!pack=${ pack }/source=${ source }/preview`
 		}
 		
 	}
