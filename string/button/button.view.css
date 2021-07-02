@@ -11,7 +11,7 @@
 	box-shadow: inset 0 0 0 1px var(--mol_theme_line);
 }
 
-[mol_string_button]:not(:placeholder-shown):hover {
+[mol_string_button]:not(:placeholder-shown):enabled:hover {
 	background: var(--mol_theme_hover);
 }
 
