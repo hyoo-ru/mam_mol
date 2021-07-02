@@ -2048,7 +2048,7 @@ var $;
             let warned = false;
             descr.value = function $mol_deprecated_wrapper(...args) {
                 if (!warned) {
-                    this.$.$mol_log3_warn({
+                    $.$$.$mol_log3_warn({
                         place: `${host.constructor.name}::${field}`,
                         message: `Deprecated`,
                         hint: message,
@@ -22700,7 +22700,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_tree2 extends $.$mol_object2 {
+    class $mol_tree2 extends Object {
         constructor(type, value, kids, span) {
             super();
             this.type = type;
@@ -22733,7 +22733,7 @@ var $;
         }
         static struct(type, kids = [], span = $.$mol_span.unknown) {
             if (/[ \n\t\\]/.test(type)) {
-                this.$.$mol_fail(span.error(`Wrong type ${JSON.stringify(type)}`));
+                $.$$.$mol_fail(span.error(`Wrong type ${JSON.stringify(type)}`));
             }
             return new $mol_tree2(type, '', kids, span);
         }
@@ -22753,10 +22753,10 @@ var $;
             return this.value + values.join('\n');
         }
         static fromString(str, uri = 'unknown') {
-            return this.$.$mol_tree2_from_string(str, uri);
+            return $.$$.$mol_tree2_from_string(str, uri);
         }
         toString() {
-            return this.$.$mol_tree2_to_string(this);
+            return $.$$.$mol_tree2_to_string(this);
         }
         insert(value, ...path) {
             if (path.length === 0)

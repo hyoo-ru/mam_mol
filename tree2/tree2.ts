@@ -21,7 +21,7 @@ namespace $ {
 	 * Avoid direct instantiation. Use static factories instead.
 	 * @see https://github.com/nin-jin/tree.d
 	 */
-	export class $mol_tree2 extends $mol_object2 {
+	export class $mol_tree2 extends Object {
 		
 		constructor(
 
@@ -101,7 +101,7 @@ namespace $ {
 		) {
 
 			if( /[ \n\t\\]/.test( type ) ) {
-				this.$.$mol_fail( span.error( `Wrong type ${ JSON.stringify( type ) }` ) )
+				$$.$mol_fail( span.error( `Wrong type ${ JSON.stringify( type ) }` ) )
 			}
 
 			return new $mol_tree2( type , '' , kids , span )
@@ -138,12 +138,12 @@ namespace $ {
 		/** Parses tree format. */
 		@ $mol_deprecated( 'Use $mol_tree2_from_string' )
 		static fromString( str : string , uri = 'unknown' ) {
-			return this.$.$mol_tree2_from_string( str, uri )
+			return $$.$mol_tree2_from_string( str, uri )
 		}
 
 		/** Serializes to tree format. */
 		toString() : string {
-			return this.$.$mol_tree2_to_string( this )
+			return $$.$mol_tree2_to_string( this )
 		}
 		
 		/** Makes new tree with node overrided by path. */
