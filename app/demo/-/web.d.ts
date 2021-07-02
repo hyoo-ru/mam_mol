@@ -6183,7 +6183,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_icon_wrench extends $mol_icon {
+    class $mol_icon_github_circle extends $mol_icon {
         path(): string;
     }
 }
@@ -6192,7 +6192,7 @@ declare namespace $ {
     class $mol_link_source extends $mol_link {
         hint(): string;
         sub(): readonly any[];
-        Icon(): $mol_icon_wrench;
+        Icon(): $mol_icon_github_circle;
     }
 }
 
