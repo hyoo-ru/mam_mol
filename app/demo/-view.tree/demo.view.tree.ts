@@ -83,27 +83,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Editor!id $mol_app_studio
-		 * 	title <= editor_title
-		 * 	class_name_base <= selected_class_name
-		 * 	tools_main / <= Close
-		 * ```
-		 */
-		@ $mol_mem_key
-		Editor(id: any) {
-			const obj = new this.$.$mol_app_studio()
-			
-			obj.title = () => this.editor_title()
-			obj.class_name_base = () => this.selected_class_name()
-			obj.tools_main = () => [
-				this.Close()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * Welcome $mol_scroll sub / <= Welcome_text
 		 * ```
 		 */
@@ -237,57 +216,6 @@ namespace $ {
 			const obj = new this.$.$mol_list()
 			
 			obj.rows = () => this.main_content()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * selected_class_name \
-		 * ```
-		 */
-		selected_class_name() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Close_icon $mol_icon_cross
-		 * ```
-		 */
-		@ $mol_mem
-		Close_icon() {
-			const obj = new this.$.$mol_icon_cross()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * close_arg * edit null
-		 * ```
-		 */
-		close_arg() {
-			return {
-				edit: null as any
-			}
-		}
-		
-		/**
-		 * ```tree
-		 * Close $mol_link
-		 * 	sub / <= Close_icon
-		 * 	arg <= close_arg
-		 * ```
-		 */
-		@ $mol_mem
-		Close() {
-			const obj = new this.$.$mol_link()
-			
-			obj.sub = () => [
-				this.Close_icon()
-			] as readonly any[]
-			obj.arg = () => this.close_arg()
 			
 			return obj
 		}

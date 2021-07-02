@@ -19,15 +19,6 @@ $mol_app_demo $mol_book2
 				repository_name \nin-jin/mol_chat
 				title <= title
 				link <= chat_link \
-	Editor!id $mol_app_studio
-		title <= editor_title
-		class_name_base <= selected_class_name \
-		tools_main /
-			<= Close $mol_link
-				sub /
-					<= Close_icon $mol_icon_cross
-				arg <= close_arg *
-					edit null
 	Welcome $mol_scroll
 		sub /
 			<= Welcome_text $mol_text

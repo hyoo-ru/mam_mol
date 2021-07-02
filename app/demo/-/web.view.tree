@@ -2610,205 +2610,6 @@ $mol_toolbar_demo $mol_demo_small
 				<= Delete $mol_button_minor sub /
 					<= Delete_icon $mol_icon_delete
 
-$mol_app_studio_field $mol_list
-	path /
-	rows /
-		<= Label $mol_view
-			sub /
-				<= Trigger $mol_app_studio_field_title
-					checked?val <=> expanded?val false
-					label /
-						<= Trigger_label $mol_dimmer
-							needle <= highlight \
-							haystack <= title
-					type <= type
-				<= Tools $mol_view sub <= tools /
-					<= Type $mol_select
-						value?val <=> type?val \
-						hint <= type_hint @ \Type...
-						Trigger_icon null
-						dictionary <= types *
-							get \<=
-							bind \<=>
-							object \Object
-							string \Text
-							locale \Localization
-							number \Number
-							bool \Flag
-							list \List
-							dict \Dictionary
-							null \None
-					<= Object $mol_select
-						value?val <=> class?val null
-						options <= object_options /
-						hint <= object_hint @ \Class...
-						Trigger_icon null
-		<= Value $mol_view
-			sub <= content /
-				<= Bool $mol_switch
-					value?val <=> value_bool?val null
-					options *
-						true \True
-						false \False
-				<= Number $mol_number
-					value?val <=> value_number?val NaN
-					hint <= hint \
-				<= String $mol_textarea
-					value?val <=> value_string?val null
-					hint <= hint \
-				<= Bind $mol_select
-					value?val <=> bind?val null
-					options <= bind_options /
-					hint <= bind_hint @ \Property..
-					No_options <= Prop_add $mol_button_minor
-						title <= prop_add_label @ \Add property
-						event_click?val <=> event_prop_add?val null
-					Trigger_icon null
-				<= List $mol_list
-					rows <= list_rows /
-				<= Dict $mol_list
-					rows <= pairs /
-				<= Overs $mol_list
-					rows <= overs /
-	Add $mol_select
-		hint <= add_hint @ \Add item..
-		value?val <=> add_item?val \
-		dictionary <= item_types *
-			get \<=
-			string \Text
-			number \Number
-			bool \Flag
-			list \List
-			dict \Dictionary
-			null \None
-		Trigger_icon <= List_trigger_icon $mol_icon_plus
-	Add_pair $mol_bar
-		sub /
-			<= Add_pair_key $mol_search
-				hint <= add_pair_hint @ \Add key..
-				query?val <=> add_pair_key?val \
-				suggests <= key_suggests /
-			<= Add_pair_submit $mol_button_minor
-				event_click?val <=> add_pair?val \
-				sub /
-					<= Add_pair_submit_icon $mol_icon_plus
-	Add_over $mol_select
-		hint <= add_over_hint @ \Add override..
-		value?val <=> add_over?val \
-		Trigger_icon <= Overs_trigger_icon $mol_icon_plus
-		options <= over_options /
-	Prop!id $mol_app_studio_field
-		path <= prop_path!id /
-		prop_arg!id <= prop_arg!id *
-		prop!path?val <=> prop!path?val $mol_tree2_empty
-		props!name?val <=> props!name?val $mol_tree2_empty
-		prop_value!id <= prop_value!id null
-		bind_options <= bind_options /
-		prop_add?val <=> prop_add?val null
-		object_options <= object_options /
-
-$mol_app_studio_field_title $mol_check_expand
-	attr *
-		^
-		mol_app_studio_field_title_type <= type \null
-
-$mol_icon_source $mol_icon path \M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z
-
-$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
-
-$mol_app_studio $mol_book2
-	value_overrided!id?val null
-	-
-	tools_main /
-	pages /
-		<= Preview_page $mol_page
-			title <= preview_title @ \Preview: 
-			tools <= preview_tools /
-				<= Source_link $mol_link
-					hint <= source_title
-					sub /
-						<= Source_icon $mol_icon_source
-					arg <= source_arg *
-						source \
-						path null
-				<= Edit $mol_link
-					hint <= editor_title
-					sub /
-						<= Edit_icon $mol_icon_settings
-					arg *
-						path \
-						source null
-			body /
-				<= Selector $mol_app_studio_selector
-					sub /
-						<= Block $mol_view
-					path?val <=> path?val /
-			minimal_width 400
-		<= Editor_page $mol_page
-			plugins /
-				<= Speech_filter $mol_speech
-					event_catch?val <=> speech_filter?val null
-					patterns <= speech_filter_patterns /
-						\find (.+?)
-			title <= editor_title @ \Properties
-			tools /
-				- <= Speech_toggle $mol_check_icon
-					Icon <= Speech_toggle_icon $mol_icon_microphone
-					checked?val <=> speech_enabled?val false
-					hint <= speech_toggle_hint @ \Speech contol
-				<= Editor_close $mol_link
-					sub /
-						<= Editor_close_icon $mol_icon_cross
-					arg <= editor_close_arg *
-						path null
-			body /
-				<= Filter_bar $mol_bar sub <= filter_bar_items /
-					<= Filter $mol_search
-						hint <= filter_hint @ \Filter properties
-						query?val <=> prop_filter?val \
-					<= Prop_add $mol_button_minor
-						event_click?val <=> event_add?val null
-						sub / <= Prop_add_icon $mol_icon_plus
-						hint <= prop_add_hint @ \Add this property
-				<= Fields $mol_list
-					rows <= fields /
-			minimal_width 400
-		<= Source_page $mol_page
-			title <= source_title @ \Source code
-			minimal_width 400
-			tools /
-				<= Source_close $mol_link
-					sub /
-						<= Source_close_icon $mol_icon_cross
-					arg <= source_close_arg *
-						source null
-			body /
-				<= Source $mol_text
-					text <= source \
-	Placeholder null
-	-
-	Prop!id $mol_app_studio_field
-		path <= prop_path!id /
-		prop!path?val <=> prop_default!path?val $mol_tree2_empty
-		props!name?val <=> props_all!name?val $mol_tree2_empty
-		prop_arg!id <= prop_arg!id *
-		prop_value!id <= prop_value_base!id null
-		bind_options <= prop_options /
-		object_options <= view_options /
-		prop_add?val <=> prop_add?val \
-		highlight <= prop_filter
-	-
-	class_name_self?val \$mol_app_studio_generated
-	class_name_base?val \$mol_select
-	class_self?val $mol_tree2_empty
-	classes $mol_tree2_empty
-
-$mol_app_studio_selector $mol_view
-	event *
-		contextmenu?event <=> select?event null
-		dblclick?event <=> select?event null
-	path?val /
-
 $mol_status $mol_view
 	status null
 	minimal_height 24
@@ -2819,12 +2620,12 @@ $mol_status $mol_view
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
 
-$mol_icon_github_circle $mol_icon path \M12,2C6.48,2 2,6.48 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12C22,6.48 17.52,2 12,2Z
+$mol_icon_wrench $mol_icon path \M22.7,19L13.6,9.9C14.5,7.6 14,4.9 12.1,3C10.1,1 7.1,0.6 4.7,1.7L9,6L6,9L1.6,4.7C0.4,7.1 0.9,10.1 2.9,12.1C4.8,14 7.5,14.5 9.8,13.6L18.9,22.7C19.3,23.1 19.9,23.1 20.3,22.7L22.6,20.4C23.1,20 23.1,19.3 22.7,19Z
 
 $mol_link_source $mol_link
 	hint @ \Source code
 	sub /
-		<= Icon $mol_icon_github_circle
+		<= Icon $mol_icon_wrench
 
 $mol_icon_brightness_6 $mol_icon path \M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z
 
@@ -2834,6 +2635,8 @@ $mol_lights_toggle $mol_check_icon
 	checked?val <=> lights?val false
 
 $mol_icon_code_braces $mol_icon path \M8,3C6.9,3 6,3.9 6,5V9C6,10.1 5.1,11 4,11H3V13H4C5.1,13 6,13.9 6,15V19C6,20.1 6.9,21 8,21H10V19H8V14C8,12.9 7.1,12 6,12C7.1,12 8,11.1 8,10V5H10V3M16,3C17.1,3 18,3.9 18,5V9C18,10.1 18.9,11 20,11H21V13H20C18.9,13 18,13.9 18,15V19C18,20.1 17.1,21 16,21H14V19H16V14C16,12.9 16.9,12 18,12C16.9,12 16,11.1 16,10V5H14V3H16Z
+
+$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
 
 $mol_app_demo $mol_book2
 	editor_title <= detail_title \$mol
@@ -2856,15 +2659,6 @@ $mol_app_demo $mol_book2
 				repository_name \nin-jin/mol_chat
 				title <= title
 				link <= chat_link \
-	Editor!id $mol_app_studio
-		title <= editor_title
-		class_name_base <= selected_class_name \
-		tools_main /
-			<= Close $mol_link
-				sub /
-					<= Close_icon $mol_icon_cross
-				arg <= close_arg *
-					edit null
 	Welcome $mol_scroll
 		sub /
 			<= Welcome_text $mol_text
