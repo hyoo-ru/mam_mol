@@ -6,7 +6,12 @@ namespace $ {
 	 */
 	export type $mol_type_assert<
 		Actual ,
-		Expected extends $mol_type_equals< Actual , Expected > ,
+		Expected extends
+		| $mol_type_equals< Actual , Expected >
+		| $mol_type_error< 'Assert failed', {
+			actual: Actual ,
+			expected: Expected
+		} >
 	> = Actual
 
 	/**
