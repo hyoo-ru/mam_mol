@@ -11,9 +11,8 @@
 	box-shadow: inset 0 0 0 1px var(--mol_theme_line);
 }
 
-[mol_string_button]:disabled {
-	background: transparent;
-	color: var(--mol_theme_text);
+[mol_string_button]:not(:placeholder-shown):hover {
+	background: var(--mol_theme_hover);
 }
 
 [mol_string_button]:focus {
@@ -21,3 +20,9 @@
 	color: var(--mol_theme_text);
 	box-shadow: inset 0 0 0 1px var(--mol_theme_focus);
 }
+
+[mol_string_button]:disabled {
+	background: transparent;
+	color: var(--mol_theme_text);
+}	
+
