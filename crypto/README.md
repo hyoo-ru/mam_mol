@@ -14,13 +14,13 @@ const salt = $mol_crypto_salt()
 // Generates secret key
 const Alice = await $mol_crypto_secret.generate()
 
-// Serialize secret key to ArrayBuffer
+// Serialize secret key to ArrayBuffer (16 byte)
 const key = await Alice.serial()
 
 // Reuse secret key from ArrayBuffer
 const Bob = await $mol_crypto_secret.from( key )
 
-// Use secret key and salt to encrypt data
+// Use secret key and salt to encrypt data (16 bytes + data length )
 const closed = await Alice.encrypt( data, salt )
 
 // Use secret key and salt to decrypt data
@@ -36,15 +36,17 @@ const data = new Uint8Array([1,2,3])
 // Generates private-public key pair
 const pair = await $mol_crypto_cipher_pair()
 
-// Serialize keys to ArrayBuffer
+// Serialize public key to ArrayBuffer (162 bytes)
 const key_public = await pair.public.serial()
+
+// Serialize private key to ArrayBuffer (~640 bytes)
 const key_private = await pair.private.serial()
 
 // Reuse keys from ArrayBuffer
 const Alice = await $mol_crypto_cipher_public.from( key_public )
 const Bob = await $mol_crypto_cipher_private.from( key_private )
 
-// Use public key to encrypt data
+// Use public key to encrypt data (max 86 bytes input, 128 bytes output)
 const closed = await Alice.encrypt( data )
 
 // Use private key to decrypt data
@@ -60,15 +62,17 @@ const data = new Uint8Array([1,2,3])
 // Generates private-public key pair
 const pair = await $mol_crypto_auditor_pair()
 
-// Serialize keys to ArrayBuffer
+// Serialize public key to ArrayBuffer (62 bytes)
 const key_public = await pair.public.serial()
+
+// Serialize private key to ArrayBuffer (~195 bytes)
 const key_private = await pair.private.serial()
 
 // Reuse keys from ArrayBuffer
 const Alice = await $mol_crypto_auditor_public.from( key_public )
 const Bob = await $mol_crypto_auditor_private.from( key_private )
 
-// Make sign for data
+// Make sign for data (32 bytes)
 const sign = await Alice.sign( data )
 
 // Use sign to verify data

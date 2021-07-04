@@ -52,7 +52,7 @@ namespace $ {
 			)
 		}
 		
-		/** 62 byte */
+		/** 62 bytes */
 		async serial() {
 			return await crypto.subtle.exportKey(
 				'spki',
@@ -100,7 +100,7 @@ namespace $ {
 			)
 		}
 		
-		/** 32 byte */
+		/** 32 bytes */
 		async sign( data: DataView | ArrayBuffer ) {
 			
 			return await crypto.subtle.sign(
