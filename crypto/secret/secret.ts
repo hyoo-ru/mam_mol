@@ -3,6 +3,7 @@ namespace $ {
 	const algorithm = {
 		name: 'AES-GCM',
 		length: 128,
+		tagLength: 32,
 	}
 	
 	/** Symmetric cipher with shortest payload */
@@ -44,7 +45,7 @@ namespace $ {
 			)
 		}
 
-		/** 16 bytes + data length */
+		/** 4 bytes + data length */
 		async encrypt( open: DataView | ArrayBuffer, salt: Uint8Array ) {
 			return await crypto.subtle.encrypt(
 				{

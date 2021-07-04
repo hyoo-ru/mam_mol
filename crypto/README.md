@@ -20,7 +20,7 @@ const key = await Alice.serial()
 // Reuse secret key from ArrayBuffer
 const Bob = await $mol_crypto_secret.from( key )
 
-// Use secret key and salt to encrypt data (16 bytes + data length )
+// Use secret key and salt to encrypt data (4 bytes + data length )
 const closed = await Alice.encrypt( data, salt )
 
 // Use secret key and salt to decrypt data
