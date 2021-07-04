@@ -1114,7 +1114,7 @@ namespace $ {
 				
 			}
 
-			const target = mod.resolve( '-/README.md' )
+			const target = pack.resolve( '-/README.md' )
 			target.text( source?.text() ?? path )
 			this.logBundle( target , Date.now() - start )
 			
