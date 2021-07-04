@@ -74,3 +74,15 @@ const sign = await Alice.sign( data )
 // Use sign to verify data
 const  = await Bob.verify( data, sign )
 ```
+
+# Usage from NPM
+
+```
+npm install mol_crypto_lib
+```
+
+[![](https://badgen.net/bundlephobia/minzip/mol_crypto_lib)](https://bundlephobia.com/package/mol_crypto_lib)
+
+```javascript
+import { $mol_crypto_salt } from 'mol_crypto_lib'
+```
