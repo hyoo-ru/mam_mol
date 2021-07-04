@@ -59,7 +59,7 @@ namespace $ {
 			)
 		}
 		
-		/** max 86 byte input, 128 byte output */
+		/** max 86 bytes input, 128 bytes output */
 		async encrypt( data: DataView | ArrayBuffer ) {
 			return await crypto.subtle.encrypt(
 				algorithm,

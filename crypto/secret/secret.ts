@@ -36,7 +36,7 @@ namespace $ {
 			)
 		}
 		
-		/** 16 byte */
+		/** 16 bytes */
 		async serial() {
 			return await crypto.subtle.exportKey(
 				'raw',
@@ -44,7 +44,7 @@ namespace $ {
 			)
 		}
 
-		/** 16 + length */
+		/** 16 bytes + data length */
 		async encrypt( open: DataView | ArrayBuffer, salt: Uint8Array ) {
 			return await crypto.subtle.encrypt(
 				{
