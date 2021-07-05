@@ -17,7 +17,7 @@ namespace $ {
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( proto , name )
 		const value = descr!.value! as Function
 		
-		const store = new WeakMap< Host , Map< Key , $mol_atom2<Output> > >()
+		const store = new WeakMap< Host , Map< string , $mol_atom2<Output> > >()
 
 		Object.defineProperty( proto , name + "()" , {
 			get : function() {
@@ -28,9 +28,9 @@ namespace $ {
 		const get_cache = ( host : Host , key : Key )=> {
 			
 			let dict = store.get( host )!
-			if( !dict ) store.set( host , dict = new $mol_dict )
+			if( !dict ) store.set( host , dict = new Map )
 			
-			const key_str = $mol_dict_key(key)
+			const key_str = $mol_key(key)
 			let cache = dict.get( key_str )
 			if( cache ) return cache
 

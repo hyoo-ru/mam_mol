@@ -1,32 +1,24 @@
 namespace $ {
-
-	export function $mol_dict_key( value : any ) : any {
-		
-		if( !value ) return JSON.stringify( value )
-		if( typeof value !== 'object' && typeof value !== 'function' ) return JSON.stringify( value )
-
-		if( Array.isArray( value ) ) return JSON.stringify( value )
-		if( Object.getPrototypeOf( Object.getPrototypeOf( value ) ) === null ) return JSON.stringify( value )
-		
-		return value
-	}
 	
+	/** @deprecated */
+	export let $mol_dict_key = $mol_key
+
 	export class $mol_dict< Key , Value > extends Map< Key , Value > {
 
 		get( key : Key ) {
-			return super.get( $mol_dict_key( key ) )
+			return super.get( $mol_key( key ) )
 		}
 
 		has( key : Key ) {
-			return super.has( $mol_dict_key( key ) )
+			return super.has( $mol_key( key ) )
 		}
 
 		set( key : Key , value : Value ) {
-			return super.set( $mol_dict_key( key ) , value )
+			return super.set( $mol_key( key ) , value )
 		}
 
 		delete( key : Key ) {
-			return super.delete( $mol_dict_key( key ) )
+			return super.delete( $mol_key( key ) )
 		}
 
 		forEach( back : ( value : Value , key : Key , dict : Map< Key , Value > ) => void , context? : any ) {
