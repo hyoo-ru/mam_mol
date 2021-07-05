@@ -1,5 +1,6 @@
 namespace $ {
 
+	/** @deprecated Use `Object.is` */
 	export function $mol_compare_any( a : any , b : any ) {
 		
 		if( a === b ) return true

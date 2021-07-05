@@ -746,26 +746,6 @@ var $;
 var $;
 (function ($) {
     $.$mol_test({
-        'objects by reference'() {
-            $.$mol_assert_equal($.$mol_compare_any({}, {}), false);
-        },
-        'primitives by value'() {
-            $.$mol_assert_equal($.$mol_compare_any('a', 'a'), true);
-        },
-        'NaN by value'() {
-            $.$mol_assert_equal($.$mol_compare_any(Number.NaN, Number.NaN), true);
-        },
-        'NaN not equal zero'() {
-            $.$mol_assert_equal($.$mol_compare_any(Number.NaN, 0), false);
-        },
-    });
-})($ || ($ = {}));
-//any.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
         'return source when same object'() {
             const target = {};
             $.$mol_assert_equal($.$mol_conform(target, target), target);

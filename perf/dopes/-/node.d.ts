@@ -303,10 +303,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_compare_any(a: any, b: any): boolean;
-}
-
-declare namespace $ {
     const $mol_conform_stack: any[];
     function $mol_conform<Target, Source>(target: Target, source: Source): Target;
     const $mol_conform_handlers: WeakMap<Object, (target: any, source: any) => any>;
