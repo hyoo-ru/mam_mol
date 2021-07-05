@@ -2410,7 +2410,9 @@ var $;
                     return null;
                 return (child instanceof $mol_view)
                     ? child.dom_node()
-                    : String(child);
+                    : child instanceof Node
+                        ? child
+                        : String(child);
             });
             $.$mol_dom_render_children(node, nodes);
             for (const el of sub)
