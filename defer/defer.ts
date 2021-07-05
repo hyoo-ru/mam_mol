@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** @deprecated Use $mol_after_frame instead */
 	export class $mol_defer extends $mol_object {
 		
 		constructor( public run : ()=> void ) {
