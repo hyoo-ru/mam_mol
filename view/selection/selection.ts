@@ -14,7 +14,7 @@ namespace $ {
 				element = element.parentNode as HTMLElement
 			}
 
-			new $mol_defer( ()=> {
+			$mol_fiber_defer( ()=> {
 
 				const element = $mol_mem_cached( ()=> this.focused() )![0] as HTMLElement
 				
@@ -28,7 +28,6 @@ namespace $ {
 		
 		static focus( event : FocusEvent ) {
 			this.focused( [ event.target as Element ] )
-
 		}
 		
 		static blur( event : FocusEvent ) {

@@ -10,7 +10,7 @@ namespace $ {
 		const event_name = self.cordova ? 'deviceready' : 'DOMContentLoaded'
 		Promise.resolve().then( $mol_fiber_root( ()=> {
 			$mol_view.autobind()
-			$mol_defer.run()
+			$mol_fiber_warp()
 		} ) )
 		
 		function $mol_view_watch() {

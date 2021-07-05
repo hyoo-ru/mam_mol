@@ -8934,7 +8934,7 @@ var $;
                 parents.push(element);
                 element = element.parentNode;
             }
-            new $.$mol_defer(() => {
+            $.$mol_fiber_defer(() => {
                 const element = $.$mol_mem_cached(() => this.focused())[0];
                 if (element)
                     element.focus();

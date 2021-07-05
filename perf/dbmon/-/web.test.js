@@ -998,6 +998,58 @@ var $;
 ;
 "use strict";
 var $;
+(function ($) {
+    class $mol_defer extends $.$mol_object {
+        constructor(run) {
+            super();
+            this.run = run;
+            $mol_defer.add(this);
+        }
+        destructor() {
+            $mol_defer.drop(this);
+        }
+        static schedule() {
+            if (this.timer)
+                return;
+            this.timer = this.scheduleNative(() => {
+                this.timer = null;
+                this.run();
+            });
+        }
+        static unschedule() {
+            if (!this.timer)
+                return;
+            cancelAnimationFrame(this.timer);
+            this.timer = null;
+        }
+        static add(defer) {
+            this.all.push(defer);
+            this.schedule();
+        }
+        static drop(defer) {
+            var index = this.all.indexOf(defer);
+            if (index >= 0)
+                this.all.splice(index, 1);
+        }
+        static run() {
+            if (this.all.length === 0)
+                return;
+            this.schedule();
+            for (var defer; defer = this.all.shift();)
+                defer.run();
+        }
+    }
+    $mol_defer.all = [];
+    $mol_defer.timer = null;
+    $mol_defer.scheduleNative = (typeof requestAnimationFrame == 'function')
+        ? handler => requestAnimationFrame(handler)
+        : handler => setTimeout(handler, 16);
+    $.$mol_defer = $mol_defer;
+})($ || ($ = {}));
+//defer.js.map
+;
+"use strict";
+var $;
 (function ($_1) {
     $_1.$mol_test({
         'Value has js-path name'() {
