@@ -63,7 +63,7 @@ namespace $ {
 					... algorithm,
 					iv: salt,
 				},
-				await this.native,
+				this.native,
 				closed
 			)
 		}
