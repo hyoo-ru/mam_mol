@@ -1,6 +1,6 @@
 # $mol_crypto
 
-Simple API for effective cross platform cryptography.
+Simple API for effective cross platform cryptography with minimal extra size.
 
 ## Symmetric encoding
 
