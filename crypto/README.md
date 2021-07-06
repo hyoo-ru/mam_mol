@@ -1,6 +1,6 @@
 # $mol_crypto
 
-Simple API for effective cross platform cryptography.
+Simple API for effective cross platform cryptography with minimal extra size.
 
 ## Symmetric encoding
 
@@ -8,8 +8,8 @@ Simple API for effective cross platform cryptography.
 // Any DataView or ArrayBuffer
 const data = new Uint8Array([1,2,3])
 
-// Should be unique for every encryption
-const salt = $mol_crypto_salt()
+// Should be unique for every encryption (but may be predictable)
+const salt = $mol_crypto_salt() // 4 bytes
 
 // Generates secret key
 const Alice = await $mol_crypto_secret.generate()
