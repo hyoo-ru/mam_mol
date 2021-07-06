@@ -19,7 +19,8 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		strings() {
-			const regexp = $mol_regexp.from( { needle: this.needle() } , { ignoreCase: true } )
+			const variants = { ... this.needle().split( /\s/g ).filter( Boolean ) } as Record< number, string >
+			const regexp = $mol_regexp.from( { needle: variants } , { ignoreCase: true } )
 			return this.haystack().split( regexp )
 		}
 		
