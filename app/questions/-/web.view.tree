@@ -136,7 +136,7 @@ $mol_check_expand $mol_check
 
 $mol_paragraph $mol_view
 	line_height 24
-	letter_width 8
+	letter_width 7
 	width_limit Infinity
 	sub / <= title
 

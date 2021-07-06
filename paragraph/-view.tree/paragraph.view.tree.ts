@@ -12,11 +12,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * letter_width 8
+		 * letter_width 7
 		 * ```
 		 */
 		letter_width() {
-			return 8
+			return 7
 		}
 		
 		/**

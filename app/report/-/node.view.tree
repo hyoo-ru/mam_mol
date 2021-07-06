@@ -172,7 +172,7 @@ $mol_icon_dots_vertical $mol_icon path \M12,16C13.1,16 14,16.9 14,18C14,19.1 13.
 
 $mol_paragraph $mol_view
 	line_height 24
-	letter_width 8
+	letter_width 7
 	width_limit Infinity
 	sub / <= title
 

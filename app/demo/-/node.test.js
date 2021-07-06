@@ -5526,7 +5526,7 @@ var $;
             return 24;
         }
         letter_width() {
-            return 8;
+            return 7;
         }
         width_limit() {
             return Infinity;

@@ -63,6 +63,9 @@ namespace $ {
 			})
 		}
 		
+		static prolog = '!'
+		static separator = '/'
+		
 		static make_link( next : { [ key : string ] : string | null } ) {
 			const chunks : string[] = []
 			for( let key in next ) {
@@ -71,7 +74,7 @@ namespace $ {
 				chunks.push( [ key ].concat( val ? [ val ] : [] ).map( this.encode ).join( '=' ) )
 			}
 			
-			return new URL( '#!' + chunks.join( '/' ) , $mol_dom_context.location.href ).toString()
+			return new URL( '#' + this.prolog + chunks.join( this.separator ) , $mol_dom_context.location.href ).toString()
 		}
 
 		static encode( str : string ) {

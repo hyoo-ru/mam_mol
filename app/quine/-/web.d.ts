@@ -1607,6 +1607,8 @@ declare namespace $ {
         static link(next: {
             [key: string]: string;
         }): string;
+        static prolog: string;
+        static separator: string;
         static make_link(next: {
             [key: string]: string | null;
         }): string;
