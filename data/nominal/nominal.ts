@@ -7,9 +7,9 @@ namespace $ {
 	>(
 		config : { [ key in Nominal ] : Sub }
 	) : {
-		Value : Value
+		Value: Value,
 	} & (
-		( ... val : Parameters<Sub> )=> Value
+		( this: $, ... val : Parameters<Sub> )=> Value
 	) {
 
 		const nominal = Object.keys( config )[0] as Nominal

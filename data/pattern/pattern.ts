@@ -2,12 +2,14 @@ namespace $ {
 
 	export function $mol_data_pattern( pattern : RegExp ) {
 
-		return $mol_data_setup( ( val : string ) => {
+		return $mol_data_setup( function( this: $, val: string ) {
 
-			const val2 = $mol_data_string( val )
-			if( pattern.test( val2 ) ) return val2
+			const val2 = this.$mol_data_string( val )
 			
-			return $mol_fail( new $mol_data_error( `${ val } is not a ${ pattern }` ) )
+			if( !pattern.test( val2 ) )
+				return this.$mol_fail( new this.$mol_data_error( `${ val } is not a ${ pattern }` ) )
+			
+			return val2
 
 		} , pattern )
 

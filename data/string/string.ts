@@ -1,10 +1,11 @@
 namespace $ {
 
-	export let $mol_data_string = ( val : string )=> {
+	export function $mol_data_string( this: $, val : string ) {
 		
-		if( typeof val === 'string' ) return val
+		if( typeof val !== 'string' )
+			this.$mol_fail( new this.$mol_data_error( `${ val } is not a string` ) )
 		
-		return $mol_fail( new $mol_data_error( `${ val } is not a string` ) )
+		return val
 	}
 	
 }

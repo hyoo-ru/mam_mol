@@ -20,19 +20,19 @@ namespace $ {
 		} ,
 
 		'Is right value of enum' () {
-			$mol_assert_equal( Sex(0) , sex.male )
+			$mol_assert_equal( Sex.call( $$, 0 ) , sex.male )
 		} ,
 
 		'Is wrong value of enum' () {
-			$mol_assert_fail( ()=> Sex(2) , `2 is not value of sex enum` )
+			$mol_assert_fail( ()=> Sex.call( $$, 2 ) , `2 is not value of sex enum` )
 		} ,
 
 		'Is name instead of value' () {
-			$mol_assert_fail( ()=> Sex( 'male' as any ) , `male is not value of sex enum` )
+			$mol_assert_fail( ()=> Sex.call( $$, 'male' as any ) , `male is not value of sex enum` )
 		} ,
 
 		'Is common object field' () {
-			$mol_assert_fail( ()=> Sex( '__proto__' as any ) , `__proto__ is not value of sex enum` )
+			$mol_assert_fail( ()=> Sex.call( $$, '__proto__' as any ) , `__proto__ is not value of sex enum` )
 		} ,
 
 	})
@@ -58,19 +58,19 @@ namespace $ {
 		} ,
 
 		'Is right value of enum' () {
-			$mol_assert_equal( Gender( 'transgender' as any ) , gender.trans )
+			$mol_assert_equal( Gender.call( $$, 'transgender' as any ) , gender.trans )
 		} ,
 
 		'Is wrong value of enum' () {
-			$mol_assert_fail( ()=> Gender( 'xxx' as any ) , `xxx is not value of gender enum` )
+			$mol_assert_fail( ()=> Gender.call( $$, 'xxx' as any ) , `xxx is not value of gender enum` )
 		} ,
 
 		'Is name instead of value' () {
-			$mol_assert_fail( ()=> Gender( 'trans' as any ) , `trans is not value of gender enum` )
+			$mol_assert_fail( ()=> Gender.call( $$, 'trans' as any ) , `trans is not value of gender enum` )
 		} ,
 
 		'Is common object field' () {
-			$mol_assert_fail( ()=> Gender( '__proto__' as any ) , `__proto__ is not value of gender enum` )
+			$mol_assert_fail( ()=> Gender.call( $$, '__proto__' as any ) , `__proto__ is not value of gender enum` )
 		} ,
 
 	})

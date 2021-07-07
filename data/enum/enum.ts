@@ -14,10 +14,10 @@ namespace $ {
 			}
 		}
 
-		return $mol_data_setup( ( value : Value ) => {
+		return $mol_data_setup( function( this: $, value: Value ) {
 
 			if ( typeof index[ value ] !== 'string' ) {
-				return $mol_fail( new $mol_data_error( `${value} is not value of ${name} enum` ) )
+				return this.$mol_fail( new this.$mol_data_error( `${value} is not value of ${name} enum` ) )
 			}
 
 			return value

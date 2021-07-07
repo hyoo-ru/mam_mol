@@ -1,31 +1,36 @@
 namespace $ {
+	
+	const parse_date = $mol_data_instance( Date )
+	const parse_object = $mol_data_instance( Object )
+	
 	$mol_test({
 
 		'Is same class' () {
-			$mol_data_instance( Date )( new Date )
+			parse_date.call( $$, new Date )
 		} ,
 
 		'Is sub class' () {
-			$mol_data_instance( Object )( new Date )
+			parse_object.call( $$, new Date )
 		} ,
 
 		'Is super class' () {
 			$mol_assert_fail( ()=> {
-				$mol_data_instance( Date )( new Object as any )
+				parse_date.call( $$, new Object as any )
 			} , '[object Object] is not a Date' )
 		} ,
 
 		'Is another class' () {
 			$mol_assert_fail( ()=> {
-				$mol_data_instance( Date )( new Array as any )
+				parse_date.call( $$, new Array as any )
 			} , ' is not a Date' )
 		} ,
 
 		'Is not object' () {
 			$mol_assert_fail( ()=> {
-				$mol_data_instance( Date )( null as any )
+				parse_date.call( $$, null as any )
 			} , 'null is not a Date' )
 		} ,
 
 	})
+	
 }

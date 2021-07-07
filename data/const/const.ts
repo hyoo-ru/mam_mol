@@ -2,11 +2,11 @@ namespace $ {
 
 	export function $mol_data_const< Val extends {} | string | number >( ref : Val ) {
 
-		return $mol_data_setup( ( val : Val ) => {
+		return $mol_data_setup( function( this: $, val : Val ) {
 			
 			if( Object.is( val , ref ) ) return ref
 			
-			return $mol_fail( new $mol_data_error( `${ val } is not ${ ref }` ) )
+			return this.$mol_fail( new this.$mol_data_error( `${ val } is not ${ ref }` ) )
 
 		} , ref )
 

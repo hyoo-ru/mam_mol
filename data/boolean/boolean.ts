@@ -1,10 +1,10 @@
 namespace $ {
 
-	export let $mol_data_boolean = ( val : boolean )=> {
+	export function $mol_data_boolean( this: $, val : boolean ) {
 		
 		if( typeof val === 'boolean' ) return val
 		
-		return $mol_fail( new $mol_data_error( `${ val } is not a boolean` ) )
+		return this.$mol_fail( new this.$mol_data_error( `${ val } is not a boolean` ) )
 	}
 	
 }

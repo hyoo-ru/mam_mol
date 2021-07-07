@@ -1,15 +1,15 @@
 namespace $ {
 
-	export function $mol_data_array< Sub extends $mol_data_value >( sub : Sub ) {
+	export function $mol_data_array< Sub extends $mol_data_value >( sub: Sub ) {
 
-		return $mol_data_setup( ( val : readonly Parameters< Sub >[0][] | unknown ) => {
+		return $mol_data_setup( function( this: $, val: readonly Parameters< Sub >[0][] | unknown ) {
 			
-			if( !Array.isArray( val ) ) return $mol_fail( new $mol_data_error( `${ val } is not an array` ) )
+			if( !Array.isArray( val ) ) this.$mol_fail( new this.$mol_data_error( `${ val } is not an array` ) )
 			
 			return val.map( ( item , index )=> {
 
 				try {
-					return sub( item )
+					return sub.call( this, item )
 				} catch( error ) {
 
 					if( 'then' in error ) return $mol_fail_hidden( error )
@@ -21,7 +21,7 @@ namespace $ {
 
 			} ) as readonly ReturnType< Sub >[]
 			
-		} , sub )
+		}, sub )
 
 	}
 			
