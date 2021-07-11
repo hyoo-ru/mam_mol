@@ -22979,6 +22979,23 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_media extends $.$mol_object2 {
+        static match(query) {
+            const res = this.$.$mol_dom_context.matchMedia(query);
+            res.onchange = () => $.$mol_mem_cached(() => this.match(query), res.matches);
+            return res.matches;
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_media, "match", null);
+    $.$mol_media = $mol_media;
+})($ || ($ = {}));
+//media.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function parse(theme) {
         if (theme === 'on')
             return true;
@@ -22989,7 +23006,7 @@ var $;
     function $mol_lights(next) {
         return this.$mol_state_local.value('$mol_lights', next)
             ?? parse(this.$mol_state_arg.value('mol_lights'))
-            ?? $.$mol_dom_context.matchMedia('(prefers-color-scheme: light)').matches;
+            ?? this.$mol_media.match('(prefers-color-scheme: light)');
     }
     $.$mol_lights = $mol_lights;
 })($ || ($ = {}));
