@@ -1768,6 +1768,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_media extends $mol_object2 {
+        static match(query: string): boolean;
+    }
+}
+
+declare namespace $ {
     class $mol_state_local<Value> extends $mol_object {
         static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
         static native(): Storage | {
@@ -1778,12 +1784,6 @@ declare namespace $ {
         static value<Value>(key: string, next?: Value, force?: $mol_mem_force): Value | null;
         prefix(): string;
         value(key: string, next?: Value): Value | null;
-    }
-}
-
-declare namespace $ {
-    class $mol_media extends $mol_object2 {
-        static match(query: string): boolean;
     }
 }
 

@@ -22996,9 +22996,16 @@ var $;
         return null;
     }
     function $mol_lights(next) {
-        return this.$mol_state_local.value('$mol_lights', next)
+        const base = null
             ?? parse(this.$mol_state_arg.value('mol_lights'))
             ?? this.$mol_media.match('(prefers-color-scheme: light)');
+        if (next === undefined) {
+            return this.$mol_state_local.value('$mol_lights') ?? base;
+        }
+        else {
+            this.$mol_state_local.value('$mol_lights', next === base ? null : next);
+            return next;
+        }
     }
     $.$mol_lights = $mol_lights;
 })($ || ($ = {}));

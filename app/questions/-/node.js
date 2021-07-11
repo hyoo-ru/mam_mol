@@ -5905,6 +5905,23 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_media extends $.$mol_object2 {
+        static match(query) {
+            const res = this.$.$mol_dom_context.matchMedia(query);
+            res.onchange = () => $.$mol_mem_cached(() => this.match(query), res.matches);
+            return res.matches;
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_media, "match", null);
+    $.$mol_media = $mol_media;
+})($ || ($ = {}));
+//media.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_state_local extends $.$mol_object {
         static native() {
             if (this['native()'])
@@ -5956,23 +5973,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_media extends $.$mol_object2 {
-        static match(query) {
-            const res = this.$.$mol_dom_context.matchMedia(query);
-            res.onchange = () => $.$mol_mem_cached(() => this.match(query), res.matches);
-            return res.matches;
-        }
-    }
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_media, "match", null);
-    $.$mol_media = $mol_media;
-})($ || ($ = {}));
-//media.js.map
-;
-"use strict";
-var $;
-(function ($) {
     function parse(theme) {
         if (theme === 'on')
             return true;
@@ -5981,9 +5981,16 @@ var $;
         return null;
     }
     function $mol_lights(next) {
-        return this.$mol_state_local.value('$mol_lights', next)
+        const base = null
             ?? parse(this.$mol_state_arg.value('mol_lights'))
             ?? this.$mol_media.match('(prefers-color-scheme: light)');
+        if (next === undefined) {
+            return this.$mol_state_local.value('$mol_lights') ?? base;
+        }
+        else {
+            this.$mol_state_local.value('$mol_lights', next === base ? null : next);
+            return next;
+        }
     }
     $.$mol_lights = $mol_lights;
 })($ || ($ = {}));
