@@ -20217,6 +20217,7 @@ var $;
             event_select(id, event) {
                 this.value(id);
                 this.focused(false);
+                event?.preventDefault();
             }
             nav_components() {
                 if (this.options().length > 1 && this.Filter()) {
