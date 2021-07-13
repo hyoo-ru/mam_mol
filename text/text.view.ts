@@ -101,7 +101,7 @@ namespace $.$$ {
 							const span = this.Link( id )
 							span.type( name )
 							span.link( this.uri_resolve( chunks[ 1 ] ) )
-							span.content( this.text2spans( id , chunks[ 0 ] ) )
+							span.content( this.text2spans( id , ' ' + chunks[ 0 ] ) )
 							return spans.push( span )
 						}
 					}
