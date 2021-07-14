@@ -49,11 +49,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Anchor <= Query
+		 * Anchor $mol_view sub <= anchor_content
 		 * ```
 		 */
+		@ $mol_mem
 		Anchor() {
-			return this.Query()
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => this.anchor_content()
+			
+			return obj
 		}
 		
 		/**
@@ -208,6 +213,53 @@ namespace $ {
 			obj.enabled = () => this.enabled()
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Clear_icon $mol_icon_cross
+		 * ```
+		 */
+		@ $mol_mem
+		Clear_icon() {
+			const obj = new this.$.$mol_icon_cross()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Clear $mol_button_minor
+		 * 	hint @ \Clear
+		 * 	click?event <=> clear?event
+		 * 	sub / <= Clear_icon
+		 * ```
+		 */
+		@ $mol_mem
+		Clear() {
+			const obj = new this.$.$mol_button_minor()
+			
+			obj.hint = () => this.$.$mol_locale.text( '$mol_search_Clear_hint' )
+			obj.click = (event?: any) => this.clear(event)
+			obj.sub = () => [
+				this.Clear_icon()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * anchor_content /
+		 * 	<= Query
+		 * 	<= Clear
+		 * ```
+		 */
+		anchor_content() {
+			return [
+				this.Query(),
+				this.Clear()
+			] as readonly any[]
 		}
 		
 		/**

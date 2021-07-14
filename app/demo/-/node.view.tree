@@ -1194,6 +1194,8 @@ $mol_nav $mol_plugin
 		^
 		keydown?event <=> event_key?event null
 
+$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+
 $mol_search $mol_pop
 	query?val \
 	suggests /string
@@ -1205,11 +1207,18 @@ $mol_search $mol_pop
 			keys_y <= nav_components /$mol_view
 			current_y?component <=> nav_focused?component null
 	showed?val <=> suggests_showed?val false
-	Anchor <= Query $mol_string
-		value?val <=> query?val \
-		hint <= hint @ \Search...
-		submit?event <=> submit?event null
-		enabled <= enabled true
+	Anchor $mol_view
+		sub <= anchor_content /
+			<= Query $mol_string
+				value?val <=> query?val \
+				hint <= hint @ \Search...
+				submit?event <=> submit?event null
+				enabled <= enabled true
+			<= Clear $mol_button_minor
+				hint @ \Clear
+				click?event <=> clear?event null
+				sub /
+					<= Clear_icon $mol_icon_cross
 	bubble_content /$mol_view_content
 		<= Menu $mol_list
 			rows <= menu_items /$mol_view
@@ -2620,8 +2629,6 @@ $mol_lights_toggle $mol_check_icon
 	checked?val <=> lights?val false
 
 $mol_icon_code_braces $mol_icon path \M8,3C6.9,3 6,3.9 6,5V9C6,10.1 5.1,11 4,11H3V13H4C5.1,13 6,13.9 6,15V19C6,20.1 6.9,21 8,21H10V19H8V14C8,12.9 7.1,12 6,12C7.1,12 8,11.1 8,10V5H10V3M16,3C17.1,3 18,3.9 18,5V9C18,10.1 18.9,11 20,11H21V13H20C18.9,13 18,13.9 18,15V19C18,20.1 17.1,21 16,21H14V19H16V14C16,12.9 16.9,12 18,12C16.9,12 16,11.1 16,10V5H14V3H16Z
-
-$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
 
 $mol_app_demo $mol_book2
 	editor_title <= detail_title \$mol

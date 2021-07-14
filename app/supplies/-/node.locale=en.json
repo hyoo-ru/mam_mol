@@ -30,5 +30,6 @@
 	"$mol_app_supplies_position_store_title": "Store",
 	"$mol_app_supplies_position_supply_date_title": "Supply date",
 	"$mol_code_scan_label": "Scan",
+	"$mol_search_Clear_hint": "Clear",
 	"$mol_search_hint": "Search..."
 }

@@ -9,11 +9,18 @@ $mol_search $mol_pop
 			keys_y <= nav_components /$mol_view
 			current_y?component <=> nav_focused?component null
 	showed?val <=> suggests_showed?val false
-	Anchor <= Query $mol_string
-		value?val <=> query?val \
-		hint <= hint @ \Search...
-		submit?event <=> submit?event null
-		enabled <= enabled true
+	Anchor $mol_view
+		sub <= anchor_content /
+			<= Query $mol_string
+				value?val <=> query?val \
+				hint <= hint @ \Search...
+				submit?event <=> submit?event null
+				enabled <= enabled true
+			<= Clear $mol_button_minor
+				hint @ \Clear
+				click?event <=> clear?event null
+				sub /
+					<= Clear_icon $mol_icon_cross
 	bubble_content /$mol_view_content
 		<= Menu $mol_list
 			rows <= menu_items /$mol_view

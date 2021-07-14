@@ -12536,6 +12536,18 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_cross extends $.$mol_icon {
+        path() {
+            return "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z";
+        }
+    }
+    $.$mol_icon_cross = $mol_icon_cross;
+})($ || ($ = {}));
+//cross.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_search extends $.$mol_pop {
         query(val) {
             if (val !== undefined)
@@ -12556,7 +12568,9 @@ var $;
             return this.suggests_showed(val);
         }
         Anchor() {
-            return this.Query();
+            const obj = new this.$.$mol_view();
+            obj.sub = () => this.anchor_content();
+            return obj;
         }
         bubble_content() {
             return [
@@ -12619,6 +12633,25 @@ var $;
             obj.enabled = () => this.enabled();
             return obj;
         }
+        Clear_icon() {
+            const obj = new this.$.$mol_icon_cross();
+            return obj;
+        }
+        Clear() {
+            const obj = new this.$.$mol_button_minor();
+            obj.hint = () => this.$.$mol_locale.text('$mol_search_Clear_hint');
+            obj.click = (event) => this.clear(event);
+            obj.sub = () => [
+                this.Clear_icon()
+            ];
+            return obj;
+        }
+        anchor_content() {
+            return [
+                this.Query(),
+                this.Clear()
+            ];
+        }
         menu_items() {
             return [];
         }
@@ -12651,6 +12684,9 @@ var $;
         $.$mol_mem
     ], $mol_search.prototype, "query", null);
     __decorate([
+        $.$mol_mem
+    ], $mol_search.prototype, "Anchor", null);
+    __decorate([
         $.$mol_mem_key
     ], $mol_search.prototype, "Suggest", null);
     __decorate([
@@ -12676,6 +12712,12 @@ var $;
     ], $mol_search.prototype, "Query", null);
     __decorate([
         $.$mol_mem
+    ], $mol_search.prototype, "Clear_icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_search.prototype, "Clear", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_search.prototype, "Menu", null);
     __decorate([
         $.$mol_mem_key
@@ -12690,7 +12732,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/search/search.view.css", "[mol_search] {\n\talign-self: flex-start;\n\tflex: auto;\n}\n\n[mol_search_query] {\n\tflex-grow: 1;\n}\n\n[mol_search_menu] {\n\tmin-height: .75rem;\n\tdisplay: flex;\n}\n\n[mol_search_suggest] {\n\ttext-align: left;\n}\n");
+    $.$mol_style_attach("mol/search/search.view.css", "[mol_search] {\n\talign-self: flex-start;\n\tflex: auto;\n}\n\n[mol_search_anchor] {\n\tflex: 1 1 auto;\n}\n\n[mol_search_query] {\n\tflex-grow: 1;\n}\n\n[mol_search_menu] {\n\tmin-height: .75rem;\n\tdisplay: flex;\n}\n\n[mol_search_suggest] {\n\ttext-align: left;\n}\n");
 })($ || ($ = {}));
 //search.view.css.js.map
 ;
@@ -12700,6 +12742,12 @@ var $;
     var $$;
     (function ($$) {
         class $mol_search extends $.$mol_search {
+            anchor_content() {
+                return [
+                    this.Query(),
+                    ...this.query() ? [this.Clear()] : [],
+                ];
+            }
             suggests_showed(next = true) {
                 this.query();
                 if (!this.focused())
@@ -12750,6 +12798,9 @@ var $;
                 this.query('');
             }
         }
+        __decorate([
+            $.$mol_mem
+        ], $mol_search.prototype, "anchor_content", null);
         __decorate([
             $.$mol_mem
         ], $mol_search.prototype, "suggests_showed", null);
@@ -22748,18 +22799,6 @@ var $;
     $.$mol_icon_code_braces = $mol_icon_code_braces;
 })($ || ($ = {}));
 //braces.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_cross extends $.$mol_icon {
-        path() {
-            return "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z";
-        }
-    }
-    $.$mol_icon_cross = $mol_icon_cross;
-})($ || ($ = {}));
-//cross.view.tree.js.map
 ;
 "use strict";
 var $;
