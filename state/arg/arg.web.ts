@@ -20,8 +20,9 @@ namespace $ {
 		
 		@ $mol_mem
 		static dict( next? : { [ key : string ] : string | null } ) {
+			
 			var href = this.href( next && this.make_link( next ) ).split( /#!?/ )[1] || ''
-			var chunks = href.split( /[\/\?#&;]/g )
+			var chunks = href.split( this.separator )
 			
 			var params : { [ key : string ] : string } = {}
 			chunks.forEach(
