@@ -3,6 +3,14 @@ namespace $.$$ {
 	export class $mol_search extends $.$mol_search {
 		
 		@ $mol_mem
+		anchor_content() {
+			return [
+				this.Query(),
+				... this.query() ? [ this.Clear() ] : [],
+			]
+		}
+		
+		@ $mol_mem
 		suggests_showed( next = true ) {
 			
 			this.query()

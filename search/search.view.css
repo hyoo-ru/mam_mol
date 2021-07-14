@@ -3,6 +3,10 @@
 	flex: auto;
 }
 
+[mol_search_anchor] {
+	flex: 1 1 auto;
+}
+
 [mol_search_query] {
 	flex-grow: 1;
 }
