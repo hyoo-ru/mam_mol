@@ -173,7 +173,7 @@ namespace $ {
 		 * ```
 		 */
 		hint() {
-			return ""
+			return " "
 		}
 		
 		/**

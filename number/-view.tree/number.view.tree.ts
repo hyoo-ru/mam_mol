@@ -72,7 +72,7 @@ namespace $ {
 		 * ```
 		 */
 		hint() {
-			return ""
+			return " "
 		}
 		
 		/**

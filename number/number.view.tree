@@ -6,7 +6,7 @@ $mol_number $mol_view
 		<= String $mol_string
 			type \tel
 			value?val <=> value_string?val \
-			hint <= hint \
+			hint <= hint \ 
 			enabled <= string_enabled <= enabled true
 		<= Dec $mol_button_minor
 			event_click?val <=> event_dec?val null

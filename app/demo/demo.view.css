@@ -27,6 +27,7 @@
 [mol_app_demo_menu_filter] {
 	align-self: stretch;
 	flex: 0 0 auto;
+	margin: var(--mol_gap_block);
 }
 
 [mol_app_demo_nav_table] {
