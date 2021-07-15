@@ -5729,7 +5729,7 @@ declare namespace $.$$ {
     class $mol_select_list extends $.$mol_select_list {
         value(val?: string[]): readonly string[];
         pick(key: string): string;
-        options(): string[];
+        options(): readonly string[];
         options_pickable(): readonly string[];
         option_title(key: string): string;
         badge_title(index: number): string;

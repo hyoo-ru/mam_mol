@@ -20,7 +20,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		options() {
-			return Object.keys( this.dictionary() )
+			return Object.keys( this.dictionary() ) as readonly string[]
 		}
 
 		@ $mol_mem
