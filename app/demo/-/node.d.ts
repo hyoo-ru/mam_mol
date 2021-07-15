@@ -5707,17 +5707,18 @@ declare namespace $ {
     class $mol_select_list extends $mol_view {
         value(val?: any): readonly string[];
         dictionary(): {};
-        minimal_height(): number;
         Badge(index: any): $mol_button_minor;
         Pick(): $$.$mol_select;
         badge_title(index: any): string;
         remove(index: any, event?: any): any;
         badge_hint(): string;
         enabled(): boolean;
+        drop_enabled(): boolean;
         options(): readonly string[];
         options_pickable(): readonly string[];
         pick(val?: any): string;
         option_title(key: any): string;
+        pick_enabled(): boolean;
         pick_hint(): string;
         Pick_icon(): $mol_icon_plus;
     }
@@ -5734,6 +5735,7 @@ declare namespace $.$$ {
         options_pickable(): readonly string[];
         option_title(key: string): string;
         badge_title(index: number): string;
+        pick_enabled(): boolean;
         sub(): ($mol_button_minor | $mol_select)[];
         title(): string;
         remove(index: number): void;

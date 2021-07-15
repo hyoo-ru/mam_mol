@@ -25,20 +25,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * minimal_height 40
-		 * ```
-		 */
-		minimal_height() {
-			return 40
-		}
-		
-		/**
-		 * ```tree
 		 * Badge!index $mol_button_minor
 		 * 	title <= badge_title!index
 		 * 	click?event <=> remove!index?event
 		 * 	hint <= badge_hint
-		 * 	enabled <= enabled
+		 * 	enabled <= drop_enabled
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -48,7 +39,7 @@ namespace $ {
 			obj.title = () => this.badge_title(index)
 			obj.click = (event?: any) => this.remove(index, event)
 			obj.hint = () => this.badge_hint()
-			obj.enabled = () => this.enabled()
+			obj.enabled = () => this.drop_enabled()
 			
 			return obj
 		}
@@ -59,6 +50,7 @@ namespace $ {
 		 * 	options <= options_pickable
 		 * 	value?val <=> pick?val
 		 * 	option_label!key <= option_title!key
+		 * 	trigger_enabled <= pick_enabled
 		 * 	hint <= pick_hint
 		 * 	Trigger_icon <= Pick_icon
 		 * ```
@@ -70,6 +62,7 @@ namespace $ {
 			obj.options = () => this.options_pickable()
 			obj.value = (val?: any) => this.pick(val)
 			obj.option_label = (key: any) => this.option_title(key)
+			obj.trigger_enabled = () => this.pick_enabled()
 			obj.hint = () => this.pick_hint()
 			obj.Trigger_icon = () => this.Pick_icon()
 			
@@ -116,6 +109,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * drop_enabled <= enabled
+		 * ```
+		 */
+		drop_enabled() {
+			return this.enabled()
+		}
+		
+		/**
+		 * ```tree
 		 * options /string
 		 * ```
 		 */
@@ -151,6 +153,15 @@ namespace $ {
 		 */
 		option_title(key: any) {
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * pick_enabled <= enabled
+		 * ```
+		 */
+		pick_enabled() {
+			return this.enabled()
 		}
 		
 		/**

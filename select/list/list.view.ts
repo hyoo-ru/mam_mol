@@ -11,6 +11,7 @@ namespace $.$$ {
 			this.value([ ... this.value() , key ])
 			
 			$mol_fiber_defer(()=> {
+				if( this.options_pickable().length === 0 ) return
 				this.Pick().Trigger().focused( true )
 				this.Pick().open()
 			})
@@ -41,12 +42,17 @@ namespace $.$$ {
 		badge_title( index: number ) {
 			return this.option_title( this.value()[ index ] )
 		}
+		
+		@ $mol_mem
+		pick_enabled() {
+			return this.options_pickable().length > 0
+		}
 
 		@ $mol_mem
 		sub() {
 			return [
 				... this.value().map( ( _, index )=> this.Badge( index ) ),
-				... this.options_pickable().length ? [ this.Pick() ] : [],
+				this.Pick(),
 			]
 		}
 
