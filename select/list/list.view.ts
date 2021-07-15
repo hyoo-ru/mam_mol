@@ -11,7 +11,7 @@ namespace $.$$ {
 			this.value([ ... this.value() , key ])
 			
 			$mol_fiber_defer(()=> {
-				if( this.options_pickable().length === 0 ) return
+				if( !this.pick_enabled() ) return
 				this.Pick().Trigger().focused( true )
 				this.Pick().open()
 			})
