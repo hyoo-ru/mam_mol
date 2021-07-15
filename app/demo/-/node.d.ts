@@ -5707,6 +5707,7 @@ declare namespace $ {
     class $mol_select_list extends $mol_view {
         value(val?: any): readonly string[];
         dictionary(): {};
+        minimal_height(): number;
         Badge(index: any): $mol_button_minor;
         Pick(): $$.$mol_select;
         badge_title(index: any): string;

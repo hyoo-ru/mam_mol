@@ -21010,6 +21010,9 @@ var $;
         dictionary() {
             return {};
         }
+        minimal_height() {
+            return 40;
+        }
         Badge(index) {
             const obj = new this.$.$mol_button_minor();
             obj.title = () => this.badge_title(index);

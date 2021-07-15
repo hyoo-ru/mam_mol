@@ -25,6 +25,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * minimal_height 40
+		 * ```
+		 */
+		minimal_height() {
+			return 40
+		}
+		
+		/**
+		 * ```tree
 		 * Badge!index $mol_button_minor
 		 * 	title <= badge_title!index
 		 * 	click?event <=> remove!index?event

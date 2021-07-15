@@ -2331,6 +2331,7 @@ $mol_select_demo_priority $mol_demo_small
 $mol_select_list $mol_view
 	value?val /string
 	dictionary *
+	minimal_height 40
 	Badge!index $mol_button_minor
 		title <= badge_title!index \badge
 		click?event <=> remove!index?event null
