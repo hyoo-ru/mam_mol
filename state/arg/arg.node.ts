@@ -28,7 +28,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		static value( key : string , next? : string | null ) {
-			if( next === void 0 ) return this.dict()[ key ] || null
+			if( next === void 0 ) return this.dict()[ key ] ?? null
 			this.href( this.link( { [ key ] : next } ) )
 			return next
 		}

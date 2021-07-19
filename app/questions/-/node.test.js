@@ -5020,7 +5020,7 @@ var $;
         }
         static value(key, next) {
             if (next === void 0)
-                return this.dict()[key] || null;
+                return this.dict()[key] ?? null;
             this.href(this.link({ [key]: next }));
             return next;
         }
