@@ -661,7 +661,7 @@ namespace $ {
 					
 					while( !dep.exists() ) dep = dep.parent()
 					
-					if( dep.type() === 'dir' ) {
+					if( dep.type() === 'dir' && dep.name() !== 'index' ) {
 						let index = dep.resolve( 'index.js' )
 						if( index.exists() ) dep = index
 					}
