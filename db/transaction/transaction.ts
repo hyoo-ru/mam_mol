@@ -14,7 +14,7 @@ namespace $ {
 		}
 		
 		/** Returns dictionary of all existen Stores. */
-		stores() {
+		get stores() {
 			return new Proxy(
 				{} as Record< string, $mol_db_store >,
 				{
@@ -63,7 +63,7 @@ namespace $ {
 		}
 		
 		db() {
-			return new $mol_db(
+			return new $mol_db_database(
 				this.native.db
 			)
 		}

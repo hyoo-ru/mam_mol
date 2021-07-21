@@ -22,7 +22,7 @@ namespace $ {
 		}
 		
 		/** Returns dictionary of all existen Indexes. */
-		indexes() {
+		get indexes() {
 			return new Proxy(
 				{} as Record< string, $mol_db_index >,
 				{
