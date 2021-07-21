@@ -1,7 +1,7 @@
 namespace $ {
 	
 	/** IndexedDB ObjectStore wrapper. */
-	export class $mol_db_store extends $mol_object2 {
+	export class $mol_db_store< Schema extends $mol_db_store_schema > extends $mol_object2 {
 		
 		constructor(
 			readonly native: IDBObjectStore,
@@ -24,7 +24,12 @@ namespace $ {
 		/** Returns dictionary of all existen Indexes. */
 		get indexes() {
 			return new Proxy(
-				{} as Record< string, $mol_db_index >,
+				{} as {
+					[ Name in keyof Schema['Indexes'] ]: $mol_db_index<{
+						Key: Schema['Indexes'][ Name ],
+						Doc: Schema['Doc'],
+					}>
+				},
 				{
 					ownKeys: ()=> [ ... this.native.indexNames ],
 					has: ( _, name: string )=> this.native.indexNames.contains( name ),
@@ -66,22 +71,22 @@ namespace $ {
 		}
 		
 		/** Counts Documents by primary key(s) */
-		count( keys?: IDBValidKey | IDBKeyRange ) {
+		count( keys?: Schema['Key'] | IDBKeyRange ) {
 			return $mol_db_response( this.native.count( keys ) )
 		}
 		
 		/** Stores single Document by primary key. */
-		put( key: IDBValidKey, doc: any ) {
+		put( key: Schema['Key'], doc: Schema['Doc'] ) {
 			return $mol_db_response( this.native.put( doc, key ) )
 		}
 		
 		/** Selects Documents by primary key(s). Returns only one by default. */
-		get< Docs extends any[] >( key: IDBValidKey | IDBKeyRange | null, count = 1 ) {
-			return $mol_db_response( this.native.getAll( key, count ) as any as IDBRequest< Docs > )
+		get( key: Schema['Key'] | IDBKeyRange | null, count = 1 ) {
+			return $mol_db_response( this.native.getAll( key, count ) as IDBRequest< Schema['Doc'][] > )
 		}
 		
 		/** Deletes Documents by primary key(s). */
-		drop( keys: IDBValidKey | IDBKeyRange ) {
+		drop( keys: Schema['Key'] | IDBKeyRange ) {
 			return $mol_db_response( this.native.delete( keys ) )
 		}
 		

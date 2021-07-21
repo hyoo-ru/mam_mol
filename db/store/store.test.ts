@@ -3,34 +3,36 @@ namespace $ {
 		
 		async 'put, get, drop, count records and clear store'() {
 			
-			const db = await $$.$mol_db( '$mol_db_test', [
-				trans => trans.store_make( 'temp' )
+			const db = await $$.$mol_db<{
+				letters: { Key: number, Doc: string, Indexes: {} }
+			}>( '$mol_db_test', [
+				trans => trans.store_make( 'letters' )
 			] )
-			const trans = db.change( 'temp' )
+			const trans = db.change( 'letters' )
 			
 			try {
 			
-				const { temp } = trans.stores
+				const { letters } = trans.stores
 				
-				$mol_assert_like( await temp.get(1), [] )
-				$mol_assert_like( await temp.get(2), [] )
-				$mol_assert_like( await temp.count(), 0 )
+				$mol_assert_like( await letters.get(1), [] )
+				$mol_assert_like( await letters.get(2), [] )
+				$mol_assert_like( await letters.count(), 0 )
 				
-				await temp.put( 1, 'a' )
-				await temp.put( 1, 'b' )
-				await temp.put( 2, 'c' )
+				await letters.put( 1, 'a' )
+				await letters.put( 1, 'b' )
+				await letters.put( 2, 'c' )
 				
-				$mol_assert_like( await temp.get(1), [ 'b' ] )
-				$mol_assert_like( await temp.get(2), [ 'c' ] )
-				$mol_assert_like( await temp.count(), 2 )
+				$mol_assert_like( await letters.get(1), [ 'b' ] )
+				$mol_assert_like( await letters.get(2), [ 'c' ] )
+				$mol_assert_like( await letters.count(), 2 )
 				
-				await temp.drop( 1 )
+				await letters.drop( 1 )
 				
-				$mol_assert_like( await temp.get(1), [] )
-				$mol_assert_like( await temp.count(), 1 )
+				$mol_assert_like( await letters.get(1), [] )
+				$mol_assert_like( await letters.count(), 1 )
 				
-				await temp.clear()
-				$mol_assert_like( await temp.count(), 0 )
+				await letters.clear()
+				$mol_assert_like( await letters.count(), 0 )
 			
 			} finally {
 				

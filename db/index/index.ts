@@ -1,7 +1,7 @@
 namespace $ {
 	
 	/** IndexedDB Index wrapper. */
-	export class $mol_db_index extends $mol_object2 {
+	export class $mol_db_index< Schema extends $mol_db_index_schema > extends $mol_object2 {
 		
 		constructor(
 			readonly native: IDBIndex,
@@ -40,13 +40,13 @@ namespace $ {
 		}
 		
 		/** Counts Documents by key(s) */
-		count( keys?: IDBArrayKey | IDBKeyRange ) {
+		count( keys?: Schema['Key'] | IDBKeyRange ) {
 			return $mol_db_response( this.native.count( keys ) )
 		}
 		
 		/** Selects Documents by key(s). Returns only one by default. */
-		get< Docs extends any[] >( key: IDBArrayKey | IDBKeyRange | null, count = 1 ) {
-			return $mol_db_response( this.native.getAll( key, count ) as any as IDBRequest< Docs > )
+		get( key: Schema['Key'] | IDBKeyRange | null, count = 1 ) {
+			return $mol_db_response( this.native.getAll( key, count ) as IDBRequest< Schema['Doc'][] > )
 		}
 		
 	}

@@ -3,7 +3,15 @@ namespace $ {
 		
 		async 'unique index'() {
 			
-			const db = await $$.$mol_db( '$mol_db_test', [
+			const db = await $$.$mol_db<{
+				users: {
+					Key: string,
+					Doc: { name: string },
+					Indexes: {
+						names: [ string ]
+					},
+				}
+			}>( '$mol_db_test', [
 				trans => trans.store_make( 'users', store => store
 					.index_make( 'names', [ 'name' ], !!'unique' ),
 				)
@@ -39,7 +47,15 @@ namespace $ {
 		
 		async 'multi path index'() {
 			
-			const db = await $$.$mol_db( '$mol_db_test', [
+			const db = await $$.$mol_db<{
+				users: {
+					Key: string,
+					Doc: { first: string, last: string },
+					Indexes: {
+						names: [ string, string ]
+					},
+				}
+			}>( '$mol_db_test', [
 				trans => trans.store_make( 'users', store => store
 					.index_make( 'names', [ 'first', 'last' ] ),
 				)
@@ -68,7 +84,16 @@ namespace $ {
 		
 		async 'multiple indexes'() {
 			
-			const db = await $$.$mol_db( '$mol_db_test', [
+			const db = await $$.$mol_db<{
+				users: {
+					Key: string,
+					Doc: { name: string, age: number },
+					Indexes: {
+						names: [ string ],
+						ages: [ number ],
+					},
+				}
+			}>( '$mol_db_test', [
 				trans => trans.store_make( 'users', store => store
 					.index_make( 'names', [ 'name' ], !!'unique' )
 					.index_make( 'ages', [ 'age' ] )
@@ -84,12 +109,12 @@ namespace $ {
 				
 				const { names, ages } = users.indexes
 				
-				$mol_assert_like( await names.get([ 'Jin' ]), [{ name: 'Jin', age: 18 }] )
-				$mol_assert_like( await names.get([ 'John' ]), [{ name: 'John', age: 18 }] )
+				$mol_assert_like( await names.get( [ 'Jin' ], 10 ), [ { name: 'Jin', age: 18 } ] )
+				$mol_assert_like( await names.get( [ 'John' ], 10 ), [ { name: 'John', age: 18 } ] )
 				$mol_assert_like( await names.count(), 2 )
 				
-				$mol_assert_like( await ages.get([ 18 ]), [ { name: 'Jin', age: 18 } ] )
-				$mol_assert_like( await ages.get( [18], 100 ), [ { name: 'Jin', age: 18 }, { name: 'John', age: 18 } ] )
+				$mol_assert_like( await ages.get( [ 18 ] ), [ { name: 'Jin', age: 18 } ] )
+				$mol_assert_like( await ages.get( [ 18 ], 10 ), [ { name: 'Jin', age: 18 }, { name: 'John', age: 18 } ] )
 				$mol_assert_like( await ages.count(), 2 )
 				
 			} finally {

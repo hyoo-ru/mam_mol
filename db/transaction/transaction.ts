@@ -5,7 +5,7 @@ interface IDBTransaction {
 namespace $ {
 	
 	/** IndexedDB Transaction wrapper. */
-	export class $mol_db_transaction extends $mol_object2 {
+	export class $mol_db_transaction< Schema extends $mol_db_schema > extends $mol_object2 {
 		
 		constructor(
 			readonly native: IDBTransaction,
@@ -16,7 +16,9 @@ namespace $ {
 		/** Returns dictionary of all existen Stores. */
 		get stores() {
 			return new Proxy(
-				{} as Record< string, $mol_db_store >,
+				{} as {
+					[ Name in keyof Schema ]: $mol_db_store< Schema[ Name ] >
+				},
 				{
 					ownKeys: ()=> [ ... this.native.objectStoreNames ],
 					has: ( _, name: string )=> this.native.objectStoreNames.contains( name ),
@@ -26,7 +28,7 @@ namespace $ {
 		}
 		
 		/** Creates new Store */
-		store_make( name: string, indexing?: ( store: $mol_db_store )=> $mol_db_store ) {
+		store_make( name: string, indexing?: ( store: $mol_db_store<any> )=> $mol_db_store<any> ) {
 			const store = this.native.db.createObjectStore( name, { autoIncrement: true } )
 			indexing?.( new $mol_db_store( store ) )
 			return this

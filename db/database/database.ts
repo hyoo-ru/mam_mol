@@ -1,7 +1,7 @@
 namespace $ {
 	
 	/** IndexedDB instance wrapper. */
-	export class $mol_db_database extends $mol_object2 {
+	export class $mol_db_database< Schema extends $mol_db_schema > extends $mol_object2 {
 		
 		constructor(
 			readonly native: IDBDatabase,
@@ -21,20 +21,20 @@ namespace $ {
 		
 		/** Returns all stores names. */
 		stores() {
-			return [ ... this.native.objectStoreNames ]
+			return [ ... this.native.objectStoreNames ] as ( keyof Schema )[]
 		}
 		
 		/** Create read-only transaction. */
-		read( ... stores: string[] ) {
-			return new $mol_db_transaction(
-				this.native.transaction( stores, 'readonly' )
+		read< Names extends Exclude< keyof Schema, symbol | number > >( ... names: Names[] ) {
+			return new $mol_db_transaction< Pick< Schema, Names > >(
+				this.native.transaction( names, 'readonly' )
 			).stores
 		}
 		
 		/** Create read/write transaction. */
-		change( ... stores: string[] ) {
-			return new $mol_db_transaction(
-				this.native.transaction( stores, 'readwrite' )
+		change< Names extends Exclude< keyof Schema, symbol | number > >( ... names: Names[] ) {
+			return new $mol_db_transaction< Pick< Schema, Names > >(
+				this.native.transaction( names, 'readwrite' )
 			)
 		}
 		
