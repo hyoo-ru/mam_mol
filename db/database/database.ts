@@ -38,7 +38,10 @@ namespace $ {
 			)
 		}
 		
-		/** Deletes database. */
+		/**
+		 * Deletes database.
+		 * DB can be deleted only after end of all transactions.
+		 */
 		kill() {
 			
 			this.native.close()
@@ -50,6 +53,10 @@ namespace $ {
 			
 		}
 		
+		/**
+		 * Closes DB connection.
+		 * Connection really be closed only after end of all transactions.
+		 */
 		destructor() {
 			this.native.close()
 		}

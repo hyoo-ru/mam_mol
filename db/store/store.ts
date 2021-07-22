@@ -45,8 +45,7 @@ namespace $ {
 			unique = false,
 			multiEntry = false,
 		) {
-			this.native.createIndex( name, path, { multiEntry, unique } )
-			return this
+			return this.native.createIndex( name, path, { multiEntry, unique } )
 		}
 		
 		/** Drops existen Index */
@@ -76,7 +75,7 @@ namespace $ {
 		}
 		
 		/** Stores single Document by primary key. */
-		put( key: Schema['Key'], doc: Schema['Doc'] ) {
+		put( doc: Schema['Doc'], key?: Schema['Key'] ) {
 			return $mol_db_response( this.native.put( doc, key ) )
 		}
 		
