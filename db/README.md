@@ -10,7 +10,7 @@ Static typed facade for [IndexedDB](https://developer.mozilla.org/en-US/docs/Web
 
 ## DB life Cycle
 
-### DB Schema
+### DB Schema Example
 
 ```typescript
 type ACME = {
