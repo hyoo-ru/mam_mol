@@ -32,7 +32,7 @@ type ACME = {
 		Key: string
 		Doc: {
 			title: string
-			body: string
+			content: string
 		}
 		Indexes: {
 			full: [ string, string ]
@@ -54,8 +54,10 @@ const db = await $$.$mol_db< ACME >( 'ACME',
 	mig => mig.store_make( 'Users' )
 	mig => mig.stores.Users.index_make( 'ages', [ 'age' ] )
 	mig => mig.stores.Users.index_make( 'names', [ 'name.first', 'name.last' ], !!'unique' )
-	mig => mig.stores.Users.index_drop( 'ages' )
-	mig => mig.store_drop( 'Users' )
+	mig => mig.store_make( 'Articles' )
+	mig => mig.stores.Articles.index_make( 'full', [ 'title', 'content' ] )
+	// mig => mig.stores.Articles.index_drop( 'full' )
+	// mig => mig.store_drop( 'Articles' )
 )
 ```
 
