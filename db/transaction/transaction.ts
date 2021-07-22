@@ -46,20 +46,13 @@ namespace $ {
 		/** Instant commits transaction. Without errors commit proceed automatically later. */
 		commit() {
 			
-			let done: ( result?: undefined )=> void
-			let fail: ( error: Error )=> void
-			
-			this.native.onerror = ()=> fail( new Error( this.native.error!.message ) )
-			this.native.oncomplete = ()=> done()
-			
-			const promise = new Promise( ( d, f )=> {
-				done = d
-				fail = f
-			} )
-			
 			this.native.commit()
 			
-			return promise
+			return new Promise< void >( ( done, fail )=> {
+				this.native.onerror = ()=> fail( new Error( this.native.error!.message ) )
+				this.native.oncomplete = ()=> done()
+			} )
+			
 		}
 		
 		get db() {
