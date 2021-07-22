@@ -695,11 +695,8 @@ namespace $ {
 			return graph
 		}
 
-		bundleAll( { path } : { path : string } ) {
-
-			this.bundle({ path , bundle : 'index.html' })
-			this.bundle({ path , bundle : 'test.html' })
-
+		@ $mol_fiber.method
+		bundleAllWeb( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'web.deps.json' })
 			this.bundle({ path , bundle : 'web.css' })
 			this.bundle({ path , bundle : 'web.js' })
@@ -709,7 +706,11 @@ namespace $ {
 			this.bundle({ path , bundle : 'web.audit.js' })
 			this.bundle({ path , bundle : 'web.view.tree' })
 			this.bundle({ path , bundle : 'web.locale=en.json' })
-
+			return null
+		}
+		
+		@ $mol_fiber.method
+		bundleAllNode( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'node.deps.json' })
 			this.bundle({ path , bundle : 'node.js' })
 			this.bundle({ path , bundle : 'node.test.js' })
@@ -717,6 +718,17 @@ namespace $ {
 			this.bundle({ path , bundle : 'node.audit.js' })
 			this.bundle({ path , bundle : 'node.view.tree' })
 			this.bundle({ path , bundle : 'node.locale=en.json' })
+			return null
+		}
+		
+		@ $mol_fiber.method
+		bundleAll( { path } : { path : string } ) {
+
+			this.bundle({ path , bundle : 'index.html' })
+			this.bundle({ path , bundle : 'test.html' })
+			
+			this.bundleAllWeb({ path })
+			this.bundleAllNode({ path })
 
 			this.bundle({ path , bundle : 'package.json' })
 			this.bundle({ path , bundle : 'readme.md' })
@@ -724,6 +736,7 @@ namespace $ {
 			this.bundleFiles( { path , exclude : [ 'node' ] } )
 			this.bundleCordova( { path , exclude : [ 'node' ] } )
 
+			return null
 		}
 		
 		@ $mol_mem_key
