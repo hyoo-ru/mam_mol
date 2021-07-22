@@ -1079,9 +1079,15 @@ declare namespace $ {
         }): $mol_graph<string, {
             priority: number;
         }>;
+        bundleAllWeb({ path }: {
+            path: string;
+        }): null;
+        bundleAllNode({ path }: {
+            path: string;
+        }): null;
         bundleAll({ path }: {
             path: string;
-        }): void;
+        }): null;
         bundle({ path, bundle }: {
             path: string;
             bundle?: string;
