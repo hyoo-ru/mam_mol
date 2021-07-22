@@ -28,10 +28,8 @@ namespace $ {
 		}
 		
 		/** Creates new Store */
-		store_make( name: string, indexing?: ( store: $mol_db_store<any> )=> $mol_db_store<any> ) {
-			const store = this.native.db.createObjectStore( name, { autoIncrement: true } )
-			indexing?.( new $mol_db_store( store ) )
-			return this
+		store_make( name: string ) {
+			return this.native.db.createObjectStore( name, { autoIncrement: true } )
 		}
 		
 		/** Drops existen Store */

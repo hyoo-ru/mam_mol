@@ -6,7 +6,7 @@ namespace $ {
 			const db = await $$.$mol_db<{
 				letters: { Key: number, Doc: string, Indexes: {} }
 			}>( '$mol_db_test',
-				trans => trans.store_make( 'letters' )
+				mig => mig.store_make( 'letters' )
 			)
 			const trans = db.change( 'letters' )
 			
@@ -18,9 +18,9 @@ namespace $ {
 				$mol_assert_like( await letters.get(2), [] )
 				$mol_assert_like( await letters.count(), 0 )
 				
-				await letters.put( 1, 'a' )
-				await letters.put( 1, 'b' )
-				await letters.put( 2, 'c' )
+				await letters.put( 'a' )
+				await letters.put( 'b', 1 )
+				await letters.put( 'c', 2 )
 				
 				$mol_assert_like( await letters.get(1), [ 'b' ] )
 				$mol_assert_like( await letters.get(2), [ 'c' ] )

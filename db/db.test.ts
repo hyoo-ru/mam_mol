@@ -11,7 +11,7 @@ namespace $ {
 			try {
 				
 				const db1 = await $$.$mol_db( '$mol_db_test',
-					trans => trans.store_make( 'temp' ),
+					mig => mig.store_make( 'temp' ),
 				)
 				db1.destructor()
 				
@@ -19,8 +19,8 @@ namespace $ {
 				$mol_assert_like( db1.version, 2 )
 				
 				const db2 = await $$.$mol_db( '$mol_db_test',
-					trans => trans.store_make( 'temp' ),
-					trans => trans.store_drop( 'temp' ),
+					mig => mig.store_make( 'temp' ),
+					mig => mig.store_drop( 'temp' ),
 				)
 				db2.destructor()
 				

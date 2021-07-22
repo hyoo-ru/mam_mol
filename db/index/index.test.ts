@@ -5,24 +5,23 @@ namespace $ {
 			
 			const db = await $$.$mol_db<{
 				users: {
-					Key: string,
-					Doc: { name: string },
+					Key: string
+					Doc: { name: string }
 					Indexes: {
 						names: [ string ]
-					},
+					}
 				}
 			}>( '$mol_db_test',
-				trans => trans.store_make( 'users', store => store
-					.index_make( 'names', [ 'name' ], !!'unique' ),
-				)
+				mig => mig.store_make( 'users' ),
+				mig => mig.stores.users.index_make( 'names', [ 'name' ], !!'unique' ),
 			)
 			const trans = db.change( 'users' )
 			
 			try {
 			
 				const { users } = trans.stores
-				await users.put( 'jin', { name: 'Jin' } )
-				await users.put( 'john', { name: 'John' } )
+				await users.put( { name: 'Jin' }, 'jin' )
+				await users.put( { name: 'John' }, 'john' )
 
 				const { names } = users.indexes
 				$mol_assert_like( await names.get( [ 'Jin' ], 10 ), [{ name: 'Jin' }] )
@@ -30,7 +29,7 @@ namespace $ {
 				$mol_assert_like( await names.count(), 2 )
 				
 				try {
-					await users.put( 'jin2', { name: 'Jin' } )
+					await users.put( { name: 'Jin' }, 'jin2' )
 					$mol_fail( new Error( 'Exception expected' ) )
 				} catch( error ) {
 					$mol_assert_equal( error.message, `Unable to add key to index 'names': at least one key does not satisfy the uniqueness requirements.` )
@@ -49,24 +48,23 @@ namespace $ {
 			
 			const db = await $$.$mol_db<{
 				users: {
-					Key: string,
-					Doc: { first: string, last: string },
+					Key: string
+					Doc: { first: string, last: string }
 					Indexes: {
 						names: [ string, string ]
-					},
+					}
 				}
 			}>( '$mol_db_test',
-				trans => trans.store_make( 'users', store => store
-					.index_make( 'names', [ 'first', 'last' ] ),
-				)
+				mig => mig.store_make( 'users' ),
+				mig => mig.stores.users.index_make( 'names', [ 'first', 'last' ] ),
 			)
 			const trans = db.change( 'users' )
 			
 			try {
 			
 				const { users } = trans.stores
-				await users.put( 'jin', { first: 'Jin', last: 'Johnson' } )
-				await users.put( 'john', { first: 'John', last: 'Jinson' } )
+				await users.put( { first: 'Jin', last: 'Johnson' }, 'jin' )
+				await users.put( { first: 'John', last: 'Jinson' }, 'john' )
 				
 				const { names } = users.indexes
 				$mol_assert_like( await names.get( [ 'Jin', 'Johnson' ], 10 ), [{ first: 'Jin', last: 'Johnson' }] )
@@ -86,26 +84,25 @@ namespace $ {
 			
 			const db = await $$.$mol_db<{
 				users: {
-					Key: string,
-					Doc: { name: string, age: number },
+					Key: string
+					Doc: { name: string, age: number }
 					Indexes: {
-						names: [ string ],
-						ages: [ number ],
-					},
+						names: [ string ]
+						ages: [ number ]
+					}
 				}
 			}>( '$mol_db_test',
-				trans => trans.store_make( 'users', store => store
-					.index_make( 'names', [ 'name' ], !!'unique' )
-					.index_make( 'ages', [ 'age' ] )
-				)
+				mig => mig.store_make( 'users' ),
+				mig => mig.stores.users.index_make( 'names', [ 'name' ], !!'unique' ),
+				mig => mig.stores.users.index_make( 'ages', [ 'age' ] ),
 			)
 			const trans = db.change( 'users' )
 			
 			try {
 			
 				const { users } = trans.stores
-				await users.put( 'jin', { name: 'Jin', age: 18 } )
-				await users.put( 'john', { name: 'John', age: 18 } )
+				await users.put( { name: 'Jin', age: 18 }, 'jin' )
+				await users.put( { name: 'John', age: 18 }, 'john' )
 				
 				const { names, ages } = users.indexes
 				
