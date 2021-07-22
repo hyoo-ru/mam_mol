@@ -6,8 +6,12 @@ namespace $ {
 	 * 	$mol_type_tail<[ 1 , 2 , 3 ]> // [ 2, 3 ]
 	 */
 	export type $mol_type_tail< Tuple extends readonly any[] > =
-		Tuple extends [ any , ... infer Tail ]
+		(
+			( ...tail : Tuple )=> any
+		) extends (
+			( head : any , ...tail : infer Tail )=> any
+		)
 			? Tail
-			: []
+			: never
 
 }
