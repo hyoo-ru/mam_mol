@@ -5,9 +5,9 @@ namespace $ {
 			
 			const db = await $$.$mol_db<{
 				letters: { Key: number, Doc: string, Indexes: {} }
-			}>( '$mol_db_test', [
+			}>( '$mol_db_test',
 				trans => trans.store_make( 'letters' )
-			] )
+			)
 			const trans = db.change( 'letters' )
 			
 			try {

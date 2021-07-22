@@ -64,7 +64,7 @@ namespace $ {
 			return promise
 		}
 		
-		db() {
+		get db() {
 			return new $mol_db_database(
 				this.native.db
 			)

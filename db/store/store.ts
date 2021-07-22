@@ -9,15 +9,15 @@ namespace $ {
 			super()
 		}
 		
-		name() {
+		get name() {
 			return this.native.name
 		}
 		
-		path() {
+		get path() {
 			return this.native.keyPath
 		}
 		
-		incremental() {
+		get incremental() {
 			return this.native.autoIncrement
 		}
 		
@@ -55,14 +55,14 @@ namespace $ {
 			return this
 		}
 		
-		transaction() {
+		get transaction() {
 			return new $mol_db_transaction(
 				this.native.transaction
 			)
 		}
 		
-		db() {
-			return this.transaction().db()
+		get db() {
+			return this.transaction.db
 		}
 		
 		/** Deletes all stored Documents */

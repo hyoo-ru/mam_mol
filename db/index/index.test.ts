@@ -11,11 +11,11 @@ namespace $ {
 						names: [ string ]
 					},
 				}
-			}>( '$mol_db_test', [
+			}>( '$mol_db_test',
 				trans => trans.store_make( 'users', store => store
 					.index_make( 'names', [ 'name' ], !!'unique' ),
 				)
-			] )
+			)
 			const trans = db.change( 'users' )
 			
 			try {
@@ -55,11 +55,11 @@ namespace $ {
 						names: [ string, string ]
 					},
 				}
-			}>( '$mol_db_test', [
+			}>( '$mol_db_test',
 				trans => trans.store_make( 'users', store => store
 					.index_make( 'names', [ 'first', 'last' ] ),
 				)
-			] )
+			)
 			const trans = db.change( 'users' )
 			
 			try {
@@ -93,12 +93,12 @@ namespace $ {
 						ages: [ number ],
 					},
 				}
-			}>( '$mol_db_test', [
+			}>( '$mol_db_test',
 				trans => trans.store_make( 'users', store => store
 					.index_make( 'names', [ 'name' ], !!'unique' )
 					.index_make( 'ages', [ 'age' ] )
 				)
-			] )
+			)
 			const trans = db.change( 'users' )
 			
 			try {

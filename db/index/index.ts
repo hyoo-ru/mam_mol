@@ -9,34 +9,34 @@ namespace $ {
 			super()
 		}
 		
-		name() {
+		get name() {
 			return this.native.name
 		}
 		
-		paths() {
+		get paths() {
 			return this.native.keyPath as string[]
 		}
 		
-		unique() {
+		get unique() {
 			return this.native.unique
 		}
 		
-		multiple() {
+		get multiple() {
 			return this.native.multiEntry
 		}
 		
-		store() {
+		get store() {
 			return new $mol_db_store(
 				this.native.objectStore
 			)
 		}
 		
-		transaction() {
-			return this.store().transaction()
+		get transaction() {
+			return this.store.transaction
 		}
 		
-		db() {
-			return this.store().db()
+		get db() {
+			return this.store.db
 		}
 		
 		/** Counts Documents by key(s) */

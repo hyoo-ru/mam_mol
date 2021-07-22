@@ -10,17 +10,17 @@ namespace $ {
 		}
 		
 		/** Returns database name. */
-		name() {
+		get name() {
 			return this.native.name
 		}
 		
 		/** Returns database schema version. */
-		version() {
+		get version() {
 			return this.native.version
 		}
 		
 		/** Returns all stores names. */
-		stores() {
+		get stores() {
 			return [ ... this.native.objectStoreNames ] as ( keyof Schema )[]
 		}
 		
@@ -43,7 +43,7 @@ namespace $ {
 			
 			this.native.close()
 			
-			const request = this.$.indexedDB.deleteDatabase( this.name() )
+			const request = this.$.indexedDB.deleteDatabase( this.name )
 			
 			request.onblocked = console.error
 			return $mol_db_response( request ).then( ()=> {} )

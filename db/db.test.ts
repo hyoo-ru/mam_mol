@@ -10,22 +10,22 @@ namespace $ {
 			
 			try {
 				
-				const db1 = await $$.$mol_db( '$mol_db_test', [
+				const db1 = await $$.$mol_db( '$mol_db_test',
 					trans => trans.store_make( 'temp' ),
-				] )
+				)
 				db1.destructor()
 				
-				$mol_assert_like( db1.stores(), [ 'temp' ] )
-				$mol_assert_like( db1.version(), 2 )
+				$mol_assert_like( db1.stores, [ 'temp' ] )
+				$mol_assert_like( db1.version, 2 )
 				
-				const db2 = await $$.$mol_db( '$mol_db_test', [
-					trans => trans.store_make('temp'),
-					trans => trans.store_drop('temp'),
-				] )
+				const db2 = await $$.$mol_db( '$mol_db_test',
+					trans => trans.store_make( 'temp' ),
+					trans => trans.store_drop( 'temp' ),
+				)
 				db2.destructor()
 				
-				$mol_assert_like( db2.stores(), [] )
-				$mol_assert_like( db2.version(), 3 )
+				$mol_assert_like( db2.stores, [] )
+				$mol_assert_like( db2.version, 3 )
 			
 			} finally {
 				

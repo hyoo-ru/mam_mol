@@ -7,14 +7,12 @@ namespace $ {
 	export async function $mol_db< Schema extends $mol_db_schema >(
 		this: $,
 		name: string,
-		migrations?: ( ( transaction: $mol_db_transaction<any> )=> $mol_db_transaction<any> )[],
+		... migrations: ( ( transaction: $mol_db_transaction<any> )=> $mol_db_transaction<any> )[]
 	) {
 		
-		const request = this.indexedDB.open( name, migrations ? migrations.length + 1 : undefined )
+		const request = this.indexedDB.open( name, migrations.length ? migrations.length + 1 : undefined )
 		
 		request.onupgradeneeded = event => {
-			
-			if( !migrations ) return
 			
 			migrations.splice( 0, event.oldVersion - 1 )
 			const transaction = new $mol_db_transaction( request.transaction! )
