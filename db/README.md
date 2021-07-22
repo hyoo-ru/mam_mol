@@ -8,6 +8,7 @@ Static typed facade for [IndexedDB](https://developer.mozilla.org/en-US/docs/Web
 
 - **Database** has Stores
 - - **Store** has Documents
+- - - **Document** contains any data
 - - - **Index** points to Documents
 
 ## DB life Cycle
