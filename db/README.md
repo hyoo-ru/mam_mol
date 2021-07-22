@@ -1,16 +1,19 @@
 # $mol_db
 
+**Unstable**
+
 Static typed facade for [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) with simple API.
 
 ## IndexedDB Structure
 
 - **Database** has Stores
 - - **Store** has Documents
+- - - **Document** contains any data
 - - - **Index** points to Documents
 
 ## DB life Cycle
 
-### DB Schema
+### DB Schema Example
 
 ```typescript
 type ACME = {
