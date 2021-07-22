@@ -21,9 +21,9 @@ var $;
                 await mock(context);
             await test(context);
         }
-        $_1.$mol_ambient({}).$mol_log3_done({
+        $_1.$$.$mol_log3_done({
             place: '$mol_test',
-            message: 'Completed',
+            message: 'All tests passed',
             count: $_1.$mol_test_all.length,
         });
     }
@@ -33,9 +33,14 @@ var $;
         if (scheduled)
             return;
         scheduled = true;
-        setTimeout(() => {
+        setTimeout(async () => {
             scheduled = false;
-            $mol_test_run();
+            try {
+                await $mol_test_run();
+            }
+            finally {
+                $_1.$$.$mol_test_complete();
+            }
         }, 0);
     }
     $_1.$mol_test_schedule = $mol_test_schedule;
@@ -79,6 +84,15 @@ var $;
     });
 })($ || ($ = {}));
 //test.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_test_complete() {
+    }
+    $.$mol_test_complete = $mol_test_complete;
+})($ || ($ = {}));
+//test.web.test.js.map
 ;
 "use strict";
 //assert.test.js.map

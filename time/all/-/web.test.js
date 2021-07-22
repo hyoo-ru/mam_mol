@@ -3,17 +3,6 @@ function require( path ){ return $node[ path ] };
 "use strict";
 var $;
 (function ($) {
-    $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
-    function $mol_ambient(overrides) {
-        return Object.setPrototypeOf(overrides, this || $);
-    }
-    $.$mol_ambient = $mol_ambient;
-})($ || ($ = {}));
-//ambient.js.map
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_fail_hidden(error) {
         throw error;
     }
@@ -42,9 +31,9 @@ var $;
                 await mock(context);
             await test(context);
         }
-        $_1.$mol_ambient({}).$mol_log3_done({
+        $_1.$$.$mol_log3_done({
             place: '$mol_test',
-            message: 'Completed',
+            message: 'All tests passed',
             count: $_1.$mol_test_all.length,
         });
     }
@@ -54,9 +43,14 @@ var $;
         if (scheduled)
             return;
         scheduled = true;
-        setTimeout(() => {
+        setTimeout(async () => {
             scheduled = false;
-            $mol_test_run();
+            try {
+                await $mol_test_run();
+            }
+            finally {
+                $_1.$$.$mol_test_complete();
+            }
         }, 0);
     }
     $_1.$mol_test_schedule = $mol_test_schedule;
@@ -100,6 +94,15 @@ var $;
     });
 })($ || ($ = {}));
 //test.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_test_complete() {
+    }
+    $.$mol_test_complete = $mol_test_complete;
+})($ || ($ = {}));
+//test.web.test.js.map
 ;
 "use strict";
 var $;
@@ -863,6 +866,17 @@ var $;
     $.$mol_jsx_attach = $mol_jsx_attach;
 })($ || ($ = {}));
 //attach.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
+    function $mol_ambient(overrides) {
+        return Object.setPrototypeOf(overrides, this || $);
+    }
+    $.$mol_ambient = $mol_ambient;
+})($ || ($ = {}));
+//ambient.js.map
 ;
 "use strict";
 var $;

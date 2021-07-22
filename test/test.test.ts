@@ -27,10 +27,10 @@ namespace $ {
 			await test( context )
 		}
 		
-		$mol_ambient({}).$mol_log3_done({
-			place : '$mol_test' , 
-			message : 'Completed' ,
-			count : $mol_test_all.length ,
+		$$.$mol_log3_done({
+			place: '$mol_test',
+			message: 'All tests passed',
+			count: $mol_test_all.length,
 		})
 		
 	}
@@ -41,13 +41,19 @@ namespace $ {
 		if( scheduled ) return
 		scheduled = true
 
-		setTimeout( ()=> {
+		setTimeout( async ()=> {
+			
 			scheduled = false
- 			$mol_test_run()
+ 			
+			try {
+				await $mol_test_run()
+			} finally {
+				$$.$mol_test_complete()
+			}
+			
 		} , 0 )
 		
 	}
-
 
 	$mol_test_mocks.push( context => {
 		let seed = 0
