@@ -703,10 +703,14 @@ namespace $ {
 			this.bundle({ path , bundle : 'web.test.js' })
 			this.bundle({ path , bundle : 'web.test.html' })
 			this.bundle({ path , bundle : 'web.d.ts' })
-			this.bundle({ path , bundle : 'web.audit.js' })
 			this.bundle({ path , bundle : 'web.view.tree' })
 			this.bundle({ path , bundle : 'web.locale=en.json' })
 			return null
+		}
+		
+		@ $mol_fiber.method
+		bundleAllWebAudit( { path } : { path : string } ) {
+			this.bundle({ path , bundle : 'web.audit.js' })
 		}
 		
 		@ $mol_fiber.method
@@ -715,10 +719,14 @@ namespace $ {
 			this.bundle({ path , bundle : 'node.js' })
 			this.bundle({ path , bundle : 'node.test.js' })
 			this.bundle({ path , bundle : 'node.d.ts' })
-			this.bundle({ path , bundle : 'node.audit.js' })
 			this.bundle({ path , bundle : 'node.view.tree' })
 			this.bundle({ path , bundle : 'node.locale=en.json' })
 			return null
+		}
+		
+		@ $mol_fiber.method
+		bundleAllNodeAudit( { path } : { path : string } ) {
+			this.bundle({ path , bundle : 'node.audit.js' })
 		}
 		
 		@ $mol_fiber.method
@@ -728,8 +736,10 @@ namespace $ {
 			this.bundle({ path , bundle : 'test.html' })
 			
 			this.bundleAllWeb({ path })
+			this.bundleAllWebAudit({ path })
 			this.bundleAllNode({ path })
-
+			this.bundleAllNodeAudit({ path })
+			
 			this.bundle({ path , bundle : 'package.json' })
 			this.bundle({ path , bundle : 'readme.md' })
 
