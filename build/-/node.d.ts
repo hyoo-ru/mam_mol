@@ -1082,9 +1082,15 @@ declare namespace $ {
         bundleAllWeb({ path }: {
             path: string;
         }): null;
+        bundleAllWebAudit({ path }: {
+            path: string;
+        }): void;
         bundleAllNode({ path }: {
             path: string;
         }): null;
+        bundleAllNodeAudit({ path }: {
+            path: string;
+        }): void;
         bundleAll({ path }: {
             path: string;
         }): null;

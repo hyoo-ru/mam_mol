@@ -4711,26 +4711,32 @@ var $;
             this.bundle({ path, bundle: 'web.test.js' });
             this.bundle({ path, bundle: 'web.test.html' });
             this.bundle({ path, bundle: 'web.d.ts' });
-            this.bundle({ path, bundle: 'web.audit.js' });
             this.bundle({ path, bundle: 'web.view.tree' });
             this.bundle({ path, bundle: 'web.locale=en.json' });
             return null;
+        }
+        bundleAllWebAudit({ path }) {
+            this.bundle({ path, bundle: 'web.audit.js' });
         }
         bundleAllNode({ path }) {
             this.bundle({ path, bundle: 'node.deps.json' });
             this.bundle({ path, bundle: 'node.js' });
             this.bundle({ path, bundle: 'node.test.js' });
             this.bundle({ path, bundle: 'node.d.ts' });
-            this.bundle({ path, bundle: 'node.audit.js' });
             this.bundle({ path, bundle: 'node.view.tree' });
             this.bundle({ path, bundle: 'node.locale=en.json' });
             return null;
+        }
+        bundleAllNodeAudit({ path }) {
+            this.bundle({ path, bundle: 'node.audit.js' });
         }
         bundleAll({ path }) {
             this.bundle({ path, bundle: 'index.html' });
             this.bundle({ path, bundle: 'test.html' });
             this.bundleAllWeb({ path });
+            this.bundleAllWebAudit({ path });
             this.bundleAllNode({ path });
+            this.bundleAllNodeAudit({ path });
             this.bundle({ path, bundle: 'package.json' });
             this.bundle({ path, bundle: 'readme.md' });
             this.bundleFiles({ path, exclude: ['node'] });
@@ -5315,7 +5321,13 @@ var $;
     ], $mol_build.prototype, "bundleAllWeb", null);
     __decorate([
         $.$mol_fiber.method
+    ], $mol_build.prototype, "bundleAllWebAudit", null);
+    __decorate([
+        $.$mol_fiber.method
     ], $mol_build.prototype, "bundleAllNode", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_build.prototype, "bundleAllNodeAudit", null);
     __decorate([
         $.$mol_fiber.method
     ], $mol_build.prototype, "bundleAll", null);
