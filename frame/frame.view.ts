@@ -6,11 +6,19 @@ namespace $.$$ {
 		@ $mol_mem
 		window() {
 
-			const node = this.dom_node()
+			const node = this.dom_node() as HTMLIFrameElement
 			
 			this.uri_resource()
 			
 			return $mol_fiber_sync( () => new Promise< Window >( ( done, fail )=> {
+				
+				new $mol_after_timeout( 3_000, ()=> {
+					try {
+						if( node.contentWindow!.location.href === 'about:blank' ) {
+							done( node.contentWindow! )
+						}
+					} catch { }
+				} )
 				
 				node.onload = () => {
 					done( node.contentWindow! )

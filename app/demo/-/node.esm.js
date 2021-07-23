@@ -3245,7 +3245,7 @@ var $;
             mol_link_current: {
                 'true': {
                     background: {
-                        color: $.$mol_theme.back,
+                        color: $.$mol_theme.hover,
                     },
                     color: $.$mol_theme.text,
                     textShadow: '0 0',
@@ -15569,6 +15569,14 @@ var $;
                 const node = this.dom_node();
                 this.uri_resource();
                 return $.$mol_fiber_sync(() => new Promise((done, fail) => {
+                    new $.$mol_after_timeout(3000, () => {
+                        try {
+                            if (node.contentWindow.location.href === 'about:blank') {
+                                done(node.contentWindow);
+                            }
+                        }
+                        catch { }
+                    });
                     node.onload = () => {
                         done(node.contentWindow);
                     };
