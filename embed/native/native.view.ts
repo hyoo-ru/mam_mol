@@ -1,27 +1,27 @@
 namespace $.$$ {
-	export class $mol_frame extends $.$mol_frame {
+	export class $mol_embed_native extends $.$mol_embed_native {
 
-		dom_node! : ( next? : HTMLIFrameElement )=> HTMLIFrameElement
+		dom_node! : ( next? : HTMLIFrameElement )=> HTMLObjectElement
 		
 		@ $mol_mem
-		window() {
+		loaded() {
 
 			const node = this.dom_node()
 			
 			this.uri_resource()
 			
-			return $mol_fiber_sync( () => new Promise< Window >( ( done, fail )=> {
+			return $mol_fiber_sync( () => new Promise< boolean >( ( done, fail )=> {
 				
 				new $mol_after_timeout( 3_000, ()=> {
 					try {
 						if( node.contentWindow!.location.href === 'about:blank' ) {
-							done( node.contentWindow! )
+							done( true )
 						}
 					} catch { }
 				} )
 				
 				node.onload = () => {
-					done( node.contentWindow! )
+					done( true )
 				}
 				
 				node.onerror = ( event : Event | string ) => {
@@ -60,20 +60,9 @@ namespace $.$$ {
 		render() {
 			const node = super.render()
 			this.uri_listener()
-			this.window()
+			this.loaded()
 			return node
 		}
 
-		allow() {
-			return [
-				... this.fullscreen() ? [ 'fullscreen' ] : [] ,
-				... this.accelerometer() ? [ 'accelerometer' ] : [] ,
-				... this.autoplay() ? [ 'autoplay' ] : [] ,
-				... this.encription() ? [ 'encrypted-media' ] : [] ,
-				... this.gyroscope() ? [ 'gyroscope' ] : [] ,
-				... this.pip() ? [ 'picture-in-picture' ] : [] ,
-			].join(';')
-		}
-		
 	}
 }
