@@ -167,3 +167,14 @@ const users = await ages.get( [ 18 ], 10 )
 const count = await Users.count([ 18 ])
 ```
 
+## Usage from NPM
+
+```
+npm install mol_db
+```
+
+[![](https://badgen.net/bundlephobia/minzip/mol_db)](https://bundlephobia.com/package/mol_db)
+
+```javascript
+import { $mol_db } from 'mol_db'
+```
