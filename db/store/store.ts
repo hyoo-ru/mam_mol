@@ -79,8 +79,13 @@ namespace $ {
 			return $mol_db_response( this.native.put( doc, key ) )
 		}
 		
-		/** Selects Documents by primary key(s). Returns only one by default. */
-		get( key: Schema['Key'] | IDBKeyRange | null, count = 1 ) {
+		/** Returns Document by primary key. */
+		get( key: Schema['Key'] ) {
+			return $mol_db_response( this.native.get( key ) as IDBRequest< Schema['Doc'] | undefined > )
+		}
+		
+		/** Selects Documents by primary keys. */
+		select( key?: Schema['Key'] | IDBKeyRange | null, count?: number ) {
 			return $mol_db_response( this.native.getAll( key, count ) as IDBRequest< Schema['Doc'][] > )
 		}
 		
