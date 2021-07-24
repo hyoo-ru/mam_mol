@@ -531,6 +531,8 @@ Some libs are already published to NPM:
 - [$mol_time](time) - Proper date/time/duration/interval arithmetic.
 - [$mol_type](type) - TypeScript meta types for complex logic.
 - [$mol_regexp](regexp) - Regular Expressions builder.
+- [$mol_crypto](crypto) - Efficient cryptographic algorithms.
+- [$mol_db](db) - Static typed IndexedDB wrapper with auto migrations.
 - [$hyoo_crowd](https://github.com/hyoo-ru/crowd.hyoo.ru) - Conflict-free Reinterpretable Ordered Washed Data.
 
 All of them are very small, powerfull and fastest. Use it for your pleasure.
