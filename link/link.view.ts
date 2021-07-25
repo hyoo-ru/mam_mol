@@ -56,7 +56,7 @@ namespace $.$$ {
 			return Math.max( super.minimal_height(), 40 )
 		}
 		
-		target(): '_self' | '_blank' | '_top' | '_parent' {
+		target(): '_self' | '_blank' | '_top' | '_parent' | string {
 			return ( this.uri_native().origin === $mol_dom_context.location.origin ) ? '_self' : '_blank'
 		}
 
