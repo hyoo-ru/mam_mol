@@ -1,13 +1,11 @@
 namespace $ {
 	
 	/** IndexedDB Index wrapper. */
-	export class $mol_db_index< Schema extends $mol_db_index_schema > extends $mol_object2 {
+	export class $mol_db_index< Schema extends $mol_db_index_schema > {
 		
 		constructor(
 			readonly native: IDBIndex,
-		) {
-			super()
-		}
+		) { }
 		
 		get name() {
 			return this.native.name

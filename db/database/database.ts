@@ -1,13 +1,11 @@
 namespace $ {
 	
 	/** IndexedDB instance wrapper. */
-	export class $mol_db_database< Schema extends $mol_db_schema > extends $mol_object2 {
+	export class $mol_db_database< Schema extends $mol_db_schema > {
 		
 		constructor(
 			readonly native: IDBDatabase,
-		) {
-			super()
-		}
+		) { }
 		
 		/** Returns database name. */
 		get name() {
@@ -46,7 +44,7 @@ namespace $ {
 			
 			this.native.close()
 			
-			const request = this.$.indexedDB.deleteDatabase( this.name )
+			const request = indexedDB.deleteDatabase( this.name )
 			
 			request.onblocked = console.error
 			return $mol_db_response( request ).then( ()=> {} )
