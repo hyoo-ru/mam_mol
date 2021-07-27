@@ -5,13 +5,11 @@ interface IDBTransaction {
 namespace $ {
 	
 	/** IndexedDB Transaction wrapper. */
-	export class $mol_db_transaction< Schema extends $mol_db_schema > extends $mol_object2 {
+	export class $mol_db_transaction< Schema extends $mol_db_schema > {
 		
 		constructor(
 			readonly native: IDBTransaction,
-		) {
-			super()
-		}
+		) {}
 		
 		/** Returns dictionary of all existen Stores. */
 		get stores() {
