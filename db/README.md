@@ -1,7 +1,5 @@
 # $mol_db
 
-**Unstable**
-
 Static typed facade for [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) with simple API.
 
 ## IndexedDB Structure
@@ -89,7 +87,7 @@ const { Users, Articles } = db.read( 'Users', 'Articles' )
 ### Read/Write Trasactions
 
 ```typescript
-const trans = db.read( 'Users', 'Articles' )
+const trans = db.change( 'Users', 'Articles' )
 const { Users, Articles } = trans.stores
 
 // ...
@@ -128,7 +126,7 @@ await Users.put( {
 ### Get One By Primary Key
 
 ```typescript
-const [ user ]= await Users.get( 1 )
+const user = await Users.get( 1 )
 ```
 
 ### Select 10 By Primary Keys
@@ -152,7 +150,7 @@ const { names, ages } = users.indexes
 ### Get One By Index
 
 ```typescript
-const [ user ]= await names.get([ 'Jin', 'Nin' ])
+const user = await names.get([ 'Jin', 'Nin' ])
 ```
 
 ### Select 10 By Index
