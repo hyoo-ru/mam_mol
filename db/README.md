@@ -89,7 +89,7 @@ const { Users, Articles } = db.read( 'Users', 'Articles' )
 ### Read/Write Trasactions
 
 ```typescript
-const trans = db.read( 'Users', 'Articles' )
+const trans = db.change( 'Users', 'Articles' )
 const { Users, Articles } = trans.stores
 
 // ...
