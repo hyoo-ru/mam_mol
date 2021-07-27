@@ -62,7 +62,7 @@ const db = await $$.$mol_db< ACME >( 'ACME',
 )
 ```
 
-There is 5 migrations. And DB version is 6.
+There is 5 migrations. And DB version is 6. After uncommenting last 2 rows, it applies 2 additional migrations and DB version will be 8.
 
 ### Close DB Connection
 
