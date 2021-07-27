@@ -4,8 +4,8 @@ Static typed facade for [IndexedDB](https://developer.mozilla.org/en-US/docs/Web
 
 ## IndexedDB Structure
 
-- **Database** has Stores
-- - **Store** has Documents
+- **Database** contains named Stores
+- - **Store** contains Documents by primary keys and named Indexes
 - - - **Document** contains any data
 - - - **Index** points to Documents
 
