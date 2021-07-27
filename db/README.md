@@ -128,7 +128,7 @@ await Users.put( {
 ### Get One By Primary Key
 
 ```typescript
-const [ user ]= await Users.get( 1 )
+const user = await Users.get( 1 )
 ```
 
 ### Select 10 By Primary Keys
@@ -152,7 +152,7 @@ const { names, ages } = users.indexes
 ### Get One By Index
 
 ```typescript
-const [ user ]= await names.get([ 'Jin', 'Nin' ])
+const user = await names.get([ 'Jin', 'Nin' ])
 ```
 
 ### Select 10 By Index
