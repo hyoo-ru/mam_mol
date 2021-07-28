@@ -583,6 +583,9 @@ namespace $ {
 						this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'add' , '--track' , 'master' , 'origin' , repo.value )
 						this.$.$mol_exec( mod.path() , 'git' , 'pull' )
 						mod.reset()
+						for ( const sub of mod.sub() ) {
+							sub.reset()
+						}
 						return true
 					}
 
