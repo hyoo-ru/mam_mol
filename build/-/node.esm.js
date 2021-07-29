@@ -4617,7 +4617,12 @@ var $;
                         return false;
                     for (let repo of mapping.select('pack', mod.name(), 'git').sub) {
                         this.$.$mol_exec(mod.path(), 'git', 'init');
-                        this.$.$mol_exec(mod.path(), 'git', 'remote', 'add', '--track', 'master', 'origin', repo.value);
+                        const res = this.$.$mol_exec(mod.path(), 'git', 'remote', 'show', repo.value);
+                        const matched = res.stdout.toString().match(/HEAD branch: (.*?)\n/);
+                        const head_branch_name = res instanceof Error || matched === null || !matched[1]
+                            ? 'master'
+                            : matched[1];
+                        this.$.$mol_exec(mod.path(), 'git', 'remote', 'add', '--track', head_branch_name, 'origin', repo.value);
                         this.$.$mol_exec(mod.path(), 'git', 'pull');
                         mod.reset();
                         for (const sub of mod.sub()) {
