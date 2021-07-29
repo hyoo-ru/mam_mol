@@ -2448,7 +2448,8 @@ var $;
             });
         }
         center() {
-            return this[0].map((_, i) => this.reduce((sum, point) => sum + point[i], 0) / this.length);
+            const Result = this[0].constructor;
+            return new Result(...this[0].map((_, i) => this.reduce((sum, point) => sum + point[i], 0) / this.length));
         }
     }
     $.$mol_vector = $mol_vector;

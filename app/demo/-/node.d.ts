@@ -2486,7 +2486,7 @@ declare namespace $ {
         expanded2(this: $mol_vector<$mol_vector_range<number>, Length>, point: readonly (readonly [number, number])[] & {
             length: Length;
         }): this;
-        center<Length_inner extends number>(this: $mol_vector<$mol_vector<number, Length_inner>, Length>): $mol_vector<number, Length_inner>;
+        center<Item extends $mol_vector<number, number>>(this: $mol_vector<Item, Length>): Item;
     }
     class $mol_vector_1d<Value> extends $mol_vector<Value, 1> {
         [0]: Value;
