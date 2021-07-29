@@ -2726,6 +2726,9 @@ var $;
                 return next;
             });
         }
+        center() {
+            return this[0].map((_, i) => this.reduce((sum, point) => sum + point[i], 0) / this.length);
+        }
     }
     $.$mol_vector = $mol_vector;
     class $mol_vector_1d extends $mol_vector {

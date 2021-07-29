@@ -67,6 +67,12 @@ namespace $ {
 			}) as any
 		}
 
+		center< Length_inner extends number >(
+			this : $mol_vector< $mol_vector< number, Length_inner > , Length > ,
+		) : $mol_vector< number, Length_inner > {
+			return this[0].map( (_,i)=> this.reduce( ( sum, point )=> sum + point[i], 0 ) / this.length )
+		}
+
 	}
 
 	export class $mol_vector_1d< Value > extends $mol_vector< Value , 1 > {
