@@ -117,6 +117,12 @@ namespace $ {
 			return range
 		}
 
+		distance< Length extends number >(
+			this : $mol_vector_range< $mol_vector< number, Length > > ,
+		): number {
+			return this.min.reduce( ( sum, min, i )=> sum + ( min - this.max[i] ) ** 2, 0 ) ** ( 1 / this[0].length )
+		}
+
 	}
 
 	export let $mol_vector_range_full = new $mol_vector_range( Number.NEGATIVE_INFINITY , Number.POSITIVE_INFINITY )
