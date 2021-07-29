@@ -2321,10 +2321,11 @@ var $;
                 }
             });
         }
+        const watch_task = $.$mol_fiber_root($mol_view_watch);
         const watch = () => {
             const logs = $.$mol_fiber.logs;
             $.$mol_fiber.logs = false;
-            $.$mol_fiber_root($mol_view_watch);
+            watch_task();
             $.$mol_fiber.logs = logs;
         };
         watch();
