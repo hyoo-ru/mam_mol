@@ -4170,7 +4170,6 @@ var $;
                     const zone = zone_of(scaled);
                     last = scaled;
                     if (zone.x !== 0 && zone.x === last_zone.x || zone.y !== 0 && zone.y === last_zone.y) {
-                        last_zone = zone;
                         continue;
                     }
                     if (last_zone.x !== 0 || last_zone.y !== 0) {

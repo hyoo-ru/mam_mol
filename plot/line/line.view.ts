@@ -46,7 +46,6 @@ namespace $.$$ {
 				last = scaled
 				
 				if( zone.x !== 0 && zone.x === last_zone.x || zone.y !== 0 && zone.y === last_zone.y ) {
-					last_zone = zone
 					continue
 				}
 				
