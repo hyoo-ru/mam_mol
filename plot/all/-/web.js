@@ -3861,59 +3861,32 @@ var $;
                 const [shift_x, shift_y] = this.shift();
                 const [scale_x, scale_y] = this.scale();
                 const indexes = [];
-                let last = [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY];
-                let first_x = null;
-                let first_y = null;
-                let last_x = null;
-                let last_y = null;
+                let last = new $.$mol_vector_2d(Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY);
+                let last_zone = new $.$mol_vector_2d(0, 0);
                 const series_x = this.series_x();
                 const series_y = this.series_y();
+                const zone_of = (point) => new $.$mol_vector_2d(point.x < viewport_left ? -1
+                    : point.x > viewport_right ? 1
+                        : 0, point.y < viewport_bottom ? -1
+                    : point.y > viewport_top ? 1
+                        : 0);
                 for (let i = 0; i < series_x.length; i++) {
-                    const scaled = [
-                        Math.round(shift_x + series_x[i] * scale_x),
-                        Math.round(shift_y + series_y[i] * scale_y),
-                    ];
-                    if (Math.abs(scaled[0] - last[0]) < threshold
-                        && Math.abs(scaled[1] - last[1]) < threshold)
+                    const scaled = new $.$mol_vector_2d(Math.round(shift_x + series_x[i] * scale_x), Math.round(shift_y + series_y[i] * scale_y));
+                    if (Math.abs(scaled.x - last.x) < threshold
+                        && Math.abs(scaled.y - last.y) < threshold)
                         continue;
+                    const zone = zone_of(scaled);
                     last = scaled;
-                    if (scaled[0] < viewport_left) {
-                        first_x = i;
+                    if (zone.x !== 0 && zone.x === last_zone.x || zone.y !== 0 && zone.y === last_zone.y) {
+                        last_zone = zone;
                         continue;
                     }
-                    if (scaled[1] < viewport_bottom) {
-                        first_y = i;
-                        continue;
+                    if (last_zone.x !== 0 || last_zone.y !== 0) {
+                        indexes.push(i - 1);
                     }
-                    if (scaled[0] > viewport_right) {
-                        if (last_x === null)
-                            last_x = i;
-                        continue;
-                    }
-                    if (scaled[1] > viewport_top) {
-                        if (last_y === null)
-                            last_y = i;
-                        continue;
-                    }
-                    if (first_x !== null)
-                        indexes.push(first_x);
-                    if (first_y !== null)
-                        indexes.push(first_y);
+                    last_zone = zone;
                     indexes.push(i);
-                    if (last_x !== null)
-                        indexes.push(last_x);
-                    if (last_y !== null)
-                        indexes.push(last_y);
-                    first_x = first_y = last_x = last_y = null;
                 }
-                if (first_x !== null)
-                    indexes.push(first_x);
-                if (first_y !== null)
-                    indexes.push(first_y);
-                if (last_x !== null)
-                    indexes.push(last_x);
-                if (last_y !== null)
-                    indexes.push(last_y);
                 return indexes;
             }
             curve() {
