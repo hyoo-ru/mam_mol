@@ -2530,6 +2530,7 @@ declare namespace $ {
         get max(): Value;
         get inversed(): $mol_vector_range<Value>;
         expanded0(value: Value): $mol_vector_range<Value>;
+        distance<Length extends number>(this: $mol_vector_range<$mol_vector<number, Length>>): number;
     }
     let $mol_vector_range_full: $mol_vector_range<number>;
     class $mol_vector_matrix<Width extends number, Height extends number> extends $mol_vector<readonly number[] & {

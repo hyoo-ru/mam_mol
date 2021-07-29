@@ -2769,6 +2769,9 @@ var $;
                 range = new Range(value, range.max);
             return range;
         }
+        distance() {
+            return this.min.reduce((sum, min, i) => sum + (min - this.max[i]) ** 2, 0) ** (1 / this[0].length);
+        }
     }
     $.$mol_vector_range = $mol_vector_range;
     $.$mol_vector_range_full = new $mol_vector_range(Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY);

@@ -2321,7 +2321,12 @@ var $;
                 }
             });
         }
-        const watch = $.$mol_fiber_root($mol_view_watch);
+        const watch = () => {
+            const logs = $.$mol_fiber.logs;
+            $.$mol_fiber.logs = false;
+            $.$mol_fiber_root($mol_view_watch);
+            $.$mol_fiber.logs = logs;
+        };
         watch();
     }
 })($ || ($ = {}));
@@ -7980,6 +7985,9 @@ var $;
             if (value < range.min)
                 range = new Range(value, range.max);
             return range;
+        }
+        distance() {
+            return this.min.reduce((sum, min, i) => sum + (min - this.max[i]) ** 2, 0) ** (1 / this[0].length);
         }
     }
     $.$mol_vector_range = $mol_vector_range;
