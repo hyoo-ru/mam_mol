@@ -70,26 +70,34 @@ namespace $.$$ {
 
 		scale_default() {
 			const limits = this.scale_limit()
-			return [limits.x.min, limits.y.min] as const
+			return new $mol_vector_2d( limits.x.min, limits.y.min )
 		}
 
 		@ $mol_mem
-		scale(next?: readonly [number, number], force?: $mol_mem_force) : readonly [number, number] {
+		scale(next?: $mol_vector_2d< number >, force?: $mol_mem_force): $mol_vector_2d< number > {
 			if (next === undefined) {
 				if (!this.graph_touched) return this.scale_default()
-				next = $mol_mem_cached( ()=> this.scale() ) || this.scale_default()
+				next = $mol_mem_cached( ()=> this.scale() ) ?? this.scale_default()
 			}
 			this.graph_touched = true
 
-			return new this.$.$mol_vector_2d( ...next ).limited(this.scale_limit())
+			return next!.limited(this.scale_limit())
 		}
 
 		scale_x(next?: number): number {
-			return this.scale( next === undefined ? undefined : [ next , this.scale()[1] ] )[0]
+			return this.scale(
+				next === undefined
+					? undefined
+					: new $mol_vector_2d( next , this.scale().y )
+			).x
 		}
 
 		scale_y(next?: number): number {
-			return this.scale( next === undefined ? undefined : [ this.scale()[0] , next ] )[1]
+			return this.scale(
+				next === undefined
+					? undefined
+					: new $mol_vector_2d( this.scale().x , next )
+			).y
 		}
 
 		@ $mol_mem
@@ -114,22 +122,22 @@ namespace $.$$ {
 		@ $mol_mem
 		shift_default() {
 			const limits = this.shift_limit()
-			return [limits.x.min, limits.y.min] as const
+			return new $mol_vector_2d( limits.x.min, limits.y.min )
 		}
 
 		graph_touched: boolean = false
 
 		@ $mol_mem
-		shift(next?: readonly [number, number], force?: $mol_mem_force) : readonly [number, number]{
+		shift(next?: $mol_vector_2d< number >, force?: $mol_mem_force): $mol_vector_2d< number > {
 
 			if (next === undefined) {
 				if (!this.graph_touched) return this.shift_default()
-				next = $mol_mem_cached( ()=> this.shift() ) || this.shift_default()
+				next = $mol_mem_cached( ()=> this.shift() ) ?? this.shift_default()
 			}
 
 			this.graph_touched = true
 
-			return new this.$.$mol_vector_2d( ...next! ).limited(this.shift_limit())
+			return next!.limited(this.shift_limit())
 		}
 
 		reset(event?: Event) {
@@ -144,7 +152,7 @@ namespace $.$$ {
 			for (let graph of graphs) {
 				graph.shift = ()=> this.shift()
 				graph.scale = ()=> this.scale()
-				graph.dimensions_pane = () => this.dimensions()
+				graph.dimensions_pane = () => this.dimensions_viewport()
 				graph.viewport = () => this.viewport()
 				graph.size_real = ()=> this.size_real()
 				graph.cursor_position = ()=> this.cursor_position()
@@ -152,6 +160,13 @@ namespace $.$$ {
 			}
 			
 			return graphs
+		}
+		
+		@ $mol_mem
+		dimensions_viewport() {
+			const shift = this.shift().multed0(-1)
+			const scale = this.scale().powered0(-1)
+			return this.viewport().map( ( range, i )=> range.added0( shift[i] ).multed0( scale[i] ) )
 		}
 
 		@ $mol_mem
