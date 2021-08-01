@@ -25,10 +25,10 @@ $mol_plot_pane $mol_svg_root
 		<= shift_limit_y $mol_vector_range /
 			0
 			0
-	shift_default /number
+	shift_default $mol_vector_2d /
 		0
 		0
-	shift?val /number
+	shift?val $mol_vector_2d /
 		0
 		0
 	scale_limit $mol_vector_2d /
@@ -38,10 +38,10 @@ $mol_plot_pane $mol_svg_root
 		<= scale_limit_y $mol_vector_range /
 			0
 			Infinity
-	scale_default /number
+	scale_default $mol_vector_2d /
 		0
 		0
-	scale?val /number
+	scale?val $mol_vector_2d /
 		1
 		1
 	scale_x?val 0
@@ -52,13 +52,6 @@ $mol_plot_pane $mol_svg_root
 	size_real $mol_vector_2d /
 		1
 		1
-	dimensions_viewport $mol_vector_2d /
-		<= dimensions_viewport_x $mol_vector_range /
-			Infinity
-			-Infinity
-		<= dimensions_viewport_y $mol_vector_range /
-			Infinity
-			-Infinity
 	dimensions $mol_vector_2d /
 		<= dimensions_x $mol_vector_range /
 			Infinity

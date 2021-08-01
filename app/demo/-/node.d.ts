@@ -2480,6 +2480,7 @@ declare namespace $ {
         multed1(this: $mol_vector<number, Length>, mults: readonly number[] & {
             length: Length;
         }): this;
+        powered0(this: $mol_vector<number, Length>, mult: number): this;
         expanded1(this: $mol_vector<$mol_vector_range<number>, Length>, point: readonly number[] & {
             length: Length;
         }): this;
@@ -2487,24 +2488,16 @@ declare namespace $ {
             length: Length;
         }): this;
         center<Item extends $mol_vector<number, number>>(this: $mol_vector<Item, Length>): Item;
-    }
-    class $mol_vector_1d<Value> extends $mol_vector<Value, 1> {
-        [0]: Value;
-        get x(): Value;
-    }
-    class $mol_vector_2d<Value> extends $mol_vector<Value, 2> {
-        [0]: Value;
-        [1]: Value;
-        get x(): Value;
-        get y(): Value;
-    }
-    class $mol_vector_3d<Value> extends $mol_vector<Value, 3> {
-        [0]: Value;
-        [1]: Value;
-        [2]: Value;
+        distance(this: $mol_vector<$mol_vector<number, number>, Length>): number;
         get x(): Value;
         get y(): Value;
         get z(): Value;
+    }
+    class $mol_vector_1d<Value> extends $mol_vector<Value, 1> {
+    }
+    class $mol_vector_2d<Value> extends $mol_vector<Value, 2> {
+    }
+    class $mol_vector_3d<Value> extends $mol_vector<Value, 3> {
     }
     class $mol_vector_range<Value> extends $mol_vector<Value, 2> {
         [0]: Value;
@@ -2513,7 +2506,6 @@ declare namespace $ {
         get max(): Value;
         get inversed(): $mol_vector_range<Value>;
         expanded0(value: Value): $mol_vector_range<Value>;
-        distance<Length extends number>(this: $mol_vector_range<$mol_vector<number, Length>>): number;
     }
     let $mol_vector_range_full: $mol_vector_range<number>;
     class $mol_vector_matrix<Width extends number, Height extends number> extends $mol_vector<readonly number[] & {
@@ -2657,7 +2649,7 @@ declare namespace $ {
         start_distance(val?: any): number;
         zoom(val?: any): number;
         start_pan(val?: any): readonly any[];
-        pan(val?: any): readonly any[];
+        pan(val?: any): $mol_vector_2d<number>;
         pos(val?: any): readonly any[];
         start_pos(val?: any): any;
         swipe_precision(): number;
@@ -2673,6 +2665,7 @@ declare namespace $ {
         swipe_to_bottom(val?: any): any;
         swipe_to_left(val?: any): any;
         swipe_to_top(val?: any): any;
+        drawn(val?: any): $mol_vector_2d<readonly number[]>;
         style(): {
             "touch-action": string;
             "overscroll-behavior": string;
@@ -2681,32 +2674,42 @@ declare namespace $ {
             touchstart: (event?: any) => any;
             touchmove: (event?: any) => any;
             touchend: (event?: any) => any;
-            mousedown: (event?: any) => any;
-            mousemove: (event?: any) => any;
-            mouseup: (event?: any) => any;
-            mouseleave: (event?: any) => any;
+            pointerdown: (event?: any) => any;
+            pointermove: (event?: any) => any;
+            pointerup: (event?: any) => any;
+            pointerleave: (event?: any) => any;
             wheel: (event?: any) => any;
+            contextmenu: (event?: any) => any;
         };
         event_start(event?: any): any;
         event_move(event?: any): any;
         event_end(event?: any): any;
         event_leave(event?: any): any;
         event_wheel(event?: any): any;
+        event_menu(event?: any): any;
     }
 }
 
 declare namespace $.$$ {
     class $mol_touch extends $.$mol_touch {
-        rect(): DOMRect;
-        event_start(event: TouchEvent | MouseEvent): void;
-        event_leave(event: TouchEvent | MouseEvent): void;
-        event_move(event: TouchEvent | MouseEvent): void;
-        swipe_left(event?: TouchEvent | MouseEvent): void;
-        swipe_right(event?: TouchEvent | MouseEvent): void;
-        swipe_top(event?: TouchEvent | MouseEvent): void;
-        swipe_bottom(event?: TouchEvent | MouseEvent): void;
-        event_end(event?: TouchEvent | MouseEvent): void;
+        auto(): void;
+        event_coords(event: TouchEvent | PointerEvent | WheelEvent): $mol_vector<$mol_vector_2d<number>, number>;
+        action_type(event: TouchEvent | PointerEvent | WheelEvent): "zoom" | "draw" | "pan" | null;
+        event_start(event: TouchEvent | PointerEvent): void;
+        event_leave(event: TouchEvent | PointerEvent): void;
+        event_move(event: TouchEvent | PointerEvent): void;
+        event_end(event: TouchEvent | PointerEvent): void;
+        swipe_left(event: TouchEvent | PointerEvent): void;
+        swipe_right(event: TouchEvent | PointerEvent): void;
+        swipe_top(event: TouchEvent | PointerEvent): void;
+        swipe_bottom(event: TouchEvent | PointerEvent): void;
+        _menu_mute: boolean;
+        event_menu(event: PointerEvent): void;
         event_wheel(event: WheelEvent): void;
+        draw_point(event: TouchEvent | PointerEvent): $mol_vector_2d<number>;
+        draw_start(event: TouchEvent | PointerEvent): void;
+        draw_continue(event: TouchEvent | PointerEvent): void;
+        draw_end(event: TouchEvent | PointerEvent): void;
     }
 }
 
@@ -2723,16 +2726,15 @@ declare namespace $ {
         gap_bottom(): number;
         gap(): $mol_vector_2d<$mol_vector_range<number>>;
         shift_limit(): $mol_vector_2d<$mol_vector_range<number>>;
-        shift_default(): readonly number[];
-        shift(val?: any): readonly number[];
+        shift_default(): $mol_vector_2d<number>;
+        shift(val?: any): $mol_vector_2d<number>;
         scale_limit(): $mol_vector_2d<$mol_vector_range<number>>;
-        scale_default(): readonly number[];
-        scale(val?: any): readonly number[];
+        scale_default(): $mol_vector_2d<number>;
+        scale(val?: any): $mol_vector_2d<number>;
         scale_x(val?: any): number;
         scale_y(val?: any): number;
         size(): $mol_vector_2d<number>;
         size_real(): $mol_vector_2d<number>;
-        dimensions_viewport(): $mol_vector_2d<$mol_vector_range<number>>;
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
         sub(): readonly $mol_svg[];
         graphs_colored(): readonly $mol_plot_graph[];
@@ -2747,8 +2749,6 @@ declare namespace $ {
         shift_limit_y(): $mol_vector_range<number>;
         scale_limit_x(): $mol_vector_range<number>;
         scale_limit_y(): $mol_vector_range<number>;
-        dimensions_viewport_x(): $mol_vector_range<number>;
-        dimensions_viewport_y(): $mol_vector_range<number>;
         dimensions_x(): $mol_vector_range<number>;
         dimensions_y(): $mol_vector_range<number>;
         graphs_sorted(): readonly $mol_svg[];
@@ -2774,16 +2774,17 @@ declare namespace $.$$ {
         size_real(): $mol_vector_2d<number>;
         view_box(): string;
         scale_limit(): $mol_vector_2d<$mol_vector_range<number>>;
-        scale_default(): readonly [number, number];
-        scale(next?: readonly [number, number], force?: $mol_mem_force): readonly [number, number];
+        scale_default(): $mol_vector_2d<number>;
+        scale(next?: $mol_vector_2d<number>, force?: $mol_mem_force): $mol_vector_2d<number>;
         scale_x(next?: number): number;
         scale_y(next?: number): number;
         shift_limit(): $mol_vector_2d<$mol_vector_range<number>>;
-        shift_default(): readonly [number, number];
+        shift_default(): $mol_vector_2d<number>;
         graph_touched: boolean;
-        shift(next?: readonly [number, number], force?: $mol_mem_force): readonly [number, number];
+        shift(next?: $mol_vector_2d<number>, force?: $mol_mem_force): $mol_vector_2d<number>;
         reset(event?: Event): void;
         graphs_positioned(): readonly $.$mol_plot_graph[];
+        dimensions_viewport(): $mol_vector<$mol_vector_range<number>, 2>;
         viewport(): $mol_vector_2d<$mol_vector_range<number>>;
         graphs_sorted(): $.$mol_svg[];
     }
@@ -4711,7 +4712,7 @@ declare namespace $.$$ {
         api(next?: any, force?: $mol_mem_force): any;
         update(event?: any): void;
         bounds_updated(): boolean;
-        center(next?: readonly [number, number], force?: $mol_mem_force): readonly [number, number];
+        center(next?: readonly [number, number], force?: $mol_mem_force): $mol_vector_2d<number> | readonly [number, number];
         render(): void;
     }
 }

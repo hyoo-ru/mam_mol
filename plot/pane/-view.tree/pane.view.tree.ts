@@ -122,21 +122,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * shift_default /number
+		 * shift_default $mol_vector_2d /
 		 * 	0
 		 * 	0
 		 * ```
 		 */
+		@ $mol_mem
 		shift_default() {
-			return [
+			const obj = new this.$.$mol_vector_2d(
 				0,
 				0
-			] as readonly number[]
+			)
+			
+			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * shift?val /number
+		 * shift?val $mol_vector_2d /
 		 * 	0
 		 * 	0
 		 * ```
@@ -144,10 +147,12 @@ namespace $ {
 		@ $mol_mem
 		shift(val?: any) {
 			if ( val !== undefined ) return val as never
-			return [
+			const obj = new this.$.$mol_vector_2d(
 				0,
 				0
-			] as readonly number[]
+			)
+			
+			return obj
 		}
 		
 		/**
@@ -169,21 +174,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * scale_default /number
+		 * scale_default $mol_vector_2d /
 		 * 	0
 		 * 	0
 		 * ```
 		 */
+		@ $mol_mem
 		scale_default() {
-			return [
+			const obj = new this.$.$mol_vector_2d(
 				0,
 				0
-			] as readonly number[]
+			)
+			
+			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * scale?val /number
+		 * scale?val $mol_vector_2d /
 		 * 	1
 		 * 	1
 		 * ```
@@ -191,10 +199,12 @@ namespace $ {
 		@ $mol_mem
 		scale(val?: any) {
 			if ( val !== undefined ) return val as never
-			return [
+			const obj = new this.$.$mol_vector_2d(
 				1,
 				1
-			] as readonly number[]
+			)
+			
+			return obj
 		}
 		
 		/**
@@ -248,23 +258,6 @@ namespace $ {
 			const obj = new this.$.$mol_vector_2d(
 				1,
 				1
-			)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * dimensions_viewport $mol_vector_2d /
-		 * 	<= dimensions_viewport_x
-		 * 	<= dimensions_viewport_y
-		 * ```
-		 */
-		@ $mol_mem
-		dimensions_viewport() {
-			const obj = new this.$.$mol_vector_2d(
-				this.dimensions_viewport_x(),
-				this.dimensions_viewport_y()
 			)
 			
 			return obj
@@ -450,40 +443,6 @@ namespace $ {
 			const obj = new this.$.$mol_vector_range(
 				0,
 				Infinity
-			)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * dimensions_viewport_x $mol_vector_range /
-		 * 	Infinity
-		 * 	-Infinity
-		 * ```
-		 */
-		@ $mol_mem
-		dimensions_viewport_x() {
-			const obj = new this.$.$mol_vector_range(
-				Infinity,
-				-Infinity
-			)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * dimensions_viewport_y $mol_vector_range /
-		 * 	Infinity
-		 * 	-Infinity
-		 * ```
-		 */
-		@ $mol_mem
-		dimensions_viewport_y() {
-			const obj = new this.$.$mol_vector_range(
-				Infinity,
-				-Infinity
 			)
 			
 			return obj

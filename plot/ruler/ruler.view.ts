@@ -6,7 +6,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		step() {
-			const scale = this.scale_step()
+			const scale = Math.abs( this.scale_step() )
 			const dims = this.dimensions_axis()
 			const range = dims.max - dims.min
 			const min_width = ( Math.abs( Math.log10( range ) ) + 2 ) * 15

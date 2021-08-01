@@ -2437,6 +2437,9 @@ var $;
         multed1(mults) {
             return this.merged(mults, (a, b) => a * b);
         }
+        powered0(mult) {
+            return this.map(value => value ** mult);
+        }
         expanded1(point) {
             return this.merged(point, (range, value) => range.expanded0(value));
         }
@@ -2455,21 +2458,25 @@ var $;
             const Result = this[0].constructor;
             return new Result(...this[0].map((_, i) => this.reduce((sum, point) => sum + point[i], 0) / this.length));
         }
-    }
-    $.$mol_vector = $mol_vector;
-    class $mol_vector_1d extends $mol_vector {
-        get x() { return this[0]; }
-    }
-    $.$mol_vector_1d = $mol_vector_1d;
-    class $mol_vector_2d extends $mol_vector {
-        get x() { return this[0]; }
-        get y() { return this[1]; }
-    }
-    $.$mol_vector_2d = $mol_vector_2d;
-    class $mol_vector_3d extends $mol_vector {
+        distance() {
+            let distance = 0;
+            for (let i = 1; i < this.length; ++i) {
+                distance += this[i - 1].reduce((sum, min, j) => sum + (min - this[i][j]) ** 2, 0) ** (1 / this[i].length);
+            }
+            return distance;
+        }
         get x() { return this[0]; }
         get y() { return this[1]; }
         get z() { return this[2]; }
+    }
+    $.$mol_vector = $mol_vector;
+    class $mol_vector_1d extends $mol_vector {
+    }
+    $.$mol_vector_1d = $mol_vector_1d;
+    class $mol_vector_2d extends $mol_vector {
+    }
+    $.$mol_vector_2d = $mol_vector_2d;
+    class $mol_vector_3d extends $mol_vector {
     }
     $.$mol_vector_3d = $mol_vector_3d;
     class $mol_vector_range extends $mol_vector {
@@ -2486,9 +2493,6 @@ var $;
             if (value < range.min)
                 range = new Range(value, range.max);
             return range;
-        }
-        distance() {
-            return this.min.reduce((sum, min, i) => sum + (min - this.max[i]) ** 2, 0) ** (1 / this[0].length);
         }
     }
     $.$mol_vector_range = $mol_vector_range;
@@ -2958,10 +2962,8 @@ var $;
         pan(val) {
             if (val !== undefined)
                 return val;
-            return [
-                0,
-                0
-            ];
+            const obj = new this.$.$mol_vector_2d(0, 0);
+            return obj;
         }
         pos(val) {
             if (val !== undefined)
@@ -3039,6 +3041,12 @@ var $;
                 return val;
             return null;
         }
+        drawn(val) {
+            if (val !== undefined)
+                return val;
+            const obj = new this.$.$mol_vector_2d([], []);
+            return obj;
+        }
         style() {
             return {
                 ...super.style(),
@@ -3052,11 +3060,12 @@ var $;
                 touchstart: (event) => this.event_start(event),
                 touchmove: (event) => this.event_move(event),
                 touchend: (event) => this.event_end(event),
-                mousedown: (event) => this.event_start(event),
-                mousemove: (event) => this.event_move(event),
-                mouseup: (event) => this.event_end(event),
-                mouseleave: (event) => this.event_leave(event),
-                wheel: (event) => this.event_wheel(event)
+                pointerdown: (event) => this.event_start(event),
+                pointermove: (event) => this.event_move(event),
+                pointerup: (event) => this.event_end(event),
+                pointerleave: (event) => this.event_leave(event),
+                wheel: (event) => this.event_wheel(event),
+                contextmenu: (event) => this.event_menu(event)
             };
         }
         event_start(event) {
@@ -3080,6 +3089,11 @@ var $;
             return null;
         }
         event_wheel(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        event_menu(event) {
             if (event !== undefined)
                 return event;
             return null;
@@ -3144,6 +3158,9 @@ var $;
     ], $mol_touch.prototype, "swipe_to_top", null);
     __decorate([
         $.$mol_mem
+    ], $mol_touch.prototype, "drawn", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_touch.prototype, "event_start", null);
     __decorate([
         $.$mol_mem
@@ -3157,6 +3174,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "event_wheel", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_touch.prototype, "event_menu", null);
     $.$mol_touch = $mol_touch;
 })($ || ($ = {}));
 //touch.view.tree.js.map
@@ -3167,71 +3187,103 @@ var $;
     var $$;
     (function ($$) {
         class $mol_touch extends $.$mol_touch {
-            rect() {
-                return this.dom_node().getBoundingClientRect();
+            constructor() {
+                super(...arguments);
+                this._menu_mute = false;
+            }
+            auto() {
+                this.view_rect();
+            }
+            event_coords(event) {
+                const { left, top } = this.view_rect();
+                function point(point) {
+                    return new $.$mol_vector_2d(Math.round(point.pageX - left), Math.round(point.pageY - top));
+                }
+                if ('touches' in event) {
+                    return new $.$mol_vector(...[...event.touches].map(point));
+                }
+                return new $.$mol_vector(point(event));
+            }
+            action_type(event) {
+                if (event instanceof TouchEvent) {
+                    if (event.touches.length === 2)
+                        return 'zoom';
+                    if (event.touches.length === 1)
+                        return 'draw';
+                }
+                if (event instanceof PointerEvent) {
+                    if (event.pointerType === 'touch')
+                        return null;
+                    if (event.ctrlKey)
+                        return 'zoom';
+                    if (event.buttons === 2)
+                        return 'pan';
+                    if (event.buttons === 1)
+                        return 'draw';
+                }
+                if (event instanceof WheelEvent) {
+                    if (event.ctrlKey)
+                        return 'zoom';
+                    return 'pan';
+                }
+                return null;
             }
             event_start(event) {
                 if (event.defaultPrevented)
                     return;
+                if (event instanceof PointerEvent) {
+                    this.dom_node().setPointerCapture(event.pointerId);
+                }
                 this.start_pan(this.pan());
-                let pos;
-                if (event instanceof MouseEvent) {
-                    if (event.buttons === 1) {
-                        pos = [event.pageX, event.pageY];
-                        this.start_pos(pos);
-                    }
+                const action_type = this.action_type(event);
+                if (!action_type)
+                    return;
+                if (action_type === 'draw') {
+                    return this.draw_start(event);
                 }
-                else if (event instanceof TouchEvent) {
-                    if (event.touches.length === 1) {
-                        pos = [event.touches[0].pageX, event.touches[0].pageY];
-                        this.start_pos(pos);
-                    }
-                    if (event.touches.length === 2) {
-                        const distance = ((event.touches[1].pageX - event.touches[0].pageX) ** 2 + (event.touches[1].pageY - event.touches[0].pageY) ** 2) ** .5;
-                        this.start_distance(distance);
-                        this.start_zoom(this.zoom());
-                    }
-                }
+                const coords = this.event_coords(event);
+                this.start_pos(coords.center());
+                this.start_distance(coords.distance());
+                this.start_zoom(this.zoom());
             }
             event_leave(event) {
                 if (event.defaultPrevented)
                     return;
-                if (event instanceof MouseEvent)
+                if (event instanceof PointerEvent)
                     this.pos(super.pos());
             }
             event_move(event) {
                 if (event.defaultPrevented)
                     return;
+                const rect = this.view_rect();
+                if (!rect)
+                    return;
                 const start_pan = this.start_pan();
                 let pos;
                 let cursor_pos;
-                if (event instanceof MouseEvent) {
-                    cursor_pos = [event.pageX, event.pageY];
-                    if (event.buttons === 1)
-                        pos = cursor_pos;
-                    else
-                        this.start_pos(null);
-                }
-                else if (event instanceof TouchEvent) {
-                    cursor_pos = [event.touches[0].pageX, event.touches[0].pageY];
-                    if (event.touches.length === 1)
-                        pos = cursor_pos;
-                    else
-                        this.start_pos(null);
+                cursor_pos = this.event_coords(event).center();
+                pos = cursor_pos;
+                const action_type = this.action_type(event);
+                if (!action_type)
+                    return;
+                if (action_type === 'draw') {
+                    return this.draw_continue(event);
                 }
                 if (cursor_pos) {
-                    const { left, top } = this.rect();
                     this.pos([
-                        Math.max(0, Math.round(cursor_pos[0] - left)),
-                        Math.max(0, Math.round(cursor_pos[1] - top)),
+                        Math.max(0, cursor_pos[0]),
+                        Math.max(0, cursor_pos[1]),
                     ]);
                 }
+                const start_pos = this.start_pos();
                 if (pos) {
-                    const start_pos = this.start_pos();
                     if (!start_pos)
                         return;
+                    const distance = new $.$mol_vector_2d(start_pos, pos).distance();
+                    if (distance >= 4)
+                        this._menu_mute = true;
                     if (this.pan !== $mol_touch.prototype.pan) {
-                        this.pan([start_pan[0] + pos[0] - start_pos[0], start_pan[1] + pos[1] - start_pos[1]]);
+                        this.pan(new $.$mol_vector_2d(start_pan[0] + pos[0] - start_pos[0], start_pan[1] + pos[1] - start_pos[1]));
                         event.preventDefault();
                     }
                     if (typeof TouchEvent === 'undefined')
@@ -3279,48 +3331,60 @@ var $;
                 if (event.touches.length === 2) {
                     if (this.zoom === $mol_touch.prototype.zoom)
                         return;
-                    const pos0 = [event.touches[0].pageX, event.touches[0].pageY];
-                    const pos1 = [event.touches[1].pageX, event.touches[1].pageY];
-                    const distance = ((pos1[0] - pos0[0]) ** 2 + (pos1[1] - pos0[1]) ** 2) ** .5;
-                    const center = [pos1[0] / 2 + pos0[0] / 2, pos1[1] / 2 + pos0[1] / 2];
+                    const coords = this.event_coords(event);
+                    const distance = coords.distance();
+                    const start_distance = this.start_distance();
+                    const center = coords.center();
                     const start_zoom = this.start_zoom();
-                    const mult = distance / this.start_distance();
+                    let mult = Math.abs(distance - start_distance) < 32 ? 1 : distance / start_distance;
                     this.zoom(start_zoom * mult);
-                    const pan = [(start_pan[0] - center[0]) * mult + center[0], (start_pan[1] - center[1]) * mult + center[1]];
+                    const pan = new $.$mol_vector_2d((start_pan[0] - center[0] + pos[0] - start_pos[0]) * mult + center[0], (start_pan[1] - center[1] + pos[1] - start_pos[1]) * mult + center[1]);
                     this.pan(pan);
                     event.preventDefault();
                 }
             }
+            event_end(event) {
+                if (!this.start_pos()) {
+                    this.draw_end(event);
+                    return;
+                }
+                if (event instanceof PointerEvent) {
+                    this.dom_node().releasePointerCapture(event.pointerId);
+                }
+                this.start_pos(null);
+                new $.$mol_after_timeout(0, () => this._menu_mute = false);
+            }
             swipe_left(event) {
-                if (this.rect().right - this.start_pos()[0] < this.swipe_precision() * 2)
+                if (this.view_rect().right - this.start_pos()[0] < this.swipe_precision() * 2)
                     this.swipe_from_right(event);
                 else
                     this.swipe_to_left(event);
                 this.event_end(event);
             }
             swipe_right(event) {
-                if (this.start_pos()[0] - this.rect().left < this.swipe_precision() * 2)
+                if (this.start_pos()[0] - this.view_rect().left < this.swipe_precision() * 2)
                     this.swipe_from_left(event);
                 else
                     this.swipe_to_right(event);
                 this.event_end(event);
             }
             swipe_top(event) {
-                if (this.rect().bottom - this.start_pos()[1] < this.swipe_precision() * 2)
+                if (this.view_rect().bottom - this.start_pos()[1] < this.swipe_precision() * 2)
                     this.swipe_from_bottom(event);
                 else
                     this.swipe_to_top(event);
                 this.event_end(event);
             }
             swipe_bottom(event) {
-                if (this.start_pos()[1] - this.rect().top < this.swipe_precision() * 2)
+                if (this.start_pos()[1] - this.view_rect().top < this.swipe_precision() * 2)
                     this.swipe_from_top(event);
                 else
                     this.swipe_to_bottom(event);
                 this.event_end(event);
             }
-            event_end(event) {
-                this.start_pos(null);
+            event_menu(event) {
+                if (this._menu_mute)
+                    event.preventDefault();
             }
             event_wheel(event) {
                 if (this.pan === $mol_touch.prototype.pan && this.zoom === $mol_touch.prototype.zoom)
@@ -3328,14 +3392,40 @@ var $;
                 if (this.pan !== $mol_touch.prototype.pan) {
                     event.preventDefault();
                 }
-                const zoom_prev = this.zoom() || 0.001;
-                const zoom_next = zoom_prev * (1 - .1 * Math.sign(event.deltaY));
-                const mult = zoom_next / zoom_prev;
-                this.zoom(zoom_next);
-                const pan_prev = this.pan();
-                const center = [event.offsetX, event.offsetY];
-                const pan_next = [(pan_prev[0] - center[0]) * mult + center[0], (pan_prev[1] - center[1]) * mult + center[1]];
-                this.pan(pan_next);
+                const action_type = this.action_type(event);
+                if (action_type === 'zoom') {
+                    const zoom_prev = this.zoom() || 0.001;
+                    const zoom_next = zoom_prev * (1 - .1 * Math.sign(event.deltaY));
+                    const mult = zoom_next / zoom_prev;
+                    this.zoom(zoom_next);
+                    const pan_prev = this.pan();
+                    const center = this.event_coords(event).center();
+                    const pan_next = pan_prev.multed0(mult).added1(center.multed0(1 - mult));
+                    this.pan(pan_next);
+                }
+                if (action_type === 'pan') {
+                    const pan_prev = this.pan();
+                    const pan_next = new $.$mol_vector_2d(pan_prev.x - event.deltaX, pan_prev.y - event.deltaY);
+                    this.pan(pan_next);
+                }
+            }
+            draw_point(event) {
+                const point = this.event_coords(event).center();
+                const zoom = this.zoom();
+                const pan = this.pan();
+                return new $.$mol_vector_2d((point.x - pan.x) / zoom, (point.y - pan.y) / zoom);
+            }
+            draw_start(event) {
+                const point = this.draw_point(event);
+                this.drawn(new $.$mol_vector_2d([point.x], [point.y]));
+            }
+            draw_continue(event) {
+                const drawn = this.drawn();
+                const point = this.draw_point(event);
+                this.drawn(new $.$mol_vector_2d([...drawn.x, point.x], [...drawn.y, point.y]));
+            }
+            draw_end(event) {
+                this.drawn(new $.$mol_vector_2d([], []));
             }
         }
         $$.$mol_touch = $mol_touch;
@@ -3387,36 +3477,28 @@ var $;
             return obj;
         }
         shift_default() {
-            return [
-                0,
-                0
-            ];
+            const obj = new this.$.$mol_vector_2d(0, 0);
+            return obj;
         }
         shift(val) {
             if (val !== undefined)
                 return val;
-            return [
-                0,
-                0
-            ];
+            const obj = new this.$.$mol_vector_2d(0, 0);
+            return obj;
         }
         scale_limit() {
             const obj = new this.$.$mol_vector_2d(this.scale_limit_x(), this.scale_limit_y());
             return obj;
         }
         scale_default() {
-            return [
-                0,
-                0
-            ];
+            const obj = new this.$.$mol_vector_2d(0, 0);
+            return obj;
         }
         scale(val) {
             if (val !== undefined)
                 return val;
-            return [
-                1,
-                1
-            ];
+            const obj = new this.$.$mol_vector_2d(1, 1);
+            return obj;
         }
         scale_x(val) {
             if (val !== undefined)
@@ -3434,10 +3516,6 @@ var $;
         }
         size_real() {
             const obj = new this.$.$mol_vector_2d(1, 1);
-            return obj;
-        }
-        dimensions_viewport() {
-            const obj = new this.$.$mol_vector_2d(this.dimensions_viewport_x(), this.dimensions_viewport_y());
             return obj;
         }
         dimensions() {
@@ -3491,14 +3569,6 @@ var $;
         }
         scale_limit_y() {
             const obj = new this.$.$mol_vector_range(0, Infinity);
-            return obj;
-        }
-        dimensions_viewport_x() {
-            const obj = new this.$.$mol_vector_range(Infinity, -Infinity);
-            return obj;
-        }
-        dimensions_viewport_y() {
-            const obj = new this.$.$mol_vector_range(Infinity, -Infinity);
             return obj;
         }
         dimensions_x() {
@@ -3555,10 +3625,16 @@ var $;
     ], $mol_plot_pane.prototype, "shift_limit", null);
     __decorate([
         $.$mol_mem
+    ], $mol_plot_pane.prototype, "shift_default", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_plot_pane.prototype, "shift", null);
     __decorate([
         $.$mol_mem
     ], $mol_plot_pane.prototype, "scale_limit", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_plot_pane.prototype, "scale_default", null);
     __decorate([
         $.$mol_mem
     ], $mol_plot_pane.prototype, "scale", null);
@@ -3574,9 +3650,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_plot_pane.prototype, "size_real", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_plot_pane.prototype, "dimensions_viewport", null);
     __decorate([
         $.$mol_mem
     ], $mol_plot_pane.prototype, "dimensions", null);
@@ -3603,12 +3676,6 @@ var $;
     ], $mol_plot_pane.prototype, "scale_limit_y", null);
     __decorate([
         $.$mol_mem
-    ], $mol_plot_pane.prototype, "dimensions_viewport_x", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_plot_pane.prototype, "dimensions_viewport_y", null);
-    __decorate([
-        $.$mol_mem
     ], $mol_plot_pane.prototype, "dimensions_x", null);
     __decorate([
         $.$mol_mem
@@ -3629,7 +3696,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/plot/pane/pane.view.css", "[mol_plot_pane] {\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tstroke-width: 2px;\n}\n");
+    $.$mol_style_attach("mol/plot/pane/pane.view.css", "[mol_plot_pane] {\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tstroke-width: 2px;\n\tuser-select: none;\n}\n");
 })($ || ($ = {}));
 //pane.view.css.js.map
 ;
@@ -3683,22 +3750,26 @@ var $;
             }
             scale_default() {
                 const limits = this.scale_limit();
-                return [limits.x.min, limits.y.min];
+                return new $.$mol_vector_2d(limits.x.min, limits.y.min);
             }
             scale(next, force) {
                 if (next === undefined) {
                     if (!this.graph_touched)
                         return this.scale_default();
-                    next = $.$mol_mem_cached(() => this.scale()) || this.scale_default();
+                    next = $.$mol_mem_cached(() => this.scale()) ?? this.scale_default();
                 }
                 this.graph_touched = true;
-                return new this.$.$mol_vector_2d(...next).limited(this.scale_limit());
+                return next.limited(this.scale_limit());
             }
             scale_x(next) {
-                return this.scale(next === undefined ? undefined : [next, this.scale()[1]])[0];
+                return this.scale(next === undefined
+                    ? undefined
+                    : new $.$mol_vector_2d(next, this.scale().y)).x;
             }
             scale_y(next) {
-                return this.scale(next === undefined ? undefined : [this.scale()[0], next])[1];
+                return this.scale(next === undefined
+                    ? undefined
+                    : new $.$mol_vector_2d(this.scale().x, next)).y;
             }
             shift_limit() {
                 const dims = this.dimensions();
@@ -3713,16 +3784,16 @@ var $;
             }
             shift_default() {
                 const limits = this.shift_limit();
-                return [limits.x.min, limits.y.min];
+                return new $.$mol_vector_2d(limits.x.min, limits.y.min);
             }
             shift(next, force) {
                 if (next === undefined) {
                     if (!this.graph_touched)
                         return this.shift_default();
-                    next = $.$mol_mem_cached(() => this.shift()) || this.shift_default();
+                    next = $.$mol_mem_cached(() => this.shift()) ?? this.shift_default();
                 }
                 this.graph_touched = true;
-                return new this.$.$mol_vector_2d(...next).limited(this.shift_limit());
+                return next.limited(this.shift_limit());
             }
             reset(event) {
                 this.graph_touched = false;
@@ -3734,13 +3805,18 @@ var $;
                 for (let graph of graphs) {
                     graph.shift = () => this.shift();
                     graph.scale = () => this.scale();
-                    graph.dimensions_pane = () => this.dimensions();
+                    graph.dimensions_pane = () => this.dimensions_viewport();
                     graph.viewport = () => this.viewport();
                     graph.size_real = () => this.size_real();
                     graph.cursor_position = () => this.cursor_position();
                     graph.gap = () => this.gap();
                 }
                 return graphs;
+            }
+            dimensions_viewport() {
+                const shift = this.shift().multed0(-1);
+                const scale = this.scale().powered0(-1);
+                return this.viewport().map((range, i) => range.added0(shift[i]).multed0(scale[i]));
             }
             viewport() {
                 const size = this.size_real();
@@ -3783,6 +3859,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_plot_pane.prototype, "graphs_positioned", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_plot_pane.prototype, "dimensions_viewport", null);
         __decorate([
             $.$mol_mem
         ], $mol_plot_pane.prototype, "viewport", null);
@@ -4854,7 +4933,7 @@ var $;
                 return this.axis_points().map((point, index) => this.Label(index));
             }
             step() {
-                const scale = this.scale_step();
+                const scale = Math.abs(this.scale_step());
                 const dims = this.dimensions_axis();
                 const range = dims.max - dims.min;
                 const min_width = (Math.abs(Math.log10(range)) + 2) * 15;

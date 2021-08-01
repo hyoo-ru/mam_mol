@@ -1,76 +1,125 @@
 namespace $.$$ {
 
 	export class $mol_touch extends $.$mol_touch {
-		rect() {
-			return this.dom_node().getBoundingClientRect()
+		
+		auto() {
+			this.view_rect()
 		}
 		
-		event_start( event : TouchEvent | MouseEvent ) {
+		event_coords( event: TouchEvent | PointerEvent | WheelEvent ) {
+			
+			const {left, top} = this.view_rect()!
+			
+			function point( point: { pageX: number, pageY: number } ) {
+				return new $mol_vector_2d(
+					Math.round( point.pageX - left ),
+					Math.round( point.pageY - top ),
+				)
+			}
+			
+			if( 'touches' in event ) {
+				return new $mol_vector(
+					... [ ... event.touches ].map( point )
+				)
+			}
+			
+			return new $mol_vector( point( event ) )
+			
+		}
+		
+		action_type( event: TouchEvent | PointerEvent | WheelEvent ) {
+			
+			if( event instanceof TouchEvent ) {
+				if( event.touches.length === 2 ) return 'zoom'
+				if( event.touches.length === 1 ) return 'draw'
+			}
+			
+			if( event instanceof PointerEvent ) {
+				if( event.pointerType === 'touch' ) return null
+				if( event.ctrlKey ) return 'zoom'
+				if( event.buttons === 2 ) return 'pan'
+				if( event.buttons === 1 ) return 'draw'
+			}
+			
+			if( event instanceof WheelEvent ) {
+				if( event.ctrlKey ) return 'zoom'
+				return 'pan'
+			}
+			
+			return null
+		}
+		
+		event_start( event : TouchEvent | PointerEvent ) {
 			if( event.defaultPrevented ) return
+			
+			if( event instanceof PointerEvent ) {
+				this.dom_node().setPointerCapture( event.pointerId )
+			}
 
 			this.start_pan( this.pan() )
-			let pos: [number, number]
-			if( event instanceof MouseEvent ) {
 
-				if( event.buttons === 1 ) {
-					pos = [ event.pageX , event.pageY ]
-					this.start_pos( pos )
-				}
-
-			} else if( event instanceof TouchEvent ) {
-
-				if( event.touches.length === 1 ) {
-					pos = [ event.touches[0].pageX , event.touches[0].pageY ]
-					this.start_pos( pos )
-				}
-
-				if( event.touches.length === 2 ) {
-					const distance = ( ( event.touches[1].pageX - event.touches[0].pageX ) ** 2 + ( event.touches[1].pageY - event.touches[0].pageY ) ** 2 ) ** .5
-					this.start_distance( distance )
-					this.start_zoom( this.zoom() )
-				}
-
+			const action_type = this.action_type( event )
+			if( !action_type ) return
+			if( action_type === 'draw' ) {
+				return this.draw_start( event )
 			}
+
+			const coords = this.event_coords( event )
+			this.start_pos( coords.center() )
+			this.start_distance( coords.distance() )
+			this.start_zoom( this.zoom() )
 
 		}
 
-		event_leave( event : TouchEvent | MouseEvent ) {
+		event_leave( event : TouchEvent | PointerEvent ) {
 			if( event.defaultPrevented ) return
-			if( event instanceof MouseEvent ) this.pos(super.pos())
+			if( event instanceof PointerEvent ) this.pos(super.pos())
 		}
 		
-		event_move( event : TouchEvent | MouseEvent ) {
+		event_move( event : TouchEvent | PointerEvent ) {
 			if( event.defaultPrevented ) return
 
+			const rect = this.view_rect()
+			if( !rect ) return
+	
 			const start_pan = this.start_pan()
 
-			let pos!: [number, number]
-			let cursor_pos!: [number, number]
-			if( event instanceof MouseEvent ) {
-				cursor_pos = [ event.pageX , event.pageY ]
-				if( event.buttons === 1 ) pos = cursor_pos
-				else this.start_pos( null )
-			} else if( event instanceof TouchEvent ) {
-				cursor_pos = [ event.touches[0].pageX , event.touches[0].pageY ]
-				if( event.touches.length === 1 ) pos = cursor_pos
-				else this.start_pos( null )
+			let pos!: $mol_vector_2d< number >
+			let cursor_pos!: $mol_vector_2d< number >
+			
+			cursor_pos = this.event_coords( event ).center()
+			pos = cursor_pos
+			
+			const action_type = this.action_type( event )
+			
+			if( !action_type ) return
+			if( action_type === 'draw' ) {
+				return this.draw_continue( event )
 			}
-
+			
 			if (cursor_pos) {
-				const {left, top} = this.rect()
+				
 				this.pos([
-					Math.max(0, Math.round(cursor_pos[0] - left)),
-					Math.max(0, Math.round(cursor_pos[1] - top)),
+					Math.max(0, cursor_pos[0]),
+					Math.max(0, cursor_pos[1]),
 				])
+				
 			}
 
+			const start_pos = this.start_pos()
 			if( pos ) {
-				const start_pos = this.start_pos()
 				if( !start_pos ) return
 
+				const distance = new $mol_vector_2d( start_pos, pos ).distance()
+				if( distance >= 4 ) this._menu_mute = true
 				
 				if( this.pan !== $mol_touch.prototype.pan ) {
-					this.pan([ start_pan[0] + pos[0] - start_pos[0] , start_pan[1] + pos[1] - start_pos[1] ])
+					this.pan(
+						new $mol_vector_2d(
+							start_pan[0] + pos[0] - start_pos[0],
+							start_pan[1] + pos[1] - start_pos[1],
+						)
+					)
 					event.preventDefault()
 				}
 
@@ -139,18 +188,20 @@ namespace $.$$ {
 			if( event.touches.length === 2 ) {
 
 				if( this.zoom === $mol_touch.prototype.zoom ) return
-
-				const pos0 = [ event.touches[0].pageX , event.touches[0].pageY ]
-				const pos1 = [ event.touches[1].pageX , event.touches[1].pageY ]
-
-				const distance = ( ( pos1[0] - pos0[0] ) ** 2 + ( pos1[1] - pos0[1] ) ** 2 ) ** .5
-				const center = [ pos1[0] / 2 + pos0[0] / 2 , pos1[1] / 2 + pos0[1] / 2 ]
+				
+				const coords = this.event_coords( event )
+				const distance = coords.distance()
+				const start_distance = this.start_distance()
+				const center = coords.center()
 
 				const start_zoom = this.start_zoom()
-				const mult = distance / this.start_distance()
+				let mult = Math.abs( distance - start_distance ) < 32 ? 1 : distance / start_distance
 				this.zoom( start_zoom * mult )
 
-				const pan = [ ( start_pan[0] - center[0] ) * mult + center[0] , ( start_pan[1] - center[1] ) * mult + center[1] ]
+				const pan = new $mol_vector_2d(
+					( start_pan[0] - center[0] + pos[0] - start_pos[0] ) * mult + center[0],
+					( start_pan[1] - center[1] + pos[1] - start_pos[1] ) * mult + center[1],
+				)
 
 				this.pan( pan )
 
@@ -159,32 +210,45 @@ namespace $.$$ {
 			
 		}
 
-		swipe_left( event? : TouchEvent | MouseEvent ) {
-			if( this.rect().right - this.start_pos()[0] < this.swipe_precision() * 2 ) this.swipe_from_right( event )
+		event_end( event : TouchEvent | PointerEvent ) {
+			if( !this.start_pos() ) {
+				this.draw_end( event )
+				return
+			}
+			if( event instanceof PointerEvent ) {
+				this.dom_node().releasePointerCapture( event.pointerId )
+			}
+			this.start_pos( null )
+			new $mol_after_timeout( 0, ()=> this._menu_mute = false )
+		}
+
+		swipe_left( event : TouchEvent | PointerEvent ) {
+			if( this.view_rect()!.right - this.start_pos()[0] < this.swipe_precision() * 2 ) this.swipe_from_right( event )
 			else this.swipe_to_left( event )
 			this.event_end( event )
 		}
 		
-		swipe_right( event? : TouchEvent | MouseEvent ) {
-			if( this.start_pos()[0] - this.rect().left < this.swipe_precision() * 2 ) this.swipe_from_left( event )
+		swipe_right( event : TouchEvent | PointerEvent ) {
+			if( this.start_pos()[0] - this.view_rect()!.left < this.swipe_precision() * 2 ) this.swipe_from_left( event )
 			else this.swipe_to_right( event )
 			this.event_end( event )
 		}
 		
-		swipe_top( event? : TouchEvent | MouseEvent ) {
-			if( this.rect().bottom - this.start_pos()[1] < this.swipe_precision() * 2 ) this.swipe_from_bottom( event )
+		swipe_top( event : TouchEvent | PointerEvent ) {
+			if( this.view_rect()!.bottom - this.start_pos()[1] < this.swipe_precision() * 2 ) this.swipe_from_bottom( event )
 			else this.swipe_to_top( event )
 			this.event_end( event )
 		}
 		
-		swipe_bottom( event? : TouchEvent | MouseEvent ) {
-			if( this.start_pos()[1] - this.rect().top < this.swipe_precision() * 2 ) this.swipe_from_top( event )
+		swipe_bottom( event : TouchEvent | PointerEvent ) {
+			if( this.start_pos()[1] - this.view_rect()!.top < this.swipe_precision() * 2 ) this.swipe_from_top( event )
 			else this.swipe_to_bottom( event )
 			this.event_end( event )
 		}
 		
-		event_end( event? : TouchEvent | MouseEvent ) {
-			this.start_pos( null )
+		_menu_mute = false
+		event_menu( event : PointerEvent ) {
+			if( this._menu_mute ) event.preventDefault()
 		}
 
 		event_wheel( event : WheelEvent ) {
@@ -194,17 +258,80 @@ namespace $.$$ {
 			if( this.pan !== $mol_touch.prototype.pan ) {
 				event.preventDefault()
 			}
+			
+			const action_type = this.action_type( event )
 
-			const zoom_prev = this.zoom() || 0.001
-			const zoom_next = zoom_prev * ( 1 - .1 * Math.sign( event.deltaY ) )
-			const mult = zoom_next / zoom_prev
-			this.zoom( zoom_next )
+			if( action_type === 'zoom' ) {
+				
+				const zoom_prev = this.zoom() || 0.001
+				const zoom_next = zoom_prev * ( 1 - .1 * Math.sign( event.deltaY ) )
+				const mult = zoom_next / zoom_prev
+				this.zoom( zoom_next )
 
-			const pan_prev = this.pan()
-			const center = [ event.offsetX , event.offsetY ]
-			const pan_next = [ ( pan_prev[0] - center[0] ) * mult + center[0] , ( pan_prev[1] - center[1] ) * mult + center[1] ]
+				const pan_prev = this.pan()
+				const center = this.event_coords( event ).center()
+				const pan_next = pan_prev.multed0( mult ).added1( center.multed0( 1 - mult ) )
 
-			this.pan( pan_next )
+				this.pan( pan_next )
+			}
+			
+			if( action_type === 'pan' ) {
+				
+				const pan_prev = this.pan()
+				const pan_next = new $mol_vector_2d(
+					pan_prev.x - event.deltaX,
+					pan_prev.y - event.deltaY,
+				)
+
+				this.pan( pan_next )
+			}
+			
+		}
+		
+		draw_point( event : TouchEvent | PointerEvent ) {
+			const point = this.event_coords( event ).center()
+			const zoom = this.zoom()
+			const pan = this.pan()
+			return new $mol_vector_2d(
+				( point.x - pan.x ) / zoom,
+				( point.y - pan.y ) / zoom,
+			)
+		}
+		
+		draw_start( event : TouchEvent | PointerEvent ) {
+			
+			const point = this.draw_point( event )
+			
+			this.drawn(
+				new $mol_vector_2d(
+					[ point.x ],
+					[ point.y ],
+				)
+			)
+			
+		}
+		
+		draw_continue( event : TouchEvent | PointerEvent ) {
+			
+			const drawn = this.drawn()
+			const point = this.draw_point( event )
+			
+			this.drawn(
+				new $mol_vector_2d(
+					[ ... drawn.x, point.x ],
+					[ ... drawn.y, point.y ],
+				)
+			)
+			
+		}
+
+		draw_end( event : TouchEvent | PointerEvent ) {
+			this.drawn(
+				new $mol_vector_2d(
+					[],
+					[],
+				)
+			)
 		}
 		
 	}

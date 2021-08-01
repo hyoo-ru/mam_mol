@@ -616,7 +616,7 @@ $mol_touch $mol_plugin
 	start_pan?val /
 		0
 		0
-	pan?val /
+	pan?val $mol_vector_2d /
 		0
 		0
 	pos?val /
@@ -641,6 +641,10 @@ $mol_touch $mol_plugin
 	swipe_to_left?val null
 	swipe_to_top?val null
 	-
+	drawn?val $mol_vector_2d /
+		/number
+		/number
+	-
 	style *
 		^
 		touch-action \none
@@ -651,11 +655,12 @@ $mol_touch $mol_plugin
 		touchstart?event <=> event_start?event null
 		touchmove?event <=> event_move?event null
 		touchend?event <=> event_end?event null
-		mousedown?event <=> event_start?event null
-		mousemove?event <=> event_move?event null
-		mouseup?event <=> event_end?event null
-		mouseleave?event <=> event_leave?event null
+		pointerdown?event <=> event_start?event null
+		pointermove?event <=> event_move?event null
+		pointerup?event <=> event_end?event null
+		pointerleave?event <=> event_leave?event null
 		wheel?event <=> event_wheel?event null
+		contextmenu?event <=> event_menu?event null
 
 $mol_plot_pane $mol_svg_root
 	aspect \none
@@ -684,10 +689,10 @@ $mol_plot_pane $mol_svg_root
 		<= shift_limit_y $mol_vector_range /
 			0
 			0
-	shift_default /number
+	shift_default $mol_vector_2d /
 		0
 		0
-	shift?val /number
+	shift?val $mol_vector_2d /
 		0
 		0
 	scale_limit $mol_vector_2d /
@@ -697,10 +702,10 @@ $mol_plot_pane $mol_svg_root
 		<= scale_limit_y $mol_vector_range /
 			0
 			Infinity
-	scale_default /number
+	scale_default $mol_vector_2d /
 		0
 		0
-	scale?val /number
+	scale?val $mol_vector_2d /
 		1
 		1
 	scale_x?val 0
@@ -711,13 +716,6 @@ $mol_plot_pane $mol_svg_root
 	size_real $mol_vector_2d /
 		1
 		1
-	dimensions_viewport $mol_vector_2d /
-		<= dimensions_viewport_x $mol_vector_range /
-			Infinity
-			-Infinity
-		<= dimensions_viewport_y $mol_vector_range /
-			Infinity
-			-Infinity
 	dimensions $mol_vector_2d /
 		<= dimensions_x $mol_vector_range /
 			Infinity
