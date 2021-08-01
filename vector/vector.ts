@@ -46,6 +46,10 @@ namespace $ {
 			return this.merged( mults , ( a , b )=> a * b ) as any
 		}
 
+		powered0( this : $mol_vector< number , Length > , mult : number ) : this {
+			return this.map( value => value ** mult ) as any
+		}
+
 		expanded1(
 			this : $mol_vector< $mol_vector_range< number > , Length > ,
 			point : readonly number[] & { length : Length } ,
@@ -74,29 +78,29 @@ namespace $ {
 			return new Result( ... this[0].map( (_,i)=> this.reduce( ( sum, point )=> sum + point[i], 0 ) / this.length ) ) as any
 		}
 
-	}
+		distance(
+			this : $mol_vector< $mol_vector< number, number >, Length > ,
+		): number {
+			let distance = 0
+			
+			for( let i = 1; i < this.length; ++i ) {
+				distance += this[ i - 1 ].reduce( ( sum, min, j )=> sum + ( min - this[i][j] ) ** 2, 0 ) ** ( 1 / this[i].length )
+			}
+			
+			return distance
+		}
 
-	export class $mol_vector_1d< Value > extends $mol_vector< Value , 1 > {
-		[0]: Value
-		get x() { return this[0] }
-	}
-
-	export class $mol_vector_2d< Value > extends $mol_vector< Value , 2 > {
-		[0]: Value
-		[1]: Value
-		get x() { return this[0] }
-		get y() { return this[1] }
-	}
-
-	export class $mol_vector_3d< Value > extends $mol_vector< Value , 3 > {
-		[0]: Value
-		[1]: Value
-		[2]: Value
 		get x() { return this[0] }
 		get y() { return this[1] }
 		get z() { return this[2] }
+		
 	}
 
+	export class $mol_vector_1d< Value > extends $mol_vector< Value , 1 > { }
+
+	export class $mol_vector_2d< Value > extends $mol_vector< Value , 2 > {}
+
+	export class $mol_vector_3d< Value > extends $mol_vector< Value , 3 > {}
 
 	export class $mol_vector_range< Value > extends $mol_vector< Value , 2 > {
 		[0]: Value
@@ -116,12 +120,6 @@ namespace $ {
 			if( value < range.min ) range = new Range( value , range.max )
 
 			return range
-		}
-
-		distance< Length extends number >(
-			this : $mol_vector_range< $mol_vector< number, Length > > ,
-		): number {
-			return this.min.reduce( ( sum, min, i )=> sum + ( min - this.max[i] ) ** 2, 0 ) ** ( 1 / this[0].length )
 		}
 
 	}
