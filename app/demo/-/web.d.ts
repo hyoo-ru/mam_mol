@@ -2792,13 +2792,13 @@ declare namespace $.$$ {
         view_box(): string;
         scale_limit(): $mol_vector_2d<$mol_vector_range<number>>;
         scale_default(): $mol_vector_2d<number>;
-        scale(next?: $mol_vector_2d<number>, force?: $mol_mem_force): $mol_vector_2d<number>;
+        scale(next?: $mol_vector_2d<number>): $mol_vector_2d<number>;
         scale_x(next?: number): number;
         scale_y(next?: number): number;
         shift_limit(): $mol_vector_2d<$mol_vector_range<number>>;
         shift_default(): $mol_vector_2d<number>;
         graph_touched: boolean;
-        shift(next?: $mol_vector_2d<number>, force?: $mol_mem_force): $mol_vector_2d<number>;
+        shift(next?: $mol_vector_2d<number>): $mol_vector_2d<number>;
         reset(event?: Event): void;
         graphs_positioned(): readonly $.$mol_plot_graph[];
         dimensions_viewport(): $mol_vector<$mol_vector_range<number>, 2>;

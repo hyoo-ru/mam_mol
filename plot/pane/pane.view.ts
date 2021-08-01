@@ -74,7 +74,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		scale(next?: $mol_vector_2d< number >, force?: $mol_mem_force): $mol_vector_2d< number > {
+		scale(next?: $mol_vector_2d< number >): $mol_vector_2d< number > {
 			if (next === undefined) {
 				if (!this.graph_touched) return this.scale_default()
 				next = $mol_mem_cached( ()=> this.scale() ) ?? this.scale_default()
@@ -128,7 +128,7 @@ namespace $.$$ {
 		graph_touched: boolean = false
 
 		@ $mol_mem
-		shift(next?: $mol_vector_2d< number >, force?: $mol_mem_force): $mol_vector_2d< number > {
+		shift(next?: $mol_vector_2d< number >): $mol_vector_2d< number > {
 
 			if (next === undefined) {
 				if (!this.graph_touched) return this.shift_default()
@@ -142,8 +142,8 @@ namespace $.$$ {
 
 		reset(event?: Event) {
 			this.graph_touched = false
-			this.scale(this.scale_default(), $mol_mem_force_cache)
-			this.shift(this.shift_default(), $mol_mem_force_cache)
+			this.scale(this.scale_default())
+			this.shift(this.shift_default())
 		}
 
 		@ $mol_mem
@@ -166,7 +166,7 @@ namespace $.$$ {
 		dimensions_viewport() {
 			const shift = this.shift().multed0(-1)
 			const scale = this.scale().powered0(-1)
-			return this.viewport().map( ( range, i )=> range.added0( shift[i] ).multed0( scale[i] ) )
+			return this.viewport().map( ( range, i )=> range.added0( shift[i] ).multed0( scale[i] ).sort( (a,b)=>a-b) )
 		}
 
 		@ $mol_mem

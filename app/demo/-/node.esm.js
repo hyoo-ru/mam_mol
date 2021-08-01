@@ -9474,7 +9474,7 @@ var $;
                 const limits = this.scale_limit();
                 return new $.$mol_vector_2d(limits.x.min, limits.y.min);
             }
-            scale(next, force) {
+            scale(next) {
                 if (next === undefined) {
                     if (!this.graph_touched)
                         return this.scale_default();
@@ -9508,7 +9508,7 @@ var $;
                 const limits = this.shift_limit();
                 return new $.$mol_vector_2d(limits.x.min, limits.y.min);
             }
-            shift(next, force) {
+            shift(next) {
                 if (next === undefined) {
                     if (!this.graph_touched)
                         return this.shift_default();
@@ -9519,8 +9519,8 @@ var $;
             }
             reset(event) {
                 this.graph_touched = false;
-                this.scale(this.scale_default(), $.$mol_mem_force_cache);
-                this.shift(this.shift_default(), $.$mol_mem_force_cache);
+                this.scale(this.scale_default());
+                this.shift(this.shift_default());
             }
             graphs_positioned() {
                 const graphs = this.graphs();
@@ -9538,7 +9538,7 @@ var $;
             dimensions_viewport() {
                 const shift = this.shift().multed0(-1);
                 const scale = this.scale().powered0(-1);
-                return this.viewport().map((range, i) => range.added0(shift[i]).multed0(scale[i]));
+                return this.viewport().map((range, i) => range.added0(shift[i]).multed0(scale[i]).sort((a, b) => a - b));
             }
             viewport() {
                 const size = this.size_real();
