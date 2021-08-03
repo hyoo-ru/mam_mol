@@ -11,11 +11,11 @@ The component which arrange content in multiple tabs.
 	items /
 		<= Main *
 			title <= Main_title @ \Main info
-			content /
+			Content /
 				\Main
 		<= Addon *
 			title <= Addon_title @ \Addition data
-			content /
+			Content /
 				\Addon
 ```
 
