@@ -11,12 +11,14 @@ The component which arrange content in multiple tabs.
 	items /
 		<= Main *
 			title <= Main_title @ \Main info
-			Content /
-				\Main
+			Content <= Main_content $mol_view
+				<= sub /
+					\Main
 		<= Addon *
 			title <= Addon_title @ \Addition data
-			Content /
-				\Addon
+			Content <= Main_content $mol_view
+				sub <= /
+					\Addon
 ```
 
 ## Properties $mol_deck
