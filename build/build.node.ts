@@ -622,11 +622,7 @@ namespace $ {
 
 			if(
 				parent.name() === 'node_modules'
-				|| ( 
-					parent.name() === 'node'
-					&& parent.path() === `${this.root().path()}/node`
-					&& parent.sub().map( s => s.name().replace( /\..*$/ , '' ) ).includes( mod.name().replace( /\..*$/ , '' )) === false
-				)	
+				|| parent === this.root().resolve( 'node' )
 			) {
 				$node[ mod.name() ] // force autoinstall through npm
 			}
