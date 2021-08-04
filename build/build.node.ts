@@ -622,7 +622,7 @@ namespace $ {
 
 			if(
 				parent.name() === 'node_modules'
-				|| parent === this.root().resolve( 'node' )
+				|| ( parent === this.root().resolve( 'node' ) )&&( mod.name() !== 'node' )
 			) {
 				$node[ mod.name() ] // force autoinstall through npm
 			}
