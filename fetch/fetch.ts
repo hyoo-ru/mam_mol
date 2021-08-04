@@ -80,7 +80,7 @@ namespace $ {
 			}
 
 			let native = $mol_dom_context.fetch
-			if( !native ) native = $node['node-fetch']
+			if( !native ) native = $node['node-fetch'] as any
 		
 			return native( input , init )
 
