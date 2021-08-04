@@ -16,7 +16,7 @@ The component which arrange content in multiple tabs.
 					\Main
 		<= Addon *
 			title <= Addon_title @ \Addition data
-			Content <= Main_content $mol_view
+			Content <= Addon_content $mol_view
 				sub <= /
 					\Addon
 ```
