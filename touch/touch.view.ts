@@ -52,16 +52,13 @@ namespace $.$$ {
 		event_start( event : TouchEvent | PointerEvent ) {
 			if( event.defaultPrevented ) return
 			
-			if( event instanceof PointerEvent ) {
-				this.dom_node().setPointerCapture( event.pointerId )
-			}
-
 			this.start_pan( this.pan() )
 
 			const action_type = this.action_type( event )
 			if( !action_type ) return
 			if( action_type === 'draw' ) {
-				return this.draw_start( event )
+				this.draw_start( event )
+				return
 			}
 
 			const coords = this.event_coords( event )
@@ -94,7 +91,8 @@ namespace $.$$ {
 			
 			if( !action_type ) return
 			if( action_type === 'draw' ) {
-				return this.draw_continue( event )
+				this.draw_continue( event )
+				return
 			}
 			
 			if (cursor_pos) {
@@ -111,7 +109,15 @@ namespace $.$$ {
 				if( !start_pos ) return
 
 				const distance = new $mol_vector_2d( start_pos, pos ).distance()
-				if( distance >= 4 ) this._menu_mute = true
+				if( distance >= 4 ) {
+					
+					this._menu_mute = true
+					
+					if( event instanceof PointerEvent ) {
+						this.dom_node().setPointerCapture( event.pointerId )
+					}
+
+				}
 				
 				if( this.pan !== $mol_touch.prototype.pan ) {
 					this.pan(

@@ -620,7 +620,10 @@ namespace $ {
 				throw new Error( `Root package "${ mod.relate( this.root() ) }" not found` )
 			}
 
-			if( parent.name() === 'node_modules' ) {
+			if(
+				parent.name() === 'node_modules'
+				|| ( parent === this.root().resolve( 'node' ) )&&( mod.name() !== 'node' )
+			) {
 				$node[ mod.name() ] // force autoinstall through npm
 			}
 
