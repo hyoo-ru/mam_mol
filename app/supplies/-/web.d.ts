@@ -2538,12 +2538,12 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_deck extends $mol_list {
-        items(): readonly any[];
+        items(): readonly $mol_view[];
         rows(): readonly $mol_view[];
-        Content(): $mol_view;
         current(val?: any): string;
         switch_options(): {};
         Switch(): $$.$mol_switch;
+        Content(): $mol_view;
     }
 }
 
@@ -2610,11 +2610,7 @@ declare namespace $ {
         ballance_unit_name(): string;
         Ballance_unit_item(): $mol_labeler;
         org_items(): readonly any[];
-        Org_content(): $mol_row;
-        Org(): {
-            title: string;
-            Content: $mol_row;
-        };
+        Org(): $mol_row;
         cons_title(): string;
         contract_title(): string;
         contract_id(): string;
@@ -2629,11 +2625,7 @@ declare namespace $ {
         debitor_name(): string;
         Debitor(): $mol_labeler;
         cons_items(): readonly any[];
-        Cons_content(): $mol_row;
-        Cons(): {
-            title: string;
-            Content: $mol_row;
-        };
+        Cons(): $mol_row;
         Descr_deck(): $$.$mol_deck;
         Descr_card(): $$.$mol_card;
         attach_title(): string;

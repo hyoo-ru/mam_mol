@@ -1332,35 +1332,26 @@ $mol_switch $mol_view
 	sub <= items /$mol_check
 
 $mol_deck $mol_list
-	items /
-		*
-			title \
-			Content <= Content $mol_view
+	items /$mol_view
 	rows /$mol_view
 		<= Switch $mol_switch
 			value?val <=> current?val \0
 			options <= switch_options *
-		<= Content
+		<= Content $mol_view
 
 $mol_deck_demo $mol_demo_small
 	title @ \Simple deck with tabbar
 	sub /
 		<= Deck $mol_deck items /
-			<= greeterItem *
-				title <= greeterLabel @ \Greeting
-				Content <= greeterContent $mol_row
-					sub /
-						<= greeterMessage @ \Hello, world!
-			<= questerItem *
-				title <= questerLabel @ \Question
-				Content <= questerContent $mol_row
-					sub /
-						<= questerMessage @ \How are you?
-			<= commanderItem *
-				title <= commanderLabel @ \Command
-				Content <= commanderContent $mol_row
-					sub /
-						<= commanderMessage @ \Let us do it right!
+			<= Greeter $mol_row
+				title @ \Greeting
+				sub / <= greeterMessage @ \Hello, world!
+			<= Quester $mol_row
+				title @ \Question
+				sub / <= questerMessage @ \How are you?
+			<= Commander $mol_row
+				title @ \Command
+				sub / <= commanderMessage @ \Let us do it right!
 
 $mol_dimmer_demo $mol_demo_small
 	title @ \Text with highlighted found substring

@@ -13657,22 +13657,13 @@ var $;
 (function ($) {
     class $mol_deck extends $.$mol_list {
         items() {
-            return [
-                {
-                    title: "",
-                    Content: this.Content()
-                }
-            ];
+            return [];
         }
         rows() {
             return [
                 this.Switch(),
                 this.Content()
             ];
-        }
-        Content() {
-            const obj = new this.$.$mol_view();
-            return obj;
         }
         current(val) {
             if (val !== undefined)
@@ -13688,16 +13679,20 @@ var $;
             obj.options = () => this.switch_options();
             return obj;
         }
+        Content() {
+            const obj = new this.$.$mol_view();
+            return obj;
+        }
     }
-    __decorate([
-        $.$mol_mem
-    ], $mol_deck.prototype, "Content", null);
     __decorate([
         $.$mol_mem
     ], $mol_deck.prototype, "current", null);
     __decorate([
         $.$mol_mem
     ], $mol_deck.prototype, "Switch", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_deck.prototype, "Content", null);
     $.$mol_deck = $mol_deck;
 })($ || ($ = {}));
 //deck.view.tree.js.map
@@ -13714,12 +13709,12 @@ var $;
             switch_options() {
                 let options = {};
                 this.items().forEach((item, index) => {
-                    options[String(index)] = item.title;
+                    options[String(index)] = item.title();
                 });
                 return options;
             }
             Content() {
-                return this.items()[this.current()].Content;
+                return this.items()[this.current()];
             }
         }
         __decorate([
@@ -13742,82 +13737,58 @@ var $;
                 this.Deck()
             ];
         }
-        greeterLabel() {
-            return this.$.$mol_locale.text('$mol_deck_demo_greeterLabel');
-        }
         greeterMessage() {
             return this.$.$mol_locale.text('$mol_deck_demo_greeterMessage');
         }
-        greeterContent() {
+        Greeter() {
             const obj = new this.$.$mol_row();
+            obj.title = () => this.$.$mol_locale.text('$mol_deck_demo_Greeter_title');
             obj.sub = () => [
                 this.greeterMessage()
             ];
             return obj;
         }
-        greeterItem() {
-            return {
-                title: this.greeterLabel(),
-                Content: this.greeterContent()
-            };
-        }
-        questerLabel() {
-            return this.$.$mol_locale.text('$mol_deck_demo_questerLabel');
-        }
         questerMessage() {
             return this.$.$mol_locale.text('$mol_deck_demo_questerMessage');
         }
-        questerContent() {
+        Quester() {
             const obj = new this.$.$mol_row();
+            obj.title = () => this.$.$mol_locale.text('$mol_deck_demo_Quester_title');
             obj.sub = () => [
                 this.questerMessage()
             ];
             return obj;
         }
-        questerItem() {
-            return {
-                title: this.questerLabel(),
-                Content: this.questerContent()
-            };
-        }
-        commanderLabel() {
-            return this.$.$mol_locale.text('$mol_deck_demo_commanderLabel');
-        }
         commanderMessage() {
             return this.$.$mol_locale.text('$mol_deck_demo_commanderMessage');
         }
-        commanderContent() {
+        Commander() {
             const obj = new this.$.$mol_row();
+            obj.title = () => this.$.$mol_locale.text('$mol_deck_demo_Commander_title');
             obj.sub = () => [
                 this.commanderMessage()
             ];
             return obj;
         }
-        commanderItem() {
-            return {
-                title: this.commanderLabel(),
-                Content: this.commanderContent()
-            };
-        }
         Deck() {
             const obj = new this.$.$mol_deck();
             obj.items = () => [
-                this.greeterItem(),
-                this.questerItem(),
-                this.commanderItem()
+                this.Greeter(),
+                this.Quester(),
+                this.Commander()
             ];
             return obj;
         }
     }
     __decorate([
         $.$mol_mem
-    ], $mol_deck_demo.prototype, "greeterContent", null);
+    ], $mol_deck_demo.prototype, "Greeter", null);
     __decorate([
         $.$mol_mem
-    ], $mol_deck_demo.prototype, "questerContent", null);
+    ], $mol_deck_demo.prototype, "Quester", null);
     __decorate([
         $.$mol_mem
-    ], $mol_deck_demo.prototype, "commanderContent", null);
+    ], $mol_deck_demo.prototype, "Commander", null);
     __decorate([
         $.$mol_mem
     ], $mol_deck_demo.prototype, "Deck", null);

@@ -493,15 +493,12 @@ $mol_switch $mol_view
 	sub <= items /$mol_check
 
 $mol_deck $mol_list
-	items /
-		*
-			title \
-			Content <= Content $mol_view
+	items /$mol_view
 	rows /$mol_view
 		<= Switch $mol_switch
 			value?val <=> current?val \0
 			options <= switch_options *
-		<= Content
+		<= Content $mol_view
 
 $mol_section $mol_list rows /
 	<= Head $mol_view
@@ -527,38 +524,36 @@ $mol_app_supplies_detail $mol_page
 				<= Descr_card $mol_card
 					Content <= Descr_deck $mol_deck
 						items /
-							<= Org *
+							<= Org $mol_row
 								title <= org_title @ \Organization
-								Content <= Org_content $mol_row
-									sub <= org_items /
-										<= Provider $mol_labeler
-											title <= provider_title @ \Provider
-											content / <= provider_name \
-										<= Consumer $mol_labeler
-											title <= customer_label @ \Consumer
-											content / <= consumer_name \
-										<= Supply_group $mol_labeler
-											title <= supply_group_title @ \Supply Group
-											content / <= supply_group_name \
-										<= Ballance_unit_item $mol_labeler
-											title <= ballance_unit_title @ \Ballance Unit
-											content / <= ballance_unit_name \
-							<= Cons *
+								sub <= org_items /
+									<= Provider $mol_labeler
+										title <= provider_title @ \Provider
+										content / <= provider_name \
+									<= Consumer $mol_labeler
+										title <= customer_label @ \Consumer
+										content / <= consumer_name \
+									<= Supply_group $mol_labeler
+										title <= supply_group_title @ \Supply Group
+										content / <= supply_group_name \
+									<= Ballance_unit_item $mol_labeler
+										title <= ballance_unit_title @ \Ballance Unit
+										content / <= ballance_unit_name \
+							<= Cons $mol_row
 								title <= cons_title @ \Consumer
-								Content <= Cons_content $mol_row
-									sub <= cons_items /
-										<= Contract $mol_labeler
-											title <= contract_title @ \Contract
-											content / <= contract_id \
-										<= Pay_method $mol_labeler
-											title <= pay_method_title @ \Pay Method
-											content / <= pay_method_name \
-										<= Manager $mol_labeler
-											title <= manager_title @ \Manager
-											content / <= manager_name \
-										<= Debitor $mol_labeler
-											title <= debitod_title @ \Debitor
-											content / <= debitor_name \
+								sub <= cons_items /
+									<= Contract $mol_labeler
+										title <= contract_title @ \Contract
+										content / <= contract_id \
+									<= Pay_method $mol_labeler
+										title <= pay_method_title @ \Pay Method
+										content / <= pay_method_name \
+									<= Manager $mol_labeler
+										title <= manager_title @ \Manager
+										content / <= manager_name \
+									<= Debitor $mol_labeler
+										title <= debitod_title @ \Debitor
+										content / <= debitor_name \
 				<= Attach_section $mol_section
 					head / <= attach_title @ \Attachments
 					Content <= Attach $mol_attach

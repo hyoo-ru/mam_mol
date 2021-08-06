@@ -3,18 +3,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * items / *
-		 * 	title \
-		 * 	Content <= Content
+		 * items /$mol_view
 		 * ```
 		 */
 		items() {
 			return [
-				{
-					title: "",
-					Content: this.Content()
-				}
-			] as readonly any[]
+			] as readonly $mol_view[]
 		}
 		
 		/**
@@ -29,18 +23,6 @@ namespace $ {
 				this.Switch(),
 				this.Content()
 			] as readonly $mol_view[]
-		}
-		
-		/**
-		 * ```tree
-		 * Content $mol_view
-		 * ```
-		 */
-		@ $mol_mem
-		Content() {
-			const obj = new this.$.$mol_view()
-			
-			return obj
 		}
 		
 		/**
@@ -77,6 +59,18 @@ namespace $ {
 			
 			obj.value = (val?: any) => this.current(val)
 			obj.options = () => this.switch_options()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Content $mol_view
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
+			const obj = new this.$.$mol_view()
 			
 			return obj
 		}

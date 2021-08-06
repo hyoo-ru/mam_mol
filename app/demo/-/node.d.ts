@@ -3740,12 +3740,12 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_deck extends $mol_list {
-        items(): readonly any[];
+        items(): readonly $mol_view[];
         rows(): readonly $mol_view[];
-        Content(): $mol_view;
         current(val?: any): string;
         switch_options(): {};
         Switch(): $$.$mol_switch;
+        Content(): $mol_view;
     }
 }
 
@@ -3761,27 +3761,12 @@ declare namespace $ {
     class $mol_deck_demo extends $mol_demo_small {
         title(): string;
         sub(): readonly any[];
-        greeterLabel(): string;
         greeterMessage(): string;
-        greeterContent(): $mol_row;
-        greeterItem(): {
-            title: string;
-            Content: $mol_row;
-        };
-        questerLabel(): string;
+        Greeter(): $mol_row;
         questerMessage(): string;
-        questerContent(): $mol_row;
-        questerItem(): {
-            title: string;
-            Content: $mol_row;
-        };
-        commanderLabel(): string;
+        Quester(): $mol_row;
         commanderMessage(): string;
-        commanderContent(): $mol_row;
-        commanderItem(): {
-            title: string;
-            Content: $mol_row;
-        };
+        Commander(): $mol_row;
         Deck(): $$.$mol_deck;
     }
 }

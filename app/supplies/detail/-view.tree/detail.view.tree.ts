@@ -302,30 +302,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Org_content $mol_row sub <= org_items
+		 * Org $mol_row
+		 * 	title <= org_title
+		 * 	sub <= org_items
 		 * ```
 		 */
 		@ $mol_mem
-		Org_content() {
+		Org() {
 			const obj = new this.$.$mol_row()
 			
+			obj.title = () => this.org_title()
 			obj.sub = () => this.org_items()
 			
 			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Org *
-		 * 	title <= org_title
-		 * 	Content <= Org_content
-		 * ```
-		 */
-		Org() {
-			return {
-				title: this.org_title(),
-				Content: this.Org_content()
-			}
 		}
 		
 		/**
@@ -505,30 +494,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Cons_content $mol_row sub <= cons_items
+		 * Cons $mol_row
+		 * 	title <= cons_title
+		 * 	sub <= cons_items
 		 * ```
 		 */
 		@ $mol_mem
-		Cons_content() {
+		Cons() {
 			const obj = new this.$.$mol_row()
 			
+			obj.title = () => this.cons_title()
 			obj.sub = () => this.cons_items()
 			
 			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Cons *
-		 * 	title <= cons_title
-		 * 	Content <= Cons_content
-		 * ```
-		 */
-		Cons() {
-			return {
-				title: this.cons_title(),
-				Content: this.Cons_content()
-			}
 		}
 		
 		/**

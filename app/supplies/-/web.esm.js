@@ -8547,22 +8547,13 @@ var $;
 (function ($) {
     class $mol_deck extends $.$mol_list {
         items() {
-            return [
-                {
-                    title: "",
-                    Content: this.Content()
-                }
-            ];
+            return [];
         }
         rows() {
             return [
                 this.Switch(),
                 this.Content()
             ];
-        }
-        Content() {
-            const obj = new this.$.$mol_view();
-            return obj;
         }
         current(val) {
             if (val !== undefined)
@@ -8578,16 +8569,20 @@ var $;
             obj.options = () => this.switch_options();
             return obj;
         }
+        Content() {
+            const obj = new this.$.$mol_view();
+            return obj;
+        }
     }
-    __decorate([
-        $.$mol_mem
-    ], $mol_deck.prototype, "Content", null);
     __decorate([
         $.$mol_mem
     ], $mol_deck.prototype, "current", null);
     __decorate([
         $.$mol_mem
     ], $mol_deck.prototype, "Switch", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_deck.prototype, "Content", null);
     $.$mol_deck = $mol_deck;
 })($ || ($ = {}));
 //deck.view.tree.js.map
@@ -8604,12 +8599,12 @@ var $;
             switch_options() {
                 let options = {};
                 this.items().forEach((item, index) => {
-                    options[String(index)] = item.title;
+                    options[String(index)] = item.title();
                 });
                 return options;
             }
             Content() {
-                return this.items()[this.current()].Content;
+                return this.items()[this.current()];
             }
         }
         __decorate([
@@ -8811,16 +8806,11 @@ var $;
                 this.Ballance_unit_item()
             ];
         }
-        Org_content() {
+        Org() {
             const obj = new this.$.$mol_row();
+            obj.title = () => this.org_title();
             obj.sub = () => this.org_items();
             return obj;
-        }
-        Org() {
-            return {
-                title: this.org_title(),
-                Content: this.Org_content()
-            };
         }
         cons_title() {
             return this.$.$mol_locale.text('$mol_app_supplies_detail_cons_title');
@@ -8889,16 +8879,11 @@ var $;
                 this.Debitor()
             ];
         }
-        Cons_content() {
+        Cons() {
             const obj = new this.$.$mol_row();
+            obj.title = () => this.cons_title();
             obj.sub = () => this.cons_items();
             return obj;
-        }
-        Cons() {
-            return {
-                title: this.cons_title(),
-                Content: this.Cons_content()
-            };
         }
         Descr_deck() {
             const obj = new this.$.$mol_deck();
@@ -9051,7 +9036,7 @@ var $;
     ], $mol_app_supplies_detail.prototype, "Ballance_unit_item", null);
     __decorate([
         $.$mol_mem
-    ], $mol_app_supplies_detail.prototype, "Org_content", null);
+    ], $mol_app_supplies_detail.prototype, "Org", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_supplies_detail.prototype, "Contract", null);
@@ -9066,7 +9051,7 @@ var $;
     ], $mol_app_supplies_detail.prototype, "Debitor", null);
     __decorate([
         $.$mol_mem
-    ], $mol_app_supplies_detail.prototype, "Cons_content", null);
+    ], $mol_app_supplies_detail.prototype, "Cons", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_supplies_detail.prototype, "Descr_deck", null);
