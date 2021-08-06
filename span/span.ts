@@ -11,9 +11,8 @@ namespace $ {
 			readonly length: number ,
 		) {
 			super()
+			this[ Symbol.toStringTag ] = `${ this.uri }#${ this.row }:${ this.col }/${ this.length }`
 		}
-
-		[ Symbol.toStringTag ] = `${ this.uri }#${ this.row }:${ this.col }/${ this.length }`
 
 		/** Span for begin of unknown resource */
 		static unknown = $mol_span.begin('unknown')
