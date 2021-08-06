@@ -1,5 +1,6 @@
 namespace $ {
 
+	/** @deprecated */
 	export function $mol_atom2_field<
 		Host extends object ,
 		Field extends keyof Host ,
