@@ -8,14 +8,14 @@ namespace $.$$ {
 		switch_options() {
 			let options : Record< string , string > = {}
 			this.items().forEach( ( item , index ) => {
-				options[ String( index ) ] = item.title
+				options[ String( index ) ] = item.title()
 			} )
 			return options
 		}
 		
 		@ $mol_mem
 		Content() {
-			return this.items()[ this.current() ].Content
+			return this.items()[ this.current() ]
 		}
 		
 	}
