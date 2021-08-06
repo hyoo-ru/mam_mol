@@ -15,15 +15,13 @@ namespace $ {
 			this[ $mol_ambient_ref ] = next
 		}
 
-		constructor( init? : ( obj : any )=> void ) {
-			if( init ) init( this )
-		}
-
 		public static create< Instance >(
 			this : new( init? : ( instance : any )=> void )=> Instance ,
 			init? : ( instance : $mol_type_writable<Instance> )=> void
 		) : Instance {
-			return new this( init )
+			const obj = new this
+			if( init ) init( obj )
+			return obj
 		}
 		
 		static [ Symbol.toPrimitive ]() {
