@@ -83,7 +83,6 @@ declare namespace $ {
         [$mol_ambient_ref]: typeof $$;
         get $(): $;
         set $(next: $);
-        constructor(init?: (obj: any) => void);
         static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
         static [Symbol.toPrimitive](): any;
         static toString(): any;
@@ -467,12 +466,11 @@ declare namespace $ {
         readonly col: number;
         readonly length: number;
         constructor(uri: string, source: string, row: number, col: number, length: number);
-        [Symbol.toStringTag]: string;
         static unknown: $mol_span;
         static begin(uri: string, source?: string): $mol_span;
         static end(uri: string, source: string): $mol_span;
         static entire(uri: string, source: string): $mol_span;
-        toString(): string;
+        toString(): any;
         toJSON(): {
             uri: string;
             row: number;

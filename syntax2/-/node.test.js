@@ -38,9 +38,9 @@ var $;
 var $;
 (function ($) {
     class $mol_syntax2 {
+        lexems;
         constructor(lexems) {
             this.lexems = lexems;
-            this.rules = [];
             for (let name in lexems) {
                 this.rules.push({
                     name: name,
@@ -51,6 +51,8 @@ var $;
             const parts = '(' + this.rules.map(rule => rule.regExp.source).join(')|(') + ')';
             this.regexp = RegExp(`([\\s\\S]*?)(?:(${parts})|$(?![^]))`, 'gm');
         }
+        rules = [];
+        regexp;
         tokenize(text, handle) {
             let end = 0;
             lexing: while (end < text.length) {

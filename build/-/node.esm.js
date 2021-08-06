@@ -228,13 +228,9 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    var _a;
     class $mol_object2 {
-        constructor(init) {
-            this[_a] = null;
-            if (init)
-                init(this);
-        }
+        static $ = $;
+        [$.$mol_ambient_ref] = null;
         get $() {
             if (this[$.$mol_ambient_ref])
                 return this[$.$mol_ambient_ref];
@@ -247,9 +243,12 @@ var $;
             this[$.$mol_ambient_ref] = next;
         }
         static create(init) {
-            return new this(init);
+            const obj = new this;
+            if (init)
+                init(obj);
+            return obj;
         }
-        static [(_a = $.$mol_ambient_ref, Symbol.toPrimitive)]() {
+        static [Symbol.toPrimitive]() {
             return this.toString();
         }
         static toString() {
@@ -268,7 +267,6 @@ var $;
             return this.toString();
         }
     }
-    $mol_object2.$ = $;
     $.$mol_object2 = $mol_object2;
 })($ || ($ = {}));
 //object2.js.map
@@ -302,6 +300,13 @@ var $;
 (function ($) {
     $.$mol_tree_convert = Symbol('$mol_tree_convert');
     class $mol_tree extends $.$mol_object2 {
+        type;
+        data;
+        sub;
+        baseUri;
+        row;
+        col;
+        length;
         constructor(config = {}) {
             super();
             this.type = config.type || '';
@@ -654,6 +659,7 @@ var $;
 var $;
 (function ($) {
     class $mol_wrapper extends $.$mol_object2 {
+        static wrap;
         static run(task) {
             return this.func(task)();
         }
@@ -691,6 +697,9 @@ var $;
 var $;
 (function ($) {
     class $mol_after_timeout extends $.$mol_object2 {
+        delay;
+        task;
+        id;
         constructor(delay, task) {
             super();
             this.delay = delay;
@@ -709,6 +718,7 @@ var $;
 var $;
 (function ($) {
     class $mol_after_frame extends $.$mol_after_timeout {
+        task;
         constructor(task) {
             super(16, task);
             this.task = task;
@@ -1048,13 +1058,7 @@ var $;
     }
     $.$mol_fiber_solid = $mol_fiber_solid;
     class $mol_fiber extends $.$mol_wrapper {
-        constructor() {
-            super(...arguments);
-            this.cursor = 0;
-            this.masters = [];
-            this._value = undefined;
-            this._error = null;
-        }
+        static logs = false;
         static wrap(task) {
             return function $mol_fiber_wrapper(...args) {
                 const slave = $mol_fiber.current;
@@ -1068,6 +1072,12 @@ var $;
                 return master.get();
             };
         }
+        static quant = 16;
+        static deadline = 0;
+        static liveline = 0;
+        static current = null;
+        static scheduled = null;
+        static queue = [];
         static async tick() {
             while ($mol_fiber.queue.length > 0) {
                 const now = Date.now();
@@ -1097,10 +1107,15 @@ var $;
             const promise = new this.$.Promise(done => this.queue.push(() => (done(null), promise)));
             return promise;
         }
+        cursor = 0;
+        masters = [];
+        calculate;
+        _value = undefined;
         get value() { return this._value; }
         set value(next) {
             this._value = next;
         }
+        _error = null;
         get error() { return this._error; }
         set error(next) {
             this._error = next;
@@ -1295,13 +1310,6 @@ var $;
             return $.$mol_dev_format_native(this);
         }
     }
-    $mol_fiber.logs = false;
-    $mol_fiber.quant = 16;
-    $mol_fiber.deadline = 0;
-    $mol_fiber.liveline = 0;
-    $mol_fiber.current = null;
-    $mol_fiber.scheduled = null;
-    $mol_fiber.queue = [];
     $.$mol_fiber = $mol_fiber;
 })($ || ($ = {}));
 //fiber.js.map
@@ -1342,16 +1350,17 @@ var $;
     }
     $.$mol_atom2_value = $mol_atom2_value;
     class $mol_atom2 extends $.$mol_fiber {
-        constructor() {
-            super(...arguments);
-            this.slaves = [];
-        }
+        static logs = false;
         static get current() {
             const atom = $.$mol_fiber.current;
             if (atom instanceof $mol_atom2)
                 return atom;
             return null;
         }
+        static cached = false;
+        static cached_next = undefined;
+        static reap_task = null;
+        static reap_queue = [];
         static reap(atom) {
             this.reap_queue.push(atom);
             if (this.reap_task)
@@ -1368,6 +1377,7 @@ var $;
                 }
             });
         }
+        slaves = [];
         rescue(master, cursor) {
             if (!(master instanceof $mol_atom2))
                 return;
@@ -1591,11 +1601,6 @@ var $;
             }
         }
     }
-    $mol_atom2.logs = false;
-    $mol_atom2.cached = false;
-    $mol_atom2.cached_next = undefined;
-    $mol_atom2.reap_task = null;
-    $mol_atom2.reap_queue = [];
     $.$mol_atom2 = $mol_atom2;
 })($ || ($ = {}));
 //atom2.js.map
@@ -1631,13 +1636,11 @@ var $;
 var $;
 (function ($) {
     class $mol_mem_force extends Object {
-        constructor() {
-            super();
-            this.$mol_mem_force = true;
-        }
+        constructor() { super(); }
+        $mol_mem_force = true;
+        static $mol_mem_force = true;
         static toString() { return this.name; }
     }
-    $mol_mem_force.$mol_mem_force = true;
     $.$mol_mem_force = $mol_mem_force;
     class $mol_mem_force_cache extends $mol_mem_force {
     }
@@ -2211,8 +2214,12 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    var _a;
     class $mol_span extends $.$mol_object2 {
+        uri;
+        source;
+        row;
+        col;
+        length;
         constructor(uri, source, row, col, length) {
             super();
             this.uri = uri;
@@ -2220,8 +2227,9 @@ var $;
             this.row = row;
             this.col = col;
             this.length = length;
-            this[_a] = `${this.uri}#${this.row}:${this.col}/${this.length}`;
+            this[Symbol.toStringTag] = `${this.uri}#${this.row}:${this.col}/${this.length}`;
         }
+        static unknown = $mol_span.begin('unknown');
         static begin(uri, source = '') {
             return new $mol_span(uri, source, 1, 1, 0);
         }
@@ -2266,8 +2274,6 @@ var $;
             return this.span(this.row, this.col + begin, end - begin);
         }
     }
-    _a = Symbol.toStringTag;
-    $mol_span.unknown = $mol_span.begin('unknown');
     $.$mol_span = $mol_span;
 })($ || ($ = {}));
 //span.js.map
@@ -2276,6 +2282,10 @@ var $;
 var $;
 (function ($) {
     class $mol_tree2 extends Object {
+        type;
+        value;
+        kids;
+        span;
         constructor(type, value, kids, span) {
             super();
             this.type = type;
@@ -2439,6 +2449,9 @@ var $;
 var $;
 (function ($) {
     class $mol_error_syntax extends SyntaxError {
+        reason;
+        line;
+        span;
         constructor(reason, line, span) {
             super(`${reason}\n${span}\n${line.substring(0, span.col - 1).replace(/\S/g, ' ')}${''.padEnd(span.length, '!')}\n${line}`);
             this.reason = reason;
@@ -2543,6 +2556,7 @@ var $;
 var $;
 (function ($) {
     class $mol_view_tree2_error extends Error {
+        spans;
         constructor(message, spans) {
             super(message);
             this.spans = spans;
@@ -2556,6 +2570,7 @@ var $;
     }
     $.$mol_view_tree2_error = $mol_view_tree2_error;
     class $mol_view_tree2_error_suggestions {
+        suggestions;
         constructor(suggestions) {
             this.suggestions = suggestions;
         }
@@ -2629,6 +2644,12 @@ var $;
 var $;
 (function ($_1) {
     class $mol_view_tree2_context extends $_1.$mol_object2 {
+        parents;
+        locales;
+        methods;
+        types;
+        added_nodes;
+        array;
         constructor($, parents, locales, methods, types = true, added_nodes = new Map(), array) {
             super();
             this.parents = parents;
@@ -2637,7 +2658,6 @@ var $;
             this.types = types;
             this.added_nodes = added_nodes;
             this.array = array;
-            this.locale_nodes = new Map();
             this.$ = $;
         }
         clone(prefixes, array) {
@@ -2695,6 +2715,7 @@ var $;
         method(index, method) {
             this.methods.push(...method);
         }
+        locale_nodes = new Map();
         locale(operator) {
             const parents = this.parents;
             const val = operator.kids.length === 1 ? operator.kids[0] : undefined;
@@ -2804,6 +2825,7 @@ var $;
 var $;
 (function ($) {
     class $mol_regexp extends RegExp {
+        groups;
         constructor(source, flags = 'gsu', groups = []) {
             super(source, flags);
             this.groups = groups;
@@ -3038,26 +3060,26 @@ var $;
             const regexp = forbidden.map(f => $mol_regexp.from(f).source).join('');
             return new $mol_regexp(`[^${regexp}]`);
         }
+        static decimal_only = $mol_regexp.from(/\d/gsu);
+        static decimal_except = $mol_regexp.from(/\D/gsu);
+        static latin_only = $mol_regexp.from(/\w/gsu);
+        static latin_except = $mol_regexp.from(/\W/gsu);
+        static space_only = $mol_regexp.from(/\s/gsu);
+        static space_except = $mol_regexp.from(/\S/gsu);
+        static word_break_only = $mol_regexp.from(/\b/gsu);
+        static word_break_except = $mol_regexp.from(/\B/gsu);
+        static tab = $mol_regexp.from(/\t/gsu);
+        static slash_back = $mol_regexp.from(/\\/gsu);
+        static nul = $mol_regexp.from(/\0/gsu);
+        static char_any = $mol_regexp.from(/./gsu);
+        static begin = $mol_regexp.from(/^/gsu);
+        static end = $mol_regexp.from(/$/gsu);
+        static or = $mol_regexp.from(/|/gsu);
+        static line_end = $mol_regexp.from({
+            win_end: [['\r'], '\n'],
+            mac_end: '\r',
+        });
     }
-    $mol_regexp.decimal_only = $mol_regexp.from(/\d/gsu);
-    $mol_regexp.decimal_except = $mol_regexp.from(/\D/gsu);
-    $mol_regexp.latin_only = $mol_regexp.from(/\w/gsu);
-    $mol_regexp.latin_except = $mol_regexp.from(/\W/gsu);
-    $mol_regexp.space_only = $mol_regexp.from(/\s/gsu);
-    $mol_regexp.space_except = $mol_regexp.from(/\S/gsu);
-    $mol_regexp.word_break_only = $mol_regexp.from(/\b/gsu);
-    $mol_regexp.word_break_except = $mol_regexp.from(/\B/gsu);
-    $mol_regexp.tab = $mol_regexp.from(/\t/gsu);
-    $mol_regexp.slash_back = $mol_regexp.from(/\\/gsu);
-    $mol_regexp.nul = $mol_regexp.from(/\0/gsu);
-    $mol_regexp.char_any = $mol_regexp.from(/./gsu);
-    $mol_regexp.begin = $mol_regexp.from(/^/gsu);
-    $mol_regexp.end = $mol_regexp.from(/$/gsu);
-    $mol_regexp.or = $mol_regexp.from(/|/gsu);
-    $mol_regexp.line_end = $mol_regexp.from({
-        win_end: [['\r'], '\n'],
-        mac_end: '\r',
-    });
     $.$mol_regexp = $mol_regexp;
 })($ || ($ = {}));
 //regexp.js.map
@@ -3384,6 +3406,7 @@ var $;
 var $;
 (function ($) {
     class $mol_state_local extends $.$mol_object {
+        static 'native()';
         static native() {
             if (this['native()'])
                 return this['native()'];
@@ -3695,10 +3718,11 @@ var $;
     }
     $_1.$mol_view_tree2_ts_spread = $mol_view_tree2_ts_spread;
     class $mol_view_tree2_ts_spread_factory extends $_1.$mol_object2 {
+        prop_parts;
+        super_spread = undefined;
         constructor($, prop_parts) {
             super();
             this.prop_parts = prop_parts;
-            this.super_spread = undefined;
             this.$ = $;
         }
         create(prop) {
@@ -3900,11 +3924,9 @@ var $;
 var $;
 (function ($) {
     class $mol_graph {
-        constructor() {
-            this.nodes = new Set();
-            this.edges_out = new Map();
-            this.edges_in = new Map();
-        }
+        nodes = new Set();
+        edges_out = new Map();
+        edges_in = new Map();
         link_out(from, to, edge) {
             let pair = this.edges_out.get(from);
             if (!pair) {
@@ -4006,22 +4028,26 @@ var $;
     const sourcemap_codec = $node['sourcemap-codec'];
     const path = $node.path;
     class $mol_sourcemap_builder {
+        file;
+        separator;
+        version = 3;
+        sourceRoot;
+        separator_count;
         constructor(file, separator = '') {
             this.file = file;
             this.separator = separator;
-            this.version = 3;
-            this.chunks = [];
-            this.segment_lines = [];
-            this.sources = [];
-            this.source_indexes = new Map();
-            this.names = [];
-            this.name_indexes = new Map();
-            this.sourceContent = [];
             const dir = path.dirname(file);
             this.sourceRoot = dir && dir !== '.' ? (dir + '/') : '';
             this.separator += '\n';
             this.separator_count = separator.split('\n').length - 2;
         }
+        chunks = [];
+        segment_lines = [];
+        sources = [];
+        source_indexes = new Map();
+        names = [];
+        name_indexes = new Map();
+        sourceContent = [];
         get content() {
             return this.chunks.join('');
         }
@@ -4192,6 +4218,7 @@ var $;
 var $;
 (function ($) {
     class $mol_error_mix extends Error {
+        errors;
         constructor(message, ...errors) {
             super(message);
             this.errors = errors;
@@ -4567,6 +4594,7 @@ var $;
         sourcesCSS({ path, exclude }) {
             return this.sourcesAll({ path, exclude }).filter(src => /(css)$/.test(src.ext()));
         }
+        static dependors = {};
         srcDeps(path) {
             const src = $.$mol_file.absolute(path);
             let ext = src.ext();
@@ -5251,7 +5279,6 @@ var $;
             return [target];
         }
     }
-    $mol_build.dependors = {};
     __decorate([
         $.$mol_mem
     ], $mol_build.prototype, "server", null);
@@ -5509,10 +5536,6 @@ var $;
 var $;
 (function ($) {
     class $mol_server extends $.$mol_object {
-        constructor() {
-            super(...arguments);
-            this.connections = new Set();
-        }
         express() {
             var express = $node['express']();
             this.expressHandlers().forEach(plugin => express.use(plugin));
@@ -5534,6 +5557,7 @@ var $;
             });
             return server;
         }
+        connections = new Set();
         socket() {
             const socket = new $node.ws.Server({
                 server: this.http(),
@@ -5737,6 +5761,7 @@ var $;
 var $;
 (function ($) {
     class $mol_build_server extends $.$mol_server {
+        static trace = false;
         expressGenerator() {
             return $.$mol_fiber_root((req, res, next) => {
                 try {
@@ -5843,7 +5868,6 @@ var $;
             });
         }
     }
-    $mol_build_server.trace = false;
     __decorate([
         $.$mol_mem_key
     ], $mol_build_server.prototype, "generate", null);

@@ -91,9 +91,17 @@ var $;
 var $;
 (function ($) {
     class $mol_func_sandbox {
-        constructor(...contexts) {
-            this.contexts = contexts;
-        }
+        static blacklist = new Set([
+            (function () { }).constructor,
+            (async function () { }).constructor,
+            (function* () { }).constructor,
+            (async function* () { }).constructor,
+            eval,
+            setTimeout,
+            setInterval,
+        ]);
+        static whitelist = new WeakSet();
+        static _make;
         static get make() {
             if (this._make)
                 return this._make;
@@ -201,22 +209,17 @@ var $;
                 };
             }).bind(null, context_default);
         }
+        constructor(...contexts) {
+            this.contexts = contexts;
+        }
+        contexts;
+        _eval;
         get eval() {
             if (this._eval)
                 return this._eval;
             return this._eval = $mol_func_sandbox.make(...this.contexts);
         }
     }
-    $mol_func_sandbox.blacklist = new Set([
-        (function () { }).constructor,
-        (async function () { }).constructor,
-        (function* () { }).constructor,
-        (async function* () { }).constructor,
-        eval,
-        setTimeout,
-        setInterval,
-    ]);
-    $mol_func_sandbox.whitelist = new WeakSet();
     $.$mol_func_sandbox = $mol_func_sandbox;
 })($ || ($ = {}));
 //sandbox.js.map
@@ -375,13 +378,9 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    var _a;
     class $mol_object2 {
-        constructor(init) {
-            this[_a] = null;
-            if (init)
-                init(this);
-        }
+        static $ = $;
+        [$.$mol_ambient_ref] = null;
         get $() {
             if (this[$.$mol_ambient_ref])
                 return this[$.$mol_ambient_ref];
@@ -394,9 +393,12 @@ var $;
             this[$.$mol_ambient_ref] = next;
         }
         static create(init) {
-            return new this(init);
+            const obj = new this;
+            if (init)
+                init(obj);
+            return obj;
         }
-        static [(_a = $.$mol_ambient_ref, Symbol.toPrimitive)]() {
+        static [Symbol.toPrimitive]() {
             return this.toString();
         }
         static toString() {
@@ -415,7 +417,6 @@ var $;
             return this.toString();
         }
     }
-    $mol_object2.$ = $;
     $.$mol_object2 = $mol_object2;
 })($ || ($ = {}));
 //object2.js.map
@@ -449,6 +450,13 @@ var $;
 (function ($) {
     $.$mol_tree_convert = Symbol('$mol_tree_convert');
     class $mol_tree extends $.$mol_object2 {
+        type;
+        data;
+        sub;
+        baseUri;
+        row;
+        col;
+        length;
         constructor(config = {}) {
             super();
             this.type = config.type || '';
