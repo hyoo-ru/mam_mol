@@ -4,4 +4,4 @@ $mol_deck $mol_list
 		<= Switch $mol_switch
 			value?val <=> current?val \0
 			options <= switch_options *
-		<= Content $mol_deck_item
+		<= Content $mol_view
