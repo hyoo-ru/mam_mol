@@ -1,9 +1,7 @@
 $mol_deck $mol_list
-	items /$mol_deck_item
+	items /$mol_view
 	rows /$mol_view
 		<= Switch $mol_switch
 			value?val <=> current?val \0
 			options <= switch_options *
 		<= Content $mol_deck_item
-$mol_deck_item $mol_view
-	title \

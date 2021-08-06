@@ -21,6 +21,6 @@ The component which arrange content in multiple tabs.
 
 ## Properties $mol_deck
 
-**`items() : $mol_deck_item[]`**
+**`items() : $mol_view[]`**
 
 Returns list of content elements. Property *title* will be display in tab.
