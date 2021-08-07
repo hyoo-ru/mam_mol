@@ -54,6 +54,8 @@ $mol_plot_graph $mol_svg_group
 	points /readonly(number)[]
 	front /$mol_svg
 	back /$mol_svg
+	Hint $mol_svg_title
+		title <= hint <= title \
 	hue NaN
 	Sample null
 

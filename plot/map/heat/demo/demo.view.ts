@@ -25,7 +25,7 @@ namespace $.$$ {
 			
 			return Array.from(
 				{ length: count_x * count_y },
-				()=> Math.floor( Math.random() * count_z )
+				()=> Math.floor( Math.random() * count_z ) * 1000
 			)
 			
 		}

@@ -1,0 +1,4 @@
+$mol_svg_title $mol_svg
+	dom_name \title
+	sub /
+		<= title
