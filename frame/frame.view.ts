@@ -1,12 +1,10 @@
 namespace $.$$ {
 	export class $mol_frame extends $.$mol_frame {
 
-		dom_node! : ( next? : HTMLIFrameElement )=> HTMLIFrameElement
-		
 		@ $mol_mem
 		window() {
 
-			const node = this.dom_node()
+			const node = this.dom_node() as HTMLIFrameElement
 			
 			this.uri_resource()
 			
@@ -41,7 +39,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		uri_listener() {
-			const node = this.dom_node()
+			const node = this.dom_node() as HTMLIFrameElement
 			return new $mol_dom_listener(
 				$mol_dom_context,
 				'message',
