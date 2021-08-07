@@ -41,7 +41,9 @@ namespace $.$$ {
 		}
 		
 		size_real() {
-			return new this.$.$mol_vector_2d(this.width() , this.height())
+			const rect = this.view_rect()
+			if( !rect ) return new this.$.$mol_vector_2d( 1, 1 )
+			return new this.$.$mol_vector_2d( rect.width, rect.height )
 		}
 
 		view_box() {
@@ -64,13 +66,13 @@ namespace $.$$ {
 
 			return new this.$.$mol_vector_2d(
 				new this.$.$mol_vector_range(left, right),
-				new this.$.$mol_vector_range(bottom, top),
+				new this.$.$mol_vector_range(top, bottom),
 			)
 		}
 
 		scale_default() {
 			const limits = this.scale_limit()
-			return new $mol_vector_2d( limits.x.min, limits.y.min )
+			return new $mol_vector_2d( limits.x.min, limits.y.max )
 		}
 
 		@ $mol_mem
