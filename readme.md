@@ -534,6 +534,7 @@ Some libs are already published to NPM:
 - [$mol_crypto](crypto) - Efficient cryptographic algorithms.
 - [$mol_db](db) - Static typed IndexedDB wrapper with auto migrations.
 - [$hyoo_crowd](https://github.com/hyoo-ru/crowd.hyoo.ru) - Conflict-free Reinterpretable Ordered Washed Data.
+- [$mol_plot](plot) - [Fastest](https://bench.hyoo.ru/app/#!bench=https%3A%2F%2Fbench.hyoo.ru%2Fchart%2Frope%2F/sample=canvasjs~mol~chartjs/sort=update) plot lib for vector graphics.
 
 All of them are very small, powerfull and fastest. Use it for your pleasure.
 
