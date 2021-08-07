@@ -4,8 +4,8 @@ Fastest plot lib for vector graphics.
 
 ## Benchmarks
 
-* [chart/rope](chart/rope) - Line graphs rendering by charts libraries ([online](http://bench.hyoo.ru/chart/rope/#sort=fill/sample=hcharts~mol))
-* [chart/bar](chart/bar) - Bar graphs rendering by charts libraries ([online](http://bench.hyoo.ru/chart/bar/#sort=fill/sample=hcharts~mol))
+* [Ropes](http://bench.hyoo.ru/chart/rope/#sort=fill/sample=hcharts~mol)
+* [Bars](http://bench.hyoo.ru/chart/bar/#sort=fill/sample=hcharts~mol)
 
 ## Real life usages
 
