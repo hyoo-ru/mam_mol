@@ -1,12 +1,10 @@
 namespace $.$$ {
 	export class $mol_embed_native extends $.$mol_embed_native {
 
-		dom_node! : ( next? : HTMLIFrameElement )=> HTMLObjectElement
-		
 		@ $mol_mem
 		loaded() {
 
-			const node = this.dom_node()
+			const node = this.dom_node() as HTMLObjectElement
 			
 			this.uri_resource()
 			
@@ -41,7 +39,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		uri_listener() {
-			const node = this.dom_node()
+			const node = this.dom_node() as HTMLObjectElement
 			return new $mol_dom_listener(
 				$mol_dom_context,
 				'message',
