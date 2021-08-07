@@ -994,29 +994,22 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_plot_bar extends $mol_plot_graph {
-        style(): {
-            "stroke-width": string;
-            color: string;
-        };
-        sub(): readonly any[];
+    class $mol_plot_group extends $mol_plot_graph {
+        sub(): readonly $mol_plot_graph[];
         Sample(): $mol_plot_graph_sample;
-        stroke_width(): string;
-        curve(): string;
-        Curve(): $mol_svg_path;
+        graphs(): readonly $mol_plot_graph[];
+        graphs_enriched(): readonly $mol_plot_graph[];
+        graph_samples(): readonly $mol_view[];
     }
 }
 
-declare namespace $ {
-}
-
 declare namespace $.$$ {
-    class $mol_plot_bar extends $.$mol_plot_bar {
-        indexes(): number[];
-        curve(): string;
-        stroke_width(): string;
-        color(): string;
+    class $mol_plot_group extends $.$mol_plot_group {
+        graphs_enriched(): readonly $.$mol_plot_graph[];
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
+        graph_samples(): any[];
+        back(): $mol_plot_graph[];
+        front(): $mol_plot_graph[];
     }
 }
 
@@ -1054,6 +1047,71 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_plot_map_heat extends $mol_plot_group {
+        series_z(): readonly number[];
+        graphs(): readonly any[];
+        Level(z: any): $mol_plot_map_heat_level;
+        Sample(): $mol_plot_graph_sample;
+        level_graphs(): readonly any[];
+        level_hint(z: any): string;
+        level_points(z: any): readonly any[];
+        level_opacity(z: any): string;
+        level_diameter(): number;
+        level_aspect(): number;
+    }
+    class $mol_plot_map_heat_level extends $mol_plot_dot {
+        style(): {
+            opacity: string;
+            "stroke-width": number;
+            color: string;
+        };
+        opacity(): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_plot_map_heat extends $.$mol_plot_map_heat {
+        levels(): number[];
+        level_graphs(): $mol_plot_map_heat_level[];
+        level_points(level: number): (readonly number[])[];
+        level_opacity(level: number): string;
+        level_diameter(): number;
+        level_aspect(): number;
+        level_hint(index: number): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_plot_bar extends $mol_plot_graph {
+        style(): {
+            "stroke-width": string;
+            color: string;
+        };
+        sub(): readonly any[];
+        Sample(): $mol_plot_graph_sample;
+        stroke_width(): string;
+        curve(): string;
+        Curve(): $mol_svg_path;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_plot_bar extends $.$mol_plot_bar {
+        indexes(): number[];
+        curve(): string;
+        stroke_width(): string;
+        color(): string;
+        dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
+    }
+}
+
+declare namespace $ {
     class $mol_plot_fill extends $mol_plot_graph {
         threshold(): number;
         spacing(): number;
@@ -1072,26 +1130,6 @@ declare namespace $.$$ {
         indexes(): number[];
         curve(): string;
         back(): this[];
-    }
-}
-
-declare namespace $ {
-    class $mol_plot_group extends $mol_plot_graph {
-        sub(): readonly $mol_plot_graph[];
-        Sample(): $mol_plot_graph_sample;
-        graphs(): readonly $mol_plot_graph[];
-        graphs_enriched(): readonly $mol_plot_graph[];
-        graph_samples(): readonly $mol_view[];
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_plot_group extends $.$mol_plot_group {
-        graphs_enriched(): readonly $.$mol_plot_graph[];
-        dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
-        graph_samples(): any[];
-        back(): $mol_plot_graph[];
-        front(): $mol_plot_graph[];
     }
 }
 
@@ -1291,6 +1329,70 @@ declare namespace $.$$ {
         background_y(): string;
         title_pos_y(): string;
         background_height(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_plot_mark_cross extends $mol_plot_graph {
+        labels(): readonly string[];
+        title_x_gap(): number;
+        threshold(): number;
+        graphs(): readonly $mol_plot_graph[];
+        dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
+        sub(): readonly any[];
+        dimensions_x(): $mol_vector_range<number>;
+        dimensions_y(): $mol_vector_range<number>;
+        curve(): string;
+        Curve(): $mol_svg_path;
+        title_x_pos_x(): string;
+        title_x_pos_y(): string;
+        title_x(): string;
+        Label_x(): $$.$mol_svg_text_box;
+        title_y_pos_x(): string;
+        title_y_pos_y(): string;
+        title_y(): string;
+        Label_y(): $$.$mol_svg_text_box;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_plot_mark_cross extends $.$mol_plot_mark_cross {
+        nearest(): {
+            value: $mol_vector_2d<number>;
+            scaled: $mol_vector_2d<number>;
+            index: number;
+        } | null;
+        curve(): string;
+        title_x(): string;
+        title_x_pos_x(): string;
+        title_x_pos_y(): string;
+        title_y(): string;
+        title_y_pos_y(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_plot_mark_hor extends $mol_plot_ruler_hor {
+        labels(): readonly string[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_plot_mark_hor extends $.$mol_plot_mark_hor {
+        series_x(): readonly number[];
+        labels(): readonly string[];
+        visible_indexes(): number[];
+        curve(): string;
+        label_text(index: number): string;
+        labels_formatted(): $mol_svg_text[];
+        label_pos_x(index: number): string;
+        label_pos_y(index: number): string;
     }
 }
 

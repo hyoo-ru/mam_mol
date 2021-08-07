@@ -243,16 +243,10 @@ $mol_plot_line $mol_plot_graph
 		color <= color
 		type <= type
 
-$mol_plot_bar $mol_plot_graph
-	style *
-		^
-		stroke-width <= stroke_width \1rem
-	sub /
-		<= Hint
-		<= Curve $mol_svg_path
-			geometry <= curve \
+$mol_plot_group $mol_plot_graph
+	sub <= graphs_enriched <= graphs /$mol_plot_graph
 	Sample $mol_plot_graph_sample
-		color <= color
+		sub <= graph_samples /$mol_view
 
 $mol_plot_dot $mol_plot_graph
 	points_max Infinity
@@ -268,6 +262,35 @@ $mol_plot_dot $mol_plot_graph
 	Sample $mol_plot_graph_sample
 		color <= color
 
+$mol_plot_map_heat $mol_plot_group
+	series_z /number
+	graphs <= level_graphs /
+	Level!z $mol_plot_map_heat_level
+		hint <= level_hint!z \
+		points <= level_points!z /
+		opacity <= level_opacity!z \1
+		diameter <= level_diameter 10
+		aspect <= level_aspect 1
+	-
+	Sample $mol_plot_graph_sample
+		color <= color
+
+$mol_plot_map_heat_level $mol_plot_dot
+	style *
+		^
+		opacity <= opacity \1
+
+$mol_plot_bar $mol_plot_graph
+	style *
+		^
+		stroke-width <= stroke_width \1rem
+	sub /
+		<= Hint
+		<= Curve $mol_svg_path
+			geometry <= curve \
+	Sample $mol_plot_graph_sample
+		color <= color
+
 $mol_plot_fill $mol_plot_graph
 	threshold 4
 	spacing 2
@@ -276,11 +299,6 @@ $mol_plot_fill $mol_plot_graph
 			geometry <= curve \
 	Sample $mol_plot_graph_sample
 		color <= color
-
-$mol_plot_group $mol_plot_graph
-	sub <= graphs_enriched <= graphs /$mol_plot_graph
-	Sample $mol_plot_graph_sample
-		sub <= graph_samples /$mol_view
 
 $mol_svg_text $mol_svg
 	dom_name \text
@@ -371,3 +389,30 @@ $mol_plot_ruler_hor $mol_plot_ruler
 	title_pos_y \100%
 	label_pos_y!v <= title_pos_y
 	background_width \100%
+
+$mol_plot_mark_cross $mol_plot_graph
+	labels /string
+	title_x_gap 4
+	threshold 16
+	graphs /$mol_plot_graph
+	dimensions $mol_vector_2d /
+		<= dimensions_x $mol_vector_range /
+			Infinity
+			-Infinity
+		<= dimensions_y $mol_vector_range /
+			Infinity
+			-Infinity
+	sub /
+		<= Curve $mol_svg_path
+			geometry <= curve \
+		<= Label_x $mol_svg_text_box
+			pos_x <= title_x_pos_x \0
+			pos_y <= title_x_pos_y \100%
+			text <= title_x \
+		<= Label_y $mol_svg_text_box
+			pos_x <= title_y_pos_x \0
+			pos_y <= title_y_pos_y \0
+			text <= title_y \
+
+$mol_plot_mark_hor $mol_plot_ruler_hor
+	labels /string
