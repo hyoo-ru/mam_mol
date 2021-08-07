@@ -15,6 +15,7 @@ namespace $.$$ {
 				graph.viewport = ()=> this.viewport()
 				graph.cursor_position = ()=> this.cursor_position()
 				graph.gap = ()=> this.gap()
+				graph.title = ()=> this.title()
 			}
 			return graphs
 		}

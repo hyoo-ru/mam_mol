@@ -23,6 +23,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Level!z $mol_plot_map_heat_level
+		 * 	hint <= level_hint!z
 		 * 	points <= level_points!z
 		 * 	opacity <= level_opacity!z
 		 * 	diameter <= level_diameter
@@ -33,6 +34,7 @@ namespace $ {
 		Level(z: any) {
 			const obj = new this.$.$mol_plot_map_heat_level()
 			
+			obj.hint = () => this.level_hint(z)
 			obj.points = () => this.level_points(z)
 			obj.opacity = () => this.level_opacity(z)
 			obj.diameter = () => this.level_diameter()
@@ -63,6 +65,15 @@ namespace $ {
 		level_graphs() {
 			return [
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * level_hint!z \
+		 * ```
+		 */
+		level_hint(z: any) {
+			return ""
 		}
 		
 		/**

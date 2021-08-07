@@ -710,6 +710,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_svg_title extends $mol_svg {
+        dom_name(): string;
+        sub(): readonly any[];
+    }
+}
+
+declare namespace $ {
     class $mol_plot_graph extends $mol_svg_group {
         series_x(): readonly number[];
         series_y(): readonly number[];
@@ -731,6 +738,7 @@ declare namespace $ {
         points(): readonly (readonly number[])[];
         front(): readonly $mol_svg[];
         back(): readonly $mol_svg[];
+        Hint(): $mol_svg_title;
         hue(): number;
         Sample(): any;
         type(): string;
@@ -743,6 +751,8 @@ declare namespace $ {
         dimensions_y(): $mol_vector_range<number>;
         gap_x(): $mol_vector_range<number>;
         gap_y(): $mol_vector_range<number>;
+        title(): string;
+        hint(): string;
     }
     class $mol_plot_graph_sample extends $mol_view {
         attr(): {

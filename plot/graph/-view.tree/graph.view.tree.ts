@@ -221,6 +221,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Hint $mol_svg_title title <= hint
+		 * ```
+		 */
+		@ $mol_mem
+		Hint() {
+			const obj = new this.$.$mol_svg_title()
+			
+			obj.title = () => this.hint()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * hue NaN
 		 * ```
 		 */
@@ -389,6 +403,24 @@ namespace $ {
 			)
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * title \
+		 * ```
+		 */
+		title() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * hint <= title
+		 * ```
+		 */
+		hint() {
+			return this.title()
 		}
 	}
 	

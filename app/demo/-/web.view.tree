@@ -517,6 +517,11 @@ $mol_card_demo $mol_demo_small
 $mol_svg_group $mol_svg
 	dom_name \g
 
+$mol_svg_title $mol_svg
+	dom_name \title
+	sub /
+		<= title
+
 $mol_plot_graph $mol_svg_group
 	series_x /number
 	series_y /number
@@ -573,6 +578,8 @@ $mol_plot_graph $mol_svg_group
 	points /readonly(number)[]
 	front /$mol_svg
 	back /$mol_svg
+	Hint $mol_svg_title
+		title <= hint <= title \
 	hue NaN
 	Sample null
 
@@ -760,6 +767,7 @@ $mol_plot_bar $mol_plot_graph
 		^
 		stroke-width <= stroke_width \1rem
 	sub /
+		<= Hint
 		<= Curve $mol_svg_path
 			geometry <= curve \
 	Sample $mol_plot_graph_sample
@@ -770,6 +778,7 @@ $mol_plot_line $mol_plot_graph
 	spacing 2
 	color_fill \none
 	sub /
+		<= Hint
 		<= Curve $mol_svg_path
 			geometry <= curve \
 	-
@@ -784,6 +793,7 @@ $mol_plot_dot $mol_plot_graph
 		^
 		stroke-width <= diameter 8
 	sub /
+		<= Hint
 		<= Curve $mol_svg_path
 			geometry <= curve \
 	-
@@ -2101,6 +2111,7 @@ $mol_plot_map_heat $mol_plot_group
 	series_z /number
 	graphs <= level_graphs /
 	Level!z $mol_plot_map_heat_level
+		hint <= level_hint!z \
 		points <= level_points!z /
 		opacity <= level_opacity!z \1
 		diameter <= level_diameter 10

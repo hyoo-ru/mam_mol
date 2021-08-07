@@ -2818,6 +2818,23 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_svg_title extends $.$mol_svg {
+        dom_name() {
+            return "title";
+        }
+        sub() {
+            return [
+                this.title()
+            ];
+        }
+    }
+    $.$mol_svg_title = $mol_svg_title;
+})($ || ($ = {}));
+//title.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_plot_graph extends $.$mol_svg_group {
         series_x() {
             return [];
@@ -2885,6 +2902,11 @@ var $;
         back() {
             return [];
         }
+        Hint() {
+            const obj = new this.$.$mol_svg_title();
+            obj.title = () => this.hint();
+            return obj;
+        }
         hue() {
             return NaN;
         }
@@ -2929,6 +2951,12 @@ var $;
             const obj = new this.$.$mol_vector_range(0, 0);
             return obj;
         }
+        title() {
+            return "";
+        }
+        hint() {
+            return this.title();
+        }
     }
     __decorate([
         $.$mol_mem
@@ -2948,6 +2976,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_plot_graph.prototype, "gap", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_plot_graph.prototype, "Hint", null);
     __decorate([
         $.$mol_mem
     ], $mol_plot_graph.prototype, "viewport_x", null);
@@ -4073,6 +4104,7 @@ var $;
         }
         sub() {
             return [
+                this.Hint(),
                 this.Curve()
             ];
         }
@@ -4175,6 +4207,7 @@ var $;
         }
         sub() {
             return [
+                this.Hint(),
                 this.Curve()
             ];
         }
@@ -4312,6 +4345,7 @@ var $;
         }
         sub() {
             return [
+                this.Hint(),
                 this.Curve()
             ];
         }
@@ -4494,7 +4528,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/plot/fill/fill.view.css", "[mol_plot_fill] {\n\tstroke: none;\n\tstroke-width: 0;\n\topacity: .1;\n\tfill: currentColor;\n}\n\n[mol_plot_fill_sample] {\n\topacity: .1;\n\tbackground: currentColor;\n\tposition: absolute;\n\tbottom: 0;\n\ttop: .75em;\n\tleft: 0;\n\tright: 0;\n}\n");
+    $.$mol_style_attach("mol/plot/fill/fill.view.css", "[mol_plot_fill] {\n\tstroke: none;\n\tstroke-width: 0;\n\topacity: .1;\n\tfill: currentColor;\n\tpointer-events: none;\n}\n\n[mol_plot_fill_sample] {\n\topacity: .1;\n\tbackground: currentColor;\n\tposition: absolute;\n\tbottom: 0;\n\ttop: .75em;\n\tleft: 0;\n\tright: 0;\n}\n");
 })($ || ($ = {}));
 //fill.view.css.js.map
 ;
@@ -4631,6 +4665,7 @@ var $;
                     graph.viewport = () => this.viewport();
                     graph.cursor_position = () => this.cursor_position();
                     graph.gap = () => this.gap();
+                    graph.title = () => this.title();
                 }
                 return graphs;
             }

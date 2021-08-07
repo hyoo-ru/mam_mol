@@ -39,5 +39,10 @@ namespace $.$$ {
 			return scale[1] / scale[0]
 		}
 		
+		@ $mol_mem
+		level_hint( index: number ) {
+			return this.levels()[ index ].toLocaleString()
+		}
+		
 	}
 }

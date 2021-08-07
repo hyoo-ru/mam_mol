@@ -35,11 +35,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Curve
+		 * sub /
+		 * 	<= Hint
+		 * 	<= Curve
 		 * ```
 		 */
 		sub() {
 			return [
+				this.Hint(),
 				this.Curve()
 			] as readonly any[]
 		}

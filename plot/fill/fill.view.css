@@ -3,6 +3,7 @@
 	stroke-width: 0;
 	opacity: .1;
 	fill: currentColor;
+	pointer-events: none;
 }
 
 [mol_plot_fill_sample] {
