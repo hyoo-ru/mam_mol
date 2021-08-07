@@ -19,6 +19,8 @@ Fastest plot lib for vector graphics.
 npm install mol_plot_all
 ```
 
+[![](https://badgen.net/bundlephobia/minzip/mol_plot_all)](https://bundlephobia.com/package/mol_plot_all)
+
 ```javascript
 import {
 	$mol_plot_pane,
