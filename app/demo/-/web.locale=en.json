@@ -112,6 +112,7 @@
 	"$mol_plot_demo_Time_title": "ms",
 	"$mol_plot_demo_Voltage_title": "V",
 	"$mol_plot_demo_title": "Dynamic lightweight graphs",
+	"$mol_plot_map_heat_demo_title": "Dynamic Heat Map Graphs",
 	"$mol_pop_demo_bubble_hint": "This is $mol_pop",
 	"$mol_pop_demo_show_text": "?",
 	"$mol_pop_demo_title": "Pop up block with various alignment",

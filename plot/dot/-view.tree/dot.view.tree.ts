@@ -12,6 +12,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspect 1
+		 * ```
+		 */
+		aspect() {
+			return 1
+		}
+		
+		/**
+		 * ```tree
 		 * style *
 		 * 	^
 		 * 	stroke-width <= diameter

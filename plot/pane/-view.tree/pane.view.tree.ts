@@ -193,7 +193,7 @@ namespace $ {
 		 * ```tree
 		 * scale?val $mol_vector_2d /
 		 * 	1
-		 * 	1
+		 * 	-1
 		 * ```
 		 */
 		@ $mol_mem
@@ -201,7 +201,7 @@ namespace $ {
 			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_vector_2d(
 				1,
-				1
+				-1
 			)
 			
 			return obj
@@ -209,24 +209,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * scale_x?val 0
+		 * scale_x?val 1
 		 * ```
 		 */
 		@ $mol_mem
 		scale_x(val?: any) {
 			if ( val !== undefined ) return val as never
-			return 0
+			return 1
 		}
 		
 		/**
 		 * ```tree
-		 * scale_y?val 0
+		 * scale_y?val -1
 		 * ```
 		 */
 		@ $mol_mem
 		scale_y(val?: any) {
 			if ( val !== undefined ) return val as never
-			return 0
+			return -1
 		}
 		
 		/**
@@ -320,14 +320,12 @@ namespace $ {
 		 * ```tree
 		 * plugins /
 		 * 	^
-		 * 	<= Meter
 		 * 	<= Touch
 		 * ```
 		 */
 		plugins() {
 			return [
 				...super.plugins(),
-				this.Meter(),
 				this.Touch()
 			] as readonly any[]
 		}
@@ -435,14 +433,14 @@ namespace $ {
 		 * ```tree
 		 * scale_limit_y $mol_vector_range /
 		 * 	0
-		 * 	Infinity
+		 * 	-Infinity
 		 * ```
 		 */
 		@ $mol_mem
 		scale_limit_y() {
 			const obj = new this.$.$mol_vector_range(
 				0,
-				Infinity
+				-Infinity
 			)
 			
 			return obj
@@ -513,32 +511,31 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * width
-		 * ```
-		 */
-		width() {
-			return this.Meter().width()
-		}
-		
-		/**
-		 * ```tree
-		 * height
-		 * ```
-		 */
-		height() {
-			return this.Meter().height()
-		}
-		
-		/**
-		 * ```tree
-		 * Meter $mol_meter
-		 * 	width => width
-		 * 	height => height
+		 * zoom?val 1
 		 * ```
 		 */
 		@ $mol_mem
-		Meter() {
-			const obj = new this.$.$mol_meter()
+		zoom(val?: any) {
+			if ( val !== undefined ) return val as never
+			return 1
+		}
+		
+		/**
+		 * ```tree
+		 * drawn?val $mol_vector_2d /
+		 * 	/number
+		 * 	/number
+		 * ```
+		 */
+		@ $mol_mem
+		drawn(val?: any) {
+			if ( val !== undefined ) return val as never
+			const obj = new this.$.$mol_vector_2d(
+				[
+				] as readonly number[],
+				[
+				] as readonly number[]
+			)
 			
 			return obj
 		}
@@ -546,18 +543,20 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Touch $mol_touch
-		 * 	zoom?val <=> scale_x?val
+		 * 	zoom?val <=> zoom?val
 		 * 	pan?val <=> shift?val
 		 * 	pos?val <=> cursor_position?val
+		 * 	drawn?val <=> drawn?val
 		 * ```
 		 */
 		@ $mol_mem
 		Touch() {
 			const obj = new this.$.$mol_touch()
 			
-			obj.zoom = (val?: any) => this.scale_x(val)
+			obj.zoom = (val?: any) => this.zoom(val)
 			obj.pan = (val?: any) => this.shift(val)
 			obj.pos = (val?: any) => this.cursor_position(val)
+			obj.drawn = (val?: any) => this.drawn(val)
 			
 			return obj
 		}

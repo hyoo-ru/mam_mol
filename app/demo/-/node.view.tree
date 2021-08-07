@@ -597,17 +597,6 @@ $mol_chart_legend $mol_scroll
 				sub /
 					<= graph_title!id \
 
-$mol_meter $mol_plugin
-	zoom 1
-	-
-	width?val 0
-	height?val 0
-	-
-	left?val 0
-	right?val 0
-	bottom?val 0
-	top?val 0
-
 $mol_touch $mol_plugin
 	start_zoom?val 0
 	start_distance?val 0
@@ -701,15 +690,15 @@ $mol_plot_pane $mol_svg_root
 			Infinity
 		<= scale_limit_y $mol_vector_range /
 			0
-			Infinity
+			-Infinity
 	scale_default $mol_vector_2d /
 		0
 		0
 	scale?val $mol_vector_2d /
 		1
-		1
-	scale_x?val 0
-	scale_y?val 0
+		-1
+	scale_x?val 1
+	scale_y?val -1
 	size $mol_vector_2d /
 		0
 		0
@@ -732,13 +721,13 @@ $mol_plot_pane $mol_svg_root
 	-
 	plugins /
 		^
-		<= Meter $mol_meter
-			width => width
-			height => height
 		<= Touch $mol_touch
-			zoom?val <=> scale_x?val
+			zoom?val <=> zoom?val 1
 			pan?val <=> shift?val
 			pos?val <=> cursor_position?val
+			drawn?val <=> drawn?val $mol_vector_2d /
+				/number
+				/number
 	event *
 		^
 		dblclick?event <=> reset?event null
@@ -755,6 +744,8 @@ $mol_chart $mol_view
 		<= Legend $mol_chart_legend
 			graphs <= graphs_colored
 		<= Plot $mol_plot_pane
+			scale_x?val => zoom?val
+			zoom?val <=> zoom?val
 			gap_left <= gap_left
 			gap_right <= gap_right
 			gap_bottom <= gap_bottom
@@ -788,6 +779,7 @@ $mol_plot_line $mol_plot_graph
 
 $mol_plot_dot $mol_plot_graph
 	points_max Infinity
+	aspect 1
 	style *
 		^
 		stroke-width <= diameter 8
@@ -1014,7 +1006,7 @@ $mol_chart_demo_styles $mol_demo_large
 $mol_chart_demo_forces $mol_demo_large
 	title @ \Fake wheel forces
 	samples_count 10000
-	points_max 600
+	points_max 1000
 	sub /
 		<= Chart $mol_chart
 			graphs /
@@ -1943,6 +1935,17 @@ $mol_message_demo $mol_demo_small
 			avatar_link \https://en.wikipedia.org/wiki/Great_Teacher_Onizuka
 			text \The story focuses on 22-year-old ex-[bōsōzoku](https://en.wikipedia.org/wiki/Bōsōzoku) member Eikichi Onizuka, who becomes a teacher at a private middle school, Holy Forest Academy, in [Tokyo](https://en.wikipedia.org/wiki/Tokyo), [Japan](https://en.wikipedia.org/wiki/Japan). It won the 1998 [Kodansha Manga Award](https://en.wikipedia.org/wiki/Kodansha_Manga_Award) for shōnen and is a continuation of Tohru Fujisawa's other manga series [Shonan Junai Gumi](https://en.wikipedia.org/wiki/Shonan_Junai_Gumi) (lit. "Shōnan True Love Group") and Bad Company, both of which focus on the life of Onizuka before he becomes a teacher in Great Teacher Onizuka.
 
+$mol_meter $mol_plugin
+	zoom 1
+	-
+	width?val 0
+	height?val 0
+	-
+	left?val 0
+	right?val 0
+	bottom?val 0
+	top?val 0
+
 $mol_meter_demo $mol_demo_small
 	title @ \Real time offset and size metering
 	plugins /
@@ -2093,6 +2096,38 @@ $mol_plot_demo $mol_demo_large
 					title <= Voltage_title @ \V
 				<= Time $mol_plot_ruler_hor
 					title <= Time_title @ \ms
+
+$mol_plot_map_heat $mol_plot_group
+	series_z /number
+	graphs <= level_graphs /
+	Level!z $mol_plot_map_heat_level
+		points <= level_points!z /
+		opacity <= level_opacity!z \1
+		diameter <= level_diameter 10
+		aspect <= level_aspect 1
+	-
+	Sample $mol_plot_graph_sample
+		color <= color
+
+$mol_plot_map_heat_level $mol_plot_dot
+	style *
+		^
+		opacity <= opacity \1
+
+$mol_plot_map_heat_demo $mol_demo_large
+	title @ \Dynamic Heat Map Graphs
+	count_x 20
+	count_y 200
+	count_z 20
+	sub /
+		<= Plot $mol_plot_pane
+			scale_y?val => zoom?val
+			zoom?val <=> zoom?val
+			graphs /
+				<= Terrain $mol_plot_map_heat
+					series_x <= terrain_x /number
+					series_y <= terrain_y /number
+					series_z <= terrain_z /number
 
 $mol_pop_demo $mol_demo_small
 	title @ \Pop up block with various alignment

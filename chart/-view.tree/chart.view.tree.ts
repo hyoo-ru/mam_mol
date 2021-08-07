@@ -113,6 +113,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * zoom?val
+		 * ```
+		 */
+		zoom(val?: any) {
+			return this.Plot().scale_x(val)
+		}
+		
+		/**
+		 * ```tree
 		 * graphs_colored
 		 * ```
 		 */
@@ -123,6 +132,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Plot $mol_plot_pane
+		 * 	scale_x?val => zoom?val
+		 * 	zoom?val <=> zoom?val
 		 * 	gap_left <= gap_left
 		 * 	gap_right <= gap_right
 		 * 	gap_bottom <= gap_bottom
@@ -137,6 +148,7 @@ namespace $ {
 		Plot() {
 			const obj = new this.$.$mol_plot_pane()
 			
+			obj.zoom = (val?: any) => this.zoom(val)
 			obj.gap_left = () => this.gap_left()
 			obj.gap_right = () => this.gap_right()
 			obj.gap_bottom = () => this.gap_bottom()

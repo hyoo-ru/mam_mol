@@ -21,11 +21,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * points_max 600
+		 * points_max 1000
 		 * ```
 		 */
 		points_max() {
-			return 600
+			return 1000
 		}
 		
 		/**

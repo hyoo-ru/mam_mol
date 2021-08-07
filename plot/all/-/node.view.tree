@@ -81,17 +81,6 @@ $mol_plot_graph_sample $mol_view
 		^
 		color <= color \black
 
-$mol_meter $mol_plugin
-	zoom 1
-	-
-	width?val 0
-	height?val 0
-	-
-	left?val 0
-	right?val 0
-	bottom?val 0
-	top?val 0
-
 $mol_touch $mol_plugin
 	start_zoom?val 0
 	start_distance?val 0
@@ -185,15 +174,15 @@ $mol_plot_pane $mol_svg_root
 			Infinity
 		<= scale_limit_y $mol_vector_range /
 			0
-			Infinity
+			-Infinity
 	scale_default $mol_vector_2d /
 		0
 		0
 	scale?val $mol_vector_2d /
 		1
-		1
-	scale_x?val 0
-	scale_y?val 0
+		-1
+	scale_x?val 1
+	scale_y?val -1
 	size $mol_vector_2d /
 		0
 		0
@@ -216,13 +205,13 @@ $mol_plot_pane $mol_svg_root
 	-
 	plugins /
 		^
-		<= Meter $mol_meter
-			width => width
-			height => height
 		<= Touch $mol_touch
-			zoom?val <=> scale_x?val
+			zoom?val <=> zoom?val 1
 			pan?val <=> shift?val
 			pos?val <=> cursor_position?val
+			drawn?val <=> drawn?val $mol_vector_2d /
+				/number
+				/number
 	event *
 		^
 		dblclick?event <=> reset?event null
@@ -258,6 +247,7 @@ $mol_plot_bar $mol_plot_graph
 
 $mol_plot_dot $mol_plot_graph
 	points_max Infinity
+	aspect 1
 	style *
 		^
 		stroke-width <= diameter 8
