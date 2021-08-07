@@ -89,12 +89,6 @@ namespace $.$$ {
 			
 			const action_type = this.action_type( event )
 			
-			if( !action_type ) return
-			if( action_type === 'draw' ) {
-				this.draw_continue( event )
-				return
-			}
-			
 			if (cursor_pos) {
 				
 				this.pos([
@@ -104,6 +98,12 @@ namespace $.$$ {
 				
 			}
 
+			if( !action_type ) return
+			if( action_type === 'draw' ) {
+				this.draw_continue( event )
+				return
+			}
+			
 			const start_pos = this.start_pos()
 			if( pos ) {
 				if( !start_pos ) return

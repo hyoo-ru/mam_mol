@@ -3566,17 +3566,17 @@ var $;
                 cursor_pos = this.event_coords(event).center();
                 pos = cursor_pos;
                 const action_type = this.action_type(event);
-                if (!action_type)
-                    return;
-                if (action_type === 'draw') {
-                    this.draw_continue(event);
-                    return;
-                }
                 if (cursor_pos) {
                     this.pos([
                         Math.max(0, cursor_pos[0]),
                         Math.max(0, cursor_pos[1]),
                     ]);
+                }
+                if (!action_type)
+                    return;
+                if (action_type === 'draw') {
+                    this.draw_continue(event);
+                    return;
                 }
                 const start_pos = this.start_pos();
                 if (pos) {
