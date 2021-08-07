@@ -4186,7 +4186,6 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_frame extends $.$mol_frame {
-        dom_node: (next?: HTMLIFrameElement) => HTMLIFrameElement;
         window(): Window;
         uri_resource(): string;
         _uri_sync: $mol_fiber | undefined;
