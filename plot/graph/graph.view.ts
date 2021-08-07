@@ -1,11 +1,17 @@
 namespace $.$$ {
 	export class $mol_plot_graph extends $.$mol_plot_graph {
+		
 		viewport() {
 			const size = this.size_real()
 			return new this.$.$mol_vector_2d(
 				new this.$.$mol_vector_range(0, size.x),
 				new this.$.$mol_vector_range(0, size.y),
 			)
+		}
+		
+		@ $mol_mem
+		indexes() {
+			return this.series_x().map( (_,i)=> i ) as readonly number[]
 		}
 
 		points() {

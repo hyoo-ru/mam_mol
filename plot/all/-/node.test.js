@@ -3014,6 +3014,9 @@ var $;
                 const size = this.size_real();
                 return new this.$.$mol_vector_2d(new this.$.$mol_vector_range(0, size.x), new this.$.$mol_vector_range(0, size.y));
             }
+            indexes() {
+                return this.series_x().map((_, i) => i);
+            }
             points() {
                 const [shift_x, shift_y] = this.shift();
                 const [scale_x, scale_y] = this.scale();
@@ -3045,6 +3048,9 @@ var $;
                 return [this];
             }
         }
+        __decorate([
+            $.$mol_mem
+        ], $mol_plot_graph.prototype, "indexes", null);
         __decorate([
             $.$mol_mem
         ], $mol_plot_graph.prototype, "series_x", null);
