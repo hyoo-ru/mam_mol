@@ -552,7 +552,8 @@ This project exists thanks to all the people who contribute.
 # Cool stuff
 
 - **[Commits visualization](http://ghv.artzub.com/#repo=mam_mol&user=hyoo-ru&climit=100000)**
-- **[Sources visualization](http://veniversum.me/git-visualizer/?owner=hyoo-ru&repo=mam_mol)**
+- **[Sources visualization (fennel)](http://veniversum.me/git-visualizer/?owner=hyoo-ru&repo=mam_mol)**
+- **[Sources visualization (foam)](https://octo-repo-visualization.vercel.app/?repo=hyoo-ru%2Fmam_mol)**
 
 # Donate
 
