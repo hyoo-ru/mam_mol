@@ -29,6 +29,8 @@ namespace $ {
 			return null
 		}
 		
+		_send_task: undefined | $mol_fiber
+		
 		@ $mol_mem_key
 		value< Key extends keyof $mol_store_shared_data >(
 			key: Key,
@@ -60,12 +62,15 @@ namespace $ {
 				
 				const val = store.value( suffix, next )
 				
-				$mol_fiber_defer( ()=>
-					this.send(
-						prefix,
-						store.delta(),
-					)
-				)
+				if( !this._send_task ) {
+					this._send_task = $mol_fiber_defer( ()=> {
+						this.send(
+							prefix,
+							store.delta(),
+						)
+						this._send_task = undefined
+					} )
+				}
 				
 				this.$.$mol_store_local.value( prefix, store.delta() )
 				
