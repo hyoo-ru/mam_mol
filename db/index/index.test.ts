@@ -22,11 +22,17 @@ namespace $ {
 				const { users } = trans.stores
 				await users.put( { name: 'Jin' }, 'jin' )
 				await users.put( { name: 'John' }, 'john' )
+				await users.put( { name: 'Bin' }, 'bin' )
 
 				const { names } = users.indexes
 				$mol_assert_like( await names.get([ 'Jin' ]), { name: 'Jin' } )
 				$mol_assert_like( await names.get([ 'John' ]), { name: 'John' } )
-				$mol_assert_like( await names.count(), 2 )
+				$mol_assert_like( await names.count(), 3 )
+				
+				$mol_assert_like(
+					await names.select( IDBKeyRange.bound( [ 'J' ], [ 'J\uFFFF' ] ) ),
+					[ { name: 'Jin' }, { name: 'John' } ],
+				)
 				
 				try {
 					await users.put( { name: 'Jin' }, 'jin2' )
