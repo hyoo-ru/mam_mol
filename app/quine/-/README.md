@@ -311,7 +311,7 @@ namespace $ {
 		
 		@ $mol_mem
 		greeting() : string {
-			const user_name = $mol_fetch.json( 'https://example.org/profile' ).name
+			const user_name = $mol_fetch.json( 'https://example.org/profile/name' ) as string
 			return `Hello, ${ user_name }!`
 		}
 		
