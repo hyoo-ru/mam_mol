@@ -1192,7 +1192,7 @@ namespace $ {
 				version[2] = eval(
 					this.$.$mol_exec( '' , 'npm' , 'view' , name , 'versions' ).stdout.toString().trim()
 				).slice(-1)[0].split('.')[2]
-			} catch() {}
+			} catch {}
 
 			version[2] = String( Number( version[2] ) + 1 )
 
