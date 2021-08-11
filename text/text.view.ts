@@ -121,14 +121,24 @@ namespace $.$$ {
 					}
 				}
 				
-				const span = this.Span( id )
-				span.type( name )
-				span.content(
-					name
-						? ([] as $mol_view[] ).concat.apply( [] , chunks.map( ( text , index )=> this.text2spans( `${id}/${index}` , text ) ) )
-						: [ found ]
-				)
-				spans.push( span )
+				if( name ) {
+					
+					const span = this.Span( id )
+					span.type( name )
+					span.content(
+						([] as $mol_view[] ).concat.apply( [] , chunks.map( ( text , index )=> this.text2spans( `${id}/${index}` , text ) ) )
+					)
+					spans.push( span )
+					
+				} else {
+					
+					const span = this.String( id )
+					span.haystack( found )
+					spans.push( span )
+					
+				}
+				
+				
 			} )
 			return spans
 		}
