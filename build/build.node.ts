@@ -1189,8 +1189,10 @@ namespace $ {
 			name = json.name || name
 			
 			try {
-				version[2] = this.$.$mol_exec( '' , 'npm' , 'view' , name , 'version' ).stdout.toString().trim().split('.')[2]
-			} catch { }
+				version[2] = eval(
+					this.$.$mol_exec( '' , 'npm' , 'view' , name , 'versions' ).stdout.toString().trim()
+				).slice(-1)[0].split('.')[2]
+			} catch() {}
 
 			version[2] = String( Number( version[2] ) + 1 )
 
