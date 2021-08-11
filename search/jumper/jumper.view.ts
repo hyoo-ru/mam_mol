@@ -11,7 +11,13 @@ namespace $.$$ {
 			if( !root ) return []
 			
 			const regexp = $mol_regexp.from( { needle } , { ignoreCase: true } )
-			return [ ... root.view_find( ( _, text = '' ) => regexp.test( text ) ) ]
+			
+			try {
+				return [ ... root.view_find( ( _, text = '' ) => regexp.test( text ) ) ]
+			} catch( error ) {
+				if(!( error instanceof Promise )) $mol_fail_hidden( error )
+				return []
+			}
 			
 		}
 
