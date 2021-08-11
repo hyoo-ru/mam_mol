@@ -7,8 +7,11 @@ namespace $.$$ {
 			const needle = this.query()
 			if( needle.length < 2 ) return []
 			
+			const root = this.Root()
+			if( !root ) return []
+			
 			const regexp = $mol_regexp.from( { needle } , { ignoreCase: true } )
-			return [ ... this.Root().view_find( ( _, text = '' ) => regexp.test( text ) ) ]
+			return [ ... root.view_find( ( _, text = '' ) => regexp.test( text ) ) ]
 			
 		}
 
