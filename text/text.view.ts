@@ -18,6 +18,8 @@ namespace $.$$ {
 					case 'table' : return this.Table( index )
 					case 'header' : return this.Header( index )
 					case 'quote' : return this.Quote( index )
+					case 'code' : return this.Code( index )
+					case 'code-indent' : return this.Code( index )
 				}
 				return this.Row( index )
 			} )
@@ -29,6 +31,11 @@ namespace $.$$ {
 		
 		header_content( index : number ) {
 			return this.text2spans( `${ index }` , this.tokens()[ index ].chunks[2] )
+		}
+		
+		code_text( index : number ) {
+			const token = this.tokens()[ index ]
+			return ( token.chunks[2] ?? token.chunks[0].replace( /^\t/gm , '' ) ).replace( /[\n\r]*$/ , '' )
 		}
 		
 		quote_text( index : number ) {
@@ -181,8 +188,6 @@ namespace $.$$ {
 			switch( token.name ) {
 				case 'header' : return this.text2spans( `${ indexBlock }` , token.chunks[2] )
 				case 'list' : return this.text2spans( `${ indexBlock }` , token.chunks[0] )
-				case 'code' : return this.code2spans( `${ indexBlock }` , token.chunks[2] )
-				case 'code-indent' : return this.code2spans( `${ indexBlock }` , token.chunks[0].replace( /[\n\r]*$/ , '\n' ).replace( /^\t/gm , '' ) )
 			}
 			
 			return this.text2spans( `${ indexBlock }` , token.chunks[0] )
