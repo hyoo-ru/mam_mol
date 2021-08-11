@@ -15,7 +15,6 @@ namespace $ {
 		assignees : $mol_github_user_json[]
 		milestone : { url : string }
 		comments : 2
-		closed_at : string
 		author_association : string
 		body : string
 		closed_by : $mol_github_user_json
@@ -83,9 +82,14 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		moment_closed() {
-			return new $mol_time_moment( this.json().updated_at )
+		moment_created() {
+			return new $mol_time_moment( this.json().created_at )
 		}
+
+		@ $mol_mem
+		moment_updated() {
+			return new $mol_time_moment( this.json().updated_at )
+		}	
 
 		@ $mol_mem
 		comments() {
