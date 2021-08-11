@@ -74,6 +74,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * String!id $mol_text_string needle <= highlight
+		 * ```
+		 */
+		@ $mol_mem_key
+		String(id: any) {
+			const obj = new this.$.$mol_text_string()
+			
+			obj.needle = () => this.highlight()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * Link!id $mol_text_link target <= link_target!id
 		 * ```
 		 */
@@ -199,6 +213,15 @@ namespace $ {
 		 * ```
 		 */
 		block_type(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * highlight \
+		 * ```
+		 */
+		highlight() {
 			return ""
 		}
 		
@@ -408,6 +431,29 @@ namespace $ {
 			if ( val !== undefined ) return val as never
 			return [
 			] as readonly any[]
+		}
+	}
+	
+	export class $mol_text_string extends $mol_dimmer {
+		
+		/**
+		 * ```tree
+		 * dom_name \span
+		 * ```
+		 */
+		dom_name() {
+			return "span"
+		}
+		
+		/**
+		 * ```tree
+		 * haystack?val \
+		 * ```
+		 */
+		@ $mol_mem
+		haystack(val?: any) {
+			if ( val !== undefined ) return val as never
+			return ""
 		}
 	}
 	

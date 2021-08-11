@@ -22,6 +22,10 @@
 	display: inline;
 }
 
+[mol_text_string] {
+	display: inline;
+}
+
 [mol_text_quote] {
 	box-shadow: inset 1px 0 0px 0px var(--mol_theme_line);
 }

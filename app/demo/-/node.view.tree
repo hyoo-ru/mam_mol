@@ -1858,6 +1858,8 @@ $mol_text $mol_list
 		sub <= block_content!id /
 		type <= block_type!id \
 	Span!id $mol_text_span
+	String!id $mol_text_string
+		needle <= highlight \
 	Link!id $mol_text_link
 		target <= link_target!id \_blank
 	Image!id $mol_text_image
@@ -1892,6 +1894,10 @@ $mol_text_span $mol_paragraph
 		^
 		mol_text_type <= type?val \
 	sub <= content?val /
+
+$mol_text_string $mol_dimmer
+	dom_name \span
+	haystack?val \
 
 $mol_text_link $mol_link_iconed
 	attr *

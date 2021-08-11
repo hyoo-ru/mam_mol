@@ -1664,6 +1664,7 @@ declare namespace $ {
         Quote(id: any): $$.$mol_text;
         Row(id: any): $mol_text_row;
         Span(id: any): $mol_text_span;
+        String(id: any): $mol_text_string;
         Link(id: any): $mol_text_link;
         Image(id: any): $mol_text_image;
         Header(id: any): $mol_text_header;
@@ -1674,6 +1675,7 @@ declare namespace $ {
         quote_text(id: any): string;
         block_content(id: any): readonly any[];
         block_type(id: any): string;
+        highlight(): string;
         link_target(id: any): string;
         header_level(id: any): number;
         header_content(id: any): readonly any[];
@@ -1705,6 +1707,10 @@ declare namespace $ {
         sub(): readonly any[];
         type(val?: any): string;
         content(val?: any): readonly any[];
+    }
+    class $mol_text_string extends $mol_dimmer {
+        dom_name(): string;
+        haystack(val?: any): string;
     }
     class $mol_text_link extends $mol_link_iconed {
         attr(): {

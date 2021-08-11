@@ -37,7 +37,7 @@ namespace $.$$ {
 			return [
 				this.Query() ,
 				... ( this.query().length > 0 ) ? [
-// 					this.Clear(),
+ 					this.Clear(),
 					this.Index(),
 				] : [] ,
 			]
