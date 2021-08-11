@@ -22,7 +22,8 @@
 	display: inline;
 }
 
-[mol_text_type="block"] {
+[mol_text_quote] {
+	box-shadow: inset 1px 0 0px 0px var(--mol_theme_line);
 }
 
 [mol_text_header] {
