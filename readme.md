@@ -311,7 +311,7 @@ namespace $ {
 		
 		@ $mol_mem
 		greeting() : string {
-			const user_name = $mol_fetch.json( 'https://example.org/profile' ).name
+			const user_name = $mol_fetch.json( 'https://example.org/profile/name' ) as string
 			return `Hello, ${ user_name }!`
 		}
 		
@@ -463,9 +463,9 @@ The name of the field corresponds to calling the property, the content of the fi
 
 ## Resources
 
-- **[$mol_logo](logo)** - $mol logotypes
-- **[$mol_icon](icon)** - css styled icons
-- **[$mol_skin](skin)** - theming
+- **[$mol_icon](https://github.com/nin-jin/mol_icon)** - css styled material design icons
+- **[$mol_skin](theme)** - theming
+- **[$mol_gap](theme)** - paddings, margins etc
 - **[$mol_style](style)** - css-in-ts
 
 ## Testing
