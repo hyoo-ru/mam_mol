@@ -1848,6 +1848,46 @@ $mol_map_yandex_demo $mol_demo_large
 					address <= place_addres \Saint-Petersburg
 					content <= place_content \It is Russia's second-largest city after Moscow
 
+$mol_text_code_token $mol_dimmer
+	attr *
+		^
+		mol_text_code_token_type <= type \
+
+$mol_text_code_token_link $mol_text_code_token
+	dom_name \a
+	type \code-link
+	attr *
+		^
+		href <= haystack \
+		target \_blank
+
+$mol_text_code_row $mol_paragraph
+	text \
+	minimal_height 24
+	numb_showed true
+	Numb $mol_view
+		sub /
+			<= numb 0
+	Token!id $mol_text_code_token
+		type <= token_type!id \
+		haystack <= token_text!id \
+		needle <= highlight \
+	Token_link!id $mol_text_code_token_link
+		haystack <= token_text!id \
+		needle <= highlight \
+
+$mol_text_code $mol_list
+	attr *
+		^
+		mol_text_code_sidebar_showed <= sidebar_showed false
+	text \
+	text_lines /string
+	Row!id $mol_text_code_row
+		numb_showed <= sidebar_showed
+		numb <= row_numb!id 0
+		text <= row_text!id \
+		highlight <= highlight \
+
 $mol_text $mol_list
 	uri_base \
 	text \
@@ -1866,6 +1906,9 @@ $mol_text $mol_list
 	Header!id $mol_text_header
 		level <= header_level!id 0
 		content <= header_content!id /
+	Code!id $mol_text_code
+		text <= code_text!id \
+		highlight <= highlight \
 	Table!id $mol_grid
 		head_cells <= table_head_cells!id /
 		rows <= table_rows!id /
@@ -2475,46 +2518,6 @@ $mol_switch_demo $mol_demo_small
 				red <= option_red @ \Red
 				green <= option_green @ \Green
 				blue <= option_blue @ \Blue
-
-$mol_text_code_token $mol_dimmer
-	attr *
-		^
-		mol_text_code_token_type <= type \
-
-$mol_text_code_token_link $mol_text_code_token
-	dom_name \a
-	type \code-link
-	attr *
-		^
-		href <= haystack \
-		target \_blank
-
-$mol_text_code_row $mol_paragraph
-	text \
-	minimal_height 24
-	numb_showed true
-	Numb $mol_view
-		sub /
-			<= numb 0
-	Token!id $mol_text_code_token
-		type <= token_type!id \
-		haystack <= token_text!id \
-		needle <= highlight \
-	Token_link!id $mol_text_code_token_link
-		haystack <= token_text!id \
-		needle <= highlight \
-
-$mol_text_code $mol_list
-	attr *
-		^
-		mol_text_code_sidebar_showed <= sidebar_showed false
-	text \
-	text_lines /string
-	Row!id $mol_text_code_row
-		numb_showed <= sidebar_showed
-		numb <= row_numb!id 0
-		text <= row_text!id \
-		highlight <= highlight \
 
 $mol_text_code_demo $mol_demo_large
 	title @ \Markdow visualization example

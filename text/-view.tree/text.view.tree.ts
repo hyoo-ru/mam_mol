@@ -131,6 +131,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Code!id $mol_text_code
+		 * 	text <= code_text!id
+		 * 	highlight <= highlight
+		 * ```
+		 */
+		@ $mol_mem_key
+		Code(id: any) {
+			const obj = new this.$.$mol_text_code()
+			
+			obj.text = () => this.code_text(id)
+			obj.highlight = () => this.highlight()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * Table!id $mol_grid
 		 * 	head_cells <= table_head_cells!id
 		 * 	rows <= table_rows!id
@@ -251,6 +268,15 @@ namespace $ {
 		header_content(id: any) {
 			return [
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * code_text!id \
+		 * ```
+		 */
+		code_text(id: any) {
+			return ""
 		}
 		
 		/**

@@ -38,6 +38,63 @@ $mol_list $mol_view
 		0
 		0
 
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 7
+	width_limit Infinity
+	sub / <= title
+
+$mol_dimmer $mol_paragraph
+	haystack \
+	needle \
+	sub <= parts /$mol_view_content
+	Low!id $mol_paragraph
+		sub /
+			<= string!id \
+	High!id $mol_paragraph
+		sub /
+			<= string!id \
+
+$mol_text_code_token $mol_dimmer
+	attr *
+		^
+		mol_text_code_token_type <= type \
+
+$mol_text_code_token_link $mol_text_code_token
+	dom_name \a
+	type \code-link
+	attr *
+		^
+		href <= haystack \
+		target \_blank
+
+$mol_text_code_row $mol_paragraph
+	text \
+	minimal_height 24
+	numb_showed true
+	Numb $mol_view
+		sub /
+			<= numb 0
+	Token!id $mol_text_code_token
+		type <= token_type!id \
+		haystack <= token_text!id \
+		needle <= highlight \
+	Token_link!id $mol_text_code_token_link
+		haystack <= token_text!id \
+		needle <= highlight \
+
+$mol_text_code $mol_list
+	attr *
+		^
+		mol_text_code_sidebar_showed <= sidebar_showed false
+	text \
+	text_lines /string
+	Row!id $mol_text_code_row
+		numb_showed <= sidebar_showed
+		numb <= row_numb!id 0
+		text <= row_text!id \
+		highlight <= highlight \
+
 $mol_float $mol_view
 	style *
 		^
@@ -128,23 +185,6 @@ $mol_check_expand $mol_check
 		paddingLeft <= level_style \0px
 	checked?val <=> expanded?val false
 	enabled <= expandable false
-
-$mol_paragraph $mol_view
-	line_height 24
-	letter_width 7
-	width_limit Infinity
-	sub / <= title
-
-$mol_dimmer $mol_paragraph
-	haystack \
-	needle \
-	sub <= parts /$mol_view_content
-	Low!id $mol_paragraph
-		sub /
-			<= string!id \
-	High!id $mol_paragraph
-		sub /
-			<= string!id \
 
 $mol_grid $mol_scroll
 	row_height 32
@@ -247,6 +287,9 @@ $mol_text $mol_list
 	Header!id $mol_text_header
 		level <= header_level!id 0
 		content <= header_content!id /
+	Code!id $mol_text_code
+		text <= code_text!id \
+		highlight <= highlight \
 	Table!id $mol_grid
 		head_cells <= table_head_cells!id /
 		rows <= table_rows!id /

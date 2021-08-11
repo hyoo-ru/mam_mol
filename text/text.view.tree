@@ -16,6 +16,9 @@ $mol_text $mol_list
 	Header!id $mol_text_header
 		level <= header_level!id 0
 		content <= header_content!id /
+	Code!id $mol_text_code
+		text <= code_text!id \
+		highlight <= highlight \
 	Table!id $mol_grid
 		head_cells <= table_head_cells!id /
 		rows <= table_rows!id /
