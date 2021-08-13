@@ -138,8 +138,10 @@ namespace $.$$ {
 			
 			sub.push( this.Menu() )
 			
-			if( this.selected() ) {
-				sub.push( this.Detail( this.selected() ) )
+			const selected = this.selected()
+			if( selected ) {
+				sub.push( this.Detail( selected ) )
+				sub.push( ... this.chat_pages( selected ) )
 			}
 			
 			return sub
@@ -154,6 +156,10 @@ namespace $.$$ {
 				default :
 					return this.names_demo().map( name => this.Widget()[ name ] )
 			}
+		}
+		
+		chat_seed( id: string ) {
+			return id
 		}
 		
 		logo_uri() {
