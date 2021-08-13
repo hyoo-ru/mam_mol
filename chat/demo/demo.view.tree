@@ -1,8 +1,10 @@
-$mol_chat_demo $mol_demo_small
+$mol_chat_demo $mol_demo_large
 	title @ \Feed of comments for this page
 	sub /
-		<= Chat $mol_chat
-			seed \mol_chat_demo
-			pages => chat_pages
+		<= Row $mol_row
+			sub /
+				<= Chat $mol_chat
+					seed \mol_chat_demo
+					pages => chat_pages
 		<= Pages $mol_view
 			sub <= chat_pages
