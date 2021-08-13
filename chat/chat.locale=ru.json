@@ -1,5 +1,3 @@
 {
-	"$mol_chat_add_hint": "Новое сообщение...",
-	"$mol_chat_add_submit_label": "Отправить",
-	"$mol_chat_add_label": "Добавить комментарий.."
+	"$mol_chat_title": "Дискуссия"
 }
