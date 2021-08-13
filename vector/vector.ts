@@ -107,7 +107,7 @@ namespace $ {
 	export class $mol_vector_range< Value > extends $mol_vector< Value , 2 > {
 		
 		get [0]() { return super[0] as Value }
-		get [1]() { return super[0] as Value }
+		get [1]() { return super[1] as Value }
 		
 		get min() { return this[0] }
 		get max() { return this[1] }
