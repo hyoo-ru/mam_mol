@@ -1,4 +1,4 @@
-$mol_frame $mol_view
+$mol_frame $mol_scroll
 	dom_name \iframe
 	attr *
 		src <= uri?val \

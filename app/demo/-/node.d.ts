@@ -4120,7 +4120,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_frame extends $mol_view {
+    class $mol_frame extends $mol_scroll {
         dom_name(): string;
         attr(): {
             src: string;
@@ -6291,6 +6291,59 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_icon_forum extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_forum_outline extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_open_in_new extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_chat extends $mol_link {
+        seed(): string;
+        opened(): boolean;
+        arg(): {
+            mol_chat: string;
+        };
+        hint(): string;
+        sub(): readonly any[];
+        pages(): readonly any[];
+        Icon(): $mol_icon_forum_outline;
+        title(): string;
+        external(): string;
+        External_icon(): $mol_icon_open_in_new;
+        Esternal(): $$.$mol_link;
+        Close_icon(): $mol_icon_cross;
+        Close(): $$.$mol_link;
+        embed(): string;
+        Embed(): $$.$mol_frame;
+        Page(): $$.$mol_page;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_chat extends $.$mol_chat {
+        opened(): boolean;
+        pages(): $mol_page[];
+        external(): string;
+        embed(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_code_braces extends $mol_icon {
         path(): string;
     }
@@ -6303,6 +6356,7 @@ declare namespace $ {
         pages(): readonly any[];
         plugins(): readonly any[];
         Menu(): $mol_app_demo_menu;
+        chat_pages(id: any): $$.$mol_page[];
         Detail(id: any): $mol_app_demo_detail;
         Welcome(): $$.$mol_scroll;
         Detail_empty_message(): $$.$mol_status;
@@ -6312,6 +6366,7 @@ declare namespace $ {
         nav_hierarchy(): any;
         nav_option(id: any): any;
         filter_string(val?: any): string;
+        chat_seed(id: any): string;
         source_link(): string;
         edit_uri(): string;
         main_content(): readonly any[];
@@ -6337,6 +6392,9 @@ declare namespace $ {
     }
     class $mol_app_demo_detail extends $mol_page {
         tools(): readonly any[];
+        chat_seed(): string;
+        chat_pages(): $$.$mol_page[];
+        Chat(): $$.$mol_chat;
         source_link(): string;
         source_hint(): string;
         Source_icon(): $mol_icon_code_braces;
@@ -6412,6 +6470,7 @@ declare namespace $.$$ {
         names_demo(): string[];
         blocks(): $mol_view[];
         main_content(): $mol_view[] | $mol_status[];
+        chat_seed(id: string): string;
         logo_uri(): string;
         source_link(): string;
         chat_link(): string;

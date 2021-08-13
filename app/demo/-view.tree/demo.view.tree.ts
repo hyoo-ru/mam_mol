@@ -60,7 +60,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * chat_pages!id
+		 * ```
+		 */
+		chat_pages(id: any) {
+			return this.Detail(id).chat_pages()
+		}
+		
+		/**
+		 * ```tree
 		 * Detail!id $mol_app_demo_detail
+		 * 	chat_seed <= chat_seed!id
+		 * 	chat_pages => chat_pages!id
 		 * 	title <= detail_title
 		 * 	source_link <= source_link
 		 * 	edit_uri <= edit_uri
@@ -71,6 +82,7 @@ namespace $ {
 		Detail(id: any) {
 			const obj = new this.$.$mol_app_demo_detail()
 			
+			obj.chat_seed = () => this.chat_seed(id)
 			obj.title = () => this.detail_title()
 			obj.source_link = () => this.source_link()
 			obj.edit_uri = () => this.edit_uri()
@@ -175,6 +187,15 @@ namespace $ {
 		@ $mol_mem
 		filter_string(val?: any) {
 			if ( val !== undefined ) return val as never
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * chat_seed!id \
+		 * ```
+		 */
+		chat_seed(id: any) {
 			return ""
 		}
 		
@@ -415,6 +436,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tools /
+		 * 	<= Chat
 		 * 	<= Source_link
 		 * 	<= Edit
 		 * 	<= Close
@@ -422,10 +444,45 @@ namespace $ {
 		 */
 		tools() {
 			return [
+				this.Chat(),
 				this.Source_link(),
 				this.Edit(),
 				this.Close()
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * chat_seed \
+		 * ```
+		 */
+		chat_seed() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * chat_pages
+		 * ```
+		 */
+		chat_pages() {
+			return this.Chat().pages()
+		}
+		
+		/**
+		 * ```tree
+		 * Chat $mol_chat
+		 * 	pages => chat_pages
+		 * 	seed <= chat_seed
+		 * ```
+		 */
+		@ $mol_mem
+		Chat() {
+			const obj = new this.$.$mol_chat()
+			
+			obj.seed = () => this.chat_seed()
+			
+			return obj
 		}
 		
 		/**

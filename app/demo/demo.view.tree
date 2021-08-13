@@ -9,16 +9,14 @@ $mol_app_demo $mol_book2
 		option!id <= nav_option!id null
 		filter?val <=> filter_string?val \
 	Detail!id $mol_app_demo_detail
+		chat_seed <= chat_seed!id \
+		chat_pages => chat_pages!id
 		title <= detail_title
 		source_link <= source_link \
 		edit_uri <= edit_uri \
 		body /
 			<= Detail_list $mol_list
 				rows <= main_content /
-			- <= Chat $mol_chat
-				repository_name \nin-jin/mol_chat
-				title <= title
-				link <= chat_link \
 	Welcome $mol_scroll
 		sub /
 			<= Welcome_text $mol_text
@@ -46,6 +44,9 @@ $mol_app_demo_menu $mol_page
 		
 $mol_app_demo_detail $mol_page
 	tools /
+		<= Chat $mol_chat
+			pages => chat_pages
+			seed <= chat_seed \
 		<= Source_link $mol_link
 			uri <= source_link \
 			target \_blank

@@ -15467,7 +15467,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_frame extends $.$mol_view {
+    class $mol_frame extends $.$mol_scroll {
         dom_name() {
             return "iframe";
         }
@@ -23527,6 +23527,189 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_forum extends $.$mol_icon {
+        path() {
+            return "M17,12V3C17,2.45 16.55,2 16,2H3C2.45,2 2,2.45 2,3V17L6,13H16C16.55,13 17,12.55 17,12M21,6H19V15H6V17C6,17.55 6.45,18 7,18H18L22,22V7C22,6.45 21.55,6 21,6Z";
+        }
+    }
+    $.$mol_icon_forum = $mol_icon_forum;
+})($ || ($ = {}));
+//forum.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_forum_outline extends $.$mol_icon {
+        path() {
+            return "M15,4V11H5.17L4,12.17V4H15M16,2H3C2.45,2 2,2.45 2,3V17L6,13H16C16.55,13 17,12.55 17,12V3C17,2.45 16.55,2 16,2M21,6H19V15H6V17C6,17.55 6.45,18 7,18H18L22,22V7C22,6.45 21.55,6 21,6Z";
+        }
+    }
+    $.$mol_icon_forum_outline = $mol_icon_forum_outline;
+})($ || ($ = {}));
+//outline.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_open_in_new extends $.$mol_icon {
+        path() {
+            return "M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V12H19V19Z";
+        }
+    }
+    $.$mol_icon_open_in_new = $mol_icon_open_in_new;
+})($ || ($ = {}));
+//new.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_chat extends $.$mol_link {
+        seed() {
+            return "";
+        }
+        opened() {
+            return false;
+        }
+        arg() {
+            return {
+                mol_chat: ""
+            };
+        }
+        hint() {
+            return this.title();
+        }
+        sub() {
+            return [
+                this.Icon()
+            ];
+        }
+        pages() {
+            return [
+                this.Page()
+            ];
+        }
+        Icon() {
+            const obj = new this.$.$mol_icon_forum_outline();
+            return obj;
+        }
+        title() {
+            return this.$.$mol_locale.text('$mol_chat_title');
+        }
+        external() {
+            return "";
+        }
+        External_icon() {
+            const obj = new this.$.$mol_icon_open_in_new();
+            return obj;
+        }
+        Esternal() {
+            const obj = new this.$.$mol_link();
+            obj.uri = () => this.external();
+            obj.sub = () => [
+                this.External_icon()
+            ];
+            return obj;
+        }
+        Close_icon() {
+            const obj = new this.$.$mol_icon_cross();
+            return obj;
+        }
+        Close() {
+            const obj = new this.$.$mol_link();
+            obj.arg = () => ({
+                mol_chat: null
+            });
+            obj.sub = () => [
+                this.Close_icon()
+            ];
+            return obj;
+        }
+        embed() {
+            return "";
+        }
+        Embed() {
+            const obj = new this.$.$mol_frame();
+            obj.uri = () => this.embed();
+            return obj;
+        }
+        Page() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => this.title();
+            obj.tools = () => [
+                this.Esternal(),
+                this.Close()
+            ];
+            obj.Body = () => this.Embed();
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_chat.prototype, "Icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_chat.prototype, "External_icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_chat.prototype, "Esternal", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_chat.prototype, "Close_icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_chat.prototype, "Close", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_chat.prototype, "Embed", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_chat.prototype, "Page", null);
+    $.$mol_chat = $mol_chat;
+})($ || ($ = {}));
+//chat.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/chat/chat.view.css", "[mol_chat_page] {\n\tflex: 0 0 40rem;\n}\n");
+})($ || ($ = {}));
+//chat.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_chat extends $.$mol_chat {
+            opened() {
+                return this.$.$mol_state_arg.value('mol_chat') !== null;
+            }
+            pages() {
+                return this.opened() ? [this.Page()] : [];
+            }
+            external() {
+                const seed = this.seed() ?? this.$.$mol_dom_context.location.host;
+                return `https://talks.hyoo.ru/#!chat=${seed}`;
+            }
+            embed() {
+                const lights = this.$.$mol_lights() ? 'on' : 'off';
+                return `${this.external()}/embed/mol_lights=${lights}`;
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_chat.prototype, "external", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_chat.prototype, "embed", null);
+        $$.$mol_chat = $mol_chat;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//chat.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_code_braces extends $.$mol_icon {
         path() {
             return "M8,3C6.9,3 6,3.9 6,5V9C6,10.1 5.1,11 4,11H3V13H4C5.1,13 6,13.9 6,15V19C6,20.1 6.9,21 8,21H10V19H8V14C8,12.9 7.1,12 6,12C7.1,12 8,11.1 8,10V5H10V3M16,3C17.1,3 18,3.9 18,5V9C18,10.1 18.9,11 20,11H21V13H20C18.9,13 18,13.9 18,15V19C18,20.1 17.1,21 16,21H14V19H16V14C16,12.9 16.9,12 18,12C16.9,12 16,11.1 16,10V5H14V3H16Z";
@@ -23561,8 +23744,12 @@ var $;
             obj.filter = (val) => this.filter_string(val);
             return obj;
         }
+        chat_pages(id) {
+            return this.Detail(id).chat_pages();
+        }
         Detail(id) {
             const obj = new this.$.$mol_app_demo_detail();
+            obj.chat_seed = () => this.chat_seed(id);
             obj.title = () => this.detail_title();
             obj.source_link = () => this.source_link();
             obj.edit_uri = () => this.edit_uri();
@@ -23606,6 +23793,9 @@ var $;
         filter_string(val) {
             if (val !== undefined)
                 return val;
+            return "";
+        }
+        chat_seed(id) {
             return "";
         }
         source_link() {
@@ -23737,10 +23927,22 @@ var $;
     class $mol_app_demo_detail extends $.$mol_page {
         tools() {
             return [
+                this.Chat(),
                 this.Source_link(),
                 this.Edit(),
                 this.Close()
             ];
+        }
+        chat_seed() {
+            return "";
+        }
+        chat_pages() {
+            return this.Chat().pages();
+        }
+        Chat() {
+            const obj = new this.$.$mol_chat();
+            obj.seed = () => this.chat_seed();
+            return obj;
         }
         source_link() {
             return "";
@@ -23816,6 +24018,9 @@ var $;
             return obj;
         }
     }
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_detail.prototype, "Chat", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_detail.prototype, "Source_icon", null);
@@ -24160,8 +24365,10 @@ var $;
             blocks() {
                 let sub = [];
                 sub.push(this.Menu());
-                if (this.selected()) {
-                    sub.push(this.Detail(this.selected()));
+                const selected = this.selected();
+                if (selected) {
+                    sub.push(this.Detail(selected));
+                    sub.push(...this.chat_pages(selected));
                 }
                 return sub;
             }
@@ -24173,6 +24380,9 @@ var $;
                     default:
                         return this.names_demo().map(name => this.Widget()[name]);
                 }
+            }
+            chat_seed(id) {
+                return id;
             }
             logo_uri() {
                 return $.$mol_file.relative('/mol/logo/logo.svg').path();
