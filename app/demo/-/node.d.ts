@@ -3429,6 +3429,9 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_check_box_demo extends $mol_demo_small {
         title(): string;
         sub(): readonly any[];

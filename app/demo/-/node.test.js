@@ -12313,7 +12313,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/chat/chat.view.css", "[mol_chat_page] {\n\tflex: 0 0 40rem;\n}\n");
+    $.$mol_style_attach("mol/chat/chat.view.css", "[mol_chat_page] {\n\tflex: 1 0 40rem;\n}\n");
 })($ || ($ = {}));
 //chat.view.css.js.map
 ;
@@ -12395,6 +12395,13 @@ var $;
     $.$mol_chat_demo = $mol_chat_demo;
 })($ || ($ = {}));
 //demo.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/chat/demo/demo.view.css", "[mol_chat_demo_pages] {\n\tflex: 1 1 auto;\n}\n");
+})($ || ($ = {}));
+//demo.view.css.js.map
 ;
 "use strict";
 var $;
