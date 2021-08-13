@@ -12360,14 +12360,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_chat_demo extends $.$mol_demo_large {
+    class $mol_chat_demo extends $.$mol_demo_small {
         title() {
             return this.$.$mol_locale.text('$mol_chat_demo_title');
         }
         sub() {
             return [
-                this.Row(),
-                this.Pages()
+                this.Row()
             ];
         }
         chat_pages() {
@@ -12385,11 +12384,6 @@ var $;
             ];
             return obj;
         }
-        Pages() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => this.chat_pages();
-            return obj;
-        }
     }
     __decorate([
         $.$mol_mem
@@ -12397,9 +12391,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_chat_demo.prototype, "Row", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_chat_demo.prototype, "Pages", null);
     $.$mol_chat_demo = $mol_chat_demo;
 })($ || ($ = {}));
 //demo.view.tree.js.map

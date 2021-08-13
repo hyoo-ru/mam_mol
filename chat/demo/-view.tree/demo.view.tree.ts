@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_chat_demo extends $mol_demo_large {
+	export class $mol_chat_demo extends $mol_demo_small {
 		
 		/**
 		 * ```tree
@@ -12,15 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Row
-		 * 	<= Pages
+		 * sub / <= Row
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Row(),
-				this.Pages()
+				this.Row()
 			] as readonly any[]
 		}
 		
@@ -61,20 +58,6 @@ namespace $ {
 			obj.sub = () => [
 				this.Chat()
 			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Pages $mol_view sub <= chat_pages
-		 * ```
-		 */
-		@ $mol_mem
-		Pages() {
-			const obj = new this.$.$mol_view()
-			
-			obj.sub = () => this.chat_pages()
 			
 			return obj
 		}

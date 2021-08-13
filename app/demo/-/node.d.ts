@@ -3418,13 +3418,12 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_chat_demo extends $mol_demo_large {
+    class $mol_chat_demo extends $mol_demo_small {
         title(): string;
         sub(): readonly any[];
         chat_pages(): $$.$mol_page[];
         Chat(): $$.$mol_chat;
         Row(): $mol_row;
-        Pages(): $mol_view;
     }
 }
 
