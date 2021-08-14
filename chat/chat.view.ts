@@ -12,7 +12,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		external() {
-			const seed = this.seed() ?? this.$.$mol_dom_context.location.host
+			const seed = this.seed() || this.$.$mol_dom_context.location.host
 			return `https://talks.hyoo.ru/#!chat=${ encodeURIComponent( seed ) }`
 		}
 		
