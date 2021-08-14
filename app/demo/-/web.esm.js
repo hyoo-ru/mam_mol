@@ -12170,7 +12170,8 @@ var $;
             }
             embed() {
                 const lights = this.$.$mol_lights() ? 'on' : 'off';
-                return `${this.external()}/embed/mol_lights=${lights}`;
+                const embed = this.$.$mol_state_arg.href();
+                return `${this.external()}/embed=${encodeURIComponent(embed)}/mol_lights=${lights}`;
             }
         }
         __decorate([
