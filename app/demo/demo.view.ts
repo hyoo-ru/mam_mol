@@ -159,7 +159,7 @@ namespace $.$$ {
 		}
 		
 		chat_seed( id: string ) {
-			return id
+			return '#!demo=' + id
 		}
 		
 		logo_uri() {
