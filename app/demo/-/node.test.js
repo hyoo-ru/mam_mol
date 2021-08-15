@@ -24430,7 +24430,7 @@ var $;
                 }
             }
             chat_seed(id) {
-                return id;
+                return '#!demo=' + id;
             }
             logo_uri() {
                 return $.$mol_file.relative('/mol/logo/logo.svg').path();
