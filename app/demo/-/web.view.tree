@@ -1510,7 +1510,7 @@ $mol_drag_demo $mol_demo_large
 
 $mol_expander $mol_list
 	rows /
-		<= Label $mol_float
+		<= Label $mol_view
 			sub /
 				<= Trigger $mol_check_expand
 					checked?val <=> expanded?val false

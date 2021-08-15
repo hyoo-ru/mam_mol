@@ -15320,7 +15320,7 @@ var $;
             return null;
         }
         Label() {
-            const obj = new this.$.$mol_float();
+            const obj = new this.$.$mol_view();
             obj.sub = () => [
                 this.Trigger(),
                 this.Tools()

@@ -4078,7 +4078,7 @@ declare namespace $ {
         label(): readonly any[];
         Trigger(): $$.$mol_check_expand;
         Tools(): any;
-        Label(): $mol_float;
+        Label(): $mol_view;
         content(): readonly any[];
         Content(): $mol_view;
     }
