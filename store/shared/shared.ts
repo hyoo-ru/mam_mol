@@ -53,8 +53,8 @@ namespace $ {
 			
 			if( next == undefined ) {
 				
-				const delta = this.$.$mol_store_local.value( prefix )
-				if( delta ) store.apply( delta )
+				// const delta = this.$.$mol_store_local.value( prefix )
+				// if( delta ) store.apply( delta )
 				
 				return store.value( suffix )!
 				
@@ -72,7 +72,7 @@ namespace $ {
 					} )
 				}
 				
-				this.$.$mol_store_local.value( prefix, store.delta() )
+				// this.$.$mol_store_local.value( prefix, store.delta() )
 				
 				return val!
 			}
@@ -176,7 +176,7 @@ namespace $ {
 				const store = this.store( prefix )
 				store.apply( delta )
 				
-				this.$.$mol_store_local.value( prefix, store.delta() )
+				// this.$.$mol_store_local.value( prefix, store.delta() )
 				this.version_last( prefix, store.clock.version_max )
 				
 				new $mol_after_timeout( 1000, $mol_fiber_warp )
