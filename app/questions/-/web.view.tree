@@ -191,7 +191,7 @@ $mol_check_expand $mol_check
 	checked?val <=> expanded?val false
 	enabled <= expandable false
 
-$mol_grid $mol_scroll
+$mol_grid $mol_view
 	row_height 32
 	row_ids /string[]
 	row_id!index null

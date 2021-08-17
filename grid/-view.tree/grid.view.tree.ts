@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_grid extends $mol_scroll {
+	export class $mol_grid extends $mol_view {
 		
 		/**
 		 * ```tree

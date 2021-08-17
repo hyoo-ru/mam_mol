@@ -1501,7 +1501,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_grid extends $mol_scroll {
+    class $mol_grid extends $mol_view {
         row_height(): number;
         row_ids(): readonly string[][];
         row_id(index: any): any;

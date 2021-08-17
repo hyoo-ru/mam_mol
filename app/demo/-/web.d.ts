@@ -1660,52 +1660,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_scroll extends $mol_view {
-        minimal_height(): number;
-        _event_scroll_timer(val?: any): any;
-        field(): {
-            scrollTop: number;
-            scrollLeft: number;
-            tabIndex: number;
-        };
-        event(): {
-            scroll: (event?: any) => any;
-        };
-        scroll_top(val?: any): number;
-        scroll_left(val?: any): number;
-        tabindex(): number;
-        event_scroll(event?: any): any;
-    }
-}
-
-declare namespace $ {
-    class $mol_state_session<Value> extends $mol_object {
-        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
-        static native(): Storage | {
-            getItem(key: string): any;
-            setItem(key: string, value: string): void;
-            removeItem(key: string): void;
-        };
-        static value<Value>(key: string, next?: Value): Value;
-        prefix(): string;
-        value(key: string, next?: Value): Value;
-    }
-}
-
-declare namespace $.$$ {
-}
-
-declare namespace $.$$ {
-    class $mol_scroll extends $.$mol_scroll {
-        scroll_top(next?: number): number;
-        scroll_left(next?: number): number;
-        _event_scroll_timer(next?: $mol_after_timeout | null): $mol_after_timeout | null | undefined;
-        event_scroll(next?: Event): void;
-        minimal_height(): number;
-    }
-}
-
-declare namespace $ {
     class $mol_float extends $mol_view {
         style(): {
             minHeight: string;
@@ -1888,7 +1842,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_grid extends $mol_scroll {
+    class $mol_grid extends $mol_view {
         row_height(): number;
         row_ids(): readonly string[][];
         row_id(index: any): any;
@@ -1934,6 +1888,20 @@ declare namespace $ {
         minimal_height(): number;
     }
     class $mol_grid_number extends $mol_grid_cell {
+    }
+}
+
+declare namespace $ {
+    class $mol_state_session<Value> extends $mol_object {
+        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+        static native(): Storage | {
+            getItem(key: string): any;
+            setItem(key: string, value: string): void;
+            removeItem(key: string): void;
+        };
+        static value<Value>(key: string, next?: Value): Value;
+        prefix(): string;
+        value(key: string, next?: Value): Value;
     }
 }
 
@@ -2103,6 +2071,38 @@ declare namespace $.$$ {
                 max: string;
             };
         };
+    }
+}
+
+declare namespace $ {
+    class $mol_scroll extends $mol_view {
+        minimal_height(): number;
+        _event_scroll_timer(val?: any): any;
+        field(): {
+            scrollTop: number;
+            scrollLeft: number;
+            tabIndex: number;
+        };
+        event(): {
+            scroll: (event?: any) => any;
+        };
+        scroll_top(val?: any): number;
+        scroll_left(val?: any): number;
+        tabindex(): number;
+        event_scroll(event?: any): any;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $.$$ {
+    class $mol_scroll extends $.$mol_scroll {
+        scroll_top(next?: number): number;
+        scroll_left(next?: number): number;
+        _event_scroll_timer(next?: $mol_after_timeout | null): $mol_after_timeout | null | undefined;
+        event_scroll(next?: Event): void;
+        minimal_height(): number;
     }
 }
 
