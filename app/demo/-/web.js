@@ -23607,7 +23607,7 @@ var $;
             return [
                 this.Head(),
                 this.Filter(),
-                this.Nav()
+                this.Body()
             ];
         }
         sources_uri() {
@@ -23645,6 +23645,13 @@ var $;
             obj.needle = () => this.filter();
             return obj;
         }
+        Body() {
+            const obj = new this.$.$mol_scroll();
+            obj.sub = () => [
+                this.Nav()
+            ];
+            return obj;
+        }
     }
     __decorate([
         $.$mol_mem
@@ -23661,6 +23668,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_menu.prototype, "Nav", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_menu.prototype, "Body", null);
     $.$mol_app_demo_menu = $mol_app_demo_menu;
     class $mol_app_demo_detail extends $.$mol_page {
         tools() {

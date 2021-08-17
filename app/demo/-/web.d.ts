@@ -6388,6 +6388,7 @@ declare namespace $ {
         hierarchy(): any;
         option(id: any): any;
         Nav(): $$.$mol_app_demo_nav;
+        Body(): $$.$mol_scroll;
     }
     class $mol_app_demo_detail extends $mol_page {
         tools(): readonly any[];
