@@ -64,11 +64,11 @@ namespace $ {
 				
 				if( !this._send_task ) {
 					this._send_task = $mol_fiber_defer( ()=> {
+						this._send_task = undefined
 						this.send(
 							prefix,
 							store.delta(),
 						)
-						this._send_task = undefined
 					} )
 				}
 				
