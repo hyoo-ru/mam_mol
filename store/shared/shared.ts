@@ -29,7 +29,7 @@ namespace $ {
 			return null
 		}
 		
-		_send_task: undefined | $mol_fiber
+		_send_task = new WeakMap< $hyoo_crowd_graph, $mol_fiber | undefined >()
 		
 		@ $mol_mem_key
 		value< Key extends keyof $mol_store_shared_data >(
@@ -62,14 +62,14 @@ namespace $ {
 				
 				const val = store.value( suffix, next )
 				
-				if( !this._send_task ) {
-					this._send_task = $mol_fiber_defer( ()=> {
-						this._send_task = undefined
+				if( !this._send_task.get( store ) ) {
+					this._send_task.set( store, $mol_fiber_defer( ()=> {
+						this._send_task.set( store, undefined )
 						this.send(
 							prefix,
 							store.delta(),
 						)
-					} )
+					} ) )
 				}
 				
 				// this.$.$mol_store_local.value( prefix, store.delta() )
