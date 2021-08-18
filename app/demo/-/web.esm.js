@@ -23603,12 +23603,13 @@ var $;
                 this.Lights()
             ];
         }
-        sub() {
-            return [
-                this.Head(),
+        Body() {
+            const obj = new this.$.$mol_scroll();
+            obj.sub = () => [
                 this.Filter(),
-                this.Body()
+                this.Nav()
             ];
+            return obj;
         }
         sources_uri() {
             return "https://github.com/hyoo-ru/mam_mol/tree/master/";
@@ -23645,14 +23646,10 @@ var $;
             obj.needle = () => this.filter();
             return obj;
         }
-        Body() {
-            const obj = new this.$.$mol_scroll();
-            obj.sub = () => [
-                this.Nav()
-            ];
-            return obj;
-        }
     }
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_menu.prototype, "Body", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_menu.prototype, "Sources", null);
@@ -23668,9 +23665,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_menu.prototype, "Nav", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_menu.prototype, "Body", null);
     $.$mol_app_demo_menu = $mol_app_demo_menu;
     class $mol_app_demo_detail extends $.$mol_page {
         tools() {

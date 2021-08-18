@@ -6393,7 +6393,7 @@ declare namespace $ {
     class $mol_app_demo_menu extends $mol_page {
         title(): string;
         tools(): readonly any[];
-        sub(): readonly any[];
+        Body(): $$.$mol_scroll;
         sources_uri(): string;
         Sources(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
@@ -6402,7 +6402,6 @@ declare namespace $ {
         hierarchy(): any;
         option(id: any): any;
         Nav(): $$.$mol_app_demo_nav;
-        Body(): $$.$mol_scroll;
     }
     class $mol_app_demo_detail extends $mol_page {
         tools(): readonly any[];

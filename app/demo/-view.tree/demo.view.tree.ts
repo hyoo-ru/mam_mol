@@ -319,18 +319,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Head
+		 * Body $mol_scroll sub /
 		 * 	<= Filter
-		 * 	<= Body
+		 * 	<= Nav
 		 * ```
 		 */
-		sub() {
-			return [
-				this.Head(),
+		@ $mol_mem
+		Body() {
+			const obj = new this.$.$mol_scroll()
+			
+			obj.sub = () => [
 				this.Filter(),
-				this.Body()
+				this.Nav()
 			] as readonly any[]
+			
+			return obj
 		}
 		
 		/**
@@ -426,22 +429,6 @@ namespace $ {
 			obj.hierarchy = () => this.hierarchy()
 			obj.record = (id: any) => this.option(id)
 			obj.needle = () => this.filter()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Body $mol_scroll sub / <= Nav
-		 * ```
-		 */
-		@ $mol_mem
-		Body() {
-			const obj = new this.$.$mol_scroll()
-			
-			obj.sub = () => [
-				this.Nav()
-			] as readonly any[]
 			
 			return obj
 		}

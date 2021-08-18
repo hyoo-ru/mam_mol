@@ -2749,16 +2749,14 @@ $mol_app_demo_menu $mol_page
 		<= Sources $mol_link_source
 			uri <= sources_uri \https://github.com/hyoo-ru/mam_mol/tree/master/
 		<= Lights $mol_lights_toggle
-	sub /
-		<= Head
-		<= Filter $mol_search
-			query?val <=> filter?val \
-		<= Body $mol_scroll
-			sub /
-				<= Nav $mol_app_demo_nav
-					hierarchy <= hierarchy null
-					record!id <= option!id null
-					needle <= filter?val \
+	Body $mol_scroll
+		sub /
+			<= Filter $mol_search
+				query?val <=> filter?val \
+			<= Nav $mol_app_demo_nav
+				hierarchy <= hierarchy null
+				record!id <= option!id null
+				needle <= filter?val \
 		
 $mol_app_demo_detail $mol_page
 	tools /
