@@ -17,11 +17,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * head /
+		 * head / <= title
 		 * ```
 		 */
 		head() {
 			return [
+				this.title()
 			] as readonly any[]
 		}
 		

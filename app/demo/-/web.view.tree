@@ -2352,6 +2352,7 @@ $mol_search_demo $mol_demo_small
 $mol_section $mol_list rows /
 	<= Head $mol_view
 		sub <= head /
+			<= title
 	<= Content null
 
 $mol_section_demo $mol_demo_large
