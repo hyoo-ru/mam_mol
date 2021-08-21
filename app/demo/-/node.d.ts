@@ -1911,6 +1911,10 @@ declare namespace $.$$ {
             row: string[];
             col: string;
         }): any[];
+        cell_content_text(id: {
+            row: string[];
+            col: string;
+        }): any[];
         records(): any;
         record(id: string): any;
         record_ids(): string[];

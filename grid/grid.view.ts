@@ -50,6 +50,10 @@ namespace $.$$ {
 			return [ this.record( id.row[ id.row.length - 1 ] )[ id.col ] ]
 		}
 		
+		cell_content_text( id : { row : string[] , col : string } ) {
+			return this.cell_content( id ).map( val => typeof val === 'object' ? JSON.stringify( val ) : val )
+		}
+		
 		records() : any {
 			return []
 		}

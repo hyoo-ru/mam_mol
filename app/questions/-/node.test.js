@@ -5304,6 +5304,9 @@ var $;
             cell_content(id) {
                 return [this.record(id.row[id.row.length - 1])[id.col]];
             }
+            cell_content_text(id) {
+                return this.cell_content(id).map(val => typeof val === 'object' ? JSON.stringify(val) : val);
+            }
             records() {
                 return [];
             }
