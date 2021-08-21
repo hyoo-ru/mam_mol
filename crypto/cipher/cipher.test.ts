@@ -10,11 +10,11 @@ namespace $ {
 			$mol_assert_ok( key_private!.byteLength < 640 )
 			
 			const key_public = await pair.public.serial()
-			$mol_assert_equal( key_public!.byteLength, 162 )
+			$mol_assert_equal( key_public!.byteLength, $mol_crypto_cipher_public.size )
 			
 			const data = new Uint8Array([1,2,3])
 			const closed = await pair.public.encrypt( data )
-			$mol_assert_equal( closed.byteLength, 128 )
+			$mol_assert_equal( closed.byteLength, $mol_crypto_cipher_ecrypted_size )
 			
 		},
 		

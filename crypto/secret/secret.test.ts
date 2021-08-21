@@ -6,13 +6,13 @@ namespace $ {
 			const cipher = await $mol_crypto_secret.generate()
 			
 			const key = await cipher.serial()
-			$mol_assert_equal( key.byteLength, 16 )
+			$mol_assert_equal( key.byteLength, $mol_crypto_secret.size )
 			
 			const data = new Uint8Array([1,2,3])
 			const salt = $mol_crypto_salt()
 			
 			const closed = await cipher.encrypt( data, salt )
-			$mol_assert_equal( closed.byteLength, 4 + data.byteLength )
+			$mol_assert_equal( closed.byteLength, data.byteLength + $mol_crypto_secret.extra )
 			
 		},
 		

@@ -9,6 +9,12 @@ namespace $ {
 	/** Symmetric cipher with shortest payload */
 	export class $mol_crypto_secret extends Object {
 		
+		/** Key size in bytes. */
+		static size = 16
+		
+		/** Extra size in bytes to encrypted data. */
+		static extra = 4
+		
 		constructor(
 			readonly native: CryptoKey & { type: 'private' }
 		) {

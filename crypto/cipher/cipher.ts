@@ -33,6 +33,9 @@ namespace $ {
 	/** Asymmetric cipher public key wrapper with shortest payload */
 	export class $mol_crypto_cipher_public extends Object {
 		
+		/** Public key size in bytes. */
+		static size = 162
+		
 		constructor(
 			readonly native: CryptoKey & { type: 'public' }
 		) {
@@ -108,5 +111,8 @@ namespace $ {
 		}
 		
 	}
+	
+	/** Encrypted size in bytes. */
+	export const $mol_crypto_cipher_ecrypted_size = 128
 
 }
