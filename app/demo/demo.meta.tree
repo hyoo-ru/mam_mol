@@ -1,4 +1,4 @@
-deploy \/mol/mol_logo.svg
+deploy \/mol/logo/logo.svg
 deploy \/mol/app/demo/manifest.json
 
 include \/mol/offline/install

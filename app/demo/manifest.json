@@ -3,7 +3,7 @@
 	"name": "$mol demo app",
 	"icons": [
 		{
-			"src": "../../../mol/mol_logo.svg",
+			"src": "../../../mol/logo/logo.svg",
 			"type": "image/svg+xml",
 			"sizes": "512x512"
 		}
