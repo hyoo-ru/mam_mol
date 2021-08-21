@@ -14,8 +14,7 @@ namespace $ {
 
 	export function $mol_jsx< Props extends { id? : string } , Children extends Array< Node | string > >(
 		Elem : string
-			| ( ( props : Props , ... children : Children ) => Element )
-			| typeof $mol_jsx_view ,
+			| ( ( props : Props , ... children : Children ) => Element ) ,
 		props : Props ,
 		... childNodes : Children
 	) : Element | DocumentFragment {
@@ -38,7 +37,7 @@ namespace $ {
 
 			if( 'prototype' in Elem ) {
 
-				const view : $mol_jsx_view = node && node[ Elem as any ] || new ( Elem as any )
+				const view = node && node[ Elem as any ] || new ( Elem as any )
 				
 				Object.assign( view , props )
 				view[ Symbol.toStringTag ] = guid
@@ -49,9 +48,9 @@ namespace $ {
 				
 				node = view.valueOf()
 				
-				node[ Elem as any ] = view
+				node![ Elem as any ] = view
 				
-				return node
+				return node!
 
 			} else {
 

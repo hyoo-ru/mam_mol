@@ -298,7 +298,7 @@ declare namespace $ {
     const $mol_jsx_frag = "";
     function $mol_jsx<Props extends {
         id?: string;
-    }, Children extends Array<Node | string>>(Elem: string | ((props: Props, ...children: Children) => Element) | typeof $mol_jsx_view, props: Props, ...childNodes: Children): Element | DocumentFragment;
+    }, Children extends Array<Node | string>>(Elem: string | ((props: Props, ...children: Children) => Element), props: Props, ...childNodes: Children): Element | DocumentFragment;
     namespace $mol_jsx.JSX {
         interface Element extends HTMLElement {
             class?: string;
@@ -347,18 +347,6 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_exec(this: $, dir: string, command: string, ...args: string[]): any;
-}
-
-declare namespace $ {
-    class $mol_jsx_view extends $mol_object2 {
-        static of<This extends typeof $mol_jsx_view>(this: This, node: Element): InstanceType<This>;
-        [Symbol.toStringTag]: string;
-        attributes: Partial<Pick<this, Exclude<keyof this, 'valueOf'>>>;
-        ownerDocument: typeof $mol_jsx_document;
-        childNodes: Array<Node | string>;
-        valueOf(): HTMLElement;
-        render(): HTMLElement;
-    }
 }
 
 export = $;
