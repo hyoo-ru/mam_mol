@@ -6,8 +6,11 @@ namespace $ {
 	
 	export let $mol_jsx_document : $mol_jsx.JSX.ElementClass['ownerDocument'] = {
 		getElementById : ()=> null ,
-		createElement : ( name : string )=> $mol_dom_context.document.createElement( name )
+		createElement : ( name : string )=> $mol_dom_context.document.createElement( name ),
+		createDocumentFragment : ()=> $mol_dom_context.document.createDocumentFragment(),
 	}
+	
+	export const $mol_jsx_frag = ''
 
 	export function $mol_jsx< Props extends { id? : string } , Children extends Array< Node | string > >(
 		Elem : string
@@ -15,7 +18,7 @@ namespace $ {
 			| typeof $mol_jsx_view ,
 		props : Props ,
 		... childNodes : Children
-	) : Element {
+	) : Element | DocumentFragment {
 
 		const id = props && props.id || ''
 
@@ -29,7 +32,7 @@ namespace $ {
 
 		const guid = $mol_jsx_prefix + id
 
-		let node = guid && $mol_jsx_document.getElementById( guid )
+		let node: Element | DocumentFragment | null = guid ? $mol_jsx_document.getElementById( guid ) : null
 
 		if( typeof Elem !== 'string' ) {
 
@@ -73,15 +76,16 @@ namespace $ {
 
 		}
 
-		if( !node ) node = $mol_jsx_document.createElement( Elem )
+		if( !node ) node = Elem ? $mol_jsx_document.createElement( Elem ) : $mol_jsx_document.createDocumentFragment()
 
 		$mol_dom_render_children( node , ( [] as ( Node | string )[] ).concat( ... childNodes ) )
+		if( !Elem ) return node
 
 		for( const key in props ) {
 
 			if( typeof props[ key ] === 'string' ) {
 
-				node.setAttribute( key , props[ key as any ] )
+				;( node as Element ).setAttribute( key , props[ key as any ] )
 
 			} else if(
 				props[ key ] &&
@@ -100,7 +104,7 @@ namespace $ {
 
 		}
 
-		if( guid ) node.id = guid
+		if( guid ) ( node as Element ).id = guid
 
 		return node
 
@@ -114,7 +118,7 @@ namespace $ {
 		
 		export interface ElementClass {
 			attributes : {}
-			ownerDocument : Pick< Document , 'getElementById' | 'createElement' >
+			ownerDocument : Pick< Document , 'getElementById' | 'createElement' | 'createDocumentFragment' >
 			childNodes : Array< Node | string >
 			valueOf() : Element
 		}
