@@ -34,6 +34,9 @@ namespace $ {
 	/** Asymmetric signing public key wrapper with shortest payload */
 	export class $mol_crypto_auditor_public extends Object {
 		
+		/** Public key size in bytes. */
+		static size = 62
+		
 		constructor(
 			readonly native: CryptoKey & { type: 'public' }
 		) {
@@ -112,5 +115,8 @@ namespace $ {
 		}
 		
 	}
+	
+	/** Sign size in bytes. */
+	export const $mol_crypto_auditor_sign_size = 32
 	
 }
