@@ -22,7 +22,7 @@ namespace $ {
 
 		const id = props && props.id || ''
 
-		if( $mol_jsx_booked ) {
+		if( Elem && $mol_jsx_booked ) {
 			if( $mol_jsx_booked.has( id ) ) {
 				$mol_fail( new Error( `JSX already has tag with id ${ JSON.stringify( id ) }` ) )
 			} else {
