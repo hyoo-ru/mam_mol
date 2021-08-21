@@ -14,7 +14,7 @@ namespace $ {
 		from: number,
 		to: number,
 		next: ArrayLike<Next>,
-		equal: ( prev: Prev, next: Next )=> boolean,
+		equal: ( next: Next, prev: Prev )=> boolean,
 		drop: ( prev: Prev, lead: Prev | null )=> Prev,
 		insert: ( next: Next, lead: Prev | null )=> Prev,
 		update: ( next: Next, prev: Prev, lead: Prev | null )=> Prev,
@@ -29,7 +29,7 @@ namespace $ {
 	
 		while( p < to || n < next.length ) {
 			
-			if( p < to && n < next.length && equal( prev[p] , next[n] ) ) {
+			if( p < to && n < next.length && equal( next[n], prev[p] ) ) {
 				
 				lead = prev[p]
 				++ p
