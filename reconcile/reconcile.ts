@@ -1,0 +1,60 @@
+namespace $ {
+	
+	export function $mol_reconcile< Prev, Next >( {
+		prev,
+		from,
+		to,
+		next,
+		equal,
+		drop,
+		insert,
+		update,
+	}: {
+		prev: readonly Prev[],
+		from: number,
+		to: number,
+		next: ArrayLike<Next>,
+		equal: ( prev: Prev, next: Next )=> boolean,
+		drop: ( prev: Prev, lead: Prev | null )=> Prev,
+		insert: ( next: Next, lead: Prev | null )=> Prev,
+		update: ( next: Next, prev: Prev, lead: Prev | null )=> Prev,
+	} ) {
+		
+		let p = from
+		let n = 0
+		let lead = p ? prev[ p - 1 ] : null
+		
+		if( to > prev.length ) $mol_fail( new RangeError( `To(${ to }) greater then length(${ prev.length })` ) )
+		if( from > to ) $mol_fail( new RangeError( `From(${ to }) greater then to(${ to })` ) )
+	
+		while( p < to || n < next.length ) {
+			
+			if( p < to && n < next.length && equal( prev[p] , next[n] ) ) {
+				
+				lead = prev[p]
+				++ p
+				++ n
+				
+			} else if( next.length - n > to - p ) {
+				
+				lead = insert( next[n], lead )
+				++ n
+				
+			} else if( next.length - n < to - p ) {
+				
+				lead = drop( prev[p], lead )
+				++ p
+				
+			} else {
+				
+				lead = update( next[n], prev[p], lead )
+				++ p
+				++ n
+				
+			}
+			
+		}
+		
+	}
+	
+}

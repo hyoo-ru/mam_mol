@@ -1,7 +1,7 @@
 namespace $ {
 
 	export function $mol_dom_render_children (
-		el : Element ,
+		el : Element | DocumentFragment ,
 		childNodes : NodeList | Array< Node | string | null >
 	) {
 		const node_set = new Set< Node | string | null >( childNodes )
