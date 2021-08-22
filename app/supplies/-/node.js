@@ -3268,9 +3268,9 @@ var $;
 var $;
 (function ($) {
     function parse(theme) {
-        if (theme === 'on')
+        if (theme === 'true')
             return true;
-        if (theme === 'off')
+        if (theme === 'false')
             return false;
         return null;
     }
@@ -3282,7 +3282,7 @@ var $;
         }
         else {
             if (arg) {
-                this.$mol_state_arg.value('mol_lights', next ? 'on' : 'off');
+                this.$mol_state_arg.value('mol_lights', String(next));
             }
             else {
                 this.$mol_state_local.value('$mol_lights', next === base ? null : next);
