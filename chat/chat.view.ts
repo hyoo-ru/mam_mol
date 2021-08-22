@@ -20,7 +20,7 @@ namespace $.$$ {
 		@ $mol_mem
 		embed() {
 			const seed = this.seed()
-			const lights = this.$.$mol_lights() ? 'on' : 'off'
+			const lights = String( this.$.$mol_lights() )
 			const embed = this.$.$mol_state_arg.href()
 			return `https://talks.hyoo.ru/#!chat=${ encodeURIComponent( seed ) }/embed=${ encodeURIComponent( embed ) }/mol_lights=${ lights }`
 		}
