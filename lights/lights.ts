@@ -10,10 +10,10 @@ namespace $ {
 		
 		const arg = parse( this.$mol_state_arg.value( 'mol_lights' ) )
 		
-		const base = arg ?? this.$mol_media.match( '(prefers-color-scheme: light)' )
+		const base = this.$mol_media.match( '(prefers-color-scheme: light)' )
 		
 		if( next === undefined ) {
-			return this.$mol_state_local.value< boolean >( '$mol_lights' ) ?? base
+			return arg ?? this.$mol_state_local.value< boolean >( '$mol_lights' ) ?? base
 		} else {
 			if( arg === null ) {
 				this.$mol_state_local.value( '$mol_lights' , next === base ? null : next )
