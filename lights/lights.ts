@@ -15,10 +15,10 @@ namespace $ {
 		if( next === undefined ) {
 			return this.$mol_state_local.value< boolean >( '$mol_lights' ) ?? base
 		} else {
-			if( arg ) {
-				this.$mol_state_arg.value( 'mol_lights' , String( next ) )
-			} else {
+			if( arg === null ) {
 				this.$mol_state_local.value( '$mol_lights' , next === base ? null : next )
+			} else {
+				this.$mol_state_arg.value( 'mol_lights' , String( next ) )
 			}
 			return next
 		}
