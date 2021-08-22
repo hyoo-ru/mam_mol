@@ -60,11 +60,11 @@ namespace $ {
 
 				this.connections.add( line )
 				
-				line.on( 'message' , message => {
+				line.on( 'message' , ( message: any, isBinary: boolean )=> {
 
 					for( const other of this.connections ) {
 						if( line === other ) continue
-						other.send( message )
+						other.send( message, { binary: isBinary } )
 					}
 					
 				} )
