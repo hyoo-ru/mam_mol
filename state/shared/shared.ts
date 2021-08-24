@@ -119,6 +119,7 @@ namespace $ {
 			
 			this.heartbeat()
 			
+			const atom = $mol_atom2.current
 			const socket = new $mol_dom_context.WebSocket( this.server() )
 			
 			socket.onmessage = $mol_fiber.func( event => {
@@ -156,7 +157,10 @@ namespace $ {
 
 			} )
 
-			socket.onclose = ()=> this.scheduled_enforcer( null )
+			socket.onclose = ()=> {
+				setTimeout( ()=> atom!.obsolete(), 5000 )
+				this.scheduled_enforcer( null )
+			}
 			
 			return socket
 		}
@@ -165,7 +169,9 @@ namespace $ {
 		heartbeat() {
 			
 			const timer = setInterval( ()=> {
-				this.socket().send('')
+				const socket = this.socket()
+				if( socket.readyState !== socket.OPEN ) return
+				socket.send('')
 			}, 30000 )
 			
 			return {
@@ -190,6 +196,8 @@ namespace $ {
 					()=> new Promise( done => socket.addEventListener( 'open', done ) )
 				)()
 			}
+			
+			if( socket.readyState !== socket.OPEN ) return
 			
 			const message = next === undefined ? [ key ] : [ key, next ]
 			socket.send( JSON.stringify( message ) )
