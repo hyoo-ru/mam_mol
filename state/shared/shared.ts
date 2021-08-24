@@ -14,8 +14,23 @@ namespace $ {
 			return new this.$.$hyoo_crowd_doc
 		}
 		
+		path() {
+			return ''
+		}
+		
 		node() {
 			return this.store().root
+		}
+		
+		@ $mol_mem_key
+		doc( key: string ) {
+			if( !key ) return this
+			const State = this.constructor as typeof $mol_state_shared
+			const state = new State
+			state.path = $mol_const( this.path() ? this.path() + '/' + key : key )
+			state.doc = k => this.doc( key + '/' + k )
+			state.socket = ()=> this.socket()
+			return state
 		}
 		
 		@ $mol_mem_key
@@ -43,7 +58,7 @@ namespace $ {
 				const delta = this.store().delta( this.server_clock )
 				if( next !== undefined && !delta.length ) return
 				
-				this.send( '', next === undefined ? null : delta )
+				this.send( this.path(), next === undefined ? null : delta )
 				
 				for( const chunk of delta ) {
 					this.server_clock.see( chunk.peer, chunk.time )
@@ -113,18 +128,19 @@ namespace $ {
 				
 				if( !Array.isArray( message ) ) return
 				
-				let [ prefix, delta ] = message as [ string, readonly $hyoo_crowd_chunk[] ]
-				if( typeof prefix !== 'string' ) return
+				let [ path, delta ] = message as [ string, readonly $hyoo_crowd_chunk[] ]
+				if( typeof path !== 'string' ) return
 				if( !delta ) return
 				
-				const store = this.store()
+				const doc = this.doc( path )
+				const store = doc.store()
 				
 				if( !delta.length ) {
 					
 					delta = store.delta()
 					if( !delta.length ) return
 					
-					this.send( '', delta )
+					this.send( path, delta )
 					return
 					
 				}
@@ -132,10 +148,10 @@ namespace $ {
 				store.apply( delta )
 				
 				for( const chunk of delta ) {
-					this.server_clock.see( chunk.peer, chunk.time )
+					doc.server_clock.see( chunk.peer, chunk.time )
 				}
 				
-				this.version_last( -1 )
+				doc.version_last( -1 )
 				this.scheduled_enforcer( null )
 
 			} )
