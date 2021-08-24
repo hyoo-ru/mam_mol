@@ -322,6 +322,11 @@ namespace $.$$ {
 			const drawn = this.drawn()
 			const point = this.draw_point( event )
 			
+			const last_x = drawn.x[ drawn.x.length - 1 ]
+			const last_y = drawn.y[ drawn.x.length - 1 ]
+			
+			if( last_x === point.x && last_x === point.y ) return
+			
 			this.drawn(
 				new $mol_vector_2d(
 					[ ... drawn.x, point.x ],
