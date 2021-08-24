@@ -8459,8 +8459,10 @@ var $;
                 const series_x = this.series_x();
                 const series_y = this.series_y();
                 return this.indexes().map(index => {
-                    const point_x = Math.round(shift_x + series_x[index] * scale_x);
-                    const point_y = Math.round(shift_y + series_y[index] * scale_y);
+                    let point_x = Math.round(shift_x + series_x[index] * scale_x);
+                    let point_y = Math.round(shift_y + series_y[index] * scale_y);
+                    point_x = Math.max(Number.MIN_SAFE_INTEGER, Math.min(point_x, Number.MAX_SAFE_INTEGER));
+                    point_y = Math.max(Number.MIN_SAFE_INTEGER, Math.min(point_y, Number.MAX_SAFE_INTEGER));
                     return [point_x, point_y];
                 });
             }
@@ -10668,8 +10670,9 @@ var $;
                 const [, shift] = this.shift();
                 const [, scale] = this.scale();
                 return this.axis_points().map(point => {
-                    const scaled = point * scale + shift;
-                    return `M 0 ${scaled.toFixed(3)} H 2000`;
+                    let scaled = Math.round(point * scale + shift);
+                    scaled = Math.max(Number.MIN_SAFE_INTEGER, Math.min(scaled, Number.MAX_SAFE_INTEGER));
+                    return `M 0 ${scaled} H 2000`;
                 }).join(' ');
             }
             title_pos_x() {
@@ -10743,8 +10746,9 @@ var $;
                 const [shift] = this.shift();
                 const [scale] = this.scale();
                 return this.axis_points().map(point => {
-                    const scaled = point * scale + shift;
-                    return `M ${scaled.toFixed(3)} 1000 V 0`;
+                    let scaled = Math.round(point * scale + shift);
+                    scaled = Math.max(Number.MIN_SAFE_INTEGER, Math.min(scaled, Number.MAX_SAFE_INTEGER));
+                    return `M ${scaled} 1000 V 0`;
                 }).join(' ');
             }
             label_pos_x(index) {

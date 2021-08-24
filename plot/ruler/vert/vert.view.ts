@@ -25,8 +25,9 @@ namespace $.$$ {
 			const [, scale] = this.scale()
 
 			return this.axis_points().map( point => {
-				const scaled = point * scale + shift
-				return `M 0 ${scaled.toFixed(3)} H 2000`
+				let scaled = Math.round( point * scale + shift )
+				scaled = Math.max( Number.MIN_SAFE_INTEGER, Math.min( scaled, Number.MAX_SAFE_INTEGER ) )
+				return `M 0 ${ scaled } H 2000`
 			}).join( ' ' )
 		}
 

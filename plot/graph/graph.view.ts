@@ -21,8 +21,12 @@ namespace $.$$ {
 			const series_y = this.series_y()
 
 			return this.indexes().map(index => {
-				const point_x = Math.round(shift_x + series_x[index] * scale_x)
-				const point_y = Math.round(shift_y + series_y[index] * scale_y)
+				
+				let point_x = Math.round(shift_x + series_x[index] * scale_x)
+				let point_y = Math.round(shift_y + series_y[index] * scale_y)
+
+				point_x = Math.max( Number.MIN_SAFE_INTEGER, Math.min( point_x, Number.MAX_SAFE_INTEGER ) )
+				point_y = Math.max( Number.MIN_SAFE_INTEGER, Math.min( point_y, Number.MAX_SAFE_INTEGER ) )
 
 				return [point_x, point_y]
 			}) as readonly( readonly number[] )[]
