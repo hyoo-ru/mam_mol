@@ -16,7 +16,7 @@
 [mol_app_demo_main],
 [mol_app_demo_detail],
 [mol_app_empty_message] {
-	flex: 1000 0 60rem;
+	flex: 1000 0 56rem;
 }
 
 [mol_app_demo_detail] {
