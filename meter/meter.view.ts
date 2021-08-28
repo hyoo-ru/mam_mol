@@ -12,7 +12,7 @@ namespace $.$$ {
 				try {
 					const { left , top , right , bottom , width , height } = node.getBoundingClientRect()
 					return { left , top , right , bottom , width , height , zoom : win.devicePixelRatio || 1 }
-				} catch( error ) {
+				} catch( error: any ) {
 					// IE11
 				}
 			}

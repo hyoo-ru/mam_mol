@@ -20,7 +20,7 @@ namespace $ {
 
 				try {
 					res[field] = sub[field]( ( val as Input )[ field ] )
-				} catch( error ) {
+				} catch( error: any ) {
 
 					if( 'then' in error ) return $mol_fail_hidden( error )
 					

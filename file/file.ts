@@ -35,7 +35,7 @@ namespace $ {
 		reset(): void {
 			try {
 				this.stat(undefined, $mol_mem_force_cache)
-			} catch (error) {
+			} catch( error: any ) {
 				if (error instanceof $mol_file_not_found) return
 				return $mol_fail_hidden(error)
 			}
@@ -61,7 +61,7 @@ namespace $ {
 			let exists = true
 			try {
 				this.stat()
-			} catch (error) {
+			} catch( error: any ) {
 
 				if (error instanceof $mol_file_not_found) {
 					exists = false

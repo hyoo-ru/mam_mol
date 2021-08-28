@@ -41,7 +41,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_log3_web_make<Close>(level: keyof Console, color: string): (this: $, event: $mol_log3_event<{}>) => () => void;
+    type $mol_type_keys_extract<Input, Upper> = {
+        [Field in keyof Input]: unknown extends Input[Field] ? never : Input[Field] extends never ? never : Input[Field] extends Upper ? Field : never;
+    }[keyof Input];
+}
+
+declare namespace $ {
+    function $mol_log3_web_make(level: $mol_type_keys_extract<Console, Function>, color: string): (this: $, event: $mol_log3_event<{}>) => () => void;
 }
 
 declare namespace $ {

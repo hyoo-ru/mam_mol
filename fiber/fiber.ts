@@ -71,7 +71,7 @@ namespace $ {
 
 				done( task( ... args ) )
 
-			} catch( error ) {
+			} catch( error: any ) {
 
 				if( 'then' in error ) return $mol_fail_hidden( error )
 
@@ -162,7 +162,7 @@ namespace $ {
 					
 					return task.call( this , ... args ) as Result
 
-				} catch( error ) {
+				} catch( error: any ) {
 
 					if( 'then' in error ) $mol_fail( new Error( 'Solid fiber can not be suspended.' ) )
 					return $mol_fail_hidden( error )
@@ -290,7 +290,7 @@ namespace $ {
 			
 			try {
 				if( this.cursor > $mol_fiber_status.actual ) return this.get()
-			} catch( error ) {
+			} catch( error: any ) {
 				if( 'then' in error ) return
 				$mol_fail_hidden( error )
 			} finally {
@@ -399,7 +399,7 @@ namespace $ {
 
 				this.pull()
 
-			} catch( error ) {
+			} catch( error: any ) {
 
 				if( Object( error ) !== error ) error = new Error( error )
 

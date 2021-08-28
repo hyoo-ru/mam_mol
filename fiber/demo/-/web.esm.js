@@ -65,6 +65,9 @@ var $;
 //log3.js.map
 ;
 "use strict";
+//extract.js.map
+;
+"use strict";
 var $;
 (function ($) {
     function $mol_log3_web_make(level, color) {

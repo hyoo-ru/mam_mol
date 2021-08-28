@@ -114,7 +114,7 @@ $mol_fiber_warp()
 $mol_fiber_defer( ()=> {
 	try {
 		console.log( get_text( 'example.org' )	 )
-	} catch( error ) {
+	} catch( error: any ) {
 		if( 'then' in error ) $mol_fail_hidden( error ) // rethrow if promise
 		console.log( error ) // handle error
 	}

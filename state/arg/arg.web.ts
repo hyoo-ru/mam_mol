@@ -105,7 +105,7 @@ namespace $ {
 		
 	}
 
-	const $mol_state_arg_change = ( event : HashChangeEvent )=> {
+	const $mol_state_arg_change = ( event : Event )=> {
 		$mol_state_arg.href( $mol_dom_context.location.href ) 
 	}
 

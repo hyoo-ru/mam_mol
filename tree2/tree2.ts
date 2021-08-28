@@ -265,7 +265,7 @@ namespace $ {
 				
 				try {
 					return handle( child , belt , context! )
-				} catch( error ) {
+				} catch( error: any ) {
 					error.message += `\n${ child.clone([]) }${ child.span }`
 					$mol_fail_hidden( error )
 				}

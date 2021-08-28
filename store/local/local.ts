@@ -15,7 +15,7 @@ namespace $ {
 				
 				return native
 
-			} catch( error ) {
+			} catch( error: any ) {
 				
 				console.warn( error )
 

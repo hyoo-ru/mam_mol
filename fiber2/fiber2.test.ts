@@ -113,7 +113,7 @@ namespace $ {
 				static check() {
 					try {
 						return $mol_fiber2_sync( Handle ).sum( 1, 2 )
-					} catch( error ) {
+					} catch( error: any ) {
 						if( error instanceof Promise ) $mol_fail_hidden( error )
 						$mol_assert_equal( error.message, 'test error 3' )
 					}

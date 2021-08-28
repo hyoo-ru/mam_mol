@@ -21,7 +21,7 @@ namespace $ {
 				str = $node.colorette[ color + 'Bright' ]( str )
 			}
 
-			this.console[ level ]( str )
+			;( this.console[ level ] as any )( str )
 	
 			const self = this
 			return ()=> self.console.groupEnd()

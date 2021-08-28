@@ -37,7 +37,7 @@ namespace $ {
 				try {
 					await users.put( { name: 'Jin' }, 'jin2' )
 					$mol_fail( new Error( 'Exception expected' ) )
-				} catch( error ) {
+				} catch( error: any ) {
 					$mol_assert_equal( error.message, `Unable to add key to index 'names': at least one key does not satisfy the uniqueness requirements.` )
 				}
 				

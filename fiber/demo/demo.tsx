@@ -19,7 +19,7 @@ namespace $ {
 				for( let i = 0 ; i < 200 ; ++i ) this.step( sandbox )
 				sandbox.innerText = String( Date.now() - start )
 	
-			} catch( error ) {
+			} catch( error: any ) {
 				if( 'then' in error ) $mol_fail_hidden( error )
 	
 				sandbox.innerText = error.message

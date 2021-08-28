@@ -27,7 +27,7 @@ namespace $ {
 			
 			try {
 				return this.source( lang ).valueOf()
-			} catch( error ) {
+			} catch( error: any ) {
 				if( 'then' in error ) $mol_fail_hidden( error )
 				const def = this.lang_default()
 				if( lang === def ) throw error

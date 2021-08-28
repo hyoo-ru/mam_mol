@@ -39,7 +39,7 @@ namespace $.$$ {
 			try {
 				this.fiber()?.get()
 				return ''
-			} catch( error ) {
+			} catch( error: any ) {
 
 				if( error instanceof Promise ) {
 					return $mol_fail_hidden( error )

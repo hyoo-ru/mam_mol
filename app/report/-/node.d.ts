@@ -1623,8 +1623,8 @@ declare namespace $ {
         static end: $mol_regexp<{}>;
         static or: $mol_regexp<{}>;
         static line_end: $mol_regexp<{
-            readonly mac_end: string;
             readonly win_end: string;
+            readonly mac_end: string;
         }>;
     }
     export {};

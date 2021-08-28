@@ -17,7 +17,7 @@ namespace $ {
 		static id( next? : string ) {
 			try {
 				if( history.state ) return history.state as string
-			} catch( error ) {
+			} catch( error: any ) {
 				// IE11
 			}
 			const id = Date.now().toString( 16 )

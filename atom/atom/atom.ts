@@ -125,7 +125,7 @@ namespace $ {
 		pull( force? : $mol_mem_force ) {
 			try {
 				return this.handler( this._next , force )
-			} catch( error ) {
+			} catch( error: any ) {
 				if( error[ '$mol_atom_catched' ] ) return error
 				if( error instanceof $mol_atom_wait ) return error
 				
@@ -374,7 +374,7 @@ namespace $ {
 						
 						return next
 
-					} catch( error ) {
+					} catch( error: any ) {
 						
 						if( error instanceof $mol_atom_wait ) return error
 						

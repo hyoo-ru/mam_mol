@@ -14,7 +14,7 @@ namespace $ {
 
 				try {
 					res[ field ] = sub( ( val as Object )[ field ] )
-				} catch( error ) {
+				} catch( error: any ) {
 
 					if( 'then' in error ) return $mol_fail_hidden( error )
 					
