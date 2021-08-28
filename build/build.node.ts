@@ -14,7 +14,7 @@ namespace $ {
 					}
 				)
 				process.exit(0)
-			} catch(error) {
+			} catch( error: any ) {
 				this.$mol_log3_fail({
 					place: '$mol_build_start' , 
 					message: error.message,
