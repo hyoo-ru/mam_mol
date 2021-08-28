@@ -597,7 +597,7 @@ namespace $ {
 						return true
 					}
 
-				} catch( error ) {
+				} catch( error: any ) {
 
 					this.$.$mol_log3_fail({
 						place: `${this}.modEnsure()` ,
@@ -668,7 +668,7 @@ namespace $ {
 
 					try {
 						this.modEnsure( dep.path() )
-					} catch( error ) {
+					} catch( error: any ) {
 						error.message = `${ error.message }\nDependency "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
 						$mol_fail_hidden(error)
 					}
@@ -911,7 +911,7 @@ namespace $ {
 							concater.add( `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }.call( {} , {} )\n`, '-' )
 						}
 
-					} catch( error ) {
+					} catch( error: any ) {
 						errors.push( error )
 					}
 				}
@@ -1002,7 +1002,7 @@ namespace $ {
 					try {
 						const content = this.js_content( src.path() )
 						concater.add( content.text, src.relate( target.parent() ), content.map)
-					} catch( error ) {
+					} catch( error: any ) {
 						errors.push( error )
 					}
 				}

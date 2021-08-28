@@ -36,7 +36,7 @@ namespace $ {
 					if( age < 1 ) return cache.value
 				}
 
-			} catch( error ) {
+			} catch( error: any ) {
 				if( error instanceof Promise ) return $mol_fail_hidden( error )
 				console.error( error )
 			}
@@ -50,7 +50,7 @@ namespace $ {
 					value ,
 				} )
 
-			} catch( error ) {
+			} catch( error: any ) {
 				if( error instanceof Promise ) return $mol_fail_hidden( error )
 				console.error( error )
 			}

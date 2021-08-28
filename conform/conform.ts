@@ -72,7 +72,7 @@ namespace $ {
 			const conformed = $mol_conform( target[key] , source[key] )
 			
 			if( conformed !== target[key] ) {
-				try { target[key] = conformed } catch( error ) {}
+				try { target[key] = conformed } catch( error: any ) {}
 				if( !Object.is( conformed , target[key] ) ) equal = false
 			}
 			

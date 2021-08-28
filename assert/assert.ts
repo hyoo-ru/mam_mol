@@ -19,7 +19,7 @@ namespace $ {
 			
 			handler()
 
-		} catch( error ) {
+		} catch( error: any ) {
 			
 			if( !ErrorRight ) return error
 			
@@ -74,7 +74,7 @@ namespace $ {
 					
 					try {
 						return JSON.stringify( val )
-					} catch( error ) {
+					} catch( error: any ) {
 						console.error( error )
 						return val
 					}

@@ -13,7 +13,7 @@ namespace $ {
 				native.setItem( '' , '' )
 				native.removeItem( '' )
 				return this['native()'] = native
-			} catch( error ) {
+			} catch( error: any ) {
 				console.warn( error )
 			}
 

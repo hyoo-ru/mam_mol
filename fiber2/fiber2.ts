@@ -100,7 +100,7 @@ namespace $ {
 
 				}
 				
-			} catch( error ) {
+			} catch( error: any ) {
 				
 				this.result = error
 				

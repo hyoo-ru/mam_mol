@@ -140,7 +140,7 @@ namespace $ {
 				
 				return comment
 
-			} catch( error ) {
+			} catch( error: any ) {
 				
 				if( error.message === 'Unauthorized' ) {
 					$mol_github_auth.token_last( undefined , $mol_mem_force_update )

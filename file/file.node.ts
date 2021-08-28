@@ -128,7 +128,7 @@ namespace $ {
 
 					return next
 
-				} catch( error ) {
+				} catch( error: any ) {
 
 					error.message += '\n' + path
 					return this.$.$mol_fail_hidden( error )
@@ -143,7 +143,7 @@ namespace $ {
 
 				$node.fs.writeFileSync( path, next )
 
-			} catch( error ) {
+			} catch( error: any ) {
 
 				error.message += '\n' + path
 				return this.$.$mol_fail_hidden( error )

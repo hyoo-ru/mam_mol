@@ -126,7 +126,7 @@ namespace $.$$ {
 
 					return sum + view.minimal_height() 
 
-				} catch( error ) {
+				} catch( error: any ) {
 
 					if( error instanceof Promise ) {
 						$mol_atom2.current!.subscribe( error )

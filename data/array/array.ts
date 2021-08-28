@@ -10,7 +10,7 @@ namespace $ {
 
 				try {
 					return sub( item )
-				} catch( error ) {
+				} catch( error: any ) {
 
 					if( 'then' in error ) return $mol_fail_hidden( error )
 					

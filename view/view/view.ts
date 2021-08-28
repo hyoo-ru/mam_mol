@@ -120,7 +120,7 @@ namespace $ {
 					}
 					
 				} 
-			} catch( error ) {
+			} catch( error: any ) {
 				if( error instanceof Promise ) {
 					$mol_atom2.current!.subscribe( error )
 				} else if( $mol_fail_catch( error ) ) {
@@ -200,7 +200,7 @@ namespace $ {
 					
 				}
 
-			} catch( error ) {
+			} catch( error: any ) {
 				
 				$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
 				

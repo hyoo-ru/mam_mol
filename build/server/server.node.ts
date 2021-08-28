@@ -14,7 +14,7 @@ namespace $ {
 
 					return $mol_fiber_unlimit( ()=> this.generate( req.url ) && Promise.resolve().then( next ) )
 				
-				} catch( error ) {
+				} catch( error: any ) {
 
 					if( typeof error.then === 'function' ) $mol_fail_hidden( error )
 					
@@ -127,7 +127,7 @@ namespace $ {
 						const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
 						for( const src of sources ) src.buffer()
 		
-					} catch( error ) {
+					} catch( error: any ) {
 
 						if( $mol_compare_deep( autorun.error , error ) ) return true
 						

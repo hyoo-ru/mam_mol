@@ -86,7 +86,7 @@ namespace $ {
 		'forbidden XMLHttpRequest'( $ ) {
 			try {
 				console.assert( void new $.XMLHttpRequest )
-			} catch( error ) {
+			} catch( error: any ) {
 				console.assert( error.message === 'XMLHttpRequest is forbidden in tests' )
 			}
 		} ,
@@ -94,7 +94,7 @@ namespace $ {
 		'forbidden fetch'( $ ) {
 			try {
 				console.assert( void $.fetch('') )
-			} catch( error ) {
+			} catch( error: any ) {
 				console.assert( error.message === 'fetch is forbidden in tests' )
 			}
 		} ,

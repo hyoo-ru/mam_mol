@@ -42,7 +42,7 @@ namespace $ {
 				
 				const timer = setInterval( ()=> {
 					
-					try { win.location.href } catch( error ) { return }
+					try { win.location.href } catch( error: any ) { return }
 	
 					const search = win.location.search
 					

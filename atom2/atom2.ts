@@ -105,7 +105,7 @@ namespace $ {
 
 				try {
 					master.get()
-				} catch( error ) {
+				} catch( error: any ) {
 					if( 'then' in error ) $mol_fail_hidden( error )
 					this.cursor = $mol_fiber_status.obsolete
 				}

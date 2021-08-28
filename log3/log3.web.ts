@@ -1,8 +1,8 @@
 namespace $ {
 
-	export function $mol_log3_web_make< Close>(
-		level : keyof Console ,
-		color : string ,
+	export function $mol_log3_web_make(
+		level : $mol_type_keys_extract< Console, Function >,
+		color : string,
 	) {
 
 		return function $mol_log3_logger(
@@ -22,7 +22,7 @@ namespace $ {
 	
 			const style = `color:${color};font-weight:bolder`
 
-			this.console[ level ]( tpl , style , ... chunks )
+			;( this.console[ level ] as any )( tpl , style , ... chunks )
 
 			const self = this
 			return ()=> self.console.groupEnd()

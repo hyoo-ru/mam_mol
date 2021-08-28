@@ -5,7 +5,7 @@ namespace $.$$ {
 		message() {
 			try {
 				return this.status() ?? null
-			} catch( error ) {
+			} catch( error: any ) {
 				if( error instanceof Promise ) $mol_fail_hidden( error )
 				return error.message
 			}

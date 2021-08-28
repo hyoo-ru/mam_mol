@@ -66,7 +66,7 @@ namespace $ {
 					)
 				} )
 				
-			} catch( error ) {
+			} catch( error: any ) {
 				
 				if( next ) $mol_fail_hidden( error )
 				
