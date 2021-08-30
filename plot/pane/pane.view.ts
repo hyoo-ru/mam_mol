@@ -158,8 +158,7 @@ namespace $.$$ {
 				const dims = graph.dimensions()
 				if( dims.x.min > dims.x.max ) return true
 				if( dims.y.min > dims.y.max ) return true
-				if( dims.x.max - dims.x.min < max_x ) return false
-				if( dims.y.max - dims.y.min < max_y ) return false
+				if( dims.x.max - dims.x.min < max_x && dims.y.max - dims.y.min < max_y ) return false
 				if( dims.x.min > viewport.x.max ) return false
 				if( dims.x.max < viewport.x.min ) return false
 				if( dims.y.min > viewport.y.max ) return false

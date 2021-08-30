@@ -820,9 +820,11 @@ declare namespace $ {
         start_zoom(val?: any): number;
         start_distance(val?: any): number;
         zoom(val?: any): number;
+        action_type(val?: any): string;
+        action_point(val?: any): $mol_vector_2d<number>;
         start_pan(val?: any): readonly any[];
         pan(val?: any): $mol_vector_2d<number>;
-        pos(val?: any): readonly any[];
+        pointer_center(): $mol_vector_2d<number>;
         start_pos(val?: any): any;
         swipe_precision(): number;
         swipe_right(val?: any): any;
@@ -837,15 +839,12 @@ declare namespace $ {
         swipe_to_bottom(val?: any): any;
         swipe_to_left(val?: any): any;
         swipe_to_top(val?: any): any;
-        drawn(val?: any): $mol_vector_2d<readonly number[]>;
+        draw(event?: any): any;
         style(): {
             "touch-action": string;
             "overscroll-behavior": string;
         };
         event(): {
-            touchstart: (event?: any) => any;
-            touchmove: (event?: any) => any;
-            touchend: (event?: any) => any;
             pointerdown: (event?: any) => any;
             pointermove: (event?: any) => any;
             pointerup: (event?: any) => any;
@@ -856,7 +855,6 @@ declare namespace $ {
         event_start(event?: any): any;
         event_move(event?: any): any;
         event_end(event?: any): any;
-        event_leave(event?: any): any;
         event_wheel(event?: any): any;
         event_menu(event?: any): any;
     }
@@ -865,23 +863,22 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_touch extends $.$mol_touch {
         auto(): void;
-        event_coords(event: TouchEvent | PointerEvent | WheelEvent): $mol_vector<$mol_vector_2d<number>, number>;
-        action_type(event: TouchEvent | PointerEvent | WheelEvent): "zoom" | "draw" | "pan" | null;
-        event_start(event: TouchEvent | PointerEvent): void;
-        event_leave(event: TouchEvent | PointerEvent): void;
-        event_move(event: TouchEvent | PointerEvent): void;
-        event_end(event: TouchEvent | PointerEvent): void;
-        swipe_left(event: TouchEvent | PointerEvent): void;
-        swipe_right(event: TouchEvent | PointerEvent): void;
-        swipe_top(event: TouchEvent | PointerEvent): void;
-        swipe_bottom(event: TouchEvent | PointerEvent): void;
+        pointer_events(next?: readonly PointerEvent[]): readonly PointerEvent[];
+        pointer_coords(): $mol_vector<$mol_vector_2d<number>, number>;
+        pointer_center(): $mol_vector_2d<number>;
+        event_coords(event: PointerEvent | WheelEvent): $mol_vector_2d<number>;
+        action_point(): $mol_vector_2d<number>;
+        event_eat(event: PointerEvent | WheelEvent): string;
+        event_start(event: PointerEvent): void;
+        event_move(event: PointerEvent): void;
+        event_end(event: PointerEvent): void;
+        swipe_left(event: PointerEvent): void;
+        swipe_right(event: PointerEvent): void;
+        swipe_top(event: PointerEvent): void;
+        swipe_bottom(event: PointerEvent): void;
         _menu_mute: boolean;
         event_menu(event: PointerEvent): void;
         event_wheel(event: WheelEvent): void;
-        draw_point(event: TouchEvent | PointerEvent): $mol_vector_2d<number>;
-        draw_start(event: TouchEvent | PointerEvent): void;
-        draw_continue(event: TouchEvent | PointerEvent): void;
-        draw_end(event: TouchEvent | PointerEvent): void;
     }
 }
 
@@ -910,7 +907,6 @@ declare namespace $ {
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
         sub(): readonly $mol_svg[];
         graphs_colored(): readonly $mol_plot_graph[];
-        cursor_position(val?: any): $mol_vector_2d<number>;
         plugins(): readonly any[];
         event(): {
             dblclick: (event?: any) => any;
@@ -927,7 +923,10 @@ declare namespace $ {
         graphs(): readonly $mol_plot_graph[];
         graphs_positioned(): readonly $mol_plot_graph[];
         zoom(val?: any): number;
-        drawn(val?: any): $mol_vector_2d<readonly number[]>;
+        draw(event?: any): any;
+        cursor_position(): $mol_vector_2d<number>;
+        action_type(): string;
+        action_point(): $mol_vector_2d<number>;
         Touch(): $$.$mol_touch;
         reset(event?: any): any;
     }

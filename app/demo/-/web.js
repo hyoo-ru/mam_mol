@@ -8432,6 +8432,17 @@ var $;
                 return val;
             return 1;
         }
+        action_type(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        action_point(val) {
+            if (val !== undefined)
+                return val;
+            const obj = new this.$.$mol_vector_2d(NaN, NaN);
+            return obj;
+        }
         start_pan(val) {
             if (val !== undefined)
                 return val;
@@ -8446,13 +8457,9 @@ var $;
             const obj = new this.$.$mol_vector_2d(0, 0);
             return obj;
         }
-        pos(val) {
-            if (val !== undefined)
-                return val;
-            return [
-                NaN,
-                NaN
-            ];
+        pointer_center() {
+            const obj = new this.$.$mol_vector_2d(NaN, NaN);
+            return obj;
         }
         start_pos(val) {
             if (val !== undefined)
@@ -8522,11 +8529,10 @@ var $;
                 return val;
             return null;
         }
-        drawn(val) {
-            if (val !== undefined)
-                return val;
-            const obj = new this.$.$mol_vector_2d([], []);
-            return obj;
+        draw(event) {
+            if (event !== undefined)
+                return event;
+            return null;
         }
         style() {
             return {
@@ -8538,13 +8544,10 @@ var $;
         event() {
             return {
                 ...super.event(),
-                touchstart: (event) => this.event_start(event),
-                touchmove: (event) => this.event_move(event),
-                touchend: (event) => this.event_end(event),
                 pointerdown: (event) => this.event_start(event),
                 pointermove: (event) => this.event_move(event),
                 pointerup: (event) => this.event_end(event),
-                pointerleave: (event) => this.event_leave(event),
+                pointerleave: (event) => this.event_end(event),
                 wheel: (event) => this.event_wheel(event),
                 contextmenu: (event) => this.event_menu(event)
             };
@@ -8560,11 +8563,6 @@ var $;
             return null;
         }
         event_end(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        event_leave(event) {
             if (event !== undefined)
                 return event;
             return null;
@@ -8591,13 +8589,19 @@ var $;
     ], $mol_touch.prototype, "zoom", null);
     __decorate([
         $.$mol_mem
+    ], $mol_touch.prototype, "action_type", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_touch.prototype, "action_point", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_touch.prototype, "start_pan", null);
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "pan", null);
     __decorate([
         $.$mol_mem
-    ], $mol_touch.prototype, "pos", null);
+    ], $mol_touch.prototype, "pointer_center", null);
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "start_pos", null);
@@ -8639,7 +8643,7 @@ var $;
     ], $mol_touch.prototype, "swipe_to_top", null);
     __decorate([
         $.$mol_mem
-    ], $mol_touch.prototype, "drawn", null);
+    ], $mol_touch.prototype, "draw", null);
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "event_start", null);
@@ -8649,9 +8653,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "event_end", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_touch.prototype, "event_leave", null);
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "event_wheel", null);
@@ -8671,61 +8672,72 @@ var $;
             auto() {
                 this.view_rect();
             }
+            pointer_events(next = []) {
+                return next;
+            }
+            pointer_coords() {
+                const events = this.pointer_events();
+                const touches = events.filter(e => e.pointerType === 'touch');
+                const pens = events.filter(e => e.pointerType === 'pen');
+                const mouses = events.filter(e => e.pointerType === 'mouse');
+                const choosen = touches.length ? touches : pens.length ? pens : mouses;
+                return new $.$mol_vector(...choosen.map(event => this.event_coords(event)));
+            }
+            pointer_center() {
+                const coords = this.pointer_coords();
+                return coords.length ? coords.center() : new $.$mol_vector_2d(NaN, NaN);
+            }
             event_coords(event) {
                 const { left, top } = this.view_rect();
-                function point(point) {
-                    return new $.$mol_vector_2d(Math.round(point.pageX - left), Math.round(point.pageY - top));
-                }
-                if ('touches' in event) {
-                    return new $.$mol_vector(...[...event.touches].map(point));
-                }
-                return new $.$mol_vector(point(event));
+                return new $.$mol_vector_2d(Math.round(event.pageX - left), Math.round(event.pageY - top));
             }
-            action_type(event) {
-                if (event instanceof TouchEvent) {
-                    if (event.touches.length === 2)
-                        return 'zoom';
-                    if (event.touches.length === 1)
-                        return 'draw';
-                }
+            action_point() {
+                const coord = this.pointer_center();
+                if (!coord)
+                    return null;
+                const zoom = this.zoom();
+                const pan = this.pan();
+                return new $.$mol_vector_2d((coord.x - pan.x) / zoom, (coord.y - pan.y) / zoom);
+            }
+            event_eat(event) {
                 if (event instanceof PointerEvent) {
-                    if (event.pointerType === 'touch')
-                        return null;
-                    if (event.ctrlKey)
-                        return 'zoom';
-                    if (event.buttons === 2)
-                        return 'pan';
-                    if (event.buttons === 1)
-                        return 'draw';
+                    const events = this.pointer_events().filter(e => e.pointerId !== event.pointerId);
+                    if (event.type !== 'pointerleave')
+                        events.push(event);
+                    this.pointer_events(events);
+                    if (events.filter(e => e.pointerType === 'touch').length === 2) {
+                        return this.action_type('zoom');
+                    }
+                    if (events.length > 0) {
+                        if (event.ctrlKey)
+                            return this.action_type('zoom');
+                        if (event.buttons === 2)
+                            return this.action_type('pan');
+                        if (event.buttons === 1)
+                            return this.action_type('draw');
+                    }
+                    return this.action_type('');
                 }
                 if (event instanceof WheelEvent) {
                     if (event.ctrlKey)
-                        return 'zoom';
-                    return 'pan';
+                        return this.action_type('zoom');
+                    return this.action_type('pan');
                 }
-                return null;
+                return this.action_type('');
             }
             event_start(event) {
                 if (event.defaultPrevented)
                     return;
                 this.start_pan(this.pan());
-                const action_type = this.action_type(event);
+                const action_type = this.event_eat(event);
                 if (!action_type)
                     return;
-                if (action_type === 'draw') {
-                    this.draw_start(event);
+                if (action_type === 'draw')
                     return;
-                }
-                const coords = this.event_coords(event);
+                const coords = this.pointer_coords();
                 this.start_pos(coords.center());
                 this.start_distance(coords.distance());
                 this.start_zoom(this.zoom());
-            }
-            event_leave(event) {
-                if (event.defaultPrevented)
-                    return;
-                if (event instanceof PointerEvent)
-                    this.pos(super.pos());
             }
             event_move(event) {
                 if (event.defaultPrevented)
@@ -8734,84 +8746,56 @@ var $;
                 if (!rect)
                     return;
                 const start_pan = this.start_pan();
-                let pos;
-                let cursor_pos;
-                cursor_pos = this.event_coords(event).center();
-                pos = cursor_pos;
-                const action_type = this.action_type(event);
-                if (cursor_pos) {
-                    this.pos([
-                        Math.max(0, cursor_pos[0]),
-                        Math.max(0, cursor_pos[1]),
-                    ]);
-                }
+                const action_type = this.event_eat(event);
+                let pos = this.pointer_center();
                 if (!action_type)
                     return;
                 if (action_type === 'draw') {
-                    this.draw_continue(event);
+                    this.draw(event);
                     return;
                 }
                 const start_pos = this.start_pos();
-                if (pos) {
-                    if (!start_pos)
-                        return;
-                    const distance = new $.$mol_vector_2d(start_pos, pos).distance();
+                if (!start_pos)
+                    return;
+                if (action_type === 'pan') {
+                    const distance = new $.$mol_vector(start_pos, pos).distance();
                     if (distance >= 4) {
                         this._menu_mute = true;
-                        if (event instanceof PointerEvent) {
-                            this.dom_node().setPointerCapture(event.pointerId);
-                        }
+                        this.dom_node().setPointerCapture(event.pointerId);
                     }
-                    if (this.pan !== $mol_touch.prototype.pan) {
-                        this.pan(new $.$mol_vector_2d(start_pan[0] + pos[0] - start_pos[0], start_pan[1] + pos[1] - start_pos[1]));
-                        event.preventDefault();
-                    }
-                    if (typeof TouchEvent === 'undefined')
-                        return;
-                    if (!(event instanceof TouchEvent))
-                        return;
-                    const precision = this.swipe_precision();
-                    if ((this.swipe_right !== $mol_touch.prototype.swipe_right
-                        || this.swipe_from_left !== $mol_touch.prototype.swipe_from_left
-                        || this.swipe_to_right !== $mol_touch.prototype.swipe_to_right)
-                        && pos[0] - start_pos[0] > precision * 2
-                        && Math.abs(pos[1] - start_pos[1]) < precision) {
-                        this.swipe_right(event);
-                        event.preventDefault();
-                    }
-                    if ((this.swipe_left !== $mol_touch.prototype.swipe_left
-                        || this.swipe_from_right !== $mol_touch.prototype.swipe_from_right
-                        || this.swipe_to_left !== $mol_touch.prototype.swipe_to_left)
-                        && start_pos[0] - pos[0] > precision * 2
-                        && Math.abs(pos[1] - start_pos[1]) < precision) {
-                        this.swipe_left(event);
-                        event.preventDefault();
-                    }
-                    if ((this.swipe_bottom !== $mol_touch.prototype.swipe_bottom
-                        || this.swipe_from_top !== $mol_touch.prototype.swipe_from_top
-                        || this.swipe_to_bottom !== $mol_touch.prototype.swipe_to_bottom)
-                        && pos[1] - start_pos[1] > precision * 2
-                        && Math.abs(pos[0] - start_pos[0]) < precision) {
-                        this.swipe_bottom(event);
-                        event.preventDefault();
-                    }
-                    if ((this.swipe_top !== $mol_touch.prototype.swipe_top
-                        || this.swipe_from_bottom !== $mol_touch.prototype.swipe_from_bottom
-                        || this.swipe_to_top !== $mol_touch.prototype.swipe_to_top)
-                        && start_pos[1] - pos[1] > precision * 2
-                        && Math.abs(pos[0] - start_pos[0]) < precision) {
-                        this.swipe_top(event);
-                        event.preventDefault();
-                    }
+                    this.pan(new $.$mol_vector_2d(start_pan[0] + pos[0] - start_pos[0], start_pan[1] + pos[1] - start_pos[1]));
                 }
-                if (typeof TouchEvent === 'undefined')
-                    return;
-                if (!(event instanceof TouchEvent))
-                    return;
-                if (event.touches.length === 2) {
-                    if (this.zoom === $mol_touch.prototype.zoom)
-                        return;
-                    const coords = this.event_coords(event);
+                const precision = this.swipe_precision();
+                if ((this.swipe_right !== $mol_touch.prototype.swipe_right
+                    || this.swipe_from_left !== $mol_touch.prototype.swipe_from_left
+                    || this.swipe_to_right !== $mol_touch.prototype.swipe_to_right)
+                    && pos[0] - start_pos[0] > precision * 2
+                    && Math.abs(pos[1] - start_pos[1]) < precision) {
+                    this.swipe_right(event);
+                }
+                if ((this.swipe_left !== $mol_touch.prototype.swipe_left
+                    || this.swipe_from_right !== $mol_touch.prototype.swipe_from_right
+                    || this.swipe_to_left !== $mol_touch.prototype.swipe_to_left)
+                    && start_pos[0] - pos[0] > precision * 2
+                    && Math.abs(pos[1] - start_pos[1]) < precision) {
+                    this.swipe_left(event);
+                }
+                if ((this.swipe_bottom !== $mol_touch.prototype.swipe_bottom
+                    || this.swipe_from_top !== $mol_touch.prototype.swipe_from_top
+                    || this.swipe_to_bottom !== $mol_touch.prototype.swipe_to_bottom)
+                    && pos[1] - start_pos[1] > precision * 2
+                    && Math.abs(pos[0] - start_pos[0]) < precision) {
+                    this.swipe_bottom(event);
+                }
+                if ((this.swipe_top !== $mol_touch.prototype.swipe_top
+                    || this.swipe_from_bottom !== $mol_touch.prototype.swipe_from_bottom
+                    || this.swipe_to_top !== $mol_touch.prototype.swipe_to_top)
+                    && start_pos[1] - pos[1] > precision * 2
+                    && Math.abs(pos[0] - start_pos[0]) < precision) {
+                    this.swipe_top(event);
+                }
+                if (action_type === 'zoom') {
+                    const coords = this.pointer_coords();
                     const distance = coords.distance();
                     const start_distance = this.start_distance();
                     const center = coords.center();
@@ -8820,16 +8804,14 @@ var $;
                     this.zoom(start_zoom * mult);
                     const pan = new $.$mol_vector_2d((start_pan[0] - center[0] + pos[0] - start_pos[0]) * mult + center[0], (start_pan[1] - center[1] + pos[1] - start_pos[1]) * mult + center[1]);
                     this.pan(pan);
-                    event.preventDefault();
                 }
             }
             event_end(event) {
+                this.event_eat(event);
+                this.dom_node().releasePointerCapture(event.pointerId);
                 if (!this.start_pos()) {
-                    this.draw_end(event);
+                    this.draw(event);
                     return;
-                }
-                if (event instanceof PointerEvent) {
-                    this.dom_node().releasePointerCapture(event.pointerId);
                 }
                 this.start_pos(null);
                 new $.$mol_after_timeout(0, () => this._menu_mute = false);
@@ -8873,46 +8855,36 @@ var $;
                 if (this.pan !== $mol_touch.prototype.pan) {
                     event.preventDefault();
                 }
-                const action_type = this.action_type(event);
+                const action_type = this.event_eat(event);
                 if (action_type === 'zoom') {
                     const zoom_prev = this.zoom() || 0.001;
                     const zoom_next = zoom_prev * (1 - .1 * Math.sign(event.deltaY));
                     const mult = zoom_next / zoom_prev;
                     this.zoom(zoom_next);
                     const pan_prev = this.pan();
-                    const center = this.event_coords(event).center();
+                    const center = this.pointer_center();
                     const pan_next = pan_prev.multed0(mult).added1(center.multed0(1 - mult));
                     this.pan(pan_next);
                 }
                 if (action_type === 'pan') {
                     const pan_prev = this.pan();
-                    const pan_next = new $.$mol_vector_2d(pan_prev.x - event.deltaX, pan_prev.y - event.deltaY);
+                    const pan_next = new $.$mol_vector_2d(pan_prev.x - (event.shiftKey ? event.deltaY : event.deltaX), pan_prev.y - (event.shiftKey ? event.deltaX : event.deltaY));
                     this.pan(pan_next);
                 }
             }
-            draw_point(event) {
-                const point = this.event_coords(event).center();
-                const zoom = this.zoom();
-                const pan = this.pan();
-                return new $.$mol_vector_2d((point.x - pan.x) / zoom, (point.y - pan.y) / zoom);
-            }
-            draw_start(event) {
-                const point = this.draw_point(event);
-                this.drawn(new $.$mol_vector_2d([point.x], [point.y]));
-            }
-            draw_continue(event) {
-                const drawn = this.drawn();
-                const point = this.draw_point(event);
-                const last_x = drawn.x[drawn.x.length - 1];
-                const last_y = drawn.y[drawn.x.length - 1];
-                if (last_x === point.x && last_x === point.y)
-                    return;
-                this.drawn(new $.$mol_vector_2d([...drawn.x, point.x], [...drawn.y, point.y]));
-            }
-            draw_end(event) {
-                this.drawn(new $.$mol_vector_2d([], []));
-            }
         }
+        __decorate([
+            $.$mol_mem
+        ], $mol_touch.prototype, "pointer_events", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_touch.prototype, "pointer_coords", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_touch.prototype, "pointer_center", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_touch.prototype, "action_point", null);
         $$.$mol_touch = $mol_touch;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -9013,12 +8985,6 @@ var $;
         graphs_colored() {
             return this.graphs_positioned();
         }
-        cursor_position(val) {
-            if (val !== undefined)
-                return val;
-            const obj = new this.$.$mol_vector_2d(NaN, NaN);
-            return obj;
-        }
         plugins() {
             return [
                 ...super.plugins(),
@@ -9077,18 +9043,25 @@ var $;
                 return val;
             return 1;
         }
-        drawn(val) {
-            if (val !== undefined)
-                return val;
-            const obj = new this.$.$mol_vector_2d([], []);
-            return obj;
+        draw(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        cursor_position() {
+            return this.Touch().pointer_center();
+        }
+        action_type() {
+            return this.Touch().action_type();
+        }
+        action_point() {
+            return this.Touch().action_point();
         }
         Touch() {
             const obj = new this.$.$mol_touch();
             obj.zoom = (val) => this.zoom(val);
             obj.pan = (val) => this.shift(val);
-            obj.pos = (val) => this.cursor_position(val);
-            obj.drawn = (val) => this.drawn(val);
+            obj.draw = (event) => this.draw(event);
             return obj;
         }
         reset(event) {
@@ -9141,9 +9114,6 @@ var $;
     ], $mol_plot_pane.prototype, "dimensions", null);
     __decorate([
         $.$mol_mem
-    ], $mol_plot_pane.prototype, "cursor_position", null);
-    __decorate([
-        $.$mol_mem
     ], $mol_plot_pane.prototype, "gap_x", null);
     __decorate([
         $.$mol_mem
@@ -9171,7 +9141,7 @@ var $;
     ], $mol_plot_pane.prototype, "zoom", null);
     __decorate([
         $.$mol_mem
-    ], $mol_plot_pane.prototype, "drawn", null);
+    ], $mol_plot_pane.prototype, "draw", null);
     __decorate([
         $.$mol_mem
     ], $mol_plot_pane.prototype, "Touch", null);
@@ -9300,9 +9270,7 @@ var $;
                         return true;
                     if (dims.y.min > dims.y.max)
                         return true;
-                    if (dims.x.max - dims.x.min < max_x)
-                        return false;
-                    if (dims.y.max - dims.y.min < max_y)
+                    if (dims.x.max - dims.x.min < max_x && dims.y.max - dims.y.min < max_y)
                         return false;
                     if (dims.x.min > viewport.x.max)
                         return false;

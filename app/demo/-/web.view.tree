@@ -608,6 +608,10 @@ $mol_touch $mol_plugin
 	start_zoom?val 0
 	start_distance?val 0
 	zoom?val 1
+	action_type?val \
+	action_point?val $mol_vector_2d /
+		NaN
+		NaN
 	-
 	start_pan?val /
 		0
@@ -615,7 +619,7 @@ $mol_touch $mol_plugin
 	pan?val $mol_vector_2d /
 		0
 		0
-	pos?val /
+	pointer_center $mol_vector_2d /
 		NaN
 		NaN
 	-
@@ -637,9 +641,7 @@ $mol_touch $mol_plugin
 	swipe_to_left?val null
 	swipe_to_top?val null
 	-
-	drawn?val $mol_vector_2d /
-		/number
-		/number
+	draw?event null
 	-
 	style *
 		^
@@ -648,13 +650,10 @@ $mol_touch $mol_plugin
 	-
 	event *
 		^
-		touchstart?event <=> event_start?event null
-		touchmove?event <=> event_move?event null
-		touchend?event <=> event_end?event null
 		pointerdown?event <=> event_start?event null
 		pointermove?event <=> event_move?event null
 		pointerup?event <=> event_end?event null
-		pointerleave?event <=> event_leave?event null
+		pointerleave?event <=> event_end?event null
 		wheel?event <=> event_wheel?event null
 		contextmenu?event <=> event_menu?event null
 
@@ -722,19 +721,16 @@ $mol_plot_pane $mol_svg_root
 	-
 	sub <= graphs_sorted /$mol_svg
 	graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
-	cursor_position?val $mol_vector_2d /
-		NaN
-		NaN
 	-
 	plugins /
 		^
 		<= Touch $mol_touch
 			zoom?val <=> zoom?val 1
 			pan?val <=> shift?val
-			pos?val <=> cursor_position?val
-			drawn?val <=> drawn?val $mol_vector_2d /
-				/number
-				/number
+			pointer_center => cursor_position
+			action_type => action_type
+			action_point => action_point
+			draw?event <=> draw?event null
 	event *
 		^
 		dblclick?event <=> reset?event null

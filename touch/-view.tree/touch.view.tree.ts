@@ -36,6 +36,35 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * action_type?val \
+		 * ```
+		 */
+		@ $mol_mem
+		action_type(val?: any) {
+			if ( val !== undefined ) return val as never
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * action_point?val $mol_vector_2d /
+		 * 	NaN
+		 * 	NaN
+		 * ```
+		 */
+		@ $mol_mem
+		action_point(val?: any) {
+			if ( val !== undefined ) return val as never
+			const obj = new this.$.$mol_vector_2d(
+				NaN,
+				NaN
+			)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * start_pan?val /
 		 * 	0
 		 * 	0
@@ -70,18 +99,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * pos?val /
+		 * pointer_center $mol_vector_2d /
 		 * 	NaN
 		 * 	NaN
 		 * ```
 		 */
 		@ $mol_mem
-		pos(val?: any) {
-			if ( val !== undefined ) return val as never
-			return [
+		pointer_center() {
+			const obj = new this.$.$mol_vector_2d(
 				NaN,
 				NaN
-			] as readonly any[]
+			)
+			
+			return obj
 		}
 		
 		/**
@@ -238,22 +268,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * drawn?val $mol_vector_2d /
-		 * 	/number
-		 * 	/number
+		 * draw?event null
 		 * ```
 		 */
 		@ $mol_mem
-		drawn(val?: any) {
-			if ( val !== undefined ) return val as never
-			const obj = new this.$.$mol_vector_2d(
-				[
-				] as readonly number[],
-				[
-				] as readonly number[]
-			)
-			
-			return obj
+		draw(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
 		}
 		
 		/**
@@ -276,13 +297,10 @@ namespace $ {
 		 * ```tree
 		 * event *
 		 * 	^
-		 * 	touchstart?event <=> event_start?event
-		 * 	touchmove?event <=> event_move?event
-		 * 	touchend?event <=> event_end?event
 		 * 	pointerdown?event <=> event_start?event
 		 * 	pointermove?event <=> event_move?event
 		 * 	pointerup?event <=> event_end?event
-		 * 	pointerleave?event <=> event_leave?event
+		 * 	pointerleave?event <=> event_end?event
 		 * 	wheel?event <=> event_wheel?event
 		 * 	contextmenu?event <=> event_menu?event
 		 * ```
@@ -290,13 +308,10 @@ namespace $ {
 		event() {
 			return {
 				...super.event(),
-				touchstart: (event?: any) => this.event_start(event),
-				touchmove: (event?: any) => this.event_move(event),
-				touchend: (event?: any) => this.event_end(event),
 				pointerdown: (event?: any) => this.event_start(event),
 				pointermove: (event?: any) => this.event_move(event),
 				pointerup: (event?: any) => this.event_end(event),
-				pointerleave: (event?: any) => this.event_leave(event),
+				pointerleave: (event?: any) => this.event_end(event),
 				wheel: (event?: any) => this.event_wheel(event),
 				contextmenu: (event?: any) => this.event_menu(event)
 			}
@@ -331,17 +346,6 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_end(event?: any) {
-			if ( event !== undefined ) return event as never
-			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * event_leave?event null
-		 * ```
-		 */
-		@ $mol_mem
-		event_leave(event?: any) {
 			if ( event !== undefined ) return event as never
 			return null as any
 		}

@@ -300,24 +300,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cursor_position?val $mol_vector_2d /
-		 * 	NaN
-		 * 	NaN
-		 * ```
-		 */
-		@ $mol_mem
-		cursor_position(val?: any) {
-			if ( val !== undefined ) return val as never
-			const obj = new this.$.$mol_vector_2d(
-				NaN,
-				NaN
-			)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * plugins /
 		 * 	^
 		 * 	<= Touch
@@ -522,22 +504,40 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * drawn?val $mol_vector_2d /
-		 * 	/number
-		 * 	/number
+		 * draw?event null
 		 * ```
 		 */
 		@ $mol_mem
-		drawn(val?: any) {
-			if ( val !== undefined ) return val as never
-			const obj = new this.$.$mol_vector_2d(
-				[
-				] as readonly number[],
-				[
-				] as readonly number[]
-			)
-			
-			return obj
+		draw(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * cursor_position
+		 * ```
+		 */
+		cursor_position() {
+			return this.Touch().pointer_center()
+		}
+		
+		/**
+		 * ```tree
+		 * action_type
+		 * ```
+		 */
+		action_type() {
+			return this.Touch().action_type()
+		}
+		
+		/**
+		 * ```tree
+		 * action_point
+		 * ```
+		 */
+		action_point() {
+			return this.Touch().action_point()
 		}
 		
 		/**
@@ -545,8 +545,10 @@ namespace $ {
 		 * Touch $mol_touch
 		 * 	zoom?val <=> zoom?val
 		 * 	pan?val <=> shift?val
-		 * 	pos?val <=> cursor_position?val
-		 * 	drawn?val <=> drawn?val
+		 * 	pointer_center => cursor_position
+		 * 	action_type => action_type
+		 * 	action_point => action_point
+		 * 	draw?event <=> draw?event
 		 * ```
 		 */
 		@ $mol_mem
@@ -555,8 +557,7 @@ namespace $ {
 			
 			obj.zoom = (val?: any) => this.zoom(val)
 			obj.pan = (val?: any) => this.shift(val)
-			obj.pos = (val?: any) => this.cursor_position(val)
-			obj.drawn = (val?: any) => this.drawn(val)
+			obj.draw = (event?: any) => this.draw(event)
 			
 			return obj
 		}
