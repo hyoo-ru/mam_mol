@@ -40,7 +40,7 @@ namespace $ {
 		'@': {
 			mol_link_current: {
 				'true': {
-					color: $mol_theme.text,
+					color: $mol_theme.focus,
 					textShadow: '0 0',
 				}
 			}
