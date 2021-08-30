@@ -10,6 +10,6 @@
 }
 
 [mol_switch_option][mol_check_checked="true"] {
-	color: var(--mol_theme_text);
+	color: var(--mol_theme_focus);
 	text-shadow: 0 0;
 }
