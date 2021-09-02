@@ -484,11 +484,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * graphs_positioned <= graphs
+		 * graphs_visible <= graphs
+		 * ```
+		 */
+		graphs_visible() {
+			return this.graphs()
+		}
+		
+		/**
+		 * ```tree
+		 * graphs_positioned <= graphs_visible
 		 * ```
 		 */
 		graphs_positioned() {
-			return this.graphs()
+			return this.graphs_visible()
 		}
 		
 		/**

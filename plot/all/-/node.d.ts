@@ -921,6 +921,7 @@ declare namespace $ {
         dimensions_y(): $mol_vector_range<number>;
         graphs_sorted(): readonly $mol_svg[];
         graphs(): readonly $mol_plot_graph[];
+        graphs_visible(): readonly $mol_plot_graph[];
         graphs_positioned(): readonly $mol_plot_graph[];
         zoom(val?: any): number;
         draw(event?: any): any;

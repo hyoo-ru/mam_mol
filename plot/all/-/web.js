@@ -3460,8 +3460,11 @@ var $;
         graphs() {
             return [];
         }
-        graphs_positioned() {
+        graphs_visible() {
             return this.graphs();
+        }
+        graphs_positioned() {
+            return this.graphs_visible();
         }
         zoom(val) {
             if (val !== undefined)
