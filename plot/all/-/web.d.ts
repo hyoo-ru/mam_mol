@@ -884,6 +884,7 @@ declare namespace $ {
         size(): $mol_vector_2d<number>;
         size_real(): $mol_vector_2d<number>;
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
+        dimensions_viewport(): $mol_vector_2d<$mol_vector_range<number>>;
         sub(): readonly $mol_svg[];
         graphs_colored(): readonly $mol_plot_graph[];
         plugins(): readonly any[];
@@ -898,6 +899,8 @@ declare namespace $ {
         scale_limit_y(): $mol_vector_range<number>;
         dimensions_x(): $mol_vector_range<number>;
         dimensions_y(): $mol_vector_range<number>;
+        dimensions_viewport_x(): $mol_vector_range<number>;
+        dimensions_viewport_y(): $mol_vector_range<number>;
         graphs_sorted(): readonly $mol_svg[];
         graphs(): readonly $mol_plot_graph[];
         graphs_visible(): readonly $mol_plot_graph[];

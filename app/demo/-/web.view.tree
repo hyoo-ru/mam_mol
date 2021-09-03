@@ -718,6 +718,13 @@ $mol_plot_pane $mol_svg_root
 		<= dimensions_y $mol_vector_range /
 			Infinity
 			-Infinity
+	dimensions_viewport $mol_vector_2d /
+		<= dimensions_viewport_x $mol_vector_range /
+			Infinity
+			-Infinity
+		<= dimensions_viewport_y $mol_vector_range /
+			Infinity
+			-Infinity
 	-
 	sub <= graphs_sorted /$mol_svg
 	graphs_colored <= graphs_positioned <= graphs_visible <= graphs /$mol_plot_graph

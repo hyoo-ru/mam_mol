@@ -282,6 +282,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * dimensions_viewport $mol_vector_2d /
+		 * 	<= dimensions_viewport_x
+		 * 	<= dimensions_viewport_y
+		 * ```
+		 */
+		@ $mol_mem
+		dimensions_viewport() {
+			const obj = new this.$.$mol_vector_2d(
+				this.dimensions_viewport_x(),
+				this.dimensions_viewport_y()
+			)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * sub <= graphs_sorted
 		 * ```
 		 */
@@ -454,6 +471,40 @@ namespace $ {
 		 */
 		@ $mol_mem
 		dimensions_y() {
+			const obj = new this.$.$mol_vector_range(
+				Infinity,
+				-Infinity
+			)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * dimensions_viewport_x $mol_vector_range /
+		 * 	Infinity
+		 * 	-Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		dimensions_viewport_x() {
+			const obj = new this.$.$mol_vector_range(
+				Infinity,
+				-Infinity
+			)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * dimensions_viewport_y $mol_vector_range /
+		 * 	Infinity
+		 * 	-Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		dimensions_viewport_y() {
 			const obj = new this.$.$mol_vector_range(
 				Infinity,
 				-Infinity
