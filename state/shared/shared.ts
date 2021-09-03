@@ -10,8 +10,24 @@ namespace $ {
 		server_clock = new $hyoo_crowd_clock
 		
 		@ $mol_mem
+		peer() {
+			
+			const key = this + '.peer()'
+			
+			const peer = this.$.$mol_state_local.value( key )
+			if( peer ) return Number( peer )
+			
+			const peer2 = 1 + Math.floor( Math.random() * ( 2 ** ( 6 * 8 ) - 2 ) )
+			$mol_fiber_defer( ()=> {
+				this.$.$mol_state_local.value( key, peer2 )
+			})
+			
+			return peer2
+		}
+		
+		@ $mol_mem
 		store() {
-			return new this.$.$hyoo_crowd_doc
+			return new this.$.$hyoo_crowd_doc( this.peer() )
 		}
 		
 		path() {
@@ -30,6 +46,7 @@ namespace $ {
 			state.path = $mol_const( this.path() ? this.path() + '/' + key : key )
 			state.doc = k => this.doc( key + '/' + k )
 			state.socket = ()=> this.socket()
+			state.peer = ()=> this.peer()
 			return state
 		}
 		
