@@ -4104,27 +4104,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_svg_path extends $.$mol_svg {
-        dom_name() {
-            return "path";
-        }
-        attr() {
-            return {
-                ...super.attr(),
-                d: this.geometry()
-            };
-        }
-        geometry() {
-            return "";
-        }
-    }
-    $.$mol_svg_path = $mol_svg_path;
-})($ || ($ = {}));
-//path.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_plot_line extends $.$mol_plot_graph {
         threshold() {
             return 1;
@@ -4135,10 +4114,18 @@ var $;
         color_fill() {
             return "none";
         }
+        dom_name() {
+            return "path";
+        }
+        attr() {
+            return {
+                ...super.attr(),
+                d: this.curve()
+            };
+        }
         sub() {
             return [
-                this.Hint(),
-                this.Curve()
+                this.Hint()
             ];
         }
         Sample() {
@@ -4150,18 +4137,10 @@ var $;
         curve() {
             return "";
         }
-        Curve() {
-            const obj = new this.$.$mol_svg_path();
-            obj.geometry = () => this.curve();
-            return obj;
-        }
     }
     __decorate([
         $.$mol_mem
     ], $mol_plot_line.prototype, "Sample", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_plot_line.prototype, "Curve", null);
     $.$mol_plot_line = $mol_plot_line;
 })($ || ($ = {}));
 //line.view.tree.js.map
@@ -4179,6 +4158,9 @@ var $;
     var $$;
     (function ($$) {
         class $mol_plot_line extends $.$mol_plot_line {
+            sub() {
+                return this.hint() ? super.sub() : [];
+            }
             indexes() {
                 const threshold = this.threshold();
                 const { x: { min: viewport_left, max: viewport_right }, y: { min: viewport_bottom, max: viewport_top }, } = this.viewport();
@@ -4194,7 +4176,7 @@ var $;
                         : 0, point.y < viewport_bottom ? -1
                     : point.y > viewport_top ? 1
                         : 0);
-                for (let i = 0; i < series_x.length; i++) {
+                for (let i = 0; i < series_x.length - 1; i++) {
                     const scaled = new $.$mol_vector_2d(Math.round(shift_x + series_x[i] * scale_x), Math.round(shift_y + series_y[i] * scale_y));
                     if (Math.abs(scaled.x - last.x) < threshold
                         && Math.abs(scaled.y - last.y) < threshold)
@@ -4210,6 +4192,7 @@ var $;
                     last_zone = zone;
                     indexes.push(i);
                 }
+                indexes.push(series_x.length - 1);
                 return indexes;
             }
             curve() {
@@ -4319,6 +4302,27 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //group.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_svg_path extends $.$mol_svg {
+        dom_name() {
+            return "path";
+        }
+        attr() {
+            return {
+                ...super.attr(),
+                d: this.geometry()
+            };
+        }
+        geometry() {
+            return "";
+        }
+    }
+    $.$mol_svg_path = $mol_svg_path;
+})($ || ($ = {}));
+//path.view.tree.js.map
 ;
 "use strict";
 var $;
@@ -4749,38 +4753,11 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_plot_fill extends $.$mol_plot_graph {
+    class $mol_plot_fill extends $.$mol_plot_line {
         threshold() {
             return 4;
         }
-        spacing() {
-            return 2;
-        }
-        sub() {
-            return [
-                this.Curve()
-            ];
-        }
-        Sample() {
-            const obj = new this.$.$mol_plot_graph_sample();
-            obj.color = () => this.color();
-            return obj;
-        }
-        curve() {
-            return "";
-        }
-        Curve() {
-            const obj = new this.$.$mol_svg_path();
-            obj.geometry = () => this.curve();
-            return obj;
-        }
     }
-    __decorate([
-        $.$mol_mem
-    ], $mol_plot_fill.prototype, "Sample", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_plot_fill.prototype, "Curve", null);
     $.$mol_plot_fill = $mol_plot_fill;
 })($ || ($ = {}));
 //fill.view.tree.js.map
@@ -4798,65 +4775,6 @@ var $;
     var $$;
     (function ($$) {
         class $mol_plot_fill extends $.$mol_plot_fill {
-            indexes() {
-                const threshold = this.threshold();
-                const { x: { min: viewport_left, max: viewport_right }, y: { min: viewport_bottom, max: viewport_top }, } = this.viewport();
-                const [shift_x, shift_y] = this.shift();
-                const [scale_x, scale_y] = this.scale();
-                const indexes = [];
-                let last = [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY];
-                let first_x = null;
-                let first_y = null;
-                let last_x = null;
-                let last_y = null;
-                const series_x = this.series_x();
-                const series_y = this.series_y();
-                for (let i = 0; i < series_x.length; i++) {
-                    const scaled = [
-                        Math.round(shift_x + series_x[i] * scale_x),
-                        Math.round(shift_y + series_y[i] * scale_y),
-                    ];
-                    if (Math.abs(scaled[0] - last[0]) < threshold
-                        && Math.abs(scaled[1] - last[1]) < threshold)
-                        continue;
-                    last = scaled;
-                    if (scaled[0] < viewport_left) {
-                        first_x = i;
-                        continue;
-                    }
-                    if (scaled[1] < viewport_bottom) {
-                        first_y = i;
-                        continue;
-                    }
-                    if (scaled[0] > viewport_right) {
-                        last_x = i;
-                        continue;
-                    }
-                    if (scaled[1] > viewport_top) {
-                        last_y = i;
-                        continue;
-                    }
-                    if (first_x !== null)
-                        indexes.push(first_x);
-                    if (first_y !== null)
-                        indexes.push(first_y);
-                    indexes.push(i);
-                    if (last_x !== null)
-                        indexes.push(last_x);
-                    if (last_y !== null)
-                        indexes.push(last_y);
-                    first_x = first_y = last_x = last_y = null;
-                }
-                if (first_x !== null)
-                    indexes.push(first_x);
-                if (first_y !== null)
-                    indexes.push(first_y);
-                if (last_x !== null)
-                    indexes.push(last_x);
-                if (last_y !== null)
-                    indexes.push(last_y);
-                return indexes;
-            }
             curve() {
                 const points = this.points();
                 if (points.length === 0)
@@ -4865,13 +4783,13 @@ var $;
                 const main = points.map(point => `L ${point.join(' ')}`).join(' ');
                 return `M ${points[0].join(' ')} ${main} V ${shift_y} H ${points[0][0]}`;
             }
+            front() {
+                return [];
+            }
             back() {
                 return [this];
             }
         }
-        __decorate([
-            $.$mol_mem
-        ], $mol_plot_fill.prototype, "indexes", null);
         $$.$mol_plot_fill = $mol_plot_fill;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

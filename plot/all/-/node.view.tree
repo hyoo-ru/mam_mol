@@ -226,21 +226,16 @@ $mol_plot_pane $mol_svg_root
 		^
 		dblclick?event <=> reset?event null
 
-$mol_svg_path $mol_svg
-	dom_name \path
-	attr *
-		^
-		d <= geometry \
-
-
 $mol_plot_line $mol_plot_graph
 	threshold 1
 	spacing 2
 	color_fill \none
+	dom_name \path
+	attr *
+		^
+		d <= curve \
 	sub /
 		<= Hint
-		<= Curve $mol_svg_path
-			geometry <= curve \
 	-
 	Sample $mol_plot_graph_sample
 		color <= color
@@ -250,6 +245,13 @@ $mol_plot_group $mol_plot_graph
 	sub <= graphs_enriched <= graphs /$mol_plot_graph
 	Sample $mol_plot_graph_sample
 		sub <= graph_samples /$mol_view
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
 
 $mol_plot_dot $mol_plot_graph
 	points_max Infinity
@@ -294,14 +296,8 @@ $mol_plot_bar $mol_plot_graph
 	Sample $mol_plot_graph_sample
 		color <= color
 
-$mol_plot_fill $mol_plot_graph
+$mol_plot_fill $mol_plot_line
 	threshold 4
-	spacing 2
-	sub /
-		<= Curve $mol_svg_path
-			geometry <= curve \
-	Sample $mol_plot_graph_sample
-		color <= color
 
 $mol_svg_text $mol_svg
 	dom_name \text

@@ -966,24 +966,18 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_svg_path extends $mol_svg {
-        dom_name(): string;
-        attr(): {
-            d: string;
-        };
-        geometry(): string;
-    }
-}
-
-declare namespace $ {
     class $mol_plot_line extends $mol_plot_graph {
         threshold(): number;
         spacing(): number;
         color_fill(): string;
+        dom_name(): string;
+        attr(): {
+            d: string;
+            mol_plot_graph_type: string;
+        };
         sub(): readonly any[];
         Sample(): $mol_plot_graph_sample;
         curve(): string;
-        Curve(): $mol_svg_path;
     }
 }
 
@@ -992,6 +986,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_plot_line extends $.$mol_plot_line {
+        sub(): readonly any[];
         indexes(): number[];
         curve(): string;
     }
@@ -1014,6 +1009,16 @@ declare namespace $.$$ {
         graph_samples(): any[];
         back(): $mol_plot_graph[];
         front(): $mol_plot_graph[];
+    }
+}
+
+declare namespace $ {
+    class $mol_svg_path extends $mol_svg {
+        dom_name(): string;
+        attr(): {
+            d: string;
+        };
+        geometry(): string;
     }
 }
 
@@ -1116,13 +1121,8 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_plot_fill extends $mol_plot_graph {
+    class $mol_plot_fill extends $mol_plot_line {
         threshold(): number;
-        spacing(): number;
-        sub(): readonly any[];
-        Sample(): $mol_plot_graph_sample;
-        curve(): string;
-        Curve(): $mol_svg_path;
     }
 }
 
@@ -1131,8 +1131,8 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_plot_fill extends $.$mol_plot_fill {
-        indexes(): number[];
         curve(): string;
+        front(): never[];
         back(): this[];
     }
 }

@@ -30,15 +30,35 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Hint
-		 * 	<= Curve
+		 * dom_name \path
+		 * ```
+		 */
+		dom_name() {
+			return "path"
+		}
+		
+		/**
+		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	d <= curve
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				d: this.curve()
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * sub / <= Hint
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Hint(),
-				this.Curve()
+				this.Hint()
 			] as readonly any[]
 		}
 		
@@ -66,20 +86,6 @@ namespace $ {
 		 */
 		curve() {
 			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Curve $mol_svg_path geometry <= curve
-		 * ```
-		 */
-		@ $mol_mem
-		Curve() {
-			const obj = new this.$.$mol_svg_path()
-			
-			obj.geometry = () => this.curve()
-			
-			return obj
 		}
 	}
 	

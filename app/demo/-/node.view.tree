@@ -780,10 +780,12 @@ $mol_plot_line $mol_plot_graph
 	threshold 1
 	spacing 2
 	color_fill \none
+	dom_name \path
+	attr *
+		^
+		d <= curve \
 	sub /
 		<= Hint
-		<= Curve $mol_svg_path
-			geometry <= curve \
 	-
 	Sample $mol_plot_graph_sample
 		color <= color
@@ -961,14 +963,8 @@ $mol_chart_demo_simple $mol_demo_large
 						<= Plan
 						<= Fact_dots
 
-$mol_plot_fill $mol_plot_graph
+$mol_plot_fill $mol_plot_line
 	threshold 4
-	spacing 2
-	sub /
-		<= Curve $mol_svg_path
-			geometry <= curve \
-	Sample $mol_plot_graph_sample
-		color <= color
 
 $mol_chart_demo_styles $mol_demo_large
 	title @ \Chart with various styles of graphs.
