@@ -1,5 +1,9 @@
 namespace $.$$ {
 	export class $mol_plot_line extends $.$mol_plot_line {
+
+		sub() {
+			return this.hint() ? super.sub() : []
+		}
 		
 		@ $mol_mem
 		indexes() {
@@ -29,7 +33,7 @@ namespace $.$$ {
 					: 0,
 			)
 			
-			for (let i = 0; i < series_x.length; i++) {
+			for (let i = 0; i < series_x.length-1; i++) {
 				
 				const scaled = new $mol_vector_2d(
 					Math.round( shift_x + series_x[i] * scale_x ),
@@ -56,8 +60,10 @@ namespace $.$$ {
 				last_zone = zone
 				
 				indexes.push(i)
-
+				
 			}
+			
+			indexes.push( series_x.length - 1 )
 
 			return indexes
 		}
