@@ -11,18 +11,7 @@ namespace $ {
 		
 		@ $mol_mem
 		peer() {
-			
-			const key = this + '.peer()'
-			
-			const peer = this.$.$mol_state_local.value( key )
-			if( peer ) return Number( peer )
-			
-			const peer2 = 1 + Math.floor( Math.random() * ( 2 ** ( 6 * 8 ) - 2 ) )
-			$mol_fiber_defer( ()=> {
-				this.$.$mol_state_local.value( key, peer2 )
-			})
-			
-			return peer2
+			return $mol_hash_string( this.keys_serial().public )
 		}
 		
 		@ $mol_mem
@@ -73,19 +62,8 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		store_raw() {
-			return new this.$.$hyoo_crowd_doc( this.peer() )
-		}
-		
-		@ $mol_mem
 		store() {
-			
-			const keys = this.keys_serial()
-			const store = this.store_raw()
-			
-			// store.root.sub( 'peer' ).sub( store.peer.toString( 36 ) ).sub( 'key' ).value( keys.public )
-			
-			return store
+			return new this.$.$hyoo_crowd_doc( this.peer() )
 		}
 		
 		path() {
@@ -130,12 +108,18 @@ namespace $ {
 		request( next?: unknown ) {
 			
 			this.socket()
+			const store = this.store()
+			
+			if( next !== undefined ) {
+				const pub = this.keys_serial().public
+				store.root.sub( pub ).value( pub )
+			}
 			
 			$mol_fiber_defer( ()=> {
 				
-				const delta = this.store().delta( this.server_clock )
+				const delta = store.delta( this.server_clock )
 				if( next !== undefined && !delta.length ) return
-				
+			
 				this.send( this.path(), next === undefined && !delta.length ? [] : delta )
 				
 				for( const chunk of delta ) {
