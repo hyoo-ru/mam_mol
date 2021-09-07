@@ -26,8 +26,66 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		store() {
+		keys_serial() {
+			
+			const key = this + '.keys()'
+			let serial = this.$.$mol_state_local.value( key ) as null | { public: string, private: string }
+			if( serial ) return serial
+			
+			const pair = $mol_fiber_sync( this.$.$mol_crypto_auditor_pair ).call( $ )
+				
+			serial = {
+				public: $mol_base64_encode(
+					new Uint8Array(
+						$mol_fiber_sync( pair.public.serial ).call( pair.public )
+					)
+				),
+				private: $mol_base64_encode(
+					new Uint8Array(
+						$mol_fiber_sync( pair.private.serial ).call( pair.private )
+					)
+				),
+			}
+			
+			$mol_fiber_defer( ()=> this.$.$mol_state_local.value( key, serial ) )
+			
+			return serial
+		}
+		
+		@ $mol_mem
+		keys() {
+			
+			const prev = this.keys_serial()
+			
+			return {
+				public: $mol_fiber_sync( this.$.$mol_crypto_auditor_public.from )
+					.call(
+						this.$.$mol_crypto_auditor_public,
+						$mol_base64_decode( prev.public ),
+					),
+				private: $mol_fiber_sync( this.$.$mol_crypto_auditor_private.from )
+					.call(
+						this.$.$mol_crypto_auditor_private,
+						$mol_base64_decode( prev.private ),
+					),
+			}
+			
+		}
+		
+		@ $mol_mem
+		store_raw() {
 			return new this.$.$hyoo_crowd_doc( this.peer() )
+		}
+		
+		@ $mol_mem
+		store() {
+			
+			const keys = this.keys_serial()
+			const store = this.store_raw()
+			
+			// store.root.sub( 'peer' ).sub( store.peer.toString( 36 ) ).sub( 'key' ).value( keys.public )
+			
+			return store
 		}
 		
 		path() {
@@ -47,6 +105,8 @@ namespace $ {
 			state.doc = k => this.doc( key + '/' + k )
 			state.socket = ()=> this.socket()
 			state.peer = ()=> this.peer()
+			state.keys_serial = ()=> this.keys_serial()
+			state.keys = ()=> this.keys()
 			return state
 		}
 		
@@ -76,7 +136,7 @@ namespace $ {
 				const delta = this.store().delta( this.server_clock )
 				if( next !== undefined && !delta.length ) return
 				
-				this.send( this.path(), next === undefined && !delta.length ? null : delta )
+				this.send( this.path(), next === undefined && !delta.length ? [] : delta )
 				
 				for( const chunk of delta ) {
 					this.server_clock.see( chunk.peer, chunk.time )
@@ -147,7 +207,7 @@ namespace $ {
 				
 				if( !Array.isArray( message ) ) return
 				
-				let [ path, delta ] = message as [ string, readonly $hyoo_crowd_chunk[] ]
+				let [ path, ... delta ] = message as [ string, ... $hyoo_crowd_chunk[] ]
 				if( typeof path !== 'string' ) return
 				if( !delta ) return
 				
@@ -156,7 +216,7 @@ namespace $ {
 				
 				if( !delta.length ) {
 					
-					delta = store.delta()
+					delta = store.delta() as $hyoo_crowd_chunk[]
 					if( !delta.length ) return
 					
 					this.send( path, delta )
@@ -205,7 +265,7 @@ namespace $ {
 		}
 		
 		@ $mol_fiber.method
-		send( key: string, next?: any ) {
+		send( key: string, next?: readonly $hyoo_crowd_chunk[] ) {
 			
 			const socket = this.socket()
 			
@@ -217,7 +277,7 @@ namespace $ {
 			
 			if( socket.readyState !== socket.OPEN ) return
 			
-			const message = next === undefined ? [ key ] : [ key, next ]
+			const message = next === undefined ? [ key ] : [ key, ... next ]
 			socket.send( JSON.stringify( message ) )
 			
 		}
