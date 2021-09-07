@@ -11,23 +11,23 @@ namespace $.$$ {
 			mol_text_code_token_type: {
 
 				'code-keyword': {
-					color: hsla(0, 70, 50, 1),
+					color: hsla( 0, 70, 50, 1 ),
 				},
 				
 				'code-field': {
-					color: hsla(300, 70, 50, 1 ),
+					color: hsla( 300, 70, 50, 1 ),
 				},
 				
 				'code-tag': {
-					color: hsla(330, 70, 50, 1 ),
+					color: hsla( 330, 70, 50, 1 ),
 				},
 				
 				'code-global': {
-					color: hsla(210, 80, 50, 1 ),
+					color: hsla( 30, 80, 50, 1 ),
 				},
 				
 				'code-decorator': {
-					color: hsla(180, 40, 50, 1 ),
+					color: hsla( 180, 40, 50, 1 ),
 				},
 				
 				'code-punctuation': {
@@ -35,19 +35,19 @@ namespace $.$$ {
 				},
 				
 				'code-string': {
-					color: hsla(90, 40, 50, 1 ),
+					color: hsla( 90, 40, 50, 1 ),
 				},
 				
 				'code-number': {
-					color: hsla(60, 70, 50, 1 ),
+					color: hsla( 60, 70, 50, 1 ),
 				},
 				
 				'code-call': {
-					color: hsla(270, 60, 50, 1 ),
+					color: hsla( 270, 60, 50, 1 ),
 				},
 				
 				'code-link': {
-					color: hsla(240, 60, 50, 1 ),
+					color: hsla( 210, 60, 50, 1 ),
 				},
 				
 				'code-comment-inline': {
