@@ -2446,7 +2446,7 @@ var $;
                     return null;
                 return (child instanceof $mol_view)
                     ? child.dom_node()
-                    : child instanceof Node
+                    : child instanceof $.$mol_dom_context.Node
                         ? child
                         : String(child);
             });
