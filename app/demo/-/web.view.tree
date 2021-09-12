@@ -2049,33 +2049,6 @@ $mol_message_demo $mol_demo_small
 			avatar_link \https://en.wikipedia.org/wiki/Great_Teacher_Onizuka
 			text \The story focuses on 22-year-old ex-[bōsōzoku](https://en.wikipedia.org/wiki/Bōsōzoku) member Eikichi Onizuka, who becomes a teacher at a private middle school, Holy Forest Academy, in [Tokyo](https://en.wikipedia.org/wiki/Tokyo), [Japan](https://en.wikipedia.org/wiki/Japan). It won the 1998 [Kodansha Manga Award](https://en.wikipedia.org/wiki/Kodansha_Manga_Award) for shōnen and is a continuation of Tohru Fujisawa's other manga series [Shonan Junai Gumi](https://en.wikipedia.org/wiki/Shonan_Junai_Gumi) (lit. "Shōnan True Love Group") and Bad Company, both of which focus on the life of Onizuka before he becomes a teacher in Great Teacher Onizuka.
 
-$mol_meter $mol_plugin
-	zoom 1
-	-
-	width?val 0
-	height?val 0
-	-
-	left?val 0
-	right?val 0
-	bottom?val 0
-	top?val 0
-
-$mol_meter_demo $mol_demo_small
-	title @ \Real time offset and size metering
-	plugins /
-		<= Meter $mol_meter
-			top => top
-			height => height
-	sub /
-		<= Top $mol_view
-			sub /
-				\Offset from top: 
-				<= top
-		<= Height $mol_view
-			sub /
-				\Component height: 
-				<= height
-
 $mol_nav_demo $mol_demo_small
 	title @ \Number input control with various configuration
 	plugins /

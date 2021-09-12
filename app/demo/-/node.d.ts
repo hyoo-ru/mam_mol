@@ -5100,55 +5100,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_meter extends $mol_plugin {
-        zoom(): number;
-        width(val?: any): number;
-        height(val?: any): number;
-        left(val?: any): number;
-        right(val?: any): number;
-        bottom(val?: any): number;
-        top(val?: any): number;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_meter extends $.$mol_meter {
-        rect(): {
-            left: number;
-            top: number;
-            right: number;
-            bottom: number;
-            width: number;
-            height: number;
-            zoom: number;
-        };
-        top(): number;
-        bottom(): number;
-        left(): number;
-        right(): number;
-        width(): number;
-        height(): number;
-        zoom(): number;
-    }
-}
-
-declare namespace $ {
-    class $mol_meter_demo extends $mol_demo_small {
-        title(): string;
-        plugins(): readonly any[];
-        sub(): readonly any[];
-        top(): number;
-        height(): number;
-        Meter(): $$.$mol_meter;
-        Top(): $mol_view;
-        Height(): $mol_view;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_nav_demo extends $mol_demo_small {
         title(): string;
         plugins(): readonly any[];
