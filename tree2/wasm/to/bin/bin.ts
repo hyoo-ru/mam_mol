@@ -232,7 +232,7 @@ namespace $ {
 				
 				// end
 				body.push(
-					... bytes( [ $mol_wasm_bin_instr['end'] ], func.span ),
+					... bytes( [ $mol_wasm_bin_instr_nullary.end ], func.span ),
 				)
 				
 				section.push(
