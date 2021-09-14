@@ -121,6 +121,25 @@ namespace $ {
 
 		} ,
 
+		'export function that returns pair'($) {
+
+			const code = $.$mol_tree2_from_string(`
+				type pair
+					<= i32
+					<= i32
+				func pair
+					i32.const 1
+					i32.const 2
+				export pair func pair
+			`)
+			
+			const instance = $mol_tree2_wasm_to_module( code ).instance()
+			const pair = instance.get( 'pair' ) as ()=> [ number, number ]
+			
+			$mol_assert_like( pair(), [ 1, 2 ] )
+
+		} ,
+
 	})
 
 }
