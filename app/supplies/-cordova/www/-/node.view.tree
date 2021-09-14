@@ -486,6 +486,7 @@ $mol_switch $mol_view
 		checked?val <=> option_checked!id?val false
 		label <= option_label!id / <= option_title!id \
 		enabled <= option_enabled!id <= enabled true
+		hint <= option_hint!id \
 		minimal_height 24
 	value?val null
 	options *

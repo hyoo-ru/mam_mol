@@ -7,6 +7,7 @@ namespace $ {
 		 * 	checked?val <=> option_checked!id?val
 		 * 	label <= option_label!id
 		 * 	enabled <= option_enabled!id
+		 * 	hint <= option_hint!id
 		 * 	minimal_height 24
 		 * ```
 		 */
@@ -17,6 +18,7 @@ namespace $ {
 			obj.checked = (val?: any) => this.option_checked(id, val)
 			obj.label = () => this.option_label(id)
 			obj.enabled = () => this.option_enabled(id)
+			obj.hint = () => this.option_hint(id)
 			obj.minimal_height = () => 24
 			
 			return obj
@@ -109,6 +111,15 @@ namespace $ {
 		 */
 		option_enabled(id: any) {
 			return this.enabled()
+		}
+		
+		/**
+		 * ```tree
+		 * option_hint!id \
+		 * ```
+		 */
+		option_hint(id: any) {
+			return ""
 		}
 		
 		/**

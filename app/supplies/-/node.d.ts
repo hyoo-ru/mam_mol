@@ -2499,6 +2499,7 @@ declare namespace $ {
         option_label(id: any): readonly any[];
         enabled(): boolean;
         option_enabled(id: any): boolean;
+        option_hint(id: any): string;
         items(): readonly $mol_check[];
     }
 }
