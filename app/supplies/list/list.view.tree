@@ -1,8 +1,6 @@
 $mol_app_supplies_list $mol_page
 	supplies /$mol_app_supplies_domain_supply
-	head /
-		<= Title
-		<= Tools
+	tools /
 		<= Search $mol_code
 			hint <= search_hint @ \Search supply by bar code
 			value?val <=> search_query?val \
