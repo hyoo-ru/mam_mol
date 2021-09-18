@@ -50,11 +50,9 @@ $mol_app_supplies_detail $mol_page
 				<= Positions_section $mol_section
 					head <= positions_head /
 						<= positions_title @ \Positions
-						<= Cost $mol_labeler
-							title <= cost_title @ \Cost
-							content / <= Cost_value $mol_cost
-								value <= cost $mol_unit_money
-									valueOf 0
+						<= Cost_value $mol_cost
+							value <= cost $mol_unit_money
+								valueOf 0
 					Content <= Positions $mol_list
 						rows <= positions /$mol_view
 	foot /

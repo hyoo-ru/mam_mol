@@ -2314,7 +2314,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_app_supplies_list extends $mol_page {
         supplies(): readonly $mol_app_supplies_domain_supply[];
-        head(): readonly any[];
+        tools(): readonly any[];
         body(): readonly any[];
         Supply_row(index: any): $$.$mol_app_supplies_card;
         search_hint(): string;
@@ -2635,10 +2635,8 @@ declare namespace $ {
         Attach(): $$.$mol_attach;
         Attach_section(): $mol_section;
         positions_title(): string;
-        cost_title(): string;
         cost(): $mol_unit_money;
         Cost_value(): $$.$mol_cost;
-        Cost(): $mol_labeler;
         positions_head(): readonly any[];
         positions(): readonly $mol_view[];
         Positions(): $$.$mol_list;

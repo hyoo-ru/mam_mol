@@ -13,16 +13,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * head /
-		 * 	<= Title
-		 * 	<= Tools
-		 * 	<= Search
+		 * tools / <= Search
 		 * ```
 		 */
-		head() {
+		tools() {
 			return [
-				this.Title(),
-				this.Tools(),
 				this.Search()
 			] as readonly any[]
 		}

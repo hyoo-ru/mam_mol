@@ -7723,10 +7723,8 @@ var $;
         supplies() {
             return [];
         }
-        head() {
+        tools() {
             return [
-                this.Title(),
-                this.Tools(),
                 this.Search()
             ];
         }
@@ -7794,7 +7792,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/app/supplies/list/list.view.css", "[mol_app_supplies_list_search] {\n\tflex: 100%;\n\tdisplay: block;\n}\n\n[mol_app_supplies_list_supply_rows] {\n\tpadding: 1rem;\n}\n");
+    $.$mol_style_attach("mol/app/supplies/list/list.view.css", "[mol_app_supplies_list_search] {\n\tflex-grow: 1000;\n}\n");
 })($ || ($ = {}));
 //list.view.css.js.map
 ;
@@ -8930,9 +8928,6 @@ var $;
         positions_title() {
             return this.$.$mol_locale.text('$mol_app_supplies_detail_positions_title');
         }
-        cost_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_cost_title');
-        }
         cost() {
             const obj = new this.$.$mol_unit_money();
             obj.valueOf = () => 0;
@@ -8943,18 +8938,10 @@ var $;
             obj.value = () => this.cost();
             return obj;
         }
-        Cost() {
-            const obj = new this.$.$mol_labeler();
-            obj.title = () => this.cost_title();
-            obj.content = () => [
-                this.Cost_value()
-            ];
-            return obj;
-        }
         positions_head() {
             return [
                 this.positions_title(),
-                this.Cost()
+                this.Cost_value()
             ];
         }
         positions() {
@@ -9079,9 +9066,6 @@ var $;
     ], $mol_app_supplies_detail.prototype, "Cost_value", null);
     __decorate([
         $.$mol_mem
-    ], $mol_app_supplies_detail.prototype, "Cost", null);
-    __decorate([
-        $.$mol_mem
     ], $mol_app_supplies_detail.prototype, "Positions", null);
     __decorate([
         $.$mol_mem
@@ -9105,7 +9089,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/app/supplies/detail/detail.view.css", "[mol_app_supplies_detail_content] {\n\tpadding: 0 .75rem;\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_app_supplies_detail_content] > * {\n\tmargin: .75rem 0;\n}\n\n[mol_app_supplies_detail_positions] > * {\n\tmargin: .75rem 0;\n}\n\n[mol_app_supplies_detail_back_icon] {\n\ttransform: rotateZ(180deg);\n}\n\n[mol_app_supplies_detail_descr_deck] {\n\tmargin: 0;\n}\n\n[mol_app_supplies_detail_cons_content] {\n\talign-items: baseline;\n}\n\n[mol_app_supplies_detail_cons_content] > * {\n\tflex: 1 1 10rem;\n}\n\n[mol_app_supplies_detail_org_content] {\n\talign-items: baseline;\n}\n\n[mol_app_supplies_detail_org_content] > * {\n\tflex: 1 1 10rem;\n}\n\n[mol_app_supplies_detail_cost] {\n\ttext-align: right;\n\tmargin: 0;\n}\n");
+    $.$mol_style_attach("mol/app/supplies/detail/detail.view.css", "[mol_app_supplies_detail] [mol_labeler_label] {\n\tpadding: 0;\n}\n\n[mol_app_supplies_detail_content] {\n\tpadding: 0 .75rem;\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_app_supplies_detail_content] > * {\n\tmargin: .75rem 0;\n}\n\n[mol_app_supplies_detail_positions] > * {\n\tmargin: .75rem 0;\n}\n\n[mol_app_supplies_detail_descr_deck] {\n\tmargin: 0;\n}\n\n[mol_app_supplies_detail_cons_content] {\n\talign-items: baseline;\n}\n\n[mol_app_supplies_detail_cons_content] > * {\n\tflex: 1 1 10rem;\n}\n\n[mol_app_supplies_detail_org_content] {\n\talign-items: baseline;\n}\n\n[mol_app_supplies_detail_org_content] > * {\n\tflex: 1 1 10rem;\n}\n\n[mol_app_supplies_detail_cost] {\n\ttext-align: right;\n\tmargin: 0;\n}\n");
 })($ || ($ = {}));
 //detail.view.css.js.map
 ;
@@ -9212,7 +9196,6 @@ var $;
         }
         List() {
             const obj = new this.$.$mol_app_supplies_list();
-            obj.minimal_width = () => 600;
             obj.supplies = () => this.supplies();
             obj.tools = () => this.tools_root();
             obj.title = () => this.list_title();
@@ -9221,7 +9204,6 @@ var $;
         }
         Detail(id) {
             const obj = new this.$.$mol_app_supplies_detail();
-            obj.minimal_width = () => 800;
             obj.supply = () => this.supply();
             return obj;
         }

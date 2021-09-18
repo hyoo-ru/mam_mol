@@ -619,15 +619,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cost_title @ \Cost
-		 * ```
-		 */
-		cost_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_cost_title' )
-		}
-		
-		/**
-		 * ```tree
 		 * cost $mol_unit_money valueOf 0
 		 * ```
 		 */
@@ -656,34 +647,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Cost $mol_labeler
-		 * 	title <= cost_title
-		 * 	content / <= Cost_value
-		 * ```
-		 */
-		@ $mol_mem
-		Cost() {
-			const obj = new this.$.$mol_labeler()
-			
-			obj.title = () => this.cost_title()
-			obj.content = () => [
-				this.Cost_value()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * positions_head /
 		 * 	<= positions_title
-		 * 	<= Cost
+		 * 	<= Cost_value
 		 * ```
 		 */
 		positions_head() {
 			return [
 				this.positions_title(),
-				this.Cost()
+				this.Cost_value()
 			] as readonly any[]
 		}
 		

@@ -32,7 +32,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * List $mol_app_supplies_list
-		 * 	minimal_width 600
 		 * 	supplies <= supplies
 		 * 	tools <= tools_root
 		 * 	title <= list_title
@@ -43,7 +42,6 @@ namespace $ {
 		List() {
 			const obj = new this.$.$mol_app_supplies_list()
 			
-			obj.minimal_width = () => 600
 			obj.supplies = () => this.supplies()
 			obj.tools = () => this.tools_root()
 			obj.title = () => this.list_title()
@@ -54,16 +52,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Detail!id $mol_app_supplies_detail
-		 * 	minimal_width 800
-		 * 	supply <= supply
+		 * Detail!id $mol_app_supplies_detail supply <= supply
 		 * ```
 		 */
 		@ $mol_mem_key
 		Detail(id: any) {
 			const obj = new this.$.$mol_app_supplies_detail()
 			
-			obj.minimal_width = () => 800
 			obj.supply = () => this.supply()
 			
 			return obj

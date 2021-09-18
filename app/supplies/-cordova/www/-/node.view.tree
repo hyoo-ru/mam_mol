@@ -368,9 +368,7 @@ $mol_code $mol_view
 
 $mol_app_supplies_list $mol_page
 	supplies /$mol_app_supplies_domain_supply
-	head /
-		<= Title
-		<= Tools
+	tools /
 		<= Search $mol_code
 			hint <= search_hint @ \Search supply by bar code
 			value?val <=> search_query?val \
@@ -564,11 +562,9 @@ $mol_app_supplies_detail $mol_page
 				<= Positions_section $mol_section
 					head <= positions_head /
 						<= positions_title @ \Positions
-						<= Cost $mol_labeler
-							title <= cost_title @ \Cost
-							content / <= Cost_value $mol_cost
-								value <= cost $mol_unit_money
-									valueOf 0
+						<= Cost_value $mol_cost
+							value <= cost $mol_unit_money
+								valueOf 0
 					Content <= Positions $mol_list
 						rows <= positions /$mol_view
 	foot /
@@ -594,12 +590,10 @@ $mol_app_supplies $mol_book2
 		entered?val <=> entered?val false
 	-
 	List $mol_app_supplies_list
-		minimal_width 600
 		supplies <= supplies /$mol_app_supplies_domain_supply
 		tools <= tools_root /
 		title <= list_title @ \Supplies
 		search_query?val <=> supply_id?val \
 	-
 	Detail!id $mol_app_supplies_detail
-		minimal_width 800
 		supply <= supply null

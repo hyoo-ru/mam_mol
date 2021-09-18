@@ -1,3 +1,7 @@
+[mol_app_supplies_detail] [mol_labeler_label] {
+	padding: 0;
+}
+
 [mol_app_supplies_detail_content] {
 	padding: 0 .75rem;
 	background: var(--mol_theme_field);
@@ -9,10 +13,6 @@
 
 [mol_app_supplies_detail_positions] > * {
 	margin: .75rem 0;
-}
-
-[mol_app_supplies_detail_back_icon] {
-	transform: rotateZ(180deg);
 }
 
 [mol_app_supplies_detail_descr_deck] {

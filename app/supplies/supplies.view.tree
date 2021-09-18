@@ -7,12 +7,10 @@ $mol_app_supplies $mol_book2
 		entered?val <=> entered?val false
 	-
 	List $mol_app_supplies_list
-		minimal_width 600
 		supplies <= supplies /$mol_app_supplies_domain_supply
 		tools <= tools_root /
 		title <= list_title @ \Supplies
 		search_query?val <=> supply_id?val \
 	-
 	Detail!id $mol_app_supplies_detail
-		minimal_width 800
 		supply <= supply null
