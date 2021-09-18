@@ -7,7 +7,7 @@ $mol_nav_demo $mol_demo_small
 			keys_y <= row_list
 			current_y?val <=> row_current?val
 	sub /
-		<= Hint $mol_view sub / <= hint @ \Select option and use keys to switch
+		<= Hint $mol_card title @ \Select option and use keys to switch
 		<= Tab_list $mol_switch
 			keys => tab_list
 			value?val <=> tab_current?val \

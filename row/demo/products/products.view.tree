@@ -4,8 +4,7 @@ $mol_row_demo_products $mol_demo_large
 	Product!id $mol_card
 		minimal_width 140
 		minimal_height 100
-		content /
-			<= product_title!id \
+		title <= product_title!id \
 	sub /
 		<= Catalog $mol_scroll
 			sub /

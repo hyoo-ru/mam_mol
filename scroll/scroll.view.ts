@@ -36,6 +36,10 @@ namespace $.$$ {
 			return this.$.$mol_print.active() ? null! : 0
 		}
 		
+		minimal_width() {
+			return this.$.$mol_print.active() ? null! : 0
+		}
+		
 	}
 
 }

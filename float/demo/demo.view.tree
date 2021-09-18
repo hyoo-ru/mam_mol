@@ -7,9 +7,9 @@ $mol_float_demo $mol_demo_large
 					sub /
 						<= Head_row $mol_row
 							sub /
-								<= Head_content $mol_view
-									sub /
-										\Float header
-				<= Content $mol_row sub /
-					<= Filler1 $mol_filler
-					<= Filler2 $mol_filler
+								<= Head_content $mol_paragraph
+									title \Float header
+				<= Content $mol_list
+					rows /
+						<= Filler1 $mol_filler
+						<= Filler2 $mol_filler

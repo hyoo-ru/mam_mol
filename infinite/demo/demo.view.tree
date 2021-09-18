@@ -5,7 +5,4 @@ $mol_infinite_demo $mol_demo_large
 		<= Scroll $mol_scroll sub /
 			<= List $mol_infinite
 				after!anchor_id <= after!anchor_id /
-				Row!id <= Item!id $mol_row
-					minimal_height 40
-					sub /
-						<= item_title!id \
+				Row!id <= Item!id $mol_filler

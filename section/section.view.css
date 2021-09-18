@@ -1,6 +1,6 @@
 [mol_section_head] {
-	font-size: 1.5rem;
-	line-height: 2.5rem;
+	padding: var(--mol_gap_text);
+	font-weight: bolder;
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-end;

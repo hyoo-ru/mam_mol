@@ -5,9 +5,7 @@ $mol_app_demo $mol_book2
 	plugins /
 		<= Theme $mol_theme_auto
 	Menu $mol_app_demo_menu
-		hierarchy <= nav_hierarchy null
-		option!id <= nav_option!id null
-		filter?val <=> filter_string?val \
+		names <= names_demo_all /string
 	Detail!id $mol_app_demo_detail
 		chat_seed <= chat_seed!id \
 		chat_pages => chat_pages!id
@@ -28,6 +26,7 @@ $mol_app_demo $mol_book2
 			<= detail_empty_postfix @ \"
 			
 $mol_app_demo_menu $mol_page
+	names /string
 	title @ \$mol components
 	tools /
 		<= Sources $mol_link_source
@@ -37,11 +36,15 @@ $mol_app_demo_menu $mol_page
 		sub /
 			<= Filter $mol_search
 				query?val <=> filter?val \
-			<= Nav $mol_app_demo_nav
-				hierarchy <= hierarchy null
-				record!id <= option!id null
+			<= Options $mol_list
+				rows <= options /
+	Option!id $mol_link
+		arg <= option_arg!id *
+		sub /
+			<= Option_title!id $mol_dimmer
+				haystack <= option_title!id \
 				needle <= filter?val \
-		
+
 $mol_app_demo_detail $mol_page
 	tools /
 		<= Chat $mol_chat
@@ -50,11 +53,9 @@ $mol_app_demo_detail $mol_page
 		<= Source_link $mol_link
 			uri <= source_link \
 			target \_blank
+			hint <= source_hint @ \Source code of this demo
 			sub /
-				<= Source_button $mol_button_major
-					hint <= source_hint @ \Source code of this demo
-					sub /
-						<= Source_icon $mol_icon_code_braces
+				<= Source_icon $mol_icon_code_braces
 		<= Edit $mol_link
 			hint <= edit_hint @ \Edit this demo in studio
 			sub /
@@ -68,17 +69,3 @@ $mol_app_demo_detail $mol_page
 				<= Close_icon $mol_icon_cross
 			arg <= close_arg *
 				demo null
-
-$mol_app_demo_nav $mol_grid
-	hierarchy_col \title
-	Head null
-	-
-	Option!id $mol_link
-		arg <= arg!id *
-		sub /
-			<= Expand!id $mol_check_expand
-				expanded?val <=> cell_expanded!id?val
-				level <= cell_level!id
-			<= Content!id $mol_view
-				sub /
-					<= cell_content!id

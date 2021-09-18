@@ -4,6 +4,8 @@ namespace $.$$ {
 
 	$mol_style_define( $mol_drag_demo , {
 		
+		padding: $mol_gap.block,
+		
 		Task_drop:{
 			'@': {
 				mol_drop_status: {
@@ -14,10 +16,6 @@ namespace $.$$ {
 			},
 		},
 
-		List: {
-			padding: $mol_gap.block,
-		},
-		
 		List_drop: {
 			'@': {
 				mol_drop_status: {

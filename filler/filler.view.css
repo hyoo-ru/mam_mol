@@ -1,3 +1,4 @@
 [mol_filler] {
 	text-align: left;
+	padding: var(--mol_gap_text);
 }

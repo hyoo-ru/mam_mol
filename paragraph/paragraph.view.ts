@@ -27,15 +27,19 @@ namespace $.$$ {
 		width_limit() {
 			return this.$.$mol_window.size().width
 		}
+		
+		minimal_width() {
+			return this.letter_width()
+		}
 
 		@ $mol_mem
-		minimal_width() {
+		row_width() {
 			return Math.max( Math.min( this.width_limit() , this.maximal_width() ) , this.letter_width() )
 		}
 
 		@ $mol_mem
 		minimal_height() {
-			return Math.max( 1 , Math.ceil( this.maximal_width() / this.minimal_width() ) ) * this.line_height()
+			return Math.max( 1 , Math.ceil( this.maximal_width() / this.row_width() ) ) * this.line_height()
 		}
 
 	}

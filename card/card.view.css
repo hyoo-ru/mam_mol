@@ -12,6 +12,7 @@
 	flex: 1 1 auto;
 	border-radius: var(--mol_gap_round);
 	margin: 0;
+	padding: var(--mol_gap_block);
 }
 
 [mol_card_status] {
