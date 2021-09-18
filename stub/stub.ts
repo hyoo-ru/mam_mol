@@ -66,8 +66,8 @@ namespace $ {
 	}
 	
 	export function $mol_stub_person_name() {
-		var first = $mol_stub_select_random( [ 'Ivan' , 'Petr' , 'Sidor' ] )
-		var last = $mol_stub_select_random( [ 'Ivanov' , 'Petrov' , 'Sidorov' ] )
+		var first = $mol_stub_select_random( [ 'Ivan' , 'Petr' , 'Sidor', 'John', 'Sam' ] )
+		var last = $mol_stub_select_random( [ 'Ivanov' , 'Petrov' , 'Sidorov', 'Johnson', 'Smith' ] )
 		return `${first} ${last}`
 	}
 	
