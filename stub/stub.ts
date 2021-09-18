@@ -71,6 +71,11 @@ namespace $ {
 		return `${first} ${last}`
 	}
 	
+	export function $mol_stub_person_avatar( size = 80 ) {
+		const id = Math.random().toString( 16 ).slice( 2 )
+		return `https://gravatar.com/avatar/${id}?d=robohash&s=${size}`
+	}
+	
 	export function $mol_stub_city() {
 		return $mol_stub_select_random( [ 'Moscow' , 'London' , 'Washington' , 'Buenos Aires' ] )
 	}
