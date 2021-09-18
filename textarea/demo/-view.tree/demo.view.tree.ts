@@ -96,10 +96,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Scroll $mol_scroll sub /
+		 * Inputs $mol_list rows /
 		 * 	<= Empty_descr
 		 * 	<= Filled_descr
 		 * 	<= Disabled
+		 * ```
+		 */
+		@ $mol_mem
+		Inputs() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => [
+				this.Empty_descr(),
+				this.Filled_descr(),
+				this.Disabled()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Scroll $mol_scroll sub / <= Inputs
 		 * ```
 		 */
 		@ $mol_mem
@@ -107,9 +125,7 @@ namespace $ {
 			const obj = new this.$.$mol_scroll()
 			
 			obj.sub = () => [
-				this.Empty_descr(),
-				this.Filled_descr(),
-				this.Disabled()
+				this.Inputs()
 			] as readonly any[]
 			
 			return obj

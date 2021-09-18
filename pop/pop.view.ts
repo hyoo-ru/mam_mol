@@ -7,7 +7,7 @@ namespace $.$$ {
 			return next
 		}
 
-		sub() {
+		sub_visible() {
 			return [
 				this.Anchor() ,
 				... this.showed() ? [ this.Bubble() ] : [] ,

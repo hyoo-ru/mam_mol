@@ -23,16 +23,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Head_content $mol_view sub / \Float header
+		 * Head_content $mol_paragraph title \Float header
 		 * ```
 		 */
 		@ $mol_mem
 		Head_content() {
-			const obj = new this.$.$mol_view()
+			const obj = new this.$.$mol_paragraph()
 			
-			obj.sub = () => [
-				"Float header"
-			] as readonly any[]
+			obj.title = () => "Float header"
 			
 			return obj
 		}
@@ -95,16 +93,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Content $mol_row sub /
+		 * Content $mol_list rows /
 		 * 	<= Filler1
 		 * 	<= Filler2
 		 * ```
 		 */
 		@ $mol_mem
 		Content() {
-			const obj = new this.$.$mol_row()
+			const obj = new this.$.$mol_list()
 			
-			obj.sub = () => [
+			obj.rows = () => [
 				this.Filler1(),
 				this.Filler2()
 			] as readonly any[]

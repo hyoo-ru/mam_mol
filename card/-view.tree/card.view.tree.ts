@@ -40,11 +40,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * content /$mol_view_content
+		 * content /$mol_view_content <= title
 		 * ```
 		 */
 		content() {
 			return [
+				this.title()
 			] as readonly $mol_view_content[]
 		}
 		

@@ -1,0 +1,16 @@
+$mol_gallery_demo $mol_demo_large
+	title @ \Gallery of cards
+	count 101
+	sub /
+		<= Scroll $mol_scroll
+			sub /
+				<= App $mol_gallery
+					items <= items /
+	Item!id $mol_link
+		minimal_width 100
+		uri \https://thiscatdoesnotexist.com/
+		style *
+			backgroundImage \url('https://thiscatdoesnotexist.com/')
+		sub /
+			<= Item_title!id $mol_paragraph
+				title <= item_title!id \

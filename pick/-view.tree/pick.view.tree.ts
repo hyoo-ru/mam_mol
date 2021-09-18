@@ -41,6 +41,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Trigger $mol_check
+		 * 	minimal_width 40
+		 * 	minimal_height 40
 		 * 	enabled <= trigger_enabled
 		 * 	checked?event <=> showed?event
 		 * 	sub <= trigger_content
@@ -51,6 +53,8 @@ namespace $ {
 		Trigger() {
 			const obj = new this.$.$mol_check()
 			
+			obj.minimal_width = () => 40
+			obj.minimal_height = () => 40
 			obj.enabled = () => this.trigger_enabled()
 			obj.checked = (event?: any) => this.showed(event)
 			obj.sub = () => this.trigger_content()

@@ -34,6 +34,8 @@ $mol_pop $mol_view
 	align_hor \
 	sub /
 		<= Anchor null
+	sub_visible /
+		<= Anchor
 		<= Bubble $mol_pop_bubble
 			align <= align \bottom_center
 			content <= bubble_content /$mol_view_content
@@ -97,6 +99,8 @@ $mol_check $mol_button_minor
 
 $mol_pick $mol_pop
 	Anchor <= Trigger $mol_check
+		minimal_width 40
+		minimal_height 40
 		enabled <= trigger_enabled true
 		checked?event <=> showed?event
 		sub <= trigger_content /$mol_view_content

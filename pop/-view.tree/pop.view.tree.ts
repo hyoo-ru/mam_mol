@@ -43,12 +43,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
+		 * sub / <= Anchor
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Anchor()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * sub_visible /
 		 * 	<= Anchor
 		 * 	<= Bubble
 		 * ```
 		 */
-		sub() {
+		sub_visible() {
 			return [
 				this.Anchor(),
 				this.Bubble()

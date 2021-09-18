@@ -7,7 +7,7 @@ namespace $ {
 		 * 	<= Link
 		 * 	<= String
 		 * 	<= Button
-		 * 	<= Card
+		 * 	<= Message
 		 * ```
 		 */
 		sub() {
@@ -15,7 +15,7 @@ namespace $ {
 				this.Link(),
 				this.String(),
 				this.Button(),
-				this.Card()
+				this.Message()
 			] as readonly any[]
 		}
 		
@@ -174,11 +174,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Card_speck $mol_speck
+		 * Message_speck $mol_speck
 		 * ```
 		 */
 		@ $mol_mem
-		Card_speck() {
+		Message_speck() {
 			const obj = new this.$.$mol_speck()
 			
 			return obj
@@ -186,28 +186,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * card_status @ \Created
+		 * message_text @ \Created
 		 * ```
 		 */
-		card_status() {
-			return this.$.$mol_locale.text( '$mol_speck_demo_card_status' )
+		message_text() {
+			return this.$.$mol_locale.text( '$mol_speck_demo_message_text' )
 		}
 		
 		/**
 		 * ```tree
-		 * Card $mol_card
-		 * 	content / <= Card_speck
-		 * 	status <= card_status
+		 * Message $mol_paragraph sub /
+		 * 	<= Message_speck
+		 * 	<= message_text
 		 * ```
 		 */
 		@ $mol_mem
-		Card() {
-			const obj = new this.$.$mol_card()
+		Message() {
+			const obj = new this.$.$mol_paragraph()
 			
-			obj.content = () => [
-				this.Card_speck()
+			obj.sub = () => [
+				this.Message_speck(),
+				this.message_text()
 			] as readonly any[]
-			obj.status = () => this.card_status()
 			
 			return obj
 		}

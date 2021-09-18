@@ -26,14 +26,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Simple_content $mol_row sub / \Hello world!
+		 * Simple $mol_card content / \Hello world!
 		 * ```
 		 */
 		@ $mol_mem
-		Simple_content() {
-			const obj = new this.$.$mol_row()
+		Simple() {
+			const obj = new this.$.$mol_card()
 			
-			obj.sub = () => [
+			obj.content = () => [
 				"Hello world!"
 			] as readonly any[]
 			
@@ -42,38 +42,8 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Simple $mol_card Content <= Simple_content
-		 * ```
-		 */
-		@ $mol_mem
-		Simple() {
-			const obj = new this.$.$mol_card()
-			
-			obj.Content = () => this.Simple_content()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Pending_content $mol_row sub / \Hello pending!
-		 * ```
-		 */
-		@ $mol_mem
-		Pending_content() {
-			const obj = new this.$.$mol_row()
-			
-			obj.sub = () => [
-				"Hello pending!"
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * Pending $mol_card
-		 * 	Content <= Pending_content
+		 * 	title \Hello pending!
 		 * 	status \pending
 		 * ```
 		 */
@@ -81,7 +51,7 @@ namespace $ {
 		Pending() {
 			const obj = new this.$.$mol_card()
 			
-			obj.Content = () => this.Pending_content()
+			obj.title = () => "Hello pending!"
 			obj.status = () => "pending"
 			
 			return obj

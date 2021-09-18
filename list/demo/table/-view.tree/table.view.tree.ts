@@ -12,11 +12,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * count 10000
+		 * count 1000
 		 * ```
 		 */
 		count() {
-			return 10000
+			return 1000
 		}
 		
 		/**

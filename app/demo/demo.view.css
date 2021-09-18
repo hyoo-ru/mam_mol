@@ -2,25 +2,18 @@
 	flex: 0 0 18rem;
 }
 
-[mol_app_demo_menu_tools] {
-	padding: 0;
+[mol_app_demo_menu_body] {
+	padding: var(--mol_gap_block);
 }
 
-[mol_app_demo_menu_nav] {
-	flex: auto;
-	display: flex;
-	flex-direction: column;
-	align-self: stretch;
+[mol_app_demo_menu_tools] {
+	padding: 0;
 }
 
 [mol_app_demo_main],
 [mol_app_demo_detail],
 [mol_app_empty_message] {
 	flex: 1000 0 56rem;
-}
-
-[mol_app_demo_detail] {
-	background: var(--mol_theme_field);
 }
 
 [mol_app_demo_menu_filter] {
@@ -62,7 +55,6 @@
 [mol_app_demo_list] {
 	display: flex;
 	flex-wrap: wrap;
-	padding: var(--mol_gap_block);
 	align-content: flex-start;
 	align-items: flex-start;
 }
@@ -72,6 +64,7 @@
 }
 
 [mol_app_demo_detail_body] {
+	padding: 0;
 	display: flex;
 	align-items: stretch;
 	justify-content: flex-start;
@@ -79,16 +72,9 @@
 }
 
 [mol_app_demo_detail_list] {
-	flex: 1 0 auto;
+	flex: 1 0 100%;
 	display: flex;
 	flex-direction: column;
-	margin: var(--mol_gap_block);
-}
-
-[mol_app_demo_detail_list] > [mol_demo_large] {
-	margin: var(--mol_gap_block);
-	height: calc( 100vh - 100px );
-	width: calc( 100% - 1rem );
 }
 
 [mol_app_demo_page_close] {
@@ -115,8 +101,4 @@
 
 [mol_app_demo_chat] {
 	flex: none;
-}
-
-[mol_app_demo_detail_source_link] {
-	padding: 0;
 }

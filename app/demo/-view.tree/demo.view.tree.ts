@@ -41,19 +41,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Menu $mol_app_demo_menu
-		 * 	hierarchy <= nav_hierarchy
-		 * 	option!id <= nav_option!id
-		 * 	filter?val <=> filter_string?val
+		 * Menu $mol_app_demo_menu names <= names_demo_all
 		 * ```
 		 */
 		@ $mol_mem
 		Menu() {
 			const obj = new this.$.$mol_app_demo_menu()
 			
-			obj.hierarchy = () => this.nav_hierarchy()
-			obj.option = (id: any) => this.nav_option(id)
-			obj.filter = (val?: any) => this.filter_string(val)
+			obj.names = () => this.names_demo_all()
 			
 			return obj
 		}
@@ -163,31 +158,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * nav_hierarchy null
+		 * names_demo_all /string
 		 * ```
 		 */
-		nav_hierarchy() {
-			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * nav_option!id null
-		 * ```
-		 */
-		nav_option(id: any) {
-			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * filter_string?val \
-		 * ```
-		 */
-		@ $mol_mem
-		filter_string(val?: any) {
-			if ( val !== undefined ) return val as never
-			return ""
+		names_demo_all() {
+			return [
+			] as readonly string[]
 		}
 		
 		/**
@@ -296,6 +272,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * names /string
+		 * ```
+		 */
+		names() {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
 		 * title @ \$mol components
 		 * ```
 		 */
@@ -321,7 +307,7 @@ namespace $ {
 		 * ```tree
 		 * Body $mol_scroll sub /
 		 * 	<= Filter
-		 * 	<= Nav
+		 * 	<= Options
 		 * ```
 		 */
 		@ $mol_mem
@@ -330,7 +316,26 @@ namespace $ {
 			
 			obj.sub = () => [
 				this.Filter(),
-				this.Nav()
+				this.Options()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Option!id $mol_link
+		 * 	arg <= option_arg!id
+		 * 	sub / <= Option_title!id
+		 * ```
+		 */
+		@ $mol_mem_key
+		Option(id: any) {
+			const obj = new this.$.$mol_link()
+			
+			obj.arg = () => this.option_arg(id)
+			obj.sub = () => [
+				this.Option_title(id)
 			] as readonly any[]
 			
 			return obj
@@ -398,36 +403,59 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hierarchy null
+		 * options /
 		 * ```
 		 */
-		hierarchy() {
-			return null as any
+		options() {
+			return [
+			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * option!id null
-		 * ```
-		 */
-		option(id: any) {
-			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * Nav $mol_app_demo_nav
-		 * 	hierarchy <= hierarchy
-		 * 	record!id <= option!id
-		 * 	needle <= filter?val
+		 * Options $mol_list rows <= options
 		 * ```
 		 */
 		@ $mol_mem
-		Nav() {
-			const obj = new this.$.$mol_app_demo_nav()
+		Options() {
+			const obj = new this.$.$mol_list()
 			
-			obj.hierarchy = () => this.hierarchy()
-			obj.record = (id: any) => this.option(id)
+			obj.rows = () => this.options()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * option_arg!id *
+		 * ```
+		 */
+		option_arg(id: any) {
+			return {
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * option_title!id \
+		 * ```
+		 */
+		option_title(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Option_title!id $mol_dimmer
+		 * 	haystack <= option_title!id
+		 * 	needle <= filter?val
+		 * ```
+		 */
+		@ $mol_mem_key
+		Option_title(id: any) {
+			const obj = new this.$.$mol_dimmer()
+			
+			obj.haystack = () => this.option_title(id)
 			obj.needle = () => this.filter()
 			
 			return obj
@@ -520,29 +548,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Source_button $mol_button_major
-		 * 	hint <= source_hint
-		 * 	sub / <= Source_icon
-		 * ```
-		 */
-		@ $mol_mem
-		Source_button() {
-			const obj = new this.$.$mol_button_major()
-			
-			obj.hint = () => this.source_hint()
-			obj.sub = () => [
-				this.Source_icon()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * Source_link $mol_link
 		 * 	uri <= source_link
 		 * 	target \_blank
-		 * 	sub / <= Source_button
+		 * 	hint <= source_hint
+		 * 	sub / <= Source_icon
 		 * ```
 		 */
 		@ $mol_mem
@@ -551,8 +561,9 @@ namespace $ {
 			
 			obj.uri = () => this.source_link()
 			obj.target = () => "_blank"
+			obj.hint = () => this.source_hint()
 			obj.sub = () => [
-				this.Source_button()
+				this.Source_icon()
 			] as readonly any[]
 			
 			return obj
@@ -675,92 +686,6 @@ namespace $ {
 				this.Close_icon()
 			] as readonly any[]
 			obj.arg = () => this.close_arg()
-			
-			return obj
-		}
-	}
-	
-	export class $mol_app_demo_nav extends $mol_grid {
-		
-		/**
-		 * ```tree
-		 * hierarchy_col \title
-		 * ```
-		 */
-		hierarchy_col() {
-			return "title"
-		}
-		
-		/**
-		 * ```tree
-		 * Head null
-		 * ```
-		 */
-		Head() {
-			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * Option!id $mol_link
-		 * 	arg <= arg!id
-		 * 	sub /
-		 * 		<= Expand!id
-		 * 		<= Content!id
-		 * ```
-		 */
-		@ $mol_mem_key
-		Option(id: any) {
-			const obj = new this.$.$mol_link()
-			
-			obj.arg = () => this.arg(id)
-			obj.sub = () => [
-				this.Expand(id),
-				this.Content(id)
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * arg!id *
-		 * ```
-		 */
-		arg(id: any) {
-			return {
-			}
-		}
-		
-		/**
-		 * ```tree
-		 * Expand!id $mol_check_expand
-		 * 	expanded?val <=> cell_expanded!id?val
-		 * 	level <= cell_level!id
-		 * ```
-		 */
-		@ $mol_mem_key
-		Expand(id: any) {
-			const obj = new this.$.$mol_check_expand()
-			
-			obj.expanded = (val?: any) => this.cell_expanded(id, val)
-			obj.level = () => this.cell_level(id)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Content!id $mol_view sub / <= cell_content!id
-		 * ```
-		 */
-		@ $mol_mem_key
-		Content(id: any) {
-			const obj = new this.$.$mol_view()
-			
-			obj.sub = () => [
-				this.cell_content(id)
-			] as readonly any[]
 			
 			return obj
 		}

@@ -42,28 +42,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * item_title!id \
-		 * ```
-		 */
-		item_title(id: any) {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Item!id $mol_row
-		 * 	minimal_height 40
-		 * 	sub / <= item_title!id
+		 * Item!id $mol_filler
 		 * ```
 		 */
 		@ $mol_mem_key
 		Item(id: any) {
-			const obj = new this.$.$mol_row()
-			
-			obj.minimal_height = () => 40
-			obj.sub = () => [
-				this.item_title(id)
-			] as readonly any[]
+			const obj = new this.$.$mol_filler()
 			
 			return obj
 		}

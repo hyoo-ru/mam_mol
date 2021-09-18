@@ -24,7 +24,7 @@ namespace $ {
 		 * Product!id $mol_card
 		 * 	minimal_width 140
 		 * 	minimal_height 100
-		 * 	content / <= product_title!id
+		 * 	title <= product_title!id
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -33,9 +33,7 @@ namespace $ {
 			
 			obj.minimal_width = () => 140
 			obj.minimal_height = () => 100
-			obj.content = () => [
-				this.product_title(id)
-			] as readonly any[]
+			obj.title = () => this.product_title(id)
 			
 			return obj
 		}

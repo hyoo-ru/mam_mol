@@ -2,12 +2,12 @@ $mol_deck_demo $mol_demo_small
 	title @ \Simple deck with tabbar
 	sub /
 		<= Deck $mol_deck items /
-			<= Greeter $mol_row
+			<= Greeter $mol_card
 				title @ \Greeting
-				sub / <= greeterMessage @ \Hello, world!
-			<= Quester $mol_row
+				content / <= greet_message @ \Hello, world!
+			<= Quester $mol_card
 				title @ \Question
-				sub / <= questerMessage @ \How are you?
-			<= Commander $mol_row
+				content / <= quest_message @ \How are you?
+			<= Commander $mol_card
 				title @ \Command
-				sub / <= commanderMessage @ \Let us do it right!
+				content / <= command_message @ \Let us do it right!

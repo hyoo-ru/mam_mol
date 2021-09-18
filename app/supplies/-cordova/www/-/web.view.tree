@@ -206,6 +206,7 @@ $mol_card $mol_list
 	rows /$mol_view
 		<= Content $mol_view
 			sub <= content /$mol_view_content
+				<= title
 		<= Status $mol_view
 			minimal_height 30
 			sub /
@@ -238,6 +239,8 @@ $mol_pop $mol_view
 	align_hor \
 	sub /
 		<= Anchor null
+	sub_visible /
+		<= Anchor
 		<= Bubble $mol_pop_bubble
 			align <= align \bottom_center
 			content <= bubble_content /$mol_view_content

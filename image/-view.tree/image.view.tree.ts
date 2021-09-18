@@ -16,13 +16,15 @@ namespace $ {
 		 * 	^
 		 * 	src <= uri
 		 * 	alt <= title
+		 * 	loading <= loading
 		 * ```
 		 */
 		field() {
 			return {
 				...super.field(),
 				src: this.uri(),
-				alt: this.title()
+				alt: this.title(),
+				loading: this.loading()
 			}
 		}
 		
@@ -33,6 +35,15 @@ namespace $ {
 		 */
 		uri() {
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * loading \lazy
+		 * ```
+		 */
+		loading() {
+			return "lazy"
 		}
 	}
 	

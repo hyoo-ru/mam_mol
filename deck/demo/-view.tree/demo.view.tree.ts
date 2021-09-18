@@ -23,27 +23,27 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * greeterMessage @ \Hello, world!
+		 * greet_message @ \Hello, world!
 		 * ```
 		 */
-		greeterMessage() {
-			return this.$.$mol_locale.text( '$mol_deck_demo_greeterMessage' )
+		greet_message() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_greet_message' )
 		}
 		
 		/**
 		 * ```tree
-		 * Greeter $mol_row
+		 * Greeter $mol_card
 		 * 	title @ \Greeting
-		 * 	sub / <= greeterMessage
+		 * 	content / <= greet_message
 		 * ```
 		 */
 		@ $mol_mem
 		Greeter() {
-			const obj = new this.$.$mol_row()
+			const obj = new this.$.$mol_card()
 			
 			obj.title = () => this.$.$mol_locale.text( '$mol_deck_demo_Greeter_title' )
-			obj.sub = () => [
-				this.greeterMessage()
+			obj.content = () => [
+				this.greet_message()
 			] as readonly any[]
 			
 			return obj
@@ -51,27 +51,27 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * questerMessage @ \How are you?
+		 * quest_message @ \How are you?
 		 * ```
 		 */
-		questerMessage() {
-			return this.$.$mol_locale.text( '$mol_deck_demo_questerMessage' )
+		quest_message() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_quest_message' )
 		}
 		
 		/**
 		 * ```tree
-		 * Quester $mol_row
+		 * Quester $mol_card
 		 * 	title @ \Question
-		 * 	sub / <= questerMessage
+		 * 	content / <= quest_message
 		 * ```
 		 */
 		@ $mol_mem
 		Quester() {
-			const obj = new this.$.$mol_row()
+			const obj = new this.$.$mol_card()
 			
 			obj.title = () => this.$.$mol_locale.text( '$mol_deck_demo_Quester_title' )
-			obj.sub = () => [
-				this.questerMessage()
+			obj.content = () => [
+				this.quest_message()
 			] as readonly any[]
 			
 			return obj
@@ -79,27 +79,27 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * commanderMessage @ \Let us do it right!
+		 * command_message @ \Let us do it right!
 		 * ```
 		 */
-		commanderMessage() {
-			return this.$.$mol_locale.text( '$mol_deck_demo_commanderMessage' )
+		command_message() {
+			return this.$.$mol_locale.text( '$mol_deck_demo_command_message' )
 		}
 		
 		/**
 		 * ```tree
-		 * Commander $mol_row
+		 * Commander $mol_card
 		 * 	title @ \Command
-		 * 	sub / <= commanderMessage
+		 * 	content / <= command_message
 		 * ```
 		 */
 		@ $mol_mem
 		Commander() {
-			const obj = new this.$.$mol_row()
+			const obj = new this.$.$mol_card()
 			
 			obj.title = () => this.$.$mol_locale.text( '$mol_deck_demo_Commander_title' )
-			obj.sub = () => [
-				this.commanderMessage()
+			obj.content = () => [
+				this.command_message()
 			] as readonly any[]
 			
 			return obj

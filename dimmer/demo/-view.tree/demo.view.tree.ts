@@ -12,23 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= one
-		 * 	<= two
-		 * 	<= three
-		 * 	<= four
-		 * 	<= five
-		 * 	<= six
+		 * sub / <= App
 		 * ```
 		 */
 		sub() {
 			return [
-				this.one(),
-				this.two(),
-				this.three(),
-				this.four(),
-				this.five(),
-				this.six()
+				this.App()
 			] as readonly any[]
 		}
 		
@@ -130,6 +119,33 @@ namespace $ {
 			
 			obj.haystack = () => "Let's search nothing"
 			obj.needle = () => ""
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * App $mol_row sub /
+		 * 	<= one
+		 * 	<= two
+		 * 	<= three
+		 * 	<= four
+		 * 	<= five
+		 * 	<= six
+		 * ```
+		 */
+		@ $mol_mem
+		App() {
+			const obj = new this.$.$mol_row()
+			
+			obj.sub = () => [
+				this.one(),
+				this.two(),
+				this.three(),
+				this.four(),
+				this.five(),
+				this.six()
+			] as readonly any[]
 			
 			return obj
 		}

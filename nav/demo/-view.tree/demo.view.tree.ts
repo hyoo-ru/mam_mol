@@ -60,25 +60,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hint @ \Select option and use keys to switch
-		 * ```
-		 */
-		hint() {
-			return this.$.$mol_locale.text( '$mol_nav_demo_hint' )
-		}
-		
-		/**
-		 * ```tree
-		 * Hint $mol_view sub / <= hint
+		 * Hint $mol_card title @ \Select option and use keys to switch
 		 * ```
 		 */
 		@ $mol_mem
 		Hint() {
-			const obj = new this.$.$mol_view()
+			const obj = new this.$.$mol_card()
 			
-			obj.sub = () => [
-				this.hint()
-			] as readonly any[]
+			obj.title = () => this.$.$mol_locale.text( '$mol_nav_demo_Hint_title' )
 			
 			return obj
 		}

@@ -16,6 +16,7 @@ $mol_card $mol_list
 	rows /$mol_view
 		<= Content $mol_view
 			sub <= content /$mol_view_content
+				<= title
 		<= Status $mol_view
 			minimal_height 30
 			sub /
@@ -147,14 +148,14 @@ $mol_attach_demo $mol_demo_small
 		<= Filled $mol_attach
 			items?val <=> filled_items?val /
 				<= Item1 $mol_attach_item
-					url_thumb \mol/logo/logo.svg
-					url_load \logo/logo.svg
+					url_thumb \https://thiscatdoesnotexist.com/
+					url_load \https://thiscatdoesnotexist.com/
 				<= Item2 $mol_attach_item
-					url_thumb \mol/logo/logo.svg
-					url_load \logo/logo.svg
+					url_thumb \https://thiscatdoesnotexist.com/
+					url_load \https://thiscatdoesnotexist.com/
 				<= Item3 $mol_attach_item
-					url_thumb \mol/logo/logo.svg
-					url_load \logo/logo.svg
+					url_thumb \https://thiscatdoesnotexist.com/
+					url_load \https://thiscatdoesnotexist.com/
 
 $mol_bar $mol_view
 
@@ -499,19 +500,14 @@ $mol_calendar_demo_simple $mol_demo_small
 		<= Calendar $mol_calendar
 			month_moment <= today $mol_time_moment
 
-$mol_row $mol_view
-
 $mol_card_demo $mol_demo_small
 	title @ \Cards with optional status
 	sub /
 		<= Simple $mol_card
-			Content <= Simple_content $mol_row
-				sub /
-					\Hello world!
+			content /
+				\Hello world!
 		<= Pending $mol_card
-			Content <= Pending_content $mol_row
-				sub /
-					\Hello pending!
+			title \Hello pending!
 			status \pending
 
 $mol_svg_group $mol_svg
@@ -1099,6 +1095,8 @@ $mol_chat $mol_link
 			Body <= Embed $mol_frame
 				uri <= embed \
 
+$mol_row $mol_view
+
 $mol_chat_demo $mol_demo_small
 	title @ \Feed of comments for this page
 	sub /
@@ -1228,6 +1226,8 @@ $mol_pop $mol_view
 	align_hor \
 	sub /
 		<= Anchor null
+	sub_visible /
+		<= Anchor
 		<= Bubble $mol_pop_bubble
 			align <= align \bottom_center
 			content <= bubble_content /$mol_view_content
@@ -1331,6 +1331,8 @@ $mol_code_demo $mol_demo_small
 
 $mol_pick $mol_pop
 	Anchor <= Trigger $mol_check
+		minimal_width 40
+		minimal_height 40
 		enabled <= trigger_enabled true
 		checked?event <=> showed?event
 		sub <= trigger_content /$mol_view_content
@@ -1414,37 +1416,39 @@ $mol_deck_demo $mol_demo_small
 	title @ \Simple deck with tabbar
 	sub /
 		<= Deck $mol_deck items /
-			<= Greeter $mol_row
+			<= Greeter $mol_card
 				title @ \Greeting
-				sub / <= greeterMessage @ \Hello, world!
-			<= Quester $mol_row
+				content / <= greet_message @ \Hello, world!
+			<= Quester $mol_card
 				title @ \Question
-				sub / <= questerMessage @ \How are you?
-			<= Commander $mol_row
+				content / <= quest_message @ \How are you?
+			<= Commander $mol_card
 				title @ \Command
-				sub / <= commanderMessage @ \Let us do it right!
+				content / <= command_message @ \Let us do it right!
 
 $mol_dimmer_demo $mol_demo_small
 	title @ \Text with highlighted found substring
 	sub /
-		<= one $mol_dimmer
-			haystack \Don't put all your eggs in one basket
-			needle \eggs
-		<= two $mol_dimmer
-			haystack \Don't look a gift horse in the mouth.
-			needle \oo
-		<= three $mol_dimmer
-			haystack \There is no word you are looking for
-			needle \luck
-		<= four $mol_dimmer
-			haystack \ooAAooAAoo
-			needle \oo
-		<= five $mol_dimmer
-			haystack \Let's search this string
-			needle \Let's search this string
-		<= six $mol_dimmer
-			haystack \Let's search nothing
-			needle \
+		<= App $mol_row
+			sub /
+				<= one $mol_dimmer
+					haystack \Don't put all your eggs in one basket
+					needle \eggs
+				<= two $mol_dimmer
+					haystack \Don't look a gift horse in the mouth.
+					needle \oo
+				<= three $mol_dimmer
+					haystack \There is no word you are looking for
+					needle \luck
+				<= four $mol_dimmer
+					haystack \ooAAooAAoo
+					needle \oo
+				<= five $mol_dimmer
+					haystack \Let's search this string
+					needle \Let's search this string
+				<= six $mol_dimmer
+					haystack \Let's search nothing
+					needle \
 
 $mol_ghost $mol_view
 	Sub $mol_view
@@ -1549,12 +1553,12 @@ $mol_float_demo $mol_demo_large
 					sub /
 						<= Head_row $mol_row
 							sub /
-								<= Head_content $mol_view
-									sub /
-										\Float header
-				<= Content $mol_row sub /
-					<= Filler1 $mol_filler
-					<= Filler2 $mol_filler
+								<= Head_content $mol_paragraph
+									title \Float header
+				<= Content $mol_list
+					rows /
+						<= Filler1 $mol_filler
+						<= Filler2 $mol_filler
 
 $mol_labeler $mol_list
 	rows /
@@ -1651,12 +1655,37 @@ $mol_frame_demo $mol_demo_large
 		<= Frame $mol_frame
 			uri \https://mol.js.org/
 
+$mol_gallery $mol_view
+	sub <= items /$mol_view
+	Side!id $mol_gallery
+		style *
+			flexGrow <= side_size!id \1
+		items <= side_items!id /$mol_view
+
+$mol_gallery_demo $mol_demo_large
+	title @ \Gallery of cards
+	count 101
+	sub /
+		<= Scroll $mol_scroll
+			sub /
+				<= App $mol_gallery
+					items <= items /
+	Item!id $mol_link
+		minimal_width 100
+		uri \https://thiscatdoesnotexist.com/
+		style *
+			backgroundImage \url('https://thiscatdoesnotexist.com/')
+		sub /
+			<= Item_title!id $mol_paragraph
+				title <= item_title!id \
+
 $mol_image $mol_view
 	dom_name \img
 	field *
 		^
 		src <= uri \
 		alt <= title
+		loading <= loading \lazy
 
 $mol_link_iconed $mol_link
 	sub /
@@ -1738,7 +1767,7 @@ $mol_html_view_demo $mol_demo_large
 					\ </p>
 					\ <h2>Media elements</h2>
 					\ <p>
-					\ 	<img src="https://mol.js.org/logo/logo_128.png" />
+					\ 	<img src="https://mol.hyoo.ru/mol/logo/logo.svg" />
 					\ </p>
 					\ <h2>Block elements</h2>
 					\ <blockquote><p>Block quotation</p></blockquote>
@@ -1755,22 +1784,20 @@ $mol_infinite_demo $mol_demo_large
 		<= Scroll $mol_scroll sub /
 			<= List $mol_infinite
 				after!anchor_id <= after!anchor_id /
-				Row!id <= Item!id $mol_row
-					minimal_height 40
-					sub /
-						<= item_title!id \
+				Row!id <= Item!id $mol_filler
 
 $mol_labeler_demo $mol_demo_small
 	title @ \Labeled content of some types
 	sub /
-		<= Provider $mol_labeler
-			title \Provider
-			content / \ACME Provider Inc.
-		<= Name $mol_labeler
-			title \User name
-			Content <= Name_control $mol_string
-				hint \Jack Sparrow
-				value?val <=> user_name?val \
+		<= App $mol_row sub /
+			<= Provider $mol_labeler
+				title \Provider
+				content / \ACME Provider Inc.
+			<= Name $mol_labeler
+				title \User name
+				Content <= Name_control $mol_string
+					hint \Jack Sparrow
+					value?val <=> user_name?val \
 
 $mol_link_demo $mol_demo_small
 	title @ \Some hyperlinks
@@ -1829,7 +1856,7 @@ $mol_number $mol_view
 
 $mol_list_demo_table $mol_demo_large
 	title @ \Large list of rows with dynamic content
-	count 10000
+	count 1000
 	sub /
 		<= Scroll $mol_scroll
 			sub /
@@ -2059,7 +2086,7 @@ $mol_nav_demo $mol_demo_small
 			keys_y <= row_list
 			current_y?val <=> row_current?val
 	sub /
-		<= Hint $mol_view sub / <= hint @ \Select option and use keys to switch
+		<= Hint $mol_card title @ \Select option and use keys to switch
 		<= Tab_list $mol_switch
 			keys => tab_list
 			value?val <=> tab_current?val \
@@ -2289,8 +2316,7 @@ $mol_row_demo_products $mol_demo_large
 	Product!id $mol_card
 		minimal_width 140
 		minimal_height 100
-		content /
-			<= product_title!id \
+		title <= product_title!id \
 	sub /
 		<= Catalog $mol_scroll
 			sub /
@@ -2481,10 +2507,10 @@ $mol_speck_demo $mol_demo_small
 				<= Button_speck $mol_speck
 					value <= notification_count 8
 				<= Button_icon $mol_icon_menu
-		<= Card $mol_card
-			content /
-				<= Card_speck $mol_speck
-			status <= card_status @ \Created
+		<= Message $mol_paragraph
+			sub /
+				<= Message_speck $mol_speck
+				<= message_text @ \Created
 
 $mol_speech_demo $mol_demo_small
 	sub /
@@ -2610,17 +2636,18 @@ $mol_textarea_demo $mol_demo_large
 	title @ \Text input field in various states
 	sub /
 		<= Scroll $mol_scroll sub /
-			<= Empty_descr $mol_textarea
-				hint \source code
-				value?val <=> empty_descr?val \
-			<= Filled_descr $mol_textarea
-				value?val <=> filled_descr?val \
-					\function hello( name = 'World' ) {
-					\	return `Hello, ${ name }!`
-					\}
-			<= Disabled $mol_textarea
-				enabled false
-				value?val <=> filled_descr?val
+			<= Inputs $mol_list rows /
+				<= Empty_descr $mol_textarea
+					hint \source code
+					value?val <=> empty_descr?val \
+				<= Filled_descr $mol_textarea
+					value?val <=> filled_descr?val \
+						\function hello( name = 'World' ) {
+						\	return `Hello, ${ name }!`
+						\}
+				<= Disabled $mol_textarea
+					enabled false
+					value?val <=> filled_descr?val
 
 $mol_toolbar $mol_view
 	attr *
@@ -2695,9 +2722,7 @@ $mol_app_demo $mol_book2
 	plugins /
 		<= Theme $mol_theme_auto
 	Menu $mol_app_demo_menu
-		hierarchy <= nav_hierarchy null
-		option!id <= nav_option!id null
-		filter?val <=> filter_string?val \
+		names <= names_demo_all /string
 	Detail!id $mol_app_demo_detail
 		chat_seed <= chat_seed!id \
 		chat_pages => chat_pages!id
@@ -2718,6 +2743,7 @@ $mol_app_demo $mol_book2
 			<= detail_empty_postfix @ \"
 			
 $mol_app_demo_menu $mol_page
+	names /string
 	title @ \$mol components
 	tools /
 		<= Sources $mol_link_source
@@ -2727,11 +2753,15 @@ $mol_app_demo_menu $mol_page
 		sub /
 			<= Filter $mol_search
 				query?val <=> filter?val \
-			<= Nav $mol_app_demo_nav
-				hierarchy <= hierarchy null
-				record!id <= option!id null
+			<= Options $mol_list
+				rows <= options /
+	Option!id $mol_link
+		arg <= option_arg!id *
+		sub /
+			<= Option_title!id $mol_dimmer
+				haystack <= option_title!id \
 				needle <= filter?val \
-		
+
 $mol_app_demo_detail $mol_page
 	tools /
 		<= Chat $mol_chat
@@ -2740,11 +2770,9 @@ $mol_app_demo_detail $mol_page
 		<= Source_link $mol_link
 			uri <= source_link \
 			target \_blank
+			hint <= source_hint @ \Source code of this demo
 			sub /
-				<= Source_button $mol_button_major
-					hint <= source_hint @ \Source code of this demo
-					sub /
-						<= Source_icon $mol_icon_code_braces
+				<= Source_icon $mol_icon_code_braces
 		<= Edit $mol_link
 			hint <= edit_hint @ \Edit this demo in studio
 			sub /
@@ -2758,20 +2786,6 @@ $mol_app_demo_detail $mol_page
 				<= Close_icon $mol_icon_cross
 			arg <= close_arg *
 				demo null
-
-$mol_app_demo_nav $mol_grid
-	hierarchy_col \title
-	Head null
-	-
-	Option!id $mol_link
-		arg <= arg!id *
-		sub /
-			<= Expand!id $mol_check_expand
-				expanded?val <=> cell_expanded!id?val
-				level <= cell_level!id
-			<= Content!id $mol_view
-				sub /
-					<= cell_content!id
 
 $mol_app_demo_main $mol_page
 	minimal_width 400

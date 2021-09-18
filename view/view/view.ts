@@ -225,7 +225,10 @@ namespace $ {
 		dom_node_actual() {
 			const node = this.dom_node()
 
-			$mol_dom_render_styles( node, { minHeight: this.minimal_height() } )
+			$mol_dom_render_styles( node, {
+				minHeight: this.minimal_height(),
+				minWidth: this.minimal_width(),
+			} )
 
 			const attr = this.attr()
 			const style = this.style()

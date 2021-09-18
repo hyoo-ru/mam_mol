@@ -24,16 +24,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Item1 $mol_attach_item
-		 * 	url_thumb \mol/logo/logo.svg
-		 * 	url_load \logo/logo.svg
+		 * 	url_thumb \https://thiscatdoesnotexist.com/
+		 * 	url_load \https://thiscatdoesnotexist.com/
 		 * ```
 		 */
 		@ $mol_mem
 		Item1() {
 			const obj = new this.$.$mol_attach_item()
 			
-			obj.url_thumb = () => "mol/logo/logo.svg"
-			obj.url_load = () => "logo/logo.svg"
+			obj.url_thumb = () => "https://thiscatdoesnotexist.com/"
+			obj.url_load = () => "https://thiscatdoesnotexist.com/"
 			
 			return obj
 		}
@@ -41,16 +41,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Item2 $mol_attach_item
-		 * 	url_thumb \mol/logo/logo.svg
-		 * 	url_load \logo/logo.svg
+		 * 	url_thumb \https://thiscatdoesnotexist.com/
+		 * 	url_load \https://thiscatdoesnotexist.com/
 		 * ```
 		 */
 		@ $mol_mem
 		Item2() {
 			const obj = new this.$.$mol_attach_item()
 			
-			obj.url_thumb = () => "mol/logo/logo.svg"
-			obj.url_load = () => "logo/logo.svg"
+			obj.url_thumb = () => "https://thiscatdoesnotexist.com/"
+			obj.url_load = () => "https://thiscatdoesnotexist.com/"
 			
 			return obj
 		}
@@ -58,16 +58,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Item3 $mol_attach_item
-		 * 	url_thumb \mol/logo/logo.svg
-		 * 	url_load \logo/logo.svg
+		 * 	url_thumb \https://thiscatdoesnotexist.com/
+		 * 	url_load \https://thiscatdoesnotexist.com/
 		 * ```
 		 */
 		@ $mol_mem
 		Item3() {
 			const obj = new this.$.$mol_attach_item()
 			
-			obj.url_thumb = () => "mol/logo/logo.svg"
-			obj.url_load = () => "logo/logo.svg"
+			obj.url_thumb = () => "https://thiscatdoesnotexist.com/"
+			obj.url_load = () => "https://thiscatdoesnotexist.com/"
 			
 			return obj
 		}

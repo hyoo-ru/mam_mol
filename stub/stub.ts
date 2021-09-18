@@ -66,9 +66,14 @@ namespace $ {
 	}
 	
 	export function $mol_stub_person_name() {
-		var first = $mol_stub_select_random( [ 'Ivan' , 'Petr' , 'Sidor' ] )
-		var last = $mol_stub_select_random( [ 'Ivanov' , 'Petrov' , 'Sidorov' ] )
+		var first = $mol_stub_select_random( [ 'Ivan' , 'Petr' , 'Sidor', 'John', 'Sam' ] )
+		var last = $mol_stub_select_random( [ 'Ivanov' , 'Petrov' , 'Sidorov', 'Johnson', 'Smith' ] )
 		return `${first} ${last}`
+	}
+	
+	export function $mol_stub_person_avatar( size = 80 ) {
+		const id = Math.random().toString( 16 ).slice( 2 )
+		return `https://gravatar.com/avatar/${id}?d=robohash&s=${size}`
 	}
 	
 	export function $mol_stub_city() {
