@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_row_demo_products extends $mol_demo_large {
+	export class $mol_row_demo_products extends $mol_view {
 		
 		/**
 		 * ```tree
@@ -12,11 +12,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * count 500
+		 * count 100
 		 * ```
 		 */
 		count() {
-			return 500
+			return 100
 		}
 		
 		/**
@@ -40,12 +40,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Catalog
+		 * sub / <= Products
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Catalog()
+				this.Products()
 			] as readonly any[]
 		}
 		
@@ -78,22 +78,6 @@ namespace $ {
 			const obj = new this.$.$mol_row()
 			
 			obj.sub = () => this.products()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Catalog $mol_scroll sub / <= Products
-		 * ```
-		 */
-		@ $mol_mem
-		Catalog() {
-			const obj = new this.$.$mol_scroll()
-			
-			obj.sub = () => [
-				this.Products()
-			] as readonly any[]
 			
 			return obj
 		}

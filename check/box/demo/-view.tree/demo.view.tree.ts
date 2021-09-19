@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_check_box_demo extends $mol_demo_small {
+	export class $mol_check_box_demo extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -12,7 +12,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
+		 * rows /
 		 * 	<= Labeled_base
 		 * 	<= Labeled_checked
 		 * 	<= Labeled_disabled
@@ -21,7 +21,7 @@ namespace $ {
 		 * 	<= Alone_disabled
 		 * ```
 		 */
-		sub() {
+		rows() {
 			return [
 				this.Labeled_base(),
 				this.Labeled_checked(),

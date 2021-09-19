@@ -140,7 +140,9 @@ $mol_attach_add_input $mol_view
 		^
 		change?val <=> event_picked?val null
 
-$mol_demo_small $mol_view
+$mol_row $mol_view
+
+$mol_demo_small $mol_row
 
 $mol_attach_demo $mol_demo_small
 	title @ \Attach files an show them
@@ -1095,22 +1097,18 @@ $mol_chat $mol_link
 			Body <= Embed $mol_frame
 				uri <= embed \
 
-$mol_row $mol_view
-
 $mol_chat_demo $mol_demo_small
 	title @ \Feed of comments for this page
 	sub /
-		<= Row $mol_row
-			sub /
-				<= Chat $mol_chat
-					seed \mol_chat_demo
-					pages => chat_pages
+		<= Chat $mol_chat
+			seed \mol_chat_demo
+			pages => chat_pages
 		- <= Pages $mol_view
 			sub <= chat_pages
 
-$mol_check_box_demo $mol_demo_small
+$mol_check_box_demo $mol_list
 	title @ \Checkboxes in various states
-	sub /
+	rows /
 		<= Labeled_base $mol_check_box
 			checked?val <=> base_checked?val false
 			title <= c1Label @ \Base
@@ -1134,9 +1132,9 @@ $mol_check_box_demo $mol_demo_small
 			checked true
 			enabled false
 
-$mol_check_expand_demo $mol_demo_small
+$mol_check_expand_demo $mol_list
 	title @ \Checkbox-expand in various states
-	sub /
+	rows /
 		<= Labeled_base $mol_check_expand
 			checked?val <=> base_expanded?val false
 			title <= c1Label @ \Base
@@ -1145,15 +1143,15 @@ $mol_check_expand_demo $mol_demo_small
 			title <= c2Label @ \Expanded
 			checked?val <=> expanded_expanded?val true
 		-
+		<= Disabled $mol_check_expand
+			title <= c5Label @ \Non expandable
+			disabled true
+		-
 		<= Empty_base $mol_check_expand
 			checked?val <=> base_expanded?val false
 		-
 		<= Empty_expanded $mol_check_expand
 			checked?val <=> expanded_expanded?val true
-		-
-		<= Disabled $mol_check_expand
-			title <= c5Label @ \Non expandable
-			disabled true
 
 $mol_check_group $mol_check_box
 	checks /$mol_check
@@ -1163,7 +1161,7 @@ $mol_icon_check $mol_icon path \M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.5
 
 $mol_icon_check_all $mol_icon path \M0.41,13.41L6,19L7.41,17.58L1.83,12M22.24,5.58L11.66,16.17L7.5,12L6.07,13.41L11.66,19L23.66,7M18,7L16.59,5.58L10.24,11.93L11.66,13.34L18,7Z
 
-$mol_check_group_demo $mol_demo_small
+$mol_check_group_demo $mol_view
 	title @ \Group of checkboxes
 	sub /
 		<= All $mol_check_group
@@ -1203,7 +1201,7 @@ $mol_check_icon $mol_check
 
 $mol_icon_microphone $mol_icon path \M12,2C13.66,2 15,3.34 15,5V11C15,12.66 13.66,14 12,14C10.34,14 9,12.66 9,11V5C9,3.34 10.34,2 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7C7,13.76 9.24,16 12,16C14.76,16 17,13.76 17,11H19Z
 
-$mol_check_icon_demo $mol_demo_small
+$mol_check_icon_demo $mol_view
 	title @ \Iconic checkboxes in various states
 	sub /
 		<= Base $mol_check_icon
@@ -1275,6 +1273,7 @@ $mol_search $mol_pop
 			keys_y <= nav_components /$mol_view
 			current_y?component <=> nav_focused?component null
 	showed?val <=> suggests_showed?val false
+	align_hor \right
 	Anchor $mol_view
 		sub <= anchor_content /
 			<= Query $mol_string
@@ -1382,15 +1381,13 @@ $mol_date_calendar $mol_calendar
 			event_click?event <=> day_click!day?event null
 			minimal_height 24
 
-$mol_date_demo $mol_demo_small
+$mol_date_demo $mol_view
 	sub /
-		<= View $mol_view
+		<= Date $mol_date
+			value_moment?val <=> date?val $mol_time_moment
+		<= Formatted $mol_view
 			sub /
-				<= Date $mol_date
-					value_moment?val <=> date?val $mol_time_moment
-				<= Formatted $mol_view
-					sub /
-						<= formatted \
+				<= formatted \
 
 $mol_switch $mol_view
 	Option!id $mol_check
@@ -1426,29 +1423,27 @@ $mol_deck_demo $mol_demo_small
 				title @ \Command
 				content / <= command_message @ \Let us do it right!
 
-$mol_dimmer_demo $mol_demo_small
+$mol_dimmer_demo $mol_row
 	title @ \Text with highlighted found substring
 	sub /
-		<= App $mol_row
-			sub /
-				<= one $mol_dimmer
-					haystack \Don't put all your eggs in one basket
-					needle \eggs
-				<= two $mol_dimmer
-					haystack \Don't look a gift horse in the mouth.
-					needle \oo
-				<= three $mol_dimmer
-					haystack \There is no word you are looking for
-					needle \luck
-				<= four $mol_dimmer
-					haystack \ooAAooAAoo
-					needle \oo
-				<= five $mol_dimmer
-					haystack \Let's search this string
-					needle \Let's search this string
-				<= six $mol_dimmer
-					haystack \Let's search nothing
-					needle \
+		<= one $mol_dimmer
+			haystack \Don't put all your eggs in one basket
+			needle \eggs
+		<= two $mol_dimmer
+			haystack \Don't look a gift horse in the mouth.
+			needle \oo
+		<= three $mol_dimmer
+			haystack \There is no word you are looking for
+			needle \luck
+		<= four $mol_dimmer
+			haystack \ooAAooAAoo
+			needle \oo
+		<= five $mol_dimmer
+			haystack \Let's search this string
+			needle \Let's search this string
+		<= six $mol_dimmer
+			haystack \Let's search nothing
+			needle \
 
 $mol_ghost $mol_view
 	Sub $mol_view
@@ -1536,7 +1531,7 @@ $mol_filler $mol_view
 		\Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. Etiam luctus porttitor lorem, sed suscipit est rutrum non. Curabitur lobortis nisl a enim congue semper. Aenean commodo ultrices imperdiet. Vestibulum ut justo vel sapien venenatis tincidunt. Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. Aliquam ut massa in turpis dapibus convallis. Praesent elit lacus, vestibulum at malesuada et, ornare et est. Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. Mauris ut placerat justo. Mauris in ultricies enim. Quisque nec est eleifend nulla ultrices egestas quis ut quam. Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. Cras quis ligula sem, vel elementum mi. Phasellus non ullamcorper urna.
 		\Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In euismod ultrices facilisis. Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. Proin quis dictum nisl. Morbi id quam sapien, sed vestibulum sem. Duis elementum rutrum mauris sed convallis. Proin vestibulum magna mi. Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. Sed non tortor sodales quam auctor elementum. Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. Donec vel.
 
-$mol_expander_demo $mol_demo_small
+$mol_expander_demo $mol_demo_large
 	title @ \Simple spoiler
 	sub /
 		<= Expander $mol_expander
@@ -1589,7 +1584,7 @@ $mol_form $mol_view
 		<= Bar_buttons $mol_row
 			sub <= buttons /$mol_view
 
-$mol_form_demo_bids $mol_demo_small
+$mol_form_demo_bids $mol_list
 	title @ \Sign Up form demo
 	message_required @ \Required
 	message_no_spaces @ \No spaces!
@@ -1647,12 +1642,12 @@ $mol_form_demo_bids $mol_demo_small
 					sub / <= submit_text @ \Sign Up
 					click?val <=> submit?val null
 					enabled <= submit_allowed true
-		<= Message $mol_view sub / <= message?val \
+		<= Message $mol_row sub / <= message?val \
 
 $mol_frame_demo $mol_demo_large
-	title @ \Another page inside that
 	sub /
 		<= Frame $mol_frame
+			title @ \Another page inside that
 			uri \https://mol.js.org/
 
 $mol_gallery $mol_view
@@ -1662,14 +1657,12 @@ $mol_gallery $mol_view
 			flexGrow <= side_size!id \1
 		items <= side_items!id /$mol_view
 
-$mol_gallery_demo $mol_demo_large
+$mol_gallery_demo $mol_view
 	title @ \Gallery of cards
 	count 101
 	sub /
-		<= Scroll $mol_scroll
-			sub /
-				<= App $mol_gallery
-					items <= items /
+		<= App $mol_gallery
+			items <= items /
 	Item!id $mol_link
 		minimal_width 100
 		uri \https://thiscatdoesnotexist.com/
@@ -1777,31 +1770,29 @@ $mol_infinite $mol_list
 	after!id /
 	Row!id $mol_view
 
-$mol_infinite_demo $mol_demo_large
+$mol_infinite_demo $mol_view
 	title @ \Infinite list demo
 	chunk_size 20
 	sub /
-		<= Scroll $mol_scroll sub /
-			<= List $mol_infinite
-				after!anchor_id <= after!anchor_id /
-				Row!id <= Item!id $mol_filler
+		<= List $mol_infinite
+			after!anchor_id <= after!anchor_id /
+			Row!id <= Item!id $mol_filler
 
 $mol_labeler_demo $mol_demo_small
 	title @ \Labeled content of some types
 	sub /
-		<= App $mol_row sub /
-			<= Provider $mol_labeler
-				title \Provider
-				content / \ACME Provider Inc.
-			<= Name $mol_labeler
-				title \User name
-				Content <= Name_control $mol_string
-					hint \Jack Sparrow
-					value?val <=> user_name?val \
+		<= Provider $mol_labeler
+			title \Provider
+			content / \ACME Provider Inc.
+		<= Name $mol_labeler
+			title \User name
+			Content <= Name_control $mol_string
+				hint \Jack Sparrow
+				value?val <=> user_name?val \
 
-$mol_link_demo $mol_demo_small
+$mol_link_demo $mol_list
 	title @ \Some hyperlinks
-	sub /
+	rows /
 		<= This $mol_link
 			sub /
 				<= this_label @ \This page
@@ -1822,46 +1813,21 @@ $mol_link_demo $mol_demo_small
 			title \example.org
 			hint <= external_hint @ \external link
 
-$mol_link_iconed_demo $mol_demo_small
+$mol_link_iconed_demo $mol_list
 	title @ \Link with icon
-	sub /
+	rows /
 		<= Input $mol_string
 			value?val <=> uri?val \https://www.google.com/search?q=%24mol
 		<= Output $mol_link_iconed
 			uri <= uri?val
 			
 
-$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
-
-$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
-
-$mol_number $mol_view
-	precision_view <= precision 1
-	precision_change <= precision 1
-	value?val NaN
-	sub /
-		<= String $mol_string
-			type \tel
-			value?val <=> value_string?val \
-			hint <= hint \ 
-			enabled <= string_enabled <= enabled true
-		<= Dec $mol_button_minor
-			event_click?val <=> event_dec?val null
-			enabled <= dec_enabled <= enabled true
-			sub / <= dec_icon $mol_icon_minus
-		<= Inc $mol_button_minor
-			event_click?val <=> event_inc?val null
-			enabled <= inc_enabled <= enabled true
-			sub / <= inc_icon $mol_icon_plus
-
-$mol_list_demo_table $mol_demo_large
+$mol_list_demo_table $mol_view
 	title @ \Large list of rows with dynamic content
 	count 1000
 	sub /
-		<= Scroll $mol_scroll
-			sub /
-				<= Rows $mol_list
-					rows <= rows /
+		<= Rows $mol_list
+			rows <= rows /
 	Row!id $mol_row
 		minimal_height 40
 		sub <= row_content!id /
@@ -1880,18 +1846,13 @@ $mol_list_demo_table $mol_demo_large
 			<= Date!id $mol_date
 				value_moment?val <=> row_moment!id?val $mol_time_moment
 				enabled <= row_editable!id
-			<= Number!id $mol_number
-				value?val <=> row_number!id?val 0
-				enabled <= row_editable!id
 			<= Link!id $mol_link_iconed uri <= row_uri!id \
 
-$mol_list_demo_tree $mol_demo_large
+$mol_list_demo_tree $mol_view
 	title @ \Large list of rows with dynamic content
 	sub /
-		<= Scroll $mol_scroll
-			sub /
-				<= Content $mol_list
-					rows <= root_rows /
+		<= Content $mol_list
+			rows <= root_rows /
 	Row!id $mol_expander
 		label / <= Row_title!id $mol_paragraph sub / <= row_title!id \
 		expanded?val <=> row_expanded!id?val false
@@ -2103,6 +2064,29 @@ $mol_nav_demo $mol_demo_small
 				third \Third
 
 
+$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
+
+$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
+
+$mol_number $mol_view
+	precision_view <= precision 1
+	precision_change <= precision 1
+	value?val NaN
+	sub /
+		<= String $mol_string
+			type \tel
+			value?val <=> value_string?val \
+			hint <= hint \ 
+			enabled <= string_enabled <= enabled true
+		<= Dec $mol_button_minor
+			event_click?val <=> event_dec?val null
+			enabled <= dec_enabled <= enabled true
+			sub / <= dec_icon $mol_icon_minus
+		<= Inc $mol_button_minor
+			event_click?val <=> event_inc?val null
+			enabled <= inc_enabled <= enabled true
+			sub / <= inc_icon $mol_icon_plus
+
 $mol_number_demo $mol_demo_small
 	title @ \Number input control with various configuration
 	sub /
@@ -2140,18 +2124,15 @@ $mol_page_demo $mol_demo_large
 	sub /
 		<= Page $mol_page
 			tools /
-				<= Button $mol_button_minor
+				<= Button_tools $mol_button_minor
 					title \Toolbar Button
 			body /
-				<= Content $mol_row
-					sub /
-						<= Text $mol_filler
+				<= Text $mol_filler
 			foot /
 				<= Foot_content $mol_row
 					sub /
-						<= Foot_text $mol_view
-							sub /
-								\Footer
+						<= Button_foot $mol_button_minor
+							title \Footer Button
 
 $mol_paginator $mol_view
 	sub /
@@ -2288,7 +2269,7 @@ $mol_portion_demo $mol_demo_small
 		<= Full $mol_portion
 			portion <= third 1
 
-$mol_row_demo_form $mol_demo_small
+$mol_row_demo_form $mol_view
 	title @ \Some controls in one row with equal paddings and wrapping support
 	sub /
 		<= Row $mol_row
@@ -2310,18 +2291,16 @@ $mol_row_demo_form $mol_demo_small
 				<= Drop $mol_button_minor
 					title <= drop_title @ \Drop
 
-$mol_row_demo_products $mol_demo_large
+$mol_row_demo_products $mol_view
 	title @ \Product catalog
-	count 500
+	count 100
 	Product!id $mol_card
 		minimal_width 140
 		minimal_height 100
 		title <= product_title!id \
 	sub /
-		<= Catalog $mol_scroll
-			sub /
-				<= Products $mol_row
-					sub <= products /
+		<= Products $mol_row
+			sub <= products /
 
 
 $mol_scroll_demo $mol_demo_large
@@ -2354,13 +2333,12 @@ $mol_section $mol_list rows /
 			<= title
 	<= Content null
 
-$mol_section_demo $mol_demo_large
+$mol_section_demo $mol_view
 	title @ \Section with header
 	sub /
-		<= Text $mol_row sub /
-			<= Section $mol_section
-				head / \Section header
-				Content <= Section_content $mol_filler
+		<= Section $mol_section
+			head / \Section header
+			Content <= Section_content $mol_filler
 
 $mol_icon_dots_vertical $mol_icon path \M12,16C13.1,16 14,16.9 14,18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18C10,16.9 10.9,16 12,16M12,10C13.1,10 14,10.9 14,12C14,13.1 13.1,14 12,14C10.9,14 10,13.1 10,12C10,10.9 10.9,10 12,10M12,4C13.1,4 14,4.9 14,6C14,7.1 13.1,8 12,8C10.9,8 10,7.1 10,6C10,4.9 10.9,4 12,4Z
 
@@ -2467,9 +2445,9 @@ $mol_select_list $mol_view
 		hint <= pick_hint @ \Add..
 		Trigger_icon <= Pick_icon $mol_icon_plus
 
-$mol_select_list_demo $mol_demo_small
+$mol_select_list_demo $mol_list
 	title @ \Friends picker
-	sub /
+	rows /
 		<= Friends $mol_select_list
 			value?val <=> friends?val /
 			dictionary <= suggestions *
@@ -2517,7 +2495,7 @@ $mol_speech_demo $mol_demo_small
 		<= Toggle $mol_check_icon
 			Icon <= Toggle_icon $mol_icon_microphone
 			checked?val <=> hearing?val false
-		<= Message $mol_view
+		<= Message $mol_row
 			sub /
 				<= message \
 		<= Speak $mol_button_major
@@ -2541,9 +2519,9 @@ $mol_string_demo $mol_demo_small
 
 $mol_string_button $mol_string
 
-$mol_switch_demo $mol_demo_small
+$mol_switch_demo $mol_list
 	title @ \Color switchers in various state
-	sub /
+	rows /
 		<= Enabled $mol_switch
 			value?val <=> color?val \red
 			options *
@@ -2558,56 +2536,52 @@ $mol_switch_demo $mol_demo_small
 				green <= option_green @ \Green
 				blue <= option_blue @ \Blue
 
-$mol_text_code_demo $mol_demo_large
+$mol_text_code_demo $mol_view
 	title @ \Markdow visualization example
 	sub /
-		<= Scroll $mol_scroll
-			sub /
-				<= Text $mol_text_code text <= source \
+		<= Text $mol_text_code text <= source \
 
-$mol_text_demo $mol_demo_large
+$mol_text_demo $mol_view
 	title @ \Markdown visualization example
 	sub /
-		<= Scroll $mol_scroll
-			sub /
-				<= Text $mol_text text \
-					\# [Benchmarks](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master)
-					\## Benchmark 1
-					\### Benchmark 1.1
-					\#### Benchmark 1.1.1
-					\##### Benchmark 1.1.1.1
-					\
-					\* [Frameworks comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/list) - Frameworks comparison ([online](http://bench.hyoo.ru/#becnh=list#sort=fill#))
-					\* [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark) ([online](http://bench.hyoo.ru/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
-					\* [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
-					\* [Line charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/rope) ([online](http://bench.hyoo.ru/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
-					\* [Bar charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/bar) ([online](http://bench.hyoo.ru/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))
-					\
-					\# Quick start
-					\
-					\**Create MAM project**
-					\
-					\Easy way is checkout [this preconfigured ~~PMS~~MAM repository](http://github.com/eigenmethod/mam/) and start dev server:
-					\
-					\```sh
-					\git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
-					\npm start
-					\```
-					\
-					\|           | **Column 1** | **Column 2** | **Column 3**
-					\|-----------|--------------|--------------|---------
-					\| **Row 1** | Cell 1x1     | Cell 2x1     | Cell 3x1
-					\| **Row 2** | Cell 1x2     | Cell 2x2     | Cell 3x2
-					\| **Row 3** | Cell 1x3     | Cell 2x3     | Cell 3x3
-					\| **Row 4** | Cell 1x4     | Cell 2x4     | Cell 3x4
-					\| **Row 5** | Cell 1x5     | Cell 2x5     | Cell 3x5
-					\| **Row 6** | Cell 1x6     | Cell 2x6     | Cell 3x6
-					\| **Row 7** | Cell 1x7     | Cell 2x7     | Cell 3x7
-					\| **Row 8** | Cell 1x8     | Cell 2x8     | Cell 3x8
-					\| **Row 9** | Cell 1x9     | Cell 2x9     | Cell 3x9
-					\
-					\Build status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
-					\
+		<= Text $mol_text text \
+			\# [Benchmarks](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master)
+			\## Benchmark 1
+			\### Benchmark 1.1
+			\#### Benchmark 1.1.1
+			\##### Benchmark 1.1.1.1
+			\
+			\* [Frameworks comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/list) - Frameworks comparison ([online](http://bench.hyoo.ru/#becnh=list#sort=fill#))
+			\* [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark) ([online](http://bench.hyoo.ru/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
+			\* [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
+			\* [Line charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/rope) ([online](http://bench.hyoo.ru/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
+			\* [Bar charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/bar) ([online](http://bench.hyoo.ru/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))
+			\
+			\# Quick start
+			\
+			\**Create MAM project**
+			\
+			\Easy way is checkout [this preconfigured ~~PMS~~MAM repository](http://github.com/eigenmethod/mam/) and start dev server:
+			\
+			\```sh
+			\git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
+			\npm start
+			\```
+			\
+			\|           | **Column 1** | **Column 2** | **Column 3**
+			\|-----------|--------------|--------------|---------
+			\| **Row 1** | Cell 1x1     | Cell 2x1     | Cell 3x1
+			\| **Row 2** | Cell 1x2     | Cell 2x2     | Cell 3x2
+			\| **Row 3** | Cell 1x3     | Cell 2x3     | Cell 3x3
+			\| **Row 4** | Cell 1x4     | Cell 2x4     | Cell 3x4
+			\| **Row 5** | Cell 1x5     | Cell 2x5     | Cell 3x5
+			\| **Row 6** | Cell 1x6     | Cell 2x6     | Cell 3x6
+			\| **Row 7** | Cell 1x7     | Cell 2x7     | Cell 3x7
+			\| **Row 8** | Cell 1x8     | Cell 2x8     | Cell 3x8
+			\| **Row 9** | Cell 1x9     | Cell 2x9     | Cell 3x9
+			\
+			\Build status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
+			\
 
 $mol_textarea $mol_view
 	attr *
@@ -2632,22 +2606,20 @@ $mol_textarea $mol_view
 			sidebar_showed <= sidebar_showed
 			highlight <= highlight \
 
-$mol_textarea_demo $mol_demo_large
+$mol_textarea_demo $mol_list
 	title @ \Text input field in various states
-	sub /
-		<= Scroll $mol_scroll sub /
-			<= Inputs $mol_list rows /
-				<= Empty_descr $mol_textarea
-					hint \source code
-					value?val <=> empty_descr?val \
-				<= Filled_descr $mol_textarea
-					value?val <=> filled_descr?val \
-						\function hello( name = 'World' ) {
-						\	return `Hello, ${ name }!`
-						\}
-				<= Disabled $mol_textarea
-					enabled false
-					value?val <=> filled_descr?val
+	rows /
+		<= Empty_descr $mol_textarea
+			hint \source code
+			value?val <=> empty_descr?val \
+		<= Filled_descr $mol_textarea
+			value?val <=> filled_descr?val \
+				\function hello( name = 'World' ) {
+				\	return `Hello, ${ name }!`
+				\}
+		<= Disabled $mol_textarea
+			enabled false
+			value?val <=> filled_descr?val
 
 $mol_toolbar $mol_view
 	attr *
@@ -2729,9 +2701,7 @@ $mol_app_demo $mol_book2
 		title <= detail_title
 		source_link <= source_link \
 		edit_uri <= edit_uri \
-		body /
-			<= Detail_list $mol_list
-				rows <= main_content /
+		Demo <= Demo $mol_view
 	Welcome $mol_scroll
 		sub /
 			<= Welcome_text $mol_text
@@ -2751,10 +2721,11 @@ $mol_app_demo_menu $mol_page
 		<= Lights $mol_lights_toggle
 	Body $mol_scroll
 		sub /
-			<= Filter $mol_search
-				query?val <=> filter?val \
-			<= Options $mol_list
-				rows <= options /
+			<= List $mol_list rows /
+				<= Filter $mol_search
+					query?val <=> filter?val \
+				<= Options $mol_list
+					rows <= options /
 	Option!id $mol_link
 		arg <= option_arg!id *
 		sub /
@@ -2786,6 +2757,8 @@ $mol_app_demo_detail $mol_page
 				<= Close_icon $mol_icon_cross
 			arg <= close_arg *
 				demo null
+	body /
+		<= Demo $mol_view
 
 $mol_app_demo_main $mol_page
 	minimal_width 400

@@ -1,10 +1,8 @@
-$mol_list_demo_tree $mol_demo_large
+$mol_list_demo_tree $mol_view
 	title @ \Large list of rows with dynamic content
 	sub /
-		<= Scroll $mol_scroll
-			sub /
-				<= Content $mol_list
-					rows <= root_rows /
+		<= Content $mol_list
+			rows <= root_rows /
 	Row!id $mol_expander
 		label / <= Row_title!id $mol_paragraph sub / <= row_title!id \
 		expanded?val <=> row_expanded!id?val false

@@ -1,7 +1,3 @@
-[mol_form_demo_bids] {
-	flex-direction: column;
-}
-
-[mol_form_demo_bids_message] {
-	padding: .75rem;
+[mol_form_demo_bids_form] {
+	max-width: 20rem;
 }

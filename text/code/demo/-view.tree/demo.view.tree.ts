@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_text_code_demo extends $mol_demo_large {
+	export class $mol_text_code_demo extends $mol_view {
 		
 		/**
 		 * ```tree
@@ -12,12 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Scroll
+		 * sub / <= Text
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Scroll()
+				this.Text()
 			] as readonly any[]
 		}
 		
@@ -40,22 +40,6 @@ namespace $ {
 			const obj = new this.$.$mol_text_code()
 			
 			obj.text = () => this.source()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Scroll $mol_scroll sub / <= Text
-		 * ```
-		 */
-		@ $mol_mem
-		Scroll() {
-			const obj = new this.$.$mol_scroll()
-			
-			obj.sub = () => [
-				this.Text()
-			] as readonly any[]
 			
 			return obj
 		}

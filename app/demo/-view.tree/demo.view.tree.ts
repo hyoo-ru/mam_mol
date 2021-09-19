@@ -70,7 +70,7 @@ namespace $ {
 		 * 	title <= detail_title
 		 * 	source_link <= source_link
 		 * 	edit_uri <= edit_uri
-		 * 	body / <= Detail_list
+		 * 	Demo <= Demo
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -81,9 +81,7 @@ namespace $ {
 			obj.title = () => this.detail_title()
 			obj.source_link = () => this.source_link()
 			obj.edit_uri = () => this.edit_uri()
-			obj.body = () => [
-				this.Detail_list()
-			] as readonly any[]
+			obj.Demo = () => this.Demo()
 			
 			return obj
 		}
@@ -195,24 +193,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * main_content /
-		 * ```
-		 */
-		main_content() {
-			return [
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * Detail_list $mol_list rows <= main_content
+		 * Demo $mol_view
 		 * ```
 		 */
 		@ $mol_mem
-		Detail_list() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => this.main_content()
+		Demo() {
+			const obj = new this.$.$mol_view()
 			
 			return obj
 		}
@@ -305,9 +291,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Body $mol_scroll sub /
-		 * 	<= Filter
-		 * 	<= Options
+		 * Body $mol_scroll sub / <= List
 		 * ```
 		 */
 		@ $mol_mem
@@ -315,8 +299,7 @@ namespace $ {
 			const obj = new this.$.$mol_scroll()
 			
 			obj.sub = () => [
-				this.Filter(),
-				this.Options()
+				this.List()
 			] as readonly any[]
 			
 			return obj
@@ -427,6 +410,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * List $mol_list rows /
+		 * 	<= Filter
+		 * 	<= Options
+		 * ```
+		 */
+		@ $mol_mem
+		List() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => [
+				this.Filter(),
+				this.Options()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * option_arg!id *
 		 * ```
 		 */
@@ -479,6 +481,17 @@ namespace $ {
 				this.Source_link(),
 				this.Edit(),
 				this.Close()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * body / <= Demo
+		 * ```
+		 */
+		body() {
+			return [
+				this.Demo()
 			] as readonly any[]
 		}
 		
@@ -686,6 +699,18 @@ namespace $ {
 				this.Close_icon()
 			] as readonly any[]
 			obj.arg = () => this.close_arg()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Demo $mol_view
+		 * ```
+		 */
+		@ $mol_mem
+		Demo() {
+			const obj = new this.$.$mol_view()
 			
 			return obj
 		}

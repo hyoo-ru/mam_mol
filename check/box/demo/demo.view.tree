@@ -1,6 +1,6 @@
-$mol_check_box_demo $mol_demo_small
+$mol_check_box_demo $mol_list
 	title @ \Checkboxes in various states
-	sub /
+	rows /
 		<= Labeled_base $mol_check_box
 			checked?val <=> base_checked?val false
 			title <= c1Label @ \Base

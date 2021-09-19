@@ -141,15 +141,8 @@ namespace $.$$ {
 			return sub
 		}
 
-		@ $mol_mem 
-		main_content() {
-			const names = this.names_demo()
-			switch( names.length ) {
-				case 0 :
-					return [ this.Detail_empty_message() ]
-				default :
-					return this.names_demo().map( name => this.Widget()[ name ] )
-			}
+		Demo() {
+			return this.Widget()[ this.selected() ]
 		}
 		
 		chat_seed( id: string ) {

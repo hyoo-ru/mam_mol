@@ -9,7 +9,7 @@
 }
 
 [mol_form_bar_fields] > * {
-	margin: .5rem;
+	margin: var(--mol_gap_block);
 }
 
 [mol_form_bar_buttons] {
@@ -19,4 +19,5 @@
 
 [mol_form_bar_buttons] > * {
 	flex: 1 1 auto;
+	margin: var(--mol_gap_block);
 }

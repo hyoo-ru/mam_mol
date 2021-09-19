@@ -68,12 +68,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Message $mol_view sub / <= message
+		 * Message $mol_row sub / <= message
 		 * ```
 		 */
 		@ $mol_mem
 		Message() {
-			const obj = new this.$.$mol_view()
+			const obj = new this.$.$mol_row()
 			
 			obj.sub = () => [
 				this.message()

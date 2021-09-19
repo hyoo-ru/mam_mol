@@ -1,4 +1,4 @@
-$mol_form_demo_bids $mol_demo_small
+$mol_form_demo_bids $mol_list
 	title @ \Sign Up form demo
 	message_required @ \Required
 	message_no_spaces @ \No spaces!
@@ -56,4 +56,4 @@ $mol_form_demo_bids $mol_demo_small
 					sub / <= submit_text @ \Sign Up
 					click?val <=> submit?val null
 					enabled <= submit_allowed true
-		<= Message $mol_view sub / <= message?val \
+		<= Message $mol_row sub / <= message?val \

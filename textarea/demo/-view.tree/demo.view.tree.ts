@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_textarea_demo extends $mol_demo_large {
+	export class $mol_textarea_demo extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -12,12 +12,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Scroll
+		 * rows /
+		 * 	<= Empty_descr
+		 * 	<= Filled_descr
+		 * 	<= Disabled
 		 * ```
 		 */
-		sub() {
+		rows() {
 			return [
-				this.Scroll()
+				this.Empty_descr(),
+				this.Filled_descr(),
+				this.Disabled()
 			] as readonly any[]
 		}
 		
@@ -90,43 +95,6 @@ namespace $ {
 			
 			obj.enabled = () => false
 			obj.value = (val?: any) => this.filled_descr(val)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Inputs $mol_list rows /
-		 * 	<= Empty_descr
-		 * 	<= Filled_descr
-		 * 	<= Disabled
-		 * ```
-		 */
-		@ $mol_mem
-		Inputs() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Empty_descr(),
-				this.Filled_descr(),
-				this.Disabled()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Scroll $mol_scroll sub / <= Inputs
-		 * ```
-		 */
-		@ $mol_mem
-		Scroll() {
-			const obj = new this.$.$mol_scroll()
-			
-			obj.sub = () => [
-				this.Inputs()
-			] as readonly any[]
 			
 			return obj
 		}

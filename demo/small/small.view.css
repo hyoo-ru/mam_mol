@@ -1,4 +1,4 @@
-[mol_demo_small] {
+/* [mol_demo_small] {
 	max-width: 100%;
 	position: relative;
 	display: flex;
@@ -9,9 +9,4 @@
 	align-self: flex-start;
 	background: var(--mol_theme_back);
 	color: var(--mol_theme_text);
-	border-radius: var(--mol_gap_round);
-}
-
-[mol_demo_small] > * {
-	margin: var(--mol_gap_block);
-}
+} */

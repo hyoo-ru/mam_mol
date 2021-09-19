@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_gallery_demo extends $mol_demo_large {
+	export class $mol_gallery_demo extends $mol_view {
 		
 		/**
 		 * ```tree
@@ -21,12 +21,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Scroll
+		 * sub / <= App
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Scroll()
+				this.App()
 			] as readonly any[]
 		}
 		
@@ -75,22 +75,6 @@ namespace $ {
 			const obj = new this.$.$mol_gallery()
 			
 			obj.items = () => this.items()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Scroll $mol_scroll sub / <= App
-		 * ```
-		 */
-		@ $mol_mem
-		Scroll() {
-			const obj = new this.$.$mol_scroll()
-			
-			obj.sub = () => [
-				this.App()
-			] as readonly any[]
 			
 			return obj
 		}

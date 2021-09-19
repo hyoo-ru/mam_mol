@@ -49,6 +49,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * align_hor \right
+		 * ```
+		 */
+		align_hor() {
+			return "right"
+		}
+		
+		/**
+		 * ```tree
 		 * Anchor $mol_view sub <= anchor_content
 		 * ```
 		 */

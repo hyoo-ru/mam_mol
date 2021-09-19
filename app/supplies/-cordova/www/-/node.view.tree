@@ -337,6 +337,7 @@ $mol_search $mol_pop
 			keys_y <= nav_components /$mol_view
 			current_y?component <=> nav_focused?component null
 	showed?val <=> suggests_showed?val false
+	align_hor \right
 	Anchor $mol_view
 		sub <= anchor_content /
 			<= Query $mol_string

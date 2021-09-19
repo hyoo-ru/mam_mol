@@ -3,7 +3,7 @@ $mol_speech_demo $mol_demo_small
 		<= Toggle $mol_check_icon
 			Icon <= Toggle_icon $mol_icon_microphone
 			checked?val <=> hearing?val false
-		<= Message $mol_view
+		<= Message $mol_row
 			sub /
 				<= message \
 		<= Speak $mol_button_major

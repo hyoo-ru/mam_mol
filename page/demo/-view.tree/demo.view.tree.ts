@@ -23,11 +23,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Button $mol_button_minor title \Toolbar Button
+		 * Button_tools $mol_button_minor title \Toolbar Button
 		 * ```
 		 */
 		@ $mol_mem
-		Button() {
+		Button_tools() {
 			const obj = new this.$.$mol_button_minor()
 			
 			obj.title = () => "Toolbar Button"
@@ -49,39 +49,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Content $mol_row sub / <= Text
+		 * Button_foot $mol_button_minor title \Footer Button
 		 * ```
 		 */
 		@ $mol_mem
-		Content() {
-			const obj = new this.$.$mol_row()
+		Button_foot() {
+			const obj = new this.$.$mol_button_minor()
 			
-			obj.sub = () => [
-				this.Text()
-			] as readonly any[]
+			obj.title = () => "Footer Button"
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * Foot_text $mol_view sub / \Footer
-		 * ```
-		 */
-		@ $mol_mem
-		Foot_text() {
-			const obj = new this.$.$mol_view()
-			
-			obj.sub = () => [
-				"Footer"
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Foot_content $mol_row sub / <= Foot_text
+		 * Foot_content $mol_row sub / <= Button_foot
 		 * ```
 		 */
 		@ $mol_mem
@@ -89,7 +71,7 @@ namespace $ {
 			const obj = new this.$.$mol_row()
 			
 			obj.sub = () => [
-				this.Foot_text()
+				this.Button_foot()
 			] as readonly any[]
 			
 			return obj
@@ -98,8 +80,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Page $mol_page
-		 * 	tools / <= Button
-		 * 	body / <= Content
+		 * 	tools / <= Button_tools
+		 * 	body / <= Text
 		 * 	foot / <= Foot_content
 		 * ```
 		 */
@@ -108,10 +90,10 @@ namespace $ {
 			const obj = new this.$.$mol_page()
 			
 			obj.tools = () => [
-				this.Button()
+				this.Button_tools()
 			] as readonly any[]
 			obj.body = () => [
-				this.Content()
+				this.Text()
 			] as readonly any[]
 			obj.foot = () => [
 				this.Foot_content()

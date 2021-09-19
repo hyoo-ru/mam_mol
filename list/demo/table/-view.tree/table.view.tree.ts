@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_list_demo_table extends $mol_demo_large {
+	export class $mol_list_demo_table extends $mol_view {
 		
 		/**
 		 * ```tree
@@ -21,12 +21,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Scroll
+		 * sub / <= Rows
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Scroll()
+				this.Rows()
 			] as readonly any[]
 		}
 		
@@ -67,22 +67,6 @@ namespace $ {
 			const obj = new this.$.$mol_list()
 			
 			obj.rows = () => this.rows()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Scroll $mol_scroll sub / <= Rows
-		 * ```
-		 */
-		@ $mol_mem
-		Scroll() {
-			const obj = new this.$.$mol_scroll()
-			
-			obj.sub = () => [
-				this.Rows()
-			] as readonly any[]
 			
 			return obj
 		}
@@ -243,34 +227,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_number!id?val 0
-		 * ```
-		 */
-		@ $mol_mem_key
-		row_number(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
-			return 0
-		}
-		
-		/**
-		 * ```tree
-		 * Number!id $mol_number
-		 * 	value?val <=> row_number!id?val
-		 * 	enabled <= row_editable!id
-		 * ```
-		 */
-		@ $mol_mem_key
-		Number(id: any) {
-			const obj = new this.$.$mol_number()
-			
-			obj.value = (val?: any) => this.row_number(id, val)
-			obj.enabled = () => this.row_editable(id)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * row_uri!id \
 		 * ```
 		 */
@@ -300,7 +256,6 @@ namespace $ {
 		 * 	<= Editable!id
 		 * 	<= Priority!id
 		 * 	<= Date!id
-		 * 	<= Number!id
 		 * 	<= Link!id
 		 * ```
 		 */
@@ -311,7 +266,6 @@ namespace $ {
 				this.Editable(id),
 				this.Priority(id),
 				this.Date(id),
-				this.Number(id),
 				this.Link(id)
 			] as readonly any[]
 		}

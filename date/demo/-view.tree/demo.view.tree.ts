@@ -1,14 +1,17 @@
 namespace $ {
-	export class $mol_date_demo extends $mol_demo_small {
+	export class $mol_date_demo extends $mol_view {
 		
 		/**
 		 * ```tree
-		 * sub / <= View
+		 * sub /
+		 * 	<= Date
+		 * 	<= Formatted
 		 * ```
 		 */
 		sub() {
 			return [
-				this.View()
+				this.Date(),
+				this.Formatted()
 			] as readonly any[]
 		}
 		
@@ -59,25 +62,6 @@ namespace $ {
 			
 			obj.sub = () => [
 				this.formatted()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * View $mol_view sub /
-		 * 	<= Date
-		 * 	<= Formatted
-		 * ```
-		 */
-		@ $mol_mem
-		View() {
-			const obj = new this.$.$mol_view()
-			
-			obj.sub = () => [
-				this.Date(),
-				this.Formatted()
 			] as readonly any[]
 			
 			return obj

@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_form_demo_bids extends $mol_demo_small {
+	export class $mol_form_demo_bids extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -604,12 +604,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Message $mol_view sub / <= message?val
+		 * Message $mol_row sub / <= message?val
 		 * ```
 		 */
 		@ $mol_mem
 		Message() {
-			const obj = new this.$.$mol_view()
+			const obj = new this.$.$mol_row()
 			
 			obj.sub = () => [
 				this.message()

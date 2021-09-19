@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_section_demo extends $mol_demo_large {
+	export class $mol_section_demo extends $mol_view {
 		
 		/**
 		 * ```tree
@@ -12,12 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Text
+		 * sub / <= Section
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Text()
+				this.Section()
 			] as readonly any[]
 		}
 		
@@ -48,22 +48,6 @@ namespace $ {
 				"Section header"
 			] as readonly any[]
 			obj.Content = () => this.Section_content()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Text $mol_row sub / <= Section
-		 * ```
-		 */
-		@ $mol_mem
-		Text() {
-			const obj = new this.$.$mol_row()
-			
-			obj.sub = () => [
-				this.Section()
-			] as readonly any[]
 			
 			return obj
 		}

@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_link_iconed_demo extends $mol_demo_small {
+	export class $mol_link_iconed_demo extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -12,12 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
+		 * rows /
 		 * 	<= Input
 		 * 	<= Output
 		 * ```
 		 */
-		sub() {
+		rows() {
 			return [
 				this.Input(),
 				this.Output()

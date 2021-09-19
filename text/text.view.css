@@ -2,7 +2,6 @@
 	line-height: 1.5em;
 	box-sizing: border-box;
 	max-width: 60rem;
-	padding: var(--mol_gap_block);
 	border-radius: var(--mol_gap_round);
 	white-space: pre-line;
 	display: flex;

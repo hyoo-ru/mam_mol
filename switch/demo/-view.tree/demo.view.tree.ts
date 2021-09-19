@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_switch_demo extends $mol_demo_small {
+	export class $mol_switch_demo extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -12,12 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
+		 * rows /
 		 * 	<= Enabled
 		 * 	<= Disabled
 		 * ```
 		 */
-		sub() {
+		rows() {
 			return [
 				this.Enabled(),
 				this.Disabled()

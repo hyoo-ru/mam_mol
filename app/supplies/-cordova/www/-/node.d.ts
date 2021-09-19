@@ -2226,6 +2226,7 @@ declare namespace $ {
         suggests(): readonly string[];
         plugins(): readonly $mol_plugin[];
         showed(val?: any): boolean;
+        align_hor(): string;
         Anchor(): $mol_view;
         bubble_content(): readonly $mol_view_content[];
         Suggest(id: any): $mol_button_minor;

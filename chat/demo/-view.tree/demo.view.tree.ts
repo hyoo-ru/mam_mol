@@ -12,12 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Row
+		 * sub / <= Chat
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Row()
+				this.Chat()
 			] as readonly any[]
 		}
 		
@@ -42,22 +42,6 @@ namespace $ {
 			const obj = new this.$.$mol_chat()
 			
 			obj.seed = () => "mol_chat_demo"
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Row $mol_row sub / <= Chat
-		 * ```
-		 */
-		@ $mol_mem
-		Row() {
-			const obj = new this.$.$mol_row()
-			
-			obj.sub = () => [
-				this.Chat()
-			] as readonly any[]
 			
 			return obj
 		}

@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_select_list_demo extends $mol_demo_small {
+	export class $mol_select_list_demo extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -12,12 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
+		 * rows /
 		 * 	<= Friends
 		 * 	<= Friends_disabled
 		 * ```
 		 */
-		sub() {
+		rows() {
 			return [
 				this.Friends(),
 				this.Friends_disabled()

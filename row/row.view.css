@@ -8,6 +8,7 @@
 	flex: 0 0 auto;
 	box-sizing: border-box;
 	max-width: 100%;
+	grid-gap: 0 .75rem;
 }
 
 [mol_row] > * {

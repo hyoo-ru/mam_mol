@@ -1,6 +1,6 @@
-$mol_switch_demo $mol_demo_small
+$mol_switch_demo $mol_list
 	title @ \Color switchers in various state
-	sub /
+	rows /
 		<= Enabled $mol_switch
 			value?val <=> color?val \red
 			options *

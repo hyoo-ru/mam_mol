@@ -12,12 +12,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= App
+		 * sub /
+		 * 	<= Provider
+		 * 	<= Name
 		 * ```
 		 */
 		sub() {
 			return [
-				this.App()
+				this.Provider(),
+				this.Name()
 			] as readonly any[]
 		}
 		
@@ -81,25 +84,6 @@ namespace $ {
 			
 			obj.title = () => "User name"
 			obj.Content = () => this.Name_control()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * App $mol_row sub /
-		 * 	<= Provider
-		 * 	<= Name
-		 * ```
-		 */
-		@ $mol_mem
-		App() {
-			const obj = new this.$.$mol_row()
-			
-			obj.sub = () => [
-				this.Provider(),
-				this.Name()
-			] as readonly any[]
 			
 			return obj
 		}

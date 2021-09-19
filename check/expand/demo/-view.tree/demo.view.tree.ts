@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_check_expand_demo extends $mol_demo_small {
+	export class $mol_check_expand_demo extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -12,21 +12,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
+		 * rows /
 		 * 	<= Labeled_base
 		 * 	<= Labeled_expanded
+		 * 	<= Disabled
 		 * 	<= Empty_base
 		 * 	<= Empty_expanded
-		 * 	<= Disabled
 		 * ```
 		 */
-		sub() {
+		rows() {
 			return [
 				this.Labeled_base(),
 				this.Labeled_expanded(),
+				this.Disabled(),
 				this.Empty_base(),
-				this.Empty_expanded(),
-				this.Disabled()
+				this.Empty_expanded()
 			] as readonly any[]
 		}
 		
@@ -106,6 +106,32 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * c5Label @ \Non expandable
+		 * ```
+		 */
+		c5Label() {
+			return this.$.$mol_locale.text( '$mol_check_expand_demo_c5Label' )
+		}
+		
+		/**
+		 * ```tree
+		 * Disabled $mol_check_expand
+		 * 	title <= c5Label
+		 * 	disabled true
+		 * ```
+		 */
+		@ $mol_mem
+		Disabled() {
+			const obj = new this.$.$mol_check_expand()
+			
+			obj.title = () => this.c5Label()
+			obj.disabled = () => true
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * Empty_base $mol_check_expand checked?val <=> base_expanded?val
 		 * ```
 		 */
@@ -128,32 +154,6 @@ namespace $ {
 			const obj = new this.$.$mol_check_expand()
 			
 			obj.checked = (val?: any) => this.expanded_expanded(val)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * c5Label @ \Non expandable
-		 * ```
-		 */
-		c5Label() {
-			return this.$.$mol_locale.text( '$mol_check_expand_demo_c5Label' )
-		}
-		
-		/**
-		 * ```tree
-		 * Disabled $mol_check_expand
-		 * 	title <= c5Label
-		 * 	disabled true
-		 * ```
-		 */
-		@ $mol_mem
-		Disabled() {
-			const obj = new this.$.$mol_check_expand()
-			
-			obj.title = () => this.c5Label()
-			obj.disabled = () => true
 			
 			return obj
 		}

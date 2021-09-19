@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_link_demo extends $mol_demo_small {
+	export class $mol_link_demo extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -12,7 +12,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
+		 * rows /
 		 * 	<= This
 		 * 	<= Red
 		 * 	<= Green
@@ -20,7 +20,7 @@ namespace $ {
 		 * 	<= External
 		 * ```
 		 */
-		sub() {
+		rows() {
 			return [
 				this.This(),
 				this.Red(),
