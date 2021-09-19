@@ -1,6 +1,7 @@
 [mol_check_box_icon] {
 	border-radius: var(--mol_gap_round);
 	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	color: var(--mol_theme_shade);
 }
 
 [mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {

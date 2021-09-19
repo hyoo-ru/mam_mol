@@ -1,6 +1,6 @@
-$mol_link_demo $mol_demo_small
+$mol_link_demo $mol_list
 	title @ \Some hyperlinks
-	sub /
+	rows /
 		<= This $mol_link
 			sub /
 				<= this_label @ \This page

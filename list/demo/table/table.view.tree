@@ -1,11 +1,9 @@
-$mol_list_demo_table $mol_demo_large
+$mol_list_demo_table $mol_view
 	title @ \Large list of rows with dynamic content
 	count 1000
 	sub /
-		<= Scroll $mol_scroll
-			sub /
-				<= Rows $mol_list
-					rows <= rows /
+		<= Rows $mol_list
+			rows <= rows /
 	Row!id $mol_row
 		minimal_height 40
 		sub <= row_content!id /
@@ -23,8 +21,5 @@ $mol_list_demo_table $mol_demo_large
 					critical \Critical
 			<= Date!id $mol_date
 				value_moment?val <=> row_moment!id?val $mol_time_moment
-				enabled <= row_editable!id
-			<= Number!id $mol_number
-				value?val <=> row_number!id?val 0
 				enabled <= row_editable!id
 			<= Link!id $mol_link_iconed uri <= row_uri!id \

@@ -12,9 +12,7 @@ $mol_app_demo $mol_book2
 		title <= detail_title
 		source_link <= source_link \
 		edit_uri <= edit_uri \
-		body /
-			<= Detail_list $mol_list
-				rows <= main_content /
+		Demo <= Demo $mol_view
 	Welcome $mol_scroll
 		sub /
 			<= Welcome_text $mol_text
@@ -34,10 +32,11 @@ $mol_app_demo_menu $mol_page
 		<= Lights $mol_lights_toggle
 	Body $mol_scroll
 		sub /
-			<= Filter $mol_search
-				query?val <=> filter?val \
-			<= Options $mol_list
-				rows <= options /
+			<= List $mol_list rows /
+				<= Filter $mol_search
+					query?val <=> filter?val \
+				<= Options $mol_list
+					rows <= options /
 	Option!id $mol_link
 		arg <= option_arg!id *
 		sub /
@@ -69,3 +68,5 @@ $mol_app_demo_detail $mol_page
 				<= Close_icon $mol_icon_cross
 			arg <= close_arg *
 				demo null
+	body /
+		<= Demo $mol_view

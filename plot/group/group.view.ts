@@ -22,7 +22,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		dimensions() {
-			const graphs = this.graphs()
+			const graphs = this.graphs_enriched()
 			let next = new this.$.$mol_vector_2d(
 				$mol_vector_range_full.inversed,
 				$mol_vector_range_full.inversed

@@ -1,5 +1,6 @@
 [mol_attach_content] {
 	justify-content: flex-start;
+	flex-wrap: wrap;
 }
 
 [mol_attach_item] {

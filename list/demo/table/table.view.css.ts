@@ -55,7 +55,6 @@ namespace $.$$ {
 
 		Priority: {
 			flex: 'none',
-			padding: [ 0 , rem(.5) ],
 		},
 
 	})

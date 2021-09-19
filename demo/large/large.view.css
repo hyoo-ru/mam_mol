@@ -1,15 +1,16 @@
 [mol_demo_large] {
-	height: 100%;
+	flex: 1 1 auto;
+	flex-direction: column;
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	border-radius: var(--mol_gap_round);
+	/* height: 100%;
 	width: 100%;
 	overflow: hidden;
-	box-shadow: 0 0 0 .5px var(--mol_theme_line);
-	border-radius: var(--mol_gap_round);
 	background: var(--mol_theme_back);
 	color: var(--mol_theme_text);
 	position: relative;
-	flex: 1 0 auto;
 	display: flex;
 	align-items: stretch;
 	box-sizing: border-box;
-	align-self: stretch;
+	align-self: stretch; */
 }

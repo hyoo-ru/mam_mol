@@ -1,8 +1,7 @@
-$mol_infinite_demo $mol_demo_large
+$mol_infinite_demo $mol_view
 	title @ \Infinite list demo
 	chunk_size 20
 	sub /
-		<= Scroll $mol_scroll sub /
-			<= List $mol_infinite
-				after!anchor_id <= after!anchor_id /
-				Row!id <= Item!id $mol_filler
+		<= List $mol_infinite
+			after!anchor_id <= after!anchor_id /
+			Row!id <= Item!id $mol_filler

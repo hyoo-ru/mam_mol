@@ -1,6 +1,7 @@
 namespace $.$$ {
 
 	const { per , rem } = $mol_style_unit
+	const { calc } = $mol_style_func
 
 	$mol_style_define( $mol_page , {
 
@@ -86,11 +87,12 @@ namespace $.$$ {
 				basis: per(100),
 			},
 			margin: 0,
-			// '>': {
-			// 	$mol_view: {
-			// 		margin: $mol_gap.block,
-			// 	}
-			// },
+			'>': {
+				$mol_view: {
+					margin: $mol_gap.block,
+					maxWidth: calc('100% - 1.5rem'),
+				}
+			},
 		},
 
 		Foot: {

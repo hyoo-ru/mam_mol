@@ -1,8 +1,10 @@
 [mol_list] {
 	will-change: contents;
-	display: block;
+	display: flex;
 	flex-direction: column;
 	flex-shrink: 0;
+	width: 100%;
+	max-width: 100%;
 	/* display: flex;
 	align-items: stretch;
 	align-content: stretch; */

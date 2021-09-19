@@ -1,4 +1,4 @@
-$mol_check_group_demo $mol_demo_small
+$mol_check_group_demo $mol_view
 	title @ \Group of checkboxes
 	sub /
 		<= All $mol_check_group
