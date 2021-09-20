@@ -105,6 +105,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem
+		request_done( next?: ( res: unknown )=> void ) {
+			return ( res: unknown )=> {}
+		}
+		
+		@ $mol_mem
 		request( next?: unknown ) {
 			
 			this.socket()
@@ -115,18 +120,33 @@ namespace $ {
 				store.root.sub( pub ).value( pub )
 			}
 			
-			$mol_fiber_defer( ()=> {
+			$mol_fiber.run( ()=> {
+				$mol_fiber_defer( ()=> {
+					
+					const delta = store.delta( this.server_clock )
+					if( next !== undefined && !delta.length ) return
 				
-				const delta = store.delta( this.server_clock )
-				if( next !== undefined && !delta.length ) return
-			
-				this.send( this.path(), next === undefined && !delta.length ? [] : delta )
-				
-				for( const chunk of delta ) {
-					this.server_clock.see( chunk.peer, chunk.time )
-				}
-				
+					this.send( this.path(), next === undefined && !delta.length ? [] : delta )
+					
+					for( const chunk of delta ) {
+						this.server_clock.see( chunk.peer, chunk.time )
+					}
+					
+				} )
 			} )
+			
+			if( $mol_dom_context.navigator.onLine && next === undefined ) {
+				const prev = $mol_mem_cached( ()=> this.request() )
+				if( prev === undefined ) {
+					const wait = $mol_fiber_sync(
+						()=> new Promise( done => {
+							$mol_mem_cached( ()=> this.request_done(),  done )
+							new $mol_after_timeout( 5000, ()=> done( null ) )
+						} )
+					)
+					wait()
+				}
+			}
 			
 			return null
 		}
@@ -197,6 +217,8 @@ namespace $ {
 				
 				const doc = this.doc( path )
 				const store = doc.store()
+				
+				doc.request_done()( null )
 				
 				if( !delta.length ) {
 					

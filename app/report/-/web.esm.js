@@ -1979,11 +1979,22 @@ var $;
             if (!sub)
                 return 0;
             let min = 0;
-            sub.forEach(view => {
-                if (view instanceof $mol_view) {
-                    min = Math.max(min, view.minimal_width());
+            try {
+                sub.forEach(view => {
+                    if (view instanceof $mol_view) {
+                        min = Math.max(min, view.minimal_width());
+                    }
+                });
+            }
+            catch (error) {
+                if (error instanceof Promise) {
+                    $.$mol_atom2.current.subscribe(error);
                 }
-            });
+                else if ($.$mol_fail_catch(error)) {
+                    console.error(error);
+                }
+                return 24;
+            }
             return min;
         }
         maximal_width() {
