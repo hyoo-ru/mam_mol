@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_nav_demo extends $mol_demo_small {
+	export class $mol_nav_demo extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -23,13 +23,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
+		 * rows /
 		 * 	<= Hint
 		 * 	<= Tab_list
 		 * 	<= Row_list
 		 * ```
 		 */
-		sub() {
+		rows() {
 			return [
 				this.Hint(),
 				this.Tab_list(),

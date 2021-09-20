@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_check_group_demo extends $mol_view {
+	export class $mol_check_group_demo extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -12,12 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
+		 * rows /
 		 * 	<= All
 		 * 	<= Partial
 		 * ```
 		 */
-		sub() {
+		rows() {
 			return [
 				this.All(),
 				this.Partial()

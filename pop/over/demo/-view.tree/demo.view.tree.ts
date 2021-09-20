@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_pop_over_demo extends $mol_demo_small {
+	export class $mol_pop_over_demo extends $mol_view {
 		
 		/**
 		 * ```tree

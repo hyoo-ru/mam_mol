@@ -1097,7 +1097,7 @@ $mol_chat $mol_link
 			Body <= Embed $mol_frame
 				uri <= embed \
 
-$mol_chat_demo $mol_demo_small
+$mol_chat_demo $mol_view
 	title @ \Feed of comments for this page
 	sub /
 		<= Chat $mol_chat
@@ -1161,9 +1161,9 @@ $mol_icon_check $mol_icon path \M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.5
 
 $mol_icon_check_all $mol_icon path \M0.41,13.41L6,19L7.41,17.58L1.83,12M22.24,5.58L11.66,16.17L7.5,12L6.07,13.41L11.66,19L23.66,7M18,7L16.59,5.58L10.24,11.93L11.66,13.34L18,7Z
 
-$mol_check_group_demo $mol_view
+$mol_check_group_demo $mol_list
 	title @ \Group of checkboxes
-	sub /
+	rows /
 		<= All $mol_check_group
 			title \SPECIAL
 			checks /
@@ -1201,9 +1201,9 @@ $mol_check_icon $mol_check
 
 $mol_icon_microphone $mol_icon path \M12,2C13.66,2 15,3.34 15,5V11C15,12.66 13.66,14 12,14C10.34,14 9,12.66 9,11V5C9,3.34 10.34,2 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7C7,13.76 9.24,16 12,16C14.76,16 17,13.76 17,11H19Z
 
-$mol_check_icon_demo $mol_view
+$mol_check_icon_demo $mol_list
 	title @ \Iconic checkboxes in various states
-	sub /
+	rows /
 		<= Base $mol_check_icon
 			Icon <= Base_icon $mol_icon_microphone
 			checked?val <=> base_checked?val false
@@ -1409,7 +1409,7 @@ $mol_deck $mol_list
 			options <= switch_options *
 		<= Content $mol_view
 
-$mol_deck_demo $mol_demo_small
+$mol_deck_demo $mol_view
 	title @ \Simple deck with tabbar
 	sub /
 		<= Deck $mol_deck items /
@@ -1423,25 +1423,25 @@ $mol_deck_demo $mol_demo_small
 				title @ \Command
 				content / <= command_message @ \Let us do it right!
 
-$mol_dimmer_demo $mol_row
+$mol_dimmer_demo $mol_list
 	title @ \Text with highlighted found substring
-	sub /
-		<= one $mol_dimmer
+	rows /
+		<= One $mol_dimmer
 			haystack \Don't put all your eggs in one basket
 			needle \eggs
-		<= two $mol_dimmer
+		<= Two $mol_dimmer
 			haystack \Don't look a gift horse in the mouth.
 			needle \oo
-		<= three $mol_dimmer
+		<= Three $mol_dimmer
 			haystack \There is no word you are looking for
 			needle \luck
-		<= four $mol_dimmer
+		<= Four $mol_dimmer
 			haystack \ooAAooAAoo
 			needle \oo
-		<= five $mol_dimmer
+		<= Five $mol_dimmer
 			haystack \Let's search this string
 			needle \Let's search this string
-		<= six $mol_dimmer
+		<= Six $mol_dimmer
 			haystack \Let's search nothing
 			needle \
 
@@ -1531,7 +1531,7 @@ $mol_filler $mol_view
 		\Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. Etiam luctus porttitor lorem, sed suscipit est rutrum non. Curabitur lobortis nisl a enim congue semper. Aenean commodo ultrices imperdiet. Vestibulum ut justo vel sapien venenatis tincidunt. Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. Aliquam ut massa in turpis dapibus convallis. Praesent elit lacus, vestibulum at malesuada et, ornare et est. Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. Mauris ut placerat justo. Mauris in ultricies enim. Quisque nec est eleifend nulla ultrices egestas quis ut quam. Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. Cras quis ligula sem, vel elementum mi. Phasellus non ullamcorper urna.
 		\Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In euismod ultrices facilisis. Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. Proin quis dictum nisl. Morbi id quam sapien, sed vestibulum sem. Duis elementum rutrum mauris sed convallis. Proin vestibulum magna mi. Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. Sed non tortor sodales quam auctor elementum. Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. Donec vel.
 
-$mol_expander_demo $mol_demo_large
+$mol_expander_demo $mol_view
 	title @ \Simple spoiler
 	sub /
 		<= Expander $mol_expander
@@ -1892,153 +1892,7 @@ $mol_map_yandex_demo $mol_demo_large
 					address <= place_addres \Saint-Petersburg
 					content <= place_content \It is Russia's second-largest city after Moscow
 
-$mol_text_code_token $mol_dimmer
-	attr *
-		^
-		mol_text_code_token_type <= type \
-
-$mol_text_code_token_link $mol_text_code_token
-	dom_name \a
-	type \code-link
-	attr *
-		^
-		href <= haystack \
-		target \_blank
-
-$mol_text_code_row $mol_paragraph
-	text \
-	minimal_height 24
-	numb_showed true
-	Numb $mol_view
-		sub /
-			<= numb 0
-	Token!id $mol_text_code_token
-		type <= token_type!id \
-		haystack <= token_text!id \
-		needle <= highlight \
-	Token_link!id $mol_text_code_token_link
-		haystack <= token_text!id \
-		needle <= highlight \
-
-$mol_text_code $mol_list
-	attr *
-		^
-		mol_text_code_sidebar_showed <= sidebar_showed false
-	text \
-	text_lines /string
-	Row!id $mol_text_code_row
-		numb_showed <= sidebar_showed
-		numb <= row_numb!id 0
-		text <= row_text!id \
-		highlight <= highlight \
-
-$mol_text $mol_list
-	uri_base \
-	text \
-	tokens /
-	Quote!id $mol_text
-		text <= quote_text!id \
-	Row!id $mol_text_row
-		sub <= block_content!id /
-		type <= block_type!id \
-	Span!id $mol_text_span
-	String!id $mol_text_string
-		needle <= highlight \
-	Link!id $mol_text_link
-		target <= link_target!id \_blank
-	Image!id $mol_text_image
-	Header!id $mol_text_header
-		level <= header_level!id 0
-		content <= header_content!id /
-	Code!id $mol_text_code
-		text <= code_text!id \
-		highlight <= highlight \
-	Table!id $mol_grid
-		head_cells <= table_head_cells!id /
-		rows <= table_rows!id /
-	Table_row!id $mol_grid_row
-		cells <= table_cells!id /
-	Table_cell!id $mol_grid_cell
-		sub <= table_cell_content!id /
-	Table_cell_head!id $mol_float
-		sub <= table_cell_content!id /
-
-$mol_text_row $mol_paragraph
-	attr *
-		^
-		mol_text_type <= type \
-
-$mol_text_header $mol_paragraph
-	dom_name \h
-	attr *
-		^
-		mol_text_header_level <= level?val 0
-	sub <= content /
-
-$mol_text_span $mol_paragraph
-	dom_name \span
-	attr *
-		^
-		mol_text_type <= type?val \
-	sub <= content?val /
-
-$mol_text_string $mol_dimmer
-	dom_name \span
-	haystack?val \
-
-$mol_text_link $mol_link_iconed
-	attr *
-		^
-		mol_text_type <= type?val \
-	uri <= link?val \
-	content?val /
-
-$mol_text_image $mol_view
-	dom_name \object
-	attr *
-		^
-		allowfullscreen true
-		mol_text_type <= type?val \
-		data <= link?val \
-	sub /
-		<= title?val \
-
-$mol_message $mol_view
-	moment $mol_time_moment
-	sub /
-		<= Info $mol_row
-			sub /
-				<= Author $mol_link
-					uri <= avatar_link \
-					sub /
-						<= Avatar $mol_image
-							title \
-							uri <= avatar \
-						<= Name $mol_view
-							sub /
-								<= name \ 
-				<= Moment $mol_view
-					sub /
-						<= moment_string \
-		<= Text $mol_text
-			text <= text \
-
-$mol_message_demo $mol_demo_small
-	title @ \Generic user message
-	sub /
-		<= Message_short $mol_message
-			name \Jin
-			moment <= created $mol_time_moment
-			avatar \https://avatars3.githubusercontent.com/u/442988?v=4
-			avatar_link \https://github.com/nin-jin
-			text \Hello, **everybody!**
-		<= Message_long $mol_message
-			name \Great Teacher Onizuka
-			moment <= created $mol_time_moment
-			avatar_link \https://en.wikipedia.org/wiki/Great_Teacher_Onizuka
-			text \The story focuses on 22-year-old ex-[bōsōzoku](https://en.wikipedia.org/wiki/Bōsōzoku) member Eikichi Onizuka, who becomes a teacher at a private middle school, Holy Forest Academy, in [Tokyo](https://en.wikipedia.org/wiki/Tokyo), [Japan](https://en.wikipedia.org/wiki/Japan). It won the 1998 [Kodansha Manga Award](https://en.wikipedia.org/wiki/Kodansha_Manga_Award) for shōnen and is a continuation of Tohru Fujisawa's other manga series [Shonan Junai Gumi](https://en.wikipedia.org/wiki/Shonan_Junai_Gumi) (lit. "Shōnan True Love Group") and Bad Company, both of which focus on the life of Onizuka before he becomes a teacher in Great Teacher Onizuka.
-
-$mol_nav_demo $mol_demo_small
+$mol_nav_demo $mol_list
 	title @ \Number input control with various configuration
 	plugins /
 		<= Nav $mol_nav
@@ -2046,7 +1900,7 @@ $mol_nav_demo $mol_demo_small
 			current_x?val <=> tab_current?val
 			keys_y <= row_list
 			current_y?val <=> row_current?val
-	sub /
+	rows /
 		<= Hint $mol_card title @ \Select option and use keys to switch
 		<= Tab_list $mol_switch
 			keys => tab_list
@@ -2146,7 +2000,7 @@ $mol_paginator $mol_view
 			click?event <=> forward?event null
 			sub / <= Forward_icon $mol_icon_chevron_right
 
-$mol_paginator_demo $mol_demo_small
+$mol_paginator_demo $mol_view
 	title @ \Page switcher
 	sub /
 		<= Pages $mol_paginator
@@ -2231,7 +2085,7 @@ $mol_pop_over $mol_pop
 		mouseenter?event <=> event_show?event null
 		mouseleave?event <=> event_hide?event null
 
-$mol_pop_over_demo $mol_demo_small
+$mol_pop_over_demo $mol_view
 	title @ \Menu that opens on mouse over
 	sub /
 		<= Menu $mol_row
@@ -2373,7 +2227,7 @@ $mol_select $mol_pick
 		enabled <= enabled true
 	Trigger_icon $mol_icon_dots_vertical
 
-$mol_select_demo_colors $mol_demo_small
+$mol_select_demo_colors $mol_view
 	title @ \Color picker with filter and custom rows
 	sub /
 		<= Color $mol_select
@@ -2396,7 +2250,7 @@ $mol_select_colors_color_preview $mol_view
 		^
 		background <= color \
 
-$mol_select_demo_month $mol_demo_small
+$mol_select_demo_month $mol_view
 	title @ \Month picker with filter
 	sub /
 		<= Month $mol_select
@@ -2416,7 +2270,7 @@ $mol_select_demo_month $mol_demo_small
 				nov \November
 				dec \December
 
-$mol_select_demo_priority $mol_demo_small
+$mol_select_demo_priority $mol_view
 	title @ \Priority picker
 	sub /
 		<= Priority $mol_select
@@ -2536,10 +2390,121 @@ $mol_switch_demo $mol_list
 				green <= option_green @ \Green
 				blue <= option_blue @ \Blue
 
+$mol_text_code_token $mol_dimmer
+	attr *
+		^
+		mol_text_code_token_type <= type \
+
+$mol_text_code_token_link $mol_text_code_token
+	dom_name \a
+	type \code-link
+	attr *
+		^
+		href <= haystack \
+		target \_blank
+
+$mol_text_code_row $mol_paragraph
+	text \
+	minimal_height 24
+	numb_showed true
+	Numb $mol_view
+		sub /
+			<= numb 0
+	Token!id $mol_text_code_token
+		type <= token_type!id \
+		haystack <= token_text!id \
+		needle <= highlight \
+	Token_link!id $mol_text_code_token_link
+		haystack <= token_text!id \
+		needle <= highlight \
+
+$mol_text_code $mol_list
+	attr *
+		^
+		mol_text_code_sidebar_showed <= sidebar_showed false
+	text \
+	text_lines /string
+	Row!id $mol_text_code_row
+		numb_showed <= sidebar_showed
+		numb <= row_numb!id 0
+		text <= row_text!id \
+		highlight <= highlight \
+
 $mol_text_code_demo $mol_view
 	title @ \Markdow visualization example
 	sub /
 		<= Text $mol_text_code text <= source \
+
+$mol_text $mol_list
+	uri_base \
+	text \
+	tokens /
+	Quote!id $mol_text
+		text <= quote_text!id \
+	Row!id $mol_text_row
+		sub <= block_content!id /
+		type <= block_type!id \
+	Span!id $mol_text_span
+	String!id $mol_text_string
+		needle <= highlight \
+	Link!id $mol_text_link
+		target <= link_target!id \_blank
+	Image!id $mol_text_image
+	Header!id $mol_text_header
+		level <= header_level!id 0
+		content <= header_content!id /
+	Code!id $mol_text_code
+		text <= code_text!id \
+		highlight <= highlight \
+	Table!id $mol_grid
+		head_cells <= table_head_cells!id /
+		rows <= table_rows!id /
+	Table_row!id $mol_grid_row
+		cells <= table_cells!id /
+	Table_cell!id $mol_grid_cell
+		sub <= table_cell_content!id /
+	Table_cell_head!id $mol_float
+		sub <= table_cell_content!id /
+
+$mol_text_row $mol_paragraph
+	attr *
+		^
+		mol_text_type <= type \
+
+$mol_text_header $mol_paragraph
+	dom_name \h
+	attr *
+		^
+		mol_text_header_level <= level?val 0
+	sub <= content /
+
+$mol_text_span $mol_paragraph
+	dom_name \span
+	attr *
+		^
+		mol_text_type <= type?val \
+	sub <= content?val /
+
+$mol_text_string $mol_dimmer
+	dom_name \span
+	haystack?val \
+
+$mol_text_link $mol_link_iconed
+	attr *
+		^
+		mol_text_type <= type?val \
+	uri <= link?val \
+	content?val /
+
+$mol_text_image $mol_view
+	dom_name \object
+	attr *
+		^
+		allowfullscreen true
+		mol_text_type <= type?val \
+		data <= link?val \
+	sub /
+		<= title?val \
 
 $mol_text_demo $mol_view
 	title @ \Markdown visualization example

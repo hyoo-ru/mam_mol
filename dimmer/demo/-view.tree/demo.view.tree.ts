@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_dimmer_demo extends $mol_row {
+	export class $mol_dimmer_demo extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -12,35 +12,35 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= one
-		 * 	<= two
-		 * 	<= three
-		 * 	<= four
-		 * 	<= five
-		 * 	<= six
+		 * rows /
+		 * 	<= One
+		 * 	<= Two
+		 * 	<= Three
+		 * 	<= Four
+		 * 	<= Five
+		 * 	<= Six
 		 * ```
 		 */
-		sub() {
+		rows() {
 			return [
-				this.one(),
-				this.two(),
-				this.three(),
-				this.four(),
-				this.five(),
-				this.six()
+				this.One(),
+				this.Two(),
+				this.Three(),
+				this.Four(),
+				this.Five(),
+				this.Six()
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * one $mol_dimmer
+		 * One $mol_dimmer
 		 * 	haystack \Don't put all your eggs in one basket
 		 * 	needle \eggs
 		 * ```
 		 */
 		@ $mol_mem
-		one() {
+		One() {
 			const obj = new this.$.$mol_dimmer()
 			
 			obj.haystack = () => "Don't put all your eggs in one basket"
@@ -51,13 +51,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * two $mol_dimmer
+		 * Two $mol_dimmer
 		 * 	haystack \Don't look a gift horse in the mouth.
 		 * 	needle \oo
 		 * ```
 		 */
 		@ $mol_mem
-		two() {
+		Two() {
 			const obj = new this.$.$mol_dimmer()
 			
 			obj.haystack = () => "Don't look a gift horse in the mouth."
@@ -68,13 +68,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * three $mol_dimmer
+		 * Three $mol_dimmer
 		 * 	haystack \There is no word you are looking for
 		 * 	needle \luck
 		 * ```
 		 */
 		@ $mol_mem
-		three() {
+		Three() {
 			const obj = new this.$.$mol_dimmer()
 			
 			obj.haystack = () => "There is no word you are looking for"
@@ -85,13 +85,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * four $mol_dimmer
+		 * Four $mol_dimmer
 		 * 	haystack \ooAAooAAoo
 		 * 	needle \oo
 		 * ```
 		 */
 		@ $mol_mem
-		four() {
+		Four() {
 			const obj = new this.$.$mol_dimmer()
 			
 			obj.haystack = () => "ooAAooAAoo"
@@ -102,13 +102,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * five $mol_dimmer
+		 * Five $mol_dimmer
 		 * 	haystack \Let's search this string
 		 * 	needle \Let's search this string
 		 * ```
 		 */
 		@ $mol_mem
-		five() {
+		Five() {
 			const obj = new this.$.$mol_dimmer()
 			
 			obj.haystack = () => "Let's search this string"
@@ -119,13 +119,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * six $mol_dimmer
+		 * Six $mol_dimmer
 		 * 	haystack \Let's search nothing
 		 * 	needle \
 		 * ```
 		 */
 		@ $mol_mem
-		six() {
+		Six() {
 			const obj = new this.$.$mol_dimmer()
 			
 			obj.haystack = () => "Let's search nothing"

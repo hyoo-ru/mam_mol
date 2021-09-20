@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_check_icon_demo extends $mol_view {
+	export class $mol_check_icon_demo extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -12,13 +12,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
+		 * rows /
 		 * 	<= Base
 		 * 	<= Checked
 		 * 	<= Disabled
 		 * ```
 		 */
-		sub() {
+		rows() {
 			return [
 				this.Base(),
 				this.Checked(),

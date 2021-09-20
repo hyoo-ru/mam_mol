@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_select_demo_colors extends $mol_demo_small {
+	export class $mol_select_demo_colors extends $mol_view {
 		
 		/**
 		 * ```tree
