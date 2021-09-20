@@ -39,7 +39,7 @@ include \/mol/link/iconed/demo
 include \/mol/list/demo/table
 include \/mol/list/demo/tree
 include \/mol/map/yandex/demo
-include \/mol/message/demo
+- include \/mol/message/demo
 include \/mol/nav/demo
 include \/mol/number/demo
 include \/mol/page/demo

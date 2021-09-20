@@ -1,6 +1,6 @@
-$mol_check_group_demo $mol_view
+$mol_check_group_demo $mol_list
 	title @ \Group of checkboxes
-	sub /
+	rows /
 		<= All $mol_check_group
 			title \SPECIAL
 			checks /

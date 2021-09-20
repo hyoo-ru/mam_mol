@@ -1,6 +1,6 @@
-$mol_message_demo $mol_demo_small
+$mol_message_demo $mol_list
 	title @ \Generic user message
-	sub /
+	rows /
 		<= Message_short $mol_message
 			name \Jin
 			moment <= created $mol_time_moment
