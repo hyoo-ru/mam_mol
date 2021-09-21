@@ -1,0 +1,96 @@
+/** @jsx $mol_jsx */
+namespace $ {
+	
+	export async function $mol_dom_capture_image( el: Element ) {
+		
+		function wait_load( el: {
+			onload: null | ( ( value: any )=> any ),
+			onerror: null | ( ( error: Event )=> any ),
+		} ) {
+			return new Promise< typeof el >( ( done, fail )=> {
+				el.onload = ()=> done( el )
+				el.onerror = fail
+			} )
+		}
+		
+		function restyle( el: HTMLElement, styles: CSSStyleDeclaration ) {
+			for( let i= 0; i < styles.length; ++i ) {
+				const prop = styles[ i ]
+				el.style[ prop ] = styles[ prop ]
+			}
+		}
+		
+		function clone( el: Element ) {
+			
+			const re = el.cloneNode() as HTMLElement
+
+			const styles = $mol_dom_context.getComputedStyle( el as HTMLElement )
+			restyle( re, styles )
+
+			const before = $mol_dom_context.getComputedStyle( el as HTMLElement, ':before' )
+			if( before.content !== 'none' ) {
+				const kid = <span>{ JSON.parse( before.content ) }</span>
+				restyle( kid, before )
+				re.appendChild( kid )
+			}
+			
+			for( const kid of el.childNodes ) {
+				const dup = ( kid.nodeType === kid.ELEMENT_NODE )
+					? clone( kid as Element )
+					: kid.cloneNode()
+				re.appendChild( dup )
+			}
+			
+			const after = $mol_dom_context.getComputedStyle( el as HTMLElement, ':after' )
+			if( after.content !== 'none' ) {
+				const kid = <span>{ JSON.parse( after.content ) }</span>
+				restyle( kid, after )
+				re.appendChild( kid )
+			}
+			
+			return re
+		}
+
+		const { width, height } = el.getBoundingClientRect()
+		
+		// const styles = [ ... document.querySelectorAll( 'style' ) ].map( s => s.cloneNode( true ) )
+		
+		const svg = <svg
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox={ `0 0 ${ width } ${ height }` }
+				width={ String( width ) }
+				height={ String( height ) }
+			>
+			{/* <base href={ location.href } /> */}
+			<foreignObject
+				xmlns="http://www.w3.org/2000/svg"
+				width={ String( width ) }
+				height={ String( height ) }
+				>
+				{/* { styles } */}
+				{ clone( el ) }
+			</foreignObject>
+		</svg>
+		
+		const xml = $mol_dom_serialize( svg )
+		const uri = 'data:image/svg+xml,' + encodeURIComponent( xml )
+		
+		const image = <img src={ uri } /> as HTMLImageElement
+		await wait_load( image )
+	
+		return image
+	}
+	
+	export async function $mol_dom_capture_canvas( el: Element ) {
+		
+		const image = await $mol_dom_capture_image( el )
+		
+		const canvas = <canvas width={ image.width } height={ image.height } ></canvas> as HTMLCanvasElement
+		const context = canvas.getContext( '2d' )!
+		
+		context.drawImage( image, 0, 0 )
+
+		return canvas
+	}
+
+}

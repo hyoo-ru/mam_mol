@@ -6,13 +6,16 @@ namespace $ {
 	
 	export let $mol_jsx_document : $mol_jsx.JSX.ElementClass['ownerDocument'] = {
 		getElementById : ()=> null ,
-		createElement : ( name : string )=> $mol_dom_context.document.createElement( name ),
+		createElementNS : ( space: string, name : string )=> $mol_dom_context.document.createElementNS( space, name ) as any,
 		createDocumentFragment : ()=> $mol_dom_context.document.createDocumentFragment(),
 	}
 	
 	export const $mol_jsx_frag = ''
 
-	export function $mol_jsx< Props extends { id? : string } , Children extends Array< Node | string > >(
+	export function $mol_jsx<
+		Props extends $mol_jsx.JSX.IntrinsicAttributes,
+		Children extends Array< Node | string >
+	>(
 		Elem : string
 			| ( ( props : Props , ... children : Children ) => Element ) ,
 		props : Props ,
@@ -75,7 +78,11 @@ namespace $ {
 
 		}
 
-		if( !node ) node = Elem ? $mol_jsx_document.createElement( Elem ) : $mol_jsx_document.createDocumentFragment()
+		if( !node ) {
+			node = Elem
+				? $mol_jsx_document.createElementNS( props?.xmlns ?? 'http://www.w3.org/1999/xhtml', Elem )
+				: $mol_jsx_document.createDocumentFragment()
+		}
 
 		$mol_dom_render_children( node , ( [] as ( Node | string )[] ).concat( ... childNodes ) )
 		if( !Elem ) return node
@@ -97,9 +104,11 @@ namespace $ {
 					continue
 				}
 
-			}
+			} else {
 
-			node[ key as any ] = props[ key ]
+				node[ key as any ] = props[ key ]
+				
+			}
 
 		}
 
@@ -117,19 +126,28 @@ namespace $ {
 		
 		export interface ElementClass {
 			attributes : {}
-			ownerDocument : Pick< Document , 'getElementById' | 'createElement' | 'createDocumentFragment' >
+			ownerDocument : Pick< Document , 'getElementById' | 'createElementNS' | 'createDocumentFragment' >
 			childNodes : Array< Node | string >
 			valueOf() : Element
 		}
 		
+		type OrString< Dict > = {
+			[ key in keyof Dict ]: Dict[ key ] | string
+		}
+		
 		/** Props for html elements */
 		export type IntrinsicElements = {
-			[ key in keyof HTMLElementTagNameMap ]? : $.$mol_type_partial_deep< Element & HTMLElementTagNameMap[ key ] >
+			[ key in keyof ElementTagNameMap ]? : $.$mol_type_partial_deep< OrString<
+				& Element
+				& IntrinsicAttributes
+				& ElementTagNameMap[ key ]
+			> >
 		}
 		
 		/** Additional undeclared props */
 		export interface IntrinsicAttributes {
 			id? : string
+			xmlns? : string
 		}
 		
 		export interface ElementAttributesProperty {

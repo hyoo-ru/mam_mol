@@ -179,7 +179,7 @@ var $;
     $.$mol_jsx_booked = null;
     $.$mol_jsx_document = {
         getElementById: () => null,
-        createElement: (name) => $.$mol_dom_context.document.createElement(name),
+        createElementNS: (space, name) => $.$mol_dom_context.document.createElementNS(space, name),
         createDocumentFragment: () => $.$mol_dom_context.document.createDocumentFragment(),
     };
     $.$mol_jsx_frag = '';
@@ -221,8 +221,11 @@ var $;
                 }
             }
         }
-        if (!node)
-            node = Elem ? $.$mol_jsx_document.createElement(Elem) : $.$mol_jsx_document.createDocumentFragment();
+        if (!node) {
+            node = Elem
+                ? $.$mol_jsx_document.createElementNS(props?.xmlns ?? 'http://www.w3.org/1999/xhtml', Elem)
+                : $.$mol_jsx_document.createDocumentFragment();
+        }
         $.$mol_dom_render_children(node, [].concat(...childNodes));
         if (!Elem)
             return node;
@@ -239,7 +242,9 @@ var $;
                     continue;
                 }
             }
-            node[key] = props[key];
+            else {
+                node[key] = props[key];
+            }
         }
         if (guid)
             node.id = guid;
