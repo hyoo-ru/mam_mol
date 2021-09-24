@@ -4140,7 +4140,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: .375rem;\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n\tgrid-gap: 0 .75rem;\n}\n\n[mol_row] > * {\n\tmargin: .375rem;\n\tmax-width: 100%;\n}\n");
+    $.$mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: .375rem;\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmargin: .375rem;\n\tmax-width: 100%;\n}\n");
 })($ || ($ = {}));
 //row.view.css.js.map
 ;
@@ -18493,7 +18493,7 @@ var $;
     (function ($$) {
         class $mol_number extends $.$mol_number {
             event_dec(next) {
-                this.value((this.value() || 0) - this.precision_change());
+                this.value((Number(this.value()) || 0) - this.precision_change());
             }
             event_inc(next) {
                 this.value((Number(this.value()) || 0) + this.precision_change());
@@ -18512,7 +18512,7 @@ var $;
                     return (value / precisionView).toFixed();
                 }
                 else {
-                    const fixedNumber = Math.log(1 / precisionView) / Math.log(10);
+                    const fixedNumber = Math.log10(1 / precisionView);
                     return value.toFixed(fixedNumber);
                 }
             }
@@ -23179,6 +23179,471 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //demo.view.tree.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_video_player extends $.$mol_view {
+        dom_name() {
+            return "video";
+        }
+        playing(val) {
+            if (val !== undefined)
+                return val;
+            return false;
+        }
+        volume(val) {
+            if (val !== undefined)
+                return val;
+            return 0;
+        }
+        time(val) {
+            if (val !== undefined)
+                return val;
+            return 0;
+        }
+        duration() {
+            return 0;
+        }
+        attr() {
+            return {
+                src: this.uri(),
+                controls: this.controls()
+            };
+        }
+        event() {
+            return {
+                volumechange: (event) => this.revolume(event),
+                timeupdate: (event) => this.retime(event),
+                durationchange: (event) => this.redurate(event),
+                play: (event) => this.play(event),
+                pause: (event) => this.pause(event)
+            };
+        }
+        uri() {
+            return "";
+        }
+        controls() {
+            return true;
+        }
+        revolume(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        retime(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        redurate(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        play(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        pause(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player.prototype, "playing", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player.prototype, "volume", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player.prototype, "time", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player.prototype, "revolume", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player.prototype, "retime", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player.prototype, "redurate", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player.prototype, "play", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player.prototype, "pause", null);
+    $.$mol_video_player = $mol_video_player;
+})($ || ($ = {}));
+//player.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/video/player/player.view.css", "[mol_video_player] {\n\tflex: 1 1 auto;\n}\n");
+})($ || ($ = {}));
+//player.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_video_player extends $.$mol_video_player {
+            dom_node() {
+                return super.dom_node();
+            }
+            volume(next) {
+                this.revolume();
+                if (next === undefined) {
+                    return this.dom_node().volume;
+                }
+                else {
+                    return this.dom_node().volume = Math.max(0, Math.min(next, 1));
+                }
+            }
+            time(next) {
+                this.retime();
+                if (next === undefined) {
+                    return this.dom_node().currentTime;
+                }
+                else {
+                    return this.dom_node().currentTime = Math.max(0, Math.min(next, this.duration()));
+                }
+            }
+            duration() {
+                this.redurate();
+                return this.dom_node().duration;
+            }
+            playing(next) {
+                if (next === undefined) {
+                    return false;
+                }
+                else {
+                    if (next) {
+                        this.dom_node().play();
+                    }
+                    else {
+                        this.dom_node().pause();
+                    }
+                    return next;
+                }
+            }
+            play() {
+                this.playing(true);
+            }
+            pause() {
+                this.playing(false);
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_video_player.prototype, "volume", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_video_player.prototype, "time", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_video_player.prototype, "duration", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_video_player.prototype, "playing", null);
+        $$.$mol_video_player = $mol_video_player;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//player.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_upload extends $.$mol_icon {
+        path() {
+            return "M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z";
+        }
+    }
+    $.$mol_icon_upload = $mol_icon_upload;
+})($ || ($ = {}));
+//upload.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_button_open extends $.$mol_button_minor {
+        sub() {
+            return [
+                this.Icon(),
+                this.Native()
+            ];
+        }
+        Icon() {
+            const obj = new this.$.$mol_icon_upload();
+            return obj;
+        }
+        accept() {
+            return "";
+        }
+        multiple() {
+            return true;
+        }
+        files(next) {
+            return this.Native().files(next);
+        }
+        Native() {
+            const obj = new this.$.$mol_button_open_native();
+            obj.accept = () => this.accept();
+            obj.multiple = () => this.multiple();
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_button_open.prototype, "Icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_button_open.prototype, "Native", null);
+    $.$mol_button_open = $mol_button_open;
+    class $mol_button_open_native extends $.$mol_view {
+        dom_name() {
+            return "input";
+        }
+        files(next) {
+            if (next !== undefined)
+                return next;
+            return [];
+        }
+        attr() {
+            return {
+                type: "file",
+                accept: this.accept(),
+                multiple: this.multiple()
+            };
+        }
+        event() {
+            return {
+                change: (next) => this.picked(next)
+            };
+        }
+        accept() {
+            return "";
+        }
+        multiple() {
+            return true;
+        }
+        picked(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_button_open_native.prototype, "files", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_button_open_native.prototype, "picked", null);
+    $.$mol_button_open_native = $mol_button_open_native;
+})($ || ($ = {}));
+//open.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/button/open/open.view.css", "[mol_button_open_native] {\n\tposition: absolute;\n\tleft: 0;\n\ttop: -100%;\n\twidth: 100%;\n\theight: 200%;\n\tcursor: pointer;\n\topacity: 0;\n}\n");
+})($ || ($ = {}));
+//open.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_button_open_native extends $.$mol_button_open_native {
+            dom_node() {
+                return super.dom_node();
+            }
+            picked() {
+                this.files(this.dom_node().files);
+            }
+        }
+        $$.$mol_button_open_native = $mol_button_open_native;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//open.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_play extends $.$mol_icon {
+        path() {
+            return "M8,5.14V19.14L19,12.14L8,5.14Z";
+        }
+    }
+    $.$mol_icon_play = $mol_icon_play;
+})($ || ($ = {}));
+//play.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_video_player_demo extends $.$mol_demo_large {
+        title() {
+            return "Reactive video player";
+        }
+        sub() {
+            return [
+                this.Controls(),
+                this.Player()
+            ];
+        }
+        files() {
+            return this.Open().files();
+        }
+        Open() {
+            const obj = new this.$.$mol_button_open();
+            return obj;
+        }
+        Playing_icon() {
+            const obj = new this.$.$mol_icon_play();
+            return obj;
+        }
+        Playing() {
+            const obj = new this.$.$mol_check_icon();
+            obj.checked = (val) => this.playing(val);
+            obj.Icon = () => this.Playing_icon();
+            return obj;
+        }
+        Duration() {
+            const obj = new this.$.$mol_paragraph();
+            obj.sub = () => [
+                this.duration()
+            ];
+            return obj;
+        }
+        Duration_labeler() {
+            const obj = new this.$.$mol_labeler();
+            obj.title = () => "Duration";
+            obj.content = () => [
+                this.Duration()
+            ];
+            return obj;
+        }
+        Time() {
+            const obj = new this.$.$mol_number();
+            obj.value = (val) => this.time(val);
+            obj.precision_view = () => 0.001;
+            return obj;
+        }
+        Time_labeler() {
+            const obj = new this.$.$mol_labeler();
+            obj.title = () => "Time";
+            obj.content = () => [
+                this.Time()
+            ];
+            return obj;
+        }
+        Volume() {
+            const obj = new this.$.$mol_number();
+            obj.value = (val) => this.volume(val);
+            obj.precision = () => 0.001;
+            return obj;
+        }
+        Volume_labeler() {
+            const obj = new this.$.$mol_labeler();
+            obj.title = () => "Volume";
+            obj.content = () => [
+                this.Volume()
+            ];
+            return obj;
+        }
+        Controls() {
+            const obj = new this.$.$mol_row();
+            obj.sub = () => [
+                this.Open(),
+                this.Playing(),
+                this.Duration_labeler(),
+                this.Time_labeler(),
+                this.Volume_labeler()
+            ];
+            return obj;
+        }
+        uri() {
+            return "";
+        }
+        playing(val) {
+            return this.Player().playing(val);
+        }
+        volume(val) {
+            return this.Player().volume(val);
+        }
+        time(val) {
+            return this.Player().time(val);
+        }
+        duration() {
+            return this.Player().duration();
+        }
+        Player() {
+            const obj = new this.$.$mol_video_player();
+            obj.uri = () => this.uri();
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player_demo.prototype, "Open", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player_demo.prototype, "Playing_icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player_demo.prototype, "Playing", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player_demo.prototype, "Duration", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player_demo.prototype, "Duration_labeler", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player_demo.prototype, "Time", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player_demo.prototype, "Time_labeler", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player_demo.prototype, "Volume", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player_demo.prototype, "Volume_labeler", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player_demo.prototype, "Controls", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_video_player_demo.prototype, "Player", null);
+    $.$mol_video_player_demo = $mol_video_player_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_video_player_demo extends $.$mol_video_player_demo {
+            uri() {
+                const file = this.files()[0];
+                if (!file)
+                    return null;
+                return URL.createObjectURL(file);
+            }
+        }
+        $$.$mol_video_player_demo = $mol_video_player_demo;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//demo.view.js.map
 ;
 "use strict";
 var $;

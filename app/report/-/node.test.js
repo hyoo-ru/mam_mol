@@ -6094,7 +6094,7 @@ var $;
     (function ($$) {
         class $mol_number extends $.$mol_number {
             event_dec(next) {
-                this.value((this.value() || 0) - this.precision_change());
+                this.value((Number(this.value()) || 0) - this.precision_change());
             }
             event_inc(next) {
                 this.value((Number(this.value()) || 0) + this.precision_change());
@@ -6113,7 +6113,7 @@ var $;
                     return (value / precisionView).toFixed();
                 }
                 else {
-                    const fixedNumber = Math.log(1 / precisionView) / Math.log(10);
+                    const fixedNumber = Math.log10(1 / precisionView);
                     return value.toFixed(fixedNumber);
                 }
             }

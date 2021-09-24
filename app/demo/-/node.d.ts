@@ -6240,6 +6240,127 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_video_player extends $mol_view {
+        dom_name(): string;
+        playing(val?: any): boolean;
+        volume(val?: any): number;
+        time(val?: any): number;
+        duration(): number;
+        attr(): {
+            src: string;
+            controls: boolean;
+        };
+        event(): {
+            volumechange: (event?: any) => any;
+            timeupdate: (event?: any) => any;
+            durationchange: (event?: any) => any;
+            play: (event?: any) => any;
+            pause: (event?: any) => any;
+        };
+        uri(): string;
+        controls(): boolean;
+        revolume(event?: any): any;
+        retime(event?: any): any;
+        redurate(event?: any): any;
+        play(event?: any): any;
+        pause(event?: any): any;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_video_player extends $.$mol_video_player {
+        dom_node(): HTMLVideoElement;
+        volume(next?: number): number;
+        time(next?: number): number;
+        duration(): number;
+        playing(next?: boolean): boolean;
+        play(): void;
+        pause(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_upload extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_button_open extends $mol_button_minor {
+        sub(): readonly any[];
+        Icon(): $mol_icon_upload;
+        accept(): string;
+        multiple(): boolean;
+        files(next?: any): readonly any[];
+        Native(): $$.$mol_button_open_native;
+    }
+    class $mol_button_open_native extends $mol_view {
+        dom_name(): string;
+        files(next?: any): readonly any[];
+        attr(): {
+            type: string;
+            accept: string;
+            multiple: boolean;
+        };
+        event(): {
+            change: (next?: any) => any;
+        };
+        accept(): string;
+        multiple(): boolean;
+        picked(next?: any): any;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_button_open_native extends $.$mol_button_open_native {
+        dom_node(): HTMLInputElement;
+        picked(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_play extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_video_player_demo extends $mol_demo_large {
+        title(): string;
+        sub(): readonly any[];
+        files(): readonly any[];
+        Open(): $mol_button_open;
+        Playing_icon(): $mol_icon_play;
+        Playing(): $mol_check_icon;
+        Duration(): $$.$mol_paragraph;
+        Duration_labeler(): $mol_labeler;
+        Time(): $$.$mol_number;
+        Time_labeler(): $mol_labeler;
+        Volume(): $$.$mol_number;
+        Volume_labeler(): $mol_labeler;
+        Controls(): $mol_row;
+        uri(): string;
+        playing(val?: any): boolean;
+        volume(val?: any): number;
+        time(val?: any): number;
+        duration(): number;
+        Player(): $$.$mol_video_player;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_video_player_demo extends $.$mol_video_player_demo {
+        uri(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_status extends $mol_view {
         status(): any;
         minimal_height(): number;

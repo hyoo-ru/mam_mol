@@ -2626,6 +2626,77 @@ $mol_toolbar_demo $mol_demo_small
 				<= Delete $mol_button_minor sub /
 					<= Delete_icon $mol_icon_delete
 
+$mol_video_player $mol_view
+	dom_name \video
+	playing?val false
+	volume?val 0
+	time?val 0
+	duration 0
+	attr *
+		src <= uri \
+		controls <= controls true
+	event *
+		volumechange?event <=> revolume?event null
+		timeupdate?event <=> retime?event null
+		durationchange?event <=> redurate?event null
+		play?event <=> play?event null
+		pause?event <=> pause?event null
+
+$mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
+
+$mol_button_open $mol_button_minor
+	sub /
+		<= Icon $mol_icon_upload
+		<= Native $mol_button_open_native
+			files?next => files?next
+			accept <= accept \
+			multiple <= multiple true
+
+$mol_button_open_native $mol_view
+	dom_name \input
+	files?next /
+	attr *
+		type \file
+		accept <= accept \
+		multiple <= multiple true
+	event *
+		change?next <=> picked?next null
+
+$mol_icon_play $mol_icon path \M8,5.14V19.14L19,12.14L8,5.14Z
+
+$mol_video_player_demo $mol_demo_large
+	title \Reactive video player
+	sub /
+		<= Controls $mol_row sub /
+			<= Open $mol_button_open
+				files => files
+			<= Playing $mol_check_icon
+				checked?val <=> playing?val
+				Icon <= Playing_icon $mol_icon_play
+			<= Duration_labeler $mol_labeler
+				title \Duration
+				content /
+					<= Duration $mol_paragraph
+						sub / <= duration
+			<= Time_labeler $mol_labeler
+				title \Time
+				content /
+					<= Time $mol_number
+						value?val <=> time?val
+						precision_view 0.001
+			<= Volume_labeler $mol_labeler
+				title \Volume
+				content /
+					<= Volume $mol_number
+						value?val <=> volume?val
+						precision 0.001
+		<= Player $mol_video_player
+			uri <= uri \
+			playing?val => playing?val
+			volume?val => volume?val
+			time?val => time?val
+			duration => duration
+
 $mol_status $mol_view
 	status null
 	minimal_height 24
