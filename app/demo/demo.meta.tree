@@ -7,6 +7,7 @@ include \/mol/attach/demo
 include \/mol/bar/demo
 include \/mol/bench/demo
 include \/mol/book2/demo
+include \/mol/book2/catalog/demo
 include \/mol/button/demo
 include \/mol/calendar/demo/holiday
 include \/mol/calendar/demo/selection
