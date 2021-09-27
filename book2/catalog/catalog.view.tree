@@ -1,0 +1,19 @@
+$mol_book2_catalog $mol_book2
+	param \
+	spreads *
+	Spread $mol_view
+	pages /
+		<= Menu $mol_page
+			title <= menu_title \
+			tools <= menu_tools /
+			body /
+				<= Links $mol_list
+					rows <= links /
+	Link!id $mol_link
+		arg <= arg!id *
+		sub /
+			<= spread_title!id \
+	Spread_close $mol_link
+		arg <= spread_close_arg *
+		sub /
+			<= Spread_close_icon $mol_icon_cross

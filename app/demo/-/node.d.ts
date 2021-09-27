@@ -2145,6 +2145,87 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_page extends $mol_view {
+        sub(): readonly any[];
+        Title(): $mol_view;
+        tools(): readonly $mol_view_content[];
+        Tools(): $mol_view;
+        head(): readonly any[];
+        Head(): $mol_view;
+        body_scroll_top(val?: any): number;
+        body(): readonly $mol_view_content[];
+        Body(): $$.$mol_scroll;
+        foot(): readonly $mol_view[];
+        Foot(): $mol_view;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $.$$ {
+    class $mol_page extends $.$mol_page {
+        body_scroll_top(next?: number): number;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_cross extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_book2_catalog extends $mol_book2 {
+        param(): string;
+        spreads(): {};
+        Spread(): $mol_view;
+        pages(): readonly any[];
+        Link(id: any): $$.$mol_link;
+        Spread_close(): $$.$mol_link;
+        menu_title(): string;
+        menu_tools(): readonly any[];
+        links(): readonly any[];
+        Links(): $$.$mol_list;
+        Menu(): $$.$mol_page;
+        arg(id: any): {};
+        spread_title(id: any): string;
+        spread_close_arg(): {};
+        Spread_close_icon(): $mol_icon_cross;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_book2_catalog extends $.$mol_book2_catalog {
+        pages(): any[];
+        links(): $mol_link[];
+        Spread(): any;
+        spread(): string;
+        arg(spread: string): {
+            [x: string]: string;
+        };
+        spread_close_arg(): {
+            [x: string]: null;
+        };
+        spread_title(spread: string): any;
+    }
+}
+
+declare namespace $ {
+    class $mol_book2_catalog_demo extends $mol_demo_large {
+        title(): string;
+        sub(): readonly any[];
+        Articles(): $$.$mol_page;
+        Images(): $$.$mol_page;
+        Maps(): $$.$mol_page;
+        Calatog(): $$.$mol_book2_catalog;
+    }
+}
+
+declare namespace $ {
     class $mol_button_major extends $mol_button_typed {
         attr(): {
             mol_theme: string;
@@ -3305,12 +3386,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_icon_cross extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
     class $mol_frame extends $mol_scroll {
         dom_name(): string;
         attr(): {
@@ -3345,31 +3420,6 @@ declare namespace $.$$ {
         uri_listener(): $mol_dom_listener;
         render(): void;
         allow(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_page extends $mol_view {
-        sub(): readonly any[];
-        Title(): $mol_view;
-        tools(): readonly $mol_view_content[];
-        Tools(): $mol_view;
-        head(): readonly any[];
-        Head(): $mol_view;
-        body_scroll_top(val?: any): number;
-        body(): readonly $mol_view_content[];
-        Body(): $$.$mol_scroll;
-        foot(): readonly $mol_view[];
-        Foot(): $mol_view;
-    }
-}
-
-declare namespace $.$$ {
-}
-
-declare namespace $.$$ {
-    class $mol_page extends $.$mol_page {
-        body_scroll_top(next?: number): number;
     }
 }
 

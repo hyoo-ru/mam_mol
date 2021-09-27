@@ -1,0 +1,19 @@
+$mol_book2_catalog_demo $mol_demo_large
+	title \Catalog of pages
+	sub /
+		<= Calatog $mol_book2_catalog
+			param \mol_book2_catalog_demo
+			menu_title \Sections
+			spreads *
+				articles <= Articles $mol_page
+					title \Articles
+					body /
+						\Articles content
+				images <= Images $mol_page
+					title \Images
+					body /
+						\Images content
+				maps <= Maps $mol_page
+					title \Maps
+					body /
+						\Maps content

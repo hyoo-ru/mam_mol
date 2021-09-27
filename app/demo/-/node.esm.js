@@ -6722,7 +6722,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n\t/* transform: translateZ(0); */\n\ttransition: none;\n\toverflow: overlay;\n\tscroll-snap-type: x proximity;\n}\n\n[mol_book2] > * {\n/* \tflex: none; */\n\tscroll-snap-stop: always;\n\tscroll-snap-align: end;\n\tposition: relative;\n\t/* z-index: 0; */\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n\tflex-shrink: 0;\n}\n\n[mol_book2] > *:first-child {\n\tscroll-snap-align: start;\n}\n\n[mol_book2] > [mol_view] {\n\ttransform: none; /* prevent content clipping */\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\t/* background: var(--mol_theme_back); */\n}\n");
+    $.$mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n\t/* transform: translateZ(0); */\n\ttransition: none;\n\toverflow: overlay;\n\tscroll-snap-type: x proximity;\n}\n\n[mol_book2] > * {\n/* \tflex: none; */\n\tscroll-snap-stop: always;\n\tscroll-snap-align: end;\n\tposition: relative;\n\t/* z-index: 0; */\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n\tflex-shrink: 0;\n}\n\n[mol_book2] > *:first-child {\n\tscroll-snap-align: start;\n}\n\n[mol_book2] > [mol_view] {\n\ttransform: none; /* prevent content clipping */\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\t/* background: var(--mol_theme_back); */\n}\n");
 })($ || ($ = {}));
 //book2.view.css.js.map
 ;
@@ -6843,6 +6843,425 @@ var $;
     $.$mol_style_attach("mol/book2/demo/demo.view.css", "[mol_book2_demo_first], \n[mol_book2_demo_second], \n[mol_book2_demo_third] {\n\talign-items: center;\n\tjustify-content: center;\n\tfont-size: 2rem;\n\tdisplay: flex;\n}\n\n\n[mol_book2_demo_first] {\n\tflex: 1 0 20rem;\n\tbackground-color: hsla(240, 100%, 50%, .2);\n}\n\n[mol_book2_demo_second] {\n\tflex: 1 0 100%;\n\tbackground-color: hsla(120, 100%, 50%, .2);\n}\n\n[mol_book2_demo_third] {\n\tflex: 1 0 60rem;\n\tbackground-color: hsla(0, 100%, 50%, .2);\n}\n");
 })($ || ($ = {}));
 //demo.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_page extends $.$mol_view {
+        sub() {
+            return [
+                this.Head(),
+                this.Body(),
+                this.Foot()
+            ];
+        }
+        Title() {
+            const obj = new this.$.$mol_view();
+            obj.dom_name = () => "h1";
+            obj.sub = () => [
+                this.title()
+            ];
+            return obj;
+        }
+        tools() {
+            return [];
+        }
+        Tools() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => this.tools();
+            return obj;
+        }
+        head() {
+            return [
+                this.Title(),
+                this.Tools()
+            ];
+        }
+        Head() {
+            const obj = new this.$.$mol_view();
+            obj.minimal_height = () => 64;
+            obj.sub = () => this.head();
+            return obj;
+        }
+        body_scroll_top(val) {
+            if (val !== undefined)
+                return val;
+            return 0;
+        }
+        body() {
+            return [];
+        }
+        Body() {
+            const obj = new this.$.$mol_scroll();
+            obj.scroll_top = (val) => this.body_scroll_top(val);
+            obj.sub = () => this.body();
+            return obj;
+        }
+        foot() {
+            return [];
+        }
+        Foot() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => this.foot();
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_page.prototype, "Title", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_page.prototype, "Tools", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_page.prototype, "Head", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_page.prototype, "body_scroll_top", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_page.prototype, "Body", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_page.prototype, "Foot", null);
+    $.$mol_page = $mol_page;
+})($ || ($ = {}));
+//page.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const { per, rem } = $.$mol_style_unit;
+        const { calc } = $.$mol_style_func;
+        $.$mol_style_define($$.$mol_page, {
+            display: 'flex',
+            margin: 0,
+            flex: {
+                basis: 'auto',
+                direction: 'column',
+            },
+            position: 'relative',
+            alignSelf: 'stretch',
+            maxWidth: per(100),
+            maxHeight: per(100),
+            boxSizing: 'border-box',
+            background: {
+                color: $.$mol_theme.back,
+            },
+            color: $.$mol_theme.text,
+            ':focus': {
+                outline: 'none',
+            },
+            Head: {
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'flex-end',
+                flex: 'none',
+                position: 'relative',
+                margin: 0,
+                minHeight: rem(4),
+                padding: $.$mol_gap.block,
+                background: {
+                    color: $.$mol_theme.back,
+                },
+                border: {
+                    radius: $.$mol_gap.round,
+                },
+                boxShadow: `0 0.5rem 0.5rem -0.5rem hsla(0,0%,0%,.25)`,
+                zIndex: 2,
+            },
+            Title: {
+                minHeight: rem(2),
+                margin: 0,
+                padding: $.$mol_gap.text,
+                wordBreak: 'normal',
+                textShadow: '0 0',
+                font: {
+                    size: 'inherit',
+                    weight: 'normal',
+                },
+                flex: {
+                    grow: 1000,
+                    shrink: 1,
+                    basis: 'auto',
+                },
+            },
+            Tools: {
+                flex: {
+                    basis: 'auto',
+                    grow: 0,
+                    shrink: 1,
+                },
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-start',
+                flexWrap: 'wrap',
+            },
+            Body: {
+                flex: {
+                    grow: 1000,
+                    shrink: 1,
+                    basis: per(100),
+                },
+            },
+            Foot: {
+                display: 'flex',
+                justifyContent: 'space-between',
+                flex: 'none',
+                margin: 0,
+                overflow: 'hidden',
+                background: {
+                    color: $.$mol_theme.back,
+                },
+                border: {
+                    radius: $.$mol_gap.round,
+                },
+                boxShadow: `0 -0.5rem 0.5rem -0.5rem hsla(0,0%,0%,.25)`,
+                zIndex: 1,
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//page.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_page extends $.$mol_page {
+            body_scroll_top(next) {
+                return $.$mol_state_session.value(`${this}.body_scroll_top()`, next) || 0;
+            }
+        }
+        $$.$mol_page = $mol_page;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//page.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_cross extends $.$mol_icon {
+        path() {
+            return "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z";
+        }
+    }
+    $.$mol_icon_cross = $mol_icon_cross;
+})($ || ($ = {}));
+//cross.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_book2_catalog extends $.$mol_book2 {
+        param() {
+            return "";
+        }
+        spreads() {
+            return {};
+        }
+        Spread() {
+            const obj = new this.$.$mol_view();
+            return obj;
+        }
+        pages() {
+            return [
+                this.Menu()
+            ];
+        }
+        Link(id) {
+            const obj = new this.$.$mol_link();
+            obj.arg = () => this.arg(id);
+            obj.sub = () => [
+                this.spread_title(id)
+            ];
+            return obj;
+        }
+        Spread_close() {
+            const obj = new this.$.$mol_link();
+            obj.arg = () => this.spread_close_arg();
+            obj.sub = () => [
+                this.Spread_close_icon()
+            ];
+            return obj;
+        }
+        menu_title() {
+            return "";
+        }
+        menu_tools() {
+            return [];
+        }
+        links() {
+            return [];
+        }
+        Links() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => this.links();
+            return obj;
+        }
+        Menu() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => this.menu_title();
+            obj.tools = () => this.menu_tools();
+            obj.body = () => [
+                this.Links()
+            ];
+            return obj;
+        }
+        arg(id) {
+            return {};
+        }
+        spread_title(id) {
+            return "";
+        }
+        spread_close_arg() {
+            return {};
+        }
+        Spread_close_icon() {
+            const obj = new this.$.$mol_icon_cross();
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_book2_catalog.prototype, "Spread", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_book2_catalog.prototype, "Link", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_book2_catalog.prototype, "Spread_close", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_book2_catalog.prototype, "Links", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_book2_catalog.prototype, "Menu", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_book2_catalog.prototype, "Spread_close_icon", null);
+    $.$mol_book2_catalog = $mol_book2_catalog;
+})($ || ($ = {}));
+//catalog.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/book2/catalog/catalog.view.css", "[mol_book2_catalog_links] {\n\tpadding: var(--mol_gap_block);\n}\n");
+})($ || ($ = {}));
+//catalog.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_book2_catalog extends $.$mol_book2_catalog {
+            pages() {
+                return [
+                    this.Menu(),
+                    ...this.spread() ? [this.Spread()] : [],
+                ];
+            }
+            links() {
+                return Object.keys(this.spreads()).map(spread => this.Link(spread));
+            }
+            Spread() {
+                return this.spreads()[this.spread()];
+            }
+            spread() {
+                return this.$.$mol_state_arg.value(this.param()) ?? '';
+            }
+            arg(spread) {
+                return { [this.param()]: spread };
+            }
+            spread_close_arg() {
+                return { [this.param()]: null };
+            }
+            spread_title(spread) {
+                return this.spreads()[spread].title();
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_book2_catalog.prototype, "pages", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_book2_catalog.prototype, "links", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_book2_catalog.prototype, "spread", null);
+        $$.$mol_book2_catalog = $mol_book2_catalog;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//catalog.viwe.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_book2_catalog_demo extends $.$mol_demo_large {
+        title() {
+            return "Catalog of pages";
+        }
+        sub() {
+            return [
+                this.Calatog()
+            ];
+        }
+        Articles() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => "Articles";
+            obj.body = () => [
+                "Articles content"
+            ];
+            return obj;
+        }
+        Images() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => "Images";
+            obj.body = () => [
+                "Images content"
+            ];
+            return obj;
+        }
+        Maps() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => "Maps";
+            obj.body = () => [
+                "Maps content"
+            ];
+            return obj;
+        }
+        Calatog() {
+            const obj = new this.$.$mol_book2_catalog();
+            obj.param = () => "mol_book2_catalog_demo";
+            obj.menu_title = () => "Sections";
+            obj.spreads = () => ({
+                articles: this.Articles(),
+                images: this.Images(),
+                maps: this.Maps()
+            });
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_book2_catalog_demo.prototype, "Articles", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_book2_catalog_demo.prototype, "Images", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_book2_catalog_demo.prototype, "Maps", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_book2_catalog_demo.prototype, "Calatog", null);
+    $.$mol_book2_catalog_demo = $mol_book2_catalog_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
 ;
 "use strict";
 var $;
@@ -11748,18 +12167,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_cross extends $.$mol_icon {
-        path() {
-            return "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z";
-        }
-    }
-    $.$mol_icon_cross = $mol_icon_cross;
-})($ || ($ = {}));
-//cross.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_frame extends $.$mol_scroll {
         dom_name() {
             return "iframe";
@@ -11902,203 +12309,6 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //frame.view.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_page extends $.$mol_view {
-        sub() {
-            return [
-                this.Head(),
-                this.Body(),
-                this.Foot()
-            ];
-        }
-        Title() {
-            const obj = new this.$.$mol_view();
-            obj.dom_name = () => "h1";
-            obj.sub = () => [
-                this.title()
-            ];
-            return obj;
-        }
-        tools() {
-            return [];
-        }
-        Tools() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => this.tools();
-            return obj;
-        }
-        head() {
-            return [
-                this.Title(),
-                this.Tools()
-            ];
-        }
-        Head() {
-            const obj = new this.$.$mol_view();
-            obj.minimal_height = () => 64;
-            obj.sub = () => this.head();
-            return obj;
-        }
-        body_scroll_top(val) {
-            if (val !== undefined)
-                return val;
-            return 0;
-        }
-        body() {
-            return [];
-        }
-        Body() {
-            const obj = new this.$.$mol_scroll();
-            obj.scroll_top = (val) => this.body_scroll_top(val);
-            obj.sub = () => this.body();
-            return obj;
-        }
-        foot() {
-            return [];
-        }
-        Foot() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => this.foot();
-            return obj;
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_page.prototype, "Title", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_page.prototype, "Tools", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_page.prototype, "Head", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_page.prototype, "body_scroll_top", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_page.prototype, "Body", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_page.prototype, "Foot", null);
-    $.$mol_page = $mol_page;
-})($ || ($ = {}));
-//page.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const { per, rem } = $.$mol_style_unit;
-        const { calc } = $.$mol_style_func;
-        $.$mol_style_define($$.$mol_page, {
-            display: 'flex',
-            margin: 0,
-            flex: {
-                basis: 'auto',
-                direction: 'column',
-            },
-            position: 'relative',
-            alignSelf: 'stretch',
-            maxWidth: per(100),
-            maxHeight: per(100),
-            boxSizing: 'border-box',
-            background: {
-                color: $.$mol_theme.back,
-            },
-            color: $.$mol_theme.text,
-            ':focus': {
-                outline: 'none',
-            },
-            Head: {
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'flex-end',
-                flex: 'none',
-                position: 'relative',
-                margin: 0,
-                minHeight: rem(4),
-                padding: $.$mol_gap.block,
-                background: {
-                    color: $.$mol_theme.back,
-                },
-                border: {
-                    radius: $.$mol_gap.round,
-                },
-                boxShadow: `0 0.5rem 0.5rem -0.5rem hsla(0,0%,0%,.25)`,
-                zIndex: 2,
-            },
-            Title: {
-                minHeight: rem(2),
-                margin: 0,
-                padding: $.$mol_gap.text,
-                wordBreak: 'normal',
-                textShadow: '0 0',
-                font: {
-                    size: 'inherit',
-                    weight: 'normal',
-                },
-                flex: {
-                    grow: 1000,
-                    shrink: 1,
-                    basis: 'auto',
-                },
-            },
-            Tools: {
-                flex: {
-                    basis: 'auto',
-                    grow: 0,
-                    shrink: 1,
-                },
-                display: 'flex',
-                justifyContent: 'flex-end',
-                alignItems: 'flex-start',
-                flexWrap: 'wrap',
-            },
-            Body: {
-                flex: {
-                    grow: 1000,
-                    shrink: 1,
-                    basis: per(100),
-                },
-            },
-            Foot: {
-                display: 'flex',
-                justifyContent: 'space-between',
-                flex: 'none',
-                margin: 0,
-                overflow: 'hidden',
-                background: {
-                    color: $.$mol_theme.back,
-                },
-                border: {
-                    radius: $.$mol_gap.round,
-                },
-                boxShadow: `0 -0.5rem 0.5rem -0.5rem hsla(0,0%,0%,.25)`,
-                zIndex: 1,
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//page.view.css.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_page extends $.$mol_page {
-            body_scroll_top(next) {
-                return $.$mol_state_session.value(`${this}.body_scroll_top()`, next) || 0;
-            }
-        }
-        $$.$mol_page = $mol_page;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//page.view.js.map
 ;
 "use strict";
 var $;
