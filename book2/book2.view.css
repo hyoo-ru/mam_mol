@@ -24,6 +24,10 @@
 	flex-shrink: 0;
 }
 
+[mol_book2] > [mol_book2] {
+	display: contents;
+}
+
 [mol_book2] > *:first-child {
 	scroll-snap-align: start;
 }
