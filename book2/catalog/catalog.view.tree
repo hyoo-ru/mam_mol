@@ -5,7 +5,7 @@ $mol_book2_catalog $mol_book2
 	pages /
 		<= Menu $mol_page
 			title <= menu_title \
-			foot <= menu_foot \
+			tools <= menu_tools /
 			body /
 				<= Links $mol_list
 					rows <= links /
