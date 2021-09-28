@@ -1830,6 +1830,8 @@ $mol_labeler_demo $mol_demo_small
 				hint \Jack Sparrow
 				value?val <=> user_name?val \
 
+$mol_icon_download $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
+
 $mol_link_demo $mol_list
 	title @ \Some hyperlinks
 	rows /
@@ -1852,6 +1854,12 @@ $mol_link_demo $mol_list
 			uri \http://example.org
 			title \example.org
 			hint <= external_hint @ \external link
+		<= Download $mol_link
+			uri <= object_uri \
+			file_name \file.csv
+			sub /
+				<= Download_icon $mol_icon_download
+				<= download_label @ \Download
 
 $mol_link_iconed_demo $mol_list
 	title @ \Link with icon

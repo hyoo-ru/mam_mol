@@ -18,6 +18,7 @@ namespace $ {
 		 * 	<= Green
 		 * 	<= Blue
 		 * 	<= External
+		 * 	<= Download
 		 * ```
 		 */
 		rows() {
@@ -26,7 +27,8 @@ namespace $ {
 				this.Red(),
 				this.Green(),
 				this.Blue(),
-				this.External()
+				this.External(),
+				this.Download()
 			] as readonly any[]
 		}
 		
@@ -169,6 +171,60 @@ namespace $ {
 			obj.uri = () => "http://example.org"
 			obj.title = () => "example.org"
 			obj.hint = () => this.external_hint()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * object_uri \
+		 * ```
+		 */
+		object_uri() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Download_icon $mol_icon_download
+		 * ```
+		 */
+		@ $mol_mem
+		Download_icon() {
+			const obj = new this.$.$mol_icon_download()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * download_label @ \Download
+		 * ```
+		 */
+		download_label() {
+			return this.$.$mol_locale.text( '$mol_link_demo_download_label' )
+		}
+		
+		/**
+		 * ```tree
+		 * Download $mol_link
+		 * 	uri <= object_uri
+		 * 	file_name \file.csv
+		 * 	sub /
+		 * 		<= Download_icon
+		 * 		<= download_label
+		 * ```
+		 */
+		@ $mol_mem
+		Download() {
+			const obj = new this.$.$mol_link()
+			
+			obj.uri = () => this.object_uri()
+			obj.file_name = () => "file.csv"
+			obj.sub = () => [
+				this.Download_icon(),
+				this.download_label()
+			] as readonly any[]
 			
 			return obj
 		}

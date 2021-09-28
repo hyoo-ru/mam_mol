@@ -17307,6 +17307,18 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_download extends $.$mol_icon {
+        path() {
+            return "M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z";
+        }
+    }
+    $.$mol_icon_download = $mol_icon_download;
+})($ || ($ = {}));
+//download.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_link_demo extends $.$mol_list {
         title() {
             return this.$.$mol_locale.text('$mol_link_demo_title');
@@ -17317,7 +17329,8 @@ var $;
                 this.Red(),
                 this.Green(),
                 this.Blue(),
-                this.External()
+                this.External(),
+                this.Download()
             ];
         }
         this_label() {
@@ -17379,6 +17392,26 @@ var $;
             obj.hint = () => this.external_hint();
             return obj;
         }
+        object_uri() {
+            return "";
+        }
+        Download_icon() {
+            const obj = new this.$.$mol_icon_download();
+            return obj;
+        }
+        download_label() {
+            return this.$.$mol_locale.text('$mol_link_demo_download_label');
+        }
+        Download() {
+            const obj = new this.$.$mol_link();
+            obj.uri = () => this.object_uri();
+            obj.file_name = () => "file.csv";
+            obj.sub = () => [
+                this.Download_icon(),
+                this.download_label()
+            ];
+            return obj;
+        }
     }
     __decorate([
         $.$mol_mem
@@ -17395,9 +17428,34 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_link_demo.prototype, "External", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_link_demo.prototype, "Download_icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_link_demo.prototype, "Download", null);
     $.$mol_link_demo = $mol_link_demo;
 })($ || ($ = {}));
 //demo.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_link_demo extends $.$mol_link_demo {
+            object_uri() {
+                const blob = new Blob(['hello;world\nhello1;world2'], { type: 'text/csv' });
+                return $.$mol_dom_context.URL.createObjectURL(blob);
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_link_demo.prototype, "object_uri", null);
+        $$.$mol_link_demo = $mol_link_demo;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//demo.view.js.map
 ;
 "use strict";
 var $;
