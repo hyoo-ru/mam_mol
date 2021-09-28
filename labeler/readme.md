@@ -9,11 +9,11 @@ Provides label before the content.
 ```
 <= Count $mol_labeler
 	title <= count_label @ \Count
-	content <= count 0
+	Content <= count 0
 ```
 
 ## Properties
 
 **`title() : string`**
 
-**`content() : any`**
+**`Content() : any`**
