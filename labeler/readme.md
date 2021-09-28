@@ -9,11 +9,16 @@ Provides label before the content.
 ```
 <= Count $mol_labeler
 	title <= count_label @ \Count
-	content <= count 0
+	content /
+		<= count 0
 ```
 
 ## Properties
 
-**`title() : string`**
+**`label(): $mol_view_content[]`** - content of label which renders above.
 
-**`content() : any`**
+**`title(): string`** - title renders as label by default.
+
+**`Content(): any`** - content view.
+
+**`content(): any[]`** - content of content view.
