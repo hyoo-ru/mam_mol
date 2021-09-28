@@ -20,3 +20,9 @@ $mol_link_demo $mol_list
 			uri \http://example.org
 			title \example.org
 			hint <= external_hint @ \external link
+		<= Download $mol_link
+			uri <= object_uri \
+			file_name \file.csv
+			sub /
+				<= Download_icon $mol_icon_download
+				<= download_label @ \Download

@@ -51,3 +51,6 @@ Returns hint that displays on hover.
 	target \_blank
 ```
 
+**`file_name() : string`**
+
+Used to download files. See "Download" in [demo](./demo/demo.view.tree)
