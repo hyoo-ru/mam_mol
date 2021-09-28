@@ -1,7 +1,7 @@
 namespace $ {
 	
 	export type $mol_db_index_schema = {
-		Key: IDBArrayKey,
+		Key: IDBValidKey[],
 		Doc: unknown,
 	}
 	
