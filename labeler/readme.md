@@ -15,6 +15,10 @@ Provides label before the content.
 
 ## Properties
 
-**`title() : string`**
+**`label(): $mol_view_content[]`** - content of label which renders above.
 
-**`Content() : any`**
+**`title(): string`** - title renders as label by default.
+
+**`Content(): any`** - content view.
+
+**`content(): any[]`** - content of content view.
