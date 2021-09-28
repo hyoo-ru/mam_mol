@@ -10,8 +10,9 @@ Component which expands any content on title click.
 <= Spoiler $mol_expander
 	label / \Murder is..
 	content / \majordomo
-	Tools $mol_view sub /
-		<= Lock_icon $mol_icon_lock
+	Tools <= Spoiler_tools $mol_view
+		sub /
+			<= Lock_icon $mol_icon_lock
 ```
 
 ## Properties
