@@ -9,7 +9,8 @@ Provides label before the content.
 ```
 <= Count $mol_labeler
 	title <= count_label @ \Count
-	Content <= count 0
+	content /
+		<= count 0
 ```
 
 ## Properties
