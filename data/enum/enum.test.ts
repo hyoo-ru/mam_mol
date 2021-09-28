@@ -2,8 +2,10 @@ namespace $ {
 
 	enum sex { male , female }
 	const Sex = $mol_data_enum( 'sex' , sex )
-	type sex_value =  $mol_type_assert< typeof Sex.Value , sex >
-
+	
+	// Test disabled due https://github.com/microsoft/TypeScript/issues/46112
+	// type sex_value =  $mol_type_assert< typeof Sex.Value , sex >
+	
 	$mol_test({
 		
 		'config of enum' () {
@@ -44,7 +46,8 @@ namespace $ {
 	
 	const Gender = $mol_data_enum( 'gender' , gender )
 
-	type gender_value =  $mol_type_assert< typeof Gender.Value , gender >
+	// Test disabled due https://github.com/microsoft/TypeScript/issues/46112
+	// type gender_value =  $mol_type_assert< typeof Gender.Value , gender >
 
 	$mol_test({
 		
