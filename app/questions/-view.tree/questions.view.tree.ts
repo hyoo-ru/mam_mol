@@ -16,7 +16,6 @@ namespace $ {
 		 * ```tree
 		 * Menu $mol_page
 		 * 	title <= title_default
-		 * 	minimal_width 400
 		 * 	tools / <= Source_link
 		 * 	body / <= Menu_links
 		 * ```
@@ -26,7 +25,6 @@ namespace $ {
 			const obj = new this.$.$mol_page()
 			
 			obj.title = () => this.title_default()
-			obj.minimal_width = () => 400
 			obj.tools = () => [
 				this.Source_link()
 			] as readonly any[]
@@ -40,7 +38,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Details!id $mol_page
-		 * 	minimal_width 600
 		 * 	title <= question_title!id
 		 * 	tools /
 		 * 		<= Details_permalink!id
@@ -54,7 +51,6 @@ namespace $ {
 		Details(id: any) {
 			const obj = new this.$.$mol_page()
 			
-			obj.minimal_width = () => 600
 			obj.title = () => this.question_title(id)
 			obj.tools = () => [
 				this.Details_permalink(id),

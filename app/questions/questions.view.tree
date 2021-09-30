@@ -4,7 +4,6 @@ $mol_app_questions $mol_book2
 	-
 	Menu $mol_page
 		title <= title_default @ \Questions
-		minimal_width 400
 		tools /
 			<= Source_link $mol_link_source
 				uri \https://github.com/eigenmethod/mol/tree/master/app/questions
@@ -13,7 +12,6 @@ $mol_app_questions $mol_book2
 				rows <= menu_rows /
 	-
 	Details!id $mol_page
-		minimal_width 600
 		title <= question_title!id \
 		tools /
 			<= Details_permalink!id $mol_link
