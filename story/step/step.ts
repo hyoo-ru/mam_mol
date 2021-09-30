@@ -22,6 +22,7 @@ namespace $ {
 	 */
 	 export class $mol_story_step_prop extends $mol_story_step {
 
+		@ $mol_story_skip.method
 		go() {
 			this.object[ this.field ]( this.value )
 		}
@@ -35,6 +36,7 @@ namespace $ {
 	 */
 	 export class $mol_story_step_field extends $mol_story_step {
 
+		@ $mol_story_skip.method
 		go() {
 			this.object[ this.field ] = this.value
 		}

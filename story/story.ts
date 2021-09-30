@@ -96,7 +96,6 @@ namespace $ {
 		}
 
 		/** Undo last twist. **/
-		@ $mol_story_skip.method
 		backward() {
 
 			if( this.prev.length > 0 ) return this.reset()
@@ -110,7 +109,6 @@ namespace $ {
 		}
 
 		/** Redo last rollbacked twist. **/
-		@ $mol_story_skip.method
 		forward() {
 
 			if( this.future.length === 0 ) return
