@@ -40,11 +40,11 @@ obj.foo(2) // doesn't track
 
 obj.set(3) // tracks
 
-// Enforce commit now instead of autocommit after 500ms
-obj.$.$mol_story_current.commit()
-
 // Rollback all uncommited steps
 // obj.$.$mol_story_current.reset()
+
+// Enforce commit now instead of autocommit after 500ms
+obj.$.$mol_story_current.commit()
 
 // Undo
 obj.$.$mol_story_current.backward()
