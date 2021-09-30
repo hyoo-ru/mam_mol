@@ -50,5 +50,5 @@ obj.$.$mol_story_current.commit()
 obj.$.$mol_story_current.backward()
 
 // Redo
-obj.$.$mol_story_current.forward()
+obj.$.$mol_story_current.backward()
 ```
