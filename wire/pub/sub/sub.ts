@@ -1,7 +1,7 @@
 namespace $ {
 	
 	/**
-	 * Publisher that can auto collect other publishers.
+	 * Publisher that can auto collect other publishers. 76B
 	 * 
 	 * 	P1 P2 P3 P4 P5 P6 S1 S2 S3
 	 * 	   ^              ^
@@ -9,8 +9,8 @@ namespace $ {
 	 */
 	export class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
 		
-		protected wire_pubs_cursor = -1
-		protected wire_subs_from = 0
+		protected wire_pubs_cursor = -1 // 4B
+		protected wire_subs_from = 0 // 4B
 		
 		begin() {
 			this.wire_pubs_cursor = 0

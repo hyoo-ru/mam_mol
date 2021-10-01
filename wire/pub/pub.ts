@@ -1,13 +1,13 @@
 namespace $ {
 
 	/**
-	 * Collects subscribers in compact array.
+	 * Collects subscribers in compact array. 68B
 	 * Use `$mol_wire_auto?.promo( pub )` to auto wire.
 	 */
 	export class $mol_wire_pub extends $mol_object2 {
 		
-		protected wire_peers = [] as $mol_wire_pub[]
-		protected wire_pos = [] as number[]
+		protected wire_peers = [] as $mol_wire_pub[] // 28B
+		protected wire_pos = [] as number[] // 28B
 		
 		/**
 		 * Subscribe subscriber to this publisher events and return position of subscriber that required to unsubscribe.
