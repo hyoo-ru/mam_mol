@@ -1,7 +1,7 @@
 namespace $ {
 	
 	/**
-	 * Publisher that can auto collect other publishers.
+	 * Publisher that can auto collect other publishers. 32B
 	 * 
 	 * 	P1 P2 P3 P4 P5 P6 S1 S2 S3
 	 * 	   ^              ^
@@ -9,8 +9,24 @@ namespace $ {
 	 */
 	export class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
 		
-		protected wire_pubs_cursor = -1
-		protected wire_subs_from = 0
+		protected wire_pubs_cursor = -1 // 4B
+		protected wire_subs_from = 0 // 4B
+		
+		get wire_pubs() {
+			const res = [] as $mol_wire_pub[]
+			for( let i = 0; i < this.wire_subs_from; i += 2 ) {
+				res.push( this[i] as $mol_wire_pub )
+			}
+			return res
+		}
+		
+		get wire_subs() {
+			const res = [] as $mol_wire_pub_sub[]
+			for( let i = this.wire_subs_from; i < this.length; i += 2 ) {
+				res.push( this[i] as $mol_wire_pub_sub )
+			}
+			return res
+		}
 		
 		begin() {
 			this.wire_pubs_cursor = 0
@@ -23,59 +39,58 @@ namespace $ {
 			
 			if( this.wire_pubs_cursor < this.wire_subs_from ) {
 			
- 				const next = this.wire_peers[ this.wire_pubs_cursor ]
+ 				const next = this[ this.wire_pubs_cursor ] as $mol_wire_pub
 				
 				if( next === pub ) {
-					++ this.wire_pubs_cursor
+					this.wire_pubs_cursor += 2
 					return
 				}
 
-				next.off( this.wire_pos[ this.wire_pubs_cursor ] )
+				next.off( this[ this.wire_pubs_cursor + 1 ] as number )
 				
 			} else {
 				
-				if( this.wire_subs_from < this.wire_peers.length ) {
-					this.move( this.wire_subs_from, this.wire_peers.length )
+				if( this.wire_subs_from < this.length ) {
+					this.move( this.wire_subs_from, this.length )
 				}
 				
-				++ this.wire_subs_from
+				this.wire_subs_from += 2
 				
 			}			
 			
-			this.wire_peers[ this.wire_pubs_cursor ] = pub
-			this.wire_pos[ this.wire_pubs_cursor ] = pub.on( this as $mol_wire_pub, this.wire_pubs_cursor )
+			this[ this.wire_pubs_cursor ] = pub
+			this[ this.wire_pubs_cursor + 1 ] = pub.on( this, this.wire_pubs_cursor )
 			
-			++ this.wire_pubs_cursor
+			this.wire_pubs_cursor += 2
 		}
 		
 		next() {
 			if( this.wire_pubs_cursor >= this.wire_subs_from ) return null
-			return this.wire_peers[ this.wire_pubs_cursor ]
+			return this[ this.wire_pubs_cursor ] as $mol_wire_pub
 		}
 		
 		end( sub: $mol_wire_sub | null ) {
 			
-			let tail = 0
-			
 			for(
 				let cursor = this.wire_pubs_cursor;
 				cursor < this.wire_subs_from;
-				++ cursor
+				cursor += 2
 			) {
 				
-				const pub = this.wire_peers[ cursor ]
-				pub.off( this.wire_pos[ cursor ] )
+				const pub = this[ cursor ] as $mol_wire_pub
+				pub.off( this[ cursor + 1 ] as number )
 				
-				if( this.wire_subs_from < this.wire_peers.length ) {
-					pub.move( cursor, this.wire_peers.length - 1 )
-				} else {
-					++ tail
+				if( this.wire_subs_from < this.length ) {
+					pub.move( cursor, this.length - 2 )
 				}
 				
 			}
 			
-			const count = this.wire_pubs_cursor + this.wire_peers.length - this.wire_subs_from
-			while( this.wire_peers.length > count ) this.wire_peers.pop()
+			const count = this.wire_pubs_cursor + this.length - this.wire_subs_from
+			while( this.length > count ) {
+				this.pop()
+				this.pop()
+			}
 			
 			this.wire_subs_from = this.wire_pubs_cursor
 			
@@ -84,8 +99,8 @@ namespace $ {
 		}
 		
 		emit( quant: unknown = this ) {
-			for( let i = this.wire_subs_from; i < this.wire_peers.length; ++i ) {
-				this.wire_peers[i].absorb( quant )
+			for( let i = this.wire_subs_from; i < this.length; i += 2 ) {
+				;( this[i] as $mol_wire_pub ).absorb( quant )
 			}
 		}
 		

@@ -60,7 +60,7 @@ namespace $ {
 			if( this.wire_pubs_cursor < 0 ) return
 			this.wire_pubs_cursor = -1
 
-			if( this.wire_subs_from < this.wire_peers.length ) {
+			if( this.wire_subs_from < this.length ) {
 				this.emit( quant )
 			} else {
 				new $mol_after_frame( ()=> this.run() )
@@ -120,7 +120,7 @@ namespace $ {
 
 		}
 		
-		push( next: Result | Error | Promise< Result > ) {
+		put( next: Result | Error | Promise< Result > ) {
 			this.result = next
 			this.emit()
 		}
