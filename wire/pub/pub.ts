@@ -1,21 +1,22 @@
 namespace $ {
 
 	/**
-	 * Collects subscribers in compact array. 68B
+	 * Collects subscribers in compact array. 24B
 	 * Use `$mol_wire_auto?.promo( pub )` to auto wire.
 	 */
-	export class $mol_wire_pub extends $mol_object2 {
+	export class $mol_wire_pub extends Array< $mol_wire_pub | number > {
 		
-		protected wire_peers = [] as $mol_wire_pub[] // 28B
-		protected wire_pos = [] as number[] // 28B
+		// Derived objects should be Arrays.
+		static get [ Symbol.species ]() {
+			return Array
+		}
 		
 		/**
 		 * Subscribe subscriber to this publisher events and return position of subscriber that required to unsubscribe.
 		 */
 		on( sub: $mol_wire_pub, sub_pos: number ) {
-			const pos = this.wire_peers.length
-			this.wire_peers[ pos ] = sub
-			this.wire_pos[ pos ] = sub_pos
+			const pos = this.length
+			this.push( sub, sub_pos )
 			return pos
 		}
 		
@@ -24,26 +25,25 @@ namespace $ {
 		 */
 		off( sub_pos: number ) {
 			
-			if(!( sub_pos < this.wire_peers.length )) {
+			if(!( sub_pos < this.length )) {
 				$mol_fail( new Error( `Wrong pos ${ sub_pos }` ) )
 			}
 			
-			const end = this.wire_peers.length - 1
+			const end = this.length - 2
 			if( sub_pos !== end ) {
 				this.move( end, sub_pos )
 			}
 			
-			this.wire_peers.pop()
-			this.wire_pos.pop()
-			
+			this.pop()
+			this.pop()
 		}
 		
 		/**
 		 * Notify subscribers about something.
 		 */
 		emit( quant: unknown = this ) {
-			for( let i = 0; i < this.wire_peers.length; ++i ) {
-				this.wire_peers[i].absorb( quant )
+			for( let i = 0; i < this.length; i += 2 ) {
+				;( this[i] as $mol_wire_pub ).absorb( quant )
 			}
 		}
 		
@@ -59,11 +59,11 @@ namespace $ {
 		 */
 		move( from_pos: number, to_pos: number ) {
 			
-			const peer = this.wire_peers[ from_pos ]
-			const self_pos = this.wire_pos[ from_pos ]
+			const peer = this[ from_pos ] as $mol_wire_pub
+			const self_pos = this[ from_pos + 1 ] as number
 			
-			this.wire_peers[ to_pos ] = peer
-			this.wire_pos[ to_pos ] = self_pos
+			this[ to_pos ] = peer
+			this[ to_pos + 1 ] = self_pos
 			
 			peer.repos( self_pos, to_pos )
 		}
@@ -72,7 +72,11 @@ namespace $ {
 		 * Updates self position in the peer.
 		 */
 		repos( peer_pos: number, self_pos: number ) {
-			this.wire_pos[ peer_pos ] = self_pos
+			this[ peer_pos + 1 ] = self_pos
+		}
+		
+		[ $mol_dev_format_head ]() {
+			return $mol_dev_format_native( this ),
 		}
 		
 	}

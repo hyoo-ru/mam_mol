@@ -40,7 +40,7 @@ namespace $ {
 			}  else {
 				const fiber = $mol_fiber2.make( this, orig, next )
 				const res = fiber.sync()
-				cache.push( res )
+				cache.put( res )
 				return res
 			}
 			
