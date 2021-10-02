@@ -76,7 +76,7 @@ namespace $ {
 		}
 		
 		[ $mol_dev_format_head ]() {
-			return $mol_dev_format_native( this ),
+			return $mol_dev_format_native( this )
 		}
 		
 	}
