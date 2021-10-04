@@ -8,12 +8,6 @@ namespace $ {
 		Result,
 	> extends $mol_wire_pub_sub {
 		
-		public result: Result | Error | Promise< Result > = undefined as any
-		
-		host: Host
-		task: ( this : Host , ... args : Args )=> Result
-		args: Args
-		
 		static make<
 			Host,
 			Args extends readonly unknown[],
@@ -40,21 +34,46 @@ namespace $ {
 			return new this( host, task, ... args )
 		}
 		
+		public result: Result | Error | Promise< Result > = undefined as any
+		readonly args: Args
+		
 		constructor(
-			host: Host,
-			task: ( this : Host , ... args : Args )=> Result,
+			readonly host: Host,
+			readonly task: ( this : Host , ... args : Args )=> Result,
 			... args: Args
 		) {
 			super()
-			
-			this.host = host
-			this.task = task
 			this.args = args
-			
-			this[ Symbol.toStringTag ] = String( host ) + '.' + $$.$mol_func_name( task )
-			
 		}
 		
+		[ $mol_dev_format_head ]() {
+			
+			const args = [] as any[]
+			for( const val of this.args ) {
+				args.push(
+					$mol_dev_format_auto( val ),
+					$mol_dev_format_shade( ', ' ),
+				)
+			}
+			
+			return $mol_dev_format_div( {},
+				$mol_dev_format_native( this ),
+				$mol_dev_format_shade( ': ' ),
+				$mol_dev_format_accent(
+					... this.host ? [
+						String( this.host ),
+						$mol_dev_format_shade( '.' ),
+					] : [],
+					$$.$mol_func_name( this.task ),
+				),
+				$mol_dev_format_shade( '(' ),
+				... args.slice( 0, -1 ),
+				$mol_dev_format_shade( ') = ' ),
+				this.result,
+			)
+			
+		}
+
 		absorb( quant: unknown ) {
 			
 			if( this.wire_pubs_cursor < 0 ) return
