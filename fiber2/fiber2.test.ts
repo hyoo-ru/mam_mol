@@ -17,7 +17,7 @@ namespace $ {
 			
 		},
 
-		'Prevent potential tnrown promise leakage'() {
+		'Prevent potential leakage of tnrown promise'() {
 
 			class Leaked extends $mol_object2 {
 				

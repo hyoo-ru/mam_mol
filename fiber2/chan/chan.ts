@@ -16,7 +16,7 @@ namespace $ {
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( proto , name )
 		const orig = descr!.value!
 		
-		const key = name instanceof Symbol ? name : Symbol( name as string | number )
+		const key = name instanceof Symbol ? Symbol( String( name ) ) : Symbol( name as string | number )
 
 		;( proto as any )[ key ] = null
 
