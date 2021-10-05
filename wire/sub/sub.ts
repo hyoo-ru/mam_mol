@@ -9,16 +9,11 @@ namespace $ {
 		begin(): $mol_wire_sub | null
 
 		/**
-		 * Promote next publisher to auto wire its togeter.
-		 * Must be used only between `begin` and `end`.
-		 */
-		promo( pub: $mol_wire_pub ): void
-		
-		/**
 		 * Returns next auto wired publisher. It can be easely repormoted.
+		 * Or promotes next publisher to auto wire its togeter.
 		 * Must be used only between `begin` and `end`.
 		 */
-		next(): $mol_wire_pub | null
+		next( pub?: $mol_wire_pub ): $mol_wire_pub | null
 		
 		/**
 		 * Ends auto wire to publishers and unsubscribes from unpromoted publishers.

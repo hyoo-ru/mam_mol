@@ -39,6 +39,13 @@ namespace $ {
 		}
 		
 		/**
+		 * Autowire this publisher with current subscriber.
+		 **/
+		promo() {
+			$mol_wire?.next( this )
+		}
+		
+		/**
 		 * Notify subscribers about something.
 		 */
 		emit( quant: unknown = this ) {
