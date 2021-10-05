@@ -15,9 +15,9 @@ namespace $ {
 			
 			const bu1 = sub.begin()
 			try {
-				$mol_wire?.promo( pub1 )
-				$mol_wire?.promo( pub2 )
-				$mol_wire?.promo( pub2 )
+				pub1.promo()
+				pub2.promo()
+				pub2.promo()
 			} finally {
 				sub.end( bu1 )
 			}
@@ -31,9 +31,9 @@ namespace $ {
 			
 			const bu2 = sub.begin()
 			try {
-				$mol_wire?.promo( pub1 )
-				$mol_wire?.promo( pub1 )
-				$mol_wire?.promo( pub2 )
+				pub1.promo()
+				pub1.promo()
+				pub2.promo()
 			} finally {
 				sub.end( bu2 )
 			}
@@ -45,5 +45,28 @@ namespace $ {
 			
 		},
 		
+		'cyclic detection'( $ ) {
+			
+			const sub1 = new $mol_wire_pub_sub
+			const sub2 = new $mol_wire_pub_sub
+			
+			const bu1 = sub1.begin()
+			try {
+				
+				const bu2 = sub2.begin()
+				try {
+					
+					$mol_assert_fail( ()=> sub1.promo(), 'Circular subscription' )
+					
+				} finally {
+					sub2.end( bu2 )
+				}
+				
+			} finally {
+				sub1.end( bu1 )
+			}
+			
+		},
+
 	})
 }

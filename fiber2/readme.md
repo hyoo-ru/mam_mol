@@ -45,6 +45,7 @@ class App {
 		this.log( User.name() )
 		this.log( 'Finished' )
 	}
+	
 }
 
 $mol_fiber2_async( App ).run() // It must be async at top level

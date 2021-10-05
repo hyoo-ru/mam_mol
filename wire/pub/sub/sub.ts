@@ -1,5 +1,7 @@
 namespace $ {
 	
+	export const $mol_pub_sub_ready = -1
+	
 	/**
 	 * Publisher that can auto collect other publishers. 32B
 	 * 
@@ -9,7 +11,7 @@ namespace $ {
 	 */
 	export class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
 		
-		protected wire_pubs_cursor = -1 // 4B
+		protected wire_pubs_cursor = $mol_pub_sub_ready // 4B
 		protected wire_subs_from = 0 // 4B
 		
 		get wire_pubs() {
@@ -35,20 +37,34 @@ namespace $ {
 			return sub
 		}
 		
-		promo( pub: $mol_wire_pub ) {
+		promo() {
+			
+			if( this.wire_pubs_cursor >= 0 ) {
+				$mol_fail( new Error( 'Circular subscription' ) )
+			}
+			
+			$mol_wire?.next( this )
+		}
+		
+		next( pub?: $mol_wire_pub ): $mol_wire_pub | null {
+			
+			if( this.wire_pubs_cursor < 0 ) $mol_fail( new Error( 'Promo to non begun sub' ) )
 			
 			if( this.wire_pubs_cursor < this.wire_subs_from ) {
 			
  				const next = this[ this.wire_pubs_cursor ] as $mol_wire_pub
+				if( pub === undefined ) return next
 				
 				if( next === pub ) {
 					this.wire_pubs_cursor += 2
-					return
+					return next
 				}
-
+				
 				next.off( this[ this.wire_pubs_cursor + 1 ] as number )
 				
 			} else {
+				
+				if( pub === undefined ) return null
 				
 				if( this.wire_subs_from < this.length ) {
 					this.move( this.wire_subs_from, this.length )
@@ -62,14 +78,13 @@ namespace $ {
 			this[ this.wire_pubs_cursor + 1 ] = pub.on( this, this.wire_pubs_cursor )
 			
 			this.wire_pubs_cursor += 2
-		}
-		
-		next() {
-			if( this.wire_pubs_cursor >= this.wire_subs_from ) return null
-			return this[ this.wire_pubs_cursor ] as $mol_wire_pub
+			
+			return pub
 		}
 		
 		end( sub: $mol_wire_sub | null ) {
+			
+			if( this.wire_pubs_cursor < 0 ) $mol_fail( new Error( 'End of non begun sub' ) )
 			
 			for(
 				let cursor = this.wire_pubs_cursor;

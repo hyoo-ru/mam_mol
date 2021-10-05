@@ -1,7 +1,13 @@
 namespace $ {
 	
 	const handled = new WeakSet< Promise< unknown > >()
+	
+	export const $mol_fiber2_ready = $mol_pub_sub_ready
+	export const $mol_fiber2_fresh = -2
 
+	/**
+	 * Suspendable task with with support both sync/async api.
+	 **/
 	export class $mol_fiber2<
 		Host,
 		Args extends readonly unknown[],
@@ -28,7 +34,7 @@ namespace $ {
 				if( existen.task !== task ) break reuse
 				if( !$mol_compare_deep( existen.args, args ) ) break reuse
 				
-				return existen				
+				return existen
 			}
 			
 			return new this( host, task, ... args )
@@ -76,8 +82,8 @@ namespace $ {
 
 		absorb( quant: unknown ) {
 			
-			if( this.wire_pubs_cursor < 0 ) return
-			this.wire_pubs_cursor = -1
+			if( this.wire_pubs_cursor >= $mol_fiber2_ready ) return
+			this.wire_pubs_cursor = $mol_fiber2_ready
 
 			if( this.wire_subs_from < this.length ) {
 				this.emit( quant )
@@ -89,9 +95,9 @@ namespace $ {
 		
 		run() {
 			
-			$mol_wire?.promo( this )
+			this.promo()
 			
-			if( this.wire_pubs_cursor >= 0 ) return
+			if( this.wire_pubs_cursor < $mol_fiber2_ready ) return
 			
 			const bu = this.begin()
 
@@ -134,7 +140,10 @@ namespace $ {
 				}
 				
 			} finally {
+				
 				this.end( bu )
+				this.wire_pubs_cursor = $mol_fiber2_fresh
+				
 			}
 
 		}

@@ -31,7 +31,7 @@ namespace $ {
 			x.foo( 5 )
 			$mol_assert_equal( x.xxx() , 7 )
 			
-		}
+		},
 
 	})
 }
