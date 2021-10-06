@@ -51,6 +51,7 @@ $mol_speck $mol_view
 $mol_button $mol_view
 	enabled true
 	minimal_height 40
+	minimal_width 40
 	click?event null
 	event_click?event null
 	event *

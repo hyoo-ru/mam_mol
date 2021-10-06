@@ -21,6 +21,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * minimal_width 40
+		 * ```
+		 */
+		minimal_width() {
+			return 40
+		}
+		
+		/**
+		 * ```tree
 		 * click?event null
 		 * ```
 		 */
