@@ -10,7 +10,6 @@
 	word-break: normal;
 	cursor: default;
 	user-select: none;
-	min-width: 2.5rem;
 	border-radius: var(--mol_gap_round);
 }
 [mol_button]:focus {
