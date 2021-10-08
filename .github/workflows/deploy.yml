@@ -38,4 +38,17 @@ jobs:
       with:
         repo-token: ${{ secrets.GH_PAT }}
         site-directory: mol
-
+  
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+    - env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        INPUTS_CLIENT_PAYLOAD: '{"repository":${{ toJson(github.event.repository.name) }}}'
+        INPUTS_EVENT_TYPE: latest
+        INPUTS_REPOSITORY: ${{ matrix.repo }}
+      uses: rekgrpth/github-repository-dispatch-shell-action@v1
+    strategy:
+      matrix:
+        repo:
+          - hyoo-ru/mol.hyoo.ru
