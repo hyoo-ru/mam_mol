@@ -45,7 +45,7 @@ jobs:
     - env:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         INPUTS_CLIENT_PAYLOAD: '{"repository":${{ toJson(github.event.repository.name) }}}'
-        INPUTS_EVENT_TYPE: latest
+        INPUTS_EVENT_TYPE: workflow_dispatch
         INPUTS_REPOSITORY: ${{ matrix.repo }}
       uses: rekgrpth/github-repository-dispatch-shell-action@v1
     strategy:
