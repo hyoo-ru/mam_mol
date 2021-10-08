@@ -1682,7 +1682,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_stub_select_random<Value>(list: Value[]): Value;
+    function $mol_stub_select_random<Value>(list: readonly Value[]): Value;
     function $mol_stub_strings(prefix?: string, count?: number, length?: number): any[];
     function $mol_stub_code(length?: number): string;
     function $mol_stub_price(max?: number): $mol_unit_money_usd;

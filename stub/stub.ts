@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export function $mol_stub_select_random< Value >( list : Value[] ) {
+	export function $mol_stub_select_random< Value >( list : readonly Value[] ) {
 		return list[ Math.floor( Math.random() * list.length ) ]
 	}
 	
