@@ -52,13 +52,13 @@ const db = await $$.$mol_db< ACME >( 'ACME' )
 
 ```typescript
 const db = await $$.$mol_db< ACME >( 'ACME',
-	mig => mig.store_make( 'Users' )
-	mig => mig.stores.Users.index_make( 'ages', [ 'age' ] )
-	mig => mig.stores.Users.index_make( 'names', [ 'name.first', 'name.last' ], !!'unique' )
-	mig => mig.store_make( 'Articles' )
-	mig => mig.stores.Articles.index_make( 'full', [ 'title', 'content' ] )
-	// mig => mig.stores.Articles.index_drop( 'full' )
-	// mig => mig.store_drop( 'Articles' )
+	mig => mig.store_make( 'Users' ),
+	mig => mig.stores.Users.index_make( 'ages', [ 'age' ] ),
+	mig => mig.stores.Users.index_make( 'names', [ 'name.first', 'name.last' ], !!'unique' ),
+	mig => mig.store_make( 'Articles' ),
+	mig => mig.stores.Articles.index_make( 'full', [ 'title', 'content' ] ),
+	// mig => mig.stores.Articles.index_drop( 'full' ),
+	// mig => mig.store_drop( 'Articles' ),
 )
 ```
 
