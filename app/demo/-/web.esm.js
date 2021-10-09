@@ -8742,6 +8742,9 @@ var $;
         graphs() {
             return [];
         }
+        graphs_front() {
+            return [];
+        }
         sub() {
             return this.graph_legends();
         }

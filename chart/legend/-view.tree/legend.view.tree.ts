@@ -13,6 +13,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * graphs_front /$mol_plot_graph
+		 * ```
+		 */
+		graphs_front() {
+			return [
+			] as readonly $mol_plot_graph[]
+		}
+		
+		/**
+		 * ```tree
 		 * sub <= graph_legends
 		 * ```
 		 */
