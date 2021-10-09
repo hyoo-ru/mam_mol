@@ -1,0 +1,8 @@
+$mol_button_share_demo $mol_view
+	title @ \Share button
+	sub /
+		<= Share_self $mol_button_share
+			title \Share this page
+		<= Share_hyoo $mol_button_share
+			title \Share hyoo.ru
+			uri \https://hyoo.ru
