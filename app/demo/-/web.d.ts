@@ -2272,6 +2272,41 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_share extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_share_variant extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_button_share extends $mol_button_minor {
+        uri(): string;
+        sub(): readonly any[];
+        Icon(): $mol_icon_share_variant;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_button_share extends $.$mol_button_share {
+        click(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_button_share_demo extends $mol_view {
+        title(): string;
+        sub(): readonly any[];
+        Share_self(): $$.$mol_button_share;
+        Share_hyoo(): $$.$mol_button_share;
+    }
+}
+
+declare namespace $ {
     class $mol_hor extends $mol_view {
     }
 }

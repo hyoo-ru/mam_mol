@@ -7177,6 +7177,104 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_share extends $.$mol_icon {
+        path() {
+            return "M21,12L14,5V9C7,10 4,15 3,20C5.5,16.5 9,14.9 14,14.9V19L21,12Z";
+        }
+    }
+    $.$mol_icon_share = $mol_icon_share;
+})($ || ($ = {}));
+//share.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_share_variant extends $.$mol_icon {
+        path() {
+            return "M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.19C16.5,7.69 17.21,8 18,8C19.66,8 21,6.66 21,5C21,3.34 19.66,2 18,2C16.34,2 15,3.34 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.81C7.5,9.31 6.79,9 6,9C4.34,9 3,10.34 3,12C3,13.66 4.34,15 6,15C6.79,15 7.5,14.69 8.04,14.19L15.16,18.34C15.11,18.55 15.08,18.77 15.08,19C15.08,20.61 16.39,21.91 18,21.91C19.61,21.91 20.92,20.61 20.92,19C20.92,17.39 19.61,16.08 18,16.08Z";
+        }
+    }
+    $.$mol_icon_share_variant = $mol_icon_share_variant;
+})($ || ($ = {}));
+//variant.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_button_share extends $.$mol_button_minor {
+        uri() {
+            return "";
+        }
+        sub() {
+            return [
+                this.Icon()
+            ];
+        }
+        Icon() {
+            const obj = new this.$.$mol_icon_share_variant();
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_button_share.prototype, "Icon", null);
+    $.$mol_button_share = $mol_button_share;
+})($ || ($ = {}));
+//share.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_button_share extends $.$mol_button_share {
+            click() {
+                this.$.$mol_dom_context.navigator.share({ url: this.uri() });
+            }
+        }
+        $$.$mol_button_share = $mol_button_share;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//share.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_button_share_demo extends $.$mol_view {
+        title() {
+            return this.$.$mol_locale.text('$mol_button_share_demo_title');
+        }
+        sub() {
+            return [
+                this.Share_self(),
+                this.Share_hyoo()
+            ];
+        }
+        Share_self() {
+            const obj = new this.$.$mol_button_share();
+            obj.title = () => "Share this page";
+            return obj;
+        }
+        Share_hyoo() {
+            const obj = new this.$.$mol_button_share();
+            obj.title = () => "Share hyoo.ru";
+            obj.uri = () => "https://hyoo.ru";
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_button_share_demo.prototype, "Share_self", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_button_share_demo.prototype, "Share_hyoo", null);
+    $.$mol_button_share_demo = $mol_button_share_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_hor extends $.$mol_view {
     }
     $.$mol_hor = $mol_hor;

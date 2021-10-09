@@ -13,6 +13,7 @@
 	"$mol_button_demo_major_label": "Click me!",
 	"$mol_button_demo_minor_label": "Or click me..",
 	"$mol_button_demo_title": "All types of buttons in every states",
+	"$mol_button_share_demo_title": "Share button",
 	"$mol_calendar_demo_holiday_title": "Days of month 2018-01 with custom holidays",
 	"$mol_calendar_demo_selection_title": "Days of month 2018-01 with custom selection",
 	"$mol_calendar_demo_simple_title": "Days of curret month",

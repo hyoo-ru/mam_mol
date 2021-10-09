@@ -2,12 +2,34 @@ namespace $ {
 	
 	export class $mol_state_shared extends $mol_object2 {
 		
+		@ $mol_mem
+		db() {
+			
+			type Scheme = {
+				Chunks: {
+					Key: [ string, number, number ] // path, head, self
+					Doc: $hyoo_crowd_chunk & { path: string }
+					Indexes: {
+						Path: [ string ]
+					}
+				}
+			}
+			
+			const init = $mol_fiber_sync( ()=> $$.$mol_db< Scheme >( '$mol_state_shared_db',
+				mig => mig.store_make( 'Chunks' ),
+				mig => mig.stores.Chunks.index_make( 'Path', [ 'path' ] ),
+			) )
+			
+			return init()
+		}
+		
 		server() {
 			// return $mol_dom_context.document.location.origin.replace( /^\w+:/ , 'ws:' )
 			return `wss://sync-hyoo-ru.herokuapp.com/`
 		}
 		
 		server_clock = new $hyoo_crowd_clock
+		db_clock = new $hyoo_crowd_clock
 		
 		@ $mol_mem
 		peer() {
@@ -85,6 +107,7 @@ namespace $ {
 			state.peer = ()=> this.peer()
 			state.keys_serial = ()=> this.keys_serial()
 			state.keys = ()=> this.keys()
+			state.db = ()=> this.db()
 			return state
 		}
 		
@@ -96,6 +119,7 @@ namespace $ {
 			state.request = n => this.request( n )
 			state.path = ()=> this.path()
 			state.version_last = n => this.version_last( n )
+			state.db = ()=> this.db()
 			return state
 		}
 		
@@ -110,14 +134,52 @@ namespace $ {
 		}
 		
 		@ $mol_mem
+		db_load() {
+			
+			return $mol_fiber_defer( ()=> {
+				
+				const db = this.db()
+				const Chunks = db.read( 'Chunks' ).Chunks
+				
+				const path = this.path()
+				const delta = $mol_fiber_sync( ()=> Chunks.indexes.Path.select([ path ]) )()
+				
+				const store = this.store()
+				store.apply( delta )
+				this.version_last( -1 )
+				
+			} )
+			
+		}
+		
+		@ $mol_mem
 		request( next?: unknown ) {
 			
+			const db = this.db()
 			this.socket()
 			const store = this.store()
+			const path = this.path()
 			
-			if( next !== undefined ) {
+			this.db_load()
+			
+			if( next === undefined ) {
+				
+				// $mol_fiber.run( ()=> {
+				// 	$mol_fiber_defer( ()=> {
+				// 		const Chunks = db.read( 'Chunks' ).Chunks
+				// 		const delta = $mol_fiber_sync( ()=> Chunks.indexes.Path.select([ path ]) )()
+				// 		if( delta.length ) {
+				// 			store.apply( delta )
+				// 			this.version_last( -1 )
+				// 		}
+				// 	} )
+				// } )
+				
+			} else {
+				
 				const pub = this.keys_serial().public
 				store.root.sub( pub ).value( pub )
+				
 			}
 			
 			$mol_fiber.run( ()=> {
@@ -125,8 +187,22 @@ namespace $ {
 					
 					const delta = store.delta( this.server_clock )
 					if( next !== undefined && !delta.length ) return
-				
-					this.send( this.path(), next === undefined && !delta.length ? [] : delta )
+					
+					if( next !== undefined ) {
+						
+						const trans = db.change( 'Chunks' )
+						const Chunks = trans.stores.Chunks
+						for( const chunk of delta ) {
+							console.log({ ... chunk, path })
+							Chunks.put( { ... chunk, path }, [ path, chunk.head, chunk.self ] )
+						}
+						trans.commit().then(console.log)
+		
+					}
+					
+					if( delta.length ) {
+						this.send( path, next === undefined && !delta.length ? [] : delta )
+					}
 					
 					for( const chunk of delta ) {
 						this.server_clock.see( chunk.peer, chunk.time )
@@ -135,18 +211,25 @@ namespace $ {
 				} )
 			} )
 			
-			if( $mol_dom_context.navigator.onLine && next === undefined ) {
-				const prev = $mol_mem_cached( ()=> this.request() )
-				if( prev === undefined ) {
-					const wait = $mol_fiber_sync(
-						()=> new Promise( done => {
-							$mol_mem_cached( ()=> this.request_done(),  done )
-							new $mol_after_timeout( 5000, ()=> done( null ) )
-						} )
-					)
-					wait()
-				}
+			if( next === undefined ) {
+				
+				$mol_fiber.run( ()=> {
+					$mol_fiber_defer( ()=> { this.send( path, [] ) } )
+				} )
+				
 			}
+			// if( $mol_dom_context.navigator.onLine && next === undefined ) {
+			// 	const prev = $mol_mem_cached( ()=> this.request() )
+			// 	if( prev === undefined ) {
+			// 		const wait = $mol_fiber_sync(
+			// 			()=> new Promise( done => {
+			// 				$mol_mem_cached( ()=> this.request_done(),  done )
+			// 				new $mol_after_timeout( 5000, ()=> done( null ) )
+			// 			} )
+			// 		)
+			// 		wait()
+			// 	}
+			// }
 			
 			return null
 		}
@@ -199,6 +282,7 @@ namespace $ {
 		@ $mol_mem
 		socket() {
 			
+			const db = this.db()
 			this.heartbeat()
 			
 			const atom = $mol_atom2.current
@@ -229,6 +313,13 @@ namespace $ {
 					return
 					
 				}
+				
+				const trans = db.change( 'Chunks' )
+				const Chunks = trans.stores.Chunks
+				for( const chunk of delta ) {
+					Chunks.put( { ... chunk, path }, [ path, chunk.head, chunk.self ] )
+				}
+				trans.commit()
 				
 				store.apply( delta )
 				

@@ -9,6 +9,7 @@ include \/mol/bench/demo
 include \/mol/book2/demo
 include \/mol/book2/catalog/demo
 include \/mol/button/demo
+include \/mol/button/share/demo
 include \/mol/calendar/demo/holiday
 include \/mol/calendar/demo/selection
 include \/mol/calendar/demo/simple
