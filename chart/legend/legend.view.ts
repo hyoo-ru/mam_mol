@@ -4,11 +4,11 @@ namespace $.$$ {
 
 		@ $mol_mem
 		graphs_front() {
-			return this.graphs().filter( graph => graph.Sample())
+			return this.graphs().filter( graph => graph.Sample()) as readonly $mol_plot_graph[]
 		}
 		
 		graph_legends() {
-			return this.graphs_front().map( ( graph , index )=> this.Graph_legend( index ) )
+			return this.graphs_front().map( ( graph , index )=> this.Graph_legend( index ) ) as readonly $mol_view[]
 		}
 		
 		graph_title( index : number ) {
