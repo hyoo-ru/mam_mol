@@ -11,6 +11,10 @@
 	margin: .75rem 0;
 }
 
+[mol_app_supplies_detail_positions] > * {
+	margin: .25rem 0;
+}
+
 [mol_app_supplies_detail_descr_deck] {
 	margin: 0;
 }
