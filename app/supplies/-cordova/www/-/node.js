@@ -8072,7 +8072,7 @@ var $;
 (function ($) {
     class $mol_app_supplies_position extends $.$mol_card {
         minimal_height() {
-            return 70;
+            return 64;
         }
         position() {
             const obj = new this.$.$mol_app_supplies_domain_supply_position();
