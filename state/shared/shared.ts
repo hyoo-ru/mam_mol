@@ -193,10 +193,10 @@ namespace $ {
 						const trans = db.change( 'Chunks' )
 						const Chunks = trans.stores.Chunks
 						for( const chunk of delta ) {
-							console.log({ ... chunk, path })
+							// console.log({ ... chunk, path })
 							Chunks.put( { ... chunk, path }, [ path, chunk.head, chunk.self ] )
 						}
-						trans.commit().then(console.log)
+						trans.commit()//.then(console.log)
 		
 					}
 					
