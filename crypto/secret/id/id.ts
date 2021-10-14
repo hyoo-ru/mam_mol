@@ -43,11 +43,11 @@ namespace $ {
 	export async function $mol_crypto_secret_id_get( this: $ ) {
 		
 		const cred = await this.$mol_dom_context.navigator.credentials.get({
-            publicKey: {
-                timeout: 1000,
-                challenge: new Uint8Array().buffer
-            },
-        }) as PublicKeyCredential | null
+			publicKey: {
+				timeout: 1000,
+				challenge: new Uint8Array().buffer
+			},
+		}) as PublicKeyCredential | null
 		
 		return $mol_crypto_secret.from( cred!.rawId )
 	}
