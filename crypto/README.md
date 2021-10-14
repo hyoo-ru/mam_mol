@@ -27,6 +27,13 @@ const closed = await Alice.encrypt( data, salt )
 const opened = await Bob.decrypt( closed, salt )
 ```
 
+## Authentication
+
+```typescript
+// Returns authenticated secret key using WebAuthn
+const Alice = await $mol_crypto_secret_id()
+```
+
 ## Asymmetric encoding
 
 ```typescript
