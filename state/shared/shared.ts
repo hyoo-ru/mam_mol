@@ -8,7 +8,7 @@ namespace $ {
 			type Scheme = {
 				Chunks: {
 					Key: [ string, number, number ] // path, head, self
-					Doc: $hyoo_crowd_chunk & { path: string }
+					Doc: { path: string, chunk: $hyoo_crowd_chunk }
 					Indexes: {
 						Path: [ string ]
 					}
@@ -143,6 +143,8 @@ namespace $ {
 				
 				const path = this.path()
 				const delta = $mol_fiber_sync( ()=> Chunks.indexes.Path.select([ path ]) )()
+					.map( doc => doc.chunk )
+					.filter( Boolean )
 				
 				const store = this.store()
 				store.apply( delta )
@@ -194,7 +196,7 @@ namespace $ {
 						const Chunks = trans.stores.Chunks
 						for( const chunk of delta ) {
 							// console.log({ ... chunk, path })
-							Chunks.put( { ... chunk, path }, [ path, chunk.head, chunk.self ] )
+							Chunks.put( { path, chunk }, [ path, chunk.head, chunk.self ] )
 						}
 						trans.commit()//.then(console.log)
 		
@@ -317,7 +319,7 @@ namespace $ {
 				const trans = db.change( 'Chunks' )
 				const Chunks = trans.stores.Chunks
 				for( const chunk of delta ) {
-					Chunks.put( { ... chunk, path }, [ path, chunk.head, chunk.self ] )
+					Chunks.put( { path, chunk }, [ path, chunk.head, chunk.self ] )
 				}
 				trans.commit()
 				
