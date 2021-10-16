@@ -1,5 +1,10 @@
 namespace $ {
 	
+	interface SpeechResultsEvent extends Event {
+		resultIndex: number
+		results: SpeechRecognitionResultList
+	}
+	
 	export class $mol_speech extends $mol_plugin {
 		
 		@ $mol_mem
@@ -73,20 +78,32 @@ namespace $ {
 			api.lang = $mol_locale.lang()
 			
 			api.onnomatch = $mol_fiber_root( ( event : any )=> {
-				this.event_result( null )
+				console.log(event)
+				api.stop()
 				return null
 			})
-			api.onresult = $mol_fiber_root(( event : any )=> {
-				this.event_result( event )
+			api.onresult = $mol_fiber_root(( event: SpeechResultsEvent )=> {
+				this.recognition_index( event.resultIndex )
+				const recognition = event.results[ event.resultIndex ]
+				this.recognition( event.resultIndex, recognition )
 				return null
 			} )
-			api.onerror = $mol_fiber_root( ( event : Event )=> {
+			api.onerror = $mol_fiber_root( ( event : ErrorEvent )=> {
+				if( event.error === 'no-speech' ) return null
+				console.log(event)
 				console.error( new Error( ( event as any ).error || event ) )
-				this.event_result( null )
+				api.stop()
 				return null
 			} )
 			api.onend = ( event : any )=> {
+				this.recognition_index( -1 )
+				console.log(event)
 				if( this.hearing() ) api.start()
+			}
+			api.onspeechend = ( event : any )=> {
+				this.recognition_index( -1 )
+				console.log(event)
+				api.stop()
 			}
 			
 			return api;
@@ -106,10 +123,13 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		static event_result( event? : null | Event & {
-			results : Array< { transcript : string }[] & { isFinal : boolean } >
-		} ) {
-			return event || null
+		static recognition_index( next = -1 ) {
+			return next
+		}
+
+		@ $mol_mem_key
+		static recognition( index: number, next?: SpeechRecognitionResult ) {
+			return next ?? null
 		}
 
 		@ $mol_mem
@@ -117,13 +137,21 @@ namespace $ {
 
 			if( !this.hearing() ) return []
 
-			const result = this.event_result()
-			if( !result ) return []
-
-			const results = this.event_result()?.results ?? []
-			return ( [].slice.call( results ) as typeof results )
+			const last_index = this.recognition_index()
+			if( last_index < 0 ) return []
+			
+			return $mol_range2(
+				index => this.recognition( index )!,
+				()=> last_index + 1,
+			)
+			
 		}
 
+		@ $mol_mem
+		static recognition_last() {
+			return this.recognition( this.recognition_index() ) ?? null
+		}
+		
 		@ $mol_mem
 		static commands() {
 			return this.recognitions().map( result => result[0].transcript.toLowerCase().trim().replace( /[,\.]/g , '' ) )
@@ -168,7 +196,6 @@ namespace $ {
 		}
 		
 		event_catch( found? : string[] ) {
-			console.log( found )
 			return false
 		}
 		
