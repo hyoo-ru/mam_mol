@@ -5845,24 +5845,10 @@ declare namespace $ {
         static speaking(next?: boolean): boolean;
         static hearer(): any;
         static hearing(next?: boolean): boolean;
-        static event_result(event?: null | Event & {
-            results: Array<{
-                transcript: string;
-            }[] & {
-                isFinal: boolean;
-            }>;
-        }): (Event & {
-            results: Array<{
-                transcript: string;
-            }[] & {
-                isFinal: boolean;
-            }>;
-        }) | null;
-        static recognitions(): ({
-            transcript: string;
-        }[] & {
-            isFinal: boolean;
-        })[];
+        static recognition_index(next?: number): number;
+        static recognition(index: number, next?: SpeechRecognitionResult): SpeechRecognitionResult | null;
+        static recognitions(): SpeechRecognitionResult[];
+        static recognition_last(): SpeechRecognitionResult | null;
         static commands(): string[];
         static text(): string;
         commands_skip(next?: number): number;

@@ -21588,21 +21588,34 @@ var $;
             api.continuous = true;
             api.lang = $.$mol_locale.lang();
             api.onnomatch = $.$mol_fiber_root((event) => {
-                this.event_result(null);
+                console.log(event);
+                api.stop();
                 return null;
             });
             api.onresult = $.$mol_fiber_root((event) => {
-                this.event_result(event);
+                this.recognition_index(event.resultIndex);
+                const recognition = event.results[event.resultIndex];
+                this.recognition(event.resultIndex, recognition);
                 return null;
             });
             api.onerror = $.$mol_fiber_root((event) => {
+                if (event.error === 'no-speech')
+                    return null;
+                console.log(event);
                 console.error(new Error(event.error || event));
-                this.event_result(null);
+                api.stop();
                 return null;
             });
             api.onend = (event) => {
+                this.recognition_index(-1);
+                console.log(event);
                 if (this.hearing())
                     api.start();
+            };
+            api.onspeechend = (event) => {
+                this.recognition_index(-1);
+                console.log(event);
+                api.stop();
             };
             return api;
         }
@@ -21617,17 +21630,22 @@ var $;
             }
             return next;
         }
-        static event_result(event) {
-            return event || null;
+        static recognition_index(next = -1) {
+            return next;
+        }
+        static recognition(index, next) {
+            return next ?? null;
         }
         static recognitions() {
             if (!this.hearing())
                 return [];
-            const result = this.event_result();
-            if (!result)
+            const last_index = this.recognition_index();
+            if (last_index < 0)
                 return [];
-            const results = this.event_result()?.results ?? [];
-            return [].slice.call(results);
+            return $.$mol_range2(index => this.recognition(index), () => last_index + 1);
+        }
+        static recognition_last() {
+            return this.recognition(this.recognition_index()) ?? null;
         }
         static commands() {
             return this.recognitions().map(result => result[0].transcript.toLowerCase().trim().replace(/[,\.]/g, ''));
@@ -21658,7 +21676,6 @@ var $;
             return null;
         }
         event_catch(found) {
-            console.log(found);
             return false;
         }
         patterns() {
@@ -21705,10 +21722,16 @@ var $;
     ], $mol_speech, "hearing", null);
     __decorate([
         $.$mol_mem
-    ], $mol_speech, "event_result", null);
+    ], $mol_speech, "recognition_index", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_speech, "recognition", null);
     __decorate([
         $.$mol_mem
     ], $mol_speech, "recognitions", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_speech, "recognition_last", null);
     __decorate([
         $.$mol_mem
     ], $mol_speech, "commands", null);
