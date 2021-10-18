@@ -21,8 +21,8 @@ namespace $.$$ {
 			
 			while( true ) {
 				let text2 = text
-					.replace( /\s+?\S+ сотри слово (пожалуйста|плиз|please)/ , '' )
-					.replace( /^(.*?) сотри (\d+) (слово|слова|слов) (пожалуйста|плиз|please)/ , ( str , text , count )=> text.replace( new RegExp( `(\\s\\S+){${ count }}$` ) , '' ) )
+					.replace( /\s+?\S+ сотри слово (пожалуйста|плиз|please)/i , '' )
+					.replace( /^(.*?) сотри (\d+) (слово|слова|слов) (пожалуйста|плиз|please)/i , ( str , text , count )=> text.replace( new RegExp( `(\\s\\S+){${ count }}$` ) , '' ) )
 				if( text === text2 ) break
 				text = text2
 			}

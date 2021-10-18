@@ -8,7 +8,7 @@ namespace $ {
 			type Scheme = {
 				Chunks: {
 					Key: [ string, number, number ] // path, head, self
-					Doc: $hyoo_crowd_chunk & { path: string }
+					Doc: { path: string, chunk: $hyoo_crowd_chunk }
 					Indexes: {
 						Path: [ string ]
 					}
@@ -115,7 +115,7 @@ namespace $ {
 		sub( key: string ) {
 			const State = this.constructor as typeof $mol_state_shared
 			const state = new State
-			state.node = $mol_const( this.node().sub( key ) )
+			state.node = $mol_const( this.node().sub( key, $hyoo_crowd_struct ) )
 			state.request = n => this.request( n )
 			state.path = ()=> this.path()
 			state.version_last = n => this.version_last( n )
@@ -143,6 +143,8 @@ namespace $ {
 				
 				const path = this.path()
 				const delta = $mol_fiber_sync( ()=> Chunks.indexes.Path.select([ path ]) )()
+					.map( doc => doc.chunk )
+					.filter( Boolean )
 				
 				const store = this.store()
 				store.apply( delta )
@@ -178,7 +180,7 @@ namespace $ {
 			} else {
 				
 				const pub = this.keys_serial().public
-				store.root.sub( pub ).value( pub )
+				store.root.sub( pub, $hyoo_crowd_reg ).value( pub )
 				
 			}
 			
@@ -193,10 +195,10 @@ namespace $ {
 						const trans = db.change( 'Chunks' )
 						const Chunks = trans.stores.Chunks
 						for( const chunk of delta ) {
-							console.log({ ... chunk, path })
-							Chunks.put( { ... chunk, path }, [ path, chunk.head, chunk.self ] )
+							// console.log({ ... chunk, path })
+							Chunks.put( { path, chunk }, [ path, chunk.head, chunk.self ] )
 						}
-						trans.commit().then(console.log)
+						trans.commit()//.then(console.log)
 		
 					}
 					
@@ -237,7 +239,7 @@ namespace $ {
 		@ $mol_mem
 		value( next?: unknown ) {
 			this.request( next )
-			const res = this.node().value( next )
+			const res = this.node().as( $hyoo_crowd_reg ).value( next )
 			this.version_last( next as any )
 			return res
 		}
@@ -245,7 +247,7 @@ namespace $ {
 		@ $mol_mem
 		list( next?: readonly unknown[] ) {
 			this.request( next )
-			const res = this.node().list( next ) ?? []
+			const res = this.node().as( $hyoo_crowd_list ).list( next ) ?? []
 			this.version_last( next as any )
 			return res
 		}
@@ -253,7 +255,7 @@ namespace $ {
 		@ $mol_mem
 		text( next?: string ) {
 			this.request( next )
-			const res = this.node().text( next ) ?? ''
+			const res = this.node().as( $hyoo_crowd_text ).text( next ) ?? ''
 			this.version_last( next as any )
 			return res
 		}
@@ -261,7 +263,7 @@ namespace $ {
 		@ $mol_mem
 		selection( next?: number[] ) {
 			
-			const node = this.node()
+			const node = this.node().as( $hyoo_crowd_text )
 			
 			this.version_last()
 			
@@ -317,7 +319,7 @@ namespace $ {
 				const trans = db.change( 'Chunks' )
 				const Chunks = trans.stores.Chunks
 				for( const chunk of delta ) {
-					Chunks.put( { ... chunk, path }, [ path, chunk.head, chunk.self ] )
+					Chunks.put( { path, chunk }, [ path, chunk.head, chunk.self ] )
 				}
 				trans.commit()
 				
