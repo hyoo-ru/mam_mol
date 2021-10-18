@@ -44,7 +44,7 @@ namespace $ {
 			
 			this.native.close()
 			
-			const request = indexedDB.deleteDatabase( this.name )
+			const request = $mol_dom_context.indexedDB.deleteDatabase( this.name )
 			
 			request.onblocked = console.error
 			return $mol_db_response( request ).then( ()=> {} )
