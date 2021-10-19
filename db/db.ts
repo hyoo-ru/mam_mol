@@ -14,7 +14,7 @@ namespace $ {
 		... migrations: ( ( transaction: $mol_db_transaction< $mol_db_schema > )=> void )[]
 	) {
 		
-		const request = this.indexedDB.open( name, migrations.length ? migrations.length + 1 : undefined )
+		const request = this.$mol_dom_context.indexedDB.open( name, migrations.length ? migrations.length + 1 : undefined )
 		
 		request.onupgradeneeded = event => {
 			
