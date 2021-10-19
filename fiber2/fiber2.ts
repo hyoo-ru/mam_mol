@@ -1,9 +1,8 @@
 namespace $ {
 	
-	const handled = new WeakSet< Promise< unknown > >()
-	
 	export const $mol_fiber2_ready = $mol_pub_sub_ready
-	export const $mol_fiber2_fresh = -2
+	export const $mol_fiber2_doubt = -2
+	export const $mol_fiber2_fresh = -3
 
 	/**
 	 * Suspendable task with with support both sync/async api.
@@ -40,7 +39,7 @@ namespace $ {
 			return new this( host, task, ... args )
 		}
 		
-		public result: Result | Error | Promise< Result > = undefined as any
+		public result: Result | Error | Promise< Result | Error > = undefined as any
 		readonly args: Args
 		
 		constructor(
@@ -103,54 +102,42 @@ namespace $ {
 
 			try {
 				
-				this.result = this.task.call( this.host, ... this.args )
+				let result: typeof this.result = this.task.call( this.host, ... this.args )
 				
-				if( this.result instanceof Promise ) {
-					
-					if( handled.has( this.result ) ) return
-					
-					this.result = this.result.then(
-						res => {
-							this.result = res
-							this.emit()
-							return res
-						},
-						error => {
-							this.result = error
-							this.emit()
-						},
-					)
-					
-					handled.add( this.result )
-
+				if( result instanceof Promise ) {
+					const put = this.put.bind( this )
+					result = result.then( put, put )
 				}
+				
+				this.put( result )
 				
 			} catch( error: any ) {
 				
-				this.result = error
-				
-				if( handled.has( error ) ) return
-				handled.add( error )
-				
 				if( error instanceof Promise ) {
-					error.then(
-						res => this.absorb( res ),
-						err => this.absorb( err ),
-					)
+					const absorb = this.absorb.bind( this )
+					error = error.then( absorb, absorb )
 				}
 				
+				this.put( error )
+				
 			} finally {
-				
 				this.end( bu )
-				this.wire_pubs_cursor = $mol_fiber2_fresh
-				
 			}
 
 		}
 		
-		put( next: Result | Error | Promise< Result > ) {
+		put( next: Result | Error | Promise< Result | Error > ) {
+			
+			const prev = this.result
 			this.result = next
-			this.emit()
+			
+			if( this.wire_subs_from < this.length ) {
+				if( !$mol_compare_deep( prev, next ) ) {
+					this.emit()
+				}
+			}
+			
+			return next
 		}
 		
 		sync() {
