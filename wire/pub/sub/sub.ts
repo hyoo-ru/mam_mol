@@ -111,6 +111,8 @@ namespace $ {
 			
 			$mol_wire = sub
 			
+			this.wire_pubs_cursor = $mol_fiber2_fresh
+			
 		}
 		
 		emit( quant: unknown = this ) {
