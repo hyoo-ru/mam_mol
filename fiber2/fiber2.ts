@@ -74,7 +74,7 @@ namespace $ {
 				$mol_dev_format_shade( '(' ),
 				... args.slice( 0, -1 ),
 				$mol_dev_format_shade( ') = ' ),
-				this.result,
+				$mol_dev_format_auto( this.result ),
 			)
 			
 		}
