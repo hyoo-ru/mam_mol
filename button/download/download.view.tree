@@ -1,0 +1,5 @@
+$mol_button_download $mol_button_minor
+	blob null
+	file_name \blob.bin
+	sub /
+		<= Icon $mol_icon_download
