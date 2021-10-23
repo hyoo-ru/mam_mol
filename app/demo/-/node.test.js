@@ -21580,14 +21580,14 @@ var $;
             api.continuous = true;
             api.lang = $.$mol_locale.lang();
             api.onnomatch = $.$mol_fiber_root((event) => {
-                console.log(event);
                 api.stop();
                 return null;
             });
             api.onresult = $.$mol_fiber_root((event) => {
-                this.recognition_index(event.resultIndex);
+                this.recognition_index([...event.results].filter(res => res.isFinal).length);
                 const recognition = event.results[event.resultIndex];
-                this.recognition(event.resultIndex, recognition);
+                const index = event.resultIndex + this.recognition_offset();
+                this.recognition(index, recognition);
                 return null;
             });
             api.onerror = $.$mol_fiber_root((event) => {
@@ -21599,14 +21599,14 @@ var $;
                 return null;
             });
             api.onend = (event) => {
+                if (this.recognition_index() > 0) {
+                    this.recognition_offset(this.recognition_offset() + this.recognition_index());
+                }
                 this.recognition_index(-1);
-                console.log(event);
                 if (this.hearing())
                     api.start();
             };
             api.onspeechend = (event) => {
-                this.recognition_index(-1);
-                console.log(event);
                 api.stop();
             };
             return api;
@@ -21625,19 +21625,16 @@ var $;
         static recognition_index(next = -1) {
             return next;
         }
+        static recognition_offset(next = 0) {
+            return next;
+        }
         static recognition(index, next) {
             return next ?? null;
         }
         static recognitions() {
             if (!this.hearing())
                 return [];
-            const last_index = this.recognition_index();
-            if (last_index < 0)
-                return [];
-            return $.$mol_range2(index => this.recognition(index), () => last_index + 1);
-        }
-        static recognition_last() {
-            return this.recognition(this.recognition_index()) ?? null;
+            return $.$mol_range2(index => this.recognition(index), () => Math.max(0, this.recognition_index() + this.recognition_offset()));
         }
         static commands() {
             return this.recognitions().map(result => result[0].transcript.toLowerCase().trim().replace(/[,\.]/g, ''));
@@ -21716,14 +21713,14 @@ var $;
         $.$mol_mem
     ], $mol_speech, "recognition_index", null);
     __decorate([
+        $.$mol_mem
+    ], $mol_speech, "recognition_offset", null);
+    __decorate([
         $.$mol_mem_key
     ], $mol_speech, "recognition", null);
     __decorate([
         $.$mol_mem
     ], $mol_speech, "recognitions", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_speech, "recognition_last", null);
     __decorate([
         $.$mol_mem
     ], $mol_speech, "commands", null);
