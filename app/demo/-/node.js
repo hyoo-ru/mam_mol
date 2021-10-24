@@ -7200,7 +7200,7 @@ var $;
         $$.$mol_book2_catalog = $mol_book2_catalog;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-//catalog.viwe.js.map
+//catalog.view.js.map
 ;
 "use strict";
 var $;
