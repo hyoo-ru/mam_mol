@@ -24192,7 +24192,7 @@ var $;
     class $mol_app_demo_detail extends $.$mol_page {
         tools() {
             return [
-                this.Readme_link(),
+                this.Readme(),
                 this.Chat(),
                 this.Source_link(),
                 this.Edit(),
@@ -24204,19 +24204,16 @@ var $;
                 this.Demo()
             ];
         }
-        readme_hint() {
-            return this.$.$mol_locale.text('$mol_app_demo_detail_readme_hint');
-        }
         readme_icon() {
             const obj = new this.$.$mol_icon_information_outline();
             return obj;
         }
-        Readme_link() {
+        Readme() {
             const obj = new this.$.$mol_link();
             obj.arg = () => ({
                 readme: ""
             });
-            obj.hint = () => this.readme_hint();
+            obj.hint = () => this.$.$mol_locale.text('$mol_app_demo_detail_Readme_hint');
             obj.sub = () => [
                 this.readme_icon()
             ];
@@ -24309,7 +24306,7 @@ var $;
     ], $mol_app_demo_detail.prototype, "readme_icon", null);
     __decorate([
         $.$mol_mem
-    ], $mol_app_demo_detail.prototype, "Readme_link", null);
+    ], $mol_app_demo_detail.prototype, "Readme", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_detail.prototype, "Chat", null);
@@ -24612,7 +24609,7 @@ var $;
                     sub.push(...this.chat_pages(selected));
                 }
                 const readme_page = this.readme_page();
-                if (readme_page) {
+                if (readme_page && selected) {
                     sub.push(this.Readme_page());
                 }
                 return sub;
@@ -24634,14 +24631,21 @@ var $;
                 const source_link = this.source_prefix() + pieces.join('/');
                 return source_link;
             }
+            name_parse(name) {
+                const split = name.replace(/_demo.*$/, '').split('_');
+                const keys = split.map((_, index) => split.slice(0, -1 - index).join('_'));
+                const key = keys.find(key => this.repo_dict()[key]);
+                if (!key)
+                    throw new Error(`${this}.name_parse("${name}"): Key "${key}" not found`);
+                const repo = this.repo_dict()[key];
+                const module = split.slice(key.split('_').length);
+                return { repo, module };
+            }
             repo() {
-                const demo = $.$mol_state_arg.value('demo');
-                const name = demo.split('_')[0];
-                return this.repo_dict()[name];
+                return this.name_parse($.$mol_state_arg.value('demo')).repo;
             }
             module() {
-                const demo = $.$mol_state_arg.value('demo');
-                return demo.split('_').slice(1, -1);
+                return this.name_parse($.$mol_state_arg.value('demo')).module;
             }
             chat_link() {
                 return $.$mol_state_arg.make_link({ demo: this.selected() });
@@ -24661,6 +24665,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_app_demo.prototype, "names_demo", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_app_demo.prototype, "name_parse", null);
         __decorate([
             $.$mol_mem
         ], $mol_app_demo.prototype, "edit_uri", null);
@@ -24694,19 +24701,16 @@ var $;
             }
             readme() {
                 let module = this.module();
-                while (module.length > 0) {
-                    try {
-                        return this.$.$mol_fetch.text(this.link(module));
-                    }
-                    catch (error) {
-                        if ('then' in error)
-                            $.$mol_fail_hidden(error);
-                        if (error.message !== 'HTTP Error 404')
-                            $.$mol_fail(error);
+                while (module.length) {
+                    const res = this.$.$mol_fetch.request(this.link(module));
+                    if (`${res.status}`[0] === '2')
+                        return new $.$mol_fetch_response(res).text();
+                    else if (res.status === 404)
                         module = module.slice(0, -1);
-                    }
+                    else
+                        throw new Error(res.statusText || `HTTP Error ${res.status}`);
                 }
-                return 'Readme not found';
+                throw new Error('Readme not found');
             }
         }
         __decorate([

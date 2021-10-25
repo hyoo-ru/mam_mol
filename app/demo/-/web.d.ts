@@ -6575,9 +6575,8 @@ declare namespace $ {
     class $mol_app_demo_detail extends $mol_page {
         tools(): readonly any[];
         body(): readonly any[];
-        readme_hint(): string;
         readme_icon(): $mol_icon_information_outline;
-        Readme_link(): $$.$mol_link;
+        Readme(): $$.$mol_link;
         chat_seed(): string;
         chat_pages(): $$.$mol_page[];
         Chat(): $$.$mol_chat;
@@ -6660,6 +6659,10 @@ declare namespace $.$$ {
         chat_seed(id: string): string;
         logo_uri(): string;
         source_link(): string;
+        name_parse(name: string): {
+            repo: any;
+            module: string[];
+        };
         repo(): any;
         module(): string[];
         chat_link(): string;

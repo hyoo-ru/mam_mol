@@ -516,7 +516,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tools /
-		 * 	<= Readme_link
+		 * 	<= Readme
 		 * 	<= Chat
 		 * 	<= Source_link
 		 * 	<= Edit
@@ -525,7 +525,7 @@ namespace $ {
 		 */
 		tools() {
 			return [
-				this.Readme_link(),
+				this.Readme(),
 				this.Chat(),
 				this.Source_link(),
 				this.Edit(),
@@ -546,15 +546,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * readme_hint @ \Readme
-		 * ```
-		 */
-		readme_hint() {
-			return this.$.$mol_locale.text( '$mol_app_demo_detail_readme_hint' )
-		}
-		
-		/**
-		 * ```tree
 		 * readme_icon $mol_icon_information_outline
 		 * ```
 		 */
@@ -567,20 +558,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Readme_link $mol_link
+		 * Readme $mol_link
 		 * 	arg * readme \
-		 * 	hint <= readme_hint
+		 * 	hint @ \Readme
 		 * 	sub / <= readme_icon
 		 * ```
 		 */
 		@ $mol_mem
-		Readme_link() {
+		Readme() {
 			const obj = new this.$.$mol_link()
 			
 			obj.arg = () => ({
 				readme: ""
 			})
-			obj.hint = () => this.readme_hint()
+			obj.hint = () => this.$.$mol_locale.text( '$mol_app_demo_detail_Readme_hint' )
 			obj.sub = () => [
 				this.readme_icon()
 			] as readonly any[]

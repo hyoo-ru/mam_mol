@@ -2848,10 +2848,10 @@ $mol_app_demo_menu $mol_page
 
 $mol_app_demo_detail $mol_page
 	tools /
-		<= Readme_link $mol_link
+		<= Readme $mol_link
 			arg *
 				readme \
-			hint <= readme_hint @ \Readme
+			hint @ \Readme
 			sub /
 				<= readme_icon $mol_icon_information_outline
 		<= Chat $mol_chat
