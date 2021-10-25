@@ -103,3 +103,7 @@
 [mol_app_demo_chat] {
 	flex: none;
 }
+
+[mol_app_demo_readme] {
+	flex: 1 0 30rem;
+}

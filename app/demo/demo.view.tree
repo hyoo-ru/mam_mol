@@ -1,7 +1,8 @@
 $mol_app_demo $mol_book2
 	editor_title <= detail_title \$mol
 	source_prefix \https://github.com/hyoo-ru/mam_mol/tree/master/
-	readme_template \https://raw.githubusercontent.com/hyoo-ru/mam_mol/master/{module}/readme.md
+	repo_dict *
+		mol \hyoo-ru/mam_mol
 	pages <= blocks /
 	plugins /
 		<= Theme $mol_theme_auto
@@ -14,9 +15,9 @@ $mol_app_demo $mol_book2
 		source_link <= source_link \
 		edit_uri <= edit_uri \
 		Demo <= Demo $mol_view
-	Readme_page!id $mol_app_demo_readme
-		Readme <= Readme!id $mol_text
-			text <= readme!id \
+	Readme_page $mol_app_demo_readme
+		repo <= repo \
+		module <= module /string
 	Welcome $mol_scroll
 		sub /
 			<= Welcome_text $mol_text
@@ -82,13 +83,17 @@ $mol_app_demo_detail $mol_page
 		<= Demo $mol_view
 
 $mol_app_demo_readme $mol_page
+	link_template \https://raw.githubusercontent.com/{repo}/master/{module}/readme.md
+	repo \
+	module /string
+	title @ \Readme
 	tools /
 		<= Close $mol_link 
-			hint <= close_hint @ \Close panel
+			hint @ \Close panel
 			sub /
 				<= Close_icon $mol_icon_cross
 			arg <= close_arg *
 				readme null
-	title @ \Readme
 	body /
 		<= Readme $mol_text
+			text <= readme \
