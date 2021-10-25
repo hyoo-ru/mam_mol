@@ -21,6 +21,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * repo_dict * mol \hyoo-ru/mam_mol
+		 * ```
+		 */
+		repo_dict() {
+			return {
+				mol: "hyoo-ru/mam_mol"
+			}
+		}
+		
+		/**
+		 * ```tree
 		 * pages <= blocks
 		 * ```
 		 */
@@ -82,6 +93,23 @@ namespace $ {
 			obj.source_link = () => this.source_link()
 			obj.edit_uri = () => this.edit_uri()
 			obj.Demo = () => this.Demo()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Readme_page $mol_app_demo_readme
+		 * 	repo <= repo
+		 * 	module <= module
+		 * ```
+		 */
+		@ $mol_mem
+		Readme_page() {
+			const obj = new this.$.$mol_app_demo_readme()
+			
+			obj.repo = () => this.repo()
+			obj.module = () => this.module()
 			
 			return obj
 		}
@@ -201,6 +229,25 @@ namespace $ {
 			const obj = new this.$.$mol_view()
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * repo \
+		 * ```
+		 */
+		repo() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * module /string
+		 * ```
+		 */
+		module() {
+			return [
+			] as readonly string[]
 		}
 		
 		/**
@@ -469,6 +516,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tools /
+		 * 	<= Readme_link
 		 * 	<= Chat
 		 * 	<= Source_link
 		 * 	<= Edit
@@ -477,6 +525,7 @@ namespace $ {
 		 */
 		tools() {
 			return [
+				this.Readme_link(),
 				this.Chat(),
 				this.Source_link(),
 				this.Edit(),
@@ -493,6 +542,50 @@ namespace $ {
 			return [
 				this.Demo()
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * readme_hint @ \Readme
+		 * ```
+		 */
+		readme_hint() {
+			return this.$.$mol_locale.text( '$mol_app_demo_detail_readme_hint' )
+		}
+		
+		/**
+		 * ```tree
+		 * readme_icon $mol_icon_information_outline
+		 * ```
+		 */
+		@ $mol_mem
+		readme_icon() {
+			const obj = new this.$.$mol_icon_information_outline()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Readme_link $mol_link
+		 * 	arg * readme \
+		 * 	hint <= readme_hint
+		 * 	sub / <= readme_icon
+		 * ```
+		 */
+		@ $mol_mem
+		Readme_link() {
+			const obj = new this.$.$mol_link()
+			
+			obj.arg = () => ({
+				readme: ""
+			})
+			obj.hint = () => this.readme_hint()
+			obj.sub = () => [
+				this.readme_icon()
+			] as readonly any[]
+			
+			return obj
 		}
 		
 		/**
@@ -711,6 +804,135 @@ namespace $ {
 		@ $mol_mem
 		Demo() {
 			const obj = new this.$.$mol_view()
+			
+			return obj
+		}
+	}
+	
+	export class $mol_app_demo_readme extends $mol_page {
+		
+		/**
+		 * ```tree
+		 * link_template \https://raw.githubusercontent.com/{repo}/master/{module}/readme.md
+		 * ```
+		 */
+		link_template() {
+			return "https://raw.githubusercontent.com/{repo}/master/{module}/readme.md"
+		}
+		
+		/**
+		 * ```tree
+		 * repo \
+		 * ```
+		 */
+		repo() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * module /string
+		 * ```
+		 */
+		module() {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * title @ \Readme
+		 * ```
+		 */
+		title() {
+			return this.$.$mol_locale.text( '$mol_app_demo_readme_title' )
+		}
+		
+		/**
+		 * ```tree
+		 * tools / <= Close
+		 * ```
+		 */
+		tools() {
+			return [
+				this.Close()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * body / <= Readme
+		 * ```
+		 */
+		body() {
+			return [
+				this.Readme()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Close_icon $mol_icon_cross
+		 * ```
+		 */
+		@ $mol_mem
+		Close_icon() {
+			const obj = new this.$.$mol_icon_cross()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * close_arg * readme null
+		 * ```
+		 */
+		close_arg() {
+			return {
+				readme: null as any
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * Close $mol_link
+		 * 	hint @ \Close panel
+		 * 	sub / <= Close_icon
+		 * 	arg <= close_arg
+		 * ```
+		 */
+		@ $mol_mem
+		Close() {
+			const obj = new this.$.$mol_link()
+			
+			obj.hint = () => this.$.$mol_locale.text( '$mol_app_demo_readme_Close_hint' )
+			obj.sub = () => [
+				this.Close_icon()
+			] as readonly any[]
+			obj.arg = () => this.close_arg()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * readme \
+		 * ```
+		 */
+		readme() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Readme $mol_text text <= readme
+		 * ```
+		 */
+		@ $mol_mem
+		Readme() {
+			const obj = new this.$.$mol_text()
+			
+			obj.text = () => this.readme()
 			
 			return obj
 		}

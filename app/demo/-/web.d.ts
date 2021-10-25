@@ -6506,6 +6506,18 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_icon_information extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_information_outline extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_code_braces extends $mol_icon {
         path(): string;
     }
@@ -6515,11 +6527,15 @@ declare namespace $ {
     class $mol_app_demo extends $mol_book2 {
         editor_title(): string;
         source_prefix(): string;
+        repo_dict(): {
+            mol: string;
+        };
         pages(): readonly any[];
         plugins(): readonly any[];
         Menu(): $$.$mol_app_demo_menu;
         chat_pages(id: any): $$.$mol_page[];
         Detail(id: any): $mol_app_demo_detail;
+        Readme_page(): $$.$mol_app_demo_readme;
         Welcome(): $$.$mol_scroll;
         Detail_empty_message(): $$.$mol_status;
         detail_title(): string;
@@ -6530,6 +6546,8 @@ declare namespace $ {
         source_link(): string;
         edit_uri(): string;
         Demo(): $mol_view;
+        repo(): string;
+        module(): readonly string[];
         welcome_text(): string;
         Welcome_text(): $$.$mol_text;
         detail_empty_prefix(): string;
@@ -6557,6 +6575,9 @@ declare namespace $ {
     class $mol_app_demo_detail extends $mol_page {
         tools(): readonly any[];
         body(): readonly any[];
+        readme_hint(): string;
+        readme_icon(): $mol_icon_information_outline;
+        Readme_link(): $$.$mol_link;
         chat_seed(): string;
         chat_pages(): $$.$mol_page[];
         Chat(): $$.$mol_chat;
@@ -6576,6 +6597,21 @@ declare namespace $ {
         };
         Close(): $$.$mol_link;
         Demo(): $mol_view;
+    }
+    class $mol_app_demo_readme extends $mol_page {
+        link_template(): string;
+        repo(): string;
+        module(): readonly string[];
+        title(): string;
+        tools(): readonly any[];
+        body(): readonly any[];
+        Close_icon(): $mol_icon_cross;
+        close_arg(): {
+            readme: any;
+        };
+        Close(): $$.$mol_link;
+        readme(): string;
+        Readme(): $$.$mol_text;
     }
 }
 
@@ -6615,6 +6651,7 @@ declare namespace $.$$ {
         detail_title(): string;
         names_demo_all(): string[];
         selected(): string;
+        readme_page(): boolean;
         selected_class_name(): string;
         Widget(): Record<string, $mol_view>;
         names_demo(): string[];
@@ -6623,6 +6660,8 @@ declare namespace $.$$ {
         chat_seed(id: string): string;
         logo_uri(): string;
         source_link(): string;
+        repo(): any;
+        module(): string[];
         chat_link(): string;
         edit_uri(): string;
     }
@@ -6633,6 +6672,10 @@ declare namespace $.$$ {
             demo: string;
         };
         option_title(id: string): string;
+    }
+    class $mol_app_demo_readme extends $.$mol_app_demo_readme {
+        link(module: readonly string[]): string;
+        readme(): string;
     }
 }
 
