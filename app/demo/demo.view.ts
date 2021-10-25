@@ -85,6 +85,10 @@ namespace $.$$ {
 		selected() {
 			return $mol_state_arg.value( 'demo' ) || ''
 		}
+		
+		readme_page() {
+			return $mol_state_arg.value( 'readme' ) === ''
+		}
 
 		selected_class_name() {
 			return '$' + this.selected()
@@ -138,6 +142,11 @@ namespace $.$$ {
 				sub.push( ... this.chat_pages( selected ) )
 			}
 			
+			const readme_page = this.readme_page()
+			if ( readme_page ) {
+				sub.push( this.Readme_page() )
+			}
+			
 			return sub
 		}
 
@@ -163,7 +172,18 @@ namespace $.$$ {
 
 			return source_link
 		}
-
+		
+		repo() {
+			const demo = $mol_state_arg.value('demo')!
+			const name = demo.split('_')[ 0 ]
+			return this.repo_dict()[ name ]
+		}
+		
+		module() {
+			const demo = $mol_state_arg.value('demo')!
+			return demo.split('_').slice(1,-1)
+		}
+		
 		chat_link() {
 			return $mol_state_arg.make_link({ demo : this.selected() })
 		}
@@ -197,6 +217,32 @@ namespace $.$$ {
 		
 		option_title( id: string ) {
 			return '$'+ id.replace( '_demo_', '/' ).replace( '_demo', '' )
+		}
+		
+	}
+	
+	export class $mol_app_demo_readme extends $.$mol_app_demo_readme {
+
+		link( module: readonly string[] ) {
+			return this.link_template().replace( '{repo}', this.repo() ).replace( '{module}' , module.join('/') )
+		}
+
+		@ $mol_mem
+		readme() {
+			let module = this.module()
+
+			while( module.length > 0 ) {
+				try {
+					return this.$.$mol_fetch.text( this.link( module ) )
+				} catch( error: any ) {
+					if ( 'then' in error ) $mol_fail_hidden( error )
+					if ( error.message !== 'HTTP Error 404' ) $mol_fail( error )
+
+					module = module.slice( 0 , -1 )
+				}
+			}
+			
+			return 'Readme not found'
 		}
 		
 	}
