@@ -143,7 +143,7 @@ namespace $.$$ {
 			}
 			
 			const readme_page = this.readme_page()
-			if ( readme_page ) {
+			if ( readme_page && selected ) {
 				sub.push( this.Readme_page() )
 			}
 			
@@ -173,15 +173,27 @@ namespace $.$$ {
 			return source_link
 		}
 		
+		@ $mol_mem_key
+		name_parse( name: string ) {
+			const split = name.split('_').filter( item => item !== 'demo' )
+			
+			const keys = split.map( ( _ , index ) => split.slice( 0 , -1-index ).join('_') )
+			const key = keys.find( key => this.repo_dict()[ key ] )
+			
+			if ( !key ) throw new Error(`${ this }.name_parse("${ name }"): Key "${ key }" not found`)
+
+			const repo = this.repo_dict()[ key ]
+			const module = split.slice( key.split('_').length )
+			
+			return { repo , module }
+		}
+		
 		repo() {
-			const demo = $mol_state_arg.value('demo')!
-			const name = demo.split('_')[ 0 ]
-			return this.repo_dict()[ name ]
+			return this.name_parse( $mol_state_arg.value('demo')! ).repo		
 		}
 		
 		module() {
-			const demo = $mol_state_arg.value('demo')!
-			return demo.split('_').slice(1,-1)
+			return this.name_parse( $mol_state_arg.value('demo')! ).module	
 		}
 		
 		chat_link() {
@@ -231,18 +243,17 @@ namespace $.$$ {
 		readme() {
 			let module = this.module()
 
-			while( module.length > 0 ) {
-				try {
-					return this.$.$mol_fetch.text( this.link( module ) )
-				} catch( error: any ) {
-					if ( 'then' in error ) $mol_fail_hidden( error )
-					if ( error.message !== 'HTTP Error 404' ) $mol_fail( error )
+			while( module.length ) {
+				const res = this.$.$mol_fetch.request( this.link( module ) )
 
-					module = module.slice( 0 , -1 )
-				}
+				if ( `${ res.status }`[0] === '2' ) return new $mol_fetch_response( res ).text() 
+
+				else if ( res.status === 404 ) module = module.slice( 0 , -1 )
+
+				else throw new Error( res.statusText || `HTTP Error ${ res.status }` )
 			}
 			
-			return 'Readme not found'
+			throw new Error('Readme not found')
 		}
 		
 	}
