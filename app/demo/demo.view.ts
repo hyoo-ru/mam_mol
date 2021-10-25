@@ -175,7 +175,7 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		name_parse( name: string ) {
-			const split = name.split('_').filter( item => item !== 'demo' )
+			const split = name.replace( /_demo.*$/ , '' ).split('_')
 			
 			const keys = split.map( ( _ , index ) => split.slice( 0 , -1-index ).join('_') )
 			const key = keys.find( key => this.repo_dict()[ key ] )
