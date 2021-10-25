@@ -85,6 +85,10 @@ namespace $.$$ {
 		selected() {
 			return $mol_state_arg.value( 'demo' ) || ''
 		}
+		
+		readme_page() {
+			return $mol_state_arg.value( 'readme' ) === ''
+		}
 
 		selected_class_name() {
 			return '$' + this.selected()
@@ -138,6 +142,11 @@ namespace $.$$ {
 				sub.push( ... this.chat_pages( selected ) )
 			}
 			
+			const readme_page = this.readme_page()
+			if ( readme_page ) {
+				sub.push( this.Readme_page( selected ) )
+			}
+			
 			return sub
 		}
 
@@ -162,6 +171,14 @@ namespace $.$$ {
 			const source_link = this.source_prefix() + pieces.join('/')
 
 			return source_link
+		}
+		
+		@ $mol_mem_key
+		readme( id: string ): string {
+			const module = id.split('_').slice(1, -1)[ 0 ]
+			const readme_link = this.readme_template().replace( '{module}' , module )
+			const readme = this.$.$mol_fetch.text( readme_link )
+			return readme
 		}
 
 		chat_link() {
