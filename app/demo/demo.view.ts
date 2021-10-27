@@ -85,6 +85,10 @@ namespace $.$$ {
 		selected() {
 			return $mol_state_arg.value( 'demo' ) || ''
 		}
+		
+		readme_page() {
+			return $mol_state_arg.value( 'readme' ) === ''
+		}
 
 		selected_class_name() {
 			return '$' + this.selected()
@@ -138,6 +142,11 @@ namespace $.$$ {
 				sub.push( ... this.chat_pages( selected ) )
 			}
 			
+			const readme_page = this.readme_page()
+			if ( readme_page && selected ) {
+				sub.push( this.Readme_page() )
+			}
+			
 			return sub
 		}
 
@@ -163,7 +172,30 @@ namespace $.$$ {
 
 			return source_link
 		}
+		
+		@ $mol_mem_key
+		name_parse( name: string ) {
+			const split = name.replace( /_demo.*$/ , '' ).split('_')
+			
+			const keys = split.map( ( _ , index ) => split.slice( 0 , -1-index ).join('_') )
+			const key = keys.find( key => this.repo_dict()[ key ] )
+			
+			if ( !key ) throw new Error(`${ this }.name_parse("${ name }"): Key "${ key }" not found`)
 
+			const repo = this.repo_dict()[ key ]
+			const module = split.slice( key.split('_').length )
+			
+			return { repo , module }
+		}
+		
+		repo() {
+			return this.name_parse( $mol_state_arg.value('demo')! ).repo		
+		}
+		
+		module() {
+			return this.name_parse( $mol_state_arg.value('demo')! ).module	
+		}
+		
 		chat_link() {
 			return $mol_state_arg.make_link({ demo : this.selected() })
 		}
@@ -197,6 +229,31 @@ namespace $.$$ {
 		
 		option_title( id: string ) {
 			return '$'+ id.replace( '_demo_', '/' ).replace( '_demo', '' )
+		}
+		
+	}
+	
+	export class $mol_app_demo_readme extends $.$mol_app_demo_readme {
+
+		link( module: readonly string[] ) {
+			return this.link_template().replace( '{repo}', this.repo() ).replace( '{module}' , module.join('/') )
+		}
+
+		@ $mol_mem
+		readme() {
+			let module = this.module()
+
+			while( module.length ) {
+				const res = this.$.$mol_fetch.request( this.link( module ) )
+
+				if ( `${ res.status }`[0] === '2' ) return new $mol_fetch_response( res ).text() 
+
+				else if ( res.status === 404 ) module = module.slice( 0 , -1 )
+
+				else throw new Error( res.statusText || `HTTP Error ${ res.status }` )
+			}
+			
+			throw new Error('Readme not found')
 		}
 		
 	}
