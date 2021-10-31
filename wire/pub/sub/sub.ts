@@ -1,7 +1,5 @@
 namespace $ {
 	
-	export const $mol_pub_sub_ready = -1
-	
 	/**
 	 * Publisher that can auto collect other publishers. 32B
 	 * 
@@ -11,7 +9,7 @@ namespace $ {
 	 */
 	export class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
 		
-		protected wire_pubs_cursor = $mol_pub_sub_ready // 4B
+		protected wire_pubs_cursor = $mol_wire_stale // 4B
 		protected wire_subs_from = 0 // 4B
 		
 		get wire_pubs() {
@@ -111,14 +109,19 @@ namespace $ {
 			
 			$mol_wire = sub
 			
-			this.wire_pubs_cursor = $mol_fiber2_fresh
+			this.wire_pubs_cursor = $mol_wire_fresh
 			
 		}
 		
-		emit( quant: unknown = this ) {
+		absorb( quant: number ) {
+			
+			if( this.wire_pubs_cursor >= quant ) return
+			this.wire_pubs_cursor = quant
+			
 			for( let i = this.wire_subs_from; i < this.length; i += 2 ) {
-				;( this[i] as $mol_wire_pub ).absorb( quant )
+				$mol_wire_queue.push( this[i] as $mol_wire_pub_sub )
 			}
+			
 		}
 		
 	}

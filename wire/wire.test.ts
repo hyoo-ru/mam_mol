@@ -5,13 +5,7 @@ namespace $ {
 			
 			const pub1 = new class extends $mol_wire_pub { p = 1 }
 			const pub2 = new class extends $mol_wire_pub { p = 2 }
-			
-			let absorbed = [] as unknown[]
-			const sub = new class extends $mol_wire_pub_sub {
-				absorb( pub: unknown ) {
-					absorbed.push( pub )
-				}
-			}
+			const sub = new $mol_wire_pub_sub
 			
 			const bu1 = sub.begin()
 			try {
@@ -22,12 +16,10 @@ namespace $ {
 				sub.end( bu1 )
 			}
 			
-			pub1.emit()
-			pub2.emit()
+			pub1.emit( $mol_wire_stale )
+			pub2.emit( $mol_wire_stale )
 			
-			$mol_assert_like( absorbed, [ pub1, pub2, pub2 ] )
-			
-			absorbed = []
+			$mol_assert_like( sub.wire_pubs, [ pub1, pub2, pub2 ] )
 			
 			const bu2 = sub.begin()
 			try {
@@ -38,10 +30,10 @@ namespace $ {
 				sub.end( bu2 )
 			}
 			
-			pub1.emit()
-			pub2.emit()
+			pub1.emit( $mol_wire_stale )
+			pub2.emit( $mol_wire_stale )
 			
-			$mol_assert_like( absorbed, [ pub1, pub1, pub2 ] )
+			$mol_assert_like( sub.wire_pubs, [ pub1, pub1, pub2 ] )
 			
 		},
 		

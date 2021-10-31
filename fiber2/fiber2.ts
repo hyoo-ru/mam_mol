@@ -1,9 +1,7 @@
 namespace $ {
 	
-	export const $mol_fiber2_ready = $mol_pub_sub_ready
-	export const $mol_fiber2_doubt = -2
-	export const $mol_fiber2_fresh = -3
-
+	const handled = new WeakSet< Promise< unknown > >()
+	
 	/**
 	 * Suspendable task with with support both sync/async api.
 	 **/
@@ -63,6 +61,7 @@ namespace $ {
 			
 			return $mol_dev_format_div( {},
 				$mol_dev_format_native( this ),
+				$mol_dev_format_shade( this.wire_pubs_cursor >= 0 ? this.wire_pubs_cursor : this.wire_pubs_cursor.constructor.name ),
 				$mol_dev_format_shade( ': ' ),
 				$mol_dev_format_accent(
 					... this.host ? [
@@ -79,14 +78,12 @@ namespace $ {
 			
 		}
 
-		absorb( quant: unknown ) {
-			
-			if( this.wire_pubs_cursor >= $mol_fiber2_ready ) return
-			this.wire_pubs_cursor = $mol_fiber2_ready
+		absorb( quant: number ) {
 
-			if( this.wire_subs_from < this.length ) {
-				this.emit( quant )
-			} else {
+			if( this.wire_pubs_cursor >= quant ) return
+			super.absorb( quant )
+			
+			if( this.wire_subs_from === this.length ) {
 				new $mol_after_frame( ()=> this.run() )
 			}
 			
@@ -96,7 +93,7 @@ namespace $ {
 			
 			this.promo()
 			
-			if( this.wire_pubs_cursor < $mol_fiber2_ready ) return
+			if( this.wire_pubs_cursor < $mol_wire_stale ) return
 			
 			const bu = this.begin()
 
@@ -107,15 +104,17 @@ namespace $ {
 				if( result instanceof Promise ) {
 					const put = this.put.bind( this )
 					result = result.then( put, put )
+					handled.add( result )
 				}
 				
 				this.put( result )
 				
 			} catch( error: any ) {
 				
-				if( error instanceof Promise ) {
-					const absorb = this.absorb.bind( this )
-					error = error.then( absorb, absorb )
+				if( error instanceof Promise && !handled.has( error ) ) {
+					const emit = ()=> this.emit( $mol_wire_stale )
+					error = error.then( emit, emit )
+					handled.add( error )
 				}
 				
 				this.put( error )
@@ -133,7 +132,7 @@ namespace $ {
 			
 			if( this.wire_subs_from < this.length ) {
 				if( !$mol_compare_deep( prev, next ) ) {
-					this.emit()
+					this.emit( $mol_wire_stale )
 				}
 			}
 			
