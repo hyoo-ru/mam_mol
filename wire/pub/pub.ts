@@ -48,17 +48,26 @@ namespace $ {
 		/**
 		 * Notify subscribers about something.
 		 */
-		emit( quant: unknown = this ) {
+		emit( quant = $mol_wire_stale ) {
+			
 			for( let i = 0; i < this.length; i += 2 ) {
-				;( this[i] as $mol_wire_pub ).absorb( quant )
+				$mol_wire_queue.push( this[i] as $mol_wire_sub )
 			}
+			
+			while( $mol_wire_queue.length ) {
+				const next = $mol_wire_queue.pop()!
+				next.absorb( quant )
+			}
+			
 		}
 		
 		/**
 		 * Notify about changes in the publisher.
 		 */
-		absorb( quant?: unknown ) {
-			this.emit( quant )
+		absorb( quant: number ) {
+			for( let i = 0; i < this.length; i += 2 ) {
+				$mol_wire_queue.push( this[i] as $mol_wire_sub )
+			}
 		}
 		
 		/**
