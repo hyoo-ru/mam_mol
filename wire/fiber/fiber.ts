@@ -5,7 +5,7 @@ namespace $ {
 	/**
 	 * Suspendable task with with support both sync/async api.
 	 **/
-	export class $mol_fiber2<
+	export class $mol_wire_fiber<
 		Host,
 		Args extends readonly unknown[],
 		Result,
@@ -19,13 +19,13 @@ namespace $ {
 			host: Host,
 			task: ( this : Host , ... args : Args )=> Result,
 			... args: Args
-		): $mol_fiber2< Host, [ ... Args ], Result > {
+		): $mol_wire_fiber< Host, [ ... Args ], Result > {
 			
 			const existen = $mol_wire?.next()
 			
 			reuse: if( existen ) {
 				
-				if(!( existen instanceof $mol_fiber2 )) break reuse
+				if(!( existen instanceof $mol_wire_fiber )) break reuse
 			
 				if( existen.host !== host ) break reuse
 				if( existen.task !== task ) break reuse
@@ -163,7 +163,7 @@ namespace $ {
 			
 			if( this.result instanceof Promise ) {
 				
-				if( !$mol_wire || !( $mol_wire instanceof $mol_fiber2 ) ) {
+				if( !$mol_wire || !( $mol_wire instanceof $mol_wire_fiber ) ) {
 					$mol_fail( new Error( 'Sync execution of fiber available only inside $mol_fiber2_async' ) )
 				}
 				
