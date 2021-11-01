@@ -11,6 +11,8 @@ namespace $ {
 			return Array
 		}
 		
+		protected subs_from = 0 // 4B
+		
 		/**
 		 * Subscribe subscriber to this publisher events and return position of subscriber that required to unsubscribe.
 		 */
@@ -46,28 +48,35 @@ namespace $ {
 		}
 		
 		/**
+		 * Enforce lazy emitting.
+		 */
+		touch() {
+			this.emit()
+		}
+		
+		/**
 		 * Notify subscribers about something.
 		 */
-		emit( quant = $mol_wire_stale ) {
+		emit() {
 			
-			for( let i = 0; i < this.length; i += 2 ) {
-				$mol_wire_queue.push( this[i] as $mol_wire_sub )
-			}
+			if( !this.absorb( $mol_wire_stale ) ) return false
 			
 			while( $mol_wire_queue.length ) {
 				const next = $mol_wire_queue.pop()!
-				next.absorb( quant )
+				next.absorb( $mol_wire_doubt )
 			}
 			
+			return true
 		}
 		
 		/**
 		 * Notify about changes in the publisher.
 		 */
 		absorb( quant: number ) {
-			for( let i = 0; i < this.length; i += 2 ) {
+			for( let i = this.subs_from; i < this.length; i += 2 ) {
 				$mol_wire_queue.push( this[i] as $mol_wire_sub )
 			}
+			return true
 		}
 		
 		/**

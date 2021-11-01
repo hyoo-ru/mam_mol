@@ -50,6 +50,43 @@ namespace $ {
 			
 		},
 
+		'Skip recalculation when actually no dependency changes'( $ ) {
+			
+			const log = [] as string[]
+			
+			class App extends $mol_object2 {
+
+				static $ = $
+				
+				@ $mol_fiber2_chan
+				static xxx( next? : number ) {
+					log.push( 'xxx' )
+					return next || 1
+				}
+				
+				@ $mol_fiber2_chan
+				static yyy() {
+					log.push( 'yyy' )
+					return [ Math.sign( this.xxx() ) ]
+				}
+				
+				@ $mol_fiber2_chan
+				static zzz() {
+					log.push( 'zzz' )
+					return this.yyy()[0] + 1
+				}
+
+			}
+			
+			App.zzz()
+			$mol_assert_like( log , [ 'zzz', 'yyy', 'xxx' ] )
+			
+			App.xxx( 5 )
+			App.zzz()
+			$mol_assert_like( log , [ 'zzz', 'yyy', 'xxx', 'xxx', 'yyy' ] )
+			
+		},
+
 		// https://github.com/nin-jin/slides/tree/master/reactivity
 		'Dupes: Equality'( $ ) {
 			
