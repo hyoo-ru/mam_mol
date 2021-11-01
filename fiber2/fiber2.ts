@@ -61,7 +61,7 @@ namespace $ {
 			
 			return $mol_dev_format_div( {},
 				$mol_dev_format_native( this ),
-				$mol_dev_format_shade( this.wire_pubs_cursor >= 0 ? this.wire_pubs_cursor : this.wire_pubs_cursor.constructor.name ),
+				$mol_dev_format_shade( this.pubs_cursor >= 0 ? this.pubs_cursor : this.pubs_cursor.constructor.name ),
 				$mol_dev_format_shade( ': ' ),
 				$mol_dev_format_accent(
 					... this.host ? [
@@ -80,26 +80,38 @@ namespace $ {
 
 		absorb( quant: number ) {
 
-			if( this.wire_pubs_cursor >= quant ) return
-			super.absorb( quant )
+			if( !super.absorb( quant ) ) return false
 			
-			if( this.wire_subs_from === this.length ) {
-				new $mol_after_frame( ()=> this.run() )
+			if( this.subs_from === this.length ) {
+				new $mol_after_frame( ()=> this.touch() )
 			}
 			
+			return true
 		}
 		
-		run() {
+		touch() {
 			
-			this.promo()
+			type Result = typeof this.result
 			
-			if( this.wire_pubs_cursor < $mol_wire_stale ) return
+			if( this.pubs_cursor === $mol_wire_fresh ) return
+			
+			check: if( this.pubs_cursor === $mol_wire_doubt ) {
+				
+				for( let i = 0 ; i < this.subs_from; i += 2 ) {
+					;( this[i] as $mol_wire_pub ).touch()
+					if( this.pubs_cursor === $mol_wire_stale ) break check
+				}
+				
+				this.pubs_cursor = $mol_wire_fresh
+				return
+				
+			}
 			
 			const bu = this.begin()
 
 			try {
-				
-				let result: typeof this.result = this.task.call( this.host, ... this.args )
+
+				let result: Result = this.task.call( this.host, ... this.args )
 				
 				if( result instanceof Promise ) {
 					const put = this.put.bind( this )
@@ -112,8 +124,7 @@ namespace $ {
 			} catch( error: any ) {
 				
 				if( error instanceof Promise && !handled.has( error ) ) {
-					const emit = ()=> this.emit( $mol_wire_stale )
-					error = error.then( emit, emit )
+					error = error.finally( ()=> this.emit() )
 					handled.add( error )
 				}
 				
@@ -130,9 +141,11 @@ namespace $ {
 			const prev = this.result
 			this.result = next
 			
-			if( this.wire_subs_from < this.length ) {
+			if( this.subs_from < this.length ) {
 				if( !$mol_compare_deep( prev, next ) ) {
-					this.emit( $mol_wire_stale )
+					for( let i = this.subs_from; i < this.length; i += 2 ) {
+						;( this[i] as $mol_wire_pub_sub ).emit()
+					}
 				}
 			}
 			
@@ -141,7 +154,8 @@ namespace $ {
 		
 		sync() {
 			
-			this.run()
+			this.promo()
+			this.touch()
 			
 			if( this.result instanceof Error ) {
 				return $mol_fail_hidden( this.result )
@@ -163,7 +177,7 @@ namespace $ {
 			
 			while( true ) {
 				
-				this.run()
+				this.touch()
 				
 				if( this.result instanceof Error ) throw this.result
 				

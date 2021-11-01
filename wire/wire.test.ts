@@ -16,8 +16,8 @@ namespace $ {
 				sub.end( bu1 )
 			}
 			
-			pub1.emit( $mol_wire_stale )
-			pub2.emit( $mol_wire_stale )
+			pub1.emit()
+			pub2.emit()
 			
 			$mol_assert_like( sub.wire_pubs, [ pub1, pub2, pub2 ] )
 			
@@ -30,8 +30,8 @@ namespace $ {
 				sub.end( bu2 )
 			}
 			
-			pub1.emit( $mol_wire_stale )
-			pub2.emit( $mol_wire_stale )
+			pub1.emit()
+			pub2.emit()
 			
 			$mol_assert_like( sub.wire_pubs, [ pub1, pub1, pub2 ] )
 			
