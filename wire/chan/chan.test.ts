@@ -7,7 +7,7 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_fiber2_chan
+				@ $mol_wire_chan
 				static value( next = 1 ) { return next + 1 }
 
 			}
@@ -25,17 +25,17 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_fiber2_chan
+				@ $mol_wire_chan
 				static xxx( next? : number ) {
 					return next || 1
 				}
 
-				@ $mol_fiber2_chan
+				@ $mol_wire_chan
 				static yyy() {
 					return this.xxx() + 1
 				}
 
-				@ $mol_fiber2_chan
+				@ $mol_wire_chan
 				static zzz() {
 					return this.yyy() + 1
 				}
@@ -58,19 +58,19 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_fiber2_chan
+				@ $mol_wire_chan
 				static xxx( next? : number ) {
 					log.push( 'xxx' )
 					return next || 1
 				}
 				
-				@ $mol_fiber2_chan
+				@ $mol_wire_chan
 				static yyy() {
 					log.push( 'yyy' )
 					return [ Math.sign( this.xxx() ) ]
 				}
 				
-				@ $mol_fiber2_chan
+				@ $mol_wire_chan
 				static zzz() {
 					log.push( 'zzz' )
 					return this.yyy()[0] + 1
@@ -96,12 +96,12 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_fiber2_chan
+				@ $mol_wire_chan
 				static foo( next? : { numbs: number[] } ) {
 					return next ?? { numbs: [ 1 ] }
 				}
 
-				@ $mol_fiber2_chan
+				@ $mol_wire_chan
 				static bar() {
 					return { ... this.foo(), count: ++ counter }
 				}
@@ -125,12 +125,12 @@ namespace $ {
 		
 				static $ = $
 				
-				@ $mol_fiber2_chan
+				@ $mol_wire_chan
 				static foo() : number {
 					return this.bar() + 1
 				}
 		
-				@ $mol_fiber2_chan
+				@ $mol_wire_chan
 				static bar() : number {
 					return this.foo() + 1
 				}

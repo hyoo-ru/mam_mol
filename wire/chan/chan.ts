@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export function $mol_fiber2_chan<
+	export function $mol_wire_chan<
 		Host extends object ,
 		Field extends keyof Host ,
 		Prop extends Extract< Host[ Field ] , ( next? : any )=> any >,
@@ -20,12 +20,12 @@ namespace $ {
 
 		;( proto as any )[ key ] = null
 
-		const cached = ( host : Host ): $mol_fiber2< Host, readonly Input[], Output > => {
+		const cached = ( host : Host ): $mol_wire_fiber< Host, readonly Input[], Output > => {
 			
 			let cache = ( host as any )[ key ]
 			if( cache ) return cache
 
-			let cache2 = new $mol_fiber2( host, orig )
+			let cache2 = new $mol_wire_fiber( host, orig )
 			;( host as any )[ key ] = cache2
 
 			return cache2
@@ -38,7 +38,7 @@ namespace $ {
 			if( next === undefined ) {
 				return cache.sync()
 			}  else {
-				const fiber = $mol_fiber2.make( this, orig, next )
+				const fiber = $mol_wire_fiber.make( this, orig, next )
 				const res = fiber.sync()
 				cache.put( res )
 				return res

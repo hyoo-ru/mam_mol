@@ -6,7 +6,7 @@ namespace $ {
 
 			class Sync extends $mol_object2 {
 				
-				@ $mol_fiber2_method
+				@ $mol_wire_method
 				static calc( a: number, b: number ) {
 					return a + b
 				}
@@ -25,9 +25,9 @@ namespace $ {
 					return a
 				}
 				
-				@ $mol_fiber2_method
+				@ $mol_wire_method
 				static calc() {
-					const syn = $mol_fiber2_sync( this )
+					const syn = $mol_wire_sync( this )
 					return syn.val( 1 ) + syn.val( 2 )
 				}
 				
@@ -49,12 +49,12 @@ namespace $ {
 				}
 				
 				static sum( a: number, b: number ) {
-					const syn = $mol_fiber2_sync( this )
+					const syn = $mol_wire_sync( this )
 					return syn.val( a ) + syn.val( b )
 				}
 				
 				static async calc( a: number, b: number ) {
-					return 5 + await $mol_fiber2_async( this ).sum( a, b )
+					return 5 + await $mol_wire_async( this ).sum( a, b )
 				}
 				
 			}
@@ -70,7 +70,7 @@ namespace $ {
 				static logs_idemp = 0
 				static logs_unidemp = 0
 				
-				@ $mol_fiber2_method
+				@ $mol_wire_method
 				static log_idemp() {
 					this.logs_idemp += 1
 				}
@@ -86,12 +86,12 @@ namespace $ {
 				static sum( a: number, b: number ) {
 					this.log_idemp()
 					this.log_unidemp()
-					const syn = $mol_fiber2_sync( this )
+					const syn = $mol_wire_sync( this )
 					return syn.val( a ) + syn.val( b )
 				}
 				
 				static async calc( a: number, b: number ) {
-					return 5 + await $mol_fiber2_async( this ).sum( a, b )
+					return 5 + await $mol_wire_async( this ).sum( a, b )
 				}
 				
 			}
@@ -112,7 +112,7 @@ namespace $ {
 				
 				static check() {
 					try {
-						return $mol_fiber2_sync( Handle ).sum( 1, 2 )
+						return $mol_wire_sync( Handle ).sum( 1, 2 )
 					} catch( error: any ) {
 						if( error instanceof Promise ) $mol_fail_hidden( error )
 						$mol_assert_equal( error.message, 'test error 3' )
@@ -121,7 +121,7 @@ namespace $ {
 				
 			}
 				
-			await $mol_fiber2_async( Handle ).check()
+			await $mol_wire_async( Handle ).check()
 			
 		},
 		
