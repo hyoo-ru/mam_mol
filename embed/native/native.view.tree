@@ -5,4 +5,4 @@ $mol_embed_native $mol_view
 		data <= uri?val \
 		type <= mime \
 	sub /
-		\
+		<= title?val \

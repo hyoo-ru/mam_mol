@@ -2572,7 +2572,9 @@ $mol_text_image $mol_view
 		mol_text_type <= type?val \
 		data <= link?val \
 	sub /
-		<= title?val \
+		<= Image $mol_image
+			uri <= link
+			title <= title?val \
 
 $mol_text_demo $mol_view
 	title @ \Markdown visualization example

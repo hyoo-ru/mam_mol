@@ -574,12 +574,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= title?val
+		 * sub / <= Image
 		 * ```
 		 */
 		sub() {
 			return [
-				this.title()
+				this.Image()
 			] as readonly any[]
 		}
 		
@@ -614,6 +614,23 @@ namespace $ {
 		title(val?: any) {
 			if ( val !== undefined ) return val as never
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Image $mol_image
+		 * 	uri <= link
+		 * 	title <= title?val
+		 * ```
+		 */
+		@ $mol_mem
+		Image() {
+			const obj = new this.$.$mol_image()
+			
+			obj.uri = () => this.link()
+			obj.title = () => this.title()
+			
+			return obj
 		}
 	}
 	
