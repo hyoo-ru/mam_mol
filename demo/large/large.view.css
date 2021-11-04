@@ -7,14 +7,4 @@
 	max-width: valc( 100% - 1.5rem );
 	max-height: valc( 100% - 1.5rem );
 	overflow: hidden;
-	/* height: 100%;
-	width: 100%;
-	overflow: hidden;
-	background: var(--mol_theme_back);
-	color: var(--mol_theme_text);
-	position: relative;
-	display: flex;
-	align-items: stretch;
-	box-sizing: border-box;
-	align-self: stretch; */
 }
