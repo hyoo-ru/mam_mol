@@ -1,6 +1,7 @@
 namespace $ {
 	$mol_test({
 		
+		// https://github.com/nin-jin/slides/tree/master/reactivity#component-states
 		'Cached channel' ($) {
 
 			class App extends $mol_object2 {
@@ -19,7 +20,8 @@ namespace $ {
 
 		},
 
-		'Lazy recalculation of cached values'( $ ) {
+		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--constant-consistency-of-states
+		'Auto recalculation of cached values'( $ ) {
 			
 			class App extends $mol_object2 {
 
@@ -50,6 +52,7 @@ namespace $ {
 			
 		},
 
+		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--only-necessary-calculations
 		'Skip recalculation when actually no dependency changes'( $ ) {
 			
 			const log = [] as string[]
@@ -87,7 +90,7 @@ namespace $ {
 			
 		},
 
-		// https://github.com/nin-jin/slides/tree/master/reactivity
+		// https://github.com/nin-jin/slides/tree/master/reactivity#dupes-equality
 		'Dupes: Equality'( $ ) {
 			
 			let counter = 0
@@ -118,7 +121,7 @@ namespace $ {
 			
 		},
 
-		// https://github.com/nin-jin/slides/tree/master/reactivity
+		// https://github.com/nin-jin/slides/tree/master/reactivity#cycle-fail
 		'Cycle: Fail'( $ ) {
 		
 			class App extends $mol_object {
