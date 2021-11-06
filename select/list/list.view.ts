@@ -51,8 +51,10 @@ namespace $.$$ {
 		@ $mol_mem
 		sub() {
 			return [
-				... this.value().map( ( _, index )=> this.Badge( index ) ),
 				this.Pick(),
+				... this.value()
+					.map( ( _, index )=> this.Badge( index ) )
+					.reverse(),
 			]
 		}
 

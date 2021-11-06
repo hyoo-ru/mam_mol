@@ -47,6 +47,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Pick $mol_select
+		 * 	align_hor <= align_hor
 		 * 	options <= options_pickable
 		 * 	value?val <=> pick?val
 		 * 	option_label!key <= option_title!key
@@ -59,6 +60,7 @@ namespace $ {
 		Pick() {
 			const obj = new this.$.$mol_select()
 			
+			obj.align_hor = () => this.align_hor()
 			obj.options = () => this.options_pickable()
 			obj.value = (val?: any) => this.pick(val)
 			obj.option_label = (key: any) => this.option_title(key)
@@ -114,6 +116,15 @@ namespace $ {
 		 */
 		drop_enabled() {
 			return this.enabled()
+		}
+		
+		/**
+		 * ```tree
+		 * align_hor \right
+		 * ```
+		 */
+		align_hor() {
+			return "right"
 		}
 		
 		/**
