@@ -6,6 +6,9 @@ $mol_app_demo $mol_book2
 	pages <= blocks /
 	plugins /
 		<= Theme $mol_theme_auto
+	demo_block_list /
+		\$mol_demo_small
+		\$mol_demo_large
 	Menu $mol_app_demo_menu
 		names <= names_demo_filtered /string
 		tags_all <= tags_demo_selectable /string

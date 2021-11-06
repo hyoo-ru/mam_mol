@@ -15,31 +15,32 @@ namespace $.$$ {
 
 		@ $mol_mem
 		names_demo_all() {
-			var next : string[] = []
-			for( var name in this.$ ) {
-				if( !/^\$.*_demo($|_)/i.test( name ) ) continue
-				if( /^\$mol_demo/.test( name ) ) continue
-				if( /^\$mol_app_demo/.test( name ) ) continue
+			const next : string[] = []
+
+			for( const name in this.$ ) {
 				if( typeof this.$[ name ] !== 'function' ) continue
+
+				if( !$mol_func_is_class( this.$[ name ] ) ) continue
+
+				if( !( this.$[ name ].prototype instanceof $mol_demo ) ) continue
+
+				if ( this.demo_block_list().includes( name ) ) continue
+				
 				next.push( name.substring( 1 ) )
 			}
+
 			return next.sort()
 		}
 
 		@ $mol_mem_key
 		widget_tags( name: string ) {
-			const tags = this.Widget()[ name ].tags?.()
+			const tags = this.Widget()[ name ].tags()
 
-			if( tags ) {
-				if( tags.length === 0 ) {
-					console.warn( `Demo widget ${ name } without tags` )
-					return [ 'untagged' ]
-				} else {
-					return tags
-				}
+			if( tags.length === 0 ) {
+				console.warn( `Demo widget without tags: ${ name }` )
+				return [ 'untagged' ]
 			} else {
-				console.warn( `Demo widget ${ name } without tags property` )
-				return []
+				return tags
 			}
 		}
 
