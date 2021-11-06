@@ -14,3 +14,11 @@ $mol_scroll_demo $mol_demo_large
 					<= Filler7 $mol_filler
 					<= Filler8 $mol_filler
 					<= Filler9 $mol_filler
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_scroll
+		\$mol_filler
+		\$mol_list
+		\scroll
+		\container
+

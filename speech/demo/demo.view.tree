@@ -9,4 +9,14 @@ $mol_speech_demo $mol_demo_small
 		<= Speak $mol_button_major
 			click?val <=> speak?val null
 			sub / \Speak
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_speech
+		\$mol_icon
+		\$mol_row
+		\$mol_button
+		\speech
+		\voice
+		\recognition
+		\dictation
 		

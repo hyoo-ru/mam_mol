@@ -1,4 +1,4 @@
-$mol_button_share_demo $mol_view
+$mol_button_share_demo $mol_demo
 	title @ \Share button
 	sub /
 		<= Share_self $mol_button_share
@@ -6,3 +6,9 @@ $mol_button_share_demo $mol_view
 		<= Share_hyoo $mol_button_share
 			title \Share hyoo.ru
 			uri \https://hyoo.ru
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_button_share
+		\share
+		\button
+		\icon

@@ -21,3 +21,10 @@ $mol_plot_demo $mol_demo_large
 					title <= Voltage_title @ \V
 				<= Time $mol_plot_ruler_hor
 					title <= Time_title @ \ms
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_plot
+		\visualization
+		\chart
+		\graph
+		\dashboard

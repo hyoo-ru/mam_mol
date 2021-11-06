@@ -24,4 +24,15 @@ $mol_drag_demo $mol_demo_large
 			Sub <= Task_link!task $mol_link
 				uri <= task_uri!task \
 				sub / <= task_title!task \
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_drag
+		\$mol_drop
+		\$mol_float
+		\$mol_link
+		\$mol_icon
+		\$mol_scroll
+		\drag
+		\dragndrop
+		\list
 

@@ -18,3 +18,12 @@ $mol_bar_demo $mol_demo_small
 					checked?val <=> confirmed?val false
 				<= Three_submit $mol_button_minor
 					title <= submit_title \Submit
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_bar
+		\$mol_string
+		\$mol_check
+		\$mol_button
+		\bar
+		\group
+		\container

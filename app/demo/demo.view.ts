@@ -25,7 +25,74 @@ namespace $.$$ {
 			}
 			return next.sort()
 		}
-		
+
+		@ $mol_mem_key
+		widget_tags( name: string ) {
+			const tags = this.Widget()[ name ].tags?.()
+
+			if( tags ) {
+				if( tags.length === 0 ) {
+					console.warn( `Demo widget ${ name } without tags` )
+					return [ 'untagged' ]
+				} else {
+					return tags
+				}
+			} else {
+				console.warn( `Demo widget ${ name } without tags property` )
+				return []
+			}
+		}
+
+		@ $mol_mem
+		names_demo_filtered() {
+			const filter_tags = this.Menu().tags_filter()
+
+			return filter_tags.length
+				? this.names_demo_all().filter( name => {
+					const component_tags = this.widget_tags( name )
+					return filter_tags.every( tag => component_tags.includes( tag ) )
+				} )
+				: this.names_demo_all()
+		}
+
+		@ $mol_mem
+		tags_demo_all() {
+			return Array.from(
+				new Set(
+					this.names_demo_all().flatMap( name => {
+						return this.widget_tags( name )
+					} )
+				)
+			).map( tag => tag.toLowerCase() ).sort()
+		}
+
+		@ $mol_mem
+		tags_demo_selectable() {
+			const filter_tags = this.Menu().tags_filter()
+
+			if( filter_tags.length === 0 ) return this.tags_demo_all()
+
+			const filtered_names = this.names_demo_filtered()
+
+			if( filtered_names.length === 1 ) return filter_tags
+
+			return this.tags_demo_all().filter( tag => {
+				if( !filter_tags.includes( tag ) ) {
+					const all_widgets_include_tag = filtered_names.every(
+						name => this.widget_tags( name ).includes( tag )
+					)
+
+					const all_widgets_not_include_tag = filtered_names.every(
+						name => !this.widget_tags( name ).includes( tag )
+					)
+
+					return !all_widgets_include_tag && !all_widgets_not_include_tag
+				}
+
+				return true
+			} )
+		}
+
 		selected() {
 			return $mol_state_arg.value( 'demo' ) || ''
 		}
@@ -42,7 +109,7 @@ namespace $.$$ {
 		Widget() {
 			return $mol_atom2_dict({
 				get : ( name : string )=> {
-					const Class : typeof $mol_view = this.$[ '$' + name ]
+					const Class : typeof $mol_demo = this.$[ '$' + name ]
 					return new Class()
 				}
 			})
@@ -135,15 +202,31 @@ namespace $.$$ {
 	export class $mol_app_demo_menu extends $.$mol_app_demo_menu {
 		
 		@ $mol_mem
-		names_filtered() {
-			const filter = this.filter().toLowerCase()
-			const names = this.names().filter( name => ( name.toLowerCase().indexOf( filter ) != -1 ) )
-			return names
+		tags_dictionary() {
+			return this.tags_all().reduce( ( res, tag ) => {
+				res[ tag ] = tag
+				return res
+			}, {} as Record<string, string> )
+		}
+
+		@ $mol_mem
+		tags_filter( next?: string[] ) {
+			if( next ) {
+				if( next.length !== 0 ) {
+					this.$.$mol_state_arg.value( 'demo_tags', next.join() )
+				} else {
+					this.$.$mol_state_arg.value( 'demo_tags', null )
+				}
+				return next
+			} else {
+				const tags_string = this.$.$mol_state_arg.value( 'demo_tags' )
+				return tags_string ? tags_string.split( ',' ) : []
+			}
 		}
 		
 		@ $mol_mem
 		options() {
-			return this.names_filtered().map( id => this.Option( id ) )
+			return this.names().map( id => this.Option( id ) )
 		}
 		
 		option_arg( id: string ) {

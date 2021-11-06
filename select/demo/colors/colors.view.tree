@@ -1,4 +1,4 @@
-$mol_select_demo_colors $mol_view
+$mol_select_demo_colors $mol_demo
 	title @ \Color picker with filter and custom rows
 	sub /
 		<= Color $mol_select
@@ -15,6 +15,13 @@ $mol_select_demo_colors $mol_view
 							haystack <= color_name!id \
 							needle <= color_filter
 					minimal_height 40
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_select
+		\$mol_dimmer
+		\select
+		\colorpicker
+		\filter
 
 $mol_select_colors_color_preview $mol_view
 	style *

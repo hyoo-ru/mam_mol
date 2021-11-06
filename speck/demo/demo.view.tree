@@ -19,3 +19,13 @@ $mol_speck_demo $mol_demo_small
 			sub /
 				<= Message_speck $mol_speck
 				<= message_text @ \Created
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_speck
+		\$mol_link
+		\$mol_icon
+		\$mol_paragraph
+		\$mol_button
+		\speck
+		\highlight
+

@@ -14,3 +14,8 @@ $mol_button_demo $mol_demo_small
 		<= Minor_disabled $mol_button_minor
 			title <= minor_label @ \Or click me..
 			enabled false
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_button
+		\button
+

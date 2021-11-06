@@ -1,7 +1,14 @@
-$mol_date_demo $mol_view
+$mol_date_demo $mol_demo
 	sub /
 		<= Date $mol_date
 			value_moment?val <=> date?val $mol_time_moment
 		<= Formatted $mol_view
 			sub /
 				<= formatted \
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_date
+		\$mol_time_moment
+		\date
+		\datepicker
+		\format

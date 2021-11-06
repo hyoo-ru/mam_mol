@@ -1,6 +1,13 @@
-$mol_section_demo $mol_view
+$mol_section_demo $mol_demo
 	title @ \Section with header
 	sub /
 		<= Section $mol_section
 			head / \Section header
 			Content <= Section_content $mol_filler
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_section
+		\$mol_filler
+		\section
+		\container
+		\header

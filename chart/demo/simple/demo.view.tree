@@ -33,3 +33,11 @@ $mol_chart_demo_simple $mol_demo_large
 					graphs /
 						<= Plan
 						<= Fact_dots
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_chart
+		\$mol_plot
+		\chart
+		\plot
+		\visualization
+		\dashboard

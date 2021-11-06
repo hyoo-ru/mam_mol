@@ -1,21 +1,28 @@
-$mol_dimmer_demo $mol_list
+$mol_dimmer_demo $mol_demo
 	title @ \Text with highlighted found substring
-	rows /
-		<= One $mol_dimmer
-			haystack \Don't put all your eggs in one basket
-			needle \eggs
-		<= Two $mol_dimmer
-			haystack \Don't look a gift horse in the mouth.
-			needle \oo
-		<= Three $mol_dimmer
-			haystack \There is no word you are looking for
-			needle \luck
-		<= Four $mol_dimmer
-			haystack \ooAAooAAoo
-			needle \oo
-		<= Five $mol_dimmer
-			haystack \Let's search this string
-			needle \Let's search this string
-		<= Six $mol_dimmer
-			haystack \Let's search nothing
-			needle \
+	sub /
+		<= Demo_items $mol_list rows /
+			<= One $mol_dimmer
+				haystack \Don't put all your eggs in one basket
+				needle \eggs
+			<= Two $mol_dimmer
+				haystack \Don't look a gift horse in the mouth.
+				needle \oo
+			<= Three $mol_dimmer
+				haystack \There is no word you are looking for
+				needle \luck
+			<= Four $mol_dimmer
+				haystack \ooAAooAAoo
+				needle \oo
+			<= Five $mol_dimmer
+				haystack \Let's search this string
+				needle \Let's search this string
+			<= Six $mol_dimmer
+				haystack \Let's search nothing
+				needle \
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_dimmer
+		\dimmer
+		\search
+		\highlight

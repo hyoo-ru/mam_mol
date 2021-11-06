@@ -1,4 +1,4 @@
-$mol_gallery_demo $mol_view
+$mol_gallery_demo $mol_demo
 	title @ \Gallery of cards
 	count 101
 	sub /
@@ -12,3 +12,11 @@ $mol_gallery_demo $mol_view
 		sub /
 			<= Item_title!id $mol_paragraph
 				title <= item_title!id \
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_gallery
+		\$mol_link
+		\$mol_paragraph
+		\gallery
+		\image
+		\adaptive

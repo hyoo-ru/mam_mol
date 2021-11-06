@@ -1,4 +1,4 @@
-$mol_select_demo_month $mol_view
+$mol_select_demo_month $mol_demo
 	title @ \Month picker with filter
 	sub /
 		<= Month $mol_select
@@ -17,3 +17,7 @@ $mol_select_demo_month $mol_view
 				oct \October
 				nov \November
 				dec \December
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_select
+		\select

@@ -1,4 +1,4 @@
-$mol_chat_demo $mol_view
+$mol_chat_demo $mol_demo
 	title @ \Feed of comments for this page
 	sub /
 		<= Chat $mol_chat
@@ -6,3 +6,8 @@ $mol_chat_demo $mol_view
 			pages => chat_pages
 		- <= Pages $mol_view
 			sub <= chat_pages
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_chat
+		\chat
+		\communication

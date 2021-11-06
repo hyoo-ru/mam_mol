@@ -4,3 +4,11 @@ $mol_bench_demo $mol_demo_small
 		<= View $mol_bench
 			col_sort?val <=> col_sort?val \mid
 			result <= result *
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_bench
+		\$mol_portion
+		\$mol_float
+		\$mol_grid
+		\benchmark
+		\perfomance

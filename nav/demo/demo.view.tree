@@ -1,25 +1,34 @@
-$mol_nav_demo $mol_list
+$mol_nav_demo $mol_demo
 	title @ \Number input control with various configuration
-	plugins /
-		<= Nav $mol_nav
-			keys_x <= tab_list
-			current_x?val <=> tab_current?val
-			keys_y <= row_list
-			current_y?val <=> row_current?val
-	rows /
-		<= Hint $mol_card title @ \Select option and use keys to switch
-		<= Tab_list $mol_switch
-			keys => tab_list
-			value?val <=> tab_current?val \
-			options *
-				first \First
-				second \Second
-				third \Third
-		<= Row_list $mol_switch
-			keys => row_list
-			value?val <=> row_current?val \
-			options *
-				first \First
-				second \Second
-				third \Third
+	sub /
+		<= Demo_items $mol_list
+			plugins /
+				<= Nav $mol_nav
+					keys_x <= tab_list
+					current_x?val <=> tab_current?val
+					keys_y <= row_list
+					current_y?val <=> row_current?val
+			rows /
+				<= Hint $mol_card title @ \Select option and use keys to switch
+				<= Tab_list $mol_switch
+					keys => tab_list
+					value?val <=> tab_current?val \
+					options *
+						first \First
+						second \Second
+						third \Third
+				<= Row_list $mol_switch
+					keys => row_list
+					value?val <=> row_current?val \
+					options *
+						first \First
+						second \Second
+						third \Third
+	tags /
+		<= mol_demo_tag_componet
+		\$mol_nav
+		\$mol_card
+		\$mol_switch
+		\navigation
+		\keyboard
 

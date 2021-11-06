@@ -1,0 +1,16 @@
+[mol_demo_small] {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	align-content: flex-start;
+	justify-content: flex-start;
+	padding: .375rem;
+	flex: 0 0 auto;
+	box-sizing: border-box;
+	max-width: 100%;
+}
+
+[mol_demo_small] > * {
+	margin: .375rem;
+	max-width: 100%;
+}
