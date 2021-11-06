@@ -204,7 +204,7 @@ namespace $.$$ {
 		@ $mol_mem
 		tags_dictionary() {
 			const dictionary: Record<string, string> = {}
-			
+
 			for (const tag of this.tags_all()) {
 				dictionary[tag] = tag
 			}
@@ -215,14 +215,10 @@ namespace $.$$ {
 		@ $mol_mem
 		tags_filter( next?: string[] ) {
 			if( next ) {
-				if( next.length !== 0 ) {
-					this.$.$mol_state_arg.value( 'demo_tags', next.join() )
-				} else {
-					this.$.$mol_state_arg.value( 'demo_tags', null )
-				}
+				this.$.$mol_state_arg.value( 'tags', next.join() || null )
 				return next
 			} else {
-				const tags_string = this.$.$mol_state_arg.value( 'demo_tags' )
+				const tags_string = this.$.$mol_state_arg.value( 'tags' )
 				return tags_string ? tags_string.split( ',' ) : []
 			}
 		}
