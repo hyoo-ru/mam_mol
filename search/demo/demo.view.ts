@@ -6,11 +6,12 @@ namespace $.$$ {
 		suggests() {
 			
 			const query = this.query()
-			if( query.length < 2 ) return []
+			if( !query.length ) return [ 'foo ', 'bar ' ]
 			
-			this.$.$mol_wait_timeout( 500 )
+			this.$.$mol_wait_timeout( 200 )
 			
-			return $mol_stub_strings( query , 30 )
+			const length = ( Math.floor( query.length / 10 ) + 1 ) * 10
+			return $mol_stub_strings( query, 30, length ).map( v => v + ' ' )
 		}
 		
 	}

@@ -5344,7 +5344,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_search_demo extends $.$mol_search_demo {
-        suggests(): any[];
+        suggests(): string[];
     }
 }
 
