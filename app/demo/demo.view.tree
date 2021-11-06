@@ -6,8 +6,12 @@ $mol_app_demo $mol_book2
 	pages <= blocks /
 	plugins /
 		<= Theme $mol_theme_auto
+	demo_block_list /
+		\$mol_demo_small
+		\$mol_demo_large
 	Menu $mol_app_demo_menu
-		names <= names_demo_all /string
+		names <= names_demo_filtered /string
+		tags_all <= tags_demo_selectable /string
 	Detail!id $mol_app_demo_detail
 		chat_seed <= chat_seed!id \
 		chat_pages => chat_pages!id
@@ -30,7 +34,8 @@ $mol_app_demo $mol_book2
 			
 $mol_app_demo_menu $mol_page
 	names /string
-	title @ \$mol components
+	tags_all /string
+	title @ \$mol examples
 	tools /
 		<= Sources $mol_link_source
 			uri <= sources_uri \https://github.com/hyoo-ru/mam_mol/tree/master/
@@ -38,16 +43,16 @@ $mol_app_demo_menu $mol_page
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /
-				<= Filter $mol_search
-					query?val <=> filter?val \
+				<= Filter $mol_select_list
+					value?val <=> tags_filter?val /string
+					dictionary <= tags_dictionary *
 				<= Options $mol_list
 					rows <= options /
 	Option!id $mol_link
 		arg <= option_arg!id *
 		sub /
-			<= Option_title!id $mol_dimmer
-				haystack <= option_title!id \
-				needle <= filter?val \
+			<= Option_title!id $mol_row sub /
+				<= option_title!id \
 
 $mol_app_demo_detail $mol_page
 	tools /

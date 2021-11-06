@@ -1,4 +1,4 @@
-$mol_select_demo_priority $mol_view
+$mol_select_demo_priority $mol_demo
 	title @ \Priority picker
 	sub /
 		<= Priority $mol_select
@@ -10,3 +10,6 @@ $mol_select_demo_priority $mol_view
 				\Medium
 				\Low
 				\Lowest
+	tags /
+		\$mol_select
+		\select

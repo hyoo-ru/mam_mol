@@ -12,3 +12,9 @@ $mol_attach_demo $mol_demo_small
 				<= Item3 $mol_attach_item
 					url_thumb \https://thiscatdoesnotexist.com/
 					url_load \https://thiscatdoesnotexist.com/
+	tags /
+		\$mol_attach
+		\attach
+		\file
+		\image
+		\upload

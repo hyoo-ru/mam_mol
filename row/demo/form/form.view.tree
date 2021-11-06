@@ -1,4 +1,4 @@
-$mol_row_demo_form $mol_view
+$mol_row_demo_form $mol_demo
 	title @ \Some controls in one row with equal paddings and wrapping support
 	sub /
 		<= Row $mol_row
@@ -19,3 +19,15 @@ $mol_row_demo_form $mol_view
 					checked?val <=> publish?val false
 				<= Drop $mol_button_minor
 					title <= drop_title @ \Drop
+	tags /
+		\$mol_row
+		\$mol_search
+		\$mol_number
+		\$mol_portion
+		\$mol_check
+		\$mol_button
+		\row
+		\container
+		\flex
+		\identation
+		\space

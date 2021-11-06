@@ -12,3 +12,13 @@ $mol_page_demo $mol_demo_large
 					sub /
 						<= Button_foot $mol_button_minor
 							title \Footer Button
+	tags /
+		\$mol_page
+		\$mol_filler
+		\$mol_row
+		\$mol_button
+		\page
+		\container
+		\header
+		\footer
+		\toolbar

@@ -1,5 +1,9 @@
-$mol_paginator_demo $mol_view
+$mol_paginator_demo $mol_demo
 	title @ \Page switcher
 	sub /
 		<= Pages $mol_paginator
 			value?val <=> page?val 0
+	tags /
+		\$mol_paginator
+		\paginator
+		\navigation

@@ -7,3 +7,8 @@ $mol_card_demo $mol_demo_small
 		<= Pending $mol_card
 			title \Hello pending!
 			status \pending
+	tags /
+		\$mol_card
+		\card
+		\status
+		\container

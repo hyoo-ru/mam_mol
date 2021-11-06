@@ -1,4 +1,4 @@
-$mol_text_demo $mol_view
+$mol_text_demo $mol_demo
 	title @ \Markdown visualization example
 	sub /
 		<= Text $mol_text text \
@@ -39,3 +39,7 @@ $mol_text_demo $mol_view
 			\
 			\Build status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
 			\
+	tags /
+		\$mol_text
+		\text
+		\markdown

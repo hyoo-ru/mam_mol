@@ -43,3 +43,10 @@ $mol_chart_demo_styles $mol_demo_large
 				<= Day $mol_plot_mark_hor
 					title <= day_title @ \Day
 					series_x <= series_x /number
+	tags /
+		\$mol_chart
+		\$mol_plot
+		\chart
+		\plot
+		\visualization
+		\dashboard

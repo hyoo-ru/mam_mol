@@ -4,3 +4,7 @@ $mol_search_demo $mol_demo_small
 		<= Search $mol_search
 			query => query
 			suggests <= suggests /
+	tags /
+		\$mol_search
+		\search
+		\suggest

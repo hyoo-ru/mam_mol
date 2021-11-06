@@ -1,16 +1,22 @@
-$mol_switch_demo $mol_list
+$mol_switch_demo $mol_demo
 	title @ \Color switchers in various state
-	rows /
-		<= Enabled $mol_switch
-			value?val <=> color?val \red
-			options *
-				red <= option_red @ \Red
-				green <= option_green @ \Green
-				blue <= option_blue @ \Blue
-		<= Disabled $mol_switch
-			value?val <=> color?val \red
-			enabled false
-			options *
-				red <= option_red @ \Red
-				green <= option_green @ \Green
-				blue <= option_blue @ \Blue
+	sub /
+		<= Demo_items $mol_list
+			rows /
+				<= Enabled $mol_switch
+					value?val <=> color?val \red
+					options *
+						red <= option_red @ \Red
+						green <= option_green @ \Green
+						blue <= option_blue @ \Blue
+				<= Disabled $mol_switch
+					value?val <=> color?val \red
+					enabled false
+					options *
+						red <= option_red @ \Red
+						green <= option_green @ \Green
+						blue <= option_blue @ \Blue
+	tags /
+		\$mol_switch
+		\switch
+		\option

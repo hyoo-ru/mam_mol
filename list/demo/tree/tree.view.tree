@@ -1,4 +1,4 @@
-$mol_list_demo_tree $mol_view
+$mol_list_demo_tree $mol_demo
 	title @ \Large list of rows with dynamic content
 	sub /
 		<= Content $mol_list
@@ -8,3 +8,13 @@ $mol_list_demo_tree $mol_view
 		expanded?val <=> row_expanded!id?val false
 		Content <= Row_content!id $mol_list
 			rows <= row_content!id /
+	tags /
+		\$mol_list
+		\$mol_expander
+		\$mol_list
+		\$mol_paragraph
+		\list
+		\tree
+		\hierarchy
+		\container
+		\nested

@@ -1,8 +1,17 @@
-$mol_link_iconed_demo $mol_list
+$mol_link_iconed_demo $mol_demo
 	title @ \Link with icon
-	rows /
-		<= Input $mol_string
-			value?val <=> uri?val \https://www.google.com/search?q=%24mol
-		<= Output $mol_link_iconed
-			uri <= uri?val
-			
+	sub /
+		<= Demo_items $mol_list
+			rows /
+				<= Input $mol_string
+					value?val <=> uri?val \https://www.google.com/search?q=%24mol
+				<= Output $mol_link_iconed
+					uri <= uri?val
+	tags /
+		\$mol_link
+		\$mol_icon
+		\$mol_string
+		\link
+		\icon
+		\url
+
