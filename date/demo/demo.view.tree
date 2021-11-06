@@ -6,7 +6,6 @@ $mol_date_demo $mol_demo
 			sub /
 				<= formatted \
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_date
 		\$mol_time_moment
 		\date

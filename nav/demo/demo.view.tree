@@ -25,7 +25,6 @@ $mol_nav_demo $mol_demo
 						second \Second
 						third \Third
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_nav
 		\$mol_card
 		\$mol_switch

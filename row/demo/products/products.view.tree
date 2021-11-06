@@ -9,7 +9,6 @@ $mol_row_demo_products $mol_demo
 		<= Products $mol_row
 			sub <= products /
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_row
 		\$mol_card
 		\products

@@ -1,4 +1,2 @@
 $mol_demo $mol_view
 	tags /string
-	mol_demo_tag_componet @ \$mol components
-	mol_demo_tag_example @ \examples

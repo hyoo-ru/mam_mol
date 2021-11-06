@@ -8,7 +8,6 @@ $mol_map_yandex_demo $mol_demo_large
 					address <= place_addres \Saint-Petersburg
 					content <= place_content \It is Russia's second-largest city after Moscow
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_map_yandex
 		\map
 

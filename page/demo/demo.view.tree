@@ -13,7 +13,6 @@ $mol_page_demo $mol_demo_large
 						<= Button_foot $mol_button_minor
 							title \Footer Button
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_page
 		\$mol_filler
 		\$mol_row

@@ -36,7 +36,6 @@ $mol_check_group_demo $mol_demo
 						title <= luck_title \Luck
 						checked?val <=> luck?val true
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_check_group
 		\$mol_check_box
 		\$mol_list

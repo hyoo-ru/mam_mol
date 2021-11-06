@@ -13,7 +13,6 @@ $mol_gallery_demo $mol_demo
 			<= Item_title!id $mol_paragraph
 				title <= item_title!id \
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_gallery
 		\$mol_link
 		\$mol_paragraph

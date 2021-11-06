@@ -15,7 +15,6 @@ $mol_textarea_demo $mol_demo
 					enabled false
 					value?val <=> filled_descr?val
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_textarea
 		\textarea
 		\code

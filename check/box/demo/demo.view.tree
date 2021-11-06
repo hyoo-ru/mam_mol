@@ -25,6 +25,5 @@ $mol_check_box_demo $mol_demo
 				checked true
 				enabled false
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_check_box
 		\checkbox

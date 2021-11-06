@@ -20,7 +20,6 @@ $mol_row_demo_form $mol_demo
 				<= Drop $mol_button_minor
 					title <= drop_title @ \Drop
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_row
 		\$mol_search
 		\$mol_number

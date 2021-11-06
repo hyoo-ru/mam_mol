@@ -12,7 +12,6 @@ $mol_deck_demo $mol_demo
 				title @ \Command
 				content / <= command_message @ \Let us do it right!
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_deck
 		\$mol_card
 		\deck

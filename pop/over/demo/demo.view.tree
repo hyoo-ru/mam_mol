@@ -26,7 +26,6 @@ $mol_pop_over_demo $mol_demo
 								<= About $mol_button_minor
 									title <= about_title @ \About
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_pop_over
 		\$mol_list
 		\$mol_button

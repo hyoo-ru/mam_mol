@@ -4,7 +4,6 @@ $mol_paginator_demo $mol_demo
 		<= Pages $mol_paginator
 			value?val <=> page?val 0
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_paginator
 		\paginator
 		\navigation

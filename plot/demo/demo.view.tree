@@ -22,7 +22,6 @@ $mol_plot_demo $mol_demo_large
 				<= Time $mol_plot_ruler_hor
 					title <= Time_title @ \ms
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_plot
 		\visualization
 		\chart

@@ -25,7 +25,6 @@ $mol_chart_demo_forces $mol_demo_large
 						<= Forces_left
 						<= Forces_right
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_chart
 		\chart
 		\plot

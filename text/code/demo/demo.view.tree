@@ -3,7 +3,6 @@ $mol_text_code_demo $mol_demo
 	sub /
 		<= Text $mol_text_code text <= source \
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_text_code
 		\text
 		\code

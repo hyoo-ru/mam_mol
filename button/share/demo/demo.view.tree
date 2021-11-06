@@ -7,7 +7,6 @@ $mol_button_share_demo $mol_demo
 			title \Share hyoo.ru
 			uri \https://hyoo.ru
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_button_share
 		\share
 		\button

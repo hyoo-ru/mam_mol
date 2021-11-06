@@ -11,6 +11,5 @@ $mol_select_demo_priority $mol_demo
 				\Low
 				\Lowest
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_select
 		\select

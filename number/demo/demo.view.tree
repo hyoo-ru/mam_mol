@@ -30,7 +30,6 @@ $mol_number_demo $mol_demo_small
 			value?val <=> year?val NaN
 			precision 1000
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_number
 		\number
 		\field

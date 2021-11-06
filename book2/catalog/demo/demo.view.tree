@@ -18,7 +18,6 @@ $mol_book2_catalog_demo $mol_demo_large
 					body /
 						\Maps content
 	tags /
-		<= mol_demo_tag_componet
 		\$mol_book2_catalog
 		\$mol_page
 		\app
