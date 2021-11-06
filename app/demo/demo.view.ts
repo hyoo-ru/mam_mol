@@ -56,10 +56,10 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		tags_demo_all() {
+		tags_demo_filtered() {
 			return Array.from(
 				new Set(
-					this.names_demo_all().flatMap( name => {
+					this.names_demo_filtered().flatMap( name => {
 						return this.widget_tags( name )
 					} )
 				)
@@ -70,13 +70,13 @@ namespace $.$$ {
 		tags_demo_selectable() {
 			const filter_tags = this.Menu().tags_filter()
 
-			if( filter_tags.length === 0 ) return this.tags_demo_all()
+			if( filter_tags.length === 0 ) return this.tags_demo_filtered()
 
 			const filtered_names = this.names_demo_filtered()
 
 			if( filtered_names.length === 1 ) return filter_tags
 
-			return this.tags_demo_all().filter( tag => {
+			return this.tags_demo_filtered().filter( tag => {
 				if( !filter_tags.includes( tag ) ) {
 					const all_widgets_include_tag = filtered_names.every(
 						name => this.widget_tags( name ).includes( tag )
