@@ -5,5 +5,7 @@
 	"$mol_app_demo_detail_Readme_hint": "Readme",
 	"$mol_app_demo_detail_source_hint": "Исходный код для демо приложения",
 	"$mol_app_demo_detail_edit_hint": "Открыть демо приложение в студии",
-	"$mol_app_demo_detail_close_hint": "Закрыть панель"
+	"$mol_app_demo_detail_close_hint": "Закрыть панель",
+	"$mol_app_demo_readme_title": "Readme",
+	"$mol_app_demo_readme_Close_hint": "Закрыть панель"
 }
