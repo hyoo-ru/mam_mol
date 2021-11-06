@@ -99,6 +99,11 @@
 	object-fit: scale-down;
 }
 
+[mol_text_image_image] {
+	object-fit: scale-down;
+	flex-grow: 1;
+}
+
 [mol_text_type="strong"] {
 	color: var(--mol_theme_focus);
 }
