@@ -21,6 +21,30 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_speck
+		 * 	\$mol_link
+		 * 	\$mol_icon
+		 * 	\$mol_paragraph
+		 * 	\$mol_button
+		 * 	\speck
+		 * 	\highlight
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_speck",
+				"$mol_link",
+				"$mol_icon",
+				"$mol_paragraph",
+				"$mol_button",
+				"speck",
+				"highlight"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Link_speck $mol_speck value \β
 		 * ```
 		 */

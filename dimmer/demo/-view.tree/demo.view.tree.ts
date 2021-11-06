@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_dimmer_demo extends $mol_list {
+	export class $mol_dimmer_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -12,23 +12,30 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * rows /
-		 * 	<= One
-		 * 	<= Two
-		 * 	<= Three
-		 * 	<= Four
-		 * 	<= Five
-		 * 	<= Six
+		 * sub / <= Demo_items
 		 * ```
 		 */
-		rows() {
+		sub() {
 			return [
-				this.One(),
-				this.Two(),
-				this.Three(),
-				this.Four(),
-				this.Five(),
-				this.Six()
+				this.Demo_items()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_dimmer
+		 * 	\dimmer
+		 * 	\search
+		 * 	\highlight
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_dimmer",
+				"dimmer",
+				"search",
+				"highlight"
 			] as readonly any[]
 		}
 		
@@ -130,6 +137,33 @@ namespace $ {
 			
 			obj.haystack = () => "Let's search nothing"
 			obj.needle = () => ""
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Demo_items $mol_list rows /
+		 * 	<= One
+		 * 	<= Two
+		 * 	<= Three
+		 * 	<= Four
+		 * 	<= Five
+		 * 	<= Six
+		 * ```
+		 */
+		@ $mol_mem
+		Demo_items() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => [
+				this.One(),
+				this.Two(),
+				this.Three(),
+				this.Four(),
+				this.Five(),
+				this.Six()
+			] as readonly any[]
 			
 			return obj
 		}

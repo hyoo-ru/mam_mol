@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_select_demo_priority extends $mol_view {
+	export class $mol_select_demo_priority extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -18,6 +18,20 @@ namespace $ {
 		sub() {
 			return [
 				this.Priority()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_select
+		 * 	\select
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_select",
+				"select"
 			] as readonly any[]
 		}
 		

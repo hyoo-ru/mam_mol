@@ -24,3 +24,9 @@ $mol_chart_demo_forces $mol_demo_large
 					graphs /
 						<= Forces_left
 						<= Forces_right
+	tags /
+		\$mol_chart
+		\chart
+		\plot
+		\visualization
+		\dashboard

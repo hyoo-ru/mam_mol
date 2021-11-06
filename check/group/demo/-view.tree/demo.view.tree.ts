@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_check_group_demo extends $mol_list {
+	export class $mol_check_group_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -12,15 +12,34 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * rows /
-		 * 	<= All
-		 * 	<= Partial
+		 * sub / <= Demo_items
 		 * ```
 		 */
-		rows() {
+		sub() {
 			return [
-				this.All(),
-				this.Partial()
+				this.Demo_items()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_check_group
+		 * 	\$mol_check_box
+		 * 	\$mol_list
+		 * 	\checkbox
+		 * 	\multi
+		 * 	\group
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_check_group",
+				"$mol_check_box",
+				"$mol_list",
+				"checkbox",
+				"multi",
+				"group"
 			] as readonly any[]
 		}
 		
@@ -339,6 +358,25 @@ namespace $ {
 				this.Intelligence(),
 				this.Agility(),
 				this.Luck()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Demo_items $mol_list rows /
+		 * 	<= All
+		 * 	<= Partial
+		 * ```
+		 */
+		@ $mol_mem
+		Demo_items() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => [
+				this.All(),
+				this.Partial()
 			] as readonly any[]
 			
 			return obj

@@ -30,6 +30,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_button
+		 * 	\button
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_button",
+				"button"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * major_label @ \Click me!
 		 * ```
 		 */

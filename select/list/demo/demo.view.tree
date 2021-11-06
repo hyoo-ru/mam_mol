@@ -1,18 +1,25 @@
-$mol_select_list_demo $mol_list
+$mol_select_list_demo $mol_demo
 	title @ \Friends picker
-	rows /
-		<= Friends $mol_select_list
-			value?val <=> friends?val /
-			dictionary <= suggestions *
-				jocker \Jocker
-				harley \Harley Quinn
-				penguin \Penguin
-				riddler \Riddler
-				bane \Bane
-				freeze \Mister Freeze
-				clay \Clayface
-				mask \Black Mask
-		<= Friends_disabled $mol_select_list
-			value?val <=> friends?val /
-			dictionary <= suggestions
-			enabled false
+	sub /
+		<= Demo_items $mol_list
+			rows /
+				<= Friends $mol_select_list
+					value?val <=> friends?val /
+					dictionary <= suggestions *
+						jocker \Jocker
+						harley \Harley Quinn
+						penguin \Penguin
+						riddler \Riddler
+						bane \Bane
+						freeze \Mister Freeze
+						clay \Clayface
+						mask \Black Mask
+				<= Friends_disabled $mol_select_list
+					value?val <=> friends?val /
+					dictionary <= suggestions
+					enabled false
+	tags /
+		\$mol_select_list
+		\select
+		\tags
+		\multiselect

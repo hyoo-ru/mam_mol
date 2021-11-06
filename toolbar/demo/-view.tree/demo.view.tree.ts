@@ -23,6 +23,30 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_toolbar
+		 * 	\$mol_string
+		 * 	\$mol_button
+		 * 	\$mol_icon
+		 * 	\toolbar
+		 * 	\button
+		 * 	\icon
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_toolbar",
+				"$mol_string",
+				"$mol_button",
+				"$mol_icon",
+				"toolbar",
+				"button",
+				"icon"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * search_hint @ \Search...
 		 * ```
 		 */

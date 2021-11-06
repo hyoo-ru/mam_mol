@@ -26,6 +26,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_card
+		 * 	\card
+		 * 	\status
+		 * 	\container
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_card",
+				"card",
+				"status",
+				"container"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Simple $mol_card content / \Hello world!
 		 * ```
 		 */

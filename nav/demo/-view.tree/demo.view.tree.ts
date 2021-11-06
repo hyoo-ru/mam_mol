@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_nav_demo extends $mol_list {
+	export class $mol_nav_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -12,28 +12,32 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * plugins / <= Nav
+		 * sub / <= Demo_items
 		 * ```
 		 */
-		plugins() {
+		sub() {
 			return [
-				this.Nav()
+				this.Demo_items()
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * rows /
-		 * 	<= Hint
-		 * 	<= Tab_list
-		 * 	<= Row_list
+		 * tags /
+		 * 	\$mol_nav
+		 * 	\$mol_card
+		 * 	\$mol_switch
+		 * 	\navigation
+		 * 	\keyboard
 		 * ```
 		 */
-		rows() {
+		tags() {
 			return [
-				this.Hint(),
-				this.Tab_list(),
-				this.Row_list()
+				"$mol_nav",
+				"$mol_card",
+				"$mol_switch",
+				"navigation",
+				"keyboard"
 			] as readonly any[]
 		}
 		
@@ -158,6 +162,32 @@ namespace $ {
 				second: "Second",
 				third: "Third"
 			})
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Demo_items $mol_list
+		 * 	plugins / <= Nav
+		 * 	rows /
+		 * 		<= Hint
+		 * 		<= Tab_list
+		 * 		<= Row_list
+		 * ```
+		 */
+		@ $mol_mem
+		Demo_items() {
+			const obj = new this.$.$mol_list()
+			
+			obj.plugins = () => [
+				this.Nav()
+			] as readonly any[]
+			obj.rows = () => [
+				this.Hint(),
+				this.Tab_list(),
+				this.Row_list()
+			] as readonly any[]
 			
 			return obj
 		}

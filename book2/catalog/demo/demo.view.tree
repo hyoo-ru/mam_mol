@@ -17,3 +17,13 @@ $mol_book2_catalog_demo $mol_demo_large
 					title \Maps
 					body /
 						\Maps content
+	tags /
+		\$mol_book2_catalog
+		\$mol_page
+		\app
+		\page
+		\book
+		\menu
+		\navigation
+		\transition
+		\multipage

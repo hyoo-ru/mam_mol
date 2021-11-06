@@ -23,6 +23,34 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_page
+		 * 	\$mol_filler
+		 * 	\$mol_row
+		 * 	\$mol_button
+		 * 	\page
+		 * 	\container
+		 * 	\header
+		 * 	\footer
+		 * 	\toolbar
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_page",
+				"$mol_filler",
+				"$mol_row",
+				"$mol_button",
+				"page",
+				"container",
+				"header",
+				"footer",
+				"toolbar"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Button_tools $mol_button_minor title \Toolbar Button
 		 * ```
 		 */

@@ -19,3 +19,11 @@ $mol_code_demo $mol_demo_small
 			format \CODE_39
 		<= Itf $mol_code
 			format \ITF
+	tags /
+		\$mol_code
+		\code
+		\qrcode
+		\barcode
+		\scanner
+		\scan
+		\cordova

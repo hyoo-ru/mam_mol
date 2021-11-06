@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_row_demo_products extends $mol_view {
+	export class $mol_row_demo_products extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -46,6 +46,26 @@ namespace $ {
 		sub() {
 			return [
 				this.Products()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_row
+		 * 	\$mol_card
+		 * 	\products
+		 * 	\grid
+		 * 	\scroll
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_row",
+				"$mol_card",
+				"products",
+				"grid",
+				"scroll"
 			] as readonly any[]
 		}
 		

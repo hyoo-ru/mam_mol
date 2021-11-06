@@ -1,14 +1,21 @@
-$mol_textarea_demo $mol_list
+$mol_textarea_demo $mol_demo
 	title @ \Text input field in various states
-	rows /
-		<= Empty_descr $mol_textarea
-			hint \source code
-			value?val <=> empty_descr?val \
-		<= Filled_descr $mol_textarea
-			value?val <=> filled_descr?val \
-				\function hello( name = 'World' ) {
-				\	return `Hello, ${ name }!`
-				\}
-		<= Disabled $mol_textarea
-			enabled false
-			value?val <=> filled_descr?val
+	sub /
+		<= Demo_items $mol_list
+			rows /
+				<= Empty_descr $mol_textarea
+					hint \source code
+					value?val <=> empty_descr?val \
+				<= Filled_descr $mol_textarea
+					value?val <=> filled_descr?val \
+						\function hello( name = 'World' ) {
+						\	return `Hello, ${ name }!`
+						\}
+				<= Disabled $mol_textarea
+					enabled false
+					value?val <=> filled_descr?val
+	tags /
+		\$mol_textarea
+		\textarea
+		\code
+		\syntax highlighting

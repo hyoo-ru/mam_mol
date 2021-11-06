@@ -32,6 +32,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_chart
+		 * 	\$mol_plot
+		 * 	\chart
+		 * 	\plot
+		 * 	\visualization
+		 * 	\dashboard
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_chart",
+				"$mol_plot",
+				"chart",
+				"plot",
+				"visualization",
+				"dashboard"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * receipts_title @ \Receipts
 		 * ```
 		 */

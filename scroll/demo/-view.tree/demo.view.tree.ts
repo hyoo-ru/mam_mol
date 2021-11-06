@@ -23,6 +23,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_scroll
+		 * 	\$mol_filler
+		 * 	\$mol_list
+		 * 	\scroll
+		 * 	\container
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_scroll",
+				"$mol_filler",
+				"$mol_list",
+				"scroll",
+				"container"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Filler0 $mol_filler
 		 * ```
 		 */

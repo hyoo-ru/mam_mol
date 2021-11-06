@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_gallery_demo extends $mol_view {
+	export class $mol_gallery_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -53,6 +53,28 @@ namespace $ {
 			] as readonly any[]
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_gallery
+		 * 	\$mol_link
+		 * 	\$mol_paragraph
+		 * 	\gallery
+		 * 	\image
+		 * 	\adaptive
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_gallery",
+				"$mol_link",
+				"$mol_paragraph",
+				"gallery",
+				"image",
+				"adaptive"
+			] as readonly any[]
 		}
 		
 		/**

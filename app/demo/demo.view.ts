@@ -6,9 +6,7 @@ namespace $.$$ {
 			const selected = this.selected()
 			if( selected ) {
 				const names = this.names_demo() 
-				/*if( names.length === 1 ) {
-					return `$${ selected.replace( /_demo.* / , '' ) }: ${ this.Sample_large( names[0] ).Widget().title() }`
-				}*/
+
 				return `$${ selected }`
 			}
 			
@@ -17,71 +15,85 @@ namespace $.$$ {
 
 		@ $mol_mem
 		names_demo_all() {
-			var next : string[] = []
-			for( var name in this.$ ) {
-				if( !/^\$.*_demo($|_)/i.test( name ) ) continue
-				if( /^\$mol_demo/.test( name ) ) continue
-				if( /^\$mol_app_demo/.test( name ) ) continue
+			const next : string[] = []
+
+			for( const name in this.$ ) {
 				if( typeof this.$[ name ] !== 'function' ) continue
+
+				if( !$mol_func_is_class( this.$[ name ] ) ) continue
+
+				if( !( this.$[ name ].prototype instanceof $mol_demo ) ) continue
+
+				if ( this.demo_block_list().includes( name ) ) continue
+				
 				next.push( name.substring( 1 ) )
 			}
+
 			return next.sort()
 		}
-		
-		// @ $mol_mem
-		// nav_hierarchy() {
-		// 	const names = this.names_demo_filtered()
-			
-		// 	const hierarchy = {} as { [ prefix : string ] : $mol_grid_node }
-		// 	const root = hierarchy[ '' ] = {
-		// 		id : '' ,
-		// 		parent : null as any as $mol_grid_node ,
-		// 		sub : [] as $mol_grid_node[] ,
-		// 	}
-			
-		// 	names.forEach( name => {
-		// 		const chunks = name.split( /(?=[_.-])/ )
-		// 		let branch = root
-		// 		for( let i = 1 ; i <= chunks.length ; ++ i ) {
-		// 			const prefix = chunks.slice( 0 , i ).join( '' )
-		// 			if( !hierarchy[ prefix ] ) {
-		// 				branch.sub.push( hierarchy[ prefix ] = {
-		// 					id : prefix ,
-		// 					parent : branch ,
-		// 					sub : [] as $mol_grid_node[] ,
-		// 				} )
-		// 			}
-		// 			branch = hierarchy[ prefix ]
-		// 		}
-		// 	} )
-			
-		// 	hierarchy[ '' ].sub.map( child => reduce( child ) )
-			
-		// 	function reduce( node : $mol_grid_node ) {
-		// 		if( names.indexOf( node.id ) >= 0 ) return node
-				
-		// 		node.sub = node.sub.map( child => reduce( child ) )
-		// 		if( node.sub.length !== 1 ) return node
-				
-		// 		node.sub[0].parent = node.parent
-		// 		return node.sub[0]
-		// 	}
-			
-		// 	return hierarchy
-		// }
-		
-		// nav_option( id : string ) {
-		// 	const parent = this.nav_hierarchy()[ id ].parent
-			
-		// 	const title = `$${ id }`
-		// 	.substring( parent.id.length + 1 )
-		// 	.replace( /^[-._]|[-._]demo$/g , '' )
-		// 	.replace( /_/g , ' ' )
-		// 	.replace( /^(\w)/ , letter => letter.toUpperCase() )
-			
-		// 	return { title }
-		// }
-		
+
+		@ $mol_mem_key
+		widget_tags( name: string ) {
+			const tags = this.Widget()[ name ].tags()
+
+			if( tags.length === 0 ) {
+				console.warn( `Demo widget without tags: ${ name }` )
+				return [ 'untagged' ]
+			} else {
+				return tags
+			}
+		}
+
+		@ $mol_mem
+		names_demo_filtered() {
+			const filter_tags = this.Menu().tags_filter()
+
+			return filter_tags.length
+				? this.names_demo_all().filter( name => {
+					const component_tags = this.widget_tags( name )
+					return filter_tags.every( tag => component_tags.includes( tag ) )
+				} )
+				: this.names_demo_all()
+		}
+
+		@ $mol_mem
+		tags_demo_filtered() {
+			return Array.from(
+				new Set(
+					this.names_demo_filtered().flatMap( name => {
+						return this.widget_tags( name )
+					} )
+				)
+			).map( tag => tag.toLowerCase() ).sort()
+		}
+
+		@ $mol_mem
+		tags_demo_selectable() {
+			const filter_tags = this.Menu().tags_filter()
+
+			if( filter_tags.length === 0 ) return this.tags_demo_filtered()
+
+			const filtered_names = this.names_demo_filtered()
+
+			if( filtered_names.length === 1 ) return filter_tags
+
+			return this.tags_demo_filtered().filter( tag => {
+				if( !filter_tags.includes( tag ) ) {
+					const all_widgets_include_tag = filtered_names.every(
+						name => this.widget_tags( name ).includes( tag )
+					)
+
+					const all_widgets_not_include_tag = filtered_names.every(
+						name => !this.widget_tags( name ).includes( tag )
+					)
+
+					return !all_widgets_include_tag && !all_widgets_not_include_tag
+				}
+
+				return true
+			} )
+		}
+
 		selected() {
 			return $mol_state_arg.value( 'demo' ) || ''
 		}
@@ -98,7 +110,7 @@ namespace $.$$ {
 		Widget() {
 			return $mol_atom2_dict({
 				get : ( name : string )=> {
-					const Class : typeof $mol_view = this.$[ '$' + name ]
+					const Class : typeof $mol_demo = this.$[ '$' + name ]
 					return new Class()
 				}
 			})
@@ -108,27 +120,6 @@ namespace $.$$ {
 		names_demo() {
 			const selected = this.selected()
 			return [ selected ]
-			// const all = this.names_demo_all()
-			
-			// const root = this.nav_hierarchy()[ selected ]
-			// if( !root ) return []
-
-			// const names : string[] = []
-			// const collect = ( node : typeof root )=> {
-			// 	const demo = `${ node.id }_demo`
-			// 	if( all.indexOf( demo ) !== -1 ) {
-			// 		if( names.indexOf( demo ) === -1 ) names.push( demo )
-			// 	} else if( all.indexOf( node.id ) !== -1 ) {
-			// 		if( names.indexOf( node.id ) === -1 ) names.push( node.id )
-			// 	} else {
-			// 		node.sub.forEach( child => collect( child ) )
-			// 	}
-			// }
-
-			// if( root.sub.length ) root.sub.forEach( child => collect( child ) )
-			// collect( root )
-			
-			// return names
 		}
 		
 		blocks() {
@@ -212,15 +203,30 @@ namespace $.$$ {
 	export class $mol_app_demo_menu extends $.$mol_app_demo_menu {
 		
 		@ $mol_mem
-		names_filtered() {
-			const filter = this.filter().toLowerCase()
-			const names = this.names().filter( name => ( name.toLowerCase().indexOf( filter ) != -1 ) )
-			return names
+		tags_dictionary() {
+			const dictionary: Record<string, string> = {}
+
+			for( const tag of this.tags_all() ) {
+				dictionary[ tag ] = tag
+			}
+
+			return dictionary
+		}
+
+		@ $mol_mem
+		tags_filter( next?: string[] ) {
+			if( next ) {
+				this.$.$mol_state_arg.value( 'tags', next.join() || null )
+				return next
+			} else {
+				const tags_string = this.$.$mol_state_arg.value( 'tags' )
+				return tags_string ? tags_string.split( ',' ) : []
+			}
 		}
 		
 		@ $mol_mem
 		options() {
-			return this.names_filtered().map( id => this.Option( id ) )
+			return this.names().map( id => this.Option( id ) )
 		}
 		
 		option_arg( id: string ) {

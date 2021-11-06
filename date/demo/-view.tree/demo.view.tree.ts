@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_date_demo extends $mol_view {
+	export class $mol_date_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -12,6 +12,26 @@ namespace $ {
 			return [
 				this.Date(),
 				this.Formatted()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_date
+		 * 	\$mol_time_moment
+		 * 	\date
+		 * 	\datepicker
+		 * 	\format
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_date",
+				"$mol_time_moment",
+				"date",
+				"datepicker",
+				"format"
 			] as readonly any[]
 		}
 		

@@ -42,6 +42,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_number
+		 * 	\number
+		 * 	\field
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_number",
+				"number",
+				"field"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * zero $mol_number
 		 * ```
 		 */

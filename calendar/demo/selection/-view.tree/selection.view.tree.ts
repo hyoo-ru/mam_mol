@@ -37,6 +37,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_calendar
+		 * 	\calendar
+		 * 	\date
+		 * 	\period
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_calendar",
+				"calendar",
+				"date",
+				"period"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * month \2018-01
 		 * ```
 		 */

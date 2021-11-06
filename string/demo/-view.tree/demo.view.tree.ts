@@ -30,6 +30,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_string
+		 * 	\input
+		 * 	\string
+		 * 	\text
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_string",
+				"input",
+				"string",
+				"text"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * name?val \
 		 * ```
 		 */

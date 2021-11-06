@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_row_demo_form extends $mol_view {
+	export class $mol_row_demo_form extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -18,6 +18,38 @@ namespace $ {
 		sub() {
 			return [
 				this.Row()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_row
+		 * 	\$mol_search
+		 * 	\$mol_number
+		 * 	\$mol_portion
+		 * 	\$mol_check
+		 * 	\$mol_button
+		 * 	\row
+		 * 	\container
+		 * 	\flex
+		 * 	\identation
+		 * 	\space
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_row",
+				"$mol_search",
+				"$mol_number",
+				"$mol_portion",
+				"$mol_check",
+				"$mol_button",
+				"row",
+				"container",
+				"flex",
+				"identation",
+				"space"
 			] as readonly any[]
 		}
 		

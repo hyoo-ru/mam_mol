@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_section_demo extends $mol_view {
+	export class $mol_section_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -18,6 +18,26 @@ namespace $ {
 		sub() {
 			return [
 				this.Section()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_section
+		 * 	\$mol_filler
+		 * 	\section
+		 * 	\container
+		 * 	\header
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_section",
+				"$mol_filler",
+				"section",
+				"container",
+				"header"
 			] as readonly any[]
 		}
 		

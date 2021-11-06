@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_select_demo_colors extends $mol_view {
+	export class $mol_select_demo_colors extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -18,6 +18,26 @@ namespace $ {
 		sub() {
 			return [
 				this.Color()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_select
+		 * 	\$mol_dimmer
+		 * 	\select
+		 * 	\colorpicker
+		 * 	\filter
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_select",
+				"$mol_dimmer",
+				"select",
+				"colorpicker",
+				"filter"
 			] as readonly any[]
 		}
 		

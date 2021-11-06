@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_paginator_demo extends $mol_view {
+	export class $mol_paginator_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -18,6 +18,22 @@ namespace $ {
 		sub() {
 			return [
 				this.Pages()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_paginator
+		 * 	\paginator
+		 * 	\navigation
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_paginator",
+				"paginator",
+				"navigation"
 			] as readonly any[]
 		}
 		

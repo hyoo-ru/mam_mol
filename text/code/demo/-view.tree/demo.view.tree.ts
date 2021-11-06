@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_text_code_demo extends $mol_view {
+	export class $mol_text_code_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -18,6 +18,24 @@ namespace $ {
 		sub() {
 			return [
 				this.Text()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_text_code
+		 * 	\text
+		 * 	\code
+		 * 	\syntax highlighting
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_text_code",
+				"text",
+				"code",
+				"syntax highlighting"
 			] as readonly any[]
 		}
 		

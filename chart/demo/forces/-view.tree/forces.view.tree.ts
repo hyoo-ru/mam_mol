@@ -41,6 +41,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_chart
+		 * 	\chart
+		 * 	\plot
+		 * 	\visualization
+		 * 	\dashboard
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_chart",
+				"chart",
+				"plot",
+				"visualization",
+				"dashboard"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * forces_left_title @ \Left wheel
 		 * ```
 		 */

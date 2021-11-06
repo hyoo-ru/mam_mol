@@ -5,7 +5,7 @@
 	"$mol_app_demo_detail_empty_postfix": "\"",
 	"$mol_app_demo_detail_empty_prefix": "No one demo with prefix \"",
 	"$mol_app_demo_detail_source_hint": "Source code of this demo",
-	"$mol_app_demo_menu_title": "$mol components",
+	"$mol_app_demo_menu_title": "$mol examples",
 	"$mol_app_demo_readme_Close_hint": "Close panel",
 	"$mol_app_demo_readme_title": "Readme",
 	"$mol_attach_demo_title": "Attach files an show them",

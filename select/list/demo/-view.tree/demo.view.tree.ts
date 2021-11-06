@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_select_list_demo extends $mol_list {
+	export class $mol_select_list_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -12,15 +12,30 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * rows /
-		 * 	<= Friends
-		 * 	<= Friends_disabled
+		 * sub / <= Demo_items
 		 * ```
 		 */
-		rows() {
+		sub() {
 			return [
-				this.Friends(),
-				this.Friends_disabled()
+				this.Demo_items()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_select_list
+		 * 	\select
+		 * 	\tags
+		 * 	\multiselect
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_select_list",
+				"select",
+				"tags",
+				"multiselect"
 			] as readonly any[]
 		}
 		
@@ -94,6 +109,25 @@ namespace $ {
 			obj.value = (val?: any) => this.friends(val)
 			obj.dictionary = () => this.suggestions()
 			obj.enabled = () => false
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Demo_items $mol_list rows /
+		 * 	<= Friends
+		 * 	<= Friends_disabled
+		 * ```
+		 */
+		@ $mol_mem
+		Demo_items() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => [
+				this.Friends(),
+				this.Friends_disabled()
+			] as readonly any[]
 			
 			return obj
 		}

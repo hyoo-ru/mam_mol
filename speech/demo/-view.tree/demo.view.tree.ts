@@ -19,6 +19,32 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_speech
+		 * 	\$mol_icon
+		 * 	\$mol_row
+		 * 	\$mol_button
+		 * 	\speech
+		 * 	\voice
+		 * 	\recognition
+		 * 	\dictation
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_speech",
+				"$mol_icon",
+				"$mol_row",
+				"$mol_button",
+				"speech",
+				"voice",
+				"recognition",
+				"dictation"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Toggle_icon $mol_icon_microphone
 		 * ```
 		 */

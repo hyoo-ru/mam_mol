@@ -52,14 +52,31 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Menu $mol_app_demo_menu names <= names_demo_all
+		 * demo_block_list /
+		 * 	\$mol_demo_small
+		 * 	\$mol_demo_large
+		 * ```
+		 */
+		demo_block_list() {
+			return [
+				"$mol_demo_small",
+				"$mol_demo_large"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Menu $mol_app_demo_menu
+		 * 	names <= names_demo_filtered
+		 * 	tags_all <= tags_demo_selectable
 		 * ```
 		 */
 		@ $mol_mem
 		Menu() {
 			const obj = new this.$.$mol_app_demo_menu()
 			
-			obj.names = () => this.names_demo_all()
+			obj.names = () => this.names_demo_filtered()
+			obj.tags_all = () => this.tags_demo_selectable()
 			
 			return obj
 		}
@@ -184,10 +201,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * names_demo_all /string
+		 * names_demo_filtered /string
 		 * ```
 		 */
-		names_demo_all() {
+		names_demo_filtered() {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags_demo_selectable /string
+		 * ```
+		 */
+		tags_demo_selectable() {
 			return [
 			] as readonly string[]
 		}
@@ -315,7 +342,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \$mol components
+		 * tags_all /string
+		 * ```
+		 */
+		tags_all() {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * title @ \$mol examples
 		 * ```
 		 */
 		title() {
@@ -408,25 +445,39 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * filter?val \
+		 * tags_filter?val /string
 		 * ```
 		 */
 		@ $mol_mem
-		filter(val?: any) {
+		tags_filter(val?: any) {
 			if ( val !== undefined ) return val as never
-			return ""
+			return [
+			] as readonly string[]
 		}
 		
 		/**
 		 * ```tree
-		 * Filter $mol_search query?val <=> filter?val
+		 * tags_dictionary *
+		 * ```
+		 */
+		tags_dictionary() {
+			return {
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * Filter $mol_select_list
+		 * 	value?val <=> tags_filter?val
+		 * 	dictionary <= tags_dictionary
 		 * ```
 		 */
 		@ $mol_mem
 		Filter() {
-			const obj = new this.$.$mol_search()
+			const obj = new this.$.$mol_select_list()
 			
-			obj.query = (val?: any) => this.filter(val)
+			obj.value = (val?: any) => this.tags_filter(val)
+			obj.dictionary = () => this.tags_dictionary()
 			
 			return obj
 		}
@@ -495,17 +546,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Option_title!id $mol_dimmer
-		 * 	haystack <= option_title!id
-		 * 	needle <= filter?val
+		 * Option_title!id $mol_row sub / <= option_title!id
 		 * ```
 		 */
 		@ $mol_mem_key
 		Option_title(id: any) {
-			const obj = new this.$.$mol_dimmer()
+			const obj = new this.$.$mol_row()
 			
-			obj.haystack = () => this.option_title(id)
-			obj.needle = () => this.filter()
+			obj.sub = () => [
+				this.option_title(id)
+			] as readonly any[]
 			
 			return obj
 		}

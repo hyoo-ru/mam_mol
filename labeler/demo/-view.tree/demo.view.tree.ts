@@ -26,6 +26,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_labeler
+		 * 	\$mol_string
+		 * 	\label
+		 * 	\form
+		 * 	\field
+		 * 	\caption
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_labeler",
+				"$mol_string",
+				"label",
+				"form",
+				"field",
+				"caption"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Provider $mol_labeler
 		 * 	title \Provider
 		 * 	content / \ACME Provider Inc.

@@ -26,6 +26,30 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_bar
+		 * 	\$mol_string
+		 * 	\$mol_check
+		 * 	\$mol_button
+		 * 	\bar
+		 * 	\group
+		 * 	\container
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_bar",
+				"$mol_string",
+				"$mol_check",
+				"$mol_button",
+				"bar",
+				"group",
+				"container"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * mail_hint \E-mail
 		 * ```
 		 */

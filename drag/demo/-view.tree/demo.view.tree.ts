@@ -47,6 +47,34 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_drag
+		 * 	\$mol_drop
+		 * 	\$mol_float
+		 * 	\$mol_link
+		 * 	\$mol_icon
+		 * 	\$mol_scroll
+		 * 	\drag
+		 * 	\dragndrop
+		 * 	\list
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_drag",
+				"$mol_drop",
+				"$mol_float",
+				"$mol_link",
+				"$mol_icon",
+				"$mol_scroll",
+				"drag",
+				"dragndrop",
+				"list"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * transfer_adopt?transfer null
 		 * ```
 		 */

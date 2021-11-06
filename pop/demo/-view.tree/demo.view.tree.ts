@@ -23,6 +23,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_pop
+		 * 	\$mol_row
+		 * 	\$mol_button
+		 * 	\popup
+		 * 	\menu
+		 * 	\container
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_pop",
+				"$mol_row",
+				"$mol_button",
+				"popup",
+				"menu",
+				"container"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * show_text @ \?
 		 * ```
 		 */

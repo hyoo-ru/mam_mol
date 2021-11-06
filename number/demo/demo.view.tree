@@ -29,3 +29,7 @@ $mol_number_demo $mol_demo_small
 		<= nine $mol_number
 			value?val <=> year?val NaN
 			precision 1000
+	tags /
+		\$mol_number
+		\number
+		\field

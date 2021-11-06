@@ -26,6 +26,40 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_video
+		 * 	\$mol_row
+		 * 	\$mol_button
+		 * 	\$mol_check
+		 * 	\$mol_paragraph
+		 * 	\$mol_number
+		 * 	\$mol_labeler
+		 * 	\video
+		 * 	\player
+		 * 	\palyback
+		 * 	\upload
+		 * 	\media
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_video",
+				"$mol_row",
+				"$mol_button",
+				"$mol_check",
+				"$mol_paragraph",
+				"$mol_number",
+				"$mol_labeler",
+				"video",
+				"player",
+				"palyback",
+				"upload",
+				"media"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * files
 		 * ```
 		 */

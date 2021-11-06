@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_list_demo_tree extends $mol_view {
+	export class $mol_list_demo_tree extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -40,6 +40,34 @@ namespace $ {
 			obj.Content = () => this.Row_content(id)
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_list
+		 * 	\$mol_expander
+		 * 	\$mol_list
+		 * 	\$mol_paragraph
+		 * 	\list
+		 * 	\tree
+		 * 	\hierarchy
+		 * 	\container
+		 * 	\nested
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_list",
+				"$mol_expander",
+				"$mol_list",
+				"$mol_paragraph",
+				"list",
+				"tree",
+				"hierarchy",
+				"container",
+				"nested"
+			] as readonly any[]
 		}
 		
 		/**

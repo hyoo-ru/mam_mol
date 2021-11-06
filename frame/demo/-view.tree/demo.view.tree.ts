@@ -14,6 +14,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_frame
+		 * 	\frame
+		 * 	\iframe
+		 * 	\container
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_frame",
+				"frame",
+				"iframe",
+				"container"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Frame $mol_frame
 		 * 	title @ \Another page inside that
 		 * 	uri \https://mol.js.org/

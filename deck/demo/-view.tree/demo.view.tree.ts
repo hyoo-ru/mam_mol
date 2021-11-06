@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_deck_demo extends $mol_view {
+	export class $mol_deck_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -18,6 +18,28 @@ namespace $ {
 		sub() {
 			return [
 				this.Deck()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_deck
+		 * 	\$mol_card
+		 * 	\deck
+		 * 	\card
+		 * 	\tabs
+		 * 	\container
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_deck",
+				"$mol_card",
+				"deck",
+				"card",
+				"tabs",
+				"container"
 			] as readonly any[]
 		}
 		

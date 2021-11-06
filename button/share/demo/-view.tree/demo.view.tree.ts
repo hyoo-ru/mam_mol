@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_button_share_demo extends $mol_view {
+	export class $mol_button_share_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -21,6 +21,24 @@ namespace $ {
 			return [
 				this.Share_self(),
 				this.Share_hyoo()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_button_share
+		 * 	\share
+		 * 	\button
+		 * 	\icon
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_button_share",
+				"share",
+				"button",
+				"icon"
 			] as readonly any[]
 		}
 		

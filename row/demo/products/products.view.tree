@@ -1,4 +1,4 @@
-$mol_row_demo_products $mol_view
+$mol_row_demo_products $mol_demo
 	title @ \Product catalog
 	count 100
 	Product!id $mol_card
@@ -8,4 +8,10 @@ $mol_row_demo_products $mol_view
 	sub /
 		<= Products $mol_row
 			sub <= products /
+	tags /
+		\$mol_row
+		\$mol_card
+		\products
+		\grid
+		\scroll
 

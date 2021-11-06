@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_expander_demo extends $mol_view {
+	export class $mol_expander_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -18,6 +18,28 @@ namespace $ {
 		sub() {
 			return [
 				this.Expander()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_expander
+		 * 	\$mol_filler
+		 * 	\expander
+		 * 	\expand
+		 * 	\container
+		 * 	\fold
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_expander",
+				"$mol_filler",
+				"expander",
+				"expand",
+				"container",
+				"fold"
 			] as readonly any[]
 		}
 		

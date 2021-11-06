@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_pop_over_demo extends $mol_view {
+	export class $mol_pop_over_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -18,6 +18,30 @@ namespace $ {
 		sub() {
 			return [
 				this.Menu()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_pop_over
+		 * 	\$mol_list
+		 * 	\$mol_button
+		 * 	\popover
+		 * 	\pop
+		 * 	\menu
+		 * 	\hover
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_pop_over",
+				"$mol_list",
+				"$mol_button",
+				"popover",
+				"pop",
+				"menu",
+				"hover"
 			] as readonly any[]
 		}
 		

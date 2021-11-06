@@ -50,6 +50,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_plot_map_heat
+		 * 	\$mol_plot_pane
+		 * 	\visualization
+		 * 	\heatmap
+		 * 	\graph
+		 * 	\dashboard
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_plot_map_heat",
+				"$mol_plot_pane",
+				"visualization",
+				"heatmap",
+				"graph",
+				"dashboard"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * terrain_x /number
 		 * ```
 		 */

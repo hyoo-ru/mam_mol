@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_check_expand_demo extends $mol_list {
+	export class $mol_check_expand_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -12,21 +12,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * rows /
-		 * 	<= Labeled_base
-		 * 	<= Labeled_expanded
-		 * 	<= Disabled
-		 * 	<= Empty_base
-		 * 	<= Empty_expanded
+		 * sub / <= Demo_items
 		 * ```
 		 */
-		rows() {
+		sub() {
 			return [
-				this.Labeled_base(),
-				this.Labeled_expanded(),
-				this.Disabled(),
-				this.Empty_base(),
-				this.Empty_expanded()
+				this.Demo_items()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_check_expand
+		 * 	\expand
+		 * 	\fold
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_check_expand",
+				"expand",
+				"fold"
 			] as readonly any[]
 		}
 		
@@ -154,6 +161,31 @@ namespace $ {
 			const obj = new this.$.$mol_check_expand()
 			
 			obj.checked = (val?: any) => this.expanded_expanded(val)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Demo_items $mol_list rows /
+		 * 	<= Labeled_base
+		 * 	<= Labeled_expanded
+		 * 	<= Disabled
+		 * 	<= Empty_base
+		 * 	<= Empty_expanded
+		 * ```
+		 */
+		@ $mol_mem
+		Demo_items() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => [
+				this.Labeled_base(),
+				this.Labeled_expanded(),
+				this.Disabled(),
+				this.Empty_base(),
+				this.Empty_expanded()
+			] as readonly any[]
 			
 			return obj
 		}

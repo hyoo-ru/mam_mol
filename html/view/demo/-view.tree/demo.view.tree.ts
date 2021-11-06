@@ -23,6 +23,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_html_view
+		 * 	\$mol_scroll
+		 * 	\html
+		 * 	\render
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_html_view",
+				"$mol_scroll",
+				"html",
+				"render"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Html $mol_html_view html \
 		 * 	\ <h1>HTML Example</h1>
 		 * 	\ <h2>Headings</h2>

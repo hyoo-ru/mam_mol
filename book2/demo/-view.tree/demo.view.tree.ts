@@ -23,6 +23,30 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_book2
+		 * 	\app
+		 * 	\page
+		 * 	\book
+		 * 	\navigation
+		 * 	\transition
+		 * 	\multipage
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_book2",
+				"app",
+				"page",
+				"book",
+				"navigation",
+				"transition",
+				"multipage"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * First $mol_view sub / \ First
 		 * ```
 		 */

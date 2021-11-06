@@ -1,4 +1,9 @@
-$mol_text_code_demo $mol_view
+$mol_text_code_demo $mol_demo
 	title @ \Markdow visualization example
 	sub /
 		<= Text $mol_text_code text <= source \
+	tags /
+		\$mol_text_code
+		\text
+		\code
+		\syntax highlighting

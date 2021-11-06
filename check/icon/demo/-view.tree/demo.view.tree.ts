@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_check_icon_demo extends $mol_list {
+	export class $mol_check_icon_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -12,17 +12,32 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * rows /
-		 * 	<= Base
-		 * 	<= Checked
-		 * 	<= Disabled
+		 * sub / <= Demo_items
 		 * ```
 		 */
-		rows() {
+		sub() {
 			return [
-				this.Base(),
-				this.Checked(),
-				this.Disabled()
+				this.Demo_items()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_check_icon
+		 * 	\$mol_icon
+		 * 	\checkbox
+		 * 	\button
+		 * 	\icon
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_check_icon",
+				"$mol_icon",
+				"checkbox",
+				"button",
+				"icon"
 			] as readonly any[]
 		}
 		
@@ -133,6 +148,27 @@ namespace $ {
 			obj.Icon = () => this.Disabled_icon()
 			obj.checked = () => true
 			obj.enabled = () => false
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Demo_items $mol_list rows /
+		 * 	<= Base
+		 * 	<= Checked
+		 * 	<= Disabled
+		 * ```
+		 */
+		@ $mol_mem
+		Demo_items() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => [
+				this.Base(),
+				this.Checked(),
+				this.Disabled()
+			] as readonly any[]
 			
 			return obj
 		}

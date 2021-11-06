@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_list_demo_table extends $mol_view {
+	export class $mol_list_demo_table extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -45,6 +45,34 @@ namespace $ {
 			obj.sub = () => this.row_content(id)
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_list
+		 * 	\$mol_row
+		 * 	\$mol_check
+		 * 	\$mol_switch
+		 * 	\$mol_time
+		 * 	\$mol_link
+		 * 	\list
+		 * 	\table
+		 * 	\scroll
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_list",
+				"$mol_row",
+				"$mol_check",
+				"$mol_switch",
+				"$mol_time",
+				"$mol_link",
+				"list",
+				"table",
+				"scroll"
+			] as readonly any[]
 		}
 		
 		/**

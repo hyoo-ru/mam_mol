@@ -23,6 +23,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_float
+		 * 	\$mol_scroll
+		 * 	\$mol_list
+		 * 	\$mol_filler
+		 * 	\scroll
+		 * 	\container
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_float",
+				"$mol_scroll",
+				"$mol_list",
+				"$mol_filler",
+				"scroll",
+				"container"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Head_content $mol_paragraph title \Float header
 		 * ```
 		 */

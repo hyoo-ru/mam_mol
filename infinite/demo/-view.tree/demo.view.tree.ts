@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_infinite_demo extends $mol_view {
+	export class $mol_infinite_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -27,6 +27,28 @@ namespace $ {
 		sub() {
 			return [
 				this.List()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_infinite
+		 * 	\$mol_filler
+		 * 	\infinite
+		 * 	\scroll
+		 * 	\virtual
+		 * 	\container
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_infinite",
+				"$mol_filler",
+				"infinite",
+				"scroll",
+				"virtual",
+				"container"
 			] as readonly any[]
 		}
 		

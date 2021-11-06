@@ -23,6 +23,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_attach
+		 * 	\attach
+		 * 	\file
+		 * 	\image
+		 * 	\upload
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_attach",
+				"attach",
+				"file",
+				"image",
+				"upload"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Item1 $mol_attach_item
 		 * 	url_thumb \https://thiscatdoesnotexist.com/
 		 * 	url_load \https://thiscatdoesnotexist.com/

@@ -23,6 +23,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_map_yandex
+		 * 	\map
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_map_yandex",
+				"map"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * place_title \
 		 * ```
 		 */

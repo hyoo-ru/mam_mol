@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_check_box_demo extends $mol_list {
+	export class $mol_check_box_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -12,23 +12,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * rows /
-		 * 	<= Labeled_base
-		 * 	<= Labeled_checked
-		 * 	<= Labeled_disabled
-		 * 	<= Alone_base
-		 * 	<= Alone_checked
-		 * 	<= Alone_disabled
+		 * sub / <= Demo_items
 		 * ```
 		 */
-		rows() {
+		sub() {
 			return [
-				this.Labeled_base(),
-				this.Labeled_checked(),
-				this.Labeled_disabled(),
-				this.Alone_base(),
-				this.Alone_checked(),
-				this.Alone_disabled()
+				this.Demo_items()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_check_box
+		 * 	\checkbox
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_check_box",
+				"checkbox"
 			] as readonly any[]
 		}
 		
@@ -175,6 +178,33 @@ namespace $ {
 			
 			obj.checked = () => true
 			obj.enabled = () => false
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Demo_items $mol_list rows /
+		 * 	<= Labeled_base
+		 * 	<= Labeled_checked
+		 * 	<= Labeled_disabled
+		 * 	<= Alone_base
+		 * 	<= Alone_checked
+		 * 	<= Alone_disabled
+		 * ```
+		 */
+		@ $mol_mem
+		Demo_items() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => [
+				this.Labeled_base(),
+				this.Labeled_checked(),
+				this.Labeled_disabled(),
+				this.Alone_base(),
+				this.Alone_checked(),
+				this.Alone_disabled()
+			] as readonly any[]
 			
 			return obj
 		}

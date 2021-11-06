@@ -40,6 +40,30 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_code
+		 * 	\code
+		 * 	\qrcode
+		 * 	\barcode
+		 * 	\scanner
+		 * 	\scan
+		 * 	\cordova
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_code",
+				"code",
+				"qrcode",
+				"barcode",
+				"scanner",
+				"scan",
+				"cordova"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Qr $mol_code format \QR_CODE
 		 * ```
 		 */

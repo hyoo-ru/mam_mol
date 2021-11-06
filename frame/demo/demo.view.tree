@@ -3,3 +3,8 @@ $mol_frame_demo $mol_demo_large
 		<= Frame $mol_frame
 			title @ \Another page inside that
 			uri \https://mol.js.org/
+	tags /
+		\$mol_frame
+		\frame
+		\iframe
+		\container

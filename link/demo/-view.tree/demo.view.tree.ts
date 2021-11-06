@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_link_demo extends $mol_list {
+	export class $mol_link_demo extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -12,23 +12,40 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * rows /
-		 * 	<= This
-		 * 	<= Red
-		 * 	<= Green
-		 * 	<= Blue
-		 * 	<= External
-		 * 	<= Download
+		 * sub / <= Demo_items
 		 * ```
 		 */
-		rows() {
+		sub() {
 			return [
-				this.This(),
-				this.Red(),
-				this.Green(),
-				this.Blue(),
-				this.External(),
-				this.Download()
+				this.Demo_items()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_link
+		 * 	\$mol_icon
+		 * 	\file
+		 * 	\download
+		 * 	\link
+		 * 	\icon
+		 * 	\navigation
+		 * 	\router
+		 * 	\url
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_link",
+				"$mol_icon",
+				"file",
+				"download",
+				"link",
+				"icon",
+				"navigation",
+				"router",
+				"url"
 			] as readonly any[]
 		}
 		
@@ -224,6 +241,33 @@ namespace $ {
 			obj.sub = () => [
 				this.Download_icon(),
 				this.download_label()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Demo_items $mol_list rows /
+		 * 	<= This
+		 * 	<= Red
+		 * 	<= Green
+		 * 	<= Blue
+		 * 	<= External
+		 * 	<= Download
+		 * ```
+		 */
+		@ $mol_mem
+		Demo_items() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => [
+				this.This(),
+				this.Red(),
+				this.Green(),
+				this.Blue(),
+				this.External(),
+				this.Download()
 			] as readonly any[]
 			
 			return obj

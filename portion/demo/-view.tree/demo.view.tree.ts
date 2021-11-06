@@ -28,6 +28,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_portion
+		 * 	\dashboard
+		 * 	\progress
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_portion",
+				"dashboard",
+				"progress"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * fist 0
 		 * ```
 		 */

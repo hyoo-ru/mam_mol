@@ -23,6 +23,34 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_book2_catalog
+		 * 	\$mol_page
+		 * 	\app
+		 * 	\page
+		 * 	\book
+		 * 	\menu
+		 * 	\navigation
+		 * 	\transition
+		 * 	\multipage
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_book2_catalog",
+				"$mol_page",
+				"app",
+				"page",
+				"book",
+				"menu",
+				"navigation",
+				"transition",
+				"multipage"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Articles $mol_page
 		 * 	title \Articles
 		 * 	body / \Articles content

@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_form_demo_bids extends $mol_list {
+	export class $mol_form_demo_bids extends $mol_demo {
 		
 		/**
 		 * ```tree
@@ -93,15 +93,40 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Form
-		 * 	<= Message
+		 * sub / <= Demo_items
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Form(),
-				this.Message()
+				this.Demo_items()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags /
+		 * 	\$mol_form
+		 * 	\$mol_form_field
+		 * 	\$mol_button
+		 * 	\$mol_row
+		 * 	\$mol_string
+		 * 	\form
+		 * 	\bids
+		 * 	\validation
+		 * 	\field
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_form",
+				"$mol_form_field",
+				"$mol_button",
+				"$mol_row",
+				"$mol_string",
+				"form",
+				"bids",
+				"validation",
+				"field"
 			] as readonly any[]
 		}
 		
@@ -613,6 +638,25 @@ namespace $ {
 			
 			obj.sub = () => [
 				this.message()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Demo_items $mol_list sub /
+		 * 	<= Form
+		 * 	<= Message
+		 * ```
+		 */
+		@ $mol_mem
+		Demo_items() {
+			const obj = new this.$.$mol_list()
+			
+			obj.sub = () => [
+				this.Form(),
+				this.Message()
 			] as readonly any[]
 			
 			return obj

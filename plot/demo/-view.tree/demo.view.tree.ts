@@ -34,6 +34,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_plot
+		 * 	\visualization
+		 * 	\chart
+		 * 	\graph
+		 * 	\dashboard
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_plot",
+				"visualization",
+				"chart",
+				"graph",
+				"dashboard"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * saturation_series /
 		 * ```
 		 */

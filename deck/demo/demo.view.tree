@@ -1,4 +1,4 @@
-$mol_deck_demo $mol_view
+$mol_deck_demo $mol_demo
 	title @ \Simple deck with tabbar
 	sub /
 		<= Deck $mol_deck items /
@@ -11,3 +11,10 @@ $mol_deck_demo $mol_view
 			<= Commander $mol_card
 				title @ \Command
 				content / <= command_message @ \Let us do it right!
+	tags /
+		\$mol_deck
+		\$mol_card
+		\deck
+		\card
+		\tabs
+		\container

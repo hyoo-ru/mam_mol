@@ -23,6 +23,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_search
+		 * 	\search
+		 * 	\suggest
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_search",
+				"search",
+				"suggest"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * suggests /
 		 * ```
 		 */
