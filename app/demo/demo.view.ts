@@ -203,10 +203,13 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		tags_dictionary() {
-			return this.tags_all().reduce( ( res, tag ) => {
-				res[ tag ] = tag
-				return res
-			}, {} as Record<string, string> )
+			const dictionary: Record<string, string> = {}
+			
+			for (const tag of this.tags_all()) {
+				dictionary[tag] = tag
+			}
+			
+			return dictionary
 		}
 
 		@ $mol_mem
