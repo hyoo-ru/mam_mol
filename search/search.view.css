@@ -19,3 +19,8 @@
 [mol_search_suggest] {
 	text-align: left;
 }
+
+[mol_search_suggest_label_high] {
+	color: var(--mol_theme_shade);
+	text-shadow: none;
+}

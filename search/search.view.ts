@@ -64,13 +64,15 @@ namespace $.$$ {
 			return key
 		}
 		
+		@ $mol_mem
 		menu_items() {
 			return this.suggests().map( ( suggest : string ) => this.Suggest( suggest ) )
 		}
 		
 		suggest_select( id : string , event? : MouseEvent ) {
 			this.query( id )
-			this.Query().focused( false )
+			this.Query().selection([ id.length, id.length ])
+			this.Query().focused( true )
 		}
 		
 		clear( event? : Event ) {
