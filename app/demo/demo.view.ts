@@ -205,10 +205,10 @@ namespace $.$$ {
 		tags_dictionary() {
 			const dictionary: Record<string, string> = {}
 
-			for (const tag of this.tags_all()) {
-				dictionary[tag] = tag
+			for( const tag of this.tags_all() ) {
+				dictionary[ tag ] = tag
 			}
-			
+
 			return dictionary
 		}
 
