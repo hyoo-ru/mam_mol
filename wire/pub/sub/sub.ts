@@ -112,12 +112,12 @@ namespace $ {
 			
 		}
 		
-		absorb( quant: number ) {
+		affect( quant: number ) {
 			
 			if( this.pubs_cursor >= quant ) return false
 			this.pubs_cursor = quant
 			
-			return super.absorb( quant )
+			return super.affect( quant )
 		}
 		
 	}

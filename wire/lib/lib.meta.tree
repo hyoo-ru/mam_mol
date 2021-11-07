@@ -4,3 +4,4 @@ include \/mol/wire/fiber
 include \/mol/wire/sync
 include \/mol/wire/async
 include \/mol/wire/chan
+include \/mol/wire/set
