@@ -120,6 +120,10 @@ namespace $ {
 			return super.affect( quant )
 		}
 		
+		[ $mol_dev_format_head ]() {
+			return $mol_dev_format_native( this )
+		}
+		
 	}
 	
 }
