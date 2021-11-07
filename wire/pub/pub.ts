@@ -59,7 +59,7 @@ namespace $ {
 		 */
 		emit() {
 			for( let i = this.subs_from; i < this.length; i += 2 ) {
-				;( this[i] as $mol_wire_pub_sub ).absorb()
+				;( this[i] as $mol_wire_pub ).absorb()
 			}
 		}
 		
@@ -107,10 +107,6 @@ namespace $ {
 		 */
 		repos( peer_pos: number, self_pos: number ) {
 			this[ peer_pos + 1 ] = self_pos
-		}
-		
-		[ $mol_dev_format_head ]() {
-			return $mol_dev_format_native( this )
 		}
 		
 	}
