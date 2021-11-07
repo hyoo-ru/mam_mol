@@ -93,7 +93,7 @@ namespace $ {
 				pub.off( this[ cursor + 1 ] as number )
 				
 				if( this.subs_from < this.length ) {
-					pub.move( cursor, this.length - 2 )
+					this.move( cursor, this.length - 2 )
 				}
 				
 			}
