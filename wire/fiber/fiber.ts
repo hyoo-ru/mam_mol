@@ -78,9 +78,9 @@ namespace $ {
 			
 		}
 
-		absorb( quant: number ) {
+		affect( quant: number ) {
 
-			if( !super.absorb( quant ) ) return false
+			if( !super.affect( quant ) ) return false
 			
 			if( this.subs_from === this.length ) {
 				new $mol_after_frame( ()=> this.touch() )
@@ -124,7 +124,7 @@ namespace $ {
 			} catch( error: any ) {
 				
 				if( error instanceof Promise && !handled.has( error ) ) {
-					error = error.finally( ()=> this.emit() )
+					error = error.finally( ()=> this.absorb() )
 					handled.add( error )
 				}
 				
@@ -143,9 +143,7 @@ namespace $ {
 			
 			if( this.subs_from < this.length ) {
 				if( !$mol_compare_deep( prev, next ) ) {
-					for( let i = this.subs_from; i < this.length; i += 2 ) {
-						;( this[i] as $mol_wire_pub_sub ).emit()
-					}
+					this.emit()
 				}
 			}
 			
