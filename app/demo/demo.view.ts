@@ -61,35 +61,23 @@ namespace $.$$ {
 			return this.Widget()[ name ].title()
 		}
 
-		/** Search string not empty and ends with space */
-		@ $mol_mem
-		filter_last_word_completed( next?: boolean ) {
-			return next !== undefined ? next : true
-		}
-
 		filter() {
 			return this.Menu().filter()
 		}
 
-		/** Search string uniq words */
+		/** Filter string not empty and ends with space */
+		@ $mol_mem
+		filter_last_word_completed() {
+			return /[^\s]+\s+$/.test( this.filter() )
+		}
+
+		/** Filter string uniq words */
 		@ $mol_mem
 		filter_words() {
-			const words = this.filter()
-				?.trimStart()
-				.replace( /\s{1,}/g, ' ' )
-				.split( /\s/ )?? []
-			
-			/** Search string ends with space */
-			let last_word_completed = false
+			const filter = this.filter().trim()
 
-			if( words.length !== 0 ) {
-				last_word_completed = words[ words.length - 1 ] === ''
+			const words = filter !== '' ? filter.split( /\s+/ ) : []
 
-				if( last_word_completed ) words.pop()
-			}
-
-			this.filter_last_word_completed( last_word_completed )
-			
 			return [ ... new Set( words ) ]
 		}
 
@@ -292,7 +280,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		override filter( next?: string ) {
-			return this.$.$mol_state_arg.value( 'search' , next ) ?? super.filter()
+			return this.$.$mol_state_arg.value( 'filter' , next === '' ? null : next ) ?? super.filter()
 		}
 		
 		@ $mol_mem
