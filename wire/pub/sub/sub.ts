@@ -93,7 +93,7 @@ namespace $ {
 				pub.off( this[ cursor + 1 ] as number )
 				
 				if( this.subs_from < this.length ) {
-					pub.move( cursor, this.length - 2 )
+					this.move( cursor, this.length - 2 )
 				}
 				
 			}
@@ -112,12 +112,16 @@ namespace $ {
 			
 		}
 		
-		absorb( quant: number ) {
+		affect( quant: number ) {
 			
 			if( this.pubs_cursor >= quant ) return false
 			this.pubs_cursor = quant
 			
-			return super.absorb( quant )
+			return super.affect( quant )
+		}
+		
+		[ $mol_dev_format_head ]() {
+			return $mol_dev_format_native( this )
 		}
 		
 	}

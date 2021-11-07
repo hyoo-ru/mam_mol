@@ -51,28 +51,37 @@ namespace $ {
 		 * Enforce lazy emitting.
 		 */
 		touch() {
-			this.emit()
+			this.absorb()
 		}
 		
 		/**
-		 * Notify subscribers about something.
+		 * Notify subscribers about self changes.
 		 */
 		emit() {
+			for( let i = this.subs_from; i < this.length; i += 2 ) {
+				;( this[i] as $mol_wire_pub ).absorb()
+			}
+		}
+		
+		/**
+		 * Receive notification about publisher changes.
+		 */
+		absorb() {
 			
-			if( !this.absorb( $mol_wire_stale ) ) return false
+			if( !this.affect( $mol_wire_stale ) ) return false
 			
 			while( $mol_wire_queue.length ) {
 				const next = $mol_wire_queue.pop()!
-				next.absorb( $mol_wire_doubt )
+				next.affect( $mol_wire_doubt )
 			}
 			
 			return true
 		}
 		
 		/**
-		 * Notify about changes in the publisher.
+		 * Add self subscribers to affection queue.
 		 */
-		absorb( quant: number ) {
+		affect( quant: number ) {
 			for( let i = this.subs_from; i < this.length; i += 2 ) {
 				$mol_wire_queue.push( this[i] as $mol_wire_sub )
 			}
@@ -98,10 +107,6 @@ namespace $ {
 		 */
 		repos( peer_pos: number, self_pos: number ) {
 			this[ peer_pos + 1 ] = self_pos
-		}
-		
-		[ $mol_dev_format_head ]() {
-			return $mol_dev_format_native( this )
 		}
 		
 	}
