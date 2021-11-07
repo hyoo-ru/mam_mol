@@ -43,6 +43,5 @@ try {
 ## Firing events
 
 ```ts
-pepe.emit() // Fire `undefined`
-pepe.emit( new Error( 'Attention!' ) ) // Fire something else
+pepe.emit() // Notify subscribers about changes
 ```

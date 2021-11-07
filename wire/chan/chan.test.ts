@@ -144,5 +144,50 @@ namespace $ {
 
 		} ,
 
+		'Actions inside invariant'( $ ) {
+		
+			class App extends $mol_object {
+		
+				static $ = $
+				
+				@ $mol_wire_chan
+				static count( next = 0 ) {
+					return next
+				}
+		
+				@ $mol_wire_chan
+				static inc_event( next = null as null | Event ) {
+					return next
+				}
+		
+				@ $mol_wire_chan
+				static inc_task() {
+					if( !this.inc_event() ) return
+					this.count( this.count() + 1 )
+					this.inc_event( null )
+				}
+		
+				@ $mol_wire_chan
+				static res() {
+					this.inc_task()
+					return this.count()
+				}
+		
+			}
+			
+			$mol_assert_like( App.res() , 0 )
+			
+			App.inc_event( new Event( 'inc' ) )
+			$mol_assert_like( App.res() , 1 )
+			
+			App.inc_event( new Event( 'inc' ) )
+			App.inc_event( new Event( 'inc' ) )
+			$mol_assert_like( App.res() , 2 )
+			
+			App.count( 0 )
+			$mol_assert_like( App.res() , 0 )
+			
+		} ,
+
 	})
 }
