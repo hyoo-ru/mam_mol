@@ -34,7 +34,6 @@ $mol_chart_demo_simple $mol_demo_large
 						<= Plan
 						<= Fact_dots
 	tags /
-		\$mol_chart
 		\$mol_plot
 		\chart
 		\plot

@@ -58,7 +58,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		widget_title( name: string ) {
-			return '' // this.Widget()[ name ].title() // FIXME Doubted while calculation
+			return this.Widget()[ name ].title()
 		}
 
 		/** Search string not empty and ends with space */
@@ -304,7 +304,6 @@ namespace $.$$ {
 			return { 'demo' : id }
 		}
 		
-		// TODO Передавать сразу подготовленные имена?
 		override option_title( id: string ) {
 			return '$'+ id.replace( '_demo_', '/' ).replace( '_demo', '' )
 		}
