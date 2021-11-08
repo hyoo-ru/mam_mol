@@ -40,7 +40,7 @@ namespace $.$$ {
 		widget_tags( name: string ) {
 			const component_name = this.component_name( name )
 
-			const tags = this.Widget()[ name ].tags()
+			const tags = this.Widget()[ name ].tags().map( tag => tag.toLowerCase() )
 
 			if( tags.length === 0 ) {
 
@@ -78,7 +78,7 @@ namespace $.$$ {
 
 			const words = filter !== '' ? filter.split( /\s+/ ) : []
 
-			return [ ... new Set( words ) ]
+			return [ ... new Set( words ) ].map( word => word.toLowerCase() )
 		}
 
 		@ $mol_mem
@@ -91,7 +91,7 @@ namespace $.$$ {
 					const title = this.widget_title( name )
 
 					const component_keywords = [
-						...( title ? [ title ] : [] ),
+						...( title ? [ title.toLowerCase() ] : [] ),
 						...this.widget_tags( name )
 					]
 
