@@ -158,14 +158,14 @@ namespace $.$$ {
 					complements.push(
 						`${ filter_words.slice( 0, -1 ).join( ' ' ) } ${ tag }`
 					)
-				} else {
+				} else if ( complements.length === 0 ) {
 					suggests.push(
 						`${ filter_words.join( ' ' ) } ${ tag }`
 					)
 				}
 			}
 
-			return [ ... complements, ... suggests ]
+			return complements.length !== 0 ? complements : [ ... complements, ... suggests ]
 		}
 
 		override selected() {
