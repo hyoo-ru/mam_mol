@@ -25589,6 +25589,17 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        const compare_names = (a, b) => {
+            if (a[0] === '$' && b[0] !== '$')
+                return 1;
+            if (a[0] !== '$' && b[0] === '$')
+                return -1;
+            if (a > b)
+                return 1;
+            if (a < b)
+                return -1;
+            return 0;
+        };
         class $mol_app_demo extends $.$mol_app_demo {
             component_name(name) {
                 return '$' + name.split('_demo')?.[0] ?? name;
@@ -25617,13 +25628,13 @@ var $;
             }
             widget_tags(name) {
                 const component_name = this.component_name(name);
-                const tags = this.Widget()[name].tags();
+                const tags = this.Widget()[name].tags().map(tag => tag.toLowerCase());
                 if (tags.length === 0) {
                     console.warn(`Demo widget without tags: ${name}`);
-                    return [component_name, 'untagged'];
+                    return ['untagged', component_name];
                 }
                 else {
-                    return [component_name, ...tags];
+                    return [...tags, component_name];
                 }
             }
             widget_title(name) {
@@ -25638,7 +25649,7 @@ var $;
             filter_words() {
                 const filter = this.filter().trim();
                 const words = filter !== '' ? filter.split(/\s+/) : [];
-                return [...new Set(words)];
+                return [...new Set(words)].map(word => word.toLowerCase());
             }
             names_demo_filtered() {
                 const words = this.filter_words();
@@ -25646,7 +25657,7 @@ var $;
                     return this.names_demo_all().filter(name => {
                         const title = this.widget_title(name);
                         const component_keywords = [
-                            ...(title ? [title] : []),
+                            ...(title ? [title.toLowerCase()] : []),
                             ...this.widget_tags(name)
                         ];
                         return words.every(word => component_keywords.some(kw => kw.includes(word)));
@@ -25657,9 +25668,10 @@ var $;
                 }
             }
             tags_demo_filtered() {
-                return [...new Set(this.names_demo_filtered().flatMap(name => {
-                        return this.widget_tags(name);
-                    }))].map(tag => tag.toLowerCase()).sort();
+                return [...new Set(this.names_demo_filtered().flatMap(name => this.widget_tags(name)))]
+                    .map(tag => tag.trim().toLowerCase())
+                    .filter(tag => tag !== '')
+                    .sort(compare_names);
             }
             filter_suggests() {
                 const filter_words = this.filter_words();
@@ -25668,30 +25680,23 @@ var $;
                 const filtered_names = this.names_demo_filtered();
                 if (filtered_names.length <= 1)
                     return [];
-                const suggested_tags = this.tags_demo_filtered().filter(tag => {
-                    if (!filter_words.includes(tag)) {
-                        const all_widgets_include_tag = filtered_names.every(name => this.widget_tags(name).includes(tag));
-                        const all_widgets_not_include_tag = filtered_names.every(name => !this.widget_tags(name).includes(tag));
-                        return !all_widgets_include_tag && !all_widgets_not_include_tag;
-                    }
-                    return true;
-                });
-                const filter = filter_words.join(' ');
+                const tags = this.tags_demo_filtered();
                 const filter_last_word = filter_words.slice(-1)[0];
                 const filter_last_word_completed = this.filter_last_word_completed();
+                const complements = [];
                 const suggests = [];
-                for (const tag of suggested_tags) {
-                    if (filter.includes(tag))
+                for (const tag of tags) {
+                    if (filter_words.includes(tag))
                         continue;
                     if (!filter_last_word_completed &&
                         tag.indexOf(filter_last_word) === 0) {
-                        suggests.push(`${filter_words.slice(0, -1).join(' ')} ${tag}`);
+                        complements.push(`${filter_words.slice(0, -1).join(' ')} ${tag}`);
                     }
-                    else {
-                        suggests.push(`${filter} ${tag}`);
+                    else if (complements.length === 0) {
+                        suggests.push(`${filter_words.join(' ')} ${tag}`);
                     }
                 }
-                return suggests;
+                return complements.length !== 0 ? complements : [...complements, ...suggests];
             }
             selected() {
                 return $.$mol_state_arg.value('demo') || '';

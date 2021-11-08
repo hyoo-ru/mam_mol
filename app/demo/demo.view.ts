@@ -1,4 +1,13 @@
 namespace $.$$ {
+	
+	/** The component tags should be at the end of the list */
+	const compare_names = ( a: string, b: string )=> {
+		if ( a[ 0 ] === '$' && b[ 0 ] !== '$') return 1
+		if ( a[ 0 ] !== '$' && b[ 0 ] === '$' ) return -1
+		if ( a > b ) return 1
+		if ( a < b ) return -1
+		return 0
+	}
 
 	export class $mol_app_demo extends $.$mol_app_demo {
 
@@ -40,17 +49,17 @@ namespace $.$$ {
 		widget_tags( name: string ) {
 			const component_name = this.component_name( name )
 
-			const tags = this.Widget()[ name ].tags()
+			const tags = this.Widget()[ name ].tags().map( tag => tag.toLowerCase() )
 
 			if( tags.length === 0 ) {
 
 				console.warn( `Demo widget without tags: ${ name }` )
 
-				return [ component_name, 'untagged' ]
+				return [ 'untagged', component_name ]
 
 			} else {
 
-				return [component_name, ...tags]
+				return [ ...tags, component_name ]
 
 			}
 
@@ -78,7 +87,7 @@ namespace $.$$ {
 
 			const words = filter !== '' ? filter.split( /\s+/ ) : []
 
-			return [ ... new Set( words ) ]
+			return [ ... new Set( words ) ].map( word => word.toLowerCase() )
 		}
 
 		@ $mol_mem
@@ -91,7 +100,7 @@ namespace $.$$ {
 					const title = this.widget_title( name )
 
 					const component_keywords = [
-						...( title ? [ title ] : [] ),
+						...( title ? [ title.toLowerCase() ] : [] ),
 						...this.widget_tags( name )
 					]
 
@@ -110,10 +119,11 @@ namespace $.$$ {
 		@ $mol_mem
 		tags_demo_filtered() {
 			return [... new Set(
-				this.names_demo_filtered().flatMap( name => {
-						return this.widget_tags( name )
-				} )
-			) ].map( tag => tag.toLowerCase() ).sort()
+				this.names_demo_filtered().flatMap( name => this.widget_tags( name ) )
+			) ]
+				.map( tag => tag.trim().toLowerCase() )
+				.filter( tag => tag !== '')
+				.sort( compare_names )
 		}
 
 		@ $mol_mem
@@ -126,48 +136,36 @@ namespace $.$$ {
 
 			if( filtered_names.length <= 1 ) return []
 
-			const suggested_tags = this.tags_demo_filtered().filter( tag => {
-				if( !filter_words.includes( tag ) ) {
-					const all_widgets_include_tag = filtered_names.every(
-						name => this.widget_tags( name ).includes( tag )
-					)
-
-					const all_widgets_not_include_tag = filtered_names.every(
-						name => !this.widget_tags( name ).includes( tag )
-					)
-
-					return !all_widgets_include_tag && !all_widgets_not_include_tag
-				}
-
-				return true
-			} )
-
-			const filter = filter_words.join( ' ' )
+			const tags = this.tags_demo_filtered()
 
 			const filter_last_word = filter_words.slice( -1 )[ 0 ]
 
 			const filter_last_word_completed = this.filter_last_word_completed()
+			
+			/** Uncopleted words complements */
+			const complements: string[] = []
 
+			/** Tags suggests */
 			const suggests: string[] = []
 
-			for( const tag of suggested_tags ) {
-				if( filter.includes( tag ) ) continue
+			for( const tag of tags ) {
+				if( filter_words.includes( tag ) ) continue
 
 				if(
 					!filter_last_word_completed &&
 					tag.indexOf( filter_last_word ) === 0
 				) {
-					suggests.push(
+					complements.push(
 						`${ filter_words.slice( 0, -1 ).join( ' ' ) } ${ tag }`
 					)
-				} else {
+				} else if ( complements.length === 0 ) {
 					suggests.push(
-						`${ filter } ${ tag }`
+						`${ filter_words.join( ' ' ) } ${ tag }`
 					)
 				}
 			}
 
-			return suggests
+			return complements.length !== 0 ? complements : [ ... complements, ... suggests ]
 		}
 
 		override selected() {
