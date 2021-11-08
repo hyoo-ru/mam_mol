@@ -35,7 +35,6 @@ $mol_html_view_demo $mol_demo_large
 					\ <blockquote><p>Block quotation</p></blockquote>
 					\ <pre><code>Block code</code></pre>
 	tags /
-		\$mol_html_view
 		\$mol_scroll
 		\html
 		\render

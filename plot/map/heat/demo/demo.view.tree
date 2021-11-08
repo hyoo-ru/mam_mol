@@ -13,7 +13,6 @@ $mol_plot_map_heat_demo $mol_demo_large
 					series_y <= terrain_y /number
 					series_z <= terrain_z /number
 	tags /
-		\$mol_plot_map_heat
 		\$mol_plot_pane
 		\visualization
 		\heatmap

@@ -9,7 +9,6 @@ $mol_list_demo_tree $mol_demo
 		Content <= Row_content!id $mol_list
 			rows <= row_content!id /
 	tags /
-		\$mol_list
 		\$mol_expander
 		\$mol_list
 		\$mol_paragraph

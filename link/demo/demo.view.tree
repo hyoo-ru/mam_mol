@@ -29,7 +29,6 @@ $mol_link_demo $mol_demo
 						<= Download_icon $mol_icon_download
 						<= download_label @ \Download
 	tags /
-		\$mol_link
 		\$mol_icon
 		\file
 		\download

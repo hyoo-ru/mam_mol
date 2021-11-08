@@ -17,6 +17,5 @@ $mol_switch_demo $mol_demo
 						green <= option_green @ \Green
 						blue <= option_blue @ \Blue
 	tags /
-		\$mol_switch
 		\switch
 		\option

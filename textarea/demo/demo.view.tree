@@ -15,7 +15,6 @@ $mol_textarea_demo $mol_demo
 					enabled false
 					value?val <=> filled_descr?val
 	tags /
-		\$mol_textarea
 		\textarea
 		\code
 		\syntax highlighting

@@ -20,7 +20,6 @@ $mol_code_demo $mol_demo_small
 		<= Itf $mol_code
 			format \ITF
 	tags /
-		\$mol_code
 		\code
 		\qrcode
 		\barcode
