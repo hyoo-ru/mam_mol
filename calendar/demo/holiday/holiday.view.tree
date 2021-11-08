@@ -20,6 +20,5 @@ $mol_calendar_demo_holiday $mol_demo_small
 			month_string <= month \2018-01
 			day_holiday!day <= holiday!day false
 	tags /
-		\$mol_calendar
 		\calendar
 		\date

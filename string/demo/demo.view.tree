@@ -12,7 +12,6 @@ $mol_string_demo $mol_demo_small
 			disabled true
 			value?val <=> name2?val
 	tags /
-		\$mol_string
 		\input
 		\string
 		\text

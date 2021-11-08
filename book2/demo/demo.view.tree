@@ -9,7 +9,6 @@ $mol_book2_demo $mol_demo_large
 			<= Third $mol_view
 				sub / \ Third
 	tags /
-		\$mol_book2
 		\app
 		\page
 		\book

@@ -11,11 +11,12 @@ $mol_app_demo $mol_book2
 		\$mol_demo_large
 	Menu $mol_app_demo_menu
 		names <= names_demo_filtered /string
-		tags_all <= tags_demo_selectable /string
+		filter_suggests <= filter_suggests /string
 	Detail!id $mol_app_demo_detail
 		chat_seed <= chat_seed!id \
 		chat_pages => chat_pages!id
 		title <= detail_title
+		description <= detail_description \
 		source_link <= source_link \
 		edit_uri <= edit_uri \
 		Demo <= Demo $mol_view
@@ -31,10 +32,10 @@ $mol_app_demo $mol_book2
 			<= detail_empty_prefix @ \No one demo with prefix "
 			<= selected \
 			<= detail_empty_postfix @ \"
-			
+
 $mol_app_demo_menu $mol_page
 	names /string
-	tags_all /string
+	filter_suggests /string
 	title @ \$mol examples
 	tools /
 		<= Sources $mol_link_source
@@ -43,18 +44,20 @@ $mol_app_demo_menu $mol_page
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /
-				<= Filter $mol_select_list
-					value?val <=> tags_filter?val /string
-					dictionary <= tags_dictionary *
+				<= Filter $mol_search
+					query?val <=> filter?val \
+					suggests <= filter_suggests
 				<= Options $mol_list
 					rows <= options /
 	Option!id $mol_link
 		arg <= option_arg!id *
 		sub /
-			<= Option_title!id $mol_row sub /
-				<= option_title!id \
+			<= Option_title!id $mol_dimmer
+				haystack <= option_title!id \
+				needle <= filter?val \
 
 $mol_app_demo_detail $mol_page
+	description \
 	tools /
 		<= Readme $mol_link
 			arg *

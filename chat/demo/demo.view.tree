@@ -7,6 +7,5 @@ $mol_chat_demo $mol_demo
 		- <= Pages $mol_view
 			sub <= chat_pages
 	tags /
-		\$mol_chat
 		\chat
 		\communication
