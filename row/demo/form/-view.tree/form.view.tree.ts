@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_row
 		 * 	\$mol_search
 		 * 	\$mol_number
 		 * 	\$mol_portion
@@ -39,7 +38,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_row",
 				"$mol_search",
 				"$mol_number",
 				"$mol_portion",

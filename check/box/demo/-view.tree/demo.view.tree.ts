@@ -23,14 +23,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\$mol_check_box
-		 * 	\checkbox
+		 * tags / \checkbox
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_check_box",
 				"checkbox"
 			] as readonly any[]
 		}

@@ -18,7 +18,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_date
 		 * 	\$mol_time_moment
 		 * 	\date
 		 * 	\datepicker
@@ -27,7 +26,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_date",
 				"$mol_time_moment",
 				"date",
 				"datepicker",

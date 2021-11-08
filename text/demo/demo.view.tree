@@ -40,6 +40,5 @@ $mol_text_demo $mol_demo
 			\Build status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
 			\
 	tags /
-		\$mol_text
 		\text
 		\markdown

@@ -24,14 +24,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_chat
 		 * 	\chat
 		 * 	\communication
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_chat",
 				"chat",
 				"communication"
 			] as readonly any[]

@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_pop
 		 * 	\$mol_row
 		 * 	\$mol_button
 		 * 	\popup
@@ -34,7 +33,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_pop",
 				"$mol_row",
 				"$mol_button",
 				"popup",

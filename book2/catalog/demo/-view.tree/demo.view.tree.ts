@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_book2_catalog
 		 * 	\$mol_page
 		 * 	\app
 		 * 	\page
@@ -37,7 +36,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_book2_catalog",
 				"$mol_page",
 				"app",
 				"page",

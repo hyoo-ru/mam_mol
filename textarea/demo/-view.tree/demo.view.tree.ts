@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_textarea
 		 * 	\textarea
 		 * 	\code
 		 * 	\syntax highlighting
@@ -32,7 +31,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_textarea",
 				"textarea",
 				"code",
 				"syntax highlighting"

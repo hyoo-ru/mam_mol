@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_attach
 		 * 	\attach
 		 * 	\file
 		 * 	\image
@@ -33,7 +32,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_attach",
 				"attach",
 				"file",
 				"image",

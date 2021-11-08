@@ -16,9 +16,9 @@ $mol_select_demo_colors $mol_demo
 							needle <= color_filter
 					minimal_height 40
 	tags /
-		\$mol_select
 		\$mol_dimmer
 		\select
+		\color
 		\colorpicker
 		\filter
 

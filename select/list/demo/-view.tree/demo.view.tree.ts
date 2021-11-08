@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_select_list
 		 * 	\select
 		 * 	\tags
 		 * 	\multiselect
@@ -32,7 +31,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_select_list",
 				"select",
 				"tags",
 				"multiselect"

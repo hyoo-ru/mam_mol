@@ -5,7 +5,6 @@ $mol_section_demo $mol_demo
 			head / \Section header
 			Content <= Section_content $mol_filler
 	tags /
-		\$mol_section
 		\$mol_filler
 		\section
 		\container

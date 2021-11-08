@@ -24,14 +24,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_check_expand
 		 * 	\expand
 		 * 	\fold
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_check_expand",
 				"expand",
 				"fold"
 			] as readonly any[]

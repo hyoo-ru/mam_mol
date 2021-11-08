@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_link
 		 * 	\$mol_icon
 		 * 	\file
 		 * 	\download
@@ -37,7 +36,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_link",
 				"$mol_icon",
 				"file",
 				"download",

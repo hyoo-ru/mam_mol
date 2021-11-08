@@ -48,7 +48,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_drag
 		 * 	\$mol_drop
 		 * 	\$mol_float
 		 * 	\$mol_link
@@ -61,7 +60,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_drag",
 				"$mol_drop",
 				"$mol_float",
 				"$mol_link",

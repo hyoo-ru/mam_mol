@@ -38,7 +38,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_calendar
 		 * 	\calendar
 		 * 	\date
 		 * 	\period
@@ -46,7 +45,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_calendar",
 				"calendar",
 				"date",
 				"period"

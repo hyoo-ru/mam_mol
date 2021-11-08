@@ -25,7 +25,6 @@ $mol_drag_demo $mol_demo_large
 				uri <= task_uri!task \
 				sub / <= task_title!task \
 	tags /
-		\$mol_drag
 		\$mol_drop
 		\$mol_float
 		\$mol_link

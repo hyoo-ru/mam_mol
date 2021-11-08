@@ -6,7 +6,6 @@ $mol_infinite_demo $mol_demo
 			after!anchor_id <= after!anchor_id /
 			Row!id <= Item!id $mol_filler
 	tags /
-		\$mol_infinite
 		\$mol_filler
 		\infinite
 		\scroll

@@ -27,7 +27,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_bar
 		 * 	\$mol_string
 		 * 	\$mol_check
 		 * 	\$mol_button
@@ -38,7 +37,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_bar",
 				"$mol_string",
 				"$mol_check",
 				"$mol_button",

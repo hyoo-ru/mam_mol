@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_dimmer
 		 * 	\dimmer
 		 * 	\search
 		 * 	\highlight
@@ -32,7 +31,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_dimmer",
 				"dimmer",
 				"search",
 				"highlight"

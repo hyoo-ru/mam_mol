@@ -14,7 +14,6 @@ $mol_float_demo $mol_demo_large
 						<= Filler1 $mol_filler
 						<= Filler2 $mol_filler
 	tags /
-		\$mol_float
 		\$mol_scroll
 		\$mol_list
 		\$mol_filler

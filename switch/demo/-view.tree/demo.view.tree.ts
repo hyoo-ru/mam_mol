@@ -24,14 +24,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_switch
 		 * 	\switch
 		 * 	\option
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_switch",
 				"switch",
 				"option"
 			] as readonly any[]

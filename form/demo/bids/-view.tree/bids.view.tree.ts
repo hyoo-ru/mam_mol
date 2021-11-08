@@ -105,7 +105,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_form
 		 * 	\$mol_form_field
 		 * 	\$mol_button
 		 * 	\$mol_row
@@ -118,7 +117,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_form",
 				"$mol_form_field",
 				"$mol_button",
 				"$mol_row",

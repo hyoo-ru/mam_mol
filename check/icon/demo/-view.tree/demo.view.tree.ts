@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_check_icon
 		 * 	\$mol_icon
 		 * 	\checkbox
 		 * 	\button
@@ -33,7 +32,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_check_icon",
 				"$mol_icon",
 				"checkbox",
 				"button",

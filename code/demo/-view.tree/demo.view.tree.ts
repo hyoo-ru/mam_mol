@@ -41,7 +41,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_code
 		 * 	\code
 		 * 	\qrcode
 		 * 	\barcode
@@ -52,7 +51,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_code",
 				"code",
 				"qrcode",
 				"barcode",

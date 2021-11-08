@@ -20,7 +20,6 @@ $mol_toolbar_demo $mol_demo_small
 				<= Delete $mol_button_minor sub /
 					<= Delete_icon $mol_icon_delete
 	tags /
-		\$mol_toolbar
 		\$mol_string
 		\$mol_button
 		\$mol_icon

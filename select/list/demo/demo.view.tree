@@ -19,7 +19,6 @@ $mol_select_list_demo $mol_demo
 					dictionary <= suggestions
 					enabled false
 	tags /
-		\$mol_select_list
 		\select
 		\tags
 		\multiselect

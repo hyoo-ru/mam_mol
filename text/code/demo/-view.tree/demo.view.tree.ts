@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_text_code
 		 * 	\text
 		 * 	\code
 		 * 	\syntax highlighting
@@ -32,7 +31,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_text_code",
 				"text",
 				"code",
 				"syntax highlighting"

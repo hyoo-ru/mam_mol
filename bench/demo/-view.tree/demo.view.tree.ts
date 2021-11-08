@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_bench
 		 * 	\$mol_portion
 		 * 	\$mol_float
 		 * 	\$mol_grid
@@ -34,7 +33,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_bench",
 				"$mol_portion",
 				"$mol_float",
 				"$mol_grid",

@@ -24,14 +24,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_paginator
 		 * 	\paginator
 		 * 	\navigation
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_paginator",
 				"paginator",
 				"navigation"
 			] as readonly any[]

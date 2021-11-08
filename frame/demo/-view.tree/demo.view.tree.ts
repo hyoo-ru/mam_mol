@@ -15,7 +15,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_frame
 		 * 	\frame
 		 * 	\iframe
 		 * 	\container
@@ -23,7 +22,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_frame",
 				"frame",
 				"iframe",
 				"container"

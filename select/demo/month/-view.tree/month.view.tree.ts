@@ -23,14 +23,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\$mol_select
-		 * 	\select
+		 * tags / \select
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_select",
 				"select"
 			] as readonly any[]
 		}

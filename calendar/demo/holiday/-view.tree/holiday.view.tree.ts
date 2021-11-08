@@ -62,14 +62,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_calendar
 		 * 	\calendar
 		 * 	\date
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_calendar",
 				"calendar",
 				"date"
 			] as readonly any[]

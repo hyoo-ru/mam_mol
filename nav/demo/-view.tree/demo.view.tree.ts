@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_nav
 		 * 	\$mol_card
 		 * 	\$mol_switch
 		 * 	\navigation
@@ -33,7 +32,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_nav",
 				"$mol_card",
 				"$mol_switch",
 				"navigation",

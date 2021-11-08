@@ -18,5 +18,4 @@ $mol_select_demo_month $mol_demo
 				nov \November
 				dec \December
 	tags /
-		\$mol_select
 		\select

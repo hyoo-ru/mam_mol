@@ -1,16 +1,20 @@
 namespace $.$$ {
-	
-	export class $mol_app_demo extends $.$mol_app_demo {
-		
-		detail_title() {
-			const selected = this.selected()
-			if( selected ) {
-				const names = this.names_demo() 
 
-				return `$${ selected }`
-			}
+	export class $mol_app_demo extends $.$mol_app_demo {
+
+		@ $mol_mem_key
+		component_name( name: string ) {
+			return '$'+ name.split( '_demo' )?.[ 0 ] ?? name
+		}
+		
+		override detail_title() {
+			const selected = this.selected()
 			
-			return super.title()
+			return selected ? this.component_name( selected ) : super.title()
+		}
+
+		override detail_description() {
+			return this.Demo().title()
 		}
 
 		@ $mol_mem
@@ -34,51 +38,96 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		widget_tags( name: string ) {
+			const component_name = this.component_name( name )
+
 			const tags = this.Widget()[ name ].tags()
 
 			if( tags.length === 0 ) {
+
 				console.warn( `Demo widget without tags: ${ name }` )
-				return [ 'untagged' ]
+
+				return [ component_name, 'untagged' ]
+
 			} else {
-				return tags
+
+				return [component_name, ...tags]
+
+			}
+
+		}
+
+		@ $mol_mem_key
+		widget_title( name: string ) {
+			return this.Widget()[ name ].title()
+		}
+
+		filter() {
+			return this.Menu().filter()
+		}
+
+		/** Filter string not empty and ends with space */
+		@ $mol_mem
+		filter_last_word_completed() {
+			return /[^\s]+\s+$/.test( this.filter() )
+		}
+
+		/** Filter string uniq words */
+		@ $mol_mem
+		filter_words() {
+			const filter = this.filter().trim()
+
+			const words = filter !== '' ? filter.split( /\s+/ ) : []
+
+			return [ ... new Set( words ) ]
+		}
+
+		@ $mol_mem
+		override names_demo_filtered() {
+			const words = this.filter_words()
+
+			if( words.length !== 0 ) {
+
+				return this.names_demo_all().filter( name => {
+					const title = this.widget_title( name )
+
+					const component_keywords = [
+						...( title ? [ title ] : [] ),
+						...this.widget_tags( name )
+					]
+
+					return words.every(
+						word => component_keywords.some( kw => kw.includes( word ) )
+					)
+				} )
+
+			} else {
+
+				return this.names_demo_all()
+
 			}
 		}
 
 		@ $mol_mem
-		names_demo_filtered() {
-			const filter_tags = this.Menu().tags_filter()
-
-			return filter_tags.length
-				? this.names_demo_all().filter( name => {
-					const component_tags = this.widget_tags( name )
-					return filter_tags.every( tag => component_tags.includes( tag ) )
-				} )
-				: this.names_demo_all()
-		}
-
-		@ $mol_mem
 		tags_demo_filtered() {
-			return Array.from(
-				new Set(
-					this.names_demo_filtered().flatMap( name => {
+			return [... new Set(
+				this.names_demo_filtered().flatMap( name => {
 						return this.widget_tags( name )
-					} )
-				)
-			).map( tag => tag.toLowerCase() ).sort()
+				} )
+			) ].map( tag => tag.toLowerCase() ).sort()
 		}
 
 		@ $mol_mem
-		tags_demo_selectable() {
-			const filter_tags = this.Menu().tags_filter()
+		override filter_suggests() {
+			const filter_words = this.filter_words()
 
-			if( filter_tags.length === 0 ) return this.tags_demo_filtered()
+			if( filter_words.length === 0 ) return this.tags_demo_filtered()
 
 			const filtered_names = this.names_demo_filtered()
 
-			if( filtered_names.length === 1 ) return filter_tags
+			if( filtered_names.length <= 1 ) return []
 
-			return this.tags_demo_filtered().filter( tag => {
-				if( !filter_tags.includes( tag ) ) {
+			const suggested_tags = this.tags_demo_filtered().filter( tag => {
+				if( !filter_words.includes( tag ) ) {
 					const all_widgets_include_tag = filtered_names.every(
 						name => this.widget_tags( name ).includes( tag )
 					)
@@ -92,9 +141,36 @@ namespace $.$$ {
 
 				return true
 			} )
+
+			const filter = filter_words.join( ' ' )
+
+			const filter_last_word = filter_words.slice( -1 )[ 0 ]
+
+			const filter_last_word_completed = this.filter_last_word_completed()
+
+			const suggests: string[] = []
+
+			for( const tag of suggested_tags ) {
+				if( filter.includes( tag ) ) continue
+
+				if(
+					!filter_last_word_completed &&
+					tag.indexOf( filter_last_word ) === 0
+				) {
+					suggests.push(
+						`${ filter_words.slice( 0, -1 ).join( ' ' ) } ${ tag }`
+					)
+				} else {
+					suggests.push(
+						`${ filter } ${ tag }`
+					)
+				}
+			}
+
+			return suggests
 		}
 
-		selected() {
+		override selected() {
 			return $mol_state_arg.value( 'demo' ) || ''
 		}
 		
@@ -122,7 +198,7 @@ namespace $.$$ {
 			return [ selected ]
 		}
 		
-		blocks() {
+		override blocks() {
 			let sub : $mol_view[] = []
 			
 			sub.push( this.Menu() )
@@ -141,11 +217,11 @@ namespace $.$$ {
 			return sub
 		}
 
-		Demo() {
+		override Demo() {
 			return this.Widget()[ this.selected() ]
 		}
 		
-		chat_seed( id: string ) {
+		override chat_seed( id: string ) {
 			return '#!demo=' + id
 		}
 		
@@ -153,7 +229,7 @@ namespace $.$$ {
 			return $mol_file.relative( '/mol/logo/logo.svg' ).path()
 		}
 
-		source_link() {
+		override source_link() {
 			
 			const demo = $mol_state_arg.value('demo')
 			if( !demo ) return this.source_prefix()
@@ -179,12 +255,12 @@ namespace $.$$ {
 			return { repo , module }
 		}
 		
-		repo() {
-			return this.name_parse( $mol_state_arg.value('demo')! ).repo		
+		override repo() {
+			return this.name_parse( $mol_state_arg.value( 'demo' )! ).repo
 		}
 		
-		module() {
-			return this.name_parse( $mol_state_arg.value('demo')! ).module	
+		override module() {
+			return this.name_parse( $mol_state_arg.value( 'demo' )! ).module
 		}
 		
 		chat_link() {
@@ -192,7 +268,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		edit_uri() {
+		override edit_uri() {
 			const source = encodeURIComponent( `$${''}my_app $${ this.selected() }` )
 			const pack = encodeURIComponent( this.$.$mol_state_arg.make_link({}) )
 			return `https://studio.hyoo.ru/#!pack=${ pack }/source=${ source }/preview`
@@ -201,39 +277,22 @@ namespace $.$$ {
 	}
 	
 	export class $mol_app_demo_menu extends $.$mol_app_demo_menu {
-		
-		@ $mol_mem
-		tags_dictionary() {
-			const dictionary: Record<string, string> = {}
-
-			for( const tag of this.tags_all() ) {
-				dictionary[ tag ] = tag
-			}
-
-			return dictionary
-		}
 
 		@ $mol_mem
-		tags_filter( next?: string[] ) {
-			if( next ) {
-				this.$.$mol_state_arg.value( 'tags', next.join() || null )
-				return next
-			} else {
-				const tags_string = this.$.$mol_state_arg.value( 'tags' )
-				return tags_string ? tags_string.split( ',' ) : []
-			}
+		override filter( next?: string ) {
+			return this.$.$mol_state_arg.value( 'filter' , next === '' ? null : next ) ?? super.filter()
 		}
 		
 		@ $mol_mem
-		options() {
+		override options() {
 			return this.names().map( id => this.Option( id ) )
 		}
 		
-		option_arg( id: string ) {
+		override option_arg( id: string ) {
 			return { 'demo' : id }
 		}
 		
-		option_title( id: string ) {
+		override option_title( id: string ) {
 			return '$'+ id.replace( '_demo_', '/' ).replace( '_demo', '' )
 		}
 		
@@ -246,7 +305,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		readme() {
+		override readme() {
 			let module = this.module()
 
 			while( module.length ) {

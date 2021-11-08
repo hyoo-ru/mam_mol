@@ -6640,8 +6640,9 @@ declare namespace $ {
         blocks(): readonly any[];
         Theme(): $$.$mol_theme_auto;
         names_demo_filtered(): readonly string[];
-        tags_demo_selectable(): readonly string[];
+        filter_suggests(): readonly string[];
         chat_seed(id: any): string;
+        detail_description(): string;
         source_link(): string;
         edit_uri(): string;
         Demo(): $mol_view;
@@ -6655,7 +6656,7 @@ declare namespace $ {
     }
     class $mol_app_demo_menu extends $mol_page {
         names(): readonly string[];
-        tags_all(): readonly string[];
+        filter_suggests(): readonly string[];
         title(): string;
         tools(): readonly any[];
         Body(): $$.$mol_scroll;
@@ -6663,17 +6664,17 @@ declare namespace $ {
         sources_uri(): string;
         Sources(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
-        tags_filter(val?: any): readonly string[];
-        tags_dictionary(): {};
-        Filter(): $$.$mol_select_list;
+        filter(val?: any): string;
+        Filter(): $$.$mol_search;
         options(): readonly any[];
         Options(): $$.$mol_list;
         List(): $$.$mol_list;
         option_arg(id: any): {};
         option_title(id: any): string;
-        Option_title(id: any): $mol_row;
+        Option_title(id: any): $$.$mol_dimmer;
     }
     class $mol_app_demo_detail extends $mol_page {
+        description(): string;
         tools(): readonly any[];
         body(): readonly any[];
         readme_icon(): $mol_icon_information_outline;
@@ -6748,12 +6749,18 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_app_demo extends $.$mol_app_demo {
+        component_name(name: string): string;
         detail_title(): string;
+        detail_description(): string;
         names_demo_all(): string[];
-        widget_tags(name: string): readonly string[];
+        widget_tags(name: string): string[];
+        widget_title(name: string): string;
+        filter(): string;
+        filter_last_word_completed(): boolean;
+        filter_words(): string[];
         names_demo_filtered(): string[];
         tags_demo_filtered(): string[];
-        tags_demo_selectable(): string[];
+        filter_suggests(): string[];
         selected(): string;
         readme_page(): boolean;
         selected_class_name(): string;
@@ -6774,8 +6781,7 @@ declare namespace $.$$ {
         edit_uri(): string;
     }
     class $mol_app_demo_menu extends $.$mol_app_demo_menu {
-        tags_dictionary(): Record<string, string>;
-        tags_filter(next?: string[]): string[];
+        filter(next?: string): string;
         options(): $mol_link[];
         option_arg(id: string): {
             demo: string;

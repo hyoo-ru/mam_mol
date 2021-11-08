@@ -51,7 +51,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_plot_map_heat
 		 * 	\$mol_plot_pane
 		 * 	\visualization
 		 * 	\heatmap
@@ -61,7 +60,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_plot_map_heat",
 				"$mol_plot_pane",
 				"visualization",
 				"heatmap",

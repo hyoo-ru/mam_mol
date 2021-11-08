@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_html_view
 		 * 	\$mol_scroll
 		 * 	\html
 		 * 	\render
@@ -32,7 +31,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_html_view",
 				"$mol_scroll",
 				"html",
 				"render"

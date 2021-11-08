@@ -27,7 +27,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_video
 		 * 	\$mol_row
 		 * 	\$mol_button
 		 * 	\$mol_check
@@ -43,7 +42,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_video",
 				"$mol_row",
 				"$mol_button",
 				"$mol_check",

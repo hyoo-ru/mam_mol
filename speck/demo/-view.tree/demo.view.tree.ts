@@ -22,7 +22,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_speck
 		 * 	\$mol_link
 		 * 	\$mol_icon
 		 * 	\$mol_paragraph
@@ -33,7 +32,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_speck",
 				"$mol_link",
 				"$mol_icon",
 				"$mol_paragraph",

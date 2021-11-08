@@ -42,7 +42,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_chart
 		 * 	\chart
 		 * 	\plot
 		 * 	\visualization
@@ -51,7 +50,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_chart",
 				"chart",
 				"plot",
 				"visualization",

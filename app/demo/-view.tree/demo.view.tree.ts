@@ -68,7 +68,7 @@ namespace $ {
 		 * ```tree
 		 * Menu $mol_app_demo_menu
 		 * 	names <= names_demo_filtered
-		 * 	tags_all <= tags_demo_selectable
+		 * 	filter_suggests <= filter_suggests
 		 * ```
 		 */
 		@ $mol_mem
@@ -76,7 +76,7 @@ namespace $ {
 			const obj = new this.$.$mol_app_demo_menu()
 			
 			obj.names = () => this.names_demo_filtered()
-			obj.tags_all = () => this.tags_demo_selectable()
+			obj.filter_suggests = () => this.filter_suggests()
 			
 			return obj
 		}
@@ -96,6 +96,7 @@ namespace $ {
 		 * 	chat_seed <= chat_seed!id
 		 * 	chat_pages => chat_pages!id
 		 * 	title <= detail_title
+		 * 	description <= detail_description
 		 * 	source_link <= source_link
 		 * 	edit_uri <= edit_uri
 		 * 	Demo <= Demo
@@ -107,6 +108,7 @@ namespace $ {
 			
 			obj.chat_seed = () => this.chat_seed(id)
 			obj.title = () => this.detail_title()
+			obj.description = () => this.detail_description()
 			obj.source_link = () => this.source_link()
 			obj.edit_uri = () => this.edit_uri()
 			obj.Demo = () => this.Demo()
@@ -211,10 +213,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags_demo_selectable /string
+		 * filter_suggests /string
 		 * ```
 		 */
-		tags_demo_selectable() {
+		filter_suggests() {
 			return [
 			] as readonly string[]
 		}
@@ -225,6 +227,15 @@ namespace $ {
 		 * ```
 		 */
 		chat_seed(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * detail_description \
+		 * ```
+		 */
+		detail_description() {
 			return ""
 		}
 		
@@ -342,10 +353,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags_all /string
+		 * filter_suggests /string
 		 * ```
 		 */
-		tags_all() {
+		filter_suggests() {
 			return [
 			] as readonly string[]
 		}
@@ -445,39 +456,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags_filter?val /string
+		 * filter?val \
 		 * ```
 		 */
 		@ $mol_mem
-		tags_filter(val?: any) {
+		filter(val?: any) {
 			if ( val !== undefined ) return val as never
-			return [
-			] as readonly string[]
+			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * tags_dictionary *
-		 * ```
-		 */
-		tags_dictionary() {
-			return {
-			}
-		}
-		
-		/**
-		 * ```tree
-		 * Filter $mol_select_list
-		 * 	value?val <=> tags_filter?val
-		 * 	dictionary <= tags_dictionary
+		 * Filter $mol_search
+		 * 	query?val <=> filter?val
+		 * 	suggests <= filter_suggests
 		 * ```
 		 */
 		@ $mol_mem
 		Filter() {
-			const obj = new this.$.$mol_select_list()
+			const obj = new this.$.$mol_search()
 			
-			obj.value = (val?: any) => this.tags_filter(val)
-			obj.dictionary = () => this.tags_dictionary()
+			obj.query = (val?: any) => this.filter(val)
+			obj.suggests = () => this.filter_suggests()
 			
 			return obj
 		}
@@ -546,22 +546,32 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Option_title!id $mol_row sub / <= option_title!id
+		 * Option_title!id $mol_dimmer
+		 * 	haystack <= option_title!id
+		 * 	needle <= filter?val
 		 * ```
 		 */
 		@ $mol_mem_key
 		Option_title(id: any) {
-			const obj = new this.$.$mol_row()
+			const obj = new this.$.$mol_dimmer()
 			
-			obj.sub = () => [
-				this.option_title(id)
-			] as readonly any[]
+			obj.haystack = () => this.option_title(id)
+			obj.needle = () => this.filter()
 			
 			return obj
 		}
 	}
 	
 	export class $mol_app_demo_detail extends $mol_page {
+		
+		/**
+		 * ```tree
+		 * description \
+		 * ```
+		 */
+		description() {
+			return ""
+		}
 		
 		/**
 		 * ```tree

@@ -60,7 +60,6 @@ $mol_form_demo_bids $mol_demo
 							enabled <= submit_allowed true
 				<= Message $mol_row sub / <= message?val \
 	tags /
-		\$mol_form
 		\$mol_form_field
 		\$mol_button
 		\$mol_row

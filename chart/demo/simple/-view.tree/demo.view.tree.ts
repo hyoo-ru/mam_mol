@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_chart
 		 * 	\$mol_plot
 		 * 	\chart
 		 * 	\plot
@@ -34,7 +33,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_chart",
 				"$mol_plot",
 				"chart",
 				"plot",

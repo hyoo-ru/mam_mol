@@ -24,18 +24,18 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_select
 		 * 	\$mol_dimmer
 		 * 	\select
+		 * 	\color
 		 * 	\colorpicker
 		 * 	\filter
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_select",
 				"$mol_dimmer",
 				"select",
+				"color",
 				"colorpicker",
 				"filter"
 			] as readonly any[]

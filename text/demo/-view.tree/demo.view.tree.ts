@@ -24,14 +24,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_text
 		 * 	\text
 		 * 	\markdown
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_text",
 				"text",
 				"markdown"
 			] as readonly any[]

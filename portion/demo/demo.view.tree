@@ -8,6 +8,5 @@ $mol_portion_demo $mol_demo_small
 		<= Full $mol_portion
 			portion <= third 1
 	tags /
-		\$mol_portion
 		\dashboard
 		\progress

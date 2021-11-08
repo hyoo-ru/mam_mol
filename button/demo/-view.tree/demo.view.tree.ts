@@ -30,14 +30,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\$mol_button
-		 * 	\button
+		 * tags / \button
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_button",
 				"button"
 			] as readonly any[]
 		}

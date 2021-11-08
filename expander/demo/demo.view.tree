@@ -5,7 +5,6 @@ $mol_expander_demo $mol_demo
 			title \Lorem Ipsum
 			Content <= Content $mol_filler
 	tags /
-		\$mol_expander
 		\$mol_filler
 		\expander
 		\expand

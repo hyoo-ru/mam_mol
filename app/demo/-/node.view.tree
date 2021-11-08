@@ -161,7 +161,6 @@ $mol_attach_demo $mol_demo_small
 					url_thumb \https://thiscatdoesnotexist.com/
 					url_load \https://thiscatdoesnotexist.com/
 	tags /
-		\$mol_attach
 		\attach
 		\file
 		\image
@@ -246,7 +245,6 @@ $mol_bar_demo $mol_demo_small
 				<= Three_submit $mol_button_minor
 					title <= submit_title \Submit
 	tags /
-		\$mol_bar
 		\$mol_string
 		\$mol_check
 		\$mol_button
@@ -386,7 +384,6 @@ $mol_bench_demo $mol_demo_small
 			col_sort?val <=> col_sort?val \mid
 			result <= result *
 	tags /
-		\$mol_bench
 		\$mol_portion
 		\$mol_float
 		\$mol_grid
@@ -423,7 +420,6 @@ $mol_book2_demo $mol_demo_large
 			<= Third $mol_view
 				sub / \ Third
 	tags /
-		\$mol_book2
 		\app
 		\page
 		\book
@@ -491,7 +487,6 @@ $mol_book2_catalog_demo $mol_demo_large
 					body /
 						\Maps content
 	tags /
-		\$mol_book2_catalog
 		\$mol_page
 		\app
 		\page
@@ -523,7 +518,6 @@ $mol_button_demo $mol_demo_small
 			title <= minor_label @ \Or click me..
 			enabled false
 	tags /
-		\$mol_button
 		\button
 
 
@@ -545,7 +539,6 @@ $mol_button_share_demo $mol_demo
 			title \Share hyoo.ru
 			uri \https://hyoo.ru
 	tags /
-		\$mol_button_share
 		\share
 		\button
 		\icon
@@ -614,7 +607,6 @@ $mol_calendar_demo_holiday $mol_demo_small
 			month_string <= month \2018-01
 			day_holiday!day <= holiday!day false
 	tags /
-		\$mol_calendar
 		\calendar
 		\date
 
@@ -628,7 +620,6 @@ $mol_calendar_demo_selection $mol_demo_small
 			month_string <= month \2018-01
 			day_selected!day <= selected!day false
 	tags /
-		\$mol_calendar
 		\calendar
 		\date
 		\period
@@ -639,7 +630,6 @@ $mol_calendar_demo_simple $mol_demo_small
 		<= Calendar $mol_calendar
 			month_moment <= today $mol_time_moment
 	tags /
-		\$mol_calendar
 		\calendar
 		\date
 
@@ -653,7 +643,6 @@ $mol_card_demo $mol_demo_small
 			title \Hello pending!
 			status \pending
 	tags /
-		\$mol_card
 		\card
 		\status
 		\container
@@ -1108,7 +1097,6 @@ $mol_chart_demo_simple $mol_demo_large
 						<= Plan
 						<= Fact_dots
 	tags /
-		\$mol_chart
 		\$mol_plot
 		\chart
 		\plot
@@ -1164,7 +1152,6 @@ $mol_chart_demo_styles $mol_demo_large
 					title <= day_title @ \Day
 					series_x <= series_x /number
 	tags /
-		\$mol_chart
 		\$mol_plot
 		\chart
 		\plot
@@ -1198,7 +1185,6 @@ $mol_chart_demo_forces $mol_demo_large
 						<= Forces_left
 						<= Forces_right
 	tags /
-		\$mol_chart
 		\chart
 		\plot
 		\visualization
@@ -1254,7 +1240,6 @@ $mol_chat_demo $mol_demo
 		- <= Pages $mol_view
 			sub <= chat_pages
 	tags /
-		\$mol_chat
 		\chat
 		\communication
 
@@ -1285,7 +1270,6 @@ $mol_check_box_demo $mol_demo
 				checked true
 				enabled false
 	tags /
-		\$mol_check_box
 		\checkbox
 
 $mol_check_expand_demo $mol_demo
@@ -1310,7 +1294,6 @@ $mol_check_expand_demo $mol_demo
 			<= Empty_expanded $mol_check_expand
 				checked?val <=> expanded_expanded?val true
 	tags /
-		\$mol_check_expand
 		\expand
 		\fold
 
@@ -1361,7 +1344,6 @@ $mol_check_group_demo $mol_demo
 						title <= luck_title \Luck
 						checked?val <=> luck?val true
 	tags /
-		\$mol_check_group
 		\$mol_check_box
 		\$mol_list
 		\checkbox
@@ -1390,7 +1372,6 @@ $mol_check_icon_demo $mol_demo
 					checked true
 					enabled false
 	tags /
-		\$mol_check_icon
 		\$mol_icon
 		\checkbox
 		\button
@@ -1507,7 +1488,6 @@ $mol_code_demo $mol_demo_small
 		<= Itf $mol_code
 			format \ITF
 	tags /
-		\$mol_code
 		\code
 		\qrcode
 		\barcode
@@ -1576,7 +1556,6 @@ $mol_date_demo $mol_demo
 			sub /
 				<= formatted \
 	tags /
-		\$mol_date
 		\$mol_time_moment
 		\date
 		\datepicker
@@ -1616,7 +1595,6 @@ $mol_deck_demo $mol_demo
 				title @ \Command
 				content / <= command_message @ \Let us do it right!
 	tags /
-		\$mol_deck
 		\$mol_card
 		\deck
 		\card
@@ -1646,7 +1624,6 @@ $mol_dimmer_demo $mol_demo
 				haystack \Let's search nothing
 				needle \
 	tags /
-		\$mol_dimmer
 		\dimmer
 		\search
 		\highlight
@@ -1712,7 +1689,6 @@ $mol_drag_demo $mol_demo_large
 				uri <= task_uri!task \
 				sub / <= task_title!task \
 	tags /
-		\$mol_drag
 		\$mol_drop
 		\$mol_float
 		\$mol_link
@@ -1754,7 +1730,6 @@ $mol_expander_demo $mol_demo
 			title \Lorem Ipsum
 			Content <= Content $mol_filler
 	tags /
-		\$mol_expander
 		\$mol_filler
 		\expander
 		\expand
@@ -1779,7 +1754,6 @@ $mol_float_demo $mol_demo_large
 						<= Filler1 $mol_filler
 						<= Filler2 $mol_filler
 	tags /
-		\$mol_float
 		\$mol_scroll
 		\$mol_list
 		\$mol_filler
@@ -1877,7 +1851,6 @@ $mol_form_demo_bids $mol_demo
 							enabled <= submit_allowed true
 				<= Message $mol_row sub / <= message?val \
 	tags /
-		\$mol_form
 		\$mol_form_field
 		\$mol_button
 		\$mol_row
@@ -1893,7 +1866,6 @@ $mol_frame_demo $mol_demo_large
 			title @ \Another page inside that
 			uri \https://mol.js.org/
 	tags /
-		\$mol_frame
 		\frame
 		\iframe
 		\container
@@ -1920,7 +1892,6 @@ $mol_gallery_demo $mol_demo
 			<= Item_title!id $mol_paragraph
 				title <= item_title!id \
 	tags /
-		\$mol_gallery
 		\$mol_link
 		\$mol_paragraph
 		\gallery
@@ -2021,7 +1992,6 @@ $mol_html_view_demo $mol_demo_large
 					\ <blockquote><p>Block quotation</p></blockquote>
 					\ <pre><code>Block code</code></pre>
 	tags /
-		\$mol_html_view
 		\$mol_scroll
 		\html
 		\render
@@ -2038,7 +2008,6 @@ $mol_infinite_demo $mol_demo
 			after!anchor_id <= after!anchor_id /
 			Row!id <= Item!id $mol_filler
 	tags /
-		\$mol_infinite
 		\$mol_filler
 		\infinite
 		\scroll
@@ -2057,7 +2026,6 @@ $mol_labeler_demo $mol_demo_small
 				hint \Jack Sparrow
 				value?val <=> user_name?val \
 	tags /
-		\$mol_labeler
 		\$mol_string
 		\label
 		\form
@@ -2097,7 +2065,6 @@ $mol_link_demo $mol_demo
 						<= Download_icon $mol_icon_download
 						<= download_label @ \Download
 	tags /
-		\$mol_link
 		\$mol_icon
 		\file
 		\download
@@ -2151,7 +2118,6 @@ $mol_list_demo_table $mol_demo
 				enabled <= row_editable!id
 			<= Link!id $mol_link_iconed uri <= row_uri!id \
 	tags /
-		\$mol_list
 		\$mol_row
 		\$mol_check
 		\$mol_switch
@@ -2172,7 +2138,6 @@ $mol_list_demo_tree $mol_demo
 		Content <= Row_content!id $mol_list
 			rows <= row_content!id /
 	tags /
-		\$mol_list
 		\$mol_expander
 		\$mol_list
 		\$mol_paragraph
@@ -2215,7 +2180,6 @@ $mol_map_yandex_demo $mol_demo_large
 					address <= place_addres \Saint-Petersburg
 					content <= place_content \It is Russia's second-largest city after Moscow
 	tags /
-		\$mol_map_yandex
 		\map
 
 
@@ -2246,7 +2210,6 @@ $mol_nav_demo $mol_demo
 						second \Second
 						third \Third
 	tags /
-		\$mol_nav
 		\$mol_card
 		\$mol_switch
 		\navigation
@@ -2308,7 +2271,6 @@ $mol_number_demo $mol_demo_small
 			value?val <=> year?val NaN
 			precision 1000
 	tags /
-		\$mol_number
 		\number
 		\field
 
@@ -2327,7 +2289,6 @@ $mol_page_demo $mol_demo_large
 						<= Button_foot $mol_button_minor
 							title \Footer Button
 	tags /
-		\$mol_page
 		\$mol_filler
 		\$mol_row
 		\$mol_button
@@ -2355,7 +2316,6 @@ $mol_paginator_demo $mol_demo
 		<= Pages $mol_paginator
 			value?val <=> page?val 0
 	tags /
-		\$mol_paginator
 		\paginator
 		\navigation
 
@@ -2383,7 +2343,6 @@ $mol_plot_demo $mol_demo_large
 				<= Time $mol_plot_ruler_hor
 					title <= Time_title @ \ms
 	tags /
-		\$mol_plot
 		\visualization
 		\chart
 		\graph
@@ -2422,7 +2381,6 @@ $mol_plot_map_heat_demo $mol_demo_large
 					series_y <= terrain_y /number
 					series_z <= terrain_z /number
 	tags /
-		\$mol_plot_map_heat
 		\$mol_plot_pane
 		\visualization
 		\heatmap
@@ -2441,7 +2399,6 @@ $mol_pop_demo $mol_demo_small
 					sub / 
 						<= bubble_hint @ \This is $mol_pop
 	tags /
-		\$mol_pop
 		\$mol_row
 		\$mol_button
 		\popup
@@ -2487,7 +2444,6 @@ $mol_pop_over_demo $mol_demo
 								<= About $mol_button_minor
 									title <= about_title @ \About
 	tags /
-		\$mol_pop_over
 		\$mol_list
 		\$mol_button
 		\popover
@@ -2505,7 +2461,6 @@ $mol_portion_demo $mol_demo_small
 		<= Full $mol_portion
 			portion <= third 1
 	tags /
-		\$mol_portion
 		\dashboard
 		\progress
 
@@ -2531,7 +2486,6 @@ $mol_row_demo_form $mol_demo
 				<= Drop $mol_button_minor
 					title <= drop_title @ \Drop
 	tags /
-		\$mol_row
 		\$mol_search
 		\$mol_number
 		\$mol_portion
@@ -2554,7 +2508,6 @@ $mol_row_demo_products $mol_demo
 		<= Products $mol_row
 			sub <= products /
 	tags /
-		\$mol_row
 		\$mol_card
 		\products
 		\grid
@@ -2578,7 +2531,6 @@ $mol_scroll_demo $mol_demo_large
 					<= Filler8 $mol_filler
 					<= Filler9 $mol_filler
 	tags /
-		\$mol_scroll
 		\$mol_filler
 		\$mol_list
 		\scroll
@@ -2586,15 +2538,17 @@ $mol_scroll_demo $mol_demo_large
 
 
 $mol_search_demo $mol_demo_small
-	title @ \Simple search field with suggest 
+	title @ \Search field with suggest 
 	sub /
 		<= Search $mol_search
 			query => query
 			suggests <= suggests /
 	tags /
-		\$mol_search
 		\search
 		\suggest
+		\string
+		\fulltext
+		\filter
 
 $mol_section $mol_list rows /
 	<= Head $mol_view
@@ -2609,7 +2563,6 @@ $mol_section_demo $mol_demo
 			head / \Section header
 			Content <= Section_content $mol_filler
 	tags /
-		\$mol_section
 		\$mol_filler
 		\section
 		\container
@@ -2666,9 +2619,9 @@ $mol_select_demo_colors $mol_demo
 							needle <= color_filter
 					minimal_height 40
 	tags /
-		\$mol_select
 		\$mol_dimmer
 		\select
+		\color
 		\colorpicker
 		\filter
 
@@ -2697,7 +2650,6 @@ $mol_select_demo_month $mol_demo
 				nov \November
 				dec \December
 	tags /
-		\$mol_select
 		\select
 
 $mol_select_demo_priority $mol_demo
@@ -2713,7 +2665,6 @@ $mol_select_demo_priority $mol_demo
 				\Low
 				\Lowest
 	tags /
-		\$mol_select
 		\select
 
 $mol_select_list $mol_view
@@ -2754,7 +2705,6 @@ $mol_select_list_demo $mol_demo
 					dictionary <= suggestions
 					enabled false
 	tags /
-		\$mol_select_list
 		\select
 		\tags
 		\multiselect
@@ -2785,7 +2735,6 @@ $mol_speck_demo $mol_demo_small
 				<= Message_speck $mol_speck
 				<= message_text @ \Created
 	tags /
-		\$mol_speck
 		\$mol_link
 		\$mol_icon
 		\$mol_paragraph
@@ -2806,7 +2755,6 @@ $mol_speech_demo $mol_demo_small
 			click?val <=> speak?val null
 			sub / \Speak
 	tags /
-		\$mol_speech
 		\$mol_icon
 		\$mol_row
 		\$mol_button
@@ -2830,7 +2778,6 @@ $mol_string_demo $mol_demo_small
 			disabled true
 			value?val <=> name2?val
 	tags /
-		\$mol_string
 		\input
 		\string
 		\text
@@ -2857,7 +2804,6 @@ $mol_switch_demo $mol_demo
 						green <= option_green @ \Green
 						blue <= option_blue @ \Blue
 	tags /
-		\$mol_switch
 		\switch
 		\option
 
@@ -2906,7 +2852,6 @@ $mol_text_code_demo $mol_demo
 	sub /
 		<= Text $mol_text_code text <= source \
 	tags /
-		\$mol_text_code
 		\text
 		\code
 		\syntax highlighting
@@ -3026,7 +2971,6 @@ $mol_text_demo $mol_demo
 			\Build status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
 			\
 	tags /
-		\$mol_text
 		\text
 		\markdown
 
@@ -3070,7 +3014,6 @@ $mol_textarea_demo $mol_demo
 					enabled false
 					value?val <=> filled_descr?val
 	tags /
-		\$mol_textarea
 		\textarea
 		\code
 		\syntax highlighting
@@ -3115,7 +3058,6 @@ $mol_toolbar_demo $mol_demo_small
 				<= Delete $mol_button_minor sub /
 					<= Delete_icon $mol_icon_delete
 	tags /
-		\$mol_toolbar
 		\$mol_string
 		\$mol_button
 		\$mol_icon
@@ -3194,7 +3136,6 @@ $mol_video_player_demo $mol_demo_large
 			time?val => time?val
 			duration => duration
 	tags /
-		\$mol_video
 		\$mol_row
 		\$mol_button
 		\$mol_check
@@ -3251,11 +3192,12 @@ $mol_app_demo $mol_book2
 		\$mol_demo_large
 	Menu $mol_app_demo_menu
 		names <= names_demo_filtered /string
-		tags_all <= tags_demo_selectable /string
+		filter_suggests <= filter_suggests /string
 	Detail!id $mol_app_demo_detail
 		chat_seed <= chat_seed!id \
 		chat_pages => chat_pages!id
 		title <= detail_title
+		description <= detail_description \
 		source_link <= source_link \
 		edit_uri <= edit_uri \
 		Demo <= Demo $mol_view
@@ -3271,10 +3213,10 @@ $mol_app_demo $mol_book2
 			<= detail_empty_prefix @ \No one demo with prefix "
 			<= selected \
 			<= detail_empty_postfix @ \"
-			
+
 $mol_app_demo_menu $mol_page
 	names /string
-	tags_all /string
+	filter_suggests /string
 	title @ \$mol examples
 	tools /
 		<= Sources $mol_link_source
@@ -3283,18 +3225,20 @@ $mol_app_demo_menu $mol_page
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /
-				<= Filter $mol_select_list
-					value?val <=> tags_filter?val /string
-					dictionary <= tags_dictionary *
+				<= Filter $mol_search
+					query?val <=> filter?val \
+					suggests <= filter_suggests
 				<= Options $mol_list
 					rows <= options /
 	Option!id $mol_link
 		arg <= option_arg!id *
 		sub /
-			<= Option_title!id $mol_row sub /
-				<= option_title!id \
+			<= Option_title!id $mol_dimmer
+				haystack <= option_title!id \
+				needle <= filter?val \
 
 $mol_app_demo_detail $mol_page
+	description \
 	tools /
 		<= Readme $mol_link
 			arg *

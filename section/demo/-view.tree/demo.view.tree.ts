@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_section
 		 * 	\$mol_filler
 		 * 	\section
 		 * 	\container
@@ -33,7 +32,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_section",
 				"$mol_filler",
 				"section",
 				"container",

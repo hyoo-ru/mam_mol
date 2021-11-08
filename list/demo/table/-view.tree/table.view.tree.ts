@@ -50,7 +50,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_list
 		 * 	\$mol_row
 		 * 	\$mol_check
 		 * 	\$mol_switch
@@ -63,7 +62,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_list",
 				"$mol_row",
 				"$mol_check",
 				"$mol_switch",

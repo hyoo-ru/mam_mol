@@ -23,14 +23,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\$mol_map_yandex
-		 * 	\map
+		 * tags / \map
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_map_yandex",
 				"map"
 			] as readonly any[]
 		}

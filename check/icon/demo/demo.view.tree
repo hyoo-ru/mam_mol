@@ -16,7 +16,6 @@ $mol_check_icon_demo $mol_demo
 					checked true
 					enabled false
 	tags /
-		\$mol_check_icon
 		\$mol_icon
 		\checkbox
 		\button

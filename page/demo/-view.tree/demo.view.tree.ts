@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_page
 		 * 	\$mol_filler
 		 * 	\$mol_row
 		 * 	\$mol_button
@@ -37,7 +36,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_page",
 				"$mol_filler",
 				"$mol_row",
 				"$mol_button",

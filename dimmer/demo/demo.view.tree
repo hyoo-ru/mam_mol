@@ -21,7 +21,6 @@ $mol_dimmer_demo $mol_demo
 				haystack \Let's search nothing
 				needle \
 	tags /
-		\$mol_dimmer
 		\dimmer
 		\search
 		\highlight

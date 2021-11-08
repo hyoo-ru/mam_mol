@@ -31,7 +31,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_string
 		 * 	\input
 		 * 	\string
 		 * 	\text
@@ -39,7 +38,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_string",
 				"input",
 				"string",
 				"text"

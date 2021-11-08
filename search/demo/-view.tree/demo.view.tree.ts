@@ -3,7 +3,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Simple search field with suggest
+		 * title @ \Search field with suggest
 		 * ```
 		 */
 		title() {
@@ -24,16 +24,20 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_search
 		 * 	\search
 		 * 	\suggest
+		 * 	\string
+		 * 	\fulltext
+		 * 	\filter
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_search",
 				"search",
-				"suggest"
+				"suggest",
+				"string",
+				"fulltext",
+				"filter"
 			] as readonly any[]
 		}
 		

@@ -52,7 +52,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_row
 		 * 	\$mol_card
 		 * 	\products
 		 * 	\grid
@@ -61,7 +60,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_row",
 				"$mol_card",
 				"products",
 				"grid",

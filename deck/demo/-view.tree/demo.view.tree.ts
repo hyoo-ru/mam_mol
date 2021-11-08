@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_deck
 		 * 	\$mol_card
 		 * 	\deck
 		 * 	\card
@@ -34,7 +33,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_deck",
 				"$mol_card",
 				"deck",
 				"card",

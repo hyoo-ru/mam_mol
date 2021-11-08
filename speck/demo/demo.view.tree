@@ -20,7 +20,6 @@ $mol_speck_demo $mol_demo_small
 				<= Message_speck $mol_speck
 				<= message_text @ \Created
 	tags /
-		\$mol_speck
 		\$mol_link
 		\$mol_icon
 		\$mol_paragraph

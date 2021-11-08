@@ -27,7 +27,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_button_share
 		 * 	\share
 		 * 	\button
 		 * 	\icon
@@ -35,7 +34,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_button_share",
 				"share",
 				"button",
 				"icon"
