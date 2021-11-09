@@ -2,7 +2,7 @@ $mol_button_open $mol_button_minor
 	sub /
 		<= Icon $mol_icon_upload
 		<= Native $mol_button_open_native
-			files?next => files?next
+			files?next <=> files?next /
 			accept <= accept \
 			multiple <= multiple true
 
