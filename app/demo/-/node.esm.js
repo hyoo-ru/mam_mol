@@ -25683,20 +25683,19 @@ var $;
                 const tags = this.tags_demo_filtered();
                 const filter_last_word = filter_words.slice(-1)[0];
                 const filter_last_word_completed = this.filter_last_word_completed();
-                const complements = [];
                 const suggests = [];
                 for (const tag of tags) {
                     if (filter_words.includes(tag))
                         continue;
-                    if (!filter_last_word_completed &&
-                        tag.indexOf(filter_last_word) === 0) {
-                        complements.push(`${filter_words.slice(0, -1).join(' ')} ${tag}`);
-                    }
-                    else if (complements.length === 0) {
+                    if (filter_last_word_completed) {
                         suggests.push(`${filter_words.join(' ')} ${tag}`);
                     }
+                    else if (tag.indexOf(filter_last_word) === 0 &&
+                        (filter_last_word.length < tag.length)) {
+                        suggests.push(`${filter_words.slice(0, -1).join(' ')} ${tag}`);
+                    }
                 }
-                return complements.length !== 0 ? complements : [...complements, ...suggests];
+                return suggests;
             }
             selected() {
                 return $.$mol_state_arg.value('demo') || '';
