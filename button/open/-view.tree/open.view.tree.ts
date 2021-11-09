@@ -29,6 +29,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * files?next /
+		 * ```
+		 */
+		@ $mol_mem
+		files(next?: any) {
+			if ( next !== undefined ) return next as never
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * accept \
 		 * ```
 		 */
@@ -47,17 +59,8 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * files?next
-		 * ```
-		 */
-		files(next?: any) {
-			return this.Native().files(next)
-		}
-		
-		/**
-		 * ```tree
 		 * Native $mol_button_open_native
-		 * 	files?next => files?next
+		 * 	files?next <=> files?next
 		 * 	accept <= accept
 		 * 	multiple <= multiple
 		 * ```
@@ -66,6 +69,7 @@ namespace $ {
 		Native() {
 			const obj = new this.$.$mol_button_open_native()
 			
+			obj.files = (next?: any) => this.files(next)
 			obj.accept = () => this.accept()
 			obj.multiple = () => this.multiple()
 			

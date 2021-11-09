@@ -5,6 +5,7 @@ namespace $ {
 	| 'hsla'
 	| 'rgba'
 	| 'var'
+	| 'clamp'
 	| 'url'
 
 	const { per } = $mol_style_unit
@@ -45,6 +46,17 @@ namespace $ {
 			return new $mol_style_func(
 				'hsla',
 				[ hue , per( saturation ) , per( lightness ) , alpha ],
+			)
+		}
+	
+		static clamp(
+			min: $mol_style_unit< any >,
+			mid: $mol_style_unit< any >,
+			max: $mol_style_unit< any >,
+		) {
+			return new $mol_style_func(
+				'clamp',
+				[ min, mid, max ],
 			)
 		}
 	
