@@ -30,7 +30,9 @@
 	color: transparent;
 	caret-color: var(--mol_theme_text);
 	resize: none;
+	text-align: inherit;
 	white-space: inherit;
+	border-radius: inherit;
 	tab-size: 4;
 	overflow-anchor: none;
 }
