@@ -36,7 +36,7 @@ namespace $ {
 	| $mol_style_func< 'hsla' | 'rgba' | 'var' >
 	| `#${string}`
 	
-	type Length = 0 | $mol_style_unit< $mol_style_unit_length > | $mol_style_func< 'calc' | 'var' >
+	type Length = 0 | $mol_style_unit< $mol_style_unit_length > | $mol_style_func< 'calc' | 'var' | 'clamp' >
 
 	type Size =
 	| 'auto' | 'max-content' | 'min-content' | 'fit-content'
@@ -103,6 +103,8 @@ namespace $ {
 			size?: ( BG_size | [ BG_size, BG_size ] )[]
 			
 		}
+		
+		backdropFilter: string
 
 		box?: {
 
