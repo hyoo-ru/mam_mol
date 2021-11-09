@@ -18601,7 +18601,7 @@ var $;
                 api.controls.remove('fullscreenControl');
                 api.controls.remove('typeSelector');
                 api.events.add(['actionend'], (event) => {
-                    new $.$mol_after_frame($.$mol_fiber_root(() => {
+                    new $.$mol_after_tick($.$mol_fiber_root(() => {
                         this.update(event);
                     }));
                 });
