@@ -1,4 +1,4 @@
-$mol_chart_demo_styles $mol_demo_large
+$mol_chart_demo_styles $mol_example_large
 	title @ \Chart with various styles of graphs.
 	samples_count 15
 	sub /

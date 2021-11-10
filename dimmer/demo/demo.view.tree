@@ -1,4 +1,4 @@
-$mol_dimmer_demo $mol_demo
+$mol_dimmer_demo $mol_example
 	title @ \Text with highlighted found substring
 	sub /
 		<= Demo_items $mol_list rows /

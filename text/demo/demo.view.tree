@@ -1,4 +1,4 @@
-$mol_text_demo $mol_demo
+$mol_text_demo $mol_example
 	title @ \Markdown visualization example
 	sub /
 		<= Text $mol_text text \

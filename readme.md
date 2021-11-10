@@ -429,7 +429,7 @@ The name of the field corresponds to calling the property, the content of the fi
 ## Complex components
 
 - **[$mol_form](form)** - forms with validators
-- **[$mol_demo](demo)** - demonstrates widget in various screens
+- **[$mol_example](demo)** - demonstrates widget in various screens
 - **[$mol_attach](attach)** - preview list and attach button
 - **[$mol_cost](cost)** - prints currency values
 - **[$mol_message](message)** - user message

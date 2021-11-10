@@ -1,4 +1,4 @@
-$mol_float_demo $mol_demo_large
+$mol_float_demo $mol_example_large
 	title @ \Floating header example
 	sub /
 		<= Scroll $mol_scroll

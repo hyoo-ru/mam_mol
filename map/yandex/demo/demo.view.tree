@@ -1,4 +1,4 @@
-$mol_map_yandex_demo $mol_demo_large
+$mol_map_yandex_demo $mol_example_large
 	title @ \Simple Yandex Maps wrapper
 	sub /
 		<= Map $mol_map_yandex

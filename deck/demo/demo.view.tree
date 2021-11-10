@@ -1,4 +1,4 @@
-$mol_deck_demo $mol_demo
+$mol_deck_demo $mol_example
 	title @ \Simple deck with tabbar
 	sub /
 		<= Deck $mol_deck items /

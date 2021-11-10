@@ -1,4 +1,4 @@
-$mol_check_group_demo $mol_demo
+$mol_check_group_demo $mol_example
 	title @ \Group of checkboxes
 	sub /
 		<= Demo_items $mol_list

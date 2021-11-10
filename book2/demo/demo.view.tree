@@ -1,4 +1,4 @@
-$mol_book2_demo $mol_demo_large
+$mol_book2_demo $mol_example_large
 	title @ \Adaprive layout for various sizes of screen
 	sub /
 		<= View $mol_book2 pages /
