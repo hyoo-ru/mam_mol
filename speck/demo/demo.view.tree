@@ -1,4 +1,4 @@
-$mol_speck_demo $mol_demo_small
+$mol_speck_demo $mol_example_small
 	sub /
 		<= Link $mol_link
 			sub /

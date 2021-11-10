@@ -35,7 +35,7 @@ namespace $.$$ {
 
 				if( !$mol_func_is_class( this.$[ name ] ) ) continue
 
-				if( !( this.$[ name ].prototype instanceof $mol_demo ) ) continue
+				if( !( this.$[ name ].prototype instanceof $mol_example ) ) continue
 
 				if ( this.demo_block_list().includes( name ) ) continue
 				
@@ -181,7 +181,7 @@ namespace $.$$ {
 		Widget() {
 			return $mol_atom2_dict({
 				get : ( name : string )=> {
-					const Class : typeof $mol_demo = this.$[ '$' + name ]
+					const Class : typeof $mol_example = this.$[ '$' + name ]
 					return new Class()
 				}
 			})

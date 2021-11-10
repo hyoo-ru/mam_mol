@@ -1,4 +1,4 @@
-$mol_infinite_demo $mol_demo
+$mol_infinite_demo $mol_example
 	title @ \Infinite list demo
 	chunk_size 20
 	sub /

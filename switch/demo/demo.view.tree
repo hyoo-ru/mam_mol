@@ -1,4 +1,4 @@
-$mol_switch_demo $mol_demo
+$mol_switch_demo $mol_example
 	title @ \Color switchers in various state
 	sub /
 		<= Demo_items $mol_list

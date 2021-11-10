@@ -53,14 +53,14 @@ namespace $ {
 		/**
 		 * ```tree
 		 * demo_block_list /
-		 * 	\$mol_demo_small
-		 * 	\$mol_demo_large
+		 * 	\$mol_example_small
+		 * 	\$mol_example_large
 		 * ```
 		 */
 		demo_block_list() {
 			return [
-				"$mol_demo_small",
-				"$mol_demo_large"
+				"$mol_example_small",
+				"$mol_example_large"
 			] as readonly any[]
 		}
 		

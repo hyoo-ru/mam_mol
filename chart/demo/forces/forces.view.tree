@@ -1,4 +1,4 @@
-$mol_chart_demo_forces $mol_demo_large
+$mol_chart_demo_forces $mol_example_large
 	title @ \Fake wheel forces
 	samples_count 10000
 	points_max 1000

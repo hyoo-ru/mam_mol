@@ -1,4 +1,4 @@
-$mol_video_player_demo $mol_demo_large
+$mol_video_player_demo $mol_example_large
 	title \Reactive video player
 	sub /
 		<= Controls $mol_row sub /

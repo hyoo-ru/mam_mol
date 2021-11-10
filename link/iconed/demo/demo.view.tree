@@ -1,4 +1,4 @@
-$mol_link_iconed_demo $mol_demo
+$mol_link_iconed_demo $mol_example
 	title @ \Link with icon
 	sub /
 		<= Demo_items $mol_list

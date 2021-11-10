@@ -1,4 +1,4 @@
-$mol_calendar_demo_selection $mol_demo_small
+$mol_calendar_demo_selection $mol_example_small
 	title @ \Days of month 2018-01 with custom selection
 	interval_config *
 		start \2018-01-10

@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_calendar_demo_selection extends $mol_demo_small {
+	export class $mol_calendar_demo_selection extends $mol_example_small {
 		
 		/**
 		 * ```tree

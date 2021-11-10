@@ -7,8 +7,8 @@ $mol_app_demo $mol_book2
 	plugins /
 		<= Theme $mol_theme_auto
 	demo_block_list /
-		\$mol_demo_small
-		\$mol_demo_large
+		\$mol_example_small
+		\$mol_example_large
 	Menu $mol_app_demo_menu
 		names <= names_demo_filtered /string
 		filter_suggests <= filter_suggests /string

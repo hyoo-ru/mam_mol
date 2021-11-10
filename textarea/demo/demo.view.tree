@@ -1,4 +1,4 @@
-$mol_textarea_demo $mol_demo
+$mol_textarea_demo $mol_example
 	title @ \Text input field in various states
 	sub /
 		<= Demo_items $mol_list

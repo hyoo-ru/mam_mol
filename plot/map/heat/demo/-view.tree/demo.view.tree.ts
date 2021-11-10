@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_plot_map_heat_demo extends $mol_demo_large {
+	export class $mol_plot_map_heat_demo extends $mol_example_large {
 		
 		/**
 		 * ```tree
