@@ -2986,7 +2986,7 @@ $mol_textarea $mol_view
 		<= Edit $mol_string
 			dom_name \textarea
 			value?val <=> value?val \
-			hint <= hint \
+			hint <= hint \ 
 			enabled <= enabled true
 			length_max <= length_max Infinity
 			selection?val <=> selection?val /number

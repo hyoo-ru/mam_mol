@@ -104,7 +104,7 @@ namespace $ {
 		 * ```
 		 */
 		hint() {
-			return ""
+			return " "
 		}
 		
 		/**
