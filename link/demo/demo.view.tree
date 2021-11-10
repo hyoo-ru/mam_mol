@@ -1,4 +1,4 @@
-$mol_link_demo $mol_demo
+$mol_link_demo $mol_example
 	title @ \Some hyperlinks
 	sub /
 		<= Demo_items $mol_list

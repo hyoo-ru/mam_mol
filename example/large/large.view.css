@@ -1,4 +1,4 @@
-[mol_demo_large] {
+[mol_example_large] {
 	flex: 1 1 auto;
 	flex-direction: column;
 	box-shadow: 0 0 0 1px var(--mol_theme_line);

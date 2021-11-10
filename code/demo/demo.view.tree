@@ -1,4 +1,4 @@
-$mol_code_demo $mol_demo_small
+$mol_code_demo $mol_example_small
 	title @ \Barcode scanner with various formats support
 	sub /
 		<= Qr $mol_code

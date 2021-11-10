@@ -1,3 +1,3 @@
-$mol_app_quine_demo $mol_demo_large
+$mol_app_quine_demo $mol_example_large
 	sub /
 		<= App $mol_app_quine

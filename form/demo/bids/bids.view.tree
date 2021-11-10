@@ -1,4 +1,4 @@
-$mol_form_demo_bids $mol_demo
+$mol_form_demo_bids $mol_example
 	title @ \Sign Up form demo
 	message_required @ \Required
 	message_no_spaces @ \No spaces!
