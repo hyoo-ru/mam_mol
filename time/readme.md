@@ -7,7 +7,7 @@ Small, simple, powerfull, and fast TypeScript/JavaScript library for proper date
 ## Direct
 
 ```html
-<script src="http://mol.js.org/time/all/-/web.js"></script>
+<script src="https://unpkg.com/mol_time_all/web.js"></script>
 <script>
 	alert( new $mol_time_moment() ) // alerts current time
 </script>
