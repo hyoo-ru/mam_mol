@@ -1,4 +1,4 @@
-$mol_calendar_demo_simple $mol_demo_small
+$mol_calendar_demo_simple $mol_example_small
 	title @ \Days of curret month
 	sub /
 		<= Calendar $mol_calendar

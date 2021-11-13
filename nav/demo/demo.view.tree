@@ -1,4 +1,4 @@
-$mol_nav_demo $mol_demo
+$mol_nav_demo $mol_example
 	title @ \Number input control with various configuration
 	sub /
 		<= Demo_items $mol_list

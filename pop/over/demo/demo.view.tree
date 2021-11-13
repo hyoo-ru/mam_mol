@@ -1,4 +1,4 @@
-$mol_pop_over_demo $mol_demo
+$mol_pop_over_demo $mol_example
 	title @ \Menu that opens on mouse over
 	sub /
 		<= Menu $mol_row

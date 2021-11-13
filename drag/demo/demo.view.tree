@@ -1,4 +1,4 @@
-$mol_drag_demo $mol_demo_large
+$mol_drag_demo $mol_example_large
 	task_count 100
 	sub /
 		<= List_drop $mol_drop

@@ -1,4 +1,4 @@
-$mol_bench_demo $mol_demo_small
+$mol_bench_demo $mol_example_small
 	title @ \Benchmarking results visualization
 	sub /
 		<= View $mol_bench

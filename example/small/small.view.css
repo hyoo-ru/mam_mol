@@ -1,4 +1,4 @@
-[mol_demo_small] {
+[mol_example_small] {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: flex-start;
@@ -10,7 +10,7 @@
 	max-width: 100%;
 }
 
-[mol_demo_small] > * {
+[mol_example_small] > * {
 	margin: .375rem;
 	max-width: 100%;
 }

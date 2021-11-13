@@ -1,4 +1,4 @@
-$mol_html_view_demo $mol_demo_large
+$mol_html_view_demo $mol_example_large
 	title @ \View raw HTML
 	sub /
 		<= Scroll $mol_scroll sub /

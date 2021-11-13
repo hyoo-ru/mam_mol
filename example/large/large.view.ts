@@ -1,5 +1,5 @@
 // namespace $.$$ {
-// 	export class $mol_demo_large extends $.$mol_demo_large {
+// 	export class $mol_example_large extends $.$mol_example_large {
 		
 // 		minimal_height() {
 // 			return $mol_window.size().height - 100

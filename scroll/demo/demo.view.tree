@@ -1,4 +1,4 @@
-$mol_scroll_demo $mol_demo_large
+$mol_scroll_demo $mol_example_large
 	title @ \Simple scroll pane
 	sub /
 		<= Scroll $mol_scroll

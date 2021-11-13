@@ -1,4 +1,4 @@
-$mol_button_share_demo $mol_demo
+$mol_button_share_demo $mol_example
 	title @ \Share button
 	sub /
 		<= Share_self $mol_button_share

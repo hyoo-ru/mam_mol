@@ -1,4 +1,4 @@
-$mol_frame_demo $mol_demo_large
+$mol_frame_demo $mol_example_large
 	sub /
 		<= Frame $mol_frame
 			title @ \Another page inside that
