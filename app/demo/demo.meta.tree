@@ -51,6 +51,7 @@ include \/mol/plot/map/heat/demo
 include \/mol/pop/demo
 include \/mol/pop/over/demo
 include \/mol/portion/demo
+include \/mol/pick/demo
 include \/mol/row/demo/form
 include \/mol/row/demo/products
 include \/mol/scroll/demo
