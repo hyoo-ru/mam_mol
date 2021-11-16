@@ -2,6 +2,7 @@
 	border: none;
 	font: inherit;
 	display: inline-flex;
+	gap: var(--mol_gap_space);
 	flex-shrink: 0;
 	text-decoration: inherit;
 	cursor: inherit;

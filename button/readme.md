@@ -5,10 +5,21 @@ Simple button.
 ## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_button)
 
 ## Usage example
+
+Major button:
 ```
 <= Submit $mol_button_major
 	event_click?val <=> event_submit?val null
 	title <= submit_label @ \Submit form
+```
+
+Minor button with custom content (icon and title):
+```
+<= Submit $mol_button_minor
+	event_click?val <=> event_submit?val null
+	sub /
+		<= Submit_icon $mol_icon_cursor_default_click
+		<= submit_label @ \Submit form
 ```
 
 ## Variations
