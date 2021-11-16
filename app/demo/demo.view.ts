@@ -315,6 +315,19 @@ namespace $.$$ {
 			
 			throw new Error('Readme not found')
 		}
+
+		@ $mol_mem
+		override readme_content() {
+			try {
+				this.readme()
+				return this.Readme()
+			} catch ( err ) {
+				if ( err instanceof Error && err.message.includes( 'not found' ) ) {
+					return this.Not_found()
+				}
+				throw err
+			}
+		}
 		
 	}
 	

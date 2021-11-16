@@ -103,5 +103,10 @@ $mol_app_demo_readme $mol_page
 			arg <= close_arg *
 				readme null
 	body /
-		<= Readme $mol_text
-			text <= readme \
+		<= readme_content null
+	-
+	Readme $mol_text
+		text <= readme \
+	Not_found $mol_view sub /
+		<= Not_found_caption @ \Readme not found
+

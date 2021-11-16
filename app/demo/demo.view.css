@@ -107,3 +107,12 @@
 [mol_app_demo_readme] {
 	flex: 1 0 30rem;
 }
+
+[mol_app_demo_readme_not_found] {
+	display: flex;
+	flex: 1 0;
+	align-items: center;
+	justify-content: center;
+	font-size: 2rem;
+	color: var(--mol_skin_passive_text);
+}
