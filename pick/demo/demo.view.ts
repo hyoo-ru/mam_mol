@@ -3,6 +3,17 @@ namespace $.$$ {
 
 	export class $mol_pick_demo extends $.$mol_pick_demo {
 
+		override menu_item_download_uri() {
+			const data = {
+				foo: 'bar',
+				arr: [ 1, 2, 3 ]
+			}
+
+			const blob = new Blob( [JSON.stringify(data, null, 2)] , { type: 'text/json' } )
+			
+			return $mol_dom_context.URL.createObjectURL( blob )
+		}
+
 		hide_options_menu() {
 			this.Options_pop().focused( false )
 		}

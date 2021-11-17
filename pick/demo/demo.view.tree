@@ -40,40 +40,13 @@ $mol_pick_demo $mol_example_small
 			sub /
 				<= menu_item_copy_icon $mol_icon_content_copy
 				<= menu_item_copy_label @ \Copy
-		- <= Menu_item_link $mol_link
-			event_click?val <=> menu_item_link_click?val null
-			sub /
-				<= menu_item_link_icon $mol_icon_link_variant
-				<= menu_item_link_label @ \Link
-		<= Menu_item_download $mol_link
+		<= Menu_item_download $mol_link_lazy
 			hint <= menu_item_download_hint @ \Download some json
-			uri <= menu_item_download_uri \
+			uri_generated <= menu_item_download_uri \
 			file_name \demo.json
 			sub /
 				<= menu_item_download_icon $mol_icon_cloud_download_outline
 				<= menu_item_download_label @ \Download
-		- ---------
-		- DEMO
-		<= Menu_item_demo1 $mol_pick
-			align \left-bottom
-			trigger_content /
-				<= Menu_item_demo1_item $mol_button_minor
-					sub /
-						<= menu_item_demo1_icon $mol_icon_menu_left_outline
-						<= menu_item_demo1_label @ \Demo1
-			bubble_content /
-				<= Delete_confirm_content
-		<= Menu_item_demo2 $mol_pick
-			align \left-bottom
-			trigger_content /
-				<= Menu_item_demo2_item $mol_view
-					sub /
-						<= menu_item_demo2_icon $mol_icon_menu_left_outline
-						<= menu_item_demo2_item_label @ \Demo2
-			bubble_content /
-				<= Delete_confirm_content
-		- DEMO
-		- ---------
 		<= Menu_item_delete $mol_button_minor
 			style *
 				color \red
@@ -94,9 +67,10 @@ $mol_pick_demo $mol_example_small
 				title <= delete_cancel_title @ \Cancel
 				event_click?val <=> delete_cancel_click?val null
 	tags /
-		\$mol_link
+		\$mol_link_lazy
 		\$mol_icon
 		\$mol_text
+		\$mol_check
 		\pick
 		\popup
 		\info
