@@ -1,13 +1,8 @@
 # $mol_date
 
 Date presenter and picker.
-<<<<<<< HEAD
- 
-## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_date_demo)
-=======
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_date)
->>>>>>> 1617c1e88982258072367302980c28c2452904d3
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_date_demo)
 
 ## Properties
 
