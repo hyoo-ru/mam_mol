@@ -2,7 +2,7 @@
 
 Hyperlink with lazy generated (on `mousedown` event) uri. 
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_link_lazy_demo)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_link_lazy_demo)
 
 ## Usage example
 
@@ -26,7 +26,7 @@ override uri_generated() {
 }
 ```
 
-## Extends [$mol_link](https://mol.js.org/app/demo/-/#demo=mol_link_demo)
+## Extends [$mol_link](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_link_demo)
 
 ## Properties
 

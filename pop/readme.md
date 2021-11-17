@@ -2,7 +2,7 @@
 
 `Bubble` that can be shown anchored to `Anchor` element.
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_pop)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_pop_demo)
 
 ## Usage example
 

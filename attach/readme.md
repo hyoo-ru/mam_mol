@@ -2,7 +2,7 @@
 
 Component that helps to upload files to server.
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_attach)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_attach_demo)
 
 ## Usage example
 ```

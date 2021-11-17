@@ -2,7 +2,7 @@
 
 The component which arrange content in multiple tabs.
  
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_deck)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_deck_demo)
 
 ## Usage example
 

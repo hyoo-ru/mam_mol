@@ -2,7 +2,7 @@
 
 Show short attention info at other component.
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_speck)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_speck_demo)
 
 ## Usage example
 

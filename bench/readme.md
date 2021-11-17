@@ -2,7 +2,7 @@
 
 Benchmark results visualisator.
  
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_bench)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_bench_demo)
 
 ## Usage example
 
@@ -22,4 +22,4 @@ Field name for sorting.
 
 Dictionary of dictionaries of results.
 
-## Extends: [$mol_grid](../grid)
+## Extends: [$mol_grid](https://github.com/hyoo-ru/mam_mol/tree/master/grid)

@@ -2,7 +2,7 @@
 
 Date presenter and picker.
  
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_date)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_date_demo)
 
 ## Properties
 
@@ -38,4 +38,4 @@ Instance $mol_time_moment.
 	value_moment?val <=> today?val $mol_time_moment
 ```
 
-## Extends: [$mol_string](../string)
+## Extends: [$mol_string](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_string_demo)
