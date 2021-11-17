@@ -114,5 +114,5 @@
 	align-items: center;
 	justify-content: center;
 	font-size: 2rem;
-	color: var(--mol_skin_passive_text);
+	color: var(--mol_theme_shade);
 }
