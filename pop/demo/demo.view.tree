@@ -1,18 +1,50 @@
-$mol_pop_demo $mol_example_small
+$mol_pop_demo $mol_example
 	title @ \Pop up block with various alignment
 	sub /
-		<= Pop $mol_pop
-			Anchor <= Show $mol_button_minor
-				title <= show_text @ \?
-			showed <= showed <= focused
-			bubble_content /
-				<= Content $mol_row 
-					sub / 
-						<= bubble_hint @ \This is $mol_pop
+		<= Manage $mol_row sub /
+			<= Showed $mol_labeler
+				title <= show_title @ \Showed
+				content /
+					<= Show_check $mol_check_box
+						hint <= pop_showed_check_hint @ \$mol_pop showed
+						checked?val <=> pop_showed?val true
+			<= Align $mol_labeler
+				title <= align_title @ \Align
+				content /
+					<= Align_select $mol_switch
+						value?val <=> pop_align?val \bottom_right
+						options <= aligins *
+							left_top \left_top
+							left_center \left_center
+							left_bottom \left_bottom
+							right_top \right_top
+							right_center \right_center
+							right_bottom \right_bottom
+							center \center
+							top_left \top_left
+							top_center \top_center
+							top_right \top_right
+							bottom_left \bottom_left
+							bottom_center \bottom_center
+							bottom_right \bottom_right
+		<= Pop_area $mol_view sub /
+			<= Pop $mol_pop
+				Anchor <= Pop_anchor $mol_button_major sub /
+					<= anchor_button_icon $mol_icon_anchor
+					<= anchor_button_title @ \Anchor
+				showed <= pop_showed
+				align <= pop_align
+				bubble_content /
+					<= Content $mol_row 
+						minimal_width 150
+						sub / 
+							<= bubble_hint @ \This is $mol_pop content
 	tags /
 		\$mol_row
 		\$mol_button
+		\$mol_labeler
 		\popup
 		\menu
+		\align
 		\container
 

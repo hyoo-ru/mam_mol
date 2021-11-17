@@ -1,6 +1,6 @@
 # $mol_cost
 
-Prints [money unit](../unit/money) in right format.
+Prints [money unit](https://github.com/hyoo-ru/mam_mol/tree/master/unit/money) in right format.
 
 ## Usage example
 

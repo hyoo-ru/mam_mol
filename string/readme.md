@@ -2,7 +2,7 @@
 
 Input field to enter single line of text.
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_string_demo)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_string_demo)
 
 ## Usage example
 

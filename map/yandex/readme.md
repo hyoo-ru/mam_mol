@@ -2,7 +2,7 @@
 
 Simple [Yandex Maps](https://tech.yandex.ru/maps/doc/jsapi/2.1/) wrapper.
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_map_yandex)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_map_yandex_demo)
 
 ## Usage example
 

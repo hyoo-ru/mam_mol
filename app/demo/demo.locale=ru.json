@@ -6,5 +6,6 @@
 	"$mol_app_demo_detail_source_hint": "Исходный код для демо приложения",
 	"$mol_app_demo_menu_title": "$mol примеры",
 	"$mol_app_demo_readme_Close_hint": "Закрыть панель",
-	"$mol_app_demo_readme_title": "Readme"
+	"$mol_app_demo_readme_title": "Readme",
+	"$mol_app_demo_readme_Not_found_caption": "Readme не найден"
 }

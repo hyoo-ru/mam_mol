@@ -2,7 +2,7 @@
 
 Draws generic user message
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_message_demo)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_message_demo)
 
 ## Usage example
 ```

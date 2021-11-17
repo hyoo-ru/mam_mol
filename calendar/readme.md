@@ -2,7 +2,7 @@
 
 Draws all days of month as table.
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_calendar)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_calendar_demo)
 
 ## Usage example
 ```

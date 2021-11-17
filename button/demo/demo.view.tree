@@ -14,6 +14,11 @@ $mol_button_demo $mol_example_small
 		<= Minor_disabled $mol_button_minor
 			title <= minor_label @ \Or click me..
 			enabled false
+		-
+		<= Minor_icon_enabled $mol_button_minor
+			sub /
+				<= Minor_icon $mol_icon_cursor_default_click_outline
+				<= minor_label
 	tags /
 		\button
 

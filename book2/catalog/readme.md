@@ -2,7 +2,7 @@
 
 Variant of [$mol_book](..) which draws menu in side bar on opens one of taken spreads.
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_book2_catalog_demo)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_book2_catalog_demo)
 
 ## Usage example
 
