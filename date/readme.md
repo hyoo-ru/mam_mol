@@ -1,7 +1,7 @@
 # $mol_date
 
 Date presenter and picker.
- 
+
 ## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_date)
 
 ## Properties
@@ -9,6 +9,7 @@ Date presenter and picker.
 **`date( next? : string ) : string`**
 
 Date in YYYY-MM-DD format.
+
 ```
 <= Birth_day $mol_date
 	date?val <=> birth_day?val \2017-04-01
@@ -17,6 +18,7 @@ Date in YYYY-MM-DD format.
 **`time( next? : string ) : string`**
 
 Time in hh:mm format.
+
 ```
 <= Begin $mol_date
 	time?val <=> begin?val \09:00
@@ -24,7 +26,8 @@ Time in hh:mm format.
 
 **`value_number( next? : number ) : number`**
 
-Counts of milliseconds from Unix Epoch. 
+Counts of milliseconds from Unix Epoch.
+
 ```
 <= New_year $mol_date
 	value_number?val <=> new_year?val 1514764800
