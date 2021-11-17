@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_pop_demo extends $mol_example_small {
+	export class $mol_pop_demo extends $mol_example {
 		
 		/**
 		 * ```tree
@@ -12,12 +12,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Pop
+		 * sub /
+		 * 	<= Manage
+		 * 	<= Pop_area
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Pop()
+				this.Manage(),
+				this.Pop_area()
 			] as readonly any[]
 		}
 		
@@ -26,8 +29,10 @@ namespace $ {
 		 * tags /
 		 * 	\$mol_row
 		 * 	\$mol_button
+		 * 	\$mol_labeler
 		 * 	\popup
 		 * 	\menu
+		 * 	\align
 		 * 	\container
 		 * ```
 		 */
@@ -35,47 +40,233 @@ namespace $ {
 			return [
 				"$mol_row",
 				"$mol_button",
+				"$mol_labeler",
 				"popup",
 				"menu",
+				"align",
 				"container"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * show_text @ \?
+		 * show_title @ \Showed
 		 * ```
 		 */
-		show_text() {
-			return this.$.$mol_locale.text( '$mol_pop_demo_show_text' )
+		show_title() {
+			return this.$.$mol_locale.text( '$mol_pop_demo_show_title' )
 		}
 		
 		/**
 		 * ```tree
-		 * Show $mol_button_minor title <= show_text
+		 * pop_showed_check_hint @ \$mol_pop showed
+		 * ```
+		 */
+		pop_showed_check_hint() {
+			return this.$.$mol_locale.text( '$mol_pop_demo_pop_showed_check_hint' )
+		}
+		
+		/**
+		 * ```tree
+		 * pop_showed?val true
 		 * ```
 		 */
 		@ $mol_mem
-		Show() {
-			const obj = new this.$.$mol_button_minor()
+		pop_showed(val?: any) {
+			if ( val !== undefined ) return val as never
+			return true
+		}
+		
+		/**
+		 * ```tree
+		 * Show_check $mol_check_box
+		 * 	hint <= pop_showed_check_hint
+		 * 	checked?val <=> pop_showed?val
+		 * ```
+		 */
+		@ $mol_mem
+		Show_check() {
+			const obj = new this.$.$mol_check_box()
 			
-			obj.title = () => this.show_text()
+			obj.hint = () => this.pop_showed_check_hint()
+			obj.checked = (val?: any) => this.pop_showed(val)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * showed <= focused
+		 * Showed $mol_labeler
+		 * 	title <= show_title
+		 * 	content / <= Show_check
 		 * ```
 		 */
-		showed() {
-			return this.focused()
+		@ $mol_mem
+		Showed() {
+			const obj = new this.$.$mol_labeler()
+			
+			obj.title = () => this.show_title()
+			obj.content = () => [
+				this.Show_check()
+			] as readonly any[]
+			
+			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * bubble_hint @ \This is $mol_pop
+		 * align_title @ \Align
+		 * ```
+		 */
+		align_title() {
+			return this.$.$mol_locale.text( '$mol_pop_demo_align_title' )
+		}
+		
+		/**
+		 * ```tree
+		 * pop_align?val \bottom_right
+		 * ```
+		 */
+		@ $mol_mem
+		pop_align(val?: any) {
+			if ( val !== undefined ) return val as never
+			return "bottom_right"
+		}
+		
+		/**
+		 * ```tree
+		 * aligins *
+		 * 	left_top \left_top
+		 * 	left_center \left_center
+		 * 	left_bottom \left_bottom
+		 * 	right_top \right_top
+		 * 	right_center \right_center
+		 * 	right_bottom \right_bottom
+		 * 	center \center
+		 * 	top_left \top_left
+		 * 	top_center \top_center
+		 * 	top_right \top_right
+		 * 	bottom_left \bottom_left
+		 * 	bottom_center \bottom_center
+		 * 	bottom_right \bottom_right
+		 * ```
+		 */
+		aligins() {
+			return {
+				left_top: "left_top",
+				left_center: "left_center",
+				left_bottom: "left_bottom",
+				right_top: "right_top",
+				right_center: "right_center",
+				right_bottom: "right_bottom",
+				center: "center",
+				top_left: "top_left",
+				top_center: "top_center",
+				top_right: "top_right",
+				bottom_left: "bottom_left",
+				bottom_center: "bottom_center",
+				bottom_right: "bottom_right"
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * Align_select $mol_switch
+		 * 	value?val <=> pop_align?val
+		 * 	options <= aligins
+		 * ```
+		 */
+		@ $mol_mem
+		Align_select() {
+			const obj = new this.$.$mol_switch()
+			
+			obj.value = (val?: any) => this.pop_align(val)
+			obj.options = () => this.aligins()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Align $mol_labeler
+		 * 	title <= align_title
+		 * 	content / <= Align_select
+		 * ```
+		 */
+		@ $mol_mem
+		Align() {
+			const obj = new this.$.$mol_labeler()
+			
+			obj.title = () => this.align_title()
+			obj.content = () => [
+				this.Align_select()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Manage $mol_row sub /
+		 * 	<= Showed
+		 * 	<= Align
+		 * ```
+		 */
+		@ $mol_mem
+		Manage() {
+			const obj = new this.$.$mol_row()
+			
+			obj.sub = () => [
+				this.Showed(),
+				this.Align()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * anchor_button_icon $mol_icon_anchor
+		 * ```
+		 */
+		@ $mol_mem
+		anchor_button_icon() {
+			const obj = new this.$.$mol_icon_anchor()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * anchor_button_title @ \Anchor
+		 * ```
+		 */
+		anchor_button_title() {
+			return this.$.$mol_locale.text( '$mol_pop_demo_anchor_button_title' )
+		}
+		
+		/**
+		 * ```tree
+		 * Pop_anchor $mol_button_major sub /
+		 * 	<= anchor_button_icon
+		 * 	<= anchor_button_title
+		 * ```
+		 */
+		@ $mol_mem
+		Pop_anchor() {
+			const obj = new this.$.$mol_button_major()
+			
+			obj.sub = () => [
+				this.anchor_button_icon(),
+				this.anchor_button_title()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * bubble_hint @ \This is $mol_pop content
 		 * ```
 		 */
 		bubble_hint() {
@@ -84,13 +275,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Content $mol_row sub / <= bubble_hint
+		 * Content $mol_row
+		 * 	minimal_width 150
+		 * 	sub / <= bubble_hint
 		 * ```
 		 */
 		@ $mol_mem
 		Content() {
 			const obj = new this.$.$mol_row()
 			
+			obj.minimal_width = () => 150
 			obj.sub = () => [
 				this.bubble_hint()
 			] as readonly any[]
@@ -101,8 +295,9 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Pop $mol_pop
-		 * 	Anchor <= Show
-		 * 	showed <= showed
+		 * 	Anchor <= Pop_anchor
+		 * 	showed <= pop_showed
+		 * 	align <= pop_align
 		 * 	bubble_content / <= Content
 		 * ```
 		 */
@@ -110,10 +305,27 @@ namespace $ {
 		Pop() {
 			const obj = new this.$.$mol_pop()
 			
-			obj.Anchor = () => this.Show()
-			obj.showed = () => this.showed()
+			obj.Anchor = () => this.Pop_anchor()
+			obj.showed = () => this.pop_showed()
+			obj.align = () => this.pop_align()
 			obj.bubble_content = () => [
 				this.Content()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Pop_area $mol_view sub / <= Pop
+		 * ```
+		 */
+		@ $mol_mem
+		Pop_area() {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => [
+				this.Pop()
 			] as readonly any[]
 			
 			return obj

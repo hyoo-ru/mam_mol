@@ -2,7 +2,7 @@
 
 Heat map graph.
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_plot_map_heat)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_plot_map_heat_demo)
 
 ## Usage example
 

@@ -4,7 +4,7 @@
 	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	border-radius: var(--mol_gap_round);
 	margin: var(--mol_gap_block);
-	max-width: valc( 100% - 1.5rem );
-	max-height: valc( 100% - 1.5rem );
+	max-width: calc( 100% - 1.5rem );
+	max-height: calc( 100% - 1.5rem );
 	overflow: hidden;
 }

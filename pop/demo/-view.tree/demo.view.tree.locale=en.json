@@ -1,5 +1,8 @@
 {
 	"$mol_pop_demo_title": "Pop up block with various alignment",
-	"$mol_pop_demo_show_text": "?",
-	"$mol_pop_demo_bubble_hint": "This is $mol_pop"
+	"$mol_pop_demo_show_title": "Showed",
+	"$mol_pop_demo_pop_showed_check_hint": "$mol_pop showed",
+	"$mol_pop_demo_align_title": "Align",
+	"$mol_pop_demo_anchor_button_title": "Anchor",
+	"$mol_pop_demo_bubble_hint": "This is $mol_pop content"
 }

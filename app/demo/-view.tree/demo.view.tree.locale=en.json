@@ -7,5 +7,6 @@
 	"$mol_app_demo_detail_edit_hint": "Edit this demo in studio",
 	"$mol_app_demo_detail_close_hint": "Close panel",
 	"$mol_app_demo_readme_title": "Readme",
-	"$mol_app_demo_readme_Close_hint": "Close panel"
+	"$mol_app_demo_readme_Close_hint": "Close panel",
+	"$mol_app_demo_readme_Not_found_caption": "Readme not found"
 }

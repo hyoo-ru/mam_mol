@@ -292,6 +292,12 @@ namespace $.$$ {
 		}
 		
 	}
+
+	export class $mol_app_demo_readme_not_found_error extends Error {
+		constructor( public module: readonly string[] ) {
+			super( 'Readme not found' )
+		}
+	}
 	
 	export class $mol_app_demo_readme extends $.$mol_app_demo_readme {
 
@@ -313,7 +319,20 @@ namespace $.$$ {
 				else throw new Error( res.statusText || `HTTP Error ${ res.status }` )
 			}
 			
-			throw new Error('Readme not found')
+			throw new $mol_app_demo_readme_not_found_error( module )
+		}
+
+		@ $mol_mem
+		override readme_content() {
+			try {
+				this.readme()
+				return this.Readme()
+			} catch ( err ) {
+				if ( err instanceof $mol_app_demo_readme_not_found_error ) {
+					return this.Not_found()
+				}
+				throw err
+			}
 		}
 		
 	}

@@ -2,7 +2,7 @@
 
 Buttons which switching the sate;
 
-## [Online demo](http://mol.js.org/#demo=mol_switch_demo)
+## [Online demo](http://mol.hyoo.ru/#!section=demos/readme/demo=mol_switch_demo)
 
 ## Usage example
 

@@ -2,7 +2,7 @@
 
 Dynamic hyperlink. It can to add, change or remove parameters. The link leads to current page would be stylized in other way.
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_link)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_link_demo)
 
 ## Properties
 

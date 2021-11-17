@@ -2,7 +2,7 @@
 
 Machine readable code input. On Cordova displays button to call native scanner.
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_code)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_code_demo)
 
 ## Usage example
 

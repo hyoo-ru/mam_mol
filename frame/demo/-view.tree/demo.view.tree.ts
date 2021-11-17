@@ -32,7 +32,7 @@ namespace $ {
 		 * ```tree
 		 * Frame $mol_frame
 		 * 	title @ \Another page inside that
-		 * 	uri \https://mol.js.org/
+		 * 	uri \https://mol.hyoo.ru/
 		 * ```
 		 */
 		@ $mol_mem
@@ -40,7 +40,7 @@ namespace $ {
 			const obj = new this.$.$mol_frame()
 			
 			obj.title = () => this.$.$mol_locale.text( '$mol_frame_demo_Frame_title' )
-			obj.uri = () => "https://mol.js.org/"
+			obj.uri = () => "https://mol.hyoo.ru/"
 			
 			return obj
 		}

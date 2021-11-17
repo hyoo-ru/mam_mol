@@ -17,6 +17,7 @@ namespace $ {
 		 * 	<= Major_disabled
 		 * 	<= Minor_enabled
 		 * 	<= Minor_disabled
+		 * 	<= Minor_icon_enabled
 		 * ```
 		 */
 		sub() {
@@ -24,7 +25,8 @@ namespace $ {
 				this.Major_enabled(),
 				this.Major_disabled(),
 				this.Minor_enabled(),
-				this.Minor_disabled()
+				this.Minor_disabled(),
+				this.Minor_icon_enabled()
 			] as readonly any[]
 		}
 		
@@ -115,6 +117,37 @@ namespace $ {
 			
 			obj.title = () => this.minor_label()
 			obj.enabled = () => false
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Minor_icon $mol_icon_cursor_default_click_outline
+		 * ```
+		 */
+		@ $mol_mem
+		Minor_icon() {
+			const obj = new this.$.$mol_icon_cursor_default_click_outline()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Minor_icon_enabled $mol_button_minor sub /
+		 * 	<= Minor_icon
+		 * 	<= minor_label
+		 * ```
+		 */
+		@ $mol_mem
+		Minor_icon_enabled() {
+			const obj = new this.$.$mol_button_minor()
+			
+			obj.sub = () => [
+				this.Minor_icon(),
+				this.minor_label()
+			] as readonly any[]
 			
 			return obj
 		}

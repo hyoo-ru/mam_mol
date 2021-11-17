@@ -38,6 +38,7 @@ include \/mol/infinite/demo
 include \/mol/labeler/demo
 include \/mol/link/demo
 include \/mol/link/iconed/demo
+include \/mol/link/lazy/demo
 include \/mol/list/demo/table
 include \/mol/list/demo/tree
 include \/mol/map/yandex/demo
@@ -51,6 +52,7 @@ include \/mol/plot/map/heat/demo
 include \/mol/pop/demo
 include \/mol/pop/over/demo
 include \/mol/portion/demo
+include \/mol/pick/demo
 include \/mol/row/demo/form
 include \/mol/row/demo/products
 include \/mol/scroll/demo

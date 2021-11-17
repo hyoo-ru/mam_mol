@@ -1,0 +1,13 @@
+{
+	"$mol_pick_demo_title": "Simple and complex popups",
+	"$mol_pick_demo_pick_content": "This is popup content",
+	"$mol_pick_demo_Simple_pop_hint": "Click to show simple popup",
+	"$mol_pick_demo_Info_pop_hint": "Click to show info popup",
+	"$mol_pick_demo_Options_pop_hint": "Click to show options menu",
+	"$mol_pick_demo_menu_item_copy_label": "Copy",
+	"$mol_pick_demo_menu_item_download_hint": "Download some json",
+	"$mol_pick_demo_menu_item_download_label": "Download",
+	"$mol_pick_demo_menu_item_delete_label": "Delete",
+	"$mol_pick_demo_delete_confirm_title": "Delete",
+	"$mol_pick_demo_delete_cancel_title": "Cancel"
+}

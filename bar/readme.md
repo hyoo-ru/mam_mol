@@ -2,14 +2,14 @@
 
 The component for grouping several components in one composite control.
 
-##[Online demo](https://mol.js.org/app/demo/-/#demo=mol_bar)
+##[Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_bar_demo)
 
 ## Usage examples
 ```
 <= Search $mol_bar
 	sub /
-		< String $mol_string
+		<= String $mol_string
 			value?val <=> query?val \
-		< Submit $mol_button_minor
+		<= Submit $mol_button_minor
 			title <= submit_label @ \Submit
 ```

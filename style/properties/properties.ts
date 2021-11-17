@@ -81,6 +81,8 @@ namespace $ {
 		| 'normal' | 'stretch' | 'center'
 		| Common
 
+		gap?: Length
+
 		/** All background style properties. */
 		background?:
 		| 'none'

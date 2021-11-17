@@ -2,7 +2,7 @@ $mol_frame_demo $mol_example_large
 	sub /
 		<= Frame $mol_frame
 			title @ \Another page inside that
-			uri \https://mol.js.org/
+			uri \https://mol.hyoo.ru/
 	tags /
 		\frame
 		\iframe

@@ -2,7 +2,7 @@
 
 Represents a common card. It can has several statuses at bottom line.
 
-## [Online demo](https://mol.js.org/app/demo/-/#demo=mol_card)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_card_demo)
 
 ## Usage example
 

@@ -912,13 +912,43 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * body / <= Readme
+		 * body / <= readme_content
 		 * ```
 		 */
 		body() {
 			return [
-				this.Readme()
+				this.readme_content()
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Readme $mol_text text <= readme
+		 * ```
+		 */
+		@ $mol_mem
+		Readme() {
+			const obj = new this.$.$mol_text()
+			
+			obj.text = () => this.readme()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Not_found $mol_view sub / <= Not_found_caption
+		 * ```
+		 */
+		@ $mol_mem
+		Not_found() {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => [
+				this.Not_found_caption()
+			] as readonly any[]
+			
+			return obj
 		}
 		
 		/**
@@ -967,6 +997,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * readme_content null
+		 * ```
+		 */
+		readme_content() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * readme \
 		 * ```
 		 */
@@ -976,16 +1015,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Readme $mol_text text <= readme
+		 * Not_found_caption @ \Readme not found
 		 * ```
 		 */
-		@ $mol_mem
-		Readme() {
-			const obj = new this.$.$mol_text()
-			
-			obj.text = () => this.readme()
-			
-			return obj
+		Not_found_caption() {
+			return this.$.$mol_locale.text( '$mol_app_demo_readme_Not_found_caption' )
 		}
 	}
 	
