@@ -25,7 +25,7 @@ namespace $.$$ {
 		@ $mol_mem
 		current() {
 
-			const base = this.$.$mol_state_arg.href()
+			const base = this.$.$mol_state_arg.href_normal()
 			const target = this.uri_native().toString()
 
 			if( base === target ) return true

@@ -19,6 +19,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem
+		static href_normal(): string {
+			return this.link({})
+		}
+		
+		@ $mol_mem
 		static dict( next? : { [ key : string ] : string | null } ) {
 			
 			var href = this.href( next && this.make_link( next ) ).split( /#!?/ )[1] || ''
