@@ -2467,7 +2467,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_attach extends $.$mol_attach {
-        attach_new(next?: File): void;
+        attach_new(next: File): void;
         content(): ($mol_view | $mol_attach_add)[];
     }
     class $mol_attach_item extends $.$mol_attach_item {

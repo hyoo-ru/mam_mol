@@ -5,7 +5,7 @@ namespace $.$$ {
 		pages() {
 			return [
 				this.Menu(),
-				... this.spread() ? [ this.Spread() ] : [],
+				... this.spread() != null ? [ this.Spread() ] : [],
 			]
 		}
 		
@@ -24,7 +24,7 @@ namespace $.$$ {
 		}
 		
 		arg( spread: string ) {
-			return { [ this.param() ]: spread }
+			return { [ this.param() ]: spread || null }
 		}
 		
 		spread_close_arg() {

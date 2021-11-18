@@ -7199,7 +7199,7 @@ var $;
             pages() {
                 return [
                     this.Menu(),
-                    ...this.spread() ? [this.Spread()] : [],
+                    ...this.spread() != null ? [this.Spread()] : [],
                 ];
             }
             links() {
@@ -7212,7 +7212,7 @@ var $;
                 return this.$.$mol_state_arg.value(this.param()) ?? '';
             }
             arg(spread) {
-                return { [this.param()]: spread };
+                return { [this.param()]: spread || null };
             }
             spread_close_arg() {
                 return { [this.param()]: null };
