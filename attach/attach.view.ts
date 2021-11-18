@@ -2,7 +2,7 @@ namespace $.$$ {
 
 	export class $mol_attach extends $.$mol_attach {
 
-		attach_new( next? : File ) {
+		attach_new( next : File ) {
 			const items = this.items()
 			const item = this.Item( items.length )
 			const url = URL.createObjectURL( next )
