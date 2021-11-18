@@ -8,6 +8,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem
+		static href_normal(): string {
+			return this.link({})
+		}
+		
+		@ $mol_mem
 		static dict( next? : { [ key : string ] : string | null } ) {
 			if( next !== void 0 ) this.href( this.make_link( next ) )
 			

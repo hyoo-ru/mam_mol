@@ -863,6 +863,7 @@ declare namespace $ {
     class $mol_state_arg extends $mol_object {
         prefix: string;
         static href(next?: string, force?: $mol_mem_force): string;
+        static href_normal(): string;
         static dict(next?: {
             [key: string]: string | null;
         }): {

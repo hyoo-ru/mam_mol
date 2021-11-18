@@ -5912,6 +5912,9 @@ var $;
         static href(next) {
             return next || process.argv.slice(2).join(' ');
         }
+        static href_normal() {
+            return this.link({});
+        }
         static dict(next) {
             if (next !== void 0)
                 this.href(this.make_link(next));
@@ -5974,6 +5977,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_state_arg, "href", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_state_arg, "href_normal", null);
     __decorate([
         $.$mol_mem
     ], $mol_state_arg, "dict", null);
@@ -6051,7 +6057,7 @@ var $;
                 return new URL(this.uri(), base);
             }
             current() {
-                const base = this.$.$mol_state_arg.href();
+                const base = this.$.$mol_state_arg.href_normal();
                 const target = this.uri_native().toString();
                 if (base === target)
                     return true;
