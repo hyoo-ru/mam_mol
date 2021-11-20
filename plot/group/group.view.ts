@@ -16,6 +16,8 @@ namespace $.$$ {
 				graph.cursor_position = ()=> this.cursor_position()
 				graph.gap = ()=> this.gap()
 				graph.title = ()=> this.title()
+				graph.repos_x = val => this.repos_x( val )
+				graph.repos_y = val => this.repos_y( val )
 			}
 			return graphs
 		}
