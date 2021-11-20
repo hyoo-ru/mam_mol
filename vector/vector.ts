@@ -92,6 +92,12 @@ namespace $ {
 			return distance
 		}
 
+		transponed(
+			this : $mol_vector< $mol_vector< number, number >, Length > ,
+		): $mol_vector< $mol_vector< number, Length >, typeof this[0]['length'] > {
+			return this[0].map( ( _, i )=> this.map( row => row[i] ) )
+		}
+
 		get x() { return this[0] }
 		get y() { return this[1] }
 		get z() { return this[2] }

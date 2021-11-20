@@ -8825,6 +8825,9 @@ var $;
             }
             return distance;
         }
+        transponed() {
+            return this[0].map((_, i) => this.map(row => row[i]));
+        }
         get x() { return this[0]; }
         get y() { return this[1]; }
         get z() { return this[2]; }
@@ -8945,6 +8948,12 @@ var $;
         gap() {
             const obj = new this.$.$mol_vector_2d(this.gap_x(), this.gap_y());
             return obj;
+        }
+        repos_x(val) {
+            return 0;
+        }
+        repos_y(val) {
+            return 0;
         }
         indexes() {
             return [];
@@ -9104,14 +9113,20 @@ var $;
             indexes() {
                 return this.series_x().map((_, i) => i);
             }
+            repos_x(val) {
+                return val;
+            }
+            repos_y(val) {
+                return val;
+            }
             points() {
                 const [shift_x, shift_y] = this.shift();
                 const [scale_x, scale_y] = this.scale();
                 const series_x = this.series_x();
                 const series_y = this.series_y();
                 return this.indexes().map(index => {
-                    let point_x = Math.round(shift_x + series_x[index] * scale_x);
-                    let point_y = Math.round(shift_y + series_y[index] * scale_y);
+                    let point_x = Math.round(shift_x + this.repos_x(series_x[index]) * scale_x);
+                    let point_y = Math.round(shift_y + this.repos_y(series_y[index]) * scale_y);
                     point_x = Math.max(Number.MIN_SAFE_INTEGER, Math.min(point_x, Number.MAX_SAFE_INTEGER));
                     point_y = Math.max(Number.MIN_SAFE_INTEGER, Math.min(point_y, Number.MAX_SAFE_INTEGER));
                     return [point_x, point_y];
@@ -9125,7 +9140,7 @@ var $;
                 const series_x = this.series_x();
                 const series_y = this.series_y();
                 for (let i = 0; i < series_x.length; i++) {
-                    next = next.expanded1([series_x[i], series_y[i]]);
+                    next = next.expanded1([this.repos_x(series_x[i]), this.repos_y(series_y[i])]);
                 }
                 return next;
             }
@@ -10499,7 +10514,7 @@ var $;
                     : point.y > viewport_top ? 1
                         : 0);
                 for (let i = 0; i < series_x.length - 1; i++) {
-                    const scaled = new $.$mol_vector_2d(Math.round(shift_x + series_x[i] * scale_x), Math.round(shift_y + series_y[i] * scale_y));
+                    const scaled = new $.$mol_vector_2d(Math.round(shift_x + this.repos_x(series_x[i]) * scale_x), Math.round(shift_y + this.repos_y(series_y[i]) * scale_y));
                     if (Math.abs(scaled.x - last.x) < threshold
                         && Math.abs(scaled.y - last.y) < threshold)
                         continue;
@@ -10636,8 +10651,8 @@ var $;
                 do {
                     indexes = [];
                     for (let i = 0; i < series_x.length; i++) {
-                        const point_x = series_x[i];
-                        const point_y = series_y[i];
+                        const point_x = this.repos_x(series_x[i]);
+                        const point_y = this.repos_y(series_y[i]);
                         const scaled_x = Math.round(shift_x + point_x * scale_x);
                         const scaled_y = Math.round(shift_y + point_y * scale_y);
                         if (Math.abs(scaled_x - last_x) < radius
@@ -10741,6 +10756,8 @@ var $;
                     graph.cursor_position = () => this.cursor_position();
                     graph.gap = () => this.gap();
                     graph.title = () => this.title();
+                    graph.repos_x = val => this.repos_x(val);
+                    graph.repos_y = val => this.repos_y(val);
                 }
                 return graphs;
             }
@@ -18947,8 +18964,8 @@ var $;
         const json = $.$mol_fetch.json(url.toString());
         return Response(json).map(({ lon, lat, boundingbox: box }) => {
             return {
-                coord: new $.$mol_vector_2d(lat, lon),
-                box: new $.$mol_vector_2d(new $.$mol_vector_range(box[0], box[1]), new $.$mol_vector_range(box[2], box[3])),
+                coord: new $.$mol_vector_2d(lon, lat),
+                box: new $.$mol_vector_2d(new $.$mol_vector_range(box[2], box[3]), new $.$mol_vector_range(box[0], box[1])),
             };
         });
     }

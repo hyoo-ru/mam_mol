@@ -36,8 +36,8 @@ namespace $.$$ {
 			for (let i = 0; i < series_x.length-1; i++) {
 				
 				const scaled = new $mol_vector_2d(
-					Math.round( shift_x + series_x[i] * scale_x ),
-					Math.round( shift_y + series_y[i] * scale_y ),
+					Math.round( shift_x + this.repos_x( series_x[i] ) * scale_x ),
+					Math.round( shift_y + this.repos_y( series_y[i] ) * scale_y ),
 				)
 
 				if (

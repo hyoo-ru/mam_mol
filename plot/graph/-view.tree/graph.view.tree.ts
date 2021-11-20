@@ -181,6 +181,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * repos_x!val 0
+		 * ```
+		 */
+		repos_x(val: any) {
+			return 0
+		}
+		
+		/**
+		 * ```tree
+		 * repos_y!val 0
+		 * ```
+		 */
+		repos_y(val: any) {
+			return 0
+		}
+		
+		/**
+		 * ```tree
 		 * indexes /number
 		 * ```
 		 */

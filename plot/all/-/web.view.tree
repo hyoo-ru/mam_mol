@@ -71,6 +71,8 @@ $mol_plot_graph $mol_svg_group
 		<= gap_y $mol_vector_range /
 			0
 			0
+	repos_x!val 0
+	repos_y!val 0
 	indexes /number
 	points /readonly(number)[]
 	front /$mol_svg

@@ -33,8 +33,8 @@ namespace $.$$ {
 			do {
 				indexes = []
 				for (let i = 0; i < series_x.length; i++) {
-					const point_x = series_x[i]
-					const point_y = series_y[i]
+					const point_x = this.repos_x( series_x[i] )
+					const point_y = this.repos_y( series_y[i] )
 					const scaled_x = Math.round(shift_x + point_x * scale_x)
 					const scaled_y = Math.round(shift_y + point_y * scale_y)
 

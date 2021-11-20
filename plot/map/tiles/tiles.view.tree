@@ -1,0 +1,13 @@
+$mol_plot_map_tiles $mol_plot_graph
+	tile_size_real 256
+	level 0
+	uri_template \
+	sub <= tiles /
+	Tile!id $mol_svg_image
+		uri <= tile_uri!id \
+		pos <= tile_pos!id /
+			0
+			0
+		size <= tile_size!id /
+			0
+			0

@@ -669,6 +669,7 @@ declare namespace $ {
         }): this;
         center<Item extends $mol_vector<number, number>>(this: $mol_vector<Item, Length>): Item;
         distance(this: $mol_vector<$mol_vector<number, number>, Length>): number;
+        transponed(this: $mol_vector<$mol_vector<number, number>, Length>): $mol_vector<$mol_vector<number, Length>, typeof this[0]['length']>;
         get x(): Value;
         get y(): Value;
         get z(): Value;
@@ -735,6 +736,8 @@ declare namespace $ {
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
         size_real(): $mol_vector_2d<number>;
         gap(): $mol_vector_2d<$mol_vector_range<number>>;
+        repos_x(val: any): number;
+        repos_y(val: any): number;
         indexes(): readonly number[];
         points(): readonly (readonly number[])[];
         front(): readonly $mol_svg[];
@@ -774,6 +777,8 @@ declare namespace $.$$ {
     class $mol_plot_graph extends $.$mol_plot_graph {
         viewport(): $mol_vector_2d<$mol_vector_range<number>>;
         indexes(): readonly number[];
+        repos_x(val: number): number;
+        repos_y(val: number): number;
         points(): readonly (readonly number[])[];
         series_x(): readonly number[];
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
