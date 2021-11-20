@@ -6,7 +6,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		level() {
-			return Math.max( 0, Math.floor( Math.log2( this.scale()[0] ) ) )
+			return Math.max( 0, Math.round( Math.log2( this.scale()[0] ) ) )
 		}
 		
 		@ $mol_mem
