@@ -65,21 +65,21 @@ namespace $.$$ {
 			return `translate3d(${pos_x}px,${pos_y}px,0px) scale(${scale})`
 		}
 		
-		@ $mol_mem_key
-		override tile_pos( id: Id ) {
+		// @ $mol_mem_key
+		// override tile_pos( id: Id ) {
 			
-			const [ level, x, y ] = id
-			const [ shift_x, shift_y ] = this.shift()
-			const [ scale_x, scale_y ] = this.scale()
-			const count = 1 << level
-			const tile_size = this.tile_size_real()
+		// 	const [ level, x, y ] = id
+		// 	const [ shift_x, shift_y ] = this.shift()
+		// 	const [ scale_x, scale_y ] = this.scale()
+		// 	const count = 1 << level
+		// 	const tile_size = this.tile_size_real()
 			
-			return [
-				Math.floor( ( x / count - .5 ) * tile_size * scale_x + shift_x ) ,
-				Math.floor( ( y / count - .5 ) * tile_size * scale_y + shift_y ) ,
-			]
+		// 	return [
+		// 		Math.floor( ( x / count - .5 ) * tile_size * scale_x + shift_x ) ,
+		// 		Math.floor( ( y / count - .5 ) * tile_size * scale_y + shift_y ) ,
+		// 	]
 			
-		}
+		// }
 		
 		tile_at( pos: [ number, number, number ] ) {
 			
@@ -94,19 +94,19 @@ namespace $.$$ {
 			
 		}
 		
-		@ $mol_mem_key
-		override tile_size( id: Id ) {
+		// @ $mol_mem_key
+		// override tile_size( id: Id ) {
 			
-			const [ level ] = id
-			const [ scale_x, scale_y ] = this.scale()
-			const tile_size = this.tile_size_real()
+		// 	const [ level ] = id
+		// 	const [ scale_x, scale_y ] = this.scale()
+		// 	const tile_size = this.tile_size_real()
 			
-			return [
-				Math.ceil( tile_size * scale_x / 2**level ) ,
-				Math.ceil( tile_size * scale_y / 2**level ) ,
-			]
+		// 	return [
+		// 		Math.ceil( tile_size * scale_x / 2**level ) ,
+		// 		Math.ceil( tile_size * scale_y / 2**level ) ,
+		// 	]
 			
-		}
+		// }
 		
 	}
 	
