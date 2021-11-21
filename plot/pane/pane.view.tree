@@ -76,6 +76,9 @@ $mol_plot_pane $mol_svg_root
 			zoom?val <=> zoom?val 1
 			pan?val <=> shift?val
 			pointer_center => cursor_position
+			allow_draw <= allow_draw true
+			allow_pan <= allow_pan true
+			allow_zoom <= allow_zoom true
 			action_type => action_type
 			action_point => action_point
 			draw?event <=> draw?event null

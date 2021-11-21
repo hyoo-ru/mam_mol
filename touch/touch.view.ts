@@ -67,14 +67,20 @@ namespace $.$$ {
 				if( event.type !== 'pointerleave' ) events.push( event )
 				this.pointer_events( events )
 				
-				if( events.filter( e => e.pointerType === 'touch' ).length === 2 ) {
+				if( this.allow_zoom() && events.filter( e => e.pointerType === 'touch' ).length === 2 ) {
 					return this.action_type( 'zoom' )
 				}
 				
+				enum button {
+					left = 1,
+					right = 2,
+					middle = 4,
+				}
+				
 				if( events.length > 0 ) {
-					if( event.ctrlKey ) return this.action_type( 'zoom' )
-					if( event.buttons === 4 ) return this.action_type( 'pan' )
-					if( event.buttons === 1 ) return this.action_type( 'draw' )
+					if( event.ctrlKey && this.allow_zoom() ) return this.action_type( 'zoom' )
+					if( event.buttons === button.left && this.allow_draw() ) return this.action_type( 'draw' )
+					if( event.buttons && this.allow_pan() ) return this.action_type( 'pan' )
 				}
 				
 				return this.action_type( '' )
@@ -129,14 +135,7 @@ namespace $.$$ {
 				
 			if( action_type === 'pan' ) {
 
-				const distance = new $mol_vector( start_pos, pos ).distance()
-				if( distance >= 4 ) {
-					
-					this._menu_mute = true
-					
-					this.dom_node().setPointerCapture( event.pointerId )
-
-				}
+				this.dom_node().setPointerCapture( event.pointerId )
 				
 				this.pan(
 					new $mol_vector_2d(
@@ -231,7 +230,6 @@ namespace $.$$ {
 			
 			this.start_pos( null )
 			
-			new $mol_after_timeout( 0, ()=> this._menu_mute = false )
 		}
 
 		swipe_left( event : PointerEvent ) {
@@ -258,11 +256,6 @@ namespace $.$$ {
 			this.event_end( event )
 		}
 		
-		_menu_mute = false
-		event_menu( event : PointerEvent ) {
-			if( this._menu_mute ) event.preventDefault()
-		}
-
 		event_wheel( event : WheelEvent ) {
 
 			if( this.pan === $mol_touch.prototype.pan && this.zoom === $mol_touch.prototype.zoom ) return
