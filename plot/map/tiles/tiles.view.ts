@@ -57,8 +57,8 @@ namespace $.$$ {
 			const count = 1 << level
 			const tile_size = this.tile_size_real()
 			
-			const pos_x = Math.floor( ( x / count - .5 ) * tile_size * scale_x + shift_x ) ,
-			const pos_y = Math.floor( ( y / count - .5 ) * tile_size * scale_y + shift_y ) ,
+			const pos_x = Math.floor( ( x / count - .5 ) * tile_size * scale_x + shift_x )
+			const pos_y = Math.floor( ( y / count - .5 ) * tile_size * scale_y + shift_y )
 			
 			const scale = scale_x / 2**level
 			
