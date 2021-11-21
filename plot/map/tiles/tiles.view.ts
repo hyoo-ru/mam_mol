@@ -15,8 +15,9 @@ namespace $.$$ {
 			const level = this.level()
 			const dims = this.dimensions_pane()
 			const tiles = []
+			const range = [ level, Math.max( 0, level + this.level_pyramid() ) ].sort( ( a, b )=> a - b )
 			
-			for( let l = 0; l <= level; ++l ) {
+			for( let l = range[0]; l <= range[1]; ++l ) {
 				
 				const [ xs, ys ] = this.tile_at([ l, dims.x.min, dims.y.min ])
 				const [ xe, ye ] = this.tile_at([ l, dims.x.max, dims.y.max ])
