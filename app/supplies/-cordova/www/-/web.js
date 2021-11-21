@@ -2848,7 +2848,7 @@ var $;
                     if (next === prev)
                         return;
                     const history = $.$mol_dom_context.history;
-                    history.replaceState(history.state, $.$mol_dom_context.document.title, this.href());
+                    history.replaceState(history.state, $.$mol_dom_context.document.title, next);
                 });
             }
             if ($.$mol_dom_context.parent !== $.$mol_dom_context.self) {
