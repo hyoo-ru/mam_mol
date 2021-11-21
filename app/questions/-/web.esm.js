@@ -5218,7 +5218,14 @@ var $;
                 next = $.$mol_dom_context.location.href;
             }
             else if (!/^about:srcdoc/.test(next)) {
-                history.replaceState(history.state, $.$mol_dom_context.document.title, next);
+                new $.$mol_after_frame(() => {
+                    const next = this.href();
+                    const prev = $.$mol_dom_context.location.href;
+                    if (next === prev)
+                        return;
+                    const history = $.$mol_dom_context.history;
+                    history.replaceState(history.state, $.$mol_dom_context.document.title, this.href());
+                });
             }
             if ($.$mol_dom_context.parent !== $.$mol_dom_context.self) {
                 $.$mol_dom_context.parent.postMessage(['hashchange', next], '*');
