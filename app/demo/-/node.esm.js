@@ -9588,7 +9588,6 @@ var $;
                     return;
                 if (action_type === 'draw')
                     return;
-                event.preventDefault();
                 const coords = this.pointer_coords();
                 this.start_pos(coords.center());
                 this.start_distance(coords.distance());
