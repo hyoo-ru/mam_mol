@@ -13,7 +13,6 @@ namespace $ {
 		position: 'relative',
 		minWidth: rem(2.5),
 		gap: $mol_gap.space,
-		backdropFilter: 'blur(var(--mol_gap_blur))',
 		
 		border: {
 			radius: $mol_gap.round,
