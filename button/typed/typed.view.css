@@ -3,6 +3,7 @@
 	align-items: center;
 	padding: var(--mol_gap_text);
 	border-radius: var(--mol_gap_round);
+	backdrop-filter: blur(var(--mol_gap_blur));
 }
 
 [mol_button_typed][disabled] {
