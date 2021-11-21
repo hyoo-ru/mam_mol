@@ -73,7 +73,7 @@ namespace $.$$ {
 				
 				if( events.length > 0 ) {
 					if( event.ctrlKey ) return this.action_type( 'zoom' )
-					if( event.buttons === 2 ) return this.action_type( 'pan' )
+					if( event.buttons === 4 ) return this.action_type( 'pan' )
 					if( event.buttons === 1 ) return this.action_type( 'draw' )
 				}
 				
