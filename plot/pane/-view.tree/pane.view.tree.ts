@@ -331,20 +331,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * event *
-		 * 	^
-		 * 	dblclick?event <=> reset?event
-		 * ```
-		 */
-		event() {
-			return {
-				...super.event(),
-				dblclick: (event?: any) => this.reset(event)
-			}
-		}
-		
-		/**
-		 * ```tree
 		 * gap_x $mol_vector_range /
 		 * 	<= gap_left
 		 * 	<= gap_right
@@ -620,17 +606,6 @@ namespace $ {
 			obj.draw = (event?: any) => this.draw(event)
 			
 			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * reset?event null
-		 * ```
-		 */
-		@ $mol_mem
-		reset(event?: any) {
-			if ( event !== undefined ) return event as never
-			return null as any
 		}
 	}
 	

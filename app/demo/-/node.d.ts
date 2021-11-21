@@ -2868,9 +2868,6 @@ declare namespace $ {
         sub(): readonly $mol_svg[];
         graphs_colored(): readonly $mol_plot_graph[];
         plugins(): readonly any[];
-        event(): {
-            dblclick: (event?: any) => any;
-        };
         gap_x(): $mol_vector_range<number>;
         gap_y(): $mol_vector_range<number>;
         shift_limit_x(): $mol_vector_range<number>;
@@ -2891,7 +2888,6 @@ declare namespace $ {
         action_type(): string;
         action_point(): $mol_vector_2d<number>;
         Touch(): $$.$mol_touch;
-        reset(event?: any): any;
     }
 }
 

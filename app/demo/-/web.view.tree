@@ -885,7 +885,7 @@ $mol_plot_pane $mol_svg_root
 			action_type => action_type
 			action_point => action_point
 			draw?event <=> draw?event null
-	event *
+	- event *
 		^
 		dblclick?event <=> reset?event null
 
