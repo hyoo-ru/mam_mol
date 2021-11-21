@@ -49,6 +49,23 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
+		override tile_transform( id: Id ) {
+			
+			const [ level, x, y ] = id
+			const [ shift_x, shift_y ] = this.shift()
+			const [ scale_x, scale_y ] = this.scale()
+			const count = 1 << level
+			const tile_size = this.tile_size_real()
+			
+			const pos_x = Math.floor( ( x / count - .5 ) * tile_size * scale_x + shift_x ) ,
+			const pos_y = Math.floor( ( y / count - .5 ) * tile_size * scale_y + shift_y ) ,
+			
+			const scale = scale_x / 2**level
+			
+			return `translate3d(${pos_x}px,${pos_y}px,0px) scale(${scale})`
+		}
+		
+		@ $mol_mem_key
 		override tile_pos( id: Id ) {
 			
 			const [ level, x, y ] = id
