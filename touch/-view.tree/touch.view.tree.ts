@@ -36,6 +36,33 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * allow_draw true
+		 * ```
+		 */
+		allow_draw() {
+			return true
+		}
+		
+		/**
+		 * ```tree
+		 * allow_pan true
+		 * ```
+		 */
+		allow_pan() {
+			return true
+		}
+		
+		/**
+		 * ```tree
+		 * allow_zoom true
+		 * ```
+		 */
+		allow_zoom() {
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * action_type?val \
 		 * ```
 		 */
@@ -302,7 +329,6 @@ namespace $ {
 		 * 	pointerup?event <=> event_end?event
 		 * 	pointerleave?event <=> event_end?event
 		 * 	wheel?event <=> event_wheel?event
-		 * 	contextmenu?event <=> event_menu?event
 		 * ```
 		 */
 		event() {
@@ -312,8 +338,7 @@ namespace $ {
 				pointermove: (event?: any) => this.event_move(event),
 				pointerup: (event?: any) => this.event_end(event),
 				pointerleave: (event?: any) => this.event_end(event),
-				wheel: (event?: any) => this.event_wheel(event),
-				contextmenu: (event?: any) => this.event_menu(event)
+				wheel: (event?: any) => this.event_wheel(event)
 			}
 		}
 		
@@ -357,17 +382,6 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_wheel(event?: any) {
-			if ( event !== undefined ) return event as never
-			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * event_menu?event null
-		 * ```
-		 */
-		@ $mol_mem
-		event_menu(event?: any) {
 			if ( event !== undefined ) return event as never
 			return null as any
 		}

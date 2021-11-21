@@ -2797,6 +2797,9 @@ declare namespace $ {
         start_zoom(val?: any): number;
         start_distance(val?: any): number;
         zoom(val?: any): number;
+        allow_draw(): boolean;
+        allow_pan(): boolean;
+        allow_zoom(): boolean;
         action_type(val?: any): string;
         action_point(val?: any): $mol_vector_2d<number>;
         start_pan(val?: any): readonly any[];
@@ -2827,13 +2830,11 @@ declare namespace $ {
             pointerup: (event?: any) => any;
             pointerleave: (event?: any) => any;
             wheel: (event?: any) => any;
-            contextmenu: (event?: any) => any;
         };
         event_start(event?: any): any;
         event_move(event?: any): any;
         event_end(event?: any): any;
         event_wheel(event?: any): any;
-        event_menu(event?: any): any;
     }
 }
 
@@ -2853,8 +2854,6 @@ declare namespace $.$$ {
         swipe_right(event: PointerEvent): void;
         swipe_top(event: PointerEvent): void;
         swipe_bottom(event: PointerEvent): void;
-        _menu_mute: boolean;
-        event_menu(event: PointerEvent): void;
         event_wheel(event: WheelEvent): void;
     }
 }
@@ -2901,6 +2900,9 @@ declare namespace $ {
         graphs_visible(): readonly $mol_plot_graph[];
         graphs_positioned(): readonly $mol_plot_graph[];
         zoom(val?: any): number;
+        allow_draw(): boolean;
+        allow_pan(): boolean;
+        allow_zoom(): boolean;
         draw(event?: any): any;
         cursor_position(): $mol_vector_2d<number>;
         action_type(): string;

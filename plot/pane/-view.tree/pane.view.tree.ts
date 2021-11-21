@@ -550,6 +550,33 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * allow_draw true
+		 * ```
+		 */
+		allow_draw() {
+			return true
+		}
+		
+		/**
+		 * ```tree
+		 * allow_pan true
+		 * ```
+		 */
+		allow_pan() {
+			return true
+		}
+		
+		/**
+		 * ```tree
+		 * allow_zoom true
+		 * ```
+		 */
+		allow_zoom() {
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * draw?event null
 		 * ```
 		 */
@@ -592,6 +619,9 @@ namespace $ {
 		 * 	zoom?val <=> zoom?val
 		 * 	pan?val <=> shift?val
 		 * 	pointer_center => cursor_position
+		 * 	allow_draw <= allow_draw
+		 * 	allow_pan <= allow_pan
+		 * 	allow_zoom <= allow_zoom
 		 * 	action_type => action_type
 		 * 	action_point => action_point
 		 * 	draw?event <=> draw?event
@@ -603,6 +633,9 @@ namespace $ {
 			
 			obj.zoom = (val?: any) => this.zoom(val)
 			obj.pan = (val?: any) => this.shift(val)
+			obj.allow_draw = () => this.allow_draw()
+			obj.allow_pan = () => this.allow_pan()
+			obj.allow_zoom = () => this.allow_zoom()
 			obj.draw = (event?: any) => this.draw(event)
 			
 			return obj

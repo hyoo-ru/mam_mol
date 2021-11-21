@@ -3174,6 +3174,15 @@ var $;
                 return val;
             return 1;
         }
+        allow_draw() {
+            return true;
+        }
+        allow_pan() {
+            return true;
+        }
+        allow_zoom() {
+            return true;
+        }
         action_type(val) {
             if (val !== undefined)
                 return val;
@@ -3290,8 +3299,7 @@ var $;
                 pointermove: (event) => this.event_move(event),
                 pointerup: (event) => this.event_end(event),
                 pointerleave: (event) => this.event_end(event),
-                wheel: (event) => this.event_wheel(event),
-                contextmenu: (event) => this.event_menu(event)
+                wheel: (event) => this.event_wheel(event)
             };
         }
         event_start(event) {
@@ -3310,11 +3318,6 @@ var $;
             return null;
         }
         event_wheel(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        event_menu(event) {
             if (event !== undefined)
                 return event;
             return null;
@@ -3398,9 +3401,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "event_wheel", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_touch.prototype, "event_menu", null);
     $.$mol_touch = $mol_touch;
 })($ || ($ = {}));
 //touch.view.tree.js.map
@@ -3447,16 +3447,22 @@ var $;
                     if (event.type !== 'pointerleave')
                         events.push(event);
                     this.pointer_events(events);
-                    if (events.filter(e => e.pointerType === 'touch').length === 2) {
+                    if (this.allow_zoom() && events.filter(e => e.pointerType === 'touch').length === 2) {
                         return this.action_type('zoom');
                     }
+                    let button;
+                    (function (button) {
+                        button[button["left"] = 1] = "left";
+                        button[button["right"] = 2] = "right";
+                        button[button["middle"] = 4] = "middle";
+                    })(button || (button = {}));
                     if (events.length > 0) {
-                        if (event.ctrlKey)
+                        if (event.ctrlKey && this.allow_zoom())
                             return this.action_type('zoom');
-                        if (event.buttons === 4)
-                            return this.action_type('pan');
-                        if (event.buttons === 1)
+                        if (event.buttons === button.left && this.allow_draw())
                             return this.action_type('draw');
+                        if (event.buttons && this.allow_pan())
+                            return this.action_type('pan');
                     }
                     return this.action_type('');
                 }
@@ -3500,11 +3506,7 @@ var $;
                 if (!start_pos)
                     return;
                 if (action_type === 'pan') {
-                    const distance = new $.$mol_vector(start_pos, pos).distance();
-                    if (distance >= 4) {
-                        this._menu_mute = true;
-                        this.dom_node().setPointerCapture(event.pointerId);
-                    }
+                    this.dom_node().setPointerCapture(event.pointerId);
                     this.pan(new $.$mol_vector_2d(start_pan[0] + pos[0] - start_pos[0], start_pan[1] + pos[1] - start_pos[1]));
                 }
                 const precision = this.swipe_precision();
@@ -3556,7 +3558,6 @@ var $;
                     return;
                 }
                 this.start_pos(null);
-                new $.$mol_after_timeout(0, () => this._menu_mute = false);
             }
             swipe_left(event) {
                 if (this.view_rect().right - this.start_pos()[0] < this.swipe_precision() * 2)
@@ -3585,11 +3586,6 @@ var $;
                 else
                     this.swipe_to_bottom(event);
                 this.event_end(event);
-            }
-            _menu_mute = false;
-            event_menu(event) {
-                if (this._menu_mute)
-                    event.preventDefault();
             }
             event_wheel(event) {
                 if (this.pan === $mol_touch.prototype.pan && this.zoom === $mol_touch.prototype.zoom)
@@ -3794,6 +3790,15 @@ var $;
                 return val;
             return 1;
         }
+        allow_draw() {
+            return true;
+        }
+        allow_pan() {
+            return true;
+        }
+        allow_zoom() {
+            return true;
+        }
         draw(event) {
             if (event !== undefined)
                 return event;
@@ -3812,6 +3817,9 @@ var $;
             const obj = new this.$.$mol_touch();
             obj.zoom = (val) => this.zoom(val);
             obj.pan = (val) => this.shift(val);
+            obj.allow_draw = () => this.allow_draw();
+            obj.allow_pan = () => this.allow_pan();
+            obj.allow_zoom = () => this.allow_zoom();
             obj.draw = (event) => this.draw(event);
             return obj;
         }
