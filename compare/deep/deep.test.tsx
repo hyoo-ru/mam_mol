@@ -25,20 +25,13 @@ namespace $ {
 			$mol_assert_not( $mol_compare_deep( Object( 1 ) , Object( 2 ) ) )
 		} ,
 
-		'empty POJOs'() {
+		'POJO'() {
 			$mol_assert_ok( $mol_compare_deep( {} , {} ) )
-		} ,
-		
-		'different POJOs'() {
 			$mol_assert_not( $mol_compare_deep( { a : 1 } , { b : 2 } ) )
-		} ,
-
-		'different POJOs with same keys but different values'() {
 			$mol_assert_not( $mol_compare_deep( { a : 1 } , { a : 2 } ) )
-		} ,
-
-		'different POJOs with different keys but same values'() {
 			$mol_assert_not( $mol_compare_deep( {} , { a : undefined } ) )
+			$mol_assert_ok( $mol_compare_deep( { a: 1, b: 2 } , { b: 2, a: 1 } ) )
+			$mol_assert_ok( $mol_compare_deep( { a : { b : 1 } } , { a : { b : 1 } } ) )
 		} ,
 
 		'Array'() {
@@ -46,10 +39,6 @@ namespace $ {
 			$mol_assert_ok( $mol_compare_deep( [ 1 , [2] ] , [ 1 , [2] ] ) )
 			$mol_assert_not( $mol_compare_deep( [ 1 , 2 ] , [ 1 , 3 ] ) )
 			$mol_assert_not( $mol_compare_deep( [ 1 , 2 , ] , [ 1 , 3 , undefined ] ) )
-		} ,
-
-		'same POJO trees'() {
-			$mol_assert_ok( $mol_compare_deep( { a : { b : 1 } } , { a : { b : 1 } } ) )
 		} ,
 
 		'different classes with same values'() {
