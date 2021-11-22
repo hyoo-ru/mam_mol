@@ -5661,44 +5661,35 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const left_stack = [];
-    const right_stack = [];
     let cache = new WeakMap();
     function $mol_compare_deep(left, right) {
         if (Object.is(left, right))
             return true;
-        const left_type = typeof left;
-        const right_type = typeof right;
-        if (left_type !== right_type)
+        if (left === null)
             return false;
-        if (left_type === 'function')
-            return left['toString']() === right['toString']();
-        if (left_type !== 'object')
+        if (right === null)
             return false;
-        if (!left || !right)
+        if (typeof left !== 'object')
             return false;
-        if (left instanceof Error)
+        if (typeof right !== 'object')
             return false;
         if (left['constructor'] !== right['constructor'])
             return false;
-        if (left instanceof RegExp)
-            return left.toString() === right['toString']();
-        const ref = left_stack.indexOf(left);
-        if (ref >= 0) {
-            return Object.is(right_stack[ref], right);
-        }
         let left_cache = cache.get(left);
         if (left_cache) {
-            const b_cache = left_cache.get(right);
-            if (typeof b_cache === 'boolean')
-                return b_cache;
+            const right_cache = left_cache.get(right);
+            if (typeof right_cache === 'boolean')
+                return right_cache;
         }
         else {
             left_cache = new WeakMap();
             cache.set(left, left_cache);
+            left_cache.set(right, true);
         }
-        left_stack.push(left);
-        right_stack.push(right);
+        if (left instanceof RegExp)
+            return left.toString() === right['toString']();
+        if (left instanceof Date)
+            return Object.is(left.valueOf(), right['valueOf']());
         let result;
         try {
             if (Symbol.iterator in left) {
@@ -5716,6 +5707,8 @@ var $;
                 }
                 return result = true;
             }
+            if (left['constructor'] !== ({}).constructor)
+                return result = false;
             let count = 0;
             for (let key in left) {
                 try {
@@ -5732,15 +5725,9 @@ var $;
                 if (count < 0)
                     return result = false;
             }
-            if (left instanceof Number || left instanceof String || left instanceof Symbol || left instanceof Boolean || left instanceof Date) {
-                if (!Object.is(left['valueOf'](), right['valueOf']()))
-                    return result = false;
-            }
             return result = true;
         }
         finally {
-            left_stack.pop();
-            right_stack.pop();
             left_cache.set(right, result);
         }
     }

@@ -59,7 +59,8 @@ namespace $ {
 				Box
 			)
 			
-			$mol_assert_like( boxify( 5 ) , new Box( '5' ) )
+			$mol_assert_ok( boxify( 5 ) instanceof Box )
+			$mol_assert_like( boxify( 5 ).value, '5' )
 			
 		},
 

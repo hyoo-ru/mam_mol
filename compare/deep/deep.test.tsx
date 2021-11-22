@@ -17,12 +17,7 @@ namespace $ {
 			$mol_assert_ok( $mol_compare_deep( 1 , 1 ) )
 			$mol_assert_ok( $mol_compare_deep( Number.NaN , Number.NaN ) )
 			$mol_assert_not( $mol_compare_deep( 1 , 2 ) )
-		} ,
-
-		'Number'() {
-			$mol_assert_ok( $mol_compare_deep( Object( 1 ) , Object( 1 ) ) )
-			$mol_assert_ok( $mol_compare_deep( Object( Number.NaN ) , Object( Number.NaN ) ) )
-			$mol_assert_not( $mol_compare_deep( Object( 1 ) , Object( 2 ) ) )
+			$mol_assert_not( $mol_compare_deep( Object( 1 ) , Object( 1 ) ) )
 		} ,
 
 		'POJO'() {
@@ -41,15 +36,14 @@ namespace $ {
 			$mol_assert_not( $mol_compare_deep( [ 1 , 2 , ] , [ 1 , 3 , undefined ] ) )
 		} ,
 
-		'different classes with same values'() {
-
-			class Obj { foo = 1 }
+		'Non POJO are different'() {
 			
-			const a = new Obj
-			const b = new class extends Obj {}
+			class Thing extends Object {}
+			$mol_assert_not( $mol_compare_deep( new Thing , new Thing ) )
 			
-			$mol_assert_not( $mol_compare_deep( a , b ) )
-
+			$mol_assert_not( $mol_compare_deep( ()=> 1 , ()=>1 ) )
+			$mol_assert_not( $mol_compare_deep( new RangeError( 'Test error' ) , new RangeError( 'Test error' ) ) )
+			
 		} ,
 
 		'same POJOs with cyclic reference'() {
@@ -64,34 +58,6 @@ namespace $ {
 
 		} ,
 
-		'empty Element'() {
-			$mol_assert_ok( $mol_compare_deep( <div /> , <div /> ) )
-			$mol_assert_not( $mol_compare_deep( <div /> , <span /> ) )
-		} ,
-		
-		'Element with attributes'() {
-			$mol_assert_ok( $mol_compare_deep( <div dir="rtl" /> , <div dir="rtl" /> ) )
-			$mol_assert_not( $mol_compare_deep( <div dir="rtl" /> , <div /> ) )
-			$mol_assert_not( $mol_compare_deep( <div dir="rtl" /> , <div dir="ltr" /> ) )
-		} ,
-		
-		'Element with styles'() {
-			$mol_assert_ok( $mol_compare_deep( <div style={{ color : 'red' }} /> , <div style={{ color : 'red' }} /> ) )
-			$mol_assert_not( $mol_compare_deep( <div style={{ color : 'red' }} /> , <div style={{ }} /> ) )
-			$mol_assert_not( $mol_compare_deep( <div style={{ color : 'red' }} /> , <div style={{ color : 'blue' }} /> ) )
-		} ,
-		
-		'Element with content'() {
-			$mol_assert_ok( $mol_compare_deep( <div>foo<br/></div> , <div>foo<br/></div> ) )
-			$mol_assert_not( $mol_compare_deep( <div>foo<br/></div> , <div>bar<br/></div> ) )
-			$mol_assert_not( $mol_compare_deep( <div>foo<br/></div> , <div>foo<hr/></div> ) )
-		} ,
-		
-		'Element with handlers'() {
-			$mol_assert_ok( $mol_compare_deep( <div onclick={ ()=> 1 } /> , <div onclick={ ()=> 1 } /> ) )
-			$mol_assert_not( $mol_compare_deep( <div onclick={ ()=> 1 } /> , <div onclick={ ()=> 2 } /> ) )
-		} ,
-		
 		'Date'() {
 			$mol_assert_ok( $mol_compare_deep( new Date( 12345 ) , new Date( 12345 ) ) )
 			$mol_assert_not( $mol_compare_deep( new Date( 12345 ) , new Date( 12346 ) ) )

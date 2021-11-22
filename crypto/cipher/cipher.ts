@@ -63,7 +63,7 @@ namespace $ {
 		}
 		
 		/** max 86 bytes input, 128 bytes output */
-		async encrypt( data: DataView | ArrayBuffer ) {
+		async encrypt( data: DataView | ArrayBuffer ): Promise< ArrayBuffer > {
 			return await crypto.subtle.encrypt(
 				algorithm,
 				this.native,
@@ -102,7 +102,7 @@ namespace $ {
 			)
 		}
 		
-		async decrypt( data: DataView | ArrayBuffer ) {
+		async decrypt( data: DataView | ArrayBuffer ): Promise< ArrayBuffer > {
 			return await crypto.subtle.decrypt(
 				algorithm,
 				this.native,

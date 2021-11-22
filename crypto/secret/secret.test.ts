@@ -26,7 +26,7 @@ namespace $ {
 			const closed = await cipher.encrypt( data, salt )
 			const opened = await cipher.decrypt( closed, salt )
 			
-			$mol_assert_like( data.buffer, opened )
+			$mol_assert_like( data, new Uint8Array( opened ) )
 			
 		},
 		
@@ -41,7 +41,7 @@ namespace $ {
 			const Bob = await $mol_crypto_secret.from( await Alice.serial() )
 			const opened = await Bob.decrypt( closed, salt )
 			
-			$mol_assert_like( data.buffer, opened )
+			$mol_assert_like( data, new Uint8Array( opened ) )
 			
 		},
 		

@@ -26,7 +26,7 @@ namespace $ {
 			const closed = await pair.public.encrypt( data )
 			const opened = await pair.private.decrypt( closed )
 			
-			$mol_assert_like( data.buffer, opened )
+			$mol_assert_like( data, new Uint8Array( opened ) )
 			
 		},
 		
@@ -41,7 +41,7 @@ namespace $ {
 			const Bob = await $mol_crypto_cipher_private.from( await pair.private.serial() )
 			const opened = await Bob.decrypt( closed )
 			
-			$mol_assert_like( data.buffer, opened )
+			$mol_assert_like( data, new Uint8Array( opened ) )
 			
 		},
 		
