@@ -28,12 +28,11 @@ namespace $ {
 
 			const right_cache = left_cache.get( right )
 			if( typeof right_cache === 'boolean' ) return right_cache
-			
+
 		} else {
 			
-			left_cache = new WeakMap< any , boolean >()
+			left_cache = new WeakMap< any , boolean >([[ right, true ]])
 			cache.set( left , left_cache )
-			left_cache.set( right, true )
 
 		}
 

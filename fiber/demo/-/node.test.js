@@ -1837,9 +1837,8 @@ var $;
                 return right_cache;
         }
         else {
-            left_cache = new WeakMap();
+            left_cache = new WeakMap([[right, true]]);
             cache.set(left, left_cache);
-            left_cache.set(right, true);
         }
         let result;
         try {
