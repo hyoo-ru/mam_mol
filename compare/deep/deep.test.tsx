@@ -14,10 +14,14 @@ namespace $ {
 		} ,
 
 		'number'() {
+			
 			$mol_assert_ok( $mol_compare_deep( 1 , 1 ) )
 			$mol_assert_ok( $mol_compare_deep( Number.NaN , Number.NaN ) )
 			$mol_assert_not( $mol_compare_deep( 1 , 2 ) )
-			$mol_assert_not( $mol_compare_deep( Object( 1 ) , Object( 1 ) ) )
+			
+			$mol_assert_ok( $mol_compare_deep( Object( 1 ) , Object( 1 ) ) )
+			$mol_assert_not( $mol_compare_deep( Object( 1 ) , Object( 2 ) ) )
+			
 		} ,
 
 		'POJO'() {
@@ -71,8 +75,9 @@ namespace $ {
 
 		'Map'() {
 			$mol_assert_ok( $mol_compare_deep( new Map , new Map ) )
-			$mol_assert_ok( $mol_compare_deep( new Map([ [ [1] , [2] ] ]) , new Map([ [ [1] , [2] ] ]) ) )
+			$mol_assert_ok( $mol_compare_deep( new Map([ [ 1 , [2] ] ]) , new Map([ [ 1 , [2] ] ]) ) )
 			$mol_assert_not( $mol_compare_deep( new Map([ [ 1 , 2 ] ]) , new Map([ [ 1 , 3 ] ]) ) )
+			$mol_assert_not( $mol_compare_deep( new Map([ [ [1] , 2 ] ]) , new Map([ [ [1] , 2 ] ]) ) )
 		} ,
 		
 		'Set'() {

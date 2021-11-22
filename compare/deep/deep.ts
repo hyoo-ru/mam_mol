@@ -1,8 +1,8 @@
 namespace $ {
 
 	let cache = new WeakMap< any , WeakMap< any , boolean > >()
-
-	export function $mol_compare_deep< Value >( left : Value , right : Value ) : boolean {
+	
+	export function $mol_compare_deep< Value >( left: Value, right: Value ): boolean {
 
 		if( Object.is( left , right ) ) return true
 
@@ -12,7 +12,16 @@ namespace $ {
 		if( typeof left !== 'object' ) return false
 		if( typeof right !== 'object' ) return false
 
-		if( left['constructor'] !== right['constructor'] ) return false
+		const left_proto = Reflect.getPrototypeOf( left as any )
+		const right_proto = Reflect.getPrototypeOf( right as any )
+		
+		if( left_proto !== right_proto ) return false
+
+		if( left instanceof Boolean ) return Object.is( left.valueOf(), right['valueOf']() )
+		if( left instanceof Number ) return Object.is( left.valueOf(), right['valueOf']() )
+		if( left instanceof String ) return Object.is( left.valueOf(), right['valueOf']() )
+		if( left instanceof Date ) return Object.is( left.valueOf(), right['valueOf']() )
+		if( left instanceof RegExp ) return left.source === right['source'] && left.flags === right['flags']
 
 		let left_cache = cache.get( left )
 		if( left_cache ) {
@@ -28,70 +37,93 @@ namespace $ {
 
 		}
 
-		if( left instanceof RegExp ) return left.toString() === right['toString']()
-		if( left instanceof Date ) return Object.is( left.valueOf(), right['valueOf']() )
-
-		let result! : boolean
+		let result!: boolean
 
 		try {
-
-			if( Symbol.iterator in left ) {
-				
-				const left_iter = left[ Symbol.iterator ]()
-				const right_iter = right[ Symbol.iterator ]()
-	
-				while( true ) {
-
-					const left_next = left_iter.next()
-					const right_next = right_iter.next()
-
-					if( left_next.done !== right_next.done ) return result = false
-					if( left_next.done ) break
-
-					if( !$mol_compare_deep( left_next.value , right_next.value ) ) return result = false
-
-				}
-
-				return result = true
-
-			}
 			
-			if( left['constructor'] !== ({}).constructor ) return result = false
-
-			let count = 0
-
-			for( let key in left ) {
-
-				try {
-
-					if( !$mol_compare_deep( left[key] , right[key] ) ) return result = false
-				
-				} catch( error: any ) {
-
-					$mol_fail_hidden( new $mol_error_mix( `Failed ${ JSON.stringify( key ) } fields comparison of ${left} and ${right}` , error ) )
-
-				}
-				
-				++ count
-
-			}
-	
-			for( let key in right ) {
-
-				--count
-				
-				if( count < 0 ) return result = false
-				
-			}
-			
-			return result = true
+			if( left_proto && !Reflect.getPrototypeOf( left_proto ) ) result = compare_pojo( left, right as any )
+			else if( Array.isArray( left ) ) result = compare_array( left, right as any )
+			else if( left instanceof Set ) result = compare_set( left, right as any )
+			else if( left instanceof Map ) result = compare_map( left, right as any )
+			else if( ArrayBuffer.isView( left ) ) result = compare_buffer( left, right as any )
+			else result = false
 
 		} finally {
-			
 			left_cache.set( right , result )
+		}
+		
+		return result
+	}
+
+	function compare_array< Value extends any[] >( left: Value, right: Value ): boolean {
+		
+		const len = left.length
+		if( len !== right.length ) return false
+		
+		for( let i = 0; i < len; ++i ) {
+			if( !$mol_compare_deep( left[i] , right[i] ) ) return false
+		}
+		
+		return true
+	}
+	
+	function compare_buffer( left: ArrayBufferView, right: ArrayBufferView ): boolean {
+		
+		const len = left.byteLength
+		if( len !== right.byteLength ) return false
+		
+		for( let i = 0; i < len; ++i ) {
+			if( left[i] !== right[i] ) return false
+		}
+		
+		return true
+	}
+	
+	function compare_iterator< Value extends IterableIterator<any> >(
+		left: Value,
+		right: Value,
+		compare: ( left: any, right: any )=> boolean
+	): boolean {
+		
+		while( true ) {
+
+			const left_next = left.next()
+			const right_next = right.next()
+
+			if( left_next.done !== right_next.done ) return false
+			if( left_next.done ) break
+
+			if( !compare( left_next.value , right_next.value ) ) return false
 
 		}
 
-	}
+		return true
 
+	}
+	
+	function compare_set< Value extends Set<any> >( left: Value, right: Value ): boolean {
+		if( left.size !== right.size ) return false
+		return compare_iterator( left.values(), right.values(), $mol_compare_deep )
+	}
+	
+	function compare_map< Key, Value >( left: Map< Key, Value > , right: Map< Key, Value > ): boolean {
+		if( left.size !== right.size ) return false
+		return compare_iterator( left.keys(), right.keys(), Object.is )
+			&& compare_iterator( left.values(), right.values(), $mol_compare_deep )
+	}
+	
+	function compare_pojo( left: {}, right: {} ): boolean {
+		
+		const left_keys = Object.getOwnPropertyNames( left )
+		const right_keys = Object.getOwnPropertyNames( right )
+		
+		if( left_keys.length !== right_keys.length ) return false
+
+		for( let key of left_keys ) {
+			if( !$mol_compare_deep( left[ key ], Reflect.get( right, key ) ) ) return false
+		}
+
+		return true
+	}
+	
 }
