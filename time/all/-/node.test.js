@@ -1043,26 +1043,19 @@ var $;
             $.$mol_assert_ok($.$mol_compare_deep(Object(Number.NaN), Object(Number.NaN)));
             $.$mol_assert_not($.$mol_compare_deep(Object(1), Object(2)));
         },
-        'empty POJOs'() {
+        'POJO'() {
             $.$mol_assert_ok($.$mol_compare_deep({}, {}));
-        },
-        'different POJOs'() {
             $.$mol_assert_not($.$mol_compare_deep({ a: 1 }, { b: 2 }));
-        },
-        'different POJOs with same keys but different values'() {
             $.$mol_assert_not($.$mol_compare_deep({ a: 1 }, { a: 2 }));
-        },
-        'different POJOs with different keys but same values'() {
             $.$mol_assert_not($.$mol_compare_deep({}, { a: undefined }));
+            $.$mol_assert_ok($.$mol_compare_deep({ a: 1, b: 2 }, { b: 2, a: 1 }));
+            $.$mol_assert_ok($.$mol_compare_deep({ a: { b: 1 } }, { a: { b: 1 } }));
         },
         'Array'() {
             $.$mol_assert_ok($.$mol_compare_deep([], []));
             $.$mol_assert_ok($.$mol_compare_deep([1, [2]], [1, [2]]));
             $.$mol_assert_not($.$mol_compare_deep([1, 2], [1, 3]));
             $.$mol_assert_not($.$mol_compare_deep([1, 2,], [1, 3, undefined]));
-        },
-        'same POJO trees'() {
-            $.$mol_assert_ok($.$mol_compare_deep({ a: { b: 1 } }, { a: { b: 1 } }));
         },
         'different classes with same values'() {
             class Obj {
@@ -1146,94 +1139,87 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const a_stack = [];
-    const b_stack = [];
-    let cache = null;
-    function $mol_compare_deep(a, b) {
-        if (Object.is(a, b))
+    const left_stack = [];
+    const right_stack = [];
+    let cache = new WeakMap();
+    function $mol_compare_deep(left, right) {
+        if (Object.is(left, right))
             return true;
-        const a_type = typeof a;
-        const b_type = typeof b;
-        if (a_type !== b_type)
+        const left_type = typeof left;
+        const right_type = typeof right;
+        if (left_type !== right_type)
             return false;
-        if (a_type === 'function')
-            return a['toString']() === b['toString']();
-        if (a_type !== 'object')
+        if (left_type === 'function')
+            return left['toString']() === right['toString']();
+        if (left_type !== 'object')
             return false;
-        if (!a || !b)
+        if (!left || !right)
             return false;
-        if (a instanceof Error)
+        if (left instanceof Error)
             return false;
-        if (a['constructor'] !== b['constructor'])
+        if (left['constructor'] !== right['constructor'])
             return false;
-        if (a instanceof RegExp)
-            return a.toString() === b['toString']();
-        const ref = a_stack.indexOf(a);
+        if (left instanceof RegExp)
+            return left.toString() === right['toString']();
+        const ref = left_stack.indexOf(left);
         if (ref >= 0) {
-            return Object.is(b_stack[ref], b);
+            return Object.is(right_stack[ref], right);
         }
-        if (!cache)
-            cache = new WeakMap;
-        let a_cache = cache.get(a);
-        if (a_cache) {
-            const b_cache = a_cache.get(b);
+        let left_cache = cache.get(left);
+        if (left_cache) {
+            const b_cache = left_cache.get(right);
             if (typeof b_cache === 'boolean')
                 return b_cache;
         }
         else {
-            a_cache = new WeakMap();
-            cache.set(a, a_cache);
+            left_cache = new WeakMap();
+            cache.set(left, left_cache);
         }
-        a_stack.push(a);
-        b_stack.push(b);
+        left_stack.push(left);
+        right_stack.push(right);
         let result;
         try {
-            if (Symbol.iterator in a) {
-                const a_iter = a[Symbol.iterator]();
-                const b_iter = b[Symbol.iterator]();
+            if (Symbol.iterator in left) {
+                const left_iter = left[Symbol.iterator]();
+                const right_iter = right[Symbol.iterator]();
                 while (true) {
-                    const a_next = a_iter.next();
-                    const b_next = b_iter.next();
-                    if (a_next.done !== b_next.done)
+                    const left_next = left_iter.next();
+                    const right_next = right_iter.next();
+                    if (left_next.done !== right_next.done)
                         return result = false;
-                    if (a_next.done)
+                    if (left_next.done)
                         break;
-                    if (!$mol_compare_deep(a_next.value, b_next.value))
+                    if (!$mol_compare_deep(left_next.value, right_next.value))
                         return result = false;
                 }
                 return result = true;
             }
             let count = 0;
-            for (let key in a) {
+            for (let key in left) {
                 try {
-                    if (!$mol_compare_deep(a[key], b[key]))
+                    if (!$mol_compare_deep(left[key], right[key]))
                         return result = false;
                 }
                 catch (error) {
-                    $.$mol_fail_hidden(new $.$mol_error_mix(`Failed ${JSON.stringify(key)} fields comparison of ${a} and ${b}`, error));
+                    $.$mol_fail_hidden(new $.$mol_error_mix(`Failed ${JSON.stringify(key)} fields comparison of ${left} and ${right}`, error));
                 }
                 ++count;
             }
-            for (let key in b) {
+            for (let key in right) {
                 --count;
                 if (count < 0)
                     return result = false;
             }
-            if (a instanceof Number || a instanceof String || a instanceof Symbol || a instanceof Boolean || a instanceof Date) {
-                if (!Object.is(a['valueOf'](), b['valueOf']()))
+            if (left instanceof Number || left instanceof String || left instanceof Symbol || left instanceof Boolean || left instanceof Date) {
+                if (!Object.is(left['valueOf'](), right['valueOf']()))
                     return result = false;
             }
             return result = true;
         }
         finally {
-            a_stack.pop();
-            b_stack.pop();
-            if (a_stack.length === 0) {
-                cache = null;
-            }
-            else {
-                a_cache.set(b, result);
-            }
+            left_stack.pop();
+            right_stack.pop();
+            left_cache.set(right, result);
         }
     }
     $.$mol_compare_deep = $mol_compare_deep;

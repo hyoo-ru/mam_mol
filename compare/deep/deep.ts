@@ -1,71 +1,69 @@
 namespace $ {
 
-	const a_stack = [] as any[]
-	const b_stack = [] as any[]
+	const left_stack = [] as any[]
+	const right_stack = [] as any[]
 
-	let cache = null as null | WeakMap< any , WeakMap< any , boolean > >
+	let cache = new WeakMap< any , WeakMap< any , boolean > >()
 
-	export function $mol_compare_deep< Value >( a : Value , b : Value ) : boolean {
+	export function $mol_compare_deep< Value >( left : Value , right : Value ) : boolean {
 
-		if( Object.is( a , b ) ) return true
+		if( Object.is( left , right ) ) return true
 
-		const a_type = typeof a
-		const b_type = typeof b
+		const left_type = typeof left
+		const right_type = typeof right
 
-		if( a_type !== b_type ) return false
+		if( left_type !== right_type ) return false
 
-		if( a_type === 'function' ) return a['toString']() === b['toString']()
-		if( a_type !== 'object' ) return false
+		if( left_type === 'function' ) return left['toString']() === right['toString']()
+		if( left_type !== 'object' ) return false
 
-		if( !a || !b ) return false
+		if( !left || !right ) return false
 
-		if( a instanceof Error ) return false
-		if( a['constructor'] !== b['constructor'] ) return false
+		if( left instanceof Error ) return false
+		if( left['constructor'] !== right['constructor'] ) return false
 
-		if( a instanceof RegExp ) return a.toString() === b['toString']()
+		if( left instanceof RegExp ) return left.toString() === right['toString']()
 
-		const ref = a_stack.indexOf( a )
+		const ref = left_stack.indexOf( left )
 		
 		if( ref >= 0 ) {
-			return Object.is( b_stack[ ref ] , b )
+			return Object.is( right_stack[ ref ] , right )
 		}
 
-		if( !cache ) cache = new WeakMap
+		let left_cache = cache.get( left )
+		if( left_cache ) {
 
-		let a_cache = cache.get( a )
-		if( a_cache ) {
-
-			const b_cache = a_cache.get( b )
+			const b_cache = left_cache.get( right )
 			if( typeof b_cache === 'boolean' ) return b_cache
 
 		} else {
 
-			a_cache = new WeakMap< any , boolean >()
-			cache.set( a , a_cache )
+			left_cache = new WeakMap< any , boolean >()
+			cache.set( left , left_cache )
 
 		}
 
-		a_stack.push( a )
-		b_stack.push( b )
+		left_stack.push( left )
+		right_stack.push( right )
 
 		let result! : boolean
 
 		try {
 
-			if( Symbol.iterator in a ) {
+			if( Symbol.iterator in left ) {
 				
-				const a_iter = a[ Symbol.iterator ]()
-				const b_iter = b[ Symbol.iterator ]()
+				const left_iter = left[ Symbol.iterator ]()
+				const right_iter = right[ Symbol.iterator ]()
 	
 				while( true ) {
 
-					const a_next = a_iter.next()
-					const b_next = b_iter.next()
+					const left_next = left_iter.next()
+					const right_next = right_iter.next()
 
-					if( a_next.done !== b_next.done ) return result = false
-					if( a_next.done ) break
+					if( left_next.done !== right_next.done ) return result = false
+					if( left_next.done ) break
 
-					if( !$mol_compare_deep( a_next.value , b_next.value ) ) return result = false
+					if( !$mol_compare_deep( left_next.value , right_next.value ) ) return result = false
 
 				}
 
@@ -75,15 +73,15 @@ namespace $ {
 
 			let count = 0
 
-			for( let key in a ) {
+			for( let key in left ) {
 
 				try {
 
-					if( !$mol_compare_deep( a[key] , b[key] ) ) return result = false
+					if( !$mol_compare_deep( left[key] , right[key] ) ) return result = false
 				
 				} catch( error: any ) {
 
-					$mol_fail_hidden( new $mol_error_mix( `Failed ${ JSON.stringify( key ) } fields comparison of ${a} and ${b}` , error ) )
+					$mol_fail_hidden( new $mol_error_mix( `Failed ${ JSON.stringify( key ) } fields comparison of ${left} and ${right}` , error ) )
 
 				}
 				
@@ -91,7 +89,7 @@ namespace $ {
 
 			}
 	
-			for( let key in b ) {
+			for( let key in right ) {
 
 				--count
 				
@@ -99,22 +97,17 @@ namespace $ {
 				
 			}
 			
-			if( a instanceof Number || a instanceof String || a instanceof Symbol || a instanceof Boolean || a instanceof Date ) {
-				if( !Object.is( a['valueOf'](), b['valueOf']() ) ) return result = false
+			if( left instanceof Number || left instanceof String || left instanceof Symbol || left instanceof Boolean || left instanceof Date ) {
+				if( !Object.is( left['valueOf'](), right['valueOf']() ) ) return result = false
 			}
 
 			return result = true
 
 		} finally {
 			
-			a_stack.pop()
-			b_stack.pop()
-
-			if( a_stack.length === 0 ) {
-				cache = null
-			} else {
-				a_cache.set( b , result )
-			}
+			left_stack.pop()
+			right_stack.pop()
+			left_cache.set( right , result )
 
 		}
 
