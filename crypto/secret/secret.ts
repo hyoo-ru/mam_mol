@@ -52,7 +52,7 @@ namespace $ {
 		}
 
 		/** 4 bytes + data length */
-		async encrypt( open: DataView | ArrayBuffer, salt: Uint8Array ) {
+		async encrypt( open: DataView | ArrayBuffer, salt: Uint8Array ): Promise< ArrayBuffer > {
 			return await crypto.subtle.encrypt(
 				{
 					... algorithm,
@@ -63,7 +63,7 @@ namespace $ {
 			)
 		}
 		
-		async decrypt( closed: DataView | ArrayBuffer, salt : Uint8Array ) {
+		async decrypt( closed: DataView | ArrayBuffer, salt : Uint8Array ): Promise< ArrayBuffer > {
 			return await crypto.subtle.decrypt(
 				{
 					... algorithm,
