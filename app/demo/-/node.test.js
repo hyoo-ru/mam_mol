@@ -7745,6 +7745,9 @@ var $;
         toString(pattern = 'P#Y#M#DT#h#m#s') {
             return super.toString(pattern);
         }
+        [Symbol.toPrimitive](mode) {
+            return mode === 'number' ? this.valueOf() : this.toString();
+        }
         static patterns = {
             '#Y': (duration) => {
                 if (!duration.year)
@@ -7940,6 +7943,9 @@ var $;
         toJSON() { return this.toString(); }
         toString(pattern = 'YYYY-MM-DDThh:mm:ss.sssZ') {
             return super.toString(pattern);
+        }
+        [Symbol.toPrimitive](mode) {
+            return mode === 'number' ? this.valueOf() : this.toString();
         }
         static patterns = {
             'YYYY': (moment) => {
@@ -8378,6 +8384,9 @@ var $;
         toJSON() { return this.toString(); }
         toString() {
             return (this._start || this._duration || '').toString() + '/' + (this._end || this._duration || '').toString();
+        }
+        [Symbol.toPrimitive](mode) {
+            return this.toString();
         }
     }
     $.$mol_time_interval = $mol_time_interval;
@@ -27110,6 +27119,21 @@ var $;
             $.$mol_assert_ok($.$mol_compare_deep(new Uint8Array([0]), new Uint8Array([0])));
             $.$mol_assert_not($.$mol_compare_deep(new Uint8Array([0]), new Uint8Array([1])));
         },
+        'Custom comparator'() {
+            class User {
+                name;
+                rand;
+                constructor(name, rand = Math.random()) {
+                    this.name = name;
+                    this.rand = rand;
+                }
+                [Symbol.toPrimitive](mode) {
+                    return this.name;
+                }
+            }
+            $.$mol_assert_ok($.$mol_compare_deep(new User('Jin'), new User('Jin')));
+            $.$mol_assert_not($.$mol_compare_deep(new User('Jin'), new User('John')));
+        },
     });
 })($ || ($ = {}));
 //deep.test.js.map
@@ -27165,6 +27189,8 @@ var $;
                 result = compare_map(left, right);
             else if (ArrayBuffer.isView(left))
                 result = compare_buffer(left, right);
+            else if (Symbol.toPrimitive in left)
+                result = compare_primitive(left, right);
             else
                 result = false;
         }
@@ -27228,6 +27254,9 @@ var $;
                 return false;
         }
         return true;
+    }
+    function compare_primitive(left, right) {
+        return Object.is(left[Symbol.toPrimitive]('default'), right[Symbol.toPrimitive]('default'));
     }
 })($ || ($ = {}));
 //deep.js.map
@@ -28922,6 +28951,10 @@ var $;
         'format typed'() {
             $.$mol_assert_equal(new $.$mol_time_duration('P1Y2M3DT4h5m6s').toString('P#Y#M#DT#h#m#s'), 'P1Y2M3DT4H5M6S');
         },
+        'comparison'() {
+            const iso = 'P1Y1M1DT1h1m1s';
+            $.$mol_assert_like(new $.$mol_time_duration(iso), new $.$mol_time_duration(iso));
+        },
     });
 })($ || ($ = {}));
 //duration.test.js.map
@@ -28977,7 +29010,11 @@ var $;
         },
         'change offset'() {
             $.$mol_assert_equal(new $.$mol_time_moment('2021-04-10 +03:00').toOffset('Z').toString(), '2021-04-09T21:00:00+00:00');
-        }
+        },
+        'comparison'() {
+            const iso = '2021-01-02T03:04:05.678+09:10';
+            $.$mol_assert_like(new $.$mol_time_moment(iso), new $.$mol_time_moment(iso));
+        },
     });
 })($ || ($ = {}));
 //moment.test.js.map
@@ -28990,7 +29027,11 @@ var $;
             $.$mol_assert_equal(new $.$mol_time_interval('2015-01-01/P1M').end.toString(), '2015-02-01');
             $.$mol_assert_equal(new $.$mol_time_interval('P1M/2015-02-01').start.toString(), '2015-01-01');
             $.$mol_assert_equal(new $.$mol_time_interval('2015-01-01/2015-02-01').duration.toString(), 'PT2678400S');
-        }
+        },
+        'comparison'() {
+            const iso = '2021-01-02/2022-03-04';
+            $.$mol_assert_like(new $.$mol_time_interval(iso), new $.$mol_time_interval(iso));
+        },
     });
 })($ || ($ = {}));
 //interval.test.js.map

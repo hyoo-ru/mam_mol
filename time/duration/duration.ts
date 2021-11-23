@@ -117,6 +117,10 @@ namespace $ {
 			return super.toString( pattern )
 		}
 
+		[ Symbol.toPrimitive ]( mode: 'default' | 'number' | 'string' ) {
+			return mode === 'number' ? this.valueOf() : this.toString()
+		}
+		
 		static patterns = {
 
 			'#Y' : ( duration : $mol_time_duration )=> {

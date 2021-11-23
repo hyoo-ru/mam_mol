@@ -92,6 +92,26 @@ namespace $ {
 			$mol_assert_not( $mol_compare_deep( new Uint8Array([ 0 ]) , new Uint8Array([ 1 ]) ) )
 		} ,
 		
+		'Custom comparator'() {
+			
+			class User {
+				
+				constructor(
+					readonly name: string,
+					readonly rand = Math.random(),
+				) {}
+				
+				[ Symbol.toPrimitive ]( mode: 'default' | 'number' | 'string' ) {
+					return this.name
+				}
+				
+			}
+			
+			$mol_assert_ok( $mol_compare_deep( new User( 'Jin' ), new User( 'Jin' ) ) )
+			$mol_assert_not( $mol_compare_deep( new User( 'Jin' ), new User( 'John' ) ) )
+			
+		} ,
+		
 	})
 
 }
