@@ -301,9 +301,7 @@ namespace $ {
 
 		push( value : Value ) {
 			
-			value = this.$.$mol_conform( value , this.value )
-			
-			if( this.error !== null || !Object.is( this.value , value ) ) {
+			if( this.error !== null || !$mol_compare_deep( this.value , value ) ) {
 		
 				if( $mol_fiber.logs ) this.$.$mol_log3_done({
 					place : this ,
