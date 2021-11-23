@@ -18,5 +18,10 @@ namespace $ {
 			)
 		} ,
 	
+		'comparison'() {
+			const iso = 'P1Y1M1DT1h1m1s'
+			$mol_assert_like( new $mol_time_duration( iso ), new $mol_time_duration( iso ) )
+		},
+		
 	} )
 }

@@ -71,6 +71,10 @@ namespace $ {
 			return ( this._start || this._duration || '' ).toString() + '/' + ( this._end || this._duration || '' ).toString()
 		}
 
+		[ Symbol.toPrimitive ]( mode: 'default' | 'number' | 'string' ) {
+			return this.toString()
+		}
+		
 	}
 
 }

@@ -208,6 +208,10 @@ namespace $ {
 		toString( pattern = 'YYYY-MM-DDThh:mm:ss.sssZ' ) {
 			return super.toString( pattern )
 		}
+		
+		[ Symbol.toPrimitive ]( mode: 'default' | 'number' | 'string' ) {
+			return mode === 'number' ? this.valueOf() : this.toString()
+		}
 
 		/// Mnemonics:
 		///  * single letter for numbers: M - month number, D - day of month.

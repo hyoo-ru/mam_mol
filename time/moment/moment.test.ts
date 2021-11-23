@@ -70,7 +70,12 @@ namespace $ {
 		
 		'change offset'() {
 			$mol_assert_equal( new $mol_time_moment( '2021-04-10 +03:00' ).toOffset( 'Z' ).toString(), '2021-04-09T21:00:00+00:00' )
-		}
+		} ,
+		
+		'comparison'() {
+			const iso = '2021-01-02T03:04:05.678+09:10'
+			$mol_assert_like( new $mol_time_moment( iso ), new $mol_time_moment( iso ) )
+		},
 
 	} )
 }

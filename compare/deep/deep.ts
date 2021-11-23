@@ -45,6 +45,7 @@ namespace $ {
 			else if( left instanceof Set ) result = compare_set( left, right as any )
 			else if( left instanceof Map ) result = compare_map( left, right as any )
 			else if( ArrayBuffer.isView( left ) ) result = compare_buffer( left, right as any )
+			else if( Symbol.toPrimitive in left ) result = compare_primitive( left, right )
 			else result = false
 
 		} finally {
@@ -123,6 +124,13 @@ namespace $ {
 		}
 
 		return true
+	}
+	
+	function compare_primitive( left: {}, right: {} ): boolean {
+		return Object.is(
+			left[ Symbol.toPrimitive ]( 'default' ),
+			right[ Symbol.toPrimitive ]( 'default' ),
+		)
 	}
 	
 }
