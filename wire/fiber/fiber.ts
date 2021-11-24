@@ -11,7 +11,7 @@ namespace $ {
 		Result,
 	> extends $mol_wire_pub_sub {
 		
-		static make<
+		static temp<
 			Host,
 			Args extends readonly unknown[],
 			Result,
@@ -36,6 +36,35 @@ namespace $ {
 			
 			return new this( host, task, ... args )
 		}
+		
+		static persist<
+			Host,
+			Args extends readonly unknown[],
+			Result,
+		>(
+			host: Host,
+			task: ( this : Host , ... args : Args )=> Result,
+			... args: Args
+		): $mol_wire_fiber< Host, [ ... Args ], Result > {
+
+			const key = task.name + '(' + args.map( v => JSON.stringify( v ) ) + ')'
+			const existen = host[ key ]
+			
+			reuse: if( existen ) {
+				
+				if(!( existen instanceof $mol_wire_fiber )) break reuse
+			
+				if( existen.host !== host ) break reuse
+				if( existen.task !== task ) break reuse
+				if( !$mol_compare_deep( existen.args, args ) ) break reuse
+				
+				return existen
+			}
+			
+			return host[ key ] = new this( host, task, ... args )
+			
+		}
+		
 		
 		public result: Result | Error | Promise< Result | Error > = undefined as any
 		readonly args: Args
@@ -119,6 +148,7 @@ namespace $ {
 					handled.add( result )
 				}
 				
+				this.end( bu )
 				this.put( result )
 				
 			} catch( error: any ) {
@@ -128,10 +158,9 @@ namespace $ {
 					handled.add( error )
 				}
 				
+				this.end( bu )
 				this.put( error )
 				
-			} finally {
-				this.end( bu )
 			}
 
 		}
@@ -146,6 +175,8 @@ namespace $ {
 					this.emit()
 				}
 			}
+			
+			this.pubs_cursor = $mol_wire_fresh
 			
 			return next
 		}
@@ -162,7 +193,7 @@ namespace $ {
 			if( this.result instanceof Promise ) {
 				
 				if( !$mol_wire || !( $mol_wire instanceof $mol_wire_fiber ) ) {
-					$mol_fail( new Error( 'Sync execution of fiber available only inside $mol_fiber2_async' ) )
+					$mol_fail( new Error( 'Sync execution of synced fiber available only inside $mol_fiber2_async' ) )
 				}
 				
 				return $mol_fail_hidden( this.result )
