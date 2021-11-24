@@ -12,7 +12,7 @@ namespace $ {
 		return {
 			... descr,
 			value: function( this: Host, ... args: Args ) {
-				const fiber = $mol_wire_fiber.make( this ?? null as any, descr.value!, ... args )
+				const fiber = $mol_wire_fiber.temp( this ?? null as any, descr.value!, ... args )
 				return fiber.sync() as Result
 			}
 		}

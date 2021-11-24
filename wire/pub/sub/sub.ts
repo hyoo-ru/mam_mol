@@ -108,8 +108,6 @@ namespace $ {
 			
 			$mol_wire = sub
 			
-			this.pubs_cursor = $mol_wire_fresh
-			
 		}
 		
 		affect( quant: number ) {

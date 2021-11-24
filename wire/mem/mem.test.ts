@@ -8,7 +8,7 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static value( next = 1 ) { return next + 1 }
 
 			}
@@ -27,17 +27,17 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static xxx( next? : number ) {
 					return next || 1
 				}
 
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static yyy() {
 					return this.xxx() + 1
 				}
 
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static zzz() {
 					return this.yyy() + 1
 				}
@@ -61,19 +61,19 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static xxx( next? : number ) {
 					log.push( 'xxx' )
 					return next || 1
 				}
 				
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static yyy() {
 					log.push( 'yyy' )
 					return [ Math.sign( this.xxx() ) ]
 				}
 				
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static zzz() {
 					log.push( 'zzz' )
 					return this.yyy()[0] + 1
@@ -99,12 +99,12 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static foo( next? : { numbs: number[] } ) {
 					return next ?? { numbs: [ 1 ] }
 				}
 
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static bar() {
 					return { ... this.foo(), count: ++ counter }
 				}
@@ -128,12 +128,12 @@ namespace $ {
 		
 				static $ = $
 				
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static foo() : number {
 					return this.bar() + 1
 				}
 		
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static bar() : number {
 					return this.foo() + 1
 				}
@@ -150,24 +150,24 @@ namespace $ {
 		
 				static $ = $
 				
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static count( next = 0 ) {
 					return next
 				}
 		
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static inc_event( next = null as null | Event ) {
 					return next
 				}
 		
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static inc_task() {
 					if( !this.inc_event() ) return
 					this.count( this.count() + 1 )
 					this.inc_event( null )
 				}
 		
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static res() {
 					this.inc_task()
 					return this.count()

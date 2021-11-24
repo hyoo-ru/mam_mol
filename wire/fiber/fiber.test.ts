@@ -17,7 +17,7 @@ namespace $ {
 			
 		},
 
-		'Prevent potential leakage of tnrown promise'() {
+		'Prevent potential leakage of thrown promise'() {
 
 			class Leaked extends $mol_object2 {
 				
@@ -35,7 +35,7 @@ namespace $ {
 			
 			$mol_assert_fail(
 				()=> Leaked.calc(),
-				'Sync execution of fiber available only inside $mol_fiber2_async',
+				'Sync execution of synced fiber available only inside $mol_fiber2_async',
 			)
 			
 		},

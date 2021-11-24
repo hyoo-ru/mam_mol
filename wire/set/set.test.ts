@@ -8,7 +8,7 @@ namespace $ {
 				static $ = $
 				static set = new $mol_wire_set< number >()
 				
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static lucky() {
 					return this.set.has( 777 )
 				}
@@ -35,7 +35,7 @@ namespace $ {
 				static $ = $
 				static set = new $mol_wire_set< number >()
 				
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static size() {
 					return this.set.size
 				}
@@ -62,7 +62,7 @@ namespace $ {
 				static $ = $
 				static set = new $mol_wire_set< number >()
 				
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static sum() {
 					let res = 0
 					for( const val of this.set ) {
@@ -93,7 +93,7 @@ namespace $ {
 				static $ = $
 				static set = new $mol_wire_set< number >()
 				
-				@ $mol_wire_chan
+				@ $mol_wire_mem(0)
 				static sum() {
 					let res = 0
 					this.set.forEach( val => res += val )

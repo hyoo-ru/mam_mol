@@ -6,7 +6,7 @@ namespace $ {
 				const val = obj[ field ]
 				if( typeof val !== 'function' ) return val
 				return function( this: Host, ... args: any[] ) {
-					const fiber = $mol_wire_fiber.make( obj, val, ... args )
+					const fiber = $mol_wire_fiber.temp( obj, val, ... args )
 					return fiber.async()
 				}
 			}
