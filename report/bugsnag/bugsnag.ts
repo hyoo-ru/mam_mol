@@ -2,7 +2,7 @@ namespace $ {
 	
 	export let $mol_report_bugsnag = ''
 	
-	self.onerror = function( msg, url, line, col, err ) {
+	globalThis.onerror = function( msg, url, line, col, err ) {
 		
 		const el = document.activeElement
 		
@@ -56,14 +56,14 @@ namespace $ {
 		
 	}
 	
-	self.onunhandledrejection = function( event ) {
-		self.onerror!( 'Unhandled Rejection', '', 0, 0, event.reason )
+	globalThis.onunhandledrejection = function( event ) {
+		globalThis.onerror!( 'Unhandled Rejection', '', 0, 0, event.reason )
 	} 
 	
 	const error = console.error
 	console.error = function( ... args ) {
 		error.apply( console, args )
-		self.onerror!( 'Logged Error', '', 0, 0, arguments[0] )
+		globalThis.onerror!( 'Logged Error', '', 0, 0, arguments[0] )
 	}
 	
 }
