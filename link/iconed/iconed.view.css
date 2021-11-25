@@ -1,7 +1,7 @@
 [mol_link_iconed] {
 	align-items: center;
 	color: var(--mol_theme_control);
-	display: inline;
+	display: inline-flex;
 	padding: var(--mol_gap_text);
 }
 
