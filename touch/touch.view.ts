@@ -63,7 +63,9 @@ namespace $.$$ {
 			
 			if( event instanceof PointerEvent ) {
 
-				const events = this.pointer_events().filter( e => e.pointerId !== event.pointerId )
+				const events = this.pointer_events()
+					.filter( e => e instanceof PointerEvent )
+					.filter( e => e.pointerId !== event.pointerId )
 				if( event.type !== 'pointerup' && event.type !== 'pointerleave' ) events.push( event )
 				this.pointer_events( events )
 				
