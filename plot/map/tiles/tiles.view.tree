@@ -2,6 +2,7 @@ $mol_plot_map_tiles $mol_plot_graph
 	tile_size_real 256
 	level 0
 	level_pyramid 0
+	tiles_limit 8
 	uri_template \
 	sub <= tiles /
 	Tile!id $mol_svg_image
