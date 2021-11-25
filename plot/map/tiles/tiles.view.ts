@@ -13,14 +13,25 @@ namespace $.$$ {
 		override tiles() {
 			
 			const level = this.level()
+			const limit = this.tiles_limit()
 			const dims = this.dimensions_pane()
 			const tiles = []
 			const range = [ level, Math.max( 0, level + this.level_pyramid() ) ].sort( ( a, b )=> a - b )
 			
 			for( let l = range[0]; l <= range[1]; ++l ) {
 				
-				const [ xs, ys ] = this.tile_at([ l, dims.x.min, dims.y.min ])
-				const [ xe, ye ] = this.tile_at([ l, dims.x.max, dims.y.max ])
+				let [ xs, ys ] = this.tile_at([ l, dims.x.min, dims.y.min ])
+				let [ xe, ye ] = this.tile_at([ l, dims.x.max, dims.y.max ])
+				
+				if( xe - xs >= limit ) {
+					xs = Math.ceil( ( xs + xe - limit ) / 2 )
+					xe = xs + limit - 1
+				}
+				
+				if( ye - ys >= limit ) {
+					ys = Math.ceil( ( ys + ye - limit ) / 2 )
+					ye = ys + limit - 1
+				}
 				
 				for( let y= ys; y <= ye; ++y ) {
 					for( let x= xs; x <= xe; ++x ) {
@@ -107,6 +118,14 @@ namespace $.$$ {
 		// 	]
 			
 		// }
+		
+		back() {
+			return [ this ] as unknown as readonly $.$mol_svg[]
+		}
+		
+		front() {
+			return [ ]
+		}
 		
 	}
 	
