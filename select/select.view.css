@@ -50,7 +50,7 @@
 }
 
 [mol_select_trigger] > * {
-	margin-right: -.75rem;
+	margin-right: -1rem;
 }
 
 [mol_select_trigger] > *:last-child {
