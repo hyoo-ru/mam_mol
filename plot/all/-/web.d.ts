@@ -818,7 +818,9 @@ declare namespace $ {
         swipe_to_bottom(val?: any): any;
         swipe_to_left(val?: any): any;
         swipe_to_top(val?: any): any;
+        draw_start(event?: any): any;
         draw(event?: any): any;
+        draw_end(event?: any): any;
         style(): {
             "touch-action": string;
             "overscroll-behavior": string;
@@ -833,6 +835,7 @@ declare namespace $ {
         event_start(event?: any): any;
         event_move(event?: any): any;
         event_end(event?: any): any;
+        event_leave(event?: any): any;
         event_wheel(event?: any): any;
     }
 }
@@ -849,6 +852,7 @@ declare namespace $.$$ {
         event_start(event: PointerEvent): void;
         event_move(event: PointerEvent): void;
         event_end(event: PointerEvent): void;
+        event_leave(event: PointerEvent): void;
         swipe_left(event: PointerEvent): void;
         swipe_right(event: PointerEvent): void;
         swipe_top(event: PointerEvent): void;
@@ -902,7 +906,9 @@ declare namespace $ {
         allow_draw(): boolean;
         allow_pan(): boolean;
         allow_zoom(): boolean;
+        draw_start(event?: any): any;
         draw(event?: any): any;
+        draw_end(event?: any): any;
         cursor_position(): $mol_vector_2d<number>;
         action_type(): string;
         action_point(): $mol_vector_2d<number>;

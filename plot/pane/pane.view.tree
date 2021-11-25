@@ -81,7 +81,9 @@ $mol_plot_pane $mol_svg_root
 			allow_zoom <= allow_zoom true
 			action_type => action_type
 			action_point => action_point
+			draw_start?event <=> draw_start?event null
 			draw?event <=> draw?event null
+			draw_end?event <=> draw_end?event null
 	- event *
 		^
 		dblclick?event <=> reset?event null

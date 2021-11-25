@@ -577,11 +577,33 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * draw_start?event null
+		 * ```
+		 */
+		@ $mol_mem
+		draw_start(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * draw?event null
 		 * ```
 		 */
 		@ $mol_mem
 		draw(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * draw_end?event null
+		 * ```
+		 */
+		@ $mol_mem
+		draw_end(event?: any) {
 			if ( event !== undefined ) return event as never
 			return null as any
 		}
@@ -624,7 +646,9 @@ namespace $ {
 		 * 	allow_zoom <= allow_zoom
 		 * 	action_type => action_type
 		 * 	action_point => action_point
+		 * 	draw_start?event <=> draw_start?event
 		 * 	draw?event <=> draw?event
+		 * 	draw_end?event <=> draw_end?event
 		 * ```
 		 */
 		@ $mol_mem
@@ -636,7 +660,9 @@ namespace $ {
 			obj.allow_draw = () => this.allow_draw()
 			obj.allow_pan = () => this.allow_pan()
 			obj.allow_zoom = () => this.allow_zoom()
+			obj.draw_start = (event?: any) => this.draw_start(event)
 			obj.draw = (event?: any) => this.draw(event)
+			obj.draw_end = (event?: any) => this.draw_end(event)
 			
 			return obj
 		}

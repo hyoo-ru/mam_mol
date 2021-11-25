@@ -295,11 +295,33 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * draw_start?event null
+		 * ```
+		 */
+		@ $mol_mem
+		draw_start(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * draw?event null
 		 * ```
 		 */
 		@ $mol_mem
 		draw(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * draw_end?event null
+		 * ```
+		 */
+		@ $mol_mem
+		draw_end(event?: any) {
 			if ( event !== undefined ) return event as never
 			return null as any
 		}
@@ -327,7 +349,7 @@ namespace $ {
 		 * 	pointerdown?event <=> event_start?event
 		 * 	pointermove?event <=> event_move?event
 		 * 	pointerup?event <=> event_end?event
-		 * 	pointerleave?event <=> event_end?event
+		 * 	pointerleave?event <=> event_leave?event
 		 * 	wheel?event <=> event_wheel?event
 		 * ```
 		 */
@@ -337,7 +359,7 @@ namespace $ {
 				pointerdown: (event?: any) => this.event_start(event),
 				pointermove: (event?: any) => this.event_move(event),
 				pointerup: (event?: any) => this.event_end(event),
-				pointerleave: (event?: any) => this.event_end(event),
+				pointerleave: (event?: any) => this.event_leave(event),
 				wheel: (event?: any) => this.event_wheel(event)
 			}
 		}
@@ -371,6 +393,17 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_end(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * event_leave?event null
+		 * ```
+		 */
+		@ $mol_mem
+		event_leave(event?: any) {
 			if ( event !== undefined ) return event as never
 			return null as any
 		}

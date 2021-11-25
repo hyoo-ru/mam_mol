@@ -64,10 +64,16 @@ namespace $.$$ {
 			if( event instanceof PointerEvent ) {
 
 				const events = this.pointer_events().filter( e => e.pointerId !== event.pointerId )
-				if( event.type !== 'pointerleave' ) events.push( event )
+				if( event.type !== 'pointerup' && event.type !== 'pointerleave' ) events.push( event )
 				this.pointer_events( events )
 				
-				if( this.allow_zoom() && events.filter( e => e.pointerType === 'touch' ).length === 2 ) {
+				const touch_count = events.filter( e => e.pointerType === 'touch' ).length
+				
+				if( this.allow_zoom() && touch_count === 2 ) {
+					return this.action_type( 'zoom' )
+				}
+				
+				if( this.action_type() === 'zoom' && touch_count === 1 ) {
 					return this.action_type( 'zoom' )
 				}
 				
@@ -103,10 +109,14 @@ namespace $.$$ {
 			const action_type = this.event_eat( event )
 			if( !action_type ) return
 			
-			if( action_type === 'draw' ) return
-
 			const coords = this.pointer_coords()
 			this.start_pos( coords.center() )
+			
+			if( action_type === 'draw' ) {
+				this.draw_start( event )
+				return
+			}
+
 			this.start_distance( coords.distance() )
 			this.start_zoom( this.zoom() )
 
@@ -122,15 +132,19 @@ namespace $.$$ {
 
 			const action_type = this.event_eat( event )
 			
+			const start_pos = this.start_pos()
 			let pos = this.pointer_center()!
 
 			if( !action_type ) return
 			if( action_type === 'draw' ) {
-				this.draw( event )
+				
+				const distance = new $mol_vector( start_pos, pos ).distance()
+				if( distance >= 4 ) {
+					this.draw( event )
+				}
 				return
 			}
 			
-			const start_pos = this.start_pos()
 			if( !start_pos ) return
 				
 			if( action_type === 'pan' ) {
@@ -220,14 +234,19 @@ namespace $.$$ {
 
 		event_end( event : PointerEvent ) {
 			
-			this.event_eat( event )
-			this.dom_node().releasePointerCapture( event.pointerId )
-			
-			if( !this.start_pos() ) {
-				this.draw( event )
-				return
+			const action = this.action_type()
+			if( action ==='draw' ) {
+				this.draw_end( event )
 			}
 			
+			this.event_leave( event )
+			
+		}
+
+		event_leave( event : PointerEvent ) {
+
+			this.event_eat( event )
+			this.dom_node().releasePointerCapture( event.pointerId )
 			this.start_pos( null )
 			
 		}
