@@ -42,7 +42,7 @@ namespace $.$$ {
 			return index
 		}
 
-		sub() {
+		anchor_content() {
 			return [
 				this.Query() ,
 				... ( this.query().length > 0 ) ? [
