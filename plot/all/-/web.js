@@ -3193,7 +3193,7 @@ var $;
                 const events = this.pointer_events();
                 const touches = events.filter(e => e.pointerType === 'touch');
                 const pens = events.filter(e => e.pointerType === 'pen');
-                const mouses = events.filter(e => e.pointerType === 'mouse');
+                const mouses = events.filter(e => !e.pointerType || e.pointerType === 'mouse');
                 const choosen = touches.length ? touches : pens.length ? pens : mouses;
                 return new $.$mol_vector(...choosen.map(event => this.event_coords(event)));
             }
@@ -3243,6 +3243,7 @@ var $;
                     return this.action_type('');
                 }
                 if (event instanceof WheelEvent) {
+                    this.pointer_events([event]);
                     if (event.ctrlKey)
                         return this.action_type('zoom');
                     return this.action_type('pan');
