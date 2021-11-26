@@ -1,11 +1,18 @@
 namespace $ {
+
+	// More compact (32B sign) but don't work in Safari
+	// const algorithm = {
+	// 	name: 'RSA-PSS',
+	// 	modulusLength: 256,
+	// 	publicExponent: new Uint8Array([ 1, 0, 1 ]),
+	// 	hash: 'SHA-1',
+	// 	saltLength: 8,
+	// }
 	
 	const algorithm = {
-		name: 'RSA-PSS',
-		modulusLength: 256,
-		publicExponent: new Uint8Array([ 1, 0, 1 ]),
-		hash: 'SHA-1',
-		saltLength: 8,
+		name: "ECDSA",
+		hash: {name: "SHA-256"},
+		namedCurve: 'P-256',
 	}
 	
 	/** Asymmetric signing pair with shortest payload */
@@ -34,8 +41,8 @@ namespace $ {
 	/** Asymmetric signing public key wrapper with shortest payload */
 	export class $mol_crypto_auditor_public extends Object {
 		
-		/** Public key size in bytes. */
-		static size = 62
+		/** Key size in bytes. */
+		static size = 91
 		
 		constructor(
 			readonly native: CryptoKey & { type: 'public' }
@@ -55,7 +62,7 @@ namespace $ {
 			)
 		}
 		
-		/** 62 bytes */
+		/** 91 bytes */
 		async serial() {
 			return await crypto.subtle.exportKey(
 				'spki',
@@ -77,6 +84,9 @@ namespace $ {
 	/** Asymmetric signing private key wrapper with shortest payload */
 	export class $mol_crypto_auditor_private extends Object {
 		
+		/** Key size in bytes. */
+		static size = 138
+		
 		constructor(
 			readonly native: CryptoKey & { type: 'private' }
 		) {
@@ -95,7 +105,7 @@ namespace $ {
 			)
 		}
 		
-		/** ~195 bytes */
+		/** 138 bytes */
 		async serial() {
 			return await crypto.subtle.exportKey(
 				'pkcs8',
@@ -103,7 +113,7 @@ namespace $ {
 			)
 		}
 		
-		/** 32 bytes */
+		/** 64 bytes */
 		async sign( data: DataView | ArrayBuffer ) {
 			
 			return await crypto.subtle.sign(
@@ -117,6 +127,6 @@ namespace $ {
 	}
 	
 	/** Sign size in bytes. */
-	export const $mol_crypto_auditor_sign_size = 32
+	export const $mol_crypto_auditor_sign_size = 64
 	
 }

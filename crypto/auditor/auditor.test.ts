@@ -6,8 +6,7 @@ namespace $ {
 			const pair = await $$.$mol_crypto_auditor_pair()
 			
 			const key_private = await pair.private.serial()
-			$mol_assert_ok( key_private!.byteLength > 190 )
-			$mol_assert_ok( key_private!.byteLength < 200 )
+			$mol_assert_equal( key_private.byteLength, $mol_crypto_auditor_private.size )
 			
 			const key_public = await pair.public.serial()
 			$mol_assert_equal( key_public!.byteLength, $mol_crypto_auditor_public.size )
