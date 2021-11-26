@@ -62,8 +62,8 @@ namespace $ {
 	
 	const error = console.error
 	console.error = function( ... args ) {
-		error.apply( console, args )
 		globalThis.onerror!( 'Logged Error', '', 0, 0, arguments[0] )
+		error.apply( console, args )
 	}
 	
 }
