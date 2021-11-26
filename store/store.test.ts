@@ -14,25 +14,6 @@ namespace $ {
 
 		} ,
 
-		'safe reference' () {
-
-			const foo = { foo : 1 }
-			const bar = { bar : 1 }
-
-			const store = new $mol_store({ foo , bar })
-
-			store.data({ foo , bar })
-
-			store.data({
-				foo : { foo : 1 } ,
-				bar : { bar : 3 } ,
-			})
-
-			$mol_assert_equal( store.data().foo , foo )
-			$mol_assert_unique( store.data().bar , bar )
-
-		} ,
-
 		'get and set by shapshot' () {
 
 			const store = new $mol_store({
