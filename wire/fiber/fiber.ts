@@ -2,10 +2,6 @@ namespace $ {
 	
 	const handled = new WeakSet< Promise< unknown > >()
 	
-	export function $mol_wire_fiber_key( task: ()=> void, ... args: any[] ) {
-		return task.name + '(' + args.map( v => JSON.stringify( v ) ) + ')'
-	}
-	
 	/**
 	 * Suspendable task with with support both sync/async api.
 	 **/
@@ -50,9 +46,24 @@ namespace $ {
 			task: ( this : Host , ... args : Args )=> Result,
 			... args: Args
 		): $mol_wire_fiber< Host, [ ... Args ], Result > {
+			
+			const name = task.name + '()'
+			
+			let dict, key, existen, fiber
+			
+			if( args.length ) {
 
-			const key = $mol_wire_fiber_key( task, ... args )
-			const existen = host[ key ]
+				dict = host[ name ]
+				if( !dict ) dict = host[ name ] = new Map<any,any>()
+				
+				key = args.map( v => JSON.stringify( v ) ).join(',')
+				existen = dict.get( key )
+				
+			} else {
+			
+				existen = host[ name ]
+				
+			}
 			
 			reuse: if( existen ) {
 				
@@ -64,8 +75,19 @@ namespace $ {
 				return existen
 			}
 			
-			return host[ key ] = new this( host, task, key, ... args )
+			if( args.length ) {
+				
+				fiber = new this( host, task, task.name + '(' + key + ')', ... args )
+				dict.set( key, fiber )
+				
+			} else {
+				
+				fiber = new this( host, task, name, ... args )
+				host[ name ] = fiber
+				
+			}
 			
+			return fiber
 		}
 		
 		
@@ -182,7 +204,6 @@ namespace $ {
 			const prev = this.cache
 			this.cache = next
 			if( $mol_owning_catch( this, next ) ) {
-				next[ $mol_object_field ] = this.task.name
 				next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
 			}
 			

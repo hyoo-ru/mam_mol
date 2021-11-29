@@ -16,18 +16,18 @@ namespace $ {
 				
 				return function( this: Host, ... args: any[] ) {
 					
+					const fiber = $mol_wire_fiber.persist( obj, val.orig, ... args )
+					
 					if( push ) {
 						
-						const cache = $mol_wire_fiber.persist( obj, val.orig, ... args )
-						
-						if( next === undefined ) cache.stale()
-						else cache.put( next )
+						if( next === undefined ) fiber.stale()
+						else fiber.put( next )
 						
 						return next
 						
 					} else {
 						
-						return obj[ $mol_wire_fiber_key( val.orig, ... args ) ]?.cache
+						return fiber?.cache
 						
 					}
 					
