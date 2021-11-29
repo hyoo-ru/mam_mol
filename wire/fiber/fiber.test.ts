@@ -17,29 +17,6 @@ namespace $ {
 			
 		},
 
-		'Prevent potential leakage of thrown promise'() {
-
-			class Leaked extends $mol_object2 {
-				
-				static async val( a: number ) {
-					return a
-				}
-				
-				@ $mol_wire_method
-				static calc() {
-					const syn = $mol_wire_sync( this )
-					return syn.val( 1 ) + syn.val( 2 )
-				}
-				
-			}
-			
-			$mol_assert_fail(
-				()=> Leaked.calc(),
-				'Sync execution of synced fiber available only inside $mol_fiber2_async',
-			)
-			
-		},
-
 		async 'async <=> sync'() {
 			
 			class SyncAsync extends $mol_object2 {

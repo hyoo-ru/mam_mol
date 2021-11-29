@@ -38,6 +38,15 @@ namespace $ {
 			
 			this.pop()
 			this.pop()
+			
+			if( this.length === this.subs_from ) this.alone()
+			
+		}
+		
+		/**
+		 * Called when last sub was unsubscribed.
+		 **/
+		alone() {
 		}
 		
 		/**
@@ -51,7 +60,7 @@ namespace $ {
 		 * Enforce lazy emitting.
 		 */
 		touch() {
-			this.absorb()
+			this.stale()
 		}
 		
 		/**
@@ -59,14 +68,14 @@ namespace $ {
 		 */
 		emit() {
 			for( let i = this.subs_from; i < this.length; i += 2 ) {
-				;( this[i] as $mol_wire_pub ).absorb()
+				;( this[i] as $mol_wire_pub ).stale()
 			}
 		}
 		
 		/**
 		 * Receive notification about publisher changes.
 		 */
-		absorb() {
+		stale() {
 			
 			if( !this.affect( $mol_wire_stale ) ) return false
 			
@@ -83,7 +92,9 @@ namespace $ {
 		 */
 		affect( quant: number ) {
 			for( let i = this.subs_from; i < this.length; i += 2 ) {
-				$mol_wire_queue.push( this[i] as $mol_wire_sub )
+				const sub = this[i] as $mol_wire_sub
+				//if( typeof sub !== 'object' ) return $mol_fail( new Error( 'Wrong sub' ) )
+				$mol_wire_queue.push( sub )
 			}
 			return true
 		}
@@ -96,6 +107,9 @@ namespace $ {
 			const peer = this[ from_pos ] as $mol_wire_pub
 			const self_pos = this[ from_pos + 1 ] as number
 			
+			//if( typeof peer !== 'object' ) return $mol_fail( new Error( 'Wrong peer' ) )
+			//if( typeof self_pos !== 'number' ) return $mol_fail( new Error( 'Wrong self_pos' ) )
+			
 			this[ to_pos ] = peer
 			this[ to_pos + 1 ] = self_pos
 			
@@ -106,6 +120,10 @@ namespace $ {
 		 * Updates self position in the peer.
 		 */
 		repos( peer_pos: number, self_pos: number ) {
+			//if( typeof peer_pos !== 'number' ) return $mol_fail( new Error( 'Wrong peer_pos' ) )
+			//if( typeof self_pos !== 'number' ) return $mol_fail( new Error( 'Wrong self_pos' ) )
+			//if( typeof this[ peer_pos ] !== 'object' ) return $mol_fail( new Error( 'Wrong back link' ) )
+			//if( this[ peer_pos ][ self_pos ] !== this ) return $mol_fail( new Error( 'Inconsistent back link' ) )
 			this[ peer_pos + 1 ] = self_pos
 		}
 		

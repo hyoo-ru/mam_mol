@@ -2,6 +2,10 @@ namespace $ {
 	
 	const handled = new WeakSet< Promise< unknown > >()
 	
+	export function $mol_wire_fiber_key( task: ()=> void, ... args: any[] ) {
+		return task.name + '(' + args.map( v => JSON.stringify( v ) ) + ')'
+	}
+	
 	/**
 	 * Suspendable task with with support both sync/async api.
 	 **/
@@ -34,7 +38,7 @@ namespace $ {
 				return existen
 			}
 			
-			return new this( host, task, ... args )
+			return new this( host, task, task.name + '(...)', ... args )
 		}
 		
 		static persist<
@@ -47,7 +51,7 @@ namespace $ {
 			... args: Args
 		): $mol_wire_fiber< Host, [ ... Args ], Result > {
 
-			const key = task.name + '(' + args.map( v => JSON.stringify( v ) ) + ')'
+			const key = $mol_wire_fiber_key( task, ... args )
 			const existen = host[ key ]
 			
 			reuse: if( existen ) {
@@ -61,22 +65,33 @@ namespace $ {
 				return existen
 			}
 			
-			return host[ key ] = new this( host, task, ... args )
+			return host[ key ] = new this( host, task, key, ... args )
 			
 		}
 		
 		
-		public result: Result | Error | Promise< Result | Error > = undefined as any
+		public cache: Result | Error | Promise< Result | Error > = undefined as any
 		readonly args: Args
+		
+		get result() {
+			if( this.cache instanceof Promise ) return
+			if( this.cache instanceof Error ) return
+			return this.cache
+		}
 		
 		constructor(
 			readonly host: Host,
 			readonly task: ( this : Host , ... args : Args )=> Result,
+			key: string,
 			... args: Args
 		) {
 			super()
 			this.args = args
+			$mol_owning_catch( host, this )
+			this[ Symbol.toStringTag ] = this.host + '.' + key
 		}
+		
+		destructor() {}
 		
 		[ $mol_dev_format_head ]() {
 			
@@ -88,21 +103,14 @@ namespace $ {
 				)
 			}
 			
+			const cursor = this.pubs_cursor >= 0
+				? '@' + this.pubs_cursor
+				: this.pubs_cursor.constructor.name
+			
 			return $mol_dev_format_div( {},
 				$mol_dev_format_native( this ),
-				$mol_dev_format_shade( this.pubs_cursor >= 0 ? this.pubs_cursor : this.pubs_cursor.constructor.name ),
-				$mol_dev_format_shade( ': ' ),
-				$mol_dev_format_accent(
-					... this.host ? [
-						String( this.host ),
-						$mol_dev_format_shade( '.' ),
-					] : [],
-					$$.$mol_func_name( this.task ),
-				),
-				$mol_dev_format_shade( '(' ),
-				... args.slice( 0, -1 ),
-				$mol_dev_format_shade( ') = ' ),
-				$mol_dev_format_auto( this.result ),
+				$mol_dev_format_shade( ' ' + cursor +  ' = ' ),
+				$mol_dev_format_auto( this.cache ),
 			)
 			
 		}
@@ -120,7 +128,7 @@ namespace $ {
 		
 		touch() {
 			
-			type Result = typeof this.result
+			type Result = typeof this.cache
 			
 			if( this.pubs_cursor === $mol_wire_fresh ) return
 			
@@ -154,7 +162,7 @@ namespace $ {
 			} catch( error: any ) {
 				
 				if( error instanceof Promise && !handled.has( error ) ) {
-					error = error.finally( ()=> this.absorb() )
+					error = error.finally( ()=> this.stale() )
 					handled.add( error )
 				}
 				
@@ -167,8 +175,12 @@ namespace $ {
 		
 		put( next: Result | Error | Promise< Result | Error > ) {
 			
-			const prev = this.result
-			this.result = next
+			const prev = this.cache
+			this.cache = next
+			if( $mol_owning_catch( this, next ) ) {
+				next[ $mol_object_field ] = this.task.name
+				next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+			}
 			
 			if( this.subs_from < this.length ) {
 				if( !$mol_compare_deep( prev, next ) ) {
@@ -186,20 +198,15 @@ namespace $ {
 			this.promo()
 			this.touch()
 			
-			if( this.result instanceof Error ) {
-				return $mol_fail_hidden( this.result )
+			if( this.cache instanceof Error ) {
+				return $mol_fail_hidden( this.cache )
 			}
 			
-			if( this.result instanceof Promise ) {
-				
-				if( !$mol_wire || !( $mol_wire instanceof $mol_wire_fiber ) ) {
-					$mol_fail( new Error( 'Sync execution of synced fiber available only inside $mol_fiber2_async' ) )
-				}
-				
-				return $mol_fail_hidden( this.result )
+			if( this.cache instanceof Promise ) {
+				return $mol_fail_hidden( this.cache )
 			}
 			
-			return this.result as Result extends Promise< infer Res > ? Res : Result
+			return this.cache as Result extends Promise< infer Res > ? Res : Result
 		}
 
 		async async() {
@@ -208,16 +215,21 @@ namespace $ {
 				
 				this.touch()
 				
-				if( this.result instanceof Error ) throw this.result
+				if( this.cache instanceof Error ) {
+					$mol_fail_hidden( this.cache )
+				}
 				
-				if( this.result instanceof Promise ) await this.result
-				else break
+				if( this.cache instanceof Promise ) {
+					await this.cache
+				} else break
 				
 			}
 			
-			return this.result
+			this.forget()
+			
+			return this.cache
 		}
-
+		
 	}
 	
 }
