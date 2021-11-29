@@ -114,6 +114,11 @@ namespace $ {
 			)
 			
 		}
+		
+		alone() {
+			this.cache = undefined as any
+			super.alone()
+		}
 
 		affect( quant: number ) {
 
