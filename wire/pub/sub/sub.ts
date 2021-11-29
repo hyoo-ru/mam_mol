@@ -83,8 +83,24 @@ namespace $ {
 			
 			if( this.pubs_cursor < 0 ) $mol_fail( new Error( 'End of non begun sub' ) )
 			
+			this.forget( this.pubs_cursor )
+			
+			$mol_wire = sub
+			
+		}
+		
+		alone() {
+			this.forget()
+			this.cache = undefined
+			this.pubs_cursor = $mol_wire_stale
+		}
+		
+		forget( from = 0 ) {
+			
+			let tail = 0
+			
 			for(
-				let cursor = this.pubs_cursor;
+				let cursor = from;
 				cursor < this.subs_from;
 				cursor += 2
 			) {
@@ -93,23 +109,24 @@ namespace $ {
 				pub.off( this[ cursor + 1 ] as number )
 				
 				if( this.subs_from < this.length ) {
-					this.move( cursor, this.length - 2 )
+					this.move( this.length - 2, cursor )
+					this.pop()
+					this.pop()
+				} else {
+					++ tail
 				}
 				
 			}
 			
-			const count = this.pubs_cursor + this.length - this.subs_from
-			while( this.length > count ) {
+			for(; tail; -- tail ) {
 				this.pop()
 				this.pop()
 			}
 			
-			this.subs_from = this.pubs_cursor
-			
-			$mol_wire = sub
+			this.subs_from = from
 			
 		}
-		
+
 		affect( quant: number ) {
 			
 			if( this.pubs_cursor >= quant ) return false
