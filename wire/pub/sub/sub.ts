@@ -91,7 +91,6 @@ namespace $ {
 		
 		alone() {
 			this.forget()
-			this.cache = undefined
 			this.pubs_cursor = $mol_wire_stale
 		}
 		
