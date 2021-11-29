@@ -60,7 +60,6 @@ namespace $ {
 			
 				if( existen.host !== host ) break reuse
 				if( existen.task !== task ) break reuse
-				if( !$mol_compare_deep( existen.args, args ) ) break reuse
 				
 				return existen
 			}
