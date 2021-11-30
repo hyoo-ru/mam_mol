@@ -53,17 +53,16 @@ namespace $ {
 		
 		function value( this: Host, ... args: any[] ) {
 			
-			let cache = $mol_wire_fiber.persist( this, orig, ... args.slice( 0, keys ) )
+			let atom = $mol_wire_fiber.persist( this, orig, ... args.slice( 0, keys ) )
 			
-			if( args[ keys ] === undefined ) {
-				return cache.sync()
-			}  else {
-				const fiber = $mol_wire_fiber.temp( this, orig, ... args )
-				const res = fiber.sync()
-				cache.put( res )
-				return res
-			}
+			let res = atom.sync()
+			if( args[ keys ] === undefined ) return res
 			
+			const fiber = $mol_wire_fiber.temp( this, orig, ... args )
+			res = fiber.sync()
+			atom.put( res )
+			
+			return res
 		}
 		
 		$mol_func_name_from( value, orig )
