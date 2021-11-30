@@ -3,7 +3,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Share button
+		 * title @ \Share button demo
 		 * ```
 		 */
 		title() {
@@ -44,13 +44,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Share_page $mol_button_share hint \Share this page with screenshot
+		 * Share_page $mol_button_share
+		 * 	title <= title
+		 * 	hint \Share this page with screenshot
 		 * ```
 		 */
 		@ $mol_mem
 		Share_page() {
 			const obj = new this.$.$mol_button_share()
 			
+			obj.title = () => this.title()
 			obj.hint = () => "Share this page with screenshot"
 			
 			return obj
@@ -59,6 +62,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Share_screenshot $mol_button_share
+		 * 	title \Component screensht
 		 * 	hint \Share screenshot of component
 		 * 	uri null
 		 * 	capture <= Share_hyoo
@@ -68,6 +72,7 @@ namespace $ {
 		Share_screenshot() {
 			const obj = new this.$.$mol_button_share()
 			
+			obj.title = () => "Component screensht"
 			obj.hint = () => "Share screenshot of component"
 			obj.uri = () => null as any
 			obj.capture = () => this.Share_hyoo()
@@ -78,6 +83,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Share_hyoo $mol_button_share
+		 * 	title \$hyoo
 		 * 	hint \Share hyoo.ru
 		 * 	uri \https://hyoo.ru
 		 * 	capture null
@@ -87,6 +93,7 @@ namespace $ {
 		Share_hyoo() {
 			const obj = new this.$.$mol_button_share()
 			
+			obj.title = () => "$hyoo"
 			obj.hint = () => "Share hyoo.ru"
 			obj.uri = () => "https://hyoo.ru"
 			obj.capture = () => null as any

@@ -2371,6 +2371,13 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    let $mol_report_bugsnag: string;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_button_share_demo extends $mol_example {
         title(): string;
         sub(): readonly any[];
