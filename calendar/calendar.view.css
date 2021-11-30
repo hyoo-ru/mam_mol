@@ -24,6 +24,7 @@
 	text-align: center;
 	word-break: normal;
 	box-shadow: none;
+	border-radius: var(--mol_gap_round);
 }
 
 [mol_calendar_weekday] {
