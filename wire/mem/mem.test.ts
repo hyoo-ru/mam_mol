@@ -144,6 +144,39 @@ namespace $ {
 
 		} ,
 
+		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
+		'Different order of pull and push'( $ ) {
+		
+			class App extends $mol_object {
+		
+				static $ = $
+				
+				@ $mol_wire_mem(0)
+				static store( next = 0 ) {
+					return next
+				}
+		
+				@ $mol_wire_mem(0)
+				static fast( next?: number ) {
+					return this.store( next )
+				}
+		
+				@ $mol_wire_mem(0)
+				static slow( next?: number ) {
+					return this.store( next )
+				}
+		
+			}
+		
+			App.fast()
+			$mol_assert_equal( App.slow( 666 ) , 666 )
+			$mol_assert_equal( App.fast(), App.slow(), 666 )
+			
+			App.store( 777 )
+			$mol_assert_equal( App.fast(), App.slow(), 777 )
+
+		} ,
+		
 		'Actions inside invariant'( $ ) {
 		
 			class App extends $mol_object {
