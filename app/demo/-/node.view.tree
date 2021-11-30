@@ -538,17 +538,23 @@ $mol_icon_share_variant $mol_icon path \M18,16.08C17.24,16.08 16.56,16.38 16.04,
 
 $mol_button_share $mol_button_minor
 	uri \
+	capture null
 	sub /
 		<= Icon $mol_icon_share_variant
 
 $mol_button_share_demo $mol_example
 	title @ \Share button
 	sub /
-		<= Share_self $mol_button_share
-			title \Share this page
+		<= Share_page $mol_button_share
+			hint \Share this page with screenshot
+		<= Share_screenshot $mol_button_share
+			hint \Share screenshot of component
+			uri null
+			capture <= Share_hyoo
 		<= Share_hyoo $mol_button_share
-			title \Share hyoo.ru
+			hint \Share hyoo.ru
 			uri \https://hyoo.ru
+			capture null
 	tags /
 		\share
 		\button

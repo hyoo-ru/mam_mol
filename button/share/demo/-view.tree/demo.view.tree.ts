@@ -13,13 +13,15 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Share_self
+		 * 	<= Share_page
+		 * 	<= Share_screenshot
 		 * 	<= Share_hyoo
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Share_self(),
+				this.Share_page(),
+				this.Share_screenshot(),
 				this.Share_hyoo()
 			] as readonly any[]
 		}
@@ -42,14 +44,33 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Share_self $mol_button_share title \Share this page
+		 * Share_page $mol_button_share hint \Share this page with screenshot
 		 * ```
 		 */
 		@ $mol_mem
-		Share_self() {
+		Share_page() {
 			const obj = new this.$.$mol_button_share()
 			
-			obj.title = () => "Share this page"
+			obj.hint = () => "Share this page with screenshot"
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Share_screenshot $mol_button_share
+		 * 	hint \Share screenshot of component
+		 * 	uri null
+		 * 	capture <= Share_hyoo
+		 * ```
+		 */
+		@ $mol_mem
+		Share_screenshot() {
+			const obj = new this.$.$mol_button_share()
+			
+			obj.hint = () => "Share screenshot of component"
+			obj.uri = () => null as any
+			obj.capture = () => this.Share_hyoo()
 			
 			return obj
 		}
@@ -57,16 +78,18 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Share_hyoo $mol_button_share
-		 * 	title \Share hyoo.ru
+		 * 	hint \Share hyoo.ru
 		 * 	uri \https://hyoo.ru
+		 * 	capture null
 		 * ```
 		 */
 		@ $mol_mem
 		Share_hyoo() {
 			const obj = new this.$.$mol_button_share()
 			
-			obj.title = () => "Share hyoo.ru"
+			obj.hint = () => "Share hyoo.ru"
 			obj.uri = () => "https://hyoo.ru"
+			obj.capture = () => null as any
 			
 			return obj
 		}

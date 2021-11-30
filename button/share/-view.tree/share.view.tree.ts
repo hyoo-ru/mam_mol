@@ -12,6 +12,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * capture null
+		 * ```
+		 */
+		capture() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * sub / <= Icon
 		 * ```
 		 */
