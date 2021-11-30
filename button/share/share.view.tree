@@ -1,4 +1,5 @@
 $mol_button_share $mol_button_minor
 	uri \
+	capture null
 	sub /
 		<= Icon $mol_icon_share_variant
