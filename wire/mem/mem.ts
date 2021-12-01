@@ -1,5 +1,16 @@
 namespace $ {
 	
+	export function $mol_wire_mem_solid() {
+
+		const atom = $mol_wire
+		if( !atom ) return
+		
+		if( atom instanceof $mol_wire_fiber ) {
+			atom.destructor = ()=> {}
+		}
+		
+	}
+	
 	export function $mol_wire_mem_cache_reset< Host extends object >( host: Host ) {
 		return $mol_wire_mem_cache( host, undefined )
 	}
@@ -27,7 +38,7 @@ namespace $ {
 						
 					} else {
 						
-						return fiber?.cache
+						return fiber?.result
 						
 					}
 					
@@ -65,7 +76,7 @@ namespace $ {
 			return res
 		}
 		
-		$mol_func_name_from( value, orig )
+		Object.defineProperty( value , 'name' , { value : orig.name + '@' } )
 		
 		Object.assign( value, { orig } )
 		const descr2 = { ... descr, value }

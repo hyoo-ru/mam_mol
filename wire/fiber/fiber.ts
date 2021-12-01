@@ -100,6 +100,11 @@ namespace $ {
 			return this.cache
 		}
 		
+		get persistent() {
+			const id = this[ Symbol.toStringTag ]
+			return id[ id.length - 2 ] !== '.'
+		}
+		
 		constructor(
 			readonly host: Host,
 			readonly task: ( this : Host , ... args : Args )=> Result,
@@ -112,8 +117,15 @@ namespace $ {
 			this[ Symbol.toStringTag ] = this.host + '.' + key
 		}
 		
-		destructor() {}
+		destructor() {
+			super.destructor()
+			this.cache = undefined as any
+		}
 		
+		alone() {
+			this.destructor()
+		}
+
 		[ $mol_dev_format_head ]() {
 			
 			const args = [] as any[]
@@ -136,11 +148,6 @@ namespace $ {
 			
 		}
 		
-		alone() {
-			this.cache = undefined as any
-			super.alone()
-		}
-
 		affect( quant: number ) {
 
 			if( !super.affect( quant ) ) return false
@@ -184,6 +191,12 @@ namespace $ {
 				
 				this.end( bu )
 				this.put( result )
+				
+				if( result instanceof Promise ) return
+				
+				if( !this.persistent ) {
+					this.forget()
+				}
 				
 			} catch( error: any ) {
 				
@@ -249,8 +262,6 @@ namespace $ {
 				} else break
 				
 			}
-			
-			this.forget()
 			
 			return this.cache
 		}

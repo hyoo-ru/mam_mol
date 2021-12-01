@@ -89,10 +89,12 @@ namespace $ {
 			
 		}
 		
-		alone() {
+		destructor() {
 			this.forget()
 			this.pubs_cursor = $mol_wire_stale
 		}
+		
+		alone() { }
 		
 		forget( from = 0 ) {
 			
