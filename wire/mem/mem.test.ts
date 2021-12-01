@@ -124,7 +124,7 @@ namespace $ {
 		// https://github.com/nin-jin/slides/tree/master/reactivity#cycle-fail
 		'Cycle: Fail'( $ ) {
 		
-			class App extends $mol_object {
+			class App extends $mol_object2 {
 		
 				static $ = $
 				
@@ -147,7 +147,7 @@ namespace $ {
 		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
 		'Different order of pull and push'( $ ) {
 		
-			class App extends $mol_object {
+			class App extends $mol_object2 {
 		
 				static $ = $
 				
@@ -179,13 +179,18 @@ namespace $ {
 		
 		'Actions inside invariant'( $ ) {
 		
-			class App extends $mol_object {
+			class App extends $mol_object2 {
 		
 				static $ = $
 				
 				@ $mol_wire_mem(0)
 				static count( next = 0 ) {
 					return next
+				}
+		
+				//@ $mol_wire_mem(0)
+				static count2() {
+					return this.count()
 				}
 		
 				@ $mol_wire_mem(0)
@@ -202,8 +207,9 @@ namespace $ {
 		
 				@ $mol_wire_mem(0)
 				static res() {
+					const count = this.count2()
 					this.inc_task()
-					return this.count()
+					return count
 				}
 		
 			}
