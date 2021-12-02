@@ -3,8 +3,8 @@ namespace $ {
 		
 		'Collect deps'() {
 			
-			const pub1 = new class extends $mol_wire_pub { p = 1 }
-			const pub2 = new class extends $mol_wire_pub { p = 2 }
+			const pub1 = new $mol_wire_pub
+			const pub2 = new $mol_wire_pub
 			const sub = new $mol_wire_pub_sub
 			
 			const bu1 = sub.begin()

@@ -21,7 +21,7 @@ namespace $ {
 			... args: Args
 		): $mol_wire_fiber< Host, [ ... Args ], Result > {
 			
-			const existen = $mol_wire?.next()
+			const existen = $mol_wire_auto?.next()
 			
 			reuse: if( existen ) {
 				
@@ -148,9 +148,9 @@ namespace $ {
 			
 		}
 		
-		affect( quant: number ) {
+		affect( quant: number, pos: number ) {
 
-			if( !super.affect( quant ) ) return false
+			if( !super.affect( quant, pos ) ) return false
 			
 			if( this.subs_from === this.length ) {
 				new $mol_after_frame( ()=> this.touch() )
@@ -163,16 +163,16 @@ namespace $ {
 			
 			type Result = typeof this.cache
 			
-			if( this.pubs_cursor === $mol_wire_fresh ) return
+			if( this.pubs_cursor === $mol_wire_status.fresh ) return
 			
-			check: if( this.pubs_cursor === $mol_wire_doubt ) {
+			check: if( this.pubs_cursor === $mol_wire_status.doubt ) {
 				
 				for( let i = 0 ; i < this.subs_from; i += 2 ) {
 					;( this[i] as $mol_wire_pub ).touch()
-					if( this.pubs_cursor === $mol_wire_stale ) break check
+					if( this.pubs_cursor === $mol_wire_status.stale ) break check
 				}
 				
-				this.pubs_cursor = $mol_wire_fresh
+				this.pubs_cursor = $mol_wire_status.fresh
 				return
 				
 			}
@@ -226,7 +226,7 @@ namespace $ {
 				}
 			}
 			
-			this.pubs_cursor = $mol_wire_fresh
+			this.pubs_cursor = $mol_wire_status.fresh
 			
 			return next
 		}
