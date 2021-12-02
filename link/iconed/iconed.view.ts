@@ -23,7 +23,7 @@ namespace $.$$ {
 			return [
 				... this.host() ? [ this.Icon() ] : [],
 				... this.content(),
-			]
+			] as readonly any[]
 		}
 
 	}
