@@ -2,7 +2,7 @@ namespace $ {
 	
 	export function $mol_wire_mem_solid() {
 
-		const atom = $mol_wire
+		const atom = $mol_wire_auto
 		if( !atom ) return
 		
 		if( atom instanceof $mol_wire_fiber ) {
@@ -62,21 +62,22 @@ namespace $ {
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( proto , name )
 		const orig = descr!.value!
 		
-		function value( this: Host, ... args: any[] ) {
-			
+		function push( this: Host, ... args: any[] ) {
 			let atom = $mol_wire_fiber.persist( this, orig, ... args.slice( 0, keys ) )
-			
-			let res = atom.sync()
-			if( args[ keys ] === undefined ) return res
-			
-			const fiber = $mol_wire_fiber.temp( this, orig, ... args )
-			res = fiber.sync()
-			atom.put( res )
-			
-			return res
+			atom.sync()
+			return atom.put( orig.call( this, ... args ) )
 		}
 		
-		Object.defineProperty( value , 'name' , { value : orig.name + '@' } )
+		function value( this: Host, ... args: any[] ) {
+			if( args[ keys ] === undefined ) {
+				return $mol_wire_fiber.persist( this, orig, ... args.slice( 0, keys ) ).sync()
+			} else {
+				return $mol_wire_fiber.temp( this, push, ... args ).sync()
+			}
+		}
+		
+		Object.defineProperty( push , 'name' , { value : orig.name + '@mem_push' } )
+		Object.defineProperty( value , 'name' , { value : orig.name + '@mem' } )
 		
 		Object.assign( value, { orig } )
 		const descr2 = { ... descr, value }

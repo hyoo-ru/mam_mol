@@ -5,7 +5,7 @@ namespace $ {
 			get( obj, field ) {
 				const val = obj[ field ]
 				if( typeof val !== 'function' ) return val
-				return function( this: Host, ... args: any[] ) {
+				return function $mol_wire_sync( this: Host, ... args: any[] ) {
 					const fiber = $mol_wire_fiber.temp( obj, val, ... args )
 					return fiber.sync()
 				}

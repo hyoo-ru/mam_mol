@@ -9,15 +9,23 @@ namespace $ {
 				static $ = $
 				
 				@ $mol_wire_mem(0)
-				static value( next = 1 ) { return next + 1 }
+				static value( next = 1 ) {
+					return next + 1
+				}
+				
+				@ $mol_wire_method
+				static test() {
+					
+					$mol_assert_equal( App.value() , 2 )
+		
+					App.value( 2 )
+					$mol_assert_equal( App.value() , 3 )
+					
+				}
 
 			}
-
-			$mol_assert_equal( App.value() , 2 )
-
-			App.value( 2 )
-			$mol_assert_equal( App.value() , 3 )
-
+			
+			App.test()
 		},
 
 		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--constant-consistency-of-states
@@ -42,14 +50,20 @@ namespace $ {
 					return this.yyy() + 1
 				}
 
+				@ $mol_wire_method
+				static test() {
+					
+					$mol_assert_equal( App.yyy() , 2 )
+					$mol_assert_equal( App.zzz() , 3 )
+		
+					App.xxx( 5 )
+					$mol_assert_equal( App.zzz() , 7 )
+					
+				}
+				
 			}
 			
-			$mol_assert_equal( App.yyy() , 2 )
-			$mol_assert_equal( App.zzz() , 3 )
-
-			App.xxx( 5 )
-			$mol_assert_equal( App.zzz() , 7 )
-			
+			App.test()
 		},
 
 		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--only-necessary-calculations
@@ -79,15 +93,21 @@ namespace $ {
 					return this.yyy()[0] + 1
 				}
 
+				@ $mol_wire_method
+				static test() {
+					
+					App.zzz()
+					$mol_assert_like( log , [ 'zzz', 'yyy', 'xxx' ] )
+					
+					App.xxx( 5 )
+					App.zzz()
+					$mol_assert_like( log , [ 'zzz', 'yyy', 'xxx', 'xxx', 'yyy' ] )
+					
+				}
+				
 			}
 			
-			App.zzz()
-			$mol_assert_like( log , [ 'zzz', 'yyy', 'xxx' ] )
-			
-			App.xxx( 5 )
-			App.zzz()
-			$mol_assert_like( log , [ 'zzz', 'yyy', 'xxx', 'xxx', 'yyy' ] )
-			
+			App.test()
 		},
 
 		// https://github.com/nin-jin/slides/tree/master/reactivity#dupes-equality
@@ -109,16 +129,22 @@ namespace $ {
 					return { ... this.foo(), count: ++ counter }
 				}
 
+				@ $mol_wire_method
+				static test() {
+					
+					$mol_assert_like( App.bar() , { numbs: [ 1 ], count: 1 } )
+		
+					App.foo({ numbs: [ 1 ] })
+					$mol_assert_like( App.bar() , { numbs: [ 1 ], count: 1 } )
+					
+					App.foo({ numbs: [ 2 ] })
+					$mol_assert_like( App.bar() , { numbs: [ 2 ], count: 2 } )
+					
+				}
+				
 			}
 			
-			$mol_assert_like( App.bar() , { numbs: [ 1 ], count: 1 } )
-
-			App.foo({ numbs: [ 1 ] })
-			$mol_assert_like( App.bar() , { numbs: [ 1 ], count: 1 } )
-			
-			App.foo({ numbs: [ 2 ] })
-			$mol_assert_like( App.bar() , { numbs: [ 2 ], count: 2 } )
-			
+			App.test()
 		},
 
 		// https://github.com/nin-jin/slides/tree/master/reactivity#cycle-fail
@@ -138,10 +164,14 @@ namespace $ {
 					return this.foo() + 1
 				}
 		
+				@ $mol_wire_method
+				static test() {
+					$mol_assert_fail( ()=> App.foo(), 'Circular subscription' )
+				}	
+				
 			}
-		
-			$mol_assert_fail( ()=> App.foo(), 'Circular subscription' )
-
+			
+			App.test()
 		} ,
 
 		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
@@ -166,17 +196,24 @@ namespace $ {
 					return this.store( next )
 				}
 		
-			}
-		
-			App.fast()
-			$mol_assert_equal( App.slow( 666 ) , 666 )
-			$mol_assert_equal( App.fast(), App.slow(), 666 )
-			
-			App.store( 777 )
-			$mol_assert_equal( App.fast(), App.slow(), 777 )
+				@ $mol_wire_method
+				static test() {
+					
+					App.fast()
+					$mol_assert_equal( App.slow( 666 ) , 666 )
+					$mol_assert_equal( App.fast(), App.slow(), 666 )
+					
+					App.store( 777 )
+					$mol_assert_equal( App.fast(), App.slow(), 777 )
 
+				}	
+				
+			}
+			
+			App.test()
 		} ,
 		
+		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
 		'Actions inside invariant'( $ ) {
 		
 			class App extends $mol_object2 {
@@ -188,44 +225,31 @@ namespace $ {
 					return next
 				}
 		
-				//@ $mol_wire_mem(0)
+				@ $mol_wire_mem(0)
 				static count2() {
 					return this.count()
 				}
 		
 				@ $mol_wire_mem(0)
-				static inc_event( next = null as null | Event ) {
-					return next
-				}
-		
-				@ $mol_wire_mem(0)
-				static inc_task() {
-					if( !this.inc_event() ) return
-					this.count( this.count() + 1 )
-					this.inc_event( null )
-				}
-		
-				@ $mol_wire_mem(0)
 				static res() {
 					const count = this.count2()
-					this.inc_task()
-					return count
+					if( !count ) this.count( count + 1 )
+					return count + 1
 				}
 		
+				@ $mol_wire_method
+				static test() {
+					
+					$mol_assert_like( App.res() , 1 )
+					
+					App.count( 5 )
+					$mol_assert_like( App.res() , 6 )
+					
+				}
+				
 			}
 			
-			$mol_assert_like( App.res() , 0 )
-			
-			App.inc_event( new Event( 'inc' ) )
-			$mol_assert_like( App.res() , 1 )
-			
-			App.inc_event( new Event( 'inc' ) )
-			App.inc_event( new Event( 'inc' ) )
-			$mol_assert_like( App.res() , 2 )
-			
-			App.count( 0 )
-			$mol_assert_like( App.res() , 0 )
-			
+			App.test()
 		} ,
 
 	})

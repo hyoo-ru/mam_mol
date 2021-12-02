@@ -9,7 +9,7 @@ namespace $ {
 	 */
 	export class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
 		
-		protected pubs_cursor = $mol_wire_stale // 4B
+		protected pubs_cursor = $mol_wire_status.stale // 4B
 		
 		get wire_pubs() {
 			const res = [] as $mol_wire_pub[]
@@ -29,8 +29,8 @@ namespace $ {
 		
 		begin() {
 			this.pubs_cursor = 0
-			const sub = $mol_wire
-			$mol_wire = this
+			const sub = $mol_wire_auto
+			$mol_wire_auto = this
 			return sub
 		}
 		
@@ -40,7 +40,7 @@ namespace $ {
 				$mol_fail( new Error( 'Circular subscription' ) )
 			}
 			
-			$mol_wire?.next( this )
+			$mol_wire_auto?.next( this )
 		}
 		
 		next( pub?: $mol_wire_pub ): $mol_wire_pub | null {
@@ -85,13 +85,14 @@ namespace $ {
 			
 			this.forget( this.pubs_cursor )
 			
-			$mol_wire = sub
+			$mol_wire_auto = sub
+			this.pubs_cursor = $mol_wire_status.fresh
 			
 		}
 		
 		destructor() {
 			this.forget()
-			this.pubs_cursor = $mol_wire_stale
+			this.pubs_cursor = $mol_wire_status.stale
 		}
 		
 		alone() { }
@@ -128,12 +129,18 @@ namespace $ {
 			
 		}
 
-		affect( quant: number ) {
+		affect( quant: number, pos: number ) {
 			
-			if( this.pubs_cursor >= quant ) return false
+			if( this.pubs_cursor >= quant ) {
+				if( this.pubs_cursor < 0 ) return false
+				if( this.pubs_cursor <= pos + 2 ) return false
+				const pub = this[ pos ] as $mol_wire_pub
+				pub.touch()
+				return false
+			}
 			this.pubs_cursor = quant
 			
-			return super.affect( quant )
+			return super.affect( quant, pos )
 		}
 		
 		[ $mol_dev_format_head ]() {
