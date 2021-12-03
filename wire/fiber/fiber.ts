@@ -92,7 +92,10 @@ namespace $ {
 		
 		
 		public cache: Result | Error | Promise< Result | Error > = undefined as any
-		readonly args: Args
+		
+		get args() {
+			return this.slice( 0 , this.pubs_from ) as any as Args
+		}
 		
 		get result() {
 			if( this.cache instanceof Promise ) return
@@ -100,7 +103,7 @@ namespace $ {
 			return this.cache
 		}
 		
-		get persistent() {
+		get persist() {
 			const id = this[ Symbol.toStringTag ]
 			return id[ id.length - 2 ] !== '.'
 		}
@@ -112,7 +115,8 @@ namespace $ {
 			... args: Args
 		) {
 			super()
-			this.args = args
+			this.push( ... args as any )
+			this.pubs_from = this.subs_from = args.length
 			$mol_owning_catch( host, this )
 			this[ Symbol.toStringTag ] = this.host + '.' + key
 		}
@@ -128,17 +132,9 @@ namespace $ {
 
 		[ $mol_dev_format_head ]() {
 			
-			const args = [] as any[]
-			for( const val of this.args ) {
-				args.push(
-					$mol_dev_format_auto( val ),
-					$mol_dev_format_shade( ', ' ),
-				)
-			}
-			
-			const cursor = this.pubs_cursor >= 0
-				? '@' + this.pubs_cursor
-				: this.pubs_cursor.constructor.name
+			const cursor = this.cursor >= 0
+				? '@' + this.cursor
+				: this.cursor.constructor.name
 			
 			return $mol_dev_format_div( {},
 				$mol_dev_format_native( this ),
@@ -163,16 +159,16 @@ namespace $ {
 			
 			type Result = typeof this.cache
 			
-			if( this.pubs_cursor === $mol_wire_status.fresh ) return
+			if( this.cursor === $mol_wire_cursor.fresh ) return
 			
-			check: if( this.pubs_cursor === $mol_wire_status.doubt ) {
+			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
-				for( let i = 0 ; i < this.subs_from; i += 2 ) {
+				for( let i = this.pubs_from ; i < this.subs_from; i += 2 ) {
 					;( this[i] as $mol_wire_pub ).touch()
-					if( this.pubs_cursor === $mol_wire_status.stale ) break check
+					if( this.cursor === $mol_wire_cursor.stale ) break check
 				}
 				
-				this.pubs_cursor = $mol_wire_status.fresh
+				this.cursor = $mol_wire_cursor.fresh
 				return
 				
 			}
@@ -194,7 +190,7 @@ namespace $ {
 				
 				if( result instanceof Promise ) return
 				
-				if( !this.persistent ) {
+				if( !this.persist ) {
 					this.forget()
 				}
 				
@@ -226,7 +222,7 @@ namespace $ {
 				}
 			}
 			
-			this.pubs_cursor = $mol_wire_status.fresh
+			this.cursor = $mol_wire_cursor.fresh
 			
 			return next
 		}

@@ -19,7 +19,7 @@ namespace $ {
 			pub1.emit()
 			pub2.emit()
 			
-			$mol_assert_like( sub.wire_pubs, [ pub1, pub2, pub2 ] )
+			$mol_assert_like( sub.pubs, [ pub1, pub2, pub2 ] )
 			
 			const bu2 = sub.begin()
 			try {
@@ -33,7 +33,7 @@ namespace $ {
 			pub1.emit()
 			pub2.emit()
 			
-			$mol_assert_like( sub.wire_pubs, [ pub1, pub1, pub2 ] )
+			$mol_assert_like( sub.pubs, [ pub1, pub1, pub2 ] )
 			
 		},
 		
