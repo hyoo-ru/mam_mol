@@ -121,8 +121,16 @@ namespace $ {
 		}
 		
 		destructor() {
+			
 			super.destructor()
+			
+			const prev = this.cache
+			if( $mol_owning_check( this, prev ) ) {
+				prev.destructor()
+			}
+			
 			this.cache = undefined as any
+			
 		}
 		
 		alone() {
@@ -210,15 +218,25 @@ namespace $ {
 		put( next: Result | Error | Promise< Result | Error > ) {
 			
 			const prev = this.cache
-			this.cache = next
-			if( $mol_owning_catch( this, next ) ) {
-				next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
-			}
 			
-			if( this.subs_from < this.length ) {
-				if( !$mol_compare_deep( prev, next ) ) {
-					this.emit()
+			if( next !== prev ) {
+				
+				if( $mol_owning_check( this, prev ) ) {
+					prev.destructor()
 				}
+				
+				this.cache = next
+				
+				if( $mol_owning_catch( this, next ) ) {
+					next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+				}
+				
+				if( this.subs_from < this.length ) {
+					if( !$mol_compare_deep( prev, next ) ) {
+						this.emit()
+					}
+				}
+				
 			}
 			
 			this.cursor = $mol_wire_cursor.fresh
