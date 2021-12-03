@@ -77,11 +77,11 @@ namespace $ {
 		 */
 		stale() {
 			
-			if( !this.affect( $mol_wire_status.stale ) ) return false
+			if( !this.affect( $mol_wire_cursor.stale ) ) return false
 			
 			while( $mol_wire_queue.length ) {
 				const next = $mol_wire_queue.pop()! as $mol_wire_sub
-				next.affect( $mol_wire_status.doubt )
+				next.affect( $mol_wire_cursor.doubt )
 			}
 			
 			return true
