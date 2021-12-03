@@ -23,7 +23,7 @@ namespace $.$$ {
 			return res
 		}
 		
-		@ $mol_mem
+		@ $mol_mem_key
 		level_opacity( level: number ) {
 			return String( level / this.levels().length )
 		}

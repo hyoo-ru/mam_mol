@@ -85,6 +85,15 @@ namespace $ {
 			
 			this.forget( this.pubs_cursor )
 			
+			for(
+				let cursor = 0;
+				cursor < this.subs_from;
+				cursor += 2
+			) {
+				const pub = this[ cursor ] as $mol_wire_pub
+				pub.touch()
+			}
+			
 			$mol_wire_auto = sub
 			this.pubs_cursor = $mol_wire_status.fresh
 			
@@ -129,18 +138,12 @@ namespace $ {
 			
 		}
 
-		affect( quant: number, pos: number ) {
+		affect( quant: number ) {
 			
-			if( this.pubs_cursor >= quant ) {
-				if( this.pubs_cursor < 0 ) return false
-				if( this.pubs_cursor <= pos + 2 ) return false
-				const pub = this[ pos ] as $mol_wire_pub
-				pub.touch()
-				return false
-			}
+			if( this.pubs_cursor >= quant ) return false
 			this.pubs_cursor = quant
 			
-			return super.affect( quant, pos )
+			return super.affect( quant )
 		}
 		
 		[ $mol_dev_format_head ]() {
