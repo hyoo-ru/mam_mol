@@ -4,7 +4,7 @@ namespace $ {
 	
 	globalThis.onerror = function( msg, url, line, col, err ) {
 		
-		const el = document.activeElement
+		const doc = $mol_dom_context.document
 		
 		const report = {
 			apiKey: $mol_report_bugsnag,
@@ -20,10 +20,10 @@ namespace $ {
 					userAgent: navigator.userAgent,
 					time: new Date().toISOString(),
 				},
-				context: el && el.id,
+				context: doc?.activeElement?.id,
 				exceptions: [{
-					message: err && err.message || err || msg,
-					errorClass: err && err.constructor.name,
+					message: err?.message || err || msg,
+					errorClass: err?.constructor.name,
 					stacktrace: [{
 						columnNumber: col,
 						file: url,
@@ -35,8 +35,8 @@ namespace $ {
 					stack: err && err.stack,
 				},
 				request: {
-					url: document.location.href,
-					referer: document.referrer,
+					url: doc?.location.href,
+					referer: doc?.referrer,
 				},
 			}],
 		}
