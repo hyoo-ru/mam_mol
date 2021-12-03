@@ -953,6 +953,61 @@ var $;
 ;
 "use strict";
 var $;
+(function ($) {
+    $.$mol_test({
+        'Primitives'() {
+            $.$mol_assert_equal($.$mol_key(null), 'null');
+            $.$mol_assert_equal($.$mol_key(false), 'false');
+            $.$mol_assert_equal($.$mol_key(true), 'true');
+            $.$mol_assert_equal($.$mol_key(0), '0');
+            $.$mol_assert_equal($.$mol_key(''), '""');
+        },
+        'Array & POJO'() {
+            $.$mol_assert_equal($.$mol_key([null]), '[null]');
+            $.$mol_assert_equal($.$mol_key({ foo: 0 }), '{"foo":0}');
+            $.$mol_assert_equal($.$mol_key({ foo: [false] }), '{"foo":[false]}');
+        },
+        'Function'() {
+            const func = () => { };
+            $.$mol_assert_equal($.$mol_key(func), $.$mol_key(func));
+            $.$mol_assert_unique($.$mol_key(func), $.$mol_key(() => { }));
+        },
+        'Objects'() {
+            class User {
+            }
+            const jin = new User();
+            $.$mol_assert_equal($.$mol_key(jin), $.$mol_key(jin));
+            $.$mol_assert_unique($.$mol_key(jin), $.$mol_key(new User()));
+        },
+        'Elements'() {
+            const foo = $.$mol_jsx("div", null, "bar");
+            $.$mol_assert_equal($.$mol_key(foo), $.$mol_key(foo));
+            $.$mol_assert_unique($.$mol_key(foo), $.$mol_key($.$mol_jsx("div", null, "bar")));
+        },
+        'Custom JSON representation'() {
+            class User {
+                name;
+                age;
+                constructor(name, age) {
+                    this.name = name;
+                    this.age = age;
+                }
+                toJSON() { return { name: this.name }; }
+            }
+            $.$mol_assert_equal($.$mol_key(new User('jin', 18)), '{"name":"jin"}');
+        },
+        'Special native classes'() {
+            $.$mol_assert_equal($.$mol_key(new Date('xyz')), 'null');
+            $.$mol_assert_equal($.$mol_key(new Date('2001-01-02T03:04:05.678Z')), '"2001-01-02T03:04:05.678Z"');
+            $.$mol_assert_equal($.$mol_key(/./), '"/./"');
+            $.$mol_assert_equal($.$mol_key(/\./gimsu), '"/\\\\./gimsu"');
+        },
+    });
+})($ || ($ = {}));
+//key.test.js.map
+;
+"use strict";
+var $;
 (function ($_1) {
     $_1.$mol_test({
         'keyed reactive properties'($) {

@@ -56,7 +56,7 @@ namespace $ {
 				dict = host[ name ]
 				if( !dict ) dict = host[ name ] = new Map<any,any>()
 				
-				key = args.map( v => JSON.stringify( v ) ).join(',')
+				key = args.map( v => $mol_key( v ) ).join(',')
 				existen = dict.get( key )
 				
 			} else {
@@ -148,9 +148,9 @@ namespace $ {
 			
 		}
 		
-		affect( quant: number, pos: number ) {
+		affect( quant: number ) {
 
-			if( !super.affect( quant, pos ) ) return false
+			if( !super.affect( quant ) ) return false
 			
 			if( this.subs_from === this.length ) {
 				new $mol_after_frame( ()=> this.touch() )

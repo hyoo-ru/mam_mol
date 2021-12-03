@@ -62,22 +62,20 @@ namespace $ {
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( proto , name )
 		const orig = descr!.value!
 		
-		function push( this: Host, ... args: any[] ) {
-			let atom = $mol_wire_fiber.persist( this, orig, ... args.slice( 0, keys ) )
-			atom.sync()
-			return atom.put( orig.call( this, ... args ) )
-		}
-		
 		function value( this: Host, ... args: any[] ) {
-			if( args[ keys ] === undefined ) {
-				return $mol_wire_fiber.persist( this, orig, ... args.slice( 0, keys ) ).sync()
-			} else {
-				return $mol_wire_fiber.temp( this, push, ... args ).sync()
-			}
+			
+			let atom = $mol_wire_fiber.persist( this, orig, ... args.slice( 0, keys ) )
+			
+			let res = atom.sync()
+			if( args[ keys ] === undefined ) return res
+			
+			return atom.put(
+				$mol_wire_fiber.temp( this, orig, ... args ).sync()
+			)
+			
 		}
 		
-		Object.defineProperty( push , 'name' , { value : orig.name + '@mem_push' } )
-		Object.defineProperty( value , 'name' , { value : orig.name + '@mem' } )
+		Object.defineProperty( value , 'name' , { value : orig.name + '@' } )
 		
 		Object.assign( value, { orig } )
 		const descr2 = { ... descr, value }

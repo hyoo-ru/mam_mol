@@ -68,21 +68,20 @@ namespace $ {
 		 */
 		emit() {
 			for( let i = this.subs_from; i < this.length; i += 2 ) {
-				;( this[i] as $mol_wire_pub ).stale( this[i+1] as number )
+				;( this[i] as $mol_wire_pub ).stale()
 			}
 		}
 		
 		/**
 		 * Receive notification about publisher changes.
 		 */
-		stale( pos = -1 ) {
+		stale() {
 			
-			if( !this.affect( $mol_wire_status.stale, pos ) ) return false
+			if( !this.affect( $mol_wire_status.stale ) ) return false
 			
 			while( $mol_wire_queue.length ) {
-				const pos = $mol_wire_queue.pop()! as number
 				const next = $mol_wire_queue.pop()! as $mol_wire_sub
-				next.affect( $mol_wire_status.doubt, pos )
+				next.affect( $mol_wire_status.doubt )
 			}
 			
 			return true
@@ -91,11 +90,11 @@ namespace $ {
 		/**
 		 * Add self subscribers to affection queue.
 		 */
-		affect( quant: number, pos: number ) {
+		affect( quant: number ) {
 			for( let i = this.subs_from; i < this.length; i += 2 ) {
 				const sub = this[i] as $mol_wire_sub
 				//if( typeof sub !== 'object' ) return $mol_fail( new Error( 'Wrong sub' ) )
-				$mol_wire_queue.push( sub, this[i+1] as number )
+				$mol_wire_queue.push( sub )
 			}
 			return true
 		}

@@ -434,7 +434,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_key<Value>(value: Value): string | Value;
+    function $mol_guid(length?: number, exists?: (id: string) => boolean): string;
+}
+
+declare namespace $ {
+    function $mol_key<Value>(value: Value): string;
 }
 
 declare namespace $ {
