@@ -117,7 +117,6 @@ namespace $ {
 			super()
 			this.push( ... args as any )
 			this.pubs_from = this.subs_from = args.length
-			$mol_owning_catch( host, this )
 			this[ Symbol.toStringTag ] = this.host + '.' + key
 		}
 		
