@@ -105,8 +105,6 @@ namespace $ {
 			this.cursor = $mol_wire_cursor.stale
 		}
 		
-		alone() { }
-		
 		forget( from = this.pubs_from ) {
 			
 			let tail = 0

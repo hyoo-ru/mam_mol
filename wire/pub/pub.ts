@@ -11,6 +11,8 @@ namespace $ {
 			return Array
 		}
 		
+		static affected = [] as ( $mol_wire_sub | number )[]
+		
 		protected subs_from = 0 // 4B
 		
 		/**
@@ -39,15 +41,14 @@ namespace $ {
 			this.pop()
 			this.pop()
 			
-			if( this.length === this.subs_from ) this.alone()
+			if( this.length === this.subs_from ) this.reap()
 			
 		}
 		
 		/**
 		 * Called when last sub was unsubscribed.
 		 **/
-		alone() {
-		}
+		reap() { }
 		
 		/**
 		 * Autowire this publisher with current subscriber.
@@ -79,8 +80,8 @@ namespace $ {
 			
 			if( !this.affect( $mol_wire_cursor.stale ) ) return false
 			
-			while( $mol_wire_queue.length ) {
-				const next = $mol_wire_queue.pop()! as $mol_wire_sub
+			while( $mol_wire_pub.affected.length ) {
+				const next = $mol_wire_pub.affected.pop()! as $mol_wire_sub
 				next.affect( $mol_wire_cursor.doubt )
 			}
 			
@@ -94,7 +95,7 @@ namespace $ {
 			for( let i = this.subs_from; i < this.length; i += 2 ) {
 				const sub = this[i] as $mol_wire_sub
 				//if( typeof sub !== 'object' ) return $mol_fail( new Error( 'Wrong sub' ) )
-				$mol_wire_queue.push( sub )
+				$mol_wire_pub.affected.push( sub )
 			}
 			return true
 		}
