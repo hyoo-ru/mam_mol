@@ -11,9 +11,9 @@ namespace $ {
 				}
 			}
 		} ) as any as {
-			[ key in keyof Host ]: Host[ key ] extends ( ... args: infer Args )=> Promise< infer Res >
-				? ( ... args: Args )=> Res
-				: Host[ key ]
+			[ key in keyof Host ]: Host[ key ] extends ( ... args: infer Args )=> any
+				? ( ... args: Args )=> Awaited< ReturnType< Host[ key ] > >
+				: never
 		}
 	}
 

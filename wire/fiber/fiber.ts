@@ -1,6 +1,7 @@
 namespace $ {
 	
 	const handled = new WeakSet< Promise< unknown > >()
+	const nothing = ()=> {}
 	
 	/**
 	 * Suspendable task with with support both sync/async api.
@@ -90,6 +91,52 @@ namespace $ {
 			return fiber
 		}
 		
+		static planning = [] as $mol_wire_fiber< any, any, any >[]
+		static reaping = [] as $mol_wire_fiber< any, any, any >[]
+		
+		static plan_task: $mol_after_frame | null = null
+		static plan() {
+			
+			if( this.plan_task ) return
+			
+			this.plan_task = new $mol_after_frame( ()=> {
+				
+				try {
+					this.sync()
+				} finally {
+					$mol_wire_fiber.plan_task = null
+				}
+
+			} )
+			
+		}
+		
+		static sync() {
+			
+			// Sync whole fiber graph
+			while( this.planning.length ) {
+				
+				const fibers = this.planning.splice( 0, this.planning.length )
+				
+				for( const fiber of fibers ) {
+					fiber.touch()
+				}
+				
+			}
+			
+			// Collect garbage
+			while( this.reaping.length ) {
+				
+				const fibers = this.reaping.splice( 0, this.reaping.length )
+				
+				for( const fiber of fibers ) {
+					if( !fiber.alone ) continue
+					fiber.destructor()
+				}
+				
+			}
+			
+		}
 		
 		public cache: Result | Error | Promise< Result | Error > = undefined as any
 		
@@ -106,6 +153,10 @@ namespace $ {
 		get persist() {
 			const id = this[ Symbol.toStringTag ]
 			return id[ id.length - 2 ] !== '.'
+		}
+		
+		get alone() {
+			return this.subs_from === this.length
 		}
 		
 		constructor(
@@ -130,11 +181,20 @@ namespace $ {
 			}
 			
 			this.cache = undefined as any
-			
 		}
 		
-		alone() {
-			this.destructor()
+		solid() {
+			this.reap = nothing
+		}
+		
+		plan() {
+			$mol_wire_fiber.planning.push( this )
+			$mol_wire_fiber.plan()
+		}
+		
+		reap() {
+			$mol_wire_fiber.reaping.push( this )
+			$mol_wire_fiber.plan()
 		}
 
 		[ $mol_dev_format_head ]() {
@@ -156,7 +216,7 @@ namespace $ {
 			if( !super.affect( quant ) ) return false
 			
 			if( this.subs_from === this.length ) {
-				new $mol_after_frame( ()=> this.touch() )
+				this.plan()
 			}
 			
 			return true
