@@ -127,6 +127,7 @@ namespace $ {
 			}
 
 			App.owner()
+			$mol_wire_fiber.sync()
 			$mol_assert_ok( destroyed )
 			
 		} ,
