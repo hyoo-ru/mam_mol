@@ -97,8 +97,8 @@ namespace $.$$ {
 			
 			if( event instanceof WheelEvent ) {
 				this.pointer_events([ event as any ])
-				if( event.ctrlKey ) return this.action_type( 'zoom' )
-				return this.action_type( 'pan' )
+				if( event.shiftKey ) return this.action_type( 'pan' )
+				return this.action_type( 'zoom' )
 			}
 			
 			return this.action_type( '' )
@@ -306,8 +306,8 @@ namespace $.$$ {
 				
 				const pan_prev = this.pan()
 				const pan_next = new $mol_vector_2d(
-					pan_prev.x - ( event.shiftKey ? event.deltaY : event.deltaX ),
-					pan_prev.y - ( event.shiftKey ? event.deltaX : event.deltaY ),
+					pan_prev.x - event.deltaX,
+					pan_prev.y - event.deltaY,
 				)
 
 				this.pan( pan_next )
