@@ -7823,7 +7823,7 @@ var $;
             fetch('https://notify.bugsnag.com/', {
                 method: 'post',
                 body: JSON.stringify(report),
-            });
+            }).catch(() => null);
         }
     };
     globalThis.onunhandledrejection = function (event) {

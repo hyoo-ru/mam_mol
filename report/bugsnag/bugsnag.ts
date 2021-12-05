@@ -50,7 +50,7 @@ namespace $ {
 			fetch( 'https://notify.bugsnag.com/', {
 				method: 'post',
 				body: JSON.stringify( report ),
-			} )
+			} ).catch( ()=> null )
 			
 		}
 		
