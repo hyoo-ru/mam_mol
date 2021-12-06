@@ -1,15 +1,16 @@
 /** @jsx $mol_jsx */
 /** @jsxFrag $mol_jsx_frag */
 namespace $ {
+
 	$mol_test({
 		
 		'same list'() {
 			
-			const list = <>
-				<p rev-old>a</p>
-				<p rev-old>b</p>
-				<p rev-old>c</p>
-			</>
+			const list = <body>
+				<p data-rev="old">a</p>
+				<p data-rev="old">b</p>
+				<p data-rev="old">c</p>
+			</body>
 			
 			$mol_reconcile({
 				prev: [ ... list.children ],
@@ -18,26 +19,30 @@ namespace $ {
 				next: 'abc',
 				equal: ( next, prev )=> prev.textContent === next,
 				drop: ( prev, lead )=> list.removeChild( prev ),
-				insert: ( next, lead )=> list.insertBefore( <p rev-new>{ next }</p>, lead?.nextSibling ?? list.firstChild ),
-				update: ( next, prev, lead )=> ( prev.textContent = next, prev ),
+				insert: ( next, lead )=> list.insertBefore( <p data-rev="new">{ next }</p>, lead ? lead.nextSibling : list.firstChild ),
+				update: ( next, prev, lead )=> {
+					prev.textContent = next
+					prev.setAttribute( 'data-rev', 'up' )
+					return prev
+				},
 			})
 			
-			$mol_assert_like( list.outerHTML, (<>
-				<p rev-old>a</p>
-				<p rev-old>b</p>
-				<p rev-old>c</p>
-			</>).outerHTML )
+			$mol_assert_dom( list, <body>
+				<p data-rev="old">a</p>
+				<p data-rev="old">b</p>
+				<p data-rev="old">c</p>
+			</body> )
 			
 		},
 		
 		'insert items'() {
 			
-			const list = <>
-				<p rev-old>a</p>
-				<p rev-old>b</p>
-				<p rev-old>c</p>
-				<p rev-old>d</p>
-			</>
+			const list = <body>
+				<p data-rev="old">a</p>
+				<p data-rev="old">b</p>
+				<p data-rev="old">c</p>
+				<p data-rev="old">d</p>
+			</body>
 			
 			$mol_reconcile({
 				prev: [ ... list.children ],
@@ -46,31 +51,67 @@ namespace $ {
 				next: 'bXYc',
 				equal: ( next, prev )=> prev.textContent === next,
 				drop: ( prev, lead )=> list.removeChild( prev ),
-				insert: ( next, lead )=> list.insertBefore( <p rev-new>{ next }</p>, lead?.nextSibling ?? list.firstChild ),
-				update: ( next, prev, lead )=> ( prev.textContent = next, prev ),
+				insert: ( next, lead )=> list.insertBefore( <p data-rev="new">{ next }</p>, lead ? lead.nextSibling : list.firstChild ),
+				update: ( next, prev, lead )=> {
+					prev.textContent = next
+					prev.setAttribute( 'data-rev', 'up' )
+					return prev
+				},
 			})
 			
-			$mol_assert_like( list.outerHTML, (<>
-				<p rev-old>a</p>
-				<p rev-old>b</p>
-				<p rev-new>X</p>
-				<p rev-new>Y</p>
-				<p rev-old>c</p>
-				<p rev-old>d</p>
-			</>).outerHTML )
+			$mol_assert_dom( list, <body>
+				<p data-rev="old">a</p>
+				<p data-rev="old">b</p>
+				<p data-rev="new">X</p>
+				<p data-rev="new">Y</p>
+				<p data-rev="old">c</p>
+				<p data-rev="old">d</p>
+			</body> )
+			
+		},
+		
+		'split item'() {
+			
+			const list = <body>
+				<p data-rev="old">a</p>
+				<p data-rev="old">bc</p>
+				<p data-rev="old">d</p>
+			</body>
+			
+			$mol_reconcile({
+				prev: [ ... list.children ],
+				from: 0,
+				to: 3,
+				next: 'abcd',
+				equal: ( next, prev )=> prev.textContent === next,
+				drop: ( prev, lead )=> list.removeChild( prev ),
+				insert: ( next, lead )=> list.insertBefore( <p data-rev="new">{ next }</p>, lead ? lead.nextSibling : list.firstChild ),
+				update: ( next, prev, lead )=> {
+					prev.textContent = next
+					prev.setAttribute( 'data-rev', 'up' )
+					return prev
+				},
+			})
+			
+			$mol_assert_dom( list, <body>
+				<p data-rev="old">a</p>
+				<p data-rev="new">b</p>
+				<p data-rev="up">c</p>
+				<p data-rev="old">d</p>
+			</body> )
 			
 		},
 		
 		'drop items'() {
 			
-			const list = <>
-				<p rev-old>A</p>
-				<p rev-old>B</p>
-				<p rev-old>x</p>
-				<p rev-old>y</p>
-				<p rev-old>C</p>
-				<p rev-old>D</p>
-			</>
+			const list = <body>
+				<p data-rev="old">A</p>
+				<p data-rev="old">B</p>
+				<p data-rev="old">x</p>
+				<p data-rev="old">y</p>
+				<p data-rev="old">C</p>
+				<p data-rev="old">D</p>
+			</body>
 			
 			$mol_reconcile({
 				prev: [ ... list.children ],
@@ -79,27 +120,31 @@ namespace $ {
 				next: 'BC',
 				equal: ( next, prev )=> prev.textContent === next,
 				drop: ( prev, lead )=> list.removeChild( prev ),
-				insert: ( next, lead )=> list.insertBefore( <p rev-new>{ next }</p>, lead?.nextSibling ?? list.firstChild ),
-				update: ( next, prev, lead )=> ( prev.textContent = next, prev ),
+				insert: ( next, lead )=> list.insertBefore( <p data-rev="new">{ next }</p>, lead ? lead.nextSibling : list.firstChild ),
+				update: ( next, prev, lead )=> {
+					prev.textContent = next
+					prev.setAttribute( 'data-rev', 'up' )
+					return prev
+				},
 			})
 			
-			$mol_assert_like( list.outerHTML, (<>
-				<p rev-old>A</p>
-				<p rev-old>B</p>
-				<p rev-old>C</p>
-				<p rev-old>D</p>
-			</>).outerHTML )
+			$mol_assert_dom( list, <body>
+				<p data-rev="old">A</p>
+				<p data-rev="old">B</p>
+				<p data-rev="old">C</p>
+				<p data-rev="old">D</p>
+			</body> )
 			
 		},
 		
 		'update items'() {
 			
-			const list = <>
-				<p rev-old>a</p>
-				<p rev-old>B</p>
-				<p rev-old>C</p>
-				<p rev-old>d</p>
-			</>
+			const list = <body>
+				<p data-rev="old">a</p>
+				<p data-rev="old">B</p>
+				<p data-rev="old">C</p>
+				<p data-rev="old">d</p>
+			</body>
 			
 			$mol_reconcile({
 				prev: [ ... list.children ],
@@ -108,16 +153,20 @@ namespace $ {
 				next: 'XY',
 				equal: ( next, prev )=> prev.textContent === next,
 				drop: ( prev, lead )=> list.removeChild( prev ),
-				insert: ( next, lead )=> list.insertBefore( <p rev-new>{ next }</p>, lead?.nextSibling ?? list.firstChild ),
-				update: ( next, prev, lead )=> ( prev.textContent = next, prev ),
+				insert: ( next, lead )=> list.insertBefore( <p data-rev="new">{ next }</p>, lead ? lead.nextSibling : list.firstChild ),
+				update: ( next, prev, lead )=> {
+					prev.textContent = next
+					prev.setAttribute( 'data-rev', 'up' )
+					return prev
+				},
 			})
 			
-			$mol_assert_like( list.outerHTML, (<>
-				<p rev-old>a</p>
-				<p rev-old>X</p>
-				<p rev-old>Y</p>
-				<p rev-old>d</p>
-			</>).outerHTML )
+			$mol_assert_dom( list, <body>
+				<p data-rev="old">a</p>
+				<p data-rev="up">X</p>
+				<p data-rev="up">Y</p>
+				<p data-rev="old">d</p>
+			</body> )
 			
 		},
 		

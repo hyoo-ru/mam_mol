@@ -88,4 +88,8 @@ namespace $ {
 		}
 	}
 	
+	export function $mol_assert_dom( left: Element, right: Element ) {
+		$mol_assert_equal( $mol_dom_serialize( left ), $mol_dom_serialize( right ) )
+	}
+
 }
