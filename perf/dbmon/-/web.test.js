@@ -346,6 +346,17 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_dom_serialize(node) {
+        const serializer = new $.$mol_dom_context.XMLSerializer;
+        return serializer.serializeToString(node);
+    }
+    $.$mol_dom_serialize = $mol_dom_serialize;
+})($ || ($ = {}));
+//serialize.js.map
+;
+"use strict";
+var $;
+(function ($) {
     $.$mol_test({
         'must be false'() {
             $.$mol_assert_not(0);
@@ -462,6 +473,10 @@ var $;
         }
     }
     $.$mol_assert_like = $mol_assert_like;
+    function $mol_assert_dom(left, right) {
+        $mol_assert_equal($.$mol_dom_serialize(left), $.$mol_dom_serialize(right));
+    }
+    $.$mol_assert_dom = $mol_assert_dom;
 })($ || ($ = {}));
 //assert.js.map
 ;

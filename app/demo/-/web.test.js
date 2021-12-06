@@ -377,6 +377,10 @@ var $;
         }
     }
     $.$mol_assert_like = $mol_assert_like;
+    function $mol_assert_dom(left, right) {
+        $mol_assert_equal($.$mol_dom_serialize(left), $.$mol_dom_serialize(right));
+    }
+    $.$mol_assert_dom = $mol_assert_dom;
 })($ || ($ = {}));
 //assert.js.map
 ;
