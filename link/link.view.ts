@@ -53,7 +53,7 @@ namespace $.$$ {
 		}
 
 		minimal_height() {
-			return Math.max( super.minimal_height(), 40 )
+			return Math.max( super.minimal_height(), 24 )
 		}
 		
 		target(): '_self' | '_blank' | '_top' | '_parent' | string {
