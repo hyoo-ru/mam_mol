@@ -6140,7 +6140,7 @@ var $;
                 return null;
             }
             minimal_height() {
-                return Math.max(super.minimal_height(), 40);
+                return Math.max(super.minimal_height(), 24);
             }
             target() {
                 return (this.uri_native().origin === $.$mol_dom_context.location.origin) ? '_self' : '_blank';
