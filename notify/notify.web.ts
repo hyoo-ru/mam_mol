@@ -21,7 +21,7 @@ namespace $ {
 			return perm === 'granted'
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_wire_method
 		static show( info: {
 			context: string,
 			message: string,

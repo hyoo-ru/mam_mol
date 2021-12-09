@@ -3,6 +3,11 @@ namespace $.$$ {
 	export class $mol_touch extends $.$mol_touch {
 		
 		auto() {
+			this.start_pan()
+			this.start_pos()
+			this.start_distance()
+			this.start_zoom()
+			this.action_type()
 			this.view_rect()
 		}
 		
@@ -244,13 +249,16 @@ namespace $.$$ {
 			
 			this.event_leave( event )
 			
+			if( !this.pointer_events().length ) {
+				this.start_pos( null )
+			}
+			
 		}
 
 		event_leave( event : PointerEvent ) {
 
 			this.event_eat( event )
 			this.dom_node().releasePointerCapture( event.pointerId )
-			this.start_pos( null )
 			
 		}
 
@@ -306,8 +314,8 @@ namespace $.$$ {
 				
 				const pan_prev = this.pan()
 				const pan_next = new $mol_vector_2d(
-					pan_prev.x - ( event.shiftKey ? event.deltaY : event.deltaX ),
-					pan_prev.y - ( event.shiftKey ? event.deltaX : event.deltaY ),
+					pan_prev.x - ( event.shiftKey ? event.deltaY : event.deltaX ) /10,
+					pan_prev.y - ( event.shiftKey ? event.deltaX : event.deltaY ) /10,
 				)
 
 				this.pan( pan_next )

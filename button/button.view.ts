@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $mol_button extends $.$mol_button {
 
 		@ $mol_mem
-		fiber( next = null as null | $mol_fiber ) { return next }
+		fiber( next = null as null | $mol_wire_fiber<any,any,any> ) { return next }
 		
 		disabled() {
 			return !this.enabled()
@@ -13,12 +13,12 @@ namespace $.$$ {
 			if( !next ) return
 			if( !this.enabled() ) return
 
-			this.fiber( $mol_fiber.current! )
+			this.fiber( $mol_wire_auto! as $mol_wire_fiber<any,any,any> )
 			
 			this.event_click( next )
 			this.click( next )
 
-			if( this.fiber() === $mol_fiber.current! ) {
+			if( this.fiber() === $mol_wire_auto! ) {
 				this.fiber( null )
 			}
 			
@@ -37,7 +37,7 @@ namespace $.$$ {
 		error() {
 
 			try {
-				this.fiber()?.get()
+				this.fiber()?.sync()
 				return ''
 			} catch( error: any ) {
 

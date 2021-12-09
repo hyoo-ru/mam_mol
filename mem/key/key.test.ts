@@ -3,7 +3,6 @@ module $ {
 	$mol_test({
 		
 		'keyed reactive properties' ($) {
-			$mol_fiber_warp()
 
 			class Fib extends $mol_object2 {
 

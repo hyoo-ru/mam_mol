@@ -12,7 +12,7 @@ namespace $ {
 			)=> {
 				try {
 
-					return $mol_fiber_unlimit( ()=> this.generate( req.url ) && Promise.resolve().then( next ) )
+					return this.generate( req.url ) && Promise.resolve().then( next )
 				
 				} catch( error: any ) {
 

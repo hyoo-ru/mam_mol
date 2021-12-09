@@ -79,14 +79,14 @@ const task = $mol_fiber_defer( ()=> {
 task.destructor()
 ```
 
-### $mol_fiber.method
+### $mol_wire_method
 
 Decorates method by fiber.
 
 ```typescript
 export class $my_foo {
 
-	@ $mol_fiber.method
+	@ $mol_wire_method
 	transfer( from  , to ) {
 		request( to , {
 			method: 'post' ,

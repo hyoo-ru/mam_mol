@@ -3,12 +3,13 @@ namespace $ {
 	export class $mol_media extends $mol_object2 {
 		
 		@ $mol_mem_key
-		static match( query: string ) {
+		static match( query: string, next?: boolean ) {
+			
+			if( next !== undefined ) return next
+			
 			const res = this.$.$mol_dom_context.matchMedia( query )
-			res.onchange = ()=> $mol_mem_cached(
-				()=> this.match( query ),
-				res.matches,
-			)
+			res.onchange = ()=> this.match( query, res.matches )
+			
 			return res.matches
 		}
 		

@@ -5,14 +5,16 @@ namespace $.$$ {
 		static api() {
 			return $mol_import.script( `https://api-maps.yandex.ru/2.1/?lang=${ $mol_locale.lang() }` ).ymaps
 		}
+		
+		wait_ready( ymaps: any ) {
+			return new Promise( done => ymaps.ready( done ) )
+		}
 
 		@ $mol_mem
 		api( next? : any , force? : $mol_mem_force ) : any {
 			
 			const ymaps = $mol_map_yandex.api()
-
-			const load_map = $mol_fiber_sync( ()=> new Promise( done => ymaps.ready( done ) ) )
-			load_map()
+			$mol_wire_sync( this ).wait_ready( ymaps )
 
 			const api = new ymaps.Map( this.dom_node() , {
 				center : [ 0 , 0 ] ,

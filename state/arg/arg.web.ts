@@ -3,7 +3,7 @@ namespace $ {
 	export class $mol_state_arg extends $mol_object {
 		
 		@ $mol_mem
-		static href( next? : string , force? : $mol_mem_force ) {
+		static href( next?: string ) {
 			
 			if( next === undefined ) {
 				

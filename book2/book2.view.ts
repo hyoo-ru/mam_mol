@@ -9,9 +9,9 @@ namespace $.$$ {
 		@ $mol_mem
 		sub() {
 			
-			const next = [  ... this.pages().slice(),this.Placeholder() ]
+			const next = [  ... this.pages().slice(), this.Placeholder() ]
 			
-			const prev = $mol_mem_cached( ()=> this.sub() ) ?? []
+			const prev = $mol_wire_cache( this ).sub().result ?? []
 			
 			for( let i = 1 ; i++ ; ) {
 				
@@ -22,7 +22,7 @@ namespace $.$$ {
 
 				if( p === n ) continue
 
-				new $mol_after_timeout( 100,()=> n.dom_node().scrollIntoView({ behavior : 'smooth' }) )
+				new $mol_after_work( 100, ()=> n.dom_node().scrollIntoView({ behavior : 'auto' }) )
 				break
 
 			}

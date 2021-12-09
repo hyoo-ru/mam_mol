@@ -12,7 +12,7 @@ namespace $ {
 					return sub( item )
 				} catch( error: any ) {
 
-					if( 'then' in error ) return $mol_fail_hidden( error )
+					if( error instanceof Promise ) return $mol_fail_hidden( error )
 					
 					error.message = `[${ index }] ${ error.message }`
 					return $mol_fail( error )

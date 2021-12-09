@@ -201,7 +201,7 @@ namespace $ {
 			
 			const cursor = this.cursor >= 0
 				? '@' + this.cursor
-				: this.cursor.constructor.name
+				: this.cursor?.constructor?.name
 			
 			return $mol_dev_format_div( {},
 				$mol_dev_format_native( this ),
@@ -270,6 +270,12 @@ namespace $ {
 				
 				this.end( bu )
 				this.put( error )
+				
+				if( error instanceof Promise ) return
+				
+				if( !this.persist ) {
+					this.forget()
+				}
 				
 			}
 

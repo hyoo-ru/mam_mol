@@ -558,7 +558,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		@ $mol_fiber.method
+		@ $mol_wire_method
 		modEnsure( path : string ) {
 
 			var mod = $mol_file.absolute( path )
@@ -709,7 +709,7 @@ namespace $ {
 			return graph
 		}
 
-		@ $mol_fiber.method
+		@ $mol_wire_method
 		bundleAllWeb( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'web.deps.json' })
 			this.bundle({ path , bundle : 'web.css' })
@@ -722,12 +722,12 @@ namespace $ {
 			return null
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_wire_method
 		bundleAllWebAudit( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'web.audit.js' })
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_wire_method
 		bundleAllNode( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'node.deps.json' })
 			this.bundle({ path , bundle : 'node.js' })
@@ -738,12 +738,12 @@ namespace $ {
 			return null
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_wire_method
 		bundleAllNodeAudit( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'node.audit.js' })
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_wire_method
 		bundleAll( { path } : { path : string } ) {
 
 			this.bundle({ path , bundle : 'index.html' })

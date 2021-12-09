@@ -230,7 +230,7 @@
 // 				@ $mol_atom2_field
 // 				static first = 1
 
-// 				@ $mol_fiber.method
+// 				@ $mol_wire_method
 // 				static increase() { return ++ this.first }
 				
 // 				@ $mol_atom2_field
@@ -269,7 +269,7 @@
 // 				static get $() { return $ }
 // 				static counter = 0
 
-// 				@ $mol_fiber.method
+// 				@ $mol_wire_method
 // 				static count() { return this.counter ++ }
 
 // 				@ $mol_atom2_field

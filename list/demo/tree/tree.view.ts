@@ -5,15 +5,17 @@ namespace $.$$ {
 			return this.row_content( [] )
 		}
 		
+		#titles = new Map< string, string >()
+		
 		@ $mol_mem_key
 		row_title( id : number[] ) {
-			$mol_mem_persist()
+			$mol_wire_cache( this ).row_title( id ).solid()
 			return `Node ${ id.join( '.' ) }: ${ $mol_stub_message( 512 ) } `
 		}
 
 		@ $mol_mem_key
 		row_content( id : number[] ) {
-			$mol_mem_persist()
+			$mol_wire_cache( this ).row_content( id ).solid()
 			return [ ... $mol_range2( index => this.Row([ ... id , index ]) , ()=> Math.floor( Math.random() * 10 + 5 ) ) ]
 		}
 

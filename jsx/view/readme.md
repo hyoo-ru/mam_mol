@@ -59,7 +59,7 @@ class $my_app extends $mol_jsx_view {
 	valueOf() { return super.valueOf() }
 
 	// fibered action
-	@ $mol_fiber.method
+	@ $mol_wire_method
 	change( event : Event ) {
 		this.title = 'World'
 	}

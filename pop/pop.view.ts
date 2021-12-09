@@ -7,6 +7,7 @@ namespace $.$$ {
 			return next
 		}
 
+		@ $mol_mem
 		sub_visible() {
 			return [
 				this.Anchor() ,

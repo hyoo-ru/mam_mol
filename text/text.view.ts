@@ -91,7 +91,7 @@ namespace $.$$ {
 			return url.toString()
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_wire_method
 		text2spans( prefix : string , text : string ) {
 			let index = 0
 			const spans = [] as $mol_view[]
@@ -150,7 +150,7 @@ namespace $.$$ {
 			return spans
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_wire_method
 		code2spans( prefix : string , text : string ) {
 			let index = 0
 			const spans = [] as $mol_view[]

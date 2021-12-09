@@ -114,7 +114,7 @@ namespace $ {
 				
 				try {
 
-					const prev = $mol_mem_cached( ()=> this.buffer() )
+					const prev = $mol_wire_cache( this ).buffer().result
 					
 					next = buffer_normalize( $node.fs.readFileSync( path ) )
 

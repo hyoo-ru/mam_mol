@@ -34,7 +34,7 @@ namespace $ {
 			return this.speaker().getVoices().filter( voice => voice.lang.split('-')[0] === lang )
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_wire_method
 		static say( text : string ) {
 			
 			const speaker = this.speaker()
