@@ -573,10 +573,16 @@ var $;
         static get promise() {
             if (this._promise)
                 return this._promise;
-            return this._promise = new Promise(done => requestAnimationFrame(() => {
-                this._promise = null;
-                done();
-            }));
+            return this._promise = new Promise(done => {
+                requestAnimationFrame(() => {
+                    this._promise = null;
+                    done();
+                });
+                setTimeout(() => {
+                    this._promise = null;
+                    done();
+                }, 100);
+            });
         }
         cancelled = false;
         promise;

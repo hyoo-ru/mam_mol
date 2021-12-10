@@ -4,7 +4,7 @@ namespace $.$$ {
 		@ $mol_mem
 		status( next = 'ready' as 'ready' | 'drag' ) { return next }
 
-		_target = null as EventTarget | null
+		protected _target = null as EventTarget | null
 
 		enter( event : DragEvent ) {
 

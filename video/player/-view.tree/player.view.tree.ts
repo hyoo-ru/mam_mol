@@ -57,12 +57,16 @@ namespace $ {
 		 * attr *
 		 * 	src <= uri
 		 * 	controls <= controls
+		 * 	autoplay <= autoplay
+		 * 	poster <= poster
 		 * ```
 		 */
 		attr() {
 			return {
 				src: this.uri(),
-				controls: this.controls()
+				controls: this.controls(),
+				autoplay: this.autoplay(),
+				poster: this.poster()
 			}
 		}
 		
@@ -72,6 +76,7 @@ namespace $ {
 		 * 	volumechange?event <=> revolume?event
 		 * 	timeupdate?event <=> retime?event
 		 * 	durationchange?event <=> redurate?event
+		 * 	playing?event <=> play_started?event
 		 * 	play?event <=> play?event
 		 * 	pause?event <=> pause?event
 		 * ```
@@ -81,6 +86,7 @@ namespace $ {
 				volumechange: (event?: any) => this.revolume(event),
 				timeupdate: (event?: any) => this.retime(event),
 				durationchange: (event?: any) => this.redurate(event),
+				playing: (event?: any) => this.play_started(event),
 				play: (event?: any) => this.play(event),
 				pause: (event?: any) => this.pause(event)
 			}
@@ -102,6 +108,24 @@ namespace $ {
 		 */
 		controls() {
 			return true
+		}
+		
+		/**
+		 * ```tree
+		 * autoplay true
+		 * ```
+		 */
+		autoplay() {
+			return true
+		}
+		
+		/**
+		 * ```tree
+		 * poster \
+		 * ```
+		 */
+		poster() {
+			return ""
 		}
 		
 		/**
@@ -133,6 +157,17 @@ namespace $ {
 		 */
 		@ $mol_mem
 		redurate(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * play_started?event null
+		 * ```
+		 */
+		@ $mol_mem
+		play_started(event?: any) {
 			if ( event !== undefined ) return event as never
 			return null as any
 		}
