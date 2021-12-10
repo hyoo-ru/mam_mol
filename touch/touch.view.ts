@@ -3,6 +3,7 @@ namespace $.$$ {
 	export class $mol_touch extends $.$mol_touch {
 		
 		auto() {
+			this.pointer_events()
 			this.start_pan()
 			this.start_pos()
 			this.start_distance()
@@ -249,16 +250,13 @@ namespace $.$$ {
 			
 			this.event_leave( event )
 			
-			if( !this.pointer_events().length ) {
-				this.start_pos( null )
-			}
-			
 		}
 
 		event_leave( event : PointerEvent ) {
 
 			this.event_eat( event )
 			this.dom_node().releasePointerCapture( event.pointerId )
+			this.start_pos( null )
 			
 		}
 

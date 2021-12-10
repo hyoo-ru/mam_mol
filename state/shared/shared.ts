@@ -117,7 +117,7 @@ namespace $ {
 			state.node = $mol_const( this.node().sub( key, $hyoo_crowd_struct ) )
 			state.request = n => this.request( n )
 			state.path = ()=> this.path()
-			state.version_last = n => this.version_last( n )
+			// state.version_last = n => this.version_last( n )
 			state.db = ()=> this.db()
 			return state
 		}
@@ -144,7 +144,7 @@ namespace $ {
 			
 			const store = this.store()
 			store.apply( delta )
-			this.version_last( -1 )
+			// this.version_last( -1 )
 				
 		}
 		
@@ -234,7 +234,7 @@ namespace $ {
 		value( next?: unknown ) {
 			this.request( next )
 			const res = this.node().as( $hyoo_crowd_reg ).value( next )
-			this.version_last( next as any )
+			// this.version_last( next as any )
 			return res
 		}
 		
@@ -242,7 +242,7 @@ namespace $ {
 		list( next?: readonly unknown[] ) {
 			this.request( next )
 			const res = this.node().as( $hyoo_crowd_list ).list( next ) ?? []
-			this.version_last( next as any )
+			// this.version_last( next as any )
 			return res
 		}
 		
@@ -250,7 +250,7 @@ namespace $ {
 		text( next?: string ) {
 			this.request( next )
 			const res = this.node().as( $hyoo_crowd_text ).text( next ) ?? ''
-			this.version_last( next as any )
+			// this.version_last( next as any )
 			return res
 		}
 		
@@ -259,7 +259,7 @@ namespace $ {
 			
 			const node = this.node().as( $hyoo_crowd_text )
 			
-			this.version_last()
+			// this.version_last()
 			
 			if( next ) {
 				this.selection_range( next.map( offset => node.point_by_offset( offset ) ) )
@@ -323,7 +323,7 @@ namespace $ {
 					doc.server_clock.see( chunk.peer, chunk.time )
 				}
 				
-				doc.version_last( -1 )
+				// doc.version_last( -1 )
 
 			} )
 

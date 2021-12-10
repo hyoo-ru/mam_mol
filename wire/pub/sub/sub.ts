@@ -20,14 +20,6 @@ namespace $ {
 			return res
 		}
 		
-		get subs() {
-			const res = [] as $mol_wire_pub_sub[]
-			for( let i = this.subs_from; i < this.length; i += 2 ) {
-				res.push( this[i] as $mol_wire_pub_sub )
-			}
-			return res
-		}
-		
 		begin() {
 			this.cursor = this.pubs_from
 			const sub = $mol_wire_auto

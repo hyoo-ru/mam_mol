@@ -15,6 +15,26 @@ namespace $ {
 		
 		protected subs_from = 0 // 4B
 		
+		get subs() {
+			const res = [] as $mol_wire_sub[]
+			for( let i = this.subs_from; i < this.length; i += 2 ) {
+				res.push( this[i] as $mol_wire_sub )
+			}
+			return res
+		}
+		
+		// get affection() {
+		// 	const queue = [ this ] as $mol_wire_pub[]
+		// 	const res = [] as typeof queue
+		// 	while( queue.length ) {
+		// 		const next = queue.pop() as any as $mol_wire_sub
+		// 		if( next['cursor'] === $mol_wire_cursor.fresh ) continue
+		// 		if( next['cursor'] ) res.push( next )
+		// 		queue.push(... next.subs )
+		// 	}
+		// 	return res
+		// }
+		
 		/**
 		 * Subscribe subscriber to this publisher events and return position of subscriber that required to unsubscribe.
 		 */
