@@ -7,9 +7,12 @@ $mol_video_player $mol_view
 	attr *
 		src <= uri \
 		controls <= controls true
+		autoplay <= autoplay true
+		poster <= poster \
 	event *
 		volumechange?event <=> revolume?event null
 		timeupdate?event <=> retime?event null
 		durationchange?event <=> redurate?event null
+		playing?event <=> play_started?event null
 		play?event <=> play?event null
 		pause?event <=> pause?event null
