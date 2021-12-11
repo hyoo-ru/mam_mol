@@ -29,6 +29,7 @@
 	font: var(--mol_skin_font);
 	background: var(--mol_theme_back);
 	color: var(--mol_theme_text);
+	contain: unset; /** Fixes bg ignoring when applied to body on Chrome */
 }
 
 [mol_view][mol_view_error]:not([mol_view_error="Promise"]) {
