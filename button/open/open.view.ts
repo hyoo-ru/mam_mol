@@ -6,7 +6,12 @@ namespace $.$$ {
 		}
 		
 		picked() {
-			this.files( this.dom_node().files )
+			
+			const files = this.dom_node().files
+			if( !files || !files.length ) return
+			
+			this.files([ ... files ])
+			
 		}
 		
 	}
