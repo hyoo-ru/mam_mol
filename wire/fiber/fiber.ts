@@ -232,7 +232,7 @@ namespace $ {
 				
 				for( let i = this.pubs_from ; i < this.subs_from; i += 2 ) {
 					;( this[i] as $mol_wire_pub ).touch()
-					if( this.cursor === $mol_wire_cursor.stale ) break check
+					if( this.cursor !== $mol_wire_cursor.doubt ) break check
 				}
 				
 				this.cursor = $mol_wire_cursor.fresh
@@ -241,10 +241,11 @@ namespace $ {
 			}
 			
 			const bu = this.begin()
+			let result
 
 			try {
 
-				let result: Result = this.task.call( this.host, ... this.args )
+				result = this.task.call( this.host, ... this.args )
 				
 				if( result instanceof Promise ) {
 					const put = this.put.bind( this )
@@ -252,32 +253,23 @@ namespace $ {
 					handled.add( result )
 				}
 				
-				this.end( bu )
-				this.put( result )
-				
-				if( result instanceof Promise ) return
-				
-				if( !this.persist ) {
-					this.forget()
-				}
-				
 			} catch( error: any ) {
 				
-				if( error instanceof Promise && !handled.has( error ) ) {
-					error = error.finally( ()=> this.stale() )
-					handled.add( error )
-				}
+				result = error
 				
-				this.end( bu )
-				this.put( error )
-				
-				if( error instanceof Promise ) return
-				
-				if( !this.persist ) {
-					this.forget()
+				if( result instanceof Promise && !handled.has( result ) ) {
+					result = result.finally( ()=> this.stale() )
+					handled.add( result )
 				}
 				
 			}
+			
+			if( !this.persist && !( result instanceof Promise ) ) {
+				this.cursor = this.pubs_from
+			}
+			
+			this.end( bu )
+			this.put( result )
 
 		}
 		

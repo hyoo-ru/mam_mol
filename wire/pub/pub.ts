@@ -78,11 +78,9 @@ namespace $ {
 		}
 		
 		/**
-		 * Enforce lazy emitting.
+		 * Enforce actualization. Should not throw errors.
 		 */
-		touch() {
-			this.stale()
-		}
+		touch() {}
 		
 		/**
 		 * Notify subscribers about self changes.
