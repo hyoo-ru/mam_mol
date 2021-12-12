@@ -8,7 +8,14 @@ class User extends $mol_object2 {
 	// Reactive static factory which makes and destroys instances.
 	static @ $mol_wire_mem(1)
 	instance( id: string ) {
-		return new User
+		return new User( id )
+	}
+	
+	constructor( readonly id: string ) { }
+	
+	// Called when all fibers unsubscribes from `User.instance` factory.
+	destructor() {
+		console.log( 'Nobody needs me anymore :(' )
 	}
 	
 	// Reactive mutable reactive property with default value.
