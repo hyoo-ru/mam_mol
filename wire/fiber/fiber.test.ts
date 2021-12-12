@@ -102,6 +102,21 @@ namespace $ {
 			
 		},
 		
+		'Owned value has js-path name' () {
+
+			class App extends $mol_object2 {
+
+				@ $mol_wire_method
+				static title() {
+					return new $mol_object2
+				}
+
+			}
+
+			$mol_assert_equal( `${ App.title() }` , 'App.title(...)' )
+
+		} ,
+
 		async 'Auto destroy owned value on alone'($) {
 
 			let destroyed = false

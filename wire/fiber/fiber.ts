@@ -155,10 +155,6 @@ namespace $ {
 			return id[ id.length - 2 ] !== '.'
 		}
 		
-		get alone() {
-			return this.subs_from === this.length
-		}
-		
 		constructor(
 			readonly host: Host,
 			readonly task: ( this : Host , ... args : Args )=> Result,

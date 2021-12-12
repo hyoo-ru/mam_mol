@@ -146,6 +146,13 @@ namespace $ {
 			this[ peer_pos + 1 ] = self_pos
 		}
 		
+		/**
+		 * Has any subscribers or not.
+		 */
+		get alone() {
+			return this.subs_from === this.length
+		}
+		
 	}
 	
 }

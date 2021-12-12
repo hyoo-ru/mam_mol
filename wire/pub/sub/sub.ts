@@ -141,6 +141,13 @@ namespace $ {
 			return $mol_dev_format_native( this )
 		}
 		
+		/**
+		 * Is subscribed to any publisher or not.
+		 */
+		get derived() {
+			return this.subs_from === this.pubs_from
+		}
+		
 	}
 	
 }

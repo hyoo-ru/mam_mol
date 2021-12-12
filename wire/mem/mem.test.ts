@@ -110,6 +110,45 @@ namespace $ {
 			App.test()
 		},
 
+		// https://github.com/nin-jin/slides/tree/master/reactivity#flow-auto
+		'Flow: Auto'( $ ) {
+
+			class App extends $mol_object2 {
+				
+				static get $() { return $ }
+
+				@ $mol_wire_mem(0)
+				static first( next = 1 ) { return next }
+				
+				@ $mol_wire_mem(0)
+				static second( next = 2 ) { return next }
+				
+				@ $mol_wire_mem(0)
+				static condition( next = true ) { return next }
+				
+				static counter = 0
+
+				@ $mol_wire_mem(0)
+				static result() {
+					const res = this.condition() ? this.first() : this.second() 
+					return res + this.counter ++
+				}
+				
+			}
+
+			$mol_assert_equal( App.result() , 1 )
+			$mol_assert_equal( App.counter , 1 )
+			
+			App.condition( false )
+			$mol_assert_equal( App.result() , 3 )
+			$mol_assert_equal( App.counter , 2 )
+
+			App.first( 10 )
+			$mol_assert_equal( App.result() , 3 )
+			$mol_assert_equal( App.counter , 2 )
+
+		} ,
+
 		// https://github.com/nin-jin/slides/tree/master/reactivity#dupes-equality
 		'Dupes: Equality'( $ ) {
 			
