@@ -1,6 +1,18 @@
 # $mol_wire
 
-Auto wiring modules.
+Auto wiring modules. It gives ability to:
+
+- Make any state observable using only 1.5KB lib. [$hyoo_crowd](https://github.com/hyoo-ru/crowd.hyoo.ru) as example.
+- Automatic dynamic track runtime property value dependencies.
+- Memoize calculations with automatic revalidationn.
+- Convert sync API to async and vice versa.
+- Manage resources automatically with predictable deconstruction time.
+- Optimize execution of tasks.
+- Dramatically reduce source code size and increase reliability by implementing reactive architecture.
+
+## Articles about
+
+- [Main Aspects of Reactivity](https://github.com/nin-jin/slides/tree/master/reactivity#readme)
 
 ## High level API
 
@@ -33,3 +45,11 @@ Auto wiring modules.
 ## Bundles
 
 - [mol_wire_lib](./lib) - NPM lib with all this mudules
+
+## Close alternatives
+
+
+- [MobX](https://mobx.js.org/)
+- [CellX](https://github.com/Riim/cellx)
+
+### [Architectural comparison](https://github.com/nin-jin/slides/tree/master/reactivity#reactive-libraries)
