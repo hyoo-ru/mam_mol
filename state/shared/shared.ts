@@ -10,18 +10,15 @@ namespace $ {
 		db_init() {
 			
 			type Scheme = {
-				Chunks: {
-					Key: [ string, number, number ] // path, head, self
-					Doc: { path: string, chunk: $hyoo_crowd_chunk }
-					Indexes: {
-						Path: [ string ]
-					}
+				Docs: {
+					Key: [ string ] // path
+					Doc: readonly $hyoo_crowd_chunk[] // delta
+					Indexes: {}
 				}
 			}
 			
 			return this.$.$mol_db< Scheme >( '$mol_state_shared_db',
-				mig => mig.store_make( 'Chunks' ),
-				mig => mig.stores.Chunks.index_make( 'Path', [ 'path' ] ),
+				mig => mig.store_make( 'Docs' ),
 			)
 			
 		}
@@ -115,16 +112,10 @@ namespace $ {
 			const State = this.constructor as typeof $mol_state_shared
 			const state = new State
 			state.node = $mol_const( this.node().sub( key, $hyoo_crowd_struct ) )
-			state.request = n => this.request( n )
+			state.sync = ()=> this.sync()
 			state.path = ()=> this.path()
-			// state.version_last = n => this.version_last( n )
 			state.db = ()=> this.db()
 			return state
-		}
-		
-		@ $mol_mem
-		version_last( next?: number ) {
-			return this.store().clock.now
 		}
 		
 		@ $mol_mem
@@ -132,125 +123,106 @@ namespace $ {
 			return ( res: unknown )=> {}
 		}
 		
-		async db_load() {
+		@ $mol_mem
+		sync() {
 			
-			const db = this.db()
-			const Chunks = db.read( 'Chunks' ).Chunks
+			this.db_sync()
+			this.server_sync()
 			
-			const path = this.path()
-			const res = await Chunks.indexes.Path.select([ path ])
-			const delta = res.map( doc => doc.chunk )
-				.filter( Boolean )
+			// const pub = this.keys_serial().public
+			// store.root.sub( pub, $hyoo_crowd_reg ).value( pub )
 			
-			const store = this.store()
-			store.apply( delta )
-			// this.version_last( -1 )
-				
+			return null
 		}
 		
 		@ $mol_mem
-		request( next?: unknown ) {
+		db_sync() {
+			
+			this.db()
+			
+			const store = this.store()
+			
+			if( store.clock.now ) {
+				if( store.clock.ahead( this.db_clock ) ) {
+					Promise.resolve().then( ()=> this.db_save() )
+				}
+			} else {
+				Promise.resolve().then( ()=> this.db_load() )
+			}
+			
+			return null
+		}
+		
+		async db_load() {
 			
 			const db = this.db()
-			this.socket()
-			const store = this.store()
+			const Docs = db.read( 'Docs' ).Docs
+			
 			const path = this.path()
+			const delta = await Docs.get([ path ])
+			if( !delta ) return
 			
-			// this.db_load()
+			const store = this.store()
+			store.apply( delta )
 			
-			if( next === undefined ) {
+			this.db_clock.sync( store.clock )
 				
-				// $mol_fiber.run( ()=> {
-				// 	$mol_fiber_defer( ()=> {
-				// 		const Chunks = db.read( 'Chunks' ).Chunks
-				// 		const delta = $mol_fiber_sync( ()=> Chunks.indexes.Path.select([ path ]) )()
-				// 		if( delta.length ) {
-				// 			store.apply( delta )
-				// 			this.version_last( -1 )
-				// 		}
-				// 	} )
-				// } )
-				
-			} else {
-				
-				const pub = this.keys_serial().public
-				store.root.sub( pub, $hyoo_crowd_reg ).value( pub )
-				
-			}
-			
-			// $mol_fiber.run( ()=> {
-			// 	$mol_fiber_defer( ()=> {
-					
-			// 		const delta = store.delta( this.server_clock )
-			// 		if( next !== undefined && !delta.length ) return
-					
-			// 		if( next !== undefined ) {
-						
-			// 			const trans = db.change( 'Chunks' )
-			// 			const Chunks = trans.stores.Chunks
-			// 			for( const chunk of delta ) {
-			// 				// console.log({ ... chunk, path })
-			// 				Chunks.put( { path, chunk }, [ path, chunk.head, chunk.self ] )
-			// 			}
-			// 			trans.commit()//.then(console.log)
+		}
 		
-			// 		}
-					
-			// 		if( delta.length ) {
-			// 			this.send( path, next === undefined && !delta.length ? [] : delta )
-			// 		}
-					
-			// 		for( const chunk of delta ) {
-			// 			this.server_clock.see( chunk.peer, chunk.time )
-			// 		}
-					
-			// 	} )
-			// } )
+		async db_save() {
 			
-			if( next === undefined ) {
-				
-				// $mol_fiber.run( ()=> {
-				// 	$mol_fiber_defer( ()=> { this.send( path, [] ) } )
-				// } )
-				
+			const path = this.path()
+			const db = this.db()
+			const store = this.store()
+			
+			const trans = db.change( 'Docs' )
+			const Docs = trans.stores.Docs
+			
+			const stored = await Docs.get([ path ]) ?? []
+			store.apply( stored )
+			
+			Docs.put( store.delta() , [ path ] )
+			trans.commit()
+			
+			this.db_clock.sync( store.clock )
+			
+			return null
+		}
+		
+		@ $mol_mem
+		server_sync() {
+			
+			this.socket()
+			
+			const store = this.store()
+			const delta = store.delta( this.server_clock )
+			
+			if( delta.length || !this.server_clock.now ) {
+				this.server_clock.sync( store.clock )
+				this.send( this.path(), delta )
 			}
-			// if( $mol_dom_context.navigator.onLine && next === undefined ) {
-			// 	const prev = $mol_mem_cached( ()=> this.request() )
-			// 	if( prev === undefined ) {
-			// 		const wait = $mol_fiber_sync(
-			// 			()=> new Promise( done => {
-			// 				$mol_mem_cached( ()=> this.request_done(),  done )
-			// 				new $mol_after_timeout( 5000, ()=> done( null ) )
-			// 			} )
-			// 		)
-			// 		wait()
-			// 	}
-			// }
 			
 			return null
 		}
 		
 		@ $mol_mem
 		value( next?: unknown ) {
-			this.request( next )
 			const res = this.node().as( $hyoo_crowd_reg ).value( next )
-			// this.version_last( next as any )
+			this.sync()
 			return res
 		}
 		
 		@ $mol_mem
 		list( next?: readonly unknown[] ) {
-			this.request( next )
 			const res = this.node().as( $hyoo_crowd_list ).list( next ) ?? []
-			// this.version_last( next as any )
+			this.sync()
 			return res
 		}
 		
 		@ $mol_mem
 		text( next?: string ) {
-			this.request( next )
 			const res = this.node().as( $hyoo_crowd_text ).text( next ) ?? ''
-			// this.version_last( next as any )
+			this.sync()
 			return res
 		}
 		
@@ -258,8 +230,6 @@ namespace $ {
 		selection( next?: number[] ) {
 			
 			const node = this.node().as( $hyoo_crowd_text )
-			
-			// this.version_last()
 			
 			if( next ) {
 				this.selection_range( next.map( offset => node.point_by_offset( offset ) ) )
@@ -284,7 +254,7 @@ namespace $ {
 			// const atom = $mol_atom2.current
 			const socket = new $mol_dom_context.WebSocket( this.server() )
 			
-			socket.onmessage = $mol_fiber_root( event => {
+			socket.onmessage = event => {
 				
 				if( !event.data ) return
 				const message = JSON.parse( event.data )
@@ -298,34 +268,22 @@ namespace $ {
 				const doc = this.doc( path )
 				const store = doc.store()
 				
-				doc.request_done()( null )
+				// doc.request_done()( null )
 				
 				if( !delta.length ) {
 					
-					delta = store.delta() as $hyoo_crowd_chunk[]
-					if( !delta.length ) return
+					// delta = store.delta() as $hyoo_crowd_chunk[]
+					// if( !delta.length ) return
 					
-					this.send( path, delta )
-					return
+					// this.send( path, delta )
+					// return
 					
 				}
-				
-				const trans = db.change( 'Chunks' )
-				const Chunks = trans.stores.Chunks
-				for( const chunk of delta ) {
-					Chunks.put( { path, chunk }, [ path, chunk.head, chunk.self ] )
-				}
-				trans.commit()
 				
 				store.apply( delta )
+				doc.server_clock.sync( store.clock )
 				
-				for( const chunk of delta ) {
-					doc.server_clock.see( chunk.peer, chunk.time )
-				}
-				
-				// doc.version_last( -1 )
-
-			} )
+			}
 
 			socket.onclose = ()=> {
 				// setTimeout( ()=> atom!.obsolete(), 5000 )
