@@ -1,6 +1,6 @@
 ## $mol_wire_method
 
-Decorates method to fiber to ensure it is idempotent inside fiber.
+Decorates method to fiber to ensure it is executed only once inside other fiber.
 
 ```typescript
 class App {
@@ -13,7 +13,7 @@ class App {
 	@ $mol_wire_method
 	run() {
 		this.log( 'Started' )
-		this.log( User.name() )
+		this.log( User.name() ) // Loads data from server
 		this.log( 'Finished' )
 	}
 	
