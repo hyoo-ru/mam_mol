@@ -27,7 +27,7 @@ namespace $ {
 			return sub
 		}
 		
-		promo() {
+		promote() {
 			
 			if( this.cursor >= this.pubs_from ) {
 				$mol_fail( new Error( 'Circular subscription' ) )

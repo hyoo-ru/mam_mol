@@ -9,9 +9,9 @@ namespace $ {
 			
 			const bu1 = sub.begin()
 			try {
-				pub1.promo()
-				pub2.promo()
-				pub2.promo()
+				pub1.promote()
+				pub2.promote()
+				pub2.promote()
 			} finally {
 				sub.end( bu1 )
 			}
@@ -23,9 +23,9 @@ namespace $ {
 			
 			const bu2 = sub.begin()
 			try {
-				pub1.promo()
-				pub1.promo()
-				pub2.promo()
+				pub1.promote()
+				pub1.promote()
+				pub2.promote()
 			} finally {
 				sub.end( bu2 )
 			}
@@ -48,7 +48,7 @@ namespace $ {
 				const bu2 = sub2.begin()
 				try {
 					
-					$mol_assert_fail( ()=> sub1.promo(), 'Circular subscription' )
+					$mol_assert_fail( ()=> sub1.promote(), 'Circular subscription' )
 					
 				} finally {
 					sub2.end( bu2 )

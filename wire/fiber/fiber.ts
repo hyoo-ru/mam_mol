@@ -300,7 +300,7 @@ namespace $ {
 		
 		sync() {
 			
-			this.promo()
+			this.promote()
 			this.touch()
 			
 			if( this.cache instanceof Error ) {
