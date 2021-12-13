@@ -13,6 +13,7 @@ Auto wiring modules. It gives ability to:
 ## Articles about
 
 - [Main Aspects of Reactivity](https://github.com/nin-jin/slides/tree/master/reactivity#readme)
+- [JS Proposal: Auto Wire](https://gist.github.com/nin-jin/6b9765fb9d0d50c2e1d37689008f5357)
 
 ## High level API
 
