@@ -54,14 +54,14 @@ namespace $ {
 				file.reset()
 				
 				if( type === 'change' ) {
-					file.buffer( undefined , $mol_mem_force_update )
+					$mol_wire_cache( this ).buffer().stale()
 				} else {
 					file.parent().reset()
 				}
 
 			} )
 			.on( 'error' , ( error : Error )=> {
-				this.stat( error as any , $mol_mem_force_fail )
+				$mol_wire_cache( this ).stat().put( error )
 			} )
 			
 			return {
@@ -73,7 +73,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		stat( next? : $mol_file_stat, force? : $mol_mem_force ) {
+		stat( next? : $mol_file_stat ) {
 			let stat = next
 			const path = this.path()
 
@@ -105,7 +105,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		buffer( next? : Uint8Array, force? : $mol_mem_force ) {
+		buffer( next? : Uint8Array ) {
 
 			const path = this.path()
 			if( next === undefined ) {

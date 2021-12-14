@@ -5,52 +5,54 @@ namespace $ {
 		static trace = false
 
 		expressGenerator() {
-			return $mol_fiber_root( (
-				req : typeof $node.express.request ,
-				res : typeof $node.express.response ,
-				next : () => any
-			)=> {
-				try {
+			return $mol_wire_async( this ).handleRequest
+		}
+		
+		handleRequest(
+			req : typeof $node.express.request ,
+			res : typeof $node.express.response ,
+			next : () => any
+		) {
+			try {
 
-					return this.generate( req.url ) && Promise.resolve().then( next )
+				return this.generate( req.url ) && Promise.resolve().then( next )
+			
+			} catch( error: any ) {
+
+				if( typeof error.then === 'function' ) $mol_fail_hidden( error )
 				
-				} catch( error: any ) {
-
-					if( typeof error.then === 'function' ) $mol_fail_hidden( error )
-					
-					if( $mol_fail_catch( error ) ) {
-						this.$.$mol_log3_fail({
-							place: `${this}.expressGenerator()`,
-							uri: req.path,
-							message: error.message,
-							stack: error.stack,
-						})
-					}
-					
-					if( req.url.match( /\.js$/ ) ) {
-
-						const script = ( error as Error ).message.split( '\n\n' ).map( msg => {
-							return `console.error( ${ JSON.stringify( msg ) } )`
-						} ).join( '\n' )
-						
-						res.send( script ).end()
-
-					} else {
-						if (! this.$.$mol_build_server.trace) {
-							error.message += '\n' + 'Set $mol_build_server.trace = true for stacktraces'
-						}
-
-						res.status(500).send( error.toString() ).end()
-						this.$.$mol_log3_fail({
-							place: `${this}.expressGenerator()`,
-							uri: req.path,
-							stack: this.$.$mol_build_server.trace ? error.stack : undefined,
-							message: error.message,
-						})
-					}
-
+				if( $mol_fail_catch( error ) ) {
+					this.$.$mol_log3_fail({
+						place: `${this}.handleRequest()`,
+						uri: req.path,
+						message: error.message,
+						stack: error.stack,
+					})
 				}
-			} )
+				
+				if( req.url.match( /\.js$/ ) ) {
+
+					const script = ( error as Error ).message.split( '\n\n' ).map( msg => {
+						return `console.error( ${ JSON.stringify( msg ) } )`
+					} ).join( '\n' )
+					
+					res.send( script ).end()
+
+				} else {
+					if (! this.$.$mol_build_server.trace) {
+						error.message += '\n' + 'Set $mol_build_server.trace = true for stacktraces'
+					}
+
+					res.status(500).send( error.toString() ).end()
+					this.$.$mol_log3_fail({
+						place: `${this}.handleRequest()`,
+						uri: req.path,
+						stack: this.$.$mol_build_server.trace ? error.stack : undefined,
+						message: error.message,
+					})
+				}
+
+			}
 		}
 		
 		build() : $mol_build {
@@ -103,54 +105,75 @@ namespace $ {
 		port() {
 			return 9080
 		}
-
+		
 		@ $mol_mem
-		start() {
-
-			return this.socket().on( 'connection' , ( line , req )=> {
+		lines( next = new Map< InstanceType<$node['ws']>, string >() ) {
+			return next
+		}
+		
+		@ $mol_mem
+		socket2() {
+			
+			return super.socket().on( 'connection' , ( line , req )=> {
 				
 				const path = req.url!.replace( /\/-.*/ , '' ).substring( 1 )
-
-				const build = this.build()
-				const bundle = build.root().resolve( path )
 
 				this.$.$mol_log3_rise({
 					place: this ,
 					message: `Connect` ,
 					path ,
 				})
-
-				const autorun = $mol_atom2_autorun( ()=> {
-
-					try {
-		
-						const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
-						for( const src of sources ) src.buffer()
-		
-					} catch( error: any ) {
-
-						if( $mol_compare_deep( autorun.error , error ) ) return true
-						
-					}
+				
+				this.lines( new Map( [ ... this.lines(), [ line, path ] ] ) )
+				
+				line.on( 'close' , ()=> {
 					
-					if( !$mol_atom2_value( ()=> autorun.get() ) ) return true
-
-					this.$.$mol_log3_rise({
-						place: `${this}`,
-						message: `$mol_build_obsolete`,
-						path
-					})
-						
-					line.send( '$mol_build_obsolete' )
-
-					return true
-		
+					const lines = new Map( this.lines() )
+					lines.delete( line )
+					this.lines( lines )
+					
 				} )
-
-				line.on( 'close' , ()=> autorun.destructor() )
-
+				
 			} )
 			
+		}
+
+		@ $mol_mem
+		start() {
+
+			const socket = this.socket2()
+
+			for( const [ line, path ] of this.lines() ) {
+				console.log( 'line', path )
+				this.notify( line, path )
+			}
+			
+			return socket
+		}
+		
+		@ $mol_wire_mem(2)
+		notify( line: InstanceType<$node['ws']>, path: string ) {
+			
+			const build = this.build()
+			const bundle = build.root().resolve( path )
+
+			// watch changes
+			const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
+			for( const src of sources ) src.buffer()
+
+			// ignore initial
+			if( !$mol_wire_cache( this ).notify( line, path ).result ) return true
+
+			this.$.$mol_log3_rise({
+				place: `${this}`,
+				message: `$mol_build_obsolete`,
+				path
+			})
+				
+			line.send( '$mol_build_obsolete' )
+
+			return true
+
 		}
 		
 	}

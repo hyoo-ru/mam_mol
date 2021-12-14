@@ -30,11 +30,11 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 
-		abstract stat( next? : $mol_file_stat, force? : $mol_mem_force ): $mol_file_stat
+		abstract stat( next? : $mol_file_stat ): $mol_file_stat
 
 		reset(): void {
 			try {
-				this.stat(undefined, $mol_mem_force_cache)
+				$mol_wire_cache( this ).stat().stale()
 			} catch( error: any ) {
 				if (error instanceof $mol_file_not_found) return
 				return $mol_fail_hidden(error)
@@ -56,7 +56,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		exists( next? : boolean , force? : $mol_mem_force ) {
+		exists( next? : boolean ) {
 
 			let exists = true
 			try {
@@ -94,21 +94,17 @@ namespace $ {
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 
-		abstract buffer( next? : Uint8Array , force? : $mol_mem_force ): Uint8Array
+		abstract buffer( next? : Uint8Array ): Uint8Array
 
-		text(next?: string, force?: $mol_mem_force) {
+		@ $mol_mem
+		text(next?: string) {
 			if( next === undefined ) {
-				return $mol_charset_decode( this.buffer( undefined, force ) )	
+				return $mol_charset_decode( this.buffer( undefined ) )	
 			} else {
 				const buffer = next === undefined ? undefined : $mol_charset_encode( next )
-				this.buffer( buffer, force )
+				this.buffer( buffer )
 				return next
 			}
-		}
-
-		fail(error: Error) {
-			this.buffer(error as any, $mol_mem_force_fail)
-			this.stat(error as any, $mol_mem_force_fail)
 		}
 
 		buffer_cached(buffer: Uint8Array) {
@@ -121,8 +117,8 @@ namespace $ {
 				mtime: ctime
 			}
 
-			this.buffer(buffer, $mol_mem_force_cache)
-			this.stat(stat , $mol_mem_force_cache)
+			$mol_wire_cache( this ).buffer().put( buffer as any )
+			$mol_wire_cache( this ).stat().put( stat as any )
 		}
 
 		text_cached(content: string) {
