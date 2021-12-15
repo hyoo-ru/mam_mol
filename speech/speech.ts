@@ -7,10 +7,8 @@ namespace $ {
 	
 	export class $mol_speech extends $mol_plugin {
 		
-		@ $mol_mem
-		static speaker() {
-
-			return $mol_fiber_sync( ()=> new Promise< SpeechSynthesis >( done => {
+		static speaker_make() {
+			return new Promise< SpeechSynthesis >( done => {
 
 				const API = $mol_dom_context.speechSynthesis
 
@@ -24,8 +22,12 @@ namespace $ {
 
 				API.addEventListener( 'voiceschanged' , on_voices )
 			
-			} ) )()
-
+			} )
+		}
+		
+		@ $mol_mem
+		static speaker() {
+			return $mol_wire_sync( this ).speaker_make()
 		}
 
 		@ $mol_mem
@@ -77,24 +79,24 @@ namespace $ {
 			api.continuous = true
 			api.lang = $mol_locale.lang()
 			
-			api.onnomatch = $mol_fiber_root( ( event : any )=> {
+			api.onnomatch = ( event : any )=> {
 				api.stop()
 				return null
-			})
-			api.onresult = $mol_fiber_root(( event: SpeechResultsEvent )=> {
+			}
+			api.onresult = ( event: SpeechResultsEvent )=> {
 				this.recognition_index( [ ... event.results ].filter( res => res.isFinal ).length )
 				const recognition = event.results[ event.resultIndex ]
 				const index = event.resultIndex + this.recognition_offset()
 				this.recognition( index, recognition )
 				return null
-			} )
-			api.onerror = $mol_fiber_root( ( event : ErrorEvent )=> {
+			}
+			api.onerror = ( event : ErrorEvent )=> {
 				if( event.error === 'no-speech' ) return null
 				console.log(event)
 				console.error( new Error( ( event as any ).error || event ) )
 				api.stop()
 				return null
-			} )
+			}
 			api.onend = ( event : any )=> {
 				if( this.recognition_index() > 0 ) {
 					this.recognition_offset( this.recognition_offset() + this.recognition_index() )
@@ -124,16 +126,19 @@ namespace $ {
 
 		@ $mol_mem
 		static recognition_index( next = -1 ) {
+			$mol_wire_solid()
 			return next
 		}
 
 		@ $mol_mem
 		static recognition_offset( next = 0 ) {
+			$mol_wire_solid()
 			return next
 		}
 		
 		@ $mol_mem_key
 		static recognition( index: number, next?: SpeechRecognitionResult ) {
+			$mol_wire_solid()
 			return next ?? null
 		}
 
@@ -161,6 +166,7 @@ namespace $ {
 		
 		@ $mol_mem
 		commands_skip( next = 0 ) {
+			$mol_wire_solid()
 			$mol_speech.hearing()
 			return next
 		}
