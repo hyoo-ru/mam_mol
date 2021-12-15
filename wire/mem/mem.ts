@@ -13,6 +13,11 @@ namespace $ {
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( proto , name )
 		const orig = descr!.value!
 		
+		const sup = Reflect.getPrototypeOf( proto )!	
+		if( typeof sup[ name as any ] === 'function' ) {
+			Object.defineProperty( orig , 'name' , { value : sup[ name as any ].name } )
+		}
+		
 		function value( this: Host, ... args: any[] ) {
 			
 			let atom = $mol_wire_fiber.persist( this, orig, ... args.slice( 0, keys ) )

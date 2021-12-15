@@ -28,6 +28,50 @@ namespace $ {
 			App.test()
 		},
 
+		'Mem overrides mem' ($) {
+
+			class Base extends $mol_object2 {
+
+				static $ = $
+				
+				@ $mol_wire_mem(0)
+				static value( next = 1 ) {
+					return next + 1
+				}
+				
+			}
+			
+			class Middle extends Base {
+				
+				@ $mol_wire_mem(0)
+				static value( next?: number ) {
+					return super.value( next ) + 1
+				}
+			
+			}
+				
+			class App extends Middle {
+				
+				@ $mol_wire_mem(0)
+				static value( next?: number ) {
+					return super.value( next ) * 3
+				}
+				
+				@ $mol_wire_method
+				static test() {
+					
+					$mol_assert_equal( this.value() , 9 )
+		
+					$mol_assert_equal( this.value( 5 ) , 21 )
+					$mol_assert_equal( this.value() , 21 )
+					
+				}
+
+			}
+			
+			App.test()
+		},
+
 		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--constant-consistency-of-states
 		'Auto recalculation of cached values'( $ ) {
 			
