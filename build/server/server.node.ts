@@ -19,7 +19,7 @@ namespace $ {
 			
 			} catch( error: any ) {
 
-				if( typeof error.then === 'function' ) $mol_fail_hidden( error )
+				if( error instanceof Promise ) $mol_fail_hidden( error )
 				
 				if( $mol_fail_catch( error ) ) {
 					this.$.$mol_log3_fail({
@@ -112,7 +112,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		socket2() {
+		socket() {
 			
 			return super.socket().on( 'connection' , ( line , req )=> {
 				
@@ -141,7 +141,7 @@ namespace $ {
 		@ $mol_mem
 		start() {
 
-			const socket = this.socket2()
+			const socket = this.socket()
 
 			for( const [ line, path ] of this.lines() ) {
 				this.notify( line, path )

@@ -292,7 +292,7 @@ namespace $ {
 
 			if( owner?.host instanceof $mol_view ) {
 
-				const suffix = owner.task.name
+				const suffix = owner.task.name.replaceAll( '@', '' )
 				const suffix2 = '_' + suffix[0].toLowerCase() + suffix.substring(1)
 				
 				for( let Class of ( owner.host.constructor as typeof $mol_view ).view_classes() ) {

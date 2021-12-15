@@ -36,13 +36,14 @@ Auto wiring modules. It gives ability to:
 
 ### Pub/Sub
 
-- [mol_wire_pub](./pub) - tiny publisher
-- [mol_wire_sub](./sub) - generic subscriber interface
-- [mol_wire_pub_sub](./pub/sub) - subscriber with retranslation support
+- [$mol_wire_pub](./pub) - tiny publisher
+- [$mol_wire_sub](./sub) - generic subscriber interface
+- [$mol_wire_pub_sub](./pub/sub) - subscriber with retranslation support
+- `$mol_wire_auto` - current tracking subscriber
 
 ## Examples
 
-- [mol_wire_set](./set) - reactive Set
+- [$mol_wire_set](./set) - reactive Set
 
 ## Low level API
 

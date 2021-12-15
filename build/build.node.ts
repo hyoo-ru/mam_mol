@@ -558,7 +558,6 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		// @ $mol_wire_method
 		modEnsure( path : string ) {
 
 			var mod = $mol_file.absolute( path )
