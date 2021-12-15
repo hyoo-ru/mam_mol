@@ -4,16 +4,18 @@ namespace $ {
 		
 		@ $mol_mem
 		static size() {
+			this.resizes()
 			return {
 				width: self.innerWidth,
 				height: self.innerHeight,
 			}
 		}
 		
+		@ $mol_mem
+		static resizes( next?: Event ) { return next }
+		
 	}
 
-	self.addEventListener( 'resize', ()=> {
-		$mol_wire_cache( $mol_window ).size().stale()
-	} )
+	self.addEventListener( 'resize', event => $mol_window.resizes( event ) )
 	
 }

@@ -22,7 +22,7 @@ namespace $.$$ {
 		@ $mol_mem
 		saturation_series() {
 			const input = this.output_series()
-			const prev : number[] = $mol_wire_cache( this ).saturation_series().result ?? []
+			const prev : number[] = $mol_wire_probe( ()=> this.saturation_series() ) ?? []
 			return input.map( ( val , i )=> {
 				const next = ( val + 9 * ( prev[ i ] || 0 ) ) / 10
 				return ( Math.abs( next ) > Math.abs( val ) ) ? next : val

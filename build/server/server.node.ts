@@ -144,7 +144,6 @@ namespace $ {
 			const socket = this.socket2()
 
 			for( const [ line, path ] of this.lines() ) {
-				console.log( 'line', path )
 				this.notify( line, path )
 			}
 			
@@ -162,7 +161,7 @@ namespace $ {
 			for( const src of sources ) src.buffer()
 
 			// ignore initial
-			if( !$mol_wire_cache( this ).notify( line, path ).result ) return true
+			if( !$mol_wire_probe( ()=> this.notify( line, path ) ) ) return true
 
 			this.$.$mol_log3_rise({
 				place: `${this}`,

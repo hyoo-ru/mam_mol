@@ -30,9 +30,18 @@ namespace $ {
 			}
 
 		}
+		
+		@ $mol_mem
+		static changes( next?: StorageEvent ) { return next }
 
 		@ $mol_mem_key
-		static value< Value >( key : string , next? : Value , force? : $mol_mem_force ) : Value | null {
+		static value< Value >(
+			key : string ,
+			next? : Value | null ,
+		) : Value | null {
+			
+			this.changes()
+			
 			if( next === void 0 ) return JSON.parse( this.native().getItem( key ) || 'null' )
 			
 			if( next === null ) this.native().removeItem( key )

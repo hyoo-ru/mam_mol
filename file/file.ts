@@ -30,11 +30,11 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 
-		abstract stat( next? : $mol_file_stat ): $mol_file_stat
+		abstract stat( next? : $mol_file_stat | null ): $mol_file_stat | null
 
 		reset(): void {
 			try {
-				$mol_wire_cache( this ).stat().stale()
+				this.stat( null )
 			} catch( error: any ) {
 				if (error instanceof $mol_file_not_found) return
 				return $mol_fail_hidden(error)
@@ -42,7 +42,7 @@ namespace $ {
 		}
 		
 		version() {
-			return this.stat().mtime.getTime().toString( 36 ).toUpperCase()
+			return this.stat()?.mtime.getTime().toString( 36 ).toUpperCase() ?? ''
 		}
 
 		abstract ensure(next?: boolean): boolean
@@ -56,20 +56,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		exists( next? : boolean ) {
+		exists( next? : boolean, virt?: 'virt' ) {
+			
+			if( virt ) return next!
 
-			let exists = true
-			try {
-				this.stat()
-			} catch( error: any ) {
-
-				if (error instanceof $mol_file_not_found) {
-					exists = false
-				} else {
-					return $mol_fail_hidden(error)
-				}
-				
-			}
+			let exists = Boolean( this.stat() )
 
 			if( next === undefined ) return exists
 			if( next === exists ) return exists
@@ -82,7 +73,7 @@ namespace $ {
 		}
 		
 		type() {
-			return this.stat().type
+			return this.stat()?.type ?? ''
 		}
 		
 		name() {
@@ -97,7 +88,8 @@ namespace $ {
 		abstract buffer( next? : Uint8Array ): Uint8Array
 
 		@ $mol_mem
-		text(next?: string) {
+		text(next?: string, virt?: 'virt') {
+			if( virt ) return next!
 			if( next === undefined ) {
 				return $mol_charset_decode( this.buffer( undefined ) )	
 			} else {
@@ -107,23 +99,23 @@ namespace $ {
 			}
 		}
 
-		buffer_cached(buffer: Uint8Array) {
-			const ctime = new Date()
-			const stat: $mol_file_stat = {
-				type: 'file',
-				size: buffer.length,
-				ctime,
-				atime: ctime,
-				mtime: ctime
-			}
+		// buffer_cached(buffer: Uint8Array) {
+		// 	const ctime = new Date()
+		// 	const stat: $mol_file_stat = {
+		// 		type: 'file',
+		// 		size: buffer.length,
+		// 		ctime,
+		// 		atime: ctime,
+		// 		mtime: ctime
+		// 	}
 
-			$mol_wire_cache( this ).buffer().put( buffer as any )
-			$mol_wire_cache( this ).stat().put( stat as any )
-		}
+		// 	$mol_wire_cache( this ).buffer().put( buffer as any )
+		// 	$mol_wire_cache( this ).stat().put( stat as any )
+		// }
 
-		text_cached(content: string) {
-			this.buffer_cached($mol_charset_encode(content))
-		}
+		// text_cached(content: string) {
+		// 	this.buffer_cached($mol_charset_encode(content))
+		// }
 		
 		abstract sub(): $mol_file[]
 
@@ -158,7 +150,7 @@ namespace $ {
 
 		size() {
 			switch( this.type() ) {
-				case 'file': return this.stat().size
+				case 'file': return this.stat()?.size ?? 0
 				default: return 0
 			}
 		}

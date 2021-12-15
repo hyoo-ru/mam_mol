@@ -296,8 +296,8 @@ namespace $ {
 			host.readFile = ( path )=> $mol_file.relative( path ).text()
 			host.writeFile = ( path , text )=> {
 				const file = $mol_file.relative( path )
-				$mol_wire_cache( file ).exists().put( true )
-				$mol_wire_cache( file ).text().put( text )
+				file.exists( true, 'virt' )
+				file.text( text, 'virt' )
 			}
 			
 			return host

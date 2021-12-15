@@ -54,8 +54,9 @@ namespace $ {
 			
 			if( args.length ) {
 
-				dict = host[ name ]
-				if( !dict ) dict = host[ name ] = new Map<any,any>()
+				dict = Object.getOwnPropertyDescriptor( host, name )
+					? host[ name ]
+					: host[ name ] = new Map<any,any>()
 				
 				key = args.map( v => $mol_key( v ) ).join(',')
 				existen = dict.get( key )
@@ -90,6 +91,8 @@ namespace $ {
 			
 			return fiber
 		}
+		
+		static warm = true
 		
 		static planning = [] as $mol_wire_fiber< any, any, any >[]
 		static reaping = [] as $mol_wire_fiber< any, any, any >[]
@@ -299,6 +302,10 @@ namespace $ {
 		}
 		
 		sync() {
+			
+			if( !$mol_wire_fiber.warm ) {
+				return this.result
+			}
 			
 			this.promote()
 			this.touch()

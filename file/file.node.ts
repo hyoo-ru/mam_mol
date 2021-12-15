@@ -1,6 +1,9 @@
 namespace $ {
 
-	function stat_convert(stat: NonNullable<ReturnType<typeof $node.fs.statSync>>): $mol_file_stat {
+	function stat_convert(stat: ReturnType<typeof $node.fs.statSync>): null | $mol_file_stat {
+		
+		if( !stat ) return null
+		
 		let type: $mol_file_type | undefined
 		if (stat.isDirectory()) type = 'dir'
 		if (stat.isFile()) type = 'file'
@@ -54,15 +57,13 @@ namespace $ {
 				file.reset()
 				
 				if( type === 'change' ) {
-					$mol_wire_cache( this ).buffer().stale()
+					this.stat( null )
 				} else {
 					file.parent().reset()
 				}
 
 			} )
-			.on( 'error' , ( error : Error )=> {
-				$mol_wire_cache( this ).stat().put( error )
-			} )
+			.on( 'error' , $mol_fail_log )
 			
 			return {
 				destructor() {
@@ -73,14 +74,14 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		stat( next? : $mol_file_stat ) {
+		stat( next? : $mol_file_stat | null ) {
 			let stat = next
 			const path = this.path()
 
 			this.parent().watcher()
 			
 			try {
-				stat = next ?? stat_convert($node.fs.statSync( path ))
+				stat = next ?? stat_convert($node.fs.statSync( path, { throwIfNoEntry: false } ))
 			} catch( error: any ) {
 				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found`)
 				error.message += '\n' + path
@@ -110,11 +111,11 @@ namespace $ {
 			const path = this.path()
 			if( next === undefined ) {
 
-				this.stat()
+				if( !this.stat() ) return new Uint8Array
 				
 				try {
 
-					const prev = $mol_wire_cache( this ).buffer().result
+					const prev = $mol_wire_probe( ()=> this.buffer() )
 					
 					next = buffer_normalize( $node.fs.readFileSync( path ) )
 

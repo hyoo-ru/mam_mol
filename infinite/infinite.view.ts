@@ -5,7 +5,7 @@ namespace $.$$ {
 		@ $mol_mem
 		row_ids() {
 
-			let ids : readonly $mol_view[] = $mol_wire_cache( this ).row_ids().result ?? []
+			let ids : readonly $mol_view[] = $mol_wire_probe( ()=> this.row_ids() ) ?? []
 
 			if( ids.length === 0 ) ids = this.after( undefined )
 			if( ids.length === 0 ) return []
