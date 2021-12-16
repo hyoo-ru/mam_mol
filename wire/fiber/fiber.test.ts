@@ -117,7 +117,7 @@ namespace $ {
 
 		} ,
 
-		async 'Auto destroy owned value on alone'($) {
+		'Auto destroy owned value on alone'($) {
 
 			let destroyed = false
 

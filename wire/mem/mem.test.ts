@@ -335,5 +335,85 @@ namespace $ {
 			App.test()
 		} ,
 
+		async 'Wait for data'($) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+				
+				static async source() {
+					return 'Jin'
+				}
+
+				@ $mol_wire_mem(0)
+				static middle() {
+					return $mol_wire_sync( this ).source()
+				}
+
+				@ $mol_wire_mem(0)
+				static target() {
+					return this.middle()
+				}
+				
+				@ $mol_wire_method
+				static test() {
+					$mol_assert_equal( App.target() , 'Jin' )
+				}
+
+			}
+
+			await $mol_wire_async( App ).test()
+		},
+
+		'Auto destroy on long alone'( $ ) {
+
+			let destroyed = false
+
+			class App extends $mol_object2 {
+
+				static $ = $
+				
+				@ $mol_wire_mem(0)
+				static showing( next = true ) {
+					return next
+				}
+
+				@ $mol_wire_mem(0)
+				static details() {
+					return {
+						destructor() {
+							destroyed = true
+						}
+					}
+				}
+
+				@ $mol_wire_mem(0)
+				static render() {
+					return this.showing() ? this.details() : null
+				}
+
+			}
+
+			const details = App.render()
+			$mol_assert_ok( details )
+
+			App.showing( false )
+			$mol_assert_not( App.render() )
+			
+			App.showing( true )
+			$mol_assert_equal( App.render() , details )
+			
+			$mol_wire_fiber.sync()
+			$mol_assert_not( destroyed )
+			
+			App.showing( false )
+			$mol_wire_fiber.sync()
+			$mol_assert_ok( destroyed )
+
+			App.showing( true )
+			$mol_assert_unique( App.render() , details )
+			
+		},
+
 	})
 }
