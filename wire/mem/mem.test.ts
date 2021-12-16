@@ -415,5 +415,91 @@ namespace $ {
 			
 		},
 
+		'Memoize by single simple key' ($) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_mem(1)
+				static user_name( user: string , next?: string ) {
+					return next ?? user
+				}
+
+				@ $mol_wire_mem(1)
+				static user_names() {
+					return [
+						this.user_name( 'jin' ),
+						this.user_name( 'john' ),
+					]
+				}
+
+			}
+
+			$mol_assert_like( App.user_names(), [ 'jin', 'john' ] )
+			
+			App.user_name( 'jin', 'JIN' )
+			$mol_assert_like( App.user_names(), [ 'JIN', 'john' ] )
+
+		} ,
+
+		'Memoize by single complex key' ($) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_mem(1)
+				static tile( pos: [ number, number ] ) {
+					return new String( `/tile=${pos}` )
+				}
+
+			}
+
+			$mol_assert_like( App.tile([0,1]), new String( '/tile=0,1' ) )
+			$mol_assert_equal( App.tile([0,1]), App.tile([0,1]) )
+
+		} ,
+
+		'Memoize by multiple keys' ($) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_mem(2)
+				static tile( x: number, y: number ) {
+					return new String( `/tile=${x},${y}` )
+				}
+
+			}
+
+			$mol_assert_like( App.tile(0,1), new String( '/tile=0,1' ) )
+			$mol_assert_equal( App.tile(0,1), App.tile(0,1) )
+
+		} ,
+
+		'Deep deps' ($) {
+
+			class Fib extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_mem(1)
+				static value( index: number , next?: number ): number {
+					if( next ) return next
+					if( index < 2 ) return 1
+					return this.value( index - 1 ) + this.value( index - 2 )
+				}
+
+			}
+
+			$mol_assert_equal( Fib.value( 40 ), 165580141 )
+
+			Fib.value( 1, 2 )
+			$mol_assert_equal( Fib.value( 40 ), 267914296 )
+
+		} ,
+
 	})
 }
