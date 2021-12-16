@@ -2,6 +2,26 @@
 
 Reactive method memoizer. Receives count of key property. For different key it stores different cache. Keys are compared deeply using [$mol_key](../../key).
 
+## Channel Abstraction
+
+Channel is function which can be used to pull and push values depending on agruments count.
+
+
+```ts
+prop(): Value // read-only single value
+prop( next?: Value ): Value // read/write single value
+
+prop( key: Ket ): Value // read-only value by key
+prop( key: Key, next?: Value ): Value // read/write value by key
+
+prop( key1: Key1, key2: Key2 ): Value // read-only value by keys
+prop( key1: Key1, key2: Key2, next?: Value ): Value // read/write value by keys
+
+// etc, any count of keys
+```
+
+## Examples
+
 ```ts
 class User extends $mol_object2 {
 	
@@ -24,10 +44,23 @@ class User extends $mol_object2 {
 		return next ?? 'Anonymous'
 	}
 	
-	// Random memoization.
+	// Memoized external communication
 	@ $mol_wire_mem(0)
-	height() {
-		return Math.random()
+	height( next?: number ) {
+		
+		if( next === undefined ) { // switch between pull and push+pull
+			return localStorage.getItem( 'height' ) ?? 0 // pull value
+		} else {
+			localStorage.setItem( 'height', next ) // push new value
+			return next // return actual value
+		}
+		
+	}
+	
+	// Memoized delegation with default value
+	@ $mol_wire_mem(0)
+	weight( next?: number ) {
+		return this.$.$mol_state_local.value( '', next ) ?? 0
 	}
 	
 	// Using other objects as key.
@@ -67,3 +100,62 @@ class User extends $mol_object2 {
 	
 }
 ```
+
+## Special cases
+
+### Enforce pull repeat
+
+```ts
+@ $mol_wire_mem(0)
+page( next = 0 ) {
+	return next
+}
+
+@ $mol_wire_mem(0)
+scroll_top( next = 0 ) {
+	this.page() // reset on page change
+	return next
+}
+```
+
+```ts
+@ $mol_wire_mem(0)
+updates( next = {} ) {
+	return Math.random()
+}
+
+@ $mol_wire_mem(0)
+data( next = 0 ) {
+	this.updates()
+	return fetchData()
+}
+
+// ...
+
+this.updates( null ) // Enforce data refetch
+```
+
+### Multiple push logic
+
+```ts
+@ $mol_wire_mem(0)
+config( next?: string, mode?: 'virt' ) {
+	
+	if( next === unefined ) { // pull
+		return fs.readFile( 'conf.txt' )
+	}
+	
+	// Skip write in virtual mode
+	if( mode === 'virt' ) return next
+	
+	// Write to FS in default mode
+	fs.writeFile( 'conf.txt' )
+	return next
+	
+}
+```
+
+## Related Articles
+
+* [$mol_atom: теория и практика реактивности](https://habrahabr.ru/post/317360/) - Object oriented reactive programming
+* [Объектное Реактивное Программирование](https://habrahabr.ru/post/330466/) - Features of Object Reactive Programming
