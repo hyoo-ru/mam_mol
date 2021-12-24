@@ -26,25 +26,25 @@ prop( key1: Key1, key2: Key2, next?: Value ): Value // read/write value by keys
 class User extends $mol_object2 {
 	
 	// Reactive static factory which makes and destroys instances.
-	static @ $mol_wire_mem(1)
-	instance( id: string ) {
+	@ $mol_wire_mem(1)
+	static instance( id: string ) {
 		return new User( id )
 	}
 	
 	constructor( readonly id: string ) { }
 	
-	// Called when all fibers unsubscribes from `User.instance` factory.
+	// Called when all fibers unsubscribed from `User.instance` factory.
 	destructor() {
 		console.log( 'Nobody needs me anymore :(' )
 	}
 	
 	// Reactive mutable reactive property with default value.
 	@ $mol_wire_mem(0)
-	name( next?: string ) {
-		return next ?? 'Anonymous'
+	name( next = 'Anonymous' ) {
+		return next
 	}
 	
-	// Memoized external communication
+	// Memoized external communication.
 	@ $mol_wire_mem(0)
 	height( next?: number ) {
 		
@@ -60,7 +60,7 @@ class User extends $mol_object2 {
 	// Memoized delegation with default value
 	@ $mol_wire_mem(0)
 	weight( next?: number ) {
-		return this.$.$mol_state_local.value( '', next ) ?? 0
+		return this.$.$mol_state_local.value( 'weight', next ) ?? 0
 	}
 	
 	// Using other objects as key.
@@ -80,7 +80,10 @@ class User extends $mol_object2 {
 	@ $mol_wire_mem(2)
 	is_between(
 		relation: 'height' | 'weight',
-		others: [ User | undefined, User | undefined ],
+		others: {
+			before?: User
+			after?: User
+		}
 		next = false,
 	) {
 		return next
@@ -89,7 +92,8 @@ class User extends $mol_object2 {
 	// Property depends on async requests.
 	@ $mol_wire_mem(0)
 	friends() {
-		return this.$.$mol_fetch.json( '/friends' )
+		return this.$.$mol_fetch.json( '/profile' ).friends
+			.map( id => User.instance( id ) )
 	}
 	
 	// Reactive property which depends on other properties.
@@ -120,7 +124,7 @@ scroll_top( next = 0 ) {
 
 ```ts
 @ $mol_wire_mem(0)
-updates( next = {} ) {
+updates( next = null ) {
 	return Math.random()
 }
 
