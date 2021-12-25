@@ -2,6 +2,10 @@
 
 Staticaly typed css style sheets. Following samples show which CSS code are generated from TS code.
 
+## Articles
+
+- [Продвинутый CSS-in-TS ](https://github.com/nin-jin/slides/tree/master/css-in-ts)
+
 ## BEM Block
 
 ```tree
