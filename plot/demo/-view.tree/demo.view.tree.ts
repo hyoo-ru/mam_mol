@@ -23,6 +23,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * frequency 8
+		 * ```
+		 */
+		frequency() {
+			return 8
+		}
+		
+		/**
+		 * ```tree
 		 * sub / <= Plot
 		 * ```
 		 */

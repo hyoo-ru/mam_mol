@@ -5202,6 +5202,7 @@ declare namespace $ {
     class $mol_plot_demo extends $mol_example_large {
         title(): string;
         count(val?: any): number;
+        frequency(): number;
         sub(): readonly any[];
         tags(): readonly any[];
         saturation_series(): readonly any[];

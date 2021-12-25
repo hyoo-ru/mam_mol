@@ -20310,6 +20310,9 @@ var $;
                 return val;
             return 20;
         }
+        frequency() {
+            return 8;
+        }
         sub() {
             return [
                 this.Plot()
@@ -20460,7 +20463,7 @@ var $;
                 return this.series_x().map(i => Math.sin(i / 2) * 2);
             }
             output_series() {
-                $.$mol_state_time.now(125);
+                $.$mol_state_time.now(Math.floor(1000 / this.frequency()));
                 return this.input_series().map(input => input * Math.random());
             }
             saturation_series() {
