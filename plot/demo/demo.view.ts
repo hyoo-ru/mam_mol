@@ -10,7 +10,8 @@ namespace $.$$ {
 
 		@ $mol_mem
 		input_series() {
-			return this.series_x().map(i => Math.sin( i / 2 ) * 2)
+			const x = this.series_x()
+			return x.map(i => Math.sin( i * 9 / x.length ) * 2)
 		}
 
 		@ $mol_mem
