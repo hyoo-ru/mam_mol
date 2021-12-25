@@ -15,7 +15,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		output_series() {
-			$mol_state_time.now( Math.floor( 1000 / this.frequency() ) )
+			$mol_state_time.now( 125 )
 			return this.input_series().map(input => input * Math.random())
 		}
 		
