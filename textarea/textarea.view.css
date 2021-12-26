@@ -37,6 +37,10 @@
 	overflow-anchor: none;
 }
 
+[mol_textarea_edit]:focus {
+	color: transparent;
+}
+
 [mol_textarea_sidebar_showed] [mol_textarea_edit] {
 	left: 3rem;
 	width: calc( 100% - 3rem );
