@@ -3171,8 +3171,7 @@ $mol_textarea $mol_view
 		keydown?event <=> press?event null
 		pointermove?event <=> hover?event null
 	sub /
-		<= Edit $mol_string
-			dom_name \textarea
+		<= Edit $mol_textarea_edit
 			value?val <=> value?val \
 			hint <= hint \ 
 			enabled <= enabled true
@@ -3184,6 +3183,12 @@ $mol_textarea $mol_view
 			row_numb!index <= row_numb!index 0
 			sidebar_showed <= sidebar_showed
 			highlight <= highlight \
+
+$mol_textarea_edit $mol_string
+	dom_name \textarea
+	field *
+		^
+		scrollTop 0
 
 $mol_textarea_demo $mol_example
 	title @ \Text input field in various states

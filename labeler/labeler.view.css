@@ -8,6 +8,7 @@
 [mol_labeler_label] {
 	color: var(--mol_theme_shade);
 	line-height: 1rem;
+	z-index: 1;
 }
 
 [mol_labeler_content] {

@@ -139,8 +139,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Edit $mol_string
-		 * 	dom_name \textarea
+		 * Edit $mol_textarea_edit
 		 * 	value?val <=> value?val
 		 * 	hint <= hint
 		 * 	enabled <= enabled
@@ -150,9 +149,8 @@ namespace $ {
 		 */
 		@ $mol_mem
 		Edit() {
-			const obj = new this.$.$mol_string()
+			const obj = new this.$.$mol_textarea_edit()
 			
-			obj.dom_name = () => "textarea"
 			obj.value = (val?: any) => this.value(val)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.enabled()
@@ -201,6 +199,32 @@ namespace $ {
 			obj.highlight = () => this.highlight()
 			
 			return obj
+		}
+	}
+	
+	export class $mol_textarea_edit extends $mol_string {
+		
+		/**
+		 * ```tree
+		 * dom_name \textarea
+		 * ```
+		 */
+		dom_name() {
+			return "textarea"
+		}
+		
+		/**
+		 * ```tree
+		 * field *
+		 * 	^
+		 * 	scrollTop 0
+		 * ```
+		 */
+		field() {
+			return {
+				...super.field(),
+				scrollTop: 0
+			}
 		}
 	}
 	

@@ -6563,10 +6563,23 @@ declare namespace $ {
         enabled(): boolean;
         length_max(): number;
         selection(val?: any): readonly number[];
-        Edit(): $$.$mol_string;
+        Edit(): $mol_textarea_edit;
         row_numb(index: any): number;
         highlight(): string;
         View(): $$.$mol_text_code;
+    }
+    class $mol_textarea_edit extends $mol_string {
+        dom_name(): string;
+        field(): {
+            scrollTop: number;
+            disabled: boolean;
+            value: string;
+            placeholder: string;
+            spellcheck: boolean;
+            autocomplete: string;
+            selectionEnd: number;
+            selectionStart: number;
+        };
     }
 }
 
