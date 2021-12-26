@@ -194,9 +194,6 @@ var $;
                 init(obj);
             return obj;
         }
-        static [Symbol.toPrimitive]() {
-            return this.toString();
-        }
         static toString() {
             if (Symbol.toStringTag in this)
                 return this[Symbol.toStringTag];
