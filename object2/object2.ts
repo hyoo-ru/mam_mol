@@ -24,9 +24,9 @@ namespace $ {
 			return obj
 		}
 		
-		//static [ Symbol.toPrimitive ]() {
-		//	return this.toString()
-		//}
+		static [ Symbol.toPrimitive ]() {
+			return this.toString()
+		}
 		
 		static toString() {
 			if( Symbol.toStringTag in this ) return this[ Symbol.toStringTag ]
@@ -35,9 +35,9 @@ namespace $ {
 		
 		destructor() { }
 		
-		[ Symbol.toPrimitive ]( hint: string ) {
-			return hint === 'number' ? this.valueOf() : this.toString()
-		}
+		//[ Symbol.toPrimitive ]( hint: string ) {
+		//	return hint === 'number' ? this.valueOf() : this.toString()
+		//}
 		
 		toString() {
 			return this[ Symbol.toStringTag ] || this.constructor.name + '()'

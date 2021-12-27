@@ -1790,15 +1790,15 @@ var $;
                 init(obj);
             return obj;
         }
+        static [Symbol.toPrimitive]() {
+            return this.toString();
+        }
         static toString() {
             if (Symbol.toStringTag in this)
                 return this[Symbol.toStringTag];
             return this.name;
         }
         destructor() { }
-        [Symbol.toPrimitive](hint) {
-            return hint === 'number' ? this.valueOf() : this.toString();
-        }
         toString() {
             return this[Symbol.toStringTag] || this.constructor.name + '()';
         }
