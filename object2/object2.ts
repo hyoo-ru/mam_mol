@@ -35,9 +35,9 @@ namespace $ {
 		
 		destructor() { }
 		
-		[ Symbol.toPrimitive ]( hint: string ) {
-			return hint === 'number' ? this.valueOf() : this.toString()
-		}
+		//[ Symbol.toPrimitive ]( hint: string ) {
+		//	return hint === 'number' ? this.valueOf() : this.toString()
+		//}
 		
 		toString() {
 			return this[ Symbol.toStringTag ] || this.constructor.name + '()'
