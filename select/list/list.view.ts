@@ -5,12 +5,13 @@ namespace $.$$ {
 			return super.value( val ) as readonly string[]
 		}
 
-		pick( key : string ) {
-			if( !key ) return ''
+		@ $mol_wire_mem(0)
+		pick( key? : string ) {
 			
+			if( !key ) return ''
 			this.value([ ... this.value() , key ])
 			
-			$mol_fiber_defer(()=> {
+			new $mol_after_frame(()=> {
 				if( !this.pick_enabled() ) return
 				this.Pick().Trigger().focused( true )
 				this.Pick().open()
@@ -63,6 +64,7 @@ namespace $.$$ {
 			return this.value().map( key => this.option_title( key ) ).join( ' + ' )
 		}
 
+		@ $mol_wire_method
 		remove( index: number ) {
 			const value = this.value()
 			this.value([

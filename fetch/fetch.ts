@@ -61,21 +61,26 @@ namespace $ {
 
 	export class $mol_fetch extends $mol_object2 {
 		
-		@ $mol_wire_method
 		static request( input : RequestInfo , init : RequestInit = {} ) {
 			
 			let native = $mol_dom_context.fetch
 			if( !native ) native = $node['node-fetch'] as any
 			
-			var controller = new AbortController()
+			const controller = new AbortController()
+			let done = false
 			
 			const promise = native( input , {
 				... init,
-				signal: controller.signal,
+				signal: controller!.signal,
+			} ).finally( ()=> {
+				done = true
 			} )
 			
 			return Object.assign( promise, {
-				destructor: ()=> controller.abort(),
+				destructor: ()=> {
+					// Abort of done request breaks response parsing
+					if( !done ) controller.abort()
+				},
 			} )
 			
 		}

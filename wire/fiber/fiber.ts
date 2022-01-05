@@ -5,6 +5,10 @@ namespace $ {
 	
 	/**
 	 * Suspendable task with with support both sync/async api.
+	 * 
+	 * 	A1 A2 A3 A4 P1 P2 P3 P4 S1 S2 S3
+	 * 	^           ^           ^
+	 * 	args_from   pubs_from   subs_from
 	 **/
 	export class $mol_wire_fiber<
 		Host,
@@ -35,7 +39,7 @@ namespace $ {
 				return existen
 			}
 			
-			return new this( host, task, task.name + '(...)', ... args )
+			return new this( host, task, host + '.' + task.name + '(#' + $mol_guid() + '#)', ... args )
 		}
 		
 		static persist<
@@ -48,22 +52,22 @@ namespace $ {
 			... args: Args
 		): $mol_wire_fiber< Host, [ ... Args ], Result > {
 			
-			const name = task.name + '()'
+			const field = task.name + '()'
 			
 			let dict, key, existen, fiber
 			
 			if( args.length ) {
 
-				dict = Object.getOwnPropertyDescriptor( host, name )
-					? host[ name ]
-					: host[ name ] = new Map<any,any>()
+				key = host + '.' + task.name + '(' + args.map( v => $mol_key( v ) ).join(',') + ')'
+				dict = Object.getOwnPropertyDescriptor( host, field )?.value
 				
-				key = args.map( v => $mol_key( v ) ).join(',')
-				existen = dict.get( key )
+				if( dict ) existen = dict.get( key )
+				else dict = host[ field ] = new Map<any,any>()
 				
 			} else {
-			
-				existen = host[ name ]
+				
+				key = host + '.' + task.name + '()'
+				existen = Object.getOwnPropertyDescriptor( host, field )?.value
 				
 			}
 			
@@ -77,17 +81,10 @@ namespace $ {
 				return existen
 			}
 			
-			if( args.length ) {
-				
-				fiber = new this( host, task, task.name + '(' + key + ')', ... args )
-				dict.set( key, fiber )
-				
-			} else {
-				
-				fiber = new this( host, task, name, ... args )
-				host[ name ] = fiber
-				
-			}
+			fiber = new this( host, task, key, ... args )
+			
+			if( args.length ) dict.set( key, fiber )
+			else host[ field ] = fiber
 			
 			return fiber
 		}
@@ -155,19 +152,19 @@ namespace $ {
 		
 		get persist() {
 			const id = this[ Symbol.toStringTag ]
-			return id[ id.length - 2 ] !== '.'
+			return id[ id.length - 2 ] !== '#'
 		}
 		
 		constructor(
 			readonly host: Host,
 			readonly task: ( this : Host , ... args : Args )=> Result,
-			key: string,
+			id: string,
 			... args: Args
 		) {
-			super()
-			this.push( ... args as any )
+			super( ... args as any, undefined as any )
+			this.pop()
 			this.pubs_from = this.subs_from = args.length
-			this[ Symbol.toStringTag ] = this.host + '.' + key
+			this[ Symbol.toStringTag ] = id
 		}
 		
 		destructor() {
@@ -180,6 +177,15 @@ namespace $ {
 			}
 			
 			this.cache = undefined as any
+			
+			if( this.persist ) {
+				if( this.pubs_from === 0 ) {
+					this.host[ this.task.name + '()' ] = null
+				} else {
+					this.host[ this.task.name + '()' ].delete( this[ Symbol.toStringTag ] )
+				}
+			}
+			
 		}
 		
 		solid() {
@@ -195,6 +201,10 @@ namespace $ {
 			$mol_wire_fiber.reaping.push( this )
 			$mol_wire_fiber.plan()
 		}
+		
+		toString() {
+			return this[ Symbol.toStringTag ]
+		}
 
 		[ $mol_dev_format_head ]() {
 			
@@ -208,6 +218,10 @@ namespace $ {
 				$mol_dev_format_auto( this.cache ),
 			)
 			
+		}
+		
+		get $() {
+			return this.host['$']
 		}
 		
 		affect( quant: number ) {
@@ -240,15 +254,23 @@ namespace $ {
 			}
 			
 			const bu = this.begin()
-			let result
+			let result: typeof this.cache
 
 			try {
 
 				result = this.task.call( this.host, ... this.args )
 				
 				if( result instanceof Promise ) {
-					const put = this.put.bind( this )
-					result = result.then( put, put )
+					
+					const put = ( res: Result )=> {
+						if( this.cache === result ) this.put( res )
+						return res
+					}
+					
+					result = Object.assign( result.then( put, put ), {
+						destructor: result['destructor']
+					} )
+					
 					handled.add( result )
 				}
 				
@@ -257,7 +279,13 @@ namespace $ {
 				result = error
 				
 				if( result instanceof Promise && !handled.has( result ) ) {
-					result = result.finally( ()=> this.stale() )
+					
+					result = Object.assign( result.finally( ()=> {
+						if( this.cache === result ) this.stale()
+					} ), {
+						destructor: result['destructor']
+					} )
+					
 					handled.add( result )
 				}
 				
@@ -285,7 +313,9 @@ namespace $ {
 				this.cache = next
 				
 				if( $mol_owning_catch( this, next ) ) {
-					next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+					try {
+						next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+					} catch {} // Promises throws in strict mode
 				}
 				
 				if( this.subs_from < this.length ) {
@@ -301,10 +331,27 @@ namespace $ {
 			return next
 		}
 		
+		#update?: $mol_wire_fiber< Host, [ ... Args ], Result >
+		@ $mol_wire_method
+		update( ... args: Args ) {
+			
+			if( this.#update && $mol_wire_auto !== this.#update ) {
+				this.#update.destructor()
+				this.#update.put( new Error( 'Aborted by new update' ) )
+			}
+			
+			this.#update = $mol_wire_auto as $mol_wire_fiber< Host, [ ... Args ], Result >
+			const res = this.task.call( this.host, ... args )
+
+			this.#update = undefined
+			return this.put( res )
+			
+		}
+		
 		sync() {
 			
 			if( !$mol_wire_fiber.warm ) {
-				return this.result
+				return this.result as Awaited< Result >
 			}
 			
 			this.promote()
@@ -318,7 +365,7 @@ namespace $ {
 				return $mol_fail_hidden( this.cache )
 			}
 			
-			return this.cache as Result extends Promise< infer Res > ? Res : Result
+			return this.cache as Awaited< Result >
 		}
 
 		async async() {

@@ -12,9 +12,10 @@ class App {
 
 	@ $mol_wire_method
 	run() {
-		this.log( 'Started' )
+		$mol_wire_sync( console ).log( 'Prepare' ) // calls twice, logs once
+		this.log( 'Started' ) // calls twice, logs once
 		this.log( User.name() ) // Loads data from server
-		this.log( 'Finished' )
+		this.log( 'Finished' ) // calls once, logs once
 	}
 	
 }

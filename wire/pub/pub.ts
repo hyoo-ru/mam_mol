@@ -2,7 +2,6 @@ namespace $ {
 
 	/**
 	 * Collects subscribers in compact array. 24B
-	 * Use `$mol_wire_auto?.promote( pub )` to auto wire.
 	 */
 	export class $mol_wire_pub extends Array< $mol_wire_pub | number > {
 		

@@ -25,9 +25,7 @@ namespace $ {
 			let res = atom.sync()
 			if( args[ keys ] === undefined ) return res
 			
-			return atom.put(
-				$mol_wire_fiber.temp( this, orig, ... args ).sync()
-			)
+			return atom.update( ... args )
 			
 		}
 		

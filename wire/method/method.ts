@@ -2,7 +2,7 @@ namespace $ {
 	
 	export function $mol_wire_method<
 		Host extends object,
-		Args extends any[],
+		Args extends readonly any[],
 		Result,
 	>(
 		host : Host,

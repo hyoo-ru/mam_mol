@@ -1,8 +1,10 @@
 namespace $ {
 	
 	export function $mol_wait_timeout_async( this: $, timeout: number ) {
-		return new Promise( done => {
-			new this.$mol_after_timeout( timeout , ()=> done( null ) )
+		const promise = $mol_promise()
+		const task = new this.$mol_after_timeout( timeout , ()=> promise.done() )
+		return Object.assign( promise, {
+			destructor: ()=> task.destructor()
 		} )
 	}
 	

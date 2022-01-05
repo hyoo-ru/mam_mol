@@ -3,6 +3,6 @@ namespace $ {
 		border: {
 			style: 'none',
 		},
-		flex: 'auto',
+		maxHeight: $mol_style_unit.vh(100),
 	} )
 }

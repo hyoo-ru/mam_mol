@@ -271,7 +271,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		override filter( next?: string ) {
-			return this.$.$mol_state_arg.value( 'filter' , next === '' ? null : next ) ?? super.filter()
+			return this.$.$mol_state_arg.value( 'filter' , next === '' ? null : next ) ?? super.filter() as string
 		}
 		
 		@ $mol_mem

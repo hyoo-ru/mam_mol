@@ -13,15 +13,14 @@ namespace $.$$ {
 			if( !next ) return
 			if( !this.enabled() ) return
 
-			this.fiber( $mol_wire_auto! as $mol_wire_fiber<any,any,any> )
+			// this.fiber( $mol_wire_auto! as $mol_wire_fiber<any,any,any> )
 			
 			this.event_click( next )
 			this.click( next )
 
-			if( this.fiber() === $mol_wire_auto! ) {
-				this.fiber( null )
-			}
-			
+			//if( this.fiber() === $mol_wire_auto! ) {
+			//	this.fiber( null )
+			//}
 		}
 		
 		event_key_press ( event: KeyboardEvent ) { 

@@ -37,6 +37,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem
+		static href_absolute(): string {
+			return new URL( this.href(), $mol_dom_context.location.href ).toString()
+		}
+		
+		@ $mol_mem
 		static dict( next? : { [ key : string ] : string | null } ) {
 			
 			var href = this.href( next && this.make_link( next ) ).split( /#!?/ )[1] || ''
@@ -85,6 +90,7 @@ namespace $ {
 		static prolog = '!'
 		static separator = '/'
 		
+		@ $mol_mem_key
 		static make_link( next : { [ key : string ] : string | null } ) {
 			const chunks : string[] = []
 			for( let key in next ) {
@@ -93,7 +99,7 @@ namespace $ {
 				chunks.push( [ key ].concat( val ? [ val ] : [] ).map( this.encode ).join( '=' ) )
 			}
 			
-			return new URL( '#' + this.prolog + chunks.join( this.separator ) , $mol_dom_context.location.href ).toString()
+			return new URL( '#' + this.prolog + chunks.join( this.separator ) , this.href_absolute() ).toString()
 		}
 
 		static encode( str : string ) {
@@ -127,6 +133,6 @@ namespace $ {
 		$mol_state_arg.href( $mol_dom_context.location.href ) 
 	}
 
-	self.addEventListener( 'hashchange' , $mol_fiber_root( $mol_state_arg_change ) )
+	self.addEventListener( 'hashchange' , $mol_state_arg_change )
 	
 }

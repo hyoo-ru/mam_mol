@@ -4,8 +4,8 @@ namespace $ {
 	 * Publisher that can auto collect other publishers. 32B
 	 * 
 	 * 	P1 P2 P3 P4 S1 S2 S3
-	 * 	   ^        ^
-	 * 	   cursor   subs_from
+	 * 	^           ^
+	 * 	pubs_from   subs_from
 	 */
 	export class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
 		
@@ -33,7 +33,7 @@ namespace $ {
 				$mol_fail( new Error( 'Circular subscription' ) )
 			}
 			
-			$mol_wire_auto?.next( this )
+			super.promote()
 		}
 		
 		next( pub?: $mol_wire_pub ): $mol_wire_pub | null {
@@ -74,6 +74,8 @@ namespace $ {
 		
 		end( sub: $mol_wire_sub | null ) {
 			
+			$mol_wire_auto = sub
+			
 			if( this.cursor < 0 ) $mol_fail( new Error( 'End of non begun sub' ) )
 			
 			this.forget( this.cursor )
@@ -87,7 +89,6 @@ namespace $ {
 				pub.touch()
 			}
 			
-			$mol_wire_auto = sub
 			this.cursor = $mol_wire_cursor.fresh
 			
 		}

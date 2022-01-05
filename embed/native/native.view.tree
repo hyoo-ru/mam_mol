@@ -1,4 +1,4 @@
-$mol_embed_native $mol_view
+$mol_embed_native $mol_scroll
 	dom_name \object
 	attr *
 		^
