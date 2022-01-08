@@ -4,7 +4,7 @@ namespace $ {
 		
 		@ $mol_mem
 		db() {
-			return $mol_wire_sync( this ).db_init()
+			return $mol_wire_sync( this as $mol_state_shared ).db_init()
 		}
 		
 		db_init() {
@@ -28,7 +28,6 @@ namespace $ {
 			return `wss://sync-hyoo-ru.herokuapp.com/`
 		}
 		
-		server_clock = new $hyoo_crowd_clock
 		db_clock = new $hyoo_crowd_clock
 		
 		@ $mol_mem
@@ -126,8 +125,13 @@ namespace $ {
 		@ $mol_mem
 		sync() {
 			
-			this.db_sync()
-			this.server_sync()
+			try {
+				this.db_sync()
+				this.server_sync()
+			} catch( error: any ) {
+				if( error instanceof Promise ) return null
+				$mol_fail_log( error )
+			}
 			
 			// const pub = this.keys_serial().public
 			// store.root.sub( pub, $hyoo_crowd_reg ).value( pub )
@@ -144,10 +148,10 @@ namespace $ {
 			
 			if( store.clock.now ) {
 				if( store.clock.ahead( this.db_clock ) ) {
-					Promise.resolve().then( ()=> this.db_save() )
+					$mol_wire_sync( this ).db_save()
 				}
 			} else {
-				Promise.resolve().then( ()=> this.db_load() )
+				$mol_wire_sync( this ).db_load()
 			}
 			
 			return null
@@ -195,11 +199,12 @@ namespace $ {
 			this.socket()
 			
 			const store = this.store()
-			const delta = store.delta( this.server_clock )
+			const server_clock = this.server_clock()
+			const delta = store.delta( server_clock )
 			
-			if( delta.length || !this.server_clock.now ) {
-				this.server_clock.sync( store.clock )
+			if( delta.length || !server_clock.now ) {
 				this.send( this.path(), delta )
+				server_clock.sync( store.clock )
 			}
 			
 			return null
@@ -246,9 +251,14 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		socket() {
+		server_clock() {
+			this.socket()
+			return new $hyoo_crowd_clock
+		}
+		
+		@ $mol_mem
+		socket( reset?: null ) {
 			
-			const db = this.db()
 			this.heartbeat()
 			
 			// const atom = $mol_atom2.current
@@ -281,12 +291,12 @@ namespace $ {
 				}
 				
 				store.apply( delta )
-				doc.server_clock.sync( store.clock )
+				doc.server_clock().sync( store.clock )
 				
 			}
 
 			socket.onclose = ()=> {
-				// setTimeout( ()=> atom!.obsolete(), 5000 )
+				setTimeout( ()=> this.socket( null ), 5000 )
 			}
 			
 			return socket

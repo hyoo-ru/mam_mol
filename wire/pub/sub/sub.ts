@@ -42,15 +42,15 @@ namespace $ {
 			
 			if( this.cursor < this.subs_from ) {
 			
- 				const next = this[ this.cursor ] as $mol_wire_pub
-				if( pub === undefined ) return next
+ 				const next = this[ this.cursor ] as $mol_wire_pub | undefined
+				if( pub === undefined ) return next ?? null
 				
 				if( next === pub ) {
 					this.cursor += 2
 					return next
 				}
 				
-				next.off( this[ this.cursor + 1 ] as number )
+				next?.off( this[ this.cursor + 1 ] as number )
 				
 			} else {
 				
@@ -93,9 +93,28 @@ namespace $ {
 			
 		}
 		
+		unsub( sub_pos: number ) {
+			this[ sub_pos ] = undefined as any
+			this[ sub_pos + 1 ] = undefined as any 
+		}
+		
 		destructor() {
+			
+			for(
+				let cursor = this.length - 2;
+				cursor >= this.subs_from;
+				cursor -= 2
+			) {
+				const sub = this[ cursor ] as $mol_wire_sub
+				const pos = this[ cursor + 1 ] as number
+				sub.unsub( pos )
+				this.pop()
+				this.pop()
+			}
+			
 			this.forget()
 			this.cursor = $mol_wire_cursor.stale
+			
 		}
 		
 		forget( from = this.pubs_from ) {
@@ -108,8 +127,8 @@ namespace $ {
 				cursor += 2
 			) {
 				
-				const pub = this[ cursor ] as $mol_wire_pub
-				pub.off( this[ cursor + 1 ] as number )
+				const pub = this[ cursor ] as $mol_wire_pub | undefined
+				pub?.off( this[ cursor + 1 ] as number )
 				
 				if( this.subs_from < this.length ) {
 					this.move( this.length - 2, cursor )

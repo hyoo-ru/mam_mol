@@ -17,6 +17,14 @@ namespace $ {
 			return ''
 		}
 		
+		[ Symbol.toPrimitive ]( hint: 'number' | 'string' | 'default' ) {
+			switch( hint ) {
+				case 'number': return this.valueOf()
+				case 'string': return this.toString()
+				default: return this.toString()
+			}
+		}
+		
 		valueOf() {
 			return this[ 'valueOf()' ]
 		}

@@ -417,7 +417,7 @@ namespace $ {
 
 		'Memoize by single simple key' ($) {
 
-			class App extends $mol_object2 {
+			class Team extends $mol_object2 {
 
 				static $ = $
 
@@ -434,18 +434,24 @@ namespace $ {
 					]
 				}
 
+				@ $mol_wire_method
+				static test() {
+				
+					$mol_assert_like( this.user_names(), [ 'jin', 'john' ] )
+					
+					Team.user_name( 'jin', 'JIN' )
+					$mol_assert_like( this.user_names(), [ 'JIN', 'john' ] )
+					
+				}
+				
 			}
 
-			$mol_assert_like( App.user_names(), [ 'jin', 'john' ] )
-			
-			App.user_name( 'jin', 'JIN' )
-			$mol_assert_like( App.user_names(), [ 'JIN', 'john' ] )
-
+			Team.test()
 		} ,
 
 		'Memoize by single complex key' ($) {
 
-			class App extends $mol_object2 {
+			class Map extends $mol_object2 {
 
 				static $ = $
 
@@ -454,16 +460,22 @@ namespace $ {
 					return new String( `/tile=${pos}` )
 				}
 
+				@ $mol_wire_method
+				static test() {
+					
+					$mol_assert_like( this.tile([0,1]), new String( '/tile=0,1' ) )
+					$mol_assert_equal( this.tile([0,1]), this.tile([0,1]) )
+					
+				}
+				
 			}
 
-			$mol_assert_like( App.tile([0,1]), new String( '/tile=0,1' ) )
-			$mol_assert_equal( App.tile([0,1]), App.tile([0,1]) )
-
+			Map.test()
 		} ,
 
 		'Memoize by multiple keys' ($) {
 
-			class App extends $mol_object2 {
+			class Map extends $mol_object2 {
 
 				static $ = $
 
@@ -472,10 +484,43 @@ namespace $ {
 					return new String( `/tile=${x},${y}` )
 				}
 
+				@ $mol_wire_method
+				static test() {
+					
+					$mol_assert_like( this.tile(0,1), new String( '/tile=0,1' ) )
+					$mol_assert_equal( this.tile(0,1), this.tile(0,1) )
+					
+				}
+				
 			}
 
-			$mol_assert_like( App.tile(0,1), new String( '/tile=0,1' ) )
-			$mol_assert_equal( App.tile(0,1), App.tile(0,1) )
+			Map.test()
+		} ,
+
+		'Owned value has js-path name' () {
+
+			class App extends $mol_object2 {
+
+				@ $mol_wire_mem(0)
+				static title() {
+					return new $mol_object2
+				}
+
+				@ $mol_wire_mem(1)
+				static like( friend: number ) {
+					return new $mol_object2
+				}
+
+				@ $mol_wire_mem(2)
+				static relation( friend: number, props: [ number ] ) {
+					return new $mol_object2
+				}
+
+			}
+
+			$mol_assert_equal( `${ App.title() }` , 'App.title()' )
+			$mol_assert_equal( `${ App.like(123) }` , 'App.like(123)' )
+			$mol_assert_equal( `${ App.relation(123,[456]) }` , 'App.relation(123,[456])' )
 
 		} ,
 
@@ -484,21 +529,71 @@ namespace $ {
 			class Fib extends $mol_object2 {
 
 				static $ = $
+				
+				static sums = 0
 
 				@ $mol_wire_mem(1)
 				static value( index: number , next?: number ): number {
 					if( next ) return next
 					if( index < 2 ) return 1
+					++ this.sums
 					return this.value( index - 1 ) + this.value( index - 2 )
 				}
 
+				@ $mol_wire_method
+				static test() {
+					
+					$mol_assert_equal( this.value( 4 ), 5 )
+					$mol_assert_equal( this.sums, 3 )
+					
+					this.value( 1, 2 )
+					$mol_assert_equal( this.value( 4 ), 8 )
+					$mol_assert_equal( this.sums, 6 )
+							
+				}
+
 			}
+			
+			Fib.test()
+		} ,
 
-			$mol_assert_equal( Fib.value( 40 ), 165580141 )
+		'Unsubscribe from temp pubs on complete' ($) {
 
-			Fib.value( 1, 2 )
-			$mol_assert_equal( Fib.value( 40 ), 267914296 )
+			class Random extends $mol_object2 {
 
+				static $ = $
+
+				@ $mol_wire_method
+				static seed() {
+					return Math.random()
+				}
+				
+				@ $mol_wire_mem(0)
+				static resets( next?: null ) {
+					return Math.random()
+				}
+				
+				@ $mol_wire_mem(0)
+				static value() {
+					this.resets()
+					return this.seed()
+				}
+
+				@ $mol_wire_method
+				static test() {
+					
+					const first = this.value()
+			
+					this.resets( null )
+					const second = this.value()
+		
+					$mol_assert_unique( first, second )
+									
+				}
+
+			}
+			
+			Random.test()
 		} ,
 
 		// async 'Debouncing by timeout'($) {

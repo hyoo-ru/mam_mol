@@ -20,6 +20,8 @@ namespace $ {
 		 */
 		end( sub: $mol_wire_pub | null ): void
 		
+		unsub( sub_pos: number ): void
+		
 		/**
 		 * Unsubscribes from all publishers.
 		 */

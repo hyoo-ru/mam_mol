@@ -102,51 +102,6 @@ namespace $ {
 			
 		},
 		
-		'Owned value has js-path name' () {
-
-			class App extends $mol_object2 {
-
-				@ $mol_wire_method
-				static title() {
-					return new $mol_object2
-				}
-
-			}
-
-			$mol_assert_equal( `${ App.title() }`.slice( 0, -10 ) , 'App.title(#' )
-
-		} ,
-
-		'Auto destroy owned value on alone'($) {
-
-			let destroyed = false
-
-			class App extends $mol_object2 {
-
-				static $ = $
-				
-				@ $mol_wire_method
-				static having() {
-					return {
-						destructor() {
-							destroyed = true
-						}
-					}
-				}
-				
-				@ $mol_wire_method
-				static owner() {
-					this.having()
-				}
-
-			}
-
-			App.owner()
-			$mol_wire_fiber.sync()
-			$mol_assert_ok( destroyed )
-			
-		} ,
-
 	})
 	
 }

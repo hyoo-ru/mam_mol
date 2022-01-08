@@ -235,6 +235,11 @@ namespace $ {
 			return true
 		}
 		
+		sleep() {
+			if( this.persist ) return
+			this.destructor()
+		}
+		
 		touch() {
 			
 			type Result = typeof this.cache
@@ -244,7 +249,7 @@ namespace $ {
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
 				for( let i = this.pubs_from ; i < this.subs_from; i += 2 ) {
-					;( this[i] as $mol_wire_pub ).touch()
+					;( this[i] as $mol_wire_pub )?.touch()
 					if( this.cursor !== $mol_wire_cursor.doubt ) break check
 				}
 				
@@ -291,10 +296,6 @@ namespace $ {
 				
 			}
 			
-			if( !this.persist && !( result instanceof Promise ) ) {
-				this.cursor = this.pubs_from
-			}
-			
 			this.end( bu )
 			this.put( result )
 
@@ -312,7 +313,7 @@ namespace $ {
 				
 				this.cache = next
 				
-				if( $mol_owning_catch( this, next ) ) {
+				if( this.persist && $mol_owning_catch( this, next ) ) {
 					try {
 						next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
 					} catch {} // Promises throws in strict mode
@@ -327,6 +328,27 @@ namespace $ {
 			}
 			
 			this.cursor = $mol_wire_cursor.fresh
+			
+			if( next instanceof Promise ) return next
+			
+			if( this.persist ) {
+			
+				for(
+					let cursor = this.pubs_from;
+					cursor < this.subs_from;
+					cursor += 2
+				) {
+					const pub = this[ cursor ] as $mol_wire_pub
+					pub.sleep()
+				}
+				
+			} else {
+				
+				this.cursor = this.pubs_from
+				this.forget()
+				this.cursor = $mol_wire_cursor.fresh
+				
+			}
 			
 			return next
 		}

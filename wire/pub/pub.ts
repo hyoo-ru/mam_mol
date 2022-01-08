@@ -3,7 +3,7 @@ namespace $ {
 	/**
 	 * Collects subscribers in compact array. 24B
 	 */
-	export class $mol_wire_pub extends Array< $mol_wire_pub | number > {
+	export class $mol_wire_pub extends Array< $mol_wire_pub | number | undefined > {
 		
 		// Derived objects should be Arrays.
 		static get [ Symbol.species ]() {
@@ -80,6 +80,11 @@ namespace $ {
 		 * Enforce actualization. Should not throw errors.
 		 */
 		touch() {}
+		
+		/**
+		 * Subscriber stabilized and allows to free.
+		 */
+		sleep() {}
 		
 		/**
 		 * Notify subscribers about self changes.
