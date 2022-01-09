@@ -353,19 +353,19 @@ namespace $ {
 			return next
 		}
 		
-		#update?: $mol_wire_fiber< Host, [ ... Args ], Result >
+		'update()'?: $mol_wire_fiber< Host, [ ... Args ], Result >
 		@ $mol_wire_method
 		update( ... args: Args ) {
 			
-			if( this.#update && $mol_wire_auto !== this.#update ) {
-				this.#update.destructor()
-				this.#update.put( new Error( 'Aborted by new update' ) )
+			if( this['update()'] && $mol_wire_auto !== this['update()'] ) {
+				this['update()'].destructor()
+				this['update()'].put( new Error( 'Aborted by new update' ) )
 			}
 			
-			this.#update = $mol_wire_auto as $mol_wire_fiber< Host, [ ... Args ], Result >
+			this['update()'] = $mol_wire_auto as $mol_wire_fiber< Host, [ ... Args ], Result >
 			const res = this.task.call( this.host, ... args )
 
-			this.#update = undefined
+			this['update()'] = undefined
 			return this.put( res )
 			
 		}
