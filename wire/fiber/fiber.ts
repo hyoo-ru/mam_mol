@@ -58,7 +58,7 @@ namespace $ {
 			
 			if( args.length ) {
 
-				key = host + '.' + task.name + '(' + args.map( v => $mol_key( v ) ).join(',') + ')'
+				key = `${ host }.${ task.name }(${ args.map( v => $mol_key( v ) ).join(',') })`
 				dict = Object.getOwnPropertyDescriptor( host, field )?.value
 				
 				if( dict ) existen = dict.get( key )
@@ -66,7 +66,7 @@ namespace $ {
 				
 			} else {
 				
-				key = host + '.' + task.name + '()'
+				key = `${ host }.${ field }`
 				existen = Object.getOwnPropertyDescriptor( host, field )?.value
 				
 			}
@@ -155,6 +155,10 @@ namespace $ {
 			return id[ id.length - 2 ] !== '#'
 		}
 		
+		field() {
+			return this.task.name + '()'
+		}
+		
 		constructor(
 			readonly host: Host,
 			readonly task: ( this : Host , ... args : Args )=> Result,
@@ -162,7 +166,7 @@ namespace $ {
 			... args: Args
 		) {
 			super( ... args as any, undefined as any )
-			this.pop()
+			this.pop() // reserve capacity for subscriber
 			this.pubs_from = this.subs_from = args.length
 			this[ Symbol.toStringTag ] = id
 		}
@@ -180,15 +184,16 @@ namespace $ {
 			
 			if( this.persist ) {
 				if( this.pubs_from === 0 ) {
-					this.host[ this.task.name + '()' ] = null
+					this.host[ this.field() ] = null
 				} else {
-					this.host[ this.task.name + '()' ].delete( this[ Symbol.toStringTag ] )
+					this.host[ this.field() ].delete( this[ Symbol.toStringTag ] )
 				}
 			}
 			
 		}
 		
 		solid() {
+			// @todo think how to remove this hack
 			this.reap = nothing
 		}
 		

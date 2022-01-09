@@ -23,7 +23,7 @@ namespace $.$$ {
 			const rect = this.view_rect()
 			if( next ) return next
 			
-			let [ min , max ] = $mol_wire_probe( ()=> this.view_window() ) ?? [ 0 , 0 ]
+			let [ min , max ] = $mol_mem_cached( ()=> this.view_window() ) ?? [ 0 , 0 ]
 
 			let max2 = max = Math.min( max , kids.length )
 			let min2 = min = Math.max( 0 , Math.min( min , max - 1 ) )
@@ -34,8 +34,8 @@ namespace $.$$ {
 			const limit_top = -over
 			const limit_bottom = window_height + over
 
-			const gap_before = $mol_wire_probe( ()=> this.gap_before() ) ?? 0
-			const gap_after = $mol_wire_probe( ()=> this.gap_after() ) ?? 0
+			const gap_before = $mol_mem_cached( ()=> this.gap_before() ) ?? 0
+			const gap_after = $mol_mem_cached( ()=> this.gap_after() ) ?? 0
 
 			let top = Math.ceil( rect?.top ?? 0 ) + gap_before
 			let bottom = Math.ceil( rect?.bottom ?? 0 ) - gap_after

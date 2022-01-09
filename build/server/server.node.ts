@@ -161,7 +161,7 @@ namespace $ {
 			for( const src of sources ) src.buffer()
 
 			// ignore initial
-			if( !$mol_wire_probe( ()=> this.notify( line, path ) ) ) return true
+			if( !$mol_mem_cached( ()=> this.notify( line, path ) ) ) return true
 
 			this.$.$mol_log3_rise({
 				place: `${this}`,

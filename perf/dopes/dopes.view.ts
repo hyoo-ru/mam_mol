@@ -103,7 +103,7 @@ namespace $.$$ {
 				this._begin_clock = clock
 				return super.speed().replace( '{speed}' , speed.toFixed(2) )
 			} else {
-				return $mol_wire_probe( ()=> this.speed() ) ?? 'Warming up..'
+				return $mol_mem_cached( ()=> this.speed() ) ?? 'Warming up..'
 			}
 
 		}

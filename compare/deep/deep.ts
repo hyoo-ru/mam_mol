@@ -1,6 +1,6 @@
 namespace $ {
 
-	let cache = new WeakMap< any , WeakMap< any , boolean > >()
+	export let $mol_compare_deep_cache = new WeakMap< any , WeakMap< any , boolean > >()
 	
 	export function $mol_compare_deep< Value >( left: Value, right: Value ): boolean {
 
@@ -23,7 +23,7 @@ namespace $ {
 		if( left instanceof Date ) return Object.is( left.valueOf(), right['valueOf']() )
 		if( left instanceof RegExp ) return left.source === right['source'] && left.flags === right['flags']
 
-		let left_cache = cache.get( left )
+		let left_cache = $mol_compare_deep_cache.get( left )
 		if( left_cache ) {
 
 			const right_cache = left_cache.get( right )
@@ -32,7 +32,7 @@ namespace $ {
 		} else {
 			
 			left_cache = new WeakMap< any , boolean >([[ right, true ]])
-			cache.set( left , left_cache )
+			$mol_compare_deep_cache.set( left , left_cache )
 
 		}
 

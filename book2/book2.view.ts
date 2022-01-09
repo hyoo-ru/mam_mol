@@ -11,7 +11,7 @@ namespace $.$$ {
 			
 			const next = [  ... this.pages().slice(), this.Placeholder() ]
 			
-			const prev = $mol_wire_probe( ()=> this.sub() ) ?? []
+			const prev = $mol_mem_cached( ()=> this.sub() ) ?? []
 			
 			for( let i = 1 ; i++ ; ) {
 				

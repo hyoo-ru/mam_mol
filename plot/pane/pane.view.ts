@@ -79,7 +79,7 @@ namespace $.$$ {
 		scale(next?: $mol_vector_2d< number >): $mol_vector_2d< number > {
 			if (next === undefined) {
 				if (!this.graph_touched) return this.scale_default()
-				next = $mol_wire_probe( ()=> this.scale() ) ?? this.scale_default()
+				next = $mol_mem_cached( ()=> this.scale() ) ?? this.scale_default()
 			}
 			this.graph_touched = true
 
@@ -134,7 +134,7 @@ namespace $.$$ {
 
 			if (next === undefined) {
 				if (!this.graph_touched) return this.shift_default()
-				next = $mol_wire_probe( ()=> this.shift() ) ?? this.shift_default()
+				next = $mol_mem_cached( ()=> this.shift() ) ?? this.shift_default()
 			}
 
 			this.graph_touched = true
