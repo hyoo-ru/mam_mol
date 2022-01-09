@@ -50,7 +50,7 @@ namespace $.$$ {
 		kids_can_add() {
 			const value = this.value()
 			if( !value ) return false
-			return false
+			return true
 		}
 		
 		@ $mol_mem
