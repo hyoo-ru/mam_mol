@@ -3,23 +3,39 @@ namespace $ {
 	/**
 	 * Collects subscribers in compact array. 24B
 	 */
-	export class $mol_wire_pub extends Array< $mol_wire_pub | number | undefined > {
+	export class $mol_wire_pub extends Array< unknown > {
 		
 		// Derived objects should be Arrays.
 		static get [ Symbol.species ]() {
 			return Array
 		}
 		
+		/**
+		 * Affection queue. Used to prevent accidental stack overflow on emit.
+		 */
 		static affected = [] as ( $mol_wire_sub | number )[]
 		
+		/**
+		 * Index of first subscriber.
+		 */
 		protected subs_from = 0 // 4B
 		
+		/**
+		 * All current subscribers.
+		 */
 		get subs() {
 			const res = [] as $mol_wire_sub[]
 			for( let i = this.subs_from; i < this.length; i += 2 ) {
 				res.push( this[i] as $mol_wire_sub )
 			}
-			return res
+			return res as readonly $mol_wire_sub[]
+		}
+		
+		/**
+		 * Has any subscribers or not.
+		 */
+		get alone() {
+			return this.subs_from === this.length
 		}
 		
 		// get affection() {
@@ -148,13 +164,6 @@ namespace $ {
 			//if( typeof this[ peer_pos ] !== 'object' ) return $mol_fail( new Error( 'Wrong back link' ) )
 			//if( this[ peer_pos ][ self_pos ] !== this ) return $mol_fail( new Error( 'Inconsistent back link' ) )
 			this[ peer_pos + 1 ] = self_pos
-		}
-		
-		/**
-		 * Has any subscribers or not.
-		 */
-		get alone() {
-			return this.subs_from === this.length
 		}
 		
 	}

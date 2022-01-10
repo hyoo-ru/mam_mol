@@ -15,12 +15,12 @@ namespace $ {
 		 */
 		next( pub?: $mol_wire_pub ): $mol_wire_pub | null
 		
+		unsub( pub_pos: number ): void
+		
 		/**
 		 * Ends auto wire to publishers and unsubscribes from unpromoted publishers.
 		 */
 		end( sub: $mol_wire_pub | null ): void
-		
-		unsub( sub_pos: number ): void
 		
 		/**
 		 * Unsubscribes from all publishers.

@@ -1,6 +1,6 @@
 # $mol_wire_fiber
 
-Pausable synchronous execution.
+Pausable synchronous execution. Tiny SuspenseAPI implementation.
 
 Code inside fibers which calls other fibers must be idempotent because it may be restarted for continuation. So all unidempotent code should be wrapped to fiber.
 

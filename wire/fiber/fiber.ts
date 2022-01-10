@@ -193,7 +193,7 @@ namespace $ {
 		}
 		
 		solid() {
-			// @todo think how to remove this hack
+			/** @todo think how to remove this hack */
 			this.reap = nothing
 		}
 		
@@ -363,7 +363,7 @@ namespace $ {
 		update( ... args: Args ) {
 			
 			if( this['update()'] && $mol_wire_auto !== this['update()'] ) {
-				this['update()'].destructor()
+				this['update()'].forget()
 				this['update()'].put( new Error( 'Aborted by new update' ) )
 			}
 			
@@ -375,6 +375,10 @@ namespace $ {
 			
 		}
 		
+		/**
+		 * Synchronous execution. Throws Promise when waits async task (SuspenseAPI provider).
+		 * Should be called inside SuspenseAPI consumer (ie fiber).
+		 */
 		sync() {
 			
 			if( !$mol_wire_fiber.warm ) {
@@ -395,6 +399,10 @@ namespace $ {
 			return this.cache as Awaited< Result >
 		}
 
+		/**
+		 * Asynchronous execution.
+		 * It's SuspenseAPI consumer. So SuspenseAPI providers can be called inside.
+		 */
 		async async() {
 			
 			while( true ) {
