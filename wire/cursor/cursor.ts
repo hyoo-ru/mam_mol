@@ -12,8 +12,8 @@ namespace $ {
 		/** Actual state but may be dropped. */
 		fresh = new ( class fresh extends Number {} )( -3 ) as any as number,
 		
-		/** Long life actual state. */
-		solid = new ( class solid extends Number {} )( -4 ) as any as number,
+		/** State will never be changed. */
+		final = new ( class solid extends Number {} )( -4 ) as any as number,
 		
 	}
 	

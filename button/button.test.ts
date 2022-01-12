@@ -7,7 +7,7 @@ namespace $.$$ {
 			
 			const clicker = $mol_button.make({
 				$,
-				event_click : ( event : MouseEvent )=> { clicked = true } ,
+				click : ( event : MouseEvent )=> { clicked = true } ,
 			})
 			
 			const element = clicker.dom_tree() as HTMLButtonElement
@@ -24,7 +24,7 @@ namespace $.$$ {
 			
 			const clicker = $mol_button.make({
 				$,
-				event_click : ( event : MouseEvent )=> { clicked = true } ,
+				click : ( event : MouseEvent )=> { clicked = true } ,
 				enabled : ()=> false ,
 			})
 			
@@ -35,6 +35,20 @@ namespace $.$$ {
 			element.dispatchEvent( event )
 			
 			$mol_assert_not( clicked )
+		} ,
+		
+		'Store error'($) {
+			
+			const clicker = $mol_button.make({
+				$,
+				click : ( event : MouseEvent )=> $.$mol_fail( new Error( 'Test error' ) ),
+			})
+			
+			const event = $mol_dom_context.document.createEvent( 'mouseevent' )
+			$mol_assert_fail( ()=> clicker.event_activate( event ), 'Test error' )
+			
+			$mol_assert_fail( ()=> clicker.status(), 'Test error' )
+			
 		} ,
 		
 	})

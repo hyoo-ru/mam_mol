@@ -344,7 +344,7 @@ namespace $ {
 					cursor += 2
 				) {
 					const pub = this[ cursor ] as $mol_wire_pub
-					pub.sleep()
+					pub?.sleep()
 				}
 				
 			} else {
@@ -358,21 +358,12 @@ namespace $ {
 			return next
 		}
 		
-		'update()'?: $mol_wire_fiber< Host, [ ... Args ], Result >
+		/**
+		 * Update fiber value through another temp fiber.
+		 */
 		@ $mol_wire_method
 		update( ... args: Args ) {
-			
-			if( this['update()'] && $mol_wire_auto !== this['update()'] ) {
-				this['update()'].forget()
-				this['update()'].put( new Error( 'Aborted by new update' ) )
-			}
-			
-			this['update()'] = $mol_wire_auto as $mol_wire_fiber< Host, [ ... Args ], Result >
-			const res = this.task.call( this.host, ... args )
-
-			this['update()'] = undefined
-			return this.put( res )
-			
+			return this.put( this.task.call( this.host, ... args ) )
 		}
 		
 		/**
@@ -413,13 +404,17 @@ namespace $ {
 					$mol_fail_hidden( this.cache )
 				}
 				
-				if( this.cache instanceof Promise ) {
-					await this.cache
-				} else break
-				
+				if(!( this.cache instanceof Promise )) return this.cache
+					
+				await this.cache
+					
+				if( this.cursor === $mol_wire_cursor.final ) {
+					// never ends on destructed fiber
+					await new Promise( ()=> {} )
+				}
+					
 			}
 			
-			return this.cache
 		}
 		
 	}

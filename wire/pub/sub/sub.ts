@@ -113,7 +113,7 @@ namespace $ {
 			}
 			
 			this.forget()
-			this.cursor = $mol_wire_cursor.stale
+			this.cursor = $mol_wire_cursor.final
 			
 		}
 		

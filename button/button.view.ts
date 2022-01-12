@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $mol_button extends $.$mol_button {
 
 		@ $mol_mem
-		fiber( next = null as null | $mol_wire_fiber<any,any,any> ) { return next }
+		status( next = null ) { return next }
 		
 		disabled() {
 			return !this.enabled()
@@ -13,14 +13,16 @@ namespace $.$$ {
 			if( !next ) return
 			if( !this.enabled() ) return
 
-			// this.fiber( $mol_wire_auto! as $mol_wire_fiber<any,any,any> )
-			
-			this.event_click( next )
-			this.click( next )
+			try {
+				
+				this.event_click( next )
+				this.click( next )
+				this.status( null )
+				
+			} catch( error: any ) {
+				this.status( error )
+			}
 
-			//if( this.fiber() === $mol_wire_auto! ) {
-			//	this.fiber( null )
-			//}
 		}
 		
 		event_key_press ( event: KeyboardEvent ) { 
@@ -36,7 +38,7 @@ namespace $.$$ {
 		error() {
 
 			try {
-				this.fiber()?.sync()
+				this.status()
 				return ''
 			} catch( error: any ) {
 
