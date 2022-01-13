@@ -596,37 +596,5 @@ namespace $ {
 			Random.test()
 		} ,
 
-		// async 'Debouncing by timeout'($) {
-
-		// 	const logs = [] as string[]
-
-		// 	class App extends $mol_object2 {
-
-		// 		static $ = $
-				
-		// 		@ $mol_wire_mem(0)
-		// 		static task( val: number ) {
-		// 			if( val === undefined ) return
-		// 			$mol_wire_sync( logs ).push( 'start' + val )
-		// 			this.$.$mol_wait_timeout(0)
-		// 			$mol_wire_sync( logs ).push( 'end' + val )
-		// 		}
-				
-		// 	}
-
-		// 	const promise = $mol_wire_async( App ).task( 1 )
-		// 	await $mol_wire_async( App ).task( 2 )
-			
-		// 	try {
-		// 		await promise
-		// 		$mol_fail_hidden( new Error( 'Not failed' ) )
-		// 	} catch( error: any ) {
-		// 		$mol_assert_equal( error.message, 'xxx' )
-		// 	}
-			
-		// 	$mol_assert_like( logs, [ 'start1', 'start2', 'end2' ] )
-			
-		// } ,
-
 	})
 }

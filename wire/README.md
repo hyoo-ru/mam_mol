@@ -1,7 +1,5 @@
 # $mol_wire
 
-**Alpha version**
-
 Auto wiring modules. It gives ability to:
 
 - Make any state observable using only 1.5KB lib. [$hyoo_crowd](https://github.com/hyoo-ru/crowd.hyoo.ru) as example.
@@ -56,7 +54,6 @@ Auto wiring modules. It gives ability to:
 - [mol_wire_pub](./pub) - tiny lib to making any state observabe
 
 ## Close alternatives
-
 
 - [MobX](https://mobx.js.org/)
 - [CellX](https://github.com/Riim/cellx)

@@ -5,17 +5,17 @@ namespace $ {
 		Field extends keyof Host ,
 		Prop extends Extract< Host[ Field ] , ( ... args: any[] )=> any >,
 	>(
-		proto : Host ,
-		name : Field ,
+		host : Host ,
+		field : Field ,
 		descr? : TypedPropertyDescriptor< Prop >
 	)=> {
 
-		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( proto , name )
+		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
 		const orig = descr!.value!
 		
-		const sup = Reflect.getPrototypeOf( proto )!	
-		if( typeof sup[ name as any ] === 'function' ) {
-			Object.defineProperty( orig , 'name' , { value : sup[ name as any ].name } )
+		const sup = Reflect.getPrototypeOf( host )!	
+		if( typeof sup[ field as any ] === 'function' ) {
+			Object.defineProperty( orig , 'name' , { value : sup[ field as any ].name } )
 		}
 		
 		function value( this: Host, ... args: any[] ) {
@@ -33,7 +33,7 @@ namespace $ {
 		
 		Object.assign( value, { orig } )
 		const descr2 = { ... descr, value }
-		Reflect.defineProperty( proto, name, descr2 )
+		Reflect.defineProperty( host, field, descr2 )
 		
 		return descr2
 

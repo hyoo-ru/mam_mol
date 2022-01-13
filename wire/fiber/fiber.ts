@@ -1,7 +1,6 @@
 namespace $ {
 	
 	const handled = new WeakSet< Promise< unknown > >()
-	const nothing = ()=> {}
 	
 	/**
 	 * Suspendable task with with support both sync/async api.
@@ -190,11 +189,6 @@ namespace $ {
 				}
 			}
 			
-		}
-		
-		solid() {
-			/** @todo think how to remove this hack */
-			this.reap = nothing
 		}
 		
 		plan() {
