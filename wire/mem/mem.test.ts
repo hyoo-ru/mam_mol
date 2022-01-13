@@ -335,6 +335,43 @@ namespace $ {
 			App.test()
 		} ,
 
+		// https://github.com/nin-jin/slides/tree/master/reactivity#error-store
+		'Restore after error'( $ ) {
+
+			class App extends $mol_object2 {
+
+				static get $() { return $ }
+
+				@ $mol_wire_mem(0)
+				static condition( next = false ) { return next }
+
+				@ $mol_wire_mem(0)
+				static broken() {
+					
+					if( this.condition() ) {
+						$mol_fail( new Error( 'test error' ) )
+					}
+					
+					return 1
+				}
+				
+				@ $mol_wire_mem(0)
+				static result() {
+					return this.broken()
+				}
+				
+			}
+
+			$mol_assert_equal( App.result() , 1 )
+			
+			App.condition( true )
+			$mol_assert_fail( ()=> App.result() )
+			
+			App.condition( false )
+			$mol_assert_equal( App.result() , 1 )
+
+		} ,
+	
 		async 'Wait for data'($) {
 
 			class App extends $mol_object2 {
@@ -414,6 +451,33 @@ namespace $ {
 			$mol_assert_unique( App.render() , details )
 			
 		},
+
+		'Forget sub fibers on complete'( $ ) {
+
+			class App extends $mol_object2 {
+
+				static get $() { return $ }
+				static counter = 0
+
+				@ $mol_wire_method
+				static count() { return this.counter ++ }
+
+				@ $mol_wire_mem(0)
+				static data( next = 1 ) { return next }
+				
+				@ $mol_wire_mem(0)
+				static result() {
+					return this.count() + this.data()
+				}
+				
+			}
+
+			$mol_assert_equal( App.result() , 1 )
+
+			App.data( 2 )
+			$mol_assert_equal( App.result() , 3 )
+
+		} ,
 
 		'Memoize by single simple key' ($) {
 
