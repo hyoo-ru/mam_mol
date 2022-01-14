@@ -11,7 +11,7 @@ namespace $ {
 	)=> {
 
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
-		const orig = descr!.value!
+		const orig = descr?.value! ?? host[ field ]
 		
 		const sup = Reflect.getPrototypeOf( host )!	
 		if( typeof sup[ field as any ] === 'function' ) {

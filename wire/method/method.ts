@@ -7,10 +7,11 @@ namespace $ {
 	>(
 		host : Host,
 		field : PropertyKey,
-		descr : TypedPropertyDescriptor< ( ... args: Args )=> Result >,
+		descr? : TypedPropertyDescriptor< ( ... args: Args )=> Result >,
 	) {
 		
-		const orig = descr!.value!
+		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
+		const orig = descr?.value! ?? host[ field ]
 		
 		const sup = Reflect.getPrototypeOf( host )!	
 		if( typeof sup[ field as any ] === 'function' ) {
@@ -18,7 +19,7 @@ namespace $ {
 		}
 		
 		const value = function( this: Host, ... args: Args ) {
-			const fiber = $mol_wire_fiber.temp( this ?? null as any, descr.value!, ... args )
+			const fiber = $mol_wire_fiber.temp( this ?? null as any, orig, ... args )
 			return fiber.sync() as Result
 		}
 		
