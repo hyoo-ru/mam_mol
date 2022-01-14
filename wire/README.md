@@ -20,6 +20,7 @@ Auto wiring modules. It gives ability to:
 ### Decorators
 
 - [$mol_wire_mem](./mem) - reactive memoizing property decorator
+- [$mol_wire_field](./field) - reactive memoizing field decorator
 - [$mol_wire_method](./method) - method decorator which run inside fiber
 
 ### Proxies

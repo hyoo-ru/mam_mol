@@ -13,7 +13,7 @@ namespace $ {
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
 		const orig = descr?.value! ?? host[ field ]
 		
-		const sup = Reflect.getPrototypeOf( host )!	
+		const sup = Reflect.getPrototypeOf( host )!
 		if( typeof sup[ field as any ] === 'function' ) {
 			Object.defineProperty( orig , 'name' , { value : sup[ field as any ].name } )
 		}
@@ -30,8 +30,8 @@ namespace $ {
 		}
 		
 		Object.defineProperty( value , 'name' , { value : orig.name + '@' } )
-		
 		Object.assign( value, { orig } )
+		
 		const descr2 = { ... descr, value }
 		Reflect.defineProperty( host, field, descr2 )
 		
