@@ -61,6 +61,8 @@ namespace $ {
 
 		@ $mol_mem_key
 		generate( url : string ) {
+			
+			$mol_wire_solid()
 
 			const matched = url.match( /^(.*)\/-\/(\w+(?:.\w+)+)$/ )
 			if( !matched ) return <$mol_file[]>[]

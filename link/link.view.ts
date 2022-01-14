@@ -42,12 +42,6 @@ namespace $.$$ {
 			return true
 		}
 
-		event_click( event? : Event ) {
-			if( !event || event.defaultPrevented ) return
-			// this.focused( false )
-			// setTimeout( $mol_log_group( `${ this }.event_click()` , ()=> this.focused( false ) ) , 50 )
-		}
-
 		file_name() {
 			return null as unknown as string
 		}

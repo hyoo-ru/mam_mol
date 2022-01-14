@@ -1,5 +1,6 @@
 $mol_embed_native $mol_scroll
 	dom_name \object
+	window null
 	attr *
 		^
 		data <= uri?val \

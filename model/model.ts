@@ -2,7 +2,7 @@ namespace $ {
 
 	export class $mol_model< Raw extends Object > extends $mol_object {
 
-		@ $mol_mem_key
+		@( $mol_mem_key as any )
 		static item<
 			Instance extends $mol_model<{}>,
 		>(

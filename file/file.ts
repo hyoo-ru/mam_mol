@@ -99,24 +99,6 @@ namespace $ {
 			}
 		}
 
-		// buffer_cached(buffer: Uint8Array) {
-		// 	const ctime = new Date()
-		// 	const stat: $mol_file_stat = {
-		// 		type: 'file',
-		// 		size: buffer.length,
-		// 		ctime,
-		// 		atime: ctime,
-		// 		mtime: ctime
-		// 	}
-
-		// 	$mol_wire_cache( this ).buffer().put( buffer as any )
-		// 	$mol_wire_cache( this ).stat().put( stat as any )
-		// }
-
-		// text_cached(content: string) {
-		// 	this.buffer_cached($mol_charset_encode(content))
-		// }
-		
 		abstract sub(): $mol_file[]
 
 		abstract resolve(path: string): $mol_file
