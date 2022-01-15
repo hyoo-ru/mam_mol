@@ -74,11 +74,14 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		stat( next? : $mol_file_stat | null ) {
+		stat( next? : $mol_file_stat | null, virt?: 'virt' ) {
+			
 			let stat = next
 			const path = this.path()
 
 			this.parent().watcher()
+			
+			if( virt ) return next!
 			
 			try {
 				stat = next ?? stat_convert($node.fs.statSync( path, { throwIfNoEntry: false } ))

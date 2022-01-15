@@ -30,7 +30,7 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 
-		abstract stat( next? : $mol_file_stat | null ): $mol_file_stat | null
+		abstract stat( next? : $mol_file_stat | null, virt?: 'virt' ): $mol_file_stat | null
 
 		reset(): void {
 			try {
@@ -56,10 +56,8 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		exists( next? : boolean, virt?: 'virt' ) {
+		exists( next? : boolean ) {
 			
-			if( virt ) return next!
-
 			let exists = Boolean( this.stat() )
 
 			if( next === undefined ) return exists
@@ -89,7 +87,17 @@ namespace $ {
 
 		@ $mol_mem
 		text(next?: string, virt?: 'virt') {
-			if( virt ) return next!
+			if( virt ) {
+				const now = new Date
+				this.stat( {
+					type: 'file',
+					size: 0,
+					atime: now,
+					mtime: now,
+					ctime: now,			
+				}, 'virt' )
+				return next!
+			}
 			if( next === undefined ) {
 				return $mol_charset_decode( this.buffer( undefined ) )	
 			} else {

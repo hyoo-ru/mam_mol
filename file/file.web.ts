@@ -28,7 +28,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		stat( next? : $mol_file_stat ) {
+		stat( next? : $mol_file_stat, virt?: 'virt' ) {
 			let stat = next
 			if (next === undefined) {
 				const content = this.text()

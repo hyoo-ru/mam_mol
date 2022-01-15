@@ -294,11 +294,7 @@ namespace $ {
 			
 			host.fileExists = ( path )=> $mol_file.relative( path ).exists()
 			host.readFile = ( path )=> $mol_file.relative( path ).text()
-			host.writeFile = ( path , text )=> {
-				const file = $mol_file.relative( path )
-				file.exists( true, 'virt' )
-				file.text( text, 'virt' )
-			}
+			host.writeFile = ( path , text )=> $mol_file.relative( path ).text( text, 'virt' )
 			
 			return host
 		}
@@ -401,6 +397,7 @@ namespace $ {
 
 		@ $mol_mem_key
 		js_error( path : string , next = null as null | Error ) {
+			this.js_content( path )
 			return next
 		}
 
@@ -458,7 +455,7 @@ namespace $ {
 				'bin' : 'application/octet-stream' ,
 			}
 
-			this.tsTranspile({ path , exclude , bundle : 'web' })
+			// this.tsTranspile({ path , exclude , bundle : 'web' })
 
 			sources = sources.map(
 				src => {
@@ -477,11 +474,12 @@ namespace $ {
 						return script
 					}
 
-					if( /^tsx?$/.test( ext ) ) {
-						return src.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
-					}
-					
-					if( 'js' === ext ) {
+					// if( /^tsx?$/.test( ext ) ) {
+						// 	return src.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
+						// }
+						
+					if( /^[jt]sx?$/.test( ext ) ) {
+					// if( 'js' === ext ) {
 						return src
 					}
 					
@@ -1038,7 +1036,7 @@ namespace $ {
 				/(<\/body>|$)/ , `
 				<script src="/mol/build/client/client.js" charset="utf-8"></script>
 				<script>
-					setTimeout( ()=> {
+					addEventListener( 'load', ()=> {
 
 						const test = document.createElement( 'script' )
 						test.src = 'web.test.js'
@@ -1049,7 +1047,7 @@ namespace $ {
 						test.onload = ()=> document.head.appendChild( audit )
 						document.head.appendChild( test )
 
-					}, 250 )
+					} )
 				</script>
 				$1`,
 			)

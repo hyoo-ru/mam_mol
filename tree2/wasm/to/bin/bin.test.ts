@@ -7,7 +7,7 @@ namespace $ {
 			const code = $.$mol_tree2_from_string(``)
 
 			$mol_assert_like(
-				new Uint8Array( $mol_tree2_wasm_to_module( code ).buffer ) ,
+				new Uint8Array( $.$mol_tree2_wasm_to_module( code ).buffer ) ,
 				new Uint8Array([ 0 , 0x61 , 0x73 , 0x6d , 0x1 , 0 , 0 , 0 ]) ,
 			)
 
@@ -20,7 +20,7 @@ namespace $ {
 			`)
 
 			$mol_assert_like(
-				new Uint8Array( $mol_tree2_wasm_to_module( code ).buffer ) ,
+				new Uint8Array( $.$mol_tree2_wasm_to_module( code ).buffer ) ,
 				new Uint8Array([
 					0 , 0x61 , 0x73 , 0x6d , 0x1 , 0 , 0 , 0 , 0 ,
 					0x4 , 0x3, 0x78, 0x78, 0x78
@@ -40,7 +40,7 @@ namespace $ {
 			`)
 
 			$mol_assert_like(
-				new Uint8Array( $mol_tree2_wasm_to_module( code ).buffer ) ,
+				new Uint8Array( $.$mol_tree2_wasm_to_module( code ).buffer ) ,
 				new Uint8Array([
 					0, 0x61, 0x73, 0x6d, 0x01, 0, 0, 0,
 					0x01, 0x08, 0x01, 0x60, 0x03, 0x7f, 0x7e, 0x7d, 0x01, 0x7c
@@ -57,7 +57,7 @@ namespace $ {
 			`)
 
 			$mol_assert_like(
-				new Uint8Array( $mol_tree2_wasm_to_module( code ).buffer ) ,
+				new Uint8Array( $.$mol_tree2_wasm_to_module( code ).buffer ) ,
 				new Uint8Array([
 					0, 0x61, 0x73, 0x6d, 0x01, 0, 0, 0, 
 					0x01, 0x04, 0x01, 0x60, 0, 0,
@@ -77,7 +77,7 @@ namespace $ {
 				export xxx.yyy func identity
 			`)
 			
-			const instance = $mol_tree2_wasm_to_module( code ).instance({ foo: { bar: ( a: number )=> a } })
+			const instance = $.$mol_tree2_wasm_to_module( code ).instance({ foo: { bar: ( a: number )=> a } })
 			const identity = instance.get( 'xxx.yyy' ) as ( val: number )=> number
 			
 			$mol_assert_like( identity( 123 ), 123 )
@@ -94,7 +94,7 @@ namespace $ {
 				export id func identity
 			`)
 			
-			const instance = $mol_tree2_wasm_to_module( code ).instance()
+			const instance = $.$mol_tree2_wasm_to_module( code ).instance()
 			const identity = instance.get( 'id' ) as ( val: number )=> number
 			
 			$mol_assert_like( identity( 123 ), 123 )
@@ -114,7 +114,7 @@ namespace $ {
 				export increase func inc32
 			`)
 			
-			const instance = $mol_tree2_wasm_to_module( code ).instance()
+			const instance = $.$mol_tree2_wasm_to_module( code ).instance()
 			const inc = instance.get( 'increase' ) as ( a: number )=> number
 			
 			$mol_assert_like( inc( 2 ), 3 )
@@ -133,7 +133,7 @@ namespace $ {
 				export pair func pair
 			`)
 			
-			const instance = $mol_tree2_wasm_to_module( code ).instance()
+			const instance = $.$mol_tree2_wasm_to_module( code ).instance()
 			const pair = instance.get( 'pair' ) as ()=> [ number, number ]
 			
 			$mol_assert_like( pair(), [ 1, 2 ] )
