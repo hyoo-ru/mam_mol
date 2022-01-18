@@ -25,7 +25,7 @@ namespace $ {
 			... args: Args
 		): $mol_wire_fiber< Host, [ ... Args ], Result > {
 			
-			const existen = $mol_wire_auto?.next()
+			const existen = $mol_wire_auto?.track_next()
 			
 			reuse: if( existen ) {
 				
@@ -38,7 +38,7 @@ namespace $ {
 				return existen
 			}
 			
-			return new this( host, task, host + '.' + task.name + '(#' + $mol_guid() + '#)', ... args )
+			return new this( host, task, host + '.' + task.name + '(#)', ... args )
 		}
 		
 		static persist<
@@ -118,7 +118,7 @@ namespace $ {
 				const fibers = this.planning.splice( 0, this.planning.length )
 				
 				for( const fiber of fibers ) {
-					fiber.touch()
+					fiber.up()
 				}
 				
 			}
@@ -129,7 +129,7 @@ namespace $ {
 				const fibers = this.reaping.splice( 0, this.reaping.length )
 				
 				for( const fiber of fibers ) {
-					if( !fiber.alone ) continue
+					if( !fiber.sub_empty ) continue
 					fiber.destructor()
 				}
 				
@@ -140,7 +140,7 @@ namespace $ {
 		public cache: Result | Error | Promise< Result | Error > = undefined as any
 		
 		get args() {
-			return this.slice( 0 , this.pubs_from ) as any as Args
+			return this.slice( 0 , this.pub_from ) as any as Args
 		}
 		
 		get result() {
@@ -166,7 +166,7 @@ namespace $ {
 		) {
 			super( ... args as any, undefined as any )
 			this.pop() // reserve capacity for subscriber
-			this.pubs_from = this.subs_from = args.length
+			this.pub_from = this.sub_from = args.length
 			this[ Symbol.toStringTag ] = id
 		}
 		
@@ -182,7 +182,7 @@ namespace $ {
 			this.cache = undefined as any
 			
 			if( this.persist ) {
-				if( this.pubs_from === 0 ) {
+				if( this.pub_from === 0 ) {
 					this.host[ this.field() ] = null
 				} else {
 					this.host[ this.field() ].delete( this[ Symbol.toStringTag ] )
@@ -227,19 +227,19 @@ namespace $ {
 
 			if( !super.affect( quant ) ) return false
 			
-			if( this.subs_from === this.length ) {
+			if( this.sub_from === this.length ) {
 				this.plan()
 			}
 			
 			return true
 		}
 		
-		sleep() {
+		down() {
 			if( this.persist ) return
 			this.destructor()
 		}
 		
-		touch() {
+		up() {
 			
 			type Result = typeof this.cache
 			
@@ -247,8 +247,8 @@ namespace $ {
 			
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
-				for( let i = this.pubs_from ; i < this.subs_from; i += 2 ) {
-					;( this[i] as $mol_wire_pub )?.touch()
+				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
+					;( this[i] as $mol_wire_pub )?.up()
 					if( this.cursor !== $mol_wire_cursor.doubt ) break check
 				}
 				
@@ -257,7 +257,7 @@ namespace $ {
 				
 			}
 			
-			const bu = this.begin()
+			const bu = this.track_on()
 			let result: typeof this.cache
 
 			try {
@@ -295,7 +295,7 @@ namespace $ {
 				
 			}
 			
-			this.end( bu )
+			this.track_off( bu )
 			this.put( result )
 
 		}
@@ -318,7 +318,7 @@ namespace $ {
 					} catch {} // Promises throws in strict mode
 				}
 				
-				if( this.subs_from < this.length ) {
+				if( this.sub_from < this.length ) {
 					if( !$mol_compare_deep( prev, next ) ) {
 						this.emit()
 					}
@@ -333,17 +333,17 @@ namespace $ {
 			if( this.persist ) {
 			
 				for(
-					let cursor = this.pubs_from;
-					cursor < this.subs_from;
+					let cursor = this.pub_from;
+					cursor < this.sub_from;
 					cursor += 2
 				) {
 					const pub = this[ cursor ] as $mol_wire_pub
-					pub?.sleep()
+					pub?.down()
 				}
 				
 			} else {
 				
-				this.cursor = this.pubs_from
+				this.cursor = this.pub_from
 				this.forget()
 				this.cursor = $mol_wire_cursor.fresh
 				
@@ -356,7 +356,7 @@ namespace $ {
 		 * Update fiber value through another temp fiber.
 		 */
 		@ $mol_wire_method
-		update( ... args: Args ) {
+		recall( ... args: Args ) {
 			return this.put( this.task.call( this.host, ... args ) )
 		}
 		
@@ -370,8 +370,8 @@ namespace $ {
 				return this.result as Awaited< Result >
 			}
 			
-			this.promote()
-			this.touch()
+			this.track_promote()
+			this.up()
 			
 			if( this.cache instanceof Error ) {
 				return $mol_fail_hidden( this.cache )
@@ -392,7 +392,7 @@ namespace $ {
 			
 			while( true ) {
 				
-				this.touch()
+				this.up()
 				
 				if( this.cache instanceof Error ) {
 					$mol_fail_hidden( this.cache )

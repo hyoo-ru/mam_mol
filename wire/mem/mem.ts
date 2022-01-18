@@ -25,11 +25,11 @@ namespace $ {
 			let res = atom.sync()
 			if( args[ keys ] === undefined ) return res
 			
-			return atom.update( ... args )
+			return atom.recall( ... args )
 			
 		}
 		
-		Object.defineProperty( value , 'name' , { value : orig.name + '@' } )
+		Object.defineProperty( value , 'name' , { value : orig.name + ' ' } )
 		Object.assign( value, { orig } )
 		
 		const descr2 = { ... descr, value }

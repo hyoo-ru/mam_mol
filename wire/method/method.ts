@@ -23,7 +23,7 @@ namespace $ {
 			return fiber.sync() as Result
 		}
 		
-		Object.defineProperty( value , 'name' , { value : orig.name + '@' } )
+		Object.defineProperty( value , 'name' , { value : orig.name + ' ' } )
 		
 		Object.assign( value, { orig } )
 		const descr2 = { ... descr, value }

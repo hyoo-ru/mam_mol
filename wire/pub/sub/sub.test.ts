@@ -7,33 +7,33 @@ namespace $ {
 			const pub2 = new $mol_wire_pub
 			const sub = new $mol_wire_pub_sub
 			
-			const bu1 = sub.begin()
+			const bu1 = sub.track_on()
 			try {
-				pub1.promote()
-				pub2.promote()
-				pub2.promote()
+				pub1.track_promote()
+				pub2.track_promote()
+				pub2.track_promote()
 			} finally {
-				sub.end( bu1 )
+				sub.track_off( bu1 )
 			}
 			
 			pub1.emit()
 			pub2.emit()
 			
-			$mol_assert_like( sub.pubs, [ pub1, pub2, pub2 ] )
+			$mol_assert_like( sub.pub_list, [ pub1, pub2, pub2 ] )
 			
-			const bu2 = sub.begin()
+			const bu2 = sub.track_on()
 			try {
-				pub1.promote()
-				pub1.promote()
-				pub2.promote()
+				pub1.track_promote()
+				pub1.track_promote()
+				pub2.track_promote()
 			} finally {
-				sub.end( bu2 )
+				sub.track_off( bu2 )
 			}
 			
 			pub1.emit()
 			pub2.emit()
 			
-			$mol_assert_like( sub.pubs, [ pub1, pub1, pub2 ] )
+			$mol_assert_like( sub.pub_list, [ pub1, pub1, pub2 ] )
 			
 		},
 		
@@ -42,20 +42,20 @@ namespace $ {
 			const sub1 = new $mol_wire_pub_sub
 			const sub2 = new $mol_wire_pub_sub
 			
-			const bu1 = sub1.begin()
+			const bu1 = sub1.track_on()
 			try {
 				
-				const bu2 = sub2.begin()
+				const bu2 = sub2.track_on()
 				try {
 					
-					$mol_assert_fail( ()=> sub1.promote(), 'Circular subscription' )
+					$mol_assert_fail( ()=> sub1.track_promote(), 'Circular subscription' )
 					
 				} finally {
-					sub2.end( bu2 )
+					sub2.track_off( bu2 )
 				}
 				
 			} finally {
-				sub1.end( bu1 )
+				sub1.track_off( bu1 )
 			}
 			
 		},
