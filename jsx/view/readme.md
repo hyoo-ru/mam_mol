@@ -57,7 +57,7 @@ class $my_app extends $mol_jsx_view {
 	}
 
 	// fibered action
-	@ $mol_wire_method
+	@ $mol_action
 	change( event: Event ) {
 		this.title( 'World' )
 	}

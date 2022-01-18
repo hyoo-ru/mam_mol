@@ -11,7 +11,7 @@ namespace $ {
 			)
 		}
 
-		@ $mol_wire_method
+		@ $mol_action
 		handle( { id , name , args } : { id : string , name : string , args : any[] } ) {
 
 			const handler = this.handlers()[ name ] || this.handlers()[ '' ]

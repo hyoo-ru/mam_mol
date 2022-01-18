@@ -21,7 +21,7 @@ namespace $ {
 			return perm === 'granted'
 		}
 		
-		@ $mol_wire_method
+		@ $mol_action
 		static show( info: {
 			context: string,
 			message: string,

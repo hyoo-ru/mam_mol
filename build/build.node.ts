@@ -706,7 +706,7 @@ namespace $ {
 			return graph
 		}
 
-		@ $mol_wire_method
+		@ $mol_action
 		bundleAllWeb( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'web.deps.json' })
 			this.bundle({ path , bundle : 'web.css' })
@@ -719,12 +719,12 @@ namespace $ {
 			return null
 		}
 		
-		@ $mol_wire_method
+		@ $mol_action
 		bundleAllWebAudit( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'web.audit.js' })
 		}
 		
-		@ $mol_wire_method
+		@ $mol_action
 		bundleAllNode( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'node.deps.json' })
 			this.bundle({ path , bundle : 'node.js' })
@@ -735,12 +735,12 @@ namespace $ {
 			return null
 		}
 		
-		@ $mol_wire_method
+		@ $mol_action
 		bundleAllNodeAudit( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'node.audit.js' })
 		}
 		
-		@ $mol_wire_method
+		@ $mol_action
 		bundleAll( { path } : { path : string } ) {
 
 			this.bundle({ path , bundle : 'index.html' })

@@ -64,7 +64,7 @@ namespace $.$$ {
 			return this.value().map( key => this.option_title( key ) ).join( ' + ' )
 		}
 
-		@ $mol_wire_method
+		@ $mol_action
 		remove( index: number ) {
 			const value = this.value()
 			this.value([

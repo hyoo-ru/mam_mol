@@ -317,7 +317,7 @@ namespace $ {
 			
 		}
 		
-		@ $mol_wire_method
+		@ $mol_action
 		send( key: string, next?: readonly $hyoo_crowd_chunk[] ) {
 			
 			const socket = this.socket()

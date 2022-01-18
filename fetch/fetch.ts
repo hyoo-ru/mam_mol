@@ -14,12 +14,12 @@ namespace $ {
 			return this.headers().get( 'content-type' )
 		}
 
-		@ $mol_wire_method
+		@ $mol_action
 		stream() {
 			return this.native.body
 		}
 
-		@ $mol_wire_method
+		@ $mol_action
 		text() {
 
 			const buffer = this.buffer()
@@ -37,22 +37,22 @@ namespace $ {
 			return $mol_wire_sync( this.native ).json() as unknown
 		}	
 
-		@ $mol_wire_method
+		@ $mol_action
 		buffer() {
 			return $mol_wire_sync( this.native ).arrayBuffer()
 		}	
 
-		@ $mol_wire_method
+		@ $mol_action
 		xml() {
 			return $mol_dom_parse( this.text() , 'application/xml' )
 		}
 
-		@ $mol_wire_method
+		@ $mol_action
 		xhtml() {
 			return $mol_dom_parse( this.text() , 'application/xhtml+xml' )
 		}
 
-		@ $mol_wire_method
+		@ $mol_action
 		html() {
 			return $mol_dom_parse( this.text() , 'text/html' )
 		}
@@ -85,7 +85,7 @@ namespace $ {
 			
 		}
 
-		@ $mol_wire_method
+		@ $mol_action
 		static response( input: RequestInfo, init?: RequestInit ) {
 
 			const response = $mol_wire_sync( this ).request( input , init )
@@ -94,37 +94,37 @@ namespace $ {
 			throw new Error( response.statusText || `HTTP Error ${ response.status }` )
 		}
 
-		@ $mol_wire_method
+		@ $mol_action
 		static stream( input: RequestInfo, init?: RequestInit ) {
 			return this.response( input , init ).stream()
 		}
 
-		@ $mol_wire_method
+		@ $mol_action
 		static text( input: RequestInfo, init?: RequestInit ) {
 			return this.response( input , init ).text()
 		}	
 
-		@ $mol_wire_method
+		@ $mol_action
 		static json( input: RequestInfo, init?: RequestInit ) {
 			return this.response( input , init ).json()
 		}	
 
-		@ $mol_wire_method
+		@ $mol_action
 		static buffer( input: RequestInfo, init?: RequestInit ) {
 			this.response( input , init ).buffer()
 		}	
 
-		@ $mol_wire_method
+		@ $mol_action
 		static xml( input: RequestInfo, init?: RequestInit ) {
 			return this.response( input , init ).xml()
 		}
 
-		@ $mol_wire_method
+		@ $mol_action
 		static xhtml( input: RequestInfo, init?: RequestInit ) {
 			return this.response( input , init ).xhtml()
 		}
 
-		@ $mol_wire_method
+		@ $mol_action
 		static html( input: RequestInfo, init?: RequestInit ) {
 			return this.response( input , init ).html()
 		}

@@ -48,7 +48,7 @@ namespace $ {
 	
 	export class $mol_fiber {
 		/** @deprecated Use $mol_wire_method */
-		static method = $mol_wire_method
+		static method = $mol_action
 	}
 
 }
