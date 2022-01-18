@@ -3,22 +3,19 @@ namespace $ {
 	export class $mol_window extends $mol_object {
 		
 		@ $mol_mem
-		static size( next? : {
-			width : number
-			height : number
-		} , force? : $mol_mem_force ) {
-			return next || {
-				width : self.innerWidth ,
-				height : self.innerHeight ,
+		static size() {
+			this.resizes()
+			return {
+				width: self.innerWidth,
+				height: self.innerHeight,
 			}
 		}
 		
+		@ $mol_mem
+		static resizes( next?: Event ) { return next }
+		
 	}
 
-	const $mol_window_resize = ()=> {
-		$mol_window.size( undefined , $mol_mem_force_cache )
-	}
-	
-	self.addEventListener( 'resize' , $mol_fiber_root( $mol_window_resize ) )
+	self.addEventListener( 'resize', event => $mol_window.resizes( event ) )
 	
 }

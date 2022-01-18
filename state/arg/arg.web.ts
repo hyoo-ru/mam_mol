@@ -3,7 +3,7 @@ namespace $ {
 	export class $mol_state_arg extends $mol_object {
 		
 		@ $mol_mem
-		static href( next? : string , force? : $mol_mem_force ) {
+		static href( next?: string ) {
 			
 			if( next === undefined ) {
 				
@@ -34,6 +34,11 @@ namespace $ {
 		@ $mol_mem
 		static href_normal(): string {
 			return this.link({})
+		}
+		
+		@ $mol_mem
+		static href_absolute(): string {
+			return new URL( this.href(), $mol_dom_context.location.href ).toString()
 		}
 		
 		@ $mol_mem
@@ -85,6 +90,7 @@ namespace $ {
 		static prolog = '!'
 		static separator = '/'
 		
+		@ $mol_mem_key
 		static make_link( next : { [ key : string ] : string | null } ) {
 			const chunks : string[] = []
 			for( let key in next ) {
@@ -93,7 +99,7 @@ namespace $ {
 				chunks.push( [ key ].concat( val ? [ val ] : [] ).map( this.encode ).join( '=' ) )
 			}
 			
-			return new URL( '#' + this.prolog + chunks.join( this.separator ) , $mol_dom_context.location.href ).toString()
+			return new URL( '#' + this.prolog + chunks.join( this.separator ) , this.href_absolute() ).toString()
 		}
 
 		static encode( str : string ) {
@@ -127,6 +133,6 @@ namespace $ {
 		$mol_state_arg.href( $mol_dom_context.location.href ) 
 	}
 
-	self.addEventListener( 'hashchange' , $mol_fiber_root( $mol_state_arg_change ) )
+	self.addEventListener( 'hashchange' , $mol_state_arg_change )
 	
 }

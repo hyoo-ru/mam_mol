@@ -7,7 +7,7 @@ namespace $ {
 			return false
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_action
 		static show( info: {
 			context: string,
 			message: string,

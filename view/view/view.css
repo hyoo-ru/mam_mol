@@ -34,13 +34,12 @@
 
 [mol_view][mol_view_error]:not([mol_view_error="Promise"]) {
 	background-image: repeating-linear-gradient(
-		135deg,
-		hsl(0, 30%, 60%),
-		hsl(0, 30%, 60%) 11px,
-		hsl(60, 100%, 90%) 10px,
-		hsl(60, 100%, 90%) 20px
+		-45deg,
+		#f92323,
+		#f92323 10px,
+		#ff3d3d 10px,
+		#ff3d3d 30px
 	);
-	background-size: 28px 28px;
 	color: black;
 }
 

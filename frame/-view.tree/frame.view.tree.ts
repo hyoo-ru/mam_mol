@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_frame extends $mol_scroll {
+	export class $mol_frame extends $mol_embed_native {
 		
 		/**
 		 * ```tree
@@ -13,6 +13,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * attr *
+		 * 	data null
+		 * 	type null
 		 * 	src <= uri?val
 		 * 	srcdoc <= html
 		 * 	allow <= allow
@@ -20,6 +22,8 @@ namespace $ {
 		 */
 		attr() {
 			return {
+				data: null as any,
+				type: null as any,
 				src: this.uri(),
 				srcdoc: this.html(),
 				allow: this.allow()

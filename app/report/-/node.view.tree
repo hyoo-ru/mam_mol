@@ -103,7 +103,7 @@ $mol_pick $mol_pop
 		minimal_width 40
 		minimal_height 40
 		enabled <= trigger_enabled true
-		checked?event <=> showed?event
+		checked?val <=> showed?val
 		sub <= trigger_content /$mol_view_content
 		hint <= hint \
 

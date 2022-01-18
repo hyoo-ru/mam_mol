@@ -24,10 +24,10 @@ var $;
 (function ($) {
 })($ || ($ = {}));
 module.exports = $;
-//mam.js.map
+//mam.ts
 ;
 
-$node[ "../mam" ] = $node[ "../mam.js" ] = module.exports }.call( {} , {} )
+$node[ "../mam.ts" ] = $node[ "../mam.ts" ] = module.exports }.call( {} , {} )
 ;
 "use strict";
 var $;
@@ -62,12 +62,12 @@ var $;
     }
     $.$mol_time_base = $mol_time_base;
 })($ || ($ = {}));
-//base.js.map
+//mol/time/base/base.ts
 ;
 "use strict";
 var $;
 (function ($) {
-    class $mol_time_duration extends $.$mol_time_base {
+    class $mol_time_duration extends $mol_time_base {
         constructor(config = 0) {
             super();
             if (typeof config === 'number') {
@@ -197,7 +197,7 @@ var $;
     }
     $.$mol_time_duration = $mol_time_duration;
 })($ || ($ = {}));
-//duration.js.map
+//mol/time/duration/duration.ts
 ;
 "use strict";
 var $;
@@ -207,7 +207,7 @@ var $;
     }
     $.$mol_fail = $mol_fail;
 })($ || ($ = {}));
-//fail.js.map
+//mol/fail/fail.ts
 ;
 "use strict";
 var $;
@@ -226,9 +226,9 @@ var $;
         const numb = Number(str);
         if (numb < max)
             return numb;
-        $.$mol_fail(new Error(`Wrong time component ${str}`));
+        $mol_fail(new Error(`Wrong time component ${str}`));
     }
-    class $mol_time_moment extends $.$mol_time_base {
+    class $mol_time_moment extends $mol_time_base {
         constructor(config = new Date) {
             super();
             if (typeof config === 'number')
@@ -250,7 +250,7 @@ var $;
                 if (parsed[6])
                     this.second = numb(parsed[6], 60);
                 if (parsed[7])
-                    this.offset = new $.$mol_time_duration(parsed[7]);
+                    this.offset = new $mol_time_duration(parsed[7]);
                 return;
             }
             if (config instanceof Date) {
@@ -261,7 +261,7 @@ var $;
                 this.minute = config.getMinutes();
                 this.second = config.getSeconds() + config.getMilliseconds() / 1000;
                 const offset = -config.getTimezoneOffset();
-                this.offset = new $.$mol_time_duration({
+                this.offset = new $mol_time_duration({
                     hour: (offset < 0) ? Math.ceil(offset / 60) : Math.floor(offset / 60),
                     minute: offset % 60
                 });
@@ -273,7 +273,7 @@ var $;
             this.hour = config.hour;
             this.minute = config.minute;
             this.second = config.second;
-            this.offset = config.offset == null ? config.offset : new $.$mol_time_duration(config.offset);
+            this.offset = config.offset == null ? config.offset : new $mol_time_duration(config.offset);
         }
         year;
         month;
@@ -320,7 +320,7 @@ var $;
             });
         }
         shift(config) {
-            const duration = new $.$mol_time_duration(config);
+            const duration = new $mol_time_duration(config);
             const moment = new $mol_time_moment().merge({
                 year: this.year,
                 month: this.month,
@@ -357,7 +357,7 @@ var $;
             });
         }
         toOffset(config) {
-            const duration = new $.$mol_time_duration(config);
+            const duration = new $mol_time_duration(config);
             const offset = this.offset || new $mol_time_moment().offset;
             let with_time = new $mol_time_moment('T00:00:00').merge(this);
             const moment = with_time.shift(duration.summ(offset.mult(-1)));
@@ -591,46 +591,46 @@ var $;
     }
     $.$mol_time_moment = $mol_time_moment;
 })($ || ($ = {}));
-//moment.js.map
+//mol/time/moment/moment.ts
 ;
 "use strict";
 var $;
 (function ($) {
-    class $mol_time_interval extends $.$mol_time_base {
+    class $mol_time_interval extends $mol_time_base {
         constructor(config) {
             super();
             if (typeof config === 'string') {
                 var chunks = config.split('/');
                 if (chunks[0]) {
                     if (chunks[0][0].toUpperCase() === 'P') {
-                        this._duration = new $.$mol_time_duration(chunks[0]);
+                        this._duration = new $mol_time_duration(chunks[0]);
                     }
                     else {
-                        this._start = new $.$mol_time_moment(chunks[0]);
+                        this._start = new $mol_time_moment(chunks[0]);
                     }
                 }
                 else {
-                    this._start = new $.$mol_time_moment();
+                    this._start = new $mol_time_moment();
                 }
                 if (chunks[1]) {
                     if (chunks[1][0].toUpperCase() === 'P') {
-                        this._duration = new $.$mol_time_duration(chunks[1]);
+                        this._duration = new $mol_time_duration(chunks[1]);
                     }
                     else {
-                        this._end = new $.$mol_time_moment(chunks[1]);
+                        this._end = new $mol_time_moment(chunks[1]);
                     }
                 }
                 else {
-                    this._end = new $.$mol_time_moment();
+                    this._end = new $mol_time_moment();
                 }
                 return;
             }
             if (config.start !== undefined)
-                this._start = new $.$mol_time_moment(config.start);
+                this._start = new $mol_time_moment(config.start);
             if (config.end !== undefined)
-                this._end = new $.$mol_time_moment(config.end);
+                this._end = new $mol_time_moment(config.end);
             if (config.duration !== undefined)
-                this._duration = new $.$mol_time_duration(config.duration);
+                this._duration = new $mol_time_duration(config.duration);
         }
         _start;
         get start() {
@@ -648,7 +648,7 @@ var $;
         get duration() {
             if (this._duration)
                 return this._duration;
-            return this._duration = new $.$mol_time_duration(this._end.valueOf() - this._start.valueOf());
+            return this._duration = new $mol_time_duration(this._end.valueOf() - this._start.valueOf());
         }
         toJSON() { return this.toString(); }
         toString() {
@@ -660,7 +660,7 @@ var $;
     }
     $.$mol_time_interval = $mol_time_interval;
 })($ || ($ = {}));
-//interval.js.map
+//mol/time/interval/interval.ts
 ;
 export default $
 //# sourceMappingURL=web.esm.js.map

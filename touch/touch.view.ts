@@ -3,6 +3,12 @@ namespace $.$$ {
 	export class $mol_touch extends $.$mol_touch {
 		
 		auto() {
+			this.pointer_events()
+			this.start_pan()
+			this.start_pos()
+			this.start_distance()
+			this.start_zoom()
+			this.action_type()
 			this.view_rect()
 		}
 		

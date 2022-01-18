@@ -14,12 +14,12 @@ namespace $ {
 			return this.headers().get( 'content-type' )
 		}
 
-		@ $mol_fiber.method
+		@ $mol_action
 		stream() {
 			return this.native.body
 		}
 
-		@ $mol_fiber.method
+		@ $mol_action
 		text() {
 
 			const buffer = this.buffer()
@@ -33,31 +33,26 @@ namespace $ {
 
 		}	
 
-		@ $mol_fiber.method
 		json() {
-			const response = this.native
-			const parse = $mol_fiber_sync( response.json )
-			return parse.call( response ) as unknown
+			return $mol_wire_sync( this.native ).json() as unknown
 		}	
 
-		@ $mol_fiber.method
+		@ $mol_action
 		buffer() {
-			const response = this.native
-			const parse = $mol_fiber_sync( response.arrayBuffer )
-			return parse.call( response ) as ArrayBuffer
+			return $mol_wire_sync( this.native ).arrayBuffer()
 		}	
 
-		@ $mol_fiber.method
+		@ $mol_action
 		xml() {
 			return $mol_dom_parse( this.text() , 'application/xml' )
 		}
 
-		@ $mol_fiber.method
+		@ $mol_action
 		xhtml() {
 			return $mol_dom_parse( this.text() , 'application/xhtml+xml' )
 		}
 
-		@ $mol_fiber.method
+		@ $mol_action
 		html() {
 			return $mol_dom_parse( this.text() , 'text/html' )
 		}
@@ -66,66 +61,70 @@ namespace $ {
 
 	export class $mol_fetch extends $mol_object2 {
 		
-		static request = $mol_fiber_sync( ( input : RequestInfo , init : RequestInit = {} )=> {
+		static request( input : RequestInfo , init : RequestInit = {} ) {
 			
-			if( typeof AbortController === 'function' ) {
-				var controller = new AbortController()
-				init.signal = controller.signal
-				const fiber = $mol_fiber.current!
-				fiber.abort = ()=> {
-					if( fiber.cursor === $mol_fiber_status.actual ) return true
-					controller.abort()
-					return true
-				}
-			}
-
 			let native = $mol_dom_context.fetch
 			if( !native ) native = $node['node-fetch'] as any
-		
-			return native( input , init )
+			
+			const controller = new AbortController()
+			let done = false
+			
+			const promise = native( input , {
+				... init,
+				signal: controller!.signal,
+			} ).finally( ()=> {
+				done = true
+			} )
+			
+			return Object.assign( promise, {
+				destructor: ()=> {
+					// Abort of done request breaks response parsing
+					if( !done ) controller.abort()
+				},
+			} )
+			
+		}
 
-		} )
-
-		@ $mol_fiber.method
+		@ $mol_action
 		static response( input: RequestInfo, init?: RequestInit ) {
 
-			const response = this.request( input , init )
+			const response = $mol_wire_sync( this ).request( input , init )
 			if( Math.floor( response.status / 100 ) === 2 ) return new $mol_fetch_response( response )
 			
 			throw new Error( response.statusText || `HTTP Error ${ response.status }` )
 		}
 
-		@ $mol_fiber.method
+		@ $mol_action
 		static stream( input: RequestInfo, init?: RequestInit ) {
 			return this.response( input , init ).stream()
 		}
 
-		@ $mol_fiber.method
+		@ $mol_action
 		static text( input: RequestInfo, init?: RequestInit ) {
 			return this.response( input , init ).text()
 		}	
 
-		@ $mol_fiber.method
+		@ $mol_action
 		static json( input: RequestInfo, init?: RequestInit ) {
 			return this.response( input , init ).json()
 		}	
 
-		@ $mol_fiber.method
+		@ $mol_action
 		static buffer( input: RequestInfo, init?: RequestInit ) {
 			this.response( input , init ).buffer()
 		}	
 
-		@ $mol_fiber.method
+		@ $mol_action
 		static xml( input: RequestInfo, init?: RequestInit ) {
 			return this.response( input , init ).xml()
 		}
 
-		@ $mol_fiber.method
+		@ $mol_action
 		static xhtml( input: RequestInfo, init?: RequestInit ) {
 			return this.response( input , init ).xhtml()
 		}
 
-		@ $mol_fiber.method
+		@ $mol_action
 		static html( input: RequestInfo, init?: RequestInit ) {
 			return this.response( input , init ).html()
 		}

@@ -46,11 +46,11 @@ If `option_label()` property not redefined by user, value is `dictionary()[key]`
 
 The property takes a string and show this string when `option_rows()` is empty.
 
-**`options_showed() : boolean`**
+**`showed() : boolean`**
 
 Show or Hide List of options.
 
-**`options_align() : string`**
+**`align() : string`**
 
 Property extends from `$mol_pop`. Equals `align()` property
 

@@ -7,7 +7,7 @@ namespace $ {
 		var build = $mol_build.relative( '.' )
 		if( paths.length > 0 ) {
 			try {
-				process.argv.slice( 2 ).forEach(
+				paths.forEach(
 					( path : string )=> {
 						path = build.root().resolve( path ).path()
 						return build.bundleAll( { path } )
@@ -23,18 +23,18 @@ namespace $ {
 				process.exit(1)
 			}
 		} else {
-			$mol_atom2_autorun(() => build.server().start() )
+			Promise.resolve().then( ()=> build.server().start() )
 		}
 	}
 	
-	setTimeout( $mol_fiber_root( ()=> $mol_ambient({}).$mol_build_start( process.argv.slice( 2 ) ) as any ) )
+	setTimeout( ()=> $mol_wire_async( $mol_ambient({}) ).$mol_build_start( process.argv.slice( 2 ) ) )
 
 	export class $mol_build extends $mol_object {
 		
 		@ $mol_mem_key
 		static root( path : string ) {
 			return this.make({
-				root : $mol_const( $mol_file.absolute( path ) ) ,
+				root : ()=> $mol_file.absolute( path ) ,
 			})
 		}
 		
@@ -294,11 +294,7 @@ namespace $ {
 			
 			host.fileExists = ( path )=> $mol_file.relative( path ).exists()
 			host.readFile = ( path )=> $mol_file.relative( path ).text()
-			host.writeFile = ( path , text )=> {
-				const file = $mol_file.relative( path )
-				file.exists( true , $mol_mem_force_cache )
-				file.text( text , $mol_mem_force_cache )
-			}
+			host.writeFile = ( path , text )=> $mol_file.relative( path ).text( text, 'virt' )
 			
 			return host
 		}
@@ -401,6 +397,7 @@ namespace $ {
 
 		@ $mol_mem_key
 		js_error( path : string , next = null as null | Error ) {
+			this.js_content( path )
 			return next
 		}
 
@@ -458,7 +455,7 @@ namespace $ {
 				'bin' : 'application/octet-stream' ,
 			}
 
-			this.tsTranspile({ path , exclude , bundle : 'web' })
+			// this.tsTranspile({ path , exclude , bundle : 'web' })
 
 			sources = sources.map(
 				src => {
@@ -477,11 +474,12 @@ namespace $ {
 						return script
 					}
 
-					if( /^tsx?$/.test( ext ) ) {
-						return src.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
-					}
-					
-					if( 'js' === ext ) {
+					// if( /^tsx?$/.test( ext ) ) {
+						// 	return src.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
+						// }
+						
+					if( /^[jt]sx?$/.test( ext ) ) {
+					// if( 'js' === ext ) {
 						return src
 					}
 					
@@ -558,7 +556,6 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		@ $mol_fiber.method
 		modEnsure( path : string ) {
 
 			var mod = $mol_file.absolute( path )
@@ -709,7 +706,7 @@ namespace $ {
 			return graph
 		}
 
-		@ $mol_fiber.method
+		@ $mol_action
 		bundleAllWeb( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'web.deps.json' })
 			this.bundle({ path , bundle : 'web.css' })
@@ -722,12 +719,12 @@ namespace $ {
 			return null
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_action
 		bundleAllWebAudit( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'web.audit.js' })
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_action
 		bundleAllNode( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'node.deps.json' })
 			this.bundle({ path , bundle : 'node.js' })
@@ -738,12 +735,12 @@ namespace $ {
 			return null
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_action
 		bundleAllNodeAudit( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'node.audit.js' })
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_action
 		bundleAll( { path } : { path : string } ) {
 
 			this.bundle({ path , bundle : 'index.html' })
@@ -1039,7 +1036,7 @@ namespace $ {
 				/(<\/body>|$)/ , `
 				<script src="/mol/build/client/client.js" charset="utf-8"></script>
 				<script>
-					setTimeout( ()=> {
+					addEventListener( 'load', ()=> {
 
 						const test = document.createElement( 'script' )
 						test.src = 'web.test.js'
@@ -1050,7 +1047,7 @@ namespace $ {
 						test.onload = ()=> document.head.appendChild( audit )
 						document.head.appendChild( test )
 
-					}, 250 )
+					} )
 				</script>
 				$1`,
 			)
@@ -1178,7 +1175,7 @@ namespace $ {
 				module : 'node.esm.js',
 				browser : 'web.js',
 				types : 'web.d.ts',
-				dependencies : <{ [ key : string ] : string }>{}
+				dependencies : {} as { [ key : string ] : string }
 			}
 
 			if( source.exists() ) {

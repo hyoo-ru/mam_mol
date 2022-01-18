@@ -1,7 +1,10 @@
 include \/mol/wire/pub
 include \/mol/wire/pub/sub
 include \/mol/wire/fiber
+include \/mol/wire/probe
+include \/mol/wire/solid
 include \/mol/wire/sync
 include \/mol/wire/async
-include \/mol/wire/chan
-include \/mol/wire/set
+include \/mol/wire/mem
+include \/mol/wire/field
+include \/mol/wire/method

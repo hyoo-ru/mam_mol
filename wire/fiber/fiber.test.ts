@@ -102,36 +102,6 @@ namespace $ {
 			
 		},
 		
-		async 'Auto destroy owned value on alone'($) {
-
-			let destroyed = false
-
-			class App extends $mol_object2 {
-
-				static $ = $
-				
-				@ $mol_wire_method
-				static having() {
-					return {
-						destructor() {
-							destroyed = true
-						}
-					}
-				}
-				
-				@ $mol_wire_method
-				static owner() {
-					this.having()
-				}
-
-			}
-
-			App.owner()
-			$mol_wire_fiber.sync()
-			$mol_assert_ok( destroyed )
-			
-		} ,
-
 	})
 	
 }

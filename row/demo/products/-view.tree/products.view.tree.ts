@@ -22,7 +22,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Product!id $mol_card
-		 * 	minimal_width 140
+		 * 	minimal_width 110
 		 * 	minimal_height 100
 		 * 	title <= product_title!id
 		 * ```
@@ -31,7 +31,7 @@ namespace $ {
 		Product(id: any) {
 			const obj = new this.$.$mol_card()
 			
-			obj.minimal_width = () => 140
+			obj.minimal_width = () => 110
 			obj.minimal_height = () => 100
 			obj.title = () => this.product_title(id)
 			

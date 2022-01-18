@@ -19,7 +19,7 @@ var $;
 (function ($) {
 })($ || ($ = {}));
 module.exports = $;
-//mam.js.map
+//mam.ts
 ;
 "use strict";
 var $;
@@ -29,7 +29,7 @@ var $;
     }
     $.$mol_fail = $mol_fail;
 })($ || ($ = {}));
-//fail.js.map
+//mol/fail/fail.ts
 ;
 "use strict";
 var $;
@@ -73,7 +73,7 @@ var $;
                     }
                     offset += rule.size + 1;
                 }
-                $.$mol_fail(new Error('$mol_syntax2 is broken'));
+                $mol_fail(new Error('$mol_syntax2 is broken'));
             }
         }
         parse(text, handlers) {
@@ -82,6 +82,6 @@ var $;
     }
     $.$mol_syntax2 = $mol_syntax2;
 })($ || ($ = {}));
-//syntax2.js.map
+//mol/syntax2/syntax2.ts
 
 //# sourceMappingURL=node.test.js.map

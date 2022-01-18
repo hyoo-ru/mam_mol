@@ -1,6 +1,6 @@
 {
   "name": "mam",
-  "version": "1.11.25",
+  "version": "1.11.28",
   "main": "node.js",
   "module": "node.esm.js",
   "browser": "web.js",

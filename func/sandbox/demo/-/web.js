@@ -24,23 +24,23 @@ var $;
 (function ($) {
 })($ || ($ = {}));
 module.exports = $;
-//mam.js.map
+//mam.ts
 ;
 
-$node[ "../mam" ] = $node[ "../mam.js" ] = module.exports }.call( {} , {} )
+$node[ "../mam.ts" ] = $node[ "../mam.ts" ] = module.exports }.call( {} , {} )
 ;
 "use strict";
 var $;
 (function ($) {
 })($ || ($ = {}));
-//context.js.map
+//mol/dom/context/context.ts
 ;
 "use strict";
 var $;
 (function ($) {
     $.$mol_dom_context = self;
 })($ || ($ = {}));
-//context.web.js.map
+//mol/dom/context/context.web.ts
 ;
 "use strict";
 var $;
@@ -60,9 +60,9 @@ var $;
         static get make() {
             if (this._make)
                 return this._make;
-            const frame = $.$mol_dom_context.document.createElement('iframe');
+            const frame = $mol_dom_context.document.createElement('iframe');
             frame.style.display = 'none';
-            $.$mol_dom_context.document.body.appendChild(frame);
+            $mol_dom_context.document.body.appendChild(frame);
             const win = frame.contentWindow;
             const SafeFunc = win.Function;
             const SafeJSON = win.JSON;
@@ -91,7 +91,7 @@ var $;
 				for( const key of Object.getOwnPropertyNames( window ) ) delete window[ key ]
 
 			`);
-            $.$mol_dom_context.document.body.removeChild(frame);
+            $mol_dom_context.document.body.removeChild(frame);
             let context_default = {};
             function clean(obj) {
                 for (let name of Object.getOwnPropertyNames(obj)) {
@@ -177,6 +177,6 @@ var $;
     }
     $.$mol_func_sandbox = $mol_func_sandbox;
 })($ || ($ = {}));
-//sandbox.js.map
+//mol/func/sandbox/sandbox.ts
 
 //# sourceMappingURL=web.js.map

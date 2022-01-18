@@ -44,7 +44,7 @@ namespace $ {
 		 * 	minimal_width 40
 		 * 	minimal_height 40
 		 * 	enabled <= trigger_enabled
-		 * 	checked?event <=> showed?event
+		 * 	checked?val <=> showed?val
 		 * 	sub <= trigger_content
 		 * 	hint <= hint
 		 * ```
@@ -56,7 +56,7 @@ namespace $ {
 			obj.minimal_width = () => 40
 			obj.minimal_height = () => 40
 			obj.enabled = () => this.trigger_enabled()
-			obj.checked = (event?: any) => this.showed(event)
+			obj.checked = (val?: any) => this.showed(val)
 			obj.sub = () => this.trigger_content()
 			obj.hint = () => this.hint()
 			

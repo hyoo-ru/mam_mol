@@ -50,27 +50,28 @@ After click:
 
 class $my_app extends $mol_jsx_view {
 
-	// reactive field
-	@ $mol_atom2_field
-	title = 'Hello'
-
-	// reactive subtree cache
+	// reactive channel
 	@ $mol_mem
-	valueOf() { return super.valueOf() }
+	title( next = 'Hello' ) {
+		return next
+	}
 
 	// fibered action
-	@ $mol_fiber.method
-	change( event : Event ) {
-		this.title = 'World'
+	@ $mol_action
+	change( event: Event ) {
+		this.title( 'World' )
 	}
 
 	render() {
-		return <div onclick={ event => this.change( event ) }>{ this.title }</div>
+		return <div onclick={ event => this.change( event ) }>{ this.title() }</div>
 	}
 
 }
 
-$mol_atom2_autorun( ()=> $mol_jsx_attach( doc , ()=> <$my_app id="$my_app" title="Hola" /> ) )
+// enable autorun render in right context
+$mol_mem( $my_app.prototype, 'valueOf' )
+
+$mol_jsx_attach( doc , ()=> <$my_app id="$my_app" title="Hola" /> )
 ```
 
 [More examples in tests.](view.test.tsx)

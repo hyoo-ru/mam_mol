@@ -1,5 +1,5 @@
 namespace $ {
 	
-	$mol_dom_context = self as any
+	$.$mol_dom_context = self as any
 	
 }

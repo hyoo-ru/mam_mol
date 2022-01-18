@@ -22,7 +22,7 @@ namespace $ {
 					res[field] = sub[field]( ( val as Input )[ field ] )
 				} catch( error: any ) {
 
-					if( 'then' in error ) return $mol_fail_hidden( error )
+					if( error instanceof Promise ) return $mol_fail_hidden( error )
 					
 					error.message = `[${ JSON.stringify( field ) }] ${ error.message }`
 					return $mol_fail( error )

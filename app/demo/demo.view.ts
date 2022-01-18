@@ -49,7 +49,7 @@ namespace $.$$ {
 		widget_tags( name: string ) {
 			const component_name = this.component_name( name )
 
-			const tags = this.Widget()[ name ].tags().map( tag => tag.toLowerCase() )
+			const tags = this.Widget( name ).tags().map( tag => tag.toLowerCase() )
 
 			if( tags.length === 0 ) {
 
@@ -67,7 +67,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		widget_title( name: string ) {
-			return this.Widget()[ name ].title()
+			return this.Widget( name ).title()
 		}
 
 		filter() {
@@ -177,14 +177,10 @@ namespace $.$$ {
 			return '$' + this.selected()
 		}
 
-		@ $mol_mem
-		Widget() {
-			return $mol_atom2_dict({
-				get : ( name : string )=> {
-					const Class : typeof $mol_example = this.$[ '$' + name ]
-					return new Class()
-				}
-			})
+		@ $mol_mem_key
+		Widget( name : string ) {
+			const Class : typeof $mol_example = this.$[ '$' + name ]
+			return new Class()
 		}
 		
 		@ $mol_mem
@@ -213,7 +209,7 @@ namespace $.$$ {
 		}
 
 		override Demo() {
-			return this.Widget()[ this.selected() ]
+			return this.Widget( this.selected() )
 		}
 		
 		override chat_seed( id: string ) {
@@ -275,7 +271,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		override filter( next?: string ) {
-			return this.$.$mol_state_arg.value( 'filter' , next === '' ? null : next ) ?? super.filter()
+			return this.$.$mol_state_arg.value( 'filter' , next === '' ? null : next ) ?? super.filter() as string
 		}
 		
 		@ $mol_mem
@@ -306,17 +302,16 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		override readme() {
+		override readme(): string {
 			let module = this.module()
 
 			while( module.length ) {
-				const res = this.$.$mol_fetch.request( this.link( module ) )
-
-				if ( `${ res.status }`[0] === '2' ) return new $mol_fetch_response( res ).text() 
-
-				else if ( res.status === 404 ) module = module.slice( 0 , -1 )
-
-				else throw new Error( res.statusText || `HTTP Error ${ res.status }` )
+				try {
+					return this.$.$mol_fetch.text( this.link( module ) )
+				} catch( error: any ) {
+					if( error instanceof Promise ) $mol_fail_hidden( error )
+					module = module.slice( 0 , -1 )
+				}
 			}
 			
 			throw new $mol_app_demo_readme_not_found_error( module )
@@ -328,10 +323,8 @@ namespace $.$$ {
 				this.readme()
 				return this.Readme()
 			} catch ( err ) {
-				if ( err instanceof $mol_app_demo_readme_not_found_error ) {
-					return this.Not_found()
-				}
-				throw err
+				if( err instanceof Promise ) $mol_fail_hidden( err )
+				return this.Not_found()
 			}
 		}
 		

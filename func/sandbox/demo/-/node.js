@@ -24,19 +24,19 @@ var $;
 (function ($) {
 })($ || ($ = {}));
 module.exports = $;
-//mam.js.map
+//mam.ts
 ;
 
-$node[ "../mam" ] = $node[ "../mam.js" ] = module.exports }.call( {} , {} )
+$node[ "../mam.ts" ] = $node[ "../mam.ts" ] = module.exports }.call( {} , {} )
 ;
 "use strict";
 var $;
 (function ($) {
 })($ || ($ = {}));
-//context.js.map
+//mol/dom/context/context.ts
 ;
 "use strict";
-//node.js.map
+//node/node.ts
 ;
 "use strict";
 var $node = new Proxy({ require }, {
@@ -75,14 +75,14 @@ var $node = new Proxy({ require }, {
 require = (req => Object.assign(function require(name) {
     return $node[name];
 }, req))(require);
-//node.node.js.map
+//node/node.node.ts
 ;
 "use strict";
 var $;
 (function ($) {
     $.$mol_dom_context = new $node.jsdom.JSDOM('', { url: 'https://localhost/' }).window;
 })($ || ($ = {}));
-//context.node.js.map
+//mol/dom/context/context.node.ts
 ;
 "use strict";
 var $;
@@ -102,9 +102,9 @@ var $;
         static get make() {
             if (this._make)
                 return this._make;
-            const frame = $.$mol_dom_context.document.createElement('iframe');
+            const frame = $mol_dom_context.document.createElement('iframe');
             frame.style.display = 'none';
-            $.$mol_dom_context.document.body.appendChild(frame);
+            $mol_dom_context.document.body.appendChild(frame);
             const win = frame.contentWindow;
             const SafeFunc = win.Function;
             const SafeJSON = win.JSON;
@@ -133,7 +133,7 @@ var $;
 				for( const key of Object.getOwnPropertyNames( window ) ) delete window[ key ]
 
 			`);
-            $.$mol_dom_context.document.body.removeChild(frame);
+            $mol_dom_context.document.body.removeChild(frame);
             let context_default = {};
             function clean(obj) {
                 for (let name of Object.getOwnPropertyNames(obj)) {
@@ -219,7 +219,7 @@ var $;
     }
     $.$mol_func_sandbox = $mol_func_sandbox;
 })($ || ($ = {}));
-//sandbox.js.map
+//mol/func/sandbox/sandbox.ts
 ;
 "use strict";
 var $;
@@ -243,7 +243,7 @@ var $;
     $.$mol_log3_area_lazy = $mol_log3_area_lazy;
     $.$mol_log3_stack = [];
 })($ || ($ = {}));
-//log3.js.map
+//mol/log3/log3.ts
 ;
 "use strict";
 var $;
@@ -254,7 +254,7 @@ var $;
     }
     $.$mol_ambient = $mol_ambient;
 })($ || ($ = {}));
-//ambient.js.map
+//mol/ambient/ambient.ts
 ;
 "use strict";
 var $;
@@ -291,7 +291,7 @@ var $;
         value: (obj) => instances.has(obj),
     });
 })($ || ($ = {}));
-//delegate.js.map
+//mol/delegate/delegate.ts
 ;
 "use strict";
 var $;
@@ -303,7 +303,7 @@ var $;
                 return false;
             if (typeof having !== 'object')
                 return false;
-            if (having instanceof $.$mol_delegate)
+            if (having instanceof $mol_delegate)
                 return false;
             if (typeof having['destructor'] !== 'function')
                 return false;
@@ -347,7 +347,7 @@ var $;
     }
     $.$mol_owning_catch = $mol_owning_catch;
 })($ || ($ = {}));
-//owning.js.map
+//mol/owning/owning.ts
 ;
 "use strict";
 var $;
@@ -357,7 +357,7 @@ var $;
     }
     $.$mol_fail = $mol_fail;
 })($ || ($ = {}));
-//fail.js.map
+//mol/fail/fail.ts
 ;
 "use strict";
 var $;
@@ -367,27 +367,27 @@ var $;
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
-//hidden.js.map
+//mol/fail/hidden/hidden.ts
 ;
 "use strict";
-//writable.js.map
+//mol/type/writable/writable.ts
 ;
 "use strict";
 var $;
 (function ($) {
     class $mol_object2 {
         static $ = $;
-        [$.$mol_ambient_ref] = null;
+        [$mol_ambient_ref] = null;
         get $() {
-            if (this[$.$mol_ambient_ref])
-                return this[$.$mol_ambient_ref];
-            const owner = $.$mol_owning_get(this);
-            return this[$.$mol_ambient_ref] = owner?.$ || $mol_object2.$;
+            if (this[$mol_ambient_ref])
+                return this[$mol_ambient_ref];
+            const owner = $mol_owning_get(this);
+            return this[$mol_ambient_ref] = owner?.$ || $mol_object2.$;
         }
         set $(next) {
-            if (this[$.$mol_ambient_ref])
-                $.$mol_fail_hidden(new Error('Context already defined'));
-            this[$.$mol_ambient_ref] = next;
+            if (this[$mol_ambient_ref])
+                $mol_fail_hidden(new Error('Context already defined'));
+            this[$mol_ambient_ref] = next;
         }
         static create(init) {
             const obj = new this;
@@ -413,7 +413,7 @@ var $;
     }
     $.$mol_object2 = $mol_object2;
 })($ || ($ = {}));
-//object2.js.map
+//mol/object2/object2.ts
 ;
 "use strict";
 var $;
@@ -424,7 +424,7 @@ var $;
             let warned = false;
             descr.value = function $mol_deprecated_wrapper(...args) {
                 if (!warned) {
-                    $.$$.$mol_log3_warn({
+                    $$.$mol_log3_warn({
                         place: `${host.constructor.name}::${field}`,
                         message: `Deprecated`,
                         hint: message,
@@ -437,13 +437,13 @@ var $;
     }
     $.$mol_deprecated = $mol_deprecated;
 })($ || ($ = {}));
-//deprecated.js.map
+//mol/deprecated/deprecated.ts
 ;
 "use strict";
 var $;
 (function ($) {
     $.$mol_tree_convert = Symbol('$mol_tree_convert');
-    class $mol_tree extends $.$mol_object2 {
+    class $mol_tree extends $mol_object2 {
         type;
         data;
         sub;
@@ -756,7 +756,7 @@ var $;
             const sub = [].concat(...this.sub.map(child => {
                 const handle = context[child.type] || context[''];
                 if (!handle)
-                    $.$mol_fail(child.error('Handler not defined'));
+                    $mol_fail(child.error('Handler not defined'));
                 return handle(child, context);
             }));
             return this.clone({ sub });
@@ -766,11 +766,11 @@ var $;
         }
     }
     __decorate([
-        $.$mol_deprecated('Use $mol_tree:hack')
+        $mol_deprecated('Use $mol_tree:hack')
     ], $mol_tree.prototype, "transform", null);
     $.$mol_tree = $mol_tree;
 })($ || ($ = {}));
-//tree.js.map
+//mol/tree/tree.ts
 ;
 "use strict";
 var $;
@@ -798,7 +798,7 @@ var $;
     $.$mol_log3_rise = $mol_log3_node_make('log', 'stdout', 'rise', 'magenta');
     $.$mol_log3_area = $mol_log3_node_make('log', 'stdout', 'area', 'cyan');
 })($ || ($ = {}));
-//log3.node.js.map
+//mol/log3/log3.node.ts
 ;
 "use strict";
 var $;
@@ -808,7 +808,7 @@ var $;
     }
     $.$mol_env = $mol_env;
 })($ || ($ = {}));
-//env.js.map
+//mol/env/env.ts
 ;
 "use strict";
 var $;
@@ -817,7 +817,7 @@ var $;
         return this.process.env;
     };
 })($ || ($ = {}));
-//env.node.js.map
+//mol/env/env.node.ts
 ;
 "use strict";
 var $;
@@ -837,13 +837,13 @@ var $;
             env: this.$mol_env(),
         });
         if (res.status || res.error)
-            return $.$mol_fail(res.error || new Error(res.stderr.toString()));
+            return $mol_fail(res.error || new Error(res.stderr.toString()));
         if (!res.stdout)
             res.stdout = Buffer.from([]);
         return res;
     }
     $.$mol_exec = $mol_exec;
 })($ || ($ = {}));
-//exec.node.js.map
+//mol/exec/exec.node.ts
 
 //# sourceMappingURL=node.js.map

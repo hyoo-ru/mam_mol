@@ -24,13 +24,15 @@ namespace $ {
 
 		@ $mol_mem
 		autorun() {
-			return $mol_atom2_autorun( ()=> {
+			try {
 				this.dom_tree()
 				document.title = this.title()
-				return this
-			} )
+			} catch( error ) {
+				$mol_fail_log( error )
+			}
 		}
-
+		
+		@ $mol_mem
 		static autobind() {
 			
 			const nodes = $mol_dom_context.document.querySelectorAll( '[mol_view_root]' )
@@ -39,7 +41,7 @@ namespace $ {
 
 				const name = nodes.item( i ).getAttribute( 'mol_view_root' )!
 				
-				const View = $[ name ]
+				const View = $[ name ] as typeof $mol_view
 				if( !View ) {
 					console.error( `Can not attach view. Class not found: ${ name }` )
 					continue
@@ -104,13 +106,7 @@ namespace $ {
 				} )
 				
 			} catch( error: any ) {
-				
-				if( error instanceof Promise ) {
-					$mol_atom2.current!.subscribe( error )
-				} else if( $mol_fail_catch( error ) ) {
-					console.error( error )
-				}
-				
+				$mol_fail_log( error )
 				return 24
 			}
 		
@@ -137,13 +133,7 @@ namespace $ {
 				}
 				 
 			} catch( error: any ) {
-				
-				if( error instanceof Promise ) {
-					$mol_atom2.current!.subscribe( error )
-				} else if( $mol_fail_catch( error ) ) {
-					console.error( error )
-				}
-				
+				$mol_fail_log( error )
 				return 24
 			}
 
@@ -154,7 +144,7 @@ namespace $ {
 
 		@ $mol_mem
 		view_rect() {
-			if( $mol_atom2.current ) this.view_rect_watcher()
+			this.view_rect_watcher()
 			return this.view_rect_cache()
 		}
 
@@ -184,11 +174,11 @@ namespace $ {
 
 			$mol_dom_render_attributes( node , this.attr_static() )
 			
-			const events = this.event()
+			const events = $mol_wire_async( this.event() )
 			for( let event_name in events ) {
 				node.addEventListener(
 					event_name ,
-					$mol_fiber_root( events[ event_name ] ) ,
+					events[ event_name ] ,
 					{ passive : false } as any ,
 				)
 			}
@@ -222,14 +212,10 @@ namespace $ {
 				
 				$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
 				
-				if( error instanceof Promise ) {
-					$mol_atom2.current!.subscribe( error )
-					return node
-				}
-				
-				if( $mol_fail_catch( error ) ) {
-					try { void( ( node as HTMLElement ).innerText = error.message ) } catch( e ) {}
-					console.error( error )
+				if( $mol_fail_log( error ) ) {
+					try {
+						( node as HTMLElement ).innerText = error.message || error
+					} catch {}
 				}
 				
 			}
@@ -302,27 +288,28 @@ namespace $ {
 		
 		view_names_owned() {
 			const names = [] as string[]
-			let owner = $mol_owning_get( this , $mol_view )
+			let owner = $mol_owning_get( this ) as $mol_wire_fiber< any, any[], any >
 
-			if( owner instanceof $mol_view ) {
+			if( owner?.host instanceof $mol_view ) {
 
-				const suffix = this[ $mol_object_field ]
+				const suffix = owner.task.name.trim()
 				const suffix2 = '_' + suffix[0].toLowerCase() + suffix.substring(1)
 				
-				for( let Class of ( owner.constructor as typeof $mol_view ).view_classes() ) {
+				for( let Class of ( owner.host.constructor as typeof $mol_view ).view_classes() ) {
 					if( suffix in Class.prototype ) names.push( this.$.$mol_func_name( Class ) + suffix2 )
 					else break
 				}
 				
-				for( let prefix of owner.view_names_owned() ) {
+				for( let prefix of owner.host.view_names_owned() ) {
 					names.push( prefix + suffix2 )
 				}
+			
 			}
 
 			return names
 		}
 
-		@ $mol_mem
+		@ $mol_memo.method
 		view_names() {
 			const names = [] as string[]
 			
@@ -375,8 +362,8 @@ namespace $ {
 		[ $mol_dev_format_head ]() {
 			return $mol_dev_format_span( {} ,
 				$mol_dev_format_native( this ) ,
-				$mol_dev_format_shade( '/' ) ,
-				$mol_dev_format_auto( $mol_mem_cached( ()=> this.sub() ) ) ,
+				// $mol_dev_format_shade( '/' ) ,
+				// $mol_dev_format_auto( $mol_wire_cache( this ).sub().cache ) ,
 			)
 		}
 
@@ -424,7 +411,7 @@ namespace $ {
 			
 			this.force_render( new Set( path ) )
 			
-			await $mol_fiber_warp()
+			$mol_wire_fiber.sync()
 
 			view.dom_node().scrollIntoView({ block: align })
 

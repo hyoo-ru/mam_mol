@@ -7,35 +7,51 @@ namespace $ {
 					
 		class Component extends HTMLElement {
 			
-			view = new View
 			static tag = View.name.replace( /\W/g , '' ).replace( /^(?=\d+)/ , '-' ).replace( /_/g , '-' )
-			auto?: $mol_atom2 | undefined
+			static observedAttributes = new Set
 			
+			view = new View
+			root?: $mol_wire_sub | null
+			
+			@ $mol_mem
 			connectedCallback() {
 				
 				if( !this.shadowRoot ) {
 					this.attachShadow({ mode: 'open' })
 					
+					const node = this.view.dom_node()
+					node.setAttribute( 'mol_view_root', '' )
+					
 					this.shadowRoot!.append(
 						document.getElementById( `$mol_style_attach` )!.cloneNode( true ),
-						this.view.dom_node(),
+						node,
 					)
-					
+						
 				}
 				
-				this.auto = $mol_atom2_autorun( ()=> this.view.dom_tree() )	
+				this.root = $mol_wire_auto
+				
+				try {
+					this.view.dom_tree()
+				} catch( error: unknown ) {
+					if( error instanceof Promise ) return
+					$mol_fail_hidden( error )
+				}
+				
 			}
 			
 			disconnectedCallback() {
-				this.auto!.destructor()
-				this.auto = undefined
+				this.root!.destructor()
+				this.root = undefined
 			}
 			
 			attributeChangedCallback( name: string, prev: string, next: string ) {
 				this.view[ name ]( JSON.parse( next ) )
 			}
 			
-			static observedAttributes = new Set
+			toString() {
+				return '<' + ( this.constructor as typeof Component ).tag + '#' + this.id + '/>'
+			}
 			
 		}
 		
