@@ -8,7 +8,6 @@ Reactive method memoizer. Receives count of key property. For different key it s
 
 Channel is function which can be used to pull and push values depending on agruments count.
 
-
 ```ts
 prop(): Value // read-only single value
 prop( next?: Value ): Value // read/write single value

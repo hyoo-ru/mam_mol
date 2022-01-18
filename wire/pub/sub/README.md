@@ -1,8 +1,8 @@
-# $mol_wire
+# $mol_wire_pub_sub
 
 Tiny pub/sub with automatic wiring support.
 
-- All operations have O(1) complexity.
+- All tracking operations have O(1) complexity.
 - Circular subscription throws exception.
 - Subscriber is publisher too and retransmits events.
 
@@ -11,13 +11,13 @@ Tiny pub/sub with automatic wiring support.
 ```ts
 class Logger extends $mol_pub_sub {
 	
-	absorb( quant?: unknown ) {
+	affect( quant?: number ) {
 		
-		// custom logic
+		// custom logic, quant = $mol_wire_cursor
 		console.log( quant )
 		
-		// default logic
-		super.absorb( quant )
+		// default logic (retransmit)
+		super.affect( quant )
 		
 	}
 	
@@ -32,11 +32,11 @@ const susi = new Logger
 const susi = new $mol_pub_sub
 const pepe = new $mol_pub
 
-const backup = susi.begin() // begin auto wire
+const backup = susi.track_on() // begin auto wire
 try {
-	pepe.promote() // Auto subscribe Susi to Pepe
+	pepe.track_promote() // Auto subscribe Susi to Pepe
 } finally {
-	susi.end( backup ) // Unsubscribe Susi from unpromoted pubs
+	susi.track_off( backup ) // Unsubscribe Susi from unpromoted pubs
 }
 ```
 
