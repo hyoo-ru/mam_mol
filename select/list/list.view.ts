@@ -5,7 +5,7 @@ namespace $.$$ {
 			return super.value( val ) as readonly string[]
 		}
 
-		@ $mol_wire_mem(0)
+		@ $mol_mem
 		pick( key? : string ) {
 			
 			if( !key ) return ''

@@ -42,7 +42,7 @@ namespace $.$$ {
 			)
 		}
 		
-		@ $mol_wire_mem(0)
+		@ $mol_mem
 		uri_change( event?: MessageEvent<[ string, string ]> ) {
 
 			if( !event ) return

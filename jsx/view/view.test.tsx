@@ -85,7 +85,7 @@ namespace $ {
 
 			}
 			
-			$mol_wire_mem(0)( App.prototype, 'valueOf' )
+			$mol_mem( App.prototype, 'valueOf' )
 
 			const task = new Task
 			task.$ = $

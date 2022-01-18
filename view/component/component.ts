@@ -13,7 +13,7 @@ namespace $ {
 			view = new View
 			root?: $mol_wire_sub | null
 			
-			@ $mol_wire_mem(0)
+			@ $mol_mem
 			connectedCallback() {
 				
 				if( !this.shadowRoot ) {
