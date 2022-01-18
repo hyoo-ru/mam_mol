@@ -11,7 +11,7 @@ Channel is function which can be used to pull and push values depending on agrum
 prop(): Value // read-only single value
 prop( next?: Value ): Value // read/write single value
 
-prop( key: Ket ): Value // read-only value by key
+prop( key: Key ): Value // read-only value by key
 prop( key: Key, next?: Value ): Value // read/write value by key
 
 prop( key1: Key1, key2: Key2 ): Value // read-only value by keys
