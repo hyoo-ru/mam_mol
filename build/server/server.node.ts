@@ -152,7 +152,7 @@ namespace $ {
 			return socket
 		}
 		
-		@ $mol_mem_key_key
+		@ $mol_mem_key2
 		notify( line: InstanceType<$node['ws']>, path: string ) {
 			
 			const build = this.build()

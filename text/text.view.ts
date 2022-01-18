@@ -91,7 +91,7 @@ namespace $.$$ {
 			return url.toString()
 		}
 		
-		@ $mol_mem_key_key
+		@ $mol_mem_key2
 		text2spans( prefix : string , text : string ) {
 			if( text === undefined ) return []
 			let index = 0
@@ -151,7 +151,7 @@ namespace $.$$ {
 			return spans
 		}
 		
-		@ $mol_mem_key_key
+		@ $mol_mem_key2
 		code2spans( prefix : string , text : string ) {
 			let index = 0
 			const spans = [] as $mol_view[]
