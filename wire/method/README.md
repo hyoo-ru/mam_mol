@@ -2,6 +2,8 @@
 
 Decorates method to fiber to ensure it is executed only once inside other fiber.
 
+**Use [$mol_action](../../action) alias outside $mol_wire**
+
 ```typescript
 class App {
 

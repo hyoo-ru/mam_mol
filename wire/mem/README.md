@@ -2,6 +2,8 @@
 
 Reactive method memoizer. Receives count of key property. For different key it stores different cache. Keys are compared deeply using [$mol_key](../../key).
 
+**Use [$mol_mem_*](../../mem) aliases outside $mol_wire**
+
 ## Channel Abstraction
 
 Channel is function which can be used to pull and push values depending on agruments count.
