@@ -18,6 +18,9 @@ namespace $ {
 			}
 			
 			return this.$.$mol_db< Scheme >( '$mol_state_shared_db',
+				mig => mig.store_make( 'Chunks' ),
+				mig => null, //mig.stores.Chunks.index_make( 'Path', [ 'path' ] ),
+				mig => mig.store_drop( 'Chunks' ),
 				mig => mig.store_make( 'Docs' ),
 			)
 			
