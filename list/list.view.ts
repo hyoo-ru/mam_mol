@@ -13,12 +13,15 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		view_window() : [ number , number ] {
+		view_window( next?: [ number , number ] ) : [ number , number ] {
 			
 			const kids = this.sub()
 			
 			if( kids.length < 3 ) return [ 0 , kids.length ]
 			if( this.$.$mol_print.active() ) return [ 0 , kids.length ]
+			
+			const rect = this.view_rect()
+			if( next ) return next
 			
 			let [ min , max ] = $mol_mem_cached( ()=> this.view_window() ) ?? [ 0 , 0 ]
 
@@ -31,8 +34,6 @@ namespace $.$$ {
 			const limit_top = -over
 			const limit_bottom = window_height + over
 
-			const rect = this.view_rect()
- 
 			const gap_before = $mol_mem_cached( ()=> this.gap_before() ) ?? 0
 			const gap_after = $mol_mem_cached( ()=> this.gap_after() ) ?? 0
 
@@ -123,17 +124,9 @@ namespace $.$$ {
 			return this.sub().reduce( ( sum , view )=> {
 
 				try {
-
 					return sum + view.minimal_height() 
-
 				} catch( error: any ) {
-
-					if( error instanceof Promise ) {
-						$mol_atom2.current!.subscribe( error )
-					} else if( $mol_fail_catch( error ) ) {
-						console.error( error )
-					}
-
+					$mol_fail_log( error )
 					return sum
 				}
 
@@ -152,7 +145,7 @@ namespace $.$$ {
 			if( index >= 0 ) {
 				const win = this.view_window()
 				if( index < win[0] || index >= win[1] ) {
-					$mol_mem_cached( ()=> this.view_window(), [ index, index + 1 ] )
+					this.view_window([ index, index + 1 ])
 				}
 				( kids[ index ] as $mol_view ).force_render( path )
 			}

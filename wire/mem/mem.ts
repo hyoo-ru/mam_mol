@@ -5,32 +5,40 @@ namespace $ {
 		Field extends keyof Host ,
 		Prop extends Extract< Host[ Field ] , ( ... args: any[] )=> any >,
 	>(
-		proto : Host ,
-		name : Field ,
+		host : Host ,
+		field : Field ,
 		descr? : TypedPropertyDescriptor< Prop >
 	)=> {
 
-		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( proto , name )
-		const orig = descr!.value!
+		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
+		const orig = descr?.value! ?? host[ field ]
+		
+		const sup = Reflect.getPrototypeOf( host )!
+		if( typeof sup[ field as any ] === 'function' ) {
+			Object.defineProperty( orig , 'name' , { value : sup[ field as any ].name } )
+		}
 		
 		function value( this: Host, ... args: any[] ) {
 			
 			let atom = $mol_wire_fiber.persist( this, orig, ... args.slice( 0, keys ) )
 			
-			let res = atom.sync()
-			if( args[ keys ] === undefined ) return res
+			if( args[ keys ] === undefined ) return atom.sync()
 			
-			return atom.put(
-				$mol_wire_fiber.temp( this, orig, ... args ).sync()
-			)
+			try {
+				atom.sync()
+			} catch( error: unknown ) {
+				$mol_fail_log( error )
+			}
+			
+			return atom.recall( ... args )
 			
 		}
 		
-		Object.defineProperty( value , 'name' , { value : orig.name + '@' } )
-		
+		Object.defineProperty( value , 'name' , { value : orig.name + ' ' } )
 		Object.assign( value, { orig } )
+		
 		const descr2 = { ... descr, value }
-		Reflect.defineProperty( proto, name, descr2 )
+		Reflect.defineProperty( host, field, descr2 )
 		
 		return descr2
 

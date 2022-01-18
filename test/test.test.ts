@@ -15,7 +15,7 @@ namespace $ {
 
 	export let $mol_test_mocks = [] as Array< ( context : $ )=> void >
 
-	export const $mol_test_all = [] as Array< ( context : $ )=> void >
+	export const $mol_test_all = [] as Array< ( context : $ )=> any >
 
 	export async function $mol_test_run() {
 
@@ -24,7 +24,14 @@ namespace $ {
 			let context = Object.create( $$ )
 			for( let mock of $mol_test_mocks ) await mock( context )
 			
-			await test( context )
+			const res = test( context )
+			if( res instanceof Promise ) {
+				await new Promise( ( done, fail )=> {
+					res.then( done, fail )
+					setTimeout( ()=> fail( new Error( 'Test timeout: ' + test.name ) ), 1000 )
+				} )
+			}
+			
 		}
 		
 		$$.$mol_log3_done({

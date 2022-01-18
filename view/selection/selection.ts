@@ -4,19 +4,18 @@ namespace $ {
 		
 		@ $mol_mem
 		static focused( next? : Element[] ) : Element[] {
-			if( next === undefined ) return [] as Element[]
 			
 			const parents : Element[] = []
-			let element = next[ 0 ] as HTMLElement
+			let element = next?.[ 0 ] ?? $mol_dom_context.document.activeElement
 			
 			while( element ) {
 				parents.push( element )
 				element = element.parentNode as HTMLElement
 			}
 
-			$mol_fiber_defer( ()=> {
+			new $mol_after_tick( ()=> {
 
-				const element = $mol_mem_cached( ()=> this.focused() )![0] as HTMLElement
+				const element = this.focused()![0] as HTMLElement
 				
 				if( element ) element.focus()
 				else $mol_dom_context.blur()
@@ -26,14 +25,6 @@ namespace $ {
 			return parents
 		}
 		
-		static focus( event : FocusEvent ) {
-			this.focused( [ event.target as Element ] )
-		}
-		
-		static blur( event : FocusEvent ) {
-			const elements = $mol_mem_cached( ()=> this.focused() )
-			if( elements && elements[0] === event.target ) this.focused( [] )
-		}
 	}
 	
 }

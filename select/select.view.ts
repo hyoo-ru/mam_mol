@@ -56,7 +56,7 @@ namespace $.$$ {
 
 		event_select( id : string , event? : MouseEvent ) {
 			this.value( id )
-			this.focused( false )
+			this.showed( false )
 			event?.preventDefault()
 		}
 		

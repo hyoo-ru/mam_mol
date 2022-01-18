@@ -1,10 +1,13 @@
 namespace $ {
 	
 	const handled = new WeakSet< Promise< unknown > >()
-	const nothing = ()=> {}
 	
 	/**
 	 * Suspendable task with with support both sync/async api.
+	 * 
+	 * 	A1 A2 A3 A4 P1 P2 P3 P4 S1 S2 S3
+	 * 	^           ^           ^
+	 * 	args_from   pubs_from   subs_from
 	 **/
 	export class $mol_wire_fiber<
 		Host,
@@ -22,7 +25,7 @@ namespace $ {
 			... args: Args
 		): $mol_wire_fiber< Host, [ ... Args ], Result > {
 			
-			const existen = $mol_wire_auto?.next()
+			const existen = $mol_wire_auto?.track_next()
 			
 			reuse: if( existen ) {
 				
@@ -35,7 +38,7 @@ namespace $ {
 				return existen
 			}
 			
-			return new this( host, task, task.name + '(...)', ... args )
+			return new this( host, task, host + '.' + task.name + '(#)', ... args )
 		}
 		
 		static persist<
@@ -48,21 +51,22 @@ namespace $ {
 			... args: Args
 		): $mol_wire_fiber< Host, [ ... Args ], Result > {
 			
-			const name = task.name + '()'
+			const field = task.name + '()'
 			
 			let dict, key, existen, fiber
 			
 			if( args.length ) {
 
-				dict = host[ name ]
-				if( !dict ) dict = host[ name ] = new Map<any,any>()
+				key = `${ host }.${ task.name }(${ args.map( v => $mol_key( v ) ).join(',') })`
+				dict = Object.getOwnPropertyDescriptor( host, field )?.value
 				
-				key = args.map( v => $mol_key( v ) ).join(',')
-				existen = dict.get( key )
+				if( dict ) existen = dict.get( key )
+				else dict = host[ field ] = new Map<any,any>()
 				
 			} else {
-			
-				existen = host[ name ]
+				
+				key = `${ host }.${ field }`
+				existen = Object.getOwnPropertyDescriptor( host, field )?.value
 				
 			}
 			
@@ -76,20 +80,15 @@ namespace $ {
 				return existen
 			}
 			
-			if( args.length ) {
-				
-				fiber = new this( host, task, task.name + '(' + key + ')', ... args )
-				dict.set( key, fiber )
-				
-			} else {
-				
-				fiber = new this( host, task, name, ... args )
-				host[ name ] = fiber
-				
-			}
+			fiber = new this( host, task, key, ... args )
+			
+			if( args.length ) dict.set( key, fiber )
+			else host[ field ] = fiber
 			
 			return fiber
 		}
+		
+		static warm = true
 		
 		static planning = [] as $mol_wire_fiber< any, any, any >[]
 		static reaping = [] as $mol_wire_fiber< any, any, any >[]
@@ -119,7 +118,7 @@ namespace $ {
 				const fibers = this.planning.splice( 0, this.planning.length )
 				
 				for( const fiber of fibers ) {
-					fiber.touch()
+					fiber.up()
 				}
 				
 			}
@@ -130,7 +129,7 @@ namespace $ {
 				const fibers = this.reaping.splice( 0, this.reaping.length )
 				
 				for( const fiber of fibers ) {
-					if( !fiber.alone ) continue
+					if( !fiber.sub_empty ) continue
 					fiber.destructor()
 				}
 				
@@ -141,7 +140,7 @@ namespace $ {
 		public cache: Result | Error | Promise< Result | Error > = undefined as any
 		
 		get args() {
-			return this.slice( 0 , this.pubs_from ) as any as Args
+			return this.slice( 0 , this.pub_from ) as any as Args
 		}
 		
 		get result() {
@@ -152,23 +151,23 @@ namespace $ {
 		
 		get persist() {
 			const id = this[ Symbol.toStringTag ]
-			return id[ id.length - 2 ] !== '.'
+			return id[ id.length - 2 ] !== '#'
 		}
 		
-		get alone() {
-			return this.subs_from === this.length
+		field() {
+			return this.task.name + '()'
 		}
 		
 		constructor(
 			readonly host: Host,
 			readonly task: ( this : Host , ... args : Args )=> Result,
-			key: string,
+			id: string,
 			... args: Args
 		) {
-			super()
-			this.push( ... args as any )
-			this.pubs_from = this.subs_from = args.length
-			this[ Symbol.toStringTag ] = this.host + '.' + key
+			super( ... args as any, undefined as any )
+			this.pop() // reserve capacity for subscriber
+			this.pub_from = this.sub_from = args.length
+			this[ Symbol.toStringTag ] = id
 		}
 		
 		destructor() {
@@ -181,10 +180,15 @@ namespace $ {
 			}
 			
 			this.cache = undefined as any
-		}
-		
-		solid() {
-			this.reap = nothing
+			
+			if( this.persist ) {
+				if( this.pub_from === 0 ) {
+					this.host[ this.field() ] = null
+				} else {
+					this.host[ this.field() ].delete( this[ Symbol.toStringTag ] )
+				}
+			}
+			
 		}
 		
 		plan() {
@@ -196,12 +200,16 @@ namespace $ {
 			$mol_wire_fiber.reaping.push( this )
 			$mol_wire_fiber.plan()
 		}
+		
+		toString() {
+			return this[ Symbol.toStringTag ]
+		}
 
 		[ $mol_dev_format_head ]() {
 			
 			const cursor = this.cursor >= 0
 				? '@' + this.cursor
-				: this.cursor.constructor.name
+				: this.cursor?.constructor?.name
 			
 			return $mol_dev_format_div( {},
 				$mol_dev_format_native( this ),
@@ -211,18 +219,27 @@ namespace $ {
 			
 		}
 		
+		get $() {
+			return this.host['$']
+		}
+		
 		affect( quant: number ) {
 
 			if( !super.affect( quant ) ) return false
 			
-			if( this.subs_from === this.length ) {
+			if( this.sub_from === this.length ) {
 				this.plan()
 			}
 			
 			return true
 		}
 		
-		touch() {
+		down() {
+			if( this.persist ) return
+			this.destructor()
+		}
+		
+		up() {
 			
 			type Result = typeof this.cache
 			
@@ -230,9 +247,9 @@ namespace $ {
 			
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
-				for( let i = this.pubs_from ; i < this.subs_from; i += 2 ) {
-					;( this[i] as $mol_wire_pub ).touch()
-					if( this.cursor === $mol_wire_cursor.stale ) break check
+				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
+					;( this[i] as $mol_wire_pub )?.up()
+					if( this.cursor !== $mol_wire_cursor.doubt ) break check
 				}
 				
 				this.cursor = $mol_wire_cursor.fresh
@@ -240,38 +257,46 @@ namespace $ {
 				
 			}
 			
-			const bu = this.begin()
+			const bu = this.track_on()
+			let result: typeof this.cache
 
 			try {
 
-				let result: Result = this.task.call( this.host, ... this.args )
+				result = this.task.call( this.host, ... this.args )
 				
 				if( result instanceof Promise ) {
-					const put = this.put.bind( this )
-					result = result.then( put, put )
+					
+					const put = ( res: Result )=> {
+						if( this.cache === result ) this.put( res )
+						return res
+					}
+					
+					result = Object.assign( result.then( put, put ), {
+						destructor: result['destructor']
+					} )
+					
 					handled.add( result )
-				}
-				
-				this.end( bu )
-				this.put( result )
-				
-				if( result instanceof Promise ) return
-				
-				if( !this.persist ) {
-					this.forget()
 				}
 				
 			} catch( error: any ) {
 				
-				if( error instanceof Promise && !handled.has( error ) ) {
-					error = error.finally( ()=> this.stale() )
-					handled.add( error )
+				result = error
+				
+				if( result instanceof Promise && !handled.has( result ) ) {
+					
+					result = Object.assign( result.finally( ()=> {
+						if( this.cache === result ) this.stale()
+					} ), {
+						destructor: result['destructor']
+					} )
+					
+					handled.add( result )
 				}
 				
-				this.end( bu )
-				this.put( error )
-				
 			}
+			
+			this.track_off( bu )
+			this.put( result )
 
 		}
 		
@@ -287,11 +312,13 @@ namespace $ {
 				
 				this.cache = next
 				
-				if( $mol_owning_catch( this, next ) ) {
-					next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+				if( this.persist && $mol_owning_catch( this, next ) ) {
+					try {
+						next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+					} catch {} // Promises throws in strict mode
 				}
 				
-				if( this.subs_from < this.length ) {
+				if( this.sub_from < this.length ) {
 					if( !$mol_compare_deep( prev, next ) ) {
 						this.emit()
 					}
@@ -301,13 +328,50 @@ namespace $ {
 			
 			this.cursor = $mol_wire_cursor.fresh
 			
+			if( next instanceof Promise ) return next
+			
+			if( this.persist ) {
+			
+				for(
+					let cursor = this.pub_from;
+					cursor < this.sub_from;
+					cursor += 2
+				) {
+					const pub = this[ cursor ] as $mol_wire_pub
+					pub?.down()
+				}
+				
+			} else {
+				
+				this.cursor = this.pub_from
+				this.forget()
+				this.cursor = $mol_wire_cursor.fresh
+				
+			}
+			
 			return next
 		}
 		
+		/**
+		 * Update fiber value through another temp fiber.
+		 */
+		@ $mol_wire_method
+		recall( ... args: Args ) {
+			return this.put( this.task.call( this.host, ... args ) )
+		}
+		
+		/**
+		 * Synchronous execution. Throws Promise when waits async task (SuspenseAPI provider).
+		 * Should be called inside SuspenseAPI consumer (ie fiber).
+		 */
 		sync() {
 			
-			this.promo()
-			this.touch()
+			if( !$mol_wire_fiber.warm ) {
+				return this.result as Awaited< Result >
+			}
+			
+			this.track_promote()
+			this.up()
 			
 			if( this.cache instanceof Error ) {
 				return $mol_fail_hidden( this.cache )
@@ -317,26 +381,34 @@ namespace $ {
 				return $mol_fail_hidden( this.cache )
 			}
 			
-			return this.cache as Result extends Promise< infer Res > ? Res : Result
+			return this.cache as Awaited< Result >
 		}
 
+		/**
+		 * Asynchronous execution.
+		 * It's SuspenseAPI consumer. So SuspenseAPI providers can be called inside.
+		 */
 		async async() {
 			
 			while( true ) {
 				
-				this.touch()
+				this.up()
 				
 				if( this.cache instanceof Error ) {
 					$mol_fail_hidden( this.cache )
 				}
 				
-				if( this.cache instanceof Promise ) {
-					await this.cache
-				} else break
-				
+				if(!( this.cache instanceof Promise )) return this.cache
+					
+				await this.cache
+					
+				if( this.cursor === $mol_wire_cursor.final ) {
+					// never ends on destructed fiber
+					await new Promise( ()=> {} )
+				}
+					
 			}
 			
-			return this.cache
 		}
 		
 	}

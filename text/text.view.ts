@@ -91,8 +91,9 @@ namespace $.$$ {
 			return url.toString()
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_mem_key2
 		text2spans( prefix : string , text : string ) {
+			if( text === undefined ) return []
 			let index = 0
 			const spans = [] as $mol_view[]
 			this.$.$mol_syntax2_md_line.tokenize( text , ( name , found , chunks )=> {
@@ -150,7 +151,7 @@ namespace $.$$ {
 			return spans
 		}
 		
-		@ $mol_fiber.method
+		@ $mol_mem_key2
 		code2spans( prefix : string , text : string ) {
 			let index = 0
 			const spans = [] as $mol_view[]

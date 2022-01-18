@@ -23,12 +23,12 @@ namespace $.$$ {
 
 			const el = this.dom_node() as HTMLElement
 			
-			this._event_scroll_timer( new $mol_after_timeout( 200 , $mol_fiber_solid.func( ()=> {
+			this._event_scroll_timer( new $mol_after_timeout( 200 , ()=> {
 
 				this.scroll_top( Math.max( 0 , el.scrollTop ) )
 				this.scroll_left( Math.max( 0 , el.scrollLeft ) )
 
-			} ) ) )
+			} ) )
 
 		}
 

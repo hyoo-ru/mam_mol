@@ -48,19 +48,14 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		paint( next? : any , force? : $mol_mem_force ) : any {
-			this.page().render({
+		paint() {
+			return $mol_wire_sync( this.page() ).render({
 				canvasContext : ( this.dom_node() as HTMLCanvasElement ).getContext( '2d' ) ,
 				viewport : this.viewport() ,
 		    })
-			.then( ()=> this.paint( null , $mol_mem_force_cache ) )
-			.catch( ( error : any )=> this.paint( error , $mol_mem_force_cache ) )
-			
-			throw new $mol_atom_wait( 'Painting...' )
 		}
 		
-		render() {
-			super.render()
+		auto() {
 			this.paint()
 		}
 

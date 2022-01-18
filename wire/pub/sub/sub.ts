@@ -4,122 +4,134 @@ namespace $ {
 	 * Publisher that can auto collect other publishers. 32B
 	 * 
 	 * 	P1 P2 P3 P4 S1 S2 S3
-	 * 	   ^        ^
-	 * 	   cursor   subs_from
+	 * 	^           ^
+	 * 	pubs_from   subs_from
 	 */
 	export class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
 		
-		protected pubs_from = 0 // 4B
+		protected pub_from = 0 // 4B
 		protected cursor = $mol_wire_cursor.stale // 4B
 		
-		get pubs() {
+		get pub_list() {
 			const res = [] as $mol_wire_pub[]
-			for( let i = this.pubs_from; i < this.subs_from; i += 2 ) {
+			for( let i = this.pub_from; i < this.sub_from; i += 2 ) {
 				res.push( this[i] as $mol_wire_pub )
 			}
 			return res
 		}
 		
-		get subs() {
-			const res = [] as $mol_wire_pub_sub[]
-			for( let i = this.subs_from; i < this.length; i += 2 ) {
-				res.push( this[i] as $mol_wire_pub_sub )
-			}
-			return res
-		}
-		
-		begin() {
-			this.cursor = this.pubs_from
+		track_on() {
+			this.cursor = this.pub_from
 			const sub = $mol_wire_auto
 			$mol_wire_auto = this
 			return sub
 		}
 		
-		promo() {
+		track_promote() {
 			
-			if( this.cursor >= this.pubs_from ) {
+			if( this.cursor >= this.pub_from ) {
 				$mol_fail( new Error( 'Circular subscription' ) )
 			}
 			
-			$mol_wire_auto?.next( this )
+			super.track_promote()
 		}
 		
-		next( pub?: $mol_wire_pub ): $mol_wire_pub | null {
+		track_next( pub?: $mol_wire_pub ): $mol_wire_pub | null {
 			
 			if( this.cursor < 0 ) $mol_fail( new Error( 'Promo to non begun sub' ) )
 			
-			if( this.cursor < this.subs_from ) {
+			if( this.cursor < this.sub_from ) {
 			
- 				const next = this[ this.cursor ] as $mol_wire_pub
-				if( pub === undefined ) return next
+ 				const next = this[ this.cursor ] as $mol_wire_pub | undefined
+				if( pub === undefined ) return next ?? null
 				
 				if( next === pub ) {
 					this.cursor += 2
 					return next
 				}
 				
-				next.off( this[ this.cursor + 1 ] as number )
+				next?.sub_off( this[ this.cursor + 1 ] as number )
 				
 			} else {
 				
 				if( pub === undefined ) return null
 				
-				if( this.subs_from < this.length ) {
-					this.move( this.subs_from, this.length )
+				if( this.sub_from < this.length ) {
+					this.peer_move( this.sub_from, this.length )
 				}
 				
-				this.subs_from += 2
+				this.sub_from += 2
 				
 			}			
 			
 			this[ this.cursor ] = pub
-			this[ this.cursor + 1 ] = pub.on( this, this.cursor )
+			this[ this.cursor + 1 ] = pub.sub_on( this, this.cursor )
 			
 			this.cursor += 2
 			
 			return pub
 		}
 		
-		end( sub: $mol_wire_sub | null ) {
+		track_off( sub: $mol_wire_sub | null ) {
+			
+			$mol_wire_auto = sub
 			
 			if( this.cursor < 0 ) $mol_fail( new Error( 'End of non begun sub' ) )
 			
 			this.forget( this.cursor )
 			
 			for(
-				let cursor = this.pubs_from;
-				cursor < this.subs_from;
+				let cursor = this.pub_from;
+				cursor < this.sub_from;
 				cursor += 2
 			) {
 				const pub = this[ cursor ] as $mol_wire_pub
-				pub.touch()
+				pub.up()
 			}
 			
-			$mol_wire_auto = sub
 			this.cursor = $mol_wire_cursor.fresh
 			
 		}
 		
-		destructor() {
-			this.forget()
-			this.cursor = $mol_wire_cursor.stale
+		pub_off( sub_pos: number ) {
+			this[ sub_pos ] = undefined as any
+			this[ sub_pos + 1 ] = undefined as any 
 		}
 		
-		forget( from = this.pubs_from ) {
+		destructor() {
+			
+			for(
+				let cursor = this.length - 2;
+				cursor >= this.sub_from;
+				cursor -= 2
+			) {
+				const sub = this[ cursor ] as $mol_wire_sub
+				const pos = this[ cursor + 1 ] as number
+				sub.pub_off( pos )
+				this.pop()
+				this.pop()
+			}
+			
+			this.forget()
+			this.cursor = $mol_wire_cursor.final
+			
+		}
+		
+		forget( from = this.pub_from ) {
 			
 			let tail = 0
 			
 			for(
 				let cursor = from;
-				cursor < this.subs_from;
+				cursor < this.sub_from;
 				cursor += 2
 			) {
 				
-				const pub = this[ cursor ] as $mol_wire_pub
-				pub.off( this[ cursor + 1 ] as number )
+				const pub = this[ cursor ] as $mol_wire_pub | undefined
+				pub?.sub_off( this[ cursor + 1 ] as number )
 				
-				if( this.subs_from < this.length ) {
-					this.move( this.length - 2, cursor )
+				if( this.sub_from < this.length ) {
+					this.peer_move( this.length - 2, cursor )
 					this.pop()
 					this.pop()
 				} else {
@@ -133,7 +145,7 @@ namespace $ {
 				this.pop()
 			}
 			
-			this.subs_from = from
+			this.sub_from = from
 			
 		}
 
@@ -147,6 +159,13 @@ namespace $ {
 		
 		[ $mol_dev_format_head ]() {
 			return $mol_dev_format_native( this )
+		}
+		
+		/**
+		 * Is subscribed to any publisher or not.
+		 */
+		get derived() {
+			return this.sub_from === this.pub_from
 		}
 		
 	}

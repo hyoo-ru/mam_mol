@@ -2,15 +2,15 @@ name: mol_strict
 
 on:
   workflow_dispatch:
-  push:
-    branches: 
-      - master
-    paths:
-      - '.github/workflows/mol_strict.yml'
-      - 'strict/**'
-  pull_request:
-  schedule:
-    - cron: "0 7 * * *"
+  #push:
+  #  branches: 
+  #    - master
+  #  paths:
+  #    - '.github/workflows/mol_strict.yml'
+  #    - 'strict/**'
+  #pull_request:
+  #schedule:
+  #  - cron: "0 7 * * *"
 
 jobs:
   build:

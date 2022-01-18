@@ -1,6 +1,6 @@
 namespace $ {
 	
-	const keys = new WeakMap< object, string >()
+	export const $mol_key_store = new WeakMap< object, string >()
 
 	export function $mol_key< Value >( value : Value ) : string {
 		
@@ -20,11 +20,11 @@ namespace $ {
 			if( 'toJSON' in value ) return value
 			if( value instanceof RegExp ) return value.toString()
 			
-			let key = keys.get( value )
+			let key = $mol_key_store.get( value )
 			if( key ) return key
 			
 			key = $mol_guid()
-			keys.set( value, key )
+			$mol_key_store.set( value, key )
 			
 			return key
 		} )

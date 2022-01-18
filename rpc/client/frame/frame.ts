@@ -22,7 +22,7 @@ namespace $ {
 			} ) ) ()
 		}
 
-		@ $mol_fiber.method
+		@ $mol_action
 		call( { name , args } : { name : string , args : any[] } ) {
 
 			const frame = this.frame()

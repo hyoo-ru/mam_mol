@@ -28,6 +28,10 @@ namespace $ {
 			if( $mol_dev_format_head in val ) {
 				return val[ $mol_dev_format_head ]()
 			}
+			
+			if( typeof val === 'function' ) {
+				return $mol_dev_format_native( val )
+			}
 
 			return null
 			

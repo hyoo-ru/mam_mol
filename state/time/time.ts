@@ -3,12 +3,12 @@ namespace $ {
 	export class $mol_state_time extends $mol_object {
 		
 		@ $mol_mem_key
-		static now( precision = 0 , next? : number ) {
+		static now( precision?: number, reset?: null ) {
 			
-			if( precision > 0 ) {
-				new $mol_after_timeout( precision , $mol_atom2.current!.fresh )
+			if( precision === undefined ) {
+				new $mol_after_work( 16, ()=> this.now( precision, null ) )
 			} else {
-				new $mol_after_work( 16 , $mol_atom2.current!.fresh )
+				new $mol_after_timeout( precision, ()=> this.now( precision, null ) )
 			}
 		
 			return Date.now()
