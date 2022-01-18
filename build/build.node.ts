@@ -1175,7 +1175,7 @@ namespace $ {
 				module : 'node.esm.js',
 				browser : 'web.js',
 				types : 'web.d.ts',
-				dependencies : <{ [ key : string ] : string }>{}
+				dependencies : {} as { [ key : string ] : string }
 			}
 
 			if( source.exists() ) {

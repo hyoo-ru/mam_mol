@@ -65,7 +65,7 @@ namespace $ {
 			$mol_wire_solid()
 
 			const matched = url.match( /^(.*)\/-\/(\w+(?:.\w+)+)$/ )
-			if( !matched ) return <$mol_file[]>[]
+			if( !matched ) return [] as $mol_file[]
 			
 			const build = this.build()
 			
