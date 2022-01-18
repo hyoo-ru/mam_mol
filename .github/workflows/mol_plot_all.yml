@@ -19,6 +19,8 @@ jobs:
     
     steps:
     
+    - run: node -v
+    
     - name: Environment Printer
       uses: managedkaos/print-env@v1.0
     
