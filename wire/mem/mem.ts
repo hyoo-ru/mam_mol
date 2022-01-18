@@ -22,8 +22,13 @@ namespace $ {
 			
 			let atom = $mol_wire_fiber.persist( this, orig, ... args.slice( 0, keys ) )
 			
-			let res = atom.sync()
-			if( args[ keys ] === undefined ) return res
+			if( args[ keys ] === undefined ) return atom.sync()
+			
+			try {
+				atom.sync()
+			} catch( error: unknown ) {
+				$mol_fail_log( error )
+			}
 			
 			return atom.recall( ... args )
 			

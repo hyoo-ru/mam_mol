@@ -70,6 +70,9 @@ namespace $ {
 		
 		@ $mol_mem
 		static hearer() {
+			
+			$mol_wire_solid()
+			
 			const API = window['SpeechRecognition'] || window['webkitSpeechRecognition'] || window['mozSpeechRecognition'] || window['msSpeechRecognition']
 			
 			const api = new API
