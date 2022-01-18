@@ -142,6 +142,15 @@ namespace $ {
 			}
 			
 			this.parent().exists( true )
+			
+			const now = new Date
+			this.stat( {
+				type: 'file',
+				size: next.length,
+				atime: now,
+				mtime: now,
+				ctime: now,
+			}, 'virt' )
 
 			try {
 
