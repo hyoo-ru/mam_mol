@@ -1,5 +1,6 @@
 namespace $.$$ {
 
+	/** @deprecated Use $mol_book2 **/
 	export class $mol_book extends $.$mol_book {
 		
 		@ $mol_mem

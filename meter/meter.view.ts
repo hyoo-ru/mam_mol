@@ -1,19 +1,18 @@
 namespace $.$$ {
+	/** @deprecated Use $mol_view..view_rect **/
 	export class $mol_meter extends $.$mol_meter {
 		
 		@ $mol_mem
 		rect() {
+			
 			const node = this.dom_node()
 			const win = this.$.$mol_dom_context
 			
 			if( node !== $mol_dom_context.document.body ) {
-				new $mol_after_frame( $mol_atom2.current!.fresh )
-				
-				try {
-					const { left , top , right , bottom , width , height } = node.getBoundingClientRect()
+				const rect = this.view_rect()
+				if( rect ) {
+					const { left , top , right , bottom , width , height } = rect
 					return { left , top , right , bottom , width , height , zoom : win.devicePixelRatio || 1 }
-				} catch( error: any ) {
-					// IE11
 				}
 			}
 
@@ -27,39 +26,33 @@ namespace $.$$ {
 				width : size.width ,
 				height : size.height ,
 			}
+			
 		}
 		
-		@ $mol_mem
 		top() {
 			return this.rect().top
 		}
 		
-		@ $mol_mem
 		bottom() {
 			return this.rect().bottom
 		}
 		
-		@ $mol_mem
 		left() {
 			return this.rect().left
 		}
 		
-		@ $mol_mem
 		right() {
 			return this.rect().right
 		}
 		
-		@ $mol_mem
 		width() {
 			return this.rect().width
 		}
 		
-		@ $mol_mem
 		height() {
 			return this.rect().height
 		}
 		
-		@ $mol_mem
 		zoom() {
 			return this.rect().zoom
 		}
