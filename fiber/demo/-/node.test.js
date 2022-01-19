@@ -1125,7 +1125,7 @@ var $;
     function $mol_fiber_root(calculate) {
         const wrapper = function (...args) {
             const fiber = new $mol_wire_fiber(this, calculate, this + '.' + calculate.name, ...args);
-            return fiber.sync();
+            return fiber.async();
         };
         wrapper[Symbol.toStringTag] = calculate.name;
         return wrapper;
