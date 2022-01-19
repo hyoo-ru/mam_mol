@@ -17,7 +17,7 @@ namespace $ {
 		
 		const wrapper = function( this: This, ... args : any[] ) {
 			const fiber = new $mol_wire_fiber( this, calculate, this + '.' + calculate.name, ... args )
-			return fiber.sync()
+			return fiber.async()
 		} as any as Calculate
 		
 		wrapper[ Symbol.toStringTag ] = calculate.name
