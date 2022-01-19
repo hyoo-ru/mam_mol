@@ -2,7 +2,7 @@ namespace $ {
 
 	export class $mol_shared extends $mol_object2 {
 
-		@ $mol_action
+		@( $mol_action as any )
 		static value< Value >( key : string , next? : Value ) {
 			return this.$.$mol_fetch.json(
 				'https://sync-hyoo-ru.herokuapp.com/' + key ,
@@ -18,7 +18,7 @@ namespace $ {
 			) as Value
 		}
 
-		@ $mol_action
+		@( $mol_action as any )
 		static daily< Value >( key: string, request: ()=> Value, refresh = false ) {
 			
 			const today  = new this.$.$mol_time_moment().mask('0000-00-00')
