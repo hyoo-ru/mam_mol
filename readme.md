@@ -424,7 +424,9 @@ The name of the field corresponds to calling the property, the content of the fi
 ## Plugin components
 
 - **[$mol_nav](nav)** - keyboard navigation
-- **[$mol_meter](meter)** - real time element size monitoring
+- **[$mol_touch](touch)** - touch/pointer gestures
+- **[$mol_speech](speech)** - speech recognition and syntesis
+- **[$mol_hotkey](hotkey)** - keyboard shortcuts
 
 ## Complex components
 
