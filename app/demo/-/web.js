@@ -12578,19 +12578,18 @@ var $;
     (function ($$) {
         class $mol_embed_native extends $.$mol_embed_native {
             window() {
+                this.uri();
                 return $mol_wire_sync(this).load(this.dom_node(), this.uri_resource());
             }
             load(frame, uri) {
                 return new Promise((done, fail) => {
-                    new $mol_after_timeout(3_000, () => {
+                    frame.onload = () => {
                         try {
                             if (frame.contentWindow.location.href === 'about:blank') {
-                                done(frame.contentWindow);
+                                return;
                             }
                         }
                         catch { }
-                    });
-                    frame.onload = () => {
                         done(frame.contentWindow);
                     };
                     frame.onerror = (event) => {
