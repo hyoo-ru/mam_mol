@@ -3,21 +3,19 @@ namespace $.$$ {
 
 		@ $mol_mem
 		window() {
+			this.uri()
 			return $mol_wire_sync( this as $mol_embed_native ).load( this.dom_node() as HTMLIFrameElement, this.uri_resource() )
 		}
 		
 		load( frame: HTMLIFrameElement, uri: string ) {
 			return new Promise< Window >( ( done, fail )=> {
 				
-				new $mol_after_timeout( 3_000, ()=> {
+				frame.onload = () => {
 					try {
 						if( frame.contentWindow!.location.href === 'about:blank' ) {
-							done( frame.contentWindow! )
+							return
 						}
 					} catch { }
-				} )
-				
-				frame.onload = () => {
 					done( frame.contentWindow! )
 				}
 				
