@@ -29,6 +29,7 @@ namespace $.$$ {
 			return this.tokens()[ index ].chunks[0].length
 		}
 		
+		@ $mol_mem_key
 		header_content( index : number ) {
 			return this.text2spans( `${ index }` , this.tokens()[ index ].chunks[2] )
 		}
@@ -91,7 +92,6 @@ namespace $.$$ {
 			return url.toString()
 		}
 		
-		@ $mol_mem_key2
 		text2spans( prefix : string , text : string ) {
 			if( text === undefined ) return []
 			let index = 0
@@ -151,7 +151,6 @@ namespace $.$$ {
 			return spans
 		}
 		
-		@ $mol_mem_key2
 		code2spans( prefix : string , text : string ) {
 			let index = 0
 			const spans = [] as $mol_view[]
