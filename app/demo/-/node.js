@@ -793,6 +793,8 @@ var $;
             this.sub_from = from;
         }
         affect(quant) {
+            if (this.cursor === $mol_wire_cursor.final)
+                return false;
             if (this.cursor >= quant)
                 return false;
             this.cursor = quant;
@@ -22170,6 +22172,9 @@ var $;
         ], $mol_text.prototype, "rows", null);
         __decorate([
             $mol_mem_key
+        ], $mol_text.prototype, "header_content", null);
+        __decorate([
+            $mol_mem_key
         ], $mol_text.prototype, "cell_contents", null);
         __decorate([
             $mol_mem_key
@@ -22183,12 +22188,6 @@ var $;
         __decorate([
             $mol_mem_key
         ], $mol_text.prototype, "table_cell_content", null);
-        __decorate([
-            $mol_mem_key2
-        ], $mol_text.prototype, "text2spans", null);
-        __decorate([
-            $mol_mem_key2
-        ], $mol_text.prototype, "code2spans", null);
         __decorate([
             $mol_mem_key
         ], $mol_text.prototype, "block_content", null);

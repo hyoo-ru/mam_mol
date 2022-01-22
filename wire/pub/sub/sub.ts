@@ -151,6 +151,7 @@ namespace $ {
 
 		affect( quant: number ) {
 			
+			if( this.cursor === $mol_wire_cursor.final ) return false
 			if( this.cursor >= quant ) return false
 			this.cursor = quant
 			
