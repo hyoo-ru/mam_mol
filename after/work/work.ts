@@ -21,4 +21,8 @@ namespace $ {
 
 	}
 	
+	if( typeof requestIdleCallback !== 'function' ) {
+		$.$mol_after_work = $mol_after_timeout
+	}
+	
 }
