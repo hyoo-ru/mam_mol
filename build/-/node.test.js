@@ -5482,6 +5482,7 @@ var $;
             return $mol_wire_async(this).handleRequest;
         }
         handleRequest(req, res, next) {
+            res.set('Cache-Control', 'must-revalidate, public, ');
             try {
                 return this.generate(req.url) && Promise.resolve().then(next);
             }
