@@ -4237,8 +4237,11 @@ var $;
         }
     }
     $.$mol_after_work = $mol_after_work;
+    if (typeof requestIdleCallback !== 'function') {
+        $.$mol_after_work = $mol_after_timeout;
+    }
 })($ || ($ = {}));
-//mol/after/work/work.web.ts
+//mol/after/work/work.ts
 ;
 "use strict";
 var $;

@@ -1950,19 +1950,19 @@ var $;
 var $;
 (function ($_1) {
     $mol_test_mocks.push($ => {
-        $.$mol_after_work = $mol_after_mock_timeout;
+        $.$mol_after_timeout = $mol_after_mock_timeout;
     });
 })($ || ($ = {}));
-//mol/after/work/work.test.ts
+//mol/after/timeout/timeout.test.ts
 ;
 "use strict";
 var $;
 (function ($_1) {
     $mol_test_mocks.push($ => {
-        $.$mol_after_timeout = $mol_after_mock_timeout;
+        $.$mol_after_work = $mol_after_mock_timeout;
     });
 })($ || ($ = {}));
-//mol/after/timeout/timeout.test.ts
+//mol/after/work/work.test.ts
 ;
 "use strict";
 var $;
