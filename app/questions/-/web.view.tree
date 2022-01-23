@@ -16,9 +16,11 @@ $mol_book2 $mol_scroll
 	Placeholder $mol_view
 
 $mol_page $mol_view
+	dom_name \article
 	sub /
 		<= Head $mol_view
 			minimal_height 64
+			dom_name \header
 			sub <= head /
 				<= Title $mol_view
 					dom_name \h1
@@ -30,6 +32,7 @@ $mol_page $mol_view
 			scroll_top?val <=> body_scroll_top?val 0
 			sub <= body /$mol_view_content
 		<= Foot $mol_view
+			dom_name \footer
 			sub <= foot /$mol_view
 
 $mol_list $mol_view
@@ -44,6 +47,7 @@ $mol_list $mol_view
 		0
 
 $mol_paragraph $mol_view
+	dom_name \p
 	line_height 24
 	letter_width 7
 	width_limit Infinity

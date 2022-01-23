@@ -3,6 +3,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * dom_name \article
+		 * ```
+		 */
+		dom_name() {
+			return "article"
+		}
+		
+		/**
+		 * ```tree
 		 * sub /
 		 * 	<= Head
 		 * 	<= Body
@@ -78,6 +87,7 @@ namespace $ {
 		 * ```tree
 		 * Head $mol_view
 		 * 	minimal_height 64
+		 * 	dom_name \header
 		 * 	sub <= head
 		 * ```
 		 */
@@ -86,6 +96,7 @@ namespace $ {
 			const obj = new this.$.$mol_view()
 			
 			obj.minimal_height = () => 64
+			obj.dom_name = () => "header"
 			obj.sub = () => this.head()
 			
 			return obj
@@ -141,13 +152,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Foot $mol_view sub <= foot
+		 * Foot $mol_view
+		 * 	dom_name \footer
+		 * 	sub <= foot
 		 * ```
 		 */
 		@ $mol_mem
 		Foot() {
 			const obj = new this.$.$mol_view()
 			
+			obj.dom_name = () => "footer"
 			obj.sub = () => this.foot()
 			
 			return obj

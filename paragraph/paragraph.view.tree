@@ -1,4 +1,5 @@
 $mol_paragraph $mol_view
+	dom_name \p
 	line_height 24
 	letter_width 7
 	width_limit Infinity

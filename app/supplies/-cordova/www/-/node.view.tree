@@ -155,9 +155,11 @@ $mol_app_supplies_enter $mol_view
 				disabled <= submit_blocked false
 
 $mol_page $mol_view
+	dom_name \article
 	sub /
 		<= Head $mol_view
 			minimal_height 64
+			dom_name \header
 			sub <= head /
 				<= Title $mol_view
 					dom_name \h1
@@ -169,6 +171,7 @@ $mol_page $mol_view
 			scroll_top?val <=> body_scroll_top?val 0
 			sub <= body /$mol_view_content
 		<= Foot $mol_view
+			dom_name \footer
 			sub <= foot /$mol_view
 
 $mol_link $mol_view
@@ -311,6 +314,7 @@ $mol_icon $mol_svg_root
 $mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
 
 $mol_paragraph $mol_view
+	dom_name \p
 	line_height 24
 	letter_width 7
 	width_limit Infinity
