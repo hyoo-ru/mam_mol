@@ -13,6 +13,8 @@ namespace $ {
 			res : typeof $node.express.response ,
 			next : () => any
 		) {
+			res.set( 'Cache-Control', 'must-revalidate, public, ' )
+			
 			try {
 
 				return this.generate( req.url ) && Promise.resolve().then( next )
