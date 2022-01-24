@@ -1,0 +1,27 @@
+$mol_app_learn $mol_book2
+	link_base \/mol/app/learn/chapter/
+	link_name *
+		overview.md <= overview @ \0. Overview
+		mam.md <= mam @ \1. MAM
+		reactivity.md <= reactivity @ \2. Reactivity
+		components.md <= components @ \3. Components
+	Nav_link!id $mol_link
+		arg *
+			chapter <= chapter_link!id \
+		title <= chapter_title!id \
+	pages /
+		<= Nav $mol_page
+			tools /
+				<= Sources $mol_link_source
+					uri \https://github.com/hyoo-ru/mam_mol/tree/master/app/learn
+			title @ \Learning
+			body /
+				<= Nav_links $mol_list
+					rows <= nav_links /
+		<= Reader $mol_page
+			title <= reader_title \
+			body /
+				<= Reader_content $mol_text
+					text <= reader_content \
+	Placeholder $mol_page
+		title \

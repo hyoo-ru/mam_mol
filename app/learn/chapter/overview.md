@@ -1,4 +1,4 @@
-# Introducing
+# Overview
 
 $mol - does not have any core. $mol is nothing more than a set of isomorphic modules, well docked to each other. Each module performs its function well. The modules can be used anywhere, including other frameworks. Some of them are published in npm.
 
