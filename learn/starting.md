@@ -42,6 +42,8 @@ Add **web entry point** at `./my/hello/index.html`:
 <script src="web.js"></script>
 ```
 
+In the attribute `mol_view_root` we specified the name of the component to be mounted in the DOM-tree.
+
 Add [**declarative component description**](../view/readme.md) at `./my/hello/hello.view.tree` with string input field and greeting message:
 
 ```tree
@@ -98,7 +100,6 @@ The `$mol_mem` decorator turns the method into a smart state container. It cache
 Method `name(next='')` with decorator `$mol_mem` is the same as `const [name, setName] = useState('')`, with channel interface: `this.name()` will return current value, `this.name('jin')` will set new value.
 
 View-component starts with a declarative description in `view.tree` language, from which the builder generates a typescript class. The generated class is located in the "-view.tree" folder. Folders whose names begin with a minus sign contain build artifacts.
-
 
 1. Follow **`http://localhost:9080`**
 1. Open the developer tools and disable caching on the network tab. 

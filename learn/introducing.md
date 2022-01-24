@@ -1,8 +1,4 @@
-# Overview
-
-Here are the ideas, principles, and concepts behind the $mol. What is $mol and what is not. How it differs from other solutions. Dispelling myths and misunderstandings.
-
-## What is $mol
+# Introducing
 
 $mol - does not have any core. $mol is nothing more than a set of isomorphic modules, well docked to each other. Each module performs its function well. The modules can be used anywhere, including other frameworks. Some of them are published in npm.
 
@@ -33,8 +29,8 @@ The reactive system works at all levels of the application, not just in the view
 When you understand how to use the reactivity system, you can move on to creating view components.
 
 $mol components, fully divided into five parts:
-1) View - declarative description of the component interface and data flow(required, others are optional)
-1) ViewModel - imperative behavior of the component
+1) Declarative description of the component interface and data flow(required, others are optional)
+1) Imperative behavior of the component
 1) Styles
 1) Localization
 1) Tests
@@ -50,13 +46,10 @@ With `view.tree' we say:
 - which component it inherits from
 - what components it owns
 - how these components are composed in its children
-- what data streams these components are connected to
+- what states the component has
+- which data flows are linked to components and states
 
-The view.tree builder turns the description into a typescript class. I'll tell you a secret, you can create typescript class by hand and not use `view.tree`, but I think it is clear that it is needed for a reason.
+The view.tree builder turns the description into a typescript class.
 
-What the `view.tree' gives:
-
-
-
-
-
+## Next
+In the next section we study [MAM](./mam.md)
