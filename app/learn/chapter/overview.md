@@ -39,9 +39,9 @@ There is a basic view class with properties like events, attributes, children, e
 
 Custom components, inherited from a base class and customize its layout, behavior, styles. The reactive system ensures that the DOM-tree is updated in a point-by-point and optimized way when the data on which a component depends on changes.
 
-The hardest part here is learning the `view.tree'. This is the language in which the component interface and data flows are described. The difficulty is that it is not familiar. We're used to something similar to html, but this is more of a typescript interface.
+The hardest part here is learning the `view.tree`. This is the language in which the component interface and data flows are described. The difficulty is that it is not familiar. We're used to something similar to html, but this is more of a typescript interface.
 
-With `view.tree' we say:
+With `view.tree` we say:
 - what our component is called
 - which component it inherits from
 - what components it owns
