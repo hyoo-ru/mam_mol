@@ -4,7 +4,7 @@ Polyfill makes DOM reactive.
 
 **Proof of Concept. Very slow until real DOM isn't reactve.**
 
-[Complete example](./index.html)
+[Complete example](./index.html). [Online sandbox](https://jsfiddle.net/05hm6Lkt/).
 
 ## Make some DOM tree reactive
 
