@@ -36,6 +36,7 @@ Auto wiring modules. It gives ability to:
 ## Structures
 
 - [$mol_wire_set](./set) - reactive Set
+- [$mol_wire_dom](./dom) - reactive DOM
 
 ## Low level API
 
