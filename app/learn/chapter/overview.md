@@ -2,7 +2,7 @@
 
 $mol - does not have any core. $mol is nothing more than a set of isomorphic modules, well docked to each other. Each module performs its function well. The modules can be used anywhere, including other frameworks. Some of them are published in npm.
 
-Most modules are designed to be deadly simple. Some modules have a readme.md file, not all of them need it. It is good practice to look at the source code, most often you will not see more than 100 lines of code.Yes, the repository has a large number of folders, 199 of them. It may be time to reorganize them, but overall it is not a problem for application development.
+Most modules are designed to be deadly simple. Some modules have a readme.md file, not all of them need it. It is good practice to look at the source code, most often you will not see more than 100 lines of code.Yes, the repository has a large number of folders, few hundred of them. It may be time to reorganize them, but overall it is not a problem for application development.
 
 I get the impression that people tend to pay a lot of attention to the richness of the framework ecosystem when choosing what to use for the frontend. $mol has enough modules to cover most needs. The missing ones are easy to build on top of existing modules. And of course you can get package from npm.
 
