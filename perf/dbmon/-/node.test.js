@@ -1822,6 +1822,7 @@ var $;
                         }
                     }
                 }
+                this.auto();
             }
             catch (error) {
                 $mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
@@ -1832,7 +1833,6 @@ var $;
                     catch { }
                 }
             }
-            this.auto();
             return node;
         }
         dom_node_actual() {
@@ -3205,37 +3205,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_after_work extends $mol_object2 {
-        delay;
-        task;
-        id;
-        constructor(delay, task) {
-            super();
-            this.delay = delay;
-            this.task = task;
-            this.id = requestIdleCallback(task, { timeout: delay });
-        }
-        destructor() {
-            cancelIdleCallback(this.id);
-        }
-    }
-    $.$mol_after_work = $mol_after_work;
-    if (typeof requestIdleCallback !== 'function') {
-        $.$mol_after_work = $mol_after_timeout;
-    }
-})($ || ($ = {}));
-//mol/after/work/work.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_state_time extends $mol_object {
         static now(precision, reset) {
-            if (precision === undefined) {
-                new $mol_after_work(16, () => this.now(precision, null));
+            if (precision) {
+                new $mol_after_timeout(precision, () => this.now(precision, null));
             }
             else {
-                new $mol_after_timeout(precision, () => this.now(precision, null));
+                new $mol_after_frame(() => this.now(precision, null));
             }
             return Date.now();
         }
@@ -5764,15 +5740,6 @@ var $;
     });
 })($ || ($ = {}));
 //mol/state/session/session.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_work = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-//mol/after/work/work.test.ts
 ;
 "use strict";
 var $;

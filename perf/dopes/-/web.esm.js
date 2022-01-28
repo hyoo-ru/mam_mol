@@ -1919,6 +1919,7 @@ var $;
                         }
                     }
                 }
+                this.auto();
             }
             catch (error) {
                 $mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
@@ -1929,7 +1930,6 @@ var $;
                     catch { }
                 }
             }
-            this.auto();
             return node;
         }
         dom_node_actual() {

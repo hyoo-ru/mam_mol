@@ -329,13 +329,13 @@ namespace $ {
 				
 				{
 					... this.tsOptions(),
-					noEmit : true,
+					emitDeclarationOnly : true,
 				},
 				
 				{
 					... $node.typescript.sys ,
 					writeFile : (path , data )=> {
-						return $mol_fail( new Error( 'Write forbidden' ) )
+						$mol_file.relative( path ).text( data, 'virt' )
 					},
 					setTimeout : ( cb : any )=> {
 						run = cb
@@ -713,7 +713,6 @@ namespace $ {
 			this.bundle({ path , bundle : 'web.js' })
 			this.bundle({ path , bundle : 'web.test.js' })
 			this.bundle({ path , bundle : 'web.test.html' })
-			this.bundle({ path , bundle : 'web.d.ts' })
 			this.bundle({ path , bundle : 'web.view.tree' })
 			this.bundle({ path , bundle : 'web.locale=en.json' })
 			return null
@@ -722,6 +721,7 @@ namespace $ {
 		@ $mol_action
 		bundleAllWebAudit( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'web.audit.js' })
+			this.bundle({ path , bundle : 'web.d.ts' })
 		}
 		
 		@ $mol_action
@@ -729,7 +729,6 @@ namespace $ {
 			this.bundle({ path , bundle : 'node.deps.json' })
 			this.bundle({ path , bundle : 'node.js' })
 			this.bundle({ path , bundle : 'node.test.js' })
-			this.bundle({ path , bundle : 'node.d.ts' })
 			this.bundle({ path , bundle : 'node.view.tree' })
 			this.bundle({ path , bundle : 'node.locale=en.json' })
 			return null
@@ -738,6 +737,7 @@ namespace $ {
 		@ $mol_action
 		bundleAllNodeAudit( { path } : { path : string } ) {
 			this.bundle({ path , bundle : 'node.audit.js' })
+			this.bundle({ path , bundle : 'node.d.ts' })
 		}
 		
 		@ $mol_action

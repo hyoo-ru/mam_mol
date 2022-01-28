@@ -5,7 +5,7 @@ namespace $.$$ {
 			const win = this.$.$mol_dom_context
 			const style = win.getComputedStyle(this.dom_node())
 
-			if(!style['font-size']) $mol_state_time.now()
+			if(!style['font-size']) $mol_state_time.now( 0 )
 
 			return style
 		}

@@ -1822,6 +1822,7 @@ var $;
                         }
                     }
                 }
+                this.auto();
             }
             catch (error) {
                 $mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
@@ -1832,7 +1833,6 @@ var $;
                     catch { }
                 }
             }
-            this.auto();
             return node;
         }
         dom_node_actual() {
@@ -2167,37 +2167,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_after_work extends $mol_object2 {
-        delay;
-        task;
-        id;
-        constructor(delay, task) {
-            super();
-            this.delay = delay;
-            this.task = task;
-            this.id = requestIdleCallback(task, { timeout: delay });
-        }
-        destructor() {
-            cancelIdleCallback(this.id);
-        }
-    }
-    $.$mol_after_work = $mol_after_work;
-    if (typeof requestIdleCallback !== 'function') {
-        $.$mol_after_work = $mol_after_timeout;
-    }
-})($ || ($ = {}));
-//mol/after/work/work.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_state_time extends $mol_object {
         static now(precision, reset) {
-            if (precision === undefined) {
-                new $mol_after_work(16, () => this.now(precision, null));
+            if (precision) {
+                new $mol_after_timeout(precision, () => this.now(precision, null));
             }
             else {
-                new $mol_after_timeout(precision, () => this.now(precision, null));
+                new $mol_after_frame(() => this.now(precision, null));
             }
             return Date.now();
         }
@@ -2249,7 +2225,7 @@ var $;
                 return (($mol_state_time.now(1000) / 1000) % 10).toFixed(0);
             }
             transform() {
-                const t = ($mol_state_time.now() / 1000) % 10;
+                const t = ($mol_state_time.now(0) / 1000) % 10;
                 const scale = 1 + (t > 5 ? 10 - t : t) / 10;
                 return 'scale(' + (scale / 2.1) + ',0.7) translateZ(0.1px)';
             }
@@ -2297,7 +2273,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/perf/sierp/sierp.view.css", "[mol_perf_sierp] {\n\tposition: absolute;\n\tdisplay: block;\n\ttransform-origin: 0 0;\n\tleft: 50%;\n\ttop: 50%;\n\twidth: 10px;\n\theight: 10px;\n\tzoom: .75;\n\ttransition: none;\n}\n\n[mol_perf_sierp_dot] {\n\tposition: absolute;\n\tdisplay: block;\n\tbackground: #61dafb;\n\tfont: normal 15px sans-serif;\n\ttext-align: center;\n\tcursor: pointer;\n}\n");
+    $mol_style_attach("mol/perf/sierp/sierp.view.css", "[mol_perf_sierp] {\n\tposition: absolute;\n\tdisplay: block;\n\ttransform-origin: 0 0;\n\tleft: 50%;\n\ttop: 50%;\n\tzoom: .75;\n\ttransition: none;\n\twidth: 100px;\n\theight: 100px;\n}\n\n[mol_perf_sierp_dot] {\n\twidth: 10px;\n\theight: 10px;\n\tposition: absolute;\n\tdisplay: block;\n\tbackground: #61dafb;\n\tfont: normal 15px sans-serif;\n\ttext-align: center;\n\tcursor: pointer;\n}\n");
 })($ || ($ = {}));
 //mol/perf/sierp/-css/sierp.view.css.ts
 ;
@@ -4498,15 +4474,6 @@ var $;
     });
 })($ || ($ = {}));
 //mol/view/view/view.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_work = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-//mol/after/work/work.test.ts
 ;
 "use strict";
 var $;

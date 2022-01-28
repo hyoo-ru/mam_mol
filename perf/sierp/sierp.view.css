@@ -4,13 +4,15 @@
 	transform-origin: 0 0;
 	left: 50%;
 	top: 50%;
-	width: 10px;
-	height: 10px;
 	zoom: .75;
 	transition: none;
+	width: 100px;
+	height: 100px;
 }
 
 [mol_perf_sierp_dot] {
+	width: 10px;
+	height: 10px;
 	position: absolute;
 	display: block;
 	background: #61dafb;

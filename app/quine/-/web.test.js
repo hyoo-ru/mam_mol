@@ -2458,15 +2458,6 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_work = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-//mol/after/work/work.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
     $mol_test_mocks.push(context => {
         class $mol_state_arg_mock extends $mol_state_arg {
             static $ = context;

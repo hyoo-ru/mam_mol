@@ -1868,6 +1868,7 @@ var $;
                         }
                     }
                 }
+                this.auto();
             }
             catch (error) {
                 $mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
@@ -1878,7 +1879,6 @@ var $;
                     catch { }
                 }
             }
-            this.auto();
             return node;
         }
         dom_node_actual() {
@@ -4431,11 +4431,11 @@ var $;
 (function ($) {
     class $mol_state_time extends $mol_object {
         static now(precision, reset) {
-            if (precision === undefined) {
-                new $mol_after_work(16, () => this.now(precision, null));
+            if (precision) {
+                new $mol_after_timeout(precision, () => this.now(precision, null));
             }
             else {
-                new $mol_after_timeout(precision, () => this.now(precision, null));
+                new $mol_after_frame(() => this.now(precision, null));
             }
             return Date.now();
         }
@@ -4457,7 +4457,7 @@ var $;
                 const win = this.$.$mol_dom_context;
                 const style = win.getComputedStyle(this.dom_node());
                 if (!style['font-size'])
-                    $mol_state_time.now();
+                    $mol_state_time.now(0);
                 return style;
             }
             font_size() {

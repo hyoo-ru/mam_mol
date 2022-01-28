@@ -1837,6 +1837,7 @@ var $;
                         }
                     }
                 }
+                this.auto();
             }
             catch (error) {
                 $mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
@@ -1847,7 +1848,6 @@ var $;
                     catch { }
                 }
             }
-            this.auto();
             return node;
         }
         dom_node_actual() {
@@ -3155,37 +3155,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_after_work extends $mol_object2 {
-        delay;
-        task;
-        id;
-        constructor(delay, task) {
-            super();
-            this.delay = delay;
-            this.task = task;
-            this.id = requestIdleCallback(task, { timeout: delay });
-        }
-        destructor() {
-            cancelIdleCallback(this.id);
-        }
-    }
-    $.$mol_after_work = $mol_after_work;
-    if (typeof requestIdleCallback !== 'function') {
-        $.$mol_after_work = $mol_after_timeout;
-    }
-})($ || ($ = {}));
-//mol/after/work/work.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_state_time extends $mol_object {
         static now(precision, reset) {
-            if (precision === undefined) {
-                new $mol_after_work(16, () => this.now(precision, null));
+            if (precision) {
+                new $mol_after_timeout(precision, () => this.now(precision, null));
             }
             else {
-                new $mol_after_timeout(precision, () => this.now(precision, null));
+                new $mol_after_frame(() => this.now(precision, null));
             }
             return Date.now();
         }
@@ -3207,7 +3183,7 @@ var $;
                 const win = this.$.$mol_dom_context;
                 const style = win.getComputedStyle(this.dom_node());
                 if (!style['font-size'])
-                    $mol_state_time.now();
+                    $mol_state_time.now(0);
                 return style;
             }
             font_size() {
@@ -6626,6 +6602,30 @@ var $;
     $.$mol_book2 = $mol_book2;
 })($ || ($ = {}));
 //mol/book2/-view.tree/book2.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_after_work extends $mol_object2 {
+        delay;
+        task;
+        id;
+        constructor(delay, task) {
+            super();
+            this.delay = delay;
+            this.task = task;
+            this.id = requestIdleCallback(task, { timeout: delay });
+        }
+        destructor() {
+            cancelIdleCallback(this.id);
+        }
+    }
+    $.$mol_after_work = $mol_after_work;
+    if (typeof requestIdleCallback !== 'function') {
+        $.$mol_after_work = $mol_after_timeout;
+    }
+})($ || ($ = {}));
+//mol/after/work/work.ts
 ;
 "use strict";
 var $;
@@ -24314,53 +24314,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_defer extends $mol_object {
-        run;
-        constructor(run) {
-            super();
-            this.run = run;
-            $mol_defer.add(this);
-        }
-        destructor() {
-            $mol_defer.drop(this);
-        }
-        static all = [];
-        static timer = null;
-        static scheduleNative = (typeof requestAnimationFrame == 'function')
-            ? handler => requestAnimationFrame(handler)
-            : handler => setTimeout(handler, 16);
-        static schedule() {
-            if (this.timer)
-                return;
-            this.timer = this.scheduleNative(() => {
-                this.timer = null;
-                this.run();
-            });
-        }
-        static unschedule() {
-            if (!this.timer)
-                return;
-            cancelAnimationFrame(this.timer);
-            this.timer = null;
-        }
-        static add(defer) {
-            this.all.push(defer);
-            this.schedule();
-        }
-        static drop(defer) {
-            var index = this.all.indexOf(defer);
-            if (index >= 0)
-                this.all.splice(index, 1);
-        }
-        static run() {
-            if (this.all.length === 0)
-                return;
-            this.schedule();
-            for (var defer; defer = this.all.shift();)
-                defer.run();
-        }
-    }
-    $.$mol_defer = $mol_defer;
+    $.$mol_defer = $mol_after_frame;
 })($ || ($ = {}));
 //mol/defer/defer.ts
 ;
@@ -29058,15 +29012,6 @@ var $;
 ;
 "use strict";
 var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_work = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-//mol/after/work/work.test.ts
-;
-"use strict";
-var $;
 (function ($) {
     $mol_test_mocks.push(context => {
         class $mol_state_local_mock extends $mol_state_local {
@@ -29517,6 +29462,15 @@ var $;
     });
 })($ || ($ = {}));
 //mol/state/session/session.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_work = $mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+//mol/after/work/work.test.ts
 ;
 "use strict";
 var $;

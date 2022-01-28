@@ -207,7 +207,9 @@ namespace $ {
 					}
 					
 				}
-
+				
+				this.auto()
+				
 			} catch( error: any ) {
 				
 				$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
@@ -219,8 +221,6 @@ namespace $ {
 				}
 				
 			}
-			
-			this.auto()
 			
 			return node
 		}

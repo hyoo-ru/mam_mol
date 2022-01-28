@@ -53,7 +53,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		transform() {
-			const t = ( $mol_state_time.now() / 1000 ) % 10
+			const t = ( $mol_state_time.now(0) / 1000 ) % 10
 			const scale = 1 + (t > 5 ? 10 - t : t) / 10;
 			return 'scale(' + (scale / 2.1) + ',0.7) translateZ(0.1px)'
 		}

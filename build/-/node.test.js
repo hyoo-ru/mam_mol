@@ -4297,11 +4297,11 @@ var $;
             let run = () => { };
             var host = $node.typescript.createWatchCompilerHost(paths, {
                 ...this.tsOptions(),
-                noEmit: true,
+                emitDeclarationOnly: true,
             }, {
                 ...$node.typescript.sys,
                 writeFile: (path, data) => {
-                    return $mol_fail(new Error('Write forbidden'));
+                    $mol_file.relative(path).text(data, 'virt');
                 },
                 setTimeout: (cb) => {
                     run = cb;
@@ -4571,25 +4571,25 @@ var $;
             this.bundle({ path, bundle: 'web.js' });
             this.bundle({ path, bundle: 'web.test.js' });
             this.bundle({ path, bundle: 'web.test.html' });
-            this.bundle({ path, bundle: 'web.d.ts' });
             this.bundle({ path, bundle: 'web.view.tree' });
             this.bundle({ path, bundle: 'web.locale=en.json' });
             return null;
         }
         bundleAllWebAudit({ path }) {
             this.bundle({ path, bundle: 'web.audit.js' });
+            this.bundle({ path, bundle: 'web.d.ts' });
         }
         bundleAllNode({ path }) {
             this.bundle({ path, bundle: 'node.deps.json' });
             this.bundle({ path, bundle: 'node.js' });
             this.bundle({ path, bundle: 'node.test.js' });
-            this.bundle({ path, bundle: 'node.d.ts' });
             this.bundle({ path, bundle: 'node.view.tree' });
             this.bundle({ path, bundle: 'node.locale=en.json' });
             return null;
         }
         bundleAllNodeAudit({ path }) {
             this.bundle({ path, bundle: 'node.audit.js' });
+            this.bundle({ path, bundle: 'node.d.ts' });
         }
         bundleAll({ path }) {
             this.bundle({ path, bundle: 'index.html' });
@@ -9094,6 +9094,7 @@ var $;
                         }
                     }
                 }
+                this.auto();
             }
             catch (error) {
                 $mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
@@ -9104,7 +9105,6 @@ var $;
                     catch { }
                 }
             }
-            this.auto();
             return node;
         }
         dom_node_actual() {
