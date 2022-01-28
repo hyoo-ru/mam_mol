@@ -1182,16 +1182,28 @@ namespace $ {
 				Object.assign( json , JSON.parse( source.text() ) )
 			}
 
-			let version = json.version.split('.')
+			let version = json.version.split('.').map( Number )
 			name = json.name || name
 			
 			try {
-				version[2] = JSON.parse(
+				
+				const published = JSON.parse(
 					this.$.$mol_exec( '' , 'npm' , 'view' , name , 'versions', '--json' ).stdout.toString().trim()
-				).slice(-1)[0].split('.')[2]
+				).slice(-1)[0].split('.').map( Number )
+				
+				if( published[0] > version[0] ) {
+					version = published
+				} else if( published[0] === version[0] && published[1] > version[1] ) {
+					version[1] = published[1]
+				}
+				
+				if( published[2] > version[2] ) {
+					version[2] = published[2]
+				}
+				
 			} catch {}
 
-			version[2] = String( Number( version[2] ) + 1 )
+			++ version[2]
 
 			json.version = version.join( '.' )
 
