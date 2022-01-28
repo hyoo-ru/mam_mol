@@ -179,8 +179,6 @@ namespace $ {
 				prev.destructor()
 			}
 			
-			this.cache = undefined as any
-			
 			if( this.persist ) {
 				if( this.pub_from === 0 ) {
 					this.host[ this.field() ] = null
@@ -244,6 +242,7 @@ namespace $ {
 			type Result = typeof this.cache
 			
 			if( this.cursor === $mol_wire_cursor.fresh ) return
+			if( this.cursor === $mol_wire_cursor.final ) return
 			
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				

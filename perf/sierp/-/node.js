@@ -788,7 +788,7 @@ var $;
         [$mol_dev_format_head]() {
             return $mol_dev_format_native(this);
         }
-        get derived() {
+        get pub_empty() {
             return this.sub_from === this.pub_from;
         }
     }
@@ -1148,7 +1148,6 @@ var $;
             if ($mol_owning_check(this, prev)) {
                 prev.destructor();
             }
-            this.cache = undefined;
             if (this.persist) {
                 if (this.pub_from === 0) {
                     this.host[this.field()] = null;
@@ -1193,6 +1192,8 @@ var $;
         }
         up() {
             if (this.cursor === $mol_wire_cursor.fresh)
+                return;
+            if (this.cursor === $mol_wire_cursor.final)
                 return;
             check: if (this.cursor === $mol_wire_cursor.doubt) {
                 for (let i = this.pub_from; i < this.sub_from; i += 2) {
