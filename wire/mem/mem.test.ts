@@ -335,6 +335,52 @@ namespace $ {
 			App.test()
 		} ,
 
+		// // https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
+		// 'Stable order of multiple root'( $ ) {
+		
+		// 	class App extends $mol_object2 {
+		
+		// 		static $ = $
+				
+		// 		static counter = 0
+				
+		// 		@ $mol_wire_mem(0)
+		// 		static left_trigger( next = 0 ) {
+		// 			return next
+		// 		}
+		
+		// 		@ $mol_wire_mem(0)
+		// 		static left_root() {
+		// 			this.left_trigger()
+		// 			return ++ this.counter
+		// 		}
+				
+		// 		@ $mol_wire_mem(0)
+		// 		static right_trigger( next = 0 ) {
+		// 			return next
+		// 		}
+				
+		// 		@ $mol_wire_mem(0)
+		// 		static right_root() {
+		// 			this.right_trigger()
+		// 			return ++ this.counter
+		// 		}
+		
+		// 	}
+			
+		// 	$mol_assert_equal( App.left_root(), 1 )
+		// 	$mol_assert_equal( App.right_root(), 2 )
+			
+		// 	App.right_trigger( 1 )
+		// 	App.left_trigger( 1 )
+			
+		// 	$mol_wire_fiber.sync()
+			
+		// 	$mol_assert_equal( App.right_root(), 4 )
+		// 	$mol_assert_equal( App.left_root(), 3 )
+
+		// } ,
+
 		// https://github.com/nin-jin/slides/tree/master/reactivity#error-store
 		'Restore after error'( $ ) {
 

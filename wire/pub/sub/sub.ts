@@ -165,7 +165,7 @@ namespace $ {
 		/**
 		 * Is subscribed to any publisher or not.
 		 */
-		get derived() {
+		get pub_empty() {
 			return this.sub_from === this.pub_from
 		}
 		
