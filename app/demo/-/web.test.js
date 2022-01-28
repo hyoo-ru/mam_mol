@@ -229,6 +229,12 @@ var $;
             $mol_assert_not($mol_compare_deep(/\x22/mig, /\x21/mig));
             $mol_assert_not($mol_compare_deep(/\x22/mig, /\x22/mg));
         },
+        'Error'() {
+            $mol_assert_not($mol_compare_deep(new Error('xxx'), new Error('xxx')));
+            const fail = (message) => new Error(message);
+            $mol_assert_ok($mol_compare_deep(...['xxx', 'xxx'].map(msg => new Error(msg))));
+            $mol_assert_not($mol_compare_deep(...['xxx', 'yyy'].map(msg => new Error(msg))));
+        },
         'Map'() {
             $mol_assert_ok($mol_compare_deep(new Map, new Map));
             $mol_assert_ok($mol_compare_deep(new Map([[1, [2]]]), new Map([[1, [2]]])));

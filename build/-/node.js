@@ -1022,6 +1022,8 @@ var $;
                 result = compare_set(left, right);
             else if (left instanceof Map)
                 result = compare_map(left, right);
+            else if (left instanceof Error)
+                result = left.stack === right.stack;
             else if (ArrayBuffer.isView(left))
                 result = compare_buffer(left, right);
             else if (Symbol.toPrimitive in left)

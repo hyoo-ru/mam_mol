@@ -852,6 +852,8 @@ var $;
                 result = compare_set(left, right);
             else if (left instanceof Map)
                 result = compare_map(left, right);
+            else if (left instanceof Error)
+                result = left.stack === right.stack;
             else if (ArrayBuffer.isView(left))
                 result = compare_buffer(left, right);
             else if (Symbol.toPrimitive in left)
@@ -27348,6 +27350,12 @@ var $;
             $mol_assert_ok($mol_compare_deep(/\x22/mig, /\x22/mig));
             $mol_assert_not($mol_compare_deep(/\x22/mig, /\x21/mig));
             $mol_assert_not($mol_compare_deep(/\x22/mig, /\x22/mg));
+        },
+        'Error'() {
+            $mol_assert_not($mol_compare_deep(new Error('xxx'), new Error('xxx')));
+            const fail = (message) => new Error(message);
+            $mol_assert_ok($mol_compare_deep(...['xxx', 'xxx'].map(msg => new Error(msg))));
+            $mol_assert_not($mol_compare_deep(...['xxx', 'yyy'].map(msg => new Error(msg))));
         },
         'Map'() {
             $mol_assert_ok($mol_compare_deep(new Map, new Map));
