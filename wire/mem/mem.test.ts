@@ -498,6 +498,47 @@ namespace $ {
 			
 		},
 
+		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
+		async 'Hold pubs while wait async task'($) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+				
+				static counter = 0
+				
+				@ $mol_wire_mem(0)
+				static resets( next?: null ): number {
+					return ( $mol_wire_probe( ()=> this.resets() ) ?? -1 ) + 1
+				}
+				
+				static async wait() { }
+				
+				@ $mol_wire_mem(0)
+				static value() {
+					return ++ this.counter
+				}
+				
+				@ $mol_wire_mem(0)
+				static result() {
+					if( this.resets() ) $mol_wire_sync( this ).wait()
+					return this.value()
+				}
+
+				@ $mol_wire_method
+				static test() {
+				}
+				
+			}
+			
+			$mol_assert_equal( App.result() , 1 )
+			
+			App.resets( null )
+			$mol_wire_fiber.sync()
+			$mol_assert_equal( await $mol_wire_async( App ).result() , 1 )
+			
+		},
+
 		'Forget sub fibers on complete'( $ ) {
 
 			class App extends $mol_object2 {

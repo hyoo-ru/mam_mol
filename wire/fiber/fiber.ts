@@ -204,17 +204,11 @@ namespace $ {
 		}
 
 		[ $mol_dev_format_head ]() {
-			
-			const cursor = this.cursor >= 0
-				? '@' + this.cursor
-				: this.cursor?.constructor?.name
-			
 			return $mol_dev_format_div( {},
 				$mol_dev_format_native( this ),
-				$mol_dev_format_shade( ' ' + cursor +  ' = ' ),
+				$mol_dev_format_shade( this.cursor.toString() + ' ' ),
 				$mol_dev_format_auto( this.cache ),
 			)
-			
 		}
 		
 		get $() {
@@ -294,6 +288,10 @@ namespace $ {
 				
 			}
 			
+			if(!( result instanceof Promise )) {
+				this.track_cut()
+			}
+			
 			this.track_off( bu )
 			this.put( result )
 
@@ -343,7 +341,7 @@ namespace $ {
 			} else {
 				
 				this.cursor = this.pub_from
-				this.forget()
+				this.track_cut()
 				this.cursor = $mol_wire_cursor.fresh
 				
 			}

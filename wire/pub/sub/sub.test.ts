@@ -9,11 +9,16 @@ namespace $ {
 			
 			const bu1 = sub.track_on()
 			try {
+				
 				pub1.track_promote()
 				pub2.track_promote()
 				pub2.track_promote()
+				
 			} finally {
+				
+				sub.track_cut()
 				sub.track_off( bu1 )
+				
 			}
 			
 			pub1.emit()
@@ -23,11 +28,16 @@ namespace $ {
 			
 			const bu2 = sub.track_on()
 			try {
+				
 				pub1.track_promote()
 				pub1.track_promote()
 				pub2.track_promote()
+				
 			} finally {
+				
+				sub.track_cut()
 				sub.track_off( bu2 )
+				
 			}
 			
 			pub1.emit()
@@ -51,11 +61,17 @@ namespace $ {
 					$mol_assert_fail( ()=> sub1.track_promote(), 'Circular subscription' )
 					
 				} finally {
+					
+					sub2.track_cut()
 					sub2.track_off( bu2 )
+					
 				}
 				
 			} finally {
+				
+				sub1.track_cut()
 				sub1.track_off( bu1 )
+				
 			}
 			
 		},
