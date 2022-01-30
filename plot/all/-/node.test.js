@@ -471,12 +471,16 @@ var $;
     let $mol_wire_cursor;
     (function ($mol_wire_cursor) {
         $mol_wire_cursor[$mol_wire_cursor["stale"] = new (class stale extends Number {
+            toString() { return '🔴'; }
         })(-1)] = "stale";
         $mol_wire_cursor[$mol_wire_cursor["doubt"] = new (class doubt extends Number {
+            toString() { return '🟡'; }
         })(-2)] = "doubt";
         $mol_wire_cursor[$mol_wire_cursor["fresh"] = new (class fresh extends Number {
+            toString() { return '🟢'; }
         })(-3)] = "fresh";
         $mol_wire_cursor[$mol_wire_cursor["final"] = new (class solid extends Number {
+            toString() { return '🔵'; }
         })(-4)] = "final";
     })($mol_wire_cursor = $.$mol_wire_cursor || ($.$mol_wire_cursor = {}));
 })($ || ($ = {}));
@@ -708,7 +712,13 @@ var $;
                     this.cursor += 2;
                     return next;
                 }
-                next?.sub_off(this[this.cursor + 1]);
+                if (next) {
+                    if (this.sub_from < this.length) {
+                        this.peer_move(this.sub_from, this.length);
+                    }
+                    this.peer_move(this.cursor, this.sub_from);
+                    this.sub_from += 2;
+                }
             }
             else {
                 if (pub === undefined)
@@ -725,10 +735,10 @@ var $;
         }
         track_off(sub) {
             $mol_wire_auto = sub;
-            if (this.cursor < 0)
+            if (this.cursor < 0) {
                 $mol_fail(new Error('End of non begun sub'));
-            this.forget(this.cursor);
-            for (let cursor = this.pub_from; cursor < this.sub_from; cursor += 2) {
+            }
+            for (let cursor = this.pub_from; cursor < this.cursor; cursor += 2) {
                 const pub = this[cursor];
                 pub.up();
             }
@@ -746,12 +756,16 @@ var $;
                 this.pop();
                 this.pop();
             }
-            this.forget();
+            this.cursor = this.pub_from;
+            this.track_cut();
             this.cursor = $mol_wire_cursor.final;
         }
-        forget(from = this.pub_from) {
+        track_cut() {
+            if (this.cursor < this.pub_from) {
+                $mol_fail(new Error('Cut of non begun sub'));
+            }
             let tail = 0;
-            for (let cursor = from; cursor < this.sub_from; cursor += 2) {
+            for (let cursor = this.cursor; cursor < this.sub_from; cursor += 2) {
                 const pub = this[cursor];
                 pub?.sub_off(this[cursor + 1]);
                 if (this.sub_from < this.length) {
@@ -767,7 +781,7 @@ var $;
                 this.pop();
                 this.pop();
             }
-            this.sub_from = from;
+            this.sub_from = this.cursor;
         }
         affect(quant) {
             if (this.cursor === $mol_wire_cursor.final)
@@ -1163,10 +1177,7 @@ var $;
             return this[Symbol.toStringTag];
         }
         [$mol_dev_format_head]() {
-            const cursor = this.cursor >= 0
-                ? '@' + this.cursor
-                : this.cursor?.constructor?.name;
-            return $mol_dev_format_div({}, $mol_dev_format_native(this), $mol_dev_format_shade(' ' + cursor + ' = '), $mol_dev_format_auto(this.cache));
+            return $mol_dev_format_div({}, $mol_dev_format_native(this), $mol_dev_format_shade(this.cursor.toString() + ' '), $mol_dev_format_auto(this.cache));
         }
         get $() {
             return this.host['$'];
@@ -1227,6 +1238,9 @@ var $;
                     handled.add(result);
                 }
             }
+            if (!(result instanceof Promise)) {
+                this.track_cut();
+            }
             this.track_off(bu);
             this.put(result);
         }
@@ -1260,7 +1274,7 @@ var $;
             }
             else {
                 this.cursor = this.pub_from;
-                this.forget();
+                this.track_cut();
                 this.cursor = $mol_wire_cursor.fresh;
             }
             return next;
@@ -6366,6 +6380,7 @@ var $;
                 pub2.track_promote();
             }
             finally {
+                sub.track_cut();
                 sub.track_off(bu1);
             }
             pub1.emit();
@@ -6378,6 +6393,7 @@ var $;
                 pub2.track_promote();
             }
             finally {
+                sub.track_cut();
                 sub.track_off(bu2);
             }
             pub1.emit();
@@ -6394,10 +6410,12 @@ var $;
                     $mol_assert_fail(() => sub1.track_promote(), 'Circular subscription');
                 }
                 finally {
+                    sub2.track_cut();
                     sub2.track_off(bu2);
                 }
             }
             finally {
+                sub1.track_cut();
                 sub1.track_off(bu1);
             }
         },
@@ -6962,6 +6980,42 @@ var $;
             $mol_assert_ok(destroyed);
             App.showing(true);
             $mol_assert_unique(App.render(), details);
+        },
+        async 'Hold pubs while wait async task'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static counter = 0;
+                static resets(next) {
+                    return ($mol_wire_probe(() => this.resets()) ?? -1) + 1;
+                }
+                static async wait() { }
+                static value() {
+                    return ++this.counter;
+                }
+                static result() {
+                    if (this.resets())
+                        $mol_wire_sync(this).wait();
+                    return this.value();
+                }
+                static test() {
+                }
+            }
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "resets", null);
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "value", null);
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "result", null);
+            __decorate([
+                $mol_wire_method
+            ], App, "test", null);
+            $mol_assert_equal(App.result(), 1);
+            App.resets(null);
+            $mol_wire_fiber.sync();
+            $mol_assert_equal(await $mol_wire_async(App).result(), 1);
         },
         'Forget sub fibers on complete'($) {
             class App extends $mol_object2 {

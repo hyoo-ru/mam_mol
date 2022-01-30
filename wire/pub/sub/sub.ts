@@ -50,7 +50,16 @@ namespace $ {
 					return next
 				}
 				
-				next?.sub_off( this[ this.cursor + 1 ] as number )
+				if( next ) {
+					
+					if( this.sub_from < this.length ) {
+						this.peer_move( this.sub_from, this.length )
+					}
+					
+					this.peer_move( this.cursor, this.sub_from )
+					this.sub_from += 2
+					
+				}
 				
 			} else {
 				
@@ -76,13 +85,13 @@ namespace $ {
 			
 			$mol_wire_auto = sub
 			
-			if( this.cursor < 0 ) $mol_fail( new Error( 'End of non begun sub' ) )
-			
-			this.forget( this.cursor )
+			if( this.cursor < 0 ) {
+				$mol_fail( new Error( 'End of non begun sub' ) )
+			}
 			
 			for(
 				let cursor = this.pub_from;
-				cursor < this.sub_from;
+				cursor < this.cursor;
 				cursor += 2
 			) {
 				const pub = this[ cursor ] as $mol_wire_pub
@@ -112,17 +121,22 @@ namespace $ {
 				this.pop()
 			}
 			
-			this.forget()
+			this.cursor = this.pub_from
+			this.track_cut()
 			this.cursor = $mol_wire_cursor.final
 			
 		}
 		
-		forget( from = this.pub_from ) {
+		track_cut() {
+			
+			if( this.cursor < this.pub_from ) {
+				$mol_fail( new Error( 'Cut of non begun sub' ) )
+			}
 			
 			let tail = 0
 			
 			for(
-				let cursor = from;
+				let cursor = this.cursor;
 				cursor < this.sub_from;
 				cursor += 2
 			) {
@@ -145,7 +159,7 @@ namespace $ {
 				this.pop()
 			}
 			
-			this.sub_from = from
+			this.sub_from = this.cursor
 			
 		}
 

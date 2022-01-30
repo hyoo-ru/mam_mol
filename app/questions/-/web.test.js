@@ -647,6 +647,7 @@ var $;
                 pub2.track_promote();
             }
             finally {
+                sub.track_cut();
                 sub.track_off(bu1);
             }
             pub1.emit();
@@ -659,6 +660,7 @@ var $;
                 pub2.track_promote();
             }
             finally {
+                sub.track_cut();
                 sub.track_off(bu2);
             }
             pub1.emit();
@@ -675,10 +677,12 @@ var $;
                     $mol_assert_fail(() => sub1.track_promote(), 'Circular subscription');
                 }
                 finally {
+                    sub2.track_cut();
                     sub2.track_off(bu2);
                 }
             }
             finally {
+                sub1.track_cut();
                 sub1.track_off(bu1);
             }
         },
@@ -1214,6 +1218,42 @@ var $;
             $mol_assert_ok(destroyed);
             App.showing(true);
             $mol_assert_unique(App.render(), details);
+        },
+        async 'Hold pubs while wait async task'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static counter = 0;
+                static resets(next) {
+                    return ($mol_wire_probe(() => this.resets()) ?? -1) + 1;
+                }
+                static async wait() { }
+                static value() {
+                    return ++this.counter;
+                }
+                static result() {
+                    if (this.resets())
+                        $mol_wire_sync(this).wait();
+                    return this.value();
+                }
+                static test() {
+                }
+            }
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "resets", null);
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "value", null);
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "result", null);
+            __decorate([
+                $mol_wire_method
+            ], App, "test", null);
+            $mol_assert_equal(App.result(), 1);
+            App.resets(null);
+            $mol_wire_fiber.sync();
+            $mol_assert_equal(await $mol_wire_async(App).result(), 1);
         },
         'Forget sub fibers on complete'($) {
             class App extends $mol_object2 {
