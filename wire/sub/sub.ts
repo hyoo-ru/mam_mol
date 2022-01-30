@@ -18,7 +18,12 @@ namespace $ {
 		pub_off( pub_pos: number ): void
 		
 		/**
-		 * Ends auto wire to publishers and unsubscribes from unpromoted publishers.
+		 * Unsubscribes from unpromoted publishers.
+		 */
+		track_cut( sub: $mol_wire_pub | null ): void
+		
+		/**
+		 * Ends auto wire to publishers.
 		 */
 		track_off( sub: $mol_wire_pub | null ): void
 		
