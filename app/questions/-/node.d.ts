@@ -233,6 +233,7 @@ declare namespace $ {
         track_on(): $mol_wire_sub | null;
         track_next(pub?: $mol_wire_pub): $mol_wire_pub | null;
         pub_off(pub_pos: number): void;
+        track_cut(sub: $mol_wire_pub | null): void;
         track_off(sub: $mol_wire_pub | null): void;
         destructor(): void;
     }
