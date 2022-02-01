@@ -12615,10 +12615,9 @@ var $;
     (function ($$) {
         class $mol_embed_native extends $.$mol_embed_native {
             window() {
-                this.uri();
-                return $mol_wire_sync(this).load(this.dom_node(), this.uri_resource());
+                return $mol_wire_sync(this).load(this.dom_node_actual());
             }
-            load(frame, uri) {
+            load(frame) {
                 return new Promise((done, fail) => {
                     frame.onload = () => {
                         try {
@@ -12745,6 +12744,11 @@ var $;
     var $$;
     (function ($$) {
         class $mol_frame extends $.$mol_frame {
+            window() {
+                if (this.html())
+                    return this.dom_node().contentWindow;
+                return super.window();
+            }
             allow() {
                 return [
                     ...this.fullscreen() ? ['fullscreen'] : [],

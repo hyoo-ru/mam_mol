@@ -3,11 +3,10 @@ namespace $.$$ {
 
 		@ $mol_mem
 		window() {
-			this.uri()
-			return $mol_wire_sync( this as $mol_embed_native ).load( this.dom_node() as HTMLIFrameElement, this.uri_resource() )
+			return $mol_wire_sync( this as $mol_embed_native ).load( this.dom_node_actual() as HTMLIFrameElement )
 		}
 		
-		load( frame: HTMLIFrameElement, uri: string ) {
+		load( frame: HTMLIFrameElement ) {
 			return new Promise< Window >( ( done, fail )=> {
 				
 				frame.onload = () => {
