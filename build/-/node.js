@@ -4676,7 +4676,7 @@ var $;
                 }
             });
             if (!bundle || bundle === 'package.json') {
-                res = res.concat(this.bundlePackageJSON({ path, exclude: ['web'] }));
+                res = res.concat(this.bundlePackageJSON({ path, exclude: ['web', 'test'] }));
             }
             if (!bundle || bundle === 'readme.md') {
                 res = res.concat(this.bundleReadmeMd({ path, exclude: ['web'] }));
@@ -4919,8 +4919,6 @@ var $;
             var pack = $mol_file.absolute(path);
             const source = pack.resolve(`package.json`);
             const target = pack.resolve(`-/package.json`);
-            exclude = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
-            var sources = this.sourcesAll({ path, exclude });
             let name = pack.relate(this.root()).replace(/\//g, '_');
             let json = {
                 name,

@@ -5,8 +5,5 @@
   "module": "node.esm.js",
   "browser": "web.js",
   "types": "web.d.ts",
-  "dependencies": {
-    "jsdom": "*",
-    "colorette": "*"
-  }
+  "dependencies": {}
 }
