@@ -1172,6 +1172,7 @@ namespace $ {
 				module : 'node.esm.js',
 				browser : 'web.js',
 				types : 'web.d.ts',
+				keywords: [] as string[],
 				dependencies : {} as { [ key : string ] : string }
 			}
 
@@ -1210,6 +1211,10 @@ namespace $ {
 				if( require('module').builtinModules.includes(dep) ) continue
 				json.dependencies[ dep ] = `*`
 			}
+			
+			json.keywords = [ ... this.graph( { path , exclude } ).nodes ]
+				.filter( Boolean )
+				.map( path => '$' + path.replaceAll( '/', '_' ) )
 			
 			target.text( JSON.stringify( json , null , '  ' ) )
 			

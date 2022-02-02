@@ -5,5 +5,15 @@
   "module": "node.esm.js",
   "browser": "web.js",
   "types": "web.d.ts",
+  "keywords": [
+    "$mol_time_all",
+    "$mol_time",
+    "$mol",
+    "$mol_time_moment",
+    "$mol_time_duration",
+    "$mol_time_base",
+    "$mol_fail",
+    "$mol_time_interval"
+  ],
   "dependencies": {}
 }

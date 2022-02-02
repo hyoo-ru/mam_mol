@@ -5,5 +5,10 @@
   "module": "node.esm.js",
   "browser": "web.js",
   "types": "web.d.ts",
+  "keywords": [
+    "$mol_syntax2",
+    "$mol",
+    "$mol_fail"
+  ],
   "dependencies": {}
 }

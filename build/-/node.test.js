@@ -4919,6 +4919,7 @@ var $;
                 module: 'node.esm.js',
                 browser: 'web.js',
                 types: 'web.d.ts',
+                keywords: [],
                 dependencies: {}
             };
             if (source.exists()) {
@@ -4947,6 +4948,9 @@ var $;
                     continue;
                 json.dependencies[dep] = `*`;
             }
+            json.keywords = [...this.graph({ path, exclude }).nodes]
+                .filter(Boolean)
+                .map(path => '$' + path.replaceAll('/', '_'));
             target.text(JSON.stringify(json, null, '  '));
             this.logBundle(target, Date.now() - start);
             return [target];
