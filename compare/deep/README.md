@@ -31,6 +31,9 @@ $mol_compare_deep(
 npm install mol_compare_deep
 ```
 
+[![](https://badgen.net/bundlephobia/minzip/mol_compare_deep)](https://bundlephobia.com/package/mol_compare_deep)
+
+
 **Import as ESM**
 
 ```js
