@@ -69,6 +69,7 @@ namespace $ {
 		 * Menu $mol_app_demo_menu
 		 * 	names <= names_demo_filtered
 		 * 	filter_suggests <= filter_suggests
+		 * 	tools <= tools
 		 * ```
 		 */
 		@ $mol_mem
@@ -77,6 +78,7 @@ namespace $ {
 			
 			obj.names = () => this.names_demo_filtered()
 			obj.filter_suggests = () => this.filter_suggests()
+			obj.tools = () => this.tools()
 			
 			return obj
 		}
@@ -219,6 +221,55 @@ namespace $ {
 		filter_suggests() {
 			return [
 			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * sources_uri \https://github.com/hyoo-ru/mam_mol/
+		 * ```
+		 */
+		sources_uri() {
+			return "https://github.com/hyoo-ru/mam_mol/"
+		}
+		
+		/**
+		 * ```tree
+		 * Sources $mol_link_source uri <= sources_uri
+		 * ```
+		 */
+		@ $mol_mem
+		Sources() {
+			const obj = new this.$.$mol_link_source()
+			
+			obj.uri = () => this.sources_uri()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Lights $mol_lights_toggle
+		 * ```
+		 */
+		@ $mol_mem
+		Lights() {
+			const obj = new this.$.$mol_lights_toggle()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * tools /
+		 * 	<= Sources
+		 * 	<= Lights
+		 * ```
+		 */
+		tools() {
+			return [
+				this.Sources(),
+				this.Lights()
+			] as readonly any[]
 		}
 		
 		/**
@@ -372,20 +423,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tools /
-		 * 	<= Sources
-		 * 	<= Lights
-		 * ```
-		 */
-		tools() {
-			return [
-				this.Sources(),
-				this.Lights()
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
 		 * Body $mol_scroll sub / <= List
 		 * ```
 		 */
@@ -415,41 +452,6 @@ namespace $ {
 			obj.sub = () => [
 				this.Option_title(id)
 			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * sources_uri \https://github.com/hyoo-ru/mam_mol/tree/master/
-		 * ```
-		 */
-		sources_uri() {
-			return "https://github.com/hyoo-ru/mam_mol/tree/master/"
-		}
-		
-		/**
-		 * ```tree
-		 * Sources $mol_link_source uri <= sources_uri
-		 * ```
-		 */
-		@ $mol_mem
-		Sources() {
-			const obj = new this.$.$mol_link_source()
-			
-			obj.uri = () => this.sources_uri()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Lights $mol_lights_toggle
-		 * ```
-		 */
-		@ $mol_mem
-		Lights() {
-			const obj = new this.$.$mol_lights_toggle()
 			
 			return obj
 		}

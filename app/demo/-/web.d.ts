@@ -7020,6 +7020,10 @@ declare namespace $ {
         Theme(): $$.$mol_theme_auto;
         names_demo_filtered(): readonly string[];
         filter_suggests(): readonly string[];
+        sources_uri(): string;
+        Sources(): $mol_link_source;
+        Lights(): $$.$mol_lights_toggle;
+        tools(): readonly any[];
         chat_seed(id: any): string;
         detail_description(): string;
         source_link(): string;
@@ -7037,12 +7041,8 @@ declare namespace $ {
         names(): readonly string[];
         filter_suggests(): readonly string[];
         title(): string;
-        tools(): readonly any[];
         Body(): $$.$mol_scroll;
         Option(id: any): $$.$mol_link;
-        sources_uri(): string;
-        Sources(): $mol_link_source;
-        Lights(): $$.$mol_lights_toggle;
         filter(val?: any): string;
         Filter(): $$.$mol_search;
         options(): readonly any[];
