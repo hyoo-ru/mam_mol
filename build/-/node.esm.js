@@ -4937,7 +4937,7 @@ var $;
             let version = json.version.split('.').map(Number);
             name = json.name || name;
             try {
-                const published = JSON.parse(this.$.$mol_exec('', 'npm', 'view', name, 'versions', '--json').stdout.toString().trim()).slice(-1)[0].split('.').map(Number);
+                const published = [].concat(JSON.parse(this.$.$mol_exec('', 'npm', 'view', name, 'versions', '--json').stdout.toString())).slice(-1)[0].split('.').map(Number);
                 if (published[0] > version[0]) {
                     version = published;
                 }
