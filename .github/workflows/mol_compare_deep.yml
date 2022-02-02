@@ -7,7 +7,7 @@ on:
       - master
     paths:
       - '.github/workflows/mol_compare_deep.yml'
-      - 'wire/**'
+      - 'compare/deep/**'
   pull_request:
   schedule:
     - cron: "0 7 * * *"
