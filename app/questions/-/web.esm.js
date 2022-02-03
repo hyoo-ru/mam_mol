@@ -2650,7 +2650,7 @@ var $;
                         break;
                     if (p === n)
                         continue;
-                    new $mol_after_work(100, () => n.dom_node().scrollIntoView({ behavior: 'auto' }));
+                    new $mol_after_work(100, () => n.dom_node().scrollIntoView({ behavior: 'smooth' }));
                     break;
                 }
                 return next;
