@@ -162,7 +162,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		supply_status( id : string , next? : $mol_app_supplies_domain_supply_status ) {
-			return next || $mol_stub_select_random( [
+			return next || $mol_array_lottery( [
 				$mol_app_supplies_domain_supply_status.pending ,
 				$mol_app_supplies_domain_supply_status.approved
 			] )
@@ -207,7 +207,7 @@ namespace $ {
 		ballance_unit( id : string ) {
 			return $mol_app_supplies_domain_ballance_unit.make({
 				id : $mol_const( id ) ,
-				name : $mol_const( $mol_stub_select_random( [
+				name : $mol_const( $mol_array_lottery( [
 					'ACME Enterprise' ,
 					'ACME Customer' ,
 					'ACME Inside'
@@ -258,7 +258,7 @@ namespace $ {
 		pay_method( id : string ) {
 			return $mol_app_supplies_domain_pay_method.make({
 				id : $mol_const( id ) ,
-				name : $mol_const( $mol_stub_select_random( [ 'Accounting' , 'Cash' ] ) ) ,
+				name : $mol_const( $mol_array_lottery( [ 'Accounting' , 'Cash' ] ) ) ,
 			})
 		}
 		
