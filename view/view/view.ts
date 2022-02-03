@@ -350,11 +350,6 @@ namespace $ {
 			return {}
 		}
 		
-		@ $mol_deprecated( 'Use $mol_view::event instead.' )
-		event_async() : { [ key : string ] : ( event : Event )=> void } {
-			return {}
-		}
-		
 		plugins() {
 			return [] as readonly $mol_view[]
 		}
