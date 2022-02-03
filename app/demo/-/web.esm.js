@@ -6484,7 +6484,7 @@ var $;
                         break;
                     if (p === n)
                         continue;
-                    new $mol_after_timeout(500, () => n.dom_tree().scrollIntoView({ behavior: 'smooth' }));
+                    new $mol_after_frame(() => n.dom_node().scrollIntoView({ behavior: 'smooth' }));
                     break;
                 }
                 return next;
