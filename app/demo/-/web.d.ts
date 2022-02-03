@@ -2169,16 +2169,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_after_work extends $mol_object2 {
-        delay: number;
-        task: () => void;
-        id: any;
-        constructor(delay: number, task: () => void);
-        destructor(): void;
-    }
-}
-
-declare namespace $ {
 }
 
 declare namespace $.$$ {

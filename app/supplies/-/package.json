@@ -102,7 +102,6 @@
     "$mol_dom_listener",
     "$mol_mem_cached",
     "$mol_wire_probe",
-    "$mol_after_work",
     "$mol_theme_auto",
     "$mol_theme_auto_-view.tree_auto.view.tree.ts",
     "$mol_theme_auto_auto.view.tree",

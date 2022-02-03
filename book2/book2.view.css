@@ -9,7 +9,7 @@
 	/* transform: translateZ(0); */
 	transition: none;
 	overflow: overlay;
-	scroll-snap-type: x proximity;
+	scroll-snap-type: x mandatory;
 }
 
 [mol_book2] > * {
