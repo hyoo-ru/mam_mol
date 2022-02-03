@@ -1,0 +1,158 @@
+$mol_scroll $mol_view
+	minimal_height 0
+	_event_scroll_timer?val null
+	field *
+		^
+		scrollTop <= scroll_top?val 0
+		scrollLeft <= scroll_left?val 0
+		tabIndex <= tabindex -1
+	event *
+		^
+		scroll?event <=> event_scroll?event null
+
+$mol_speck $mol_view
+	attr *
+		^
+		mol_theme \$mol_theme_accent
+	style *
+		^
+		minHeight \1em
+	sub /
+		<= value null
+
+$mol_button $mol_view
+	enabled true
+	minimal_height 40
+	minimal_width 40
+	click?event null
+	event_click?event null
+	event *
+		^
+		click?event <=> event_activate?event null
+		keydown?event <=> event_key_press?event null 
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint_or_error <= hint \
+	sub /$mol_view_content
+		<= title
+	Speck $mol_speck
+
+$mol_button_typed $mol_button
+
+$mol_button_major $mol_button_typed
+	attr *
+		^
+		mol_theme \$mol_theme_accent
+
+$mol_row $mol_view
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0
+	sub <= rows /$mol_view
+	Empty $mol_view
+	Gap_before $mol_view style * paddingTop <= gap_before 0
+	Gap_after $mol_view style * paddingTop <= gap_after 0
+	view_window /
+		0
+		0
+
+$mol_button_minor $mol_button_typed
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked?val false
+		aria-checked <= checked?val false
+		role \checkbox
+	sub /$mol_view_content
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	font_size 16
+	font_family \
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
+$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+
+$mol_perf_jsfb $mol_scroll
+	sub /
+		<= Content $mol_list rows /
+			<= Head $mol_row sub /
+				<= Title $mol_view sub / <= title \$mol keyed
+				<= Controls $mol_row sub /
+					<= Create_1K $mol_button_major
+						dom_id \run
+						title \Create 1,000 rows
+						click?event <=> create_1K?event null
+					<= Create_10K $mol_button_major
+						dom_id \runlots
+						title \Create 10,000 rows
+						click?event <=> create_10K?event null
+					<= Append_1K $mol_button_major
+						dom_id \add
+						title \Append 1,000 rows
+						click?event <=> append_1K?event null
+					<= Update_10 $mol_button_major
+						dom_id \update
+						title \Update every 10th row
+						click?event <=> update_10?event null
+					<= Clear $mol_button_major
+						dom_id \clear
+						title \Clear
+						click?event <=> clear?event null
+					<= Swap $mol_button_major
+						dom_id \swaprows
+						title \Swap Rows
+						click?event <=> swap?event null
+			<= Rows $mol_list rows <= rows /
+	Row!id $mol_perf_jsfb_row
+		title?next => row_title!id?next
+		selected?next <=> row_selected!id?next false
+		drop?event <=> row_drop!id?event null
+		id <= row_id!id \
+
+$mol_perf_jsfb_row $mol_view
+	minimal_height 40
+	minimal_width 200
+	attr *
+		^
+		mol_perf_jsfb_row_selected <= selected
+	sub /
+		<= Id $mol_view sub / <= id \
+		<= Title $mol_check
+			checked?next <=> selected?next false
+			sub / <= title
+		<= Drop $mol_button_minor
+			sub / <= Drop_icon $mol_icon_cross
+			click?event <=> drop?event null
