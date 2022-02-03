@@ -2534,7 +2534,7 @@ var $;
                         break;
                     if (p === n)
                         continue;
-                    new $mol_after_frame(() => n.dom_node().scrollIntoView({ behavior: 'smooth' }));
+                    new $mol_after_frame(() => n.dom_tree().scrollIntoView({ behavior: 'smooth' }));
                     break;
                 }
                 return next;
