@@ -4617,6 +4617,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_array_lottery<Value>(list: readonly Value[]): Value;
+}
+
+declare namespace $ {
     class $mol_unit extends $mol_object {
         'valueOf()': number;
         constructor(value?: number);
@@ -4644,7 +4648,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_stub_select_random<Value>(list: readonly Value[]): Value;
     function $mol_stub_strings(prefix?: string, count?: number, length?: number): any[];
     function $mol_stub_code(length?: number): string;
     function $mol_stub_price(max?: number): $mol_unit_money_usd;

@@ -506,6 +506,8 @@
     "$mol_gallery_demo_demo.view.tree",
     "$mol_gallery_demo_-view.tree_demo.view.tree.ts",
     "$mol_stub",
+    "$mol_array_lottery",
+    "$mol_array",
     "$mol_unit_money",
     "$mol_unit",
     "$mol_html_view_demo",

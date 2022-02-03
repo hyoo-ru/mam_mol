@@ -4481,7 +4481,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/button/typed/typed.view.css", "[mol_button_typed] {\n\talign-content: center;\n\talign-items: center;\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tgap: var(--mol_gap_space);\n}\n\n[mol_button_typed][disabled] {\n\tcolor: var(--mol_theme_text);\n\tpointer-events: none;\n}\n\n[mol_button_typed]:hover ,\n[mol_button_typed]:focus {\n\tcursor: pointer;\n\tbackground-color: var(--mol_theme_hover);\n}\n");
+    $mol_style_attach("mol/button/typed/typed.view.css", "[mol_button_typed] {\n\tjustify-content: center;\n\talign-content: center;\n\talign-items: center;\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tgap: var(--mol_gap_space);\n}\n\n[mol_button_typed][disabled] {\n\tcolor: var(--mol_theme_text);\n\tpointer-events: none;\n}\n\n[mol_button_typed]:hover ,\n[mol_button_typed]:focus {\n\tcursor: pointer;\n\tbackground-color: var(--mol_theme_hover);\n}\n");
 })($ || ($ = {}));
 //mol/button/typed/-css/typed.view.css.ts
 ;
@@ -5588,10 +5588,16 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_stub_select_random(list) {
+    function $mol_array_lottery(list) {
         return list[Math.floor(Math.random() * list.length)];
     }
-    $.$mol_stub_select_random = $mol_stub_select_random;
+    $.$mol_array_lottery = $mol_array_lottery;
+})($ || ($ = {}));
+//mol/array/lottery/lottery.ts
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_stub_strings(prefix = '', count = 10, length = 10) {
         if (prefix.length >= length)
             return [];
@@ -5600,7 +5606,7 @@ var $;
         for (let i = 0; i < count; i++) {
             let text = prefix;
             for (let j = prefix.length; j < length; j++) {
-                text += $mol_stub_select_random(possible);
+                text += $mol_array_lottery(possible);
             }
             strings.push(text);
         }
@@ -5621,35 +5627,35 @@ var $;
     }
     $.$mol_stub_price = $mol_stub_price;
     function $mol_stub_product_name() {
-        var name = $mol_stub_select_random([
+        var name = $mol_array_lottery([
             'Monitor 15"',
             'Monitor 17"',
             'Monitor 19"',
             'Graphics card',
             'Frame grabber card'
         ]);
-        var port = $mol_stub_select_random(['D-SUB', 'DVI', 'HDMI']);
-        var resolution = $mol_stub_select_random(['VGA', 'Full HD', '4K']);
+        var port = $mol_array_lottery(['D-SUB', 'DVI', 'HDMI']);
+        var resolution = $mol_array_lottery(['VGA', 'Full HD', '4K']);
         return [name, port, resolution].join(', ');
     }
     $.$mol_stub_product_name = $mol_stub_product_name;
     function $mol_stub_company_name_big() {
-        var product = $mol_stub_select_random(['Everything', 'Something', 'Anything', 'Nothing']);
-        var type = $mol_stub_select_random(['Company', 'Corporation', 'Holding']);
+        var product = $mol_array_lottery(['Everything', 'Something', 'Anything', 'Nothing']);
+        var type = $mol_array_lottery(['Company', 'Corporation', 'Holding']);
         return `A ${type} that makes ${product}`;
     }
     $.$mol_stub_company_name_big = $mol_stub_company_name_big;
     function $mol_stub_company_name_small() {
-        return $mol_stub_select_random(['ACME inc.', 'Dream Company', 'Just Company']);
+        return $mol_array_lottery(['ACME inc.', 'Dream Company', 'Just Company']);
     }
     $.$mol_stub_company_name_small = $mol_stub_company_name_small;
     function $mol_stub_company_name() {
-        return $mol_stub_select_random([$mol_stub_company_name_small, $mol_stub_company_name_big])();
+        return $mol_array_lottery([$mol_stub_company_name_small, $mol_stub_company_name_big])();
     }
     $.$mol_stub_company_name = $mol_stub_company_name;
     function $mol_stub_person_name() {
-        var first = $mol_stub_select_random(['Ivan', 'Petr', 'Sidor', 'John', 'Sam']);
-        var last = $mol_stub_select_random(['Ivanov', 'Petrov', 'Sidorov', 'Johnson', 'Smith']);
+        var first = $mol_array_lottery(['Ivan', 'Petr', 'Sidor', 'John', 'Sam']);
+        var last = $mol_array_lottery(['Ivanov', 'Petrov', 'Sidorov', 'Johnson', 'Smith']);
         return `${first} ${last}`;
     }
     $.$mol_stub_person_name = $mol_stub_person_name;
@@ -5659,7 +5665,7 @@ var $;
     }
     $.$mol_stub_person_avatar = $mol_stub_person_avatar;
     function $mol_stub_city() {
-        return $mol_stub_select_random(['Moscow', 'London', 'Washington', 'Buenos Aires']);
+        return $mol_array_lottery(['Moscow', 'London', 'Washington', 'Buenos Aires']);
     }
     $.$mol_stub_city = $mol_stub_city;
     function $mol_stub_time(maxShift = 60 * 24 * 365) {
@@ -5791,7 +5797,7 @@ var $;
             return next;
         }
         supply_status(id, next) {
-            return next || $mol_stub_select_random([
+            return next || $mol_array_lottery([
                 $mol_app_supplies_domain_supply_status.pending,
                 $mol_app_supplies_domain_supply_status.approved
             ]);
@@ -5828,7 +5834,7 @@ var $;
         ballance_unit(id) {
             return $mol_app_supplies_domain_ballance_unit.make({
                 id: $mol_const(id),
-                name: $mol_const($mol_stub_select_random([
+                name: $mol_const($mol_array_lottery([
                     'ACME Enterprise',
                     'ACME Customer',
                     'ACME Inside'
@@ -5867,7 +5873,7 @@ var $;
         pay_method(id) {
             return $mol_app_supplies_domain_pay_method.make({
                 id: $mol_const(id),
-                name: $mol_const($mol_stub_select_random(['Accounting', 'Cash'])),
+                name: $mol_const($mol_array_lottery(['Accounting', 'Cash'])),
             });
         }
         debitor(id) {

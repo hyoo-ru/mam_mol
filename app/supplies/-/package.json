@@ -168,6 +168,8 @@
     "$mol_time_base",
     "$mol_unit_money",
     "$mol_unit",
+    "$mol_array_lottery",
+    "$mol_array",
     "$mol_stub",
     "$mol_app_supplies_card",
     "$mol_app_supplies_card_card.view.tree",
