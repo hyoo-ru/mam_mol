@@ -3,28 +3,29 @@ namespace $.$$ {
 	export class $mol_scroll extends $.$mol_scroll {
 
 		@ $mol_mem
-		scroll_pos( next? : readonly number[] ) {
-			return $mol_state_session.value( `${ this }.scroll_pos()` , next ) || [ 0, 0 ]
+		scroll_top( next? : number, cache?: 'cache' ): number {
+			
+			const el = this.dom_node()
+			if( next !== undefined && !cache ) el.scrollTop = next
+			
+			return el.scrollTop
 		}
 		
-		scroll_top( next? : number ): number {
-			return this.scroll_pos( next === undefined ? undefined : [ this.scroll_left(), next ] )[1]
-		}
-		
-		scroll_left( next? : number ): number {
-			return this.scroll_pos( next === undefined ? undefined : [ next, this.scroll_top() ] )[0]
+		@ $mol_mem
+		scroll_left( next? : number, cache?: 'cache' ): number {
+			
+			const el = this.dom_node()
+			if( next !== undefined && !cache ) el.scrollLeft = next
+			
+			return el.scrollLeft
 		}
 		
 		event_scroll( next? : Event ) {
 			
 			const el = this.dom_node() as HTMLElement
 			
-			this.scroll_pos([
-				Math.max( 0 , el.scrollLeft ),
-				Math.max( 0 , el.scrollTop ),
-			])
-			
-			this.dom_node_actual()
+			this.scroll_left( el.scrollLeft, 'cache' )
+			this.scroll_top( el.scrollTop, 'cache' )
 			
 		}
 

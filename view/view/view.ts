@@ -242,7 +242,9 @@ namespace $ {
 			return node
 		}
 		
-		auto() { }
+		auto() {
+			return null as any
+		}
 
 		render() {
 

@@ -53,8 +53,10 @@ namespace $.$$ {
 		}
 
 		auto() {
-			this.uri_listener()
-			this.window()
+			return [
+				this.uri_listener(),
+				this.window(),
+			]
 		}
 
 	}
