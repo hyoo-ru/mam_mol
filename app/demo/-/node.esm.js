@@ -1860,7 +1860,9 @@ var $;
             $mol_dom_render_styles(node, style);
             return node;
         }
-        auto() { }
+        auto() {
+            return null;
+        }
         render() {
             const node = this.dom_node_actual();
             const sub = this.sub_visible();
@@ -6440,12 +6442,6 @@ var $;
 var $;
 (function ($) {
     class $mol_scroll extends $mol_view {
-        scroll_pos() {
-            return [
-                0,
-                0
-            ];
-        }
         scroll_top(val) {
             if (val !== undefined)
                 return val;
@@ -6564,22 +6560,22 @@ var $;
     var $$;
     (function ($$) {
         class $mol_scroll extends $.$mol_scroll {
-            scroll_pos(next) {
-                return $mol_state_session.value(`${this}.scroll_pos()`, next) || [0, 0];
+            scroll_top(next, cache) {
+                const el = this.dom_node();
+                if (next !== undefined && !cache)
+                    el.scrollTop = next;
+                return el.scrollTop;
             }
-            scroll_top(next) {
-                return this.scroll_pos(next === undefined ? undefined : [this.scroll_left(), next])[1];
-            }
-            scroll_left(next) {
-                return this.scroll_pos(next === undefined ? undefined : [next, this.scroll_top()])[0];
+            scroll_left(next, cache) {
+                const el = this.dom_node();
+                if (next !== undefined && !cache)
+                    el.scrollLeft = next;
+                return el.scrollLeft;
             }
             event_scroll(next) {
                 const el = this.dom_node();
-                this.scroll_pos([
-                    Math.max(0, el.scrollLeft),
-                    Math.max(0, el.scrollTop),
-                ]);
-                this.dom_node_actual();
+                this.scroll_left(el.scrollLeft, 'cache');
+                this.scroll_top(el.scrollTop, 'cache');
             }
             minimal_height() {
                 return this.$.$mol_print.active() ? null : 0;
@@ -6590,7 +6586,10 @@ var $;
         }
         __decorate([
             $mol_mem
-        ], $mol_scroll.prototype, "scroll_pos", null);
+        ], $mol_scroll.prototype, "scroll_top", null);
+        __decorate([
+            $mol_mem
+        ], $mol_scroll.prototype, "scroll_left", null);
         $$.$mol_scroll = $mol_scroll;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -6799,17 +6798,14 @@ var $;
             obj.sub = () => this.head();
             return obj;
         }
-        body_scroll_top(val) {
-            if (val !== undefined)
-                return val;
-            return 0;
-        }
         body() {
             return [];
         }
+        body_scroll_top(val) {
+            return this.Body().scroll_top(val);
+        }
         Body() {
             const obj = new this.$.$mol_scroll();
-            obj.scroll_top = (val) => this.body_scroll_top(val);
             obj.sub = () => this.body();
             return obj;
         }
@@ -6832,9 +6828,6 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_page.prototype, "Head", null);
-    __decorate([
-        $mol_mem
-    ], $mol_page.prototype, "body_scroll_top", null);
     __decorate([
         $mol_mem
     ], $mol_page.prototype, "Body", null);
@@ -6942,21 +6935,6 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/page/page.view.css.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_page extends $.$mol_page {
-            body_scroll_top(next) {
-                return $mol_state_session.value(`${this}.body_scroll_top()`, next) || 0;
-            }
-        }
-        $$.$mol_page = $mol_page;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/page/page.view.ts
 ;
 "use strict";
 var $;
@@ -12811,8 +12789,10 @@ var $;
                 this.uri(event.data[1]);
             }
             auto() {
-                this.uri_listener();
-                this.window();
+                return [
+                    this.uri_listener(),
+                    this.window(),
+                ];
             }
         }
         __decorate([

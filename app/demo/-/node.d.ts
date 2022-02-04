@@ -532,7 +532,7 @@ declare namespace $ {
         dom_node(next?: Element): Element;
         dom_tree(next?: Element): Element;
         dom_node_actual(): Element;
-        auto(): void;
+        auto(): any;
         render(): void;
         static view_classes(): (typeof $mol_view)[];
         view_names_owned(): string[];
@@ -2105,7 +2105,6 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_scroll extends $mol_view {
-        scroll_pos(): readonly any[];
         scroll_top(val?: any): number;
         scroll_left(val?: any): number;
         field(): {
@@ -2124,9 +2123,8 @@ declare namespace $.$$ {
 
 declare namespace $.$$ {
     class $mol_scroll extends $.$mol_scroll {
-        scroll_pos(next?: readonly number[]): readonly number[];
-        scroll_top(next?: number): number;
-        scroll_left(next?: number): number;
+        scroll_top(next?: number, cache?: 'cache'): number;
+        scroll_left(next?: number, cache?: 'cache'): number;
         event_scroll(next?: Event): void;
         minimal_height(): number;
         minimal_width(): number;
@@ -2184,8 +2182,8 @@ declare namespace $ {
         Tools(): $mol_view;
         head(): readonly any[];
         Head(): $mol_view;
-        body_scroll_top(val?: any): number;
         body(): readonly $mol_view_content[];
+        body_scroll_top(val?: any): number;
         Body(): $$.$mol_scroll;
         foot(): readonly $mol_view[];
         Foot(): $mol_view;
@@ -2193,12 +2191,6 @@ declare namespace $ {
 }
 
 declare namespace $.$$ {
-}
-
-declare namespace $.$$ {
-    class $mol_page extends $.$mol_page {
-        body_scroll_top(next?: number): number;
-    }
 }
 
 declare namespace $ {
@@ -2219,7 +2211,7 @@ declare namespace $ {
         menu_tools(): readonly any[];
         links(): readonly any[];
         Links(): $$.$mol_list;
-        Menu(): $$.$mol_page;
+        Menu(): $mol_page;
         arg(id: any): {};
         spread_title(id: any): string;
         spread_close_arg(): {};
@@ -2251,9 +2243,9 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
-        Articles(): $$.$mol_page;
-        Images(): $$.$mol_page;
-        Maps(): $$.$mol_page;
+        Articles(): $mol_page;
+        Images(): $mol_page;
+        Maps(): $mol_page;
         Calatog(): $$.$mol_book2_catalog;
     }
 }
@@ -3601,7 +3593,7 @@ declare namespace $.$$ {
         uri_resource(): string;
         uri_listener(): $mol_dom_listener;
         uri_change(event?: MessageEvent<[string, string]>): void;
-        auto(): void;
+        auto(): ($mol_dom_listener | Window)[];
     }
 }
 
@@ -3656,7 +3648,7 @@ declare namespace $ {
         Close(): $$.$mol_link;
         embed(): string;
         Embed(): $$.$mol_frame;
-        Page(): $$.$mol_page;
+        Page(): $mol_page;
     }
 }
 
@@ -3687,7 +3679,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
-        chat_pages(): $$.$mol_page[];
+        chat_pages(): $mol_page[];
         Chat(): $$.$mol_chat;
     }
 }
@@ -5280,7 +5272,7 @@ declare namespace $ {
         Text(): $mol_filler;
         Button_foot(): $mol_button_minor;
         Foot_content(): $mol_row;
-        Page(): $$.$mol_page;
+        Page(): $mol_page;
     }
 }
 
@@ -7018,7 +7010,7 @@ declare namespace $ {
         plugins(): readonly any[];
         demo_block_list(): readonly any[];
         Menu(): $$.$mol_app_demo_menu;
-        chat_pages(id: any): $$.$mol_page[];
+        chat_pages(id: any): $mol_page[];
         Detail(id: any): $mol_app_demo_detail;
         Readme_page(): $$.$mol_app_demo_readme;
         Welcome(): $$.$mol_scroll;
@@ -7067,7 +7059,7 @@ declare namespace $ {
         readme_icon(): $mol_icon_information_outline;
         Readme(): $$.$mol_link;
         chat_seed(): string;
-        chat_pages(): $$.$mol_page[];
+        chat_pages(): $mol_page[];
         Chat(): $$.$mol_chat;
         source_link(): string;
         source_hint(): string;

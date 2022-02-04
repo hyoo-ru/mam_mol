@@ -1,7 +1,4 @@
 $mol_scroll $mol_view
-	scroll_pos /
-		0
-		0
 	scroll_top?val 0
 	scroll_left?val 0
 	field *
@@ -30,7 +27,7 @@ $mol_page $mol_view
 				<= Tools $mol_view
 					sub <= tools /$mol_view_content
 		<= Body $mol_scroll
-			scroll_top?val <=> body_scroll_top?val 0
+			scroll_top?val => body_scroll_top?val
 			sub <= body /$mol_view_content
 		<= Foot $mol_view
 			dom_name \footer

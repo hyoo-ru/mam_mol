@@ -228,7 +228,6 @@
     "$mol_book2_catalog_-view.tree_catalog.view.tree.ts",
     "$mol_page",
     "$mol_page_-view.tree_page.view.tree.ts",
-    "$mol_page_page.view.tree",
     "$mol_icon_cross",
     "$mol_icon_cross_-view.tree_cross.view.tree.ts",
     "$mol_book2_catalog_demo_-view.tree_demo.view.tree.ts",

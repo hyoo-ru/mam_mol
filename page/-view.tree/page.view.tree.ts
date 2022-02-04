@@ -104,17 +104,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * body_scroll_top?val 0
-		 * ```
-		 */
-		@ $mol_mem
-		body_scroll_top(val?: any) {
-			if ( val !== undefined ) return val as never
-			return 0
-		}
-		
-		/**
-		 * ```tree
 		 * body /$mol_view_content
 		 * ```
 		 */
@@ -125,8 +114,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * body_scroll_top?val
+		 * ```
+		 */
+		body_scroll_top(val?: any) {
+			return this.Body().scroll_top(val)
+		}
+		
+		/**
+		 * ```tree
 		 * Body $mol_scroll
-		 * 	scroll_top?val <=> body_scroll_top?val
+		 * 	scroll_top?val => body_scroll_top?val
 		 * 	sub <= body
 		 * ```
 		 */
@@ -134,7 +132,6 @@ namespace $ {
 		Body() {
 			const obj = new this.$.$mol_scroll()
 			
-			obj.scroll_top = (val?: any) => this.body_scroll_top(val)
 			obj.sub = () => this.body()
 			
 			return obj

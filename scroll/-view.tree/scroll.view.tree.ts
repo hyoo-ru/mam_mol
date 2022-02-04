@@ -3,20 +3,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * scroll_pos /
-		 * 	0
-		 * 	0
-		 * ```
-		 */
-		scroll_pos() {
-			return [
-				0,
-				0
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
 		 * scroll_top?val 0
 		 * ```
 		 */

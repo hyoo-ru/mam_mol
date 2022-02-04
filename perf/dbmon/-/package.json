@@ -93,8 +93,6 @@
     "$mol_gap",
     "$mol_scroll_-view.tree_scroll.view.tree.ts",
     "$mol_scroll_scroll.view.tree",
-    "$mol_state_session",
-    "$mol_state",
     "$mol_print",
     "$mol_dom_listener",
     "$mol_list",
@@ -111,7 +109,8 @@
     "$mol_keyboard",
     "$mol_pop_over_over.view.tree",
     "$mol_pop_over_-view.tree_over.view.tree.ts",
-    "$mol_state_time"
+    "$mol_state_time",
+    "$mol_state"
   ],
   "dependencies": {
     "jsdom": "*",
