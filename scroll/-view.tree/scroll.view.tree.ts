@@ -3,22 +3,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * minimal_height 0
+		 * scroll_pos /
+		 * 	0
+		 * 	0
 		 * ```
 		 */
-		minimal_height() {
-			return 0
-		}
-		
-		/**
-		 * ```tree
-		 * _event_scroll_timer?val null
-		 * ```
-		 */
-		@ $mol_mem
-		_event_scroll_timer(val?: any) {
-			if ( val !== undefined ) return val as never
-			return null as any
+		scroll_pos() {
+			return [
+				0,
+				0
+			] as readonly any[]
 		}
 		
 		/**

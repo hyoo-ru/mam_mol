@@ -1,6 +1,7 @@
 $mol_scroll $mol_view
-	minimal_height 0
-	_event_scroll_timer?val null
+	scroll_pos /
+		0
+		0
 	field *
 		^
 		scrollTop <= scroll_top?val 0

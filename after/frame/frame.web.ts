@@ -3,6 +3,7 @@ namespace $ {
 	export class $mol_after_frame extends $mol_object2 {
 
 		static _promise = null as Promise<void> | null
+		static _timeout = null as any
 
 		static get promise() {
 
@@ -10,15 +11,14 @@ namespace $ {
 			
 			return this._promise = new Promise( done => {
 				
-				requestAnimationFrame( ()=> {
+				const complete = ()=> {
 					this._promise = null
+					clearTimeout( this._timeout )
 					done()
-				} )
+				}
 				
-				setTimeout( ()=> {
-					this._promise = null
-					done()
-				}, 100 )
+				requestAnimationFrame( complete )
+				this._timeout = setTimeout( complete, 100 )
 				
 			} )
 

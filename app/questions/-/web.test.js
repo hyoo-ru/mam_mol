@@ -2000,15 +2000,6 @@ var $;
 //mol/state/session/session.test.ts
 ;
 "use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_timeout = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-//mol/after/timeout/timeout.test.ts
-;
-"use strict";
 //mol/type/equals/equals.test.ts
 ;
 "use strict";
@@ -2421,6 +2412,15 @@ var $;
     })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
 //mol/button/button.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_timeout = $mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+//mol/after/timeout/timeout.test.ts
 ;
 "use strict";
 var $;

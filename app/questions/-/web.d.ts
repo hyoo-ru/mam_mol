@@ -293,6 +293,7 @@ declare namespace $ {
     class $mol_after_frame extends $mol_object2 {
         task: () => void;
         static _promise: Promise<void> | null;
+        static _timeout: any;
         static get promise(): Promise<void>;
         cancelled: boolean;
         promise: Promise<void>;
@@ -722,8 +723,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_scroll extends $mol_view {
-        minimal_height(): number;
-        _event_scroll_timer(val?: any): any;
+        scroll_pos(): readonly any[];
         field(): {
             scrollTop: number;
             scrollLeft: number;
@@ -750,16 +750,6 @@ declare namespace $ {
         static value<Value>(key: string, next?: Value): Value;
         prefix(): string;
         value(key: string, next?: Value): Value;
-    }
-}
-
-declare namespace $ {
-    class $mol_after_timeout extends $mol_object2 {
-        delay: number;
-        task: () => void;
-        id: any;
-        constructor(delay: number, task: () => void);
-        destructor(): void;
     }
 }
 
@@ -791,9 +781,9 @@ declare namespace $.$$ {
 
 declare namespace $.$$ {
     class $mol_scroll extends $.$mol_scroll {
+        scroll_pos(next?: readonly number[]): readonly number[];
         scroll_top(next?: number): number;
         scroll_left(next?: number): number;
-        _event_scroll_timer(next?: $mol_after_timeout | null): $mol_after_timeout | null | undefined;
         event_scroll(next?: Event): void;
         minimal_height(): number;
         minimal_width(): number;
@@ -1401,6 +1391,16 @@ declare namespace $ {
         font_size(): number;
         font_family(): string;
         style_size(): {};
+    }
+}
+
+declare namespace $ {
+    class $mol_after_timeout extends $mol_object2 {
+        delay: number;
+        task: () => void;
+        id: any;
+        constructor(delay: number, task: () => void);
+        destructor(): void;
     }
 }
 

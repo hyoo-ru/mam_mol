@@ -293,6 +293,7 @@ declare namespace $ {
     class $mol_after_frame extends $mol_object2 {
         task: () => void;
         static _promise: Promise<void> | null;
+        static _timeout: any;
         static get promise(): Promise<void>;
         cancelled: boolean;
         promise: Promise<void>;

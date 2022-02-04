@@ -2002,15 +2002,6 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_timeout = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-//mol/after/timeout/timeout.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
     $mol_test_mocks.push(context => {
         class $mol_state_arg_mock extends $mol_state_arg {
             static $ = context;
@@ -2274,6 +2265,15 @@ var $;
     });
 })($ || ($ = {}));
 //mol/unit/unit.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_timeout = $mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+//mol/after/timeout/timeout.test.ts
 ;
 "use strict";
 //mol/type/equals/equals.test.ts

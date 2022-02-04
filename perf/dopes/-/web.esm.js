@@ -987,18 +987,18 @@ var $;
     class $mol_after_frame extends $mol_object2 {
         task;
         static _promise = null;
+        static _timeout = null;
         static get promise() {
             if (this._promise)
                 return this._promise;
             return this._promise = new Promise(done => {
-                requestAnimationFrame(() => {
+                const complete = () => {
                     this._promise = null;
+                    clearTimeout(this._timeout);
                     done();
-                });
-                setTimeout(() => {
-                    this._promise = null;
-                    done();
-                }, 100);
+                };
+                requestAnimationFrame(complete);
+                this._timeout = setTimeout(complete, 100);
             });
         }
         cancelled = false;

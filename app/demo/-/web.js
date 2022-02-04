@@ -987,18 +987,18 @@ var $;
     class $mol_after_frame extends $mol_object2 {
         task;
         static _promise = null;
+        static _timeout = null;
         static get promise() {
             if (this._promise)
                 return this._promise;
             return this._promise = new Promise(done => {
-                requestAnimationFrame(() => {
+                const complete = () => {
                     this._promise = null;
+                    clearTimeout(this._timeout);
                     done();
-                });
-                setTimeout(() => {
-                    this._promise = null;
-                    done();
-                }, 100);
+                };
+                requestAnimationFrame(complete);
+                this._timeout = setTimeout(complete, 100);
             });
         }
         cancelled = false;
@@ -2147,8 +2147,9 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    let cache = null;
     function $mol_support_css_overflow_anchor() {
-        return this.$mol_dom_context.CSS?.supports('overflow-anchor:auto') ?? false;
+        return cache ?? (cache = this.$mol_dom_context.CSS?.supports('overflow-anchor:auto') ?? false);
     }
     $.$mol_support_css_overflow_anchor = $mol_support_css_overflow_anchor;
 })($ || ($ = {}));
@@ -6193,13 +6194,11 @@ var $;
 var $;
 (function ($) {
     class $mol_scroll extends $mol_view {
-        minimal_height() {
-            return 0;
-        }
-        _event_scroll_timer(val) {
-            if (val !== undefined)
-                return val;
-            return null;
+        scroll_pos() {
+            return [
+                0,
+                0
+            ];
         }
         field() {
             return {
@@ -6234,9 +6233,6 @@ var $;
             return null;
         }
     }
-    __decorate([
-        $mol_mem
-    ], $mol_scroll.prototype, "_event_scroll_timer", null);
     __decorate([
         $mol_mem
     ], $mol_scroll.prototype, "scroll_top", null);
@@ -6324,22 +6320,21 @@ var $;
     var $$;
     (function ($$) {
         class $mol_scroll extends $.$mol_scroll {
+            scroll_pos(next) {
+                return $mol_state_session.value(`${this}.scroll_pos()`, next) || [0, 0];
+            }
             scroll_top(next) {
-                return $mol_state_session.value(`${this}.scroll_top()`, next) || 0;
+                return this.scroll_pos(next === undefined ? undefined : [this.scroll_left(), next])[1];
             }
             scroll_left(next) {
-                return $mol_state_session.value(`${this}.scroll_left()`, next) || 0;
-            }
-            _event_scroll_timer(next) {
-                return next;
+                return this.scroll_pos(next === undefined ? undefined : [next, this.scroll_top()])[0];
             }
             event_scroll(next) {
-                this._event_scroll_timer()?.destructor();
                 const el = this.dom_node();
-                this._event_scroll_timer(new $mol_after_timeout(200, () => {
-                    this.scroll_top(Math.max(0, el.scrollTop));
-                    this.scroll_left(Math.max(0, el.scrollLeft));
-                }));
+                this.scroll_pos([
+                    Math.max(0, el.scrollLeft),
+                    Math.max(0, el.scrollTop),
+                ]);
             }
             minimal_height() {
                 return this.$.$mol_print.active() ? null : 0;
@@ -6350,13 +6345,7 @@ var $;
         }
         __decorate([
             $mol_mem
-        ], $mol_scroll.prototype, "scroll_top", null);
-        __decorate([
-            $mol_mem
-        ], $mol_scroll.prototype, "scroll_left", null);
-        __decorate([
-            $mol_memo.method
-        ], $mol_scroll.prototype, "_event_scroll_timer", null);
+        ], $mol_scroll.prototype, "scroll_pos", null);
         $$.$mol_scroll = $mol_scroll;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
