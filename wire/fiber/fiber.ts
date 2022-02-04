@@ -232,7 +232,7 @@ namespace $ {
 		}
 		
 		up() {
-			
+
 			type Result = typeof this.cache
 			
 			if( this.cursor === $mol_wire_cursor.fresh ) return
@@ -255,7 +255,7 @@ namespace $ {
 
 			try {
 
-				result = this.task.call( this.host, ... this.args )
+				result = this.task.call( this.host, ... this.slice( 0 , this.pub_from ) as any as Args )
 				
 				if( result instanceof Promise ) {
 					

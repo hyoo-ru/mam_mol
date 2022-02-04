@@ -71,6 +71,7 @@ namespace $ {
 		}
 		
 		/// Name of element that created when element not found in DOM
+		@ $mol_memo.method
 		dom_name() {
 			return $mol_dom_qname( this.constructor.toString() ) || 'div'
 		}
@@ -229,10 +230,7 @@ namespace $ {
 		dom_node_actual() {
 			const node = this.dom_node()
 
-			$mol_dom_render_styles( node, {
-				minHeight: this.minimal_height(),
-				minWidth: this.minimal_width(),
-			} )
+			$mol_dom_render_styles( node, this.style_size() )
 
 			const attr = this.attr()
 			const style = this.style()
@@ -286,6 +284,7 @@ namespace $ {
 			return classes
 		}
 		
+		@ $mol_memo.method
 		view_names_owned() {
 			const names = [] as string[]
 			let owner = $mol_owning_get( this ) as $mol_wire_fiber< any, any[], any >
@@ -336,6 +335,15 @@ namespace $ {
 		
 		attr() {
 			return {}
+		}
+		
+		style_size() {
+			return {
+				minHeight: this.minimal_height(),
+				minWidth: this.minimal_width(),
+			} as {
+				[key: string]: string | number;
+			}
 		}
 		
 		style() : { [ key : string ] : string|number } {

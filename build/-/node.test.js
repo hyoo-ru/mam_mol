@@ -1390,7 +1390,7 @@ var $;
             const bu = this.track_on();
             let result;
             try {
-                result = this.task.call(this.host, ...this.args);
+                result = this.task.call(this.host, ...this.slice(0, this.pub_from));
                 if (result instanceof Promise) {
                     const put = (res) => {
                         if (this.cache === result)
@@ -8588,73 +8588,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_dom_qname(name) {
-        return name.replace(/\W/g, '').replace(/^(?=\d+)/, '_');
-    }
-    $.$mol_dom_qname = $mol_dom_qname;
-})($ || ($ = {}));
-//mol/dom/qname/qname.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dom_render_attributes(el, attrs) {
-        for (let name in attrs) {
-            let val = attrs[name];
-            if (val === null || val === false) {
-                if (!el.hasAttribute(name))
-                    continue;
-                el.removeAttribute(name);
-            }
-            else {
-                const str = String(val);
-                if (el.getAttribute(name) === str)
-                    continue;
-                el.setAttribute(name, str);
-            }
-        }
-    }
-    $.$mol_dom_render_attributes = $mol_dom_render_attributes;
-})($ || ($ = {}));
-//mol/dom/render/attributes/attributes.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dom_render_styles(el, styles) {
-        for (let name in styles) {
-            let val = styles[name];
-            const style = el.style;
-            if (typeof val === 'number') {
-                style[name] = `${val}px`;
-            }
-            else {
-                style[name] = val;
-            }
-        }
-    }
-    $.$mol_dom_render_styles = $mol_dom_render_styles;
-})($ || ($ = {}));
-//mol/dom/render/styles/styles.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dom_render_fields(el, fields) {
-        for (let key in fields) {
-            const val = fields[key];
-            if (val === undefined)
-                continue;
-            el[key] = val;
-        }
-    }
-    $.$mol_dom_render_fields = $mol_dom_render_fields;
-})($ || ($ = {}));
-//mol/dom/render/fields/fields.ts
-;
-"use strict";
-var $;
-(function ($) {
     $mol_test({
         'run callback'() {
             class Plus1 extends $mol_wrapper {
@@ -8851,6 +8784,73 @@ var $;
     $.$mol_memo = $mol_memo;
 })($ || ($ = {}));
 //mol/memo/memo.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_qname(name) {
+        return name.replace(/\W/g, '').replace(/^(?=\d+)/, '_');
+    }
+    $.$mol_dom_qname = $mol_dom_qname;
+})($ || ($ = {}));
+//mol/dom/qname/qname.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_render_attributes(el, attrs) {
+        for (let name in attrs) {
+            let val = attrs[name];
+            if (val === null || val === false) {
+                if (!el.hasAttribute(name))
+                    continue;
+                el.removeAttribute(name);
+            }
+            else {
+                const str = String(val);
+                if (el.getAttribute(name) === str)
+                    continue;
+                el.setAttribute(name, str);
+            }
+        }
+    }
+    $.$mol_dom_render_attributes = $mol_dom_render_attributes;
+})($ || ($ = {}));
+//mol/dom/render/attributes/attributes.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_render_styles(el, styles) {
+        for (let name in styles) {
+            let val = styles[name];
+            const style = el.style;
+            if (typeof val === 'number') {
+                style[name] = `${val}px`;
+            }
+            else {
+                style[name] = val;
+            }
+        }
+    }
+    $.$mol_dom_render_styles = $mol_dom_render_styles;
+})($ || ($ = {}));
+//mol/dom/render/styles/styles.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_render_fields(el, fields) {
+        for (let key in fields) {
+            const val = fields[key];
+            if (val === undefined)
+                continue;
+            el[key] = val;
+        }
+    }
+    $.$mol_dom_render_fields = $mol_dom_render_fields;
+})($ || ($ = {}));
+//mol/dom/render/fields/fields.ts
 ;
 "use strict";
 var $;
@@ -9173,10 +9173,7 @@ var $;
         }
         dom_node_actual() {
             const node = this.dom_node();
-            $mol_dom_render_styles(node, {
-                minHeight: this.minimal_height(),
-                minWidth: this.minimal_width(),
-            });
+            $mol_dom_render_styles(node, this.style_size());
             const attr = this.attr();
             const style = this.style();
             const fields = this.field();
@@ -9259,6 +9256,12 @@ var $;
         attr() {
             return {};
         }
+        style_size() {
+            return {
+                minHeight: this.minimal_height(),
+                minWidth: this.minimal_width(),
+            };
+        }
         style() {
             return {};
         }
@@ -9311,6 +9314,9 @@ var $;
         $mol_mem
     ], $mol_view.prototype, "focused", null);
     __decorate([
+        $mol_memo.method
+    ], $mol_view.prototype, "dom_name", null);
+    __decorate([
         $mol_mem
     ], $mol_view.prototype, "minimal_width", null);
     __decorate([
@@ -9334,6 +9340,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_view.prototype, "dom_node_actual", null);
+    __decorate([
+        $mol_memo.method
+    ], $mol_view.prototype, "view_names_owned", null);
     __decorate([
         $mol_memo.method
     ], $mol_view.prototype, "view_names", null);

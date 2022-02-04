@@ -36,6 +36,16 @@ namespace $ {
 		font_family() {
 			return ""
 		}
+		
+		/**
+		 * ```tree
+		 * style_size *
+		 * ```
+		 */
+		style_size() {
+			return {
+			}
+		}
 	}
 	
 }
