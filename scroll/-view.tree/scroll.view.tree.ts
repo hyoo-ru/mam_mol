@@ -17,38 +17,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * field *
-		 * 	^
-		 * 	scrollTop <= scroll_top?val
-		 * 	scrollLeft <= scroll_left?val
-		 * 	tabIndex <= tabindex
-		 * ```
-		 */
-		field() {
-			return {
-				...super.field(),
-				scrollTop: this.scroll_top(),
-				scrollLeft: this.scroll_left(),
-				tabIndex: this.tabindex()
-			}
-		}
-		
-		/**
-		 * ```tree
-		 * event *
-		 * 	^
-		 * 	scroll?event <=> event_scroll?event
-		 * ```
-		 */
-		event() {
-			return {
-				...super.event(),
-				scroll: (event?: any) => this.event_scroll(event)
-			}
-		}
-		
-		/**
-		 * ```tree
 		 * scroll_top?val 0
 		 * ```
 		 */
@@ -67,6 +35,34 @@ namespace $ {
 		scroll_left(val?: any) {
 			if ( val !== undefined ) return val as never
 			return 0
+		}
+		
+		/**
+		 * ```tree
+		 * field *
+		 * 	^
+		 * 	tabIndex <= tabindex
+		 * ```
+		 */
+		field() {
+			return {
+				...super.field(),
+				tabIndex: this.tabindex()
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * event *
+		 * 	^
+		 * 	scroll?event <=> event_scroll?event
+		 * ```
+		 */
+		event() {
+			return {
+				...super.event(),
+				scroll: (event?: any) => this.event_scroll(event)
+			}
 		}
 		
 		/**

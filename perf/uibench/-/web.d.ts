@@ -724,16 +724,14 @@ declare namespace $ {
 declare namespace $ {
     class $mol_scroll extends $mol_view {
         scroll_pos(): readonly any[];
+        scroll_top(val?: any): number;
+        scroll_left(val?: any): number;
         field(): {
-            scrollTop: number;
-            scrollLeft: number;
             tabIndex: number;
         };
         event(): {
             scroll: (event?: any) => any;
         };
-        scroll_top(val?: any): number;
-        scroll_left(val?: any): number;
         tabindex(): number;
         event_scroll(event?: any): any;
     }

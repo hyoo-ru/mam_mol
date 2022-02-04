@@ -24,6 +24,8 @@ namespace $.$$ {
 				Math.max( 0 , el.scrollTop ),
 			])
 			
+			this.dom_node_actual()
+			
 		}
 
 		minimal_height() {

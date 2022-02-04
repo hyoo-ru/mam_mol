@@ -2183,20 +2183,6 @@ var $;
                 0
             ];
         }
-        field() {
-            return {
-                ...super.field(),
-                scrollTop: this.scroll_top(),
-                scrollLeft: this.scroll_left(),
-                tabIndex: this.tabindex()
-            };
-        }
-        event() {
-            return {
-                ...super.event(),
-                scroll: (event) => this.event_scroll(event)
-            };
-        }
         scroll_top(val) {
             if (val !== undefined)
                 return val;
@@ -2206,6 +2192,18 @@ var $;
             if (val !== undefined)
                 return val;
             return 0;
+        }
+        field() {
+            return {
+                ...super.field(),
+                tabIndex: this.tabindex()
+            };
+        }
+        event() {
+            return {
+                ...super.event(),
+                scroll: (event) => this.event_scroll(event)
+            };
         }
         tabindex() {
             return -1;
@@ -2428,6 +2426,7 @@ var $;
                     Math.max(0, el.scrollLeft),
                     Math.max(0, el.scrollTop),
                 ]);
+                this.dom_node_actual();
             }
             minimal_height() {
                 return this.$.$mol_print.active() ? null : 0;
