@@ -3,7 +3,7 @@ namespace $.$$ {
 	export class $mol_scroll extends $.$mol_scroll {
 
 		@ $mol_mem
-		scroll_pos( next? : readonly [ number, number ] ) {
+		scroll_pos( next? : readonly number[] ) {
 			return $mol_state_session.value( `${ this }.scroll_pos()` , next ) || [ 0, 0 ]
 		}
 		
