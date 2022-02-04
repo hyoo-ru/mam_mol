@@ -2447,7 +2447,7 @@ var $;
                         break;
                     if (p === n)
                         continue;
-                    new $mol_after_frame(() => n.dom_node().scrollIntoView({ behavior: 'auto' }));
+                    new $mol_after_frame(() => n.dom_node().scrollIntoView({ behavior: 'smooth' }));
                     break;
                 }
                 return next;
