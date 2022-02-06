@@ -380,19 +380,20 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_wire_mem: <Keys extends number>(keys: Keys) => <Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (...args: any[]) => any>>(host: Host, field: Field, descr?: TypedPropertyDescriptor<Prop> | undefined) => {
-        value: (this: Host, ...args: any[]) => any;
+    function $mol_wire_mem<Keys extends number>(keys: Keys): <Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (...args: any[]) => any>>(host: Host, field: Field, descr?: TypedPropertyDescriptor<Prop> | undefined) => {
+        value: NonNullable<Prop>;
         enumerable?: boolean | undefined;
         configurable?: boolean | undefined;
         writable?: boolean | undefined;
         get?: (() => Prop) | undefined;
         set?: ((value: Prop) => void) | undefined;
     };
+    function $mol_wire_mem_func<Keys extends number>(keys: Keys): <Result, Args extends readonly unknown[], Func extends (...args: Args) => Result>(func: Func) => Func;
 }
 
 declare namespace $ {
     let $mol_mem: <Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (...args: any[]) => any>>(host: Host, field: Field, descr?: TypedPropertyDescriptor<Prop> | undefined) => {
-        value: (this: Host, ...args: any[]) => any;
+        value: NonNullable<Prop>;
         enumerable?: boolean | undefined;
         configurable?: boolean | undefined;
         writable?: boolean | undefined;
@@ -400,7 +401,7 @@ declare namespace $ {
         set?: ((value: Prop) => void) | undefined;
     };
     let $mol_mem_key: <Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (...args: any[]) => any>>(host: Host, field: Field, descr?: TypedPropertyDescriptor<Prop> | undefined) => {
-        value: (this: Host, ...args: any[]) => any;
+        value: NonNullable<Prop>;
         enumerable?: boolean | undefined;
         configurable?: boolean | undefined;
         writable?: boolean | undefined;
@@ -408,7 +409,7 @@ declare namespace $ {
         set?: ((value: Prop) => void) | undefined;
     };
     let $mol_mem_key2: <Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (...args: any[]) => any>>(host: Host, field: Field, descr?: TypedPropertyDescriptor<Prop> | undefined) => {
-        value: (this: Host, ...args: any[]) => any;
+        value: NonNullable<Prop>;
         enumerable?: boolean | undefined;
         configurable?: boolean | undefined;
         writable?: boolean | undefined;
@@ -416,7 +417,7 @@ declare namespace $ {
         set?: ((value: Prop) => void) | undefined;
     };
     let $mol_mem_key3: <Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (...args: any[]) => any>>(host: Host, field: Field, descr?: TypedPropertyDescriptor<Prop> | undefined) => {
-        value: (this: Host, ...args: any[]) => any;
+        value: NonNullable<Prop>;
         enumerable?: boolean | undefined;
         configurable?: boolean | undefined;
         writable?: boolean | undefined;

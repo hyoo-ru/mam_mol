@@ -1,47 +1,70 @@
 namespace $ {
 	
-	export let $mol_wire_mem = < Keys extends number >( keys: Keys ) => <
-		Host extends object ,
-		Field extends keyof Host ,
-		Prop extends Extract< Host[ Field ] , ( ... args: any[] )=> any >,
-	>(
-		host : Host ,
-		field : Field ,
-		descr? : TypedPropertyDescriptor< Prop >
-	)=> {
+	export function $mol_wire_mem< Keys extends number >( keys: Keys ) {
+		
+		const wrap = $mol_wire_mem_func( keys )
+	
+		return <
+			Host extends object ,
+			Field extends keyof Host ,
+			Prop extends Extract< Host[ Field ] , ( ... args: any[] )=> any >,
+		>(
+			host : Host ,
+			field : Field ,
+			descr? : TypedPropertyDescriptor< Prop >
+		)=> {
 
-		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
-		const orig = descr?.value! ?? host[ field ]
-		
-		const sup = Reflect.getPrototypeOf( host )!
-		if( typeof sup[ field as any ] === 'function' ) {
-			Object.defineProperty( orig , 'name' , { value : sup[ field as any ].name } )
-		}
-		
-		function value( this: Host, ... args: any[] ) {
+			if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
+			const orig = descr?.value! ?? host[ field ]
 			
-			let atom = $mol_wire_fiber.persist( this, orig, ... args.slice( 0, keys ) )
-			
-			if( args[ keys ] === undefined ) return atom.sync()
-			
-			try {
-				atom.sync()
-			} catch( error: unknown ) {
-				$mol_fail_log( error )
+			const sup = Reflect.getPrototypeOf( host )!
+			if( typeof sup[ field as any ] === 'function' ) {
+				Object.defineProperty( orig , 'name' , { value : sup[ field as any ].name } )
 			}
 			
-			return atom.recall( ... args )
+			const descr2 = {
+				... descr,
+				value: wrap( orig )
+			}
 			
+			Reflect.defineProperty( host, field, descr2 )
+			
+			return descr2
+
 		}
 		
-		Object.defineProperty( value , 'name' , { value : orig.name + ' ' } )
-		Object.assign( value, { orig } )
+	}
+	
+	export function $mol_wire_mem_func< Keys extends number >( keys: Keys ) {
 		
-		const descr2 = { ... descr, value }
-		Reflect.defineProperty( host, field, descr2 )
-		
-		return descr2
+		return <
+			Result,
+			Args extends readonly unknown[],
+			Func extends ( ... args: Args )=> Result
+		>( func: Func )=> {
+			
+			const wrapper = function( this: ThisParameterType< Func >, ... args: Parameters< Func > ){
+				
+				let atom = $mol_wire_fiber.persist( this, func, ... args.slice( 0, keys ) as any )
+				
+				if( args.length <= keys || args[ keys ] === undefined ) return atom.sync()
+				
+				try {
+					atom.sync()
+				} catch( error: unknown ) {
+					$mol_fail_log( error )
+				}
+				
+				return atom.recall( ... args as any )
 
+			}
+			
+			Object.defineProperty( wrapper , 'name' , { value : func.name + ' ' } )
+			Object.assign( wrapper, { orig: func } )
+			
+			return wrapper as unknown as Func
+		}
+		
 	}
 
 }

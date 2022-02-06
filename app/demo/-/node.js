@@ -1377,32 +1377,45 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_wire_mem = (keys) => (host, field, descr) => {
-        if (!descr)
-            descr = Reflect.getOwnPropertyDescriptor(host, field);
-        const orig = descr?.value ?? host[field];
-        const sup = Reflect.getPrototypeOf(host);
-        if (typeof sup[field] === 'function') {
-            Object.defineProperty(orig, 'name', { value: sup[field].name });
-        }
-        function value(...args) {
-            let atom = $mol_wire_fiber.persist(this, orig, ...args.slice(0, keys));
-            if (args[keys] === undefined)
-                return atom.sync();
-            try {
-                atom.sync();
+    function $mol_wire_mem(keys) {
+        const wrap = $mol_wire_mem_func(keys);
+        return (host, field, descr) => {
+            if (!descr)
+                descr = Reflect.getOwnPropertyDescriptor(host, field);
+            const orig = descr?.value ?? host[field];
+            const sup = Reflect.getPrototypeOf(host);
+            if (typeof sup[field] === 'function') {
+                Object.defineProperty(orig, 'name', { value: sup[field].name });
             }
-            catch (error) {
-                $mol_fail_log(error);
-            }
-            return atom.recall(...args);
-        }
-        Object.defineProperty(value, 'name', { value: orig.name + ' ' });
-        Object.assign(value, { orig });
-        const descr2 = { ...descr, value };
-        Reflect.defineProperty(host, field, descr2);
-        return descr2;
-    };
+            const descr2 = {
+                ...descr,
+                value: wrap(orig)
+            };
+            Reflect.defineProperty(host, field, descr2);
+            return descr2;
+        };
+    }
+    $.$mol_wire_mem = $mol_wire_mem;
+    function $mol_wire_mem_func(keys) {
+        return (func) => {
+            const wrapper = function (...args) {
+                let atom = $mol_wire_fiber.persist(this, func, ...args.slice(0, keys));
+                if (args.length <= keys || args[keys] === undefined)
+                    return atom.sync();
+                try {
+                    atom.sync();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                }
+                return atom.recall(...args);
+            };
+            Object.defineProperty(wrapper, 'name', { value: func.name + ' ' });
+            Object.assign(wrapper, { orig: func });
+            return wrapper;
+        };
+    }
+    $.$mol_wire_mem_func = $mol_wire_mem_func;
 })($ || ($ = {}));
 //mol/wire/mem/mem.ts
 ;
