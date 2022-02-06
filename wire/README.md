@@ -3,11 +3,10 @@
 Auto wiring modules. It gives ability to:
 
 - Make any state observable using only 1.5KB lib. [$hyoo_crowd](https://github.com/hyoo-ru/crowd.hyoo.ru) as example.
-- Automatic dynamic track runtime property value dependencies.
-- Memoize calculations with automatic revalidationn.
-- Convert sync API to async and vice versa.
-- Manage resources automatically with predictable deconstruction time.
-- Optimize execution of tasks.
+- Automatic dynamic track runtime value dependencies and optimize task execution order.
+- Memoize calculations with automatic revalidation. Yes, it completely solves [the first of hard problem in computer science](https://www.karlton.org/2017/12/naming-things-hard/).
+- Convert sync API to async and vice versa. Yes, it's a black magic of idempotence.
+- Manage resources automatically with predictable deconstruction moment. Yes, we don't rely on garbage collector.
 - Dramatically reduce source code size and increase reliability by implementing reactive architecture.
 
 ## Articles about
