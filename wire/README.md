@@ -18,42 +18,42 @@ Auto wiring modules. It gives ability to:
 
 ### Decorators
 
-- [$mol_wire_mem](./mem) - reactive memoizing property decorator
-- [$mol_wire_field](./field) - reactive memoizing field decorator
-- [$mol_wire_method](./method) - method decorator which run inside fiber
+- [$mol_wire_mem](https://github.com/hyoo-ru/mam_mol/tree/master/wire/mem) - reactive memoizing property decorator
+- [$mol_wire_field](https://github.com/hyoo-ru/mam_mol/tree/master/wire/field) - reactive memoizing field decorator
+- [$mol_wire_method](https://github.com/hyoo-ru/mam_mol/tree/master/wire/method) - method decorator which run inside fiber
 
 ### Proxies
 
-- [$mol_wire_sync](./sync) - converts async API to sync
-- [$mol_wire_async](./async) - converts sync API to async
+- [$mol_wire_sync](https://github.com/hyoo-ru/mam_mol/tree/master/wire/sync) - converts async API to sync
+- [$mol_wire_async](https://github.com/hyoo-ru/mam_mol/tree/master/wire/async) - converts sync API to async
 
 ### Functions
 
-- [$mol_wire_probe](./probe) - run code without state changes
-- [$mol_wire_solid](./solid) - make current fiber immortal
+- [$mol_wire_probe](https://github.com/hyoo-ru/mam_mol/tree/master/wire/probe) - run code without state changes
+- [$mol_wire_solid](https://github.com/hyoo-ru/mam_mol/tree/master/wire/solid) - make current fiber immortal
 
 ## Structures
 
-- [$mol_wire_set](./set) - reactive Set
-- [$mol_wire_dom](./dom) - reactive DOM
+- [$mol_wire_set](https://github.com/hyoo-ru/mam_mol/tree/master/wire/set) - reactive Set
+- [$mol_wire_dom](https://github.com/hyoo-ru/mam_mol/tree/master/wire/dom) - reactive DOM
 
 ## Low level API
 
 ### Pub/Sub
 
-- [$mol_wire_pub](./pub) - tiny publisher
-- [$mol_wire_sub](./sub) - generic subscriber interface
-- [$mol_wire_pub_sub](./pub/sub) - subscriber with retranslation support
+- [$mol_wire_pub](https://github.com/hyoo-ru/mam_mol/tree/master/wire/pub) - tiny publisher
+- [$mol_wire_sub](https://github.com/hyoo-ru/mam_mol/tree/master/wire/sub) - generic subscriber interface
+- [$mol_wire_pub_sub](https://github.com/hyoo-ru/mam_mol/tree/master/wire/pub/sub) - subscriber with retranslation support
 - `$mol_wire_auto` - current tracking subscriber
 
 ### Reactivity
 
-- [$mol_wire_fiber](./fiber) - pausable task with sync API
-- [$mol_wire_cursor](./cursor) - subscription statuses
+- [$mol_wire_fiber](https://github.com/hyoo-ru/mam_mol/tree/master/wire/fiber) - pausable task with sync API
+- [$mol_wire_cursor](https://github.com/hyoo-ru/mam_mol/tree/master/wire/cursor) - subscription statuses
 
 ## NPM Bundles
 
-### [mol_wire_lib](./lib)
+### [mol_wire_lib](https://github.com/hyoo-ru/mam_mol/tree/master/wire/lib)
 
 Lib with all production ready $mol_wire modules.
 
@@ -93,7 +93,7 @@ mem(1)( User.prototype, 'finger_exists' )
 action( User.prototype, 'finger_cut' )
 ```
 
-### [mol_wire_pub](./pub)
+### [mol_wire_pub](https://github.com/hyoo-ru/mam_mol/tree/master/wire/pub)
 
 Tiny lib to making any state observabe for other $mol_wire based libs.
 
@@ -125,7 +125,7 @@ export function decrease() {
 }
 ```
 
-### [mol_wire_dom](./dom)
+### [mol_wire_dom](https://github.com/hyoo-ru/mam_mol/tree/master/wire/dom)
 
 Lib to make real DOM reactive.
 
