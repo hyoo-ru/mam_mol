@@ -54,8 +54,93 @@ Auto wiring modules. It gives ability to:
 
 ## NPM Bundles
 
-- [mol_wire_lib](./lib) - lib with all this modules (7KB)
-- [mol_wire_pub](./pub) - tiny lib to making any state observabe (1.5KB)
+### [mol_wire_lib](./lib)
+
+Lib with all production ready $mol_wire modules.
+
+```sh
+npm install mol_wire_lib
+```
+
+[![](https://badgen.net/bundlephobia/minzip/mol_wire_lib)](https://bundlephobia.com/package/mol_wire_lib)
+
+```ts
+import {
+	$mol_wire_mem as mem,
+	$mol_wire_method as action,
+} from 'mol_wire_lib'
+
+class User {
+	@mem(0) age( next = 0 ) { return next }
+	@mem(1) finger_exists( id: string, next = true ) { return next }
+	@action finger_cut( id: string ) { this.finger_exists( id, false ) }
+}
+```
+
+```js
+const {
+	$mol_wire_mem: mem,
+	$mol_wire_method: actionn,
+} = require( 'mol_wire_lib' )
+
+class User {
+	age( next = 0 ) { return next }
+	finger_exists( id: string, next = true ) { return next }
+	finger_cut( id: string ) { this.finger_exists( id, false ) }
+}
+
+mem(0)( User.prototype, 'age' )
+mem(1)( User.prototype, 'finger_exists' )
+action( User.prototype, 'finger_cut' )
+```
+
+### [mol_wire_pub](./pub)
+
+Tiny lib to making any state observabe for other $mol_wire based libs.
+
+```sh
+npm install mol_wire_pub
+```
+
+[![](https://badgen.net/bundlephobia/minzip/mol_wire_pub)](https://bundlephobia.com/package/mol_wire_pub)
+
+```ts
+import { $mol_wire_pub as Publisher } from 'mol_wire_pub'
+
+let counter = 0
+const pub = new Publisher
+
+export function state() {
+	pub.track_promote()
+	return counter
+}
+
+export function increase() {
+	++ counter
+	pub.emit()
+}
+
+export function decrease() {
+	-- counter
+	pub.emit()
+}
+```
+
+### [mol_wire_dom](./dom)
+
+Lib to make real DOM reactive.
+
+```sh
+npm install mol_wire_domm
+```
+
+[![](https://badgen.net/bundlephobia/minzip/mol_wire_dom)](https://bundlephobia.com/package/mol_wire_dom)
+
+```ts
+import { $mol_wire_dom as reactivate } from 'mol_wire_dom'
+
+reactivate( document.body )
+```
 
 ## Close alternatives
 
