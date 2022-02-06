@@ -61,7 +61,7 @@ Lib with all production ready $mol_wire modules.
 npm install mol_wire_lib
 ```
 
-[![](https://badgen.net/bundlephobia/minzip/mol_wire_lib)](https://bundlephobia.com/package/mol_wire_lib)
+7KB [![](https://badgen.net/bundlephobia/minzip/mol_wire_lib)](https://bundlephobia.com/package/mol_wire_lib)
 
 ```ts
 import {
@@ -101,7 +101,7 @@ Tiny lib to making any state observabe for other $mol_wire based libs.
 npm install mol_wire_pub
 ```
 
-[![](https://badgen.net/bundlephobia/minzip/mol_wire_pub)](https://bundlephobia.com/package/mol_wire_pub)
+1.5KB [![](https://badgen.net/bundlephobia/minzip/mol_wire_pub)](https://bundlephobia.com/package/mol_wire_pub)
 
 ```ts
 import { $mol_wire_pub as Publisher } from 'mol_wire_pub'
@@ -133,7 +133,7 @@ Lib to make real DOM reactive.
 npm install mol_wire_domm
 ```
 
-[![](https://badgen.net/bundlephobia/minzip/mol_wire_dom)](https://bundlephobia.com/package/mol_wire_dom)
+7.5KB [![](https://badgen.net/bundlephobia/minzip/mol_wire_dom)](https://bundlephobia.com/package/mol_wire_dom)
 
 ```ts
 import { $mol_wire_dom as reactivate } from 'mol_wire_dom'
