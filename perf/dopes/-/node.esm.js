@@ -1089,15 +1089,15 @@ var $;
             let dict, key, existen, fiber;
             if (args.length) {
                 key = `${host}.${task.name}(${args.map(v => $mol_key(v)).join(',')})`;
-                dict = Object.getOwnPropertyDescriptor(host, field)?.value;
+                dict = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
                 if (dict)
                     existen = dict.get(key);
                 else
-                    dict = host[field] = new Map();
+                    dict = (host ?? task)[field] = new Map();
             }
             else {
                 key = `${host}.${field}`;
-                existen = Object.getOwnPropertyDescriptor(host, field)?.value;
+                existen = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
             }
             reuse: if (existen) {
                 if (!(existen instanceof $mol_wire_fiber))
@@ -1112,7 +1112,7 @@ var $;
             if (args.length)
                 dict.set(key, fiber);
             else
-                host[field] = fiber;
+                (host ?? task)[field] = fiber;
             return fiber;
         }
         static warm = true;
@@ -1181,10 +1181,12 @@ var $;
             }
             if (this.persist) {
                 if (this.pub_from === 0) {
-                    this.host[this.field()] = null;
+                    ;
+                    (this.host ?? this.task)[this.field()] = null;
                 }
                 else {
-                    this.host[this.field()].delete(this[Symbol.toStringTag]);
+                    ;
+                    (this.host ?? this.task)[this.field()].delete(this[Symbol.toStringTag]);
                 }
             }
         }
@@ -1203,7 +1205,7 @@ var $;
             return $mol_dev_format_div({}, $mol_dev_format_native(this), $mol_dev_format_shade(this.cursor.toString() + ' '), $mol_dev_format_auto(this.cache));
         }
         get $() {
-            return this.host['$'];
+            return (this.host ?? this.task)['$'];
         }
         affect(quant) {
             if (!super.affect(quant))

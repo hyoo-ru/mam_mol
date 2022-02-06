@@ -58,15 +58,15 @@ namespace $ {
 			if( args.length ) {
 
 				key = `${ host }.${ task.name }(${ args.map( v => $mol_key( v ) ).join(',') })`
-				dict = Object.getOwnPropertyDescriptor( host, field )?.value
+				dict = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
 				
 				if( dict ) existen = dict.get( key )
-				else dict = host[ field ] = new Map<any,any>()
+				else dict = ( host ?? task )[ field ] = new Map<any,any>()
 				
 			} else {
 				
 				key = `${ host }.${ field }`
-				existen = Object.getOwnPropertyDescriptor( host, field )?.value
+				existen = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
 				
 			}
 			
@@ -83,7 +83,7 @@ namespace $ {
 			fiber = new this( host, task, key, ... args )
 			
 			if( args.length ) dict.set( key, fiber )
-			else host[ field ] = fiber
+			else ( host ?? task )[ field ] = fiber
 			
 			return fiber
 		}
@@ -181,9 +181,9 @@ namespace $ {
 			
 			if( this.persist ) {
 				if( this.pub_from === 0 ) {
-					this.host[ this.field() ] = null
+					;( this.host ?? this.task )[ this.field() ] = null
 				} else {
-					this.host[ this.field() ].delete( this[ Symbol.toStringTag ] )
+					;( this.host ?? this.task )[ this.field() ].delete( this[ Symbol.toStringTag ] )
 				}
 			}
 			
@@ -212,7 +212,7 @@ namespace $ {
 		}
 		
 		get $() {
-			return this.host['$']
+			return ( this.host ?? this.task )['$']
 		}
 		
 		affect( quant: number ) {
