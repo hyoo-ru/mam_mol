@@ -7,6 +7,7 @@
 	vertical-align: top;
 	min-height: max-content;
 	white-space: pre-wrap;
+	border-radius: var(--mol_gap_round);
 }
 
 [mol_textarea_view] {
