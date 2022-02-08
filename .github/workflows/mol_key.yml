@@ -6,7 +6,7 @@ on:
     branches: 
       - master
     paths:
-      - '.github/workflows/molkey.yml'
+      - '.github/workflows/mol_key.yml'
       - 'key/**'
   pull_request:
   schedule:
