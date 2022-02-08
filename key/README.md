@@ -6,3 +6,18 @@ Returns string key for any value.
 - POJO's are returned as JSON with recursive `$mol_key` applying (`[123,{"foo":"A1B2C3D4"}]`, `{"foo":[123,"A1B2C3D4"]}"`).
 - Result of `toJSON` calling is returned for objects with this method.
 - Guid generated/reused for other objects (`"A1B2C3D4"`).
+
+## NPM Usage
+
+```ts
+npm install mol_key
+```
+
+7KB [![](https://badgen.net/bundlephobia/minzip/mol_key)](https://bundlephobia.com/package/mol_key)
+
+```ts
+import { $mol_key as key } from 'mol_key'
+
+// {"regexp":"/foo/","elems":["04Y7LLST","XMSPWAKY"]}
+key({ regexp: /foo/, elems: [ document.head, document.body ] })
+```
