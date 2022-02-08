@@ -1082,13 +1082,13 @@ var $;
                     break reuse;
                 return existen;
             }
-            return new this(host, task, host + '.' + task.name + '(#)', ...args);
+            return new this(host, task, `${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, ...args);
         }
         static persist(host, task, ...args) {
             const field = task.name + '()';
             let dict, key, existen, fiber;
             if (args.length) {
-                key = `${host}.${task.name}(${args.map(v => $mol_key(v)).join(',')})`;
+                key = `${host?.[Symbol.toStringTag] ?? host}.${task.name}(${args.map(v => $mol_key(v)).join(',')})`;
                 dict = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
                 if (dict)
                     existen = dict.get(key);
@@ -1096,7 +1096,7 @@ var $;
                     dict = (host ?? task)[field] = new Map();
             }
             else {
-                key = `${host}.${field}`;
+                key = `${host?.[Symbol.toStringTag] ?? host}.${field}`;
                 existen = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
             }
             reuse: if (existen) {

@@ -38,7 +38,7 @@ namespace $ {
 				return existen
 			}
 			
-			return new this( host, task, host + '.' + task.name + '(#)', ... args )
+			return new this( host, task, `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, ... args )
 		}
 		
 		static persist<
@@ -57,7 +57,7 @@ namespace $ {
 			
 			if( args.length ) {
 
-				key = `${ host }.${ task.name }(${ args.map( v => $mol_key( v ) ).join(',') })`
+				key = `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(${ args.map( v => $mol_key( v ) ).join(',') })`
 				dict = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
 				
 				if( dict ) existen = dict.get( key )
@@ -65,7 +65,7 @@ namespace $ {
 				
 			} else {
 				
-				key = `${ host }.${ field }`
+				key = `${ host?.[ Symbol.toStringTag ] ?? host }.${ field }`
 				existen = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
 				
 			}
