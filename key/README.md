@@ -13,7 +13,7 @@ Returns string key for any value.
 npm install mol_key
 ```
 
-7KB [![](https://badgen.net/bundlephobia/minzip/mol_key)](https://bundlephobia.com/package/mol_key)
+1KB [![](https://badgen.net/bundlephobia/minzip/mol_key)](https://bundlephobia.com/package/mol_key)
 
 ```ts
 import { $mol_key as key } from 'mol_key'
