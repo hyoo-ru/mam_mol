@@ -1,0 +1,33 @@
+name: mol_key
+
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - master
+    paths:
+      - '.github/workflows/molkey.yml'
+      - 'key/**'
+  pull_request:
+  schedule:
+    - cron: "0 7 * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - uses: managedkaos/print-env@v1.0
+    
+    - uses: hyoo-ru/mam_build@master2
+      with:
+        package: mol
+        modules: key
+    
+    - uses: JS-DevTools/npm-publish@v1
+      if: ${{ github.ref == 'refs/heads/master' }}
+      with:
+        token: ${{ secrets.NPM_AUTH_TOKEN }}
+        package: ./mol/key/-/package.json
