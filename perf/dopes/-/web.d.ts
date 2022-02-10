@@ -342,6 +342,7 @@ declare namespace $ {
         plan(): void;
         reap(): void;
         toString(): any;
+        toJSON(): any;
         get $(): any;
         affect(quant: number): boolean;
         down(): void;

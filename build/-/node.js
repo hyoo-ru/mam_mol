@@ -869,7 +869,8 @@ var $;
         cursor = $mol_wire_cursor.stale;
         get pub_list() {
             const res = [];
-            for (let i = this.pub_from; i < this.sub_from; i += 2) {
+            const max = this.cursor >= 0 ? this.cursor : this.sub_from;
+            for (let i = this.pub_from; i < max; i += 2) {
                 res.push(this[i]);
             }
             return res;
@@ -1362,6 +1363,9 @@ var $;
             $mol_wire_fiber.plan();
         }
         toString() {
+            return this[Symbol.toStringTag];
+        }
+        toJSON() {
             return this[Symbol.toStringTag];
         }
         [$mol_dev_format_head]() {
