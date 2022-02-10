@@ -869,9 +869,10 @@ var $;
             return this.task.name + '()';
         }
         constructor(host, task, id, ...args) {
-            super(...args, undefined);
+            super(...args, undefined, undefined);
             this.host = host;
             this.task = task;
+            this.pop();
             this.pop();
             this.pub_from = this.sub_from = args.length;
             this[Symbol.toStringTag] = id;

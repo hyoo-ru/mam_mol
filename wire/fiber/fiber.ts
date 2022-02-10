@@ -164,10 +164,16 @@ namespace $ {
 			id: string,
 			... args: Args
 		) {
-			super( ... args as any, undefined as any )
-			this.pop() // reserve capacity for subscriber
+			
+			super( ... args as any, undefined as any, undefined as any )
+			
+			// reserve capacity for first subscriber
+			this.pop()
+			this.pop()
+			
 			this.pub_from = this.sub_from = args.length
 			this[ Symbol.toStringTag ] = id
+			
 		}
 		
 		destructor() {
