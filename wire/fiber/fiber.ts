@@ -208,6 +208,10 @@ namespace $ {
 		toString() {
 			return this[ Symbol.toStringTag ]
 		}
+		
+		toJSON() {
+			return this[ Symbol.toStringTag ]
+		}
 
 		[ $mol_dev_format_head ]() {
 			return $mol_dev_format_div( {},
