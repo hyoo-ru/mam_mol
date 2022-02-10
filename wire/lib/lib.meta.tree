@@ -8,3 +8,4 @@ include \/mol/wire/async
 include \/mol/wire/mem
 include \/mol/wire/field
 include \/mol/wire/method
+include \/mol/wait/timeout
