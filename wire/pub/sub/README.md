@@ -9,7 +9,7 @@ Tiny pub/sub with automatic wiring support.
 ## Handling events
 
 ```ts
-class Logger extends $mol_pub_sub {
+class Logger extends $mol_wire_pub_sub {
 	
 	affect( quant?: number ) {
 		
@@ -29,14 +29,14 @@ const susi = new Logger
 ## Auto wire
 
 ```ts
-const susi = new $mol_pub_sub
-const pepe = new $mol_pub
+const susi = new $mol_wire_pub_sub
+const pepe = new $mol_wire_pub
 
 const backup = susi.track_on() // Begin auto wire
 try {
 	pepe.promote() // Auto subscribe Susi to Pepe
 } finally {
-	susi.track_cut( backup ) // Unsubscribe Susi from unpromoted pubs
+	susi.track_cut() // Unsubscribe Susi from unpromoted pubs
 	susi.track_off( backup ) // Stop auto wire
 }
 ```
