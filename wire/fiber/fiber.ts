@@ -377,7 +377,7 @@ namespace $ {
 				return this.result as Awaited< Result >
 			}
 			
-			this.track_promote()
+			this.promote()
 			this.up()
 			
 			if( this.cache instanceof Error ) {

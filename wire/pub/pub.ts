@@ -1,7 +1,7 @@
 namespace $ {
 	
 	/**
-	 * Collects subscribers in compact array. 24B
+	 * Collects subscribers in compact array. 28B
 	 */
 	export class $mol_wire_pub extends Array< unknown > {
 		
@@ -71,7 +71,7 @@ namespace $ {
 		/**
 		 * Autowire this publisher with current subscriber.
 		 **/
-		track_promote() {
+		promote() {
 			$mol_wire_auto?.track_next( this )
 		}
 		

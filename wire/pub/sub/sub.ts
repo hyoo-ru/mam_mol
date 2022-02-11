@@ -28,13 +28,13 @@ namespace $ {
 			return sub
 		}
 		
-		track_promote() {
+		promote() {
 			
 			if( this.cursor >= this.pub_from ) {
 				$mol_fail( new Error( 'Circular subscription' ) )
 			}
 			
-			super.track_promote()
+			super.promote()
 		}
 		
 		track_next( pub?: $mol_wire_pub ): $mol_wire_pub | null {

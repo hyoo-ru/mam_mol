@@ -6,22 +6,22 @@ namespace $ {
 		// Accessors
 		
 		has( value: Value ) {
-			this.pub.track_promote()
+			this.pub.promote()
 			return super.has( value )
 		}
 		
 		entries() {
-			this.pub.track_promote()
+			this.pub.promote()
 			return super.entries()
 		}
 		
 		keys() {
-			this.pub.track_promote()
+			this.pub.promote()
 			return super.keys()
 		}
 		
 		values() {
-			this.pub.track_promote()
+			this.pub.promote()
 			return super.values()
 		}
 		
@@ -29,17 +29,17 @@ namespace $ {
 			task: ( value: Value, value2: Value, set: Set< Value > ) => void,
 			self?: any
 		) {
-			this.pub.track_promote()
+			this.pub.promote()
 			super.forEach( task, self )
 		}
 		
 		[Symbol.iterator]() {
-			this.pub.track_promote()
+			this.pub.promote()
 			return super[Symbol.iterator]()
 		}
 		
 		get size() {
-			this.pub.track_promote()
+			this.pub.promote()
 			return super.size	
 		}
 

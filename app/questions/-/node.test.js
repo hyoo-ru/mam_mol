@@ -523,7 +523,7 @@ var $;
                 this.reap();
         }
         reap() { }
-        track_promote() {
+        promote() {
             $mol_wire_auto?.track_next(this);
         }
         up() { }
@@ -696,11 +696,11 @@ var $;
             $mol_wire_auto = this;
             return sub;
         }
-        track_promote() {
+        promote() {
             if (this.cursor >= this.pub_from) {
                 $mol_fail(new Error('Circular subscription'));
             }
-            super.track_promote();
+            super.promote();
         }
         track_next(pub) {
             if (this.cursor < 0)
@@ -1293,7 +1293,7 @@ var $;
             if (!$mol_wire_fiber.warm) {
                 return this.result;
             }
-            this.track_promote();
+            this.promote();
             this.up();
             if (this.cache instanceof Error) {
                 return $mol_fail_hidden(this.cache);
@@ -8045,9 +8045,9 @@ var $;
             const sub = new $mol_wire_pub_sub;
             const bu1 = sub.track_on();
             try {
-                pub1.track_promote();
-                pub2.track_promote();
-                pub2.track_promote();
+                pub1.promote();
+                pub2.promote();
+                pub2.promote();
             }
             finally {
                 sub.track_cut();
@@ -8058,9 +8058,9 @@ var $;
             $mol_assert_like(sub.pub_list, [pub1, pub2, pub2]);
             const bu2 = sub.track_on();
             try {
-                pub1.track_promote();
-                pub1.track_promote();
-                pub2.track_promote();
+                pub1.promote();
+                pub1.promote();
+                pub2.promote();
             }
             finally {
                 sub.track_cut();
@@ -8077,7 +8077,7 @@ var $;
             try {
                 const bu2 = sub2.track_on();
                 try {
-                    $mol_assert_fail(() => sub1.track_promote(), 'Circular subscription');
+                    $mol_assert_fail(() => sub1.promote(), 'Circular subscription');
                 }
                 finally {
                     sub2.track_cut();

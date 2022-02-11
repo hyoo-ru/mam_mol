@@ -525,7 +525,7 @@ var $;
                 this.reap();
         }
         reap() { }
-        track_promote() {
+        promote() {
             $mol_wire_auto?.track_next(this);
         }
         up() { }
@@ -698,11 +698,11 @@ var $;
             $mol_wire_auto = this;
             return sub;
         }
-        track_promote() {
+        promote() {
             if (this.cursor >= this.pub_from) {
                 $mol_fail(new Error('Circular subscription'));
             }
-            super.track_promote();
+            super.promote();
         }
         track_next(pub) {
             if (this.cursor < 0)
@@ -1299,7 +1299,7 @@ var $;
             if (!$mol_wire_fiber.warm) {
                 return this.result;
             }
-            this.track_promote();
+            this.promote();
             this.up();
             if (this.cache instanceof Error) {
                 return $mol_fail_hidden(this.cache);

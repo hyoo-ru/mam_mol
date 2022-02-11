@@ -217,7 +217,7 @@ declare namespace $ {
         sub_on(sub: $mol_wire_pub, pub_pos: number): number;
         sub_off(sub_pos: number): void;
         reap(): void;
-        track_promote(): void;
+        promote(): void;
         up(): void;
         down(): void;
         emit(): void;
@@ -278,7 +278,7 @@ declare namespace $ {
         protected cursor: $mol_wire_cursor;
         get pub_list(): $mol_wire_pub[];
         track_on(): $mol_wire_sub | null;
-        track_promote(): void;
+        promote(): void;
         track_next(pub?: $mol_wire_pub): $mol_wire_pub | null;
         track_off(sub: $mol_wire_sub | null): void;
         pub_off(sub_pos: number): void;

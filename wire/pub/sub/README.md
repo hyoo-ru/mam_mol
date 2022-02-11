@@ -34,7 +34,7 @@ const pepe = new $mol_pub
 
 const backup = susi.track_on() // Begin auto wire
 try {
-	pepe.track_promote() // Auto subscribe Susi to Pepe
+	pepe.promote() // Auto subscribe Susi to Pepe
 } finally {
 	susi.track_cut( backup ) // Unsubscribe Susi from unpromoted pubs
 	susi.track_off( backup ) // Stop auto wire

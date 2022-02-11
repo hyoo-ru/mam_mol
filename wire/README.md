@@ -110,7 +110,7 @@ let counter = 0
 const pub = new Publisher
 
 export function state() {
-	pub.track_promote()
+	pub.promote()
 	return counter
 }
 

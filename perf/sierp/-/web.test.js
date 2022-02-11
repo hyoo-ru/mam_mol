@@ -711,9 +711,9 @@ var $;
             const sub = new $mol_wire_pub_sub;
             const bu1 = sub.track_on();
             try {
-                pub1.track_promote();
-                pub2.track_promote();
-                pub2.track_promote();
+                pub1.promote();
+                pub2.promote();
+                pub2.promote();
             }
             finally {
                 sub.track_cut();
@@ -724,9 +724,9 @@ var $;
             $mol_assert_like(sub.pub_list, [pub1, pub2, pub2]);
             const bu2 = sub.track_on();
             try {
-                pub1.track_promote();
-                pub1.track_promote();
-                pub2.track_promote();
+                pub1.promote();
+                pub1.promote();
+                pub2.promote();
             }
             finally {
                 sub.track_cut();
@@ -743,7 +743,7 @@ var $;
             try {
                 const bu2 = sub2.track_on();
                 try {
-                    $mol_assert_fail(() => sub1.track_promote(), 'Circular subscription');
+                    $mol_assert_fail(() => sub1.promote(), 'Circular subscription');
                 }
                 finally {
                     sub2.track_cut();
