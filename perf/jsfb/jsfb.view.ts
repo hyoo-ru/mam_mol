@@ -75,7 +75,7 @@ namespace $.$$ {
 			const ids = this.ids()
 			if( ids.length < 999 ) return
 			
-			this.ids([ ids[0], ids[998], ... ids.slice( 2, 998 ), ids[1], ids[999] ])
+			this.ids([ ids[0], ids[998], ... ids.slice( 2, 998 ), ids[1], ... ids.slice(999) )
 			
 		}
 		
