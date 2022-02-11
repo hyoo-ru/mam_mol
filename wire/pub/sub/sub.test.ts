@@ -10,9 +10,9 @@ namespace $ {
 			const bu1 = sub.track_on()
 			try {
 				
-				pub1.track_promote()
-				pub2.track_promote()
-				pub2.track_promote()
+				pub1.promote()
+				pub2.promote()
+				pub2.promote()
 				
 			} finally {
 				
@@ -29,9 +29,9 @@ namespace $ {
 			const bu2 = sub.track_on()
 			try {
 				
-				pub1.track_promote()
-				pub1.track_promote()
-				pub2.track_promote()
+				pub1.promote()
+				pub1.promote()
+				pub2.promote()
 				
 			} finally {
 				
@@ -58,7 +58,7 @@ namespace $ {
 				const bu2 = sub2.track_on()
 				try {
 					
-					$mol_assert_fail( ()=> sub1.track_promote(), 'Circular subscription' )
+					$mol_assert_fail( ()=> sub1.promote(), 'Circular subscription' )
 					
 				} finally {
 					
