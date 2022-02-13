@@ -48,7 +48,7 @@ namespace $ {
 			
 			const wrapper = function( this: Host, ... args: Parameters< Func > ){
 				
-				let atom = persist.call( this, ... args.slice( 0, keys ) as Args )
+				let atom = persist( this, args.slice( 0, keys ) as Args )
 				
 				if( args.length <= keys || args[ keys ] === undefined ) return atom.sync()
 				
