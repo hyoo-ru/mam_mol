@@ -1740,7 +1740,7 @@ var $;
         return (func) => {
             const persist = $mol_wire_fiber.persist(func, keys);
             const wrapper = function (...args) {
-                let atom = persist.call(this, ...args.slice(0, keys));
+                let atom = persist(this, args.slice(0, keys));
                 if (args.length <= keys || args[keys] === undefined)
                     return atom.sync();
                 try {

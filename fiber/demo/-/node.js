@@ -779,31 +779,31 @@ var $;
         static persist(task, keys) {
             const field = task.name + '()';
             if (keys) {
-                return function $mol_wire_fiber_persist(...args) {
+                return function $mol_wire_fiber_persist(host, args) {
                     let dict, key, fiber;
-                    key = `${this?.[Symbol.toStringTag] ?? this}.${task.name}(${args.map(v => $mol_key(v)).join(',')})`;
-                    dict = Object.getOwnPropertyDescriptor(this ?? task, field)?.value;
+                    key = `${host?.[Symbol.toStringTag] ?? host}.${task.name}(${args.map(v => $mol_key(v)).join(',')})`;
+                    dict = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
                     if (dict) {
                         const existen = dict.get(key);
                         if (existen)
                             return existen;
                     }
                     else {
-                        dict = (this ?? task)[field] = new Map();
+                        dict = (host ?? task)[field] = new Map();
                     }
-                    fiber = new $mol_wire_fiber(this, task, key, ...args);
+                    fiber = new $mol_wire_fiber(host, task, key, ...args);
                     dict.set(key, fiber);
                     return fiber;
                 };
             }
             else {
-                return function $mol_wire_fiber_persist(...args) {
-                    const existen = Object.getOwnPropertyDescriptor(this ?? task, field)?.value;
+                return function $mol_wire_fiber_persist(host, args) {
+                    const existen = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
                     if (existen)
                         return existen;
-                    const key = `${this?.[Symbol.toStringTag] ?? this}.${field}`;
-                    const fiber = new $mol_wire_fiber(this, task, key, ...args);
-                    (this ?? task)[field] = fiber;
+                    const key = `${host?.[Symbol.toStringTag] ?? host}.${field}`;
+                    const fiber = new $mol_wire_fiber(host, task, key, ...args);
+                    (host ?? task)[field] = fiber;
                     return fiber;
                 };
             }

@@ -16,7 +16,7 @@ namespace $ {
 		const persist = $mol_wire_fiber.persist( _get, 0 )
 		
 		const _set = descr?.set || function( this : Host , next ) {
-			persist.call( this ).put( next )
+			persist( this, [] ).put( next )
 		}
 
 		const sup = Reflect.getPrototypeOf( host )!
@@ -26,7 +26,7 @@ namespace $ {
 		Object.defineProperty( _set , 'name' , { value : sup_descr?.set?.name ?? field } )
 		
 		function get( this: Host ) {
-			return persist.call( this ).sync()
+			return persist( this, [] ).sync()
 		}
 		
 		function set( this: Host, next: Value ) {
