@@ -318,7 +318,7 @@ declare namespace $ {
         readonly host: Host;
         readonly task: (this: Host, ...args: Args) => Result;
         static temp<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result, ...args: Args): $mol_wire_fiber<Host, [...Args], Result>;
-        static persist<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result, ...args: Args): $mol_wire_fiber<Host, [...Args], Result>;
+        static persist<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result, keys: number): (this: Host, ...args: Args) => $mol_wire_fiber<Host, [...Args], Result>;
         static warm: boolean;
         static planning: $mol_wire_fiber<any, any, any>[];
         static reaping: $mol_wire_fiber<any, any, any>[];
@@ -364,7 +364,7 @@ declare namespace $ {
         get?: (() => Prop) | undefined;
         set?: ((value: Prop) => void) | undefined;
     };
-    function $mol_wire_mem_func<Keys extends number>(keys: Keys): <Result, Args extends readonly unknown[], Func extends (...args: Args) => Result>(func: Func) => Func;
+    function $mol_wire_mem_func<Keys extends number>(keys: Keys): <Result, Host, Args extends unknown[], Func extends (this: Host, ...args: Args) => Result>(func: Func) => Func;
 }
 
 declare namespace $ {

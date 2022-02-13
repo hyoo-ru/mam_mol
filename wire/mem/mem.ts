@@ -39,13 +39,16 @@ namespace $ {
 		
 		return <
 			Result,
-			Args extends readonly unknown[],
-			Func extends ( ... args: Args )=> Result
+			Host,
+			Args extends unknown[],
+			Func extends ( this: Host, ... args: Args )=> Result
 		>( func: Func )=> {
 			
-			const wrapper = function( this: ThisParameterType< Func >, ... args: Parameters< Func > ){
+			const persist = $mol_wire_fiber.persist( func, keys )
+			
+			const wrapper = function( this: Host, ... args: Parameters< Func > ){
 				
-				let atom = $mol_wire_fiber.persist( this, func, ... args.slice( 0, keys ) as any )
+				let atom = persist.call( this, ... args.slice( 0, keys ) as Args )
 				
 				if( args.length <= keys || args[ keys ] === undefined ) return atom.sync()
 				

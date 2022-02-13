@@ -203,7 +203,7 @@ declare namespace $ {
         readonly host: Host;
         readonly task: (this: Host, ...args: Args) => Result;
         static temp<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result, ...args: Args): $mol_wire_fiber<Host, [...Args], Result>;
-        static persist<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result, ...args: Args): $mol_wire_fiber<Host, [...Args], Result>;
+        static persist<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result, keys: number): (this: Host, ...args: Args) => $mol_wire_fiber<Host, [...Args], Result>;
         static warm: boolean;
         static planning: $mol_wire_fiber<any, any, any>[];
         static reaping: $mol_wire_fiber<any, any, any>[];

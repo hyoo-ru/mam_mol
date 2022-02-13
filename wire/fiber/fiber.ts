@@ -46,46 +46,51 @@ namespace $ {
 			Args extends readonly unknown[],
 			Result,
 		>(
-			host: Host,
 			task: ( this : Host , ... args : Args )=> Result,
-			... args: Args
-		): $mol_wire_fiber< Host, [ ... Args ], Result > {
+			keys: number,
+		): ( this: Host, ... args: Args )=> $mol_wire_fiber< Host, [ ... Args ], Result > {
 			
 			const field = task.name + '()'
 			
-			let dict, key, existen, fiber
-			
-			if( args.length ) {
-
-				key = `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(${ args.map( v => $mol_key( v ) ).join(',') })`
-				dict = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
+			if( keys ) {
 				
-				if( dict ) existen = dict.get( key )
-				else dict = ( host ?? task )[ field ] = new Map<any,any>()
+				return function $mol_wire_fiber_persist( this: Host, ... args: Args ) {
+					
+					let dict, key!: string, fiber
+					
+					key = `${ this?.[ Symbol.toStringTag ] ?? this }.${ task.name }(${ args.map( v => $mol_key( v ) ).join(',') })`
+					dict = Object.getOwnPropertyDescriptor( this ?? task, field )?.value
+					
+					if( dict ) {
+						const existen = dict.get( key )
+						if( existen ) return existen
+					} else {
+						dict = ( this ?? task )[ field ] = new Map<any,any>()
+					}
+					
+					fiber = new $mol_wire_fiber( this, task, key, ... args )
+					dict.set( key, fiber )
+					
+					return fiber
+				}
 				
 			} else {
 				
-				key = `${ host?.[ Symbol.toStringTag ] ?? host }.${ field }`
-				existen = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
+				return function $mol_wire_fiber_persist( this: Host, ... args: Args ) {
+					
+					const existen = Object.getOwnPropertyDescriptor( this ?? task, field )?.value
+					if( existen ) return existen
+					
+					const key = `${ this?.[ Symbol.toStringTag ] ?? this }.${ field }`
+					
+					const fiber = new $mol_wire_fiber( this, task, key, ... args )
+					;( this ?? task )[ field ] = fiber
+					
+					return fiber
+				}
 				
 			}
 			
-			reuse: if( existen ) {
-				
-				if(!( existen instanceof $mol_wire_fiber )) break reuse
-			
-				if( existen.host !== host ) break reuse
-				if( existen.task !== task ) break reuse
-				
-				return existen
-			}
-			
-			fiber = new this( host, task, key, ... args )
-			
-			if( args.length ) dict.set( key, fiber )
-			else ( host ?? task )[ field ] = fiber
-			
-			return fiber
 		}
 		
 		static warm = true
