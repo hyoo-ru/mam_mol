@@ -219,11 +219,20 @@ namespace $ {
 		}
 
 		[ $mol_dev_format_head ]() {
+			
+			const cursor = {
+				[-1]: '🔴',
+				[-2]: '🟡',
+				[-3]: '🟢',
+				[-4]: '🔵',
+			}[ this.cursor ] ?? this.cursor.toString()
+			
 			return $mol_dev_format_div( {},
 				$mol_dev_format_native( this ),
-				$mol_dev_format_shade( this.cursor.toString() + ' ' ),
+				$mol_dev_format_shade( cursor + ' ' ),
 				$mol_dev_format_auto( this.cache ),
 			)
+			
 		}
 		
 		get $() {

@@ -421,18 +421,10 @@ var $;
 (function ($) {
     let $mol_wire_cursor;
     (function ($mol_wire_cursor) {
-        $mol_wire_cursor[$mol_wire_cursor["stale"] = new (class stale extends Number {
-            toString() { return '🔴'; }
-        })(-1)] = "stale";
-        $mol_wire_cursor[$mol_wire_cursor["doubt"] = new (class doubt extends Number {
-            toString() { return '🟡'; }
-        })(-2)] = "doubt";
-        $mol_wire_cursor[$mol_wire_cursor["fresh"] = new (class fresh extends Number {
-            toString() { return '🟢'; }
-        })(-3)] = "fresh";
-        $mol_wire_cursor[$mol_wire_cursor["final"] = new (class solid extends Number {
-            toString() { return '🔵'; }
-        })(-4)] = "final";
+        $mol_wire_cursor[$mol_wire_cursor["stale"] = -1] = "stale";
+        $mol_wire_cursor[$mol_wire_cursor["doubt"] = -2] = "doubt";
+        $mol_wire_cursor[$mol_wire_cursor["fresh"] = -3] = "fresh";
+        $mol_wire_cursor[$mol_wire_cursor["final"] = -4] = "final";
     })($mol_wire_cursor = $.$mol_wire_cursor || ($.$mol_wire_cursor = {}));
 })($ || ($ = {}));
 //mol/wire/cursor/cursor.ts
@@ -724,16 +716,9 @@ var $;
             this.sub_from = this.cursor;
         }
         absorb(quant = $mol_wire_cursor.stale) {
-            switch (this.cursor) {
-                case $mol_wire_cursor.final:
-                    return false;
-                case $mol_wire_cursor.stale:
-                    return false;
-                case $mol_wire_cursor.doubt:
-                    if (quant === $mol_wire_cursor.doubt)
-                        return false;
-            }
-            if (typeof this.cursor === 'number')
+            if (this.cursor === $mol_wire_cursor.final)
+                return false;
+            if (this.cursor >= quant)
                 return false;
             this.cursor = quant;
             return super.absorb(quant);
@@ -1135,7 +1120,13 @@ var $;
             return this[Symbol.toStringTag];
         }
         [$mol_dev_format_head]() {
-            return $mol_dev_format_div({}, $mol_dev_format_native(this), $mol_dev_format_shade(this.cursor.toString() + ' '), $mol_dev_format_auto(this.cache));
+            const cursor = {
+                [-1]: '🔴',
+                [-2]: '🟡',
+                [-3]: '🟢',
+                [-4]: '🔵',
+            }[this.cursor] ?? this.cursor.toString();
+            return $mol_dev_format_div({}, $mol_dev_format_native(this), $mol_dev_format_shade(cursor + ' '), $mol_dev_format_auto(this.cache));
         }
         get $() {
             return (this.host ?? this.task)['$'];

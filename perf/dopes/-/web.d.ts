@@ -194,10 +194,10 @@ declare namespace $ {
 
 declare namespace $ {
     enum $mol_wire_cursor {
-        stale,
-        doubt,
-        fresh,
-        final
+        stale = -1,
+        doubt = -2,
+        fresh = -3,
+        final = -4
     }
 }
 
