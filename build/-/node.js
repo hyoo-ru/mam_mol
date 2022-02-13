@@ -713,26 +713,14 @@ var $;
         }
         up() { }
         down() { }
-        emit() {
+        emit(quant = $mol_wire_cursor.stale) {
             for (let i = this.sub_from; i < this.length; i += 2) {
                 ;
-                this[i].stale();
+                this[i].absorb(quant);
             }
         }
-        stale() {
-            if (!this.affect($mol_wire_cursor.stale))
-                return false;
-            while ($mol_wire_affected.length) {
-                const next = $mol_wire_affected.pop();
-                next.affect($mol_wire_cursor.doubt);
-            }
-            return true;
-        }
-        affect(quant) {
-            for (let i = this.sub_from; i < this.length; i += 2) {
-                const sub = this[i];
-                $mol_wire_affected.push(sub);
-            }
+        absorb(quant = $mol_wire_cursor.stale) {
+            this.emit($mol_wire_cursor.doubt);
             return true;
         }
         peer_move(from_pos, to_pos) {
@@ -969,13 +957,20 @@ var $;
             }
             this.sub_from = this.cursor;
         }
-        affect(quant) {
-            if (this.cursor === $mol_wire_cursor.final)
-                return false;
-            if (this.cursor >= quant)
+        absorb(quant = $mol_wire_cursor.stale) {
+            switch (this.cursor) {
+                case $mol_wire_cursor.final:
+                    return false;
+                case $mol_wire_cursor.stale:
+                    return false;
+                case $mol_wire_cursor.doubt:
+                    if (quant === $mol_wire_cursor.doubt)
+                        return false;
+            }
+            if (typeof this.cursor === 'number')
                 return false;
             this.cursor = quant;
-            return super.affect(quant);
+            return super.absorb(quant);
         }
         [$mol_dev_format_head]() {
             return $mol_dev_format_native(this);
@@ -1375,8 +1370,8 @@ var $;
         get $() {
             return (this.host ?? this.task)['$'];
         }
-        affect(quant) {
-            if (!super.affect(quant))
+        absorb(quant = $mol_wire_cursor.stale) {
+            if (!super.absorb(quant))
                 return false;
             if (this.sub_from === this.length) {
                 this.plan();
@@ -1424,7 +1419,7 @@ var $;
                 if (result instanceof Promise && !handled.has(result)) {
                     result = Object.assign(result.finally(() => {
                         if (this.cache === result)
-                            this.stale();
+                            this.absorb();
                     }), {
                         destructor: result['destructor']
                     });

@@ -88,35 +88,17 @@ namespace $ {
 		/**
 		 * Notify subscribers about self changes.
 		 */
-		emit() {
+		emit( quant = $mol_wire_cursor.stale ) {
 			for( let i = this.sub_from; i < this.length; i += 2 ) {
-				;( this[i] as $mol_wire_pub ).stale()
+				;( this[i] as $mol_wire_pub ).absorb( quant )
 			}
 		}
 		
 		/**
 		 * Receive notification about publisher changes.
 		 */
-		stale() {
-			
-			if( !this.affect( $mol_wire_cursor.stale ) ) return false
-			
-			while( $mol_wire_affected.length ) {
-				const next = $mol_wire_affected.pop()! as $mol_wire_sub
-				next.affect( $mol_wire_cursor.doubt )
-			}
-			
-			return true
-		}
-		
-		/**
-		 * Add self subscribers to affection queue.
-		 */
-		affect( quant: number ) {
-			for( let i = this.sub_from; i < this.length; i += 2 ) {
-				const sub = this[i] as $mol_wire_sub
-				$mol_wire_affected.push( sub )
-			}
+		absorb( quant = $mol_wire_cursor.stale ) {
+			this.emit( $mol_wire_cursor.doubt )
 			return true
 		}
 		

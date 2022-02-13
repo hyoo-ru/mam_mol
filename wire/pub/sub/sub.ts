@@ -164,13 +164,21 @@ namespace $ {
 			
 		}
 
-		affect( quant: number ) {
+		absorb( quant = $mol_wire_cursor.stale ) {
 			
-			if( this.cursor === $mol_wire_cursor.final ) return false
-			if( this.cursor >= quant ) return false
+			switch( this.cursor ) {
+				case $mol_wire_cursor.final:
+					return false
+				case $mol_wire_cursor.stale:
+					return false
+				case $mol_wire_cursor.doubt:
+					if( quant === $mol_wire_cursor.doubt ) return false
+			}
+			
+			if( typeof this.cursor === 'number' ) return false
 			this.cursor = quant
 			
-			return super.affect( quant )
+			return super.absorb( quant )
 		}
 		
 		[ $mol_dev_format_head ]() {
