@@ -230,9 +230,9 @@ namespace $ {
 			return ( this.host ?? this.task )['$']
 		}
 		
-		affect( quant: number ) {
+		absorb( quant = $mol_wire_cursor.stale ) {
 
-			if( !super.affect( quant ) ) return false
+			if( !super.absorb( quant ) ) return false
 			
 			if( this.sub_from === this.length ) {
 				this.plan()
@@ -293,7 +293,7 @@ namespace $ {
 				if( result instanceof Promise && !handled.has( result ) ) {
 					
 					result = Object.assign( result.finally( ()=> {
-						if( this.cache === result ) this.stale()
+						if( this.cache === result ) this.absorb()
 					} ), {
 						destructor: result['destructor']
 					} )

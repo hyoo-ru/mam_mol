@@ -43,7 +43,7 @@ namespace $ {
 			set: next => {
 				if( typeof next === 'function' ) {
 					task = next
-					atom.stale()
+					atom.absorb()
 					atom.up()
 				} else {
 					if( atom.cache === next ) return
@@ -54,7 +54,7 @@ namespace $ {
 		
 		if( task ) atom.up()
 		
-		return ()=> atom.stale()
+		return ()=> atom.absorb()
 	}
 	
 	function rekids< El extends Element >( el: El ) {
@@ -84,7 +84,7 @@ namespace $ {
 			set: next => {
 				if( typeof next === 'function' ) {
 					task = next
-					atom.stale()
+					atom.absorb()
 					atom.up()
 				} else {
 					atom.recall( next )
@@ -92,9 +92,9 @@ namespace $ {
 			},
 		} )
 		
-		el.addEventListener( 'DOMSubtreeModified', ()=> atom.stale() )
+		el.addEventListener( 'DOMSubtreeModified', ()=> atom.absorb() )
 		
-		return ()=> atom.stale()		
+		return ()=> atom.absorb()
 	}
 	
 	function redefine( this: Element, field: string, getter: ()=> any ) {
