@@ -100,10 +100,6 @@ var $;
                 this[i].absorb(quant);
             }
         }
-        absorb(quant = $mol_wire_cursor.stale) {
-            this.emit($mol_wire_cursor.doubt);
-            return true;
-        }
         peer_move(from_pos, to_pos) {
             const peer = this[from_pos];
             const self_pos = this[from_pos + 1];
@@ -340,11 +336,11 @@ var $;
         }
         absorb(quant = $mol_wire_cursor.stale) {
             if (this.cursor === $mol_wire_cursor.final)
-                return false;
+                return;
             if (this.cursor >= quant)
-                return false;
+                return;
             this.cursor = quant;
-            return super.absorb(quant);
+            this.emit($mol_wire_cursor.doubt);
         }
         [$mol_dev_format_head]() {
             return $mol_dev_format_native(this);
@@ -910,13 +906,11 @@ var $;
         get $() {
             return (this.host ?? this.task)['$'];
         }
-        absorb(quant = $mol_wire_cursor.stale) {
-            if (!super.absorb(quant))
-                return false;
-            if (this.sub_from === this.length) {
+        emit(quant = $mol_wire_cursor.stale) {
+            if (this.sub_empty)
                 this.plan();
-            }
-            return true;
+            else
+                super.emit(quant);
         }
         down() {
             if (this.persist)

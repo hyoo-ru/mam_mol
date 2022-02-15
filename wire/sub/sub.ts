@@ -28,6 +28,11 @@ namespace $ {
 		track_off( sub: $mol_wire_pub | null ): void
 		
 		/**
+		 * Receive notification about publisher changes.
+		 */
+		absorb( quant: $mol_wire_cursor ): void
+		
+		/**
 		 * Unsubscribes from all publishers.
 		 */
 		destructor(): void

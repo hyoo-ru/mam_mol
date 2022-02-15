@@ -214,7 +214,6 @@ declare namespace $ {
         up(): void;
         down(): void;
         emit(quant?: $mol_wire_cursor): void;
-        absorb(quant?: $mol_wire_cursor): boolean;
         peer_move(from_pos: number, to_pos: number): void;
         peer_repos(peer_pos: number, self_pos: number): void;
     }
@@ -227,6 +226,7 @@ declare namespace $ {
         pub_off(pub_pos: number): void;
         track_cut(sub: $mol_wire_pub | null): void;
         track_off(sub: $mol_wire_pub | null): void;
+        absorb(quant: $mol_wire_cursor): void;
         destructor(): void;
     }
 }
@@ -276,7 +276,7 @@ declare namespace $ {
         pub_off(sub_pos: number): void;
         destructor(): void;
         track_cut(): void;
-        absorb(quant?: $mol_wire_cursor): boolean;
+        absorb(quant?: $mol_wire_cursor): void;
         get pub_empty(): boolean;
     }
 }
@@ -343,7 +343,7 @@ declare namespace $ {
         toString(): any;
         toJSON(): any;
         get $(): any;
-        absorb(quant?: $mol_wire_cursor): boolean;
+        emit(quant?: $mol_wire_cursor): void;
         down(): void;
         up(): void;
         put(next: Result | Error | Promise<Result | Error>): Result | Error | Promise<Result | Error>;
