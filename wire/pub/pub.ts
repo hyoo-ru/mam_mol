@@ -90,16 +90,8 @@ namespace $ {
 		 */
 		emit( quant = $mol_wire_cursor.stale ) {
 			for( let i = this.sub_from; i < this.length; i += 2 ) {
-				;( this[i] as $mol_wire_pub ).absorb( quant )
+				;( this[i] as $mol_wire_sub ).absorb( quant )
 			}
-		}
-		
-		/**
-		 * Receive notification about publisher changes.
-		 */
-		absorb( quant = $mol_wire_cursor.stale ) {
-			this.emit( $mol_wire_cursor.doubt )
-			return true
 		}
 		
 		/**

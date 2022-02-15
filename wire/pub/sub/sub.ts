@@ -166,11 +166,11 @@ namespace $ {
 
 		absorb( quant = $mol_wire_cursor.stale ) {
 			
-			if( this.cursor === $mol_wire_cursor.final ) return false
-			if( this.cursor >= quant ) return false
+			if( this.cursor === $mol_wire_cursor.final ) return
+			if( this.cursor >= quant ) return
 			
 			this.cursor = quant
-			return super.absorb( quant )
+			this.emit( $mol_wire_cursor.doubt )
 			
 		}
 		

@@ -239,15 +239,9 @@ namespace $ {
 			return ( this.host ?? this.task )['$']
 		}
 		
-		absorb( quant = $mol_wire_cursor.stale ) {
-
-			if( !super.absorb( quant ) ) return false
-			
-			if( this.sub_from === this.length ) {
-				this.plan()
-			}
-			
-			return true
+		emit( quant = $mol_wire_cursor.stale ) {
+			if( this.sub_empty ) this.plan()
+			else super.emit( quant )
 		}
 		
 		down() {
