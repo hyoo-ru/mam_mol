@@ -82,7 +82,7 @@ var $;
         }
         reap() { }
         promote() {
-            $mol_wire_auto?.track_next(this);
+            $mol_wire_auto()?.track_next(this);
         }
         up() { }
         down() { }
@@ -113,7 +113,11 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_wire_auto = null;
+    let auto = null;
+    function $mol_wire_auto(next = auto) {
+        return auto = next;
+    }
+    $.$mol_wire_auto = $mol_wire_auto;
     $.$mol_wire_affected = [];
 })($ || ($ = {}));
 //mol/wire/wire.ts
@@ -234,8 +238,8 @@ var $;
         }
         track_on() {
             this.cursor = this.pub_from;
-            const sub = $mol_wire_auto;
-            $mol_wire_auto = this;
+            const sub = $mol_wire_auto();
+            $mol_wire_auto(this);
             return sub;
         }
         promote() {
@@ -277,7 +281,7 @@ var $;
             return pub;
         }
         track_off(sub) {
-            $mol_wire_auto = sub;
+            $mol_wire_auto(sub);
             if (this.cursor < 0) {
                 $mol_fail(new Error('End of non begun sub'));
             }
@@ -750,7 +754,7 @@ var $;
         host;
         task;
         static temp(host, task, ...args) {
-            const existen = $mol_wire_auto?.track_next();
+            const existen = $mol_wire_auto()?.track_next();
             reuse: if (existen) {
                 if (!(existen instanceof $mol_wire_fiber))
                     break reuse;
@@ -3067,7 +3071,7 @@ var $;
                 this.watch()?.();
             }
             finally {
-                for (const pub of $mol_wire_auto.pub_list) {
+                for (const pub of $mol_wire_auto().pub_list) {
                     if (pub instanceof $mol_wire_fiber) {
                         this.track(pub);
                     }

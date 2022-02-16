@@ -72,7 +72,7 @@ namespace $ {
 		 * Autowire this publisher with current subscriber.
 		 **/
 		promote() {
-			$mol_wire_auto?.track_next( this )
+			$mol_wire_auto()?.track_next( this )
 		}
 		
 		/**

@@ -25,7 +25,7 @@ namespace $ {
 			... args: Args
 		): $mol_wire_fiber< Host, [ ... Args ], Result > {
 			
-			const existen = $mol_wire_auto?.track_next()
+			const existen = $mol_wire_auto()?.track_next()
 			
 			reuse: if( existen ) {
 				
