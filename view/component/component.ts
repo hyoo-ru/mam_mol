@@ -29,7 +29,7 @@ namespace $ {
 						
 				}
 				
-				this.root = $mol_wire_auto
+				this.root = $mol_wire_auto()
 				
 				try {
 					this.view.dom_tree()

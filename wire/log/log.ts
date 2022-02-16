@@ -41,7 +41,7 @@ namespace $ {
 			try {
 				this.watch()?.()
 			} finally {
-				for( const pub of ( $mol_wire_auto as $mol_wire_fiber< any, any, any > ).pub_list ) {
+				for( const pub of ( $mol_wire_auto() as $mol_wire_fiber< any, any, any > ).pub_list ) {
 					if( pub instanceof $mol_wire_fiber ) {
 						this.track( pub )
 					}

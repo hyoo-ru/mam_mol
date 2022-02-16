@@ -23,8 +23,8 @@ namespace $ {
 		
 		track_on() {
 			this.cursor = this.pub_from
-			const sub = $mol_wire_auto
-			$mol_wire_auto = this
+			const sub = $mol_wire_auto()
+			$mol_wire_auto( this )
 			return sub
 		}
 		
@@ -84,7 +84,7 @@ namespace $ {
 		
 		track_off( sub: $mol_wire_sub | null ) {
 			
-			$mol_wire_auto = sub
+			$mol_wire_auto( sub )
 			
 			if( this.cursor < 0 ) {
 				$mol_fail( new Error( 'End of non begun sub' ) )
