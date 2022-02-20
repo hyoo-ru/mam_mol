@@ -20,3 +20,7 @@
 [mol_number_string]::-webkit-inner-spin-button {
 	display: none;
 }
+
+[mol_number_string]:disabled {
+	text-align: left;
+}
