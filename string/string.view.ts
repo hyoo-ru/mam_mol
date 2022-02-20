@@ -8,6 +8,10 @@ namespace $.$$ {
 			this.value( ( next.target as HTMLInputElement ).value )
 			this.selection_change( next )
 		}
+		
+		hint_normalized() {
+			return this.enabled() ? this.hint() : ''
+		}
 
 		disabled() {
 			return !this.enabled()
