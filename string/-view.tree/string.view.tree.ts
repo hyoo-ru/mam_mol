@@ -66,7 +66,7 @@ namespace $ {
 		 * 	^
 		 * 	disabled <= disabled
 		 * 	value <= value_changed?val
-		 * 	placeholder <= hint
+		 * 	placeholder <= hint_visible
 		 * 	spellcheck <= spellcheck
 		 * 	autocomplete <= autocomplete_native
 		 * 	selectionEnd <= selection_end
@@ -78,7 +78,7 @@ namespace $ {
 				...super.field(),
 				disabled: this.disabled(),
 				value: this.value_changed(),
-				placeholder: this.hint(),
+				placeholder: this.hint_visible(),
 				spellcheck: this.spellcheck(),
 				autocomplete: this.autocomplete_native(),
 				selectionEnd: this.selection_end(),
@@ -173,7 +173,16 @@ namespace $ {
 		 * ```
 		 */
 		hint() {
-			return " "
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * hint_visible <= hint
+		 * ```
+		 */
+		hint_visible() {
+			return this.hint()
 		}
 		
 		/**

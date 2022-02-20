@@ -19,7 +19,7 @@ $mol_string $mol_view
 		^
 		disabled <= disabled false
 		value <= value_changed?val <=> value?val \
-		placeholder <= hint \ 
+		placeholder <= hint_visible <= hint \
 		spellcheck <= spellcheck false
 		autocomplete <= autocomplete_native \
 		selectionEnd <= selection_end 0

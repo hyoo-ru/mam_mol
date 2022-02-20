@@ -826,6 +826,7 @@ declare namespace $ {
         value(val?: any): string;
         value_changed(val?: any): string;
         hint(): string;
+        hint_visible(): string;
         spellcheck(): boolean;
         autocomplete_native(): string;
         selection_end(): number;
@@ -873,6 +874,7 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_string extends $.$mol_string {
         event_change(next?: Event): void;
+        hint_visible(): string;
         disabled(): boolean;
         autocomplete_native(): "on" | "off";
         selection_watcher(): $mol_dom_listener;
