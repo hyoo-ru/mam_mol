@@ -9,14 +9,6 @@ namespace $.$$ {
 			this.value( ( Number( this.value() ) || 0 ) + this.precision_change() )
 		}
 
-		controls() {
-			if (! this.enabled()) return []
-			return [
-				this.Dec(),
-				this.Inc(),
-			]
-		}
-
 		value_string( next? : string ) {
 			if( next !== void 0 ) {
 				this.value( next === '' ? null : Number( next ) )

@@ -14,13 +14,13 @@
 	appearance: textfield;
 	flex: 1 1 7rem;
 	width: 7rem;
-	text-align: right;
 }
 
 [mol_number_string]::-webkit-inner-spin-button {
 	display: none;
 }
 
-[mol_number_string]:disabled {
-	text-align: left;
+[mol_number_inc][disabled],
+[mol_number_dec][disabled] {
+	visibility: hidden;
 }

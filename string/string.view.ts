@@ -8,7 +8,7 @@ namespace $.$$ {
 			this.value( ( next.target as HTMLInputElement ).value )
 			this.selection_change( next )
 		}
-		
+
 		disabled() {
 			return !this.enabled()
 		}
