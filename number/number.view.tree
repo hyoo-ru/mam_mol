@@ -4,6 +4,8 @@ $mol_number $mol_view
 	value?val NaN
 	sub /
 		<= String $mol_string
+			- \ we don't want native number controls in mobile devices
+			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
 			type \tel
 			value?val <=> value_string?val \
 			hint <= hint \ 

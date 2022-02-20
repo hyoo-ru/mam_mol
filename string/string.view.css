@@ -15,6 +15,7 @@
 	background: var(--mol_theme_hover);
 	min-width: 0;
 	color: var(--mol_theme_control);
+	box-shadow: inset 0 0 0 1px var(--mol_theme_line);
 }
 
 [mol_string]:disabled {
@@ -24,7 +25,6 @@
 
 [mol_string]:placeholder-shown {
 	background: var(--mol_theme_field);
-	box-shadow: inset 0 0 0 1px var(--mol_theme_line);
 }
 
 [mol_string]:focus {
