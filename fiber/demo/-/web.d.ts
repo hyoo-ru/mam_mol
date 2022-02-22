@@ -195,8 +195,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_wire_fiber<Host, Args extends readonly unknown[], Result> extends $mol_wire_pub_sub {
-        readonly host: Host;
         readonly task: (this: Host, ...args: Args) => Result;
+        readonly host: Host;
         static temp<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result, ...args: Args): $mol_wire_fiber<Host, [...Args], Result>;
         static persist<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result, keys: number): (host: Host, args: Args) => $mol_wire_fiber<Host, [...Args], Result>;
         static warm: boolean;
@@ -210,7 +210,7 @@ declare namespace $ {
         get result(): Result | undefined;
         get persist(): boolean;
         field(): string;
-        constructor(host: Host, task: (this: Host, ...args: Args) => Result, id: string, ...args: Args);
+        constructor(id: string, task: (this: Host, ...args: Args) => Result, host: Host, ...args: Args);
         destructor(): void;
         plan(): void;
         reap(): void;

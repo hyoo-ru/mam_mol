@@ -1048,8 +1048,8 @@ var $;
 (function ($) {
     const handled = new WeakSet();
     class $mol_wire_fiber extends $mol_wire_pub_sub {
-        host;
         task;
+        host;
         static temp(host, task, ...args) {
             const existen = $mol_wire_auto()?.track_next();
             reuse: if (existen) {
@@ -1063,7 +1063,7 @@ var $;
                     break reuse;
                 return existen;
             }
-            return new this(host, task, `${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, ...args);
+            return new this(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, ...args);
         }
         static persist(task, keys) {
             const field = task.name + '()';
@@ -1080,7 +1080,7 @@ var $;
                     else {
                         dict = (host ?? task)[field] = new Map();
                     }
-                    fiber = new $mol_wire_fiber(host, task, key, ...args);
+                    fiber = new $mol_wire_fiber(key, task, host, ...args);
                     dict.set(key, fiber);
                     return fiber;
                 };
@@ -1091,7 +1091,7 @@ var $;
                     if (existen)
                         return existen;
                     const key = `${host?.[Symbol.toStringTag] ?? host}.${field}`;
-                    const fiber = new $mol_wire_fiber(host, task, key, ...args);
+                    const fiber = new $mol_wire_fiber(key, task, host, ...args);
                     (host ?? task)[field] = fiber;
                     return fiber;
                 };
@@ -1147,10 +1147,10 @@ var $;
         field() {
             return this.task.name + '()';
         }
-        constructor(host, task, id, ...args) {
+        constructor(id, task, host, ...args) {
             super(...args, undefined, undefined);
-            this.host = host;
             this.task = task;
+            this.host = host;
             this.pop();
             this.pop();
             this.pub_from = this.sub_from = args.length;
