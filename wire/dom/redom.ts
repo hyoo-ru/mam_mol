@@ -24,7 +24,7 @@ namespace $ {
 		let task = Reflect.getOwnPropertyDescriptor( el, field )?.get
 		
 		const atom = new $mol_wire_fiber< typeof el, [] | [ string ], string >(
-			el,
+			el.id + '.' + field,
 			function( this: typeof el, next?: any ) {
 				
 				let res = task?.() ?? next
@@ -34,7 +34,7 @@ namespace $ {
 				return res
 				
 			},
-			el.id + '.' + field,
+			el,
 		)
 		
 		Object.defineProperty( el, field, {
@@ -63,7 +63,7 @@ namespace $ {
 		let task = ( next: any )=> next
 		
 		const atom = new $mol_wire_fiber< typeof el, [] | [ ArrayLike<ChildNode> ], NodeListOf<ChildNode> >(
-			el,
+			el.id + '.childNodes',
 			function( this: typeof el, next?: any ) {
 				
 				const res = task( next ) as ChildNode[]
@@ -75,7 +75,7 @@ namespace $ {
 				return kids
 				
 			},
-			el.id + '.childNodes',
+			el,
 		)
 		
 		Object.defineProperty( el, 'childNodes', {
