@@ -273,7 +273,7 @@ namespace $ {
 
 			try {
 
-				result = this.task.call( this.host!, ... this.slice( 0 , this.pub_from ) as any as Args )
+				result = this.task.call( this.host!, ... ( this.pub_from ? this.slice( 0 , this.pub_from ) : [] ) as any as Args )
 				
 				if( result instanceof Promise ) {
 					
