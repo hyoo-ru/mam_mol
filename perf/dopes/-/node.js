@@ -1228,7 +1228,7 @@ var $;
             const bu = this.track_on();
             let result;
             try {
-                result = this.task.call(this.host, ...this.slice(0, this.pub_from));
+                result = this.task.call(this.host, ...(this.pub_from ? this.slice(0, this.pub_from) : []));
                 if (result instanceof Promise) {
                     const put = (res) => {
                         if (this.cache === result)
