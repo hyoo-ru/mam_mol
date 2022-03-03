@@ -1799,6 +1799,18 @@ var $;
             }
             return node;
         }
+        dom_final() {
+            this.render();
+            const sub = this.sub_visible();
+            if (!sub)
+                return;
+            for (const el of sub) {
+                if (el && typeof el === 'object' && 'dom_final' in el) {
+                    el['dom_final']();
+                }
+            }
+            return this.dom_node();
+        }
         dom_tree(next) {
             const node = this.dom_node(next);
             try {
@@ -1993,10 +2005,16 @@ var $;
     ], $mol_view.prototype, "dom_node", null);
     __decorate([
         $mol_mem
+    ], $mol_view.prototype, "dom_final", null);
+    __decorate([
+        $mol_mem
     ], $mol_view.prototype, "dom_tree", null);
     __decorate([
         $mol_mem
     ], $mol_view.prototype, "dom_node_actual", null);
+    __decorate([
+        $mol_mem
+    ], $mol_view.prototype, "render", null);
     __decorate([
         $mol_memo.method
     ], $mol_view.prototype, "view_names_owned", null);

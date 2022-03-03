@@ -16,4 +16,5 @@ interface $node {
 	"cors" : typeof import( "cors" )
 	"body-parser" : typeof import( "body-parser" )
 	"serve-index" : typeof import( "serve-index" )
+	"puppeteer" : typeof import( "puppeteer" )
 }

@@ -1829,6 +1829,18 @@ var $;
             }
             return node;
         }
+        dom_final() {
+            this.render();
+            const sub = this.sub_visible();
+            if (!sub)
+                return;
+            for (const el of sub) {
+                if (el && typeof el === 'object' && 'dom_final' in el) {
+                    el['dom_final']();
+                }
+            }
+            return this.dom_node();
+        }
         dom_tree(next) {
             const node = this.dom_node(next);
             try {
@@ -2023,10 +2035,16 @@ var $;
     ], $mol_view.prototype, "dom_node", null);
     __decorate([
         $mol_mem
+    ], $mol_view.prototype, "dom_final", null);
+    __decorate([
+        $mol_mem
     ], $mol_view.prototype, "dom_tree", null);
     __decorate([
         $mol_mem
     ], $mol_view.prototype, "dom_node_actual", null);
+    __decorate([
+        $mol_mem
+    ], $mol_view.prototype, "render", null);
     __decorate([
         $mol_memo.method
     ], $mol_view.prototype, "view_names_owned", null);
@@ -3735,6 +3753,7 @@ var $;
         static relative(path) {
             throw new Error('Not implemented yet');
         }
+        static base = '';
         path() {
             return '.';
         }
@@ -4301,7 +4320,7 @@ var $;
             });
         }
         static relative(path) {
-            return this.absolute($node.path.resolve(path).replace(/\\/g, '/'));
+            return this.absolute($node.path.resolve(this.base, path).replace(/\\/g, '/'));
         }
         watcher() {
             const watcher = $node.chokidar.watch(this.path(), {
@@ -4463,10 +4482,10 @@ var $;
             return 'en';
         }
         static lang(next) {
-            return $mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
+            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
         }
         static source(lang) {
-            return JSON.parse($mol_file.relative(`web.locale=${lang}.json`).text().toString());
+            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
         }
         static texts(lang, next) {
             if (next)
@@ -5263,9 +5282,6 @@ var $;
 var $;
 (function ($) {
     class $mol_paragraph extends $mol_view {
-        dom_name() {
-            return "p";
-        }
         line_height() {
             return 24;
         }
@@ -7581,8 +7597,8 @@ var $;
             },
             events: [{
                     device: {
-                        locale: navigator.language,
-                        userAgent: navigator.userAgent,
+                        locale: $mol_dom_context.navigator.language,
+                        userAgent: $mol_dom_context.navigator.userAgent,
                         time: new Date().toISOString(),
                     },
                     context: doc?.activeElement?.id,
@@ -7605,7 +7621,7 @@ var $;
                     },
                 }],
         };
-        if (location.hostname === 'localhost') {
+        if ($mol_dom_context.location.hostname === 'localhost') {
             console.debug('Error report', report);
         }
         else {
@@ -13031,7 +13047,7 @@ var $;
         static match(query, next) {
             if (next !== undefined)
                 return next;
-            const res = this.$.$mol_dom_context.matchMedia(query);
+            const res = this.$.$mol_dom_context.matchMedia?.(query) ?? {};
             res.onchange = () => this.match(query, res.matches);
             return res.matches;
         }

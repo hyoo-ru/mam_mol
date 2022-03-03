@@ -16,8 +16,8 @@ namespace $ {
 			},
 			events: [{
 				device: {
-					locale: navigator.language,
-					userAgent: navigator.userAgent,
+					locale: $mol_dom_context.navigator.language,
+					userAgent: $mol_dom_context.navigator.userAgent,
 					time: new Date().toISOString(),
 				},
 				context: doc?.activeElement?.id,
@@ -41,7 +41,7 @@ namespace $ {
 			}],
 		}
 		
-		if( location.hostname === 'localhost' ) {
+		if( $mol_dom_context.location.hostname === 'localhost' ) {
 			
 			console.debug( 'Error report', report )
 			

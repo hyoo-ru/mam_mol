@@ -271,7 +271,6 @@ $mol_check_expand $mol_check
 	enabled <= expandable false
 
 $mol_paragraph $mol_view
-	dom_name \p
 	line_height 24
 	letter_width 7
 	width_limit Infinity

@@ -25,6 +25,7 @@ namespace $ {
 	}
 
 	export class $mol_file_node extends $mol_file {
+		
 		@ $mol_mem_key
 		static absolute( path : string ) {
 			return this.make({
@@ -33,7 +34,7 @@ namespace $ {
 		}
 
 		static relative( path : string ) {
-			return this.absolute( $node.path.resolve( path ).replace( /\\/g , '/' ) )
+			return this.absolute( $node.path.resolve( this.base, path ).replace( /\\/g , '/' ) )
 		}
 		
 		@ $mol_mem

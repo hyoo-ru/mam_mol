@@ -524,6 +524,7 @@ declare namespace $ {
         };
         dom_id(): any;
         dom_node(next?: Element): Element;
+        dom_final(): Element | undefined;
         dom_tree(next?: Element): Element;
         dom_node_actual(): Element;
         auto(): any;
@@ -895,6 +896,7 @@ declare namespace $ {
     abstract class $mol_file extends $mol_object {
         static absolute(path: string): $mol_file;
         static relative(path: string): $mol_file;
+        static base: string;
         path(): string;
         parent(): $mol_file;
         abstract stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
@@ -2080,7 +2082,6 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_paragraph extends $mol_view {
-        dom_name(): string;
         line_height(): number;
         letter_width(): number;
         width_limit(): number;

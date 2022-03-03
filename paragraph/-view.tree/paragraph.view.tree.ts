@@ -3,15 +3,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * dom_name \p
-		 * ```
-		 */
-		dom_name() {
-			return "p"
-		}
-		
-		/**
-		 * ```tree
 		 * line_height 24
 		 * ```
 		 */

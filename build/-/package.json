@@ -17,7 +17,8 @@
     "compression": "*",
     "cors": "*",
     "body-parser": "*",
-    "serve-index": "*"
+    "serve-index": "*",
+    "puppeteer": "*"
   },
   "bin": {
     "mam": "./bin/mam"

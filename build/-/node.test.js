@@ -1652,6 +1652,7 @@ var $;
         static relative(path) {
             throw new Error('Not implemented yet');
         }
+        static base = '';
         path() {
             return '.';
         }
@@ -1846,7 +1847,7 @@ var $;
             });
         }
         static relative(path) {
-            return this.absolute($node.path.resolve(path).replace(/\\/g, '/'));
+            return this.absolute($node.path.resolve(this.base, path).replace(/\\/g, '/'));
         }
         watcher() {
             const watcher = $node.chokidar.watch(this.path(), {
@@ -3302,10 +3303,10 @@ var $;
             return 'en';
         }
         static lang(next) {
-            return $mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
+            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
         }
         static source(lang) {
-            return JSON.parse($mol_file.relative(`web.locale=${lang}.json`).text().toString());
+            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
         }
         static texts(lang, next) {
             if (next)
@@ -5510,14 +5511,87 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_wire_sync(obj) {
+        return new Proxy(obj, {
+            get(obj, field) {
+                const val = obj[field];
+                if (typeof val !== 'function')
+                    return val;
+                return function $mol_wire_sync(...args) {
+                    const fiber = $mol_wire_fiber.temp(obj, val, ...args);
+                    return fiber.sync();
+                };
+            }
+        });
+    }
+    $.$mol_wire_sync = $mol_wire_sync;
+})($ || ($ = {}));
+//mol/wire/sync/sync.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_browser extends $mol_object2 {
+        static window() {
+            $mol_wire_solid();
+            const window = $mol_wire_sync($node.puppeteer).launch({
+                headless: true,
+                ignoreHTTPSErrors: true,
+                waitForInitialPage: false,
+                defaultViewport: {
+                    width: 1024,
+                    height: 1e5,
+                }
+            });
+            return $mol_wire_sync(window);
+        }
+        static html(uri) {
+            const page = $mol_wire_sync(this.window().newPage());
+            try {
+                page.goto(uri, { waitUntil: "networkidle0" });
+                $mol_wire_sync(Promise).all(page.$$('script').map(script => script.evaluate(node => node.remove())));
+                const html = page.content();
+                page.close();
+                return html;
+            }
+            catch (error) {
+                if (!(error instanceof Promise))
+                    page.close();
+                $mol_fail_hidden(error);
+            }
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_browser, "window", null);
+    __decorate([
+        $mol_wire_method
+    ], $mol_browser, "html", null);
+    $.$mol_browser = $mol_browser;
+})($ || ($ = {}));
+//mol/browser/browser.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_build_server extends $mol_server {
         static trace = false;
         expressGenerator() {
-            return $mol_wire_async(this).handleRequest;
+            const self = $mol_wire_async(this);
+            return function (...args) {
+                return self.handleRequest.apply(self, args);
+            };
         }
         handleRequest(req, res, next) {
             res.set('Cache-Control', 'must-revalidate, public, ');
             try {
+                if (req.query._escaped_fragment_) {
+                    const fragment = decodeURIComponent(String(req.query._escaped_fragment_));
+                    const url = req.protocol + '://' + req.get('host') + req.path + '#!' + fragment;
+                    const html = $mol_browser.html(url);
+                    res.send(html).end();
+                    return;
+                }
                 return this.generate(req.url) && Promise.resolve().then(next);
             }
             catch (error) {
@@ -6472,26 +6546,6 @@ var $;
 ;
 "use strict";
 //mol/type/writable/writable.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_sync(obj) {
-        return new Proxy(obj, {
-            get(obj, field) {
-                const val = obj[field];
-                if (typeof val !== 'function')
-                    return val;
-                return function $mol_wire_sync(...args) {
-                    const fiber = $mol_wire_fiber.temp(obj, val, ...args);
-                    return fiber.sync();
-                };
-            }
-        });
-    }
-    $.$mol_wire_sync = $mol_wire_sync;
-})($ || ($ = {}));
-//mol/wire/sync/sync.ts
 ;
 "use strict";
 var $;
@@ -9211,6 +9265,18 @@ var $;
             }
             return node;
         }
+        dom_final() {
+            this.render();
+            const sub = this.sub_visible();
+            if (!sub)
+                return;
+            for (const el of sub) {
+                if (el && typeof el === 'object' && 'dom_final' in el) {
+                    el['dom_final']();
+                }
+            }
+            return this.dom_node();
+        }
         dom_tree(next) {
             const node = this.dom_node(next);
             try {
@@ -9405,10 +9471,16 @@ var $;
     ], $mol_view.prototype, "dom_node", null);
     __decorate([
         $mol_mem
+    ], $mol_view.prototype, "dom_final", null);
+    __decorate([
+        $mol_mem
     ], $mol_view.prototype, "dom_tree", null);
     __decorate([
         $mol_mem
     ], $mol_view.prototype, "dom_node_actual", null);
+    __decorate([
+        $mol_mem
+    ], $mol_view.prototype, "render", null);
     __decorate([
         $mol_memo.method
     ], $mol_view.prototype, "view_names_owned", null);
