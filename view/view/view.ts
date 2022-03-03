@@ -188,6 +188,24 @@ namespace $ {
 		}
 		
 		@ $mol_mem
+		dom_final() {
+			
+			this.render()
+			
+			const sub = this.sub_visible()
+			if( !sub ) return
+			
+			for( const el of sub ) {
+				if( el && typeof el === 'object' && 'dom_final' in el ) {
+					el['dom_final']()
+				}
+			}
+			
+			return this.dom_node()
+			
+		}
+		
+		@ $mol_mem
 		dom_tree( next? : Element ) : Element {
 			const node = this.dom_node( next )
 			
@@ -246,6 +264,7 @@ namespace $ {
 			return null as any
 		}
 
+		@ $mol_mem
 		render() {
 
 			const node = this.dom_node_actual()

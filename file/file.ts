@@ -12,7 +12,8 @@ namespace $ {
 
 	export class $mol_file_not_found extends Error {}
 
-	export abstract class $mol_file extends $mol_object {		
+	export abstract class $mol_file extends $mol_object {
+			
 		@ $mol_mem_key
 		static absolute( path : string ): $mol_file {
 			throw new Error( 'Not implemented yet' )
@@ -21,6 +22,8 @@ namespace $ {
 		static relative( path : string ) : $mol_file {
 			throw new Error( 'Not implemented yet' )
 		}
+		
+		static base = ''
 		
 		path() {
 			return '.'
