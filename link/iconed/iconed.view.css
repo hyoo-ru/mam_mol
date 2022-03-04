@@ -9,6 +9,7 @@
 	box-shadow: none;
 	height: 1em;
 	width: 1em;
+	flex: 0 0 auto;
 	display: inline-block;
 	margin: .125rem 0;
 	vertical-align: text-bottom;
