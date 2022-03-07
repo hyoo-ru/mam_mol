@@ -39,11 +39,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * loading \lazy
+		 * loading \eager
 		 * ```
 		 */
 		loading() {
-			return "lazy"
+			return "eager"
 		}
 	}
 	
