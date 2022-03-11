@@ -64,6 +64,18 @@ namespace $ {
 			this.pub.emit()
 		}
 
+		// Extensions
+		
+		item( val: Value, next?: boolean ) {
+			
+			if( next === undefined ) return this.has( val )
+			
+			if( next ) this.add( val )
+			else this.delete( val )
+			
+			return next
+		}
+
 	}
 
 }

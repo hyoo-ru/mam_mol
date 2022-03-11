@@ -68,6 +68,18 @@ namespace $ {
 			super.clear()
 			this.pub.emit()
 		}
+		
+		// Extensions
+		
+		item( key: Key, next?: Value | null ) {
+			
+			if( next === undefined ) return this.get( key ) ?? null
+			
+			if( next === null ) this.delete( key )
+			else this.set( key, next )
+			
+			return next
+		}
 
 	}
 

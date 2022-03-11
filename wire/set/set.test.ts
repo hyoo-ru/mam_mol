@@ -28,6 +28,33 @@ namespace $ {
 
 		},
 
+		'Watch item channel' ($) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+				static set = new $mol_wire_set< number >()
+				
+				@ $mol_wire_mem(0)
+				static lucky() {
+					return this.set.item( 777 )
+				}
+
+			}
+
+			$mol_assert_equal( App.lucky(), false )
+
+			App.set.item( 666, true )
+			$mol_assert_equal( App.lucky(), false )
+
+			App.set.item( 777, true )
+			$mol_assert_equal( App.lucky(), true )
+
+			App.set.item( 777, false )
+			$mol_assert_equal( App.lucky(), false )
+
+		},
+
 		'Watch size' ($) {
 
 			class App extends $mol_object2 {
