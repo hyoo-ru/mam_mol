@@ -1879,6 +1879,7 @@ declare namespace $ {
         record(id: any): any;
         hierarchy(): any;
         hierarchy_col(): string;
+        minimal_width(): number;
         sub(): readonly any[];
         Head(): $mol_grid_row;
         Row(id: any): $mol_grid_row;

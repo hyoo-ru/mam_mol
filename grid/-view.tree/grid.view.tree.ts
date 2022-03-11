@@ -78,6 +78,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * minimal_width 0
+		 * ```
+		 */
+		minimal_width() {
+			return 0
+		}
+		
+		/**
+		 * ```tree
 		 * sub /
 		 * 	<= Head
 		 * 	<= Table
@@ -108,6 +117,7 @@ namespace $ {
 		 * ```tree
 		 * Row!id $mol_grid_row
 		 * 	minimal_height <= row_height
+		 * 	minimal_width <= minimal_width
 		 * 	cells <= cells!id
 		 * ```
 		 */
@@ -116,6 +126,7 @@ namespace $ {
 			const obj = new this.$.$mol_grid_row()
 			
 			obj.minimal_height = () => this.row_height()
+			obj.minimal_width = () => this.minimal_width()
 			obj.cells = () => this.cells(id)
 			
 			return obj
