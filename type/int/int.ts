@@ -134,13 +134,28 @@ namespace $ {
 		: unknown
 	
 	type Calc< Expr extends string >
-		= Expr extends `${ infer Left }(${ infer Inner })${ infer Right }` ? Calc< `${ Left }${ Down< Calc< Inner > > }${ Right}` >
-		: Expr extends `${ infer Left }+${ infer Right }` ? Plus<[ Calc< Left >, Calc< Right > ]>
-		: Expr extends `${ infer Left }-${ infer Right }` ? Minus<[ Calc< Left >, Calc< Right > ]>
-		: Expr extends `${ infer Left }*${ infer Right }` ? Mult<[ Calc< Left >, Calc< Right > ]>
-		: Expr extends `${ infer Left }^${ infer Right }` ? Pow<[ Calc< Left >, Calc< Right > ]>
-		: Expr extends `${ infer Left } ` ? Calc< Left >
-		: Expr extends ` ${ infer Right }` ? Calc< Right >
+		
+		= Expr extends `${ infer Left }(${ infer Inner })${ infer Right }`
+		? Calc< `${ Left }${ Down< Calc< Inner > > }${ Right}` >
+		
+		: Expr extends `${ infer Left }+${ infer Right }`
+		? Plus<[ Calc< Left >, Calc< Right > ]>
+		
+		: Expr extends `${ infer Left }-${ infer Right }`
+		? Minus<[ Calc< Left >, Calc< Right > ]>
+		
+		: Expr extends `${ infer Left }*${ infer Right }`
+		? Mult<[ Calc< Left >, Calc< Right > ]>
+		
+		: Expr extends `${ infer Left }^${ infer Right }`
+		? Pow<[ Calc< Left >, Calc< Right > ]>
+		
+		: Expr extends `${ infer Left } `
+		? Calc< Left >
+		
+		: Expr extends ` ${ infer Right }`
+		? Calc< Right >
+		
 		: Parse< Expr >
 	
 	/** Evaluates simple expression */
