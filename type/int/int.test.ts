@@ -41,17 +41,17 @@ namespace $ {
 	>
 	
 	type calc_priorities = $mol_type_assert<
-		$mol_type_int_calc<'5+4*3^2-1'>,
+		$mol_type_int_calc< '5+4*3^2-1' >,
 		40
 	>
 
 	type calc_parentheses = $mol_type_assert<
-		$mol_type_int_calc<'2*(2+3)'>,
+		$mol_type_int_calc< '2*(2+3)' >,
 		10
 	>
 
 	type calc_spaces = $mol_type_assert<
-		$mol_type_int_calc<'7 + 5 - 2*2 + 1'>,
+		$mol_type_int_calc< '7 + 5 - 2*2 + 1' >,
 		9
 	>	
 
