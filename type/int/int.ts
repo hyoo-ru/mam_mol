@@ -133,4 +133,17 @@ namespace $ {
 		? never
 		: unknown
 	
+	type Calc< Expr extends string >
+		= Expr extends `${ infer Left }(${ infer Inner })${ infer Right }` ? Calc< `${ Left }${ Down< Calc< Inner > > }${ Right}` >
+		: Expr extends `${ infer Left }+${ infer Right }` ? Plus<[ Calc< Left >, Calc< Right > ]>
+		: Expr extends `${ infer Left }-${ infer Right }` ? Minus<[ Calc< Left >, Calc< Right > ]>
+		: Expr extends `${ infer Left }*${ infer Right }` ? Mult<[ Calc< Left >, Calc< Right > ]>
+		: Expr extends `${ infer Left }^${ infer Right }` ? Pow<[ Calc< Left >, Calc< Right > ]>
+		: Expr extends `${ infer Left } ` ? Calc< Left >
+		: Expr extends ` ${ infer Right }` ? Calc< Right >
+		: Parse< Expr >
+	
+	/** Evaluates simple expression */
+	export type $mol_type_int_calc< Expr extends string > = Down< Calc< Expr > >
+	
 }
