@@ -6,9 +6,11 @@ namespace $.$$ {
 
 		flex: {
 			grow: 1,
+			shrink: 1,
 			wrap: 'wrap',
 			direction: 'row-reverse',
 		},
+		justifyContent: 'flex-end',
 		display: 'flex',
 		position: 'relative',
 		overflow: 'hidden',
