@@ -12,7 +12,7 @@ Date in YYYY-MM-DD format.
 
 ```
 <= Birth_day $mol_date
-	date?val <=> birth_day?val \2017-04-01
+	value?val <=> birth_day?val \2017-04-01
 ```
 
 **`time( next? : string ) : string`**
