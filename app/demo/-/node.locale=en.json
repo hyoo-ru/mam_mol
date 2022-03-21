@@ -118,6 +118,7 @@
 	"$mol_paginator_backward_hint": "Назад",
 	"$mol_paginator_demo_title": "Page switcher",
 	"$mol_paginator_forward_hint": "Вперёд",
+	"$mol_password_demo_title": "Password input field based on $mol_string",
 	"$mol_pick_demo_Info_pop_hint": "Click to show info popup",
 	"$mol_pick_demo_Options_pop_hint": "Click to show options menu",
 	"$mol_pick_demo_Simple_pop_hint": "Click to show simple popup",

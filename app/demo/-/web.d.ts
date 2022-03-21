@@ -6897,6 +6897,46 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_icon_eye extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_password extends $mol_view {
+        type(val?: any): string;
+        sub(): readonly any[];
+        hint(): string;
+        value(val?: any): string;
+        submit(event?: any): any;
+        enabled(): boolean;
+        Pass(): $$.$mol_string;
+        checked(val?: any): boolean;
+        Show_icon(): $mol_icon_eye;
+        Show(): $mol_check_icon;
+        content(): readonly any[];
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_password extends $.$mol_password {
+        checked(next?: boolean): boolean;
+    }
+}
+
+declare namespace $ {
+    class $mol_password_demo extends $mol_example_small {
+        title(): string;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        pass(val?: any): string;
+        Simple(): $$.$mol_password;
+        pass2(val?: any): string;
+        Hint(): $$.$mol_password;
+    }
+}
+
+declare namespace $ {
     class $mol_status extends $mol_view {
         status(): any;
         minimal_height(): number;

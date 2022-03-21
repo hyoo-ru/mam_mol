@@ -25646,6 +25646,177 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_eye extends $mol_icon {
+        path() {
+            return "M12,9C10.34,9 9,10.34 9,12C9,13.66 10.34,15 12,15C13.66,15 15,13.66 15,12C15,10.34 13.66,9 12,9M12,17C9.24,17 7,14.76 7,12C7,9.24 9.24,7 12,7C14.76,7 17,9.24 17,12C17,14.76 14.76,17 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z";
+        }
+    }
+    $.$mol_icon_eye = $mol_icon_eye;
+})($ || ($ = {}));
+//mol/icon/eye/-view.tree/eye.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_password extends $mol_view {
+        type(val) {
+            if (val !== undefined)
+                return val;
+            return "password";
+        }
+        sub() {
+            return this.content();
+        }
+        hint() {
+            return "";
+        }
+        value(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        submit(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        enabled() {
+            return true;
+        }
+        Pass() {
+            const obj = new this.$.$mol_string();
+            obj.type = () => this.type();
+            obj.hint = () => this.hint();
+            obj.value = (val) => this.value(val);
+            obj.submit = (event) => this.submit(event);
+            obj.enabled = () => this.enabled();
+            return obj;
+        }
+        checked(val) {
+            if (val !== undefined)
+                return val;
+            return true;
+        }
+        Show_icon() {
+            const obj = new this.$.$mol_icon_eye();
+            return obj;
+        }
+        Show() {
+            const obj = new this.$.$mol_check_icon();
+            obj.checked = (val) => this.checked(val);
+            obj.Icon = () => this.Show_icon();
+            return obj;
+        }
+        content() {
+            return [
+                this.Pass(),
+                this.Show()
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_password.prototype, "type", null);
+    __decorate([
+        $mol_mem
+    ], $mol_password.prototype, "value", null);
+    __decorate([
+        $mol_mem
+    ], $mol_password.prototype, "submit", null);
+    __decorate([
+        $mol_mem
+    ], $mol_password.prototype, "Pass", null);
+    __decorate([
+        $mol_mem
+    ], $mol_password.prototype, "checked", null);
+    __decorate([
+        $mol_mem
+    ], $mol_password.prototype, "Show_icon", null);
+    __decorate([
+        $mol_mem
+    ], $mol_password.prototype, "Show", null);
+    $.$mol_password = $mol_password;
+})($ || ($ = {}));
+//mol/password/-view.tree/password.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_password extends $.$mol_password {
+            checked(next) {
+                this.type(next ? 'text' : 'password');
+                return next ?? false;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_password.prototype, "checked", null);
+        $$.$mol_password = $mol_password;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/password/password.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_password_demo extends $mol_example_small {
+        title() {
+            return this.$.$mol_locale.text('$mol_password_demo_title');
+        }
+        sub() {
+            return [
+                this.Simple(),
+                this.Hint()
+            ];
+        }
+        tags() {
+            return [
+                "password",
+                "input"
+            ];
+        }
+        pass(val) {
+            if (val !== undefined)
+                return val;
+            return "Hello world";
+        }
+        Simple() {
+            const obj = new this.$.$mol_password();
+            obj.value = (val) => this.pass(val);
+            return obj;
+        }
+        pass2(val) {
+            if (val !== undefined)
+                return val;
+            return "Top secret";
+        }
+        Hint() {
+            const obj = new this.$.$mol_password();
+            obj.value = (val) => this.pass2(val);
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_password_demo.prototype, "pass", null);
+    __decorate([
+        $mol_mem
+    ], $mol_password_demo.prototype, "Simple", null);
+    __decorate([
+        $mol_mem
+    ], $mol_password_demo.prototype, "pass2", null);
+    __decorate([
+        $mol_mem
+    ], $mol_password_demo.prototype, "Hint", null);
+    $.$mol_password_demo = $mol_password_demo;
+})($ || ($ = {}));
+//mol/password/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_status extends $mol_view {
         status() {
             return null;
