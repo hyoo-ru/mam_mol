@@ -25222,9 +25222,11 @@ var $;
         $mol_style_define($mol_toolbar, {
             flex: {
                 grow: 1,
+                shrink: 1,
                 wrap: 'wrap',
                 direction: 'row-reverse',
             },
+            justifyContent: 'flex-end',
             display: 'flex',
             position: 'relative',
             overflow: 'hidden',
