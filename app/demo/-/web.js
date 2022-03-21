@@ -24870,7 +24870,6 @@ var $;
         $mol_style_define($mol_toolbar, {
             flex: {
                 grow: 1,
-                shrink: 1,
                 wrap: 'wrap',
                 direction: 'row-reverse',
             },
@@ -24896,6 +24895,7 @@ var $;
                 justifyContent: 'flex-end',
                 flex: {
                     grow: 1,
+                    shrink: 1,
                     wrap: 'wrap',
                 },
                 margin: {

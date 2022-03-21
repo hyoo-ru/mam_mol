@@ -6,7 +6,6 @@ namespace $.$$ {
 
 		flex: {
 			grow: 1,
-			shrink: 1,
 			wrap: 'wrap',
 			direction: 'row-reverse',
 		},
@@ -39,6 +38,7 @@ namespace $.$$ {
 			justifyContent: 'flex-end',
 			flex: {
 				grow: 1,
+				shrink: 1,
 				wrap: 'wrap',
 			},
 			margin: {
