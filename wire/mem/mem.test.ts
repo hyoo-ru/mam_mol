@@ -316,7 +316,6 @@ namespace $ {
 		
 				@ $mol_wire_mem(0)
 				static res() {
-					$mol_wire_solid()
 					return this.checked()
 				}
 		
