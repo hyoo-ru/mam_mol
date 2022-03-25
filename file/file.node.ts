@@ -106,7 +106,7 @@ namespace $ {
 				return this.$.$mol_fail_hidden(e)
 			}
 
-			return true
+			return next ?? true
 		}
 		
 		@ $mol_mem
