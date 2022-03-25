@@ -13,19 +13,13 @@ namespace $ {
 					return next + 1
 				}
 				
-				@ $mol_wire_method
-				static test() {
-					
-					$mol_assert_equal( App.value() , 2 )
-		
-					App.value( 2 )
-					$mol_assert_equal( App.value() , 3 )
-					
-				}
-
 			}
 			
-			App.test()
+			$mol_assert_equal( App.value(), 2 )
+
+			App.value( 2 )
+			$mol_assert_equal( App.value(), 3 )
+
 		},
 
 		'Mem overrides mem' ($) {
@@ -57,19 +51,13 @@ namespace $ {
 					return super.value( next ) * 3
 				}
 				
-				@ $mol_wire_method
-				static test() {
-					
-					$mol_assert_equal( this.value() , 9 )
-		
-					$mol_assert_equal( this.value( 5 ) , 21 )
-					$mol_assert_equal( this.value() , 21 )
-					
-				}
-
 			}
 			
-			App.test()
+			$mol_assert_equal( App.value(), 9 )
+			
+			$mol_assert_equal( App.value( 5 ), 21 )
+			$mol_assert_equal( App.value(), 21 )
+
 		},
 
 		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--constant-consistency-of-states
@@ -94,20 +82,14 @@ namespace $ {
 					return this.yyy() + 1
 				}
 
-				@ $mol_wire_method
-				static test() {
-					
-					$mol_assert_equal( App.yyy() , 2 )
-					$mol_assert_equal( App.zzz() , 3 )
-		
-					App.xxx( 5 )
-					$mol_assert_equal( App.zzz() , 7 )
-					
-				}
-				
 			}
 			
-			App.test()
+			$mol_assert_equal( App.yyy(), 2 )
+			$mol_assert_equal( App.zzz(), 3 )
+
+			App.xxx( 5 )
+			$mol_assert_equal( App.zzz(), 7 )
+
 		},
 
 		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--only-necessary-calculations
@@ -137,21 +119,17 @@ namespace $ {
 					return this.yyy()[0] + 1
 				}
 
-				@ $mol_wire_method
-				static test() {
-					
-					App.zzz()
-					$mol_assert_like( log , [ 'zzz', 'yyy', 'xxx' ] )
-					
-					App.xxx( 5 )
-					App.zzz()
-					$mol_assert_like( log , [ 'zzz', 'yyy', 'xxx', 'xxx', 'yyy' ] )
-					
-				}
-				
 			}
 			
-			App.test()
+			App.zzz()
+			$mol_assert_like( log, [ 'zzz', 'yyy', 'xxx' ] )
+			
+			App.xxx( 5 )
+			$mol_assert_like( log, [ 'zzz', 'yyy', 'xxx', 'xxx' ] )
+			
+			App.zzz()
+			$mol_assert_like( log, [ 'zzz', 'yyy', 'xxx', 'xxx', 'yyy' ] )
+
 		},
 
 		// https://github.com/nin-jin/slides/tree/master/reactivity#flow-auto
@@ -212,22 +190,16 @@ namespace $ {
 					return { ... this.foo(), count: ++ counter }
 				}
 
-				@ $mol_wire_method
-				static test() {
-					
-					$mol_assert_like( App.bar() , { numbs: [ 1 ], count: 1 } )
-		
-					App.foo({ numbs: [ 1 ] })
-					$mol_assert_like( App.bar() , { numbs: [ 1 ], count: 1 } )
-					
-					App.foo({ numbs: [ 2 ] })
-					$mol_assert_like( App.bar() , { numbs: [ 2 ], count: 2 } )
-					
-				}
-				
 			}
 			
-			App.test()
+			$mol_assert_like( App.bar(), { numbs: [ 1 ], count: 1 } )
+
+			App.foo({ numbs: [ 1 ] })
+			$mol_assert_like( App.bar(), { numbs: [ 1 ], count: 1 } )
+			
+			App.foo({ numbs: [ 2 ] })
+			$mol_assert_like( App.bar(), { numbs: [ 2 ], count: 2 } )
+
 		},
 
 		// https://github.com/nin-jin/slides/tree/master/reactivity#cycle-fail
@@ -279,21 +251,15 @@ namespace $ {
 					return this.store( next )
 				}
 		
-				@ $mol_wire_method
-				static test() {
-					
-					App.fast()
-					$mol_assert_equal( App.slow( 666 ) , 666 )
-					$mol_assert_equal( App.fast(), App.slow(), 666 )
-					
-					App.store( 777 )
-					$mol_assert_equal( App.fast(), App.slow(), 777 )
-
-				}	
-				
 			}
 			
-			App.test()
+			App.fast()
+			$mol_assert_equal( App.slow( 666 ), 666 )
+			$mol_assert_equal( App.fast(), App.slow(), 666 )
+			
+			App.store( 777 )
+			$mol_assert_equal( App.fast(), App.slow(), 777 )
+			
 		} ,
 		
 		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
@@ -320,19 +286,49 @@ namespace $ {
 					return count + 1
 				}
 		
-				@ $mol_wire_method
-				static test() {
-					
-					$mol_assert_like( App.res() , 1 )
-					
-					App.count( 5 )
-					$mol_assert_like( App.res() , 6 )
-					
-				}
-				
 			}
 			
-			App.test()
+			$mol_assert_like( App.res(), 1 )
+			
+			App.count( 5 )
+			$mol_assert_like( App.res(), 6 )
+
+		} ,
+		
+		async 'Toggle with async'( $ ) {
+		
+			class App extends $mol_object2 {
+		
+				static $ = $
+				
+				@ $mol_wire_mem(0)
+				static checked( next = false ) {
+					$$.$mol_wait_timeout(0)
+					return next
+				}
+				
+				@ $mol_wire_method
+				static toggle() {
+					const prev = this.checked()
+					$mol_assert_unique( this.checked( !prev ), prev )
+					$mol_assert_equal( this.checked() , prev )
+				}
+		
+				@ $mol_wire_mem(0)
+				static res() {
+					$mol_wire_solid()
+					return this.checked()
+				}
+		
+			}
+			
+			const app = $mol_wire_async( App )
+			
+			$mol_assert_equal( await app.res(), false )
+			
+			await app.toggle()
+			$mol_assert_equal( await app.res(), true )
+			
 		} ,
 
 		// // https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
@@ -588,16 +584,16 @@ namespace $ {
 				@ $mol_wire_method
 				static test() {
 				
-					$mol_assert_like( this.user_names(), [ 'jin', 'john' ] )
-					
-					Team.user_name( 'jin', 'JIN' )
-					$mol_assert_like( this.user_names(), [ 'JIN', 'john' ] )
 					
 				}
 				
 			}
+			
+			$mol_assert_like( Team.user_names(), [ 'jin', 'john' ] )
+			
+			Team.user_name( 'jin', 'JIN' )
+			$mol_assert_like( Team.user_names(), [ 'JIN', 'john' ] )
 
-			Team.test()
 		} ,
 
 		'Memoize by single complex key' ($) {
@@ -690,22 +686,16 @@ namespace $ {
 					++ this.sums
 					return this.value( index - 1 ) + this.value( index - 2 )
 				}
-
-				@ $mol_wire_method
-				static test() {
-					
-					$mol_assert_equal( this.value( 4 ), 5 )
-					$mol_assert_equal( this.sums, 3 )
-					
-					this.value( 1, 2 )
-					$mol_assert_equal( this.value( 4 ), 8 )
-					$mol_assert_equal( this.sums, 6 )
-							
-				}
-
+				
 			}
 			
-			Fib.test()
+			$mol_assert_equal( Fib.value( 4 ), 5 )
+			$mol_assert_equal( Fib.sums, 3 )
+			
+			Fib.value( 1, 2 )
+			$mol_assert_equal( Fib.value( 4 ), 8 )
+			$mol_assert_equal( Fib.sums, 6 )
+
 		} ,
 
 		'Unsubscribe from temp pubs on complete' ($) {
@@ -730,21 +720,13 @@ namespace $ {
 					return this.seed()
 				}
 
-				@ $mol_wire_method
-				static test() {
-					
-					const first = this.value()
-			
-					this.resets( null )
-					const second = this.value()
-		
-					$mol_assert_unique( first, second )
-									
-				}
-
 			}
 			
-			Random.test()
+			const first = Random.value()
+			
+			Random.resets( null )
+			$mol_assert_unique( Random.value(), first )
+
 		} ,
 
 	})
