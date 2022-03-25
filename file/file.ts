@@ -48,7 +48,7 @@ namespace $ {
 			return this.stat()?.mtime.getTime().toString( 36 ).toUpperCase() ?? ''
 		}
 
-		abstract ensure(next?: boolean): boolean
+		abstract ensure(): void
 
 		watcher() {
 			console.warn('$mol_file_web.watcher() not implemented')
@@ -67,7 +67,7 @@ namespace $ {
 			if( next === exists ) return exists
 
 			if( next ) this.parent().exists( true )
-			this.ensure(next)
+			this.ensure()
 			this.reset()
 			
 			return next

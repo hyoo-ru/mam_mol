@@ -60,7 +60,7 @@ namespace $ {
 			return ( this.constructor as typeof $mol_file_web ).absolute( res )
 		}
 
-		ensure(next?: boolean): boolean {
+		ensure() {
 			throw new Error('$mol_file_web.ensure() not implemented')
 		} 
 
