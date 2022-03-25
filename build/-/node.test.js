@@ -695,8 +695,8 @@ var $;
         promote() {
             $mol_wire_auto()?.track_next(this);
         }
-        up() { }
-        down() { }
+        refresh() { }
+        commit() { }
         emit(quant = $mol_wire_cursor.stale) {
             for (let i = this.sub_from; i < this.length; i += 2) {
                 ;
@@ -898,7 +898,7 @@ var $;
             }
             for (let cursor = this.pub_from; cursor < this.cursor; cursor += 2) {
                 const pub = this[cursor];
-                pub.up();
+                pub.refresh();
             }
             this.cursor = $mol_wire_cursor.fresh;
         }
@@ -940,6 +940,16 @@ var $;
                 this.pop();
             }
             this.sub_from = this.cursor;
+        }
+        commit() {
+            this.commit_pubs();
+        }
+        commit_pubs() {
+            const limit = this.cursor < 0 ? this.sub_from : this.cursor;
+            for (let cursor = this.pub_from; cursor < limit; cursor += 2) {
+                const pub = this[cursor];
+                pub?.commit();
+            }
         }
         absorb(quant = $mol_wire_cursor.stale) {
             if (this.cursor === $mol_wire_cursor.final)
@@ -1271,7 +1281,7 @@ var $;
             while (this.planning.length) {
                 const fibers = this.planning.splice(0, this.planning.length);
                 for (const fiber of fibers) {
-                    fiber.up();
+                    fiber.refresh();
                 }
             }
             while (this.reaping.length) {
@@ -1287,14 +1297,14 @@ var $;
         get args() {
             return this.slice(0, this.pub_from);
         }
-        get result() {
+        result() {
             if (this.cache instanceof Promise)
                 return;
             if (this.cache instanceof Error)
                 return;
             return this.cache;
         }
-        get persist() {
+        persistent() {
             const id = this[Symbol.toStringTag];
             return id[id.length - 2] !== '#';
         }
@@ -1316,7 +1326,7 @@ var $;
             if ($mol_owning_check(this, prev)) {
                 prev.destructor();
             }
-            if (this.persist) {
+            if (this.persistent()) {
                 if (this.pub_from === 0) {
                     ;
                     (this.host ?? this.task)[this.field()] = null;
@@ -1359,12 +1369,16 @@ var $;
             else
                 super.emit(quant);
         }
-        down() {
-            if (this.persist)
+        commit() {
+            if (this.persistent())
                 return;
+            super.commit();
+            if (this.host instanceof $mol_wire_fiber) {
+                this.host.put(this.cache);
+            }
             this.destructor();
         }
-        up() {
+        refresh() {
             if (this.cursor === $mol_wire_cursor.fresh)
                 return;
             if (this.cursor === $mol_wire_cursor.final)
@@ -1372,7 +1386,7 @@ var $;
             check: if (this.cursor === $mol_wire_cursor.doubt) {
                 for (let i = this.pub_from; i < this.sub_from; i += 2) {
                     ;
-                    this[i]?.up();
+                    this[i]?.refresh();
                     if (this.cursor !== $mol_wire_cursor.doubt)
                         break check;
                 }
@@ -1420,7 +1434,7 @@ var $;
                     prev.destructor();
                 }
                 this.cache = next;
-                if (this.persist && $mol_owning_catch(this, next)) {
+                if (this.persistent() && $mol_owning_catch(this, next)) {
                     try {
                         next[Symbol.toStringTag] = this[Symbol.toStringTag];
                     }
@@ -1435,28 +1449,25 @@ var $;
             this.cursor = $mol_wire_cursor.fresh;
             if (next instanceof Promise)
                 return next;
-            if (this.persist) {
-                for (let cursor = this.pub_from; cursor < this.sub_from; cursor += 2) {
-                    const pub = this[cursor];
-                    pub?.down();
-                }
+            if (this.persistent()) {
+                this.commit_pubs();
             }
             else {
-                this.cursor = this.pub_from;
-                this.track_cut();
-                this.cursor = $mol_wire_cursor.fresh;
+                if (this.sub_empty) {
+                    this.commit();
+                }
             }
             return next;
         }
         recall(...args) {
-            return this.put(this.task.call(this.host, ...args));
+            return this.task.call(this.host, ...args);
         }
         sync() {
             if (!$mol_wire_fiber.warm) {
-                return this.result;
+                return this.result();
             }
             this.promote();
-            this.up();
+            this.refresh();
             if (this.cache instanceof Error) {
                 return $mol_fail_hidden(this.cache);
             }
@@ -1467,7 +1478,7 @@ var $;
         }
         async async() {
             while (true) {
-                this.up();
+                this.refresh();
                 if (this.cache instanceof Error) {
                     $mol_fail_hidden(this.cache);
                 }
@@ -1686,7 +1697,7 @@ var $;
                 return exists;
             if (next)
                 this.parent().exists(true);
-            this.ensure(next);
+            this.ensure();
             this.reset();
             return next;
         }
@@ -1894,19 +1905,15 @@ var $;
             }
             return stat;
         }
-        ensure(next) {
+        ensure() {
             const path = this.path();
             try {
-                if (next)
-                    $node.fs.mkdirSync(path);
-                else
-                    $node.fs.unlinkSync(path);
+                $node.fs.mkdirSync(path);
             }
             catch (e) {
                 e.message += '\n' + path;
-                return this.$.$mol_fail_hidden(e);
+                this.$.$mol_fail_hidden(e);
             }
-            return true;
         }
         buffer(next) {
             const path = this.path();
@@ -1987,6 +1994,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_file_node.prototype, "stat", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_node.prototype, "ensure", null);
     __decorate([
         $mol_mem
     ], $mol_file_node.prototype, "buffer", null);
@@ -6891,19 +6901,13 @@ var $;
                 static value(next = 1) {
                     return next + 1;
                 }
-                static test() {
-                    $mol_assert_equal(App.value(), 2);
-                    App.value(2);
-                    $mol_assert_equal(App.value(), 3);
-                }
             }
             __decorate([
                 $mol_wire_mem(0)
             ], App, "value", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "test", null);
-            App.test();
+            $mol_assert_equal(App.value(), 2);
+            App.value(2);
+            $mol_assert_equal(App.value(), 3);
         },
         'Mem overrides mem'($) {
             class Base extends $mol_object2 {
@@ -6927,19 +6931,13 @@ var $;
                 static value(next) {
                     return super.value(next) * 3;
                 }
-                static test() {
-                    $mol_assert_equal(this.value(), 9);
-                    $mol_assert_equal(this.value(5), 21);
-                    $mol_assert_equal(this.value(), 21);
-                }
             }
             __decorate([
                 $mol_wire_mem(0)
             ], App, "value", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "test", null);
-            App.test();
+            $mol_assert_equal(App.value(), 9);
+            $mol_assert_equal(App.value(5), 21);
+            $mol_assert_equal(App.value(), 21);
         },
         'Auto recalculation of cached values'($) {
             class App extends $mol_object2 {
@@ -6953,12 +6951,6 @@ var $;
                 static zzz() {
                     return this.yyy() + 1;
                 }
-                static test() {
-                    $mol_assert_equal(App.yyy(), 2);
-                    $mol_assert_equal(App.zzz(), 3);
-                    App.xxx(5);
-                    $mol_assert_equal(App.zzz(), 7);
-                }
             }
             __decorate([
                 $mol_wire_mem(0)
@@ -6969,10 +6961,10 @@ var $;
             __decorate([
                 $mol_wire_mem(0)
             ], App, "zzz", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "test", null);
-            App.test();
+            $mol_assert_equal(App.yyy(), 2);
+            $mol_assert_equal(App.zzz(), 3);
+            App.xxx(5);
+            $mol_assert_equal(App.zzz(), 7);
         },
         'Skip recalculation when actually no dependency changes'($) {
             const log = [];
@@ -6990,13 +6982,6 @@ var $;
                     log.push('zzz');
                     return this.yyy()[0] + 1;
                 }
-                static test() {
-                    App.zzz();
-                    $mol_assert_like(log, ['zzz', 'yyy', 'xxx']);
-                    App.xxx(5);
-                    App.zzz();
-                    $mol_assert_like(log, ['zzz', 'yyy', 'xxx', 'xxx', 'yyy']);
-                }
             }
             __decorate([
                 $mol_wire_mem(0)
@@ -7007,10 +6992,12 @@ var $;
             __decorate([
                 $mol_wire_mem(0)
             ], App, "zzz", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "test", null);
-            App.test();
+            App.zzz();
+            $mol_assert_like(log, ['zzz', 'yyy', 'xxx']);
+            App.xxx(5);
+            $mol_assert_like(log, ['zzz', 'yyy', 'xxx', 'xxx']);
+            App.zzz();
+            $mol_assert_like(log, ['zzz', 'yyy', 'xxx', 'xxx', 'yyy']);
         },
         'Flow: Auto'($) {
             class App extends $mol_object2 {
@@ -7055,13 +7042,6 @@ var $;
                 static bar() {
                     return { ...this.foo(), count: ++counter };
                 }
-                static test() {
-                    $mol_assert_like(App.bar(), { numbs: [1], count: 1 });
-                    App.foo({ numbs: [1] });
-                    $mol_assert_like(App.bar(), { numbs: [1], count: 1 });
-                    App.foo({ numbs: [2] });
-                    $mol_assert_like(App.bar(), { numbs: [2], count: 2 });
-                }
             }
             __decorate([
                 $mol_wire_mem(0)
@@ -7069,10 +7049,11 @@ var $;
             __decorate([
                 $mol_wire_mem(0)
             ], App, "bar", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "test", null);
-            App.test();
+            $mol_assert_like(App.bar(), { numbs: [1], count: 1 });
+            App.foo({ numbs: [1] });
+            $mol_assert_like(App.bar(), { numbs: [1], count: 1 });
+            App.foo({ numbs: [2] });
+            $mol_assert_like(App.bar(), { numbs: [2], count: 2 });
         },
         'Cycle: Fail'($) {
             class App extends $mol_object2 {
@@ -7110,13 +7091,6 @@ var $;
                 static slow(next) {
                     return this.store(next);
                 }
-                static test() {
-                    App.fast();
-                    $mol_assert_equal(App.slow(666), 666);
-                    $mol_assert_equal(App.fast(), App.slow(), 666);
-                    App.store(777);
-                    $mol_assert_equal(App.fast(), App.slow(), 777);
-                }
             }
             __decorate([
                 $mol_wire_mem(0)
@@ -7127,10 +7101,11 @@ var $;
             __decorate([
                 $mol_wire_mem(0)
             ], App, "slow", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "test", null);
-            App.test();
+            App.fast();
+            $mol_assert_equal(App.slow(666), 666);
+            $mol_assert_equal(App.fast(), App.slow(), 666);
+            App.store(777);
+            $mol_assert_equal(App.fast(), App.slow(), 777);
         },
         'Actions inside invariant'($) {
             class App extends $mol_object2 {
@@ -7147,11 +7122,6 @@ var $;
                         this.count(count + 1);
                     return count + 1;
                 }
-                static test() {
-                    $mol_assert_like(App.res(), 1);
-                    App.count(5);
-                    $mol_assert_like(App.res(), 6);
-                }
             }
             __decorate([
                 $mol_wire_mem(0)
@@ -7162,10 +7132,39 @@ var $;
             __decorate([
                 $mol_wire_mem(0)
             ], App, "res", null);
+            $mol_assert_like(App.res(), 1);
+            App.count(5);
+            $mol_assert_like(App.res(), 6);
+        },
+        async 'Toggle with async'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static checked(next = false) {
+                    $$.$mol_wait_timeout(0);
+                    return next;
+                }
+                static toggle() {
+                    const prev = this.checked();
+                    $mol_assert_unique(this.checked(!prev), prev);
+                    $mol_assert_equal(this.checked(), prev);
+                }
+                static res() {
+                    return this.checked();
+                }
+            }
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "checked", null);
             __decorate([
                 $mol_wire_method
-            ], App, "test", null);
-            App.test();
+            ], App, "toggle", null);
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "res", null);
+            const app = $mol_wire_async(App);
+            $mol_assert_equal(await app.res(), false);
+            await app.toggle();
+            $mol_assert_equal(await app.res(), true);
         },
         'Restore after error'($) {
             class App extends $mol_object2 {
@@ -7336,9 +7335,6 @@ var $;
                     ];
                 }
                 static test() {
-                    $mol_assert_like(this.user_names(), ['jin', 'john']);
-                    Team.user_name('jin', 'JIN');
-                    $mol_assert_like(this.user_names(), ['JIN', 'john']);
                 }
             }
             __decorate([
@@ -7350,7 +7346,9 @@ var $;
             __decorate([
                 $mol_wire_method
             ], Team, "test", null);
-            Team.test();
+            $mol_assert_like(Team.user_names(), ['jin', 'john']);
+            Team.user_name('jin', 'JIN');
+            $mol_assert_like(Team.user_names(), ['JIN', 'john']);
         },
         'Memoize by single complex key'($) {
             class Map extends $mol_object2 {
@@ -7427,21 +7425,15 @@ var $;
                     ++this.sums;
                     return this.value(index - 1) + this.value(index - 2);
                 }
-                static test() {
-                    $mol_assert_equal(this.value(4), 5);
-                    $mol_assert_equal(this.sums, 3);
-                    this.value(1, 2);
-                    $mol_assert_equal(this.value(4), 8);
-                    $mol_assert_equal(this.sums, 6);
-                }
             }
             __decorate([
                 $mol_wire_mem(1)
             ], Fib, "value", null);
-            __decorate([
-                $mol_wire_method
-            ], Fib, "test", null);
-            Fib.test();
+            $mol_assert_equal(Fib.value(4), 5);
+            $mol_assert_equal(Fib.sums, 3);
+            Fib.value(1, 2);
+            $mol_assert_equal(Fib.value(4), 8);
+            $mol_assert_equal(Fib.sums, 6);
         },
         'Unsubscribe from temp pubs on complete'($) {
             class Random extends $mol_object2 {
@@ -7456,12 +7448,6 @@ var $;
                     this.resets();
                     return this.seed();
                 }
-                static test() {
-                    const first = this.value();
-                    this.resets(null);
-                    const second = this.value();
-                    $mol_assert_unique(first, second);
-                }
             }
             __decorate([
                 $mol_wire_method
@@ -7472,10 +7458,9 @@ var $;
             __decorate([
                 $mol_wire_mem(0)
             ], Random, "value", null);
-            __decorate([
-                $mol_wire_method
-            ], Random, "test", null);
-            Random.test();
+            const first = Random.value();
+            Random.resets(null);
+            $mol_assert_unique(Random.value(), first);
         },
     });
 })($ || ($ = {}));

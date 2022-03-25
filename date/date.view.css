@@ -6,6 +6,9 @@
 [mol_date_next] {
 	flex-grow: 1;
 }
+[mol_date_prev] {
+	justify-content: flex-end;
+}
 
 [mol_date_calendar_title] {
 	padding: var(--mol_gap_text);

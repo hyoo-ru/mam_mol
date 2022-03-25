@@ -95,18 +95,17 @@ namespace $ {
 			return stat
 		}
 
-		ensure(next?: boolean) {
+		@ $mol_mem
+		ensure() {
 			const path = this.path()
 
 			try {
-				if (next) $node.fs.mkdirSync( path )
-				else $node.fs.unlinkSync( path )
+				$node.fs.mkdirSync( path )
 			} catch( e: any ) {
 				e.message += '\n' + path
-				return this.$.$mol_fail_hidden(e)
+				this.$.$mol_fail_hidden(e)
 			}
 
-			return true
 		}
 		
 		@ $mol_mem

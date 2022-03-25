@@ -225,8 +225,8 @@ declare namespace $ {
         sub_off(sub_pos: number): void;
         reap(): void;
         promote(): void;
-        up(): void;
-        down(): void;
+        refresh(): void;
+        commit(): void;
         emit(quant?: $mol_wire_cursor): void;
         peer_move(from_pos: number, to_pos: number): void;
         peer_repos(peer_pos: number, self_pos: number): void;
@@ -290,6 +290,8 @@ declare namespace $ {
         pub_off(sub_pos: number): void;
         destructor(): void;
         track_cut(): void;
+        commit(): void;
+        commit_pubs(): void;
         absorb(quant?: $mol_wire_cursor): void;
         get pub_empty(): boolean;
     }
@@ -351,8 +353,8 @@ declare namespace $ {
         static sync(): void;
         cache: Result | Error | Promise<Result | Error>;
         get args(): Args;
-        get result(): Result | undefined;
-        get persist(): boolean;
+        result(): Result | undefined;
+        persistent(): boolean;
         field(): string;
         constructor(id: string, task: (this: Host, ...args: Args) => Result, host?: Host | undefined, ...args: Args);
         destructor(): void;
@@ -362,10 +364,10 @@ declare namespace $ {
         toJSON(): any;
         get $(): any;
         emit(quant?: $mol_wire_cursor): void;
-        down(): void;
-        up(): void;
+        commit(): void;
+        refresh(): void;
         put(next: Result | Error | Promise<Result | Error>): Result | Error | Promise<Result | Error>;
-        recall(...args: Args): Result | Error | Promise<Result | Error>;
+        recall(...args: Args): Result;
         sync(): Awaited<Result>;
         async(): Promise<Result>;
     }

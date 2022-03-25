@@ -123,7 +123,7 @@ namespace $ {
 				const fibers = this.planning.splice( 0, this.planning.length )
 				
 				for( const fiber of fibers ) {
-					fiber.up()
+					fiber.refresh()
 				}
 				
 			}
@@ -148,13 +148,13 @@ namespace $ {
 			return this.slice( 0 , this.pub_from ) as any as Args
 		}
 		
-		get result() {
+		result() {
 			if( this.cache instanceof Promise ) return
 			if( this.cache instanceof Error ) return
 			return this.cache
 		}
 		
-		get persist() {
+		persistent() {
 			const id = this[ Symbol.toStringTag ]
 			return id[ id.length - 2 ] !== '#'
 		}
@@ -190,7 +190,7 @@ namespace $ {
 				prev.destructor()
 			}
 			
-			if( this.persist ) {
+			if( this.persistent() ) {
 				if( this.pub_from === 0 ) {
 					;( this.host ?? this.task )[ this.field() ] = null
 				} else {
@@ -244,12 +244,21 @@ namespace $ {
 			else super.emit( quant )
 		}
 		
-		down() {
-			if( this.persist ) return
+		commit() {
+			
+			if( this.persistent() ) return
+			
+			super.commit()
+			
+			if( this.host instanceof $mol_wire_fiber ) {
+				this.host.put( this.cache )
+			}
+			
 			this.destructor()
+			
 		}
 		
-		up() {
+		refresh() {
 
 			type Result = typeof this.cache
 			
@@ -259,7 +268,7 @@ namespace $ {
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
 				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
-					;( this[i] as $mol_wire_pub )?.up()
+					;( this[i] as $mol_wire_pub )?.refresh()
 					if( this.cursor !== $mol_wire_cursor.doubt ) break check
 				}
 				
@@ -327,7 +336,7 @@ namespace $ {
 				
 				this.cache = next
 				
-				if( this.persist && $mol_owning_catch( this, next ) ) {
+				if( this.persistent() && $mol_owning_catch( this, next ) ) {
 					try {
 						next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
 					} catch {} // Promises throws in strict mode
@@ -345,22 +354,15 @@ namespace $ {
 			
 			if( next instanceof Promise ) return next
 			
-			if( this.persist ) {
-			
-				for(
-					let cursor = this.pub_from;
-					cursor < this.sub_from;
-					cursor += 2
-				) {
-					const pub = this[ cursor ] as $mol_wire_pub
-					pub?.down()
-				}
+			if( this.persistent() ) {
+				
+				this.commit_pubs()
 				
 			} else {
 				
-				this.cursor = this.pub_from
-				this.track_cut()
-				this.cursor = $mol_wire_cursor.fresh
+				if( this.sub_empty ) {
+					this.commit()
+				}
 				
 			}
 			
@@ -372,7 +374,7 @@ namespace $ {
 		 */
 		@ $mol_wire_method
 		recall( ... args: Args ) {
-			return this.put( this.task.call( this.host!, ... args ) )
+			return this.task.call( this.host!, ... args )
 		}
 		
 		/**
@@ -382,11 +384,11 @@ namespace $ {
 		sync() {
 			
 			if( !$mol_wire_fiber.warm ) {
-				return this.result as Awaited< Result >
+				return this.result() as Awaited< Result >
 			}
 			
 			this.promote()
-			this.up()
+			this.refresh()
 			
 			if( this.cache instanceof Error ) {
 				return $mol_fail_hidden( this.cache )
@@ -407,7 +409,7 @@ namespace $ {
 			
 			while( true ) {
 				
-				this.up()
+				this.refresh()
 				
 				if( this.cache instanceof Error ) {
 					$mol_fail_hidden( this.cache )
@@ -421,7 +423,7 @@ namespace $ {
 					// never ends on destructed fiber
 					await new Promise( ()=> {} )
 				}
-					
+				
 			}
 			
 		}

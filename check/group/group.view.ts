@@ -9,6 +9,7 @@ namespace $.$$ {
 				for( const check of this.checks() ) {
 					check.checked( next )
 				}
+				return next
 			}
 			
 			return this.checks().some( check => check.checked() )

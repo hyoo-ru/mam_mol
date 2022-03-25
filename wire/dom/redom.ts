@@ -44,7 +44,7 @@ namespace $ {
 				if( typeof next === 'function' ) {
 					task = next
 					atom.absorb()
-					atom.up()
+					atom.refresh()
 				} else {
 					if( atom.cache === next ) return
 					atom.recall( next )
@@ -52,7 +52,7 @@ namespace $ {
 			},
 		} )
 		
-		if( task ) atom.up()
+		if( task ) atom.refresh()
 		
 		return ()=> atom.absorb()
 	}
@@ -85,7 +85,7 @@ namespace $ {
 				if( typeof next === 'function' ) {
 					task = next
 					atom.absorb()
-					atom.up()
+					atom.refresh()
 				} else {
 					atom.recall( next )
 				}
