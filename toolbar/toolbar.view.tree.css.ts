@@ -35,8 +35,10 @@ namespace $.$$ {
 		
 		Bar: {
 			display : 'flex',
+			justifyContent: 'flex-end',
 			flex: {
 				grow: 1,
+				shrink: 1,
 				wrap: 'wrap',
 			},
 			margin: {
