@@ -44,7 +44,7 @@ namespace $ {
 			Func extends ( this: Host, ... args: Args )=> Result
 		>( func: Func )=> {
 			
-			const persist = $mol_wire_fiber.persist( func, keys )
+			const persist = $mol_wire_fiber_persist.getter( func, keys )
 			
 			const wrapper = function( this: Host, ... args: Parameters< Func > ){
 				
