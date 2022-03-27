@@ -289,6 +289,8 @@ namespace $ {
 				
 				if( this.sub_empty ) {
 					this.commit()
+				} else {
+					this.commit_pubs()
 				}
 				
 			}
