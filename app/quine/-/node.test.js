@@ -796,6 +796,41 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_after_timeout extends $mol_object2 {
+        delay;
+        task;
+        id;
+        constructor(delay, task) {
+            super();
+            this.delay = delay;
+            this.task = task;
+            this.id = setTimeout(task, delay);
+        }
+        destructor() {
+            clearTimeout(this.id);
+        }
+    }
+    $.$mol_after_timeout = $mol_after_timeout;
+})($ || ($ = {}));
+//mol/after/timeout/timeout.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_after_frame extends $mol_after_timeout {
+        task;
+        constructor(task) {
+            super(16, task);
+            this.task = task;
+        }
+    }
+    $.$mol_after_frame = $mol_after_frame;
+})($ || ($ = {}));
+//mol/after/frame/frame.node.ts
+;
+"use strict";
+var $;
+(function ($) {
     $.$mol_compare_deep_cache = new WeakMap();
     function $mol_compare_deep(left, right) {
         if (Object.is(left, right))
@@ -973,41 +1008,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_after_timeout extends $mol_object2 {
-        delay;
-        task;
-        id;
-        constructor(delay, task) {
-            super();
-            this.delay = delay;
-            this.task = task;
-            this.id = setTimeout(task, delay);
-        }
-        destructor() {
-            clearTimeout(this.id);
-        }
-    }
-    $.$mol_after_timeout = $mol_after_timeout;
-})($ || ($ = {}));
-//mol/after/timeout/timeout.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_after_frame extends $mol_after_timeout {
-        task;
-        constructor(task) {
-            super(16, task);
-            this.task = task;
-        }
-    }
-    $.$mol_after_frame = $mol_after_frame;
-})($ || ($ = {}));
-//mol/after/frame/frame.node.ts
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_wire_method(host, field, descr) {
         if (!descr)
             descr = Reflect.getOwnPropertyDescriptor(host, field);
@@ -1016,8 +1016,9 @@ var $;
         if (typeof sup[field] === 'function') {
             Object.defineProperty(orig, 'name', { value: sup[field].name });
         }
+        const temp = $mol_wire_fiber_temp.getter(orig);
         const value = function (...args) {
-            const fiber = $mol_wire_fiber.temp(this ?? null, orig, ...args);
+            const fiber = temp(this ?? null, args);
             return fiber.sync();
         };
         Object.defineProperty(value, 'name', { value: orig.name + ' ' });
@@ -1037,53 +1038,6 @@ var $;
     class $mol_wire_fiber extends $mol_wire_pub_sub {
         task;
         host;
-        static temp(host, task, ...args) {
-            const existen = $mol_wire_auto()?.track_next();
-            reuse: if (existen) {
-                if (!(existen instanceof $mol_wire_fiber))
-                    break reuse;
-                if (existen.host !== host)
-                    break reuse;
-                if (existen.task !== task)
-                    break reuse;
-                if (!$mol_compare_deep(existen.args, args))
-                    break reuse;
-                return existen;
-            }
-            return new this(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, ...args);
-        }
-        static persist(task, keys) {
-            const field = task.name + '()';
-            if (keys) {
-                return function $mol_wire_fiber_persist(host, args) {
-                    let dict, key, fiber;
-                    key = `${host?.[Symbol.toStringTag] ?? host}.${task.name}(${args.map(v => $mol_key(v)).join(',')})`;
-                    dict = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
-                    if (dict) {
-                        const existen = dict.get(key);
-                        if (existen)
-                            return existen;
-                    }
-                    else {
-                        dict = (host ?? task)[field] = new Map();
-                    }
-                    fiber = new $mol_wire_fiber(key, task, host, ...args);
-                    dict.set(key, fiber);
-                    return fiber;
-                };
-            }
-            else {
-                return function $mol_wire_fiber_persist(host, args) {
-                    const existen = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
-                    if (existen)
-                        return existen;
-                    const key = `${host?.[Symbol.toStringTag] ?? host}.${field}`;
-                    const fiber = new $mol_wire_fiber(key, task, host, ...args);
-                    (host ?? task)[field] = fiber;
-                    return fiber;
-                };
-            }
-        }
         static warm = true;
         static planning = [];
         static reaping = [];
@@ -1128,8 +1082,7 @@ var $;
             return this.cache;
         }
         persistent() {
-            const id = this[Symbol.toStringTag];
-            return id[id.length - 2] !== '#';
+            return this instanceof $mol_wire_fiber_persist;
         }
         field() {
             return this.task.name + '()';
@@ -1149,7 +1102,7 @@ var $;
             if ($mol_owning_check(this, prev)) {
                 prev.destructor();
             }
-            if (this.persistent()) {
+            if (this instanceof $mol_wire_fiber_persist) {
                 if (this.pub_from === 0) {
                     ;
                     (this.host ?? this.task)[this.field()] = null;
@@ -1193,7 +1146,7 @@ var $;
                 super.emit(quant);
         }
         commit() {
-            if (this.persistent())
+            if (this instanceof $mol_wire_fiber_persist)
                 return;
             super.commit();
             if (this.host instanceof $mol_wire_fiber) {
@@ -1219,7 +1172,17 @@ var $;
             const bu = this.track_on();
             let result;
             try {
-                result = this.task.call(this.host, ...(this.pub_from ? this.slice(0, this.pub_from) : []));
+                switch (this.pub_from) {
+                    case 0:
+                        result = this.task.call(this.host);
+                        break;
+                    case 1:
+                        result = this.task.call(this.host, this[0]);
+                        break;
+                    default:
+                        result = this.task.call(this.host, ...this.slice(0, this.pub_from));
+                        break;
+                }
                 if (result instanceof Promise) {
                     const put = (res) => {
                         if (this.cache === result)
@@ -1257,7 +1220,7 @@ var $;
                     prev.destructor();
                 }
                 this.cache = next;
-                if (this.persistent() && $mol_owning_catch(this, next)) {
+                if (this instanceof $mol_wire_fiber_persist && $mol_owning_catch(this, next)) {
                     try {
                         next[Symbol.toStringTag] = this[Symbol.toStringTag];
                     }
@@ -1272,18 +1235,18 @@ var $;
             this.cursor = $mol_wire_cursor.fresh;
             if (next instanceof Promise)
                 return next;
-            if (this.persistent()) {
+            if (this instanceof $mol_wire_fiber_persist) {
                 this.commit_pubs();
             }
             else {
                 if (this.sub_empty) {
                     this.commit();
                 }
+                else {
+                    this.commit_pubs();
+                }
             }
             return next;
-        }
-        recall(...args) {
-            return this.task.call(this.host, ...args);
         }
         sync() {
             if (!$mol_wire_fiber.warm) {
@@ -1314,10 +1277,68 @@ var $;
             }
         }
     }
+    $.$mol_wire_fiber = $mol_wire_fiber;
+    class $mol_wire_fiber_temp extends $mol_wire_fiber {
+        static getter(task) {
+            return function $mol_wire_fiber_temp_get(host, args) {
+                const existen = $mol_wire_auto()?.track_next();
+                reuse: if (existen) {
+                    if (!(existen instanceof $mol_wire_fiber_temp))
+                        break reuse;
+                    if (existen.host !== host)
+                        break reuse;
+                    if (existen.task !== task)
+                        break reuse;
+                    if (!$mol_compare_deep(existen.args, args))
+                        break reuse;
+                    return existen;
+                }
+                return new $mol_wire_fiber_temp(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, ...args);
+            };
+        }
+    }
+    $.$mol_wire_fiber_temp = $mol_wire_fiber_temp;
+    class $mol_wire_fiber_persist extends $mol_wire_fiber {
+        static getter(task, keys) {
+            const field = task.name + '()';
+            if (keys) {
+                return function $mol_wire_fiber_persist_get(host, args) {
+                    let dict, key, fiber;
+                    key = `${host?.[Symbol.toStringTag] ?? host}.${task.name}(${args.map(v => $mol_key(v)).join(',')})`;
+                    dict = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
+                    if (dict) {
+                        const existen = dict.get(key);
+                        if (existen)
+                            return existen;
+                    }
+                    else {
+                        dict = (host ?? task)[field] = new Map();
+                    }
+                    fiber = new $mol_wire_fiber_persist(key, task, host, ...args);
+                    dict.set(key, fiber);
+                    return fiber;
+                };
+            }
+            else {
+                return function $mol_wire_fiber_persist_get(host, args) {
+                    const existen = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
+                    if (existen)
+                        return existen;
+                    const key = `${host?.[Symbol.toStringTag] ?? host}.${field}`;
+                    const fiber = new $mol_wire_fiber_persist(key, task, host, ...args);
+                    (host ?? task)[field] = fiber;
+                    return fiber;
+                };
+            }
+        }
+        recall(...args) {
+            return this.task.call(this.host, ...args);
+        }
+    }
     __decorate([
         $mol_wire_method
-    ], $mol_wire_fiber.prototype, "recall", null);
-    $.$mol_wire_fiber = $mol_wire_fiber;
+    ], $mol_wire_fiber_persist.prototype, "recall", null);
+    $.$mol_wire_fiber_persist = $mol_wire_fiber_persist;
 })($ || ($ = {}));
 //mol/wire/fiber/fiber.ts
 ;
@@ -1376,7 +1397,7 @@ var $;
     $.$mol_wire_mem = $mol_wire_mem;
     function $mol_wire_mem_func(keys) {
         return (func) => {
-            const persist = $mol_wire_fiber.persist(func, keys);
+            const persist = $mol_wire_fiber_persist.getter(func, keys);
             const wrapper = function (...args) {
                 let atom = persist(this, args.slice(0, keys));
                 if (args.length <= keys || args[keys] === undefined)
@@ -1549,9 +1570,10 @@ var $;
                 if (typeof val !== 'function')
                     return val;
                 let fiber;
+                const temp = $mol_wire_fiber_temp.getter(val);
                 return function $mol_wire_async(...args) {
                     fiber?.destructor();
-                    fiber = $mol_wire_fiber.temp(obj, val, ...args);
+                    fiber = temp(obj, args);
                     return fiber.async();
                 };
             }
@@ -7352,72 +7374,6 @@ var $;
 ;
 "use strict";
 var $;
-(function ($) {
-    function $mol_promise() {
-        let done;
-        let fail;
-        const promise = new Promise((d, f) => {
-            done = d;
-            fail = f;
-        });
-        return Object.assign(promise, {
-            done,
-            fail,
-        });
-    }
-    $.$mol_promise = $mol_promise;
-})($ || ($ = {}));
-//mol/promise/promise.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_timeout = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-//mol/after/timeout/timeout.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_sync(obj) {
-        return new Proxy(obj, {
-            get(obj, field) {
-                const val = obj[field];
-                if (typeof val !== 'function')
-                    return val;
-                return function $mol_wire_sync(...args) {
-                    const fiber = $mol_wire_fiber.temp(obj, val, ...args);
-                    return fiber.sync();
-                };
-            }
-        });
-    }
-    $.$mol_wire_sync = $mol_wire_sync;
-})($ || ($ = {}));
-//mol/wire/sync/sync.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wait_timeout_async(timeout) {
-        const promise = $mol_promise();
-        const task = new this.$mol_after_timeout(timeout, () => promise.done());
-        return Object.assign(promise, {
-            destructor: () => task.destructor()
-        });
-    }
-    $.$mol_wait_timeout_async = $mol_wait_timeout_async;
-    function $mol_wait_timeout(timeout) {
-        return this.$mol_wire_sync(this).$mol_wait_timeout_async(timeout);
-    }
-    $.$mol_wait_timeout = $mol_wait_timeout;
-})($ || ($ = {}));
-//mol/wait/timeout/timeout.ts
-;
-"use strict";
-var $;
 (function ($_1) {
     $mol_test({
         async 'Latest Calls Wins on Concurrency'($) {
@@ -7503,6 +7459,24 @@ var $;
 ;
 "use strict";
 var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_timeout = $mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+//mol/after/timeout/timeout.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_frame = $mol_after_mock_commmon;
+    });
+})($ || ($ = {}));
+//mol/after/frame/frame.test.ts
+;
+"use strict";
+var $;
 (function ($) {
     $mol_test({
         'Primitives'() {
@@ -7555,15 +7529,6 @@ var $;
     });
 })($ || ($ = {}));
 //mol/key/key.test.tsx
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_frame = $mol_after_mock_commmon;
-    });
-})($ || ($ = {}));
-//mol/after/frame/frame.test.ts
 ;
 "use strict";
 var $;
@@ -7891,36 +7856,6 @@ var $;
             $mol_assert_like(App.res(), 1);
             App.count(5);
             $mol_assert_like(App.res(), 6);
-        },
-        async 'Toggle with async'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static checked(next = false) {
-                    $$.$mol_wait_timeout(0);
-                    return next;
-                }
-                static toggle() {
-                    const prev = this.checked();
-                    $mol_assert_unique(this.checked(!prev), prev);
-                    $mol_assert_equal(this.checked(), prev);
-                }
-                static res() {
-                    return this.checked();
-                }
-            }
-            __decorate([
-                $mol_wire_mem(0)
-            ], App, "checked", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "toggle", null);
-            __decorate([
-                $mol_wire_mem(0)
-            ], App, "res", null);
-            const app = $mol_wire_async(App);
-            $mol_assert_equal(await app.res(), false);
-            await app.toggle();
-            $mol_assert_equal(await app.res(), true);
         },
         'Restore after error'($) {
             class App extends $mol_object2 {
@@ -9893,5 +9828,63 @@ var $;
     $mol_wire_log.active();
 })($ || ($ = {}));
 //mol/wire/wire.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_sync(obj) {
+        return new Proxy(obj, {
+            get(obj, field) {
+                const val = obj[field];
+                if (typeof val !== 'function')
+                    return val;
+                const temp = $mol_wire_fiber_temp.getter(val);
+                return function $mol_wire_sync(...args) {
+                    const fiber = temp(obj, args);
+                    return fiber.sync();
+                };
+            }
+        });
+    }
+    $.$mol_wire_sync = $mol_wire_sync;
+})($ || ($ = {}));
+//mol/wire/sync/sync.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_promise() {
+        let done;
+        let fail;
+        const promise = new Promise((d, f) => {
+            done = d;
+            fail = f;
+        });
+        return Object.assign(promise, {
+            done,
+            fail,
+        });
+    }
+    $.$mol_promise = $mol_promise;
+})($ || ($ = {}));
+//mol/promise/promise.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wait_timeout_async(timeout) {
+        const promise = $mol_promise();
+        const task = new this.$mol_after_timeout(timeout, () => promise.done());
+        return Object.assign(promise, {
+            destructor: () => task.destructor()
+        });
+    }
+    $.$mol_wait_timeout_async = $mol_wait_timeout_async;
+    function $mol_wait_timeout(timeout) {
+        return this.$mol_wire_sync(this).$mol_wait_timeout_async(timeout);
+    }
+    $.$mol_wait_timeout = $mol_wait_timeout;
+})($ || ($ = {}));
+//mol/wait/timeout/timeout.ts
 
 //# sourceMappingURL=node.test.js.map

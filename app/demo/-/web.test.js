@@ -512,15 +512,6 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_timeout = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-//mol/after/timeout/timeout.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
     $mol_test({
         async 'Latest Calls Wins on Concurrency'($) {
             class NameLogger extends $mol_object2 {
@@ -605,6 +596,15 @@ var $;
 ;
 "use strict";
 var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_frame = $mol_after_mock_commmon;
+    });
+})($ || ($ = {}));
+//mol/after/frame/frame.test.ts
+;
+"use strict";
+var $;
 (function ($) {
     $mol_test({
         'Primitives'() {
@@ -657,15 +657,6 @@ var $;
     });
 })($ || ($ = {}));
 //mol/key/key.test.tsx
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_frame = $mol_after_mock_commmon;
-    });
-})($ || ($ = {}));
-//mol/after/frame/frame.test.ts
 ;
 "use strict";
 var $;
@@ -993,36 +984,6 @@ var $;
             $mol_assert_like(App.res(), 1);
             App.count(5);
             $mol_assert_like(App.res(), 6);
-        },
-        async 'Toggle with async'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static checked(next = false) {
-                    $$.$mol_wait_timeout(0);
-                    return next;
-                }
-                static toggle() {
-                    const prev = this.checked();
-                    $mol_assert_unique(this.checked(!prev), prev);
-                    $mol_assert_equal(this.checked(), prev);
-                }
-                static res() {
-                    return this.checked();
-                }
-            }
-            __decorate([
-                $mol_wire_mem(0)
-            ], App, "checked", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "toggle", null);
-            __decorate([
-                $mol_wire_mem(0)
-            ], App, "res", null);
-            const app = $mol_wire_async(App);
-            $mol_assert_equal(await app.res(), false);
-            await app.toggle();
-            $mol_assert_equal(await app.res(), true);
         },
         'Restore after error'($) {
             class App extends $mol_object2 {
@@ -1961,6 +1922,15 @@ var $;
     })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
 //mol/button/button.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_timeout = $mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+//mol/after/timeout/timeout.test.ts
 ;
 "use strict";
 var $;

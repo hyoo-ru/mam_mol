@@ -23,7 +23,7 @@ namespace $ {
 		const descr = lookup_descr( Reflect.getPrototypeOf( el )!, field )!
 		let task = Reflect.getOwnPropertyDescriptor( el, field )?.get
 		
-		const atom = new $mol_wire_fiber< typeof el, [] | [ string ], string >(
+		const atom = new $mol_wire_fiber_persist< typeof el, [] | [ string ], string >(
 			el.id + '.' + field,
 			function( this: typeof el, next?: any ) {
 				
@@ -62,7 +62,7 @@ namespace $ {
 		const kids = el.childNodes
 		let task = ( next: any )=> next
 		
-		const atom = new $mol_wire_fiber< typeof el, [] | [ ArrayLike<ChildNode> ], NodeListOf<ChildNode> >(
+		const atom = new $mol_wire_fiber_persist< typeof el, [] | [ ArrayLike<ChildNode> ], NodeListOf<ChildNode> >(
 			el.id + '.childNodes',
 			function( this: typeof el, next?: any ) {
 				

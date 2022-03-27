@@ -607,52 +607,6 @@ var $;
 ;
 "use strict";
 var $;
-(function ($) {
-    function $mol_promise() {
-        let done;
-        let fail;
-        const promise = new Promise((d, f) => {
-            done = d;
-            fail = f;
-        });
-        return Object.assign(promise, {
-            done,
-            fail,
-        });
-    }
-    $.$mol_promise = $mol_promise;
-})($ || ($ = {}));
-//mol/promise/promise.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_timeout = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-//mol/after/timeout/timeout.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wait_timeout_async(timeout) {
-        const promise = $mol_promise();
-        const task = new this.$mol_after_timeout(timeout, () => promise.done());
-        return Object.assign(promise, {
-            destructor: () => task.destructor()
-        });
-    }
-    $.$mol_wait_timeout_async = $mol_wait_timeout_async;
-    function $mol_wait_timeout(timeout) {
-        return this.$mol_wire_sync(this).$mol_wait_timeout_async(timeout);
-    }
-    $.$mol_wait_timeout = $mol_wait_timeout;
-})($ || ($ = {}));
-//mol/wait/timeout/timeout.ts
-;
-"use strict";
-var $;
 (function ($_1) {
     $mol_test({
         async 'Latest Calls Wins on Concurrency'($) {
@@ -738,6 +692,15 @@ var $;
 ;
 "use strict";
 var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_frame = $mol_after_mock_commmon;
+    });
+})($ || ($ = {}));
+//mol/after/frame/frame.test.ts
+;
+"use strict";
+var $;
 (function ($) {
     $mol_test({
         'Primitives'() {
@@ -790,15 +753,6 @@ var $;
     });
 })($ || ($ = {}));
 //mol/key/key.test.tsx
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_frame = $mol_after_mock_commmon;
-    });
-})($ || ($ = {}));
-//mol/after/frame/frame.test.ts
 ;
 "use strict";
 var $;
@@ -1126,36 +1080,6 @@ var $;
             $mol_assert_like(App.res(), 1);
             App.count(5);
             $mol_assert_like(App.res(), 6);
-        },
-        async 'Toggle with async'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static checked(next = false) {
-                    $$.$mol_wait_timeout(0);
-                    return next;
-                }
-                static toggle() {
-                    const prev = this.checked();
-                    $mol_assert_unique(this.checked(!prev), prev);
-                    $mol_assert_equal(this.checked(), prev);
-                }
-                static res() {
-                    return this.checked();
-                }
-            }
-            __decorate([
-                $mol_wire_mem(0)
-            ], App, "checked", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "toggle", null);
-            __decorate([
-                $mol_wire_mem(0)
-            ], App, "res", null);
-            const app = $mol_wire_async(App);
-            $mol_assert_equal(await app.res(), false);
-            await app.toggle();
-            $mol_assert_equal(await app.res(), true);
         },
         'Restore after error'($) {
             class App extends $mol_object2 {
@@ -2267,6 +2191,15 @@ var $;
     });
 })($ || ($ = {}));
 //mol/unit/unit.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_timeout = $mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+//mol/after/timeout/timeout.test.ts
 ;
 "use strict";
 //mol/type/equals/equals.test.ts
@@ -3643,5 +3576,42 @@ var $;
     $mol_wire_log.active();
 })($ || ($ = {}));
 //mol/wire/wire.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_promise() {
+        let done;
+        let fail;
+        const promise = new Promise((d, f) => {
+            done = d;
+            fail = f;
+        });
+        return Object.assign(promise, {
+            done,
+            fail,
+        });
+    }
+    $.$mol_promise = $mol_promise;
+})($ || ($ = {}));
+//mol/promise/promise.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wait_timeout_async(timeout) {
+        const promise = $mol_promise();
+        const task = new this.$mol_after_timeout(timeout, () => promise.done());
+        return Object.assign(promise, {
+            destructor: () => task.destructor()
+        });
+    }
+    $.$mol_wait_timeout_async = $mol_wait_timeout_async;
+    function $mol_wait_timeout(timeout) {
+        return this.$mol_wire_sync(this).$mol_wait_timeout_async(timeout);
+    }
+    $.$mol_wait_timeout = $mol_wait_timeout;
+})($ || ($ = {}));
+//mol/wait/timeout/timeout.ts
 
 //# sourceMappingURL=web.test.js.map
