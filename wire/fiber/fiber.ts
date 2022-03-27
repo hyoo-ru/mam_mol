@@ -361,7 +361,7 @@ namespace $ {
 			Result,
 		>(
 			task: ( this : Host , ... args : Args )=> Result,
-		): ( host: Host, args: Args )=> $mol_wire_fiber< Host, [ ... Args ], Result > {
+		): ( host: Host, args: Args )=> $mol_wire_fiber_temp< Host, [ ... Args ], Result > {
 			
 			return function $mol_wire_fiber_temp_get( host: Host, args: Args ) {
 				
@@ -398,7 +398,7 @@ namespace $ {
 		>(
 			task: ( this : Host , ... args : Args )=> Result,
 			keys: number,
-		): ( host: Host, args: Args )=> $mol_wire_fiber< Host, [ ... Args ], Result > {
+		): ( host: Host, args: Args )=> $mol_wire_fiber_persist< Host, [ ... Args ], Result > {
 			
 			const field = task.name + '()'
 			
