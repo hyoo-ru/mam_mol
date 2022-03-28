@@ -76,10 +76,6 @@ namespace $ {
 			return this.cache
 		}
 		
-		persistent() {
-			return this instanceof $mol_wire_fiber_persist
-		}
-		
 		field() {
 			return this.task.name + '()'
 		}
@@ -99,25 +95,6 @@ namespace $ {
 			
 			this.pub_from = this.sub_from = args.length
 			this[ Symbol.toStringTag ] = id
-			
-		}
-		
-		destructor() {
-			
-			super.destructor()
-			
-			const prev = this.cache
-			if( $mol_owning_check( this, prev ) ) {
-				prev.destructor()
-			}
-			
-			if( this instanceof $mol_wire_fiber_persist ) {
-				if( this.pub_from === 0 ) {
-					;( this.host ?? this.task )[ this.field() ] = null
-				} else {
-					;( this.host ?? this.task )[ this.field() ].delete( this[ Symbol.toStringTag ] )
-				}
-			}
 			
 		}
 		
@@ -163,20 +140,6 @@ namespace $ {
 		emit( quant = $mol_wire_cursor.stale ) {
 			if( this.sub_empty ) this.plan()
 			else super.emit( quant )
-		}
-		
-		commit() {
-			
-			if( this instanceof $mol_wire_fiber_persist ) return
-			
-			super.commit()
-			
-			if( this.host instanceof $mol_wire_fiber ) {
-				this.host.put( this.cache )
-			}
-			
-			this.destructor()
-			
 		}
 		
 		refresh() {
@@ -385,6 +348,11 @@ namespace $ {
 			
 		}
 
+		commit() {
+			super.commit()
+			this.destructor()
+		}
+		
 	}
 	
 	export class $mol_wire_fiber_persist<
@@ -450,9 +418,28 @@ namespace $ {
 		 */
 		@ $mol_wire_method
 		recall( ... args: Args ) {
-			return this.task.call( this.host!, ... args )
+			return this.put( this.task.call( this.host!, ... args ) )
 		}
-		 
+		
+		commit() {}
+		
+		destructor() {
+			
+			super.destructor()
+			
+			const prev = this.cache
+			if( $mol_owning_check( this, prev ) ) {
+				prev.destructor()
+			}
+			
+			if( this.pub_from === 0 ) {
+				;( this.host ?? this.task )[ this.field() ] = null
+			} else {
+				;( this.host ?? this.task )[ this.field() ].delete( this[ Symbol.toStringTag ] )
+			}
+			
+		}
+		
 	}
 	
 }
