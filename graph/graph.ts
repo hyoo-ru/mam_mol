@@ -101,9 +101,14 @@ namespace $ {
 							
 							if( weight_out > min ) return min
 							if( weight_out === min ) {
+								
 								this.unlink( from , to )
-								const enter = path[ path.length - 2 ]
-								this.link( enter , to , edge )
+								
+								if( path.length > 1 ) {
+									const enter = path[ path.length - 2 ]
+									this.link( enter , to , edge )
+								}
+								
 							}
 							
 						}
