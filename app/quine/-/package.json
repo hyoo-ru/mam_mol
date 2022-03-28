@@ -193,8 +193,8 @@
     "$mol_app_quine_quine.view.tree"
   ],
   "dependencies": {
-    "jsdom": "*",
     "colorette": "*",
+    "jsdom": "*",
     "chokidar": "*"
   }
 }

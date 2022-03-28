@@ -184,8 +184,8 @@
     "$mol_number_number.view.tree"
   ],
   "dependencies": {
-    "jsdom": "*",
     "colorette": "*",
+    "jsdom": "*",
     "chokidar": "*"
   }
 }

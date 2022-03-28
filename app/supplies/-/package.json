@@ -258,8 +258,8 @@
     "$mol_icon_tick_-view.tree_tick.view.tree.ts"
   ],
   "dependencies": {
-    "jsdom": "*",
     "colorette": "*",
+    "jsdom": "*",
     "chokidar": "*"
   }
 }

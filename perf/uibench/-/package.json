@@ -113,7 +113,7 @@
     "$mol_perf_uibench_uibench.view.tree"
   ],
   "dependencies": {
-    "jsdom": "*",
-    "colorette": "*"
+    "colorette": "*",
+    "jsdom": "*"
   }
 }

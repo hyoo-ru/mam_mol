@@ -3860,8 +3860,13 @@ var $;
                             const min = visit(to);
                             if (weight_out > min)
                                 return min;
-                            if (weight_out === min)
+                            if (weight_out === min) {
                                 this.unlink(from, to);
+                                if (path.length > 1) {
+                                    const enter = path[path.length - 2];
+                                    this.link(enter, to, edge);
+                                }
+                            }
                         }
                     }
                     finally {
@@ -8294,6 +8299,16 @@ var $;
             graph.link('C', 'D', { priority: 0 });
             graph.acyclic(edge => edge.priority);
             $mol_assert_equal([...graph.sorted].join(''), 'BADC');
+        },
+        'sorting must group cutted cycles'() {
+            var graph = new $mol_graph();
+            graph.link('A', 'B', 0);
+            graph.link('B', 'C', 0);
+            graph.link('C', 'D', -2);
+            graph.link('D', 'E', 0);
+            graph.link('E', 'C', 0);
+            graph.acyclic(edge => edge);
+            $mol_assert_equal([...graph.sorted].join(''), 'CEDBA');
         },
     });
 })($ || ($ = {}));

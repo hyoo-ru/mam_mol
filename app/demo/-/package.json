@@ -783,8 +783,8 @@
     "$mol_app_demo_main_main.view.tree"
   ],
   "dependencies": {
-    "jsdom": "*",
     "colorette": "*",
+    "jsdom": "*",
     "chokidar": "*",
     "node-fetch": "*"
   }

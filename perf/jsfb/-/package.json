@@ -145,7 +145,7 @@
     "$mol_wire_solid"
   ],
   "dependencies": {
-    "jsdom": "*",
-    "colorette": "*"
+    "colorette": "*",
+    "jsdom": "*"
   }
 }

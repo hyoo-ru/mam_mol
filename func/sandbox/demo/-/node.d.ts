@@ -23,22 +23,6 @@ interface $node {
 declare var $node: $node;
 
 declare namespace $ {
-}
-
-declare namespace $ {
-    class $mol_func_sandbox {
-        static blacklist: Set<Function>;
-        static whitelist: WeakSet<object>;
-        static _make: (contexts: Object[]) => (code: string) => () => any;
-        static get make(): ((contexts: Object[]) => (code: string) => () => any) | ((...args: Object[]) => (code: string) => () => any);
-        constructor(...contexts: Object[]);
-        contexts: Object[];
-        _eval: ((code: string) => () => any) | undefined;
-        get eval(): (code: string) => () => any;
-    }
-}
-
-declare namespace $ {
     type $mol_log3_event<Fields> = {
         [key in string]: unknown;
     } & {
@@ -165,6 +149,22 @@ declare namespace $ {
 /// <reference types="node" />
 declare namespace $ {
     function $mol_exec(this: $, dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_func_sandbox {
+        static blacklist: Set<Function>;
+        static whitelist: WeakSet<object>;
+        static _make: (contexts: Object[]) => (code: string) => () => any;
+        static get make(): ((contexts: Object[]) => (code: string) => () => any) | ((...args: Object[]) => (code: string) => () => any);
+        constructor(...contexts: Object[]);
+        contexts: Object[];
+        _eval: ((code: string) => () => any) | undefined;
+        get eval(): (code: string) => () => any;
+    }
 }
 
 export = $;

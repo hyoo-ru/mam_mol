@@ -158,7 +158,7 @@
     "$mol_plot_mark_hor_-view.tree_hor.view.tree.ts"
   ],
   "dependencies": {
-    "jsdom": "*",
-    "colorette": "*"
+    "colorette": "*",
+    "jsdom": "*"
   }
 }

@@ -85,7 +85,7 @@
     "$mol_state"
   ],
   "dependencies": {
-    "jsdom": "*",
-    "colorette": "*"
+    "colorette": "*",
+    "jsdom": "*"
   }
 }

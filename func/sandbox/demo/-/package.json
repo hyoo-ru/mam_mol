@@ -33,7 +33,7 @@
     "$mol_env_env.ts"
   ],
   "dependencies": {
-    "jsdom": "*",
-    "colorette": "*"
+    "colorette": "*",
+    "jsdom": "*"
   }
 }
