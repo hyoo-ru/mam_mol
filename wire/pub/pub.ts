@@ -83,7 +83,7 @@ namespace $ {
 		/**
 		 * Allow to put data to caches in the subtree.
 		 */
-		commit() {}
+		complete() {}
 		
 		/**
 		 * Notify subscribers about self changes.

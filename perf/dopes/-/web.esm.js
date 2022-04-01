@@ -521,7 +521,7 @@ var $;
             $mol_wire_auto()?.track_next(this);
         }
         refresh() { }
-        commit() { }
+        complete() { }
         emit(quant = $mol_wire_cursor.stale) {
             for (let i = this.sub_from; i < this.length; i += 2) {
                 ;
@@ -766,14 +766,12 @@ var $;
             }
             this.sub_from = this.cursor;
         }
-        commit() {
-            this.commit_pubs();
-        }
-        commit_pubs() {
+        complete() { }
+        complete_pubs() {
             const limit = this.cursor < 0 ? this.sub_from : this.cursor;
             for (let cursor = this.pub_from; cursor < limit; cursor += 2) {
                 const pub = this[cursor];
-                pub?.commit();
+                pub?.complete();
             }
         }
         absorb(quant = $mol_wire_cursor.stale) {
@@ -1213,15 +1211,12 @@ var $;
             if (next instanceof Promise)
                 return next;
             if (this instanceof $mol_wire_fiber_persist) {
-                this.commit_pubs();
+                this.complete_pubs();
             }
             else {
-                if (this.sub_empty) {
-                    this.commit();
-                }
-                else {
-                    this.commit_pubs();
-                }
+                this.cursor = $mol_wire_cursor.final;
+                if (this.sub_empty)
+                    this.destructor();
             }
             return next;
         }
@@ -1273,8 +1268,7 @@ var $;
                 return new $mol_wire_fiber_temp(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, ...args);
             };
         }
-        commit() {
-            super.commit();
+        complete() {
             this.destructor();
         }
     }
@@ -1313,9 +1307,20 @@ var $;
             }
         }
         recall(...args) {
+            if (this.cursor > $mol_wire_cursor.fresh) {
+                try {
+                    this.once();
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        $mol_fail_hidden(error);
+                }
+            }
             return this.put(this.task.call(this.host, ...args));
         }
-        commit() { }
+        once() {
+            return this.sync();
+        }
         destructor() {
             super.destructor();
             const prev = this.cache;
@@ -1335,40 +1340,12 @@ var $;
     __decorate([
         $mol_wire_method
     ], $mol_wire_fiber_persist.prototype, "recall", null);
+    __decorate([
+        $mol_wire_method
+    ], $mol_wire_fiber_persist.prototype, "once", null);
     $.$mol_wire_fiber_persist = $mol_wire_fiber_persist;
 })($ || ($ = {}));
 //mol/wire/fiber/fiber.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const cacthed = new WeakMap();
-    function $mol_fail_catch(error) {
-        if (typeof error !== 'object')
-            return false;
-        if (cacthed.get(error))
-            return false;
-        cacthed.set(error, true);
-        return true;
-    }
-    $.$mol_fail_catch = $mol_fail_catch;
-})($ || ($ = {}));
-//mol/fail/catch/catch.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fail_log(error) {
-        if (error instanceof Promise)
-            return false;
-        if (!$mol_fail_catch(error))
-            return false;
-        console.error(error);
-        return true;
-    }
-    $.$mol_fail_log = $mol_fail_log;
-})($ || ($ = {}));
-//mol/fail/log/log.ts
 ;
 "use strict";
 var $;
@@ -1397,13 +1374,13 @@ var $;
             const persist = $mol_wire_fiber_persist.getter(func, keys);
             const wrapper = function (...args) {
                 let atom = persist(this, args.slice(0, keys));
-                if (args.length <= keys || args[keys] === undefined)
-                    return atom.sync();
-                try {
-                    atom.sync();
-                }
-                catch (error) {
-                    $mol_fail_log(error);
+                if (args.length <= keys || args[keys] === undefined) {
+                    if ($mol_wire_auto() instanceof $mol_wire_fiber_temp) {
+                        return atom.once();
+                    }
+                    else {
+                        return atom.sync();
+                    }
                 }
                 return atom.recall(...args);
             };
@@ -1449,6 +1426,37 @@ var $;
     self.addEventListener('resize', event => $mol_window.resizes(event));
 })($ || ($ = {}));
 //mol/window/window.web.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const cacthed = new WeakMap();
+    function $mol_fail_catch(error) {
+        if (typeof error !== 'object')
+            return false;
+        if (cacthed.get(error))
+            return false;
+        cacthed.set(error, true);
+        return true;
+    }
+    $.$mol_fail_catch = $mol_fail_catch;
+})($ || ($ = {}));
+//mol/fail/catch/catch.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail_log(error) {
+        if (error instanceof Promise)
+            return false;
+        if (!$mol_fail_catch(error))
+            return false;
+        console.error(error);
+        return true;
+    }
+    $.$mol_fail_log = $mol_fail_log;
+})($ || ($ = {}));
+//mol/fail/log/log.ts
 ;
 "use strict";
 var $;

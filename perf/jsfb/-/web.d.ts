@@ -205,7 +205,7 @@ declare namespace $ {
         reap(): void;
         promote(): void;
         refresh(): void;
-        commit(): void;
+        complete(): void;
         emit(quant?: $mol_wire_cursor): void;
         peer_move(from_pos: number, to_pos: number): void;
         peer_repos(peer_pos: number, self_pos: number): void;
@@ -269,8 +269,8 @@ declare namespace $ {
         pub_off(sub_pos: number): void;
         destructor(): void;
         track_cut(): void;
-        commit(): void;
-        commit_pubs(): void;
+        complete(): void;
+        complete_pubs(): void;
         absorb(quant?: $mol_wire_cursor): void;
         get pub_empty(): boolean;
     }
@@ -342,22 +342,14 @@ declare namespace $ {
     }
     class $mol_wire_fiber_temp<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
         static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result): (host: Host, args: Args) => $mol_wire_fiber_temp<Host, [...Args], Result>;
-        commit(): void;
+        complete(): void;
     }
     class $mol_wire_fiber_persist<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
         static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result, keys: number): (host: Host, args: Args) => $mol_wire_fiber_persist<Host, [...Args], Result>;
         recall(...args: Args): Error | Result | Promise<Error | Result>;
-        commit(): void;
+        once(): Awaited<Result>;
         destructor(): void;
     }
-}
-
-declare namespace $ {
-    function $mol_fail_catch(error: unknown): boolean;
-}
-
-declare namespace $ {
-    function $mol_fail_log(error: unknown): boolean;
 }
 
 declare namespace $ {
@@ -415,6 +407,14 @@ declare namespace $ {
         };
         static resizes(next?: Event): Event | undefined;
     }
+}
+
+declare namespace $ {
+    function $mol_fail_catch(error: unknown): boolean;
+}
+
+declare namespace $ {
+    function $mol_fail_log(error: unknown): boolean;
 }
 
 declare namespace $ {

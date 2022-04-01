@@ -997,7 +997,7 @@ var $;
             $mol_wire_auto()?.track_next(this);
         }
         refresh() { }
-        commit() { }
+        complete() { }
         emit(quant = $mol_wire_cursor.stale) {
             for (let i = this.sub_from; i < this.length; i += 2) {
                 ;
@@ -1242,14 +1242,12 @@ var $;
             }
             this.sub_from = this.cursor;
         }
-        commit() {
-            this.commit_pubs();
-        }
-        commit_pubs() {
+        complete() { }
+        complete_pubs() {
             const limit = this.cursor < 0 ? this.sub_from : this.cursor;
             for (let cursor = this.pub_from; cursor < limit; cursor += 2) {
                 const pub = this[cursor];
-                pub?.commit();
+                pub?.complete();
             }
         }
         absorb(quant = $mol_wire_cursor.stale) {
@@ -1685,15 +1683,12 @@ var $;
             if (next instanceof Promise)
                 return next;
             if (this instanceof $mol_wire_fiber_persist) {
-                this.commit_pubs();
+                this.complete_pubs();
             }
             else {
-                if (this.sub_empty) {
-                    this.commit();
-                }
-                else {
-                    this.commit_pubs();
-                }
+                this.cursor = $mol_wire_cursor.final;
+                if (this.sub_empty)
+                    this.destructor();
             }
             return next;
         }
@@ -1745,8 +1740,7 @@ var $;
                 return new $mol_wire_fiber_temp(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, ...args);
             };
         }
-        commit() {
-            super.commit();
+        complete() {
             this.destructor();
         }
     }
@@ -1785,9 +1779,20 @@ var $;
             }
         }
         recall(...args) {
+            if (this.cursor > $mol_wire_cursor.fresh) {
+                try {
+                    this.once();
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        $mol_fail_hidden(error);
+                }
+            }
             return this.put(this.task.call(this.host, ...args));
         }
-        commit() { }
+        once() {
+            return this.sync();
+        }
         destructor() {
             super.destructor();
             const prev = this.cache;
@@ -1807,9 +1812,68 @@ var $;
     __decorate([
         $mol_wire_method
     ], $mol_wire_fiber_persist.prototype, "recall", null);
+    __decorate([
+        $mol_wire_method
+    ], $mol_wire_fiber_persist.prototype, "once", null);
     $.$mol_wire_fiber_persist = $mol_wire_fiber_persist;
 })($ || ($ = {}));
 //mol/wire/fiber/fiber.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_mem(keys) {
+        const wrap = $mol_wire_mem_func(keys);
+        return (host, field, descr) => {
+            if (!descr)
+                descr = Reflect.getOwnPropertyDescriptor(host, field);
+            const orig = descr?.value ?? host[field];
+            const sup = Reflect.getPrototypeOf(host);
+            if (typeof sup[field] === 'function') {
+                Object.defineProperty(orig, 'name', { value: sup[field].name });
+            }
+            const descr2 = {
+                ...descr,
+                value: wrap(orig)
+            };
+            Reflect.defineProperty(host, field, descr2);
+            return descr2;
+        };
+    }
+    $.$mol_wire_mem = $mol_wire_mem;
+    function $mol_wire_mem_func(keys) {
+        return (func) => {
+            const persist = $mol_wire_fiber_persist.getter(func, keys);
+            const wrapper = function (...args) {
+                let atom = persist(this, args.slice(0, keys));
+                if (args.length <= keys || args[keys] === undefined) {
+                    if ($mol_wire_auto() instanceof $mol_wire_fiber_temp) {
+                        return atom.once();
+                    }
+                    else {
+                        return atom.sync();
+                    }
+                }
+                return atom.recall(...args);
+            };
+            Object.defineProperty(wrapper, 'name', { value: func.name + ' ' });
+            Object.assign(wrapper, { orig: func });
+            return wrapper;
+        };
+    }
+    $.$mol_wire_mem_func = $mol_wire_mem_func;
+})($ || ($ = {}));
+//mol/wire/mem/mem.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_mem = $mol_wire_mem(0);
+    $.$mol_mem_key = $mol_wire_mem(1);
+    $.$mol_mem_key2 = $mol_wire_mem(2);
+    $.$mol_mem_key3 = $mol_wire_mem(3);
+})($ || ($ = {}));
+//mol/mem/mem.ts
 ;
 "use strict";
 var $;
@@ -1841,62 +1905,6 @@ var $;
     $.$mol_fail_log = $mol_fail_log;
 })($ || ($ = {}));
 //mol/fail/log/log.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_mem(keys) {
-        const wrap = $mol_wire_mem_func(keys);
-        return (host, field, descr) => {
-            if (!descr)
-                descr = Reflect.getOwnPropertyDescriptor(host, field);
-            const orig = descr?.value ?? host[field];
-            const sup = Reflect.getPrototypeOf(host);
-            if (typeof sup[field] === 'function') {
-                Object.defineProperty(orig, 'name', { value: sup[field].name });
-            }
-            const descr2 = {
-                ...descr,
-                value: wrap(orig)
-            };
-            Reflect.defineProperty(host, field, descr2);
-            return descr2;
-        };
-    }
-    $.$mol_wire_mem = $mol_wire_mem;
-    function $mol_wire_mem_func(keys) {
-        return (func) => {
-            const persist = $mol_wire_fiber_persist.getter(func, keys);
-            const wrapper = function (...args) {
-                let atom = persist(this, args.slice(0, keys));
-                if (args.length <= keys || args[keys] === undefined)
-                    return atom.sync();
-                try {
-                    atom.sync();
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                }
-                return atom.recall(...args);
-            };
-            Object.defineProperty(wrapper, 'name', { value: func.name + ' ' });
-            Object.assign(wrapper, { orig: func });
-            return wrapper;
-        };
-    }
-    $.$mol_wire_mem_func = $mol_wire_mem_func;
-})($ || ($ = {}));
-//mol/wire/mem/mem.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_mem = $mol_wire_mem(0);
-    $.$mol_mem_key = $mol_wire_mem(1);
-    $.$mol_mem_key2 = $mol_wire_mem(2);
-    $.$mol_mem_key3 = $mol_wire_mem(3);
-})($ || ($ = {}));
-//mol/mem/mem.ts
 ;
 "use strict";
 var $;

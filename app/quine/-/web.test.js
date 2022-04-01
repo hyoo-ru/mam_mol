@@ -1200,6 +1200,40 @@ var $;
             App.count(5);
             $mol_assert_like(App.res(), 6);
         },
+        async 'Toggle with async'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static checked(next = false) {
+                    $$.$mol_wait_timeout(0);
+                    return next;
+                }
+                static toggle() {
+                    const prev = this.checked();
+                    $mol_assert_unique(this.checked(!prev), prev);
+                }
+                static res() {
+                    return this.checked();
+                }
+                static test() {
+                    $mol_assert_equal(App.res(), false);
+                    App.toggle();
+                    $mol_assert_equal(App.res(), true);
+                }
+            }
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "checked", null);
+            __decorate([
+                $mol_wire_method
+            ], App, "toggle", null);
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "res", null);
+            __decorate([
+                $mol_wire_method
+            ], App, "test", null);
+            await $mol_wire_async(App).test();
+        },
         'Restore after error'($) {
             class App extends $mol_object2 {
                 static get $() { return $; }
