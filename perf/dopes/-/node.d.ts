@@ -396,26 +396,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_guid(length?: number, exists?: (id: string) => boolean): string;
-}
-
-declare namespace $ {
-    const $mol_key_store: WeakMap<object, string>;
-    function $mol_key<Value>(value: Value): string;
-}
-
-declare namespace $ {
-    function $mol_wire_method<Host extends object, Args extends readonly any[], Result>(host: Host, field: PropertyKey, descr?: TypedPropertyDescriptor<(...args: Args) => Result>): {
-        value: (this: Host, ...args: Args) => Result;
-        enumerable?: boolean | undefined;
-        configurable?: boolean | undefined;
-        writable?: boolean | undefined;
-        get?: (() => (...args: Args) => Result) | undefined;
-        set?: ((value: (...args: Args) => Result) => void) | undefined;
-    };
-}
-
-declare namespace $ {
     abstract class $mol_wire_fiber<Host, Args extends readonly unknown[], Result> extends $mol_wire_pub_sub {
         readonly task: (this: Host, ...args: Args) => Result;
         readonly host?: Host | undefined;
@@ -441,10 +421,36 @@ declare namespace $ {
         sync(): Awaited<Result>;
         async(): Promise<Result>;
     }
+}
+
+declare namespace $ {
+    function $mol_guid(length?: number, exists?: (id: string) => boolean): string;
+}
+
+declare namespace $ {
+    const $mol_key_store: WeakMap<object, string>;
+    function $mol_key<Value>(value: Value): string;
+}
+
+declare namespace $ {
     class $mol_wire_fiber_temp<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
         static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result): (host: Host, args: Args) => $mol_wire_fiber_temp<Host, [...Args], Result>;
         complete(): void;
     }
+}
+
+declare namespace $ {
+    function $mol_wire_method<Host extends object, Args extends readonly any[], Result>(host: Host, field: PropertyKey, descr?: TypedPropertyDescriptor<(...args: Args) => Result>): {
+        value: (this: Host, ...args: Args) => Result;
+        enumerable?: boolean | undefined;
+        configurable?: boolean | undefined;
+        writable?: boolean | undefined;
+        get?: (() => (...args: Args) => Result) | undefined;
+        set?: ((value: (...args: Args) => Result) => void) | undefined;
+    };
+}
+
+declare namespace $ {
     class $mol_wire_fiber_persist<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
         static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result, keys: number): (host: Host, args: Args) => $mol_wire_fiber_persist<Host, [...Args], Result>;
         recall(...args: Args): Error | Result | Promise<Error | Result>;

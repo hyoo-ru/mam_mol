@@ -1432,84 +1432,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_guid(length = 8, exists = () => false) {
-        for (;;) {
-            let id = Math.random().toString(36).substring(2, length + 2).toUpperCase();
-            if (exists(id))
-                continue;
-            return id;
-        }
-    }
-    $.$mol_guid = $mol_guid;
-})($ || ($ = {}));
-//mol/guid/guid.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_key_store = new WeakMap();
-    function $mol_key(value) {
-        if (!value)
-            return JSON.stringify(value);
-        if (typeof value !== 'object' && typeof value !== 'function')
-            return JSON.stringify(value);
-        return JSON.stringify(value, (field, value) => {
-            if (!value)
-                return value;
-            if (typeof value !== 'object' && typeof value !== 'function')
-                return value;
-            if (Array.isArray(value))
-                return value;
-            const proto = Reflect.getPrototypeOf(value);
-            if (!proto)
-                return value;
-            if (Reflect.getPrototypeOf(proto) === null)
-                return value;
-            if ('toJSON' in value)
-                return value;
-            if (value instanceof RegExp)
-                return value.toString();
-            let key = $.$mol_key_store.get(value);
-            if (key)
-                return key;
-            key = $mol_guid();
-            $.$mol_key_store.set(value, key);
-            return key;
-        });
-    }
-    $.$mol_key = $mol_key;
-})($ || ($ = {}));
-//mol/key/key.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_method(host, field, descr) {
-        if (!descr)
-            descr = Reflect.getOwnPropertyDescriptor(host, field);
-        const orig = descr?.value ?? host[field];
-        const sup = Reflect.getPrototypeOf(host);
-        if (typeof sup[field] === 'function') {
-            Object.defineProperty(orig, 'name', { value: sup[field].name });
-        }
-        const temp = $mol_wire_fiber_temp.getter(orig);
-        const value = function (...args) {
-            const fiber = temp(this ?? null, args);
-            return fiber.sync();
-        };
-        Object.defineProperty(value, 'name', { value: orig.name + ' ' });
-        Object.assign(value, { orig });
-        const descr2 = { ...descr, value };
-        Reflect.defineProperty(host, field, descr2);
-        return descr2;
-    }
-    $.$mol_wire_method = $mol_wire_method;
-})($ || ($ = {}));
-//mol/wire/method/method.ts
-;
-"use strict";
-var $;
-(function ($) {
     const handled = new WeakSet();
     class $mol_wire_fiber extends $mol_wire_pub_sub {
         task;
@@ -1722,6 +1644,64 @@ var $;
         }
     }
     $.$mol_wire_fiber = $mol_wire_fiber;
+})($ || ($ = {}));
+//mol/wire/fiber/fiber.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_guid(length = 8, exists = () => false) {
+        for (;;) {
+            let id = Math.random().toString(36).substring(2, length + 2).toUpperCase();
+            if (exists(id))
+                continue;
+            return id;
+        }
+    }
+    $.$mol_guid = $mol_guid;
+})($ || ($ = {}));
+//mol/guid/guid.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_key_store = new WeakMap();
+    function $mol_key(value) {
+        if (!value)
+            return JSON.stringify(value);
+        if (typeof value !== 'object' && typeof value !== 'function')
+            return JSON.stringify(value);
+        return JSON.stringify(value, (field, value) => {
+            if (!value)
+                return value;
+            if (typeof value !== 'object' && typeof value !== 'function')
+                return value;
+            if (Array.isArray(value))
+                return value;
+            const proto = Reflect.getPrototypeOf(value);
+            if (!proto)
+                return value;
+            if (Reflect.getPrototypeOf(proto) === null)
+                return value;
+            if ('toJSON' in value)
+                return value;
+            if (value instanceof RegExp)
+                return value.toString();
+            let key = $.$mol_key_store.get(value);
+            if (key)
+                return key;
+            key = $mol_guid();
+            $.$mol_key_store.set(value, key);
+            return key;
+        });
+    }
+    $.$mol_key = $mol_key;
+})($ || ($ = {}));
+//mol/key/key.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_wire_fiber_temp extends $mol_wire_fiber {
         static getter(task) {
             return function $mol_wire_fiber_temp_get(host, args) {
@@ -1745,6 +1725,38 @@ var $;
         }
     }
     $.$mol_wire_fiber_temp = $mol_wire_fiber_temp;
+})($ || ($ = {}));
+//mol/wire/fiber/temp/temp.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_method(host, field, descr) {
+        if (!descr)
+            descr = Reflect.getOwnPropertyDescriptor(host, field);
+        const orig = descr?.value ?? host[field];
+        const sup = Reflect.getPrototypeOf(host);
+        if (typeof sup[field] === 'function') {
+            Object.defineProperty(orig, 'name', { value: sup[field].name });
+        }
+        const temp = $mol_wire_fiber_temp.getter(orig);
+        const value = function (...args) {
+            const fiber = temp(this ?? null, args);
+            return fiber.sync();
+        };
+        Object.defineProperty(value, 'name', { value: orig.name + ' ' });
+        Object.assign(value, { orig });
+        const descr2 = { ...descr, value };
+        Reflect.defineProperty(host, field, descr2);
+        return descr2;
+    }
+    $.$mol_wire_method = $mol_wire_method;
+})($ || ($ = {}));
+//mol/wire/method/method.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_wire_fiber_persist extends $mol_wire_fiber {
         static getter(task, keys) {
             const field = task.name + '()';
@@ -1817,7 +1829,7 @@ var $;
     ], $mol_wire_fiber_persist.prototype, "once", null);
     $.$mol_wire_fiber_persist = $mol_wire_fiber_persist;
 })($ || ($ = {}));
-//mol/wire/fiber/fiber.ts
+//mol/wire/fiber/persist/persist.ts
 ;
 "use strict";
 var $;
