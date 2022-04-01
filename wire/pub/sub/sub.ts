@@ -164,11 +164,9 @@ namespace $ {
 			
 		}
 		
-		commit() {
-			this.commit_pubs()
-		}
+		complete() { }
 		
-		commit_pubs() {
+		complete_pubs() {
 			
 			const limit = this.cursor < 0 ? this.sub_from : this.cursor 
 			
@@ -178,7 +176,7 @@ namespace $ {
 				cursor += 2
 			) {
 				const pub = this[ cursor ] as $mol_wire_pub
-				pub?.commit()
+				pub?.complete()
 			}
 			
 		}

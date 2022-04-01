@@ -50,12 +50,12 @@ namespace $ {
 				
 				let atom = persist( this, args.slice( 0, keys ) as Args )
 				
-				if( args.length <= keys || args[ keys ] === undefined ) return atom.sync()
-				
-				try {
-					atom.sync()
-				} catch( error: unknown ) {
-					$mol_fail_log( error )
+				if( args.length <= keys || args[ keys ] === undefined ) {
+					if( $mol_wire_auto() instanceof $mol_wire_fiber_temp ) {
+						return atom.once()
+					} else {
+						return atom.sync()
+					}
 				}
 				
 				return atom.recall( ... args as any )

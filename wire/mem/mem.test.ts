@@ -295,40 +295,45 @@ namespace $ {
 
 		} ,
 		
-		// async 'Toggle with async'( $ ) {
+		async 'Toggle with async'( $ ) {
 		
-		// 	class App extends $mol_object2 {
+			class App extends $mol_object2 {
 		
-		// 		static $ = $
+				static $ = $
 				
-		// 		@ $mol_wire_mem(0)
-		// 		static checked( next = false ) {
-		// 			$$.$mol_wait_timeout(0)
-		// 			return next
-		// 		}
+				@ $mol_wire_mem(0)
+				static checked( next = false ) {
+					$$.$mol_wait_timeout(0)
+					return next
+				}
 				
-		// 		@ $mol_wire_method
-		// 		static toggle() {
-		// 			const prev = this.checked()
-		// 			$mol_assert_unique( this.checked( !prev ), prev )
-		// 			$mol_assert_equal( this.checked() , prev )
-		// 		}
+				@ $mol_wire_method
+				static toggle() {
+					const prev = this.checked()
+					$mol_assert_unique( this.checked( !prev ), prev )
+					// $mol_assert_equal( this.checked() , prev )
+				}
 		
-		// 		@ $mol_wire_mem(0)
-		// 		static res() {
-		// 			return this.checked()
-		// 		}
+				@ $mol_wire_mem(0)
+				static res() {
+					return this.checked()
+				}
+				
+				@ $mol_wire_method
+				static test() {
+					
+					$mol_assert_equal( App.res(), false )
+					
+					App.toggle()
+					$mol_assert_equal( App.res(), true )
+					
+				}
 		
-		// 	}
+			}
 			
-		// 	const app = $mol_wire_async( App )
+			await $mol_wire_async( App ).test()
 			
-		// 	$mol_assert_equal( await app.res(), false )
-			
-		// 	await app.toggle()
-		// 	$mol_assert_equal( await app.res(), true )
-			
-		// } ,
+		} ,
 
 		// // https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
 		// 'Stable order of multiple root'( $ ) {

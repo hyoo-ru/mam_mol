@@ -246,15 +246,12 @@ namespace $ {
 			
 			if( this instanceof $mol_wire_fiber_persist ) {
 				
-				this.commit_pubs()
+				this.complete_pubs()
 				
 			} else {
 				
-				if( this.sub_empty ) {
-					this.commit()
-				} else {
-					this.commit_pubs()
-				}
+				this.cursor = $mol_wire_cursor.final
+				if( this.sub_empty ) this.destructor()
 				
 			}
 			
@@ -348,8 +345,7 @@ namespace $ {
 			
 		}
 
-		commit() {
-			super.commit()
+		complete() {
 			this.destructor()
 		}
 		
@@ -418,10 +414,23 @@ namespace $ {
 		 */
 		@ $mol_wire_method
 		recall( ... args: Args ) {
+			
+			if( this.cursor > $mol_wire_cursor.fresh ) {
+				try {
+					this.once()
+				} catch( error: unknown ) {
+					if( error instanceof Promise ) $mol_fail_hidden( error )
+				}
+			}
+			
 			return this.put( this.task.call( this.host!, ... args ) )
+			
 		}
 		
-		commit() {}
+		@ $mol_wire_method
+		once() {
+			return this.sync()
+		}
 		
 		destructor() {
 			
