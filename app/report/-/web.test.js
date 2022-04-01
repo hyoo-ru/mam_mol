@@ -1367,29 +1367,6 @@ var $;
             $mol_wire_fiber.sync();
             $mol_assert_equal(await $mol_wire_async(App).result(), 1);
         },
-        'Forget sub fibers on complete'($) {
-            class App extends $mol_object2 {
-                static get $() { return $; }
-                static counter = 0;
-                static count() { return this.counter++; }
-                static data(next = 1) { return next; }
-                static result() {
-                    return this.count() + this.data();
-                }
-            }
-            __decorate([
-                $mol_wire_method
-            ], App, "count", null);
-            __decorate([
-                $mol_wire_mem(0)
-            ], App, "data", null);
-            __decorate([
-                $mol_wire_mem(0)
-            ], App, "result", null);
-            $mol_assert_equal(App.result(), 1);
-            App.data(2);
-            $mol_assert_equal(App.result(), 3);
-        },
         'Memoize by single simple key'($) {
             class Team extends $mol_object2 {
                 static $ = $;
@@ -1502,33 +1479,6 @@ var $;
             Fib.value(1, 2);
             $mol_assert_equal(Fib.value(4), 8);
             $mol_assert_equal(Fib.sums, 6);
-        },
-        'Unsubscribe from temp pubs on complete'($) {
-            class Random extends $mol_object2 {
-                static $ = $;
-                static seed() {
-                    return Math.random();
-                }
-                static resets(next) {
-                    return Math.random();
-                }
-                static value() {
-                    this.resets();
-                    return this.seed();
-                }
-            }
-            __decorate([
-                $mol_wire_method
-            ], Random, "seed", null);
-            __decorate([
-                $mol_wire_mem(0)
-            ], Random, "resets", null);
-            __decorate([
-                $mol_wire_mem(0)
-            ], Random, "value", null);
-            const first = Random.value();
-            Random.resets(null);
-            $mol_assert_unique(Random.value(), first);
         },
     });
 })($ || ($ = {}));

@@ -539,33 +539,6 @@ namespace $ {
 			
 		},
 
-		'Forget sub fibers on complete'( $ ) {
-
-			class App extends $mol_object2 {
-
-				static get $() { return $ }
-				static counter = 0
-
-				@ $mol_wire_method
-				static count() { return this.counter ++ }
-
-				@ $mol_wire_mem(0)
-				static data( next = 1 ) { return next }
-				
-				@ $mol_wire_mem(0)
-				static result() {
-					return this.count() + this.data()
-				}
-				
-			}
-
-			$mol_assert_equal( App.result() , 1 )
-
-			App.data( 2 )
-			$mol_assert_equal( App.result() , 3 )
-
-		} ,
-
 		'Memoize by single simple key' ($) {
 
 			class Team extends $mol_object2 {
@@ -702,36 +675,36 @@ namespace $ {
 
 		} ,
 
-		'Unsubscribe from temp pubs on complete' ($) {
+		// 'Unsubscribe from temp pubs on complete' ($) {
 
-			class Random extends $mol_object2 {
+		// 	class Random extends $mol_object2 {
 
-				static $ = $
+		// 		static $ = $
 
-				@ $mol_wire_method
-				static seed() {
-					return Math.random()
-				}
+		// 		@ $mol_wire_method
+		// 		static seed() {
+		// 			return Math.random()
+		// 		}
 				
-				@ $mol_wire_mem(0)
-				static resets( next?: null ) {
-					return Math.random()
-				}
+		// 		@ $mol_wire_mem(0)
+		// 		static resets( next?: null ) {
+		// 			return Math.random()
+		// 		}
 				
-				@ $mol_wire_mem(0)
-				static value() {
-					this.resets()
-					return this.seed()
-				}
+		// 		@ $mol_wire_mem(0)
+		// 		static value() {
+		// 			this.resets()
+		// 			return this.seed()
+		// 		}
 
-			}
+		// 	}
 			
-			const first = Random.value()
+		// 	const first = Random.value()
 			
-			Random.resets( null )
-			$mol_assert_unique( Random.value(), first )
+		// 	Random.resets( null )
+		// 	$mol_assert_unique( Random.value(), first )
 
-		} ,
+		// } ,
 
 	})
 }

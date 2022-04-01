@@ -1721,7 +1721,8 @@ var $;
             };
         }
         complete() {
-            this.destructor();
+            if (this.sub_empty)
+                this.destructor();
         }
     }
     $.$mol_wire_fiber_temp = $mol_wire_fiber_temp;
