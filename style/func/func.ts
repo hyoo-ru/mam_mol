@@ -7,6 +7,7 @@ namespace $ {
 	| 'var'
 	| 'clamp'
 	| 'url'
+	| 'scale'
 
 	const { per } = $mol_style_unit
 	
@@ -70,6 +71,12 @@ namespace $ {
 				'rgba',
 				[ red , green , blue , alpha ],
 			)
+		}
+	
+		static scale(
+			zoom: number,
+		) {
+			return new $mol_style_func( 'scale', [ zoom ] )
 		}
 	
 	}
