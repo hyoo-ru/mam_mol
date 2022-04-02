@@ -98,6 +98,41 @@ namespace $ {
 			
 		}
 		
+		put( next: Result | Error | Promise< Result | Error > ) {
+			
+			const prev = this.cache
+			
+			if( next !== prev ) {
+				
+				if( $mol_owning_check( this, prev ) ) {
+					prev.destructor()
+				}
+				
+				this.cache = next
+				
+				if( $mol_owning_catch( this, next ) ) {
+					try {
+						next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+					} catch {} // Promises throws in strict mode
+				}
+				
+				if( this.sub_from < this.length ) {
+					if( !$mol_compare_deep( prev, next ) ) {
+						this.emit()
+					}
+				}
+				
+			}
+			
+			this.cursor = $mol_wire_cursor.fresh
+			
+			if( next instanceof Promise ) return next
+			
+			this.complete_pubs()
+			
+			return next
+		}
+		
 	}
 	
 }
