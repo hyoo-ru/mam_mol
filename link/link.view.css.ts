@@ -37,7 +37,7 @@ namespace $ {
 			
 			background: {
 				color: $mol_theme.hover,
-			}
+			},
 			
 			$mol_icon: {
 				transform: 'scale(2)',
