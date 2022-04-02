@@ -3464,7 +3464,10 @@ var $;
             outline: 'none',
             background: {
                 color: $mol_theme.hover,
-            }
+            },
+            $mol_icon: {
+                transform: 'scale(2)',
+            },
         },
         ':focus-within': {
             outline: 'none',
