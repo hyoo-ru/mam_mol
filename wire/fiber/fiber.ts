@@ -172,8 +172,6 @@ namespace $ {
 					default: result = (this.task as any).call( this.host!, ... this.slice( 0 , this.pub_from ) ); break
 				}
 				
-				// result = this.task.call( this.host!, ... ( this.pub_from ? this.pub_from > 1 ? this.slice( 0 , this.pub_from ) : [ this[0] ] : [] ) as any as Args )
-				
 				if( result instanceof Promise ) {
 					
 					const put = ( res: Result )=> {
@@ -214,49 +212,7 @@ namespace $ {
 
 		}
 		
-		put( next: Result | Error | Promise< Result | Error > ) {
-			
-			const prev = this.cache
-			
-			if( next !== prev ) {
-				
-				if( $mol_owning_check( this, prev ) ) {
-					prev.destructor()
-				}
-				
-				this.cache = next
-				
-				if( this instanceof $mol_wire_fiber_persist && $mol_owning_catch( this, next ) ) {
-					try {
-						next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
-					} catch {} // Promises throws in strict mode
-				}
-				
-				if( this.sub_from < this.length ) {
-					if( !$mol_compare_deep( prev, next ) ) {
-						this.emit()
-					}
-				}
-				
-			}
-			
-			this.cursor = $mol_wire_cursor.fresh
-			
-			if( next instanceof Promise ) return next
-			
-			if( this instanceof $mol_wire_fiber_persist ) {
-				
-				this.complete_pubs()
-				
-			} else {
-				
-				this.cursor = $mol_wire_cursor.final
-				if( this.sub_empty ) this.destructor()
-				
-			}
-			
-			return next
-		}
+		abstract put( next: Result | Error | Promise< Result | Error > ): Result | Error | Promise< Result | Error >
 		
 		/**
 		 * Synchronous execution. Throws Promise when waits async task (SuspenseAPI provider).

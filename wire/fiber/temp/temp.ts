@@ -38,6 +38,26 @@ namespace $ {
 			if( this.sub_empty ) this.destructor()
 		}
 		
+		put( next: Result | Error | Promise< Result | Error > ) {
+			
+			const prev = this.cache
+			
+			if( next !== prev ) {
+				this.cache = next
+				this.emit()
+			}
+			
+			if( next instanceof Promise ) {
+				this.cursor = $mol_wire_cursor.fresh
+				return next
+			}
+				
+			this.cursor = $mol_wire_cursor.final
+			if( this.sub_empty ) this.destructor()
+			
+			return next
+		}
+		
 	}
 
 }
