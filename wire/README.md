@@ -35,9 +35,15 @@ Auto wiring modules. It gives ability to:
 ## Structures
 
 - [$mol_wire_set](https://github.com/hyoo-ru/mam_mol/tree/master/wire/set) - reactive Set
+- [$mol_wire_dict](https://github.com/hyoo-ru/mam_mol/tree/master/wire/dict) - reactive Dictionary
 - [$mol_wire_dom](https://github.com/hyoo-ru/mam_mol/tree/master/wire/dom) - reactive DOM
 
+
 ## Low level API
+
+### Debug
+
+- [$mol_wire_log](https://github.com/hyoo-ru/mam_mol/tree/master/wire/log) - state changes logger
 
 ### Pub/Sub
 
@@ -48,7 +54,9 @@ Auto wiring modules. It gives ability to:
 
 ### Reactivity
 
-- [$mol_wire_fiber](https://github.com/hyoo-ru/mam_mol/tree/master/wire/fiber) - pausable task with sync API
+- [$mol_wire_fiber](https://github.com/hyoo-ru/mam_mol/tree/master/wire/fiber) - abstract pausable task with (a)sync API
+- [$mol_wire_task](https://github.com/hyoo-ru/mam_mol/tree/master/wire/task) - one-shot fiber
+- [$mol_wire_atom](https://github.com/hyoo-ru/mam_mol/tree/master/wire/atom) - repeatable fiber
 - [$mol_wire_cursor](https://github.com/hyoo-ru/mam_mol/tree/master/wire/cursor) - subscription statuses
 
 ## NPM Bundles

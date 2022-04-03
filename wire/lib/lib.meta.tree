@@ -13,3 +13,4 @@ include \/mol/wire/method
 include \/mol/wire/set
 include \/mol/wire/dict
 include \/mol/wait/timeout
+include \/mol/wire/log
