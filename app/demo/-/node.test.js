@@ -1665,12 +1665,12 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_wire_fiber_temp extends $mol_wire_fiber {
+    class $mol_wire_task extends $mol_wire_fiber {
         static getter(task) {
             return function $mol_wire_fiber_temp_get(host, args) {
                 const existen = $mol_wire_auto()?.track_next();
                 reuse: if (existen) {
-                    if (!(existen instanceof $mol_wire_fiber_temp))
+                    if (!(existen instanceof $mol_wire_task))
                         break reuse;
                     if (existen.host !== host)
                         break reuse;
@@ -1680,7 +1680,7 @@ var $;
                         break reuse;
                     return existen;
                 }
-                return new $mol_wire_fiber_temp(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, ...args);
+                return new $mol_wire_task(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, ...args);
             };
         }
         complete() {
@@ -1703,9 +1703,9 @@ var $;
             return next;
         }
     }
-    $.$mol_wire_fiber_temp = $mol_wire_fiber_temp;
+    $.$mol_wire_task = $mol_wire_task;
 })($ || ($ = {}));
-//mol/wire/fiber/temp/temp.ts
+//mol/wire/task/task.ts
 ;
 "use strict";
 var $;
@@ -1718,7 +1718,7 @@ var $;
         if (typeof sup[field] === 'function') {
             Object.defineProperty(orig, 'name', { value: sup[field].name });
         }
-        const temp = $mol_wire_fiber_temp.getter(orig);
+        const temp = $mol_wire_task.getter(orig);
         const value = function (...args) {
             const fiber = temp(this ?? null, args);
             return fiber.sync();
@@ -1736,7 +1736,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_wire_fiber_persist extends $mol_wire_fiber {
+    class $mol_wire_atom extends $mol_wire_fiber {
         static getter(task, keys) {
             const field = task.name + '()';
             if (keys) {
@@ -1752,7 +1752,7 @@ var $;
                     else {
                         dict = (host ?? task)[field] = new Map();
                     }
-                    fiber = new $mol_wire_fiber_persist(key, task, host, ...args);
+                    fiber = new $mol_wire_atom(key, task, host, ...args);
                     dict.set(key, fiber);
                     return fiber;
                 };
@@ -1763,7 +1763,7 @@ var $;
                     if (existen)
                         return existen;
                     const key = `${host?.[Symbol.toStringTag] ?? host}.${field}`;
-                    const fiber = new $mol_wire_fiber_persist(key, task, host, ...args);
+                    const fiber = new $mol_wire_atom(key, task, host, ...args);
                     (host ?? task)[field] = fiber;
                     return fiber;
                 };
@@ -1827,13 +1827,13 @@ var $;
     }
     __decorate([
         $mol_wire_method
-    ], $mol_wire_fiber_persist.prototype, "recall", null);
+    ], $mol_wire_atom.prototype, "recall", null);
     __decorate([
         $mol_wire_method
-    ], $mol_wire_fiber_persist.prototype, "once", null);
-    $.$mol_wire_fiber_persist = $mol_wire_fiber_persist;
+    ], $mol_wire_atom.prototype, "once", null);
+    $.$mol_wire_atom = $mol_wire_atom;
 })($ || ($ = {}));
-//mol/wire/fiber/persist/persist.ts
+//mol/wire/atom/atom.ts
 ;
 "use strict";
 var $;
@@ -1859,11 +1859,11 @@ var $;
     $.$mol_wire_mem = $mol_wire_mem;
     function $mol_wire_mem_func(keys) {
         return (func) => {
-            const persist = $mol_wire_fiber_persist.getter(func, keys);
+            const persist = $mol_wire_atom.getter(func, keys);
             const wrapper = function (...args) {
                 let atom = persist(this, args.slice(0, keys));
                 if (args.length <= keys || args[keys] === undefined) {
-                    if ($mol_wire_auto() instanceof $mol_wire_fiber_temp) {
+                    if ($mol_wire_auto() instanceof $mol_wire_task) {
                         return atom.once();
                     }
                     else {
@@ -2063,7 +2063,7 @@ var $;
                 if (typeof val !== 'function')
                     return val;
                 let fiber;
-                const temp = $mol_wire_fiber_temp.getter(val);
+                const temp = $mol_wire_task.getter(val);
                 return function $mol_wire_async(...args) {
                     fiber?.destructor();
                     fiber = temp(obj, args);
@@ -12822,7 +12822,7 @@ var $;
                 const val = obj[field];
                 if (typeof val !== 'function')
                     return val;
-                const temp = $mol_wire_fiber_temp.getter(val);
+                const temp = $mol_wire_task.getter(val);
                 return function $mol_wire_sync(...args) {
                     const fiber = temp(obj, args);
                     return fiber.sync();
@@ -14503,14 +14503,14 @@ var $;
 (function ($) {
     function $mol_fiber_defer(calculate) {
         const host = {};
-        const fiber = new $mol_wire_fiber_temp(calculate.name, calculate, host);
+        const fiber = new $mol_wire_task(calculate.name, calculate, host);
         fiber.plan();
         return fiber;
     }
     $.$mol_fiber_defer = $mol_fiber_defer;
     function $mol_fiber_root(calculate) {
         const wrapper = function (...args) {
-            const fiber = new $mol_wire_fiber_temp(this + '.' + calculate.name, calculate, this, ...args);
+            const fiber = new $mol_wire_task(this + '.' + calculate.name, calculate, this, ...args);
             return fiber.async();
         };
         wrapper[Symbol.toStringTag] = calculate.name;

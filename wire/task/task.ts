@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export class $mol_wire_fiber_temp<
+	export class $mol_wire_task<
 		Host,
 		Args extends readonly unknown[],
 		Result,
@@ -12,7 +12,7 @@ namespace $ {
 			Result,
 		>(
 			task: ( this : Host , ... args : Args )=> Result,
-		): ( host: Host, args: Args )=> $mol_wire_fiber_temp< Host, [ ... Args ], Result > {
+		): ( host: Host, args: Args )=> $mol_wire_task< Host, [ ... Args ], Result > {
 			
 			return function $mol_wire_fiber_temp_get( host: Host, args: Args ) {
 				
@@ -20,7 +20,7 @@ namespace $ {
 			
 				reuse: if( existen ) {
 					
-					if(!( existen instanceof $mol_wire_fiber_temp )) break reuse
+					if(!( existen instanceof $mol_wire_task )) break reuse
 				
 					if( existen.host !== host ) break reuse
 					if( existen.task !== task ) break reuse
@@ -29,7 +29,7 @@ namespace $ {
 					return existen
 				}
 				
-				return new $mol_wire_fiber_temp( `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, task, host, ... args )
+				return new $mol_wire_task( `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, task, host, ... args )
 			}
 			
 		}

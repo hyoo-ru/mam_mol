@@ -941,7 +941,7 @@ var $;
                 const val = obj[field];
                 if (typeof val !== 'function')
                     return val;
-                const temp = $mol_wire_fiber_temp.getter(val);
+                const temp = $mol_wire_task.getter(val);
                 return function $mol_wire_sync(...args) {
                     const fiber = temp(obj, args);
                     return fiber.sync();
