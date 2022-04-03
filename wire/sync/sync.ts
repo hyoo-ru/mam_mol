@@ -8,7 +8,7 @@ namespace $ {
 				const val = obj[ field ]
 				if( typeof val !== 'function' ) return val
 				
-				const temp = $mol_wire_fiber_temp.getter( val )
+				const temp = $mol_wire_task.getter( val )
 				return function $mol_wire_sync( this: Host, ... args: any[] ) {
 					const fiber = temp( obj, args )
 					return fiber.sync()
