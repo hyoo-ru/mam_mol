@@ -188,7 +188,11 @@ namespace $ {
 				
 			} catch( error: any ) {
 				
-				result = error
+				if( error instanceof Error || error instanceof Promise ) {
+					result = error
+				} else {
+					result = new Error( String( error ), { cause: error } )
+				}
 				
 				if( result instanceof Promise && !handled.has( result ) ) {
 					
