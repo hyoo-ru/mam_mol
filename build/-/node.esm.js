@@ -1618,6 +1618,8 @@ var $;
             const wrapper = function (...args) {
                 let atom = persist(this, args.slice(0, keys));
                 if (args.length <= keys || args[keys] === undefined) {
+                    if (!$mol_wire_fiber.warm)
+                        return atom.sync();
                     if ($mol_wire_auto() instanceof $mol_wire_task) {
                         return atom.once();
                     }
