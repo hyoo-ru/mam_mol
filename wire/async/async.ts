@@ -9,12 +9,13 @@ namespace $ {
 				if( typeof val !== 'function' ) return val
 				
 				let fiber: $mol_wire_fiber< any, any, any >
+				const temp = $mol_wire_task.getter( val ) 
 				
 				return function $mol_wire_async( this: Host, ... args: any[] ) {
 					
 					fiber?.destructor()
 					
-					fiber = $mol_wire_fiber.temp( obj, val, ... args )
+					fiber = temp( obj, args )
 					return fiber.async()
 					
 				}

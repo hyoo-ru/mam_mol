@@ -1,6 +1,6 @@
 namespace $ {
 
-	// type wrong_ints = $mol_type_int_plus< 'b40', '60b' >,
+	// type wrong_ints = $mol_type_int_plus< 'b40', '60b' >
 
 	type plus = $mol_type_assert<
 		$mol_type_int_plus< 40, '60' >,
@@ -39,5 +39,20 @@ namespace $ {
 	type desc = $mol_type_assert_never<
 		$mol_type_int_ordered< 60, '40' >
 	>
+	
+	type calc_priorities = $mol_type_assert<
+		$mol_type_int_calc< '5+4*3^2-1' >,
+		40
+	>
+
+	type calc_parentheses = $mol_type_assert<
+		$mol_type_int_calc< '2*(2+3)' >,
+		10
+	>
+
+	type calc_spaces = $mol_type_assert<
+		$mol_type_int_calc< '7 + 5 - 2*2 + 1' >,
+		9
+	>	
 
 }

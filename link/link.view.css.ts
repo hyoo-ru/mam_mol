@@ -1,6 +1,7 @@
 namespace $ {
 
 	const { rem } = $mol_style_unit
+	const { scale } = $mol_style_func
 
 	$mol_style_define( $mol_link , {
 		
@@ -19,16 +20,29 @@ namespace $ {
 		},
 
 		':hover': {
+			
 			background: {
 				color: $mol_theme.hover,
 			},
+			
+			$mol_icon: {
+				transform: 'scale(2)',
+			},
+			
 		},
 
 		':focus': {
+			
 			outline: 'none',
+			
 			background: {
 				color: $mol_theme.hover,
-			}
+			},
+			
+			$mol_icon: {
+				transform: 'scale(2)',
+			},
+			
 		},
 
 		':focus-within': {
@@ -46,7 +60,7 @@ namespace $ {
 				}
 			}
 		},
-
+		
 	} )
 
 }

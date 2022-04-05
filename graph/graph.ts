@@ -100,7 +100,16 @@ namespace $ {
 							const min = visit( to )
 							
 							if( weight_out > min ) return min
-							if( weight_out === min ) this.unlink( from , to )
+							if( weight_out === min ) {
+								
+								this.unlink( from , to )
+								
+								if( path.length > 1 ) {
+									const enter = path[ path.length - 2 ]
+									this.link( enter , to , edge )
+								}
+								
+							}
 							
 						}
 

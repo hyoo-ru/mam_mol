@@ -1,13 +1,18 @@
 namespace $ {
-	export class $mol_wire_set< Value > extends Set< Value > {
+	export class $mol_wire_dict< Key, Value > extends Map< Key, Value > {
 
 		pub = new $mol_wire_pub
 		
 		// Accessors
 		
-		has( value: Value ) {
+		has( key: Key ) {
 			this.pub.promote()
-			return super.has( value )
+			return super.has( key )
+		}
+		
+		get( key: Key ) {
+			this.pub.promote()
+			return super.get( key )
 		}
 		
 		entries() {
@@ -26,7 +31,7 @@ namespace $ {
 		}
 		
 		forEach(
-			task: ( value: Value, value2: Value, set: Set< Value > ) => void,
+			task: ( value: Value, key: Key, dict: Map< Key, Value > ) => void,
 			self?: any
 		) {
 			this.pub.promote()
@@ -45,15 +50,15 @@ namespace $ {
 
 		// Mutators
 
-		add( value: Value ) {
-			if( super.has( value ) ) return this
-			super.add( value )
+		set( key: Key, value: Value ) {
+			if( super.get( key ) === value ) return this
+			super.set( key, value )
 			this.pub.emit()
 			return this
 		}
 
-		delete( value: Value ) {
-			const res = super.delete( value )
+		delete( key: Key ) {
+			const res = super.delete( key )
 			if( res ) this.pub.emit()
 			return res
 		}
@@ -63,15 +68,15 @@ namespace $ {
 			super.clear()
 			this.pub.emit()
 		}
-
+		
 		// Extensions
 		
-		item( val: Value, next?: boolean ) {
+		item( key: Key, next?: Value | null ) {
 			
-			if( next === undefined ) return this.has( val )
+			if( next === undefined ) return this.get( key ) ?? null
 			
-			if( next ) this.add( val )
-			else this.delete( val )
+			if( next === null ) this.delete( key )
+			else this.set( key, next )
 			
 			return next
 		}

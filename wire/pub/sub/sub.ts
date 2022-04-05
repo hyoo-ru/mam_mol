@@ -96,7 +96,7 @@ namespace $ {
 				cursor += 2
 			) {
 				const pub = this[ cursor ] as $mol_wire_pub
-				pub.up()
+				pub.refresh()
 			}
 			
 			this.cursor = $mol_wire_cursor.fresh
@@ -161,6 +161,23 @@ namespace $ {
 			}
 			
 			this.sub_from = this.cursor
+			
+		}
+		
+		complete() { }
+		
+		complete_pubs() {
+			
+			const limit = this.cursor < 0 ? this.sub_from : this.cursor 
+			
+			for(
+				let cursor = this.pub_from;
+				cursor < limit;
+				cursor += 2
+			) {
+				const pub = this[ cursor ] as $mol_wire_pub
+				pub?.complete()
+			}
 			
 		}
 

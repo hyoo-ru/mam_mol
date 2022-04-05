@@ -12,7 +12,8 @@ namespace $ {
 
 	export class $mol_file_not_found extends Error {}
 
-	export abstract class $mol_file extends $mol_object {		
+	export abstract class $mol_file extends $mol_object {
+			
 		@ $mol_mem_key
 		static absolute( path : string ): $mol_file {
 			throw new Error( 'Not implemented yet' )
@@ -21,6 +22,8 @@ namespace $ {
 		static relative( path : string ) : $mol_file {
 			throw new Error( 'Not implemented yet' )
 		}
+		
+		static base = ''
 		
 		path() {
 			return '.'
@@ -45,7 +48,7 @@ namespace $ {
 			return this.stat()?.mtime.getTime().toString( 36 ).toUpperCase() ?? ''
 		}
 
-		abstract ensure(next?: boolean): boolean
+		abstract ensure(): void
 
 		watcher() {
 			console.warn('$mol_file_web.watcher() not implemented')
@@ -64,7 +67,7 @@ namespace $ {
 			if( next === exists ) return exists
 
 			if( next ) this.parent().exists( true )
-			this.ensure(next)
+			this.ensure()
 			this.reset()
 			
 			return next

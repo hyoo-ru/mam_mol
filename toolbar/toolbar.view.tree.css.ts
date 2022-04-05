@@ -24,7 +24,9 @@ namespace $.$$ {
 					Expand: {
 
 						Icon: {
-							transform: 'rotate(90deg) scaleX(-1)',
+							Path: {
+								transform: 'rotate(90deg) scaleX(-1)',
+							},
 						},
 			
 					},
@@ -35,8 +37,10 @@ namespace $.$$ {
 		
 		Bar: {
 			display : 'flex',
+			justifyContent: 'flex-end',
 			flex: {
 				grow: 1,
+				shrink: 1,
 				wrap: 'wrap',
 			},
 			margin: {
@@ -59,7 +63,9 @@ namespace $.$$ {
 			},
 
 			Icon: {
-				transform: 'rotate(90deg)',
+				Path: {
+					transform: 'rotate(90deg)',
+				},
 			},
 
 		},

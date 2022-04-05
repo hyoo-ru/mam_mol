@@ -72,3 +72,4 @@ include \/mol/text/demo
 include \/mol/textarea/demo
 include \/mol/toolbar/demo
 include \/mol/video/player/demo
+include \/mol/password/demo

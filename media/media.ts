@@ -7,7 +7,7 @@ namespace $ {
 			
 			if( next !== undefined ) return next
 			
-			const res = this.$.$mol_dom_context.matchMedia( query )
+			const res = this.$.$mol_dom_context.matchMedia?.( query ) ?? {}
 			res.onchange = ()=> this.match( query, res.matches )
 			
 			return res.matches

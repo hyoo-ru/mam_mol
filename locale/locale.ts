@@ -13,12 +13,12 @@ namespace $ {
 		
 		@ $mol_mem
 		static lang( next? : string ) {
-			return $mol_state_local.value( 'locale' , next ) || $mol_dom_context.navigator.language.replace( /-.*/ , '' ) || this.lang_default()
+			return this.$.$mol_state_local.value( 'locale' , next ) || $mol_dom_context.navigator.language.replace( /-.*/ , '' ) || this.lang_default()
 		}
 		
 		@ $mol_mem_key
 		static source( lang : string ) {
-			return JSON.parse( $mol_file.relative( `web.locale=${ lang }.json` ).text().toString() )
+			return JSON.parse( this.$.$mol_file.relative( `web.locale=${ lang }.json` ).text().toString() )
 		}
 		
 		@ $mol_mem_key

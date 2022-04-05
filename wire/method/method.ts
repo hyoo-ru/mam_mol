@@ -18,8 +18,9 @@ namespace $ {
 			Object.defineProperty( orig , 'name' , { value : sup[ field as any ].name } )
 		}
 		
+		const temp = $mol_wire_task.getter( orig )
 		const value = function( this: Host, ... args: Args ) {
-			const fiber = $mol_wire_fiber.temp( this ?? null as any, orig, ... args )
+			const fiber = temp( this ?? null as any, args )
 			return fiber.sync() as Result
 		}
 		

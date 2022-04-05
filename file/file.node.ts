@@ -25,6 +25,7 @@ namespace $ {
 	}
 
 	export class $mol_file_node extends $mol_file {
+		
 		@ $mol_mem_key
 		static absolute( path : string ) {
 			return this.make({
@@ -33,7 +34,7 @@ namespace $ {
 		}
 
 		static relative( path : string ) {
-			return this.absolute( $node.path.resolve( path ).replace( /\\/g , '/' ) )
+			return this.absolute( $node.path.resolve( this.base, path ).replace( /\\/g , '/' ) )
 		}
 		
 		@ $mol_mem
@@ -94,18 +95,17 @@ namespace $ {
 			return stat
 		}
 
-		ensure(next?: boolean) {
+		@ $mol_mem
+		ensure() {
 			const path = this.path()
 
 			try {
-				if (next) $node.fs.mkdirSync( path )
-				else $node.fs.unlinkSync( path )
+				$node.fs.mkdirSync( path )
 			} catch( e: any ) {
 				e.message += '\n' + path
-				return this.$.$mol_fail_hidden(e)
+				this.$.$mol_fail_hidden(e)
 			}
 
-			return true
 		}
 		
 		@ $mol_mem

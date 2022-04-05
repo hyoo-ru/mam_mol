@@ -13,7 +13,7 @@ namespace $ {
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
 		
 		const _get = descr?.get || $mol_const( descr?.value )
-		const persist = $mol_wire_fiber.persist( _get, 0 )
+		const persist = $mol_wire_atom.getter( _get, 0 )
 		
 		const _set = descr?.set || function( this : Host , next ) {
 			persist( this, [] ).put( next )
@@ -29,8 +29,9 @@ namespace $ {
 			return persist( this, [] ).sync()
 		}
 		
+		const temp = $mol_wire_task.getter( _set )
 		function set( this: Host, next: Value ) {
-			$mol_wire_fiber.temp( this, _set, next ).sync()
+			temp( this, [ next ] ).sync()
 		}
 		
 		Object.defineProperty( get , 'name' , { value : _get.name + '$' } )

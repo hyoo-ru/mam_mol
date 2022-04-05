@@ -78,12 +78,12 @@ namespace $ {
 		/**
 		 * Enforce actualization. Should not throw errors.
 		 */
-		up() {}
+		refresh() {}
 		
 		/**
-		 * Subscriber stabilized and allows to free.
+		 * Allow to put data to caches in the subtree.
 		 */
-		down() {}
+		complete() {}
 		
 		/**
 		 * Notify subscribers about self changes.

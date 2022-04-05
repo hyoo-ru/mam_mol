@@ -7,6 +7,7 @@ $mol_grid $mol_view
 	record!id null
 	hierarchy null
 	hierarchy_col \
+	minimal_width 0
 	-
 	sub /
 		<= Head
@@ -16,6 +17,7 @@ $mol_grid $mol_view
 		cells <= head_cells /$mol_view
 	Row!id $mol_grid_row
 		minimal_height <= row_height
+		minimal_width <= minimal_width
 		cells <= cells!id /$mol_view
 	-
 	Cell!id $mol_view

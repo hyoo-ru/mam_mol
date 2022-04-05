@@ -16,3 +16,8 @@
 	cursor: pointer;
 	background-color: var(--mol_theme_hover);
 }
+
+[mol_button_typed]:hover [mol_icon] ,
+[mol_button_typed]:focus [mol_icon] {
+	transform: scale(2);
+}

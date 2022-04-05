@@ -23,8 +23,8 @@ namespace $ {
 		const descr = lookup_descr( Reflect.getPrototypeOf( el )!, field )!
 		let task = Reflect.getOwnPropertyDescriptor( el, field )?.get
 		
-		const atom = new $mol_wire_fiber< typeof el, [] | [ string ], string >(
-			el,
+		const atom = new $mol_wire_atom< typeof el, [] | [ string ], string >(
+			el.id + '.' + field,
 			function( this: typeof el, next?: any ) {
 				
 				let res = task?.() ?? next
@@ -34,7 +34,7 @@ namespace $ {
 				return res
 				
 			},
-			el.id + '.' + field,
+			el,
 		)
 		
 		Object.defineProperty( el, field, {
@@ -44,7 +44,7 @@ namespace $ {
 				if( typeof next === 'function' ) {
 					task = next
 					atom.absorb()
-					atom.up()
+					atom.refresh()
 				} else {
 					if( atom.cache === next ) return
 					atom.recall( next )
@@ -52,7 +52,7 @@ namespace $ {
 			},
 		} )
 		
-		if( task ) atom.up()
+		if( task ) atom.refresh()
 		
 		return ()=> atom.absorb()
 	}
@@ -62,8 +62,8 @@ namespace $ {
 		const kids = el.childNodes
 		let task = ( next: any )=> next
 		
-		const atom = new $mol_wire_fiber< typeof el, [] | [ ArrayLike<ChildNode> ], NodeListOf<ChildNode> >(
-			el,
+		const atom = new $mol_wire_atom< typeof el, [] | [ ArrayLike<ChildNode> ], NodeListOf<ChildNode> >(
+			el.id + '.childNodes',
 			function( this: typeof el, next?: any ) {
 				
 				const res = task( next ) as ChildNode[]
@@ -75,7 +75,7 @@ namespace $ {
 				return kids
 				
 			},
-			el.id + '.childNodes',
+			el,
 		)
 		
 		Object.defineProperty( el, 'childNodes', {
@@ -85,7 +85,7 @@ namespace $ {
 				if( typeof next === 'function' ) {
 					task = next
 					atom.absorb()
-					atom.up()
+					atom.refresh()
 				} else {
 					atom.recall( next )
 				}

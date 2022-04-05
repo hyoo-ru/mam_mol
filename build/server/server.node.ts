@@ -5,7 +5,10 @@ namespace $ {
 		static trace = false
 
 		expressGenerator() {
-			return $mol_wire_async( this ).handleRequest
+			const self = $mol_wire_async( this )
+			return function( ... args: any[] ) {
+				return self.handleRequest.apply( self, args )
+			}
 		}
 		
 		handleRequest(
@@ -16,6 +19,16 @@ namespace $ {
 			res.set( 'Cache-Control', 'must-revalidate, public, ' )
 			
 			try {
+				
+				if( req.query._escaped_fragment_ ) {
+					
+					const fragment = decodeURIComponent( String( req.query._escaped_fragment_ ) )
+					const url = req.protocol + '://' + req.get( 'host' ) + req.path + '#!' + fragment
+					const html = $mol_browser.html( url )
+					
+					res.send( html ).end()
+					return
+				}
 
 				return this.generate( req.url ) && Promise.resolve().then( next )
 			
