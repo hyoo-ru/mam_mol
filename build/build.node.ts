@@ -978,8 +978,8 @@ namespace $ {
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 			var sources = this.sourcesJS( { path , exclude : exclude_ext } )
-			var sourcesNoTest = this.sourcesJS( { path , exclude } )
-			var sourcesTest = sources.filter( src => sourcesNoTest.indexOf( src ) === -1 )
+			var sourcesNoTest = new Set( this.sourcesJS( { path , exclude } ) )
+			var sourcesTest = sources.filter( src => !sourcesNoTest.has( src ) )
 			if( bundle === 'node' ) {
 				sourcesTest = [ ... sourcesNoTest , ... sourcesTest ]
 			} else {

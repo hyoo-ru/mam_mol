@@ -1665,7 +1665,7 @@ var $;
 (function ($) {
     class $mol_wire_task extends $mol_wire_fiber {
         static getter(task) {
-            return function $mol_wire_fiber_temp_get(host, args) {
+            return function $mol_wire_task_get(host, args) {
                 const existen = $mol_wire_auto()?.track_next();
                 reuse: if (existen) {
                     if (!(existen instanceof $mol_wire_task))
@@ -1738,7 +1738,7 @@ var $;
         static getter(task, keys) {
             const field = task.name + '()';
             if (keys) {
-                return function $mol_wire_fiber_persist_get(host, args) {
+                return function $mol_wire_atom_get(host, args) {
                     let dict, key, fiber;
                     key = `${host?.[Symbol.toStringTag] ?? host}.${task.name}(${args.map(v => $mol_key(v)).join(',')})`;
                     dict = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
@@ -1756,7 +1756,7 @@ var $;
                 };
             }
             else {
-                return function $mol_wire_fiber_persist_get(host, args) {
+                return function $mol_wire_atom_get(host, args) {
                     const existen = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
                     if (existen)
                         return existen;

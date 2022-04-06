@@ -1332,7 +1332,7 @@ var $;
 (function ($) {
     class $mol_wire_task extends $mol_wire_fiber {
         static getter(task) {
-            return function $mol_wire_fiber_temp_get(host, args) {
+            return function $mol_wire_task_get(host, args) {
                 const existen = $mol_wire_auto()?.track_next();
                 reuse: if (existen) {
                     if (!(existen instanceof $mol_wire_task))
@@ -1500,7 +1500,7 @@ var $;
         static getter(task, keys) {
             const field = task.name + '()';
             if (keys) {
-                return function $mol_wire_fiber_persist_get(host, args) {
+                return function $mol_wire_atom_get(host, args) {
                     let dict, key, fiber;
                     key = `${host?.[Symbol.toStringTag] ?? host}.${task.name}(${args.map(v => $mol_key(v)).join(',')})`;
                     dict = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
@@ -1518,7 +1518,7 @@ var $;
                 };
             }
             else {
-                return function $mol_wire_fiber_persist_get(host, args) {
+                return function $mol_wire_atom_get(host, args) {
                     const existen = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
                     if (existen)
                         return existen;
@@ -4856,8 +4856,8 @@ var $;
             concater.add('"use strict"');
             var exclude_ext = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
             var sources = this.sourcesJS({ path, exclude: exclude_ext });
-            var sourcesNoTest = this.sourcesJS({ path, exclude });
-            var sourcesTest = sources.filter(src => sourcesNoTest.indexOf(src) === -1);
+            var sourcesNoTest = new Set(this.sourcesJS({ path, exclude }));
+            var sourcesTest = sources.filter(src => !sourcesNoTest.has(src));
             if (bundle === 'node') {
                 sourcesTest = [...sourcesNoTest, ...sourcesTest];
             }
