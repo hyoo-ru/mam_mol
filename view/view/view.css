@@ -25,6 +25,9 @@
 	padding: 0;
 	width: 100%;
 	height: 100%;
+}
+
+[mol_view_root]:not([mol_view_root=""]) {
 	box-sizing: border-box;
 	font: var(--mol_skin_font);
 	background: var(--mol_theme_back);
