@@ -18258,10 +18258,7 @@ var $;
     (function ($$) {
         class $mol_infinite_demo extends $.$mol_infinite_demo {
             after(anchor_id = 0) {
-                return [...$mol_range2(index => anchor_id + index, () => this.chunk_size())];
-            }
-            item_title(id) {
-                return `Row #${id}`;
+                return Array.from({ length: this.chunk_size() }, (_, index) => anchor_id + index);
             }
         }
         __decorate([
