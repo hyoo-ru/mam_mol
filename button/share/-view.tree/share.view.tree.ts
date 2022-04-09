@@ -21,6 +21,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * hint @ \Share
+		 * ```
+		 */
+		hint() {
+			return this.$.$mol_locale.text( '$mol_button_share_hint' )
+		}
+		
+		/**
+		 * ```tree
 		 * sub / <= Icon
 		 * ```
 		 */

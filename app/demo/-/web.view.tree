@@ -543,6 +543,7 @@ $mol_icon_share_variant $mol_icon path \M18,16.08C17.24,16.08 16.56,16.38 16.04,
 $mol_button_share $mol_button_minor
 	uri \
 	capture null
+	hint @ \Share
 	sub /
 		<= Icon $mol_icon_share_variant
 
