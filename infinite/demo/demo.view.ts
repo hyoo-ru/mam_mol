@@ -4,16 +4,12 @@ namespace $.$$ {
 		
 		@ $mol_action
 		after( anchor_id = 0 ) {
-			return [ ... $mol_range2(
-				index => anchor_id + index ,
-				()=> this.chunk_size() 
-			) ]
+			return Array.from(
+				{ length: this.chunk_size() },
+				( _, index )=> anchor_id + index,
+			)
 		}
 
-		item_title( id : number ) {
-			return `Row #${id}`
-		}
-		
 	}
 
 }

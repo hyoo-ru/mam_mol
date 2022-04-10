@@ -44,18 +44,22 @@ namespace $ {
 			Func extends ( this: Host, ... args: Args )=> Result
 		>( func: Func )=> {
 			
-			const persist = $mol_wire_fiber_persist.getter( func, keys )
+			const persist = $mol_wire_atom.getter( func, keys )
 			
 			const wrapper = function( this: Host, ... args: Parameters< Func > ){
 				
 				let atom = persist( this, args.slice( 0, keys ) as Args )
 				
 				if( args.length <= keys || args[ keys ] === undefined ) {
-					if( $mol_wire_auto() instanceof $mol_wire_fiber_temp ) {
+					
+					if( !$mol_wire_fiber.warm ) return atom.sync()
+					
+					if( $mol_wire_auto() instanceof $mol_wire_task ) {
 						return atom.once()
 					} else {
 						return atom.sync()
 					}
+					
 				}
 				
 				return atom.recall( ... args as any )

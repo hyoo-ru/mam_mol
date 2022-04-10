@@ -3,7 +3,7 @@ namespace $ {
 	/** @deprecated Use $mol_wire_fiber..plan */
 	export function $mol_fiber_defer< Value = void >( calculate : ()=> Value ) {
 		const host = {}
-		const fiber = new $mol_wire_fiber_temp( calculate.name, calculate, host )
+		const fiber = new $mol_wire_task( calculate.name, calculate, host )
 		fiber.plan()
 		return fiber
 	}
@@ -16,7 +16,7 @@ namespace $ {
 	>( calculate : Calculate ) {
 		
 		const wrapper = function( this: This, ... args : any[] ) {
-			const fiber = new $mol_wire_fiber_temp( this + '.' + calculate.name, calculate, this, ... args )
+			const fiber = new $mol_wire_task( this + '.' + calculate.name, calculate, this, ... args )
 			return fiber.async()
 		} as any as Calculate
 		

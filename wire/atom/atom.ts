@@ -1,6 +1,6 @@
 namespace $ {
 
-	export class $mol_wire_fiber_persist<
+	export class $mol_wire_atom<
 		Host,
 		Args extends readonly unknown[],
 		Result,
@@ -13,13 +13,13 @@ namespace $ {
 		>(
 			task: ( this : Host , ... args : Args )=> Result,
 			keys: number,
-		): ( host: Host, args: Args )=> $mol_wire_fiber_persist< Host, [ ... Args ], Result > {
+		): ( host: Host, args: Args )=> $mol_wire_atom< Host, [ ... Args ], Result > {
 			
 			const field = task.name + '()'
 			
 			if( keys ) {
 				
-				return function $mol_wire_fiber_persist_get( host: Host, args: Args ) {
+				return function $mol_wire_atom_get( host: Host, args: Args ) {
 					
 					let dict, key!: string, fiber
 					
@@ -33,7 +33,7 @@ namespace $ {
 						dict = ( host ?? task )[ field ] = new Map<any,any>()
 					}
 					
-					fiber = new $mol_wire_fiber_persist( key, task, host, ... args )
+					fiber = new $mol_wire_atom( key, task, host, ... args )
 					dict.set( key, fiber )
 					
 					return fiber
@@ -41,14 +41,14 @@ namespace $ {
 				
 			} else {
 				
-				return function $mol_wire_fiber_persist_get( host: Host, args: Args ) {
+				return function $mol_wire_atom_get( host: Host, args: Args ) {
 					
 					const existen = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
 					if( existen ) return existen
 					
 					const key = `${ host?.[ Symbol.toStringTag ] ?? host }.${ field }`
 					
-					const fiber = new $mol_wire_fiber_persist( key, task, host, ... args )
+					const fiber = new $mol_wire_atom( key, task, host, ... args )
 					;( host ?? task )[ field ] = fiber
 					
 					return fiber

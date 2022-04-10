@@ -1,6 +1,8 @@
 include \/mol/wire/pub
 include \/mol/wire/pub/sub
 include \/mol/wire/fiber
+include \/mol/wire/task
+include \/mol/wire/atom
 include \/mol/wire/probe
 include \/mol/wire/solid
 include \/mol/wire/sync
@@ -11,3 +13,4 @@ include \/mol/wire/method
 include \/mol/wire/set
 include \/mol/wire/dict
 include \/mol/wait/timeout
+include \/mol/wire/log
