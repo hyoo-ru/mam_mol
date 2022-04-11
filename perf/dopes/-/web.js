@@ -486,37 +486,38 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_wire_pub extends Array {
+    class $mol_wire_pub extends Object {
+        data = [];
         static get [Symbol.species]() {
             return Array;
         }
         sub_from = 0;
         get sub_list() {
             const res = [];
-            for (let i = this.sub_from; i < this.length; i += 2) {
-                res.push(this[i]);
+            for (let i = this.sub_from; i < this.data.length; i += 2) {
+                res.push(this.data[i]);
             }
             return res;
         }
         get sub_empty() {
-            return this.sub_from === this.length;
+            return this.sub_from === this.data.length;
         }
         sub_on(sub, pub_pos) {
-            const pos = this.length;
-            this.push(sub, pub_pos);
+            const pos = this.data.length;
+            this.data.push(sub, pub_pos);
             return pos;
         }
         sub_off(sub_pos) {
-            if (!(sub_pos < this.length)) {
+            if (!(sub_pos < this.data.length)) {
                 $mol_fail(new Error(`Wrong pos ${sub_pos}`));
             }
-            const end = this.length - 2;
+            const end = this.data.length - 2;
             if (sub_pos !== end) {
                 this.peer_move(end, sub_pos);
             }
-            this.pop();
-            this.pop();
-            if (this.length === this.sub_from)
+            this.data.pop();
+            this.data.pop();
+            if (this.data.length === this.sub_from)
                 this.reap();
         }
         reap() { }
@@ -526,20 +527,20 @@ var $;
         refresh() { }
         complete() { }
         emit(quant = $mol_wire_cursor.stale) {
-            for (let i = this.sub_from; i < this.length; i += 2) {
+            for (let i = this.sub_from; i < this.data.length; i += 2) {
                 ;
-                this[i].absorb(quant);
+                this.data[i].absorb(quant);
             }
         }
         peer_move(from_pos, to_pos) {
-            const peer = this[from_pos];
-            const self_pos = this[from_pos + 1];
-            this[to_pos] = peer;
-            this[to_pos + 1] = self_pos;
+            const peer = this.data[from_pos];
+            const self_pos = this.data[from_pos + 1];
+            this.data[to_pos] = peer;
+            this.data[to_pos + 1] = self_pos;
             peer.peer_repos(self_pos, to_pos);
         }
         peer_repos(peer_pos, self_pos) {
-            this[peer_pos + 1] = self_pos;
+            this.data[peer_pos + 1] = self_pos;
         }
     }
     $.$mol_wire_pub = $mol_wire_pub;
@@ -671,7 +672,7 @@ var $;
             const res = [];
             const max = this.cursor >= 0 ? this.cursor : this.sub_from;
             for (let i = this.pub_from; i < max; i += 2) {
-                res.push(this[i]);
+                res.push(this.data[i]);
             }
             return res;
         }
@@ -691,7 +692,7 @@ var $;
             if (this.cursor < 0)
                 $mol_fail(new Error('Promo to non begun sub'));
             if (this.cursor < this.sub_from) {
-                const next = this[this.cursor];
+                const next = this.data[this.cursor];
                 if (pub === undefined)
                     return next ?? null;
                 if (next === pub) {
@@ -699,8 +700,8 @@ var $;
                     return next;
                 }
                 if (next) {
-                    if (this.sub_from < this.length) {
-                        this.peer_move(this.sub_from, this.length);
+                    if (this.sub_from < this.data.length) {
+                        this.peer_move(this.sub_from, this.data.length);
                     }
                     this.peer_move(this.cursor, this.sub_from);
                     this.sub_from += 2;
@@ -709,13 +710,13 @@ var $;
             else {
                 if (pub === undefined)
                     return null;
-                if (this.sub_from < this.length) {
-                    this.peer_move(this.sub_from, this.length);
+                if (this.sub_from < this.data.length) {
+                    this.peer_move(this.sub_from, this.data.length);
                 }
                 this.sub_from += 2;
             }
-            this[this.cursor] = pub;
-            this[this.cursor + 1] = pub.sub_on(this, this.cursor);
+            this.data[this.cursor] = pub;
+            this.data[this.cursor + 1] = pub.sub_on(this, this.cursor);
             this.cursor += 2;
             return pub;
         }
@@ -725,22 +726,22 @@ var $;
                 $mol_fail(new Error('End of non begun sub'));
             }
             for (let cursor = this.pub_from; cursor < this.cursor; cursor += 2) {
-                const pub = this[cursor];
+                const pub = this.data[cursor];
                 pub.refresh();
             }
             this.cursor = $mol_wire_cursor.fresh;
         }
         pub_off(sub_pos) {
-            this[sub_pos] = undefined;
-            this[sub_pos + 1] = undefined;
+            this.data[sub_pos] = undefined;
+            this.data[sub_pos + 1] = undefined;
         }
         destructor() {
-            for (let cursor = this.length - 2; cursor >= this.sub_from; cursor -= 2) {
-                const sub = this[cursor];
-                const pos = this[cursor + 1];
+            for (let cursor = this.data.length - 2; cursor >= this.sub_from; cursor -= 2) {
+                const sub = this.data[cursor];
+                const pos = this.data[cursor + 1];
                 sub.pub_off(pos);
-                this.pop();
-                this.pop();
+                this.data.pop();
+                this.data.pop();
             }
             this.cursor = this.pub_from;
             this.track_cut();
@@ -752,20 +753,20 @@ var $;
             }
             let tail = 0;
             for (let cursor = this.cursor; cursor < this.sub_from; cursor += 2) {
-                const pub = this[cursor];
-                pub?.sub_off(this[cursor + 1]);
-                if (this.sub_from < this.length) {
-                    this.peer_move(this.length - 2, cursor);
-                    this.pop();
-                    this.pop();
+                const pub = this.data[cursor];
+                pub?.sub_off(this.data[cursor + 1]);
+                if (this.sub_from < this.data.length) {
+                    this.peer_move(this.data.length - 2, cursor);
+                    this.data.pop();
+                    this.data.pop();
                 }
                 else {
                     ++tail;
                 }
             }
             for (; tail; --tail) {
-                this.pop();
-                this.pop();
+                this.data.pop();
+                this.data.pop();
             }
             this.sub_from = this.cursor;
         }
@@ -773,7 +774,7 @@ var $;
         complete_pubs() {
             const limit = this.cursor < 0 ? this.sub_from : this.cursor;
             for (let cursor = this.pub_from; cursor < limit; cursor += 2) {
-                const pub = this[cursor];
+                const pub = this.data[cursor];
                 pub?.complete();
             }
         }
@@ -876,7 +877,7 @@ var $;
         }
         cache = undefined;
         get args() {
-            return this.slice(0, this.pub_from);
+            return this.data.slice(0, this.pub_from);
         }
         result() {
             if (this.cache instanceof Promise)
@@ -889,11 +890,10 @@ var $;
             return this.task.name + '()';
         }
         constructor(id, task, host, ...args) {
-            super(...args, undefined, undefined);
+            super();
             this.task = task;
             this.host = host;
-            this.pop();
-            this.pop();
+            this.data.push(...args);
             this.pub_from = this.sub_from = args.length;
             this[Symbol.toStringTag] = id;
         }
@@ -937,7 +937,7 @@ var $;
             check: if (this.cursor === $mol_wire_cursor.doubt) {
                 for (let i = this.pub_from; i < this.sub_from; i += 2) {
                     ;
-                    this[i]?.refresh();
+                    this.data[i]?.refresh();
                     if (this.cursor !== $mol_wire_cursor.doubt)
                         break check;
                 }
@@ -952,10 +952,10 @@ var $;
                         result = this.task.call(this.host);
                         break;
                     case 1:
-                        result = this.task.call(this.host, this[0]);
+                        result = this.task.call(this.host, this.data[0]);
                         break;
                     default:
-                        result = this.task.call(this.host, ...this.slice(0, this.pub_from));
+                        result = this.task.call(this.host, ...this.data.slice(0, this.pub_from));
                         break;
                 }
                 if (result instanceof Promise) {
@@ -1353,7 +1353,7 @@ var $;
                     }
                     catch { }
                 }
-                if (this.sub_from < this.length) {
+                if (this.sub_from < this.data.length) {
                     if (!$mol_compare_deep(prev, next)) {
                         this.emit();
                     }

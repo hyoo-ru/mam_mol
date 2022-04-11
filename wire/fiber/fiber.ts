@@ -67,7 +67,7 @@ namespace $ {
 		public cache: Result | Error | Promise< Result | Error > = undefined as any
 		
 		get args() {
-			return this.slice( 0 , this.pub_from ) as any as Args
+			return this.data.slice( 0 , this.pub_from ) as any as Args
 		}
 		
 		result() {
@@ -87,12 +87,8 @@ namespace $ {
 			... args: Args
 		) {
 			
-			super( ... args as any, undefined as any, undefined as any )
-			
-			// reserve capacity for first subscriber
-			this.pop()
-			this.pop()
-			
+			super()
+			this.data.push( ... args )
 			this.pub_from = this.sub_from = args.length
 			this[ Symbol.toStringTag ] = id
 			
@@ -152,7 +148,7 @@ namespace $ {
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
 				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
-					;( this[i] as $mol_wire_pub )?.refresh()
+					;( this.data[i] as $mol_wire_pub )?.refresh()
 					if( this.cursor !== $mol_wire_cursor.doubt ) break check
 				}
 				
@@ -168,8 +164,8 @@ namespace $ {
 
 				switch( this.pub_from ) {
 					case 0: result = (this.task as any).call( this.host! ); break
-					case 1: result = (this.task as any).call( this.host!, this[0] ); break
-					default: result = (this.task as any).call( this.host!, ... this.slice( 0 , this.pub_from ) ); break
+					case 1: result = (this.task as any).call( this.host!, this.data[0] ); break
+					default: result = (this.task as any).call( this.host!, ... this.data.slice( 0 , this.pub_from ) ); break
 				}
 				
 				if( result instanceof Promise ) {

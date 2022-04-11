@@ -16,7 +16,7 @@ namespace $ {
 			const res = [] as $mol_wire_pub[]
 			const max = this.cursor >=0 ? this.cursor : this.sub_from
 			for( let i = this.pub_from; i < max; i += 2 ) {
-				res.push( this[i] as $mol_wire_pub )
+				res.push( this.data[i] as $mol_wire_pub )
 			}
 			return res
 		}
@@ -43,7 +43,7 @@ namespace $ {
 			
 			if( this.cursor < this.sub_from ) {
 			
- 				const next = this[ this.cursor ] as $mol_wire_pub | undefined
+ 				const next = this.data[ this.cursor ] as $mol_wire_pub | undefined
 				if( pub === undefined ) return next ?? null
 				
 				if( next === pub ) {
@@ -53,8 +53,8 @@ namespace $ {
 				
 				if( next ) {
 					
-					if( this.sub_from < this.length ) {
-						this.peer_move( this.sub_from, this.length )
+					if( this.sub_from < this.data.length ) {
+						this.peer_move( this.sub_from, this.data.length )
 					}
 					
 					this.peer_move( this.cursor, this.sub_from )
@@ -66,16 +66,16 @@ namespace $ {
 				
 				if( pub === undefined ) return null
 				
-				if( this.sub_from < this.length ) {
-					this.peer_move( this.sub_from, this.length )
+				if( this.sub_from < this.data.length ) {
+					this.peer_move( this.sub_from, this.data.length )
 				}
 				
 				this.sub_from += 2
 				
 			}			
 			
-			this[ this.cursor ] = pub
-			this[ this.cursor + 1 ] = pub.sub_on( this, this.cursor )
+			this.data[ this.cursor ] = pub
+			this.data[ this.cursor + 1 ] = pub.sub_on( this, this.cursor )
 			
 			this.cursor += 2
 			
@@ -95,7 +95,7 @@ namespace $ {
 				cursor < this.cursor;
 				cursor += 2
 			) {
-				const pub = this[ cursor ] as $mol_wire_pub
+				const pub = this.data[ cursor ] as $mol_wire_pub
 				pub.refresh()
 			}
 			
@@ -104,22 +104,22 @@ namespace $ {
 		}
 		
 		pub_off( sub_pos: number ) {
-			this[ sub_pos ] = undefined as any
-			this[ sub_pos + 1 ] = undefined as any 
+			this.data[ sub_pos ] = undefined as any
+			this.data[ sub_pos + 1 ] = undefined as any 
 		}
 		
 		destructor() {
 			
 			for(
-				let cursor = this.length - 2;
+				let cursor = this.data.length - 2;
 				cursor >= this.sub_from;
 				cursor -= 2
 			) {
-				const sub = this[ cursor ] as $mol_wire_sub
-				const pos = this[ cursor + 1 ] as number
+				const sub = this.data[ cursor ] as $mol_wire_sub
+				const pos = this.data[ cursor + 1 ] as number
 				sub.pub_off( pos )
-				this.pop()
-				this.pop()
+				this.data.pop()
+				this.data.pop()
 			}
 			
 			this.cursor = this.pub_from
@@ -142,13 +142,13 @@ namespace $ {
 				cursor += 2
 			) {
 				
-				const pub = this[ cursor ] as $mol_wire_pub | undefined
-				pub?.sub_off( this[ cursor + 1 ] as number )
+				const pub = this.data[ cursor ] as $mol_wire_pub | undefined
+				pub?.sub_off( this.data[ cursor + 1 ] as number )
 				
-				if( this.sub_from < this.length ) {
-					this.peer_move( this.length - 2, cursor )
-					this.pop()
-					this.pop()
+				if( this.sub_from < this.data.length ) {
+					this.peer_move( this.data.length - 2, cursor )
+					this.data.pop()
+					this.data.pop()
 				} else {
 					++ tail
 				}
@@ -156,8 +156,8 @@ namespace $ {
 			}
 			
 			for(; tail; -- tail ) {
-				this.pop()
-				this.pop()
+				this.data.pop()
+				this.data.pop()
 			}
 			
 			this.sub_from = this.cursor
@@ -175,7 +175,7 @@ namespace $ {
 				cursor < limit;
 				cursor += 2
 			) {
-				const pub = this[ cursor ] as $mol_wire_pub
+				const pub = this.data[ cursor ] as $mol_wire_pub
 				pub?.complete()
 			}
 			

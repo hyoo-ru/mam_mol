@@ -203,7 +203,8 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_wire_pub extends Array<unknown> {
+    class $mol_wire_pub extends Object {
+        data: unknown[];
         static get [Symbol.species](): ArrayConstructor;
         protected sub_from: number;
         get sub_list(): readonly $mol_wire_sub[];
