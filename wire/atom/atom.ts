@@ -116,7 +116,7 @@ namespace $ {
 					} catch {} // Promises throws in strict mode
 				}
 				
-				if( this.sub_from < this.length ) {
+				if( this.sub_from < this.data.length ) {
 					if( !$mol_compare_deep( prev, next ) ) {
 						this.emit()
 					}
