@@ -19,7 +19,7 @@ namespace $ {
 			
 			if( keys ) {
 				
-				return function $mol_wire_fiber_persist_get( host: Host, args: Args ) {
+				return function $mol_wire_atom_get( host: Host, args: Args ) {
 					
 					let dict, key!: string, fiber
 					
@@ -41,7 +41,7 @@ namespace $ {
 				
 			} else {
 				
-				return function $mol_wire_fiber_persist_get( host: Host, args: Args ) {
+				return function $mol_wire_atom_get( host: Host, args: Args ) {
 					
 					const existen = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
 					if( existen ) return existen
@@ -116,7 +116,7 @@ namespace $ {
 					} catch {} // Promises throws in strict mode
 				}
 				
-				if( this.sub_from < this.length ) {
+				if( this.sub_from < this.data.length ) {
 					if( !$mol_compare_deep( prev, next ) ) {
 						this.emit()
 					}

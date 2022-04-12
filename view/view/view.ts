@@ -35,7 +35,7 @@ namespace $ {
 		@ $mol_mem
 		static autobind() {
 			
-			const nodes = $mol_dom_context.document.querySelectorAll( '[mol_view_root]' )
+			const nodes = $mol_dom_context.document.querySelectorAll( '[mol_view_root]:not([mol_view_root=""])' )
 			
 			for( let i = nodes.length - 1 ; i >= 0 ; --i ) {
 
@@ -50,7 +50,7 @@ namespace $ {
 				const view = View.Root( i )
 				view.dom_node( nodes.item( i ) )
 				view.autorun()
-
+				
 			}
 			
 		}

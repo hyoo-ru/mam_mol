@@ -14,7 +14,7 @@ namespace $ {
 			task: ( this : Host , ... args : Args )=> Result,
 		): ( host: Host, args: Args )=> $mol_wire_task< Host, [ ... Args ], Result > {
 			
-			return function $mol_wire_fiber_temp_get( host: Host, args: Args ) {
+			return function $mol_wire_task_get( host: Host, args: Args ) {
 				
 				const existen = $mol_wire_auto()?.track_next()
 			
