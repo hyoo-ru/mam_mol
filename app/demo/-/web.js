@@ -23197,7 +23197,7 @@ var $;
             trigger_content() {
                 return [
                     ...this.option_content(this.value()),
-                    ...!this.value() ? [this.Trigger_icon()] : [],
+                    this.Trigger_icon(),
                 ];
             }
             menu_content() {
