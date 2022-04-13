@@ -36,6 +36,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * option_label_default \
+		 * ```
+		 */
+		option_label_default() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * Option_row!id $mol_button_minor
 		 * 	event_click?event <=> event_select!id?event
 		 * 	sub <= option_content!id

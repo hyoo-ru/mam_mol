@@ -1718,6 +1718,7 @@ declare namespace $ {
         dictionary(val?: any): {};
         options(): readonly string[];
         value(val?: any): string;
+        option_label_default(): string;
         Option_row(id: any): $mol_button_minor;
         No_options(): $mol_view;
         plugins(): readonly any[];

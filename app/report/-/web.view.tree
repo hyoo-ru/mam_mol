@@ -230,6 +230,7 @@ $mol_select $mol_pick
 	dictionary?val *
 	options /string
 	value?val \
+	option_label_default \
 	Option_row!id $mol_button_minor
 		event_click?event <=> event_select!id?event null
 		sub <= option_content!id /

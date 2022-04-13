@@ -30,7 +30,7 @@ namespace $.$$ {
 		
 		option_label( id : string ) {
 			const value = this.dictionary()[ id ]
-			return value == null ? id : value
+			return (value == null ? id : value) || this.option_label_default()
 		}
 		
 		option_rows() {
