@@ -7,7 +7,7 @@
 [mol_theme="$mol_theme_light"] , :root {
 	--mol_theme_back: hsl( 210 , 50% , 99% );
 	--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );
-	--mol_theme_current: hsl(210deg 32% 56%);
+	--mol_theme_current: hsl( 210 , 100% , 80% );
 	--mol_theme_text: hsl( 0 , 0% , 0% );
 	--mol_theme_control: hsla( 210 , 60% , 35% , 1 );
 	--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );

@@ -7,7 +7,6 @@
 
 [mol_switch_option] {
 	flex: 0 1 auto;
-	color: var(--mol_theme_current);
 }
 
 [mol_switch_option][mol_check_checked="true"] {
