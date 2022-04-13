@@ -3,8 +3,6 @@
 	flex-wrap: wrap;
 	flex: 1 1 auto;
 	border-radius: var(--mol_gap_round);
-	box-shadow: 0 0 0 1px var(--mol_theme_line);
-	background: var(--mol_theme_back);
 }
 
 [mol_switch_option] {
