@@ -9,6 +9,8 @@ Checkbox UI component. See Variants for more concrete implementations.
 - [$mol_check_expand](expand) - expander for trees, lists, etc.
 - [$mol_check_icon](icon) - icon checkbox
 
+## [Online demos](https://mol.hyoo.ru/#!section=demos/filter=%20checkbox)
+
 ## Usage examples
 
 ### Basic
