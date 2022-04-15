@@ -12,7 +12,7 @@
 	--mol_theme_control: hsla( 210 , 60% , 35% , 1 );
 	--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );
 	--mol_theme_line: rgba( 220 , 220 , 220 , 1 );
-	--mol_theme_focus: hsl( 290 , 70% , 50% );
+	--mol_theme_focus: hsl(28deg, 100%, 50%);
 	--mol_theme_field: white;
 	--mol_theme_image: none;
 }
@@ -40,8 +40,8 @@
 }
 
 [mol_theme="$mol_theme_accent"] {
-	--mol_theme_back: hsl( 15 , 60% , 50% );
-	--mol_theme_hover: hsl( 15 , 60% , 40% );
+	--mol_theme_back: hsl(28deg, 100%, 50%);
+	--mol_theme_hover: hsl(28deg, 100%, 50%);
 	--mol_theme_text: white;
 	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
 	--mol_theme_control: white;
