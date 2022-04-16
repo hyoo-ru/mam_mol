@@ -1387,7 +1387,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_form_field extends $mol_labeler {
         label(): readonly any[];
-        Content(): any;
+        content(): readonly any[];
         name(): string;
         bid(): string;
         Bid(): $mol_view;

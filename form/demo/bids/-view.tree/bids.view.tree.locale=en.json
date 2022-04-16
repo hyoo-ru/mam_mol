@@ -19,6 +19,7 @@
 	"$mol_form_demo_bids_sex_option_male": "Male",
 	"$mol_form_demo_bids_sex_option_intersex": "Intersex",
 	"$mol_form_demo_bids_sex_option_female": "Female",
+	"$mol_form_demo_bids_color_label": "Skin color",
 	"$mol_form_demo_bids_mail_label": "E-mail",
 	"$mol_form_demo_bids_mail_hint": "name@domain.com",
 	"$mol_form_demo_bids_submit_text": "Sign Up"

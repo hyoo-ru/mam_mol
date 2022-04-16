@@ -75,12 +75,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * option_infernal @ \Color which can not be displayed on your device
+		 * ```
+		 */
+		option_infernal() {
+			return this.$.$mol_locale.text( '$mol_switch_demo_option_infernal' )
+		}
+		
+		/**
+		 * ```tree
 		 * Enabled $mol_switch
 		 * 	value?val <=> color?val
 		 * 	options *
 		 * 		red <= option_red
 		 * 		green <= option_green
 		 * 		blue <= option_blue
+		 * 		infernal <= option_infernal
 		 * ```
 		 */
 		@ $mol_mem
@@ -91,8 +101,26 @@ namespace $ {
 			obj.options = () => ({
 				red: this.option_red(),
 				green: this.option_green(),
-				blue: this.option_blue()
+				blue: this.option_blue(),
+				infernal: this.option_infernal()
 			})
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Enabled_labeler $mol_labeler
+		 * 	title @ \Read/Write
+		 * 	Content <= Enabled
+		 * ```
+		 */
+		@ $mol_mem
+		Enabled_labeler() {
+			const obj = new this.$.$mol_labeler()
+			
+			obj.title = () => this.$.$mol_locale.text( '$mol_switch_demo_Enabled_labeler_title' )
+			obj.Content = () => this.Enabled()
 			
 			return obj
 		}
@@ -125,18 +153,35 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Demo_items $mol_list rows /
-		 * 	<= Enabled
-		 * 	<= Disabled
+		 * Disabled_labeler $mol_labeler
+		 * 	title @ \Read only
+		 * 	Content <= Disabled
+		 * ```
+		 */
+		@ $mol_mem
+		Disabled_labeler() {
+			const obj = new this.$.$mol_labeler()
+			
+			obj.title = () => this.$.$mol_locale.text( '$mol_switch_demo_Disabled_labeler_title' )
+			obj.Content = () => this.Disabled()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Demo_items $mol_row sub /
+		 * 	<= Enabled_labeler
+		 * 	<= Disabled_labeler
 		 * ```
 		 */
 		@ $mol_mem
 		Demo_items() {
-			const obj = new this.$.$mol_list()
+			const obj = new this.$.$mol_row()
 			
-			obj.rows = () => [
-				this.Enabled(),
-				this.Disabled()
+			obj.sub = () => [
+				this.Enabled_labeler(),
+				this.Disabled_labeler()
 			] as readonly any[]
 			
 			return obj

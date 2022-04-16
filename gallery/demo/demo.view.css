@@ -7,6 +7,7 @@
 	background-size: cover;
 	border-radius: var(--mol_gap_round);
 	overflow: hidden;
+	filter: var(--mol_theme_image);
 }
 
 [mol_gallery_demo_item]:hover {

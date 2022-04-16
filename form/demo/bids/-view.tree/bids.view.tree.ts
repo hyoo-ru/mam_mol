@@ -199,7 +199,7 @@ namespace $ {
 		 * Name_first_field $mol_form_field
 		 * 	name <= name_first_label
 		 * 	bid <= name_first_bid
-		 * 	control <= Name_first_control
+		 * 	Content <= Name_first_control
 		 * ```
 		 */
 		@ $mol_mem
@@ -208,7 +208,7 @@ namespace $ {
 			
 			obj.name = () => this.name_first_label()
 			obj.bid = () => this.name_first_bid()
-			obj.control = () => this.Name_first_control()
+			obj.Content = () => this.Name_first_control()
 			
 			return obj
 		}
@@ -273,7 +273,7 @@ namespace $ {
 		 * Name_nick_field $mol_form_field
 		 * 	name <= name_nick_label
 		 * 	bid <= name_nick_bid
-		 * 	control <= Name_nick_control
+		 * 	Content <= Name_nick_control
 		 * ```
 		 */
 		@ $mol_mem
@@ -282,7 +282,7 @@ namespace $ {
 			
 			obj.name = () => this.name_nick_label()
 			obj.bid = () => this.name_nick_bid()
-			obj.control = () => this.Name_nick_control()
+			obj.Content = () => this.Name_nick_control()
 			
 			return obj
 		}
@@ -347,7 +347,7 @@ namespace $ {
 		 * Name_second_field $mol_form_field
 		 * 	name <= name_second_label
 		 * 	bid <= name_second_bid
-		 * 	control <= Name_second_control
+		 * 	Content <= Name_second_control
 		 * ```
 		 */
 		@ $mol_mem
@@ -356,7 +356,7 @@ namespace $ {
 			
 			obj.name = () => this.name_second_label()
 			obj.bid = () => this.name_second_bid()
-			obj.control = () => this.Name_second_control()
+			obj.Content = () => this.Name_second_control()
 			
 			return obj
 		}
@@ -455,7 +455,7 @@ namespace $ {
 		 * Sex_field $mol_form_field
 		 * 	name <= sex_label
 		 * 	bid <= sex_bid
-		 * 	control <= Sex_control
+		 * 	Content <= Sex_control
 		 * ```
 		 */
 		@ $mol_mem
@@ -464,7 +464,69 @@ namespace $ {
 			
 			obj.name = () => this.sex_label()
 			obj.bid = () => this.sex_bid()
-			obj.control = () => this.Sex_control()
+			obj.Content = () => this.Sex_control()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * color_label @ \Skin color
+		 * ```
+		 */
+		color_label() {
+			return this.$.$mol_locale.text( '$mol_form_demo_bids_color_label' )
+		}
+		
+		/**
+		 * ```tree
+		 * color_bid \
+		 * ```
+		 */
+		color_bid() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * color?val \
+		 * ```
+		 */
+		@ $mol_mem
+		color(val?: any) {
+			if ( val !== undefined ) return val as never
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Color_control $mol_select_demo_colors color?val <=> color?val
+		 * ```
+		 */
+		@ $mol_mem
+		Color_control() {
+			const obj = new this.$.$mol_select_demo_colors()
+			
+			obj.color = (val?: any) => this.color(val)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Color_field $mol_form_field
+		 * 	name <= color_label
+		 * 	bid <= color_bid
+		 * 	control <= Color_control
+		 * ```
+		 */
+		@ $mol_mem
+		Color_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => this.color_label()
+			obj.bid = () => this.color_bid()
+			obj.control = () => this.Color_control()
 			
 			return obj
 		}
@@ -529,7 +591,7 @@ namespace $ {
 		 * Mail_field $mol_form_field
 		 * 	name <= mail_label
 		 * 	bid <= mail_bid
-		 * 	control <= Mail_control
+		 * 	Content <= Mail_control
 		 * ```
 		 */
 		@ $mol_mem
@@ -538,7 +600,7 @@ namespace $ {
 			
 			obj.name = () => this.mail_label()
 			obj.bid = () => this.mail_bid()
-			obj.control = () => this.Mail_control()
+			obj.Content = () => this.Mail_control()
 			
 			return obj
 		}
@@ -591,6 +653,7 @@ namespace $ {
 		 * 		<= Name_nick_field
 		 * 		<= Name_second_field
 		 * 		<= Sex_field
+		 * 		<= Color_field
 		 * 		<= Mail_field
 		 * 	buttons / <= Submit
 		 * ```
@@ -605,6 +668,7 @@ namespace $ {
 				this.Name_nick_field(),
 				this.Name_second_field(),
 				this.Sex_field(),
+				this.Color_field(),
 				this.Mail_field()
 			] as readonly any[]
 			obj.buttons = () => [

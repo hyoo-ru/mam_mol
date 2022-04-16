@@ -19,38 +19,44 @@ $mol_form_demo_bids $mol_example
 						<= Name_first_field $mol_form_field
 							name <= name_first_label @ \First Name
 							bid <= name_first_bid \
-							control <= Name_first_control $mol_string
+							Content <= Name_first_control $mol_string
 								hint <= name_first_hint @ \Jack
 								value?val <=> name_first?val \
 						-
 						<= Name_nick_field $mol_form_field
 							name <= name_nick_label @ \Nick Name
 							bid <= name_nick_bid \
-							control <= Name_nick_control $mol_string
+							Content <= Name_nick_control $mol_string
 								hint <= name_nick_hint @ \Capitan
 								value?val <=> name_nick?val \
 						-
 						<= Name_second_field $mol_form_field
 							name <= name_second_label @ \Second Name
 							bid <= name_second_bid \
-							control <= Name_second_control $mol_string
+							Content <= Name_second_control $mol_string
 								hint <= name_second_hint @ \Sparrow
 								value?val <=> name_second?val \
 						-
 						<= Sex_field $mol_form_field
 							name <= sex_label @ \Sex
 							bid <= sex_bid \
-							control <= Sex_control $mol_switch
+							Content <= Sex_control $mol_switch
 								value?val <=> sex?val \
 								options <= sex_options *
 									male <= sex_option_male @ \Male
 									intersex <= sex_option_intersex @ \Intersex
 									female <= sex_option_female @ \Female
 						-
+						<= Color_field $mol_form_field
+							name <= color_label @ \Skin color
+							bid <= color_bid \
+							control <= Color_control $mol_select_demo_colors
+								color?val <=> color?val \
+						-
 						<= Mail_field $mol_form_field
 							name <= mail_label @ \E-mail
 							bid <= mail_bid \
-							control <= Mail_control $mol_string
+							Content <= Mail_control $mol_string
 								hint <= mail_hint @ \name@domain.com
 								value?val <=> mail?val \
 					buttons /

@@ -4479,7 +4479,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_form_field extends $mol_labeler {
         label(): readonly any[];
-        Content(): any;
+        content(): readonly any[];
         name(): string;
         bid(): string;
         Bid(): $mol_view;
@@ -4513,6 +4513,401 @@ declare namespace $.$$ {
     class $mol_form extends $.$mol_form {
         submit_blocked(): boolean;
         keydown(next: KeyboardEvent): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_dots_vertical extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_select extends $mol_pick {
+        dictionary(val?: any): {};
+        options(): readonly string[];
+        value(val?: any): string;
+        option_label_default(): string;
+        Option_row(id: any): $mol_button_minor;
+        No_options(): $mol_view;
+        plugins(): readonly any[];
+        hint(): string;
+        bubble_content(): readonly any[];
+        Filter(): $$.$mol_string;
+        Trigger_icon(): $mol_icon_dots_vertical;
+        event_select(id: any, event?: any): any;
+        option_label(id: any): string;
+        filter_pattern(val?: any): string;
+        Option_label(id: any): $$.$mol_dimmer;
+        option_content(id: any): readonly any[];
+        no_options_message(): string;
+        nav_components(): readonly $mol_view[];
+        option_focused(component?: any): any;
+        nav_cycle(val?: any): boolean;
+        Nav(): $$.$mol_nav;
+        menu_content(): readonly $mol_view[];
+        Menu(): $$.$mol_list;
+        submit(event?: any): any;
+        enabled(): boolean;
+    }
+}
+
+declare namespace $ {
+    function $mol_match_text<Variant>(query: string, values: (variant: Variant) => string[]): (variant: Variant) => boolean;
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_select extends $.$mol_select {
+        filter_pattern(next?: string): string;
+        open(): void;
+        options(): readonly string[];
+        options_filtered(): readonly string[];
+        option_label(id: string): any;
+        option_rows(): $mol_button_minor[];
+        option_focused(component?: $mol_view): $mol_view | $mol_string | null;
+        event_select(id: string, event?: MouseEvent): void;
+        nav_components(): ($mol_button_minor | $mol_string)[];
+        trigger_content(): readonly $mol_view_content[];
+        menu_content(): $mol_view[];
+    }
+}
+
+declare namespace $ {
+    class $mol_select_demo_colors extends $mol_example {
+        title(): string;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        color(val?: any): string;
+        colors(): {};
+        color_name(id: any): string;
+        option_color(id: any): string;
+        Color_preview(id: any): $mol_select_colors_color_preview;
+        Color_name(id: any): $$.$mol_dimmer;
+        Color_option(id: any): $mol_view;
+        option_content(id: any): readonly any[];
+        color_filter(): string;
+        Color(): $$.$mol_select;
+    }
+    class $mol_select_colors_color_preview extends $mol_view {
+        style(): {
+            background: string;
+        };
+        color(): string;
+    }
+}
+
+declare namespace $ {
+    const $mol_colors: {
+        readonly aliceblue: "#f0f8ff";
+        readonly antiquewhite: "#faebd7";
+        readonly aqua: "#00ffff";
+        readonly aquamarine: "#7fffd4";
+        readonly azure: "#f0ffff";
+        readonly beige: "#f5f5dc";
+        readonly bisque: "#ffe4c4";
+        readonly black: "#000000";
+        readonly blanchedalmond: "#ffebcd";
+        readonly blue: "#0000ff";
+        readonly blueviolet: "#8a2be2";
+        readonly brown: "#a52a2a";
+        readonly burlywood: "#deb887";
+        readonly cadetblue: "#5f9ea0";
+        readonly chartreuse: "#7fff00";
+        readonly chocolate: "#d2691e";
+        readonly coral: "#ff7f50";
+        readonly cornflowerblue: "#6495ed";
+        readonly cornsilk: "#fff8dc";
+        readonly crimson: "#dc143c";
+        readonly cyan: "#00ffff";
+        readonly darkblue: "#00008b";
+        readonly darkcyan: "#008b8b";
+        readonly darkgoldenrod: "#b8860b";
+        readonly darkgray: "#a9a9a9";
+        readonly darkgreen: "#006400";
+        readonly darkgrey: "#a9a9a9";
+        readonly darkkhaki: "#bdb76b";
+        readonly darkmagenta: "#8b008b";
+        readonly darkolivegreen: "#556b2f";
+        readonly darkorange: "#ff8c00";
+        readonly darkorchid: "#9932cc";
+        readonly darkred: "#8b0000";
+        readonly darksalmon: "#e9967a";
+        readonly darkseagreen: "#8fbc8f";
+        readonly darkslateblue: "#483d8b";
+        readonly darkslategrey: "#2f4f4f";
+        readonly darkturquoise: "#00ced1";
+        readonly darkviolet: "#9400d3";
+        readonly deeppink: "#ff1493";
+        readonly deepskyblue: "#00bfff";
+        readonly dimgray: "#696969";
+        readonly dimgrey: "#696969";
+        readonly dodgerblue: "#1e90ff";
+        readonly firebrick: "#b22222";
+        readonly floralwhite: "#fffaf0";
+        readonly forestgreen: "#228b22";
+        readonly fuchsia: "#ff00ff";
+        readonly gainsboro: "#dcdcdc";
+        readonly ghostwhite: "#f8f8ff";
+        readonly gold: "#ffd700";
+        readonly goldenrod: "#daa520";
+        readonly gray: "#808080";
+        readonly green: "#008000";
+        readonly greenyellow: "#adff2f";
+        readonly grey: "#808080";
+        readonly honeydew: "#f0fff0";
+        readonly hotpink: "#ff69b4";
+        readonly indianred: "#cd5c5c";
+        readonly indigo: "#4b0082";
+        readonly ivory: "#fffff0";
+        readonly khaki: "#f0e68c";
+        readonly lavender: "#e6e6fa";
+        readonly lavenderblush: "#fff0f5";
+        readonly lawngreen: "#7cfc00";
+        readonly lemonchiffon: "#fffacd";
+        readonly lightblue: "#add8e6";
+        readonly lightcoral: "#f08080";
+        readonly lightcyan: "#e0ffff";
+        readonly lightgoldenrodyellow: "#fafad2";
+        readonly lightgray: "#d3d3d3";
+        readonly lightgreen: "#90ee90";
+        readonly lightgrey: "#d3d3d3";
+        readonly lightpink: "#ffb6c1";
+        readonly lightsalmon: "#ffa07a";
+        readonly lightseagreen: "#20b2aa";
+        readonly lightskyblue: "#87cefa";
+        readonly lightslategray: "#778899";
+        readonly lightslategrey: "#778899";
+        readonly lightsteelblue: "#b0c4de";
+        readonly lightyellow: "#ffffe0";
+        readonly lime: "#00ff00";
+        readonly limegreen: "#32cd32";
+        readonly linen: "#faf0e6";
+        readonly magenta: "#ff00ff";
+        readonly maroon: "#800000";
+        readonly mediumaquamarine: "#66cdaa";
+        readonly mediumblue: "#0000cd";
+        readonly mediumorchid: "#ba55d3";
+        readonly mediumpurple: "#9370db";
+        readonly mediumseagreen: "#3cb371";
+        readonly mediumslateblue: "#7b68ee";
+        readonly mediumspringgreen: "#00fa9a";
+        readonly mediumturquoise: "#48d1cc";
+        readonly mediumvioletred: "#c71585";
+        readonly midnightblue: "#191970";
+        readonly mintcream: "#f5fffa";
+        readonly mistyrose: "#ffe4e1";
+        readonly moccasin: "#ffe4b5";
+        readonly navajowhite: "#ffdead";
+        readonly navy: "#000080";
+        readonly oldlace: "#fdf5e6";
+        readonly olive: "#808000";
+        readonly olivedrab: "#6b8e23";
+        readonly orange: "#ffa500";
+        readonly orangered: "#ff4500";
+        readonly orchid: "#da70d6";
+        readonly palegoldenrod: "#eee8aa";
+        readonly palegreen: "#98fb98";
+        readonly paleturquoise: "#afeeee";
+        readonly palevioletred: "#db7093";
+        readonly papayawhip: "#ffefd5";
+        readonly peachpuff: "#ffdab9";
+        readonly peru: "#cd853f";
+        readonly pink: "#ffc0cb";
+        readonly plum: "#dda0dd";
+        readonly powderblue: "#b0e0e6";
+        readonly purple: "#800080";
+        readonly rebeccapurple: "#663399";
+        readonly red: "#ff0000";
+        readonly rosybrown: "#bc8f8f";
+        readonly royalblue: "#4169e1";
+        readonly saddlebrown: "#8b4513";
+        readonly salmon: "#fa8072";
+        readonly sandybrown: "#f4a460";
+        readonly seagreen: "#2e8b57";
+        readonly seashell: "#fff5ee";
+        readonly sienna: "#a0522d";
+        readonly silver: "#c0c0c0";
+        readonly skyblue: "#87ceeb";
+        readonly slateblue: "#6a5acd";
+        readonly slategray: "#708090";
+        readonly slategrey: "#708090";
+        readonly snow: "#fffafa";
+        readonly springgreen: "#00ff7f";
+        readonly steelblue: "#4682b4";
+        readonly tan: "#d2b48c";
+        readonly teal: "#008080";
+        readonly thistle: "#d8bfd8";
+        readonly tomato: "#ff6347";
+        readonly turquoise: "#40e0d0";
+        readonly violet: "#ee82ee";
+        readonly wheat: "#f5deb3";
+        readonly white: "#ffffff";
+        readonly whitesmoke: "#f5f5f5";
+        readonly yellow: "#ffff00";
+        readonly yellowgreen: "#9acd32";
+    };
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_select_demo_colors extends $.$mol_select_demo_colors {
+        color_name(id: string): any;
+        option_color(id: string): any;
+        colors(): {
+            aliceblue: "#f0f8ff";
+            antiquewhite: "#faebd7";
+            aqua: "#00ffff";
+            aquamarine: "#7fffd4";
+            azure: "#f0ffff";
+            beige: "#f5f5dc";
+            bisque: "#ffe4c4";
+            black: "#000000";
+            blanchedalmond: "#ffebcd";
+            blue: "#0000ff";
+            blueviolet: "#8a2be2";
+            brown: "#a52a2a";
+            burlywood: "#deb887";
+            cadetblue: "#5f9ea0";
+            chartreuse: "#7fff00";
+            chocolate: "#d2691e";
+            coral: "#ff7f50";
+            cornflowerblue: "#6495ed";
+            cornsilk: "#fff8dc";
+            crimson: "#dc143c";
+            cyan: "#00ffff";
+            darkblue: "#00008b";
+            darkcyan: "#008b8b";
+            darkgoldenrod: "#b8860b";
+            darkgray: "#a9a9a9";
+            darkgreen: "#006400";
+            darkgrey: "#a9a9a9";
+            darkkhaki: "#bdb76b";
+            darkmagenta: "#8b008b";
+            darkolivegreen: "#556b2f";
+            darkorange: "#ff8c00";
+            darkorchid: "#9932cc";
+            darkred: "#8b0000";
+            darksalmon: "#e9967a";
+            darkseagreen: "#8fbc8f";
+            darkslateblue: "#483d8b";
+            darkslategrey: "#2f4f4f";
+            darkturquoise: "#00ced1";
+            darkviolet: "#9400d3";
+            deeppink: "#ff1493";
+            deepskyblue: "#00bfff";
+            dimgray: "#696969";
+            dimgrey: "#696969";
+            dodgerblue: "#1e90ff";
+            firebrick: "#b22222";
+            floralwhite: "#fffaf0";
+            forestgreen: "#228b22";
+            fuchsia: "#ff00ff";
+            gainsboro: "#dcdcdc";
+            ghostwhite: "#f8f8ff";
+            gold: "#ffd700";
+            goldenrod: "#daa520";
+            gray: "#808080";
+            green: "#008000";
+            greenyellow: "#adff2f";
+            grey: "#808080";
+            honeydew: "#f0fff0";
+            hotpink: "#ff69b4";
+            indianred: "#cd5c5c";
+            indigo: "#4b0082";
+            ivory: "#fffff0";
+            khaki: "#f0e68c";
+            lavender: "#e6e6fa";
+            lavenderblush: "#fff0f5";
+            lawngreen: "#7cfc00";
+            lemonchiffon: "#fffacd";
+            lightblue: "#add8e6";
+            lightcoral: "#f08080";
+            lightcyan: "#e0ffff";
+            lightgoldenrodyellow: "#fafad2";
+            lightgray: "#d3d3d3";
+            lightgreen: "#90ee90";
+            lightgrey: "#d3d3d3";
+            lightpink: "#ffb6c1";
+            lightsalmon: "#ffa07a";
+            lightseagreen: "#20b2aa";
+            lightskyblue: "#87cefa";
+            lightslategray: "#778899";
+            lightslategrey: "#778899";
+            lightsteelblue: "#b0c4de";
+            lightyellow: "#ffffe0";
+            lime: "#00ff00";
+            limegreen: "#32cd32";
+            linen: "#faf0e6";
+            magenta: "#ff00ff";
+            maroon: "#800000";
+            mediumaquamarine: "#66cdaa";
+            mediumblue: "#0000cd";
+            mediumorchid: "#ba55d3";
+            mediumpurple: "#9370db";
+            mediumseagreen: "#3cb371";
+            mediumslateblue: "#7b68ee";
+            mediumspringgreen: "#00fa9a";
+            mediumturquoise: "#48d1cc";
+            mediumvioletred: "#c71585";
+            midnightblue: "#191970";
+            mintcream: "#f5fffa";
+            mistyrose: "#ffe4e1";
+            moccasin: "#ffe4b5";
+            navajowhite: "#ffdead";
+            navy: "#000080";
+            oldlace: "#fdf5e6";
+            olive: "#808000";
+            olivedrab: "#6b8e23";
+            orange: "#ffa500";
+            orangered: "#ff4500";
+            orchid: "#da70d6";
+            palegoldenrod: "#eee8aa";
+            palegreen: "#98fb98";
+            paleturquoise: "#afeeee";
+            palevioletred: "#db7093";
+            papayawhip: "#ffefd5";
+            peachpuff: "#ffdab9";
+            peru: "#cd853f";
+            pink: "#ffc0cb";
+            plum: "#dda0dd";
+            powderblue: "#b0e0e6";
+            purple: "#800080";
+            rebeccapurple: "#663399";
+            red: "#ff0000";
+            rosybrown: "#bc8f8f";
+            royalblue: "#4169e1";
+            saddlebrown: "#8b4513";
+            salmon: "#fa8072";
+            sandybrown: "#f4a460";
+            seagreen: "#2e8b57";
+            seashell: "#fff5ee";
+            sienna: "#a0522d";
+            silver: "#c0c0c0";
+            skyblue: "#87ceeb";
+            slateblue: "#6a5acd";
+            slategray: "#708090";
+            slategrey: "#708090";
+            snow: "#fffafa";
+            springgreen: "#00ff7f";
+            steelblue: "#4682b4";
+            tan: "#d2b48c";
+            teal: "#008080";
+            thistle: "#d8bfd8";
+            tomato: "#ff6347";
+            turquoise: "#40e0d0";
+            violet: "#ee82ee";
+            wheat: "#f5deb3";
+            white: "#ffffff";
+            whitesmoke: "#f5f5f5";
+            yellow: "#ffff00";
+            yellowgreen: "#9acd32";
+            '': string;
+        };
     }
 }
 
@@ -4562,6 +4957,11 @@ declare namespace $ {
         };
         Sex_control(): $$.$mol_switch;
         Sex_field(): $mol_form_field;
+        color_label(): string;
+        color_bid(): string;
+        color(val?: any): string;
+        Color_control(): $$.$mol_select_demo_colors;
+        Color_field(): $mol_form_field;
         mail_label(): string;
         mail_bid(): string;
         mail_hint(): string;
@@ -5846,12 +6246,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_icon_dots_vertical extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
     class $mol_icon_content_copy extends $mol_icon {
         path(): string;
     }
@@ -6046,395 +6440,6 @@ declare namespace $ {
         tags(): readonly any[];
         Section_content(): $mol_filler;
         Section(): $mol_section;
-    }
-}
-
-declare namespace $ {
-    class $mol_select extends $mol_pick {
-        dictionary(val?: any): {};
-        options(): readonly string[];
-        value(val?: any): string;
-        option_label_default(): string;
-        Option_row(id: any): $mol_button_minor;
-        No_options(): $mol_view;
-        plugins(): readonly any[];
-        hint(): string;
-        bubble_content(): readonly any[];
-        Filter(): $$.$mol_string;
-        Trigger_icon(): $mol_icon_dots_vertical;
-        event_select(id: any, event?: any): any;
-        option_label(id: any): string;
-        filter_pattern(val?: any): string;
-        Option_label(id: any): $$.$mol_dimmer;
-        option_content(id: any): readonly any[];
-        no_options_message(): string;
-        nav_components(): readonly $mol_view[];
-        option_focused(component?: any): any;
-        nav_cycle(val?: any): boolean;
-        Nav(): $$.$mol_nav;
-        menu_content(): readonly $mol_view[];
-        Menu(): $$.$mol_list;
-        submit(event?: any): any;
-        enabled(): boolean;
-    }
-}
-
-declare namespace $ {
-    function $mol_match_text<Variant>(query: string, values: (variant: Variant) => string[]): (variant: Variant) => boolean;
-}
-
-declare namespace $ {
-}
-
-declare namespace $.$$ {
-    class $mol_select extends $.$mol_select {
-        filter_pattern(next?: string): string;
-        open(): void;
-        options(): readonly string[];
-        options_filtered(): readonly string[];
-        option_label(id: string): any;
-        option_rows(): $mol_button_minor[];
-        option_focused(component?: $mol_view): $mol_view | $mol_string | null;
-        event_select(id: string, event?: MouseEvent): void;
-        nav_components(): ($mol_button_minor | $mol_string)[];
-        trigger_content(): readonly $mol_view_content[];
-        menu_content(): $mol_view[];
-    }
-}
-
-declare namespace $ {
-    class $mol_select_demo_colors extends $mol_example {
-        title(): string;
-        sub(): readonly any[];
-        tags(): readonly any[];
-        color(val?: any): string;
-        colors(): {};
-        color_name(id: any): string;
-        option_color(id: any): string;
-        Color_preview(id: any): $mol_select_colors_color_preview;
-        Color_name(id: any): $$.$mol_dimmer;
-        Color_option(id: any): $mol_view;
-        option_content(id: any): readonly any[];
-        color_filter(): string;
-        Color(): $$.$mol_select;
-    }
-    class $mol_select_colors_color_preview extends $mol_view {
-        style(): {
-            background: string;
-        };
-        color(): string;
-    }
-}
-
-declare namespace $ {
-    const $mol_colors: {
-        readonly aliceblue: "#f0f8ff";
-        readonly antiquewhite: "#faebd7";
-        readonly aqua: "#00ffff";
-        readonly aquamarine: "#7fffd4";
-        readonly azure: "#f0ffff";
-        readonly beige: "#f5f5dc";
-        readonly bisque: "#ffe4c4";
-        readonly black: "#000000";
-        readonly blanchedalmond: "#ffebcd";
-        readonly blue: "#0000ff";
-        readonly blueviolet: "#8a2be2";
-        readonly brown: "#a52a2a";
-        readonly burlywood: "#deb887";
-        readonly cadetblue: "#5f9ea0";
-        readonly chartreuse: "#7fff00";
-        readonly chocolate: "#d2691e";
-        readonly coral: "#ff7f50";
-        readonly cornflowerblue: "#6495ed";
-        readonly cornsilk: "#fff8dc";
-        readonly crimson: "#dc143c";
-        readonly cyan: "#00ffff";
-        readonly darkblue: "#00008b";
-        readonly darkcyan: "#008b8b";
-        readonly darkgoldenrod: "#b8860b";
-        readonly darkgray: "#a9a9a9";
-        readonly darkgreen: "#006400";
-        readonly darkgrey: "#a9a9a9";
-        readonly darkkhaki: "#bdb76b";
-        readonly darkmagenta: "#8b008b";
-        readonly darkolivegreen: "#556b2f";
-        readonly darkorange: "#ff8c00";
-        readonly darkorchid: "#9932cc";
-        readonly darkred: "#8b0000";
-        readonly darksalmon: "#e9967a";
-        readonly darkseagreen: "#8fbc8f";
-        readonly darkslateblue: "#483d8b";
-        readonly darkslategrey: "#2f4f4f";
-        readonly darkturquoise: "#00ced1";
-        readonly darkviolet: "#9400d3";
-        readonly deeppink: "#ff1493";
-        readonly deepskyblue: "#00bfff";
-        readonly dimgray: "#696969";
-        readonly dimgrey: "#696969";
-        readonly dodgerblue: "#1e90ff";
-        readonly firebrick: "#b22222";
-        readonly floralwhite: "#fffaf0";
-        readonly forestgreen: "#228b22";
-        readonly fuchsia: "#ff00ff";
-        readonly gainsboro: "#dcdcdc";
-        readonly ghostwhite: "#f8f8ff";
-        readonly gold: "#ffd700";
-        readonly goldenrod: "#daa520";
-        readonly gray: "#808080";
-        readonly green: "#008000";
-        readonly greenyellow: "#adff2f";
-        readonly grey: "#808080";
-        readonly honeydew: "#f0fff0";
-        readonly hotpink: "#ff69b4";
-        readonly indianred: "#cd5c5c";
-        readonly indigo: "#4b0082";
-        readonly ivory: "#fffff0";
-        readonly khaki: "#f0e68c";
-        readonly lavender: "#e6e6fa";
-        readonly lavenderblush: "#fff0f5";
-        readonly lawngreen: "#7cfc00";
-        readonly lemonchiffon: "#fffacd";
-        readonly lightblue: "#add8e6";
-        readonly lightcoral: "#f08080";
-        readonly lightcyan: "#e0ffff";
-        readonly lightgoldenrodyellow: "#fafad2";
-        readonly lightgray: "#d3d3d3";
-        readonly lightgreen: "#90ee90";
-        readonly lightgrey: "#d3d3d3";
-        readonly lightpink: "#ffb6c1";
-        readonly lightsalmon: "#ffa07a";
-        readonly lightseagreen: "#20b2aa";
-        readonly lightskyblue: "#87cefa";
-        readonly lightslategray: "#778899";
-        readonly lightslategrey: "#778899";
-        readonly lightsteelblue: "#b0c4de";
-        readonly lightyellow: "#ffffe0";
-        readonly lime: "#00ff00";
-        readonly limegreen: "#32cd32";
-        readonly linen: "#faf0e6";
-        readonly magenta: "#ff00ff";
-        readonly maroon: "#800000";
-        readonly mediumaquamarine: "#66cdaa";
-        readonly mediumblue: "#0000cd";
-        readonly mediumorchid: "#ba55d3";
-        readonly mediumpurple: "#9370db";
-        readonly mediumseagreen: "#3cb371";
-        readonly mediumslateblue: "#7b68ee";
-        readonly mediumspringgreen: "#00fa9a";
-        readonly mediumturquoise: "#48d1cc";
-        readonly mediumvioletred: "#c71585";
-        readonly midnightblue: "#191970";
-        readonly mintcream: "#f5fffa";
-        readonly mistyrose: "#ffe4e1";
-        readonly moccasin: "#ffe4b5";
-        readonly navajowhite: "#ffdead";
-        readonly navy: "#000080";
-        readonly oldlace: "#fdf5e6";
-        readonly olive: "#808000";
-        readonly olivedrab: "#6b8e23";
-        readonly orange: "#ffa500";
-        readonly orangered: "#ff4500";
-        readonly orchid: "#da70d6";
-        readonly palegoldenrod: "#eee8aa";
-        readonly palegreen: "#98fb98";
-        readonly paleturquoise: "#afeeee";
-        readonly palevioletred: "#db7093";
-        readonly papayawhip: "#ffefd5";
-        readonly peachpuff: "#ffdab9";
-        readonly peru: "#cd853f";
-        readonly pink: "#ffc0cb";
-        readonly plum: "#dda0dd";
-        readonly powderblue: "#b0e0e6";
-        readonly purple: "#800080";
-        readonly rebeccapurple: "#663399";
-        readonly red: "#ff0000";
-        readonly rosybrown: "#bc8f8f";
-        readonly royalblue: "#4169e1";
-        readonly saddlebrown: "#8b4513";
-        readonly salmon: "#fa8072";
-        readonly sandybrown: "#f4a460";
-        readonly seagreen: "#2e8b57";
-        readonly seashell: "#fff5ee";
-        readonly sienna: "#a0522d";
-        readonly silver: "#c0c0c0";
-        readonly skyblue: "#87ceeb";
-        readonly slateblue: "#6a5acd";
-        readonly slategray: "#708090";
-        readonly slategrey: "#708090";
-        readonly snow: "#fffafa";
-        readonly springgreen: "#00ff7f";
-        readonly steelblue: "#4682b4";
-        readonly tan: "#d2b48c";
-        readonly teal: "#008080";
-        readonly thistle: "#d8bfd8";
-        readonly tomato: "#ff6347";
-        readonly turquoise: "#40e0d0";
-        readonly violet: "#ee82ee";
-        readonly wheat: "#f5deb3";
-        readonly white: "#ffffff";
-        readonly whitesmoke: "#f5f5f5";
-        readonly yellow: "#ffff00";
-        readonly yellowgreen: "#9acd32";
-    };
-}
-
-declare namespace $ {
-}
-
-declare namespace $.$$ {
-    class $mol_select_demo_colors extends $.$mol_select_demo_colors {
-        color_name(id: string): any;
-        option_color(id: string): any;
-        colors(): {
-            aliceblue: "#f0f8ff";
-            antiquewhite: "#faebd7";
-            aqua: "#00ffff";
-            aquamarine: "#7fffd4";
-            azure: "#f0ffff";
-            beige: "#f5f5dc";
-            bisque: "#ffe4c4";
-            black: "#000000";
-            blanchedalmond: "#ffebcd";
-            blue: "#0000ff";
-            blueviolet: "#8a2be2";
-            brown: "#a52a2a";
-            burlywood: "#deb887";
-            cadetblue: "#5f9ea0";
-            chartreuse: "#7fff00";
-            chocolate: "#d2691e";
-            coral: "#ff7f50";
-            cornflowerblue: "#6495ed";
-            cornsilk: "#fff8dc";
-            crimson: "#dc143c";
-            cyan: "#00ffff";
-            darkblue: "#00008b";
-            darkcyan: "#008b8b";
-            darkgoldenrod: "#b8860b";
-            darkgray: "#a9a9a9";
-            darkgreen: "#006400";
-            darkgrey: "#a9a9a9";
-            darkkhaki: "#bdb76b";
-            darkmagenta: "#8b008b";
-            darkolivegreen: "#556b2f";
-            darkorange: "#ff8c00";
-            darkorchid: "#9932cc";
-            darkred: "#8b0000";
-            darksalmon: "#e9967a";
-            darkseagreen: "#8fbc8f";
-            darkslateblue: "#483d8b";
-            darkslategrey: "#2f4f4f";
-            darkturquoise: "#00ced1";
-            darkviolet: "#9400d3";
-            deeppink: "#ff1493";
-            deepskyblue: "#00bfff";
-            dimgray: "#696969";
-            dimgrey: "#696969";
-            dodgerblue: "#1e90ff";
-            firebrick: "#b22222";
-            floralwhite: "#fffaf0";
-            forestgreen: "#228b22";
-            fuchsia: "#ff00ff";
-            gainsboro: "#dcdcdc";
-            ghostwhite: "#f8f8ff";
-            gold: "#ffd700";
-            goldenrod: "#daa520";
-            gray: "#808080";
-            green: "#008000";
-            greenyellow: "#adff2f";
-            grey: "#808080";
-            honeydew: "#f0fff0";
-            hotpink: "#ff69b4";
-            indianred: "#cd5c5c";
-            indigo: "#4b0082";
-            ivory: "#fffff0";
-            khaki: "#f0e68c";
-            lavender: "#e6e6fa";
-            lavenderblush: "#fff0f5";
-            lawngreen: "#7cfc00";
-            lemonchiffon: "#fffacd";
-            lightblue: "#add8e6";
-            lightcoral: "#f08080";
-            lightcyan: "#e0ffff";
-            lightgoldenrodyellow: "#fafad2";
-            lightgray: "#d3d3d3";
-            lightgreen: "#90ee90";
-            lightgrey: "#d3d3d3";
-            lightpink: "#ffb6c1";
-            lightsalmon: "#ffa07a";
-            lightseagreen: "#20b2aa";
-            lightskyblue: "#87cefa";
-            lightslategray: "#778899";
-            lightslategrey: "#778899";
-            lightsteelblue: "#b0c4de";
-            lightyellow: "#ffffe0";
-            lime: "#00ff00";
-            limegreen: "#32cd32";
-            linen: "#faf0e6";
-            magenta: "#ff00ff";
-            maroon: "#800000";
-            mediumaquamarine: "#66cdaa";
-            mediumblue: "#0000cd";
-            mediumorchid: "#ba55d3";
-            mediumpurple: "#9370db";
-            mediumseagreen: "#3cb371";
-            mediumslateblue: "#7b68ee";
-            mediumspringgreen: "#00fa9a";
-            mediumturquoise: "#48d1cc";
-            mediumvioletred: "#c71585";
-            midnightblue: "#191970";
-            mintcream: "#f5fffa";
-            mistyrose: "#ffe4e1";
-            moccasin: "#ffe4b5";
-            navajowhite: "#ffdead";
-            navy: "#000080";
-            oldlace: "#fdf5e6";
-            olive: "#808000";
-            olivedrab: "#6b8e23";
-            orange: "#ffa500";
-            orangered: "#ff4500";
-            orchid: "#da70d6";
-            palegoldenrod: "#eee8aa";
-            palegreen: "#98fb98";
-            paleturquoise: "#afeeee";
-            palevioletred: "#db7093";
-            papayawhip: "#ffefd5";
-            peachpuff: "#ffdab9";
-            peru: "#cd853f";
-            pink: "#ffc0cb";
-            plum: "#dda0dd";
-            powderblue: "#b0e0e6";
-            purple: "#800080";
-            rebeccapurple: "#663399";
-            red: "#ff0000";
-            rosybrown: "#bc8f8f";
-            royalblue: "#4169e1";
-            saddlebrown: "#8b4513";
-            salmon: "#fa8072";
-            sandybrown: "#f4a460";
-            seagreen: "#2e8b57";
-            seashell: "#fff5ee";
-            sienna: "#a0522d";
-            silver: "#c0c0c0";
-            skyblue: "#87ceeb";
-            slateblue: "#6a5acd";
-            slategray: "#708090";
-            slategrey: "#708090";
-            snow: "#fffafa";
-            springgreen: "#00ff7f";
-            steelblue: "#4682b4";
-            tan: "#d2b48c";
-            teal: "#008080";
-            thistle: "#d8bfd8";
-            tomato: "#ff6347";
-            turquoise: "#40e0d0";
-            violet: "#ee82ee";
-            wheat: "#f5deb3";
-            white: "#ffffff";
-            whitesmoke: "#f5f5f5";
-            yellow: "#ffff00";
-            yellowgreen: "#9acd32";
-            '': string;
-        };
     }
 }
 
@@ -6649,9 +6654,12 @@ declare namespace $ {
         option_red(): string;
         option_green(): string;
         option_blue(): string;
+        option_infernal(): string;
         Enabled(): $$.$mol_switch;
+        Enabled_labeler(): $mol_labeler;
         Disabled(): $$.$mol_switch;
-        Demo_items(): $$.$mol_list;
+        Disabled_labeler(): $mol_labeler;
+        Demo_items(): $mol_row;
     }
 }
 
