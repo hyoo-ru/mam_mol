@@ -26,7 +26,7 @@ namespace $ {
 			},
 			
 			$mol_icon: {
-				transform: 'scale(2)',
+				transform: 'scale(1.5)',
 			},
 			
 		},
@@ -40,7 +40,7 @@ namespace $ {
 			},
 			
 			$mol_icon: {
-				transform: 'scale(2)',
+				transform: 'scale(1.5)',
 			},
 			
 		},
