@@ -14,7 +14,7 @@
 	flex: 1 1 auto;
 	background: var(--mol_theme_field);
 	min-width: 0;
-	color: var(--mol_theme_control);
+	/* color: var(--mol_theme_control); */
 	box-shadow: inset 0 0 0 1px var(--mol_theme_line);
 }
 

@@ -11,6 +11,7 @@
 	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	background-size: cover;
 	flex: 0 0 5rem;
+	filter: var(--mol_theme_image);
 }
 
 [mol_attach_add] {

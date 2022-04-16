@@ -16,6 +16,7 @@
 	max-width: none;
 	max-height: none;
 	overflow: hidden;
+	overflow-y: scroll;
 	overflow-y: overlay;
 	word-break: normal;
 }
