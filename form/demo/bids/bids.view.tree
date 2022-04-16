@@ -51,7 +51,7 @@ $mol_form_demo_bids $mol_example
 							name <= color_label @ \Skin color
 							bid <= color_bid \
 							control <= Color_control $mol_select_demo_colors
-								value?val <=> color?val \
+								color?val <=> color?val \
 						-
 						<= Mail_field $mol_form_field
 							name <= mail_label @ \E-mail
