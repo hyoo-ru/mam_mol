@@ -3237,7 +3237,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/speck/speck.view.css", "[mol_speck] {\n\tfont-size: .75rem;\n\tborder-radius: 1rem;\n\tmargin: -.75em .5em;\n\talign-self: flex-start;\n\tmin-height: 1em;\n\tmin-width: .5em;\n\tvertical-align: sub;\n\tpadding: .25em .5em;\n\tposition: absolute;\n\tz-index: 2;\n    text-align: center;\n    line-height: 1;\n    display: inline-block;\n\ttext-shadow: 1px 1px 0 black;\n}\n");
+    $mol_style_attach("mol/speck/speck.view.css", "[mol_speck] {\n\tfont-size: .625rem;\n\tborder-radius: 1rem;\n\tmargin: -0.625rem -0.25rem;\n\talign-self: flex-start;\n\tmin-height: 1em;\n\tmin-width: .5em;\n\tvertical-align: sub;\n\tpadding: .25em .5em;\n\tposition: absolute;\n\tz-index: 2;\n\ttext-align: center;\n\tline-height: 1;\n\tdisplay: inline-block;\n\ttext-shadow: 1px 1px 0 black;\n\twhite-space: nowrap;\n\ttext-overflow: ellipsis;\n}\n");
 })($ || ($ = {}));
 //mol/speck/-css/speck.view.css.ts
 ;
@@ -3277,7 +3277,7 @@ var $;
                 disabled: this.disabled(),
                 role: "button",
                 tabindex: this.tab_index(),
-                title: this.hint_or_error()
+                title: this.hint()
             };
         }
         sub() {
@@ -3287,6 +3287,7 @@ var $;
         }
         Speck() {
             const obj = new this.$.$mol_speck();
+            obj.value = () => this.error();
             return obj;
         }
         event_activate(event) {
@@ -3308,8 +3309,8 @@ var $;
         hint() {
             return "";
         }
-        hint_or_error() {
-            return this.hint();
+        error() {
+            return "";
         }
     }
     __decorate([
@@ -3490,9 +3491,6 @@ var $;
                     }
                     return String(error.message ?? error);
                 }
-            }
-            hint_or_error() {
-                return this.error() || super.hint_or_error();
             }
             sub_visible() {
                 return [
@@ -7098,7 +7096,8 @@ var $;
                 this.Major_disabled(),
                 this.Minor_enabled(),
                 this.Minor_disabled(),
-                this.Minor_icon_enabled()
+                this.Minor_icon_enabled(),
+                this.Iconed_enabled()
             ];
         }
         tags() {
@@ -7148,6 +7147,18 @@ var $;
             ];
             return obj;
         }
+        Iconed_icon() {
+            const obj = new this.$.$mol_icon_cursor_default_click_outline();
+            return obj;
+        }
+        Iconed_enabled() {
+            const obj = new this.$.$mol_button_minor();
+            obj.click = (event) => this.fail(event);
+            obj.sub = () => [
+                this.Iconed_icon()
+            ];
+            return obj;
+        }
     }
     __decorate([
         $mol_mem
@@ -7170,6 +7181,12 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_button_demo.prototype, "Minor_icon_enabled", null);
+    __decorate([
+        $mol_mem
+    ], $mol_button_demo.prototype, "Iconed_icon", null);
+    __decorate([
+        $mol_mem
+    ], $mol_button_demo.prototype, "Iconed_enabled", null);
     $.$mol_button_demo = $mol_button_demo;
 })($ || ($ = {}));
 //mol/button/demo/-view.tree/demo.view.tree.ts

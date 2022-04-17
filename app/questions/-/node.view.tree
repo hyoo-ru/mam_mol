@@ -131,10 +131,11 @@ $mol_button $mol_view
 		disabled <= disabled false
 		role \button
 		tabindex <= tab_index 0
-		title <= hint_or_error <= hint \
+		title <= hint \
 	sub /$mol_view_content
 		<= title
 	Speck $mol_speck
+		value <= error \
 
 $mol_button_typed $mol_button
 

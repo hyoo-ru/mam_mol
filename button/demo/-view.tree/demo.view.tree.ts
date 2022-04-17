@@ -18,6 +18,7 @@ namespace $ {
 		 * 	<= Minor_enabled
 		 * 	<= Minor_disabled
 		 * 	<= Minor_icon_enabled
+		 * 	<= Iconed_enabled
 		 * ```
 		 */
 		sub() {
@@ -26,7 +27,8 @@ namespace $ {
 				this.Major_disabled(),
 				this.Minor_enabled(),
 				this.Minor_disabled(),
-				this.Minor_icon_enabled()
+				this.Minor_icon_enabled(),
+				this.Iconed_enabled()
 			] as readonly any[]
 		}
 		
@@ -149,6 +151,37 @@ namespace $ {
 			obj.sub = () => [
 				this.Minor_icon(),
 				"Minor with Icon"
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Iconed_icon $mol_icon_cursor_default_click_outline
+		 * ```
+		 */
+		@ $mol_mem
+		Iconed_icon() {
+			const obj = new this.$.$mol_icon_cursor_default_click_outline()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Iconed_enabled $mol_button_minor
+		 * 	click?event <=> fail?event
+		 * 	sub / <= Iconed_icon
+		 * ```
+		 */
+		@ $mol_mem
+		Iconed_enabled() {
+			const obj = new this.$.$mol_button_minor()
+			
+			obj.click = (event?: any) => this.fail(event)
+			obj.sub = () => [
+				this.Iconed_icon()
 			] as readonly any[]
 			
 			return obj

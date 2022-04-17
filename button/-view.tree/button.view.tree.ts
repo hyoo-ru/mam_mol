@@ -73,7 +73,7 @@ namespace $ {
 		 * 	disabled <= disabled
 		 * 	role \button
 		 * 	tabindex <= tab_index
-		 * 	title <= hint_or_error
+		 * 	title <= hint
 		 * ```
 		 */
 		attr() {
@@ -82,7 +82,7 @@ namespace $ {
 				disabled: this.disabled(),
 				role: "button",
 				tabindex: this.tab_index(),
-				title: this.hint_or_error()
+				title: this.hint()
 			}
 		}
 		
@@ -99,12 +99,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Speck $mol_speck
+		 * Speck $mol_speck value <= error
 		 * ```
 		 */
 		@ $mol_mem
 		Speck() {
 			const obj = new this.$.$mol_speck()
+			
+			obj.value = () => this.error()
 			
 			return obj
 		}
@@ -160,11 +162,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hint_or_error <= hint
+		 * error \
 		 * ```
 		 */
-		hint_or_error() {
-			return this.hint()
+		error() {
+			return ""
 		}
 	}
 	
