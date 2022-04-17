@@ -2,23 +2,26 @@ $mol_button_demo $mol_example_small
 	title @ \All types of buttons in every states
 	sub /
 		<= Major_enabled $mol_button_major
-			title <= major_label @ \Click me!
+			title @ \Enabled Major
+			click?event <=> fail?event null
 		-
 		<= Major_disabled $mol_button_major
-			title <= major_label @ \Click me!
+			title @ \Disabled Major
 			enabled false
 		-
 		<= Minor_enabled $mol_button_minor
-			title <= minor_label @ \Or click me..
+			title @ \Enabled Minor
+			click?event <=> fail?event null
 		-
 		<= Minor_disabled $mol_button_minor
-			title <= minor_label @ \Or click me..
+			title @ \Disabled Minor
 			enabled false
 		-
 		<= Minor_icon_enabled $mol_button_minor
+			click?event <=> fail?event null
 			sub /
 				<= Minor_icon $mol_icon_cursor_default_click_outline
-				<= minor_label
+				\Minor with Icon
 	tags /
 		\button
 
