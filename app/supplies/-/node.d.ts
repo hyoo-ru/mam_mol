@@ -2016,15 +2016,11 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_pop extends $mol_view {
-        event(): {
-            keydown: (event?: any) => any;
-        };
         showed(val?: any): boolean;
         align_vert(): string;
         align_hor(): string;
         sub(): readonly any[];
         sub_visible(): readonly any[];
-        keydown(event?: any): any;
         Anchor(): any;
         align(): string;
         bubble_content(): readonly $mol_view_content[];
@@ -2057,7 +2053,6 @@ declare namespace $.$$ {
         align(): string;
         align_vert(): "suspense" | "top" | "bottom";
         align_hor(): "suspense" | "left" | "right";
-        keydown(event: KeyboardEvent): void;
     }
 }
 

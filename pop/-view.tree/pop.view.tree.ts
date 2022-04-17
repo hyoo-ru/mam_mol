@@ -3,17 +3,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * event * keydown?event <=> keydown?event
-		 * ```
-		 */
-		event() {
-			return {
-				keydown: (event?: any) => this.keydown(event)
-			}
-		}
-		
-		/**
-		 * ```tree
 		 * showed?val false
 		 * ```
 		 */
@@ -64,17 +53,6 @@ namespace $ {
 				this.Anchor(),
 				this.Bubble()
 			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * keydown?event null
-		 * ```
-		 */
-		@ $mol_mem
-		keydown(event?: any) {
-			if ( event !== undefined ) return event as never
-			return null as any
 		}
 		
 		/**

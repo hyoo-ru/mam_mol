@@ -265,7 +265,6 @@ $mol_app_supplies_card $mol_link
 						content / <= provider_name \
 
 $mol_pop $mol_view
-	event * keydown?event <=> keydown?event null
 	showed?val false
 	align_vert \
 	align_hor \

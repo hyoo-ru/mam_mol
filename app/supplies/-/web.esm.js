@@ -6361,11 +6361,6 @@ var $;
 var $;
 (function ($) {
     class $mol_pop extends $mol_view {
-        event() {
-            return {
-                keydown: (event) => this.keydown(event)
-            };
-        }
         showed(val) {
             if (val !== undefined)
                 return val;
@@ -6387,11 +6382,6 @@ var $;
                 this.Anchor(),
                 this.Bubble()
             ];
-        }
-        keydown(event) {
-            if (event !== undefined)
-                return event;
-            return null;
         }
         Anchor() {
             return null;
@@ -6416,9 +6406,6 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_pop.prototype, "showed", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pop.prototype, "keydown", null);
     __decorate([
         $mol_mem
     ], $mol_pop.prototype, "Bubble", null);
@@ -6503,16 +6490,6 @@ var $;
                 if (!rect_bubble)
                     return 'suspense';
                 return rect_bubble.left > (viewport.width - rect_bubble.right) ? 'left' : 'right';
-            }
-            keydown(event) {
-                if (event.defaultPrevented)
-                    return;
-                if (event.keyCode === $mol_keyboard_code.escape) {
-                    if (!this.showed())
-                        return;
-                    event.preventDefault();
-                    this.showed(false);
-                }
             }
         }
         __decorate([

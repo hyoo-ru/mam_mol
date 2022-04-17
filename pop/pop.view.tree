@@ -1,5 +1,4 @@
 $mol_pop $mol_view
-	event * keydown?event <=> keydown?event null
 	showed?val false
 	align_vert \
 	align_hor \

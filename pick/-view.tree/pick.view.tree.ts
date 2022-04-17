@@ -3,11 +3,36 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * event *
+		 * 	^
+		 * 	keydown?event <=> keydown?event
+		 * ```
+		 */
+		event() {
+			return {
+				...super.event(),
+				keydown: (event?: any) => this.keydown(event)
+			}
+		}
+		
+		/**
+		 * ```tree
 		 * Anchor <= Trigger
 		 * ```
 		 */
 		Anchor() {
 			return this.Trigger()
+		}
+		
+		/**
+		 * ```tree
+		 * keydown?event null
+		 * ```
+		 */
+		@ $mol_mem
+		keydown(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
 		}
 		
 		/**

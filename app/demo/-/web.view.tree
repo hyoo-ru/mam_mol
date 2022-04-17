@@ -1429,7 +1429,6 @@ $mol_check_icon_demo $mol_example
 		\icon
 
 $mol_pop $mol_view
-	event * keydown?event <=> keydown?event null
 	showed?val false
 	align_vert \
 	align_hor \
@@ -1547,6 +1546,9 @@ $mol_code_demo $mol_example_small
 		\cordova
 
 $mol_pick $mol_pop
+	event *
+		^
+		keydown?event <=> keydown?event null
 	Anchor <= Trigger $mol_check
 		minimal_width 40
 		minimal_height 40

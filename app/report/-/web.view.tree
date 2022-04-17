@@ -29,7 +29,6 @@ $mol_page $mol_view
 			sub <= foot /$mol_view
 
 $mol_pop $mol_view
-	event * keydown?event <=> keydown?event null
 	showed?val false
 	align_vert \
 	align_hor \
@@ -129,6 +128,9 @@ $mol_check $mol_button_minor
 					<= title \
 
 $mol_pick $mol_pop
+	event *
+		^
+		keydown?event <=> keydown?event null
 	Anchor <= Trigger $mol_check
 		minimal_width 40
 		minimal_height 40

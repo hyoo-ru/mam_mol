@@ -7521,7 +7521,7 @@ var $;
     (function ($$) {
         class $mol_button_demo extends $.$mol_button_demo {
             fail() {
-                this.$.$mol_wait_timeout(1000);
+                this.$.$mol_wait_timeout(2000);
                 throw new Error('Demonstration Error');
             }
         }
@@ -13954,11 +13954,6 @@ var $;
 var $;
 (function ($) {
     class $mol_pop extends $mol_view {
-        event() {
-            return {
-                keydown: (event) => this.keydown(event)
-            };
-        }
         showed(val) {
             if (val !== undefined)
                 return val;
@@ -13980,11 +13975,6 @@ var $;
                 this.Anchor(),
                 this.Bubble()
             ];
-        }
-        keydown(event) {
-            if (event !== undefined)
-                return event;
-            return null;
         }
         Anchor() {
             return null;
@@ -14009,9 +13999,6 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_pop.prototype, "showed", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pop.prototype, "keydown", null);
     __decorate([
         $mol_mem
     ], $mol_pop.prototype, "Bubble", null);
@@ -14096,16 +14083,6 @@ var $;
                 if (!rect_bubble)
                     return 'suspense';
                 return rect_bubble.left > (viewport.width - rect_bubble.right) ? 'left' : 'right';
-            }
-            keydown(event) {
-                if (event.defaultPrevented)
-                    return;
-                if (event.keyCode === $mol_keyboard_code.escape) {
-                    if (!this.showed())
-                        return;
-                    event.preventDefault();
-                    this.showed(false);
-                }
             }
         }
         __decorate([
@@ -14864,8 +14841,19 @@ var $;
 var $;
 (function ($) {
     class $mol_pick extends $mol_pop {
+        event() {
+            return {
+                ...super.event(),
+                keydown: (event) => this.keydown(event)
+            };
+        }
         Anchor() {
             return this.Trigger();
+        }
+        keydown(event) {
+            if (event !== undefined)
+                return event;
+            return null;
         }
         trigger_enabled() {
             return true;
@@ -14889,6 +14877,9 @@ var $;
     }
     __decorate([
         $mol_mem
+    ], $mol_pick.prototype, "keydown", null);
+    __decorate([
+        $mol_mem
     ], $mol_pick.prototype, "Trigger", null);
     $.$mol_pick = $mol_pick;
 })($ || ($ = {}));
@@ -14900,6 +14891,30 @@ var $;
     $mol_style_attach("mol/pick/pick.view.css", "[mol_pick_trigger] {\n\talign-items: center;\n}\n");
 })($ || ($ = {}));
 //mol/pick/-css/pick.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_pick extends $.$mol_pick {
+            keydown(event) {
+                if (!this.trigger_enabled())
+                    return;
+                if (event.defaultPrevented)
+                    return;
+                if (event.keyCode === $mol_keyboard_code.escape) {
+                    if (!this.showed())
+                        return;
+                    event.preventDefault();
+                    this.showed(false);
+                }
+            }
+        }
+        $$.$mol_pick = $mol_pick;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/pick/pick.view.ts
 ;
 "use strict";
 var $;
