@@ -3585,7 +3585,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/speck/speck.view.css", "[mol_speck] {\n\tfont-size: .625rem;\n\tborder-radius: 1rem;\n\tmargin: -0.625rem -0.25rem;\n\talign-self: flex-start;\n\tmin-height: 1em;\n\tmin-width: .5em;\n\tvertical-align: sub;\n\tpadding: .25em .5em;\n\tposition: absolute;\n\tz-index: 2;\n\ttext-align: center;\n\tline-height: 1;\n\tdisplay: inline-block;\n\ttext-shadow: 1px 1px 0 black;\n\twhite-space: nowrap;\n\ttext-overflow: ellipsis;\n}\n");
+    $mol_style_attach("mol/speck/speck.view.css", "[mol_speck] {\n\tfont-size: .625rem;\n\tborder-radius: 1rem;\n\tmargin: -0.5rem -0.25rem;\n\talign-self: flex-start;\n\tmin-height: 1em;\n\tmin-width: .5em;\n\tvertical-align: sub;\n\tpadding: .25em .5em;\n\tposition: absolute;\n\tz-index: 2;\n\ttext-align: center;\n\tline-height: 1;\n\tdisplay: inline-block;\n\ttext-shadow: 1px 1px 0 black;\n\twhite-space: nowrap;\n\ttext-overflow: ellipsis;\n}\n");
 })($ || ($ = {}));
 //mol/speck/-css/speck.view.css.ts
 ;
@@ -7386,8 +7386,8 @@ var $;
                 this.Major_disabled(),
                 this.Minor_enabled(),
                 this.Minor_disabled(),
-                this.Minor_icon_enabled(),
-                this.Iconed_enabled()
+                this.Minor_icon_only(),
+                this.Minor_iconed()
             ];
         }
         tags() {
@@ -7424,28 +7424,28 @@ var $;
             obj.enabled = () => false;
             return obj;
         }
-        Minor_icon() {
+        Minor_icon_only_icon() {
             const obj = new this.$.$mol_icon_cursor_default_click_outline();
             return obj;
         }
-        Minor_icon_enabled() {
+        Minor_icon_only() {
             const obj = new this.$.$mol_button_minor();
             obj.click = (event) => this.fail(event);
             obj.sub = () => [
-                this.Minor_icon(),
-                "Minor with Icon"
+                this.Minor_icon_only_icon()
             ];
             return obj;
         }
-        Iconed_icon() {
+        Minor_iconed_icon() {
             const obj = new this.$.$mol_icon_cursor_default_click_outline();
             return obj;
         }
-        Iconed_enabled() {
+        Minor_iconed() {
             const obj = new this.$.$mol_button_minor();
             obj.click = (event) => this.fail(event);
             obj.sub = () => [
-                this.Iconed_icon()
+                this.Minor_iconed_icon(),
+                "Minor with Icon"
             ];
             return obj;
         }
@@ -7467,16 +7467,16 @@ var $;
     ], $mol_button_demo.prototype, "Minor_disabled", null);
     __decorate([
         $mol_mem
-    ], $mol_button_demo.prototype, "Minor_icon", null);
+    ], $mol_button_demo.prototype, "Minor_icon_only_icon", null);
     __decorate([
         $mol_mem
-    ], $mol_button_demo.prototype, "Minor_icon_enabled", null);
+    ], $mol_button_demo.prototype, "Minor_icon_only", null);
     __decorate([
         $mol_mem
-    ], $mol_button_demo.prototype, "Iconed_icon", null);
+    ], $mol_button_demo.prototype, "Minor_iconed_icon", null);
     __decorate([
         $mol_mem
-    ], $mol_button_demo.prototype, "Iconed_enabled", null);
+    ], $mol_button_demo.prototype, "Minor_iconed", null);
     $.$mol_button_demo = $mol_button_demo;
 })($ || ($ = {}));
 //mol/button/demo/-view.tree/demo.view.tree.ts

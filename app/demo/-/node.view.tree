@@ -531,15 +531,16 @@ $mol_button_demo $mol_example_small
 			title @ \Disabled Minor
 			enabled false
 		-
-		<= Minor_icon_enabled $mol_button_minor
+		<= Minor_icon_only $mol_button_minor
 			click?event <=> fail?event null
 			sub /
-				<= Minor_icon $mol_icon_cursor_default_click_outline
+				<= Minor_icon_only_icon $mol_icon_cursor_default_click_outline
+		-
+		<= Minor_iconed $mol_button_minor
+			click?event <=> fail?event null
+			sub /
+				<= Minor_iconed_icon $mol_icon_cursor_default_click_outline
 				\Minor with Icon
-		<= Iconed_enabled $mol_button_minor
-			click?event <=> fail?event null
-			sub /
-				<= Iconed_icon $mol_icon_cursor_default_click_outline
 	tags /
 		\button
 

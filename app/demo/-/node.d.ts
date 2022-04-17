@@ -2325,10 +2325,10 @@ declare namespace $ {
         Major_disabled(): $mol_button_major;
         Minor_enabled(): $mol_button_minor;
         Minor_disabled(): $mol_button_minor;
-        Minor_icon(): $mol_icon_cursor_default_click_outline;
-        Minor_icon_enabled(): $mol_button_minor;
-        Iconed_icon(): $mol_icon_cursor_default_click_outline;
-        Iconed_enabled(): $mol_button_minor;
+        Minor_icon_only_icon(): $mol_icon_cursor_default_click_outline;
+        Minor_icon_only(): $mol_button_minor;
+        Minor_iconed_icon(): $mol_icon_cursor_default_click_outline;
+        Minor_iconed(): $mol_button_minor;
     }
 }
 

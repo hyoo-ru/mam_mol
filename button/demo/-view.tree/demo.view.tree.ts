@@ -17,8 +17,8 @@ namespace $ {
 		 * 	<= Major_disabled
 		 * 	<= Minor_enabled
 		 * 	<= Minor_disabled
-		 * 	<= Minor_icon_enabled
-		 * 	<= Iconed_enabled
+		 * 	<= Minor_icon_only
+		 * 	<= Minor_iconed
 		 * ```
 		 */
 		sub() {
@@ -27,8 +27,8 @@ namespace $ {
 				this.Major_disabled(),
 				this.Minor_enabled(),
 				this.Minor_disabled(),
-				this.Minor_icon_enabled(),
-				this.Iconed_enabled()
+				this.Minor_icon_only(),
+				this.Minor_iconed()
 			] as readonly any[]
 		}
 		
@@ -124,11 +124,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Minor_icon $mol_icon_cursor_default_click_outline
+		 * Minor_icon_only_icon $mol_icon_cursor_default_click_outline
 		 * ```
 		 */
 		@ $mol_mem
-		Minor_icon() {
+		Minor_icon_only_icon() {
 			const obj = new this.$.$mol_icon_cursor_default_click_outline()
 			
 			return obj
@@ -136,21 +136,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Minor_icon_enabled $mol_button_minor
+		 * Minor_icon_only $mol_button_minor
 		 * 	click?event <=> fail?event
-		 * 	sub /
-		 * 		<= Minor_icon
-		 * 		\Minor with Icon
+		 * 	sub / <= Minor_icon_only_icon
 		 * ```
 		 */
 		@ $mol_mem
-		Minor_icon_enabled() {
+		Minor_icon_only() {
 			const obj = new this.$.$mol_button_minor()
 			
 			obj.click = (event?: any) => this.fail(event)
 			obj.sub = () => [
-				this.Minor_icon(),
-				"Minor with Icon"
+				this.Minor_icon_only_icon()
 			] as readonly any[]
 			
 			return obj
@@ -158,11 +155,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Iconed_icon $mol_icon_cursor_default_click_outline
+		 * Minor_iconed_icon $mol_icon_cursor_default_click_outline
 		 * ```
 		 */
 		@ $mol_mem
-		Iconed_icon() {
+		Minor_iconed_icon() {
 			const obj = new this.$.$mol_icon_cursor_default_click_outline()
 			
 			return obj
@@ -170,18 +167,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Iconed_enabled $mol_button_minor
+		 * Minor_iconed $mol_button_minor
 		 * 	click?event <=> fail?event
-		 * 	sub / <= Iconed_icon
+		 * 	sub /
+		 * 		<= Minor_iconed_icon
+		 * 		\Minor with Icon
 		 * ```
 		 */
 		@ $mol_mem
-		Iconed_enabled() {
+		Minor_iconed() {
 			const obj = new this.$.$mol_button_minor()
 			
 			obj.click = (event?: any) => this.fail(event)
 			obj.sub = () => [
-				this.Iconed_icon()
+				this.Minor_iconed_icon(),
+				"Minor with Icon"
 			] as readonly any[]
 			
 			return obj
