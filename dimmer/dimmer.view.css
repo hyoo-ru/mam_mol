@@ -1,5 +1,6 @@
 [mol_dimmer] {
 	display: block;
+	max-width: 100%;
 }
 
 [mol_dimmer_low] {
