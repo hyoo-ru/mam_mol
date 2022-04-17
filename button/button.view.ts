@@ -51,10 +51,6 @@ namespace $.$$ {
 
 		}
 
-		hint_or_error() {
-			return this.error() || super.hint_or_error()
-		}
-
 		sub_visible() {
 			return [
 				... this.error() ? [ this.Speck() ] : [] ,

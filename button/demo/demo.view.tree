@@ -22,6 +22,10 @@ $mol_button_demo $mol_example_small
 			sub /
 				<= Minor_icon $mol_icon_cursor_default_click_outline
 				\Minor with Icon
+		<= Iconed_enabled $mol_button_minor
+			click?event <=> fail?event null
+			sub /
+				<= Iconed_icon $mol_icon_cursor_default_click_outline
 	tags /
 		\button
 
