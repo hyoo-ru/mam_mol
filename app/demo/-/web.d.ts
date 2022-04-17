@@ -2305,14 +2305,36 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
-        major_label(): string;
+        fail(event?: any): any;
         Major_enabled(): $mol_button_major;
         Major_disabled(): $mol_button_major;
-        minor_label(): string;
         Minor_enabled(): $mol_button_minor;
         Minor_disabled(): $mol_button_minor;
         Minor_icon(): $mol_icon_cursor_default_click_outline;
         Minor_icon_enabled(): $mol_button_minor;
+    }
+}
+
+declare namespace $ {
+    function $mol_promise<Result = void>(): Promise<unknown> & {
+        done: (res: Result | PromiseLike<Result>) => void;
+        fail: (error?: any) => void;
+    };
+}
+
+declare namespace $ {
+    function $mol_wait_timeout_async(this: $, timeout: number): Promise<unknown> & {
+        done: (res: void | PromiseLike<void>) => void;
+        fail: (error?: any) => void;
+    } & {
+        destructor: () => void;
+    };
+    function $mol_wait_timeout(this: $, timeout: number): unknown;
+}
+
+declare namespace $.$$ {
+    class $mol_button_demo extends $.$mol_button_demo {
+        fail(): void;
     }
 }
 
@@ -3578,23 +3600,6 @@ declare namespace $ {
         mime(): string;
         title(val?: any): string;
     }
-}
-
-declare namespace $ {
-    function $mol_promise<Result = void>(): Promise<unknown> & {
-        done: (res: Result | PromiseLike<Result>) => void;
-        fail: (error?: any) => void;
-    };
-}
-
-declare namespace $ {
-    function $mol_wait_timeout_async(this: $, timeout: number): Promise<unknown> & {
-        done: (res: void | PromiseLike<void>) => void;
-        fail: (error?: any) => void;
-    } & {
-        destructor: () => void;
-    };
-    function $mol_wait_timeout(this: $, timeout: number): unknown;
 }
 
 declare namespace $ {

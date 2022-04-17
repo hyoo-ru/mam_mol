@@ -43,23 +43,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * major_label @ \Click me!
+		 * fail?event null
 		 * ```
 		 */
-		major_label() {
-			return this.$.$mol_locale.text( '$mol_button_demo_major_label' )
+		@ $mol_mem
+		fail(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * Major_enabled $mol_button_major title <= major_label
+		 * Major_enabled $mol_button_major
+		 * 	title @ \Enabled Major
+		 * 	click?event <=> fail?event
 		 * ```
 		 */
 		@ $mol_mem
 		Major_enabled() {
 			const obj = new this.$.$mol_button_major()
 			
-			obj.title = () => this.major_label()
+			obj.title = () => this.$.$mol_locale.text( '$mol_button_demo_Major_enabled_title' )
+			obj.click = (event?: any) => this.fail(event)
 			
 			return obj
 		}
@@ -67,7 +72,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Major_disabled $mol_button_major
-		 * 	title <= major_label
+		 * 	title @ \Disabled Major
 		 * 	enabled false
 		 * ```
 		 */
@@ -75,7 +80,7 @@ namespace $ {
 		Major_disabled() {
 			const obj = new this.$.$mol_button_major()
 			
-			obj.title = () => this.major_label()
+			obj.title = () => this.$.$mol_locale.text( '$mol_button_demo_Major_disabled_title' )
 			obj.enabled = () => false
 			
 			return obj
@@ -83,23 +88,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * minor_label @ \Or click me..
-		 * ```
-		 */
-		minor_label() {
-			return this.$.$mol_locale.text( '$mol_button_demo_minor_label' )
-		}
-		
-		/**
-		 * ```tree
-		 * Minor_enabled $mol_button_minor title <= minor_label
+		 * Minor_enabled $mol_button_minor
+		 * 	title @ \Enabled Minor
+		 * 	click?event <=> fail?event
 		 * ```
 		 */
 		@ $mol_mem
 		Minor_enabled() {
 			const obj = new this.$.$mol_button_minor()
 			
-			obj.title = () => this.minor_label()
+			obj.title = () => this.$.$mol_locale.text( '$mol_button_demo_Minor_enabled_title' )
+			obj.click = (event?: any) => this.fail(event)
 			
 			return obj
 		}
@@ -107,7 +106,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Minor_disabled $mol_button_minor
-		 * 	title <= minor_label
+		 * 	title @ \Disabled Minor
 		 * 	enabled false
 		 * ```
 		 */
@@ -115,7 +114,7 @@ namespace $ {
 		Minor_disabled() {
 			const obj = new this.$.$mol_button_minor()
 			
-			obj.title = () => this.minor_label()
+			obj.title = () => this.$.$mol_locale.text( '$mol_button_demo_Minor_disabled_title' )
 			obj.enabled = () => false
 			
 			return obj
@@ -135,18 +134,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Minor_icon_enabled $mol_button_minor sub /
-		 * 	<= Minor_icon
-		 * 	<= minor_label
+		 * Minor_icon_enabled $mol_button_minor
+		 * 	click?event <=> fail?event
+		 * 	sub /
+		 * 		<= Minor_icon
+		 * 		\Minor with Icon
 		 * ```
 		 */
 		@ $mol_mem
 		Minor_icon_enabled() {
 			const obj = new this.$.$mol_button_minor()
 			
+			obj.click = (event?: any) => this.fail(event)
 			obj.sub = () => [
 				this.Minor_icon(),
-				this.minor_label()
+				"Minor with Icon"
 			] as readonly any[]
 			
 			return obj
