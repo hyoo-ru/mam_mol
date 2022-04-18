@@ -1308,8 +1308,8 @@ var $;
         task;
         host;
         static warm = true;
-        static planning = [];
-        static reaping = [];
+        static planning = new Set();
+        static reaping = new Set();
         static plan_task = null;
         static plan() {
             if (this.plan_task)
@@ -1324,14 +1324,16 @@ var $;
             });
         }
         static sync() {
-            while (this.planning.length) {
-                const fibers = this.planning.splice(0, this.planning.length);
+            while (this.planning.size) {
+                const fibers = this.planning;
+                this.planning = new Set;
                 for (const fiber of fibers) {
                     fiber.refresh();
                 }
             }
-            while (this.reaping.length) {
-                const fibers = this.reaping.splice(0, this.reaping.length);
+            while (this.reaping.size) {
+                const fibers = this.reaping;
+                this.reaping = new Set;
                 for (const fiber of fibers) {
                     if (!fiber.sub_empty)
                         continue;
@@ -1362,11 +1364,11 @@ var $;
             this[Symbol.toStringTag] = id;
         }
         plan() {
-            $mol_wire_fiber.planning.push(this);
+            $mol_wire_fiber.planning.add(this);
             $mol_wire_fiber.plan();
         }
         reap() {
-            $mol_wire_fiber.reaping.push(this);
+            $mol_wire_fiber.reaping.add(this);
             $mol_wire_fiber.plan();
         }
         toString() {
@@ -1694,17 +1696,18 @@ var $;
         }
         put(next) {
             const prev = this.cache;
-            if (next !== prev) {
-                this.cache = next;
-                this.emit();
-            }
+            this.cache = next;
             if (next instanceof Promise) {
                 this.cursor = $mol_wire_cursor.fresh;
+                if (next !== prev)
+                    this.emit();
                 return next;
             }
             this.cursor = $mol_wire_cursor.final;
             if (this.sub_empty)
                 this.destructor();
+            else if (next !== prev)
+                this.emit();
             return next;
         }
     }

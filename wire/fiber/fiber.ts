@@ -17,8 +17,8 @@ namespace $ {
 		
 		static warm = true
 		
-		static planning = [] as $mol_wire_fiber< any, any, any >[]
-		static reaping = [] as $mol_wire_fiber< any, any, any >[]
+		static planning = new Set< $mol_wire_fiber< any, any, any > >()
+		static reaping = new Set< $mol_wire_fiber< any, any, any > >()
 		
 		static plan_task: $mol_after_frame | null = null
 		static plan() {
@@ -40,9 +40,10 @@ namespace $ {
 		static sync() {
 			
 			// Sync whole fiber graph
-			while( this.planning.length ) {
+			while( this.planning.size ) {
 				
-				const fibers = this.planning.splice( 0, this.planning.length )
+				const fibers = this.planning
+				this.planning = new Set
 				
 				for( const fiber of fibers ) {
 					fiber.refresh()
@@ -51,9 +52,10 @@ namespace $ {
 			}
 			
 			// Collect garbage
-			while( this.reaping.length ) {
+			while( this.reaping.size ) {
 				
-				const fibers = this.reaping.splice( 0, this.reaping.length )
+				const fibers = this.reaping
+				this.reaping = new Set
 				
 				for( const fiber of fibers ) {
 					if( !fiber.sub_empty ) continue
@@ -95,12 +97,12 @@ namespace $ {
 		}
 		
 		plan() {
-			$mol_wire_fiber.planning.push( this )
+			$mol_wire_fiber.planning.add( this )
 			$mol_wire_fiber.plan()
 		}
 		
 		reap() {
-			$mol_wire_fiber.reaping.push( this )
+			$mol_wire_fiber.reaping.add( this )
 			$mol_wire_fiber.plan()
 		}
 		

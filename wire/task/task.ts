@@ -41,19 +41,20 @@ namespace $ {
 		put( next: Result | Error | Promise< Result | Error > ) {
 			
 			const prev = this.cache
-			
-			if( next !== prev ) {
-				this.cache = next
-				this.emit()
-			}
+			this.cache = next
 			
 			if( next instanceof Promise ) {
+				
 				this.cursor = $mol_wire_cursor.fresh
+				if( next !== prev ) this.emit()
+				
 				return next
 			}
-				
+			
 			this.cursor = $mol_wire_cursor.final
+			
 			if( this.sub_empty ) this.destructor()
+			else if( next !== prev ) this.emit()
 			
 			return next
 		}

@@ -303,8 +303,8 @@ declare namespace $ {
         readonly task: (this: Host, ...args: Args) => Result;
         readonly host?: Host | undefined;
         static warm: boolean;
-        static planning: $mol_wire_fiber<any, any, any>[];
-        static reaping: $mol_wire_fiber<any, any, any>[];
+        static planning: Set<$mol_wire_fiber<any, any, any>>;
+        static reaping: Set<$mol_wire_fiber<any, any, any>>;
         static plan_task: $mol_after_frame | null;
         static plan(): void;
         static sync(): void;
