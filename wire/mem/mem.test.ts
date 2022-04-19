@@ -60,7 +60,7 @@ namespace $ {
 
 		},
 
-		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--constant-consistency-of-states
+		// https://github.com/nin-jin/slides/tree/master/reactivity#wish-consistency
 		'Auto recalculation of cached values'( $ ) {
 			
 			class App extends $mol_object2 {
@@ -92,7 +92,7 @@ namespace $ {
 
 		},
 
-		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--only-necessary-calculations
+		// https://github.com/nin-jin/slides/tree/master/reactivity#wish-reasonability
 		'Skip recalculation when actually no dependency changes'( $ ) {
 			
 			const log = [] as string[]
@@ -229,7 +229,7 @@ namespace $ {
 			App.test()
 		} ,
 
-		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
+		// https://github.com/nin-jin/slides/tree/master/reactivity#wish-stability
 		'Different order of pull and push'( $ ) {
 		
 			class App extends $mol_object2 {
@@ -262,7 +262,7 @@ namespace $ {
 			
 		} ,
 		
-		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
+		// https://github.com/nin-jin/slides/tree/master/reactivity#wish-stability
 		'Actions inside invariant'( $ ) {
 		
 			class App extends $mol_object2 {
@@ -335,7 +335,7 @@ namespace $ {
 			
 		} ,
 
-		// // https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
+		// // https://github.com/nin-jin/slides/tree/master/reactivity#wish-stability
 		// 'Stable order of multiple root'( $ ) {
 		
 		// 	class App extends $mol_object2 {
@@ -498,7 +498,7 @@ namespace $ {
 			
 		},
 
-		// https://github.com/nin-jin/slides/tree/master/reactivity#wish--stable-behavior
+		// https://github.com/nin-jin/slides/tree/master/reactivity#wish-stability
 		async 'Hold pubs while wait async task'($) {
 
 			class App extends $mol_object2 {
