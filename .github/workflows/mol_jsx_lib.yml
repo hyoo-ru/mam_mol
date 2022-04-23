@@ -1,4 +1,4 @@
-name: mol_jsx_view
+name: mol_jsx_lib
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     branches: 
       - master
     paths:
-      - '.github/workflows/mol_jsx_view.yml'
+      - '.github/workflows/mol_jsx_lib.yml'
       - 'jsx/**'
   pull_request:
   schedule:
@@ -23,10 +23,10 @@ jobs:
       uses: hyoo-ru/mam_build@master2
       with:
         package: mol
-        modules: jsx/view
+        modules: jsx/lib
     
     - uses: JS-DevTools/npm-publish@v1
       if: ${{ github.ref == 'refs/heads/master' }}
       with:
         token: ${{ secrets.NPM_AUTH_TOKEN }}
-        package: ./mol/jsx/view/-/package.json
+        package: ./mol/jsx/lib/-/package.json
