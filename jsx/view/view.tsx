@@ -7,12 +7,20 @@ namespace $ {
 			return node[ this as any ] as InstanceType< This >
 		}
 		
-		[ Symbol.toStringTag ] : string
-		
 		attributes! : Partial< Pick< this , Exclude< keyof this , 'valueOf' > > >
 		ownerDocument! : typeof $mol_jsx_document
-		childNodes! : Array< Node | string >
 		
+		get childNodes() {
+			return this._kids()
+		}
+		set childNodes( next: Array< Node | string > ) {
+			this._kids( next )
+		}
+		
+		@ $mol_mem
+		_kids( next = [] as Array< Node | string > ) { return next }
+		
+		@ $mol_mem
 		valueOf() {
 			
 			const prefix = $mol_jsx_prefix
@@ -38,7 +46,7 @@ namespace $ {
 		}
 		
 		render() : HTMLElement {
-			return $mol_fail( new Error( 'dom_tree() not implemented' ) )
+			return $mol_fail( new Error( `render() isn't implemented` ) )
 		}
 
 	}

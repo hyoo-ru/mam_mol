@@ -22,32 +22,44 @@ namespace $ {
 		} ,
 		
 		'View by element'() {
+			
+			let br!: Br
+			let brr!: Brr
 
 			class Br extends $mol_jsx_view {
 
 				render() {
-					view = this
+					br = this
 					return <br id="/foo" />
 				}
 
 			}
 
-			let view! : Br
+			class Brr extends $mol_jsx_view {
 
-			$mol_assert_equal( Br.of( <Br /> ) , view )
+				render() {
+					brr = this
+					return <Br />
+				}
+
+			}
+
+			$mol_assert_equal( Br.of( <Brr /> ) , br )
+			$mol_assert_equal( Brr.of( <Brr /> ) , brr )
 			
 		} ,
 		
-		'Attached view rerender'() {
+		async 'Attached view rerender'() {
 
 			const doc = $mol_dom_parse( '<html><body id="/foo"></body></html>' )
 			
 			class Title extends $mol_jsx_view {
 
-				value = 'foo'
+				@ $mol_mem
+				value( next = 'foo' ) { return next }
 				
 				render() {
-					return <div>{ this.value }</div>
+					return <div>{ this.value() }</div>
 				}
 
 			}
@@ -58,46 +70,74 @@ namespace $ {
 			$mol_assert_equal( title.ownerDocument , doc )
 			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="/foo">foo</body></html>' )
 			
-			title.value = 'bar'
-			title.valueOf()
+			title.value( 'bar' )
+			await $mol_wire_fiber.sync()
 			
 			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="/foo">bar</body></html>' )
 			
 		} ,
 		
-		async 'Reactive attached view'($) {
+		async 'Nested bound views'($) {
 
-			class Task extends $mol_object2 {
+			class Task extends $mol_jsx_view {
 
 				@ $mol_mem
-				title( next? : string ) { return next || 'foo' }
+				title( next = 'foo' ) { return next }
+				
+				render() {
+					return <h1>{ this.title() }</h1>
+				}
+				
+			}
+
+			class List extends $mol_jsx_view {
+
+				render() {
+					return <div class="list">{ ... this.childNodes }</div>
+				}
 				
 			}
 
 			class App extends $mol_jsx_view {
 				
 				@ $mol_mem
-				task() { return new Task }
-
+				title( next = '' ) { return next }
+				
 				render() {
-					return <div>{ this.task().title() }</div>
+					return (
+						<List>
+							{ this.title() && <Task id="/task" title={ next => this.title( next ) }/> }
+						</List>
+					)
 				}
 
 			}
 			
-			$mol_mem( App.prototype, 'valueOf' )
-
-			const task = new Task
-			task.$ = $
-
-			const doc = $mol_dom_parse( '<html><body id="/foo"></body></html>' )
-			$.$mol_jsx_attach( doc , ()=> <App $={$} id="/foo" task={ ()=> task } /> )
+			const doc = $mol_dom_parse( '<html xmlns="http://www.w3.org/1999/xhtml"><body id="/root"></body></html>' )
+			const root = $.$mol_jsx_attach( doc , ()=> <App $={$} id="/root" /> )
 			
-			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="/foo">foo</body></html>' )
+			$mol_assert_equal(
+				$mol_dom_serialize( doc.documentElement ),
+				'<html xmlns="http://www.w3.org/1999/xhtml"><body id="/root" class="list"></body></html>',
+			)
 
-			task.title( 'bar' )
+			App.of( root ).title( 'barbar' )
 			await $mol_wire_fiber.sync()
-			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="/foo">bar</body></html>' )
+			
+			$mol_assert_equal( Task.of( root.firstElementChild! ).title(), 'barbar' )
+			$mol_assert_equal(
+				doc.documentElement.outerHTML,
+				'<html xmlns="http://www.w3.org/1999/xhtml"><body id="/root" class="list"><h1 id="/root/task">barbar</h1></body></html>',
+			)
+			
+			Task.of( root.firstElementChild! ).title( 'foofoo' )
+			await $mol_wire_fiber.sync()
+			
+			$mol_assert_equal( App.of( root ).title(), 'foofoo' )
+			$mol_assert_equal(
+				doc.documentElement.outerHTML,
+				'<html xmlns="http://www.w3.org/1999/xhtml"><body id="/root" class="list"><h1 id="/root/task">foofoo</h1></body></html>',
+			)
 			
 		} ,
 		

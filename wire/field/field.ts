@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** @deprecated Incompatible with instance fields with initializators */
 	export function $mol_wire_field<
 		Host extends object ,
 		Field extends keyof Host ,

@@ -1,77 +1,120 @@
 # $mol_jsx_view
 
-JSX view base class. 
+Reactive JSX view base class. 
 
 ## Usage example
 
-### Interactive view
+Components with memoized render:
 
 ```tsx
 /** @jsx $mol_jsx */
 
-class $my_app extends $mol_jsx_view {
-
-	title = 'Hello'
-
-	change( event : Event ) {
-		this.title = 'World'
-		this.valueOf() // force subtree rerender
+class Title extends $mol_jsx_view {
+	
+	// constant as default
+	value() {
+		return ''
 	}
-
+	
+	// render dom
 	render() {
-		return <div onclick={ event => this.change( event ) }>{ this.title }</div>
+		return <h1>{ this.value() }</h1>
 	}
-
+	
 }
 
-$mol_jsx_attach( doc , ()=> <$my_app id="$my_app" /> )
-```
+class Button extends $mol_jsx_view {
+	
+	// empty handler
+	activate( event: Event ) { }
+	
+	// render dom
+	render() {
+		return (
+			<button onclick={ event => this.activate( event ) } >
+				{ ... this.childNodes }
+			</button>
+		)
+	}
+	
+}
 
-```html
-<body id="$my_app"></body>
-```
+class App extends $mol_jsx_view {
 
-After attach:
-
-```html
-<div id="$my_app">Hello</div>
-```
-
-After click:
-
-```html
-<div id="$my_app">World</div>
-```
-
-### Reactive view
-
-```tsx
-/** @jsx $mol_jsx */
-
-class $my_app extends $mol_jsx_view {
-
-	// reactive channel
+	// reactive state
 	@ $mol_mem
 	title( next = 'Hello' ) {
 		return next
 	}
 
-	// fibered action
+	// reactive action
 	@ $mol_action
 	change( event: Event ) {
 		this.title( 'World' )
 	}
 
+	// render bound components
 	render() {
-		return <div onclick={ event => this.change( event ) }>{ this.title() }</div>
+		return (
+			<div>
+				<Button
+					id="/change"
+					activate={ event => this.change( event ) }
+					>
+					<Title
+						id="/word"
+						value={ ()=> this.title() }
+					/>
+				</Button>
+			</div>
+		)
 	}
 
 }
+```
 
-// enable autorun render in right context
-$mol_mem( $my_app.prototype, 'valueOf' )
+Base html document:
 
-$mol_jsx_attach( doc , ()=> <$my_app id="$my_app" title="Hola" /> )
+```html
+<body id="/app"></body>
+```
+
+Attach component to the document by id:
+
+```ts
+$mol_jsx_attach( document, ()=> <App id="/app" /> )
+```
+
+Document after attach:
+
+```html
+<body id="/app">
+	<button id="/app/change">
+		<h1 id="/app/word">Hello</h1>
+	</button>
+</body>
+```
+
+Take component instance for element:
+
+```ts
+const button = Button.of( document.getElementById( '/app/change' ) )
+```
+
+Enforce click event:
+
+```ts
+button.activate( new PointerEvent( 'click' ) )
+```
+
+Document after click:
+
+```html
+<body id="/app">
+	<button id="/app/change">
+		<h1 id="/app/word">World</h1>
+	</button>
+</body>
 ```
 
 [More examples in tests.](view.test.tsx)
