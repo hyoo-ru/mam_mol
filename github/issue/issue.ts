@@ -55,6 +55,13 @@ namespace $ {
 			return $mol_github_user.item( this.json().user.url! )
 		}
 
+		owner() {
+			const url = this.json().repository_url
+				.replace( /\/[^\/]+$/, '' )
+				.replace( /\/repos\//, '/users/' )
+			return $mol_github_user.item( url )
+		}
+
 		number() {
 			return this.json().number
 		}
