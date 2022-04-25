@@ -3,7 +3,7 @@ namespace $ {
 	const handled = new WeakSet< Promise< unknown > >()
 	
 	/**
-	 * Suspendable task with with support both sync/async api.
+	 * Suspendable task with support both sync/async api.
 	 * 
 	 * 	A1 A2 A3 A4 P1 P2 P3 P4 S1 S2 S3
 	 * 	^           ^           ^
