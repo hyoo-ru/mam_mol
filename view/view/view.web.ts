@@ -6,9 +6,7 @@ namespace $ {
 
 	if( $mol_dom_context.document ) {
 
-		Promise.resolve().then( ()=> {
-			$mol_view.autobind()
-		} )
+		setTimeout( ()=> $mol_view.autobind() )
 		
 		function $mol_view_watch() {
 			new $mol_after_frame( $mol_view_watch )
