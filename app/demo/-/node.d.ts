@@ -4089,7 +4089,7 @@ declare namespace $ {
         value_number(val?: any): number;
         value_moment(val?: any): $mol_time_moment;
         value(val?: any): string;
-        hint(): string;
+        input_hint(): string;
         enabled(): boolean;
         Input(): $$.$mol_string;
         month_moment(): $mol_time_moment;

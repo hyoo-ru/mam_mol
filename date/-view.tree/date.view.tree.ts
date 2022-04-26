@@ -64,10 +64,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hint \YYYY-MM-DD hh:mm
+		 * input_hint \YYYY-MM-DD hh:mm
 		 * ```
 		 */
-		hint() {
+		input_hint() {
 			return "YYYY-MM-DD hh:mm"
 		}
 		
@@ -84,7 +84,7 @@ namespace $ {
 		 * ```tree
 		 * Input $mol_string
 		 * 	value?val <=> value?val
-		 * 	hint <= hint
+		 * 	hint <= input_hint
 		 * 	enabled <= enabled
 		 * ```
 		 */
@@ -93,7 +93,7 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.value = (val?: any) => this.value(val)
-			obj.hint = () => this.hint()
+			obj.hint = () => this.input_hint()
 			obj.enabled = () => this.enabled()
 			
 			return obj

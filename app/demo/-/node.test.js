@@ -15002,7 +15002,7 @@ var $;
                 return val;
             return "";
         }
-        hint() {
+        input_hint() {
             return "YYYY-MM-DD hh:mm";
         }
         enabled() {
@@ -15011,7 +15011,7 @@ var $;
         Input() {
             const obj = new this.$.$mol_string();
             obj.value = (val) => this.value(val);
-            obj.hint = () => this.hint();
+            obj.hint = () => this.input_hint();
             obj.enabled = () => this.enabled();
             return obj;
         }
