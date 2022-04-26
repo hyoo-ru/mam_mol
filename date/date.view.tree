@@ -4,7 +4,7 @@ $mol_date $mol_pick
 	bubble_content /
 		<= Input $mol_string
 			value?val <=> value?val \
-			hint <= hint \YYYY-MM-DD hh:mm
+			hint <= input_hint \YYYY-MM-DD hh:mm
 			enabled <= enabled true
 		<= Calendar $mol_date_calendar
 			month_moment <= month_moment <= value_moment
