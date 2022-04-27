@@ -9,7 +9,8 @@
 	color: var(--mol_theme_shade);
 	z-index: 1;
 	padding: 0 var(--mol_gap_block);
-	gap: var(--mol_gap_block);
+	gap: 0 var(--mol_gap_block);
+	flex-wrap: wrap;
 }
 
 [mol_labeler_content] {

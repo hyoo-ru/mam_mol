@@ -6,6 +6,7 @@
 
 [mol_theme="$mol_theme_light"] , :root {
 	--mol_theme_back: hsl( 210 , 50% , 99% );
+	--mol_theme_card: hsla( 0deg , 0% , 0% , .025 );
 	--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );
 	--mol_theme_current: hsl( 210 , 100% , 80% );
 	--mol_theme_text: hsl( 0 , 0% , 0% );
@@ -20,6 +21,7 @@
 [mol_theme="$mol_theme_dark"] {
 	--mol_theme_back: hsl( 210 , 50% , 10% );
 	--mol_theme_hover: rgba( 255 , 255 , 255 , .05 );
+	--mol_theme_card: hsla( 0deg , 0% , 100% , .025 );
 	--mol_theme_current: hsl( 210 , 100% , 30% );
 	--mol_theme_text: hsl( 0 , 0% , 80% );
 	--mol_theme_control: hsla( 210 , 60% , 70% , 1 );

@@ -65,7 +65,6 @@
 }
 
 [mol_app_demo_detail_body] {
-	padding: var(--mol_gap_block);
 	display: flex;
 	align-items: stretch;
 	justify-content: flex-start;
@@ -106,6 +105,10 @@
 
 [mol_app_demo_readme] {
 	flex: 1 0 30rem;
+}
+
+[mol_app_demo_readme_readme] {
+	padding: var(--mol_gap_block);
 }
 
 [mol_app_demo_readme_not_found] {

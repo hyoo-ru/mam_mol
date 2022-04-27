@@ -1,4 +1,4 @@
-$mol_check_expand_demo $mol_example
+$mol_check_expand_demo $mol_example_small
 	title @ \Checkbox-expand in various states
 	sub /
 		<= Demo_items $mol_list rows /

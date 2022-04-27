@@ -5,7 +5,7 @@ $mol_form $mol_view
 		keydown?event <=> keydown?event null
 	submit?event null
 	sub /
-		<= Bar_fields $mol_view
-			sub <= form_fields /$mol_form_field
+		<= Body $mol_list
+			sub <= body <= form_fields /$mol_form_field
 		<= Bar_buttons $mol_row
 			sub <= buttons /$mol_view

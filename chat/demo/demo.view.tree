@@ -1,4 +1,4 @@
-$mol_chat_demo $mol_example
+$mol_chat_demo $mol_example_small
 	title @ \Feed of comments for this page
 	sub /
 		<= Chat $mol_chat

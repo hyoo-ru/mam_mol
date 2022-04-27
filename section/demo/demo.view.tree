@@ -1,4 +1,4 @@
-$mol_section_demo $mol_example
+$mol_section_demo $mol_example_small
 	title @ \Section with header
 	sub /
 		<= Section $mol_section

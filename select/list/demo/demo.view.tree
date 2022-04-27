@@ -1,4 +1,4 @@
-$mol_select_list_demo $mol_example
+$mol_select_list_demo $mol_example_small
 	title @ \Friends picker
 	sub /
 		<= Demo_items $mol_list

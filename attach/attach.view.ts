@@ -2,56 +2,30 @@ namespace $.$$ {
 
 	export class $mol_attach extends $.$mol_attach {
 
-		attach_new( next : File ) {
-			const items = this.items()
-			const item = this.Item( items.length )
-			const url = URL.createObjectURL( next )
-			item.url_thumb( url )
-			item.url_load( url )
-			this.items( items.concat( item ) )
+		attach_new( files: File[] ) {
+			this.items([
+				... this.items(),
+				... files.map( file => URL.createObjectURL( file ) ),
+			])
 		}
 
+		@ $mol_mem
 		content() {
-			return [ ... this.items() , this.Add() ]
+			return [ ... this.items().map( (_,i) => this.Item(i) ) , this.Add() ]
 		}
 		
-	}
-
-	export class $mol_attach_item extends $.$mol_attach_item {
-
-		style_bg() {
-			return `url("${this.url_thumb()}")`
-		}
-
-	}
-
-	export class $mol_attach_add extends $.$mol_attach_add {
-
-		file_new( next? : File , force? : $mol_mem_force_fail ) {
-			return next!
+		item_uri( index: number ) {
+			return this.items()[ index ]
 		}
 		
-		event_capture( next : Event ) {
-			if( !$mol_cordova_camera() ) return
-			
-			next.preventDefault()
-			
-			// $mol_cordova_camera().getPicture( ( url : string )=> {
-			// 	this.file_new( url )
-			// }, ( error : Error )=> {
-			// 	this.file_new( error as any , $mol_mem_force_fail )
-			// }, {
-			// 	quality: 50
-			// } )
+		item_drop( index: number, event?: Event ) {
+			const items = this.items()
+			this.items([
+				... items.slice( 0, index ),
+				... items.slice( index + 1 ),
+			])
 		}
-
-		event_picked( next : Event ) {
-			var files = [].slice.call( ( next.target as HTMLInputElement ).files )
-			for( var file of files ) {
-				this.file_new( file )
-			}
-		}
-
+		
 	}
 
 }

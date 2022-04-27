@@ -38,7 +38,9 @@ $mol_pop_demo $mol_example
 					<= Content $mol_row 
 						minimal_width 150
 						sub / 
-							<= bubble_hint @ \This is $mol_pop content
+							<= bubble_hint \
+								\This is
+								\bubble_content
 	tags /
 		\$mol_row
 		\$mol_button

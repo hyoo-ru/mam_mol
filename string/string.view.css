@@ -12,20 +12,25 @@
 	z-index: 0;
 	font: inherit;
 	flex: 1 1 auto;
-	background: var(--mol_theme_field);
+	background: transparent;
 	min-width: 0;
 	color: inherit;
-	box-shadow: inset 0 0 0 1px var(--mol_theme_line);
+	background: var(--mol_theme_card);
 }
 
-[mol_string]:disabled {
+[mol_string]:disabled:not(:placeholder-shown) {
 	background-color: transparent;
 	color: var(--mol_theme_text);
+}
+
+[mol_string]:hover:where(:not(:disabled)) {
+	background: var(--mol_theme_hover);
 }
 
 [mol_string]:focus {
 	outline: none;
 	z-index: 1;
+	background: var(--mol_theme_field);
 	color: var(--mol_theme_text);
 	box-shadow: inset 0 0 0 1px var(--mol_theme_focus);
 }

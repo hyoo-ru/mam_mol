@@ -21,12 +21,12 @@ $mol_app_demo $mol_book2
 		chat_pages => chat_pages!id
 		title <= detail_title
 		description <= detail_description \
-		source_link <= source_link \
 		edit_uri <= edit_uri \
 		Demo <= Demo $mol_view
 	Readme_page $mol_app_demo_readme
 		repo <= repo \
 		module <= module /string
+		source_link <= source_link \
 	Welcome $mol_scroll
 		sub /
 			<= Welcome_text $mol_text
@@ -68,12 +68,6 @@ $mol_app_demo_detail $mol_page
 		<= Chat $mol_chat
 			pages => chat_pages
 			seed <= chat_seed \
-		<= Source_link $mol_link
-			uri <= source_link \
-			target \_blank
-			hint <= source_hint @ \Source code of this demo
-			sub /
-				<= Source_icon $mol_icon_code_braces
 		<= Edit $mol_link
 			hint <= edit_hint @ \Edit this demo in studio
 			sub /
@@ -96,14 +90,15 @@ $mol_app_demo_readme $mol_page
 	module /string
 	title @ \Readme
 	tools /
+		<= Source_link $mol_link_source
+			uri <= source_link \
+			hint <= source_hint @ \Source code of this demo
 		<= Close $mol_link 
 			hint @ \Close panel
 			sub /
 				<= Close_icon $mol_icon_cross
 			arg <= close_arg *
 				readme null
-	body /
-		<= readme_content null
 	-
 	Readme $mol_text
 		text <= readme \

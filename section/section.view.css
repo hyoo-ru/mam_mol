@@ -1,7 +1,5 @@
 [mol_section_head] {
 	padding: var(--mol_gap_text);
-	font-weight: bolder;
-	display: flex;
 	justify-content: space-between;
 	align-items: flex-end;
 	flex-wrap: wrap;

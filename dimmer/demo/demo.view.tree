@@ -1,7 +1,7 @@
-$mol_dimmer_demo $mol_example
+$mol_dimmer_demo $mol_example_small
 	title @ \Text with highlighted found substring
 	sub /
-		<= Demo_items $mol_list rows /
+		<= Cases $mol_list rows /
 			<= One $mol_dimmer
 				haystack \Don't put all your eggs in one basket
 				needle \eggs

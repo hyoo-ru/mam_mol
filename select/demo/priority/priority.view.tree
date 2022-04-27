@@ -1,4 +1,4 @@
-$mol_select_demo_priority $mol_example
+$mol_select_demo_priority $mol_example_small
 	title @ \Priority picker
 	sub /
 		<= Priority $mol_select

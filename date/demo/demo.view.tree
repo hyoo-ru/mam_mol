@@ -1,4 +1,4 @@
-$mol_date_demo $mol_example
+$mol_date_demo $mol_example_small
 	sub /
 		<= Date $mol_date
 			value_moment?val <=> date?val $mol_time_moment

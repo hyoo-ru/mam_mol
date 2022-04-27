@@ -1,3 +1,4 @@
-[mol_form_demo_bids_form] {
-	max-width: 20rem;
+[mol_form_demo_bids] {
+	width: 80rem;
+	flex-direction: column;
 }

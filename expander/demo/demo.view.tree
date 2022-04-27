@@ -1,4 +1,4 @@
-$mol_expander_demo $mol_example
+$mol_expander_demo $mol_example_small
 	title @ \Simple spoiler
 	sub /
 		<= Expander $mol_expander

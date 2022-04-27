@@ -2,4 +2,5 @@ $mol_section $mol_list rows /
 	<= Head $mol_view
 		sub <= head /
 			<= title
-	<= Content null
+	<= Content $mol_list
+		rows <= content /

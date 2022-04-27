@@ -7,5 +7,5 @@ $mol_expander $mol_list
 					label <= label /
 						<= title
 				<= Tools null
-		<= Content $mol_view
-			sub <= content /
+		<= Content $mol_list
+			rows <= content /
