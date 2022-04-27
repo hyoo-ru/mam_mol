@@ -660,7 +660,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_state_time extends $mol_object {
-        static now(precision: number, reset?: null): number;
+        static task(precision: number, reset?: null): $mol_after_timeout | $mol_after_frame;
+        static now(precision: number): number;
     }
 }
 

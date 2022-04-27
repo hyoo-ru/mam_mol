@@ -3286,16 +3286,22 @@ var $;
 var $;
 (function ($) {
     class $mol_state_time extends $mol_object {
-        static now(precision, reset) {
+        static task(precision, reset) {
             if (precision) {
-                new $mol_after_timeout(precision, () => this.now(precision, null));
+                return new $mol_after_timeout(precision, () => this.task(precision, null));
             }
             else {
-                new $mol_after_frame(() => this.now(precision, null));
+                return new $mol_after_frame(() => this.task(precision, null));
             }
+        }
+        static now(precision) {
+            this.task(precision);
             return Date.now();
         }
     }
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_time, "task", null);
     __decorate([
         $mol_mem_key
     ], $mol_state_time, "now", null);
