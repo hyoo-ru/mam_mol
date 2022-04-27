@@ -3,10 +3,6 @@
 	flex-direction: column;
 }
 
-/* [mol_form_body] [mol_form_field] {
-	margin: var(--mol_gap_block);
-} */
-
 [mol_form_bar_buttons] {
 	box-shadow: none;
 	padding: 0;
