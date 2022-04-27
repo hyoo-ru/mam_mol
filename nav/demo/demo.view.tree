@@ -1,5 +1,5 @@
 $mol_nav_demo $mol_example
-	title @ \Number input control with various configuration
+	title \Number input control with various configuration
 	plugins /
 		<= Nav $mol_nav
 			keys_x <= tab_list
@@ -23,7 +23,7 @@ $mol_nav_demo $mol_example
 						first \First
 						second \Second
 						third \Third
-			status @ \Select option and use keys to switch
+			status \Select option and use keys to switch
 	tags /
 		\$mol_card
 		\$mol_switch

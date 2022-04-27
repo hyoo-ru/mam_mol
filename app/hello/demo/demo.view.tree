@@ -1,4 +1,4 @@
 $mol_app_hello_demo $mol_example_large
-	title @ \Simpliest application
+	title \Simpliest application
 	sub /
 		<= App $mol_app_hello

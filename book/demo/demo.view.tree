@@ -1,5 +1,5 @@
 $mol_book_demo $mol_example_large
-	title @ \Adaprive layout for various sizes of screen
+	title \Adaprive layout for various sizes of screen
 	sub /
 		<= View $mol_book
 			Placeholder <= Placeholder $mol_book_placeholder

@@ -1,5 +1,5 @@
 $mol_scroll_demo $mol_example_large
-	title @ \Simple scroll pane
+	title \Simple scroll pane
 	sub /
 		<= Scroll $mol_scroll
 			sub /

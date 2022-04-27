@@ -1,19 +1,19 @@
 $mol_switch_demo $mol_example
-	title @ \Color switchers in various state
+	title \Color switchers in various state
 	sub /
 		<= Demo_items $mol_row
 			sub /
 				<= Enabled_labeler $mol_labeler
-					title @ \Read/Write
+					title \Read/Write
 					Content <= Enabled $mol_switch
 						value?val <=> color?val \red
 						options *
-							red <= option_red @ \Red
-							green <= option_green @ \Green
-							blue <= option_blue @ \Blue
-							infernal <= option_infernal @ \Color which can not be displayed on your device
+							red <= option_red \Red
+							green <= option_green \Green
+							blue <= option_blue \Blue
+							infernal <= option_infernal \Color which can not be displayed on your device
 				<= Disabled_labeler $mol_labeler
-					title @ \Read only
+					title \Read only
 					Content <= Disabled $mol_switch
 						value?val <=> color?val
 						enabled false

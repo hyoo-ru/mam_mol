@@ -1,5 +1,5 @@
 $mol_dimmer_demo $mol_example_small
-	title @ \Text with highlighted found substring
+	title \Text with highlighted found substring
 	sub /
 		<= Cases $mol_list rows /
 			<= One $mol_dimmer

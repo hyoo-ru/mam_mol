@@ -1,5 +1,5 @@
 $mol_plot_map_heat_demo $mol_example_large
-	title @ \Dynamic Heat Map Graphs
+	title \Dynamic Heat Map Graphs
 	count_x 20
 	count_y 200
 	count_z 20

@@ -8,7 +8,7 @@ $mol_speck_demo $mol_example_small
 		<= String $mol_view
 			sub /
 				<= String_speck $mol_speck
-					value <= string_speck @ \New
+					value <= string_speck \New
 				<= String_field $mol_string
 		<= Button $mol_button_minor
 			sub /
@@ -18,7 +18,7 @@ $mol_speck_demo $mol_example_small
 		<= Message $mol_paragraph
 			sub /
 				<= Message_speck $mol_speck
-				<= message_text @ \Created
+				<= message_text \Created
 	tags /
 		\$mol_link
 		\$mol_icon

@@ -1,5 +1,5 @@
 $mol_portion_demo $mol_example_small
-	title @ \Progress bar in various states
+	title \Progress bar in various states
 	sub /
 		<= Empty $mol_portion
 			portion <= fist 0

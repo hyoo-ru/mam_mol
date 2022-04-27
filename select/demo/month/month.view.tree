@@ -1,5 +1,5 @@
 $mol_select_demo_month $mol_example_small
-	title @ \Month picker with filter
+	title \Month picker with filter
 	sub /
 		<= Month $mol_select
 			no_options_message \Not found

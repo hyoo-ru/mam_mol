@@ -1,16 +1,16 @@
 $mol_deck_demo $mol_example_small
-	title @ \Simple deck with tabbar
+	title \Simple deck with tabbar
 	sub /
 		<= Deck $mol_deck items /
 			<= Greeter $mol_card
-				title @ \Greeting
-				content / <= greet_message @ \Hello, world!
+				title \Greeting
+				content / <= greet_message \Hello, world!
 			<= Quester $mol_card
-				title @ \Question
-				content / <= quest_message @ \How are you?
+				title \Question
+				content / <= quest_message \How are you?
 			<= Commander $mol_card
-				title @ \Command
-				content / <= command_message @ \Let us do it right!
+				title \Command
+				content / <= command_message \Let us do it right!
 	tags /
 		\$mol_card
 		\deck

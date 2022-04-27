@@ -1,5 +1,5 @@
 $mol_list_demo_table $mol_example
-	title @ \Large list of rows with dynamic content
+	title \Large list of rows with dynamic content
 	count 1000
 	sub /
 		<= Rows $mol_list
@@ -10,7 +10,7 @@ $mol_list_demo_table $mol_example
 			<= Id!id $mol_view sub / <= row_id!id \
 			<= Title!id $mol_view sub / <= row_title!id \
 			<= Editable!id $mol_check_box
-				title <= editable_title @ \Editable
+				title <= editable_title \Editable
 				checked?val <=> row_editable!id?val false
 			<= Priority!id $mol_switch
 				enabled <= row_editable!id

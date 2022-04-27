@@ -1,5 +1,5 @@
 $mol_number_demo $mol_example_small
-	title @ \Number input control with various configuration
+	title \Number input control with various configuration
 	sub /
 		<= zero $mol_number
 		<= one $mol_number

@@ -1,5 +1,5 @@
 $mol_pick_demo $mol_example_small
-	title @ \Simple and complex popups
+	title \Simple and complex popups
 	confirmation_popup_content *
 		delete <= Delete_confirm_content
 	showed_confirmation null
@@ -8,14 +8,14 @@ $mol_pick_demo $mol_example_small
 			<= title
 		- 1. Simple Pop-up example
 		<= Simple_pop $mol_pick
-			hint @ \Click to show simple popup
+			hint \Click to show simple popup
 			trigger_content /
 				<= pick_trigger \?
 			bubble_content /
-				<= pick_content @ \This is popup content
+				<= pick_content \This is popup content
 		- 2. More complex info Pop-up example
 		<= Info_pop $mol_pick
-			hint @ \Click to show info popup
+			hint \Click to show info popup
 			trigger_content /
 				<= info_trigger $mol_icon_help_circle_outline
 			bubble_content /
@@ -27,7 +27,7 @@ $mol_pick_demo $mol_example_small
 						\More complex info Pop-up example
 		- 3. Options Pop-up example
 		<= Options_pop $mol_pick
-			hint @ \Click to show options menu
+			hint \Click to show options menu
 			align \bottom_left
 			trigger_content <= options_trigger_content /
 				<= options_trigger $mol_icon_dots_vertical
@@ -39,21 +39,21 @@ $mol_pick_demo $mol_example_small
 			event_click?val <=> menu_item_copy_click?val null
 			sub /
 				<= menu_item_copy_icon $mol_icon_content_copy
-				<= menu_item_copy_label @ \Copy
+				<= menu_item_copy_label \Copy
 		<= Menu_item_download $mol_link_lazy
-			hint <= menu_item_download_hint @ \Download some json
+			hint <= menu_item_download_hint \Download some json
 			uri_generated <= menu_item_download_uri \
 			file_name \demo.json
 			sub /
 				<= menu_item_download_icon $mol_icon_cloud_download_outline
-				<= menu_item_download_label @ \Download
+				<= menu_item_download_label \Download
 		<= Menu_item_delete $mol_button_minor
 			style *
 				color \red
 			event_click?val <=> menu_item_delete_click?val null
 			sub /
 				<= menu_item_delete_icon $mol_icon_trash_can_outline
-				<= menu_item_delete_label @ \Delete
+				<= menu_item_delete_label \Delete
 	-
 	Delete_confirm_content $mol_list rows /
 		<= Delete_message $mol_row sub /
@@ -61,10 +61,10 @@ $mol_pick_demo $mol_example_small
 				<= delete_message \Something will be deleted. This can't be undone.
 		<= Delete_buttons $mol_row sub /
 			<= Delete_confirm $mol_button_major
-				title <= delete_confirm_title @ \Delete
+				title <= delete_confirm_title \Delete
 				event_click?val <=> delete_confirm_click?val null
 			<= Delete_cancel $mol_button_minor
-				title <= delete_cancel_title @ \Cancel
+				title <= delete_cancel_title \Cancel
 				event_click?val <=> delete_cancel_click?val null
 	tags /
 		\$mol_link_lazy

@@ -1,5 +1,5 @@
 $mol_row_demo_products $mol_example
-	title @ \Product catalog
+	title \Product catalog
 	count 100
 	Product!id $mol_card
 		minimal_width 110

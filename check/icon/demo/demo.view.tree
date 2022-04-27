@@ -1,5 +1,5 @@
 $mol_check_icon_demo $mol_example_small
-	title @ \Iconic checkboxes in various states
+	title \Iconic checkboxes in various states
 	sub /
 		<= Base $mol_check_icon
 			Icon <= Base_icon $mol_icon_microphone

@@ -1,5 +1,5 @@
 $mol_check_group_demo $mol_example_small
-	title @ \Group of checkboxes
+	title \Group of checkboxes
 	sub /
 		<= Demo_items $mol_list
 			rows /

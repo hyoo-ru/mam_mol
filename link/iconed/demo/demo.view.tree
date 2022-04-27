@@ -1,5 +1,5 @@
 $mol_link_iconed_demo $mol_example_small
-	title @ \Link with icon
+	title \Link with icon
 	sub /
 		<= Blocks $mol_list
 			rows /

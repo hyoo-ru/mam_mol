@@ -1,16 +1,16 @@
 $mol_toolbar_demo $mol_example_small
-	title @ \Foldable toolbar demo
+	title \Foldable toolbar demo
 	sub /
 		<= Toolbar $mol_toolbar
 			items /
 				<= Search $mol_string
-					hint <= search_hint @ \Search...
+					hint <= search_hint \Search...
 				<= Replace $mol_string
-					hint <= replace_hint @ \Replace...
+					hint <= replace_hint \Replace...
 				<= Approve $mol_button_major
-					title <= approve_label @ \Approve
+					title <= approve_label \Approve
 				<= Decline $mol_button_minor
-					title <= decline_label @ \Decline
+					title <= decline_label \Decline
 				<= Copy $mol_button_minor sub /
 					<= Copy_icon $mol_icon_content_copy
 				<= Cut $mol_button_minor sub /

@@ -1,5 +1,5 @@
 $mol_meter_demo $mol_example_small
-	title @ \Real time offset and size metering
+	title \Real time offset and size metering
 	plugins /
 		<= Meter $mol_meter
 			top => top

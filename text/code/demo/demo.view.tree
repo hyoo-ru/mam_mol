@@ -1,5 +1,5 @@
 $mol_text_code_demo $mol_example_small
-	title @ \Markdow visualization example
+	title \Markdow visualization example
 	sub /
 		<= Text $mol_text_code text <= source \
 	tags /
