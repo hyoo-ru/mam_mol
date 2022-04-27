@@ -3,7 +3,8 @@ $mol_expander_demo $mol_example_small
 	sub /
 		<= Expander $mol_expander
 			title \Lorem Ipsum
-			Content <= Content $mol_filler
+			content /
+				<= Content $mol_filler
 	tags /
 		\$mol_filler
 		\expander

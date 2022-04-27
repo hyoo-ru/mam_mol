@@ -55,7 +55,7 @@ namespace $ {
 		'@': {
 			mol_link_current: {
 				'true': {
-					color: $mol_theme.text,
+					color: $mol_theme.current,
 					textShadow: '0 0',
 				}
 			}

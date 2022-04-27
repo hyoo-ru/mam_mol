@@ -1,4 +1,4 @@
-[mol_switch] {
+[mol_check_list] {
 	display: flex;
 	flex-wrap: wrap;
 	flex: 1 1 auto;
@@ -6,11 +6,11 @@
 	gap: 1px;
 }
 
-[mol_switch_option] {
+[mol_check_list_option] {
 	flex: 0 1 auto;
 }
 
-[mol_switch_option][mol_check_checked="true"] {
-	color: var(--mol_theme_text);
+[mol_check_list_option][mol_check_checked="true"] {
+	color: var(--mol_theme_current);
 	text-shadow: 0 0;
 }
