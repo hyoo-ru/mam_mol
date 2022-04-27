@@ -3,7 +3,7 @@ namespace $ {
 	export class $mol_state_time extends $mol_object {
 		
 		@ $mol_mem_key
-		static task( precision: number, reset?: null ): $mol_after_timeout {
+		static task( precision: number, reset?: null ): $mol_after_timeout | $mol_after_frame {
 			
 			if( precision ) {
 				return new $mol_after_timeout( precision, ()=> this.task( precision, null ) )
