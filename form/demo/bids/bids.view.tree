@@ -77,7 +77,7 @@ $mol_form_demo_bids $mol_example
 					name \Avatars
 					bid <= avatars_bid \
 					Content <= Avatars_control $mol_attach
-						items?val <=> avatars?val /$mol_view
+						items?val <=> avatars?val /string
 			body /
 				<= Avatars_field
 				<= Names $mol_form_group sub /
