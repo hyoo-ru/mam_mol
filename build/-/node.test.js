@@ -5009,7 +5009,7 @@ var $;
                 else if (published[0] === version[0] && published[1] > version[1]) {
                     version[1] = published[1];
                 }
-                if (published[2] > version[2]) {
+                if (!(published[2] <= version[2])) {
                     version[2] = published[2];
                 }
             }
@@ -5024,6 +5024,7 @@ var $;
             }
             json.keywords = [...this.graph({ path, exclude }).nodes]
                 .filter(Boolean)
+                .filter(path => !/[.-]/.test(path))
                 .map(path => '$' + path.replaceAll('/', '_'));
             target.text(JSON.stringify(json, null, '  '));
             this.logBundle(target, Date.now() - start);
