@@ -28,7 +28,7 @@
 	--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );
 	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
 	--mol_theme_focus: hsl( 60 , 100% , 70% );
-	--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );
+	--mol_theme_field: rgba( 0 , 0 , 0 , .05 );
 	--mol_theme_image: invert(1) hue-rotate(180deg);
 }
 
