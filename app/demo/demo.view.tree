@@ -46,7 +46,7 @@ $mol_app_demo_menu $mol_page
 			<= List $mol_list rows /
 				<= Filter $mol_search
 					query?val <=> filter?val \
-					suggests <= filter_suggests
+					- suggests <= filter_suggests
 				<= Options $mol_list
 					rows <= options /
 	Option!id $mol_link
