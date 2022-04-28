@@ -6783,7 +6783,7 @@ var $;
                 return this.pages().map(page => page?.title()).reverse().filter(Boolean).join(' | ');
             }
             sub() {
-                const next = [...this.pages().slice(), this.Placeholder()];
+                const next = [...this.pages(), this.Placeholder()];
                 const prev = $mol_mem_cached(() => this.sub()) ?? [];
                 for (let i = 1; i++;) {
                     const p = prev[prev.length - i];

@@ -9,7 +9,7 @@ namespace $.$$ {
 		@ $mol_mem
 		sub() {
 			
-			const next = [  ... this.pages().slice(), this.Placeholder() ]
+			const next = [  ... this.pages(), this.Placeholder() ]
 			
 			const prev = $mol_mem_cached( ()=> this.sub() ) ?? []
 			
