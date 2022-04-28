@@ -71,15 +71,7 @@ namespace $.$$ {
 		}
 
 		attachments() {
-			return this.supply().attachments().map( ( pos , index )=> this.Attachment( index ) )
-		}
-
-		attachment_thumb( index : number ) {
-			return this.supply().attachments()[ index ].url_thumb()
-		}
-		
-		attachment_load( index : number ) {
-			return this.supply().attachments()[ index ].url_load()
+			return this.supply().attachments().map( att => att.url_thumb() )
 		}
 
 		attach_new( next : string ) {
