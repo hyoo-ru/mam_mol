@@ -12,7 +12,7 @@
 }
 
 [mol_view]::selection {
-	background: var(--mol_theme_current);
+	background: var(--mol_theme_line);
 }
 
 [mol_view] > * {
