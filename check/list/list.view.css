@@ -11,6 +11,9 @@
 }
 
 [mol_check_list_option][mol_check_checked="true"] {
-	color: var(--mol_theme_current);
 	text-shadow: 0 0;
+}
+
+[mol_check_list_option][mol_check_checked="true"]:not([disabled]) {
+	color: var(--mol_theme_current);
 }
