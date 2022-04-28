@@ -1195,7 +1195,7 @@ namespace $ {
 					version[1] = published[1]
 				}
 				
-				if( published[2] > version[2] ) {
+				if(!( published[2] <= version[2] )) {
 					version[2] = published[2]
 				}
 				
@@ -1214,6 +1214,7 @@ namespace $ {
 			
 			json.keywords = [ ... this.graph( { path , exclude } ).nodes ]
 				.filter( Boolean )
+				.filter( path => !/[.-]/.test( path ) )
 				.map( path => '$' + path.replaceAll( '/', '_' ) )
 			
 			target.text( JSON.stringify( json , null , '  ' ) )
