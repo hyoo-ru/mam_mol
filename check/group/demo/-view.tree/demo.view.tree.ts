@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_check_group_demo extends $mol_example {
+	export class $mol_check_group_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Group of checkboxes
+		 * title \Group of checkboxes
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_check_group_demo_title' )
+			return "Group of checkboxes"
 		}
 		
 		/**

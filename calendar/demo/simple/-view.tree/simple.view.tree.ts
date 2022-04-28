@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Days of curret month
+		 * title \Days of curret month
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_calendar_demo_simple_title' )
+			return "Days of curret month"
 		}
 		
 		/**

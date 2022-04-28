@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \View raw HTML
+		 * title \View raw HTML
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_html_view_demo_title' )
+			return "View raw HTML"
 		}
 		
 		/**

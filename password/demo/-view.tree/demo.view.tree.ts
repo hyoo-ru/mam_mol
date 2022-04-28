@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Password input field based on $mol_string
+		 * title \Password input field based on $mol_string
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_password_demo_title' )
+			return "Password input field based on $mol_string"
 		}
 		
 		/**

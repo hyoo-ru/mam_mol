@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Simple scroll pane
+		 * title \Simple scroll pane
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_scroll_demo_title' )
+			return "Simple scroll pane"
 		}
 		
 		/**

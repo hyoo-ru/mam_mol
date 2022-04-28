@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_check_box_demo extends $mol_example {
+	export class $mol_check_box_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Checkboxes in various states
+		 * title \Checkboxes in various states
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_check_box_demo_title' )
+			return "Checkboxes in various states"
 		}
 		
 		/**
@@ -45,11 +45,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * c1Label @ \Base
+		 * c1Label \Base
 		 * ```
 		 */
 		c1Label() {
-			return this.$.$mol_locale.text( '$mol_check_box_demo_c1Label' )
+			return "Base"
 		}
 		
 		/**
@@ -71,11 +71,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * c2Label @ \Checked
+		 * c2Label \Checked
 		 * ```
 		 */
 		c2Label() {
-			return this.$.$mol_locale.text( '$mol_check_box_demo_c2Label' )
+			return "Checked"
 		}
 		
 		/**
@@ -108,11 +108,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * c6Label @ \Disabled
+		 * c6Label \Disabled
 		 * ```
 		 */
 		c6Label() {
-			return this.$.$mol_locale.text( '$mol_check_box_demo_c6Label' )
+			return "Disabled"
 		}
 		
 		/**

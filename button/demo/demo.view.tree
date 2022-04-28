@@ -1,20 +1,20 @@
 $mol_button_demo $mol_example_small
-	title @ \All types of buttons in every states
+	title \All types of buttons in every states
 	sub /
 		<= Major_enabled $mol_button_major
-			title @ \Enabled Major
+			title \Enabled Major
 			click?event <=> fail?event null
 		-
 		<= Major_disabled $mol_button_major
-			title @ \Disabled Major
+			title \Disabled Major
 			enabled false
 		-
 		<= Minor_enabled $mol_button_minor
-			title @ \Enabled Minor
+			title \Enabled Minor
 			click?event <=> fail?event null
 		-
 		<= Minor_disabled $mol_button_minor
-			title @ \Disabled Minor
+			title \Disabled Minor
 			enabled false
 		-
 		<= Minor_icon_only $mol_button_minor

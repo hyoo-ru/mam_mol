@@ -1,5 +1,5 @@
 $mol_string_demo $mol_example_small
-	title @ \String input field in various states
+	title \String input field in various states
 	sub /
 		<= Simple $mol_string
 			value?val <=> name?val \

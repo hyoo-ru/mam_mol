@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Large list of rows with dynamic content
+		 * title \Large list of rows with dynamic content
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_list_demo_table_title' )
+			return "Large list of rows with dynamic content"
 		}
 		
 		/**
@@ -149,11 +149,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * editable_title @ \Editable
+		 * editable_title \Editable
 		 * ```
 		 */
 		editable_title() {
-			return this.$.$mol_locale.text( '$mol_list_demo_table_editable_title' )
+			return "Editable"
 		}
 		
 		/**

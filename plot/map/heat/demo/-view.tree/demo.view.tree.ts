@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Dynamic Heat Map Graphs
+		 * title \Dynamic Heat Map Graphs
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_plot_map_heat_demo_title' )
+			return "Dynamic Heat Map Graphs"
 		}
 		
 		/**

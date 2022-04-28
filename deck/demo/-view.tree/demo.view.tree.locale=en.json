@@ -1,9 +1,1 @@
-{
-	"$mol_deck_demo_title": "Simple deck with tabbar",
-	"$mol_deck_demo_greet_message": "Hello, world!",
-	"$mol_deck_demo_Greeter_title": "Greeting",
-	"$mol_deck_demo_quest_message": "How are you?",
-	"$mol_deck_demo_Quester_title": "Question",
-	"$mol_deck_demo_command_message": "Let us do it right!",
-	"$mol_deck_demo_Commander_title": "Command"
-}
+{}

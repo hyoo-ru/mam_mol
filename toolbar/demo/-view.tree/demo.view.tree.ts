@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Foldable toolbar demo
+		 * title \Foldable toolbar demo
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_toolbar_demo_title' )
+			return "Foldable toolbar demo"
 		}
 		
 		/**
@@ -45,11 +45,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * search_hint @ \Search...
+		 * search_hint \Search...
 		 * ```
 		 */
 		search_hint() {
-			return this.$.$mol_locale.text( '$mol_toolbar_demo_search_hint' )
+			return "Search..."
 		}
 		
 		/**
@@ -68,11 +68,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * replace_hint @ \Replace...
+		 * replace_hint \Replace...
 		 * ```
 		 */
 		replace_hint() {
-			return this.$.$mol_locale.text( '$mol_toolbar_demo_replace_hint' )
+			return "Replace..."
 		}
 		
 		/**
@@ -91,11 +91,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * approve_label @ \Approve
+		 * approve_label \Approve
 		 * ```
 		 */
 		approve_label() {
-			return this.$.$mol_locale.text( '$mol_toolbar_demo_approve_label' )
+			return "Approve"
 		}
 		
 		/**
@@ -114,11 +114,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * decline_label @ \Decline
+		 * decline_label \Decline
 		 * ```
 		 */
 		decline_label() {
-			return this.$.$mol_locale.text( '$mol_toolbar_demo_decline_label' )
+			return "Decline"
 		}
 		
 		/**

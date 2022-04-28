@@ -1,23 +1,28 @@
 namespace $ {
-	export class $mol_check_icon_demo extends $mol_example {
+	export class $mol_check_icon_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Iconic checkboxes in various states
+		 * title \Iconic checkboxes in various states
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_check_icon_demo_title' )
+			return "Iconic checkboxes in various states"
 		}
 		
 		/**
 		 * ```tree
-		 * sub / <= Demo_items
+		 * sub /
+		 * 	<= Base
+		 * 	<= Checked
+		 * 	<= Disabled
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Demo_items()
+				this.Base(),
+				this.Checked(),
+				this.Disabled()
 			] as readonly any[]
 		}
 		
@@ -146,27 +151,6 @@ namespace $ {
 			obj.Icon = () => this.Disabled_icon()
 			obj.checked = () => true
 			obj.enabled = () => false
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Demo_items $mol_list rows /
-		 * 	<= Base
-		 * 	<= Checked
-		 * 	<= Disabled
-		 * ```
-		 */
-		@ $mol_mem
-		Demo_items() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Base(),
-				this.Checked(),
-				this.Disabled()
-			] as readonly any[]
 			
 			return obj
 		}

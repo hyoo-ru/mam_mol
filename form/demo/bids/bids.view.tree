@@ -1,70 +1,102 @@
 $mol_form_demo_bids $mol_example
-	title @ \Sign Up form demo
-	message_required @ \Required
-	message_no_spaces @ \No spaces!
-	message_need_more_letters @ \{count} or more letters
-	message_need_at @ \@ is required
-	message_only_one_at @ \At most one @
-	message_no_tld @ \At least 2 level domain
-	message_dots_inside @ \Dots can't be at edge
-	message_no_space_domain @ \No space in domain name
-	message_need_username @ \Username required
+	title \Sign Up form demo
+	message *
+		required \Required
+		adult \18+ only
+		no_spaces \No spaces!
+		need_more_letters \{count} or more letters
+		need_at \is required
+		only_one_at \At most one @
+		no_tld \At least 2 level domain
+		dots_inside \Dots can't be at edge
+		no_space_domain \No space in domain name
+		need_username \Username required
 	sub /
-		<= Demo_items $mol_list
+		<= Form $mol_form
+			submit?val <=> submit?val null
+			form_fields /
+				-
+				<= Name_first_field $mol_form_field
+					name \First Name
+					bid <= name_first_bid \
+					Content <= Name_first_control $mol_string
+						hint \Jack
+						value?val <=> name_first?val \
+				-
+				<= Name_nick_field $mol_form_field
+					name \Nick Name
+					bid <= name_nick_bid \
+					Content <= Name_nick_control $mol_string
+						hint \Capitan
+						value?val <=> name_nick?val \
+				-
+				<= Name_second_field $mol_form_field
+					name \Second Name
+					bid <= name_second_bid \
+					Content <= Name_second_control $mol_string
+						hint \Sparrow
+						value?val <=> name_second?val \
+				-
+				<= Sex_field $mol_form_field
+					name <= sex_label \Sex
+					bid <= sex_bid \
+					Content <= Sex_control $mol_switch
+						value?val <=> sex?val \
+						options <= sex_options *
+							male \Male
+							intersex \Intersex
+							female \Female
+				-
+				<= Color_field $mol_form_field
+					name \Skin color
+					bid <= color_bid \
+					control <= Color_control $mol_select
+						value?val <=> color?val \
+						dictionary *
+							\
+								\❔
+							white \⬜ White
+							yellow \🟨 Yellow
+							brown \🟫 Brown
+							red \🟥 Red
+				-
+				<= Age_field $mol_form_field
+					name \Age
+					bid <= age_bid \
+					control <= Age_control $mol_number
+						value?val <=> age?val 0
+				-
+				<= Mail_field $mol_form_field
+					name \E-mail
+					bid <= mail_bid \
+					Content <= Mail_control $mol_string
+						hint \name@domain.com
+						value?val <=> mail?val \
+				-
+				<= Avatars_field $mol_form_field
+					name \Avatars
+					bid <= avatars_bid \
+					Content <= Avatars_control $mol_attach
+						items?val <=> avatars?val /string
+			body /
+				<= Avatars_field
+				<= Names $mol_form_group sub /
+					<= Name_first_field
+					<= Name_nick_field
+					<= Name_second_field
+				<= Parameters $mol_form_group sub /
+					<= Age_field
+					<= Sex_field
+					<= Color_field
+				<= Mail_field
+			buttons /
+				<= Submit $mol_button_major
+					title \Sign Up
+					click?val <=> submit?val null
+					enabled <= submit_allowed true
+		<= Result $mol_row
 			sub /
-				<= Form $mol_form
-					submit?val <=> submit?val null
-					form_fields /
-						-
-						<= Name_first_field $mol_form_field
-							name <= name_first_label @ \First Name
-							bid <= name_first_bid \
-							Content <= Name_first_control $mol_string
-								hint <= name_first_hint @ \Jack
-								value?val <=> name_first?val \
-						-
-						<= Name_nick_field $mol_form_field
-							name <= name_nick_label @ \Nick Name
-							bid <= name_nick_bid \
-							Content <= Name_nick_control $mol_string
-								hint <= name_nick_hint @ \Capitan
-								value?val <=> name_nick?val \
-						-
-						<= Name_second_field $mol_form_field
-							name <= name_second_label @ \Second Name
-							bid <= name_second_bid \
-							Content <= Name_second_control $mol_string
-								hint <= name_second_hint @ \Sparrow
-								value?val <=> name_second?val \
-						-
-						<= Sex_field $mol_form_field
-							name <= sex_label @ \Sex
-							bid <= sex_bid \
-							Content <= Sex_control $mol_switch
-								value?val <=> sex?val \
-								options <= sex_options *
-									male <= sex_option_male @ \Male
-									intersex <= sex_option_intersex @ \Intersex
-									female <= sex_option_female @ \Female
-						-
-						<= Color_field $mol_form_field
-							name <= color_label @ \Skin color
-							bid <= color_bid \
-							control <= Color_control $mol_select_demo_colors
-								color?val <=> color?val \
-						-
-						<= Mail_field $mol_form_field
-							name <= mail_label @ \E-mail
-							bid <= mail_bid \
-							Content <= Mail_control $mol_string
-								hint <= mail_hint @ \name@domain.com
-								value?val <=> mail?val \
-					buttons /
-						<= Submit $mol_button_major
-							sub / <= submit_text @ \Sign Up
-							click?val <=> submit?val null
-							enabled <= submit_allowed true
-				<= Message $mol_row sub / <= message?val \
+				<= result?val \
 	tags /
 		\$mol_form_field
 		\$mol_button

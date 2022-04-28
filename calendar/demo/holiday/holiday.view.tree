@@ -1,5 +1,5 @@
 $mol_calendar_demo_holiday $mol_example_small
-	title @ \Days of month 2018-01 with custom holidays
+	title \Days of month 2018-01 with custom holidays
 	holidays /
 		\2018-01-01
 		\2018-01-02

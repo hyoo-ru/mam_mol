@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Page with header, body and footer
+		 * title \Page with header, body and footer
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_page_demo_title' )
+			return "Page with header, body and footer"
 		}
 		
 		/**

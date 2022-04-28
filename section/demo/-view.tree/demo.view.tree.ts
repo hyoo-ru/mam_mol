@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_section_demo extends $mol_example {
+	export class $mol_section_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Section with header
+		 * title \Section with header
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_section_demo_title' )
+			return "Section with header"
 		}
 		
 		/**
@@ -54,18 +54,18 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Section $mol_section
-		 * 	head / \Section header
-		 * 	Content <= Section_content
+		 * 	title \Section header
+		 * 	content / <= Section_content
 		 * ```
 		 */
 		@ $mol_mem
 		Section() {
 			const obj = new this.$.$mol_section()
 			
-			obj.head = () => [
-				"Section header"
+			obj.title = () => "Section header"
+			obj.content = () => [
+				this.Section_content()
 			] as readonly any[]
-			obj.Content = () => this.Section_content()
 			
 			return obj
 		}

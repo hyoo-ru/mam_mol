@@ -1,11 +1,11 @@
-$mol_form $mol_view
+$mol_form $mol_list
 	submit_blocked false
 	event *
 		^
 		keydown?event <=> keydown?event null
 	submit?event null
-	sub /
-		<= Bar_fields $mol_view
-			sub <= form_fields /$mol_form_field
-		<= Bar_buttons $mol_row
-			sub <= buttons /$mol_view
+	rows /
+		<= Body $mol_list
+			sub <= body <= form_fields /$mol_form_field
+		<= Foot $mol_row
+			sub <= foot <= buttons /$mol_view

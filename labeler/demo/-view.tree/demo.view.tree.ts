@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Labeled content of some types
+		 * title \Labeled content of some types
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_labeler_demo_title' )
+			return "Labeled content of some types"
 		}
 		
 		/**

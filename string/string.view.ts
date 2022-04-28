@@ -10,7 +10,7 @@ namespace $.$$ {
 		}
 
 		hint_visible() {
-			return this.enabled() ? this.hint() : ''
+			return ( this.enabled() ? this.hint() : '' ) || ' '
 		}
 
 		disabled() {

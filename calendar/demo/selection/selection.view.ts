@@ -9,8 +9,13 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		selected( day : string ) {
+			
 			const interval = this.interval()
-			return ( day >= interval.start.toString() )&&( day < interval.end.toString() )
+			if( ( day >= interval.start.toString() )&&( day < interval.end.toString() ) ) return true
+			
+			if( this.days().includes( day ) ) return true
+			
+			return false
 		}
 
 	}

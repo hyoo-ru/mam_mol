@@ -3,102 +3,54 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Sign Up form demo
+		 * title \Sign Up form demo
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_title' )
+			return "Sign Up form demo"
 		}
 		
 		/**
 		 * ```tree
-		 * message_required @ \Required
+		 * message *
+		 * 	required \Required
+		 * 	adult \18+ only
+		 * 	no_spaces \No spaces!
+		 * 	need_more_letters \{count} or more letters
+		 * 	need_at \is required
+		 * 	only_one_at \At most one @
+		 * 	no_tld \At least 2 level domain
+		 * 	dots_inside \Dots can't be at edge
+		 * 	no_space_domain \No space in domain name
+		 * 	need_username \Username required
 		 * ```
 		 */
-		message_required() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_message_required' )
+		message() {
+			return {
+				required: "Required",
+				adult: "18+ only",
+				no_spaces: "No spaces!",
+				need_more_letters: "{count} or more letters",
+				need_at: "is required",
+				only_one_at: "At most one @",
+				no_tld: "At least 2 level domain",
+				dots_inside: "Dots can't be at edge",
+				no_space_domain: "No space in domain name",
+				need_username: "Username required"
+			}
 		}
 		
 		/**
 		 * ```tree
-		 * message_no_spaces @ \No spaces!
-		 * ```
-		 */
-		message_no_spaces() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_message_no_spaces' )
-		}
-		
-		/**
-		 * ```tree
-		 * message_need_more_letters @ \{count} or more letters
-		 * ```
-		 */
-		message_need_more_letters() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_message_need_more_letters' )
-		}
-		
-		/**
-		 * ```tree
-		 * message_need_at @ \@ is required
-		 * ```
-		 */
-		message_need_at() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_message_need_at' )
-		}
-		
-		/**
-		 * ```tree
-		 * message_only_one_at @ \At most one @
-		 * ```
-		 */
-		message_only_one_at() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_message_only_one_at' )
-		}
-		
-		/**
-		 * ```tree
-		 * message_no_tld @ \At least 2 level domain
-		 * ```
-		 */
-		message_no_tld() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_message_no_tld' )
-		}
-		
-		/**
-		 * ```tree
-		 * message_dots_inside @ \Dots can't be at edge
-		 * ```
-		 */
-		message_dots_inside() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_message_dots_inside' )
-		}
-		
-		/**
-		 * ```tree
-		 * message_no_space_domain @ \No space in domain name
-		 * ```
-		 */
-		message_no_space_domain() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_message_no_space_domain' )
-		}
-		
-		/**
-		 * ```tree
-		 * message_need_username @ \Username required
-		 * ```
-		 */
-		message_need_username() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_message_need_username' )
-		}
-		
-		/**
-		 * ```tree
-		 * sub / <= Demo_items
+		 * sub /
+		 * 	<= Form
+		 * 	<= Result
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Demo_items()
+				this.Form(),
+				this.Result()
 			] as readonly any[]
 		}
 		
@@ -141,29 +93,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * name_first_label @ \First Name
-		 * ```
-		 */
-		name_first_label() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_name_first_label' )
-		}
-		
-		/**
-		 * ```tree
 		 * name_first_bid \
 		 * ```
 		 */
 		name_first_bid() {
 			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * name_first_hint @ \Jack
-		 * ```
-		 */
-		name_first_hint() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_name_first_hint' )
 		}
 		
 		/**
@@ -180,7 +114,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Name_first_control $mol_string
-		 * 	hint <= name_first_hint
+		 * 	hint \Jack
 		 * 	value?val <=> name_first?val
 		 * ```
 		 */
@@ -188,7 +122,7 @@ namespace $ {
 		Name_first_control() {
 			const obj = new this.$.$mol_string()
 			
-			obj.hint = () => this.name_first_hint()
+			obj.hint = () => "Jack"
 			obj.value = (val?: any) => this.name_first(val)
 			
 			return obj
@@ -197,7 +131,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Name_first_field $mol_form_field
-		 * 	name <= name_first_label
+		 * 	name \First Name
 		 * 	bid <= name_first_bid
 		 * 	Content <= Name_first_control
 		 * ```
@@ -206,20 +140,11 @@ namespace $ {
 		Name_first_field() {
 			const obj = new this.$.$mol_form_field()
 			
-			obj.name = () => this.name_first_label()
+			obj.name = () => "First Name"
 			obj.bid = () => this.name_first_bid()
 			obj.Content = () => this.Name_first_control()
 			
 			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * name_nick_label @ \Nick Name
-		 * ```
-		 */
-		name_nick_label() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_name_nick_label' )
 		}
 		
 		/**
@@ -229,15 +154,6 @@ namespace $ {
 		 */
 		name_nick_bid() {
 			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * name_nick_hint @ \Capitan
-		 * ```
-		 */
-		name_nick_hint() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_name_nick_hint' )
 		}
 		
 		/**
@@ -254,7 +170,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Name_nick_control $mol_string
-		 * 	hint <= name_nick_hint
+		 * 	hint \Capitan
 		 * 	value?val <=> name_nick?val
 		 * ```
 		 */
@@ -262,7 +178,7 @@ namespace $ {
 		Name_nick_control() {
 			const obj = new this.$.$mol_string()
 			
-			obj.hint = () => this.name_nick_hint()
+			obj.hint = () => "Capitan"
 			obj.value = (val?: any) => this.name_nick(val)
 			
 			return obj
@@ -271,7 +187,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Name_nick_field $mol_form_field
-		 * 	name <= name_nick_label
+		 * 	name \Nick Name
 		 * 	bid <= name_nick_bid
 		 * 	Content <= Name_nick_control
 		 * ```
@@ -280,20 +196,11 @@ namespace $ {
 		Name_nick_field() {
 			const obj = new this.$.$mol_form_field()
 			
-			obj.name = () => this.name_nick_label()
+			obj.name = () => "Nick Name"
 			obj.bid = () => this.name_nick_bid()
 			obj.Content = () => this.Name_nick_control()
 			
 			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * name_second_label @ \Second Name
-		 * ```
-		 */
-		name_second_label() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_name_second_label' )
 		}
 		
 		/**
@@ -303,15 +210,6 @@ namespace $ {
 		 */
 		name_second_bid() {
 			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * name_second_hint @ \Sparrow
-		 * ```
-		 */
-		name_second_hint() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_name_second_hint' )
 		}
 		
 		/**
@@ -328,7 +226,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Name_second_control $mol_string
-		 * 	hint <= name_second_hint
+		 * 	hint \Sparrow
 		 * 	value?val <=> name_second?val
 		 * ```
 		 */
@@ -336,7 +234,7 @@ namespace $ {
 		Name_second_control() {
 			const obj = new this.$.$mol_string()
 			
-			obj.hint = () => this.name_second_hint()
+			obj.hint = () => "Sparrow"
 			obj.value = (val?: any) => this.name_second(val)
 			
 			return obj
@@ -345,7 +243,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Name_second_field $mol_form_field
-		 * 	name <= name_second_label
+		 * 	name \Second Name
 		 * 	bid <= name_second_bid
 		 * 	Content <= Name_second_control
 		 * ```
@@ -354,7 +252,7 @@ namespace $ {
 		Name_second_field() {
 			const obj = new this.$.$mol_form_field()
 			
-			obj.name = () => this.name_second_label()
+			obj.name = () => "Second Name"
 			obj.bid = () => this.name_second_bid()
 			obj.Content = () => this.Name_second_control()
 			
@@ -363,11 +261,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sex_label @ \Sex
+		 * sex_label \Sex
 		 * ```
 		 */
 		sex_label() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_sex_label' )
+			return "Sex"
 		}
 		
 		/**
@@ -392,44 +290,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sex_option_male @ \Male
-		 * ```
-		 */
-		sex_option_male() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_sex_option_male' )
-		}
-		
-		/**
-		 * ```tree
-		 * sex_option_intersex @ \Intersex
-		 * ```
-		 */
-		sex_option_intersex() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_sex_option_intersex' )
-		}
-		
-		/**
-		 * ```tree
-		 * sex_option_female @ \Female
-		 * ```
-		 */
-		sex_option_female() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_sex_option_female' )
-		}
-		
-		/**
-		 * ```tree
 		 * sex_options *
-		 * 	male <= sex_option_male
-		 * 	intersex <= sex_option_intersex
-		 * 	female <= sex_option_female
+		 * 	male \Male
+		 * 	intersex \Intersex
+		 * 	female \Female
 		 * ```
 		 */
 		sex_options() {
 			return {
-				male: this.sex_option_male(),
-				intersex: this.sex_option_intersex(),
-				female: this.sex_option_female()
+				male: "Male",
+				intersex: "Intersex",
+				female: "Female"
 			}
 		}
 		
@@ -471,15 +342,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * color_label @ \Skin color
-		 * ```
-		 */
-		color_label() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_color_label' )
-		}
-		
-		/**
-		 * ```tree
 		 * color_bid \
 		 * ```
 		 */
@@ -500,14 +362,29 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Color_control $mol_select_demo_colors color?val <=> color?val
+		 * Color_control $mol_select
+		 * 	value?val <=> color?val
+		 * 	dictionary *
+		 * 		\
+		 * 			\❔
+		 * 		white \⬜ White
+		 * 		yellow \🟨 Yellow
+		 * 		brown \🟫 Brown
+		 * 		red \🟥 Red
 		 * ```
 		 */
 		@ $mol_mem
 		Color_control() {
-			const obj = new this.$.$mol_select_demo_colors()
+			const obj = new this.$.$mol_select()
 			
-			obj.color = (val?: any) => this.color(val)
+			obj.value = (val?: any) => this.color(val)
+			obj.dictionary = () => ({
+				"": "❔",
+				white: "⬜ White",
+				yellow: "🟨 Yellow",
+				brown: "🟫 Brown",
+				red: "🟥 Red"
+			})
 			
 			return obj
 		}
@@ -515,7 +392,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Color_field $mol_form_field
-		 * 	name <= color_label
+		 * 	name \Skin color
 		 * 	bid <= color_bid
 		 * 	control <= Color_control
 		 * ```
@@ -524,7 +401,7 @@ namespace $ {
 		Color_field() {
 			const obj = new this.$.$mol_form_field()
 			
-			obj.name = () => this.color_label()
+			obj.name = () => "Skin color"
 			obj.bid = () => this.color_bid()
 			obj.control = () => this.Color_control()
 			
@@ -533,11 +410,55 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * mail_label @ \E-mail
+		 * age_bid \
 		 * ```
 		 */
-		mail_label() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_mail_label' )
+		age_bid() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * age?val 0
+		 * ```
+		 */
+		@ $mol_mem
+		age(val?: any) {
+			if ( val !== undefined ) return val as never
+			return 0
+		}
+		
+		/**
+		 * ```tree
+		 * Age_control $mol_number value?val <=> age?val
+		 * ```
+		 */
+		@ $mol_mem
+		Age_control() {
+			const obj = new this.$.$mol_number()
+			
+			obj.value = (val?: any) => this.age(val)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Age_field $mol_form_field
+		 * 	name \Age
+		 * 	bid <= age_bid
+		 * 	control <= Age_control
+		 * ```
+		 */
+		@ $mol_mem
+		Age_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => "Age"
+			obj.bid = () => this.age_bid()
+			obj.control = () => this.Age_control()
+			
+			return obj
 		}
 		
 		/**
@@ -547,15 +468,6 @@ namespace $ {
 		 */
 		mail_bid() {
 			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * mail_hint @ \name@domain.com
-		 * ```
-		 */
-		mail_hint() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_mail_hint' )
 		}
 		
 		/**
@@ -572,7 +484,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Mail_control $mol_string
-		 * 	hint <= mail_hint
+		 * 	hint \name@domain.com
 		 * 	value?val <=> mail?val
 		 * ```
 		 */
@@ -580,7 +492,7 @@ namespace $ {
 		Mail_control() {
 			const obj = new this.$.$mol_string()
 			
-			obj.hint = () => this.mail_hint()
+			obj.hint = () => "name@domain.com"
 			obj.value = (val?: any) => this.mail(val)
 			
 			return obj
@@ -589,7 +501,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Mail_field $mol_form_field
-		 * 	name <= mail_label
+		 * 	name \E-mail
 		 * 	bid <= mail_bid
 		 * 	Content <= Mail_control
 		 * ```
@@ -598,7 +510,7 @@ namespace $ {
 		Mail_field() {
 			const obj = new this.$.$mol_form_field()
 			
-			obj.name = () => this.mail_label()
+			obj.name = () => "E-mail"
 			obj.bid = () => this.mail_bid()
 			obj.Content = () => this.Mail_control()
 			
@@ -607,11 +519,98 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * submit_text @ \Sign Up
+		 * avatars_bid \
 		 * ```
 		 */
-		submit_text() {
-			return this.$.$mol_locale.text( '$mol_form_demo_bids_submit_text' )
+		avatars_bid() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * avatars?val /string
+		 * ```
+		 */
+		@ $mol_mem
+		avatars(val?: any) {
+			if ( val !== undefined ) return val as never
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * Avatars_control $mol_attach items?val <=> avatars?val
+		 * ```
+		 */
+		@ $mol_mem
+		Avatars_control() {
+			const obj = new this.$.$mol_attach()
+			
+			obj.items = (val?: any) => this.avatars(val)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Avatars_field $mol_form_field
+		 * 	name \Avatars
+		 * 	bid <= avatars_bid
+		 * 	Content <= Avatars_control
+		 * ```
+		 */
+		@ $mol_mem
+		Avatars_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => "Avatars"
+			obj.bid = () => this.avatars_bid()
+			obj.Content = () => this.Avatars_control()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Names $mol_form_group sub /
+		 * 	<= Name_first_field
+		 * 	<= Name_nick_field
+		 * 	<= Name_second_field
+		 * ```
+		 */
+		@ $mol_mem
+		Names() {
+			const obj = new this.$.$mol_form_group()
+			
+			obj.sub = () => [
+				this.Name_first_field(),
+				this.Name_nick_field(),
+				this.Name_second_field()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Parameters $mol_form_group sub /
+		 * 	<= Age_field
+		 * 	<= Sex_field
+		 * 	<= Color_field
+		 * ```
+		 */
+		@ $mol_mem
+		Parameters() {
+			const obj = new this.$.$mol_form_group()
+			
+			obj.sub = () => [
+				this.Age_field(),
+				this.Sex_field(),
+				this.Color_field()
+			] as readonly any[]
+			
+			return obj
 		}
 		
 		/**
@@ -626,7 +625,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Submit $mol_button_major
-		 * 	sub / <= submit_text
+		 * 	title \Sign Up
 		 * 	click?val <=> submit?val
 		 * 	enabled <= submit_allowed
 		 * ```
@@ -635,9 +634,7 @@ namespace $ {
 		Submit() {
 			const obj = new this.$.$mol_button_major()
 			
-			obj.sub = () => [
-				this.submit_text()
-			] as readonly any[]
+			obj.title = () => "Sign Up"
 			obj.click = (val?: any) => this.submit(val)
 			obj.enabled = () => this.submit_allowed()
 			
@@ -654,6 +651,13 @@ namespace $ {
 		 * 		<= Name_second_field
 		 * 		<= Sex_field
 		 * 		<= Color_field
+		 * 		<= Age_field
+		 * 		<= Mail_field
+		 * 		<= Avatars_field
+		 * 	body /
+		 * 		<= Avatars_field
+		 * 		<= Names
+		 * 		<= Parameters
 		 * 		<= Mail_field
 		 * 	buttons / <= Submit
 		 * ```
@@ -669,6 +673,14 @@ namespace $ {
 				this.Name_second_field(),
 				this.Sex_field(),
 				this.Color_field(),
+				this.Age_field(),
+				this.Mail_field(),
+				this.Avatars_field()
+			] as readonly any[]
+			obj.body = () => [
+				this.Avatars_field(),
+				this.Names(),
+				this.Parameters(),
 				this.Mail_field()
 			] as readonly any[]
 			obj.buttons = () => [
@@ -680,45 +692,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * message?val \
+		 * result?val \
 		 * ```
 		 */
 		@ $mol_mem
-		message(val?: any) {
+		result(val?: any) {
 			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * Message $mol_row sub / <= message?val
+		 * Result $mol_row sub / <= result?val
 		 * ```
 		 */
 		@ $mol_mem
-		Message() {
+		Result() {
 			const obj = new this.$.$mol_row()
 			
 			obj.sub = () => [
-				this.message()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Demo_items $mol_list sub /
-		 * 	<= Form
-		 * 	<= Message
-		 * ```
-		 */
-		@ $mol_mem
-		Demo_items() {
-			const obj = new this.$.$mol_list()
-			
-			obj.sub = () => [
-				this.Form(),
-				this.Message()
+				this.result()
 			] as readonly any[]
 			
 			return obj

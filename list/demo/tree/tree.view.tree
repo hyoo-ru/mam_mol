@@ -1,5 +1,5 @@
-$mol_list_demo_tree $mol_example
-	title @ \Large list of rows with dynamic content
+$mol_list_demo_tree $mol_example_large
+	title \Large list of rows with dynamic content
 	sub /
 		<= Content $mol_list
 			rows <= root_rows /

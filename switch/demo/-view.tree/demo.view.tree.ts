@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Color switchers in various state
+		 * title \Color switchers in various state
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_switch_demo_title' )
+			return "Color switchers in various state"
 		}
 		
 		/**
@@ -48,38 +48,38 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_red @ \Red
+		 * option_red \Red
 		 * ```
 		 */
 		option_red() {
-			return this.$.$mol_locale.text( '$mol_switch_demo_option_red' )
+			return "Red"
 		}
 		
 		/**
 		 * ```tree
-		 * option_green @ \Green
+		 * option_green \Green
 		 * ```
 		 */
 		option_green() {
-			return this.$.$mol_locale.text( '$mol_switch_demo_option_green' )
+			return "Green"
 		}
 		
 		/**
 		 * ```tree
-		 * option_blue @ \Blue
+		 * option_blue \Blue
 		 * ```
 		 */
 		option_blue() {
-			return this.$.$mol_locale.text( '$mol_switch_demo_option_blue' )
+			return "Blue"
 		}
 		
 		/**
 		 * ```tree
-		 * option_infernal @ \Color which can not be displayed on your device
+		 * option_infernal \Color which can not be displayed on your device
 		 * ```
 		 */
 		option_infernal() {
-			return this.$.$mol_locale.text( '$mol_switch_demo_option_infernal' )
+			return "Color which can not be displayed on your device"
 		}
 		
 		/**
@@ -111,7 +111,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Enabled_labeler $mol_labeler
-		 * 	title @ \Read/Write
+		 * 	title \Read/Write
 		 * 	Content <= Enabled
 		 * ```
 		 */
@@ -119,7 +119,7 @@ namespace $ {
 		Enabled_labeler() {
 			const obj = new this.$.$mol_labeler()
 			
-			obj.title = () => this.$.$mol_locale.text( '$mol_switch_demo_Enabled_labeler_title' )
+			obj.title = () => "Read/Write"
 			obj.Content = () => this.Enabled()
 			
 			return obj
@@ -154,7 +154,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Disabled_labeler $mol_labeler
-		 * 	title @ \Read only
+		 * 	title \Read only
 		 * 	Content <= Disabled
 		 * ```
 		 */
@@ -162,7 +162,7 @@ namespace $ {
 		Disabled_labeler() {
 			const obj = new this.$.$mol_labeler()
 			
-			obj.title = () => this.$.$mol_locale.text( '$mol_switch_demo_Disabled_labeler_title' )
+			obj.title = () => "Read only"
 			obj.Content = () => this.Disabled()
 			
 			return obj

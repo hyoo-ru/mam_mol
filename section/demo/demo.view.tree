@@ -1,9 +1,10 @@
-$mol_section_demo $mol_example
-	title @ \Section with header
+$mol_section_demo $mol_example_small
+	title \Section with header
 	sub /
 		<= Section $mol_section
-			head / \Section header
-			Content <= Section_content $mol_filler
+			title \Section header
+			content /
+				<= Section_content $mol_filler
 	tags /
 		\$mol_filler
 		\section

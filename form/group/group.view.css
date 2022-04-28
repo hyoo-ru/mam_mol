@@ -1,0 +1,7 @@
+[mol_form_group] {
+	flex-wrap: wrap;
+}
+
+[mol_form_group] > * {
+	flex: 1 1 20rem;
+}

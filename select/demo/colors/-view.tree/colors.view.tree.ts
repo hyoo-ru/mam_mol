@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_select_demo_colors extends $mol_example {
+	export class $mol_select_demo_colors extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Color picker with filter and custom rows
+		 * title \Color picker with filter and custom rows
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_select_demo_colors_title' )
+			return "Color picker with filter and custom rows"
 		}
 		
 		/**

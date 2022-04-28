@@ -5,6 +5,7 @@ namespace $ {
 	export const $mol_theme = {
 		back: vary('--mol_theme_back'),
 		hover: vary('--mol_theme_hover'),
+		card: vary('--mol_theme_card'),
 		current: vary('--mol_theme_current'),
 		text: vary('--mol_theme_text'),
 		control: vary('--mol_theme_control'),

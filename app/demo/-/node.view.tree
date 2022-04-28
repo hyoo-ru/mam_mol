@@ -1,72 +1,3 @@
-$mol_list $mol_view
-	render_visible_only true
-	render_over 0
-	sub <= rows /$mol_view
-	Empty $mol_view
-	Gap_before $mol_view style * paddingTop <= gap_before 0
-	Gap_after $mol_view style * paddingTop <= gap_after 0
-	view_window /
-		0
-		0
-
-$mol_card $mol_list
-	attr *
-		^
-		mol_card_status_type <= status \
-	rows /$mol_view
-		<= Content $mol_view
-			sub <= content /$mol_view_content
-				<= title
-		<= Status $mol_view
-			minimal_height 30
-			sub /
-				<= status_text <= status \
-
-$mol_svg $mol_view
-	dom_name \svg
-	dom_name_space \http://www.w3.org/2000/svg
-	font_size 16
-	font_family \
-	style_size *
-
-$mol_svg_root $mol_svg
-	dom_name \svg
-	attr *
-		^
-		viewBox <= view_box \0 0 100 100
-		preserveAspectRatio <= aspect \xMidYMid
-
-$mol_svg_path $mol_svg
-	dom_name \path
-	attr *
-		^
-		d <= geometry \
-
-
-$mol_icon $mol_svg_root
-	view_box \0 0 24 24
-	minimal_width 16
-	minimal_height 16
-	sub /
-		<= Path $mol_svg_path
-			geometry <= path \
-
-$mol_link $mol_view
-	dom_name \a
-	attr *
-		^
-		href <= uri \
-		title <= hint \
-		target <= target \_self
-		download <= file_name \
-		mol_link_current <= current false
-	sub /$mol_view_content
-		<= title
-	arg *
-	event *
-		^
-		click?event <=> click?event <=> event_click?event null
-
 $mol_speck $mol_view
 	attr *
 		^
@@ -100,48 +31,81 @@ $mol_button $mol_view
 
 $mol_button_typed $mol_button
 
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	font_size 16
+	font_family \
+	style_size *
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
 $mol_button_minor $mol_button_typed
 
-$mol_icon_attach $mol_icon path \M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z
+$mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
 
-$mol_attach $mol_card
-	Content $mol_view
-		sub <= content /$mol_view
-	items?val /$mol_view
-	Add $mol_attach_add file_new?val <=> attach_new?val null
-	Item!id $mol_attach_item
-		title <= attach_title \
-
-$mol_attach_item $mol_link
-	url_thumb?val \
-	uri?val <=> url_load?val \
-	style *
-		^
-		backgroundImage <= style_bg \
-	attr *
-		^
-		download <= title \
-
-$mol_attach_add $mol_button_minor
-	minimal_height 60
-	file_new?val null
+$mol_button_open $mol_button_minor
 	sub /
-		<= Icon $mol_icon_attach
-		<= Input $mol_attach_add_input
-			event_capture?val <=> event_capture?val null
-			event_picked?val <=> event_picked?val null
+		<= Icon $mol_icon_upload
+		<= Native $mol_button_open_native
+			files?next <=> files?next /
+			accept <= accept \
+			multiple <= multiple true
 
-$mol_attach_add_input $mol_view
+$mol_button_open_native $mol_view
 	dom_name \input
+	files?next /
 	attr *
-		^
-		type <= type \file
-		accept <= accept \image/*;capture=camera
+		type \file
+		accept <= accept \
 		multiple <= multiple true
-	event_click?val <=> event_capture?val null
 	event *
+		change?next <=> picked?next null
+
+$mol_row $mol_view
+
+$mol_image $mol_view
+	dom_name \img
+	field *
 		^
-		change?val <=> event_picked?val null
+		src <= uri \
+		alt <= title
+		loading <= loading \eager
+
+$mol_attach $mol_view
+	items?val /string
+	sub /
+		<= Content $mol_row
+			sub <= content /$mol_view
+	Add $mol_button_open
+		title <= attach_title \
+		files?val <=> attach_new?val null
+	Item!id $mol_button_minor
+		click?event <=> item_drop!id?event null
+		sub /
+			<= Image!id $mol_image
+				title \
+				uri <= item_uri!id \
 
 $mol_example $mol_view
 	tags /string
@@ -149,19 +113,12 @@ $mol_example $mol_view
 $mol_example_small $mol_example
 
 $mol_attach_demo $mol_example_small
-	title @ \Attach files an show them
+	title \Attach files an show them
 	sub /
 		<= Filled $mol_attach
 			items?val <=> filled_items?val /
-				<= Item1 $mol_attach_item
-					url_thumb \https://thiscatdoesnotexist.com/
-					url_load \https://thiscatdoesnotexist.com/
-				<= Item2 $mol_attach_item
-					url_thumb \https://thiscatdoesnotexist.com/
-					url_load \https://thiscatdoesnotexist.com/
-				<= Item3 $mol_attach_item
-					url_thumb \https://thiscatdoesnotexist.com/
-					url_load \https://thiscatdoesnotexist.com/
+				\https://thiscatdoesnotexist.com/
+				\https://thiscatdoesnotexist.com/
 	tags /
 		\attach
 		\file
@@ -227,7 +184,7 @@ $mol_check_box $mol_check
 	Icon $mol_icon_tick
 
 $mol_bar_demo $mol_example_small
-	title @ \Group of controls as one control
+	title \Group of controls as one control
 	sub /
 		<= Two $mol_bar
 			sub /
@@ -287,6 +244,17 @@ $mol_dimmer $mol_paragraph
 	High!id $mol_paragraph
 		sub /
 			<= string!id \
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0
+	sub <= rows /$mol_view
+	Empty $mol_view
+	Gap_before $mol_view style * paddingTop <= gap_before 0
+	Gap_after $mol_view style * paddingTop <= gap_after 0
+	view_window /
+		0
+		0
 
 $mol_grid $mol_view
 	row_height 32
@@ -382,7 +350,7 @@ $mol_bench_head $mol_float
 		title <= hint @ \Click to sort by this column
 
 $mol_bench_demo $mol_example_small
-	title @ \Benchmarking results visualization
+	title \Benchmarking results visualization
 	sub /
 		<= View $mol_bench
 			col_sort?val <=> col_sort?val \mid
@@ -412,7 +380,7 @@ $mol_book2 $mol_scroll
 $mol_example_large $mol_example
 
 $mol_book2_demo $mol_example_large
-	title @ \Adaprive layout for various sizes of screen
+	title \Adaprive layout for various sizes of screen
 	sub /
 		<= View $mol_book2 pages /
 			<= First $mol_view
@@ -429,6 +397,22 @@ $mol_book2_demo $mol_example_large
 		\transition
 		\multipage
 
+
+$mol_link $mol_view
+	dom_name \a
+	attr *
+		^
+		href <= uri \
+		title <= hint \
+		target <= target \_self
+		download <= file_name \
+		mol_link_current <= current false
+	sub /$mol_view_content
+		<= title
+	arg *
+	event *
+		^
+		click?event <=> click?event <=> event_click?event null
 
 $mol_page $mol_view
 	dom_name \article
@@ -513,22 +497,22 @@ $mol_icon_cursor_default_click $mol_icon path \M10.76,8.69C10.34,8.69 10,9.03 10
 $mol_icon_cursor_default_click_outline $mol_icon path \M11.5,11L17.88,16.37L17,16.55L16.36,16.67C15.73,16.8 15.37,17.5 15.65,18.07L15.92,18.65L17.28,21.59L15.86,22.25L14.5,19.32L14.24,18.74C13.97,18.15 13.22,17.97 12.72,18.38L12.21,18.78L11.5,19.35V11M10.76,8.69C10.34,8.69 10,9.03 10,9.45V20.9C10,21.32 10.34,21.66 10.76,21.66C10.95,21.66 11.11,21.6 11.24,21.5L13.15,19.95L14.81,23.57C14.94,23.84 15.21,24 15.5,24C15.61,24 15.72,24 15.83,23.92L18.59,22.64C18.97,22.46 19.15,22 18.95,21.63L17.28,18L19.69,17.55C19.85,17.5 20,17.43 20.12,17.29C20.39,16.97 20.35,16.5 20,16.21L11.26,8.86L11.25,8.87C11.12,8.76 10.95,8.69 10.76,8.69M15,10V8H20V10H15M13.83,4.76L16.66,1.93L18.07,3.34L15.24,6.17L13.83,4.76M10,0H12V5H10V0M3.93,14.66L6.76,11.83L8.17,13.24L5.34,16.07L3.93,14.66M3.93,3.34L5.34,1.93L8.17,4.76L6.76,6.17L3.93,3.34M7,10H2V8H7V10
 
 $mol_button_demo $mol_example_small
-	title @ \All types of buttons in every states
+	title \All types of buttons in every states
 	sub /
 		<= Major_enabled $mol_button_major
-			title @ \Enabled Major
+			title \Enabled Major
 			click?event <=> fail?event null
 		-
 		<= Major_disabled $mol_button_major
-			title @ \Disabled Major
+			title \Disabled Major
 			enabled false
 		-
 		<= Minor_enabled $mol_button_minor
-			title @ \Enabled Minor
+			title \Enabled Minor
 			click?event <=> fail?event null
 		-
 		<= Minor_disabled $mol_button_minor
-			title @ \Disabled Minor
+			title \Disabled Minor
 			enabled false
 		-
 		<= Minor_icon_only $mol_button_minor
@@ -556,8 +540,8 @@ $mol_button_share $mol_button_minor
 	sub /
 		<= Icon $mol_icon_share_variant
 
-$mol_button_share_demo $mol_example
-	title @ \Share button demo
+$mol_button_share_demo $mol_example_small
+	title \Share button demo
 	sub /
 		<= Share_page $mol_button_share
 			title <= title
@@ -620,7 +604,7 @@ $mol_calendar_day $mol_view
 		mol_theme <= theme \
 
 $mol_calendar_demo_holiday $mol_example_small
-	title @ \Days of month 2018-01 with custom holidays
+	title \Days of month 2018-01 with custom holidays
 	holidays /
 		\2018-01-01
 		\2018-01-02
@@ -645,10 +629,16 @@ $mol_calendar_demo_holiday $mol_example_small
 		\date
 
 $mol_calendar_demo_selection $mol_example_small
-	title @ \Days of month 2018-01 with custom selection
+	title \Days of month 2018-01 with custom selection
 	interval_config *
-		start \2018-01-10
-		end \2018-01-20
+		start \2018-01-05
+		end \2018-01-10
+	days /
+		\2018-01-18
+		\2018-01-20
+		\2018-01-26
+		\2018-02-01
+		\2018-02-03
 	sub /
 		<= Calendar $mol_calendar
 			month_string <= month \2018-01
@@ -659,7 +649,7 @@ $mol_calendar_demo_selection $mol_example_small
 		\period
 
 $mol_calendar_demo_simple $mol_example_small
-	title @ \Days of curret month
+	title \Days of curret month
 	sub /
 		<= Calendar $mol_calendar
 			month_moment <= today $mol_time_moment
@@ -667,8 +657,21 @@ $mol_calendar_demo_simple $mol_example_small
 		\calendar
 		\date
 
+$mol_card $mol_list
+	attr *
+		^
+		mol_card_status_type <= status \
+	rows /$mol_view
+		<= Content $mol_view
+			sub <= content /$mol_view_content
+				<= title
+		<= Status $mol_view
+			minimal_height 30
+			sub /
+				<= status_text <= status \
+
 $mol_card_demo $mol_example_small
-	title @ \Cards with optional status
+	title \Cards with optional status
 	sub /
 		<= Simple $mol_card
 			content /
@@ -1107,19 +1110,19 @@ $mol_plot_mark_cross $mol_plot_graph
 			text <= title_y \
 
 $mol_chart_demo_simple $mol_example_large
-	title @ \Simple chart with hadcoded series
+	title \Simple chart with hadcoded series
 	sub /
 		<= Chart $mol_chart
 			graphs /
 				<= Plan $mol_plot_bar
-					title <= plan_title @ \Plan
+					title <= plan_title \Plan
 					series_y <= plan /
 						10
 						20
 						30
 						40
 				<= Fact $mol_plot_group
-					title <= fact_title @ \Fact
+					title <= fact_title \Fact
 					series_y <= facts /
 						5
 						10
@@ -1128,9 +1131,9 @@ $mol_chart_demo_simple $mol_example_large
 						<= Fact_line $mol_plot_line
 						<= Fact_dots $mol_plot_dot
 				<= Vert_ruler $mol_plot_ruler_vert
-					title <= vert_title @ \pcs
+					title <= vert_title \pcs
 				<= Marker_hor $mol_plot_mark_hor
-					title <= marker_hor_title @ \Months
+					title <= marker_hor_title \Months
 					labels <= months /string
 						\January
 						\February
@@ -1152,30 +1155,30 @@ $mol_plot_fill $mol_plot_line
 	threshold 4
 
 $mol_chart_demo_styles $mol_example_large
-	title @ \Chart with various styles of graphs.
+	title \Chart with various styles of graphs.
 	samples_count 15
 	sub /
 		<= Chart $mol_chart
 			graphs <= graphs /
 				<= Receipts $mol_plot_bar
-					title <= receipts_title @ \Receipts
+					title <= receipts_title \Receipts
 					series_x <= series_x /number
 					series_y <= series_2_y /number
 				<= Receipts_confirmed $mol_plot_bar
-					title <= receipts_confirmed_title @ \Confirmed receipts
+					title <= receipts_confirmed_title \Confirmed receipts
 					series_x <= series_x /number
 					series_y <= series_3_y /number
 				<= Maximum $mol_plot_dot
-					title <= maximum_title @ \Maximum
+					title <= maximum_title \Maximum
 					series_x <= series_x /number
 					series_y <= series_1_y /number
 				<= Waste $mol_plot_line
 					type \dashed
-					title <= waste_title @ \Waste
+					title <= waste_title \Waste
 					series_x <= series_x /number
 					series_y <= series_4_y /number
 				<= Purchases $mol_plot_group
-					title <= purchases_title @ \Purchases
+					title <= purchases_title \Purchases
 					series_x <= series_x /number
 					series_y <= series_5_y /number
 					graphs /
@@ -1183,7 +1186,7 @@ $mol_chart_demo_styles $mol_example_large
 						<= Purchases_line $mol_plot_line 
 						<= Purchases_dots $mol_plot_dot 
 				<= Taxes $mol_plot_group
-					title <= taxes_title @ \Taxes
+					title <= taxes_title \Taxes
 					series_x <= series_x /number
 					series_y <= series_6_y /number
 					graphs /
@@ -1192,9 +1195,9 @@ $mol_chart_demo_styles $mol_example_large
 							type \dashed
 						<= Taxes_dots $mol_plot_dot
 				<= Energy $mol_plot_ruler_vert
-					title <= energy_title @ \kJ
+					title <= energy_title \kJ
 				<= Day $mol_plot_mark_hor
-					title <= day_title @ \Day
+					title <= day_title \Day
 					series_x <= series_x /number
 	tags /
 		\$mol_plot
@@ -1204,26 +1207,26 @@ $mol_chart_demo_styles $mol_example_large
 		\dashboard
 
 $mol_chart_demo_forces $mol_example_large
-	title @ \Fake wheel forces
-	samples_count 10000
-	points_max 1000
+	title \Fake wheel forces
+	samples_count 5000
+	points_max 2500
 	sub /
 		<= Chart $mol_chart
 			graphs /
 				<= Forces_left $mol_plot_dot
-					title <= forces_left_title @ \Left wheel
+					title <= forces_left_title \Left wheel
 					series_x <= forces_left_x /number
 					series_y <= forces_left_y /number
 					points_max <= points_max
 				<= Forces_right $mol_plot_dot
-					title <= forces_right_title @ \Right wheel
+					title <= forces_right_title \Right wheel
 					series_x <= forces_right_x /number
 					series_y <= forces_right_y /number
 					points_max <= points_max
 				<= Vert_ruler $mol_plot_ruler_vert
-					title <= vert_title @ \kN
+					title <= vert_title \kN
 				<= Hor_ruler $mol_plot_ruler_hor
-					title <= hor_title @ \cm
+					title <= hor_title \cm
 					series_x <= forces_left_x
 				<= Cross $mol_plot_mark_cross
 					graphs /
@@ -1288,8 +1291,8 @@ $mol_chat $mol_link
 			Body <= Embed $mol_frame
 				uri <= embed \
 
-$mol_chat_demo $mol_example
-	title @ \Feed of comments for this page
+$mol_chat_demo $mol_example_small
+	title \Feed of comments for this page
 	sub /
 		<= Chat $mol_chat
 			seed \mol_chat_demo
@@ -1300,20 +1303,20 @@ $mol_chat_demo $mol_example
 		\chat
 		\communication
 
-$mol_check_box_demo $mol_example
-	title @ \Checkboxes in various states
+$mol_check_box_demo $mol_example_small
+	title \Checkboxes in various states
 	sub /
 		<= Demo_items $mol_list rows /
 			<= Labeled_base $mol_check_box
 				checked?val <=> base_checked?val false
-				title <= c1Label @ \Base
+				title <= c1Label \Base
 			-
 			<= Labeled_checked $mol_check_box
-				title <= c2Label @ \Checked
+				title <= c2Label \Checked
 				checked?val <=> checked_checked?val true
 			-
 			<= Labeled_disabled $mol_check_box
-				title <= c6Label @ \Disabled
+				title <= c6Label \Disabled
 				checked true
 				enabled false
 			-
@@ -1329,20 +1332,50 @@ $mol_check_box_demo $mol_example
 	tags /
 		\checkbox
 
-$mol_check_expand_demo $mol_example
-	title @ \Checkbox-expand in various states
+$mol_check_list $mol_view
+	Option!id $mol_check
+		checked?val <=> option_checked!id?val false
+		label <= option_label!id /
+			<= option_title!id \
+		enabled <= option_enabled!id <= enabled true
+		hint <= option_hint!id \
+		minimal_height 24
+	options *
+	keys /string
+	sub <= items /$mol_check
+
+$mol_check_list_demo $mol_example_small
+	title \Set of toggles
+	sub /
+		<= Rights $mol_check_list
+			option_checked!id?val <=> right!id?val false
+			options *
+				read \Allow Read
+				write \Allow Write
+				rights \Allow Change Rights
+				backup \Allow BackUp
+				restart \Allow Restart
+				ping \Allow Ping
+				api \Allow API Access
+				docs \Allow Read Documentation
+	tags /
+		\checkbox
+		\option
+
+$mol_check_expand_demo $mol_example_small
+	title \Checkbox-expand in various states
 	sub /
 		<= Demo_items $mol_list rows /
 			<= Labeled_base $mol_check_expand
 				checked?val <=> base_expanded?val false
-				title <= c1Label @ \Base
+				title <= c1Label \Base
 			-
 			<= Labeled_expanded $mol_check_expand
-				title <= c2Label @ \Expanded
+				title <= c2Label \Expanded
 				checked?val <=> expanded_expanded?val true
 			-
 			<= Disabled $mol_check_expand
-				title <= c5Label @ \Non expandable
+				title <= c5Label \Non expandable
 				disabled true
 			-
 			<= Empty_base $mol_check_expand
@@ -1363,8 +1396,8 @@ $mol_icon_check $mol_icon path \M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.5
 
 $mol_icon_check_all $mol_icon path \M0.41,13.41L6,19L7.41,17.58L1.83,12M22.24,5.58L11.66,16.17L7.5,12L6.07,13.41L11.66,19L23.66,7M18,7L16.59,5.58L10.24,11.93L11.66,13.34L18,7Z
 
-$mol_check_group_demo $mol_example
-	title @ \Group of checkboxes
+$mol_check_group_demo $mol_example_small
+	title \Group of checkboxes
 	sub /
 		<= Demo_items $mol_list
 			rows /
@@ -1411,23 +1444,21 @@ $mol_check_icon $mol_check
 
 $mol_icon_microphone $mol_icon path \M12,2C13.66,2 15,3.34 15,5V11C15,12.66 13.66,14 12,14C10.34,14 9,12.66 9,11V5C9,3.34 10.34,2 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7C7,13.76 9.24,16 12,16C14.76,16 17,13.76 17,11H19Z
 
-$mol_check_icon_demo $mol_example
-	title @ \Iconic checkboxes in various states
+$mol_check_icon_demo $mol_example_small
+	title \Iconic checkboxes in various states
 	sub /
-		<= Demo_items $mol_list
-			rows /
-				<= Base $mol_check_icon
-					Icon <= Base_icon $mol_icon_microphone
-					checked?val <=> base_checked?val false
-				-
-				<= Checked $mol_check_icon
-					Icon <= Checked_icon $mol_icon_microphone
-					checked?val <=> checked_checked?val true
-				-
-				<= Disabled $mol_check_box
-					Icon <= Disabled_icon $mol_icon_microphone
-					checked true
-					enabled false
+		<= Base $mol_check_icon
+			Icon <= Base_icon $mol_icon_microphone
+			checked?val <=> base_checked?val false
+		-
+		<= Checked $mol_check_icon
+			Icon <= Checked_icon $mol_icon_microphone
+			checked?val <=> checked_checked?val true
+		-
+		<= Disabled $mol_check_box
+			Icon <= Disabled_icon $mol_icon_microphone
+			checked true
+			enabled false
 	tags /
 		\$mol_icon
 		\checkbox
@@ -1523,7 +1554,7 @@ $mol_code $mol_view
 				<= scan_label @ \Scan
 
 $mol_code_demo $mol_example_small
-	title @ \Barcode scanner with various formats support
+	title \Barcode scanner with various formats support
 	sub /
 		<= Qr $mol_code
 			format \QR_CODE
@@ -1607,7 +1638,7 @@ $mol_date_calendar $mol_calendar
 			event_click?event <=> day_click!day?event null
 			minimal_height 24
 
-$mol_date_demo $mol_example
+$mol_date_demo $mol_example_small
 	sub /
 		<= Date $mol_date
 			value_moment?val <=> date?val $mol_time_moment
@@ -1620,17 +1651,8 @@ $mol_date_demo $mol_example
 		\datepicker
 		\format
 
-$mol_switch $mol_view
-	Option!id $mol_check
-		checked?val <=> option_checked!id?val false
-		label <= option_label!id / <= option_title!id \
-		enabled <= option_enabled!id <= enabled true
-		hint <= option_hint!id \
-		minimal_height 24
-	value?val null
-	options *
-	keys /string
-	sub <= items /$mol_check
+$mol_switch $mol_check_list
+	value?val \
 
 $mol_deck $mol_list
 	items /$mol_view
@@ -1640,19 +1662,19 @@ $mol_deck $mol_list
 			options <= switch_options *
 		<= Content $mol_view
 
-$mol_deck_demo $mol_example
-	title @ \Simple deck with tabbar
+$mol_deck_demo $mol_example_small
+	title \Simple deck with tabbar
 	sub /
 		<= Deck $mol_deck items /
 			<= Greeter $mol_card
-				title @ \Greeting
-				content / <= greet_message @ \Hello, world!
+				title \Greeting
+				content / <= greet_message \Hello, world!
 			<= Quester $mol_card
-				title @ \Question
-				content / <= quest_message @ \How are you?
+				title \Question
+				content / <= quest_message \How are you?
 			<= Commander $mol_card
-				title @ \Command
-				content / <= command_message @ \Let us do it right!
+				title \Command
+				content / <= command_message \Let us do it right!
 	tags /
 		\$mol_card
 		\deck
@@ -1660,10 +1682,10 @@ $mol_deck_demo $mol_example
 		\tabs
 		\container
 
-$mol_dimmer_demo $mol_example
-	title @ \Text with highlighted found substring
+$mol_dimmer_demo $mol_example_small
+	title \Text with highlighted found substring
 	sub /
-		<= Demo_items $mol_list rows /
+		<= Cases $mol_list rows /
 			<= One $mol_dimmer
 				haystack \Don't put all your eggs in one basket
 				needle \eggs
@@ -1767,8 +1789,8 @@ $mol_expander $mol_list
 					label <= label /
 						<= title
 				<= Tools null
-		<= Content $mol_view
-			sub <= content /
+		<= Content $mol_list
+			rows <= content /
 
 $mol_filler $mol_view
 	minimal_height 500
@@ -1782,12 +1804,13 @@ $mol_filler $mol_view
 		\Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. Etiam luctus porttitor lorem, sed suscipit est rutrum non. Curabitur lobortis nisl a enim congue semper. Aenean commodo ultrices imperdiet. Vestibulum ut justo vel sapien venenatis tincidunt. Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. Aliquam ut massa in turpis dapibus convallis. Praesent elit lacus, vestibulum at malesuada et, ornare et est. Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. Mauris ut placerat justo. Mauris in ultricies enim. Quisque nec est eleifend nulla ultrices egestas quis ut quam. Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. Cras quis ligula sem, vel elementum mi. Phasellus non ullamcorper urna.
 		\Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In euismod ultrices facilisis. Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. Proin quis dictum nisl. Morbi id quam sapien, sed vestibulum sem. Duis elementum rutrum mauris sed convallis. Proin vestibulum magna mi. Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. Sed non tortor sodales quam auctor elementum. Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. Donec vel.
 
-$mol_expander_demo $mol_example
-	title @ \Simple spoiler
+$mol_expander_demo $mol_example_small
+	title \Simple spoiler
 	sub /
 		<= Expander $mol_expander
 			title \Lorem Ipsum
-			Content <= Content $mol_filler
+			content /
+				<= Content $mol_filler
 	tags /
 		\$mol_filler
 		\expander
@@ -1795,10 +1818,8 @@ $mol_expander_demo $mol_example
 		\container
 		\fold
 
-$mol_row $mol_view
-
 $mol_float_demo $mol_example_large
-	title @ \Floating header example
+	title \Floating header example
 	sub /
 		<= Scroll $mol_scroll
 			sub /
@@ -1837,17 +1858,17 @@ $mol_form_field $mol_labeler
 	content /
 		<= control null
 
-$mol_form $mol_view
+$mol_form $mol_list
 	submit_blocked false
 	event *
 		^
 		keydown?event <=> keydown?event null
 	submit?event null
-	sub /
-		<= Bar_fields $mol_view
-			sub <= form_fields /$mol_form_field
-		<= Bar_buttons $mol_row
-			sub <= buttons /$mol_view
+	rows /
+		<= Body $mol_list
+			sub <= body <= form_fields /$mol_form_field
+		<= Foot $mol_row
+			sub <= foot <= buttons /$mol_view
 
 $mol_icon_dots_vertical $mol_icon path \M12,16C13.1,16 14,16.9 14,18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18C10,16.9 10.9,16 12,16M12,10C13.1,10 14,10.9 14,12C14,13.1 13.1,14 12,14C10.9,14 10,13.1 10,12C10,10.9 10.9,10 12,10M12,4C13.1,4 14,4.9 14,6C14,7.1 13.1,8 12,8C10.9,8 10,7.1 10,6C10,4.9 10.9,4 12,4Z
 
@@ -1883,102 +1904,132 @@ $mol_select $mol_pick
 		enabled <= enabled true
 	Trigger_icon $mol_icon_dots_vertical
 
-$mol_select_demo_colors $mol_example
-	title @ \Color picker with filter and custom rows
-	sub /
-		<= Color $mol_select
-			filter_pattern => color_filter
-			value?val <=> color?val \
-			dictionary <= colors *
-			option_label!id <= color_name!id \
-			option_content!id <= option_content!id /
-				<= Color_option!id $mol_view
-					sub /
-						<= Color_preview!id $mol_select_colors_color_preview
-							color <= option_color!id \
-						<= Color_name!id $mol_dimmer
-							haystack <= color_name!id \
-							needle <= color_filter
-					minimal_height 40
-	tags /
-		\$mol_dimmer
-		\select
-		\color
-		\colorpicker
-		\filter
+$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
 
-$mol_select_colors_color_preview $mol_view
-	style *
-		^
-		background <= color \
+$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
+
+$mol_number $mol_view
+	precision_view <= precision 1
+	precision_change <= precision 1
+	value?val NaN
+	sub /
+		<= String $mol_string
+			- \ we don't want native number controls in mobile devices
+			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
+			type \tel
+			value?val <=> value_string?val \
+			hint <= hint \ 
+			enabled <= string_enabled <= enabled true
+		<= Dec $mol_button_minor
+			event_click?val <=> event_dec?val null
+			enabled <= dec_enabled <= enabled true
+			sub / <= dec_icon $mol_icon_minus
+		<= Inc $mol_button_minor
+			event_click?val <=> event_inc?val null
+			enabled <= inc_enabled <= enabled true
+			sub / <= inc_icon $mol_icon_plus
+
+$mol_form_group $mol_view
 
 $mol_form_demo_bids $mol_example
-	title @ \Sign Up form demo
-	message_required @ \Required
-	message_no_spaces @ \No spaces!
-	message_need_more_letters @ \{count} or more letters
-	message_need_at @ \@ is required
-	message_only_one_at @ \At most one @
-	message_no_tld @ \At least 2 level domain
-	message_dots_inside @ \Dots can't be at edge
-	message_no_space_domain @ \No space in domain name
-	message_need_username @ \Username required
+	title \Sign Up form demo
+	message *
+		required \Required
+		adult \18+ only
+		no_spaces \No spaces!
+		need_more_letters \{count} or more letters
+		need_at \is required
+		only_one_at \At most one @
+		no_tld \At least 2 level domain
+		dots_inside \Dots can't be at edge
+		no_space_domain \No space in domain name
+		need_username \Username required
 	sub /
-		<= Demo_items $mol_list
+		<= Form $mol_form
+			submit?val <=> submit?val null
+			form_fields /
+				-
+				<= Name_first_field $mol_form_field
+					name \First Name
+					bid <= name_first_bid \
+					Content <= Name_first_control $mol_string
+						hint \Jack
+						value?val <=> name_first?val \
+				-
+				<= Name_nick_field $mol_form_field
+					name \Nick Name
+					bid <= name_nick_bid \
+					Content <= Name_nick_control $mol_string
+						hint \Capitan
+						value?val <=> name_nick?val \
+				-
+				<= Name_second_field $mol_form_field
+					name \Second Name
+					bid <= name_second_bid \
+					Content <= Name_second_control $mol_string
+						hint \Sparrow
+						value?val <=> name_second?val \
+				-
+				<= Sex_field $mol_form_field
+					name <= sex_label \Sex
+					bid <= sex_bid \
+					Content <= Sex_control $mol_switch
+						value?val <=> sex?val \
+						options <= sex_options *
+							male \Male
+							intersex \Intersex
+							female \Female
+				-
+				<= Color_field $mol_form_field
+					name \Skin color
+					bid <= color_bid \
+					control <= Color_control $mol_select
+						value?val <=> color?val \
+						dictionary *
+							\
+								\❔
+							white \⬜ White
+							yellow \🟨 Yellow
+							brown \🟫 Brown
+							red \🟥 Red
+				-
+				<= Age_field $mol_form_field
+					name \Age
+					bid <= age_bid \
+					control <= Age_control $mol_number
+						value?val <=> age?val 0
+				-
+				<= Mail_field $mol_form_field
+					name \E-mail
+					bid <= mail_bid \
+					Content <= Mail_control $mol_string
+						hint \name@domain.com
+						value?val <=> mail?val \
+				-
+				<= Avatars_field $mol_form_field
+					name \Avatars
+					bid <= avatars_bid \
+					Content <= Avatars_control $mol_attach
+						items?val <=> avatars?val /string
+			body /
+				<= Avatars_field
+				<= Names $mol_form_group sub /
+					<= Name_first_field
+					<= Name_nick_field
+					<= Name_second_field
+				<= Parameters $mol_form_group sub /
+					<= Age_field
+					<= Sex_field
+					<= Color_field
+				<= Mail_field
+			buttons /
+				<= Submit $mol_button_major
+					title \Sign Up
+					click?val <=> submit?val null
+					enabled <= submit_allowed true
+		<= Result $mol_row
 			sub /
-				<= Form $mol_form
-					submit?val <=> submit?val null
-					form_fields /
-						-
-						<= Name_first_field $mol_form_field
-							name <= name_first_label @ \First Name
-							bid <= name_first_bid \
-							Content <= Name_first_control $mol_string
-								hint <= name_first_hint @ \Jack
-								value?val <=> name_first?val \
-						-
-						<= Name_nick_field $mol_form_field
-							name <= name_nick_label @ \Nick Name
-							bid <= name_nick_bid \
-							Content <= Name_nick_control $mol_string
-								hint <= name_nick_hint @ \Capitan
-								value?val <=> name_nick?val \
-						-
-						<= Name_second_field $mol_form_field
-							name <= name_second_label @ \Second Name
-							bid <= name_second_bid \
-							Content <= Name_second_control $mol_string
-								hint <= name_second_hint @ \Sparrow
-								value?val <=> name_second?val \
-						-
-						<= Sex_field $mol_form_field
-							name <= sex_label @ \Sex
-							bid <= sex_bid \
-							Content <= Sex_control $mol_switch
-								value?val <=> sex?val \
-								options <= sex_options *
-									male <= sex_option_male @ \Male
-									intersex <= sex_option_intersex @ \Intersex
-									female <= sex_option_female @ \Female
-						-
-						<= Color_field $mol_form_field
-							name <= color_label @ \Skin color
-							bid <= color_bid \
-							control <= Color_control $mol_select_demo_colors
-								color?val <=> color?val \
-						-
-						<= Mail_field $mol_form_field
-							name <= mail_label @ \E-mail
-							bid <= mail_bid \
-							Content <= Mail_control $mol_string
-								hint <= mail_hint @ \name@domain.com
-								value?val <=> mail?val \
-					buttons /
-						<= Submit $mol_button_major
-							sub / <= submit_text @ \Sign Up
-							click?val <=> submit?val null
-							enabled <= submit_allowed true
-				<= Message $mol_row sub / <= message?val \
+				<= result?val \
 	tags /
 		\$mol_form_field
 		\$mol_button
@@ -1992,7 +2043,7 @@ $mol_form_demo_bids $mol_example
 $mol_frame_demo $mol_example_large
 	sub /
 		<= Frame $mol_frame
-			title @ \Another page inside that
+			title \Another page inside that
 			uri \https://mol.hyoo.ru/
 	tags /
 		\frame
@@ -2007,7 +2058,7 @@ $mol_gallery $mol_view
 		items <= side_items!id /$mol_view
 
 $mol_gallery_demo $mol_example
-	title @ \Gallery of cards
+	title \Gallery of cards
 	count 101
 	sub /
 		<= App $mol_gallery
@@ -2026,14 +2077,6 @@ $mol_gallery_demo $mol_example
 		\gallery
 		\image
 		\adaptive
-
-$mol_image $mol_view
-	dom_name \img
-	field *
-		^
-		src <= uri \
-		alt <= title
-		loading <= loading \eager
 
 $mol_link_iconed $mol_link
 	sub /
@@ -2085,7 +2128,7 @@ $mol_html_view_heading $mol_paragraph
 		mol_html_view_heading <= level 1
 
 $mol_html_view_demo $mol_example_large
-	title @ \View raw HTML
+	title \View raw HTML
 	sub /
 		<= Scroll $mol_scroll sub /
 			<= Html $mol_html_view
@@ -2130,7 +2173,7 @@ $mol_infinite $mol_list
 	Row!id $mol_view
 
 $mol_infinite_demo $mol_example
-	title @ \Infinite list demo
+	title \Infinite list demo
 	chunk_size 20
 	sub /
 		<= List $mol_infinite
@@ -2144,7 +2187,7 @@ $mol_infinite_demo $mol_example
 		\container
 
 $mol_labeler_demo $mol_example_small
-	title @ \Labeled content of some types
+	title \Labeled content of some types
 	sub /
 		<= Provider $mol_labeler
 			title \Provider
@@ -2163,36 +2206,36 @@ $mol_labeler_demo $mol_example_small
 
 $mol_icon_download $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
 
-$mol_link_demo $mol_example
-	title @ \Some hyperlinks
+$mol_link_demo $mol_example_small
+	title \Some hyperlinks
 	sub /
 		<= Demo_items $mol_list
 			rows /
 				<= This $mol_link
 					sub /
-						<= this_label @ \This page
+						<= this_label \This page
 				<= Red $mol_link
 					arg * color \red
 					sub /
-						<= red_label @ \Red
+						<= red_label \Red
 				<= Green $mol_link
 					arg * color \green
 					sub /
-						<= green_label @ \Green
+						<= green_label \Green
 				<= Blue $mol_link
 					arg * color \blue
 					sub /
-						<= blue_label @ \Blue
+						<= blue_label \Blue
 				<= External $mol_link
 					uri \http://example.org
 					title \example.org
-					hint <= external_hint @ \external link
+					hint <= external_hint \external link
 				<= Download $mol_link
 					uri <= object_uri \
 					file_name \file.csv
 					sub /
 						<= Download_icon $mol_icon_download
-						<= download_label @ \Download
+						<= download_label \Download
 	tags /
 		\$mol_icon
 		\file
@@ -2203,10 +2246,10 @@ $mol_link_demo $mol_example
 		\router
 		\url
 
-$mol_link_iconed_demo $mol_example
-	title @ \Link with icon
+$mol_link_iconed_demo $mol_example_small
+	title \Link with icon
 	sub /
-		<= Demo_items $mol_list
+		<= Blocks $mol_list
 			rows /
 				<= Input $mol_string
 					value?val <=> uri?val \https://www.google.com/search?q=%24mol
@@ -2231,7 +2274,7 @@ $mol_link_lazy $mol_link
 
 
 $mol_link_lazy_demo $mol_example_small
-	title @ \Lazy generated link
+	title \Lazy generated link
 	sub /
 		<= Download $mol_link_lazy
 			hint <= title
@@ -2239,7 +2282,7 @@ $mol_link_lazy_demo $mol_example_small
 			file_name <= download_file \generated.csv
 			sub /
 				<= Download_icon $mol_icon_download
-				<= download_label @ \Download
+				<= download_label \Download
 	tags /
 		\icon
 		\link
@@ -2247,7 +2290,7 @@ $mol_link_lazy_demo $mol_example_small
 		\download
 
 $mol_list_demo_table $mol_example
-	title @ \Large list of rows with dynamic content
+	title \Large list of rows with dynamic content
 	count 1000
 	sub /
 		<= Rows $mol_list
@@ -2258,7 +2301,7 @@ $mol_list_demo_table $mol_example
 			<= Id!id $mol_view sub / <= row_id!id \
 			<= Title!id $mol_view sub / <= row_title!id \
 			<= Editable!id $mol_check_box
-				title <= editable_title @ \Editable
+				title <= editable_title \Editable
 				checked?val <=> row_editable!id?val false
 			<= Priority!id $mol_switch
 				enabled <= row_editable!id
@@ -2281,8 +2324,8 @@ $mol_list_demo_table $mol_example
 		\table
 		\scroll
 
-$mol_list_demo_tree $mol_example
-	title @ \Large list of rows with dynamic content
+$mol_list_demo_tree $mol_example_large
+	title \Large list of rows with dynamic content
 	sub /
 		<= Content $mol_list
 			rows <= root_rows /
@@ -2325,7 +2368,7 @@ $mol_map_yandex $mol_view
 	objects /$mol_map_yandex_mark
 
 $mol_map_yandex_demo $mol_example_large
-	title @ \Simple Yandex Maps wrapper
+	title \Simple Yandex Maps wrapper
 	sub /
 		<= Map $mol_map_yandex
 			objects /
@@ -2338,17 +2381,16 @@ $mol_map_yandex_demo $mol_example_large
 
 
 $mol_nav_demo $mol_example
-	title @ \Number input control with various configuration
+	title \Number input control with various configuration
+	plugins /
+		<= Nav $mol_nav
+			keys_x <= tab_list
+			current_x?val <=> tab_current?val
+			keys_y <= row_list
+			current_y?val <=> row_current?val
 	sub /
-		<= Demo_items $mol_list
-			plugins /
-				<= Nav $mol_nav
-					keys_x <= tab_list
-					current_x?val <=> tab_current?val
-					keys_y <= row_list
-					current_y?val <=> row_current?val
-			rows /
-				<= Hint $mol_card title @ \Select option and use keys to switch
+		<= Demo_items $mol_card
+			content /
 				<= Tab_list $mol_switch
 					keys => tab_list
 					value?val <=> tab_current?val \
@@ -2363,6 +2405,7 @@ $mol_nav_demo $mol_example
 						first \First
 						second \Second
 						third \Third
+			status \Select option and use keys to switch
 	tags /
 		\$mol_card
 		\$mol_switch
@@ -2370,33 +2413,8 @@ $mol_nav_demo $mol_example
 		\keyboard
 
 
-$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
-
-$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
-
-$mol_number $mol_view
-	precision_view <= precision 1
-	precision_change <= precision 1
-	value?val NaN
-	sub /
-		<= String $mol_string
-			- \ we don't want native number controls in mobile devices
-			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
-			type \tel
-			value?val <=> value_string?val \
-			hint <= hint \ 
-			enabled <= string_enabled <= enabled true
-		<= Dec $mol_button_minor
-			event_click?val <=> event_dec?val null
-			enabled <= dec_enabled <= enabled true
-			sub / <= dec_icon $mol_icon_minus
-		<= Inc $mol_button_minor
-			event_click?val <=> event_inc?val null
-			enabled <= inc_enabled <= enabled true
-			sub / <= inc_icon $mol_icon_plus
-
 $mol_number_demo $mol_example_small
-	title @ \Number input control with various configuration
+	title \Number input control with various configuration
 	sub /
 		<= zero $mol_number
 		<= one $mol_number
@@ -2431,7 +2449,7 @@ $mol_number_demo $mol_example_small
 		\field
 
 $mol_page_demo $mol_example_large
-	title @ \Page with header, body and footer
+	title \Page with header, body and footer
 	sub /
 		<= Page $mol_page
 			tools /
@@ -2466,8 +2484,8 @@ $mol_paginator $mol_view
 			click?event <=> forward?event null
 			sub / <= Forward_icon $mol_icon_chevron_right
 
-$mol_paginator_demo $mol_example
-	title @ \Page switcher
+$mol_paginator_demo $mol_example_small
+	title \Page switcher
 	sub /
 		<= Pages $mol_paginator
 			value?val <=> page?val 0
@@ -2476,7 +2494,7 @@ $mol_paginator_demo $mol_example
 		\navigation
 
 $mol_plot_demo $mol_example_large
-	title @ \Dynamic lightweight graphs
+	title \Dynamic lightweight graphs
 	count?val 20
 	frequency 8
 	sub /
@@ -2496,9 +2514,9 @@ $mol_plot_demo $mol_example_large
 				<= Output $mol_plot_bar
 					series_y <= output_series /
 				<= Voltage $mol_plot_ruler_vert
-					title <= Voltage_title @ \V
+					title <= Voltage_title \V
 				<= Time $mol_plot_ruler_hor
-					title <= Time_title @ \ms
+					title <= Time_title \ms
 	tags /
 		\visualization
 		\chart
@@ -2524,7 +2542,7 @@ $mol_plot_map_heat_level $mol_plot_dot
 		opacity <= opacity \1
 
 $mol_plot_map_heat_demo $mol_example_large
-	title @ \Dynamic Heat Map Graphs
+	title \Dynamic Heat Map Graphs
 	count_x 20
 	count_y 200
 	count_z 20
@@ -2547,17 +2565,17 @@ $mol_plot_map_heat_demo $mol_example_large
 $mol_icon_anchor $mol_icon path \M12,2C10.34,2 9,3.34 9,5C9,6.27 9.8,7.4 11,7.83V10H8V12H11V18.92C9.16,18.63 7.53,17.57 6.53,16H8V14H3V19H5V17.3C6.58,19.61 9.2,21 12,21C14.8,21 17.42,19.61 19,17.31V19H21V14H16V16H17.46C16.46,17.56 14.83,18.63 13,18.92V12H16V10H13V7.82C14.2,7.4 15,6.27 15,5C15,3.34 13.66,2 12,2M12,4C12.55,4 13,4.45 13,5C13,5.55 12.55,6 12,6C11.45,6 11,5.55 11,5C11,4.45 11.45,4 12,4Z
 
 $mol_pop_demo $mol_example
-	title @ \Pop up block with various alignment
+	title \Pop up block with various alignment
 	sub /
 		<= Manage $mol_row sub /
 			<= Showed $mol_labeler
-				title <= show_title @ \Showed
+				title <= show_title \Showed
 				content /
 					<= Show_check $mol_check_box
-						hint <= pop_showed_check_hint @ \$mol_pop showed
+						hint <= pop_showed_check_hint \$mol_pop showed
 						checked?val <=> pop_showed?val true
 			<= Align $mol_labeler
-				title <= align_title @ \Align
+				title <= align_title \Align
 				content /
 					<= Align_select $mol_switch
 						value?val <=> pop_align?val \bottom_right
@@ -2579,14 +2597,16 @@ $mol_pop_demo $mol_example
 			<= Pop $mol_pop
 				Anchor <= Pop_anchor $mol_button_major sub /
 					<= anchor_button_icon $mol_icon_anchor
-					<= anchor_button_title @ \Anchor
+					<= anchor_button_title \Anchor
 				showed <= pop_showed
 				align <= pop_align
 				bubble_content /
 					<= Content $mol_row 
 						minimal_width 150
 						sub / 
-							<= bubble_hint @ \This is $mol_pop content
+							<= bubble_hint \
+								\This is
+								\bubble_content
 	tags /
 		\$mol_row
 		\$mol_button
@@ -2607,33 +2627,33 @@ $mol_pop_over $mol_pop
 		mouseenter?event <=> event_show?event null
 		mouseleave?event <=> event_hide?event null
 
-$mol_pop_over_demo $mol_example
-	title @ \Menu that opens on mouse over
+$mol_pop_over_demo $mol_example_small
+	title \Menu that opens on mouse over
 	sub /
 		<= Menu $mol_row
 			sub /
 				<= File $mol_pop_over
 					align \bottom_right
-					Anchor <= file_title @ \File
+					Anchor <= file_title \File
 					bubble_content /
 						<= File_menu $mol_list
 							rows /
 								<= Open $mol_button_minor
-									title <= open_title @ \Open
+									title <= open_title \Open
 								<= Export $mol_button_minor
-									title <= export_title @ \Export
+									title <= export_title \Export
 								<= Save $mol_button_minor
-									title <= save_title @ \Save
+									title <= save_title \Save
 				<= Help $mol_pop_over
 					align \bottom_right
-					Anchor <= help_title @ \About
+					Anchor <= help_title \About
 					bubble_content /
 						<= Help_menu $mol_list
 							rows /
 								<= Updates $mol_button_minor
-									title <= updates_title @ \Updates
+									title <= updates_title \Updates
 								<= About $mol_button_minor
-									title <= about_title @ \About
+									title <= about_title \About
 	tags /
 		\$mol_list
 		\$mol_button
@@ -2643,7 +2663,7 @@ $mol_pop_over_demo $mol_example
 		\hover
 
 $mol_portion_demo $mol_example_small
-	title @ \Progress bar in various states
+	title \Progress bar in various states
 	sub /
 		<= Empty $mol_portion
 			portion <= fist 0
@@ -2783,7 +2803,7 @@ $mol_icon_cloud_download $mol_icon path \M17,13L12,18L7,13H10V9H14V13M19.35,10.0
 $mol_icon_cloud_download_outline $mol_icon path \M8,13H10.55V10H13.45V13H16L12,17L8,13M19.35,10.04C21.95,10.22 24,12.36 24,15C24,17.76 21.76,20 19,20H6C2.69,20 0,17.31 0,14C0,10.91 2.34,8.36 5.35,8.04C6.6,5.64 9.11,4 12,4C15.64,4 18.67,6.59 19.35,10.04M19,18C20.66,18 22,16.66 22,15C22,13.45 20.78,12.14 19.22,12.04L17.69,11.93L17.39,10.43C16.88,7.86 14.62,6 12,6C9.94,6 8.08,7.14 7.13,8.97L6.63,9.92L5.56,10.03C3.53,10.24 2,11.95 2,14C2,16.21 3.79,18 6,18H19Z
 
 $mol_pick_demo $mol_example_small
-	title @ \Simple and complex popups
+	title \Simple and complex popups
 	confirmation_popup_content *
 		delete <= Delete_confirm_content
 	showed_confirmation null
@@ -2792,14 +2812,14 @@ $mol_pick_demo $mol_example_small
 			<= title
 		- 1. Simple Pop-up example
 		<= Simple_pop $mol_pick
-			hint @ \Click to show simple popup
+			hint \Click to show simple popup
 			trigger_content /
 				<= pick_trigger \?
 			bubble_content /
-				<= pick_content @ \This is popup content
+				<= pick_content \This is popup content
 		- 2. More complex info Pop-up example
 		<= Info_pop $mol_pick
-			hint @ \Click to show info popup
+			hint \Click to show info popup
 			trigger_content /
 				<= info_trigger $mol_icon_help_circle_outline
 			bubble_content /
@@ -2811,7 +2831,7 @@ $mol_pick_demo $mol_example_small
 						\More complex info Pop-up example
 		- 3. Options Pop-up example
 		<= Options_pop $mol_pick
-			hint @ \Click to show options menu
+			hint \Click to show options menu
 			align \bottom_left
 			trigger_content <= options_trigger_content /
 				<= options_trigger $mol_icon_dots_vertical
@@ -2823,21 +2843,21 @@ $mol_pick_demo $mol_example_small
 			event_click?val <=> menu_item_copy_click?val null
 			sub /
 				<= menu_item_copy_icon $mol_icon_content_copy
-				<= menu_item_copy_label @ \Copy
+				<= menu_item_copy_label \Copy
 		<= Menu_item_download $mol_link_lazy
-			hint <= menu_item_download_hint @ \Download some json
+			hint <= menu_item_download_hint \Download some json
 			uri_generated <= menu_item_download_uri \
 			file_name \demo.json
 			sub /
 				<= menu_item_download_icon $mol_icon_cloud_download_outline
-				<= menu_item_download_label @ \Download
+				<= menu_item_download_label \Download
 		<= Menu_item_delete $mol_button_minor
 			style *
 				color \red
 			event_click?val <=> menu_item_delete_click?val null
 			sub /
 				<= menu_item_delete_icon $mol_icon_trash_can_outline
-				<= menu_item_delete_label @ \Delete
+				<= menu_item_delete_label \Delete
 	-
 	Delete_confirm_content $mol_list rows /
 		<= Delete_message $mol_row sub /
@@ -2845,10 +2865,10 @@ $mol_pick_demo $mol_example_small
 				<= delete_message \Something will be deleted. This can't be undone.
 		<= Delete_buttons $mol_row sub /
 			<= Delete_confirm $mol_button_major
-				title <= delete_confirm_title @ \Delete
+				title <= delete_confirm_title \Delete
 				event_click?val <=> delete_confirm_click?val null
 			<= Delete_cancel $mol_button_minor
-				title <= delete_cancel_title @ \Cancel
+				title <= delete_cancel_title \Cancel
 				event_click?val <=> delete_cancel_click?val null
 	tags /
 		\$mol_link_lazy
@@ -2866,26 +2886,26 @@ $mol_pick_demo $mol_example_small
 		\markdown
 
 $mol_row_demo_form $mol_example
-	title @ \Some controls in one row with equal paddings and wrapping support
+	title \Some controls in one row with equal paddings and wrapping support
 	sub /
 		<= Row $mol_row
 			sub /
 				<= Name $mol_search
-					hint <= name_hint @ \Jack Sparrow
+					hint <= name_hint \Jack Sparrow
 					query?val <=> name?val \
 					suggests /
-						<= suggest1 @ \Jack Sparrow
-						<= suggest2 @ \Bruce Wayne
+						<= suggest1 \Jack Sparrow
+						<= suggest2 \Bruce Wayne
 				<= Count $mol_number
-					hint <= count_hint @ \Count
+					hint <= count_hint \Count
 					value?val <=> count?val null
 				<= Progress $mol_portion
 					portion <= progress 0.33
 				<= Publish $mol_check_box
-					title <= publish_label @ \Shared
+					title <= publish_label \Shared
 					checked?val <=> publish?val false
 				<= Drop $mol_button_minor
-					title <= drop_title @ \Drop
+					title <= drop_title \Drop
 	tags /
 		\$mol_search
 		\$mol_number
@@ -2899,7 +2919,7 @@ $mol_row_demo_form $mol_example
 		\space
 
 $mol_row_demo_products $mol_example
-	title @ \Product catalog
+	title \Product catalog
 	count 100
 	Product!id $mol_card
 		minimal_width 110
@@ -2916,7 +2936,7 @@ $mol_row_demo_products $mol_example
 
 
 $mol_scroll_demo $mol_example_large
-	title @ \Simple scroll pane
+	title \Simple scroll pane
 	sub /
 		<= Scroll $mol_scroll
 			sub /
@@ -2939,7 +2959,7 @@ $mol_scroll_demo $mol_example_large
 
 
 $mol_search_demo $mol_example_small
-	title @ \Search field with suggest 
+	title \Search field with suggest 
 	sub /
 		<= Search $mol_search
 			query => query
@@ -2955,22 +2975,53 @@ $mol_section $mol_list rows /
 	<= Head $mol_view
 		sub <= head /
 			<= title
-	<= Content null
+	<= Content $mol_list
+		rows <= content /
 
-$mol_section_demo $mol_example
-	title @ \Section with header
+$mol_section_demo $mol_example_small
+	title \Section with header
 	sub /
 		<= Section $mol_section
-			head / \Section header
-			Content <= Section_content $mol_filler
+			title \Section header
+			content /
+				<= Section_content $mol_filler
 	tags /
 		\$mol_filler
 		\section
 		\container
 		\header
 
-$mol_select_demo_month $mol_example
-	title @ \Month picker with filter
+$mol_select_demo_colors $mol_example_small
+	title \Color picker with filter and custom rows
+	sub /
+		<= Color $mol_select
+			filter_pattern => color_filter
+			value?val <=> color?val \
+			dictionary <= colors *
+			option_label!id <= color_name!id \
+			option_content!id <= option_content!id /
+				<= Color_option!id $mol_view
+					sub /
+						<= Color_preview!id $mol_select_colors_color_preview
+							color <= option_color!id \
+						<= Color_name!id $mol_dimmer
+							haystack <= color_name!id \
+							needle <= color_filter
+					minimal_height 40
+	tags /
+		\$mol_dimmer
+		\select
+		\color
+		\colorpicker
+		\filter
+
+$mol_select_colors_color_preview $mol_view
+	style *
+		^
+		background <= color \
+
+$mol_select_demo_month $mol_example_small
+	title \Month picker with filter
 	sub /
 		<= Month $mol_select
 			no_options_message \Not found
@@ -2991,8 +3042,8 @@ $mol_select_demo_month $mol_example
 	tags /
 		\select
 
-$mol_select_demo_priority $mol_example
-	title @ \Priority picker
+$mol_select_demo_priority $mol_example_small
+	title \Priority picker
 	sub /
 		<= Priority $mol_select
 			Filter null
@@ -3023,8 +3074,8 @@ $mol_select_list $mol_view
 		hint <= pick_hint @ \Add..
 		Trigger_icon <= Pick_icon $mol_icon_plus
 
-$mol_select_list_demo $mol_example
-	title @ \Friends picker
+$mol_select_list_demo $mol_example_small
+	title \Friends picker
 	sub /
 		<= Demo_items $mol_list
 			rows /
@@ -3062,7 +3113,7 @@ $mol_speck_demo $mol_example_small
 		<= String $mol_view
 			sub /
 				<= String_speck $mol_speck
-					value <= string_speck @ \New
+					value <= string_speck \New
 				<= String_field $mol_string
 		<= Button $mol_button_minor
 			sub /
@@ -3072,7 +3123,7 @@ $mol_speck_demo $mol_example_small
 		<= Message $mol_paragraph
 			sub /
 				<= Message_speck $mol_speck
-				<= message_text @ \Created
+				<= message_text \Created
 	tags /
 		\$mol_link
 		\$mol_icon
@@ -3104,7 +3155,7 @@ $mol_speech_demo $mol_example_small
 		
 
 $mol_string_demo $mol_example_small
-	title @ \String input field in various states
+	title \String input field in various states
 	sub /
 		<= Simple $mol_string
 			value?val <=> name?val \
@@ -3125,21 +3176,21 @@ $mol_string_demo $mol_example_small
 $mol_string_button $mol_string
 
 $mol_switch_demo $mol_example
-	title @ \Color switchers in various state
+	title \Color switchers in various state
 	sub /
 		<= Demo_items $mol_row
 			sub /
 				<= Enabled_labeler $mol_labeler
-					title @ \Read/Write
+					title \Read/Write
 					Content <= Enabled $mol_switch
 						value?val <=> color?val \red
 						options *
-							red <= option_red @ \Red
-							green <= option_green @ \Green
-							blue <= option_blue @ \Blue
-							infernal <= option_infernal @ \Color which can not be displayed on your device
+							red <= option_red \Red
+							green <= option_green \Green
+							blue <= option_blue \Blue
+							infernal <= option_infernal \Color which can not be displayed on your device
 				<= Disabled_labeler $mol_labeler
-					title @ \Read only
+					title \Read only
 					Content <= Disabled $mol_switch
 						value?val <=> color?val
 						enabled false
@@ -3151,8 +3202,8 @@ $mol_switch_demo $mol_example
 		\switch
 		\option
 
-$mol_text_code_demo $mol_example
-	title @ \Markdow visualization example
+$mol_text_code_demo $mol_example_small
+	title \Markdow visualization example
 	sub /
 		<= Text $mol_text_code text <= source \
 	tags /
@@ -3160,8 +3211,8 @@ $mol_text_code_demo $mol_example
 		\code
 		\syntax highlighting
 
-$mol_text_demo $mol_example
-	title @ \Markdown visualization example
+$mol_text_demo $mol_example_small
+	title \Markdown visualization example
 	sub /
 		<= Text $mol_text text \
 			\# [Benchmarks](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master)
@@ -3233,22 +3284,20 @@ $mol_textarea_edit $mol_string
 		^
 		scrollTop 0
 
-$mol_textarea_demo $mol_example
-	title @ \Text input field in various states
+$mol_textarea_demo $mol_example_small
+	title \Text input field in various states
 	sub /
-		<= Demo_items $mol_list
-			rows /
-				<= Empty_descr $mol_textarea
-					hint \source code
-					value?val <=> empty_descr?val \
-				<= Filled_descr $mol_textarea
-					value?val <=> filled_descr?val \
-						\function hello( name = 'World' ) {
-						\	return `Hello, ${ name }!`
-						\}
-				<= Disabled $mol_textarea
-					enabled false
-					value?val <=> filled_descr?val
+		<= Empty_descr $mol_textarea
+			hint \source code
+			value?val <=> empty_descr?val \
+		<= Filled_descr $mol_textarea
+			value?val <=> filled_descr?val \
+				\function hello( name = 'World' ) {
+				\	return `Hello, ${ name }!`
+				\}
+		<= Disabled $mol_textarea
+			enabled false
+			value?val <=> filled_descr?val
 	tags /
 		\textarea
 		\code
@@ -3271,18 +3320,18 @@ $mol_icon_content_paste $mol_icon path \M19,20H5V4H7V7H17V4H19M12,2C12.55,2 13,2
 $mol_icon_delete $mol_icon path \M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19C6,20.1 6.9,21 8,21H16C17.1,21 18,20.1 18,19V7H6V19Z
 
 $mol_toolbar_demo $mol_example_small
-	title @ \Foldable toolbar demo
+	title \Foldable toolbar demo
 	sub /
 		<= Toolbar $mol_toolbar
 			items /
 				<= Search $mol_string
-					hint <= search_hint @ \Search...
+					hint <= search_hint \Search...
 				<= Replace $mol_string
-					hint <= replace_hint @ \Replace...
+					hint <= replace_hint \Replace...
 				<= Approve $mol_button_major
-					title <= approve_label @ \Approve
+					title <= approve_label \Approve
 				<= Decline $mol_button_minor
-					title <= decline_label @ \Decline
+					title <= decline_label \Decline
 				<= Copy $mol_button_minor sub /
 					<= Copy_icon $mol_icon_content_copy
 				<= Cut $mol_button_minor sub /
@@ -3317,26 +3366,6 @@ $mol_video_player $mol_view
 		playing?event <=> play_started?event null
 		play?event <=> play?event null
 		pause?event <=> pause?event null
-
-$mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
-
-$mol_button_open $mol_button_minor
-	sub /
-		<= Icon $mol_icon_upload
-		<= Native $mol_button_open_native
-			files?next <=> files?next /
-			accept <= accept \
-			multiple <= multiple true
-
-$mol_button_open_native $mol_view
-	dom_name \input
-	files?next /
-	attr *
-		type \file
-		accept <= accept \
-		multiple <= multiple true
-	event *
-		change?next <=> picked?next null
 
 $mol_icon_play $mol_icon path \M8,5.14V19.14L19,12.14L8,5.14Z
 
@@ -3402,7 +3431,7 @@ $mol_password $mol_view
 			Icon <= Show_icon $mol_icon_eye
 
 $mol_password_demo $mol_example_small
-	title @ \Password input field based on $mol_string
+	title \Password input field based on $mol_string
 	sub /
 		<= Simple $mol_password
 			value?val <=> pass?val \Hello world
@@ -3440,8 +3469,6 @@ $mol_icon_information $mol_icon path \M13,9H11V7H13M13,17H11V11H13M12,2C6.48,2 2
 
 $mol_icon_information_outline $mol_icon path \M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M11,17H13V11H11V17Z
 
-$mol_icon_code_braces $mol_icon path \M8,3C6.9,3 6,3.9 6,5V9C6,10.1 5.1,11 4,11H3V13H4C5.1,13 6,13.9 6,15V19C6,20.1 6.9,21 8,21H10V19H8V14C8,12.9 7.1,12 6,12C7.1,12 8,11.1 8,10V5H10V3M16,3C17.1,3 18,3.9 18,5V9C18,10.1 18.9,11 20,11H21V13H20C18.9,13 18,13.9 18,15V19C18,20.1 17.1,21 16,21H14V19H16V14C16,12.9 16.9,12 18,12C16.9,12 16,11.1 16,10V5H14V3H16Z
-
 $mol_app_demo $mol_book2
 	editor_title <= detail_title \$mol
 	source_prefix \https://github.com/hyoo-ru/mam_mol/tree/master/
@@ -3465,12 +3492,12 @@ $mol_app_demo $mol_book2
 		chat_pages => chat_pages!id
 		title <= detail_title
 		description <= detail_description \
-		source_link <= source_link \
 		edit_uri <= edit_uri \
 		Demo <= Demo $mol_view
 	Readme_page $mol_app_demo_readme
 		repo <= repo \
 		module <= module /string
+		source_link <= source_link \
 	Welcome $mol_scroll
 		sub /
 			<= Welcome_text $mol_text
@@ -3490,7 +3517,7 @@ $mol_app_demo_menu $mol_page
 			<= List $mol_list rows /
 				<= Filter $mol_search
 					query?val <=> filter?val \
-					suggests <= filter_suggests
+					- suggests <= filter_suggests
 				<= Options $mol_list
 					rows <= options /
 	Option!id $mol_link
@@ -3512,12 +3539,6 @@ $mol_app_demo_detail $mol_page
 		<= Chat $mol_chat
 			pages => chat_pages
 			seed <= chat_seed \
-		<= Source_link $mol_link
-			uri <= source_link \
-			target \_blank
-			hint <= source_hint @ \Source code of this demo
-			sub /
-				<= Source_icon $mol_icon_code_braces
 		<= Edit $mol_link
 			hint <= edit_hint @ \Edit this demo in studio
 			sub /
@@ -3540,14 +3561,15 @@ $mol_app_demo_readme $mol_page
 	module /string
 	title @ \Readme
 	tools /
+		<= Source_link $mol_link_source
+			uri <= source_link \
+			hint <= source_hint @ \Source code of this demo
 		<= Close $mol_link 
 			hint @ \Close panel
 			sub /
 				<= Close_icon $mol_icon_cross
 			arg <= close_arg *
 				readme null
-	body /
-		<= readme_content null
 	-
 	Readme $mol_text
 		text <= readme \

@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Dynamic lightweight graphs
+		 * title \Dynamic lightweight graphs
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_plot_demo_title' )
+			return "Dynamic lightweight graphs"
 		}
 		
 		/**
@@ -199,11 +199,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Voltage_title @ \V
+		 * Voltage_title \V
 		 * ```
 		 */
 		Voltage_title() {
-			return this.$.$mol_locale.text( '$mol_plot_demo_Voltage_title' )
+			return "V"
 		}
 		
 		/**
@@ -222,11 +222,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Time_title @ \ms
+		 * Time_title \ms
 		 * ```
 		 */
 		Time_title() {
-			return this.$.$mol_locale.text( '$mol_plot_demo_Time_title' )
+			return "ms"
 		}
 		
 		/**

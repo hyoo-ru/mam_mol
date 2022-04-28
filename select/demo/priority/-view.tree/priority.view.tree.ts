@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_select_demo_priority extends $mol_example {
+	export class $mol_select_demo_priority extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Priority picker
+		 * title \Priority picker
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_select_demo_priority_title' )
+			return "Priority picker"
 		}
 		
 		/**

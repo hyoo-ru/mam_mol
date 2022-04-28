@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_deck_demo extends $mol_example {
+	export class $mol_deck_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Simple deck with tabbar
+		 * title \Simple deck with tabbar
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_deck_demo_title' )
+			return "Simple deck with tabbar"
 		}
 		
 		/**
@@ -43,17 +43,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * greet_message @ \Hello, world!
+		 * greet_message \Hello, world!
 		 * ```
 		 */
 		greet_message() {
-			return this.$.$mol_locale.text( '$mol_deck_demo_greet_message' )
+			return "Hello, world!"
 		}
 		
 		/**
 		 * ```tree
 		 * Greeter $mol_card
-		 * 	title @ \Greeting
+		 * 	title \Greeting
 		 * 	content / <= greet_message
 		 * ```
 		 */
@@ -61,7 +61,7 @@ namespace $ {
 		Greeter() {
 			const obj = new this.$.$mol_card()
 			
-			obj.title = () => this.$.$mol_locale.text( '$mol_deck_demo_Greeter_title' )
+			obj.title = () => "Greeting"
 			obj.content = () => [
 				this.greet_message()
 			] as readonly any[]
@@ -71,17 +71,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * quest_message @ \How are you?
+		 * quest_message \How are you?
 		 * ```
 		 */
 		quest_message() {
-			return this.$.$mol_locale.text( '$mol_deck_demo_quest_message' )
+			return "How are you?"
 		}
 		
 		/**
 		 * ```tree
 		 * Quester $mol_card
-		 * 	title @ \Question
+		 * 	title \Question
 		 * 	content / <= quest_message
 		 * ```
 		 */
@@ -89,7 +89,7 @@ namespace $ {
 		Quester() {
 			const obj = new this.$.$mol_card()
 			
-			obj.title = () => this.$.$mol_locale.text( '$mol_deck_demo_Quester_title' )
+			obj.title = () => "Question"
 			obj.content = () => [
 				this.quest_message()
 			] as readonly any[]
@@ -99,17 +99,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * command_message @ \Let us do it right!
+		 * command_message \Let us do it right!
 		 * ```
 		 */
 		command_message() {
-			return this.$.$mol_locale.text( '$mol_deck_demo_command_message' )
+			return "Let us do it right!"
 		}
 		
 		/**
 		 * ```tree
 		 * Commander $mol_card
-		 * 	title @ \Command
+		 * 	title \Command
 		 * 	content / <= command_message
 		 * ```
 		 */
@@ -117,7 +117,7 @@ namespace $ {
 		Commander() {
 			const obj = new this.$.$mol_card()
 			
-			obj.title = () => this.$.$mol_locale.text( '$mol_deck_demo_Commander_title' )
+			obj.title = () => "Command"
 			obj.content = () => [
 				this.command_message()
 			] as readonly any[]

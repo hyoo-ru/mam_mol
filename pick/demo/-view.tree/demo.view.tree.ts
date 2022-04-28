@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Simple and complex popups
+		 * title \Simple and complex popups
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_pick_demo_title' )
+			return "Simple and complex popups"
 		}
 		
 		/**
@@ -151,17 +151,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * pick_content @ \This is popup content
+		 * pick_content \This is popup content
 		 * ```
 		 */
 		pick_content() {
-			return this.$.$mol_locale.text( '$mol_pick_demo_pick_content' )
+			return "This is popup content"
 		}
 		
 		/**
 		 * ```tree
 		 * Simple_pop $mol_pick
-		 * 	hint @ \Click to show simple popup
+		 * 	hint \Click to show simple popup
 		 * 	trigger_content / <= pick_trigger
 		 * 	bubble_content / <= pick_content
 		 * ```
@@ -170,7 +170,7 @@ namespace $ {
 		Simple_pop() {
 			const obj = new this.$.$mol_pick()
 			
-			obj.hint = () => this.$.$mol_locale.text( '$mol_pick_demo_Simple_pop_hint' )
+			obj.hint = () => "Click to show simple popup"
 			obj.trigger_content = () => [
 				this.pick_trigger()
 			] as readonly any[]
@@ -225,7 +225,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Info_pop $mol_pick
-		 * 	hint @ \Click to show info popup
+		 * 	hint \Click to show info popup
 		 * 	trigger_content / <= info_trigger
 		 * 	bubble_content / <= info_content
 		 * ```
@@ -234,7 +234,7 @@ namespace $ {
 		Info_pop() {
 			const obj = new this.$.$mol_pick()
 			
-			obj.hint = () => this.$.$mol_locale.text( '$mol_pick_demo_Info_pop_hint' )
+			obj.hint = () => "Click to show info popup"
 			obj.trigger_content = () => [
 				this.info_trigger()
 			] as readonly any[]
@@ -282,7 +282,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Options_pop $mol_pick
-		 * 	hint @ \Click to show options menu
+		 * 	hint \Click to show options menu
 		 * 	align \bottom_left
 		 * 	trigger_content <= options_trigger_content
 		 * 	bubble_content <= options_bubble_content
@@ -292,7 +292,7 @@ namespace $ {
 		Options_pop() {
 			const obj = new this.$.$mol_pick()
 			
-			obj.hint = () => this.$.$mol_locale.text( '$mol_pick_demo_Options_pop_hint' )
+			obj.hint = () => "Click to show options menu"
 			obj.align = () => "bottom_left"
 			obj.trigger_content = () => this.options_trigger_content()
 			obj.bubble_content = () => this.options_bubble_content()
@@ -325,11 +325,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * menu_item_copy_label @ \Copy
+		 * menu_item_copy_label \Copy
 		 * ```
 		 */
 		menu_item_copy_label() {
-			return this.$.$mol_locale.text( '$mol_pick_demo_menu_item_copy_label' )
+			return "Copy"
 		}
 		
 		/**
@@ -356,11 +356,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * menu_item_download_hint @ \Download some json
+		 * menu_item_download_hint \Download some json
 		 * ```
 		 */
 		menu_item_download_hint() {
-			return this.$.$mol_locale.text( '$mol_pick_demo_menu_item_download_hint' )
+			return "Download some json"
 		}
 		
 		/**
@@ -386,11 +386,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * menu_item_download_label @ \Download
+		 * menu_item_download_label \Download
 		 * ```
 		 */
 		menu_item_download_label() {
-			return this.$.$mol_locale.text( '$mol_pick_demo_menu_item_download_label' )
+			return "Download"
 		}
 		
 		/**
@@ -444,11 +444,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * menu_item_delete_label @ \Delete
+		 * menu_item_delete_label \Delete
 		 * ```
 		 */
 		menu_item_delete_label() {
-			return this.$.$mol_locale.text( '$mol_pick_demo_menu_item_delete_label' )
+			return "Delete"
 		}
 		
 		/**
@@ -520,11 +520,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * delete_confirm_title @ \Delete
+		 * delete_confirm_title \Delete
 		 * ```
 		 */
 		delete_confirm_title() {
-			return this.$.$mol_locale.text( '$mol_pick_demo_delete_confirm_title' )
+			return "Delete"
 		}
 		
 		/**
@@ -557,11 +557,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * delete_cancel_title @ \Cancel
+		 * delete_cancel_title \Cancel
 		 * ```
 		 */
 		delete_cancel_title() {
-			return this.$.$mol_locale.text( '$mol_pick_demo_delete_cancel_title' )
+			return "Cancel"
 		}
 		
 		/**

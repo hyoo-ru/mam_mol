@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Infinite list demo
+		 * title \Infinite list demo
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_infinite_demo_title' )
+			return "Infinite list demo"
 		}
 		
 		/**

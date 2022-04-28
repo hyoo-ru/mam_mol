@@ -9,8 +9,8 @@ namespace $.$$ {
 
 			const value = this.name_first()
 
-			if( !value ) return this.message_required()
-			if( value.indexOf( ' ' ) !== -1 ) return this.message_no_spaces()
+			if( !value ) return this.message().required
+			if( value.indexOf( ' ' ) !== -1 ) return this.message().no_spaces
 
 			return ''
 		}
@@ -27,9 +27,9 @@ namespace $.$$ {
 			
 			const value = this.name_second()
 			
-			if( !value ) return this.message_required()
-			if( value.indexOf( ' ' ) !== -1 ) return this.message_no_spaces()
-			if( value.length < 3 ) return this.message_need_more_letters().replace( '{count}' , '3' )
+			if( !value ) return this.message().required
+			if( value.indexOf( ' ' ) !== -1 ) return this.message().no_spaces
+			if( value.length < 3 ) return this.message().need_more_letters.replace( '{count}' , '3' )
 
 			return ''
 		}
@@ -42,21 +42,25 @@ namespace $.$$ {
 			
 			const value = this.mail().trim()
 			
-			if( !value ) return this.message_required()
+			if( !value ) return this.message().required
 
 			const parts = value.split( '@' )
 
-			if( parts.length < 2 ) return this.message_need_at()
-			if( parts.length > 2 ) return this.message_only_one_at()
+			if( parts.length < 2 ) return this.message().need_at
+			if( parts.length > 2 ) return this.message().only_one_at
 			
-			if( !parts[0] ) return this.message_need_username()
-			if( parts[1].indexOf( ' ' ) !== -1 ) return this.message_no_space_domain()
+			if( !parts[0] ) return this.message().need_username
+			if( parts[1].indexOf( ' ' ) !== -1 ) return this.message().no_space_domain
 			const domains = parts[1].split( '.' )
 
-			if( domains.length < 2 ) return this.message_no_tld()
-			if( !domains.every( Boolean ) ) return this.message_dots_inside()
+			if( domains.length < 2 ) return this.message().no_tld
+			if( !domains.every( Boolean ) ) return this.message().dots_inside
 
 			return ''
+		}
+
+		color( next? : string ) {
+			return $mol_state_local.value( this.state_key( 'color' ) , next ) || ''
 		}
 
 		sex( next? : string ) {
@@ -64,12 +68,21 @@ namespace $.$$ {
 		}
 
 		sex_bid() {
-			if( !this.sex() ) return this.message_required()
+			if( !this.sex() ) return this.message().required
+			return ''
+		}
+
+		age( next? : number ) {
+			return $mol_state_local.value( this.state_key( 'age' ) , next ) || 0
+		}
+
+		age_bid() {
+			if( this.age() < 18 ) return this.message().adult
 			return ''
 		}
 
 		submit( next? : Event ) {
-			this.message( `Hello, ${this.sex()} ${this.name_first()} (${this.name_nick()}) ${this.name_second()} from  ${this.mail()}!` )
+			this.result( `Hello, ${this.sex()} ${this.name_first()} (${this.name_nick()}) ${this.name_second()} from  ${this.mail()}!` )
 		}
 		
 		submit_allowed() {

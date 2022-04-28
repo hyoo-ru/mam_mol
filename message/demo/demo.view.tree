@@ -1,5 +1,5 @@
 $mol_message_demo $mol_list
-	title @ \Generic user message
+	title \Generic user message
 	rows /
 		<= Message_short $mol_message
 			name \Jin

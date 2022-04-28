@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_select_list_demo extends $mol_example {
+	export class $mol_select_list_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Friends picker
+		 * title \Friends picker
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_select_list_demo_title' )
+			return "Friends picker"
 		}
 		
 		/**

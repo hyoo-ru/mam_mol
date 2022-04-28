@@ -3,29 +3,29 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Fake wheel forces
+		 * title \Fake wheel forces
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_forces_title' )
+			return "Fake wheel forces"
 		}
 		
 		/**
 		 * ```tree
-		 * samples_count 10000
+		 * samples_count 5000
 		 * ```
 		 */
 		samples_count() {
-			return 10000
+			return 5000
 		}
 		
 		/**
 		 * ```tree
-		 * points_max 1000
+		 * points_max 2500
 		 * ```
 		 */
 		points_max() {
-			return 1000
+			return 2500
 		}
 		
 		/**
@@ -59,11 +59,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * forces_left_title @ \Left wheel
+		 * forces_left_title \Left wheel
 		 * ```
 		 */
 		forces_left_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_forces_forces_left_title' )
+			return "Left wheel"
 		}
 		
 		/**
@@ -109,11 +109,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * forces_right_title @ \Right wheel
+		 * forces_right_title \Right wheel
 		 * ```
 		 */
 		forces_right_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_forces_forces_right_title' )
+			return "Right wheel"
 		}
 		
 		/**
@@ -159,11 +159,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * vert_title @ \kN
+		 * vert_title \kN
 		 * ```
 		 */
 		vert_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_forces_vert_title' )
+			return "kN"
 		}
 		
 		/**
@@ -182,11 +182,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hor_title @ \cm
+		 * hor_title \cm
 		 * ```
 		 */
 		hor_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_forces_hor_title' )
+			return "cm"
 		}
 		
 		/**

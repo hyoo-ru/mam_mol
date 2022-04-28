@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_list_demo_tree extends $mol_example {
+	export class $mol_list_demo_tree extends $mol_example_large {
 		
 		/**
 		 * ```tree
-		 * title @ \Large list of rows with dynamic content
+		 * title \Large list of rows with dynamic content
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_list_demo_tree_title' )
+			return "Large list of rows with dynamic content"
 		}
 		
 		/**

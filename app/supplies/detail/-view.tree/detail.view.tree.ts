@@ -68,23 +68,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Attachment!index $mol_attach_item
-		 * 	url_thumb <= attachment_thumb!index
-		 * 	url_load <= attachment_load!index
-		 * ```
-		 */
-		@ $mol_mem_key
-		Attachment(index: any) {
-			const obj = new this.$.$mol_attach_item()
-			
-			obj.url_thumb = () => this.attachment_thumb(index)
-			obj.url_load = () => this.attachment_load(index)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * Close_icon $mol_icon_cross
 		 * ```
 		 */
@@ -553,12 +536,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * attachments /$mol_view
+		 * attachments /string
 		 * ```
 		 */
 		attachments() {
 			return [
-			] as readonly $mol_view[]
+			] as readonly string[]
 		}
 		
 		/**
@@ -593,7 +576,7 @@ namespace $ {
 		 * ```tree
 		 * Attach_section $mol_section
 		 * 	head / <= attach_title
-		 * 	Content <= Attach
+		 * 	content / <= Attach
 		 * ```
 		 */
 		@ $mol_mem
@@ -603,7 +586,9 @@ namespace $ {
 			obj.head = () => [
 				this.attach_title()
 			] as readonly any[]
-			obj.Content = () => this.Attach()
+			obj.content = () => [
+				this.Attach()
+			] as readonly any[]
 			
 			return obj
 		}
@@ -790,24 +775,6 @@ namespace $ {
 		 */
 		position(index: any) {
 			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * attachment_thumb!index \
-		 * ```
-		 */
-		attachment_thumb(index: any) {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * attachment_load!index \
-		 * ```
-		 */
-		attachment_load(index: any) {
-			return ""
 		}
 	}
 	

@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_paginator_demo extends $mol_example {
+	export class $mol_paginator_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Page switcher
+		 * title \Page switcher
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_paginator_demo_title' )
+			return "Page switcher"
 		}
 		
 		/**

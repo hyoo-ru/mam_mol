@@ -1,23 +1,23 @@
 namespace $ {
-	export class $mol_link_iconed_demo extends $mol_example {
+	export class $mol_link_iconed_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Link with icon
+		 * title \Link with icon
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_link_iconed_demo_title' )
+			return "Link with icon"
 		}
 		
 		/**
 		 * ```tree
-		 * sub / <= Demo_items
+		 * sub / <= Blocks
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Demo_items()
+				this.Blocks()
 			] as readonly any[]
 		}
 		
@@ -84,13 +84,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Demo_items $mol_list rows /
+		 * Blocks $mol_list rows /
 		 * 	<= Input
 		 * 	<= Output
 		 * ```
 		 */
 		@ $mol_mem
-		Demo_items() {
+		Blocks() {
 			const obj = new this.$.$mol_list()
 			
 			obj.rows = () => [

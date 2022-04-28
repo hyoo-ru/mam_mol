@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Lazy generated link
+		 * title \Lazy generated link
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_link_lazy_demo_title' )
+			return "Lazy generated link"
 		}
 		
 		/**
@@ -71,11 +71,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * download_label @ \Download
+		 * download_label \Download
 		 * ```
 		 */
 		download_label() {
-			return this.$.$mol_locale.text( '$mol_link_lazy_demo_download_label' )
+			return "Download"
 		}
 		
 		/**

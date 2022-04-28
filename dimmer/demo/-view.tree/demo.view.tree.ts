@@ -1,23 +1,23 @@
 namespace $ {
-	export class $mol_dimmer_demo extends $mol_example {
+	export class $mol_dimmer_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Text with highlighted found substring
+		 * title \Text with highlighted found substring
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_dimmer_demo_title' )
+			return "Text with highlighted found substring"
 		}
 		
 		/**
 		 * ```tree
-		 * sub / <= Demo_items
+		 * sub / <= Cases
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Demo_items()
+				this.Cases()
 			] as readonly any[]
 		}
 		
@@ -141,7 +141,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Demo_items $mol_list rows /
+		 * Cases $mol_list rows /
 		 * 	<= One
 		 * 	<= Two
 		 * 	<= Three
@@ -151,7 +151,7 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		Demo_items() {
+		Cases() {
 			const obj = new this.$.$mol_list()
 			
 			obj.rows = () => [

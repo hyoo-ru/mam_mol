@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_button_share_demo extends $mol_example {
+	export class $mol_button_share_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Share button demo
+		 * title \Share button demo
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_button_share_demo_title' )
+			return "Share button demo"
 		}
 		
 		/**

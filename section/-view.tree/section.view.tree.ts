@@ -42,11 +42,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Content null
+		 * content /
 		 * ```
 		 */
+		content() {
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Content $mol_list rows <= content
+		 * ```
+		 */
+		@ $mol_mem
 		Content() {
-			return null as any
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => this.content()
+			
+			return obj
 		}
 	}
 	

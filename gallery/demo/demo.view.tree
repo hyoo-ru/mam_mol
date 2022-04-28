@@ -1,5 +1,5 @@
 $mol_gallery_demo $mol_example
-	title @ \Gallery of cards
+	title \Gallery of cards
 	count 101
 	sub /
 		<= App $mol_gallery

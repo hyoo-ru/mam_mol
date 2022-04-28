@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Benchmarking results visualization
+		 * title \Benchmarking results visualization
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_bench_demo_title' )
+			return "Benchmarking results visualization"
 		}
 		
 		/**

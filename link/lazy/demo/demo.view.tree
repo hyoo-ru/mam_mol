@@ -1,5 +1,5 @@
 $mol_link_lazy_demo $mol_example_small
-	title @ \Lazy generated link
+	title \Lazy generated link
 	sub /
 		<= Download $mol_link_lazy
 			hint <= title
@@ -7,7 +7,7 @@ $mol_link_lazy_demo $mol_example_small
 			file_name <= download_file \generated.csv
 			sub /
 				<= Download_icon $mol_icon_download
-				<= download_label @ \Download
+				<= download_label \Download
 	tags /
 		\icon
 		\link

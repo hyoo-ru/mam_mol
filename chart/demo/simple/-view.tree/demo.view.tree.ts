@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Simple chart with hadcoded series
+		 * title \Simple chart with hadcoded series
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_simple_title' )
+			return "Simple chart with hadcoded series"
 		}
 		
 		/**
@@ -43,11 +43,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * plan_title @ \Plan
+		 * plan_title \Plan
 		 * ```
 		 */
 		plan_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_simple_plan_title' )
+			return "Plan"
 		}
 		
 		/**
@@ -87,11 +87,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * fact_title @ \Fact
+		 * fact_title \Fact
 		 * ```
 		 */
 		fact_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_simple_fact_title' )
+			return "Fact"
 		}
 		
 		/**
@@ -160,11 +160,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * vert_title @ \pcs
+		 * vert_title \pcs
 		 * ```
 		 */
 		vert_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_simple_vert_title' )
+			return "pcs"
 		}
 		
 		/**
@@ -183,11 +183,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * marker_hor_title @ \Months
+		 * marker_hor_title \Months
 		 * ```
 		 */
 		marker_hor_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_simple_marker_hor_title' )
+			return "Months"
 		}
 		
 		/**

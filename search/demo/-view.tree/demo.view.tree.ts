@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Search field with suggest
+		 * title \Search field with suggest
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_search_demo_title' )
+			return "Search field with suggest "
 		}
 		
 		/**

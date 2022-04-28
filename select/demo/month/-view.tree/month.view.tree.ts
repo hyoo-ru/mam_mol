@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_select_demo_month extends $mol_example {
+	export class $mol_select_demo_month extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Month picker with filter
+		 * title \Month picker with filter
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_select_demo_month_title' )
+			return "Month picker with filter"
 		}
 		
 		/**

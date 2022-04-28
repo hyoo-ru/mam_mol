@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Adaprive layout for various sizes of screen
+		 * title \Adaprive layout for various sizes of screen
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_book2_demo_title' )
+			return "Adaprive layout for various sizes of screen"
 		}
 		
 		/**

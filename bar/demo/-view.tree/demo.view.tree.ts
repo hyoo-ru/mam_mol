@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Group of controls as one control
+		 * title \Group of controls as one control
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_bar_demo_title' )
+			return "Group of controls as one control"
 		}
 		
 		/**

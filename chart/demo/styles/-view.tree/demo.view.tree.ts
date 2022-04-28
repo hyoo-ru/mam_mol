@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Chart with various styles of graphs.
+		 * title \Chart with various styles of graphs.
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_styles_title' )
+			return "Chart with various styles of graphs."
 		}
 		
 		/**
@@ -52,11 +52,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * receipts_title @ \Receipts
+		 * receipts_title \Receipts
 		 * ```
 		 */
 		receipts_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_styles_receipts_title' )
+			return "Receipts"
 		}
 		
 		/**
@@ -100,11 +100,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * receipts_confirmed_title @ \Confirmed receipts
+		 * receipts_confirmed_title \Confirmed receipts
 		 * ```
 		 */
 		receipts_confirmed_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_styles_receipts_confirmed_title' )
+			return "Confirmed receipts"
 		}
 		
 		/**
@@ -138,11 +138,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * maximum_title @ \Maximum
+		 * maximum_title \Maximum
 		 * ```
 		 */
 		maximum_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_styles_maximum_title' )
+			return "Maximum"
 		}
 		
 		/**
@@ -176,11 +176,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * waste_title @ \Waste
+		 * waste_title \Waste
 		 * ```
 		 */
 		waste_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_styles_waste_title' )
+			return "Waste"
 		}
 		
 		/**
@@ -216,11 +216,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * purchases_title @ \Purchases
+		 * purchases_title \Purchases
 		 * ```
 		 */
 		purchases_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_styles_purchases_title' )
+			return "Purchases"
 		}
 		
 		/**
@@ -299,11 +299,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * taxes_title @ \Taxes
+		 * taxes_title \Taxes
 		 * ```
 		 */
 		taxes_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_styles_taxes_title' )
+			return "Taxes"
 		}
 		
 		/**
@@ -384,11 +384,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * energy_title @ \kJ
+		 * energy_title \kJ
 		 * ```
 		 */
 		energy_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_styles_energy_title' )
+			return "kJ"
 		}
 		
 		/**
@@ -407,11 +407,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_title @ \Day
+		 * day_title \Day
 		 * ```
 		 */
 		day_title() {
-			return this.$.$mol_locale.text( '$mol_chart_demo_styles_day_title' )
+			return "Day"
 		}
 		
 		/**

@@ -19,6 +19,7 @@ include \/mol/chart/demo/styles
 include \/mol/chart/demo/forces
 include \/mol/chat/demo
 include \/mol/check/box/demo
+include \/mol/check/list/demo
 include \/mol/check/expand/demo
 include \/mol/check/group/demo
 include \/mol/check/icon/demo

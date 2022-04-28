@@ -1,5 +1,5 @@
-$mol_button_share_demo $mol_example
-	title @ \Share button demo
+$mol_button_share_demo $mol_example_small
+	title \Share button demo
 	sub /
 		<= Share_page $mol_button_share
 			title <= title

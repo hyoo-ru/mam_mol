@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Floating header example
+		 * title \Floating header example
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_float_demo_title' )
+			return "Floating header example"
 		}
 		
 		/**

@@ -94,14 +94,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Content $mol_view sub <= content
+		 * Content $mol_list rows <= content
 		 * ```
 		 */
 		@ $mol_mem
 		Content() {
-			const obj = new this.$.$mol_view()
+			const obj = new this.$.$mol_list()
 			
-			obj.sub = () => this.content()
+			obj.rows = () => this.content()
 			
 			return obj
 		}

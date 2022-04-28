@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \All types of buttons in every states
+		 * title \All types of buttons in every states
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_button_demo_title' )
+			return "All types of buttons in every states"
 		}
 		
 		/**
@@ -57,7 +57,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Major_enabled $mol_button_major
-		 * 	title @ \Enabled Major
+		 * 	title \Enabled Major
 		 * 	click?event <=> fail?event
 		 * ```
 		 */
@@ -65,7 +65,7 @@ namespace $ {
 		Major_enabled() {
 			const obj = new this.$.$mol_button_major()
 			
-			obj.title = () => this.$.$mol_locale.text( '$mol_button_demo_Major_enabled_title' )
+			obj.title = () => "Enabled Major"
 			obj.click = (event?: any) => this.fail(event)
 			
 			return obj
@@ -74,7 +74,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Major_disabled $mol_button_major
-		 * 	title @ \Disabled Major
+		 * 	title \Disabled Major
 		 * 	enabled false
 		 * ```
 		 */
@@ -82,7 +82,7 @@ namespace $ {
 		Major_disabled() {
 			const obj = new this.$.$mol_button_major()
 			
-			obj.title = () => this.$.$mol_locale.text( '$mol_button_demo_Major_disabled_title' )
+			obj.title = () => "Disabled Major"
 			obj.enabled = () => false
 			
 			return obj
@@ -91,7 +91,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Minor_enabled $mol_button_minor
-		 * 	title @ \Enabled Minor
+		 * 	title \Enabled Minor
 		 * 	click?event <=> fail?event
 		 * ```
 		 */
@@ -99,7 +99,7 @@ namespace $ {
 		Minor_enabled() {
 			const obj = new this.$.$mol_button_minor()
 			
-			obj.title = () => this.$.$mol_locale.text( '$mol_button_demo_Minor_enabled_title' )
+			obj.title = () => "Enabled Minor"
 			obj.click = (event?: any) => this.fail(event)
 			
 			return obj
@@ -108,7 +108,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Minor_disabled $mol_button_minor
-		 * 	title @ \Disabled Minor
+		 * 	title \Disabled Minor
 		 * 	enabled false
 		 * ```
 		 */
@@ -116,7 +116,7 @@ namespace $ {
 		Minor_disabled() {
 			const obj = new this.$.$mol_button_minor()
 			
-			obj.title = () => this.$.$mol_locale.text( '$mol_button_demo_Minor_disabled_title' )
+			obj.title = () => "Disabled Minor"
 			obj.enabled = () => false
 			
 			return obj

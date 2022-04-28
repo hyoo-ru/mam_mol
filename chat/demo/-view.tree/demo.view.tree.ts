@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_chat_demo extends $mol_example {
+	export class $mol_chat_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Feed of comments for this page
+		 * title \Feed of comments for this page
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_chat_demo_title' )
+			return "Feed of comments for this page"
 		}
 		
 		/**

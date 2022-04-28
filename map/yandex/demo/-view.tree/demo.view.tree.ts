@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Simple Yandex Maps wrapper
+		 * title \Simple Yandex Maps wrapper
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_map_yandex_demo_title' )
+			return "Simple Yandex Maps wrapper"
 		}
 		
 		/**

@@ -1,6 +1,6 @@
 [mol_card] {
 	box-shadow: 0 0 0 1px var(--mol_theme_line);
-	background: var(--mol_theme_back);
+	background: var(--mol_theme_card);
 	color: var(--mol_theme_text);
 	border-radius: var(--mol_gap_round);
 	display: flex;

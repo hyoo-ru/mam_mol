@@ -7,7 +7,6 @@
 }
 
 [mol_button_typed][disabled] {
-	color: var(--mol_theme_text);
 	pointer-events: none;
 }
 

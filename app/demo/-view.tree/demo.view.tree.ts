@@ -99,7 +99,6 @@ namespace $ {
 		 * 	chat_pages => chat_pages!id
 		 * 	title <= detail_title
 		 * 	description <= detail_description
-		 * 	source_link <= source_link
 		 * 	edit_uri <= edit_uri
 		 * 	Demo <= Demo
 		 * ```
@@ -111,7 +110,6 @@ namespace $ {
 			obj.chat_seed = () => this.chat_seed(id)
 			obj.title = () => this.detail_title()
 			obj.description = () => this.detail_description()
-			obj.source_link = () => this.source_link()
 			obj.edit_uri = () => this.edit_uri()
 			obj.Demo = () => this.Demo()
 			
@@ -123,6 +121,7 @@ namespace $ {
 		 * Readme_page $mol_app_demo_readme
 		 * 	repo <= repo
 		 * 	module <= module
+		 * 	source_link <= source_link
 		 * ```
 		 */
 		@ $mol_mem
@@ -131,6 +130,7 @@ namespace $ {
 			
 			obj.repo = () => this.repo()
 			obj.module = () => this.module()
+			obj.source_link = () => this.source_link()
 			
 			return obj
 		}
@@ -292,15 +292,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * source_link \
-		 * ```
-		 */
-		source_link() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
 		 * edit_uri \
 		 * ```
 		 */
@@ -337,6 +328,15 @@ namespace $ {
 		module() {
 			return [
 			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * source_link \
+		 * ```
+		 */
+		source_link() {
+			return ""
 		}
 		
 		/**
@@ -469,9 +469,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Filter $mol_search
-		 * 	query?val <=> filter?val
-		 * 	suggests <= filter_suggests
+		 * Filter $mol_search query?val <=> filter?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -479,7 +477,6 @@ namespace $ {
 			const obj = new this.$.$mol_search()
 			
 			obj.query = (val?: any) => this.filter(val)
-			obj.suggests = () => this.filter_suggests()
 			
 			return obj
 		}
@@ -580,7 +577,6 @@ namespace $ {
 		 * tools /
 		 * 	<= Readme
 		 * 	<= Chat
-		 * 	<= Source_link
 		 * 	<= Edit
 		 * 	<= Close
 		 * ```
@@ -589,7 +585,6 @@ namespace $ {
 			return [
 				this.Readme(),
 				this.Chat(),
-				this.Source_link(),
 				this.Edit(),
 				this.Close()
 			] as readonly any[]
@@ -671,59 +666,6 @@ namespace $ {
 			const obj = new this.$.$mol_chat()
 			
 			obj.seed = () => this.chat_seed()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * source_link \
-		 * ```
-		 */
-		source_link() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * source_hint @ \Source code of this demo
-		 * ```
-		 */
-		source_hint() {
-			return this.$.$mol_locale.text( '$mol_app_demo_detail_source_hint' )
-		}
-		
-		/**
-		 * ```tree
-		 * Source_icon $mol_icon_code_braces
-		 * ```
-		 */
-		@ $mol_mem
-		Source_icon() {
-			const obj = new this.$.$mol_icon_code_braces()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Source_link $mol_link
-		 * 	uri <= source_link
-		 * 	target \_blank
-		 * 	hint <= source_hint
-		 * 	sub / <= Source_icon
-		 * ```
-		 */
-		@ $mol_mem
-		Source_link() {
-			const obj = new this.$.$mol_link()
-			
-			obj.uri = () => this.source_link()
-			obj.target = () => "_blank"
-			obj.hint = () => this.source_hint()
-			obj.sub = () => [
-				this.Source_icon()
-			] as readonly any[]
 			
 			return obj
 		}
@@ -903,23 +845,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tools / <= Close
+		 * tools /
+		 * 	<= Source_link
+		 * 	<= Close
 		 * ```
 		 */
 		tools() {
 			return [
+				this.Source_link(),
 				this.Close()
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * body / <= readme_content
-		 * ```
-		 */
-		body() {
-			return [
-				this.readme_content()
 			] as readonly any[]
 		}
 		
@@ -949,6 +883,41 @@ namespace $ {
 			obj.sub = () => [
 				this.Not_found_caption()
 			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * source_link \
+		 * ```
+		 */
+		source_link() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * source_hint @ \Source code of this demo
+		 * ```
+		 */
+		source_hint() {
+			return this.$.$mol_locale.text( '$mol_app_demo_readme_source_hint' )
+		}
+		
+		/**
+		 * ```tree
+		 * Source_link $mol_link_source
+		 * 	uri <= source_link
+		 * 	hint <= source_hint
+		 * ```
+		 */
+		@ $mol_mem
+		Source_link() {
+			const obj = new this.$.$mol_link_source()
+			
+			obj.uri = () => this.source_link()
+			obj.hint = () => this.source_hint()
 			
 			return obj
 		}
@@ -995,15 +964,6 @@ namespace $ {
 			obj.arg = () => this.close_arg()
 			
 			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * readme_content null
-		 * ```
-		 */
-		readme_content() {
-			return null as any
 		}
 		
 		/**

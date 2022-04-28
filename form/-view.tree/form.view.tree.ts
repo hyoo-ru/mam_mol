@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_form extends $mol_view {
+	export class $mol_form extends $mol_list {
 		
 		/**
 		 * ```tree
@@ -37,15 +37,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Bar_fields
-		 * 	<= Bar_buttons
+		 * rows /
+		 * 	<= Body
+		 * 	<= Foot
 		 * ```
 		 */
-		sub() {
+		rows() {
 			return [
-				this.Bar_fields(),
-				this.Bar_buttons()
+				this.Body(),
+				this.Foot()
 			] as readonly any[]
 		}
 		
@@ -72,14 +72,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Bar_fields $mol_view sub <= form_fields
+		 * body <= form_fields
+		 * ```
+		 */
+		body() {
+			return this.form_fields()
+		}
+		
+		/**
+		 * ```tree
+		 * Body $mol_list sub <= body
 		 * ```
 		 */
 		@ $mol_mem
-		Bar_fields() {
-			const obj = new this.$.$mol_view()
+		Body() {
+			const obj = new this.$.$mol_list()
 			
-			obj.sub = () => this.form_fields()
+			obj.sub = () => this.body()
 			
 			return obj
 		}
@@ -96,14 +105,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Bar_buttons $mol_row sub <= buttons
+		 * foot <= buttons
+		 * ```
+		 */
+		foot() {
+			return this.buttons()
+		}
+		
+		/**
+		 * ```tree
+		 * Foot $mol_row sub <= foot
 		 * ```
 		 */
 		@ $mol_mem
-		Bar_buttons() {
+		Foot() {
 			const obj = new this.$.$mol_row()
 			
-			obj.sub = () => this.buttons()
+			obj.sub = () => this.foot()
 			
 			return obj
 		}

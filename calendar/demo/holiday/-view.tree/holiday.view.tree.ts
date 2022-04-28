@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Days of month 2018-01 with custom holidays
+		 * title \Days of month 2018-01 with custom holidays
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_calendar_demo_holiday_title' )
+			return "Days of month 2018-01 with custom holidays"
 		}
 		
 		/**

@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \String input field in various states
+		 * title \String input field in various states
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_string_demo_title' )
+			return "String input field in various states"
 		}
 		
 		/**

@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Some controls in one row with equal paddings and wrapping support
+		 * title \Some controls in one row with equal paddings and wrapping support
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_row_demo_form_title' )
+			return "Some controls in one row with equal paddings and wrapping support"
 		}
 		
 		/**
@@ -53,11 +53,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * name_hint @ \Jack Sparrow
+		 * name_hint \Jack Sparrow
 		 * ```
 		 */
 		name_hint() {
-			return this.$.$mol_locale.text( '$mol_row_demo_form_name_hint' )
+			return "Jack Sparrow"
 		}
 		
 		/**
@@ -73,20 +73,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * suggest1 @ \Jack Sparrow
+		 * suggest1 \Jack Sparrow
 		 * ```
 		 */
 		suggest1() {
-			return this.$.$mol_locale.text( '$mol_row_demo_form_suggest1' )
+			return "Jack Sparrow"
 		}
 		
 		/**
 		 * ```tree
-		 * suggest2 @ \Bruce Wayne
+		 * suggest2 \Bruce Wayne
 		 * ```
 		 */
 		suggest2() {
-			return this.$.$mol_locale.text( '$mol_row_demo_form_suggest2' )
+			return "Bruce Wayne"
 		}
 		
 		/**
@@ -115,11 +115,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * count_hint @ \Count
+		 * count_hint \Count
 		 * ```
 		 */
 		count_hint() {
-			return this.$.$mol_locale.text( '$mol_row_demo_form_count_hint' )
+			return "Count"
 		}
 		
 		/**
@@ -175,11 +175,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * publish_label @ \Shared
+		 * publish_label \Shared
 		 * ```
 		 */
 		publish_label() {
-			return this.$.$mol_locale.text( '$mol_row_demo_form_publish_label' )
+			return "Shared"
 		}
 		
 		/**
@@ -212,11 +212,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * drop_title @ \Drop
+		 * drop_title \Drop
 		 * ```
 		 */
 		drop_title() {
-			return this.$.$mol_locale.text( '$mol_row_demo_form_drop_title' )
+			return "Drop"
 		}
 		
 		/**

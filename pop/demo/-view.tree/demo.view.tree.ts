@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Pop up block with various alignment
+		 * title \Pop up block with various alignment
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_pop_demo_title' )
+			return "Pop up block with various alignment"
 		}
 		
 		/**
@@ -50,20 +50,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * show_title @ \Showed
+		 * show_title \Showed
 		 * ```
 		 */
 		show_title() {
-			return this.$.$mol_locale.text( '$mol_pop_demo_show_title' )
+			return "Showed"
 		}
 		
 		/**
 		 * ```tree
-		 * pop_showed_check_hint @ \$mol_pop showed
+		 * pop_showed_check_hint \$mol_pop showed
 		 * ```
 		 */
 		pop_showed_check_hint() {
-			return this.$.$mol_locale.text( '$mol_pop_demo_pop_showed_check_hint' )
+			return "$mol_pop showed"
 		}
 		
 		/**
@@ -115,11 +115,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * align_title @ \Align
+		 * align_title \Align
 		 * ```
 		 */
 		align_title() {
-			return this.$.$mol_locale.text( '$mol_pop_demo_align_title' )
+			return "Align"
 		}
 		
 		/**
@@ -238,11 +238,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * anchor_button_title @ \Anchor
+		 * anchor_button_title \Anchor
 		 * ```
 		 */
 		anchor_button_title() {
-			return this.$.$mol_locale.text( '$mol_pop_demo_anchor_button_title' )
+			return "Anchor"
 		}
 		
 		/**
@@ -266,11 +266,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * bubble_hint @ \This is $mol_pop content
+		 * bubble_hint \
+		 * 	\This is
+		 * 	\bubble_content
 		 * ```
 		 */
 		bubble_hint() {
-			return this.$.$mol_locale.text( '$mol_pop_demo_bubble_hint' )
+			return "This is\nbubble_content"
 		}
 		
 		/**

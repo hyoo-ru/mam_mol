@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_pop_over_demo extends $mol_example {
+	export class $mol_pop_over_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Menu that opens on mouse over
+		 * title \Menu that opens on mouse over
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_pop_over_demo_title' )
+			return "Menu that opens on mouse over"
 		}
 		
 		/**
@@ -45,20 +45,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * file_title @ \File
+		 * file_title \File
 		 * ```
 		 */
 		file_title() {
-			return this.$.$mol_locale.text( '$mol_pop_over_demo_file_title' )
+			return "File"
 		}
 		
 		/**
 		 * ```tree
-		 * open_title @ \Open
+		 * open_title \Open
 		 * ```
 		 */
 		open_title() {
-			return this.$.$mol_locale.text( '$mol_pop_over_demo_open_title' )
+			return "Open"
 		}
 		
 		/**
@@ -77,11 +77,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * export_title @ \Export
+		 * export_title \Export
 		 * ```
 		 */
 		export_title() {
-			return this.$.$mol_locale.text( '$mol_pop_over_demo_export_title' )
+			return "Export"
 		}
 		
 		/**
@@ -100,11 +100,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * save_title @ \Save
+		 * save_title \Save
 		 * ```
 		 */
 		save_title() {
-			return this.$.$mol_locale.text( '$mol_pop_over_demo_save_title' )
+			return "Save"
 		}
 		
 		/**
@@ -165,20 +165,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * help_title @ \About
+		 * help_title \About
 		 * ```
 		 */
 		help_title() {
-			return this.$.$mol_locale.text( '$mol_pop_over_demo_help_title' )
+			return "About"
 		}
 		
 		/**
 		 * ```tree
-		 * updates_title @ \Updates
+		 * updates_title \Updates
 		 * ```
 		 */
 		updates_title() {
-			return this.$.$mol_locale.text( '$mol_pop_over_demo_updates_title' )
+			return "Updates"
 		}
 		
 		/**
@@ -197,11 +197,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * about_title @ \About
+		 * about_title \About
 		 * ```
 		 */
 		about_title() {
-			return this.$.$mol_locale.text( '$mol_pop_over_demo_about_title' )
+			return "About"
 		}
 		
 		/**

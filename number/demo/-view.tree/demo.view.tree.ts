@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Number input control with various configuration
+		 * title \Number input control with various configuration
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_number_demo_title' )
+			return "Number input control with various configuration"
 		}
 		
 		/**

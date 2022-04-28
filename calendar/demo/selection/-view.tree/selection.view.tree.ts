@@ -3,25 +3,45 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Days of month 2018-01 with custom selection
+		 * title \Days of month 2018-01 with custom selection
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_calendar_demo_selection_title' )
+			return "Days of month 2018-01 with custom selection"
 		}
 		
 		/**
 		 * ```tree
 		 * interval_config *
-		 * 	start \2018-01-10
-		 * 	end \2018-01-20
+		 * 	start \2018-01-05
+		 * 	end \2018-01-10
 		 * ```
 		 */
 		interval_config() {
 			return {
-				start: "2018-01-10",
-				end: "2018-01-20"
+				start: "2018-01-05",
+				end: "2018-01-10"
 			}
+		}
+		
+		/**
+		 * ```tree
+		 * days /
+		 * 	\2018-01-18
+		 * 	\2018-01-20
+		 * 	\2018-01-26
+		 * 	\2018-02-01
+		 * 	\2018-02-03
+		 * ```
+		 */
+		days() {
+			return [
+				"2018-01-18",
+				"2018-01-20",
+				"2018-01-26",
+				"2018-02-01",
+				"2018-02-03"
+			] as readonly any[]
 		}
 		
 		/**

@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Product catalog
+		 * title \Product catalog
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_row_demo_products_title' )
+			return "Product catalog"
 		}
 		
 		/**

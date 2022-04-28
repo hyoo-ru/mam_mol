@@ -1,23 +1,28 @@
 namespace $ {
-	export class $mol_textarea_demo extends $mol_example {
+	export class $mol_textarea_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Text input field in various states
+		 * title \Text input field in various states
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_textarea_demo_title' )
+			return "Text input field in various states"
 		}
 		
 		/**
 		 * ```tree
-		 * sub / <= Demo_items
+		 * sub /
+		 * 	<= Empty_descr
+		 * 	<= Filled_descr
+		 * 	<= Disabled
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Demo_items()
+				this.Empty_descr(),
+				this.Filled_descr(),
+				this.Disabled()
 			] as readonly any[]
 		}
 		
@@ -106,27 +111,6 @@ namespace $ {
 			
 			obj.enabled = () => false
 			obj.value = (val?: any) => this.filled_descr(val)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Demo_items $mol_list rows /
-		 * 	<= Empty_descr
-		 * 	<= Filled_descr
-		 * 	<= Disabled
-		 * ```
-		 */
-		@ $mol_mem
-		Demo_items() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Empty_descr(),
-				this.Filled_descr(),
-				this.Disabled()
-			] as readonly any[]
 			
 			return obj
 		}

@@ -88,11 +88,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * string_speck @ \New
+		 * string_speck \New
 		 * ```
 		 */
 		string_speck() {
-			return this.$.$mol_locale.text( '$mol_speck_demo_string_speck' )
+			return "New"
 		}
 		
 		/**
@@ -208,11 +208,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * message_text @ \Created
+		 * message_text \Created
 		 * ```
 		 */
 		message_text() {
-			return this.$.$mol_locale.text( '$mol_speck_demo_message_text' )
+			return "Created"
 		}
 		
 		/**

@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_check_expand_demo extends $mol_example {
+	export class $mol_check_expand_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Checkbox-expand in various states
+		 * title \Checkbox-expand in various states
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_check_expand_demo_title' )
+			return "Checkbox-expand in various states"
 		}
 		
 		/**
@@ -48,11 +48,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * c1Label @ \Base
+		 * c1Label \Base
 		 * ```
 		 */
 		c1Label() {
-			return this.$.$mol_locale.text( '$mol_check_expand_demo_c1Label' )
+			return "Base"
 		}
 		
 		/**
@@ -74,11 +74,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * c2Label @ \Expanded
+		 * c2Label \Expanded
 		 * ```
 		 */
 		c2Label() {
-			return this.$.$mol_locale.text( '$mol_check_expand_demo_c2Label' )
+			return "Expanded"
 		}
 		
 		/**
@@ -111,11 +111,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * c5Label @ \Non expandable
+		 * c5Label \Non expandable
 		 * ```
 		 */
 		c5Label() {
-			return this.$.$mol_locale.text( '$mol_check_expand_demo_c5Label' )
+			return "Non expandable"
 		}
 		
 		/**

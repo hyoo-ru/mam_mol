@@ -1,20 +1,18 @@
-$mol_check_icon_demo $mol_example
-	title @ \Iconic checkboxes in various states
+$mol_check_icon_demo $mol_example_small
+	title \Iconic checkboxes in various states
 	sub /
-		<= Demo_items $mol_list
-			rows /
-				<= Base $mol_check_icon
-					Icon <= Base_icon $mol_icon_microphone
-					checked?val <=> base_checked?val false
-				-
-				<= Checked $mol_check_icon
-					Icon <= Checked_icon $mol_icon_microphone
-					checked?val <=> checked_checked?val true
-				-
-				<= Disabled $mol_check_box
-					Icon <= Disabled_icon $mol_icon_microphone
-					checked true
-					enabled false
+		<= Base $mol_check_icon
+			Icon <= Base_icon $mol_icon_microphone
+			checked?val <=> base_checked?val false
+		-
+		<= Checked $mol_check_icon
+			Icon <= Checked_icon $mol_icon_microphone
+			checked?val <=> checked_checked?val true
+		-
+		<= Disabled $mol_check_box
+			Icon <= Disabled_icon $mol_icon_microphone
+			checked true
+			enabled false
 	tags /
 		\$mol_icon
 		\checkbox

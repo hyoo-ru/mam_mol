@@ -1,15 +1,15 @@
 $mol_pop_demo $mol_example
-	title @ \Pop up block with various alignment
+	title \Pop up block with various alignment
 	sub /
 		<= Manage $mol_row sub /
 			<= Showed $mol_labeler
-				title <= show_title @ \Showed
+				title <= show_title \Showed
 				content /
 					<= Show_check $mol_check_box
-						hint <= pop_showed_check_hint @ \$mol_pop showed
+						hint <= pop_showed_check_hint \$mol_pop showed
 						checked?val <=> pop_showed?val true
 			<= Align $mol_labeler
-				title <= align_title @ \Align
+				title <= align_title \Align
 				content /
 					<= Align_select $mol_switch
 						value?val <=> pop_align?val \bottom_right
@@ -31,14 +31,16 @@ $mol_pop_demo $mol_example
 			<= Pop $mol_pop
 				Anchor <= Pop_anchor $mol_button_major sub /
 					<= anchor_button_icon $mol_icon_anchor
-					<= anchor_button_title @ \Anchor
+					<= anchor_button_title \Anchor
 				showed <= pop_showed
 				align <= pop_align
 				bubble_content /
 					<= Content $mol_row 
 						minimal_width 150
 						sub / 
-							<= bubble_hint @ \This is $mol_pop content
+							<= bubble_hint \
+								\This is
+								\bubble_content
 	tags /
 		\$mol_row
 		\$mol_button

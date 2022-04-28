@@ -3,11 +3,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Number input control with various configuration
+		 * title \Number input control with various configuration
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_nav_demo_title' )
+			return "Number input control with various configuration"
+		}
+		
+		/**
+		 * ```tree
+		 * plugins / <= Nav
+		 * ```
+		 */
+		plugins() {
+			return [
+				this.Nav()
+			] as readonly any[]
 		}
 		
 		/**
@@ -56,20 +67,6 @@ namespace $ {
 			obj.current_x = (val?: any) => this.tab_current(val)
 			obj.keys_y = () => this.row_list()
 			obj.current_y = (val?: any) => this.row_current(val)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Hint $mol_card title @ \Select option and use keys to switch
-		 * ```
-		 */
-		@ $mol_mem
-		Hint() {
-			const obj = new this.$.$mol_card()
-			
-			obj.title = () => this.$.$mol_locale.text( '$mol_nav_demo_Hint_title' )
 			
 			return obj
 		}
@@ -166,26 +163,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Demo_items $mol_list
-		 * 	plugins / <= Nav
-		 * 	rows /
-		 * 		<= Hint
+		 * Demo_items $mol_card
+		 * 	content /
 		 * 		<= Tab_list
 		 * 		<= Row_list
+		 * 	status \Select option and use keys to switch
 		 * ```
 		 */
 		@ $mol_mem
 		Demo_items() {
-			const obj = new this.$.$mol_list()
+			const obj = new this.$.$mol_card()
 			
-			obj.plugins = () => [
-				this.Nav()
-			] as readonly any[]
-			obj.rows = () => [
-				this.Hint(),
+			obj.content = () => [
 				this.Tab_list(),
 				this.Row_list()
 			] as readonly any[]
+			obj.status = () => "Select option and use keys to switch"
 			
 			return obj
 		}

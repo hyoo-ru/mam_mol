@@ -3,6 +3,5 @@
 	"$mol_pop_demo_show_title": "Отображен",
 	"$mol_pop_demo_pop_showed_check_hint": "Отображение $mol_pop",
 	"$mol_pop_demo_align_title": "Выравнивание",
-	"$mol_pop_demo_anchor_button_title": "Якорь",
-	"$mol_pop_demo_bubble_hint": "Это содержимое $mol_pop"
+	"$mol_pop_demo_anchor_button_title": "Якорь"
 }

@@ -195,15 +195,14 @@ namespace $.$$ {
 			sub.push( this.Menu() )
 			
 			const selected = this.selected()
-			if( selected ) {
-				sub.push( this.Detail( selected ) )
-				sub.push( ... this.chat_pages( selected ) )
-			}
+			if( !selected ) return sub
+			
+			sub.push( this.Detail( selected ) )
 			
 			const readme_page = this.readme_page()
-			if ( readme_page && selected ) {
-				sub.push( this.Readme_page() )
-			}
+			if ( readme_page ) sub.push( this.Readme_page() )
+			
+			sub.push( ... this.chat_pages( selected ) )
 			
 			return sub
 		}
@@ -318,13 +317,13 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		override readme_content() {
+		override body() {
 			try {
 				this.readme()
-				return this.Readme()
+				return [ this.Readme() ]
 			} catch ( err ) {
 				if( err instanceof Promise ) $mol_fail_hidden( err )
-				return this.Not_found()
+				return [ this.Not_found() ]
 			}
 		}
 		

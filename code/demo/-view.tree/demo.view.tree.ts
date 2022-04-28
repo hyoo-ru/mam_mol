@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Barcode scanner with various formats support
+		 * title \Barcode scanner with various formats support
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_code_demo_title' )
+			return "Barcode scanner with various formats support"
 		}
 		
 		/**

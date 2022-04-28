@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Progress bar in various states
+		 * title \Progress bar in various states
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_portion_demo_title' )
+			return "Progress bar in various states"
 		}
 		
 		/**

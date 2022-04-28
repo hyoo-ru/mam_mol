@@ -1,17 +1,10 @@
 $mol_attach_demo $mol_example_small
-	title @ \Attach files an show them
+	title \Attach files an show them
 	sub /
 		<= Filled $mol_attach
 			items?val <=> filled_items?val /
-				<= Item1 $mol_attach_item
-					url_thumb \https://thiscatdoesnotexist.com/
-					url_load \https://thiscatdoesnotexist.com/
-				<= Item2 $mol_attach_item
-					url_thumb \https://thiscatdoesnotexist.com/
-					url_load \https://thiscatdoesnotexist.com/
-				<= Item3 $mol_attach_item
-					url_thumb \https://thiscatdoesnotexist.com/
-					url_load \https://thiscatdoesnotexist.com/
+				\https://thiscatdoesnotexist.com/
+				\https://thiscatdoesnotexist.com/
 	tags /
 		\attach
 		\file

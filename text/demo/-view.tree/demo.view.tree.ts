@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_text_demo extends $mol_example {
+	export class $mol_text_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Markdown visualization example
+		 * title \Markdown visualization example
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_text_demo_title' )
+			return "Markdown visualization example"
 		}
 		
 		/**

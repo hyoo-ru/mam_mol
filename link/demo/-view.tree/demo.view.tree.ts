@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_link_demo extends $mol_example {
+	export class $mol_link_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Some hyperlinks
+		 * title \Some hyperlinks
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_link_demo_title' )
+			return "Some hyperlinks"
 		}
 		
 		/**
@@ -49,11 +49,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * this_label @ \This page
+		 * this_label \This page
 		 * ```
 		 */
 		this_label() {
-			return this.$.$mol_locale.text( '$mol_link_demo_this_label' )
+			return "This page"
 		}
 		
 		/**
@@ -74,11 +74,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * red_label @ \Red
+		 * red_label \Red
 		 * ```
 		 */
 		red_label() {
-			return this.$.$mol_locale.text( '$mol_link_demo_red_label' )
+			return "Red"
 		}
 		
 		/**
@@ -104,11 +104,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * green_label @ \Green
+		 * green_label \Green
 		 * ```
 		 */
 		green_label() {
-			return this.$.$mol_locale.text( '$mol_link_demo_green_label' )
+			return "Green"
 		}
 		
 		/**
@@ -134,11 +134,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * blue_label @ \Blue
+		 * blue_label \Blue
 		 * ```
 		 */
 		blue_label() {
-			return this.$.$mol_locale.text( '$mol_link_demo_blue_label' )
+			return "Blue"
 		}
 		
 		/**
@@ -164,11 +164,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * external_hint @ \external link
+		 * external_hint \external link
 		 * ```
 		 */
 		external_hint() {
-			return this.$.$mol_locale.text( '$mol_link_demo_external_hint' )
+			return "external link"
 		}
 		
 		/**
@@ -213,11 +213,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * download_label @ \Download
+		 * download_label \Download
 		 * ```
 		 */
 		download_label() {
-			return this.$.$mol_locale.text( '$mol_link_demo_download_label' )
+			return "Download"
 		}
 		
 		/**

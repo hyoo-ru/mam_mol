@@ -1,13 +1,13 @@
 namespace $ {
-	export class $mol_expander_demo extends $mol_example {
+	export class $mol_expander_demo extends $mol_example_small {
 		
 		/**
 		 * ```tree
-		 * title @ \Simple spoiler
+		 * title \Simple spoiler
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_expander_demo_title' )
+			return "Simple spoiler"
 		}
 		
 		/**
@@ -57,7 +57,7 @@ namespace $ {
 		 * ```tree
 		 * Expander $mol_expander
 		 * 	title \Lorem Ipsum
-		 * 	Content <= Content
+		 * 	content / <= Content
 		 * ```
 		 */
 		@ $mol_mem
@@ -65,7 +65,9 @@ namespace $ {
 			const obj = new this.$.$mol_expander()
 			
 			obj.title = () => "Lorem Ipsum"
-			obj.Content = () => this.Content()
+			obj.content = () => [
+				this.Content()
+			] as readonly any[]
 			
 			return obj
 		}

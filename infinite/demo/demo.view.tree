@@ -1,5 +1,5 @@
 $mol_infinite_demo $mol_example
-	title @ \Infinite list demo
+	title \Infinite list demo
 	chunk_size 20
 	sub /
 		<= List $mol_infinite
