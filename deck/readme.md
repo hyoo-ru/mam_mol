@@ -1,7 +1,7 @@
 # $mol_deck
 
 The component which arrange content in multiple tabs.
-
+ 
 ## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_deck_demo)
 
 ## Usage example
