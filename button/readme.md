@@ -7,6 +7,7 @@ Simple button.
 ## Usage example
 
 Major button:
+
 ```
 <= Submit $mol_button_major
 	event_click?val <=> event_submit?val null
@@ -14,6 +15,7 @@ Major button:
 ```
 
 Minor button with custom content (icon and title):
+
 ```
 <= Submit $mol_button_minor
 	event_click?val <=> event_submit?val null
