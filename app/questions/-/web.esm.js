@@ -2700,9 +2700,6 @@ var $;
             maxWidth: per(100),
             maxHeight: per(100),
             boxSizing: 'border-box',
-            background: {
-                color: $mol_theme.back,
-            },
             color: $mol_theme.text,
             ':nth-child(odd)': {
                 background: {
