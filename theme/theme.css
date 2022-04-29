@@ -1,56 +1,57 @@
+:root {
+	--mol_theme_hue: 210deg;
+	--mol_theme_luma: 1;
+	--mol_theme_image: none;
+}
+
 [mol_theme] {
+	
 	background-color: var(--mol_theme_back);
 	color: var(--mol_theme_text);
 	fill: var(--mol_theme_text);
+	
+	--mol_theme_back: hsl( var(--mol_theme_hue), 50% , calc( 53% + 43% * var(--mol_theme_luma) ) );
+	--mol_theme_text: hsl( var(--mol_theme_hue), 0% , calc( 50% - 30% * var(--mol_theme_luma) ) );
+	--mol_theme_field: hsl( var(--mol_theme_hue), 0%, calc( 50% + 50% * var(--mol_theme_luma) ), .1 );
+	
+	--mol_theme_card: hsl( var(--mol_theme_hue), 0%, 50%, .05 );
+	--mol_theme_hover: hsl( var(--mol_theme_hue), 0%, 50%, .1 );
+	--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .25 );
+	--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 50%, 1 );
+	
+	--mol_theme_control: hsl( var(--mol_theme_hue), 60%, calc( 50% - 5% * var(--mol_theme_luma) ) );
+	--mol_theme_current: hsl( calc( var(--mol_theme_hue) + 90deg ), 70%, 50% );
+	--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 180deg ), 100%, calc( 50% - 5% * var(--mol_theme_luma) ) );
+	
 }
 
-[mol_theme="$mol_theme_light"] , :root {
-	--mol_theme_back: hsl( 210 , 50% , 99% );
-	--mol_theme_card: hsla( 0deg , 0% , 0% , .025 );
-	--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );
-	--mol_theme_current: hsl(160deg 100% 35%);
-	--mol_theme_text: hsl( 0 , 0% , 0% );
-	--mol_theme_control: hsla( 210 , 60% , 35% , 1 );
-	--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );
-	--mol_theme_line: rgba( 220 , 220 , 220 , 1 );
-	--mol_theme_focus: hsl(28deg, 80%, 50%);
-	--mol_theme_field: white;
+[mol_theme="$mol_theme_light"] {
+	--mol_theme_luma: 1;
 	--mol_theme_image: none;
 }
 
 [mol_theme="$mol_theme_dark"] {
-	--mol_theme_back: hsl( 210 , 50% , 10% );
-	--mol_theme_hover: rgba( 255 , 255 , 255 , .05 );
-	--mol_theme_card: hsla( 0deg , 0% , 100% , .025 );
-	--mol_theme_current: hsl(160deg, 90%, 50%);
-	--mol_theme_text: hsl( 0 , 0% , 80% );
-	--mol_theme_control: hsla( 210 , 60% , 70% , 1 );
-	--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );
-	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
-	--mol_theme_focus: hsl( 60 , 100% , 70% );
-	--mol_theme_field: rgba( 0 , 0 , 0 , .05 );
-	--mol_theme_image: invert(1) hue-rotate(180deg);
+	--mol_theme_luma: -1;
+	--mol_theme_image: invert(1) hue-rotate( 180deg );
 }
 
 [mol_theme="$mol_theme_base"] {
-	--mol_theme_back: hsla( 210 , 60% , 35% , 1 );
-	--mol_theme_hover: hsla( 210 , 60% , 30% , 1 );
-	--mol_theme_current: hsl( 210 , 100% , 20% );
-	--mol_theme_text: white;
-	--mol_theme_line: white;
-	--mol_theme_control: white;
+	--mol_theme_luma: -2;
+	--mol_theme_back: hsl( var(--mol_theme_hue), 50%, 40% );
+	--mol_theme_hover: hsl( var(--mol_theme_hue), 60%, 30% );
+	--mol_theme_current: hsl( var(--mol_theme_hue), 100%, 20% );
+}
+
+[mol_theme="$mol_theme_current"] {
+	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 90deg ), 50%, calc( 50% + 20% * var(--mol_theme_luma) ) );
 }
 
 [mol_theme="$mol_theme_accent"] {
-	--mol_theme_back: hsl(28deg, 80%, 50%);
-	--mol_theme_hover: hsl(28deg, 80%, 50%);
-	--mol_theme_text: white;
-	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
-	--mol_theme_control: white;
-	--mol_theme_focus: black;
+	--mol_theme_luma: -2;
+	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 180deg ), 70%, 45% );
+	--mol_theme_hover: hsl( calc( var(--mol_theme_hue) + 180deg ), 70%, 40% );
 }
 
 [mol_theme="$mol_theme_accent"] [mol_theme="$mol_theme_accent"] {
 	--mol_theme_back: black;
-	--mol_theme_text: white;
 }

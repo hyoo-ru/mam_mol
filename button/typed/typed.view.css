@@ -4,6 +4,8 @@
 	padding: var(--mol_gap_text);
 	border-radius: var(--mol_gap_round);
 	gap: var(--mol_gap_space);
+	user-select: none;
+	cursor: pointer;
 }
 
 [mol_button_typed][disabled] {
@@ -12,7 +14,6 @@
 
 [mol_button_typed]:hover ,
 [mol_button_typed]:focus {
-	cursor: pointer;
 	background-color: var(--mol_theme_hover);
 }
 

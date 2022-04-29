@@ -34,7 +34,7 @@ namespace $.$$ {
 			flex: {
 				grow: 1,
 				shrink: 1,
-				basis: rem(10),
+				basis: rem(15),
 			},
 			padding: $mol_gap.text,
 		},
@@ -42,8 +42,6 @@ namespace $.$$ {
 		Link: {
 			flex: {
 				grow: 1,
-				shrink: 1,
-				basis: rem(3),
 			},
 		},
 

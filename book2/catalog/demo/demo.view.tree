@@ -8,15 +8,18 @@ $mol_book2_catalog_demo $mol_example_large
 				articles <= Articles $mol_page
 					title \Articles
 					body /
-						\Articles content
+						<= Articles_content $mol_row
+							sub / \Articles content
 				images <= Images $mol_page
 					title \Images
 					body /
-						\Images content
+						<= Images_content $mol_row
+							sub / \Images content
 				maps <= Maps $mol_page
 					title \Maps
 					body /
-						\Maps content
+						<= Maps_content $mol_row
+							sub / \Maps content
 	tags /
 		\$mol_page
 		\app

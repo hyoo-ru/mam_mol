@@ -111,7 +111,7 @@ namespace $.$$ {
 		}
 
 		day_theme( day : string ) {
-			return this.day_selected( day ) ? '$mol_theme_base' : super.day_theme( day )
+			return this.day_selected( day ) ? '$mol_theme_current' : super.day_theme( day )
 		}
 
 	 }
