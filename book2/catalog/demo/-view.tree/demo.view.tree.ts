@@ -49,9 +49,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Articles_content $mol_row sub / \Articles content
+		 * ```
+		 */
+		@ $mol_mem
+		Articles_content() {
+			const obj = new this.$.$mol_row()
+			
+			obj.sub = () => [
+				"Articles content"
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * Articles $mol_page
 		 * 	title \Articles
-		 * 	body / \Articles content
+		 * 	body / <= Articles_content
 		 * ```
 		 */
 		@ $mol_mem
@@ -60,7 +76,23 @@ namespace $ {
 			
 			obj.title = () => "Articles"
 			obj.body = () => [
-				"Articles content"
+				this.Articles_content()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Images_content $mol_row sub / \Images content
+		 * ```
+		 */
+		@ $mol_mem
+		Images_content() {
+			const obj = new this.$.$mol_row()
+			
+			obj.sub = () => [
+				"Images content"
 			] as readonly any[]
 			
 			return obj
@@ -70,7 +102,7 @@ namespace $ {
 		 * ```tree
 		 * Images $mol_page
 		 * 	title \Images
-		 * 	body / \Images content
+		 * 	body / <= Images_content
 		 * ```
 		 */
 		@ $mol_mem
@@ -79,7 +111,23 @@ namespace $ {
 			
 			obj.title = () => "Images"
 			obj.body = () => [
-				"Images content"
+				this.Images_content()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Maps_content $mol_row sub / \Maps content
+		 * ```
+		 */
+		@ $mol_mem
+		Maps_content() {
+			const obj = new this.$.$mol_row()
+			
+			obj.sub = () => [
+				"Maps content"
 			] as readonly any[]
 			
 			return obj
@@ -89,7 +137,7 @@ namespace $ {
 		 * ```tree
 		 * Maps $mol_page
 		 * 	title \Maps
-		 * 	body / \Maps content
+		 * 	body / <= Maps_content
 		 * ```
 		 */
 		@ $mol_mem
@@ -98,7 +146,7 @@ namespace $ {
 			
 			obj.title = () => "Maps"
 			obj.body = () => [
-				"Maps content"
+				this.Maps_content()
 			] as readonly any[]
 			
 			return obj

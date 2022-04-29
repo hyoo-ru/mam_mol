@@ -28,13 +28,14 @@
 }
 
 [mol_calendar_weekday] {
+	color: var(--mol_theme_shade);
 	border-bottom: 1px solid var(--mol_theme_line);
 }
 
 [mol_calendar_holiday] {
-	color: var(--mol_skin_base);
+	color: var(--mol_theme_shade);
 }
 
 [mol_calendar_ghost] {
-	opacity: .25;
+	opacity: .2;
 }

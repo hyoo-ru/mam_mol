@@ -21,6 +21,12 @@ namespace $.$$ {
 		},
 		color: $mol_theme.text ,
 		// zIndex: 0 ,
+		
+		':nth-child(odd)': {
+			background: {
+				color: $mol_theme.card,
+			},
+		},
 
 		':focus': {
 			outline: 'none',
@@ -36,7 +42,7 @@ namespace $.$$ {
 			minHeight: rem(4),
 			padding: $mol_gap.block ,
 			background: {
-				color: $mol_theme.back ,
+				color: $mol_theme.card ,
 			},
 			border: {
 				radius: $mol_gap.round,
