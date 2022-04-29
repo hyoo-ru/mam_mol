@@ -36,7 +36,23 @@ namespace $.$$ {
 		minimal_width() {
 			return this.$.$mol_print.active() ? null! : 0
 		}
-		
+
+		event_mouseleave( event: MouseEvent ) {
+			this.is_enlarged_x( false )
+			this.is_enlarged_y( false )
+		}
+
+		event_move( event: MouseEvent ) {
+			const el = this.dom_node()
+			const rect = el.getBoundingClientRect()
+			const x = event.clientX - rect.left
+			const y = event.clientY - rect.top
+
+			const enlargeX = rect.width - x < 30
+			const enlargeY = rect.height - y < 30
+			this.is_enlarged_x( enlargeX )
+			this.is_enlarged_y( enlargeY )
+		}
 	}
 
 }

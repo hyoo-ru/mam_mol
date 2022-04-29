@@ -25,6 +25,26 @@ namespace $.$$ {
 		webkitOverflowScrolling: 'touch',
 		contain: 'content',
 
+		'[enlarge-scrollbar-x]::-webkit-scrollbar' {
+			width: rem( .75 ),
+		},
+
+		'[enlarge-scrollbar-x]::-webkit-scrollbar-track' {
+			background: {
+				color: 'rgba(1,1,1, 0.025)',
+			},
+		},
+
+		'[enlarge-scrollbar-y]::-webkit-scrollbar' {
+			height: rem( .75 ),
+		},
+
+		'[enlarge-scrollbar-y]::-webkit-scrollbar-track' {
+			background: {
+				color: 'rgba(1,1,1, 0.025)',
+			},
+		},
+
 		'>': {
 			$mol_view: {
 				transform: 'translateZ(0)', // enforce gpu scroll in all agents
