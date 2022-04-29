@@ -36,6 +36,7 @@ Counts of milliseconds from Unix Epoch.
 **`value_moment( next? : $mol_time_moment ) : $mol_time_moment`**
 
 Instance $mol_time_moment.
+
 ```
 <= Today $mol_date
 	value_moment?val <=> today?val $mol_time_moment
