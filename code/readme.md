@@ -14,7 +14,7 @@ Machine readable code input. On Cordova displays button to call native scanner.
 
 ## Properties
 
-**'format() : String'**
+**`format() : String`**
 
 Returns format for code scanning.
 
