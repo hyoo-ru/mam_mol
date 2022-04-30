@@ -19,8 +19,9 @@ namespace $ {
 
 	export class $mol_github_user extends $mol_github_entity< $mol_github_user_json > {
 		
+		@ $mol_mem
 		name() {
-			return this.json().login
+			return this.uri().replace( /.*\//, '' )
 		}
 
 		avatar() {
