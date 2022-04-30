@@ -1,6 +1,7 @@
 $mol_frame $mol_embed_native
 	dom_name \iframe
 	attr *
+		^
 		data null
 		type null
 		src <= uri?val \
