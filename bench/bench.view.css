@@ -16,5 +16,5 @@
 }
 
 [mol_bench_row]:nth-child(1) [mol_portion_indicator] {
-	background: var(--mol_theme_focus);
+	background: var(--mol_theme_current);
 }
