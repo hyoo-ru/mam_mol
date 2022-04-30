@@ -6794,6 +6794,158 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_assert_ok(value: any): void;
+    function $mol_assert_not(value: any): void;
+    function $mol_assert_fail(handler: () => any, ErrorRight?: any): any;
+    function $mol_assert_equal<Value>(...args: [Value, Value, ...Value[]]): void;
+    function $mol_assert_unique(...args: [any, any, ...any[]]): void;
+    function $mol_assert_like<Value>(head: Value, ...tail: Value[]): undefined;
+    function $mol_assert_dom(left: Element, right: Element): void;
+}
+
+declare namespace $ {
+    class $mol_theme_auto extends $mol_plugin {
+        attr(): {
+            mol_theme: string;
+        };
+        theme(): string;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_theme_auto extends $.$mol_theme_auto {
+        theme(): "$mol_theme_light" | "$mol_theme_dark";
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_github_circle extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_link_source extends $mol_link {
+        hint(): string;
+        sub(): readonly any[];
+        Icon(): $mol_icon_github_circle;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_brightness_6 extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_lights_toggle extends $mol_check_icon {
+        Icon(): $mol_icon_brightness_6;
+        hint(): string;
+        checked(val?: any): boolean;
+        Lights_icon(): $mol_icon_brightness_6;
+        lights(val?: any): boolean;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_lights_toggle extends $.$mol_lights_toggle {
+        lights(next?: boolean): boolean;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_play extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $hyoo_js_eval extends $mol_book2 {
+        Placeholder(): any;
+        plugins(): readonly any[];
+        pages(): readonly any[];
+        Log(index: any): $$.$hyoo_js_eval_log;
+        Theme(): $$.$mol_theme_auto;
+        Source(): $mol_link_source;
+        Lights(): $$.$mol_lights_toggle;
+        Run_icon(): $mol_icon_play;
+        run(val?: any): boolean;
+        Run(): $mol_check_icon;
+        code(val?: any): string;
+        Code(): $$.$mol_textarea;
+        Code_page(): $mol_page;
+        result_label(): string;
+        Results_close_icon(): $mol_icon_cross;
+        Results_close(): $$.$mol_link;
+        logs(): readonly any[];
+        Result(): $$.$mol_list;
+        Result_page(): $mol_page;
+        log(index: any): readonly any[];
+    }
+    class $hyoo_js_eval_log extends $mol_view {
+        values(): readonly any[];
+        Dump(index: any): $$.$hyoo_js_eval_dump;
+        dump_value(index: any): any;
+        dump_expanded(index: any, val?: any): boolean;
+    }
+    class $hyoo_js_eval_dump extends $mol_view {
+        key(): any;
+        suffix(): string;
+        value(): any;
+        sub(): readonly any[];
+        Inner(index: any): $$.$hyoo_js_eval_dump;
+        Key(): $$.$hyoo_js_eval_dump;
+        simple(): string;
+        Simple(): $$.$mol_text_code;
+        expanded(val?: any): boolean;
+        expand_title(): string;
+        expand_content(): readonly any[];
+        Expand(): $$.$mol_expander;
+        inner_key(index: any): any;
+        inner_value(index: any): any;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $hyoo_js_eval extends $.$hyoo_js_eval {
+        code(next?: string): string;
+        run(next?: boolean): boolean;
+        pages(): $mol_page[];
+        execute(): any;
+        result(next?: any[]): any[];
+        logs(): $hyoo_js_eval_log[];
+        log(index: number): any;
+    }
+    class $hyoo_js_eval_log extends $.$hyoo_js_eval_log {
+        sub(): $hyoo_js_eval_dump[];
+        dump_value(index: number): any;
+    }
+    class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
+        sub(): ($mol_expander | $hyoo_js_eval_dump)[] | ($mol_text_code | $hyoo_js_eval_dump)[];
+        simple(): string;
+        expand_title(): any;
+        inner_keys(): (string | symbol)[];
+        expand_content(): $hyoo_js_eval_dump[];
+        inner_key(index: number): string | symbol;
+        inner_value(index: number): any;
+    }
+}
+
+declare namespace $ {
+    class $mol_time_demo extends $mol_example_large {
+        title(): string;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        code(val?: any): string;
+        Sandbox(): $$.$hyoo_js_eval;
+    }
+}
+
+declare namespace $ {
     class $mol_toolbar extends $mol_view {
         attr(): {
             mol_toolbar_expanded: boolean;
@@ -6910,12 +7062,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_icon_play extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
     class $mol_video_player_demo extends $mol_example_large {
         title(): string;
         sub(): readonly any[];
@@ -7002,57 +7148,6 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_status extends $.$mol_status {
         message(): any;
-    }
-}
-
-declare namespace $ {
-    class $mol_theme_auto extends $mol_plugin {
-        attr(): {
-            mol_theme: string;
-        };
-        theme(): string;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_theme_auto extends $.$mol_theme_auto {
-        theme(): "$mol_theme_light" | "$mol_theme_dark";
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_github_circle extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_link_source extends $mol_link {
-        hint(): string;
-        sub(): readonly any[];
-        Icon(): $mol_icon_github_circle;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_brightness_6 extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_lights_toggle extends $mol_check_icon {
-        Icon(): $mol_icon_brightness_6;
-        hint(): string;
-        checked(val?: any): boolean;
-        Lights_icon(): $mol_icon_brightness_6;
-        lights(val?: any): boolean;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_lights_toggle extends $.$mol_lights_toggle {
-        lights(next?: boolean): boolean;
     }
 }
 

@@ -25526,6 +25526,694 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_assert_ok(value) {
+        if (value)
+            return;
+        $mol_fail(new Error(`${value} ≠ true`));
+    }
+    $.$mol_assert_ok = $mol_assert_ok;
+    function $mol_assert_not(value) {
+        if (!value)
+            return;
+        $mol_fail(new Error(`${value} ≠ false`));
+    }
+    $.$mol_assert_not = $mol_assert_not;
+    function $mol_assert_fail(handler, ErrorRight) {
+        const fail = $.$mol_fail;
+        try {
+            $.$mol_fail = $.$mol_fail_hidden;
+            handler();
+        }
+        catch (error) {
+            if (!ErrorRight)
+                return error;
+            $.$mol_fail = fail;
+            if (typeof ErrorRight === 'string') {
+                $mol_assert_equal(error.message, ErrorRight);
+            }
+            else {
+                $mol_assert_ok(error instanceof ErrorRight);
+            }
+            return error;
+        }
+        finally {
+            $.$mol_fail = fail;
+        }
+        $mol_fail(new Error('Not failed'));
+    }
+    $.$mol_assert_fail = $mol_assert_fail;
+    function $mol_assert_equal(...args) {
+        for (let i = 0; i < args.length; ++i) {
+            for (let j = 0; j < args.length; ++j) {
+                if (i === j)
+                    continue;
+                if (Number.isNaN(args[i]) && Number.isNaN(args[j]))
+                    continue;
+                if (args[i] !== args[j])
+                    $mol_fail(new Error(`Not equal (${i + 1}:${j + 1})\n${args[i]}\n${args[j]}`));
+            }
+        }
+    }
+    $.$mol_assert_equal = $mol_assert_equal;
+    function $mol_assert_unique(...args) {
+        for (let i = 0; i < args.length; ++i) {
+            for (let j = 0; j < args.length; ++j) {
+                if (i === j)
+                    continue;
+                if (args[i] === args[j] || (Number.isNaN(args[i]) && Number.isNaN(args[j]))) {
+                    $mol_fail(new Error(`args[${i}] = args[${j}] = ${args[i]}`));
+                }
+            }
+        }
+    }
+    $.$mol_assert_unique = $mol_assert_unique;
+    function $mol_assert_like(head, ...tail) {
+        for (let [index, value] of Object.entries(tail)) {
+            if (!$mol_compare_deep(value, head)) {
+                const print = (val) => {
+                    if (!val)
+                        return val;
+                    if (typeof val !== 'object')
+                        return val;
+                    if ('outerHTML' in val)
+                        return val.outerHTML;
+                    try {
+                        return JSON.stringify(val);
+                    }
+                    catch (error) {
+                        console.error(error);
+                        return val;
+                    }
+                };
+                return $mol_fail(new Error(`Not like (1:${+index + 2})\n${print(head)}\n---\n${print(value)}`));
+            }
+        }
+    }
+    $.$mol_assert_like = $mol_assert_like;
+    function $mol_assert_dom(left, right) {
+        $mol_assert_equal($mol_dom_serialize(left), $mol_dom_serialize(right));
+    }
+    $.$mol_assert_dom = $mol_assert_dom;
+})($ || ($ = {}));
+//mol/assert/assert.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_theme_auto extends $mol_plugin {
+        attr() {
+            return {
+                mol_theme: this.theme()
+            };
+        }
+        theme() {
+            return "";
+        }
+    }
+    $.$mol_theme_auto = $mol_theme_auto;
+})($ || ($ = {}));
+//mol/theme/auto/-view.tree/auto.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_theme_auto extends $.$mol_theme_auto {
+            theme() {
+                return this.$.$mol_lights() ? '$mol_theme_light' : '$mol_theme_dark';
+            }
+        }
+        $$.$mol_theme_auto = $mol_theme_auto;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/theme/auto/auto.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_github_circle extends $mol_icon {
+        path() {
+            return "M12,2C6.48,2 2,6.48 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12C22,6.48 17.52,2 12,2Z";
+        }
+    }
+    $.$mol_icon_github_circle = $mol_icon_github_circle;
+})($ || ($ = {}));
+//mol/icon/github/circle/-view.tree/circle.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_link_source extends $mol_link {
+        hint() {
+            return this.$.$mol_locale.text('$mol_link_source_hint');
+        }
+        sub() {
+            return [
+                this.Icon()
+            ];
+        }
+        Icon() {
+            const obj = new this.$.$mol_icon_github_circle();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_link_source.prototype, "Icon", null);
+    $.$mol_link_source = $mol_link_source;
+})($ || ($ = {}));
+//mol/link/source/-view.tree/source.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_brightness_6 extends $mol_icon {
+        path() {
+            return "M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z";
+        }
+    }
+    $.$mol_icon_brightness_6 = $mol_icon_brightness_6;
+})($ || ($ = {}));
+//mol/icon/brightness/6/-view.tree/6.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_lights_toggle extends $mol_check_icon {
+        Icon() {
+            return this.Lights_icon();
+        }
+        hint() {
+            return this.$.$mol_locale.text('$mol_lights_toggle_hint');
+        }
+        checked(val) {
+            return this.lights(val);
+        }
+        Lights_icon() {
+            const obj = new this.$.$mol_icon_brightness_6();
+            return obj;
+        }
+        lights(val) {
+            if (val !== undefined)
+                return val;
+            return false;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_lights_toggle.prototype, "Lights_icon", null);
+    __decorate([
+        $mol_mem
+    ], $mol_lights_toggle.prototype, "lights", null);
+    $.$mol_lights_toggle = $mol_lights_toggle;
+})($ || ($ = {}));
+//mol/lights/toggle/-view.tree/toggle.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_lights_toggle extends $.$mol_lights_toggle {
+            lights(next) {
+                return this.$.$mol_lights(next);
+            }
+        }
+        $$.$mol_lights_toggle = $mol_lights_toggle;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/lights/toggle/toggle.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_play extends $mol_icon {
+        path() {
+            return "M8,5.14V19.14L19,12.14L8,5.14Z";
+        }
+    }
+    $.$mol_icon_play = $mol_icon_play;
+})($ || ($ = {}));
+//mol/icon/play/-view.tree/play.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $hyoo_js_eval extends $mol_book2 {
+        Placeholder() {
+            return null;
+        }
+        plugins() {
+            return [
+                this.Theme()
+            ];
+        }
+        pages() {
+            return [
+                this.Code_page(),
+                this.Result_page()
+            ];
+        }
+        Log(index) {
+            const obj = new this.$.$hyoo_js_eval_log();
+            obj.values = () => this.log(index);
+            return obj;
+        }
+        Theme() {
+            const obj = new this.$.$mol_theme_auto();
+            return obj;
+        }
+        Source() {
+            const obj = new this.$.$mol_link_source();
+            obj.uri = () => "https://github.com/hyoo-ru/eval.js.hyoo.ru";
+            return obj;
+        }
+        Lights() {
+            const obj = new this.$.$mol_lights_toggle();
+            return obj;
+        }
+        Run_icon() {
+            const obj = new this.$.$mol_icon_play();
+            return obj;
+        }
+        run(val) {
+            if (val !== undefined)
+                return val;
+            return true;
+        }
+        Run() {
+            const obj = new this.$.$mol_check_icon();
+            obj.Icon = () => this.Run_icon();
+            obj.checked = (val) => this.run(val);
+            obj.hint = () => this.result_label();
+            return obj;
+        }
+        code(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        Code() {
+            const obj = new this.$.$mol_textarea();
+            obj.hint = () => this.$.$mol_locale.text('$hyoo_js_eval_Code_hint');
+            obj.value = (val) => this.code(val);
+            return obj;
+        }
+        Code_page() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => this.$.$mol_locale.text('$hyoo_js_eval_Code_page_title');
+            obj.tools = () => [
+                this.Source(),
+                this.Lights(),
+                this.Run()
+            ];
+            obj.body = () => [
+                this.Code()
+            ];
+            return obj;
+        }
+        result_label() {
+            return this.$.$mol_locale.text('$hyoo_js_eval_result_label');
+        }
+        Results_close_icon() {
+            const obj = new this.$.$mol_icon_cross();
+            return obj;
+        }
+        Results_close() {
+            const obj = new this.$.$mol_link();
+            obj.arg = () => ({
+                run: "false"
+            });
+            obj.sub = () => [
+                this.Results_close_icon()
+            ];
+            return obj;
+        }
+        logs() {
+            return [];
+        }
+        Result() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => this.logs();
+            return obj;
+        }
+        Result_page() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => this.result_label();
+            obj.tools = () => [
+                this.Results_close()
+            ];
+            obj.body = () => [
+                this.Result()
+            ];
+            return obj;
+        }
+        log(index) {
+            return [];
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_js_eval.prototype, "Log", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Theme", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Source", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Lights", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Run_icon", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "run", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Run", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "code", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Code", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Code_page", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Results_close_icon", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Results_close", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Result", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Result_page", null);
+    $.$hyoo_js_eval = $hyoo_js_eval;
+    class $hyoo_js_eval_log extends $mol_view {
+        values() {
+            return [];
+        }
+        Dump(index) {
+            const obj = new this.$.$hyoo_js_eval_dump();
+            obj.value = () => this.dump_value(index);
+            obj.expanded = (val) => this.dump_expanded(index, val);
+            return obj;
+        }
+        dump_value(index) {
+            return null;
+        }
+        dump_expanded(index, val) {
+            if (val !== undefined)
+                return val;
+            return true;
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_js_eval_log.prototype, "Dump", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_js_eval_log.prototype, "dump_expanded", null);
+    $.$hyoo_js_eval_log = $hyoo_js_eval_log;
+    class $hyoo_js_eval_dump extends $mol_view {
+        key() {
+            return null;
+        }
+        suffix() {
+            return "";
+        }
+        value() {
+            return null;
+        }
+        sub() {
+            return [
+                this.Key(),
+                this.Simple(),
+                this.Expand()
+            ];
+        }
+        Inner(index) {
+            const obj = new this.$.$hyoo_js_eval_dump();
+            obj.key = () => this.inner_key(index);
+            obj.value = () => this.inner_value(index);
+            return obj;
+        }
+        Key() {
+            const obj = new this.$.$hyoo_js_eval_dump();
+            obj.minimal_height = () => 40;
+            obj.value = () => this.key();
+            obj.suffix = () => ":";
+            return obj;
+        }
+        simple() {
+            return "";
+        }
+        Simple() {
+            const obj = new this.$.$mol_text_code();
+            obj.text = () => this.simple();
+            return obj;
+        }
+        expanded(val) {
+            if (val !== undefined)
+                return val;
+            return false;
+        }
+        expand_title() {
+            return "";
+        }
+        expand_content() {
+            return [];
+        }
+        Expand() {
+            const obj = new this.$.$mol_expander();
+            obj.expanded = (val) => this.expanded(val);
+            obj.title = () => this.expand_title();
+            obj.content = () => this.expand_content();
+            return obj;
+        }
+        inner_key(index) {
+            return null;
+        }
+        inner_value(index) {
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_js_eval_dump.prototype, "Inner", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_dump.prototype, "Key", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_dump.prototype, "Simple", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_dump.prototype, "expanded", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_dump.prototype, "Expand", null);
+    $.$hyoo_js_eval_dump = $hyoo_js_eval_dump;
+})($ || ($ = {}));
+//hyoo/js/eval/-view.tree/eval.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_code_page] {\n\tflex: 1 0 40rem;\n}\n\n[hyoo_js_eval_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 1000 0 40rem;\n}\n\n[hyoo_js_eval_result_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_dump] {\n\tmin-height: 2.5rem;\n}\n");
+})($ || ($ = {}));
+//hyoo/js/eval/-css/eval.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $hyoo_js_eval extends $.$hyoo_js_eval {
+            code(next) {
+                return this.$.$mol_state_arg.value('code', next) ?? '';
+            }
+            run(next) {
+                return this.$.$mol_state_arg.value('run', next?.valueOf && String(next)) !== 'false';
+            }
+            pages() {
+                return [
+                    this.Code_page(),
+                    ...this.run() ? [this.Result_page()] : [],
+                ];
+            }
+            execute() {
+                const console = new Proxy(globalThis.console, {
+                    get: (target, field) => {
+                        if (typeof target[field] !== 'function')
+                            return target[field];
+                        return (...args) => {
+                            Promise.resolve().then(() => {
+                                this.result([...this.result(), [field, ...args]]);
+                            });
+                            return target[field](...args);
+                        };
+                    }
+                });
+                return eval(this.code());
+            }
+            result(next) {
+                this.code();
+                if (next)
+                    return next;
+                return [['end', this.execute()]];
+            }
+            logs() {
+                return this.result().map((_, index) => this.Log(index));
+            }
+            log(index) {
+                return this.result()[index];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval.prototype, "code", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval.prototype, "run", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval.prototype, "pages", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval.prototype, "execute", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval.prototype, "result", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval.prototype, "logs", null);
+        __decorate([
+            $mol_mem_key
+        ], $hyoo_js_eval.prototype, "log", null);
+        $$.$hyoo_js_eval = $hyoo_js_eval;
+        class $hyoo_js_eval_log extends $.$hyoo_js_eval_log {
+            sub() {
+                return this.values().map((_, index) => this.Dump(index));
+            }
+            dump_value(index) {
+                return this.values()[index];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_log.prototype, "sub", null);
+        __decorate([
+            $mol_mem_key
+        ], $hyoo_js_eval_log.prototype, "dump_value", null);
+        $$.$hyoo_js_eval_log = $hyoo_js_eval_log;
+        class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
+            sub() {
+                const value = this.value();
+                const prefix = this.key() === null ? [] : [this.Key()];
+                if (value && (typeof value === 'object')) {
+                    return [...prefix, this.Expand()];
+                }
+                return [...prefix, this.Simple()];
+            }
+            simple() {
+                return String(this.value()) + this.suffix();
+            }
+            expand_title() {
+                const value = this.value();
+                return Reflect.getOwnPropertyDescriptor(value, Symbol.toStringTag)?.value
+                    ?? Reflect.getPrototypeOf(value).constructor.name;
+            }
+            inner_keys() {
+                let value = this.value();
+                return Reflect.ownKeys(value);
+            }
+            expand_content() {
+                return this.inner_keys().map((_, index) => this.Inner(index));
+            }
+            inner_key(index) {
+                return this.inner_keys()[index];
+            }
+            inner_value(index) {
+                const key = this.inner_key(index);
+                return Reflect.getOwnPropertyDescriptor(this.value(), key)?.value;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_dump.prototype, "sub", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_dump.prototype, "simple", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_dump.prototype, "expand_title", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_dump.prototype, "inner_keys", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_dump.prototype, "expand_content", null);
+        __decorate([
+            $mol_mem_key
+        ], $hyoo_js_eval_dump.prototype, "inner_key", null);
+        __decorate([
+            $mol_mem_key
+        ], $hyoo_js_eval_dump.prototype, "inner_value", null);
+        $$.$hyoo_js_eval_dump = $hyoo_js_eval_dump;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hyoo/js/eval/eval.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_time_demo extends $mol_example_large {
+        title() {
+            return "Time processing library sandbox";
+        }
+        sub() {
+            return [
+                this.Sandbox()
+            ];
+        }
+        tags() {
+            return [
+                "$mol_time",
+                "moment"
+            ];
+        }
+        code(val) {
+            if (val !== undefined)
+                return val;
+            return "const now = new $mol_time_moment;\nconst today = now.toString( 'YYYY-MM-DD' );\nconst tomorrow = now.shift( 'P1D' ).toString( 'DD Mon' );\n\nconst week = new $mol_time_duration( 'P7D' );\nconst days = week.count( 'P1D' );\n\nconst nextYear = new $mol_time_interval( '/P1Y' );\nconst anniversary = nextYear.end.toString( 'YYYY-MM-DD hh:mm' );\n\n({ now, today, tomorrow, week, days, nextYear, anniversary });";
+        }
+        Sandbox() {
+            const obj = new this.$.$hyoo_js_eval();
+            obj.code = (val) => this.code(val);
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_time_demo.prototype, "code", null);
+    __decorate([
+        $mol_mem
+    ], $mol_time_demo.prototype, "Sandbox", null);
+    $.$mol_time_demo = $mol_time_demo;
+})($ || ($ = {}));
+//mol/time/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_toolbar extends $mol_view {
         attr() {
             return {
@@ -26049,18 +26737,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_play extends $mol_icon {
-        path() {
-            return "M8,5.14V19.14L19,12.14L8,5.14Z";
-        }
-    }
-    $.$mol_icon_play = $mol_icon_play;
-})($ || ($ = {}));
-//mol/icon/play/-view.tree/play.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_video_player_demo extends $mol_example_large {
         title() {
             return "Reactive video player";
@@ -26458,134 +27134,6 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/status/status.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_theme_auto extends $mol_plugin {
-        attr() {
-            return {
-                mol_theme: this.theme()
-            };
-        }
-        theme() {
-            return "";
-        }
-    }
-    $.$mol_theme_auto = $mol_theme_auto;
-})($ || ($ = {}));
-//mol/theme/auto/-view.tree/auto.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_theme_auto extends $.$mol_theme_auto {
-            theme() {
-                return this.$.$mol_lights() ? '$mol_theme_light' : '$mol_theme_dark';
-            }
-        }
-        $$.$mol_theme_auto = $mol_theme_auto;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/theme/auto/auto.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_github_circle extends $mol_icon {
-        path() {
-            return "M12,2C6.48,2 2,6.48 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12C22,6.48 17.52,2 12,2Z";
-        }
-    }
-    $.$mol_icon_github_circle = $mol_icon_github_circle;
-})($ || ($ = {}));
-//mol/icon/github/circle/-view.tree/circle.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_link_source extends $mol_link {
-        hint() {
-            return this.$.$mol_locale.text('$mol_link_source_hint');
-        }
-        sub() {
-            return [
-                this.Icon()
-            ];
-        }
-        Icon() {
-            const obj = new this.$.$mol_icon_github_circle();
-            return obj;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_link_source.prototype, "Icon", null);
-    $.$mol_link_source = $mol_link_source;
-})($ || ($ = {}));
-//mol/link/source/-view.tree/source.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_brightness_6 extends $mol_icon {
-        path() {
-            return "M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z";
-        }
-    }
-    $.$mol_icon_brightness_6 = $mol_icon_brightness_6;
-})($ || ($ = {}));
-//mol/icon/brightness/6/-view.tree/6.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_lights_toggle extends $mol_check_icon {
-        Icon() {
-            return this.Lights_icon();
-        }
-        hint() {
-            return this.$.$mol_locale.text('$mol_lights_toggle_hint');
-        }
-        checked(val) {
-            return this.lights(val);
-        }
-        Lights_icon() {
-            const obj = new this.$.$mol_icon_brightness_6();
-            return obj;
-        }
-        lights(val) {
-            if (val !== undefined)
-                return val;
-            return false;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_lights_toggle.prototype, "Lights_icon", null);
-    __decorate([
-        $mol_mem
-    ], $mol_lights_toggle.prototype, "lights", null);
-    $.$mol_lights_toggle = $mol_lights_toggle;
-})($ || ($ = {}));
-//mol/lights/toggle/-view.tree/toggle.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_lights_toggle extends $.$mol_lights_toggle {
-            lights(next) {
-                return this.$.$mol_lights(next);
-            }
-        }
-        $$.$mol_lights_toggle = $mol_lights_toggle;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/lights/toggle/toggle.view.ts
 ;
 "use strict";
 var $;
@@ -27763,100 +28311,6 @@ var $;
     });
 })($ || ($ = {}));
 //mol/assert/assert.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_assert_ok(value) {
-        if (value)
-            return;
-        $mol_fail(new Error(`${value} ≠ true`));
-    }
-    $.$mol_assert_ok = $mol_assert_ok;
-    function $mol_assert_not(value) {
-        if (!value)
-            return;
-        $mol_fail(new Error(`${value} ≠ false`));
-    }
-    $.$mol_assert_not = $mol_assert_not;
-    function $mol_assert_fail(handler, ErrorRight) {
-        const fail = $.$mol_fail;
-        try {
-            $.$mol_fail = $.$mol_fail_hidden;
-            handler();
-        }
-        catch (error) {
-            if (!ErrorRight)
-                return error;
-            $.$mol_fail = fail;
-            if (typeof ErrorRight === 'string') {
-                $mol_assert_equal(error.message, ErrorRight);
-            }
-            else {
-                $mol_assert_ok(error instanceof ErrorRight);
-            }
-            return error;
-        }
-        finally {
-            $.$mol_fail = fail;
-        }
-        $mol_fail(new Error('Not failed'));
-    }
-    $.$mol_assert_fail = $mol_assert_fail;
-    function $mol_assert_equal(...args) {
-        for (let i = 0; i < args.length; ++i) {
-            for (let j = 0; j < args.length; ++j) {
-                if (i === j)
-                    continue;
-                if (Number.isNaN(args[i]) && Number.isNaN(args[j]))
-                    continue;
-                if (args[i] !== args[j])
-                    $mol_fail(new Error(`Not equal (${i + 1}:${j + 1})\n${args[i]}\n${args[j]}`));
-            }
-        }
-    }
-    $.$mol_assert_equal = $mol_assert_equal;
-    function $mol_assert_unique(...args) {
-        for (let i = 0; i < args.length; ++i) {
-            for (let j = 0; j < args.length; ++j) {
-                if (i === j)
-                    continue;
-                if (args[i] === args[j] || (Number.isNaN(args[i]) && Number.isNaN(args[j]))) {
-                    $mol_fail(new Error(`args[${i}] = args[${j}] = ${args[i]}`));
-                }
-            }
-        }
-    }
-    $.$mol_assert_unique = $mol_assert_unique;
-    function $mol_assert_like(head, ...tail) {
-        for (let [index, value] of Object.entries(tail)) {
-            if (!$mol_compare_deep(value, head)) {
-                const print = (val) => {
-                    if (!val)
-                        return val;
-                    if (typeof val !== 'object')
-                        return val;
-                    if ('outerHTML' in val)
-                        return val.outerHTML;
-                    try {
-                        return JSON.stringify(val);
-                    }
-                    catch (error) {
-                        console.error(error);
-                        return val;
-                    }
-                };
-                return $mol_fail(new Error(`Not like (1:${+index + 2})\n${print(head)}\n---\n${print(value)}`));
-            }
-        }
-    }
-    $.$mol_assert_like = $mol_assert_like;
-    function $mol_assert_dom(left, right) {
-        $mol_assert_equal($mol_dom_serialize(left), $mol_dom_serialize(right));
-    }
-    $.$mol_assert_dom = $mol_assert_dom;
-})($ || ($ = {}));
-//mol/assert/assert.ts
 ;
 "use strict";
 var $;

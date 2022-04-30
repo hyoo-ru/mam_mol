@@ -1,4 +1,7 @@
 {
+	"$hyoo_js_eval_Code_hint": "введите что-нибудь..",
+	"$hyoo_js_eval_Code_page_title": "Код",
+	"$hyoo_js_eval_result_label": "Результат",
 	"$mol_app_demo_detail_Readme_hint": "Readme",
 	"$mol_app_demo_detail_edit_hint": "Открыть демо приложение в студии",
 	"$mol_app_demo_detail_empty_postfix": "\" ни одного демо не найдено",
