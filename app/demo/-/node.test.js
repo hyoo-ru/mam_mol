@@ -6978,7 +6978,7 @@ var $;
                 margin: 0,
                 overflow: 'hidden',
                 background: {
-                    color: $mol_theme.back,
+                    color: $mol_theme.card,
                 },
                 border: {
                     radius: $mol_gap.round,
