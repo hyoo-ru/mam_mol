@@ -5,6 +5,7 @@ $mol_app_questions $mol_book2
 	Menu $mol_page
 		title <= title_default @ \Questions
 		tools /
+			<= Lights $mol_lights_toggle
 			<= Source_link $mol_link_source
 				uri \https://github.com/eigenmethod/mol/tree/master/app/questions
 		body /

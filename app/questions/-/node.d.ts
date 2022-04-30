@@ -2024,6 +2024,36 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_check_icon extends $mol_check {
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_icon_brightness_6 extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_lights_toggle extends $mol_check_icon {
+        Icon(): $mol_icon_brightness_6;
+        hint(): string;
+        checked(val?: any): boolean;
+        Lights_icon(): $mol_icon_brightness_6;
+        lights(val?: any): boolean;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_lights_toggle extends $.$mol_lights_toggle {
+        lights(next?: boolean): boolean;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_github_circle extends $mol_icon {
         path(): string;
     }
@@ -2059,6 +2089,7 @@ declare namespace $ {
         Tag(id: any): $mol_view;
         Themme(): $$.$mol_theme_auto;
         title_default(): string;
+        Lights(): $$.$mol_lights_toggle;
         Source_link(): $mol_link_source;
         menu_rows(): readonly any[];
         Menu_links(): $$.$mol_list;

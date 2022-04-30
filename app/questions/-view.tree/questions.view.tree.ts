@@ -16,7 +16,9 @@ namespace $ {
 		 * ```tree
 		 * Menu $mol_page
 		 * 	title <= title_default
-		 * 	tools / <= Source_link
+		 * 	tools /
+		 * 		<= Lights
+		 * 		<= Source_link
 		 * 	body / <= Menu_links
 		 * ```
 		 */
@@ -26,6 +28,7 @@ namespace $ {
 			
 			obj.title = () => this.title_default()
 			obj.tools = () => [
+				this.Lights(),
 				this.Source_link()
 			] as readonly any[]
 			obj.body = () => [
@@ -137,6 +140,18 @@ namespace $ {
 		 */
 		title_default() {
 			return this.$.$mol_locale.text( '$mol_app_questions_title_default' )
+		}
+		
+		/**
+		 * ```tree
+		 * Lights $mol_lights_toggle
+		 * ```
+		 */
+		@ $mol_mem
+		Lights() {
+			const obj = new this.$.$mol_lights_toggle()
+			
+			return obj
 		}
 		
 		/**
