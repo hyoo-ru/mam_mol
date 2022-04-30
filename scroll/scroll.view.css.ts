@@ -40,6 +40,13 @@ namespace $.$$ {
 			height: rem(.25),
 		},
 		
+		':hover': {
+			'::-webkit-scrollbar': {
+				width: rem(.5),
+				height: rem(.5),
+			},
+		},
+		
 		'::-webkit-scrollbar-corner': {
 			background: {
 				color: $mol_theme.line,
