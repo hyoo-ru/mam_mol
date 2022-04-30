@@ -19,12 +19,6 @@ namespace $.$$ {
 		color: $mol_theme.text ,
 		// zIndex: 0 ,
 		
-		':nth-child(odd)': {
-			background: {
-				color: $mol_theme.card,
-			},
-		},
-
 		':focus': {
 			outline: 'none',
 		} ,

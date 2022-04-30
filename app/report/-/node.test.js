@@ -3057,11 +3057,6 @@ var $;
             maxHeight: per(100),
             boxSizing: 'border-box',
             color: $mol_theme.text,
-            ':nth-child(odd)': {
-                background: {
-                    color: $mol_theme.card,
-                },
-            },
             ':focus': {
                 outline: 'none',
             },
