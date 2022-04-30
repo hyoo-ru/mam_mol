@@ -10,5 +10,6 @@ $mol_scroll $mol_view
 		mousemove?event <=> event_move?event null
 		mouseleave?event <=> event_mouseleave?event null
 	attr *
+		^
 		enlarge-scrollbar-x <= is_enlarged_x?val false
 		enlarge-scrollbar-y <= is_enlarged_y?val false
