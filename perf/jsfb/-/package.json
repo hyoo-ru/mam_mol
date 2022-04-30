@@ -38,7 +38,6 @@
     "$mol_style_define",
     "$mol_view_view",
     "$mol_view",
-    "$mol_skin",
     "$mol_window",
     "$mol_object",
     "$mol_mem",

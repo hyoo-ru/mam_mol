@@ -204,7 +204,7 @@ Add **styles** at `./my/hello/hello.view.css`:
 	flex-direction: column;
 	align-items: center;
 	font: 1.5rem/1 sans-serif;
-	box-shadow: var(--mol_skin_light_outline);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	flex: 1 1 auto;
 	align-self: stretch;
 	margin: 0;
@@ -466,7 +466,7 @@ The name of the field corresponds to calling the property, the content of the fi
 ## Resources
 
 - **[$mol_icon](https://github.com/nin-jin/mol_icon)** - css styled material design icons
-- **[$mol_skin](theme)** - theming
+- **[$mol_theme](theme)** - theming
 - **[$mol_gap](theme)** - paddings, margins etc
 - **[$mol_style](style)** - css-in-ts
 

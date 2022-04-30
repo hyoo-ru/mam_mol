@@ -38,7 +38,6 @@
     "$mol_deprecated",
     "$mol_env",
     "$mol_theme",
-    "$mol_skin",
     "$mol_window",
     "$mol_object",
     "$mol_mem",

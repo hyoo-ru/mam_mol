@@ -38,7 +38,6 @@
     "$mol_env",
     "$mol_theme",
     "$mol_style_func",
-    "$mol_skin",
     "$mol_window",
     "$mol_object",
     "$mol_mem",

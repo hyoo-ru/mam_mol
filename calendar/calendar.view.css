@@ -1,7 +1,6 @@
 [mol_calendar] {
 	display: table;
 	font-family: monospace;
-	font-family: var(--mol_skin_font_monospace);
 }
 
 [mol_calendar_head] {

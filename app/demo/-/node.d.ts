@@ -263,9 +263,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     namespace $$ { }
     const $mol_object_field: unique symbol;
     class $mol_object extends $mol_object2 {
@@ -1991,7 +1988,8 @@ declare namespace $ {
         whiteSpace?: 'normal' | 'nowrap' | 'break-spaces' | 'pre' | 'pre-wrap' | 'pre-line' | Common;
         webkitOverflowScrolling?: 'auto' | 'touch';
         scrollbar?: {
-            color?: readonly [Color, Color] | 'dark' | 'light' | 'auto' | Common;
+            color?: readonly [Color, Color] | 'auto' | Common;
+            width?: 'auto' | 'thin' | 'none' | Common;
         };
         scroll?: {
             snap?: {

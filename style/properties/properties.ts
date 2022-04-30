@@ -196,7 +196,13 @@ namespace $ {
 		webkitOverflowScrolling?: 'auto' | 'touch'
 
 		scrollbar?: {
-			color?: readonly [ Color , Color ] | 'dark' | 'light' | 'auto' | Common
+			
+			/** Color of thumb and track of scrollbars. */
+			color?: readonly [ Color , Color ] | 'auto' | Common
+			
+			/** Maximum thickness of scrollbars. */
+			width?: 'auto' | 'thin' | 'none' | Common
+			
 		}
 
 		scroll?: {

@@ -1,6 +1,6 @@
 {
   "name": "mol_plot_all",
-  "version": "1.2.209",
+  "version": "1.2.210",
   "main": "node.js",
   "module": "node.esm.js",
   "browser": "web.js",
@@ -39,7 +39,6 @@
     "$mol_style_func",
     "$mol_style_unit",
     "$mol_decor",
-    "$mol_skin",
     "$mol_window",
     "$mol_object",
     "$mol_mem",
