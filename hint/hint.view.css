@@ -1,6 +1,4 @@
 [mol_hint_bubble] {
-	background: var(--mol_skin_base);
-	color: var(--mol_skin_base_text);
-	padding: .5rem;
+	padding: var(--mol_gap_block);
 	opacity: .85;
 }

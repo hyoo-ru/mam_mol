@@ -1,13 +1,11 @@
 [mol_status] {
-	text-align: center;
-	padding: .5rem;
+	padding: var(--mol_gap_text);
 	border-radius: var(--mol_gap_round);
 	display: block;
 }
 
 [mol_status]:not([mol_view_error="Promise"]) {
-	background: var(--mol_skin_warn);
-	color: var(--mol_skin_warn_text);
+	color: var(--mol_theme_focus);
 }
 
 [mol_status]:not([mol_view_error="Promise"]):empty {

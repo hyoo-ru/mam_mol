@@ -77,7 +77,7 @@
 
 [mol_text_type="code-indent"] ,
 [mol_text_type="code"] {
-	font-family: var(--mol_skin_font_monospace);
+	font-family: monospace;
 	white-space: pre-wrap;
 	border-radius: var(--mol_gap_round);
 }

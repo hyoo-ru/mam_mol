@@ -33,6 +33,7 @@ namespace $.$$ {
 
 		scrollbar: {
 			color: [ $mol_theme.line , 'transparent' ],
+			width: 'thin',
 		},
 	
 		'::-webkit-scrollbar': {

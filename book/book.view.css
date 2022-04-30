@@ -34,7 +34,7 @@
 	left: 0;
 	z-index: 2;
 	pointer-events: none;
-	color: var(--mol_skin_base_text);
+	color: var(--mol_theme_text);
 	transform: rotate(90deg);
 }
 
