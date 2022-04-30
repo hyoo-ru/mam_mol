@@ -26195,7 +26195,9 @@ var $;
         tags() {
             return [
                 "$mol_time",
-                "moment"
+                "moment",
+                "duraion",
+                "interval"
             ];
         }
         code(val) {

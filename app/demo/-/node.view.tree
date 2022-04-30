@@ -3400,6 +3400,8 @@ $mol_time_demo $mol_example_large
 	tags /
 		\$mol_time
 		\moment
+		\duraion
+		\interval
 
 $mol_toolbar $mol_view
 	attr *

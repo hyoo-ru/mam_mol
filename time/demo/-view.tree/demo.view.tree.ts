@@ -26,12 +26,16 @@ namespace $ {
 		 * tags /
 		 * 	\$mol_time
 		 * 	\moment
+		 * 	\duraion
+		 * 	\interval
 		 * ```
 		 */
 		tags() {
 			return [
 				"$mol_time",
-				"moment"
+				"moment",
+				"duraion",
+				"interval"
 			] as readonly any[]
 		}
 		
