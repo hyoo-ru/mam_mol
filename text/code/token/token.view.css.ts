@@ -39,7 +39,7 @@ namespace $.$$ {
 				},
 				
 				'code-number': {
-					color: hsla( 60, 70, 50, 1 ),
+					color: hsla( 60, 70, 45, 1 ),
 				},
 				
 				'code-call': {

@@ -21969,7 +21969,7 @@ var $;
                         color: hsla(90, 40, 50, 1),
                     },
                     'code-number': {
-                        color: hsla(60, 70, 50, 1),
+                        color: hsla(60, 70, 45, 1),
                     },
                     'code-call': {
                         color: hsla(270, 60, 50, 1),
