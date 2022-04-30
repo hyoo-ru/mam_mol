@@ -24,6 +24,10 @@
 	flex-shrink: 0;
 }
 
+[mol_book2] > *:nth-child(odd) {
+	background-color: var(--mol_theme_card);
+}
+
 [mol_book2] > [mol_book2] {
 	display: contents;
 }
