@@ -5,7 +5,7 @@ namespace $ {
 		let done!: ( res: Result | PromiseLike< Result > )=> void
 		let fail!: ( error?: any ) => void
 		
-		const promise = new Promise( ( d, f ) => {
+		const promise = new Promise< Result >( ( d, f ) => {
 			done = d
 			fail = f
 		} )
