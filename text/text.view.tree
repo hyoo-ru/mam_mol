@@ -17,9 +17,15 @@ $mol_text $mol_list
 		level <= header_level!id 0
 		content <= header_content!id /
 		arg_anchor_name <= arg_anchor_name \anchor
-	Code!id $mol_text_code
-		text <= code_text!id \
-		highlight <= highlight \
+	Code!id $mol_list
+		rows /
+			<= Code_content!id $mol_text_code
+				text <= code_text!id \
+				highlight <= highlight \
+			<= Code_copy!id $mol_button_typed
+				click?val <=> code_copy!id?val null
+				sub /
+					<= Code_copy_icon!id $mol_icon_content_copy
 	Table!id $mol_grid
 		head_cells <= table_head_cells!id /
 		rows <= table_rows!id /

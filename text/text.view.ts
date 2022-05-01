@@ -193,6 +193,10 @@ namespace $.$$ {
 			return this.text2spans( `${ indexBlock }` , token.chunks[0] )
 		}
 
+		code_copy( id: number ) {
+			$mol_dom_context.navigator.clipboard.writeText( this.code_text( id ) )
+		}
+
 		@ $mol_mem
 		auto_scroll() {
 			const value = this.$.$mol_state_arg.value( this.arg_anchor_name() )
