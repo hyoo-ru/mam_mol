@@ -44,6 +44,7 @@ include \/mol/link/lazy/demo
 include \/mol/list/demo/table
 include \/mol/list/demo/tree
 include \/mol/map/yandex/demo
+include \/hyoo/marked/demo
 - include \/mol/message/demo
 include \/mol/nav/demo
 include \/mol/number/demo
