@@ -376,7 +376,7 @@ $mol_text $mol_list
 		cells <= table_cells!id /
 	Table_cell!id $mol_grid_cell
 		sub <= table_cell_content!id /
-	Table_cell_head!id $mol_float
+	Table_cell_head!id $mol_grid_cell
 		sub <= table_cell_content!id /
 
 $mol_text_row $mol_paragraph

@@ -193,12 +193,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Table_cell_head!id $mol_float sub <= table_cell_content!id
+		 * Table_cell_head!id $mol_grid_cell sub <= table_cell_content!id
 		 * ```
 		 */
 		@ $mol_mem_key
 		Table_cell_head(id: any) {
-			const obj = new this.$.$mol_float()
+			const obj = new this.$.$mol_grid_cell()
 			
 			obj.sub = () => this.table_cell_content(id)
 			
