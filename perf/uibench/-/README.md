@@ -222,6 +222,7 @@ Add **styles** at `./my/hello/hello.view.css`:
 
 # Tutorials
 
+- [Путь друкона - учебный курс](https://www.youtube.com/playlist?list=PLXyFFhv8ucKRBg76o0YXnmQFT1LglSaND)
 - [$mol_app_calc: вечеринка электронных таблиц](https://github.com/nin-jin/HabHub/issues/10)
 - [$hyoo_bench: готовим JS бенчмарки быстро и просто](https://github.com/nin-jin/HabHub/issues/8)
 - [$mol_app_habhub: чтение статей с GitHub](https://github.com/nin-jin/HabHub/issues/5)
