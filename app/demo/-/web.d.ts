@@ -2728,7 +2728,6 @@ declare namespace $ {
         confirm_title(): string;
         confirmed(val?: any): boolean;
         Three_confirm(): $mol_check_box;
-        Three_submit(): $mol_button_minor;
         Three(): $mol_bar;
     }
 }

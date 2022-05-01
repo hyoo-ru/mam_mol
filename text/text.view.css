@@ -114,7 +114,6 @@
 }
 
 [mol_text_type="strike"] {
-	text-decoration: line-through;
 	color: var(--mol_theme_shade);
 }
 

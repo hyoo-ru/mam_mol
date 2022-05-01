@@ -181,24 +181,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Three_submit $mol_button_minor title <= submit_title
-		 * ```
-		 */
-		@ $mol_mem
-		Three_submit() {
-			const obj = new this.$.$mol_button_minor()
-			
-			obj.title = () => this.submit_title()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * Three $mol_bar sub /
 		 * 	<= Three_mail
 		 * 	<= Three_confirm
-		 * 	<= Three_submit
 		 * ```
 		 */
 		@ $mol_mem
@@ -207,8 +192,7 @@ namespace $ {
 			
 			obj.sub = () => [
 				this.Three_mail(),
-				this.Three_confirm(),
-				this.Three_submit()
+				this.Three_confirm()
 			] as readonly any[]
 			
 			return obj

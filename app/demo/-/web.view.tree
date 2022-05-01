@@ -491,21 +491,21 @@ $hyoo_crowd_app_peer $mol_page
 			text <= stats \
 				\# Stats
 				\
-				\Peer: **{peer}**
-				\Changes: **{changes}**
+				\~~Peer:~~ {peer}
+				\~~Changes:~~ {changes}
 				\
 				\| | Alive | Dead | Total
 				\|--|--|--
-				\| Tokens | **{tokens:alive}** | **{tokens:dead}** | **{tokens:total}**
+				\| ~~Tokens~~ | {tokens:alive} | {tokens:dead} | {tokens:total}
 				\
 				\| | Now | Sync
 				\|--|--|--
-				\| Time | **{stamp:now}** | **{stamp:sync}**
+				\| ~~Time~~ | {stamp:now} | {stamp:sync}
 				\
 				\| | Text | State | Delta
 				\|--|--|--|--
-				\| JSON Size | **{size:text}** | **{size:state}** | **{size:delta}**
-				\| Bin Size | **{size:text:bin}** | **{size:state:bin}** | **{size:delta:bin}**
+				\| ~~JSON Size~~ | {size:text} | {size:state} | {size:delta}
+				\| ~~Bin Size~~ | {size:text:bin} | {size:state:bin} | {size:delta:bin}
 				\
 		<= Delta_section $mol_section
 			title \Delta
@@ -598,8 +598,6 @@ $mol_bar_demo $mol_example_small
 				<= Three_confirm $mol_check_box
 					title <= confirm_title \Confirm
 					checked?val <=> confirmed?val false
-				<= Three_submit $mol_button_minor
-					title <= submit_title \Submit
 	tags /
 		\$mol_string
 		\$mol_check
