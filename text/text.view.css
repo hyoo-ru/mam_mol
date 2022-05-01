@@ -35,6 +35,10 @@
 	text-shadow: 0 0;
 }
 
+[mol_text_header] [mol_link] {
+	display: inline-flex;
+}
+
 [mol_text_header_level="1"] {
 	font-size: 1.5em;
 }

@@ -16,6 +16,7 @@ $mol_text $mol_list
 	Header!id $mol_text_header
 		level <= header_level!id 0
 		content <= header_content!id /
+		arg_anchor_name <= arg_anchor_name \anchor
 	Code!id $mol_text_code
 		text <= code_text!id \
 		highlight <= highlight \
@@ -36,9 +37,14 @@ $mol_text_row $mol_paragraph
 
 $mol_text_header $mol_paragraph
 	dom_name \h
+	arg_anchor_name \anchor
+	anchor \
 	attr *
 		^
 		mol_text_header_level <= level?val 0
+	Anchor $mol_link
+		arg <= arg *
+		sub / <= Anchor_icon $mol_icon_link
 	sub <= content /
 
 $mol_text_span $mol_paragraph

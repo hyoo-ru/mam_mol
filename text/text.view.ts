@@ -192,6 +192,45 @@ namespace $.$$ {
 			
 			return this.text2spans( `${ indexBlock }` , token.chunks[0] )
 		}
+
+		@ $mol_mem
+		auto_scroll() {
+			const value = this.$.$mol_state_arg.value( this.arg_anchor_name() )
+			if ( !value ) return
+
+			const path = this.view_find( ( _ , text ) => text === value ).next().value
+
+			if ( path?.length ) {
+				new this.$.$mol_after_frame( ()=> {
+					this.ensure_visible( path.slice(-1)[0] )
+				} )
+			}
+		}
+
+		auto() {
+			this.auto_scroll()
+		}
 		
+	}
+
+
+	export class $mol_text_header extends $.$mol_text_header {
+
+		anchor() {
+			return this.dom_node().textContent ?? ''
+		}
+
+		arg() {
+			return {
+				[this.arg_anchor_name()]: this.anchor(),
+			}
+		}
+
+		sub() {
+			return [
+				... this.content(),
+				this.Anchor(),
+			]
+		}
 	}
 }
