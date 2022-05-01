@@ -3,6 +3,7 @@ deploy \/mol/app/demo/manifest.json
 
 include \/mol/offline/install
 
+include \/hyoo/crowd/text/demo
 include \/mol/attach/demo
 include \/mol/bar/demo
 include \/mol/bench/demo

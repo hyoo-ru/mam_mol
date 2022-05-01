@@ -37,7 +37,6 @@
 }
 
 [mol_grid_head] > * {
-	background: var(--mol_theme_back);
 	color: var(--mol_theme_shade);
 }
 
