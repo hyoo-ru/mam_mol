@@ -16,8 +16,6 @@ $mol_bar_demo $mol_example_small
 				<= Three_confirm $mol_check_box
 					title <= confirm_title \Confirm
 					checked?val <=> confirmed?val false
-				<= Three_submit $mol_button_minor
-					title <= submit_title \Submit
 	tags /
 		\$mol_string
 		\$mol_check

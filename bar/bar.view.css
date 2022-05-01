@@ -3,17 +3,3 @@
 	/* box-shadow: inset 0 0 0 1px var(--mol_theme_line); */
 	border-radius: var(--mol_gap_round);
 }
-
-[mol_bar] > * {
-	border-radius: 0;
-}
-
-[mol_bar] > *:first-child {
-	border-top-left-radius: var(--mol_gap_round);
-	border-bottom-left-radius: var(--mol_gap_round);
-}
-
-[mol_bar] > *:last-child {
-	border-top-right-radius: var(--mol_gap_round);
-	border-bottom-right-radius: var(--mol_gap_round);
-}
