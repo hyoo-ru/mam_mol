@@ -42,15 +42,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Form
-		 * 	<= Result
+		 * sub / <= Form
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Form(),
-				this.Result()
+				this.Form()
 			] as readonly any[]
 		}
 		
@@ -82,13 +79,56 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * submit?val null
+		 * avatars_bid \
+		 * ```
+		 */
+		avatars_bid() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * avatars?val /string
 		 * ```
 		 */
 		@ $mol_mem
-		submit(val?: any) {
+		avatars(val?: any) {
 			if ( val !== undefined ) return val as never
-			return null as any
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * Avatars_control $mol_attach items?val <=> avatars?val
+		 * ```
+		 */
+		@ $mol_mem
+		Avatars_control() {
+			const obj = new this.$.$mol_attach()
+			
+			obj.items = (val?: any) => this.avatars(val)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Avatars_field $mol_form_field
+		 * 	name \Avatars
+		 * 	bid <= avatars_bid
+		 * 	Content <= Avatars_control
+		 * ```
+		 */
+		@ $mol_mem
+		Avatars_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => "Avatars"
+			obj.bid = () => this.avatars_bid()
+			obj.Content = () => this.Avatars_control()
+			
+			return obj
 		}
 		
 		/**
@@ -261,6 +301,80 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Names $mol_form_group sub /
+		 * 	<= Name_first_field
+		 * 	<= Name_nick_field
+		 * 	<= Name_second_field
+		 * ```
+		 */
+		@ $mol_mem
+		Names() {
+			const obj = new this.$.$mol_form_group()
+			
+			obj.sub = () => [
+				this.Name_first_field(),
+				this.Name_nick_field(),
+				this.Name_second_field()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * age_bid \
+		 * ```
+		 */
+		age_bid() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * age?val 0
+		 * ```
+		 */
+		@ $mol_mem
+		age(val?: any) {
+			if ( val !== undefined ) return val as never
+			return 0
+		}
+		
+		/**
+		 * ```tree
+		 * Age_control $mol_number value?val <=> age?val
+		 * ```
+		 */
+		@ $mol_mem
+		Age_control() {
+			const obj = new this.$.$mol_number()
+			
+			obj.value = (val?: any) => this.age(val)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Age_field $mol_form_field
+		 * 	name \Age
+		 * 	bid <= age_bid
+		 * 	control <= Age_control
+		 * ```
+		 */
+		@ $mol_mem
+		Age_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => "Age"
+			obj.bid = () => this.age_bid()
+			obj.control = () => this.Age_control()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * sex_label \Sex
 		 * ```
 		 */
@@ -410,53 +524,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * age_bid \
-		 * ```
-		 */
-		age_bid() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * age?val 0
+		 * Parameters $mol_form_group sub /
+		 * 	<= Age_field
+		 * 	<= Sex_field
+		 * 	<= Color_field
 		 * ```
 		 */
 		@ $mol_mem
-		age(val?: any) {
-			if ( val !== undefined ) return val as never
-			return 0
-		}
-		
-		/**
-		 * ```tree
-		 * Age_control $mol_number value?val <=> age?val
-		 * ```
-		 */
-		@ $mol_mem
-		Age_control() {
-			const obj = new this.$.$mol_number()
+		Parameters() {
+			const obj = new this.$.$mol_form_group()
 			
-			obj.value = (val?: any) => this.age(val)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Age_field $mol_form_field
-		 * 	name \Age
-		 * 	bid <= age_bid
-		 * 	control <= Age_control
-		 * ```
-		 */
-		@ $mol_mem
-		Age_field() {
-			const obj = new this.$.$mol_form_field()
-			
-			obj.name = () => "Age"
-			obj.bid = () => this.age_bid()
-			obj.control = () => this.Age_control()
+			obj.sub = () => [
+				this.Age_field(),
+				this.Sex_field(),
+				this.Color_field()
+			] as readonly any[]
 			
 			return obj
 		}
@@ -519,107 +601,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * avatars_bid \
-		 * ```
-		 */
-		avatars_bid() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * avatars?val /string
+		 * submit?val null
 		 * ```
 		 */
 		@ $mol_mem
-		avatars(val?: any) {
+		submit(val?: any) {
 			if ( val !== undefined ) return val as never
-			return [
-			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
-		 * Avatars_control $mol_attach items?val <=> avatars?val
-		 * ```
-		 */
-		@ $mol_mem
-		Avatars_control() {
-			const obj = new this.$.$mol_attach()
-			
-			obj.items = (val?: any) => this.avatars(val)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Avatars_field $mol_form_field
-		 * 	name \Avatars
-		 * 	bid <= avatars_bid
-		 * 	Content <= Avatars_control
-		 * ```
-		 */
-		@ $mol_mem
-		Avatars_field() {
-			const obj = new this.$.$mol_form_field()
-			
-			obj.name = () => "Avatars"
-			obj.bid = () => this.avatars_bid()
-			obj.Content = () => this.Avatars_control()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Names $mol_form_group sub /
-		 * 	<= Name_first_field
-		 * 	<= Name_nick_field
-		 * 	<= Name_second_field
-		 * ```
-		 */
-		@ $mol_mem
-		Names() {
-			const obj = new this.$.$mol_form_group()
-			
-			obj.sub = () => [
-				this.Name_first_field(),
-				this.Name_nick_field(),
-				this.Name_second_field()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Parameters $mol_form_group sub /
-		 * 	<= Age_field
-		 * 	<= Sex_field
-		 * 	<= Color_field
-		 * ```
-		 */
-		@ $mol_mem
-		Parameters() {
-			const obj = new this.$.$mol_form_group()
-			
-			obj.sub = () => [
-				this.Age_field(),
-				this.Sex_field(),
-				this.Color_field()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * submit_allowed true
-		 * ```
-		 */
-		submit_allowed() {
-			return true
+			return null as any
 		}
 		
 		/**
@@ -643,55 +631,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Form $mol_form
-		 * 	submit?val <=> submit?val
-		 * 	form_fields /
-		 * 		<= Name_first_field
-		 * 		<= Name_nick_field
-		 * 		<= Name_second_field
-		 * 		<= Sex_field
-		 * 		<= Color_field
-		 * 		<= Age_field
-		 * 		<= Mail_field
-		 * 		<= Avatars_field
-		 * 	body /
-		 * 		<= Avatars_field
-		 * 		<= Names
-		 * 		<= Parameters
-		 * 		<= Mail_field
-		 * 	buttons / <= Submit
-		 * ```
-		 */
-		@ $mol_mem
-		Form() {
-			const obj = new this.$.$mol_form()
-			
-			obj.submit = (val?: any) => this.submit(val)
-			obj.form_fields = () => [
-				this.Name_first_field(),
-				this.Name_nick_field(),
-				this.Name_second_field(),
-				this.Sex_field(),
-				this.Color_field(),
-				this.Age_field(),
-				this.Mail_field(),
-				this.Avatars_field()
-			] as readonly any[]
-			obj.body = () => [
-				this.Avatars_field(),
-				this.Names(),
-				this.Parameters(),
-				this.Mail_field()
-			] as readonly any[]
-			obj.buttons = () => [
-				this.Submit()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * result?val \
 		 * ```
 		 */
@@ -703,15 +642,56 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Result $mol_row sub / <= result?val
+		 * Result $mol_status message <= result?val
 		 * ```
 		 */
 		@ $mol_mem
 		Result() {
-			const obj = new this.$.$mol_row()
+			const obj = new this.$.$mol_status()
 			
-			obj.sub = () => [
-				this.result()
+			obj.message = () => this.result()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * submit_allowed
+		 * ```
+		 */
+		submit_allowed() {
+			return this.Form().submit_allowed()
+		}
+		
+		/**
+		 * ```tree
+		 * Form $mol_form
+		 * 	body /
+		 * 		<= Avatars_field
+		 * 		<= Names
+		 * 		<= Parameters
+		 * 		<= Mail_field
+		 * 	submit?val <=> submit?val
+		 * 	submit_allowed => submit_allowed
+		 * 	buttons /
+		 * 		<= Submit
+		 * 		<= Result
+		 * ```
+		 */
+		@ $mol_mem
+		Form() {
+			const obj = new this.$.$mol_form()
+			
+			obj.body = () => [
+				this.Avatars_field(),
+				this.Names(),
+				this.Parameters(),
+				this.Mail_field()
+			] as readonly any[]
+			obj.submit = (val?: any) => this.submit(val)
+			obj.buttons = () => [
+				this.Submit(),
+				this.Result()
 			] as readonly any[]
 			
 			return obj

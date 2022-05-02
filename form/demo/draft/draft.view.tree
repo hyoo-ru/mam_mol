@@ -1,0 +1,66 @@
+$mol_form_demo_model $mol_object2
+	title?val \
+	type?val \
+	content?val \
+
+$mol_form_demo_draft $mol_example
+	title \Article draft form demo
+	model $mol_form_demo_model
+	-
+	message_done \Done
+	bid_required!prop \Required
+	bid_swearing!prop \No swearing
+	bid_short!prop \> 5 letters
+	bid_long!prop \> 100 letters
+	-
+	Group!name $mol_form_group
+		sub <= group!name /
+	Title_field!prop $mol_form_field
+		name \Title
+		bids /
+			<= bid_swearing!prop
+			<= bid_short!prop
+		control <= Title!prop $mol_string
+			hint \How I spent the summer..
+			value?val <=> value_str!prop?val \
+	Type_field!prop $mol_form_field
+		name \Type
+		bids /
+			<= bid_required!prop
+		control <= Type!prop $mol_switch
+			value?val <=> value_str!prop?val \
+			options *
+				article \Article
+				news \News
+				question \Question
+	Content_field!prop $mol_form_field
+		name \Content
+		bids /
+			<= bid_swearing!prop
+			<= bid_long!prop
+		control <= Content!prop $mol_textarea
+			hint \Long long story..
+			value?val <=> value_str!prop?val \
+	-
+	sub /
+		<= Flow $mol_list rows /
+			<= Form $mol_form
+				body <= form_body /
+				submit?val <=> submit?val null
+				submit_allowed => submit_allowed
+				buttons /
+					<= Submit $mol_button_major
+						title \Sign Up
+						click?val <=> submit?val null
+						enabled <= submit_allowed
+					<= Result $mol_status
+						message <= result?val \
+	tags /
+		\$mol_form_field
+		\$mol_button
+		\$mol_string
+		\$mol_switch
+		\form
+		\bids
+		\validation
+		\field

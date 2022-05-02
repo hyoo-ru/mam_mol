@@ -85,9 +85,5 @@ namespace $.$$ {
 			this.result( `Hello, ${this.sex()} ${this.name_first()} (${this.name_nick()}) ${this.name_second()} from  ${this.mail()}!` )
 		}
 		
-		submit_allowed() {
-			return !this.Form().submit_blocked()
-		}
-
 	}
 }

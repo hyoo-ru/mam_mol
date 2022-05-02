@@ -2104,7 +2104,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/theme/theme.css", ":root {\n\t--mol_theme_hue: 210deg;\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n}\n\n[mol_theme] {\n\t\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n\t\n\t--mol_theme_back: hsl( var(--mol_theme_hue), 50% , calc( 54% + 44% * var(--mol_theme_luma) ) );\n\t--mol_theme_text: hsl( var(--mol_theme_hue), 0% , calc( 50% - 30% * var(--mol_theme_luma) ) );\n\t--mol_theme_field: hsl( var(--mol_theme_hue), 0%, calc( 50% + 50% * var(--mol_theme_luma) ), .2 );\n\t\n\t--mol_theme_card: hsl( var(--mol_theme_hue), 0%, 50%, .05 );\n\t--mol_theme_hover: hsl( var(--mol_theme_hue), 0%, 50%, .1 );\n\t--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .25 );\n\t--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 50%, 1 );\n\t\n\t--mol_theme_control: hsl( var(--mol_theme_hue), 50%, calc( 55% - 10% * var(--mol_theme_luma) ) );\n\t--mol_theme_current: hsl( calc( var(--mol_theme_hue) + 120deg ), 70%, calc( 60% - 10% * var(--mol_theme_luma) ) );\n\t--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 240deg ), 80%, calc( 50% - 10% * var(--mol_theme_luma) ) );\n\t\n}\n\n[mol_theme=\"$mol_theme_light\"] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n}\n\n[mol_theme=\"$mol_theme_dark\"] {\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate( 180deg );\n}\n\n[mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_luma: -2;\n\t--mol_theme_back: hsl( var(--mol_theme_hue), 50%, 40% );\n\t--mol_theme_hover: hsl( var(--mol_theme_hue), 60%, 30% );\n\t--mol_theme_current: hsl( var(--mol_theme_hue), 100%, 20% );\n}\n\n[mol_theme=\"$mol_theme_current\"] {\n\t--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 120deg ), 50%, calc( 55% + 15% * var(--mol_theme_luma) ) );\n}\n\n[mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_luma: -2;\n\t--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 240deg ), 50%, 40% );\n\t--mol_theme_hover: hsl( calc( var(--mol_theme_hue) + 240deg ), 50%, 35% );\n}\n\n[mol_theme=\"$mol_theme_accent\"] [mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: black;\n}\n");
+    $mol_style_attach("mol/theme/theme.css", ":root {\n\t--mol_theme_hue: 210deg;\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n}\n\n[mol_theme] {\n\t\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n}\n\t\n:root, [mol_theme] {\n\t--mol_theme_back: hsl( var(--mol_theme_hue), 50% , calc( 54% + 44% * var(--mol_theme_luma) ) );\n\t--mol_theme_text: hsl( var(--mol_theme_hue), 0% , calc( 50% - 30% * var(--mol_theme_luma) ) );\n\t--mol_theme_field: hsl( var(--mol_theme_hue), 0%, calc( 50% + 50% * var(--mol_theme_luma) ), .2 );\n\t\n\t--mol_theme_card: hsl( var(--mol_theme_hue), 0%, 50%, .05 );\n\t--mol_theme_hover: hsl( var(--mol_theme_hue), 0%, 50%, .1 );\n\t--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .25 );\n\t--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 50%, 1 );\n\t\n\t--mol_theme_control: hsl( var(--mol_theme_hue), 50%, calc( 55% - 10% * var(--mol_theme_luma) ) );\n\t--mol_theme_current: hsl( calc( var(--mol_theme_hue) + 120deg ), 70%, calc( 60% - 10% * var(--mol_theme_luma) ) );\n\t--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 240deg ), 80%, calc( 50% - 10% * var(--mol_theme_luma) ) );\n\t\n}\n\n[mol_theme=\"$mol_theme_light\"] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n}\n\n[mol_theme=\"$mol_theme_dark\"] {\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate( 180deg );\n}\n\n[mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_luma: -2;\n\t--mol_theme_back: hsl( var(--mol_theme_hue), 50%, 40% );\n\t--mol_theme_hover: hsl( var(--mol_theme_hue), 60%, 30% );\n\t--mol_theme_current: hsl( var(--mol_theme_hue), 100%, 20% );\n}\n\n[mol_theme=\"$mol_theme_current\"] {\n\t--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 120deg ), 50%, calc( 55% + 15% * var(--mol_theme_luma) ) );\n}\n\n[mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_luma: -2;\n\t--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 240deg ), 50%, 40% );\n\t--mol_theme_hover: hsl( calc( var(--mol_theme_hue) + 240deg ), 50%, 35% );\n}\n\n[mol_theme=\"$mol_theme_accent\"] [mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: black;\n}\n");
 })($ || ($ = {}));
 //mol/theme/-css/theme.css.ts
 ;
@@ -19224,8 +19224,15 @@ var $;
     var $$;
     (function ($$) {
         class $mol_form extends $.$mol_form {
+            form_fields() {
+                return [...this.view_find(view => view instanceof $mol_form_field)]
+                    .map(path => path[path.length - 1]);
+            }
+            submit_allowed() {
+                return this.form_fields().every(field => !field.bid());
+            }
             submit_blocked() {
-                return this.form_fields().some(field => field.bid());
+                return !this.submit_allowed();
             }
             keydown(next) {
                 if (next.ctrlKey && next.keyCode === $mol_keyboard_code.enter && !this.submit_blocked())
@@ -19234,11 +19241,218 @@ var $;
         }
         __decorate([
             $mol_mem
-        ], $mol_form.prototype, "submit_blocked", null);
+        ], $mol_form.prototype, "form_fields", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form.prototype, "submit_allowed", null);
         $$.$mol_form = $mol_form;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/form/form.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_form_group extends $mol_view {
+    }
+    $.$mol_form_group = $mol_form_group;
+})($ || ($ = {}));
+//mol/form/group/-view.tree/group.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/form/group/group.view.css", "[mol_form_group] {\n\tflex-wrap: wrap;\n}\n\n[mol_form_group] > * {\n\tflex: 1 1 20rem;\n}\n");
+})($ || ($ = {}));
+//mol/form/group/-css/group.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_minus extends $mol_icon {
+        path() {
+            return "M19,13H5V11H19V13Z";
+        }
+    }
+    $.$mol_icon_minus = $mol_icon_minus;
+})($ || ($ = {}));
+//mol/icon/minus/-view.tree/minus.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_plus extends $mol_icon {
+        path() {
+            return "M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z";
+        }
+    }
+    $.$mol_icon_plus = $mol_icon_plus;
+})($ || ($ = {}));
+//mol/icon/plus/-view.tree/plus.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_number extends $mol_view {
+        precision_view() {
+            return this.precision();
+        }
+        precision_change() {
+            return this.precision();
+        }
+        value(val) {
+            if (val !== undefined)
+                return val;
+            return NaN;
+        }
+        sub() {
+            return [
+                this.String(),
+                this.Dec(),
+                this.Inc()
+            ];
+        }
+        precision() {
+            return 1;
+        }
+        value_string(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        hint() {
+            return " ";
+        }
+        enabled() {
+            return true;
+        }
+        string_enabled() {
+            return this.enabled();
+        }
+        String() {
+            const obj = new this.$.$mol_string();
+            obj.type = () => "tel";
+            obj.value = (val) => this.value_string(val);
+            obj.hint = () => this.hint();
+            obj.enabled = () => this.string_enabled();
+            return obj;
+        }
+        event_dec(val) {
+            if (val !== undefined)
+                return val;
+            return null;
+        }
+        dec_enabled() {
+            return this.enabled();
+        }
+        dec_icon() {
+            const obj = new this.$.$mol_icon_minus();
+            return obj;
+        }
+        Dec() {
+            const obj = new this.$.$mol_button_minor();
+            obj.event_click = (val) => this.event_dec(val);
+            obj.enabled = () => this.dec_enabled();
+            obj.sub = () => [
+                this.dec_icon()
+            ];
+            return obj;
+        }
+        event_inc(val) {
+            if (val !== undefined)
+                return val;
+            return null;
+        }
+        inc_enabled() {
+            return this.enabled();
+        }
+        inc_icon() {
+            const obj = new this.$.$mol_icon_plus();
+            return obj;
+        }
+        Inc() {
+            const obj = new this.$.$mol_button_minor();
+            obj.event_click = (val) => this.event_inc(val);
+            obj.enabled = () => this.inc_enabled();
+            obj.sub = () => [
+                this.inc_icon()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_number.prototype, "value", null);
+    __decorate([
+        $mol_mem
+    ], $mol_number.prototype, "value_string", null);
+    __decorate([
+        $mol_mem
+    ], $mol_number.prototype, "String", null);
+    __decorate([
+        $mol_mem
+    ], $mol_number.prototype, "event_dec", null);
+    __decorate([
+        $mol_mem
+    ], $mol_number.prototype, "dec_icon", null);
+    __decorate([
+        $mol_mem
+    ], $mol_number.prototype, "Dec", null);
+    __decorate([
+        $mol_mem
+    ], $mol_number.prototype, "event_inc", null);
+    __decorate([
+        $mol_mem
+    ], $mol_number.prototype, "inc_icon", null);
+    __decorate([
+        $mol_mem
+    ], $mol_number.prototype, "Inc", null);
+    $.$mol_number = $mol_number;
+})($ || ($ = {}));
+//mol/number/-view.tree/number.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/number/number.css", "[mol_number] {\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tposition: relative;\n\talign-items: stretch;\n\tmax-width: 100%;\n}\n\n[mol_number]:hover {\n\tz-index: 2;\n}\n\n[mol_number_string] {\n\tappearance: textfield;\n\tflex: 1 1 7rem;\n\twidth: 7rem;\n}\n\n[mol_number_string]::-webkit-inner-spin-button {\n\tdisplay: none;\n}\n\n[mol_number_inc][disabled],\n[mol_number_dec][disabled] {\n\tvisibility: hidden;\n}\n");
+})($ || ($ = {}));
+//mol/number/-css/number.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_number extends $.$mol_number {
+            event_dec(next) {
+                this.value((Number(this.value()) || 0) - this.precision_change());
+            }
+            event_inc(next) {
+                this.value((Number(this.value()) || 0) + this.precision_change());
+            }
+            value_string(next) {
+                if (next !== void 0) {
+                    this.value(next === '' ? null : Number(next));
+                }
+                const precisionView = this.precision_view();
+                const value = next ? Number(next) : this.value();
+                if (value === 0)
+                    return '0';
+                if (!value)
+                    return '';
+                if (precisionView >= 1) {
+                    return (value / precisionView).toFixed();
+                }
+                else {
+                    const fixedNumber = Math.log10(1 / precisionView);
+                    return value.toFixed(fixedNumber);
+                }
+            }
+        }
+        $$.$mol_number = $mol_number;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/number/number.view.ts
 ;
 "use strict";
 var $;
@@ -19535,206 +19749,57 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_minus extends $mol_icon {
-        path() {
-            return "M19,13H5V11H19V13Z";
+    class $mol_status extends $mol_view {
+        status() {
+            return null;
         }
-    }
-    $.$mol_icon_minus = $mol_icon_minus;
-})($ || ($ = {}));
-//mol/icon/minus/-view.tree/minus.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_plus extends $mol_icon {
-        path() {
-            return "M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z";
+        minimal_height() {
+            return 24;
         }
-    }
-    $.$mol_icon_plus = $mol_icon_plus;
-})($ || ($ = {}));
-//mol/icon/plus/-view.tree/plus.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_number extends $mol_view {
-        precision_view() {
-            return this.precision();
-        }
-        precision_change() {
-            return this.precision();
-        }
-        value(val) {
-            if (val !== undefined)
-                return val;
-            return NaN;
+        minimal_width() {
+            return 0;
         }
         sub() {
             return [
-                this.String(),
-                this.Dec(),
-                this.Inc()
+                this.message()
             ];
         }
-        precision() {
-            return 1;
-        }
-        value_string(val) {
-            if (val !== undefined)
-                return val;
+        message() {
             return "";
         }
-        hint() {
-            return " ";
-        }
-        enabled() {
-            return true;
-        }
-        string_enabled() {
-            return this.enabled();
-        }
-        String() {
-            const obj = new this.$.$mol_string();
-            obj.type = () => "tel";
-            obj.value = (val) => this.value_string(val);
-            obj.hint = () => this.hint();
-            obj.enabled = () => this.string_enabled();
-            return obj;
-        }
-        event_dec(val) {
-            if (val !== undefined)
-                return val;
-            return null;
-        }
-        dec_enabled() {
-            return this.enabled();
-        }
-        dec_icon() {
-            const obj = new this.$.$mol_icon_minus();
-            return obj;
-        }
-        Dec() {
-            const obj = new this.$.$mol_button_minor();
-            obj.event_click = (val) => this.event_dec(val);
-            obj.enabled = () => this.dec_enabled();
-            obj.sub = () => [
-                this.dec_icon()
-            ];
-            return obj;
-        }
-        event_inc(val) {
-            if (val !== undefined)
-                return val;
-            return null;
-        }
-        inc_enabled() {
-            return this.enabled();
-        }
-        inc_icon() {
-            const obj = new this.$.$mol_icon_plus();
-            return obj;
-        }
-        Inc() {
-            const obj = new this.$.$mol_button_minor();
-            obj.event_click = (val) => this.event_inc(val);
-            obj.enabled = () => this.inc_enabled();
-            obj.sub = () => [
-                this.inc_icon()
-            ];
-            return obj;
-        }
     }
-    __decorate([
-        $mol_mem
-    ], $mol_number.prototype, "value", null);
-    __decorate([
-        $mol_mem
-    ], $mol_number.prototype, "value_string", null);
-    __decorate([
-        $mol_mem
-    ], $mol_number.prototype, "String", null);
-    __decorate([
-        $mol_mem
-    ], $mol_number.prototype, "event_dec", null);
-    __decorate([
-        $mol_mem
-    ], $mol_number.prototype, "dec_icon", null);
-    __decorate([
-        $mol_mem
-    ], $mol_number.prototype, "Dec", null);
-    __decorate([
-        $mol_mem
-    ], $mol_number.prototype, "event_inc", null);
-    __decorate([
-        $mol_mem
-    ], $mol_number.prototype, "inc_icon", null);
-    __decorate([
-        $mol_mem
-    ], $mol_number.prototype, "Inc", null);
-    $.$mol_number = $mol_number;
+    $.$mol_status = $mol_status;
 })($ || ($ = {}));
-//mol/number/-view.tree/number.view.tree.ts
+//mol/status/-view.tree/status.view.tree.ts
 ;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/number/number.css", "[mol_number] {\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tposition: relative;\n\talign-items: stretch;\n\tmax-width: 100%;\n}\n\n[mol_number]:hover {\n\tz-index: 2;\n}\n\n[mol_number_string] {\n\tappearance: textfield;\n\tflex: 1 1 7rem;\n\twidth: 7rem;\n}\n\n[mol_number_string]::-webkit-inner-spin-button {\n\tdisplay: none;\n}\n\n[mol_number_inc][disabled],\n[mol_number_dec][disabled] {\n\tvisibility: hidden;\n}\n");
+    $mol_style_attach("mol/status/status.view.css", "[mol_status] {\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: block;\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]) {\n\tcolor: var(--mol_theme_focus);\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]):empty {\n\tdisplay: none;\n}\n");
 })($ || ($ = {}));
-//mol/number/-css/number.css.ts
+//mol/status/-css/status.view.css.ts
 ;
 "use strict";
 var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $mol_number extends $.$mol_number {
-            event_dec(next) {
-                this.value((Number(this.value()) || 0) - this.precision_change());
-            }
-            event_inc(next) {
-                this.value((Number(this.value()) || 0) + this.precision_change());
-            }
-            value_string(next) {
-                if (next !== void 0) {
-                    this.value(next === '' ? null : Number(next));
+        class $mol_status extends $.$mol_status {
+            message() {
+                try {
+                    return this.status() ?? null;
                 }
-                const precisionView = this.precision_view();
-                const value = next ? Number(next) : this.value();
-                if (value === 0)
-                    return '0';
-                if (!value)
-                    return '';
-                if (precisionView >= 1) {
-                    return (value / precisionView).toFixed();
-                }
-                else {
-                    const fixedNumber = Math.log10(1 / precisionView);
-                    return value.toFixed(fixedNumber);
+                catch (error) {
+                    if (error instanceof Promise)
+                        $mol_fail_hidden(error);
+                    return error.message;
                 }
             }
         }
-        $$.$mol_number = $mol_number;
+        $$.$mol_status = $mol_status;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-//mol/number/number.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_form_group extends $mol_view {
-    }
-    $.$mol_form_group = $mol_form_group;
-})($ || ($ = {}));
-//mol/form/group/-view.tree/group.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/form/group/group.view.css", "[mol_form_group] {\n\tflex-wrap: wrap;\n}\n\n[mol_form_group] > * {\n\tflex: 1 1 20rem;\n}\n");
-})($ || ($ = {}));
-//mol/form/group/-css/group.view.css.ts
+//mol/status/status.view.ts
 ;
 "use strict";
 var $;
@@ -19759,8 +19824,7 @@ var $;
         }
         sub() {
             return [
-                this.Form(),
-                this.Result()
+                this.Form()
             ];
         }
         tags() {
@@ -19775,10 +19839,25 @@ var $;
                 "field"
             ];
         }
-        submit(val) {
+        avatars_bid() {
+            return "";
+        }
+        avatars(val) {
             if (val !== undefined)
                 return val;
-            return null;
+            return [];
+        }
+        Avatars_control() {
+            const obj = new this.$.$mol_attach();
+            obj.items = (val) => this.avatars(val);
+            return obj;
+        }
+        Avatars_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Avatars";
+            obj.bid = () => this.avatars_bid();
+            obj.Content = () => this.Avatars_control();
+            return obj;
         }
         name_first_bid() {
             return "";
@@ -19843,6 +19922,35 @@ var $;
             obj.Content = () => this.Name_second_control();
             return obj;
         }
+        Names() {
+            const obj = new this.$.$mol_form_group();
+            obj.sub = () => [
+                this.Name_first_field(),
+                this.Name_nick_field(),
+                this.Name_second_field()
+            ];
+            return obj;
+        }
+        age_bid() {
+            return "";
+        }
+        age(val) {
+            if (val !== undefined)
+                return val;
+            return 0;
+        }
+        Age_control() {
+            const obj = new this.$.$mol_number();
+            obj.value = (val) => this.age(val);
+            return obj;
+        }
+        Age_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Age";
+            obj.bid = () => this.age_bid();
+            obj.control = () => this.Age_control();
+            return obj;
+        }
         sex_label() {
             return "Sex";
         }
@@ -19901,24 +20009,13 @@ var $;
             obj.control = () => this.Color_control();
             return obj;
         }
-        age_bid() {
-            return "";
-        }
-        age(val) {
-            if (val !== undefined)
-                return val;
-            return 0;
-        }
-        Age_control() {
-            const obj = new this.$.$mol_number();
-            obj.value = (val) => this.age(val);
-            return obj;
-        }
-        Age_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Age";
-            obj.bid = () => this.age_bid();
-            obj.control = () => this.Age_control();
+        Parameters() {
+            const obj = new this.$.$mol_form_group();
+            obj.sub = () => [
+                this.Age_field(),
+                this.Sex_field(),
+                this.Color_field()
+            ];
             return obj;
         }
         mail_bid() {
@@ -19942,46 +20039,10 @@ var $;
             obj.Content = () => this.Mail_control();
             return obj;
         }
-        avatars_bid() {
-            return "";
-        }
-        avatars(val) {
+        submit(val) {
             if (val !== undefined)
                 return val;
-            return [];
-        }
-        Avatars_control() {
-            const obj = new this.$.$mol_attach();
-            obj.items = (val) => this.avatars(val);
-            return obj;
-        }
-        Avatars_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => "Avatars";
-            obj.bid = () => this.avatars_bid();
-            obj.Content = () => this.Avatars_control();
-            return obj;
-        }
-        Names() {
-            const obj = new this.$.$mol_form_group();
-            obj.sub = () => [
-                this.Name_first_field(),
-                this.Name_nick_field(),
-                this.Name_second_field()
-            ];
-            return obj;
-        }
-        Parameters() {
-            const obj = new this.$.$mol_form_group();
-            obj.sub = () => [
-                this.Age_field(),
-                this.Sex_field(),
-                this.Color_field()
-            ];
-            return obj;
-        }
-        submit_allowed() {
-            return true;
+            return null;
         }
         Submit() {
             const obj = new this.$.$mol_button_major();
@@ -19990,46 +20051,44 @@ var $;
             obj.enabled = () => this.submit_allowed();
             return obj;
         }
-        Form() {
-            const obj = new this.$.$mol_form();
-            obj.submit = (val) => this.submit(val);
-            obj.form_fields = () => [
-                this.Name_first_field(),
-                this.Name_nick_field(),
-                this.Name_second_field(),
-                this.Sex_field(),
-                this.Color_field(),
-                this.Age_field(),
-                this.Mail_field(),
-                this.Avatars_field()
-            ];
-            obj.body = () => [
-                this.Avatars_field(),
-                this.Names(),
-                this.Parameters(),
-                this.Mail_field()
-            ];
-            obj.buttons = () => [
-                this.Submit()
-            ];
-            return obj;
-        }
         result(val) {
             if (val !== undefined)
                 return val;
             return "";
         }
         Result() {
-            const obj = new this.$.$mol_row();
-            obj.sub = () => [
-                this.result()
+            const obj = new this.$.$mol_status();
+            obj.message = () => this.result();
+            return obj;
+        }
+        submit_allowed() {
+            return this.Form().submit_allowed();
+        }
+        Form() {
+            const obj = new this.$.$mol_form();
+            obj.body = () => [
+                this.Avatars_field(),
+                this.Names(),
+                this.Parameters(),
+                this.Mail_field()
+            ];
+            obj.submit = (val) => this.submit(val);
+            obj.buttons = () => [
+                this.Submit(),
+                this.Result()
             ];
             return obj;
         }
     }
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "submit", null);
+    ], $mol_form_demo_bids.prototype, "avatars", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_bids.prototype, "Avatars_control", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_bids.prototype, "Avatars_field", null);
     __decorate([
         $mol_mem
     ], $mol_form_demo_bids.prototype, "name_first", null);
@@ -20059,6 +20118,18 @@ var $;
     ], $mol_form_demo_bids.prototype, "Name_second_field", null);
     __decorate([
         $mol_mem
+    ], $mol_form_demo_bids.prototype, "Names", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_bids.prototype, "age", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_bids.prototype, "Age_control", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_bids.prototype, "Age_field", null);
+    __decorate([
+        $mol_mem
     ], $mol_form_demo_bids.prototype, "sex", null);
     __decorate([
         $mol_mem
@@ -20077,13 +20148,7 @@ var $;
     ], $mol_form_demo_bids.prototype, "Color_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "age", null);
-    __decorate([
-        $mol_mem
-    ], $mol_form_demo_bids.prototype, "Age_control", null);
-    __decorate([
-        $mol_mem
-    ], $mol_form_demo_bids.prototype, "Age_field", null);
+    ], $mol_form_demo_bids.prototype, "Parameters", null);
     __decorate([
         $mol_mem
     ], $mol_form_demo_bids.prototype, "mail", null);
@@ -20095,31 +20160,19 @@ var $;
     ], $mol_form_demo_bids.prototype, "Mail_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "avatars", null);
-    __decorate([
-        $mol_mem
-    ], $mol_form_demo_bids.prototype, "Avatars_control", null);
-    __decorate([
-        $mol_mem
-    ], $mol_form_demo_bids.prototype, "Avatars_field", null);
-    __decorate([
-        $mol_mem
-    ], $mol_form_demo_bids.prototype, "Names", null);
-    __decorate([
-        $mol_mem
-    ], $mol_form_demo_bids.prototype, "Parameters", null);
+    ], $mol_form_demo_bids.prototype, "submit", null);
     __decorate([
         $mol_mem
     ], $mol_form_demo_bids.prototype, "Submit", null);
-    __decorate([
-        $mol_mem
-    ], $mol_form_demo_bids.prototype, "Form", null);
     __decorate([
         $mol_mem
     ], $mol_form_demo_bids.prototype, "result", null);
     __decorate([
         $mol_mem
     ], $mol_form_demo_bids.prototype, "Result", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_bids.prototype, "Form", null);
     $.$mol_form_demo_bids = $mol_form_demo_bids;
 })($ || ($ = {}));
 //mol/form/demo/bids/-view.tree/bids.view.tree.ts
@@ -20209,14 +20262,338 @@ var $;
             submit(next) {
                 this.result(`Hello, ${this.sex()} ${this.name_first()} (${this.name_nick()}) ${this.name_second()} from  ${this.mail()}!`);
             }
-            submit_allowed() {
-                return !this.Form().submit_blocked();
-            }
         }
         $$.$mol_form_demo_bids = $mol_form_demo_bids;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/form/demo/bids/bids.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_form_demo_model extends $mol_object2 {
+        title(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        type(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        content(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_model.prototype, "title", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_model.prototype, "type", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_model.prototype, "content", null);
+    $.$mol_form_demo_model = $mol_form_demo_model;
+    class $mol_form_demo_draft extends $mol_example {
+        title() {
+            return "Article draft form demo";
+        }
+        model() {
+            const obj = new this.$.$mol_form_demo_model();
+            return obj;
+        }
+        message_done() {
+            return "Done";
+        }
+        bid_required(prop) {
+            return "Required";
+        }
+        bid_swearing(prop) {
+            return "No swearing";
+        }
+        bid_short(prop) {
+            return "> 5 letters";
+        }
+        bid_long(prop) {
+            return "> 100 letters";
+        }
+        Group(name) {
+            const obj = new this.$.$mol_form_group();
+            obj.sub = () => this.group(name);
+            return obj;
+        }
+        Title_field(prop) {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Title";
+            obj.bids = () => [
+                this.bid_swearing(prop),
+                this.bid_short(prop)
+            ];
+            obj.control = () => this.Title(prop);
+            return obj;
+        }
+        Type_field(prop) {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Type";
+            obj.bids = () => [
+                this.bid_required(prop)
+            ];
+            obj.control = () => this.Type(prop);
+            return obj;
+        }
+        Content_field(prop) {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Content";
+            obj.bids = () => [
+                this.bid_swearing(prop),
+                this.bid_long(prop)
+            ];
+            obj.control = () => this.Content(prop);
+            return obj;
+        }
+        sub() {
+            return [
+                this.Flow()
+            ];
+        }
+        tags() {
+            return [
+                "$mol_form_field",
+                "$mol_button",
+                "$mol_string",
+                "$mol_switch",
+                "form",
+                "bids",
+                "validation",
+                "field"
+            ];
+        }
+        group(name) {
+            return [];
+        }
+        value_str(prop, val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        Title(prop) {
+            const obj = new this.$.$mol_string();
+            obj.hint = () => "How I spent the summer..";
+            obj.value = (val) => this.value_str(prop, val);
+            return obj;
+        }
+        Type(prop) {
+            const obj = new this.$.$mol_switch();
+            obj.value = (val) => this.value_str(prop, val);
+            obj.options = () => ({
+                article: "Article",
+                news: "News",
+                question: "Question"
+            });
+            return obj;
+        }
+        Content(prop) {
+            const obj = new this.$.$mol_textarea();
+            obj.hint = () => "Long long story..";
+            obj.value = (val) => this.value_str(prop, val);
+            return obj;
+        }
+        form_body() {
+            return [];
+        }
+        submit(val) {
+            if (val !== undefined)
+                return val;
+            return null;
+        }
+        Submit() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => "Sign Up";
+            obj.click = (val) => this.submit(val);
+            obj.enabled = () => this.submit_allowed();
+            return obj;
+        }
+        result(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        Result() {
+            const obj = new this.$.$mol_status();
+            obj.message = () => this.result();
+            return obj;
+        }
+        submit_allowed() {
+            return this.Form().submit_allowed();
+        }
+        Form() {
+            const obj = new this.$.$mol_form();
+            obj.body = () => this.form_body();
+            obj.submit = (val) => this.submit(val);
+            obj.buttons = () => [
+                this.Submit(),
+                this.Result()
+            ];
+            return obj;
+        }
+        Flow() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Form()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_draft.prototype, "model", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_form_demo_draft.prototype, "Group", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_form_demo_draft.prototype, "Title_field", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_form_demo_draft.prototype, "Type_field", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_form_demo_draft.prototype, "Content_field", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_form_demo_draft.prototype, "value_str", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_form_demo_draft.prototype, "Title", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_form_demo_draft.prototype, "Type", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_form_demo_draft.prototype, "Content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_draft.prototype, "submit", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_draft.prototype, "Submit", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_draft.prototype, "result", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_draft.prototype, "Result", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_draft.prototype, "Form", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_demo_draft.prototype, "Flow", null);
+    $.$mol_form_demo_draft = $mol_form_demo_draft;
+})($ || ($ = {}));
+//mol/form/demo/draft/-view.tree/draft.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_form_demo_draft extends $.$mol_form_demo_draft {
+            value_str(field, next) {
+                return $mol_state_local.value(`${this}.value_str(${JSON.stringify(field)})`, next)
+                    ?? this.model()[field]()
+                    ?? '';
+            }
+            form_body() {
+                return [
+                    this.Group('main'),
+                    ...this.value_str('type') ? [this.Content_field('content')] : [],
+                ];
+            }
+            group(name) {
+                switch (name) {
+                    case 'main': return [
+                        this.Title_field('title'),
+                        this.Type_field('type'),
+                    ];
+                    default: return [];
+                }
+            }
+            bid_required(field) {
+                return this.value_str(field) ? '' : super.bid_required(field);
+            }
+            bid_short(field) {
+                return this.value_str(field).length > 5 ? '' : super.bid_short(field);
+            }
+            bid_long(field) {
+                return this.value_str(field).length > 100 ? '' : super.bid_long(field);
+            }
+            bid_swearing(field) {
+                return /\bfuck/.test(this.value_str(field)) ? super.bid_swearing(field) : '';
+            }
+            changed() {
+                const model = this.model();
+                for (const field of ['title', 'type', 'content']) {
+                    if (model[field]() === this.value_str(field))
+                        continue;
+                    return true;
+                }
+                return false;
+            }
+            submit_allowed() {
+                return this.changed() && super.submit_allowed();
+            }
+            submit(next) {
+                const model = this.model();
+                for (const field of ['title', 'type', 'content']) {
+                    model[field](this.value_str(field));
+                    this.value_str(field, null);
+                }
+                this.result(this.message_done());
+            }
+            result(next = '') {
+                this.changed();
+                return next;
+            }
+        }
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_demo_draft.prototype, "value_str", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form_demo_draft.prototype, "form_body", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form_demo_draft.prototype, "group", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_demo_draft.prototype, "bid_required", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_demo_draft.prototype, "bid_short", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_demo_draft.prototype, "bid_long", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_demo_draft.prototype, "bid_swearing", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form_demo_draft.prototype, "changed", null);
+        __decorate([
+            $mol_action
+        ], $mol_form_demo_draft.prototype, "submit", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form_demo_draft.prototype, "result", null);
+        $$.$mol_form_demo_draft = $mol_form_demo_draft;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/form/demo/draft/draft.view.ts
 ;
 "use strict";
 var $;
@@ -28490,61 +28867,6 @@ var $;
     $.$mol_password_demo = $mol_password_demo;
 })($ || ($ = {}));
 //mol/password/demo/-view.tree/demo.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_status extends $mol_view {
-        status() {
-            return null;
-        }
-        minimal_height() {
-            return 24;
-        }
-        minimal_width() {
-            return 0;
-        }
-        sub() {
-            return [
-                this.message()
-            ];
-        }
-        message() {
-            return "";
-        }
-    }
-    $.$mol_status = $mol_status;
-})($ || ($ = {}));
-//mol/status/-view.tree/status.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/status/status.view.css", "[mol_status] {\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: block;\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]) {\n\tcolor: var(--mol_theme_focus);\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]):empty {\n\tdisplay: none;\n}\n");
-})($ || ($ = {}));
-//mol/status/-css/status.view.css.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_status extends $.$mol_status {
-            message() {
-                try {
-                    return this.status() ?? null;
-                }
-                catch (error) {
-                    if (error instanceof Promise)
-                        $mol_fail_hidden(error);
-                    return error.message;
-                }
-            }
-        }
-        $$.$mol_status = $mol_status;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/status/status.view.ts
 ;
 "use strict";
 var $;

@@ -5158,8 +5158,64 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_form extends $.$mol_form {
+        form_fields(): readonly $mol_form_field[];
+        submit_allowed(): boolean;
         submit_blocked(): boolean;
         keydown(next: KeyboardEvent): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_form_group extends $mol_view {
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_icon_minus extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_plus extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_number extends $mol_view {
+        precision_view(): number;
+        precision_change(): number;
+        value(val?: any): number;
+        sub(): readonly any[];
+        precision(): number;
+        value_string(val?: any): string;
+        hint(): string;
+        enabled(): boolean;
+        string_enabled(): boolean;
+        String(): $$.$mol_string;
+        event_dec(val?: any): any;
+        dec_enabled(): boolean;
+        dec_icon(): $mol_icon_minus;
+        Dec(): $mol_button_minor;
+        event_inc(val?: any): any;
+        inc_enabled(): boolean;
+        inc_icon(): $mol_icon_plus;
+        Inc(): $mol_button_minor;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_number extends $.$mol_number {
+        event_dec(next?: Event): void;
+        event_inc(next?: Event): void;
+        value_string(next?: string): string;
     }
 }
 
@@ -5223,37 +5279,12 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_icon_minus extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_plus extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_number extends $mol_view {
-        precision_view(): number;
-        precision_change(): number;
-        value(val?: any): number;
+    class $mol_status extends $mol_view {
+        status(): any;
+        minimal_height(): number;
+        minimal_width(): number;
         sub(): readonly any[];
-        precision(): number;
-        value_string(val?: any): string;
-        hint(): string;
-        enabled(): boolean;
-        string_enabled(): boolean;
-        String(): $$.$mol_string;
-        event_dec(val?: any): any;
-        dec_enabled(): boolean;
-        dec_icon(): $mol_icon_minus;
-        Dec(): $mol_button_minor;
-        event_inc(val?: any): any;
-        inc_enabled(): boolean;
-        inc_icon(): $mol_icon_plus;
-        Inc(): $mol_button_minor;
+        message(): string;
     }
 }
 
@@ -5261,19 +5292,9 @@ declare namespace $ {
 }
 
 declare namespace $.$$ {
-    class $mol_number extends $.$mol_number {
-        event_dec(next?: Event): void;
-        event_inc(next?: Event): void;
-        value_string(next?: string): string;
+    class $mol_status extends $.$mol_status {
+        message(): any;
     }
-}
-
-declare namespace $ {
-    class $mol_form_group extends $mol_view {
-    }
-}
-
-declare namespace $ {
 }
 
 declare namespace $ {
@@ -5293,7 +5314,10 @@ declare namespace $ {
         };
         sub(): readonly any[];
         tags(): readonly any[];
-        submit(val?: any): any;
+        avatars_bid(): string;
+        avatars(val?: any): readonly string[];
+        Avatars_control(): $$.$mol_attach;
+        Avatars_field(): $$.$mol_form_field;
         name_first_bid(): string;
         name_first(val?: any): string;
         Name_first_control(): $$.$mol_string;
@@ -5306,6 +5330,11 @@ declare namespace $ {
         name_second(val?: any): string;
         Name_second_control(): $$.$mol_string;
         Name_second_field(): $$.$mol_form_field;
+        Names(): $mol_form_group;
+        age_bid(): string;
+        age(val?: any): number;
+        Age_control(): $$.$mol_number;
+        Age_field(): $$.$mol_form_field;
         sex_label(): string;
         sex_bid(): string;
         sex(val?: any): string;
@@ -5320,25 +5349,17 @@ declare namespace $ {
         color(val?: any): string;
         Color_control(): $$.$mol_select;
         Color_field(): $$.$mol_form_field;
-        age_bid(): string;
-        age(val?: any): number;
-        Age_control(): $$.$mol_number;
-        Age_field(): $$.$mol_form_field;
+        Parameters(): $mol_form_group;
         mail_bid(): string;
         mail(val?: any): string;
         Mail_control(): $$.$mol_string;
         Mail_field(): $$.$mol_form_field;
-        avatars_bid(): string;
-        avatars(val?: any): readonly string[];
-        Avatars_control(): $$.$mol_attach;
-        Avatars_field(): $$.$mol_form_field;
-        Names(): $mol_form_group;
-        Parameters(): $mol_form_group;
-        submit_allowed(): boolean;
+        submit(val?: any): any;
         Submit(): $mol_button_major;
-        Form(): $$.$mol_form;
         result(val?: any): string;
-        Result(): $mol_row;
+        Result(): $$.$mol_status;
+        submit_allowed(): boolean;
+        Form(): $$.$mol_form;
     }
 }
 
@@ -5360,8 +5381,61 @@ declare namespace $.$$ {
         age(next?: number): number;
         age_bid(): string;
         submit(next?: Event): void;
-        submit_allowed(): boolean;
     }
+}
+
+declare namespace $ {
+    class $mol_form_demo_model extends $mol_object2 {
+        title(val?: any): string;
+        type(val?: any): string;
+        content(val?: any): string;
+    }
+    class $mol_form_demo_draft extends $mol_example {
+        title(): string;
+        model(): $mol_form_demo_model;
+        message_done(): string;
+        bid_required(prop: any): string;
+        bid_swearing(prop: any): string;
+        bid_short(prop: any): string;
+        bid_long(prop: any): string;
+        Group(name: any): $mol_form_group;
+        Title_field(prop: any): $$.$mol_form_field;
+        Type_field(prop: any): $$.$mol_form_field;
+        Content_field(prop: any): $$.$mol_form_field;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        group(name: any): readonly any[];
+        value_str(prop: any, val?: any): string;
+        Title(prop: any): $$.$mol_string;
+        Type(prop: any): $$.$mol_switch;
+        Content(prop: any): $$.$mol_textarea;
+        form_body(): readonly any[];
+        submit(val?: any): any;
+        Submit(): $mol_button_major;
+        result(val?: any): string;
+        Result(): $$.$mol_status;
+        submit_allowed(): boolean;
+        Form(): $$.$mol_form;
+        Flow(): $$.$mol_list;
+    }
+}
+
+declare namespace $.$$ {
+    type Field = $mol_type_keys_extract<$mol_form_demo_model, () => string>;
+    export class $mol_form_demo_draft extends $.$mol_form_demo_draft {
+        value_str(field: Field, next?: string | null): any;
+        form_body(): ($mol_form_field | $mol_form_group)[];
+        group(name: string): $mol_form_field[];
+        bid_required(field: Field): string;
+        bid_short(field: Field): string;
+        bid_long(field: Field): string;
+        bid_swearing(field: Field): string;
+        changed(): boolean;
+        submit_allowed(): boolean;
+        submit(next?: Event): void;
+        result(next?: string): string;
+    }
+    export {};
 }
 
 declare namespace $ {
@@ -7533,25 +7607,6 @@ declare namespace $ {
         Simple(): $$.$mol_password;
         pass2(val?: any): string;
         Hint(): $$.$mol_password;
-    }
-}
-
-declare namespace $ {
-    class $mol_status extends $mol_view {
-        status(): any;
-        minimal_height(): number;
-        minimal_width(): number;
-        sub(): readonly any[];
-        message(): string;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $.$$ {
-    class $mol_status extends $.$mol_status {
-        message(): any;
     }
 }
 

@@ -1581,6 +1581,8 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_form extends $.$mol_form {
+        form_fields(): readonly $mol_form_field[];
+        submit_allowed(): boolean;
         submit_blocked(): boolean;
         keydown(next: KeyboardEvent): void;
     }

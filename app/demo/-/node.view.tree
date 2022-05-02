@@ -2111,6 +2111,33 @@ $mol_form $mol_list
 		<= Foot $mol_row
 			sub <= foot <= buttons /$mol_view
 
+$mol_form_group $mol_view
+
+$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
+
+$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
+
+$mol_number $mol_view
+	precision_view <= precision 1
+	precision_change <= precision 1
+	value?val NaN
+	sub /
+		<= String $mol_string
+			- \ we don't want native number controls in mobile devices
+			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
+			type \tel
+			value?val <=> value_string?val \
+			hint <= hint \ 
+			enabled <= string_enabled <= enabled true
+		<= Dec $mol_button_minor
+			event_click?val <=> event_dec?val null
+			enabled <= dec_enabled <= enabled true
+			sub / <= dec_icon $mol_icon_minus
+		<= Inc $mol_button_minor
+			event_click?val <=> event_inc?val null
+			enabled <= inc_enabled <= enabled true
+			sub / <= inc_icon $mol_icon_plus
+
 $mol_icon_dots_vertical $mol_icon path \M12,16C13.1,16 14,16.9 14,18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18C10,16.9 10.9,16 12,16M12,10C13.1,10 14,10.9 14,12C14,13.1 13.1,14 12,14C10.9,14 10,13.1 10,12C10,10.9 10.9,10 12,10M12,4C13.1,4 14,4.9 14,6C14,7.1 13.1,8 12,8C10.9,8 10,7.1 10,6C10,4.9 10.9,4 12,4Z
 
 $mol_select $mol_pick
@@ -2145,32 +2172,12 @@ $mol_select $mol_pick
 		enabled <= enabled true
 	Trigger_icon $mol_icon_dots_vertical
 
-$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
-
-$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
-
-$mol_number $mol_view
-	precision_view <= precision 1
-	precision_change <= precision 1
-	value?val NaN
+$mol_status $mol_view
+	status null
+	minimal_height 24
+	minimal_width 0
 	sub /
-		<= String $mol_string
-			- \ we don't want native number controls in mobile devices
-			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
-			type \tel
-			value?val <=> value_string?val \
-			hint <= hint \ 
-			enabled <= string_enabled <= enabled true
-		<= Dec $mol_button_minor
-			event_click?val <=> event_dec?val null
-			enabled <= dec_enabled <= enabled true
-			sub / <= dec_icon $mol_icon_minus
-		<= Inc $mol_button_minor
-			event_click?val <=> event_inc?val null
-			enabled <= inc_enabled <= enabled true
-			sub / <= inc_icon $mol_icon_plus
-
-$mol_form_group $mol_view
+		<= message \
 
 $mol_form_demo_bids $mol_example
 	title \Sign Up form demo
@@ -2187,95 +2194,145 @@ $mol_form_demo_bids $mol_example
 		need_username \Username required
 	sub /
 		<= Form $mol_form
-			submit?val <=> submit?val null
-			form_fields /
-				-
-				<= Name_first_field $mol_form_field
-					name \First Name
-					bid <= name_first_bid \
-					Content <= Name_first_control $mol_string
-						hint \Jack
-						value?val <=> name_first?val \
-				-
-				<= Name_nick_field $mol_form_field
-					name \Nick Name
-					bid <= name_nick_bid \
-					Content <= Name_nick_control $mol_string
-						hint \Capitan
-						value?val <=> name_nick?val \
-				-
-				<= Name_second_field $mol_form_field
-					name \Second Name
-					bid <= name_second_bid \
-					Content <= Name_second_control $mol_string
-						hint \Sparrow
-						value?val <=> name_second?val \
-				-
-				<= Sex_field $mol_form_field
-					name <= sex_label \Sex
-					bid <= sex_bid \
-					Content <= Sex_control $mol_switch
-						value?val <=> sex?val \
-						options <= sex_options *
-							male \Male
-							intersex \Intersex
-							female \Female
-				-
-				<= Color_field $mol_form_field
-					name \Skin color
-					bid <= color_bid \
-					control <= Color_control $mol_select
-						value?val <=> color?val \
-						dictionary *
-							\
-								\❔
-							white \⬜ White
-							yellow \🟨 Yellow
-							brown \🟫 Brown
-							red \🟥 Red
-				-
-				<= Age_field $mol_form_field
-					name \Age
-					bid <= age_bid \
-					control <= Age_control $mol_number
-						value?val <=> age?val 0
-				-
+			body /
+				<= Avatars_field $mol_form_field
+					name \Avatars
+					bid <= avatars_bid \
+					Content <= Avatars_control $mol_attach
+						items?val <=> avatars?val /string
+				<= Names $mol_form_group sub /
+					<= Name_first_field $mol_form_field
+						name \First Name
+						bid <= name_first_bid \
+						Content <= Name_first_control $mol_string
+							hint \Jack
+							value?val <=> name_first?val \
+					<= Name_nick_field $mol_form_field
+						name \Nick Name
+						bid <= name_nick_bid \
+						Content <= Name_nick_control $mol_string
+							hint \Capitan
+							value?val <=> name_nick?val \
+					<= Name_second_field $mol_form_field
+						name \Second Name
+						bid <= name_second_bid \
+						Content <= Name_second_control $mol_string
+							hint \Sparrow
+							value?val <=> name_second?val \
+				<= Parameters $mol_form_group sub /
+					<= Age_field $mol_form_field
+						name \Age
+						bid <= age_bid \
+						control <= Age_control $mol_number
+							value?val <=> age?val 0
+					<= Sex_field $mol_form_field
+						name <= sex_label \Sex
+						bid <= sex_bid \
+						Content <= Sex_control $mol_switch
+							value?val <=> sex?val \
+							options <= sex_options *
+								male \Male
+								intersex \Intersex
+								female \Female
+					<= Color_field $mol_form_field
+						name \Skin color
+						bid <= color_bid \
+						control <= Color_control $mol_select
+							value?val <=> color?val \
+							dictionary *
+								\
+									\❔
+								white \⬜ White
+								yellow \🟨 Yellow
+								brown \🟫 Brown
+								red \🟥 Red
 				<= Mail_field $mol_form_field
 					name \E-mail
 					bid <= mail_bid \
 					Content <= Mail_control $mol_string
 						hint \name@domain.com
 						value?val <=> mail?val \
-				-
-				<= Avatars_field $mol_form_field
-					name \Avatars
-					bid <= avatars_bid \
-					Content <= Avatars_control $mol_attach
-						items?val <=> avatars?val /string
-			body /
-				<= Avatars_field
-				<= Names $mol_form_group sub /
-					<= Name_first_field
-					<= Name_nick_field
-					<= Name_second_field
-				<= Parameters $mol_form_group sub /
-					<= Age_field
-					<= Sex_field
-					<= Color_field
-				<= Mail_field
+			submit?val <=> submit?val null
+			submit_allowed => submit_allowed
 			buttons /
 				<= Submit $mol_button_major
 					title \Sign Up
 					click?val <=> submit?val null
-					enabled <= submit_allowed true
-		<= Result $mol_row
-			sub /
-				<= result?val \
+					enabled <= submit_allowed
+				<= Result $mol_status
+					message <= result?val \
 	tags /
 		\$mol_form_field
 		\$mol_button
 		\$mol_row
 		\$mol_string
+		\form
+		\bids
+		\validation
+		\field
+
+$mol_form_demo_model $mol_object2
+	title?val \
+	type?val \
+	content?val \
+
+$mol_form_demo_draft $mol_example
+	title \Article draft form demo
+	model $mol_form_demo_model
+	-
+	message_done \Done
+	bid_required!prop \Required
+	bid_swearing!prop \No swearing
+	bid_short!prop \> 5 letters
+	bid_long!prop \> 100 letters
+	-
+	Group!name $mol_form_group
+		sub <= group!name /
+	Title_field!prop $mol_form_field
+		name \Title
+		bids /
+			<= bid_swearing!prop
+			<= bid_short!prop
+		control <= Title!prop $mol_string
+			hint \How I spent the summer..
+			value?val <=> value_str!prop?val \
+	Type_field!prop $mol_form_field
+		name \Type
+		bids /
+			<= bid_required!prop
+		control <= Type!prop $mol_switch
+			value?val <=> value_str!prop?val \
+			options *
+				article \Article
+				news \News
+				question \Question
+	Content_field!prop $mol_form_field
+		name \Content
+		bids /
+			<= bid_swearing!prop
+			<= bid_long!prop
+		control <= Content!prop $mol_textarea
+			hint \Long long story..
+			value?val <=> value_str!prop?val \
+	-
+	sub /
+		<= Flow $mol_list rows /
+			<= Form $mol_form
+				body <= form_body /
+				submit?val <=> submit?val null
+				submit_allowed => submit_allowed
+				buttons /
+					<= Submit $mol_button_major
+						title \Sign Up
+						click?val <=> submit?val null
+						enabled <= submit_allowed
+					<= Result $mol_status
+						message <= result?val \
+	tags /
+		\$mol_form_field
+		\$mol_button
+		\$mol_string
+		\$mol_switch
 		\form
 		\bids
 		\validation
@@ -3642,13 +3699,6 @@ $mol_password_demo $mol_example_small
 	tags /
 		\password
 		\input
-
-$mol_status $mol_view
-	status null
-	minimal_height 24
-	minimal_width 0
-	sub /
-		<= message \
 
 $mol_icon_information $mol_icon path \M13,9H11V7H13M13,17H11V11H13M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2Z
 

@@ -32,6 +32,7 @@ include \/mol/drag/demo
 include \/mol/expander/demo
 include \/mol/float/demo
 include \/mol/form/demo/bids
+include \/mol/form/demo/draft
 include \/mol/frame/demo
 - include \/mol/grid/demo
 include \/mol/gallery/demo
