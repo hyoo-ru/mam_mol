@@ -71,13 +71,13 @@ $mol_form_demo_bids $mol_example
 					Content <= Mail_control $mol_string
 						hint \name@domain.com
 						value?val <=> mail?val \
-			submit?val <=> submit?val null
-			submit_allowed => submit_allowed
+			submit?val <=> signup?val null
+			submit_allowed => signup_allowed
 			buttons /
-				<= Submit $mol_button_major
+				<= Signup $mol_button_major
 					title \Sign Up
-					click?val <=> submit?val null
-					enabled <= submit_allowed
+					click?val <=> signup?val null
+					enabled <= signup_allowed
 				<= Result $mol_status
 					message <= result?val \
 	tags /

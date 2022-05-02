@@ -81,7 +81,7 @@ namespace $.$$ {
 			return ''
 		}
 
-		submit( next? : Event ) {
+		signup( next? : Event ) {
 			this.result( `Hello, ${this.sex()} ${this.name_first()} (${this.name_nick()}) ${this.name_second()} from  ${this.mail()}!` )
 		}
 		

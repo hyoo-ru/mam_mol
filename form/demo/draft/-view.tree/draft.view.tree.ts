@@ -314,30 +314,30 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * submit?val null
+		 * publish?event null
 		 * ```
 		 */
 		@ $mol_mem
-		submit(val?: any) {
-			if ( val !== undefined ) return val as never
+		publish(event?: any) {
+			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * Submit $mol_button_major
-		 * 	title \Sign Up
-		 * 	click?val <=> submit?val
-		 * 	enabled <= submit_allowed
+		 * Publish $mol_button_major
+		 * 	title \Publish
+		 * 	click?event <=> publish?event
+		 * 	enabled <= publish_allowed
 		 * ```
 		 */
 		@ $mol_mem
-		Submit() {
+		Publish() {
 			const obj = new this.$.$mol_button_major()
 			
-			obj.title = () => "Sign Up"
-			obj.click = (val?: any) => this.submit(val)
-			obj.enabled = () => this.submit_allowed()
+			obj.title = () => "Publish"
+			obj.click = (event?: any) => this.publish(event)
+			obj.enabled = () => this.publish_allowed()
 			
 			return obj
 		}
@@ -369,10 +369,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * submit_allowed
+		 * publish_allowed
 		 * ```
 		 */
-		submit_allowed() {
+		publish_allowed() {
 			return this.Form().submit_allowed()
 		}
 		
@@ -380,10 +380,10 @@ namespace $ {
 		 * ```tree
 		 * Form $mol_form
 		 * 	body <= form_body
-		 * 	submit?val <=> submit?val
-		 * 	submit_allowed => submit_allowed
+		 * 	submit?event <=> publish?event
+		 * 	submit_allowed => publish_allowed
 		 * 	buttons /
-		 * 		<= Submit
+		 * 		<= Publish
 		 * 		<= Result
 		 * ```
 		 */
@@ -392,9 +392,9 @@ namespace $ {
 			const obj = new this.$.$mol_form()
 			
 			obj.body = () => this.form_body()
-			obj.submit = (val?: any) => this.submit(val)
+			obj.submit = (event?: any) => this.publish(event)
 			obj.buttons = () => [
-				this.Submit(),
+				this.Publish(),
 				this.Result()
 			] as readonly any[]
 			

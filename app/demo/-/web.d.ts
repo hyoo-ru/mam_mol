@@ -5330,11 +5330,11 @@ declare namespace $ {
         mail(val?: any): string;
         Mail_control(): $$.$mol_string;
         Mail_field(): $$.$mol_form_field;
-        submit(val?: any): any;
-        Submit(): $mol_button_major;
+        signup(val?: any): any;
+        Signup(): $mol_button_major;
         result(val?: any): string;
         Result(): $$.$mol_status;
-        submit_allowed(): boolean;
+        signup_allowed(): boolean;
         Form(): $$.$mol_form;
     }
 }
@@ -5356,7 +5356,7 @@ declare namespace $.$$ {
         sex_bid(): string;
         age(next?: number): number;
         age_bid(): string;
-        submit(next?: Event): void;
+        signup(next?: Event): void;
     }
 }
 
@@ -5386,11 +5386,11 @@ declare namespace $ {
         Type(prop: any): $$.$mol_switch;
         Content(prop: any): $$.$mol_textarea;
         form_body(): readonly any[];
-        submit(val?: any): any;
-        Submit(): $mol_button_major;
+        publish(event?: any): any;
+        Publish(): $mol_button_major;
         result(val?: any): string;
         Result(): $$.$mol_status;
-        submit_allowed(): boolean;
+        publish_allowed(): boolean;
         Form(): $$.$mol_form;
         Flow(): $$.$mol_list;
     }
@@ -5407,8 +5407,8 @@ declare namespace $.$$ {
         bid_long(field: Field): string;
         bid_swearing(field: Field): string;
         changed(): boolean;
-        submit_allowed(): boolean;
-        submit(next?: Event): void;
+        publish_allowed(): boolean;
+        publish(next?: Event): void;
         result(next?: string): string;
     }
     export {};

@@ -601,30 +601,30 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * submit?val null
+		 * signup?val null
 		 * ```
 		 */
 		@ $mol_mem
-		submit(val?: any) {
+		signup(val?: any) {
 			if ( val !== undefined ) return val as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * Submit $mol_button_major
+		 * Signup $mol_button_major
 		 * 	title \Sign Up
-		 * 	click?val <=> submit?val
-		 * 	enabled <= submit_allowed
+		 * 	click?val <=> signup?val
+		 * 	enabled <= signup_allowed
 		 * ```
 		 */
 		@ $mol_mem
-		Submit() {
+		Signup() {
 			const obj = new this.$.$mol_button_major()
 			
 			obj.title = () => "Sign Up"
-			obj.click = (val?: any) => this.submit(val)
-			obj.enabled = () => this.submit_allowed()
+			obj.click = (val?: any) => this.signup(val)
+			obj.enabled = () => this.signup_allowed()
 			
 			return obj
 		}
@@ -656,10 +656,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * submit_allowed
+		 * signup_allowed
 		 * ```
 		 */
-		submit_allowed() {
+		signup_allowed() {
 			return this.Form().submit_allowed()
 		}
 		
@@ -671,10 +671,10 @@ namespace $ {
 		 * 		<= Names
 		 * 		<= Parameters
 		 * 		<= Mail_field
-		 * 	submit?val <=> submit?val
-		 * 	submit_allowed => submit_allowed
+		 * 	submit?val <=> signup?val
+		 * 	submit_allowed => signup_allowed
 		 * 	buttons /
-		 * 		<= Submit
+		 * 		<= Signup
 		 * 		<= Result
 		 * ```
 		 */
@@ -688,9 +688,9 @@ namespace $ {
 				this.Parameters(),
 				this.Mail_field()
 			] as readonly any[]
-			obj.submit = (val?: any) => this.submit(val)
+			obj.submit = (val?: any) => this.signup(val)
 			obj.buttons = () => [
-				this.Submit(),
+				this.Signup(),
 				this.Result()
 			] as readonly any[]
 			

@@ -20039,16 +20039,16 @@ var $;
             obj.Content = () => this.Mail_control();
             return obj;
         }
-        submit(val) {
+        signup(val) {
             if (val !== undefined)
                 return val;
             return null;
         }
-        Submit() {
+        Signup() {
             const obj = new this.$.$mol_button_major();
             obj.title = () => "Sign Up";
-            obj.click = (val) => this.submit(val);
-            obj.enabled = () => this.submit_allowed();
+            obj.click = (val) => this.signup(val);
+            obj.enabled = () => this.signup_allowed();
             return obj;
         }
         result(val) {
@@ -20061,7 +20061,7 @@ var $;
             obj.message = () => this.result();
             return obj;
         }
-        submit_allowed() {
+        signup_allowed() {
             return this.Form().submit_allowed();
         }
         Form() {
@@ -20072,9 +20072,9 @@ var $;
                 this.Parameters(),
                 this.Mail_field()
             ];
-            obj.submit = (val) => this.submit(val);
+            obj.submit = (val) => this.signup(val);
             obj.buttons = () => [
-                this.Submit(),
+                this.Signup(),
                 this.Result()
             ];
             return obj;
@@ -20160,10 +20160,10 @@ var $;
     ], $mol_form_demo_bids.prototype, "Mail_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "submit", null);
+    ], $mol_form_demo_bids.prototype, "signup", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Submit", null);
+    ], $mol_form_demo_bids.prototype, "Signup", null);
     __decorate([
         $mol_mem
     ], $mol_form_demo_bids.prototype, "result", null);
@@ -20259,7 +20259,7 @@ var $;
                     return this.message().adult;
                 return '';
             }
-            submit(next) {
+            signup(next) {
                 this.result(`Hello, ${this.sex()} ${this.name_first()} (${this.name_nick()}) ${this.name_second()} from  ${this.mail()}!`);
             }
         }
@@ -20405,16 +20405,16 @@ var $;
         form_body() {
             return [];
         }
-        submit(val) {
-            if (val !== undefined)
-                return val;
+        publish(event) {
+            if (event !== undefined)
+                return event;
             return null;
         }
-        Submit() {
+        Publish() {
             const obj = new this.$.$mol_button_major();
-            obj.title = () => "Sign Up";
-            obj.click = (val) => this.submit(val);
-            obj.enabled = () => this.submit_allowed();
+            obj.title = () => "Publish";
+            obj.click = (event) => this.publish(event);
+            obj.enabled = () => this.publish_allowed();
             return obj;
         }
         result(val) {
@@ -20427,15 +20427,15 @@ var $;
             obj.message = () => this.result();
             return obj;
         }
-        submit_allowed() {
+        publish_allowed() {
             return this.Form().submit_allowed();
         }
         Form() {
             const obj = new this.$.$mol_form();
             obj.body = () => this.form_body();
-            obj.submit = (val) => this.submit(val);
+            obj.submit = (event) => this.publish(event);
             obj.buttons = () => [
-                this.Submit(),
+                this.Publish(),
                 this.Result()
             ];
             return obj;
@@ -20477,10 +20477,10 @@ var $;
     ], $mol_form_demo_draft.prototype, "Content", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "submit", null);
+    ], $mol_form_demo_draft.prototype, "publish", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "Submit", null);
+    ], $mol_form_demo_draft.prototype, "Publish", null);
     __decorate([
         $mol_mem
     ], $mol_form_demo_draft.prototype, "result", null);
@@ -20544,10 +20544,10 @@ var $;
                 }
                 return false;
             }
-            submit_allowed() {
-                return this.changed() && super.submit_allowed();
+            publish_allowed() {
+                return this.changed() && super.publish_allowed();
             }
-            submit(next) {
+            publish(next) {
                 const model = this.model();
                 for (const field of ['title', 'type', 'content']) {
                     model[field](this.value_str(field));
@@ -20586,7 +20586,7 @@ var $;
         ], $mol_form_demo_draft.prototype, "changed", null);
         __decorate([
             $mol_action
-        ], $mol_form_demo_draft.prototype, "submit", null);
+        ], $mol_form_demo_draft.prototype, "publish", null);
         __decorate([
             $mol_mem
         ], $mol_form_demo_draft.prototype, "result", null);
