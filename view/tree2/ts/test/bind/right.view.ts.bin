@@ -21,20 +21,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * indexed_outer!key
+		 * indexed_outer*
 		 * ```
 		 */
-		indexed_outer(key: any) {
-			return this.Cls().indexed(key)
+		indexed_outer(id: any) {
+			return this.Cls().indexed(id)
 		}
 		
 		/**
 		 * ```tree
-		 * indexed_writable_outer!key?val
+		 * indexed_writable_outer*?val
 		 * ```
 		 */
-		indexed_writable_outer(key: any, val?: any) {
-			return this.Cls().indexed_writable(key, val)
+		indexed_writable_outer(id: any, val?: any) {
+			return this.Cls().indexed_writable(id, val)
 		}
 		
 		/**
@@ -42,8 +42,8 @@ namespace $ {
 		 * Cls $mol_view
 		 * 	inner => outer
 		 * 	writable?val => writable_outer?val
-		 * 	indexed!key => indexed_outer!key
-		 * 	indexed_writable!key?val => indexed_writable_outer!key?val
+		 * 	indexed* => indexed_outer*
+		 * 	indexed_writable*?val => indexed_writable_outer*?val
 		 * ```
 		 */
 		@ $mol_mem
@@ -64,20 +64,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Outer_title!index
+		 * Outer_title*
 		 * ```
 		 */
-		Outer_title(index: any) {
-			return this.Indexed(index).Title()
+		Outer_title(id: any) {
+			return this.Indexed(id).Title()
 		}
 		
 		/**
 		 * ```tree
-		 * Indexed!index $mol_view Title => Outer_title!index
+		 * Indexed* $mol_view Title => Outer_title*
 		 * ```
 		 */
 		@ $mol_mem_key
-		Indexed(index: any) {
+		Indexed(id: any) {
 			const obj = new this.$.$mol_view()
 			
 			return obj
