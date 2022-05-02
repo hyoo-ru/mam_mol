@@ -9,6 +9,10 @@
     "mam": "./bin/mam"
   },
   "dependencies": {
-    "colorette": "*"
+	"@types/compression": "*",
+	"@types/express": "*",
+	"@types/node": "*",
+	"@types/serve-index": "*",
+	"@types/ws": "*"
   }
 }

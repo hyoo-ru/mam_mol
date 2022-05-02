@@ -21,20 +21,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * indexed!key <= indexed_owner!key
+		 * indexed* <= indexed_owner*
 		 * ```
 		 */
-		indexed(key: any) {
-			return this.indexed_owner(key)
+		indexed(id: any) {
+			return this.indexed_owner(id)
 		}
 		
 		/**
 		 * ```tree
-		 * indexed_default!key <= indexed_default_owner!key
+		 * indexed_default* <= indexed_default_owner*
 		 * ```
 		 */
-		indexed_default(key: any) {
-			return this.indexed_default_owner(key)
+		indexed_default(id: any) {
+			return this.indexed_default_owner(id)
 		}
 		
 		/**
@@ -66,11 +66,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * class_indexed!key <= class_indexed_owner!key
+		 * class_indexed* <= class_indexed_owner*
 		 * ```
 		 */
-		class_indexed(key: any) {
-			return this.class_indexed_owner(key)
+		class_indexed(id: any) {
+			return this.class_indexed_owner(id)
 		}
 		
 		/**
@@ -122,10 +122,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * indexed_default_owner!key null
+		 * indexed_default_owner* null
 		 * ```
 		 */
-		indexed_default_owner(key: any) {
+		indexed_default_owner(id: any) {
 			return null as any
 		}
 		
@@ -165,10 +165,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * localized_owner!key @ \some1
+		 * localized_owner* @ \some1
 		 * ```
 		 */
-		localized_owner(key: any) {
+		localized_owner(id: any) {
 			return this.$.$mol_locale.text( '$mol_view_tree2_ts_test_bind_left_localized_owner' )
 		}
 		
@@ -192,22 +192,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * class_indexed_owner!key $mol_view
+		 * class_indexed_owner* $mol_view
 		 * 	title @ \some1
 		 * 	same <= same?val
 		 * 	some <= twice
-		 * 	localized <= localized_owner!key
+		 * 	localized <= localized_owner*
 		 * 	chain <= chain1
 		 * ```
 		 */
 		@ $mol_mem_key
-		class_indexed_owner(key: any) {
+		class_indexed_owner(id: any) {
 			const obj = new this.$.$mol_view()
 			
 			obj.title = () => this.$.$mol_locale.text( '$mol_view_tree2_ts_test_bind_left_class_indexed_owner_title' )
 			obj.same = () => this.same()
 			obj.some = () => this.twice()
-			obj.localized = () => this.localized_owner(key)
+			obj.localized = () => this.localized_owner(id)
 			obj.chain = () => this.chain1()
 			
 			return obj

@@ -9,8 +9,19 @@ namespace $ {
 		const { key, next } = [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
 		
 		return prop.struct( '(,)', [
-			... key ? [ prop.struct( key.slice(1) || 'key' ) ] : [],
-			... next ? [ prop.struct( next.slice(1) || 'next' ) ] : [],
+			... key ? [ prop.struct( 'id' ) ] : [],
+			... next ? [ prop.struct( 'next' ) ] : [],
+		] )
+		
+	}
+	
+	function args_of( prop: $mol_tree2 ) {
+		
+		const { key, next } = [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
+		
+		return prop.struct( '(,)', [
+			... key ? [ key.length > 1 ? prop.data( key.slice(1) ) : prop.struct( 'id' ) ] : [],
+			... next ? [ prop.struct( 'next' ) ] : [],
 		] )
 		
 	}
@@ -40,18 +51,15 @@ namespace $ {
 							res.struct( '[]', [
 								res.data( name_of( res ) ),
 							] ),
-							params_of( bind.kids[0] ),
+							args_of( bind.kids[0] ),
 						] ),
 					]
 				}
 				
 				const decorate = ()=> {
 					return prop.struct( '()', [
-						prop.struct( '__decorate' ),
+						prop.struct( key ? '$mol_mem_key' : '$mol_mem' ),
 						prop.struct( '(,)', [
-							prop.struct( '[,]', [
-								prop.struct( key ? '$mol_mem_key' : '$mol_mem' ),
-							] ),
 							prop.struct( '()', [
 								klass.clone([]),
 								prop.struct( '[]', [
@@ -59,7 +67,6 @@ namespace $ {
 								] ),
 							] ),
 							prop.data( name ),
-							prop.struct( 'null' ),
 						] ),
 					] )
 				}
@@ -166,7 +173,7 @@ namespace $ {
 														over.struct( '[]', [
 															over.data( name ),
 														] ),
-														params_of( over ),
+														args_of( over ),
 													] ),
 												] )
 											] ),

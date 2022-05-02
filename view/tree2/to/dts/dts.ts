@@ -11,11 +11,11 @@ namespace $ {
 		return prop.struct( 'line', [
 			prop.data('( '),
 			... key ? [
-				prop.data( key.slice(1) || 'key' ),
+				prop.data( 'id' ),
 				prop.data(': any, '),
 			] : [],
 			... next ? [
-				prop.data( next.slice(1) || 'next' ),
+				prop.data( 'next' ),
 				prop.data('?: '),
 				... val,
 				prop.data(' '),
