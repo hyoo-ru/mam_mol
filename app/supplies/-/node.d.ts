@@ -1385,6 +1385,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_form_field extends $mol_labeler {
+        bids(): readonly string[];
         label(): readonly any[];
         content(): readonly any[];
         name(): string;
@@ -1395,6 +1396,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_form_field extends $.$mol_form_field {
+        bid(): string;
+    }
 }
 
 declare namespace $ {
@@ -1587,11 +1594,11 @@ declare namespace $ {
         loginLabel(): string;
         login(val?: any): string;
         loginControl(): $$.$mol_string;
-        loginField(): $mol_form_field;
+        loginField(): $$.$mol_form_field;
         passwordLabel(): string;
         password(val?: any): string;
         passControl(): $$.$mol_string;
-        passwordField(): $mol_form_field;
+        passwordField(): $$.$mol_form_field;
         submitLabel(): string;
         event_submit(val?: any): any;
         submit_blocked(): boolean;

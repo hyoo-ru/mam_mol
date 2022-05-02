@@ -3,6 +3,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * bids /string
+		 * ```
+		 */
+		bids() {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
 		 * label /
 		 * 	<= name
 		 * 	<= Bid

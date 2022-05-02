@@ -5116,6 +5116,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_form_field extends $mol_labeler {
+        bids(): readonly string[];
         label(): readonly any[];
         content(): readonly any[];
         name(): string;
@@ -5126,6 +5127,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_form_field extends $.$mol_form_field {
+        bid(): string;
+    }
 }
 
 declare namespace $ {
@@ -5290,15 +5297,15 @@ declare namespace $ {
         name_first_bid(): string;
         name_first(val?: any): string;
         Name_first_control(): $$.$mol_string;
-        Name_first_field(): $mol_form_field;
+        Name_first_field(): $$.$mol_form_field;
         name_nick_bid(): string;
         name_nick(val?: any): string;
         Name_nick_control(): $$.$mol_string;
-        Name_nick_field(): $mol_form_field;
+        Name_nick_field(): $$.$mol_form_field;
         name_second_bid(): string;
         name_second(val?: any): string;
         Name_second_control(): $$.$mol_string;
-        Name_second_field(): $mol_form_field;
+        Name_second_field(): $$.$mol_form_field;
         sex_label(): string;
         sex_bid(): string;
         sex(val?: any): string;
@@ -5308,23 +5315,23 @@ declare namespace $ {
             female: string;
         };
         Sex_control(): $$.$mol_switch;
-        Sex_field(): $mol_form_field;
+        Sex_field(): $$.$mol_form_field;
         color_bid(): string;
         color(val?: any): string;
         Color_control(): $$.$mol_select;
-        Color_field(): $mol_form_field;
+        Color_field(): $$.$mol_form_field;
         age_bid(): string;
         age(val?: any): number;
         Age_control(): $$.$mol_number;
-        Age_field(): $mol_form_field;
+        Age_field(): $$.$mol_form_field;
         mail_bid(): string;
         mail(val?: any): string;
         Mail_control(): $$.$mol_string;
-        Mail_field(): $mol_form_field;
+        Mail_field(): $$.$mol_form_field;
         avatars_bid(): string;
         avatars(val?: any): readonly string[];
         Avatars_control(): $$.$mol_attach;
-        Avatars_field(): $mol_form_field;
+        Avatars_field(): $$.$mol_form_field;
         Names(): $mol_form_group;
         Parameters(): $mol_form_group;
         submit_allowed(): boolean;

@@ -76,6 +76,7 @@ $mol_labeler $mol_list
 			sub <= content /
 
 $mol_form_field $mol_labeler
+	bids /string
 	label /
 		<= name \
 		<= Bid $mol_view
