@@ -12,5 +12,5 @@ $mol_app_supplies $mol_book2
 		title <= list_title @ \Supplies
 		search_query?val <=> supply_id?val \
 	-
-	Detail!id $mol_app_supplies_detail
+	Detail* $mol_app_supplies_detail
 		supply <= supply null

@@ -54,12 +54,12 @@ $mol_dimmer $mol_paragraph
 	haystack \
 	needle \
 	sub <= parts /$mol_view_content
-	Low!id $mol_paragraph
+	Low* $mol_paragraph
 		sub /
-			<= string!id \
-	High!id $mol_paragraph
+			<= string* \
+	High* $mol_paragraph
 		sub /
-			<= string!id \
+			<= string* \
 
 $mol_text_code_token $mol_dimmer
 	attr *
@@ -81,12 +81,12 @@ $mol_text_code_row $mol_paragraph
 	Numb $mol_view
 		sub /
 			<= numb 0
-	Token!id $mol_text_code_token
-		type <= token_type!id \
-		haystack <= token_text!id \
+	Token* $mol_text_code_token
+		type <= token_type* \
+		haystack <= token_text* \
 		needle <= highlight \
-	Token_link!id $mol_text_code_token_link
-		haystack <= token_text!id \
+	Token_link* $mol_text_code_token_link
+		haystack <= token_text* \
 		needle <= highlight \
 
 $mol_text_code $mol_list
@@ -95,10 +95,10 @@ $mol_text_code $mol_list
 		mol_text_code_sidebar_showed <= sidebar_showed false
 	text \
 	text_lines /string
-	Row!id $mol_text_code_row
+	Row* $mol_text_code_row
 		numb_showed <= sidebar_showed
-		numb <= row_numb!id 0
-		text <= row_text!id \
+		numb <= row_numb* 0
+		text <= row_text* \
 		highlight <= highlight \
 
 $mol_float $mol_view
@@ -198,10 +198,10 @@ $mol_check_expand $mol_check
 $mol_grid $mol_view
 	row_height 32
 	row_ids /string[]
-	row_id!index null
+	row_id* null
 	col_ids /
 	records *
-	record!id null
+	record* null
 	hierarchy null
 	hierarchy_col \
 	minimal_width 0
@@ -212,28 +212,28 @@ $mol_grid $mol_view
 			sub <= rows /$mol_view
 	Head $mol_grid_row
 		cells <= head_cells /$mol_view
-	Row!id $mol_grid_row
+	Row* $mol_grid_row
 		minimal_height <= row_height
 		minimal_width <= minimal_width
-		cells <= cells!id /$mol_view
+		cells <= cells* /$mol_view
 	-
-	Cell!id $mol_view
-	cell!id null
-	Cell_text!id $mol_grid_cell
-		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
-	Cell_number!id $mol_grid_number
-		sub <= cell_content_number!id <= cell_content!id /$mol_view_content
-	Col_head!id $mol_float
+	Cell* $mol_view
+	cell* null
+	Cell_text* $mol_grid_cell
+		sub <= cell_content_text* <= cell_content* /$mol_view_content
+	Cell_number* $mol_grid_number
+		sub <= cell_content_number* <= cell_content* /$mol_view_content
+	Col_head* $mol_float
 		dom_name \th
-		sub <= col_head_content!id /$mol_view_content
-	Cell_branch!id $mol_check_expand
-		level <= cell_level!id 0
-		label <= cell_content!id /$mol_view_content
-		expanded?val <=> cell_expanded!id?val false
-	Cell_content!id /
-		<= Cell_dimmer!id $mol_dimmer
+		sub <= col_head_content* /$mol_view_content
+	Cell_branch* $mol_check_expand
+		level <= cell_level* 0
+		label <= cell_content* /$mol_view_content
+		expanded?val <=> cell_expanded*?val false
+	Cell_content* /
+		<= Cell_dimmer* $mol_dimmer
 			needle <= needle \
-			haystack <= cell_value!id \
+			haystack <= cell_value* \
 
 $mol_grid_table $mol_list
 	dom_name \table
@@ -285,32 +285,32 @@ $mol_text $mol_list
 	uri_base \
 	text \
 	tokens /
-	Quote!id $mol_text
-		text <= quote_text!id \
-	Row!id $mol_text_row
-		sub <= block_content!id /
-		type <= block_type!id \
-	Span!id $mol_text_span
-	String!id $mol_text_string
+	Quote* $mol_text
+		text <= quote_text* \
+	Row* $mol_text_row
+		sub <= block_content* /
+		type <= block_type* \
+	Span* $mol_text_span
+	String* $mol_text_string
 		needle <= highlight \
-	Link!id $mol_text_link
-		target <= link_target!id \_blank
-	Image!id $mol_text_image
-	Header!id $mol_text_header
-		level <= header_level!id 0
-		content <= header_content!id /
-	Code!id $mol_text_code
-		text <= code_text!id \
+	Link* $mol_text_link
+		target <= link_target* \_blank
+	Image* $mol_text_image
+	Header* $mol_text_header
+		level <= header_level* 0
+		content <= header_content* /
+	Code* $mol_text_code
+		text <= code_text* \
 		highlight <= highlight \
-	Table!id $mol_grid
-		head_cells <= table_head_cells!id /
-		rows <= table_rows!id /
-	Table_row!id $mol_grid_row
-		cells <= table_cells!id /
-	Table_cell!id $mol_grid_cell
-		sub <= table_cell_content!id /
-	Table_cell_head!id $mol_grid_cell
-		sub <= table_cell_content!id /
+	Table* $mol_grid
+		head_cells <= table_head_cells* /
+		rows <= table_rows* /
+	Table_row* $mol_grid_row
+		cells <= table_cells* /
+	Table_cell* $mol_grid_cell
+		sub <= table_cell_content* /
+	Table_cell_head* $mol_grid_cell
+		sub <= table_cell_content* /
 
 $mol_text_row $mol_paragraph
 	attr *
@@ -391,37 +391,37 @@ $mol_app_questions $mol_book2
 			<= Menu_links $mol_list
 				rows <= menu_rows /
 	-
-	Details!id $mol_page
-		title <= question_title!id \
+	Details* $mol_page
+		title <= question_title* \
 		tools /
-			<= Details_permalink!id $mol_link
-				uri <= question_permalink!id \
+			<= Details_permalink* $mol_link
+				uri <= question_permalink* \
 				sub /
-					<= Details_permalink_icon!id $mol_icon_external
-			<= Details_close!id $mol_link
+					<= Details_permalink_icon* $mol_icon_external
+			<= Details_close* $mol_link
 				sub /
-					<= Details_close_icon!id $mol_icon_cross
+					<= Details_close_icon* $mol_icon_cross
 				arg *
 					question null
 		body /
-			<= Details_descr!id $mol_text
-				text <= question_descr!id \
-			<= Answers!id $mol_list
-				rows <= answers!id /
+			<= Details_descr* $mol_text
+				text <= question_descr* \
+			<= Answers* $mol_list
+				rows <= answers* /
 	-
-	Answer!id $mol_text
-		text <= question_answer!id \
+	Answer* $mol_text
+		text <= question_answer* \
 	-
-	Question_link!index $mol_link
+	Question_link* $mol_link
 		minimal_height 64
-		arg <= question_arg_by_index!index *
+		arg <= question_arg_by_index* *
 		sub /
-			<= Question_title!index $mol_view
+			<= Question_title* $mol_view
 				sub /
-					<= question_title_by_index!index \
-			<= Question_tags!index $mol_view
-				sub <= question_tags_by_index!index /
+					<= question_title_by_index* \
+			<= Question_tags* $mol_view
+				sub <= question_tags_by_index* /
 	-
-	Tag!id $mol_view
+	Tag* $mol_view
 		sub /
-			<= tag_name!id \ 
+			<= tag_name* \ 

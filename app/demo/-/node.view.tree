@@ -176,12 +176,12 @@ $mol_dimmer $mol_paragraph
 	haystack \
 	needle \
 	sub <= parts /$mol_view_content
-	Low!id $mol_paragraph
+	Low* $mol_paragraph
 		sub /
-			<= string!id \
-	High!id $mol_paragraph
+			<= string* \
+	High* $mol_paragraph
 		sub /
-			<= string!id \
+			<= string* \
 
 $mol_text_code_token $mol_dimmer
 	attr *
@@ -203,12 +203,12 @@ $mol_text_code_row $mol_paragraph
 	Numb $mol_view
 		sub /
 			<= numb 0
-	Token!id $mol_text_code_token
-		type <= token_type!id \
-		haystack <= token_text!id \
+	Token* $mol_text_code_token
+		type <= token_type* \
+		haystack <= token_text* \
 		needle <= highlight \
-	Token_link!id $mol_text_code_token_link
-		haystack <= token_text!id \
+	Token_link* $mol_text_code_token_link
+		haystack <= token_text* \
 		needle <= highlight \
 
 $mol_text_code $mol_list
@@ -217,10 +217,10 @@ $mol_text_code $mol_list
 		mol_text_code_sidebar_showed <= sidebar_showed false
 	text \
 	text_lines /string
-	Row!id $mol_text_code_row
+	Row* $mol_text_code_row
 		numb_showed <= sidebar_showed
-		numb <= row_numb!id 0
-		text <= row_text!id \
+		numb <= row_numb* 0
+		text <= row_text* \
 		highlight <= highlight \
 
 $mol_hotkey $mol_plugin
@@ -281,10 +281,10 @@ $mol_check_expand $mol_check
 $mol_grid $mol_view
 	row_height 32
 	row_ids /string[]
-	row_id!index null
+	row_id* null
 	col_ids /
 	records *
-	record!id null
+	record* null
 	hierarchy null
 	hierarchy_col \
 	minimal_width 0
@@ -295,28 +295,28 @@ $mol_grid $mol_view
 			sub <= rows /$mol_view
 	Head $mol_grid_row
 		cells <= head_cells /$mol_view
-	Row!id $mol_grid_row
+	Row* $mol_grid_row
 		minimal_height <= row_height
 		minimal_width <= minimal_width
-		cells <= cells!id /$mol_view
+		cells <= cells* /$mol_view
 	-
-	Cell!id $mol_view
-	cell!id null
-	Cell_text!id $mol_grid_cell
-		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
-	Cell_number!id $mol_grid_number
-		sub <= cell_content_number!id <= cell_content!id /$mol_view_content
-	Col_head!id $mol_float
+	Cell* $mol_view
+	cell* null
+	Cell_text* $mol_grid_cell
+		sub <= cell_content_text* <= cell_content* /$mol_view_content
+	Cell_number* $mol_grid_number
+		sub <= cell_content_number* <= cell_content* /$mol_view_content
+	Col_head* $mol_float
 		dom_name \th
-		sub <= col_head_content!id /$mol_view_content
-	Cell_branch!id $mol_check_expand
-		level <= cell_level!id 0
-		label <= cell_content!id /$mol_view_content
-		expanded?val <=> cell_expanded!id?val false
-	Cell_content!id /
-		<= Cell_dimmer!id $mol_dimmer
+		sub <= col_head_content* /$mol_view_content
+	Cell_branch* $mol_check_expand
+		level <= cell_level* 0
+		label <= cell_content* /$mol_view_content
+		expanded?val <=> cell_expanded*?val false
+	Cell_content* /
+		<= Cell_dimmer* $mol_dimmer
 			needle <= needle \
-			haystack <= cell_value!id \
+			haystack <= cell_value* \
 
 $mol_grid_table $mol_list
 	dom_name \table
@@ -352,32 +352,32 @@ $mol_text $mol_list
 	uri_base \
 	text \
 	tokens /
-	Quote!id $mol_text
-		text <= quote_text!id \
-	Row!id $mol_text_row
-		sub <= block_content!id /
-		type <= block_type!id \
-	Span!id $mol_text_span
-	String!id $mol_text_string
+	Quote* $mol_text
+		text <= quote_text* \
+	Row* $mol_text_row
+		sub <= block_content* /
+		type <= block_type* \
+	Span* $mol_text_span
+	String* $mol_text_string
 		needle <= highlight \
-	Link!id $mol_text_link
-		target <= link_target!id \_blank
-	Image!id $mol_text_image
-	Header!id $mol_text_header
-		level <= header_level!id 0
-		content <= header_content!id /
-	Code!id $mol_text_code
-		text <= code_text!id \
+	Link* $mol_text_link
+		target <= link_target* \_blank
+	Image* $mol_text_image
+	Header* $mol_text_header
+		level <= header_level* 0
+		content <= header_content* /
+	Code* $mol_text_code
+		text <= code_text* \
 		highlight <= highlight \
-	Table!id $mol_grid
-		head_cells <= table_head_cells!id /
-		rows <= table_rows!id /
-	Table_row!id $mol_grid_row
-		cells <= table_cells!id /
-	Table_cell!id $mol_grid_cell
-		sub <= table_cell_content!id /
-	Table_cell_head!id $mol_grid_cell
-		sub <= table_cell_content!id /
+	Table* $mol_grid
+		head_cells <= table_head_cells* /
+		rows <= table_rows* /
+	Table_row* $mol_grid_row
+		cells <= table_cells* /
+	Table_cell* $mol_grid_cell
+		sub <= table_cell_content* /
+	Table_cell_head* $mol_grid_cell
+		sub <= table_cell_content* /
 
 $mol_text_row $mol_paragraph
 	attr *
@@ -439,7 +439,7 @@ $mol_textarea $mol_view
 		<= View $mol_text_code
 			text <= value
 			render_visible_only false
-			row_numb!index <= row_numb!index 0
+			row_numb* <= row_numb* 0
 			sidebar_showed <= sidebar_showed
 			highlight <= highlight \
 
@@ -551,12 +551,12 @@ $mol_attach $mol_view
 	Add $mol_button_open
 		title <= attach_title \
 		files?val <=> attach_new?val null
-	Item!id $mol_button_minor
-		click?event <=> item_drop!id?event null
+	Item* $mol_button_minor
+		click?event <=> item_drop*?event null
 		sub /
-			<= Image!id $mol_image
+			<= Image* $mol_image
 				title \
-				uri <= item_uri!id \
+				uri <= item_uri* \
 
 $mol_example_small $mol_example
 
@@ -625,16 +625,16 @@ $mol_bench $mol_grid
 	records <= result *
 	col_sort?val \
 	-
-	Col_head!id $mol_bench_head
-		event_click?val <=> event_sort_toggle!id?val null
-		sub <= col_head_content!id /
-			<= col_head_title!id \
-			<= Col_head_sort!id $mol_icon_sort_asc
+	Col_head* $mol_bench_head
+		event_click?val <=> event_sort_toggle*?val null
+		sub <= col_head_content* /
+			<= col_head_title* \
+			<= Col_head_sort* $mol_icon_sort_asc
 	-
-	cell_content_number!id /
-		<= result_value!id \
-		<= Result_portion!id $mol_portion
-			portion <= result_portion!id 0
+	cell_content_number* /
+		<= result_value* \
+		<= Result_portion* $mol_portion
+			portion <= result_portion* 0
 
 
 $mol_bench_head $mol_float
@@ -691,10 +691,10 @@ $mol_book2_catalog $mol_book2
 			body /
 				<= Links $mol_list
 					rows <= links /
-	Link!id $mol_link
-		arg <= arg!id *
+	Link* $mol_link
+		arg <= arg* *
 		sub /
-			<= spread_title!id \
+			<= spread_title* \
 	Spread_close $mol_link
 		arg <= spread_close_arg *
 		sub /
@@ -817,21 +817,21 @@ $mol_calendar $mol_list
 			sub <= weekdays /$mol_view
 	weeks /$mol_view
 	-
-	Weekday!index $mol_calendar_day
-		holiday <= weekend!index false
+	Weekday* $mol_calendar_day
+		holiday <= weekend* false
 		sub /
-			<= weekday!index \
+			<= weekday* \
 	-
-	Week!row $mol_hor
-		sub <= week_days!row /$mol_view
+	Week* $mol_hor
+		sub <= week_days* /$mol_view
 	-
-	Day!day $mol_calendar_day
-		ghost <= day_ghost!day false
-		holiday <= day_holiday!day false
-		selected <= day_selected!day false
-		theme <= day_theme!day \
-		sub <= day_content!day /
-			<= day_text!day \
+	Day* $mol_calendar_day
+		ghost <= day_ghost* false
+		holiday <= day_holiday* false
+		selected <= day_selected* false
+		theme <= day_theme* \
+		sub <= day_content* /
+			<= day_text* \
 	-
 	month_string \
 	month_moment $mol_time_moment
@@ -865,7 +865,7 @@ $mol_calendar_demo_holiday $mol_example_small
 	sub /
 		<= Calendar $mol_calendar
 			month_string <= month \2018-01
-			day_holiday!day <= holiday!day false
+			day_holiday* <= holiday* false
 	tags /
 		\calendar
 		\date
@@ -884,7 +884,7 @@ $mol_calendar_demo_selection $mol_example_small
 	sub /
 		<= Calendar $mol_calendar
 			month_string <= month \2018-01
-			day_selected!day <= selected!day false
+			day_selected* <= selected* false
 	tags /
 		\calendar
 		\date
@@ -986,8 +986,8 @@ $mol_plot_graph $mol_svg_group
 		<= gap_y $mol_vector_range /
 			0
 			0
-	repos_x!val 0
-	repos_y!val 0
+	repos_x* 0
+	repos_y* 0
 	indexes /number
 	points /readonly(number)[]
 	front /$mol_svg
@@ -1010,14 +1010,14 @@ $mol_chart_legend $mol_scroll
 	graphs_front /$mol_plot_graph
 	sub <= graph_legends /$mol_view
 	-
-	Graph_legend!id $mol_view
+	Graph_legend* $mol_view
 		sub /
-			<= Graph_sample_box!id $mol_view
+			<= Graph_sample_box* $mol_view
 				sub /
-					<= Graph_sample!id null
-			<= Graph_title!id $mol_view
+					<= Graph_sample* null
+			<= Graph_title* $mol_view
 				sub /
-					<= graph_title!id \
+					<= graph_title* \
 
 $mol_touch $mol_plugin
 	start_zoom?val 0
@@ -1301,18 +1301,18 @@ $mol_plot_ruler $mol_plot_graph
 			pos_y <= title_pos_y \100%
 			align <= title_align \start
 			text <= title
-	Label!index $mol_svg_text
-		pos <= label_pos!index /
-			<= label_pos_x!index \
-			<= label_pos_y!index \
-		text <= label_text!index \
+	Label* $mol_svg_text
+		pos <= label_pos* /
+			<= label_pos_x* \
+			<= label_pos_y* \
+		text <= label_text* \
 		align <= label_align \
 
 $mol_plot_ruler_vert $mol_plot_ruler
 	title_align \end
 	label_align \end
 	title_pos_y \14
-	label_pos_x!v <= title_pos_x
+	label_pos_x* <= title_pos_x
 	background_height \100%
 	background_width <= title_pos_x
 
@@ -1321,7 +1321,7 @@ $mol_plot_ruler_hor $mol_plot_ruler
 	label_align \middle
 	title_pos_x \0
 	title_pos_y \100%
-	label_pos_y!v <= title_pos_y
+	label_pos_y* <= title_pos_y
 	background_width \100%
 
 $mol_plot_mark_hor $mol_plot_ruler_hor
@@ -1575,12 +1575,12 @@ $mol_check_box_demo $mol_example_small
 		\checkbox
 
 $mol_check_list $mol_view
-	Option!id $mol_check
-		checked?val <=> option_checked!id?val false
-		label <= option_label!id /
-			<= option_title!id \
-		enabled <= option_enabled!id <= enabled true
-		hint <= option_hint!id \
+	Option* $mol_check
+		checked?val <=> option_checked*?val false
+		label <= option_label* /
+			<= option_title* \
+		enabled <= option_enabled* <= enabled true
+		hint <= option_hint* \
 		minimal_height 24
 	options *
 	keys /string
@@ -1590,7 +1590,7 @@ $mol_check_list_demo $mol_example_small
 	title \Set of toggles
 	sub /
 		<= Rights $mol_check_list
-			option_checked!id?val <=> right!id?val false
+			option_checked*?val <=> right*?val false
 			options *
 				read \Allow Read
 				write \Allow Write
@@ -1776,11 +1776,11 @@ $mol_search $mol_pop
 	bubble_content /$mol_view_content
 		<= Menu $mol_list
 			rows <= menu_items /$mol_view
-	Suggest!id $mol_button_minor
-		click?event <=> suggest_select!id?event null
-		sub <= suggest_content!id /$mol_view_content
-			<= Suggest_label!id $mol_dimmer
-				haystack <= suggest_label!id \
+	Suggest* $mol_button_minor
+		click?event <=> suggest_select*?event null
+		sub <= suggest_content* /$mol_view_content
+			<= Suggest_label* $mol_dimmer
+				haystack <= suggest_label* \
 				needle <= query?val \
 
 $mol_code $mol_view
@@ -1850,8 +1850,8 @@ $mol_date $mol_pick
 			enabled <= enabled true
 		<= Calendar $mol_date_calendar
 			month_moment <= month_moment <= value_moment
-			day_selected!day <= day_selected!day false
-			day_click!day?event <=> day_click!day?event null
+			day_selected* <= day_selected* false
+			day_click*?event <=> day_click*?event null
 			Title => Calendar_title
 			head /
 				<= Calendar_tools $mol_view
@@ -1872,10 +1872,10 @@ $mol_date $mol_pick
 	value_moment?val $mol_time_moment
 
 $mol_date_calendar $mol_calendar
-	day_content!day /
-		<= Day_button!day $mol_button_minor
-			title <= day_text!day
-			event_click?event <=> day_click!day?event null
+	day_content* /
+		<= Day_button* $mol_button_minor
+			title <= day_text*
+			event_click?event <=> day_click*?event null
 			minimal_height 24
 
 $mol_date_demo $mol_example_small
@@ -1998,17 +1998,17 @@ $mol_drag_demo $mol_example_large
 						\Trash
 				<= List $mol_list
 					rows <= task_rows /
-	Task_row!task $mol_drag
+	Task_row* $mol_drag
 		transfer *
-			text/plain <= task_title!task \
-			text/html <= task_html!task \
-			text/uri-list <= task_uri!task \
-		Sub <= Task_drop!task $mol_drop
+			text/plain <= task_title* \
+			text/html <= task_html* \
+			text/uri-list <= task_uri* \
+		Sub <= Task_drop* $mol_drop
 			adopt?transfer <=> transfer_adopt?transfer null
-			receive?obj <=> receive_before!task?obj null
-			Sub <= Task_link!task $mol_link
-				uri <= task_uri!task \
-				sub / <= task_title!task \
+			receive?obj <=> receive_before*?obj null
+			Sub <= Task_link* $mol_link
+				uri <= task_uri* \
+				sub / <= task_title* \
 	tags /
 		\$mol_drop
 		\$mol_float
@@ -2145,11 +2145,11 @@ $mol_select $mol_pick
 	options /string
 	value?val \
 	option_label_default \
-	Option_row!id $mol_button_minor
-		event_click?event <=> event_select!id?event null
-		sub <= option_content!id /
-			<= Option_label!id $mol_dimmer
-				haystack <= option_label!id \
+	Option_row* $mol_button_minor
+		event_click?event <=> event_select*?event null
+		sub <= option_content* /
+			<= Option_label* $mol_dimmer
+				haystack <= option_label* \
 				needle <= filter_pattern?val \
 	No_options $mol_view
 		sub /
@@ -2348,10 +2348,10 @@ $mol_frame_demo $mol_example_large
 
 $mol_gallery $mol_view
 	sub <= items /$mol_view
-	Side!id $mol_gallery
+	Side* $mol_gallery
 		style *
-			flexGrow <= side_size!id \1
-		items <= side_items!id /$mol_view
+			flexGrow <= side_size* \1
+		items <= side_items* /$mol_view
 
 $mol_gallery_demo $mol_example
 	title \Gallery of cards
@@ -2359,14 +2359,14 @@ $mol_gallery_demo $mol_example
 	sub /
 		<= App $mol_gallery
 			items <= items /
-	Item!id $mol_link
+	Item* $mol_link
 		minimal_width 100
 		uri \https://thiscatdoesnotexist.com/
 		style *
 			backgroundImage \url('https://thiscatdoesnotexist.com/')
 		sub /
-			<= Item_title!id $mol_paragraph
-				title <= item_title!id \
+			<= Item_title* $mol_paragraph
+				title <= item_title* \
 	tags /
 		\$mol_link
 		\$mol_paragraph
@@ -2377,37 +2377,37 @@ $mol_gallery_demo $mol_example
 $mol_html_view $mol_list
 	html \
 	dom null
-	safe_link!uri \
+	safe_link* \
 	xss_uri \https://en.wikipedia.org/wiki/XSS#
-	Heading!id $mol_html_view_heading
-		level <= heading_level!id 1
-		sub <= content!id /
-	Paragraph!id $mol_paragraph
-		sub <= content!id /
-	List!id $mol_list
-		rows <= content!id /
-	Quote!id $mol_list
-		rows <= content!id /
-	Strong!id $mol_paragraph
-		sub <= content!id /
-	Emphasis!id $mol_paragraph
-		sub <= content!id /
-	Deleted!id $mol_paragraph
-		sub <= content!id /
-	Inserted!id $mol_paragraph
-		sub <= content!id /
-	Code!id $mol_paragraph
-		sub <= content!id /
-	Link!id $mol_link_iconed
-		uri <= link_uri!id \
-		content <= content!id /
-	Image!id $mol_image
-		uri <= image_uri!id \
-	Break!id $mol_paragraph
+	Heading* $mol_html_view_heading
+		level <= heading_level* 1
+		sub <= content* /
+	Paragraph* $mol_paragraph
+		sub <= content* /
+	List* $mol_list
+		rows <= content* /
+	Quote* $mol_list
+		rows <= content* /
+	Strong* $mol_paragraph
+		sub <= content* /
+	Emphasis* $mol_paragraph
+		sub <= content* /
+	Deleted* $mol_paragraph
+		sub <= content* /
+	Inserted* $mol_paragraph
+		sub <= content* /
+	Code* $mol_paragraph
+		sub <= content* /
+	Link* $mol_link_iconed
+		uri <= link_uri* \
+		content <= content* /
+	Image* $mol_image
+		uri <= image_uri* \
+	Break* $mol_paragraph
 		sub /
-	Text!id $mol_dimmer
+	Text* $mol_dimmer
 		needle <= highlight \
-		haystack <= text!id \
+		haystack <= text* \
 
 $mol_html_view_heading $mol_paragraph
 	attr *
@@ -2455,16 +2455,16 @@ $mol_html_view_demo $mol_example
 		\render
 
 $mol_infinite $mol_list
-	after!id /
-	Row!id $mol_view
+	after* /
+	Row* $mol_view
 
 $mol_infinite_demo $mol_example
 	title \Infinite list demo
 	chunk_size 20
 	sub /
 		<= List $mol_infinite
-			after!anchor_id <= after!anchor_id /
-			Row!id <= Item!id $mol_filler
+			after* <= after* /
+			Row* <= Item* $mol_filler
 	tags /
 		\$mol_filler
 		\infinite
@@ -2581,25 +2581,25 @@ $mol_list_demo_table $mol_example
 	sub /
 		<= Rows $mol_list
 			rows <= rows /
-	Row!id $mol_row
+	Row* $mol_row
 		minimal_height 40
-		sub <= row_content!id /
-			<= Id!id $mol_view sub / <= row_id!id \
-			<= Title!id $mol_view sub / <= row_title!id \
-			<= Editable!id $mol_check_box
+		sub <= row_content* /
+			<= Id* $mol_view sub / <= row_id* \
+			<= Title* $mol_view sub / <= row_title* \
+			<= Editable* $mol_check_box
 				title <= editable_title \Editable
-				checked?val <=> row_editable!id?val false
-			<= Priority!id $mol_switch
-				enabled <= row_editable!id
-				value?val <=> row_priority!id?val \
+				checked?val <=> row_editable*?val false
+			<= Priority* $mol_switch
+				enabled <= row_editable*
+				value?val <=> row_priority*?val \
 				options *
 					minor \Minor
 					major \Major
 					critical \Critical
-			<= Date!id $mol_date
-				value_moment?val <=> row_moment!id?val $mol_time_moment
-				enabled <= row_editable!id
-			<= Link!id $mol_link_iconed uri <= row_uri!id \
+			<= Date* $mol_date
+				value_moment?val <=> row_moment*?val $mol_time_moment
+				enabled <= row_editable*
+			<= Link* $mol_link_iconed uri <= row_uri* \
 	tags /
 		\$mol_row
 		\$mol_check
@@ -2615,11 +2615,11 @@ $mol_list_demo_tree $mol_example_large
 	sub /
 		<= Content $mol_list
 			rows <= root_rows /
-	Row!id $mol_expander
-		label / <= Row_title!id $mol_paragraph sub / <= row_title!id \
-		expanded?val <=> row_expanded!id?val false
-		Content <= Row_content!id $mol_list
-			rows <= row_content!id /
+	Row* $mol_expander
+		label / <= Row_title* $mol_paragraph sub / <= row_title* \
+		expanded?val <=> row_expanded*?val false
+		Content <= Row_content* $mol_list
+			rows <= row_content* /
 	tags /
 		\$mol_expander
 		\$mol_list
@@ -2852,10 +2852,10 @@ $mol_plot_demo $mol_example_large
 $mol_plot_map_heat $mol_plot_group
 	series_z /number
 	graphs <= level_graphs /
-	Level!z $mol_plot_map_heat_level
-		hint <= level_hint!z \
-		points <= level_points!z /
-		opacity <= level_opacity!z \1
+	Level* $mol_plot_map_heat_level
+		hint <= level_hint* \
+		points <= level_points* /
+		opacity <= level_opacity* \1
 		diameter <= level_diameter 10
 		aspect <= level_aspect 1
 	-
@@ -3134,10 +3134,10 @@ $mol_row_demo_form $mol_example
 $mol_row_demo_products $mol_example
 	title \Product catalog
 	count 100
-	Product!id $mol_card
+	Product* $mol_card
 		minimal_width 110
 		minimal_height 100
-		title <= product_title!id \
+		title <= product_title* \
 	sub /
 		<= Products $mol_row
 			sub <= products /
@@ -3204,14 +3204,14 @@ $mol_select_demo_colors $mol_example_small
 			filter_pattern => color_filter
 			value?val <=> color?val \
 			dictionary <= colors *
-			option_label!id <= color_name!id \
-			option_content!id <= option_content!id /
-				<= Color_option!id $mol_view
+			option_label* <= color_name* \
+			option_content* <= option_content* /
+				<= Color_option* $mol_view
 					sub /
-						<= Color_preview!id $mol_select_colors_color_preview
-							color <= option_color!id \
-						<= Color_name!id $mol_dimmer
-							haystack <= color_name!id \
+						<= Color_preview* $mol_select_colors_color_preview
+							color <= option_color* \
+						<= Color_name* $mol_dimmer
+							haystack <= color_name* \
 							needle <= color_filter
 					minimal_height 40
 	tags /
@@ -3266,16 +3266,16 @@ $mol_select_demo_priority $mol_example_small
 $mol_select_list $mol_view
 	value?val /string
 	dictionary *
-	Badge!index $mol_button_minor
-		title <= badge_title!index \badge
-		click?event <=> remove!index?event null
+	Badge* $mol_button_minor
+		title <= badge_title* \badge
+		click?event <=> remove*?event null
 		hint <= badge_hint @ \Drop
 		enabled <= drop_enabled <= enabled true
 	Pick $mol_select
 		align_hor <= align_hor \right
 		options <= options_pickable <= options /string
 		value?val <=> pick?val \
-		option_label!key <= option_title!key \
+		option_label* <= option_title* \
 		trigger_enabled <= pick_enabled <= enabled true
 		hint <= pick_hint @ \Add..
 		Trigger_icon <= Pick_icon $mol_icon_plus
@@ -3720,9 +3720,9 @@ $mol_app_demo $mol_book2
 			<= Sources $mol_link_source
 				uri <= sources_uri \https://github.com/hyoo-ru/mam_mol/
 			<= Lights $mol_lights_toggle
-	Detail!id $mol_app_demo_detail
-		chat_seed <= chat_seed!id \
-		chat_pages => chat_pages!id
+	Detail* $mol_app_demo_detail
+		chat_seed <= chat_seed* \
+		chat_pages => chat_pages*
 		title <= detail_title
 		description <= detail_description \
 		edit_uri <= edit_uri \
@@ -3753,11 +3753,11 @@ $mol_app_demo_menu $mol_page
 					- suggests <= filter_suggests
 				<= Options $mol_list
 					rows <= options /
-	Option!id $mol_link
-		arg <= option_arg!id *
+	Option* $mol_link
+		arg <= option_arg* *
 		sub /
-			<= Option_title!id $mol_dimmer
-				haystack <= option_title!id \
+			<= Option_title* $mol_dimmer
+				haystack <= option_title* \
 				needle <= filter?val \
 
 $mol_app_demo_detail $mol_page

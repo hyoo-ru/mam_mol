@@ -12,7 +12,7 @@ $mol_calendar_demo_selection $mol_example_small
 	sub /
 		<= Calendar $mol_calendar
 			month_string <= month \2018-01
-			day_selected!day <= selected!day false
+			day_selected* <= selected* false
 	tags /
 		\calendar
 		\date

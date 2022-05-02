@@ -1,10 +1,10 @@
 $mol_grid $mol_view
 	row_height 32
 	row_ids /string[]
-	row_id!index null
+	row_id* null
 	col_ids /
 	records *
-	record!id null
+	record* null
 	hierarchy null
 	hierarchy_col \
 	minimal_width 0
@@ -15,28 +15,28 @@ $mol_grid $mol_view
 			sub <= rows /$mol_view
 	Head $mol_grid_row
 		cells <= head_cells /$mol_view
-	Row!id $mol_grid_row
+	Row* $mol_grid_row
 		minimal_height <= row_height
 		minimal_width <= minimal_width
-		cells <= cells!id /$mol_view
+		cells <= cells* /$mol_view
 	-
-	Cell!id $mol_view
-	cell!id null
-	Cell_text!id $mol_grid_cell
-		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
-	Cell_number!id $mol_grid_number
-		sub <= cell_content_number!id <= cell_content!id /$mol_view_content
-	Col_head!id $mol_float
+	Cell* $mol_view
+	cell* null
+	Cell_text* $mol_grid_cell
+		sub <= cell_content_text* <= cell_content* /$mol_view_content
+	Cell_number* $mol_grid_number
+		sub <= cell_content_number* <= cell_content* /$mol_view_content
+	Col_head* $mol_float
 		dom_name \th
-		sub <= col_head_content!id /$mol_view_content
-	Cell_branch!id $mol_check_expand
-		level <= cell_level!id 0
-		label <= cell_content!id /$mol_view_content
-		expanded?val <=> cell_expanded!id?val false
-	Cell_content!id /
-		<= Cell_dimmer!id $mol_dimmer
+		sub <= col_head_content* /$mol_view_content
+	Cell_branch* $mol_check_expand
+		level <= cell_level* 0
+		label <= cell_content* /$mol_view_content
+		expanded?val <=> cell_expanded*?val false
+	Cell_content* /
+		<= Cell_dimmer* $mol_dimmer
 			needle <= needle \
-			haystack <= cell_value!id \
+			haystack <= cell_value* \
 
 $mol_grid_table $mol_list
 	dom_name \table

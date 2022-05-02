@@ -3,11 +3,11 @@ $mol_select $mol_pick
 	options /string
 	value?val \
 	option_label_default \
-	Option_row!id $mol_button_minor
-		event_click?event <=> event_select!id?event null
-		sub <= option_content!id /
-			<= Option_label!id $mol_dimmer
-				haystack <= option_label!id \
+	Option_row* $mol_button_minor
+		event_click?event <=> event_select*?event null
+		sub <= option_content* /
+			<= Option_label* $mol_dimmer
+				haystack <= option_label* \
 				needle <= filter_pattern?val \
 	No_options $mol_view
 		sub /

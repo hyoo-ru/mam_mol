@@ -4,10 +4,10 @@ $mol_perf_sierp $mol_view
 	style *
 		transform <= transform \
 	sub / <= Dots $mol_view sub <= dots /
-	Dot!id $mol_perf_sierp_dot
-		left <= left!id 0
-		top <= top!id 0
-		size <= size!id 25
+	Dot* $mol_perf_sierp_dot
+		left <= left* 0
+		top <= top* 0
+		size <= size* 25
 		text <= text \
 
 $mol_perf_sierp_dot $mol_view

@@ -190,12 +190,12 @@ $mol_dimmer $mol_paragraph
 	haystack \
 	needle \
 	sub <= parts /$mol_view_content
-	Low!id $mol_paragraph
+	Low* $mol_paragraph
 		sub /
-			<= string!id \
-	High!id $mol_paragraph
+			<= string* \
+	High* $mol_paragraph
 		sub /
-			<= string!id \
+			<= string* \
 
 $mol_nav $mol_plugin
 	cycle?val false
@@ -234,11 +234,11 @@ $mol_select $mol_pick
 	options /string
 	value?val \
 	option_label_default \
-	Option_row!id $mol_button_minor
-		event_click?event <=> event_select!id?event null
-		sub <= option_content!id /
-			<= Option_label!id $mol_dimmer
-				haystack <= option_label!id \
+	Option_row* $mol_button_minor
+		event_click?event <=> event_select*?event null
+		sub <= option_content* /
+			<= Option_label* $mol_dimmer
+				haystack <= option_label* \
 				needle <= filter_pattern?val \
 	No_options $mol_view
 		sub /
@@ -295,19 +295,19 @@ $mol_app_report $mol_page
 			rows <= rows /
 				<= headRower $mol_app_report_rower
 					cells <= headCells /
-	rower!id $mol_app_report_rower
-		cells <= rowerCells!id /
-	cell!id $mol_app_report_cell
-		content <= cell_content!id null
-		rows <= cellrows!id 1
-		cols <= cellCols!id 1
-	texter!id $mol_view
-		sub / <= cell_value!id?val null
-	select!id $mol_select
-		value?val <=> cell_value!id?val null
-		dictionary <= cell_options!id *
-	number!id $mol_number
-		value?val <=> cell_value!id?val null
+	rower* $mol_app_report_rower
+		cells <= rowerCells* /
+	cell* $mol_app_report_cell
+		content <= cell_content* null
+		rows <= cellrows* 1
+		cols <= cellCols* 1
+	texter* $mol_view
+		sub / <= cell_value*?val null
+	select* $mol_select
+		value?val <=> cell_value*?val null
+		dictionary <= cell_options* *
+	number* $mol_number
+		value?val <=> cell_value*?val null
 
 $mol_app_report_tabler $mol_view
 	dom_name \table

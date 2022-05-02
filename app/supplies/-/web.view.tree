@@ -324,12 +324,12 @@ $mol_dimmer $mol_paragraph
 	haystack \
 	needle \
 	sub <= parts /$mol_view_content
-	Low!id $mol_paragraph
+	Low* $mol_paragraph
 		sub /
-			<= string!id \
-	High!id $mol_paragraph
+			<= string* \
+	High* $mol_paragraph
 		sub /
-			<= string!id \
+			<= string* \
 
 $mol_search $mol_pop
 	query?val \
@@ -358,11 +358,11 @@ $mol_search $mol_pop
 	bubble_content /$mol_view_content
 		<= Menu $mol_list
 			rows <= menu_items /$mol_view
-	Suggest!id $mol_button_minor
-		click?event <=> suggest_select!id?event null
-		sub <= suggest_content!id /$mol_view_content
-			<= Suggest_label!id $mol_dimmer
-				haystack <= suggest_label!id \
+	Suggest* $mol_button_minor
+		click?event <=> suggest_select*?event null
+		sub <= suggest_content* /$mol_view_content
+			<= Suggest_label* $mol_dimmer
+				haystack <= suggest_label* \
 				needle <= query?val \
 
 $mol_code $mol_view
@@ -385,10 +385,10 @@ $mol_app_supplies_list $mol_page
 		<= Supply_rows $mol_list
 			rows <= supply_rows /$mol_view
 	-
-	Supply_row!index $mol_app_supplies_card
-		supply <= supply!index null
-		arg <= supply_arg!index *
-			supply <= supply_id!index \
+	Supply_row* $mol_app_supplies_card
+		supply <= supply* null
+		arg <= supply_arg* *
+			supply <= supply_id* \
 
 $mol_app_supplies_position $mol_card
 	minimal_height 64
@@ -448,12 +448,12 @@ $mol_check $mol_button_minor
 					<= title \
 
 $mol_check_list $mol_view
-	Option!id $mol_check
-		checked?val <=> option_checked!id?val false
-		label <= option_label!id /
-			<= option_title!id \
-		enabled <= option_enabled!id <= enabled true
-		hint <= option_hint!id \
+	Option* $mol_check
+		checked?val <=> option_checked*?val false
+		label <= option_label* /
+			<= option_title* \
+		enabled <= option_enabled* <= enabled true
+		hint <= option_hint* \
 		minimal_height 24
 	options *
 	keys /string
@@ -506,12 +506,12 @@ $mol_attach $mol_view
 	Add $mol_button_open
 		title <= attach_title \
 		files?val <=> attach_new?val null
-	Item!id $mol_button_minor
-		click?event <=> item_drop!id?event null
+	Item* $mol_button_minor
+		click?event <=> item_drop*?event null
 		sub /
-			<= Image!id $mol_image
+			<= Image* $mol_image
 				title \
-				uri <= item_uri!id \
+				uri <= item_uri* \
 
 $mol_section $mol_list rows /
 	<= Head $mol_view
@@ -590,8 +590,8 @@ $mol_app_supplies_detail $mol_page
 					checked?val <=> approved?val false
 					title <= approved_title @ \Approved
 	-
-	Position!index $mol_app_supplies_position
-		position <= position!index null
+	Position* $mol_app_supplies_position
+		position <= position* null
 
 $mol_app_supplies $mol_book2
 	attr *
@@ -607,5 +607,5 @@ $mol_app_supplies $mol_book2
 		title <= list_title @ \Supplies
 		search_query?val <=> supply_id?val \
 	-
-	Detail!id $mol_app_supplies_detail
+	Detail* $mol_app_supplies_detail
 		supply <= supply null

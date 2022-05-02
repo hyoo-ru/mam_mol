@@ -26,8 +26,8 @@ $mol_perf_uibench_table $mol_list
 		^
 		class \Table
 	sub <= rows /
-	Row!index $mol_perf_uibench_table_row
-		state <= row_state!index null
+	Row* $mol_perf_uibench_table_row
+		state <= row_state* null
 
 $mol_perf_uibench_table_row $mol_view
 	state null
@@ -41,8 +41,8 @@ $mol_perf_uibench_table_row $mol_view
 		<= Head $mol_perf_uibench_table_cell
 			text <= head_text \
 		<= cells /
-	Cell!index $mol_perf_uibench_table_cell
-		text <= cell_state!index null
+	Cell* $mol_perf_uibench_table_cell
+		text <= cell_state* null
 
 $mol_perf_uibench_table_cell $mol_view
 	dom_name \td
@@ -62,8 +62,8 @@ $mol_perf_uibench_anim $mol_view
 		^
 		class \Anim
 	sub <= boxes /
-	Box!index $mol_perf_uibench_anim_box
-		state <= box_state!index null
+	Box* $mol_perf_uibench_anim_box
+		state <= box_state* null
 
 $mol_perf_uibench_anim_box $mol_view
 	state null
@@ -92,10 +92,10 @@ $mol_perf_uibench_tree_branch $mol_list
 	attr_static *
 		^
 		class \TreeNode
-	Branch!index $mol_perf_uibench_tree_branch
-		state <= branch_state!index null
-	Leaf!index $mol_perf_uibench_tree_leaf
-		text <= leaf_state!index null
+	Branch* $mol_perf_uibench_tree_branch
+		state <= branch_state* null
+	Leaf* $mol_perf_uibench_tree_leaf
+		text <= leaf_state* null
 
 $mol_perf_uibench_tree_leaf $mol_view
 	minimal_height 26

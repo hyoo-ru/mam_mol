@@ -29,11 +29,11 @@ $mol_perf_jsfb $mol_scroll
 						title \Swap Rows
 						click?event <=> swap?event null
 			<= Rows $mol_list rows <= rows /
-	Row!id $mol_perf_jsfb_row
-		title?next => row_title!id?next
-		selected?next <=> row_selected!id?next false
-		drop?event <=> row_drop!id?event null
-		id <= row_id!id \
+	Row* $mol_perf_jsfb_row
+		title?next => row_title*?next
+		selected?next <=> row_selected*?next false
+		drop?event <=> row_drop*?event null
+		id <= row_id* \
 
 $mol_perf_jsfb_row $mol_view
 	minimal_height 40
