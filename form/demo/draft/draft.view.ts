@@ -1,6 +1,6 @@
 namespace $.$$ {
 	
-	type Field = $mol_type_keys_extract< $mol_form_demo_model, ()=> string >
+	type Field = $mol_type_keys_extract< $mol_form_demo_draft_model, ()=> string >
 	
 	export class $mol_form_demo_draft extends $.$mol_form_demo_draft {
 		
