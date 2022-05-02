@@ -1,4 +1,5 @@
 $mol_form_field $mol_labeler
+	bids /string
 	label /
 		<= name \
 		<= Bid $mol_view
