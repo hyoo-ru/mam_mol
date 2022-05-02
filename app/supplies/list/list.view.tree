@@ -8,7 +8,7 @@ $mol_app_supplies_list $mol_page
 		<= Supply_rows $mol_list
 			rows <= supply_rows /$mol_view
 	-
-	Supply_row!index $mol_app_supplies_card
-		supply <= supply!index null
-		arg <= supply_arg!index *
-			supply <= supply_id!index \
+	Supply_row* $mol_app_supplies_card
+		supply <= supply* null
+		arg <= supply_arg* *
+			supply <= supply_id* \

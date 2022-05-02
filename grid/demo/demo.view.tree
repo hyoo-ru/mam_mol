@@ -5,7 +5,7 @@ $mol_grid_demo $mol_example_large
 	sub /
 		<= Grid $mol_grid
 			records <= records *
-			col_head_content!col <= col_head_content!col /
+			col_head_content* <= col_head_content* /
 	tags /
 		\grid
 		\table

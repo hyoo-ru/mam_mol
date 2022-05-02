@@ -3,8 +3,8 @@ $mol_embed_pdf $mol_scroll
 	sub  /
 		<= Pages $mol_list 
 			rows <= pages /
-	Page!index $mol_embed_pdf_page
-		page <= page!index null
+	Page* $mol_embed_pdf_page
+		page <= page* null
 
 $mol_embed_pdf_page $mol_view
 	dom_name \canvas

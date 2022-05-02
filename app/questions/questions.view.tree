@@ -12,37 +12,37 @@ $mol_app_questions $mol_book2
 			<= Menu_links $mol_list
 				rows <= menu_rows /
 	-
-	Details!id $mol_page
-		title <= question_title!id \
+	Details* $mol_page
+		title <= question_title* \
 		tools /
-			<= Details_permalink!id $mol_link
-				uri <= question_permalink!id \
+			<= Details_permalink* $mol_link
+				uri <= question_permalink* \
 				sub /
-					<= Details_permalink_icon!id $mol_icon_external
-			<= Details_close!id $mol_link
+					<= Details_permalink_icon* $mol_icon_external
+			<= Details_close* $mol_link
 				sub /
-					<= Details_close_icon!id $mol_icon_cross
+					<= Details_close_icon* $mol_icon_cross
 				arg *
 					question null
 		body /
-			<= Details_descr!id $mol_text
-				text <= question_descr!id \
-			<= Answers!id $mol_list
-				rows <= answers!id /
+			<= Details_descr* $mol_text
+				text <= question_descr* \
+			<= Answers* $mol_list
+				rows <= answers* /
 	-
-	Answer!id $mol_text
-		text <= question_answer!id \
+	Answer* $mol_text
+		text <= question_answer* \
 	-
-	Question_link!index $mol_link
+	Question_link* $mol_link
 		minimal_height 64
-		arg <= question_arg_by_index!index *
+		arg <= question_arg_by_index* *
 		sub /
-			<= Question_title!index $mol_view
+			<= Question_title* $mol_view
 				sub /
-					<= question_title_by_index!index \
-			<= Question_tags!index $mol_view
-				sub <= question_tags_by_index!index /
+					<= question_title_by_index* \
+			<= Question_tags* $mol_view
+				sub <= question_tags_by_index* /
 	-
-	Tag!id $mol_view
+	Tag* $mol_view
 		sub /
-			<= tag_name!id \ 
+			<= tag_name* \ 

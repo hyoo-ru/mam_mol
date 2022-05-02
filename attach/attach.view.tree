@@ -6,9 +6,9 @@ $mol_attach $mol_view
 	Add $mol_button_open
 		title <= attach_title \
 		files?val <=> attach_new?val null
-	Item!id $mol_button_minor
-		click?event <=> item_drop!id?event null
+	Item* $mol_button_minor
+		click?event <=> item_drop*?event null
 		sub /
-			<= Image!id $mol_image
+			<= Image* $mol_image
 				title \
-				uri <= item_uri!id \
+				uri <= item_uri* \

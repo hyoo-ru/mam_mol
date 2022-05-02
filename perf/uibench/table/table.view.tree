@@ -5,8 +5,8 @@ $mol_perf_uibench_table $mol_list
 		^
 		class \Table
 	sub <= rows /
-	Row!index $mol_perf_uibench_table_row
-		state <= row_state!index null
+	Row* $mol_perf_uibench_table_row
+		state <= row_state* null
 
 $mol_perf_uibench_table_row $mol_view
 	state null
@@ -20,8 +20,8 @@ $mol_perf_uibench_table_row $mol_view
 		<= Head $mol_perf_uibench_table_cell
 			text <= head_text \
 		<= cells /
-	Cell!index $mol_perf_uibench_table_cell
-		text <= cell_state!index null
+	Cell* $mol_perf_uibench_table_cell
+		text <= cell_state* null
 
 $mol_perf_uibench_table_cell $mol_view
 	dom_name \td

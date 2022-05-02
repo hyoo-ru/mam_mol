@@ -1,37 +1,37 @@
 $mol_html_view $mol_list
 	html \
 	dom null
-	safe_link!uri \
+	safe_link* \
 	xss_uri \https://en.wikipedia.org/wiki/XSS#
-	Heading!id $mol_html_view_heading
-		level <= heading_level!id 1
-		sub <= content!id /
-	Paragraph!id $mol_paragraph
-		sub <= content!id /
-	List!id $mol_list
-		rows <= content!id /
-	Quote!id $mol_list
-		rows <= content!id /
-	Strong!id $mol_paragraph
-		sub <= content!id /
-	Emphasis!id $mol_paragraph
-		sub <= content!id /
-	Deleted!id $mol_paragraph
-		sub <= content!id /
-	Inserted!id $mol_paragraph
-		sub <= content!id /
-	Code!id $mol_paragraph
-		sub <= content!id /
-	Link!id $mol_link_iconed
-		uri <= link_uri!id \
-		content <= content!id /
-	Image!id $mol_image
-		uri <= image_uri!id \
-	Break!id $mol_paragraph
+	Heading* $mol_html_view_heading
+		level <= heading_level* 1
+		sub <= content* /
+	Paragraph* $mol_paragraph
+		sub <= content* /
+	List* $mol_list
+		rows <= content* /
+	Quote* $mol_list
+		rows <= content* /
+	Strong* $mol_paragraph
+		sub <= content* /
+	Emphasis* $mol_paragraph
+		sub <= content* /
+	Deleted* $mol_paragraph
+		sub <= content* /
+	Inserted* $mol_paragraph
+		sub <= content* /
+	Code* $mol_paragraph
+		sub <= content* /
+	Link* $mol_link_iconed
+		uri <= link_uri* \
+		content <= content* /
+	Image* $mol_image
+		uri <= image_uri* \
+	Break* $mol_paragraph
 		sub /
-	Text!id $mol_dimmer
+	Text* $mol_dimmer
 		needle <= highlight \
-		haystack <= text!id \
+		haystack <= text* \
 
 $mol_html_view_heading $mol_paragraph
 	attr *

@@ -3,8 +3,8 @@ $mol_infinite_demo $mol_example
 	chunk_size 20
 	sub /
 		<= List $mol_infinite
-			after!anchor_id <= after!anchor_id /
-			Row!id <= Item!id $mol_filler
+			after* <= after* /
+			Row* <= Item* $mol_filler
 	tags /
 		\$mol_filler
 		\infinite

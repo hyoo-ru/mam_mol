@@ -1,10 +1,10 @@
 $mol_check_list $mol_view
-	Option!id $mol_check
-		checked?val <=> option_checked!id?val false
-		label <= option_label!id /
-			<= option_title!id \
-		enabled <= option_enabled!id <= enabled true
-		hint <= option_hint!id \
+	Option* $mol_check
+		checked?val <=> option_checked*?val false
+		label <= option_label* /
+			<= option_title* \
+		enabled <= option_enabled* <= enabled true
+		hint <= option_hint* \
 		minimal_height 24
 	options *
 	keys /string

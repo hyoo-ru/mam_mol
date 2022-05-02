@@ -8,8 +8,8 @@ $mol_date $mol_pick
 			enabled <= enabled true
 		<= Calendar $mol_date_calendar
 			month_moment <= month_moment <= value_moment
-			day_selected!day <= day_selected!day false
-			day_click!day?event <=> day_click!day?event null
+			day_selected* <= day_selected* false
+			day_click*?event <=> day_click*?event null
 			Title => Calendar_title
 			head /
 				<= Calendar_tools $mol_view
@@ -30,8 +30,8 @@ $mol_date $mol_pick
 	value_moment?val $mol_time_moment
 
 $mol_date_calendar $mol_calendar
-	day_content!day /
-		<= Day_button!day $mol_button_minor
-			title <= day_text!day
-			event_click?event <=> day_click!day?event null
+	day_content* /
+		<= Day_button* $mol_button_minor
+			title <= day_text*
+			event_click?event <=> day_click*?event null
 			minimal_height 24

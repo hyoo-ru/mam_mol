@@ -10,21 +10,21 @@ $mol_calendar $mol_list
 			sub <= weekdays /$mol_view
 	weeks /$mol_view
 	-
-	Weekday!index $mol_calendar_day
-		holiday <= weekend!index false
+	Weekday* $mol_calendar_day
+		holiday <= weekend* false
 		sub /
-			<= weekday!index \
+			<= weekday* \
 	-
-	Week!row $mol_hor
-		sub <= week_days!row /$mol_view
+	Week* $mol_hor
+		sub <= week_days* /$mol_view
 	-
-	Day!day $mol_calendar_day
-		ghost <= day_ghost!day false
-		holiday <= day_holiday!day false
-		selected <= day_selected!day false
-		theme <= day_theme!day \
-		sub <= day_content!day /
-			<= day_text!day \
+	Day* $mol_calendar_day
+		ghost <= day_ghost* false
+		holiday <= day_holiday* false
+		selected <= day_selected* false
+		theme <= day_theme* \
+		sub <= day_content* /
+			<= day_text* \
 	-
 	month_string \
 	month_moment $mol_time_moment
