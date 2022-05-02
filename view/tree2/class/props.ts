@@ -5,7 +5,18 @@ namespace $ {
 		this: $,
 		klass : $mol_tree2,
 	) {
-		const props = this.$mol_view_tree2_class_super( klass )
+		let props = this.$mol_view_tree2_class_super( klass )
+		
+		// ! syntax to #
+		props = props.clone(
+			props.hack({
+				'': ( node, belt )=> {
+					const normal = node.type.replace( /!\w+/, '#' )
+					if( node.type === normal ) return [ node.clone( node.hack( belt ) ) ]
+					return [ node.struct( normal, node.hack( belt ) ) ]
+				}
+			})
+		)
 
 		const props_inner = [] as $mol_tree2[]
 
