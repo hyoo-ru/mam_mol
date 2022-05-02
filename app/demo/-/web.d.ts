@@ -5361,14 +5361,14 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_form_demo_model extends $mol_object2 {
+    class $mol_form_demo_draft_model extends $mol_object2 {
         title(val?: any): string;
         type(val?: any): string;
         content(val?: any): string;
     }
     class $mol_form_demo_draft extends $mol_example {
         title(): string;
-        model(): $mol_form_demo_model;
+        model(): $mol_form_demo_draft_model;
         message_done(): string;
         bid_required(prop: any): string;
         bid_swearing(prop: any): string;
@@ -5397,7 +5397,7 @@ declare namespace $ {
 }
 
 declare namespace $.$$ {
-    type Field = $mol_type_keys_extract<$mol_form_demo_model, () => string>;
+    type Field = $mol_type_keys_extract<$mol_form_demo_draft_model, () => string>;
     export class $mol_form_demo_draft extends $.$mol_form_demo_draft {
         value_str(field: Field, next?: string | null): any;
         form_body(): ($mol_form_field | $mol_form_group)[];

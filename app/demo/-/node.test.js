@@ -20271,7 +20271,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_form_demo_model extends $mol_object2 {
+    class $mol_form_demo_draft_model extends $mol_object2 {
         title(val) {
             if (val !== undefined)
                 return val;
@@ -20290,20 +20290,20 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $mol_form_demo_model.prototype, "title", null);
+    ], $mol_form_demo_draft_model.prototype, "title", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_model.prototype, "type", null);
+    ], $mol_form_demo_draft_model.prototype, "type", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_model.prototype, "content", null);
-    $.$mol_form_demo_model = $mol_form_demo_model;
+    ], $mol_form_demo_draft_model.prototype, "content", null);
+    $.$mol_form_demo_draft_model = $mol_form_demo_draft_model;
     class $mol_form_demo_draft extends $mol_example {
         title() {
             return "Article draft form demo";
         }
         model() {
-            const obj = new this.$.$mol_form_demo_model();
+            const obj = new this.$.$mol_form_demo_draft_model();
             return obj;
         }
         message_done() {

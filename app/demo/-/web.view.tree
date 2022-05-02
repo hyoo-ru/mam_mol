@@ -2271,14 +2271,14 @@ $mol_form_demo_bids $mol_example
 		\validation
 		\field
 
-$mol_form_demo_model $mol_object2
+$mol_form_demo_draft_model $mol_object2
 	title?val \
 	type?val \
 	content?val \
 
 $mol_form_demo_draft $mol_example
 	title \Article draft form demo
-	model $mol_form_demo_model
+	model $mol_form_demo_draft_model
 	-
 	message_done \Done
 	bid_required!prop \Required

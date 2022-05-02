@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_form_demo_model extends $mol_object2 {
+	export class $mol_form_demo_draft_model extends $mol_object2 {
 		
 		/**
 		 * ```tree
@@ -48,12 +48,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * model $mol_form_demo_model
+		 * model $mol_form_demo_draft_model
 		 * ```
 		 */
 		@ $mol_mem
 		model() {
-			const obj = new this.$.$mol_form_demo_model()
+			const obj = new this.$.$mol_form_demo_draft_model()
 			
 			return obj
 		}
