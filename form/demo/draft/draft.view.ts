@@ -14,20 +14,9 @@ namespace $.$$ {
 		@ $mol_mem
 		form_body() {
 			return [
-				this.Group( 'main' ),
-				... this.value_str( 'type' ) ? [ this.Content_field( 'content' ) ] : [],
+				this.Main(),
+				... this.value_str( 'type' ) ? [ this.Content_field() ] : [],
 			]
-		}
-		
-		@ $mol_mem
-		group( name: string ) {
-			switch( name ) {
-				case 'main': return [
-					this.Title_field( 'title' ),
-					this.Type_field( 'type' ),
-				]
-				default: return []
-			}
 		}
 		
 		@ $mol_mem_key

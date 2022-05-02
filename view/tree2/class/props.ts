@@ -7,11 +7,11 @@ namespace $ {
 	) {
 		let props = this.$mol_view_tree2_class_super( klass )
 		
-		// ! syntax to #
+		// ! syntax to *
 		props = props.clone(
 			props.hack({
 				'': ( node, belt )=> {
-					const normal = node.type.replace( /!\w+/, '#' )
+					const normal = node.type.replace( /!\w+/, '*' )
 					if( node.type === normal ) return [ node.clone( node.hack( belt ) ) ]
 					return [ node.struct( normal, node.hack( belt ) ) ]
 				}
