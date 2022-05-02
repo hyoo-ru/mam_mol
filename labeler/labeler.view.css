@@ -6,6 +6,7 @@
 }
 
 [mol_labeler_label] {
+	min-height: 2.5rem;
 	color: var(--mol_theme_shade);
 	z-index: 1;
 	padding: var(--mol_gap_text);

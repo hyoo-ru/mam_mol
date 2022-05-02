@@ -2083,7 +2083,7 @@ $mol_float_demo $mol_example_large
 $mol_labeler $mol_list
 	rows /
 		<= Label $mol_view
-			minimal_height 16
+			minimal_height 40
 			sub <= label /$mol_view_content
 				<= title
 		<= Content $mol_view
