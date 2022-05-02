@@ -71,6 +71,7 @@ $mol_form_demo_bids $mol_example
 					Content <= Mail_control $mol_string
 						hint \name@domain.com
 						value?val <=> mail?val \
+			submit?val <=> submit?val null
 			submit_allowed => submit_allowed
 			buttons /
 				<= Submit $mol_button_major

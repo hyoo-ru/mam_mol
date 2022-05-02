@@ -46,6 +46,7 @@ $mol_form_demo_draft $mol_example
 		<= Flow $mol_list rows /
 			<= Form $mol_form
 				body <= form_body /
+				submit?val <=> submit?val null
 				submit_allowed => submit_allowed
 				buttons /
 					<= Submit $mol_button_major

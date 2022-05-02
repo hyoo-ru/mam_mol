@@ -3,6 +3,7 @@ $mol_form $mol_list
 	event *
 		^
 		keydown?event <=> keydown?event null
+	submit?event null
 	rows /
 		<= Body $mol_list
 			sub <= body <= form_fields /$mol_form_field
