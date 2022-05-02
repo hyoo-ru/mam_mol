@@ -2687,7 +2687,7 @@ var $;
         let props = this.$mol_view_tree2_class_super(klass);
         props = props.clone(props.hack({
             '': (node, belt) => {
-                const normal = node.type.replace(/!\w+/, '#');
+                const normal = node.type.replace(/!\w+/, '*');
                 if (node.type === normal)
                     return [node.clone(node.hack(belt))];
                 return [node.struct(normal, node.hack(belt))];
@@ -3000,7 +3000,7 @@ var $;
     const err = $mol_view_tree2_error_str;
     function $mol_view_tree2_prop_split(src) {
         const prop_name = src.type;
-        let key_pos = prop_name.indexOf('#');
+        let key_pos = prop_name.indexOf('*');
         let next_pos = prop_name.indexOf('?');
         let next_pos_orig = next_pos;
         if (next_pos === -1)

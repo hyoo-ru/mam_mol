@@ -43,9 +43,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Item# $mol_button_minor
-		 * 	click?event <=> item_drop#?event
-		 * 	sub / <= Image#
+		 * Item* $mol_button_minor
+		 * 	click?event <=> item_drop*?event
+		 * 	sub / <= Image*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -106,7 +106,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * item_drop#?event null
+		 * item_drop*?event null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -117,7 +117,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * item_uri# \
+		 * item_uri* \
 		 * ```
 		 */
 		item_uri(id: any) {
@@ -126,9 +126,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Image# $mol_image
+		 * Image* $mol_image
 		 * 	title \
-		 * 	uri <= item_uri#
+		 * 	uri <= item_uri*
 		 * ```
 		 */
 		@ $mol_mem_key

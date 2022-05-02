@@ -30,7 +30,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Low# $mol_paragraph sub / <= string#
+		 * Low* $mol_paragraph sub / <= string*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -46,7 +46,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * High# $mol_paragraph sub / <= string#
+		 * High* $mol_paragraph sub / <= string*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -72,7 +72,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * string# \
+		 * string* \
 		 * ```
 		 */
 		string(id: any) {

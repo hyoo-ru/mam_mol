@@ -46,9 +46,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Token# $mol_text_code_token
-		 * 	type <= token_type#
-		 * 	haystack <= token_text#
+		 * Token* $mol_text_code_token
+		 * 	type <= token_type*
+		 * 	haystack <= token_text*
 		 * 	needle <= highlight
 		 * ```
 		 */
@@ -65,8 +65,8 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Token_link# $mol_text_code_token_link
-		 * 	haystack <= token_text#
+		 * Token_link* $mol_text_code_token_link
+		 * 	haystack <= token_text*
 		 * 	needle <= highlight
 		 * ```
 		 */
@@ -91,7 +91,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * token_type# \
+		 * token_type* \
 		 * ```
 		 */
 		token_type(id: any) {
@@ -100,7 +100,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * token_text# \
+		 * token_text* \
 		 * ```
 		 */
 		token_text(id: any) {

@@ -5374,17 +5374,16 @@ declare namespace $ {
         bid_swearing(id: any): string;
         bid_short(id: any): string;
         bid_long(id: any): string;
-        Group(id: any): $mol_form_group;
-        Title_field(id: any): $$.$mol_form_field;
-        Type_field(id: any): $$.$mol_form_field;
-        Content_field(id: any): $$.$mol_form_field;
         sub(): readonly any[];
         tags(): readonly any[];
-        group(id: any): readonly any[];
         value_str(id: any, val?: any): string;
-        Title(id: any): $$.$mol_string;
-        Type(id: any): $$.$mol_switch;
-        Content(id: any): $$.$mol_textarea;
+        Title(): $$.$mol_string;
+        Title_field(): $$.$mol_form_field;
+        Type(): $$.$mol_switch;
+        Type_field(): $$.$mol_form_field;
+        Main(): $mol_form_group;
+        Content(): $$.$mol_textarea;
+        Content_field(): $$.$mol_form_field;
         form_body(): readonly any[];
         publish(event?: any): any;
         Publish(): $mol_button_major;
@@ -5401,7 +5400,6 @@ declare namespace $.$$ {
     export class $mol_form_demo_draft extends $.$mol_form_demo_draft {
         value_str(field: Field, next?: string | null): any;
         form_body(): ($mol_form_field | $mol_form_group)[];
-        group(name: string): $mol_form_field[];
         bid_required(field: Field): string;
         bid_short(field: Field): string;
         bid_long(field: Field): string;

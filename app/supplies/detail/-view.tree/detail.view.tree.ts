@@ -54,7 +54,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Position# $mol_app_supplies_position position <= position#
+		 * Position* $mol_app_supplies_position position <= position*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -770,7 +770,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * position# null
+		 * position* null
 		 * ```
 		 */
 		position(id: any) {

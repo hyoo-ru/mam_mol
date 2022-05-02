@@ -27,9 +27,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Weekday# $mol_calendar_day
-		 * 	holiday <= weekend#
-		 * 	sub / <= weekday#
+		 * Weekday* $mol_calendar_day
+		 * 	holiday <= weekend*
+		 * 	sub / <= weekday*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -46,7 +46,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Week# $mol_hor sub <= week_days#
+		 * Week* $mol_hor sub <= week_days*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -60,12 +60,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Day# $mol_calendar_day
-		 * 	ghost <= day_ghost#
-		 * 	holiday <= day_holiday#
-		 * 	selected <= day_selected#
-		 * 	theme <= day_theme#
-		 * 	sub <= day_content#
+		 * Day* $mol_calendar_day
+		 * 	ghost <= day_ghost*
+		 * 	holiday <= day_holiday*
+		 * 	selected <= day_selected*
+		 * 	theme <= day_theme*
+		 * 	sub <= day_content*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -181,7 +181,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * weekend# false
+		 * weekend* false
 		 * ```
 		 */
 		weekend(id: any) {
@@ -190,7 +190,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * weekday# \
+		 * weekday* \
 		 * ```
 		 */
 		weekday(id: any) {
@@ -199,7 +199,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * week_days# /$mol_view
+		 * week_days* /$mol_view
 		 * ```
 		 */
 		week_days(id: any) {
@@ -209,7 +209,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_ghost# false
+		 * day_ghost* false
 		 * ```
 		 */
 		day_ghost(id: any) {
@@ -218,7 +218,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_holiday# false
+		 * day_holiday* false
 		 * ```
 		 */
 		day_holiday(id: any) {
@@ -227,7 +227,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_selected# false
+		 * day_selected* false
 		 * ```
 		 */
 		day_selected(id: any) {
@@ -236,7 +236,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_theme# \
+		 * day_theme* \
 		 * ```
 		 */
 		day_theme(id: any) {
@@ -245,7 +245,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_text# \
+		 * day_text* \
 		 * ```
 		 */
 		day_text(id: any) {
@@ -254,7 +254,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_content# / <= day_text#
+		 * day_content* / <= day_text*
 		 * ```
 		 */
 		day_content(id: any) {

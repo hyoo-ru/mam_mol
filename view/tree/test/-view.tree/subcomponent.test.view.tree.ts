@@ -3,7 +3,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Page# $mol_view_tree_test_attributes_subcomponent_page Sub <= page#
+		 * Page* $mol_view_tree_test_attributes_subcomponent_page Sub <= page*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -17,7 +17,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * page# null
+		 * page* null
 		 * ```
 		 */
 		page(id: any) {

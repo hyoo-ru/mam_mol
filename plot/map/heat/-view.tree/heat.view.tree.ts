@@ -22,10 +22,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Level# $mol_plot_map_heat_level
-		 * 	hint <= level_hint#
-		 * 	points <= level_points#
-		 * 	opacity <= level_opacity#
+		 * Level* $mol_plot_map_heat_level
+		 * 	hint <= level_hint*
+		 * 	points <= level_points*
+		 * 	opacity <= level_opacity*
 		 * 	diameter <= level_diameter
 		 * 	aspect <= level_aspect
 		 * ```
@@ -69,7 +69,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * level_hint# \
+		 * level_hint* \
 		 * ```
 		 */
 		level_hint(id: any) {
@@ -78,7 +78,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * level_points# /
+		 * level_points* /
 		 * ```
 		 */
 		level_points(id: any) {
@@ -88,7 +88,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * level_opacity# \1
+		 * level_opacity* \1
 		 * ```
 		 */
 		level_opacity(id: any) {

@@ -52,7 +52,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Detail# $mol_app_supplies_detail supply <= supply
+		 * Detail* $mol_app_supplies_detail supply <= supply
 		 * ```
 		 */
 		@ $mol_mem_key

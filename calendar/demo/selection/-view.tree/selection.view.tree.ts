@@ -82,7 +82,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * selected# false
+		 * selected* false
 		 * ```
 		 */
 		selected(id: any) {
@@ -93,7 +93,7 @@ namespace $ {
 		 * ```tree
 		 * Calendar $mol_calendar
 		 * 	month_string <= month
-		 * 	day_selected# <= selected#
+		 * 	day_selected* <= selected*
 		 * ```
 		 */
 		@ $mol_mem

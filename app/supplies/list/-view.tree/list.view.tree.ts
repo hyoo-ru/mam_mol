@@ -35,9 +35,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Supply_row# $mol_app_supplies_card
-		 * 	supply <= supply#
-		 * 	arg <= supply_arg#
+		 * Supply_row* $mol_app_supplies_card
+		 * 	supply <= supply*
+		 * 	arg <= supply_arg*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -113,7 +113,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * supply# null
+		 * supply* null
 		 * ```
 		 */
 		supply(id: any) {
@@ -122,7 +122,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * supply_id# \
+		 * supply_id* \
 		 * ```
 		 */
 		supply_id(id: any) {
@@ -131,7 +131,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * supply_arg# * supply <= supply_id#
+		 * supply_arg* * supply <= supply_id*
 		 * ```
 		 */
 		supply_arg(id: any) {

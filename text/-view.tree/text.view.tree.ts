@@ -31,7 +31,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Quote# $mol_text text <= quote_text#
+		 * Quote* $mol_text text <= quote_text*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -45,9 +45,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Row# $mol_text_row
-		 * 	sub <= block_content#
-		 * 	type <= block_type#
+		 * Row* $mol_text_row
+		 * 	sub <= block_content*
+		 * 	type <= block_type*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -62,7 +62,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Span# $mol_text_span
+		 * Span* $mol_text_span
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -74,7 +74,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * String# $mol_text_string needle <= highlight
+		 * String* $mol_text_string needle <= highlight
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -88,7 +88,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Link# $mol_text_link target <= link_target#
+		 * Link* $mol_text_link target <= link_target*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -102,7 +102,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Image# $mol_text_image
+		 * Image* $mol_text_image
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -114,9 +114,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Header# $mol_text_header
-		 * 	level <= header_level#
-		 * 	content <= header_content#
+		 * Header* $mol_text_header
+		 * 	level <= header_level*
+		 * 	content <= header_content*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -131,8 +131,8 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Code# $mol_text_code
-		 * 	text <= code_text#
+		 * Code* $mol_text_code
+		 * 	text <= code_text*
 		 * 	highlight <= highlight
 		 * ```
 		 */
@@ -148,9 +148,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Table# $mol_grid
-		 * 	head_cells <= table_head_cells#
-		 * 	rows <= table_rows#
+		 * Table* $mol_grid
+		 * 	head_cells <= table_head_cells*
+		 * 	rows <= table_rows*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -165,7 +165,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Table_row# $mol_grid_row cells <= table_cells#
+		 * Table_row* $mol_grid_row cells <= table_cells*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -179,7 +179,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Table_cell# $mol_grid_cell sub <= table_cell_content#
+		 * Table_cell* $mol_grid_cell sub <= table_cell_content*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -193,7 +193,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Table_cell_head# $mol_grid_cell sub <= table_cell_content#
+		 * Table_cell_head* $mol_grid_cell sub <= table_cell_content*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -207,7 +207,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * quote_text# \
+		 * quote_text* \
 		 * ```
 		 */
 		quote_text(id: any) {
@@ -216,7 +216,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * block_content# /
+		 * block_content* /
 		 * ```
 		 */
 		block_content(id: any) {
@@ -226,7 +226,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * block_type# \
+		 * block_type* \
 		 * ```
 		 */
 		block_type(id: any) {
@@ -244,7 +244,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * link_target# \_blank
+		 * link_target* \_blank
 		 * ```
 		 */
 		link_target(id: any) {
@@ -253,7 +253,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * header_level# 0
+		 * header_level* 0
 		 * ```
 		 */
 		header_level(id: any) {
@@ -262,7 +262,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * header_content# /
+		 * header_content* /
 		 * ```
 		 */
 		header_content(id: any) {
@@ -272,7 +272,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * code_text# \
+		 * code_text* \
 		 * ```
 		 */
 		code_text(id: any) {
@@ -281,7 +281,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * table_head_cells# /
+		 * table_head_cells* /
 		 * ```
 		 */
 		table_head_cells(id: any) {
@@ -291,7 +291,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * table_rows# /
+		 * table_rows* /
 		 * ```
 		 */
 		table_rows(id: any) {
@@ -301,7 +301,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * table_cells# /
+		 * table_cells* /
 		 * ```
 		 */
 		table_cells(id: any) {
@@ -311,7 +311,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * table_cell_content# /
+		 * table_cell_content* /
 		 * ```
 		 */
 		table_cell_content(id: any) {

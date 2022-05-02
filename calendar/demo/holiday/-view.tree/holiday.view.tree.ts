@@ -84,7 +84,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * holiday# false
+		 * holiday* false
 		 * ```
 		 */
 		holiday(id: any) {
@@ -95,7 +95,7 @@ namespace $ {
 		 * ```tree
 		 * Calendar $mol_calendar
 		 * 	month_string <= month
-		 * 	day_holiday# <= holiday#
+		 * 	day_holiday* <= holiday*
 		 * ```
 		 */
 		@ $mol_mem

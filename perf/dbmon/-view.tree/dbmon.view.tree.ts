@@ -23,7 +23,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Database# $mol_view sub <= database#
+		 * Database* $mol_view sub <= database*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -37,10 +37,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Query# $mol_perf_dbmon_query
-		 * 	elapsed <= query_elapsed#
-		 * 	elapsed_mod <= query_elapsed_mod#
-		 * 	value <= query_value#
+		 * Query* $mol_perf_dbmon_query
+		 * 	elapsed <= query_elapsed*
+		 * 	elapsed_mod <= query_elapsed_mod*
+		 * 	value <= query_value*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -80,7 +80,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * name# \
+		 * name* \
 		 * ```
 		 */
 		name(id: any) {
@@ -89,7 +89,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Name# $mol_view sub / <= name#
+		 * Name* $mol_view sub / <= name*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -105,7 +105,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * query_count_label_mod# \
+		 * query_count_label_mod* \
 		 * ```
 		 */
 		query_count_label_mod(id: any) {
@@ -114,7 +114,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * query_count# 0
+		 * query_count* 0
 		 * ```
 		 */
 		query_count(id: any) {
@@ -123,9 +123,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Query_count# $mol_perf_dbmon_query_count
-		 * 	label_mod <= query_count_label_mod#
-		 * 	count <= query_count#
+		 * Query_count* $mol_perf_dbmon_query_count
+		 * 	label_mod <= query_count_label_mod*
+		 * 	count <= query_count*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -140,7 +140,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * top_queries# /
+		 * top_queries* /
 		 * ```
 		 */
 		top_queries(id: any) {
@@ -150,10 +150,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * database# /
-		 * 	<= Name#
-		 * 	<= Query_count#
-		 * 	<= top_queries#
+		 * database* /
+		 * 	<= Name*
+		 * 	<= Query_count*
+		 * 	<= top_queries*
 		 * ```
 		 */
 		database(id: any) {
@@ -166,7 +166,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * query_elapsed# \
+		 * query_elapsed* \
 		 * ```
 		 */
 		query_elapsed(id: any) {
@@ -175,7 +175,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * query_elapsed_mod# \
+		 * query_elapsed_mod* \
 		 * ```
 		 */
 		query_elapsed_mod(id: any) {
@@ -184,7 +184,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * query_value# \
+		 * query_value* \
 		 * ```
 		 */
 		query_value(id: any) {

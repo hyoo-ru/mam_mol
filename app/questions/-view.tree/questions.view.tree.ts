@@ -40,14 +40,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Details# $mol_page
-		 * 	title <= question_title#
+		 * Details* $mol_page
+		 * 	title <= question_title*
 		 * 	tools /
-		 * 		<= Details_permalink#
-		 * 		<= Details_close#
+		 * 		<= Details_permalink*
+		 * 		<= Details_close*
 		 * 	body /
-		 * 		<= Details_descr#
-		 * 		<= Answers#
+		 * 		<= Details_descr*
+		 * 		<= Answers*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -69,7 +69,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Answer# $mol_text text <= question_answer#
+		 * Answer* $mol_text text <= question_answer*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -83,12 +83,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Question_link# $mol_link
+		 * Question_link* $mol_link
 		 * 	minimal_height 64
-		 * 	arg <= question_arg_by_index#
+		 * 	arg <= question_arg_by_index*
 		 * 	sub /
-		 * 		<= Question_title#
-		 * 		<= Question_tags#
+		 * 		<= Question_title*
+		 * 		<= Question_tags*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -107,7 +107,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Tag# $mol_view sub / <= tag_name#
+		 * Tag* $mol_view sub / <= tag_name*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -194,7 +194,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_title# \
+		 * question_title* \
 		 * ```
 		 */
 		question_title(id: any) {
@@ -203,7 +203,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_permalink# \
+		 * question_permalink* \
 		 * ```
 		 */
 		question_permalink(id: any) {
@@ -212,7 +212,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Details_permalink_icon# $mol_icon_external
+		 * Details_permalink_icon* $mol_icon_external
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -224,9 +224,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Details_permalink# $mol_link
-		 * 	uri <= question_permalink#
-		 * 	sub / <= Details_permalink_icon#
+		 * Details_permalink* $mol_link
+		 * 	uri <= question_permalink*
+		 * 	sub / <= Details_permalink_icon*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -243,7 +243,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Details_close_icon# $mol_icon_cross
+		 * Details_close_icon* $mol_icon_cross
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -255,8 +255,8 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Details_close# $mol_link
-		 * 	sub / <= Details_close_icon#
+		 * Details_close* $mol_link
+		 * 	sub / <= Details_close_icon*
 		 * 	arg * question null
 		 * ```
 		 */
@@ -276,7 +276,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_descr# \
+		 * question_descr* \
 		 * ```
 		 */
 		question_descr(id: any) {
@@ -285,7 +285,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Details_descr# $mol_text text <= question_descr#
+		 * Details_descr* $mol_text text <= question_descr*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -299,7 +299,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * answers# /
+		 * answers* /
 		 * ```
 		 */
 		answers(id: any) {
@@ -309,7 +309,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Answers# $mol_list rows <= answers#
+		 * Answers* $mol_list rows <= answers*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -323,7 +323,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_answer# \
+		 * question_answer* \
 		 * ```
 		 */
 		question_answer(id: any) {
@@ -332,7 +332,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_arg_by_index# *
+		 * question_arg_by_index* *
 		 * ```
 		 */
 		question_arg_by_index(id: any) {
@@ -342,7 +342,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_title_by_index# \
+		 * question_title_by_index* \
 		 * ```
 		 */
 		question_title_by_index(id: any) {
@@ -351,7 +351,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Question_title# $mol_view sub / <= question_title_by_index#
+		 * Question_title* $mol_view sub / <= question_title_by_index*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -367,7 +367,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_tags_by_index# /
+		 * question_tags_by_index* /
 		 * ```
 		 */
 		question_tags_by_index(id: any) {
@@ -377,7 +377,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Question_tags# $mol_view sub <= question_tags_by_index#
+		 * Question_tags* $mol_view sub <= question_tags_by_index*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -391,7 +391,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tag_name# \
+		 * tag_name* \
 		 * ```
 		 */
 		tag_name(id: any) {

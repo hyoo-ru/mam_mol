@@ -23,12 +23,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Task_row# $mol_drag
+		 * Task_row* $mol_drag
 		 * 	transfer *
-		 * 		text/plain <= task_title#
-		 * 		text/html <= task_html#
-		 * 		text/uri-list <= task_uri#
-		 * 	Sub <= Task_drop#
+		 * 		text/plain <= task_title*
+		 * 		text/html <= task_html*
+		 * 		text/uri-list <= task_uri*
+		 * 	Sub <= Task_drop*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -218,7 +218,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * task_title# \
+		 * task_title* \
 		 * ```
 		 */
 		task_title(id: any) {
@@ -227,7 +227,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * task_html# \
+		 * task_html* \
 		 * ```
 		 */
 		task_html(id: any) {
@@ -236,7 +236,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * task_uri# \
+		 * task_uri* \
 		 * ```
 		 */
 		task_uri(id: any) {
@@ -245,7 +245,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * receive_before#?obj null
+		 * receive_before*?obj null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -256,9 +256,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Task_link# $mol_link
-		 * 	uri <= task_uri#
-		 * 	sub / <= task_title#
+		 * Task_link* $mol_link
+		 * 	uri <= task_uri*
+		 * 	sub / <= task_title*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -275,10 +275,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Task_drop# $mol_drop
+		 * Task_drop* $mol_drop
 		 * 	adopt?transfer <=> transfer_adopt?transfer
-		 * 	receive?obj <=> receive_before#?obj
-		 * 	Sub <= Task_link#
+		 * 	receive?obj <=> receive_before*?obj
+		 * 	Sub <= Task_link*
 		 * ```
 		 */
 		@ $mol_mem_key

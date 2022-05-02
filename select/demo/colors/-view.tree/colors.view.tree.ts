@@ -64,7 +64,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * color_name# \
+		 * color_name* \
 		 * ```
 		 */
 		color_name(id: any) {
@@ -73,7 +73,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_color# \
+		 * option_color* \
 		 * ```
 		 */
 		option_color(id: any) {
@@ -82,7 +82,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Color_preview# $mol_select_colors_color_preview color <= option_color#
+		 * Color_preview* $mol_select_colors_color_preview color <= option_color*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -96,8 +96,8 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Color_name# $mol_dimmer
-		 * 	haystack <= color_name#
+		 * Color_name* $mol_dimmer
+		 * 	haystack <= color_name*
 		 * 	needle <= color_filter
 		 * ```
 		 */
@@ -113,10 +113,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Color_option# $mol_view
+		 * Color_option* $mol_view
 		 * 	sub /
-		 * 		<= Color_preview#
-		 * 		<= Color_name#
+		 * 		<= Color_preview*
+		 * 		<= Color_name*
 		 * 	minimal_height 40
 		 * ```
 		 */
@@ -135,7 +135,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_content# / <= Color_option#
+		 * option_content* / <= Color_option*
 		 * ```
 		 */
 		option_content(id: any) {
@@ -159,8 +159,8 @@ namespace $ {
 		 * 	filter_pattern => color_filter
 		 * 	value?val <=> color?val
 		 * 	dictionary <= colors
-		 * 	option_label# <= color_name#
-		 * 	option_content# <= option_content#
+		 * 	option_label* <= color_name*
+		 * 	option_content* <= option_content*
 		 * ```
 		 */
 		@ $mol_mem

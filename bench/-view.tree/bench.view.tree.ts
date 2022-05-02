@@ -23,9 +23,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Col_head# $mol_bench_head
-		 * 	event_click?val <=> event_sort_toggle#?val
-		 * 	sub <= col_head_content#
+		 * Col_head* $mol_bench_head
+		 * 	event_click?val <=> event_sort_toggle*?val
+		 * 	sub <= col_head_content*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -40,9 +40,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cell_content_number# /
-		 * 	<= result_value#
-		 * 	<= Result_portion#
+		 * cell_content_number* /
+		 * 	<= result_value*
+		 * 	<= Result_portion*
 		 * ```
 		 */
 		cell_content_number(id: any) {
@@ -64,7 +64,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * event_sort_toggle#?val null
+		 * event_sort_toggle*?val null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -75,7 +75,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * col_head_title# \
+		 * col_head_title* \
 		 * ```
 		 */
 		col_head_title(id: any) {
@@ -84,7 +84,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Col_head_sort# $mol_icon_sort_asc
+		 * Col_head_sort* $mol_icon_sort_asc
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -96,9 +96,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * col_head_content# /
-		 * 	<= col_head_title#
-		 * 	<= Col_head_sort#
+		 * col_head_content* /
+		 * 	<= col_head_title*
+		 * 	<= Col_head_sort*
 		 * ```
 		 */
 		col_head_content(id: any) {
@@ -110,7 +110,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * result_value# \
+		 * result_value* \
 		 * ```
 		 */
 		result_value(id: any) {
@@ -119,7 +119,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * result_portion# 0
+		 * result_portion* 0
 		 * ```
 		 */
 		result_portion(id: any) {
@@ -128,7 +128,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Result_portion# $mol_portion portion <= result_portion#
+		 * Result_portion* $mol_portion portion <= result_portion*
 		 * ```
 		 */
 		@ $mol_mem_key

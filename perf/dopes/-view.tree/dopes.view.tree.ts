@@ -30,10 +30,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Label# $mol_view
+		 * Label* $mol_view
 		 * 	style *
-		 * 		color <= label_color#
-		 * 		transform <= label_transform#
+		 * 		color <= label_color*
+		 * 		transform <= label_transform*
 		 * 	sub / \Dope
 		 * ```
 		 */
@@ -159,7 +159,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * label_color# \
+		 * label_color* \
 		 * ```
 		 */
 		label_color(id: any) {
@@ -168,7 +168,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * label_transform# \
+		 * label_transform* \
 		 * ```
 		 */
 		label_transform(id: any) {

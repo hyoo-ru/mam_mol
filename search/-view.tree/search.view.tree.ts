@@ -83,9 +83,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Suggest# $mol_button_minor
-		 * 	click?event <=> suggest_select#?event
-		 * 	sub <= suggest_content#
+		 * Suggest* $mol_button_minor
+		 * 	click?event <=> suggest_select*?event
+		 * 	sub <= suggest_content*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -297,7 +297,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * suggest_select#?event null
+		 * suggest_select*?event null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -308,7 +308,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * suggest_label# \
+		 * suggest_label* \
 		 * ```
 		 */
 		suggest_label(id: any) {
@@ -317,8 +317,8 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Suggest_label# $mol_dimmer
-		 * 	haystack <= suggest_label#
+		 * Suggest_label* $mol_dimmer
+		 * 	haystack <= suggest_label*
 		 * 	needle <= query?val
 		 * ```
 		 */
@@ -334,7 +334,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * suggest_content# /$mol_view_content <= Suggest_label#
+		 * suggest_content* /$mol_view_content <= Suggest_label*
 		 * ```
 		 */
 		suggest_content(id: any) {

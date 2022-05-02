@@ -95,7 +95,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Branch# $mol_perf_uibench_tree_branch state <= branch_state#
+		 * Branch* $mol_perf_uibench_tree_branch state <= branch_state*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -109,7 +109,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Leaf# $mol_perf_uibench_tree_leaf text <= leaf_state#
+		 * Leaf* $mol_perf_uibench_tree_leaf text <= leaf_state*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -123,7 +123,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * branch_state# null
+		 * branch_state* null
 		 * ```
 		 */
 		branch_state(id: any) {
@@ -132,7 +132,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * leaf_state# null
+		 * leaf_state* null
 		 * ```
 		 */
 		leaf_state(id: any) {

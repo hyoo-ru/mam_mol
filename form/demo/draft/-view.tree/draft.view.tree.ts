@@ -69,7 +69,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * bid_required# \Required
+		 * bid_required* \Required
 		 * ```
 		 */
 		bid_required(id: any) {
@@ -78,7 +78,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * bid_swearing# \No swearing
+		 * bid_swearing* \No swearing
 		 * ```
 		 */
 		bid_swearing(id: any) {
@@ -87,7 +87,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * bid_short# \> 5 letters
+		 * bid_short* \> 5 letters
 		 * ```
 		 */
 		bid_short(id: any) {
@@ -96,94 +96,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * bid_long# \> 100 letters
+		 * bid_long* \> 100 letters
 		 * ```
 		 */
 		bid_long(id: any) {
 			return "> 100 letters"
-		}
-		
-		/**
-		 * ```tree
-		 * Group# $mol_form_group sub <= group#
-		 * ```
-		 */
-		@ $mol_mem_key
-		Group(id: any) {
-			const obj = new this.$.$mol_form_group()
-			
-			obj.sub = () => this.group(id)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Title_field# $mol_form_field
-		 * 	name \Title
-		 * 	bids /
-		 * 		<= bid_swearing#
-		 * 		<= bid_short#
-		 * 	control <= Title#
-		 * ```
-		 */
-		@ $mol_mem_key
-		Title_field(id: any) {
-			const obj = new this.$.$mol_form_field()
-			
-			obj.name = () => "Title"
-			obj.bids = () => [
-				this.bid_swearing(id),
-				this.bid_short(id)
-			] as readonly any[]
-			obj.control = () => this.Title(id)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Type_field# $mol_form_field
-		 * 	name \Type
-		 * 	bids / <= bid_required#
-		 * 	control <= Type#
-		 * ```
-		 */
-		@ $mol_mem_key
-		Type_field(id: any) {
-			const obj = new this.$.$mol_form_field()
-			
-			obj.name = () => "Type"
-			obj.bids = () => [
-				this.bid_required(id)
-			] as readonly any[]
-			obj.control = () => this.Type(id)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Content_field# $mol_form_field
-		 * 	name \Content
-		 * 	bids /
-		 * 		<= bid_swearing#
-		 * 		<= bid_long#
-		 * 	control <= Content#
-		 * ```
-		 */
-		@ $mol_mem_key
-		Content_field(id: any) {
-			const obj = new this.$.$mol_form_field()
-			
-			obj.name = () => "Content"
-			obj.bids = () => [
-				this.bid_swearing(id),
-				this.bid_long(id)
-			] as readonly any[]
-			obj.control = () => this.Content(id)
-			
-			return obj
 		}
 		
 		/**
@@ -225,17 +142,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * group# /
-		 * ```
-		 */
-		group(id: any) {
-			return [
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * value_str#?val \
+		 * value_str*title?val \
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -246,36 +153,60 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Title# $mol_string
+		 * Title $mol_string
 		 * 	hint \How I spent the summer..
-		 * 	value?val <=> value_str#?val
+		 * 	value?val <=> value_str*title?val
 		 * ```
 		 */
-		@ $mol_mem_key
-		Title(id: any) {
+		@ $mol_mem
+		Title() {
 			const obj = new this.$.$mol_string()
 			
 			obj.hint = () => "How I spent the summer.."
-			obj.value = (val?: any) => this.value_str(id, val)
+			obj.value = (val?: any) => this.value_str("title", val)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * Type# $mol_switch
-		 * 	value?val <=> value_str#?val
+		 * Title_field $mol_form_field
+		 * 	name \Title
+		 * 	bids /
+		 * 		<= bid_swearing*title
+		 * 		<= bid_short*title
+		 * 	control <= Title
+		 * ```
+		 */
+		@ $mol_mem
+		Title_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => "Title"
+			obj.bids = () => [
+				this.bid_swearing("title"),
+				this.bid_short("title")
+			] as readonly any[]
+			obj.control = () => this.Title()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Type $mol_switch
+		 * 	value?val <=> value_str*type?val
 		 * 	options *
 		 * 		article \Article
 		 * 		news \News
 		 * 		question \Question
 		 * ```
 		 */
-		@ $mol_mem_key
-		Type(id: any) {
+		@ $mol_mem
+		Type() {
 			const obj = new this.$.$mol_switch()
 			
-			obj.value = (val?: any) => this.value_str(id, val)
+			obj.value = (val?: any) => this.value_str("type", val)
 			obj.options = () => ({
 				article: "Article",
 				news: "News",
@@ -287,17 +218,81 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Content# $mol_textarea
-		 * 	hint \Long long story..
-		 * 	value?val <=> value_str#?val
+		 * Type_field $mol_form_field
+		 * 	name \Type
+		 * 	bids / <= bid_required*type
+		 * 	control <= Type
 		 * ```
 		 */
-		@ $mol_mem_key
-		Content(id: any) {
+		@ $mol_mem
+		Type_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => "Type"
+			obj.bids = () => [
+				this.bid_required("type")
+			] as readonly any[]
+			obj.control = () => this.Type()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Main $mol_form_group sub /
+		 * 	<= Title_field
+		 * 	<= Type_field
+		 * ```
+		 */
+		@ $mol_mem
+		Main() {
+			const obj = new this.$.$mol_form_group()
+			
+			obj.sub = () => [
+				this.Title_field(),
+				this.Type_field()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Content $mol_textarea
+		 * 	hint \Long long story..
+		 * 	value?val <=> value_str*content?val
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
 			const obj = new this.$.$mol_textarea()
 			
 			obj.hint = () => "Long long story.."
-			obj.value = (val?: any) => this.value_str(id, val)
+			obj.value = (val?: any) => this.value_str("content", val)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Content_field $mol_form_field
+		 * 	name \Content
+		 * 	bids /
+		 * 		<= bid_swearing*content
+		 * 		<= bid_long*content
+		 * 	control <= Content
+		 * ```
+		 */
+		@ $mol_mem
+		Content_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => "Content"
+			obj.bids = () => [
+				this.bid_swearing("content"),
+				this.bid_long("content")
+			] as readonly any[]
+			obj.control = () => this.Content()
 			
 			return obj
 		}
@@ -305,10 +300,14 @@ namespace $ {
 		/**
 		 * ```tree
 		 * form_body /
+		 * 	<= Main
+		 * 	<= Content_field
 		 * ```
 		 */
 		form_body() {
 			return [
+				this.Main(),
+				this.Content_field()
 			] as readonly any[]
 		}
 		

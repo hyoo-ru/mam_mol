@@ -181,7 +181,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * repos_x# 0
+		 * repos_x* 0
 		 * ```
 		 */
 		repos_x(id: any) {
@@ -190,7 +190,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * repos_y# 0
+		 * repos_y* 0
 		 * ```
 		 */
 		repos_y(id: any) {

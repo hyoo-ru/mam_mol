@@ -52,7 +52,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * after# /
+		 * after* /
 		 * ```
 		 */
 		after(id: any) {
@@ -62,7 +62,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Item# $mol_filler
+		 * Item* $mol_filler
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -75,8 +75,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * List $mol_infinite
-		 * 	after# <= after#
-		 * 	Row# <= Item#
+		 * 	after* <= after*
+		 * 	Row* <= Item*
 		 * ```
 		 */
 		@ $mol_mem

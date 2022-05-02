@@ -162,7 +162,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_numb# 0
+		 * row_numb* 0
 		 * ```
 		 */
 		row_numb(id: any) {
@@ -183,7 +183,7 @@ namespace $ {
 		 * View $mol_text_code
 		 * 	text <= value
 		 * 	render_visible_only false
-		 * 	row_numb# <= row_numb#
+		 * 	row_numb* <= row_numb*
 		 * 	sidebar_showed <= sidebar_showed
 		 * 	highlight <= highlight
 		 * ```

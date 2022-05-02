@@ -45,9 +45,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Link# $mol_link
-		 * 	arg <= arg#
-		 * 	sub / <= spread_title#
+		 * Link* $mol_link
+		 * 	arg <= arg*
+		 * 	sub / <= spread_title*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -147,7 +147,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * arg# *
+		 * arg* *
 		 * ```
 		 */
 		arg(id: any) {
@@ -157,7 +157,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * spread_title# \
+		 * spread_title* \
 		 * ```
 		 */
 		spread_title(id: any) {

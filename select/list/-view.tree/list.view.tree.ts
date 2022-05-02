@@ -25,9 +25,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Badge# $mol_button_minor
-		 * 	title <= badge_title#
-		 * 	click?event <=> remove#?event
+		 * Badge* $mol_button_minor
+		 * 	title <= badge_title*
+		 * 	click?event <=> remove*?event
 		 * 	hint <= badge_hint
 		 * 	enabled <= drop_enabled
 		 * ```
@@ -50,7 +50,7 @@ namespace $ {
 		 * 	align_hor <= align_hor
 		 * 	options <= options_pickable
 		 * 	value?val <=> pick?val
-		 * 	option_label# <= option_title#
+		 * 	option_label* <= option_title*
 		 * 	trigger_enabled <= pick_enabled
 		 * 	hint <= pick_hint
 		 * 	Trigger_icon <= Pick_icon
@@ -73,7 +73,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * badge_title# \badge
+		 * badge_title* \badge
 		 * ```
 		 */
 		badge_title(id: any) {
@@ -82,7 +82,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * remove#?event null
+		 * remove*?event null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -159,7 +159,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_title# \
+		 * option_title* \
 		 * ```
 		 */
 		option_title(id: any) {

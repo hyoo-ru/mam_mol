@@ -26,7 +26,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * rower# $mol_app_report_rower cells <= rowerCells#
+		 * rower* $mol_app_report_rower cells <= rowerCells*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -40,10 +40,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cell# $mol_app_report_cell
-		 * 	content <= cell_content#
-		 * 	rows <= cellrows#
-		 * 	cols <= cellCols#
+		 * cell* $mol_app_report_cell
+		 * 	content <= cell_content*
+		 * 	rows <= cellrows*
+		 * 	cols <= cellCols*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -59,7 +59,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * texter# $mol_view sub / <= cell_value#?val
+		 * texter* $mol_view sub / <= cell_value*?val
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -75,9 +75,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * select# $mol_select
-		 * 	value?val <=> cell_value#?val
-		 * 	dictionary <= cell_options#
+		 * select* $mol_select
+		 * 	value?val <=> cell_value*?val
+		 * 	dictionary <= cell_options*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -92,7 +92,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * number# $mol_number value?val <=> cell_value#?val
+		 * number* $mol_number value?val <=> cell_value*?val
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -180,7 +180,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * rowerCells# /
+		 * rowerCells* /
 		 * ```
 		 */
 		rowerCells(id: any) {
@@ -190,7 +190,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cell_content# null
+		 * cell_content* null
 		 * ```
 		 */
 		cell_content(id: any) {
@@ -199,7 +199,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cellrows# 1
+		 * cellrows* 1
 		 * ```
 		 */
 		cellrows(id: any) {
@@ -208,7 +208,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cellCols# 1
+		 * cellCols* 1
 		 * ```
 		 */
 		cellCols(id: any) {
@@ -217,7 +217,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cell_value#?val null
+		 * cell_value*?val null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -228,7 +228,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cell_options# *
+		 * cell_options* *
 		 * ```
 		 */
 		cell_options(id: any) {

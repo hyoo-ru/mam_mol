@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Option# $mol_check
-		 * 	checked?val <=> option_checked#?val
-		 * 	label <= option_label#
-		 * 	enabled <= option_enabled#
-		 * 	hint <= option_hint#
+		 * Option* $mol_check
+		 * 	checked?val <=> option_checked*?val
+		 * 	label <= option_label*
+		 * 	enabled <= option_enabled*
+		 * 	hint <= option_hint*
 		 * 	minimal_height 24
 		 * ```
 		 */
@@ -55,7 +55,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_checked#?val false
+		 * option_checked*?val false
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -66,7 +66,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_title# \
+		 * option_title* \
 		 * ```
 		 */
 		option_title(id: any) {
@@ -75,7 +75,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_label# / <= option_title#
+		 * option_label* / <= option_title*
 		 * ```
 		 */
 		option_label(id: any) {
@@ -95,7 +95,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_enabled# <= enabled
+		 * option_enabled* <= enabled
 		 * ```
 		 */
 		option_enabled(id: any) {
@@ -104,7 +104,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_hint# \
+		 * option_hint* \
 		 * ```
 		 */
 		option_hint(id: any) {

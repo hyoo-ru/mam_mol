@@ -44,7 +44,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Row# $mol_perf_uibench_table_row state <= row_state#
+		 * Row* $mol_perf_uibench_table_row state <= row_state*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -68,7 +68,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_state# null
+		 * row_state* null
 		 * ```
 		 */
 		row_state(id: any) {
@@ -137,7 +137,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Cell# $mol_perf_uibench_table_cell text <= cell_state#
+		 * Cell* $mol_perf_uibench_table_cell text <= cell_state*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -202,7 +202,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cell_state# null
+		 * cell_state* null
 		 * ```
 		 */
 		cell_state(id: any) {

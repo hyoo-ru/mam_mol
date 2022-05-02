@@ -110,7 +110,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_selected# false
+		 * day_selected* false
 		 * ```
 		 */
 		day_selected(id: any) {
@@ -119,7 +119,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_click#?event null
+		 * day_click*?event null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -268,8 +268,8 @@ namespace $ {
 		 * ```tree
 		 * Calendar $mol_date_calendar
 		 * 	month_moment <= month_moment
-		 * 	day_selected# <= day_selected#
-		 * 	day_click#?event <=> day_click#?event
+		 * 	day_selected* <= day_selected*
+		 * 	day_click*?event <=> day_click*?event
 		 * 	Title => Calendar_title
 		 * 	head / <= Calendar_tools
 		 * ```
@@ -293,7 +293,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_content# / <= Day_button#
+		 * day_content* / <= Day_button*
 		 * ```
 		 */
 		day_content(id: any) {
@@ -304,7 +304,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_click#?event null
+		 * day_click*?event null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -315,9 +315,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Day_button# $mol_button_minor
-		 * 	title <= day_text#
-		 * 	event_click?event <=> day_click#?event
+		 * Day_button* $mol_button_minor
+		 * 	title <= day_text*
+		 * 	event_click?event <=> day_click*?event
 		 * 	minimal_height 24
 		 * ```
 		 */

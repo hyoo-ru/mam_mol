@@ -35,7 +35,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Box# $mol_perf_uibench_anim_box state <= box_state#
+		 * Box* $mol_perf_uibench_anim_box state <= box_state*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -59,7 +59,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * box_state# null
+		 * box_state* null
 		 * ```
 		 */
 		box_state(id: any) {

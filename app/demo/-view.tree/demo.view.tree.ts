@@ -85,7 +85,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * chat_pages#
+		 * chat_pages*
 		 * ```
 		 */
 		chat_pages(id: any) {
@@ -94,9 +94,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Detail# $mol_app_demo_detail
-		 * 	chat_seed <= chat_seed#
-		 * 	chat_pages => chat_pages#
+		 * Detail* $mol_app_demo_detail
+		 * 	chat_seed <= chat_seed*
+		 * 	chat_pages => chat_pages*
 		 * 	title <= detail_title
 		 * 	description <= detail_description
 		 * 	edit_uri <= edit_uri
@@ -274,7 +274,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * chat_seed# \
+		 * chat_seed* \
 		 * ```
 		 */
 		chat_seed(id: any) {
@@ -439,9 +439,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Option# $mol_link
-		 * 	arg <= option_arg#
-		 * 	sub / <= Option_title#
+		 * Option* $mol_link
+		 * 	arg <= option_arg*
+		 * 	sub / <= Option_title*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -526,7 +526,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_arg# *
+		 * option_arg* *
 		 * ```
 		 */
 		option_arg(id: any) {
@@ -536,7 +536,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_title# \
+		 * option_title* \
 		 * ```
 		 */
 		option_title(id: any) {
@@ -545,8 +545,8 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Option_title# $mol_dimmer
-		 * 	haystack <= option_title#
+		 * Option_title* $mol_dimmer
+		 * 	haystack <= option_title*
 		 * 	needle <= filter?val
 		 * ```
 		 */

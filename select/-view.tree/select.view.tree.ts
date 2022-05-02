@@ -45,9 +45,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Option_row# $mol_button_minor
-		 * 	event_click?event <=> event_select#?event
-		 * 	sub <= option_content#
+		 * Option_row* $mol_button_minor
+		 * 	event_click?event <=> event_select*?event
+		 * 	sub <= option_content*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -148,7 +148,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * event_select#?event null
+		 * event_select*?event null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -159,7 +159,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_label# \
+		 * option_label* \
 		 * ```
 		 */
 		option_label(id: any) {
@@ -179,8 +179,8 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Option_label# $mol_dimmer
-		 * 	haystack <= option_label#
+		 * Option_label* $mol_dimmer
+		 * 	haystack <= option_label*
 		 * 	needle <= filter_pattern?val
 		 * ```
 		 */
@@ -196,7 +196,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_content# / <= Option_label#
+		 * option_content* / <= Option_label*
 		 * ```
 		 */
 		option_content(id: any) {

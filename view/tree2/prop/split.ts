@@ -7,7 +7,7 @@ namespace $ {
 	export function $mol_view_tree2_prop_split(this: $, src: $mol_tree2) {
 		const prop_name = src.type
 
-		let key_pos = prop_name.indexOf('#')
+		let key_pos = prop_name.indexOf('*')
 		let next_pos = prop_name.indexOf('?')
 		let next_pos_orig = next_pos
 		if (next_pos === -1) next_pos = prop_name.length

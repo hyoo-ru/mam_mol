@@ -121,9 +121,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Label# $mol_svg_text
-		 * 	pos <= label_pos#
-		 * 	text <= label_text#
+		 * Label* $mol_svg_text
+		 * 	pos <= label_pos*
+		 * 	text <= label_text*
 		 * 	align <= label_align
 		 * ```
 		 */
@@ -278,7 +278,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * label_pos_x# \
+		 * label_pos_x* \
 		 * ```
 		 */
 		label_pos_x(id: any) {
@@ -287,7 +287,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * label_pos_y# \
+		 * label_pos_y* \
 		 * ```
 		 */
 		label_pos_y(id: any) {
@@ -296,9 +296,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * label_pos# /
-		 * 	<= label_pos_x#
-		 * 	<= label_pos_y#
+		 * label_pos* /
+		 * 	<= label_pos_x*
+		 * 	<= label_pos_y*
 		 * ```
 		 */
 		label_pos(id: any) {
@@ -310,7 +310,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * label_text# \
+		 * label_text* \
 		 * ```
 		 */
 		label_text(id: any) {

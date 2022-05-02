@@ -2281,44 +2281,42 @@ $mol_form_demo_draft $mol_example
 	model $mol_form_demo_draft_model
 	-
 	message_done \Done
-	bid_required!prop \Required
-	bid_swearing!prop \No swearing
-	bid_short!prop \> 5 letters
-	bid_long!prop \> 100 letters
-	-
-	Group!name $mol_form_group
-		sub <= group!name /
-	Title_field!prop $mol_form_field
-		name \Title
-		bids /
-			<= bid_swearing!prop
-			<= bid_short!prop
-		control <= Title!prop $mol_string
-			hint \How I spent the summer..
-			value?val <=> value_str!prop?val \
-	Type_field!prop $mol_form_field
-		name \Type
-		bids /
-			<= bid_required!prop
-		control <= Type!prop $mol_switch
-			value?val <=> value_str!prop?val \
-			options *
-				article \Article
-				news \News
-				question \Question
-	Content_field!prop $mol_form_field
-		name \Content
-		bids /
-			<= bid_swearing!prop
-			<= bid_long!prop
-		control <= Content!prop $mol_textarea
-			hint \Long long story..
-			value?val <=> value_str!prop?val \
+	bid_required* \Required
+	bid_swearing* \No swearing
+	bid_short* \> 5 letters
+	bid_long* \> 100 letters
 	-
 	sub /
 		<= Flow $mol_list rows /
 			<= Form $mol_form
 				body <= form_body /
+					<= Main $mol_form_group sub /
+						<= Title_field $mol_form_field
+							name \Title
+							bids /
+								<= bid_swearing*title
+								<= bid_short*title
+							control <= Title $mol_string
+								hint \How I spent the summer..
+								value?val <=> value_str*title?val \
+						<= Type_field $mol_form_field
+							name \Type
+							bids /
+								<= bid_required*type
+							control <= Type $mol_switch
+								value?val <=> value_str*type?val \
+								options *
+									article \Article
+									news \News
+									question \Question
+					<= Content_field $mol_form_field
+						name \Content
+						bids /
+							<= bid_swearing*content
+							<= bid_long*content
+						control <= Content $mol_textarea
+							hint \Long long story..
+							value?val <=> value_str*content?val \
 				submit?event <=> publish?event null
 				submit_allowed => publish_allowed
 				buttons /

@@ -39,7 +39,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * label_pos_y# <= title_pos_y
+		 * label_pos_y* <= title_pos_y
 		 * ```
 		 */
 		label_pos_y(id: any) {
