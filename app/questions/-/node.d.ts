@@ -1563,7 +1563,7 @@ declare namespace $ {
     class $mol_grid extends $mol_view {
         row_height(): number;
         row_ids(): readonly string[][];
-        row_id(index: any): any;
+        row_id(id: any): any;
         col_ids(): readonly any[];
         records(): {};
         record(id: any): any;
@@ -2083,7 +2083,7 @@ declare namespace $ {
         Menu(): $mol_page;
         Details(id: any): $mol_page;
         Answer(id: any): $$.$mol_text;
-        Question_link(index: any): $$.$mol_link;
+        Question_link(id: any): $$.$mol_link;
         Tag(id: any): $mol_view;
         Themme(): $$.$mol_theme_auto;
         title_default(): string;
@@ -2102,11 +2102,11 @@ declare namespace $ {
         answers(id: any): readonly any[];
         Answers(id: any): $$.$mol_list;
         question_answer(id: any): string;
-        question_arg_by_index(index: any): {};
-        question_title_by_index(index: any): string;
-        Question_title(index: any): $mol_view;
-        question_tags_by_index(index: any): readonly any[];
-        Question_tags(index: any): $mol_view;
+        question_arg_by_index(id: any): {};
+        question_title_by_index(id: any): string;
+        Question_title(id: any): $mol_view;
+        question_tags_by_index(id: any): readonly any[];
+        Question_tags(id: any): $mol_view;
         tag_name(id: any): string;
     }
 }

@@ -1642,7 +1642,7 @@ declare namespace $ {
     class $mol_grid extends $mol_view {
         row_height(): number;
         row_ids(): readonly string[][];
-        row_id(index: any): any;
+        row_id(id: any): any;
         col_ids(): readonly any[];
         records(): {};
         record(id: any): any;

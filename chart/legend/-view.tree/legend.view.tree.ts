@@ -32,9 +32,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Graph_legend!id $mol_view sub /
-		 * 	<= Graph_sample_box!id
-		 * 	<= Graph_title!id
+		 * Graph_legend# $mol_view sub /
+		 * 	<= Graph_sample_box#
+		 * 	<= Graph_title#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -61,7 +61,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Graph_sample!id null
+		 * Graph_sample# null
 		 * ```
 		 */
 		Graph_sample(id: any) {
@@ -70,7 +70,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Graph_sample_box!id $mol_view sub / <= Graph_sample!id
+		 * Graph_sample_box# $mol_view sub / <= Graph_sample#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -86,7 +86,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * graph_title!id \
+		 * graph_title# \
 		 * ```
 		 */
 		graph_title(id: any) {
@@ -95,7 +95,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Graph_title!id $mol_view sub / <= graph_title!id
+		 * Graph_title# $mol_view sub / <= graph_title#
 		 * ```
 		 */
 		@ $mol_mem_key

@@ -14,7 +14,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_title!id?next
+		 * row_title#?next
 		 * ```
 		 */
 		row_title(id: any, next?: any) {
@@ -23,11 +23,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Row!id $mol_perf_jsfb_row
-		 * 	title?next => row_title!id?next
-		 * 	selected?next <=> row_selected!id?next
-		 * 	drop?event <=> row_drop!id?event
-		 * 	id <= row_id!id
+		 * Row# $mol_perf_jsfb_row
+		 * 	title?next => row_title#?next
+		 * 	selected?next <=> row_selected#?next
+		 * 	drop?event <=> row_drop#?event
+		 * 	id <= row_id#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -337,7 +337,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_selected!id?next false
+		 * row_selected#?next false
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -348,7 +348,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_drop!id?event null
+		 * row_drop#?event null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -359,7 +359,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_id!id \
+		 * row_id# \
 		 * ```
 		 */
 		row_id(id: any) {

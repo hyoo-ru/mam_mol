@@ -52,17 +52,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * after!anchor_id /
+		 * after# /
 		 * ```
 		 */
-		after(anchor_id: any) {
+		after(id: any) {
 			return [
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * Item!id $mol_filler
+		 * Item# $mol_filler
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -75,15 +75,15 @@ namespace $ {
 		/**
 		 * ```tree
 		 * List $mol_infinite
-		 * 	after!anchor_id <= after!anchor_id
-		 * 	Row!id <= Item!id
+		 * 	after# <= after#
+		 * 	Row# <= Item#
 		 * ```
 		 */
 		@ $mol_mem
 		List() {
 			const obj = new this.$.$mol_infinite()
 			
-			obj.after = (anchor_id: any) => this.after(anchor_id)
+			obj.after = (id: any) => this.after(id)
 			obj.Row = (id: any) => this.Item(id)
 			
 			return obj

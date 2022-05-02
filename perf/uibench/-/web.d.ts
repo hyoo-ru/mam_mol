@@ -853,9 +853,9 @@ declare namespace $ {
             class: string;
         };
         sub(): readonly any[];
-        Row(index: any): $$.$mol_perf_uibench_table_row;
+        Row(id: any): $$.$mol_perf_uibench_table_row;
         rows(): readonly any[];
-        row_state(index: any): any;
+        row_state(id: any): any;
     }
     class $mol_perf_uibench_table_row extends $mol_view {
         state(): any;
@@ -866,13 +866,13 @@ declare namespace $ {
             "data-id": number;
         };
         sub(): readonly any[];
-        Cell(index: any): $$.$mol_perf_uibench_table_cell;
+        Cell(id: any): $$.$mol_perf_uibench_table_cell;
         classes(): string;
         id(): number;
         head_text(): string;
         Head(): $$.$mol_perf_uibench_table_cell;
         cells(): readonly any[];
-        cell_state(index: any): any;
+        cell_state(id: any): any;
     }
     class $mol_perf_uibench_table_cell extends $mol_view {
         dom_name(): string;
@@ -923,9 +923,9 @@ declare namespace $ {
             class: string;
         };
         sub(): readonly any[];
-        Box(index: any): $$.$mol_perf_uibench_anim_box;
+        Box(id: any): $$.$mol_perf_uibench_anim_box;
         boxes(): readonly any[];
-        box_state(index: any): any;
+        box_state(id: any): any;
     }
     class $mol_perf_uibench_anim_box extends $mol_view {
         state(): any;
@@ -979,10 +979,10 @@ declare namespace $ {
         attr_static(): {
             class: string;
         };
-        Branch(index: any): $$.$mol_perf_uibench_tree_branch;
-        Leaf(index: any): $mol_perf_uibench_tree_leaf;
-        branch_state(index: any): any;
-        leaf_state(index: any): any;
+        Branch(id: any): $$.$mol_perf_uibench_tree_branch;
+        Leaf(id: any): $mol_perf_uibench_tree_leaf;
+        branch_state(id: any): any;
+        leaf_state(id: any): any;
     }
     class $mol_perf_uibench_tree_leaf extends $mol_view {
         minimal_height(): number;

@@ -35,17 +35,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Supply_row!index $mol_app_supplies_card
-		 * 	supply <= supply!index
-		 * 	arg <= supply_arg!index
+		 * Supply_row# $mol_app_supplies_card
+		 * 	supply <= supply#
+		 * 	arg <= supply_arg#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Supply_row(index: any) {
+		Supply_row(id: any) {
 			const obj = new this.$.$mol_app_supplies_card()
 			
-			obj.supply = () => this.supply(index)
-			obj.arg = () => this.supply_arg(index)
+			obj.supply = () => this.supply(id)
+			obj.arg = () => this.supply_arg(id)
 			
 			return obj
 		}
@@ -113,30 +113,30 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * supply!index null
+		 * supply# null
 		 * ```
 		 */
-		supply(index: any) {
+		supply(id: any) {
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * supply_id!index \
+		 * supply_id# \
 		 * ```
 		 */
-		supply_id(index: any) {
+		supply_id(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * supply_arg!index * supply <= supply_id!index
+		 * supply_arg# * supply <= supply_id#
 		 * ```
 		 */
-		supply_arg(index: any) {
+		supply_arg(id: any) {
 			return {
-				supply: this.supply_id(index)
+				supply: this.supply_id(id)
 			}
 		}
 	}

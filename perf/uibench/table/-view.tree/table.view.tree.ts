@@ -44,14 +44,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Row!index $mol_perf_uibench_table_row state <= row_state!index
+		 * Row# $mol_perf_uibench_table_row state <= row_state#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Row(index: any) {
+		Row(id: any) {
 			const obj = new this.$.$mol_perf_uibench_table_row()
 			
-			obj.state = () => this.row_state(index)
+			obj.state = () => this.row_state(id)
 			
 			return obj
 		}
@@ -68,10 +68,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_state!index null
+		 * row_state# null
 		 * ```
 		 */
-		row_state(index: any) {
+		row_state(id: any) {
 			return null as any
 		}
 	}
@@ -137,14 +137,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Cell!index $mol_perf_uibench_table_cell text <= cell_state!index
+		 * Cell# $mol_perf_uibench_table_cell text <= cell_state#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Cell(index: any) {
+		Cell(id: any) {
 			const obj = new this.$.$mol_perf_uibench_table_cell()
 			
-			obj.text = () => this.cell_state(index)
+			obj.text = () => this.cell_state(id)
 			
 			return obj
 		}
@@ -202,10 +202,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cell_state!index null
+		 * cell_state# null
 		 * ```
 		 */
-		cell_state(index: any) {
+		cell_state(id: any) {
 			return null as any
 		}
 	}

@@ -873,7 +873,7 @@ declare namespace $ {
     class $mol_perf_dopes extends $mol_view {
         title(): string;
         sub(): readonly any[];
-        Label(index: any): $mol_view;
+        Label(id: any): $mol_view;
         speed(): string;
         Speed(): $mol_view;
         start(event?: any): any;
@@ -882,8 +882,8 @@ declare namespace $ {
         Stop(): $mol_button_major;
         labels(): readonly any[];
         Labels(): $mol_view;
-        label_color(index: any): string;
-        label_transform(index: any): string;
+        label_color(id: any): string;
+        label_transform(id: any): string;
     }
 }
 

@@ -95,47 +95,47 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Branch!index $mol_perf_uibench_tree_branch state <= branch_state!index
+		 * Branch# $mol_perf_uibench_tree_branch state <= branch_state#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Branch(index: any) {
+		Branch(id: any) {
 			const obj = new this.$.$mol_perf_uibench_tree_branch()
 			
-			obj.state = () => this.branch_state(index)
+			obj.state = () => this.branch_state(id)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * Leaf!index $mol_perf_uibench_tree_leaf text <= leaf_state!index
+		 * Leaf# $mol_perf_uibench_tree_leaf text <= leaf_state#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Leaf(index: any) {
+		Leaf(id: any) {
 			const obj = new this.$.$mol_perf_uibench_tree_leaf()
 			
-			obj.text = () => this.leaf_state(index)
+			obj.text = () => this.leaf_state(id)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * branch_state!index null
+		 * branch_state# null
 		 * ```
 		 */
-		branch_state(index: any) {
+		branch_state(id: any) {
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * leaf_state!index null
+		 * leaf_state# null
 		 * ```
 		 */
-		leaf_state(index: any) {
+		leaf_state(id: any) {
 			return null as any
 		}
 	}

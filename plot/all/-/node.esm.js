@@ -2904,10 +2904,10 @@ var $;
             const obj = new this.$.$mol_vector_2d(this.gap_x(), this.gap_y());
             return obj;
         }
-        repos_x(val) {
+        repos_x(id) {
             return 0;
         }
-        repos_y(val) {
+        repos_y(id) {
             return 0;
         }
         indexes() {
@@ -4566,11 +4566,11 @@ var $;
         graphs() {
             return this.level_graphs();
         }
-        Level(z) {
+        Level(id) {
             const obj = new this.$.$mol_plot_map_heat_level();
-            obj.hint = () => this.level_hint(z);
-            obj.points = () => this.level_points(z);
-            obj.opacity = () => this.level_opacity(z);
+            obj.hint = () => this.level_hint(id);
+            obj.points = () => this.level_points(id);
+            obj.opacity = () => this.level_opacity(id);
             obj.diameter = () => this.level_diameter();
             obj.aspect = () => this.level_aspect();
             return obj;
@@ -4583,13 +4583,13 @@ var $;
         level_graphs() {
             return [];
         }
-        level_hint(z) {
+        level_hint(id) {
             return "";
         }
-        level_points(z) {
+        level_points(id) {
             return [];
         }
-        level_opacity(z) {
+        level_opacity(id) {
             return "1";
         }
         level_diameter() {
@@ -5167,10 +5167,10 @@ var $;
                 this.Title()
             ];
         }
-        Label(index) {
+        Label(id) {
             const obj = new this.$.$mol_svg_text();
-            obj.pos = () => this.label_pos(index);
-            obj.text = () => this.label_text(index);
+            obj.pos = () => this.label_pos(id);
+            obj.text = () => this.label_text(id);
             obj.align = () => this.label_align();
             return obj;
         }
@@ -5222,19 +5222,19 @@ var $;
             obj.text = () => this.title();
             return obj;
         }
-        label_pos_x(index) {
+        label_pos_x(id) {
             return "";
         }
-        label_pos_y(index) {
+        label_pos_y(id) {
             return "";
         }
-        label_pos(index) {
+        label_pos(id) {
             return [
-                this.label_pos_x(index),
-                this.label_pos_y(index)
+                this.label_pos_x(id),
+                this.label_pos_y(id)
             ];
         }
-        label_text(index) {
+        label_text(id) {
             return "";
         }
         label_align() {
@@ -5387,7 +5387,7 @@ var $;
         title_pos_y() {
             return "14";
         }
-        label_pos_x(v) {
+        label_pos_x(id) {
             return this.title_pos_x();
         }
         background_height() {
@@ -5466,7 +5466,7 @@ var $;
         title_pos_y() {
             return "100%";
         }
-        label_pos_y(v) {
+        label_pos_y(id) {
             return this.title_pos_y();
         }
         background_width() {

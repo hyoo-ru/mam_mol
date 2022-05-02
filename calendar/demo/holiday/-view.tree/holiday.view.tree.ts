@@ -84,10 +84,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * holiday!day false
+		 * holiday# false
 		 * ```
 		 */
-		holiday(day: any) {
+		holiday(id: any) {
 			return false
 		}
 		
@@ -95,7 +95,7 @@ namespace $ {
 		 * ```tree
 		 * Calendar $mol_calendar
 		 * 	month_string <= month
-		 * 	day_holiday!day <= holiday!day
+		 * 	day_holiday# <= holiday#
 		 * ```
 		 */
 		@ $mol_mem
@@ -103,7 +103,7 @@ namespace $ {
 			const obj = new this.$.$mol_calendar()
 			
 			obj.month_string = () => this.month()
-			obj.day_holiday = (day: any) => this.holiday(day)
+			obj.day_holiday = (id: any) => this.holiday(id)
 			
 			return obj
 		}

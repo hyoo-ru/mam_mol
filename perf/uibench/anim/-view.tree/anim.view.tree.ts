@@ -35,14 +35,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Box!index $mol_perf_uibench_anim_box state <= box_state!index
+		 * Box# $mol_perf_uibench_anim_box state <= box_state#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Box(index: any) {
+		Box(id: any) {
 			const obj = new this.$.$mol_perf_uibench_anim_box()
 			
-			obj.state = () => this.box_state(index)
+			obj.state = () => this.box_state(id)
 			
 			return obj
 		}
@@ -59,10 +59,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * box_state!index null
+		 * box_state# null
 		 * ```
 		 */
-		box_state(index: any) {
+		box_state(id: any) {
 			return null as any
 		}
 	}

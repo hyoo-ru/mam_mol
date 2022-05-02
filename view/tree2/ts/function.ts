@@ -5,7 +5,7 @@ namespace $ {
 	) {
 		const sub = [ name.data('(') ]
 
-		if (key) sub.push(key)
+		if (key) sub.push(key.data('id'))
 		if (types && key) sub.push(key.data( ': any'))
 		if (key && next) sub.push(name.data(', '))
 		if (next) sub.push(next)

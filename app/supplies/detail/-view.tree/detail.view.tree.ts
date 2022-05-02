@@ -54,14 +54,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Position!index $mol_app_supplies_position position <= position!index
+		 * Position# $mol_app_supplies_position position <= position#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Position(index: any) {
+		Position(id: any) {
 			const obj = new this.$.$mol_app_supplies_position()
 			
-			obj.position = () => this.position(index)
+			obj.position = () => this.position(id)
 			
 			return obj
 		}
@@ -770,10 +770,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * position!index null
+		 * position# null
 		 * ```
 		 */
-		position(index: any) {
+		position(id: any) {
 			return null as any
 		}
 	}

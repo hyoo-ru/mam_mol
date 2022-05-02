@@ -5050,7 +5050,7 @@ var $;
         row_ids() {
             return [];
         }
-        row_id(index) {
+        row_id(id) {
             return null;
         }
         col_ids() {
@@ -7043,13 +7043,13 @@ var $;
             obj.text = () => this.question_answer(id);
             return obj;
         }
-        Question_link(index) {
+        Question_link(id) {
             const obj = new this.$.$mol_link();
             obj.minimal_height = () => 64;
-            obj.arg = () => this.question_arg_by_index(index);
+            obj.arg = () => this.question_arg_by_index(id);
             obj.sub = () => [
-                this.Question_title(index),
-                this.Question_tags(index)
+                this.Question_title(id),
+                this.Question_tags(id)
             ];
             return obj;
         }
@@ -7135,25 +7135,25 @@ var $;
         question_answer(id) {
             return "";
         }
-        question_arg_by_index(index) {
+        question_arg_by_index(id) {
             return {};
         }
-        question_title_by_index(index) {
+        question_title_by_index(id) {
             return "";
         }
-        Question_title(index) {
+        Question_title(id) {
             const obj = new this.$.$mol_view();
             obj.sub = () => [
-                this.question_title_by_index(index)
+                this.question_title_by_index(id)
             ];
             return obj;
         }
-        question_tags_by_index(index) {
+        question_tags_by_index(id) {
             return [];
         }
-        Question_tags(index) {
+        Question_tags(id) {
             const obj = new this.$.$mol_view();
-            obj.sub = () => this.question_tags_by_index(index);
+            obj.sub = () => this.question_tags_by_index(id);
             return obj;
         }
         tag_name(id) {
@@ -9733,12 +9733,12 @@ var $;
 var $;
 (function ($) {
     class $mol_view_tree_test_attributes_subcomponent extends $mol_view {
-        Page(index) {
+        Page(id) {
             const obj = new this.$.$mol_view_tree_test_attributes_subcomponent_page();
-            obj.Sub = () => this.page(index);
+            obj.Sub = () => this.page(id);
             return obj;
         }
-        page(index) {
+        page(id) {
             return null;
         }
     }

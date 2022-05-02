@@ -181,19 +181,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * repos_x!val 0
+		 * repos_x# 0
 		 * ```
 		 */
-		repos_x(val: any) {
+		repos_x(id: any) {
 			return 0
 		}
 		
 		/**
 		 * ```tree
-		 * repos_y!val 0
+		 * repos_y# 0
 		 * ```
 		 */
-		repos_y(val: any) {
+		repos_y(id: any) {
 			return 0
 		}
 		

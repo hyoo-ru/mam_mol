@@ -3,24 +3,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Page!index $mol_view_tree_test_attributes_subcomponent_page Sub <= page!index
+		 * Page# $mol_view_tree_test_attributes_subcomponent_page Sub <= page#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Page(index: any) {
+		Page(id: any) {
 			const obj = new this.$.$mol_view_tree_test_attributes_subcomponent_page()
 			
-			obj.Sub = () => this.page(index)
+			obj.Sub = () => this.page(id)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * page!index null
+		 * page# null
 		 * ```
 		 */
-		page(index: any) {
+		page(id: any) {
 			return null as any
 		}
 	}

@@ -40,14 +40,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Details!id $mol_page
-		 * 	title <= question_title!id
+		 * Details# $mol_page
+		 * 	title <= question_title#
 		 * 	tools /
-		 * 		<= Details_permalink!id
-		 * 		<= Details_close!id
+		 * 		<= Details_permalink#
+		 * 		<= Details_close#
 		 * 	body /
-		 * 		<= Details_descr!id
-		 * 		<= Answers!id
+		 * 		<= Details_descr#
+		 * 		<= Answers#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -69,7 +69,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Answer!id $mol_text text <= question_answer!id
+		 * Answer# $mol_text text <= question_answer#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -83,23 +83,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Question_link!index $mol_link
+		 * Question_link# $mol_link
 		 * 	minimal_height 64
-		 * 	arg <= question_arg_by_index!index
+		 * 	arg <= question_arg_by_index#
 		 * 	sub /
-		 * 		<= Question_title!index
-		 * 		<= Question_tags!index
+		 * 		<= Question_title#
+		 * 		<= Question_tags#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Question_link(index: any) {
+		Question_link(id: any) {
 			const obj = new this.$.$mol_link()
 			
 			obj.minimal_height = () => 64
-			obj.arg = () => this.question_arg_by_index(index)
+			obj.arg = () => this.question_arg_by_index(id)
 			obj.sub = () => [
-				this.Question_title(index),
-				this.Question_tags(index)
+				this.Question_title(id),
+				this.Question_tags(id)
 			] as readonly any[]
 			
 			return obj
@@ -107,7 +107,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Tag!id $mol_view sub / <= tag_name!id
+		 * Tag# $mol_view sub / <= tag_name#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -194,7 +194,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_title!id \
+		 * question_title# \
 		 * ```
 		 */
 		question_title(id: any) {
@@ -203,7 +203,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_permalink!id \
+		 * question_permalink# \
 		 * ```
 		 */
 		question_permalink(id: any) {
@@ -212,7 +212,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Details_permalink_icon!id $mol_icon_external
+		 * Details_permalink_icon# $mol_icon_external
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -224,9 +224,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Details_permalink!id $mol_link
-		 * 	uri <= question_permalink!id
-		 * 	sub / <= Details_permalink_icon!id
+		 * Details_permalink# $mol_link
+		 * 	uri <= question_permalink#
+		 * 	sub / <= Details_permalink_icon#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -243,7 +243,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Details_close_icon!id $mol_icon_cross
+		 * Details_close_icon# $mol_icon_cross
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -255,8 +255,8 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Details_close!id $mol_link
-		 * 	sub / <= Details_close_icon!id
+		 * Details_close# $mol_link
+		 * 	sub / <= Details_close_icon#
 		 * 	arg * question null
 		 * ```
 		 */
@@ -276,7 +276,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_descr!id \
+		 * question_descr# \
 		 * ```
 		 */
 		question_descr(id: any) {
@@ -285,7 +285,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Details_descr!id $mol_text text <= question_descr!id
+		 * Details_descr# $mol_text text <= question_descr#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -299,7 +299,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * answers!id /
+		 * answers# /
 		 * ```
 		 */
 		answers(id: any) {
@@ -309,7 +309,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Answers!id $mol_list rows <= answers!id
+		 * Answers# $mol_list rows <= answers#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -323,7 +323,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_answer!id \
+		 * question_answer# \
 		 * ```
 		 */
 		question_answer(id: any) {
@@ -332,34 +332,34 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_arg_by_index!index *
+		 * question_arg_by_index# *
 		 * ```
 		 */
-		question_arg_by_index(index: any) {
+		question_arg_by_index(id: any) {
 			return {
 			}
 		}
 		
 		/**
 		 * ```tree
-		 * question_title_by_index!index \
+		 * question_title_by_index# \
 		 * ```
 		 */
-		question_title_by_index(index: any) {
+		question_title_by_index(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * Question_title!index $mol_view sub / <= question_title_by_index!index
+		 * Question_title# $mol_view sub / <= question_title_by_index#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Question_title(index: any) {
+		Question_title(id: any) {
 			const obj = new this.$.$mol_view()
 			
 			obj.sub = () => [
-				this.question_title_by_index(index)
+				this.question_title_by_index(id)
 			] as readonly any[]
 			
 			return obj
@@ -367,31 +367,31 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * question_tags_by_index!index /
+		 * question_tags_by_index# /
 		 * ```
 		 */
-		question_tags_by_index(index: any) {
+		question_tags_by_index(id: any) {
 			return [
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * Question_tags!index $mol_view sub <= question_tags_by_index!index
+		 * Question_tags# $mol_view sub <= question_tags_by_index#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Question_tags(index: any) {
+		Question_tags(id: any) {
 			const obj = new this.$.$mol_view()
 			
-			obj.sub = () => this.question_tags_by_index(index)
+			obj.sub = () => this.question_tags_by_index(id)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * tag_name!id \
+		 * tag_name# \
 		 * ```
 		 */
 		tag_name(id: any) {

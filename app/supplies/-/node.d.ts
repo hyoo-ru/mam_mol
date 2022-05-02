@@ -2361,15 +2361,15 @@ declare namespace $ {
         supplies(): readonly $mol_app_supplies_domain_supply[];
         tools(): readonly any[];
         body(): readonly any[];
-        Supply_row(index: any): $$.$mol_app_supplies_card;
+        Supply_row(id: any): $$.$mol_app_supplies_card;
         search_hint(): string;
         search_query(val?: any): string;
         Search(): $$.$mol_code;
         supply_rows(): readonly $mol_view[];
         Supply_rows(): $$.$mol_list;
-        supply(index: any): any;
-        supply_id(index: any): string;
-        supply_arg(index: any): {
+        supply(id: any): any;
+        supply_id(id: any): string;
+        supply_arg(id: any): {
             supply: string;
         };
     }
@@ -2667,7 +2667,7 @@ declare namespace $ {
         tools(): readonly any[];
         body(): readonly any[];
         foot(): readonly any[];
-        Position(index: any): $$.$mol_app_supplies_position;
+        Position(id: any): $$.$mol_app_supplies_position;
         Close_icon(): $mol_icon_cross;
         close_arg(): {
             supply: any;
@@ -2723,7 +2723,7 @@ declare namespace $ {
         Approve(): $mol_check_box;
         actions(): readonly any[];
         Actions(): $mol_row;
-        position(index: any): any;
+        position(id: any): any;
     }
 }
 

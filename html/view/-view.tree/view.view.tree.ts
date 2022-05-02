@@ -21,10 +21,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * safe_link!uri \
+		 * safe_link# \
 		 * ```
 		 */
-		safe_link(uri: any) {
+		safe_link(id: any) {
 			return ""
 		}
 		
@@ -39,9 +39,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Heading!id $mol_html_view_heading
-		 * 	level <= heading_level!id
-		 * 	sub <= content!id
+		 * Heading# $mol_html_view_heading
+		 * 	level <= heading_level#
+		 * 	sub <= content#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -56,7 +56,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Paragraph!id $mol_paragraph sub <= content!id
+		 * Paragraph# $mol_paragraph sub <= content#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -70,7 +70,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * List!id $mol_list rows <= content!id
+		 * List# $mol_list rows <= content#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -84,7 +84,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Quote!id $mol_list rows <= content!id
+		 * Quote# $mol_list rows <= content#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -98,7 +98,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Strong!id $mol_paragraph sub <= content!id
+		 * Strong# $mol_paragraph sub <= content#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -112,7 +112,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Emphasis!id $mol_paragraph sub <= content!id
+		 * Emphasis# $mol_paragraph sub <= content#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -126,7 +126,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Deleted!id $mol_paragraph sub <= content!id
+		 * Deleted# $mol_paragraph sub <= content#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -140,7 +140,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Inserted!id $mol_paragraph sub <= content!id
+		 * Inserted# $mol_paragraph sub <= content#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -154,7 +154,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Code!id $mol_paragraph sub <= content!id
+		 * Code# $mol_paragraph sub <= content#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -168,9 +168,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Link!id $mol_link_iconed
-		 * 	uri <= link_uri!id
-		 * 	content <= content!id
+		 * Link# $mol_link_iconed
+		 * 	uri <= link_uri#
+		 * 	content <= content#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -185,7 +185,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Image!id $mol_image uri <= image_uri!id
+		 * Image# $mol_image uri <= image_uri#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -199,7 +199,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Break!id $mol_paragraph sub /
+		 * Break# $mol_paragraph sub /
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -214,9 +214,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Text!id $mol_dimmer
+		 * Text# $mol_dimmer
 		 * 	needle <= highlight
-		 * 	haystack <= text!id
+		 * 	haystack <= text#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -231,7 +231,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * heading_level!id 1
+		 * heading_level# 1
 		 * ```
 		 */
 		heading_level(id: any) {
@@ -240,7 +240,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * content!id /
+		 * content# /
 		 * ```
 		 */
 		content(id: any) {
@@ -250,7 +250,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * link_uri!id \
+		 * link_uri# \
 		 * ```
 		 */
 		link_uri(id: any) {
@@ -259,7 +259,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * image_uri!id \
+		 * image_uri# \
 		 * ```
 		 */
 		image_uri(id: any) {
@@ -277,7 +277,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * text!id \
+		 * text# \
 		 * ```
 		 */
 		text(id: any) {

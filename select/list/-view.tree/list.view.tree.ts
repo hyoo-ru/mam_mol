@@ -25,19 +25,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Badge!index $mol_button_minor
-		 * 	title <= badge_title!index
-		 * 	click?event <=> remove!index?event
+		 * Badge# $mol_button_minor
+		 * 	title <= badge_title#
+		 * 	click?event <=> remove#?event
 		 * 	hint <= badge_hint
 		 * 	enabled <= drop_enabled
 		 * ```
 		 */
 		@ $mol_mem_key
-		Badge(index: any) {
+		Badge(id: any) {
 			const obj = new this.$.$mol_button_minor()
 			
-			obj.title = () => this.badge_title(index)
-			obj.click = (event?: any) => this.remove(index, event)
+			obj.title = () => this.badge_title(id)
+			obj.click = (event?: any) => this.remove(id, event)
 			obj.hint = () => this.badge_hint()
 			obj.enabled = () => this.drop_enabled()
 			
@@ -50,7 +50,7 @@ namespace $ {
 		 * 	align_hor <= align_hor
 		 * 	options <= options_pickable
 		 * 	value?val <=> pick?val
-		 * 	option_label!key <= option_title!key
+		 * 	option_label# <= option_title#
 		 * 	trigger_enabled <= pick_enabled
 		 * 	hint <= pick_hint
 		 * 	Trigger_icon <= Pick_icon
@@ -63,7 +63,7 @@ namespace $ {
 			obj.align_hor = () => this.align_hor()
 			obj.options = () => this.options_pickable()
 			obj.value = (val?: any) => this.pick(val)
-			obj.option_label = (key: any) => this.option_title(key)
+			obj.option_label = (id: any) => this.option_title(id)
 			obj.trigger_enabled = () => this.pick_enabled()
 			obj.hint = () => this.pick_hint()
 			obj.Trigger_icon = () => this.Pick_icon()
@@ -73,20 +73,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * badge_title!index \badge
+		 * badge_title# \badge
 		 * ```
 		 */
-		badge_title(index: any) {
+		badge_title(id: any) {
 			return "badge"
 		}
 		
 		/**
 		 * ```tree
-		 * remove!index?event null
+		 * remove#?event null
 		 * ```
 		 */
 		@ $mol_mem_key
-		remove(index: any, event?: any) {
+		remove(id: any, event?: any) {
 			if ( event !== undefined ) return event as never
 			return null as any
 		}
@@ -159,10 +159,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_title!key \
+		 * option_title# \
 		 * ```
 		 */
-		option_title(key: any) {
+		option_title(id: any) {
 			return ""
 		}
 		

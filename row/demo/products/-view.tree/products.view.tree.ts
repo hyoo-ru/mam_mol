@@ -21,10 +21,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Product!id $mol_card
+		 * Product# $mol_card
 		 * 	minimal_width 110
 		 * 	minimal_height 100
-		 * 	title <= product_title!id
+		 * 	title <= product_title#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -69,7 +69,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * product_title!id \
+		 * product_title# \
 		 * ```
 		 */
 		product_title(id: any) {

@@ -23,10 +23,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Row!id $mol_expander
-		 * 	label / <= Row_title!id
-		 * 	expanded?val <=> row_expanded!id?val
-		 * 	Content <= Row_content!id
+		 * Row# $mol_expander
+		 * 	label / <= Row_title#
+		 * 	expanded?val <=> row_expanded#?val
+		 * 	Content <= Row_content#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -94,7 +94,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_title!id \
+		 * row_title# \
 		 * ```
 		 */
 		row_title(id: any) {
@@ -103,7 +103,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Row_title!id $mol_paragraph sub / <= row_title!id
+		 * Row_title# $mol_paragraph sub / <= row_title#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -119,7 +119,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_expanded!id?val false
+		 * row_expanded#?val false
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -130,7 +130,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_content!id /
+		 * row_content# /
 		 * ```
 		 */
 		row_content(id: any) {
@@ -140,7 +140,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Row_content!id $mol_list rows <= row_content!id
+		 * Row_content# $mol_list rows <= row_content#
 		 * ```
 		 */
 		@ $mol_mem_key

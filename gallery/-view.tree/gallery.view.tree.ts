@@ -12,9 +12,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Side!id $mol_gallery
-		 * 	style * flexGrow <= side_size!id
-		 * 	items <= side_items!id
+		 * Side# $mol_gallery
+		 * 	style * flexGrow <= side_size#
+		 * 	items <= side_items#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -41,7 +41,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * side_size!id \1
+		 * side_size# \1
 		 * ```
 		 */
 		side_size(id: any) {
@@ -50,7 +50,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * side_items!id /$mol_view
+		 * side_items# /$mol_view
 		 * ```
 		 */
 		side_items(id: any) {

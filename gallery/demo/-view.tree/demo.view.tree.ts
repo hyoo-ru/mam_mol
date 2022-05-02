@@ -32,11 +32,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Item!id $mol_link
+		 * Item# $mol_link
 		 * 	minimal_width 100
 		 * 	uri \https://thiscatdoesnotexist.com/
 		 * 	style * backgroundImage \url('https://thiscatdoesnotexist.com/')
-		 * 	sub / <= Item_title!id
+		 * 	sub / <= Item_title#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -101,7 +101,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * item_title!id \
+		 * item_title# \
 		 * ```
 		 */
 		item_title(id: any) {
@@ -110,7 +110,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Item_title!id $mol_paragraph title <= item_title!id
+		 * Item_title# $mol_paragraph title <= item_title#
 		 * ```
 		 */
 		@ $mol_mem_key

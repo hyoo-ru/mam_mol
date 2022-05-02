@@ -3201,15 +3201,15 @@ var $;
         sub() {
             return this.rows();
         }
-        Row(index) {
+        Row(id) {
             const obj = new this.$.$mol_perf_uibench_table_row();
-            obj.state = () => this.row_state(index);
+            obj.state = () => this.row_state(id);
             return obj;
         }
         rows() {
             return [];
         }
-        row_state(index) {
+        row_state(id) {
             return null;
         }
     }
@@ -3240,9 +3240,9 @@ var $;
                 this.cells()
             ];
         }
-        Cell(index) {
+        Cell(id) {
             const obj = new this.$.$mol_perf_uibench_table_cell();
-            obj.text = () => this.cell_state(index);
+            obj.text = () => this.cell_state(id);
             return obj;
         }
         classes() {
@@ -3262,7 +3262,7 @@ var $;
         cells() {
             return [];
         }
-        cell_state(index) {
+        cell_state(id) {
             return null;
         }
     }
@@ -3408,15 +3408,15 @@ var $;
         sub() {
             return this.boxes();
         }
-        Box(index) {
+        Box(id) {
             const obj = new this.$.$mol_perf_uibench_anim_box();
-            obj.state = () => this.box_state(index);
+            obj.state = () => this.box_state(id);
             return obj;
         }
         boxes() {
             return [];
         }
-        box_state(index) {
+        box_state(id) {
             return null;
         }
     }
@@ -3542,20 +3542,20 @@ var $;
                 class: "TreeNode"
             };
         }
-        Branch(index) {
+        Branch(id) {
             const obj = new this.$.$mol_perf_uibench_tree_branch();
-            obj.state = () => this.branch_state(index);
+            obj.state = () => this.branch_state(id);
             return obj;
         }
-        Leaf(index) {
+        Leaf(id) {
             const obj = new this.$.$mol_perf_uibench_tree_leaf();
-            obj.text = () => this.leaf_state(index);
+            obj.text = () => this.leaf_state(id);
             return obj;
         }
-        branch_state(index) {
+        branch_state(id) {
             return null;
         }
-        leaf_state(index) {
+        leaf_state(id) {
             return null;
         }
     }
@@ -5980,12 +5980,12 @@ var $;
 var $;
 (function ($) {
     class $mol_view_tree_test_attributes_subcomponent extends $mol_view {
-        Page(index) {
+        Page(id) {
             const obj = new this.$.$mol_view_tree_test_attributes_subcomponent_page();
-            obj.Sub = () => this.page(index);
+            obj.Sub = () => this.page(id);
             return obj;
         }
-        page(index) {
+        page(id) {
             return null;
         }
     }

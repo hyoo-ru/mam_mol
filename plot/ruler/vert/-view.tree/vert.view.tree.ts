@@ -30,10 +30,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * label_pos_x!v <= title_pos_x
+		 * label_pos_x# <= title_pos_x
 		 * ```
 		 */
-		label_pos_x(v: any) {
+		label_pos_x(id: any) {
 			return this.title_pos_x()
 		}
 		

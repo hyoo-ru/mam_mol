@@ -36,10 +36,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Row!id $mol_text_code_row
+		 * Row# $mol_text_code_row
 		 * 	numb_showed <= sidebar_showed
-		 * 	numb <= row_numb!id
-		 * 	text <= row_text!id
+		 * 	numb <= row_numb#
+		 * 	text <= row_text#
 		 * 	highlight <= highlight
 		 * ```
 		 */
@@ -66,7 +66,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_numb!id 0
+		 * row_numb# 0
 		 * ```
 		 */
 		row_numb(id: any) {
@@ -75,7 +75,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_text!id \
+		 * row_text# \
 		 * ```
 		 */
 		row_text(id: any) {

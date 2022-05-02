@@ -32,9 +32,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Row!id $mol_row
+		 * Row# $mol_row
 		 * 	minimal_height 40
-		 * 	sub <= row_content!id
+		 * 	sub <= row_content#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -99,7 +99,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_id!id \
+		 * row_id# \
 		 * ```
 		 */
 		row_id(id: any) {
@@ -108,7 +108,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Id!id $mol_view sub / <= row_id!id
+		 * Id# $mol_view sub / <= row_id#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -124,7 +124,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_title!id \
+		 * row_title# \
 		 * ```
 		 */
 		row_title(id: any) {
@@ -133,7 +133,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Title!id $mol_view sub / <= row_title!id
+		 * Title# $mol_view sub / <= row_title#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -158,7 +158,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_editable!id?val false
+		 * row_editable#?val false
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -169,9 +169,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Editable!id $mol_check_box
+		 * Editable# $mol_check_box
 		 * 	title <= editable_title
-		 * 	checked?val <=> row_editable!id?val
+		 * 	checked?val <=> row_editable#?val
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -186,7 +186,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_priority!id?val \
+		 * row_priority#?val \
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -197,9 +197,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Priority!id $mol_switch
-		 * 	enabled <= row_editable!id
-		 * 	value?val <=> row_priority!id?val
+		 * Priority# $mol_switch
+		 * 	enabled <= row_editable#
+		 * 	value?val <=> row_priority#?val
 		 * 	options *
 		 * 		minor \Minor
 		 * 		major \Major
@@ -223,7 +223,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_moment!id?val $mol_time_moment
+		 * row_moment#?val $mol_time_moment
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -236,9 +236,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Date!id $mol_date
-		 * 	value_moment?val <=> row_moment!id?val
-		 * 	enabled <= row_editable!id
+		 * Date# $mol_date
+		 * 	value_moment?val <=> row_moment#?val
+		 * 	enabled <= row_editable#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -253,7 +253,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_uri!id \
+		 * row_uri# \
 		 * ```
 		 */
 		row_uri(id: any) {
@@ -262,7 +262,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Link!id $mol_link_iconed uri <= row_uri!id
+		 * Link# $mol_link_iconed uri <= row_uri#
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -276,13 +276,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_content!id /
-		 * 	<= Id!id
-		 * 	<= Title!id
-		 * 	<= Editable!id
-		 * 	<= Priority!id
-		 * 	<= Date!id
-		 * 	<= Link!id
+		 * row_content# /
+		 * 	<= Id#
+		 * 	<= Title#
+		 * 	<= Editable#
+		 * 	<= Priority#
+		 * 	<= Date#
+		 * 	<= Link#
 		 * ```
 		 */
 		row_content(id: any) {

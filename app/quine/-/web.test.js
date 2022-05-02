@@ -2220,12 +2220,12 @@ var $;
 var $;
 (function ($) {
     class $mol_view_tree_test_attributes_subcomponent extends $mol_view {
-        Page(index) {
+        Page(id) {
             const obj = new this.$.$mol_view_tree_test_attributes_subcomponent_page();
-            obj.Sub = () => this.page(index);
+            obj.Sub = () => this.page(id);
             return obj;
         }
-        page(index) {
+        page(id) {
             return null;
         }
     }

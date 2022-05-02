@@ -22,21 +22,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Level!z $mol_plot_map_heat_level
-		 * 	hint <= level_hint!z
-		 * 	points <= level_points!z
-		 * 	opacity <= level_opacity!z
+		 * Level# $mol_plot_map_heat_level
+		 * 	hint <= level_hint#
+		 * 	points <= level_points#
+		 * 	opacity <= level_opacity#
 		 * 	diameter <= level_diameter
 		 * 	aspect <= level_aspect
 		 * ```
 		 */
 		@ $mol_mem_key
-		Level(z: any) {
+		Level(id: any) {
 			const obj = new this.$.$mol_plot_map_heat_level()
 			
-			obj.hint = () => this.level_hint(z)
-			obj.points = () => this.level_points(z)
-			obj.opacity = () => this.level_opacity(z)
+			obj.hint = () => this.level_hint(id)
+			obj.points = () => this.level_points(id)
+			obj.opacity = () => this.level_opacity(id)
 			obj.diameter = () => this.level_diameter()
 			obj.aspect = () => this.level_aspect()
 			
@@ -69,29 +69,29 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * level_hint!z \
+		 * level_hint# \
 		 * ```
 		 */
-		level_hint(z: any) {
+		level_hint(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * level_points!z /
+		 * level_points# /
 		 * ```
 		 */
-		level_points(z: any) {
+		level_points(id: any) {
 			return [
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * level_opacity!z \1
+		 * level_opacity# \1
 		 * ```
 		 */
-		level_opacity(z: any) {
+		level_opacity(id: any) {
 			return "1"
 		}
 		

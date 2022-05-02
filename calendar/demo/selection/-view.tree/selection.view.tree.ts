@@ -82,10 +82,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * selected!day false
+		 * selected# false
 		 * ```
 		 */
-		selected(day: any) {
+		selected(id: any) {
 			return false
 		}
 		
@@ -93,7 +93,7 @@ namespace $ {
 		 * ```tree
 		 * Calendar $mol_calendar
 		 * 	month_string <= month
-		 * 	day_selected!day <= selected!day
+		 * 	day_selected# <= selected#
 		 * ```
 		 */
 		@ $mol_mem
@@ -101,7 +101,7 @@ namespace $ {
 			const obj = new this.$.$mol_calendar()
 			
 			obj.month_string = () => this.month()
-			obj.day_selected = (day: any) => this.selected(day)
+			obj.day_selected = (id: any) => this.selected(id)
 			
 			return obj
 		}

@@ -37,7 +37,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * right!id?val false
+		 * right#?val false
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -49,7 +49,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Rights $mol_check_list
-		 * 	option_checked!id?val <=> right!id?val
+		 * 	option_checked#?val <=> right#?val
 		 * 	options *
 		 * 		read \Allow Read
 		 * 		write \Allow Write

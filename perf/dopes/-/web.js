@@ -2774,11 +2774,11 @@ var $;
                 this.Labels()
             ];
         }
-        Label(index) {
+        Label(id) {
             const obj = new this.$.$mol_view();
             obj.style = () => ({
-                color: this.label_color(index),
-                transform: this.label_transform(index)
+                color: this.label_color(id),
+                transform: this.label_transform(id)
             });
             obj.sub = () => [
                 "Dope"
@@ -2825,10 +2825,10 @@ var $;
             obj.sub = () => this.labels();
             return obj;
         }
-        label_color(index) {
+        label_color(id) {
             return "";
         }
-        label_transform(index) {
+        label_transform(id) {
             return "";
         }
     }

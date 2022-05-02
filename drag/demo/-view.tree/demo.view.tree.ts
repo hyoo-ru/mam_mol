@@ -23,24 +23,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Task_row!task $mol_drag
+		 * Task_row# $mol_drag
 		 * 	transfer *
-		 * 		text/plain <= task_title!task
-		 * 		text/html <= task_html!task
-		 * 		text/uri-list <= task_uri!task
-		 * 	Sub <= Task_drop!task
+		 * 		text/plain <= task_title#
+		 * 		text/html <= task_html#
+		 * 		text/uri-list <= task_uri#
+		 * 	Sub <= Task_drop#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Task_row(task: any) {
+		Task_row(id: any) {
 			const obj = new this.$.$mol_drag()
 			
 			obj.transfer = () => ({
-				"text/plain": this.task_title(task),
-				"text/html": this.task_html(task),
-				"text/uri-list": this.task_uri(task)
+				"text/plain": this.task_title(id),
+				"text/html": this.task_html(id),
+				"text/uri-list": this.task_uri(id)
 			})
-			obj.Sub = () => this.Task_drop(task)
+			obj.Sub = () => this.Task_drop(id)
 			
 			return obj
 		}
@@ -218,56 +218,56 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * task_title!task \
+		 * task_title# \
 		 * ```
 		 */
-		task_title(task: any) {
+		task_title(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * task_html!task \
+		 * task_html# \
 		 * ```
 		 */
-		task_html(task: any) {
+		task_html(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * task_uri!task \
+		 * task_uri# \
 		 * ```
 		 */
-		task_uri(task: any) {
+		task_uri(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * receive_before!task?obj null
+		 * receive_before#?obj null
 		 * ```
 		 */
 		@ $mol_mem_key
-		receive_before(task: any, obj?: any) {
+		receive_before(id: any, obj?: any) {
 			if ( obj !== undefined ) return obj as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * Task_link!task $mol_link
-		 * 	uri <= task_uri!task
-		 * 	sub / <= task_title!task
+		 * Task_link# $mol_link
+		 * 	uri <= task_uri#
+		 * 	sub / <= task_title#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Task_link(task: any) {
+		Task_link(id: any) {
 			const obj = new this.$.$mol_link()
 			
-			obj.uri = () => this.task_uri(task)
+			obj.uri = () => this.task_uri(id)
 			obj.sub = () => [
-				this.task_title(task)
+				this.task_title(id)
 			] as readonly any[]
 			
 			return obj
@@ -275,19 +275,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Task_drop!task $mol_drop
+		 * Task_drop# $mol_drop
 		 * 	adopt?transfer <=> transfer_adopt?transfer
-		 * 	receive?obj <=> receive_before!task?obj
-		 * 	Sub <= Task_link!task
+		 * 	receive?obj <=> receive_before#?obj
+		 * 	Sub <= Task_link#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Task_drop(task: any) {
+		Task_drop(id: any) {
 			const obj = new this.$.$mol_drop()
 			
 			obj.adopt = (transfer?: any) => this.transfer_adopt(transfer)
-			obj.receive = (obj?: any) => this.receive_before(task, obj)
-			obj.Sub = () => this.Task_link(task)
+			obj.receive = (obj?: any) => this.receive_before(id, obj)
+			obj.Sub = () => this.Task_link(id)
 			
 			return obj
 		}

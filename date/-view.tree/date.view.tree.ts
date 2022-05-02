@@ -110,20 +110,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_selected!day false
+		 * day_selected# false
 		 * ```
 		 */
-		day_selected(day: any) {
+		day_selected(id: any) {
 			return false
 		}
 		
 		/**
 		 * ```tree
-		 * day_click!day?event null
+		 * day_click#?event null
 		 * ```
 		 */
 		@ $mol_mem_key
-		day_click(day: any, event?: any) {
+		day_click(id: any, event?: any) {
 			if ( event !== undefined ) return event as never
 			return null as any
 		}
@@ -268,8 +268,8 @@ namespace $ {
 		 * ```tree
 		 * Calendar $mol_date_calendar
 		 * 	month_moment <= month_moment
-		 * 	day_selected!day <= day_selected!day
-		 * 	day_click!day?event <=> day_click!day?event
+		 * 	day_selected# <= day_selected#
+		 * 	day_click#?event <=> day_click#?event
 		 * 	Title => Calendar_title
 		 * 	head / <= Calendar_tools
 		 * ```
@@ -279,8 +279,8 @@ namespace $ {
 			const obj = new this.$.$mol_date_calendar()
 			
 			obj.month_moment = () => this.month_moment()
-			obj.day_selected = (day: any) => this.day_selected(day)
-			obj.day_click = (day: any, event?: any) => this.day_click(day, event)
+			obj.day_selected = (id: any) => this.day_selected(id)
+			obj.day_click = (id: any, event?: any) => this.day_click(id, event)
 			obj.head = () => [
 				this.Calendar_tools()
 			] as readonly any[]
@@ -293,40 +293,40 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_content!day / <= Day_button!day
+		 * day_content# / <= Day_button#
 		 * ```
 		 */
-		day_content(day: any) {
+		day_content(id: any) {
 			return [
-				this.Day_button(day)
+				this.Day_button(id)
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * day_click!day?event null
+		 * day_click#?event null
 		 * ```
 		 */
 		@ $mol_mem_key
-		day_click(day: any, event?: any) {
+		day_click(id: any, event?: any) {
 			if ( event !== undefined ) return event as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * Day_button!day $mol_button_minor
-		 * 	title <= day_text!day
-		 * 	event_click?event <=> day_click!day?event
+		 * Day_button# $mol_button_minor
+		 * 	title <= day_text#
+		 * 	event_click?event <=> day_click#?event
 		 * 	minimal_height 24
 		 * ```
 		 */
 		@ $mol_mem_key
-		Day_button(day: any) {
+		Day_button(id: any) {
 			const obj = new this.$.$mol_button_minor()
 			
-			obj.title = () => this.day_text(day)
-			obj.event_click = (event?: any) => this.day_click(day, event)
+			obj.title = () => this.day_text(id)
+			obj.event_click = (event?: any) => this.day_click(id, event)
 			obj.minimal_height = () => 24
 			
 			return obj

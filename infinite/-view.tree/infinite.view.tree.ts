@@ -3,7 +3,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * after!id /
+		 * after# /
 		 * ```
 		 */
 		after(id: any) {
@@ -13,7 +13,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Row!id $mol_view
+		 * Row# $mol_view
 		 * ```
 		 */
 		@ $mol_mem_key

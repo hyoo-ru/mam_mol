@@ -5461,7 +5461,7 @@ var $;
         row_ids() {
             return [];
         }
-        row_id(index) {
+        row_id(id) {
             return null;
         }
         col_ids() {

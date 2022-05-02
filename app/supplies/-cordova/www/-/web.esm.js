@@ -7679,10 +7679,10 @@ var $;
                 this.Supply_rows()
             ];
         }
-        Supply_row(index) {
+        Supply_row(id) {
             const obj = new this.$.$mol_app_supplies_card();
-            obj.supply = () => this.supply(index);
-            obj.arg = () => this.supply_arg(index);
+            obj.supply = () => this.supply(id);
+            obj.arg = () => this.supply_arg(id);
             return obj;
         }
         search_hint() {
@@ -7707,15 +7707,15 @@ var $;
             obj.rows = () => this.supply_rows();
             return obj;
         }
-        supply(index) {
+        supply(id) {
             return null;
         }
-        supply_id(index) {
+        supply_id(id) {
             return "";
         }
-        supply_arg(index) {
+        supply_arg(id) {
             return {
-                supply: this.supply_id(index)
+                supply: this.supply_id(id)
             };
         }
     }
@@ -8754,9 +8754,9 @@ var $;
                 this.Actions()
             ];
         }
-        Position(index) {
+        Position(id) {
             const obj = new this.$.$mol_app_supplies_position();
-            obj.position = () => this.position(index);
+            obj.position = () => this.position(id);
             return obj;
         }
         Close_icon() {
@@ -9028,7 +9028,7 @@ var $;
             obj.sub = () => this.actions();
             return obj;
         }
-        position(index) {
+        position(id) {
             return null;
         }
     }

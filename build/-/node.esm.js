@@ -2600,13 +2600,9 @@ var $;
             const parents = this.parents;
             for (let i = 1; i < parents.length; i++) {
                 const parent = parents[i];
-                if (key && key.value === parent.key?.value)
-                    finded_key = parent.key;
-                if (next && next.value === parent.next?.value)
+                if (next && parent.next)
                     finded_next = parent.next;
             }
-            if (key && !finded_key)
-                return this.$.$mol_fail($mol_view_tree2_error_str `Key ${key.value} at ${key.span} not found at ${this.parents.map(parent => parent.src.span)}`);
             if (next && !finded_next)
                 return this.$.$mol_fail($mol_view_tree2_error_str `Next ${next.value} at ${next.span} not found at ${this.parents.map(parent => parent.src.span)}`);
             const first_method = parents.length > 1 ? parents[1] : undefined;
@@ -2688,7 +2684,15 @@ var $;
 (function ($) {
     const err = $mol_view_tree2_error_str;
     function $mol_view_tree2_class_props(klass) {
-        const props = this.$mol_view_tree2_class_super(klass);
+        let props = this.$mol_view_tree2_class_super(klass);
+        props = props.clone(props.hack({
+            '': (node, belt) => {
+                const normal = node.type.replace(/!\w+/, '#');
+                if (node.type === normal)
+                    return [node.clone(node.hack(belt))];
+                return [node.struct(normal, node.hack(belt))];
+            }
+        }));
         const props_inner = [];
         const props_root = props.hack({
             '<=': (operator, belt) => {
@@ -2996,25 +3000,25 @@ var $;
     const err = $mol_view_tree2_error_str;
     function $mol_view_tree2_prop_split(src) {
         const prop_name = src.type;
-        let key_pos = prop_name.indexOf('!');
+        let key_pos = prop_name.indexOf('#');
         let next_pos = prop_name.indexOf('?');
+        let next_pos_orig = next_pos;
         if (next_pos === -1)
             next_pos = prop_name.length;
-        if (key_pos === -1)
-            key_pos = next_pos;
+        const name_end = (key_pos === -1) ? next_pos : key_pos;
         if (key_pos > next_pos)
             return this.$mol_fail(err `Index argument must be before next argument at ${src.span}, use ${example1}`);
-        const name = prop_name.substring(0, key_pos);
-        const key = key_pos === next_pos ? '' : prop_name.substring(key_pos + 1, next_pos);
+        const name = prop_name.substring(0, name_end);
+        const key = key_pos < 0 ? '' : prop_name.substring(key_pos + 1, next_pos);
         const next = prop_name.substring(next_pos + 1);
         if ((key && !regular_regex.test(key))
-            || (next && !regular_regex.test(name)))
-            return this.$mol_fail(err `Only regular chars and digits allowed at ${src.span}, use ${example2}`);
+            || (next && !regular_regex.test(next)))
+            return this.$mol_fail(err `Only regular chars and digits allowed ${key} ${next} at ${src.span}, use ${example2}`);
         return {
             src,
             name: $mol_tree2.data(name, [], src.span.slice(0, name.length)),
-            key: key ? $mol_tree2.data(key, [], src.span.slice(key_pos, key_pos + key.length)) : undefined,
-            next: next ? $mol_tree2.data(next, [], src.span.slice(next_pos, next_pos + next.length)) : undefined
+            key: key_pos >= 0 ? $mol_tree2.data(key ? JSON.stringify(key) : 'id', [], src.span.slice(key_pos, key_pos + key.length)) : undefined,
+            next: next_pos_orig >= 0 ? $mol_tree2.data(next || 'next', [], src.span.slice(next_pos, next_pos + next.length)) : undefined
         };
     }
     $.$mol_view_tree2_prop_split = $mol_view_tree2_prop_split;
@@ -3023,8 +3027,9 @@ var $;
         'having!key?next <= owner!key?next'
     ]);
     const example2 = new $mol_view_tree2_error_suggestions([
-        'having!key',
-        'having!key?next',
+        'having#',
+        'having#key',
+        'having#key?next',
         'having',
     ]);
 })($ || ($ = {}));
@@ -3478,7 +3483,7 @@ var $;
             return value.data(type);
         if (Number(type).toString() === type)
             return value.data(type);
-        return this.$mol_fail(err `Value ${value.value} not allowed at ${value.span}, use ${example}`);
+        return this.$mol_fail(err `Value ${value.toString()} not allowed at ${value.span}, use ${example}`);
     }
     $.$mol_view_tree2_value = $mol_view_tree2_value;
     const example = new $mol_view_tree2_error_suggestions([
@@ -3585,7 +3590,7 @@ var $;
     function $mol_view_tree2_ts_function_declaration({ name, key, next }, types = false) {
         const sub = [name.data('(')];
         if (key)
-            sub.push(key);
+            sub.push(key.data('id'));
         if (types && key)
             sub.push(key.data(': any'));
         if (key && next)

@@ -121,18 +121,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Label!index $mol_svg_text
-		 * 	pos <= label_pos!index
-		 * 	text <= label_text!index
+		 * Label# $mol_svg_text
+		 * 	pos <= label_pos#
+		 * 	text <= label_text#
 		 * 	align <= label_align
 		 * ```
 		 */
 		@ $mol_mem_key
-		Label(index: any) {
+		Label(id: any) {
 			const obj = new this.$.$mol_svg_text()
 			
-			obj.pos = () => this.label_pos(index)
-			obj.text = () => this.label_text(index)
+			obj.pos = () => this.label_pos(id)
+			obj.text = () => this.label_text(id)
 			obj.align = () => this.label_align()
 			
 			return obj
@@ -278,42 +278,42 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * label_pos_x!index \
+		 * label_pos_x# \
 		 * ```
 		 */
-		label_pos_x(index: any) {
+		label_pos_x(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * label_pos_y!index \
+		 * label_pos_y# \
 		 * ```
 		 */
-		label_pos_y(index: any) {
+		label_pos_y(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * label_pos!index /
-		 * 	<= label_pos_x!index
-		 * 	<= label_pos_y!index
+		 * label_pos# /
+		 * 	<= label_pos_x#
+		 * 	<= label_pos_y#
 		 * ```
 		 */
-		label_pos(index: any) {
+		label_pos(id: any) {
 			return [
-				this.label_pos_x(index),
-				this.label_pos_y(index)
+				this.label_pos_x(id),
+				this.label_pos_y(id)
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * label_text!index \
+		 * label_text# \
 		 * ```
 		 */
-		label_text(index: any) {
+		label_text(id: any) {
 			return ""
 		}
 		

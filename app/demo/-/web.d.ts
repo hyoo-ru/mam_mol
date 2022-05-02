@@ -2184,7 +2184,7 @@ declare namespace $ {
     class $mol_grid extends $mol_view {
         row_height(): number;
         row_ids(): readonly string[][];
-        row_id(index: any): any;
+        row_id(id: any): any;
         col_ids(): readonly any[];
         records(): {};
         record(id: any): any;
@@ -2477,7 +2477,7 @@ declare namespace $ {
         length_max(): number;
         selection(val?: any): readonly number[];
         Edit(): $mol_textarea_edit;
-        row_numb(index: any): number;
+        row_numb(id: any): number;
         highlight(): string;
         View(): $$.$mol_text_code;
     }
@@ -3176,9 +3176,9 @@ declare namespace $ {
     class $mol_calendar extends $mol_list {
         sub(): readonly any[];
         weeks(): readonly $mol_view[];
-        Weekday(index: any): $mol_calendar_day;
-        Week(row: any): $$.$mol_hor;
-        Day(day: any): $mol_calendar_day;
+        Weekday(id: any): $mol_calendar_day;
+        Week(id: any): $$.$mol_hor;
+        Day(id: any): $mol_calendar_day;
         month_string(): string;
         month_moment(): $mol_time_moment;
         title(): string;
@@ -3187,15 +3187,15 @@ declare namespace $ {
         Head(): $mol_view;
         weekdays(): readonly $mol_view[];
         Weekdays(): $$.$mol_hor;
-        weekend(index: any): boolean;
-        weekday(index: any): string;
-        week_days(row: any): readonly $mol_view[];
-        day_ghost(day: any): boolean;
-        day_holiday(day: any): boolean;
-        day_selected(day: any): boolean;
-        day_theme(day: any): string;
-        day_text(day: any): string;
-        day_content(day: any): readonly any[];
+        weekend(id: any): boolean;
+        weekday(id: any): string;
+        week_days(id: any): readonly $mol_view[];
+        day_ghost(id: any): boolean;
+        day_holiday(id: any): boolean;
+        day_selected(id: any): boolean;
+        day_theme(id: any): string;
+        day_text(id: any): string;
+        day_content(id: any): readonly any[];
     }
     class $mol_calendar_day extends $mol_view {
         minimal_height(): number;
@@ -3265,7 +3265,7 @@ declare namespace $ {
         sub(): readonly any[];
         tags(): readonly any[];
         month(): string;
-        holiday(day: any): boolean;
+        holiday(id: any): boolean;
         Calendar(): $$.$mol_calendar;
     }
 }
@@ -3287,7 +3287,7 @@ declare namespace $ {
         sub(): readonly any[];
         tags(): readonly any[];
         month(): string;
-        selected(day: any): boolean;
+        selected(id: any): boolean;
         Calendar(): $$.$mol_calendar;
     }
 }
@@ -3445,8 +3445,8 @@ declare namespace $ {
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
         size_real(): $mol_vector_2d<number>;
         gap(): $mol_vector_2d<$mol_vector_range<number>>;
-        repos_x(val: any): number;
-        repos_y(val: any): number;
+        repos_x(id: any): number;
+        repos_y(id: any): number;
         indexes(): readonly number[];
         points(): readonly (readonly number[])[];
         front(): readonly $mol_svg[];
@@ -3906,7 +3906,7 @@ declare namespace $ {
         normalize(val?: any): number;
         precision(): number;
         sub(): readonly any[];
-        Label(index: any): $$.$mol_svg_text;
+        Label(id: any): $$.$mol_svg_text;
         background_x(): string;
         background_y(): string;
         background_width(): string;
@@ -3919,10 +3919,10 @@ declare namespace $ {
         title_pos_y(): string;
         title_align(): string;
         Title(): $$.$mol_svg_text_box;
-        label_pos_x(index: any): string;
-        label_pos_y(index: any): string;
-        label_pos(index: any): readonly any[];
-        label_text(index: any): string;
+        label_pos_x(id: any): string;
+        label_pos_y(id: any): string;
+        label_pos(id: any): readonly any[];
+        label_text(id: any): string;
         label_align(): string;
     }
 }
@@ -3953,7 +3953,7 @@ declare namespace $ {
         title_align(): string;
         label_align(): string;
         title_pos_y(): string;
-        label_pos_x(v: any): string;
+        label_pos_x(id: any): string;
         background_height(): string;
         background_width(): string;
     }
@@ -3981,7 +3981,7 @@ declare namespace $ {
         label_align(): string;
         title_pos_x(): string;
         title_pos_y(): string;
-        label_pos_y(v: any): string;
+        label_pos_y(id: any): string;
         background_width(): string;
     }
 }
@@ -4724,8 +4724,8 @@ declare namespace $ {
         enabled(): boolean;
         Input(): $$.$mol_string;
         month_moment(): $mol_time_moment;
-        day_selected(day: any): boolean;
-        day_click(day: any, event?: any): any;
+        day_selected(id: any): boolean;
+        day_click(id: any, event?: any): any;
         prev_hint(): string;
         prev(event?: any): any;
         Prev_icon(): $mol_icon_chevron_left;
@@ -4739,9 +4739,9 @@ declare namespace $ {
         Calendar(): $mol_date_calendar;
     }
     class $mol_date_calendar extends $mol_calendar {
-        day_content(day: any): readonly any[];
-        day_click(day: any, event?: any): any;
-        Day_button(day: any): $mol_button_minor;
+        day_content(id: any): readonly any[];
+        day_click(id: any, event?: any): any;
+        Day_button(id: any): $mol_button_minor;
     }
 }
 
@@ -4960,7 +4960,7 @@ declare namespace $ {
     class $mol_drag_demo extends $mol_example_large {
         task_count(): number;
         sub(): readonly any[];
-        Task_row(task: any): $$.$mol_drag;
+        Task_row(id: any): $$.$mol_drag;
         tags(): readonly any[];
         transfer_adopt(transfer?: any): any;
         receive(obj?: any): any;
@@ -4972,12 +4972,12 @@ declare namespace $ {
         List(): $$.$mol_list;
         Scroll(): $$.$mol_scroll;
         List_drop(): $$.$mol_drop;
-        task_title(task: any): string;
-        task_html(task: any): string;
-        task_uri(task: any): string;
-        receive_before(task: any, obj?: any): any;
-        Task_link(task: any): $$.$mol_link;
-        Task_drop(task: any): $$.$mol_drop;
+        task_title(id: any): string;
+        task_html(id: any): string;
+        task_uri(id: any): string;
+        receive_before(id: any, obj?: any): any;
+        Task_link(id: any): $$.$mol_link;
+        Task_drop(id: any): $$.$mol_drop;
     }
 }
 
@@ -5370,21 +5370,21 @@ declare namespace $ {
         title(): string;
         model(): $mol_form_demo_draft_model;
         message_done(): string;
-        bid_required(prop: any): string;
-        bid_swearing(prop: any): string;
-        bid_short(prop: any): string;
-        bid_long(prop: any): string;
-        Group(name: any): $mol_form_group;
-        Title_field(prop: any): $$.$mol_form_field;
-        Type_field(prop: any): $$.$mol_form_field;
-        Content_field(prop: any): $$.$mol_form_field;
+        bid_required(id: any): string;
+        bid_swearing(id: any): string;
+        bid_short(id: any): string;
+        bid_long(id: any): string;
+        Group(id: any): $mol_form_group;
+        Title_field(id: any): $$.$mol_form_field;
+        Type_field(id: any): $$.$mol_form_field;
+        Content_field(id: any): $$.$mol_form_field;
         sub(): readonly any[];
         tags(): readonly any[];
-        group(name: any): readonly any[];
-        value_str(prop: any, val?: any): string;
-        Title(prop: any): $$.$mol_string;
-        Type(prop: any): $$.$mol_switch;
-        Content(prop: any): $$.$mol_textarea;
+        group(id: any): readonly any[];
+        value_str(id: any, val?: any): string;
+        Title(id: any): $$.$mol_string;
+        Type(id: any): $$.$mol_switch;
+        Content(id: any): $$.$mol_textarea;
         form_body(): readonly any[];
         publish(event?: any): any;
         Publish(): $mol_button_major;
@@ -5518,7 +5518,7 @@ declare namespace $ {
     class $mol_html_view extends $mol_list {
         html(): string;
         dom(): any;
-        safe_link(uri: any): string;
+        safe_link(id: any): string;
         xss_uri(): string;
         Heading(id: any): $mol_html_view_heading;
         Paragraph(id: any): $$.$mol_paragraph;
@@ -5619,7 +5619,7 @@ declare namespace $ {
         chunk_size(): number;
         sub(): readonly any[];
         tags(): readonly any[];
-        after(anchor_id: any): readonly any[];
+        after(id: any): readonly any[];
         Item(id: any): $mol_filler;
         List(): $$.$mol_infinite;
     }
@@ -6312,12 +6312,12 @@ declare namespace $ {
     class $mol_plot_map_heat extends $mol_plot_group {
         series_z(): readonly number[];
         graphs(): readonly any[];
-        Level(z: any): $mol_plot_map_heat_level;
+        Level(id: any): $mol_plot_map_heat_level;
         Sample(): $mol_plot_graph_sample;
         level_graphs(): readonly any[];
-        level_hint(z: any): string;
-        level_points(z: any): readonly any[];
-        level_opacity(z: any): string;
+        level_hint(id: any): string;
+        level_points(id: any): readonly any[];
+        level_opacity(id: any): string;
         level_diameter(): number;
         level_aspect(): number;
     }
@@ -7067,10 +7067,10 @@ declare namespace $ {
     class $mol_select_list extends $mol_view {
         value(val?: any): readonly string[];
         dictionary(): {};
-        Badge(index: any): $mol_button_minor;
+        Badge(id: any): $mol_button_minor;
         Pick(): $$.$mol_select;
-        badge_title(index: any): string;
-        remove(index: any, event?: any): any;
+        badge_title(id: any): string;
+        remove(id: any, event?: any): any;
         badge_hint(): string;
         enabled(): boolean;
         drop_enabled(): boolean;
@@ -7078,7 +7078,7 @@ declare namespace $ {
         options(): readonly string[];
         options_pickable(): readonly string[];
         pick(val?: any): string;
-        option_title(key: any): string;
+        option_title(id: any): string;
         pick_enabled(): boolean;
         pick_hint(): string;
         Pick_icon(): $mol_icon_plus;
@@ -7311,7 +7311,7 @@ declare namespace $ {
         Placeholder(): any;
         plugins(): readonly any[];
         pages(): readonly any[];
-        Log(index: any): $$.$hyoo_js_eval_log;
+        Log(id: any): $$.$hyoo_js_eval_log;
         Theme(): $$.$mol_theme_auto;
         Source(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
@@ -7327,20 +7327,20 @@ declare namespace $ {
         logs(): readonly any[];
         Result(): $$.$mol_list;
         Result_page(): $mol_page;
-        log(index: any): readonly any[];
+        log(id: any): readonly any[];
     }
     class $hyoo_js_eval_log extends $mol_view {
         values(): readonly any[];
-        Dump(index: any): $$.$hyoo_js_eval_dump;
-        dump_value(index: any): any;
-        dump_expanded(index: any, val?: any): boolean;
+        Dump(id: any): $$.$hyoo_js_eval_dump;
+        dump_value(id: any): any;
+        dump_expanded(id: any, val?: any): boolean;
     }
     class $hyoo_js_eval_dump extends $mol_view {
         key(): any;
         suffix(): string;
         value(): any;
         sub(): readonly any[];
-        Inner(index: any): $$.$hyoo_js_eval_dump;
+        Inner(id: any): $$.$hyoo_js_eval_dump;
         Key(): $$.$hyoo_js_eval_dump;
         simple(): string;
         Simple(): $$.$mol_text_code;
@@ -7348,8 +7348,8 @@ declare namespace $ {
         expand_title(): string;
         expand_content(): readonly any[];
         Expand(): $$.$mol_expander;
-        inner_key(index: any): any;
-        inner_value(index: any): any;
+        inner_key(id: any): any;
+        inner_value(id: any): any;
     }
 }
 

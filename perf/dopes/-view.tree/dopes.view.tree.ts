@@ -30,20 +30,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Label!index $mol_view
+		 * Label# $mol_view
 		 * 	style *
-		 * 		color <= label_color!index
-		 * 		transform <= label_transform!index
+		 * 		color <= label_color#
+		 * 		transform <= label_transform#
 		 * 	sub / \Dope
 		 * ```
 		 */
 		@ $mol_mem_key
-		Label(index: any) {
+		Label(id: any) {
 			const obj = new this.$.$mol_view()
 			
 			obj.style = () => ({
-				color: this.label_color(index),
-				transform: this.label_transform(index)
+				color: this.label_color(id),
+				transform: this.label_transform(id)
 			})
 			obj.sub = () => [
 				"Dope"
@@ -159,19 +159,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * label_color!index \
+		 * label_color# \
 		 * ```
 		 */
-		label_color(index: any) {
+		label_color(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * label_transform!index \
+		 * label_transform# \
 		 * ```
 		 */
-		label_transform(index: any) {
+		label_transform(id: any) {
 			return ""
 		}
 	}

@@ -27,18 +27,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Weekday!index $mol_calendar_day
-		 * 	holiday <= weekend!index
-		 * 	sub / <= weekday!index
+		 * Weekday# $mol_calendar_day
+		 * 	holiday <= weekend#
+		 * 	sub / <= weekday#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Weekday(index: any) {
+		Weekday(id: any) {
 			const obj = new this.$.$mol_calendar_day()
 			
-			obj.holiday = () => this.weekend(index)
+			obj.holiday = () => this.weekend(id)
 			obj.sub = () => [
-				this.weekday(index)
+				this.weekday(id)
 			] as readonly any[]
 			
 			return obj
@@ -46,37 +46,37 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Week!row $mol_hor sub <= week_days!row
+		 * Week# $mol_hor sub <= week_days#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Week(row: any) {
+		Week(id: any) {
 			const obj = new this.$.$mol_hor()
 			
-			obj.sub = () => this.week_days(row)
+			obj.sub = () => this.week_days(id)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * Day!day $mol_calendar_day
-		 * 	ghost <= day_ghost!day
-		 * 	holiday <= day_holiday!day
-		 * 	selected <= day_selected!day
-		 * 	theme <= day_theme!day
-		 * 	sub <= day_content!day
+		 * Day# $mol_calendar_day
+		 * 	ghost <= day_ghost#
+		 * 	holiday <= day_holiday#
+		 * 	selected <= day_selected#
+		 * 	theme <= day_theme#
+		 * 	sub <= day_content#
 		 * ```
 		 */
 		@ $mol_mem_key
-		Day(day: any) {
+		Day(id: any) {
 			const obj = new this.$.$mol_calendar_day()
 			
-			obj.ghost = () => this.day_ghost(day)
-			obj.holiday = () => this.day_holiday(day)
-			obj.selected = () => this.day_selected(day)
-			obj.theme = () => this.day_theme(day)
-			obj.sub = () => this.day_content(day)
+			obj.ghost = () => this.day_ghost(id)
+			obj.holiday = () => this.day_holiday(id)
+			obj.selected = () => this.day_selected(id)
+			obj.theme = () => this.day_theme(id)
+			obj.sub = () => this.day_content(id)
 			
 			return obj
 		}
@@ -181,85 +181,85 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * weekend!index false
+		 * weekend# false
 		 * ```
 		 */
-		weekend(index: any) {
+		weekend(id: any) {
 			return false
 		}
 		
 		/**
 		 * ```tree
-		 * weekday!index \
+		 * weekday# \
 		 * ```
 		 */
-		weekday(index: any) {
+		weekday(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * week_days!row /$mol_view
+		 * week_days# /$mol_view
 		 * ```
 		 */
-		week_days(row: any) {
+		week_days(id: any) {
 			return [
 			] as readonly $mol_view[]
 		}
 		
 		/**
 		 * ```tree
-		 * day_ghost!day false
+		 * day_ghost# false
 		 * ```
 		 */
-		day_ghost(day: any) {
+		day_ghost(id: any) {
 			return false
 		}
 		
 		/**
 		 * ```tree
-		 * day_holiday!day false
+		 * day_holiday# false
 		 * ```
 		 */
-		day_holiday(day: any) {
+		day_holiday(id: any) {
 			return false
 		}
 		
 		/**
 		 * ```tree
-		 * day_selected!day false
+		 * day_selected# false
 		 * ```
 		 */
-		day_selected(day: any) {
+		day_selected(id: any) {
 			return false
 		}
 		
 		/**
 		 * ```tree
-		 * day_theme!day \
+		 * day_theme# \
 		 * ```
 		 */
-		day_theme(day: any) {
+		day_theme(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * day_text!day \
+		 * day_text# \
 		 * ```
 		 */
-		day_text(day: any) {
+		day_text(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * day_content!day / <= day_text!day
+		 * day_content# / <= day_text#
 		 * ```
 		 */
-		day_content(day: any) {
+		day_content(id: any) {
 			return [
-				this.day_text(day)
+				this.day_text(id)
 			] as readonly any[]
 		}
 	}

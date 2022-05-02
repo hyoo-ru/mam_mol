@@ -162,10 +162,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_numb!index 0
+		 * row_numb# 0
 		 * ```
 		 */
-		row_numb(index: any) {
+		row_numb(id: any) {
 			return 0
 		}
 		
@@ -183,7 +183,7 @@ namespace $ {
 		 * View $mol_text_code
 		 * 	text <= value
 		 * 	render_visible_only false
-		 * 	row_numb!index <= row_numb!index
+		 * 	row_numb# <= row_numb#
 		 * 	sidebar_showed <= sidebar_showed
 		 * 	highlight <= highlight
 		 * ```
@@ -194,7 +194,7 @@ namespace $ {
 			
 			obj.text = () => this.value()
 			obj.render_visible_only = () => false
-			obj.row_numb = (index: any) => this.row_numb(index)
+			obj.row_numb = (id: any) => this.row_numb(id)
 			obj.sidebar_showed = () => this.sidebar_showed()
 			obj.highlight = () => this.highlight()
 			

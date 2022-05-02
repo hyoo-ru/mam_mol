@@ -45,10 +45,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Dot!id $mol_perf_sierp_dot
-		 * 	left <= left!id
-		 * 	top <= top!id
-		 * 	size <= size!id
+		 * Dot# $mol_perf_sierp_dot
+		 * 	left <= left#
+		 * 	top <= top#
+		 * 	size <= size#
 		 * 	text <= text
 		 * ```
 		 */
@@ -99,7 +99,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * left!id 0
+		 * left# 0
 		 * ```
 		 */
 		left(id: any) {
@@ -108,7 +108,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * top!id 0
+		 * top# 0
 		 * ```
 		 */
 		top(id: any) {
@@ -117,7 +117,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * size!id 25
+		 * size# 25
 		 * ```
 		 */
 		size(id: any) {
