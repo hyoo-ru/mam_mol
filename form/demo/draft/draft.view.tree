@@ -46,13 +46,13 @@ $mol_form_demo_draft $mol_example
 		<= Flow $mol_list rows /
 			<= Form $mol_form
 				body <= form_body /
-				submit?val <=> submit?val null
-				submit_allowed => submit_allowed
+				submit?event <=> publish?event null
+				submit_allowed => publish_allowed
 				buttons /
-					<= Submit $mol_button_major
-						title \Sign Up
-						click?val <=> submit?val null
-						enabled <= submit_allowed
+					<= Publish $mol_button_major
+						title \Publish
+						click?event <=> publish?event null
+						enabled <= publish_allowed
 					<= Result $mol_status
 						message <= result?val \
 	tags /

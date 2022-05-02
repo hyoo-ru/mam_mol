@@ -63,12 +63,12 @@ namespace $.$$ {
 			return false
 		}
 		
-		submit_allowed() {
-			return this.changed() && super.submit_allowed()
+		publish_allowed() {
+			return this.changed() && super.publish_allowed()
 		}
 		
 		@ $mol_action
-		submit( next? : Event ) {
+		publish( next? : Event ) {
 			
 			const model = this.model()
 			
