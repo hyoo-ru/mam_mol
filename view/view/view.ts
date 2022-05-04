@@ -13,6 +13,8 @@ namespace $ {
 	export function $mol_view_state_key( suffix : string ) {
 		return suffix
 	}
+	
+	const error_showed = new WeakSet< Error >()
 
 	/// Reactive statefull lazy ViewModel
 	export class $mol_view extends $mol_object {
@@ -231,13 +233,17 @@ namespace $ {
 				
 			} catch( error: any ) {
 				
+				$mol_fail_log( error )
+				
 				$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
 				
-				if( $mol_fail_log( error ) ) {
-					try {
-						( node as HTMLElement ).innerText = error.message || error
-					} catch {}
-				}
+				if( error_showed.has( error ) ) return node
+				
+				try {
+					( node as HTMLElement ).innerText = '\xA0\xA0' + ( error.message || error ) + '\xA0\xA0'
+				} catch {}
+				
+				error_showed.add( error )
 				
 			}
 			

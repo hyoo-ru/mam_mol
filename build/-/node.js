@@ -5932,6 +5932,8 @@ var $;
                     return res.redirect(301, `${match[1]}-/test.html${match[2] ?? ''}`);
                 }
                 const dir = root.resolve(req.path);
+                const build = this.build();
+                build.modEnsure(dir.path());
                 if (dir.type() === 'dir') {
                     const files = new Set(['-']);
                     for (const file of dir.sub()) {

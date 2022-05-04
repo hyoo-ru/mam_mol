@@ -120,6 +120,10 @@ namespace $ {
 				}
 				
 				const dir = root.resolve(req.path)
+				
+				const build = this.build()
+				build.modEnsure( dir.path() )
+				
 				if( dir.type() === 'dir' ) {
 					const files = new Set< string >([ '-' ])
 					for( const file of dir.sub() ) {

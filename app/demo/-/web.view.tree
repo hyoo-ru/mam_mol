@@ -3500,7 +3500,7 @@ $hyoo_js_eval $mol_book2
 					hint <= result_label
 			body /
 				<= Code $mol_textarea
-					hint @ \type something..
+					hint \javascript..
 					value?val <=> code?val \
 		<= Result_page $mol_page
 			title <= result_label @ \Result
