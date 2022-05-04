@@ -153,7 +153,7 @@ namespace $ {
 								background: hsl( 0deg, 0%, 0%, .05 )
 							}
 						</style>
-					` + [ ... files ].map( file => `<a href="${file}">${file}</a>` ).join('\n')
+					` + [ ... files ].sort().map( file => `<a href="${file}">${file}</a>` ).join('\n')
 					return res.end( html )
 				}
 				
