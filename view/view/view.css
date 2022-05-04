@@ -40,9 +40,9 @@
 	background-image: repeating-linear-gradient(
 		-45deg,
 		#f92323,
-		#f92323 10px,
-		#ff3d3d 10px,
-		#ff3d3d 30px
+		#f92323 .5rem,
+		#ff3d3d .5rem,
+		#ff3d3d 1.5rem
 	);
 	color: black;
 }
