@@ -1288,7 +1288,7 @@ declare namespace $ {
         handleRequest(req: typeof $node.express.request, res: typeof $node.express.response, next: () => any): Promise<any> | undefined;
         build(): $mol_build;
         generate(url: string): $mol_file[];
-        expressIndex(): (req: typeof $node.express.request, res: typeof $node.express.response, next: () => void) => void;
+        expressIndex(): (req: typeof $node.express.request, res: typeof $node.express.response, next: () => void) => void | import("express").Response<any, Record<string, any>>;
         port(): number;
         lines(next?: Map<import("ws"), string>): Map<import("ws"), string>;
         socket(): import("ws").Server<import("ws").WebSocket>;
