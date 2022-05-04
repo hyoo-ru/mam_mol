@@ -5923,7 +5923,7 @@ var $;
         }
         expressIndex() {
             return (req, res, next) => {
-                const match = req.url.match(/(.*[^\-]\/)([\?#].*)?$/);
+                const match = req.url.match(/(\/|.*[^\-]\/)([\?#].*)?$/);
                 if (!match)
                     return next();
                 const root = $mol_file.absolute(this.rootPublic());
