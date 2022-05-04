@@ -34,3 +34,17 @@ Returns content of Body.
 `foot() : []`
 
 Returns content of Foot.
+
+## Hint
+
+You can hide the header - override ```Head null```:
+
+```
+<= Page_without_head $mol_page
+	Head null
+	title <= Page_without_title @ \Sign Up
+	body / <= Page_without_form $mol_view
+	foot null
+```
+
+This will also work for the others: [Head](https://github.com/hyoo-ru/mam_mol/blob/master/page/page.view.tree#L4), [Body](https://github.com/hyoo-ru/mam_mol/blob/master/page/page.view.tree#L14), [Foot](https://github.com/hyoo-ru/mam_mol/blob/master/page/page.view.tree#L17).
