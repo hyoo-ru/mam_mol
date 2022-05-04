@@ -2368,6 +2368,8 @@ var $;
             catch (error) {
                 $mol_fail_log(error);
                 $mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
+                if (error instanceof Promise)
+                    return node;
                 if (error_showed.has(error))
                     return node;
                 try {
