@@ -443,6 +443,8 @@
     "$hyoo_js_eval",
     "$hyoo_js",
     "$mol_assert",
+    "$mol_icon_bookmark_outline",
+    "$mol_icon_bookmark",
     "$mol_icon_play",
     "$mol_toolbar_demo",
     "$mol_toolbar",

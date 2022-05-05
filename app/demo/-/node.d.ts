@@ -7331,6 +7331,18 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_bookmark extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_bookmark_outline extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_play extends $mol_icon {
         path(): string;
     }
@@ -7340,11 +7352,25 @@ declare namespace $ {
     class $hyoo_js_eval extends $mol_book2 {
         Placeholder(): any;
         plugins(): readonly any[];
+        bookmark_list(next?: any): readonly string[];
         pages(): readonly any[];
         Log(id: any): $$.$hyoo_js_eval_log;
         Theme(): $$.$mol_theme_auto;
+        Сlear_icon(): $mol_icon_plus;
+        Сlear(): $$.$mol_link;
         Source(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
+        menu_link_title(id: any): string;
+        menu_link_code(id: any): string;
+        Menu_link(id: any): $$.$mol_link;
+        menu(): readonly any[];
+        Menu(): $$.$mol_list;
+        Menu_page(): $mol_page;
+        perf(): string;
+        Perf(): $$.$mol_link_iconed;
+        Bookmark_icon(): $mol_icon_bookmark_outline;
+        bookmark(val?: any): boolean;
+        Bookmark(): $mol_check_icon;
         Run_icon(): $mol_icon_play;
         run(val?: any): boolean;
         Run(): $mol_check_icon;
@@ -7390,7 +7416,13 @@ declare namespace $.$$ {
     class $hyoo_js_eval extends $.$hyoo_js_eval {
         code(next?: string): string;
         run(next?: boolean): boolean;
+        perf(): string;
         pages(): $mol_page[];
+        bookmark_list(next?: string[]): readonly string[];
+        bookmark(next?: boolean): boolean;
+        menu(): $mol_link[];
+        menu_link_code(index: number): string;
+        menu_link_title(index: number): string;
         code_enhanced(): string;
         execute(): any[];
         spy(args: () => any[]): void;

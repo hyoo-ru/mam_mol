@@ -3481,19 +3481,63 @@ $mol_textarea_demo $mol_example_small
 		\code
 		\syntax highlighting
 
+$mol_icon_bookmark $mol_icon path \M17,3H7C5.9,3 5,3.9 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z
+
+$mol_icon_bookmark_outline $mol_icon path \M17,18L12,15.82L7,18V5H17M17,3H7C5.9,3 5,3.9 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z
+
 $mol_icon_play $mol_icon path \M8,5.14V19.14L19,12.14L8,5.14Z
 
 $hyoo_js_eval $mol_book2
 	Placeholder null
 	plugins /
 		<= Theme $mol_theme_auto
+	bookmark_list? /string
+		\
+			\// Example Notebook
+			\
+			\// load external script
+			\const {
+			\	$mol_compare_deep: compare
+			\} = $mol_import.script(
+			\	'https://unpkg.com/mol_compare_deep'
+			\)
+			\
+			\// local vars
+			\const one = [1]
+			\one.push( one )
+			\const left =  { a: [1,one], b:    one  }
+			\const right = { a:    one,  b: [1,one] }
+			\
+			\// result
+			\compare( left, right )
 	pages /
-		<= Code_page $mol_page
-			title @ \Code
+		<= Menu_page $mol_page
+			title @ \Bookmarks
 			tools /
+				<= Сlear $mol_link
+					arg * code null
+					sub /
+						<= Сlear_icon $mol_icon_plus
 				<= Source $mol_link_source
 					uri \https://github.com/hyoo-ru/eval.js.hyoo.ru
 				<= Lights $mol_lights_toggle
+			body /
+				<= Menu $mol_list
+					rows <= menu /
+						<= Menu_link*default $mol_link
+							title <= menu_link_title* \
+							arg * code <= menu_link_code* \
+		<= Code_page $mol_page
+			title @ \Code
+			tools /
+				<= Perf $mol_link_iconed
+					title \
+					hint @ \Measure Performance
+					uri <= perf \
+				<= Bookmark $mol_check_icon
+					Icon <= Bookmark_icon $mol_icon_bookmark_outline
+					checked?val <=> bookmark?val false
+					hint @ \Bookmark
 				<= Run $mol_check_icon
 					Icon <= Run_icon $mol_icon_play
 					checked?val <=> run?val true
