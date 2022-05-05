@@ -1,6 +1,6 @@
 # $mol_time
 
-Small, simple, powerfull, and fast TypeScript/JavaScript library for proper date/time/duration/interval arithmetic.
+Small, simple, powerful, and fast TypeScript/JavaScript library for proper date/time/duration/interval arithmetic.
 
 # Installation
 

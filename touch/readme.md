@@ -1,6 +1,6 @@
 # $mol_touch
 
-Plugin for touch gestures
+Plugin for touch gestures.
 
 ## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_touch_demo)
 

@@ -5,6 +5,7 @@ The base class for all visual components. It provides the infrastructure for rea
 ## Properties
 
 **`dom_name()' : string`**
+
 Returns name of the DOM-element creating for component, if the element with appropriate id is not presented at DOM yet.
 
 **`dom_name_space() = 'http://www.w3.org/1999/xhtml'`**
@@ -12,6 +13,7 @@ Returns name of the DOM-element creating for component, if the element with appr
 Returns namespaceURI for the DOM element. 
 
 **`sub() : Array< $mol_view | Node | string | number | boolean > = null `**
+
 Returns list of child components/elements/primitives. If the list have not been set (by default), then the content of the DOM-element would not be changed in way, it's helpful for manual operating with DOM.
 
 **`context( next? : $ ) : $`**
@@ -40,7 +42,7 @@ Returns dictionary of fields, which is necessary to set to the DOM-element after
 
 **`style() : { [ key : string ] : string | number }`**
 
-Returns dictionary of styles. Numbers will be convertes to string with "px" suffix.
+Returns dictionary of styles. Numbers will be converted to string with "px" suffix.
 
 **`event() : { [ key : string ] : ( event : Event )=> void }`**
 
@@ -52,10 +54,9 @@ Determines, whether the component is focused or not at this time. If any inserte
 
 **`plugins() : Array< $mol_view > = null`**
 
-It is an array of plugins. Plugin is a component which can be supplemented with the logic of the current components.
-For example
+Array of plugins. Plugin is a component which can be supplemented with the logic of the current components.
 
-In the example we create a list with navigation (using $mol_nav)
+For example, list component with keyboard navigation (used `$mol_nav` plugin):
 
 ```
 <= Options $mol_list
@@ -67,9 +68,9 @@ In the example we create a list with navigation (using $mol_nav)
 
 ## *.view.tree
 
-*view.tree* - is a declarative language of describing components, based on [format tree](https://github.com/nin-jin/tree.d). In a file could be plenty of components defined in series, but better way is put every component in a separate file, except very trivial cases.
-To create a new component it's enough to inherit this from any existing one.
-Names of the components should begin with `$` and be unique globally accordance with principles presented on [MAM](https://github.com/eigenmethod/mam). For example, let's declare the component `$my_button` extended from `$mol_view`:
+*view.tree* - is a declarative language of describing components, based on [tree format](https://github.com/nin-jin/tree.d). One file can have multiple component definitions, but better to put every component in a separate file, except in very trivial cases.
+To create a new component in `view.tree` file you must inherit it from any existing one or `$mol_view`.
+Name of the component should begin with `$` and be unique globally accordance with principles presented on [MAM](https://github.com/eigenmethod/mam). For example, let's declare the component `$my_button` extended from `$mol_view`:
 
 ```tree
 $my_button $mol_view
@@ -81,7 +82,7 @@ It translates to (every *.view.tree code would be translated to *.view.tree.ts):
 namespace $ { export class $my_button extends $mol_view {} }
 ```
 
-While inheritance there is a possibility to declare additional properties or overload existing (but types of properties should match). For example lets overload a `uri` property with `"https://example.org"` string, and `sub` - with array of one string `"Click me!"`, besides, lets declare a new property `target` with `"_top"` value by default. (it's important to mark that a value by default is necessary when declaring a property):  
+When inheriting, it is possible to declare additional properties or overload existing ones (but the property type must match). For example, lets overload a `uri` property with `"https://example.org"` string, and `sub` - with array of one string `"Click me!"`, besides, lets declare a new property `target` with `"_top"` value by default (default value is necessary when declaring a new property):
 
 ```tree
 $my_example $mol_link
@@ -94,22 +95,34 @@ $my_example $mol_link
 ```typescript
 namespace $ { export class $my_example extends $mol_link {
 
-	uri() {
-		return "https://example.org"
-	}
+	uri() { return "https://example.org" }
 
-	sub() {
-		return [ "Click me!" ]
-	}
+	sub() { return [ "Click me!" ] }
 
-	target() {
-		return "_top"
-	}
-
+	target() { return "_top" }
 } }
 ```
 
-Nodes beginning with `-` - would be ignored, it allows to use them for commenting and temporary disable subtree. Nodes beginning with `$` - is name of component. `/` - any list should begin with this symbol. `\` - should be preceded any raw data, which can contain entirely any data until the end of the line, `@` marks string for extraction to separate `*.locale=en.json` file. Numbers, booleans values and `null` is being wrote as it is, without any prefixes:
+Note: For better readability, a single child node in a tree file is often written on a single line. You can expand all nodes in the previous example:
+
+```tree
+$my_example
+	$mol_link
+		uri
+			\https://example.org
+		sub
+			/
+				\Click me!
+		target
+			\_top
+```
+
+Node where name starts with `$` - name of component.
+Child nodes beginning with node `/` - list. You can set type of list, e.g `/number`, `/$mol_view` for better type checking.
+Text after `\` - raw data which can contain entirely any data until the end of the line.
+Node `@` marks string for extraction to separate `*.locale=en.json` file and used for i18n translation, e.g `@ \Values example`.
+Numbers, booleans values and `null` is being wrote as it is, without any prefixes:
+Nodes after `-` are ignored, you can use them for commenting and temporary disable subtree.
 
 ```tree
 $my_values $mol_view
@@ -140,7 +153,7 @@ namespace $ { export class $my_values extends $mol_view {
 } }
 ````
 
-Dictionary (correspondence keys to their values) could be declared through a node `*` (you can use `^` to inherit pairs from superclass), through which are set values of attributes to DOM-element:
+Dictionary (correspondence keys to their values) could be declared through a node `*` (you can use `^` to inherit pairs from superclass). For example, set DOM-element's attribute values:
 
 ```tree
 $my_number $mol_view
@@ -156,9 +169,7 @@ $my_number $mol_view
 ```typescript
 namespace $ { export class $my_number extends $mol_view {
 
-	dom_name() {
-		return "input"
-	}
+	dom_name() { return "input" }
 
 	attr() {
 		return { ...super.attr() ,
@@ -167,11 +178,10 @@ namespace $ { export class $my_number extends $mol_view {
 			"max" : "20" ,
 		}
 	}
-
 } }
 ```
 
-We could set value in the same way for fields of a DOM-element:
+To set a value for a DOM element's fields:
 
 ```tree
 $my_scroll $mol_view
@@ -188,11 +198,10 @@ namespace $ { export class $my_scroll extends $mol_view {
 			"scrollTop" : 0 ,
 		}
 	}
-
 } }
 ```
 
-And styles too:
+To set styles:
 
 ```tree
 $my_rotate $mol_view
@@ -209,11 +218,10 @@ namespace $ { export class $my_rotate extends $mol_view {
 			"transform" : "rotate( 180deg )" ,
 		}
 	}
-
 } }
 ```
 
-As a value we could bring not only constants, but also a content of another properties through one-way binding. For example, lets declare two text properties `hint` and `text`, and then use them for forming a dictionary `field` and a list `sub`:
+As a value, we could cast not only constants, but also the contents of other properties through `<=` one-way binding. For example, let's declare two text properties `hint` and `text` and then use them for the `field` dictionary and `sub` list:
 
 ```tree
 $my_hint $mol_view
@@ -229,13 +237,9 @@ $my_hint $mol_view
 ```typescript
 namespace $ { export class $my_hint extends $mol_view {
 
-	hint() {
-		return "Default hint"
-	}
+	hint() { return "Default hint" }
 
-	text() {
-		return "Default text"
-	}
+	text() { return "Default text" }
 
 	field() {
 		return { ...super.field() ,
@@ -246,11 +250,10 @@ namespace $ { export class $my_hint extends $mol_view {
 	sub() {
 		return [ this.text() ]
 	}
-
 } }
 ```
 
-Often it is convenient to combine declaration of property and usage of this one. The next example is equals to the previous completely:
+It's often convenient to combine declaring a property and using it. The following example is exactly the same as the previous one:
 
 ```tree
 $my_hint $mol_view
@@ -260,7 +263,8 @@ $my_hint $mol_view
 	sub /
 		<= text \Default text
 ```
-Reactions on DOM-events are required for two-way binding. For example, lets point out, that objects of `click` event is necessary to put in eventRemove property, which we declare right here and set it a default value `null`:
+
+Reactions on DOM-events are required for two-way binding. For example, lets point out, that objects of `click` event is necessary to put in `remove` property, which we declare right here and set it a default value `null`:
 
 ```tree
 $my_remover $mol_view
@@ -288,11 +292,10 @@ namespace $ { export class $my_remover extends $mol_view {
 	sub() {
 		return [ "Remove" ]
 	}
-
 } }
 ```
 
-We could declare as value an instance of another class directly. In the next example it is being declared a property `List`, and which value would be a component type of `$mol_list_demo_tree`, and then it put into a list of child components `sub`:
+You can declare an instance of another class as a value directly. The following example declares a `List` property with the value of instance `$mol_list_demo_tree` and then places it in a list of `sub` child components:
 
 ```tree
 $my_app $mol_view
@@ -317,7 +320,7 @@ namespace $ { export class $my_app extends $mol_view {
 } }
 ```
 
-A property of a nested component could be overloaded also: 
+Properties of a nested component can be overloaded, below overloaded `title` and `content` properties of `$mol_label` component: 
 
 ```tree
 $my_name $mol_view
@@ -341,11 +344,11 @@ namespace $ { export class $my_name extends $mol_view {
 	sub() {
 		return [ this.Info() ]
 	}
-
 } }
-
 ```
-Properties of parent and child component could be linked. At the following example we declare reactive property `name`, and we say to child component `Input` use property `name` as its own property `value`, we also say to a child component `Output` we want to property `name` to be outputted at inside of this one. In this way components `Input` and `Output` are become linked through parent's property `name` and changing value in `Input` would lead to updating output:
+
+Properties of parent and child components can be linked. In the following example, we declare a reactive `name` property and tell the `Input` child component to use the `name` property as its own `value` property, we also tell the `Output` child component that we want the `name` property to output inside that.
+The `Input` and `Output` components are linked through the `name` parent property, and changing the value in the `Input` will also update the `Output`:
 
 ```tree
 $my_greeter $mol_view
@@ -393,7 +396,7 @@ namespace $ { export class $my_greeter extends $mol_view {
 ```
 $my_app $mol_scroll
 	sub /
- 		<= Page $mol_page
+		<= Page $mol_page
 			Title => Page_title -
 			head /
 				<= Back $mol_button_minor
@@ -402,81 +405,95 @@ $my_app $mol_scroll
 ```
 
 ```typescript
-namespace $ { export class $my_app extends $mol_scroll {
-
-	/// Title => Page_title -
-	Page_title() {
-		return this.Page().Title()
+namespace $ {
+	export class $my_app extends $mol_scroll {
+		
+		// sub / <= Page
+		sub() {
+			return [
+				this.Page()
+			] as readonly any[]
+		}
+		
+		// Back $mol_button_minor title \Back
+		@ $mol_mem
+		Back() {
+			const obj = new this.$.$mol_button_minor()
+			
+			obj.title = () => "Back"
+			
+			return obj
+		}
+		
+		// Page_title
+		Page_title() {
+			return this.Page().Title()
+		}
+		
+		// Page $mol_page
+		// 	Title => Page_title
+		// 	head /
+		// 		<= Back
+		// 		<= Page_title
+		@ $mol_mem
+		Page() {
+			const obj = new this.$.$mol_page()
+			
+			obj.head = () => [
+				this.Back(),
+				this.Page_title()
+			] as readonly any[]
+			
+			return obj
+		}
 	}
-
-	/// Back $mol_button_minor title \Back
-	@ $mol_mem
-	Back() {
-		const obj = new $mol_button_minor
-		obj.title = () => "Back"
-		return obj
-	}
-
-	/// Page $mol_page 
-	/// 	Title => Page_title 
-	/// 	head / 
-	/// 		<= Back 
-	/// 		<= Page_title
-	@ $mol_mem
-	Page() {
-		const obj = new $mol_page
-		obj.head = () => [ this.Back() , this.Page_title() ]
-		return obj
-	}
-
-	/// sub / <= Page
-	sub() {
-		return [ this.Page() ]
-	}
-
-} }
+}
 ```
 
-There are certain properties that depending on the key return different values. A typical example - a list of strings. Each line - a separate component that is available for the unique key. The listing of such properties is `!` after the name of the key:
+There are certain properties that return different values depending on the key. A typical example of is a list of strings. Each row is a separate component, accessed by a unique key. The list of such properties has a `*` after the name:
 
 ```tree
 $my_tasks $mol_list
 	sub <= task_rows /
-	Task_row!key $mol_view
+	Task_row* $mol_view
 		sub /
-			<= task_title!key <= task_title_default \
+			<= task_title* <= task_title_default \
 ```
 
 ```typescript
-namespace $ { export class $my_tasks extends $mol_list {
-
-	sub() {
-		return this.task_rows()
-	}
-
-	task_rows() {
-		return []
-	}
-
-	@ $mol_mem
-	Task_row( key : any ) {
-		const obj = new $mol_view
-		obj.sub = () => [ this.task_title( key ) ]
-		return obj
-	}
-
-	task_title( key : any ) {
-		return this.task_title_default()
-	}
-
-	task_title_default() {
-		return ""
-	}
-
-} }
+namespace $ {
+	export class $my_tasks extends $mol_list {
+		
+		// sub <= task_rows
+		sub() { return this.task_rows() }
+		
+		// Task_row* $mol_view sub / <= task_title*
+		@ $mol_mem_key
+		Task_row(id: any) {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => [
+				this.task_title(id)
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		// task_rows /
+		task_rows() { return [] as readonly any[] }
+		
+		// task_title_default \
+		task_title_default() { return "" }
+		
+		// task_title* <= task_title_default
+		task_title(id: any) { return this.task_title_default() }
+	}	
+}
 ```
 
-Here we declared the property `task_row`, which takes on input some key and returns an unique instance of `$mol_view` for every key, with overloaded property `sub`, which outputs appropriate `task_title` for every `task_row`, and in its turn `task_title` returns the content of property `default_title` independently of the key, which is equal to empty string initially. Further overloading any of these properties, we could change any aspect of component behavior. You can override `task_rows` in subclass to generate rows as you want. In example:
+In above example we declared the property `Task_row`, which takes on input some ID-key and returns an unique instance of `$mol_view` for every key. 
+`Task_row` has overloaded property `sub` that outputs appropriate `task_title` for every `Task_row` (`task_title` returns content of property `task_title_default`), which is equal to empty string initially.
+Further, by overloading any of these properties, we can change any aspect of the component's behavior. You can override `task_rows` in a subclass to generate rows of your choice. For example":
 
 ```
 task_rows() {
@@ -484,21 +501,29 @@ task_rows() {
 	for( let i = 0 ; i < 10 ; ++ i ) rows.push( this.Task_row( i ) )
 	return rows
 }
+
+task_title(id: any) {
+   return `Title - ${id}`
+}
 ```
+
+Note: There is old way howto to use property with id. Instead of `*` you can write `!id`. E.g. instead of `task_title*` you can use `task_title!key`. You might find such usage in old examples, tutorials or old projects.
+
+
 ### All special chars
 
 - `-` - remarks, ignored by code generation
-- `$` - component name prefix
-- `/` - array
+- `$` - component name prefix, e.g `$mol_button`
+- `/` - array, optionally you can set type of array, e.g `sub /number`
 - `*` - dictionary (string keys, any values)
 - `^` - return value of the same property from super class
-- `\` - raw string
-- `@` - localized string
+- `\` - raw string, e.g. `message \Hello`
+- `@` - localized string, e.g. `message @ \Hello world`
 - `<=` - read only provide property from owner to sub component
 - `=>` - read only provide property from sub component to owner
 - `<=>` - fully replace sub component property by owner's one
-- `!` - property takes key as first argument
-- `?` - property can be changed by provide additional optional argument
+- property + `*` or `!` - property takes ID as first argument, e.g. `Task_row* $mol_view`
+- property + `?` - property can be changed by providing an additional optional argument, e.g. `value <=> name?val \`
 
 ## view.ts
 
@@ -511,40 +536,54 @@ $my_hello $mol_view
 	sub /
 		<= Input $mol_string
 			hint \Name
-			value <=> name?val \
+			value?val <=> name?val \
 		<= message \
 ```
 
-Here we declared 2 properties: `name` for getting value from `Input` and `message` for output the value. It would be translated into following file `./my/hello/-view.tree/hello.view.tree.ts`: 
+Here we have declared 2 properties: `name` to get the value from `Input` and `message` to output the value (we will override this property below).
+It will be translated into following file `./my/hello/-view.tree/hello.view.tree.ts`: 
 
 ```typescript
-namespace $ { export class $my_hello extends $mol_view {
-
-	@ $mol_mem
-	name( next? : any ) {
-		return ( next !== undefined ) ? next : ""
+namespace $ {
+	export class $my_hello extends $mol_view {
+		
+		// sub /
+		// 	<= Input
+		// 	<= message
+		sub() {
+			return [
+				this.Input(),
+				this.message()
+			] as readonly any[]
+		}
+		
+		// name?val \
+		@ $mol_mem
+		name(val?: any) {
+			if ( val !== undefined ) return val as never
+			return ""
+		}
+		
+		// Input $mol_string
+		// 	hint \Name
+		// 	value?val <=> name?val
+		@ $mol_mem
+		Input() {
+			const obj = new this.$.$mol_string()
+			
+			obj.hint = () => "Name"
+			obj.value = (val?: any) => this.name(val)
+			
+			return obj
+		}
+		
+		// message \
+		message() { return "" }
 	}
-
-	@ $mol_mem
-	Input( next? : any ) {
-		const obj = $mol_string
-		obj.hint = () => "Name"
-		obj.value = ( next? : any ) => this.name( next )
-		return obj
-	}
-
-	message() {
-		return ""
-	}
-
-	sub() {
-		return [ this.Input() , this.message() ]
-	}
-
-} }
+}
 ```
 
-For now we could "mix" into this class our behavior through `./my/hello/hello.view.ts`:
+Now let's override the `message` method, which will use the `name` property in `./my/hello/hello.view.ts` behaivour file. `message` will depend on the `name` property entered by the user:
 
 ```typescript
 namespace $.$$ {
@@ -558,8 +597,6 @@ namespace $.$$ {
 	}
 }
 ```
-
-Here we linked our properties `message` and `name` through the expression. So now wherever we use `$my_hello`, the value `message` would be depend on `name` property entered by a user.
 
 ## IDE Support
 

@@ -1,9 +1,9 @@
 # $mol_ghost
 
-Mixin view logic to dom node of another component.
+Mixin view logic to DOM node of another component.
 
 ## Properties
 
 **`Sub() : $mol_view`**
 
-Component that provides dom node.
+Component that provides DOM node.

@@ -97,7 +97,7 @@ trans.abort()
 await trans.commit()
 ```
 
-Uncommited transaction without errors will be commitetd automatically. Any modification error aborts transaction.
+Uncommitted transaction without errors will be committed automatically. Any modification error aborts transaction.
 
 ## Documents Life Cycle
 
