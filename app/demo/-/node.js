@@ -27587,7 +27587,7 @@ var $;
             if (next !== undefined)
                 return next;
             return [
-                "// Example Notebook\n\n// load external script\nconst {\n\t$mol_compare_deep: compare\n} = $mol_import.script(\n\t'https://unpkg.com/mol_compare_deep'\n)\n\n// local vars\nconst one = [1]\none.push( one )\nconst left =  { a: [1,one], b:    one  }\nconst right = { a:    one,  b: [1,one] }\n\n// result\ncompare( left, right )"
+                "// Example Notebook\n\n// load external script\nconst {\n\t$mol_compare_deep: compare\n} = $mol_import.module(\n\t'https://esm.sh/mol_compare_deep'\n).default\n\n// local vars\nconst one = [1]\none.push( one )\nconst left =  { a: [1,one], b:    one  }\nconst right = { a:    one,  b: [1,one] }\n\n// result\ncompare( left, right )"
             ];
         }
         pages() {
@@ -28013,7 +28013,7 @@ var $;
             }
             code_enhanced() {
                 let code = this.code();
-                code = code.replaceAll(/^(?:const|var|let) +(\w+)/mig, (found, name) => `this.spy( ()=>[ "${name} =", ${name} ] )\n${found}`);
+                code = code.replaceAll(/^(\s*)(?:const|var|let) +(\w+)/mig, (found, indent, name) => `${indent}this.spy( ()=>[ "${name} =", ${name} ] )\n${found}`);
                 return code;
             }
             execute() {
