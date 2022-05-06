@@ -20,8 +20,8 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		items( next? : $mol_github_issue[] , force? : $mol_mem_force ) {
-			return this.json( undefined , force ).items.map( json => $mol_github_issue.item( json.url! ) )
+		items( next? : $mol_github_issue[] | null ) {
+			return this.json( null ).items.map( json => $mol_github_issue.item( json.url! ) )
 		}
 
 		resource_url() {
