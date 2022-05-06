@@ -32,13 +32,13 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		json( next? : Partial< Raw > , force? : $mol_mem_force ) {
+		json( next? : null | Partial< Raw > ) {
 			
 			let json : Raw | undefined
 			let uri = this.uri()			
 			const cache = $mol_model.cache< Raw >()
 
-			if( !next && !force ) {
+			if( !next && next !== null ) {
 				json = cache[ uri ]
 				if( json != undefined ) return json
 			}

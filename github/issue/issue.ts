@@ -70,8 +70,9 @@ namespace $ {
 			return this.json().title
 		}
 
+		@ $mol_mem
 		text() {
-			return this.json().body
+			return this.json().body ?? this.json( null ).body ?? 'x'
 		}
 
 		closer() {
@@ -122,7 +123,7 @@ namespace $ {
 
 		@ $mol_mem
 		items( next? : $mol_github_comment[] , force? : $mol_mem_force ) {
-			return this.json( undefined , force ).map( json => $mol_github_comment.item( json.url! ) )
+			return this.json( null ).map( json => $mol_github_comment.item( json.url! ) )
 		}
 
 		@ $mol_mem_key
@@ -143,7 +144,7 @@ namespace $ {
 				const comment = $mol_github_comment.item( json.url! )
 				comment.json_update( json )
 
-				this.json( undefined , $mol_mem_force_cache )
+				this.json( null )
 				
 				return comment
 
