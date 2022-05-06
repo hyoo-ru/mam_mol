@@ -413,6 +413,7 @@ $mol_app_questions $mol_book2
 		text <= question_answer* \
 	-
 	Question_link* $mol_link
+		minimal_width 64
 		minimal_height 64
 		arg <= question_arg_by_index* *
 		sub /

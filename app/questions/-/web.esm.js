@@ -6730,6 +6730,7 @@ var $;
         }
         Question_link(id) {
             const obj = new this.$.$mol_link();
+            obj.minimal_width = () => 64;
             obj.minimal_height = () => 64;
             obj.arg = () => this.question_arg_by_index(id);
             obj.sub = () => [

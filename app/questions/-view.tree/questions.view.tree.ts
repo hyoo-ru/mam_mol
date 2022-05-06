@@ -84,6 +84,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Question_link* $mol_link
+		 * 	minimal_width 64
 		 * 	minimal_height 64
 		 * 	arg <= question_arg_by_index*
 		 * 	sub /
@@ -95,6 +96,7 @@ namespace $ {
 		Question_link(id: any) {
 			const obj = new this.$.$mol_link()
 			
+			obj.minimal_width = () => 64
 			obj.minimal_height = () => 64
 			obj.arg = () => this.question_arg_by_index(id)
 			obj.sub = () => [
