@@ -12,6 +12,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * spread?val \
+		 * ```
+		 */
+		@ $mol_mem
+		spread(val?: any) {
+			if ( val !== undefined ) return val as never
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * spreads *
 		 * ```
 		 */
@@ -102,6 +113,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * menu_foot /
+		 * ```
+		 */
+		menu_foot() {
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * links /
 		 * ```
 		 */
@@ -129,6 +150,7 @@ namespace $ {
 		 * Menu $mol_page
 		 * 	title <= menu_title
 		 * 	tools <= menu_tools
+		 * 	foot <= menu_foot
 		 * 	body / <= Links
 		 * ```
 		 */
@@ -138,6 +160,7 @@ namespace $ {
 			
 			obj.title = () => this.menu_title()
 			obj.tools = () => this.menu_tools()
+			obj.foot = () => this.menu_foot()
 			obj.body = () => [
 				this.Links()
 			] as readonly any[]

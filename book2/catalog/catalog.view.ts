@@ -19,8 +19,8 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		spread() {
-			return this.$.$mol_state_arg.value( this.param() ) ?? ''
+		spread( next?: string ) {
+			return this.$.$mol_state_arg.value( this.param(), next ) ?? ''
 		}
 		
 		arg( spread: string ) {

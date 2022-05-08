@@ -2897,6 +2897,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_book2_catalog extends $mol_book2 {
         param(): string;
+        spread(val?: any): string;
         spreads(): {};
         Spread(): $mol_view;
         pages(): readonly any[];
@@ -2904,6 +2905,7 @@ declare namespace $ {
         Spread_close(): $$.$mol_link;
         menu_title(): string;
         menu_tools(): readonly any[];
+        menu_foot(): readonly any[];
         links(): readonly any[];
         Links(): $$.$mol_list;
         Menu(): $mol_page;
@@ -2922,7 +2924,7 @@ declare namespace $.$$ {
         pages(): any[];
         links(): $mol_link[];
         Spread(): any;
-        spread(): string;
+        spread(next?: string): string;
         arg(spread: string): {
             [x: string]: string | null;
         };
