@@ -8,7 +8,7 @@ All globally defined entities are accessible from context:
 Promise === $.Promise === $.$$.Promise
 ```
 
-Ambient context can be overrided in instance:
+Ambient context can be overridden in instance:
 
 ```typescript
 class Foo extends $mol_object2 {

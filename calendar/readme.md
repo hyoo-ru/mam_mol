@@ -18,7 +18,7 @@ Displayed month as moment.
 
 **`month_string() : string`**
 
-Displayed month as string in iso format like `2017-01`.
+Displayed month as string in ISO format like `2017-01`.
 
 ## Days modificators
 

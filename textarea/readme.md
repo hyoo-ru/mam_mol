@@ -1,6 +1,6 @@
 # $mol_textarea
 
-Input field to enter multiple line text.
+An input field for entering multiline text.
 
 ## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_textarea_demo)
 
@@ -21,8 +21,8 @@ Property `value` is a currently displayed text.
 
 **`hint() : string`**
 
-To display placeholder text on our `$mol_string` element we should use `hint` property.
+Placeholder text in the absence of any value.
 
 **`enabled() : boolean`**
 
-Allowed text changing or not.
+Whether the input is non-interactive.

@@ -519,8 +519,8 @@ Note: There is old way howto to use property with id. Instead of `*` you can wri
 - `^` - return value of the same property from super class
 - `\` - raw string, e.g. `message \Hello`
 - `@` - localized string, e.g. `message @ \Hello world`
-- `<=` - read only provide property from owner to sub component
-- `=>` - read only provide property from sub component to owner
+- `<=` - owner to sub component data binding
+- `=>` - sub component to owner data binding
 - `<=>` - fully replace sub component property by owner's one
 - property + `*` or `!` - property takes ID as first argument, e.g. `Task_row* $mol_view`
 - property + `?` - property can be changed by providing an additional optional argument, e.g. `value <=> name?val \`
