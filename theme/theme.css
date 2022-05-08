@@ -22,7 +22,7 @@
 	--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 50%, 1 );
 	
 	--mol_theme_control: hsl( var(--mol_theme_hue), 50%, calc( 50% - 5% * var(--mol_theme_luma) ) );
-	--mol_theme_current: hsl( calc( var(--mol_theme_hue) + 120deg ), 70%, calc( 60% - 0% * var(--mol_theme_luma) ) );
+	--mol_theme_current: hsl( calc( var(--mol_theme_hue) + 120deg ), 70%, calc( 50% - 10% * var(--mol_theme_luma) ) );
 	--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 240deg ), 90%, calc( 50% - 15% * var(--mol_theme_luma) ) );
 	
 }
