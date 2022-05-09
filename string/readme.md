@@ -25,4 +25,4 @@ Placeholder text in the absence of any value.
 
 **`enabled() : boolean`**
 
-Whether the input is non-interactive.
+Whether the input is interactive.

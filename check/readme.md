@@ -41,4 +41,4 @@ Returns checked state of checkbox. User can switch them when checkbox is enabled
 
 **`enabled() : boolean`**
 
-Whether the control is non-interactive.
+Whether the control is interactive.

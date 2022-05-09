@@ -27,4 +27,4 @@ Keys are possible values of `value` property. That options are labels which woul
 
 **`enabled() : boolean`**
 
-Property that turning on or off our switcher.
+Whether the switch is interactive.
