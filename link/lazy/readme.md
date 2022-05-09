@@ -1,6 +1,6 @@
 # $mol_link_lazy
 
-Hyperlink with lazy generated (on `mousedown` event) uri. 
+Hyperlink with lazy generated (on `mousedown` event) URI. 
 
 ## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_link_lazy_demo)
 
@@ -32,6 +32,6 @@ override uri_generated() {
 
 **`uri_generated() : string`**
 
-Returns the string that is set in the uri when the link is clicked (on `mousedown` event).
+Returns the string that is set in the URI when the link is clicked (on `mousedown` event).
 
 

@@ -1,6 +1,6 @@
 # $mol_book2
 
-Root component for adaptivity to various sreen sizes. Implements booklet UX.
+Root component for adaptivity to various screen sizes. Implements booklet UX.
 
 ## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_book2_demo)
 
