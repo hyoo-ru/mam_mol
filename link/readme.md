@@ -8,7 +8,7 @@ Dynamic hyperlink. It can to add, change or remove parameters. The link leads to
 
 **`arg() : { [ name : string ] : string }`**
 
-Returns patch that will be applied to page url. 
+Returns patch that will be applied to page URL. 
 
 ```
 <= Close $mol_link
@@ -20,7 +20,7 @@ Returns patch that will be applied to page url.
 
 **`uri() : string`**
 
-Returns target uri.
+Returns target URI.
 
 ```
 <= Example $mol_link

@@ -1,6 +1,6 @@
 # $mol_number
 
-Component to view and edit some number value.
+Component for entering, incrementing and decrementing numeric values.
 
 ## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_number_demo)
 
@@ -22,29 +22,25 @@ Property `value` is a currently displayed number.
 
 **`hint() : string`**
 
-Property `hint` inherits from `$mol_string` component
+Property `hint` inherits from `$mol_string` component.
 
 **`enabled() : boolean`**
 
-Property `enabled` inherits from $mol_string component
+State of $mol_string component.
 
-But in `$mol_number` added some features to manage states of any part of component like buttons or input field.
-We can turn off `$mol_number` component separately. To do it we should use some of the following properties:
-* **`dec_enabled() : boolean`** - property responds for state of decrease button
-* **`inc_enabled() : boolean`** - property responds for state of increase button
-* **`string_enabled() : boolean`** - property responds for state of input
+It is possible to set state for different part of component: input field, increase/decrease buttons:
+* **`string_enabled() : boolean`**
+* **`inc_enabled() : boolean`**
+* **`dec_enabled() : boolean`**
 
 **`precision() : number`**
 
-`$mol_number` can display numbers in any format user select for. `precision` is alias for `precisionView` and `precisionChange`.
+Precision for input field step value for increase/decrease buttons. You can set individually precision and step value by using `precision_view` and `precision_change` properties.
 
 **`precision_view() : boolean`**
 
-For example if we want to show a number in fixed-point notation
-we should set to `precisionView` property to a value that would be less then `0`. For example if we want to display 
-number in `0.xx` format we should set `precisionView` to `0.01`.  
+Precision of the input field. For example, set `precision_view` to `0.01` for `0.xx` number format.
 
 **`precision_change() : number`**
 
-Also we can set `$mol_number` how it should increase of decrease the value in it's input. If we set `precisionChange` any number,
-the value in its input field will be increased or decreased on this number.
+Step value for increase/decrease buttons.

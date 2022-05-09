@@ -1,6 +1,6 @@
 # $mol_bench
 
-Benchmark results visualisator.
+Benchmark results visualizer.
 
 ## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_bench_demo)
 

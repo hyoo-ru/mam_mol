@@ -7,10 +7,10 @@ Tiny undo/redo typescript library for any mutable objects.
 - **Story** - Full history (past and future). Contains list of Twists.
 - - **Twist** - Atomic changeset. Contains list of Steps to apply and list of steps to rollback.
 - - - **Step** - Change of one field of one object to one value.
-- - **Draft** - Transaction which can be rollbacked or commited.
+- - **Draft** - Transaction which can be roll back or committed.
 - **Tell** - Action to enable tracking.
 - **Skip** - Action to skip tracking.
-- **Hero** - Trackable property.
+- **Hero** - Tracked property.
 
 ## Usage
 

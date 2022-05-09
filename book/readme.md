@@ -19,7 +19,7 @@ $my_app $mol_book
 
 `pages() : $mol_view[]`
 
-The array of "pages"
+The array of "pages".
 
 `event_front_up( next? : Event ) : Event`
 
@@ -27,4 +27,4 @@ Pop left front page.
 
 `event_front_down( next? : Event ) : Event`
 
-Hide front page is its poped.
+Hide front page is its popped.

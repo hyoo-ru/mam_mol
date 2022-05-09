@@ -4,10 +4,10 @@ Checkbox UI component. See Variants for more concrete implementations.
 
 ## Variants
 
-- [$mol_check_box](box) - simple checkbox
-- [$mol_check_group](group) -  group of checkboxes
-- [$mol_check_expand](expand) - expander for trees, lists, etc.
-- [$mol_check_icon](icon) - icon checkbox
+- [$mol_check_box](box) - Simple checkbox
+- [$mol_check_group](group) -  Group of checkboxes
+- [$mol_check_expand](expand) - Expander for trees, lists, etc
+- [$mol_check_icon](icon) - Icon checkbox
 
 ## [Online demos](https://mol.hyoo.ru/#!section=demos/filter=%20checkbox)
 
@@ -41,4 +41,4 @@ Returns checked state of checkbox. User can switch them when checkbox is enabled
 
 **`enabled() : boolean`**
 
-Returns true if checkbox can be switched by user.
+Whether the control is interactive.

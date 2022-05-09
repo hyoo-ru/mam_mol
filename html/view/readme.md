@@ -19,4 +19,4 @@ Raw HTML. Unknown tags are transparently ignored.
 
 **`xss_uri() : string`** 
 
-Link to xss logger service. Don't use `javascript:` like protocols.
+Link to XSS logger service. Don't use `javascript:` like protocols.

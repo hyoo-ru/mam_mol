@@ -19,7 +19,7 @@ Handlers dictionary. See [$mol_keyboard_code](https://github.com/eigenmethod/mol
 
 ## Modifiers
 
-If true than check for same key are pressed.
+If true then check for same key are pressed.
 
 **`mod_ctrl() : boolean`**
 
