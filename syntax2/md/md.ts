@@ -18,7 +18,7 @@ namespace $ {
 		'strike' : /~~(.+?)~~/ ,
 		'image-link' : /!\[([^\[\]]*?)\]\((.*?)\)/ ,
 		'text-link' : /\[(.*?(?:\[.*?\].*?)*)\]\((.*?)\)/ ,
-		'text-link-http' : /\b(https?:\/\/\S+)/ ,
+		'text-link-http' : /\b(https?:\/\/\S+)(?![^,.;:!?])/ ,
 	})
 	
 	export const $mol_syntax2_md_code = new $mol_syntax2({

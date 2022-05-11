@@ -106,7 +106,7 @@ namespace $.$$ {
 						span.link( this.uri_resolve( found ) )
 						
 						const content = this.String( id + '/0' )
-						content.haystack( found )
+						content.haystack( ' ' + found )
 						span.content([ content ])
 	
 						return spans.push( span )

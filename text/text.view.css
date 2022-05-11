@@ -86,7 +86,7 @@
 [mol_text_type="text-link"] {
 	color: var(--mol_theme_control);
 	text-decoration: none;
-	padding: 0 .25rem;
+	padding: 0;
 }
 
 [mol_text_link]:hover ,
