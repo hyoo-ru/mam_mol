@@ -73,7 +73,7 @@ class App extends $mol_jsx_view {
 }
 ```
 
-Base html document:
+Base HTML document:
 
 ```html
 <body id="/app"></body>

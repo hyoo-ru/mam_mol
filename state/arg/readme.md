@@ -36,7 +36,7 @@ Returns and sets dictionary of all arguments.
 
 **```link( next : { [ key : string ] : string } ) : string```**
 
-Returns link with overrided arguments.
+Returns link with overridden arguments.
 
 # Real world usage
 

@@ -1,6 +1,6 @@
 # $mol_string
 
-Input field to enter single line of text.
+An input field for entering single line text.
 
 ## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_string_demo)
 
@@ -21,8 +21,8 @@ Property `value` is a currently displayed string.
 
 **`hint() : string`**
 
-To display placeholder text on our `$mol_string` element we should use `hint` property.
+Placeholder text in the absence of any value.
 
 **`enabled() : boolean`**
 
-To turn off `$mol_string` we should use `enabled` property and set it to `false`. And if you don't want to turn off any element of `$mol_string` just write nothing.
+Whether the input is interactive.

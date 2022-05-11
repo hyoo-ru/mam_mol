@@ -1,6 +1,6 @@
 # $mol_define
 
-Checks the member is not override a same member of superclass.
+Checks that a member does not override the same member of the superclass.
 
 ## Sample
 
