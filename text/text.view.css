@@ -23,6 +23,7 @@
 
 [mol_text_string] {
 	display: inline;
+	flex: 0 1 auto;
 }
 
 [mol_text_quote] {
@@ -116,6 +117,14 @@
 
 [mol_text_type="strike"] {
 	color: var(--mol_theme_shade);
+}
+
+[mol_text_type="remark"] {
+	color: var(--mol_theme_shade);
+}
+
+[mol_text_type="quote"] {
+	font-style: italic;
 }
 
 [mol_text_type="code-keyword"] {

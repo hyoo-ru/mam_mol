@@ -1,7 +1,7 @@
 [mol_link_iconed] {
 	align-items: baseline;
 	color: var(--mol_theme_control);
-	display: inline;
+	display: inline-flex;
 	padding: var(--mol_gap_text);
 }
 
@@ -11,8 +11,8 @@
 	width: 1em;
 	flex: 0 0 auto;
 	display: inline-block;
-	margin: .125rem 0;
-	align-self: center;
+	margin: .25rem 0;
+	align-self: normal;
 	vertical-align: text-bottom;
 	border-radius: 0;
 	object-fit: scale-down;
