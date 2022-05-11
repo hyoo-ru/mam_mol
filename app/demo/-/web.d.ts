@@ -1886,6 +1886,8 @@ declare namespace $ {
         code3: RegExp;
         code: RegExp;
         strike: RegExp;
+        remark: RegExp;
+        quote: RegExp;
         'image-link': RegExp;
         'text-link': RegExp;
         'text-link-http': RegExp;
