@@ -100,6 +100,13 @@ namespace $.$$ {
 				const id = `${prefix}/${index++}`
 				
 				switch( name ) {
+					case 'text-link-http' : {
+						const span = this.Link( id )
+						span.type( name )
+						span.link( this.uri_resolve( chunks[ 0 ] ) )
+						span.content( chunks )
+						return spans.push( span )
+					}
 					case 'text-link' : {
 						if( /^(\w+script+:)+/.test( chunks[ 1 ] ) ) {
 							const span = this.Span( id )
