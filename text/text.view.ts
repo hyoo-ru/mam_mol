@@ -106,7 +106,7 @@ namespace $.$$ {
 						span.link( this.uri_resolve( chunks[ 0 ] ) )
 						span.content( chunks )
 						return spans.push( span )
-					},
+					}
 					case 'text-link' : {
 						if( /^(\w+script+:)+/.test( chunks[ 1 ] ) ) {
 							const span = this.Span( id )
