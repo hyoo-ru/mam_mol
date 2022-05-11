@@ -82,10 +82,11 @@
 	border-radius: var(--mol_gap_round);
 }
 
+[mol_text_type="text-link-http"],
 [mol_text_type="text-link"] {
 	color: var(--mol_theme_control);
 	text-decoration: none;
-	padding: 0 .25rem 0 0;
+	padding: 0 .25rem;
 }
 
 [mol_text_link]:hover ,
