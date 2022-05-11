@@ -7911,8 +7911,10 @@ var $;
                         case 'text-link-http': {
                             const span = this.Link(id);
                             span.type(name);
-                            span.link(this.uri_resolve(chunks[0]));
-                            span.content(chunks);
+                            span.link(this.uri_resolve(found));
+                            const content = this.String(id + '/0');
+                            content.haystack(found);
+                            span.content([content]);
                             return spans.push(span);
                         }
                         case 'text-link': {
