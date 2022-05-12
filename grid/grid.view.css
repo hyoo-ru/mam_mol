@@ -42,10 +42,6 @@
 	transform: none !important;
 }
 
-[mol_grid_head] > * {
-	color: var(--mol_theme_shade);
-}
-
 [mol_grid_cell_number] {
 	text-align: right;
 }

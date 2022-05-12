@@ -7,8 +7,8 @@
 
 [mol_link_iconed_icon] {
 	box-shadow: none;
-	height: 1em;
-	width: 1em;
+	height: 1rem;
+	width: 1rem;
 	flex: 0 0 auto;
 	display: inline-block;
 	margin: .25rem 0;
@@ -19,5 +19,5 @@
 }
 
 [mol_theme="$mol_theme_dark"] [mol_link_iconed_icon] {
-	filter: invert(1) hue-rotate(180deg);
+	filter: var(--mol_theme_image);
 }

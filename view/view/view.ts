@@ -14,7 +14,7 @@ namespace $ {
 		return suffix
 	}
 	
-	const error_showed = new WeakSet< Error >()
+	const error_shower = new WeakMap< Error, $mol_view >()
 
 	/// Reactive statefull lazy ViewModel
 	export class $mol_view extends $mol_object {
@@ -96,11 +96,11 @@ namespace $ {
 		@ $mol_mem
 		minimal_width() {
 			
-			const sub = this.sub()
-			if( !sub ) return 0
-			
 			let min = 0
 			try {
+				
+				const sub = this.sub()
+				if( !sub ) return 0
 				
 				sub.forEach( view => {
 					if( view instanceof $mol_view ) {
@@ -238,13 +238,13 @@ namespace $ {
 				$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
 				
 				if( error instanceof Promise ) return node
-				if( error_showed.has( error ) ) return node
+				if( ( error_shower.get( error ) ?? this ) !== this ) return node
 				
 				try {
 					( node as HTMLElement ).innerText = '\xA0\xA0' + ( error.message || error ) + '\xA0\xA0'
 				} catch {}
 				
-				error_showed.add( error )
+				error_shower.set( error, this )
 				
 			}
 			

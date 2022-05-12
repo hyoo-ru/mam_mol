@@ -7,15 +7,11 @@ namespace $.$$ {
 		padding: $mol_gap.text,
 		whiteSpace: 'pre-wrap',
 		
-		font: {
-			family: 'monospace',
-		},
-		
 		'@': {
 			'mol_text_code_sidebar_showed': {
 				true: {
 					margin: {
-						left: rem(3),
+						left: rem(1.5),
 					},
 				},
 			},
