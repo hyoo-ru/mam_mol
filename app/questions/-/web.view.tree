@@ -281,78 +281,71 @@ $mol_link_iconed $mol_link
 		<= title <= uri
 	host \
 
+$mol_embed_native $mol_scroll
+	dom_name \object
+	window null
+	attr *
+		^
+		data <= uri?val \
+		type <= mime \
+	sub /
+		<= title?val \
+
 $mol_text $mol_list
 	uri_base \
 	text \
-	tokens /
+	flow_tokens /
+	- \Blocks
+	Paragraph* $mol_paragraph
+		sub <= block_content* /
 	Quote* $mol_text
 		text <= quote_text* \
-	Row* $mol_text_row
+	List* $mol_text
+		text <= list_text* \
+	Header* $mol_paragraph
+		dom_name <= header_level* \h
 		sub <= block_content* /
-		type <= block_type* \
-	Span* $mol_text_span
-	String* $mol_text_string
-		needle <= highlight \
-	Link* $mol_text_link
-		target <= link_target* \_blank
-	Image* $mol_text_image
-	Header* $mol_text_header
-		level <= header_level* 0
-		content <= header_content* /
 	Code* $mol_text_code
 		text <= code_text* \
 		highlight <= highlight \
+		sidebar_showed <= code_sidebar_showed true
+	- \Table
 	Table* $mol_grid
 		head_cells <= table_head_cells* /
 		rows <= table_rows* /
 	Table_row* $mol_grid_row
 		cells <= table_cells* /
-	Table_cell* $mol_grid_cell
-		sub <= table_cell_content* /
-	Table_cell_head* $mol_grid_cell
-		sub <= table_cell_content* /
-
-$mol_text_row $mol_paragraph
-	attr *
-		^
-		mol_text_type <= type \
-
-$mol_text_header $mol_paragraph
-	dom_name \h
-	attr *
-		^
-		mol_text_header_level <= level?val 0
-	sub <= content /
+	Table_cell* $mol_text
+		text <= table_cell_text* \
+	- \Lines
+	String* $mol_dimmer
+		dom_name \span
+		needle <= highlight \
+		haystack <= line_text* \
+	Span* $mol_text_span
+		dom_name \span
+		type <= line_type* \
+		sub <= line_content* /
+	Code_line* $mol_text_code_row
+		numb_showed false
+		text <= line_text* \
+	Link* $mol_link_iconed
+		uri <= link_uri* \
+		target <= link_target* \_blank
+		content <= line_content* /
+	Link_http* $mol_link_iconed
+		uri <= link_uri* \
+		target <= link_target* \_blank
+		content / <= String*
+	Image* $mol_embed_native
+		uri <= link_uri* \
+		sub <= line_content* /
 
 $mol_text_span $mol_paragraph
 	dom_name \span
 	attr *
 		^
-		mol_text_type <= type?val \
-	sub <= content?val /
-
-$mol_text_string $mol_dimmer
-	dom_name \span
-	haystack?val \
-
-$mol_text_link $mol_link_iconed
-	attr *
-		^
-		mol_text_type <= type?val \
-	uri <= link?val \
-	content?val /
-
-$mol_text_image $mol_view
-	dom_name \object
-	attr *
-		^
-		allowfullscreen true
-		mol_text_type <= type?val \
-		data <= link?val \
-	sub /
-		<= Image $mol_image
-			uri <= link
-			title <= title?val \
+		mol_text_type <= type \
 
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \

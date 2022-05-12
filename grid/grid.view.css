@@ -1,6 +1,6 @@
 [mol_grid] {
 	display: block;
-	flex: 1 1 auto;
+	flex: 0 1 auto;
 	position: relative;
 }
 
@@ -40,10 +40,6 @@
 [mol_grid_head] {
 	display: table-row;
 	transform: none !important;
-}
-
-[mol_grid_head] > * {
-	color: var(--mol_theme_shade);
 }
 
 [mol_grid_cell_number] {

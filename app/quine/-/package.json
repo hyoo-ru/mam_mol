@@ -103,9 +103,9 @@
     "$mol_list",
     "$mol_support_css",
     "$mol_support",
+    "$mol_paragraph",
     "$mol_text_code",
     "$mol_text_code_row",
-    "$mol_paragraph",
     "$mol_text_code_token",
     "$mol_dimmer",
     "$mol_regexp",
@@ -136,6 +136,12 @@
     "$mol_link",
     "$mol_state_arg",
     "$mol_image",
+    "$mol_embed_native",
+    "$mol_embed",
+    "$mol_wire_sync",
+    "$mol_wait_timeout",
+    "$mol_wait",
+    "$mol_promise",
     "$mol_row"
   ],
   "dependencies": {

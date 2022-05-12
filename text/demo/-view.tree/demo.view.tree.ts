@@ -38,42 +38,77 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Text $mol_text text \
-		 * 	\# [Benchmarks](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master)
-		 * 	\## Benchmark 1
-		 * 	\### Benchmark 1.1
-		 * 	\#### Benchmark 1.1.1
-		 * 	\##### Benchmark 1.1.1.1
+		 * 	\# Header level 1
+		 * 	\## Header level 2
+		 * 	\### Header level 3
+		 * 	\#### Header level 4
+		 * 	\##### Header level 5
 		 * 	\
-		 * 	\* [Frameworks comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/list) - Frameworks comparison ([online](http://bench.hyoo.ru/#becnh=list#sort=fill#))
-		 * 	\* [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark) ([online](http://bench.hyoo.ru/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
-		 * 	\* [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
-		 * 	\* [Line charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/rope) ([online](http://bench.hyoo.ru/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
-		 * 	\* [Bar charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/bar) ([online](http://bench.hyoo.ru/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))
+		 * 	\# List
 		 * 	\
-		 * 	\# Quick start
+		 * 	\- first item
+		 * 	\  1. first of first item
+		 * 	\  2. second of first item
+		 * 	\  > quote as item
+		 * 	\  > + list inside quote
+		 * 	\- second item
 		 * 	\
-		 * 	\**Create MAM project**
+		 * 	\# Inline Formatting
 		 * 	\
-		 * 	\Easy way is checkout [this preconfigured ~~PMS~~MAM repository](http://github.com/eigenmethod/mam/) and start dev server:
+		 * 	\- Some **strong text**
+		 * 	\- Some *emphasis text*
+		 * 	\- Some ~~deleted text~~
+		 * 	\- Some `short_code("foo")` & ```long_code(`${bar}`)```
+		 * 	\- Some "quoted text"
 		 * 	\
-		 * 	\```sh
-		 * 	\git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
-		 * 	\npm start
+		 * 	\# Hyper Link
+		 * 	\
+		 * 	\* Some [link *with* title](http://example.org).
+		 * 	\* Auto http link: http://mol.hyoo.ru, (http://mol.hyoo.ru), http://mol.hyoo.ru.
+		 * 	\* Some [*unsafe* link](somescript:document.cookie).
+		 * 	\
+		 * 	\# Embedding
+		 * 	\
+		 * 	\## Image
+		 * 	\![](https://mol.hyoo.ru/mol/logo/logo.svg)
+		 * 	\
+		 * 	\## Video
+		 * 	\![](https://www.youtube.com/embed/XNt7DEkisKg)
+		 * 	\
+		 * 	\## Site
+		 * 	\![](https://mol.hyoo.ru)
+		 * 	\
+		 * 	\## Inline
+		 * 	\
+		 * 	\- Badge: [![Deploy](https://github.com/hyoo-ru/mam_mol/actions/workflows/deploy.yml/badge.svg)](https://github.com/hyoo-ru/mam_mol/actions/workflows/deploy.yml)
+		 * 	\- Broken images: ![*Alternative* text](https://example.org/404), ![](https://example.org/404)
+		 * 	\- Unsafe images: ![*Alternative* text](somescript:document.cookie), ![](somescript:document.cookie)
+		 * 	\
+		 * 	\# Preformatted Code
+		 * 	\
+		 * 	\```js
+		 * 	\class SomeCode {
+		 * 	\	with_prolog: true
+		 * 	\}
 		 * 	\```
 		 * 	\
-		 * 	\|           | **Column 1** | **Column 2** | **Column 3**
-		 * 	\|-----------|--------------|--------------|---------
-		 * 	\| **Row 1** | Cell 1x1     | Cell 2x1     | Cell 3x1
-		 * 	\| **Row 2** | Cell 1x2     | Cell 2x2     | Cell 3x2
-		 * 	\| **Row 3** | Cell 1x3     | Cell 2x3     | Cell 3x3
-		 * 	\| **Row 4** | Cell 1x4     | Cell 2x4     | Cell 3x4
-		 * 	\| **Row 5** | Cell 1x5     | Cell 2x5     | Cell 3x5
-		 * 	\| **Row 6** | Cell 1x6     | Cell 2x6     | Cell 3x6
-		 * 	\| **Row 7** | Cell 1x7     | Cell 2x7     | Cell 3x7
-		 * 	\| **Row 8** | Cell 1x8     | Cell 2x8     | Cell 3x8
-		 * 	\| **Row 9** | Cell 1x9     | Cell 2x9     | Cell 3x9
+		 * 	\	class SomeCode {
+		 * 	\		with_indents: true
+		 * 	\	}
 		 * 	\
-		 * 	\Build status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
+		 * 	\# Table
+		 * 	\
+		 * 	\|           | ~~Column~~ 1 | ~~Column~~ 2 | ~~Column~~ 3
+		 * 	\|-----------|--------------|--------------|-------------
+		 * 	\| ~~Row~~ 1 | ~~Cell~~ 1x1 | ~~Cell~~ 2x1 | ~~Cell~~ 3x1
+		 * 	\| ~~Row~~ 2 | ~~Cell~~ 1x2 | ~~Cell~~ 2x2 | ~~Cell~~ 3x2
+		 * 	\| ~~Row~~ 3 | ~~Cell~~ 1x3 | ~~Cell~~ 2x3 | ~~Cell~~ 3x3
+		 * 	\| ~~Row~~ 4 | ~~Cell~~ 1x4 | ~~Cell~~ 2x4 | ~~Cell~~ 3x4
+		 * 	\| ~~Row~~ 5 | ~~Cell~~ 1x5 | ~~Cell~~ 2x5 | ~~Cell~~ 3x5
+		 * 	\| ~~Row~~ 6 | ~~Cell~~ 1x6 | ~~Cell~~ 2x6 | ~~Cell~~ 3x6
+		 * 	\| ~~Row~~ 7 | ~~Cell~~ 1x7 | ~~Cell~~ 2x7 | ~~Cell~~ 3x7
+		 * 	\| ~~Row~~ 8 | ~~Cell~~ 1x8 | ~~Cell~~ 2x8 | ~~Cell~~ 3x8
+		 * 	\| ~~Row~~ 9 | ~~Cell~~ 1x9 | ~~Cell~~ 2x9 | ~~Cell~~ 3x9
 		 * 	\
 		 * ```
 		 */
@@ -81,7 +116,7 @@ namespace $ {
 		Text() {
 			const obj = new this.$.$mol_text()
 			
-			obj.text = () => "# [Benchmarks](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master)\n## Benchmark 1\n### Benchmark 1.1\n#### Benchmark 1.1.1\n##### Benchmark 1.1.1.1\n\n* [Frameworks comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/list) - Frameworks comparison ([online](http://bench.hyoo.ru/#becnh=list#sort=fill#))\n* [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark) ([online](http://bench.hyoo.ru/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))\n* [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)\n* [Line charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/rope) ([online](http://bench.hyoo.ru/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))\n* [Bar charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/bar) ([online](http://bench.hyoo.ru/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))\n\n# Quick start\n\n**Create MAM project**\n\nEasy way is checkout [this preconfigured ~~PMS~~MAM repository](http://github.com/eigenmethod/mam/) and start dev server:\n\n```sh\ngit clone https://github.com/eigenmethod/mam.git ./mam && cd mam\nnpm start\n```\n\n|           | **Column 1** | **Column 2** | **Column 3**\n|-----------|--------------|--------------|---------\n| **Row 1** | Cell 1x1     | Cell 2x1     | Cell 3x1\n| **Row 2** | Cell 1x2     | Cell 2x2     | Cell 3x2\n| **Row 3** | Cell 1x3     | Cell 2x3     | Cell 3x3\n| **Row 4** | Cell 1x4     | Cell 2x4     | Cell 3x4\n| **Row 5** | Cell 1x5     | Cell 2x5     | Cell 3x5\n| **Row 6** | Cell 1x6     | Cell 2x6     | Cell 3x6\n| **Row 7** | Cell 1x7     | Cell 2x7     | Cell 3x7\n| **Row 8** | Cell 1x8     | Cell 2x8     | Cell 3x8\n| **Row 9** | Cell 1x9     | Cell 2x9     | Cell 3x9\n\nBuild status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)\n"
+			obj.text = () => "# Header level 1\n## Header level 2\n### Header level 3\n#### Header level 4\n##### Header level 5\n\n# List\n\n- first item\n  1. first of first item\n  2. second of first item\n  > quote as item\n  > + list inside quote\n- second item\n\n# Inline Formatting\n\n- Some **strong text**\n- Some *emphasis text*\n- Some ~~deleted text~~\n- Some `short_code(\"foo\")` & ```long_code(`${bar}`)```\n- Some \"quoted text\"\n\n# Hyper Link\n\n* Some [link *with* title](http://example.org).\n* Auto http link: http://mol.hyoo.ru, (http://mol.hyoo.ru), http://mol.hyoo.ru.\n* Some [*unsafe* link](somescript:document.cookie).\n\n# Embedding\n\n## Image\n![](https://mol.hyoo.ru/mol/logo/logo.svg)\n\n## Video\n![](https://www.youtube.com/embed/XNt7DEkisKg)\n\n## Site\n![](https://mol.hyoo.ru)\n\n## Inline\n\n- Badge: [![Deploy](https://github.com/hyoo-ru/mam_mol/actions/workflows/deploy.yml/badge.svg)](https://github.com/hyoo-ru/mam_mol/actions/workflows/deploy.yml)\n- Broken images: ![*Alternative* text](https://example.org/404), ![](https://example.org/404)\n- Unsafe images: ![*Alternative* text](somescript:document.cookie), ![](somescript:document.cookie)\n\n# Preformatted Code\n\n```js\nclass SomeCode {\n\twith_prolog: true\n}\n```\n\n\tclass SomeCode {\n\t\twith_indents: true\n\t}\n\n# Table\n\n|           | ~~Column~~ 1 | ~~Column~~ 2 | ~~Column~~ 3\n|-----------|--------------|--------------|-------------\n| ~~Row~~ 1 | ~~Cell~~ 1x1 | ~~Cell~~ 2x1 | ~~Cell~~ 3x1\n| ~~Row~~ 2 | ~~Cell~~ 1x2 | ~~Cell~~ 2x2 | ~~Cell~~ 3x2\n| ~~Row~~ 3 | ~~Cell~~ 1x3 | ~~Cell~~ 2x3 | ~~Cell~~ 3x3\n| ~~Row~~ 4 | ~~Cell~~ 1x4 | ~~Cell~~ 2x4 | ~~Cell~~ 3x4\n| ~~Row~~ 5 | ~~Cell~~ 1x5 | ~~Cell~~ 2x5 | ~~Cell~~ 3x5\n| ~~Row~~ 6 | ~~Cell~~ 1x6 | ~~Cell~~ 2x6 | ~~Cell~~ 3x6\n| ~~Row~~ 7 | ~~Cell~~ 1x7 | ~~Cell~~ 2x7 | ~~Cell~~ 3x7\n| ~~Row~~ 8 | ~~Cell~~ 1x8 | ~~Cell~~ 2x8 | ~~Cell~~ 3x8\n| ~~Row~~ 9 | ~~Cell~~ 1x9 | ~~Cell~~ 2x9 | ~~Cell~~ 3x9\n"
 			
 			return obj
 		}

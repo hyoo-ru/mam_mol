@@ -8461,7 +8461,7 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
-    const error_showed = new WeakSet();
+    const error_shower = new WeakMap();
     class $mol_view extends $mol_object {
         static Root(id) {
             return new this;
@@ -8511,11 +8511,11 @@ var $;
             return this.sub();
         }
         minimal_width() {
-            const sub = this.sub();
-            if (!sub)
-                return 0;
             let min = 0;
             try {
+                const sub = this.sub();
+                if (!sub)
+                    return 0;
                 sub.forEach(view => {
                     if (view instanceof $mol_view) {
                         min = Math.max(min, view.minimal_width());
@@ -8606,13 +8606,13 @@ var $;
                 $mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
                 if (error instanceof Promise)
                     return node;
-                if (error_showed.has(error))
+                if ((error_shower.get(error) ?? this) !== this)
                     return node;
                 try {
                     node.innerText = '\xA0\xA0' + (error.message || error) + '\xA0\xA0';
                 }
                 catch { }
-                error_showed.add(error);
+                error_shower.set(error, this);
             }
             return node;
         }
