@@ -1252,6 +1252,7 @@ declare namespace $ {
         static window(): {
             _targets: Map<string, import("puppeteer").Target>;
             process: () => import("child_process").ChildProcess | null;
+            _setIsPageTargetCallback: (isPageTargetCallback?: import("puppeteer").IsPageTargetCallback | undefined) => void;
             createIncognitoBrowserContext: (options?: import("puppeteer").BrowserContextOptions | undefined) => import("puppeteer").BrowserContext;
             browserContexts: () => import("puppeteer").BrowserContext[];
             defaultBrowserContext: () => import("puppeteer").BrowserContext;
