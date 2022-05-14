@@ -17,7 +17,7 @@ namespace $ {
 		
 		'parse & serial'() {
 			
-			const csv = 'foo;bar\n"123";"456"\n"x""xx";"y""y""y"'
+			const csv = 'foo,bar\n"123","456"\n"x""xx","y""y""y"'
 			
 			$mol_assert_like(
 				$mol_csv_serial( $mol_csv_parse( csv ) ),
