@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export function $mol_csv_serial( data: Record< string, any >[], delimiter = ';' ) {
+	export function $mol_csv_serial( data: Record< string, any >[], delimiter = ',' ) {
 		
 		const fields = new Set< string >()
 		
@@ -24,7 +24,7 @@ namespace $ {
 			
 		}
 		
-		return rows.map( row => row.join( ';' ) ).join( '\n' )
+		return rows.map( row => row.join( delimiter ) ).join( '\n' )
 		
 	}
 	
