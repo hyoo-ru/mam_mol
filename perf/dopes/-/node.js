@@ -894,6 +894,7 @@ var $;
         hover: vary('--mol_theme_hover'),
         card: vary('--mol_theme_card'),
         current: vary('--mol_theme_current'),
+        special: vary('--mol_theme_special'),
         text: vary('--mol_theme_text'),
         control: vary('--mol_theme_control'),
         shade: vary('--mol_theme_shade'),

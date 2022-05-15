@@ -63,6 +63,11 @@ h5[mol_text_header] {
 	font-size: 1rem;
 }
 
+h6[mol_text_header] {
+	font-size: 1rem;
+	font-style: italic;
+}
+
 [mol_text_list] {
 	padding-left: 1.5rem;
 }
