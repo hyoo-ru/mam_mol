@@ -37,12 +37,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= title?val
+		 * sub / <= Fallback
 		 * ```
 		 */
 		sub() {
 			return [
-				this.title()
+				this.Fallback()
 			] as readonly any[]
 		}
 		
@@ -75,6 +75,23 @@ namespace $ {
 		title(val?: any) {
 			if ( val !== undefined ) return val as never
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Fallback $mol_link
+		 * 	uri <= uri
+		 * 	title <= title?val
+		 * ```
+		 */
+		@ $mol_mem
+		Fallback() {
+			const obj = new this.$.$mol_link()
+			
+			obj.uri = () => this.uri()
+			obj.title = () => this.title()
+			
+			return obj
 		}
 	}
 	
