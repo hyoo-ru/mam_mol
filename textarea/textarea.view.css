@@ -28,7 +28,7 @@
 	top: 0;
 	width: 100%;
 	height: 100%;
-	color: transparent;
+	color: transparent !important;
 	caret-color: var(--mol_theme_text);
 	resize: none;
 	text-align: inherit;
