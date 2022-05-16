@@ -3611,17 +3611,15 @@ $mol_time_demo $mol_example_large
 	sub /
 		<= Sandbox $hyoo_js_eval
 			code?val <=> code?val \
-				\const now = new $mol_time_moment;
-				\const today = now.toString( 'YYYY-MM-DD' );
-				\const tomorrow = now.shift( 'P1D' ).toString( 'DD Mon' );
+				\const now = new $mol_time_moment
+				\const today = now.toString( 'YYYY-MM-DD' )
+				\const tomorrow = now.shift( 'P1D' ).toString( 'DD Mon' )
 				\
-				\const week = new $mol_time_duration( 'P7D' );
-				\const days = week.count( 'P1D' );
+				\const week = new $mol_time_duration( 'P7D' )
+				\const days = week.count( 'P1D' )
 				\
-				\const nextYear = new $mol_time_interval( '/P1Y' );
-				\const anniversary = nextYear.end.toString( 'YYYY-MM-DD hh:mm' );
-				\
-				\({ now, today, tomorrow, week, days, nextYear, anniversary });
+				\const nextYear = new $mol_time_interval( '/P1Y' )
+				\const anniversary = nextYear.end.toString( 'YYYY-MM-DD hh:mm' )
 	tags /
 		\$mol_time
 		\moment

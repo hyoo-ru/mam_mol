@@ -28098,7 +28098,7 @@ var $;
         code(val) {
             if (val !== undefined)
                 return val;
-            return "const now = new $mol_time_moment;\nconst today = now.toString( 'YYYY-MM-DD' );\nconst tomorrow = now.shift( 'P1D' ).toString( 'DD Mon' );\n\nconst week = new $mol_time_duration( 'P7D' );\nconst days = week.count( 'P1D' );\n\nconst nextYear = new $mol_time_interval( '/P1Y' );\nconst anniversary = nextYear.end.toString( 'YYYY-MM-DD hh:mm' );\n\n({ now, today, tomorrow, week, days, nextYear, anniversary });";
+            return "const now = new $mol_time_moment\nconst today = now.toString( 'YYYY-MM-DD' )\nconst tomorrow = now.shift( 'P1D' ).toString( 'DD Mon' )\n\nconst week = new $mol_time_duration( 'P7D' )\nconst days = week.count( 'P1D' )\n\nconst nextYear = new $mol_time_interval( '/P1Y' )\nconst anniversary = nextYear.end.toString( 'YYYY-MM-DD hh:mm' )";
         }
         Sandbox() {
             const obj = new this.$.$hyoo_js_eval();
