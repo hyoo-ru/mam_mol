@@ -325,6 +325,7 @@ $mol_text $mol_list
 		sub <= line_content* /
 	Code_line* $mol_text_code_row
 		numb_showed false
+		highlight <= highlight \
 		text <= line_text* \
 	Link* $mol_link_iconed
 		uri <= link_uri* \

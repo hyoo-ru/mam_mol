@@ -194,6 +194,7 @@ namespace $ {
 		 * ```tree
 		 * Code_line* $mol_text_code_row
 		 * 	numb_showed false
+		 * 	highlight <= highlight
 		 * 	text <= line_text*
 		 * ```
 		 */
@@ -202,6 +203,7 @@ namespace $ {
 			const obj = new this.$.$mol_text_code_row()
 			
 			obj.numb_showed = () => false
+			obj.highlight = () => this.highlight()
 			obj.text = () => this.line_text(id)
 			
 			return obj
