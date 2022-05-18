@@ -6411,7 +6411,7 @@ var $;
         'code-comment-inline': /\/\/.*?$/,
         'code-string': /(?:".*?"|'.*?'|`.*?`|\/.+?\/[gmi]*\b|(?:^|[ \t])\\[^\n]*\n)/,
         'code-number': /[+-]?(?:\d*\.)?\d+\w*/,
-        'code-call': /\.?\w+(?=\()/,
+        'code-call': /\.?\w+ *(?=\()/,
         'code-field': /(?:\.\w+|[\w-]+\??\s*:(?!\/\/))/,
         'code-keyword': /\b(throw|readonly|unknown|keyof|typeof|never|from|class|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|let|const|for|do|while|until|in|of|new|if|then|else|switch|case|this|return|async|await|try|catch|break|continue|get|set|public|private|protected|string|boolean|number|null|undefined|true|false|void)\b/,
         'code-global': /[$]+\w*|\b[A-Z][a-z0-9]+[A-Z]\w*/,
@@ -6927,9 +6927,6 @@ var $;
 var $;
 (function ($) {
     class $mol_check_expand extends $mol_check {
-        minimal_height() {
-            return 40;
-        }
         Icon() {
             const obj = new this.$.$mol_icon_chevron();
             return obj;
@@ -6974,7 +6971,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/check/expand/expand.view.css", "[mol_check_expand] {\n\tmin-width: 20px;\n}\n\n[mol_check_expand][disabled] [mol_check_expand_icon] {\n\tvisibility: hidden;\n}\n\n[mol_check_expand_icon] {\n\tbox-shadow: none;\n\tmargin: .25rem 0;\n}\n[mol_check_expand_icon] {\n\ttransform: rotateZ(0deg);\n}\n\n[mol_check_checked] [mol_check_expand_icon_path] {\n\ttransform: rotateZ(90deg);\n}\n\n[mol_check_expand_icon] {\n\tvertical-align: text-top;\n}\n\n[mol_check_expand_label] {\n\tmargin-left: 0;\n}\n");
+    $mol_style_attach("mol/check/expand/expand.view.css", "[mol_check_expand] {\n\tmin-width: 20px;\n}\n\n[mol_check_expand][disabled] [mol_check_expand_icon] {\n\tvisibility: hidden;\n}\n\n[mol_check_expand_icon] {\n\tbox-shadow: none;\n\tmargin: .25rem -.25rem;\n}\n[mol_check_expand_icon] {\n\ttransform: rotateZ(0deg);\n}\n\n[mol_check_checked] [mol_check_expand_icon_path] {\n\ttransform: rotateZ(90deg);\n}\n\n[mol_check_expand_icon] {\n\tvertical-align: text-top;\n}\n\n[mol_check_expand_label] {\n\tmargin-left: 0;\n}\n");
 })($ || ($ = {}));
 //mol/check/expand/-css/expand.view.css.ts
 ;
@@ -27523,17 +27520,17 @@ var $;
             const obj = new this.$.$mol_theme_auto();
             return obj;
         }
-        Сlear_icon() {
+        Clear_icon() {
             const obj = new this.$.$mol_icon_plus();
             return obj;
         }
-        Сlear() {
+        Clear() {
             const obj = new this.$.$mol_link();
             obj.arg = () => ({
                 code: null
             });
             obj.sub = () => [
-                this.Сlear_icon()
+                this.Clear_icon()
             ];
             return obj;
         }
@@ -27574,7 +27571,7 @@ var $;
             const obj = new this.$.$mol_page();
             obj.title = () => this.$.$mol_locale.text('$hyoo_js_eval_Menu_page_title');
             obj.tools = () => [
-                this.Сlear(),
+                this.Clear(),
                 this.Source(),
                 this.Lights()
             ];
@@ -27700,10 +27697,10 @@ var $;
     ], $hyoo_js_eval.prototype, "Theme", null);
     __decorate([
         $mol_mem
-    ], $hyoo_js_eval.prototype, "\u0421lear_icon", null);
+    ], $hyoo_js_eval.prototype, "Clear_icon", null);
     __decorate([
         $mol_mem
-    ], $hyoo_js_eval.prototype, "\u0421lear", null);
+    ], $hyoo_js_eval.prototype, "Clear", null);
     __decorate([
         $mol_mem
     ], $hyoo_js_eval.prototype, "Source", null);
@@ -27766,57 +27763,101 @@ var $;
         values() {
             return [];
         }
-        Dump(id) {
-            const obj = new this.$.$hyoo_js_eval_dump();
-            obj.value = () => this.dump_value(id);
-            obj.expanded = (val) => this.dump_expanded(id, val);
+        sub() {
+            return [
+                this.Prefix(),
+                this.Dump("0")
+            ];
+        }
+        prefix() {
+            return "";
+        }
+        Prefix() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.prefix()
+            ];
             return obj;
         }
         dump_value(id) {
             return null;
         }
-        dump_expanded(id, val) {
-            if (val !== undefined)
-                return val;
+        dump_expanded(id, next) {
+            if (next !== undefined)
+                return next;
             return true;
+        }
+        Dump(id) {
+            const obj = new this.$.$hyoo_js_eval_dump();
+            obj.value = () => this.dump_value(id);
+            obj.expanded = (next) => this.dump_expanded(id, next);
+            return obj;
         }
     }
     __decorate([
-        $mol_mem_key
-    ], $hyoo_js_eval_log.prototype, "Dump", null);
+        $mol_mem
+    ], $hyoo_js_eval_log.prototype, "Prefix", null);
     __decorate([
         $mol_mem_key
     ], $hyoo_js_eval_log.prototype, "dump_expanded", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_js_eval_log.prototype, "Dump", null);
     $.$hyoo_js_eval_log = $hyoo_js_eval_log;
-    class $hyoo_js_eval_dump extends $mol_view {
+    class $hyoo_js_eval_pair extends $mol_view {
+        sub() {
+            return [
+                this.Key(),
+                this.Suffix(),
+                this.Value()
+            ];
+        }
         key() {
             return null;
+        }
+        Key() {
+            const obj = new this.$.$hyoo_js_eval_dump();
+            obj.value = () => this.key();
+            return obj;
         }
         suffix() {
             return "";
         }
+        Suffix() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.suffix()
+            ];
+            return obj;
+        }
+        value() {
+            return null;
+        }
+        Value() {
+            const obj = new this.$.$hyoo_js_eval_dump();
+            obj.value = () => this.value();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_pair.prototype, "Key", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_pair.prototype, "Suffix", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_pair.prototype, "Value", null);
+    $.$hyoo_js_eval_pair = $hyoo_js_eval_pair;
+    class $hyoo_js_eval_dump extends $mol_view {
         value() {
             return null;
         }
         sub() {
             return [
-                this.Key(),
                 this.Simple(),
                 this.Expand()
             ];
-        }
-        Inner(id) {
-            const obj = new this.$.$hyoo_js_eval_dump();
-            obj.key = () => this.inner_key(id);
-            obj.value = () => this.inner_value(id);
-            return obj;
-        }
-        Key() {
-            const obj = new this.$.$hyoo_js_eval_dump();
-            obj.minimal_height = () => 40;
-            obj.value = () => this.key();
-            obj.suffix = () => ":";
-            return obj;
         }
         simple() {
             return "";
@@ -27834,35 +27875,65 @@ var $;
         expand_title() {
             return "";
         }
+        Expand_title() {
+            const obj = new this.$.$mol_text_code();
+            obj.text = () => this.expand_title();
+            return obj;
+        }
+        Expand_head() {
+            const obj = new this.$.$mol_check_expand();
+            obj.minimal_height = () => 24;
+            obj.minimal_width = () => 24;
+            obj.checked = (val) => this.expanded(val);
+            obj.label = () => [
+                this.Expand_title()
+            ];
+            return obj;
+        }
+        pair_key(id) {
+            return null;
+        }
+        pair_suffix(id) {
+            return null;
+        }
+        pair_value(id) {
+            return null;
+        }
+        Pair(id) {
+            const obj = new this.$.$hyoo_js_eval_pair();
+            obj.key = () => this.pair_key(id);
+            obj.suffix = () => this.pair_suffix(id);
+            obj.value = () => this.pair_value(id);
+            return obj;
+        }
         expand_content() {
-            return [];
+            return [
+                this.Pair("0")
+            ];
         }
         Expand() {
             const obj = new this.$.$mol_expander();
             obj.expanded = (val) => this.expanded(val);
-            obj.title = () => this.expand_title();
+            obj.Trigger = () => this.Expand_head();
             obj.content = () => this.expand_content();
             return obj;
         }
-        inner_key(id) {
-            return null;
-        }
-        inner_value(id) {
-            return null;
-        }
     }
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_js_eval_dump.prototype, "Inner", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_js_eval_dump.prototype, "Key", null);
     __decorate([
         $mol_mem
     ], $hyoo_js_eval_dump.prototype, "Simple", null);
     __decorate([
         $mol_mem
     ], $hyoo_js_eval_dump.prototype, "expanded", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_dump.prototype, "Expand_title", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_dump.prototype, "Expand_head", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_js_eval_dump.prototype, "Pair", null);
     __decorate([
         $mol_mem
     ], $hyoo_js_eval_dump.prototype, "Expand", null);
@@ -27873,7 +27944,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_menu_page] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_menu] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code_page] {\n\tflex: 1 0 auto;\n}\n\n[hyoo_js_eval_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 0 0 50%;\n}\n\n[hyoo_js_eval_result_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_dump] {\n\tmin-height: 2.5rem;\n\tmin-width: 2.5rem;\n}\n");
+    $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_menu_page] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_menu] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code_page] {\n\tflex: 1 0 auto;\n}\n\n[hyoo_js_eval_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_result] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 0 0 50%;\n}\n\n[hyoo_js_eval_result_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_log] {\n\talign-items: flex-start;\n}\n\n[hyoo_js_eval_log_prefix] {\n\tposition: sticky;\n\ttop: 0;\n}\n\n[hyoo_js_eval_dump] {\n\tmin-height: 2.5rem;\n\tmin-width: 2.5rem;\n\tpadding-left: .75rem;\n}\n\n[hyoo_js_eval_dump_simple] {\n\tpadding: 0;\n}\n\n[hyoo_js_eval_dump_key] {\n\tpadding-right: .75rem;\n}\n\n[hyoo_js_eval_dump_expand_title],\n[hyoo_js_eval_dump_expand_head] {\n\tpadding: 0;\n}\n\n[hyoo_js_eval_pair] {\n\talign-items: flex-start;\n}\n\n[hyoo_js_eval_pair_key] {\n\tposition: sticky;\n\ttop: 0;\n\tpadding-right: .25rem;\n}\n\n[hyoo_js_eval_pair_suffix] {\n\tposition: sticky;\n\ttop: 0;\n}\n");
 })($ || ($ = {}));
 //hyoo/js/eval/-css/eval.view.css.ts
 ;
@@ -27939,7 +28010,7 @@ var $;
                         if (typeof target[field] !== 'function')
                             return target[field];
                         return (...args) => {
-                            this.spy(() => [`console.${String(field)}:`, ...args]);
+                            this.spy(() => [`${String(field)}:`, ...args]);
                             return target[field](...args);
                         };
                     }
@@ -28006,7 +28077,13 @@ var $;
         $$.$hyoo_js_eval = $hyoo_js_eval;
         class $hyoo_js_eval_log extends $.$hyoo_js_eval_log {
             sub() {
-                return this.values().map((_, index) => this.Dump(index));
+                return [
+                    this.Prefix(),
+                    ...this.values().slice(1).map((_, index) => this.Dump(index + 1))
+                ];
+            }
+            prefix() {
+                return this.values()[0];
             }
             dump_value(index) {
                 return this.values()[index];
@@ -28019,36 +28096,69 @@ var $;
             $mol_mem_key
         ], $hyoo_js_eval_log.prototype, "dump_value", null);
         $$.$hyoo_js_eval_log = $hyoo_js_eval_log;
+        class $hyoo_js_eval_pair extends $.$hyoo_js_eval_pair {
+            sub() {
+                return this.suffix()
+                    ? [this.Key(), this.Suffix(), this.Value()]
+                    : [this.Value()];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_pair.prototype, "sub", null);
+        $$.$hyoo_js_eval_pair = $hyoo_js_eval_pair;
         class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
             sub() {
                 const value = this.value();
-                const prefix = this.key() === null ? [] : [this.Key()];
-                if (value && (typeof value === 'object')) {
-                    return [...prefix, this.Expand()];
-                }
-                return [...prefix, this.Simple()];
+                if (!value)
+                    return [this.Simple()];
+                if (typeof value === 'object')
+                    return [this.Expand()];
+                if (typeof value === 'function')
+                    return [this.Expand()];
+                return [this.Simple()];
             }
             simple() {
-                return String(this.value()) + this.suffix();
+                const value = this.value();
+                return value ? String(value) : JSON.stringify(value) ?? 'undefined';
             }
             expand_title() {
                 const value = this.value();
+                if (typeof value === 'function') {
+                    const name = Reflect.getOwnPropertyDescriptor(value, 'name')?.value;
+                    if (name)
+                        return name + '(){}';
+                }
+                if (value instanceof RegExp)
+                    return String(value);
+                if (value instanceof Date)
+                    return value.toISOString();
                 return Reflect.getOwnPropertyDescriptor(value, Symbol.toStringTag)?.value
                     ?? Reflect.getPrototypeOf(value).constructor.name;
             }
-            inner_keys() {
+            pairs_data() {
                 let value = this.value();
-                return Reflect.ownKeys(value);
+                const self = Reflect.ownKeys(value)
+                    .map(key => [key, '∶', Reflect.getOwnPropertyDescriptor(value, key)?.value]);
+                const map = value instanceof Map
+                    ? [...value].map(([key, val]) => [key, '🡒', val])
+                    : [];
+                const set = value instanceof Set
+                    ? [...value].map(val => [null, '', val])
+                    : [];
+                return [...self, ...map, ...set];
             }
             expand_content() {
-                return this.inner_keys().map((_, index) => this.Inner(index));
+                return this.pairs_data().map((_, index) => this.Pair(index));
             }
-            inner_key(index) {
-                return this.inner_keys()[index];
+            pair_key(index) {
+                return this.pairs_data()[index][0];
             }
-            inner_value(index) {
-                const key = this.inner_key(index);
-                return Reflect.getOwnPropertyDescriptor(this.value(), key)?.value;
+            pair_suffix(index) {
+                return this.pairs_data()[index][1];
+            }
+            pair_value(index) {
+                return this.pairs_data()[index][2];
             }
         }
         __decorate([
@@ -28062,16 +28172,10 @@ var $;
         ], $hyoo_js_eval_dump.prototype, "expand_title", null);
         __decorate([
             $mol_mem
-        ], $hyoo_js_eval_dump.prototype, "inner_keys", null);
+        ], $hyoo_js_eval_dump.prototype, "pairs_data", null);
         __decorate([
             $mol_mem
         ], $hyoo_js_eval_dump.prototype, "expand_content", null);
-        __decorate([
-            $mol_mem_key
-        ], $hyoo_js_eval_dump.prototype, "inner_key", null);
-        __decorate([
-            $mol_mem_key
-        ], $hyoo_js_eval_dump.prototype, "inner_value", null);
         $$.$hyoo_js_eval_dump = $hyoo_js_eval_dump;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

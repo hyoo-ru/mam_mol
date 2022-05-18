@@ -3,15 +3,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * minimal_height 40
-		 * ```
-		 */
-		minimal_height() {
-			return 40
-		}
-		
-		/**
-		 * ```tree
 		 * Icon $mol_icon_chevron
 		 * ```
 		 */

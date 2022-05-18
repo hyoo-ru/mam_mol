@@ -1537,7 +1537,6 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_check_expand extends $mol_check {
-        minimal_height(): number;
         Icon(): $mol_icon_chevron;
         level(): number;
         style(): {

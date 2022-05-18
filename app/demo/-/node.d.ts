@@ -2174,7 +2174,6 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_check_expand extends $mol_check {
-        minimal_height(): number;
         Icon(): $mol_icon_chevron;
         level(): number;
         style(): {
@@ -7330,8 +7329,8 @@ declare namespace $ {
         pages(): readonly any[];
         Log(id: any): $$.$hyoo_js_eval_log;
         Theme(): $$.$mol_theme_auto;
-        Сlear_icon(): $mol_icon_plus;
-        Сlear(): $$.$mol_link;
+        Clear_icon(): $mol_icon_plus;
+        Clear(): $$.$mol_link;
         Source(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
         menu_link_title(id: any): string;
@@ -7361,25 +7360,37 @@ declare namespace $ {
     }
     class $hyoo_js_eval_log extends $mol_view {
         values(): readonly any[];
-        Dump(id: any): $$.$hyoo_js_eval_dump;
+        sub(): readonly any[];
+        prefix(): string;
+        Prefix(): $mol_view;
         dump_value(id: any): any;
-        dump_expanded(id: any, val?: any): boolean;
+        dump_expanded(id: any, next?: any): boolean;
+        Dump(id: any): $$.$hyoo_js_eval_dump;
+    }
+    class $hyoo_js_eval_pair extends $mol_view {
+        sub(): readonly any[];
+        key(): any;
+        Key(): $$.$hyoo_js_eval_dump;
+        suffix(): string;
+        Suffix(): $mol_view;
+        value(): any;
+        Value(): $$.$hyoo_js_eval_dump;
     }
     class $hyoo_js_eval_dump extends $mol_view {
-        key(): any;
-        suffix(): string;
         value(): any;
         sub(): readonly any[];
-        Inner(id: any): $$.$hyoo_js_eval_dump;
-        Key(): $$.$hyoo_js_eval_dump;
         simple(): string;
         Simple(): $$.$mol_text_code;
         expanded(val?: any): boolean;
         expand_title(): string;
+        Expand_title(): $$.$mol_text_code;
+        Expand_head(): $$.$mol_check_expand;
+        pair_key(id: any): any;
+        pair_suffix(id: any): any;
+        pair_value(id: any): any;
+        Pair(id: any): $$.$hyoo_js_eval_pair;
         expand_content(): readonly any[];
         Expand(): $$.$mol_expander;
-        inner_key(id: any): any;
-        inner_value(id: any): any;
     }
 }
 
@@ -7405,17 +7416,22 @@ declare namespace $.$$ {
         log(index: number): any;
     }
     class $hyoo_js_eval_log extends $.$hyoo_js_eval_log {
-        sub(): $hyoo_js_eval_dump[];
+        sub(): $mol_view[];
+        prefix(): any;
         dump_value(index: number): any;
     }
+    class $hyoo_js_eval_pair extends $.$hyoo_js_eval_pair {
+        sub(): $mol_view[];
+    }
     class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
-        sub(): ($mol_expander | $hyoo_js_eval_dump)[] | ($mol_text_code | $hyoo_js_eval_dump)[];
+        sub(): $mol_expander[] | $mol_text_code[];
         simple(): string;
         expand_title(): any;
-        inner_keys(): (string | symbol)[];
-        expand_content(): $hyoo_js_eval_dump[];
-        inner_key(index: number): string | symbol;
-        inner_value(index: number): any;
+        pairs_data(): any[][];
+        expand_content(): $hyoo_js_eval_pair[];
+        pair_key(index: number): any;
+        pair_suffix(index: number): any;
+        pair_value(index: number): any;
     }
 }
 
