@@ -4544,7 +4544,7 @@ var $;
                 color: $mol_theme.shade,
                 width: rem(3),
                 margin: {
-                    left: rem(-4),
+                    left: rem(-3.75),
                 },
                 display: 'inline-block',
                 whiteSpace: 'nowrap',

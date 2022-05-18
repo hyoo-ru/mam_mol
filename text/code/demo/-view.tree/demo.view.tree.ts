@@ -48,13 +48,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Text $mol_text_code text <= source
+		 * Text $mol_text_code
+		 * 	sidebar_showed true
+		 * 	text <= source
 		 * ```
 		 */
 		@ $mol_mem
 		Text() {
 			const obj = new this.$.$mol_text_code()
 			
+			obj.sidebar_showed = () => true
 			obj.text = () => this.source()
 			
 			return obj
