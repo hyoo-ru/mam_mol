@@ -6,7 +6,6 @@ namespace $.$$ {
 			return this.values().map( (_,index)=> this.Dump( index ) )
 		}
 		
-		@ $mol_mem_key
 		dump_value( index: number ) {
 			return this.values()[ index ]
 		}
