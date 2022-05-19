@@ -6076,14 +6076,12 @@ var $;
         Link(id) {
             const obj = new this.$.$mol_link_iconed();
             obj.uri = () => this.link_uri(id);
-            obj.target = () => this.link_target(id);
             obj.content = () => this.line_content(id);
             return obj;
         }
         Link_http(id) {
             const obj = new this.$.$mol_link_iconed();
             obj.uri = () => this.link_uri(id);
-            obj.target = () => this.link_target(id);
             obj.content = () => [
                 this.String(id)
             ];
@@ -6139,9 +6137,6 @@ var $;
         }
         link_uri(id) {
             return "";
-        }
-        link_target(id) {
-            return "_blank";
         }
     }
     __decorate([

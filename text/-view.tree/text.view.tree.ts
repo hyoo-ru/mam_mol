@@ -213,7 +213,6 @@ namespace $ {
 		 * ```tree
 		 * Link* $mol_link_iconed
 		 * 	uri <= link_uri*
-		 * 	target <= link_target*
 		 * 	content <= line_content*
 		 * ```
 		 */
@@ -222,7 +221,6 @@ namespace $ {
 			const obj = new this.$.$mol_link_iconed()
 			
 			obj.uri = () => this.link_uri(id)
-			obj.target = () => this.link_target(id)
 			obj.content = () => this.line_content(id)
 			
 			return obj
@@ -232,7 +230,6 @@ namespace $ {
 		 * ```tree
 		 * Link_http* $mol_link_iconed
 		 * 	uri <= link_uri*
-		 * 	target <= link_target*
 		 * 	content / <= String*
 		 * ```
 		 */
@@ -241,7 +238,6 @@ namespace $ {
 			const obj = new this.$.$mol_link_iconed()
 			
 			obj.uri = () => this.link_uri(id)
-			obj.target = () => this.link_target(id)
 			obj.content = () => [
 				this.String(id)
 			] as readonly any[]
@@ -404,15 +400,6 @@ namespace $ {
 		 */
 		link_uri(id: any) {
 			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * link_target* \_blank
-		 * ```
-		 */
-		link_target(id: any) {
-			return "_blank"
 		}
 	}
 	

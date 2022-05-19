@@ -333,11 +333,9 @@ $mol_text $mol_list
 		text <= line_text* \
 	Link* $mol_link_iconed
 		uri <= link_uri* \
-		target <= link_target* \_blank
 		content <= line_content* /
 	Link_http* $mol_link_iconed
 		uri <= link_uri* \
-		target <= link_target* \_blank
 		content / <= String*
 	Image* $mol_embed_native
 		uri <= link_uri* \
