@@ -1,0 +1,18 @@
+[mol_dump_value] {
+	min-height: 2.5rem;
+	min-width: 2.5rem;
+	/* padding-left: .75rem; */
+}
+
+[mol_dump_value_simple] {
+	padding: 0;
+}
+
+[mol_dump_value_expand_content] {
+	padding-left: .75rem;
+}
+
+[mol_dump_value_expand_title],
+[mol_dump_value_expand_head] {
+	padding: 0;
+}
