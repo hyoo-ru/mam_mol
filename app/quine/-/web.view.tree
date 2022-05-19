@@ -283,9 +283,12 @@ $mol_embed_native $mol_scroll
 		data <= uri?val \
 		type <= mime \
 	sub /
-		<= Fallback $mol_link
+		<= Fallback_link $mol_link
 			uri <= uri
-			title <= title?val \
+			sub /
+				<= Fallback_image $mol_image
+					uri <= uri
+					title <= title?val \
 
 $mol_text $mol_list
 	uri_base \
@@ -334,7 +337,7 @@ $mol_text $mol_list
 		content / <= String*
 	Image* $mol_embed_native
 		uri <= link_uri* \
-		sub <= line_content* /
+		title <= line_text* \
 
 $mol_text_span $mol_paragraph
 	dom_name \span

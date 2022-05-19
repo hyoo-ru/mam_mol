@@ -6231,7 +6231,7 @@ var $;
         }
         sub() {
             return [
-                this.Fallback()
+                this.Fallback_link()
             ];
         }
         uri(val) {
@@ -6247,10 +6247,18 @@ var $;
                 return val;
             return "";
         }
-        Fallback() {
-            const obj = new this.$.$mol_link();
+        Fallback_image() {
+            const obj = new this.$.$mol_image();
             obj.uri = () => this.uri();
             obj.title = () => this.title();
+            return obj;
+        }
+        Fallback_link() {
+            const obj = new this.$.$mol_link();
+            obj.uri = () => this.uri();
+            obj.sub = () => [
+                this.Fallback_image()
+            ];
             return obj;
         }
     }
@@ -6262,7 +6270,10 @@ var $;
     ], $mol_embed_native.prototype, "title", null);
     __decorate([
         $mol_mem
-    ], $mol_embed_native.prototype, "Fallback", null);
+    ], $mol_embed_native.prototype, "Fallback_image", null);
+    __decorate([
+        $mol_mem
+    ], $mol_embed_native.prototype, "Fallback_link", null);
     $.$mol_embed_native = $mol_embed_native;
 })($ || ($ = {}));
 //mol/embed/native/-view.tree/native.view.tree.ts
@@ -6494,7 +6505,7 @@ var $;
         Image(id) {
             const obj = new this.$.$mol_embed_native();
             obj.uri = () => this.link_uri(id);
-            obj.sub = () => this.line_content(id);
+            obj.title = () => this.line_text(id);
             return obj;
         }
         block_content(id) {

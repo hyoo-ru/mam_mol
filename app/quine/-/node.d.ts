@@ -1867,7 +1867,8 @@ declare namespace $ {
         uri(val?: any): string;
         mime(): string;
         title(val?: any): string;
-        Fallback(): $$.$mol_link;
+        Fallback_image(): $mol_image;
+        Fallback_link(): $$.$mol_link;
     }
 }
 

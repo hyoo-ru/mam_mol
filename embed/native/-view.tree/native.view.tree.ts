@@ -37,12 +37,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Fallback
+		 * sub / <= Fallback_link
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Fallback()
+				this.Fallback_link()
 			] as readonly any[]
 		}
 		
@@ -79,17 +79,36 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Fallback $mol_link
+		 * Fallback_image $mol_image
 		 * 	uri <= uri
 		 * 	title <= title?val
 		 * ```
 		 */
 		@ $mol_mem
-		Fallback() {
-			const obj = new this.$.$mol_link()
+		Fallback_image() {
+			const obj = new this.$.$mol_image()
 			
 			obj.uri = () => this.uri()
 			obj.title = () => this.title()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Fallback_link $mol_link
+		 * 	uri <= uri
+		 * 	sub / <= Fallback_image
+		 * ```
+		 */
+		@ $mol_mem
+		Fallback_link() {
+			const obj = new this.$.$mol_link()
+			
+			obj.uri = () => this.uri()
+			obj.sub = () => [
+				this.Fallback_image()
+			] as readonly any[]
 			
 			return obj
 		}

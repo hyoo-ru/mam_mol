@@ -249,7 +249,7 @@ namespace $ {
 		 * ```tree
 		 * Image* $mol_embed_native
 		 * 	uri <= link_uri*
-		 * 	sub <= line_content*
+		 * 	title <= line_text*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -257,7 +257,7 @@ namespace $ {
 			const obj = new this.$.$mol_embed_native()
 			
 			obj.uri = () => this.link_uri(id)
-			obj.sub = () => this.line_content(id)
+			obj.title = () => this.line_text(id)
 			
 			return obj
 		}
