@@ -28126,27 +28126,44 @@ var $;
                 const value = this.value();
                 if (typeof value === 'function') {
                     const name = Reflect.getOwnPropertyDescriptor(value, 'name')?.value;
+                    const source = Function.prototype.toString.call(value);
+                    const args = source.replace(/\)[\s\S]*$/g, ')').replace(/^[\s\S]*\(/g, '(');
                     if (name)
-                        return name + '(){}';
+                        return name + args + '{}';
                 }
                 if (value instanceof RegExp)
                     return String(value);
                 if (value instanceof Date)
                     return value.toISOString();
                 return Reflect.getOwnPropertyDescriptor(value, Symbol.toStringTag)?.value
-                    ?? Reflect.getPrototypeOf(value).constructor.name;
+                    ?? Reflect.getPrototypeOf(value)?.constructor.name
+                    ?? 'Object';
             }
             pairs_data() {
                 let value = this.value();
-                const self = Reflect.ownKeys(value)
-                    .map(key => [key, '∶', Reflect.getOwnPropertyDescriptor(value, key)?.value]);
+                const self = [];
+                for (const key of Reflect.ownKeys(value)) {
+                    const descr = Reflect.getOwnPropertyDescriptor(value, key);
+                    if ('value' in descr)
+                        self.push([key, '∶', descr.value]);
+                    if ('get' in descr)
+                        self.push(['get ' + String(key), '∶', descr.get]);
+                    if ('set' in descr)
+                        self.push(['set ' + String(key), '∶', descr.set]);
+                }
                 const map = value instanceof Map
                     ? [...value].map(([key, val]) => [key, '🡒', val])
                     : [];
                 const set = value instanceof Set
                     ? [...value].map(val => [null, '', val])
                     : [];
-                return [...self, ...map, ...set];
+                const proto = Reflect.getPrototypeOf(value);
+                return [
+                    ...self,
+                    ...map,
+                    ...set,
+                    ['[[prototype]]', ':', proto]
+                ];
             }
             expand_content() {
                 return this.pairs_data().map((_, index) => this.Pair(index));
@@ -28184,14 +28201,47 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_time_demo extends $mol_example_large {
-        title() {
-            return "Time processing library sandbox";
-        }
+    class $mol_example_code extends $mol_example_large {
         sub() {
             return [
                 this.Sandbox()
             ];
+        }
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Sandbox() {
+            const obj = new this.$.$hyoo_js_eval();
+            obj.Menu_page = () => null;
+            obj.Perf = () => null;
+            obj.Bookmark = () => null;
+            obj.code = (next) => this.code(next);
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_example_code.prototype, "code", null);
+    __decorate([
+        $mol_mem
+    ], $mol_example_code.prototype, "Sandbox", null);
+    $.$mol_example_code = $mol_example_code;
+})($ || ($ = {}));
+//mol/example/code/-view.tree/code.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_time_demo extends $mol_example_code {
+        title() {
+            return "Time processing library sandbox";
+        }
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const now = new $mol_time_moment\nconst today = now.toString( 'YYYY-MM-DD' )\nconst tomorrow = now.shift( 'P1D' ).toString( 'DD Mon' )\n\nconst week = new $mol_time_duration( 'P7D' )\nconst days = week.count( 'P1D' )\n\nconst nextYear = new $mol_time_interval( '/P1Y' )\nconst anniversary = nextYear.end.toString( 'YYYY-MM-DD hh:mm' )";
         }
         tags() {
             return [
@@ -28201,23 +28251,10 @@ var $;
                 "interval"
             ];
         }
-        code(val) {
-            if (val !== undefined)
-                return val;
-            return "const now = new $mol_time_moment\nconst today = now.toString( 'YYYY-MM-DD' )\nconst tomorrow = now.shift( 'P1D' ).toString( 'DD Mon' )\n\nconst week = new $mol_time_duration( 'P7D' )\nconst days = week.count( 'P1D' )\n\nconst nextYear = new $mol_time_interval( '/P1Y' )\nconst anniversary = nextYear.end.toString( 'YYYY-MM-DD hh:mm' )";
-        }
-        Sandbox() {
-            const obj = new this.$.$hyoo_js_eval();
-            obj.code = (val) => this.code(val);
-            return obj;
-        }
     }
     __decorate([
         $mol_mem
     ], $mol_time_demo.prototype, "code", null);
-    __decorate([
-        $mol_mem
-    ], $mol_time_demo.prototype, "Sandbox", null);
     $.$mol_time_demo = $mol_time_demo;
 })($ || ($ = {}));
 //mol/time/demo/-view.tree/demo.view.tree.ts

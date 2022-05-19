@@ -7404,12 +7404,18 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_time_demo extends $mol_example_large {
-        title(): string;
+    class $mol_example_code extends $mol_example_large {
         sub(): readonly any[];
-        tags(): readonly any[];
-        code(val?: any): string;
+        code(next?: any): string;
         Sandbox(): $$.$hyoo_js_eval;
+    }
+}
+
+declare namespace $ {
+    class $mol_time_demo extends $mol_example_code {
+        title(): string;
+        code(next?: any): string;
+        tags(): readonly any[];
     }
 }
 

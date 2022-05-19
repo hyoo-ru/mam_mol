@@ -440,6 +440,7 @@
     "$mol_text_demo",
     "$mol_textarea_demo",
     "$mol_time_demo",
+    "$mol_example_code",
     "$hyoo_js_eval",
     "$hyoo_js",
     "$mol_assert",
