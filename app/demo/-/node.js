@@ -3656,9 +3656,6 @@ var $;
 //mol/example/large/-css/large.view.css.ts
 ;
 "use strict";
-//mol/example/large/large.view.ts
-;
-"use strict";
 //mol/type/result/result.ts
 ;
 "use strict";
@@ -18708,6 +18705,71 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_dump_list extends $mol_view {
+        values() {
+            return [];
+        }
+        sub() {
+            return [
+                this.Dump("0")
+            ];
+        }
+        dump_value(id) {
+            return null;
+        }
+        dump_expanded(id, next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        Dump(id) {
+            const obj = new this.$.$mol_dump_value();
+            obj.value = () => this.dump_value(id);
+            obj.expanded = (next) => this.dump_expanded(id, next);
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_dump_list.prototype, "dump_expanded", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_dump_list.prototype, "Dump", null);
+    $.$mol_dump_list = $mol_dump_list;
+})($ || ($ = {}));
+//mol/dump/list/-view.tree/list.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/dump/list/list.view.css", "[mol_dump_list] {\n\talign-items: flex-start;\n\tgap: var(--mol_gap_space);\n}\n\n[mol_dump_list_dump]:first-child {\n\tposition: sticky;\n\ttop: .75rem;\n}\n");
+})($ || ($ = {}));
+//mol/dump/list/-css/list.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_dump_list extends $.$mol_dump_list {
+            sub() {
+                return this.values().map((_, index) => this.Dump(index));
+            }
+            dump_value(index) {
+                return this.values()[index];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_dump_list.prototype, "sub", null);
+        $$.$mol_dump_list = $mol_dump_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/dump/list/list.view.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_expander extends $mol_list {
         rows() {
             return [
@@ -18791,6 +18853,221 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/expander/expander.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_dump_value extends $mol_view {
+        value() {
+            return null;
+        }
+        sub() {
+            return [
+                this.Simple(),
+                this.Expand()
+            ];
+        }
+        simple() {
+            return "";
+        }
+        Simple() {
+            const obj = new this.$.$mol_text_code();
+            obj.text = () => this.simple();
+            return obj;
+        }
+        expanded(val) {
+            if (val !== undefined)
+                return val;
+            return false;
+        }
+        expand_title() {
+            return "";
+        }
+        Expand_title() {
+            const obj = new this.$.$mol_text_code();
+            obj.text = () => this.expand_title();
+            return obj;
+        }
+        Expand_head() {
+            const obj = new this.$.$mol_check_expand();
+            obj.minimal_height = () => 24;
+            obj.minimal_width = () => 24;
+            obj.checked = (val) => this.expanded(val);
+            obj.label = () => [
+                this.Expand_title()
+            ];
+            return obj;
+        }
+        row_values(id) {
+            return [];
+        }
+        Row(id) {
+            const obj = new this.$.$mol_dump_list();
+            obj.values = () => this.row_values(id);
+            return obj;
+        }
+        expand_content() {
+            return [
+                this.Row("0")
+            ];
+        }
+        Expand() {
+            const obj = new this.$.$mol_expander();
+            obj.expanded = (val) => this.expanded(val);
+            obj.Trigger = () => this.Expand_head();
+            obj.content = () => this.expand_content();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_dump_value.prototype, "Simple", null);
+    __decorate([
+        $mol_mem
+    ], $mol_dump_value.prototype, "expanded", null);
+    __decorate([
+        $mol_mem
+    ], $mol_dump_value.prototype, "Expand_title", null);
+    __decorate([
+        $mol_mem
+    ], $mol_dump_value.prototype, "Expand_head", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_dump_value.prototype, "Row", null);
+    __decorate([
+        $mol_mem
+    ], $mol_dump_value.prototype, "Expand", null);
+    $.$mol_dump_value = $mol_dump_value;
+})($ || ($ = {}));
+//mol/dump/value/-view.tree/value.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/dump/value/value.view.css", "[mol_dump_value] {\n\tmin-height: 2.5rem;\n\tmin-width: 2.5rem;\n\t/* padding-left: .75rem; */\n}\n\n[mol_dump_value_simple] {\n\tpadding: 0;\n}\n\n[mol_dump_value_expand_content] {\n\tpadding-left: .75rem;\n}\n\n[mol_dump_value_expand_title],\n[mol_dump_value_expand_head] {\n\tpadding: 0;\n}\n");
+})($ || ($ = {}));
+//mol/dump/value/-css/value.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_dump_value extends $.$mol_dump_value {
+            sub() {
+                const value = this.value();
+                if (!value)
+                    return [this.Simple()];
+                if (typeof value === 'object')
+                    return [this.Expand()];
+                if (typeof value === 'function')
+                    return [this.Expand()];
+                return [this.Simple()];
+            }
+            simple() {
+                const value = this.value();
+                return value ? String(value) : JSON.stringify(value) ?? 'undefined';
+            }
+            expand_title() {
+                const value = this.value();
+                if (typeof value === 'function') {
+                    const name = Reflect.getOwnPropertyDescriptor(value, 'name')?.value;
+                    const source = Function.prototype.toString.call(value);
+                    const args = source.replace(/\)[\s\S]*$/g, ')').replace(/^[\s\S]*\(/g, '(');
+                    if (name)
+                        return name + args + '{}';
+                }
+                if (value instanceof RegExp)
+                    return String(value);
+                if (value instanceof Date)
+                    return value.toISOString();
+                return Reflect.getOwnPropertyDescriptor(value, Symbol.toStringTag)?.value
+                    ?? Reflect.getPrototypeOf(value)?.constructor.name
+                    ?? 'Object';
+            }
+            rows_values() {
+                let value = this.value();
+                const self = [];
+                for (const key of Reflect.ownKeys(value)) {
+                    const prefix = String(key) + '∶';
+                    const descr = Reflect.getOwnPropertyDescriptor(value, key);
+                    if ('value' in descr)
+                        self.push([prefix, descr.value]);
+                    else
+                        self.push([prefix, descr.get, descr.set]);
+                }
+                const map = value instanceof Map
+                    ? [...value].map(([key, val]) => [key, '🡒', val])
+                    : [];
+                const set = value instanceof Set
+                    ? [...value].map(val => [val])
+                    : [];
+                const proto = Reflect.getPrototypeOf(value);
+                return [
+                    ...self,
+                    ...map,
+                    ...set,
+                    ['__proto__:', proto]
+                ];
+            }
+            expand_content() {
+                return this.rows_values().map((_, index) => this.Row(index));
+            }
+            row_values(index) {
+                return this.rows_values()[index];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_dump_value.prototype, "sub", null);
+        __decorate([
+            $mol_mem
+        ], $mol_dump_value.prototype, "simple", null);
+        __decorate([
+            $mol_mem
+        ], $mol_dump_value.prototype, "expand_title", null);
+        __decorate([
+            $mol_mem
+        ], $mol_dump_value.prototype, "rows_values", null);
+        __decorate([
+            $mol_mem
+        ], $mol_dump_value.prototype, "expand_content", null);
+        $$.$mol_dump_value = $mol_dump_value;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/dump/value/value.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_dump_demo extends $mol_example_small {
+        title() {
+            return "Attach files an show them";
+        }
+        sub() {
+            return [
+                this.Dump()
+            ];
+        }
+        tags() {
+            return [
+                "dump",
+                "javascript",
+                "debug"
+            ];
+        }
+        Dump() {
+            const obj = new this.$.$mol_dump_value();
+            obj.value = () => this.sub();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_dump_demo.prototype, "Dump", null);
+    $.$mol_dump_demo = $mol_dump_demo;
+})($ || ($ = {}));
+//mol/dump/demo/-view.tree/demo.view.tree.ts
 ;
 "use strict";
 var $;
@@ -27506,11 +27783,6 @@ var $;
                 this.Result_page()
             ];
         }
-        Log(id) {
-            const obj = new this.$.$hyoo_js_eval_log();
-            obj.values = () => this.log(id);
-            return obj;
-        }
         Theme() {
             const obj = new this.$.$mol_theme_auto();
             return obj;
@@ -27658,8 +27930,18 @@ var $;
             ];
             return obj;
         }
-        logs() {
+        log(id) {
             return [];
+        }
+        Log(id) {
+            const obj = new this.$.$mol_dump_list();
+            obj.values = () => this.log(id);
+            return obj;
+        }
+        logs() {
+            return [
+                this.Log("0")
+            ];
         }
         Result() {
             const obj = new this.$.$mol_list();
@@ -27677,16 +27959,10 @@ var $;
             ];
             return obj;
         }
-        log(id) {
-            return [];
-        }
     }
     __decorate([
         $mol_mem
     ], $hyoo_js_eval.prototype, "bookmark_list", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_js_eval.prototype, "Log", null);
     __decorate([
         $mol_mem
     ], $hyoo_js_eval.prototype, "Theme", null);
@@ -27748,198 +28024,22 @@ var $;
         $mol_mem
     ], $hyoo_js_eval.prototype, "Results_close", null);
     __decorate([
+        $mol_mem_key
+    ], $hyoo_js_eval.prototype, "Log", null);
+    __decorate([
         $mol_mem
     ], $hyoo_js_eval.prototype, "Result", null);
     __decorate([
         $mol_mem
     ], $hyoo_js_eval.prototype, "Result_page", null);
     $.$hyoo_js_eval = $hyoo_js_eval;
-    class $hyoo_js_eval_log extends $mol_view {
-        values() {
-            return [];
-        }
-        sub() {
-            return [
-                this.Prefix(),
-                this.Dump("0")
-            ];
-        }
-        prefix() {
-            return "";
-        }
-        Prefix() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => [
-                this.prefix()
-            ];
-            return obj;
-        }
-        dump_value(id) {
-            return null;
-        }
-        dump_expanded(id, next) {
-            if (next !== undefined)
-                return next;
-            return true;
-        }
-        Dump(id) {
-            const obj = new this.$.$hyoo_js_eval_dump();
-            obj.value = () => this.dump_value(id);
-            obj.expanded = (next) => this.dump_expanded(id, next);
-            return obj;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $hyoo_js_eval_log.prototype, "Prefix", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_js_eval_log.prototype, "dump_expanded", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_js_eval_log.prototype, "Dump", null);
-    $.$hyoo_js_eval_log = $hyoo_js_eval_log;
-    class $hyoo_js_eval_pair extends $mol_view {
-        sub() {
-            return [
-                this.Key(),
-                this.Suffix(),
-                this.Value()
-            ];
-        }
-        key() {
-            return null;
-        }
-        Key() {
-            const obj = new this.$.$hyoo_js_eval_dump();
-            obj.value = () => this.key();
-            return obj;
-        }
-        suffix() {
-            return "";
-        }
-        Suffix() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => [
-                this.suffix()
-            ];
-            return obj;
-        }
-        value() {
-            return null;
-        }
-        Value() {
-            const obj = new this.$.$hyoo_js_eval_dump();
-            obj.value = () => this.value();
-            return obj;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $hyoo_js_eval_pair.prototype, "Key", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_js_eval_pair.prototype, "Suffix", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_js_eval_pair.prototype, "Value", null);
-    $.$hyoo_js_eval_pair = $hyoo_js_eval_pair;
-    class $hyoo_js_eval_dump extends $mol_view {
-        value() {
-            return null;
-        }
-        sub() {
-            return [
-                this.Simple(),
-                this.Expand()
-            ];
-        }
-        simple() {
-            return "";
-        }
-        Simple() {
-            const obj = new this.$.$mol_text_code();
-            obj.text = () => this.simple();
-            return obj;
-        }
-        expanded(val) {
-            if (val !== undefined)
-                return val;
-            return false;
-        }
-        expand_title() {
-            return "";
-        }
-        Expand_title() {
-            const obj = new this.$.$mol_text_code();
-            obj.text = () => this.expand_title();
-            return obj;
-        }
-        Expand_head() {
-            const obj = new this.$.$mol_check_expand();
-            obj.minimal_height = () => 24;
-            obj.minimal_width = () => 24;
-            obj.checked = (val) => this.expanded(val);
-            obj.label = () => [
-                this.Expand_title()
-            ];
-            return obj;
-        }
-        pair_key(id) {
-            return null;
-        }
-        pair_suffix(id) {
-            return null;
-        }
-        pair_value(id) {
-            return null;
-        }
-        Pair(id) {
-            const obj = new this.$.$hyoo_js_eval_pair();
-            obj.key = () => this.pair_key(id);
-            obj.suffix = () => this.pair_suffix(id);
-            obj.value = () => this.pair_value(id);
-            return obj;
-        }
-        expand_content() {
-            return [
-                this.Pair("0")
-            ];
-        }
-        Expand() {
-            const obj = new this.$.$mol_expander();
-            obj.expanded = (val) => this.expanded(val);
-            obj.Trigger = () => this.Expand_head();
-            obj.content = () => this.expand_content();
-            return obj;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $hyoo_js_eval_dump.prototype, "Simple", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_js_eval_dump.prototype, "expanded", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_js_eval_dump.prototype, "Expand_title", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_js_eval_dump.prototype, "Expand_head", null);
-    __decorate([
-        $mol_mem_key
-    ], $hyoo_js_eval_dump.prototype, "Pair", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_js_eval_dump.prototype, "Expand", null);
-    $.$hyoo_js_eval_dump = $hyoo_js_eval_dump;
 })($ || ($ = {}));
 //hyoo/js/eval/-view.tree/eval.view.tree.ts
 ;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_menu_page] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_menu] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code_page] {\n\tflex: 1 0 auto;\n}\n\n[hyoo_js_eval_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_result] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 0 0 50%;\n}\n\n[hyoo_js_eval_result_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_log] {\n\talign-items: flex-start;\n}\n\n[hyoo_js_eval_log_prefix] {\n\tposition: sticky;\n\ttop: 0;\n}\n\n[hyoo_js_eval_dump] {\n\tmin-height: 2.5rem;\n\tmin-width: 2.5rem;\n\tpadding-left: .75rem;\n}\n\n[hyoo_js_eval_dump_simple] {\n\tpadding: 0;\n}\n\n[hyoo_js_eval_dump_key] {\n\tpadding-right: .75rem;\n}\n\n[hyoo_js_eval_dump_expand_title],\n[hyoo_js_eval_dump_expand_head] {\n\tpadding: 0;\n}\n\n[hyoo_js_eval_pair] {\n\talign-items: flex-start;\n}\n\n[hyoo_js_eval_pair_key] {\n\tposition: sticky;\n\ttop: 0;\n\tpadding-right: .25rem;\n}\n\n[hyoo_js_eval_pair_suffix] {\n\tposition: sticky;\n\ttop: 0;\n}\n");
+    $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_menu_page] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_menu] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code_page] {\n\tflex: 1 0 auto;\n}\n\n[hyoo_js_eval_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_result] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 0 0 50%;\n}\n\n[hyoo_js_eval_result_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n");
 })($ || ($ = {}));
 //hyoo/js/eval/-css/eval.view.css.ts
 ;
@@ -28070,125 +28170,6 @@ var $;
             $mol_mem_key
         ], $hyoo_js_eval.prototype, "log", null);
         $$.$hyoo_js_eval = $hyoo_js_eval;
-        class $hyoo_js_eval_log extends $.$hyoo_js_eval_log {
-            sub() {
-                return [
-                    this.Prefix(),
-                    ...this.values().slice(1).map((_, index) => this.Dump(index + 1))
-                ];
-            }
-            prefix() {
-                return this.values()[0];
-            }
-            dump_value(index) {
-                return this.values()[index];
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $hyoo_js_eval_log.prototype, "sub", null);
-        __decorate([
-            $mol_mem_key
-        ], $hyoo_js_eval_log.prototype, "dump_value", null);
-        $$.$hyoo_js_eval_log = $hyoo_js_eval_log;
-        class $hyoo_js_eval_pair extends $.$hyoo_js_eval_pair {
-            sub() {
-                return this.suffix()
-                    ? [this.Key(), this.Suffix(), this.Value()]
-                    : [this.Value()];
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $hyoo_js_eval_pair.prototype, "sub", null);
-        $$.$hyoo_js_eval_pair = $hyoo_js_eval_pair;
-        class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
-            sub() {
-                const value = this.value();
-                if (!value)
-                    return [this.Simple()];
-                if (typeof value === 'object')
-                    return [this.Expand()];
-                if (typeof value === 'function')
-                    return [this.Expand()];
-                return [this.Simple()];
-            }
-            simple() {
-                const value = this.value();
-                return value ? String(value) : JSON.stringify(value) ?? 'undefined';
-            }
-            expand_title() {
-                const value = this.value();
-                if (typeof value === 'function') {
-                    const name = Reflect.getOwnPropertyDescriptor(value, 'name')?.value;
-                    const source = Function.prototype.toString.call(value);
-                    const args = source.replace(/\)[\s\S]*$/g, ')').replace(/^[\s\S]*\(/g, '(');
-                    if (name)
-                        return name + args + '{}';
-                }
-                if (value instanceof RegExp)
-                    return String(value);
-                if (value instanceof Date)
-                    return value.toISOString();
-                return Reflect.getOwnPropertyDescriptor(value, Symbol.toStringTag)?.value
-                    ?? Reflect.getPrototypeOf(value)?.constructor.name
-                    ?? 'Object';
-            }
-            pairs_data() {
-                let value = this.value();
-                const self = [];
-                for (const key of Reflect.ownKeys(value)) {
-                    const descr = Reflect.getOwnPropertyDescriptor(value, key);
-                    if ('value' in descr)
-                        self.push([key, '∶', descr.value]);
-                    if ('get' in descr)
-                        self.push(['get ' + String(key), '∶', descr.get]);
-                    if ('set' in descr)
-                        self.push(['set ' + String(key), '∶', descr.set]);
-                }
-                const map = value instanceof Map
-                    ? [...value].map(([key, val]) => [key, '🡒', val])
-                    : [];
-                const set = value instanceof Set
-                    ? [...value].map(val => [null, '', val])
-                    : [];
-                const proto = Reflect.getPrototypeOf(value);
-                return [
-                    ...self,
-                    ...map,
-                    ...set,
-                    ['[[prototype]]', ':', proto]
-                ];
-            }
-            expand_content() {
-                return this.pairs_data().map((_, index) => this.Pair(index));
-            }
-            pair_key(index) {
-                return this.pairs_data()[index][0];
-            }
-            pair_suffix(index) {
-                return this.pairs_data()[index][1];
-            }
-            pair_value(index) {
-                return this.pairs_data()[index][2];
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $hyoo_js_eval_dump.prototype, "sub", null);
-        __decorate([
-            $mol_mem
-        ], $hyoo_js_eval_dump.prototype, "simple", null);
-        __decorate([
-            $mol_mem
-        ], $hyoo_js_eval_dump.prototype, "expand_title", null);
-        __decorate([
-            $mol_mem
-        ], $hyoo_js_eval_dump.prototype, "pairs_data", null);
-        __decorate([
-            $mol_mem
-        ], $hyoo_js_eval_dump.prototype, "expand_content", null);
-        $$.$hyoo_js_eval_dump = $hyoo_js_eval_dump;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //hyoo/js/eval/eval.view.ts

@@ -4996,6 +4996,26 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_dump_list extends $mol_view {
+        values(): readonly any[];
+        sub(): readonly any[];
+        dump_value(id: any): any;
+        dump_expanded(id: any, next?: any): boolean;
+        Dump(id: any): $$.$mol_dump_value;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_dump_list extends $.$mol_dump_list {
+        sub(): $mol_dump_value[];
+        dump_value(index: number): any;
+    }
+}
+
+declare namespace $ {
     class $mol_expander extends $mol_list {
         rows(): readonly any[];
         expanded(val?: any): boolean;
@@ -5014,6 +5034,46 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_expander extends $.$mol_expander {
         rows(): $mol_view[];
+    }
+}
+
+declare namespace $ {
+    class $mol_dump_value extends $mol_view {
+        value(): any;
+        sub(): readonly any[];
+        simple(): string;
+        Simple(): $$.$mol_text_code;
+        expanded(val?: any): boolean;
+        expand_title(): string;
+        Expand_title(): $$.$mol_text_code;
+        Expand_head(): $$.$mol_check_expand;
+        row_values(id: any): readonly any[];
+        Row(id: any): $$.$mol_dump_list;
+        expand_content(): readonly any[];
+        Expand(): $$.$mol_expander;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_dump_value extends $.$mol_dump_value {
+        sub(): $mol_text_code[] | $mol_expander[];
+        simple(): string;
+        expand_title(): any;
+        rows_values(): any[][];
+        expand_content(): $mol_dump_list[];
+        row_values(index: number): any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_dump_demo extends $mol_example_small {
+        title(): string;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        Dump(): $$.$mol_dump_value;
     }
 }
 
@@ -7294,7 +7354,6 @@ declare namespace $ {
         plugins(): readonly any[];
         bookmark_list(next?: any): readonly string[];
         pages(): readonly any[];
-        Log(id: any): $$.$hyoo_js_eval_log;
         Theme(): $$.$mol_theme_auto;
         Clear_icon(): $mol_icon_plus;
         Clear(): $$.$mol_link;
@@ -7320,44 +7379,11 @@ declare namespace $ {
         result_label(): string;
         Results_close_icon(): $mol_icon_cross;
         Results_close(): $$.$mol_link;
+        log(id: any): readonly any[];
+        Log(id: any): $$.$mol_dump_list;
         logs(): readonly any[];
         Result(): $$.$mol_list;
         Result_page(): $mol_page;
-        log(id: any): readonly any[];
-    }
-    class $hyoo_js_eval_log extends $mol_view {
-        values(): readonly any[];
-        sub(): readonly any[];
-        prefix(): string;
-        Prefix(): $mol_view;
-        dump_value(id: any): any;
-        dump_expanded(id: any, next?: any): boolean;
-        Dump(id: any): $$.$hyoo_js_eval_dump;
-    }
-    class $hyoo_js_eval_pair extends $mol_view {
-        sub(): readonly any[];
-        key(): any;
-        Key(): $$.$hyoo_js_eval_dump;
-        suffix(): string;
-        Suffix(): $mol_view;
-        value(): any;
-        Value(): $$.$hyoo_js_eval_dump;
-    }
-    class $hyoo_js_eval_dump extends $mol_view {
-        value(): any;
-        sub(): readonly any[];
-        simple(): string;
-        Simple(): $$.$mol_text_code;
-        expanded(val?: any): boolean;
-        expand_title(): string;
-        Expand_title(): $$.$mol_text_code;
-        Expand_head(): $$.$mol_check_expand;
-        pair_key(id: any): any;
-        pair_suffix(id: any): any;
-        pair_value(id: any): any;
-        Pair(id: any): $$.$hyoo_js_eval_pair;
-        expand_content(): readonly any[];
-        Expand(): $$.$mol_expander;
     }
 }
 
@@ -7379,26 +7405,8 @@ declare namespace $.$$ {
         execute(): any[];
         spy(args: () => any[]): void;
         result(next?: any[]): any[];
-        logs(): $hyoo_js_eval_log[];
+        logs(): $mol_dump_list[];
         log(index: number): any;
-    }
-    class $hyoo_js_eval_log extends $.$hyoo_js_eval_log {
-        sub(): $mol_view[];
-        prefix(): any;
-        dump_value(index: number): any;
-    }
-    class $hyoo_js_eval_pair extends $.$hyoo_js_eval_pair {
-        sub(): $mol_view[];
-    }
-    class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
-        sub(): $mol_expander[] | $mol_text_code[];
-        simple(): string;
-        expand_title(): any;
-        pairs_data(): any[][];
-        expand_content(): $hyoo_js_eval_pair[];
-        pair_key(index: number): any;
-        pair_suffix(index: number): any;
-        pair_value(index: number): any;
     }
 }
 
