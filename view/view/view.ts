@@ -241,7 +241,8 @@ namespace $ {
 				if( ( error_shower.get( error ) ?? this ) !== this ) return node
 				
 				try {
-					( node as HTMLElement ).innerText = '\xA0\xA0' + ( error.message || error ) + '\xA0\xA0'
+					const message = error.message || error
+					;( node as HTMLElement ).innerText = message.replace( /^|$/mg, '\xA0\xA0' )
 				} catch {}
 				
 				error_shower.set( error, this )
