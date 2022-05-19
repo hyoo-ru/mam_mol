@@ -45,7 +45,7 @@ $mol_text $mol_list
 		content / <= String*
 	Image* $mol_embed_native
 		uri <= link_uri* \
-		sub <= line_content* /
+		title <= line_text* \
 
 $mol_text_span $mol_paragraph
 	dom_name \span
