@@ -14,7 +14,7 @@ Dumps any JS values.
 ## Dump multiple values
 
 ```tree
-<= $mol_dump_value
+<= $mol_dump_list
 	values <= log /
 		\foo
 		123
