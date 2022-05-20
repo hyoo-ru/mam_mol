@@ -5,16 +5,16 @@ Dumps any JS values.
 ## Dump single value
 
 ```tree
-<= $mol_dump_value
+<= Dump $mol_dump_value
 	value <= data *
 		foo 123
 		bar 456
 ```
 
-## Dump multiple values
+## Dump multiple values in a row
 
 ```tree
-<= $mol_dump_list
+<= Log $mol_dump_list
 	values <= log /
 		\foo
 		123
