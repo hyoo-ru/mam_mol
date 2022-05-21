@@ -18961,6 +18961,15 @@ var $;
                         res.push([val]);
                     }
                 }
+                if (value instanceof Function) {
+                    let source = Function.prototype.toString.call(value)
+                        .replace(/^.*?\{\r?\n/, '')
+                        .replace(/}$/, '')
+                        .trimEnd();
+                    const indent = source.match(/^\s*/)[0];
+                    source = source.replace(new RegExp(`^${indent}`, 'gm'), '\t');
+                    res.push([source]);
+                }
                 if (value instanceof Element) {
                     try {
                         for (const kid of value.childNodes) {
