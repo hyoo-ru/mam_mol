@@ -4,16 +4,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * event *
-		 * 	dragstart?event <=> start?event
-		 * 	drag?event <=> move?event
-		 * 	dragend?event <=> end?event
+		 * 	dragstart?event <=> drag_start?event
+		 * 	drag?event <=> drag_move?event
+		 * 	dragend?event <=> drag_end?event
 		 * ```
 		 */
 		event() {
 			return {
-				dragstart: (event?: any) => this.start(event),
-				drag: (event?: any) => this.move(event),
-				dragend: (event?: any) => this.end(event)
+				dragstart: (event?: any) => this.drag_start(event),
+				drag: (event?: any) => this.drag_move(event),
+				dragend: (event?: any) => this.drag_end(event)
 			}
 		}
 		
@@ -96,6 +96,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * drag_start?event <=> start?event
+		 * ```
+		 */
+		drag_start(event?: any) {
+			return this.start(event)
+		}
+		
+		/**
+		 * ```tree
 		 * move?event null
 		 * ```
 		 */
@@ -107,6 +116,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * drag_move?event <=> move?event
+		 * ```
+		 */
+		drag_move(event?: any) {
+			return this.move(event)
+		}
+		
+		/**
+		 * ```tree
 		 * end?event null
 		 * ```
 		 */
@@ -114,6 +132,15 @@ namespace $ {
 		end(event?: any) {
 			if ( event !== undefined ) return event as never
 			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * drag_end?event <=> end?event
+		 * ```
+		 */
+		drag_end(event?: any) {
+			return this.end(event)
 		}
 		
 		/**

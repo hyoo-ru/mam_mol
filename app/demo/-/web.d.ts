@@ -4866,8 +4866,11 @@ declare namespace $ {
         allow_move(): boolean;
         image(): Element;
         start(event?: any): any;
+        drag_start(event?: any): any;
         move(event?: any): any;
+        drag_move(event?: any): any;
         end(event?: any): any;
+        drag_end(event?: any): any;
         status(val?: any): string;
     }
 }
@@ -4875,8 +4878,8 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_drag extends $.$mol_drag {
         status(next?: "ready" | "drag"): "ready" | "drag";
-        start(event: DragEvent): void;
-        end(event: DragEvent): void;
+        drag_start(event: DragEvent): void;
+        drag_end(event: DragEvent): void;
     }
 }
 

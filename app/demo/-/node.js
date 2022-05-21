@@ -7406,7 +7406,9 @@ var $;
                 return url.hostname;
             }
             title() {
-                return decodeURIComponent(this.uri().split(this.host(), 2)[1]).replace(/^\//, ' ');
+                const suffix = this.uri().split(this.host(), 2)[1].replace(/^[\/\?#!]+/, '')
+                    || this.host();
+                return decodeURIComponent(suffix).replace(/^\//, ' ');
             }
             sub() {
                 return [
@@ -18012,9 +18014,9 @@ var $;
     class $mol_drag extends $mol_ghost {
         event() {
             return {
-                dragstart: (event) => this.start(event),
-                drag: (event) => this.move(event),
-                dragend: (event) => this.end(event)
+                dragstart: (event) => this.drag_start(event),
+                drag: (event) => this.drag_move(event),
+                dragend: (event) => this.drag_end(event)
             };
         }
         attr() {
@@ -18047,15 +18049,24 @@ var $;
                 return event;
             return null;
         }
+        drag_start(event) {
+            return this.start(event);
+        }
         move(event) {
             if (event !== undefined)
                 return event;
             return null;
         }
+        drag_move(event) {
+            return this.move(event);
+        }
         end(event) {
             if (event !== undefined)
                 return event;
             return null;
+        }
+        drag_end(event) {
+            return this.end(event);
         }
         status(val) {
             if (val !== undefined)
@@ -18086,7 +18097,7 @@ var $;
     (function ($$) {
         class $mol_drag extends $.$mol_drag {
             status(next = 'ready') { return next; }
-            start(event) {
+            drag_start(event) {
                 setTimeout(() => this.status('drag'));
                 const transfer = this.transfer();
                 for (let type in transfer) {
@@ -18104,9 +18115,11 @@ var $;
                 if (effectAllowed === 'copyLinkMove')
                     effectAllowed = 'all';
                 event.dataTransfer.effectAllowed = effectAllowed;
+                this.start(event);
             }
-            end(event) {
+            drag_end(event) {
                 setTimeout(() => this.status('ready'));
+                this.end(event);
             }
         }
         __decorate([
