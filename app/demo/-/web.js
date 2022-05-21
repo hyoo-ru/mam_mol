@@ -18596,7 +18596,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/dump/value/value.view.css", "[mol_dump_value] {\n\tmin-height: 2.5rem;\n\tmin-width: 2.5rem;\n}\n\n[mol_dump_value_simple] {\n\tpadding: 0;\n}\n\n[mol_dump_value_expand_content] {\n\tpadding-left: .75rem;\n}\n\n[mol_dump_value_expand_title],\n[mol_dump_value_expand_head] {\n\tpadding: 0;\n}\n");
+    $mol_style_attach("mol/dump/value/value.view.css", "[mol_dump_value] {\n\tmin-height: 2.5rem;\n\tmin-width: 2.5rem;\n}\n\n[mol_dump_value_simple] {\n\tpadding: 0;\n}\n\n[mol_dump_value_expand_content] {\n\tpadding-left: 1.5rem;\n}\n\n[mol_dump_value_expand_title],\n[mol_dump_value_expand_head] {\n\tpadding: 0;\n}\n");
 })($ || ($ = {}));
 //mol/dump/value/-css/value.view.css.ts
 ;
@@ -18633,34 +18633,55 @@ var $;
                     return String(value);
                 if (value instanceof Date)
                     return value.toISOString();
-                return Reflect.getOwnPropertyDescriptor(value, Symbol.toStringTag)?.value
+                const kind = Reflect.getOwnPropertyDescriptor(value, Symbol.toStringTag)?.value
                     ?? Reflect.getPrototypeOf(value)?.constructor.name
                     ?? 'Object';
+                if (value instanceof Node) {
+                    try {
+                        switch (value.nodeType) {
+                            case value.TEXT_NODE: return kind + ' ' + value.nodeValue?.trim();
+                            case value.ELEMENT_NODE: return kind + ' ' + value.id;
+                            case value.DOCUMENT_NODE: return kind + ' ' + value.baseURI;
+                        }
+                    }
+                    catch { }
+                }
+                return kind;
             }
             rows_values() {
                 let value = this.value();
-                const self = [];
+                const res = [];
+                if (value instanceof Map) {
+                    for (const [key, val] of value) {
+                        res.push([key, '🡒', val]);
+                    }
+                }
+                if (value instanceof Set) {
+                    for (const val of value) {
+                        res.push([val]);
+                    }
+                }
+                if (value instanceof Element) {
+                    try {
+                        for (const kid of value.childNodes) {
+                            res.push([kid]);
+                        }
+                        for (const attr of value.attributes) {
+                            res.push([attr.nodeName, '=', attr.nodeValue]);
+                        }
+                    }
+                    catch { }
+                }
                 for (const key of Reflect.ownKeys(value)) {
                     const prefix = String(key) + '∶';
                     const descr = Reflect.getOwnPropertyDescriptor(value, key);
                     if ('value' in descr)
-                        self.push([prefix, descr.value]);
+                        res.push([prefix, descr.value]);
                     else
-                        self.push([prefix, descr.get, descr.set]);
+                        res.push([prefix, descr.get, descr.set]);
                 }
-                const map = value instanceof Map
-                    ? [...value].map(([key, val]) => [key, '🡒', val])
-                    : [];
-                const set = value instanceof Set
-                    ? [...value].map(val => [val])
-                    : [];
-                const proto = Reflect.getPrototypeOf(value);
-                return [
-                    ...self,
-                    ...map,
-                    ...set,
-                    ['__proto__:', proto]
-                ];
+                res.push(['__proto__:', Reflect.getPrototypeOf(value)]);
+                return res;
             }
             expand_content() {
                 return this.rows_values().map((_, index) => this.Row(index));
