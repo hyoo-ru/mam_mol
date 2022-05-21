@@ -39,7 +39,7 @@ namespace $.$$ {
 				try {
 					switch( value.nodeType ) {
 						case value.TEXT_NODE: return kind + ' ' + value.nodeValue?.trim()
-						case value.ELEMENT_NODE: return kind + ' ' + ( value as Element ).id
+						case value.ELEMENT_NODE: return value.nodeName + ' ' + ( value as Element ).id
 						case value.DOCUMENT_NODE: return kind + ' ' + value.baseURI
 					}
 				} catch {}
@@ -77,7 +77,7 @@ namespace $.$$ {
 					}
 				} catch {}
 			}
-				
+			
 			for( const key of Reflect.ownKeys( value ) ) {
 				const prefix = String( key ) + '∶'
 				const descr = Reflect.getOwnPropertyDescriptor( value, key )!

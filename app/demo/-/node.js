@@ -18948,7 +18948,7 @@ var $;
                     try {
                         switch (value.nodeType) {
                             case value.TEXT_NODE: return kind + ' ' + value.nodeValue?.trim();
-                            case value.ELEMENT_NODE: return kind + ' ' + value.id;
+                            case value.ELEMENT_NODE: return value.nodeName + ' ' + value.id;
                             case value.DOCUMENT_NODE: return kind + ' ' + value.baseURI;
                         }
                     }
