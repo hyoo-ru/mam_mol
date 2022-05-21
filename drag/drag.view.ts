@@ -4,7 +4,7 @@ namespace $.$$ {
 		@ $mol_mem
 		status( next = 'ready' as 'ready' | 'drag' ) { return next }
 
-		start( event : DragEvent ) {
+		drag_start( event : DragEvent ) {
 
 			setTimeout( ()=> this.status( 'drag' ) )
 
@@ -24,10 +24,13 @@ namespace $.$$ {
 			if( effectAllowed === 'copyLinkMove' ) effectAllowed = 'all'
 			event.dataTransfer!.effectAllowed = effectAllowed as DataTransfer['effectAllowed']
 			
+			this.start( event )
+			
 		}
-
-		end( event : DragEvent ) {
+		
+		drag_end( event : DragEvent ) {
 			setTimeout( ()=> this.status( 'ready' ) )
+			this.end( event )
 		}
 
 	}
