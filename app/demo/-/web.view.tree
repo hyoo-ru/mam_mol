@@ -2716,9 +2716,8 @@ $hyoo_marked_app $mol_book2
 					arg *
 						html null
 			body /
-				<= Html_text $mol_textarea
-					enabled false
-					value <= html \
+				<= Html_text $mol_text_code
+					text <= html \
 
 $hyoo_marked_demo $mol_example_large
 	title \CROWD Text Merge

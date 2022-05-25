@@ -6039,7 +6039,7 @@ declare namespace $ {
         Close_icon(): $mol_icon_cross;
         Close(): $$.$mol_link;
         html(): string;
-        Html_text(): $$.$mol_textarea;
+        Html_text(): $$.$mol_text_code;
         Html(): $mol_page;
     }
 }

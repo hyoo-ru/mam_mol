@@ -23260,9 +23260,8 @@ var $;
             return "";
         }
         Html_text() {
-            const obj = new this.$.$mol_textarea();
-            obj.enabled = () => false;
-            obj.value = () => this.html();
+            const obj = new this.$.$mol_text_code();
+            obj.text = () => this.html();
             return obj;
         }
         Html() {
