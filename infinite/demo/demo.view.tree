@@ -7,6 +7,7 @@ $mol_infinite_demo $mol_example
 			Row* <= Item* $mol_filler
 	tags /
 		\$mol_filler
+		\$mol_list
 		\infinite
 		\scroll
 		\virtual
