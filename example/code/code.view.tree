@@ -1,4 +1,4 @@
-$mol_example_code $mol_example_large
+$mol_example_code $mol_example
 	sub /
 		<= Sandbox $hyoo_js_eval
 			Menu_page null

@@ -3619,7 +3619,7 @@ $hyoo_js_eval $mol_book2
 						<= Log*0 $mol_dump_list
 							values <= log* /
 
-$mol_example_code $mol_example_large
+$mol_example_code $mol_example
 	sub /
 		<= Sandbox $hyoo_js_eval
 			Menu_page null

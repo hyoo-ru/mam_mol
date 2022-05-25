@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_example_code extends $mol_example_large {
+	export class $mol_example_code extends $mol_example {
 		
 		/**
 		 * ```tree

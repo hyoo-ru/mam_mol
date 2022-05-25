@@ -7408,11 +7408,14 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_example_code extends $mol_example_large {
+    class $mol_example_code extends $mol_example {
         sub(): readonly any[];
         code(next?: any): string;
         Sandbox(): $$.$hyoo_js_eval;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
