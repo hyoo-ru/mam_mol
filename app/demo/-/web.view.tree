@@ -3002,7 +3002,6 @@ $mol_pop_over_demo $mol_example_small
 								<= About $mol_button_minor
 									title <= about_title \About
 	tags /
-		\$mol_list
 		\$mol_button
 		\popover
 		\pop
@@ -3187,7 +3186,6 @@ $mol_scroll_demo $mol_example_large
 					<= Filler9 $mol_filler
 	tags /
 		\$mol_filler
-		\$mol_list
 		\scroll
 		\container
 

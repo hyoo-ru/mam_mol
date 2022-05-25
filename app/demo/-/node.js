@@ -24938,7 +24938,6 @@ var $;
         }
         tags() {
             return [
-                "$mol_list",
                 "$mol_button",
                 "popover",
                 "pop",
@@ -25867,7 +25866,6 @@ var $;
         tags() {
             return [
                 "$mol_filler",
-                "$mol_list",
                 "scroll",
                 "container"
             ];

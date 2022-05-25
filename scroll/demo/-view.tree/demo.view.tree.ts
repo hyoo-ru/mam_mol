@@ -25,7 +25,6 @@ namespace $ {
 		 * ```tree
 		 * tags /
 		 * 	\$mol_filler
-		 * 	\$mol_list
 		 * 	\scroll
 		 * 	\container
 		 * ```
@@ -33,7 +32,6 @@ namespace $ {
 		tags() {
 			return [
 				"$mol_filler",
-				"$mol_list",
 				"scroll",
 				"container"
 			] as readonly any[]
