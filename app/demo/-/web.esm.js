@@ -25716,7 +25716,6 @@ var $;
         tags() {
             return [
                 "$mol_dimmer",
-                "$mol_list",
                 "select",
                 "color",
                 "colorpicker",

@@ -25,7 +25,6 @@ namespace $ {
 		 * ```tree
 		 * tags /
 		 * 	\$mol_dimmer
-		 * 	\$mol_list
 		 * 	\select
 		 * 	\color
 		 * 	\colorpicker
@@ -35,7 +34,6 @@ namespace $ {
 		tags() {
 			return [
 				"$mol_dimmer",
-				"$mol_list",
 				"select",
 				"color",
 				"colorpicker",
