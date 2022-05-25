@@ -5,6 +5,7 @@ $mol_text_code_demo $mol_example_small
 			sidebar_showed true
 			text <= source \
 	tags /
+		\$mol_list
 		\text
 		\code
 		\syntax highlighting

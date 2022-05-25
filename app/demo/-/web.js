@@ -27060,6 +27060,7 @@ var $;
         }
         tags() {
             return [
+                "$mol_list",
                 "text",
                 "code",
                 "syntax highlighting"
