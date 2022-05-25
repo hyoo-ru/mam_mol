@@ -21640,6 +21640,7 @@ var $;
         tags() {
             return [
                 "$mol_filler",
+                "$mol_list",
                 "infinite",
                 "scroll",
                 "virtual",
@@ -26095,6 +26096,7 @@ var $;
         tags() {
             return [
                 "$mol_dimmer",
+                "$mol_list",
                 "select",
                 "color",
                 "colorpicker",

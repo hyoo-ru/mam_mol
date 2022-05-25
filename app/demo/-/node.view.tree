@@ -2488,6 +2488,7 @@ $mol_infinite_demo $mol_example
 			Row* <= Item* $mol_filler
 	tags /
 		\$mol_filler
+		\$mol_list
 		\infinite
 		\scroll
 		\virtual
@@ -3235,6 +3236,7 @@ $mol_select_demo_colors $mol_example_small
 					minimal_height 40
 	tags /
 		\$mol_dimmer
+		\$mol_list
 		\select
 		\color
 		\colorpicker

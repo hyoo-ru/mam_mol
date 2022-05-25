@@ -17,6 +17,7 @@ $mol_select_demo_colors $mol_example_small
 					minimal_height 40
 	tags /
 		\$mol_dimmer
+		\$mol_list
 		\select
 		\color
 		\colorpicker

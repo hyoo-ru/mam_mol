@@ -34,6 +34,7 @@ namespace $ {
 		 * ```tree
 		 * tags /
 		 * 	\$mol_filler
+		 * 	\$mol_list
 		 * 	\infinite
 		 * 	\scroll
 		 * 	\virtual
@@ -43,6 +44,7 @@ namespace $ {
 		tags() {
 			return [
 				"$mol_filler",
+				"$mol_list",
 				"infinite",
 				"scroll",
 				"virtual",
