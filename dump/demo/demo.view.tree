@@ -4,6 +4,7 @@ $mol_dump_demo $mol_example_small
 		<= Dump $mol_dump_value
 			value <= sub
 	tags /
+		\$mol_list
 		\dump
 		\javascript
 		\debug
