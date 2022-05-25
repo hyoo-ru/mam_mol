@@ -24,6 +24,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
+		 * 	\$mol_list
 		 * 	\dump
 		 * 	\javascript
 		 * 	\debug
@@ -31,6 +32,7 @@ namespace $ {
 		 */
 		tags() {
 			return [
+				"$mol_list",
 				"dump",
 				"javascript",
 				"debug"
