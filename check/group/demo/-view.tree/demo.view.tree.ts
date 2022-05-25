@@ -25,7 +25,6 @@ namespace $ {
 		 * ```tree
 		 * tags /
 		 * 	\$mol_check_box
-		 * 	\$mol_list
 		 * 	\checkbox
 		 * 	\multi
 		 * 	\group
@@ -34,7 +33,6 @@ namespace $ {
 		tags() {
 			return [
 				"$mol_check_box",
-				"$mol_list",
 				"checkbox",
 				"multi",
 				"group"

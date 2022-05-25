@@ -15922,7 +15922,6 @@ var $;
         tags() {
             return [
                 "$mol_check_box",
-                "$mol_list",
                 "checkbox",
                 "multi",
                 "group"
