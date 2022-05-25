@@ -25,7 +25,6 @@
     "$mol_fail",
     "$mol_type_writable",
     "$mol_type",
-    "$mol_deprecated",
     "$mol_env"
   ],
   "dependencies": {

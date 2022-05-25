@@ -22,7 +22,6 @@
     "$mol_fail_hidden",
     "$mol_type_writable",
     "$mol_type",
-    "$mol_deprecated",
     "$mol_wire_async",
     "$mol_wire",
     "$mol_wire_sub",

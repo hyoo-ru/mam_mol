@@ -34,7 +34,6 @@
     "$mol_exec",
     "$mol_log3",
     "$mol_tree",
-    "$mol_deprecated",
     "$mol_env",
     "$mol_theme",
     "$mol_style_func",
