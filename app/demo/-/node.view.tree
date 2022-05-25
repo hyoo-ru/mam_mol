@@ -3002,6 +3002,7 @@ $mol_pop_over_demo $mol_example_small
 								<= About $mol_button_minor
 									title <= about_title \About
 	tags /
+		\$mol_list
 		\$mol_button
 		\popover
 		\pop

@@ -24938,6 +24938,7 @@ var $;
         }
         tags() {
             return [
+                "$mol_list",
                 "$mol_button",
                 "popover",
                 "pop",
