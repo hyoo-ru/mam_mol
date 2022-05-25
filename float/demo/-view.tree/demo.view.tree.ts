@@ -25,7 +25,6 @@ namespace $ {
 		 * ```tree
 		 * tags /
 		 * 	\$mol_scroll
-		 * 	\$mol_list
 		 * 	\$mol_filler
 		 * 	\scroll
 		 * 	\container
@@ -34,7 +33,6 @@ namespace $ {
 		tags() {
 			return [
 				"$mol_scroll",
-				"$mol_list",
 				"$mol_filler",
 				"scroll",
 				"container"

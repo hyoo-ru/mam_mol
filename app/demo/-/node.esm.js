@@ -19121,7 +19121,6 @@ var $;
         tags() {
             return [
                 "$mol_scroll",
-                "$mol_list",
                 "$mol_filler",
                 "scroll",
                 "container"
@@ -24939,7 +24938,6 @@ var $;
         }
         tags() {
             return [
-                "$mol_list",
                 "$mol_button",
                 "popover",
                 "pop",
