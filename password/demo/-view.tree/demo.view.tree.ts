@@ -65,18 +65,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * pass2?val \Top secret
+		 * pass2?val \
 		 * ```
 		 */
 		@ $mol_mem
 		pass2(val?: any) {
 			if ( val !== undefined ) return val as never
-			return "Top secret"
+			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * Hint $mol_password value?val <=> pass2?val
+		 * Hint $mol_password
+		 * 	value?val <=> pass2?val
+		 * 	hint \Top secret
 		 * ```
 		 */
 		@ $mol_mem
@@ -84,6 +86,7 @@ namespace $ {
 			const obj = new this.$.$mol_password()
 			
 			obj.value = (val?: any) => this.pass2(val)
+			obj.hint = () => "Top secret"
 			
 			return obj
 		}

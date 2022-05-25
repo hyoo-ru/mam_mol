@@ -28669,11 +28669,12 @@ var $;
         pass2(val) {
             if (val !== undefined)
                 return val;
-            return "Top secret";
+            return "";
         }
         Hint() {
             const obj = new this.$.$mol_password();
             obj.value = (val) => this.pass2(val);
+            obj.hint = () => "Top secret";
             return obj;
         }
     }
