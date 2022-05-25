@@ -136,7 +136,7 @@ namespace $ {
 		}
 		
 		/** Parses tree format. */
-		@ $mol_deprecated( 'Use $mol_tree2_from_string' )
+		/** @deprecated Use $mol_tree2_from_string */
 		static fromString( str : string , uri = 'unknown' ) {
 			return $$.$mol_tree2_from_string( str, uri )
 		}
