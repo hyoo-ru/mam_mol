@@ -1,6 +1,6 @@
 # $mol_list
 
-## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_list_demo)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_list_demo_tree)
 
 The list of rows with lazy/virtual rendering support based on `minimal_height` of rows. 
 
