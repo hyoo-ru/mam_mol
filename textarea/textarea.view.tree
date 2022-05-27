@@ -1,4 +1,4 @@
-$mol_textarea $mol_view
+$mol_textarea $mol_stack
 	attr *
 		^
 		mol_textarea_clickable <= clickable?val false
