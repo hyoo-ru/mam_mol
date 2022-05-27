@@ -9,6 +9,8 @@
 }
 
 [mol_textarea_view] {
+	position: relative;
+	z-index: 1;
 	pointer-events: none;
 	white-space: inherit;
 	font-family: inherit;
