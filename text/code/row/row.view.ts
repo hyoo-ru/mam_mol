@@ -85,6 +85,26 @@ namespace $.$$ {
 			
 		}
 
+		@ $mol_mem_key
+		find_pos( offset: number ) {
+			return this.find_token_pos([ offset ])
+		}
+		
+		@ $mol_mem_key
+		find_token_pos( [ offset, ... path ]: number[] ) {
+			
+			for( const [ index, token ] of this.tokens( path ).entries() ) {
+				if( token.found.length > offset ) {
+					const token = this.Token([ ... path, index ])
+					return { token, offset }
+				} else {
+					offset -= token.found.length
+				}
+			}
+			
+			return null
+		}
+		
 	}
 
 }
