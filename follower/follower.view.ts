@@ -14,7 +14,7 @@ namespace $.$$ {
 				+ ( anchor_rect?.left ?? 0 )
 				+ this.offset()[0] * ( anchor_rect?.width ?? 0 )
 			
-			return next
+			return Math.floor( next )
 		}
 		
 		@ $mol_mem
@@ -30,7 +30,7 @@ namespace $.$$ {
 				+ ( anchor_rect?.top ?? 0 )
 				+ this.offset()[1] * ( anchor_rect?.height ?? 0 )
 			
-			return next
+			return Math.floor( next )
 		}
 		
 	}
