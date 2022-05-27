@@ -155,6 +155,8 @@ $mol_page $mol_view
 			dom_name \footer
 			sub <= foot /$mol_view
 
+$mol_stack $mol_view
+
 $mol_list $mol_view
 	render_visible_only true
 	render_over 0
@@ -417,7 +419,7 @@ $mol_text_span $mol_paragraph
 		^
 		mol_text_type <= type \
 
-$mol_textarea $mol_view
+$mol_textarea $mol_stack
 	attr *
 		^
 		mol_textarea_clickable <= clickable?val false
@@ -3381,6 +3383,16 @@ $mol_speech_demo $mol_example_small
 		\dictation
 		
 
+$mol_stack_demo $mol_example_small
+	sub /
+		<= Collage $mol_stack
+			sub /
+				<= Back $mol_image uri \https://thiscatdoesnotexist.com/
+				<= Front $mol_view sub / \❤🧡💛💚💙💜🤎🖤
+	tags /
+		\$mol_stack
+		\layout
+
 $mol_string_demo $mol_example_small
 	title \String input field in various states
 	sub /
@@ -3528,6 +3540,7 @@ $mol_textarea_demo $mol_example_small
 			hint \source code
 			value?val <=> empty_descr?val \
 		<= Filled_descr $mol_textarea
+			sidebar_showed true
 			value?val <=> filled_descr?val \
 				\function hello( name = 'World' ) {
 				\	return `Hello, ${ name }!`

@@ -86,13 +86,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Filled_descr $mol_textarea value?val <=> filled_descr?val
+		 * Filled_descr $mol_textarea
+		 * 	sidebar_showed true
+		 * 	value?val <=> filled_descr?val
 		 * ```
 		 */
 		@ $mol_mem
 		Filled_descr() {
 			const obj = new this.$.$mol_textarea()
 			
+			obj.sidebar_showed = () => true
 			obj.value = (val?: any) => this.filled_descr(val)
 			
 			return obj
