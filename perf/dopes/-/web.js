@@ -80,13 +80,14 @@ var $;
                 event.prompt();
             });
         }
-        if (location.protocol !== 'about:') {
-            if (navigator.serviceWorker)
-                navigator.serviceWorker.register(uri);
-            else if (location.protocol === 'http:')
-                console.warn('HTTPS is required for service workers.');
-            else
-                console.warn('Service Worker is not supported.');
+        else if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+            console.warn('HTTPS or localhost is required for service workers.');
+        }
+        else if (!navigator.serviceWorker) {
+            console.warn('Service Worker is not supported.');
+        }
+        else {
+            navigator.serviceWorker.register(uri);
         }
     }
     $.$mol_offline = $mol_offline;
