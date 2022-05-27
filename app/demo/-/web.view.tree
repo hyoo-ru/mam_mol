@@ -33,8 +33,6 @@ $mol_speck $mol_view
 
 $mol_button $mol_view
 	enabled true
-	minimal_height 40
-	minimal_width 40
 	click?event null
 	event_click?event null
 	event *
@@ -53,6 +51,8 @@ $mol_button $mol_view
 		value <= error \
 
 $mol_button_typed $mol_button
+	minimal_height 40
+	minimal_width 40
 
 $mol_svg $mol_view
 	dom_name \svg
@@ -212,6 +212,7 @@ $mol_text_code_row $mol_paragraph
 	Token_link* $mol_text_code_token_link
 		haystack <= token_text* \
 		needle <= highlight \
+	find_pos* null
 
 $mol_text_code $mol_list
 	attr *
@@ -219,6 +220,7 @@ $mol_text_code $mol_list
 		mol_text_code_sidebar_showed <= sidebar_showed false
 	text \
 	text_lines /string
+	find_pos* null
 	Row* $mol_text_code_row
 		numb_showed <= sidebar_showed
 		numb <= row_numb* 0

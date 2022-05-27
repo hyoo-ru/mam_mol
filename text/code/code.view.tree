@@ -4,6 +4,7 @@ $mol_text_code $mol_list
 		mol_text_code_sidebar_showed <= sidebar_showed false
 	text \
 	text_lines /string
+	find_pos* null
 	Row* $mol_text_code_row
 		numb_showed <= sidebar_showed
 		numb <= row_numb* 0

@@ -63,8 +63,6 @@ $mol_speck $mol_view
 
 $mol_button $mol_view
 	enabled true
-	minimal_height 40
-	minimal_width 40
 	click?event null
 	event_click?event null
 	event *
@@ -83,6 +81,8 @@ $mol_button $mol_view
 		value <= error \
 
 $mol_button_typed $mol_button
+	minimal_height 40
+	minimal_width 40
 
 $mol_svg $mol_view
 	dom_name \svg

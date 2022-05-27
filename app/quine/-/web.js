@@ -4039,6 +4039,9 @@ var $;
             obj.needle = () => this.highlight();
             return obj;
         }
+        find_pos(id) {
+            return null;
+        }
         numb() {
             return 0;
         }
@@ -4240,6 +4243,21 @@ var $;
                     yield [...path, this];
                 }
             }
+            find_pos(offset) {
+                return this.find_token_pos([offset]);
+            }
+            find_token_pos([offset, ...path]) {
+                for (const [index, token] of this.tokens(path).entries()) {
+                    if (token.found.length > offset) {
+                        const token = this.Token([...path, index]);
+                        return { token, offset };
+                    }
+                    else {
+                        offset -= token.found.length;
+                    }
+                }
+                return null;
+            }
         }
         __decorate([
             $mol_mem_key
@@ -4256,6 +4274,12 @@ var $;
         __decorate([
             $mol_mem_key
         ], $mol_text_code_row.prototype, "token_text", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code_row.prototype, "find_pos", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code_row.prototype, "find_token_pos", null);
         $$.$mol_text_code_row = $mol_text_code_row;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -4276,6 +4300,9 @@ var $;
         }
         text_lines() {
             return [];
+        }
+        find_pos(id) {
+            return null;
         }
         Row(id) {
             const obj = new this.$.$mol_text_code_row();
@@ -4346,6 +4373,17 @@ var $;
             row_numb(index) {
                 return index;
             }
+            find_pos(offset) {
+                for (const [index, line] of this.text_lines().entries()) {
+                    if (line.length >= offset) {
+                        return this.Row(index + 1).find_pos(offset);
+                    }
+                    else {
+                        offset -= line.length + 1;
+                    }
+                }
+                return null;
+            }
         }
         __decorate([
             $mol_mem
@@ -4356,6 +4394,9 @@ var $;
         __decorate([
             $mol_mem_key
         ], $mol_text_code.prototype, "row_text", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code.prototype, "find_pos", null);
         $$.$mol_text_code = $mol_text_code;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -4425,12 +4466,6 @@ var $;
     class $mol_button extends $mol_view {
         enabled() {
             return true;
-        }
-        minimal_height() {
-            return 40;
-        }
-        minimal_width() {
-            return 40;
         }
         click(event) {
             if (event !== undefined)
@@ -4689,6 +4724,12 @@ var $;
 var $;
 (function ($) {
     class $mol_button_typed extends $mol_button {
+        minimal_height() {
+            return 40;
+        }
+        minimal_width() {
+            return 40;
+        }
     }
     $.$mol_button_typed = $mol_button_typed;
 })($ || ($ = {}));

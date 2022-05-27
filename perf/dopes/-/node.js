@@ -2602,12 +2602,6 @@ var $;
         enabled() {
             return true;
         }
-        minimal_height() {
-            return 40;
-        }
-        minimal_width() {
-            return 40;
-        }
         click(event) {
             if (event !== undefined)
                 return event;
@@ -2886,6 +2880,12 @@ var $;
 var $;
 (function ($) {
     class $mol_button_typed extends $mol_button {
+        minimal_height() {
+            return 40;
+        }
+        minimal_width() {
+            return 40;
+        }
     }
     $.$mol_button_typed = $mol_button_typed;
 })($ || ($ = {}));

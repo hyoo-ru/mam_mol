@@ -82,6 +82,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * find_pos* null
+		 * ```
+		 */
+		find_pos(id: any) {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * numb 0
 		 * ```
 		 */

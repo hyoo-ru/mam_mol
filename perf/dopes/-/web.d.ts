@@ -602,8 +602,6 @@ declare namespace $ {
 declare namespace $ {
     class $mol_button extends $mol_view {
         enabled(): boolean;
-        minimal_height(): number;
-        minimal_width(): number;
         click(event?: any): any;
         event_click(event?: any): any;
         event(): {
@@ -762,6 +760,8 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_button_typed extends $mol_button {
+        minimal_height(): number;
+        minimal_width(): number;
     }
 }
 

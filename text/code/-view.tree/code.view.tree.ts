@@ -36,6 +36,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * find_pos* null
+		 * ```
+		 */
+		find_pos(id: any) {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * Row* $mol_text_code_row
 		 * 	numb_showed <= sidebar_showed
 		 * 	numb <= row_numb*
