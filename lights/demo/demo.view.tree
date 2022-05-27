@@ -1,0 +1,16 @@
+$mol_lights_demo $mol_example_small
+	title \Simple connection of the dark theme
+	sub /
+		<= sample $mol_page
+			plugins /
+				<= Theme $mol_theme_auto
+			tools /
+				<= Lighter $mol_lights_toggle
+			body /
+				<= Button $mol_button_minor
+					title \text
+				<= Check $mol_check
+					title \text
+				<= Switch $mol_switch
+				<= Number $mol_number
+				<= Portion $mol_portion
