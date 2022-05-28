@@ -94,7 +94,7 @@ namespace $.$$ {
 		find_token_pos( [ offset, ... path ]: number[] ) {
 			
 			for( const [ index, token ] of this.tokens( path ).entries() ) {
-				if( token.found.length > offset ) {
+				if( token.found.length >= offset ) {
 					const token = this.Token([ ... path, index ])
 					return { token, offset }
 				} else {
