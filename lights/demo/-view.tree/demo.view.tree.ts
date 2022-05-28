@@ -12,12 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= sample
+		 * sub / <= Sample
 		 * ```
 		 */
 		sub() {
 			return [
-				this.sample()
+				this.Sample()
 			] as readonly any[]
 		}
 		
@@ -47,19 +47,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sample $mol_page
+		 * Sample $mol_view
 		 * 	plugins / <= Theme
-		 * 	tools / <= Lighter
+		 * 	sub / <= Lighter
 		 * ```
 		 */
 		@ $mol_mem
-		sample() {
-			const obj = new this.$.$mol_page()
+		Sample() {
+			const obj = new this.$.$mol_view()
 			
 			obj.plugins = () => [
 				this.Theme()
 			] as readonly any[]
-			obj.tools = () => [
+			obj.sub = () => [
 				this.Lighter()
 			] as readonly any[]
 			

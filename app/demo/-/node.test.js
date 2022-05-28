@@ -29195,7 +29195,7 @@ var $;
         }
         sub() {
             return [
-                this.sample()
+                this.Sample()
             ];
         }
         Theme() {
@@ -29206,12 +29206,12 @@ var $;
             const obj = new this.$.$mol_lights_toggle();
             return obj;
         }
-        sample() {
-            const obj = new this.$.$mol_page();
+        Sample() {
+            const obj = new this.$.$mol_view();
             obj.plugins = () => [
                 this.Theme()
             ];
-            obj.tools = () => [
+            obj.sub = () => [
                 this.Lighter()
             ];
             return obj;
@@ -29225,7 +29225,7 @@ var $;
     ], $mol_lights_demo.prototype, "Lighter", null);
     __decorate([
         $mol_mem
-    ], $mol_lights_demo.prototype, "sample", null);
+    ], $mol_lights_demo.prototype, "Sample", null);
     $.$mol_lights_demo = $mol_lights_demo;
 })($ || ($ = {}));
 //mol/lights/demo/-view.tree/demo.view.tree.ts

@@ -7655,7 +7655,7 @@ declare namespace $ {
         sub(): readonly any[];
         Theme(): $$.$mol_theme_auto;
         Lighter(): $$.$mol_lights_toggle;
-        sample(): $mol_page;
+        Sample(): $mol_view;
     }
 }
 
