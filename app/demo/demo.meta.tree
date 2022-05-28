@@ -80,3 +80,4 @@ include \/mol/time/demo
 include \/mol/toolbar/demo
 include \/mol/video/player/demo
 include \/mol/password/demo
+include \/mol/lights/demo
