@@ -1,0 +1,8 @@
+$mol_lights_demo $mol_example_small
+	title \Switcher between light/dark themes (usually for `$mol_theme_auto` plugin).
+	sub /
+		<= sample $mol_page
+			plugins /
+				<= Theme $mol_theme_auto
+			tools /
+				<= Lighter $mol_lights_toggle
