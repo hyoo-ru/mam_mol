@@ -5,5 +5,4 @@ $mol_follower $mol_ghost
 		0
 	style *
 		^
-		top <= top 0
-		left <= left 0
+		transform <= transform \
