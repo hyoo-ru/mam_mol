@@ -152,7 +152,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		view_rect_cache( next = null as ClientRect | null ) {
+		view_rect_cache( next = null as DOMRectReadOnly | null ) {
 			return next
 		}
 
