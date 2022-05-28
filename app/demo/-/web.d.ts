@@ -7649,6 +7649,16 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_lights_demo extends $mol_example_small {
+        title(): string;
+        sub(): readonly any[];
+        Theme(): $$.$mol_theme_auto;
+        Lighter(): $$.$mol_lights_toggle;
+        sample(): $mol_page;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_information extends $mol_icon {
         path(): string;
     }

@@ -29183,6 +29183,50 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_lights_demo extends $mol_example_small {
+        title() {
+            return "Switcher between light/dark themes (usually for `$mol_theme_auto` plugin).";
+        }
+        sub() {
+            return [
+                this.sample()
+            ];
+        }
+        Theme() {
+            const obj = new this.$.$mol_theme_auto();
+            return obj;
+        }
+        Lighter() {
+            const obj = new this.$.$mol_lights_toggle();
+            return obj;
+        }
+        sample() {
+            const obj = new this.$.$mol_page();
+            obj.plugins = () => [
+                this.Theme()
+            ];
+            obj.tools = () => [
+                this.Lighter()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_lights_demo.prototype, "Theme", null);
+    __decorate([
+        $mol_mem
+    ], $mol_lights_demo.prototype, "Lighter", null);
+    __decorate([
+        $mol_mem
+    ], $mol_lights_demo.prototype, "sample", null);
+    $.$mol_lights_demo = $mol_lights_demo;
+})($ || ($ = {}));
+//mol/lights/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_information extends $mol_icon {
         path() {
             return "M13,9H11V7H13M13,17H11V11H13M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2Z";
