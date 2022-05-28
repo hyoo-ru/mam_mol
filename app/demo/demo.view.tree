@@ -27,10 +27,6 @@ $mol_app_demo $mol_book2
 		repo <= repo \
 		module <= module /string
 		source_link <= source_link \
-	Welcome $mol_scroll
-		sub /
-			<= Welcome_text $mol_text
-				text <= welcome_text \
 	Detail_empty_message $mol_status
 		sub /
 			<= detail_empty_prefix @ \No one demo with prefix "

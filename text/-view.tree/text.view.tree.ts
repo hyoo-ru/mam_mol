@@ -45,13 +45,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Quote* $mol_text text <= quote_text*
+		 * Quote* $mol_text
+		 * 	uri_resolve* <= uri_resolve*
+		 * 	text <= quote_text*
 		 * ```
 		 */
 		@ $mol_mem_key
 		Quote(id: any) {
 			const obj = new this.$.$mol_text()
 			
+			obj.uri_resolve = (id: any) => this.uri_resolve(id)
 			obj.text = () => this.quote_text(id)
 			
 			return obj
@@ -59,13 +62,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * List* $mol_text text <= list_text*
+		 * List* $mol_text
+		 * 	uri_resolve* <= uri_resolve*
+		 * 	text <= list_text*
 		 * ```
 		 */
 		@ $mol_mem_key
 		List(id: any) {
 			const obj = new this.$.$mol_text()
 			
+			obj.uri_resolve = (id: any) => this.uri_resolve(id)
 			obj.text = () => this.list_text(id)
 			
 			return obj
@@ -140,13 +146,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Table_cell* $mol_text text <= table_cell_text*
+		 * Table_cell* $mol_text
+		 * 	uri_resolve* <= uri_resolve*
+		 * 	text <= table_cell_text*
 		 * ```
 		 */
 		@ $mol_mem_key
 		Table_cell(id: any) {
 			const obj = new this.$.$mol_text()
 			
+			obj.uri_resolve = (id: any) => this.uri_resolve(id)
 			obj.text = () => this.table_cell_text(id)
 			
 			return obj
@@ -270,6 +279,15 @@ namespace $ {
 		block_content(id: any) {
 			return [
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * uri_resolve* null
+		 * ```
+		 */
+		uri_resolve(id: any) {
+			return null as any
 		}
 		
 		/**

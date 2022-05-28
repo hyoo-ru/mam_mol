@@ -2417,6 +2417,7 @@ declare namespace $ {
         Link_http(id: any): $$.$mol_link_iconed;
         Image(id: any): $$.$mol_embed_native;
         block_content(id: any): readonly any[];
+        uri_resolve(id: any): any;
         quote_text(id: any): string;
         list_text(id: any): string;
         header_level(id: any): string;
@@ -7684,7 +7685,6 @@ declare namespace $ {
         chat_pages(id: any): $mol_page[];
         Detail(id: any): $mol_app_demo_detail;
         Readme_page(): $$.$mol_app_demo_readme;
-        Welcome(): $$.$mol_scroll;
         Detail_empty_message(): $$.$mol_status;
         detail_title(): string;
         blocks(): readonly any[];
@@ -7702,8 +7702,6 @@ declare namespace $ {
         repo(): string;
         module(): readonly string[];
         source_link(): string;
-        welcome_text(): string;
-        Welcome_text(): $$.$mol_text;
         detail_empty_prefix(): string;
         selected(): string;
         detail_empty_postfix(): string;

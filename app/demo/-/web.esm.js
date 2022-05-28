@@ -7397,11 +7397,13 @@ var $;
         }
         Quote(id) {
             const obj = new this.$.$mol_text();
+            obj.uri_resolve = (id) => this.uri_resolve(id);
             obj.text = () => this.quote_text(id);
             return obj;
         }
         List(id) {
             const obj = new this.$.$mol_text();
+            obj.uri_resolve = (id) => this.uri_resolve(id);
             obj.text = () => this.list_text(id);
             return obj;
         }
@@ -7431,6 +7433,7 @@ var $;
         }
         Table_cell(id) {
             const obj = new this.$.$mol_text();
+            obj.uri_resolve = (id) => this.uri_resolve(id);
             obj.text = () => this.table_cell_text(id);
             return obj;
         }
@@ -7477,6 +7480,9 @@ var $;
         }
         block_content(id) {
             return [];
+        }
+        uri_resolve(id) {
+            return null;
         }
         quote_text(id) {
             return "";
@@ -28932,13 +28938,6 @@ var $;
             obj.source_link = () => this.source_link();
             return obj;
         }
-        Welcome() {
-            const obj = new this.$.$mol_scroll();
-            obj.sub = () => [
-                this.Welcome_text()
-            ];
-            return obj;
-        }
         Detail_empty_message() {
             const obj = new this.$.$mol_status();
             obj.sub = () => [
@@ -29004,14 +29003,6 @@ var $;
         source_link() {
             return "";
         }
-        welcome_text() {
-            return "";
-        }
-        Welcome_text() {
-            const obj = new this.$.$mol_text();
-            obj.text = () => this.welcome_text();
-            return obj;
-        }
         detail_empty_prefix() {
             return this.$.$mol_locale.text('$mol_app_demo_detail_empty_prefix');
         }
@@ -29033,9 +29024,6 @@ var $;
     ], $mol_app_demo.prototype, "Readme_page", null);
     __decorate([
         $mol_mem
-    ], $mol_app_demo.prototype, "Welcome", null);
-    __decorate([
-        $mol_mem
     ], $mol_app_demo.prototype, "Detail_empty_message", null);
     __decorate([
         $mol_mem
@@ -29049,9 +29037,6 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_app_demo.prototype, "Demo", null);
-    __decorate([
-        $mol_mem
-    ], $mol_app_demo.prototype, "Welcome_text", null);
     $.$mol_app_demo = $mol_app_demo;
     class $mol_app_demo_menu extends $mol_page {
         names() {

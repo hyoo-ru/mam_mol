@@ -137,22 +137,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Welcome $mol_scroll sub / <= Welcome_text
-		 * ```
-		 */
-		@ $mol_mem
-		Welcome() {
-			const obj = new this.$.$mol_scroll()
-			
-			obj.sub = () => [
-				this.Welcome_text()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * Detail_empty_message $mol_status sub /
 		 * 	<= detail_empty_prefix
 		 * 	<= selected
@@ -337,29 +321,6 @@ namespace $ {
 		 */
 		source_link() {
 			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * welcome_text \
-		 * ```
-		 */
-		welcome_text() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Welcome_text $mol_text text <= welcome_text
-		 * ```
-		 */
-		@ $mol_mem
-		Welcome_text() {
-			const obj = new this.$.$mol_text()
-			
-			obj.text = () => this.welcome_text()
-			
-			return obj
 		}
 		
 		/**

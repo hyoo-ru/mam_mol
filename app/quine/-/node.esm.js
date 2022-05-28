@@ -6454,11 +6454,13 @@ var $;
         }
         Quote(id) {
             const obj = new this.$.$mol_text();
+            obj.uri_resolve = (id) => this.uri_resolve(id);
             obj.text = () => this.quote_text(id);
             return obj;
         }
         List(id) {
             const obj = new this.$.$mol_text();
+            obj.uri_resolve = (id) => this.uri_resolve(id);
             obj.text = () => this.list_text(id);
             return obj;
         }
@@ -6488,6 +6490,7 @@ var $;
         }
         Table_cell(id) {
             const obj = new this.$.$mol_text();
+            obj.uri_resolve = (id) => this.uri_resolve(id);
             obj.text = () => this.table_cell_text(id);
             return obj;
         }
@@ -6534,6 +6537,9 @@ var $;
         }
         block_content(id) {
             return [];
+        }
+        uri_resolve(id) {
+            return null;
         }
         quote_text(id) {
             return "";
