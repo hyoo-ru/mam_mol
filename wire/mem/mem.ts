@@ -62,7 +62,7 @@ namespace $ {
 					
 				}
 				
-				return atom.recall( ... args as any )
+				return atom.resync( ... args as any )
 
 			}
 			

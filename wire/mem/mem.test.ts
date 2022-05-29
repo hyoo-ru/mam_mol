@@ -22,6 +22,24 @@ namespace $ {
 
 		},
 
+		'Read Pushed' ($) {
+
+			class App extends $mol_object2 {
+
+				static $ = $
+				
+				@ $mol_wire_mem(0)
+				static value( next = 0 ) {
+					return next
+				}
+				
+			}
+			
+			$mol_assert_equal( App.value( 1 ), 1 )
+			$mol_assert_equal( App.value(), 1 )
+
+		},
+
 		'Mem overrides mem' ($) {
 
 			class Base extends $mol_object2 {
@@ -229,6 +247,38 @@ namespace $ {
 			App.test()
 		} ,
 
+		// https://github.com/nin-jin/slides/tree/master/reactivity#wish-stability
+		'Update deps on push'( $ ) {
+		
+			class App extends $mol_object2 {
+		
+				static $ = $
+				
+				@ $mol_wire_mem(0)
+				static left( next = false ) {
+					return next
+				}
+		
+				@ $mol_wire_mem(0)
+				static right( next = false ) {
+					return next
+				}
+		
+				@ $mol_wire_mem(0)
+				static res( next?: boolean ) {
+					return this.left( next ) && this.right()
+				}
+		
+			}
+			
+			$mol_assert_equal( App.res(), false )
+			$mol_assert_equal( App.res( true ), false )
+			
+			$mol_assert_equal( App.right( true ), true )
+			$mol_assert_equal( App.res(), true )
+			
+		} ,
+		
 		// https://github.com/nin-jin/slides/tree/master/reactivity#wish-stability
 		'Different order of pull and push'( $ ) {
 		

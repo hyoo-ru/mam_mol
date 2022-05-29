@@ -62,18 +62,30 @@ namespace $ {
 		 * Update fiber value through another temp fiber.
 		 */
 		@ $mol_wire_method
-		recall( ... args: Args ) {
+		resync( ... args: Args ) {
 			
-			if( this.cursor > $mol_wire_cursor.fresh ) {
-				try {
-					this.once()
-				} catch( error: unknown ) {
-					if( error instanceof Promise ) $mol_fail_hidden( error )
-				}
+			let res: any
+			
+			try {
+				res = this.recall( ... args )
+			} catch( error: unknown ) {
+				if( error instanceof Promise ) $mol_fail_hidden( error )
+				res = error
 			}
 			
-			return this.put( this.task.call( this.host!, ... args ) )
+			try {
+				this.once()
+			} catch( error: unknown ) {
+				if( error instanceof Promise ) $mol_fail_hidden( error )
+			}
 			
+			return this.put( res )
+			
+		}
+		
+		@ $mol_wire_method
+		recall( ... args: Args ) {
+			return this.task.call( this.host!, ... args )
 		}
 		
 		@ $mol_wire_method

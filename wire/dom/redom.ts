@@ -47,7 +47,7 @@ namespace $ {
 					atom.refresh()
 				} else {
 					if( atom.cache === next ) return
-					atom.recall( next )
+					atom.resync( next )
 				}
 			},
 		} )
@@ -87,7 +87,7 @@ namespace $ {
 					atom.absorb()
 					atom.refresh()
 				} else {
-					atom.recall( next )
+					atom.resync( next )
 				}
 			},
 		} )

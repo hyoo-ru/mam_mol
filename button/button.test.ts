@@ -46,8 +46,7 @@ namespace $.$$ {
 			
 			const event = $mol_dom_context.document.createEvent( 'mouseevent' )
 			$mol_assert_fail( ()=> clicker.event_activate( event ), 'Test error' )
-			
-			$mol_assert_fail( ()=> clicker.status(), 'Test error' )
+			$mol_assert_equal( clicker.status()[0].message, 'Test error' )
 			
 		} ,
 		
