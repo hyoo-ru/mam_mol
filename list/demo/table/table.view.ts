@@ -3,8 +3,10 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		rows() {
-			$mol_wire_solid()
-			return Array.from( { length: this.count() }, (_,i)=> this.Row(i) )
+			return Array.from(
+				{ length: this.count() },
+				(_,i)=> this.Row(i),
+			)
 		}
 
 		row_id( id: number ) {
