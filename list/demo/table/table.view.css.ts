@@ -22,18 +22,11 @@ namespace $.$$ {
 
 		Id_labeler: {
 			flex: {
-				grow: 0,
-				shrink: 1,
 				basis: rem(7),
 			},
 		},
 		
 		Id: {
-			padding: $mol_gap.text,
-		},
-		
-		Title: {
-			fontWeight: 'bolder',
 			padding: $mol_gap.text,
 		},
 		
