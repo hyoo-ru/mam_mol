@@ -5818,10 +5818,6 @@ declare namespace $ {
     }
 }
 
-declare namespace $ {
-    function $mol_wire_solid(): void;
-}
-
 declare namespace $.$$ {
 }
 
@@ -5851,6 +5847,10 @@ declare namespace $ {
         row_content(id: any): readonly any[];
         Row_content(id: any): $$.$mol_list;
     }
+}
+
+declare namespace $ {
+    function $mol_wire_solid(): void;
 }
 
 declare namespace $ {

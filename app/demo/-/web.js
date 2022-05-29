@@ -22156,17 +22156,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_wire_solid() {
-        $mol_wire_auto().reap = nothing;
-    }
-    $.$mol_wire_solid = $mol_wire_solid;
-    const nothing = () => { };
-})($ || ($ = {}));
-//mol/wire/solid/solid.ts
-;
-"use strict";
-var $;
-(function ($) {
     var $$;
     (function ($$) {
         const { rem } = $mol_style_unit;
@@ -22186,16 +22175,10 @@ var $;
             },
             Id_labeler: {
                 flex: {
-                    grow: 0,
-                    shrink: 1,
                     basis: rem(7),
                 },
             },
             Id: {
-                padding: $mol_gap.text,
-            },
-            Title: {
-                fontWeight: 'bolder',
                 padding: $mol_gap.text,
             },
         });
@@ -22210,7 +22193,6 @@ var $;
     (function ($$) {
         class $mol_list_demo_table extends $.$mol_list_demo_table {
             rows() {
-                $mol_wire_solid();
                 return Array.from({ length: this.count() }, (_, i) => this.Row(i));
             }
             row_id(id) {
@@ -22340,6 +22322,17 @@ var $;
     $.$mol_list_demo_tree = $mol_list_demo_tree;
 })($ || ($ = {}));
 //mol/list/demo/tree/-view.tree/tree.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_solid() {
+        $mol_wire_auto().reap = nothing;
+    }
+    $.$mol_wire_solid = $mol_wire_solid;
+    const nothing = () => { };
+})($ || ($ = {}));
+//mol/wire/solid/solid.ts
 ;
 "use strict";
 var $;
