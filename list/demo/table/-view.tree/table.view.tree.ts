@@ -85,14 +85,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Id_labeler* $mol_list_demo_table_col_small
+		 * Id_labeler* $mol_labeler
 		 * 	title \Identifier
 		 * 	Content <= Id*
 		 * ```
 		 */
 		@ $mol_mem_key
 		Id_labeler(id: any) {
-			const obj = new this.$.$mol_list_demo_table_col_small()
+			const obj = new this.$.$mol_labeler()
 			
 			obj.title = () => "Identifier"
 			obj.Content = () => this.Id(id)
@@ -137,14 +137,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Title_labeler* $mol_list_demo_table_col_big
+		 * Title_labeler* $mol_labeler
 		 * 	title \Product Name
 		 * 	Content <= Title*
 		 * ```
 		 */
 		@ $mol_mem_key
 		Title_labeler(id: any) {
-			const obj = new this.$.$mol_list_demo_table_col_big()
+			const obj = new this.$.$mol_labeler()
 			
 			obj.title = () => "Product Name"
 			obj.Content = () => this.Title(id)
@@ -198,14 +198,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Status_labeler* $mol_list_demo_table_col_big
+		 * Status_labeler* $mol_labeler
 		 * 	title \Status
 		 * 	Content <= Status*
 		 * ```
 		 */
 		@ $mol_mem_key
 		Status_labeler(id: any) {
-			const obj = new this.$.$mol_list_demo_table_col_big()
+			const obj = new this.$.$mol_labeler()
 			
 			obj.title = () => "Status"
 			obj.Content = () => this.Status(id)
@@ -240,14 +240,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Quantity_labeler* $mol_list_demo_table_col_big
+		 * Quantity_labeler* $mol_labeler
 		 * 	title \Quantity
 		 * 	Content <= Quantity*
 		 * ```
 		 */
 		@ $mol_mem_key
 		Quantity_labeler(id: any) {
-			const obj = new this.$.$mol_list_demo_table_col_big()
+			const obj = new this.$.$mol_labeler()
 			
 			obj.title = () => "Quantity"
 			obj.Content = () => this.Quantity(id)
@@ -284,14 +284,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Date_labeler* $mol_list_demo_table_col_big
+		 * Date_labeler* $mol_labeler
 		 * 	title \Supply Time
 		 * 	Content <= Date*
 		 * ```
 		 */
 		@ $mol_mem_key
 		Date_labeler(id: any) {
-			const obj = new this.$.$mol_list_demo_table_col_big()
+			const obj = new this.$.$mol_labeler()
 			
 			obj.title = () => "Supply Time"
 			obj.Content = () => this.Date(id)
@@ -362,12 +362,6 @@ namespace $ {
 			
 			return obj
 		}
-	}
-	
-	export class $mol_list_demo_table_col_big extends $mol_labeler {
-	}
-	
-	export class $mol_list_demo_table_col_small extends $mol_labeler {
 	}
 	
 }

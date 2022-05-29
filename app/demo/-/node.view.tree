@@ -2615,15 +2615,15 @@ $mol_list_demo_table $mol_example
 					minimal_height 104
 					minimal_width 200
 					sub <= row_content* /
-						<= Id_labeler* $mol_list_demo_table_col_small
+						<= Id_labeler* $mol_labeler
 							title \Identifier
 							Content <= Id* $mol_view sub / <= row_id*? 0
-						<= Title_labeler* $mol_list_demo_table_col_big
+						<= Title_labeler* $mol_labeler
 							title \Product Name
 							Content <= Title* $mol_link_iconed
 								uri <= row_uri* \
 								title <= row_title* \
-						<= Status_labeler* $mol_list_demo_table_col_big
+						<= Status_labeler* $mol_labeler
 							title \Status
 							Content <= Status* $mol_switch
 								value?val <=> row_status*?val \
@@ -2631,11 +2631,11 @@ $mol_list_demo_table $mol_example
 									minor \Store
 									major \Sale
 									critical \Support
-						<= Quantity_labeler* $mol_list_demo_table_col_big
+						<= Quantity_labeler* $mol_labeler
 							title \Quantity
 							Content <= Quantity* $mol_number
 								value? <=> row_quantity*? 0
-						<= Date_labeler* $mol_list_demo_table_col_big
+						<= Date_labeler* $mol_labeler
 							title \Supply Time
 							Content <= Date* $mol_date
 								value_moment?val <=> row_moment*?val $mol_time_moment
@@ -2648,9 +2648,6 @@ $mol_list_demo_table $mol_example
 		\list
 		\table
 		\scroll
-
-$mol_list_demo_table_col_big $mol_labeler
-$mol_list_demo_table_col_small $mol_labeler
 
 $mol_list_demo_tree $mol_example_large
 	title \Large list of rows with dynamic content

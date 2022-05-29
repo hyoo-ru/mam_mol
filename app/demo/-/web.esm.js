@@ -3227,7 +3227,10 @@ var $;
             const selector = (prefix, path) => {
                 if (path.length === 0)
                     return prefix || `[${block}]`;
-                return `${prefix ? prefix + ' ' : ''}[${block}_${path.join('_')}]`;
+                let res = `[${block}_${path.join('_')}]`;
+                if (prefix)
+                    res = prefix + ' :where(' + res + ')';
+                return res;
             };
             for (const key of Object.keys(config).reverse()) {
                 if (/^[a-z]/.test(key)) {
@@ -3264,19 +3267,19 @@ var $;
                     make_class(prefix, [...path, key.toLowerCase()], config[key]);
                 }
                 else if (key[0] === '$') {
-                    make_class(selector(prefix, path) + ' [' + $mol_dom_qname(key) + ']', [], config[key]);
+                    make_class(selector(prefix, path) + ' :where([' + $mol_dom_qname(key) + '])', [], config[key]);
                 }
                 else if (key === '>') {
                     const types = config[key];
                     for (let type in types) {
-                        make_class(selector(prefix, path) + ' > [' + $mol_dom_qname(type) + ']', [], types[type]);
+                        make_class(selector(prefix, path) + ' > :where([' + $mol_dom_qname(type) + '])', [], types[type]);
                     }
                 }
                 else if (key === '@') {
                     const attrs = config[key];
                     for (let name in attrs) {
                         for (let val in attrs[name]) {
-                            make_class(selector(prefix, path) + '[' + name + '=' + JSON.stringify(val) + ']', [], attrs[name][val]);
+                            make_class(selector(prefix, path) + ':where([' + name + '=' + JSON.stringify(val) + '])', [], attrs[name][val]);
                         }
                     }
                 }
@@ -21991,7 +21994,7 @@ var $;
             return obj;
         }
         Id_labeler(id) {
-            const obj = new this.$.$mol_list_demo_table_col_small();
+            const obj = new this.$.$mol_labeler();
             obj.title = () => "Identifier";
             obj.Content = () => this.Id(id);
             return obj;
@@ -22009,7 +22012,7 @@ var $;
             return obj;
         }
         Title_labeler(id) {
-            const obj = new this.$.$mol_list_demo_table_col_big();
+            const obj = new this.$.$mol_labeler();
             obj.title = () => "Product Name";
             obj.Content = () => this.Title(id);
             return obj;
@@ -22033,7 +22036,7 @@ var $;
             return obj;
         }
         Status_labeler(id) {
-            const obj = new this.$.$mol_list_demo_table_col_big();
+            const obj = new this.$.$mol_labeler();
             obj.title = () => "Status";
             obj.Content = () => this.Status(id);
             return obj;
@@ -22049,7 +22052,7 @@ var $;
             return obj;
         }
         Quantity_labeler(id) {
-            const obj = new this.$.$mol_list_demo_table_col_big();
+            const obj = new this.$.$mol_labeler();
             obj.title = () => "Quantity";
             obj.Content = () => this.Quantity(id);
             return obj;
@@ -22066,7 +22069,7 @@ var $;
             return obj;
         }
         Date_labeler(id) {
-            const obj = new this.$.$mol_list_demo_table_col_big();
+            const obj = new this.$.$mol_labeler();
             obj.title = () => "Supply Time";
             obj.Content = () => this.Date(id);
             return obj;
@@ -22147,12 +22150,6 @@ var $;
         $mol_mem
     ], $mol_list_demo_table.prototype, "Rows", null);
     $.$mol_list_demo_table = $mol_list_demo_table;
-    class $mol_list_demo_table_col_big extends $mol_labeler {
-    }
-    $.$mol_list_demo_table_col_big = $mol_list_demo_table_col_big;
-    class $mol_list_demo_table_col_small extends $mol_labeler {
-    }
-    $.$mol_list_demo_table_col_small = $mol_list_demo_table_col_small;
 })($ || ($ = {}));
 //mol/list/demo/table/-view.tree/table.view.tree.ts
 ;
@@ -22173,16 +22170,6 @@ var $;
     var $$;
     (function ($$) {
         const { rem } = $mol_style_unit;
-        $mol_style_define($mol_list_demo_table_col_big, {
-            flex: {
-                basis: rem(14),
-            },
-        });
-        $mol_style_define($mol_list_demo_table_col_small, {
-            flex: {
-                basis: rem(7),
-            },
-        });
         $mol_style_define($mol_list_demo_table, {
             Rows: {
                 flex: {
@@ -22192,10 +22179,16 @@ var $;
             Row: {
                 boxShadow: `0 1px 0 0 ${$mol_theme.line}`,
             },
+            $mol_labeler: {
+                flex: {
+                    basis: rem(14),
+                },
+            },
             Id_labeler: {
                 flex: {
                     grow: 0,
                     shrink: 1,
+                    basis: rem(7),
                 },
             },
             Id: {

@@ -5792,11 +5792,11 @@ declare namespace $ {
         tags(): readonly any[];
         row_id(id: any, next?: any): number;
         Id(id: any): $mol_view;
-        Id_labeler(id: any): $mol_list_demo_table_col_small;
+        Id_labeler(id: any): $mol_labeler;
         row_uri(id: any): string;
         row_title(id: any): string;
         Title(id: any): $$.$mol_link_iconed;
-        Title_labeler(id: any): $mol_list_demo_table_col_big;
+        Title_labeler(id: any): $mol_labeler;
         row_status(id: any, val?: any): string;
         status_options(): {
             minor: string;
@@ -5804,21 +5804,17 @@ declare namespace $ {
             critical: string;
         };
         Status(id: any): $$.$mol_switch;
-        Status_labeler(id: any): $mol_list_demo_table_col_big;
+        Status_labeler(id: any): $mol_labeler;
         row_quantity(id: any, next?: any): number;
         Quantity(id: any): $$.$mol_number;
-        Quantity_labeler(id: any): $mol_list_demo_table_col_big;
+        Quantity_labeler(id: any): $mol_labeler;
         row_moment(id: any, val?: any): $mol_time_moment;
         Date(id: any): $$.$mol_date;
-        Date_labeler(id: any): $mol_list_demo_table_col_big;
+        Date_labeler(id: any): $mol_labeler;
         row_content(id: any): readonly any[];
         Row(id: any): $mol_row;
         rows(): readonly any[];
         Rows(): $$.$mol_list;
-    }
-    class $mol_list_demo_table_col_big extends $mol_labeler {
-    }
-    class $mol_list_demo_table_col_small extends $mol_labeler {
     }
 }
 
