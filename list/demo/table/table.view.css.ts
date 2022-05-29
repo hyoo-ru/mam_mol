@@ -2,18 +2,6 @@ namespace $.$$ {
 
 	const { rem } = $mol_style_unit
 	
-	$mol_style_define( $mol_list_demo_table_col_big , {
-		flex: {
-			basis: rem(14),
-		},
-	})
-	
-	$mol_style_define( $mol_list_demo_table_col_small , {
-		flex: {
-			basis: rem(7),
-		},
-	})
-	
 	$mol_style_define( $mol_list_demo_table , {
 		
 		Rows: {
@@ -25,11 +13,18 @@ namespace $.$$ {
 		Row: {
 			boxShadow: `0 1px 0 0 ${ $mol_theme.line }`,
 		},
+		
+		$mol_labeler: {
+			flex: {
+				basis: rem(14),
+			},
+		},
 
 		Id_labeler: {
 			flex: {
 				grow: 0,
 				shrink: 1,
+				basis: rem(7),
 			},
 		},
 		
