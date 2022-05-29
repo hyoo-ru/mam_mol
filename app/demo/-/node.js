@@ -22192,18 +22192,12 @@ var $;
             return "Large list of rows with dynamic content";
         }
         count() {
-            return 1000;
+            return 10000;
         }
         sub() {
             return [
                 this.Rows()
             ];
-        }
-        Row(id) {
-            const obj = new this.$.$mol_row();
-            obj.minimal_height = () => 40;
-            obj.sub = () => this.row_content(id);
-            return obj;
         }
         tags() {
             return [
@@ -22217,16 +22211,10 @@ var $;
                 "scroll"
             ];
         }
-        rows() {
-            return [];
-        }
-        Rows() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => this.rows();
-            return obj;
-        }
-        row_id(id) {
-            return "";
+        row_id(id, next) {
+            if (next !== undefined)
+                return next;
+            return 0;
         }
         Id(id) {
             const obj = new this.$.$mol_view();
@@ -22235,44 +22223,68 @@ var $;
             ];
             return obj;
         }
+        Id_labeler(id) {
+            const obj = new this.$.$mol_list_demo_table_col_small();
+            obj.title = () => "Identifier";
+            obj.Content = () => this.Id(id);
+            return obj;
+        }
+        row_uri(id) {
+            return "";
+        }
         row_title(id) {
             return "";
         }
         Title(id) {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => [
-                this.row_title(id)
-            ];
+            const obj = new this.$.$mol_link_iconed();
+            obj.uri = () => this.row_uri(id);
+            obj.title = () => this.row_title(id);
             return obj;
         }
-        editable_title() {
-            return "Editable";
-        }
-        row_editable(id, val) {
-            if (val !== undefined)
-                return val;
-            return false;
-        }
-        Editable(id) {
-            const obj = new this.$.$mol_check_box();
-            obj.title = () => this.editable_title();
-            obj.checked = (val) => this.row_editable(id, val);
+        Title_labeler(id) {
+            const obj = new this.$.$mol_list_demo_table_col_big();
+            obj.title = () => "Product Name";
+            obj.Content = () => this.Title(id);
             return obj;
         }
-        row_priority(id, val) {
+        row_status(id, val) {
             if (val !== undefined)
                 return val;
             return "";
         }
-        Priority(id) {
+        status_options() {
+            return {
+                minor: "Store",
+                major: "Sale",
+                critical: "Support"
+            };
+        }
+        Status(id) {
             const obj = new this.$.$mol_switch();
-            obj.enabled = () => this.row_editable(id);
-            obj.value = (val) => this.row_priority(id, val);
-            obj.options = () => ({
-                minor: "Minor",
-                major: "Major",
-                critical: "Critical"
-            });
+            obj.value = (val) => this.row_status(id, val);
+            obj.options = () => this.status_options();
+            return obj;
+        }
+        Status_labeler(id) {
+            const obj = new this.$.$mol_list_demo_table_col_big();
+            obj.title = () => "Status";
+            obj.Content = () => this.Status(id);
+            return obj;
+        }
+        row_quantity(id, next) {
+            if (next !== undefined)
+                return next;
+            return 0;
+        }
+        Quantity(id) {
+            const obj = new this.$.$mol_number();
+            obj.value = (next) => this.row_quantity(id, next);
+            return obj;
+        }
+        Quantity_labeler(id) {
+            const obj = new this.$.$mol_list_demo_table_col_big();
+            obj.title = () => "Quantity";
+            obj.Content = () => this.Quantity(id);
             return obj;
         }
         row_moment(id, val) {
@@ -22284,52 +22296,74 @@ var $;
         Date(id) {
             const obj = new this.$.$mol_date();
             obj.value_moment = (val) => this.row_moment(id, val);
-            obj.enabled = () => this.row_editable(id);
             return obj;
         }
-        row_uri(id) {
-            return "";
-        }
-        Link(id) {
-            const obj = new this.$.$mol_link_iconed();
-            obj.uri = () => this.row_uri(id);
+        Date_labeler(id) {
+            const obj = new this.$.$mol_list_demo_table_col_big();
+            obj.title = () => "Supply Time";
+            obj.Content = () => this.Date(id);
             return obj;
         }
         row_content(id) {
             return [
-                this.Id(id),
-                this.Title(id),
-                this.Editable(id),
-                this.Priority(id),
-                this.Date(id),
-                this.Link(id)
+                this.Id_labeler(id),
+                this.Title_labeler(id),
+                this.Status_labeler(id),
+                this.Quantity_labeler(id),
+                this.Date_labeler(id)
             ];
+        }
+        Row(id) {
+            const obj = new this.$.$mol_row();
+            obj.minimal_height = () => 104;
+            obj.minimal_width = () => 200;
+            obj.sub = () => this.row_content(id);
+            return obj;
+        }
+        rows() {
+            return [
+                this.Row("0")
+            ];
+        }
+        Rows() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => this.rows();
+            return obj;
         }
     }
     __decorate([
         $mol_mem_key
-    ], $mol_list_demo_table.prototype, "Row", null);
-    __decorate([
-        $mol_mem
-    ], $mol_list_demo_table.prototype, "Rows", null);
+    ], $mol_list_demo_table.prototype, "row_id", null);
     __decorate([
         $mol_mem_key
     ], $mol_list_demo_table.prototype, "Id", null);
     __decorate([
         $mol_mem_key
+    ], $mol_list_demo_table.prototype, "Id_labeler", null);
+    __decorate([
+        $mol_mem_key
     ], $mol_list_demo_table.prototype, "Title", null);
     __decorate([
         $mol_mem_key
-    ], $mol_list_demo_table.prototype, "row_editable", null);
+    ], $mol_list_demo_table.prototype, "Title_labeler", null);
     __decorate([
         $mol_mem_key
-    ], $mol_list_demo_table.prototype, "Editable", null);
+    ], $mol_list_demo_table.prototype, "row_status", null);
     __decorate([
         $mol_mem_key
-    ], $mol_list_demo_table.prototype, "row_priority", null);
+    ], $mol_list_demo_table.prototype, "Status", null);
     __decorate([
         $mol_mem_key
-    ], $mol_list_demo_table.prototype, "Priority", null);
+    ], $mol_list_demo_table.prototype, "Status_labeler", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_list_demo_table.prototype, "row_quantity", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_list_demo_table.prototype, "Quantity", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_list_demo_table.prototype, "Quantity_labeler", null);
     __decorate([
         $mol_mem_key
     ], $mol_list_demo_table.prototype, "row_moment", null);
@@ -22338,8 +22372,20 @@ var $;
     ], $mol_list_demo_table.prototype, "Date", null);
     __decorate([
         $mol_mem_key
-    ], $mol_list_demo_table.prototype, "Link", null);
+    ], $mol_list_demo_table.prototype, "Date_labeler", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_list_demo_table.prototype, "Row", null);
+    __decorate([
+        $mol_mem
+    ], $mol_list_demo_table.prototype, "Rows", null);
     $.$mol_list_demo_table = $mol_list_demo_table;
+    class $mol_list_demo_table_col_big extends $mol_labeler {
+    }
+    $.$mol_list_demo_table_col_big = $mol_list_demo_table_col_big;
+    class $mol_list_demo_table_col_small extends $mol_labeler {
+    }
+    $.$mol_list_demo_table_col_small = $mol_list_demo_table_col_small;
 })($ || ($ = {}));
 //mol/list/demo/table/-view.tree/table.view.tree.ts
 ;
@@ -22360,45 +22406,37 @@ var $;
     var $$;
     (function ($$) {
         const { rem } = $mol_style_unit;
+        $mol_style_define($mol_list_demo_table_col_big, {
+            flex: {
+                basis: rem(14),
+            },
+        });
+        $mol_style_define($mol_list_demo_table_col_small, {
+            flex: {
+                basis: rem(7),
+            },
+        });
         $mol_style_define($mol_list_demo_table, {
+            Rows: {
+                flex: {
+                    grow: 1,
+                },
+            },
             Row: {
-                padding: 0,
-                '>': {
-                    $mol_view: {
-                        margin: 0,
-                    },
+                boxShadow: `0 1px 0 0 ${$mol_theme.line}`,
+            },
+            Id_labeler: {
+                flex: {
+                    grow: 0,
+                    shrink: 1,
                 },
             },
             Id: {
-                justifyContent: 'flex-end',
                 padding: $mol_gap.text,
-                flex: {
-                    grow: 0,
-                    shrink: 0,
-                    basis: rem(4),
-                },
             },
             Title: {
                 fontWeight: 'bolder',
-                flex: {
-                    grow: 1,
-                    shrink: 1,
-                    basis: rem(15),
-                },
                 padding: $mol_gap.text,
-            },
-            Link: {
-                flex: {
-                    grow: 1,
-                },
-            },
-            Editable: {
-                Title: {
-                    verticalAlign: 'top',
-                },
-            },
-            Priority: {
-                flex: 'none',
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
@@ -22413,26 +22451,27 @@ var $;
         class $mol_list_demo_table extends $.$mol_list_demo_table {
             rows() {
                 $mol_wire_solid();
-                return [...$mol_range2(index => this.Row(index), () => this.count())];
+                return Array.from({ length: this.count() }, (_, i) => this.Row(i));
             }
             row_id(id) {
-                return String(id);
+                return id + 1;
             }
             row_title(id) {
-                $mol_wire_solid();
                 return $mol_stub_product_name();
             }
-            row_number(id, next) {
-                $mol_wire_solid();
-                return next ?? id + 1;
+            row_quantity(id, next = Math.floor(Math.random() * 100)) {
+                return next;
+            }
+            row_status(id, next = $mol_array_lottery(Object.keys(this.status_options()))) {
+                return next;
             }
             row_uri(id) {
-                $mol_wire_solid();
-                return `http://xkcd.com/${this.row_number(id)}`;
+                return `http://xkcd.com/${this.row_id(id)}`;
             }
-            row_moment(id, next) {
-                $mol_wire_solid();
-                return next ?? new $mol_time_moment().shift({ day: this.row_number(id) });
+            row_moment(id, next = new $mol_time_moment().shift({
+                day: Math.floor(Math.random() * 100)
+            })) {
+                return next;
             }
         }
         __decorate([
@@ -22443,7 +22482,10 @@ var $;
         ], $mol_list_demo_table.prototype, "row_title", null);
         __decorate([
             $mol_mem_key
-        ], $mol_list_demo_table.prototype, "row_number", null);
+        ], $mol_list_demo_table.prototype, "row_quantity", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_list_demo_table.prototype, "row_status", null);
         __decorate([
             $mol_mem_key
         ], $mol_list_demo_table.prototype, "row_uri", null);

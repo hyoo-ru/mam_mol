@@ -12,11 +12,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * count 1000
+		 * count 10000
 		 * ```
 		 */
 		count() {
-			return 1000
+			return 10000
 		}
 		
 		/**
@@ -28,23 +28,6 @@ namespace $ {
 			return [
 				this.Rows()
 			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * Row* $mol_row
-		 * 	minimal_height 40
-		 * 	sub <= row_content*
-		 * ```
-		 */
-		@ $mol_mem_key
-		Row(id: any) {
-			const obj = new this.$.$mol_row()
-			
-			obj.minimal_height = () => 40
-			obj.sub = () => this.row_content(id)
-			
-			return obj
 		}
 		
 		/**
@@ -75,40 +58,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * rows /
+		 * row_id*? 0
 		 * ```
 		 */
-		rows() {
-			return [
-			] as readonly any[]
+		@ $mol_mem_key
+		row_id(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
+			return 0
 		}
 		
 		/**
 		 * ```tree
-		 * Rows $mol_list rows <= rows
-		 * ```
-		 */
-		@ $mol_mem
-		Rows() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => this.rows()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * row_id* \
-		 * ```
-		 */
-		row_id(id: any) {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Id* $mol_view sub / <= row_id*
+		 * Id* $mol_view sub / <= row_id*?
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -124,6 +85,32 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Id_labeler* $mol_list_demo_table_col_small
+		 * 	title \Identifier
+		 * 	Content <= Id*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Id_labeler(id: any) {
+			const obj = new this.$.$mol_list_demo_table_col_small()
+			
+			obj.title = () => "Identifier"
+			obj.Content = () => this.Id(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * row_uri* \
+		 * ```
+		 */
+		row_uri(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * row_title* \
 		 * ```
 		 */
@@ -133,90 +120,137 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Title* $mol_view sub / <= row_title*
+		 * Title* $mol_link_iconed
+		 * 	uri <= row_uri*
+		 * 	title <= row_title*
 		 * ```
 		 */
 		@ $mol_mem_key
 		Title(id: any) {
-			const obj = new this.$.$mol_view()
+			const obj = new this.$.$mol_link_iconed()
 			
-			obj.sub = () => [
-				this.row_title(id)
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * editable_title \Editable
-		 * ```
-		 */
-		editable_title() {
-			return "Editable"
-		}
-		
-		/**
-		 * ```tree
-		 * row_editable*?val false
-		 * ```
-		 */
-		@ $mol_mem_key
-		row_editable(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
-			return false
-		}
-		
-		/**
-		 * ```tree
-		 * Editable* $mol_check_box
-		 * 	title <= editable_title
-		 * 	checked?val <=> row_editable*?val
-		 * ```
-		 */
-		@ $mol_mem_key
-		Editable(id: any) {
-			const obj = new this.$.$mol_check_box()
-			
-			obj.title = () => this.editable_title()
-			obj.checked = (val?: any) => this.row_editable(id, val)
+			obj.uri = () => this.row_uri(id)
+			obj.title = () => this.row_title(id)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * row_priority*?val \
+		 * Title_labeler* $mol_list_demo_table_col_big
+		 * 	title \Product Name
+		 * 	Content <= Title*
 		 * ```
 		 */
 		@ $mol_mem_key
-		row_priority(id: any, val?: any) {
+		Title_labeler(id: any) {
+			const obj = new this.$.$mol_list_demo_table_col_big()
+			
+			obj.title = () => "Product Name"
+			obj.Content = () => this.Title(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * row_status*?val \
+		 * ```
+		 */
+		@ $mol_mem_key
+		row_status(id: any, val?: any) {
 			if ( val !== undefined ) return val as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * Priority* $mol_switch
-		 * 	enabled <= row_editable*
-		 * 	value?val <=> row_priority*?val
-		 * 	options *
-		 * 		minor \Minor
-		 * 		major \Major
-		 * 		critical \Critical
+		 * status_options *
+		 * 	minor \Store
+		 * 	major \Sale
+		 * 	critical \Support
+		 * ```
+		 */
+		status_options() {
+			return {
+				minor: "Store",
+				major: "Sale",
+				critical: "Support"
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * Status* $mol_switch
+		 * 	value?val <=> row_status*?val
+		 * 	options <= status_options
 		 * ```
 		 */
 		@ $mol_mem_key
-		Priority(id: any) {
+		Status(id: any) {
 			const obj = new this.$.$mol_switch()
 			
-			obj.enabled = () => this.row_editable(id)
-			obj.value = (val?: any) => this.row_priority(id, val)
-			obj.options = () => ({
-				minor: "Minor",
-				major: "Major",
-				critical: "Critical"
-			})
+			obj.value = (val?: any) => this.row_status(id, val)
+			obj.options = () => this.status_options()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Status_labeler* $mol_list_demo_table_col_big
+		 * 	title \Status
+		 * 	Content <= Status*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Status_labeler(id: any) {
+			const obj = new this.$.$mol_list_demo_table_col_big()
+			
+			obj.title = () => "Status"
+			obj.Content = () => this.Status(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * row_quantity*? 0
+		 * ```
+		 */
+		@ $mol_mem_key
+		row_quantity(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
+			return 0
+		}
+		
+		/**
+		 * ```tree
+		 * Quantity* $mol_number value? <=> row_quantity*?
+		 * ```
+		 */
+		@ $mol_mem_key
+		Quantity(id: any) {
+			const obj = new this.$.$mol_number()
+			
+			obj.value = (next?: any) => this.row_quantity(id, next)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Quantity_labeler* $mol_list_demo_table_col_big
+		 * 	title \Quantity
+		 * 	Content <= Quantity*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Quantity_labeler(id: any) {
+			const obj = new this.$.$mol_list_demo_table_col_big()
+			
+			obj.title = () => "Quantity"
+			obj.Content = () => this.Quantity(id)
 			
 			return obj
 		}
@@ -236,9 +270,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Date* $mol_date
-		 * 	value_moment?val <=> row_moment*?val
-		 * 	enabled <= row_editable*
+		 * Date* $mol_date value_moment?val <=> row_moment*?val
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -246,30 +278,23 @@ namespace $ {
 			const obj = new this.$.$mol_date()
 			
 			obj.value_moment = (val?: any) => this.row_moment(id, val)
-			obj.enabled = () => this.row_editable(id)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * row_uri* \
-		 * ```
-		 */
-		row_uri(id: any) {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Link* $mol_link_iconed uri <= row_uri*
+		 * Date_labeler* $mol_list_demo_table_col_big
+		 * 	title \Supply Time
+		 * 	Content <= Date*
 		 * ```
 		 */
 		@ $mol_mem_key
-		Link(id: any) {
-			const obj = new this.$.$mol_link_iconed()
+		Date_labeler(id: any) {
+			const obj = new this.$.$mol_list_demo_table_col_big()
 			
-			obj.uri = () => this.row_uri(id)
+			obj.title = () => "Supply Time"
+			obj.Content = () => this.Date(id)
 			
 			return obj
 		}
@@ -277,24 +302,72 @@ namespace $ {
 		/**
 		 * ```tree
 		 * row_content* /
-		 * 	<= Id*
-		 * 	<= Title*
-		 * 	<= Editable*
-		 * 	<= Priority*
-		 * 	<= Date*
-		 * 	<= Link*
+		 * 	<= Id_labeler*
+		 * 	<= Title_labeler*
+		 * 	<= Status_labeler*
+		 * 	<= Quantity_labeler*
+		 * 	<= Date_labeler*
 		 * ```
 		 */
 		row_content(id: any) {
 			return [
-				this.Id(id),
-				this.Title(id),
-				this.Editable(id),
-				this.Priority(id),
-				this.Date(id),
-				this.Link(id)
+				this.Id_labeler(id),
+				this.Title_labeler(id),
+				this.Status_labeler(id),
+				this.Quantity_labeler(id),
+				this.Date_labeler(id)
 			] as readonly any[]
 		}
+		
+		/**
+		 * ```tree
+		 * Row*0 $mol_row
+		 * 	minimal_height 104
+		 * 	minimal_width 200
+		 * 	sub <= row_content*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Row(id: any) {
+			const obj = new this.$.$mol_row()
+			
+			obj.minimal_height = () => 104
+			obj.minimal_width = () => 200
+			obj.sub = () => this.row_content(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * rows / <= Row*0
+		 * ```
+		 */
+		rows() {
+			return [
+				this.Row("0")
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Rows $mol_list rows <= rows
+		 * ```
+		 */
+		@ $mol_mem
+		Rows() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => this.rows()
+			
+			return obj
+		}
+	}
+	
+	export class $mol_list_demo_table_col_big extends $mol_labeler {
+	}
+	
+	export class $mol_list_demo_table_col_small extends $mol_labeler {
 	}
 	
 }

@@ -5789,24 +5789,36 @@ declare namespace $ {
         title(): string;
         count(): number;
         sub(): readonly any[];
-        Row(id: any): $mol_row;
         tags(): readonly any[];
-        rows(): readonly any[];
-        Rows(): $$.$mol_list;
-        row_id(id: any): string;
+        row_id(id: any, next?: any): number;
         Id(id: any): $mol_view;
+        Id_labeler(id: any): $mol_list_demo_table_col_small;
+        row_uri(id: any): string;
         row_title(id: any): string;
-        Title(id: any): $mol_view;
-        editable_title(): string;
-        row_editable(id: any, val?: any): boolean;
-        Editable(id: any): $mol_check_box;
-        row_priority(id: any, val?: any): string;
-        Priority(id: any): $$.$mol_switch;
+        Title(id: any): $$.$mol_link_iconed;
+        Title_labeler(id: any): $mol_list_demo_table_col_big;
+        row_status(id: any, val?: any): string;
+        status_options(): {
+            minor: string;
+            major: string;
+            critical: string;
+        };
+        Status(id: any): $$.$mol_switch;
+        Status_labeler(id: any): $mol_list_demo_table_col_big;
+        row_quantity(id: any, next?: any): number;
+        Quantity(id: any): $$.$mol_number;
+        Quantity_labeler(id: any): $mol_list_demo_table_col_big;
         row_moment(id: any, val?: any): $mol_time_moment;
         Date(id: any): $$.$mol_date;
-        row_uri(id: any): string;
-        Link(id: any): $$.$mol_link_iconed;
+        Date_labeler(id: any): $mol_list_demo_table_col_big;
         row_content(id: any): readonly any[];
+        Row(id: any): $mol_row;
+        rows(): readonly any[];
+        Rows(): $$.$mol_list;
+    }
+    class $mol_list_demo_table_col_big extends $mol_labeler {
+    }
+    class $mol_list_demo_table_col_small extends $mol_labeler {
     }
 }
 
@@ -5820,9 +5832,10 @@ declare namespace $.$$ {
 declare namespace $.$$ {
     class $mol_list_demo_table extends $.$mol_list_demo_table {
         rows(): $mol_row[];
-        row_id(id: number): string;
+        row_id(id: number): number;
         row_title(id: number): string;
-        row_number(id: number, next?: number): number;
+        row_quantity(id: number, next?: number): number;
+        row_status(id: number, next?: string): string;
         row_uri(id: number): string;
         row_moment(id: number, next?: $mol_time_moment): $mol_time_moment;
     }
