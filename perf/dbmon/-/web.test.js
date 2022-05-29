@@ -942,6 +942,19 @@ var $;
             App.value(2);
             $mol_assert_equal(App.value(), 3);
         },
+        'Read Pushed'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static value(next = 0) {
+                    return next;
+                }
+            }
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "value", null);
+            $mol_assert_equal(App.value(1), 1);
+            $mol_assert_equal(App.value(), 1);
+        },
         'Mem overrides mem'($) {
             class Base extends $mol_object2 {
                 static $ = $;
@@ -1111,6 +1124,33 @@ var $;
                 $mol_wire_method
             ], App, "test", null);
             App.test();
+        },
+        'Update deps on push'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static left(next = false) {
+                    return next;
+                }
+                static right(next = false) {
+                    return next;
+                }
+                static res(next) {
+                    return this.left(next) && this.right();
+                }
+            }
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "left", null);
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "right", null);
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "res", null);
+            $mol_assert_equal(App.res(), false);
+            $mol_assert_equal(App.res(true), false);
+            $mol_assert_equal(App.right(true), true);
+            $mol_assert_equal(App.res(), true);
         },
         'Different order of pull and push'($) {
             class App extends $mol_object2 {

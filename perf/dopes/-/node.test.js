@@ -1745,17 +1745,27 @@ var $;
                 };
             }
         }
-        recall(...args) {
-            if (this.cursor > $mol_wire_cursor.fresh) {
-                try {
-                    this.once();
-                }
-                catch (error) {
-                    if (error instanceof Promise)
-                        $mol_fail_hidden(error);
-                }
+        resync(...args) {
+            let res;
+            try {
+                res = this.recall(...args);
             }
-            return this.put(this.task.call(this.host, ...args));
+            catch (error) {
+                if (error instanceof Promise)
+                    $mol_fail_hidden(error);
+                res = error;
+            }
+            try {
+                this.once();
+            }
+            catch (error) {
+                if (error instanceof Promise)
+                    $mol_fail_hidden(error);
+            }
+            return this.put(res);
+        }
+        recall(...args) {
+            return this.task.call(this.host, ...args);
         }
         once() {
             return this.sync();
@@ -1803,6 +1813,9 @@ var $;
     }
     __decorate([
         $mol_wire_method
+    ], $mol_wire_atom.prototype, "resync", null);
+    __decorate([
+        $mol_wire_method
     ], $mol_wire_atom.prototype, "recall", null);
     __decorate([
         $mol_wire_method
@@ -1848,7 +1861,7 @@ var $;
                         return atom.sync();
                     }
                 }
-                return atom.recall(...args);
+                return atom.resync(...args);
             };
             Object.defineProperty(wrapper, 'name', { value: func.name + ' ' });
             Object.assign(wrapper, { orig: func });
@@ -2815,7 +2828,7 @@ var $;
     var $$;
     (function ($$) {
         class $mol_button extends $.$mol_button {
-            status(next = null) { return next; }
+            status(next = [null]) { return next; }
             disabled() {
                 return !this.enabled();
             }
@@ -2827,10 +2840,11 @@ var $;
                 try {
                     this.event_click(next);
                     this.click(next);
-                    this.status(null);
+                    this.status([null]);
                 }
                 catch (error) {
-                    this.status(error);
+                    this.status([error]);
+                    $mol_fail_hidden(error);
                 }
             }
             event_key_press(event) {
@@ -2842,16 +2856,13 @@ var $;
                 return this.enabled() ? super.tab_index() : -1;
             }
             error() {
-                try {
-                    this.status();
+                const [error] = this.status();
+                if (!error)
                     return '';
+                if (error instanceof Promise) {
+                    return $mol_fail_hidden(error);
                 }
-                catch (error) {
-                    if (error instanceof Promise) {
-                        return $mol_fail_hidden(error);
-                    }
-                    return String(error.message ?? error);
-                }
+                return String(error.message ?? error);
             }
             sub_visible() {
                 return [
@@ -4321,6 +4332,19 @@ var $;
             App.value(2);
             $mol_assert_equal(App.value(), 3);
         },
+        'Read Pushed'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static value(next = 0) {
+                    return next;
+                }
+            }
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "value", null);
+            $mol_assert_equal(App.value(1), 1);
+            $mol_assert_equal(App.value(), 1);
+        },
         'Mem overrides mem'($) {
             class Base extends $mol_object2 {
                 static $ = $;
@@ -4490,6 +4514,33 @@ var $;
                 $mol_wire_method
             ], App, "test", null);
             App.test();
+        },
+        'Update deps on push'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static left(next = false) {
+                    return next;
+                }
+                static right(next = false) {
+                    return next;
+                }
+                static res(next) {
+                    return this.left(next) && this.right();
+                }
+            }
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "left", null);
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "right", null);
+            __decorate([
+                $mol_wire_mem(0)
+            ], App, "res", null);
+            $mol_assert_equal(App.res(), false);
+            $mol_assert_equal(App.res(true), false);
+            $mol_assert_equal(App.right(true), true);
+            $mol_assert_equal(App.res(), true);
         },
         'Different order of pull and push'($) {
             class App extends $mol_object2 {
@@ -5312,7 +5363,7 @@ var $;
                 });
                 const event = $mol_dom_context.document.createEvent('mouseevent');
                 $mol_assert_fail(() => clicker.event_activate(event), 'Test error');
-                $mol_assert_fail(() => clicker.status(), 'Test error');
+                $mol_assert_equal(clicker.status()[0].message, 'Test error');
             },
         });
     })($$ = $_1.$$ || ($_1.$$ = {}));

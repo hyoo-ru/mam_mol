@@ -1505,17 +1505,27 @@ var $;
                 };
             }
         }
-        recall(...args) {
-            if (this.cursor > $mol_wire_cursor.fresh) {
-                try {
-                    this.once();
-                }
-                catch (error) {
-                    if (error instanceof Promise)
-                        $mol_fail_hidden(error);
-                }
+        resync(...args) {
+            let res;
+            try {
+                res = this.recall(...args);
             }
-            return this.put(this.task.call(this.host, ...args));
+            catch (error) {
+                if (error instanceof Promise)
+                    $mol_fail_hidden(error);
+                res = error;
+            }
+            try {
+                this.once();
+            }
+            catch (error) {
+                if (error instanceof Promise)
+                    $mol_fail_hidden(error);
+            }
+            return this.put(res);
+        }
+        recall(...args) {
+            return this.task.call(this.host, ...args);
         }
         once() {
             return this.sync();
@@ -1563,6 +1573,9 @@ var $;
     }
     __decorate([
         $mol_wire_method
+    ], $mol_wire_atom.prototype, "resync", null);
+    __decorate([
+        $mol_wire_method
     ], $mol_wire_atom.prototype, "recall", null);
     __decorate([
         $mol_wire_method
@@ -1608,7 +1621,7 @@ var $;
                         return atom.sync();
                     }
                 }
-                return atom.recall(...args);
+                return atom.resync(...args);
             };
             Object.defineProperty(wrapper, 'name', { value: func.name + ' ' });
             Object.assign(wrapper, { orig: func });
