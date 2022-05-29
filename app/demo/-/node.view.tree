@@ -157,17 +157,6 @@ $mol_page $mol_view
 
 $mol_stack $mol_view
 
-$mol_list $mol_view
-	render_visible_only true
-	render_over 0
-	sub <= rows /$mol_view
-	Empty $mol_view
-	Gap_before $mol_view style * paddingTop <= gap_before 0
-	Gap_after $mol_view style * paddingTop <= gap_after 0
-	view_window /
-		0
-		0
-
 $mol_paragraph $mol_view
 	line_height 24
 	letter_width 7
@@ -213,6 +202,17 @@ $mol_text_code_row $mol_paragraph
 		haystack <= token_text* \
 		needle <= highlight \
 	find_pos* null
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0
+	sub <= rows /$mol_view
+	Empty $mol_view
+	Gap_before $mol_view style * paddingTop <= gap_before 0
+	Gap_after $mol_view style * paddingTop <= gap_after 0
+	view_window /
+		0
+		0
 
 $mol_text_code $mol_list
 	attr *
