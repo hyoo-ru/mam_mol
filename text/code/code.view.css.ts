@@ -10,8 +10,10 @@ namespace $.$$ {
 		'@': {
 			'mol_text_code_sidebar_showed': {
 				true: {
-					margin: {
-						left: rem(1.5),
+					$mol_text_code_row: {
+						margin: {
+							left: rem(1.5),
+						},
 					},
 				},
 			},
