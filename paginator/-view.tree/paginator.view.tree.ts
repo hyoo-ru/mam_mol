@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_paginator extends $mol_view {
+	export class $mol_paginator extends $mol_bar {
 		
 		/**
 		 * ```tree

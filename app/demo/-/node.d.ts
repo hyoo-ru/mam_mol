@@ -6348,7 +6348,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_paginator extends $mol_view {
+    class $mol_paginator extends $mol_bar {
         sub(): readonly any[];
         backward_hint(): string;
         backward(event?: any): any;

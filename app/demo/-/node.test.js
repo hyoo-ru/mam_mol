@@ -24241,7 +24241,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_paginator extends $mol_view {
+    class $mol_paginator extends $mol_bar {
         sub() {
             return [
                 this.Backward(),
@@ -24335,7 +24335,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/paginator/paginator.view.css", "[mol_paginator_value] {\n\tpadding: .5rem 0;\n}\n");
+    $mol_style_attach("mol/paginator/paginator.view.css", "[mol_paginator] {\n\talign-items: flex-start;\n}\n\n[mol_paginator_value] {\n\tpadding: .5rem 0;\n}\n");
 })($ || ($ = {}));
 //mol/paginator/-css/paginator.view.css.ts
 ;

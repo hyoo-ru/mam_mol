@@ -1,4 +1,4 @@
-$mol_paginator $mol_view
+$mol_paginator $mol_bar
 	sub /
 		<= Backward $mol_button_minor
 			hint <= backward_hint @ \Назад
