@@ -13254,6 +13254,12 @@ var $;
                 const size_x = Math.max(0, Math.ceil((1 / aspect - 1) * diameter));
                 return points.map(point => `M ${point[0] - shift_x} ${point[1] - shift_y} l ${size_x} ${size_y}`).join(' ');
             }
+            dimensions() {
+                const scale = this.scale();
+                const radius = this.diameter() / Math.min(...scale) / 2;
+                const dims = super.dimensions();
+                return new this.$.$mol_vector_2d(new $mol_vector_range(dims.x.min - radius, dims.x.max + radius), new $mol_vector_range(dims.y.min - radius, dims.y.max + radius));
+            }
         }
         __decorate([
             $mol_mem
@@ -13261,6 +13267,9 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_plot_dot.prototype, "indexes", null);
+        __decorate([
+            $mol_mem
+        ], $mol_plot_dot.prototype, "dimensions", null);
         $$.$mol_plot_dot = $mol_plot_dot;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

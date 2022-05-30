@@ -3827,6 +3827,7 @@ declare namespace $.$$ {
         filled(): Set<number>;
         indexes(): number[];
         curve(): string;
+        dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
     }
 }
 
