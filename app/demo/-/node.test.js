@@ -11581,8 +11581,11 @@ var $;
             return this[0].map((_, i) => this.map(row => row[i]));
         }
         get x() { return this[0]; }
+        set x(next) { this[0] = next; }
         get y() { return this[1]; }
+        set y(next) { this[1] = next; }
         get z() { return this[2]; }
+        set z(next) { this[2] = next; }
     }
     $.$mol_vector = $mol_vector;
     class $mol_vector_1d extends $mol_vector {
@@ -11595,10 +11598,17 @@ var $;
     }
     $.$mol_vector_3d = $mol_vector_3d;
     class $mol_vector_range extends $mol_vector {
-        get [0]() { return super[0]; }
-        get [1]() { return super[1]; }
+        0;
+        1;
+        constructor(min, max) {
+            super(min, max);
+            this[0] = min;
+            this[1] = max;
+        }
         get min() { return this[0]; }
+        set min(next) { this[0] = next; }
         get max() { return this[1]; }
+        set max(next) { this[1] = next; }
         get inversed() {
             return new this.constructor(this.max, this.min);
         }
@@ -11892,7 +11902,14 @@ var $;
                 const series_x = this.series_x();
                 const series_y = this.series_y();
                 for (let i = 0; i < series_x.length; i++) {
-                    next = next.expanded1([this.repos_x(series_x[i]), this.repos_y(series_y[i])]);
+                    if (series_x[i] > next.x.max)
+                        next.x.max = series_x[i];
+                    if (series_x[i] < next.x.min)
+                        next.x.min = series_x[i];
+                    if (series_y[i] > next.y.max)
+                        next.y.max = series_y[i];
+                    if (series_y[i] < next.y.min)
+                        next.y.min = series_y[i];
                 }
                 return next;
             }
@@ -13409,16 +13426,17 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_coord_pack(a, b) {
-        return a << 16 | b & 0xFFFF;
+    const mask = 0b11111_11111_11111;
+    function $mol_coord_pack(high, low) {
+        return (high << 17 >>> 2) | (low & mask);
     }
     $.$mol_coord_pack = $mol_coord_pack;
-    function $mol_coord_high(key) {
-        return key >> 16;
+    function $mol_coord_high(pack) {
+        return pack << 2 >> 17;
     }
     $.$mol_coord_high = $mol_coord_high;
-    function $mol_coord_low(key) {
-        return (key & 0xFFFF) << 16 >> 16;
+    function $mol_coord_low(pack) {
+        return (pack << 17) >> 17;
     }
     $.$mol_coord_low = $mol_coord_low;
 })($ || ($ = {}));

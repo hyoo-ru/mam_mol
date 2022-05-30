@@ -672,8 +672,11 @@ declare namespace $ {
         distance(this: $mol_vector<$mol_vector<number, number>, Length>): number;
         transponed(this: $mol_vector<$mol_vector<number, number>, Length>): $mol_vector<$mol_vector<number, Length>, typeof this[0]['length']>;
         get x(): Value;
+        set x(next: Value);
         get y(): Value;
+        set y(next: Value);
         get z(): Value;
+        set z(next: Value);
     }
     class $mol_vector_1d<Value> extends $mol_vector<Value, 1> {
     }
@@ -682,10 +685,13 @@ declare namespace $ {
     class $mol_vector_3d<Value> extends $mol_vector<Value, 3> {
     }
     class $mol_vector_range<Value> extends $mol_vector<Value, 2> {
-        get [0](): Value;
-        get [1](): Value;
+        0: Value;
+        1: Value;
+        constructor(min: Value, max: Value);
         get min(): Value;
+        set min(next: Value);
         get max(): Value;
+        set max(next: Value);
         get inversed(): $mol_vector_range<Value>;
         expanded0(value: Value): $mol_vector_range<Value>;
     }
@@ -1024,9 +1030,9 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_coord_pack(a: number, b: number): number;
-    function $mol_coord_high(key: number): number;
-    function $mol_coord_low(key: number): number;
+    function $mol_coord_pack(high: number, low: number): number;
+    function $mol_coord_high(pack: number): number;
+    function $mol_coord_low(pack: number): number;
 }
 
 declare namespace $ {
