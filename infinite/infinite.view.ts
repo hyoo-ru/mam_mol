@@ -16,7 +16,12 @@ namespace $.$$ {
 			const window_height = $mol_window.size().height
 
 			if( rect.bottom < window_height * 3 ) {
-				ids = [ ... ids , ... this.after( ids[ ids.length - 1 ] ) ]
+				try {
+					const news = this.after( ids[ ids.length - 1 ] )
+					ids = [ ... ids , ... news ]
+				} catch( error: unknown ) {
+					$mol_fail_log( error )
+				}
 			}
 
 			return ids
