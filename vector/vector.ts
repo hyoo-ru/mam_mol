@@ -117,6 +117,15 @@ namespace $ {
 
 	export class $mol_vector_range< Value > extends $mol_vector< Value , 2 > {
 		
+		0: Value
+		1: Value
+		
+		constructor( min: Value, max: Value ) {
+			super( min, max )
+			this[0] = min
+			this[1] = max
+		}
+		
 		get min() { return this[0] }
 		set min( next: Value ) { this[0] = next }
 		
