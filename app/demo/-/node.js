@@ -21710,7 +21710,13 @@ var $;
                     return ids;
                 const window_height = $mol_window.size().height;
                 if (rect.bottom < window_height * 3) {
-                    ids = [...ids, ...this.after(ids[ids.length - 1])];
+                    try {
+                        const news = this.after(ids[ids.length - 1]);
+                        ids = [...ids, ...news];
+                    }
+                    catch (error) {
+                        $mol_fail_log(error);
+                    }
                 }
                 return ids;
             }
@@ -21732,7 +21738,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_infinite_demo extends $mol_example {
+    class $mol_infinite_demo extends $mol_example_small {
         title() {
             return "Infinite list demo";
         }
@@ -21757,8 +21763,44 @@ var $;
         after(id) {
             return [];
         }
+        photo(id) {
+            return "";
+        }
+        Photo(id) {
+            const obj = new this.$.$mol_image();
+            obj.uri = () => this.photo(id);
+            return obj;
+        }
+        name(id) {
+            return "";
+        }
+        Name(id) {
+            const obj = new this.$.$mol_paragraph();
+            obj.title = () => this.name(id);
+            return obj;
+        }
+        city(id) {
+            return "";
+        }
+        City(id) {
+            const obj = new this.$.$mol_paragraph();
+            obj.title = () => this.city(id);
+            return obj;
+        }
+        Info(id) {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Name(id),
+                this.City(id)
+            ];
+            return obj;
+        }
         Item(id) {
-            const obj = new this.$.$mol_filler();
+            const obj = new this.$.$mol_row();
+            obj.sub = () => [
+                this.Photo(id),
+                this.Info(id)
+            ];
             return obj;
         }
         List() {
@@ -21768,6 +21810,18 @@ var $;
             return obj;
         }
     }
+    __decorate([
+        $mol_mem_key
+    ], $mol_infinite_demo.prototype, "Photo", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_infinite_demo.prototype, "Name", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_infinite_demo.prototype, "City", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_infinite_demo.prototype, "Info", null);
     __decorate([
         $mol_mem_key
     ], $mol_infinite_demo.prototype, "Item", null);
@@ -21781,16 +21835,56 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_wire_solid() {
+        $mol_wire_auto().reap = nothing;
+    }
+    $.$mol_wire_solid = $mol_wire_solid;
+    const nothing = () => { };
+})($ || ($ = {}));
+//mol/wire/solid/solid.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/infinite/demo/demo.view.css", "[mol_infinite_demo_list] {\n\tflex: 1 0 auto;\n}\n\n[mol_infinite_demo_photo] {\n\twidth: 3rem;\n\theight: 3rem;\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_infinite_demo_city] {\n\tcolor: var(--mol_theme_shade);\n}\n");
+})($ || ($ = {}));
+//mol/infinite/demo/-css/demo.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     var $$;
     (function ($$) {
         class $mol_infinite_demo extends $.$mol_infinite_demo {
             after(anchor_id = 0) {
+                this.$.$mol_wait_timeout(1000);
                 return Array.from({ length: this.chunk_size() }, (_, index) => anchor_id + index);
+            }
+            photo(index) {
+                $mol_wire_solid();
+                return $mol_stub_person_avatar();
+            }
+            name(index) {
+                $mol_wire_solid();
+                return $mol_stub_person_name();
+            }
+            city(index) {
+                $mol_wire_solid();
+                return $mol_stub_city();
             }
         }
         __decorate([
             $mol_action
         ], $mol_infinite_demo.prototype, "after", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_infinite_demo.prototype, "photo", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_infinite_demo.prototype, "name", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_infinite_demo.prototype, "city", null);
         $$.$mol_infinite_demo = $mol_infinite_demo;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -22595,17 +22689,6 @@ var $;
     $.$mol_list_demo_tree = $mol_list_demo_tree;
 })($ || ($ = {}));
 //mol/list/demo/tree/-view.tree/tree.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_solid() {
-        $mol_wire_auto().reap = nothing;
-    }
-    $.$mol_wire_solid = $mol_wire_solid;
-    const nothing = () => { };
-})($ || ($ = {}));
-//mol/wire/solid/solid.ts
 ;
 "use strict";
 var $;
