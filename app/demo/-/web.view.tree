@@ -3578,6 +3578,17 @@ $mol_icon_bookmark_outline $mol_icon path \M17,18L12,15.82L7,18V5H17M17,3H7C5.9,
 
 $mol_icon_play $mol_icon path \M8,5.14V19.14L19,12.14L8,5.14Z
 
+$mol_icon_flash $mol_icon path \M7,2V13H10V22L17,10H13L17,2H7Z
+
+$mol_follower $mol_ghost
+	Anchor $mol_view
+	offset /
+		0
+		0
+	style *
+		^
+		transform <= transform \
+
 $hyoo_js_eval $mol_book2
 	Placeholder null
 	plugins /
@@ -3636,7 +3647,14 @@ $hyoo_js_eval $mol_book2
 			body /
 				<= Code $mol_textarea
 					hint \javascript..
+					sidebar_showed true
 					value?val <=> code?val \
+				<= Error_mark $mol_follower
+					Anchor <= error_anchor null
+					offset <= error_offset /
+						0
+						0
+					Sub <= Error_icon $mol_icon_flash
 		<= Result_page $mol_page
 			title <= result_label @ \Result
 			tools /

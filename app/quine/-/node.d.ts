@@ -1254,6 +1254,7 @@ declare namespace $ {
         'text-link-http': RegExp;
     }>;
     const $mol_syntax2_md_code: $mol_syntax2<{
+        'code-indent': RegExp;
         'code-docs': RegExp;
         'code-comment-block': RegExp;
         'code-link': RegExp;

@@ -7,7 +7,7 @@ namespace $.$$ {
 			const self_rect = this.view_rect()
 			const prev = $mol_wire_probe( ()=> this.pos() )
 			
-			const anchor_rect = this.Anchor().view_rect()
+			const anchor_rect = this.Anchor()?.view_rect()
 			if( !anchor_rect ) return null
 			
 			const left = Math.floor(

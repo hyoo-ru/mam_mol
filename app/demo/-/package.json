@@ -450,6 +450,8 @@
     "$mol_icon_bookmark_outline",
     "$mol_icon_bookmark",
     "$mol_icon_play",
+    "$mol_icon_flash",
+    "$mol_follower",
     "$mol_toolbar_demo",
     "$mol_toolbar",
     "$mol_icon_content_cut",

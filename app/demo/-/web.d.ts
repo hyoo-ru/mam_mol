@@ -1860,6 +1860,7 @@ declare namespace $ {
         'text-link-http': RegExp;
     }>;
     const $mol_syntax2_md_code: $mol_syntax2<{
+        'code-indent': RegExp;
         'code-docs': RegExp;
         'code-comment-block': RegExp;
         'code-link': RegExp;
@@ -7412,6 +7413,36 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_flash extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_follower extends $mol_ghost {
+        Anchor(): $mol_view;
+        offset(): readonly any[];
+        style(): {
+            transform: string;
+        };
+        transform(): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_follower extends $.$mol_follower {
+        pos(): {
+            left: number;
+            top: number;
+        } | null;
+        transform(): string;
+    }
+}
+
+declare namespace $ {
     class $hyoo_js_eval extends $mol_book2 {
         Placeholder(): any;
         plugins(): readonly any[];
@@ -7438,6 +7469,10 @@ declare namespace $ {
         Run(): $mol_check_icon;
         code(val?: any): string;
         Code(): $$.$mol_textarea;
+        error_anchor(): any;
+        error_offset(): readonly any[];
+        Error_icon(): $mol_icon_flash;
+        Error_mark(): $$.$mol_follower;
         Code_page(): $mol_page;
         result_label(): string;
         Results_close_icon(): $mol_icon_cross;
@@ -7466,6 +7501,13 @@ declare namespace $.$$ {
         menu_link_title(index: number): string;
         code_enhanced(): string;
         execute(): any[];
+        error_pos(): {
+            token: $mol_text_code_token;
+            offset: number;
+        } | null;
+        error_anchor(): $mol_text_code_token | undefined;
+        error_offset(): number[];
+        Error_mark(): any;
         spy(args: () => any[]): void;
         result(next?: any[]): any[];
         logs(): $mol_dump_list[];
