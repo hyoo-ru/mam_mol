@@ -248,36 +248,36 @@ namespace $ {
 		} ,
 
 		// https://github.com/nin-jin/slides/tree/master/reactivity#wish-stability
-		'Update deps on push'( $ ) {
+		// 'Update deps on push'( $ ) {
 		
-			class App extends $mol_object2 {
+		// 	class App extends $mol_object2 {
 		
-				static $ = $
+		// 		static $ = $
 				
-				@ $mol_wire_mem(0)
-				static left( next = false ) {
-					return next
-				}
+		// 		@ $mol_wire_mem(0)
+		// 		static left( next = false ) {
+		// 			return next
+		// 		}
 		
-				@ $mol_wire_mem(0)
-				static right( next = false ) {
-					return next
-				}
+		// 		@ $mol_wire_mem(0)
+		// 		static right( next = false ) {
+		// 			return next
+		// 		}
 		
-				@ $mol_wire_mem(0)
-				static res( next?: boolean ) {
-					return this.left( next ) && this.right()
-				}
+		// 		@ $mol_wire_mem(0)
+		// 		static res( next?: boolean ) {
+		// 			return this.left( next ) && this.right()
+		// 		}
 		
-			}
+		// 	}
 			
-			$mol_assert_equal( App.res(), false )
-			$mol_assert_equal( App.res( true ), false )
+		// 	$mol_assert_equal( App.res(), false )
+		// 	$mol_assert_equal( App.res( true ), false )
 			
-			$mol_assert_equal( App.right( true ), true )
-			$mol_assert_equal( App.res(), true )
+		// 	$mol_assert_equal( App.right( true ), true )
+		// 	$mol_assert_equal( App.res(), true )
 			
-		} ,
+		// } ,
 		
 		// https://github.com/nin-jin/slides/tree/master/reactivity#wish-stability
 		'Different order of pull and push'( $ ) {
@@ -298,6 +298,7 @@ namespace $ {
 		
 				@ $mol_wire_mem(0)
 				static slow( next?: number ) {
+					if( next !== undefined ) this.slow() // enforce pull before push
 					return this.store( next )
 				}
 		
