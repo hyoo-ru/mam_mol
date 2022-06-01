@@ -857,9 +857,12 @@ var $;
         }
         static sync() {
             while (this.planning.size) {
-                const fibers = this.planning;
-                this.planning = new Set;
-                for (const fiber of fibers) {
+                for (const fiber of this.planning) {
+                    this.planning.delete(fiber);
+                    if (fiber.cursor >= 0)
+                        continue;
+                    if (fiber.cursor === $mol_wire_cursor.final)
+                        continue;
                     fiber.refresh();
                 }
             }
