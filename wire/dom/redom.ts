@@ -35,6 +35,7 @@ namespace $ {
 				
 			},
 			el,
+			[],
 		)
 		
 		Object.defineProperty( el, field, {
@@ -47,7 +48,7 @@ namespace $ {
 					atom.refresh()
 				} else {
 					if( atom.cache === next ) return
-					atom.resync( next )
+					atom.resync([ next ])
 				}
 			},
 		} )
@@ -76,6 +77,7 @@ namespace $ {
 				
 			},
 			el,
+			[],
 		)
 		
 		Object.defineProperty( el, 'childNodes', {
@@ -87,7 +89,7 @@ namespace $ {
 					atom.absorb()
 					atom.refresh()
 				} else {
-					atom.resync( next )
+					atom.resync([ next ])
 				}
 			},
 		} )

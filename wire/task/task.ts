@@ -29,7 +29,7 @@ namespace $ {
 					return existen
 				}
 				
-				return new $mol_wire_task( `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, task, host, ... args )
+				return new $mol_wire_task( `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, task, host, args )
 			}
 			
 		}
