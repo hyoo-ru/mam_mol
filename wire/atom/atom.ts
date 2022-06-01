@@ -33,7 +33,7 @@ namespace $ {
 						dict = ( host ?? task )[ field ] = new Map<any,any>()
 					}
 					
-					fiber = new $mol_wire_atom( key, task, host, ... args )
+					fiber = new $mol_wire_atom( key, task, host, args )
 					dict.set( key, fiber )
 					
 					return fiber
@@ -48,7 +48,7 @@ namespace $ {
 					
 					const key = `${ host?.[ Symbol.toStringTag ] ?? host }.${ field }`
 					
-					const fiber = new $mol_wire_atom( key, task, host, ... args )
+					const fiber = new $mol_wire_atom( key, task, host, args )
 					;( host ?? task )[ field ] = fiber
 					
 					return fiber
@@ -62,7 +62,7 @@ namespace $ {
 		 * Update fiber value through another temp fiber.
 		 */
 		@ $mol_wire_method
-		resync( ... args: Args ) {
+		resync( args: Args ) {
 			return this.put( this.task.call( this.host!, ... args ) )
 		}
 		

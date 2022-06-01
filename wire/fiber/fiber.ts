@@ -86,12 +86,12 @@ namespace $ {
 			id: string,
 			readonly task: ( this : Host , ... args : Args )=> Result,
 			readonly host?: Host,
-			... args: Args
+			args?: Args
 		) {
 			
 			super()
-			this.data.push( ... args )
-			this.pub_from = this.sub_from = args.length
+			if( args ) this.data.push( ... args )
+			this.pub_from = this.sub_from = args?.length ?? 0
 			this[ Symbol.toStringTag ] = id
 			
 		}
@@ -167,7 +167,7 @@ namespace $ {
 				switch( this.pub_from ) {
 					case 0: result = (this.task as any).call( this.host! ); break
 					case 1: result = (this.task as any).call( this.host!, this.data[0] ); break
-					default: result = (this.task as any).call( this.host!, ... this.data.slice( 0 , this.pub_from ) ); break
+					default: result = (this.task as any).call( this.host!, ... this.args ); break
 				}
 				
 				if( result instanceof Promise ) {

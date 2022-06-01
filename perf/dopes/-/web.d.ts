@@ -311,7 +311,7 @@ declare namespace $ {
         get args(): Args;
         result(): Result | undefined;
         field(): string;
-        constructor(id: string, task: (this: Host, ...args: Args) => Result, host?: Host | undefined, ...args: Args);
+        constructor(id: string, task: (this: Host, ...args: Args) => Result, host?: Host | undefined, args?: Args);
         plan(): void;
         reap(): void;
         toString(): any;
@@ -361,7 +361,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_wire_atom<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
         static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result, keys: number): (host: Host, args: Args) => $mol_wire_atom<Host, [...Args], Result>;
-        resync(...args: Args): Error | Result | Promise<Error | Result>;
+        resync(args: Args): Error | Result | Promise<Error | Result>;
         once(): Awaited<Result>;
         destructor(): void;
         put(next: Result | Error | Promise<Result | Error>): Error | Result | Promise<Error | Result>;

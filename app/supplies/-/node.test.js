@@ -1308,12 +1308,13 @@ var $;
         field() {
             return this.task.name + '()';
         }
-        constructor(id, task, host, ...args) {
+        constructor(id, task, host, args) {
             super();
             this.task = task;
             this.host = host;
-            this.data.push(...args);
-            this.pub_from = this.sub_from = args.length;
+            if (args)
+                this.data.push(...args);
+            this.pub_from = this.sub_from = args?.length ?? 0;
             this[Symbol.toStringTag] = id;
         }
         plan() {
@@ -1374,7 +1375,7 @@ var $;
                         result = this.task.call(this.host, this.data[0]);
                         break;
                     default:
-                        result = this.task.call(this.host, ...this.data.slice(0, this.pub_from));
+                        result = this.task.call(this.host, ...this.args);
                         break;
                 }
                 if (result instanceof Promise) {
@@ -1640,7 +1641,7 @@ var $;
                         break reuse;
                     return existen;
                 }
-                return new $mol_wire_task(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, ...args);
+                return new $mol_wire_task(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, args);
             };
         }
         complete() {
@@ -1713,7 +1714,7 @@ var $;
                     else {
                         dict = (host ?? task)[field] = new Map();
                     }
-                    fiber = new $mol_wire_atom(key, task, host, ...args);
+                    fiber = new $mol_wire_atom(key, task, host, args);
                     dict.set(key, fiber);
                     return fiber;
                 };
@@ -1724,13 +1725,13 @@ var $;
                     if (existen)
                         return existen;
                     const key = `${host?.[Symbol.toStringTag] ?? host}.${field}`;
-                    const fiber = new $mol_wire_atom(key, task, host, ...args);
+                    const fiber = new $mol_wire_atom(key, task, host, args);
                     (host ?? task)[field] = fiber;
                     return fiber;
                 };
             }
         }
-        resync(...args) {
+        resync(args) {
             return this.put(this.task.call(this.host, ...args));
         }
         once() {
@@ -1816,7 +1817,7 @@ var $;
                 let atom = persist(this, args.slice(0, keys));
                 if (args.length <= keys || args[keys] === undefined) {
                     if (!$mol_wire_fiber.warm)
-                        return atom.sync();
+                        return atom.result();
                     if ($mol_wire_auto() instanceof $mol_wire_task) {
                         return atom.once();
                     }
@@ -1824,7 +1825,7 @@ var $;
                         return atom.sync();
                     }
                 }
-                return atom.resync(...args);
+                return atom.resync(args);
             };
             Object.defineProperty(wrapper, 'name', { value: func.name + ' ' });
             Object.assign(wrapper, { orig: func });
@@ -7737,14 +7738,14 @@ var $;
 (function ($) {
     function $mol_fiber_defer(calculate) {
         const host = {};
-        const fiber = new $mol_wire_task(calculate.name, calculate, host);
+        const fiber = new $mol_wire_task(calculate.name, calculate, host, []);
         fiber.plan();
         return fiber;
     }
     $.$mol_fiber_defer = $mol_fiber_defer;
     function $mol_fiber_root(calculate) {
         const wrapper = function (...args) {
-            const fiber = new $mol_wire_task(this + '.' + calculate.name, calculate, this, ...args);
+            const fiber = new $mol_wire_task(this + '.' + calculate.name, calculate, this, args);
             return fiber.async();
         };
         wrapper[Symbol.toStringTag] = calculate.name;
