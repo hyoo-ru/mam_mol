@@ -1,6 +1,6 @@
 :root {
 	--mol_theme_hue: 210deg;
-	--mol_theme_luma: 1;
+	--mol_theme_luma: -1;
 	--mol_theme_image: none;
 }
 
