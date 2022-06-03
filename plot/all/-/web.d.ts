@@ -944,7 +944,7 @@ declare namespace $.$$ {
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
         size(): $mol_vector_2d<number>;
         graph_hue(index: number): number;
-        graphs_colored(): $.$mol_plot_graph[];
+        graphs_colored(): readonly $.$mol_plot_graph[];
         size_real(): $mol_vector_2d<number>;
         view_box(): string;
         scale_limit(): $mol_vector_2d<$mol_vector_range<number>>;
@@ -958,7 +958,7 @@ declare namespace $.$$ {
         shift(next?: $mol_vector_2d<number>): $mol_vector_2d<number>;
         reset(event?: Event): void;
         graphs_visible(): $.$mol_plot_graph[];
-        graphs_positioned(): $.$mol_plot_graph[];
+        graphs_positioned(): readonly $.$mol_plot_graph[];
         dimensions_viewport(): $mol_vector<$mol_vector_range<number>, 2>;
         viewport(): $mol_vector_2d<$mol_vector_range<number>>;
         graphs_sorted(): $.$mol_svg[];
@@ -1052,7 +1052,6 @@ declare namespace $.$$ {
         filled(): Set<number>;
         indexes(): number[];
         curve(): string;
-        dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
     }
 }
 
