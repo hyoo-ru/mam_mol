@@ -32,6 +32,21 @@ namespace $ {
 
 		},
 
+		async 'Wrap function'( $ ) {
+			
+			const name = $mol_wire_async( function( name: string ) {
+				$.$mol_wait_timeout(0)
+				return name
+			} )
+			
+			const promise = name( 'jin' )
+			
+			$.$mol_after_mock_warp()
+			
+			$mol_assert_like( await promise, 'jin' )
+			
+		},
+
 	})
 	
 }

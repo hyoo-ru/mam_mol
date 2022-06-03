@@ -34,9 +34,11 @@
 				const clear = document.getElementById( 'clear' )
 				
 				// Setup invariants
-				root.__defineGetter__( 'childNodes', ()=> greet.checked ? [ form, greeting ] : [ form ] )
-				clear.__defineGetter__( 'style', ()=> ({ fontSize: 16 / devicePixelRatio + 'px' }) )
-				greeting.__defineGetter__( 'textContent', ()=> `Hello ${nickname.value}!` )
+				root.childNodes = ()=> greet.checked ? [ form, greeting ] : [ form ]
+				greeting.textContent = ()=> `Hello ${nickname.value}!`
+				clear.style = ()=> ({
+					fontSize: new CSSUnitValue( 16 / devicePixelRatio, 'px' )
+				})
 				
 				// Set up handlers
 				clear.onclick = ()=> nickname.value = ''
