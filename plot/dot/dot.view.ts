@@ -90,19 +90,5 @@ namespace $.$$ {
 			).join( ' ' )
 		}
 		
-		@ $mol_mem
-		dimensions() {
-			
-			const scale = this.scale()
-			const radius = this.diameter() / Math.min( ... scale ) / 2
-			const dims = super.dimensions()
-			
-			return new this.$.$mol_vector_2d(
-				new $mol_vector_range( dims.x.min - radius, dims.x.max + radius ),
-				new $mol_vector_range( dims.y.min - radius, dims.y.max + radius ),
-			)
-			
-		}
-		
 	}
 }
