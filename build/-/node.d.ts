@@ -34,11 +34,6 @@ declare namespace $ {
     let $mol_log3_stack: (() => void)[];
 }
 
-interface $node {
-    [key: string]: any;
-}
-declare var $node: $node;
-
 declare namespace $ {
     const $mol_ambient_ref: unique symbol;
     type $mol_ambient_context = $;
@@ -128,7 +123,35 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_log3_node_make(level: keyof Console, output: 'stdout' | 'stderr', type: string, color: keyof typeof $node.colorette): (this: $, event: $mol_log3_event<{}>) => () => void;
+    class $mol_term_color {
+        static reset: (str: string) => string;
+        static bold: (str: string) => string;
+        static italic: (str: string) => string;
+        static underline: (str: string) => string;
+        static inverse: (str: string) => string;
+        static hidden: (str: string) => string;
+        static strike: (str: string) => string;
+        static gray: (str: string) => string;
+        static red: (str: string) => string;
+        static green: (str: string) => string;
+        static yellow: (str: string) => string;
+        static blue: (str: string) => string;
+        static magenta: (str: string) => string;
+        static cyan: (str: string) => string;
+        static white: (str: string) => string;
+        static Red: (str: string) => string;
+        static Green: (str: string) => string;
+        static Yellow: (str: string) => string;
+        static Blue: (str: string) => string;
+        static Magenta: (str: string) => string;
+        static Cyan: (str: string) => string;
+        static White: (str: string) => string;
+        static ansi(open: number, close: number): (str: string) => string;
+    }
+}
+
+declare namespace $ {
+    function $mol_log3_node_make(level: keyof Console, output: 'stdout' | 'stderr', type: string, color: (str: string) => string): (this: $, event: $mol_log3_event<{}>) => () => void;
 }
 
 declare namespace $ {
@@ -376,6 +399,24 @@ declare namespace $ {
     };
 }
 
+interface $node {
+    [key: string]: any;
+}
+declare var $node: $node;
+
+declare namespace $ {
+    function $mol_env(): Record<string, string | undefined>;
+}
+
+declare namespace $ {
+}
+
+/// <reference types="node" />
+/// <reference types="node" />
+declare namespace $ {
+    function $mol_exec(this: $, dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
+}
+
 declare namespace $ {
     type $mol_charset_encoding = 'utf8' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
     function $mol_charset_decode(value: Uint8Array, code?: $mol_charset_encoding): string;
@@ -466,19 +507,6 @@ declare namespace $ {
         relate(base?: $mol_file): string;
         append(next: Uint8Array | string): undefined;
     }
-}
-
-declare namespace $ {
-    function $mol_env(): Record<string, string | undefined>;
-}
-
-declare namespace $ {
-}
-
-/// <reference types="node" />
-/// <reference types="node" />
-declare namespace $ {
-    function $mol_exec(this: $, dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
 }
 
 declare namespace $ {

@@ -46,48 +46,6 @@ var $;
 //mol/log3/log3.ts
 ;
 "use strict";
-//node/node.ts
-;
-"use strict";
-var $node = new Proxy({ require }, {
-    get(target, name, wrapper) {
-        if (target[name])
-            return target[name];
-        const mod = target.require('module');
-        if (mod.builtinModules.indexOf(name) >= 0)
-            return target.require(name);
-        const path = target.require('path');
-        const fs = target.require('fs');
-        let dir = path.resolve('.');
-        const suffix = `./node_modules/${name}`;
-        const $$ = $;
-        while (!fs.existsSync(path.join(dir, suffix))) {
-            const parent = path.resolve(dir, '..');
-            if (parent === dir) {
-                $$.$mol_exec('.', 'npm', 'install', name);
-                try {
-                    $$.$mol_exec('.', 'npm', 'install', '@types/' + name);
-                }
-                catch { }
-                break;
-            }
-            else {
-                dir = parent;
-            }
-        }
-        return target.require(name);
-    },
-    set(target, name, value) {
-        target[name] = value;
-        return true;
-    },
-});
-require = (req => Object.assign(function require(name) {
-    return $node[name];
-}, req))(require);
-//node/node.node.ts
-;
-"use strict";
 var $;
 (function ($) {
     $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
@@ -590,28 +548,71 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_term_color {
+        static reset = this.ansi(0, 0);
+        static bold = this.ansi(1, 22);
+        static italic = this.ansi(3, 23);
+        static underline = this.ansi(4, 24);
+        static inverse = this.ansi(7, 27);
+        static hidden = this.ansi(8, 28);
+        static strike = this.ansi(9, 29);
+        static gray = this.ansi(90, 39);
+        static red = this.ansi(91, 39);
+        static green = this.ansi(92, 39);
+        static yellow = this.ansi(93, 39);
+        static blue = this.ansi(94, 39);
+        static magenta = this.ansi(95, 39);
+        static cyan = this.ansi(96, 39);
+        static white = this.ansi(97, 39);
+        static Red = (str) => this.inverse(this.red(str));
+        static Green = (str) => this.inverse(this.green(str));
+        static Yellow = (str) => this.inverse(this.yellow(str));
+        static Blue = (str) => this.inverse(this.blue(str));
+        static Magenta = (str) => this.inverse(this.magenta(str));
+        static Cyan = (str) => this.inverse(this.cyan(str));
+        static White = (str) => this.inverse(this.white(str));
+        static ansi(open, close) {
+            if (typeof process === 'undefined')
+                return String;
+            if (!process.stdout.isTTY)
+                return String;
+            const prefix = `\x1b[${open}m`;
+            const postfix = `\x1b[${close}m`;
+            const suffix_regexp = new RegExp(postfix.replace('[', '\\['), 'g');
+            return function colorer(str) {
+                str = String(str);
+                if (str === '')
+                    return str;
+                const suffix = str.replace(suffix_regexp, prefix);
+                return prefix + suffix + postfix;
+            };
+        }
+    }
+    $.$mol_term_color = $mol_term_color;
+})($ || ($ = {}));
+//mol/term/color/color.ts
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_log3_node_make(level, output, type, color) {
         return function $mol_log3_logger(event) {
             if (!event.time)
                 event = { time: new Date().toISOString(), ...event };
             const tree = this.$mol_tree.fromJSON(event).clone({ type });
-            let str = tree.toString();
-            if (process[output].isTTY) {
-                str = $node.colorette[color + 'Bright'](str);
-            }
-            ;
+            let str = color(tree.toString());
             this.console[level](str);
             const self = this;
             return () => self.console.groupEnd();
         };
     }
     $.$mol_log3_node_make = $mol_log3_node_make;
-    $.$mol_log3_come = $mol_log3_node_make('info', 'stdout', 'come', 'blue');
-    $.$mol_log3_done = $mol_log3_node_make('info', 'stdout', 'done', 'green');
-    $.$mol_log3_fail = $mol_log3_node_make('error', 'stderr', 'fail', 'red');
-    $.$mol_log3_warn = $mol_log3_node_make('warn', 'stderr', 'warn', 'yellow');
-    $.$mol_log3_rise = $mol_log3_node_make('log', 'stdout', 'rise', 'magenta');
-    $.$mol_log3_area = $mol_log3_node_make('log', 'stdout', 'area', 'cyan');
+    $.$mol_log3_come = $mol_log3_node_make('info', 'stdout', 'come', $mol_term_color.blue);
+    $.$mol_log3_done = $mol_log3_node_make('info', 'stdout', 'done', $mol_term_color.green);
+    $.$mol_log3_fail = $mol_log3_node_make('error', 'stderr', 'fail', $mol_term_color.red);
+    $.$mol_log3_warn = $mol_log3_node_make('warn', 'stderr', 'warn', $mol_term_color.yellow);
+    $.$mol_log3_rise = $mol_log3_node_make('log', 'stdout', 'rise', $mol_term_color.magenta);
+    $.$mol_log3_area = $mol_log3_node_make('log', 'stdout', 'area', $mol_term_color.cyan);
 })($ || ($ = {}));
 //mol/log3/log3.node.ts
 ;
@@ -1638,6 +1639,94 @@ var $;
 //mol/mem/mem.ts
 ;
 "use strict";
+//node/node.ts
+;
+"use strict";
+var $node = new Proxy({ require }, {
+    get(target, name, wrapper) {
+        if (target[name])
+            return target[name];
+        const mod = target.require('module');
+        if (mod.builtinModules.indexOf(name) >= 0)
+            return target.require(name);
+        const path = target.require('path');
+        const fs = target.require('fs');
+        let dir = path.resolve('.');
+        const suffix = `./node_modules/${name}`;
+        const $$ = $;
+        while (!fs.existsSync(path.join(dir, suffix))) {
+            const parent = path.resolve(dir, '..');
+            if (parent === dir) {
+                $$.$mol_exec('.', 'npm', 'install', name);
+                try {
+                    $$.$mol_exec('.', 'npm', 'install', '@types/' + name);
+                }
+                catch { }
+                break;
+            }
+            else {
+                dir = parent;
+            }
+        }
+        return target.require(name);
+    },
+    set(target, name, value) {
+        target[name] = value;
+        return true;
+    },
+});
+require = (req => Object.assign(function require(name) {
+    return $node[name];
+}, req))(require);
+//node/node.node.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_env() {
+        return {};
+    }
+    $.$mol_env = $mol_env;
+})($ || ($ = {}));
+//mol/env/env.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_env = function $mol_env() {
+        return this.process.env;
+    };
+})($ || ($ = {}));
+//mol/env/env.node.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_exec(dir, command, ...args) {
+        let [app, ...args0] = command.split(' ');
+        args = [...args0, ...args];
+        this.$mol_log3_come({
+            place: '$mol_exec',
+            dir: $node.path.relative('', dir),
+            message: 'Run',
+            command: `${app} ${args.join(' ')}`,
+        });
+        var res = $node['child_process'].spawnSync(app, args, {
+            cwd: $node.path.resolve(dir),
+            shell: true,
+            env: this.$mol_env(),
+        });
+        if (res.status || res.error)
+            return $mol_fail(res.error || new Error(res.stderr.toString()));
+        if (!res.stdout)
+            res.stdout = Buffer.from([]);
+        return res;
+    }
+    $.$mol_exec = $mol_exec;
+})($ || ($ = {}));
+//mol/exec/exec.node.ts
+;
+"use strict";
 var $;
 (function ($) {
     const TextDecoder = globalThis.TextDecoder ?? $node.util.TextDecoder;
@@ -2051,52 +2140,6 @@ var $;
     $.$mol_file = $mol_file_node;
 })($ || ($ = {}));
 //mol/file/file.node.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_env() {
-        return {};
-    }
-    $.$mol_env = $mol_env;
-})($ || ($ = {}));
-//mol/env/env.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_env = function $mol_env() {
-        return this.process.env;
-    };
-})($ || ($ = {}));
-//mol/env/env.node.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_exec(dir, command, ...args) {
-        let [app, ...args0] = command.split(' ');
-        args = [...args0, ...args];
-        this.$mol_log3_come({
-            place: '$mol_exec',
-            dir: $node.path.relative('', dir),
-            message: 'Run',
-            command: `${app} ${args.join(' ')}`,
-        });
-        var res = $node['child_process'].spawnSync(app, args, {
-            cwd: $node.path.resolve(dir),
-            shell: true,
-            env: this.$mol_env(),
-        });
-        if (res.status || res.error)
-            return $mol_fail(res.error || new Error(res.stderr.toString()));
-        if (!res.stdout)
-            res.stdout = Buffer.from([]);
-        return res;
-    }
-    $.$mol_exec = $mol_exec;
-})($ || ($ = {}));
-//mol/exec/exec.node.ts
 ;
 "use strict";
 var $;

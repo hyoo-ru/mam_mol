@@ -32,6 +32,8 @@
     "$mol_fail",
     "$mol_type_writable",
     "$mol_type",
+    "$mol_term_color",
+    "$mol_term",
     "$mol_env",
     "$mol_dom_render_children",
     "$mol_dom_render",
@@ -470,7 +472,6 @@
     "$mol_app_demo_main"
   ],
   "dependencies": {
-    "colorette": "*",
     "jsdom": "*",
     "chokidar": "*",
     "node-fetch": "*"

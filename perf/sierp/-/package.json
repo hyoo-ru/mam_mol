@@ -30,6 +30,8 @@
     "$mol_exec",
     "$mol_log3",
     "$mol_tree",
+    "$mol_term_color",
+    "$mol_term",
     "$mol_env",
     "$mol_theme",
     "$mol_style_func",
@@ -80,7 +82,6 @@
     "$mol_state"
   ],
   "dependencies": {
-    "colorette": "*",
     "jsdom": "*"
   }
 }

@@ -25,10 +25,11 @@
     "$mol_fail",
     "$mol_type_writable",
     "$mol_type",
+    "$mol_term_color",
+    "$mol_term",
     "$mol_env"
   ],
   "dependencies": {
-    "colorette": "*",
     "jsdom": "*"
   }
 }
