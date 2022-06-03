@@ -1,5 +1,4 @@
 namespace $ {
-	const TextDecoder = globalThis.TextDecoder ?? $node.util.TextDecoder
 
 	// @see https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/encoding
 	export type $mol_charset_encoding = 'utf8' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6'

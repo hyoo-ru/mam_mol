@@ -20,15 +20,15 @@ namespace $ {
 			
 			try {
 				
-				if( req.query._escaped_fragment_ ) {
+				// if( req.query._escaped_fragment_ ) {
 					
-					const fragment = decodeURIComponent( String( req.query._escaped_fragment_ ) )
-					const url = req.protocol + '://' + req.get( 'host' ) + req.path + '#!' + fragment
-					const html = $mol_browser.html( url )
+				// 	const fragment = decodeURIComponent( String( req.query._escaped_fragment_ ) )
+				// 	const url = req.protocol + '://' + req.get( 'host' ) + req.path + '#!' + fragment
+				// 	const html = $mol_browser.html( url )
 					
-					res.send( html ).end()
-					return
-				}
+				// 	res.send( html ).end()
+				// 	return
+				// }
 
 				return this.generate( req.url ) && Promise.resolve().then( next )
 			
