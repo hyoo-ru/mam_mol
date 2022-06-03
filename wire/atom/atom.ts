@@ -58,6 +58,29 @@ namespace $ {
 			
 		}
 		
+		static watching = new Set< $mol_wire_atom< any, any, any > >()
+		
+		static watch() {
+		
+			new $mol_after_frame( $mol_wire_atom.watch )
+			
+			for( const atom of $mol_wire_atom.watching ) {
+				
+				if( atom.cursor === $mol_wire_cursor.final ) {
+					$mol_wire_atom.watching.delete( atom )
+				} else {
+					atom.cursor = $mol_wire_cursor.stale
+					atom.fresh()
+				}
+				
+			}
+			
+		}
+		
+		watch() {
+			$mol_wire_atom.watching.add( this )
+		}
+		
 		/**
 		 * Update fiber value through another temp fiber.
 		 */
@@ -124,5 +147,7 @@ namespace $ {
 		}
 		
 	}
+	
+	$mol_wire_atom.watch()
 	
 }

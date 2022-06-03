@@ -80,7 +80,7 @@ namespace $ {
 		/**
 		 * Enforce actualization. Should not throw errors.
 		 */
-		refresh() {}
+		fresh() {}
 		
 		/**
 		 * Allow to put data to caches in the subtree.

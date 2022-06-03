@@ -45,7 +45,7 @@ namespace $ {
 					this.planning.delete( fiber )
 					if( fiber.cursor >= 0 ) continue
 					if( fiber.cursor === $mol_wire_cursor.final ) continue
-					fiber.refresh()
+					fiber.fresh()
 				}
 			}
 			
@@ -138,7 +138,7 @@ namespace $ {
 			else super.emit( quant )
 		}
 		
-		refresh() {
+		fresh() {
 
 			type Result = typeof this.cache
 			
@@ -148,7 +148,7 @@ namespace $ {
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
 				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
-					;( this.data[i] as $mol_wire_pub )?.refresh()
+					;( this.data[i] as $mol_wire_pub )?.fresh()
 					if( this.cursor !== $mol_wire_cursor.doubt ) break check
 				}
 				
@@ -212,6 +212,11 @@ namespace $ {
 
 		}
 		
+		refresh() {
+			this.cursor = $mol_wire_cursor.stale
+			this.fresh()
+		}
+		
 		abstract put( next: Result | Error | Promise< Result | Error > ): Result | Error | Promise< Result | Error >
 		
 		/**
@@ -225,7 +230,7 @@ namespace $ {
 			}
 			
 			this.promote()
-			this.refresh()
+			this.fresh()
 			
 			if( this.cache instanceof Error ) {
 				return $mol_fail_hidden( this.cache )
@@ -246,7 +251,7 @@ namespace $ {
 			
 			while( true ) {
 				
-				this.refresh()
+				this.fresh()
 				
 				if( this.cache instanceof Error ) {
 					$mol_fail_hidden( this.cache )
