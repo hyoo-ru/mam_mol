@@ -96,7 +96,7 @@ namespace $ {
 				cursor += 2
 			) {
 				const pub = this.data[ cursor ] as $mol_wire_pub
-				pub.refresh()
+				pub.fresh()
 			}
 			
 			this.cursor = $mol_wire_cursor.fresh

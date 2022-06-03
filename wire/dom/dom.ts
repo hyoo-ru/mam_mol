@@ -45,7 +45,7 @@ namespace $ {
 				if( typeof next === 'function' ) {
 					task = next
 					atom.absorb()
-					atom.refresh()
+					atom.fresh()
 				} else {
 					if( atom.cache === next ) return
 					atom.resync([ next ])
@@ -53,7 +53,47 @@ namespace $ {
 			},
 		} )
 		
-		if( task ) atom.refresh()
+		if( task ) atom.fresh()
+		
+		return ()=> atom.absorb()
+	}
+	
+	function restyle< El extends HTMLElement >( el: El ) {
+		
+		const style = el.style
+		let task = ( next: any )=> next
+		
+		const atom = new $mol_wire_atom< typeof el, [] | [ Partial< CSSStyleDeclaration > ], CSSStyleDeclaration >(
+			el.id + '.style',
+			function( this: typeof el, next?: any ) {
+				
+				const res = task( next ) as CSSStyleDeclaration
+				if( res === undefined ) return style
+				
+				for( const key in res ) {
+					style[ key ] = res[ key ] ?? ''
+				}
+				
+				return style
+				
+			},
+			el,
+			[],
+		)
+		
+		Object.defineProperty( el, 'style', {
+			configurable: true,
+			get: ()=> atom.sync(),
+			set: next => {
+				if( typeof next === 'function' ) {
+					task = next
+					atom.absorb()
+					atom.fresh()
+				} else {
+					atom.resync([ next ])
+				}
+			},
+		} )
 		
 		return ()=> atom.absorb()
 	}
@@ -87,14 +127,12 @@ namespace $ {
 				if( typeof next === 'function' ) {
 					task = next
 					atom.absorb()
-					atom.refresh()
+					atom.fresh()
 				} else {
 					atom.resync([ next ])
 				}
 			},
 		} )
-		
-		el.addEventListener( 'DOMSubtreeModified', ()=> atom.absorb() )
 		
 		return ()=> atom.absorb()
 	}
@@ -114,6 +152,7 @@ namespace $ {
 		if( el instanceof HTMLElement ) el.addEventListener( 'DOMSubtreeModified', reproperty( el, 'innerText' ) )
 		if( el instanceof HTMLElement ) el.addEventListener( 'DOMSubtreeModified', reproperty( el, 'innerHTML' ) )
 		if( el instanceof HTMLElement ) el.addEventListener( 'DOMSubtreeModified', reproperty( el, 'outerHTML' ) )
+		if( el instanceof HTMLElement ) restyle( el )
 		
 		el.addEventListener( 'DOMSubtreeModified', reproperty( el, 'textContent' ) )
 		el.addEventListener( 'DOMSubtreeModified', rekids( el ) )

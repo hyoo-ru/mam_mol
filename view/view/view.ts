@@ -147,19 +147,9 @@ namespace $ {
 
 		@ $mol_mem
 		view_rect() {
-			this.view_rect_watcher()
-			return this.view_rect_cache()
-		}
-
-		@ $mol_mem
-		view_rect_cache( next = null as DOMRectReadOnly | null ) {
-			return next
-		}
-
-		@ $mol_mem
-		view_rect_watcher() {
-			$mol_view.watchers.add( this )
-			return { destructor : ()=> $mol_view.watchers.delete( this ) }
+			$mol_wire_watch()
+			const { width, height, left, right, top, bottom } = this.dom_node().getBoundingClientRect()
+			return { width, height, left, right, top, bottom } // pick to optimize compare
 		}
 
 		dom_id() {
