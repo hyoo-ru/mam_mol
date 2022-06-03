@@ -2625,13 +2625,6 @@ var $;
 //mol/state/local/local.web.ts
 ;
 "use strict";
-//node/node.ts
-;
-"use strict";
-var $node = $node || {};
-//node/node.web.ts
-;
-"use strict";
 var $;
 (function ($) {
     $mol_test({
@@ -2652,13 +2645,19 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const TextDecoder = globalThis.TextDecoder ?? $node.util.TextDecoder;
     function $mol_charset_decode(value, code = 'utf8') {
         return new TextDecoder(code).decode(value);
     }
     $.$mol_charset_decode = $mol_charset_decode;
 })($ || ($ = {}));
 //mol/charset/decode/decode.ts
+;
+"use strict";
+//node/node.ts
+;
+"use strict";
+var $node = $node || {};
+//node/node.web.ts
 ;
 "use strict";
 var $;

@@ -1644,6 +1644,16 @@ var $;
 //mol/mem/mem.ts
 ;
 "use strict";
+var $;
+(function ($) {
+    function $mol_charset_decode(value, code = 'utf8') {
+        return new TextDecoder(code).decode(value);
+    }
+    $.$mol_charset_decode = $mol_charset_decode;
+})($ || ($ = {}));
+//mol/charset/decode/decode.ts
+;
+"use strict";
 //node/node.ts
 ;
 "use strict";
@@ -1653,6 +1663,8 @@ var $node = new Proxy({ require }, {
             return target[name];
         const mod = target.require('module');
         if (mod.builtinModules.indexOf(name) >= 0)
+            return target.require(name);
+        if (name[0] === '.')
             return target.require(name);
         const path = target.require('path');
         const fs = target.require('fs');
@@ -1730,17 +1742,6 @@ var $;
     $.$mol_exec = $mol_exec;
 })($ || ($ = {}));
 //mol/exec/exec.node.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const TextDecoder = globalThis.TextDecoder ?? $node.util.TextDecoder;
-    function $mol_charset_decode(value, code = 'utf8') {
-        return new TextDecoder(code).decode(value);
-    }
-    $.$mol_charset_decode = $mol_charset_decode;
-})($ || ($ = {}));
-//mol/charset/decode/decode.ts
 ;
 "use strict";
 var $;
@@ -5811,75 +5812,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_wire_sync(obj) {
-        return new Proxy(obj, {
-            get(obj, field) {
-                const val = obj[field];
-                if (typeof val !== 'function')
-                    return val;
-                const temp = $mol_wire_task.getter(val);
-                return function $mol_wire_sync(...args) {
-                    const fiber = temp(obj, args);
-                    return fiber.sync();
-                };
-            },
-            apply(obj, self, args) {
-                const temp = $mol_wire_task.getter(obj);
-                const fiber = temp(self, args);
-                return fiber.sync();
-            },
-        });
-    }
-    $.$mol_wire_sync = $mol_wire_sync;
-})($ || ($ = {}));
-//mol/wire/sync/sync.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_browser extends $mol_object2 {
-        static window() {
-            $mol_wire_solid();
-            const window = $mol_wire_sync($node.puppeteer).launch({
-                headless: true,
-                ignoreHTTPSErrors: true,
-                waitForInitialPage: false,
-                defaultViewport: {
-                    width: 1024,
-                    height: 1e5,
-                }
-            });
-            return $mol_wire_sync(window);
-        }
-        static html(uri) {
-            const page = $mol_wire_sync(this.window().newPage());
-            try {
-                page.goto(uri, { waitUntil: "networkidle0" });
-                $mol_wire_sync(Promise).all(page.$$('script').map(script => script.evaluate(node => node.remove())));
-                const html = page.content();
-                page.close();
-                return html;
-            }
-            catch (error) {
-                if (!(error instanceof Promise))
-                    page.close();
-                $mol_fail_hidden(error);
-            }
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_browser, "window", null);
-    __decorate([
-        $mol_wire_method
-    ], $mol_browser, "html", null);
-    $.$mol_browser = $mol_browser;
-})($ || ($ = {}));
-//mol/browser/browser.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_build_server extends $mol_server {
         static trace = false;
         expressGenerator() {
@@ -5891,13 +5823,6 @@ var $;
         handleRequest(req, res, next) {
             res.set('Cache-Control', 'must-revalidate, public, ');
             try {
-                if (req.query._escaped_fragment_) {
-                    const fragment = decodeURIComponent(String(req.query._escaped_fragment_));
-                    const url = req.protocol + '://' + req.get('host') + req.path + '#!' + fragment;
-                    const html = $mol_browser.html(url);
-                    res.send(html).end();
-                    return;
-                }
                 return this.generate(req.url) && Promise.resolve().then(next);
             }
             catch (error) {
@@ -6769,6 +6694,32 @@ var $;
     });
 })($ || ($ = {}));
 //mol/after/timeout/timeout.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_sync(obj) {
+        return new Proxy(obj, {
+            get(obj, field) {
+                const val = obj[field];
+                if (typeof val !== 'function')
+                    return val;
+                const temp = $mol_wire_task.getter(val);
+                return function $mol_wire_sync(...args) {
+                    const fiber = temp(obj, args);
+                    return fiber.sync();
+                };
+            },
+            apply(obj, self, args) {
+                const temp = $mol_wire_task.getter(obj);
+                const fiber = temp(self, args);
+                return fiber.sync();
+            },
+        });
+    }
+    $.$mol_wire_sync = $mol_wire_sync;
+})($ || ($ = {}));
+//mol/wire/sync/sync.ts
 ;
 "use strict";
 var $;

@@ -46,6 +46,8 @@ var $node = new Proxy({ require }, {
         const mod = target.require('module');
         if (mod.builtinModules.indexOf(name) >= 0)
             return target.require(name);
+        if (name[0] === '.')
+            return target.require(name);
         const path = target.require('path');
         const fs = target.require('fs');
         let dir = path.resolve('.');

@@ -279,7 +279,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const TextDecoder = globalThis.TextDecoder ?? $node.util.TextDecoder;
     function $mol_charset_decode(value, code = 'utf8') {
         return new TextDecoder(code).decode(value);
     }

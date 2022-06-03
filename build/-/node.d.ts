@@ -399,6 +399,11 @@ declare namespace $ {
     };
 }
 
+declare namespace $ {
+    type $mol_charset_encoding = 'utf8' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
+    function $mol_charset_decode(value: Uint8Array, code?: $mol_charset_encoding): string;
+}
+
 interface $node {
     [key: string]: any;
 }
@@ -415,11 +420,6 @@ declare namespace $ {
 /// <reference types="node" />
 declare namespace $ {
     function $mol_exec(this: $, dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
-}
-
-declare namespace $ {
-    type $mol_charset_encoding = 'utf8' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
-    function $mol_charset_decode(value: Uint8Array, code?: $mol_charset_encoding): string;
 }
 
 declare namespace $ {
@@ -1269,47 +1269,6 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_wire_solid(): void;
-}
-
-declare namespace $ {
-    function $mol_wire_sync<Host extends object>(obj: Host): (Host extends (...args: infer Args) => infer Res ? Res extends Promise<infer Res2> ? (...args: Args) => Res2 : Host : {}) & { [key in keyof Host]: Host[key] extends (...args: infer Args_1) => Promise<infer Res_1> ? (...args: Args_1) => Res_1 : Host[key]; };
-}
-
-/// <reference types="node" />
-declare namespace $ {
-    class $mol_browser extends $mol_object2 {
-        static window(): {
-            _targets: Map<string, import("puppeteer").Target>;
-            process: () => import("child_process").ChildProcess | null;
-            _setIsPageTargetCallback: (isPageTargetCallback?: import("puppeteer").IsPageTargetCallback | undefined) => void;
-            _getIsPageTargetCallback: () => import("puppeteer").IsPageTargetCallback | undefined;
-            createIncognitoBrowserContext: (options?: import("puppeteer").BrowserContextOptions | undefined) => import("puppeteer").BrowserContext;
-            browserContexts: () => import("puppeteer").BrowserContext[];
-            defaultBrowserContext: () => import("puppeteer").BrowserContext;
-            _disposeContext: (contextId?: string | undefined) => void;
-            wsEndpoint: () => string;
-            newPage: () => import("puppeteer").Page;
-            _createPageInContext: (contextId?: string | undefined) => import("puppeteer").Page;
-            targets: () => import("puppeteer").Target[];
-            target: () => import("puppeteer").Target;
-            waitForTarget: (predicate: (x: import("puppeteer").Target) => boolean | Promise<boolean>, options?: import("puppeteer").WaitForTargetOptions | undefined) => import("puppeteer").Target;
-            pages: () => import("puppeteer").Page[];
-            version: () => string;
-            userAgent: () => string;
-            close: () => void;
-            disconnect: () => void;
-            isConnected: () => boolean;
-            on: (event: import("puppeteer").EventType, handler: import("puppeteer").Handler<any>) => import("puppeteer").EventEmitter;
-            off: (event: import("puppeteer").EventType, handler: import("puppeteer").Handler<any>) => import("puppeteer").EventEmitter;
-            removeListener: (event: import("puppeteer").EventType, handler: import("puppeteer").Handler<any>) => import("puppeteer").EventEmitter;
-            addListener: (event: import("puppeteer").EventType, handler: import("puppeteer").Handler<any>) => import("puppeteer").EventEmitter;
-            emit: (event: import("puppeteer").EventType, eventData?: unknown) => boolean;
-            once: (event: import("puppeteer").EventType, handler: import("puppeteer").Handler<any>) => import("puppeteer").EventEmitter;
-            listenerCount: (event: import("puppeteer").EventType) => number;
-            removeAllListeners: (event?: import("puppeteer").EventType | undefined) => import("puppeteer").EventEmitter;
-        };
-        static html(uri: string): string;
-    }
 }
 
 declare namespace $ {

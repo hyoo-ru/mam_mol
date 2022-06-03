@@ -1,6 +1,6 @@
 {
   "name": "mam",
-  "version": "1.11.29",
+  "version": "1.11.32",
   "main": "node.js",
   "module": "node.esm.js",
   "browser": "web.js",
@@ -45,11 +45,11 @@
     "$mol_file",
     "$mol_charset_decode",
     "$mol_charset",
+    "$mol_charset_encode",
     "$node",
     "$node_modules",
     "$mol_exec",
     "$mol_env",
-    "$mol_charset_encode",
     "$mol_const",
     "$mol_fail_log",
     "$mol_fail_catch",
@@ -58,9 +58,7 @@
     "$mol_compare_array",
     "$mol_build_server",
     "$mol_server",
-    "$mol_browser",
     "$mol_wire_solid",
-    "$mol_wire_sync",
     "$mol_tree2_from_string",
     "$mol_tree2_from",
     "$mol_tree2",
@@ -113,8 +111,7 @@
     "compression": "*",
     "cors": "*",
     "body-parser": "*",
-    "serve-index": "*",
-    "puppeteer": "*"
+    "serve-index": "*"
   },
   "bin": {
     "mam": "./bin/mam"
