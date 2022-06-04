@@ -12892,7 +12892,7 @@ var $;
             return this.graphs_sorted();
         }
         graphs_colored() {
-            return this.graphs_positioned();
+            return this.graphs_visible();
         }
         plugins() {
             return [
@@ -12946,11 +12946,11 @@ var $;
         graphs() {
             return [];
         }
-        graphs_visible() {
+        graphs_positioned() {
             return this.graphs();
         }
-        graphs_positioned() {
-            return this.graphs_visible();
+        graphs_visible() {
+            return this.graphs_positioned();
         }
         zoom(val) {
             if (val !== undefined)
@@ -13126,7 +13126,7 @@ var $;
                 return (360 + (this.hue_base() + this.hue_shift() * index) % 360) % 360;
             }
             graphs_colored() {
-                const graphs = this.graphs_positioned();
+                const graphs = this.graphs_visible();
                 for (let index = 0; index < graphs.length; index++) {
                     graphs[index].hue = () => this.graph_hue(index);
                 }
@@ -13215,6 +13215,10 @@ var $;
                         return true;
                     if (dims.y.min > dims.y.max)
                         return true;
+                    const size_x = dims.x.max - dims.x.min;
+                    const size_y = dims.y.max - dims.y.min;
+                    if ((size_x || size_y) && size_x < max_x && size_y < max_y)
+                        return false;
                     if (dims.x.min > viewport.x.max)
                         return false;
                     if (dims.x.max < viewport.x.min)

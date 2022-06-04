@@ -308,11 +308,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * graphs_colored <= graphs_positioned
+		 * graphs_colored <= graphs_visible
 		 * ```
 		 */
 		graphs_colored() {
-			return this.graphs_positioned()
+			return this.graphs_visible()
 		}
 		
 		/**
@@ -521,20 +521,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * graphs_visible <= graphs
+		 * graphs_positioned <= graphs
 		 * ```
 		 */
-		graphs_visible() {
+		graphs_positioned() {
 			return this.graphs()
 		}
 		
 		/**
 		 * ```tree
-		 * graphs_positioned <= graphs_visible
+		 * graphs_visible <= graphs_positioned
 		 * ```
 		 */
-		graphs_positioned() {
-			return this.graphs_visible()
+		graphs_visible() {
+			return this.graphs_positioned()
 		}
 		
 		/**

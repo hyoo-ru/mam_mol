@@ -3711,8 +3711,8 @@ declare namespace $ {
         dimensions_viewport_y(): $mol_vector_range<number>;
         graphs_sorted(): readonly $mol_svg[];
         graphs(): readonly $mol_plot_graph[];
-        graphs_visible(): readonly $mol_plot_graph[];
         graphs_positioned(): readonly $mol_plot_graph[];
+        graphs_visible(): readonly $mol_plot_graph[];
         zoom(val?: any): number;
         allow_draw(): boolean;
         allow_pan(): boolean;
@@ -3735,7 +3735,7 @@ declare namespace $.$$ {
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
         size(): $mol_vector_2d<number>;
         graph_hue(index: number): number;
-        graphs_colored(): readonly $.$mol_plot_graph[];
+        graphs_colored(): $.$mol_plot_graph[];
         size_real(): $mol_vector_2d<number>;
         view_box(): string;
         scale_limit(): $mol_vector_2d<$mol_vector_range<number>>;
@@ -3770,7 +3770,7 @@ declare namespace $ {
         hue_base(): number;
         hue_shift(): number;
         zoom(val?: any): number;
-        graphs_colored(): readonly $mol_plot_graph[];
+        graphs_colored(): $mol_plot_graph[];
         Plot(): $$.$mol_plot_pane;
     }
 }
