@@ -15,4 +15,5 @@ $mol_text_code $mol_stack
 					text <= row_text* \
 					highlight <= highlight \
 		<= Copy $mol_button_copy
+			hint @ \Copy whole code
 			text <= text
