@@ -1,5 +1,7 @@
 [mol_stack] {
 	display: grid;
+	width: max-content;
+	height: max-content;
 }
 
 [mol_stack] > * {
