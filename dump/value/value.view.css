@@ -11,7 +11,8 @@
 	padding-left: 1.5rem;
 }
 
-[mol_dump_value_expand_title],
+[mol_dump_value_expand_title_rows],
+[mol_dump_value_simple_rows],
 [mol_dump_value_expand_head] {
 	padding: 0;
 }
