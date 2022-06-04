@@ -505,6 +505,7 @@ namespace $ {
 		 * ```tree
 		 * Link $mol_link
 		 * 	arg <= arg
+		 * 	hint @ \Permalink to this section
 		 * 	sub <= content
 		 * ```
 		 */
@@ -513,6 +514,7 @@ namespace $ {
 			const obj = new this.$.$mol_link()
 			
 			obj.arg = () => this.arg()
+			obj.hint = () => this.$.$mol_locale.text( '$mol_text_header_Link_hint' )
 			obj.sub = () => this.content()
 			
 			return obj

@@ -4888,6 +4888,473 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_state_local extends $mol_object {
+        static 'native()';
+        static native() {
+            if (this['native()'])
+                return this['native()'];
+            check: try {
+                const native = $mol_dom_context.localStorage;
+                if (!native)
+                    break check;
+                native.setItem('', '');
+                native.removeItem('');
+                return this['native()'] = native;
+            }
+            catch (error) {
+                console.warn(error);
+            }
+            return this['native()'] = {
+                getItem(key) {
+                    return this[':' + key];
+                },
+                setItem(key, value) {
+                    this[':' + key] = value;
+                },
+                removeItem(key) {
+                    this[':' + key] = void 0;
+                }
+            };
+        }
+        static changes(next) { return next; }
+        static value(key, next) {
+            this.changes();
+            if (next === void 0)
+                return JSON.parse(this.native().getItem(key) || 'null');
+            if (next === null)
+                this.native().removeItem(key);
+            else
+                this.native().setItem(key, JSON.stringify(next));
+            return next;
+        }
+        prefix() { return ''; }
+        value(key, next) {
+            return $mol_state_local.value(this.prefix() + '.' + key, next);
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_state_local, "changes", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_local, "value", null);
+    $.$mol_state_local = $mol_state_local;
+})($ || ($ = {}));
+//mol/state/local/local.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_charset_decode(value, code = 'utf8') {
+        return new TextDecoder(code).decode(value);
+    }
+    $.$mol_charset_decode = $mol_charset_decode;
+})($ || ($ = {}));
+//mol/charset/decode/decode.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const TextEncoder = globalThis.TextEncoder ?? $node.util.TextEncoder;
+    const encoder = new TextEncoder();
+    function $mol_charset_encode(value) {
+        return encoder.encode(value);
+    }
+    $.$mol_charset_encode = $mol_charset_encode;
+})($ || ($ = {}));
+//mol/charset/encode/encode.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file_not_found extends Error {
+    }
+    $.$mol_file_not_found = $mol_file_not_found;
+    class $mol_file extends $mol_object {
+        static absolute(path) {
+            throw new Error('Not implemented yet');
+        }
+        static relative(path) {
+            throw new Error('Not implemented yet');
+        }
+        static base = '';
+        path() {
+            return '.';
+        }
+        parent() {
+            return this.resolve('..');
+        }
+        reset() {
+            try {
+                this.stat(null);
+            }
+            catch (error) {
+                if (error instanceof $mol_file_not_found)
+                    return;
+                return $mol_fail_hidden(error);
+            }
+        }
+        version() {
+            return this.stat()?.mtime.getTime().toString(36).toUpperCase() ?? '';
+        }
+        watcher() {
+            console.warn('$mol_file_web.watcher() not implemented');
+            return {
+                destructor() { }
+            };
+        }
+        exists(next) {
+            let exists = Boolean(this.stat());
+            if (next === undefined)
+                return exists;
+            if (next === exists)
+                return exists;
+            if (next)
+                this.parent().exists(true);
+            this.ensure();
+            this.reset();
+            return next;
+        }
+        type() {
+            return this.stat()?.type ?? '';
+        }
+        name() {
+            return this.path().replace(/^.*\//, '');
+        }
+        ext() {
+            const match = /((?:\.\w+)+)$/.exec(this.path());
+            return match ? match[1].substring(1) : '';
+        }
+        text(next, virt) {
+            if (virt) {
+                const now = new Date;
+                this.stat({
+                    type: 'file',
+                    size: 0,
+                    atime: now,
+                    mtime: now,
+                    ctime: now,
+                }, 'virt');
+                return next;
+            }
+            if (next === undefined) {
+                return $mol_charset_decode(this.buffer(undefined));
+            }
+            else {
+                const buffer = next === undefined ? undefined : $mol_charset_encode(next);
+                this.buffer(buffer);
+                return next;
+            }
+        }
+        find(include, exclude) {
+            const found = [];
+            const sub = this.sub();
+            for (const child of sub) {
+                const child_path = child.path();
+                if (exclude && child_path.match(exclude))
+                    continue;
+                if (!include || child_path.match(include))
+                    found.push(child);
+                if (child.type() === 'dir') {
+                    const sub_child = child.find(include, exclude);
+                    for (const child of sub_child)
+                        found.push(child);
+                }
+            }
+            return found;
+        }
+        size() {
+            switch (this.type()) {
+                case 'file': return this.stat()?.size ?? 0;
+                default: return 0;
+            }
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_file.prototype, "exists", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file.prototype, "text", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_file, "absolute", null);
+    $.$mol_file = $mol_file;
+})($ || ($ = {}));
+//mol/file/file.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_compare_array(a, b) {
+        if (a === b)
+            return true;
+        if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b))
+            return false;
+        if (a.length !== b.length)
+            return false;
+        for (let i = 0; i < a.length; i++)
+            if (a[i] !== b[i])
+                return false;
+        return true;
+    }
+    $.$mol_compare_array = $mol_compare_array;
+})($ || ($ = {}));
+//mol/compare/array/array.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function stat_convert(stat) {
+        if (!stat)
+            return null;
+        let type;
+        if (stat.isDirectory())
+            type = 'dir';
+        if (stat.isFile())
+            type = 'file';
+        if (stat.isSymbolicLink())
+            type = 'link';
+        if (!type)
+            return $mol_fail(new Error(`Unsupported file type`));
+        return {
+            type,
+            size: Number(stat.size),
+            atime: stat.atime,
+            mtime: stat.mtime,
+            ctime: stat.ctime
+        };
+    }
+    function buffer_normalize(buf) {
+        return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);
+    }
+    class $mol_file_node extends $mol_file {
+        static absolute(path) {
+            return this.make({
+                path: $mol_const(path)
+            });
+        }
+        static relative(path) {
+            return this.absolute($node.path.resolve(this.base, path).replace(/\\/g, '/'));
+        }
+        watcher() {
+            const watcher = $node.chokidar.watch(this.path(), {
+                persistent: true,
+                ignored: /(^\.|___$)/,
+                depth: 0,
+                ignoreInitial: true,
+                awaitWriteFinish: {
+                    stabilityThreshold: 100,
+                },
+            });
+            watcher
+                .on('all', (type, path) => {
+                const file = $mol_file.relative(path.replace(/\\/g, '/'));
+                file.reset();
+                if (type === 'change') {
+                    this.stat(null);
+                }
+                else {
+                    file.parent().reset();
+                }
+            })
+                .on('error', $mol_fail_log);
+            return {
+                destructor() {
+                    watcher.close();
+                }
+            };
+        }
+        stat(next, virt) {
+            let stat = next;
+            const path = this.path();
+            this.parent().watcher();
+            if (virt)
+                return next;
+            try {
+                stat = next ?? stat_convert($node.fs.statSync(path, { throwIfNoEntry: false }));
+            }
+            catch (error) {
+                if (error.code === 'ENOENT')
+                    error = new $mol_file_not_found(`File not found`);
+                error.message += '\n' + path;
+                return this.$.$mol_fail_hidden(error);
+            }
+            return stat;
+        }
+        ensure() {
+            const path = this.path();
+            try {
+                $node.fs.mkdirSync(path);
+            }
+            catch (e) {
+                e.message += '\n' + path;
+                this.$.$mol_fail_hidden(e);
+            }
+        }
+        buffer(next) {
+            const path = this.path();
+            if (next === undefined) {
+                if (!this.stat())
+                    return new Uint8Array;
+                try {
+                    const prev = $mol_mem_cached(() => this.buffer());
+                    next = buffer_normalize($node.fs.readFileSync(path));
+                    if (prev !== undefined && !$mol_compare_array(prev, next)) {
+                        this.$.$mol_log3_rise({
+                            place: `$mol_file_node..buffer()`,
+                            message: 'Changed',
+                            path: this.relate(),
+                        });
+                    }
+                    return next;
+                }
+                catch (error) {
+                    error.message += '\n' + path;
+                    return this.$.$mol_fail_hidden(error);
+                }
+            }
+            this.parent().exists(true);
+            const now = new Date;
+            this.stat({
+                type: 'file',
+                size: next.length,
+                atime: now,
+                mtime: now,
+                ctime: now,
+            }, 'virt');
+            try {
+                $node.fs.writeFileSync(path, next);
+            }
+            catch (error) {
+                error.message += '\n' + path;
+                return this.$.$mol_fail_hidden(error);
+            }
+            return next;
+        }
+        sub() {
+            if (!this.exists())
+                return [];
+            if (this.type() !== 'dir')
+                return [];
+            const path = this.path();
+            try {
+                return $node.fs.readdirSync(path)
+                    .filter(name => !/^\.+$/.test(name))
+                    .map(name => this.resolve(name));
+            }
+            catch (e) {
+                e.message += '\n' + path;
+                return this.$.$mol_fail_hidden(e);
+            }
+        }
+        resolve(path) {
+            return this.constructor.relative($node.path.join(this.path(), path));
+        }
+        relate(base = this.constructor.relative('.')) {
+            return $node.path.relative(base.path(), this.path()).replace(/\\/g, '/');
+        }
+        append(next) {
+            const path = this.path();
+            try {
+                $node.fs.appendFileSync(path, next);
+            }
+            catch (e) {
+                e.message += '\n' + path;
+                return this.$.$mol_fail_hidden(e);
+            }
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_file_node.prototype, "watcher", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_node.prototype, "stat", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_node.prototype, "ensure", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_node.prototype, "buffer", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_node.prototype, "sub", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_file_node, "absolute", null);
+    $.$mol_file_node = $mol_file_node;
+    $.$mol_file = $mol_file_node;
+})($ || ($ = {}));
+//mol/file/file.node.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_locale extends $mol_object {
+        static lang_default() {
+            return 'en';
+        }
+        static lang(next) {
+            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
+        }
+        static source(lang) {
+            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
+        }
+        static texts(lang, next) {
+            if (next)
+                return next;
+            try {
+                return this.source(lang).valueOf();
+            }
+            catch (error) {
+                if (error instanceof Promise)
+                    $mol_fail_hidden(error);
+                const def = this.lang_default();
+                if (lang === def)
+                    throw error;
+                return this.source(def);
+            }
+        }
+        static text(key) {
+            for (let lang of [this.lang(), 'en']) {
+                const text = this.texts(lang)[key];
+                if (text)
+                    return text;
+                this.warn(key);
+            }
+            return `<${key}>`;
+        }
+        static warn(key) {
+            console.warn(`Not translated to "${this.lang()}": ${key}`);
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "lang_default", null);
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "lang", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "source", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "texts", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "text", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "warn", null);
+    $.$mol_locale = $mol_locale;
+})($ || ($ = {}));
+//mol/locale/locale.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_text_code extends $mol_stack {
         attr() {
             return {
@@ -4946,6 +5413,7 @@ var $;
         }
         Copy() {
             const obj = new this.$.$mol_button_copy();
+            obj.hint = () => this.$.$mol_locale.text('$mol_text_code_Copy_hint');
             obj.text = () => this.text();
             return obj;
         }
@@ -6454,6 +6922,7 @@ var $;
         Link() {
             const obj = new this.$.$mol_link();
             obj.arg = () => this.arg();
+            obj.hint = () => this.$.$mol_locale.text('$mol_text_header_Link_hint');
             obj.sub = () => this.content();
             return obj;
         }
@@ -6752,63 +7221,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_state_local extends $mol_object {
-        static 'native()';
-        static native() {
-            if (this['native()'])
-                return this['native()'];
-            check: try {
-                const native = $mol_dom_context.localStorage;
-                if (!native)
-                    break check;
-                native.setItem('', '');
-                native.removeItem('');
-                return this['native()'] = native;
-            }
-            catch (error) {
-                console.warn(error);
-            }
-            return this['native()'] = {
-                getItem(key) {
-                    return this[':' + key];
-                },
-                setItem(key, value) {
-                    this[':' + key] = value;
-                },
-                removeItem(key) {
-                    this[':' + key] = void 0;
-                }
-            };
-        }
-        static changes(next) { return next; }
-        static value(key, next) {
-            this.changes();
-            if (next === void 0)
-                return JSON.parse(this.native().getItem(key) || 'null');
-            if (next === null)
-                this.native().removeItem(key);
-            else
-                this.native().setItem(key, JSON.stringify(next));
-            return next;
-        }
-        prefix() { return ''; }
-        value(key, next) {
-            return $mol_state_local.value(this.prefix() + '.' + key, next);
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_state_local, "changes", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_local, "value", null);
-    $.$mol_state_local = $mol_state_local;
-})($ || ($ = {}));
-//mol/state/local/local.ts
-;
-"use strict";
-var $;
-(function ($) {
     function parse(theme) {
         if (theme === 'true')
             return true;
@@ -6850,416 +7262,6 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/theme/auto/auto.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_charset_decode(value, code = 'utf8') {
-        return new TextDecoder(code).decode(value);
-    }
-    $.$mol_charset_decode = $mol_charset_decode;
-})($ || ($ = {}));
-//mol/charset/decode/decode.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const TextEncoder = globalThis.TextEncoder ?? $node.util.TextEncoder;
-    const encoder = new TextEncoder();
-    function $mol_charset_encode(value) {
-        return encoder.encode(value);
-    }
-    $.$mol_charset_encode = $mol_charset_encode;
-})($ || ($ = {}));
-//mol/charset/encode/encode.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_file_not_found extends Error {
-    }
-    $.$mol_file_not_found = $mol_file_not_found;
-    class $mol_file extends $mol_object {
-        static absolute(path) {
-            throw new Error('Not implemented yet');
-        }
-        static relative(path) {
-            throw new Error('Not implemented yet');
-        }
-        static base = '';
-        path() {
-            return '.';
-        }
-        parent() {
-            return this.resolve('..');
-        }
-        reset() {
-            try {
-                this.stat(null);
-            }
-            catch (error) {
-                if (error instanceof $mol_file_not_found)
-                    return;
-                return $mol_fail_hidden(error);
-            }
-        }
-        version() {
-            return this.stat()?.mtime.getTime().toString(36).toUpperCase() ?? '';
-        }
-        watcher() {
-            console.warn('$mol_file_web.watcher() not implemented');
-            return {
-                destructor() { }
-            };
-        }
-        exists(next) {
-            let exists = Boolean(this.stat());
-            if (next === undefined)
-                return exists;
-            if (next === exists)
-                return exists;
-            if (next)
-                this.parent().exists(true);
-            this.ensure();
-            this.reset();
-            return next;
-        }
-        type() {
-            return this.stat()?.type ?? '';
-        }
-        name() {
-            return this.path().replace(/^.*\//, '');
-        }
-        ext() {
-            const match = /((?:\.\w+)+)$/.exec(this.path());
-            return match ? match[1].substring(1) : '';
-        }
-        text(next, virt) {
-            if (virt) {
-                const now = new Date;
-                this.stat({
-                    type: 'file',
-                    size: 0,
-                    atime: now,
-                    mtime: now,
-                    ctime: now,
-                }, 'virt');
-                return next;
-            }
-            if (next === undefined) {
-                return $mol_charset_decode(this.buffer(undefined));
-            }
-            else {
-                const buffer = next === undefined ? undefined : $mol_charset_encode(next);
-                this.buffer(buffer);
-                return next;
-            }
-        }
-        find(include, exclude) {
-            const found = [];
-            const sub = this.sub();
-            for (const child of sub) {
-                const child_path = child.path();
-                if (exclude && child_path.match(exclude))
-                    continue;
-                if (!include || child_path.match(include))
-                    found.push(child);
-                if (child.type() === 'dir') {
-                    const sub_child = child.find(include, exclude);
-                    for (const child of sub_child)
-                        found.push(child);
-                }
-            }
-            return found;
-        }
-        size() {
-            switch (this.type()) {
-                case 'file': return this.stat()?.size ?? 0;
-                default: return 0;
-            }
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_file.prototype, "exists", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file.prototype, "text", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_file, "absolute", null);
-    $.$mol_file = $mol_file;
-})($ || ($ = {}));
-//mol/file/file.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_compare_array(a, b) {
-        if (a === b)
-            return true;
-        if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b))
-            return false;
-        if (a.length !== b.length)
-            return false;
-        for (let i = 0; i < a.length; i++)
-            if (a[i] !== b[i])
-                return false;
-        return true;
-    }
-    $.$mol_compare_array = $mol_compare_array;
-})($ || ($ = {}));
-//mol/compare/array/array.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function stat_convert(stat) {
-        if (!stat)
-            return null;
-        let type;
-        if (stat.isDirectory())
-            type = 'dir';
-        if (stat.isFile())
-            type = 'file';
-        if (stat.isSymbolicLink())
-            type = 'link';
-        if (!type)
-            return $mol_fail(new Error(`Unsupported file type`));
-        return {
-            type,
-            size: Number(stat.size),
-            atime: stat.atime,
-            mtime: stat.mtime,
-            ctime: stat.ctime
-        };
-    }
-    function buffer_normalize(buf) {
-        return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);
-    }
-    class $mol_file_node extends $mol_file {
-        static absolute(path) {
-            return this.make({
-                path: $mol_const(path)
-            });
-        }
-        static relative(path) {
-            return this.absolute($node.path.resolve(this.base, path).replace(/\\/g, '/'));
-        }
-        watcher() {
-            const watcher = $node.chokidar.watch(this.path(), {
-                persistent: true,
-                ignored: /(^\.|___$)/,
-                depth: 0,
-                ignoreInitial: true,
-                awaitWriteFinish: {
-                    stabilityThreshold: 100,
-                },
-            });
-            watcher
-                .on('all', (type, path) => {
-                const file = $mol_file.relative(path.replace(/\\/g, '/'));
-                file.reset();
-                if (type === 'change') {
-                    this.stat(null);
-                }
-                else {
-                    file.parent().reset();
-                }
-            })
-                .on('error', $mol_fail_log);
-            return {
-                destructor() {
-                    watcher.close();
-                }
-            };
-        }
-        stat(next, virt) {
-            let stat = next;
-            const path = this.path();
-            this.parent().watcher();
-            if (virt)
-                return next;
-            try {
-                stat = next ?? stat_convert($node.fs.statSync(path, { throwIfNoEntry: false }));
-            }
-            catch (error) {
-                if (error.code === 'ENOENT')
-                    error = new $mol_file_not_found(`File not found`);
-                error.message += '\n' + path;
-                return this.$.$mol_fail_hidden(error);
-            }
-            return stat;
-        }
-        ensure() {
-            const path = this.path();
-            try {
-                $node.fs.mkdirSync(path);
-            }
-            catch (e) {
-                e.message += '\n' + path;
-                this.$.$mol_fail_hidden(e);
-            }
-        }
-        buffer(next) {
-            const path = this.path();
-            if (next === undefined) {
-                if (!this.stat())
-                    return new Uint8Array;
-                try {
-                    const prev = $mol_mem_cached(() => this.buffer());
-                    next = buffer_normalize($node.fs.readFileSync(path));
-                    if (prev !== undefined && !$mol_compare_array(prev, next)) {
-                        this.$.$mol_log3_rise({
-                            place: `$mol_file_node..buffer()`,
-                            message: 'Changed',
-                            path: this.relate(),
-                        });
-                    }
-                    return next;
-                }
-                catch (error) {
-                    error.message += '\n' + path;
-                    return this.$.$mol_fail_hidden(error);
-                }
-            }
-            this.parent().exists(true);
-            const now = new Date;
-            this.stat({
-                type: 'file',
-                size: next.length,
-                atime: now,
-                mtime: now,
-                ctime: now,
-            }, 'virt');
-            try {
-                $node.fs.writeFileSync(path, next);
-            }
-            catch (error) {
-                error.message += '\n' + path;
-                return this.$.$mol_fail_hidden(error);
-            }
-            return next;
-        }
-        sub() {
-            if (!this.exists())
-                return [];
-            if (this.type() !== 'dir')
-                return [];
-            const path = this.path();
-            try {
-                return $node.fs.readdirSync(path)
-                    .filter(name => !/^\.+$/.test(name))
-                    .map(name => this.resolve(name));
-            }
-            catch (e) {
-                e.message += '\n' + path;
-                return this.$.$mol_fail_hidden(e);
-            }
-        }
-        resolve(path) {
-            return this.constructor.relative($node.path.join(this.path(), path));
-        }
-        relate(base = this.constructor.relative('.')) {
-            return $node.path.relative(base.path(), this.path()).replace(/\\/g, '/');
-        }
-        append(next) {
-            const path = this.path();
-            try {
-                $node.fs.appendFileSync(path, next);
-            }
-            catch (e) {
-                e.message += '\n' + path;
-                return this.$.$mol_fail_hidden(e);
-            }
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_file_node.prototype, "watcher", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_node.prototype, "stat", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_node.prototype, "ensure", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_node.prototype, "buffer", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_node.prototype, "sub", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_file_node, "absolute", null);
-    $.$mol_file_node = $mol_file_node;
-    $.$mol_file = $mol_file_node;
-})($ || ($ = {}));
-//mol/file/file.node.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_locale extends $mol_object {
-        static lang_default() {
-            return 'en';
-        }
-        static lang(next) {
-            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
-        }
-        static source(lang) {
-            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
-        }
-        static texts(lang, next) {
-            if (next)
-                return next;
-            try {
-                return this.source(lang).valueOf();
-            }
-            catch (error) {
-                if (error instanceof Promise)
-                    $mol_fail_hidden(error);
-                const def = this.lang_default();
-                if (lang === def)
-                    throw error;
-                return this.source(def);
-            }
-        }
-        static text(key) {
-            for (let lang of [this.lang(), 'en']) {
-                const text = this.texts(lang)[key];
-                if (text)
-                    return text;
-                this.warn(key);
-            }
-            return `<${key}>`;
-        }
-        static warn(key) {
-            console.warn(`Not translated to "${this.lang()}": ${key}`);
-            return null;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_locale, "lang_default", null);
-    __decorate([
-        $mol_mem
-    ], $mol_locale, "lang", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "source", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "texts", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "text", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "warn", null);
-    $.$mol_locale = $mol_locale;
-})($ || ($ = {}));
-//mol/locale/locale.ts
 ;
 "use strict";
 var $;

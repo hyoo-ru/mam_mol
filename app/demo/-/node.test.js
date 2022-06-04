@@ -6653,6 +6653,7 @@ var $;
         }
         Copy() {
             const obj = new this.$.$mol_button_copy();
+            obj.hint = () => this.$.$mol_locale.text('$mol_text_code_Copy_hint');
             obj.text = () => this.text();
             return obj;
         }
@@ -8068,6 +8069,7 @@ var $;
         Link() {
             const obj = new this.$.$mol_link();
             obj.arg = () => this.arg();
+            obj.hint = () => this.$.$mol_locale.text('$mol_text_header_Link_hint');
             obj.sub = () => this.content();
             return obj;
         }

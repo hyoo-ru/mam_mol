@@ -153,13 +153,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Copy $mol_button_copy text <= text
+		 * Copy $mol_button_copy
+		 * 	hint @ \Copy whole code
+		 * 	text <= text
 		 * ```
 		 */
 		@ $mol_mem
 		Copy() {
 			const obj = new this.$.$mol_button_copy()
 			
+			obj.hint = () => this.$.$mol_locale.text( '$mol_text_code_Copy_hint' )
 			obj.text = () => this.text()
 			
 			return obj

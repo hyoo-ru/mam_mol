@@ -1532,6 +1532,104 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_state_local<Value> extends $mol_object {
+        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+        static native(): Storage | {
+            getItem(key: string): any;
+            setItem(key: string, value: string): void;
+            removeItem(key: string): void;
+        };
+        static changes(next?: StorageEvent): StorageEvent | undefined;
+        static value<Value>(key: string, next?: Value | null): Value | null;
+        prefix(): string;
+        value(key: string, next?: Value): Value | null;
+    }
+}
+
+declare namespace $ {
+    type $mol_charset_encoding = 'utf8' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
+    function $mol_charset_decode(value: Uint8Array, code?: $mol_charset_encoding): string;
+}
+
+declare namespace $ {
+    function $mol_charset_encode(value: string): Uint8Array;
+}
+
+declare namespace $ {
+    type $mol_file_type = 'file' | 'dir' | 'link';
+    interface $mol_file_stat {
+        type: $mol_file_type;
+        size: number;
+        atime: Date;
+        mtime: Date;
+        ctime: Date;
+    }
+    class $mol_file_not_found extends Error {
+    }
+    abstract class $mol_file extends $mol_object {
+        static absolute(path: string): $mol_file;
+        static relative(path: string): $mol_file;
+        static base: string;
+        path(): string;
+        parent(): $mol_file;
+        abstract stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
+        reset(): void;
+        version(): string;
+        abstract ensure(): void;
+        watcher(): {
+            destructor(): void;
+        };
+        exists(next?: boolean): boolean;
+        type(): "" | $mol_file_type;
+        name(): string;
+        ext(): string;
+        abstract buffer(next?: Uint8Array): Uint8Array;
+        text(next?: string, virt?: 'virt'): string;
+        abstract sub(): $mol_file[];
+        abstract resolve(path: string): $mol_file;
+        abstract relate(base?: $mol_file): string;
+        abstract append(next: Uint8Array | string): void;
+        find(include?: RegExp, exclude?: RegExp): $mol_file[];
+        size(): number;
+    }
+}
+
+declare namespace $ {
+    function $mol_compare_array<Value extends ArrayLike<unknown>>(a: Value, b: Value): boolean;
+}
+
+declare namespace $ {
+    class $mol_file_node extends $mol_file {
+        static absolute(path: string): $mol_file_node;
+        static relative(path: string): $mol_file_node;
+        watcher(): {
+            destructor(): void;
+        };
+        stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
+        ensure(): void;
+        buffer(next?: Uint8Array): Uint8Array;
+        sub(): $mol_file[];
+        resolve(path: string): $mol_file;
+        relate(base?: $mol_file): string;
+        append(next: Uint8Array | string): undefined;
+    }
+}
+
+declare namespace $ {
+    interface $mol_locale_dict {
+        [key: string]: string;
+    }
+    class $mol_locale extends $mol_object {
+        static lang_default(): string;
+        static lang(next?: string): string;
+        static source(lang: string): any;
+        static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
+        static text(key: string): string;
+        static warn(key: string): null;
+    }
+}
+
+declare namespace $ {
     class $mol_text_code extends $mol_stack {
         attr(): {
             mol_text_code_sidebar_showed: boolean;
@@ -2040,110 +2138,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_state_local<Value> extends $mol_object {
-        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
-        static native(): Storage | {
-            getItem(key: string): any;
-            setItem(key: string, value: string): void;
-            removeItem(key: string): void;
-        };
-        static changes(next?: StorageEvent): StorageEvent | undefined;
-        static value<Value>(key: string, next?: Value | null): Value | null;
-        prefix(): string;
-        value(key: string, next?: Value): Value | null;
-    }
-}
-
-declare namespace $ {
     function $mol_lights(this: $, next?: boolean): boolean;
 }
 
 declare namespace $.$$ {
     class $mol_theme_auto extends $.$mol_theme_auto {
         theme(): "$mol_theme_light" | "$mol_theme_dark";
-    }
-}
-
-declare namespace $ {
-    type $mol_charset_encoding = 'utf8' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
-    function $mol_charset_decode(value: Uint8Array, code?: $mol_charset_encoding): string;
-}
-
-declare namespace $ {
-    function $mol_charset_encode(value: string): Uint8Array;
-}
-
-declare namespace $ {
-    type $mol_file_type = 'file' | 'dir' | 'link';
-    interface $mol_file_stat {
-        type: $mol_file_type;
-        size: number;
-        atime: Date;
-        mtime: Date;
-        ctime: Date;
-    }
-    class $mol_file_not_found extends Error {
-    }
-    abstract class $mol_file extends $mol_object {
-        static absolute(path: string): $mol_file;
-        static relative(path: string): $mol_file;
-        static base: string;
-        path(): string;
-        parent(): $mol_file;
-        abstract stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
-        reset(): void;
-        version(): string;
-        abstract ensure(): void;
-        watcher(): {
-            destructor(): void;
-        };
-        exists(next?: boolean): boolean;
-        type(): "" | $mol_file_type;
-        name(): string;
-        ext(): string;
-        abstract buffer(next?: Uint8Array): Uint8Array;
-        text(next?: string, virt?: 'virt'): string;
-        abstract sub(): $mol_file[];
-        abstract resolve(path: string): $mol_file;
-        abstract relate(base?: $mol_file): string;
-        abstract append(next: Uint8Array | string): void;
-        find(include?: RegExp, exclude?: RegExp): $mol_file[];
-        size(): number;
-    }
-}
-
-declare namespace $ {
-    function $mol_compare_array<Value extends ArrayLike<unknown>>(a: Value, b: Value): boolean;
-}
-
-declare namespace $ {
-    class $mol_file_node extends $mol_file {
-        static absolute(path: string): $mol_file_node;
-        static relative(path: string): $mol_file_node;
-        watcher(): {
-            destructor(): void;
-        };
-        stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
-        ensure(): void;
-        buffer(next?: Uint8Array): Uint8Array;
-        sub(): $mol_file[];
-        resolve(path: string): $mol_file;
-        relate(base?: $mol_file): string;
-        append(next: Uint8Array | string): undefined;
-    }
-}
-
-declare namespace $ {
-    interface $mol_locale_dict {
-        [key: string]: string;
-    }
-    class $mol_locale extends $mol_object {
-        static lang_default(): string;
-        static lang(next?: string): string;
-        static source(lang: string): any;
-        static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): string;
-        static warn(key: string): null;
     }
 }
 

@@ -30,5 +30,7 @@
 	"$mol_select_hint": "Pick..",
 	"$mol_select_list_badge_hint": "Drop",
 	"$mol_select_list_pick_hint": "Add..",
-	"$mol_select_no_options_message": "No options"
+	"$mol_select_no_options_message": "No options",
+	"$mol_text_code_Copy_hint": "Copy whole code",
+	"$mol_text_header_Link_hint": "Permalink to this section"
 }

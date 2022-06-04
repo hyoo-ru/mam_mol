@@ -238,6 +238,7 @@ $mol_text_code $mol_stack
 					text <= row_text* \
 					highlight <= highlight \
 		<= Copy $mol_button_copy
+			hint @ \Copy whole code
 			text <= text
 
 $mol_hotkey $mol_plugin
@@ -442,6 +443,7 @@ $mol_text_header $mol_paragraph
 	sub /
 		<= Link $mol_link
 			arg <= arg *
+			hint @ \Permalink to this section
 			sub <= content /
 
 $mol_text_span $mol_paragraph
