@@ -6,11 +6,13 @@ $mol_text_code $mol_stack
 	text_lines /string
 	find_pos* null
 	sub /
-		<= Rows $mol_list rows <= rows /
-			<= Row*0 $mol_text_code_row
-				numb_showed <= sidebar_showed
-				numb <= row_numb* 0
-				text <= row_text* \
-				highlight <= highlight \
+		<= Rows $mol_list
+			render_visible_only <= render_visible_only false
+			rows <= rows /
+				<= Row*0 $mol_text_code_row
+					numb_showed <= sidebar_showed
+					numb <= row_numb* 0
+					text <= row_text* \
+					highlight <= highlight \
 		<= Copy $mol_button_copy
 			text <= text

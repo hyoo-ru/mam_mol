@@ -1,6 +1,10 @@
 namespace $.$$ {
 	export class $mol_text_code extends $.$mol_text_code {
 		
+		render_visible_only() {
+			return this.$.$mol_support_css_overflow_anchor()
+		}
+		
 		@ $mol_mem
 		text_lines() {
 			return this.text().split( '\n' ) as readonly string[]
