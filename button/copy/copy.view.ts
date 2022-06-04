@@ -1,4 +1,4 @@
-namespace $.$ {
+namespace $.$$ {
 	
 	export class $mol_button_copy extends $.$mol_button_copy {
 		
