@@ -85,23 +85,7 @@ $mol_text_code_row $mol_paragraph
 		needle <= highlight \
 	find_pos* null
 
-$mol_text_code $mol_list
-	attr *
-		^
-		mol_text_code_sidebar_showed <= sidebar_showed false
-	text \
-	text_lines /string
-	find_pos* null
-	Row* $mol_text_code_row
-		numb_showed <= sidebar_showed
-		numb <= row_numb* 0
-		text <= row_text* \
-		highlight <= highlight \
-
-$mol_float $mol_view
-	style *
-		^
-		minHeight \auto
+$mol_stack $mol_view
 
 $mol_speck $mol_view
 	attr *
@@ -166,6 +150,37 @@ $mol_icon $mol_svg_root
 			geometry <= path \
 
 $mol_button_minor $mol_button_typed
+
+$mol_icon_content_copy $mol_icon path \M19,21H8V7H19M19,5H8C6.9,5 6,5.9 6,7V21C6,22.1 6.9,23 8,23H19C20.1,23 21,22.1 21,21V7C21,5.9 20.1,5 19,5M16,1H4C2.9,1 2,1.9 2,3V17H4V3H16V1Z
+
+$mol_button_copy $mol_button_minor
+	text \
+	sub /
+		<= Icon $mol_icon_content_copy
+
+$mol_text_code $mol_stack
+	attr *
+		^
+		mol_text_code_sidebar_showed <= sidebar_showed false
+	text \
+	text_lines /string
+	find_pos* null
+	sub /
+		<= Rows $mol_list
+			render_visible_only <= render_visible_only false
+			rows <= rows /
+				<= Row*0 $mol_text_code_row
+					numb_showed <= sidebar_showed
+					numb <= row_numb* 0
+					text <= row_text* \
+					highlight <= highlight \
+		<= Copy $mol_button_copy
+			text <= text
+
+$mol_float $mol_view
+	style *
+		^
+		minHeight \auto
 
 $mol_check $mol_button_minor
 	attr *
@@ -295,19 +310,25 @@ $mol_embed_native $mol_scroll
 $mol_text $mol_list
 	uri_base \
 	text \
+	param \
 	flow_tokens /
+	auto /
+		<= auto_scroll null
 	- \Blocks
 	Paragraph* $mol_paragraph
 		sub <= block_content* /
 	Quote* $mol_text
 		uri_resolve* <= uri_resolve* null
 		text <= quote_text* \
+		auto_scroll null
 	List* $mol_text
 		uri_resolve* <= uri_resolve* null
 		text <= list_text* \
-	Header* $mol_paragraph
+		auto_scroll null
+	Header* $mol_text_header
 		dom_name <= header_level* \h
-		sub <= block_content* /
+		content <= block_content* /
+		arg <= header_arg* *
 	Code* $mol_text_code
 		text <= code_text* \
 		highlight <= highlight \
@@ -319,6 +340,7 @@ $mol_text $mol_list
 	Table_row* $mol_grid_row
 		cells <= table_cells* /
 	Table_cell* $mol_text
+		auto_scroll null
 		uri_resolve* <= uri_resolve* null
 		text <= table_cell_text* \
 	- \Lines
@@ -343,6 +365,12 @@ $mol_text $mol_list
 	Image* $mol_embed_native
 		uri <= link_uri* \
 		title <= line_text* \
+
+$mol_text_header $mol_paragraph
+	sub /
+		<= Link $mol_link
+			arg <= arg *
+			sub <= content /
 
 $mol_text_span $mol_paragraph
 	dom_name \span

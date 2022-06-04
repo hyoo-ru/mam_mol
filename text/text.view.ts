@@ -33,9 +33,21 @@ namespace $.$$ {
 			} )
 		}
 		
+		@ $mol_mem
+		param() {
+			return this.toString().replace( /^.*?\)\./, '' ).replace( /[()]/g, '' )
+		}
+		
 		@ $mol_mem_key
 		header_level( index: number ) {
 			return 'h' + this.flow_tokens()[ index ].chunks[0].length
+		}
+		
+		@ $mol_mem_key
+		header_arg( index: number ) {
+			return {
+				[ this.param() ]: this.flow_tokens()[ index ].chunks[2]
+			}
 		}
 		
 		@ $mol_mem_key
@@ -195,5 +207,22 @@ namespace $.$$ {
 			return token.chunks[0]
 		}
 		
+		@ $mol_mem
+		auto_scroll() {
+			for( const [ index, token ] of this.flow_tokens().entries() ) {
+				
+				if( token.name !== 'header' ) continue
+				
+				const header = this.Header( index )
+				if( !header.Link().current() ) continue
+				
+				new $mol_after_tick(
+					()=> this.ensure_visible( header )
+				)
+				
+			}
+		}
+
 	}
+
 }

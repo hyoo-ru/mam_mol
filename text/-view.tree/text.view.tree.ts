@@ -21,11 +21,31 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * param \
+		 * ```
+		 */
+		param() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * flow_tokens /
 		 * ```
 		 */
 		flow_tokens() {
 			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * auto / <= auto_scroll
+		 * ```
+		 */
+		auto() {
+			return [
+				this.auto_scroll()
 			] as readonly any[]
 		}
 		
@@ -48,6 +68,7 @@ namespace $ {
 		 * Quote* $mol_text
 		 * 	uri_resolve* <= uri_resolve*
 		 * 	text <= quote_text*
+		 * 	auto_scroll null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -56,6 +77,7 @@ namespace $ {
 			
 			obj.uri_resolve = (id: any) => this.uri_resolve(id)
 			obj.text = () => this.quote_text(id)
+			obj.auto_scroll = () => null as any
 			
 			return obj
 		}
@@ -65,6 +87,7 @@ namespace $ {
 		 * List* $mol_text
 		 * 	uri_resolve* <= uri_resolve*
 		 * 	text <= list_text*
+		 * 	auto_scroll null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -73,23 +96,26 @@ namespace $ {
 			
 			obj.uri_resolve = (id: any) => this.uri_resolve(id)
 			obj.text = () => this.list_text(id)
+			obj.auto_scroll = () => null as any
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * Header* $mol_paragraph
+		 * Header* $mol_text_header
 		 * 	dom_name <= header_level*
-		 * 	sub <= block_content*
+		 * 	content <= block_content*
+		 * 	arg <= header_arg*
 		 * ```
 		 */
 		@ $mol_mem_key
 		Header(id: any) {
-			const obj = new this.$.$mol_paragraph()
+			const obj = new this.$.$mol_text_header()
 			
 			obj.dom_name = () => this.header_level(id)
-			obj.sub = () => this.block_content(id)
+			obj.content = () => this.block_content(id)
+			obj.arg = () => this.header_arg(id)
 			
 			return obj
 		}
@@ -147,6 +173,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Table_cell* $mol_text
+		 * 	auto_scroll null
 		 * 	uri_resolve* <= uri_resolve*
 		 * 	text <= table_cell_text*
 		 * ```
@@ -155,6 +182,7 @@ namespace $ {
 		Table_cell(id: any) {
 			const obj = new this.$.$mol_text()
 			
+			obj.auto_scroll = () => null as any
 			obj.uri_resolve = (id: any) => this.uri_resolve(id)
 			obj.text = () => this.table_cell_text(id)
 			
@@ -273,6 +301,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * auto_scroll null
+		 * ```
+		 */
+		auto_scroll() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * block_content* /
 		 * ```
 		 */
@@ -315,6 +352,16 @@ namespace $ {
 		 */
 		header_level(id: any) {
 			return "h"
+		}
+		
+		/**
+		 * ```tree
+		 * header_arg* *
+		 * ```
+		 */
+		header_arg(id: any) {
+			return {
+			}
 		}
 		
 		/**
@@ -418,6 +465,57 @@ namespace $ {
 		 */
 		link_uri(id: any) {
 			return ""
+		}
+	}
+	
+	export class $mol_text_header extends $mol_paragraph {
+		
+		/**
+		 * ```tree
+		 * sub / <= Link
+		 * ```
+		 */
+		sub() {
+			return [
+				this.Link()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * arg *
+		 * ```
+		 */
+		arg() {
+			return {
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * content /
+		 * ```
+		 */
+		content() {
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Link $mol_link
+		 * 	arg <= arg
+		 * 	sub <= content
+		 * ```
+		 */
+		@ $mol_mem
+		Link() {
+			const obj = new this.$.$mol_link()
+			
+			obj.arg = () => this.arg()
+			obj.sub = () => this.content()
+			
+			return obj
 		}
 	}
 	

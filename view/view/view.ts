@@ -380,7 +380,7 @@ namespace $ {
 		plugins() {
 			return [] as readonly $mol_view[]
 		}
-
+		
 		[ $mol_dev_format_head ]() {
 			return $mol_dev_format_span( {} ,
 				$mol_dev_format_native( this ) ,
@@ -397,10 +397,15 @@ namespace $ {
 
 			if( check( this ) ) return yield [ ... path, this ]
 			
-			for( const item of this.sub() ) {
-				if( item instanceof $mol_view ) {
-					yield* item.view_find( check, [ ... path, this ] )
+			try {
+				for( const item of this.sub() ) {
+					if( item instanceof $mol_view ) {
+						yield* item.view_find( check, [ ... path, this ] )
+					}
 				}
+			} catch( error: unknown ) {
+				if( error instanceof Promise ) $mol_fail_hidden( error )
+				$mol_fail_log( error )
 			}
 			
 		}
@@ -430,7 +435,6 @@ namespace $ {
 		async ensure_visible( view: $mol_view, align: ScrollLogicalPosition = "start" ) {
 			
 			const path = this.view_find( v => v === view ).next().value
-			
 			this.force_render( new Set( path ) )
 			
 			$mol_wire_fiber.sync()

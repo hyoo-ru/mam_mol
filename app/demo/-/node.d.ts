@@ -1993,18 +1993,43 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_text_code extends $mol_list {
+    class $mol_icon_content_copy extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_button_copy extends $mol_button_minor {
+        text(): string;
+        sub(): readonly any[];
+        Icon(): $mol_icon_content_copy;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_button_copy extends $.$mol_button_copy {
+        click(event?: Event): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_text_code extends $mol_stack {
         attr(): {
             mol_text_code_sidebar_showed: boolean;
         };
         text(): string;
         text_lines(): readonly string[];
         find_pos(id: any): any;
-        Row(id: any): $$.$mol_text_code_row;
+        sub(): readonly any[];
         sidebar_showed(): boolean;
+        render_visible_only(): boolean;
         row_numb(id: any): number;
         row_text(id: any): string;
         highlight(): string;
+        Row(id: any): $$.$mol_text_code_row;
+        rows(): readonly any[];
+        Rows(): $$.$mol_list;
+        Copy(): $$.$mol_button_copy;
     }
 }
 
@@ -2013,6 +2038,7 @@ declare namespace $.$$ {
 
 declare namespace $.$$ {
     class $mol_text_code extends $.$mol_text_code {
+        render_visible_only(): boolean;
         text_lines(): readonly string[];
         rows(): $mol_text_code_row[];
         row_text(index: number): string;
@@ -2021,6 +2047,7 @@ declare namespace $.$$ {
             token: $mol_text_code_token;
             offset: number;
         } | null;
+        sub(): ($mol_list | $mol_button_copy)[];
     }
 }
 
@@ -2458,11 +2485,13 @@ declare namespace $ {
     class $mol_text extends $mol_list {
         uri_base(): string;
         text(): string;
+        param(): string;
         flow_tokens(): readonly any[];
+        auto(): readonly any[];
         Paragraph(id: any): $$.$mol_paragraph;
         Quote(id: any): $$.$mol_text;
         List(id: any): $$.$mol_text;
-        Header(id: any): $$.$mol_paragraph;
+        Header(id: any): $mol_text_header;
         Code(id: any): $$.$mol_text_code;
         Table(id: any): $$.$mol_grid;
         Table_row(id: any): $mol_grid_row;
@@ -2473,11 +2502,13 @@ declare namespace $ {
         Link(id: any): $$.$mol_link_iconed;
         Link_http(id: any): $$.$mol_link_iconed;
         Image(id: any): $$.$mol_embed_native;
+        auto_scroll(): any;
         block_content(id: any): readonly any[];
         uri_resolve(id: any): any;
         quote_text(id: any): string;
         list_text(id: any): string;
         header_level(id: any): string;
+        header_arg(id: any): {};
         code_text(id: any): string;
         highlight(): string;
         code_sidebar_showed(): boolean;
@@ -2489,6 +2520,12 @@ declare namespace $ {
         line_type(id: any): string;
         line_content(id: any): readonly any[];
         link_uri(id: any): string;
+    }
+    class $mol_text_header extends $mol_paragraph {
+        sub(): readonly any[];
+        arg(): {};
+        content(): readonly any[];
+        Link(): $$.$mol_link;
     }
     class $mol_text_span extends $mol_paragraph {
         dom_name(): string;
@@ -2510,8 +2547,12 @@ declare namespace $.$$ {
             chunks: string[];
         }[];
         block_type(index: number): string;
-        rows(): ($mol_paragraph | $mol_text_code | $mol_grid | $mol_text)[];
+        rows(): ($mol_paragraph | $mol_text_code | $mol_grid | $mol_text | $mol_text_header)[];
+        param(): any;
         header_level(index: number): string;
+        header_arg(index: number): {
+            [x: number]: string;
+        };
         code_text(index: number): string;
         quote_text(index: number): string;
         list_text(index: number): string;
@@ -2546,6 +2587,7 @@ declare namespace $.$$ {
         line_content(path: readonly number[]): ($mol_dimmer | $mol_text_code_row | $mol_link_iconed | $mol_embed_native | $mol_text_span)[];
         link_uri(path: readonly number[]): string;
         image_title(path: readonly number[]): string;
+        auto_scroll(): void;
     }
 }
 
@@ -6653,12 +6695,6 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_icon_help_circle_outline extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_content_copy extends $mol_icon {
         path(): string;
     }
 }

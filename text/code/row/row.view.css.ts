@@ -15,7 +15,7 @@ namespace $.$$ {
 			color: $mol_theme.shade,
 			width: rem(3),
 			margin: {
-				left: rem(-3.75),
+				left: rem(-4),
 			},
 			display: 'inline-block',
 			whiteSpace: 'nowrap',
