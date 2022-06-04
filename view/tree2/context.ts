@@ -71,13 +71,8 @@ namespace $ {
 			const parents = this.parents
 			for (let i = 1 ; i < parents.length; i++) {
 				const parent = parents[i]
-				if (key && key.value === parent.key?.value) finded_key = parent.key
-				if (next && next.value === parent.next?.value) finded_next = parent.next
+				if (next && parent.next) finded_next = parent.next
 			}
-
-			if (key && ! finded_key) return this.$.$mol_fail(
-				$mol_view_tree2_error_str`Key ${key.value} at ${key.span} not found at ${this.parents.map(parent => parent.src.span)}`
-			)
 
 			if (next && ! finded_next) return this.$.$mol_fail(
 				$mol_view_tree2_error_str`Next ${next.value} at ${next.span} not found at ${this.parents.map(parent => parent.src.span)}`

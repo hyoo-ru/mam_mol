@@ -33,7 +33,7 @@ Minor button with custom content (icon and title):
 
 **`enabled() : boolean`**
 
-Button can be clicked when enable only.
+The button can only be pressed when it is enabled.
 
 **`event_click( next? : Event ) : Event`**
 

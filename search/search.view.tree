@@ -25,9 +25,9 @@ $mol_search $mol_pop
 	bubble_content /$mol_view_content
 		<= Menu $mol_list
 			rows <= menu_items /$mol_view
-	Suggest!id $mol_button_minor
-		click?event <=> suggest_select!id?event null
-		sub <= suggest_content!id /$mol_view_content
-			<= Suggest_label!id $mol_dimmer
-				haystack <= suggest_label!id \
+	Suggest* $mol_button_minor
+		click?event <=> suggest_select*?event null
+		sub <= suggest_content* /$mol_view_content
+			<= Suggest_label* $mol_dimmer
+				haystack <= suggest_label* \
 				needle <= query?val \

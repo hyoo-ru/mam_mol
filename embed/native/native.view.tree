@@ -6,4 +6,9 @@ $mol_embed_native $mol_scroll
 		data <= uri?val \
 		type <= mime \
 	sub /
-		<= title?val \
+		<= Fallback_link $mol_link
+			uri <= uri
+			sub /
+				<= Fallback_image $mol_image
+					uri <= uri
+					title <= title?val \

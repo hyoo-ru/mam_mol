@@ -1,21 +1,30 @@
 namespace $.$$ {
 	
-	const { rem } = $mol_style_unit
+	const { rem, px } = $mol_style_unit
 
 	$mol_style_define( $mol_text_code, {
 
-		padding: $mol_gap.text,
 		whiteSpace: 'pre-wrap',
 		
-		font: {
-			family: 'monospace',
+		Rows: {
+			padding: $mol_gap.text,
+		},
+		
+		Copy: {
+			position: 'sticky',
+			top: 0,
+			margin: {
+				left: px(-1),
+			},
 		},
 		
 		'@': {
 			'mol_text_code_sidebar_showed': {
 				true: {
-					margin: {
-						left: rem(3),
+					$mol_text_code_row: {
+						margin: {
+							left: rem(1.75),
+						},
 					},
 				},
 			},

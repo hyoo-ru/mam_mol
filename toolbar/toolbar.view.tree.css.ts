@@ -13,28 +13,6 @@ namespace $.$$ {
 		position: 'relative',
 		overflow: 'hidden',
 
-		'@': {
-			mol_toolbar_expanded: {
-				true: {
-
-					Bar: {
-						maxHeight: vh(100),
-					},
-					
-					Expand: {
-
-						Icon: {
-							Path: {
-								transform: 'rotate(90deg) scaleX(-1)',
-							},
-						},
-			
-					},
-			
-				},
-			},
-		},
-		
 		Bar: {
 			display : 'flex',
 			justifyContent: 'flex-end',
@@ -68,6 +46,28 @@ namespace $.$$ {
 				},
 			},
 
+		},
+		
+		'@': {
+			mol_toolbar_expanded: {
+				true: {
+
+					Bar: {
+						maxHeight: vh(100),
+					},
+					
+					Expand: {
+
+						Icon: {
+							Path: {
+								transform: 'rotate(90deg) scaleX(-1)',
+							},
+						},
+			
+					},
+			
+				},
+			},
 		},
 		
 	} )

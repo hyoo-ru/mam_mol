@@ -5,7 +5,7 @@ namespace $.$$ {
 		title() {
 			return this.pages().map( page => page?.title() ).reverse().filter( Boolean ).join( ' | ' )
 		}
-
+		
 		@ $mol_mem
 		sub() {
 			

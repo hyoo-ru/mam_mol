@@ -26,9 +26,9 @@ $mol_plot_ruler $mol_plot_graph
 			pos_y <= title_pos_y \100%
 			align <= title_align \start
 			text <= title
-	Label!index $mol_svg_text
-		pos <= label_pos!index /
-			<= label_pos_x!index \
-			<= label_pos_y!index \
-		text <= label_text!index \
+	Label* $mol_svg_text
+		pos <= label_pos* /
+			<= label_pos_x* \
+			<= label_pos_y* \
+		text <= label_text* \
 		align <= label_align \

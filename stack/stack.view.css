@@ -1,0 +1,7 @@
+[mol_stack] {
+	display: grid;
+}
+
+[mol_stack] > * {
+	grid-area: 1/1;
+}

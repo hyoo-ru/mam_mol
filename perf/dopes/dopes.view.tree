@@ -12,9 +12,9 @@ $mol_perf_dopes $mol_view
 			click?event <=> stop?event null
 		<= Labels $mol_view
 			sub <= labels /
-	Label!index $mol_view
+	Label* $mol_view
 		style *
-			color <= label_color!index \
-			transform <= label_transform!index \
+			color <= label_color* \
+			transform <= label_transform* \
 		sub /
 			\Dope

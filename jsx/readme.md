@@ -1,6 +1,6 @@
 # $mol_jsx
 
-JSX adapter that makes DOM tree. Generates global uniue ids for every dom-element by components tree with ids. Ensures all local ids are unique. Can reuse an existing nodes by guids when used inside [`$mol_jsx_attach`](https://github.com/hyoo-ru/mam_mol/tree/master/jsx/attach).
+JSX adapter that makes DOM tree. Generates global unique ids for every DOM-element by components tree with ids. Ensures all local ids are unique. Can reuse an existing nodes by GUIDs when used inside [`$mol_jsx_attach`](https://github.com/hyoo-ru/mam_mol/tree/master/jsx/attach).
 
 ## Usage example
 
@@ -55,4 +55,4 @@ Result:
 # See also
 
 - [$mol_jsx_attach](https://github.com/hyoo-ru/mam_mol/tree/master/jsx/attach) - render JSX to existing document
-- [$mol_jsx_view](https://github.com/hyoo-ru/mam_mol/tree/master/jsx/view) - statefull view bound to dom-element
+- [$mol_jsx_view](https://github.com/hyoo-ru/mam_mol/tree/master/jsx/view) - stateful view bound to DOM-element

@@ -20,9 +20,21 @@ namespace $ {
 					
 				}
 				
-			}
+			},
 			
-		} ) as any as {
+			apply( obj, self, args ) {
+				const temp = $mol_wire_task.getter( obj as ( ... args: any[] )=> any )
+				const fiber = temp( self, args )
+				return fiber.async()
+			},
+			
+		} ) as any as (
+			Host extends ( ... args: infer Args )=> infer Res
+				? Res extends Promise<any>
+					? Host
+					: ( ... args: Args )=> Promise< Res >
+				: {}
+		) & {
 			[ key in keyof Host ]: Host[ key ] extends ( ... args: infer Args )=> infer Res
 				? Res extends Promise<any>
 					? Host[ key ]

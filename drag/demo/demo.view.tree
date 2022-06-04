@@ -13,17 +13,17 @@ $mol_drag_demo $mol_example_large
 						\Trash
 				<= List $mol_list
 					rows <= task_rows /
-	Task_row!task $mol_drag
+	Task_row* $mol_drag
 		transfer *
-			text/plain <= task_title!task \
-			text/html <= task_html!task \
-			text/uri-list <= task_uri!task \
-		Sub <= Task_drop!task $mol_drop
+			text/plain <= task_title* \
+			text/html <= task_html* \
+			text/uri-list <= task_uri* \
+		Sub <= Task_drop* $mol_drop
 			adopt?transfer <=> transfer_adopt?transfer null
-			receive?obj <=> receive_before!task?obj null
-			Sub <= Task_link!task $mol_link
-				uri <= task_uri!task \
-				sub / <= task_title!task \
+			receive?obj <=> receive_before*?obj null
+			Sub <= Task_link* $mol_link
+				uri <= task_uri* \
+				sub / <= task_title* \
 	tags /
 		\$mol_drop
 		\$mol_float

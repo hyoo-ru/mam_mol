@@ -11,3 +11,7 @@
 	display: inline-flex;
 	flex-wrap: nowrap;
 }
+
+[mol_check_title] {
+	flex-shrink: 1;
+}

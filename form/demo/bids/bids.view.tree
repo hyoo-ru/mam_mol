@@ -13,90 +13,73 @@ $mol_form_demo_bids $mol_example
 		need_username \Username required
 	sub /
 		<= Form $mol_form
-			submit?val <=> submit?val null
-			form_fields /
-				-
-				<= Name_first_field $mol_form_field
-					name \First Name
-					bid <= name_first_bid \
-					Content <= Name_first_control $mol_string
-						hint \Jack
-						value?val <=> name_first?val \
-				-
-				<= Name_nick_field $mol_form_field
-					name \Nick Name
-					bid <= name_nick_bid \
-					Content <= Name_nick_control $mol_string
-						hint \Capitan
-						value?val <=> name_nick?val \
-				-
-				<= Name_second_field $mol_form_field
-					name \Second Name
-					bid <= name_second_bid \
-					Content <= Name_second_control $mol_string
-						hint \Sparrow
-						value?val <=> name_second?val \
-				-
-				<= Sex_field $mol_form_field
-					name <= sex_label \Sex
-					bid <= sex_bid \
-					Content <= Sex_control $mol_switch
-						value?val <=> sex?val \
-						options <= sex_options *
-							male \Male
-							intersex \Intersex
-							female \Female
-				-
-				<= Color_field $mol_form_field
-					name \Skin color
-					bid <= color_bid \
-					control <= Color_control $mol_select
-						value?val <=> color?val \
-						dictionary *
-							\
-								\❔
-							white \⬜ White
-							yellow \🟨 Yellow
-							brown \🟫 Brown
-							red \🟥 Red
-				-
-				<= Age_field $mol_form_field
-					name \Age
-					bid <= age_bid \
-					control <= Age_control $mol_number
-						value?val <=> age?val 0
-				-
+			body /
+				<= Avatars_field $mol_form_field
+					name \Avatars
+					bid <= avatars_bid \
+					Content <= Avatars_control $mol_attach
+						items?val <=> avatars?val /string
+				<= Names $mol_form_group sub /
+					<= Name_first_field $mol_form_field
+						name \First Name
+						bid <= name_first_bid \
+						Content <= Name_first_control $mol_string
+							hint \Jack
+							value?val <=> name_first?val \
+					<= Name_nick_field $mol_form_field
+						name \Nick Name
+						bid <= name_nick_bid \
+						Content <= Name_nick_control $mol_string
+							hint \Capitan
+							value?val <=> name_nick?val \
+					<= Name_second_field $mol_form_field
+						name \Second Name
+						bid <= name_second_bid \
+						Content <= Name_second_control $mol_string
+							hint \Sparrow
+							value?val <=> name_second?val \
+				<= Parameters $mol_form_group sub /
+					<= Age_field $mol_form_field
+						name \Age
+						bid <= age_bid \
+						control <= Age_control $mol_number
+							value?val <=> age?val 0
+					<= Sex_field $mol_form_field
+						name <= sex_label \Sex
+						bid <= sex_bid \
+						Content <= Sex_control $mol_switch
+							value?val <=> sex?val \
+							options <= sex_options *
+								male \Male
+								intersex \Intersex
+								female \Female
+					<= Color_field $mol_form_field
+						name \Skin color
+						bid <= color_bid \
+						control <= Color_control $mol_select
+							value?val <=> color?val \
+							dictionary *
+								\
+									\❔
+								white \⬜ White
+								yellow \🟨 Yellow
+								brown \🟫 Brown
+								red \🟥 Red
 				<= Mail_field $mol_form_field
 					name \E-mail
 					bid <= mail_bid \
 					Content <= Mail_control $mol_string
 						hint \name@domain.com
 						value?val <=> mail?val \
-				-
-				<= Avatars_field $mol_form_field
-					name \Avatars
-					bid <= avatars_bid \
-					Content <= Avatars_control $mol_attach
-						items?val <=> avatars?val /string
-			body /
-				<= Avatars_field
-				<= Names $mol_form_group sub /
-					<= Name_first_field
-					<= Name_nick_field
-					<= Name_second_field
-				<= Parameters $mol_form_group sub /
-					<= Age_field
-					<= Sex_field
-					<= Color_field
-				<= Mail_field
+			submit?val <=> signup?val null
+			submit_allowed => signup_allowed
 			buttons /
-				<= Submit $mol_button_major
+				<= Signup $mol_button_major
 					title \Sign Up
-					click?val <=> submit?val null
-					enabled <= submit_allowed true
-		<= Result $mol_row
-			sub /
-				<= result?val \
+					click?val <=> signup?val null
+					enabled <= signup_allowed
+				<= Result $mol_status
+					message <= result?val \
 	tags /
 		\$mol_form_field
 		\$mol_button

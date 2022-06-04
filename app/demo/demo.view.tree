@@ -16,9 +16,9 @@ $mol_app_demo $mol_book2
 			<= Sources $mol_link_source
 				uri <= sources_uri \https://github.com/hyoo-ru/mam_mol/
 			<= Lights $mol_lights_toggle
-	Detail!id $mol_app_demo_detail
-		chat_seed <= chat_seed!id \
-		chat_pages => chat_pages!id
+	Detail* $mol_app_demo_detail
+		chat_seed <= chat_seed* \
+		chat_pages => chat_pages*
 		title <= detail_title
 		description <= detail_description \
 		edit_uri <= edit_uri \
@@ -27,10 +27,6 @@ $mol_app_demo $mol_book2
 		repo <= repo \
 		module <= module /string
 		source_link <= source_link \
-	Welcome $mol_scroll
-		sub /
-			<= Welcome_text $mol_text
-				text <= welcome_text \
 	Detail_empty_message $mol_status
 		sub /
 			<= detail_empty_prefix @ \No one demo with prefix "
@@ -49,11 +45,11 @@ $mol_app_demo_menu $mol_page
 					- suggests <= filter_suggests
 				<= Options $mol_list
 					rows <= options /
-	Option!id $mol_link
-		arg <= option_arg!id *
+	Option* $mol_link
+		arg <= option_arg* *
 		sub /
-			<= Option_title!id $mol_dimmer
-				haystack <= option_title!id \
+			<= Option_title* $mol_dimmer
+				haystack <= option_title* \
 				needle <= filter?val \
 
 $mol_app_demo_detail $mol_page

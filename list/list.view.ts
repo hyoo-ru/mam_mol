@@ -72,13 +72,13 @@ namespace $.$$ {
 
 			// force recalc min when overlapse top limit
 			if( anchoring && ( top <= limit_top ) && ( bottom2 < limit_bottom ) ) {
-				min2 = max
+				min2 = Math.max( 0, max - 1 )
 				top2 = bottom
 			}
 
 			// force recalc max when overlapse bottom limit
 			if( ( bottom >= limit_bottom ) && ( top2 >= limit_top ) ) {
-				max2 = min
+				max2 = Math.min( min + 1, kids.length )
 				bottom2 = top
 			}
 

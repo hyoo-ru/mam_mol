@@ -6,19 +6,21 @@ namespace $.$$ {
 
 		display: 'block',
 		
+		font: {
+			family: 'monospace',
+		},
+		
 		Numb: {
 			textAlign: 'right',
 			color: $mol_theme.shade,
 			width: rem(3),
-			padding: {
-				right: rem(1.5),
-			},
 			margin: {
-				left: rem(-3),
+				left: rem(-4),
 			},
 			display: 'inline-block',
 			whiteSpace: 'nowrap',
 			userSelect: 'none',
+			position: 'absolute',
 		},
 
 	} )

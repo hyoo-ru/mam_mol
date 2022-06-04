@@ -1,0 +1,3 @@
+$mol_button_copy $mol_button_minor
+	sub /
+		<= Icon $mol_icon_content_copy

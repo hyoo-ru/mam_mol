@@ -5,10 +5,10 @@ $mol_plot_map_tiles $mol_plot_graph
 	tiles_limit 8
 	uri_template \
 	sub <= tiles /
-	Tile!id $mol_svg_image
+	Tile* $mol_svg_image
 		style *
-			transform <= tile_transform!id \
-		uri <= tile_uri!id \
+			transform <= tile_transform* \
+		uri <= tile_uri* \
 		pos /
 			0
 			0

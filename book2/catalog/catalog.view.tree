@@ -1,18 +1,20 @@
 $mol_book2_catalog $mol_book2
 	param \
+	spread?val \
 	spreads *
 	Spread $mol_view
 	pages /
 		<= Menu $mol_page
 			title <= menu_title \
 			tools <= menu_tools /
+			foot <= menu_foot /
 			body /
 				<= Links $mol_list
 					rows <= links /
-	Link!id $mol_link
-		arg <= arg!id *
+	Link* $mol_link
+		arg <= arg* *
 		sub /
-			<= spread_title!id \
+			<= spread_title* \
 	Spread_close $mol_link
 		arg <= spread_close_arg *
 		sub /

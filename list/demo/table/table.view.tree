@@ -1,28 +1,37 @@
 $mol_list_demo_table $mol_example
 	title \Large list of rows with dynamic content
-	count 1000
+	count 10000
 	sub /
 		<= Rows $mol_list
 			rows <= rows /
-	Row!id $mol_row
-		minimal_height 40
-		sub <= row_content!id /
-			<= Id!id $mol_view sub / <= row_id!id \
-			<= Title!id $mol_view sub / <= row_title!id \
-			<= Editable!id $mol_check_box
-				title <= editable_title \Editable
-				checked?val <=> row_editable!id?val false
-			<= Priority!id $mol_switch
-				enabled <= row_editable!id
-				value?val <=> row_priority!id?val \
-				options *
-					minor \Minor
-					major \Major
-					critical \Critical
-			<= Date!id $mol_date
-				value_moment?val <=> row_moment!id?val $mol_time_moment
-				enabled <= row_editable!id
-			<= Link!id $mol_link_iconed uri <= row_uri!id \
+				<= Row*0 $mol_row
+					minimal_height 104
+					minimal_width 200
+					sub <= row_content* /
+						<= Id_labeler* $mol_labeler
+							title \Identifier
+							Content <= Id* $mol_view sub / <= row_id*? 0
+						<= Title_labeler* $mol_labeler
+							title \Product Name
+							Content <= Title* $mol_link_iconed
+								uri <= row_uri* \
+								title <= row_title* \
+						<= Status_labeler* $mol_labeler
+							title \Status
+							Content <= Status* $mol_switch
+								value?val <=> row_status*?val \
+								options <= status_options *
+									minor \Store
+									major \Sale
+									critical \Support
+						<= Quantity_labeler* $mol_labeler
+							title \Quantity
+							Content <= Quantity* $mol_number
+								value? <=> row_quantity*? 0
+						<= Date_labeler* $mol_labeler
+							title \Supply Time
+							Content <= Date* $mol_date
+								value_moment?val <=> row_moment*?val $mol_time_moment
 	tags /
 		\$mol_row
 		\$mol_check

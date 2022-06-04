@@ -5,6 +5,7 @@ $mol_textarea_demo $mol_example_small
 			hint \source code
 			value?val <=> empty_descr?val \
 		<= Filled_descr $mol_textarea
+			sidebar_showed true
 			value?val <=> filled_descr?val \
 				\function hello( name = 'World' ) {
 				\	return `Hello, ${ name }!`

@@ -8,7 +8,7 @@ namespace $ {
 
 	export class $mol_github_search_issues extends $mol_model< $mol_github_search_issues_json > {
 		
-		json_update( patch : $mol_github_search_issues_json ) {
+		json_update( patch? : $mol_github_search_issues_json ) {
 			
 			if( patch ) {
 				for( let issue of patch.items ) {
@@ -20,8 +20,8 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		items( next? : $mol_github_issue[] , force? : $mol_mem_force ) {
-			return this.json( undefined , force ).items.map( json => $mol_github_issue.item( json.url! ) )
+		items( next? : null ) {
+			return this.json( next ).items.map( json => $mol_github_issue.item( json.url! ) )
 		}
 
 		resource_url() {

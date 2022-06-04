@@ -6,8 +6,8 @@
 	top: 50%;
 	zoom: .75;
 	transition: none;
-	width: 100px;
-	height: 100px;
+	width: 0px;
+	height: 0px;
 }
 
 [mol_perf_sierp_dot] {

@@ -41,14 +41,12 @@ namespace $ {
 			
 			// Sync whole fiber graph
 			while( this.planning.size ) {
-				
-				const fibers = this.planning
-				this.planning = new Set
-				
-				for( const fiber of fibers ) {
-					fiber.refresh()
+				for( const fiber of this.planning ) {
+					this.planning.delete( fiber )
+					if( fiber.cursor >= 0 ) continue
+					if( fiber.cursor === $mol_wire_cursor.final ) continue
+					fiber.fresh()
 				}
-				
 			}
 			
 			// Collect garbage
@@ -86,12 +84,12 @@ namespace $ {
 			id: string,
 			readonly task: ( this : Host , ... args : Args )=> Result,
 			readonly host?: Host,
-			... args: Args
+			args?: Args
 		) {
 			
 			super()
-			this.data.push( ... args )
-			this.pub_from = this.sub_from = args.length
+			if( args ) this.data.push( ... args )
+			this.pub_from = this.sub_from = args?.length ?? 0
 			this[ Symbol.toStringTag ] = id
 			
 		}
@@ -140,7 +138,7 @@ namespace $ {
 			else super.emit( quant )
 		}
 		
-		refresh() {
+		fresh() {
 
 			type Result = typeof this.cache
 			
@@ -150,7 +148,7 @@ namespace $ {
 			check: if( this.cursor === $mol_wire_cursor.doubt ) {
 				
 				for( let i = this.pub_from ; i < this.sub_from; i += 2 ) {
-					;( this.data[i] as $mol_wire_pub )?.refresh()
+					;( this.data[i] as $mol_wire_pub )?.fresh()
 					if( this.cursor !== $mol_wire_cursor.doubt ) break check
 				}
 				
@@ -167,7 +165,7 @@ namespace $ {
 				switch( this.pub_from ) {
 					case 0: result = (this.task as any).call( this.host! ); break
 					case 1: result = (this.task as any).call( this.host!, this.data[0] ); break
-					default: result = (this.task as any).call( this.host!, ... this.data.slice( 0 , this.pub_from ) ); break
+					default: result = (this.task as any).call( this.host!, ... this.args ); break
 				}
 				
 				if( result instanceof Promise ) {
@@ -214,6 +212,11 @@ namespace $ {
 
 		}
 		
+		refresh() {
+			this.cursor = $mol_wire_cursor.stale
+			this.fresh()
+		}
+		
 		abstract put( next: Result | Error | Promise< Result | Error > ): Result | Error | Promise< Result | Error >
 		
 		/**
@@ -227,7 +230,7 @@ namespace $ {
 			}
 			
 			this.promote()
-			this.refresh()
+			this.fresh()
 			
 			if( this.cache instanceof Error ) {
 				return $mol_fail_hidden( this.cache )
@@ -248,7 +251,7 @@ namespace $ {
 			
 			while( true ) {
 				
-				this.refresh()
+				this.fresh()
 				
 				if( this.cache instanceof Error ) {
 					$mol_fail_hidden( this.cache )

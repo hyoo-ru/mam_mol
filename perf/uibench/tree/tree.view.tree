@@ -13,10 +13,10 @@ $mol_perf_uibench_tree_branch $mol_list
 	attr_static *
 		^
 		class \TreeNode
-	Branch!index $mol_perf_uibench_tree_branch
-		state <= branch_state!index null
-	Leaf!index $mol_perf_uibench_tree_leaf
-		text <= leaf_state!index null
+	Branch* $mol_perf_uibench_tree_branch
+		state <= branch_state* null
+	Leaf* $mol_perf_uibench_tree_leaf
+		text <= leaf_state* null
 
 $mol_perf_uibench_tree_leaf $mol_view
 	minimal_height 26

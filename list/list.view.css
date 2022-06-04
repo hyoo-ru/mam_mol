@@ -18,7 +18,3 @@
 	transition: none;
 	overflow-anchor: none;
 }
- 
-[mol_list] > * {
-	display: flex;
-}

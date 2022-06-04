@@ -33,7 +33,7 @@ namespace $ {
 						dict = ( host ?? task )[ field ] = new Map<any,any>()
 					}
 					
-					fiber = new $mol_wire_atom( key, task, host, ... args )
+					fiber = new $mol_wire_atom( key, task, host, args )
 					dict.set( key, fiber )
 					
 					return fiber
@@ -48,7 +48,7 @@ namespace $ {
 					
 					const key = `${ host?.[ Symbol.toStringTag ] ?? host }.${ field }`
 					
-					const fiber = new $mol_wire_atom( key, task, host, ... args )
+					const fiber = new $mol_wire_atom( key, task, host, args )
 					;( host ?? task )[ field ] = fiber
 					
 					return fiber
@@ -58,22 +58,35 @@ namespace $ {
 			
 		}
 		
+		static watching = new Set< $mol_wire_atom< any, any, any > >()
+		
+		static watch() {
+		
+			new $mol_after_frame( $mol_wire_atom.watch )
+			
+			for( const atom of $mol_wire_atom.watching ) {
+				
+				if( atom.cursor === $mol_wire_cursor.final ) {
+					$mol_wire_atom.watching.delete( atom )
+				} else {
+					atom.cursor = $mol_wire_cursor.stale
+					atom.fresh()
+				}
+				
+			}
+			
+		}
+		
+		watch() {
+			$mol_wire_atom.watching.add( this )
+		}
+		
 		/**
 		 * Update fiber value through another temp fiber.
 		 */
 		@ $mol_wire_method
-		recall( ... args: Args ) {
-			
-			if( this.cursor > $mol_wire_cursor.fresh ) {
-				try {
-					this.once()
-				} catch( error: unknown ) {
-					if( error instanceof Promise ) $mol_fail_hidden( error )
-				}
-			}
-			
+		resync( args: Args ) {
 			return this.put( this.task.call( this.host!, ... args ) )
-			
 		}
 		
 		@ $mol_wire_method
@@ -134,5 +147,7 @@ namespace $ {
 		}
 		
 	}
+	
+	$mol_wire_atom.watch()
 	
 }

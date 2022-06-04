@@ -3,11 +3,11 @@ $mol_list_demo_tree $mol_example_large
 	sub /
 		<= Content $mol_list
 			rows <= root_rows /
-	Row!id $mol_expander
-		label / <= Row_title!id $mol_paragraph sub / <= row_title!id \
-		expanded?val <=> row_expanded!id?val false
-		Content <= Row_content!id $mol_list
-			rows <= row_content!id /
+	Row* $mol_expander
+		label / <= Row_title* $mol_paragraph sub / <= row_title* \
+		expanded?val <=> row_expanded*?val false
+		Content <= Row_content* $mol_list
+			rows <= row_content* /
 	tags /
 		\$mol_expander
 		\$mol_list

@@ -2,19 +2,19 @@
 	min-width: 20px;
 }
 
-[mol_check_expand][disabled] [mol_check_expand_icon] {
+:where([mol_check_expand][disabled]) [mol_check_expand_icon] {
 	visibility: hidden;
 }
 
 [mol_check_expand_icon] {
 	box-shadow: none;
-	margin: .25rem 0;
+	margin: .25rem -.25rem;
 }
 [mol_check_expand_icon] {
 	transform: rotateZ(0deg);
 }
 
-[mol_check_checked] [mol_check_expand_icon_path] {
+:where([mol_check_checked]) [mol_check_expand_icon_path] {
 	transform: rotateZ(90deg);
 }
 

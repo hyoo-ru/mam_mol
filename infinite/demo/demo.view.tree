@@ -1,12 +1,18 @@
-$mol_infinite_demo $mol_example
+$mol_infinite_demo $mol_example_small
 	title \Infinite list demo
 	chunk_size 20
 	sub /
 		<= List $mol_infinite
-			after!anchor_id <= after!anchor_id /
-			Row!id <= Item!id $mol_filler
+			after* <= after* /
+			Row* <= Item* $mol_row
+				sub /
+					<= Photo* $mol_image uri <= photo* \
+					<= Info* $mol_list rows /
+						<= Name* $mol_paragraph title <= name* \
+						<= City* $mol_paragraph title <= city* \
 	tags /
 		\$mol_filler
+		\$mol_list
 		\infinite
 		\scroll
 		\virtual

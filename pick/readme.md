@@ -31,4 +31,4 @@ The array of trigger content. Click on trigger show/hide bubble.
 
 **`bubble_content() : []`**
 
-The array of popup content
+The array of popup content.

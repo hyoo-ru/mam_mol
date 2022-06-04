@@ -21,6 +21,5 @@
 	left: 0;
 	width: 100%;
 	background: hsla( 0, 0%, 100%, .25 );
-	backdrop-filter: blur(.25rem);
 	color: black;
 }

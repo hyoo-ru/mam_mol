@@ -154,11 +154,11 @@ namespace $.$$ {
 			const size_real = this.size_real()
 			const max_x = ( viewport.x.max - viewport.x.min ) / size_real.x
 			const max_y = ( viewport.y.max - viewport.y.min ) / size_real.y
-			return this.graphs().filter( graph => {
+			return this.graphs_positioned().filter( graph => {
 				const dims = graph.dimensions()
 				if( dims.x.min > dims.x.max ) return true
 				if( dims.y.min > dims.y.max ) return true
-				if( dims.x.max - dims.x.min < max_x && dims.y.max - dims.y.min < max_y ) return false
+				// if( dims.x.max - dims.x.min < max_x && dims.y.max - dims.y.min < max_y ) return false
 				if( dims.x.min > viewport.x.max ) return false
 				if( dims.x.max < viewport.x.min ) return false
 				if( dims.y.min > viewport.y.max ) return false
@@ -169,7 +169,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		graphs_positioned() {
-			const graphs = this.graphs_visible()
+			const graphs = this.graphs()
 			for (let graph of graphs) {
 				graph.shift = ()=> this.shift()
 				graph.scale = ()=> this.scale()

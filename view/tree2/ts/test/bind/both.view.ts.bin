@@ -30,11 +30,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * indexed!key?val <=> indexed_owner!key?val
+		 * indexed*?val <=> indexed_owner*?val
 		 * ```
 		 */
-		indexed(key: any, val?: any) {
-			return this.indexed_owner(key, val)
+		indexed(id: any, val?: any) {
+			return this.indexed_owner(id, val)
 		}
 		
 		/**
@@ -48,15 +48,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * class_indexed!key?val $mol_view expanded <=> cell_expanded!key?val
+		 * class_indexed*?val $mol_view expanded <=> cell_expanded*?val
 		 * ```
 		 */
 		@ $mol_mem_key
-		class_indexed(key: any, val?: any) {
+		class_indexed(id: any, val?: any) {
 			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_view()
 			
-			obj.expanded = () => this.cell_expanded(key, val)
+			obj.expanded = () => this.cell_expanded(id, val)
 			
 			return obj
 		}
@@ -132,11 +132,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * indexed_owner!key?val null
+		 * indexed_owner*?val null
 		 * ```
 		 */
 		@ $mol_mem_key
-		indexed_owner(key: any, val?: any) {
+		indexed_owner(id: any, val?: any) {
 			if ( val !== undefined ) return val as never
 			return null as any
 		}

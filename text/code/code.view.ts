@@ -20,5 +20,27 @@ namespace $.$$ {
 			return index
 		}
 		
+		@ $mol_mem_key
+		find_pos( offset: number ) {
+			
+			for( const [ index, line ] of this.text_lines().entries() ) {
+				if( line.length >= offset ) {
+					return this.Row( index + 1 ).find_pos( offset )
+				} else {
+					offset -= line.length + 1
+				}
+			}
+			
+			return null
+		}
+		
+		@ $mol_mem
+		sub() {
+			return [
+				this.Rows(),
+				... this.sidebar_showed() ? [ this.Copy() ] : []
+			]
+		}
+		
 	}
 }

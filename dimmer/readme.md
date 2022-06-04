@@ -1,6 +1,6 @@
 # $mol_dimmer
 
-Output text with dimmed not matched substrings.
+Output text with dimmed mismatched substrings.
 
 ## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_dimmer_demo)
 

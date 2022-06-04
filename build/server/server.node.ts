@@ -20,15 +20,15 @@ namespace $ {
 			
 			try {
 				
-				if( req.query._escaped_fragment_ ) {
+				// if( req.query._escaped_fragment_ ) {
 					
-					const fragment = decodeURIComponent( String( req.query._escaped_fragment_ ) )
-					const url = req.protocol + '://' + req.get( 'host' ) + req.path + '#!' + fragment
-					const html = $mol_browser.html( url )
+				// 	const fragment = decodeURIComponent( String( req.query._escaped_fragment_ ) )
+				// 	const url = req.protocol + '://' + req.get( 'host' ) + req.path + '#!' + fragment
+				// 	const html = $mol_browser.html( url )
 					
-					res.send( html ).end()
-					return
-				}
+				// 	res.send( html ).end()
+				// 	return
+				// }
 
 				return this.generate( req.url ) && Promise.resolve().then( next )
 			
@@ -107,15 +107,63 @@ namespace $ {
 				res : typeof $node.express.response ,
 				next : () => void
 			) => {
-				const match =  req.url.match( /(.*[^\-]\/)([\?#].*)?$/ )
+				
+				const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
 				if (! match) return next()
+				
+				const root = $mol_file.absolute(this.rootPublic())
 
-				const file = $mol_file.absolute(this.rootPublic())
-					.resolve(`${req.path}index.html`)
+				const file = root.resolve(`${req.path}index.html`)
 
-				if (! file.exists()) return next()
-
-				res.redirect(301, `${match[1]}-/test.html${match[2] ?? ''}`)
+				if (file.exists()) {
+					return res.redirect(301, `${match[1]}-/test.html${match[2] ?? ''}`)
+				}
+				
+				const dir = root.resolve(req.path)
+				
+				const build = this.build()
+				build.modEnsure( dir.path() )
+				
+				if( dir.type() === 'dir' ) {
+					const files = new Set< string >([ '-' ])
+					for( const file of dir.sub() ) {
+						files.add( file.name() )
+						if( /\.meta\.tree$/.test( file.name() ) ) {
+							const meta = $$.$mol_tree2_from_string( file.text() )
+							for( const pack of meta.select( 'pack', null ).kids ) {
+								files.add( pack.type )
+							}
+						}
+					}
+					const html = `
+						<style>
+							body {
+								display: flex;
+								flex-wrap: wrap;
+								font: 1rem/1.5rem sans-serif;
+								align-items: flex-start;
+								justify-content: center;
+								align-content: flex-start;
+							}
+							a {
+								display: flex;
+								padding: 0.75rem;
+								text-decoration: none;
+								flex: 0 1 10rem;
+								justify-content: center;
+								color: rgb(57, 115, 172);
+								font-weight: bolder;
+							}
+							a:hover {
+								background: hsl( 0deg, 0%, 0%, .05 )
+							}
+						</style>
+					` + [ ... files ].sort().map( file => `<a href="${file}">${file}</a>` ).join('\n')
+					return res.end( html )
+				}
+				
+				return next()
+				
 			}
 		}
 		

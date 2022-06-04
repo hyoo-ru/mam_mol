@@ -32,7 +32,7 @@
 }
 
 [mol_calendar_holiday] {
-	color: var(--mol_theme_shade);
+	color: var(--mol_theme_special);
 }
 
 [mol_calendar_ghost] {

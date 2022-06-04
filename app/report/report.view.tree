@@ -7,19 +7,19 @@ $mol_app_report $mol_page
 			rows <= rows /
 				<= headRower $mol_app_report_rower
 					cells <= headCells /
-	rower!id $mol_app_report_rower
-		cells <= rowerCells!id /
-	cell!id $mol_app_report_cell
-		content <= cell_content!id null
-		rows <= cellrows!id 1
-		cols <= cellCols!id 1
-	texter!id $mol_view
-		sub / <= cell_value!id?val null
-	select!id $mol_select
-		value?val <=> cell_value!id?val null
-		dictionary <= cell_options!id *
-	number!id $mol_number
-		value?val <=> cell_value!id?val null
+	rower* $mol_app_report_rower
+		cells <= rowerCells* /
+	cell* $mol_app_report_cell
+		content <= cell_content* null
+		rows <= cellrows* 1
+		cols <= cellCols* 1
+	texter* $mol_view
+		sub / <= cell_value*?val null
+	select* $mol_select
+		value?val <=> cell_value*?val null
+		dictionary <= cell_options* *
+	number* $mol_number
+		value?val <=> cell_value*?val null
 
 $mol_app_report_tabler $mol_view
 	dom_name \table

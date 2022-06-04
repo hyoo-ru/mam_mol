@@ -24,9 +24,6 @@
 	padding: 0;
 	width: 100%;
 	height: 100%;
-}
-
-[mol_view_root]:not([mol_view_root=""]) {
 	box-sizing: border-box;
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	font-size: 1rem;
@@ -40,11 +37,13 @@
 	background-image: repeating-linear-gradient(
 		-45deg,
 		#f92323,
-		#f92323 10px,
-		#ff3d3d 10px,
-		#ff3d3d 30px
+		#f92323 .5rem,
+		#ff3d3d .5rem,
+		#ff3d3d 1.5rem
 	);
 	color: black;
+	align-items: center;
+    justify-content: center;
 }
 
 @keyframes mol_view_wait_move {

@@ -199,7 +199,7 @@ namespace $ {
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test][mol_theme="$mol_theme_dark"] {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test]:where([mol_theme="$mol_theme_dark"]) {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
 			
 		},
 
@@ -256,7 +256,7 @@ namespace $ {
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test][mol_theme="$mol_theme_dark"] [mol_style_sheet_test_item] {\n\tcolor: red;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test]:where([mol_theme="$mol_theme_dark"]) :where([mol_style_sheet_test_item]) {\n\tcolor: red;\n}\n' )
 			
 		},
 
@@ -269,7 +269,7 @@ namespace $ {
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test2] [mol_style_sheet_test1] {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test2] :where([mol_style_sheet_test1]) {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
 			
 		},
 
@@ -284,7 +284,7 @@ namespace $ {
 				},
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test2] > [mol_style_sheet_test1] {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test2] > :where([mol_style_sheet_test1]) {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
 			
 		},
 

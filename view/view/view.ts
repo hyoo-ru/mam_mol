@@ -13,6 +13,8 @@ namespace $ {
 	export function $mol_view_state_key( suffix : string ) {
 		return suffix
 	}
+	
+	const error_shower = new WeakMap< Error, $mol_view >()
 
 	/// Reactive statefull lazy ViewModel
 	export class $mol_view extends $mol_object {
@@ -94,11 +96,11 @@ namespace $ {
 		@ $mol_mem
 		minimal_width() {
 			
-			const sub = this.sub()
-			if( !sub ) return 0
-			
 			let min = 0
 			try {
+				
+				const sub = this.sub()
+				if( !sub ) return 0
 				
 				sub.forEach( view => {
 					if( view instanceof $mol_view ) {
@@ -145,19 +147,9 @@ namespace $ {
 
 		@ $mol_mem
 		view_rect() {
-			this.view_rect_watcher()
-			return this.view_rect_cache()
-		}
-
-		@ $mol_mem
-		view_rect_cache( next = null as ClientRect | null ) {
-			return next
-		}
-
-		@ $mol_mem
-		view_rect_watcher() {
-			$mol_view.watchers.add( this )
-			return { destructor : ()=> $mol_view.watchers.delete( this ) }
+			$mol_wire_watch()
+			const { width, height, left, right, top, bottom } = this.dom_node().getBoundingClientRect()
+			return { width, height, left, right, top, bottom } // pick to optimize compare
 		}
 
 		dom_id() {
@@ -231,13 +223,19 @@ namespace $ {
 				
 			} catch( error: any ) {
 				
+				$mol_fail_log( error )
+				
 				$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
 				
-				if( $mol_fail_log( error ) ) {
-					try {
-						( node as HTMLElement ).innerText = error.message || error
-					} catch {}
-				}
+				if( error instanceof Promise ) return node
+				if( ( error_shower.get( error ) ?? this ) !== this ) return node
+				
+				try {
+					const message = error.message || error
+					;( node as HTMLElement ).innerText = message.replace( /^|$/mg, '\xA0\xA0' )
+				} catch {}
+				
+				error_shower.set( error, this )
 				
 			}
 			
@@ -382,7 +380,7 @@ namespace $ {
 		plugins() {
 			return [] as readonly $mol_view[]
 		}
-
+		
 		[ $mol_dev_format_head ]() {
 			return $mol_dev_format_span( {} ,
 				$mol_dev_format_native( this ) ,
