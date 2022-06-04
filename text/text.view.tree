@@ -11,9 +11,11 @@ $mol_text $mol_list
 	Quote* $mol_text
 		uri_resolve* <= uri_resolve* null
 		text <= quote_text* \
+		auto_scroll null
 	List* $mol_text
 		uri_resolve* <= uri_resolve* null
 		text <= list_text* \
+		auto_scroll null
 	Header* $mol_text_header
 		dom_name <= header_level* \h
 		content <= block_content* /
@@ -29,6 +31,7 @@ $mol_text $mol_list
 	Table_row* $mol_grid_row
 		cells <= table_cells* /
 	Table_cell* $mol_text
+		auto_scroll null
 		uri_resolve* <= uri_resolve* null
 		text <= table_cell_text* \
 	- \Lines

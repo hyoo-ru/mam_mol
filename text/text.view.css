@@ -34,7 +34,6 @@
 	display: block;
 	text-shadow: 0 0;
 	font-weight: normal;
-	position: relative;
 }
 
 * + [mol_text_header] {
@@ -92,10 +91,6 @@ h6[mol_text_header] {
 	border-radius: 0;
 }
 
-[mol_text_code_block] {
-	border-radius: var(--mol_gap_round);
-}
-
 [mol_text_link_http],
 [mol_text_link] {
 	padding: 0;
@@ -135,9 +130,9 @@ h6[mol_text_header] {
 [mol_text_code_copy] {
 	align-self: flex-start;
 	justify-self: flex-start;
+	margin-left: -1px;
 }
 
 [mol_text_code_copy_icon] {
 	background-color: var(--mol_theme_card);
-	margin-left: -1px;
 }

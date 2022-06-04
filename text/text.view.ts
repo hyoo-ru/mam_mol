@@ -216,7 +216,9 @@ namespace $.$$ {
 				const header = this.Header( index )
 				if( !header.Link().current() ) continue
 				
-				this.ensure_visible( header )
+				new $mol_after_tick(
+					()=> this.ensure_visible( header )
+				)
 				
 			}
 		}
