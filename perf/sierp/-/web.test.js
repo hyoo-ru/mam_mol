@@ -1514,23 +1514,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_wire_probe(task, next) {
-        const warm = $mol_wire_fiber.warm;
-        try {
-            $mol_wire_fiber.warm = false;
-            return task();
-        }
-        finally {
-            $mol_wire_fiber.warm = warm;
-        }
-    }
-    $.$mol_wire_probe = $mol_wire_probe;
-})($ || ($ = {}));
-//mol/wire/probe/probe.ts
-;
-"use strict";
-var $;
-(function ($) {
     $mol_test({
         'init with overload'() {
             class X extends $mol_object {

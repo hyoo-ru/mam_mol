@@ -64,6 +64,7 @@
     "$mol_memo",
     "$mol_wrapper",
     "$mol_dom_qname",
+    "$mol_wire_probe",
     "$mol_wire_watch",
     "$mol_const",
     "$mol_dom_render_attributes",

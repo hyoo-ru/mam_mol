@@ -3031,6 +3031,23 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_wire_probe(task, next) {
+        const warm = $mol_wire_fiber.warm;
+        try {
+            $mol_wire_fiber.warm = false;
+            return task();
+        }
+        finally {
+            $mol_wire_fiber.warm = warm;
+        }
+    }
+    $.$mol_wire_probe = $mol_wire_probe;
+})($ || ($ = {}));
+//mol/wire/probe/probe.ts
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_wire_watch() {
         const atom = $mol_wire_auto();
         if (atom instanceof $mol_wire_atom) {
@@ -3285,9 +3302,14 @@ var $;
         }
         static watchers = new Set();
         view_rect() {
-            $mol_wire_watch();
-            const { width, height, left, right, top, bottom } = this.dom_node().getBoundingClientRect();
-            return { width, height, left, right, top, bottom };
+            if ($mol_wire_probe(() => this.view_rect()) === undefined) {
+                $mol_wire_watch();
+                return null;
+            }
+            else {
+                const { width, height, left, right, top, bottom } = this.dom_node().getBoundingClientRect();
+                return { width, height, left, right, top, bottom };
+            }
         }
         dom_id() {
             return this.toString();
@@ -3996,23 +4018,6 @@ var $;
     $.$mol_book2 = $mol_book2;
 })($ || ($ = {}));
 //mol/book2/-view.tree/book2.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_probe(task, next) {
-        const warm = $mol_wire_fiber.warm;
-        try {
-            $mol_wire_fiber.warm = false;
-            return task();
-        }
-        finally {
-            $mol_wire_fiber.warm = warm;
-        }
-    }
-    $.$mol_wire_probe = $mol_wire_probe;
-})($ || ($ = {}));
-//mol/wire/probe/probe.ts
 ;
 "use strict";
 var $;
