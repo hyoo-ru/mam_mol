@@ -147,9 +147,13 @@ namespace $ {
 
 		@ $mol_mem
 		view_rect() {
-			$mol_wire_watch()
-			const { width, height, left, right, top, bottom } = this.dom_node().getBoundingClientRect()
-			return { width, height, left, right, top, bottom } // pick to optimize compare
+			if( $mol_wire_probe( ()=> this.view_rect() ) === undefined ) {
+				$mol_wire_watch()
+				return null // don't touch DOM to prevent instant reflow
+			} else {
+				const { width, height, left, right, top, bottom } = this.dom_node().getBoundingClientRect()
+				return { width, height, left, right, top, bottom } // pick to optimize compare
+			}
 		}
 
 		dom_id() {
