@@ -26,6 +26,7 @@ namespace $ {
 		if( left instanceof String ) return Object.is( left.valueOf(), right['valueOf']() )
 		if( left instanceof Date ) return Object.is( left.valueOf(), right['valueOf']() )
 		if( left instanceof RegExp ) return left.source === right['source'] && left.flags === right['flags']
+		if( left instanceof Error ) return left.stack === right['stack']
 
 		let left_cache = $mol_compare_deep_cache.get( left )
 		if( left_cache ) {
@@ -48,7 +49,6 @@ namespace $ {
 			else if( Array.isArray( left ) ) result = compare_array( left, right as any )
 			else if( left instanceof Set ) result = compare_set( left, right as any )
 			else if( left instanceof Map ) result = compare_map( left, right as any )
-			else if( left instanceof Error ) result = left.stack === ( right as any ).stack
 			else if( ArrayBuffer.isView( left ) ) result = compare_buffer( left, right as any )
 			else if( Symbol.toPrimitive in left ) result = compare_primitive( left, right )
 			else result = false

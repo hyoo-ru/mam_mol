@@ -471,6 +471,8 @@ var $;
             return Object.is(left.valueOf(), right['valueOf']());
         if (left instanceof RegExp)
             return left.source === right['source'] && left.flags === right['flags'];
+        if (left instanceof Error)
+            return left.stack === right['stack'];
         let left_cache = $.$mol_compare_deep_cache.get(left);
         if (left_cache) {
             const right_cache = left_cache.get(right);
@@ -491,8 +493,6 @@ var $;
                 result = compare_set(left, right);
             else if (left instanceof Map)
                 result = compare_map(left, right);
-            else if (left instanceof Error)
-                result = left.stack === right.stack;
             else if (ArrayBuffer.isView(left))
                 result = compare_buffer(left, right);
             else if (Symbol.toPrimitive in left)
