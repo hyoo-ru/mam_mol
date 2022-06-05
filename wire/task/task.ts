@@ -35,7 +35,7 @@ namespace $ {
 		}
 
 		complete() {
-			if( this.sub_empty ) this.destructor()
+			this.destructor()
 		}
 		
 		put( next: Result | Error | Promise< Result | Error > ) {
