@@ -3457,16 +3457,6 @@ var $;
                 this.Content()
             ];
         }
-        row_title(id, next) {
-            return this.Row(id).title(next);
-        }
-        Row(id) {
-            const obj = new this.$.$mol_perf_jsfb_row();
-            obj.selected = (next) => this.row_selected(id, next);
-            obj.drop = (event) => this.row_drop(id, event);
-            obj.id = () => this.row_id(id);
-            return obj;
-        }
         title() {
             return "$mol keyed";
         }
@@ -3477,76 +3467,76 @@ var $;
             ];
             return obj;
         }
-        create_1K(event) {
-            if (event !== undefined)
-                return event;
+        create_1K(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Create_1K() {
             const obj = new this.$.$mol_button_major();
             obj.dom_id = () => "run";
             obj.title = () => "Create 1,000 rows";
-            obj.click = (event) => this.create_1K(event);
+            obj.click = (next) => this.create_1K(next);
             return obj;
         }
-        create_10K(event) {
-            if (event !== undefined)
-                return event;
+        create_10K(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Create_10K() {
             const obj = new this.$.$mol_button_major();
             obj.dom_id = () => "runlots";
             obj.title = () => "Create 10,000 rows";
-            obj.click = (event) => this.create_10K(event);
+            obj.click = (next) => this.create_10K(next);
             return obj;
         }
-        append_1K(event) {
-            if (event !== undefined)
-                return event;
+        append_1K(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Append_1K() {
             const obj = new this.$.$mol_button_major();
             obj.dom_id = () => "add";
             obj.title = () => "Append 1,000 rows";
-            obj.click = (event) => this.append_1K(event);
+            obj.click = (next) => this.append_1K(next);
             return obj;
         }
-        update_10(event) {
-            if (event !== undefined)
-                return event;
+        update_10(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Update_10() {
             const obj = new this.$.$mol_button_major();
             obj.dom_id = () => "update";
             obj.title = () => "Update every 10th row";
-            obj.click = (event) => this.update_10(event);
+            obj.click = (next) => this.update_10(next);
             return obj;
         }
-        clear(event) {
-            if (event !== undefined)
-                return event;
+        clear(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Clear() {
             const obj = new this.$.$mol_button_major();
             obj.dom_id = () => "clear";
             obj.title = () => "Clear";
-            obj.click = (event) => this.clear(event);
+            obj.click = (next) => this.clear(next);
             return obj;
         }
-        swap(event) {
-            if (event !== undefined)
-                return event;
+        swap(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Swap() {
             const obj = new this.$.$mol_button_major();
             obj.dom_id = () => "swaprows";
             obj.title = () => "Swap Rows";
-            obj.click = (event) => this.swap(event);
+            obj.click = (next) => this.swap(next);
             return obj;
         }
         Controls() {
@@ -3569,8 +3559,33 @@ var $;
             ];
             return obj;
         }
+        row_selected(id, next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        row_drop(id, next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        row_id(id) {
+            return "";
+        }
+        row_title(id, next) {
+            return this.Row("0").title(next);
+        }
+        Row(id) {
+            const obj = new this.$.$mol_perf_jsfb_row();
+            obj.selected = (next) => this.row_selected(id, next);
+            obj.drop = (next) => this.row_drop(id, next);
+            obj.id = () => this.row_id(id);
+            return obj;
+        }
         rows() {
-            return [];
+            return [
+                this.Row("0")
+            ];
         }
         Rows() {
             const obj = new this.$.$mol_list();
@@ -3585,23 +3600,7 @@ var $;
             ];
             return obj;
         }
-        row_selected(id, next) {
-            if (next !== undefined)
-                return next;
-            return false;
-        }
-        row_drop(id, event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        row_id(id) {
-            return "";
-        }
     }
-    __decorate([
-        $mol_mem_key
-    ], $mol_perf_jsfb.prototype, "Row", null);
     __decorate([
         $mol_mem
     ], $mol_perf_jsfb.prototype, "Title", null);
@@ -3648,17 +3647,20 @@ var $;
         $mol_mem
     ], $mol_perf_jsfb.prototype, "Head", null);
     __decorate([
-        $mol_mem
-    ], $mol_perf_jsfb.prototype, "Rows", null);
-    __decorate([
-        $mol_mem
-    ], $mol_perf_jsfb.prototype, "Content", null);
-    __decorate([
         $mol_mem_key
     ], $mol_perf_jsfb.prototype, "row_selected", null);
     __decorate([
         $mol_mem_key
     ], $mol_perf_jsfb.prototype, "row_drop", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_perf_jsfb.prototype, "Row", null);
+    __decorate([
+        $mol_mem
+    ], $mol_perf_jsfb.prototype, "Rows", null);
+    __decorate([
+        $mol_mem
+    ], $mol_perf_jsfb.prototype, "Content", null);
     $.$mol_perf_jsfb = $mol_perf_jsfb;
     class $mol_perf_jsfb_row extends $mol_view {
         minimal_height() {
@@ -3707,9 +3709,9 @@ var $;
             const obj = new this.$.$mol_icon_cross();
             return obj;
         }
-        drop(event) {
-            if (event !== undefined)
-                return event;
+        drop(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Drop() {
@@ -3717,7 +3719,7 @@ var $;
             obj.sub = () => [
                 this.Drop_icon()
             ];
-            obj.click = (event) => this.drop(event);
+            obj.click = (next) => this.drop(next);
             return obj;
         }
     }

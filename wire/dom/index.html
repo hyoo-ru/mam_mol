@@ -36,9 +36,7 @@
 				// Setup invariants
 				root.childNodes = ()=> greet.checked ? [ form, greeting ] : [ form ]
 				greeting.textContent = ()=> `Hello ${nickname.value}!`
-				clear.style = ()=> ({
-					fontSize: new CSSUnitValue( 16 / devicePixelRatio, 'px' )
-				})
+				clear.style = ()=> ({ zoom: 1 / devicePixelRatio })
 				
 				// Set up handlers
 				clear.onclick = ()=> nickname.value = ''

@@ -14,35 +14,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_title*?next
-		 * ```
-		 */
-		row_title(id: any, next?: any) {
-			return this.Row(id).title(next)
-		}
-		
-		/**
-		 * ```tree
-		 * Row* $mol_perf_jsfb_row
-		 * 	title?next => row_title*?next
-		 * 	selected?next <=> row_selected*?next
-		 * 	drop?event <=> row_drop*?event
-		 * 	id <= row_id*
-		 * ```
-		 */
-		@ $mol_mem_key
-		Row(id: any) {
-			const obj = new this.$.$mol_perf_jsfb_row()
-			
-			obj.selected = (next?: any) => this.row_selected(id, next)
-			obj.drop = (event?: any) => this.row_drop(id, event)
-			obj.id = () => this.row_id(id)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * title \$mol keyed
 		 * ```
 		 */
@@ -68,12 +39,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * create_1K?event null
+		 * create_1K? null
 		 * ```
 		 */
 		@ $mol_mem
-		create_1K(event?: any) {
-			if ( event !== undefined ) return event as never
+		create_1K(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -82,7 +53,7 @@ namespace $ {
 		 * Create_1K $mol_button_major
 		 * 	dom_id \run
 		 * 	title \Create 1,000 rows
-		 * 	click?event <=> create_1K?event
+		 * 	click? <=> create_1K?
 		 * ```
 		 */
 		@ $mol_mem
@@ -91,19 +62,19 @@ namespace $ {
 			
 			obj.dom_id = () => "run"
 			obj.title = () => "Create 1,000 rows"
-			obj.click = (event?: any) => this.create_1K(event)
+			obj.click = (next?: any) => this.create_1K(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * create_10K?event null
+		 * create_10K? null
 		 * ```
 		 */
 		@ $mol_mem
-		create_10K(event?: any) {
-			if ( event !== undefined ) return event as never
+		create_10K(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -112,7 +83,7 @@ namespace $ {
 		 * Create_10K $mol_button_major
 		 * 	dom_id \runlots
 		 * 	title \Create 10,000 rows
-		 * 	click?event <=> create_10K?event
+		 * 	click? <=> create_10K?
 		 * ```
 		 */
 		@ $mol_mem
@@ -121,19 +92,19 @@ namespace $ {
 			
 			obj.dom_id = () => "runlots"
 			obj.title = () => "Create 10,000 rows"
-			obj.click = (event?: any) => this.create_10K(event)
+			obj.click = (next?: any) => this.create_10K(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * append_1K?event null
+		 * append_1K? null
 		 * ```
 		 */
 		@ $mol_mem
-		append_1K(event?: any) {
-			if ( event !== undefined ) return event as never
+		append_1K(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -142,7 +113,7 @@ namespace $ {
 		 * Append_1K $mol_button_major
 		 * 	dom_id \add
 		 * 	title \Append 1,000 rows
-		 * 	click?event <=> append_1K?event
+		 * 	click? <=> append_1K?
 		 * ```
 		 */
 		@ $mol_mem
@@ -151,19 +122,19 @@ namespace $ {
 			
 			obj.dom_id = () => "add"
 			obj.title = () => "Append 1,000 rows"
-			obj.click = (event?: any) => this.append_1K(event)
+			obj.click = (next?: any) => this.append_1K(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * update_10?event null
+		 * update_10? null
 		 * ```
 		 */
 		@ $mol_mem
-		update_10(event?: any) {
-			if ( event !== undefined ) return event as never
+		update_10(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -172,7 +143,7 @@ namespace $ {
 		 * Update_10 $mol_button_major
 		 * 	dom_id \update
 		 * 	title \Update every 10th row
-		 * 	click?event <=> update_10?event
+		 * 	click? <=> update_10?
 		 * ```
 		 */
 		@ $mol_mem
@@ -181,19 +152,19 @@ namespace $ {
 			
 			obj.dom_id = () => "update"
 			obj.title = () => "Update every 10th row"
-			obj.click = (event?: any) => this.update_10(event)
+			obj.click = (next?: any) => this.update_10(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * clear?event null
+		 * clear? null
 		 * ```
 		 */
 		@ $mol_mem
-		clear(event?: any) {
-			if ( event !== undefined ) return event as never
+		clear(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -202,7 +173,7 @@ namespace $ {
 		 * Clear $mol_button_major
 		 * 	dom_id \clear
 		 * 	title \Clear
-		 * 	click?event <=> clear?event
+		 * 	click? <=> clear?
 		 * ```
 		 */
 		@ $mol_mem
@@ -211,19 +182,19 @@ namespace $ {
 			
 			obj.dom_id = () => "clear"
 			obj.title = () => "Clear"
-			obj.click = (event?: any) => this.clear(event)
+			obj.click = (next?: any) => this.clear(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * swap?event null
+		 * swap? null
 		 * ```
 		 */
 		@ $mol_mem
-		swap(event?: any) {
-			if ( event !== undefined ) return event as never
+		swap(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -232,7 +203,7 @@ namespace $ {
 		 * Swap $mol_button_major
 		 * 	dom_id \swaprows
 		 * 	title \Swap Rows
-		 * 	click?event <=> swap?event
+		 * 	click? <=> swap?
 		 * ```
 		 */
 		@ $mol_mem
@@ -241,7 +212,7 @@ namespace $ {
 			
 			obj.dom_id = () => "swaprows"
 			obj.title = () => "Swap Rows"
-			obj.click = (event?: any) => this.swap(event)
+			obj.click = (next?: any) => this.swap(next)
 			
 			return obj
 		}
@@ -294,11 +265,72 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * rows /
+		 * row_selected*? false
+		 * ```
+		 */
+		@ $mol_mem_key
+		row_selected(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
+			return false
+		}
+		
+		/**
+		 * ```tree
+		 * row_drop*? null
+		 * ```
+		 */
+		@ $mol_mem_key
+		row_drop(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * row_id* \
+		 * ```
+		 */
+		row_id(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * row_title*?
+		 * ```
+		 */
+		row_title(id: any, next?: any) {
+			return this.Row("0").title(next)
+		}
+		
+		/**
+		 * ```tree
+		 * Row*0 $mol_perf_jsfb_row
+		 * 	title? => row_title*?
+		 * 	selected? <=> row_selected*?
+		 * 	drop? <=> row_drop*?
+		 * 	id <= row_id*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Row(id: any) {
+			const obj = new this.$.$mol_perf_jsfb_row()
+			
+			obj.selected = (next?: any) => this.row_selected(id, next)
+			obj.drop = (next?: any) => this.row_drop(id, next)
+			obj.id = () => this.row_id(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * rows / <= Row*0
 		 * ```
 		 */
 		rows() {
 			return [
+				this.Row("0")
 			] as readonly any[]
 		}
 		
@@ -333,37 +365,6 @@ namespace $ {
 			] as readonly any[]
 			
 			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * row_selected*?next false
-		 * ```
-		 */
-		@ $mol_mem_key
-		row_selected(id: any, next?: any) {
-			if ( next !== undefined ) return next as never
-			return false
-		}
-		
-		/**
-		 * ```tree
-		 * row_drop*?event null
-		 * ```
-		 */
-		@ $mol_mem_key
-		row_drop(id: any, event?: any) {
-			if ( event !== undefined ) return event as never
-			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * row_id* \
-		 * ```
-		 */
-		row_id(id: any) {
-			return ""
 		}
 	}
 	
@@ -444,7 +445,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * selected?next false
+		 * selected? false
 		 * ```
 		 */
 		@ $mol_mem
@@ -456,7 +457,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Title $mol_check
-		 * 	checked?next <=> selected?next
+		 * 	checked? <=> selected?
 		 * 	sub / <= title
 		 * ```
 		 */
@@ -486,12 +487,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * drop?event null
+		 * drop? null
 		 * ```
 		 */
 		@ $mol_mem
-		drop(event?: any) {
-			if ( event !== undefined ) return event as never
+		drop(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -499,7 +500,7 @@ namespace $ {
 		 * ```tree
 		 * Drop $mol_button_minor
 		 * 	sub / <= Drop_icon
-		 * 	click?event <=> drop?event
+		 * 	click? <=> drop?
 		 * ```
 		 */
 		@ $mol_mem
@@ -509,7 +510,7 @@ namespace $ {
 			obj.sub = () => [
 				this.Drop_icon()
 			] as readonly any[]
-			obj.click = (event?: any) => this.drop(event)
+			obj.click = (next?: any) => this.drop(next)
 			
 			return obj
 		}

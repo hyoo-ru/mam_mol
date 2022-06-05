@@ -1172,30 +1172,30 @@ declare namespace $ {
 declare namespace $ {
     class $mol_perf_jsfb extends $mol_scroll {
         sub(): readonly any[];
-        row_title(id: any, next?: any): string;
-        Row(id: any): $$.$mol_perf_jsfb_row;
         title(): string;
         Title(): $mol_view;
-        create_1K(event?: any): any;
+        create_1K(next?: any): any;
         Create_1K(): $mol_button_major;
-        create_10K(event?: any): any;
+        create_10K(next?: any): any;
         Create_10K(): $mol_button_major;
-        append_1K(event?: any): any;
+        append_1K(next?: any): any;
         Append_1K(): $mol_button_major;
-        update_10(event?: any): any;
+        update_10(next?: any): any;
         Update_10(): $mol_button_major;
-        clear(event?: any): any;
+        clear(next?: any): any;
         Clear(): $mol_button_major;
-        swap(event?: any): any;
+        swap(next?: any): any;
         Swap(): $mol_button_major;
         Controls(): $mol_row;
         Head(): $mol_row;
+        row_selected(id: any, next?: any): boolean;
+        row_drop(id: any, next?: any): any;
+        row_id(id: any): string;
+        row_title(id: any, next?: any): string;
+        Row(id: any): $$.$mol_perf_jsfb_row;
         rows(): readonly any[];
         Rows(): $$.$mol_list;
         Content(): $$.$mol_list;
-        row_selected(id: any, next?: any): boolean;
-        row_drop(id: any, event?: any): any;
-        row_id(id: any): string;
     }
     class $mol_perf_jsfb_row extends $mol_view {
         minimal_height(): number;
@@ -1209,7 +1209,7 @@ declare namespace $ {
         selected(next?: any): boolean;
         Title(): $$.$mol_check;
         Drop_icon(): $mol_icon_cross;
-        drop(event?: any): any;
+        drop(next?: any): any;
         Drop(): $mol_button_minor;
     }
 }
