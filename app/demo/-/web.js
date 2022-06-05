@@ -2213,8 +2213,7 @@ var $;
             };
         }
         complete() {
-            if (this.sub_empty)
-                this.destructor();
+            this.destructor();
         }
         put(next) {
             const prev = this.cache;
