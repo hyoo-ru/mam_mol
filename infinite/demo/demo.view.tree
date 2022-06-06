@@ -1,15 +1,17 @@
-$mol_infinite_demo $mol_example_small
+$mol_infinite_demo $mol_example_large
 	title \Infinite list demo
 	chunk_size 20
 	sub /
-		<= List $mol_infinite
-			after* <= after* /
-			Row* <= Item* $mol_row
-				sub /
-					<= Photo* $mol_image uri <= photo* \
-					<= Info* $mol_list rows /
-						<= Name* $mol_paragraph title <= name* \
-						<= City* $mol_paragraph title <= city* \
+		<= Scroll $mol_scroll sub /
+			<= List $mol_infinite
+				before* <= before* /
+				after* <= after* /
+				Row* <= Item* $mol_row
+					sub /
+						<= Photo* $mol_image uri <= photo* \
+						<= Info* $mol_list rows /
+							<= Name* $mol_paragraph title <= name* \
+							<= City* $mol_paragraph title <= city* \
 	tags /
 		\$mol_filler
 		\$mol_list

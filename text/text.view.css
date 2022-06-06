@@ -37,7 +37,7 @@
 }
 
 * + [mol_text_header] {
-	padding-top: 0.75rem;
+	margin-top: 0.75rem;
 }
 
 h1[mol_text_header] {
