@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_infinite_demo extends $mol_example_small {
+	export class $mol_infinite_demo extends $mol_example_large {
 		
 		/**
 		 * ```tree
@@ -21,12 +21,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= List
+		 * sub / <= Scroll
 		 * ```
 		 */
 		sub() {
 			return [
-				this.List()
+				this.Scroll()
 			] as readonly any[]
 		}
 		
@@ -49,6 +49,16 @@ namespace $ {
 				"scroll",
 				"virtual",
 				"container"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * before* /
+		 * ```
+		 */
+		before(id: any) {
+			return [
 			] as readonly any[]
 		}
 		
@@ -172,6 +182,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * List $mol_infinite
+		 * 	before* <= before*
 		 * 	after* <= after*
 		 * 	Row* <= Item*
 		 * ```
@@ -180,8 +191,25 @@ namespace $ {
 		List() {
 			const obj = new this.$.$mol_infinite()
 			
+			obj.before = (id: any) => this.before(id)
 			obj.after = (id: any) => this.after(id)
 			obj.Row = (id: any) => this.Item(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Scroll $mol_scroll sub / <= List
+		 * ```
+		 */
+		@ $mol_mem
+		Scroll() {
+			const obj = new this.$.$mol_scroll()
+			
+			obj.sub = () => [
+				this.List()
+			] as readonly any[]
 			
 			return obj
 		}

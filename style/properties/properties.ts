@@ -2,7 +2,7 @@ namespace $ {
 
 	export type $mol_style_properties = Partial< $mol_type_override< CSSStyleDeclaration , Overrides > >
 
-	type Common = 'inherit' | 'initial' | 'unset'
+	type Common = 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer'
 
 	type Color =
 	| 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure'
@@ -223,7 +223,10 @@ namespace $ {
 				align: Span_align | readonly [ Span_align , Span_align ] | Common
 
 			}
-
+			
+			/** Offsets for the optimal viewing region of the scrollport: the region used as the target region for placing things in view of the user. */
+			padding?: Directions< Length | 'auto' >
+			
 		}
 		
 		/** Element's width. By default, it sets the width of the content area, but if `boxSizing` is set to `border-box`, it sets the width of the border area. */

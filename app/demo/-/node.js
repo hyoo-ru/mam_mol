@@ -3908,6 +3908,9 @@ var $;
             alignSelf: 'stretch',
             boxSizing: 'border-box',
             willChange: 'scroll-position',
+            scroll: {
+                padding: [rem(.75), 0],
+            },
             maxHeight: per(100),
             maxWidth: per(100),
             webkitOverflowScrolling: 'touch',
@@ -8111,7 +8114,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/text/text.view.css", "[mol_text] {\n\tline-height: 1.5em;\n\tbox-sizing: border-box;\n\tmax-width: 60rem;\n\tborder-radius: var(--mol_gap_round);\n\twhite-space: pre-line;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex: 0 0 auto;\n\ttab-size: 4;\n}\n\n[mol_text_paragraph] {\n\tpadding: var(--mol_gap_text);\n\toverflow: auto;\n\tmax-width: 100%;\n\tdisplay: block;\n}\n\n[mol_text_span] {\n\tdisplay: inline;\n}\n\n[mol_text_string] {\n\tdisplay: inline;\n\tflex: 0 1 auto;\n}\n\n[mol_text_quote] {\n\tbox-shadow: inset 1px 0 0px 0px var(--mol_theme_line);\n}\n\n[mol_text_header] {\n\tdisplay: block;\n\ttext-shadow: 0 0;\n\tfont-weight: normal;\n}\n\n* + [mol_text_header] {\n\tpadding-top: 0.75rem;\n}\n\nh1[mol_text_header] {\n\tfont-size: 1.5rem;\n}\n\nh2[mol_text_header] {\n\tfont-size: 1.5rem;\n\tfont-style: italic;\n}\n\nh3[mol_text_header] {\n\tfont-size: 1.25rem;\n}\n\nh4[mol_text_header] {\n\tfont-size: 1.25em;\n\tfont-style: italic;\n}\n\nh5[mol_text_header] {\n\tfont-size: 1rem;\n}\n\nh6[mol_text_header] {\n\tfont-size: 1rem;\n\tfont-style: italic;\n}\n\n[mol_text_list] {\n\tpadding-left: 1.5rem;\n}\n\n[mol_text_list_paragraph] {\n\tdisplay: list-item;\n}\n\n[mol_text_list_paragraph]::before {\n\tcontent: '•';\n\twidth: 1.5rem;\n\tdisplay: inline-block;\n\tposition: absolute;\n\tmargin-left: -1.5rem;\n}\n\n[mol_text_table_cell] {\n\twidth: auto;\n\tdisplay: table-cell;\n\tvertical-align: baseline;\n\tpadding: 0;\n\tborder-radius: 0;\n}\n\n[mol_text_link_http],\n[mol_text_link] {\n\tpadding: 0;\n}\n\n[mol_text_image] {\n\tobject-fit: contain;\n\tobject-position: center;\n\tdisplay: inline;\n\taspect-ratio: auto;\n}\n\n[mol_text_code_line] {\n\tdisplay: inline-block;\n}\n\n[mol_text_type=\"strong\"] {\n\ttext-shadow: 0 0;\n}\n\n[mol_text_type=\"emphasis\"] {\n\tfont-style: italic;\n}\n\n[mol_text_type=\"strike\"] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_text_type=\"remark\"] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_text_type=\"quote\"] {\n\tfont-style: italic;\n}\n\n[mol_text_code_copy] {\n\talign-self: flex-start;\n\tjustify-self: flex-start;\n\tmargin-left: -1px;\n}\n\n[mol_text_code_copy_icon] {\n\tbackground-color: var(--mol_theme_card);\n}\n");
+    $mol_style_attach("mol/text/text.view.css", "[mol_text] {\n\tline-height: 1.5em;\n\tbox-sizing: border-box;\n\tmax-width: 60rem;\n\tborder-radius: var(--mol_gap_round);\n\twhite-space: pre-line;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex: 0 0 auto;\n\ttab-size: 4;\n}\n\n[mol_text_paragraph] {\n\tpadding: var(--mol_gap_text);\n\toverflow: auto;\n\tmax-width: 100%;\n\tdisplay: block;\n}\n\n[mol_text_span] {\n\tdisplay: inline;\n}\n\n[mol_text_string] {\n\tdisplay: inline;\n\tflex: 0 1 auto;\n}\n\n[mol_text_quote] {\n\tbox-shadow: inset 1px 0 0px 0px var(--mol_theme_line);\n}\n\n[mol_text_header] {\n\tdisplay: block;\n\ttext-shadow: 0 0;\n\tfont-weight: normal;\n}\n\n* + [mol_text_header] {\n\tmargin-top: 0.75rem;\n}\n\nh1[mol_text_header] {\n\tfont-size: 1.5rem;\n}\n\nh2[mol_text_header] {\n\tfont-size: 1.5rem;\n\tfont-style: italic;\n}\n\nh3[mol_text_header] {\n\tfont-size: 1.25rem;\n}\n\nh4[mol_text_header] {\n\tfont-size: 1.25em;\n\tfont-style: italic;\n}\n\nh5[mol_text_header] {\n\tfont-size: 1rem;\n}\n\nh6[mol_text_header] {\n\tfont-size: 1rem;\n\tfont-style: italic;\n}\n\n[mol_text_list] {\n\tpadding-left: 1.5rem;\n}\n\n[mol_text_list_paragraph] {\n\tdisplay: list-item;\n}\n\n[mol_text_list_paragraph]::before {\n\tcontent: '•';\n\twidth: 1.5rem;\n\tdisplay: inline-block;\n\tposition: absolute;\n\tmargin-left: -1.5rem;\n}\n\n[mol_text_table_cell] {\n\twidth: auto;\n\tdisplay: table-cell;\n\tvertical-align: baseline;\n\tpadding: 0;\n\tborder-radius: 0;\n}\n\n[mol_text_link_http],\n[mol_text_link] {\n\tpadding: 0;\n}\n\n[mol_text_image] {\n\tobject-fit: contain;\n\tobject-position: center;\n\tdisplay: inline;\n\taspect-ratio: auto;\n}\n\n[mol_text_code_line] {\n\tdisplay: inline-block;\n}\n\n[mol_text_type=\"strong\"] {\n\ttext-shadow: 0 0;\n}\n\n[mol_text_type=\"emphasis\"] {\n\tfont-style: italic;\n}\n\n[mol_text_type=\"strike\"] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_text_type=\"remark\"] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_text_type=\"quote\"] {\n\tfont-style: italic;\n}\n\n[mol_text_code_copy] {\n\talign-self: flex-start;\n\tjustify-self: flex-start;\n\tmargin-left: -1px;\n}\n\n[mol_text_code_copy_icon] {\n\tbackground-color: var(--mol_theme_card);\n}\n");
 })($ || ($ = {}));
 //mol/text/-css/text.view.css.ts
 ;
@@ -21917,17 +21920,54 @@ var $;
 var $;
 (function ($) {
     class $mol_infinite extends $mol_list {
+        before(id) {
+            return [];
+        }
         after(id) {
+            return [];
+        }
+        row_ids(next) {
+            if (next !== undefined)
+                return next;
             return [];
         }
         Row(id) {
             const obj = new this.$.$mol_view();
             return obj;
         }
+        Before(id) {
+            const obj = new this.$.$mol_view();
+            obj.minimal_width = () => 0;
+            obj.minimal_height = () => 0;
+            obj.auto = () => this.before_load(id);
+            return obj;
+        }
+        After(id) {
+            const obj = new this.$.$mol_view();
+            obj.minimal_width = () => 0;
+            obj.minimal_height = () => 0;
+            obj.auto = () => this.after_load(id);
+            return obj;
+        }
+        before_load(id) {
+            return null;
+        }
+        after_load(id) {
+            return null;
+        }
     }
+    __decorate([
+        $mol_mem
+    ], $mol_infinite.prototype, "row_ids", null);
     __decorate([
         $mol_mem_key
     ], $mol_infinite.prototype, "Row", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_infinite.prototype, "Before", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_infinite.prototype, "After", null);
     $.$mol_infinite = $mol_infinite;
 })($ || ($ = {}));
 //mol/infinite/-view.tree/infinite.view.tree.ts
@@ -21935,37 +21975,57 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $mol_style_attach("mol/infinite/infinite.view.css", "[mol_infinite_before],\n[mol_infinite_after] {\n\toverflow-anchor: none;\n}\n\n[mol_infinite_after][mol_view_error=\"Promise\"] {\n\theight: 100vh;\n}\n");
+})($ || ($ = {}));
+//mol/infinite/-css/infinite.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     var $$;
     (function ($$) {
         class $mol_infinite extends $.$mol_infinite {
-            row_ids() {
-                let ids = $mol_mem_cached(() => this.row_ids()) ?? [];
-                if (ids.length === 0)
-                    ids = this.after(undefined);
-                if (ids.length === 0)
-                    return [];
-                const rect = this.view_rect();
-                if (!rect)
-                    return ids;
-                const window_height = $mol_window.size().height;
-                if (rect.bottom < window_height * 3) {
-                    try {
-                        const news = this.after(ids[ids.length - 1]);
-                        ids = [...ids, ...news];
-                    }
-                    catch (error) {
-                        $mol_fail_log(error);
-                    }
-                }
-                return ids;
+            before_load(anchor) {
+                const more = this.before(anchor);
+                new $mol_after_tick(() => {
+                    let ids = this.row_ids();
+                    const index = Math.max(0, ids.indexOf(anchor));
+                    const unique = new Set([
+                        ...ids.slice(0, index),
+                        ...more,
+                        ...ids.slice(index),
+                    ]);
+                    this.row_ids([...unique]);
+                });
+            }
+            after_load(anchor) {
+                const more = this.after(anchor);
+                new $mol_after_tick(() => {
+                    let ids = this.row_ids();
+                    const index = (ids.indexOf(anchor) + 1) || ids.length;
+                    const unique = new Set([
+                        ...ids.slice(0, index),
+                        ...more,
+                        ...ids.slice(index),
+                    ]);
+                    this.row_ids([...unique]);
+                });
             }
             rows() {
-                return this.row_ids().map(id => this.Row(id));
+                const ids = this.row_ids();
+                return [
+                    this.Before(ids.at(0)),
+                    ...ids.map(id => this.Row(id)),
+                    this.After(ids.at(-1)),
+                ];
             }
         }
         __decorate([
-            $mol_mem
-        ], $mol_infinite.prototype, "row_ids", null);
+            $mol_mem_key
+        ], $mol_infinite.prototype, "before_load", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_infinite.prototype, "after_load", null);
         __decorate([
             $mol_mem
         ], $mol_infinite.prototype, "rows", null);
@@ -21977,7 +22037,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_infinite_demo extends $mol_example_small {
+    class $mol_infinite_demo extends $mol_example_large {
         title() {
             return "Infinite list demo";
         }
@@ -21986,7 +22046,7 @@ var $;
         }
         sub() {
             return [
-                this.List()
+                this.Scroll()
             ];
         }
         tags() {
@@ -21998,6 +22058,9 @@ var $;
                 "virtual",
                 "container"
             ];
+        }
+        before(id) {
+            return [];
         }
         after(id) {
             return [];
@@ -22044,8 +22107,16 @@ var $;
         }
         List() {
             const obj = new this.$.$mol_infinite();
+            obj.before = (id) => this.before(id);
             obj.after = (id) => this.after(id);
             obj.Row = (id) => this.Item(id);
+            return obj;
+        }
+        Scroll() {
+            const obj = new this.$.$mol_scroll();
+            obj.sub = () => [
+                this.List()
+            ];
             return obj;
         }
     }
@@ -22067,6 +22138,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_infinite_demo.prototype, "List", null);
+    __decorate([
+        $mol_mem
+    ], $mol_infinite_demo.prototype, "Scroll", null);
     $.$mol_infinite_demo = $mol_infinite_demo;
 })($ || ($ = {}));
 //mol/infinite/demo/-view.tree/demo.view.tree.ts
@@ -22097,7 +22171,7 @@ var $;
         class $mol_infinite_demo extends $.$mol_infinite_demo {
             after(anchor_id = 0) {
                 this.$.$mol_wait_timeout(1000);
-                return Array.from({ length: this.chunk_size() }, (_, index) => anchor_id + index);
+                return Array.from({ length: this.chunk_size() }, (_, index) => anchor_id + index + 1);
             }
             photo(index) {
                 $mol_wire_solid();
@@ -22113,7 +22187,7 @@ var $;
             }
         }
         __decorate([
-            $mol_action
+            $mol_mem_key
         ], $mol_infinite_demo.prototype, "after", null);
         __decorate([
             $mol_mem_key
