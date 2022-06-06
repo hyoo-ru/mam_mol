@@ -1,3 +1,5 @@
-$mol_hint $mol_pop_over
-	bubble_content /
-		<= title
+$mol_hint $mol_check
+	dictionary *
+	Icon $mol_icon_help_circle_outline
+	hint_close @ \Hide
+	hint_open @ \Hint
