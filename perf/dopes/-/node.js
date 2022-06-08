@@ -2136,6 +2136,8 @@ var $;
 var $;
 (function ($) {
     function $mol_wire_async(obj) {
+        let fiber;
+        const temp = $mol_wire_task.getter(obj);
         return new Proxy(obj, {
             get(obj, field) {
                 const val = obj[field];
@@ -2150,8 +2152,8 @@ var $;
                 };
             },
             apply(obj, self, args) {
-                const temp = $mol_wire_task.getter(obj);
-                const fiber = temp(self, args);
+                fiber?.destructor();
+                fiber = temp(self, args);
                 return fiber.async();
             },
         });
