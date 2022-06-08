@@ -2,7 +2,7 @@ namespace $ {
 
 	$mol_test({
 		
-		async 'Latest Calls Wins on Concurrency'( $ ) {
+		async 'Latest method calls wins'( $ ) {
 			
 			class NameLogger extends $mol_object2 {
 				
@@ -32,18 +32,27 @@ namespace $ {
 
 		},
 
-		async 'Wrap function'( $ ) {
+		async 'Latest function calls wins'( $ ) {
 			
-			const name = $mol_wire_async( function( name: string ) {
+			const first = [] as string[]
+			const last = [] as string[]
+			
+			function send_name( next: string ) {
+				$mol_wire_sync( first ).push( next )
 				$.$mol_wait_timeout(0)
-				return name
-			} )
+				last.push( next )
+			}
 			
+			const name = $mol_wire_async( send_name )
+			
+			name( 'john' )
 			const promise = name( 'jin' )
 			
 			$.$mol_after_mock_warp()
+			await promise
 			
-			$mol_assert_like( await promise, 'jin' )
+			$mol_assert_like( first, [ 'john', 'jin' ] )
+			$mol_assert_like( last, [ 'jin' ] )
 			
 		},
 
