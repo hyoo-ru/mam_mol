@@ -18,7 +18,14 @@ namespace $.$$ {
 			
 			this.$.$mol_syntax2_md_code.tokenize(
 				text,
-				( name , found , chunks )=> tokens.push({ name , found , chunks }),
+				( name , found , chunks )=> {
+					if( name === 'code-sexpr' ) {
+						tokens.push({ name: 'code-punctuation', found: '(', chunks: [] })
+						tokens.push({ name: 'code-call', found: chunks[0], chunks: [] })
+					} else {
+						tokens.push({ name , found , chunks })	
+					}
+				},
 			)
 			
 			return tokens as Readonly< typeof tokens >
