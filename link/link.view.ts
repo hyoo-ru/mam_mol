@@ -36,7 +36,7 @@ namespace $.$$ {
 			if( keys.length === 0 ) return false
 
 			for( const key of keys ) {
-				if( this.$.$mol_state_arg.value( key ) !== args[ key ] ) return false
+				if( this.$.$mol_state_arg.value( key ) != args[ key ] ) return false
 			}
 
 			return true
