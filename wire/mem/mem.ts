@@ -10,12 +10,12 @@ namespace $ {
 			Prop extends Extract< Host[ Field ] , ( ... args: any[] )=> any >,
 		>(
 			host : Host ,
-			field : Field ,
+			field : Field | string ,
 			descr? : TypedPropertyDescriptor< Prop >
 		)=> {
 
 			if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
-			const orig = descr?.value! ?? host[ field ]
+			const orig = descr?.value! ?? host[ field as Field ]
 			
 			const sup = Reflect.getPrototypeOf( host )!
 			if( typeof sup[ field as any ] === 'function' ) {
