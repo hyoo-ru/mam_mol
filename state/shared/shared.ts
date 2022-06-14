@@ -38,7 +38,10 @@ namespace $ {
 			const key = `${this}.peer()`
 			const id = this.$.$mol_state_local.value( key )
 			if( id ) return id as string
-			return this.$.$mol_state_local.value( key, $mol_guid() )!
+			return this.$.$mol_state_local.value(
+				key,
+				1 + Math.floor( Math.random() * ( 2 ** ( 6 * 8 ) - 2 ) ),
+			)!
 			// return $mol_hash_string( this.keys_serial().public )
 		}
 		
