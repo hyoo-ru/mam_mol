@@ -37,7 +37,7 @@ namespace $ {
 		peer() {
 			const key = `${this}.peer()`
 			const id = this.$.$mol_state_local.value( key )
-			if( id ) return id as string
+			if( id ) return id as number
 			return this.$.$mol_state_local.value(
 				key,
 				1 + Math.floor( Math.random() * ( 2 ** ( 6 * 8 ) - 2 ) ),
