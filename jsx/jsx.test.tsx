@@ -87,12 +87,12 @@ namespace $ {
 			}
 
 			const Bar = ( props: {}, icon: Element )=> {
-				return <span>{ icon }</span>
+				return <span>{ icon }<i id="label"/></span>
 			}
 
 			const dom = <Foo id="foo" />
 
-			$mol_assert_equal( dom.outerHTML, '<div id="foo" class="Foo"><span id="foo/bar" class="Foo_bar Bar"><img id="foo/icon" class="Foo_icon"></span></div>' )
+			$mol_assert_equal( dom.outerHTML, '<div id="foo" class="Foo"><span id="foo/bar" class="Foo_bar Bar"><img id="foo/icon" class="Foo_icon"><i id="foo/bar/label" class="Foo_bar_label Bar_label"></i></span></div>' )
 			
 		} ,
 		

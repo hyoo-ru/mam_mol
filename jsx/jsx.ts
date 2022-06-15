@@ -25,7 +25,7 @@ namespace $ {
 
 		const id = props && props.id || ''
 		const guid = id ? $mol_jsx_prefix ? $mol_jsx_prefix + '/'+ id : id : $mol_jsx_prefix
-		const crumbs_self = id ? $mol_jsx_crumbs.replace( /([^ ]+)/, `$1_${id}` ) : $mol_jsx_crumbs
+		const crumbs_self = id ? $mol_jsx_crumbs.replace( /(\S+)/g, `$1_${id}` ) : $mol_jsx_crumbs
 		
 		if( Elem && $mol_jsx_booked ) {
 			if( $mol_jsx_booked.has( id ) ) {
