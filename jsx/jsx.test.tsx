@@ -105,7 +105,42 @@ namespace $ {
 				</div>
 			}
 
-			$mol_assert_fail( ()=> <App id="/foo" />, 'JSX already has tag with id "/bar"' )
+			$mol_assert_fail( ()=> <App id="/foo" />, 'JSX already has tag with id "/foo/bar"' )
+			
+		} ,
+		
+		'Owner based guid generationn'() {
+
+			const Foo = ()=> {
+				return <div>
+					<Bar id="/bar" icon={ ()=> <img id="/icon" /> } />
+				</div>
+			}
+
+			const Bar = ( props: { icon: ()=> Element } )=> {
+				return <span>{ props.icon() }</span>
+			}
+
+			const dom = <Foo id="/foo" />
+
+			$mol_assert_equal( dom.outerHTML, '<div id="/foo"><span id="/foo/bar"><img id="/foo/icon"></span></div>' )
+			
+		} ,
+		
+		'Fail on same ids from different caller'() {
+
+			const Foo = ()=> {
+				return <div>
+					<img id="/icon" />
+					<Bar id="/bar" icon={ ()=> <img id="/icon" /> } />
+				</div>
+			}
+
+			const Bar = ( props: { icon: ()=> Element } )=> {
+				return <span>{ props.icon() }</span>
+			}
+
+			$mol_assert_fail( ()=> <Foo id="/foo" />, 'JSX already has tag with id "/foo/icon"' )
 			
 		} ,
 		

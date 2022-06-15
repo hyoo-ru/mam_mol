@@ -23,18 +23,56 @@ namespace $ {
 	) : Element | DocumentFragment {
 
 		const id = props && props.id || ''
-
+		const guid = $mol_jsx_prefix + id
+		
 		if( Elem && $mol_jsx_booked ) {
 			if( $mol_jsx_booked.has( id ) ) {
-				$mol_fail( new Error( `JSX already has tag with id ${ JSON.stringify( id ) }` ) )
+				$mol_fail( new Error( `JSX already has tag with id ${ JSON.stringify( guid ) }` ) )
 			} else {
 				$mol_jsx_booked.add( id )
 			}
 		}
 
-		const guid = $mol_jsx_prefix + id
-
 		let node: Element | DocumentFragment | null = guid ? $mol_jsx_document.getElementById( guid ) : null
+
+		if( $mol_jsx_prefix ) {
+			
+			const prefix_ext = $mol_jsx_prefix
+			const booked_ext = $mol_jsx_booked
+			
+			for( const field in props ) {
+				
+				const func = props[ field ]
+				if( typeof func !== 'function' ) continue
+				
+				
+				const wrapper = function( this: any, ... args: any[] ) {
+					
+					const prefix = $mol_jsx_prefix
+					const booked = $mol_jsx_booked
+					
+					try {
+		
+						$mol_jsx_prefix = prefix_ext
+						$mol_jsx_booked = booked_ext
+						
+						return func.call( this, ... args )
+						
+					} finally {
+						
+						$mol_jsx_prefix = prefix
+						$mol_jsx_booked = booked
+	
+					}
+					
+				}
+				
+				$mol_func_name_from( wrapper, func )
+				props[ field ] = wrapper as any
+				
+			}
+			
+		}
 
 		if( typeof Elem !== 'string' ) {
 
