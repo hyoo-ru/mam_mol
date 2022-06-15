@@ -1,6 +1,7 @@
 namespace $ {
 
 	export let $mol_jsx_prefix = ''
+	export let $mol_jsx_crumbs = ''
 
 	export let $mol_jsx_booked = null as null | Set< string >
 	
@@ -24,6 +25,7 @@ namespace $ {
 
 		const id = props && props.id || ''
 		const guid = id ? $mol_jsx_prefix ? $mol_jsx_prefix + '/'+ id : id : $mol_jsx_prefix
+		const crumbs_self = id ? $mol_jsx_crumbs.replace( /([^ ]+)/, `$1_${id}` ) : $mol_jsx_crumbs
 		
 		if( Elem && $mol_jsx_booked ) {
 			if( $mol_jsx_booked.has( id ) ) {
@@ -39,6 +41,7 @@ namespace $ {
 			
 			const prefix_ext = $mol_jsx_prefix
 			const booked_ext = $mol_jsx_booked
+			const crumbs_ext = $mol_jsx_crumbs
 			
 			for( const field in props ) {
 				
@@ -50,11 +53,13 @@ namespace $ {
 					
 					const prefix = $mol_jsx_prefix
 					const booked = $mol_jsx_booked
+					const crumbs = $mol_jsx_crumbs
 					
 					try {
 		
 						$mol_jsx_prefix = prefix_ext
 						$mol_jsx_booked = booked_ext
+						$mol_jsx_crumbs = crumbs_ext
 						
 						return func.call( this, ... args )
 						
@@ -62,6 +67,7 @@ namespace $ {
 						
 						$mol_jsx_prefix = prefix
 						$mol_jsx_booked = booked
+						$mol_jsx_crumbs = crumbs
 	
 					}
 					
@@ -86,6 +92,7 @@ namespace $ {
 				view.childNodes = childNodes
 				
 				if( !view.ownerDocument ) view.ownerDocument = $mol_jsx_document
+				view.className = ( crumbs_self ? crumbs_self + ' ' : '' ) + ( Elem['name'] || Elem )
 				
 				node = view.valueOf()
 				
@@ -97,11 +104,13 @@ namespace $ {
 
 				const prefix = $mol_jsx_prefix
 				const booked = $mol_jsx_booked
+				const crumbs = $mol_jsx_crumbs
 				
 				try {
 	
 					$mol_jsx_prefix = guid
 					$mol_jsx_booked = new Set
+					$mol_jsx_crumbs = ( crumbs_self ? crumbs_self + ' ' : '' ) + ( Elem['name'] || Elem )
 	
 					return ( Elem as any )( props , ... childNodes )
 					
@@ -109,6 +118,7 @@ namespace $ {
 
 					$mol_jsx_prefix = prefix
 					$mol_jsx_booked = booked
+					$mol_jsx_crumbs = crumbs
 	
 				}
 				
@@ -151,6 +161,7 @@ namespace $ {
 		}
 
 		if( guid ) ( node as Element ).id = guid
+		if( $mol_jsx_crumbs ) ( node as Element ).className = ( props?.['class'] ? props['class'] + ' ' : '' ) + crumbs_self
 
 		return node
 

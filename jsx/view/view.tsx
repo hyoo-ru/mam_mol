@@ -9,6 +9,7 @@ namespace $ {
 		
 		attributes! : Partial< Pick< this , Exclude< keyof this , 'valueOf' > > >
 		ownerDocument! : typeof $mol_jsx_document
+		className! : typeof $mol_jsx_crumbs
 		
 		get childNodes() {
 			return this._kids()
@@ -25,12 +26,14 @@ namespace $ {
 			
 			const prefix = $mol_jsx_prefix
 			const booked = $mol_jsx_booked
+			const crumbs = $mol_jsx_crumbs
 			const document = $mol_jsx_document
 			
 			try {
 				
 				$mol_jsx_prefix = this[ Symbol.toStringTag ]
 				$mol_jsx_booked = new Set
+				$mol_jsx_crumbs = this.className
 				$mol_jsx_document = this.ownerDocument
 
 				return this.render()
@@ -39,6 +42,7 @@ namespace $ {
 
 				$mol_jsx_prefix = prefix
 				$mol_jsx_booked = booked
+				$mol_jsx_crumbs = crumbs
 				$mol_jsx_document = document
 
 			}
