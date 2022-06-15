@@ -70,9 +70,9 @@ namespace $ {
 				return <button title={ props.hint } >{ target() }</button>
 			}
 
-			const dom = <Button id="/foo" hint="click me">{ ()=> 'hey!' }</Button>
+			const dom = <Button id="foo" hint="click me">{ ()=> 'hey!' }</Button>
 
-			$mol_assert_equal( dom.outerHTML, '<button title="click me" id="/foo">hey!</button>' )
+			$mol_assert_equal( dom.outerHTML, '<button title="click me" id="foo">hey!</button>' )
 			
 		} ,
 		
@@ -80,8 +80,8 @@ namespace $ {
 
 			const Foo = ()=> {
 				return <div>
-					<Bar id="/bar">
-						<img id="/icon" />
+					<Bar id="bar">
+						<img id="icon" />
 					</Bar>
 				</div>
 			}
@@ -90,9 +90,9 @@ namespace $ {
 				return <span>{ icon }</span>
 			}
 
-			const dom = <Foo id="/foo" />
+			const dom = <Foo id="foo" />
 
-			$mol_assert_equal( dom.outerHTML, '<div id="/foo"><span id="/foo/bar"><img id="/foo/icon"></span></div>' )
+			$mol_assert_equal( dom.outerHTML, '<div id="foo"><span id="foo/bar"><img id="foo/icon"></span></div>' )
 			
 		} ,
 		
@@ -100,12 +100,12 @@ namespace $ {
 
 			const App = ()=> {
 				return <div>
-					<span id="/bar" />
-					<span id="/bar" />
+					<span id="bar" />
+					<span id="bar" />
 				</div>
 			}
 
-			$mol_assert_fail( ()=> <App id="/foo" />, 'JSX already has tag with id "/foo/bar"' )
+			$mol_assert_fail( ()=> <App id="foo" />, 'JSX already has tag with id "foo/bar"' )
 			
 		} ,
 		
@@ -113,7 +113,7 @@ namespace $ {
 
 			const Foo = ()=> {
 				return <div>
-					<Bar id="/bar" icon={ ()=> <img id="/icon" /> } />
+					<Bar id="bar" icon={ ()=> <img id="icon" /> } />
 				</div>
 			}
 
@@ -121,9 +121,9 @@ namespace $ {
 				return <span>{ props.icon() }</span>
 			}
 
-			const dom = <Foo id="/foo" />
+			const dom = <Foo id="foo" />
 
-			$mol_assert_equal( dom.outerHTML, '<div id="/foo"><span id="/foo/bar"><img id="/foo/icon"></span></div>' )
+			$mol_assert_equal( dom.outerHTML, '<div id="foo"><span id="foo/bar"><img id="foo/icon"></span></div>' )
 			
 		} ,
 		
@@ -131,8 +131,8 @@ namespace $ {
 
 			const Foo = ()=> {
 				return <div>
-					<img id="/icon" />
-					<Bar id="/bar" icon={ ()=> <img id="/icon" /> } />
+					<img id="icon" />
+					<Bar id="bar" icon={ ()=> <img id="icon" /> } />
 				</div>
 			}
 
@@ -140,7 +140,7 @@ namespace $ {
 				return <span>{ props.icon() }</span>
 			}
 
-			$mol_assert_fail( ()=> <Foo id="/foo" />, 'JSX already has tag with id "/foo/icon"' )
+			$mol_assert_fail( ()=> <Foo id="foo" />, 'JSX already has tag with id "foo/icon"' )
 			
 		} ,
 		
