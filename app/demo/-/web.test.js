@@ -215,7 +215,7 @@ var $;
                 return $mol_jsx("button", { title: props.hint }, target());
             };
             const dom = $mol_jsx(Button, { id: "foo", hint: "click me" }, () => 'hey!');
-            $mol_assert_equal(dom.outerHTML, '<button title="click me" id="foo">hey!</button>');
+            $mol_assert_equal(dom.outerHTML, '<button title="click me" id="foo" class="Button">hey!</button>');
         },
         'Nested guid generation'() {
             const Foo = () => {
@@ -227,7 +227,7 @@ var $;
                 return $mol_jsx("span", null, icon);
             };
             const dom = $mol_jsx(Foo, { id: "foo" });
-            $mol_assert_equal(dom.outerHTML, '<div id="foo"><span id="foo/bar"><img id="foo/icon"></span></div>');
+            $mol_assert_equal(dom.outerHTML, '<div id="foo" class="Foo"><span id="foo/bar" class="Foo_bar Bar"><img id="foo/icon" class="Foo_icon"></span></div>');
         },
         'Fail on non unique ids'() {
             const App = () => {
@@ -240,13 +240,13 @@ var $;
         'Owner based guid generationn'() {
             const Foo = () => {
                 return $mol_jsx("div", null,
-                    $mol_jsx(Bar, { id: "bar", icon: () => $mol_jsx("img", { id: "icon" }) }));
+                    $mol_jsx(Bar, { id: "middle", icon: () => $mol_jsx("img", { id: "icon" }) }));
             };
             const Bar = (props) => {
                 return $mol_jsx("span", null, props.icon());
             };
-            const dom = $mol_jsx(Foo, { id: "foo" });
-            $mol_assert_equal(dom.outerHTML, '<div id="foo"><span id="foo/bar"><img id="foo/icon"></span></div>');
+            const dom = $mol_jsx(Foo, { id: "app" });
+            $mol_assert_equal(dom.outerHTML, '<div id="app" class="Foo"><span id="app/middle" class="Foo_middle Bar"><img id="app/icon" class="Foo_icon"></span></div>');
         },
         'Fail on same ids from different caller'() {
             const Foo = () => {

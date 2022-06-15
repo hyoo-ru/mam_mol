@@ -52,6 +52,7 @@ declare namespace $ {
 
 declare namespace $ {
     let $mol_jsx_prefix: string;
+    let $mol_jsx_crumbs: string;
     let $mol_jsx_booked: Set<string> | null;
     let $mol_jsx_document: $mol_jsx.JSX.ElementClass['ownerDocument'];
     const $mol_jsx_frag = "";

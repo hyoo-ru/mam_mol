@@ -17,7 +17,7 @@ namespace $ {
 
 			const dom = <Foo id="foo" title="bar">xxx{123}</Foo>
 
-			$mol_assert_equal( dom.outerHTML , '<div id="foo">bar xxx-123</div>' )
+			$mol_assert_equal( dom.outerHTML , '<div id="foo" class="Foo">bar xxx-123</div>' )
 			
 		} ,
 		
@@ -68,12 +68,12 @@ namespace $ {
 			const title = Title.of( dom )
 			
 			$mol_assert_equal( title.ownerDocument , doc )
-			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="foo">foo</body></html>' )
+			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="foo" class="Title">foo</body></html>' )
 			
 			title.value( 'bar' )
 			await $mol_wire_fiber.sync()
 			
-			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="foo">bar</body></html>' )
+			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="foo" class="Title">bar</body></html>' )
 			
 		} ,
 		
@@ -118,7 +118,7 @@ namespace $ {
 			
 			$mol_assert_equal(
 				$mol_dom_serialize( doc.documentElement ),
-				'<html xmlns="http://www.w3.org/1999/xhtml"><body id="root" class="list"></body></html>',
+				'<html xmlns="http://www.w3.org/1999/xhtml"><body id="root" class="list App List"></body></html>',
 			)
 
 			App.of( root ).title( 'barbar' )
@@ -127,7 +127,7 @@ namespace $ {
 			$mol_assert_equal( Task.of( root.firstElementChild! ).title(), 'barbar' )
 			$mol_assert_equal(
 				doc.documentElement.outerHTML,
-				'<html xmlns="http://www.w3.org/1999/xhtml"><body id="root" class="list"><h1 id="root/task">barbar</h1></body></html>',
+				'<html xmlns="http://www.w3.org/1999/xhtml"><body id="root" class="list App List"><h1 id="root/task" class="App_task Task">barbar</h1></body></html>',
 			)
 			
 			Task.of( root.firstElementChild! ).title( 'foofoo' )
@@ -136,7 +136,7 @@ namespace $ {
 			$mol_assert_equal( App.of( root ).title(), 'foofoo' )
 			$mol_assert_equal(
 				doc.documentElement.outerHTML,
-				'<html xmlns="http://www.w3.org/1999/xhtml"><body id="root" class="list"><h1 id="root/task">foofoo</h1></body></html>',
+				'<html xmlns="http://www.w3.org/1999/xhtml"><body id="root" class="list App List"><h1 id="root/task" class="App_task Task">foofoo</h1></body></html>',
 			)
 			
 		} ,

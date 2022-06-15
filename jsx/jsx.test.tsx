@@ -72,7 +72,7 @@ namespace $ {
 
 			const dom = <Button id="foo" hint="click me">{ ()=> 'hey!' }</Button>
 
-			$mol_assert_equal( dom.outerHTML, '<button title="click me" id="foo">hey!</button>' )
+			$mol_assert_equal( dom.outerHTML, '<button title="click me" id="foo" class="Button">hey!</button>' )
 			
 		} ,
 		
@@ -92,7 +92,7 @@ namespace $ {
 
 			const dom = <Foo id="foo" />
 
-			$mol_assert_equal( dom.outerHTML, '<div id="foo"><span id="foo/bar"><img id="foo/icon"></span></div>' )
+			$mol_assert_equal( dom.outerHTML, '<div id="foo" class="Foo"><span id="foo/bar" class="Foo_bar Bar"><img id="foo/icon" class="Foo_icon"></span></div>' )
 			
 		} ,
 		
@@ -113,7 +113,7 @@ namespace $ {
 
 			const Foo = ()=> {
 				return <div>
-					<Bar id="bar" icon={ ()=> <img id="icon" /> } />
+					<Bar id="middle" icon={ ()=> <img id="icon" /> } />
 				</div>
 			}
 
@@ -121,9 +121,9 @@ namespace $ {
 				return <span>{ props.icon() }</span>
 			}
 
-			const dom = <Foo id="foo" />
+			const dom = <Foo id="app" />
 
-			$mol_assert_equal( dom.outerHTML, '<div id="foo"><span id="foo/bar"><img id="foo/icon"></span></div>' )
+			$mol_assert_equal( dom.outerHTML, '<div id="app" class="Foo"><span id="app/middle" class="Foo_middle Bar"><img id="app/icon" class="Foo_icon"></span></div>' )
 			
 		} ,
 		
