@@ -223,7 +223,7 @@ var $;
     function $mol_jsx(Elem, props, ...childNodes) {
         const id = props && props.id || '';
         const guid = id ? $.$mol_jsx_prefix ? $.$mol_jsx_prefix + '/' + id : id : $.$mol_jsx_prefix;
-        const crumbs_self = id ? $.$mol_jsx_crumbs.replace(/(\S+)/g, `$1_${id}`) : $.$mol_jsx_crumbs;
+        const crumbs_self = id ? $.$mol_jsx_crumbs.replace(/(\S+)/g, `$1_${id.replace(/\/.*/i, '')}`) : $.$mol_jsx_crumbs;
         if (Elem && $.$mol_jsx_booked) {
             if ($.$mol_jsx_booked.has(id)) {
                 $mol_fail(new Error(`JSX already has tag with id ${JSON.stringify(guid)}`));
@@ -299,7 +299,11 @@ var $;
         $mol_dom_render_children(node, [].concat(...childNodes));
         if (!Elem)
             return node;
+        if (guid)
+            node.id = guid;
         for (const key in props) {
+            if (key === 'id')
+                continue;
             if (typeof props[key] === 'string') {
                 ;
                 node.setAttribute(key, props[key]);
@@ -316,8 +320,6 @@ var $;
                 node[key] = props[key];
             }
         }
-        if (guid)
-            node.id = guid;
         if ($.$mol_jsx_crumbs)
             node.className = (props?.['class'] ? props['class'] + ' ' : '') + crumbs_self;
         return node;

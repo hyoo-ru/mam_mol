@@ -25,7 +25,7 @@ namespace $ {
 
 		const id = props && props.id || ''
 		const guid = id ? $mol_jsx_prefix ? $mol_jsx_prefix + '/'+ id : id : $mol_jsx_prefix
-		const crumbs_self = id ? $mol_jsx_crumbs.replace( /(\S+)/g, `$1_${id}` ) : $mol_jsx_crumbs
+		const crumbs_self = id ? $mol_jsx_crumbs.replace( /(\S+)/g, `$1_${ id.replace( /\/.*/i, '' ) }` ) : $mol_jsx_crumbs
 		
 		if( Elem && $mol_jsx_booked ) {
 			if( $mol_jsx_booked.has( id ) ) {
@@ -135,7 +135,9 @@ namespace $ {
 		$mol_dom_render_children( node , ( [] as ( Node | string )[] ).concat( ... childNodes ) )
 		if( !Elem ) return node
 
+		if( guid ) ( node as Element ).id = guid
 		for( const key in props ) {
+			if( key === 'id' ) continue
 
 			if( typeof props[ key ] === 'string' ) {
 
@@ -160,7 +162,6 @@ namespace $ {
 
 		}
 
-		if( guid ) ( node as Element ).id = guid
 		if( $mol_jsx_crumbs ) ( node as Element ).className = ( props?.['class'] ? props['class'] + ' ' : '' ) + crumbs_self
 
 		return node
