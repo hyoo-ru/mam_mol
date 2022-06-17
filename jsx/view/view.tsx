@@ -1,8 +1,10 @@
 /** @jsx $mol_jsx */
 namespace $ {
 
-	export class $mol_jsx_view extends $mol_object2 {
+	/** Reactive JSX component */
+	export abstract class $mol_jsx_view extends $mol_object2 {
 
+		/** Returns component instance for DOM node. */
 		static of< This extends typeof $mol_jsx_view >( this : This , node : Element ) {
 			return node[ this as any ] as InstanceType< This >
 		}
@@ -11,15 +13,10 @@ namespace $ {
 		ownerDocument! : typeof $mol_jsx_document
 		className! : typeof $mol_jsx_crumbs
 		
+		@ $mol_wire_field
 		get childNodes() {
-			return this._kids()
+			return [] as Array< Node | string >
 		}
-		set childNodes( next: Array< Node | string > ) {
-			this._kids( next )
-		}
-		
-		@ $mol_mem
-		_kids( next = [] as Array< Node | string > ) { return next }
 		
 		@ $mol_mem
 		valueOf() {
@@ -49,9 +46,7 @@ namespace $ {
 
 		}
 		
-		render() : HTMLElement {
-			return $mol_fail( new Error( `render() isn't implemented` ) )
-		}
+		abstract render() : HTMLElement
 
 	}
 
