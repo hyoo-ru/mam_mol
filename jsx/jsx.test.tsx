@@ -72,7 +72,7 @@ namespace $ {
 
 			const dom = <Button id="foo" hint="click me">{ ()=> 'hey!' }</Button>
 
-			$mol_assert_equal( dom.outerHTML, '<button title="click me" id="foo" class="Button">hey!</button>' )
+			$mol_assert_equal( dom.outerHTML, '<button id="foo" title="click me" class="Button">hey!</button>' )
 			
 		} ,
 		
