@@ -109,12 +109,15 @@ h6[mol_text_header] {
 	max-height: 20vh;
 }
 [mol_text_image_fallback_link] {
-	zoom: .25;
 	padding: 0;
+	font-size: .25em;
+	border-radius: .05rem;
 }
 [mol_text_image_fallback_image] {
 	object-fit: contain;
-	max-height: 100vh;
+	object-position: center;
+	max-height: 20vh;
+	border-radius: .05rem;
 }
 
 [mol_text_code_line] {
