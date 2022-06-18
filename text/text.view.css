@@ -106,14 +106,14 @@ h6[mol_text_header] {
 [mol_text_image]:not([mol_view_error]) {
 	zoom: 4;
 	border-radius: .05rem;
-	max-height: 25vh;
+	max-height: 20vh;
 }
 [mol_text_image_fallback_link] {
 	zoom: .25;
 	padding: 0;
 }
 [mol_text_image_fallback_image] {
-	object-fit: scale-down;
+	object-fit: contain;
 	max-height: 100vh;
 }
 
