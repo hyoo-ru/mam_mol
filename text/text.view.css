@@ -101,16 +101,13 @@ h6[mol_text_header] {
 	object-position: center;
 	display: inline;
 	aspect-ratio: auto;
-	max-height: 100vh;
-}
-[mol_text_image]:not([mol_view_error]) {
 	zoom: 4;
 	border-radius: .05rem;
 	max-height: 20vh;
+	font-size: .25em;
 }
 [mol_text_image_fallback_link] {
 	padding: 0;
-	font-size: .25em;
 	border-radius: .05rem;
 }
 [mol_text_image_fallback_image] {
