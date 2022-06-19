@@ -56,6 +56,8 @@ $mol_text $mol_list
 	Image* $mol_embed_native
 		uri <= link_uri* \
 		title <= line_text* \
+		Fallback_image => Image_fallback*
+		sub / <= Image_fallback*
 
 $mol_text_header $mol_paragraph
 	sub /

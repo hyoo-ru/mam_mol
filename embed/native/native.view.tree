@@ -1,14 +1,15 @@
 $mol_embed_native $mol_scroll
+	uri?val \
 	dom_name \object
 	window null
 	attr *
 		^
-		data <= uri?val \
+		data <= uri_object <= uri
 		type <= mime \
 	sub /
 		<= Fallback_link $mol_link
-			uri <= uri
+			uri <= uri_link <= uri
 			sub /
 				<= Fallback_image $mol_image
-					uri <= uri
+					uri <= uri_image <= uri
 					title <= title?val \
