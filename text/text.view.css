@@ -117,6 +117,12 @@ h6[mol_text_header] {
 	border-radius: .05rem;
 }
 
+[mol_text_code] {
+	white-space: pre;
+	overflow-x: auto;
+	tab-size: 2;
+}
+
 [mol_text_code_line] {
 	display: inline-block;
 }
@@ -139,14 +145,4 @@ h6[mol_text_header] {
 
 [mol_text_type="quote"] {
 	font-style: italic;
-}
-
-[mol_text_code_copy] {
-	align-self: flex-start;
-	justify-self: flex-start;
-	margin-left: -1px;
-}
-
-[mol_text_code_copy_icon] {
-	background-color: var(--mol_theme_card);
 }
