@@ -129,6 +129,7 @@ h6[mol_text_header] {
 
 [mol_text_type="strong"] {
 	text-shadow: 0 0;
+	color: var(--mol_theme_special);
 }
 
 [mol_text_type="emphasis"] {
