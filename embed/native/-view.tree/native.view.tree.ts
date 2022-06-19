@@ -3,6 +3,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * uri?val \
+		 * ```
+		 */
+		@ $mol_mem
+		uri(val?: any) {
+			if ( val !== undefined ) return val as never
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * dom_name \object
 		 * ```
 		 */
@@ -23,14 +34,14 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	data <= uri?val
+		 * 	data <= uri_object
 		 * 	type <= mime
 		 * ```
 		 */
 		attr() {
 			return {
 				...super.attr(),
-				data: this.uri(),
+				data: this.uri_object(),
 				type: this.mime()
 			}
 		}
@@ -48,13 +59,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * uri?val \
+		 * uri_object <= uri
 		 * ```
 		 */
-		@ $mol_mem
-		uri(val?: any) {
-			if ( val !== undefined ) return val as never
-			return ""
+		uri_object() {
+			return this.uri()
 		}
 		
 		/**
@@ -64,6 +73,24 @@ namespace $ {
 		 */
 		mime() {
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * uri_link <= uri
+		 * ```
+		 */
+		uri_link() {
+			return this.uri()
+		}
+		
+		/**
+		 * ```tree
+		 * uri_image <= uri
+		 * ```
+		 */
+		uri_image() {
+			return this.uri()
 		}
 		
 		/**
@@ -80,7 +107,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Fallback_image $mol_image
-		 * 	uri <= uri
+		 * 	uri <= uri_image
 		 * 	title <= title?val
 		 * ```
 		 */
@@ -88,7 +115,7 @@ namespace $ {
 		Fallback_image() {
 			const obj = new this.$.$mol_image()
 			
-			obj.uri = () => this.uri()
+			obj.uri = () => this.uri_image()
 			obj.title = () => this.title()
 			
 			return obj
@@ -97,7 +124,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Fallback_link $mol_link
-		 * 	uri <= uri
+		 * 	uri <= uri_link
 		 * 	sub / <= Fallback_image
 		 * ```
 		 */
@@ -105,7 +132,7 @@ namespace $ {
 		Fallback_link() {
 			const obj = new this.$.$mol_link()
 			
-			obj.uri = () => this.uri()
+			obj.uri = () => this.uri_link()
 			obj.sub = () => [
 				this.Fallback_image()
 			] as readonly any[]

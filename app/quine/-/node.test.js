@@ -6456,6 +6456,11 @@ var $;
 var $;
 (function ($) {
     class $mol_embed_native extends $mol_scroll {
+        uri(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
         dom_name() {
             return "object";
         }
@@ -6465,7 +6470,7 @@ var $;
         attr() {
             return {
                 ...super.attr(),
-                data: this.uri(),
+                data: this.uri_object(),
                 type: this.mime()
             };
         }
@@ -6474,13 +6479,17 @@ var $;
                 this.Fallback_link()
             ];
         }
-        uri(val) {
-            if (val !== undefined)
-                return val;
-            return "";
+        uri_object() {
+            return this.uri();
         }
         mime() {
             return "";
+        }
+        uri_link() {
+            return this.uri();
+        }
+        uri_image() {
+            return this.uri();
         }
         title(val) {
             if (val !== undefined)
@@ -6489,13 +6498,13 @@ var $;
         }
         Fallback_image() {
             const obj = new this.$.$mol_image();
-            obj.uri = () => this.uri();
+            obj.uri = () => this.uri_image();
             obj.title = () => this.title();
             return obj;
         }
         Fallback_link() {
             const obj = new this.$.$mol_link();
-            obj.uri = () => this.uri();
+            obj.uri = () => this.uri_link();
             obj.sub = () => [
                 this.Fallback_image()
             ];
@@ -6637,6 +6646,10 @@ var $;
                     this.window(),
                 ];
             }
+            uri_object() {
+                const uri = this.uri();
+                return /\.(png|gif|jpg|jpeg|webp)$/.test(uri) ? 'javascript:return false' : uri;
+            }
         }
         __decorate([
             $mol_mem
@@ -6650,6 +6663,9 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_embed_native.prototype, "uri_change", null);
+        __decorate([
+            $mol_mem
+        ], $mol_embed_native.prototype, "uri_object", null);
         $$.$mol_embed_native = $mol_embed_native;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -6762,10 +6778,16 @@ var $;
             ];
             return obj;
         }
+        Image_fallback(id) {
+            return this.Image(id).Fallback_image();
+        }
         Image(id) {
             const obj = new this.$.$mol_embed_native();
             obj.uri = () => this.link_uri(id);
             obj.title = () => this.line_text(id);
+            obj.sub = () => [
+                this.Image_fallback(id)
+            ];
             return obj;
         }
         auto_scroll() {

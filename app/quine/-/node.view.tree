@@ -294,18 +294,19 @@ $mol_link_iconed $mol_link
 	host \
 
 $mol_embed_native $mol_scroll
+	uri?val \
 	dom_name \object
 	window null
 	attr *
 		^
-		data <= uri?val \
+		data <= uri_object <= uri
 		type <= mime \
 	sub /
 		<= Fallback_link $mol_link
-			uri <= uri
+			uri <= uri_link <= uri
 			sub /
 				<= Fallback_image $mol_image
-					uri <= uri
+					uri <= uri_image <= uri
 					title <= title?val \
 
 $mol_text $mol_list
@@ -366,6 +367,8 @@ $mol_text $mol_list
 	Image* $mol_embed_native
 		uri <= link_uri* \
 		title <= line_text* \
+		Fallback_image => Image_fallback*
+		sub / <= Image_fallback*
 
 $mol_text_header $mol_paragraph
 	sub /
