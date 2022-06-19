@@ -12,10 +12,16 @@ namespace $.$$ {
 		
 		Copy: {
 			position: 'sticky',
+			alignSelf: 'flex-start',
+			justifySelf: 'flex-start',
 			top: 0,
-			margin: {
-				left: px(-1),
+			left: 0,
+			Icon: {
+				background: {
+					color: $mol_theme.card,
+				},
 			},
+			transform: 'translate(-1px,-1px)',
 		},
 		
 		'@': {
