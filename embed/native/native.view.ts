@@ -53,6 +53,7 @@ namespace $.$$ {
 		}
 
 		auto() {
+			if( !this.rich() ) return []
 			return [
 				this.uri_listener(),
 				this.window(),
@@ -60,9 +61,13 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		rich() {
+			return !/\.(png|gif|jpg|jpeg|webp)$/.test( this.uri() )
+		}
+		
+		@ $mol_mem
 		uri_object() {
-			const uri = this.uri() 
-			return /\.(png|gif|jpg|jpeg|webp)$/.test( uri ) ? 'javascript:return false' : uri
+			return this.rich() ? this.uri() : 'javascript:return false'
 		}
 
 	}

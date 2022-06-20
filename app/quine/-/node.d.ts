@@ -1995,6 +1995,7 @@ declare namespace $.$$ {
         uri_listener(): $mol_dom_listener;
         uri_change(event?: MessageEvent<[string, string]>): void;
         auto(): (Window | $mol_dom_listener)[];
+        rich(): boolean;
         uri_object(): string;
     }
 }

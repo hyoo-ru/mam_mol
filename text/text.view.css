@@ -101,10 +101,10 @@ h6[mol_text_header] {
 	object-position: center;
 	display: inline;
 	aspect-ratio: auto;
-	zoom: 4;
+	zoom: 5;
 	border-radius: .05rem;
-	max-height: 20vh;
-	font-size: .25em;
+	max-height: calc( 20vh - 2rem );
+	font-size: .2em;
 }
 [mol_text_image_fallback_link] {
 	padding: 0;
@@ -113,7 +113,7 @@ h6[mol_text_header] {
 [mol_text_image_fallback_image] {
 	object-fit: contain;
 	object-position: center;
-	max-height: 20vh;
+	max-height: calc( 20vh - 2rem );
 	border-radius: .05rem;
 }
 
