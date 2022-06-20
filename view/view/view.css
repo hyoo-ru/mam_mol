@@ -8,10 +8,30 @@
 	display: flex;
 	flex-shrink: 0;
 	contain: style;
-}
+	scrollbar-color: var(--mol_theme_line) transparent;
+	scrollbar-width: thin;
+}	
 
 [mol_view]::selection {
 	background: var(--mol_theme_line);
+}	
+
+[mol_view]::-webkit-scrollbar {
+	width: .25rem;
+	height: .25rem;
+}
+
+[mol_view]::-webkit-scrollbar-corner {
+	background-color: var(--mol_theme_line);
+}
+
+[mol_view]::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
+[mol_view]::-webkit-scrollbar-thumb {
+	background-color: var(--mol_theme_line);
+	border-radius: var(--mol_gap_round);
 }
 
 [mol_view] > * {
