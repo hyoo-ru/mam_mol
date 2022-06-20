@@ -41,6 +41,7 @@ $mol_text_demo $mol_example_large
 								\  1. first of first item
 								\  2. second of first item
 								\  > quote as item
+								\  > > quote in quote
 								\  > + list inside quote
 								\- second item
 								\

@@ -8,13 +8,13 @@ Markdown visualizer.
 
 ```tree
 <= Description $mol_text
+	highlight <= search \mam
 	text <= description \
-		\# Lorem ipsum
+		\# Quick start
 		\
-		\**Create new component**
-		\
-		\```sh
-		\git clone https://github.com/nin-jin/mam.git ./pms && cd mam
-		\npm install && npm start
-		\```
+		\## Start dev server
+		\	git clone https://github.com/nin-jin/mam.git
+		\	cd mam
+		\	npm install
+		\	npm start
 ```
