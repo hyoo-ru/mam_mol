@@ -7,6 +7,7 @@
 	border-radius: var(--mol_gap_round);
 	font-family: monospace;
 	position: relative;
+	tab-size: 4;
 }
 
 [mol_textarea_view] {
@@ -14,6 +15,7 @@
 	pointer-events: none;
 	white-space: inherit;
 	font-family: inherit;
+	tab-size: inherit;
 }
 
 [mol_textarea_view_copy] {
@@ -33,11 +35,11 @@
 	text-align: inherit;
 	white-space: inherit;
 	border-radius: inherit;
-	tab-size: 4;
 	overflow-anchor: none;
 	position: absolute;
 	height: 100%;
 	width: 100%;
+	tab-size: inherit;
 }
 
 [mol_textarea_sidebar_showed] [mol_textarea_edit] {
