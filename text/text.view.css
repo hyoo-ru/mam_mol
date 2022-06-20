@@ -96,25 +96,22 @@ h6[mol_text_header] {
 	padding: 0;
 }
 
-[mol_text_image] {
+[mol_text_embed_object] {
 	object-fit: contain;
 	object-position: center;
 	display: inline;
-	aspect-ratio: auto;
-	zoom: 4;
-	border-radius: .05rem;
-	max-height: 20vh;
-	font-size: .25em;
+	width: 100vw;
+	max-height: calc( 100vh - 6rem );
 }
-[mol_text_image_fallback_link] {
+[mol_text_embed_object_fallback] {
 	padding: 0;
-	border-radius: .05rem;
 }
-[mol_text_image_fallback_image] {
+[mol_text_embed_image] {
 	object-fit: contain;
 	object-position: center;
-	max-height: 20vh;
-	border-radius: .05rem;
+	display: inline;
+	max-height: calc( 100vh - 6rem );
+	vertical-align: top;
 }
 
 [mol_text_code] {

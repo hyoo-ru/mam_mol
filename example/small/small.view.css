@@ -12,5 +12,5 @@
 
 [mol_example_small] > * {
 	margin: .375rem;
-	max-width: 100%;
+	max-width: calc( 100% - .75rem );
 }

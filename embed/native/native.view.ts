@@ -59,11 +59,5 @@ namespace $.$$ {
 			]
 		}
 		
-		@ $mol_mem
-		uri_object() {
-			const uri = this.uri() 
-			return /\.(png|gif|jpg|jpeg|webp)$/.test( uri ) ? 'javascript:return false' : uri
-		}
-
 	}
 }
