@@ -1,0 +1,7 @@
+$mol_embed_any $mol_ghost
+	Image $mol_image
+		title <= title \
+		uri <= uri \
+	Object $mol_embed_native
+		title <= title \
+		uri <= uri \
