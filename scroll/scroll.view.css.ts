@@ -34,11 +34,6 @@ namespace $.$$ {
 			},
 		},
 
-		scrollbar: {
-			color: [ $mol_theme.line , 'transparent' ],
-			width: 'thin',
-		},
-	
 		'::-webkit-scrollbar': {
 			width: rem(.25),
 			height: rem(.25),
@@ -51,27 +46,6 @@ namespace $.$$ {
 			},
 		},
 		
-		'::-webkit-scrollbar-corner': {
-			background: {
-				color: $mol_theme.line,
-			},
-		},
-
-		'::-webkit-scrollbar-track': {
-			background: {
-				color: 'transparent',
-			},
-		},
-
-		'::-webkit-scrollbar-thumb': {
-			background: {
-				color: $mol_theme.line,
-			},
-			border: {
-				radius: $mol_gap.round,
-			},
-		},
-
 		'@media' : {
 			'print' : {
 				overflow: 'visible',

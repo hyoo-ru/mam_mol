@@ -37,6 +37,7 @@
     "$mol_style_func",
     "$mol_style_unit",
     "$mol_decor",
+    "$mol_gap",
     "$mol_window",
     "$mol_object",
     "$mol_mem",
@@ -82,7 +83,6 @@
     "$mol_string",
     "$mol_hotkey",
     "$mol_keyboard",
-    "$mol_gap",
     "$mol_dom_listener"
   ],
   "dependencies": {
