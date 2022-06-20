@@ -180,7 +180,7 @@ namespace $.$$ {
 				switch( name ) {
 					case 'text-link-http': return this.Link_http( path2 )
 					case 'text-link' : return this.Link( path2 )
-					case 'image-link': return this.Image( path2 )
+					case 'image-link': return this.Embed( path2 )
 					case 'code3': return this.Code_line( path2 )
 					case 'code': return this.Code_line( path2 )
 					case '': return this.String( path2 )
@@ -199,12 +199,6 @@ namespace $.$$ {
 			if( !uri ) throw new Error( 'Bad link' )
 			return uri
 			
-		}
-		
-		@ $mol_mem_key
-		image_title( path: readonly number[] ) {
-			const token = this.line_token( path )
-			return token.chunks[0]
 		}
 		
 		@ $mol_mem

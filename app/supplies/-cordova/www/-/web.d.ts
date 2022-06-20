@@ -2584,6 +2584,8 @@ declare namespace $ {
             alt: string;
             loading: string;
         };
+        minimal_width(): number;
+        minimal_height(): number;
         uri(): string;
         loading(): string;
     }

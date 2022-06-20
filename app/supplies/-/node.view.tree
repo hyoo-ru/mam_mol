@@ -497,6 +497,8 @@ $mol_image $mol_view
 		src <= uri \
 		alt <= title
 		loading <= loading \eager
+	minimal_width 16
+	minimal_height 16
 
 $mol_attach $mol_view
 	items?val /string

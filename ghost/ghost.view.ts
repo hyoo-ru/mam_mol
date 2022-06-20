@@ -29,10 +29,17 @@ namespace $.$$ {
 		}
 		
 		dom_tree() {
+			
 			const Sub = this.Sub()
 			const node = Sub.dom_tree()
-			this.dom_node_actual()
-			this.auto()
+			
+			try {
+				this.dom_node_actual()
+				this.auto()
+			} catch( error: unknown ) {
+				$mol_fail_log( error )
+			}
+			
 			return node
 		}
 

@@ -8924,6 +8924,12 @@ var $;
                 loading: this.loading()
             };
         }
+        minimal_width() {
+            return 16;
+        }
+        minimal_height() {
+            return 16;
+        }
         uri() {
             return "";
         }

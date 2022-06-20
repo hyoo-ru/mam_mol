@@ -30,6 +30,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * minimal_width 16
+		 * ```
+		 */
+		minimal_width() {
+			return 16
+		}
+		
+		/**
+		 * ```tree
+		 * minimal_height 16
+		 * ```
+		 */
+		minimal_height() {
+			return 16
+		}
+		
+		/**
+		 * ```tree
 		 * uri \
 		 * ```
 		 */

@@ -284,31 +284,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Image_fallback*
-		 * ```
-		 */
-		Image_fallback(id: any) {
-			return this.Image(id).Fallback_image()
-		}
-		
-		/**
-		 * ```tree
-		 * Image* $mol_embed_native
+		 * Embed* $mol_embed_any
 		 * 	uri <= link_uri*
 		 * 	title <= line_text*
-		 * 	Fallback_image => Image_fallback*
-		 * 	sub / <= Image_fallback*
 		 * ```
 		 */
 		@ $mol_mem_key
-		Image(id: any) {
-			const obj = new this.$.$mol_embed_native()
+		Embed(id: any) {
+			const obj = new this.$.$mol_embed_any()
 			
 			obj.uri = () => this.link_uri(id)
 			obj.title = () => this.line_text(id)
-			obj.sub = () => [
-				this.Image_fallback(id)
-			] as readonly any[]
 			
 			return obj
 		}

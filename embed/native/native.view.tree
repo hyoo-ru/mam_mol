@@ -4,12 +4,10 @@ $mol_embed_native $mol_scroll
 	window null
 	attr *
 		^
-		data <= uri_object <= uri
+		data <= uri
 		type <= mime \
 	sub /
-		<= Fallback_link $mol_link
-			uri <= uri_link <= uri
+		<= Fallback $mol_link
+			uri <= uri
 			sub /
-				<= Fallback_image $mol_image
-					uri <= uri_image <= uri
-					title <= title?val \
+				<= title \
