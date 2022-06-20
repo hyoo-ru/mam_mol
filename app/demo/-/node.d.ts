@@ -7493,6 +7493,28 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_search_jumper extends $mol_search {
+        Root(): $mol_view;
+        forward(event?: any): void;
+        backward(event?: any): void;
+        Index(): $$.$mol_paginator;
+        plugins(): readonly any[];
+        index(val?: any): number;
+        Backward(): $$.$mol_hotkey;
+        escape(val?: any): any;
+        Forward(): $$.$mol_hotkey;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_search_jumper extends $.$mol_search_jumper {
+        results(): $mol_view[][];
+        index(next?: number): number;
+        anchor_content(): ($mol_button_minor | $mol_string | $mol_paginator)[];
+    }
+}
+
+declare namespace $ {
     class $mol_icon_pencil extends $mol_icon {
         path(): string;
     }
@@ -7503,6 +7525,8 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        search(next?: any): string;
+        Search(): $$.$mol_search_jumper;
         Edit_icon(): $mol_icon_pencil;
         Edit(): $$.$mol_link;
         View(): $$.$mol_text;

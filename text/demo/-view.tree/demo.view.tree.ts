@@ -37,6 +37,34 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * search? \
+		 * ```
+		 */
+		@ $mol_mem
+		search(next?: any) {
+			if ( next !== undefined ) return next as never
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Search $mol_search_jumper
+		 * 	query? <=> search?
+		 * 	Root <= View
+		 * ```
+		 */
+		@ $mol_mem
+		Search() {
+			const obj = new this.$.$mol_search_jumper()
+			
+			obj.query = (next?: any) => this.search(next)
+			obj.Root = () => this.View()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * Edit_icon $mol_icon_pencil
 		 * ```
 		 */
@@ -70,7 +98,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * View $mol_text text <= text
+		 * View $mol_text
+		 * 	text <= text
+		 * 	highlight <= search
 		 * ```
 		 */
 		@ $mol_mem
@@ -78,6 +108,7 @@ namespace $ {
 			const obj = new this.$.$mol_text()
 			
 			obj.text = () => this.text()
+			obj.highlight = () => this.search()
 			
 			return obj
 		}
@@ -86,7 +117,9 @@ namespace $ {
 		 * ```tree
 		 * View_page $mol_page
 		 * 	title \Output
-		 * 	tools / <= Edit
+		 * 	tools /
+		 * 		<= Search
+		 * 		<= Edit
 		 * 	body / <= View
 		 * ```
 		 */
@@ -96,6 +129,7 @@ namespace $ {
 			
 			obj.title = () => "Output"
 			obj.tools = () => [
+				this.Search(),
 				this.Edit()
 			] as readonly any[]
 			obj.body = () => [

@@ -3519,6 +3519,22 @@ $mol_text_code_demo $mol_example_small
 		\code
 		\syntax highlighting
 
+$mol_search_jumper $mol_search
+	Root $mol_view
+	Index $mol_paginator
+		value?val <=> index?val 0
+		forward?event => forward?event
+		backward?event => backward?event
+	plugins /
+		^
+		<= Backward $mol_hotkey
+			mod_shift true
+			key * enter?event <=> backward?event
+		<= Forward $mol_hotkey
+			key *
+				enter?event <=> forward?event
+				escape?val <=> escape?val null
+
 $mol_icon_pencil $mol_icon path \M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z
 
 $mol_text_demo $mol_example_large
@@ -3530,12 +3546,17 @@ $mol_text_demo $mol_example_large
 				<= View_page $mol_page
 					title \Output
 					tools /
+						<= Search $mol_search_jumper
+							query? <=> search? \
+							Root <= View
 						<= Edit $mol_link
 							arg * edit \
 							sub /
 								<= Edit_icon $mol_icon_pencil
 					body /
-						<= View $mol_text text <= text
+						<= View $mol_text
+							text <= text
+							highlight <= search
 				<= Code_page $mol_page
 					title \Input
 					tools /
