@@ -28,6 +28,7 @@
 
 [mol_text_quote] {
 	box-shadow: inset 1px 0 0px 0px var(--mol_theme_line);
+	margin-left: 0.75rem;
 }
 
 [mol_text_header] {

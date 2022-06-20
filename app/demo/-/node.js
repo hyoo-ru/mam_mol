@@ -8320,7 +8320,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/text/text.view.css", "[mol_text] {\n\tline-height: 1.5em;\n\tbox-sizing: border-box;\n\tmax-width: 60rem;\n\tborder-radius: var(--mol_gap_round);\n\twhite-space: pre-line;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex: 0 0 auto;\n\ttab-size: 4;\n}\n\n[mol_text_paragraph] {\n\tpadding: var(--mol_gap_text);\n\toverflow: auto;\n\tmax-width: 100%;\n\tdisplay: block;\n}\n\n[mol_text_span] {\n\tdisplay: inline;\n}\n\n[mol_text_string] {\n\tdisplay: inline;\n\tflex: 0 1 auto;\n}\n\n[mol_text_quote] {\n\tbox-shadow: inset 1px 0 0px 0px var(--mol_theme_line);\n}\n\n[mol_text_header] {\n\tdisplay: block;\n\ttext-shadow: 0 0;\n\tfont-weight: normal;\n}\n\n* + [mol_text_header] {\n\tmargin-top: 0.75rem;\n}\n\nh1[mol_text_header] {\n\tfont-size: 1.5rem;\n}\n\nh2[mol_text_header] {\n\tfont-size: 1.5rem;\n\tfont-style: italic;\n}\n\nh3[mol_text_header] {\n\tfont-size: 1.25rem;\n}\n\nh4[mol_text_header] {\n\tfont-size: 1.25em;\n\tfont-style: italic;\n}\n\nh5[mol_text_header] {\n\tfont-size: 1rem;\n}\n\nh6[mol_text_header] {\n\tfont-size: 1rem;\n\tfont-style: italic;\n}\n\n[mol_text_list] {\n\tpadding-left: 1.5rem;\n}\n\n[mol_text_list_paragraph] {\n\tdisplay: list-item;\n}\n\n[mol_text_list_paragraph]::before {\n\tcontent: '•';\n\twidth: 1.5rem;\n\tdisplay: inline-block;\n\tposition: absolute;\n\tmargin-left: -1.5rem;\n}\n\n[mol_text_table_cell] {\n\twidth: auto;\n\tdisplay: table-cell;\n\tvertical-align: baseline;\n\tpadding: 0;\n\tborder-radius: 0;\n}\n\n[mol_text_link_http],\n[mol_text_link] {\n\tpadding: 0;\n}\n\n[mol_text_embed_object] {\n\tobject-fit: contain;\n\tobject-position: center;\n\tdisplay: inline;\n\twidth: 100vw;\n\tmax-height: calc( 100vh - 6rem );\n}\n[mol_text_embed_object_fallback] {\n\tpadding: 0;\n}\n[mol_text_embed_image] {\n\tobject-fit: contain;\n\tobject-position: center;\n\tdisplay: inline;\n\tmax-height: calc( 100vh - 6rem );\n\tvertical-align: top;\n}\n\n[mol_text_code] {\n\twhite-space: pre;\n\toverflow-x: auto;\n\ttab-size: 2;\n}\n\n[mol_text_code_line] {\n\tdisplay: inline-block;\n}\n\n[mol_text_type=\"strong\"] {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_special);\n}\n\n[mol_text_type=\"emphasis\"] {\n\tfont-style: italic;\n}\n\n[mol_text_type=\"strike\"] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_text_type=\"remark\"] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_text_type=\"quote\"] {\n\tfont-style: italic;\n}\n");
+    $mol_style_attach("mol/text/text.view.css", "[mol_text] {\n\tline-height: 1.5em;\n\tbox-sizing: border-box;\n\tmax-width: 60rem;\n\tborder-radius: var(--mol_gap_round);\n\twhite-space: pre-line;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex: 0 0 auto;\n\ttab-size: 4;\n}\n\n[mol_text_paragraph] {\n\tpadding: var(--mol_gap_text);\n\toverflow: auto;\n\tmax-width: 100%;\n\tdisplay: block;\n}\n\n[mol_text_span] {\n\tdisplay: inline;\n}\n\n[mol_text_string] {\n\tdisplay: inline;\n\tflex: 0 1 auto;\n}\n\n[mol_text_quote] {\n\tbox-shadow: inset 1px 0 0px 0px var(--mol_theme_line);\n\tmargin-left: 0.75rem;\n}\n\n[mol_text_header] {\n\tdisplay: block;\n\ttext-shadow: 0 0;\n\tfont-weight: normal;\n}\n\n* + [mol_text_header] {\n\tmargin-top: 0.75rem;\n}\n\nh1[mol_text_header] {\n\tfont-size: 1.5rem;\n}\n\nh2[mol_text_header] {\n\tfont-size: 1.5rem;\n\tfont-style: italic;\n}\n\nh3[mol_text_header] {\n\tfont-size: 1.25rem;\n}\n\nh4[mol_text_header] {\n\tfont-size: 1.25em;\n\tfont-style: italic;\n}\n\nh5[mol_text_header] {\n\tfont-size: 1rem;\n}\n\nh6[mol_text_header] {\n\tfont-size: 1rem;\n\tfont-style: italic;\n}\n\n[mol_text_list] {\n\tpadding-left: 1.5rem;\n}\n\n[mol_text_list_paragraph] {\n\tdisplay: list-item;\n}\n\n[mol_text_list_paragraph]::before {\n\tcontent: '•';\n\twidth: 1.5rem;\n\tdisplay: inline-block;\n\tposition: absolute;\n\tmargin-left: -1.5rem;\n}\n\n[mol_text_table_cell] {\n\twidth: auto;\n\tdisplay: table-cell;\n\tvertical-align: baseline;\n\tpadding: 0;\n\tborder-radius: 0;\n}\n\n[mol_text_link_http],\n[mol_text_link] {\n\tpadding: 0;\n}\n\n[mol_text_embed_object] {\n\tobject-fit: contain;\n\tobject-position: center;\n\tdisplay: inline;\n\twidth: 100vw;\n\tmax-height: calc( 100vh - 6rem );\n}\n[mol_text_embed_object_fallback] {\n\tpadding: 0;\n}\n[mol_text_embed_image] {\n\tobject-fit: contain;\n\tobject-position: center;\n\tdisplay: inline;\n\tmax-height: calc( 100vh - 6rem );\n\tvertical-align: top;\n}\n\n[mol_text_code] {\n\twhite-space: pre;\n\toverflow-x: auto;\n\ttab-size: 2;\n}\n\n[mol_text_code_line] {\n\tdisplay: inline-block;\n}\n\n[mol_text_type=\"strong\"] {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_special);\n}\n\n[mol_text_type=\"emphasis\"] {\n\tfont-style: italic;\n}\n\n[mol_text_type=\"strike\"] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_text_type=\"remark\"] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_text_type=\"quote\"] {\n\tfont-style: italic;\n}\n");
 })($ || ($ = {}));
 //mol/text/-css/text.view.css.ts
 ;
@@ -28172,13 +28172,25 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_text_demo extends $mol_example_small {
+    class $mol_icon_pencil extends $mol_icon {
+        path() {
+            return "M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z";
+        }
+    }
+    $.$mol_icon_pencil = $mol_icon_pencil;
+})($ || ($ = {}));
+//mol/icon/pencil/-view.tree/pencil.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_text_demo extends $mol_example_large {
         title() {
             return "Markdown visualization example";
         }
         sub() {
             return [
-                this.Text()
+                this.Book()
             ];
         }
         tags() {
@@ -28187,18 +28199,148 @@ var $;
                 "markdown"
             ];
         }
-        Text() {
+        Edit_icon() {
+            const obj = new this.$.$mol_icon_pencil();
+            return obj;
+        }
+        Edit() {
+            const obj = new this.$.$mol_link();
+            obj.arg = () => ({
+                edit: ""
+            });
+            obj.sub = () => [
+                this.Edit_icon()
+            ];
+            return obj;
+        }
+        View() {
             const obj = new this.$.$mol_text();
-            obj.text = () => "# Header level 1\n## Header level 2\n### Header level 3\n#### Header level 4\n##### Header level 5\n###### Header level 6\n\n# List\n\n- first item\n  1. first of first item\n  2. second of first item\n  > quote as item\n  > + list inside quote\n- second item\n\n# Inline Formatting\n\n- Some **strong text**\n- Some *emphasis text*\n- Some ~~deleted text~~\n- Some `short_code(\"foo\")` & ```long_code(`${bar}`)```\n- Some \"quoted text\"\n\n# Hyper Link\n\n* Some [link *with* title](http://example.org).\n* Auto http link: http://mol.hyoo.ru, (http://mol.hyoo.ru), http://mol.hyoo.ru.\n* Some [*unsafe* link](somescript:document.cookie).\n\n# Embedding\n\n## Image\n![](https://mol.hyoo.ru/mol/logo/logo.svg)\n\n## Video\n![](https://www.youtube.com/embed/XNt7DEkisKg)\n\n## Site\n![](https://mol.hyoo.ru)\n\n## Inline\n\n- Badge: [![Deploy](https://github.com/hyoo-ru/mam_mol/actions/workflows/deploy.yml/badge.svg)](https://github.com/hyoo-ru/mam_mol/actions/workflows/deploy.yml)\n- Broken images: ![*Alternative* text](https://example.org/404.png) ![](https://example.org/404.svg)\n- Unsafe images: ![*Alternative* text](somescript:document.cookie) ![](somescript:document.cookie)\n\n# Preformatted Code\n\n```js\nclass SomeCode {\n\twith_prolog: true\n}\n```\n\n\tclass SomeCode {\n\t\twith_indents: true\n\t}\n\n# Table\n\n|           | ~~Column~~ 1 | ~~Column~~ 2 | ~~Column~~ 3\n|-----------|--------------|--------------|-------------\n| ~~Row~~ 1 | ~~Cell~~ 1x1 | ~~Cell~~ 2x1 | ~~Cell~~ 3x1\n| ~~Row~~ 2 | ~~Cell~~ 1x2 | ~~Cell~~ 2x2 | ~~Cell~~ 3x2\n| ~~Row~~ 3 | ~~Cell~~ 1x3 | ~~Cell~~ 2x3 | ~~Cell~~ 3x3\n| ~~Row~~ 4 | ~~Cell~~ 1x4 | ~~Cell~~ 2x4 | ~~Cell~~ 3x4\n| ~~Row~~ 5 | ~~Cell~~ 1x5 | ~~Cell~~ 2x5 | ~~Cell~~ 3x5\n| ~~Row~~ 6 | ~~Cell~~ 1x6 | ~~Cell~~ 2x6 | ~~Cell~~ 3x6\n| ~~Row~~ 7 | ~~Cell~~ 1x7 | ~~Cell~~ 2x7 | ~~Cell~~ 3x7\n| ~~Row~~ 8 | ~~Cell~~ 1x8 | ~~Cell~~ 2x8 | ~~Cell~~ 3x8\n| ~~Row~~ 9 | ~~Cell~~ 1x9 | ~~Cell~~ 2x9 | ~~Cell~~ 3x9\n";
+            obj.text = () => this.text();
+            return obj;
+        }
+        View_page() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => "Output";
+            obj.tools = () => [
+                this.Edit()
+            ];
+            obj.body = () => [
+                this.View()
+            ];
+            return obj;
+        }
+        Close_icon() {
+            const obj = new this.$.$mol_icon_cross();
+            return obj;
+        }
+        Close() {
+            const obj = new this.$.$mol_link();
+            obj.arg = () => ({
+                edit: null
+            });
+            obj.sub = () => [
+                this.Close_icon()
+            ];
+            return obj;
+        }
+        text(next) {
+            if (next !== undefined)
+                return next;
+            return "# Header level 1\n## Header level 2\n### Header level 3\n#### Header level 4\n##### Header level 5\n###### Header level 6\n\n# List\n\n- first item\n  1. first of first item\n  2. second of first item\n  > quote as item\n  > + list inside quote\n- second item\n\n# Inline Formatting\n\n- Some **strong text**\n- Some *emphasis text*\n- Some ~~deleted text~~\n- Some `short_code(\"foo\")` & ```long_code(`${bar}`)```\n- Some \"quoted text\"\n\n# Hyper Link\n\n* Some [link *with* title](http://example.org).\n* Auto http link: http://mol.hyoo.ru, (http://mol.hyoo.ru), http://mol.hyoo.ru.\n* Some [*unsafe* link](somescript:document.cookie).\n\n# Embedding\n\n## Image\n![](https://mol.hyoo.ru/mol/logo/logo.svg)\n\n## Video\n![](https://www.youtube.com/embed/XNt7DEkisKg)\n\n## Site\n![](https://life.hyoo.ru)\n\n## Inline\n\n- Badge: [![Deploy](https://github.com/hyoo-ru/mam_mol/actions/workflows/deploy.yml/badge.svg)](https://github.com/hyoo-ru/mam_mol/actions/workflows/deploy.yml)\n- Broken images: ![*Alternative* text](https://example.org/404.png) ![](https://example.org/404.svg)\n- Unsafe images: ![*Alternative* text](somescript:document.cookie) ![](somescript:document.cookie)\n\n# Preformatted Code\n\n```js\nclass SomeCode {\n\twith_prolog: true\n}\n```\n\n\tclass SomeCode {\n\t\twith_indents: true\n\t}\n\n# Table\n\n|           | ~~Column~~ 1 | ~~Column~~ 2 | ~~Column~~ 3\n|-----------|--------------|--------------|-------------\n| ~~Row~~ 1 | ~~Cell~~ 1x1 | ~~Cell~~ 2x1 | ~~Cell~~ 3x1\n| ~~Row~~ 2 | ~~Cell~~ 1x2 | ~~Cell~~ 2x2 | ~~Cell~~ 3x2\n| ~~Row~~ 3 | ~~Cell~~ 1x3 | ~~Cell~~ 2x3 | ~~Cell~~ 3x3\n| ~~Row~~ 4 | ~~Cell~~ 1x4 | ~~Cell~~ 2x4 | ~~Cell~~ 3x4\n| ~~Row~~ 5 | ~~Cell~~ 1x5 | ~~Cell~~ 2x5 | ~~Cell~~ 3x5\n| ~~Row~~ 6 | ~~Cell~~ 1x6 | ~~Cell~~ 2x6 | ~~Cell~~ 3x6\n| ~~Row~~ 7 | ~~Cell~~ 1x7 | ~~Cell~~ 2x7 | ~~Cell~~ 3x7\n| ~~Row~~ 8 | ~~Cell~~ 1x8 | ~~Cell~~ 2x8 | ~~Cell~~ 3x8\n| ~~Row~~ 9 | ~~Cell~~ 1x9 | ~~Cell~~ 2x9 | ~~Cell~~ 3x9\n";
+        }
+        Code() {
+            const obj = new this.$.$mol_textarea();
+            obj.value = (next) => this.text(next);
+            return obj;
+        }
+        Code_page() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => "Input";
+            obj.tools = () => [
+                this.Close()
+            ];
+            obj.body = () => [
+                this.Code()
+            ];
+            return obj;
+        }
+        pages() {
+            return [
+                this.View_page(),
+                this.Code_page()
+            ];
+        }
+        Book() {
+            const obj = new this.$.$mol_book2();
+            obj.Placeholder = () => null;
+            obj.pages = () => this.pages();
             return obj;
         }
     }
     __decorate([
         $mol_mem
-    ], $mol_text_demo.prototype, "Text", null);
+    ], $mol_text_demo.prototype, "Edit_icon", null);
+    __decorate([
+        $mol_mem
+    ], $mol_text_demo.prototype, "Edit", null);
+    __decorate([
+        $mol_mem
+    ], $mol_text_demo.prototype, "View", null);
+    __decorate([
+        $mol_mem
+    ], $mol_text_demo.prototype, "View_page", null);
+    __decorate([
+        $mol_mem
+    ], $mol_text_demo.prototype, "Close_icon", null);
+    __decorate([
+        $mol_mem
+    ], $mol_text_demo.prototype, "Close", null);
+    __decorate([
+        $mol_mem
+    ], $mol_text_demo.prototype, "text", null);
+    __decorate([
+        $mol_mem
+    ], $mol_text_demo.prototype, "Code", null);
+    __decorate([
+        $mol_mem
+    ], $mol_text_demo.prototype, "Code_page", null);
+    __decorate([
+        $mol_mem
+    ], $mol_text_demo.prototype, "Book", null);
     $.$mol_text_demo = $mol_text_demo;
 })($ || ($ = {}));
 //mol/text/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/text/demo/demo.view.css", "[mol_text_demo_view_page] {\n\tflex: 1 0 40rem;\n}\n\n[mol_text_demo_code_page] {\n\tflex: 0 0 40rem;\n}\n\n[mol_text_demo_view_page_body],\n[mol_text_demo_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n");
+})($ || ($ = {}));
+//mol/text/demo/-css/demo.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_text_demo extends $.$mol_text_demo {
+            edit() {
+                return this.$.$mol_state_arg.value('edit') !== null;
+            }
+            pages() {
+                return [
+                    this.View_page(),
+                    ...this.edit() ? [this.Code_page()] : [],
+                ];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_text_demo.prototype, "pages", null);
+        $$.$mol_text_demo = $mol_text_demo;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/text/demo/demo.view.ts
 ;
 "use strict";
 var $;

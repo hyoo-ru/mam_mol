@@ -7493,11 +7493,37 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_text_demo extends $mol_example_small {
+    class $mol_icon_pencil extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_text_demo extends $mol_example_large {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
-        Text(): $$.$mol_text;
+        Edit_icon(): $mol_icon_pencil;
+        Edit(): $$.$mol_link;
+        View(): $$.$mol_text;
+        View_page(): $mol_page;
+        Close_icon(): $mol_icon_cross;
+        Close(): $$.$mol_link;
+        text(next?: any): string;
+        Code(): $$.$mol_textarea;
+        Code_page(): $mol_page;
+        pages(): readonly any[];
+        Book(): $$.$mol_book2;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_text_demo extends $.$mol_text_demo {
+        edit(): boolean;
+        pages(): $mol_page[];
     }
 }
 
