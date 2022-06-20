@@ -53,22 +53,11 @@ namespace $.$$ {
 		}
 
 		auto() {
-			if( !this.rich() ) return []
 			return [
 				this.uri_listener(),
 				this.window(),
 			]
 		}
 		
-		@ $mol_mem
-		rich() {
-			return !/\.(png|gif|jpg|jpeg|webp)$/.test( this.uri() )
-		}
-		
-		@ $mol_mem
-		uri_object() {
-			return this.rich() ? this.uri() : 'javascript:return false'
-		}
-
 	}
 }
