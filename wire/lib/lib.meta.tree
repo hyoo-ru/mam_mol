@@ -8,7 +8,8 @@ include \/mol/wire/solid
 include \/mol/wire/watch
 include \/mol/wire/sync
 include \/mol/wire/async
-include \/mol/wire/mem
+include \/mol/wire/solo
+include \/mol/wire/plex
 include \/mol/wire/field
 include \/mol/wire/method
 include \/mol/wire/patch

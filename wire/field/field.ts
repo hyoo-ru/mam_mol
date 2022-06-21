@@ -14,10 +14,8 @@ namespace $ {
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
 		
 		const _get = descr?.get || $mol_const( descr?.value )
-		const persist = $mol_wire_atom.getter( _get, 0 )
-		
 		const _set = descr?.set || function( this : Host , next ) {
-			persist( this, [] ).put( next )
+			$mol_wire_atom.solo( this, _get ).put( next )
 		}
 
 		const sup = Reflect.getPrototypeOf( host )!
@@ -27,7 +25,7 @@ namespace $ {
 		Object.defineProperty( _set , 'name' , { value : sup_descr?.set?.name ?? field } )
 		
 		function get( this: Host ) {
-			return persist( this, [] ).sync()
+			return $mol_wire_atom.solo( this, _get ).sync()
 		}
 		
 		const temp = $mol_wire_task.getter( _set )
