@@ -510,7 +510,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    export function $mol_wire_solo<Args extends any[]>(host: object, field: string, descr: TypedPropertyDescriptor<(...args: Args) => any>): TypedPropertyDescriptor<(...args: First_optional<Args>) => any>;
+    export function $mol_wire_solo<Args extends any[]>(host: object, field: string, descr?: TypedPropertyDescriptor<(...args: Args) => any>): TypedPropertyDescriptor<(...args: First_optional<Args>) => any>;
     type First_optional<Args extends any[]> = Args extends [] ? [] : [Args[0] | undefined, ...$mol_type_tail<Args>];
     export {};
 }
@@ -522,7 +522,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    export function $mol_wire_plex<Args extends any[]>(host: object, field: string, descr: TypedPropertyDescriptor<(...args: Args) => any>): Guard<Args, TypedPropertyDescriptor<(...args: Args) => any>>;
+    export function $mol_wire_plex<Args extends any[]>(host: object, field: string, descr?: TypedPropertyDescriptor<(...args: Args) => any>): Guard<Args, TypedPropertyDescriptor<(...args: Args) => any> | undefined>;
     type Guard<Args extends any[], Val> = unknown extends Args[0] ? Val : undefined extends Args[0] ? $mol_type_error<"Key can't be optional. Make it required or use solo channel.", Args> : Val;
     export {};
 }

@@ -3,10 +3,11 @@ namespace $ {
 	export function $mol_wire_solo< Args extends any[] >(
 		host: object,
 		field: string,
-		descr: TypedPropertyDescriptor< ( ... args: Args )=> any >
+		descr?: TypedPropertyDescriptor< ( ... args: Args )=> any >
 	) {
 
-		const orig = descr.value!
+		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
+		const orig = descr?.value! ?? host[ field ]
 		
 		const sup = Reflect.getPrototypeOf( host )!
 		if( typeof sup[ field ] === 'function' ) {
