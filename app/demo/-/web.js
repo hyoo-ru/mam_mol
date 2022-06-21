@@ -2454,7 +2454,7 @@ var $;
 //mol/wire/atom/atom.ts
 ;
 "use strict";
-//mol/type/error/error.ts
+//mol/type/tail/tail.ts
 ;
 "use strict";
 var $;
@@ -2490,6 +2490,9 @@ var $;
     $.$mol_wire_solo = $mol_wire_solo;
 })($ || ($ = {}));
 //mol/wire/solo/solo.ts
+;
+"use strict";
+//mol/type/error/error.ts
 ;
 "use strict";
 var $;
@@ -22918,9 +22921,6 @@ var $;
 ;
 "use strict";
 //mol/type/param/param.ts
-;
-"use strict";
-//mol/type/tail/tail.ts
 ;
 "use strict";
 //mol/data/value/value.ts

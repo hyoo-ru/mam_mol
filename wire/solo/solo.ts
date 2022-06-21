@@ -40,11 +40,11 @@ namespace $ {
 		
 		Reflect.defineProperty( host, field, descr2 )
 		
-		return descr2 as Guard< Args, typeof descr >
+		return descr2 as any as TypedPropertyDescriptor< ( ... args: First_optional< Args > )=> any >
 	}
 
-	type Guard< Args extends any[], Val > = undefined extends Args[0]
-		? Val
-		: $mol_type_error< "Value may be omitted. Make param optional or use plex channel." >
+	type First_optional< Args extends any[] > =  Args extends []
+		? []
+		: [ Args[0] | undefined, ... $mol_type_tail< Args > ]
 
 }

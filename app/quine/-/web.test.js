@@ -956,6 +956,9 @@ var $;
 //mol/wire/async/async.test.ts
 ;
 "use strict";
+//mol/type/tail/tail.test.ts
+;
+"use strict";
 var $;
 (function ($_1) {
     $mol_test({

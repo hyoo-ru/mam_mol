@@ -354,15 +354,19 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    type $mol_type_error<Message, Info = {}> = Message & {
-        $mol_type_error: Info;
-    };
+    type $mol_type_tail<Tuple extends readonly any[]> = ((...tail: Tuple) => any) extends ((head: any, ...tail: infer Tail) => any) ? Tail : never;
 }
 
 declare namespace $ {
-    export function $mol_wire_solo<Args extends any[]>(host: object, field: string, descr: TypedPropertyDescriptor<(...args: Args) => any>): Guard<Args, TypedPropertyDescriptor<(...args: Args) => any>>;
-    type Guard<Args extends any[], Val> = undefined extends Args[0] ? Val : $mol_type_error<"Value may be omitted. Make param optional or use plex channel.">;
+    export function $mol_wire_solo<Args extends any[]>(host: object, field: string, descr: TypedPropertyDescriptor<(...args: Args) => any>): TypedPropertyDescriptor<(...args: First_optional<Args>) => any>;
+    type First_optional<Args extends any[]> = Args extends [] ? [] : [Args[0] | undefined, ...$mol_type_tail<Args>];
     export {};
+}
+
+declare namespace $ {
+    type $mol_type_error<Message, Info = {}> = Message & {
+        $mol_type_error: Info;
+    };
 }
 
 declare namespace $ {
