@@ -8,7 +8,7 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static value( next = 1 ) {
 					return next + 1
 				}
@@ -28,7 +28,7 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static value( next = 0 ) {
 					return next
 				}
@@ -46,7 +46,7 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static value( next = 1 ) {
 					return next + 1
 				}
@@ -55,7 +55,7 @@ namespace $ {
 			
 			class Middle extends Base {
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static value( next?: number ) {
 					return super.value( next ) + 1
 				}
@@ -64,7 +64,7 @@ namespace $ {
 				
 			class App extends Middle {
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static value( next?: number ) {
 					return super.value( next ) * 3
 				}
@@ -85,17 +85,17 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static xxx( next? : number ) {
 					return next || 1
 				}
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static yyy() {
 					return this.xxx() + 1
 				}
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static zzz() {
 					return this.yyy() + 1
 				}
@@ -119,19 +119,19 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static xxx( next? : number ) {
 					log.push( 'xxx' )
 					return next || 1
 				}
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static yyy() {
 					log.push( 'yyy' )
 					return [ Math.sign( this.xxx() ) ]
 				}
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static zzz() {
 					log.push( 'zzz' )
 					return this.yyy()[0] + 1
@@ -157,18 +157,18 @@ namespace $ {
 				
 				static get $() { return $ }
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static first( next = 1 ) { return next }
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static second( next = 2 ) { return next }
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static condition( next = true ) { return next }
 				
 				static counter = 0
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static result() {
 					const res = this.condition() ? this.first() : this.second() 
 					return res + this.counter ++
@@ -198,12 +198,12 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static foo( next? : { numbs: number[] } ) {
 					return next ?? { numbs: [ 1 ] }
 				}
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static bar() {
 					return { ... this.foo(), count: ++ counter }
 				}
@@ -227,12 +227,12 @@ namespace $ {
 		
 				static $ = $
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static foo() : number {
 					return this.bar() + 1
 				}
 		
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static bar() : number {
 					return this.foo() + 1
 				}
@@ -254,17 +254,17 @@ namespace $ {
 		
 		// 		static $ = $
 				
-		// 		@ $mol_wire_mem(0)
+		// 		@ $mol_wire_solo
 		// 		static left( next = false ) {
 		// 			return next
 		// 		}
 		
-		// 		@ $mol_wire_mem(0)
+		// 		@ $mol_wire_solo
 		// 		static right( next = false ) {
 		// 			return next
 		// 		}
 		
-		// 		@ $mol_wire_mem(0)
+		// 		@ $mol_wire_solo
 		// 		static res( next?: boolean ) {
 		// 			return this.left( next ) && this.right()
 		// 		}
@@ -286,17 +286,17 @@ namespace $ {
 		
 				static $ = $
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static store( next = 0 ) {
 					return next
 				}
 		
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static fast( next?: number ) {
 					return this.store( next )
 				}
 		
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static slow( next?: number ) {
 					if( next !== undefined ) this.slow() // enforce pull before push
 					return this.store( next )
@@ -320,17 +320,17 @@ namespace $ {
 		
 				static $ = $
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static count( next = 0 ) {
 					return next
 				}
 		
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static count2() {
 					return this.count()
 				}
 		
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static res() {
 					const count = this.count2()
 					if( !count ) this.count( count + 1 )
@@ -352,7 +352,7 @@ namespace $ {
 		
 				static $ = $
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static checked( next = false ) {
 					$$.$mol_wait_timeout(0)
 					return next
@@ -365,7 +365,7 @@ namespace $ {
 					// $mol_assert_equal( this.checked() , prev )
 				}
 		
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static res() {
 					return this.checked()
 				}
@@ -395,23 +395,23 @@ namespace $ {
 				
 		// 		static counter = 0
 				
-		// 		@ $mol_wire_mem(0)
+		// 		@ $mol_wire_solo
 		// 		static left_trigger( next = 0 ) {
 		// 			return next
 		// 		}
 		
-		// 		@ $mol_wire_mem(0)
+		// 		@ $mol_wire_solo
 		// 		static left_root() {
 		// 			this.left_trigger()
 		// 			return ++ this.counter
 		// 		}
 				
-		// 		@ $mol_wire_mem(0)
+		// 		@ $mol_wire_solo
 		// 		static right_trigger( next = 0 ) {
 		// 			return next
 		// 		}
 				
-		// 		@ $mol_wire_mem(0)
+		// 		@ $mol_wire_solo
 		// 		static right_root() {
 		// 			this.right_trigger()
 		// 			return ++ this.counter
@@ -439,10 +439,10 @@ namespace $ {
 
 				static get $() { return $ }
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static condition( next = false ) { return next }
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static broken() {
 					
 					if( this.condition() ) {
@@ -452,7 +452,7 @@ namespace $ {
 					return 1
 				}
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static result() {
 					return this.broken()
 				}
@@ -479,12 +479,12 @@ namespace $ {
 					return 'Jin'
 				}
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static middle() {
 					return $mol_wire_sync( this ).source()
 				}
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static target() {
 					return this.middle()
 				}
@@ -507,12 +507,12 @@ namespace $ {
 
 				static $ = $
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static showing( next = true ) {
 					return next
 				}
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static details() {
 					return {
 						destructor() {
@@ -521,7 +521,7 @@ namespace $ {
 					}
 				}
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static render() {
 					return this.showing() ? this.details() : null
 				}
@@ -558,19 +558,19 @@ namespace $ {
 				
 				static counter = 0
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static resets( next?: null ): number {
 					return ( $mol_wire_probe( ()=> this.resets() ) ?? -1 ) + 1
 				}
 				
 				static async wait() { }
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static value() {
 					return ++ this.counter
 				}
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static result() {
 					if( this.resets() ) $mol_wire_sync( this ).wait()
 					return this.value()
@@ -590,139 +590,18 @@ namespace $ {
 			
 		},
 
-		'Memoize by single simple key' ($) {
-
-			class Team extends $mol_object2 {
-
-				static $ = $
-
-				@ $mol_wire_mem(1)
-				static user_name( user: string , next?: string ) {
-					return next ?? user
-				}
-
-				@ $mol_wire_mem(1)
-				static user_names() {
-					return [
-						this.user_name( 'jin' ),
-						this.user_name( 'john' ),
-					]
-				}
-
-				@ $mol_wire_method
-				static test() {
-				
-					
-				}
-				
-			}
-			
-			$mol_assert_like( Team.user_names(), [ 'jin', 'john' ] )
-			
-			Team.user_name( 'jin', 'JIN' )
-			$mol_assert_like( Team.user_names(), [ 'JIN', 'john' ] )
-
-		} ,
-
-		'Memoize by single complex key' ($) {
-
-			class Map extends $mol_object2 {
-
-				static $ = $
-
-				@ $mol_wire_mem(1)
-				static tile( pos: [ number, number ] ) {
-					return new String( `/tile=${pos}` )
-				}
-
-				@ $mol_wire_method
-				static test() {
-					
-					$mol_assert_like( this.tile([0,1]), new String( '/tile=0,1' ) )
-					$mol_assert_equal( this.tile([0,1]), this.tile([0,1]) )
-					
-				}
-				
-			}
-
-			Map.test()
-		} ,
-
-		'Memoize by multiple keys' ($) {
-
-			class Map extends $mol_object2 {
-
-				static $ = $
-
-				@ $mol_wire_mem(2)
-				static tile( x: number, y: number ) {
-					return new String( `/tile=${x},${y}` )
-				}
-
-				@ $mol_wire_method
-				static test() {
-					
-					$mol_assert_like( this.tile(0,1), new String( '/tile=0,1' ) )
-					$mol_assert_equal( this.tile(0,1), this.tile(0,1) )
-					
-				}
-				
-			}
-
-			Map.test()
-		} ,
-
 		'Owned value has js-path name' () {
 
 			class App extends $mol_object2 {
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static title() {
-					return new $mol_object2
-				}
-
-				@ $mol_wire_mem(1)
-				static like( friend: number ) {
-					return new $mol_object2
-				}
-
-				@ $mol_wire_mem(2)
-				static relation( friend: number, props: [ number ] ) {
 					return new $mol_object2
 				}
 
 			}
 
 			$mol_assert_equal( `${ App.title() }` , 'App.title()' )
-			$mol_assert_equal( `${ App.like(123) }` , 'App.like(123)' )
-			$mol_assert_equal( `${ App.relation(123,[456]) }` , 'App.relation(123,[456])' )
-
-		} ,
-
-		'Deep deps' ($) {
-
-			class Fib extends $mol_object2 {
-
-				static $ = $
-				
-				static sums = 0
-
-				@ $mol_wire_mem(1)
-				static value( index: number , next?: number ): number {
-					if( next ) return next
-					if( index < 2 ) return 1
-					++ this.sums
-					return this.value( index - 1 ) + this.value( index - 2 )
-				}
-				
-			}
-			
-			$mol_assert_equal( Fib.value( 4 ), 5 )
-			$mol_assert_equal( Fib.sums, 3 )
-			
-			Fib.value( 1, 2 )
-			$mol_assert_equal( Fib.value( 4 ), 8 )
-			$mol_assert_equal( Fib.sums, 6 )
 
 		} ,
 
@@ -737,12 +616,12 @@ namespace $ {
 					return Math.random()
 				}
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static resets( next?: null ) {
 					return Math.random()
 				}
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static value() {
 					this.resets()
 					return this.seed()

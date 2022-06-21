@@ -209,14 +209,14 @@ namespace $ {
 			const socket = this.socket()
 
 			for( const [ line, path ] of this.lines() ) {
-				this.notify( line, path )
+				this.notify([ line, path ])
 			}
 			
 			return socket
 		}
 		
-		@ $mol_mem_key2
-		notify( line: InstanceType<$node['ws']>, path: string ) {
+		@ $mol_mem_key
+		notify( [ line, path ]: [ InstanceType<$node['ws']>, string ] ) {
 			
 			const build = this.build()
 			const bundle = build.root().resolve( path )
@@ -226,7 +226,7 @@ namespace $ {
 			for( const src of sources ) src.buffer()
 
 			// ignore initial
-			if( !$mol_mem_cached( ()=> this.notify( line, path ) ) ) return true
+			if( !$mol_mem_cached( ()=> this.notify([ line, path ]) ) ) return true
 
 			this.$.$mol_log3_rise({
 				place: `${this}`,

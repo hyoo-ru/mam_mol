@@ -9,7 +9,6 @@ namespace $ {
 			
 			const get = descr.get ?? ( ()=> descr.value )
 			const set = descr.set ?? ( next => descr.value = next )
-			const persist = $mol_wire_atom.getter( get, 0 )
 			
 			Reflect.defineProperty( obj, field, {
 				
@@ -17,13 +16,13 @@ namespace $ {
 				enumerable: descr.enumerable,
 				
 				get() {
-					const atom = persist( obj, [] )
+					const atom = $mol_wire_atom.solo( obj, get )
 					atom.watch()
 					return atom.sync()
 				},
 				
 				set( next ) {
-					const atom = persist( obj, [] )
+					const atom = $mol_wire_atom.solo( obj, get )
 					set.call( this, next )
 					atom.refresh()
 				},

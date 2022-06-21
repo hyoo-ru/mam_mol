@@ -21,7 +21,7 @@ You can use that to debounce:
 ```typescript
 class User extends $mol_object2 {
 	
-	@ $mol_wire_mem(0)
+	@ $mol_wire_solo
 	name( name?: string ) {
 		
 		// pull branch

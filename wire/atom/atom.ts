@@ -6,56 +6,53 @@ namespace $ {
 		Result,
 	> extends $mol_wire_fiber< Host, Args, Result > {
 
-		static getter<
+		static solo<
 			Host,
 			Args extends readonly unknown[],
 			Result,
 		>(
-			task: ( this : Host , ... args : Args )=> Result,
-			keys: number,
-		): ( host: Host, args: Args )=> $mol_wire_atom< Host, [ ... Args ], Result > {
+			host: Host,
+			task: ( this: Host, ... args: Args )=> Result,
+		): $mol_wire_atom< Host, Args, Result > {
 			
 			const field = task.name + '()'
 			
-			if( keys ) {
-				
-				return function $mol_wire_atom_get( host: Host, args: Args ) {
-					
-					let dict, key!: string, fiber
-					
-					key = `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(${ args.map( v => $mol_key( v ) ).join(',') })`
-					dict = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
-					
-					if( dict ) {
-						const existen = dict.get( key )
-						if( existen ) return existen
-					} else {
-						dict = ( host ?? task )[ field ] = new Map<any,any>()
-					}
-					
-					fiber = new $mol_wire_atom( key, task, host, args )
-					dict.set( key, fiber )
-					
-					return fiber
-				}
-				
+			const existen = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
+			if( existen ) return existen
+			
+			const key = `${ host?.[ Symbol.toStringTag ] ?? host }.${ field }`
+			
+			const fiber = new $mol_wire_atom( key, task, host, [] as any as Args )
+			;( host ?? task )[ field ] = fiber
+			
+			return fiber
+		}
+		
+		static plex<
+			Host,
+			Args extends readonly unknown[],
+			Result,
+		>(
+			host: Host,
+			task: ( this: Host , ... args: Args )=> Result,
+			key: Args[0],
+		): $mol_wire_atom< Host, Args, Result > {
+			
+			const field = task.name + '()'
+			let dict = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
+			const id = `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(${ $mol_key( key ) })`
+			
+			if( dict ) {
+				const existen = dict.get( id )
+				if( existen ) return existen
 			} else {
-				
-				return function $mol_wire_atom_get( host: Host, args: Args ) {
-					
-					const existen = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
-					if( existen ) return existen
-					
-					const key = `${ host?.[ Symbol.toStringTag ] ?? host }.${ field }`
-					
-					const fiber = new $mol_wire_atom( key, task, host, args )
-					;( host ?? task )[ field ] = fiber
-					
-					return fiber
-				}
-				
+				dict = ( host ?? task )[ field ] = new Map<any,any>()
 			}
 			
+			const fiber = new $mol_wire_atom( id, task, host, [ key ] as any as Args )
+			dict.set( id, fiber )
+			
+			return fiber
 		}
 		
 		static watching = new Set< $mol_wire_atom< any, any, any > >()
