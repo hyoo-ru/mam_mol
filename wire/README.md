@@ -19,7 +19,8 @@ Auto wiring modules. It gives ability to:
 
 ### Decorators
 
-- [$mol_wire_mem](https://github.com/hyoo-ru/mam_mol/tree/master/wire/mem) - reactive memoizing property decorator
+- [$mol_wire_solo](https://github.com/hyoo-ru/mam_mol/tree/master/wire/solo) - reactive memoizing solo property decorator
+- [$mol_wire_plex](https://github.com/hyoo-ru/mam_mol/tree/master/wire/plex) - reactive memoizing multiplexed property decorator
 - [$mol_wire_field](https://github.com/hyoo-ru/mam_mol/tree/master/wire/field) - reactive memoizing field decorator
 - [$mol_wire_method](https://github.com/hyoo-ru/mam_mol/tree/master/wire/method) - method decorator which run inside fiber
 
@@ -74,21 +75,23 @@ npm install mol_wire_lib
 
 ```ts
 import {
-	$mol_wire_mem as mem,
-	$mol_wire_method as action,
+	$mol_wire_solo as solo,
+	$mol_wire_plex as plex,
+	$mol_wire_method as task,
 } from 'mol_wire_lib'
 
 class User {
-	@mem(0) age( next = 0 ) { return next }
-	@mem(1) finger_exists( id: string, next = true ) { return next }
-	@action finger_cut( id: string ) { this.finger_exists( id, false ) }
+	@solo age( next = 0 ) { return next }
+	@plex finger_exists( id: string, next = true ) { return next }
+	@task finger_cut( id: string ) { this.finger_exists( id, false ) }
 }
 ```
 
 ```js
 const {
-	$mol_wire_mem: mem,
-	$mol_wire_method: actionn,
+	$mol_wire_solo as solo,
+	$mol_wire_plex as plex,
+	$mol_wire_method as task,
 } = require( 'mol_wire_lib' )
 
 class User {
@@ -97,9 +100,9 @@ class User {
 	finger_cut( id: string ) { this.finger_exists( id, false ) }
 }
 
-mem(0)( User.prototype, 'age' )
-mem(1)( User.prototype, 'finger_exists' )
-action( User.prototype, 'finger_cut' )
+solo( User.prototype, 'age' )
+plex( User.prototype, 'finger_exists' )
+task( User.prototype, 'finger_cut' )
 ```
 
 ### [mol_wire_pub](https://github.com/hyoo-ru/mam_mol/tree/master/wire/pub)
