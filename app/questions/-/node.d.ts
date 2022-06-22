@@ -2057,11 +2057,11 @@ declare namespace $ {
         block_content(id: any): readonly any[];
         uri_resolve(id: any): any;
         quote_text(id: any): string;
+        highlight(): string;
         list_text(id: any): string;
         header_level(id: any): string;
         header_arg(id: any): {};
         code_text(id: any): string;
-        highlight(): string;
         code_sidebar_showed(): boolean;
         table_head_cells(id: any): readonly any[];
         table_rows(id: any): readonly any[];

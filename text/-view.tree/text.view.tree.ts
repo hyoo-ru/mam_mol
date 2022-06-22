@@ -68,6 +68,7 @@ namespace $ {
 		 * Quote* $mol_text
 		 * 	uri_resolve* <= uri_resolve*
 		 * 	text <= quote_text*
+		 * 	highlight <= highlight
 		 * 	auto_scroll null
 		 * ```
 		 */
@@ -77,6 +78,7 @@ namespace $ {
 			
 			obj.uri_resolve = (id: any) => this.uri_resolve(id)
 			obj.text = () => this.quote_text(id)
+			obj.highlight = () => this.highlight()
 			obj.auto_scroll = () => null as any
 			
 			return obj
@@ -87,6 +89,7 @@ namespace $ {
 		 * List* $mol_text
 		 * 	uri_resolve* <= uri_resolve*
 		 * 	text <= list_text*
+		 * 	highlight <= highlight
 		 * 	auto_scroll null
 		 * ```
 		 */
@@ -96,6 +99,7 @@ namespace $ {
 			
 			obj.uri_resolve = (id: any) => this.uri_resolve(id)
 			obj.text = () => this.list_text(id)
+			obj.highlight = () => this.highlight()
 			obj.auto_scroll = () => null as any
 			
 			return obj
@@ -174,6 +178,7 @@ namespace $ {
 		 * ```tree
 		 * Table_cell* $mol_text
 		 * 	auto_scroll null
+		 * 	highlight <= highlight
 		 * 	uri_resolve* <= uri_resolve*
 		 * 	text <= table_cell_text*
 		 * ```
@@ -183,6 +188,7 @@ namespace $ {
 			const obj = new this.$.$mol_text()
 			
 			obj.auto_scroll = () => null as any
+			obj.highlight = () => this.highlight()
 			obj.uri_resolve = (id: any) => this.uri_resolve(id)
 			obj.text = () => this.table_cell_text(id)
 			
@@ -338,6 +344,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * highlight \
+		 * ```
+		 */
+		highlight() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * list_text* \
 		 * ```
 		 */
@@ -370,15 +385,6 @@ namespace $ {
 		 * ```
 		 */
 		code_text(id: any) {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * highlight \
-		 * ```
-		 */
-		highlight() {
 			return ""
 		}
 		

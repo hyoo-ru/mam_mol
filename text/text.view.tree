@@ -11,10 +11,12 @@ $mol_text $mol_list
 	Quote* $mol_text
 		uri_resolve* <= uri_resolve* null
 		text <= quote_text* \
+		highlight <= highlight \
 		auto_scroll null
 	List* $mol_text
 		uri_resolve* <= uri_resolve* null
 		text <= list_text* \
+		highlight <= highlight \
 		auto_scroll null
 	Header* $mol_text_header
 		dom_name <= header_level* \h
@@ -32,6 +34,7 @@ $mol_text $mol_list
 		cells <= table_cells* /
 	Table_cell* $mol_text
 		auto_scroll null
+		highlight <= highlight \
 		uri_resolve* <= uri_resolve* null
 		text <= table_cell_text* \
 	- \Lines
