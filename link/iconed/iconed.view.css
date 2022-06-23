@@ -13,7 +13,7 @@
 	display: inline-block;
 	margin: .25rem 0;
 	align-self: normal;
-	vertical-align: text-bottom;
+	vertical-align: top;
 	border-radius: 0;
 	object-fit: scale-down;
 }
