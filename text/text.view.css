@@ -96,6 +96,12 @@ h6[mol_text_header] {
 [mol_text_link_http],
 [mol_text_link] {
 	padding: 0;
+	display: inline;
+}
+
+[mol_text_link_http_icon],
+[mol_text_link_icon] {
+	margin: .25rem;
 }
 
 [mol_text_embed_object] {
