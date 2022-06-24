@@ -75,6 +75,8 @@ git clone https://github.com/hyoo-ru/mam.git ./mam && cd mam
 npm install && npm start
 ```
 
+Or simply use [![Gitpod Online Dev Workspace](https://img.shields.io/badge/Gitpod-Online--Dev--Workspace-blue?logo=gitpod)](https://gitpod.io/#https://github.com/hyoo-ru/mam).
+
 ## Setup your editor
 
 - Use MAM directory as root of your project in editor
