@@ -103,6 +103,7 @@
     "$mol_charset_encode",
     "$mol_mem_cached",
     "$mol_compare_array",
+    "$mol_text_text",
     "$mol_text",
     "$mol_list",
     "$mol_support_css",
