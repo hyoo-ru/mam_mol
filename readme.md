@@ -6,7 +6,6 @@ Reactive micro-modular UI framework. Very simple, but very powerful!
 
 - [Levels](#levels)
 - [Features](#features)
-- [Applications](https://apps.hyoo.ru/)
 - [Review](#reviews)
 - [Quick start](#quick-start)
 - [Tutorials](#tutorials)
@@ -518,3 +517,4 @@ This project exists thanks to all the people who contribute.
 # Donate
 
 - **[Shut up and take my money](http://yasobe.ru/na/mol)**
+- **[Long time support](https://boosty.to/hyoo)**
