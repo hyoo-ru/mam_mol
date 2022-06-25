@@ -7,9 +7,7 @@ Reactive micro-modular UI framework. Very simple, but very powerful!
 - [Levels](#levels)
 - [Features](#features)
 - [Applications](https://apps.hyoo.ru/)
-- [Benchmarks](#benchmarks)
-- [Articles](#articles)
-- [Discussions](https://teleg.run/mam_mol)
+- [Review](#reviews)
 - [Quick start](#quick-start)
 - [Tutorials](#tutorials)
 - [Rationale](#rationale)
@@ -44,23 +42,11 @@ Reactive micro-modular UI framework. Very simple, but very powerful!
 - Pseudosynchronous code. [Asynchrony is abstracted by reactivity](#reactivity). No callbacks/promises/streams hell. No async/await/yield virus.
 - Automatic [BEM](https://en.bem.info/methodology/naming-convention/)-attributes generation for elements.
 
-# Benchmarks
+# Reviews
 
-- [$hyoo_bench_list](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/list) - Frameworks comparison ([online](https://bench.hyoo.ru/list/#sort=fill/sample=angular-1-5-5~mol~native-html~react-15-3-2~native-dom))
-- [ToDoMVC benchmark](https://github.com/hyoo-ru/todomvc/tree/master/benchmark) ([online](https://hyoo-ru.github.io/todomvc/benchmark/#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
-- [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=220306_AiDcKB_6FK%2C220306_BiDcYS_5YM%2C220306_BiDcQW_5YN%2C220306_AiDcQG_6FN&thumbSize=100&ival=500&end=visual)
-- [Line charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/rope) ([online](https://bench.hyoo.ru/chart/rope/#sort=fill/sample=hcharts~mol))
-- [Bar charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/bar) ([online](https://bench.hyoo.ru/chart/bar/#sort=fill/sample=hcharts~mol))
-- [React vs React Fiber vs $mol](https://github.com/nin-jin/sierpinski) ([online](https://nin-jin.github.io/sierpinski))
-
-# Articles
-
-- [$mol — лучшее средство от геморроя](https://habr.com/ru/post/341146/) - Quick introduction to $mol
-- [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/) - Comprehensive $mol review
-- [Объектное Реактивное Программирование](https://habrahabr.ru/post/330466/) - Features of Object Reactive Programming
-- [Концепции автоматического тестирования](https://habr.com/ru/post/351430/) - Testing principles
-- [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/) - Problems of popular frameworks
-- [Принципы написания кода](https://habrahabr.ru/post/236785/) - Code style principles
+- [$mol — лучшее средство от геморроя](https://mol.hyoo.ru/#!section=slides/slides=https%3A%2F%2Fnin-jin.github.io%2Fslides%2Fmol%2F) - Quick introduction to $mol
+- [$mol: реактивный микромодульный фреймворк](https://mol.hyoo.ru/#!section=articles/author=nin-jin/repo=HabHub/article=5) - First introduction to $mol
+- [$mol: 4 года спустя](https://mol.hyoo.ru/#!section=articles/author=nin-jin/repo=HabHub/article=23) - State of $mol after 4 years
 
 # Quick start
 
