@@ -131,60 +131,6 @@ $my_hello $mol_view
 		<= message \
 ```
 
-That will be automatically compiled to typescript code like this:
-
-```typescript
-namespace $ {
-	export class $my_hello extends $mol_view {
-
-		/**
-		 * ```tree
-		 * sub /
-		 * 	<= Name
-		 * 	<= message
-		 * ```
-		 */
-		sub() {
-			return [this.Name(), this.message()] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * name?val \
-		 * ```
-		 */
-		@ $mol_mem
-		name(val?: any) {
-			if ( val !== undefined ) return val as never
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * Name $mol_string
-		 * 	hint \Name
-		 * 	value?val <=> name?val
-		 * ```
-		 */
-		@ $mol_mem
-		Name() {
-			const obj = new this.$.$mol_string()
-			obj.hint = () => "Name"
-			obj.value = (val?: any) => this.name(val)
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * message \
-		 * ```
-		 */
-		message() { return "" }
-	}
-
-}
-```
-
 Add **your behaviour** at `./my/hello/hello.view.ts` by extending generated class:
 
 ```typescript
@@ -210,8 +156,9 @@ namespace $.$$ {
 		'Generating greeting message'() {
 
 			const app = new $my_hello
+			$mol_assert_equal( app.message() , '' )
+			
 			app.name( 'Jin' )
-
 			$mol_assert_equal( app.message() , 'Hello, Jin!' )
 
 		}
