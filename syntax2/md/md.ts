@@ -29,7 +29,7 @@ namespace $ {
 		'code-comment-block' : /(?:\/\*[^]*?\*\/|\/\+[^]*?\+\/|<![^]*?>)/ ,
 		'code-link' : /(?:\w+:\/\/|#)\S+?(?=\s|\\\\|""|$)/ ,
 		'code-comment-inline' : /\/\/.*?$/ ,
-		'code-string' : /(?:".*?"|'.*?'|`.*?`|\/.+?\/[dygimsu]*(?!\w)|(?:^|[ \t])\\[^\n]*\n)/ ,
+		'code-string' : /(?:".*?"|'.*?'|`.*?`|\/.+?\/[dygimsu]*(?!\p{Letter})|(?:^|[ \t])\\[^\n]*\n)/ ,
 		'code-number' : /[+-]?(?:\d*\.)?\d+\w*/ ,
 		'code-call' : /\.?\w+ *(?=\()/ ,
 		'code-sexpr' : /\((\w+ )/ ,
