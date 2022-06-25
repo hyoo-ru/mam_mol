@@ -4,6 +4,15 @@ namespace $ {
 	export const $mol_int62_min = - ( 2 ** 30 )
 	export const $mol_int62_range = $mol_int62_max - $mol_int62_min + 1
 	
+	export function $mol_int62_dump(
+		hi: number,
+		lo: number,
+	) {
+		hi = ( hi + $mol_int62_range ) % $mol_int62_range
+		lo = ( lo + $mol_int62_range ) % $mol_int62_range
+		return `${ hi.toString(36) }_${ lo.toString(36) }`
+	}
+
 	export function $mol_int62_compare(
 		left_hi: number,
 		left_lo: number,
