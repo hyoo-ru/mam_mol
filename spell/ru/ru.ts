@@ -8,7 +8,7 @@ namespace $ {
 	
 	export const $mol_spell_ru_tail = $mol_regexp.vary([ 'а', 'ам', 'ами', 'ас', 'am', 'ax', 'ая', 'е', 'её', 'ей', 'ем', 'еми', 'емя', 'ex', 'ею', 'ёт', 'ёте', 'ёх', 'ёшь', 'и', 'ие', 'ий', 'им', 'ими', 'ит', 'ите', 'их', 'ишь', 'ию', 'м', 'ми', 'мя', 'о', 'ов', 'ого', 'ое', 'оё', 'ой', 'ом', 'ому', 'ою', 'cm', 'у', 'ум', 'умя', 'ут', 'ух', 'ую', 'шь' ])
 	
-	export const $mol_spell_ru = $mol_regexp.from([
+	export const $mol_spell_ru = $mol_regexp.from( [
 		$mol_regexp.begin,
 		$mol_regexp.repeat([
 			{ prefix: $mol_regexp.repeat( $mol_spell_ru_prefix ) },
@@ -17,6 +17,6 @@ namespace $ {
 		], 1),
 		[ { tail: $mol_spell_ru_tail } ],
 		$mol_regexp.end,
-	])
+	], { ignoreCase: true } )
 	
 }

@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export const $mol_spell_any = $mol_regexp.from({
+	export const $mol_spell_any = $mol_regexp.from( {
 		ru: $mol_spell_ru,
 		// xx: [
 		// 	$mol_regexp.begin,
@@ -10,6 +10,6 @@ namespace $ {
 		// 	),
 		// 	$mol_regexp.end,
 		// ],
-	})
+	}, { ignoreCase: true } )
 	
 }
