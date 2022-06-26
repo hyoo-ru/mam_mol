@@ -187,11 +187,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * spellcheck false
+		 * spellcheck true
 		 * ```
 		 */
 		spellcheck() {
-			return false
+			return true
 		}
 		
 		/**

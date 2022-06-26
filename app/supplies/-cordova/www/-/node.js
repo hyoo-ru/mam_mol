@@ -4000,7 +4000,7 @@ var $;
             return this.hint();
         }
         spellcheck() {
-            return false;
+            return true;
         }
         autocomplete_native() {
             return "";
