@@ -160,6 +160,16 @@ namespace $ {
 
 		},
 
+		'anon variants'() {
+
+			const name = $mol_regexp.from([ 'A', $mol_regexp.vary([ '4', '5' ]) ])
+
+			$mol_assert_equal( 'AB'.match( name ) , null )
+			$mol_assert_equal( 'A4'.match( name )![0] , 'A4' )
+			$mol_assert_equal( 'A5'.match( name )![0] , 'A5' )
+
+		},
+
 		'only groups'() {
 
 			const regexp = $mol_regexp.from({ dog : '@' })
@@ -316,7 +326,7 @@ namespace $ {
 
 		},
 
-		'variants'() {
+		'named variants'() {
 
 			const { begin , or , end , from } = $mol_regexp
 

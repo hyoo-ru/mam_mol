@@ -2927,6 +2927,15 @@ var $;
             };
             return regexp2;
         }
+        static vary(sources) {
+            const groups = [];
+            const chunks = sources.map(source => {
+                const regexp = $mol_regexp.from(source);
+                groups.push(...regexp.groups);
+                return regexp.source;
+            });
+            return new $mol_regexp(`(?:${chunks.join('|')})`, '', groups);
+        }
         static optional(source) {
             return $mol_regexp.repeat_greedy(source, 0, 1);
         }
@@ -9773,6 +9782,12 @@ var $;
             $mol_assert_equal('AB'.match(name)[0], 'A');
             $mol_assert_equal('A4'.match(name)[0], 'A4');
         },
+        'anon variants'() {
+            const name = $mol_regexp.from(['A', $mol_regexp.vary(['4', '5'])]);
+            $mol_assert_equal('AB'.match(name), null);
+            $mol_assert_equal('A4'.match(name)[0], 'A4');
+            $mol_assert_equal('A5'.match(name)[0], 'A5');
+        },
         'only groups'() {
             const regexp = $mol_regexp.from({ dog: '@' });
             $mol_assert_like([...'#'.matchAll(regexp)][0].groups, undefined);
@@ -9864,7 +9879,7 @@ var $;
                 { digit: '3' },
             ]);
         },
-        'variants'() {
+        'named variants'() {
             const { begin, or, end, from } = $mol_regexp;
             const sexism = from([
                 begin, 'sex = ', { sex: ['male', or, 'female'] }, end
