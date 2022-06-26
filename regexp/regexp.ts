@@ -208,6 +208,32 @@ namespace $ {
 			return regexp2
 		}
 
+		/** Makes regexp that match any of options */
+		static vary<
+			Sources extends readonly $mol_regexp_source[]
+		>(
+			sources : Sources ,
+		) {
+			
+			const groups = [] as string[]
+			
+			const chunks = sources.map( source => {
+
+				const regexp = $mol_regexp.from( source )
+				groups.push( ... regexp.groups )
+				
+				return regexp.source
+
+			} ) as any as readonly[ $mol_regexp_source , ... $mol_regexp_source[] ]
+			
+			return new $mol_regexp< $mol_regexp_groups< Sources[number] > >(
+				`(?:${ chunks.join('|') })` ,
+				'' ,
+				groups as any[] ,
+			)
+			
+		}
+
 		/** Makes regexp that allow absent of this pattern */
 		static optional<
 			Source extends $mol_regexp_source
@@ -428,7 +454,7 @@ namespace $ {
 			const regexp = forbidden.map( f => $mol_regexp.from( f ).source ).join('')
 			return new $mol_regexp( `[^${ regexp }]` )
 		}
-
+		
 		static decimal_only = $mol_regexp.from( /\d/gsu )
 		static decimal_except = $mol_regexp.from( /\D/gsu )
 		
