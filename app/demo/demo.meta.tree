@@ -69,6 +69,7 @@ include \/mol/select/demo/priority
 include \/mol/select/list/demo
 include \/mol/speck/demo
 include \/mol/speech/demo
+include \/mol/spell/demo
 include \/mol/stack/demo
 include \/mol/string/demo
 include \/mol/string/button/demo

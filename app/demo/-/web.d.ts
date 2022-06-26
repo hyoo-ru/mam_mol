@@ -7341,6 +7341,51 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_spell_demo extends $mol_example_small {
+        sub(): readonly any[];
+        tags(): readonly any[];
+        article(next?: any): string;
+        Article(): $$.$mol_textarea;
+        report(): string;
+        Report(): $$.$mol_text_code;
+        List(): $$.$mol_list;
+    }
+}
+
+declare namespace $ {
+    const $mol_spell_ru_prefix: $mol_regexp<{}>;
+    const $mol_spell_ru_root: $mol_regexp<{}>;
+    const $mol_spell_ru_suffix: $mol_regexp<{}>;
+    const $mol_spell_ru_tail: $mol_regexp<{}>;
+    const $mol_spell_ru: $mol_regexp<{
+        readonly tail: string;
+        readonly prefix: string;
+        readonly root: string;
+        readonly suffix: string;
+    }>;
+}
+
+declare namespace $ {
+    const $mol_spell_any: $mol_regexp<{
+        readonly ru: string;
+        readonly tail: string;
+        readonly prefix: string;
+        readonly root: string;
+        readonly suffix: string;
+    }>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_spell_demo extends $.$mol_spell_demo {
+        words(): string[];
+        report(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_stack_demo extends $mol_example_small {
         sub(): readonly any[];
         tags(): readonly any[];
