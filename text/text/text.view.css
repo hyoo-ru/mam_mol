@@ -122,13 +122,13 @@ h6[mol_text_header] {
 	vertical-align: top;
 }
 
-[mol_text_code] {
+[mol_text_pre] {
 	white-space: pre;
 	overflow-x: auto;
 	tab-size: 2;
 }
 
-[mol_text_code_line] {
+[mol_text_pre_line] {
 	display: inline-block;
 }
 

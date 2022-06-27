@@ -126,19 +126,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Code* $mol_text_code
-		 * 	text <= code_text*
+		 * Pre* $mol_text_code
+		 * 	text <= pre_text*
 		 * 	highlight <= highlight
-		 * 	sidebar_showed <= code_sidebar_showed
+		 * 	sidebar_showed <= pre_sidebar_showed
 		 * ```
 		 */
 		@ $mol_mem_key
-		Code(id: any) {
+		Pre(id: any) {
 			const obj = new this.$.$mol_text_code()
 			
-			obj.text = () => this.code_text(id)
+			obj.text = () => this.pre_text(id)
 			obj.highlight = () => this.highlight()
-			obj.sidebar_showed = () => this.code_sidebar_showed()
+			obj.sidebar_showed = () => this.pre_sidebar_showed()
 			
 			return obj
 		}
@@ -381,19 +381,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * code_text* \
+		 * pre_text* \
 		 * ```
 		 */
-		code_text(id: any) {
+		pre_text(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * code_sidebar_showed true
+		 * pre_sidebar_showed true
 		 * ```
 		 */
-		code_sidebar_showed() {
+		pre_sidebar_showed() {
 			return true
 		}
 		

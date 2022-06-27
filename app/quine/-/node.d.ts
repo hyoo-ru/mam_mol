@@ -2025,7 +2025,7 @@ declare namespace $ {
         Quote(id: any): $$.$mol_text;
         List(id: any): $$.$mol_text;
         Header(id: any): $mol_text_header;
-        Code(id: any): $$.$mol_text_code;
+        Pre(id: any): $$.$mol_text_code;
         Table(id: any): $$.$mol_grid;
         Table_row(id: any): $mol_grid_row;
         Table_cell(id: any): $$.$mol_text;
@@ -2043,8 +2043,8 @@ declare namespace $ {
         list_text(id: any): string;
         header_level(id: any): string;
         header_arg(id: any): {};
-        code_text(id: any): string;
-        code_sidebar_showed(): boolean;
+        pre_text(id: any): string;
+        pre_sidebar_showed(): boolean;
         table_head_cells(id: any): readonly any[];
         table_rows(id: any): readonly any[];
         table_cells(id: any): readonly any[];
@@ -2086,7 +2086,7 @@ declare namespace $.$$ {
         header_arg(index: number): {
             [x: number]: string;
         };
-        code_text(index: number): string;
+        pre_text(index: number): string;
         quote_text(index: number): string;
         list_text(index: number): string;
         cell_content(indexBlock: number): string[][];

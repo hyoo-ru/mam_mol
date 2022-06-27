@@ -22,10 +22,10 @@ $mol_text $mol_list
 		dom_name <= header_level* \h
 		content <= block_content* /
 		arg <= header_arg* *
-	Code* $mol_text_code
-		text <= code_text* \
+	Pre* $mol_text_code
+		text <= pre_text* \
 		highlight <= highlight \
-		sidebar_showed <= code_sidebar_showed true
+		sidebar_showed <= pre_sidebar_showed true
 	- \Table
 	Table* $mol_grid
 		head_cells <= table_head_cells* /

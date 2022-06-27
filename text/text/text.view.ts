@@ -24,8 +24,8 @@ namespace $.$$ {
 					case 'quote': return this.Quote( index )
 					case 'header': return this.Header( index )
 					case 'list': return this.List( index )
-					case 'code': return this.Code( index )
-					case 'code-indent': return this.Code( index )
+					case 'code': return this.Pre( index )
+					case 'code-indent': return this.Pre( index )
 					case 'table': return this.Table( index )
 					default: return this.Paragraph( index )
 				}
@@ -51,7 +51,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
-		code_text( index : number ) {
+		pre_text( index : number ) {
 			const token = this.flow_tokens()[ index ]
 			return ( token.chunks[2] ?? token.chunks[0].replace( /^(\t|    )/gm , '' ) ).replace( /[\n\r]*$/ , '' )
 		}
