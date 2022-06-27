@@ -30,13 +30,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * article? \я весьма сегдян недоперепила, вттак.
+		 * article? \Я весьма сегдян недоперепила, вттак.
 		 * ```
 		 */
 		@ $mol_mem
 		article(next?: any) {
 			if ( next !== undefined ) return next as never
-			return "я весьма сегдян недоперепила, вттак."
+			return "Я весьма сегдян недоперепила, вттак."
 		}
 		
 		/**

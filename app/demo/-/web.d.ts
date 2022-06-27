@@ -7341,6 +7341,23 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_spell_morphs extends Set<string> {
+        readonly max: number;
+        constructor(items?: string[]);
+    }
+    class $mol_spell extends Object {
+        static head: $mol_spell_morphs;
+        static prefix: $mol_spell_morphs;
+        static root: $mol_spell_morphs;
+        static postfix: $mol_spell_morphs;
+        static foot: $mol_spell_morphs;
+        static test(word: string): boolean;
+        static test_tail(word: string): boolean;
+        static test_body(word: string): boolean;
+    }
+}
+
+declare namespace $ {
     class $mol_spell_demo extends $mol_example_small {
         sub(): readonly any[];
         tags(): readonly any[];
@@ -7353,26 +7370,18 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    const $mol_spell_ru_prefix: $mol_regexp<{}>;
-    const $mol_spell_ru_root: $mol_regexp<{}>;
-    const $mol_spell_ru_suffix: $mol_regexp<{}>;
-    const $mol_spell_ru_tail: $mol_regexp<{}>;
-    const $mol_spell_ru: $mol_regexp<{
-        readonly tail: string;
-        readonly prefix: string;
-        readonly root: string;
-        readonly suffix: string;
-    }>;
+    class $mol_spell_ru extends $mol_spell {
+        static prefix: $mol_spell_morphs;
+        static root: $mol_spell_morphs;
+        static postfix: $mol_spell_morphs;
+        static foot: $mol_spell_morphs;
+    }
 }
 
 declare namespace $ {
-    const $mol_spell_any: $mol_regexp<{
-        readonly ru: string;
-        readonly tail: string;
-        readonly prefix: string;
-        readonly root: string;
-        readonly suffix: string;
-    }>;
+    class $mol_spell_any extends Object {
+        static test(word: string): boolean;
+    }
 }
 
 declare namespace $ {
@@ -7380,7 +7389,6 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_spell_demo extends $.$mol_spell_demo {
-        words(): string[];
         report(): string;
     }
 }
