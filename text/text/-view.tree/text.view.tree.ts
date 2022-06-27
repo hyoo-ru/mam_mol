@@ -390,11 +390,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * pre_sidebar_showed true
+		 * code_sidebar_showed true
+		 * ```
+		 */
+		code_sidebar_showed() {
+			return true
+		}
+		
+		/**
+		 * ```tree
+		 * pre_sidebar_showed <= code_sidebar_showed
 		 * ```
 		 */
 		pre_sidebar_showed() {
-			return true
+			return this.code_sidebar_showed()
 		}
 		
 		/**

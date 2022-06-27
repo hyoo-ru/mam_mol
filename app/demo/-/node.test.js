@@ -8371,8 +8371,11 @@ var $;
         pre_text(id) {
             return "";
         }
-        pre_sidebar_showed() {
+        code_sidebar_showed() {
             return true;
+        }
+        pre_sidebar_showed() {
+            return this.code_sidebar_showed();
         }
         table_head_cells(id) {
             return [];

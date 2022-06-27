@@ -2063,6 +2063,7 @@ declare namespace $ {
         header_level(id: any): string;
         header_arg(id: any): {};
         pre_text(id: any): string;
+        code_sidebar_showed(): boolean;
         pre_sidebar_showed(): boolean;
         table_head_cells(id: any): readonly any[];
         table_rows(id: any): readonly any[];
