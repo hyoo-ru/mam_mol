@@ -128,7 +128,7 @@ h6[mol_text_header] {
 	tab-size: 2;
 }
 
-[mol_text_pre_line] {
+[mol_text_code_line] {
 	display: inline-block;
 }
 
