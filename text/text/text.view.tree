@@ -25,7 +25,7 @@ $mol_text $mol_list
 	Pre* $mol_text_code
 		text <= pre_text* \
 		highlight <= highlight \
-		sidebar_showed <= pre_sidebar_showed true
+		sidebar_showed <= pre_sidebar_showed <= code_sidebar_showed true
 	- \Table
 	Table* $mol_grid
 		head_cells <= table_head_cells* /
