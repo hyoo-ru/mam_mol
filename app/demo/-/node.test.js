@@ -10571,6 +10571,7 @@ var $;
         }
         const { width, height } = el.getBoundingClientRect();
         const svg = $mol_jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: `0 0 ${width} ${height}`, width: String(width), height: String(height) },
+            $mol_jsx("base", { href: location.href }),
             $mol_jsx("foreignObject", { xmlns: "http://www.w3.org/2000/svg", width: String(width), height: String(height) }, clone(el)));
         const xml = $mol_dom_serialize(svg);
         const uri = 'data:image/svg+xml,' + encodeURIComponent(xml);
