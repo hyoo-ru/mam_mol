@@ -10555,6 +10555,17 @@ var $;
         }
         function clone(el) {
             const re = el.cloneNode();
+            if (el instanceof HTMLImageElement && !/^(data|blob):/.test(el.src)) {
+                const canvas = $mol_jsx("canvas", { width: el.naturalWidth, height: el.naturalHeight });
+                const context = canvas.getContext('2d');
+                context.drawImage(el, 0, 0);
+                try {
+                    re['src'] = canvas.toDataURL();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                }
+            }
             const styles = $mol_dom_context.getComputedStyle(el);
             restyle(re, styles);
             const before = $mol_dom_context.getComputedStyle(el, ':before');
@@ -10579,7 +10590,6 @@ var $;
         }
         const { width, height } = el.getBoundingClientRect();
         const svg = $mol_jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: `0 0 ${width} ${height}`, width: String(width), height: String(height) },
-            $mol_jsx("base", { href: location.href }),
             $mol_jsx("foreignObject", { xmlns: "http://www.w3.org/2000/svg", width: String(width), height: String(height) }, clone(el)));
         const xml = $mol_dom_serialize(svg);
         const uri = 'data:image/svg+xml,' + encodeURIComponent(xml);
