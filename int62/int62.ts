@@ -10,7 +10,7 @@ namespace $ {
 	) {
 		hi = ( hi + $mol_int62_range ) % $mol_int62_range
 		lo = ( lo + $mol_int62_range ) % $mol_int62_range
-		return `${ hi.toString(36) }_${ lo.toString(36) }`
+		return `${ hi.toString(36) }_${ lo.toString(36) }` as const
 	}
 
 	export function $mol_int62_compare(
