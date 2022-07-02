@@ -61,12 +61,7 @@ namespace $ {
 			const query = this.transfer( address, amount, comment )
 
 			console.log(2)
-			// const response = $mol_wire_sync(query).send()
-			const response = $mol_wire_sync({ go: async () => {
-				const r = await query.send()
-				console.log({ r })
-				return r
-			} }).go()
+			const response = $mol_wire_sync(query).send()
 
 			console.log(3)
 			if (response["@type"] === "ok") {
