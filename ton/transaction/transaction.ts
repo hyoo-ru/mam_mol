@@ -45,7 +45,7 @@ namespace $ {
 		comment() {
 			const payload = this.payload()
 			if (!payload.msg_data || payload.msg_data['@type'] !== 'msg.dataText') return ''
-			return new TextDecoder().decode($mol_ton.lib().utils.base64ToBytes( payload.msg_data.text ));
+			return $mol_base64_decode( payload.msg_data.text );
 		}
 
 		fee() {

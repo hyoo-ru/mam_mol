@@ -1,5 +1,7 @@
 namespace $ {
 
+	$node['tonweb'] // for installing npm package
+
 	export class $mol_ton extends $mol_object2 {
 
 		@ $mol_mem
@@ -53,13 +55,12 @@ namespace $ {
 		}
 	
 		@ $mol_mem_key
-		wallet(id: { publicKey?: Uint8Array, address?: string }) {
+		wallet(key: ReturnType<$mol_ton_wallet['keys']> | string) {
 			const obj = new $mol_ton_wallet
 			obj.ton = $mol_const(this)
 
-			const Wallet = obj.Wallet()
-			const wallet = new Wallet(this.provider(), { address: id.address, publicKey: id.publicKey, wc: 0 });
-			obj.obj = $mol_const(wallet)
+			if (typeof key !== 'string') obj.keys = $mol_const(key)
+			else obj.address = $mol_const(new ($mol_ton.lib().utils.Address)(key))
 
 			return obj
 		}

@@ -2,34 +2,41 @@ namespace $ {
 
 	export class $mol_ton_wallet extends $mol_object2 {
 
+		static Wallet(type = 'v3R2') {
+			return $mol_ton.lib().Wallets.all[type]
+		}
+
+		@ $mol_action
+		static words_create() {
+			return $mol_wire_sync($mol_ton.lib().mnemonic).generateMnemonic() as string[]
+		}
+
+		@ $mol_action
+		static words_to_pair(words: string[]) {
+			const { secretKey } = $mol_wire_sync($mol_ton.lib().mnemonic).mnemonicToKeyPair(words)
+			return $mol_ton.lib().utils.nacl.sign.keyPair.fromSeed(secretKey.slice(0, 32))
+		}
+
 		ton(): $mol_ton {
 			throw new Error('Not defined')
 		}
 
-		Wallet() {
-			return this.ton().api().wallet.all.v3R2;
-		}
-
-		@ $mol_mem
-		words(next?: string) {
-			return this.$.$mol_store_local.value(this + '.words()', next)
-		}
-
-		@ $mol_mem
-		keys() {
-			let words = this.words()
-
-			if (!words) {
-				words = this.words( $mol_wire_sync($mol_ton.lib().mnemonic).generateMnemonic() )
-			}
-
-			const { secretKey }= $mol_wire_sync($mol_ton.lib().mnemonic).mnemonicToKeyPair(words)
-			return $mol_ton.lib().utils.nacl.sign.keyPair.fromSeed(secretKey.slice(0, 32))
-		}
-
-		@ $mol_mem
-		obj(): InstanceType<ReturnType<$mol_ton_wallet['Wallet']>> {
+		keys(): { publicKey: Uint8Array, secretKey: Uint8Array } {
 			throw new Error('Not defined')
+		}
+
+		@ $mol_mem
+		obj(): ReturnType<typeof $mol_ton_wallet.Wallet> {
+			const Wallet = $mol_ton_wallet.Wallet()
+
+			let keys: ReturnType<$mol_ton_wallet['keys']> | null = null
+			try { keys = this.keys() } catch(error) {}
+
+			return new Wallet(this.ton().provider(), {
+				publicKey: keys !== null ? keys.publicKey : undefined,
+				address: keys === null ? this.address() : undefined,
+				wc: 0,
+			})
 		}
 
 		@ $mol_mem
@@ -52,7 +59,7 @@ namespace $ {
 
 		@ $mol_action
 		transfer(address: string, amount: string, payload: string) {
-			const wallet = this.ton().wallet({ address })
+			const wallet = this.ton().wallet(address)
 
 			let seqno = this.info().seqno
 			if (!seqno) seqno = 0
@@ -85,8 +92,8 @@ namespace $ {
 		}
 
 		@ $mol_action
-		transactions(key: { address: string, count?: number }) {
-			const list = $mol_wire_sync( this.ton().api() ).getTransactions( key.address, key.count ?? 20 ) as unknown[]
+		transactions(count = 20) {
+			const list = $mol_wire_sync( this.ton().api() ).getTransactions(this.address(), count) as unknown[]
 			return list.map( data => this.ton().transaction(data) )
 		}
 	}
