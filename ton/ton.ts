@@ -1,0 +1,98 @@
+namespace $ {
+
+	export class $mol_ton extends $mol_object2 {
+
+		api_key() { return '' }
+
+		testnet() {
+			return 'https://testnet.toncenter.com/api/v2/jsonRPC'
+		}
+
+		mainnet() {
+			return 'https://toncenter.com/api/v2/jsonRPC'
+		}
+
+		is_testnet() {
+			return true
+		}
+
+		@ $mol_mem
+		provider() {
+			return new $lib_ton.HttpProvider( this.is_testnet() ? this.testnet() : this.mainnet() , { apiKey: this.api_key() } )
+		}
+
+		@ $mol_mem
+		api() {
+			return new $lib_ton( this.provider() )
+		}
+
+		@ $mol_action
+		keys() {
+			const keys = $lib_ton.utils.nacl.sign.keyPair()
+			return {
+				private: keys.secretKey,
+				public: keys.publicKey,
+			}
+		}
+
+		@ $mol_action
+		wallet_create() {
+			const keys = this.keys()
+			const Wallet = this.api().wallet.all.v3R2;
+			const wallet = new Wallet(this.provider(), { publicKey: keys.public, wc: 0 });
+			const address = $mol_wire_sync(wallet).getAddress().toString(true, true, true, this.is_testnet())
+			return { keys, address }
+		}
+
+		@ $mol_mem_key
+		wallet_info(address: string) {
+			return $mol_wire_sync( this.provider() ).getWalletInfo(address) as unknown
+		}
+
+		transaction_comment_decode(msg: { msg_data?: { '@type': 'msg.dataText' | string, text: string } }) {
+			if (!msg.msg_data || msg.msg_data['@type'] !== 'msg.dataText') return ''
+			return new TextDecoder().decode($lib_ton.utils.base64ToBytes( msg.msg_data.text ));
+		}
+
+		transaction(obj: any) {
+			// https://github.com/toncenter/ton-wallet/blob/521aa4642b2111905e23fb2424fe8e300c32827e/src/js/Controller.js#L306
+			let address_from = ''
+			let address_to = ''
+			let comment = ''
+
+			if (obj.in_msg.source) {
+				address_from = obj.in_msg.source
+				address_to = obj.in_msg.destination
+				comment = this.transaction_comment_decode(obj.in_msg)
+			} else if (obj.out_msgs.length) {
+				address_from = obj.out_msgs[0].source;
+                address_to = obj.out_msgs[0].destination;
+                comment = this.transaction_comment_decode(obj.out_msgs[0]);
+			}
+
+			let amount = new $lib_ton.utils.BN(obj.in_msg.value)
+			for (const outMsg of obj.out_msgs) {
+                amount = amount.sub(new $lib_ton.utils.BN(outMsg.value))
+            }
+
+			return {
+				address_from,
+				address_to,
+				comment,
+				amount,
+				fee: obj.fee.toString(),
+				fee_storage: obj.storageFee.toString(),
+				fee_other: obj.otherFee.toString(),
+				date: new $mol_time_moment( obj.utime * 1000 ),
+			}
+		}
+
+		@ $mol_action
+		transaction_list(address: string, count = 20) {
+			const list = $mol_wire_sync( this.api() ).getTransactions( address, count ) as unknown[]
+			return list.map( obj => this.transaction(obj) )
+		}
+
+	}
+
+}
