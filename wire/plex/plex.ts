@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export function $mol_wire_plex< Args extends any[] >(
+	export function $mol_wire_plex< Args extends [ any, ... any[] ] >(
 		host: object,
 		field: string,
 		descr?: TypedPropertyDescriptor< ( ... args: Args )=> any >
@@ -41,17 +41,7 @@ namespace $ {
 		
 		Reflect.defineProperty( host, field, descr2 )
 		
-		return descr2 as Guard< Args, typeof descr >
+		return descr2
 	}
-
-	type Guard< Args extends any[], Val >
-		
-		= unknown extends Args[0]
-		? Val
-		
-		: undefined extends Args[0]
-		? $mol_type_error< "Key can't be optional. Make it required or use solo channel.", Args >
-		
-		: Val
 	
 }
