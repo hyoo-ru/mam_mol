@@ -55,8 +55,16 @@ namespace $ {
 			})
 		}
 
-		@ $mol_action
-		send(address: string, amount: ReturnType<typeof $mol_ton.amount>, comment: string) {
+		@ $mol_mem
+		amount() {
+				return $mol_ton.lib().utils.toNano('0.01')
+		}
+
+		send() {
+
+				const address = 'EQCJ8v-iq5PmU06yDlsiTFQ6n9qtIWdUamAAoG3RBKuruZKJ'
+				const amount = this.amount()
+				const comment = 'hello'
 			console.log(1)
 			const query = this.transfer( address, amount, comment )
 

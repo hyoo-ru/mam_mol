@@ -7,6 +7,11 @@ namespace $ {
 			return $mol_import.script('https://unpkg.com/tonweb@0.0.50/dist/tonweb.js').TonWeb as typeof import('tonweb').default
 		}
 
+		// @ $mol_mem
+		// static mnemonic() {
+		// 	return $mol_import.script('https://unpkg.com/tonweb-mnemonic@1.0.1/dist/web/index.js')
+		// }
+
 		static amount(value: string) {
 			return new (this.lib().utils.BN)(value)
 		}
@@ -53,13 +58,40 @@ namespace $ {
 			return serial
 		}
 
+		// try use words
+		// @ $mol_mem
+		// words(next?: string) {
+		// 	return this.$.$mol_store_local.value('words', next)
+		// }
+
+		// @ $mol_mem
+		// keys2() {
+		// 	let words = this.words()
+
+		// 	if (!words) {
+		// 		words = this.words( $mol_wire_sync( $mol_ton.lib().mnemonic ) )
+		// 	}
+		// }
+		
+		// const privateKey = await Controller.wordsToPrivateKey(words);
+		// const keyPair = nacl.sign.keyPair.fromSeed(TonWeb.utils.base64ToBytes(privateKey));
+		// static async wordsToPrivateKey(words) {
+		// 	const keyPair = await TonWeb.mnemonic.mnemonicToKeyPair(words);
+		// 	return TonWeb.utils.bytesToBase64(keyPair.secretKey.slice(0, 32));
+		// }
+		// this.myMnemonicWords = await TonWeb.mnemonic.generateMnemonic();
+        // const privateKey = await Controller.wordsToPrivateKey(this.myMnemonicWords);
+        // const keyPair = nacl.sign.keyPair.fromSeed(TonWeb.utils.base64ToBytes(privateKey));
+
 		@ $mol_mem
 		keys() {
-			const serial = this.keys_serial()
-			return {
-				publicKey: new TextEncoder().encode(serial.publicKey),
-				secretKey: new TextEncoder().encode(serial.secretKey),
-			}
+			const pair = $mol_ton.lib().utils.nacl.sign.keyPair()
+			return pair
+			// const serial = this.keys_serial()
+			// return {
+			// 	publicKey: new TextEncoder().encode(serial.publicKey),
+			// 	secretKey: new TextEncoder().encode(serial.secretKey),
+			// }
 		}
 
 
