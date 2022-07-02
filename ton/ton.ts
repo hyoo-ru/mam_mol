@@ -15,11 +15,11 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		static nanoTo(value: string) {
+		static toNano(value: string) {
 			return $mol_ton.lib().utils.toNano(value)
 		}
 
-		static nanoFrom(obj: ReturnType<typeof $mol_ton.amount>) {
+		static fromNano(obj: ReturnType<typeof $mol_ton.amount>) {
 			return $mol_ton.lib().utils.fromNano(obj)
 		}
 

@@ -34,7 +34,7 @@ namespace $ {
 		}
 
 		amount() {
-			return $mol_ton.nanoFrom( this.amount_nano() )
+			return $mol_ton.fromNano( this.amount_nano() )
 		}
 
 		payload() {
