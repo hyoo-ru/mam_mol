@@ -44,7 +44,6 @@
     "$mol_wire_method",
     "$mol_type_tail",
     "$mol_wire_plex",
-    "$mol_type_error",
     "$mol_file",
     "$mol_charset_decode",
     "$mol_charset",

@@ -509,15 +509,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    type $mol_type_error<Message, Info = {}> = Message & {
-        $mol_type_error: Info;
+    function $mol_wire_plex<Args extends [any, ...any[]]>(host: object, field: string, descr?: TypedPropertyDescriptor<(...args: Args) => any>): {
+        value: (this: typeof host, ...args: Args) => any;
+        enumerable?: boolean | undefined;
+        configurable?: boolean | undefined;
+        writable?: boolean | undefined;
+        get?: (() => (...args: Args) => any) | undefined;
+        set?: ((value: (...args: Args) => any) => void) | undefined;
     };
-}
-
-declare namespace $ {
-    export function $mol_wire_plex<Args extends any[]>(host: object, field: string, descr?: TypedPropertyDescriptor<(...args: Args) => any>): Guard<Args, TypedPropertyDescriptor<(...args: Args) => any> | undefined>;
-    type Guard<Args extends any[], Val> = unknown extends Args[0] ? Val : undefined extends Args[0] ? $mol_type_error<"Key can't be optional. Make it required or use solo channel.", Args> : Val;
-    export {};
 }
 
 declare namespace $ {
@@ -683,6 +682,12 @@ declare namespace $ {
 
 declare namespace $ {
     type $mol_type_result<Func> = Func extends (...params: any) => infer Result ? Result : Func extends new (...params: any) => infer Result ? Result : never;
+}
+
+declare namespace $ {
+    type $mol_type_error<Message, Info = {}> = Message & {
+        $mol_type_error: Info;
+    };
 }
 
 declare namespace $ {

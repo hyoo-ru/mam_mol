@@ -1912,9 +1912,6 @@ var $;
 //mol/wire/solo/solo.ts
 ;
 "use strict";
-//mol/type/error/error.ts
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_wire_plex(host, field, descr) {
@@ -3088,6 +3085,9 @@ var $;
     });
 })($ || ($ = {}));
 //mol/log3/log3.test.ts
+;
+"use strict";
+//mol/type/error/error.ts
 ;
 "use strict";
 //mol/type/assert/assert.test.ts

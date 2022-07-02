@@ -1920,9 +1920,6 @@ var $;
 //mol/wire/solo/solo.ts
 ;
 "use strict";
-//mol/type/error/error.ts
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_wire_plex(host, field, descr) {
@@ -2691,6 +2688,9 @@ var $;
 ;
 "use strict";
 //mol/type/result/result.ts
+;
+"use strict";
+//mol/type/error/error.ts
 ;
 "use strict";
 //mol/type/override/override.ts
