@@ -133,7 +133,7 @@ namespace $ {
 
 			this.locale_nodes.set(key, val)
 
-			this.locales[key] = val.value
+			this.locales[key] = val.text()
 
 			return operator.struct('line', body)
 		}
