@@ -2,6 +2,11 @@ namespace $ {
 
 	export class $mol_ton extends $mol_object2 {
 
+		@ $mol_mem
+		tonweb() {
+			return $mol_import.script('https://unpkg.com/tonweb@0.0.50/dist/tonweb.js').TonWeb as typeof import('tonweb').default
+		}
+
 		api_key() { return '' }
 
 		testnet() {
@@ -18,17 +23,19 @@ namespace $ {
 
 		@ $mol_mem
 		provider() {
-			return new $lib_ton.HttpProvider( this.is_testnet() ? this.testnet() : this.mainnet() , { apiKey: this.api_key() } )
+			const Provider = this.tonweb().HttpProvider
+			return new Provider( this.is_testnet() ? this.testnet() : this.mainnet() , { apiKey: this.api_key() } )
 		}
 
 		@ $mol_mem
 		api() {
-			return new $lib_ton( this.provider() )
+			const Ton = this.tonweb()
+			return new Ton( this.provider() )
 		}
 
 		@ $mol_action
 		keys() {
-			const keys = $lib_ton.utils.nacl.sign.keyPair()
+			const keys = this.tonweb().utils.nacl.sign.keyPair()
 			return {
 				private: keys.secretKey,
 				public: keys.publicKey,
@@ -51,7 +58,7 @@ namespace $ {
 
 		transaction_comment_decode(msg: { msg_data?: { '@type': 'msg.dataText' | string, text: string } }) {
 			if (!msg.msg_data || msg.msg_data['@type'] !== 'msg.dataText') return ''
-			return new TextDecoder().decode($lib_ton.utils.base64ToBytes( msg.msg_data.text ));
+			return new TextDecoder().decode(this.tonweb().utils.base64ToBytes( msg.msg_data.text ));
 		}
 
 		transaction(obj: any) {
@@ -70,9 +77,9 @@ namespace $ {
                 comment = this.transaction_comment_decode(obj.out_msgs[0]);
 			}
 
-			let amount = new $lib_ton.utils.BN(obj.in_msg.value)
+			let amount = new (this.tonweb().utils.BN)(obj.in_msg.value)
 			for (const outMsg of obj.out_msgs) {
-                amount = amount.sub(new $lib_ton.utils.BN(outMsg.value))
+                amount = amount.sub(new (this.tonweb().utils.BN)(outMsg.value))
             }
 
 			return {
