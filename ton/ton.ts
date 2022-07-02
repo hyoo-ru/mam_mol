@@ -7,6 +7,10 @@ namespace $ {
 			return $mol_import.script('https://unpkg.com/tonweb@0.0.50/dist/tonweb.js').TonWeb as typeof import('tonweb').default
 		}
 
+		static amount(value: string) {
+			return new (this.lib().utils.BN)(value)
+		}
+
 		api_key() { return '' }
 
 		testnet() {
@@ -116,7 +120,5 @@ namespace $ {
 		}
 
 	}
-
-	export const $mol_ton_amount = $mol_ton.lib().utils.BN
 
 }

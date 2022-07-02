@@ -20,6 +20,7 @@ namespace $ {
 			return $mol_wire_sync(this.obj()).getAddress()
 		}
 
+		@ $mol_mem
 		info() {
 			return $mol_wire_sync( this.ton().provider() ).getWalletInfo( this.address().toString(true, true, true, this.ton().is_testnet()) )
 		}
@@ -29,22 +30,22 @@ namespace $ {
 		}
 
 		balance() {
-			return new $mol_ton_amount( this.info().balance )
+			return $mol_ton.amount( this.info().balance )
 		}
 
 		@ $mol_action
-		send(address: string, amount: typeof $mol_ton_amount, comment: string) {
+		transfer(address: string, amount: ReturnType<typeof $mol_ton.amount>, comment: string) {
 			const wallet = this.ton().wallet({ address })
-
-			if (wallet.initialized() === false) {
-				address = wallet.address().toString(true, true, false, this.ton().is_testnet())
-			}
 
 			const info = wallet.info()
 			let seqno = info.seqno
 			if (!seqno) seqno = 0
 
-			const query = this.obj().methods.transfer({
+			if (wallet.initialized() === false) {
+				address = wallet.address().toString(true, true, false, this.ton().is_testnet())
+			}
+
+			return this.obj().methods.transfer({
 				secretKey: this.ton().keys().secretKey,
 				toAddress: address,
 				amount: amount,
@@ -52,8 +53,22 @@ namespace $ {
 				payload: comment,
 				sendMode: 3,
 			})
+		}
 
-			const response = $mol_wire_sync(query).send()
+		@ $mol_action
+		send(address: string, amount: ReturnType<typeof $mol_ton.amount>, comment: string) {
+			console.log(1)
+			const query = this.transfer( address, amount, comment )
+
+			console.log(2)
+			// const response = $mol_wire_sync(query).send()
+			const response = $mol_wire_sync({ go: async () => {
+				const r = await query.send()
+				console.log({ r })
+				return r
+			} }).go()
+
+			console.log(3)
 			if (response["@type"] === "ok") {
 				return true;
 			} else {
