@@ -11,6 +11,23 @@ namespace $ {
 		}
 
 		@ $mol_mem
+		words(next?: string) {
+			return this.$.$mol_store_local.value(this + '.words()', next)
+		}
+
+		@ $mol_mem
+		keys() {
+			let words = this.words()
+
+			if (!words) {
+				words = this.words( $mol_wire_sync($mol_ton.lib().mnemonic).generateMnemonic() )
+			}
+
+			const { secretKey }= $mol_wire_sync($mol_ton.lib().mnemonic).mnemonicToKeyPair(words)
+			return $mol_ton.lib().utils.nacl.sign.keyPair.fromSeed(secretKey.slice(0, 32))
+		}
+
+		@ $mol_mem
 		obj(): InstanceType<ReturnType<$mol_ton_wallet['Wallet']>> {
 			throw new Error('Not defined')
 		}
@@ -34,11 +51,10 @@ namespace $ {
 		}
 
 		@ $mol_action
-		transfer(address: string, amount: ReturnType<typeof $mol_ton.amount>, comment: string) {
+		transfer(address: string, amount: string, payload: string) {
 			const wallet = this.ton().wallet({ address })
 
-			const info = wallet.info()
-			let seqno = info.seqno
+			let seqno = this.info().seqno
 			if (!seqno) seqno = 0
 
 			if (wallet.initialized() === false) {
@@ -46,38 +62,32 @@ namespace $ {
 			}
 
 			return this.obj().methods.transfer({
-				secretKey: this.ton().keys().secretKey,
+				secretKey: this.keys().secretKey,
 				toAddress: address,
 				amount: amount,
 				seqno: seqno,
-				payload: comment,
+				payload: payload,
 				sendMode: 3,
 			})
 		}
 
-		@ $mol_mem
-		amount() {
-				return $mol_ton.lib().utils.toNano('0.01')
-		}
+		send(address: string, amount: string, payload: string) {
+			const query = this.transfer(address, amount, payload)
 
-		send() {
-
-				const address = 'EQCJ8v-iq5PmU06yDlsiTFQ6n9qtIWdUamAAoG3RBKuruZKJ'
-				const amount = this.amount()
-				const comment = 'hello'
-			console.log(1)
-			const query = this.transfer( address, amount, comment )
-
-			console.log(2)
 			const response = $mol_wire_sync(query).send()
 
-			console.log(3)
 			if (response["@type"] === "ok") {
 				return true;
 			} else {
 				console.error(response)
 				return false;
 			}
+		}
+
+		@ $mol_action
+		transactions(key: { address: string, count?: number }) {
+			const list = $mol_wire_sync( this.ton().api() ).getTransactions( key.address, key.count ?? 20 ) as unknown[]
+			return list.map( data => this.ton().transaction(data) )
 		}
 	}
 

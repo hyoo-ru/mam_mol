@@ -4,19 +4,28 @@ namespace $ {
 
 		@ $mol_mem
 		static lib() {
-			return $mol_import.script('https://unpkg.com/tonweb@0.0.50/dist/tonweb.js').TonWeb as typeof import('tonweb').default
+			const TonWeb = $mol_import.script('https://unpkg.com/tonweb@0.0.50/dist/tonweb.js').TonWeb as typeof import('tonweb').default & { mnemonic: any }
+			$mol_import.script('https://unpkg.com/tonweb-mnemonic@1.0.1/dist/web/index.js')
+			return TonWeb
 		}
 
-		// @ $mol_mem
-		// static mnemonic() {
-		// 	return $mol_import.script('https://unpkg.com/tonweb-mnemonic@1.0.1/dist/web/index.js')
-		// }
-
+		@ $mol_mem_key
 		static amount(value: string) {
 			return new (this.lib().utils.BN)(value)
 		}
 
-		api_key() { return '' }
+		@ $mol_mem_key
+		static nanoTo(value: string) {
+			return $mol_ton.lib().utils.toNano(value)
+		}
+
+		static nanoFrom(obj: ReturnType<typeof $mol_ton.amount>) {
+			return $mol_ton.lib().utils.fromNano(obj)
+		}
+
+		api_key() {
+			return 'c0e4df33e6b63b8641add66d09d7aab5fdaef6c87d8afa30fa43c77f9ee51586'
+		}
 
 		testnet() {
 			return 'https://testnet.toncenter.com/api/v2/jsonRPC'
@@ -26,8 +35,9 @@ namespace $ {
 			return 'https://toncenter.com/api/v2/jsonRPC'
 		}
 
-		is_testnet() {
-			return true
+		@ $mol_mem
+		is_testnet(next?: boolean) {
+			return next ?? true
 		}
 
 		@ $mol_mem
@@ -41,60 +51,7 @@ namespace $ {
 			const Ton = $mol_ton.lib()
 			return new Ton( this.provider() )
 		}
-
-		@ $mol_mem
-		keys_serial() {
-			const key = this + '.keys()'
-			let serial = this.$.$mol_state_local.value( key ) as null | { publicKey: string, secretKey: string }
-			if( serial ) return serial
-
-			const pair = $mol_ton.lib().utils.nacl.sign.keyPair()
-			serial = {
-				publicKey: new TextDecoder().decode(pair.publicKey),
-				secretKey: new TextDecoder().decode(pair.secretKey),
-			}
-			this.$.$mol_state_local.value( key, serial )
-			
-			return serial
-		}
-
-		// try use words
-		// @ $mol_mem
-		// words(next?: string) {
-		// 	return this.$.$mol_store_local.value('words', next)
-		// }
-
-		// @ $mol_mem
-		// keys2() {
-		// 	let words = this.words()
-
-		// 	if (!words) {
-		// 		words = this.words( $mol_wire_sync( $mol_ton.lib().mnemonic ) )
-		// 	}
-		// }
-		
-		// const privateKey = await Controller.wordsToPrivateKey(words);
-		// const keyPair = nacl.sign.keyPair.fromSeed(TonWeb.utils.base64ToBytes(privateKey));
-		// static async wordsToPrivateKey(words) {
-		// 	const keyPair = await TonWeb.mnemonic.mnemonicToKeyPair(words);
-		// 	return TonWeb.utils.bytesToBase64(keyPair.secretKey.slice(0, 32));
-		// }
-		// this.myMnemonicWords = await TonWeb.mnemonic.generateMnemonic();
-        // const privateKey = await Controller.wordsToPrivateKey(this.myMnemonicWords);
-        // const keyPair = nacl.sign.keyPair.fromSeed(TonWeb.utils.base64ToBytes(privateKey));
-
-		@ $mol_mem
-		keys() {
-			const pair = $mol_ton.lib().utils.nacl.sign.keyPair()
-			return pair
-			// const serial = this.keys_serial()
-			// return {
-			// 	publicKey: new TextEncoder().encode(serial.publicKey),
-			// 	secretKey: new TextEncoder().encode(serial.secretKey),
-			// }
-		}
-
-
+	
 		@ $mol_mem_key
 		wallet(id: { publicKey?: Uint8Array, address?: string }) {
 			const obj = new $mol_ton_wallet
@@ -107,48 +64,13 @@ namespace $ {
 			return obj
 		}
 
-		transaction_comment_decode(msg: { msg_data?: { '@type': 'msg.dataText' | string, text: string } }) {
-			if (!msg.msg_data || msg.msg_data['@type'] !== 'msg.dataText') return ''
-			return new TextDecoder().decode($mol_ton.lib().utils.base64ToBytes( msg.msg_data.text ));
-		}
+		@ $mol_mem_key
+		transaction(data: any) {
+			const obj = new $mol_ton_transaction
+			obj.ton = $mol_const(this)
+			obj.obj = $mol_const(data)
 
-		transaction(obj: any) {
-			// https://github.com/toncenter/ton-wallet/blob/521aa4642b2111905e23fb2424fe8e300c32827e/src/js/Controller.js#L306
-			let address_from = ''
-			let address_to = ''
-			let comment = ''
-
-			if (obj.in_msg.source) {
-				address_from = obj.in_msg.source
-				address_to = obj.in_msg.destination
-				comment = this.transaction_comment_decode(obj.in_msg)
-			} else if (obj.out_msgs.length) {
-				address_from = obj.out_msgs[0].source;
-                address_to = obj.out_msgs[0].destination;
-                comment = this.transaction_comment_decode(obj.out_msgs[0]);
-			}
-
-			let amount = new ($mol_ton.lib().utils.BN)(obj.in_msg.value)
-			for (const outMsg of obj.out_msgs) {
-                amount = amount.sub(new ($mol_ton.lib().utils.BN)(outMsg.value))
-            }
-
-			return {
-				address_from,
-				address_to,
-				comment,
-				amount,
-				fee: obj.fee.toString(),
-				fee_storage: obj.storage_fee.toString(),
-				fee_other: obj.other_fee.toString(),
-				date: new $mol_time_moment( obj.utime * 1000 ),
-			}
-		}
-
-		@ $mol_action
-		transaction_list(address: string, count = 20) {
-			const list = $mol_wire_sync( this.api() ).getTransactions( address, count ) as unknown[]
-			return list.map( obj => this.transaction(obj) )
+			return obj
 		}
 
 	}
