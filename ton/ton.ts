@@ -3,7 +3,7 @@ namespace $ {
 	export class $mol_ton extends $mol_object2 {
 
 		@ $mol_mem
-		tonweb() {
+		static lib() {
 			return $mol_import.script('https://unpkg.com/tonweb@0.0.50/dist/tonweb.js').TonWeb as typeof import('tonweb').default
 		}
 
@@ -23,47 +23,40 @@ namespace $ {
 
 		@ $mol_mem
 		provider() {
-			const Provider = this.tonweb().HttpProvider
+			const Provider = $mol_ton.lib().HttpProvider
 			return new Provider( this.is_testnet() ? this.testnet() : this.mainnet() , { apiKey: this.api_key() } )
 		}
 
 		@ $mol_mem
 		api() {
-			const Ton = this.tonweb()
+			const Ton = $mol_ton.lib()
 			return new Ton( this.provider() )
 		}
 
 		@ $mol_mem
 		keys() {
-			const keys = this.tonweb().utils.nacl.sign.keyPair()
+			const keys = $mol_ton.lib().utils.nacl.sign.keyPair()
 			return {
 				private: keys.secretKey,
 				public: keys.publicKey,
 			}
 		}
 
-		@ $mol_mem
-		wallet_create() {
-			console.log(1)
-			const keys = this.keys()
-			console.log(2, keys)
-			const Wallet = this.api().wallet.all.v3R2;
-			console.log(3, Wallet)
-			const wallet = new Wallet(this.provider(), { publicKey: keys.public, wc: 0 });
-			console.log(4, wallet)
-	/*>*/	const address = $mol_wire_sync(wallet).getAddress().toString(true, true, true, this.is_testnet())
-			console.log(5, address)
-			return { keys, address }
-		}
-
 		@ $mol_mem_key
-		wallet_info(address: string) {
-			return $mol_wire_sync( this.provider() ).getWalletInfo(address) as unknown
+		wallet(id: { publicKey?: Uint8Array, address?: string }) {
+			const obj = new $mol_ton_wallet
+			obj.ton = $mol_const(this)
+
+			const Wallet = obj.Wallet()
+			const wallet = new Wallet(this.provider(), { address: id.address, publicKey: id.publicKey, wc: 0 });
+			obj.obj = $mol_const(wallet)
+
+			return obj
 		}
 
 		transaction_comment_decode(msg: { msg_data?: { '@type': 'msg.dataText' | string, text: string } }) {
 			if (!msg.msg_data || msg.msg_data['@type'] !== 'msg.dataText') return ''
-			return new TextDecoder().decode(this.tonweb().utils.base64ToBytes( msg.msg_data.text ));
+			return new TextDecoder().decode($mol_ton.lib().utils.base64ToBytes( msg.msg_data.text ));
 		}
 
 		transaction(obj: any) {
@@ -82,9 +75,9 @@ namespace $ {
                 comment = this.transaction_comment_decode(obj.out_msgs[0]);
 			}
 
-			let amount = new (this.tonweb().utils.BN)(obj.in_msg.value)
+			let amount = new ($mol_ton.lib().utils.BN)(obj.in_msg.value)
 			for (const outMsg of obj.out_msgs) {
-                amount = amount.sub(new (this.tonweb().utils.BN)(outMsg.value))
+                amount = amount.sub(new ($mol_ton.lib().utils.BN)(outMsg.value))
             }
 
 			return {
