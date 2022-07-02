@@ -33,7 +33,7 @@ namespace $ {
 			return new Ton( this.provider() )
 		}
 
-		@ $mol_action
+		@ $mol_mem
 		keys() {
 			const keys = this.tonweb().utils.nacl.sign.keyPair()
 			return {
@@ -42,12 +42,17 @@ namespace $ {
 			}
 		}
 
-		@ $mol_action
+		@ $mol_mem
 		wallet_create() {
+			console.log(1)
 			const keys = this.keys()
+			console.log(2, keys)
 			const Wallet = this.api().wallet.all.v3R2;
+			console.log(3, Wallet)
 			const wallet = new Wallet(this.provider(), { publicKey: keys.public, wc: 0 });
-			const address = $mol_wire_sync(wallet).getAddress().toString(true, true, true, this.is_testnet())
+			console.log(4, wallet)
+	/*>*/	const address = $mol_wire_sync(wallet).getAddress().toString(true, true, true, this.is_testnet())
+			console.log(5, address)
 			return { keys, address }
 		}
 
