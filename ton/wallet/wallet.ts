@@ -64,7 +64,7 @@ namespace $ {
 			return this.obj().methods.transfer({
 				secretKey: this.keys().secretKey,
 				toAddress: address,
-				amount: amount,
+				amount: $mol_ton.toNano(amount),
 				seqno: seqno,
 				payload: payload,
 				sendMode: 3,
