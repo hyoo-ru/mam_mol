@@ -45,8 +45,13 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		info() {
+		info(force?: any) {
 			return $mol_wire_sync( this.ton().provider() ).getWalletInfo( this.address().toString(true, true, true, this.ton().is_testnet()) )
+		}
+
+		@ $mol_action
+		seqno() {
+			return $mol_wire_sync( this.obj().methods.seqno() ).call()
 		}
 
 		initialized() {
@@ -58,11 +63,8 @@ namespace $ {
 		}
 
 		@ $mol_action
-		transfer(address: string, amount: string, payload: string) {
+		transfer(address: string, amount: string, payload: string, seqno: number) {
 			const wallet = this.ton().wallet(address)
-
-			let seqno = this.info().seqno
-			if (!seqno) seqno = 0
 
 			if (wallet.initialized() === false) {
 				address = wallet.address().toString(true, true, false, this.ton().is_testnet())
@@ -78,8 +80,8 @@ namespace $ {
 			})
 		}
 
-		send(address: string, amount: string, payload: string) {
-			const query = this.transfer(address, amount, payload)
+		send(address: string, amount: string, payload: string, seqno: number) {
+			const query = this.transfer(address, amount, payload, seqno)
 
 			const response = $mol_wire_sync(query).send()
 
