@@ -54,7 +54,7 @@ namespace $ {
 		}
 
 		balance() {
-			return $mol_ton.amount( this.info().balance )
+			return $mol_ton.fromNano( this.info().balance )
 		}
 
 		@ $mol_action
