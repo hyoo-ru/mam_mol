@@ -31,7 +31,7 @@ namespace $ {
 			)
 		}
 		
-		static async from( serial: DataView | ArrayBuffer ) {
+		static async from( serial: BufferSource ) {
 			return new this(
 				await crypto.subtle.importKey(
 					'raw',
@@ -52,7 +52,7 @@ namespace $ {
 		}
 
 		/** 4 bytes + data length */
-		async encrypt( open: DataView | ArrayBuffer, salt: Uint8Array ): Promise< ArrayBuffer > {
+		async encrypt( open: BufferSource, salt: BufferSource ): Promise< ArrayBuffer > {
 			return await crypto.subtle.encrypt(
 				{
 					... algorithm,
@@ -63,7 +63,7 @@ namespace $ {
 			)
 		}
 		
-		async decrypt( closed: DataView | ArrayBuffer, salt : Uint8Array ): Promise< ArrayBuffer > {
+		async decrypt( closed: BufferSource, salt : BufferSource ): Promise< ArrayBuffer > {
 			return await crypto.subtle.decrypt(
 				{
 					... algorithm,

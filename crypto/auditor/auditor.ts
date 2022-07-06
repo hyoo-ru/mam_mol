@@ -1,18 +1,12 @@
 namespace $ {
 
-	// More compact (32B sign) but don't work in Safari
-	// const algorithm = {
-	// 	name: 'RSA-PSS',
-	// 	modulusLength: 256,
-	// 	publicExponent: new Uint8Array([ 1, 0, 1 ]),
-	// 	hash: 'SHA-1',
-	// 	saltLength: 8,
-	// }
-	
+	/** @FIXME Need polyfill for Safari (https://github.com/microsoft/MSR-JavaScript-Crypto/) */
 	const algorithm = {
-		name: "ECDSA",
-		hash: {name: "SHA-256"},
-		namedCurve: 'P-256',
+		name: 'RSA-PSS',
+		modulusLength: 256,
+		publicExponent: new Uint8Array([ 1, 0, 1 ]),
+		hash: 'SHA-1',
+		saltLength: 8,
 	}
 	
 	/** Asymmetric signing pair with shortest payload */
@@ -42,7 +36,7 @@ namespace $ {
 	export class $mol_crypto_auditor_public extends Object {
 		
 		/** Key size in bytes. */
-		static size = 91
+		static size = 62
 		
 		constructor(
 			readonly native: CryptoKey & { type: 'public' }
@@ -50,7 +44,7 @@ namespace $ {
 			super()
 		}
 		
-		static async from( serial: DataView | ArrayBuffer ) {
+		static async from( serial: BufferSource ) {
 			return new this(
 				await crypto.subtle.importKey(
 					'spki',
@@ -62,7 +56,7 @@ namespace $ {
 			)
 		}
 		
-		/** 91 bytes */
+		/** 62 bytes */
 		async serial() {
 			return await crypto.subtle.exportKey(
 				'spki',
@@ -70,7 +64,7 @@ namespace $ {
 			)
 		}
 		
-		async verify( data: DataView | ArrayBuffer, sign: DataView | ArrayBuffer ) {
+		async verify( data: BufferSource, sign: BufferSource ) {
 			return await crypto.subtle.verify(
 				algorithm,
 				this.native,
@@ -84,8 +78,8 @@ namespace $ {
 	/** Asymmetric signing private key wrapper with shortest payload */
 	export class $mol_crypto_auditor_private extends Object {
 		
-		/** Key size in bytes. */
-		static size = 138
+		/** Max key size in bytes. */
+		static size = 200
 		
 		constructor(
 			readonly native: CryptoKey & { type: 'private' }
@@ -93,7 +87,7 @@ namespace $ {
 			super()
 		}
 	
-		static async from( serial: DataView | ArrayBuffer ) {
+		static async from( serial: BufferSource ) {
 			return new this(
 				await crypto.subtle.importKey(
 					'pkcs8',
@@ -105,7 +99,7 @@ namespace $ {
 			)
 		}
 		
-		/** 138 bytes */
+		/** 190-200 bytes */
 		async serial() {
 			return await crypto.subtle.exportKey(
 				'pkcs8',
@@ -113,8 +107,8 @@ namespace $ {
 			)
 		}
 		
-		/** 64 bytes */
-		async sign( data: DataView | ArrayBuffer ) {
+		/** 32 bytes */
+		async sign( data: BufferSource ) {
 			
 			return await crypto.subtle.sign(
 				algorithm,
@@ -127,6 +121,6 @@ namespace $ {
 	}
 	
 	/** Sign size in bytes. */
-	export const $mol_crypto_auditor_sign_size = 64
+	export const $mol_crypto_auditor_sign_size = 32
 	
 }
