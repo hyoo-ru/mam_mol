@@ -42,7 +42,7 @@ namespace $ {
 			super()
 		}
 		
-		static async from( serial: DataView | ArrayBuffer ) {
+		static async from( serial: BufferSource ) {
 			return new this(
 				await crypto.subtle.importKey(
 					'spki',
@@ -63,7 +63,7 @@ namespace $ {
 		}
 		
 		/** max 86 bytes input, 128 bytes output */
-		async encrypt( data: DataView | ArrayBuffer ): Promise< ArrayBuffer > {
+		async encrypt( data: BufferSource ): Promise< ArrayBuffer > {
 			return await crypto.subtle.encrypt(
 				algorithm,
 				this.native,
@@ -82,7 +82,7 @@ namespace $ {
 			super()
 		}
 		
-		static async from( serial: DataView | ArrayBuffer ) {
+		static async from( serial: BufferSource ) {
 			return new this(
 				await crypto.subtle.importKey(
 					'pkcs8',
@@ -102,7 +102,7 @@ namespace $ {
 			)
 		}
 		
-		async decrypt( data: DataView | ArrayBuffer ): Promise< ArrayBuffer > {
+		async decrypt( data: BufferSource ): Promise< ArrayBuffer > {
 			return await crypto.subtle.decrypt(
 				algorithm,
 				this.native,
