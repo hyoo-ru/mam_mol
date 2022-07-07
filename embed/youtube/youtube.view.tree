@@ -7,7 +7,7 @@ $mol_embed_youtube $mol_check
 		<= Image $mol_image
 			title <= title \
 			uri <= video_preview \
-		<= Frame $mol_embed_native
+		<= Frame $mol_frame
 			title <= title \
 			uri <= video_embed \
 

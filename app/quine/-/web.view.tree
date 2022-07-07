@@ -312,6 +312,22 @@ $mol_embed_native $mol_scroll
 			sub /
 				<= title \
 
+$mol_frame $mol_embed_native
+	dom_name \iframe
+	attr *
+		^
+		data null
+		type null
+		src <= uri?val \
+		srcdoc <= html null
+		allow <= allow \
+		allowFullscreen <= fullscreen true
+	accelerometer true
+	autoplay true
+	encription true
+	gyroscope true
+	pip true
+
 $mol_embed_youtube $mol_check
 	uri \
 	video_preview \
@@ -321,7 +337,7 @@ $mol_embed_youtube $mol_check
 		<= Image $mol_image
 			title <= title \
 			uri <= video_preview \
-		<= Frame $mol_embed_native
+		<= Frame $mol_frame
 			title <= title \
 			uri <= video_embed \
 

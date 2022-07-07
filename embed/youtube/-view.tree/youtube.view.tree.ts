@@ -99,14 +99,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Frame $mol_embed_native
+		 * Frame $mol_frame
 		 * 	title <= title
 		 * 	uri <= video_embed
 		 * ```
 		 */
 		@ $mol_mem
 		Frame() {
-			const obj = new this.$.$mol_embed_native()
+			const obj = new this.$.$mol_frame()
 			
 			obj.title = () => this.title()
 			obj.uri = () => this.video_embed()
