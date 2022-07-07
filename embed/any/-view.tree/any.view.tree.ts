@@ -37,6 +37,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Youtube $mol_embed_youtube
+		 * 	title <= title
+		 * 	uri <= uri
+		 * ```
+		 */
+		@ $mol_mem
+		Youtube() {
+			const obj = new this.$.$mol_embed_youtube()
+			
+			obj.title = () => this.title()
+			obj.uri = () => this.uri()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * title \
 		 * ```
 		 */

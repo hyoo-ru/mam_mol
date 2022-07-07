@@ -154,6 +154,10 @@
     "$mol_wait_timeout",
     "$mol_wait",
     "$mol_promise",
+    "$mol_embed_youtube",
+    "$mol_jsx",
+    "$mol_type_partial_deep",
+    "$mol_type_partial",
     "$mol_row"
   ],
   "dependencies": {

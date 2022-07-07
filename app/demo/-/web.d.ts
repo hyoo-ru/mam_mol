@@ -278,16 +278,15 @@ declare namespace $ {
 declare namespace $ {
     let $hyoo_crowd_tokenizer: $mol_regexp<{
         readonly token: string;
+        readonly emoji: string;
         readonly 'line-break': string;
         readonly indents: string;
-        readonly spaces: string;
         readonly Word: string;
         readonly word: string;
         readonly others: string;
-        readonly emoji: string;
+        readonly space: string;
         readonly win_end: string;
         readonly mac_end: string;
-        readonly tab: string;
     }>;
 }
 
@@ -2500,9 +2499,37 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_embed_youtube extends $mol_check {
+        uri(): string;
+        video_preview(): string;
+        video_id(): string;
+        checked(next?: any): boolean;
+        sub(): readonly any[];
+        active(next?: any): boolean;
+        title(): string;
+        Image(): $mol_image;
+        video_embed(): string;
+        Frame(): $$.$mol_embed_native;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_embed_youtube extends $.$mol_embed_youtube {
+        video_embed(): string;
+        video_id(): string;
+        video_preview(): string;
+        sub(): ($mol_image | $mol_embed_native)[];
+    }
+}
+
+declare namespace $ {
     class $mol_embed_any extends $mol_ghost {
         Image(): $mol_image;
         Object(): $$.$mol_embed_native;
+        Youtube(): $$.$mol_embed_youtube;
         title(): string;
         uri(): string;
     }
@@ -2510,8 +2537,8 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_embed_any extends $.$mol_embed_any {
-        type(): "image" | "object";
-        Sub(): $mol_image | $mol_embed_native;
+        type(): "image" | "object" | "youtube";
+        Sub(): $mol_image | $mol_embed_native | $mol_embed_youtube;
     }
 }
 
@@ -4332,8 +4359,8 @@ declare namespace $ {
             src: string;
             srcdoc: any;
             allow: string;
+            allowFullscreen: boolean;
         };
-        fullscreen(): boolean;
         accelerometer(): boolean;
         autoplay(): boolean;
         encription(): boolean;
@@ -4342,6 +4369,7 @@ declare namespace $ {
         uri(val?: any): string;
         html(): any;
         allow(): string;
+        fullscreen(): boolean;
     }
 }
 

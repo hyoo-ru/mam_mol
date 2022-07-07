@@ -191,6 +191,7 @@
     "$mol_wait_timeout",
     "$mol_wait",
     "$mol_promise",
+    "$mol_embed_youtube",
     "$mol_section",
     "$mol_attach_demo",
     "$mol_attach",

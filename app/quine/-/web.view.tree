@@ -312,11 +312,28 @@ $mol_embed_native $mol_scroll
 			sub /
 				<= title \
 
+$mol_embed_youtube $mol_check
+	uri \
+	video_preview \
+	video_id \
+	checked? <=> active? false
+	sub /
+		<= Image $mol_image
+			title <= title \
+			uri <= video_preview \
+		<= Frame $mol_embed_native
+			title <= title \
+			uri <= video_embed \
+
+
 $mol_embed_any $mol_ghost
 	Image $mol_image
 		title <= title \
 		uri <= uri \
 	Object $mol_embed_native
+		title <= title \
+		uri <= uri \
+	Youtube $mol_embed_youtube
 		title <= title \
 		uri <= uri \
 

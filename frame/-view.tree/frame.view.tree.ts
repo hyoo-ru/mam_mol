@@ -13,30 +13,25 @@ namespace $ {
 		/**
 		 * ```tree
 		 * attr *
+		 * 	^
 		 * 	data null
 		 * 	type null
 		 * 	src <= uri?val
 		 * 	srcdoc <= html
 		 * 	allow <= allow
+		 * 	allowFullscreen <= fullscreen
 		 * ```
 		 */
 		attr() {
 			return {
+				...super.attr(),
 				data: null as any,
 				type: null as any,
 				src: this.uri(),
 				srcdoc: this.html(),
-				allow: this.allow()
+				allow: this.allow(),
+				allowFullscreen: this.fullscreen()
 			}
-		}
-		
-		/**
-		 * ```tree
-		 * fullscreen true
-		 * ```
-		 */
-		fullscreen() {
-			return true
 		}
 		
 		/**
@@ -111,6 +106,15 @@ namespace $ {
 		 */
 		allow() {
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * fullscreen true
+		 * ```
+		 */
+		fullscreen() {
+			return true
 		}
 	}
 	

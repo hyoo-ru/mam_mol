@@ -412,11 +412,28 @@ $mol_embed_native $mol_scroll
 			sub /
 				<= title \
 
+$mol_embed_youtube $mol_check
+	uri \
+	video_preview \
+	video_id \
+	checked? <=> active? false
+	sub /
+		<= Image $mol_image
+			title <= title \
+			uri <= video_preview \
+		<= Frame $mol_embed_native
+			title <= title \
+			uri <= video_embed \
+
+
 $mol_embed_any $mol_ghost
 	Image $mol_image
 		title <= title \
 		uri <= uri \
 	Object $mol_embed_native
+		title <= title \
+		uri <= uri \
+	Youtube $mol_embed_youtube
 		title <= title \
 		uri <= uri \
 
@@ -1537,12 +1554,13 @@ $mol_icon_open_in_new $mol_icon path \M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.4
 $mol_frame $mol_embed_native
 	dom_name \iframe
 	attr *
+		^
 		data null
 		type null
 		src <= uri?val \
 		srcdoc <= html null
 		allow <= allow \
-	fullscreen true
+		allowFullscreen <= fullscreen true
 	accelerometer true
 	autoplay true
 	encription true
