@@ -104,6 +104,8 @@ h6[mol_text_header] {
 	margin: .25rem;
 }
 
+[mol_text_embed_youtube_image],
+[mol_text_embed_youtube_frame],
 [mol_text_embed_object] {
 	object-fit: contain;
 	object-position: center;

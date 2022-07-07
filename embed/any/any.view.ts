@@ -6,7 +6,12 @@ namespace $.$$ {
 		type() {
 			
 			try {
-				if( /\.(png|gif|jpg|jpeg|webp|svg)$/.test( this.uri() ) ) return 'image'
+				
+				const uri = this.uri()
+				
+				if( /\.(png|gif|jpg|jpeg|webp|svg)$/.test( uri ) ) return 'image'
+				if( /^https:\/\/www\.youtube\.com\//.test( uri ) ) return 'youtube'
+				
 			} catch( error ) {
 				$mol_fail_log( error )
 				return 'image'
@@ -19,6 +24,7 @@ namespace $.$$ {
 		Sub() {
 			switch( this.type() ) {
 				case 'image': return this.Image()
+				case 'youtube': return this.Youtube()
 				default: return this.Object()
 			}
 		}
