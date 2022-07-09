@@ -205,10 +205,11 @@ $mol_page $mol_view
 			sub <= foot /$mol_view
 
 $mol_link $mol_view
+	uri \
 	dom_name \a
 	attr *
 		^
-		href <= uri \
+		href <= uri_toggle \
 		title <= hint \
 		target <= target \_self
 		download <= file_name \

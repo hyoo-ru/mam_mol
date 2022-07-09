@@ -5459,13 +5459,16 @@ var $;
 var $;
 (function ($) {
     class $mol_link extends $mol_view {
+        uri() {
+            return "";
+        }
         dom_name() {
             return "a";
         }
         attr() {
             return {
                 ...super.attr(),
-                href: this.uri(),
+                href: this.uri_toggle(),
                 title: this.hint(),
                 target: this.target(),
                 download: this.file_name(),
@@ -5486,7 +5489,7 @@ var $;
                 click: (event) => this.click(event)
             };
         }
-        uri() {
+        uri_toggle() {
             return "";
         }
         hint() {
@@ -5576,10 +5579,10 @@ var $;
     var $$;
     (function ($$) {
         class $mol_link extends $.$mol_link {
-            uri() {
-                return this.current() ? this.uri_off() : this.uri_on();
+            uri_toggle() {
+                return this.current() ? this.uri_off() : this.uri();
             }
-            uri_on() {
+            uri() {
                 return new this.$.$mol_state_arg(this.state_key()).link(this.arg());
             }
             uri_off() {
@@ -5590,7 +5593,7 @@ var $;
             }
             uri_native() {
                 const base = this.$.$mol_state_arg.href();
-                return new URL(this.uri_on(), base);
+                return new URL(this.uri(), base);
             }
             current() {
                 const base = this.$.$mol_state_arg.href_normal();
@@ -5613,16 +5616,19 @@ var $;
             minimal_height() {
                 return Math.max(super.minimal_height(), 24);
             }
+            external() {
+                return this.uri_native().origin !== $mol_dom_context.location.origin;
+            }
             target() {
-                return (this.uri_native().origin === $mol_dom_context.location.origin) ? '_self' : '_blank';
+                return this.external() ? '_blank' : '_self';
             }
         }
         __decorate([
             $mol_mem
-        ], $mol_link.prototype, "uri", null);
+        ], $mol_link.prototype, "uri_toggle", null);
         __decorate([
             $mol_mem
-        ], $mol_link.prototype, "uri_on", null);
+        ], $mol_link.prototype, "uri", null);
         __decorate([
             $mol_mem
         ], $mol_link.prototype, "uri_off", null);
@@ -16028,18 +16034,18 @@ var $;
         title() {
             return this.$.$mol_locale.text('$mol_chat_title');
         }
-        external() {
+        standalone() {
             return "";
         }
-        External_icon() {
+        Standalone_icon() {
             const obj = new this.$.$mol_icon_open_in_new();
             return obj;
         }
         Esternal() {
             const obj = new this.$.$mol_link();
-            obj.uri = () => this.external();
+            obj.uri = () => this.standalone();
             obj.sub = () => [
-                this.External_icon()
+                this.Standalone_icon()
             ];
             return obj;
         }
@@ -16081,7 +16087,7 @@ var $;
     ], $mol_chat.prototype, "Icon", null);
     __decorate([
         $mol_mem
-    ], $mol_chat.prototype, "External_icon", null);
+    ], $mol_chat.prototype, "Standalone_icon", null);
     __decorate([
         $mol_mem
     ], $mol_chat.prototype, "Esternal", null);
@@ -16120,7 +16126,7 @@ var $;
             pages() {
                 return this.opened() ? [this.Page()] : [];
             }
-            external() {
+            standalone() {
                 const seed = this.seed();
                 const origin = new URL(this.$.$mol_state_arg.href()).origin;
                 return `https://talks.hyoo.ru/#!chat=${encodeURIComponent(origin + '/' + seed)}`;
@@ -16134,7 +16140,7 @@ var $;
         }
         __decorate([
             $mol_mem
-        ], $mol_chat.prototype, "external", null);
+        ], $mol_chat.prototype, "standalone", null);
         __decorate([
             $mol_mem
         ], $mol_chat.prototype, "embed", null);

@@ -11,7 +11,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		external() {
+		standalone() {
 			const seed = this.seed()
 			const origin = new URL( this.$.$mol_state_arg.href() ).origin
 			return `https://talks.hyoo.ru/#!chat=${ encodeURIComponent( origin + '/' + seed ) }`

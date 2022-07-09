@@ -84,20 +84,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * external \
+		 * standalone \
 		 * ```
 		 */
-		external() {
+		standalone() {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * External_icon $mol_icon_open_in_new
+		 * Standalone_icon $mol_icon_open_in_new
 		 * ```
 		 */
 		@ $mol_mem
-		External_icon() {
+		Standalone_icon() {
 			const obj = new this.$.$mol_icon_open_in_new()
 			
 			return obj
@@ -106,17 +106,17 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Esternal $mol_link
-		 * 	uri <= external
-		 * 	sub / <= External_icon
+		 * 	uri <= standalone
+		 * 	sub / <= Standalone_icon
 		 * ```
 		 */
 		@ $mol_mem
 		Esternal() {
 			const obj = new this.$.$mol_link()
 			
-			obj.uri = () => this.external()
+			obj.uri = () => this.standalone()
 			obj.sub = () => [
-				this.External_icon()
+				this.Standalone_icon()
 			] as readonly any[]
 			
 			return obj

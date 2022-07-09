@@ -3,12 +3,12 @@ namespace $.$$ {
 	export class $mol_link extends $.$mol_link {
 		
 		@ $mol_mem
-		uri() {
-			return this.current() ? this.uri_off() : this.uri_on()
+		uri_toggle() {
+			return this.current() ? this.uri_off() : this.uri()
 		}
 
 		@ $mol_mem
-		uri_on() {
+		uri() {
 			return new this.$.$mol_state_arg( this.state_key() ).link( this.arg() )
 		}
 
@@ -23,7 +23,7 @@ namespace $.$$ {
 		@ $mol_mem
 		uri_native() {
 			const base = this.$.$mol_state_arg.href()
-			return new URL( this.uri_on() , base )
+			return new URL( this.uri() , base )
 		}
 
 		@ $mol_mem
@@ -54,8 +54,12 @@ namespace $.$$ {
 			return Math.max( super.minimal_height(), 24 )
 		}
 		
+		external() {
+			return this.uri_native().origin !== $mol_dom_context.location.origin
+		}
+		
 		target(): '_self' | '_blank' | '_top' | '_parent' | string {
-			return ( this.uri_native().origin === $mol_dom_context.location.origin ) ? '_self' : '_blank'
+			return this.external() ? '_blank' : '_self'
 		}
 
 	}

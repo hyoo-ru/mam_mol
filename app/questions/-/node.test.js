@@ -6149,13 +6149,16 @@ var $;
 var $;
 (function ($) {
     class $mol_link extends $mol_view {
+        uri() {
+            return "";
+        }
         dom_name() {
             return "a";
         }
         attr() {
             return {
                 ...super.attr(),
-                href: this.uri(),
+                href: this.uri_toggle(),
                 title: this.hint(),
                 target: this.target(),
                 download: this.file_name(),
@@ -6176,7 +6179,7 @@ var $;
                 click: (event) => this.click(event)
             };
         }
-        uri() {
+        uri_toggle() {
             return "";
         }
         hint() {
@@ -6352,10 +6355,10 @@ var $;
     var $$;
     (function ($$) {
         class $mol_link extends $.$mol_link {
-            uri() {
-                return this.current() ? this.uri_off() : this.uri_on();
+            uri_toggle() {
+                return this.current() ? this.uri_off() : this.uri();
             }
-            uri_on() {
+            uri() {
                 return new this.$.$mol_state_arg(this.state_key()).link(this.arg());
             }
             uri_off() {
@@ -6366,7 +6369,7 @@ var $;
             }
             uri_native() {
                 const base = this.$.$mol_state_arg.href();
-                return new URL(this.uri_on(), base);
+                return new URL(this.uri(), base);
             }
             current() {
                 const base = this.$.$mol_state_arg.href_normal();
@@ -6389,16 +6392,19 @@ var $;
             minimal_height() {
                 return Math.max(super.minimal_height(), 24);
             }
+            external() {
+                return this.uri_native().origin !== $mol_dom_context.location.origin;
+            }
             target() {
-                return (this.uri_native().origin === $mol_dom_context.location.origin) ? '_self' : '_blank';
+                return this.external() ? '_blank' : '_self';
             }
         }
         __decorate([
             $mol_mem
-        ], $mol_link.prototype, "uri", null);
+        ], $mol_link.prototype, "uri_toggle", null);
         __decorate([
             $mol_mem
-        ], $mol_link.prototype, "uri_on", null);
+        ], $mol_link.prototype, "uri", null);
         __decorate([
             $mol_mem
         ], $mol_link.prototype, "uri_off", null);

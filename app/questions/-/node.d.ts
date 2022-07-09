@@ -1843,6 +1843,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_link extends $mol_view {
+        uri(): string;
         dom_name(): string;
         attr(): {
             href: string;
@@ -1856,7 +1857,7 @@ declare namespace $ {
         event(): {
             click: (event?: any) => any;
         };
-        uri(): string;
+        uri_toggle(): string;
         hint(): string;
         target(): string;
         file_name(): string;
@@ -1895,13 +1896,14 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_link extends $.$mol_link {
+        uri_toggle(): string;
         uri(): string;
-        uri_on(): string;
         uri_off(): string;
         uri_native(): URL;
         current(): boolean;
         file_name(): string;
         minimal_height(): number;
+        external(): boolean;
         target(): '_self' | '_blank' | '_top' | '_parent' | string;
     }
 }

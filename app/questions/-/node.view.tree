@@ -266,10 +266,11 @@ $mol_grid_cell $mol_view
 $mol_grid_number $mol_grid_cell
 
 $mol_link $mol_view
+	uri \
 	dom_name \a
 	attr *
 		^
-		href <= uri \
+		href <= uri_toggle \
 		title <= hint \
 		target <= target \_self
 		download <= file_name \

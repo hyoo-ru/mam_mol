@@ -3,6 +3,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * uri \
+		 * ```
+		 */
+		uri() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * dom_name \a
 		 * ```
 		 */
@@ -14,7 +23,7 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	href <= uri
+		 * 	href <= uri_toggle
 		 * 	title <= hint
 		 * 	target <= target
 		 * 	download <= file_name
@@ -24,7 +33,7 @@ namespace $ {
 		attr() {
 			return {
 				...super.attr(),
-				href: this.uri(),
+				href: this.uri_toggle(),
 				title: this.hint(),
 				target: this.target(),
 				download: this.file_name(),
@@ -69,10 +78,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * uri \
+		 * uri_toggle \
 		 * ```
 		 */
-		uri() {
+		uri_toggle() {
 			return ""
 		}
 		
