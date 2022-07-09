@@ -4,14 +4,18 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		uri() {
-			
-			const arg = this.arg()
-			
-			const uri = new this.$.$mol_state_arg( this.state_key() ).link( arg )
-			if( uri !== this.$.$mol_state_arg.href() ) return uri
-			
+			return this.current() ? this.uri_off() : this.uri_on()
+		}
+
+		@ $mol_mem
+		uri_on() {
+			return new this.$.$mol_state_arg( this.state_key() ).link( this.arg() )
+		}
+
+		@ $mol_mem
+		uri_off() {
 			const arg2 = {}
-			for( let i in arg ) arg2[i] = null
+			for( let i in this.arg() ) arg2[i] = null
 			
 			return new this.$.$mol_state_arg( this.state_key() ).link( arg2 )
 		}
@@ -19,7 +23,7 @@ namespace $.$$ {
 		@ $mol_mem
 		uri_native() {
 			const base = this.$.$mol_state_arg.href()
-			return new URL( this.uri() , base )
+			return new URL( this.uri_on() , base )
 		}
 
 		@ $mol_mem
