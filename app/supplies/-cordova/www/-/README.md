@@ -18,10 +18,7 @@ Reactive micro-modular UI framework. Very simple, but very powerful!
 
 # Levels
 
-1. ✅ **Library.** $mol is just set of small libs. Honor libs: jQuery, React, Redux, MobX.
-2. ✅ **Framework.** $mol is very flexible, but simple. Honor frameworks: Angular, Vue, Ember.
-3. ✅ **Сonstruction Kit.** $mol has many customizable UI components. Honor construction kits: Ext, OpenUI5.
-4. ⭕ **Platform.** $mol doesn't fit it yet. Honor platforms: Drupal, SAP, 1C.
+![](https://habrastorage.org/webt/qb/xi/pb/qbxipbsmjkbqrkfv3royn7ko3b8.png)
 
 # Features
 
