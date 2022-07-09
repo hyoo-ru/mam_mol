@@ -2,9 +2,10 @@
 
 Reactive micro-modular UI framework. Very simple, but very powerful!
 
+![](https://habrastorage.org/webt/0r/l1/70/0rl170zizkwddstnp5mt5bruroa.png)
+
 # Contents
 
-- [Levels](#levels)
 - [Features](#features)
 - [Review](#reviews)
 - [Quick start](#quick-start)
@@ -15,10 +16,6 @@ Reactive micro-modular UI framework. Very simple, but very powerful!
 - [Contributors](#contributors)
 - [Cool stuff](#cool-stuff)
 - [Donate](#donate)
-
-# Levels
-
-![](https://habrastorage.org/webt/qb/xi/pb/qbxipbsmjkbqrkfv3royn7ko3b8.png)
 
 # Features
 
