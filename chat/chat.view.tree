@@ -10,9 +10,9 @@ $mol_chat $mol_link
 			title <= title @ \Discussion
 			tools /
 				<= Esternal $mol_link
-					uri <= external \
+					uri <= standalone \
 					sub /
-						<= External_icon $mol_icon_open_in_new
+						<= Standalone_icon $mol_icon_open_in_new
 				<= Close $mol_link
 					arg * mol_chat null
 					sub /
