@@ -5268,18 +5268,20 @@ var $;
     (function ($$) {
         class $mol_link extends $.$mol_link {
             uri() {
-                const arg = this.arg();
-                const uri = new this.$.$mol_state_arg(this.state_key()).link(arg);
-                if (uri !== this.$.$mol_state_arg.href())
-                    return uri;
+                return this.current() ? this.uri_off() : this.uri_on();
+            }
+            uri_on() {
+                return new this.$.$mol_state_arg(this.state_key()).link(this.arg());
+            }
+            uri_off() {
                 const arg2 = {};
-                for (let i in arg)
+                for (let i in this.arg())
                     arg2[i] = null;
                 return new this.$.$mol_state_arg(this.state_key()).link(arg2);
             }
             uri_native() {
                 const base = this.$.$mol_state_arg.href();
-                return new URL(this.uri(), base);
+                return new URL(this.uri_on(), base);
             }
             current() {
                 const base = this.$.$mol_state_arg.href_normal();
@@ -5309,6 +5311,12 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_link.prototype, "uri", null);
+        __decorate([
+            $mol_mem
+        ], $mol_link.prototype, "uri_on", null);
+        __decorate([
+            $mol_mem
+        ], $mol_link.prototype, "uri_off", null);
         __decorate([
             $mol_mem
         ], $mol_link.prototype, "uri_native", null);

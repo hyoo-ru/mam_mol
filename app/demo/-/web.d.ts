@@ -1677,6 +1677,8 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_link extends $.$mol_link {
         uri(): string;
+        uri_on(): string;
+        uri_off(): string;
         uri_native(): URL;
         current(): boolean;
         file_name(): string;
