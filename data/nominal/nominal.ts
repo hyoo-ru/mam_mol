@@ -1,6 +1,6 @@
 namespace $ {
 	
-	type $mol_data_nominal_type< Value, Nominal > = Value & { $mol_data_nominal: Nominal }
+	type $mol_data_nominal_type< Value, Nominal > = Value | { $mol_data_nominal: Nominal }
 	
 	type $mol_data_nominal_parser< Input extends any[], Output > = {
 		Value : Output

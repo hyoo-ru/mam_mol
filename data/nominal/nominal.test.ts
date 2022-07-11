@@ -8,9 +8,11 @@ namespace $ {
 			
 			let len = Length( 10 )
 			len = Length( 20 ) // Validate
-			len = 20 as typeof Length.Value // Cast
-
-			// len = 20 // Compile time error
+			
+			len = 20 // Implicit Cast
+			let num: number = len // Implicit Cast
+			len = Weight( 20 ) as typeof Length.Value // Explicit Cast
+			
 			// len = Weight( 20 ) // Compile time error
 			// len = Length( 20.1 ) // Run time error
 
