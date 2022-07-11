@@ -7953,6 +7953,8 @@ declare namespace $ {
         detail_title(): string;
         blocks(): readonly any[];
         Theme(): $$.$mol_theme_auto;
+        search_start(next?: any): any;
+        Search_start(): $$.$mol_hotkey;
         names_demo_filtered(): readonly string[];
         filter_suggests(): readonly string[];
         sources_uri(): string;
@@ -8059,6 +8061,7 @@ declare namespace $.$$ {
         names_demo_all(): string[];
         widget_tags(name: string): string[];
         widget_title(name: string): string;
+        search_start(event?: Event): void;
         filter(): string;
         filter_last_word_completed(): boolean;
         filter_words(): string[];

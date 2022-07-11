@@ -3982,6 +3982,9 @@ $mol_app_demo $mol_book2
 	pages <= blocks /
 	plugins /
 		<= Theme $mol_theme_auto
+		<= Search_start $mol_hotkey
+			key * F? <=> search_start? null
+			mod_ctrl true
 	demo_block_list /
 		\$mol_example_small
 		\$mol_example_large

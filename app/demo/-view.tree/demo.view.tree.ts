@@ -41,12 +41,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * plugins / <= Theme
+		 * plugins /
+		 * 	<= Theme
+		 * 	<= Search_start
 		 * ```
 		 */
 		plugins() {
 			return [
-				this.Theme()
+				this.Theme(),
+				this.Search_start()
 			] as readonly any[]
 		}
 		
@@ -183,6 +186,36 @@ namespace $ {
 		@ $mol_mem
 		Theme() {
 			const obj = new this.$.$mol_theme_auto()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * search_start? null
+		 * ```
+		 */
+		@ $mol_mem
+		search_start(next?: any) {
+			if ( next !== undefined ) return next as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * Search_start $mol_hotkey
+		 * 	key * F? <=> search_start?
+		 * 	mod_ctrl true
+		 * ```
+		 */
+		@ $mol_mem
+		Search_start() {
+			const obj = new this.$.$mol_hotkey()
+			
+			obj.key = () => ({
+				F: (next?: any) => this.search_start(next)
+			})
+			obj.mod_ctrl = () => true
 			
 			return obj
 		}

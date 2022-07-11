@@ -30239,7 +30239,8 @@ var $;
         }
         plugins() {
             return [
-                this.Theme()
+                this.Theme(),
+                this.Search_start()
             ];
         }
         demo_block_list() {
@@ -30291,6 +30292,19 @@ var $;
         }
         Theme() {
             const obj = new this.$.$mol_theme_auto();
+            return obj;
+        }
+        search_start(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Search_start() {
+            const obj = new this.$.$mol_hotkey();
+            obj.key = () => ({
+                F: (next) => this.search_start(next)
+            });
+            obj.mod_ctrl = () => true;
             return obj;
         }
         names_demo_filtered() {
@@ -30364,6 +30378,12 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_app_demo.prototype, "Theme", null);
+    __decorate([
+        $mol_mem
+    ], $mol_app_demo.prototype, "search_start", null);
+    __decorate([
+        $mol_mem
+    ], $mol_app_demo.prototype, "Search_start", null);
     __decorate([
         $mol_mem
     ], $mol_app_demo.prototype, "Sources", null);
@@ -30805,6 +30825,11 @@ var $;
             }
             widget_title(name) {
                 return this.Widget(name).title();
+            }
+            search_start(event) {
+                const query = this.Menu().Filter().Query();
+                query.focused(true);
+                event?.preventDefault();
             }
             filter() {
                 return this.Menu().filter();
