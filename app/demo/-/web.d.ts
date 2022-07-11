@@ -730,8 +730,18 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_after_timeout extends $mol_object2 {
+        delay: number;
+        task: () => void;
+        id: any;
+        constructor(delay: number, task: () => void);
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
     class $mol_view_selection extends $mol_object {
-        static focused(next?: Element[]): Element[];
+        static focused(next?: Element[], notify?: 'notify'): Element[];
     }
 }
 
@@ -1384,16 +1394,6 @@ declare namespace $ {
         font_size(): number;
         font_family(): string;
         style_size(): {};
-    }
-}
-
-declare namespace $ {
-    class $mol_after_timeout extends $mol_object2 {
-        delay: number;
-        task: () => void;
-        id: any;
-        constructor(delay: number, task: () => void);
-        destructor(): void;
     }
 }
 

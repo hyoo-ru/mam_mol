@@ -541,7 +541,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_view_selection extends $mol_object {
-        static focused(next?: Element[]): Element[];
+        static focused(next?: Element[], notify?: 'notify'): Element[];
     }
 }
 

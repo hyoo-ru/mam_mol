@@ -22,10 +22,7 @@ namespace $.$$ {
 
 				if( p === n ) continue
 
-				new $mol_after_frame( ()=> {
-					n.dom_node()['focus']()
-					n.dom_node().scrollIntoView({ behavior : 'smooth' })
-				} )
+				new $mol_after_tick( ()=> n.focused( true ) )
 				
 				break
 
