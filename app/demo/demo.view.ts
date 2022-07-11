@@ -70,6 +70,12 @@ namespace $.$$ {
 			return this.Widget( name ).title()
 		}
 
+		search_start( event?: Event ) {
+			const query = this.Menu().Filter().Query()
+			query.focused( true )
+			event?.preventDefault()
+		}
+		
 		filter() {
 			return this.Menu().filter()
 		}
