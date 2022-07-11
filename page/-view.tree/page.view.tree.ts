@@ -12,6 +12,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * field *
+		 * 	^
+		 * 	tabIndex <= tabindex
+		 * ```
+		 */
+		field() {
+			return {
+				...super.field(),
+				tabIndex: this.tabindex()
+			}
+		}
+		
+		/**
+		 * ```tree
 		 * sub /
 		 * 	<= Head
 		 * 	<= Body
@@ -24,6 +38,15 @@ namespace $ {
 				this.Body(),
 				this.Foot()
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * tabindex -1
+		 * ```
+		 */
+		tabindex() {
+			return -1
 		}
 		
 		/**

@@ -138,6 +138,9 @@ $mol_link_source $mol_link
 
 $mol_page $mol_view
 	dom_name \article
+	field *
+		^
+		tabIndex <= tabindex -1
 	sub /
 		<= Head $mol_view
 			minimal_height 64

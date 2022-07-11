@@ -3090,7 +3090,10 @@ var $;
                         break;
                     if (p === n)
                         continue;
-                    new $mol_after_frame(() => n.dom_node().scrollIntoView({ behavior: 'smooth' }));
+                    new $mol_after_frame(() => {
+                        n.dom_node()['focus']();
+                        n.dom_node().scrollIntoView({ behavior: 'smooth' });
+                    });
                     break;
                 }
                 return next;
@@ -5119,12 +5122,21 @@ var $;
         dom_name() {
             return "article";
         }
+        field() {
+            return {
+                ...super.field(),
+                tabIndex: this.tabindex()
+            };
+        }
         sub() {
             return [
                 this.Head(),
                 this.Body(),
                 this.Foot()
             ];
+        }
+        tabindex() {
+            return -1;
         }
         Title() {
             const obj = new this.$.$mol_view();
