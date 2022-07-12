@@ -22,13 +22,22 @@ namespace $.$$ {
 
 				if( p === n ) continue
 
-				new $mol_after_tick( ()=> n.focused( true ) )
+				n.bring()
 				
 				break
 
 			}
 
 			return next as readonly $mol_view[]
+		}
+		
+		bring() {
+			
+			const pages = this.pages()
+			
+			if( pages.length ) pages[ pages.length - 1 ].bring()
+			else super.bring()
+			
 		}
 
 	}

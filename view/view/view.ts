@@ -66,7 +66,7 @@ namespace $ {
 			let node = this.dom_node()
 			const value = $mol_view_selection.focused( next === undefined ? undefined : ( next ? [ node ] : [] ) )
 			return value.indexOf( node ) !== -1
-		} 
+		}
 		
 		state_key( suffix = '' ) {
 			return this.$.$mol_view_state_key( suffix )
@@ -445,6 +445,13 @@ namespace $ {
 
 			view.dom_node().scrollIntoView({ block: align })
 
+		}
+		
+		bring() {
+			new $mol_after_work( 16, ()=> {
+				this.dom_node().scrollIntoView({ behavior : 'smooth' })
+				new $mol_after_timeout( 400, ()=> this.focused( true ) )
+			} )
 		}
 
 	}
