@@ -5,7 +5,7 @@ namespace $.$$ {
 		pages() {
 			return [
 				this.Menu(),
-				... this.spread() != null ? [ this.Spread() ] : [],
+				... $mol_maybe( this.Spread() ),
 			]
 		}
 		

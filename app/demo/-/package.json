@@ -109,6 +109,7 @@
     "$mol_plugin",
     "$mol_dom_render_styles",
     "$mol_dom_render_fields",
+    "$mol_after_work",
     "$mol_type_pick",
     "$mol_type_keys_extract",
     "$mol_type_keys",

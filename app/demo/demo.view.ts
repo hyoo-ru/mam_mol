@@ -71,8 +71,7 @@ namespace $.$$ {
 		}
 
 		search_start( event?: Event ) {
-			const query = this.Menu().Filter().Query()
-			query.focused( true )
+			this.Menu().Filter().Query().bring()
 			event?.preventDefault()
 		}
 		

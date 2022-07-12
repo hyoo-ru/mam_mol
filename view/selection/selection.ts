@@ -15,18 +15,12 @@ namespace $ {
 			
 			if( !next || notify ) return parents
 			
-			new $mol_after_frame( ()=> {
+			new $mol_after_tick( ()=> {
 				
-				this.focused()?.[0].scrollIntoView({ behavior : 'smooth' })
+				const element = this.focused()![0] as HTMLElement
 				
-				new $mol_after_timeout( 250, ()=> {
-					
-					const element = this.focused()![0] as HTMLElement
-					
-					if( element ) element.focus()
-					else $mol_dom_context.blur()
-
-				} )
+				if( element ) element.focus()
+				else $mol_dom_context.blur()
 				
 			} )
 
