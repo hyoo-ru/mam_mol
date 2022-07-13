@@ -354,6 +354,7 @@ $mol_search $mol_pop
 				hint <= hint @ \Search...
 				submit?event <=> submit?event null
 				enabled <= enabled true
+				bring => bring
 			<= Clear $mol_button_minor
 				hint @ \Clear
 				click?event <=> clear?event null

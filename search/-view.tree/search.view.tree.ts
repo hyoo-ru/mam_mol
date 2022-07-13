@@ -205,11 +205,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * bring
+		 * ```
+		 */
+		bring() {
+			return this.Query().bring()
+		}
+		
+		/**
+		 * ```tree
 		 * Query $mol_string
 		 * 	value?val <=> query?val
 		 * 	hint <= hint
 		 * 	submit?event <=> submit?event
 		 * 	enabled <= enabled
+		 * 	bring => bring
 		 * ```
 		 */
 		@ $mol_mem
