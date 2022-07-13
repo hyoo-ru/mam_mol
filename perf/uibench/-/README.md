@@ -23,8 +23,8 @@ Reactive micro-modular UI framework. Very simple, but very powerful!
 - [Lazy rendering/evaluating/loading etc](#lazyness).
 - [Full reactivity](#reactivity) in all application layers. Not only between View and ViewModel.
 - [Automatic dependency tracking](#reactivity) between reactive containers. No need to manual publish/subscribe/unsubscribe and streams routing.
-- [Effective state synchronization](mem) in right way. 
-- Automatic inclusion of modules in package at compile time. No need for manually importing them. [Just use it](#zero-configuration).
+- [Effective state synchronization](wire) in right way. 
+- Automatic inclusion of modules in package at compile time. No need for manually importing or installing them. [Just use it](#zero-configuration).
 - Very small modules. [All of them are optional](#zero-configuration).
 - Cross platform. [Support any environment](#zero-configuration) (NodeJS, Web browsers, Cordova).
 - Static typing ([TypeScript](https://www.typescriptlang.org/)). Full IDE support.
@@ -262,8 +262,8 @@ namespace $ {
 	export class $my_greeter {
 		
 		@ $mol_mem
-		greeting() : string {
-			const user_name = $mol_fetch.json( 'https://example.org/profile/name' ) as string
+		greeting() {
+			const user_name = $mol_fetch.json( 'https://example.org/profile/name' )
 			return `Hello, ${ user_name }!`
 		}
 		
@@ -271,7 +271,7 @@ namespace $ {
 }
 ```
 
-Details: [$mol_mem](mem), [$mol_atom2](atom2).
+Details: [$mol_wire](wire).
 
 ## Debugging
 
@@ -304,7 +304,7 @@ The name of the field corresponds to calling the property, the content of the fi
 
 ## Object model
 
-- **[$mol_mem](mem)** - Reactive property decorator
+- **[$mol_wire](wire)** - Reactivity system
 - **[$mol_object](object)** - Components base class
 
 ## Lifecycle
