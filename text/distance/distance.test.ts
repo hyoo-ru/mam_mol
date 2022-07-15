@@ -50,7 +50,7 @@ namespace $ {
 			)
 		},
 		
-		'Simmetry'() {
+		'Symmetry'() {
 			$mol_assert_equal(
 				$mol_text_distance( `booklet`, `handbook` ),
 				$mol_text_distance( `handbook`, `booklet` ),
