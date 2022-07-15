@@ -2,6 +2,18 @@
 
 Calculates the lexicographical distance between two texts.
 
+## Algorithm
+
+- A simple and fast.
+- Text profile based.
+- Normalized from 0 (equal) to 1 (different).
+- Rearrangement of words gives short distance.
+- Different texts length support.
+- Independent of changes position.
+- Complexity O(n).
+- Memory usage O(log n).
+- For equal length texts it's a [metric](https://en.wikipedia.org/wiki/Metric_(mathematics)).
+
 ## Usage
 
 ```ts
@@ -18,15 +30,11 @@ $mol_text_distance(
 )
 ```
 
-## Algorithm
-
-- A simple and fast.
-- Normalized from 0 to 1.
-- Rearrangement of words gives short distance.
-- Independent of texts length.
-- Independent of changes position.
-- Complexity O(n).
-- Memory usage O(log n).
+```ts
+const profile1 = $mol_text_profile( `profile` )
+const profile2 = $mol_text_profile( `prodir` )
+const distance = $mol_text_profile_distance( profile1, profile2 ) // 0.54
+```
 
 ## NPM Bundle
 

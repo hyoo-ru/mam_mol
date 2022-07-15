@@ -50,5 +50,19 @@ namespace $ {
 			)
 		},
 		
+		'Simmetry'() {
+			$mol_assert_equal(
+				$mol_text_distance( `booklet`, `handbook` ),
+				$mol_text_distance( `handbook`, `booklet` ),
+			)
+		},
+		
+		'Triangle inequality'() {
+			const A = $mol_text_distance( `metric`, `123ric` )
+			const B = $mol_text_distance( `123ric`, `123456` )
+			const C = $mol_text_distance( `metric`, `123456` )
+			$mol_assert_ok( A + B >= C )
+		},
+		
 	})
 }
