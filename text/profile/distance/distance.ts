@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export function $mol_text_key_distance(
+	export function $mol_text_profile_distance(
 		left: Map< string, number >,
 		right: Map< string, number >,
 	) {
