@@ -36,14 +36,13 @@ namespace $ {
 					return this
 				},
 				next() {
+					
 					const iteration = iterator.next()
-
-					if( !iteration.done ) {
-						const key = iteration.value[0]
-						if( typeof key === 'string' ) iteration.value[0] = JSON.parse( key )
-					}
-
+					if( iteration.done ) return iteration
+					
+					iteration.value[0] = JSON.parse( iteration.value[0] as any as string )
 					return iteration
+					
 				}
 			}
 		}
