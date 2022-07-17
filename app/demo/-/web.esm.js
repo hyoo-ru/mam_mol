@@ -22190,10 +22190,15 @@ var $;
 var $;
 (function ($) {
     function $mol_wire_solid() {
-        $mol_wire_auto().reap = nothing;
+        const current = $mol_wire_auto();
+        if (current.reap !== nothing) {
+            current?.sub_on(sub, sub.data.length);
+        }
+        current.reap = nothing;
     }
     $.$mol_wire_solid = $mol_wire_solid;
     const nothing = () => { };
+    const sub = new $mol_wire_pub_sub;
 })($ || ($ = {}));
 //mol/wire/solid/solid.ts
 ;
