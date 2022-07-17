@@ -4673,11 +4673,11 @@ var $;
                 },
             }, $node.typescript.createSemanticDiagnosticsBuilderProgram, (diagnostic) => {
                 if (diagnostic.file) {
-                    const error = new Error($node.typescript.formatDiagnostic(diagnostic, {
+                    const error = $node.typescript.formatDiagnostic(diagnostic, {
                         getCurrentDirectory: () => this.root().path(),
                         getCanonicalFileName: (path) => path.toLowerCase(),
                         getNewLine: () => '\n',
-                    }));
+                    });
                     this.js_error(diagnostic.file.getSourceFile().fileName, error);
                 }
                 else {
@@ -5098,12 +5098,11 @@ var $;
             const errors = [];
             const paths = this.tsPaths({ path, exclude: exclude_ext, bundle });
             for (const path of paths) {
-                const src = this.$.$mol_file.absolute(path);
-                src.text();
+                this.js_content(path);
                 const error = this.js_error(path);
                 if (!error)
                     continue;
-                errors.push(error);
+                errors.push(new Error(error));
             }
             this.logBundle(target, Date.now() - start);
             if (errors.length) {

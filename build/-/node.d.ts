@@ -1089,7 +1089,7 @@ declare namespace $ {
             recheck: () => void;
             destructor: () => void;
         } | null;
-        js_error(path: string, next?: Error | null): Error | null;
+        js_error(path: string, next?: string | null): string | null;
         js_content(path: string): {
             text: string;
             map: $mol_sourcemap_raw | undefined;
