@@ -3,7 +3,7 @@
 	outline-offset: 0;
 	border: none;
 	border-radius: var(--mol_gap_round);
-	white-space: nowrap;
+	white-space: pre-line;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	padding: var(--mol_gap_text);
