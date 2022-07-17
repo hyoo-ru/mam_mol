@@ -80,6 +80,13 @@ namespace $ {
 
 		} ,
 
+		'method iterators key restore'() {
+			const dict = new $mol_dict([[ [123] , 321 ]])
+			$mol_assert_like( [ ... dict.keys() ], [ [123] ] )
+			$mol_assert_like( [ ... dict.values() ], [ 321 ] )
+			$mol_assert_like( [ ... dict.entries() ], [ [ [123], 321 ] ] )
+		} ,
+
 		'forEach key restore'() {
 
 			const dict = new $mol_dict([[ [123] , 321 ]])
