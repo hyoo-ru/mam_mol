@@ -1,6 +1,5 @@
 [mol_link_iconed] {
 	align-items: baseline;
-	color: var(--mol_theme_control);
 	display: inline-flex;
 	padding: var(--mol_gap_text);
 }
