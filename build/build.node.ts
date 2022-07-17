@@ -352,11 +352,11 @@ namespace $ {
 
 					if( diagnostic.file ) {
 
-						const error = new Error( $node.typescript.formatDiagnostic( diagnostic , {
+						const error = $node.typescript.formatDiagnostic( diagnostic , {
 							getCurrentDirectory : ()=> this.root().path() ,
 							getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
 							getNewLine : ()=> '\n' ,
-						}) )
+						})
 						
 						this.js_error( diagnostic.file.getSourceFile().fileName , error )
 						
@@ -396,7 +396,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		js_error( path : string , next = null as null | Error ) {
+		js_error( path : string , next = null as null | string ) {
 			this.js_content( path )
 			return next
 		}
@@ -943,14 +943,12 @@ namespace $ {
 
 			for( const path of paths ) {
 
-				const src = this.$.$mol_file.absolute( path ) 
-
-				src.text() // recheck on file change
+				this.js_content( path ) // recheck on file change
 
 				const error = this.js_error( path )
 				if( !error ) continue
 				
-				errors.push( error )
+				errors.push( new Error( error ) )
 			}
 			
 			this.logBundle( target , Date.now() - start )
