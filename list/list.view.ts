@@ -145,7 +145,7 @@ namespace $.$$ {
 			if( index >= 0 ) {
 				const win = this.view_window()
 				if( index < win[0] || index >= win[1] ) {
-					this.view_window([ index, index + 1 ])
+					this.view_window([ this.render_visible_only() ? index : 0, index + 1 ])
 				}
 				( kids[ index ] as $mol_view ).force_render( path )
 			}
