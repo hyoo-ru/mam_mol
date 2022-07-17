@@ -381,8 +381,8 @@ namespace $ {
 				recheck: ()=> {
 					for( const path of paths ) {
 						const version = $node.fs.statSync( path ).mtime.valueOf()
+						this.js_error( path, null )
 						if( versions[ path ] && versions[ path ] !== version ) {
-							this.js_error( path, null )
 							const watcher = watchers.get( path )
 							if( watcher ) watcher( path , 2 )
 						}
