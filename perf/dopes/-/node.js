@@ -2374,7 +2374,7 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
-    const error_shower = new WeakMap();
+    const error_showed = new WeakMap();
     class $mol_view extends $mol_object {
         static Root(id) {
             return new this;
@@ -2518,14 +2518,14 @@ var $;
                 $mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
                 if (error instanceof Promise)
                     return node;
-                if ((error_shower.get(error) ?? this) !== this)
+                if ((error_showed.get(error) ?? this) !== this)
                     return node;
                 try {
                     const message = error.message || error;
                     node.innerText = message.replace(/^|$/mg, '\xA0\xA0');
                 }
                 catch { }
-                error_shower.set(error, this);
+                error_showed.set(error, this);
             }
             return node;
         }
