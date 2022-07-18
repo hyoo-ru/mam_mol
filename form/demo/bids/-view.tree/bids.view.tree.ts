@@ -17,7 +17,7 @@ namespace $ {
 		 * 	adult \18+ only
 		 * 	no_spaces \No spaces!
 		 * 	need_more_letters \{count} or more letters
-		 * 	need_at \is required
+		 * 	need_at \@ is required
 		 * 	only_one_at \At most one @
 		 * 	no_tld \At least 2 level domain
 		 * 	dots_inside \Dots can't be at edge
@@ -31,7 +31,7 @@ namespace $ {
 				adult: "18+ only",
 				no_spaces: "No spaces!",
 				need_more_letters: "{count} or more letters",
-				need_at: "is required",
+				need_at: "@ is required",
 				only_one_at: "At most one @",
 				no_tld: "At least 2 level domain",
 				dots_inside: "Dots can't be at edge",
