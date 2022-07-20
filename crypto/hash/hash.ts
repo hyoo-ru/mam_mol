@@ -23,7 +23,7 @@ namespace $ {
 		words[ bytes - 1 ] = bits
 
 		// Digest
-		for( let i = 0; i < words.length; i += 16 ) {
+		for( let i = 0; i < bytes; i += 16 ) {
 			
 			let h0 = hash[0]
 			let h1 = hash[1]
@@ -44,28 +44,28 @@ namespace $ {
 					
 				}
 				
-				const n1 = ( hash[0] << 5 )|( hash[0] >>> 27 )
+				const n1 = ( h0 << 5 )|( h0 >>> 27 )
 				
 				const n2 =
 					
 					j < 20
-						? ( hash[1] & hash[2] | ~hash[1] & hash[3] ) + 1518500249
+						? ( h1 & h2 | ~h1 & h3 ) + 1518500249
 					
 					: j < 40
-						? ( hash[1] ^ hash[2] ^ hash[3] ) + 1859775393
+						? ( h1 ^ h2 ^ h3 ) + 1859775393
 					
 					: j < 60
-						? ( hash[1] & hash[2] | hash[1] & hash[3] | hash[2] & hash[3] ) - 1894007588
+						? ( h1 & h2 | h1 & h3 | h2 & h3 ) - 1894007588
 					
-					: ( hash[1] ^ hash[2] ^ hash[3] ) - 899497514
+					: ( h1 ^ h2 ^ h3 ) - 899497514
 
-				const next = n1 + n2 + hash[4] + ( buffer[j] >>> 0 )
+				const next = n1 + n2 + h4 + ( buffer[j] >>> 0 )
 
-				hash[4] = hash[3]
-				hash[3] = hash[2]
-				hash[2] = ( hash[1] << 30 )|( hash[1] >>> 2 )
-				hash[1] = hash[0]
-				hash[0] = next
+				h4 = h3
+				h3 = h2
+				h2 = ( h1 << 30 )|( h1 >>> 2 )
+				h1 = h0
+				h0 = next
 				
 			}
 
