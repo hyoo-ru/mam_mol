@@ -6,17 +6,17 @@ namespace $ {
 	export function $mol_crypto_hash( data: Uint8Array ) {
 		
 		const bits = data.byteLength << 3
-		const bytes = ( ( bits + 64 >>> 9 ) << 4) + 16
+		const bytes = 16 + ( bits + 64 >>> 9 << 4 )
 		
 		const words = new Int32Array( bytes )
 		
 		// LE -> BE
-		for (var i = 0; i < data.length; i++ ) {
+		for( var i = 0; i < data.length; ++i ) {
 			words[ i >>> 2 ] |= data[i] << ( 24 - ( i << 3 ) & 0b11111 )
 		}
 		
 		// Initial
-        const hash = new Int32Array([ 1732584193, -271733879, -1732584194, 271733878, -1009589776 ])
+		const hash = new Int32Array([ 1732584193, -271733879, -1732584194, 271733878, -1009589776 ])
 		
 		// Padding
 		words[ bits >> 5 ] |= 0x80 << ( 24 - bits & 0b11111 )
@@ -40,7 +40,7 @@ namespace $ {
 				} else {
 					
 					const shuffle = buffer[j-3] ^ buffer[j-8] ^ buffer[j-14] ^ buffer[j-16]
-					buffer[j] = ( shuffle << 1 )|( shuffle >>> 31 )
+					buffer[j] = shuffle << 1 | shuffle >>> 31
 					
 				}
 				
@@ -59,11 +59,11 @@ namespace $ {
 					
 					: ( hash[1] ^ hash[2] ^ hash[3] ) - 899497514
 
-				const next = n1 + hash[4] + ( buffer[j] >>> 0 ) + n2
+				const next = n1 + n2 + hash[4] + ( buffer[j] >>> 0 )
 
 				hash[4] = hash[3]
 				hash[3] = hash[2]
-				hash[2] = (hash[1] << 30) | (hash[1] >>> 2)
+				hash[2] = ( hash[1] << 30 )|( hash[1] >>> 2 )
 				hash[1] = hash[0]
 				hash[0] = next
 				
@@ -78,7 +78,7 @@ namespace $ {
 		}
 		
 		// BE -> LE
-		for( let i = 0; i < hash.length; ++i ) {
+		for( let i = 0; i < 20; ++i ) {
 			const word = hash[i]
 			hash[i] = 0
 				| word << 24
