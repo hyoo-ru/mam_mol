@@ -32,27 +32,29 @@ namespace $ {
 			let h4 = hash[4]
 
 			for( let j = 0; j < 80; ++j ) {
-
+				
+				const n1 = ( h0 << 5 )|( h0 >>> 27 )
+				let turn
+				
 				if( j < 16 ) {
 					
 					buffer[j] = words[ i + j ]
+					turn = ( h1 & h2 | ~h1 & h3 ) + 1518500249
 					
 				} else {
 					
 					const shuffle = buffer[j-3] ^ buffer[j-8] ^ buffer[j-14] ^ buffer[j-16]
 					buffer[j] = shuffle << 1 | shuffle >>> 31
 					
+					turn =
+						j < 20 ? ( h1 & h2 | ~h1 & h3 ) + 1518500249 :
+						j < 40 ? ( h1 ^ h2 ^ h3 ) + 1859775393 :
+						j < 60 ? ( h1 & h2 | h1 & h3 | h2 & h3 ) - 1894007588 :
+						( h1 ^ h2 ^ h3 ) - 899497514
+
 				}
 				
-				const n1 = ( h0 << 5 )|( h0 >>> 27 )
-				
-				const n2 =
-					j < 20 ? ( h1 & h2 | ~h1 & h3 ) + 1518500249 :
-					j < 40 ? ( h1 ^ h2 ^ h3 ) + 1859775393 :
-					j < 60 ? ( h1 & h2 | h1 & h3 | h2 & h3 ) - 1894007588 :
-					( h1 ^ h2 ^ h3 ) - 899497514
-
-				const next = n1 + n2 + h4 + ( buffer[j] >>> 0 )
+				const next = turn + h4 + ( buffer[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 ))
 
 				h4 = h3
 				h3 = h2
