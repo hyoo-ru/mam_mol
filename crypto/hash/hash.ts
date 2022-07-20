@@ -47,17 +47,10 @@ namespace $ {
 				const n1 = ( h0 << 5 )|( h0 >>> 27 )
 				
 				const n2 =
-					
-					j < 20
-						? ( h1 & h2 | ~h1 & h3 ) + 1518500249
-					
-					: j < 40
-						? ( h1 ^ h2 ^ h3 ) + 1859775393
-					
-					: j < 60
-						? ( h1 & h2 | h1 & h3 | h2 & h3 ) - 1894007588
-					
-					: ( h1 ^ h2 ^ h3 ) - 899497514
+					j < 20 ? ( h1 & h2 | ~h1 & h3 ) + 1518500249 :
+					j < 40 ? ( h1 ^ h2 ^ h3 ) + 1859775393 :
+					j < 60 ? ( h1 & h2 | h1 & h3 | h2 & h3 ) - 1894007588 :
+					( h1 ^ h2 ^ h3 ) - 899497514
 
 				const next = n1 + n2 + h4 + ( buffer[j] >>> 0 )
 
@@ -80,11 +73,7 @@ namespace $ {
 		// BE -> LE
 		for( let i = 0; i < 20; ++i ) {
 			const word = hash[i]
-			hash[i] = 0
-				| word << 24
-				| word << 8 & 0xFF0000
-				| word >>> 8 & 0xFF00
-				| word >>> 24 & 0xFF
+			hash[i] = word << 24 | word << 8 & 0xFF0000 | word >>> 8 & 0xFF00 | word >>> 24 & 0xFF
 		}
 
 		return new Uint8Array( hash.buffer )
