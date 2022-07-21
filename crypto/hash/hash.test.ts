@@ -8,6 +8,20 @@ namespace $ {
 			)
 		},
 		
+		'three bytes hash'() {
+			$mol_assert_like(
+				$mol_crypto_hash( new Uint8Array([ 255, 254, 253 ]) ),
+				new Uint8Array([ 240, 150, 38, 243, 255, 128, 96, 0, 72, 215, 207, 228, 19, 149, 113, 52, 2, 125, 27, 77 ]),
+			)
+		},
+		
+		'six bytes hash'() {
+			$mol_assert_like(
+				$mol_crypto_hash( new Uint8Array([ 0, 255, 10, 250, 32, 128 ]) ),
+				new Uint8Array([ 23, 25, 155, 181, 46, 200, 221, 83, 254, 0, 166, 68, 91, 255, 67, 140, 114, 88, 218, 155 ]),
+			)
+		},
+		
 		'seven bytes hash'() {
 			$mol_assert_like(
 				$mol_crypto_hash( new Uint8Array([ 1, 2, 3, 4, 5, 6, 7 ]) ),

@@ -1,27 +1,26 @@
 namespace $ {
 	
-	let buffer = new Uint32Array(80)
+	let sponge = new Uint32Array(80)
 	
 	/** Fast small sync SHA-1 */
 	export function $mol_crypto_hash( data: Uint8Array ) {
 		
 		const bits = data.byteLength << 3
+		const kbits = bits >> 5
+		const kword = 0x80 << ( 24 - bits & 0b11111 )
+		
 		const bytes = 16 + ( bits + 64 >>> 9 << 4 )
+		const klens = bytes - 1
+		const words = new Int32Array( data.buffer, data.byteOffset, data.byteLength >> 2 )
 		
-		const words = new Int32Array( bytes )
-		
-		// LE -> BE
-		for( var i = 0; i < data.length; ++i ) {
-			words[ i >>> 2 ] |= data[i] << ( 24 - ( i << 3 ) & 0b11111 )
+		let tail = 0
+		for( let i = words.length * 4; i < data.length; ++i ) {
+			tail |= data[i] << ( i << 3 & 0b11000 )
 		}
 		
 		// Initial
 		const hash = new Int32Array([ 1732584193, -271733879, -1732584194, 271733878, -1009589776 ])
 		
-		// Padding
-		words[ bits >> 5 ] |= 0x80 << ( 24 - bits & 0b11111 )
-		words[ bytes - 1 ] = bits
-
 		// Digest
 		for( let i = 0; i < bytes; i += 16 ) {
 			
@@ -37,13 +36,31 @@ namespace $ {
 				
 				if( j < 16 ) {
 					
-					buffer[j] = words[ i + j ]
+					const k = i + j
+					if( k === klens ) {
+						
+						sponge[j] = bits
+						
+					} else {
+						
+						let word =
+							k === words.length ? tail :
+							k > words.length ? 0 :
+							words[k]
+						
+						word = word << 24 | word << 8 & 0xFF0000 | word >>> 8 & 0xFF00 | word >>> 24 & 0xFF // LE -> BE
+						if( k === kbits ) word |= kword
+						
+						sponge[j] = word
+						
+					}
+					
 					turn = ( h1 & h2 | ~h1 & h3 ) + 1518500249
 					
 				} else {
 					
-					const shuffle = buffer[j-3] ^ buffer[j-8] ^ buffer[j-14] ^ buffer[j-16]
-					buffer[j] = shuffle << 1 | shuffle >>> 31
+					const shuffle = sponge[j-3] ^ sponge[j-8] ^ sponge[j-14] ^ sponge[j-16]
+					sponge[j] = shuffle << 1 | shuffle >>> 31
 					
 					turn =
 						j < 20 ? ( h1 & h2 | ~h1 & h3 ) + 1518500249 :
@@ -53,7 +70,7 @@ namespace $ {
 
 				}
 				
-				const next = turn + h4 + ( buffer[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 ))
+				const next = turn + h4 + ( sponge[j] >>> 0 ) + (( h0 << 5 )|( h0 >>> 27 ))
 
 				h4 = h3
 				h3 = h2
@@ -71,10 +88,9 @@ namespace $ {
 			
 		}
 		
-		// BE -> LE
 		for( let i = 0; i < 20; ++i ) {
 			const word = hash[i]
-			hash[i] = word << 24 | word << 8 & 0xFF0000 | word >>> 8 & 0xFF00 | word >>> 24 & 0xFF
+			hash[i] = word << 24 | word << 8 & 0xFF0000 | word >>> 8 & 0xFF00 | word >>> 24 & 0xFF // BE -> LE
 		}
 
 		return new Uint8Array( hash.buffer )
