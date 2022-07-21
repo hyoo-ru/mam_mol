@@ -33,7 +33,6 @@ namespace $ {
 
 			for( let j = 0; j < 80; ++j ) {
 				
-				const n1 = ( h0 << 5 )|( h0 >>> 27 )
 				let turn
 				
 				if( j < 16 ) {
