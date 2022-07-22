@@ -25,7 +25,7 @@ npm install mol_plot_all
 import {
 	$mol_plot_pane,
 	$mol_plot_map_heat,
-	$mol_atom2,
+	$mol_wire_atom,
 } from 'mol_plot_all'
 
 // constants
