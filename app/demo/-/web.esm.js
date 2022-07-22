@@ -19255,9 +19255,9 @@ var $;
                 if (typeof value === 'function') {
                     const name = Reflect.getOwnPropertyDescriptor(value, 'name')?.value;
                     const source = Function.prototype.toString.call(value);
-                    const args = source.replace(/\)[\s\S]*$/g, ')').replace(/^[\s\S]*\(/g, '(');
+                    const args = source.match(/^[^{]+(\([\s\S]*?\))/)?.[1] ?? '{}';
                     if (name)
-                        return name + args + '{}';
+                        return name + args;
                 }
                 if (value instanceof RegExp)
                     return String(value);
@@ -19293,7 +19293,7 @@ var $;
                 }
                 if (value instanceof Function) {
                     let source = Function.prototype.toString.call(value)
-                        .replace(/^.*?\{\r?\n/, '')
+                        .replace(/^.*?\{\r?\n?/, '')
                         .replace(/}$/, '')
                         .trimEnd();
                     const indent = source.match(/^\s*/)[0];
@@ -29146,7 +29146,7 @@ var $;
             }
             code_enhanced() {
                 let code = this.code();
-                code = code.replaceAll(/^([ \t]*)(?:const|var|let) +(\w+)/mig, (found, indent, name) => `spy( ()=>[ "${indent}${name} =", ${name} ] );${found}`);
+                code = code.replaceAll(/^([ \t]*)(?:const|var|let|class|function) +(\w+)/mig, (found, indent, name) => `spy( ()=>[ "${indent}${name} =", ${name} ] );${found}`);
                 return code;
             }
             execute() {

@@ -24,8 +24,8 @@ namespace $.$$ {
 			if( typeof value === 'function' ) {
 				const name = Reflect.getOwnPropertyDescriptor( value, 'name' )?.value
 				const source = Function.prototype.toString.call( value )
-				const args = source.replace( /\)[\s\S]*$/g, ')' ).replace( /^[\s\S]*\(/g, '(' )
-				if( name ) return name + args + '{}'
+				const args = source.match( /^[^{]+(\([\s\S]*?\))/ )?.[1] ?? '{}'
+				if( name ) return name + args
 			}
 			
 			if( value instanceof RegExp ) return String( value )
@@ -69,7 +69,7 @@ namespace $.$$ {
 			
 			if( value instanceof Function ) {
 				let source = Function.prototype.toString.call( value )
-					.replace( /^.*?\{\r?\n/, '' )
+					.replace( /^.*?\{\r?\n?/, '' )
 					.replace( /}$/, '' )
 					.trimEnd()
 				const indent = source.match( /^\s*/ )![0]
