@@ -1237,7 +1237,8 @@ var $;
     class $mol_wire_task extends $mol_wire_fiber {
         static getter(task) {
             return function $mol_wire_task_get(host, args) {
-                const existen = $mol_wire_auto()?.track_next();
+                const sub = $mol_wire_auto();
+                const existen = sub?.track_next();
                 reuse: if (existen) {
                     if (!(existen instanceof $mol_wire_task))
                         break reuse;
@@ -1248,6 +1249,9 @@ var $;
                     if (!$mol_compare_deep(existen.args, args))
                         break reuse;
                     return existen;
+                }
+                if (existen && sub instanceof $mol_wire_task) {
+                    $mol_fail(new Error(`$mol_wire_task detects nonidempotency\n${existen}`));
                 }
                 return new $mol_wire_task(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, args);
             };
