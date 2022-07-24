@@ -123,7 +123,7 @@ Attached XSLT makes UI to view data in comfortable way.
 		<name>mol</name>
 		<private>false</private>
 		<owner>user=jin</owner>
-		<_len query="issue">100500</len>
+		<_len query="issue">100500</_len>
 	</repo>
 	<user id="user=jin">
 		<name>Jin</name>
