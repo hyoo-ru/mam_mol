@@ -4,16 +4,16 @@ Description of HARP reply.
 
 ## HTTP Negotiation
 
-- Tree: `Accept: application/x-tree;harp`
-- JSON: `Accept: application/json`
-- XML: `Accept: application/xml` (default)
+- [Tree](https://github.com/nin-jin/tree.d): `Accept: application/x-tree;harp`
+- [JSON](https://www.w3.org/XML/): `Accept: application/json`
+- [XML](https://www.json.org/json-en.html): `Accept: application/xml` (default)
 
 ## Model
 
 - Reply is slice of graph which matches to query.
 - Reply is normalized.
 - Data represents in 4 levels: `type:string` / `id:string` / `field:string` / `value:any`.
-- Each entity have surrogate id which is unique for type. Combination of `type` and `id` is global unique.
+- Each entity have surrogate `id` which is unique for type. Combination of `type` and `id` is global unique.
 - Link to entity is global unique relative URI like `type=id`.
 - Relations is always list of URI's.
 
@@ -99,8 +99,8 @@ user
 Attached XSLT makes UI to view data in comfortable way.
 
 ```xml
-<?xml-stylesheet type="text/xsl" href="harp.xsl"?>
-<harp xmlns="https://harp.hyoo.ru">
+<?xml-stylesheet type="text/xsl" href="https://harp.hyoo.ru/view.xsl"?>
+<slice xmlns="https://harp.hyoo.ru">
 	<_query id="pullRequest[_num=20&amp;30;state=closed,merged;+repository[name;private;owner[name];_len[issue]];-updateTime;author[name]]">
 		<reply>pullRequest=first</reply>
 		<reply>pullRequest=first</reply>
@@ -128,6 +128,6 @@ Attached XSLT makes UI to view data in comfortable way.
 	<user id="user=jin">
 		<name>Jin</name>
 	</user>
-</harp>
+</slice>
 ```
 
