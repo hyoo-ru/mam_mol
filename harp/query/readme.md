@@ -55,7 +55,7 @@ Symbols which can be used in the path in any place, which is escaped by `encodUR
 - `GET /user[sex=male,female;age=18,18&;role@admin]` - `sex`, `age` and `role` of `18+` `males` and `females` without `admin` rights.
 - `GET /user[+birthday=2000-01-01&;-created;_num=&10]` - `10` users with `birthday` from `2000-01-01` ordered by `birthday` asc then `created` desc.
 - `GET /user=me[friend[+age=18&;name;_num=&10]]` - my first 10 younger adult friends with fetching they names and ages.
-- `GET /user=jin[friend[name]];article[author[name]]`** - all `jin` friend names and all article author names, without users data duplication.
+- `GET /user=jin[friend[name]];article[author[name]]` - all `jin` friend names and all article author names, without users data duplication.
 
 ## Common Functions
 
