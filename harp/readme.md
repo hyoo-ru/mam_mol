@@ -64,49 +64,6 @@ user
 		name \Jin
 ```
 
-#### JSON Response
-
-```json
-{
-	"_query": {
-		"pullRequest[_num=20&30;state=closed,merged;+repository[name;private;owner[name];_len[issue]];-updateTime;author[name]]": {
-			"reply": [ "pullRequest=first", "pullRequest=second" ]
-		},
-	},
-	"pullRequest": {
-		"first": {
-			"_num": 0,
-			"state": "closed",
-			"repository": [ "repo=mol" ],
-			"author": [ "user=jin" ],
-			"updateTime": "2022-07-22",
-		},
-		"second": {
-			"_num": 1,
-			"state": "merged",
-			"repository": [ "repo=mol" ],
-			"author": [ "user=jin" ],
-			"updateTime": "2022-07-21",
-		},	
-	},
-	"repo": {
-		"mol": {
-			"name": "mol",
-			"private": false,
-			"owner": [ "user=jin" ],
-			"_len": {
-				"issue": 100500,
-			},
-		},
-	},
-	"user": {
-		"jin": {
-			"name": "Jin",
-		},
-	},
-}
-```
-
 ### OData
 
 #### Request
