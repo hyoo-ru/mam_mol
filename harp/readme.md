@@ -87,18 +87,21 @@ POST /graphql
 			offset: 20,
 			limit: 10,
 		) {
+			id
 			state
 			updateTime
 			repository {
 				name
 				private
 				owner {
+					id
 					name
 				}
 				issueCount: count( what: issue )
 			}
 			updateTime
 			author {
+				id
 				name
 			}
 		}
@@ -111,38 +114,44 @@ POST /graphql
 ```json
 {
 	"request": {
-		"pullRequest": {
-			"first": {
+		"pullRequest": [
+			{
+				"id": "first",
 				"state": "closed",
 				"repository": {
 					"name": "mol",
 					"private": false,
 					"owner": {
+						"id": "jin",
 						"name": "Jin",
 					},
 					"issueCount": 100500,
 				},
 				"updateTime": "2022-07-22",
 				"author": {
+					"id": "jin",
 					"name": "Jin",
 				},
 			},
-			"second": {
+			{
+				"id": "second",
 				"state": "merged",
 				"repository": {
 					"name": "mol",
 					"private": false,
 					"owner": {
+						"id": "jin",
 						"name": "Jin",
 					},
 					"issueCount": 100500,
 				},
 				"updateTime": "2022-07-21",
 				"author": {
+					"id": "jin",
 					"name": "Jin",
 				},
 			},	
-		},
+		],
 	},
 }
 ```
