@@ -2,8 +2,9 @@
 
 HARP is powerful easy to read and debug declarative normalizid graph protocol for REST API's.
 
-- [HARP Query](./query) - one-line query language
-- [HARP Scheme](./scheme) - type-safe builder/parser/validator
+- [HARP Query](./query) - one-line graph query language.
+- [HARP Reply](./reply) - normalized graph slice data output.
+- [HARP Scheme](./scheme) - type-safe builder/parser/validator.
 
 ## Properties
 
@@ -37,29 +38,27 @@ GET /pullRequest[state=closed,merged;+repository[name;private;owner[name];_len[i
 _query
 	\pullRequest[_num=20&30;state=closed,merged;+repository[name;private;owner[name];_len[issue]];-updateTime;author[name]]
 		reply
-			\pullRequest=first
-			\pullRequest=second
+			pullRequest=first
+			pullRequest=second
 pullRequest
 	\first
 		_num 0
-		state \closed
-		repository \repo=mol
-		author \user=jin
-		updateTime \2022-07-22
+		state closed
+		repository repo=mol
+		author user=jin
+		updateTime 2022-07-22
 	\second
 		_num 1
-		state \merged
-		repository \repo=mol
-		author \user=jin
-		updateTime \2022-07-21
+		state merged
+		repository repo=mol
+		author user=jin
+		updateTime 2022-07-21
 repo
 	\mol
 		name \mol
 		private false
-		owner \user=jin
-		_len
-			\issue
-				100500
+		owner user=jin
+		_len issue 100500
 user
 	\jin
 		name \Jin

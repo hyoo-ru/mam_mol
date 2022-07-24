@@ -17,7 +17,7 @@ Description of HARP query.
 
 URI special symbols (encoded by `encodeURIComponent` but not `encodeURI`):
 
-	= @ # $ & + ; : , / ? .
+	= @ # $ & + ; : , / ?
 
 Common query string format: pairs separated by `&`, key and value separated by `=`.
 
@@ -29,11 +29,11 @@ Common path format: chunks sparated by `/`.
 
 So mostly safe symbols:
 
-	/ @ $ & + = ; , .
+	/ @ $ & + = ; ,
 
 Symbols which can be used in the path in any place, which is escaped by `encodURIComponent`, but which doesn't escaped by ChromeDev Tools:
 
-	/ @ $ & + = ; , . [ ]
+	/ @ $ & + = ; , [ ]
 
 ## Decision
 
