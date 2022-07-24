@@ -120,7 +120,7 @@ namespace $ {
 		0: Value
 		1: Value
 		
-		constructor( min: Value, max: Value ) {
+		constructor( min: Value, max = min ) {
 			super( min, max )
 			this[0] = min
 			this[1] = max
