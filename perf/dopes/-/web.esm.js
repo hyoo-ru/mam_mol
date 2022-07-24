@@ -1250,9 +1250,6 @@ var $;
                         break reuse;
                     return existen;
                 }
-                if (existen && sub instanceof $mol_wire_task) {
-                    $mol_fail(new Error(`$mol_wire_task detects nonidempotency\n${existen}`));
-                }
                 return new $mol_wire_task(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, args);
             };
         }
