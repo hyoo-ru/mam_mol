@@ -102,7 +102,7 @@ POST /graphql
 			repository {
 				name
 				private
-				issue_count: count( what: issue )
+				issueCount: count( what: issue )
 			}
 		}
 	}
