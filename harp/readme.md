@@ -92,7 +92,14 @@ POST /graphql
 			repository {
 				name
 				private
+				owner {
+					name
+				}
 				issueCount: count( what: issue )
+			}
+			updateTime
+			author {
+				name
 			}
 		}
 	}
@@ -115,10 +122,10 @@ POST /graphql
 					},
 					"issueCount": 100500,
 				},
+				"updateTime": "2022-07-22",
 				"author": {
 					"name": "Jin",
 				},
-				"updateTime": "2022-07-22",
 			},
 			"second": {
 				"state": "merged",
@@ -130,10 +137,10 @@ POST /graphql
 					},
 					"issueCount": 100500,
 				},
+				"updateTime": "2022-07-21",
 				"author": {
 					"name": "Jin",
 				},
-				"updateTime": "2022-07-21",
 			},	
 		},
 	},
