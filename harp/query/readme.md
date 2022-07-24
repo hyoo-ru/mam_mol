@@ -75,7 +75,7 @@ Sums of values from sub requests.
 {
 	"_sum": {
 		"income[month=2022-07]": 9000,
-		"month=2022-07": 9000,
+		"outcome[month=2022-07]": 9000,
 	}
 }
 ```
