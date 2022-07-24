@@ -1,6 +1,6 @@
 # $mol_harp
 
-HARP is powerful easy to read and debug declarative normalizid graph protocol for REST API's.
+HARP is powerful easy to read and debug declarative normalized graph protocol for REST-full API's.
 
 - [HARP Query](./query) - one-line graph query language.
 - [HARP Reply](./reply) - normalized graph slice data output.
