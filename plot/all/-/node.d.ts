@@ -791,7 +791,7 @@ declare namespace $ {
     class $mol_vector_range<Value> extends $mol_vector<Value, 2> {
         0: Value;
         1: Value;
-        constructor(min: Value, max: Value);
+        constructor(min: Value, max?: Value);
         get min(): Value;
         set min(next: Value);
         get max(): Value;

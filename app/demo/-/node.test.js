@@ -12359,7 +12359,7 @@ var $;
     class $mol_vector_range extends $mol_vector {
         0;
         1;
-        constructor(min, max) {
+        constructor(min, max = min) {
             super(min, max);
             this[0] = min;
             this[1] = max;
