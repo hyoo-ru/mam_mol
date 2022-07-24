@@ -46,7 +46,7 @@ Symbols which can be used in the path in any place, which is escaped by `encodUR
   - `1&5` = `2,3,4`
   - `1&` - greater then 1
   - `&5` - lower then 5
-- Sub query is wrapped by '[]': `user=me[name;age]`.
+- Sub query is wrapped by `[]`: `user=me[name;age]`.
 
 ## Examples
 
