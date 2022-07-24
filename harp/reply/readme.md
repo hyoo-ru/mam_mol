@@ -96,7 +96,7 @@ user
 
 #### harp.xml
 
-Attached XSLT makes UI to view data in comfortable way.
+Attached XSLT makes UI to view data in comfortable way. [Online example](https://nin-jin.github.io/harp/api=1).
 
 ```xml
 <?xml-stylesheet type="text/xsl" href="https://harp.hyoo.ru/view.xsl"?>
