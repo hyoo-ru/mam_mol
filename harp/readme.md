@@ -8,19 +8,34 @@ HARP is powerful easy to read and debug declarative normalized graph protocol fo
 
 ## Properties
 
-|                                           | HARP   | OData | GraphQL
-|-------------------------------------------|--------|-------|--------
-| **Single line** query                     | ✅    | ✅    |❌
-| Common uri **query string** compatibility | ❌    | ✅    |❌
-| **Web Tools** Friendly                    | ✅    | ❌    |❌
-| Data **filtering**                        | ✅    | ✅    |❌
-| Limited filtering **logic**               | ✅    | ❌    |✅
-| Data **sorting**                          | ✅    | ✅    |❌
-| Data **limiting**                         | ✅    | ✅    |❌
-| Data **aggregation**                      | ✅    | ✅    |❌
-| **Metadata** query                        | ✅    | ✅    |✅
-| **Normalized** response                   | ✅    | ❌    |❌
-| **File name** compatible                  | ✅    | ❌    |❌
+|                                         | HARP   | OData | GraphQL
+|-----------------------------------------|--------|-------|--------
+| **Single line** query                   | ✅    | ✅    |❌
+| Common uri **query string** compatibile | ❌    | ✅    |❌
+| **File name** compatible                | ✅    | ❌    |❌
+| **Web Tools** Friendly                  | ✅    | ❌    |❌
+| Data **filtering**                      | ✅    | ✅    |❌
+| Limited filtering **logic**             | ✅    | ❌    |✅
+| Data **sorting**                        | ✅    | ✅    |❌
+| Data **limiting**                       | ✅    | ✅    |❌
+| Data **aggregation**                    | ✅    | ✅    |❌
+| **Metadata** query                      | ✅    | ✅    |✅
+| **Normalized** response                 | ✅    | ❌    |❌
+| **Idempotent** requests                 | ✅    | ❌    |❌
+
+# Architecture
+
+- HARP is the REST but isn't CRUD.
+- Same URI can be accessed through HTTP or WebSocket.
+- Supported only this HTTP methods:
+  - `GET` to read normalized slice of domain graph.
+  - `PATCH` to write with merge using LWW strategy. A set of entities can be updated together in one transaction.
+  - `WATCH` to read and subscribe for updates (HTTP-over-WS only).
+  - `FORGET` to unsubscribe (HTTP-over-WS only).
+- Unsupported HTTP methods:
+  - `POST` isn't idempotent. Just generate id and use `PATCH` to create entities on the fly.
+  - `DELETE` breaks referential connectivity. Just mark as hidden using `PATCH`.
+- Each entity is identified by `type` and `id` and have short global unique URI like `type=id`.
 
 ## Examples
 
