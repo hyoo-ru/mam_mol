@@ -69,7 +69,8 @@ user
 #### Request
 
 ```
-GET /pullRequest?$filter=state%20eq%20closed%20or%20state%20eq%20merged&$orderby=repository%20asc%2CupdateTime%20desc&$select=state%2Crepository%2Fname%2Crepository%2Fprivate%2CupdateTime&$skip=20&$top=10
+GET /pullRequest?$filter=state%20eq%20closed%20or%20state%20eq%20merged&$orderby=repository%20asc%2CupdateTime%20desc&$select=state%2Crepository%2Fname%2Crepository%2Fprivate%2Crepository%2Fowner%2Fname%2CupdateTime
+%2Cauthor%2Fname&$skip=20&$top=10&$format=json
 ```
 
 ### GraphGL

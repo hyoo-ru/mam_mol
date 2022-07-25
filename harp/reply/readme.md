@@ -131,3 +131,9 @@ Attached XSLT makes UI to view data in comfortable way. [Online example](https:/
 </slice>
 ```
 
+##### UI Requirements
+
+- Quick switch between representations (UI, Tree, JSON, XML).
+- Relations as hyperlinks.
+- Full text search.
+- Buttons to quick add fields to query.
