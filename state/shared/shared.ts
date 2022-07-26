@@ -137,10 +137,14 @@ namespace $ {
 			
 			try {
 				this.db_sync()
+			} catch( error: any ) {
+				if(!( error instanceof Promise )) $mol_fail_log( error )
+			}
+			
+			try {
 				this.server_sync()
 			} catch( error: any ) {
-				if( error instanceof Promise ) return null
-				$mol_fail_log( error )
+				if(!( error instanceof Promise )) $mol_fail_log( error )
 			}
 			
 			// const pub = this.keys_serial().public
