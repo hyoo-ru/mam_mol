@@ -34,7 +34,7 @@ HARP is powerful easy to read and debug declarative normalized graph protocol fo
   - `FORGET` to unsubscribe (HTTP-over-WS only).
 - Unsupported HTTP methods:
   - `POST` isn't idempotent. Just generate id and use `PATCH` to create entities on the fly.
-  - `DELETE` breaks referential connectivity. Just mark as hidden using `PATCH`.
+  - `DELETE` breaks referential connectivity. Just mark as hidden using `PATCH` and/or remove links.
 - Each entity is identified by `type` and `id` and have short global unique URI like `type=id`.
 
 ## Examples
