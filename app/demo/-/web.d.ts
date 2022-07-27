@@ -7600,7 +7600,9 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_wire_race<Tasks extends (() => any)[]>(...tasks: Tasks): any[];
+    function $mol_wire_race<Tasks extends (() => any)[]>(...tasks: Tasks): {
+        [index in keyof Tasks]: ReturnType<Tasks[index]>;
+    };
 }
 
 declare namespace $ {

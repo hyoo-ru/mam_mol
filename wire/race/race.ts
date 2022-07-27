@@ -2,7 +2,9 @@ namespace $ {
 	
 	export function $mol_wire_race<
 		Tasks extends ( ()=> any )[]
-	>( ... tasks: Tasks ) {
+	>( ... tasks: Tasks ): {
+		[ index in keyof Tasks ]: ReturnType< Tasks[ index ] >
+	} {
 		
 		const results = tasks.map( task => {
 			
@@ -20,7 +22,7 @@ namespace $ {
 		const error = results.find( res => res instanceof Error )
 		if( error ) $mol_fail( error )
 		
-		return results
+		return results as any
 	}
 	
 }
