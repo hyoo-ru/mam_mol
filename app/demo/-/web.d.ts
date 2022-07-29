@@ -1253,6 +1253,7 @@ declare namespace $ {
         event_click(event?: any): any;
         event(): {
             click: (event?: any) => any;
+            dblclick: (event?: any) => any;
             keydown: (event?: any) => any;
         };
         attr(): {
@@ -1264,6 +1265,7 @@ declare namespace $ {
         sub(): readonly $mol_view_content[];
         Speck(): $mol_speck;
         event_activate(event?: any): any;
+        clicks(event?: any): any;
         event_key_press(event?: any): any;
         disabled(): boolean;
         tab_index(): number;
@@ -5130,6 +5132,7 @@ declare namespace $ {
         sub(): readonly any[];
         dump_value(id: any): any;
         dump_expanded(id: any, next?: any): boolean;
+        prototypes(): boolean;
         Dump(id: any): $$.$mol_dump_value;
     }
 }
@@ -5141,6 +5144,7 @@ declare namespace $.$$ {
     class $mol_dump_list extends $.$mol_dump_list {
         sub(): $mol_dump_value[];
         dump_value(index: number): any;
+        expand_all(event?: Event, blacklist?: Set<unknown>): void;
     }
 }
 
@@ -5172,11 +5176,13 @@ declare namespace $ {
         sub(): readonly any[];
         simple(): string;
         Simple(): $$.$mol_text_code;
-        expanded(val?: any): boolean;
+        expanded(next?: any): boolean;
+        expand_all(next?: any): any;
         expand_title(): string;
         Expand_title(): $$.$mol_text_code;
         Expand_head(): $$.$mol_check_expand;
         row_values(id: any): readonly any[];
+        prototypes(): boolean;
         Row(id: any): $$.$mol_dump_list;
         expand_content(): readonly any[];
         Expand(): $$.$mol_expander;
@@ -5194,6 +5200,7 @@ declare namespace $.$$ {
         rows_values(): any[][];
         expand_content(): $mol_dump_list[];
         row_values(index: number): any[];
+        expand_all(event?: Event, blacklist?: Set<unknown>): void;
     }
 }
 
@@ -5202,7 +5209,27 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
-        Dump(): $$.$mol_dump_value;
+        value(): any;
+        Dump_short(): $$.$mol_dump_value;
+        Dump_long(): $$.$mol_dump_value;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_dump_demo extends $.$mol_dump_demo {
+        value(): {
+            undefined: undefined;
+            null: null;
+            boolean: boolean;
+            number: number;
+            string: string;
+            regexp: RegExp;
+            date: Date;
+            set: Set<any>;
+            map: Map<any, any>;
+            array: number[];
+            buffer: Uint8Array;
+        };
     }
 }
 

@@ -10,5 +10,9 @@ namespace $.$$ {
 			return this.values()[ index ]
 		}
 		
+		expand_all( event?: Event, blacklist = new Set ) {
+			this.Dump(1).expand_all( event, blacklist )
+		}
+		
 	}
 }

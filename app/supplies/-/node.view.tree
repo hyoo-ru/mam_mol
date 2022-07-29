@@ -101,6 +101,7 @@ $mol_button $mol_view
 	event *
 		^
 		click?event <=> event_activate?event null
+		dblclick?event <=> clicks?event null
 		keydown?event <=> event_key_press?event null 
 	attr *
 		^

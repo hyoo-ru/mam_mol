@@ -44,9 +44,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * prototypes false
+		 * ```
+		 */
+		prototypes() {
+			return false
+		}
+		
+		/**
+		 * ```tree
 		 * Dump*0 $mol_dump_value
 		 * 	value <= dump_value*
 		 * 	expanded? <=> dump_expanded*?
+		 * 	prototypes <= prototypes
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -55,6 +65,7 @@ namespace $ {
 			
 			obj.value = () => this.dump_value(id)
 			obj.expanded = (next?: any) => this.dump_expanded(id, next)
+			obj.prototypes = () => this.prototypes()
 			
 			return obj
 		}

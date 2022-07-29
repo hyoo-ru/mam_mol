@@ -49,13 +49,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * expanded?val false
+		 * expanded? false
 		 * ```
 		 */
 		@ $mol_mem
-		expanded(val?: any) {
-			if ( val !== undefined ) return val as never
+		expanded(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
+		}
+		
+		/**
+		 * ```tree
+		 * expand_all? null
+		 * ```
+		 */
+		@ $mol_mem
+		expand_all(next?: any) {
+			if ( next !== undefined ) return next as never
+			return null as any
 		}
 		
 		/**
@@ -86,7 +97,8 @@ namespace $ {
 		 * Expand_head $mol_check_expand
 		 * 	minimal_height 24
 		 * 	minimal_width 24
-		 * 	checked?val <=> expanded?val
+		 * 	checked? <=> expanded?
+		 * 	clicks? <=> expand_all?
 		 * 	label / <= Expand_title
 		 * ```
 		 */
@@ -96,7 +108,8 @@ namespace $ {
 			
 			obj.minimal_height = () => 24
 			obj.minimal_width = () => 24
-			obj.checked = (val?: any) => this.expanded(val)
+			obj.checked = (next?: any) => this.expanded(next)
+			obj.clicks = (next?: any) => this.expand_all(next)
 			obj.label = () => [
 				this.Expand_title()
 			] as readonly any[]
@@ -116,7 +129,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Row*0 $mol_dump_list values <= row_values*
+		 * prototypes false
+		 * ```
+		 */
+		prototypes() {
+			return false
+		}
+		
+		/**
+		 * ```tree
+		 * Row*0 $mol_dump_list
+		 * 	values <= row_values*
+		 * 	prototypes <= prototypes
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -124,6 +148,7 @@ namespace $ {
 			const obj = new this.$.$mol_dump_list()
 			
 			obj.values = () => this.row_values(id)
+			obj.prototypes = () => this.prototypes()
 			
 			return obj
 		}
@@ -142,7 +167,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Expand $mol_expander
-		 * 	expanded?val <=> expanded?val
+		 * 	expanded? <=> expanded?
 		 * 	Trigger <= Expand_head
 		 * 	content <= expand_content
 		 * ```
@@ -151,7 +176,7 @@ namespace $ {
 		Expand() {
 			const obj = new this.$.$mol_expander()
 			
-			obj.expanded = (val?: any) => this.expanded(val)
+			obj.expanded = (next?: any) => this.expanded(next)
 			obj.Trigger = () => this.Expand_head()
 			obj.content = () => this.expand_content()
 			

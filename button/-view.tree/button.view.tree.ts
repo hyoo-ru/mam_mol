@@ -37,6 +37,7 @@ namespace $ {
 		 * event *
 		 * 	^
 		 * 	click?event <=> event_activate?event
+		 * 	dblclick?event <=> clicks?event
 		 * 	keydown?event <=> event_key_press?event
 		 * ```
 		 */
@@ -44,6 +45,7 @@ namespace $ {
 			return {
 				...super.event(),
 				click: (event?: any) => this.event_activate(event),
+				dblclick: (event?: any) => this.clicks(event),
 				keydown: (event?: any) => this.event_key_press(event)
 			}
 		}
@@ -100,6 +102,17 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_activate(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * clicks?event null
+		 * ```
+		 */
+		@ $mol_mem
+		clicks(event?: any) {
 			if ( event !== undefined ) return event as never
 			return null as any
 		}
