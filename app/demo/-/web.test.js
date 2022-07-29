@@ -4729,6 +4729,167 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $hyoo_harp_to_string(query) {
+        return Object.entries(query).map(([field, harp]) => {
+            if (field === '+')
+                return '';
+            if (field === '=')
+                return '';
+            if (field === '@')
+                return '';
+            if (!harp)
+                return '';
+            const order = harp['+'] === true ? '+' : harp['+'] === false ? '-' : '';
+            const filter = harp['='] ? '=' : harp['@'] ? '@' : '';
+            const name = encodeURIComponent(field);
+            let values = (harp['='] || harp['@'] || []).map(([min, max]) => {
+                if (max === undefined || min === max)
+                    return encodeURIComponent(String(min));
+                min = (min === undefined) ? '' : encodeURIComponent(String(min));
+                max = (max === undefined) ? '' : encodeURIComponent(String(max));
+                return `${min}&${max}`;
+            }).join(',');
+            let fetch = $hyoo_harp_to_string(harp);
+            if (fetch)
+                fetch = `[${fetch}]`;
+            return `${order}${name}${filter}${values}${fetch}`;
+        }).filter(Boolean).join(';');
+    }
+    $.$hyoo_harp_to_string = $hyoo_harp_to_string;
+})($ || ($ = {}));
+//hyoo/harp/to/string/string.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function check(str, query) {
+        $mol_assert_like(str, $hyoo_harp_to_string(query));
+        $mol_assert_like(query, $hyoo_harp_from_string(str));
+    }
+    $mol_test({
+        'root'() {
+            check('', {});
+        },
+        'only field'() {
+            check('user%3D777', {
+                'user=777': {},
+            });
+        },
+        'primary key'() {
+            check('user=jin%2C777', {
+                user: {
+                    '=': [['jin,777']],
+                },
+            });
+        },
+        'single fetch'() {
+            check('friend[age%24]', {
+                friend: {
+                    age$: {},
+                },
+            });
+        },
+        'fetch and primary key'() {
+            check('user=jin[friend]', {
+                'user': {
+                    '=': [['jin']],
+                    friend: {},
+                },
+            });
+        },
+        'multiple fetch'() {
+            check('age;friend', {
+                age: {},
+                friend: {},
+            });
+        },
+        'deep fetch'() {
+            check('my[friend[age];name];stat', {
+                my: {
+                    friend: {
+                        age: {},
+                    },
+                    name: {},
+                },
+                stat: {},
+            });
+        },
+        'orders'() {
+            check('+age;-name', {
+                age: {
+                    '+': true
+                },
+                name: {
+                    '+': false
+                },
+            });
+        },
+        'filter types'() {
+            check('sex=female;status@married', {
+                sex: {
+                    '=': [['female']],
+                },
+                status: {
+                    '@': [['married']],
+                },
+            });
+        },
+        'filter ranges'() {
+            check('sex=female;age=18&25;weight=&50;height=150&;hobby=paint,singing', {
+                sex: {
+                    '=': [['female']],
+                },
+                age: {
+                    '=': [['18', '25']],
+                },
+                weight: {
+                    '=': [['', '50']],
+                },
+                height: {
+                    '=': [['150', '']],
+                },
+                hobby: {
+                    '=': [['paint'], ['singing']],
+                },
+            });
+        },
+        'slicing'() {
+            check('friend[_num=0&100]', {
+                friend: {
+                    _num: { '=': [['0', '100']] },
+                },
+            });
+        },
+        'complex'() {
+            check('pullRequest[state=closed,merged;+repository[name;private];-updateTime;_num=0&100]', {
+                pullRequest: {
+                    state: {
+                        '=': [
+                            ['closed'],
+                            ['merged'],
+                        ]
+                    },
+                    repository: {
+                        '+': true,
+                        name: {},
+                        private: {},
+                    },
+                    updateTime: {
+                        '+': false,
+                    },
+                    _num: {
+                        '=': [['0', '100']],
+                    },
+                },
+            });
+        },
+    });
+})($ || ($ = {}));
+//hyoo/harp/harp.test.ts
+;
+"use strict";
+var $;
+(function ($) {
     $mol_test({
         'Word making'() {
             $mol_assert_ok($mol_spell_ru.test('пил'));

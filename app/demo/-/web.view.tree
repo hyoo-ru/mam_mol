@@ -2831,6 +2831,32 @@ $hyoo_marked_demo $mol_example_large
 		\MarkDown
 		\HTML
 
+$hyoo_harp_app $mol_page
+	title \HARP - Humane API REST Protocol
+	plugins /
+		<= Theme $mol_theme_auto
+	tools /
+		<= Source $mol_link_source
+			uri \https://github.com/hyoo-ru/harp.hyoo.ru
+		<= Lights $mol_lights_toggle
+	body /
+		<= Content $mol_list rows /
+			<= Uri $mol_textarea
+				hint \harp;query
+				value? <=> uri? \pullRequest[state=closed,merged;+repository[name;private;owner[name];_len[issue]];-updateTime;author[name];_num=20&30]
+			<= Json $mol_dump_value
+				value <= json? null
+
+$hyoo_harp_demo $mol_example_large
+	sub /
+		<= Sandbox $hyoo_harp_app
+			Lights null
+			title => title
+	tags /
+		\API
+		\Query
+		\REST
+
 $mol_nav_demo $mol_example
 	title \Number input control with various configuration
 	plugins /

@@ -24233,6 +24233,259 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $hyoo_harp_app extends $mol_page {
+        title() {
+            return "HARP - Humane API REST Protocol";
+        }
+        plugins() {
+            return [
+                this.Theme()
+            ];
+        }
+        tools() {
+            return [
+                this.Source(),
+                this.Lights()
+            ];
+        }
+        body() {
+            return [
+                this.Content()
+            ];
+        }
+        Theme() {
+            const obj = new this.$.$mol_theme_auto();
+            return obj;
+        }
+        Source() {
+            const obj = new this.$.$mol_link_source();
+            obj.uri = () => "https://github.com/hyoo-ru/harp.hyoo.ru";
+            return obj;
+        }
+        Lights() {
+            const obj = new this.$.$mol_lights_toggle();
+            return obj;
+        }
+        uri(next) {
+            if (next !== undefined)
+                return next;
+            return "pullRequest[state=closed,merged;+repository[name;private;owner[name];_len[issue]];-updateTime;author[name];_num=20&30]";
+        }
+        Uri() {
+            const obj = new this.$.$mol_textarea();
+            obj.hint = () => "harp;query";
+            obj.value = (next) => this.uri(next);
+            return obj;
+        }
+        json(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Json() {
+            const obj = new this.$.$mol_dump_value();
+            obj.value = () => this.json();
+            return obj;
+        }
+        Content() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Uri(),
+                this.Json()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hyoo_harp_app.prototype, "Theme", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_harp_app.prototype, "Source", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_harp_app.prototype, "Lights", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_harp_app.prototype, "uri", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_harp_app.prototype, "Uri", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_harp_app.prototype, "json", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_harp_app.prototype, "Json", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_harp_app.prototype, "Content", null);
+    $.$hyoo_harp_app = $hyoo_harp_app;
+})($ || ($ = {}));
+//hyoo/harp/app/-view.tree/app.view.tree.ts
+;
+"use strict";
+//hyoo/harp/query/query.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const syntax = new $mol_syntax2({
+        'filter': /[=@]/,
+        'list_separator': /,/,
+        'range_separator': /&/,
+        'fetch_open': /\[/,
+        'fetch_separator': /;/,
+        'fetch_close': /\]/,
+    });
+    function $hyoo_harp_from_string(uri) {
+        let parent = {};
+        let prev = null;
+        let stack = [parent];
+        let range = null;
+        let values = null;
+        function fail_at(offset) {
+            const uri_marked = uri.substring(0, offset) + '\u035C' + uri.substring(offset);
+            $mol_fail(new Error(`Unexpected token at ${offset} of "${uri_marked}"`));
+        }
+        syntax.parse(uri, {
+            '': (text, chunks, offset) => {
+                if (values) {
+                    text = decodeURIComponent(text);
+                    range = range ? [range[0], text] : [text];
+                }
+                else {
+                    let [, order, name] = /^([+-]?)(.*)$/.exec(text);
+                    prev = parent[decodeURIComponent(name)] = {};
+                    if (order)
+                        prev['+'] = order === '+';
+                    stack.push(parent);
+                }
+            },
+            'filter': (filter, chinks, offset) => {
+                if (prev) {
+                    values = prev[filter] = [];
+                }
+                else {
+                    values = [];
+                    parent[''] = values;
+                }
+            },
+            'list_separator': (found, chunks, offset) => {
+                if (!range)
+                    fail_at(offset);
+                values.push(range);
+                range = null;
+            },
+            'range_separator': (found, chunks, offset) => {
+                if (!values)
+                    fail_at(offset);
+                range = [range?.[0] ?? '', ''];
+            },
+            'fetch_open': (found, chunks, offset) => {
+                if (range) {
+                    values.push(range);
+                    range = null;
+                }
+                if (!prev)
+                    fail_at(offset);
+                parent = prev;
+                values = null;
+                prev = null;
+            },
+            'fetch_separator': (found, chunks, offset) => {
+                if (range) {
+                    values.push(range);
+                    range = null;
+                }
+                parent = stack.pop();
+                values = null;
+                prev = null;
+            },
+            'fetch_close': () => {
+                if (range) {
+                    values.push(range);
+                    range = null;
+                }
+                parent = stack.pop();
+                values = null;
+                prev = null;
+            },
+        });
+        if (range)
+            values.push(range);
+        return stack[0];
+    }
+    $.$hyoo_harp_from_string = $hyoo_harp_from_string;
+})($ || ($ = {}));
+//hyoo/harp/from/string/string.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("hyoo/harp/app/app.view.css", "[hyoo_harp_app_content] {\n\tpadding: var(--mol_gap_block);\n}\n");
+})($ || ($ = {}));
+//hyoo/harp/app/-css/app.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $hyoo_harp_app extends $.$hyoo_harp_app {
+            uri(next) {
+                return this.$.$mol_state_arg.value('query', next) ?? super.uri();
+            }
+            json() {
+                return $hyoo_harp_from_string(this.uri());
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $hyoo_harp_app.prototype, "uri", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_harp_app.prototype, "json", null);
+        $$.$hyoo_harp_app = $hyoo_harp_app;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hyoo/harp/app/app.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $hyoo_harp_demo extends $mol_example_large {
+        sub() {
+            return [
+                this.Sandbox()
+            ];
+        }
+        tags() {
+            return [
+                "API",
+                "Query",
+                "REST"
+            ];
+        }
+        title() {
+            return this.Sandbox().title();
+        }
+        Sandbox() {
+            const obj = new this.$.$hyoo_harp_app();
+            obj.Lights = () => null;
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $hyoo_harp_demo.prototype, "Sandbox", null);
+    $.$hyoo_harp_demo = $hyoo_harp_demo;
+})($ || ($ = {}));
+//hyoo/harp/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_nav_demo extends $mol_example {
         title() {
             return "Number input control with various configuration";

@@ -6460,6 +6460,56 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $hyoo_harp_app extends $mol_page {
+        title(): string;
+        plugins(): readonly any[];
+        tools(): readonly any[];
+        body(): readonly any[];
+        Theme(): $$.$mol_theme_auto;
+        Source(): $mol_link_source;
+        Lights(): $$.$mol_lights_toggle;
+        uri(next?: any): string;
+        Uri(): $$.$mol_textarea;
+        json(next?: any): any;
+        Json(): $$.$mol_dump_value;
+        Content(): $$.$mol_list;
+    }
+}
+
+declare namespace $ {
+    type $hyoo_harp_query<Field extends string = string> = {
+        [field in Field]: $hyoo_harp_query<never>;
+    } & {
+        '+'?: boolean;
+        '='?: any[][];
+        '@'?: any[][];
+    };
+}
+
+declare namespace $ {
+    function $hyoo_harp_from_string(uri: string): $hyoo_harp_query;
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $hyoo_harp_app extends $.$hyoo_harp_app {
+        uri(next?: string): string;
+        json(): $hyoo_harp_query<string>;
+    }
+}
+
+declare namespace $ {
+    class $hyoo_harp_demo extends $mol_example_large {
+        sub(): readonly any[];
+        tags(): readonly any[];
+        title(): string;
+        Sandbox(): $$.$hyoo_harp_app;
+    }
+}
+
+declare namespace $ {
     class $mol_nav_demo extends $mol_example {
         title(): string;
         plugins(): readonly any[];
