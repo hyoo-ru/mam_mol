@@ -6482,7 +6482,7 @@ declare namespace $ {
     } & {
         '+'?: boolean;
         '='?: any[][];
-        '@'?: any[][];
+        '!='?: any[][];
     };
 }
 

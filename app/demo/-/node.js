@@ -24698,7 +24698,7 @@ var $;
         uri(next) {
             if (next !== undefined)
                 return next;
-            return "pullRequest[state=closed,merged;+repository[name;private;owner[name];_len[issue]];-updateTime;author[name];_num=20&30]";
+            return "pullRequest[state=closed,merged;+repository[name;private;owner[name];_len[issue]];-updateTime;author[name];_num=20@30]";
         }
         Uri() {
             const obj = new this.$.$mol_textarea();
@@ -24760,11 +24760,11 @@ var $;
 var $;
 (function ($) {
     const syntax = new $mol_syntax2({
-        'filter': /[=@]/,
+        'filter': /!?=/,
         'list_separator': /,/,
-        'range_separator': /&/,
+        'range_separator': /@/,
         'fetch_open': /\[/,
-        'fetch_separator': /;/,
+        'fetch_separator': /[;&\/?#]/,
         'fetch_close': /\]/,
     });
     function $hyoo_harp_from_string(uri) {
@@ -24781,7 +24781,9 @@ var $;
             '': (text, chunks, offset) => {
                 if (values) {
                     text = decodeURIComponent(text);
-                    range = range ? [range[0], text] : [text];
+                    range = (range && range.length > 1)
+                        ? [range[0], range[1] + text]
+                        : [(range?.[0] ?? '') + text];
                 }
                 else {
                     let [, order, name] = /^([+-]?)(.*)$/.exec(text);
@@ -24792,7 +24794,15 @@ var $;
                 }
             },
             'filter': (filter, chinks, offset) => {
-                if (prev) {
+                if (values) {
+                    if (range) {
+                        range.push(range.pop() + filter);
+                    }
+                    else {
+                        range = [filter];
+                    }
+                }
+                else if (prev) {
                     values = prev[filter] = [];
                 }
                 else {

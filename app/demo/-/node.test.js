@@ -24690,7 +24690,7 @@ var $;
         uri(next) {
             if (next !== undefined)
                 return next;
-            return "pullRequest[state=closed,merged;+repository[name;private;owner[name];_len[issue]];-updateTime;author[name];_num=20&30]";
+            return "pullRequest[state=closed,merged;+repository[name;private;owner[name];_len[issue]];-updateTime;author[name];_num=20@30]";
         }
         Uri() {
             const obj = new this.$.$mol_textarea();
@@ -24752,11 +24752,11 @@ var $;
 var $;
 (function ($) {
     const syntax = new $mol_syntax2({
-        'filter': /[=@]/,
+        'filter': /!?=/,
         'list_separator': /,/,
-        'range_separator': /&/,
+        'range_separator': /@/,
         'fetch_open': /\[/,
-        'fetch_separator': /;/,
+        'fetch_separator': /[;&\/?#]/,
         'fetch_close': /\]/,
     });
     function $hyoo_harp_from_string(uri) {
@@ -24773,7 +24773,9 @@ var $;
             '': (text, chunks, offset) => {
                 if (values) {
                     text = decodeURIComponent(text);
-                    range = range ? [range[0], text] : [text];
+                    range = (range && range.length > 1)
+                        ? [range[0], range[1] + text]
+                        : [(range?.[0] ?? '') + text];
                 }
                 else {
                     let [, order, name] = /^([+-]?)(.*)$/.exec(text);
@@ -24784,7 +24786,15 @@ var $;
                 }
             },
             'filter': (filter, chinks, offset) => {
-                if (prev) {
+                if (values) {
+                    if (range) {
+                        range.push(range.pop() + filter);
+                    }
+                    else {
+                        range = [filter];
+                    }
+                }
+                else if (prev) {
                     values = prev[filter] = [];
                 }
                 else {
@@ -36536,19 +36546,19 @@ var $;
                 return '';
             if (field === '=')
                 return '';
-            if (field === '@')
+            if (field === '!=')
                 return '';
             if (!harp)
                 return '';
             const order = harp['+'] === true ? '+' : harp['+'] === false ? '-' : '';
-            const filter = harp['='] ? '=' : harp['@'] ? '@' : '';
+            const filter = harp['='] ? '=' : harp['!='] ? '!=' : '';
             const name = encodeURIComponent(field);
-            let values = (harp['='] || harp['@'] || []).map(([min, max]) => {
+            let values = (harp['='] || harp['!='] || []).map(([min, max]) => {
                 if (max === undefined || min === max)
                     return encodeURIComponent(String(min));
                 min = (min === undefined) ? '' : encodeURIComponent(String(min));
                 max = (max === undefined) ? '' : encodeURIComponent(String(max));
-                return `${min}&${max}`;
+                return `${min}@${max}`;
             }).join(',');
             let fetch = $hyoo_harp_to_string(harp);
             if (fetch)
@@ -36604,6 +36614,23 @@ var $;
                 friend: {},
             });
         },
+        'common query string back compatible'() {
+            $mol_assert_like($hyoo_harp_from_string('user=jin&age=100500'), {
+                user: {
+                    '=': [['jin']],
+                },
+                age: {
+                    '=': [['100500']],
+                },
+            });
+        },
+        'common pathname back compatible'() {
+            $mol_assert_like($hyoo_harp_from_string('users/jin/comments'), {
+                users: {},
+                jin: {},
+                comments: {},
+            });
+        },
         'deep fetch'() {
             check('my[friend[age];name];stat', {
                 my: {
@@ -36626,17 +36653,17 @@ var $;
             });
         },
         'filter types'() {
-            check('sex=female;status@married', {
+            check('sex=female;status!=married', {
                 sex: {
                     '=': [['female']],
                 },
                 status: {
-                    '@': [['married']],
+                    '!=': [['married']],
                 },
             });
         },
         'filter ranges'() {
-            check('sex=female;age=18&25;weight=&50;height=150&;hobby=paint,singing', {
+            check('sex=female;age=18@25;weight=@50;height=150@;hobby=paint,singing', {
                 sex: {
                     '=': [['female']],
                 },
@@ -36654,15 +36681,25 @@ var $;
                 },
             });
         },
+        'unescaped values'() {
+            $mol_assert_like($hyoo_harp_from_string('foo=jin=777;bar=jin!=666'), {
+                foo: {
+                    '=': [['jin=777']],
+                },
+                bar: {
+                    '=': [['jin!=666']],
+                },
+            });
+        },
         'slicing'() {
-            check('friend[_num=0&100]', {
+            check('friend[_num=0@100]', {
                 friend: {
                     _num: { '=': [['0', '100']] },
                 },
             });
         },
         'complex'() {
-            check('pullRequest[state=closed,merged;+repository[name;private];-updateTime;_num=0&100]', {
+            check('pullRequest[state=closed,merged;+repository[name;private];-updateTime;_num=0@100]', {
                 pullRequest: {
                     state: {
                         '=': [
