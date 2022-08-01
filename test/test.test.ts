@@ -52,11 +52,8 @@ namespace $ {
 			
 			scheduled = false
  			
-			try {
-				await $mol_test_run()
-			} finally {
-				$$.$mol_test_complete()
-			}
+			await $mol_test_run()
+			$$.$mol_test_complete()
 			
 		} , 0 )
 		
