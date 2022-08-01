@@ -32,14 +32,14 @@ namespace $.$$ {
 			if( value instanceof Date ) return value.toISOString()
 			
 			const kind = Reflect.getOwnPropertyDescriptor( value, Symbol.toStringTag )?.value
-				?? Reflect.getPrototypeOf( value )?.constructor.name
+				?? value.constructor.name
 				?? 'Object'
 			
 			if( value instanceof Node ) {
 				try {
 					switch( value.nodeType ) {
 						case value.TEXT_NODE: return kind + ' ' + value.nodeValue?.trim()
-						case value.ELEMENT_NODE: return value.nodeName + ' ' + ( value as Element ).id
+						case value.ELEMENT_NODE: return `<${ ( value as Element ).localName }> ${ ( value as Element ).id }`
 						case value.DOCUMENT_NODE: return kind + ' ' + value.baseURI
 					}
 				} catch {}
@@ -88,14 +88,29 @@ namespace $.$$ {
 				} catch {}
 			}
 			
-			for( const key of Reflect.ownKeys( value ) ) {
-				const prefix = String( key ) + '∶'
-				const descr = Reflect.getOwnPropertyDescriptor( value, key )!
-				if( 'value' in descr ) res.push([ prefix, descr.value ])
-				else res.push([ prefix, descr.get, descr.set ])
+			if( value && ( typeof value === 'object' || typeof value === 'function' ) ) {
+				
+				for( const key of Reflect.ownKeys( value ) ) {
+					const prefix = String( key ) + '∶'
+					const descr = Reflect.getOwnPropertyDescriptor( value, key )!
+					if( 'value' in descr ) {
+						const line = [ prefix, descr.value ] as any[]
+						// let proto = descr.value
+						// while( proto && typeof proto === 'object' ) {
+						// 	proto = Reflect.getPrototypeOf( proto )
+						// 	if( proto ) line.push( ' - ', proto )
+						// }
+						res.push( line )
+					} else {
+						res.push([ prefix, descr.get, descr.set ])
+					}
+				}
+				
+				if( this.prototypes() ) {
+					res.push([ '__proto__:', Reflect.getPrototypeOf( value ) ])
+				}
+				
 			}
-			
-			res.push([ '__proto__:', Reflect.getPrototypeOf( value ) ])
 			
 			return res
 		}
@@ -107,6 +122,19 @@ namespace $.$$ {
 		
 		row_values( index: number ) {
 			return this.rows_values()[ index ]
+		}
+		
+		expand_all( event?: Event, blacklist = new Set ) {
+			
+			if( blacklist.has( this.value() ) ) return
+			blacklist.add( this.value() )
+			
+			this.expanded( true )
+			for( const row of this.expand_content() ) {
+				if( row.values()[0] === '__proto__:' ) continue
+				row.expand_all( event, blacklist )
+			}
+			
 		}
 
 	}

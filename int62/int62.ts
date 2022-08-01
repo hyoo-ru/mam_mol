@@ -9,10 +9,18 @@ namespace $ {
 	export const $mol_int62_min = - ( 2 ** 30 )
 	export const $mol_int62_range = $mol_int62_max - $mol_int62_min + 1
 	
-	export function $mol_int62_dump( { lo, hi }: $mol_int62_pair ) {
+	export function $mol_int62_to_string( { lo, hi }: $mol_int62_pair ) {
 		lo = ( lo + $mol_int62_range ) % $mol_int62_range
 		hi = ( hi + $mol_int62_range ) % $mol_int62_range
 		return `${ lo.toString(36) }_${ hi.toString(36) }` as const
+	}
+
+	export function $mol_int62_from_string( str: string ): $mol_int62_pair {
+		const [ lo, hi ] = str.split( '_' )
+		return {
+			lo: ( parseInt( lo, 36 ) - $mol_int62_min ) % $mol_int62_range + $mol_int62_min,
+			hi: ( parseInt( hi, 36 ) - $mol_int62_min ) % $mol_int62_range + $mol_int62_min,
+		} as const
 	}
 
 	export function $mol_int62_compare(
