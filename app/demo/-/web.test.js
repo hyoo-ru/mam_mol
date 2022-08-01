@@ -1082,31 +1082,33 @@ var $;
             const store1 = new $hyoo_crowd_doc(123);
             $hyoo_crowd_text.for(store1).text('foo bar foo');
             $mol_assert_like($hyoo_crowd_text.for(store1).text(), 'foo bar foo');
-            $mol_assert_like($hyoo_crowd_list.for(store1).list(), ['foo', ' ', 'bar', ' ', 'foo']);
+            $mol_assert_like($hyoo_crowd_list.for(store1).list(), ['foo', ' bar', ' foo']);
             const store2 = store1.fork(234);
             $hyoo_crowd_text.for(store2).text('barFFFoo  bar');
             $mol_assert_like($hyoo_crowd_text.for(store2).text(), 'barFFFoo  bar');
-            $mol_assert_like($hyoo_crowd_list.for(store2).list(), ['bar', 'FFFoo', '  ', 'bar']);
+            $mol_assert_like($hyoo_crowd_list.for(store2).list(), ['bar', 'FFFoo', ' ', ' bar']);
         },
         'Text modifications'() {
             const store1 = new $hyoo_crowd_doc(123);
             $hyoo_crowd_text.for(store1).text('foo bar');
             const store2 = store1.fork(234);
             $hyoo_crowd_text.for(store2).text('foo  bar');
-            $mol_assert_like(store1.root.chunks().map(chunk => chunk.self), store2.root.chunks().map(chunk => chunk.self));
+            $mol_assert_like(store1.root.chunks().map(chunk => chunk.self), [
+                store2.root.chunks()[0].self,
+                store2.root.chunks()[2].self,
+            ]);
             const store3 = store2.fork(345);
             $hyoo_crowd_text.for(store3).text('foo ton bar');
             $mol_assert_like(store2.root.chunks().map(chunk => chunk.self), [
                 store3.root.chunks()[0].self,
-                store3.root.chunks()[3].self,
-                store3.root.chunks()[4].self,
+                store3.root.chunks()[1].self,
+                store3.root.chunks()[2].self,
             ]);
             const store4 = store3.fork(456);
             $hyoo_crowd_text.for(store4).text('foo bar');
             $mol_assert_like([
                 store3.root.chunks()[0].self,
-                store3.root.chunks()[1].self,
-                store3.root.chunks()[4].self,
+                store3.root.chunks()[2].self,
             ], store4.root.chunks().map(chunk => chunk.self));
             const store5 = store3.fork(567);
             $hyoo_crowd_text.for(store5).text('foo ');
@@ -1238,10 +1240,8 @@ var $;
             const left = base.fork(234);
             $hyoo_crowd_text.for(left).text('111 222 xxx 333 444 555 666');
             const right = base.fork(345);
-            right.insert(right.root.chunks()[2], 0, 10);
-            right.insert(right.root.chunks()[2], 0, 10);
-            right.insert(right.root.chunks()[2], 0, 10);
-            right.insert(right.root.chunks()[2], 0, 10);
+            right.insert(right.root.chunks()[1], 0, 5);
+            right.insert(right.root.chunks()[1], 0, 5);
             const left_delta = left.delta(base.clock);
             const right_delta = right.delta(base.clock);
             left.apply(right_delta);
@@ -1277,7 +1277,7 @@ var $;
             const store = new $hyoo_crowd_doc(123);
             $hyoo_crowd_text.for(store).text('xxx foo bar yyy');
             $hyoo_crowd_text.for(store).write('X Y Z', 6, 9);
-            $mol_assert_like($hyoo_crowd_list.for(store).list(), ['xxx', ' ', 'fo', 'X', ' ', 'Y', ' ', 'Zar', ' ', 'yyy']);
+            $mol_assert_like($hyoo_crowd_list.for(store).list(), ['xxx', ' fo', 'X', ' Y', ' Zar', ' yyy']);
         },
         'Write whole token'() {
             const store = new $hyoo_crowd_doc(123);
@@ -1301,7 +1301,7 @@ var $;
             const store = new $hyoo_crowd_doc(123);
             $hyoo_crowd_text.for(store).text('foo bar');
             $hyoo_crowd_text.for(store).write('xxx', 4);
-            $mol_assert_like($hyoo_crowd_list.for(store).list(), ['foo', ' ', 'xxxbar']);
+            $mol_assert_like($hyoo_crowd_list.for(store).list(), ['foo', ' xxxbar']);
         },
         'Offset <=> Point'() {
             const store = new $hyoo_crowd_doc(123);
