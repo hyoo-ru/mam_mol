@@ -7,16 +7,19 @@ Starts subtasks concurrently instead of serial.
 ```ts
 class App extends $mol_object2 {
 
+	@ $mol_wire_solo
 	static dataLeft( next = 0 ) {
 		this.$.$mol_wait_timeout( 1000 )
 		return next
 	}
 
+	@ $mol_wire_solo
 	static dataRight( next = 0 ) {
 		this.$.$mol_wait_timeout( 1000 )
 		return next
 	}
 
+	@ $mol_wire_solo
 	static render() {
 		try {
 			console.log( ... $mol_wire_race(
@@ -38,9 +41,6 @@ class App extends $mol_object2 {
 	}
 
 }
-$mol_wire_solo( App, 'dataLeft' )
-$mol_wire_solo( App, 'dataRight' )
-$mol_wire_solo( App, 'render' )
 
 $mol_wire_async( App ).run()
 ```
