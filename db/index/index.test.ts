@@ -30,7 +30,7 @@ namespace $ {
 				$mol_assert_like( await names.count(), 3 )
 				
 				$mol_assert_like(
-					await names.select( IDBKeyRange.bound( [ 'J' ], [ 'J\uFFFF' ] ) ),
+					await names.select( $mol_dom_context.IDBKeyRange.bound( [ 'J' ], [ 'J\uFFFF' ] ) ),
 					[ { name: 'Jin' }, { name: 'John' } ],
 				)
 				
@@ -79,7 +79,7 @@ namespace $ {
 				$mol_assert_like( await names.count(), 3 )
 				
 				$mol_assert_like(
-					await names.select( IDBKeyRange.bound( [ 'Jin', 'Johnson' ], [ 'John', 'Jinson' ] ) ),
+					await names.select( $mol_dom_context.IDBKeyRange.bound( [ 'Jin', 'Johnson' ], [ 'John', 'Jinson' ] ) ),
 					[ { first: 'Jin', last: 'Johnson' }, { first: 'John', last: 'Jinson' } ],
 				)
 				

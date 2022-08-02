@@ -63,7 +63,7 @@ namespace $ {
 				
 				$mol_assert_like( await letters.select(), [ 'a', 'b', 'c', 'd' ] )
 				$mol_assert_like( await letters.select( null, 2 ), [ 'a', 'b' ] )
-				$mol_assert_like( await letters.select( IDBKeyRange.bound( 2, 3 ) ), [ 'b', 'c' ] )
+				$mol_assert_like( await letters.select( $mol_dom_context.IDBKeyRange.bound( 2, 3 ) ), [ 'b', 'c' ] )
 				
 			} finally {
 				

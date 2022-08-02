@@ -132,13 +132,13 @@ const user = await Users.get( 1 )
 ### Select 10 By Primary Keys
 
 ```typescript
-const users = await Users.get( IDBKeyRange.bound( 10, 50 ), 10 )
+const users = await Users.get( $mol_dom_context.IDBKeyRange.bound( 10, 50 ), 10 )
 ```
 
 ### Count By Primary Keys
 
 ```typescript
-const count = await Users.count( IDBKeyRange.bound( 10, 50 ) )
+const count = await Users.count( $mol_dom_context.IDBKeyRange.bound( 10, 50 ) )
 ```
 
 ### By Index
