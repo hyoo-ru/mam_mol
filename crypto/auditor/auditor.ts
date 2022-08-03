@@ -1,6 +1,6 @@
 namespace $ {
 
-	/** @FIXME Need polyfill for Safari (https://github.com/microsoft/MSR-JavaScript-Crypto/) */
+	/** @FIXME Need polyfill for Safari and Node (https://github.com/microsoft/MSR-JavaScript-Crypto/) */
 	const algorithm = {
 		name: 'RSA-PSS',
 		modulusLength: 256,
@@ -12,7 +12,7 @@ namespace $ {
 	/** Asymmetric signing pair with shortest payload */
 	export async function $mol_crypto_auditor_pair( this: $ ) {
 		
-		const pair = await $.crypto.subtle.generateKey(
+		const pair = await $mol_crypto_native.subtle.generateKey(
 			algorithm,
 			true,
 			[ 'sign', 'verify' ]
@@ -46,7 +46,7 @@ namespace $ {
 		
 		static async from( serial: BufferSource ) {
 			return new this(
-				await crypto.subtle.importKey(
+				await $mol_crypto_native.subtle.importKey(
 					'spki',
 					serial,
 					algorithm,
@@ -58,14 +58,14 @@ namespace $ {
 		
 		/** 62 bytes */
 		async serial() {
-			return await crypto.subtle.exportKey(
+			return await $mol_crypto_native.subtle.exportKey(
 				'spki',
 				this.native,
 			)
 		}
 		
 		async verify( data: BufferSource, sign: BufferSource ) {
-			return await crypto.subtle.verify(
+			return await $mol_crypto_native.subtle.verify(
 				algorithm,
 				this.native,
 				sign,
@@ -89,7 +89,7 @@ namespace $ {
 	
 		static async from( serial: BufferSource ) {
 			return new this(
-				await crypto.subtle.importKey(
+				await $mol_crypto_native.subtle.importKey(
 					'pkcs8',
 					serial,
 					algorithm,
@@ -101,7 +101,7 @@ namespace $ {
 		
 		/** 190-200 bytes */
 		async serial() {
-			return await crypto.subtle.exportKey(
+			return await $mol_crypto_native.subtle.exportKey(
 				'pkcs8',
 				this.native,
 			)
@@ -110,7 +110,7 @@ namespace $ {
 		/** 32 bytes */
 		async sign( data: BufferSource ) {
 			
-			return await crypto.subtle.sign(
+			return await $mol_crypto_native.subtle.sign(
 				algorithm,
 				this.native,
 				data
