@@ -42,10 +42,7 @@ namespace $ {
 				}
 				
 			} finally {
-				
-				trans.abort()
 				db.kill()
-				
 			}
 			
 		},
