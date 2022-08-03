@@ -10,7 +10,7 @@ namespace $ {
 	/** Asymmetric cipher pair with shortest payload */
 	export async function $mol_crypto_cipher_pair( this: $ ) {
 		
-		const pair = await $.crypto.subtle.generateKey(
+		const pair = await $mol_crypto_native.subtle.generateKey(
 			algorithm,
 			true,
 			[ 'encrypt', 'decrypt' ]
@@ -44,7 +44,7 @@ namespace $ {
 		
 		static async from( serial: BufferSource ) {
 			return new this(
-				await crypto.subtle.importKey(
+				await $mol_crypto_native.subtle.importKey(
 					'spki',
 					serial,
 					algorithm,
@@ -56,7 +56,7 @@ namespace $ {
 		
 		/** 162 bytes */
 		async serial() {
-			return await crypto.subtle.exportKey(
+			return await $mol_crypto_native.subtle.exportKey(
 				'spki',
 				this.native,
 			)
@@ -64,7 +64,7 @@ namespace $ {
 		
 		/** max 86 bytes input, 128 bytes output */
 		async encrypt( data: BufferSource ): Promise< ArrayBuffer > {
-			return await crypto.subtle.encrypt(
+			return await $mol_crypto_native.subtle.encrypt(
 				algorithm,
 				this.native,
 				data,
@@ -84,7 +84,7 @@ namespace $ {
 		
 		static async from( serial: BufferSource ) {
 			return new this(
-				await crypto.subtle.importKey(
+				await $mol_crypto_native.subtle.importKey(
 					'pkcs8',
 					serial,
 					algorithm,
@@ -96,14 +96,14 @@ namespace $ {
 		
 		/** ~640 bytes */
 		async serial() {
-			return await crypto.subtle.exportKey(
+			return await $mol_crypto_native.subtle.exportKey(
 				'pkcs8',
 				this.native,
 			)
 		}
 		
 		async decrypt( data: BufferSource ): Promise< ArrayBuffer > {
-			return await crypto.subtle.decrypt(
+			return await $mol_crypto_native.subtle.decrypt(
 				algorithm,
 				this.native,
 				data,

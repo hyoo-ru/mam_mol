@@ -32,7 +32,7 @@ namespace $ {
 		// async 'reference'() {
 		// 	const data = new Uint8Array([255,254,253])
 		// 	const left = $mol_crypto_hash(data)
-		// 	const right = new Uint8Array(await crypto.subtle.digest('SHA-1', data))
+		// 	const right = new Uint8Array(await $mol_crypto_native.digest('SHA-1', data))
 		// 	console.log( left, right, $mol_compare_deep( left, right ) )
 		// },
 		
