@@ -471,6 +471,7 @@
     "$mol_wire_lib",
     "$mol_wire_race",
     "$mol_wire_field",
+    "$mol_wire_trans",
     "$mol_wire_patch",
     "$mol_wire_set",
     "$mol_wire_dict",

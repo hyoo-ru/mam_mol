@@ -12,6 +12,7 @@ include \/mol/wire/race
 include \/mol/wire/solo
 include \/mol/wire/plex
 include \/mol/wire/field
+include \/mol/wire/trans
 include \/mol/wire/method
 include \/mol/wire/patch
 include \/mol/wire/set
