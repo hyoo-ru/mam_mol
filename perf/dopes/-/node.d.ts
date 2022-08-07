@@ -164,6 +164,7 @@ declare namespace $ {
         static blue: (str: string) => string;
         static magenta: (str: string) => string;
         static cyan: (str: string) => string;
+        static Gray: (str: string) => string;
         static Red: (str: string) => string;
         static Green: (str: string) => string;
         static Yellow: (str: string) => string;

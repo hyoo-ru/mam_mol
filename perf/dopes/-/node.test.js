@@ -651,6 +651,7 @@ var $;
         static blue = this.ansi(94, 39);
         static magenta = this.ansi(95, 39);
         static cyan = this.ansi(96, 39);
+        static Gray = (str) => this.inverse(this.gray(str));
         static Red = (str) => this.inverse(this.red(str));
         static Green = (str) => this.inverse(this.green(str));
         static Yellow = (str) => this.inverse(this.yellow(str));

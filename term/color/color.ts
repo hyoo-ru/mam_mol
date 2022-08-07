@@ -18,6 +18,7 @@ namespace $ {
 		static magenta = this.ansi( 95, 39 )
 		static cyan = this.ansi( 96, 39 )
 		
+		static Gray = ( str: string )=> this.inverse( this.gray( str ) )
 		static Red = ( str: string )=> this.inverse( this.red( str ) )
 		static Green = ( str: string )=> this.inverse( this.green( str ) )
 		static Yellow = ( str: string )=> this.inverse( this.yellow( str ) )
