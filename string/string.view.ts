@@ -26,7 +26,7 @@ namespace $.$$ {
 			return new $mol_dom_listener(
 				this.$.$mol_dom_context.document,
 				'selectionchange',
-				event => this.selection_change( event ),
+				$mol_wire_async( event => this.selection_change( event ) ),
 			)
 		}
 		
