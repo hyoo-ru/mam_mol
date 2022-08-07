@@ -4828,7 +4828,7 @@ var $;
                 return this.autocomplete() ? 'on' : 'off';
             }
             selection_watcher() {
-                return new $mol_dom_listener(this.$.$mol_dom_context.document, 'selectionchange', event => this.selection_change(event));
+                return new $mol_dom_listener(this.$.$mol_dom_context.document, 'selectionchange', $mol_wire_async(event => this.selection_change(event)));
             }
             selection_change(event) {
                 const el = this.dom_node();

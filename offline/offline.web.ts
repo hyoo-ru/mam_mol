@@ -1,4 +1,8 @@
 namespace $ {
+	
+	const blacklist = new Set([
+		'http://cse.google.com/adsense/search/async-ads.js'
+	])
 
 	export function $mol_offline( uri = 'web.js' ) {
 		
@@ -14,6 +18,19 @@ namespace $ {
 			} )
 
 			self.addEventListener( 'fetch' , ( event : any )=> {
+				
+				if( blacklist.has( event.request.url ) ) {
+					return event.respondWith(
+						new Response(
+							null,
+							{
+								status: 418,
+								statusText: 'Blocked'
+							},
+						)
+					)
+				}
+				
 				event.respondWith(
 
 					fetch( event.request )
@@ -37,6 +54,7 @@ namespace $ {
 					} )
 
 				)
+				
 			})
 
 			self.addEventListener( 'beforeinstallprompt' , ( event : any )=> {
