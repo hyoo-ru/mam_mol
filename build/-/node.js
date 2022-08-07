@@ -570,14 +570,12 @@ var $;
         static blue = this.ansi(94, 39);
         static magenta = this.ansi(95, 39);
         static cyan = this.ansi(96, 39);
-        static white = this.ansi(97, 39);
         static Red = (str) => this.inverse(this.red(str));
         static Green = (str) => this.inverse(this.green(str));
         static Yellow = (str) => this.inverse(this.yellow(str));
         static Blue = (str) => this.inverse(this.blue(str));
         static Magenta = (str) => this.inverse(this.magenta(str));
         static Cyan = (str) => this.inverse(this.cyan(str));
-        static White = (str) => this.inverse(this.white(str));
         static ansi(open, close) {
             if (typeof process === 'undefined')
                 return String;

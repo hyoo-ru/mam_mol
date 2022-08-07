@@ -164,14 +164,12 @@ declare namespace $ {
         static blue: (str: string) => string;
         static magenta: (str: string) => string;
         static cyan: (str: string) => string;
-        static white: (str: string) => string;
         static Red: (str: string) => string;
         static Green: (str: string) => string;
         static Yellow: (str: string) => string;
         static Blue: (str: string) => string;
         static Magenta: (str: string) => string;
         static Cyan: (str: string) => string;
-        static White: (str: string) => string;
         static ansi(open: number, close: number): (str: string) => string;
     }
 }
