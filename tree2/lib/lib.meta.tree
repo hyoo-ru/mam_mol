@@ -8,7 +8,7 @@ include \/mol/tree2/text/to/string/mapped
 include \/mol/tree2/text/to/sourcemap
 include \/mol/tree2/text/to/sourcemap/vis
 include \/mol/tree2/to/string
-include \/mol/tree2/to/jso
-include \/mol/tree2/to/tream
+include \/mol/tree2/to/json
+include \/mol/tree2/to/stream
 include \/mol/tree2/xml/from/dom
 include \/mol/tree2/xml/to/text
