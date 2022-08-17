@@ -31,11 +31,14 @@ namespace $.$$ {
 		}
 		
 		selection_change( event: Event ) {
+			const prev = this.selection()
 			const el = this.dom_node() as HTMLInputElement
-			this.selection([
-				el.selectionStart,
-				el.selectionEnd,
-			])
+			const next = [
+				el.selectionStart!,
+				el.selectionEnd!,
+			]
+			if( $mol_compare_deep( prev, next ) ) return
+			this.selection( next )
 		}
 		
 		selection_start() {
