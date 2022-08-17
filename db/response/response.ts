@@ -7,7 +7,7 @@ namespace $ {
 		
 		return new Promise< Result >( ( done, fail )=> {
 			request.onerror = ()=> fail( new Error( request.error!.message ) )
-			request.onsuccess = ()=> done( request.result )
+			request.onsuccess = ()=> done( request.result as Result )
 		} )
 		
 	}

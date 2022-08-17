@@ -2,11 +2,9 @@ namespace $ {
 
 	/** @FIXME Need polyfill for Safari and Node (https://github.com/microsoft/MSR-JavaScript-Crypto/) */
 	const algorithm = {
-		name: 'RSA-PSS',
-		modulusLength: 256,
-		publicExponent: new Uint8Array([ 1, 0, 1 ]),
-		hash: 'SHA-1',
-		saltLength: 8,
+		name: 'ECDSA',
+		hash: 'SHA-256',
+		namedCurve: "P-256",
 	}
 	
 	/** Asymmetric signing pair with shortest payload */
@@ -36,7 +34,7 @@ namespace $ {
 	export class $mol_crypto_auditor_public extends Object {
 		
 		/** Key size in bytes. */
-		static size = 62
+		static size = 91
 		
 		constructor(
 			readonly native: CryptoKey & { type: 'public' }
@@ -121,6 +119,6 @@ namespace $ {
 	}
 	
 	/** Sign size in bytes. */
-	export const $mol_crypto_auditor_sign_size = 32
+	export const $mol_crypto_auditor_sign_size = 64
 	
 }
