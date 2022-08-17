@@ -42,7 +42,8 @@ namespace $ {
 				}
 				
 			} finally {
-				db.kill()
+				trans.abort()
+				await db.kill()
 			}
 			
 		},
@@ -81,10 +82,8 @@ namespace $ {
 				)
 				
 			} finally {
-				
 				trans.abort()
-				db.kill()
-				
+				await db.kill()
 			}
 			
 		},
@@ -123,10 +122,8 @@ namespace $ {
 				$mol_assert_like( await ages.count(), 2 )
 				
 			} finally {
-				
 				trans.abort()
-				db.kill()
-				
+				await db.kill()
 			}
 			
 		},
