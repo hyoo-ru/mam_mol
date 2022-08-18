@@ -38,6 +38,7 @@ namespace $ {
 		
 		/** Instant abort transaction. Any errors aborts transactions automatically. */
 		abort() {
+			if( this.native.error ) return
 			this.native.abort()
 		}
 		
