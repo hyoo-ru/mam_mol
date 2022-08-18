@@ -4846,7 +4846,7 @@ var $;
                 return false;
             }
             for (let repo of mapping.select('pack', mod.name(), 'git').sub) {
-                this.$.$mol_exec(this.root().path(), 'git', 'clone', repo.value, mod.path());
+                this.$.$mol_exec(this.root().path(), 'git', 'clone', repo.value, mod.relate(this.root()));
                 mod.reset();
                 return true;
             }
@@ -5144,7 +5144,7 @@ var $;
             if (errors.length)
                 $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, ...errors));
             if (bundle === 'node') {
-                this.$.$mol_exec(this.root().path(), 'node', '--trace-uncaught', target.path());
+                this.$.$mol_exec(this.root().path(), 'node', '--trace-uncaught', target.relate(this.root()));
             }
             return [target, targetMap];
         }
