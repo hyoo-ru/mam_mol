@@ -87,7 +87,6 @@ namespace $ {
 	function compare_iterator< Value extends IterableIterator<any> >(
 		left: Value,
 		right: Value,
-		compare: ( left: any, right: any )=> boolean
 	): boolean {
 		
 		while( true ) {
@@ -98,7 +97,7 @@ namespace $ {
 			if( left_next.done !== right_next.done ) return false
 			if( left_next.done ) break
 
-			if( !compare( left_next.value , right_next.value ) ) return false
+			if( !$mol_compare_deep( left_next.value , right_next.value ) ) return false
 
 		}
 
@@ -108,13 +107,13 @@ namespace $ {
 	
 	function compare_set< Value extends Set<any> >( left: Value, right: Value ): boolean {
 		if( left.size !== right.size ) return false
-		return compare_iterator( left.values(), right.values(), $mol_compare_deep )
+		return compare_iterator( left.values(), right.values() )
 	}
 	
 	function compare_map< Key, Value >( left: Map< Key, Value > , right: Map< Key, Value > ): boolean {
 		if( left.size !== right.size ) return false
-		return compare_iterator( left.keys(), right.keys(), Object.is )
-			&& compare_iterator( left.values(), right.values(), $mol_compare_deep )
+		return compare_iterator( left.keys(), right.keys() )
+			&& compare_iterator( left.values(), right.values() )
 	}
 	
 	function compare_pojo( left: {}, right: {} ): boolean {
