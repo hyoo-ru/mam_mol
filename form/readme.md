@@ -40,9 +40,9 @@ Returns buttons to interact with the form.
 
 Returns name of field.
 
-**`errors() : string[]`**
+**`bid() : string`**
 
-Returns list of errors.
+Returns call to action.
 
 **`control() : $mol_view`**
 

@@ -1653,7 +1653,7 @@ var $;
         }
         return true;
     }
-    function compare_iterator(left, right, compare) {
+    function compare_iterator(left, right) {
         while (true) {
             const left_next = left.next();
             const right_next = right.next();
@@ -1661,7 +1661,7 @@ var $;
                 return false;
             if (left_next.done)
                 break;
-            if (!compare(left_next.value, right_next.value))
+            if (!$mol_compare_deep(left_next.value, right_next.value))
                 return false;
         }
         return true;
@@ -1669,13 +1669,13 @@ var $;
     function compare_set(left, right) {
         if (left.size !== right.size)
             return false;
-        return compare_iterator(left.values(), right.values(), $mol_compare_deep);
+        return compare_iterator(left.values(), right.values());
     }
     function compare_map(left, right) {
         if (left.size !== right.size)
             return false;
-        return compare_iterator(left.keys(), right.keys(), Object.is)
-            && compare_iterator(left.values(), right.values(), $mol_compare_deep);
+        return compare_iterator(left.keys(), right.keys())
+            && compare_iterator(left.values(), right.values());
     }
     function compare_pojo(left, right) {
         const left_keys = Object.getOwnPropertyNames(left);
@@ -8756,8 +8756,9 @@ var $;
         'Map'() {
             $mol_assert_ok($mol_compare_deep(new Map, new Map));
             $mol_assert_ok($mol_compare_deep(new Map([[1, [2]]]), new Map([[1, [2]]])));
+            $mol_assert_ok($mol_compare_deep(new Map([[[1], 2]]), new Map([[[1], 2]])));
             $mol_assert_not($mol_compare_deep(new Map([[1, 2]]), new Map([[1, 3]])));
-            $mol_assert_not($mol_compare_deep(new Map([[[1], 2]]), new Map([[[1], 2]])));
+            $mol_assert_not($mol_compare_deep(new Map([[[1], 2]]), new Map([[[3], 2]])));
         },
         'Set'() {
             $mol_assert_ok($mol_compare_deep(new Set, new Set));
