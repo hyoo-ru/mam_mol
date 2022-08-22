@@ -4,8 +4,10 @@ interface Window {
 
 namespace $ {
 
-	if( $mol_dom_context.document ) {
-		setTimeout( ()=> $mol_view.autobind() )
-	}
+	$mol_dom_context.document?.addEventListener(
+		'DOMContentLoaded',
+		()=> $mol_view.autobind(),
+		{ once: true },
+	)
 	
 }
