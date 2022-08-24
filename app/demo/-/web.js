@@ -545,6 +545,8 @@ var $;
 var $;
 (function ($) {
     function $mol_reconcile({ prev, from, to, next, equal, drop, insert, update, }) {
+        if (!update)
+            update = (next, prev, lead) => insert(next, drop(prev, lead));
         let p = from;
         let n = 0;
         let lead = p ? prev[p - 1] : null;

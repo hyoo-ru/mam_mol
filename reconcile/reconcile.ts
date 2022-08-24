@@ -17,8 +17,10 @@ namespace $ {
 		equal: ( next: Next, prev: Prev )=> boolean,
 		drop: ( prev: Prev, lead: Prev | null )=> Prev | null,
 		insert: ( next: Next, lead: Prev | null )=> Prev,
-		update: ( next: Next, prev: Prev, lead: Prev | null )=> Prev,
+		update?: ( next: Next, prev: Prev, lead: Prev | null )=> Prev,
 	} ) {
+		
+		if( !update ) update = ( next, prev, lead )=> insert( next, drop( prev, lead ) )
 		
 		let p = from
 		let n = 0

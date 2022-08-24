@@ -160,7 +160,7 @@ declare namespace $ {
         equal: (next: Next, prev: Prev) => boolean;
         drop: (prev: Prev, lead: Prev | null) => Prev | null;
         insert: (next: Next, lead: Prev | null) => Prev;
-        update: (next: Next, prev: Prev, lead: Prev | null) => Prev;
+        update?: (next: Next, prev: Prev, lead: Prev | null) => Prev;
     }): void;
 }
 
