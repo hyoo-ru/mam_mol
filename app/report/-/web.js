@@ -4436,7 +4436,7 @@ var $;
                 return new $mol_dom_listener(this.$.$mol_dom_context.document, 'selectionchange', $mol_wire_async(event => this.selection_change(event)));
             }
             selection_change(event) {
-                const prev = this.selection();
+                const prev = $mol_wire_probe(() => this.selection()) ?? [0, 0];
                 const el = this.dom_node();
                 const next = [
                     el.selectionStart,

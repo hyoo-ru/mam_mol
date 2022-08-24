@@ -564,7 +564,7 @@ $hyoo_crowd_app $mol_book2
 					uri \https://github.com/hyoo-ru/crowd.hyoo.ru/
 
 $hyoo_crowd_app_peer $mol_page
-	store $hyoo_crowd_doc
+	store $hyoo_crowd_land
 	sync 0
 	body /
 		<= Text $mol_textarea
@@ -578,18 +578,17 @@ $hyoo_crowd_app_peer $mol_page
 				\~~Peer:~~ {peer}
 				\~~Changes:~~ {changes}
 				\
-				\| | Alive | Dead | Total
+				\| | ~~Alive~~ | ~~Dead~~ | ~~Total~~
 				\|--|--|--
 				\| ~~Tokens~~ | {tokens:alive} | {tokens:dead} | {tokens:total}
 				\
-				\| | Now | Sync
+				\| | ~~Now~~ | ~~Sync~~
 				\|--|--|--
 				\| ~~Time~~ | {stamp:now} | {stamp:sync}
 				\
-				\| | Text | State | Delta
+				\| | ~~Text~~ | ~~State~~ | ~~Delta~~
 				\|--|--|--|--
-				\| ~~JSON Size~~ | {size:text} | {size:state} | {size:delta}
-				\| ~~Bin Size~~ | {size:text:bin} | {size:state:bin} | {size:delta:bin}
+				\| ~~Bin Size~~ | {size:text} | {size:state} | {size:delta}
 				\
 		<= Delta_section $mol_section
 			title \Delta

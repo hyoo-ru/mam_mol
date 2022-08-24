@@ -3,6 +3,7 @@ interface $node {
 	"child_process" : typeof import( "child_process" )
 	"jsdom" : typeof import( "jsdom" )
 	"util" : typeof import( "util" )
+	"crypto" : typeof import( "crypto" )
 	"fs" : typeof import( "fs" )
 	"chokidar" : typeof import( "chokidar" )
 	"node-fetch" : typeof import( "node-fetch" )
