@@ -31,7 +31,7 @@ namespace $.$$ {
 		}
 		
 		selection_change( event: Event ) {
-			const prev = this.selection()
+			const prev = $mol_wire_probe( ()=> this.selection() ) ?? [ 0, 0 ]
 			const el = this.dom_node() as HTMLInputElement
 			const next = [
 				el.selectionStart!,
