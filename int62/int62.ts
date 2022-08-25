@@ -1,5 +1,7 @@
 namespace $ {
 	
+	export type $mol_int62_string = `${string}_${string}`
+	
 	export type $mol_int62_pair = {
 		readonly lo: number,
 		readonly hi: number,
@@ -9,7 +11,7 @@ namespace $ {
 	export const $mol_int62_min = - ( 2 ** 30 )
 	export const $mol_int62_range = $mol_int62_max - $mol_int62_min + 1
 	
-	export function $mol_int62_to_string( { lo, hi }: $mol_int62_pair ) {
+	export function $mol_int62_to_string( { lo, hi }: $mol_int62_pair ): $mol_int62_string {
 		lo = ( lo + $mol_int62_range ) % $mol_int62_range
 		hi = ( hi + $mol_int62_range ) % $mol_int62_range
 		return `${ lo.toString(36) }_${ hi.toString(36) }` as const

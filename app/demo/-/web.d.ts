@@ -92,6 +92,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_int62_string = `${string}_${string}`;
     type $mol_int62_pair = {
         readonly lo: number;
         readonly hi: number;
@@ -99,7 +100,7 @@ declare namespace $ {
     const $mol_int62_max: number;
     const $mol_int62_min: number;
     const $mol_int62_range: number;
-    function $mol_int62_to_string({ lo, hi }: $mol_int62_pair): `${string}_${string}`;
+    function $mol_int62_to_string({ lo, hi }: $mol_int62_pair): $mol_int62_string;
     function $mol_int62_from_string(str: string): $mol_int62_pair;
     function $mol_int62_compare(left_lo: number, left_hi: number, right_lo: number, right_hi: number): number;
     function $mol_int62_inc(lo: number, hi: number, max?: number): $mol_int62_pair;
@@ -380,7 +381,10 @@ declare namespace $ {
 
 declare namespace $ {
     type $mol_charset_encoding = 'utf8' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
-    function $mol_charset_decode(value: BufferSource, code?: $mol_charset_encoding): string;
+}
+
+declare namespace $ {
+    function $mol_charset_decode(buffer: BufferSource, encoding?: $mol_charset_encoding): string;
 }
 
 declare namespace $ {

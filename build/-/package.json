@@ -47,6 +47,7 @@
     "$mol_file",
     "$mol_charset_decode",
     "$mol_charset",
+    "$mol_charset_encoding",
     "$mol_charset_encode",
     "$node",
     "$node_modules",

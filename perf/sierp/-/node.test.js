@@ -5315,6 +5315,9 @@ var $;
 //mol/state/local/local.ts
 ;
 "use strict";
+//mol/charset/encoding/encoding.ts
+;
+"use strict";
 var $;
 (function ($) {
     $mol_test({
@@ -5335,8 +5338,12 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_charset_decode(value, code = 'utf8') {
-        return new TextDecoder(code).decode(value);
+    const decoders = {};
+    function $mol_charset_decode(buffer, encoding = 'utf8') {
+        let decoder = decoders[encoding];
+        if (!decoder)
+            decoder = decoders[encoding] = new TextDecoder(encoding);
+        return decoder.decode(buffer);
     }
     $.$mol_charset_decode = $mol_charset_decode;
 })($ || ($ = {}));
