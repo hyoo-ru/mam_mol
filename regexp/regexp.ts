@@ -156,6 +156,10 @@ namespace $ {
 		): string | null {
 			return null
 		}
+		
+		get native() {
+			return new RegExp( this.source, this.flags )
+		}
 
 		/** Makes regexp that non-greedy repeats this pattern from min to max count */
 		static repeat<
