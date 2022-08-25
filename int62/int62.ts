@@ -53,14 +53,18 @@ namespace $ {
 		}
 	}
 
-	export function $mol_int62_hash_string( str: string, seed_lo = 0, seed_hi = 0 ) {
-		return $mol_int62_hash_buffer( $mol_charset_encode( str ), seed_lo, seed_hi )
+	export function $mol_int62_hash_string( str: string ) {
+		return $mol_int62_to_string(
+			$mol_int62_hash_buffer(
+				$mol_charset_encode( str ),
+			)
+		)
 	}
 	
-	export function $mol_int62_hash_buffer( buf: Uint8Array, seed_lo = 0, seed_hi = 0 ): $mol_int62_pair {
+	export function $mol_int62_hash_buffer( buf: Uint8Array, seed = { lo: 0, hi: 0 } ): $mol_int62_pair {
 		
-		let h1 = 0xdeadbeef ^ seed_lo
-		let h2 = 0x41c6ce57 ^ seed_hi
+		let h1 = 0xdeadbeef ^ seed.lo
+		let h2 = 0x41c6ce57 ^ seed.hi
 		
 		for( const byte of buf ) {
 			h1 = Math.imul( h1 ^ byte, 2654435761 )
