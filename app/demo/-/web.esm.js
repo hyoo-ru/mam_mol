@@ -2936,15 +2936,26 @@ var $;
             const head_id = $mol_int62_to_string(head);
             const kids = this._unit_lists.get(head_id);
             const queue = kids.splice(0).sort((left, right) => -$hyoo_crowd_unit_compare(left, right));
+            const locate = (lo, hi) => {
+                for (let i = kids.length - 1; i >= 0; --i) {
+                    const kid = kids[i];
+                    if (kid.self_lo !== lo)
+                        continue;
+                    if (kid.self_hi !== hi)
+                        continue;
+                    return i;
+                }
+                return -1;
+            };
             for (let cursor = queue.length - 1; cursor >= 0; --cursor) {
                 const kid = queue[cursor];
                 let index = 0;
                 if (kid.prev_lo || kid.prev_hi) {
-                    index = kids.findIndex(sib => sib.self_lo === kid.prev_lo && sib.self_hi === kid.prev_hi) + 1;
+                    index = locate(kid.prev_lo, kid.prev_hi) + 1;
                     if (!index) {
                         index = kids.length;
                         if (kid.next_lo || kid.next_hi) {
-                            index = kids.findIndex(sib => sib.self_lo === kid.next_lo && sib.self_hi === kid.next_hi);
+                            index = locate(kid.next_lo, kid.next_hi);
                             if (index === -1)
                                 continue;
                         }
