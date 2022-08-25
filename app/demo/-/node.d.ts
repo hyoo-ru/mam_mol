@@ -390,6 +390,7 @@ declare namespace $ {
             };
         }> | null;
         generate(params: Groups_to_params<Groups>): string | null;
+        get native(): RegExp;
         static repeat<Source extends $mol_regexp_source>(source: Source, min?: number, max?: number): $mol_regexp<$mol_regexp_groups<Source>>;
         static repeat_greedy<Source extends $mol_regexp_source>(source: Source, min?: number, max?: number): $mol_regexp<$mol_regexp_groups<Source>>;
         static vary<Sources extends readonly $mol_regexp_source[]>(sources: Sources): $mol_regexp<$mol_regexp_groups<Sources[number]>>;
@@ -426,18 +427,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $hyoo_crowd_tokenizer: $mol_regexp<{
-        readonly token: string;
-        readonly emoji: string;
-        readonly 'line-break': string;
-        readonly indents: string;
-        readonly Word: string;
-        readonly word: string;
-        readonly others: string;
-        readonly space: string;
-        readonly win_end: string;
-        readonly mac_end: string;
-    }>;
+    let $hyoo_crowd_tokenizer: RegExp;
 }
 
 declare namespace $ {

@@ -4688,6 +4688,9 @@ var $;
         generate(params) {
             return null;
         }
+        get native() {
+            return new RegExp(this.source, this.flags);
+        }
         static repeat(source, min = 0, max = Number.POSITIVE_INFINITY) {
             const regexp = $mol_regexp.from(source);
             const upper = Number.isFinite(max) ? max : '';

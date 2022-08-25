@@ -737,6 +737,9 @@ var $;
         generate(params) {
             return null;
         }
+        get native() {
+            return new RegExp(this.source, this.flags);
+        }
         static repeat(source, min = 0, max = Number.POSITIVE_INFINITY) {
             const regexp = $mol_regexp.from(source);
             const upper = Number.isFinite(max) ? max : '';
@@ -992,7 +995,7 @@ var $;
                 ]), 1),
             ],
         },
-    });
+    }).native;
 })($ || ($ = {}));
 //hyoo/crowd/tokenizer/tokenizer.ts
 ;
@@ -3083,7 +3086,7 @@ var $;
                 --from;
                 next = String(list[from].data) + next;
             }
-            const words = [...next.matchAll($hyoo_crowd_tokenizer)].map(token => token[0]);
+            const words = next.match($hyoo_crowd_tokenizer);
             this.as($hyoo_crowd_list).insert(words, from, to);
             return this;
         }
