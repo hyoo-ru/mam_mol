@@ -1258,7 +1258,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_build_server extends $mol_server {
         static trace: boolean;
-        expressGenerator(): (...args: any[]) => Promise<any> | undefined;
+        expressGenerator(): (...args: any[]) => Promise<unknown> | undefined;
         handleRequest(req: typeof $node.express.request, res: typeof $node.express.response, next: () => any): Promise<any> | undefined;
         build(): $mol_build;
         generate(url: string): $mol_file[];

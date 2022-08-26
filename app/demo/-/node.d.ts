@@ -542,9 +542,10 @@ declare namespace $ {
 declare namespace $ {
     type $hyoo_crowd_unit_id = `${$mol_int62_string}/${$mol_int62_string}`;
     enum $hyoo_crowd_unit_kind {
-        join = 0,
-        give = 1,
-        data = 2
+        grab = 0,
+        join = 1,
+        give = 2,
+        data = 3
     }
     enum $hyoo_crowd_unit_group {
         auth = 0,
@@ -706,7 +707,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $hyoo_crowd_reg extends $hyoo_crowd_node {
-        value(next?: unknown): unknown;
+        value(next?: unknown): {} | null;
         str(next?: string): string;
         numb(next?: number): number;
         bool(next?: boolean): boolean;
@@ -7962,7 +7963,7 @@ declare namespace $ {
         set(key: Key, value: Value): this;
         delete(key: Key): boolean;
         clear(): void;
-        item(key: Key, next?: Value | null): Value | null;
+        item(key: Key, next?: Value | null): NonNullable<Value> | null;
     }
 }
 

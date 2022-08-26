@@ -1834,9 +1834,10 @@ var $;
     const level = $mol_data_enum('level', $hyoo_crowd_peer_level);
     let $hyoo_crowd_unit_kind;
     (function ($hyoo_crowd_unit_kind) {
-        $hyoo_crowd_unit_kind[$hyoo_crowd_unit_kind["join"] = 0] = "join";
-        $hyoo_crowd_unit_kind[$hyoo_crowd_unit_kind["give"] = 1] = "give";
-        $hyoo_crowd_unit_kind[$hyoo_crowd_unit_kind["data"] = 2] = "data";
+        $hyoo_crowd_unit_kind[$hyoo_crowd_unit_kind["grab"] = 0] = "grab";
+        $hyoo_crowd_unit_kind[$hyoo_crowd_unit_kind["join"] = 1] = "join";
+        $hyoo_crowd_unit_kind[$hyoo_crowd_unit_kind["give"] = 2] = "give";
+        $hyoo_crowd_unit_kind[$hyoo_crowd_unit_kind["data"] = 3] = "data";
     })($hyoo_crowd_unit_kind = $.$hyoo_crowd_unit_kind || ($.$hyoo_crowd_unit_kind = {}));
     let $hyoo_crowd_unit_group;
     (function ($hyoo_crowd_unit_group) {
@@ -1870,7 +1871,12 @@ var $;
         }
         kind() {
             if (this.head === this.self && this.auth === this.self) {
-                return $hyoo_crowd_unit_kind.join;
+                if (this.head === this.land) {
+                    return $hyoo_crowd_unit_kind.grab;
+                }
+                else {
+                    return $hyoo_crowd_unit_kind.join;
+                }
             }
             if (this.head === this.land) {
                 return $hyoo_crowd_unit_kind.give;
@@ -1883,13 +1889,19 @@ var $;
                 : $hyoo_crowd_unit_group.auth;
         }
         level() {
-            return level(this.data);
+            switch (this.kind()) {
+                case $hyoo_crowd_unit_kind.grab: return $hyoo_crowd_peer_level.law;
+                case $hyoo_crowd_unit_kind.give: return level(this.data);
+                default: $mol_fail(new Error(`Wrong unit kind for getting level: ${this.kind()}`));
+            }
         }
         [Symbol.toPrimitive]() {
             return JSON.stringify(this);
         }
         [$mol_dev_format_head]() {
             switch (this.kind()) {
+                case $hyoo_crowd_unit_kind.grab:
+                    return $mol_dev_format_div({}, $mol_dev_format_native(this), ' 👑');
                 case $hyoo_crowd_unit_kind.join:
                     return $mol_dev_format_div({}, $mol_dev_format_native(this), $mol_dev_format_shade(' 🔑 ', this.self));
                 case $hyoo_crowd_unit_kind.give:
@@ -3096,7 +3108,7 @@ var $;
             return land;
         }
         home() {
-            return this.land(this.peer.id);
+            return this.land_sync(this.peer.id);
         }
         _knights = new $mol_dict();
         _signs = new WeakMap();
@@ -3177,6 +3189,7 @@ var $;
             const auth_unit = land.unit(unit.auth, unit.auth);
             const kind = unit.kind();
             switch (kind) {
+                case $hyoo_crowd_unit_kind.grab:
                 case $hyoo_crowd_unit_kind.join: {
                     if (auth_unit) {
                         $mol_fail(new Error('Already join'));
@@ -3200,18 +3213,17 @@ var $;
                 }
                 case $hyoo_crowd_unit_kind.give: {
                     const king_unit = land.unit(land.id(), land.id());
-                    if (!king_unit) {
+                    if (!king_unit)
                         $mol_fail(new Error('No king'));
-                    }
-                    const give_unit = land.unit(land.id(), unit.self);
-                    if (give_unit?.level() > unit.level()) {
-                        $mol_fail(new Error(`Revoke unsupported`));
-                    }
                     if (unit.auth === king_unit.auth)
                         break;
-                    const lord_unit = land.unit(land.id(), unit.auth);
-                    if (lord_unit?.level() !== $hyoo_crowd_peer_level.law) {
+                    const lord_level = land.level(unit.auth);
+                    if (lord_level !== $hyoo_crowd_peer_level.law) {
                         $mol_fail(new Error(`Need law level`));
+                    }
+                    const peer_level = land.level(unit.auth);
+                    if (peer_level > unit.level()) {
+                        $mol_fail(new Error(`Revoke unsupported`));
                     }
                     break;
                 }
@@ -3440,10 +3452,12 @@ var $;
             this.level('0_0', next);
         }
         level(peer, next) {
-            this.join();
+            if (next)
+                this.join();
             const level_id = `${this.id()}/${peer}`;
             const exists = this._unit_all.get(level_id);
-            const prev = exists?.level() ?? $hyoo_crowd_peer_level.get;
+            const def = this._unit_all.get(`${this.id()}/0_0`);
+            const prev = exists?.level() ?? def?.level() ?? $hyoo_crowd_peer_level.get;
             if (next === undefined)
                 return prev;
             if (next <= prev)
