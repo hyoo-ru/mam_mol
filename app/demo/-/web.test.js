@@ -1981,6 +1981,18 @@ var $;
             $mol_assert_like(store.chief.as($hyoo_crowd_list).list(), []);
             $mol_assert_like(store.delta(), []);
         },
+        async 'Return default state'() {
+            const store = await make_land();
+            const reg = store.chief.as($hyoo_crowd_reg);
+            const list = store.chief.as($hyoo_crowd_list);
+            const text = store.chief.as($hyoo_crowd_text);
+            $mol_assert_like(reg.bool(false), false);
+            $mol_assert_like(reg.str(''), '');
+            $mol_assert_like(reg.numb(0), 0);
+            $mol_assert_like(text.text(''), '');
+            $mol_assert_like(reg.value(null), null);
+            $mol_assert_like(list.list(), []);
+        },
         async 'Serial changes'() {
             const store = await make_land();
             Object.assign(store.peer(), { key_public_serial: null });

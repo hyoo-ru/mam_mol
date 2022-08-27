@@ -2275,10 +2275,10 @@ var $;
             return String(this.value(next) ?? '');
         }
         numb(next) {
-            return Number(this.value(next) ?? 0);
+            return Number(this.value(next));
         }
         bool(next) {
-            return Boolean(this.value(next) ?? false);
+            return Boolean(this.value(next));
         }
         yoke(king_level, base_level) {
             const world = this.world();
@@ -3105,7 +3105,7 @@ var $;
                 --from;
                 next = String(list[from].data) + next;
             }
-            const words = next.match($hyoo_crowd_tokenizer);
+            const words = next.match($hyoo_crowd_tokenizer) ?? [];
             this.as($hyoo_crowd_list).insert(words, from, to);
             return this;
         }

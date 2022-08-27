@@ -2722,10 +2722,10 @@ var $;
             return String(this.value(next) ?? '');
         }
         numb(next) {
-            return Number(this.value(next) ?? 0);
+            return Number(this.value(next));
         }
         bool(next) {
-            return Boolean(this.value(next) ?? false);
+            return Boolean(this.value(next));
         }
         yoke(king_level, base_level) {
             const world = this.world();
@@ -3552,7 +3552,7 @@ var $;
                 --from;
                 next = String(list[from].data) + next;
             }
-            const words = next.match($hyoo_crowd_tokenizer);
+            const words = next.match($hyoo_crowd_tokenizer) ?? [];
             this.as($hyoo_crowd_list).insert(words, from, to);
             return this;
         }
@@ -35030,6 +35030,18 @@ var $;
             $mol_assert_like(store.chief.as($hyoo_crowd_reg).str(), '');
             $mol_assert_like(store.chief.as($hyoo_crowd_list).list(), []);
             $mol_assert_like(store.delta(), []);
+        },
+        async 'Return default state'() {
+            const store = await make_land();
+            const reg = store.chief.as($hyoo_crowd_reg);
+            const list = store.chief.as($hyoo_crowd_list);
+            const text = store.chief.as($hyoo_crowd_text);
+            $mol_assert_like(reg.bool(false), false);
+            $mol_assert_like(reg.str(''), '');
+            $mol_assert_like(reg.numb(0), 0);
+            $mol_assert_like(text.text(''), '');
+            $mol_assert_like(reg.value(null), null);
+            $mol_assert_like(list.list(), []);
         },
         async 'Serial changes'() {
             const store = await make_land();
