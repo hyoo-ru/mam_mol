@@ -569,7 +569,8 @@ declare namespace $ {
         [Symbol.toPrimitive](): string;
     }
     class $hyoo_crowd_unit_bin extends DataView {
-        static from(unit: $hyoo_crowd_unit): $hyoo_crowd_unit_bin;
+        static from_buffer(buffer: Int16Array): $hyoo_crowd_unit_bin;
+        static from_unit(unit: $hyoo_crowd_unit): $hyoo_crowd_unit_bin;
         sign(next?: Uint8Array): Uint8Array;
         size(): number;
         sens(): Uint8Array;
@@ -823,10 +824,16 @@ declare namespace $ {
         _signs: WeakMap<$hyoo_crowd_unit, Uint8Array>;
         grab(king_level?: $hyoo_crowd_peer_level, base_level?: $hyoo_crowd_peer_level): Promise<$hyoo_crowd_land>;
         delta_land(land: $hyoo_crowd_land, clocks?: readonly [$hyoo_crowd_clock, $hyoo_crowd_clock]): Promise<readonly $hyoo_crowd_unit[]>;
-        delta(clocks?: Map<`${string}_${string}`, readonly [$hyoo_crowd_clock, $hyoo_crowd_clock]>): Promise<$hyoo_crowd_unit[]>;
-        apply(delta: Uint8Array): Promise<[$hyoo_crowd_unit, string][]>;
-        apply_unit(unit: $hyoo_crowd_unit): Promise<string>;
-        audit(unit: $hyoo_crowd_unit): Promise<void>;
+        delta_batch(land: $hyoo_crowd_land, clocks?: readonly [$hyoo_crowd_clock, $hyoo_crowd_clock]): AsyncGenerator<Uint8Array, void, unknown>;
+        delta(clocks?: Map<`${string}_${string}`, readonly [$hyoo_crowd_clock, $hyoo_crowd_clock]>): AsyncGenerator<Uint8Array, void, unknown>;
+        apply(delta: Uint8Array): Promise<{
+            allow: $hyoo_crowd_unit[];
+            forbid: Map<$hyoo_crowd_unit, string>;
+        }>;
+        audit_delta(land: $hyoo_crowd_land, delta: $hyoo_crowd_unit[]): Promise<{
+            allow: $hyoo_crowd_unit[];
+            forbid: Map<$hyoo_crowd_unit, string>;
+        }>;
     }
 }
 
@@ -846,14 +853,14 @@ declare namespace $ {
         get clocks(): readonly [$hyoo_crowd_clock, $hyoo_crowd_clock];
         readonly pub: $mol_wire_pub;
         readonly _clocks: readonly [$hyoo_crowd_clock, $hyoo_crowd_clock];
-        protected _unit_all: Map<`${string}_${string}/${string}_${string}`, $hyoo_crowd_unit>;
+        _unit_all: Map<`${string}_${string}/${string}_${string}`, $hyoo_crowd_unit>;
         unit(head: $mol_int62_string, self: $mol_int62_string): $hyoo_crowd_unit | undefined;
-        protected _unit_lists: Map<`${string}_${string}`, ($hyoo_crowd_unit[] & {
+        _unit_lists: Map<`${string}_${string}`, ($hyoo_crowd_unit[] & {
             dirty: boolean;
         }) | undefined>;
-        protected _unit_alives: Map<`${string}_${string}`, $hyoo_crowd_unit[] | undefined>;
+        _unit_alives: Map<`${string}_${string}`, $hyoo_crowd_unit[] | undefined>;
         size(): number;
-        protected unit_list(head: $mol_int62_string): $hyoo_crowd_unit[] & {
+        unit_list(head: $mol_int62_string): $hyoo_crowd_unit[] & {
             dirty: boolean;
         };
         unit_alives(head: $mol_int62_string): readonly $hyoo_crowd_unit[];
