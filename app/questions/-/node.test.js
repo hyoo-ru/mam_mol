@@ -3169,12 +3169,16 @@ var $;
         Logo() {
             return null;
         }
+        title_content() {
+            return [
+                this.Logo(),
+                this.title()
+            ];
+        }
         Title() {
             const obj = new this.$.$mol_view();
             obj.dom_name = () => "h1";
-            obj.sub = () => [
-                this.title()
-            ];
+            obj.sub = () => this.title_content();
             return obj;
         }
         tools() {
@@ -3187,7 +3191,6 @@ var $;
         }
         head() {
             return [
-                this.Logo(),
                 this.Title(),
                 this.Tools()
             ];
@@ -3284,6 +3287,7 @@ var $;
                 minHeight: rem(2),
                 margin: 0,
                 padding: $mol_gap.text,
+                gap: $mol_gap.text,
                 wordBreak: 'normal',
                 textShadow: '0 0',
                 font: {

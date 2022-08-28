@@ -60,9 +60,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * title_content /
+		 * 	<= Logo
+		 * 	<= title
+		 * ```
+		 */
+		title_content() {
+			return [
+				this.Logo(),
+				this.title()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Title $mol_view
 		 * 	dom_name \h1
-		 * 	sub / <= title
+		 * 	sub <= title_content
 		 * ```
 		 */
 		@ $mol_mem
@@ -70,9 +84,7 @@ namespace $ {
 			const obj = new this.$.$mol_view()
 			
 			obj.dom_name = () => "h1"
-			obj.sub = () => [
-				this.title()
-			] as readonly any[]
+			obj.sub = () => this.title_content()
 			
 			return obj
 		}
@@ -104,14 +116,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * head /
-		 * 	<= Logo
 		 * 	<= Title
 		 * 	<= Tools
 		 * ```
 		 */
 		head() {
 			return [
-				this.Logo(),
 				this.Title(),
 				this.Tools()
 			] as readonly any[]
