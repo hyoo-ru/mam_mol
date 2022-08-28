@@ -18,6 +18,7 @@ $mol_page $mol_view
 			minimal_height 64
 			dom_name \header
 			sub <= head /
+				<= Logo null
 				<= Title $mol_view
 					dom_name \h1
 					sub /

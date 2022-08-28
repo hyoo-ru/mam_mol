@@ -6368,6 +6368,9 @@ var $;
         tabindex() {
             return -1;
         }
+        Logo() {
+            return null;
+        }
         Title() {
             const obj = new this.$.$mol_view();
             obj.dom_name = () => "h1";
@@ -6386,6 +6389,7 @@ var $;
         }
         head() {
             return [
+                this.Logo(),
                 this.Title(),
                 this.Tools()
             ];

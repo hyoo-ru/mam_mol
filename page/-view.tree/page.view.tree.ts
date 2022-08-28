@@ -51,6 +51,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Logo null
+		 * ```
+		 */
+		Logo() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * Title $mol_view
 		 * 	dom_name \h1
 		 * 	sub / <= title
@@ -95,12 +104,14 @@ namespace $ {
 		/**
 		 * ```tree
 		 * head /
+		 * 	<= Logo
 		 * 	<= Title
 		 * 	<= Tools
 		 * ```
 		 */
 		head() {
 			return [
+				this.Logo(),
 				this.Title(),
 				this.Tools()
 			] as readonly any[]
