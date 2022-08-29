@@ -20395,7 +20395,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/expander/expander.view.css", "[mol_expander] {\n\tflex-direction: column;\n\tflex: 1 1 auto;\n}\n\n[mol_expander_label] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_expander_trigger] {\n\tflex: auto;\n\tposition: relative;\n}\n\n[mol_expander_trigger_icon] {\n\tposition: absolute;\n\tmargin-left: -1rem;\n}\n");
+    $mol_style_attach("mol/expander/expander.view.css", "[mol_expander] {\n\tflex-direction: column;\n}\n\n[mol_expander_label] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_expander_trigger] {\n\tflex: auto;\n\tposition: relative;\n}\n\n[mol_expander_trigger_icon] {\n\tposition: absolute;\n\tmargin-left: -1rem;\n}\n");
 })($ || ($ = {}));
 //mol/expander/-css/expander.view.css.ts
 ;
@@ -34504,7 +34504,7 @@ var $;
             const time1 = clock.tick('b_33');
             $mol_assert_like(time1, now);
             $mol_assert_like(clock.last_time, now);
-            clock.see_peer('m_66', now + 10);
+            clock.see_peer('m_66', clock.now() + 10);
             const time2 = clock.tick('m_66');
             $mol_assert_like(time2, now + 11);
             $mol_assert_like(clock.last_time, now + 11);
