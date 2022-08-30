@@ -39,6 +39,10 @@ var $;
 //hyoo/hyoo.ts
 ;
 "use strict";
+let $hyoo_crowd_test = "1";
+//hyoo/crowd/-meta.tree/crowd.meta.tree.ts
+;
+"use strict";
 var $;
 (function ($) {
 })($ || ($ = {}));
@@ -9495,6 +9499,7 @@ var $;
         }
         Header(id) {
             const obj = new this.$.$mol_text_header();
+            obj.minimal_height = () => 40;
             obj.dom_name = () => this.header_level(id);
             obj.content = () => this.block_content(id);
             obj.arg = () => this.header_arg(id);

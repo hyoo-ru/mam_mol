@@ -108,6 +108,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Header* $mol_text_header
+		 * 	minimal_height 40
 		 * 	dom_name <= header_level*
 		 * 	content <= block_content*
 		 * 	arg <= header_arg*
@@ -117,6 +118,7 @@ namespace $ {
 		Header(id: any) {
 			const obj = new this.$.$mol_text_header()
 			
+			obj.minimal_height = () => 40
 			obj.dom_name = () => this.header_level(id)
 			obj.content = () => this.block_content(id)
 			obj.arg = () => this.header_arg(id)

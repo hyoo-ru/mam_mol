@@ -380,6 +380,7 @@ $mol_text $mol_list
 		highlight <= highlight \
 		auto_scroll null
 	Header* $mol_text_header
+		minimal_height 40
 		dom_name <= header_level* \h
 		content <= block_content* /
 		arg <= header_arg* *
