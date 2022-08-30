@@ -779,7 +779,7 @@ $mol_book2_catalog $mol_book2
 					rows <= links /
 	Link* $mol_link
 		arg <= arg* *
-		sub /
+		sub <= link_content* /
 			<= spread_title* \
 	Spread_close $mol_link
 		arg <= spread_close_arg *

@@ -58,7 +58,7 @@ namespace $ {
 		 * ```tree
 		 * Link* $mol_link
 		 * 	arg <= arg*
-		 * 	sub / <= spread_title*
+		 * 	sub <= link_content*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -66,9 +66,7 @@ namespace $ {
 			const obj = new this.$.$mol_link()
 			
 			obj.arg = () => this.arg(id)
-			obj.sub = () => [
-				this.spread_title(id)
-			] as readonly any[]
+			obj.sub = () => this.link_content(id)
 			
 			return obj
 		}
@@ -185,6 +183,17 @@ namespace $ {
 		 */
 		spread_title(id: any) {
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * link_content* / <= spread_title*
+		 * ```
+		 */
+		link_content(id: any) {
+			return [
+				this.spread_title(id)
+			] as readonly any[]
 		}
 		
 		/**

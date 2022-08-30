@@ -3359,6 +3359,7 @@ declare namespace $ {
         Menu(): $mol_page;
         arg(id: any): {};
         spread_title(id: any): string;
+        link_content(id: any): readonly any[];
         spread_close_arg(): {};
         Spread_close_icon(): $mol_icon_cross;
     }

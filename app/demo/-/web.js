@@ -10982,9 +10982,7 @@ var $;
         Link(id) {
             const obj = new this.$.$mol_link();
             obj.arg = () => this.arg(id);
-            obj.sub = () => [
-                this.spread_title(id)
-            ];
+            obj.sub = () => this.link_content(id);
             return obj;
         }
         Spread_close() {
@@ -11027,6 +11025,11 @@ var $;
         }
         spread_title(id) {
             return "";
+        }
+        link_content(id) {
+            return [
+                this.spread_title(id)
+            ];
         }
         spread_close_arg() {
             return {};
