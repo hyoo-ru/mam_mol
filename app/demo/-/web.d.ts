@@ -28,8 +28,6 @@ declare namespace $ {
 declare namespace $ {
 }
 
-declare let $hyoo_crowd_test: string;
-
 declare namespace $ {
     var $mol_dom_context: typeof globalThis;
 }
