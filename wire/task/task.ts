@@ -41,6 +41,7 @@ namespace $ {
 		}
 
 		complete() {
+			if( this.cache instanceof Promise ) return
 			this.destructor()
 		}
 		

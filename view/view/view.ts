@@ -205,7 +205,7 @@ namespace $ {
 		dom_tree( next? : Element ) : Element {
 			const node = this.dom_node( next )
 			
-			try {
+			render: try {
 
 				$mol_dom_render_attributes( node , { mol_view_error : null } )
 
@@ -223,16 +223,14 @@ namespace $ {
 					
 				}
 				
-				this.auto()
-				
 			} catch( error: any ) {
 				
 				$mol_fail_log( error )
 				
 				$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
 				
-				if( error instanceof Promise ) return node
-				if( ( error_showed.get( error ) ?? this ) !== this ) return node
+				if( error instanceof Promise ) break render
+				if( ( error_showed.get( error ) ?? this ) !== this ) break render
 				
 				try {
 					const message = error.message || error
@@ -243,6 +241,12 @@ namespace $ {
 				
 			}
 			
+			try {
+				this.auto()
+			} catch( error ) {
+				$mol_fail_log( error )
+			}
+				
 			return node
 		}
 
