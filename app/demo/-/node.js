@@ -23419,6 +23419,81 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_avatar extends $mol_icon {
+        view_box() {
+            return "0 0 24 24";
+        }
+        id() {
+            return "";
+        }
+        path() {
+            return "M 12 12 l 0 0 M 0 0 l 0 0 M 24 24 l 0 0 M 0 24 l 0 0 M 24 0 l 0 0";
+        }
+    }
+    $.$mol_avatar = $mol_avatar;
+})($ || ($ = {}));
+//mol/avatar/-view.tree/avatar.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_hash_string(str, seed = 0) {
+        let h1 = 0xdeadbeef ^ seed;
+        let h2 = 0x41c6ce57 ^ seed;
+        for (let i = 0; i < str.length; i++) {
+            const ch = str.charCodeAt(i);
+            h1 = Math.imul(h1 ^ ch, 2654435761);
+            h2 = Math.imul(h2 ^ ch, 1597334677);
+        }
+        h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+        h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+        return 4294967296 * (((1 << 16) - 1) & h2) + (h1 >>> 0);
+    }
+    $.$mol_hash_string = $mol_hash_string;
+})($ || ($ = {}));
+//mol/hash/string/string.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/avatar/avatar.view.css", "[mol_avatar] {\n\tstroke-linecap: round;\n    stroke-width: 4px;\n    fill: none;\n    stroke: currentColor;\n\t/* width: 1.5rem;\n\theight: 1.5rem;\n\tmargin: 0 -.25rem; */\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n}\n");
+})($ || ($ = {}));
+//mol/avatar/-css/avatar.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_avatar extends $.$mol_avatar {
+            path() {
+                const id = $mol_hash_string(this.id());
+                const p = 2;
+                const m = 2.8;
+                let path = '';
+                for (let x = 0; x < 4; ++x) {
+                    for (let y = 0; y < 8; ++y) {
+                        if ((id >> (x + y * 7)) & 1) {
+                            const mxp = Math.ceil(m * x + p);
+                            const myp = Math.ceil(m * y + p);
+                            path += `M ${mxp} ${myp} l 0 0 ` + `M ${24 - mxp} ${myp} l 0 0 `;
+                        }
+                    }
+                }
+                return path;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_avatar.prototype, "path", null);
+        $$.$mol_avatar = $mol_avatar;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/avatar/avatar.view.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_infinite_demo extends $mol_example_large {
         title() {
             return "Infinite list demo";
@@ -23435,6 +23510,7 @@ var $;
             return [
                 "$mol_filler",
                 "$mol_list",
+                "$mol_avatar",
                 "infinite",
                 "scroll",
                 "virtual",
@@ -23447,12 +23523,12 @@ var $;
         after(id) {
             return [];
         }
-        photo(id) {
+        id(id) {
             return "";
         }
         Photo(id) {
-            const obj = new this.$.$mol_image();
-            obj.uri = () => this.photo(id);
+            const obj = new this.$.$mol_avatar();
+            obj.id = () => this.id(id);
             return obj;
         }
         name(id) {
@@ -23560,9 +23636,8 @@ var $;
                 this.$.$mol_wait_timeout(1000);
                 return Array.from({ length: this.chunk_size() }, (_, index) => (anchor_id ?? 0) + index + 1);
             }
-            photo(index) {
-                $mol_wire_solid();
-                return $mol_stub_person_avatar();
+            id(index) {
+                return String(index);
             }
             name(index) {
                 $mol_wire_solid();
@@ -23576,9 +23651,6 @@ var $;
         __decorate([
             $mol_mem_key
         ], $mol_infinite_demo.prototype, "after", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_infinite_demo.prototype, "photo", null);
         __decorate([
             $mol_mem_key
         ], $mol_infinite_demo.prototype, "name", null);

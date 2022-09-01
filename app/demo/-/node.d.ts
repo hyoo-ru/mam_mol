@@ -6063,6 +6063,27 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_avatar extends $mol_icon {
+        view_box(): string;
+        id(): string;
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    function $mol_hash_string(str: string, seed?: number): number;
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_avatar extends $.$mol_avatar {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_infinite_demo extends $mol_example_large {
         title(): string;
         chunk_size(): number;
@@ -6070,8 +6091,8 @@ declare namespace $ {
         tags(): readonly any[];
         before(id: any): readonly any[];
         after(id: any): readonly any[];
-        photo(id: any): string;
-        Photo(id: any): $mol_image;
+        id(id: any): string;
+        Photo(id: any): $$.$mol_avatar;
         name(id: any): string;
         Name(id: any): $$.$mol_paragraph;
         city(id: any): string;
@@ -6093,7 +6114,7 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_infinite_demo extends $.$mol_infinite_demo {
         after(anchor_id: number | null): number[];
-        photo(index: number): string;
+        id(index: number): string;
         name(index: number): string;
         city(index: number): string;
     }

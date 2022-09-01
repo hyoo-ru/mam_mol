@@ -2568,6 +2568,11 @@ $mol_infinite $mol_list
 		minimal_height 0
 		auto <= after_load* null
 
+$mol_avatar $mol_icon
+	view_box \0 0 24 24
+	id \
+	path \M 12 12 l 0 0 M 0 0 l 0 0 M 24 24 l 0 0 M 0 24 l 0 0 M 24 0 l 0 0
+
 $mol_infinite_demo $mol_example_large
 	title \Infinite list demo
 	chunk_size 20
@@ -2578,13 +2583,14 @@ $mol_infinite_demo $mol_example_large
 				after* <= after* /
 				Row* <= Item* $mol_row
 					sub /
-						<= Photo* $mol_image uri <= photo* \
+						<= Photo* $mol_avatar id <= id* \
 						<= Info* $mol_list rows /
 							<= Name* $mol_paragraph title <= name* \
 							<= City* $mol_paragraph title <= city* \
 	tags /
 		\$mol_filler
 		\$mol_list
+		\$mol_avatar
 		\infinite
 		\scroll
 		\virtual

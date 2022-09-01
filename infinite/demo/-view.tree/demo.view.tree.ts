@@ -35,6 +35,7 @@ namespace $ {
 		 * tags /
 		 * 	\$mol_filler
 		 * 	\$mol_list
+		 * 	\$mol_avatar
 		 * 	\infinite
 		 * 	\scroll
 		 * 	\virtual
@@ -45,6 +46,7 @@ namespace $ {
 			return [
 				"$mol_filler",
 				"$mol_list",
+				"$mol_avatar",
 				"infinite",
 				"scroll",
 				"virtual",
@@ -74,23 +76,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * photo* \
+		 * id* \
 		 * ```
 		 */
-		photo(id: any) {
+		id(id: any) {
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * Photo* $mol_image uri <= photo*
+		 * Photo* $mol_avatar id <= id*
 		 * ```
 		 */
 		@ $mol_mem_key
 		Photo(id: any) {
-			const obj = new this.$.$mol_image()
+			const obj = new this.$.$mol_avatar()
 			
-			obj.uri = () => this.photo(id)
+			obj.id = () => this.id(id)
 			
 			return obj
 		}

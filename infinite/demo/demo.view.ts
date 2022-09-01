@@ -20,10 +20,8 @@ namespace $.$$ {
 			)
 		}
 		
-		@ $mol_mem_key
-		photo( index: number ) {
-			$mol_wire_solid()
-			return $mol_stub_person_avatar()
+		id( index: number ) {
+			return String( index )
 		}
 		
 		@ $mol_mem_key
