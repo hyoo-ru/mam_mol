@@ -3168,7 +3168,7 @@ var $;
                 const bin = unit.bin;
                 bins.push(bin);
                 size += bin.byteLength;
-                if (size >= 2 ** 17)
+                if (size >= 2 ** 15)
                     yield pack();
             }
             if (size)
