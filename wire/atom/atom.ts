@@ -123,7 +123,9 @@ namespace $ {
 				if( $mol_owning_catch( this, next ) ) {
 					try {
 						next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
-					} catch {} // Promises throws in strict mode
+					} catch { // Promises throws in strict mode
+						Object.defineProperty( next, Symbol.toStringTag, { value: this[ Symbol.toStringTag ] } )
+					}
 				}
 				
 				if( this.sub_from < this.data.length ) {

@@ -176,7 +176,7 @@ namespace $ {
 					}
 					
 					result = Object.assign( result.then( put, put ), {
-						destructor: result['destructor']
+						destructor: result['destructor'] ?? (()=> {})
 					} )
 					
 					handled.add( result )
@@ -195,7 +195,7 @@ namespace $ {
 					result = Object.assign( result.finally( ()=> {
 						if( this.cache === result ) this.absorb()
 					} ), {
-						destructor: result['destructor']
+						destructor: result['destructor'] ?? (()=> {})
 					} )
 					
 					handled.add( result )
