@@ -55,7 +55,7 @@ namespace $ {
 			await $mol_test_run()
 			$$.$mol_test_complete()
 			
-		} , 0 )
+		} , 1000 )
 		
 	}
 

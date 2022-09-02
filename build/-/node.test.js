@@ -5172,18 +5172,12 @@ var $;
                 : `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`;
             content = content.replace(/(<\/body>|$)/, `
 				<script src="/mol/build/client/client.js" charset="utf-8"></script>
+				<script src="web.test.js" charset="utf-8"></script>
 				<script>
 					addEventListener( 'load', ()=> {
-
-						const test = document.createElement( 'script' )
-						test.src = 'web.test.js'
-						
 						const audit =  document.createElement( 'script' )
 						audit.src = 'web.audit.js'
-						
-						test.onload = ()=> document.head.appendChild( audit )
-						document.head.appendChild( test )
-
+						document.head.appendChild( audit )
 					} )
 				</script>
 				$1`);
@@ -6096,7 +6090,7 @@ var $;
             scheduled = false;
             await $mol_test_run();
             $$.$mol_test_complete();
-        }, 0);
+        }, 1000);
     }
     $_1.$mol_test_schedule = $mol_test_schedule;
     $_1.$mol_test_mocks.push(context => {
