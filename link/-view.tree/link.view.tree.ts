@@ -24,7 +24,7 @@ namespace $ {
 		 * attr *
 		 * 	^
 		 * 	href <= uri_toggle
-		 * 	title <= hint
+		 * 	title <= hint_safe
 		 * 	target <= target
 		 * 	download <= file_name
 		 * 	mol_link_current <= current
@@ -34,7 +34,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				href: this.uri_toggle(),
-				title: this.hint(),
+				title: this.hint_safe(),
 				target: this.target(),
 				download: this.file_name(),
 				mol_link_current: this.current()
@@ -92,6 +92,15 @@ namespace $ {
 		 */
 		hint() {
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * hint_safe <= hint
+		 * ```
+		 */
+		hint_safe() {
+			return this.hint()
 		}
 		
 		/**

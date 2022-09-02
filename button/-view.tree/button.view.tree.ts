@@ -57,7 +57,7 @@ namespace $ {
 		 * 	disabled <= disabled
 		 * 	role \button
 		 * 	tabindex <= tab_index
-		 * 	title <= hint
+		 * 	title <= hint_safe
 		 * ```
 		 */
 		attr() {
@@ -66,7 +66,7 @@ namespace $ {
 				disabled: this.disabled(),
 				role: "button",
 				tabindex: this.tab_index(),
-				title: this.hint()
+				title: this.hint_safe()
 			}
 		}
 		
@@ -153,6 +153,15 @@ namespace $ {
 		 */
 		hint() {
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * hint_safe <= hint
+		 * ```
+		 */
+		hint_safe() {
+			return this.hint()
 		}
 		
 		/**

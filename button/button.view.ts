@@ -50,6 +50,15 @@ namespace $.$$ {
 			return String( error.message ?? error )
 
 		}
+		
+		hint_safe() {
+			try {
+				return this.hint()
+			} catch( error ) {
+				$mol_fail_log( error )
+				return ''
+			}
+		}
 
 		sub_visible() {
 			return [

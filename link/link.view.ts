@@ -62,6 +62,15 @@ namespace $.$$ {
 			return this.external() ? '_blank' : '_self'
 		}
 
+		hint_safe() {
+			try {
+				return this.hint()
+			} catch( error ) {
+				$mol_fail_log( error )
+				return ''
+			}
+		}
+		
 	}
 	
 }

@@ -859,6 +859,7 @@ declare namespace $ {
         disabled(): boolean;
         tab_index(): number;
         hint(): string;
+        hint_safe(): string;
         error(): string;
     }
 }
@@ -979,6 +980,7 @@ declare namespace $.$$ {
         event_key_press(event: KeyboardEvent): void;
         tab_index(): number;
         error(): string;
+        hint_safe(): string;
         sub_visible(): ($mol_view_content | $mol_speck)[];
     }
 }

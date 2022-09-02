@@ -108,7 +108,7 @@ $mol_button $mol_view
 		disabled <= disabled false
 		role \button
 		tabindex <= tab_index 0
-		title <= hint \
+		title <= hint_safe <= hint \
 	sub /$mol_view_content
 		<= title
 	Speck $mol_speck
@@ -215,7 +215,7 @@ $mol_link $mol_view
 	attr *
 		^
 		href <= uri_toggle \
-		title <= hint \
+		title <= hint_safe <= hint \
 		target <= target \_self
 		download <= file_name \
 		mol_link_current <= current false
