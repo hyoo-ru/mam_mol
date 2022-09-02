@@ -4,7 +4,7 @@ $mol_link $mol_view
 	attr *
 		^
 		href <= uri_toggle \
-		title <= hint \
+		title <= hint_safe <= hint \
 		target <= target \_self
 		download <= file_name \
 		mol_link_current <= current false
