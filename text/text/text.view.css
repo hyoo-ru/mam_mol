@@ -24,6 +24,7 @@
 [mol_text_string] {
 	display: inline;
 	flex: 0 1 auto;
+	white-space: normal;
 }
 
 [mol_text_quote] {
@@ -97,6 +98,7 @@ h6[mol_text_header] {
 [mol_text_link] {
 	padding: 0;
 	display: inline;
+	white-space: nowrap;
 }
 
 [mol_text_link_http_icon],
