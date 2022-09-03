@@ -1607,7 +1607,7 @@ var $;
         if (left instanceof RegExp)
             return left.source === right['source'] && left.flags === right['flags'];
         if (left instanceof Error)
-            return left.stack === right['stack'];
+            return left.message === right['message'] && left.stack === right['stack'];
         let left_cache = $.$mol_compare_deep_cache.get(left);
         if (left_cache) {
             const right_cache = left_cache.get(right);
