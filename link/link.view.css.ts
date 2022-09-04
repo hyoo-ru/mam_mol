@@ -52,7 +52,7 @@ namespace $ {
 			}
 		},
 		
-		':active' {
+		':active': {
 			color: $mol_theme.focus,
 		},
 
