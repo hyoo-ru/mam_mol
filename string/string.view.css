@@ -15,7 +15,7 @@
 	background: transparent;
 	min-width: 0;
 	color: inherit;
-	background: var(--mol_theme_card);
+	background: var(--mol_theme_field);
 }
 
 [mol_string]:disabled:not(:placeholder-shown) {
@@ -24,13 +24,12 @@
 }
 
 [mol_string]:hover:where(:not(:disabled)) {
-	background: var(--mol_theme_hover);
+	box-shadow: inset 0 0 0 1px var(--mol_theme_line);
 }
 
 [mol_string]:focus {
 	outline: none;
 	z-index: 1;
-	background: var(--mol_theme_field);
 	color: var(--mol_theme_text);
 	box-shadow: inset 0 0 0 1px var(--mol_theme_focus);
 }
