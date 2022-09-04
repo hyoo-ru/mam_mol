@@ -23527,7 +23527,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/avatar/avatar.view.css", "[mol_avatar] {\n\tstroke-linecap: round;\n    stroke-width: 4px;\n    fill: none;\n    stroke: currentColor;\n\t/* width: 1.5rem;\n\theight: 1.5rem;\n\tmargin: 0 -.25rem; */\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n}\n");
+    $mol_style_attach("mol/avatar/avatar.view.css", "[mol_avatar] {\n\tstroke-linecap: round;\n\tstroke-width: 4.1px;\n\tfill: none;\n\tstroke: currentColor;\n\t/* width: 1.5rem;\n\theight: 1.5rem;\n\tmargin: 0 -.25rem; */\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n}\n");
 })($ || ($ = {}));
 //mol/avatar/-css/avatar.view.css.ts
 ;
@@ -23539,8 +23539,8 @@ var $;
         class $mol_avatar extends $.$mol_avatar {
             path() {
                 const id = $mol_hash_string(this.id());
-                const p = 2;
-                const m = 2.8;
+                const p = 2.1;
+                const m = 2.7;
                 let path = '';
                 for (let x = 0; x < 4; ++x) {
                     for (let y = 0; y < 8; ++y) {
