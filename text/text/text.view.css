@@ -83,7 +83,7 @@ h6[mol_text_header] {
 	width: 1.5rem;
 	display: inline-block;
 	position: absolute;
-	margin-left: -1.5rem;
+	margin-left: -1rem;
 }
 
 [mol_text_table_cell] {
