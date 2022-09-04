@@ -70,6 +70,10 @@ h6[mol_text_header] {
 	font-style: italic;
 }
 
+[mol_text_header_link] {
+	color: inherit;
+}
+
 [mol_text_list] {
 	padding-left: 1.5rem;
 }
