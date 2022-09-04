@@ -713,6 +713,7 @@ declare namespace $ {
         level_base(next?: $hyoo_crowd_peer_level): void;
         level(peer: $mol_int62_string, next?: $hyoo_crowd_peer_level): $hyoo_crowd_peer_level;
         lords(): readonly `${string}_${string}`[];
+        authors(): Set<`${string}_${string}`>;
         put(head: $mol_int62_string, self: $mol_int62_string, prev: $mol_int62_string, data: unknown): $hyoo_crowd_unit;
         wipe(unit: $hyoo_crowd_unit): $hyoo_crowd_unit;
         move(unit: $hyoo_crowd_unit, head: $mol_int62_string, prev: $mol_int62_string): $hyoo_crowd_unit;

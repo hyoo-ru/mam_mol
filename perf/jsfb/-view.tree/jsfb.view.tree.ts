@@ -300,7 +300,7 @@ namespace $ {
 		 * ```
 		 */
 		row_title(id: any, next?: any) {
-			return this.Row("0").title(next)
+			return this.Row(id).title(next)
 		}
 		
 		/**

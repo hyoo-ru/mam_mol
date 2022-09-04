@@ -3643,7 +3643,7 @@ var $;
             return "";
         }
         row_title(id, next) {
-            return this.Row("0").title(next);
+            return this.Row(id).title(next);
         }
         Row(id) {
             const obj = new this.$.$mol_perf_jsfb_row();

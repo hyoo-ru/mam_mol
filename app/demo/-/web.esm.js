@@ -2842,6 +2842,18 @@ var $;
             }
             return lords;
         }
+        authors() {
+            this.pub.promote();
+            const authors = new Set();
+            for (const unit of this._unit_all.values()) {
+                if (unit.kind() !== $hyoo_crowd_unit_kind.data)
+                    continue;
+                if (unit.data === null)
+                    continue;
+                authors.add(unit.auth);
+            }
+            return authors;
+        }
         put(head, self, prev, data) {
             this.join();
             const old_id = `${head}/${self}`;
