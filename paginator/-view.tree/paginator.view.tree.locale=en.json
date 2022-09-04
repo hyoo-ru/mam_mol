@@ -1,4 +1,4 @@
 {
-	"$mol_paginator_backward_hint": "Назад",
-	"$mol_paginator_forward_hint": "Вперёд"
+	"$mol_paginator_backward_hint": "Backward",
+	"$mol_paginator_forward_hint": "Forward"
 }

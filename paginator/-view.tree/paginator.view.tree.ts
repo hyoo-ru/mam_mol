@@ -19,7 +19,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * backward_hint @ \Назад
+		 * backward_hint @ \Backward
 		 * ```
 		 */
 		backward_hint() {
@@ -99,7 +99,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * forward_hint @ \Вперёд
+		 * forward_hint @ \Forward
 		 * ```
 		 */
 		forward_hint() {
