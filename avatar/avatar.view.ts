@@ -5,8 +5,8 @@ namespace $.$$ {
 		path() {
 			
 			const id = $mol_hash_string( this.id() )
-			const p = 2
-			const m = 2.8
+			const p = 2.1
+			const m = 2.7
 			
 			let path = ''
 			
