@@ -9095,7 +9095,7 @@ var $;
             view.dom_node().scrollIntoView({ block: align });
         }
         bring() {
-            new $mol_after_work(16, () => {
+            new $mol_after_work(150, () => {
                 this.focused(true);
                 this.dom_node().scrollIntoView({ behavior: 'smooth' });
             });
