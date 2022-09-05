@@ -44,5 +44,5 @@
 
 [mol_textarea_sidebar_showed] [mol_textarea_edit] {
 	left: 1.5rem;
-	width: calc( 100% - 1.75rem );
+	width: calc( 100% - 1.5rem );
 }
