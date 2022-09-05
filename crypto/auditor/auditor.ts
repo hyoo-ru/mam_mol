@@ -34,7 +34,7 @@ namespace $ {
 	export class $mol_crypto_auditor_public extends Object {
 		
 		/** Key size in bytes. */
-		static size = 91
+		static size = 86
 		
 		constructor(
 			readonly native: CryptoKey & { type: 'public' }
@@ -42,11 +42,18 @@ namespace $ {
 			super()
 		}
 		
-		static async from( serial: BufferSource ) {
+		static async from( serial: string ) {
 			return new this(
 				await $mol_crypto_native.subtle.importKey(
-					'spki',
-					serial,
+					'jwk',
+					{
+						crv: "P-256",
+						ext: true,
+						key_ops: ['verify'],
+						kty: "EC",
+						x: serial.slice( 0, 43 ),
+						y: serial.slice( 43, 86 ),
+					},
 					algorithm,
 					true,
 					[ 'verify' ],
@@ -55,11 +62,12 @@ namespace $ {
 		}
 		
 		/** 62 bytes */
-		async serial() {
-			return await $mol_crypto_native.subtle.exportKey(
-				'spki',
+		async serial(): Promise< string > {
+			const { x, y } = await $mol_crypto_native.subtle.exportKey(
+				'jwk',
 				this.native,
 			)
+			return x! + y!
 		}
 		
 		async verify( data: BufferSource, sign: BufferSource ) {
@@ -76,8 +84,8 @@ namespace $ {
 	/** Asymmetric signing private key wrapper with shortest payload */
 	export class $mol_crypto_auditor_private extends Object {
 		
-		/** Max key size in bytes. */
-		static size = 200
+		/** Key size in bytes. */
+		static size = 129
 		
 		constructor(
 			readonly native: CryptoKey & { type: 'private' }
@@ -85,11 +93,19 @@ namespace $ {
 			super()
 		}
 	
-		static async from( serial: BufferSource ) {
+		static async from( serial: string ) {
 			return new this(
 				await $mol_crypto_native.subtle.importKey(
-					'pkcs8',
-					serial,
+					'jwk',
+					{
+						crv: "P-256",
+						ext: true,
+						key_ops: ['sign'],
+						kty: "EC",
+						x: serial.slice( 0, 43 ),
+						y: serial.slice( 43, 86 ),
+						d: serial.slice( 86, 129 ),
+					},
 					algorithm,
 					true,
 					[ 'sign' ],
@@ -97,15 +113,16 @@ namespace $ {
 			)
 		}
 		
-		/** 190-200 bytes */
-		async serial() {
-			return await $mol_crypto_native.subtle.exportKey(
-				'pkcs8',
+		/** 129 bytes */
+		async serial(): Promise< string > {
+			const { x, y, d } = await $mol_crypto_native.subtle.exportKey(
+				'jwk',
 				this.native,
 			)
+			return x! + y! + d!
 		}
 		
-		/** 32 bytes */
+		/** 64 bytes */
 		async sign( data: BufferSource ) {
 			
 			return await $mol_crypto_native.subtle.sign(
@@ -116,9 +133,20 @@ namespace $ {
 			
 		}
 		
+		/** Makes public key from private */
+		async public() {
+			return await $mol_crypto_auditor_public.from(
+				$mol_crypto_auditor_private_to_public( await this.serial() )
+			)
+		}
+		
 	}
 	
 	/** Sign size in bytes. */
 	export const $mol_crypto_auditor_sign_size = 64
+	
+	export function $mol_crypto_auditor_private_to_public( serial: string ) {
+		return serial.slice( 0, 86 )
+	}
 	
 }

@@ -287,8 +287,8 @@ declare namespace $ {
         constructor(native: CryptoKey & {
             type: 'public';
         });
-        static from(serial: BufferSource): Promise<$mol_crypto_auditor_public>;
-        serial(): Promise<ArrayBuffer>;
+        static from(serial: string): Promise<$mol_crypto_auditor_public>;
+        serial(): Promise<string>;
         verify(data: BufferSource, sign: BufferSource): Promise<boolean>;
     }
     class $mol_crypto_auditor_private extends Object {
@@ -299,11 +299,13 @@ declare namespace $ {
         constructor(native: CryptoKey & {
             type: 'private';
         });
-        static from(serial: BufferSource): Promise<$mol_crypto_auditor_private>;
-        serial(): Promise<ArrayBuffer>;
+        static from(serial: string): Promise<$mol_crypto_auditor_private>;
+        serial(): Promise<string>;
         sign(data: BufferSource): Promise<ArrayBuffer>;
+        public(): Promise<$mol_crypto_auditor_public>;
     }
     const $mol_crypto_auditor_sign_size = 64;
+    function $mol_crypto_auditor_private_to_public(serial: string): string;
 }
 
 declare namespace $ {
@@ -315,13 +317,13 @@ declare namespace $ {
     }
     class $hyoo_crowd_peer extends Object {
         readonly key_public: $mol_crypto_auditor_public;
-        readonly key_public_serial: Uint8Array;
+        readonly key_public_serial: string;
         readonly key_private: $mol_crypto_auditor_private;
-        readonly key_private_serial: Uint8Array;
+        readonly key_private_serial: string;
         id: $mol_int62_string;
-        constructor(key_public: $mol_crypto_auditor_public, key_public_serial: Uint8Array, key_private: $mol_crypto_auditor_private, key_private_serial: Uint8Array);
+        constructor(key_public: $mol_crypto_auditor_public, key_public_serial: string, key_private: $mol_crypto_auditor_private, key_private_serial: string);
         static generate(): Promise<$hyoo_crowd_peer>;
-        static restore(public_serial: Uint8Array, private_serial: Uint8Array): Promise<$hyoo_crowd_peer>;
+        static restore(serial: string): Promise<$hyoo_crowd_peer>;
     }
 }
 

@@ -908,16 +908,24 @@ var $;
     $.$mol_crypto_auditor_pair = $mol_crypto_auditor_pair;
     class $mol_crypto_auditor_public extends Object {
         native;
-        static size = 91;
+        static size = 86;
         constructor(native) {
             super();
             this.native = native;
         }
         static async from(serial) {
-            return new this(await $mol_crypto_native.subtle.importKey('spki', serial, algorithm, true, ['verify']));
+            return new this(await $mol_crypto_native.subtle.importKey('jwk', {
+                crv: "P-256",
+                ext: true,
+                key_ops: ['verify'],
+                kty: "EC",
+                x: serial.slice(0, 43),
+                y: serial.slice(43, 86),
+            }, algorithm, true, ['verify']));
         }
         async serial() {
-            return await $mol_crypto_native.subtle.exportKey('spki', this.native);
+            const { x, y } = await $mol_crypto_native.subtle.exportKey('jwk', this.native);
+            return x + y;
         }
         async verify(data, sign) {
             return await $mol_crypto_native.subtle.verify(algorithm, this.native, sign, data);
@@ -926,23 +934,39 @@ var $;
     $.$mol_crypto_auditor_public = $mol_crypto_auditor_public;
     class $mol_crypto_auditor_private extends Object {
         native;
-        static size = 200;
+        static size = 129;
         constructor(native) {
             super();
             this.native = native;
         }
         static async from(serial) {
-            return new this(await $mol_crypto_native.subtle.importKey('pkcs8', serial, algorithm, true, ['sign']));
+            return new this(await $mol_crypto_native.subtle.importKey('jwk', {
+                crv: "P-256",
+                ext: true,
+                key_ops: ['sign'],
+                kty: "EC",
+                x: serial.slice(0, 43),
+                y: serial.slice(43, 86),
+                d: serial.slice(86, 129),
+            }, algorithm, true, ['sign']));
         }
         async serial() {
-            return await $mol_crypto_native.subtle.exportKey('pkcs8', this.native);
+            const { x, y, d } = await $mol_crypto_native.subtle.exportKey('jwk', this.native);
+            return x + y + d;
         }
         async sign(data) {
             return await $mol_crypto_native.subtle.sign(algorithm, this.native, data);
         }
+        async public() {
+            return await $mol_crypto_auditor_public.from($mol_crypto_auditor_private_to_public(await this.serial()));
+        }
     }
     $.$mol_crypto_auditor_private = $mol_crypto_auditor_private;
     $.$mol_crypto_auditor_sign_size = 64;
+    function $mol_crypto_auditor_private_to_public(serial) {
+        return serial.slice(0, 86);
+    }
+    $.$mol_crypto_auditor_private_to_public = $mol_crypto_auditor_private_to_public;
 })($ || ($ = {}));
 //mol/crypto/auditor/auditor.ts
 ;
@@ -968,20 +992,15 @@ var $;
             this.key_public_serial = key_public_serial;
             this.key_private = key_private;
             this.key_private_serial = key_private_serial;
-            this.id = $mol_int62_to_string($mol_int62_hash_buffer(this.key_public_serial));
+            this.id = $mol_int62_hash_string(this.key_public_serial);
         }
         static async generate() {
             const pair = await $$.$mol_crypto_auditor_pair();
-            const public_serial = new Uint8Array(await pair.public.serial());
-            const private_serial = new Uint8Array(await pair.private.serial());
-            return new this(pair.public, public_serial, pair.private, private_serial);
+            const serial = await pair.private.serial();
+            return new this(pair.public, $mol_crypto_auditor_private_to_public(serial), pair.private, serial);
         }
-        static async restore(public_serial, private_serial) {
-            const pair = {
-                public: await $$.$mol_crypto_auditor_public.from(public_serial),
-                private: await $$.$mol_crypto_auditor_private.from(private_serial),
-            };
-            return new this(pair.public, public_serial, pair.private, private_serial);
+        static async restore(serial) {
+            return new this(await $$.$mol_crypto_auditor_public.from(serial), $mol_crypto_auditor_private_to_public(serial), await $$.$mol_crypto_auditor_private.from(serial), serial);
         }
     }
     $.$hyoo_crowd_peer = $hyoo_crowd_peer;
@@ -2558,10 +2577,10 @@ var $;
                     case $hyoo_crowd_unit_kind.join: {
                         if (auth_unit)
                             return 'Already join';
-                        if (!(unit.data instanceof Uint8Array))
+                        if (typeof unit.data !== 'string')
                             return 'No join key';
                         const key_buf = unit.data;
-                        const self = $mol_int62_to_string($mol_int62_hash_buffer(key_buf));
+                        const self = $mol_int62_hash_string(key_buf);
                         if (unit.self !== self)
                             return 'Alien join key';
                         const key = await $mol_crypto_auditor_public.from(key_buf);
