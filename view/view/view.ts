@@ -453,8 +453,8 @@ namespace $ {
 		
 		bring() {
 			new $mol_after_work( 16, ()=> {
+				this.focused( true )
 				this.dom_node().scrollIntoView({ behavior : 'smooth' })
-				new $mol_after_timeout( 400, ()=> this.focused( true ) )
 			} )
 		}
 

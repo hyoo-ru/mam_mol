@@ -2006,7 +2006,7 @@ var $;
             new $mol_after_tick(() => {
                 const element = this.focused()[0];
                 if (element)
-                    element.focus();
+                    element.focus({ preventScroll: true });
                 else
                     $mol_dom_context.blur();
             });
@@ -2661,8 +2661,8 @@ var $;
         }
         bring() {
             new $mol_after_work(16, () => {
+                this.focused(true);
                 this.dom_node().scrollIntoView({ behavior: 'smooth' });
-                new $mol_after_timeout(400, () => this.focused(true));
             });
         }
     }
