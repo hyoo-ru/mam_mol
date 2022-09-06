@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export function $mol_wire_trans( next: any ) {
+	export function $mol_wire_easing( next: any ) {
 		
 		const atom = $mol_wire_auto()
 		if(!( atom instanceof $mol_wire_atom )) $mol_fail( new Error( 'Allowed only inside atom' ) )

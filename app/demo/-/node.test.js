@@ -30588,27 +30588,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_wire_trans(next) {
-        const atom = $mol_wire_auto();
-        if (!(atom instanceof $mol_wire_atom))
-            $mol_fail(new Error('Allowed only inside atom'));
-        const prev = atom.result() ?? next;
-        if (typeof prev !== 'number')
-            return next;
-        const current = (prev * 2 + next) / 3;
-        const diff = Math.abs(current - next);
-        if (diff < 1)
-            return next;
-        $mol_state_time.now(0);
-        return current;
-    }
-    $.$mol_wire_trans = $mol_wire_trans;
-})($ || ($ = {}));
-//mol/wire/trans/trans.ts
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_wire_patch(obj) {
         for (const field of Reflect.ownKeys(obj)) {
             const descr = Reflect.getOwnPropertyDescriptor(obj, field);

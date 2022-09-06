@@ -31,6 +31,7 @@ Auto wiring modules. It gives ability to:
 
 ### Functions
 
+- [$mol_wire_easing](https://github.com/hyoo-ru/mam_mol/tree/master/wire/easing) - transition atom value
 - [$mol_wire_probe](https://github.com/hyoo-ru/mam_mol/tree/master/wire/probe) - run code without state changes
 - [$mol_wire_solid](https://github.com/hyoo-ru/mam_mol/tree/master/wire/solid) - make current fiber immortal
 
