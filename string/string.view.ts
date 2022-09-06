@@ -31,14 +31,15 @@ namespace $.$$ {
 		}
 		
 		selection_change( event: Event ) {
-			const prev = $mol_wire_probe( ()=> this.selection() ) ?? [ 0, 0 ]
+			
 			const el = this.dom_node() as HTMLInputElement
-			const next = [
+			if( el !== this.$.$mol_dom_context.document.activeElement ) return
+			
+			this.selection([
 				el.selectionStart!,
 				el.selectionEnd!,
-			]
-			if( $mol_compare_deep( prev, next ) ) return
-			this.selection( next )
+			])
+			
 		}
 		
 		selection_start() {

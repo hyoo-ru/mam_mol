@@ -6024,6 +6024,7 @@ declare namespace $ {
         before(id: any): readonly any[];
         after(id: any): readonly any[];
         row_ids(next?: any): readonly any[];
+        render_over(): number;
         Row(id: any): $mol_view;
         Before(id: any): $mol_view;
         After(id: any): $mol_view;
