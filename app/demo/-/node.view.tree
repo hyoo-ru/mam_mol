@@ -582,7 +582,7 @@ $hyoo_crowd_app_peer $mol_page
 				\
 				\| | ~~Alive~~ | ~~Dead~~ | ~~Total~~
 				\|--|--|--
-				\| ~~Tokens~~ | {tokens:alive} | {tokens:dead} | {tokens:total}
+				\| ~~Units~~ | {units:alive} | {units:dead} | {units:total}
 				\
 				\| | ~~Now~~ | ~~Sync~~
 				\|--|--|--
