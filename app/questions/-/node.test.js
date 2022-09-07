@@ -6952,7 +6952,7 @@ var $;
                 src: this.uri(),
                 srcdoc: this.html(),
                 allow: this.allow(),
-                allowFullscreen: this.fullscreen()
+                allowfullscreen: this.fullscreen()
             };
         }
         accelerometer() {

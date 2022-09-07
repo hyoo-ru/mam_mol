@@ -19,7 +19,7 @@ namespace $ {
 		 * 	src <= uri?val
 		 * 	srcdoc <= html
 		 * 	allow <= allow
-		 * 	allowFullscreen <= fullscreen
+		 * 	allowfullscreen <= fullscreen
 		 * ```
 		 */
 		attr() {
@@ -30,7 +30,7 @@ namespace $ {
 				src: this.uri(),
 				srcdoc: this.html(),
 				allow: this.allow(),
-				allowFullscreen: this.fullscreen()
+				allowfullscreen: this.fullscreen()
 			}
 		}
 		

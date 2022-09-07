@@ -2017,7 +2017,7 @@ declare namespace $ {
             src: string;
             srcdoc: any;
             allow: string;
-            allowFullscreen: boolean;
+            allowfullscreen: boolean;
         };
         accelerometer(): boolean;
         autoplay(): boolean;

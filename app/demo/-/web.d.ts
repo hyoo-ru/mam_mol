@@ -217,6 +217,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    let $mol_compare_deep_cache: WeakMap<any, WeakMap<any, boolean>>;
+    function $mol_compare_deep<Value>(left: Value, right: Value): boolean;
+}
+
+declare namespace $ {
     class $hyoo_crowd_list extends $hyoo_crowd_node {
         list(next?: readonly unknown[]): readonly unknown[];
         set(next?: ReadonlySet<string | number | boolean | null>): Set<unknown>;
@@ -644,11 +649,6 @@ declare namespace $ {
         sync(): Awaited<Result>;
         async(): Promise<Result>;
     }
-}
-
-declare namespace $ {
-    let $mol_compare_deep_cache: WeakMap<any, WeakMap<any, boolean>>;
-    function $mol_compare_deep<Value>(left: Value, right: Value): boolean;
 }
 
 declare namespace $ {
@@ -2715,7 +2715,7 @@ declare namespace $ {
             src: string;
             srcdoc: any;
             allow: string;
-            allowFullscreen: boolean;
+            allowfullscreen: boolean;
         };
         accelerometer(): boolean;
         autoplay(): boolean;

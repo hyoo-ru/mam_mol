@@ -327,7 +327,7 @@ $mol_frame $mol_embed_native
 		src <= uri?val \
 		srcdoc <= html null
 		allow <= allow \
-		allowFullscreen <= fullscreen true
+		allowfullscreen <= fullscreen true
 	accelerometer true
 	autoplay true
 	encription true
