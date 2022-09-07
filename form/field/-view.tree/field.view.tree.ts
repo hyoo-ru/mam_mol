@@ -27,13 +27,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * content / <= control
+		 * Content <= control
 		 * ```
 		 */
-		content() {
-			return [
-				this.control()
-			] as readonly any[]
+		Content() {
+			return this.control()
 		}
 		
 		/**

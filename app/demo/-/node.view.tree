@@ -2196,8 +2196,7 @@ $mol_form_field $mol_labeler
 		<= name \
 		<= Bid $mol_view
 			sub / <= bid \
-	content /
-		<= control null
+	Content <= control null
 
 $mol_form $mol_list
 	submit_blocked false
