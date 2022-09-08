@@ -1233,7 +1233,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_server extends $mol_object {
         express(): import("express-serve-static-core").Express;
-        http(): import("http").Server;
+        http(): import("http").Server<typeof import("http").IncomingMessage, typeof import("http").ServerResponse>;
         connections: Set<import("ws")>;
         socket(): import("ws").Server<import("ws").WebSocket>;
         expressHandlers(): any[];
