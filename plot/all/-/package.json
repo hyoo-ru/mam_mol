@@ -1,6 +1,6 @@
 {
   "name": "mol_plot_all",
-  "version": "1.2.345",
+  "version": "1.2.346",
   "main": "node.js",
   "module": "node.esm.js",
   "browser": "web.js",
