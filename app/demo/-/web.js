@@ -17901,18 +17901,26 @@ var $;
                 return `${this.align_vert()}_${this.align_hor()}`;
             }
             align_vert() {
-                const viewport = this.$.$mol_window.size();
+                const viewport = this.view_port();
                 const rect_bubble = this.view_rect();
                 if (!rect_bubble)
                     return 'suspense';
-                return rect_bubble.top > (viewport.height - rect_bubble.bottom) ? 'top' : 'bottom';
+                return rect_bubble.top > (viewport.top + viewport.height - rect_bubble.bottom) ? 'top' : 'bottom';
             }
             align_hor() {
-                const viewport = this.$.$mol_window.size();
+                const viewport = this.view_port();
                 const rect_bubble = this.view_rect();
                 if (!rect_bubble)
                     return 'suspense';
-                return rect_bubble.left > (viewport.width - rect_bubble.right) ? 'left' : 'right';
+                return rect_bubble.left > (viewport.left + viewport.width - rect_bubble.right) ? 'left' : 'right';
+            }
+            View_port() {
+                const view = new $mol_view;
+                view.dom_node(this.dom_node().offsetParent);
+                return view;
+            }
+            view_port() {
+                return this.View_port().view_rect() ?? { ...this.$.$mol_window.size(), left: 0, top: 0 };
             }
         }
         __decorate([
@@ -17933,6 +17941,12 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_pop.prototype, "align_hor", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "View_port", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "view_port", null);
         $$.$mol_pop = $mol_pop;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
