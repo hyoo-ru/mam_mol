@@ -4588,7 +4588,7 @@ var $;
         async ensure_visible(view, align = "start") {
             const path = this.view_find(v => v === view).next().value;
             this.force_render(new Set(path));
-            $mol_wire_fiber.sync();
+            this.dom_final();
             view.dom_node().scrollIntoView({ block: align });
         }
         bring() {
