@@ -6687,21 +6687,28 @@ var $;
             }
             align_vert() {
                 const viewport = this.view_port();
-                const rect_bubble = this.view_rect();
-                if (!rect_bubble)
+                const rect_pop = this.view_rect();
+                if (!rect_pop)
                     return 'suspense';
-                return rect_bubble.top > (viewport.top + viewport.height - rect_bubble.bottom) ? 'top' : 'bottom';
+                return rect_pop.top > (viewport.top + viewport.height / 2) ? 'top' : 'bottom';
             }
             align_hor() {
                 const viewport = this.view_port();
-                const rect_bubble = this.view_rect();
-                if (!rect_bubble)
+                const rect_pop = this.view_rect();
+                if (!rect_pop)
                     return 'suspense';
-                return rect_bubble.left > (viewport.left + viewport.width - rect_bubble.right) ? 'left' : 'right';
+                return rect_pop.left > (viewport.left + viewport.width / 2) ? 'left' : 'right';
             }
             View_port() {
                 const view = new $mol_view;
-                view.dom_node(this.dom_node().offsetParent);
+                view.dom_node = () => {
+                    let node = this.dom_node();
+                    while (node = node.offsetParent) {
+                        if (this.$.$mol_dom_context.getComputedStyle(node).overflow !== 'visible')
+                            return node;
+                    }
+                    return this.$.$mol_dom_context.document.documentElement;
+                };
                 return view;
             }
             view_port() {

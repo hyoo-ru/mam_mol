@@ -283,7 +283,6 @@ namespace $ {
 		 * ```tree
 		 * Options_pop $mol_pick
 		 * 	hint \Click to show options menu
-		 * 	align \bottom_left
 		 * 	trigger_content <= options_trigger_content
 		 * 	bubble_content <= options_bubble_content
 		 * ```
@@ -293,7 +292,6 @@ namespace $ {
 			const obj = new this.$.$mol_pick()
 			
 			obj.hint = () => "Click to show options menu"
-			obj.align = () => "bottom_left"
 			obj.trigger_content = () => this.options_trigger_content()
 			obj.bubble_content = () => this.options_bubble_content()
 			

@@ -3200,7 +3200,6 @@ $mol_pick_demo $mol_example_small
 		- 3. Options Pop-up example
 		<= Options_pop $mol_pick
 			hint \Click to show options menu
-			align \bottom_left
 			trigger_content <= options_trigger_content /
 				<= options_trigger $mol_icon_dots_vertical
 			bubble_content <= options_bubble_content /
