@@ -10,15 +10,17 @@ namespace $ {
 			
 			if( perm === 'granted' ) return true
 			
-			perm = $mol_fiber_sync( ()=>
-				new Promise< NotificationPermission >( done =>
-					Notification.requestPermission( perm => {
-						done( perm )
-					} )
-				)
-			)()
+			perm = $mol_wire_sync( this ).request_permissions()
 			
 			return perm === 'granted'
+		}
+		
+		static async request_permissions() {
+			return new Promise< NotificationPermission >( done =>
+				Notification.requestPermission( perm => {
+					done( perm )
+				} )
+			)
 		}
 		
 		@ $mol_action
