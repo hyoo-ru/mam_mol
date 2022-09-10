@@ -291,11 +291,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * chat_seed* \
+		 * chat_seed* \p9zx0v_nsmx1d
 		 * ```
 		 */
 		chat_seed(id: any) {
-			return ""
+			return "p9zx0v_nsmx1d"
 		}
 		
 		/**
@@ -632,11 +632,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * chat_seed \
+		 * chat_seed \0_0
 		 * ```
 		 */
 		chat_seed() {
-			return ""
+			return "0_0"
 		}
 		
 		/**

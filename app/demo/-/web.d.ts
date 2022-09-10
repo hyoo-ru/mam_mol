@@ -8460,7 +8460,6 @@ declare namespace $.$$ {
         names_demo(): string[];
         blocks(): $mol_view[];
         Demo(): $mol_example;
-        chat_seed(id: string): string;
         logo_uri(): string;
         source_link(): string;
         name_parse(name: string): {

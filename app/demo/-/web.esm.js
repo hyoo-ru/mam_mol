@@ -16960,13 +16960,13 @@ var $;
             standalone() {
                 const seed = this.seed();
                 const origin = new URL(this.$.$mol_state_arg.href()).origin;
-                return `https://talks.hyoo.ru/#!chat=${encodeURIComponent(origin + '/' + seed)}`;
+                return `https://talks.hyoo.ru/#!chat=${seed}`;
             }
             embed() {
                 const seed = this.seed();
                 const lights = String(this.$.$mol_lights());
                 const embed = this.$.$mol_state_arg.href();
-                return `https://talks.hyoo.ru/#!chat=${encodeURIComponent(seed)}/embed=${encodeURIComponent(embed)}/mol_lights=${lights}`;
+                return `https://talks.hyoo.ru/#!chat=${encodeURIComponent(seed)}/mol_lights=${lights}`;
             }
         }
         __decorate([
@@ -32160,7 +32160,7 @@ var $;
             ];
         }
         chat_seed(id) {
-            return "";
+            return "p9zx0v_nsmx1d";
         }
         detail_description() {
             return "";
@@ -32341,7 +32341,7 @@ var $;
             return obj;
         }
         chat_seed() {
-            return "";
+            return "0_0";
         }
         chat_pages() {
             return this.Chat().pages();
@@ -32747,9 +32747,6 @@ var $;
             }
             Demo() {
                 return this.Widget(this.selected());
-            }
-            chat_seed(id) {
-                return '#!demo=' + id;
             }
             logo_uri() {
                 return $mol_file.relative('/mol/logo/logo.svg').path();

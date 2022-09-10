@@ -4037,7 +4037,7 @@ $mol_app_demo $mol_book2
 				uri <= sources_uri \https://github.com/hyoo-ru/mam_mol/
 			<= Lights $mol_lights_toggle
 	Detail* $mol_app_demo_detail
-		chat_seed <= chat_seed* \
+		chat_seed <= chat_seed* \p9zx0v_nsmx1d
 		chat_pages => chat_pages*
 		title <= detail_title
 		description <= detail_description \
@@ -4083,7 +4083,7 @@ $mol_app_demo_detail $mol_page
 				<= readme_icon $mol_icon_information_outline
 		<= Chat $mol_chat
 			pages => chat_pages
-			seed <= chat_seed \
+			seed <= chat_seed \0_0
 		<= Edit $mol_link
 			hint <= edit_hint @ \Edit this demo in studio
 			sub /
