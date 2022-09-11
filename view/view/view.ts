@@ -452,9 +452,9 @@ namespace $ {
 		}
 		
 		bring() {
-			new $mol_after_work( 150, ()=> {
+			new $mol_after_frame( ()=> {
+				this.dom_node().scrollIntoView()
 				this.focused( true )
-				this.dom_node().scrollIntoView({ behavior : 'smooth' })
 			} )
 		}
 
