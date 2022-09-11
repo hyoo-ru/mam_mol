@@ -19,7 +19,7 @@ namespace $ {
 				
 				const element = this.focused()![0] as HTMLElement
 				
-				if( element ) element.focus({ preventScroll: true })
+				if( element ) element.focus()
 				else $mol_dom_context.blur()
 				
 			} )

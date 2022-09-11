@@ -81,7 +81,6 @@
     "$mol_dom_render_fields",
     "$mol_func_name",
     "$mol_func",
-    "$mol_after_work",
     "$mol_type_pick",
     "$mol_type_keys_extract",
     "$mol_type_keys",
