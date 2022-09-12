@@ -3746,7 +3746,7 @@ var $;
     $.$mol_syntax2_md_flow = new $mol_syntax2({
         'quote': /^((?:(?:> )(?:[^]*?)$(\r?\n?))+)([\n\r]*)/,
         'header': /^(#+)(\s+)(.*?)$([\n\r]*)/,
-        'list': /^((?:(?:\s?[*+-]|\d+\.) +(?:[^]*?)$(?:\r?\n?)(?:(?:  |\t)(?:[^]*?)$(?:\r?\n?))*)+)((?:\r?\n)*)/,
+        'list': /^((?:(?: ?[*+-]|\d+\.) +(?:[^]*?)$(?:\r?\n?)(?:  (?:[^]*?)$(?:\r?\n?))*)+)((?:\r?\n)*)/,
         'code': /^(```\s*)([\w.-]*)[\r\n]+([^]*?)^(```)$([\n\r]*)/,
         'code-indent': /^((?:(?:  |\t)(?:[^]*?)$([\n\r]*))+)/,
         'table': /((?:^\|.+?$\r?\n)+)([\n\r]*)/,
@@ -7261,7 +7261,7 @@ var $;
                 return this.flow_tokens()[index].chunks[0].replace(/^> /mg, '');
             }
             list_text(index) {
-                return this.flow_tokens()[index].chunks[0].replace(/^([-*+ ]|\d+\.)/mg, '');
+                return this.flow_tokens()[index].chunks[0].replace(/^([-*+ ]|\d+\.) ?/mg, '').replace(/^  /mg, '');
             }
             cell_content(indexBlock) {
                 return this.flow_tokens()[indexBlock].chunks[0]
