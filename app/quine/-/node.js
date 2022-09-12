@@ -7562,7 +7562,7 @@ var $;
                 return this.flow_tokens()[index].chunks[0].replace(/^> /mg, '');
             }
             list_text(index) {
-                return this.flow_tokens()[index].chunks[0].replace(/^([-*+ ]|\d+\.) /mg, '');
+                return this.flow_tokens()[index].chunks[0].replace(/^([-*+ ]|\d+\.)/mg, '');
             }
             cell_content(indexBlock) {
                 return this.flow_tokens()[indexBlock].chunks[0]

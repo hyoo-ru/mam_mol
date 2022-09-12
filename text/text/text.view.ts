@@ -63,7 +63,7 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		list_text( index : number ) {
-			return this.flow_tokens()[ index ].chunks[0].replace( /^([-*+ ]|\d+\.) /mg , '' )
+			return this.flow_tokens()[ index ].chunks[0].replace( /^([-*+ ]|\d+\.)/mg , '' )
 		}
 		
 		@ $mol_mem_key
