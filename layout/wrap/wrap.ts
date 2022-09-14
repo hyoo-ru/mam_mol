@@ -8,12 +8,11 @@ namespace $ {
 		down() {
 			
 			const limit = this.limit()
-			const items = this.items
 
-			this.ortho.items = []
+			this.ortho.kids = []
 
 			let index = 0
-			all: while( index < items.length ) {
+			all: while( index < this.kids.length ) {
 
 				const group = $mol_layout_flex.make({
 					pos: this.pos,
@@ -21,9 +20,9 @@ namespace $ {
 					ortho: $mol_layout_stack.make({})
 				})
 
-				group: while( index < items.length ) {
+				group: while( index < this.kids.length ) {
 
-					const line = [] as typeof items
+					const line = [] as typeof this.kids
 					let frag: $mol_layout
 					let ind = index
 					let line_min = 0
@@ -34,13 +33,13 @@ namespace $ {
 
 					line: while( true ) {
 						
-						frag = items[ ind ]
+						frag = this.kids[ ind ]
 						line.push( frag )
 						line_min = Math.max( line_min, frag.min )
 						line_max += frag.max
 
 						++ ind
-						const next = items[ ind ]
+						const next = this.kids[ ind ]
 						if( !next ) break
 
 						break_after = frag.break_after()
@@ -58,14 +57,14 @@ namespace $ {
 
 					group.max += line_max
 					
-					if( group.items.length > 0 ) {
+					if( group.kids.length > 0 ) {
 						if( group.max > limit ) break group
 					}
 
 					group.min = Math.max( group.min , line_min )
 
-					group.items.push( ... line )
-					group.ortho!.items.push( ... line.map( frag => frag.ortho! ) )
+					group.kids.push( ... line )
+					group.ortho!.kids.push( ... line.map( frag => frag.ortho! ) )
 					index += line.length
 
 					if( break_after === $mol_layout_break.force ) break group
@@ -75,7 +74,7 @@ namespace $ {
 
 				group.down()
 				
-				this.ortho.items.push( group.ortho! )
+				this.ortho.kids.push( group.ortho! )
 
 			}
 

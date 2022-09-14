@@ -13,10 +13,10 @@
 		<script>
 			
 			const root = document.getElementById('root')
-			const words = Array.from( { length: 1000 }, (_,i)=> String( i ) + ' ' )
 			
-			const widgets = words.map( text => {
+			const widgets_left = Array.from( { length: 100 }, (_,i) => {
 				
+				const text = i + ' '
 				const width = Math.ceil( $mol_font_measure( '1rem sans-serif', text ) )
 				
 				const layout = $mol_layout.make({
@@ -33,8 +33,34 @@
 				
 			} )
 			
-			const layout = $mol_layout_wrap.make({
-				items: widgets.map( w => w.layout ),
+			const widgets_right = Array.from( { length: 200 }, (_,i) => {
+				
+				const text = i + ' '
+				const width = Math.ceil( $mol_font_measure( '1rem sans-serif', text ) )
+				
+				const layout = $mol_layout.make({
+					min: width,
+					max: width,
+					ortho: $mol_layout.make({
+						min: 16,
+						max: 16,
+						base: 12,
+					}),
+				})
+				
+				return { layout, text }
+				
+			} )
+			
+			const layout = $mol_layout_row.make({
+				kids: [
+					$mol_layout_wrap.make({
+						kids: widgets_left.map( w => w.layout ),
+					}), 
+					$mol_layout_wrap.make({
+						kids: widgets_right.map( w => w.layout ),
+					}),
+				],
 			})
 			
 			function reflow() {
@@ -49,7 +75,15 @@
 				layout.fresh()
 				
 				const context = root.getContext('2d')
-				for( const widget of widgets ) {
+				
+				for( const widget of widgets_left ) {
+					context.font = '1rem sans-serif'
+					const x = widget.layout
+					const y = x.ortho
+					context.fillText( widget.text, x.pos, y.pos + y.base, x.size )
+				}
+				
+				for( const widget of widgets_right ) {
 					context.font = '1rem sans-serif'
 					const x = widget.layout
 					const y = x.ortho

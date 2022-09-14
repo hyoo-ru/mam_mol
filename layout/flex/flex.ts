@@ -8,12 +8,12 @@ namespace $ {
 			let min = this.padding()
 			let max = min
 
-			for( const item of this.items ) {
+			for( const kid of this.kids ) {
 				
-				item.up()
+				kid.up()
 				
-				min += item.min
-				max += item.max
+				min += kid.min
+				max += kid.max
 				
 			}
 
@@ -35,10 +35,10 @@ namespace $ {
 				let mult = diff / min
 				if( !Number.isFinite( mult ) ) mult = 0
 				
-				for( const item of this.items ) {
-					item.pos = pos
-					pos += item.size = Math.min( limit , item.min + Math.floor( item.shrink() * mult ) )
-					item.down()
+				for( const kid of this.kids ) {
+					kid.pos = pos
+					pos += kid.size = Math.min( limit , kid.min + Math.floor( kid.shrink() * mult ) )
+					kid.down()
 				}
 
 			} else if( diff > 0 ) { // grow
@@ -46,18 +46,18 @@ namespace $ {
 				let mult = diff / this.grow()
 				if( !Number.isFinite( mult ) ) mult = 0
 				
-				for( const item of this.items ) {
-					item.pos = pos
-					pos += item.size = item.min + Math.floor( item.grow() * mult )
-					item.down()
+				for( const kid of this.kids ) {
+					kid.pos = pos
+					pos += kid.size = kid.min + Math.floor( kid.grow() * mult )
+					kid.down()
 				}
 				
 			} else { // fit
 				
-				for( const item of this.items ) {
-					item.pos = pos
-					pos += item.size = item.min
-					item.down()
+				for( const kid of this.kids ) {
+					kid.pos = pos
+					pos += kid.size = kid.min
+					kid.down()
 				}
 
 			}
