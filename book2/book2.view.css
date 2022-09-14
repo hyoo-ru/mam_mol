@@ -23,7 +23,7 @@
 	max-width: 100%;
 	flex-shrink: 0;
 }
-[mol_book2] > * + *:before {
+[mol_book2] > * + *:not([mol_book2_placeholder]):before {
 	display: block;
 	content: '≡';
 	opacity: .5;
