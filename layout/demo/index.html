@@ -74,16 +74,15 @@
 				layout.fresh()
 				
 				const context = root.getContext('2d')
+				context.font = '1rem sans-serif'
 				
 				for( const widget of widgets_left ) {
-					context.font = '1rem sans-serif'
 					const x = widget.layout
 					const y = x.ortho
 					context.fillText( widget.text, x.pos, y.pos + y.base, x.size )
 				}
 				
 				for( const widget of widgets_right ) {
-					context.font = '1rem sans-serif'
 					const x = widget.layout
 					const y = x.ortho
 					context.fillText( widget.text, x.pos, y.pos + y.base, x.size )
