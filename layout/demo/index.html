@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<style>
+			body {
+				margin: 0;
+				/* contain: strict; */
+			}
+		</style>
+	</head>
+	<body>
+		<script src="-/web.js"></script>
+		<canvas id="root"></canvas>
+		<script>
+			
+			const root = document.getElementById('root')
+			const words = Array.from( { length: 1000 }, (_,i)=> String( i ) + ' ' )
+			
+			const widgets = words.map( text => {
+				
+				const width = Math.ceil( $mol_font_measure( '1rem sans-serif', text ) )
+				
+				const layout = $mol_layout.make({
+					min: width,
+					max: width,
+					ortho: $mol_layout.make({
+						min: 16,
+						max: 16,
+						base: 12,
+					}),
+				})
+				
+				return { layout, text }
+				
+			} )
+			
+			const layout = $mol_layout_wrap.make({
+				items: widgets.map( w => w.layout ),
+			})
+			
+			function reflow() {
+				
+				root.width = window.innerWidth * devicePixelRatio
+				root.height = window.innerHeight * devicePixelRatio
+				root.style.zoom = 1/devicePixelRatio
+				
+				layout.size = window.innerWidth * devicePixelRatio
+				layout.ortho.size = window.innerHeight * devicePixelRatio
+			
+				layout.fresh()
+				
+				const context = root.getContext('2d')
+				for( const widget of widgets ) {
+					context.font = '1rem sans-serif'
+					const x = widget.layout
+					const y = x.ortho
+					context.fillText( widget.text, x.pos, y.pos + y.base, x.size )
+				}
+				
+			}
+			
+			reflow()
+			window.onresize = reflow
+			
+		</script>
+	</body>
+</html>
