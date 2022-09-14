@@ -4287,7 +4287,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_font_measure(size: number, face: string, text: string): number;
+    function $mol_font_measure(font: string, text: string): number;
 }
 
 declare namespace $ {

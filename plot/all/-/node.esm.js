@@ -5217,9 +5217,9 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_font_measure(size, face, text) {
+    function $mol_font_measure(font, text) {
         const canvas = $mol_font_canvas();
-        canvas.font = size + 'px ' + face;
+        canvas.font = font;
         return canvas.measureText(text).width;
     }
     $.$mol_font_measure = $mol_font_measure;
@@ -5243,7 +5243,7 @@ var $;
                 return `${this.width()}px`;
             }
             width() {
-                return $mol_font_measure(this.font_size(), this.font_family(), this.text());
+                return $mol_font_measure(this.font_size() + 'px ' + this.font_family(), this.text());
             }
             box_pos_x() {
                 const align = this.align();
