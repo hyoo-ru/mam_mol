@@ -7,9 +7,9 @@ namespace $ {
 			
 			let base = 0
 			
-			for( const item of this.items ) {
-				item.up()
-				base = Math.max( base , item.base )
+			for( const kid of this.kids ) {
+				kid.up()
+				base = Math.max( base , kid.base )
 			}
 			
 			this.base = base + this.before()
@@ -17,12 +17,12 @@ namespace $ {
 			let min = 0
 			let max = 0
 			
-			for( const item of this.items ) {
+			for( const kid of this.kids ) {
 				
-				const shift = base - item.base
+				const shift = base - kid.base
 				
-				min = Math.max( min , item.min + shift )
-				max = Math.max( max , item.max + shift )
+				min = Math.max( min , kid.min + shift )
+				max = Math.max( max , kid.max + shift )
 				
 			}
 
@@ -41,15 +41,15 @@ namespace $ {
 			
 			let size = 0
 			
-			for( const item of this.items ) {
+			for( const kid of this.kids ) {
 				
-				const shift = base - item.base
-				item.pos = pos + shift
-				item.size = Math.min( item.max, limit )
+				const shift = base - kid.base
+				kid.pos = pos + shift
+				kid.size = Math.min( kid.max, limit )
 				
-				item.down()
+				kid.down()
 				
-				size = Math.max( size , item.size + shift )
+				size = Math.max( size , kid.size + shift )
 				
 			}
 			
