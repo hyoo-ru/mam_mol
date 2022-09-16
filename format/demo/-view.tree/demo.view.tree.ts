@@ -30,6 +30,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\$mol_format
+		 * 	\$mol_string
+		 * 	\$mol_phone
+		 * 	\input
+		 * ```
+		 */
+		tags() {
+			return [
+				"$mol_format",
+				"$mol_string",
+				"$mol_phone",
+				"input"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * ip? \
 		 * ```
 		 */

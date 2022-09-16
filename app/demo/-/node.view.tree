@@ -2470,6 +2470,11 @@ $mol_format_demo $mol_example_small
 				value? <=> moment? \
 			<= Moment_out $mol_card
 				title <= moment
+	tags /
+		\$mol_format
+		\$mol_string
+		\$mol_phone
+		\input
 
 $mol_frame_demo $mol_example_large
 	sub /

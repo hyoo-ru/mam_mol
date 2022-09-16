@@ -5915,6 +5915,7 @@ declare namespace $ {
     class $mol_format_demo extends $mol_example_small {
         title(): string;
         sub(): readonly any[];
+        tags(): readonly any[];
         ip(next?: any): string;
         Ip_in(): $$.$mol_format;
         Ip_out(): $$.$mol_card;
