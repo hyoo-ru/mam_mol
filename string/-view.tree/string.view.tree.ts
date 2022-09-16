@@ -40,12 +40,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * selection?val /number
+		 * 	0
+		 * 	0
 		 * ```
 		 */
 		@ $mol_mem
 		selection(val?: any) {
 			if ( val !== undefined ) return val as never
 			return [
+				0,
+				0
 			] as readonly number[]
 		}
 		

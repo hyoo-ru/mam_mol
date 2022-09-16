@@ -5837,6 +5837,104 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_format extends $mol_string {
+        allow(): string;
+        hint(): string;
+        mask(id: any): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_format extends $.$mol_format {
+        selection([from, to]?: [number, number]): number[];
+        value_changed(next?: string): string;
+        event_change(next?: InputEvent): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_phone extends $mol_format {
+        mask(id: any): string;
+    }
+}
+
+declare namespace $.$$ {
+    const $mol_phone_formats: {
+        '': string;
+        '1': string;
+        '27': string;
+        '212': string;
+        '253': string;
+        '254': string;
+        '30': string;
+        '31': string;
+        '32': string;
+        '33': string;
+        '34': string;
+        '36': string;
+        '351': string;
+        '353': string;
+        '354': string;
+        '358': string;
+        '380': string;
+        '39': string;
+        '40': string;
+        '41': string;
+        '44': string;
+        '45': string;
+        '46': string;
+        '47': string;
+        '48': string;
+        '49': string;
+        '52': string;
+        '60': string;
+        '61': string;
+        '63': string;
+        '64': string;
+        '65': string;
+        '66': string;
+        '7': string;
+        '81': string;
+        '82': string;
+        '86': string;
+        '90': string;
+        '91': string;
+        '92': string;
+        '94': string;
+        '98': string;
+    };
+    class $mol_phone extends $.$mol_phone {
+        mask(val: string): any;
+    }
+}
+
+declare namespace $ {
+    class $mol_format_demo extends $mol_example_small {
+        title(): string;
+        sub(): readonly any[];
+        ip(next?: any): string;
+        Ip_in(): $$.$mol_format;
+        Ip_out(): $$.$mol_card;
+        Ip(): $$.$mol_list;
+        phone(next?: any): string;
+        Phone_in(): $$.$mol_phone;
+        Phone_out(): $$.$mol_card;
+        Phone(): $$.$mol_list;
+        card(next?: any): string;
+        Card_in(): $$.$mol_format;
+        Card_out(): $$.$mol_card;
+        Card(): $$.$mol_list;
+        moment(next?: any): string;
+        Moment_in(): $$.$mol_format;
+        Moment_out(): $$.$mol_card;
+        Moment(): $$.$mol_list;
+    }
+}
+
+declare namespace $ {
     class $mol_frame_demo extends $mol_example_large {
         sub(): readonly any[];
         tags(): readonly any[];

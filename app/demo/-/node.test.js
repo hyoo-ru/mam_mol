@@ -7955,7 +7955,10 @@ var $;
         selection(val) {
             if (val !== undefined)
                 return val;
-            return [];
+            return [
+                0,
+                0
+            ];
         }
         auto() {
             return [
@@ -8097,7 +8100,7 @@ var $;
             event_change(next) {
                 if (!next)
                     return;
-                this.value(next.target.value);
+                this.value_changed(next.target.value);
                 this.selection_change(next);
             }
             hint_visible() {
@@ -8116,10 +8119,12 @@ var $;
                 const el = this.dom_node();
                 if (el !== this.$.$mol_dom_context.document.activeElement)
                     return;
-                this.selection([
+                const [from, to] = this.selection([
                     el.selectionStart,
                     el.selectionEnd,
                 ]);
+                el.selectionEnd = to;
+                el.selectionStart = from;
             }
             selection_start() {
                 return this.selection()[0];
@@ -22606,6 +22611,332 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/form/demo/draft/draft.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_format extends $mol_string {
+        allow() {
+            return "0123456789";
+        }
+        hint() {
+            return this.mask("0");
+        }
+        mask(id) {
+            return "";
+        }
+    }
+    $.$mol_format = $mol_format;
+})($ || ($ = {}));
+//mol/format/-view.tree/format.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/format/format.view.css", "[mol_format] {\n\tfont-family: monospace;\n}\n");
+})($ || ($ = {}));
+//mol/format/-css/format.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_format extends $.$mol_format {
+            selection([from, to] = [0, 0]) {
+                const prev = $mol_wire_probe(() => this.selection());
+                if (!prev)
+                    return [0, 100];
+                if (from === to) {
+                    if (from === 0) {
+                        to = 1;
+                    }
+                    else {
+                        to = from + 1;
+                        if (prev?.[0] === from && prev?.[1] === to) {
+                            --from;
+                            --to;
+                        }
+                    }
+                    const allow = this.allow();
+                    const mask = this.mask([...this.value_changed()].filter(letter => allow.includes(letter)).join(''));
+                    const dir = (prev?.[0] ?? 0) < from ? 1 : -1;
+                    while (from && mask[from] && mask[from] !== '_') {
+                        from += dir;
+                        to += dir;
+                    }
+                }
+                return [from, to];
+            }
+            value_changed(next) {
+                const allow = this.allow();
+                const normalize = (val) => {
+                    val = [...val].filter(letter => allow.includes(letter)).join('');
+                    const letters = [...val].reverse();
+                    return this.mask(val).replace(/_/gu, () => letters.pop() ?? '_') + letters.reverse().join('');
+                };
+                if (next !== undefined) {
+                    next = normalize(next);
+                    if (next.includes('_'))
+                        return next;
+                }
+                return normalize(this.value(next));
+            }
+            event_change(next) {
+                if (!next)
+                    return;
+                if (next.data && !this.allow().includes(next.data))
+                    return;
+                super.event_change(next);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_format.prototype, "selection", null);
+        __decorate([
+            $mol_mem
+        ], $mol_format.prototype, "value_changed", null);
+        $$.$mol_format = $mol_format;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/format/format.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_phone extends $mol_format {
+        mask(id) {
+            return "+___ (___) ___-__-__";
+        }
+    }
+    $.$mol_phone = $mol_phone;
+})($ || ($ = {}));
+//mol/phone/-view.tree/phone.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $$.$mol_phone_formats = {
+            '': '+___________',
+            '1': '+_ (___) ___-__-__',
+            '27': '+__ (__) ___-__-__',
+            '212': '+___ (___) __-__-__',
+            '253': '+___ (__) __-__-__',
+            '254': '+___ (___) __-__-__',
+            '30': '+__ (___) ___-__-__',
+            '31': '+__ (__) ____ ____',
+            '32': '+__ (___) __-__-__',
+            '33': '+__ _ __-__-__-__',
+            '34': '+__ ___-___-___',
+            '36': '+__ __ ___ ___',
+            '351': '+___ ___ ___ ___',
+            '353': '+___ _____',
+            '354': '+___ ___ __ __',
+            '358': '+___ (___) _ ___-___',
+            '380': '+___ (__) ___ __ __',
+            '39': '+__ (___) ___-__-__',
+            '40': '+__-___-___-___',
+            '41': '+__ (__) ___-__-__',
+            '44': '+__ (___) ____ ____',
+            '45': '+__ __-__-__-__',
+            '46': '+__ ___-___ __ __',
+            '47': '+__ __-__-__-__',
+            '48': '+__ (____) __-__-__',
+            '49': '+__ (__) ___-__-__',
+            '52': '+__ ___ ___ ____',
+            '60': '+__ (__) ____-____',
+            '61': '+__ (___) ___-___',
+            '63': '+__ (___) ___-__-__',
+            '64': '+__ (__) ___-__-__',
+            '65': '+__ ____-____',
+            '66': '+__ ____-____',
+            '7': '+_ (___) ___-__-__',
+            '81': '+__ (__) ___-__-__',
+            '82': '+__ (___) ___-__-__',
+            '86': '+__ (___) ____-____',
+            '90': '+__ (___) ___-__-__',
+            '91': '+__ ____-____',
+            '92': '+__ (__) ____-____',
+            '94': '+__ (___) ___-___',
+            '98': '+__ (___) ___-__-__',
+        };
+        class $mol_phone extends $.$mol_phone {
+            mask(val) {
+                return $$.$mol_phone_formats[val.slice(0, 3)]
+                    || $$.$mol_phone_formats[val.slice(0, 2)]
+                    || $$.$mol_phone_formats[val.slice(0, 1)]
+                    || $$.$mol_phone_formats[''];
+            }
+        }
+        $$.$mol_phone = $mol_phone;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/phone/phone.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_format_demo extends $mol_example_small {
+        title() {
+            return "Formatted string input/output";
+        }
+        sub() {
+            return [
+                this.Ip(),
+                this.Phone(),
+                this.Card(),
+                this.Moment()
+            ];
+        }
+        ip(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Ip_in() {
+            const obj = new this.$.$mol_format();
+            obj.mask = () => "___.___.___.___";
+            obj.value = (next) => this.ip(next);
+            return obj;
+        }
+        Ip_out() {
+            const obj = new this.$.$mol_card();
+            obj.title = () => this.ip();
+            return obj;
+        }
+        Ip() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Ip_in(),
+                this.Ip_out()
+            ];
+            return obj;
+        }
+        phone(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Phone_in() {
+            const obj = new this.$.$mol_phone();
+            obj.value = (next) => this.phone(next);
+            return obj;
+        }
+        Phone_out() {
+            const obj = new this.$.$mol_card();
+            obj.title = () => this.phone();
+            return obj;
+        }
+        Phone() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Phone_in(),
+                this.Phone_out()
+            ];
+            return obj;
+        }
+        card(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Card_in() {
+            const obj = new this.$.$mol_format();
+            obj.mask = () => "____ ____ ____ ____";
+            obj.value = (next) => this.card(next);
+            return obj;
+        }
+        Card_out() {
+            const obj = new this.$.$mol_card();
+            obj.title = () => this.card();
+            return obj;
+        }
+        Card() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Card_in(),
+                this.Card_out()
+            ];
+            return obj;
+        }
+        moment(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Moment_in() {
+            const obj = new this.$.$mol_format();
+            obj.mask = () => "__.__.____ __:__";
+            obj.value = (next) => this.moment(next);
+            return obj;
+        }
+        Moment_out() {
+            const obj = new this.$.$mol_card();
+            obj.title = () => this.moment();
+            return obj;
+        }
+        Moment() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Moment_in(),
+                this.Moment_out()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "ip", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Ip_in", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Ip_out", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Ip", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "phone", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Phone_in", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Phone_out", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Phone", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "card", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Card_in", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Card_out", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Card", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "moment", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Moment_in", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Moment_out", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Moment", null);
+    $.$mol_format_demo = $mol_format_demo;
+})($ || ($ = {}));
+//mol/format/demo/-view.tree/demo.view.tree.ts
 ;
 "use strict";
 var $;

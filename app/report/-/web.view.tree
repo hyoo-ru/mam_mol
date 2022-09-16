@@ -160,6 +160,8 @@ $mol_string $mol_view
 	minimal_height 40
 	autocomplete false
 	selection?val /number
+		0
+		0
 	auto /
 		<= selection_watcher null
 	field *

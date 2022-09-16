@@ -262,6 +262,8 @@ $mol_string $mol_view
 	minimal_height 40
 	autocomplete false
 	selection?val /number
+		0
+		0
 	auto /
 		<= selection_watcher null
 	field *
@@ -2434,6 +2436,40 @@ $mol_form_demo_draft $mol_example
 		\bids
 		\validation
 		\field
+
+$mol_format $mol_string
+	allow \0123456789
+	hint <= mask*0 \
+
+$mol_phone $mol_format
+	mask* \+___ (___) ___-__-__
+
+$mol_format_demo $mol_example_small
+	title \Formatted string input/output
+	sub /
+		<= Ip $mol_list rows /
+			<= Ip_in $mol_format
+				mask \___.___.___.___
+				value? <=> ip? \
+			<= Ip_out $mol_card
+				title <= ip
+		<= Phone $mol_list rows /
+			<= Phone_in $mol_phone
+				value? <=> phone? \
+			<= Phone_out $mol_card
+				title <= phone
+		<= Card $mol_list rows /
+			<= Card_in $mol_format
+				mask \____ ____ ____ ____
+				value? <=> card? \
+			<= Card_out $mol_card
+				title <= card
+		<= Moment $mol_list rows /
+			<= Moment_in $mol_format
+				mask \__.__.____ __:__
+				value? <=> moment? \
+			<= Moment_out $mol_card
+				title <= moment
 
 $mol_frame_demo $mol_example_large
 	sub /
