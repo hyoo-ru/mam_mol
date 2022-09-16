@@ -22468,10 +22468,10 @@ var $;
         }
         sub() {
             return [
-                this.Ip(),
-                this.Phone(),
-                this.Card(),
-                this.Moment()
+                this.Ip_card(),
+                this.Phone_card(),
+                this.Card_card(),
+                this.Moment_card()
             ];
         }
         tags() {
@@ -22487,24 +22487,17 @@ var $;
                 return next;
             return "";
         }
-        Ip_in() {
+        Ip() {
             const obj = new this.$.$mol_format();
             obj.mask = () => "___.___.___.___";
             obj.keyboard = () => "numeric";
             obj.value = (next) => this.ip(next);
             return obj;
         }
-        Ip_out() {
+        Ip_card() {
             const obj = new this.$.$mol_card();
-            obj.title = () => this.ip();
-            return obj;
-        }
-        Ip() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Ip_in(),
-                this.Ip_out()
-            ];
+            obj.status = () => this.ip();
+            obj.Content = () => this.Ip();
             return obj;
         }
         phone(next) {
@@ -22512,22 +22505,15 @@ var $;
                 return next;
             return "";
         }
-        Phone_in() {
+        Phone() {
             const obj = new this.$.$mol_phone();
             obj.value = (next) => this.phone(next);
             return obj;
         }
-        Phone_out() {
+        Phone_card() {
             const obj = new this.$.$mol_card();
-            obj.title = () => this.phone();
-            return obj;
-        }
-        Phone() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Phone_in(),
-                this.Phone_out()
-            ];
+            obj.status = () => this.phone();
+            obj.Content = () => this.Phone();
             return obj;
         }
         card(next) {
@@ -22535,24 +22521,17 @@ var $;
                 return next;
             return "";
         }
-        Card_in() {
+        Card() {
             const obj = new this.$.$mol_format();
             obj.mask = () => "____ ____ ____ ____";
             obj.keyboard = () => "numeric";
             obj.value = (next) => this.card(next);
             return obj;
         }
-        Card_out() {
+        Card_card() {
             const obj = new this.$.$mol_card();
-            obj.title = () => this.card();
-            return obj;
-        }
-        Card() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Card_in(),
-                this.Card_out()
-            ];
+            obj.status = () => this.card();
+            obj.Content = () => this.Card();
             return obj;
         }
         moment(next) {
@@ -22560,24 +22539,17 @@ var $;
                 return next;
             return "";
         }
-        Moment_in() {
+        Moment() {
             const obj = new this.$.$mol_format();
             obj.mask = () => "__.__.____ __:__";
             obj.keyboard = () => "numeric";
             obj.value = (next) => this.moment(next);
             return obj;
         }
-        Moment_out() {
+        Moment_card() {
             const obj = new this.$.$mol_card();
-            obj.title = () => this.moment();
-            return obj;
-        }
-        Moment() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Moment_in(),
-                this.Moment_out()
-            ];
+            obj.status = () => this.moment();
+            obj.Content = () => this.Moment();
             return obj;
         }
     }
@@ -22586,49 +22558,37 @@ var $;
     ], $mol_format_demo.prototype, "ip", null);
     __decorate([
         $mol_mem
-    ], $mol_format_demo.prototype, "Ip_in", null);
-    __decorate([
-        $mol_mem
-    ], $mol_format_demo.prototype, "Ip_out", null);
-    __decorate([
-        $mol_mem
     ], $mol_format_demo.prototype, "Ip", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Ip_card", null);
     __decorate([
         $mol_mem
     ], $mol_format_demo.prototype, "phone", null);
     __decorate([
         $mol_mem
-    ], $mol_format_demo.prototype, "Phone_in", null);
-    __decorate([
-        $mol_mem
-    ], $mol_format_demo.prototype, "Phone_out", null);
-    __decorate([
-        $mol_mem
     ], $mol_format_demo.prototype, "Phone", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Phone_card", null);
     __decorate([
         $mol_mem
     ], $mol_format_demo.prototype, "card", null);
     __decorate([
         $mol_mem
-    ], $mol_format_demo.prototype, "Card_in", null);
-    __decorate([
-        $mol_mem
-    ], $mol_format_demo.prototype, "Card_out", null);
-    __decorate([
-        $mol_mem
     ], $mol_format_demo.prototype, "Card", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Card_card", null);
     __decorate([
         $mol_mem
     ], $mol_format_demo.prototype, "moment", null);
     __decorate([
         $mol_mem
-    ], $mol_format_demo.prototype, "Moment_in", null);
-    __decorate([
-        $mol_mem
-    ], $mol_format_demo.prototype, "Moment_out", null);
-    __decorate([
-        $mol_mem
     ], $mol_format_demo.prototype, "Moment", null);
+    __decorate([
+        $mol_mem
+    ], $mol_format_demo.prototype, "Moment_card", null);
     $.$mol_format_demo = $mol_format_demo;
 })($ || ($ = {}));
 //mol/format/demo/-view.tree/demo.view.tree.ts

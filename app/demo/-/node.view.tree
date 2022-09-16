@@ -2449,32 +2449,28 @@ $mol_phone $mol_format
 $mol_format_demo $mol_example_small
 	title \Formatted string input/output
 	sub /
-		<= Ip $mol_list rows /
-			<= Ip_in $mol_format
+		<= Ip_card $mol_card
+			status <= ip
+			Content <= Ip $mol_format
 				mask \___.___.___.___
 				keyboard \numeric
 				value? <=> ip? \
-			<= Ip_out $mol_card
-				title <= ip
-		<= Phone $mol_list rows /
-			<= Phone_in $mol_phone
+		<= Phone_card $mol_card
+			status <= phone
+			Content <= Phone $mol_phone
 				value? <=> phone? \
-			<= Phone_out $mol_card
-				title <= phone
-		<= Card $mol_list rows /
-			<= Card_in $mol_format
+		<= Card_card $mol_card
+			status <= card
+			Content <= Card $mol_format
 				mask \____ ____ ____ ____
 				keyboard \numeric
 				value? <=> card? \
-			<= Card_out $mol_card
-				title <= card
-		<= Moment $mol_list rows /
-			<= Moment_in $mol_format
+		<= Moment_card $mol_card
+			status <= moment
+			Content <= Moment $mol_format
 				mask \__.__.____ __:__
 				keyboard \numeric
 				value? <=> moment? \
-			<= Moment_out $mol_card
-				title <= moment
 	tags /
 		\$mol_format
 		\$mol_string

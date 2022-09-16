@@ -13,18 +13,18 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Ip
-		 * 	<= Phone
-		 * 	<= Card
-		 * 	<= Moment
+		 * 	<= Ip_card
+		 * 	<= Phone_card
+		 * 	<= Card_card
+		 * 	<= Moment_card
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Ip(),
-				this.Phone(),
-				this.Card(),
-				this.Moment()
+				this.Ip_card(),
+				this.Phone_card(),
+				this.Card_card(),
+				this.Moment_card()
 			] as readonly any[]
 		}
 		
@@ -59,14 +59,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Ip_in $mol_format
+		 * Ip $mol_format
 		 * 	mask \___.___.___.___
 		 * 	keyboard \numeric
 		 * 	value? <=> ip?
 		 * ```
 		 */
 		@ $mol_mem
-		Ip_in() {
+		Ip() {
 			const obj = new this.$.$mol_format()
 			
 			obj.mask = () => "___.___.___.___"
@@ -78,33 +78,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Ip_out $mol_card title <= ip
+		 * Ip_card $mol_card
+		 * 	status <= ip
+		 * 	Content <= Ip
 		 * ```
 		 */
 		@ $mol_mem
-		Ip_out() {
+		Ip_card() {
 			const obj = new this.$.$mol_card()
 			
-			obj.title = () => this.ip()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Ip $mol_list rows /
-		 * 	<= Ip_in
-		 * 	<= Ip_out
-		 * ```
-		 */
-		@ $mol_mem
-		Ip() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Ip_in(),
-				this.Ip_out()
-			] as readonly any[]
+			obj.status = () => this.ip()
+			obj.Content = () => this.Ip()
 			
 			return obj
 		}
@@ -122,11 +106,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Phone_in $mol_phone value? <=> phone?
+		 * Phone $mol_phone value? <=> phone?
 		 * ```
 		 */
 		@ $mol_mem
-		Phone_in() {
+		Phone() {
 			const obj = new this.$.$mol_phone()
 			
 			obj.value = (next?: any) => this.phone(next)
@@ -136,33 +120,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Phone_out $mol_card title <= phone
+		 * Phone_card $mol_card
+		 * 	status <= phone
+		 * 	Content <= Phone
 		 * ```
 		 */
 		@ $mol_mem
-		Phone_out() {
+		Phone_card() {
 			const obj = new this.$.$mol_card()
 			
-			obj.title = () => this.phone()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Phone $mol_list rows /
-		 * 	<= Phone_in
-		 * 	<= Phone_out
-		 * ```
-		 */
-		@ $mol_mem
-		Phone() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Phone_in(),
-				this.Phone_out()
-			] as readonly any[]
+			obj.status = () => this.phone()
+			obj.Content = () => this.Phone()
 			
 			return obj
 		}
@@ -180,14 +148,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Card_in $mol_format
+		 * Card $mol_format
 		 * 	mask \____ ____ ____ ____
 		 * 	keyboard \numeric
 		 * 	value? <=> card?
 		 * ```
 		 */
 		@ $mol_mem
-		Card_in() {
+		Card() {
 			const obj = new this.$.$mol_format()
 			
 			obj.mask = () => "____ ____ ____ ____"
@@ -199,33 +167,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Card_out $mol_card title <= card
+		 * Card_card $mol_card
+		 * 	status <= card
+		 * 	Content <= Card
 		 * ```
 		 */
 		@ $mol_mem
-		Card_out() {
+		Card_card() {
 			const obj = new this.$.$mol_card()
 			
-			obj.title = () => this.card()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Card $mol_list rows /
-		 * 	<= Card_in
-		 * 	<= Card_out
-		 * ```
-		 */
-		@ $mol_mem
-		Card() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Card_in(),
-				this.Card_out()
-			] as readonly any[]
+			obj.status = () => this.card()
+			obj.Content = () => this.Card()
 			
 			return obj
 		}
@@ -243,14 +195,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Moment_in $mol_format
+		 * Moment $mol_format
 		 * 	mask \__.__.____ __:__
 		 * 	keyboard \numeric
 		 * 	value? <=> moment?
 		 * ```
 		 */
 		@ $mol_mem
-		Moment_in() {
+		Moment() {
 			const obj = new this.$.$mol_format()
 			
 			obj.mask = () => "__.__.____ __:__"
@@ -262,33 +214,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Moment_out $mol_card title <= moment
+		 * Moment_card $mol_card
+		 * 	status <= moment
+		 * 	Content <= Moment
 		 * ```
 		 */
 		@ $mol_mem
-		Moment_out() {
+		Moment_card() {
 			const obj = new this.$.$mol_card()
 			
-			obj.title = () => this.moment()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Moment $mol_list rows /
-		 * 	<= Moment_in
-		 * 	<= Moment_out
-		 * ```
-		 */
-		@ $mol_mem
-		Moment() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Moment_in(),
-				this.Moment_out()
-			] as readonly any[]
+			obj.status = () => this.moment()
+			obj.Content = () => this.Moment()
 			
 			return obj
 		}

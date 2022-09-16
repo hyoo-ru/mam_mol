@@ -5921,21 +5921,17 @@ declare namespace $ {
         sub(): readonly any[];
         tags(): readonly any[];
         ip(next?: any): string;
-        Ip_in(): $$.$mol_format;
-        Ip_out(): $$.$mol_card;
-        Ip(): $$.$mol_list;
+        Ip(): $$.$mol_format;
+        Ip_card(): $$.$mol_card;
         phone(next?: any): string;
-        Phone_in(): $$.$mol_phone;
-        Phone_out(): $$.$mol_card;
-        Phone(): $$.$mol_list;
+        Phone(): $$.$mol_phone;
+        Phone_card(): $$.$mol_card;
         card(next?: any): string;
-        Card_in(): $$.$mol_format;
-        Card_out(): $$.$mol_card;
-        Card(): $$.$mol_list;
+        Card(): $$.$mol_format;
+        Card_card(): $$.$mol_card;
         moment(next?: any): string;
-        Moment_in(): $$.$mol_format;
-        Moment_out(): $$.$mol_card;
-        Moment(): $$.$mol_list;
+        Moment(): $$.$mol_format;
+        Moment_card(): $$.$mol_card;
     }
 }
 
