@@ -22812,7 +22812,7 @@ var $;
         Ip_in() {
             const obj = new this.$.$mol_format();
             obj.mask = () => "___.___.___.___";
-            obj.keyboard = () => "number";
+            obj.keyboard = () => "numeric";
             obj.value = (next) => this.ip(next);
             return obj;
         }
@@ -22860,7 +22860,7 @@ var $;
         Card_in() {
             const obj = new this.$.$mol_format();
             obj.mask = () => "____ ____ ____ ____";
-            obj.keyboard = () => "number";
+            obj.keyboard = () => "numeric";
             obj.value = (next) => this.card(next);
             return obj;
         }
@@ -22885,7 +22885,7 @@ var $;
         Moment_in() {
             const obj = new this.$.$mol_format();
             obj.mask = () => "__.__.____ __:__";
-            obj.keyboard = () => "number";
+            obj.keyboard = () => "numeric";
             obj.value = (next) => this.moment(next);
             return obj;
         }
