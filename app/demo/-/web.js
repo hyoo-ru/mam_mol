@@ -22338,22 +22338,13 @@ var $;
                 if (!prev)
                     return [0, 100];
                 if (from === to) {
-                    if (from === 0) {
-                        to = 1;
-                    }
-                    else {
-                        to = from + 1;
-                        if (prev?.[0] === from && prev?.[1] === to) {
-                            --from;
-                            --to;
-                        }
-                    }
                     const allow = this.allow();
                     const mask = this.mask([...this.value_changed()].filter(letter => allow.includes(letter)).join(''));
-                    const dir = (prev?.[0] ?? 0) < from ? 1 : -1;
-                    while (from && mask[from] && mask[from] !== '_') {
-                        from += dir;
-                        to += dir;
+                    if ((prev?.[0] ?? 0) < from) {
+                        while (from && mask[from] && mask[from] !== '_') {
+                            ++from;
+                            ++to;
+                        }
                     }
                 }
                 return [from, to];
