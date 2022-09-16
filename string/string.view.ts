@@ -5,7 +5,7 @@ namespace $.$$ {
 		
 		event_change( next? : Event ) {
 			if( !next ) return
-			this.value( ( next.target as HTMLInputElement ).value )
+			this.value_changed( ( next.target as HTMLInputElement ).value )
 			this.selection_change( next )
 		}
 
@@ -35,10 +35,13 @@ namespace $.$$ {
 			const el = this.dom_node() as HTMLInputElement
 			if( el !== this.$.$mol_dom_context.document.activeElement ) return
 			
-			this.selection([
+			const [ from, to ] = this.selection([
 				el.selectionStart!,
 				el.selectionEnd!,
 			])
+			
+			el.selectionEnd = to
+			el.selectionStart = from
 			
 		}
 		

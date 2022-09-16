@@ -1,0 +1,26 @@
+$mol_format_demo $mol_example_small
+	title \Formatted string input/output
+	sub /
+		<= Ip $mol_list rows /
+			<= Ip_in $mol_format
+				mask \___.___.___.___
+				value? <=> ip? \
+			<= Ip_out $mol_card
+				title <= ip
+		<= Phone $mol_list rows /
+			<= Phone_in $mol_phone
+				value? <=> phone? \
+			<= Phone_out $mol_card
+				title <= phone
+		<= Card $mol_list rows /
+			<= Card_in $mol_format
+				mask \____ ____ ____ ____
+				value? <=> card? \
+			<= Card_out $mol_card
+				title <= card
+		<= Moment $mol_list rows /
+			<= Moment_in $mol_format
+				mask \__.__.____ __:__
+				value? <=> moment? \
+			<= Moment_out $mol_card
+				title <= moment
