@@ -2945,7 +2945,8 @@ var $;
                 spellcheck: this.spellcheck(),
                 autocomplete: this.autocomplete_native(),
                 selectionEnd: this.selection_end(),
-                selectionStart: this.selection_start()
+                selectionStart: this.selection_start(),
+                inputMode: this.keyboard()
             };
         }
         attr() {
@@ -2998,6 +2999,9 @@ var $;
         }
         selection_start() {
             return 0;
+        }
+        keyboard() {
+            return "text";
         }
         length_max() {
             return Infinity;

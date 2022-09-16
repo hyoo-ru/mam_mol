@@ -61,6 +61,7 @@ namespace $ {
 		 * ```tree
 		 * Ip_in $mol_format
 		 * 	mask \___.___.___.___
+		 * 	keyboard \number
 		 * 	value? <=> ip?
 		 * ```
 		 */
@@ -69,6 +70,7 @@ namespace $ {
 			const obj = new this.$.$mol_format()
 			
 			obj.mask = () => "___.___.___.___"
+			obj.keyboard = () => "number"
 			obj.value = (next?: any) => this.ip(next)
 			
 			return obj
@@ -180,6 +182,7 @@ namespace $ {
 		 * ```tree
 		 * Card_in $mol_format
 		 * 	mask \____ ____ ____ ____
+		 * 	keyboard \number
 		 * 	value? <=> card?
 		 * ```
 		 */
@@ -188,6 +191,7 @@ namespace $ {
 			const obj = new this.$.$mol_format()
 			
 			obj.mask = () => "____ ____ ____ ____"
+			obj.keyboard = () => "number"
 			obj.value = (next?: any) => this.card(next)
 			
 			return obj
@@ -241,6 +245,7 @@ namespace $ {
 		 * ```tree
 		 * Moment_in $mol_format
 		 * 	mask \__.__.____ __:__
+		 * 	keyboard \number
 		 * 	value? <=> moment?
 		 * ```
 		 */
@@ -249,6 +254,7 @@ namespace $ {
 			const obj = new this.$.$mol_format()
 			
 			obj.mask = () => "__.__.____ __:__"
+			obj.keyboard = () => "number"
 			obj.value = (next?: any) => this.moment(next)
 			
 			return obj

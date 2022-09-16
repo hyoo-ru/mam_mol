@@ -2374,6 +2374,7 @@ declare namespace $ {
             autocomplete: string;
             selectionEnd: number;
             selectionStart: number;
+            inputMode: string;
         };
         attr(): {
             maxlength: number;
@@ -2394,6 +2395,7 @@ declare namespace $ {
         autocomplete_native(): string;
         selection_end(): number;
         selection_start(): number;
+        keyboard(): string;
         length_max(): number;
         type(val?: any): string;
         event_change(event?: any): any;
@@ -2455,6 +2457,7 @@ declare namespace $ {
             autocomplete: string;
             selectionEnd: number;
             selectionStart: number;
+            inputMode: string;
         };
     }
 }
@@ -5908,6 +5911,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_phone extends $mol_format {
         mask(id: any): string;
+        keyboard(): string;
     }
 }
 

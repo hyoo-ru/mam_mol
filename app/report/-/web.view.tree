@@ -173,6 +173,7 @@ $mol_string $mol_view
 		autocomplete <= autocomplete_native \
 		selectionEnd <= selection_end 0
 		selectionStart <= selection_start 0
+		inputMode <= keyboard \text
 	attr *
 		^
 		maxlength <= length_max Infinity

@@ -7655,7 +7655,8 @@ var $;
                 spellcheck: this.spellcheck(),
                 autocomplete: this.autocomplete_native(),
                 selectionEnd: this.selection_end(),
-                selectionStart: this.selection_start()
+                selectionStart: this.selection_start(),
+                inputMode: this.keyboard()
             };
         }
         attr() {
@@ -7708,6 +7709,9 @@ var $;
         }
         selection_start() {
             return 0;
+        }
+        keyboard() {
+            return "text";
         }
         length_max() {
             return Infinity;
@@ -22394,6 +22398,9 @@ var $;
         mask(id) {
             return "+___ (___) ___-__-__";
         }
+        keyboard() {
+            return "tel";
+        }
     }
     $.$mol_phone = $mol_phone;
 })($ || ($ = {}));
@@ -22492,6 +22499,7 @@ var $;
         Ip_in() {
             const obj = new this.$.$mol_format();
             obj.mask = () => "___.___.___.___";
+            obj.keyboard = () => "number";
             obj.value = (next) => this.ip(next);
             return obj;
         }
@@ -22539,6 +22547,7 @@ var $;
         Card_in() {
             const obj = new this.$.$mol_format();
             obj.mask = () => "____ ____ ____ ____";
+            obj.keyboard = () => "number";
             obj.value = (next) => this.card(next);
             return obj;
         }
@@ -22563,6 +22572,7 @@ var $;
         Moment_in() {
             const obj = new this.$.$mol_format();
             obj.mask = () => "__.__.____ __:__";
+            obj.keyboard = () => "number";
             obj.value = (next) => this.moment(next);
             return obj;
         }

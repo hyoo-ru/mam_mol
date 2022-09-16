@@ -75,6 +75,7 @@ namespace $ {
 		 * 	autocomplete <= autocomplete_native
 		 * 	selectionEnd <= selection_end
 		 * 	selectionStart <= selection_start
+		 * 	inputMode <= keyboard
 		 * ```
 		 */
 		field() {
@@ -86,7 +87,8 @@ namespace $ {
 				spellcheck: this.spellcheck(),
 				autocomplete: this.autocomplete_native(),
 				selectionEnd: this.selection_end(),
-				selectionStart: this.selection_start()
+				selectionStart: this.selection_start(),
+				inputMode: this.keyboard()
 			}
 		}
 		
@@ -223,6 +225,15 @@ namespace $ {
 		 */
 		selection_start() {
 			return 0
+		}
+		
+		/**
+		 * ```tree
+		 * keyboard \text
+		 * ```
+		 */
+		keyboard() {
+			return "text"
 		}
 		
 		/**

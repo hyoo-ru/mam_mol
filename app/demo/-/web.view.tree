@@ -275,6 +275,7 @@ $mol_string $mol_view
 		autocomplete <= autocomplete_native \
 		selectionEnd <= selection_end 0
 		selectionStart <= selection_start 0
+		inputMode <= keyboard \text
 	attr *
 		^
 		maxlength <= length_max Infinity
@@ -2443,6 +2444,7 @@ $mol_format $mol_string
 
 $mol_phone $mol_format
 	mask* \+___ (___) ___-__-__
+	keyboard \tel
 
 $mol_format_demo $mol_example_small
 	title \Formatted string input/output
@@ -2450,6 +2452,7 @@ $mol_format_demo $mol_example_small
 		<= Ip $mol_list rows /
 			<= Ip_in $mol_format
 				mask \___.___.___.___
+				keyboard \number
 				value? <=> ip? \
 			<= Ip_out $mol_card
 				title <= ip
@@ -2461,12 +2464,14 @@ $mol_format_demo $mol_example_small
 		<= Card $mol_list rows /
 			<= Card_in $mol_format
 				mask \____ ____ ____ ____
+				keyboard \number
 				value? <=> card? \
 			<= Card_out $mol_card
 				title <= card
 		<= Moment $mol_list rows /
 			<= Moment_in $mol_format
 				mask \__.__.____ __:__
+				keyboard \number
 				value? <=> moment? \
 			<= Moment_out $mol_card
 				title <= moment
