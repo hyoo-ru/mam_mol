@@ -4,7 +4,7 @@ $mol_format_demo $mol_example_small
 		<= Ip $mol_list rows /
 			<= Ip_in $mol_format
 				mask \___.___.___.___
-				keyboard \number
+				keyboard \numeric
 				value? <=> ip? \
 			<= Ip_out $mol_card
 				title <= ip
@@ -16,14 +16,14 @@ $mol_format_demo $mol_example_small
 		<= Card $mol_list rows /
 			<= Card_in $mol_format
 				mask \____ ____ ____ ____
-				keyboard \number
+				keyboard \numeric
 				value? <=> card? \
 			<= Card_out $mol_card
 				title <= card
 		<= Moment $mol_list rows /
 			<= Moment_in $mol_format
 				mask \__.__.____ __:__
-				keyboard \number
+				keyboard \numeric
 				value? <=> moment? \
 			<= Moment_out $mol_card
 				title <= moment
