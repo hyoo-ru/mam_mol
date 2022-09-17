@@ -3557,10 +3557,10 @@ var $;
         const first_char = val.type && val.type[0];
         if (first_char === '/')
             return 'list';
-        if (first_char === '$')
-            return 'object';
         if (Number(val.type).toString() == val.type)
             return 'number';
+        if (/^[$A-Z]/.test(first_char))
+            return 'object';
         return this.$mol_fail(err `Unknown value type ${val.type} at ${val.span}`);
     }
     $.$mol_view_tree2_value_type = $mol_view_tree2_value_type;
@@ -3859,7 +3859,7 @@ var $;
 (function ($) {
     const err = $mol_view_tree2_error_str;
     function $mol_view_tree2_ts_factory(klass, factory, factory_context) {
-        if (klass.type[0] !== '$')
+        if (!/^[$A-Z]/.test(klass.type))
             return this.$mol_fail(err `Need a valid class name at ${klass.span}, use ${example}`);
         const obj_node = klass.data('obj');
         const body = [];
@@ -4373,7 +4373,7 @@ var $;
             body = add_return(operator, this.$mol_view_tree2_ts_dictionary(operator, context, having_parts));
         else if (type[0] === '/')
             body = add_return(operator, this.$mol_view_tree2_ts_array(operator, context, having_parts));
-        else if (type[0] === '$')
+        else if (/^[$A-Z]/.test(type))
             body = this.$mol_view_tree2_ts_factory(operator, having_parts, context);
         else
             body = add_return(operator, this.$mol_view_tree2_ts_value(operator));
@@ -4399,7 +4399,7 @@ var $;
         const { name, key, next, src } = owner_parts;
         const operator = src.kids.length === 1 ? src.kids[0] : undefined;
         const type = operator?.type;
-        const is_class = type && type[0] === '$';
+        const is_class = type && /^[$A-Z]/.test(type);
         const is_delegate = type === '<=' || type === '<=>';
         let need_cache = false;
         if (is_delegate)

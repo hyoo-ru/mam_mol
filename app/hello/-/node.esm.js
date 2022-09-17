@@ -3004,7 +3004,8 @@ var $;
             return "text";
         }
         length_max() {
-            return Infinity;
+            const obj = new this.$.Infinity();
+            return obj;
         }
         type(val) {
             if (val !== undefined)
@@ -3040,6 +3041,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_string.prototype, "value", null);
+    __decorate([
+        $mol_mem
+    ], $mol_string.prototype, "length_max", null);
     __decorate([
         $mol_mem
     ], $mol_string.prototype, "type", null);

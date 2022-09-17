@@ -256,8 +256,11 @@ namespace $ {
 		 * hue NaN
 		 * ```
 		 */
+		@ $mol_mem
 		hue() {
-			return NaN
+			const obj = new this.$.NaN()
+			
+			return obj
 		}
 		
 		/**

@@ -6,8 +6,11 @@ namespace $ {
 		 * points_max Infinity
 		 * ```
 		 */
+		@ $mol_mem
 		points_max() {
-			return Infinity
+			const obj = new this.$.Infinity()
+			
+			return obj
 		}
 		
 		/**

@@ -74,7 +74,9 @@ namespace $ {
 		@ $mol_mem
 		year(val?: any) {
 			if ( val !== undefined ) return val as never
-			return NaN
+			const obj = new this.$.NaN()
+			
+			return obj
 		}
 		
 		/**

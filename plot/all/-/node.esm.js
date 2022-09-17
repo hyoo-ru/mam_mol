@@ -3076,7 +3076,8 @@ var $;
             return obj;
         }
         hue() {
-            return NaN;
+            const obj = new this.$.NaN();
+            return obj;
         }
         Sample() {
             return null;
@@ -3147,6 +3148,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_plot_graph.prototype, "Hint", null);
+    __decorate([
+        $mol_mem
+    ], $mol_plot_graph.prototype, "hue", null);
     __decorate([
         $mol_mem
     ], $mol_plot_graph.prototype, "viewport_x", null);
@@ -3804,7 +3808,8 @@ var $;
         hue_base(val) {
             if (val !== undefined)
                 return val;
-            return NaN;
+            const obj = new this.$.NaN();
+            return obj;
         }
         hue_shift(val) {
             if (val !== undefined)
@@ -4542,7 +4547,8 @@ var $;
 (function ($) {
     class $mol_plot_dot extends $mol_plot_graph {
         points_max() {
-            return Infinity;
+            const obj = new this.$.Infinity();
+            return obj;
         }
         aspect() {
             return 1;
@@ -4576,6 +4582,9 @@ var $;
             return obj;
         }
     }
+    __decorate([
+        $mol_mem
+    ], $mol_plot_dot.prototype, "points_max", null);
     __decorate([
         $mol_mem
     ], $mol_plot_dot.prototype, "Sample", null);

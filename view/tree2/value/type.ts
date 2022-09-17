@@ -17,10 +17,9 @@ namespace $ {
 		const first_char = val.type && val.type[0]
 
 		if (first_char === '/') return 'list'
-		if (first_char === '$') return 'object'
- 
 		if( Number( val.type ).toString() == val.type ) return 'number'
-	
+		if (/^[$A-Z]/.test( first_char )) return 'object'
+ 
 		return this.$mol_fail(
 			err`Unknown value type ${val.type} at ${val.span}`
 		)

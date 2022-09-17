@@ -24,8 +24,11 @@ namespace $ {
 		 * width_limit Infinity
 		 * ```
 		 */
+		@ $mol_mem
 		width_limit() {
-			return Infinity
+			const obj = new this.$.Infinity()
+			
+			return obj
 		}
 		
 		/**

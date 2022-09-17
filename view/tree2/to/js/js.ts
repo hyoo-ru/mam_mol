@@ -128,7 +128,7 @@ namespace $ {
 							input.struct( '[,]', input.hack( belt ) ),
 						]
 						
-						if( input.type[0] === '$' ) {
+						if( /^[$A-Z]/.test( input.type ) ) {
 							
 							if( !next ) addons.push( decorate() )
 							

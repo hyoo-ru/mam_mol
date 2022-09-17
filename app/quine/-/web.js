@@ -3557,7 +3557,8 @@ var $;
             return 7;
         }
         width_limit() {
-            return Infinity;
+            const obj = new this.$.Infinity();
+            return obj;
         }
         sub() {
             return [
@@ -3565,6 +3566,9 @@ var $;
             ];
         }
     }
+    __decorate([
+        $mol_mem
+    ], $mol_paragraph.prototype, "width_limit", null);
     $.$mol_paragraph = $mol_paragraph;
 })($ || ($ = {}));
 //mol/paragraph/-view.tree/paragraph.view.tree.ts

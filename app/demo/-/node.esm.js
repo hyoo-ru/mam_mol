@@ -6892,7 +6892,8 @@ var $;
             return 7;
         }
         width_limit() {
-            return Infinity;
+            const obj = new this.$.Infinity();
+            return obj;
         }
         sub() {
             return [
@@ -6900,6 +6901,9 @@ var $;
             ];
         }
     }
+    __decorate([
+        $mol_mem
+    ], $mol_paragraph.prototype, "width_limit", null);
     $.$mol_paragraph = $mol_paragraph;
 })($ || ($ = {}));
 //mol/paragraph/-view.tree/paragraph.view.tree.ts
@@ -8041,7 +8045,8 @@ var $;
             return "text";
         }
         length_max() {
-            return Infinity;
+            const obj = new this.$.Infinity();
+            return obj;
         }
         type(val) {
             if (val !== undefined)
@@ -8077,6 +8082,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_string.prototype, "value", null);
+    __decorate([
+        $mol_mem
+    ], $mol_string.prototype, "length_max", null);
     __decorate([
         $mol_mem
     ], $mol_string.prototype, "type", null);
@@ -8206,7 +8214,8 @@ var $;
             return true;
         }
         length_max() {
-            return Infinity;
+            const obj = new this.$.Infinity();
+            return obj;
         }
         selection(val) {
             if (val !== undefined)
@@ -8250,6 +8259,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_textarea.prototype, "value", null);
+    __decorate([
+        $mol_mem
+    ], $mol_textarea.prototype, "length_max", null);
     __decorate([
         $mol_mem
     ], $mol_textarea.prototype, "selection", null);
@@ -13585,7 +13597,8 @@ var $;
             return obj;
         }
         hue() {
-            return NaN;
+            const obj = new this.$.NaN();
+            return obj;
         }
         Sample() {
             return null;
@@ -13656,6 +13669,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_plot_graph.prototype, "Hint", null);
+    __decorate([
+        $mol_mem
+    ], $mol_plot_graph.prototype, "hue", null);
     __decorate([
         $mol_mem
     ], $mol_plot_graph.prototype, "viewport_x", null);
@@ -14405,7 +14421,8 @@ var $;
         hue_base(val) {
             if (val !== undefined)
                 return val;
-            return NaN;
+            const obj = new this.$.NaN();
+            return obj;
         }
         hue_shift(val) {
             if (val !== undefined)
@@ -15231,7 +15248,8 @@ var $;
 (function ($) {
     class $mol_plot_dot extends $mol_plot_graph {
         points_max() {
-            return Infinity;
+            const obj = new this.$.Infinity();
+            return obj;
         }
         aspect() {
             return 1;
@@ -15265,6 +15283,9 @@ var $;
             return obj;
         }
     }
+    __decorate([
+        $mol_mem
+    ], $mol_plot_dot.prototype, "points_max", null);
     __decorate([
         $mol_mem
     ], $mol_plot_dot.prototype, "Sample", null);
@@ -19143,7 +19164,8 @@ var $;
         value_number(val) {
             if (val !== undefined)
                 return val;
-            return NaN;
+            const obj = new this.$.NaN();
+            return obj;
         }
         value_moment(val) {
             if (val !== undefined)
@@ -21341,7 +21363,8 @@ var $;
         value(val) {
             if (val !== undefined)
                 return val;
-            return NaN;
+            const obj = new this.$.NaN();
+            return obj;
         }
         sub() {
             return [
@@ -26505,7 +26528,8 @@ var $;
         year(val) {
             if (val !== undefined)
                 return val;
-            return NaN;
+            const obj = new this.$.NaN();
+            return obj;
         }
         one() {
             const obj = new this.$.$mol_number();

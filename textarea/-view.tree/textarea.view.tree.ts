@@ -121,8 +121,11 @@ namespace $ {
 		 * length_max Infinity
 		 * ```
 		 */
+		@ $mol_mem
 		length_max() {
-			return Infinity
+			const obj = new this.$.Infinity()
+			
+			return obj
 		}
 		
 		/**
