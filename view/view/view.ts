@@ -440,7 +440,7 @@ namespace $ {
 		}
 
 		/** Renders view to DOM and scroll to it. */
-		async ensure_visible( view: $mol_view, align: ScrollLogicalPosition = "start" ) {
+		ensure_visible( view: $mol_view, align: ScrollLogicalPosition = "start" ) {
 			
 			const path = this.view_find( v => v === view ).next().value
 			this.force_render( new Set( path ) )
@@ -453,7 +453,7 @@ namespace $ {
 		
 		bring() {
 			new $mol_after_frame( ()=> {
-				this.dom_node().scrollIntoView()
+				this.dom_node().scrollIntoView({ inline: 'start' })
 				this.focused( true )
 			} )
 		}
