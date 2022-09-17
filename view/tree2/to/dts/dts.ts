@@ -106,7 +106,7 @@ namespace $ {
 								input.data('[]'),
 							]
 							
-							if( input.type[0] === '$' ) {
+							if( /^[$A-Z]/.test( input.type ) ) {
 								
 								const first = input.kids[0]
 								if( first && first.type === '/' ) {
