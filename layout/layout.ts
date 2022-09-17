@@ -40,7 +40,7 @@ namespace $ {
 		limit() { return this.size - this.padding() }
 
 		/** Growing priority. */
-		grow() { return this.max - this.min }
+		grow() { return Math.max( 0, this.max - this.min ) }
 
 		/** Shrinking priority. */
 		shrink() { return this.min || 1 }

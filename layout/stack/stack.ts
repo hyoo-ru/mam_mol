@@ -39,17 +39,18 @@ namespace $ {
 			const base = this.base - this.before()
 			const limit = this.limit()
 			
-			let size = 0
+			// let size = 0
 			
 			for( const kid of this.kids ) {
 				
 				const shift = base - kid.base
 				kid.pos = pos + shift
-				kid.size = Math.min( kid.max, limit )
+				
+				kid.size = kid.grow() ? limit : Math.min( kid.max, limit )
 				
 				kid.down()
 				
-				size = Math.max( size , kid.size + shift )
+				// size = Math.max( size , kid.size + shift )
 				
 			}
 			
