@@ -26,7 +26,7 @@ $mol_date $mol_pick
 							sub /
 								<= Next_icon $mol_icon_chevron_right
 	-
-	value_number?val NaN
+	value_number?val +NaN
 	value_moment?val $mol_time_moment
 
 $mol_date_calendar $mol_calendar

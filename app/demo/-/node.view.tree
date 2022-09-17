@@ -1084,7 +1084,7 @@ $mol_plot_graph $mol_svg_group
 	back /$mol_svg
 	Hint $mol_svg_title
 		title <= hint <= title \
-	hue NaN
+	hue +NaN
 	Sample null
 
 $mol_plot_graph_sample $mol_view
@@ -1169,7 +1169,7 @@ $mol_touch $mol_plugin
 $mol_plot_pane $mol_svg_root
 	aspect \none
 	-
-	hue_base?val NaN
+	hue_base?val +NaN
 	hue_shift?val 111
 	-
 	gap_hor 48
@@ -1933,7 +1933,7 @@ $mol_date $mol_pick
 							sub /
 								<= Next_icon $mol_icon_chevron_right
 	-
-	value_number?val NaN
+	value_number?val +NaN
 	value_moment?val $mol_time_moment
 
 $mol_date_calendar $mol_calendar
@@ -2222,7 +2222,7 @@ $mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
 $mol_number $mol_view
 	precision_view <= precision 1
 	precision_change <= precision 1
-	value?val NaN
+	value?val +NaN
 	sub /
 		<= String $mol_string
 			- \ we don't want native number controls in mobile devices
@@ -2945,31 +2945,31 @@ $mol_number_demo $mol_example_small
 	sub /
 		<= zero $mol_number
 		<= one $mol_number
-			value?val <=> year?val NaN
+			value?val <=> year?val +NaN
 		<= two $mol_number
-			value?val <=> year?val NaN
+			value?val <=> year?val +NaN
 			hint \2016
 		<= three $mol_number
 			value?val <=> age?val 32
 			hint \18-99
 			enabled false
 		<= four $mol_number
-			value?val <=> year?val NaN
+			value?val <=> year?val +NaN
 			string_enabled false
 		<= five $mol_number
 			value?val <=> age?val 32
 			dec_enabled false
 		<= six $mol_number
-			value?val <=> year?val NaN
+			value?val <=> year?val +NaN
 			inc_enabled false
 		<= seven $mol_number
-			value?val <=> year?val NaN
+			value?val <=> year?val +NaN
 			precision_change 10
 		<= eight $mol_number
-			value?val <=> year?val NaN
+			value?val <=> year?val +NaN
 			precision_view 0.01
 		<= nine $mol_number
-			value?val <=> year?val NaN
+			value?val <=> year?val +NaN
 			precision 1000
 	tags /
 		\number

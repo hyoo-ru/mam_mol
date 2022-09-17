@@ -276,7 +276,7 @@ $mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
 $mol_number $mol_view
 	precision_view <= precision 1
 	precision_change <= precision 1
-	value?val NaN
+	value?val +NaN
 	sub /
 		<= String $mol_string
 			- \ we don't want native number controls in mobile devices

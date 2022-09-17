@@ -253,14 +253,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hue NaN
+		 * hue +NaN
 		 * ```
 		 */
-		@ $mol_mem
 		hue() {
-			const obj = new this.$.NaN()
-			
-			return obj
+			return +NaN
 		}
 		
 		/**

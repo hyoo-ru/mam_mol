@@ -757,7 +757,7 @@ declare namespace $ {
         front(): readonly $mol_svg[];
         back(): readonly $mol_svg[];
         Hint(): $mol_svg_title;
-        hue(): any;
+        hue(): number;
         Sample(): any;
         type(): string;
         color(): string;
@@ -874,7 +874,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_plot_pane extends $mol_svg_root {
         aspect(): string;
-        hue_base(val?: any): any;
+        hue_base(val?: any): number;
         hue_shift(val?: any): number;
         gap_hor(): number;
         gap_vert(): number;

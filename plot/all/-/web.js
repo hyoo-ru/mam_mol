@@ -2626,8 +2626,7 @@ var $;
             return obj;
         }
         hue() {
-            const obj = new this.$.NaN();
-            return obj;
+            return +NaN;
         }
         Sample() {
             return null;
@@ -2698,9 +2697,6 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_plot_graph.prototype, "Hint", null);
-    __decorate([
-        $mol_mem
-    ], $mol_plot_graph.prototype, "hue", null);
     __decorate([
         $mol_mem
     ], $mol_plot_graph.prototype, "viewport_x", null);
@@ -3358,8 +3354,7 @@ var $;
         hue_base(val) {
             if (val !== undefined)
                 return val;
-            const obj = new this.$.NaN();
-            return obj;
+            return +NaN;
         }
         hue_shift(val) {
             if (val !== undefined)

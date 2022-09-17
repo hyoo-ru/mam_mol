@@ -1860,7 +1860,7 @@ declare namespace $ {
     class $mol_number extends $mol_view {
         precision_view(): number;
         precision_change(): number;
-        value(val?: any): any;
+        value(val?: any): number;
         sub(): readonly any[];
         precision(): number;
         value_string(val?: any): string;
@@ -1886,7 +1886,7 @@ declare namespace $.$$ {
     class $mol_number extends $.$mol_number {
         event_dec(next?: Event): void;
         event_inc(next?: Event): void;
-        value_string(next?: string): any;
+        value_string(next?: string): string;
     }
 }
 

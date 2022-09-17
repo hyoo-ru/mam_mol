@@ -6099,8 +6099,7 @@ var $;
         value(val) {
             if (val !== undefined)
                 return val;
-            const obj = new this.$.NaN();
-            return obj;
+            return +NaN;
         }
         sub() {
             return [

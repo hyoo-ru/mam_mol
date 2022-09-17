@@ -3909,7 +3909,7 @@ declare namespace $ {
         front(): readonly $mol_svg[];
         back(): readonly $mol_svg[];
         Hint(): $mol_svg_title;
-        hue(): any;
+        hue(): number;
         Sample(): any;
         type(): string;
         color(): string;
@@ -4052,7 +4052,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_plot_pane extends $mol_svg_root {
         aspect(): string;
-        hue_base(val?: any): any;
+        hue_base(val?: any): number;
         hue_shift(val?: any): number;
         gap_hor(): number;
         gap_vert(): number;
@@ -5132,7 +5132,7 @@ declare namespace $ {
     class $mol_date extends $mol_pick {
         Icon(): $mol_icon_calendar;
         bubble_content(): readonly any[];
-        value_number(val?: any): any;
+        value_number(val?: any): number;
         value_moment(val?: any): $mol_time_moment;
         value(val?: any): string;
         input_hint(): string;
@@ -5642,7 +5642,7 @@ declare namespace $ {
     class $mol_number extends $mol_view {
         precision_view(): number;
         precision_change(): number;
-        value(val?: any): any;
+        value(val?: any): number;
         sub(): readonly any[];
         precision(): number;
         value_string(val?: any): string;
@@ -5668,7 +5668,7 @@ declare namespace $.$$ {
     class $mol_number extends $.$mol_number {
         event_dec(next?: Event): void;
         event_inc(next?: Event): void;
-        value_string(next?: string): any;
+        value_string(next?: string): string;
     }
 }
 
@@ -6865,7 +6865,7 @@ declare namespace $ {
         sub(): readonly any[];
         tags(): readonly any[];
         zero(): $$.$mol_number;
-        year(val?: any): any;
+        year(val?: any): number;
         one(): $$.$mol_number;
         two(): $$.$mol_number;
         age(val?: any): number;

@@ -29,15 +29,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value_number?val NaN
+		 * value_number?val +NaN
 		 * ```
 		 */
 		@ $mol_mem
 		value_number(val?: any) {
 			if ( val !== undefined ) return val as never
-			const obj = new this.$.NaN()
-			
-			return obj
+			return +NaN
 		}
 		
 		/**

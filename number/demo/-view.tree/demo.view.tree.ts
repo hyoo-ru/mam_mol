@@ -68,15 +68,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * year?val NaN
+		 * year?val +NaN
 		 * ```
 		 */
 		@ $mol_mem
 		year(val?: any) {
 			if ( val !== undefined ) return val as never
-			const obj = new this.$.NaN()
-			
-			return obj
+			return +NaN
 		}
 		
 		/**

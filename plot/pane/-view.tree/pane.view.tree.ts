@@ -12,15 +12,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hue_base?val NaN
+		 * hue_base?val +NaN
 		 * ```
 		 */
 		@ $mol_mem
 		hue_base(val?: any) {
 			if ( val !== undefined ) return val as never
-			const obj = new this.$.NaN()
-			
-			return obj
+			return +NaN
 		}
 		
 		/**

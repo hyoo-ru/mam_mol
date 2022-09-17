@@ -80,7 +80,7 @@ $mol_plot_graph $mol_svg_group
 	back /$mol_svg
 	Hint $mol_svg_title
 		title <= hint <= title \
-	hue NaN
+	hue +NaN
 	Sample null
 
 $mol_plot_graph_sample $mol_view
@@ -151,7 +151,7 @@ $mol_touch $mol_plugin
 $mol_plot_pane $mol_svg_root
 	aspect \none
 	-
-	hue_base?val NaN
+	hue_base?val +NaN
 	hue_shift?val 111
 	-
 	gap_hor 48
