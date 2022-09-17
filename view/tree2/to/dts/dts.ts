@@ -106,6 +106,10 @@ namespace $ {
 								input.data('[]'),
 							]
 							
+							if( Number( input.type ).toString() === input.type.replace( /^\+/, '' ) ) return [
+								input.data( 'number' ),
+							]
+							
 							if( /^[$A-Z]/.test( input.type ) ) {
 								
 								const first = input.kids[0]
@@ -182,10 +186,6 @@ namespace $ {
 								]
 								
 							}
-							
-							if( Number( input.type ).toString() === input.type ) return [
-								input.data( 'number' ),
-							]
 							
 							return [
 								input.data( input.type || 'string' ),
