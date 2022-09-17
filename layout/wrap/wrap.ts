@@ -17,6 +17,8 @@ namespace $ {
 				const group = $mol_layout_flex.make({
 					pos: this.pos,
 					size: this.size,
+					before: ()=> this.before(),
+					after: ()=> this.after(),
 					ortho: $mol_layout_stack.make({})
 				})
 

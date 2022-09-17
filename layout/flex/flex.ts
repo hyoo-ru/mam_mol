@@ -19,6 +19,8 @@ namespace $ {
 
 			this.min = min
 			this.max = max
+			
+			this.base = this.before() + ( this.kids[0]?.base ?? 0 )
 
 		}
 
