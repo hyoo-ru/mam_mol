@@ -7,7 +7,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		keys() {
+		keys(): readonly string[] {
 			return Object.keys( this.options() )
 		}
 
@@ -17,7 +17,7 @@ namespace $.$$ {
 		}
 		
 		option_title( key : string ) {
-			return this.options()[key]
+			return this.options()[key] || key
 		}
 		
 	}
