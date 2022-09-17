@@ -2551,7 +2551,7 @@ declare namespace $.$$ {
         options(): {
             [key: string]: string;
         };
-        keys(): string[];
+        keys(): readonly string[];
         items(): $mol_check[];
         option_title(key: string): string;
     }

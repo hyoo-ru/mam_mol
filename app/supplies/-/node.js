@@ -8756,7 +8756,7 @@ var $;
                 return this.keys().map(key => this.Option(key));
             }
             option_title(key) {
-                return this.options()[key];
+                return this.options()[key] || key;
             }
         }
         __decorate([

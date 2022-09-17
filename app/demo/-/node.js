@@ -11458,9 +11458,6 @@ var $;
         menu_tools() {
             return [];
         }
-        menu_foot() {
-            return [];
-        }
         links() {
             return [];
         }
@@ -11469,14 +11466,20 @@ var $;
             obj.rows = () => this.links();
             return obj;
         }
+        menu_body() {
+            return [
+                this.Links()
+            ];
+        }
+        menu_foot() {
+            return [];
+        }
         Menu() {
             const obj = new this.$.$mol_page();
             obj.title = () => this.menu_title();
             obj.tools = () => this.menu_tools();
+            obj.body = () => this.menu_body();
             obj.foot = () => this.menu_foot();
-            obj.body = () => [
-                this.Links()
-            ];
             return obj;
         }
         arg(id) {
@@ -11537,9 +11540,14 @@ var $;
     (function ($$) {
         class $mol_book2_catalog extends $.$mol_book2_catalog {
             pages() {
+                const spread = this.Spread();
                 return [
                     this.Menu(),
-                    ...$mol_maybe(this.Spread()),
+                    ...spread
+                        ? spread instanceof $mol_book2
+                            ? spread.pages()
+                            : [spread]
+                        : [],
                 ];
             }
             links() {
@@ -11558,7 +11566,8 @@ var $;
                 return { [this.param()]: null };
             }
             spread_title(spread) {
-                return this.spreads()[spread].title();
+                const page = this.spreads()[spread];
+                return page instanceof $mol_book2 && page.pages()[0]?.title() || page.title();
             }
         }
         __decorate([
@@ -17521,7 +17530,7 @@ var $;
                 return this.keys().map(key => this.Option(key));
             }
             option_title(key) {
-                return this.options()[key];
+                return this.options()[key] || key;
             }
         }
         __decorate([

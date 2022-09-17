@@ -111,16 +111,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * menu_foot /
-		 * ```
-		 */
-		menu_foot() {
-			return [
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
 		 * links /
 		 * ```
 		 */
@@ -145,11 +135,32 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * menu_body / <= Links
+		 * ```
+		 */
+		menu_body() {
+			return [
+				this.Links()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * menu_foot /
+		 * ```
+		 */
+		menu_foot() {
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Menu $mol_page
 		 * 	title <= menu_title
 		 * 	tools <= menu_tools
+		 * 	body <= menu_body
 		 * 	foot <= menu_foot
-		 * 	body / <= Links
 		 * ```
 		 */
 		@ $mol_mem
@@ -158,10 +169,8 @@ namespace $ {
 			
 			obj.title = () => this.menu_title()
 			obj.tools = () => this.menu_tools()
+			obj.body = () => this.menu_body()
 			obj.foot = () => this.menu_foot()
-			obj.body = () => [
-				this.Links()
-			] as readonly any[]
 			
 			return obj
 		}

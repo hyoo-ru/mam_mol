@@ -7,10 +7,10 @@ $mol_book2_catalog $mol_book2
 		<= Menu $mol_page
 			title <= menu_title \
 			tools <= menu_tools /
-			foot <= menu_foot /
-			body /
+			body <= menu_body /
 				<= Links $mol_list
 					rows <= links /
+			foot <= menu_foot /
 	Link* $mol_link
 		arg <= arg* *
 		sub <= link_content* /

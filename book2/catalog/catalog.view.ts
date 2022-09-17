@@ -3,9 +3,14 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		pages() {
+			const spread = this.Spread()
 			return [
 				this.Menu(),
-				... $mol_maybe( this.Spread() ),
+				... spread
+					? spread instanceof $mol_book2
+						? spread.pages()
+						: [ spread ]
+					: [],
 			]
 		}
 		
@@ -32,7 +37,8 @@ namespace $.$$ {
 		}
 		
 		spread_title( spread: string ) {
-			return this.spreads()[ spread ].title()
+			const page = this.spreads()[ spread ]
+			return page instanceof $mol_book2 && page.pages()[0]?.title() || page.title()
 		}
 		
 	}
