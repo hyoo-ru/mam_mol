@@ -2890,6 +2890,7 @@ $hyoo_harp_app $mol_page
 		<= Lights $mol_lights_toggle
 	body /
 		<= Content $mol_list rows /
+			<= Rate $mol_speck value <= rate 0
 			<= Uri $mol_textarea
 				hint \harp;query
 				value? <=> uri? \pullRequest[state=closed,merged;+repository[name;private;owner[name];_len[issue]];-updateTime;author[name];_num=20@30]

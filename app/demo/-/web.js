@@ -25661,6 +25661,14 @@ var $;
             const obj = new this.$.$mol_lights_toggle();
             return obj;
         }
+        rate() {
+            return 0;
+        }
+        Rate() {
+            const obj = new this.$.$mol_speck();
+            obj.value = () => this.rate();
+            return obj;
+        }
         uri(next) {
             if (next !== undefined)
                 return next;
@@ -25685,6 +25693,7 @@ var $;
         Content() {
             const obj = new this.$.$mol_list();
             obj.rows = () => [
+                this.Rate(),
                 this.Uri(),
                 this.Json()
             ];
@@ -25700,6 +25709,9 @@ var $;
     __decorate([
         $mol_mem
     ], $hyoo_harp_app.prototype, "Lights", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_harp_app.prototype, "Rate", null);
     __decorate([
         $mol_mem
     ], $hyoo_harp_app.prototype, "uri", null);
@@ -25828,6 +25840,35 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function count(query) {
+        return;
+    }
+    function $hyoo_harp_rate(query) {
+        let rate = 1;
+        for (const field of Object.keys(query)) {
+            switch (field) {
+                case '=': break;
+                case '+': break;
+                case '!=': break;
+                case '_num': break;
+                default:
+                    const kid = query[field];
+                    const mult = $hyoo_harp_rate(kid);
+                    if (mult === 1)
+                        rate += (kid['=']?.length ?? kid['!=']?.length ?? 1 / 10) * 10;
+                    else
+                        rate += mult;
+            }
+        }
+        return rate;
+    }
+    $.$hyoo_harp_rate = $hyoo_harp_rate;
+})($ || ($ = {}));
+//hyoo/harp/rate/rate.ts
+;
+"use strict";
+var $;
+(function ($) {
     $mol_style_attach("hyoo/harp/app/app.view.css", "[hyoo_harp_app_content] {\n\tpadding: var(--mol_gap_block);\n}\n");
 })($ || ($ = {}));
 //hyoo/harp/app/-css/app.view.css.ts
@@ -25844,6 +25885,9 @@ var $;
             json() {
                 return $hyoo_harp_from_string(this.uri());
             }
+            rate() {
+                return $hyoo_harp_rate(this.json());
+            }
         }
         __decorate([
             $mol_mem
@@ -25851,6 +25895,9 @@ var $;
         __decorate([
             $mol_mem
         ], $hyoo_harp_app.prototype, "json", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_harp_app.prototype, "rate", null);
         $$.$hyoo_harp_app = $hyoo_harp_app;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

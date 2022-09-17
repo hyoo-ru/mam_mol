@@ -424,6 +424,7 @@
     "$hyoo_harp_from_string",
     "$hyoo_harp_from",
     "$hyoo_harp_query",
+    "$hyoo_harp_rate",
     "$mol_nav_demo",
     "$mol_number_demo",
     "$mol_page_demo",
