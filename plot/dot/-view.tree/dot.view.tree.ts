@@ -3,14 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * points_max Infinity
+		 * points_max +Infinity
 		 * ```
 		 */
-		@ $mol_mem
 		points_max() {
-			const obj = new this.$.Infinity()
-			
-			return obj
+			return +Infinity
 		}
 		
 		/**

@@ -1104,7 +1104,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_plot_dot extends $mol_plot_graph {
-        points_max(): any;
+        points_max(): number;
         aspect(): number;
         style(): {
             "stroke-width": number;

@@ -266,7 +266,7 @@ $mol_svg_path $mol_svg
 
 
 $mol_plot_dot $mol_plot_graph
-	points_max Infinity
+	points_max +Infinity
 	aspect 1
 	style *
 		^

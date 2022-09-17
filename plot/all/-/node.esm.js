@@ -4547,8 +4547,7 @@ var $;
 (function ($) {
     class $mol_plot_dot extends $mol_plot_graph {
         points_max() {
-            const obj = new this.$.Infinity();
-            return obj;
+            return +Infinity;
         }
         aspect() {
             return 1;
@@ -4582,9 +4581,6 @@ var $;
             return obj;
         }
     }
-    __decorate([
-        $mol_mem
-    ], $mol_plot_dot.prototype, "points_max", null);
     __decorate([
         $mol_mem
     ], $mol_plot_dot.prototype, "Sample", null);

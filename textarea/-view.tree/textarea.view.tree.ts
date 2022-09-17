@@ -118,14 +118,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * length_max Infinity
+		 * length_max +Infinity
 		 * ```
 		 */
-		@ $mol_mem
 		length_max() {
-			const obj = new this.$.Infinity()
-			
-			return obj
+			return +Infinity
 		}
 		
 		/**

@@ -29,7 +29,7 @@ $mol_string $mol_view
 		inputMode <= keyboard \text
 	attr *
 		^
-		maxlength <= length_max Infinity
+		maxlength <= length_max +Infinity
 		type <= type?val \text
 	event *
 		^

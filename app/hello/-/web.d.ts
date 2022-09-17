@@ -843,7 +843,7 @@ declare namespace $ {
             inputMode: string;
         };
         attr(): {
-            maxlength: any;
+            maxlength: number;
             type: string;
         };
         event(): {
@@ -862,7 +862,7 @@ declare namespace $ {
         selection_end(): number;
         selection_start(): number;
         keyboard(): string;
-        length_max(): any;
+        length_max(): number;
         type(val?: any): string;
         event_change(event?: any): any;
         event_key_press(event?: any): any;

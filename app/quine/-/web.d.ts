@@ -1009,7 +1009,7 @@ declare namespace $ {
     class $mol_paragraph extends $mol_view {
         line_height(): number;
         letter_width(): number;
-        width_limit(): any;
+        width_limit(): number;
         sub(): readonly any[];
     }
 }

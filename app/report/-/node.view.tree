@@ -176,7 +176,7 @@ $mol_string $mol_view
 		inputMode <= keyboard \text
 	attr *
 		^
-		maxlength <= length_max Infinity
+		maxlength <= length_max +Infinity
 		type <= type?val \text
 	event *
 		^
@@ -191,7 +191,7 @@ $mol_icon_dots_vertical $mol_icon path \M12,16C13.1,16 14,16.9 14,18C14,19.1 13.
 $mol_paragraph $mol_view
 	line_height 24
 	letter_width 7
-	width_limit Infinity
+	width_limit +Infinity
 	sub / <= title
 
 $mol_dimmer $mol_paragraph

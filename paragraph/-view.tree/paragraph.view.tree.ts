@@ -21,14 +21,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * width_limit Infinity
+		 * width_limit +Infinity
 		 * ```
 		 */
-		@ $mol_mem
 		width_limit() {
-			const obj = new this.$.Infinity()
-			
-			return obj
+			return +Infinity
 		}
 		
 		/**
