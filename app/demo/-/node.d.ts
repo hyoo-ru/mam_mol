@@ -3514,7 +3514,7 @@ declare namespace $ {
         Menu_filter(): $$.$mol_search;
         arg(id: any): {};
         spread_title(id: any): string;
-        Spread_title(id: any): $$.$mol_dimmer;
+        Menu_link_title(id: any): $$.$mol_dimmer;
         menu_link_content(id: any): readonly any[];
         Menu_link(id: any): $$.$mol_link;
         menu_links(): readonly any[];

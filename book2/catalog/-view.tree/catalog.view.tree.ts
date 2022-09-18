@@ -152,13 +152,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Spread_title* $mol_dimmer
+		 * Menu_link_title* $mol_dimmer
 		 * 	needle <= menu_filter
 		 * 	haystack <= spread_title*
 		 * ```
 		 */
 		@ $mol_mem_key
-		Spread_title(id: any) {
+		Menu_link_title(id: any) {
 			const obj = new this.$.$mol_dimmer()
 			
 			obj.needle = () => this.menu_filter()
@@ -169,12 +169,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * menu_link_content* / <= Spread_title*
+		 * menu_link_content* / <= Menu_link_title*
 		 * ```
 		 */
 		menu_link_content(id: any) {
 			return [
-				this.Spread_title(id)
+				this.Menu_link_title(id)
 			] as readonly any[]
 		}
 		

@@ -869,7 +869,7 @@ $mol_book2_catalog $mol_book2
 						<= Menu_link*0 $mol_link
 							arg <= arg* *
 							sub <= menu_link_content* /
-								<= Spread_title* $mol_dimmer
+								<= Menu_link_title* $mol_dimmer
 									needle <= menu_filter
 									haystack <= spread_title* \
 			foot <= menu_foot /
