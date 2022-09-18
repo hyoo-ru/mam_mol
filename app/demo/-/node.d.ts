@@ -3509,6 +3509,7 @@ declare namespace $ {
         Spread_close(): $$.$mol_link;
         menu_title(): string;
         menu_tools(): readonly any[];
+        menu_head(): readonly any[];
         menu_filter(next?: any): string;
         Menu_filter(): $$.$mol_search;
         arg(id: any): {};
@@ -3520,6 +3521,8 @@ declare namespace $ {
         Menu_links(): $$.$mol_list;
         menu_body(): readonly any[];
         menu_foot(): readonly any[];
+        Menu_title(): $mol_view;
+        Menu_tools(): $mol_view;
         Menu(): $mol_page;
         spread_close_arg(): {};
         Spread_close_icon(): $mol_icon_cross;

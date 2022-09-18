@@ -5,8 +5,13 @@ $mol_book2_catalog $mol_book2
 	Spread $mol_view
 	pages /
 		<= Menu $mol_page
+			Title => Menu_title
 			title <= menu_title \
+			Tools => Menu_tools
 			tools <= menu_tools /
+			head <= menu_head /
+				<= Menu_title
+				<= Menu_tools
 			body <= menu_body /
 				<= Menu_filter $mol_search
 					query? <=> menu_filter? \

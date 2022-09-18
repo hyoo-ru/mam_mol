@@ -94,6 +94,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * menu_head /
+		 * 	<= Menu_title
+		 * 	<= Menu_tools
+		 * ```
+		 */
+		menu_head() {
+			return [
+				this.Menu_title(),
+				this.Menu_tools()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * menu_filter? \
 		 * ```
 		 */
@@ -232,9 +246,30 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Menu_title
+		 * ```
+		 */
+		Menu_title() {
+			return this.Menu().Title()
+		}
+		
+		/**
+		 * ```tree
+		 * Menu_tools
+		 * ```
+		 */
+		Menu_tools() {
+			return this.Menu().Tools()
+		}
+		
+		/**
+		 * ```tree
 		 * Menu $mol_page
+		 * 	Title => Menu_title
 		 * 	title <= menu_title
+		 * 	Tools => Menu_tools
 		 * 	tools <= menu_tools
+		 * 	head <= menu_head
 		 * 	body <= menu_body
 		 * 	foot <= menu_foot
 		 * ```
@@ -245,6 +280,7 @@ namespace $ {
 			
 			obj.title = () => this.menu_title()
 			obj.tools = () => this.menu_tools()
+			obj.head = () => this.menu_head()
 			obj.body = () => this.menu_body()
 			obj.foot = () => this.menu_foot()
 			

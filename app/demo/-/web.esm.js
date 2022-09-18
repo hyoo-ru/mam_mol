@@ -11825,6 +11825,12 @@ var $;
         menu_tools() {
             return [];
         }
+        menu_head() {
+            return [
+                this.Menu_title(),
+                this.Menu_tools()
+            ];
+        }
         menu_filter(next) {
             if (next !== undefined)
                 return next;
@@ -11877,10 +11883,17 @@ var $;
         menu_foot() {
             return [];
         }
+        Menu_title() {
+            return this.Menu().Title();
+        }
+        Menu_tools() {
+            return this.Menu().Tools();
+        }
         Menu() {
             const obj = new this.$.$mol_page();
             obj.title = () => this.menu_title();
             obj.tools = () => this.menu_tools();
+            obj.head = () => this.menu_head();
             obj.body = () => this.menu_body();
             obj.foot = () => this.menu_foot();
             return obj;
@@ -11946,7 +11959,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/book2/catalog/catalog.view.css", "[mol_book2_catalog_menu_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_book2_catalog_menu_filter] {\n\tflex-grow: 0;\n\talign-self: stretch;\n}\n\n");
+    $mol_style_attach("mol/book2/catalog/catalog.view.css", "[mol_book2_catalog_menu_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_book2_catalog_menu_filter] {\n\tflex-shrink: 0;\n\tflex-grow: 0;\n\talign-self: stretch;\n}\n\n");
 })($ || ($ = {}));
 //mol/book2/catalog/-css/catalog.view.css.ts
 ;
