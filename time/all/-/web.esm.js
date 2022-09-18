@@ -355,7 +355,7 @@ var $;
                 offset: mask.offset === undefined ? undefined : this.offset,
             });
         }
-        toOffset(config) {
+        toOffset(config = new $mol_time_moment().offset) {
             const duration = new $mol_time_duration(config);
             const offset = this.offset || new $mol_time_moment().offset;
             let with_time = new $mol_time_moment('T00:00:00').merge(this);
