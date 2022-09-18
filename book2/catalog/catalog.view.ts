@@ -15,8 +15,18 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		links() {
-			return Object.keys( this.spreads() ).map( spread => this.Link( spread ) )
+		menu_body() {
+			return [
+				... Object.keys( this.spreads() ).length >= 10 ? [ this.Menu_filter() ] : [],
+				this.Menu_links(),
+			]
+		}
+		
+		@ $mol_mem
+		menu_links() {
+			return Object.keys( this.spreads() )
+				.filter( $mol_match_text( this.menu_filter(), spread => [ this.spread_title( spread ) ] ) )
+				.map( spread => this.Menu_link( spread ) )
 		}
 		
 		Spread() {

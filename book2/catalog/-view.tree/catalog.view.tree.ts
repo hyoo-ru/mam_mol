@@ -56,23 +56,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Link* $mol_link
-		 * 	arg <= arg*
-		 * 	sub <= link_content*
-		 * ```
-		 */
-		@ $mol_mem_key
-		Link(id: any) {
-			const obj = new this.$.$mol_link()
-			
-			obj.arg = () => this.arg(id)
-			obj.sub = () => this.link_content(id)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * Spread_close $mol_link
 		 * 	arg <= spread_close_arg
 		 * 	sub / <= Spread_close_icon
@@ -111,36 +94,129 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * links /
+		 * menu_filter? \
 		 * ```
 		 */
-		links() {
-			return [
-			] as readonly any[]
+		@ $mol_mem
+		menu_filter(next?: any) {
+			if ( next !== undefined ) return next as never
+			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * Links $mol_list rows <= links
+		 * Menu_filter $mol_search query? <=> menu_filter?
 		 * ```
 		 */
 		@ $mol_mem
-		Links() {
-			const obj = new this.$.$mol_list()
+		Menu_filter() {
+			const obj = new this.$.$mol_search()
 			
-			obj.rows = () => this.links()
+			obj.query = (next?: any) => this.menu_filter(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * menu_body / <= Links
+		 * arg* *
+		 * ```
+		 */
+		arg(id: any) {
+			return {
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * spread_title* \
+		 * ```
+		 */
+		spread_title(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Spread_title* $mol_dimmer
+		 * 	needle <= menu_filter
+		 * 	haystack <= spread_title*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Spread_title(id: any) {
+			const obj = new this.$.$mol_dimmer()
+			
+			obj.needle = () => this.menu_filter()
+			obj.haystack = () => this.spread_title(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * menu_link_content* / <= Spread_title*
+		 * ```
+		 */
+		menu_link_content(id: any) {
+			return [
+				this.Spread_title(id)
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Menu_link*0 $mol_link
+		 * 	arg <= arg*
+		 * 	sub <= menu_link_content*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Menu_link(id: any) {
+			const obj = new this.$.$mol_link()
+			
+			obj.arg = () => this.arg(id)
+			obj.sub = () => this.menu_link_content(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * menu_links / <= Menu_link*0
+		 * ```
+		 */
+		menu_links() {
+			return [
+				this.Menu_link("0")
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Menu_links $mol_list rows <= menu_links
+		 * ```
+		 */
+		@ $mol_mem
+		Menu_links() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => this.menu_links()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * menu_body /
+		 * 	<= Menu_filter
+		 * 	<= Menu_links
 		 * ```
 		 */
 		menu_body() {
 			return [
-				this.Links()
+				this.Menu_filter(),
+				this.Menu_links()
 			] as readonly any[]
 		}
 		
@@ -173,36 +249,6 @@ namespace $ {
 			obj.foot = () => this.menu_foot()
 			
 			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * arg* *
-		 * ```
-		 */
-		arg(id: any) {
-			return {
-			}
-		}
-		
-		/**
-		 * ```tree
-		 * spread_title* \
-		 * ```
-		 */
-		spread_title(id: any) {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * link_content* / <= spread_title*
-		 * ```
-		 */
-		link_content(id: any) {
-			return [
-				this.spread_title(id)
-			] as readonly any[]
 		}
 		
 		/**
