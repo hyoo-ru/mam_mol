@@ -4875,9 +4875,13 @@ var $;
             if (parent === this.root()) {
                 throw new Error(`Root package "${mod.relate(this.root())}" not found`);
             }
-            if (parent.name() === 'node_modules'
-                || (parent === this.root().resolve('node')) && (mod.name() !== 'node')) {
+            if (!mod.name().startsWith('@')
+                && (parent.name() === 'node_modules'
+                    || (parent === this.root().resolve('node')) && (mod.name() !== 'node'))) {
                 $node[mod.name()];
+            }
+            if (parent.name().startsWith('@') && parent.parent().name() === 'node_modules') {
+                $node[`${parent.name()}/${mod.name()}`];
             }
             return false;
         }
