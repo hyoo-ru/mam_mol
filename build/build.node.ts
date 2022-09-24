@@ -618,10 +618,18 @@ namespace $ {
 			}
 
 			if(
-				parent.name() === 'node_modules'
-				|| ( parent === this.root().resolve( 'node' ) )&&( mod.name() !== 'node' )
+				!mod.name().startsWith('@')
+				&& (
+					parent.name() === 'node_modules'
+					|| ( parent === this.root().resolve( 'node' ) )&&( mod.name() !== 'node' )
+				)
 			) {
 				$node[ mod.name() ] // force autoinstall through npm
+			}
+
+			// Handle npm pacakges with names @hello/world
+			if (parent.name().startsWith('@') && parent.parent().name() === 'node_modules') {
+				$node [ `${parent.name()}/${mod.name()}` ]
 			}
 
 			return false
