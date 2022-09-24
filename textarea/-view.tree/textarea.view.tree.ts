@@ -118,6 +118,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * spellcheck true
+		 * ```
+		 */
+		spellcheck() {
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * length_max +Infinity
 		 * ```
 		 */
@@ -143,6 +152,7 @@ namespace $ {
 		 * 	value?val <=> value?val
 		 * 	hint <= hint
 		 * 	enabled <= enabled
+		 * 	spellcheck <= spellcheck
 		 * 	length_max <= length_max
 		 * 	selection?val <=> selection?val
 		 * ```
@@ -154,6 +164,7 @@ namespace $ {
 			obj.value = (val?: any) => this.value(val)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.enabled()
+			obj.spellcheck = () => this.spellcheck()
 			obj.length_max = () => this.length_max()
 			obj.selection = (val?: any) => this.selection(val)
 			

@@ -11,6 +11,7 @@ $mol_textarea $mol_stack
 			value?val <=> value?val \
 			hint <= hint \ 
 			enabled <= enabled true
+			spellcheck <= spellcheck true
 			length_max <= length_max +Infinity
 			selection?val <=> selection?val /number
 		<= View $mol_text_code

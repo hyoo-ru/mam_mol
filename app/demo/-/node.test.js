@@ -8197,6 +8197,9 @@ var $;
         enabled() {
             return true;
         }
+        spellcheck() {
+            return true;
+        }
         length_max() {
             return +Infinity;
         }
@@ -8210,6 +8213,7 @@ var $;
             obj.value = (val) => this.value(val);
             obj.hint = () => this.hint();
             obj.enabled = () => this.enabled();
+            obj.spellcheck = () => this.spellcheck();
             obj.length_max = () => this.length_max();
             obj.selection = (val) => this.selection(val);
             return obj;
@@ -9045,6 +9049,11 @@ var $;
                 this.Fallback()
             ];
         }
+        message() {
+            return {
+                hashchange: (next) => this.uri_change(next)
+            };
+        }
         mime() {
             return "";
         }
@@ -9059,6 +9068,11 @@ var $;
             ];
             return obj;
         }
+        uri_change(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
     }
     __decorate([
         $mol_mem
@@ -9066,9 +9080,28 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_embed_native.prototype, "Fallback", null);
+    __decorate([
+        $mol_mem
+    ], $mol_embed_native.prototype, "uri_change", null);
     $.$mol_embed_native = $mol_embed_native;
 })($ || ($ = {}));
 //mol/embed/native/-view.tree/native.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_solid() {
+        const current = $mol_wire_auto();
+        if (current.reap !== nothing) {
+            current?.sub_on(sub, sub.data.length);
+        }
+        current.reap = nothing;
+    }
+    $.$mol_wire_solid = $mol_wire_solid;
+    const nothing = () => { };
+    const sub = new $mol_wire_pub_sub;
+})($ || ($ = {}));
+//mol/wire/solid/solid.ts
 ;
 "use strict";
 var $;
@@ -9121,6 +9154,7 @@ var $;
     (function ($$) {
         class $mol_embed_native extends $.$mol_embed_native {
             window() {
+                $mol_wire_solid();
                 return $mol_wire_sync(this).load(this.dom_node_actual());
             }
             load(frame) {
@@ -9142,24 +9176,25 @@ var $;
             uri_resource() {
                 return this.uri().replace(/#.*/, '');
             }
-            uri_listener() {
-                return new $mol_dom_listener($mol_dom_context, 'message', $mol_wire_async(this).uri_change);
+            message_listener() {
+                return new $mol_dom_listener($mol_dom_context, 'message', $mol_wire_async(this).message_receive);
             }
-            uri_change(event) {
+            message_receive(event) {
                 if (!event)
                     return;
                 if (event.source !== this.window())
                     return;
                 if (!Array.isArray(event.data))
                     return;
-                if (event.data[0] !== 'hashchange')
-                    return;
+                this.message()[event.data[0]]?.(event);
+            }
+            uri_change(event) {
                 this.$.$mol_wait_timeout(1000);
                 this.uri(event.data[1]);
             }
             auto() {
                 return [
-                    this.uri_listener(),
+                    this.message_listener(),
                     this.window(),
                 ];
             }
@@ -9172,10 +9207,7 @@ var $;
         ], $mol_embed_native.prototype, "uri_resource", null);
         __decorate([
             $mol_mem
-        ], $mol_embed_native.prototype, "uri_listener", null);
-        __decorate([
-            $mol_mem
-        ], $mol_embed_native.prototype, "uri_change", null);
+        ], $mol_embed_native.prototype, "message_listener", null);
         $$.$mol_embed_native = $mol_embed_native;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -24094,22 +24126,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_wire_solid() {
-        const current = $mol_wire_auto();
-        if (current.reap !== nothing) {
-            current?.sub_on(sub, sub.data.length);
-        }
-        current.reap = nothing;
-    }
-    $.$mol_wire_solid = $mol_wire_solid;
-    const nothing = () => { };
-    const sub = new $mol_wire_pub_sub;
-})($ || ($ = {}));
-//mol/wire/solid/solid.ts
-;
-"use strict";
-var $;
-(function ($) {
     $mol_style_attach("mol/infinite/demo/demo.view.css", "[mol_infinite_demo_list] {\n\tflex: 1 0 auto;\n}\n\n[mol_infinite_demo_photo] {\n\twidth: 3rem;\n\theight: 3rem;\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_infinite_demo_city] {\n\tcolor: var(--mol_theme_shade);\n}\n");
 })($ || ($ = {}));
 //mol/infinite/demo/-css/demo.view.css.ts
@@ -31492,6 +31508,7 @@ var $;
             const obj = new this.$.$mol_textarea();
             obj.hint = () => "javascript..";
             obj.sidebar_showed = () => true;
+            obj.spellcheck = () => false;
             obj.value = (val) => this.code(val);
             return obj;
         }

@@ -317,6 +317,8 @@ $mol_embed_native $mol_scroll
 			uri <= uri
 			sub /
 				<= title \
+	message *
+		hashchange? <=> uri_change? null
 
 $mol_frame $mol_embed_native
 	dom_name \iframe

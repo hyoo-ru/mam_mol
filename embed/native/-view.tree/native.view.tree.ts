@@ -59,6 +59,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * message * hashchange? <=> uri_change?
+		 * ```
+		 */
+		message() {
+			return {
+				hashchange: (next?: any) => this.uri_change(next)
+			}
+		}
+		
+		/**
+		 * ```tree
 		 * mime \
 		 * ```
 		 */
@@ -92,6 +103,17 @@ namespace $ {
 			] as readonly any[]
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * uri_change? null
+		 * ```
+		 */
+		@ $mol_mem
+		uri_change(next?: any) {
+			if ( next !== undefined ) return next as never
+			return null as any
 		}
 	}
 	

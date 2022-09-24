@@ -301,6 +301,7 @@ $mol_textarea $mol_stack
 			value?val <=> value?val \
 			hint <= hint \ 
 			enabled <= enabled true
+			spellcheck <= spellcheck true
 			length_max <= length_max +Infinity
 			selection?val <=> selection?val /number
 		<= View $mol_text_code
@@ -420,6 +421,8 @@ $mol_embed_native $mol_scroll
 			uri <= uri
 			sub /
 				<= title \
+	message *
+		hashchange? <=> uri_change? null
 
 $mol_frame $mol_embed_native
 	dom_name \iframe
@@ -3870,6 +3873,7 @@ $hyoo_js_eval $mol_book2
 				<= Code $mol_textarea
 					hint \javascript..
 					sidebar_showed true
+					spellcheck false
 					value?val <=> code?val \
 				<= Error_mark $mol_follower
 					Anchor <= error_anchor null
