@@ -3,6 +3,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		window() {
+			$mol_wire_solid()
 			return $mol_wire_sync( this as $mol_embed_native ).load( this.dom_node_actual() as HTMLIFrameElement )
 		}
 		
@@ -31,30 +32,31 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		uri_listener() {
+		message_listener() {
 			return new $mol_dom_listener(
 				$mol_dom_context,
 				'message',
-				$mol_wire_async( this ).uri_change
+				$mol_wire_async( this ).message_receive
 			)
 		}
 		
-		@ $mol_mem
-		uri_change( event?: MessageEvent<[ string, string ]> ) {
-
+		message_receive( event?: MessageEvent<[ string, string ]> ) {
+			
 			if( !event ) return
 			if( event.source !== this.window() ) return
 			if( !Array.isArray( event.data ) ) return
-			if( event.data[0] !== 'hashchange' ) return
 			
+			this.message()[ event.data[0] ]?.( event )
+		}
+
+		uri_change( event: MessageEvent<[ string, string ]> ) {
 			this.$.$mol_wait_timeout( 1000 )
-			
 			this.uri( event.data[1] )
 		}
 
 		auto() {
 			return [
-				this.uri_listener(),
+				this.message_listener(),
 				this.window(),
 			]
 		}
