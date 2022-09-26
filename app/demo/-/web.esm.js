@@ -1618,9 +1618,6 @@ var $;
             this.data = data;
             this.bin = bin;
         }
-        get id() {
-            return `${this.head}/${this.self}`;
-        }
         kind() {
             if (this.head === this.self && this.auth === this.self) {
                 if (this.head === this.land) {
@@ -2014,32 +2011,22 @@ var $;
             const units = await this.delta_land(land, clocks);
             let size = 0;
             const bins = [];
-            const packs = [];
-            function wrap() {
-                const batch = new Uint8Array(size);
-                let offset = 0;
-                for (const bin of bins) {
-                    batch.set(new Uint8Array(bin.buffer, bin.byteOffset, bin.byteLength), offset);
-                    offset += bin.byteLength;
-                }
-                size = 0;
-                bins.length = 0;
-                packs.push(batch);
-            }
             for (const unit of units) {
                 const bin = unit.bin;
                 bins.push(bin);
                 size += bin.byteLength;
             }
-            if (size)
-                wrap();
-            return packs;
+            const batch = new Uint8Array(size);
+            let offset = 0;
+            for (const bin of bins) {
+                batch.set(new Uint8Array(bin.buffer, bin.byteOffset, bin.byteLength), offset);
+                offset += bin.byteLength;
+            }
+            return batch;
         }
         async *delta(clocks = new Map()) {
             for (const land of this.lands.values()) {
-                for (const pack of await this.delta_batch(land, clocks.get(land.id()))) {
-                    yield pack;
-                }
+                yield await this.delta_batch(land, clocks.get(land.id()));
             }
         }
         async apply(delta) {
@@ -2791,7 +2778,7 @@ var $;
             for (const next of delta) {
                 this._clocks[next.group()].see_peer(next.auth, next.time);
                 const kids = this.unit_list(next.head);
-                const next_id = next.id;
+                const next_id = `${next.head}/${next.self}`;
                 let prev = this._unit_all.get(next_id);
                 if (prev) {
                     if ($hyoo_crowd_unit_compare(prev, next) > 0)
