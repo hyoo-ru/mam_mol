@@ -2449,13 +2449,10 @@ var $;
             land_inner.apply(land_outer.delta());
             return land_inner;
         }
-        async delta_land(land, clocks = [new $hyoo_crowd_clock, new $hyoo_crowd_clock]) {
-            const units = land.delta(clocks);
-            if (!units.length)
-                return [];
-            for (const unit of units) {
+        sign_units(units) {
+            return Promise.all(units.map(async (unit) => {
                 if (unit.bin)
-                    continue;
+                    return unit;
                 const bin = $hyoo_crowd_unit_bin.from_unit(unit);
                 let sign = this._signs.get(unit);
                 if (!sign) {
@@ -2465,8 +2462,11 @@ var $;
                 bin.sign(sign);
                 unit.bin = bin;
                 this._signs.set(unit, sign);
-            }
-            return units;
+                return unit;
+            }));
+        }
+        delta_land(land, clocks = [new $hyoo_crowd_clock, new $hyoo_crowd_clock]) {
+            return this.sign_units(land.delta(clocks));
         }
         async delta_batch(land, clocks = [new $hyoo_crowd_clock, new $hyoo_crowd_clock]) {
             const units = await this.delta_land(land, clocks);
@@ -3022,6 +3022,39 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_wire_method(host, field, descr) {
+        if (!descr)
+            descr = Reflect.getOwnPropertyDescriptor(host, field);
+        const orig = descr?.value ?? host[field];
+        const sup = Reflect.getPrototypeOf(host);
+        if (typeof sup[field] === 'function') {
+            Object.defineProperty(orig, 'name', { value: sup[field].name });
+        }
+        const temp = $mol_wire_task.getter(orig);
+        const value = function (...args) {
+            const fiber = temp(this ?? null, args);
+            return fiber.sync();
+        };
+        Object.defineProperty(value, 'name', { value: orig.name + ' ' });
+        Object.assign(value, { orig });
+        const descr2 = { ...descr, value };
+        Reflect.defineProperty(host, field, descr2);
+        return descr2;
+    }
+    $.$mol_wire_method = $mol_wire_method;
+})($ || ($ = {}));
+//mol/wire/method/method.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_action = $mol_wire_method;
+})($ || ($ = {}));
+//mol/action/action.ts
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_wire_sync(obj) {
         return new Proxy(obj, {
             get(obj, field) {
@@ -3079,6 +3112,9 @@ var $;
             return land;
         }
     }
+    __decorate([
+        $mol_action
+    ], $hyoo_crowd_reg.prototype, "yoke", null);
     $.$hyoo_crowd_reg = $hyoo_crowd_reg;
 })($ || ($ = {}));
 //hyoo/crowd/reg/reg.ts
@@ -3730,32 +3766,6 @@ var $;
     $.$mol_window = $mol_window;
 })($ || ($ = {}));
 //mol/window/window.node.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_method(host, field, descr) {
-        if (!descr)
-            descr = Reflect.getOwnPropertyDescriptor(host, field);
-        const orig = descr?.value ?? host[field];
-        const sup = Reflect.getPrototypeOf(host);
-        if (typeof sup[field] === 'function') {
-            Object.defineProperty(orig, 'name', { value: sup[field].name });
-        }
-        const temp = $mol_wire_task.getter(orig);
-        const value = function (...args) {
-            const fiber = temp(this ?? null, args);
-            return fiber.sync();
-        };
-        Object.defineProperty(value, 'name', { value: orig.name + ' ' });
-        Object.assign(value, { orig });
-        const descr2 = { ...descr, value };
-        Reflect.defineProperty(host, field, descr2);
-        return descr2;
-    }
-    $.$mol_wire_method = $mol_wire_method;
-})($ || ($ = {}));
-//mol/wire/method/method.ts
 ;
 "use strict";
 var $;
@@ -12005,13 +12015,6 @@ var $;
     $.$mol_search = $mol_search;
 })($ || ($ = {}));
 //mol/search/-view.tree/search.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_action = $mol_wire_method;
-})($ || ($ = {}));
-//mol/action/action.ts
 ;
 "use strict";
 var $;

@@ -576,7 +576,8 @@ declare namespace $ {
         _knights: $mol_dict<`${string}_${string}`, $hyoo_crowd_peer>;
         _signs: WeakMap<$hyoo_crowd_unit, Uint8Array>;
         grab(king_level?: $hyoo_crowd_peer_level, base_level?: $hyoo_crowd_peer_level): Promise<$hyoo_crowd_land>;
-        delta_land(land: $hyoo_crowd_land, clocks?: readonly [$hyoo_crowd_clock, $hyoo_crowd_clock]): Promise<readonly $hyoo_crowd_unit[]>;
+        sign_units(units: readonly $hyoo_crowd_unit[]): Promise<$hyoo_crowd_unit[]>;
+        delta_land(land: $hyoo_crowd_land, clocks?: readonly [$hyoo_crowd_clock, $hyoo_crowd_clock]): Promise<$hyoo_crowd_unit[]>;
         delta_batch(land: $hyoo_crowd_land, clocks?: readonly [$hyoo_crowd_clock, $hyoo_crowd_clock]): Promise<Uint8Array>;
         delta(clocks?: Map<`${string}_${string}`, readonly [$hyoo_crowd_clock, $hyoo_crowd_clock]>): AsyncGenerator<Uint8Array, void, unknown>;
         apply(delta: Uint8Array): Promise<{
@@ -656,6 +657,21 @@ declare namespace $ {
         complete(): void;
         put(next: Result | Error | Promise<Result | Error>): Result | Error | Promise<Result | Error>;
     }
+}
+
+declare namespace $ {
+    function $mol_wire_method<Host extends object, Args extends readonly any[], Result>(host: Host, field: PropertyKey, descr?: TypedPropertyDescriptor<(...args: Args) => Result>): {
+        value: (this: Host, ...args: Args) => Result;
+        enumerable?: boolean | undefined;
+        configurable?: boolean | undefined;
+        writable?: boolean | undefined;
+        get?: (() => (...args: Args) => Result) | undefined;
+        set?: ((value: (...args: Args) => Result) => void) | undefined;
+    };
+}
+
+declare namespace $ {
+    let $mol_action: typeof $mol_wire_method;
 }
 
 declare namespace $ {
@@ -855,17 +871,6 @@ declare namespace $ {
         readonly round: $mol_style_func<"var", "--mol_gap_round">;
         readonly space: $mol_style_func<"var", "--mol_gap_space">;
         readonly blur: $mol_style_func<"var", "--mol_gap_blur">;
-    };
-}
-
-declare namespace $ {
-    function $mol_wire_method<Host extends object, Args extends readonly any[], Result>(host: Host, field: PropertyKey, descr?: TypedPropertyDescriptor<(...args: Args) => Result>): {
-        value: (this: Host, ...args: Args) => Result;
-        enumerable?: boolean | undefined;
-        configurable?: boolean | undefined;
-        writable?: boolean | undefined;
-        get?: (() => (...args: Args) => Result) | undefined;
-        set?: ((value: (...args: Args) => Result) => void) | undefined;
     };
 }
 
@@ -1741,10 +1746,6 @@ declare namespace $ {
         find(include?: RegExp, exclude?: RegExp): $mol_file[];
         size(): number;
     }
-}
-
-declare namespace $ {
-    let $mol_action: typeof $mol_wire_method;
 }
 
 declare namespace $ {
