@@ -664,15 +664,6 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_after_timeout = $mol_after_mock_timeout;
-    });
-})($ || ($ = {}));
-//mol/after/timeout/timeout.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
     $mol_test({
         async 'Latest method calls wins'($) {
             class NameLogger extends $mol_object2 {
@@ -712,6 +703,15 @@ var $;
     });
 })($ || ($ = {}));
 //mol/wire/async/async.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_after_timeout = $mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+//mol/after/timeout/timeout.test.ts
 ;
 "use strict";
 var $;

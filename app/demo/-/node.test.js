@@ -3014,39 +3014,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_wire_method(host, field, descr) {
-        if (!descr)
-            descr = Reflect.getOwnPropertyDescriptor(host, field);
-        const orig = descr?.value ?? host[field];
-        const sup = Reflect.getPrototypeOf(host);
-        if (typeof sup[field] === 'function') {
-            Object.defineProperty(orig, 'name', { value: sup[field].name });
-        }
-        const temp = $mol_wire_task.getter(orig);
-        const value = function (...args) {
-            const fiber = temp(this ?? null, args);
-            return fiber.sync();
-        };
-        Object.defineProperty(value, 'name', { value: orig.name + ' ' });
-        Object.assign(value, { orig });
-        const descr2 = { ...descr, value };
-        Reflect.defineProperty(host, field, descr2);
-        return descr2;
-    }
-    $.$mol_wire_method = $mol_wire_method;
-})($ || ($ = {}));
-//mol/wire/method/method.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_action = $mol_wire_method;
-})($ || ($ = {}));
-//mol/action/action.ts
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_wire_sync(obj) {
         return new Proxy(obj, {
             get(obj, field) {
@@ -3101,12 +3068,10 @@ var $;
                 return null;
             const land = $mol_wire_sync(world).grab(king_level, base_level);
             this.value(land.id());
+            world.land_init(land);
             return land;
         }
     }
-    __decorate([
-        $mol_action
-    ], $hyoo_crowd_reg.prototype, "yoke", null);
     $.$hyoo_crowd_reg = $hyoo_crowd_reg;
 })($ || ($ = {}));
 //hyoo/crowd/reg/reg.ts
@@ -3119,10 +3084,8 @@ var $;
             return new Node(this.land, $mol_int62_hash_string(key + '\n' + this.head));
         }
         yoke(key, Node, king_level, base_level) {
-            return this.sub(key, $hyoo_crowd_reg)
-                .yoke(king_level, base_level)?.chief
-                .sub(key, Node)
-                ?? null;
+            const land = this.sub(key, $hyoo_crowd_reg).yoke(king_level, base_level);
+            return land?.chief.sub(key, Node) ?? null;
         }
     }
     $.$hyoo_crowd_struct = $hyoo_crowd_struct;
@@ -3758,6 +3721,32 @@ var $;
     $.$mol_window = $mol_window;
 })($ || ($ = {}));
 //mol/window/window.node.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_method(host, field, descr) {
+        if (!descr)
+            descr = Reflect.getOwnPropertyDescriptor(host, field);
+        const orig = descr?.value ?? host[field];
+        const sup = Reflect.getPrototypeOf(host);
+        if (typeof sup[field] === 'function') {
+            Object.defineProperty(orig, 'name', { value: sup[field].name });
+        }
+        const temp = $mol_wire_task.getter(orig);
+        const value = function (...args) {
+            const fiber = temp(this ?? null, args);
+            return fiber.sync();
+        };
+        Object.defineProperty(value, 'name', { value: orig.name + ' ' });
+        Object.assign(value, { orig });
+        const descr2 = { ...descr, value };
+        Reflect.defineProperty(host, field, descr2);
+        return descr2;
+    }
+    $.$mol_wire_method = $mol_wire_method;
+})($ || ($ = {}));
+//mol/wire/method/method.ts
 ;
 "use strict";
 var $;
@@ -12007,6 +11996,13 @@ var $;
     $.$mol_search = $mol_search;
 })($ || ($ = {}));
 //mol/search/-view.tree/search.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_action = $mol_wire_method;
+})($ || ($ = {}));
+//mol/action/action.ts
 ;
 "use strict";
 var $;

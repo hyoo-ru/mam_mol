@@ -660,21 +660,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_wire_method<Host extends object, Args extends readonly any[], Result>(host: Host, field: PropertyKey, descr?: TypedPropertyDescriptor<(...args: Args) => Result>): {
-        value: (this: Host, ...args: Args) => Result;
-        enumerable?: boolean | undefined;
-        configurable?: boolean | undefined;
-        writable?: boolean | undefined;
-        get?: (() => (...args: Args) => Result) | undefined;
-        set?: ((value: (...args: Args) => Result) => void) | undefined;
-    };
-}
-
-declare namespace $ {
-    let $mol_action: typeof $mol_wire_method;
-}
-
-declare namespace $ {
     function $mol_wire_sync<Host extends object>(obj: Host): (Host extends (...args: infer Args) => infer Res ? Res extends Promise<infer Res2> ? (...args: Args) => Res2 : Host : {}) & { [key in keyof Host]: Host[key] extends (...args: infer Args_1) => Promise<infer Res_1> ? (...args: Args_1) => Res_1 : Host[key]; };
 }
 
@@ -871,6 +856,17 @@ declare namespace $ {
         readonly round: $mol_style_func<"var", "--mol_gap_round">;
         readonly space: $mol_style_func<"var", "--mol_gap_space">;
         readonly blur: $mol_style_func<"var", "--mol_gap_blur">;
+    };
+}
+
+declare namespace $ {
+    function $mol_wire_method<Host extends object, Args extends readonly any[], Result>(host: Host, field: PropertyKey, descr?: TypedPropertyDescriptor<(...args: Args) => Result>): {
+        value: (this: Host, ...args: Args) => Result;
+        enumerable?: boolean | undefined;
+        configurable?: boolean | undefined;
+        writable?: boolean | undefined;
+        get?: (() => (...args: Args) => Result) | undefined;
+        set?: ((value: (...args: Args) => Result) => void) | undefined;
     };
 }
 
@@ -1746,6 +1742,10 @@ declare namespace $ {
         find(include?: RegExp, exclude?: RegExp): $mol_file[];
         size(): number;
     }
+}
+
+declare namespace $ {
+    let $mol_action: typeof $mol_wire_method;
 }
 
 declare namespace $ {
