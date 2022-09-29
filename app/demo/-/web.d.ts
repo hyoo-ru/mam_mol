@@ -8299,6 +8299,7 @@ declare namespace $ {
             src: string;
             controls: boolean;
             autoplay: boolean;
+            loop: boolean;
             poster: string;
         };
         event(): {
@@ -8312,6 +8313,7 @@ declare namespace $ {
         uri(): string;
         controls(): boolean;
         autoplay(): boolean;
+        loop(): boolean;
         poster(): string;
         revolume(event?: any): any;
         retime(event?: any): any;

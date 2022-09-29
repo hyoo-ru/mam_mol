@@ -3746,6 +3746,8 @@ var $;
                 this.event_end(event);
             }
             event_wheel(event) {
+                if (event.defaultPrevented)
+                    return;
                 if (this.pan === $mol_touch.prototype.pan && this.zoom === $mol_touch.prototype.zoom)
                     return;
                 if (this.pan !== $mol_touch.prototype.pan) {

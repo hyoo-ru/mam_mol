@@ -58,6 +58,7 @@ namespace $ {
 		 * 	src <= uri
 		 * 	controls <= controls
 		 * 	autoplay <= autoplay
+		 * 	loop <= loop
 		 * 	poster <= poster
 		 * ```
 		 */
@@ -66,6 +67,7 @@ namespace $ {
 				src: this.uri(),
 				controls: this.controls(),
 				autoplay: this.autoplay(),
+				loop: this.loop(),
 				poster: this.poster()
 			}
 		}
@@ -117,6 +119,15 @@ namespace $ {
 		 */
 		autoplay() {
 			return true
+		}
+		
+		/**
+		 * ```tree
+		 * loop false
+		 * ```
+		 */
+		loop() {
+			return false
 		}
 		
 		/**
