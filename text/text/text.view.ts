@@ -201,6 +201,11 @@ namespace $.$$ {
 			
 		}
 		
+		@ $mol_mem_key
+		link_host( path: readonly number[] ) {
+			return this.link_uri( path ).replace( /^.*?\/\/|\/.*$/g, '' )
+		}
+		
 		@ $mol_mem
 		auto_scroll() {
 			for( const [ index, token ] of this.flow_tokens().entries() ) {

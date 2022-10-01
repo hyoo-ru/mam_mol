@@ -2210,6 +2210,7 @@ declare namespace $ {
         line_type(id: any): string;
         line_content(id: any): readonly any[];
         link_uri(id: any): string;
+        link_host(id: any): string;
     }
     class $mol_text_header extends $mol_paragraph {
         sub(): readonly any[];
@@ -2276,6 +2277,7 @@ declare namespace $.$$ {
         line_text(path: readonly number[]): string;
         line_content(path: readonly number[]): ($mol_dimmer | $mol_text_code_row | $mol_link_iconed | $mol_embed_any | $mol_text_span)[];
         link_uri(path: readonly number[]): string;
+        link_host(path: readonly number[]): string;
         auto_scroll(): void;
     }
 }

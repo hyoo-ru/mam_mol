@@ -419,7 +419,7 @@ $mol_text $mol_list
 		content <= line_content* /
 	Link_http* $mol_link_iconed
 		uri <= link_uri* \
-		content / <= String*
+		content / <= link_host* \
 	Embed* $mol_embed_any
 		uri <= link_uri* \
 		title <= line_text* \

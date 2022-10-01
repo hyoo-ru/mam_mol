@@ -275,7 +275,7 @@ namespace $ {
 		 * ```tree
 		 * Link_http* $mol_link_iconed
 		 * 	uri <= link_uri*
-		 * 	content / <= String*
+		 * 	content / <= link_host*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -284,7 +284,7 @@ namespace $ {
 			
 			obj.uri = () => this.link_uri(id)
 			obj.content = () => [
-				this.String(id)
+				this.link_host(id)
 			] as readonly any[]
 			
 			return obj
@@ -481,6 +481,15 @@ namespace $ {
 		 * ```
 		 */
 		link_uri(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * link_host* \
+		 * ```
+		 */
+		link_host(id: any) {
 			return ""
 		}
 	}
