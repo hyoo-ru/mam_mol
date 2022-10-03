@@ -58,13 +58,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_id*? 0
+		 * row_id*? \0000
 		 * ```
 		 */
 		@ $mol_mem_key
 		row_id(id: any, next?: any) {
 			if ( next !== undefined ) return next as never
-			return 0
+			return "0000"
 		}
 		
 		/**

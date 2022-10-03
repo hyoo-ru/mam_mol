@@ -6355,7 +6355,7 @@ declare namespace $ {
         count(): number;
         sub(): readonly any[];
         tags(): readonly any[];
-        row_id(id: any, next?: any): number;
+        row_id(id: any, next?: any): string;
         Id(id: any): $mol_view;
         Id_labeler(id: any): $mol_labeler;
         row_uri(id: any): string;

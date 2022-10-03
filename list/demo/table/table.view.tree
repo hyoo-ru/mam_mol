@@ -10,7 +10,7 @@ $mol_list_demo_table $mol_example
 					sub <= row_content* /
 						<= Id_labeler* $mol_labeler
 							title \ID
-							Content <= Id* $mol_view sub / <= row_id*? 0
+							Content <= Id* $mol_view sub / <= row_id*? \0000
 						<= Title_labeler* $mol_labeler
 							title \Product Name
 							Content <= Title* $mol_link_iconed

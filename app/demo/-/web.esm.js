@@ -24357,7 +24357,7 @@ var $;
         row_id(id, next) {
             if (next !== undefined)
                 return next;
-            return 0;
+            return "0000";
         }
         Id(id) {
             const obj = new this.$.$mol_view();
