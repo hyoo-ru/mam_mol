@@ -10,7 +10,7 @@ namespace $.$$ {
 		}
 
 		row_id( id: number ) {
-			return id + 1
+			return String( id ).padStart( 4, '0' )
 		}
 
 		@ $mol_mem_key
@@ -47,6 +47,17 @@ namespace $.$$ {
 			})
 		) {
 			return next
+		}
+		
+		@ $mol_mem
+		colors() {
+			return Object.keys( $mol_colors )
+		}
+		
+		@ $mol_mem_key
+		row_color( id: number, next?: string ) {
+			$mol_wire_solid()
+			return next ?? $mol_array_lottery( this.colors() )
 		}
 
 	}

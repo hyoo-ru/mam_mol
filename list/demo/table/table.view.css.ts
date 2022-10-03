@@ -14,15 +14,21 @@ namespace $.$$ {
 			boxShadow: `0 1px 0 0 ${ $mol_theme.line }`,
 		},
 		
-		$mol_labeler: {
+		Title_labeler: {
 			flex: {
-				basis: rem(14),
+				basis: rem(15),
+			},
+		},
+
+		Color_labeler: {
+			flex: {
+				basis: rem(10),
 			},
 		},
 
 		Id_labeler: {
 			flex: {
-				basis: rem(7),
+				basis: rem(4),
 			},
 		},
 		

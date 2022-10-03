@@ -29,7 +29,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Label $mol_view
-		 * 	minimal_height 40
+		 * 	minimal_height 32
 		 * 	sub <= label
 		 * ```
 		 */
@@ -37,7 +37,7 @@ namespace $ {
 		Label() {
 			const obj = new this.$.$mol_view()
 			
-			obj.minimal_height = () => 40
+			obj.minimal_height = () => 32
 			obj.sub = () => this.label()
 			
 			return obj

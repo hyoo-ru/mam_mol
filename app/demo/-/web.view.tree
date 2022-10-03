@@ -2198,7 +2198,7 @@ $mol_float_demo $mol_example_large
 $mol_labeler $mol_list
 	rows /
 		<= Label $mol_view
-			minimal_height 40
+			minimal_height 32
 			sub <= label /$mol_view_content
 				<= title
 		<= Content $mol_view
@@ -2755,26 +2755,31 @@ $mol_link_lazy_demo $mol_example_small
 
 $mol_list_demo_table $mol_example
 	title \Large list of rows with dynamic content
-	count 10000
+	count 9999
 	sub /
 		<= Rows $mol_list
 			rows <= rows /
 				<= Row*0 $mol_row
-					minimal_height 104
+					minimal_height 100
 					minimal_width 200
 					sub <= row_content* /
 						<= Id_labeler* $mol_labeler
-							title \Identifier
+							title \ID
 							Content <= Id* $mol_view sub / <= row_id*? 0
 						<= Title_labeler* $mol_labeler
 							title \Product Name
 							Content <= Title* $mol_link_iconed
 								uri <= row_uri* \
 								title <= row_title* \
+						<= Color_labeler* $mol_labeler
+							title \Color
+							Content <= Color* $mol_select
+								value? <=> row_color*? \
+								options <= colors /
 						<= Status_labeler* $mol_labeler
 							title \Status
 							Content <= Status* $mol_switch
-								value?val <=> row_status*?val \
+								value? <=> row_status*? \
 								options <= status_options *
 									minor \Store
 									major \Sale

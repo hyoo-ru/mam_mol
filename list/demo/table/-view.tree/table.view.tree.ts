@@ -12,11 +12,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * count 10000
+		 * count 9999
 		 * ```
 		 */
 		count() {
-			return 10000
+			return 9999
 		}
 		
 		/**
@@ -86,7 +86,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Id_labeler* $mol_labeler
-		 * 	title \Identifier
+		 * 	title \ID
 		 * 	Content <= Id*
 		 * ```
 		 */
@@ -94,7 +94,7 @@ namespace $ {
 		Id_labeler(id: any) {
 			const obj = new this.$.$mol_labeler()
 			
-			obj.title = () => "Identifier"
+			obj.title = () => "ID"
 			obj.Content = () => this.Id(id)
 			
 			return obj
@@ -154,12 +154,67 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_status*?val \
+		 * row_color*? \
 		 * ```
 		 */
 		@ $mol_mem_key
-		row_status(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
+		row_color(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * colors /
+		 * ```
+		 */
+		colors() {
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Color* $mol_select
+		 * 	value? <=> row_color*?
+		 * 	options <= colors
+		 * ```
+		 */
+		@ $mol_mem_key
+		Color(id: any) {
+			const obj = new this.$.$mol_select()
+			
+			obj.value = (next?: any) => this.row_color(id, next)
+			obj.options = () => this.colors()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Color_labeler* $mol_labeler
+		 * 	title \Color
+		 * 	Content <= Color*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Color_labeler(id: any) {
+			const obj = new this.$.$mol_labeler()
+			
+			obj.title = () => "Color"
+			obj.Content = () => this.Color(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * row_status*? \
+		 * ```
+		 */
+		@ $mol_mem_key
+		row_status(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -182,7 +237,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Status* $mol_switch
-		 * 	value?val <=> row_status*?val
+		 * 	value? <=> row_status*?
 		 * 	options <= status_options
 		 * ```
 		 */
@@ -190,7 +245,7 @@ namespace $ {
 		Status(id: any) {
 			const obj = new this.$.$mol_switch()
 			
-			obj.value = (val?: any) => this.row_status(id, val)
+			obj.value = (next?: any) => this.row_status(id, next)
 			obj.options = () => this.status_options()
 			
 			return obj
@@ -304,6 +359,7 @@ namespace $ {
 		 * row_content* /
 		 * 	<= Id_labeler*
 		 * 	<= Title_labeler*
+		 * 	<= Color_labeler*
 		 * 	<= Status_labeler*
 		 * 	<= Quantity_labeler*
 		 * 	<= Date_labeler*
@@ -313,6 +369,7 @@ namespace $ {
 			return [
 				this.Id_labeler(id),
 				this.Title_labeler(id),
+				this.Color_labeler(id),
 				this.Status_labeler(id),
 				this.Quantity_labeler(id),
 				this.Date_labeler(id)
@@ -322,7 +379,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Row*0 $mol_row
-		 * 	minimal_height 104
+		 * 	minimal_height 100
 		 * 	minimal_width 200
 		 * 	sub <= row_content*
 		 * ```
@@ -331,7 +388,7 @@ namespace $ {
 		Row(id: any) {
 			const obj = new this.$.$mol_row()
 			
-			obj.minimal_height = () => 104
+			obj.minimal_height = () => 100
 			obj.minimal_width = () => 200
 			obj.sub = () => this.row_content(id)
 			
