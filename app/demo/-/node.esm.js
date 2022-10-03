@@ -1518,6 +1518,11 @@ var $;
                 this.land.wipe(unit);
             }
         }
+        node_make(val, Node) {
+            this.insert([val]);
+            const unit = this.units().at(-1);
+            return this.land.node(unit.self, Node);
+        }
     }
     $.$hyoo_crowd_list = $hyoo_crowd_list;
 })($ || ($ = {}));
@@ -2434,8 +2439,8 @@ var $;
         }
         _knights = new $mol_dict();
         _signs = new WeakMap();
-        async grab(king_level = $hyoo_crowd_peer_level.law, base_level = $hyoo_crowd_peer_level.get) {
-            if (!king_level && !base_level)
+        async grab(law = [''], mod = [], add = []) {
+            if (!law.length && !mod.length && !add.length)
                 $mol_fail(new Error('Grabbing dead land'));
             const knight = await $hyoo_crowd_peer.generate();
             this._knights.set(knight.id, knight);
@@ -2444,8 +2449,12 @@ var $;
                 id: $mol_const(knight.id),
                 peer: $mol_const(knight),
             });
-            land_outer.level(this.peer.id, king_level);
-            land_outer.level_base(base_level);
+            for (const peer of law)
+                land_outer.level(peer || this.peer.id, $hyoo_crowd_peer_level.law);
+            for (const peer of mod)
+                land_outer.level(peer || this.peer.id, $hyoo_crowd_peer_level.mod);
+            for (const peer of add)
+                land_outer.level(peer || this.peer.id, $hyoo_crowd_peer_level.add);
             land_inner.apply(land_outer.delta());
             return land_inner;
         }
@@ -3067,14 +3076,14 @@ var $;
         bool(next) {
             return Boolean(this.value(next));
         }
-        yoke(king_level, base_level) {
+        yoke(law = [''], mod = [], add = []) {
             const world = this.world();
             let land_id = (this.value() ?? '0_0');
             if (land_id !== '0_0')
                 return world.land_sync(land_id);
             if (this.land.level(this.land.peer().id) < $hyoo_crowd_peer_level.add)
                 return null;
-            const land = $mol_wire_sync(world).grab(king_level, base_level);
+            const land = $mol_wire_sync(world).grab(law, mod, add);
             this.value(land.id());
             world.land_init(land);
             return land;
@@ -3091,8 +3100,8 @@ var $;
         sub(key, Node) {
             return new Node(this.land, $mol_int62_hash_string(key + '\n' + this.head));
         }
-        yoke(key, Node, king_level, base_level) {
-            const land = this.sub(key, $hyoo_crowd_reg).yoke(king_level, base_level);
+        yoke(key, Node, law = [''], mod = [], add = []) {
+            const land = this.sub(key, $hyoo_crowd_reg).yoke(law, mod, add);
             return land?.chief.sub(key, Node) ?? null;
         }
     }
