@@ -2397,6 +2397,7 @@ declare namespace $ {
         spellcheck(): boolean;
         length_max(): number;
         selection(val?: any): readonly number[];
+        bring(): void;
         Edit(): $mol_textarea_edit;
         row_numb(id: any): number;
         highlight(): string;
@@ -8145,6 +8146,8 @@ declare namespace $ {
         bookmark_list(next?: any): readonly string[];
         pages(): readonly any[];
         Theme(): $$.$mol_theme_auto;
+        submit(next?: any): any;
+        Submit(): $$.$mol_hotkey;
         Clear_icon(): $mol_icon_plus;
         Clear(): $$.$mol_link;
         Source(): $mol_link_source;
@@ -8164,6 +8167,7 @@ declare namespace $ {
         run(val?: any): boolean;
         Run(): $mol_check_icon;
         code(val?: any): string;
+        bring(): void;
         Code(): $$.$mol_textarea;
         error_anchor(): any;
         error_offset(): readonly any[];
@@ -8188,6 +8192,7 @@ declare namespace $.$$ {
     class $hyoo_js_eval extends $.$hyoo_js_eval {
         code(next?: string): string;
         run(next?: boolean): boolean;
+        submit(): void;
         perf(): string;
         pages(): $mol_page[];
         bookmark_list(next?: string[]): readonly string[];

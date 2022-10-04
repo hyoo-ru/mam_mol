@@ -304,6 +304,7 @@ $mol_textarea $mol_stack
 			spellcheck <= spellcheck true
 			length_max <= length_max +Infinity
 			selection?val <=> selection?val /number
+			bring => bring
 		<= View $mol_text_code
 			text <= value
 			render_visible_only false
@@ -3823,6 +3824,9 @@ $hyoo_js_eval $mol_book2
 	Placeholder null
 	plugins /
 		<= Theme $mol_theme_auto
+		<= Submit $mol_hotkey
+			key * enter? <=> submit? null
+			mod_ctrl true
 	bookmark_list? /string
 		\
 			\// Example Notebook
@@ -3861,6 +3865,7 @@ $hyoo_js_eval $mol_book2
 							arg * code <= menu_link_code* \
 		<= Code_page $mol_page
 			title @ \Code
+			bring <= bring
 			tools /
 				<= Perf $mol_link_iconed
 					title \
@@ -3876,6 +3881,7 @@ $hyoo_js_eval $mol_book2
 					hint <= result_label
 			body /
 				<= Code $mol_textarea
+					bring => bring
 					hint \javascript..
 					sidebar_showed true
 					spellcheck false

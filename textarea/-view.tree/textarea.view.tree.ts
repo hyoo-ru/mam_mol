@@ -148,6 +148,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * bring
+		 * ```
+		 */
+		bring() {
+			return this.Edit().bring()
+		}
+		
+		/**
+		 * ```tree
 		 * Edit $mol_textarea_edit
 		 * 	value?val <=> value?val
 		 * 	hint <= hint
@@ -155,6 +164,7 @@ namespace $ {
 		 * 	spellcheck <= spellcheck
 		 * 	length_max <= length_max
 		 * 	selection?val <=> selection?val
+		 * 	bring => bring
 		 * ```
 		 */
 		@ $mol_mem
