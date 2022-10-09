@@ -3145,7 +3145,7 @@ var $;
             return this.response(input, init).json();
         }
         static buffer(input, init) {
-            this.response(input, init).buffer();
+            return this.response(input, init).buffer();
         }
         static xml(input, init) {
             return this.response(input, init).xml();

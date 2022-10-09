@@ -40,7 +40,7 @@ namespace $ {
 		@ $mol_action
 		buffer() {
 			return $mol_wire_sync( this.native ).arrayBuffer()
-		}	
+		}
 
 		@ $mol_action
 		xml() {
@@ -111,7 +111,7 @@ namespace $ {
 
 		@ $mol_action
 		static buffer( input: RequestInfo, init?: RequestInit ) {
-			this.response( input , init ).buffer()
+			return this.response( input , init ).buffer()
 		}	
 
 		@ $mol_action
