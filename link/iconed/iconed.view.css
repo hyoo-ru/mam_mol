@@ -12,7 +12,7 @@
 	display: inline-block;
 	margin: .25rem 0;
 	align-self: normal;
-	vertical-align: top;
+	vertical-align: text-top;
 	border-radius: 0;
 	object-fit: scale-down;
 }

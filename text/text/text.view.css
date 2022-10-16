@@ -1,7 +1,7 @@
 [mol_text] {
 	line-height: 1.5em;
 	box-sizing: border-box;
-	max-width: 60rem;
+	max-width: 50rem;
 	border-radius: var(--mol_gap_round);
 	white-space: pre-line;
 	display: flex;
