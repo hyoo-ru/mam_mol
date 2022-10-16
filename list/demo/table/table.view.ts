@@ -8,6 +8,14 @@ namespace $.$$ {
 				(_,i)=> this.Row(i),
 			)
 		}
+		
+		@ $mol_mem
+		check_list() {
+			return Array.from(
+				{ length: this.count() },
+				(_,i)=> this.Id(i),
+			)
+		}
 
 		row_id( id: number ) {
 			return String( id ).padStart( 4, '0' )

@@ -24342,6 +24342,7 @@ var $;
         }
         sub() {
             return [
+                this.Head(),
                 this.Rows()
             ];
         }
@@ -24357,16 +24358,36 @@ var $;
                 "scroll"
             ];
         }
+        check_list() {
+            return [];
+        }
+        Check() {
+            const obj = new this.$.$mol_check_group();
+            obj.checks = () => this.check_list();
+            obj.title = () => "Good Goods";
+            return obj;
+        }
+        Head() {
+            const obj = new this.$.$mol_row();
+            obj.sub = () => [
+                this.Check()
+            ];
+            return obj;
+        }
         row_id(id, next) {
             if (next !== undefined)
                 return next;
             return "0000";
         }
+        row_checked(id, next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
         Id(id) {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => [
-                this.row_id(id)
-            ];
+            const obj = new this.$.$mol_check_box();
+            obj.title = () => this.row_id(id);
+            obj.checked = (next) => this.row_checked(id, next);
             return obj;
         }
         Id_labeler(id) {
@@ -24499,8 +24520,17 @@ var $;
         }
     }
     __decorate([
+        $mol_mem
+    ], $mol_list_demo_table.prototype, "Check", null);
+    __decorate([
+        $mol_mem
+    ], $mol_list_demo_table.prototype, "Head", null);
+    __decorate([
         $mol_mem_key
     ], $mol_list_demo_table.prototype, "row_id", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_list_demo_table.prototype, "row_checked", null);
     __decorate([
         $mol_mem_key
     ], $mol_list_demo_table.prototype, "Id", null);
@@ -24721,13 +24751,16 @@ var $;
     (function ($$) {
         const { rem } = $mol_style_unit;
         $mol_style_define($mol_list_demo_table, {
+            flex: {
+                direction: 'column',
+            },
             Rows: {
                 flex: {
                     grow: 1,
                 },
             },
             Row: {
-                boxShadow: `0 1px 0 0 ${$mol_theme.line}`,
+                boxShadow: `0 -1px 0 0 ${$mol_theme.line}`,
             },
             Title_labeler: {
                 flex: {
@@ -24741,7 +24774,12 @@ var $;
             },
             Id_labeler: {
                 flex: {
-                    basis: rem(4),
+                    basis: rem(5),
+                },
+                Label: {
+                    padding: {
+                        left: rem(2.5),
+                    },
                 },
             },
             Id: {
@@ -24760,6 +24798,9 @@ var $;
         class $mol_list_demo_table extends $.$mol_list_demo_table {
             rows() {
                 return Array.from({ length: this.count() }, (_, i) => this.Row(i));
+            }
+            check_list() {
+                return Array.from({ length: this.count() }, (_, i) => this.Id(i));
             }
             row_id(id) {
                 return String(id).padStart(4, '0');
@@ -24792,6 +24833,9 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_list_demo_table.prototype, "rows", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list_demo_table.prototype, "check_list", null);
         __decorate([
             $mol_mem_key
         ], $mol_list_demo_table.prototype, "row_title", null);

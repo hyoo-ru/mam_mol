@@ -21,11 +21,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Rows
+		 * sub /
+		 * 	<= Head
+		 * 	<= Rows
 		 * ```
 		 */
 		sub() {
 			return [
+				this.Head(),
 				this.Rows()
 			] as readonly any[]
 		}
@@ -58,6 +61,49 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * check_list /$mol_check
+		 * ```
+		 */
+		check_list() {
+			return [
+			] as readonly $mol_check[]
+		}
+		
+		/**
+		 * ```tree
+		 * Check $mol_check_group
+		 * 	checks <= check_list
+		 * 	title \Good Goods
+		 * ```
+		 */
+		@ $mol_mem
+		Check() {
+			const obj = new this.$.$mol_check_group()
+			
+			obj.checks = () => this.check_list()
+			obj.title = () => "Good Goods"
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Head $mol_row sub / <= Check
+		 * ```
+		 */
+		@ $mol_mem
+		Head() {
+			const obj = new this.$.$mol_row()
+			
+			obj.sub = () => [
+				this.Check()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * row_id*? \0000
 		 * ```
 		 */
@@ -69,16 +115,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Id* $mol_view sub / <= row_id*?
+		 * row_checked*? false
+		 * ```
+		 */
+		@ $mol_mem_key
+		row_checked(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
+			return false
+		}
+		
+		/**
+		 * ```tree
+		 * Id* $mol_check_box
+		 * 	title <= row_id*?
+		 * 	checked? <=> row_checked*?
 		 * ```
 		 */
 		@ $mol_mem_key
 		Id(id: any) {
-			const obj = new this.$.$mol_view()
+			const obj = new this.$.$mol_check_box()
 			
-			obj.sub = () => [
-				this.row_id(id)
-			] as readonly any[]
+			obj.title = () => this.row_id(id)
+			obj.checked = (next?: any) => this.row_checked(id, next)
 			
 			return obj
 		}

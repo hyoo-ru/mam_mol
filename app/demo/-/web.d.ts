@@ -6327,8 +6327,12 @@ declare namespace $ {
         count(): number;
         sub(): readonly any[];
         tags(): readonly any[];
+        check_list(): readonly $mol_check[];
+        Check(): $$.$mol_check_group;
+        Head(): $mol_row;
         row_id(id: any, next?: any): string;
-        Id(id: any): $mol_view;
+        row_checked(id: any, next?: any): boolean;
+        Id(id: any): $mol_check_box;
         Id_labeler(id: any): $mol_labeler;
         row_uri(id: any): string;
         row_title(id: any): string;
@@ -6517,6 +6521,7 @@ declare namespace $.$$ {
 declare namespace $.$$ {
     class $mol_list_demo_table extends $.$mol_list_demo_table {
         rows(): $mol_row[];
+        check_list(): $mol_check_box[];
         row_id(id: number): string;
         row_title(id: number): string;
         row_quantity(id: number, next?: number): number;
