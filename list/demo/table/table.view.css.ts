@@ -4,6 +4,10 @@ namespace $.$$ {
 	
 	$mol_style_define( $mol_list_demo_table , {
 		
+		flex: {
+			direction: 'column',
+		},
+		
 		Rows: {
 			flex: {
 				grow: 1,
@@ -11,7 +15,7 @@ namespace $.$$ {
 		},
 		
 		Row: {
-			boxShadow: `0 1px 0 0 ${ $mol_theme.line }`,
+			boxShadow: `0 -1px 0 0 ${ $mol_theme.line }`,
 		},
 		
 		Title_labeler: {
@@ -28,7 +32,12 @@ namespace $.$$ {
 
 		Id_labeler: {
 			flex: {
-				basis: rem(4),
+				basis: rem(5),
+			},
+			Label: {
+				padding: {
+					left: rem(2.5),
+				},
 			},
 		},
 		
