@@ -32,7 +32,7 @@
 	left: -.325rem;
 }
 
-[mol_book2] > *:nth-child(odd):not([mol_book2_placeholder]) {
+[mol_book2] > *:where( :nth-child(odd):not([mol_book2_placeholder]) ) {
 	background-color: var(--mol_theme_card);
 }
 
