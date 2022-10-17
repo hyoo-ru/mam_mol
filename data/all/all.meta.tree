@@ -11,7 +11,7 @@ include \/mol/data/number
 include \/mol/data/optional
 include \/mol/data/pattern
 include \/mol/data/record
-include \/mol/data/string
+include \/mol/data/dict
 include \/mol/data/string
 include \/mol/data/variant
 include \/mol/data/wrapper
