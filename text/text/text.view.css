@@ -1,5 +1,5 @@
 [mol_text] {
-	line-height: 1.5em;
+	line-height: 1.5rem;
 	box-sizing: border-box;
 	max-width: 50rem;
 	border-radius: var(--mol_gap_round);
