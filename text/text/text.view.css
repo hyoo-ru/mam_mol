@@ -1,5 +1,5 @@
 [mol_text] {
-	line-height: 1.5rem;
+	line-height: 1.5em;
 	box-sizing: border-box;
 	max-width: 50rem;
 	border-radius: var(--mol_gap_round);
@@ -118,6 +118,7 @@ h6[mol_text_header] {
 	display: inline;
 	width: 100vw;
 	max-height: calc( 100vh - 6rem );
+	vertical-align: top;
 }
 [mol_text_embed_object_fallback] {
 	padding: 0;
