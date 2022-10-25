@@ -1,6 +1,6 @@
 {
   "name": "mol_time_all",
-  "version": "1.1.368",
+  "version": "1.1.369",
   "main": "node.js",
   "module": "node.esm.js",
   "browser": "web.js",
