@@ -452,9 +452,16 @@ namespace $ {
 		}
 		
 		bring() {
-			new $mol_after_frame( ()=> {
+			new this.$.$mol_after_frame( ()=> {
+				
 				this.dom_node().scrollIntoView({ inline: 'start' })
-				this.focused( true )
+				
+				const win = this.$.$mol_dom_context
+				
+				if( win.parent === win.self || win.document.hasFocus() ) {
+					this.focused( true )
+				}
+				
 			} )
 		}
 
