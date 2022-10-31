@@ -304,10 +304,11 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $hyoo_crowd_node {
+    class $hyoo_crowd_node extends Object {
         land;
         head;
         constructor(land, head) {
+            super();
             this.land = land;
             this.head = head;
         }
@@ -325,6 +326,9 @@ var $;
         }
         nodes(Node) {
             return this.units().map(unit => new Node(this.land, unit.self));
+        }
+        [Symbol.toPrimitive]() {
+            return `${this.constructor.name}("${this.land.id()}","${this.head}")`;
         }
         [$mol_dev_format_head]() {
             return $mol_dev_format_span({}, $mol_dev_format_native(this), $mol_dev_format_shade('/'), $mol_dev_format_auto(this.units().map(unit => unit.data)), $mol_dev_format_shade('/'), $mol_dev_format_auto(this.nodes($hyoo_crowd_node)));
