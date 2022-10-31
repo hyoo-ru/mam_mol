@@ -184,6 +184,7 @@ declare namespace $ {
 
 declare namespace $ {
     type $mol_int62_string = `${string}_${string}`;
+    function $mol_int62_string_ensure(str: unknown): `${string}_${string}`;
     type $mol_int62_pair = {
         readonly lo: number;
         readonly hi: number;

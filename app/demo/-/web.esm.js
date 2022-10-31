@@ -134,6 +134,12 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_int62_string_ensure(str) {
+        if (typeof str !== 'string')
+            return '0_0';
+        return $mol_int62_to_string($mol_int62_from_string(str));
+    }
+    $.$mol_int62_string_ensure = $mol_int62_string_ensure;
     $.$mol_int62_max = (2 ** 30) - 1;
     $.$mol_int62_min = -(2 ** 30);
     $.$mol_int62_range = $.$mol_int62_max - $.$mol_int62_min + 1;
@@ -144,10 +150,15 @@ var $;
     }
     $.$mol_int62_to_string = $mol_int62_to_string;
     function $mol_int62_from_string(str) {
-        const [lo, hi] = str.split('_');
+        const [str_lo, str_hi] = str.split('_');
+        const int_lo = parseInt(str_lo, 36);
+        const int_hi = parseInt(str_hi, 36);
+        if (int_lo.toString(36) !== str_lo || int_hi.toString(36) !== str_hi) {
+            return { lo: 0, hi: 0 };
+        }
         return {
-            lo: (parseInt(lo, 36) - $.$mol_int62_min) % $.$mol_int62_range + $.$mol_int62_min,
-            hi: (parseInt(hi, 36) - $.$mol_int62_min) % $.$mol_int62_range + $.$mol_int62_min,
+            lo: (int_lo - $.$mol_int62_min) % $.$mol_int62_range + $.$mol_int62_min,
+            hi: (int_hi - $.$mol_int62_min) % $.$mol_int62_range + $.$mol_int62_min,
         };
     }
     $.$mol_int62_from_string = $mol_int62_from_string;
@@ -2623,7 +2634,7 @@ var $;
         }
         yoke(law = [''], mod = [], add = []) {
             const world = this.world();
-            let land_id = (this.value() ?? '0_0');
+            let land_id = $mol_int62_string_ensure(this.value());
             if (land_id !== '0_0')
                 return world.land_sync(land_id);
             if (this.land.level(this.land.peer().id) < $hyoo_crowd_peer_level.add)

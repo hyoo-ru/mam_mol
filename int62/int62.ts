@@ -2,6 +2,11 @@ namespace $ {
 	
 	export type $mol_int62_string = `${string}_${string}`
 	
+	export function $mol_int62_string_ensure( str: unknown ) {
+		if( typeof str !== 'string' ) return '0_0'
+		return $mol_int62_to_string( $mol_int62_from_string( str ) )
+	}
+	
 	export type $mol_int62_pair = {
 		readonly lo: number,
 		readonly hi: number,
@@ -18,11 +23,21 @@ namespace $ {
 	}
 
 	export function $mol_int62_from_string( str: string ): $mol_int62_pair {
-		const [ lo, hi ] = str.split( '_' )
+		
+		const [ str_lo, str_hi ] = str.split( '_' )
+		
+		const int_lo = parseInt( str_lo, 36 )
+		const int_hi = parseInt( str_hi, 36 )
+		
+		if( int_lo.toString( 36 ) !== str_lo || int_hi.toString( 36 ) !== str_hi ) {
+			return { lo: 0, hi: 0 }
+		}
+		
 		return {
-			lo: ( parseInt( lo, 36 ) - $mol_int62_min ) % $mol_int62_range + $mol_int62_min,
-			hi: ( parseInt( hi, 36 ) - $mol_int62_min ) % $mol_int62_range + $mol_int62_min,
+			lo: ( int_lo - $mol_int62_min ) % $mol_int62_range + $mol_int62_min,
+			hi: ( int_hi - $mol_int62_min ) % $mol_int62_range + $mol_int62_min,
 		} as const
+		
 	}
 
 	export function $mol_int62_compare(
