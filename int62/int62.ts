@@ -3,8 +3,8 @@ namespace $ {
 	export type $mol_int62_string = `${string}_${string}`
 	
 	export function $mol_int62_string_ensure( str: unknown ) {
-		if( typeof str !== 'string' ) return '0_0'
-		return $mol_int62_to_string( $mol_int62_from_string( str ) )
+		if( typeof str !== 'string' ) return null
+		return $mol_int62_from_string( str ) && str as $mol_int62_string
 	}
 	
 	export type $mol_int62_pair = {
@@ -22,7 +22,7 @@ namespace $ {
 		return lo.toString(36) + '_' + hi.toString(36) as $mol_int62_string
 	}
 
-	export function $mol_int62_from_string( str: string ): $mol_int62_pair {
+	export function $mol_int62_from_string( str: string ): null | $mol_int62_pair {
 		
 		const [ str_lo, str_hi ] = str.split( '_' )
 		
@@ -30,7 +30,7 @@ namespace $ {
 		const int_hi = parseInt( str_hi, 36 )
 		
 		if( int_lo.toString( 36 ) !== str_lo || int_hi.toString( 36 ) !== str_hi ) {
-			return { lo: 0, hi: 0 }
+			return null
 		}
 		
 		return {
