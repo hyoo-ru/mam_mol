@@ -184,7 +184,7 @@ declare namespace $ {
 
 declare namespace $ {
     type $mol_int62_string = `${string}_${string}`;
-    function $mol_int62_string_ensure(str: unknown): `${string}_${string}`;
+    function $mol_int62_string_ensure(str: unknown): `${string}_${string}` | null;
     type $mol_int62_pair = {
         readonly lo: number;
         readonly hi: number;
@@ -193,7 +193,7 @@ declare namespace $ {
     const $mol_int62_min: number;
     const $mol_int62_range: number;
     function $mol_int62_to_string({ lo, hi }: $mol_int62_pair): `${string}_${string}`;
-    function $mol_int62_from_string(str: string): $mol_int62_pair;
+    function $mol_int62_from_string(str: string): null | $mol_int62_pair;
     function $mol_int62_compare(left_lo: number, left_hi: number, right_lo: number, right_hi: number): number;
     function $mol_int62_inc(lo: number, hi: number, max?: number): $mol_int62_pair;
     function $mol_int62_random(): $mol_int62_pair;

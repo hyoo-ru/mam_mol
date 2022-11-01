@@ -739,8 +739,8 @@ var $;
 (function ($) {
     function $mol_int62_string_ensure(str) {
         if (typeof str !== 'string')
-            return '0_0';
-        return $mol_int62_to_string($mol_int62_from_string(str));
+            return null;
+        return $mol_int62_from_string(str) && str;
     }
     $.$mol_int62_string_ensure = $mol_int62_string_ensure;
     $.$mol_int62_max = (2 ** 30) - 1;
@@ -757,7 +757,7 @@ var $;
         const int_lo = parseInt(str_lo, 36);
         const int_hi = parseInt(str_hi, 36);
         if (int_lo.toString(36) !== str_lo || int_hi.toString(36) !== str_hi) {
-            return { lo: 0, hi: 0 };
+            return null;
         }
         return {
             lo: (int_lo - $.$mol_int62_min) % $.$mol_int62_range + $.$mol_int62_min,
@@ -3069,7 +3069,7 @@ var $;
             const unit = this.units()[0];
             if (next === undefined)
                 return unit?.data ?? null;
-            if (unit?.data === next)
+            if ($mol_compare_deep(unit?.data, next))
                 return next;
             this.land.put(this.head, unit?.self ?? this.land.id_new(), '0_0', next);
             return next;
@@ -3086,7 +3086,7 @@ var $;
         yoke(law = [''], mod = [], add = []) {
             const world = this.world();
             let land_id = $mol_int62_string_ensure(this.value());
-            if (land_id !== '0_0')
+            if (land_id)
                 return world.land_sync(land_id);
             if (this.land.level(this.land.peer().id) < $hyoo_crowd_peer_level.add)
                 return null;
