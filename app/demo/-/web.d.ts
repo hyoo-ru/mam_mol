@@ -721,6 +721,8 @@ declare namespace $ {
         level(peer: $mol_int62_string, next?: $hyoo_crowd_peer_level): $hyoo_crowd_peer_level;
         lords(): readonly `${string}_${string}`[];
         authors(): Set<`${string}_${string}`>;
+        first_stamp(): number | null;
+        last_stamp(): number;
         selection(peer: $mol_int62_string): $hyoo_crowd_reg;
         put(head: $mol_int62_string, self: $mol_int62_string, prev: $mol_int62_string, data: unknown): $hyoo_crowd_unit;
         wipe(unit: $hyoo_crowd_unit): $hyoo_crowd_unit;

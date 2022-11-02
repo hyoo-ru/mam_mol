@@ -3336,6 +3336,13 @@ var $;
             }
             return authors;
         }
+        first_stamp() {
+            const grab_unit = this._unit_all.get(`${this.id()}/${this.id()}`);
+            return (grab_unit && $hyoo_crowd_time_stamp(grab_unit.time)) ?? null;
+        }
+        last_stamp() {
+            return this.clock_data.last_stamp();
+        }
         selection(peer) {
             return this.world().land_sync(peer).chief.sub('$hyoo_crowd_land..selection', $hyoo_crowd_reg);
         }
@@ -3514,6 +3521,7 @@ var $;
                 return next;
             }
             else {
+                this.units();
                 return reg.value()
                     ?.map(point => this.offset_by_point(point)[1]) ?? [0, 0];
             }
@@ -10475,7 +10483,7 @@ var $;
                     .replace('{units:alive}', this.units_alive().toLocaleString())
                     .replace('{units:dead}', this.units_dead().toLocaleString())
                     .replace('{units:total}', this.units_total().toLocaleString())
-                    .replace('{stamp:now}', this.store().clock_data.last_stamp().toString(36))
+                    .replace('{stamp:now}', this.store().last_stamp().toString(36))
                     .replace('{stamp:sync}', this.sync_clocks()[1].last_stamp().toString(36))
                     .replace('{size:text}', this.size_text().toLocaleString())
                     .replace('{size:state}', this.size_state_bin().toLocaleString())
