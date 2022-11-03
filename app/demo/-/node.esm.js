@@ -2549,15 +2549,13 @@ var $;
                 switch (kind) {
                     case $hyoo_crowd_unit_kind.grab:
                     case $hyoo_crowd_unit_kind.join: {
-                        if (auth_unit)
-                            return 'Already join';
-                        if (typeof unit.data !== 'string')
+                        const key_str = auth_unit?.data ?? unit.data;
+                        if (typeof key_str !== 'string')
                             return 'No join key';
-                        const key_buf = unit.data;
-                        const self = $mol_int62_hash_string(key_buf);
+                        const self = $mol_int62_hash_string(key_str);
                         if (unit.self !== self)
                             return 'Alien join key';
-                        const key = await $mol_crypto_auditor_public.from(key_buf);
+                        const key = await $mol_crypto_auditor_public.from(key_str);
                         const sign = bin.sign();
                         const valid = await key.verify(bin.sens(), sign);
                         if (!valid)
@@ -2589,10 +2587,10 @@ var $;
                         return `Level too low`;
                     }
                 }
-                if (!auth_unit)
+                const key_str = auth_unit?.data;
+                if (typeof key_str !== 'string')
                     return 'No auth key';
-                const key_buf = auth_unit.data;
-                const key = await $mol_crypto_auditor_public.from(key_buf);
+                const key = await $mol_crypto_auditor_public.from(key_str);
                 const sign = bin.sign();
                 const valid = await key.verify(bin.sens(), sign);
                 if (!valid)
@@ -3284,12 +3282,27 @@ var $;
                 return;
             const auth_id = `${auth.id}/${auth.id}`;
             const auth_unit = this._unit_all.get(auth_id);
-            if (auth_unit)
-                return;
+            if (auth_unit?.data)
+                return this._joined = true;
             const time = this._clocks[$hyoo_crowd_unit_group.auth].tick(auth.id);
             const join_unit = new $hyoo_crowd_unit(this.id(), auth.id, auth.id, auth.id, '0_0', '0_0', time, auth.key_public_serial, null);
             this._unit_all.set(auth_id, join_unit);
             this._joined = true;
+        }
+        leave() {
+            const auth = this.peer();
+            if (!auth)
+                return;
+            if (!auth.key_public_serial)
+                return;
+            const auth_id = `${auth.id}/${auth.id}`;
+            const auth_unit = this._unit_all.get(auth_id);
+            if (!auth_unit || !auth_unit.data)
+                return this._joined = false;
+            const time = this._clocks[$hyoo_crowd_unit_group.auth].tick(auth.id);
+            const join_unit = new $hyoo_crowd_unit(this.id(), auth.id, auth.id, auth.id, '0_0', '0_0', time, null, null);
+            this._unit_all.set(auth_id, join_unit);
+            this._joined = false;
         }
         level_base(next) {
             this.level('0_0', next);
@@ -3314,13 +3327,29 @@ var $;
             this.pub.emit();
             return next;
         }
-        lords() {
+        peers() {
             this.pub.promote();
             const lords = [];
             for (const unit of this._unit_all.values()) {
-                if (unit.kind() !== $hyoo_crowd_unit_kind.give)
+                switch (unit.kind()) {
+                    case $hyoo_crowd_unit_kind.data: continue;
+                    case $hyoo_crowd_unit_kind.join: continue;
+                    default: lords.push(unit.self);
+                }
+            }
+            return lords;
+        }
+        residents() {
+            this.pub.promote();
+            const lords = [];
+            for (const unit of this._unit_all.values()) {
+                if (unit.data === null)
                     continue;
-                lords.push(unit.self);
+                switch (unit.kind()) {
+                    case $hyoo_crowd_unit_kind.data: continue;
+                    case $hyoo_crowd_unit_kind.give: continue;
+                    default: lords.push(unit.self);
+                }
             }
             return lords;
         }
