@@ -1994,8 +1994,6 @@ var $;
         _knights = new $mol_dict();
         _signs = new WeakMap();
         async grab(law = [''], mod = [], add = []) {
-            if (!law.length && !mod.length && !add.length)
-                $mol_fail(new Error('Grabbing dead land'));
             const knight = await $hyoo_crowd_peer.generate();
             this._knights.set(knight.id, knight);
             const land_inner = this.land(knight.id);
@@ -2890,11 +2888,9 @@ var $;
             for (const unit of this._unit_all.values()) {
                 if (unit.data === null)
                     continue;
-                switch (unit.kind()) {
-                    case $hyoo_crowd_unit_kind.data: continue;
-                    case $hyoo_crowd_unit_kind.give: continue;
-                    default: lords.push(unit.self);
-                }
+                if (unit.kind() !== $hyoo_crowd_unit_kind.join)
+                    continue;
+                lords.push(unit.self);
             }
             return lords;
         }

@@ -510,5 +510,5 @@ This project exists thanks to all the people who contribute.
 
 # Donate
 
-- **[Shut up and take my money](http://yasobe.ru/na/mol)**
+- **[Shut up and take my money](https://www.tinkoff.ru/cf/1VnW7ZtTeg2)**
 - **[Long time support](https://boosty.to/hyoo)**
