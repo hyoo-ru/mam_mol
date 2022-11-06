@@ -11,6 +11,7 @@ namespace $.$$ {
 				
 				if( /\.(png|gif|jpg|jpeg|webp|svg)$/.test( uri ) ) return 'image'
 				if( /^https:\/\/www\.youtube\.com\//.test( uri ) ) return 'youtube'
+				if( /^https:\/\/youtu\.be\//.test( uri ) ) return 'youtube'
 				
 			} catch( error ) {
 				$mol_fail_log( error )
