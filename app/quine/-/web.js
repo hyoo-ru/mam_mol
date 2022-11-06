@@ -6800,7 +6800,9 @@ var $;
                 return `https://www.youtube.com/embed/${encodeURIComponent(this.video_id())}?autoplay=1&loop=1`;
             }
             video_id() {
-                return this.uri().match(/^https\:\/\/www\.youtube\.com\/(?:embed\/|watch\?v=)([^\/&?#]+)/)?.[1] ?? 'about:blank';
+                return this.uri().match(/^https\:\/\/www\.youtube\.com\/(?:embed\/|watch\?v=)([^\/&?#]+)/)?.[1]
+                    ?? this.uri().match(/^https\:\/\/youtu\.be\/([^\/&?#]+)/)?.[1]
+                    ?? 'about:blank';
             }
             video_preview() {
                 return `https://i.ytimg.com/vi_webp/${this.video_id()}/sddefault.webp`;
@@ -6880,6 +6882,8 @@ var $;
                     if (/\.(png|gif|jpg|jpeg|webp|svg)$/.test(uri))
                         return 'image';
                     if (/^https:\/\/www\.youtube\.com\//.test(uri))
+                        return 'youtube';
+                    if (/^https:\/\/youtu\.be\//.test(uri))
                         return 'youtube';
                 }
                 catch (error) {
