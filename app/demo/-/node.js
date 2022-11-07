@@ -3286,6 +3286,7 @@ var $;
             const join_unit = new $hyoo_crowd_unit(this.id(), auth.id, auth.id, auth.id, '0_0', '0_0', time, auth.key_public_serial, null);
             this._unit_all.set(auth_id, join_unit);
             this._joined = true;
+            this.pub.emit();
         }
         leave() {
             const auth = this.peer();
@@ -3301,6 +3302,7 @@ var $;
             const join_unit = new $hyoo_crowd_unit(this.id(), auth.id, auth.id, auth.id, '0_0', '0_0', time, null, null);
             this._unit_all.set(auth_id, join_unit);
             this._joined = false;
+            this.pub.emit();
         }
         level_base(next) {
             this.level('0_0', next);
@@ -3362,10 +3364,12 @@ var $;
             return authors;
         }
         first_stamp() {
+            this.pub.promote();
             const grab_unit = this._unit_all.get(`${this.id()}/${this.id()}`);
             return (grab_unit && $hyoo_crowd_time_stamp(grab_unit.time)) ?? null;
         }
         last_stamp() {
+            this.pub.promote();
             return this.clock_data.last_stamp();
         }
         selection(peer) {
