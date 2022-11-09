@@ -76,6 +76,7 @@
     "$mol_dom_render_attributes",
     "$mol_dom_render",
     "$mol_wire_async",
+    "$mol_dom_render_events",
     "$mol_plugin",
     "$mol_dom_render_styles",
     "$mol_dom_render_children",

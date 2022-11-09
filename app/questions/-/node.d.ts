@@ -584,6 +584,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_dom_render_events(el: Element, events: {
+        [key: string]: (event: Event) => any;
+    }, passive?: boolean): void;
+}
+
+declare namespace $ {
     function $mol_dom_render_styles(el: Element, styles: {
         [key: string]: string | number;
     }): void;
@@ -1970,15 +1976,6 @@ declare namespace $ {
     class $mol_ghost extends $mol_view {
         Sub(): $mol_view;
     }
-}
-
-declare namespace $ {
-    function $mol_dom_render_events(el: Element, events: {
-        [key: string]: (event: Event) => any;
-    }): void;
-    function $mol_dom_render_events_async(el: Element, events: {
-        [key: string]: (event: Event) => any;
-    }): void;
 }
 
 declare namespace $.$$ {

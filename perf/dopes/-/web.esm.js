@@ -1780,6 +1780,18 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_dom_render_events(el, events, passive = false) {
+        for (let name in events) {
+            el.addEventListener(name, events[name], { passive });
+        }
+    }
+    $.$mol_dom_render_events = $mol_dom_render_events;
+})($ || ($ = {}));
+//mol/dom/render/events/events.ts
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_dom_render_styles(el, styles) {
         for (let name in styles) {
             let val = styles[name];
@@ -2021,9 +2033,7 @@ var $;
             node.toString = $mol_const('<#' + id + '>');
             $mol_dom_render_attributes(node, this.attr_static());
             const events = $mol_wire_async(this.event());
-            for (let event_name in events) {
-                node.addEventListener(event_name, events[event_name], { passive: false });
-            }
+            $mol_dom_render_events(node, events);
             return node;
         }
         dom_final() {
