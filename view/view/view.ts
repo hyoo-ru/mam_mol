@@ -172,13 +172,7 @@ namespace $ {
 			$mol_dom_render_attributes( node , this.attr_static() )
 			
 			const events = $mol_wire_async( this.event() )
-			for( let event_name in events ) {
-				node.addEventListener(
-					event_name ,
-					events[ event_name ] ,
-					{ passive : false } as any ,
-				)
-			}
+			$mol_dom_render_events(node, events)
 
 			return node
 		}
