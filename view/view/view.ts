@@ -172,7 +172,7 @@ namespace $ {
 			$mol_dom_render_attributes( node , this.attr_static() )
 			
 			const events = $mol_wire_async( this.event() )
-			$mol_dom_render_events_async(node, events)
+			$mol_dom_render_events(node, events)
 
 			return node
 		}
