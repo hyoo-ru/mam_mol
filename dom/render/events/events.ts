@@ -2,20 +2,12 @@ namespace $ {
 	
 	export function $mol_dom_render_events (
 		el : Element ,
-		events : { [ key : string ] : ( event : Event )=> any }
+		events : { [ key : string ] : ( event : Event )=> any },
+		passive = false
 	) {
 		for( let name in events ) {
-			el.addEventListener( name , events[ name ] , { passive : false } as any )
+			el.addEventListener( name , events[ name ] , { passive } )
 		}
 	}
-	
-	export function $mol_dom_render_events_async (
-		el : Element ,
-		events : { [ key : string ] : ( event : Event )=> any }
-	) {
-		for( let name in events ) {
-			el.addEventListener( name , events[ name ] , { passive : true } as any )
-		}
-	}
-	
+
 }
