@@ -159,6 +159,12 @@ namespace $ {
 							}
 						</style>
 					` + [ ... files ].sort().map( file => `<a href="${file}">${file}</a>` ).join('\n')
+					
+					res.writeHead( 200, {
+						'Content-Type': 'text/html',
+						'Access-Control-Allow-Origin': '*',
+					} )
+					
 					return res.end( html )
 				}
 				
