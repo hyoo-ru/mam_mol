@@ -8873,6 +8873,7 @@ var $;
             return this.toString();
         }
         dom_node(next) {
+            $mol_wire_solid();
             const node = next || $mol_dom_context.document.createElementNS(this.dom_name_space(), this.dom_name());
             const id = this.dom_id();
             node.setAttribute('id', id);

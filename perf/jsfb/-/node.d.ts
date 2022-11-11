@@ -567,6 +567,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_wire_solid(): void;
+}
+
+declare namespace $ {
     function $mol_const<Value>(value: Value): {
         (): Value;
         '()': Value;
@@ -1298,10 +1302,6 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_array_lottery<Value>(list: readonly Value[]): Value;
-}
-
-declare namespace $ {
-    function $mol_wire_solid(): void;
 }
 
 declare namespace $ {

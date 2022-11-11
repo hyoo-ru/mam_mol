@@ -1062,6 +1062,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_wire_solid(): void;
+}
+
+declare namespace $ {
     function $mol_dom_render_attributes(el: Element, attrs: {
         [key: string]: string | number | boolean | null;
     }): void;
@@ -2722,10 +2726,6 @@ declare namespace $ {
         Fallback(): $$.$mol_link;
         uri_change(next?: any): any;
     }
-}
-
-declare namespace $ {
-    function $mol_wire_solid(): void;
 }
 
 declare namespace $ {

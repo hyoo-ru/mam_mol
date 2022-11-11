@@ -163,6 +163,8 @@ namespace $ {
 		@ $mol_mem
 		dom_node( next? : Element ) {
 			
+			$mol_wire_solid()
+			
 			const node = next || $mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
 
 			const id = this.dom_id()

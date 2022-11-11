@@ -72,6 +72,7 @@
     "$mol_dom_qname",
     "$mol_wire_probe",
     "$mol_wire_watch",
+    "$mol_wire_solid",
     "$mol_const",
     "$mol_dom_render_attributes",
     "$mol_dom_render",
