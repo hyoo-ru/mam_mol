@@ -19720,7 +19720,7 @@ var $;
     (function ($$) {
         class $mol_date_demo extends $.$mol_date_demo {
             formatted() {
-                return this.date()?.toString('DD Month YYYY');
+                return this.date()?.toString('DD Month YYYY hh:mm');
             }
         }
         $$.$mol_date_demo = $mol_date_demo;
