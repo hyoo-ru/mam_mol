@@ -1914,6 +1914,11 @@ $mol_pick $mol_pop
 
 $mol_icon_calendar $mol_icon path \M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z
 
+$mol_format $mol_string
+	allow \0123456789
+	hint <= mask*0 \
+	keyboard \numeric
+
 $mol_icon_chevron_left $mol_icon path \M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z
 
 $mol_icon_chevron_right $mol_icon path \M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z
@@ -1922,9 +1927,9 @@ $mol_date $mol_pick
 	Icon $mol_icon_calendar
 	-
 	bubble_content /
-		<= Input $mol_string
+		<= Input $mol_format
 			value?val <=> value?val \
-			hint <= input_hint \YYYY-MM-DD hh:mm
+			mask* <= input_mask* \
 			enabled <= enabled true
 		<= Calendar $mol_date_calendar
 			month_moment <= month_moment <= value_moment
@@ -2451,10 +2456,6 @@ $mol_form_demo_draft $mol_example
 		\validation
 		\field
 
-$mol_format $mol_string
-	allow \0123456789
-	hint <= mask*0 \
-
 $mol_phone $mol_format
 	mask* \+___ (___) ___-__-__
 	keyboard \tel
@@ -2466,7 +2467,6 @@ $mol_format_demo $mol_example_small
 			status <= ip
 			Content <= Ip $mol_format
 				mask \___.___.___.___
-				keyboard \numeric
 				value? <=> ip? \
 		<= Phone_card $mol_card
 			status <= phone
@@ -2476,13 +2476,11 @@ $mol_format_demo $mol_example_small
 			status <= card
 			Content <= Card $mol_format
 				mask \____ ____ ____ ____
-				keyboard \numeric
 				value? <=> card? \
 		<= Moment_card $mol_card
 			status <= moment
 			Content <= Moment $mol_format
 				mask \__.__.____ __:__
-				keyboard \numeric
 				value? <=> moment? \
 	tags /
 		\$mol_format

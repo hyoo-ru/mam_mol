@@ -64,11 +64,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * input_hint \YYYY-MM-DD hh:mm
+		 * input_mask* \
 		 * ```
 		 */
-		input_hint() {
-			return "YYYY-MM-DD hh:mm"
+		input_mask(id: any) {
+			return ""
 		}
 		
 		/**
@@ -82,18 +82,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Input $mol_string
+		 * Input $mol_format
 		 * 	value?val <=> value?val
-		 * 	hint <= input_hint
+		 * 	mask* <= input_mask*
 		 * 	enabled <= enabled
 		 * ```
 		 */
 		@ $mol_mem
 		Input() {
-			const obj = new this.$.$mol_string()
+			const obj = new this.$.$mol_format()
 			
 			obj.value = (val?: any) => this.value(val)
-			obj.hint = () => this.input_hint()
+			obj.mask = (id: any) => this.input_mask(id)
 			obj.enabled = () => this.enabled()
 			
 			return obj

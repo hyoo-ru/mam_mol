@@ -4,6 +4,10 @@ namespace $.$$ {
 		trigger_content() {
 			return [ this.value_moment()?.toString( 'YYYY-MM-DD hh:mm' ) ?? this.Icon() ]
 		}
+		
+		input_mask( val: string ) {
+			return val.length > 8 ? '____-__-__ __:__' : '____-__-__ '
+		}
 
 		@ $mol_mem
 		value( val? : string ) {

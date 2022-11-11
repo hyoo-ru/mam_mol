@@ -2,9 +2,9 @@ $mol_date $mol_pick
 	Icon $mol_icon_calendar
 	-
 	bubble_content /
-		<= Input $mol_string
+		<= Input $mol_format
 			value?val <=> value?val \
-			hint <= input_hint \YYYY-MM-DD hh:mm
+			mask* <= input_mask* \
 			enabled <= enabled true
 		<= Calendar $mol_date_calendar
 			month_moment <= month_moment <= value_moment

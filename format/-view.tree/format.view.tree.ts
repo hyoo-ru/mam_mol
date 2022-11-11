@@ -21,6 +21,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * keyboard \numeric
+		 * ```
+		 */
+		keyboard() {
+			return "numeric"
+		}
+		
+		/**
+		 * ```tree
 		 * mask*0 \
 		 * ```
 		 */

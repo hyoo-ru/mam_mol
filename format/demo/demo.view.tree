@@ -5,7 +5,6 @@ $mol_format_demo $mol_example_small
 			status <= ip
 			Content <= Ip $mol_format
 				mask \___.___.___.___
-				keyboard \numeric
 				value? <=> ip? \
 		<= Phone_card $mol_card
 			status <= phone
@@ -15,13 +14,11 @@ $mol_format_demo $mol_example_small
 			status <= card
 			Content <= Card $mol_format
 				mask \____ ____ ____ ____
-				keyboard \numeric
 				value? <=> card? \
 		<= Moment_card $mol_card
 			status <= moment
 			Content <= Moment $mol_format
 				mask \__.__.____ __:__
-				keyboard \numeric
 				value? <=> moment? \
 	tags /
 		\$mol_format

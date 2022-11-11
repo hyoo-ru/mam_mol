@@ -930,6 +930,9 @@ var $;
         nodes(Node) {
             return this.units().map(unit => new Node(this.land, unit.self));
         }
+        virgin() {
+            return this.land.unit_list(this.head).length === 0;
+        }
         [Symbol.toPrimitive]() {
             return `${this.constructor.name}("${this.land.id()}","${this.head}")`;
         }
@@ -19267,6 +19270,89 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_format extends $mol_string {
+        allow() {
+            return "0123456789";
+        }
+        hint() {
+            return this.mask("0");
+        }
+        keyboard() {
+            return "numeric";
+        }
+        mask(id) {
+            return "";
+        }
+    }
+    $.$mol_format = $mol_format;
+})($ || ($ = {}));
+//mol/format/-view.tree/format.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/format/format.view.css", "[mol_format] {\n\tfont-family: monospace;\n}\n");
+})($ || ($ = {}));
+//mol/format/-css/format.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_format extends $.$mol_format {
+            selection([from, to] = [0, 0]) {
+                const prev = $mol_wire_probe(() => this.selection());
+                if (!prev)
+                    return [0, 100];
+                if (from === to) {
+                    const allow = this.allow();
+                    const mask = this.mask([...this.value_changed()].filter(letter => allow.includes(letter)).join(''));
+                    if ((prev?.[0] ?? 0) < from) {
+                        while (from && mask[from] && mask[from] !== '_') {
+                            ++from;
+                            ++to;
+                        }
+                    }
+                }
+                return [from, to];
+            }
+            value_changed(next) {
+                const allow = this.allow();
+                const normalize = (val) => {
+                    val = [...val].filter(letter => allow.includes(letter)).join('');
+                    const letters = [...val].reverse();
+                    return this.mask(val).replace(/_/gu, () => letters.pop() ?? '_') + letters.reverse().join('');
+                };
+                if (next !== undefined) {
+                    next = normalize(next);
+                    if (next.includes('_'))
+                        return next;
+                }
+                return normalize(this.value(next));
+            }
+            event_change(next) {
+                if (!next)
+                    return;
+                if (next.data && !this.allow().includes(next.data))
+                    return;
+                super.event_change(next);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_format.prototype, "selection", null);
+        __decorate([
+            $mol_mem
+        ], $mol_format.prototype, "value_changed", null);
+        $$.$mol_format = $mol_format;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/format/format.view.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_chevron_left extends $mol_icon {
         path() {
             return "M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z";
@@ -19318,16 +19404,16 @@ var $;
                 return val;
             return "";
         }
-        input_hint() {
-            return "YYYY-MM-DD hh:mm";
+        input_mask(id) {
+            return "";
         }
         enabled() {
             return true;
         }
         Input() {
-            const obj = new this.$.$mol_string();
+            const obj = new this.$.$mol_format();
             obj.value = (val) => this.value(val);
-            obj.hint = () => this.input_hint();
+            obj.mask = (id) => this.input_mask(id);
             obj.enabled = () => this.enabled();
             return obj;
         }
@@ -19509,6 +19595,9 @@ var $;
         class $mol_date extends $.$mol_date {
             trigger_content() {
                 return [this.value_moment()?.toString('YYYY-MM-DD hh:mm') ?? this.Icon()];
+            }
+            input_mask(val) {
+                return val.length > 8 ? '____-__-__ __:__' : '____-__-__ ';
             }
             value(val) {
                 const moment = this.value_moment();
@@ -22773,86 +22862,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_format extends $mol_string {
-        allow() {
-            return "0123456789";
-        }
-        hint() {
-            return this.mask("0");
-        }
-        mask(id) {
-            return "";
-        }
-    }
-    $.$mol_format = $mol_format;
-})($ || ($ = {}));
-//mol/format/-view.tree/format.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/format/format.view.css", "[mol_format] {\n\tfont-family: monospace;\n}\n");
-})($ || ($ = {}));
-//mol/format/-css/format.view.css.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_format extends $.$mol_format {
-            selection([from, to] = [0, 0]) {
-                const prev = $mol_wire_probe(() => this.selection());
-                if (!prev)
-                    return [0, 100];
-                if (from === to) {
-                    const allow = this.allow();
-                    const mask = this.mask([...this.value_changed()].filter(letter => allow.includes(letter)).join(''));
-                    if ((prev?.[0] ?? 0) < from) {
-                        while (from && mask[from] && mask[from] !== '_') {
-                            ++from;
-                            ++to;
-                        }
-                    }
-                }
-                return [from, to];
-            }
-            value_changed(next) {
-                const allow = this.allow();
-                const normalize = (val) => {
-                    val = [...val].filter(letter => allow.includes(letter)).join('');
-                    const letters = [...val].reverse();
-                    return this.mask(val).replace(/_/gu, () => letters.pop() ?? '_') + letters.reverse().join('');
-                };
-                if (next !== undefined) {
-                    next = normalize(next);
-                    if (next.includes('_'))
-                        return next;
-                }
-                return normalize(this.value(next));
-            }
-            event_change(next) {
-                if (!next)
-                    return;
-                if (next.data && !this.allow().includes(next.data))
-                    return;
-                super.event_change(next);
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_format.prototype, "selection", null);
-        __decorate([
-            $mol_mem
-        ], $mol_format.prototype, "value_changed", null);
-        $$.$mol_format = $mol_format;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/format/format.view.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_phone extends $mol_format {
         mask(id) {
             return "+___ (___) ___-__-__";
@@ -22958,7 +22967,6 @@ var $;
         Ip() {
             const obj = new this.$.$mol_format();
             obj.mask = () => "___.___.___.___";
-            obj.keyboard = () => "numeric";
             obj.value = (next) => this.ip(next);
             return obj;
         }
@@ -22992,7 +23000,6 @@ var $;
         Card() {
             const obj = new this.$.$mol_format();
             obj.mask = () => "____ ____ ____ ____";
-            obj.keyboard = () => "numeric";
             obj.value = (next) => this.card(next);
             return obj;
         }
@@ -23010,7 +23017,6 @@ var $;
         Moment() {
             const obj = new this.$.$mol_format();
             obj.mask = () => "__.__.____ __:__";
-            obj.keyboard = () => "numeric";
             obj.value = (next) => this.moment(next);
             return obj;
         }
@@ -34574,145 +34580,6 @@ var $;
 var $;
 (function ($) {
     $mol_test({
-        'same list'() {
-            const list = $mol_jsx("body", null,
-                $mol_jsx("p", { "data-rev": "old" }, "a"),
-                $mol_jsx("p", { "data-rev": "old" }, "b"),
-                $mol_jsx("p", { "data-rev": "old" }, "c"));
-            $mol_reconcile({
-                prev: [...list.children],
-                from: 0,
-                to: 3,
-                next: 'abc',
-                equal: (next, prev) => prev.textContent === next,
-                drop: (prev, lead) => list.removeChild(prev),
-                insert: (next, lead) => list.insertBefore($mol_jsx("p", { "data-rev": "new" }, next), lead ? lead.nextSibling : list.firstChild),
-                update: (next, prev, lead) => {
-                    prev.textContent = next;
-                    prev.setAttribute('data-rev', 'up');
-                    return prev;
-                },
-            });
-            $mol_assert_dom(list, $mol_jsx("body", null,
-                $mol_jsx("p", { "data-rev": "old" }, "a"),
-                $mol_jsx("p", { "data-rev": "old" }, "b"),
-                $mol_jsx("p", { "data-rev": "old" }, "c")));
-        },
-        'insert items'() {
-            const list = $mol_jsx("body", null,
-                $mol_jsx("p", { "data-rev": "old" }, "a"),
-                $mol_jsx("p", { "data-rev": "old" }, "b"),
-                $mol_jsx("p", { "data-rev": "old" }, "c"),
-                $mol_jsx("p", { "data-rev": "old" }, "d"));
-            $mol_reconcile({
-                prev: [...list.children],
-                from: 1,
-                to: 3,
-                next: 'bXYc',
-                equal: (next, prev) => prev.textContent === next,
-                drop: (prev, lead) => list.removeChild(prev),
-                insert: (next, lead) => list.insertBefore($mol_jsx("p", { "data-rev": "new" }, next), lead ? lead.nextSibling : list.firstChild),
-                update: (next, prev, lead) => {
-                    prev.textContent = next;
-                    prev.setAttribute('data-rev', 'up');
-                    return prev;
-                },
-            });
-            $mol_assert_dom(list, $mol_jsx("body", null,
-                $mol_jsx("p", { "data-rev": "old" }, "a"),
-                $mol_jsx("p", { "data-rev": "old" }, "b"),
-                $mol_jsx("p", { "data-rev": "new" }, "X"),
-                $mol_jsx("p", { "data-rev": "new" }, "Y"),
-                $mol_jsx("p", { "data-rev": "old" }, "c"),
-                $mol_jsx("p", { "data-rev": "old" }, "d")));
-        },
-        'split item'() {
-            const list = $mol_jsx("body", null,
-                $mol_jsx("p", { "data-rev": "old" }, "a"),
-                $mol_jsx("p", { "data-rev": "old" }, "bc"),
-                $mol_jsx("p", { "data-rev": "old" }, "d"));
-            $mol_reconcile({
-                prev: [...list.children],
-                from: 0,
-                to: 3,
-                next: 'abcd',
-                equal: (next, prev) => prev.textContent === next,
-                drop: (prev, lead) => list.removeChild(prev),
-                insert: (next, lead) => list.insertBefore($mol_jsx("p", { "data-rev": "new" }, next), lead ? lead.nextSibling : list.firstChild),
-                update: (next, prev, lead) => {
-                    prev.textContent = next;
-                    prev.setAttribute('data-rev', 'up');
-                    return prev;
-                },
-            });
-            $mol_assert_dom(list, $mol_jsx("body", null,
-                $mol_jsx("p", { "data-rev": "old" }, "a"),
-                $mol_jsx("p", { "data-rev": "new" }, "b"),
-                $mol_jsx("p", { "data-rev": "up" }, "c"),
-                $mol_jsx("p", { "data-rev": "old" }, "d")));
-        },
-        'drop items'() {
-            const list = $mol_jsx("body", null,
-                $mol_jsx("p", { "data-rev": "old" }, "A"),
-                $mol_jsx("p", { "data-rev": "old" }, "B"),
-                $mol_jsx("p", { "data-rev": "old" }, "x"),
-                $mol_jsx("p", { "data-rev": "old" }, "y"),
-                $mol_jsx("p", { "data-rev": "old" }, "C"),
-                $mol_jsx("p", { "data-rev": "old" }, "D"));
-            $mol_reconcile({
-                prev: [...list.children],
-                from: 1,
-                to: 5,
-                next: 'BC',
-                equal: (next, prev) => prev.textContent === next,
-                drop: (prev, lead) => list.removeChild(prev),
-                insert: (next, lead) => list.insertBefore($mol_jsx("p", { "data-rev": "new" }, next), lead ? lead.nextSibling : list.firstChild),
-                update: (next, prev, lead) => {
-                    prev.textContent = next;
-                    prev.setAttribute('data-rev', 'up');
-                    return prev;
-                },
-            });
-            $mol_assert_dom(list, $mol_jsx("body", null,
-                $mol_jsx("p", { "data-rev": "old" }, "A"),
-                $mol_jsx("p", { "data-rev": "old" }, "B"),
-                $mol_jsx("p", { "data-rev": "old" }, "C"),
-                $mol_jsx("p", { "data-rev": "old" }, "D")));
-        },
-        'update items'() {
-            const list = $mol_jsx("body", null,
-                $mol_jsx("p", { "data-rev": "old" }, "a"),
-                $mol_jsx("p", { "data-rev": "old" }, "B"),
-                $mol_jsx("p", { "data-rev": "old" }, "C"),
-                $mol_jsx("p", { "data-rev": "old" }, "d"));
-            $mol_reconcile({
-                prev: [...list.children],
-                from: 1,
-                to: 3,
-                next: 'XY',
-                equal: (next, prev) => prev.textContent === next,
-                drop: (prev, lead) => list.removeChild(prev),
-                insert: (next, lead) => list.insertBefore($mol_jsx("p", { "data-rev": "new" }, next), lead ? lead.nextSibling : list.firstChild),
-                update: (next, prev, lead) => {
-                    prev.textContent = next;
-                    prev.setAttribute('data-rev', 'up');
-                    return prev;
-                },
-            });
-            $mol_assert_dom(list, $mol_jsx("body", null,
-                $mol_jsx("p", { "data-rev": "old" }, "a"),
-                $mol_jsx("p", { "data-rev": "up" }, "X"),
-                $mol_jsx("p", { "data-rev": "up" }, "Y"),
-                $mol_jsx("p", { "data-rev": "old" }, "d")));
-        },
-    });
-})($ || ($ = {}));
-//mol/reconcile/reconcile.test.tsx
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
         'config by value'() {
             const N = $mol_data_setup((a) => a, 5);
             $mol_assert_equal(N.config, 5);
@@ -35893,6 +35760,145 @@ var $;
 //hyoo/crowd/land/land.test.ts
 ;
 "use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'same list'() {
+            const list = $mol_jsx("body", null,
+                $mol_jsx("p", { "data-rev": "old" }, "a"),
+                $mol_jsx("p", { "data-rev": "old" }, "b"),
+                $mol_jsx("p", { "data-rev": "old" }, "c"));
+            $mol_reconcile({
+                prev: [...list.children],
+                from: 0,
+                to: 3,
+                next: 'abc',
+                equal: (next, prev) => prev.textContent === next,
+                drop: (prev, lead) => list.removeChild(prev),
+                insert: (next, lead) => list.insertBefore($mol_jsx("p", { "data-rev": "new" }, next), lead ? lead.nextSibling : list.firstChild),
+                update: (next, prev, lead) => {
+                    prev.textContent = next;
+                    prev.setAttribute('data-rev', 'up');
+                    return prev;
+                },
+            });
+            $mol_assert_dom(list, $mol_jsx("body", null,
+                $mol_jsx("p", { "data-rev": "old" }, "a"),
+                $mol_jsx("p", { "data-rev": "old" }, "b"),
+                $mol_jsx("p", { "data-rev": "old" }, "c")));
+        },
+        'insert items'() {
+            const list = $mol_jsx("body", null,
+                $mol_jsx("p", { "data-rev": "old" }, "a"),
+                $mol_jsx("p", { "data-rev": "old" }, "b"),
+                $mol_jsx("p", { "data-rev": "old" }, "c"),
+                $mol_jsx("p", { "data-rev": "old" }, "d"));
+            $mol_reconcile({
+                prev: [...list.children],
+                from: 1,
+                to: 3,
+                next: 'bXYc',
+                equal: (next, prev) => prev.textContent === next,
+                drop: (prev, lead) => list.removeChild(prev),
+                insert: (next, lead) => list.insertBefore($mol_jsx("p", { "data-rev": "new" }, next), lead ? lead.nextSibling : list.firstChild),
+                update: (next, prev, lead) => {
+                    prev.textContent = next;
+                    prev.setAttribute('data-rev', 'up');
+                    return prev;
+                },
+            });
+            $mol_assert_dom(list, $mol_jsx("body", null,
+                $mol_jsx("p", { "data-rev": "old" }, "a"),
+                $mol_jsx("p", { "data-rev": "old" }, "b"),
+                $mol_jsx("p", { "data-rev": "new" }, "X"),
+                $mol_jsx("p", { "data-rev": "new" }, "Y"),
+                $mol_jsx("p", { "data-rev": "old" }, "c"),
+                $mol_jsx("p", { "data-rev": "old" }, "d")));
+        },
+        'split item'() {
+            const list = $mol_jsx("body", null,
+                $mol_jsx("p", { "data-rev": "old" }, "a"),
+                $mol_jsx("p", { "data-rev": "old" }, "bc"),
+                $mol_jsx("p", { "data-rev": "old" }, "d"));
+            $mol_reconcile({
+                prev: [...list.children],
+                from: 0,
+                to: 3,
+                next: 'abcd',
+                equal: (next, prev) => prev.textContent === next,
+                drop: (prev, lead) => list.removeChild(prev),
+                insert: (next, lead) => list.insertBefore($mol_jsx("p", { "data-rev": "new" }, next), lead ? lead.nextSibling : list.firstChild),
+                update: (next, prev, lead) => {
+                    prev.textContent = next;
+                    prev.setAttribute('data-rev', 'up');
+                    return prev;
+                },
+            });
+            $mol_assert_dom(list, $mol_jsx("body", null,
+                $mol_jsx("p", { "data-rev": "old" }, "a"),
+                $mol_jsx("p", { "data-rev": "new" }, "b"),
+                $mol_jsx("p", { "data-rev": "up" }, "c"),
+                $mol_jsx("p", { "data-rev": "old" }, "d")));
+        },
+        'drop items'() {
+            const list = $mol_jsx("body", null,
+                $mol_jsx("p", { "data-rev": "old" }, "A"),
+                $mol_jsx("p", { "data-rev": "old" }, "B"),
+                $mol_jsx("p", { "data-rev": "old" }, "x"),
+                $mol_jsx("p", { "data-rev": "old" }, "y"),
+                $mol_jsx("p", { "data-rev": "old" }, "C"),
+                $mol_jsx("p", { "data-rev": "old" }, "D"));
+            $mol_reconcile({
+                prev: [...list.children],
+                from: 1,
+                to: 5,
+                next: 'BC',
+                equal: (next, prev) => prev.textContent === next,
+                drop: (prev, lead) => list.removeChild(prev),
+                insert: (next, lead) => list.insertBefore($mol_jsx("p", { "data-rev": "new" }, next), lead ? lead.nextSibling : list.firstChild),
+                update: (next, prev, lead) => {
+                    prev.textContent = next;
+                    prev.setAttribute('data-rev', 'up');
+                    return prev;
+                },
+            });
+            $mol_assert_dom(list, $mol_jsx("body", null,
+                $mol_jsx("p", { "data-rev": "old" }, "A"),
+                $mol_jsx("p", { "data-rev": "old" }, "B"),
+                $mol_jsx("p", { "data-rev": "old" }, "C"),
+                $mol_jsx("p", { "data-rev": "old" }, "D")));
+        },
+        'update items'() {
+            const list = $mol_jsx("body", null,
+                $mol_jsx("p", { "data-rev": "old" }, "a"),
+                $mol_jsx("p", { "data-rev": "old" }, "B"),
+                $mol_jsx("p", { "data-rev": "old" }, "C"),
+                $mol_jsx("p", { "data-rev": "old" }, "d"));
+            $mol_reconcile({
+                prev: [...list.children],
+                from: 1,
+                to: 3,
+                next: 'XY',
+                equal: (next, prev) => prev.textContent === next,
+                drop: (prev, lead) => list.removeChild(prev),
+                insert: (next, lead) => list.insertBefore($mol_jsx("p", { "data-rev": "new" }, next), lead ? lead.nextSibling : list.firstChild),
+                update: (next, prev, lead) => {
+                    prev.textContent = next;
+                    prev.setAttribute('data-rev', 'up');
+                    return prev;
+                },
+            });
+            $mol_assert_dom(list, $mol_jsx("body", null,
+                $mol_jsx("p", { "data-rev": "old" }, "a"),
+                $mol_jsx("p", { "data-rev": "up" }, "X"),
+                $mol_jsx("p", { "data-rev": "up" }, "Y"),
+                $mol_jsx("p", { "data-rev": "old" }, "d")));
+        },
+    });
+})($ || ($ = {}));
+//mol/reconcile/reconcile.test.tsx
+;
+"use strict";
 //mol/type/merge/merge.test.ts
 ;
 "use strict";
@@ -36220,6 +36226,38 @@ var $;
     });
 })($ || ($ = {}));
 //hyoo/crowd/tokenizer/tokenizer.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    async function make_land(id = '1_1') {
+        return $hyoo_crowd_land.make({
+            id: $mol_const(id),
+            peer: $mol_const(await $hyoo_crowd_peer.generate()),
+        });
+    }
+    $mol_test({
+        async 'list add & insert & drop'() {
+            const land = await make_land();
+            const node = land.chief.as($hyoo_crowd_list);
+            node.list([1, 2]);
+            $mol_assert_like(node.list(), [1, 2]);
+            node.add(3);
+            $mol_assert_like(node.list(), [1, 2, 3]);
+            node.add(3);
+            $mol_assert_like(node.list(), [1, 2, 3]);
+            node.insert([2]);
+            $mol_assert_like(node.list(), [1, 2, 3, 2]);
+            node.insert([2], 0);
+            $mol_assert_like(node.list(), [2, 1, 2, 3, 2]);
+            node.drop(2);
+            $mol_assert_like(node.list(), [1, 3]);
+            node.drop(2);
+            $mol_assert_like(node.list(), [1, 3]);
+        },
+    });
+})($ || ($ = {}));
+//hyoo/crowd/list/list.test.ts
 ;
 "use strict";
 var $;
