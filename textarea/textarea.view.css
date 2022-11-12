@@ -47,9 +47,9 @@
 }
 
 [mol_textarea_edit]:hover + [mol_textarea_view] {
-	z-index: 1;
+	z-index: var(--mol_layer_hover);
 }
 
 [mol_textarea_edit]:focus + [mol_textarea_view] {
-	z-index: 2;
+	z-index: var(--mol_layer_focus);
 }

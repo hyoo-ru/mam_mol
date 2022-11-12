@@ -87,6 +87,7 @@
     "$mol_string",
     "$mol_hotkey",
     "$mol_keyboard",
+    "$mol_layer",
     "$mol_dom_listener"
   ],
   "dependencies": {

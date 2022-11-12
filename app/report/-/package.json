@@ -109,6 +109,7 @@
     "$mol_select",
     "$mol_pick",
     "$mol_pop",
+    "$mol_layer",
     "$mol_check",
     "$mol_button_minor",
     "$mol_button",

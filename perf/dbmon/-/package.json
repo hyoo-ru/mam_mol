@@ -101,6 +101,7 @@
     "$mol_mem_cached",
     "$mol_pop_over",
     "$mol_pop",
+    "$mol_layer",
     "$mol_state_time",
     "$mol_state"
   ],

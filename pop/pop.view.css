@@ -7,7 +7,7 @@
 	box-shadow: 0 0 1rem hsla(0,0%,0%,.5);
 	border-radius: var(--mol_gap_round);
 	position: absolute;
-	z-index: 5;
+	z-index: var(--mol_layer_popup);
 	background: var(--mol_theme_back);
 	max-width: none;
 	max-height: none;

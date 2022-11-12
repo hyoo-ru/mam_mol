@@ -98,6 +98,7 @@
     "$mol_button_major",
     "$mol_button",
     "$mol_speck",
+    "$mol_layer",
     "$mol_keyboard",
     "$mol_button_typed",
     "$mol_icon",
