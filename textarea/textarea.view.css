@@ -11,7 +11,6 @@
 }
 
 [mol_textarea_view] {
-	z-index: 1;
 	pointer-events: none;
 	white-space: inherit;
 	font-family: inherit;
@@ -45,4 +44,12 @@
 [mol_textarea_sidebar_showed] [mol_textarea_edit] {
 	left: 1.5rem;
 	width: calc( 100% - 1.5rem );
+}
+
+[mol_textarea_edit]:hover + [mol_textarea_view] {
+	z-index: 1;
+}
+
+[mol_textarea_edit]:focus + [mol_textarea_view] {
+	z-index: 2;
 }

@@ -9,7 +9,6 @@
 	padding: var(--mol_gap_text);
 	text-align: left;
 	position: relative;
-	z-index: 0;
 	font: inherit;
 	flex: 1 1 auto;
 	background: transparent;
@@ -29,11 +28,12 @@
 
 [mol_string]:where(:not(:disabled)):hover {
 	box-shadow: inset 0 0 0 2px var(--mol_theme_line);
+	z-index: 1;
 }
 
 [mol_string]:focus {
 	outline: none;
-	z-index: 1;
+	z-index: 2;
 	color: var(--mol_theme_text);
 	box-shadow: inset 0 0 0 1px var(--mol_theme_focus);
 }
