@@ -8,7 +8,7 @@
 	vertical-align: sub;
 	padding: .25em .5em;
 	position: absolute;
-	z-index: 3;
+	z-index: var(--mol_layer_speck);
 	text-align: center;
 	line-height: 1;
 	display: inline-block;

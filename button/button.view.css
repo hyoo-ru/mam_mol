@@ -14,10 +14,10 @@
 }
 
 [mol_button]:where(:not(:disabled)):hover {
-	z-index: 1;
+	z-index: var(--mol_layer_hover);
 }
 
 [mol_button]:focus {
 	outline: none;
-	z-index: 2;
+	z-index: var(--mol_layer_focus);
 }
