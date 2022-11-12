@@ -8,7 +8,6 @@
 [mol_labeler_label] {
 	min-height: 2rem;
 	color: var(--mol_theme_shade);
-	z-index: 1;
 	padding: .75rem .75rem 0;
 	gap: 0 var(--mol_gap_block);
 	flex-wrap: wrap;

@@ -15,8 +15,6 @@
 }
 
 [mol_select_filter] {
-	z-index: 2;
-	opacity: 1 !important;
 	flex: 1 0 auto;
 	align-self: stretch;
 }
