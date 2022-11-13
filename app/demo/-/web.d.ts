@@ -7936,6 +7936,9 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_switch_demo extends $mol_example {
         title(): string;
         sub(): readonly any[];
