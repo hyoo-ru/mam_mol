@@ -30383,6 +30383,22 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_string_button extends $mol_string {
+    }
+    $.$mol_string_button = $mol_string_button;
+})($ || ($ = {}));
+//mol/string/button/-view.tree/button.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/string/button/button.view.css", "[mol_string_button]:not(:placeholder-shown):not(:focus):not(:hover) {\n\tcolor: var(--mol_theme_control);\n\tbackground: transparent;\n\tbox-shadow: none;\n}\n");
+})($ || ($ = {}));
+//mol/string/button/-css/button.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_string_demo extends $mol_example_small {
         title() {
             return "String input field in various states";
@@ -30392,7 +30408,8 @@ var $;
                 this.Simple(),
                 this.Hint(),
                 this.Filled(),
-                this.Disabled()
+                this.Disabled(),
+                this.Button()
             ];
         }
         tags() {
@@ -30434,6 +30451,11 @@ var $;
             obj.value = (val) => this.name2(val);
             return obj;
         }
+        Button() {
+            const obj = new this.$.$mol_string_button();
+            obj.value = (val) => this.name2(val);
+            return obj;
+        }
     }
     __decorate([
         $mol_mem
@@ -30453,25 +30475,12 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_string_demo.prototype, "Disabled", null);
+    __decorate([
+        $mol_mem
+    ], $mol_string_demo.prototype, "Button", null);
     $.$mol_string_demo = $mol_string_demo;
 })($ || ($ = {}));
 //mol/string/demo/-view.tree/demo.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_string_button extends $mol_string {
-    }
-    $.$mol_string_button = $mol_string_button;
-})($ || ($ = {}));
-//mol/string/button/-view.tree/button.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/string/button/button.view.css", "[mol_string_button]:not(:placeholder-shown):not(:focus):not(:hover) {\n\tcolor: var(--mol_theme_control);\n\tbackground: transparent;\n\tbox-shadow: none;\n}\n");
-})($ || ($ = {}));
-//mol/string/button/-css/button.view.css.ts
 ;
 "use strict";
 var $;

@@ -7917,6 +7917,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_string_button extends $mol_string {
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_string_demo extends $mol_example_small {
         title(): string;
         sub(): readonly any[];
@@ -7927,15 +7935,8 @@ declare namespace $ {
         name2(val?: any): string;
         Filled(): $$.$mol_string;
         Disabled(): $$.$mol_string;
+        Button(): $mol_string_button;
     }
-}
-
-declare namespace $ {
-    class $mol_string_button extends $mol_string {
-    }
-}
-
-declare namespace $ {
 }
 
 declare namespace $ {

@@ -17,6 +17,7 @@ namespace $ {
 		 * 	<= Hint
 		 * 	<= Filled
 		 * 	<= Disabled
+		 * 	<= Button
 		 * ```
 		 */
 		sub() {
@@ -24,7 +25,8 @@ namespace $ {
 				this.Simple(),
 				this.Hint(),
 				this.Filled(),
-				this.Disabled()
+				this.Disabled(),
+				this.Button()
 			] as readonly any[]
 		}
 		
@@ -123,6 +125,20 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.disabled = () => true
+			obj.value = (val?: any) => this.name2(val)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Button $mol_string_button value?val <=> name2?val
+		 * ```
+		 */
+		@ $mol_mem
+		Button() {
+			const obj = new this.$.$mol_string_button()
+			
 			obj.value = (val?: any) => this.name2(val)
 			
 			return obj
