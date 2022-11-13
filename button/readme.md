@@ -34,11 +34,11 @@ Minor button with custom content (icon and title):
 
 [$mol_button_download](download) - Download file from ```uri()``` or a ```blob()```
 
-[$mol_button_open](open) - ?
+[$mol_button_open](open) - File open button
 
 [$mol_button_share](share) - Share ```title()``` and ```uri()``` to other app 
 
-[$mol_button_typed](typed) - ?
+[$mol_button_typed](typed) - Button with basic styles for buttons
 
 ## Properties
 
