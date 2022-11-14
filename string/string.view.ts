@@ -1,11 +1,14 @@
 namespace $.$$ {
 	export class $mol_string extends $.$mol_string {
 		
-		// _timer = null as any
-		
 		event_change( next? : Event ) {
 			if( !next ) return
-			this.value_changed( ( next.target as HTMLInputElement ).value )
+			const el = next.target as HTMLInputElement
+			const from = el.selectionStart
+			const to = el.selectionEnd
+			el.value = this.value_changed( el.value )
+			el.selectionEnd = to
+			el.selectionStart = from
 			this.selection_change( next )
 		}
 
