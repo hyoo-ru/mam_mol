@@ -3813,7 +3813,12 @@ var $;
             event_change(next) {
                 if (!next)
                     return;
-                this.value_changed(next.target.value);
+                const el = next.target;
+                const from = el.selectionStart;
+                const to = el.selectionEnd;
+                el.value = this.value_changed(el.value);
+                el.selectionEnd = to;
+                el.selectionStart = from;
                 this.selection_change(next);
             }
             hint_visible() {

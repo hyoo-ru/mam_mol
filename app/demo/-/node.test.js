@@ -8205,7 +8205,12 @@ var $;
             event_change(next) {
                 if (!next)
                     return;
-                this.value_changed(next.target.value);
+                const el = next.target;
+                const from = el.selectionStart;
+                const to = el.selectionEnd;
+                el.value = this.value_changed(el.value);
+                el.selectionEnd = to;
+                el.selectionStart = from;
                 this.selection_change(next);
             }
             hint_visible() {
@@ -19326,15 +19331,21 @@ var $;
                 const prev = $mol_wire_probe(() => this.selection());
                 if (!prev)
                     return [0, 100];
-                if (from === to) {
-                    const allow = this.allow();
-                    const mask = this.mask([...this.value_changed()].filter(letter => allow.includes(letter)).join(''));
-                    if ((prev?.[0] ?? 0) < from) {
-                        while (from && mask[from] && mask[from] !== '_') {
-                            ++from;
-                            ++to;
-                        }
-                    }
+                if (from !== to)
+                    return [from, to];
+                const allow = this.allow();
+                const value = this.value_changed();
+                const filtered = [...value].filter(letter => allow.includes(letter)).join('');
+                const mask = this.mask(filtered);
+                if ((prev?.[0] ?? 0) >= from)
+                    return [from, to];
+                const lastAllow = (value.length - [...value].reverse().findIndex(letter => allow.includes(letter))) % (value.length + 1);
+                if (lastAllow < from) {
+                    from = to = lastAllow;
+                }
+                while (mask[from] && mask[from] !== '_') {
+                    ++from;
+                    ++to;
                 }
                 return [from, to];
             }
@@ -19351,13 +19362,6 @@ var $;
                         return next;
                 }
                 return normalize(this.value(next));
-            }
-            event_change(next) {
-                if (!next)
-                    return;
-                if (next.data && !this.allow().includes(next.data))
-                    return;
-                super.event_change(next);
             }
         }
         __decorate([
