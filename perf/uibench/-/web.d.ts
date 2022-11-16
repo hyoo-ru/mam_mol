@@ -109,8 +109,8 @@ declare namespace $ {
         get $(): $;
         set $(next: $);
         static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
-        static [Symbol.toPrimitive](): any;
-        static toString(): any;
+        static [Symbol.toPrimitive](): unknown;
+        static toString(): unknown;
         destructor(): void;
         toString(): any;
         toJSON(): any;

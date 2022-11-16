@@ -79,8 +79,8 @@ declare namespace $ {
         get $(): $;
         set $(next: $);
         static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
-        static [Symbol.toPrimitive](): any;
-        static toString(): any;
+        static [Symbol.toPrimitive](): unknown;
+        static toString(): unknown;
         destructor(): void;
         toString(): any;
         toJSON(): any;
@@ -768,10 +768,8 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_view_tree2_prop_signature: $mol_regexp<{
-        readonly name: string;
-        readonly key: string;
-        readonly next: string;
+    let $mol_view_tree2_prop_signature: $mol_regexp<{} | {
+        [x: string]: string;
     }>;
 }
 
