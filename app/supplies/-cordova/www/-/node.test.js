@@ -9119,7 +9119,8 @@ var $;
                 ...super.field(),
                 src: this.uri(),
                 alt: this.title(),
-                loading: this.loading()
+                loading: this.loading(),
+                decoding: this.decoding()
             };
         }
         minimal_width() {
@@ -9133,6 +9134,9 @@ var $;
         }
         loading() {
             return "eager";
+        }
+        decoding() {
+            return "async";
         }
     }
     $.$mol_image = $mol_image;

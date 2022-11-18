@@ -17,6 +17,7 @@ namespace $ {
 		 * 	src <= uri
 		 * 	alt <= title
 		 * 	loading <= loading
+		 * 	decoding <= decoding
 		 * ```
 		 */
 		field() {
@@ -24,7 +25,8 @@ namespace $ {
 				...super.field(),
 				src: this.uri(),
 				alt: this.title(),
-				loading: this.loading()
+				loading: this.loading(),
+				decoding: this.decoding()
 			}
 		}
 		
@@ -62,6 +64,15 @@ namespace $ {
 		 */
 		loading() {
 			return "eager"
+		}
+		
+		/**
+		 * ```tree
+		 * decoding \async
+		 * ```
+		 */
+		decoding() {
+			return "async"
 		}
 	}
 	
