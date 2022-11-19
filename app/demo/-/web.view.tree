@@ -546,7 +546,8 @@ $mol_text_span $mol_paragraph
 $mol_section $mol_list rows /
 	<= Head $mol_view
 		sub <= head /
-			<= title
+			<= Title $mol_paragraph title <= title
+			<= Tools $mol_view sub <= tools /
 	<= Content $mol_list
 		rows <= content /
 

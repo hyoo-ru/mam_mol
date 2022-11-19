@@ -17,12 +17,53 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * head / <= title
+		 * Title $mol_paragraph title <= title
+		 * ```
+		 */
+		@ $mol_mem
+		Title() {
+			const obj = new this.$.$mol_paragraph()
+			
+			obj.title = () => this.title()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * tools /
+		 * ```
+		 */
+		tools() {
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Tools $mol_view sub <= tools
+		 * ```
+		 */
+		@ $mol_mem
+		Tools() {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => this.tools()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * head /
+		 * 	<= Title
+		 * 	<= Tools
 		 * ```
 		 */
 		head() {
 			return [
-				this.title()
+				this.Title(),
+				this.Tools()
 			] as readonly any[]
 		}
 		
