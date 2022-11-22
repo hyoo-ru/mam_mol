@@ -448,17 +448,17 @@ namespace $ {
 		}
 		
 		bring() {
+			
+			const win = this.$.$mol_dom_context
+			if( win.parent !== win.self && !win.document.hasFocus() ) return
+			
 			new this.$.$mol_after_frame( ()=> {
 				
 				this.dom_node().scrollIntoView({ inline: 'start' })
-				
-				const win = this.$.$mol_dom_context
-				
-				if( win.parent === win.self || win.document.hasFocus() ) {
-					this.focused( true )
-				}
+				this.focused( true )
 				
 			} )
+			
 		}
 
 	}
