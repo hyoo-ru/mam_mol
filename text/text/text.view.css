@@ -1,7 +1,6 @@
 [mol_text] {
 	line-height: 1.5em;
 	box-sizing: border-box;
-	max-width: 50rem;
 	border-radius: var(--mol_gap_round);
 	white-space: pre-line;
 	display: flex;
@@ -15,6 +14,7 @@
 	overflow: auto;
 	max-width: 100%;
 	display: block;
+	max-width: 50rem;
 }
 
 [mol_text_span] {
@@ -108,6 +108,10 @@ h6[mol_text_header] {
 [mol_text_link_http_icon],
 [mol_text_link_icon] {
 	margin: .25rem;
+}
+
+[mol_text_link_icon] + [mol_text_embed] {
+	margin-left: -1.5rem;
 }
 
 [mol_text_embed_youtube_image],
