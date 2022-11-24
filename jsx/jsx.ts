@@ -138,11 +138,12 @@ namespace $ {
 		if( guid ) ( node as Element ).id = guid
 		for( const key in props ) {
 			if( key === 'id' ) continue
-
+			
 			if( typeof props[ key ] === 'string' ) {
-
+				
+				if( key in node ) node[ key as any ] = props[ key ]
 				;( node as Element ).setAttribute( key , props[ key as any ] )
-
+				
 			} else if(
 				props[ key ] &&
 				typeof props[ key ] === 'object' &&
