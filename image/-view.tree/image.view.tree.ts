@@ -18,6 +18,7 @@ namespace $ {
 		 * 	alt <= title
 		 * 	loading <= loading
 		 * 	decoding <= decoding
+		 * 	crossOrigin <= cors
 		 * ```
 		 */
 		field() {
@@ -26,7 +27,8 @@ namespace $ {
 				src: this.uri(),
 				alt: this.title(),
 				loading: this.loading(),
-				decoding: this.decoding()
+				decoding: this.decoding(),
+				crossOrigin: this.cors()
 			}
 		}
 		
@@ -73,6 +75,15 @@ namespace $ {
 		 */
 		decoding() {
 			return "async"
+		}
+		
+		/**
+		 * ```tree
+		 * cors \anonymous
+		 * ```
+		 */
+		cors() {
+			return "anonymous"
 		}
 	}
 	

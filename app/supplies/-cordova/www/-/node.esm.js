@@ -9130,7 +9130,8 @@ var $;
                 src: this.uri(),
                 alt: this.title(),
                 loading: this.loading(),
-                decoding: this.decoding()
+                decoding: this.decoding(),
+                crossOrigin: this.cors()
             };
         }
         minimal_width() {
@@ -9147,6 +9148,9 @@ var $;
         }
         decoding() {
             return "async";
+        }
+        cors() {
+            return "anonymous";
         }
     }
     $.$mol_image = $mol_image;
