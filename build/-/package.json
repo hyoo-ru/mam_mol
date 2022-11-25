@@ -39,6 +39,8 @@
     "$mol_mem",
     "$mol_wire_solo",
     "$mol_wire_atom",
+    "$mol_func_name",
+    "$mol_func",
     "$mol_key",
     "$mol_guid",
     "$mol_wire_method",

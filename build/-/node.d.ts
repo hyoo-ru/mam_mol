@@ -319,6 +319,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_func_name(this: $, func: Function): string;
+    function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
+}
+
+declare namespace $ {
     function $mol_guid(length?: number, exists?: (id: string) => boolean): string;
 }
 
