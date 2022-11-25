@@ -48,9 +48,9 @@
 	transform: none !important;
 }
 
-[mol_grid_cell_number] {
+/* [mol_grid_cell_number] {
 	text-align: right;
-}
+} */
 
 [mol_grid_col_head] {
 	font-weight: inherit;
