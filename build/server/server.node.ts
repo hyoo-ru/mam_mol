@@ -20,15 +20,15 @@ namespace $ {
 			
 			try {
 				
-				if( req.query._escaped_fragment_ ) {
+				// if( req.query._escaped_fragment_ ) {
 					
-					const fragment = decodeURIComponent( String( req.query._escaped_fragment_ ) )
-					const url = req.protocol + '://' + req.get( 'host' ) + req.path + '#!' + fragment
-					const html = $mol_browser.html( url )
+				// 	const fragment = decodeURIComponent( String( req.query._escaped_fragment_ ) )
+				// 	const url = req.protocol + '://' + req.get( 'host' ) + req.path + '#!' + fragment
+				// 	const html = $mol_browser.html( url )
 					
-					res.send( html ).end()
-					return
-				}
+				// 	res.send( html ).end()
+				// 	return
+				// }
 
 				return this.generate( req.url ) && Promise.resolve().then( next )
 			
@@ -159,6 +159,12 @@ namespace $ {
 							}
 						</style>
 					` + [ ... files ].sort().map( file => `<a href="${file}">${file}</a>` ).join('\n')
+					
+					res.writeHead( 200, {
+						'Content-Type': 'text/html',
+						'Access-Control-Allow-Origin': '*',
+					} )
+					
 					return res.end( html )
 				}
 				
@@ -209,14 +215,14 @@ namespace $ {
 			const socket = this.socket()
 
 			for( const [ line, path ] of this.lines() ) {
-				this.notify( line, path )
+				this.notify([ line, path ])
 			}
 			
 			return socket
 		}
 		
-		@ $mol_mem_key2
-		notify( line: InstanceType<$node['ws']>, path: string ) {
+		@ $mol_mem_key
+		notify( [ line, path ]: [ InstanceType<$node['ws']>, string ] ) {
 			
 			const build = this.build()
 			const bundle = build.root().resolve( path )
@@ -226,7 +232,7 @@ namespace $ {
 			for( const src of sources ) src.buffer()
 
 			// ignore initial
-			if( !$mol_mem_cached( ()=> this.notify( line, path ) ) ) return true
+			if( !$mol_mem_cached( ()=> this.notify([ line, path ]) ) ) return true
 
 			this.$.$mol_log3_rise({
 				place: `${this}`,

@@ -2,30 +2,61 @@ namespace $.$$ {
 
 	export class $mol_infinite extends $.$mol_infinite {
 
-		@ $mol_mem
-		row_ids() {
-
-			let ids : readonly $mol_view[] = $mol_mem_cached( ()=> this.row_ids() ) ?? []
-
-			if( ids.length === 0 ) ids = this.after( undefined )
-			if( ids.length === 0 ) return []
+		@ $mol_mem_key
+		before_load( anchor: any ) {
 			
-			const rect = this.view_rect()
-			if( !rect ) return ids
-
-			const window_height = $mol_window.size().height
-
-			if( rect.bottom < window_height * 3 ) {
-				ids = [ ... ids , ... this.after( ids[ ids.length - 1 ] ) ]
-			}
-
-			return ids
-
+			const more = this.before( anchor )
+			
+			new $mol_after_tick( ()=> {
+				
+				let ids = this.row_ids()
+				const index = Math.max( 0, ids.indexOf( anchor ) )
+				
+				const unique = new Set([
+					... ids.slice( 0, index ),
+					... more,
+					... ids.slice( index ),
+				])
+				
+				this.row_ids([ ... unique ])
+				
+			} )
+			
+		}
+		
+		@ $mol_mem_key
+		after_load( anchor: any ) {
+			
+			const more = this.after( anchor )
+			
+			new $mol_after_tick( ()=> {
+				
+				let ids = this.row_ids()
+				const index = ( ids.indexOf( anchor ) + 1 ) || ids.length
+				
+				const unique = new Set([
+					... ids.slice( 0, index ),
+					... more,
+					... ids.slice( index ),
+				])
+				
+				this.row_ids([ ... unique ])
+				
+			} )
+			
 		}
 		
 		@ $mol_mem
 		rows() {
-			return this.row_ids().map( id => this.Row( id ) )
+			
+			const ids = this.row_ids()
+			
+			return [
+				this.Before( ids.at(0) ),
+				... ids.map( id => this.Row( id ) ),
+				this.After( ids.at(-1) ),
+			]
+			
 		}
 		
 	}

@@ -1,23 +1,22 @@
 [mol_link_iconed] {
 	align-items: baseline;
-	color: var(--mol_theme_control);
 	display: inline-flex;
 	padding: var(--mol_gap_text);
 }
 
 [mol_link_iconed_icon] {
 	box-shadow: none;
-	height: 1em;
-	width: 1em;
+	height: 1rem;
+	width: 1rem;
 	flex: 0 0 auto;
 	display: inline-block;
-	margin: .125rem 0;
-	align-self: center;
-	vertical-align: text-bottom;
+	margin: .25rem 0;
+	align-self: normal;
+	vertical-align: text-top;
 	border-radius: 0;
 	object-fit: scale-down;
 }
 
 [mol_theme="$mol_theme_dark"] [mol_link_iconed_icon] {
-	filter: invert(1) hue-rotate(180deg);
+	filter: var(--mol_theme_image);
 }

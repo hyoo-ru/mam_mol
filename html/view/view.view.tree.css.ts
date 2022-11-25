@@ -8,40 +8,41 @@ namespace $ {
 
 		Heading: {
 
-			padding: $mol_gap.block,
+			padding: $mol_gap.text,
+			textShadow: '0 0',
 			
 			'@': {
 				'mol_html_view_heading': {
 					'1': {
 						font : {
-							size: rem(2),
+							size: rem(1.5),
 						},
 					},
 					'2': {
 						font : {
-							size: rem(2),
+							size: rem(1.5),
 							style: 'italic',
 						},
 					},
 					'3': {
 						font : {
-							size: rem(1.5),
+							size: rem(1.25),
 						},
 					},
 					'4': {
 						font : {
-							size: rem(1.5),
+							size: rem(1.25),
 							style: 'italic',
 						},
 					},
 					'5': {
 						font : {
-							size: rem(1.25),
+							size: rem(1),
 						},
 					},
 					'6': {
 						font : {
-							size: rem(1.25),
+							size: rem(1),
 							style: 'italic',
 						},
 					},
@@ -89,7 +90,8 @@ namespace $ {
 
 		Strong: {
 			display: 'inline',
-			color: $mol_theme.focus,
+			color: $mol_theme.special,
+			textShadow: '0 0',
 		},
 
 		Emphasis: {
@@ -103,12 +105,10 @@ namespace $ {
 			display: 'inline',
 			color: $mol_theme.shade,
 		},
-
+		
 		Inserted: {
 			display: 'inline',
-			font: {
-				weight: 'bolder',
-			},
+			color: $mol_theme.special,
 		},
 
 		Link: {

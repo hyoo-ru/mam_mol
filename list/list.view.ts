@@ -72,13 +72,13 @@ namespace $.$$ {
 
 			// force recalc min when overlapse top limit
 			if( anchoring && ( top <= limit_top ) && ( bottom2 < limit_bottom ) ) {
-				min2 = max
+				min2 = Math.max( 0, max - 1 )
 				top2 = bottom
 			}
 
 			// force recalc max when overlapse bottom limit
 			if( ( bottom >= limit_bottom ) && ( top2 >= limit_top ) ) {
-				max2 = min
+				max2 = Math.min( min + 1, kids.length )
 				bottom2 = top
 			}
 
@@ -145,7 +145,7 @@ namespace $.$$ {
 			if( index >= 0 ) {
 				const win = this.view_window()
 				if( index < win[0] || index >= win[1] ) {
-					this.view_window([ index, index + 1 ])
+					this.view_window([ this.render_visible_only() ? index : 0, index + 1 ])
 				}
 				( kids[ index ] as $mol_view ).force_render( path )
 			}

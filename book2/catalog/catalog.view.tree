@@ -1,18 +1,29 @@
 $mol_book2_catalog $mol_book2
 	param \
+	spread?val \
 	spreads *
 	Spread $mol_view
 	pages /
 		<= Menu $mol_page
+			Title => Menu_title
 			title <= menu_title \
+			Tools => Menu_tools
 			tools <= menu_tools /
-			body /
-				<= Links $mol_list
-					rows <= links /
-	Link* $mol_link
-		arg <= arg* *
-		sub /
-			<= spread_title* \
+			head <= menu_head /
+				<= Menu_title
+				<= Menu_tools
+			body <= menu_body /
+				<= Menu_filter $mol_search
+					query? <=> menu_filter? \
+				<= Menu_links $mol_list
+					rows <= menu_links /
+						<= Menu_link*0 $mol_link
+							arg <= arg* *
+							sub <= menu_link_content* /
+								<= Menu_link_title* $mol_dimmer
+									needle <= menu_filter
+									haystack <= spread_title* \
+			foot <= menu_foot /
 	Spread_close $mol_link
 		arg <= spread_close_arg *
 		sub /

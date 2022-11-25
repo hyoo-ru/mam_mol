@@ -35,51 +35,58 @@ namespace $ {
 		
 		@ $mol_mem
 		peer() {
-			return $mol_hash_string( this.keys_serial().public )
+			const key = `${this}.peer()`
+			const id = this.$.$mol_state_local.value( key )
+			if( id ) return id as number
+			return this.$.$mol_state_local.value(
+				key,
+				1 + Math.floor( Math.random() * ( 2 ** ( 6 * 8 ) - 2 ) ),
+			)!
+			// return $mol_hash_string( this.keys_serial().public )
 		}
 		
-		@ $mol_mem
-		keys_serial() {
+		// @ $mol_mem
+		// keys_serial() {
 			
-			const key = this + '.keys()'
-			let serial = this.$.$mol_state_local.value( key ) as null | { public: string, private: string }
-			if( serial ) return serial
+		// 	const key = this + '.keys()'
+		// 	let serial = this.$.$mol_state_local.value( key ) as null | { public: string, private: string }
+		// 	if( serial ) return serial
 			
-			const pair = $mol_wire_sync( this.$ ).$mol_crypto_auditor_pair()
+		// 	const pair = $mol_wire_sync( this.$ ).$mol_crypto_auditor_pair()
 				
-			serial = {
-				public: $mol_base64_encode(
-					new Uint8Array(
-						$mol_wire_sync( pair.public ).serial()
-					)
-				),
-				private: $mol_base64_encode(
-					new Uint8Array(
-						$mol_wire_sync( pair.private ).serial()
-					)
-				),
-			}
+		// 	serial = {
+		// 		public: $mol_base64_encode(
+		// 			new Uint8Array(
+		// 				$mol_wire_sync( pair.public ).serial()
+		// 			)
+		// 		),
+		// 		private: $mol_base64_encode(
+		// 			new Uint8Array(
+		// 				$mol_wire_sync( pair.private ).serial()
+		// 			)
+		// 		),
+		// 	}
 			
-			this.$.$mol_state_local.value( key, serial )
+		// 	this.$.$mol_state_local.value( key, serial )
 			
-			return serial
-		}
+		// 	return serial
+		// }
 		
-		@ $mol_mem
-		keys() {
+		// @ $mol_mem
+		// keys() {
 			
-			const prev = this.keys_serial()
+		// 	const prev = this.keys_serial()
 			
-			return {
-				public: $mol_wire_sync( this.$.$mol_crypto_auditor_public ).from(
-					$mol_base64_decode( prev.public ),
-				),
-				private: $mol_wire_sync( this.$.$mol_crypto_auditor_private ).from(
-					$mol_base64_decode( prev.private ),
-				),
-			}
+		// 	return {
+		// 		public: $mol_wire_sync( this.$.$mol_crypto_auditor_public ).from(
+		// 			$mol_base64_decode( prev.public ),
+		// 		),
+		// 		private: $mol_wire_sync( this.$.$mol_crypto_auditor_private ).from(
+		// 			$mol_base64_decode( prev.private ),
+		// 		),
+		// 	}
 			
-		}
+		// }
 		
 		@ $mol_mem
 		store() {
@@ -103,8 +110,8 @@ namespace $ {
 			state.doc = k => this.doc( key + '/' + k )
 			state.socket = ()=> this.socket()
 			state.peer = ()=> this.peer()
-			state.keys_serial = ()=> this.keys_serial()
-			state.keys = ()=> this.keys()
+			// state.keys_serial = ()=> this.keys_serial()
+			// state.keys = ()=> this.keys()
 			state.db = ()=> this.db()
 			return state
 		}
@@ -130,10 +137,14 @@ namespace $ {
 			
 			try {
 				this.db_sync()
+			} catch( error: any ) {
+				if(!( error instanceof Promise )) $mol_fail_log( error )
+			}
+			
+			try {
 				this.server_sync()
 			} catch( error: any ) {
-				if( error instanceof Promise ) return null
-				$mol_fail_log( error )
+				if(!( error instanceof Promise )) $mol_fail_log( error )
 			}
 			
 			// const pub = this.keys_serial().public

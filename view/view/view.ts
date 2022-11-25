@@ -14,7 +14,7 @@ namespace $ {
 		return suffix
 	}
 	
-	const error_showed = new WeakSet< Error >()
+	const error_showed = new WeakMap< Error, $mol_view >()
 
 	/// Reactive statefull lazy ViewModel
 	export class $mol_view extends $mol_object {
@@ -66,7 +66,7 @@ namespace $ {
 			let node = this.dom_node()
 			const value = $mol_view_selection.focused( next === undefined ? undefined : ( next ? [ node ] : [] ) )
 			return value.indexOf( node ) !== -1
-		} 
+		}
 		
 		state_key( suffix = '' ) {
 			return this.$.$mol_view_state_key( suffix )
@@ -96,11 +96,11 @@ namespace $ {
 		@ $mol_mem
 		minimal_width() {
 			
-			const sub = this.sub()
-			if( !sub ) return 0
-			
 			let min = 0
 			try {
+				
+				const sub = this.sub()
+				if( !sub ) return 0
 				
 				sub.forEach( view => {
 					if( view instanceof $mol_view ) {
@@ -147,19 +147,13 @@ namespace $ {
 
 		@ $mol_mem
 		view_rect() {
-			this.view_rect_watcher()
-			return this.view_rect_cache()
-		}
-
-		@ $mol_mem
-		view_rect_cache( next = null as ClientRect | null ) {
-			return next
-		}
-
-		@ $mol_mem
-		view_rect_watcher() {
-			$mol_view.watchers.add( this )
-			return { destructor : ()=> $mol_view.watchers.delete( this ) }
+			if( $mol_wire_probe( ()=> this.view_rect() ) === undefined ) {
+				$mol_wire_watch()
+				return null // don't touch DOM to prevent instant reflow
+			} else {
+				const { width, height, left, right, top, bottom } = this.dom_node().getBoundingClientRect()
+				return { width, height, left, right, top, bottom } // pick to optimize compare
+			}
 		}
 
 		dom_id() {
@@ -168,6 +162,8 @@ namespace $ {
 		
 		@ $mol_mem
 		dom_node( next? : Element ) {
+			
+			$mol_wire_solid()
 			
 			const node = next || $mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
 
@@ -178,13 +174,7 @@ namespace $ {
 			$mol_dom_render_attributes( node , this.attr_static() )
 			
 			const events = $mol_wire_async( this.event() )
-			for( let event_name in events ) {
-				node.addEventListener(
-					event_name ,
-					events[ event_name ] ,
-					{ passive : false } as any ,
-				)
-			}
+			$mol_dom_render_events(node, events)
 
 			return node
 		}
@@ -211,7 +201,7 @@ namespace $ {
 		dom_tree( next? : Element ) : Element {
 			const node = this.dom_node( next )
 			
-			try {
+			render: try {
 
 				$mol_dom_render_attributes( node , { mol_view_error : null } )
 
@@ -229,25 +219,30 @@ namespace $ {
 					
 				}
 				
-				this.auto()
-				
 			} catch( error: any ) {
 				
 				$mol_fail_log( error )
 				
 				$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
 				
-				if( error instanceof Promise ) return node
-				if( error_showed.has( error ) ) return node
+				if( error instanceof Promise ) break render
+				if( ( error_showed.get( error ) ?? this ) !== this ) break render
 				
 				try {
-					( node as HTMLElement ).innerText = '\xA0\xA0' + ( error.message || error ) + '\xA0\xA0'
+					const message = error.message || error
+					;( node as HTMLElement ).innerText = message.replace( /^|$/mg, '\xA0\xA0' )
 				} catch {}
 				
-				error_showed.add( error )
+				error_showed.set( error, this )
 				
 			}
 			
+			try {
+				this.auto()
+			} catch( error ) {
+				$mol_fail_log( error )
+			}
+				
 			return node
 		}
 
@@ -389,7 +384,7 @@ namespace $ {
 		plugins() {
 			return [] as readonly $mol_view[]
 		}
-
+		
 		[ $mol_dev_format_head ]() {
 			return $mol_dev_format_span( {} ,
 				$mol_dev_format_native( this ) ,
@@ -406,10 +401,15 @@ namespace $ {
 
 			if( check( this ) ) return yield [ ... path, this ]
 			
-			for( const item of this.sub() ) {
-				if( item instanceof $mol_view ) {
-					yield* item.view_find( check, [ ... path, this ] )
+			try {
+				for( const item of this.sub() ) {
+					if( item instanceof $mol_view ) {
+						yield* item.view_find( check, [ ... path, this ] )
+					}
 				}
+			} catch( error: unknown ) {
+				if( error instanceof Promise ) $mol_fail_hidden( error )
+				$mol_fail_log( error )
 			}
 			
 		}
@@ -436,16 +436,29 @@ namespace $ {
 		}
 
 		/** Renders view to DOM and scroll to it. */
-		async ensure_visible( view: $mol_view, align: ScrollLogicalPosition = "start" ) {
+		ensure_visible( view: $mol_view, align: ScrollLogicalPosition = "start" ) {
 			
 			const path = this.view_find( v => v === view ).next().value
-			
 			this.force_render( new Set( path ) )
 			
-			$mol_wire_fiber.sync()
+			this.dom_final()
 
 			view.dom_node().scrollIntoView({ block: align })
 
+		}
+		
+		bring() {
+			
+			const win = this.$.$mol_dom_context
+			if( win.parent !== win.self && !win.document.hasFocus() ) return
+			
+			new this.$.$mol_after_frame( ()=> {
+				
+				this.dom_node().scrollIntoView({ inline: 'start' })
+				this.focused( true )
+				
+			} )
+			
 		}
 
 	}

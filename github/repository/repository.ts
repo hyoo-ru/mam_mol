@@ -71,9 +71,9 @@ namespace $ {
 
 	export class $mol_github_repository extends $mol_github_entity< $mol_github_repository_json > {
 		
-		json_update( patch : Partial< $mol_github_repository_json > ) {
+		json_update( patch? : Partial< $mol_github_repository_json > ) {
 			
-			if( patch.owner ) $mol_github_user.item( patch.owner.url! ).json_update( patch.owner )
+			if( patch?.owner ) $mol_github_user.item( patch.owner.url! ).json_update( patch.owner )
 			
 			return super.json_update( patch )
 		}
@@ -101,20 +101,16 @@ namespace $ {
 		
 		json_update( patch : $mol_github_issue_json[] ) {
 			
-			if( patch ) {
-				for( let issue of patch ) {
-					$mol_github_issue.item( issue.url! ).json_update( issue )
-				}
+			for( let issue of patch ) {
+				$mol_github_issue.item( issue.url! ).json_update( issue )
 			}
 
-			const cache = $mol_model.cache< $mol_github_issue_json[] >()
-			
-			return cache[ this.uri() ] = patch
+			return super.json_update( patch )
 		}
 
 		@ $mol_mem
-		items( next? : $mol_github_issue[] , force? : $mol_mem_force ) {
-			return this.json( undefined , force ).map( json => $mol_github_issue.item( json.url! ) )
+		items( next? : null ) {
+			return this.json( next ).map( json => $mol_github_issue.item( json.url! ) )
 		}
 
 		@ $mol_mem_key
@@ -133,9 +129,9 @@ namespace $ {
 				} ) as $mol_github_issue_json
 
 				const comment = $mol_github_issue.item( json.url! )
-				comment.json_update( json )
+				comment.json( json )
 
-				this.json( undefined , $mol_mem_force_cache )
+				this.json( null )
 				
 				return comment
 

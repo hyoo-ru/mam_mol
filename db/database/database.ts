@@ -46,8 +46,8 @@ namespace $ {
 			
 			const request = $mol_dom_context.indexedDB.deleteDatabase( this.name )
 			
-			request.onblocked = console.error
-			return $mol_db_response( request ).then( ()=> {} )
+			request.onblocked = console.warn
+			return $mol_db_response( request )
 			
 		}
 		

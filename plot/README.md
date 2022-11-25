@@ -25,7 +25,7 @@ npm install mol_plot_all
 import {
 	$mol_plot_pane,
 	$mol_plot_map_heat,
-	$mol_atom2,
+	$mol_wire_atom,
 } from 'mol_plot_all'
 
 // constants
@@ -39,13 +39,14 @@ map.series_x = () => Array.from({ length }, (_, i) => i % width);
 map.series_y = () => Array.from({ length }, (_, i) => Math.floor(i / width));
 
 // make observable atom
-const source = new $mol_atom2
-// define memoized calculation
-source.calculate = ()=> Array.from({ length }, (_, i) => Math.floor(Math.random() * 20) * 1000);
-// enforce update data every second 
-setInterval( ()=> source.obsolete(), 1000 )
+const source = new $mol_wire_atom( 'source', ()=> {
+	// enforce update data every second 
+	setTimeout( ()=> source.absorb(), 1000 )
+	// generate series
+	return Array.from({ length }, (_, i) => Math.floor(Math.random() * 20) * 1000)
+} )
 // connect dynamic provider with graph
-map.series_z = () => source.get()
+map.series_z = () => source.sync()
 
 // prepare pane for graphs
 const pane = new $mol_plot_pane();

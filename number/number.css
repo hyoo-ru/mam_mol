@@ -6,10 +6,6 @@
 	max-width: 100%;
 }
 
-[mol_number]:hover {
-	z-index: 2;
-}
-
 [mol_number_string] {
 	appearance: textfield;
 	flex: 1 1 7rem;

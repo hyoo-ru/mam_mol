@@ -75,6 +75,9 @@ new $mol_time_moment( '2015-07-19' ).shift( 'P16D' ) // new $mol_time_moment( '2
 
 // create moment by shift one to offset
 new $mol_time_moment( '2015-07-19T19:24+03:00' ).toOffset( 'Z' ) // new $mol_time_moment( '2015-07-19T16:24+00:00' )
+
+// create moment by shift one to local offset
+new $mol_time_moment( '2015-07-19T19:24+03:00' ).toOffset() // new $mol_time_moment( '2015-07-16T16:24+03:00' )
 ```
 
 ## Serialization

@@ -8,7 +8,7 @@ Button to open embedded chat.
 
 ```
 <= Chat $mol_chat
-	seed <= seed \my-super-duper-id
+	seed <= seed \0_0
 	pages => chat_pages
 ```
 
@@ -16,7 +16,7 @@ Button to open embedded chat.
 
 **`seed() : string`**
 
-Global unique id of chat. Current host name by default.
+Global unique id of chat.
 
 **`pages() : $mol_page[]`**
 

@@ -16,7 +16,8 @@ namespace $ {
 			
 			return function $mol_wire_task_get( host: Host, args: Args ) {
 				
-				const existen = $mol_wire_auto()?.track_next()
+				const sub = $mol_wire_auto()
+				const existen = sub?.track_next()
 			
 				reuse: if( existen ) {
 					
@@ -29,13 +30,19 @@ namespace $ {
 					return existen
 				}
 				
-				return new $mol_wire_task( `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, task, host, ... args )
+				// Disabled because non-idempotency is required for try-catch
+				// if( existen && sub instanceof $mol_wire_task ) {
+				// 	$mol_fail( new Error( `$mol_wire_task detects nonidempotency\n${existen}` ) )
+				// }
+				
+				return new $mol_wire_task( `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, task, host, args )
 			}
 			
 		}
 
 		complete() {
-			if( this.sub_empty ) this.destructor()
+			if( this.cache instanceof Promise ) return
+			this.destructor()
 		}
 		
 		put( next: Result | Error | Promise< Result | Error > ) {

@@ -1,7 +1,7 @@
 # $mol_object
 
-The base class for long living objects. Every such object has an unique user friendly id like `$my_app.root(0).List().Task("123")`. This id, is a script simultaneously, by its helping we can get a link to an object from a browser console,
-it's very convenience while debugging. To have a correct identifiers, it's recommended to create an object through a factory wrapped by decorator [$mol_mem](../mem) at "owns" object:
+The base class for long living objects. Every such object has an unique user friendly id like `$my_app.root(0).List().Task("123")`. This id is also a script with which we can get a link to an object from the browser console.
+This is very handy for debugging. To have a correct identifiers, it's recommended to create an object through a factory wrapped by decorator [$mol_mem](../mem) at "owns" object:
 
 ```typescript
 namespace $ {
@@ -15,7 +15,8 @@ namespace $ {
 	}
 }
 ```
-This idetifier is used everywhere, in particular is outputted automatically while [logging](../log):
+
+This identifier is used everywhere, in particular is outputted automatically while [logging](../log):
 
 ```
 10:16:43 $my_app.root(0).List() pull

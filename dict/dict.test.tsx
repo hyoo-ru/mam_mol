@@ -65,9 +65,9 @@ namespace $ {
 
 		'for-of key restore'() {
 			
-			const dict = new $mol_dict< number , number >([[ 123 , 321 ]])
+			const dict = new $mol_dict([[ [123] , 321 ]])
 			
-			const keys = [] as number[]
+			const keys = [] as number[][]
 			const vals = [] as number[]
 
 			for( const [ key , val ] of dict ) {
@@ -75,19 +75,23 @@ namespace $ {
 				vals.push( val )
 			}
 
-			$mol_assert_equal( keys.length , 1 )
-			$mol_assert_equal( keys[0] , 123 )
-			
-			$mol_assert_equal( vals.length , 1 )
-			$mol_assert_equal( vals[0] , 321 )
+			$mol_assert_like( keys, [ [123] ] )
+			$mol_assert_like( vals, [ 321 ] )
 
+		} ,
+
+		'method iterators key restore'() {
+			const dict = new $mol_dict([[ [123] , 321 ]])
+			$mol_assert_like( [ ... dict.keys() ], [ [123] ] )
+			$mol_assert_like( [ ... dict.values() ], [ 321 ] )
+			$mol_assert_like( [ ... dict.entries() ], [ [ [123], 321 ] ] )
 		} ,
 
 		'forEach key restore'() {
 
-			const dict = new $mol_dict< number , number >([[ 123 , 321 ]])
+			const dict = new $mol_dict([[ [123] , 321 ]])
 			
-			const keys = [] as number[]
+			const keys = [] as number[][]
 			const vals = [] as number[]
 
 			dict.forEach( ( val , key )=> {
@@ -95,12 +99,9 @@ namespace $ {
 				vals.push( val )
 			} )
 
-			$mol_assert_equal( keys.length , 1 )
-			$mol_assert_equal( keys[0] , 123 )
+			$mol_assert_like( keys, [ [123] ] )
+			$mol_assert_like( vals, [ 321 ] )
 			
-			$mol_assert_equal( vals.length , 1 )
-			$mol_assert_equal( vals[0] , 321 )
-
 		} ,
 
 	})

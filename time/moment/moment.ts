@@ -190,7 +190,7 @@ namespace $ {
 			
 		}
 
-		toOffset( config : $mol_time_duration_config ) {
+		toOffset( config: $mol_time_duration_config = new $mol_time_moment().offset! ) {
 			
 			const duration = new $mol_time_duration( config )
 			const offset = this.offset || new $mol_time_moment().offset!

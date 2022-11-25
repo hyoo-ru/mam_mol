@@ -28,26 +28,49 @@ namespace $ {
 			} , context )
 		}
 
-		[Symbol.iterator]() {
-			const iterator = super[ Symbol.iterator ]()
+		keys() {
+			const iterator = super.keys()
 			
 			return {
 				[Symbol.iterator]() {
 					return this
 				},
 				next() {
+					
 					const iteration = iterator.next()
-
-					if( !iteration.done ) {
-						const key = iteration.value[0]
-						if( typeof key === 'string' ) iteration.value[0] = JSON.parse( key )
-					}
-
+					if( iteration.done ) return iteration
+					
+					iteration.value = JSON.parse( iteration.value as any as string )
 					return iteration
+					
 				}
 			}
 		}
-
+		
+		entries() {
+			const iterator = super.entries()
+			
+			return {
+				[Symbol.iterator]() {
+					return this
+				},
+				next() {
+					
+					const iteration = iterator.next()
+					if( iteration.done ) return iteration
+					
+					iteration.value = [ JSON.parse( iteration.value[0] as any as string ), iteration.value[1] ]
+					// iteration.value[0] = JSON.parse( iteration.value[0] as any as string )
+					return iteration
+					
+				}
+			}
+		}
+		
+		[Symbol.iterator]() {
+			return this.entries()
+		}
+		
 	}
 
 }

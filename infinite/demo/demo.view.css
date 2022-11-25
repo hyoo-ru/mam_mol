@@ -1,0 +1,13 @@
+[mol_infinite_demo_list] {
+	flex: 1 0 auto;
+}
+
+[mol_infinite_demo_photo] {
+	width: 3rem;
+	height: 3rem;
+	background: var(--mol_theme_card);
+}
+
+[mol_infinite_demo_city] {
+	color: var(--mol_theme_shade);
+}

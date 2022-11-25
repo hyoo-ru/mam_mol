@@ -1,28 +1,47 @@
 $mol_list_demo_table $mol_example
 	title \Large list of rows with dynamic content
-	count 1000
+	count 9999
 	sub /
-		<= Rows $mol_list
-			rows <= rows /
-	Row* $mol_row
-		minimal_height 40
-		sub <= row_content* /
-			<= Id* $mol_view sub / <= row_id* \
-			<= Title* $mol_view sub / <= row_title* \
-			<= Editable* $mol_check_box
-				title <= editable_title \Editable
-				checked?val <=> row_editable*?val false
-			<= Priority* $mol_switch
-				enabled <= row_editable*
-				value?val <=> row_priority*?val \
-				options *
-					minor \Minor
-					major \Major
-					critical \Critical
-			<= Date* $mol_date
-				value_moment?val <=> row_moment*?val $mol_time_moment
-				enabled <= row_editable*
-			<= Link* $mol_link_iconed uri <= row_uri* \
+		<= Head $mol_row sub /
+			<= Check $mol_check_group
+				checks <= check_list /$mol_check
+				title \Good Goods
+		<= Rows $mol_list rows <= rows /
+			<= Row*0 $mol_row
+				minimal_height 100
+				minimal_width 200
+				sub <= row_content* /
+					<= Id_labeler* $mol_labeler
+						title \ID
+						Content <= Id* $mol_check_box
+							title <= row_id*? \0000
+							checked? <=> row_checked*? false
+					<= Title_labeler* $mol_labeler
+						title \Product Name
+						Content <= Title* $mol_link_iconed
+							uri <= row_uri* \
+							title <= row_title* \
+					<= Color_labeler* $mol_labeler
+						title \Color
+						Content <= Color* $mol_select
+							value? <=> row_color*? \
+							options <= colors /
+					<= Status_labeler* $mol_labeler
+						title \Status
+						Content <= Status* $mol_switch
+							value? <=> row_status*? \
+							options <= status_options *
+								minor \Store
+								major \Sale
+								critical \Support
+					<= Quantity_labeler* $mol_labeler
+						title \Quantity
+						Content <= Quantity* $mol_number
+							value? <=> row_quantity*? 0
+					<= Date_labeler* $mol_labeler
+						title \Supply Time
+						Content <= Date* $mol_date
+							value_moment?val <=> row_moment*?val $mol_time_moment
 	tags /
 		\$mol_row
 		\$mol_check

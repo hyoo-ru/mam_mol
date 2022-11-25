@@ -1,48 +1,55 @@
 [mol_textarea] {
 	flex: 1 0 auto;
-	display: flex;
 	flex-direction: column;
-	position: relative;
-	z-index: 0;
 	vertical-align: top;
 	min-height: max-content;
 	white-space: pre-wrap;
 	border-radius: var(--mol_gap_round);
+	font-family: monospace;
+	position: relative;
+	tab-size: 4;
 }
 
 [mol_textarea_view] {
 	pointer-events: none;
-	z-index: 1;
 	white-space: inherit;
+	font-family: inherit;
+	tab-size: inherit;
 }
+
+[mol_textarea_view_copy] {
+	pointer-events: all;
+}
+
 [mol_textarea_clickable] > [mol_textarea_view] {
 	pointer-events: all;
 }
 
 [mol_textarea_edit] {
-	font-family: monospace;
-	z-index: -1 !important;
+	font-family: inherit;
 	padding: var(--mol_gap_text);
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	color: transparent;
+	color: transparent !important;
 	caret-color: var(--mol_theme_text);
 	resize: none;
 	text-align: inherit;
 	white-space: inherit;
 	border-radius: inherit;
-	tab-size: 4;
 	overflow-anchor: none;
-}
-
-[mol_textarea_edit]:focus {
-	color: transparent;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	tab-size: inherit;
 }
 
 [mol_textarea_sidebar_showed] [mol_textarea_edit] {
-	left: 3rem;
-	width: calc( 100% - 3rem );
+	left: 1.5rem;
+	width: calc( 100% - 1.5rem );
+}
+
+[mol_textarea_edit]:hover + [mol_textarea_view] {
+	z-index: var(--mol_layer_hover);
+}
+
+[mol_textarea_edit]:focus + [mol_textarea_view] {
+	z-index: var(--mol_layer_focus);
 }

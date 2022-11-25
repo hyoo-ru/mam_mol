@@ -1,11 +1,14 @@
 namespace $.$$ {
 	export class $mol_string extends $.$mol_string {
 		
-		// _timer = null as any
-		
 		event_change( next? : Event ) {
 			if( !next ) return
-			this.value( ( next.target as HTMLInputElement ).value )
+			const el = next.target as HTMLInputElement
+			const from = el.selectionStart
+			const to = el.selectionEnd
+			el.value = this.value_changed( el.value )
+			el.selectionEnd = to
+			el.selectionStart = from
 			this.selection_change( next )
 		}
 
@@ -26,16 +29,23 @@ namespace $.$$ {
 			return new $mol_dom_listener(
 				this.$.$mol_dom_context.document,
 				'selectionchange',
-				event => this.selection_change( event ),
+				$mol_wire_async( event => this.selection_change( event ) ),
 			)
 		}
 		
 		selection_change( event: Event ) {
+			
 			const el = this.dom_node() as HTMLInputElement
-			this.selection([
-				el.selectionStart,
-				el.selectionEnd,
+			if( el !== this.$.$mol_dom_context.document.activeElement ) return
+			
+			const [ from, to ] = this.selection([
+				el.selectionStart!,
+				el.selectionEnd!,
 			])
+			
+			el.selectionEnd = to
+			el.selectionStart = from
+			
 		}
 		
 		selection_start() {

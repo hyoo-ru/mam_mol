@@ -27,7 +27,7 @@ namespace $ {
 		const body = operator.struct('indent', [
 			operator.struct('line', [
 				owner_parts.name.data('return this.'),
-				this.$mol_view_tree2_ts_function_call(factory),
+				this.$mol_view_tree2_ts_function_call({ ... factory, key: factory.key?.data( 'id' ) }),
 				owner_parts.name.data('.'),
 				this.$mol_view_tree2_ts_function_call(having_parts),
 			])

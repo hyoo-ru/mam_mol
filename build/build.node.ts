@@ -352,11 +352,11 @@ namespace $ {
 
 					if( diagnostic.file ) {
 
-						const error = new Error( $node.typescript.formatDiagnostic( diagnostic , {
+						const error = $node.typescript.formatDiagnostic( diagnostic , {
 							getCurrentDirectory : ()=> this.root().path() ,
 							getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
 							getNewLine : ()=> '\n' ,
-						}) )
+						})
 						
 						this.js_error( diagnostic.file.getSourceFile().fileName , error )
 						
@@ -381,8 +381,8 @@ namespace $ {
 				recheck: ()=> {
 					for( const path of paths ) {
 						const version = $node.fs.statSync( path ).mtime.valueOf()
+						this.js_error( path, null )
 						if( versions[ path ] && versions[ path ] !== version ) {
-							this.js_error( path, null )
 							const watcher = watchers.get( path )
 							if( watcher ) watcher( path , 2 )
 						}
@@ -396,7 +396,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		js_error( path : string , next = null as null | Error ) {
+		js_error( path : string , next = null as null | string ) {
 			this.js_content( path )
 			return next
 		}
@@ -608,7 +608,7 @@ namespace $ {
 			}
 
 			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
-				this.$.$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.path() )
+				this.$.$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.relate( this.root() ) )
 				mod.reset()
 				return true
 			}
@@ -618,10 +618,18 @@ namespace $ {
 			}
 
 			if(
-				parent.name() === 'node_modules'
-				|| ( parent === this.root().resolve( 'node' ) )&&( mod.name() !== 'node' )
+				!mod.name().startsWith('@')
+				&& (
+					parent.name() === 'node_modules'
+					|| ( parent === this.root().resolve( 'node' ) )&&( mod.name() !== 'node' )
+				)
 			) {
 				$node[ mod.name() ] // force autoinstall through npm
+			}
+
+			// Handle npm pacakges with names @hello/world
+			if (parent.name().startsWith('@') && parent.parent().name() === 'node_modules') {
+				$node [ `${parent.name()}/${mod.name()}` ]
 			}
 
 			return false
@@ -943,14 +951,12 @@ namespace $ {
 
 			for( const path of paths ) {
 
-				const src = this.$.$mol_file.absolute( path ) 
-
-				src.text() // recheck on file change
+				this.js_content( path ) // recheck on file change
 
 				const error = this.js_error( path )
 				if( !error ) continue
 				
-				errors.push( error )
+				errors.push( new Error( error ) )
 			}
 			
 			this.logBundle( target , Date.now() - start )
@@ -1013,7 +1019,7 @@ namespace $ {
 			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
 
 			if( bundle === 'node' ) {
-				this.$.$mol_exec( this.root().path() , 'node' , '--trace-uncaught', target.path() )
+				this.$.$mol_exec( this.root().path() , 'node' , '--trace-uncaught', target.relate( this.root() ) )
 			}
 			
 			return [ target , targetMap ]
@@ -1035,19 +1041,13 @@ namespace $ {
 			content = content.replace(
 				/(<\/body>|$)/ , `
 				<script src="/mol/build/client/client.js" charset="utf-8"></script>
+				<script src="web.test.js" charset="utf-8"></script>
 				<script>
-					addEventListener( 'load', ()=> {
-
-						const test = document.createElement( 'script' )
-						test.src = 'web.test.js'
-						
+					addEventListener( 'load', ()=> setTimeout( ()=> {
 						const audit =  document.createElement( 'script' )
 						audit.src = 'web.audit.js'
-						
-						test.onload = ()=> document.head.appendChild( audit )
-						document.head.appendChild( test )
-
-					} )
+						document.head.appendChild( audit )
+					}, 500 ) )
 				</script>
 				$1`,
 			)

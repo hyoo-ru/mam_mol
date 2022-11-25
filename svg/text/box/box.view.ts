@@ -8,8 +8,7 @@ namespace $.$$ {
 		@ $mol_mem
 		width() {
 			return $mol_font_measure(
-				this.font_size(),
-				this.font_family(),
+				this.font_size() + 'px ' + this.font_family(),
 				this.text(),
 			)
 		}

@@ -6,6 +6,9 @@ $mol_app_demo $mol_book2
 	pages <= blocks /
 	plugins /
 		<= Theme $mol_theme_auto
+		<= Search_start $mol_hotkey
+			key * F? <=> search_start? null
+			mod_ctrl true
 	demo_block_list /
 		\$mol_example_small
 		\$mol_example_large
@@ -17,7 +20,7 @@ $mol_app_demo $mol_book2
 				uri <= sources_uri \https://github.com/hyoo-ru/mam_mol/
 			<= Lights $mol_lights_toggle
 	Detail* $mol_app_demo_detail
-		chat_seed <= chat_seed* \
+		chat_seed <= chat_seed* \p9zx0v_nsmx1d
 		chat_pages => chat_pages*
 		title <= detail_title
 		description <= detail_description \
@@ -27,10 +30,6 @@ $mol_app_demo $mol_book2
 		repo <= repo \
 		module <= module /string
 		source_link <= source_link \
-	Welcome $mol_scroll
-		sub /
-			<= Welcome_text $mol_text
-				text <= welcome_text \
 	Detail_empty_message $mol_status
 		sub /
 			<= detail_empty_prefix @ \No one demo with prefix "
@@ -67,7 +66,7 @@ $mol_app_demo_detail $mol_page
 				<= readme_icon $mol_icon_information_outline
 		<= Chat $mol_chat
 			pages => chat_pages
-			seed <= chat_seed \
+			seed <= chat_seed \0_0
 		<= Edit $mol_link
 			hint <= edit_hint @ \Edit this demo in studio
 			sub /

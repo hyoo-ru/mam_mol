@@ -1,6 +1,6 @@
 # $mol_range2
 
-Lazy computable lists with native Array interface. $mol_range2_array is mutable but all derived ranges are immutable.
+Lazy computed lists with native Array interface. $mol_range2_array is mutable but all derived ranges are immutable.
 
 # Creating
 

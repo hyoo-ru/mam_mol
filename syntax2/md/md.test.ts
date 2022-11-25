@@ -6,11 +6,12 @@ namespace $ {
 			const check = ( input : string , right : [ string , string , string[] , number ][] )=> {
 				const tokens = [] as typeof right
 				$mol_syntax2_md_flow.tokenize( input , ( ... token )=> tokens.push( token ) )
-				$mol_assert_like( JSON.stringify( tokens ) , JSON.stringify( right ) )
+				$mol_assert_like( tokens , right ) 
 			}
 
 			check( 'Hello,\nWorld..\r\n\r\n\nof Love!' , [
-				[ 'block' , 'Hello,\nWorld..\r\n\r\n\n' , [ 'Hello,\nWorld..' , '\r\n\r\n\n' ] , 0 ] ,
+				[ 'block' , 'Hello,\n' , [ 'Hello,', '\n' ] , 0 ] ,
+				[ 'block' , 'World..\r\n\r\n\n' , [ 'World..' , '\r\n\r\n\n' ] , 7 ] ,
 				[ 'block' , 'of Love!' , [ 'of Love!' , '' ] , 19 ] ,
 			] )
 			

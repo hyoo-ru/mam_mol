@@ -17,14 +17,21 @@
 	scroll-snap-stop: always;
 	scroll-snap-align: end;
 	position: relative;
-	/* z-index: 0; */
 	min-height: 100%;
 	max-height: 100%;
 	max-width: 100%;
 	flex-shrink: 0;
 }
+[mol_book2] > * + *:not([mol_book2_placeholder]):before {
+	display: block;
+	content: '=';
+	opacity: .5;
+	position: absolute;
+	top: -.5rem;
+	left: -.325rem;
+}
 
-[mol_book2] > *:nth-child(odd):not([mol_book2_placeholder]) {
+[mol_book2] > *:where( :nth-child(odd):not([mol_book2_placeholder]) ) {
 	background-color: var(--mol_theme_card);
 }
 

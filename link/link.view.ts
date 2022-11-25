@@ -3,15 +3,19 @@ namespace $.$$ {
 	export class $mol_link extends $.$mol_link {
 		
 		@ $mol_mem
+		uri_toggle() {
+			return this.current() ? this.uri_off() : this.uri()
+		}
+
+		@ $mol_mem
 		uri() {
-			
-			const arg = this.arg()
-			
-			const uri = new this.$.$mol_state_arg( this.state_key() ).link( arg )
-			if( uri !== this.$.$mol_state_arg.href() ) return uri
-			
+			return new this.$.$mol_state_arg( this.state_key() ).link( this.arg() )
+		}
+
+		@ $mol_mem
+		uri_off() {
 			const arg2 = {}
-			for( let i in arg ) arg2[i] = null
+			for( let i in this.arg() ) arg2[i] = null
 			
 			return new this.$.$mol_state_arg( this.state_key() ).link( arg2 )
 		}
@@ -36,7 +40,7 @@ namespace $.$$ {
 			if( keys.length === 0 ) return false
 
 			for( const key of keys ) {
-				if( this.$.$mol_state_arg.value( key ) !== args[ key ] ) return false
+				if( this.$.$mol_state_arg.value( key ) != args[ key ] ) return false
 			}
 
 			return true
@@ -50,10 +54,23 @@ namespace $.$$ {
 			return Math.max( super.minimal_height(), 24 )
 		}
 		
+		external() {
+			return this.uri_native().origin !== $mol_dom_context.location.origin
+		}
+		
 		target(): '_self' | '_blank' | '_top' | '_parent' | string {
-			return ( this.uri_native().origin === $mol_dom_context.location.origin ) ? '_self' : '_blank'
+			return this.external() ? '_blank' : '_self'
 		}
 
+		hint_safe() {
+			try {
+				return this.hint()
+			} catch( error ) {
+				$mol_fail_log( error )
+				return ''
+			}
+		}
+		
 	}
 	
 }

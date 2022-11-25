@@ -9,14 +9,10 @@ namespace $ {
 			this : { new() : Instance },
 			uri : string,
 		) : Instance {
+			$mol_wire_solid()
 			const instance = new this
 			instance.uri = ()=> uri
 			return instance
-		}
-
-		@ $mol_mem
-		static cache< Raw extends Object >() {
-			return {}
 		}
 
 		uri() {
@@ -32,40 +28,31 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		json( next? : Partial< Raw > , force? : $mol_mem_force ) {
+		json( next? : null | Partial< Raw > ): Raw {
 			
-			let json : Raw | undefined
-			let uri = this.uri()			
-			const cache = $mol_model.cache< Raw >()
-
-			if( !next && !force ) {
-				json = cache[ uri ]
-				if( json != undefined ) return json
-			}
-
-			cache[ uri ] = undefined
-
-			json = $mol_fetch.json( this.resource_url() , {
+			const prev = this.json_update()
+			if( next ) return this.json_update({ ... prev, ... next })
+			if( next === undefined && prev !== undefined ) return prev
+			
+			let json = $mol_fetch.json( this.resource_url() , {
 				method : next ? this.method_put() : 'GET' ,
 				body : next && JSON.stringify( next ) ,
-				headers : {
+				headers : { 
 					'content-type' : 'application/json',
 				},
 			} ) as Raw
-
+			
 			return this.json_update( json )
 
 		}
 
-		json_update( patch : Partial< Raw > ) : Raw {
-			const uri = this.uri()
-			const cache =  $mol_model.cache< Raw >()
-
-			return cache[ uri ] = {
-				... cache[ uri ] || {} as Raw,
-				... patch,
-			}
-
+		@ $mol_mem
+		json_update( patch? : Partial< Raw > ): Raw {
+			
+			if( patch ) this.json_update()
+			else $mol_wire_solid()
+			
+			return patch as any
 		}
 
 	}

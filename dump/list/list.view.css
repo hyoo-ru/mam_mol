@@ -1,0 +1,9 @@
+[mol_dump_list] {
+	align-items: flex-start;
+	gap: var(--mol_gap_space);
+}
+
+[mol_dump_list_dump]:first-child {
+	position: sticky;
+	top: 0;
+}

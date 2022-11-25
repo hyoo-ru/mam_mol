@@ -23,6 +23,19 @@ namespace $ {
 		function clone( el: Element ) {
 			
 			const re = el.cloneNode() as HTMLElement
+			if( el instanceof HTMLImageElement && !/^(data|blob):/.test( el.src ) ) {
+				
+				const canvas = <canvas width={ el.naturalWidth } height={ el.naturalHeight } ></canvas> as HTMLCanvasElement
+				const context = canvas.getContext( '2d' )!
+				context.drawImage( el, 0, 0 )
+				
+				try {
+					re['src'] = canvas.toDataURL() // external urls don't works
+				} catch( error ) {
+					$mol_fail_log( error ) // CORS don't supported
+				}
+				
+			}
 
 			const styles = $mol_dom_context.getComputedStyle( el as HTMLElement )
 			restyle( re, styles )
@@ -61,12 +74,12 @@ namespace $ {
 				width={ String( width ) }
 				height={ String( height ) }
 			>
-			{/* <base href={ location.href } /> */}
 			<foreignObject
 				xmlns="http://www.w3.org/2000/svg"
 				width={ String( width ) }
 				height={ String( height ) }
 				>
+				{/* <base href={ location.href } /> */}
 				{/* { styles } */}
 				{ clone( el ) }
 			</foreignObject>

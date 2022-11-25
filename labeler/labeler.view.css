@@ -6,14 +6,14 @@
 }
 
 [mol_labeler_label] {
-	min-height: 2.5rem;
+	min-height: 2rem;
 	color: var(--mol_theme_shade);
-	z-index: 1;
-	padding: var(--mol_gap_text);
+	padding: .5rem .75rem;
 	gap: 0 var(--mol_gap_block);
 	flex-wrap: wrap;
 }
 
 [mol_labeler_content] {
 	display: flex;
+	padding: var(--mol_gap_text);
 }

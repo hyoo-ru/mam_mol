@@ -29,10 +29,12 @@ include \/mol/date/demo
 include \/mol/deck/demo
 include \/mol/dimmer/demo
 include \/mol/drag/demo
+include \/mol/dump/demo
 include \/mol/expander/demo
 include \/mol/float/demo
 include \/mol/form/demo/bids
 include \/mol/form/demo/draft
+include \/mol/format/demo
 include \/mol/frame/demo
 - include \/mol/grid/demo
 include \/mol/gallery/demo
@@ -46,6 +48,7 @@ include \/mol/list/demo/table
 include \/mol/list/demo/tree
 include \/mol/map/yandex/demo
 include \/hyoo/marked/demo
+include \/hyoo/harp/demo
 - include \/mol/message/demo
 include \/mol/nav/demo
 include \/mol/number/demo
@@ -68,6 +71,8 @@ include \/mol/select/demo/priority
 include \/mol/select/list/demo
 include \/mol/speck/demo
 include \/mol/speech/demo
+include \/mol/spell/demo
+include \/mol/stack/demo
 include \/mol/string/demo
 include \/mol/string/button/demo
 include \/mol/switch/demo
@@ -78,3 +83,4 @@ include \/mol/time/demo
 include \/mol/toolbar/demo
 include \/mol/video/player/demo
 include \/mol/password/demo
+include \/mol/lights/demo

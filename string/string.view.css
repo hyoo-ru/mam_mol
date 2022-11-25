@@ -3,19 +3,18 @@
 	outline-offset: 0;
 	border: none;
 	border-radius: var(--mol_gap_round);
-	white-space: nowrap;
+	white-space: pre-line;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	padding: var(--mol_gap_text);
 	text-align: left;
 	position: relative;
-	z-index: 0;
 	font: inherit;
 	flex: 1 1 auto;
 	background: transparent;
 	min-width: 0;
 	color: inherit;
-	background: var(--mol_theme_card);
+	background: var(--mol_theme_field);
 }
 
 [mol_string]:disabled:not(:placeholder-shown) {
@@ -23,16 +22,24 @@
 	color: var(--mol_theme_text);
 }
 
-[mol_string]:hover:where(:not(:disabled)) {
-	background: var(--mol_theme_hover);
+[mol_string]:where(:not(:disabled)) {
+	box-shadow: inset 0 0 0 1px var(--mol_theme_line);
+}
+
+[mol_string]:where(:not(:disabled)):hover {
+	box-shadow: inset 0 0 0 2px var(--mol_theme_line);
+	z-index: var(--mol_layer_hover);
 }
 
 [mol_string]:focus {
 	outline: none;
-	z-index: 1;
-	background: var(--mol_theme_field);
+	z-index: var(--mol_layer_focus);
 	color: var(--mol_theme_text);
 	box-shadow: inset 0 0 0 1px var(--mol_theme_focus);
+}
+
+[mol_string]::placeholder {
+	color: var(--mol_theme_shade);
 }
 
 [mol_string]::-ms-clear {

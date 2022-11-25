@@ -1,4 +1,8 @@
 namespace $ {
+	
+	const blacklist = new Set([
+		'//cse.google.com/adsense/search/async-ads.js'
+	])
 
 	export function $mol_offline( uri = 'web.js' ) {
 		
@@ -14,6 +18,19 @@ namespace $ {
 			} )
 
 			self.addEventListener( 'fetch' , ( event : any )=> {
+				
+				if( blacklist.has( event.request.url.replace( /^https?:/, '' ) ) ) {
+					return event.respondWith(
+						new Response(
+							null,
+							{
+								status: 418,
+								statusText: 'Blocked'
+							},
+						)
+					)
+				}
+				
 				event.respondWith(
 
 					fetch( event.request )
@@ -37,6 +54,7 @@ namespace $ {
 					} )
 
 				)
+				
 			})
 
 			self.addEventListener( 'beforeinstallprompt' , ( event : any )=> {
@@ -44,10 +62,12 @@ namespace $ {
 				event.prompt()
 			} )
 
-		} if( location.protocol !== 'about:' ) {
-			if( navigator.serviceWorker ) navigator.serviceWorker.register( uri )
-			else if( location.protocol === 'http:' ) console.warn( 'HTTPS is required for service workers.' )
-			else console.warn( 'Service Worker is not supported.' )
+		} else if( location.protocol !== 'https:' && location.hostname !== 'localhost' ) {
+			console.warn( 'HTTPS or localhost is required for service workers.' )
+		} else if( !navigator.serviceWorker ) {
+			console.warn( 'Service Worker is not supported.' )
+		} else {
+			navigator.serviceWorker.register( uri )
 		}
 
 	}

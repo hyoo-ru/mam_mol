@@ -1,15 +1,13 @@
 # $mol
 
-Reactive micro-modular ui framework. Very simple, but very powerful!
+Reactive micro-modular UI framework. Very simple, but very powerful!
+
+![](https://habrastorage.org/webt/0r/l1/70/0rl170zizkwddstnp5mt5bruroa.png)
 
 # Contents
 
-- [Levels](#levels)
 - [Features](#features)
-- [Applications](https://apps.hyoo.ru/)
-- [Benchmarks](#benchmarks)
-- [Articles](#articles)
-- [Discussions](https://teleg.run/mam_mol)
+- [Review](#reviews)
 - [Quick start](#quick-start)
 - [Tutorials](#tutorials)
 - [Rationale](#rationale)
@@ -19,21 +17,14 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Cool stuff](#cool-stuff)
 - [Donate](#donate)
 
-# Levels
-
-1. ✅ **Library.** $mol is just set of small libs. Honor libs: jQuery, React, Redux, MobX.
-2. ✅ **Framework.** $mol is very flexible, but simple. Honor framewworks: Angular, Vue, Ember.
-3. ✅ **Сonstruction Kit.** $mol has many costomizable ui components. Honor construction kits: Ext, OpenUI5.
-4. ⭕ **Platform.** $mol doesn't fit it yet. Honor platforms: Drupal, SAP, 1C.
-
 # Features
 
 - [Zero configuration](#zero-configuration). Just checkout and use it.
 - [Lazy rendering/evaluating/loading etc](#lazyness).
 - [Full reactivity](#reactivity) in all application layers. Not only between View and ViewModel.
 - [Automatic dependency tracking](#reactivity) between reactive containers. No need to manual publish/subscribe/unsubscribe and streams routing.
-- [Effective state synchronization](mem) in right way. 
-- Automatic inclusion of modules in package at compile time. No need for manually importing them. [Just use it](#zero-configuration).
+- [Effective state synchronization](wire) in right way. 
+- Automatic inclusion of modules in package at compile time. No need for manually importing or installing them. [Just use it](#zero-configuration).
 - Very small modules. [All of them are optional](#zero-configuration).
 - Cross platform. [Support any environment](#zero-configuration) (NodeJS, Web browsers, Cordova).
 - Static typing ([TypeScript](https://www.typescriptlang.org/)). Full IDE support.
@@ -44,23 +35,11 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - Pseudosynchronous code. [Asynchrony is abstracted by reactivity](#reactivity). No callbacks/promises/streams hell. No async/await/yield virus.
 - Automatic [BEM](https://en.bem.info/methodology/naming-convention/)-attributes generation for elements.
 
-# Benchmarks
+# Reviews
 
-- [$hyoo_bench_list](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/list) - Frameworks comparison ([online](https://bench.hyoo.ru/list/#sort=fill/sample=angular-1-5-5~mol~native-html~react-15-3-2~native-dom))
-- [ToDoMVC benchmark](https://github.com/hyoo-ru/todomvc/tree/master/benchmark) ([online](https://hyoo-ru.github.io/todomvc/benchmark/#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
-- [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=220306_AiDcKB_6FK%2C220306_BiDcYS_5YM%2C220306_BiDcQW_5YN%2C220306_AiDcQG_6FN&thumbSize=100&ival=500&end=visual)
-- [Line charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/rope) ([online](https://bench.hyoo.ru/chart/rope/#sort=fill/sample=hcharts~mol))
-- [Bar charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/bar) ([online](https://bench.hyoo.ru/chart/bar/#sort=fill/sample=hcharts~mol))
-- [React vs React Fiber vs $mol](https://github.com/nin-jin/sierpinski) ([online](https://nin-jin.github.io/sierpinski))
-
-# Articles
-
-- [$mol — лучшее средство от геморроя](https://habr.com/ru/post/341146/) - Quick introduction to $mol
-- [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/) - Comprehensive $mol review
-- [Объектное Реактивное Программирование](https://habrahabr.ru/post/330466/) - Features of Object Reactive Programming
-- [Концепции автоматического тестирования](https://habr.com/ru/post/351430/) - Testing principles
-- [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/) - Problems of popular frameworks
-- [Принципы написания кода](https://habrahabr.ru/post/236785/) - Code style principles
+- [$mol — лучшее средство от геморроя](https://mol.hyoo.ru/#!section=slides/slides=https%3A%2F%2Fnin-jin.github.io%2Fslides%2Fmol%2F) - Quick introduction to $mol
+- [$mol: реактивный микромодульный фреймворк](https://mol.hyoo.ru/#!section=articles/author=nin-jin/repo=HabHub/article=5) - First introduction to $mol
+- [$mol: 4 года спустя](https://mol.hyoo.ru/#!section=articles/author=nin-jin/repo=HabHub/article=23) - State of $mol after 4 years
 
 # Quick start
 
@@ -75,6 +54,8 @@ git clone https://github.com/hyoo-ru/mam.git ./mam && cd mam
 npm install && npm start
 ```
 
+Or simply use [![Gitpod Online Dev Workspace](https://img.shields.io/badge/Gitpod-Online--Dev--Workspace-blue.svg)](https://gitpod.io/#https://github.com/hyoo-ru/mam).
+
 ## Setup your editor
 
 - Use MAM directory as root of your project in editor
@@ -84,14 +65,22 @@ npm install && npm start
 
 ## Create your application component
 
-Examples use namespace `my` and application name `hello`, but you can use your own namespace and application name.
+The following example uses the namespace "my" and the application name "hello", but you can use your own namespace and application name.
+
+Let's create a component that allows you to enter your name and display greeting text: "Hello, " + your name.
+
+You need to create next files:
+- ./my/hello/index.html - Web entry point
+- ./my/hello/hello.view.tree - Declarative component description
+- ./my/hello/hello.view.ts - Behaviour/User interface logic
+- ./my/hello/hello.test.ts - Tests
+- ./my/hello/hello.view.css - Styles
 
 Add **web entry point** at `./my/hello/index.html`:
 
 ```html
 <!doctype html> <!-- Disable quirks mode -->
 <html mol_view_root> <!-- Reset root styles -->
-	
 	<head>
 		<meta charset="utf-8" /> <!-- Force utf-8 encoding -->
 		<meta
@@ -99,13 +88,12 @@ Add **web entry point** at `./my/hello/index.html`:
 			content="width=device-width, height=device-height, initial-scale=1"
 		/> <!-- Disable mobile browser auto zoom, $mol is adaptive -->
 		<meta name="mobile-web-app-capable" content="yes"> <!-- Fullscreen support -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
 	</head>
-	
 	<body mol_view_root> <!-- Reset root styles -->
 		<div mol_view_root="$my_hello"></div> <!-- Autobind component to element on load -->
 		<script src="web.js"></script> <!-- Load autogenerated js bundle -->
 	</body>
-
 </html>
 ```
 
@@ -120,43 +108,6 @@ $my_hello $mol_view
 			hint \Name
 			value?val <=> name?val \
 		<= message \
-```
-
-That will be automatically compiled to typescript code like this:
-
-```typescript
-namespace $ { export class $my_hello extends $mol_view {
-
-	/// name?val \
-	@ $mol_mem
-	name( next = '' ) {
-		return next
-	}
-
-	/// Name $mol_string 
-	/// 	hint \Name
-	/// 	value?val <=> name?val
-	@ $mol_mem
-	Name() {
-		const obj = new $mol_string
-		obj.hint = () => "Name" ,
-		obj.value = next => this.name( next ) ,
-		return obj
-	}
-
-	/// message \
-	message() {
-		return ""
-	}
-
-	/// sub / 
-	/// 	<= Name
-	/// 	<= message
-	sub() {
-		return [ this.Name() , this.message() ]
-	}
-
-} }
 ```
 
 Add **your behaviour** at `./my/hello/hello.view.ts` by extending generated class:
@@ -184,8 +135,9 @@ namespace $.$$ {
 		'Generating greeting message'() {
 
 			const app = new $my_hello
+			$mol_assert_equal( app.message() , '' )
+			
 			app.name( 'Jin' )
-
 			$mol_assert_equal( app.message() , 'Hello, Jin!' )
 
 		}
@@ -247,11 +199,9 @@ Here is a full set of supported bundles:
 - `-/node.test.js` - JS with tests for NodeJS
 - `-/node.deps.json` - a map of dependencies modules for NodeJS
 
-**Support of Source Maps**. Sources are compiled and integrate to maps, they are fully self-sufficient.
+**Support of Source Maps**. Sources are compiled and integrated into maps, they are fully self-sufficient.
 
 **Development server**, which compiles bundles as needed. For example, when `http://localhost:9080/hyoo/todomvc/-/web.js` is requested, the `js` bundle is built from `hyoo/todomvc` for `web` environment. Rebuilding occurs only if any source files are changed.
-
-**Transpilling of modern CSS into CSS supported by browsers** ([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): vendor prefixes and variables etc.
 
 **Transpilling [TypeScript](https://github.com/Microsoft/TypeScript) into JS**. 
 In TS configuration enabled support decorators and disabled implicit `any` type, to prevent missing typing by change.
@@ -267,7 +217,7 @@ Unlike another frameworks, $mol does not isolate the internals of its components
 For example, to set the list of sub components you need to redefine `sub` property in view.tree
 
 ```tree
-Confirm_delte $mol_row sub /
+Confirm_delete $mol_row sub /
 	<= Yes $mol_button_minor title \Yes
 	<= No $mol_button_major title \No
 ```
@@ -288,7 +238,7 @@ are public and can be safely overloaded.
 
 Details about viewers and `view.tree` language: [$mol_view](view).
 
-## Lazyness
+## Laziness
 
 [$mol_view](view) implements lazy rendering. [$mol_scroll](scroll) watches scroll position and suggests the view height to embedded components. [$mol_list](list) knows the view height and minimal sizes of the embedded components, it excludes components definitely outside viewport from rendering. And all other components report their minimal size through `minimal_height` property.
 
@@ -312,8 +262,8 @@ namespace $ {
 	export class $my_greeter {
 		
 		@ $mol_mem
-		greeting() : string {
-			const user_name = $mol_fetch.json( 'https://example.org/profile/name' ) as string
+		greeting() {
+			const user_name = $mol_fetch.json( 'https://example.org/profile/name' )
 			return `Hello, ${ user_name }!`
 		}
 		
@@ -321,7 +271,7 @@ namespace $ {
 }
 ```
 
-Details: [$mol_mem](mem), [$mol_atom2](atom2).
+Details: [$mol_wire](wire).
 
 ## Debugging
 
@@ -345,97 +295,97 @@ The name of the field corresponds to calling the property, the content of the fi
 
 ## Flow
 
-- **[$mol_fiber](fiber)** - suspendable tasks
-- **[$mol_atom2](atom2)** - reactive container
-- **[$mol_log2](log2)** - logging
-- **[$mol_import](import)** - dynamic sources import
-- **[$mol_after](after)** - scheduled callbacks with unified api
-- **[$mol_fail](fail)** - throws all exceptions in one place to increase debug experience
+- **[$mol_fiber](fiber)** - Suspendable tasks
+- **[$mol_atom2](atom2)** - Reactive container
+- **[$mol_log2](log2)** - Logging
+- **[$mol_import](import)** - Dynamic sources import
+- **[$mol_after](after)** - Scheduled callbacks with unified api
+- **[$mol_fail](fail)** - Throws all exceptions in one place to increase debug experience
 
 ## Object model
 
-- **[$mol_mem](mem)** - reactive property decorator
-- **[$mol_object](object)** - components base class
+- **[$mol_wire](wire)** - Reactivity system
+- **[$mol_object](object)** - Components base class
 
 ## Lifecycle
 
-- **[$mol_ambient] - makes derived context
-- **[$mol_owning] - owning relation between objects
+- **[$mol_ambient](ambient)** - Makes derived context
+- **[$mol_owning](owning)** - Owning relation between objects
 
 ## Functions
 
-- **[$mol_const](const)** - const value returning function
-- **[$mol_func_name](func/name)** - name of function
-- **[$mol_func_sandbox](func/sandbox)** - sandbox for safe code evaluation
+- **[$mol_const](const)** - Const value returning function
+- **[$mol_func_name](func/name)** - Name of function
+- **[$mol_func_sandbox](func/sandbox)** - Sandbox for safe code evaluation
 
 ## Collections
 
-- **[$mol_range2](range2)** - lazy array
-- **[$mol_maybe](maybe)** - [maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
-- **[$mol_conform](conform)** - object tree reconciler
-- **[$mol_dict](dict)** - useful native `Map` extension
-- **[$mol_array_chunks](array/chunks)** - splits array by different chunks
-- **[$mol_array_trim](array/trim)** - shortens array without memory reallocation
+- **[$mol_range2](range2)** - Lazy array
+- **[$mol_maybe](maybe)** - [Maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
+- **[$mol_conform](conform)** - Object tree reconciler
+- **[$mol_dict](dict)** - Useful native `Map` extension
+- **[$mol_array_chunks](array/chunks)** - Splits array by different chunks
+- **[$mol_array_trim](array/trim)** - Shortens array without memory reallocation
 
 ## [State modules](state)
 
-- **[$mol_state_arg](state/arg)** - arguments state (location/argv)
-- **[$mol_state_local](state/local)** - persistent local state (localStorage)
-- **[$mol_state_session](state/session)** - session temporary state (sessionStorage)
-- **[$mol_state_history](state/history)** - browser history bound state
-- **[$mol_state_stack](state/stack)** - state of current stack of execution
-- **[$mol_state_time](state/time)** - reactive current time stamp 
+- **[$mol_state_arg](state/arg)** - Arguments state (location/argv)
+- **[$mol_state_local](state/local)** - Persistent local state (localStorage)
+- **[$mol_state_session](state/session)** - Session temporary state (sessionStorage)
+- **[$mol_state_history](state/history)** - Browser history bound state
+- **[$mol_state_stack](state/stack)** - State of current stack of execution
+- **[$mol_state_time](state/time)** - Reactive current time stamp 
 
 ## Simple components
 
-- **[$mol_view](view)** - reactive view model base class with lazy error-proof renderer
-- **[$mol_ghost](ghost)** - node-less wrapper for another view
-- **[$mol_filler](filler)** - lorem ipsum
-- **[$mol_svg](svg)** - svg base components
-- **[$mol_status](status)** - prints error status of some property
-- **[$mol_speck](speck)** - attention speck
+- **[$mol_view](view)** - Reactive view model base class with lazy error-proof renderer
+- **[$mol_ghost](ghost)** - Node-less wrapper for another view
+- **[$mol_filler](filler)** - Lorem ipsum
+- **[$mol_svg](svg)** - SVG base components
+- **[$mol_status](status)** - Prints error status of some property
+- **[$mol_speck](speck)** - Attention speck
 
 ## Simple controls
 
-- **[$mol_link](link)** - navigation link
-- **[$mol_button](button)** - button
-- **[$mol_check](check)** - check box
-- **[$mol_switch](switch)** - radio buttons
-- **[$mol_select](select)** - select with search and lazy rendering support
-- **[$mol_string](string)** - one string input control
-- **[$mol_textarea](textarea)** - multiple line input control
-- **[$mol_search](search)** - search string with suggests support
-- **[$mol_number](number)** - one number input control
-- **[$mol_code](code)** - bar code scanner
-- **[$mol_portion](portion)** - portion visualizer
+- **[$mol_link](link)** - Navigation link
+- **[$mol_button](button)** - Button
+- **[$mol_check](check)** - Check box
+- **[$mol_switch](switch)** - Radio buttons
+- **[$mol_select](select)** - Select with search and lazy rendering support
+- **[$mol_string](string)** - One string input control
+- **[$mol_textarea](textarea)** - Multiple line input control
+- **[$mol_search](search)** - Search string with suggests support
+- **[$mol_number](number)** - One number input control
+- **[$mol_code](code)** - Bar code scanner
+- **[$mol_portion](portion)** - Portion visualizer
 
 ## Layout components
 
-- **[$mol_scroll](scroll)** - scroll pane with position saving
-- **[$mol_tiler](tiler)** - items in row with balanced wrapping
-- **[$mol_row](row)** - items in row with wrapping and padding between
-- **[$mol_bar](bar)** - group of controls as own control
-- **[$mol_list](list)** - vertical list of rows
-- **[$mol_labeler](labeler)** - labeled content
-- **[$mol_section](section)** - section with header
-- **[$mol_book](book)** - horizontal stack of pages
-- **[$mol_page](page)** - page with header, body and footer
-- **[$mol_deck](deck)** - deck of panels with tab bar
-- **[$mol_card](card)** - card with content
+- **[$mol_scroll](scroll)** - Scroll pane with position saving
+- **[$mol_tiler](tiler)** - Items in row with balanced wrapping
+- **[$mol_row](row)** - Items in row with wrapping and padding between
+- **[$mol_bar](bar)** - Group of controls as own control
+- **[$mol_list](list)** - Vertical list of rows
+- **[$mol_labeler](labeler)** - Labeled content
+- **[$mol_section](section)** - Section with header
+- **[$mol_book](book)** - Horizontal stack of pages
+- **[$mol_page](page)** - Page with header, body and footer
+- **[$mol_deck](deck)** - Deck of panels with tab bar
+- **[$mol_card](card)** - Card with content
 
 ## Plugin components
 
-- **[$mol_nav](nav)** - keyboard navigation
-- **[$mol_touch](touch)** - touch/pointer gestures
-- **[$mol_speech](speech)** - speech recognition and syntesis
-- **[$mol_hotkey](hotkey)** - keyboard shortcuts
+- **[$mol_nav](nav)** - Keyboard navigation
+- **[$mol_touch](touch)** - Touch/pointer gestures
+- **[$mol_speech](speech)** - Speech recognition and synthesis
+- **[$mol_hotkey](hotkey)** - Keyboard shortcuts
 
 ## Complex components
 
-- **[$mol_form](form)** - forms with validators
-- **[$mol_attach](attach)** - preview list and attach button
-- **[$mol_cost](cost)** - prints currency values
-- **[$mol_message](message)** - user message
+- **[$mol_form](form)** - Forms with validators
+- **[$mol_attach](attach)** - Preview list and attach button
+- **[$mol_cost](cost)** - Prints currency values
+- **[$mol_message](message)** - User message
 
 ## Charts
 
@@ -448,52 +398,52 @@ The name of the field corresponds to calling the property, the content of the fi
 - **[$mol_plot_dot](plot/dot)** - Dots graph
 - **[$mol_plot_fill](plot/fill)** - Filling graph
 - **[$mol_plot_group](plot/group)** - Group of graph as single graph
-- **[$mol_plot_ruler_vert](plot/ruler/vert)** - Verical ruler
+- **[$mol_plot_ruler_vert](plot/ruler/vert)** - Vertical ruler
 - **[$mol_plot_ruler_hor](plot/ruler/hor)** - Horizontal ruler
 - **[$mol_plot_mark_hor](plot/mark/hor)** - Horizontal markers
 
 ## Data formats
 
-- **[$mol_tree2](tree2)** - [tree format](https://github.com/nin-jin/tree.d) (`view.tree` language described at [$mol_view](view))
+- **[$mol_tree2](tree2)** - [Tree format](https://github.com/nin-jin/tree.d) (`view.tree` language described at [$mol_view](view))
 - **[$mol_base64](base64)** - Base64 encode/decode
 - **[$mol_leb128](leb128)** - LEB128 encode/decode
 
 ## Math
 
-- **[$mol_graph](graph)** - graph algorithms
-- **[$mol_unit](unit)** - typed number value
-- **[$mol_merge_dict](merge/dict)** - merge two dictionaries to new one
+- **[$mol_graph](graph)** - Graph algorithms
+- **[$mol_unit](unit)** - Typed number value
+- **[$mol_merge_dict](merge/dict)** - Merge two dictionaries to new one
 
 ## Resources
 
-- **[$mol_icon](https://github.com/nin-jin/mol_icon)** - css styled material design icons
-- **[$mol_theme](theme)** - theming
-- **[$mol_gap](theme)** - paddings, margins etc
-- **[$mol_style](style)** - css-in-ts
+- **[$mol_icon](https://github.com/nin-jin/mol_icon)** - CSS styled material design icons
+- **[$mol_theme](theme)** - Theming
+- **[$mol_gap](theme)** - Paddings, margins etc
+- **[$mol_style](style)** - CSS-in-TS
 
 ## Testing
 
-- **[$mol_test](test)** - unit testing
-- **[$mol_stub](stub)** - stub data generators
-- **[$mol_assert](assert)** - assertion functions
+- **[$mol_test](test)** - Unit testing
+- **[$mol_stub](stub)** - Stub data generators
+- **[$mol_assert](assert)** - Assertion functions
 
 ## API
 
-- **[$mol_window](window)** - reactive view port configuration
+- **[$mol_window](window)** - Reactive view port configuration
 - **[$mol_fetch](fetch)** - Reactive [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 - **[$mol_webdav](webdav)** - Reactive [WebDAV](https://wikipedia.org/wiki/WebDAV) client
-- **[$mol_file](file)** - isomorphic reactive file system wrapper
-- **[$mol_exec](exec)** - synchronous execute of system command
+- **[$mol_file](file)** - Isomorphic reactive file system wrapper
+- **[$mol_exec](exec)** - Synchronous execute of system command
 - **[$mol_cordova](cordova)** - [Apache Cordova](https://cordova.apache.org) API
 
 ## Time
 
-- **[$mol_time_moment](time/moment)** - [time moment](https://en.wikipedia.org/wiki/ISO_8601#Dates) representation with iso8601 support
-- **[$mol_time_duration](time/duration)** - [time duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) representation with iso8601 support
-- **[$mol_time_interval](time/interval)** - [time interval](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals) representation with iso8601 support
-- **[$mol_state_time](state/time)** - reactive current time stamp 
-- **[$mol_date](date)** - date picker
-- **[$mol_calendar](calendar)** - days of month as table
+- **[$mol_time_moment](time/moment)** - [Time moment](https://en.wikipedia.org/wiki/ISO_8601#Dates) representation with iso8601 support
+- **[$mol_time_duration](time/duration)** - [Time duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) representation with iso8601 support
+- **[$mol_time_interval](time/interval)** - [Time interval](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals) representation with iso8601 support
+- **[$mol_state_time](state/time)** - Reactive current time stamp 
+- **[$mol_date](date)** - Date picker
+- **[$mol_calendar](calendar)** - Days of month as table
 
 ## Maps
 
@@ -501,14 +451,14 @@ The name of the field corresponds to calling the property, the content of the fi
 
 ## WebAssemply
 
-- **[$mol_wasm](wasm)** - wasm runner
+- **[$mol_wasm](wasm)** - WASM runner
 - **[$mol_leb128](leb128)** - LEB128 encode/decode
 - **[$mol_tree2_wasm](tree2/wasm)** - wasm.tree representation
 
 ## Web Services
 
 - **[$mol_github](github)** - [GitHub API](https://developer.github.com/v3/)
-- **[$mol_chat](chat)** - GitHub based comments everywere
+- **[$mol_chat](chat)** - GitHub based comments everywhere
 
 ## Building
 
@@ -539,7 +489,7 @@ Some libs are already published to NPM:
 - [$hyoo_crowd](https://github.com/hyoo-ru/crowd.hyoo.ru) - Conflict-free Reinterpretable Ordered Washed Data.
 - [$mol_plot](plot) - [Fastest](https://bench.hyoo.ru/app/#!bench=https%3A%2F%2Fbench.hyoo.ru%2Fchart%2Frope%2F/sample=canvasjs~mol~chartjs/sort=update) plot lib for vector graphics.
 
-All of them are very small, powerfull and fastest. Use it for your pleasure.
+All of them are very small, powerful and fastest. Use it for your pleasure.
 
 # Contributors
 
@@ -560,4 +510,5 @@ This project exists thanks to all the people who contribute.
 
 # Donate
 
-- **[Shut up and take my money](http://yasobe.ru/na/mol)**
+- **[Shut up and take my money](https://www.tinkoff.ru/cf/1VnW7ZtTeg2)**
+- **[Long time support](https://boosty.to/hyoo)**

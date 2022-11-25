@@ -3,15 +3,11 @@
 	display: inline-flex;
 }
 
-[mol_pop]:hover {
-	z-index: 4;
-}
-
 [mol_pop_bubble] {
 	box-shadow: 0 0 1rem hsla(0,0%,0%,.5);
 	border-radius: var(--mol_gap_round);
 	position: absolute;
-	z-index: 3;
+	z-index: var(--mol_layer_popup);
 	background: var(--mol_theme_back);
 	max-width: none;
 	max-height: none;
@@ -19,6 +15,8 @@
 	overflow-y: scroll;
 	overflow-y: overlay;
 	word-break: normal;
+	width: max-content;
+	height: max-content;
 }
 
 [mol_pop_bubble][mol_scroll] {

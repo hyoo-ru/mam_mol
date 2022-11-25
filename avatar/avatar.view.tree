@@ -1,0 +1,4 @@
+$mol_avatar $mol_icon
+	view_box \0 0 24 24
+	id \
+	path \M 12 12 l 0 0 M 0 0 l 0 0 M 24 24 l 0 0 M 0 24 l 0 0 M 24 0 l 0 0

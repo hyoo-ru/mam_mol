@@ -26,6 +26,7 @@ namespace $ {
 		if( left instanceof String ) return Object.is( left.valueOf(), right['valueOf']() )
 		if( left instanceof Date ) return Object.is( left.valueOf(), right['valueOf']() )
 		if( left instanceof RegExp ) return left.source === right['source'] && left.flags === right['flags']
+		if( left instanceof Error ) return left.message === right['message'] && left.stack === right['stack']
 
 		let left_cache = $mol_compare_deep_cache.get( left )
 		if( left_cache ) {
@@ -48,7 +49,6 @@ namespace $ {
 			else if( Array.isArray( left ) ) result = compare_array( left, right as any )
 			else if( left instanceof Set ) result = compare_set( left, right as any )
 			else if( left instanceof Map ) result = compare_map( left, right as any )
-			else if( left instanceof Error ) result = left.stack === ( right as any ).stack
 			else if( ArrayBuffer.isView( left ) ) result = compare_buffer( left, right as any )
 			else if( Symbol.toPrimitive in left ) result = compare_primitive( left, right )
 			else result = false
@@ -87,7 +87,6 @@ namespace $ {
 	function compare_iterator< Value extends IterableIterator<any> >(
 		left: Value,
 		right: Value,
-		compare: ( left: any, right: any )=> boolean
 	): boolean {
 		
 		while( true ) {
@@ -98,7 +97,7 @@ namespace $ {
 			if( left_next.done !== right_next.done ) return false
 			if( left_next.done ) break
 
-			if( !compare( left_next.value , right_next.value ) ) return false
+			if( !$mol_compare_deep( left_next.value , right_next.value ) ) return false
 
 		}
 
@@ -108,13 +107,13 @@ namespace $ {
 	
 	function compare_set< Value extends Set<any> >( left: Value, right: Value ): boolean {
 		if( left.size !== right.size ) return false
-		return compare_iterator( left.values(), right.values(), $mol_compare_deep )
+		return compare_iterator( left.values(), right.values() )
 	}
 	
 	function compare_map< Key, Value >( left: Map< Key, Value > , right: Map< Key, Value > ): boolean {
 		if( left.size !== right.size ) return false
-		return compare_iterator( left.keys(), right.keys(), Object.is )
-			&& compare_iterator( left.values(), right.values(), $mol_compare_deep )
+		return compare_iterator( left.keys(), right.keys() )
+			&& compare_iterator( left.values(), right.values() )
 	}
 	
 	function compare_pojo( left: {}, right: {} ): boolean {

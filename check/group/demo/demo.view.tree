@@ -37,7 +37,6 @@ $mol_check_group_demo $mol_example_small
 						checked?val <=> luck?val true
 	tags /
 		\$mol_check_box
-		\$mol_list
 		\checkbox
 		\multi
 		\group

@@ -38,4 +38,4 @@ Uri for navigation on click to avatar.
 
 **`text() : string`**
 
-Message body that interpeted as markdown.
+Message body that interpreted as markdown.

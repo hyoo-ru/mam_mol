@@ -34,11 +34,11 @@ Property `current_x` is an current item in `keys_x`.
 
 **`cycle( value? : boolean ) : boolean`**
 
-Property `cycle` activate or disable cycle navigation ( If on last item we fires navigate on next item, it navigate on first item ).
+Property `cycle` activate or disable cycle navigation.
 
 ## Modifiers
 
-If true than check for same key are pressed.
+If true, then check if the same key is pressed.
 
 **`mod_ctrl() : boolean`**
 **`mod_shift() : boolean`**
