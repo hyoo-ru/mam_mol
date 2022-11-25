@@ -37,7 +37,7 @@ Returns content of Foot.
 
 ## Hint
 
-You can hide the header - override ```Head null```:
+You can hide the header - override `Head null`:
 
 ```
 <= Page_without_head $mol_page
