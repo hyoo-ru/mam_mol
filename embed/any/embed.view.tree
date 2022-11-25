@@ -1,6 +1,0 @@
-$mol_embed_any $mol_ghost
-	Pdf $mol_embed_pdf
-		uri <= uri \
-	Native $mol_embed_native
-		uri <= uri \
-		mime <= mime \

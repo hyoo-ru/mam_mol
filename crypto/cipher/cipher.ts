@@ -4,13 +4,13 @@ namespace $ {
 		name: 'RSA-OAEP',
 		modulusLength: 1024,
 		publicExponent: new Uint8Array([ 1, 0, 1 ]),
-		hash: 'SHA-1',
+		hash: 'SHA-256',
 	}
 	
 	/** Asymmetric cipher pair with shortest payload */
 	export async function $mol_crypto_cipher_pair( this: $ ) {
 		
-		const pair = await $.crypto.subtle.generateKey(
+		const pair = await $mol_crypto_native.subtle.generateKey(
 			algorithm,
 			true,
 			[ 'encrypt', 'decrypt' ]
@@ -42,9 +42,9 @@ namespace $ {
 			super()
 		}
 		
-		static async from( serial: DataView | ArrayBuffer ) {
+		static async from( serial: BufferSource ) {
 			return new this(
-				await crypto.subtle.importKey(
+				await $mol_crypto_native.subtle.importKey(
 					'spki',
 					serial,
 					algorithm,
@@ -56,15 +56,15 @@ namespace $ {
 		
 		/** 162 bytes */
 		async serial() {
-			return await crypto.subtle.exportKey(
+			return await $mol_crypto_native.subtle.exportKey(
 				'spki',
 				this.native,
 			)
 		}
 		
 		/** max 86 bytes input, 128 bytes output */
-		async encrypt( data: DataView | ArrayBuffer ): Promise< ArrayBuffer > {
-			return await crypto.subtle.encrypt(
+		async encrypt( data: BufferSource ): Promise< ArrayBuffer > {
+			return await $mol_crypto_native.subtle.encrypt(
 				algorithm,
 				this.native,
 				data,
@@ -82,9 +82,9 @@ namespace $ {
 			super()
 		}
 		
-		static async from( serial: DataView | ArrayBuffer ) {
+		static async from( serial: BufferSource ) {
 			return new this(
-				await crypto.subtle.importKey(
+				await $mol_crypto_native.subtle.importKey(
 					'pkcs8',
 					serial,
 					algorithm,
@@ -96,14 +96,14 @@ namespace $ {
 		
 		/** ~640 bytes */
 		async serial() {
-			return await crypto.subtle.exportKey(
+			return await $mol_crypto_native.subtle.exportKey(
 				'pkcs8',
 				this.native,
 			)
 		}
 		
-		async decrypt( data: DataView | ArrayBuffer ): Promise< ArrayBuffer > {
-			return await crypto.subtle.decrypt(
+		async decrypt( data: BufferSource ): Promise< ArrayBuffer > {
+			return await $mol_crypto_native.subtle.decrypt(
 				algorithm,
 				this.native,
 				data,

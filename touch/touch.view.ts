@@ -285,6 +285,8 @@ namespace $.$$ {
 		}
 		
 		event_wheel( event : WheelEvent ) {
+			
+			if( event.defaultPrevented ) return
 
 			if( this.pan === $mol_touch.prototype.pan && this.zoom === $mol_touch.prototype.zoom ) return
 			

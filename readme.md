@@ -2,14 +2,12 @@
 
 Reactive micro-modular UI framework. Very simple, but very powerful!
 
+![](https://habrastorage.org/webt/0r/l1/70/0rl170zizkwddstnp5mt5bruroa.png)
+
 # Contents
 
-- [Levels](#levels)
 - [Features](#features)
-- [Applications](https://apps.hyoo.ru/)
-- [Benchmarks](#benchmarks)
-- [Articles](#articles)
-- [Discussions](https://teleg.run/mam_mol)
+- [Review](#reviews)
 - [Quick start](#quick-start)
 - [Tutorials](#tutorials)
 - [Rationale](#rationale)
@@ -19,21 +17,14 @@ Reactive micro-modular UI framework. Very simple, but very powerful!
 - [Cool stuff](#cool-stuff)
 - [Donate](#donate)
 
-# Levels
-
-1. ✅ **Library.** $mol is just set of small libs. Honor libs: jQuery, React, Redux, MobX.
-2. ✅ **Framework.** $mol is very flexible, but simple. Honor frameworks: Angular, Vue, Ember.
-3. ✅ **Сonstruction Kit.** $mol has many customizable UI components. Honor construction kits: Ext, OpenUI5.
-4. ⭕ **Platform.** $mol doesn't fit it yet. Honor platforms: Drupal, SAP, 1C.
-
 # Features
 
 - [Zero configuration](#zero-configuration). Just checkout and use it.
 - [Lazy rendering/evaluating/loading etc](#lazyness).
 - [Full reactivity](#reactivity) in all application layers. Not only between View and ViewModel.
 - [Automatic dependency tracking](#reactivity) between reactive containers. No need to manual publish/subscribe/unsubscribe and streams routing.
-- [Effective state synchronization](mem) in right way. 
-- Automatic inclusion of modules in package at compile time. No need for manually importing them. [Just use it](#zero-configuration).
+- [Effective state synchronization](wire) in right way. 
+- Automatic inclusion of modules in package at compile time. No need for manually importing or installing them. [Just use it](#zero-configuration).
 - Very small modules. [All of them are optional](#zero-configuration).
 - Cross platform. [Support any environment](#zero-configuration) (NodeJS, Web browsers, Cordova).
 - Static typing ([TypeScript](https://www.typescriptlang.org/)). Full IDE support.
@@ -44,23 +35,11 @@ Reactive micro-modular UI framework. Very simple, but very powerful!
 - Pseudosynchronous code. [Asynchrony is abstracted by reactivity](#reactivity). No callbacks/promises/streams hell. No async/await/yield virus.
 - Automatic [BEM](https://en.bem.info/methodology/naming-convention/)-attributes generation for elements.
 
-# Benchmarks
+# Reviews
 
-- [$hyoo_bench_list](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/list) - Frameworks comparison ([online](https://bench.hyoo.ru/list/#sort=fill/sample=angular-1-5-5~mol~native-html~react-15-3-2~native-dom))
-- [ToDoMVC benchmark](https://github.com/hyoo-ru/todomvc/tree/master/benchmark) ([online](https://hyoo-ru.github.io/todomvc/benchmark/#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
-- [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=220306_AiDcKB_6FK%2C220306_BiDcYS_5YM%2C220306_BiDcQW_5YN%2C220306_AiDcQG_6FN&thumbSize=100&ival=500&end=visual)
-- [Line charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/rope) ([online](https://bench.hyoo.ru/chart/rope/#sort=fill/sample=hcharts~mol))
-- [Bar charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/bar) ([online](https://bench.hyoo.ru/chart/bar/#sort=fill/sample=hcharts~mol))
-- [React vs React Fiber vs $mol](https://github.com/nin-jin/sierpinski) ([online](https://nin-jin.github.io/sierpinski))
-
-# Articles
-
-- [$mol — лучшее средство от геморроя](https://habr.com/ru/post/341146/) - Quick introduction to $mol
-- [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/) - Comprehensive $mol review
-- [Объектное Реактивное Программирование](https://habrahabr.ru/post/330466/) - Features of Object Reactive Programming
-- [Концепции автоматического тестирования](https://habr.com/ru/post/351430/) - Testing principles
-- [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/) - Problems of popular frameworks
-- [Принципы написания кода](https://habrahabr.ru/post/236785/) - Code style principles
+- [$mol — лучшее средство от геморроя](https://mol.hyoo.ru/#!section=slides/slides=https%3A%2F%2Fnin-jin.github.io%2Fslides%2Fmol%2F) - Quick introduction to $mol
+- [$mol: реактивный микромодульный фреймворк](https://mol.hyoo.ru/#!section=articles/author=nin-jin/repo=HabHub/article=5) - First introduction to $mol
+- [$mol: 4 года спустя](https://mol.hyoo.ru/#!section=articles/author=nin-jin/repo=HabHub/article=23) - State of $mol after 4 years
 
 # Quick start
 
@@ -74,6 +53,8 @@ The easiest way is to checkout this [preconfigured MAM repository](http://github
 git clone https://github.com/hyoo-ru/mam.git ./mam && cd mam
 npm install && npm start
 ```
+
+Or simply use [![Gitpod Online Dev Workspace](https://img.shields.io/badge/Gitpod-Online--Dev--Workspace-blue.svg)](https://gitpod.io/#https://github.com/hyoo-ru/mam).
 
 ## Setup your editor
 
@@ -129,60 +110,6 @@ $my_hello $mol_view
 		<= message \
 ```
 
-That will be automatically compiled to typescript code like this:
-
-```typescript
-namespace $ {
-	export class $my_hello extends $mol_view {
-
-		/**
-		 * ```tree
-		 * sub /
-		 * 	<= Name
-		 * 	<= message
-		 * ```
-		 */
-		sub() {
-			return [this.Name(), this.message()] as readonly any[]
-		}
-
-		/**
-		 * ```tree
-		 * name?val \
-		 * ```
-		 */
-		@ $mol_mem
-		name(val?: any) {
-			if ( val !== undefined ) return val as never
-			return ""
-		}
-
-		/**
-		 * ```tree
-		 * Name $mol_string
-		 * 	hint \Name
-		 * 	value?val <=> name?val
-		 * ```
-		 */
-		@ $mol_mem
-		Name() {
-			const obj = new this.$.$mol_string()
-			obj.hint = () => "Name"
-			obj.value = (val?: any) => this.name(val)
-			return obj
-		}
-
-		/**
-		 * ```tree
-		 * message \
-		 * ```
-		 */
-		message() { return "" }
-	}
-
-}
-```
-
 Add **your behaviour** at `./my/hello/hello.view.ts` by extending generated class:
 
 ```typescript
@@ -208,8 +135,9 @@ namespace $.$$ {
 		'Generating greeting message'() {
 
 			const app = new $my_hello
+			$mol_assert_equal( app.message() , '' )
+			
 			app.name( 'Jin' )
-
 			$mol_assert_equal( app.message() , 'Hello, Jin!' )
 
 		}
@@ -334,8 +262,8 @@ namespace $ {
 	export class $my_greeter {
 		
 		@ $mol_mem
-		greeting() : string {
-			const user_name = $mol_fetch.json( 'https://example.org/profile/name' ) as string
+		greeting() {
+			const user_name = $mol_fetch.json( 'https://example.org/profile/name' )
 			return `Hello, ${ user_name }!`
 		}
 		
@@ -343,7 +271,7 @@ namespace $ {
 }
 ```
 
-Details: [$mol_mem](mem), [$mol_atom2](atom2).
+Details: [$mol_wire](wire).
 
 ## Debugging
 
@@ -376,7 +304,7 @@ The name of the field corresponds to calling the property, the content of the fi
 
 ## Object model
 
-- **[$mol_mem](mem)** - Reactive property decorator
+- **[$mol_wire](wire)** - Reactivity system
 - **[$mol_object](object)** - Components base class
 
 ## Lifecycle
@@ -582,4 +510,5 @@ This project exists thanks to all the people who contribute.
 
 # Donate
 
-- **[Shut up and take my money](http://yasobe.ru/na/mol)**
+- **[Shut up and take my money](https://www.tinkoff.ru/cf/1VnW7ZtTeg2)**
+- **[Long time support](https://boosty.to/hyoo)**

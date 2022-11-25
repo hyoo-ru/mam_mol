@@ -1,9 +1,15 @@
 $mol_embed_native $mol_scroll
+	uri?val \
 	dom_name \object
 	window null
 	attr *
 		^
-		data <= uri?val \
+		data <= uri
 		type <= mime \
 	sub /
-		<= title?val \
+		<= Fallback $mol_link
+			uri <= uri
+			sub /
+				<= title \
+	message *
+		hashchange? <=> uri_change? null

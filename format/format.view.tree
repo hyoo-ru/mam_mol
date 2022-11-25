@@ -1,0 +1,4 @@
+$mol_format $mol_string
+	allow \0123456789
+	hint <= mask*0 \
+	keyboard \numeric

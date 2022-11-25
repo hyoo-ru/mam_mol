@@ -1,0 +1,11 @@
+$mol_spell_demo $mol_example_small
+	sub /
+		<= List $mol_list rows /
+			<= Article $mol_textarea
+				value? <=> article? \Я весьма сегдян недоперепила, вттак.
+			<= Report $mol_text_code text <= report \
+	tags /
+		\$mol_spell_check
+		\$mol_textarea
+		\spellcheck
+

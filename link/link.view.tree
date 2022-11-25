@@ -1,9 +1,10 @@
 $mol_link $mol_view
+	uri \
 	dom_name \a
 	attr *
 		^
-		href <= uri \
-		title <= hint \
+		href <= uri_toggle \
+		title <= hint_safe <= hint \
 		target <= target \_self
 		download <= file_name \
 		mol_link_current <= current false

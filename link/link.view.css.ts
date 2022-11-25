@@ -51,6 +51,10 @@ namespace $ {
 				color: $mol_theme.hover,
 			}
 		},
+		
+		':active': {
+			color: $mol_theme.focus,
+		},
 
 		'@': {
 			mol_link_current: {

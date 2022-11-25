@@ -5,7 +5,7 @@ namespace $ {
 
 			class Cache extends $mol_object2 {
 
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static store( next?: Record< string, number > ): typeof next {
 					if( !next ) return {}
 					return {

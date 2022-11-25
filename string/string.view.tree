@@ -4,6 +4,8 @@ $mol_string $mol_view
 	minimal_height 40
 	autocomplete false
 	selection?val /number
+		0
+		0
 	auto /
 		<= selection_watcher null
 	field *
@@ -11,13 +13,14 @@ $mol_string $mol_view
 		disabled <= disabled false
 		value <= value_changed?val <=> value?val \
 		placeholder <= hint_visible <= hint \
-		spellcheck <= spellcheck false
+		spellcheck <= spellcheck true
 		autocomplete <= autocomplete_native \
 		selectionEnd <= selection_end 0
 		selectionStart <= selection_start 0
+		inputMode <= keyboard \text
 	attr *
 		^
-		maxlength <= length_max Infinity
+		maxlength <= length_max +Infinity
 		type <= type?val \text
 	event *
 		^

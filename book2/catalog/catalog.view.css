@@ -1,3 +1,10 @@
-[mol_book2_catalog_links] {
+[mol_book2_catalog_menu_links] {
 	padding: var(--mol_gap_block);
 }
+
+[mol_book2_catalog_menu_filter] {
+	flex-shrink: 0;
+	flex-grow: 0;
+	align-self: stretch;
+}
+

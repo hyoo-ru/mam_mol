@@ -5,11 +5,16 @@ include \/mol/wire/task
 include \/mol/wire/atom
 include \/mol/wire/probe
 include \/mol/wire/solid
+include \/mol/wire/watch
 include \/mol/wire/sync
 include \/mol/wire/async
-include \/mol/wire/mem
+include \/mol/wire/race
+include \/mol/wire/solo
+include \/mol/wire/plex
 include \/mol/wire/field
+include \/mol/wire/easing
 include \/mol/wire/method
+include \/mol/wire/patch
 include \/mol/wire/set
 include \/mol/wire/dict
 include \/mol/wait/timeout

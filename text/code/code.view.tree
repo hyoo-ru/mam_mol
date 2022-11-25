@@ -1,11 +1,19 @@
-$mol_text_code $mol_list
+$mol_text_code $mol_stack
 	attr *
 		^
 		mol_text_code_sidebar_showed <= sidebar_showed false
 	text \
 	text_lines /string
-	Row* $mol_text_code_row
-		numb_showed <= sidebar_showed
-		numb <= row_numb* 0
-		text <= row_text* \
-		highlight <= highlight \
+	find_pos* null
+	sub /
+		<= Rows $mol_list
+			render_visible_only <= render_visible_only false
+			rows <= rows /
+				<= Row*0 $mol_text_code_row
+					numb_showed <= sidebar_showed
+					numb <= row_numb* 0
+					text <= row_text* \
+					highlight <= highlight \
+		<= Copy $mol_button_copy
+			hint @ \Copy whole code
+			text <= text

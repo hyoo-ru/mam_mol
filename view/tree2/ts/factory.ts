@@ -13,7 +13,7 @@ namespace $ {
 		factory: $mol_view_tree2_prop,
 		factory_context: $mol_view_tree2_context,
 	) {
-		if (klass.type[0] !== '$') return this.$mol_fail(
+		if (!/^[$A-Z]/.test(klass.type)) return this.$mol_fail(
 			err`Need a valid class name at ${klass.span}, use ${example}`
 		)
 

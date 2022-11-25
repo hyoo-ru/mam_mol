@@ -21,6 +21,9 @@
 
 				// Make DOM reactive
 				$mol_wire_dom( document.body )
+				
+				// Make globals reactive
+				$mol_wire_patch( globalThis )
 	
 				// Take references to elements
 				const root = document.getElementById( 'root' )
@@ -30,9 +33,10 @@
 				const greeting = document.getElementById( 'greeting' )
 				const clear = document.getElementById( 'clear' )
 				
-				// Set up reactive formulas
-				greeting.__defineGetter__( 'textContent', ()=> 'Hello ' + nickname.value + '!' )
-				root.__defineGetter__( 'childNodes', ()=> greet.checked ? [ form, greeting ] : [ form ] )
+				// Setup invariants
+				root.childNodes = ()=> greet.checked ? [ form, greeting ] : [ form ]
+				greeting.textContent = ()=> `Hello ${nickname.value}!`
+				clear.style = ()=> ({ zoom: 1 / devicePixelRatio })
 				
 				// Set up handlers
 				clear.onclick = ()=> nickname.value = ''

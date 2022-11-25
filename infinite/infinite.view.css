@@ -1,0 +1,8 @@
+[mol_infinite_before],
+[mol_infinite_after] {
+	overflow-anchor: none;
+}
+
+[mol_infinite_after][mol_view_error="Promise"] {
+	height: 100vh;
+}

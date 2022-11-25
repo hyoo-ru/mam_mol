@@ -75,7 +75,10 @@ namespace $ {
 
 		@ $mol_mem
 		json_update( patch? : Partial< Raw > ): Raw {
-			$mol_wire_solid()
+			
+			if( patch ) this.json_update()
+			else $mol_wire_solid()
+			
 			return patch as any
 		}
 

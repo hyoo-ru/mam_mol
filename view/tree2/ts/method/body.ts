@@ -26,7 +26,7 @@ namespace $ {
 		else if (type === '@') body = add_return(operator, this.$mol_view_tree2_ts_locale(operator, context))
 		else if (type === '*') body = add_return(operator, this.$mol_view_tree2_ts_dictionary(operator, context, having_parts))
 		else if (type[0] === '/') body = add_return(operator, this.$mol_view_tree2_ts_array(operator, context, having_parts))
-		else if (type[0] === '$') body = this.$mol_view_tree2_ts_factory(operator, having_parts, context)
+		else if (/^[$A-Z]/.test(type)) body = this.$mol_view_tree2_ts_factory(operator, having_parts, context)
 		else body = add_return(operator, this.$mol_view_tree2_ts_value(operator))
 
 		const method = this.$mol_view_tree2_ts_method(having_parts, body, context.types)

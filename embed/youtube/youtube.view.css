@@ -1,0 +1,7 @@
+[mol_embed_youtube] {
+	padding: 0;
+}
+
+[mol_embed_youtube_image]:not(:hover):not(:focus) {
+	opacity: .75;
+}

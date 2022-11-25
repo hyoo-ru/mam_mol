@@ -47,6 +47,7 @@ namespace $.$$ {
 			minHeight: rem(2),
 			margin: 0,
 			padding: $mol_gap.text,
+			gap: $mol_gap.text,
 			wordBreak: 'normal',
 			textShadow: '0 0',
 
@@ -56,7 +57,7 @@ namespace $.$$ {
 			},
 	
 			flex: {
-				grow: 1000,
+				grow: 1,
 				shrink: 1,
 				basis: 'auto',
 			},
@@ -67,7 +68,7 @@ namespace $.$$ {
 			
 			flex: {
 				basis: 'auto',
-				grow: 0,
+				grow: 1000,
 				shrink: 1,
 			},
 			display: 'flex',

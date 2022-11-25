@@ -1,5 +1,8 @@
 $mol_page $mol_view
 	dom_name \article
+	field *
+		^
+		tabIndex <= tabindex -1
 	sub /
 		<= Head $mol_view
 			minimal_height 64
@@ -7,7 +10,8 @@ $mol_page $mol_view
 			sub <= head /
 				<= Title $mol_view
 					dom_name \h1
-					sub /
+					sub <= title_content /
+						<= Logo null
 						<= title
 				<= Tools $mol_view
 					sub <= tools /$mol_view_content

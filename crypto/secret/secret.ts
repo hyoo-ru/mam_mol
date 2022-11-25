@@ -23,7 +23,7 @@ namespace $ {
 		
 		static async generate() {
 			return new this(
-				await crypto.subtle.generateKey(
+				await $mol_crypto_native.subtle.generateKey(
 					algorithm,
 					true,
 					[ 'encrypt', 'decrypt' ]
@@ -31,9 +31,9 @@ namespace $ {
 			)
 		}
 		
-		static async from( serial: DataView | ArrayBuffer ) {
+		static async from( serial: BufferSource ) {
 			return new this(
-				await crypto.subtle.importKey(
+				await $mol_crypto_native.subtle.importKey(
 					'raw',
 					serial,
 					algorithm,
@@ -45,15 +45,15 @@ namespace $ {
 		
 		/** 16 bytes */
 		async serial() {
-			return await crypto.subtle.exportKey(
+			return await $mol_crypto_native.subtle.exportKey(
 				'raw',
 				this.native,
 			)
 		}
 
 		/** 4 bytes + data length */
-		async encrypt( open: DataView | ArrayBuffer, salt: Uint8Array ): Promise< ArrayBuffer > {
-			return await crypto.subtle.encrypt(
+		async encrypt( open: BufferSource, salt: BufferSource ): Promise< ArrayBuffer > {
+			return await $mol_crypto_native.subtle.encrypt(
 				{
 					... algorithm,
 					iv: salt,
@@ -63,8 +63,8 @@ namespace $ {
 			)
 		}
 		
-		async decrypt( closed: DataView | ArrayBuffer, salt : Uint8Array ): Promise< ArrayBuffer > {
-			return await crypto.subtle.decrypt(
+		async decrypt( closed: BufferSource, salt : BufferSource ): Promise< ArrayBuffer > {
+			return await $mol_crypto_native.subtle.decrypt(
 				{
 					... algorithm,
 					iv: salt,

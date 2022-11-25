@@ -41,7 +41,7 @@ element.view.value()
 Example:
 
 ```typescript
-const watcher = $mol_atom2_autorun( ()=> {
+const watcher = new $mol_wire_atom( 'some id', ()=> {
     const current_value = element.view.value()
     // do something for every new value
 } )

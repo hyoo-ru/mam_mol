@@ -17,7 +17,10 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		title() {
-			return decodeURIComponent( this.uri().split( this.host() , 2 )[1] ).replace( /^\//, ' ' )
+			const uri = this.uri()
+			const host = this.host()
+			const suffix = ( host ? uri.split( this.host() , 2 )[1] : uri ).replace( /^[\/\?#!]+/, '' )
+			return decodeURIComponent( suffix || host ).replace( /^\//, ' ' )
 		}
 		
 		@ $mol_mem

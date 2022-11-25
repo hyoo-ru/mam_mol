@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $mol_button extends $.$mol_button {
 
 		@ $mol_mem
-		status( next = null ) { return next }
+		status( next = [ null as any ] ) { return next }
 		
 		disabled() {
 			return !this.enabled()
@@ -17,10 +17,13 @@ namespace $.$$ {
 				
 				this.event_click( next )
 				this.click( next )
-				this.status( null )
+				this.status([ null ])
 				
 			} catch( error: any ) {
-				this.status( error )
+				
+				this.status([ error ])
+				$mol_fail_hidden( error )
+				
 			}
 
 		}
@@ -37,18 +40,24 @@ namespace $.$$ {
 
 		error() {
 
-			try {
-				this.status()
-				return ''
-			} catch( error: any ) {
+			const [ error ] = this.status()
+			if( !error ) return ''
 
-				if( error instanceof Promise ) {
-					return $mol_fail_hidden( error )
-				}
-				
-				return String( error.message ?? error )
+			if( error instanceof Promise ) {
+				return $mol_fail_hidden( error )
 			}
+			
+			return String( error.message ?? error )
 
+		}
+		
+		hint_safe() {
+			try {
+				return this.hint()
+			} catch( error ) {
+				$mol_fail_log( error )
+				return ''
+			}
 		}
 
 		sub_visible() {

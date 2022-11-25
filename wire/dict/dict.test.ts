@@ -8,7 +8,7 @@ namespace $ {
 				static $ = $
 				static dict = new $mol_wire_dict< number, number >()
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static lucky() {
 					return this.dict.get( 777 )
 				}
@@ -35,7 +35,7 @@ namespace $ {
 				static $ = $
 				static dict = new $mol_wire_dict< number, number >()
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static lucky() {
 					return this.dict.item( 777 )
 				}
@@ -62,7 +62,7 @@ namespace $ {
 				static $ = $
 				static dict = new $mol_wire_dict< number, number >()
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static size() {
 					return this.dict.size
 				}
@@ -89,7 +89,7 @@ namespace $ {
 				static $ = $
 				static dict = new $mol_wire_dict< number, number >()
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static sum() {
 					let keys = 0
 					let vals = 0
@@ -122,7 +122,7 @@ namespace $ {
 				static $ = $
 				static dict = new $mol_wire_dict< number, number >()
 				
-				@ $mol_wire_mem(0)
+				@ $mol_wire_solo
 				static sum() {
 					let keys = 0
 					let vals = 0

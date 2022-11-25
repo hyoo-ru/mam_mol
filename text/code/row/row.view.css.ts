@@ -5,6 +5,7 @@ namespace $.$$ {
 	$mol_style_define( $mol_text_code_row, {
 
 		display: 'block',
+		position: 'relative',
 		
 		font: {
 			family: 'monospace',

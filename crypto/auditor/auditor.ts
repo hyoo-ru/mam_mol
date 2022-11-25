@@ -1,24 +1,16 @@
 namespace $ {
 
-	// More compact (32B sign) but don't work in Safari
-	// const algorithm = {
-	// 	name: 'RSA-PSS',
-	// 	modulusLength: 256,
-	// 	publicExponent: new Uint8Array([ 1, 0, 1 ]),
-	// 	hash: 'SHA-1',
-	// 	saltLength: 8,
-	// }
-	
+	/** @FIXME Need polyfill for Safari and Node (https://github.com/microsoft/MSR-JavaScript-Crypto/) */
 	const algorithm = {
-		name: "ECDSA",
-		hash: {name: "SHA-256"},
-		namedCurve: 'P-256',
+		name: 'ECDSA',
+		hash: 'SHA-256',
+		namedCurve: "P-256",
 	}
 	
 	/** Asymmetric signing pair with shortest payload */
 	export async function $mol_crypto_auditor_pair( this: $ ) {
 		
-		const pair = await $.crypto.subtle.generateKey(
+		const pair = await $mol_crypto_native.subtle.generateKey(
 			algorithm,
 			true,
 			[ 'sign', 'verify' ]
@@ -42,7 +34,7 @@ namespace $ {
 	export class $mol_crypto_auditor_public extends Object {
 		
 		/** Key size in bytes. */
-		static size = 91
+		static size = 86
 		
 		constructor(
 			readonly native: CryptoKey & { type: 'public' }
@@ -50,11 +42,18 @@ namespace $ {
 			super()
 		}
 		
-		static async from( serial: DataView | ArrayBuffer ) {
+		static async from( serial: string ) {
 			return new this(
-				await crypto.subtle.importKey(
-					'spki',
-					serial,
+				await $mol_crypto_native.subtle.importKey(
+					'jwk',
+					{
+						crv: "P-256",
+						ext: true,
+						key_ops: ['verify'],
+						kty: "EC",
+						x: serial.slice( 0, 43 ),
+						y: serial.slice( 43, 86 ),
+					},
 					algorithm,
 					true,
 					[ 'verify' ],
@@ -62,16 +61,17 @@ namespace $ {
 			)
 		}
 		
-		/** 91 bytes */
-		async serial() {
-			return await crypto.subtle.exportKey(
-				'spki',
+		/** 62 bytes */
+		async serial(): Promise< string > {
+			const { x, y } = await $mol_crypto_native.subtle.exportKey(
+				'jwk',
 				this.native,
 			)
+			return x! + y!
 		}
 		
-		async verify( data: DataView | ArrayBuffer, sign: DataView | ArrayBuffer ) {
-			return await crypto.subtle.verify(
+		async verify( data: BufferSource, sign: BufferSource ) {
+			return await $mol_crypto_native.subtle.verify(
 				algorithm,
 				this.native,
 				sign,
@@ -85,7 +85,7 @@ namespace $ {
 	export class $mol_crypto_auditor_private extends Object {
 		
 		/** Key size in bytes. */
-		static size = 138
+		static size = 129
 		
 		constructor(
 			readonly native: CryptoKey & { type: 'private' }
@@ -93,11 +93,19 @@ namespace $ {
 			super()
 		}
 	
-		static async from( serial: DataView | ArrayBuffer ) {
+		static async from( serial: string ) {
 			return new this(
-				await crypto.subtle.importKey(
-					'pkcs8',
-					serial,
+				await $mol_crypto_native.subtle.importKey(
+					'jwk',
+					{
+						crv: "P-256",
+						ext: true,
+						key_ops: ['sign'],
+						kty: "EC",
+						x: serial.slice( 0, 43 ),
+						y: serial.slice( 43, 86 ),
+						d: serial.slice( 86, 129 ),
+					},
 					algorithm,
 					true,
 					[ 'sign' ],
@@ -105,18 +113,19 @@ namespace $ {
 			)
 		}
 		
-		/** 138 bytes */
-		async serial() {
-			return await crypto.subtle.exportKey(
-				'pkcs8',
+		/** 129 bytes */
+		async serial(): Promise< string > {
+			const { x, y, d } = await $mol_crypto_native.subtle.exportKey(
+				'jwk',
 				this.native,
 			)
+			return x! + y! + d!
 		}
 		
 		/** 64 bytes */
-		async sign( data: DataView | ArrayBuffer ) {
+		async sign( data: BufferSource ) {
 			
-			return await crypto.subtle.sign(
+			return await $mol_crypto_native.subtle.sign(
 				algorithm,
 				this.native,
 				data
@@ -124,9 +133,20 @@ namespace $ {
 			
 		}
 		
+		/** Makes public key from private */
+		async public() {
+			return await $mol_crypto_auditor_public.from(
+				$mol_crypto_auditor_private_to_public( await this.serial() )
+			)
+		}
+		
 	}
 	
 	/** Sign size in bytes. */
 	export const $mol_crypto_auditor_sign_size = 64
+	
+	export function $mol_crypto_auditor_private_to_public( serial: string ) {
+		return serial.slice( 0, 86 )
+	}
 	
 }

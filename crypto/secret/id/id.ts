@@ -1,11 +1,14 @@
 namespace $ {
 	
 	export async function $mol_crypto_secret_id( this: $ ) {
-		try {
-			return await this.$mol_crypto_secret_id_get()
-		} catch {
-			return await this.$mol_crypto_secret_id_new()
-		}
+		
+		const signed = this.$mol_dom_context.localStorage.getItem( '$mol_crypto_secret' )
+		if( signed === '' ) return await this.$mol_crypto_secret_id_get()
+		
+		const id = await this.$mol_crypto_secret_id_new()
+		this.$mol_dom_context.localStorage.setItem( '$mol_crypto_secret', '' )
+		return id
+		
 	}
 	
 	export async function $mol_crypto_secret_id_new( this: $ ) {
@@ -15,21 +18,19 @@ namespace $ {
 			publicKey: {
 				
 				rp: {
-					name: "$mol_crypto_id"
+					name: "$mol_crypto_id",
 				},
 
 				user: {
-					id: new Uint8Array(16),
+					id: new Uint8Array([0]),
 					name: "",
 					displayName: ""
 				},
 
 				pubKeyCredParams: [
+					{ type: "public-key", alg: -7 },
 					{ type: "public-key", alg: -257 },
 				],
-
-
-				timeout: 1000,
 
 				challenge: new Uint8Array().buffer,
 				
@@ -43,9 +44,10 @@ namespace $ {
 	export async function $mol_crypto_secret_id_get( this: $ ) {
 		
 		const cred = await this.$mol_dom_context.navigator.credentials.get({
+			mediation: 'silent',
 			publicKey: {
-				timeout: 1000,
-				challenge: new Uint8Array().buffer
+				userVerification: 'discouraged',
+				challenge: new Uint8Array().buffer,
 			},
 		}) as PublicKeyCredential | null
 		

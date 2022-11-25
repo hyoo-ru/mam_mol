@@ -9,7 +9,7 @@ namespace $ {
 		const { name, key, next, src } = owner_parts
 		const operator = src.kids.length === 1 ? src.kids[0] : undefined
 		const type = operator?.type
-		const is_class = type && type[0] === '$'
+		const is_class = type && /^[$A-Z]/.test( type )
 		const is_delegate = type === '<=' || type === '<=>'
 
 		let need_cache = false

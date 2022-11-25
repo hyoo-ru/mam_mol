@@ -3,15 +3,30 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		pages() {
+			const spread = this.Spread()
 			return [
 				this.Menu(),
-				... this.spread() != null ? [ this.Spread() ] : [],
+				... spread
+					? spread instanceof $mol_book2
+						? spread.pages()
+						: [ spread ]
+					: [],
 			]
 		}
 		
 		@ $mol_mem
-		links() {
-			return Object.keys( this.spreads() ).map( spread => this.Link( spread ) )
+		menu_body() {
+			return [
+				... Object.keys( this.spreads() ).length >= 10 ? [ this.Menu_filter() ] : [],
+				this.Menu_links(),
+			]
+		}
+		
+		@ $mol_mem
+		menu_links() {
+			return Object.keys( this.spreads() )
+				.filter( $mol_match_text( this.menu_filter(), spread => [ this.spread_title( spread ) ] ) )
+				.map( spread => this.Menu_link( spread ) )
 		}
 		
 		Spread() {
@@ -32,7 +47,8 @@ namespace $.$$ {
 		}
 		
 		spread_title( spread: string ) {
-			return this.spreads()[ spread ].title()
+			const page = this.spreads()[ spread ]
+			return page instanceof $mol_book2 && page.pages()[0]?.title() || page.title()
 		}
 		
 	}

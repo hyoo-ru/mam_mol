@@ -70,6 +70,11 @@ namespace $.$$ {
 			return this.Widget( name ).title()
 		}
 
+		search_start( event?: Event ) {
+			this.Menu().Filter().Query().bring()
+			event?.preventDefault()
+		}
+		
 		filter() {
 			return this.Menu().filter()
 		}
@@ -211,9 +216,9 @@ namespace $.$$ {
 			return this.Widget( this.selected() )
 		}
 		
-		override chat_seed( id: string ) {
-			return '#!demo=' + id
-		}
+		// override chat_seed( id: string ) {
+		// 	return '#!demo=' + id
+		// }
 		
 		logo_uri() {
 			return $mol_file.relative( '/mol/logo/logo.svg' ).path()

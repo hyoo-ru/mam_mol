@@ -6,12 +6,11 @@
 	align-self: stretch;
 	vertical-align: inherit;
 	border-radius: var(--mol_gap_round);
-	box-shadow: inset 0 0 0 1px var(--mol_theme_line);
-	background: var(--mol_theme_field);
+	background: var(--mol_theme_line);
 }
 
 [mol_portion_indicator] {
-	padding: .25rem 0;
+	padding: .25rem 0 0;
 	background-color: var(--mol_theme_control);
 	color: var(--mol_theme_control);
 	border-radius: var(--mol_gap_round);

@@ -13,6 +13,11 @@
 	border-radius: var(--mol_gap_round);
 }
 
+[mol_button]:where(:not(:disabled)):hover {
+	z-index: var(--mol_layer_hover);
+}
+
 [mol_button]:focus {
 	outline: none;
+	z-index: var(--mol_layer_focus);
 }

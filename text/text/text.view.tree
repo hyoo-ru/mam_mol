@@ -1,0 +1,75 @@
+$mol_text $mol_list
+	uri_base \
+	text \
+	param \
+	flow_tokens /
+	auto /
+		<= auto_scroll null
+	- \Blocks
+	Paragraph* $mol_paragraph
+		sub <= block_content* /
+	Quote* $mol_text
+		uri_resolve* <= uri_resolve* null
+		text <= quote_text* \
+		highlight <= highlight \
+		auto_scroll null
+	List* $mol_text
+		uri_resolve* <= uri_resolve* null
+		text <= list_text* \
+		highlight <= highlight \
+		auto_scroll null
+	Header* $mol_text_header
+		minimal_height 40
+		dom_name <= header_level* \h
+		content <= block_content* /
+		arg <= header_arg* *
+	Pre* $mol_text_code
+		text <= pre_text* \
+		highlight <= highlight \
+		sidebar_showed <= pre_sidebar_showed <= code_sidebar_showed true
+	- \Table
+	Table* $mol_grid
+		head_cells <= table_head_cells* /
+		rows <= table_rows* /
+	Table_row* $mol_grid_row
+		cells <= table_cells* /
+	Table_cell* $mol_text
+		auto_scroll null
+		highlight <= highlight \
+		uri_resolve* <= uri_resolve* null
+		text <= table_cell_text* \
+	- \Lines
+	String* $mol_dimmer
+		dom_name \span
+		needle <= highlight \
+		haystack <= line_text* \
+	Span* $mol_text_span
+		dom_name \span
+		type <= line_type* \
+		sub <= line_content* /
+	Code_line* $mol_text_code_row
+		numb_showed false
+		highlight <= highlight \
+		text <= line_text* \
+	Link* $mol_link_iconed
+		uri <= link_uri* \
+		content <= line_content* /
+	Link_http* $mol_link_iconed
+		uri <= link_uri* \
+		content / <= link_host* \
+	Embed* $mol_embed_any
+		uri <= link_uri* \
+		title <= line_text* \
+
+$mol_text_header $mol_paragraph
+	sub /
+		<= Link $mol_link
+			arg <= arg *
+			hint @ \Permalink to this section
+			sub <= content /
+
+$mol_text_span $mol_paragraph
+	dom_name \span
+	attr *
+		^
+		mol_text_type <= type \
