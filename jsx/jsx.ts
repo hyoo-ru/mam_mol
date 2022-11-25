@@ -141,7 +141,7 @@ namespace $ {
 			
 			if( typeof props[ key ] === 'string' ) {
 				
-				if( key in node ) node[ key as any ] = props[ key ]
+				if( typeof node[ key as any ] === 'string' ) node[ key as any ] = props[ key ]
 				;( node as Element ).setAttribute( key , props[ key as any ] )
 				
 			} else if(

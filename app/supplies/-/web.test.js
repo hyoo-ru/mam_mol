@@ -298,7 +298,7 @@ var $;
             if (key === 'id')
                 continue;
             if (typeof props[key] === 'string') {
-                if (key in node)
+                if (typeof node[key] === 'string')
                     node[key] = props[key];
                 node.setAttribute(key, props[key]);
             }
