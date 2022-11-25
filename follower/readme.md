@@ -2,8 +2,6 @@
 
 Marker on top of another component with tracking of its position.
 
-## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_follower_demo)
-
 ## Usage example
 ```
 <= Targer_object $mol_button_minor
