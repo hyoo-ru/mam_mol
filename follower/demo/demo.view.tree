@@ -1,7 +1,0 @@
-$mol_follower_demo $mol_example_small
-	title \Marker of another component
-	sub /
-		<= Targer_object $mol_button_minor
-		<= Follower_object $mol_follower
-			Anchor <= Targer_object
-			Sub <= Follower_sample_content $mol_icon_flash
