@@ -102,6 +102,11 @@ namespace $ {
 			return new URL( '#' + this.prolog + chunks.join( this.separator ) , this.href_absolute() ).toString()
 		}
 
+		@ $mol_action
+		static go( next : { [ key : string ] : string | null } ) {
+			$mol_dom_context.location.href = this.make_link( next )
+		}
+		
 		static encode( str : string ) {
 			return encodeURIComponent( str ).replace( /\(/g , '%28' ).replace( /\)/g , '%29' )
 		}
