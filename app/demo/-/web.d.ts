@@ -1346,6 +1346,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    let $mol_action: typeof $mol_wire_method;
+}
+
+declare namespace $ {
     class $mol_state_arg extends $mol_object {
         prefix: string;
         static href(next?: string): string;
@@ -1368,6 +1372,9 @@ declare namespace $ {
         static make_link(next: {
             [key: string]: string | null;
         }): string;
+        static go(next: {
+            [key: string]: string | null;
+        }): void;
         static encode(str: string): string;
         constructor(prefix?: string);
         value(key: string, next?: string): string | null;
@@ -1773,10 +1780,6 @@ declare namespace $ {
         find(include?: RegExp, exclude?: RegExp): $mol_file[];
         size(): number;
     }
-}
-
-declare namespace $ {
-    let $mol_action: typeof $mol_wire_method;
 }
 
 declare namespace $ {

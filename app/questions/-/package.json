@@ -149,6 +149,7 @@
     "$mol_link_iconed",
     "$mol_link",
     "$mol_state_arg",
+    "$mol_action",
     "$mol_image",
     "$mol_embed_any",
     "$mol_embed",
@@ -178,7 +179,6 @@
     "$mol_html_decode",
     "$mol_html",
     "$mol_fetch",
-    "$mol_action",
     "$mol_dom_parse"
   ],
   "dependencies": {

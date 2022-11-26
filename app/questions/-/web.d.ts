@@ -1879,6 +1879,9 @@ declare namespace $ {
         static make_link(next: {
             [key: string]: string | null;
         }): string;
+        static go(next: {
+            [key: string]: string | null;
+        }): void;
         static encode(str: string): string;
         constructor(prefix?: string);
         value(key: string, next?: string): string | null;

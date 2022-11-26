@@ -1887,6 +1887,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    let $mol_action: typeof $mol_wire_method;
+}
+
+declare namespace $ {
     class $mol_state_arg extends $mol_object {
         prefix: string;
         static href(next?: string): string;
@@ -1901,6 +1905,9 @@ declare namespace $ {
         static make_link(next: {
             [key: string]: any;
         }): string;
+        static go(next: {
+            [key: string]: string | null;
+        }): void;
         constructor(prefix?: string);
         value(key: string, next?: string): string | null;
         sub(postfix: string): $mol_state_arg;
