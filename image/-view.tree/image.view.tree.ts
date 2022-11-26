@@ -79,11 +79,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cors \anonymous
+		 * cors null
 		 * ```
 		 */
 		cors() {
-			return "anonymous"
+			return null as any
 		}
 	}
 	

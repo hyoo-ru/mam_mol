@@ -2676,14 +2676,14 @@ declare namespace $ {
             alt: string;
             loading: string;
             decoding: string;
-            crossOrigin: string;
+            crossOrigin: any;
         };
         minimal_width(): number;
         minimal_height(): number;
         uri(): string;
         loading(): string;
         decoding(): string;
-        cors(): string;
+        cors(): any;
     }
 }
 
