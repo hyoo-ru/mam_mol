@@ -1152,6 +1152,594 @@ var $;
 //mol/memo/memo.test.ts
 ;
 "use strict";
+//mol/type/tail/tail.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        'Cached channel'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static value(next = 1) {
+                    return next + 1;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "value", null);
+            $mol_assert_equal(App.value(), 2);
+            App.value(2);
+            $mol_assert_equal(App.value(), 3);
+        },
+        'Read Pushed'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static value(next = 0) {
+                    return next;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "value", null);
+            $mol_assert_equal(App.value(1), 1);
+            $mol_assert_equal(App.value(), 1);
+        },
+        'Mem overrides mem'($) {
+            class Base extends $mol_object2 {
+                static $ = $;
+                static value(next = 1) {
+                    return next + 1;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], Base, "value", null);
+            class Middle extends Base {
+                static value(next) {
+                    return super.value(next) + 1;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], Middle, "value", null);
+            class App extends Middle {
+                static value(next) {
+                    return super.value(next) * 3;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "value", null);
+            $mol_assert_equal(App.value(), 9);
+            $mol_assert_equal(App.value(5), 21);
+            $mol_assert_equal(App.value(), 21);
+        },
+        'Auto recalculation of cached values'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static xxx(next) {
+                    return next || 1;
+                }
+                static yyy() {
+                    return this.xxx() + 1;
+                }
+                static zzz() {
+                    return this.yyy() + 1;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "xxx", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "yyy", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "zzz", null);
+            $mol_assert_equal(App.yyy(), 2);
+            $mol_assert_equal(App.zzz(), 3);
+            App.xxx(5);
+            $mol_assert_equal(App.zzz(), 7);
+        },
+        'Skip recalculation when actually no dependency changes'($) {
+            const log = [];
+            class App extends $mol_object2 {
+                static $ = $;
+                static xxx(next) {
+                    log.push('xxx');
+                    return next || 1;
+                }
+                static yyy() {
+                    log.push('yyy');
+                    return [Math.sign(this.xxx())];
+                }
+                static zzz() {
+                    log.push('zzz');
+                    return this.yyy()[0] + 1;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "xxx", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "yyy", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "zzz", null);
+            App.zzz();
+            $mol_assert_like(log, ['zzz', 'yyy', 'xxx']);
+            App.xxx(5);
+            $mol_assert_like(log, ['zzz', 'yyy', 'xxx', 'xxx']);
+            App.zzz();
+            $mol_assert_like(log, ['zzz', 'yyy', 'xxx', 'xxx', 'yyy']);
+        },
+        'Flow: Auto'($) {
+            class App extends $mol_object2 {
+                static get $() { return $; }
+                static first(next = 1) { return next; }
+                static second(next = 2) { return next; }
+                static condition(next = true) { return next; }
+                static counter = 0;
+                static result() {
+                    const res = this.condition() ? this.first() : this.second();
+                    return res + this.counter++;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "first", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "second", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "condition", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "result", null);
+            $mol_assert_equal(App.result(), 1);
+            $mol_assert_equal(App.counter, 1);
+            App.condition(false);
+            $mol_assert_equal(App.result(), 3);
+            $mol_assert_equal(App.counter, 2);
+            App.first(10);
+            $mol_assert_equal(App.result(), 3);
+            $mol_assert_equal(App.counter, 2);
+        },
+        'Dupes: Equality'($) {
+            let counter = 0;
+            class App extends $mol_object2 {
+                static $ = $;
+                static foo(next) {
+                    return next ?? { numbs: [1] };
+                }
+                static bar() {
+                    return { ...this.foo(), count: ++counter };
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "foo", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "bar", null);
+            $mol_assert_like(App.bar(), { numbs: [1], count: 1 });
+            App.foo({ numbs: [1] });
+            $mol_assert_like(App.bar(), { numbs: [1], count: 1 });
+            App.foo({ numbs: [2] });
+            $mol_assert_like(App.bar(), { numbs: [2], count: 2 });
+        },
+        'Cycle: Fail'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static foo() {
+                    return this.bar() + 1;
+                }
+                static bar() {
+                    return this.foo() + 1;
+                }
+                static test() {
+                    $mol_assert_fail(() => App.foo(), 'Circular subscription');
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "foo", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "bar", null);
+            __decorate([
+                $mol_wire_method
+            ], App, "test", null);
+            App.test();
+        },
+        'Different order of pull and push'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static store(next = 0) {
+                    return next;
+                }
+                static fast(next) {
+                    return this.store(next);
+                }
+                static slow(next) {
+                    if (next !== undefined)
+                        this.slow();
+                    return this.store(next);
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "store", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "fast", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "slow", null);
+            App.fast();
+            $mol_assert_equal(App.slow(666), 666);
+            $mol_assert_equal(App.fast(), App.slow(), 666);
+            App.store(777);
+            $mol_assert_equal(App.fast(), App.slow(), 777);
+        },
+        'Actions inside invariant'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static count(next = 0) {
+                    return next;
+                }
+                static count2() {
+                    return this.count();
+                }
+                static res() {
+                    const count = this.count2();
+                    if (!count)
+                        this.count(count + 1);
+                    return count + 1;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "count", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "count2", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "res", null);
+            $mol_assert_like(App.res(), 1);
+            App.count(5);
+            $mol_assert_like(App.res(), 6);
+        },
+        async 'Toggle with async'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static checked(next = false) {
+                    $$.$mol_wait_timeout(0);
+                    return next;
+                }
+                static toggle() {
+                    const prev = this.checked();
+                    $mol_assert_unique(this.checked(!prev), prev);
+                }
+                static res() {
+                    return this.checked();
+                }
+                static test() {
+                    $mol_assert_equal(App.res(), false);
+                    App.toggle();
+                    $mol_assert_equal(App.res(), true);
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "checked", null);
+            __decorate([
+                $mol_wire_method
+            ], App, "toggle", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "res", null);
+            __decorate([
+                $mol_wire_method
+            ], App, "test", null);
+            await $mol_wire_async(App).test();
+        },
+        'Restore after error'($) {
+            class App extends $mol_object2 {
+                static get $() { return $; }
+                static condition(next = false) { return next; }
+                static broken() {
+                    if (this.condition()) {
+                        $mol_fail(new Error('test error'));
+                    }
+                    return 1;
+                }
+                static result() {
+                    return this.broken();
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "condition", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "broken", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "result", null);
+            $mol_assert_equal(App.result(), 1);
+            App.condition(true);
+            $mol_assert_fail(() => App.result());
+            App.condition(false);
+            $mol_assert_equal(App.result(), 1);
+        },
+        async 'Wait for data'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static async source() {
+                    return 'Jin';
+                }
+                static middle() {
+                    return $mol_wire_sync(this).source();
+                }
+                static target() {
+                    return this.middle();
+                }
+                static test() {
+                    $mol_assert_equal(App.target(), 'Jin');
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "middle", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "target", null);
+            __decorate([
+                $mol_wire_method
+            ], App, "test", null);
+            await $mol_wire_async(App).test();
+        },
+        'Auto destroy on long alone'($) {
+            let destroyed = false;
+            class App extends $mol_object2 {
+                static $ = $;
+                static showing(next = true) {
+                    return next;
+                }
+                static details() {
+                    return {
+                        destructor() {
+                            destroyed = true;
+                        }
+                    };
+                }
+                static render() {
+                    return this.showing() ? this.details() : null;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "showing", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "details", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "render", null);
+            const details = App.render();
+            $mol_assert_ok(details);
+            App.showing(false);
+            $mol_assert_not(App.render());
+            App.showing(true);
+            $mol_assert_equal(App.render(), details);
+            $mol_wire_fiber.sync();
+            $mol_assert_not(destroyed);
+            App.showing(false);
+            $mol_wire_fiber.sync();
+            $mol_assert_ok(destroyed);
+            App.showing(true);
+            $mol_assert_unique(App.render(), details);
+        },
+        async 'Hold pubs while wait async task'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static counter = 0;
+                static resets(next) {
+                    return ($mol_wire_probe(() => this.resets()) ?? -1) + 1;
+                }
+                static async wait() { }
+                static value() {
+                    return ++this.counter;
+                }
+                static result() {
+                    if (this.resets())
+                        $mol_wire_sync(this).wait();
+                    return this.value();
+                }
+                static test() {
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "resets", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "value", null);
+            __decorate([
+                $mol_wire_solo
+            ], App, "result", null);
+            __decorate([
+                $mol_wire_method
+            ], App, "test", null);
+            $mol_assert_equal(App.result(), 1);
+            App.resets(null);
+            $mol_wire_fiber.sync();
+            $mol_assert_equal(await $mol_wire_async(App).result(), 1);
+        },
+        'Owned value has js-path name'() {
+            class App extends $mol_object2 {
+                static title() {
+                    return new $mol_object2;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "title", null);
+            $mol_assert_equal(`${App.title()}`, 'App.title()');
+        },
+        'Unsubscribe from temp pubs on complete'($) {
+            class Random extends $mol_object2 {
+                static $ = $;
+                static seed() {
+                    return Math.random();
+                }
+                static resets(next) {
+                    return Math.random();
+                }
+                static value() {
+                    this.resets();
+                    return this.seed();
+                }
+            }
+            __decorate([
+                $mol_wire_method
+            ], Random, "seed", null);
+            __decorate([
+                $mol_wire_solo
+            ], Random, "resets", null);
+            __decorate([
+                $mol_wire_solo
+            ], Random, "value", null);
+            const first = Random.value();
+            Random.resets(null);
+            $mol_assert_unique(Random.value(), first);
+        },
+    });
+})($ || ($ = {}));
+//mol/wire/solo/solo.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        'Memoize by single simple key'($) {
+            class Team extends $mol_object2 {
+                static $ = $;
+                static user_name(user, next) {
+                    return next ?? user;
+                }
+                static user_names() {
+                    return [
+                        this.user_name('jin'),
+                        this.user_name('john'),
+                    ];
+                }
+            }
+            __decorate([
+                $mol_wire_plex
+            ], Team, "user_name", null);
+            __decorate([
+                $mol_wire_solo
+            ], Team, "user_names", null);
+            $mol_assert_like(Team.user_names(), ['jin', 'john']);
+            Team.user_name('jin', 'JIN');
+            $mol_assert_like(Team.user_names(), ['JIN', 'john']);
+        },
+        'Memoize by single complex key'($) {
+            class Map extends $mol_object2 {
+                static $ = $;
+                static tile(pos) {
+                    return new String(`/tile=${pos}`);
+                }
+                static test() {
+                    $mol_assert_like(this.tile([0, 1]), new String('/tile=0,1'));
+                    $mol_assert_equal(this.tile([0, 1]), this.tile([0, 1]));
+                }
+            }
+            __decorate([
+                $mol_wire_plex
+            ], Map, "tile", null);
+            __decorate([
+                $mol_wire_method
+            ], Map, "test", null);
+            Map.test();
+        },
+        'Owned value has js-path name'() {
+            class App extends $mol_object2 {
+                static like(friend) {
+                    return new $mol_object2;
+                }
+                static relation([friend, props]) {
+                    return new $mol_object2;
+                }
+            }
+            __decorate([
+                $mol_wire_plex
+            ], App, "like", null);
+            __decorate([
+                $mol_wire_plex
+            ], App, "relation", null);
+            $mol_assert_equal(`${App.like(123)}`, 'App.like(123)');
+            $mol_assert_equal(`${App.relation([123, [456]])}`, 'App.relation([123,[456]])');
+        },
+        'Deep deps'($) {
+            class Fib extends $mol_object2 {
+                static $ = $;
+                static sums = 0;
+                static value(index, next) {
+                    if (next)
+                        return next;
+                    if (index < 2)
+                        return 1;
+                    ++this.sums;
+                    return this.value(index - 1) + this.value(index - 2);
+                }
+            }
+            __decorate([
+                $mol_wire_plex
+            ], Fib, "value", null);
+            $mol_assert_equal(Fib.value(4), 5);
+            $mol_assert_equal(Fib.sums, 3);
+            Fib.value(1, 2);
+            $mol_assert_equal(Fib.value(4), 8);
+            $mol_assert_equal(Fib.sums, 6);
+        },
+    });
+})($ || ($ = {}));
+//mol/wire/plex/plex.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Previous value'() {
+            class Cache extends $mol_object2 {
+                static store(next) {
+                    if (!next)
+                        return {};
+                    return {
+                        ...$mol_wire_probe(() => this.store()) ?? {},
+                        ...next,
+                    };
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], Cache, "store", null);
+            $mol_assert_like(Cache.store(), {});
+            $mol_assert_like(Cache.store({ foo: 666 }), { foo: 666 });
+            $mol_assert_like(Cache.store({ bar: 777 }), { foo: 666, bar: 777 });
+        },
+    });
+})($ || ($ = {}));
+//mol/wire/probe/probe.test.ts
+;
+"use strict";
 var $;
 (function ($) {
     $mol_test({
@@ -1288,6 +1876,30 @@ var $;
     });
 })($ || ($ = {}));
 //mol/dict/dict.test.tsx
+;
+"use strict";
+//mol/type/keys/extract/extract.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        $.$mol_log3_come = () => { };
+        $.$mol_log3_done = () => { };
+        $.$mol_log3_fail = () => { };
+        $.$mol_log3_warn = () => { };
+        $.$mol_log3_rise = () => { };
+        $.$mol_log3_area = () => () => { };
+    });
+})($ || ($ = {}));
+//mol/log3/log3.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_wire_log.active();
+})($ || ($ = {}));
+//mol/wire/atom/atom.test.ts
 ;
 "use strict";
 var $;
@@ -2397,23 +3009,6 @@ var $;
 //hyoo/crowd/list/list.test.ts
 ;
 "use strict";
-//mol/type/keys/extract/extract.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        $.$mol_log3_come = () => { };
-        $.$mol_log3_done = () => { };
-        $.$mol_log3_fail = () => { };
-        $.$mol_log3_warn = () => { };
-        $.$mol_log3_rise = () => { };
-        $.$mol_log3_area = () => () => { };
-    });
-})($ || ($ = {}));
-//mol/log3/log3.test.ts
-;
-"use strict";
 var $;
 (function ($) {
     $mol_test({
@@ -2467,594 +3062,6 @@ var $;
 //mol/after/tick/tick.test.ts
 ;
 "use strict";
-//mol/type/tail/tail.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        'Cached channel'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static value(next = 1) {
-                    return next + 1;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "value", null);
-            $mol_assert_equal(App.value(), 2);
-            App.value(2);
-            $mol_assert_equal(App.value(), 3);
-        },
-        'Read Pushed'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static value(next = 0) {
-                    return next;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "value", null);
-            $mol_assert_equal(App.value(1), 1);
-            $mol_assert_equal(App.value(), 1);
-        },
-        'Mem overrides mem'($) {
-            class Base extends $mol_object2 {
-                static $ = $;
-                static value(next = 1) {
-                    return next + 1;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], Base, "value", null);
-            class Middle extends Base {
-                static value(next) {
-                    return super.value(next) + 1;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], Middle, "value", null);
-            class App extends Middle {
-                static value(next) {
-                    return super.value(next) * 3;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "value", null);
-            $mol_assert_equal(App.value(), 9);
-            $mol_assert_equal(App.value(5), 21);
-            $mol_assert_equal(App.value(), 21);
-        },
-        'Auto recalculation of cached values'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static xxx(next) {
-                    return next || 1;
-                }
-                static yyy() {
-                    return this.xxx() + 1;
-                }
-                static zzz() {
-                    return this.yyy() + 1;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "xxx", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "yyy", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "zzz", null);
-            $mol_assert_equal(App.yyy(), 2);
-            $mol_assert_equal(App.zzz(), 3);
-            App.xxx(5);
-            $mol_assert_equal(App.zzz(), 7);
-        },
-        'Skip recalculation when actually no dependency changes'($) {
-            const log = [];
-            class App extends $mol_object2 {
-                static $ = $;
-                static xxx(next) {
-                    log.push('xxx');
-                    return next || 1;
-                }
-                static yyy() {
-                    log.push('yyy');
-                    return [Math.sign(this.xxx())];
-                }
-                static zzz() {
-                    log.push('zzz');
-                    return this.yyy()[0] + 1;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "xxx", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "yyy", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "zzz", null);
-            App.zzz();
-            $mol_assert_like(log, ['zzz', 'yyy', 'xxx']);
-            App.xxx(5);
-            $mol_assert_like(log, ['zzz', 'yyy', 'xxx', 'xxx']);
-            App.zzz();
-            $mol_assert_like(log, ['zzz', 'yyy', 'xxx', 'xxx', 'yyy']);
-        },
-        'Flow: Auto'($) {
-            class App extends $mol_object2 {
-                static get $() { return $; }
-                static first(next = 1) { return next; }
-                static second(next = 2) { return next; }
-                static condition(next = true) { return next; }
-                static counter = 0;
-                static result() {
-                    const res = this.condition() ? this.first() : this.second();
-                    return res + this.counter++;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "first", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "second", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "condition", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "result", null);
-            $mol_assert_equal(App.result(), 1);
-            $mol_assert_equal(App.counter, 1);
-            App.condition(false);
-            $mol_assert_equal(App.result(), 3);
-            $mol_assert_equal(App.counter, 2);
-            App.first(10);
-            $mol_assert_equal(App.result(), 3);
-            $mol_assert_equal(App.counter, 2);
-        },
-        'Dupes: Equality'($) {
-            let counter = 0;
-            class App extends $mol_object2 {
-                static $ = $;
-                static foo(next) {
-                    return next ?? { numbs: [1] };
-                }
-                static bar() {
-                    return { ...this.foo(), count: ++counter };
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "foo", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "bar", null);
-            $mol_assert_like(App.bar(), { numbs: [1], count: 1 });
-            App.foo({ numbs: [1] });
-            $mol_assert_like(App.bar(), { numbs: [1], count: 1 });
-            App.foo({ numbs: [2] });
-            $mol_assert_like(App.bar(), { numbs: [2], count: 2 });
-        },
-        'Cycle: Fail'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static foo() {
-                    return this.bar() + 1;
-                }
-                static bar() {
-                    return this.foo() + 1;
-                }
-                static test() {
-                    $mol_assert_fail(() => App.foo(), 'Circular subscription');
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "foo", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "bar", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "test", null);
-            App.test();
-        },
-        'Different order of pull and push'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static store(next = 0) {
-                    return next;
-                }
-                static fast(next) {
-                    return this.store(next);
-                }
-                static slow(next) {
-                    if (next !== undefined)
-                        this.slow();
-                    return this.store(next);
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "store", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "fast", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "slow", null);
-            App.fast();
-            $mol_assert_equal(App.slow(666), 666);
-            $mol_assert_equal(App.fast(), App.slow(), 666);
-            App.store(777);
-            $mol_assert_equal(App.fast(), App.slow(), 777);
-        },
-        'Actions inside invariant'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static count(next = 0) {
-                    return next;
-                }
-                static count2() {
-                    return this.count();
-                }
-                static res() {
-                    const count = this.count2();
-                    if (!count)
-                        this.count(count + 1);
-                    return count + 1;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "count", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "count2", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "res", null);
-            $mol_assert_like(App.res(), 1);
-            App.count(5);
-            $mol_assert_like(App.res(), 6);
-        },
-        async 'Toggle with async'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static checked(next = false) {
-                    $$.$mol_wait_timeout(0);
-                    return next;
-                }
-                static toggle() {
-                    const prev = this.checked();
-                    $mol_assert_unique(this.checked(!prev), prev);
-                }
-                static res() {
-                    return this.checked();
-                }
-                static test() {
-                    $mol_assert_equal(App.res(), false);
-                    App.toggle();
-                    $mol_assert_equal(App.res(), true);
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "checked", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "toggle", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "res", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "test", null);
-            await $mol_wire_async(App).test();
-        },
-        'Restore after error'($) {
-            class App extends $mol_object2 {
-                static get $() { return $; }
-                static condition(next = false) { return next; }
-                static broken() {
-                    if (this.condition()) {
-                        $mol_fail(new Error('test error'));
-                    }
-                    return 1;
-                }
-                static result() {
-                    return this.broken();
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "condition", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "broken", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "result", null);
-            $mol_assert_equal(App.result(), 1);
-            App.condition(true);
-            $mol_assert_fail(() => App.result());
-            App.condition(false);
-            $mol_assert_equal(App.result(), 1);
-        },
-        async 'Wait for data'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static async source() {
-                    return 'Jin';
-                }
-                static middle() {
-                    return $mol_wire_sync(this).source();
-                }
-                static target() {
-                    return this.middle();
-                }
-                static test() {
-                    $mol_assert_equal(App.target(), 'Jin');
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "middle", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "target", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "test", null);
-            await $mol_wire_async(App).test();
-        },
-        'Auto destroy on long alone'($) {
-            let destroyed = false;
-            class App extends $mol_object2 {
-                static $ = $;
-                static showing(next = true) {
-                    return next;
-                }
-                static details() {
-                    return {
-                        destructor() {
-                            destroyed = true;
-                        }
-                    };
-                }
-                static render() {
-                    return this.showing() ? this.details() : null;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "showing", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "details", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "render", null);
-            const details = App.render();
-            $mol_assert_ok(details);
-            App.showing(false);
-            $mol_assert_not(App.render());
-            App.showing(true);
-            $mol_assert_equal(App.render(), details);
-            $mol_wire_fiber.sync();
-            $mol_assert_not(destroyed);
-            App.showing(false);
-            $mol_wire_fiber.sync();
-            $mol_assert_ok(destroyed);
-            App.showing(true);
-            $mol_assert_unique(App.render(), details);
-        },
-        async 'Hold pubs while wait async task'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static counter = 0;
-                static resets(next) {
-                    return ($mol_wire_probe(() => this.resets()) ?? -1) + 1;
-                }
-                static async wait() { }
-                static value() {
-                    return ++this.counter;
-                }
-                static result() {
-                    if (this.resets())
-                        $mol_wire_sync(this).wait();
-                    return this.value();
-                }
-                static test() {
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "resets", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "value", null);
-            __decorate([
-                $mol_wire_solo
-            ], App, "result", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "test", null);
-            $mol_assert_equal(App.result(), 1);
-            App.resets(null);
-            $mol_wire_fiber.sync();
-            $mol_assert_equal(await $mol_wire_async(App).result(), 1);
-        },
-        'Owned value has js-path name'() {
-            class App extends $mol_object2 {
-                static title() {
-                    return new $mol_object2;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "title", null);
-            $mol_assert_equal(`${App.title()}`, 'App.title()');
-        },
-        'Unsubscribe from temp pubs on complete'($) {
-            class Random extends $mol_object2 {
-                static $ = $;
-                static seed() {
-                    return Math.random();
-                }
-                static resets(next) {
-                    return Math.random();
-                }
-                static value() {
-                    this.resets();
-                    return this.seed();
-                }
-            }
-            __decorate([
-                $mol_wire_method
-            ], Random, "seed", null);
-            __decorate([
-                $mol_wire_solo
-            ], Random, "resets", null);
-            __decorate([
-                $mol_wire_solo
-            ], Random, "value", null);
-            const first = Random.value();
-            Random.resets(null);
-            $mol_assert_unique(Random.value(), first);
-        },
-    });
-})($ || ($ = {}));
-//mol/wire/solo/solo.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        'Memoize by single simple key'($) {
-            class Team extends $mol_object2 {
-                static $ = $;
-                static user_name(user, next) {
-                    return next ?? user;
-                }
-                static user_names() {
-                    return [
-                        this.user_name('jin'),
-                        this.user_name('john'),
-                    ];
-                }
-            }
-            __decorate([
-                $mol_wire_plex
-            ], Team, "user_name", null);
-            __decorate([
-                $mol_wire_solo
-            ], Team, "user_names", null);
-            $mol_assert_like(Team.user_names(), ['jin', 'john']);
-            Team.user_name('jin', 'JIN');
-            $mol_assert_like(Team.user_names(), ['JIN', 'john']);
-        },
-        'Memoize by single complex key'($) {
-            class Map extends $mol_object2 {
-                static $ = $;
-                static tile(pos) {
-                    return new String(`/tile=${pos}`);
-                }
-                static test() {
-                    $mol_assert_like(this.tile([0, 1]), new String('/tile=0,1'));
-                    $mol_assert_equal(this.tile([0, 1]), this.tile([0, 1]));
-                }
-            }
-            __decorate([
-                $mol_wire_plex
-            ], Map, "tile", null);
-            __decorate([
-                $mol_wire_method
-            ], Map, "test", null);
-            Map.test();
-        },
-        'Owned value has js-path name'() {
-            class App extends $mol_object2 {
-                static like(friend) {
-                    return new $mol_object2;
-                }
-                static relation([friend, props]) {
-                    return new $mol_object2;
-                }
-            }
-            __decorate([
-                $mol_wire_plex
-            ], App, "like", null);
-            __decorate([
-                $mol_wire_plex
-            ], App, "relation", null);
-            $mol_assert_equal(`${App.like(123)}`, 'App.like(123)');
-            $mol_assert_equal(`${App.relation([123, [456]])}`, 'App.relation([123,[456]])');
-        },
-        'Deep deps'($) {
-            class Fib extends $mol_object2 {
-                static $ = $;
-                static sums = 0;
-                static value(index, next) {
-                    if (next)
-                        return next;
-                    if (index < 2)
-                        return 1;
-                    ++this.sums;
-                    return this.value(index - 1) + this.value(index - 2);
-                }
-            }
-            __decorate([
-                $mol_wire_plex
-            ], Fib, "value", null);
-            $mol_assert_equal(Fib.value(4), 5);
-            $mol_assert_equal(Fib.sums, 3);
-            Fib.value(1, 2);
-            $mol_assert_equal(Fib.value(4), 8);
-            $mol_assert_equal(Fib.sums, 6);
-        },
-    });
-})($ || ($ = {}));
-//mol/wire/plex/plex.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Previous value'() {
-            class Cache extends $mol_object2 {
-                static store(next) {
-                    if (!next)
-                        return {};
-                    return {
-                        ...$mol_wire_probe(() => this.store()) ?? {},
-                        ...next,
-                    };
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], Cache, "store", null);
-            $mol_assert_like(Cache.store(), {});
-            $mol_assert_like(Cache.store({ foo: 666 }), { foo: 666 });
-            $mol_assert_like(Cache.store({ bar: 777 }), { foo: 666, bar: 777 });
-        },
-    });
-})($ || ($ = {}));
-//mol/wire/probe/probe.test.ts
-;
-"use strict";
 var $;
 (function ($) {
     $mol_test({
@@ -3069,13 +3076,6 @@ var $;
     });
 })($ || ($ = {}));
 //mol/maybe/maybe.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_wire_log.active();
-})($ || ($ = {}));
-//mol/wire/atom/atom.test.ts
 ;
 "use strict";
 var $;
