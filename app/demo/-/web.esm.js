@@ -12581,11 +12581,12 @@ var $;
                 }
             }
             if (re instanceof HTMLInputElement) {
-                re.value = el['value'];
-                re.checked = el['checked'];
+                re.setAttribute('value', el['value']);
+                if (el['checked'])
+                    re.setAttribute('checked', '');
             }
             if (re instanceof HTMLTextAreaElement) {
-                re.value = el['value'];
+                re.setAttribute('value', el['value']);
             }
             const styles = $mol_dom_context.getComputedStyle(el);
             restyle(re, styles);
