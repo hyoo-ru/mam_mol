@@ -21085,9 +21085,9 @@ var $;
                 if (typeof value === 'function') {
                     const name = Reflect.getOwnPropertyDescriptor(value, 'name')?.value;
                     const source = Function.prototype.toString.call(value);
-                    const args = source.match(/^[^{]+(\([\s\S]*?\))/)?.[1] ?? '{}';
+                    const args = source.match(/^[^{=>]*?\(([\s\S]*?)\)/)?.[1] ?? source.match(/^([$\w]+)\s+=>/)?.[1] ?? '';
                     if (name)
-                        return name + args;
+                        return name + '(' + args + ')';
                 }
                 if (value instanceof RegExp)
                     return String(value);
