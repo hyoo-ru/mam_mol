@@ -6,7 +6,11 @@ namespace $.$$ {
 			const el = next.target as HTMLInputElement
 			const from = el.selectionStart
 			const to = el.selectionEnd
-			el.value = this.value_changed( el.value )
+			try {
+				el.value = this.value_changed( el.value )
+			} catch( error ) {
+				$mol_fail_log( error )
+			}
 			el.selectionEnd = to
 			el.selectionStart = from
 			this.selection_change( next )
