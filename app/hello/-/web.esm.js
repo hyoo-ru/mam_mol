@@ -2520,8 +2520,7 @@ var $;
         event() {
             return {
                 ...super.event(),
-                input: (event) => this.event_change(event),
-                keydown: (event) => this.event_key_press(event)
+                input: (event) => this.event_change(event)
             };
         }
         plugins() {
@@ -2577,11 +2576,6 @@ var $;
                 return event;
             return null;
         }
-        event_key_press(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
         submit(event) {
             if (event !== undefined)
                 return event;
@@ -2607,9 +2601,6 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_string.prototype, "event_change", null);
-    __decorate([
-        $mol_mem
-    ], $mol_string.prototype, "event_key_press", null);
     __decorate([
         $mol_mem
     ], $mol_string.prototype, "submit", null);
@@ -2685,7 +2676,12 @@ var $;
                 const el = next.target;
                 const from = el.selectionStart;
                 const to = el.selectionEnd;
-                el.value = this.value_changed(el.value);
+                try {
+                    el.value = this.value_changed(el.value);
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                }
                 el.selectionEnd = to;
                 el.selectionStart = from;
                 this.selection_change(next);

@@ -113,14 +113,12 @@ namespace $ {
 		 * event *
 		 * 	^
 		 * 	input?event <=> event_change?event
-		 * 	keydown?event <=> event_key_press?event
 		 * ```
 		 */
 		event() {
 			return {
 				...super.event(),
-				input: (event?: any) => this.event_change(event),
-				keydown: (event?: any) => this.event_key_press(event)
+				input: (event?: any) => this.event_change(event)
 			}
 		}
 		
@@ -263,17 +261,6 @@ namespace $ {
 		 */
 		@ $mol_mem
 		event_change(event?: any) {
-			if ( event !== undefined ) return event as never
-			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * event_key_press?event null
-		 * ```
-		 */
-		@ $mol_mem
-		event_key_press(event?: any) {
 			if ( event !== undefined ) return event as never
 			return null as any
 		}
