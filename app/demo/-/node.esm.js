@@ -8260,12 +8260,7 @@ var $;
                 const el = next.target;
                 const from = el.selectionStart;
                 const to = el.selectionEnd;
-                try {
-                    el.value = this.value_changed(el.value);
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                }
+                el.value = this.value_changed(el.value);
                 el.selectionEnd = to;
                 el.selectionStart = from;
                 this.selection_change(next);
