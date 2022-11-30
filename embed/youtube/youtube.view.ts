@@ -1,4 +1,3 @@
-/** @jsx $mol_jsx */
 namespace $.$$ {
 	export class $mol_embed_youtube extends $.$mol_embed_youtube {
 		

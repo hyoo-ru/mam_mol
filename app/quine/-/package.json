@@ -160,9 +160,6 @@
     "$mol_promise",
     "$mol_embed_youtube",
     "$mol_frame",
-    "$mol_jsx",
-    "$mol_type_partial_deep",
-    "$mol_type_partial",
     "$mol_row"
   ],
   "dependencies": {
