@@ -114,6 +114,10 @@ h6[mol_text_header] {
 	margin-left: -1.5rem;
 }
 
+[mol_text_embed_youtube] {
+	display: inline;
+}
+
 [mol_text_embed_youtube_image],
 [mol_text_embed_youtube_frame],
 [mol_text_embed_object] {
