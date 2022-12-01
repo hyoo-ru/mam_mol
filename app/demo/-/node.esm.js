@@ -19440,12 +19440,12 @@ var $;
                 };
                 if (next !== undefined) {
                     next = normalize(next);
-                    if (next === this.mask(next)) {
-                        next = '';
-                    }
-                    else {
+                    if ([...next].filter(letter => allow.includes(letter)).join('')) {
                         if (next.includes('_'))
                             return next;
+                    }
+                    else {
+                        next = '';
                     }
                 }
                 return normalize(this.value(next));
