@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - run: node -v
     
     - name: Build apps
       uses: hyoo-ru/mam_build@master2
