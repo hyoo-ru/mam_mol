@@ -110,14 +110,32 @@ namespace $ {
 					],
 					
 					'*': ( obj, belt )=> [
-						
 						obj.struct('{,}',
-							obj.kids.map( field => field.struct( ':', [
-								field.data( field.type ),
-								field.struct( '()',
-									field.hack( belt ),
-								),
-							] ) ).filter( this.$mol_guard_defined )
+							obj.kids.map( field => {
+								if (field.type === '^') {
+									return field.struct( '...', [
+										field.struct( '()', [
+											field.struct( 'super' ),
+											field.struct( '[]', [
+												field.data( name ),
+											] ),
+											field.struct( '(,)' )
+										]),
+									] )
+								}
+								const op = field.kids.length > 0 ? field.kids[0] : undefined
+
+								if (op?.type && [ '<=', '*', '<=>' ].includes(op.type)) {
+									/// ???
+								}
+
+								return field.struct( ':', [
+									field.data( field.type ),
+									field.struct( '()',
+										field.hack( belt ),
+									),
+								] )
+							} ).filter( this.$mol_guard_defined )
 						),
 						
 					],
