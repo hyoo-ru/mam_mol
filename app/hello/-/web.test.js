@@ -3001,9 +3001,7 @@ var $;
     $.$mol_fetch_response = $mol_fetch_response;
     class $mol_fetch extends $mol_object2 {
         static request(input, init = {}) {
-            let native = $mol_dom_context.fetch;
-            if (!native)
-                native = $node['node-fetch'];
+            const native = globalThis.fetch ?? $node['undici'].fetch;
             const controller = new AbortController();
             let done = false;
             const promise = native(input, {

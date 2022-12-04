@@ -6,5 +6,5 @@ interface $node {
 	"crypto" : typeof import( "crypto" )
 	"fs" : typeof import( "fs" )
 	"chokidar" : typeof import( "chokidar" )
-	"node-fetch" : typeof import( "node-fetch" )
+	"undici" : typeof import( "undici" )
 }
