@@ -62,9 +62,7 @@ namespace $ {
 	export class $mol_fetch extends $mol_object2 {
 		
 		static request( input : RequestInfo , init : RequestInit = {} ) {
-			
-			let native = $mol_dom_context.fetch
-			if( !native ) native = $node['node-fetch'] as any
+			const native = globalThis.fetch ?? $node['undici'].fetch
 			
 			const controller = new AbortController()
 			let done = false
