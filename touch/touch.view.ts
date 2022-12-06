@@ -299,7 +299,7 @@ namespace $.$$ {
 			if( action_type === 'zoom' ) {
 				
 				const zoom_prev = this.zoom() || 0.001
-				const zoom_next = zoom_prev * ( 1 - .001 * event.deltaY )
+				const zoom_next = zoom_prev * ( 1 - .001 * Math.min( event.deltaY, 100 ) )
 				const mult = zoom_next / zoom_prev
 				this.zoom( zoom_next )
 
