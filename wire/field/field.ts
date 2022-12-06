@@ -11,7 +11,7 @@ namespace $ {
 		descr? : TypedPropertyDescriptor< Value >
 	): any {
 
-		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
+		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field ) as any
 		
 		const _get = descr?.get || $mol_const( descr?.value )
 		const _set = descr?.set || function( this : Host , next ) {
