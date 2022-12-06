@@ -10,7 +10,7 @@ namespace $ {
 		descr? : TypedPropertyDescriptor< ( ... args: Args )=> Result >,
 	) {
 		
-		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
+		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field ) as any
 		const orig = descr?.value! ?? host[ field ]
 		
 		const sup = Reflect.getPrototypeOf( host )!	
