@@ -15230,6 +15230,8 @@ var $;
                 let pos = this.pointer_center();
                 if (!action_type)
                     return;
+                if (!start_pos)
+                    return;
                 if (action_type === 'draw') {
                     const distance = new $mol_vector(start_pos, pos).distance();
                     if (distance >= 4) {
@@ -15237,8 +15239,6 @@ var $;
                     }
                     return;
                 }
-                if (!start_pos)
-                    return;
                 if (action_type === 'pan') {
                     this.dom_node().setPointerCapture(event.pointerId);
                     this.pan(new $mol_vector_2d(start_pan[0] + pos[0] - start_pos[0], start_pan[1] + pos[1] - start_pos[1]));

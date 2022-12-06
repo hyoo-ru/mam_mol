@@ -145,6 +145,8 @@ namespace $.$$ {
 			let pos = this.pointer_center()!
 
 			if( !action_type ) return
+			if( !start_pos ) return
+			
 			if( action_type === 'draw' ) {
 				
 				const distance = new $mol_vector( start_pos, pos ).distance()
@@ -153,8 +155,6 @@ namespace $.$$ {
 				}
 				return
 			}
-			
-			if( !start_pos ) return
 				
 			if( action_type === 'pan' ) {
 
