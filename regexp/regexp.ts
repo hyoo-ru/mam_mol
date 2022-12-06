@@ -70,7 +70,7 @@ namespace $ {
 			super( source , flags )
 		}
 		
-		*[Symbol.matchAll] (str:string): IterableIterator< $mol_type_override< RegExpExecArray, { groups?: { [ key in keyof Groups ] : string } } > > {
+		*[Symbol.matchAll] (str:string): IterableIterator< RegExpMatchArray & $mol_type_override< RegExpMatchArray, { groups?: { [ key in keyof Groups ] : string } } > > {
 			const index = this.lastIndex
 			this.lastIndex = 0
 			try {
@@ -85,10 +85,10 @@ namespace $ {
 		}
 		
 		/** Parses input and returns found capture groups or null */
-		[ Symbol.match ]( str : string ): null | string[] {
+		[ Symbol.match ]( str : string ): null | RegExpMatchArray {
 			const res = [ ... this[Symbol.matchAll]( str ) ].filter( r => r.groups ).map( r => r[0] )
 			if( !res.length ) return null
-			return res
+			return res as RegExpMatchArray
 		}
 		
 		/** Splits string by regexp edges */
@@ -112,7 +112,7 @@ namespace $ {
 			return Boolean( str.match( this) )
 		}
 		
-		exec( str : string ): $mol_type_override< RegExpExecArray , { groups?: { [ key in keyof Groups ] : string } } > | null {
+		exec( str : string ): RegExpExecArray & $mol_type_override< RegExpExecArray , { groups?: { [ key in keyof Groups ] : string } } > | null {
 			
 			const from = this.lastIndex
 			if( from >= str.length ) return null
@@ -124,7 +124,7 @@ namespace $ {
 				return Object.assign( [ str.slice( from ) ], {
 					index: from,
 					input: str,
-				} )
+				} ) as any
 			}
 
 			if( from === this.lastIndex ) {
@@ -140,7 +140,7 @@ namespace $ {
 				return Object.assign( [ skipped ], {
 					index: from,
 					input: res.input,
-				} )
+				} ) as any
 			}
 			
 			for( let i = 0 ; i < this.groups.length ; ++i ) {

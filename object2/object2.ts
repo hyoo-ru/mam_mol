@@ -29,7 +29,7 @@ namespace $ {
 		}
 		
 		static toString() {
-			if( Symbol.toStringTag in this ) return this[ Symbol.toStringTag ]
+			if( Symbol.toStringTag in this ) return this[ Symbol.toStringTag ] as string
 			return this.name
 		}
 		
@@ -39,7 +39,7 @@ namespace $ {
 		//	return hint === 'number' ? this.valueOf() : this.toString()
 		//}
 		
-		toString() {
+		toString(): string {
 			return this[ Symbol.toStringTag ] || this.constructor.name + '()'
 		}
 		

@@ -4705,6 +4705,7 @@ var $;
                 emitDeclarationOnly: true,
             }, {
                 ...$node.typescript.sys,
+                watchDirectory: (() => { }),
                 writeFile: (path, data) => {
                     $mol_file.relative(path).text(data, 'virt');
                 },
@@ -4712,7 +4713,6 @@ var $;
                     run = cb;
                 },
                 watchFile: (path, cb) => {
-                    watchers.set(path, cb);
                     return { close() { } };
                 },
             }, $node.typescript.createSemanticDiagnosticsBuilderProgram, (diagnostic) => {
@@ -4730,21 +4730,15 @@ var $;
                         message: String(diagnostic.messageText),
                     });
                 }
-            }, () => { });
+            }, () => { }, [], {
+                synchronousWatchDirectory: false,
+                watchFile: 4,
+                watchDirectory: 0,
+            });
             const service = $node.typescript.createWatchProgram(host);
             const versions = {};
             return {
                 recheck: () => {
-                    for (const path of paths) {
-                        const version = $node.fs.statSync(path).mtime.valueOf();
-                        this.js_error(path, null);
-                        if (versions[path] && versions[path] !== version) {
-                            const watcher = watchers.get(path);
-                            if (watcher)
-                                watcher(path, 2);
-                        }
-                        versions[path] = version;
-                    }
                     run();
                 },
                 destructor: () => service.close()
@@ -5151,6 +5145,7 @@ var $;
                 if (!error)
                     continue;
                 errors.push(new Error(error));
+                this.js_error(path, null);
             }
             this.logBundle(target, Date.now() - start);
             if (errors.length) {
