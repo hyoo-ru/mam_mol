@@ -334,6 +334,7 @@ namespace $ {
 				
 				{
 					... $node.typescript.sys ,
+					watchDirectory: (()=>{}) as any,
 					writeFile : (path , data )=> {
 						$mol_file.relative( path ).text( data, 'virt' )
 					},
@@ -341,7 +342,7 @@ namespace $ {
 						run = cb
 					} ,
 					watchFile : (path:string, cb:(path:string,kind:number)=>any )=> {
-						watchers.set( path , cb )
+						// watchers.set( path , cb )
 						return { close(){ } }
 					},
 				},
@@ -357,7 +358,6 @@ namespace $ {
 							getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
 							getNewLine : ()=> '\n' ,
 						})
-						
 						this.js_error( diagnostic.file.getSourceFile().fileName , error )
 						
 					} else {
@@ -369,7 +369,15 @@ namespace $ {
 					
 				} ,
 
-				() => {} ,
+				()=> {}, //watch reports
+				
+				[], // project refs
+				
+				{ // watch options
+					synchronousWatchDirectory: false,
+					watchFile: 4,
+					watchDirectory: 0,
+				},
 				
 			)
 
@@ -379,15 +387,15 @@ namespace $ {
 
 			return {
 				recheck: ()=> {
-					for( const path of paths ) {
-						const version = $node.fs.statSync( path ).mtime.valueOf()
-						this.js_error( path, null )
-						if( versions[ path ] && versions[ path ] !== version ) {
-							const watcher = watchers.get( path )
-							if( watcher ) watcher( path , 2 )
-						}
-						versions[ path ] = version
-					}
+					// for( const path of paths ) {
+					// 	const version = $node.fs.statSync( path ).mtime.valueOf()
+					// 	this.js_error( path, null )
+					// 	if( versions[ path ] && versions[ path ] !== version ) {
+					// 		const watcher = watchers.get( path )
+					// 		if( watcher ) watcher( path , 2 )
+					// 	}
+					// 	versions[ path ] = version
+					// }
 					run()
 				},
 				destructor : ()=> service.close()
@@ -957,6 +965,7 @@ namespace $ {
 				if( !error ) continue
 				
 				errors.push( new Error( error ) )
+				this.js_error( path, null ) // ts will refill it on change
 			}
 			
 			this.logBundle( target , Date.now() - start )
