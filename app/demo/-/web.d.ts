@@ -279,7 +279,7 @@ declare namespace $ {
         static toString(): string;
         destructor(): void;
         toString(): string;
-        toJSON(): string;
+        toJSON(): any;
     }
 }
 
@@ -5903,7 +5903,7 @@ declare namespace $ {
 declare namespace $.$$ {
     type Field = $mol_type_keys_extract<$mol_form_demo_draft_model, () => string>;
     export class $mol_form_demo_draft extends $.$mol_form_demo_draft {
-        value_str(field: Field, next?: string | null): string;
+        value_str(field: Field, next?: string | null): any;
         form_body(): ($mol_form_field | $mol_form_group)[];
         bid_required(field: Field): string;
         bid_short(field: Field): string;

@@ -43,7 +43,7 @@ namespace $ {
 			return this[ Symbol.toStringTag ] || this.constructor.name + '()'
 		}
 		
-		toJSON() {
+		toJSON(): any {
 			return this.toString()
 		}
 
