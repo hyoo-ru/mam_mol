@@ -7799,10 +7799,19 @@ var $;
                     }
                 }
             }
-            if (prev !== undefined && !$mol_compare_deep(prev, next)) {
+            if (fiber.host === this)
+                return next;
+            if ($mol_compare_deep(prev, next)) {
                 this.$.$mol_log3_rise({
-                    message: 'Changed',
+                    message: '💧 Same',
                     place: fiber,
+                });
+            }
+            else {
+                this.$.$mol_log3_rise({
+                    message: '🔥 Next',
+                    place: fiber,
+                    prev,
                 });
             }
             return next;
