@@ -11746,7 +11746,7 @@ var $;
                     place: fiber,
                 });
             }
-            else {
+            else if (prev !== undefined) {
                 this.$.$mol_log3_rise({
                     message: '🔥 Next',
                     place: fiber,
