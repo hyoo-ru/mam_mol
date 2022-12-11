@@ -26,6 +26,15 @@ namespace $ {
 		
 	}
 	
+	const localized_string = $$.$mol_tree2_from_string(`
+		()
+			this
+			[] \\$
+			[] \\$mol_locale
+			[] \\text
+			(,) #key
+	`)
+	
 	export function $mol_view_tree2_to_js( this: $, descr: $mol_tree2 ) {
 		
 		descr = $mol_view_tree2_classes( descr )
@@ -61,27 +70,15 @@ namespace $ {
 					] )
 				}
 				
-				const localize = ( suffix = '' )=> prop.struct( '()', [
-					prop.struct( 'this' ),
-					prop.struct( '[]', [
-						prop.data( '$' )
-					] ),
-					prop.struct( '[]', [
-						prop.data( '$' + 'mol_locale' )
-					] ),
-					prop.struct( '[]', [
-						prop.data( 'text' )
-					] ),
-					prop.struct( '(,)', [
-						prop.data( `${ klass.type }_${ name }${ suffix }` )
-					] ),
-				] )
+				const localize = ( suffix = '' )=> localized_string.hack({
+					'#key': key => [ key.data( `${ klass.type }_${ name }${ suffix }` ) ],
+				})
 				
 				if( next ) addons.push( decorate() )
 				
 				const val = prop.hack({
 					
-					'@': ( locale, belt )=> [ localize() ],
+					'@': ( locale, belt )=> localize(),
 					
 					'<=': bind => [
 						bind.struct( '()', [
@@ -170,7 +167,7 @@ namespace $ {
 											] ),
 											over.struct( '=>', [
 												params_of( over ),
-												localize( '_' + name ),
+												... localize( '_' + name ),
 											] ),
 										] ),
 									)
