@@ -4,44 +4,65 @@ namespace $ {
 
 		function sequence( open?: string, separator?: string, close?: string ) {
 			return ( input: $mol_tree2, belt: $mol_tree2_belt< never > )=> [
-				... open ? [ input.data( open ) ] : [],
-				input.struct( separator && input.kids.length > 2 ? 'indent' : 'line',
-					( [] as $mol_tree2[] ).concat(
-						... input.kids.map( ( kid, index ) => [
-							kid.struct( 'line', [
-								... kid.list([ kid ]).hack( belt ),
-								... ( separator && index < input.kids.length - 1 ) ? [ input.data( separator ) ] : [],
+				input.struct(  'line', [
+					... open ? [ input.data( open ) ] : [],
+					input.struct( separator && input.kids.length > 2 ? 'indent' : 'line',
+						( [] as $mol_tree2[] ).concat(
+							... input.kids.map( ( kid, index ) => [
+								kid.struct( 'line', [
+									... kid.list([ kid ]).hack( belt ),
+									... ( separator && index < input.kids.length - 1 ) ? [ input.data( separator ) ] : [],
+								] ),
 							] ),
+						)
+					),
+					... close ? [ input.data( close ) ] : [],
+				] ),
+			]
+		}
+
+		function block( open?: string, separator?: string, close?: string ) {
+			return ( input: $mol_tree2, belt: $mol_tree2_belt< never > )=> [
+				... open ? [ input.data( open ) ] : [],
+				... input.kids.length === 0 ? [] : [ input.struct( 'indent',
+					input.kids.map( ( kid, index ) =>
+						kid.struct( 'line', [
+							... kid.list([ kid ]).hack( belt ),
+							... ( separator ) ? [ input.data( separator ) ] : [],
 						] ),
-					)
-				),
+					),
+				) ],
 				... close ? [ input.data( close ) ] : [],
 			]
 		}
 
 		function duplet( open?: string, separator?: string, close?: string ) {
 			return ( input: $mol_tree2, belt:  $mol_tree2_belt< never > )=> [
-				... open ? [ input.data( open ) ] : [],
-				... input.list( input.kids.slice( 0, 1 ) ).hack( belt ),
-				... ( separator && input.kids.length > 1 ) ? [ input.data( separator ) ] : [],
-				... input.list( input.kids.slice( 1, 2 ) ).hack( belt ),
-				... close ? [ input.data( close ) ] : [],
+				input.struct(  'line', [
+					... open ? [ input.data( open ) ] : [],
+					... input.list( input.kids.slice( 0, 1 ) ).hack( belt ),
+					... ( separator && input.kids.length > 1 ) ? [ input.data( separator ) ] : [],
+					... input.list( input.kids.slice( 1, 2 ) ).hack( belt ),
+					... close ? [ input.data( close ) ] : [],
+				] ),
 			]
 		}
 
 		function triplet( open?: string, separator12?: string, separator23?: string, close?: string ) {
 			return ( input: $mol_tree2, belt:  $mol_tree2_belt< never > )=> [
-				... open ? [ input.data( open ) ] : [],
-				... input.list( input.kids.slice( 0, 1 ) ).hack( belt ),
-				... ( separator12 && input.kids.length > 1 ) ? [ input.data( separator12 ) ] : [],
-				... input.list( input.kids.slice( 1, 2 ) ).hack( belt ),
-				... ( separator23 && input.kids.length > 2 ) ? [ input.data( separator23 ) ] : [],
-				... input.list( input.kids.slice( 2, 3 ) ).hack( belt ),
-				... close ? [ input.data( close ) ] : [],
+				input.struct( 'line', [
+					... open ? [ input.data( open ) ] : [],
+					... input.list( input.kids.slice( 0, 1 ) ).hack( belt ),
+					... ( separator12 && input.kids.length > 1 ) ? [ input.data( separator12 ) ] : [],
+					... input.list( input.kids.slice( 1, 2 ) ).hack( belt ),
+					... ( separator23 && input.kids.length > 2 ) ? [ input.data( separator23 ) ] : [],
+					... input.list( input.kids.slice( 2, 3 ) ).hack( belt ),
+					... close ? [ input.data( close ) ] : [],
+				] ),
 			]
 		}
 
-		return js.list([ js.struct( 'line', js.hack({
+		return js.list( js.hack({
 
 			'+': sequence( '+' ),
 			'-': sequence( '-' ),
@@ -92,13 +113,13 @@ namespace $ {
 			'(&&)': sequence( '(', ' && ', ')' ),
 			'(||)': sequence( '(', ' || ', ')' ),
 			'(,)': sequence( '(', ', ', ')' ),
-			'{;}': sequence( '{', '; ', '}' ),
-			';': sequence( '', ';', '' ),
+			'{;}': block( '{', ';', '}' ),
+			';': block( '', ';', '' ),
 			'[,]': sequence( '[', ', ', ']' ),
 			'{,}': sequence( '{', ', ', '}' ),
 
 			'()': sequence( '(', '', ')' ),
-			'{}': sequence( '{', '', '}' ),
+			'{}': block( '{', '', '}' ),
 			
 			'[]': ( input, belt )=> {
 				const first = input.kids[0]
@@ -170,21 +191,23 @@ namespace $ {
 
 			'``': ( input, belt )=> {
 				return [
-					input.data( '`' ),
-					... ( [] as $mol_tree2[] ).concat( ... input.kids.map( kid => {
-						if( kid.type ) {
-							return [
-								kid.data( '${' ),
-								... kid.list([ kid ]).hack( belt ),
-								kid.data( '}' ),
-							]
-						} else {
-							return [
-								input.data( JSON.stringify( kid.text() ).slice( 1, -1 ) ),
-							]
-						}
-					} ) ),
-					input.data( '`' ),
+					input.struct( 'line', [
+						input.data( '`' ),
+						... ( [] as $mol_tree2[] ).concat( ... input.kids.map( kid => {
+							if( kid.type ) {
+								return [
+									kid.data( '${' ),
+									... kid.list([ kid ]).hack( belt ),
+									kid.data( '}' ),
+								]
+							} else {
+								return [
+									input.data( JSON.stringify( kid.text() ).slice( 1, -1 ) ),
+								]
+							}
+						} ) ),
+						input.data( '`' ),
+					] ),
 				]
 			},
 
@@ -210,7 +233,7 @@ namespace $ {
 
 			},
 
-		}) ) ])
+		}) )
 
 	}
 
