@@ -4,24 +4,24 @@ namespace $ {
 		return [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!.name
 	}
 	
-	function params_of( prop: $mol_tree2 ) {
+	function params_of( prop: $mol_tree2, bidi = true ) {
 		
 		const { key, next } = [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
 		
 		return prop.struct( '(,)', [
 			... key ? [ prop.struct( 'id' ) ] : [],
-			... next ? [ prop.struct( 'next' ) ] : [],
+			... ( bidi && next ) ? [ prop.struct( 'next' ) ] : [],
 		] )
 		
 	}
 	
-	function args_of( prop: $mol_tree2 ) {
+	function args_of( prop: $mol_tree2, bidi = true ) {
 		
 		const { key, next } = [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
 		
 		return prop.struct( '(,)', [
 			... key ? [ key.length > 1 ? prop.data( key.slice(1) ) : prop.struct( 'id' ) ] : [],
-			... next ? [ prop.struct( 'next' ) ] : [],
+			... ( bidi && next ) ? [ prop.struct( 'next' ) ] : [],
 		] )
 		
 	}
@@ -43,25 +43,15 @@ namespace $ {
 				
 				const { name, key, next } = [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
 				
-				const bind_res = ( bind: $mol_tree2 )=> {
-					const res = bind.kids[0]
-					return [
-						bind.struct( '()', [
-							res.struct( 'this' ),
-							res.struct( '[]', [
-								res.data( name_of( res ) ),
-							] ),
-							args_of( bind.kids[0] ),
-						] ),
-					]
-				}
-				
 				const decorate = ()=> {
 					return prop.struct( '()', [
 						prop.struct( key ? '$mol_mem_key' : '$mol_mem' ),
 						prop.struct( '(,)', [
 							prop.struct( '()', [
-								klass.clone([]),
+								klass.struct( '$' ),
+								prop.struct( '[]', [
+									klass.data( klass.type ),
+								] ),
 								prop.struct( '[]', [
 									prop.data( 'prototype' ),
 								] ),
@@ -93,9 +83,27 @@ namespace $ {
 					
 					'@': ( locale, belt )=> [ localize() ],
 					
-					'<=>': bind_res,
-					'<=': bind_res,
-					'=>': bind_res,
+					'<=': bind => [
+						bind.struct( '()', [
+							bind.kids[0].struct( 'this' ),
+							bind.kids[0].struct( '[]', [
+								bind.kids[0].data( name_of( bind.kids[0] ) ),
+							] ),
+							args_of( bind.kids[0], false ),
+						] ),
+					],
+					
+					'<=>': bind => [
+						bind.struct( '()', [
+							bind.kids[0].struct( 'this' ),
+							bind.kids[0].struct( '[]', [
+								bind.kids[0].data( name_of( bind.kids[0] ) ),
+							] ),
+							args_of( bind.kids[0], true ),
+						] ),
+					],
+					
+					'=>': bind => [],
 					
 					'^': ( ref )=> [
 						ref.struct( '...', [
@@ -112,12 +120,21 @@ namespace $ {
 					'*': ( obj, belt )=> [
 						
 						obj.struct('{,}',
-							obj.kids.map( field => field.struct( ':', [
-								field.data( field.type ),
-								field.struct( '()',
-									field.hack( belt ),
-								),
-							] ) ).filter( this.$mol_guard_defined )
+							obj.kids.map( field => {
+								
+								if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
+								
+								return field.struct( ':', [
+									field.data( name_of( field ) ),
+									field.kids[0].type === '<=>'
+										? field.struct( '=>', [
+											params_of( field ),
+											... field.hack( belt ),
+										] )
+										: field.hack( belt )[0],
+								] )
+								
+							} ).filter( this.$mol_guard_defined )
 						),
 						
 					],
@@ -190,12 +207,9 @@ namespace $ {
 													over.data( name ),
 												] ),
 											] ),
-											over.struct( '=>', [
-												params_of( over ),
-												over.struct( '()',
-													over.hack( belt )
-												),
-											] ),
+											over.struct( '()',
+												over.hack( belt )
+											),
 										] ),
 									)
 									
@@ -248,14 +262,27 @@ namespace $ {
 			}
 						
 			definitions.push(
-				klass.struct( 'class', [
-					klass.struct( klass.type ),
-					parent.struct( 'extends', [
-						parent.struct( parent.type ),
+				klass.struct( '=', [
+					klass.struct( '()', [
+						klass.struct( '$' ),
+						klass.struct( '[]', [
+							klass.data( klass.type ),
+						] ),
 					] ),
-					klass.struct( '{;}', members ),
+					klass.struct( 'class', [
+						klass.struct( klass.type ),
+						parent.struct( 'extends', [
+							parent.struct( '()', [
+								parent.struct( '$' ),
+								parent.struct( '[]', [
+									parent.data( parent.type ),
+								]),
+							] ),
+						] ),
+						klass.struct( '{}', members ),
+					] ),
 				] ),
-				... addons
+				... addons,
 			)
 			
 		}
