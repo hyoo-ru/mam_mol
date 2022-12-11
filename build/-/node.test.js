@@ -2797,7 +2797,7 @@ var $;
         return superclass;
     }
     $.$mol_view_tree2_class_super = $mol_view_tree2_class_super;
-    const class_regex = /^\$\w+$/;
+    const class_regex = /^[$A-Z]\w+$/;
 })($ || ($ = {}));
 //mol/view/tree2/class/super.ts
 ;
@@ -9408,6 +9408,27 @@ var $;
     });
 })($ || ($ = {}));
 //mol/state/local/local.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        class $mol_locale_mock extends $mol_locale {
+            lang(next = 'en') { return next; }
+            static source(lang) {
+                return {};
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_locale_mock.prototype, "lang", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_locale_mock, "source", null);
+        $.$mol_locale = $mol_locale_mock;
+    });
+})($ || ($ = {}));
+//mol/locale/locale.test.ts
 ;
 "use strict";
 var $;

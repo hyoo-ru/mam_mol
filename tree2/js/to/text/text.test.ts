@@ -146,7 +146,7 @@ namespace $ {
 						1
 						2
 				`),
-				'{1; 2}\n',
+				'{\n\t1;\n\t2;\n}\n',
 			)
 			
 		},
@@ -303,7 +303,7 @@ namespace $ {
 						(,) foo
 						{;} debugger
 				`),
-				'function (foo){debugger}\n',
+				'function (foo){\n\tdebugger;\n}\n',
 			)
 			
 			$mol_assert_equal(
@@ -330,7 +330,7 @@ namespace $ {
 						(,) foo
 						{;} debugger
 				`),
-				'async function* (foo){debugger}\n',
+				'async function* (foo){\n\tdebugger;\n}\n',
 			)
 			
 		},
@@ -364,7 +364,7 @@ namespace $ {
 							(,)
 							{;}
 				`),
-				'class {foo(){}}\n',
+				'class {\n\tfoo(){}\n}\n',
 			)
 			
 			$mol_assert_equal(
@@ -375,7 +375,7 @@ namespace $ {
 							(,)
 							{;}
 				`),
-				'class {static ["foo"](){}}\n',
+				'class {\n\tstatic ["foo"](){}\n}\n',
 			)
 			
 			$mol_assert_equal(
@@ -386,7 +386,7 @@ namespace $ {
 							(,)
 							{;}
 				`),
-				'class {get ["foo"](){}}\n',
+				'class {\n\tget ["foo"](){}\n}\n',
 			)
 			
 			$mol_assert_equal(
@@ -397,7 +397,7 @@ namespace $ {
 							(,) bar
 							{;}
 				`),
-				'class {set ["foo"](bar){}}\n',
+				'class {\n\tset ["foo"](bar){}\n}\n',
 			)
 			
 		},
@@ -420,7 +420,7 @@ namespace $ {
 						() 1
 						{;} 2
 				`),
-				'if(1) {2}\n',
+				'if(1) {\n\t2;\n}\n',
 			)
 
 			$mol_assert_equal(
@@ -430,7 +430,7 @@ namespace $ {
 						{;} 2
 						{;} 3
 				`),
-				'if(1) {2}else{3}\n',
+				'if(1) {\n\t2;\n}else{\n\t3;\n}\n',
 			)
 
 		},

@@ -2805,7 +2805,7 @@ var $;
         return superclass;
     }
     $.$mol_view_tree2_class_super = $mol_view_tree2_class_super;
-    const class_regex = /^\$\w+$/;
+    const class_regex = /^[$A-Z]\w+$/;
 })($ || ($ = {}));
 //mol/view/tree2/class/super.ts
 ;

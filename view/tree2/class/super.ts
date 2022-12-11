@@ -22,5 +22,5 @@ namespace $ {
 		return superclass
 	}
 
-	const class_regex = /^\$\w+$/
+	const class_regex = /^[$A-Z]\w+$/
 }
