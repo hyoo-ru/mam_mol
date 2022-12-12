@@ -59,7 +59,7 @@ namespace $ {
 					visit( kid, prefix + 1, false )
 				}
 				
-				if( inline ) indent()
+				if( inline ) next_line()
 
 			} else if( text.type === 'line' ) {
 				

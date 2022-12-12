@@ -33,7 +33,7 @@ namespace $ {
 			[] \\$mol_locale
 			[] \\text
 			(,) #key
-	`)
+	`, 'localized_string' )
 	
 	export function $mol_view_tree2_to_js( this: $, descr: $mol_tree2 ) {
 		
@@ -70,15 +70,13 @@ namespace $ {
 					] )
 				}
 				
-				const localize = ( suffix = '' )=> localized_string.hack({
-					'#key': key => [ key.data( `${ klass.type }_${ name }${ suffix }` ) ],
-				})
-				
 				if( next ) addons.push( decorate() )
 				
 				const val = prop.hack({
 					
-					'@': ( locale, belt )=> localize(),
+					'@': ( locale, belt )=> localized_string.hack({
+						'#key': key => [ locale.data( `${ klass.type }_${ name }` ) ],
+					}),
 					
 					'<=': bind => [
 						bind.struct( '()', [
@@ -152,7 +150,7 @@ namespace $ {
 								
 								if( over.type === '/' ) continue
 								
-								const name = name_of( over )
+								const oname = name_of( over )
 								const bind = over.kids[0]
 								
 								if( bind.type === '@' ) {
@@ -162,12 +160,14 @@ namespace $ {
 											over.struct( '()', [
 												over.struct( 'obj' ),
 												over.struct( '[]', [
-													over.data( name ),
+													over.data( oname ),
 												] ),
 											] ),
 											over.struct( '=>', [
 												params_of( over ),
-												... localize( '_' + name ),
+												... localized_string.hack({
+													'#key': key => [ bind.data( `${ klass.type }_${ name }_${ oname }` ) ],
+												}),
 											] ),
 										] ),
 									)
@@ -185,7 +185,7 @@ namespace $ {
 													over.struct( '()', [
 														over.struct( 'this' ),
 														over.struct( '[]', [
-															over.data( name ),
+															over.data( oname ),
 														] ),
 														args_of( over ),
 													] ),
@@ -201,7 +201,7 @@ namespace $ {
 											over.struct( '()', [
 												over.struct( 'obj' ),
 												over.struct( '[]', [
-													over.data( name ),
+													over.data( oname ),
 												] ),
 											] ),
 											over.struct( '()',
