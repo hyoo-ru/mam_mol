@@ -1225,6 +1225,7 @@ declare namespace $ {
         'code-field': RegExp;
         'code-keyword': RegExp;
         'code-global': RegExp;
+        'code-word': RegExp;
         'code-decorator': RegExp;
         'code-tag': RegExp;
         'code-punctuation': RegExp;
