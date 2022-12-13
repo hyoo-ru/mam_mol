@@ -7195,10 +7195,8 @@ var $;
             line_text(path) {
                 if (path.length === 1)
                     return this.block_text(path[0]);
-                const { name, found, chunks } = this.line_token(path);
-                switch (name) {
-                    default: return (chunks[0] || chunks[1]) ?? found;
-                }
+                const { found, chunks } = this.line_token(path);
+                return (chunks[0] || chunks[1]) ?? found;
             }
             line_content(path) {
                 return this.line_tokens(path).map(({ name, chunks }, index) => {
