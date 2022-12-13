@@ -162,13 +162,8 @@ namespace $.$$ {
 			
 			if( path.length === 1 ) return this.block_text( path[0] )
 			
-			const { name, found, chunks } = this.line_token( path )
-			switch( name ) {
-				// case 'remark': console.log('remark',found,chunks)
-					//return chunks[1]
-				default: return ( chunks[0] || chunks[1] ) ?? found
-			}
-			
+			const { found, chunks } = this.line_token( path )
+			return ( chunks[0] || chunks[1] ) ?? found
 		}
 		
 		@ $mol_mem_key
