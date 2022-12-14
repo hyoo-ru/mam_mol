@@ -3614,6 +3614,12 @@ var $;
             this.pub.emit();
             return next;
         }
+        grabbed() {
+            if (this.id() === this.peer_id())
+                return true;
+            this.pub.promote();
+            return this._unit_all.size > 0;
+        }
         peers() {
             this.pub.promote();
             const lords = [];

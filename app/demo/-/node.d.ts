@@ -901,6 +901,7 @@ declare namespace $ {
         leave(): false | undefined;
         level_base(next?: $hyoo_crowd_peer_level): void;
         level(peer: $mol_int62_string | '', next?: $hyoo_crowd_peer_level): $hyoo_crowd_peer_level;
+        grabbed(): boolean;
         peers(): readonly `${string}_${string}`[];
         residents(): readonly `${string}_${string}`[];
         authors(): Set<`${string}_${string}`>;
