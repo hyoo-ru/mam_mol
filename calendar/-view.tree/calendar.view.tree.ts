@@ -27,6 +27,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * weeks_count 6
+		 * ```
+		 */
+		weeks_count() {
+			return 6
+		}
+		
+		/**
+		 * ```tree
 		 * Weekday* $mol_calendar_day
 		 * 	holiday <= weekend*
 		 * 	sub / <= weekday*

@@ -47,17 +47,6 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		weeks_count() {
-
-			const interval = new $mol_time_interval({
-				start : this.day_draw_from() , 
-				end : this.day_last() ,
-			})
-			
-			return Math.ceil( interval.duration.count({ day : 7 }) )
-		}
-
-		@ $mol_mem
 		sub() {
 			return [
 				... super.sub() ,

@@ -13667,6 +13667,9 @@ var $;
         weeks() {
             return [];
         }
+        weeks_count() {
+            return 6;
+        }
         Weekday(id) {
             const obj = new this.$.$mol_calendar_day();
             obj.holiday = () => this.weekend(id);
@@ -13812,75 +13815,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_time_interval extends $mol_time_base {
-        constructor(config) {
-            super();
-            if (typeof config === 'string') {
-                var chunks = config.split('/');
-                if (chunks[0]) {
-                    if (chunks[0][0].toUpperCase() === 'P') {
-                        this._duration = new $mol_time_duration(chunks[0]);
-                    }
-                    else {
-                        this._start = new $mol_time_moment(chunks[0]);
-                    }
-                }
-                else {
-                    this._start = new $mol_time_moment();
-                }
-                if (chunks[1]) {
-                    if (chunks[1][0].toUpperCase() === 'P') {
-                        this._duration = new $mol_time_duration(chunks[1]);
-                    }
-                    else {
-                        this._end = new $mol_time_moment(chunks[1]);
-                    }
-                }
-                else {
-                    this._end = new $mol_time_moment();
-                }
-                return;
-            }
-            if (config.start !== undefined)
-                this._start = new $mol_time_moment(config.start);
-            if (config.end !== undefined)
-                this._end = new $mol_time_moment(config.end);
-            if (config.duration !== undefined)
-                this._duration = new $mol_time_duration(config.duration);
-        }
-        _start;
-        get start() {
-            if (this._start)
-                return this._start;
-            return this._start = this._end.shift(this._duration.mult(-1));
-        }
-        _end;
-        get end() {
-            if (this._end)
-                return this._end;
-            return this._end = this._start.shift(this._duration);
-        }
-        _duration;
-        get duration() {
-            if (this._duration)
-                return this._duration;
-            return this._duration = new $mol_time_duration(this._end.valueOf() - this._start.valueOf());
-        }
-        toJSON() { return this.toString(); }
-        toString() {
-            return (this._start || this._duration || '').toString() + '/' + (this._end || this._duration || '').toString();
-        }
-        [Symbol.toPrimitive](mode) {
-            return this.toString();
-        }
-    }
-    $.$mol_time_interval = $mol_time_interval;
-})($ || ($ = {}));
-//mol/time/interval/interval.ts
-;
-"use strict";
-var $;
-(function ($) {
     $mol_style_attach("mol/calendar/calendar.view.css", "[mol_calendar] {\n\tdisplay: table;\n\tfont-family: monospace;\n}\n\n[mol_calendar_head] {\n\tdisplay: table-caption;\n}\n\n[mol_calendar_title] {\n\tjustify-content: center;\n}\n\n[mol_calendar_weekdays] ,\n[mol_calendar_week] {\n\tdisplay: table-row;\n\tpadding: 0;\n}\n\n[mol_calendar_day] {\n\tdisplay: table-cell;\n\tpadding: .25rem .5rem;\n\ttext-align: center;\n\tword-break: normal;\n\tbox-shadow: none;\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_calendar_weekday] {\n\tcolor: var(--mol_theme_shade);\n\tborder-bottom: 1px solid var(--mol_theme_line);\n}\n\n[mol_calendar_holiday] {\n\tcolor: var(--mol_theme_special);\n}\n\n[mol_calendar_ghost] {\n\topacity: .2;\n}\n");
 })($ || ($ = {}));
 //mol/calendar/-css/calendar.view.css.ts
@@ -13920,13 +13854,6 @@ var $;
             }
             weekend(index) {
                 return [5, 6].indexOf(index) >= 0;
-            }
-            weeks_count() {
-                const interval = new $mol_time_interval({
-                    start: this.day_draw_from(),
-                    end: this.day_last(),
-                });
-                return Math.ceil(interval.duration.count({ day: 7 }));
             }
             sub() {
                 return [
@@ -13984,9 +13911,6 @@ var $;
         __decorate([
             $mol_mem_key
         ], $mol_calendar.prototype, "weekday", null);
-        __decorate([
-            $mol_mem
-        ], $mol_calendar.prototype, "weeks_count", null);
         __decorate([
             $mol_mem
         ], $mol_calendar.prototype, "sub", null);
@@ -14137,6 +14061,75 @@ var $;
     $.$mol_calendar_demo_selection = $mol_calendar_demo_selection;
 })($ || ($ = {}));
 //mol/calendar/demo/selection/-view.tree/selection.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_time_interval extends $mol_time_base {
+        constructor(config) {
+            super();
+            if (typeof config === 'string') {
+                var chunks = config.split('/');
+                if (chunks[0]) {
+                    if (chunks[0][0].toUpperCase() === 'P') {
+                        this._duration = new $mol_time_duration(chunks[0]);
+                    }
+                    else {
+                        this._start = new $mol_time_moment(chunks[0]);
+                    }
+                }
+                else {
+                    this._start = new $mol_time_moment();
+                }
+                if (chunks[1]) {
+                    if (chunks[1][0].toUpperCase() === 'P') {
+                        this._duration = new $mol_time_duration(chunks[1]);
+                    }
+                    else {
+                        this._end = new $mol_time_moment(chunks[1]);
+                    }
+                }
+                else {
+                    this._end = new $mol_time_moment();
+                }
+                return;
+            }
+            if (config.start !== undefined)
+                this._start = new $mol_time_moment(config.start);
+            if (config.end !== undefined)
+                this._end = new $mol_time_moment(config.end);
+            if (config.duration !== undefined)
+                this._duration = new $mol_time_duration(config.duration);
+        }
+        _start;
+        get start() {
+            if (this._start)
+                return this._start;
+            return this._start = this._end.shift(this._duration.mult(-1));
+        }
+        _end;
+        get end() {
+            if (this._end)
+                return this._end;
+            return this._end = this._start.shift(this._duration);
+        }
+        _duration;
+        get duration() {
+            if (this._duration)
+                return this._duration;
+            return this._duration = new $mol_time_duration(this._end.valueOf() - this._start.valueOf());
+        }
+        toJSON() { return this.toString(); }
+        toString() {
+            return (this._start || this._duration || '').toString() + '/' + (this._end || this._duration || '').toString();
+        }
+        [Symbol.toPrimitive](mode) {
+            return this.toString();
+        }
+    }
+    $.$mol_time_interval = $mol_time_interval;
+})($ || ($ = {}));
+//mol/time/interval/interval.ts
 ;
 "use strict";
 var $;
