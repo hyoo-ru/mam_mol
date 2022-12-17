@@ -9,6 +9,7 @@ $mol_calendar $mol_list
 		<= Weekdays $mol_hor
 			sub <= weekdays /$mol_view
 	weeks /$mol_view
+	weeks_count 6
 	-
 	Weekday* $mol_calendar_day
 		holiday <= weekend* false
