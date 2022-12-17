@@ -2,6 +2,10 @@
 	padding: .5rem;
 }
 
+[mol_date_input] {
+	flex-shrink: 0;
+}
+
 [mol_date_prev] ,
 [mol_date_next] {
 	flex-grow: 1;
