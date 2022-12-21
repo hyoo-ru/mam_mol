@@ -853,7 +853,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Readme $mol_text text <= readme
+		 * Readme $mol_text
+		 * 	text <= readme
+		 * 	uri_base <= uri_base?
 		 * ```
 		 */
 		@ $mol_mem
@@ -861,6 +863,7 @@ namespace $ {
 			const obj = new this.$.$mol_text()
 			
 			obj.text = () => this.readme()
+			obj.uri_base = () => this.uri_base()
 			
 			return obj
 		}
@@ -966,6 +969,17 @@ namespace $ {
 		 * ```
 		 */
 		readme() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * uri_base? \
+		 * ```
+		 */
+		@ $mol_mem
+		uri_base(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		

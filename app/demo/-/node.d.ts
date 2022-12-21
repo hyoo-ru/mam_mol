@@ -8666,6 +8666,7 @@ declare namespace $ {
         };
         Close(): $$.$mol_link;
         readme(): string;
+        uri_base(next?: any): string;
         Not_found_caption(): string;
     }
 }
