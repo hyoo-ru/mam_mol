@@ -33581,6 +33581,10 @@ var $;
             link(module) {
                 return this.link_template().replace('{repo}', this.repo()).replace('{module}', module.join('/'));
             }
+            uri_base(next = '') {
+                $mol_wire_solid();
+                return next;
+            }
             readme() {
                 let module = this.module();
                 while (module.length) {
@@ -33610,6 +33614,9 @@ var $;
                 }
             }
         }
+        __decorate([
+            $mol_mem
+        ], $mol_app_demo_readme.prototype, "uri_base", null);
         __decorate([
             $mol_mem
         ], $mol_app_demo_readme.prototype, "readme", null);

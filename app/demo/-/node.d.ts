@@ -8741,6 +8741,7 @@ declare namespace $.$$ {
     }
     class $mol_app_demo_readme extends $.$mol_app_demo_readme {
         link(module: readonly string[]): string;
+        uri_base(next?: string): string;
         readme(): string;
         body(): $mol_view[];
     }
