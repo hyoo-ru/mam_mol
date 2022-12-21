@@ -11,7 +11,7 @@ namespace $ {
 
 		'Is not dict' () {
 			$mol_assert_fail( ()=> {
-				$mol_data_dict( $mol_data_number )([ 123 ])
+				$mol_data_dict( $mol_data_number )( [ 123 ] as unknown )
 			} , '123 is not an Object' )
 		} ,
 
