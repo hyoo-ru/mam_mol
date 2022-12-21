@@ -2,7 +2,7 @@ namespace $ {
 
 	export function $mol_data_dict< Sub extends $mol_data_value >( sub : Sub ) {
 
-		return $mol_data_setup( ( val : readonly Parameters< Sub >[0][] ) => {
+		return $mol_data_setup( ( val : Readonly< Record< string , ReturnType< Sub > > > ) => {
 			
 			if( Object.getPrototypeOf( val ) !== Object.prototype ) {
 				return $mol_fail( new $mol_data_error( `${ val } is not an Object` ) )
