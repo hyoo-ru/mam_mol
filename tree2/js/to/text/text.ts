@@ -1,7 +1,7 @@
 namespace $ {
 
-	
 	export function $mol_tree2_js_to_text( this: $, js: $mol_tree2 ) {
+
 		function sequence( open?: string, separator?: string, close?: string ) {
 			return ( input: $mol_tree2, belt: $mol_tree2_belt< never > )=> [
 				input.struct(  'line', [
