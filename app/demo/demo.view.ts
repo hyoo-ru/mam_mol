@@ -304,6 +304,12 @@ namespace $.$$ {
 		link( module: readonly string[] ) {
 			return this.link_template().replace( '{repo}', this.repo() ).replace( '{module}' , module.join('/') )
 		}
+		
+		@ $mol_mem
+		uri_base( next = ''  ) {
+			$mol_wire_solid()
+			return next
+		}
 
 		@ $mol_mem
 		override readme(): string {
