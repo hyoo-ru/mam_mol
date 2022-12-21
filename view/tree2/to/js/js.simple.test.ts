@@ -1,18 +1,6 @@
 namespace $ {
 
-	const compile = $mol_data_pipe(
-		$mol_tree2_from_string,
-		$mol_view_tree2_to_js,
-		$mol_tree2_js_to_text,
-		$mol_tree2_text_to_string_mapped_js,
-	).bind( $ )
-	
-	function run( tree: string ): any {
-		const $ = { $mol_object }
-		const src = compile( tree )
-		eval( src )
-		return $
-	}
+	const run = $mol_view_tree2_to_js_test_run
 
 	$mol_test({
 		
@@ -117,72 +105,39 @@ namespace $ {
 			
 		},
 		
-		'Read only bind'( $ ) {
+		'default indexed channel'( $ ) {
 			
 			const { Foo } = run(`
 				Foo $mol_object
-					bar1 <= bar2? 1
+					a*? null
 			`)
-			
+
 			const foo = Foo.make({ $ })
-			
+
 			$mol_assert_like(
-				foo.bar1(),
-				foo.bar1( 2 ),
-				foo.bar1(),
-				foo.bar2(),
-				1,
-			)
-			
-			$mol_assert_like(
-				foo.bar2( 2 ),
-				foo.bar1(),
-				2,
+				foo.a(0, 1),
+				foo.a(0),
+				1
 			)
 			
 		},
-		
-		'Fallback bind'( $ ) {
-			
-			const { Foo } = run(`
-				Foo $mol_object
-					bar1? <=> bar2? 1
-			`)
-			
-			const foo = Foo.make({ $ })
-			
-			$mol_assert_like(
-				foo.bar1(),
-				foo.bar2(),
-				1,
-			)
-			
-			$mol_assert_like(
-				foo.bar2( 2 ),
-				foo.bar1(),
-				2,
-			)
-			
-			$mol_assert_like(
-				foo.bar1( 1 ),
-				foo.bar1(),
-				1,
-			)
-			
-			$mol_assert_like(
-				foo.bar2(),
-				2,
-			)
-			
-			$mol_assert_like(
-				foo.bar2( 3 ),
-				foo.bar2(),
-				foo.bar1(),
-				3,
-			)
-			
+
+		'empty legacy indexed channel throws error'( $ ) {
+			$mol_assert_fail(() => {
+				run(`
+					Foo $mol_object
+						a!? null
+				`)
+			})
+
+			$mol_assert_fail(() => {
+				run(`
+					Foo $mol_object
+						b! 1
+				`)
+			})
 		},
-		
+
 		'Structural channel'( $ ) {
 			
 			const { Foo } = run(`
@@ -200,21 +155,6 @@ namespace $ {
 					beta: {},
 					xxx: 2,
 				},
-			)
-			
-		},
-		
-		'Structural bidi channel'( $ ) {
-			
-			const { Foo } = run(`
-				Foo $mol_object
-					event *
-						click? <=> run? null
-			`)
-			
-			$mol_assert_like(
-				Foo.make({ $ }).event().click({}),
-				{},
 			)
 			
 		},
