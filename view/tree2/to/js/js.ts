@@ -2,17 +2,17 @@ namespace $ {
 
 	const err = $mol_view_tree2_error_str
 	
-	function groups_of( prop: $mol_tree2 ) {
+	function prop_parts( prop: $mol_tree2 ) {
 		return [ ...prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
 	}
 
 	function name_of( prop: $mol_tree2 ) {
-		return groups_of(prop).name
+		return prop_parts(prop).name
 	}
 	
 	function params_of( prop: $mol_tree2, bidi = true ) {
 		
-		const { key, next } = groups_of(prop)
+		const { key, next } = prop_parts(prop)
 		
 		return prop.struct( '(,)', [
 			key ? prop.struct( 'id' ) : undefined,
@@ -23,7 +23,7 @@ namespace $ {
 	
 	function args_of( prop: $mol_tree2, bidi = true ) {
 		
-		const { key, next } = groups_of(prop)
+		const { key, next } = prop_parts(prop)
 		
 		return prop.struct( '(,)', [
 			key ? prop.data( key.length > 1 ? key.slice(1) : 'id' ) : undefined,
@@ -51,7 +51,7 @@ namespace $ {
 		prop: $mol_tree2
 	) {
 		const { klass, members, addons } = acc
-		const { name, key, next } = groups_of(prop)
+		const { name, key, next } = prop_parts(prop)
 
 		const decorate = ()=> {
 			return prop.struct( '()', [
