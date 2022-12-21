@@ -13,11 +13,11 @@ namespace $ {
 	function params_of( prop: $mol_tree2, bidi = true ) {
 		
 		const { key, next } = prop_parts(prop)
-		
+
 		return prop.struct( '(,)', [
-			key ? prop.struct( 'id' ) : undefined,
-			bidi && next ? prop.struct( 'next' ) : undefined,
-		].filter($mol_guard_defined) )
+			... key ? [ prop.struct( 'id' ) ] : [],
+			... ( bidi && next ) ? [ prop.struct( 'next' ) ] : [],
+		] )
 		
 	}
 	
@@ -26,9 +26,9 @@ namespace $ {
 		const { key, next } = prop_parts(prop)
 		
 		return prop.struct( '(,)', [
-			key ? prop.data( key.length > 1 ? key.slice(1) : 'id' ) : undefined,
-			bidi && next ? prop.struct( 'next' ) : undefined,
-		].filter($mol_guard_defined) )
+			... key ? [ prop.data( key.length > 1 ? key.slice(1) : 'id' ) ] : [],
+			... ( bidi && next ) ? [ prop.struct( 'next' ) ] : [],
+		] )
 		
 	}
 	
