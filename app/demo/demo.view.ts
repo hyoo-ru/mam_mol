@@ -311,7 +311,10 @@ namespace $.$$ {
 
 			while( module.length ) {
 				try {
-					return this.$.$mol_fetch.text( this.link( module ) )
+					const link =  this.link( module )
+					const text = this.$.$mol_fetch.text( link )
+					this.uri_base( `https://github.com/${this.repo()}/tree/master/${module.join('/')}/` )
+					return text
 				} catch( error: any ) {
 					if( error instanceof Promise ) $mol_fail_hidden( error )
 					module = module.slice( 0 , -1 )
