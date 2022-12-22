@@ -3653,6 +3653,8 @@ var $;
     function $mol_fail_catch(error) {
         if (typeof error !== 'object')
             return false;
+        if (error instanceof Promise)
+            $mol_fail_hidden(error);
         if (cacthed.get(error))
             return false;
         cacthed.set(error, true);
@@ -3666,8 +3668,6 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_log(error) {
-        if (error instanceof Promise)
-            return false;
         if (!$mol_fail_catch(error))
             return false;
         console.error(error);
