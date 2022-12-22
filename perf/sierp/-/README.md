@@ -99,7 +99,7 @@ Add **web entry point** at `./my/hello/index.html`:
 
 Your application will be served at **`http://localhost:9080/my/hello/`**. Open it. You should refresh page to view your changes.
 
-Add [**declarative component description**](view) at `./my/hello/hello.view.tree` with string input field and greeting message:
+Add **[declarative component description](view)** at `./my/hello/hello.view.tree` with string input field and greeting message:
 
 ```tree
 $my_hello $mol_view
