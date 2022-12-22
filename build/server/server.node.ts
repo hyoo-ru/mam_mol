@@ -34,8 +34,6 @@ namespace $ {
 			
 			} catch( error: any ) {
 
-				if( error instanceof Promise ) $mol_fail_hidden( error )
-				
 				if( $mol_fail_catch( error ) ) {
 					this.$.$mol_log3_fail({
 						place: `${this}.handleRequest()`,
