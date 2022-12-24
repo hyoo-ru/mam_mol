@@ -46,5 +46,23 @@ namespace $.$$ {
 			]
 		}
 		
+		syntax() {
+			return this.$.$mol_syntax2_md_code
+		}
+
+		uri_base() {
+			return $mol_dom_context.document.location.href
+		}
+		
+		@ $mol_mem_key
+		uri_resolve( uri: string ) {
+			
+			if( /^(\w+script+:)+/.test( uri ) ) return null
+			
+			const url = new URL( uri , this.uri_base() )
+			return url.toString()
+			
+		}
+		
 	}
 }
