@@ -131,6 +131,7 @@ namespace $ {
 		 * Pre* $mol_text_code
 		 * 	text <= pre_text*
 		 * 	highlight <= highlight
+		 * 	uri_resolve* <= uri_resolve*
 		 * 	sidebar_showed <= pre_sidebar_showed
 		 * ```
 		 */
@@ -140,6 +141,7 @@ namespace $ {
 			
 			obj.text = () => this.pre_text(id)
 			obj.highlight = () => this.highlight()
+			obj.uri_resolve = (id: any) => this.uri_resolve(id)
 			obj.sidebar_showed = () => this.pre_sidebar_showed()
 			
 			return obj
@@ -328,11 +330,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * uri_resolve* null
+		 * uri_resolve* \
 		 * ```
 		 */
 		uri_resolve(id: any) {
-			return null as any
+			return ""
 		}
 		
 		/**

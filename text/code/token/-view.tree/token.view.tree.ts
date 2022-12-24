@@ -49,24 +49,24 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	href <= haystack
+		 * 	href <= uri
 		 * 	target \_blank
 		 * ```
 		 */
 		attr() {
 			return {
 				...super.attr(),
-				href: this.haystack(),
+				href: this.uri(),
 				target: "_blank"
 			}
 		}
 		
 		/**
 		 * ```tree
-		 * haystack \
+		 * uri \
 		 * ```
 		 */
-		haystack() {
+		uri() {
 			return ""
 		}
 	}

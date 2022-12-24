@@ -30,6 +30,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * syntax null
+		 * ```
+		 */
+		syntax() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * uri_resolve* \
+		 * ```
+		 */
+		uri_resolve(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * Numb $mol_view sub / <= numb
 		 * ```
 		 */
@@ -68,6 +86,7 @@ namespace $ {
 		 * Token_link* $mol_text_code_token_link
 		 * 	haystack <= token_text*
 		 * 	needle <= highlight
+		 * 	uri <= token_uri*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -76,6 +95,7 @@ namespace $ {
 			
 			obj.haystack = () => this.token_text(id)
 			obj.needle = () => this.highlight()
+			obj.uri = () => this.token_uri(id)
 			
 			return obj
 		}
@@ -122,6 +142,15 @@ namespace $ {
 		 * ```
 		 */
 		highlight() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * token_uri* \
+		 * ```
+		 */
+		token_uri(id: any) {
 			return ""
 		}
 	}

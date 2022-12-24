@@ -45,6 +45,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * uri_base \
+		 * ```
+		 */
+		uri_base() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * sub /
 		 * 	<= Rows
 		 * 	<= Copy
@@ -95,6 +104,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * syntax null
+		 * ```
+		 */
+		syntax() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * uri_resolve* \
+		 * ```
+		 */
+		uri_resolve(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * highlight \
 		 * ```
 		 */
@@ -108,6 +135,8 @@ namespace $ {
 		 * 	numb_showed <= sidebar_showed
 		 * 	numb <= row_numb*
 		 * 	text <= row_text*
+		 * 	syntax <= syntax
+		 * 	uri_resolve* <= uri_resolve*
 		 * 	highlight <= highlight
 		 * ```
 		 */
@@ -118,6 +147,8 @@ namespace $ {
 			obj.numb_showed = () => this.sidebar_showed()
 			obj.numb = () => this.row_numb(id)
 			obj.text = () => this.row_text(id)
+			obj.syntax = () => this.syntax()
+			obj.uri_resolve = (id: any) => this.uri_resolve(id)
 			obj.highlight = () => this.highlight()
 			
 			return obj
