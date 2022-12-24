@@ -14,7 +14,7 @@ namespace $.$$ {
 			})
 		}
 		
-		uri_resolve( uri: sringn ) {
+		uri_resolve( uri: string ) {
 			return `https://github.com/search?l=Markdown&q=org%3Ahyoo-ru+${ encodeURIComponent( uri ) }&type=Code`
 		}
 
