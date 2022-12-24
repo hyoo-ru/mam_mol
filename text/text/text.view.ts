@@ -116,6 +116,10 @@ namespace $.$$ {
 			
 		}
 		
+		code_syntax() {
+			return this.$.$mol_syntax2_md_code
+		}
+
 		@ $mol_mem_key
 		block_text( index: number ) {
 			
