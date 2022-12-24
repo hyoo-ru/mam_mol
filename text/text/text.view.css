@@ -135,7 +135,7 @@ h6[mol_text_header] {
 	object-fit: contain;
 	object-position: center;
 	display: inline;
-	max-height: calc( 100vh - 6rem );
+	/* max-height: calc( 100vh - 6rem ); */
 	vertical-align: top;
 }
 
