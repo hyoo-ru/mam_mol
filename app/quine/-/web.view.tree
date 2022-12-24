@@ -423,6 +423,8 @@ $mol_text $mol_list
 		numb_showed false
 		highlight <= highlight \
 		text <= line_text* \
+		uri_resolve* <= uri_resolve* \
+		syntax <= code_syntax null
 	Link* $mol_link_iconed
 		uri <= link_uri* \
 		content <= line_content* /

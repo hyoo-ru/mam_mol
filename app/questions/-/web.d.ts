@@ -2186,6 +2186,7 @@ declare namespace $ {
         line_text(id: any): string;
         line_type(id: any): string;
         line_content(id: any): readonly any[];
+        code_syntax(): any;
         link_uri(id: any): string;
         link_host(id: any): string;
     }
@@ -2238,6 +2239,24 @@ declare namespace $.$$ {
         }): string;
         uri_base(): string;
         uri_resolve(uri: string): string;
+        code_syntax(): $mol_syntax2<{
+            'code-indent': RegExp;
+            'code-docs': RegExp;
+            'code-comment-block': RegExp;
+            'code-link': RegExp;
+            'code-comment-inline': RegExp;
+            'code-string': RegExp;
+            'code-number': RegExp;
+            'code-call': RegExp;
+            'code-sexpr': RegExp;
+            'code-field': RegExp;
+            'code-keyword': RegExp;
+            'code-global': RegExp;
+            'code-word': RegExp;
+            'code-decorator': RegExp;
+            'code-tag': RegExp;
+            'code-punctuation': RegExp;
+        }>;
         block_text(index: number): string;
         block_content(index: number): ($mol_dimmer | $mol_text_code_row | $mol_link_iconed | $mol_embed_any | $mol_text_span)[];
         line_tokens(path: readonly number[]): readonly {

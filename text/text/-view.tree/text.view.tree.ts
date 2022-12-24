@@ -243,6 +243,8 @@ namespace $ {
 		 * 	numb_showed false
 		 * 	highlight <= highlight
 		 * 	text <= line_text*
+		 * 	uri_resolve* <= uri_resolve*
+		 * 	syntax <= code_syntax
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -252,6 +254,8 @@ namespace $ {
 			obj.numb_showed = () => false
 			obj.highlight = () => this.highlight()
 			obj.text = () => this.line_text(id)
+			obj.uri_resolve = (id: any) => this.uri_resolve(id)
+			obj.syntax = () => this.code_syntax()
 			
 			return obj
 		}
@@ -475,6 +479,15 @@ namespace $ {
 		line_content(id: any) {
 			return [
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * code_syntax null
+		 * ```
+		 */
+		code_syntax() {
+			return null as any
 		}
 		
 		/**

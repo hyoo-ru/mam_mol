@@ -7414,6 +7414,8 @@ var $;
             obj.numb_showed = () => false;
             obj.highlight = () => this.highlight();
             obj.text = () => this.line_text(id);
+            obj.uri_resolve = (id) => this.uri_resolve(id);
+            obj.syntax = () => this.code_syntax();
             return obj;
         }
         Link(id) {
@@ -7489,6 +7491,9 @@ var $;
         }
         line_content(id) {
             return [];
+        }
+        code_syntax() {
+            return null;
         }
         link_uri(id) {
             return "";
@@ -7671,6 +7676,9 @@ var $;
                     return null;
                 const url = new URL(uri, this.uri_base());
                 return url.toString();
+            }
+            code_syntax() {
+                return this.$.$mol_syntax2_md_code;
             }
             block_text(index) {
                 const token = this.flow_tokens()[index];
