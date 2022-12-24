@@ -14,7 +14,7 @@ $mol_text_code $mol_stack
 					numb_showed <= sidebar_showed
 					numb <= row_numb* 0
 					text <= row_text* \
-					syntax <= syntax $mol_syntax2 / *
+					syntax <= syntax null
 					uri_resolve* <= uri_resolve* \
 					highlight <= highlight \
 		<= Copy $mol_button_copy

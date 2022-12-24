@@ -4,7 +4,7 @@ $mol_text_code_demo $mol_example_small
 		<= Text $mol_text_code
 			sidebar_showed true
 			text <= source \
-			syntax <= syntax $mol_syntax2
+			syntax <= syntax null
 			uri_resolve* <= uri_resolve* \
 	tags /
 		\$mol_list

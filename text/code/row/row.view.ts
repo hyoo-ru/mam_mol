@@ -6,6 +6,10 @@ namespace $.$$ {
 			return this.text().length * this.letter_width()
 		}
 		
+		syntax() {
+			return this.$.$mol_syntax2_md_code
+		}
+
 		@ $mol_mem_key
 		tokens( path: number[] ) {
 
