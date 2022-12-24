@@ -2,7 +2,7 @@ $mol_text_code_row $mol_paragraph
 	text \
 	minimal_height 24
 	numb_showed true
-	syntax $mol_syntax2
+	syntax $mol_syntax2 / *
 	uri_resolve* \
 	Numb $mol_view
 		sub /

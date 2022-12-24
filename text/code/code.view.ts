@@ -57,7 +57,7 @@ namespace $.$$ {
 		@ $mol_mem_key
 		uri_resolve( uri: string ) {
 			
-			if( /^(\w+script+:)+/.test( uri ) ) return null
+			if( /^(\w+script+:)+/.test( uri ) ) return null as any as string
 			
 			const url = new URL( uri , this.uri_base() )
 			return url.toString()
