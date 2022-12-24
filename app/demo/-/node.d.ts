@@ -8300,7 +8300,9 @@ declare namespace $ {
         Code(): $$.$mol_textarea;
         error_anchor(): any;
         error_offset(): readonly any[];
+        error_message(): string;
         Error_icon(): $mol_icon_flash;
+        Error_view(): $mol_view;
         Error_mark(): $$.$mol_follower;
         Code_page(): $mol_page;
         result_label(): string;
@@ -8337,6 +8339,7 @@ declare namespace $.$$ {
         } | null;
         error_anchor(): $mol_text_code_token | undefined;
         error_offset(): number[];
+        error_message(): any;
         Error_mark(): any;
         spy(args: () => any[]): void;
         result(next?: any[]): any[];

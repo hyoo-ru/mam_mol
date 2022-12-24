@@ -3899,7 +3899,9 @@ $hyoo_js_eval $mol_book2
 					offset <= error_offset /
 						0
 						0
-					Sub <= Error_icon $mol_icon_flash
+					Sub <= Error_view $mol_view
+						attr * title <= error_message \
+						sub / <= Error_icon $mol_icon_flash
 		<= Result_page $mol_page
 			title <= result_label @ \Result
 			tools /

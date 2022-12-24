@@ -31831,15 +31831,28 @@ var $;
                 0
             ];
         }
+        error_message() {
+            return "";
+        }
         Error_icon() {
             const obj = new this.$.$mol_icon_flash();
+            return obj;
+        }
+        Error_view() {
+            const obj = new this.$.$mol_view();
+            obj.attr = () => ({
+                title: this.error_message()
+            });
+            obj.sub = () => [
+                this.Error_icon()
+            ];
             return obj;
         }
         Error_mark() {
             const obj = new this.$.$mol_follower();
             obj.Anchor = () => this.error_anchor();
             obj.offset = () => this.error_offset();
-            obj.Sub = () => this.Error_icon();
+            obj.Sub = () => this.Error_view();
             return obj;
         }
         Code_page() {
@@ -31970,6 +31983,9 @@ var $;
     ], $hyoo_js_eval.prototype, "Error_icon", null);
     __decorate([
         $mol_mem
+    ], $hyoo_js_eval.prototype, "Error_view", null);
+    __decorate([
+        $mol_mem
     ], $hyoo_js_eval.prototype, "Error_mark", null);
     __decorate([
         $mol_mem
@@ -31996,7 +32012,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_menu_page] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_menu] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code_page] {\n\tflex: 1 0 auto;\n}\n\n[hyoo_js_eval_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_result] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 0 0 50%;\n}\n\n[hyoo_js_eval_result_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_error_icon] {\n\tpointer-events: none;\n\tcolor: var(--mol_theme_focus);\n}\n");
+    $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_menu_page] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_menu] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code_page] {\n\tflex: 1 0 auto;\n}\n\n[hyoo_js_eval_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_result] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 0 0 50%;\n}\n\n[hyoo_js_eval_result_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_error_icon] {\n\tcolor: var(--mol_theme_focus);\n}\n");
 })($ || ($ = {}));
 //hyoo/js/eval/-css/eval.view.css.ts
 ;
@@ -32092,6 +32108,9 @@ var $;
             error_offset() {
                 const pos = this.error_pos();
                 return [pos.offset / pos.token.haystack().length, 0];
+            }
+            error_message() {
+                return this.execute()[1]?.message;
             }
             Error_mark() {
                 return this.run() ? super.Error_mark() : null;
