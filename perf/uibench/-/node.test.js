@@ -4784,6 +4784,25 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_promise() {
+        let done;
+        let fail;
+        const promise = new Promise((d, f) => {
+            done = d;
+            fail = f;
+        });
+        return Object.assign(promise, {
+            done,
+            fail,
+        });
+    }
+    $.$mol_promise = $mol_promise;
+})($ || ($ = {}));
+//mol/promise/promise.ts
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_wire_sync(obj) {
         return new Proxy(obj, {
             get(obj, field) {
@@ -4806,25 +4825,6 @@ var $;
     $.$mol_wire_sync = $mol_wire_sync;
 })($ || ($ = {}));
 //mol/wire/sync/sync.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_promise() {
-        let done;
-        let fail;
-        const promise = new Promise((d, f) => {
-            done = d;
-            fail = f;
-        });
-        return Object.assign(promise, {
-            done,
-            fail,
-        });
-    }
-    $.$mol_promise = $mol_promise;
-})($ || ($ = {}));
-//mol/promise/promise.ts
 ;
 "use strict";
 var $;
@@ -5037,12 +5037,17 @@ var $;
             ], App, "result", null);
             $mol_assert_equal(App.result(), 1);
             $mol_assert_equal(App.counter, 1);
-            App.condition(false);
-            $mol_assert_equal(App.result(), 3);
-            $mol_assert_equal(App.counter, 2);
             App.first(10);
-            $mol_assert_equal(App.result(), 3);
+            $mol_assert_equal(App.result(), 11);
             $mol_assert_equal(App.counter, 2);
+            App.condition(false);
+            $mol_assert_equal(App.result(), 4);
+            $mol_assert_equal(App.counter, 3);
+            $mol_wire_fiber.sync();
+            $mol_assert_equal(App.first(), 1);
+            App.first(20);
+            $mol_assert_equal(App.result(), 4);
+            $mol_assert_equal(App.counter, 3);
         },
         'Dupes: Equality'($) {
             let counter = 0;

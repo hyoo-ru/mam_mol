@@ -9633,12 +9633,17 @@ var $;
             ], App, "result", null);
             $mol_assert_equal(App.result(), 1);
             $mol_assert_equal(App.counter, 1);
-            App.condition(false);
-            $mol_assert_equal(App.result(), 3);
-            $mol_assert_equal(App.counter, 2);
             App.first(10);
-            $mol_assert_equal(App.result(), 3);
+            $mol_assert_equal(App.result(), 11);
             $mol_assert_equal(App.counter, 2);
+            App.condition(false);
+            $mol_assert_equal(App.result(), 4);
+            $mol_assert_equal(App.counter, 3);
+            $mol_wire_fiber.sync();
+            $mol_assert_equal(App.first(), 1);
+            App.first(20);
+            $mol_assert_equal(App.result(), 4);
+            $mol_assert_equal(App.counter, 3);
         },
         'Dupes: Equality'($) {
             let counter = 0;

@@ -907,32 +907,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_wire_sync(obj) {
-        return new Proxy(obj, {
-            get(obj, field) {
-                const val = obj[field];
-                if (typeof val !== 'function')
-                    return val;
-                const temp = $mol_wire_task.getter(val);
-                return function $mol_wire_sync(...args) {
-                    const fiber = temp(obj, args);
-                    return fiber.sync();
-                };
-            },
-            apply(obj, self, args) {
-                const temp = $mol_wire_task.getter(obj);
-                const fiber = temp(self, args);
-                return fiber.sync();
-            },
-        });
-    }
-    $.$mol_wire_sync = $mol_wire_sync;
-})($ || ($ = {}));
-//mol/wire/sync/sync.ts
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_promise() {
         let done;
         let fail;
@@ -978,6 +952,32 @@ var $;
     $.$mol_after_timeout = $mol_after_timeout;
 })($ || ($ = {}));
 //mol/after/timeout/timeout.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_sync(obj) {
+        return new Proxy(obj, {
+            get(obj, field) {
+                const val = obj[field];
+                if (typeof val !== 'function')
+                    return val;
+                const temp = $mol_wire_task.getter(val);
+                return function $mol_wire_sync(...args) {
+                    const fiber = temp(obj, args);
+                    return fiber.sync();
+                };
+            },
+            apply(obj, self, args) {
+                const temp = $mol_wire_task.getter(obj);
+                const fiber = temp(self, args);
+                return fiber.sync();
+            },
+        });
+    }
+    $.$mol_wire_sync = $mol_wire_sync;
+})($ || ($ = {}));
+//mol/wire/sync/sync.ts
 ;
 "use strict";
 var $;
@@ -1190,12 +1190,17 @@ var $;
             ], App, "result", null);
             $mol_assert_equal(App.result(), 1);
             $mol_assert_equal(App.counter, 1);
-            App.condition(false);
-            $mol_assert_equal(App.result(), 3);
-            $mol_assert_equal(App.counter, 2);
             App.first(10);
-            $mol_assert_equal(App.result(), 3);
+            $mol_assert_equal(App.result(), 11);
             $mol_assert_equal(App.counter, 2);
+            App.condition(false);
+            $mol_assert_equal(App.result(), 4);
+            $mol_assert_equal(App.counter, 3);
+            $mol_wire_fiber.sync();
+            $mol_assert_equal(App.first(), 1);
+            App.first(20);
+            $mol_assert_equal(App.result(), 4);
+            $mol_assert_equal(App.counter, 3);
         },
         'Dupes: Equality'($) {
             let counter = 0;
