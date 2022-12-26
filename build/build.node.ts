@@ -1285,7 +1285,7 @@ namespace $ {
 		bundleCordova( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const start = Date.now()
 			const pack = $mol_file.absolute( path )
-			const cordovaOut = $mol_file.absolute( `${path}/-` )
+			const cordovaOut = pack.resolve( '-' )
 			const cordova = pack.resolve( '-cordova' )
 			
 			const config = pack.resolve( 'config.xml' )
