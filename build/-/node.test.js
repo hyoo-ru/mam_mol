@@ -5368,22 +5368,17 @@ var $;
         bundleCordova({ path, exclude }) {
             const start = Date.now();
             const pack = $mol_file.absolute(path);
+            const cordovaOut = pack.resolve('-');
             const cordova = pack.resolve('-cordova');
             const config = pack.resolve('config.xml');
             if (!config.exists())
                 return [];
             const config_target = cordova.resolve('config.xml');
             config_target.text(config.text());
-            const html = pack.resolve('index.html');
             const targets = [config_target];
-            if (html.exists()) {
-                const html_target = cordova.resolve('www/index.html');
-                html_target.text(html.text());
-                targets.push(html_target);
-            }
             const sources = pack.resolve('-').find().filter(src => src.type() === 'file');
             for (const source of sources) {
-                const target = cordova.resolve(`www/${source.relate(pack)}`);
+                const target = cordova.resolve(`www/${source.relate(cordovaOut)}`);
                 target.text(source.text());
                 targets.push(target);
             }
