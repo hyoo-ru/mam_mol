@@ -5,6 +5,7 @@ $mol_text_code $mol_stack
 	text \
 	text_lines /string
 	find_pos* null
+	uri_base \
 	sub /
 		<= Rows $mol_list
 			render_visible_only <= render_visible_only false
@@ -13,6 +14,8 @@ $mol_text_code $mol_stack
 					numb_showed <= sidebar_showed
 					numb <= row_numb* 0
 					text <= row_text* \
+					syntax <= syntax null
+					uri_resolve* <= uri_resolve* \
 					highlight <= highlight \
 		<= Copy $mol_button_copy
 			hint @ \Copy whole code

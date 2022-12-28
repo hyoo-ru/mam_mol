@@ -8,5 +8,5 @@ $mol_text_code_token_link $mol_text_code_token
 	type \code-link
 	attr *
 		^
-		href <= haystack \
+		href <= uri \
 		target \_blank

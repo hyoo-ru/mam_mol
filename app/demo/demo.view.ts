@@ -304,6 +304,12 @@ namespace $.$$ {
 		link( module: readonly string[] ) {
 			return this.link_template().replace( '{repo}', this.repo() ).replace( '{module}' , module.join('/') )
 		}
+		
+		@ $mol_mem
+		uri_base( next = ''  ) {
+			$mol_wire_solid()
+			return next
+		}
 
 		@ $mol_mem
 		override readme(): string {
@@ -311,7 +317,10 @@ namespace $.$$ {
 
 			while( module.length ) {
 				try {
-					return this.$.$mol_fetch.text( this.link( module ) )
+					const link =  this.link( module )
+					const text = this.$.$mol_fetch.text( link )
+					this.uri_base( `https://github.com/${this.repo()}/tree/master/${module.join('/')}/` )
+					return text
 				} catch( error: any ) {
 					if( error instanceof Promise ) $mol_fail_hidden( error )
 					module = module.slice( 0 , -1 )

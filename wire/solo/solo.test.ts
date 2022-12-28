@@ -158,10 +158,7 @@ namespace $ {
 				static get $() { return $ }
 
 				@ $mol_wire_solo
-				static first( next = 1 ) { return next }
-				
-				@ $mol_wire_solo
-				static second( next = 2 ) { return next }
+				static source( next = 1 ) { return next }
 				
 				@ $mol_wire_solo
 				static condition( next = true ) { return next }
@@ -170,7 +167,7 @@ namespace $ {
 
 				@ $mol_wire_solo
 				static result() {
-					const res = this.condition() ? this.first() : this.second() 
+					const res = this.condition() ? this.source() : 0
 					return res + this.counter ++
 				}
 				
@@ -179,13 +176,24 @@ namespace $ {
 			$mol_assert_equal( App.result() , 1 )
 			$mol_assert_equal( App.counter , 1 )
 			
+			App.source( 10 )
+			$mol_assert_equal( App.result() , 11 )
+			$mol_assert_equal( App.counter , 2 )
+			
 			App.condition( false )
-			$mol_assert_equal( App.result() , 3 )
-			$mol_assert_equal( App.counter , 2 )
+			$mol_assert_equal( App.result() , 2 )
+			$mol_assert_equal( App.counter , 3 )
 
-			App.first( 10 )
-			$mol_assert_equal( App.result() , 3 )
-			$mol_assert_equal( App.counter , 2 )
+			$mol_wire_fiber.sync()
+			$mol_assert_equal( App.source() , 1 )
+			
+			App.source( 20 )
+			$mol_assert_equal( App.result() , 2 )
+			$mol_assert_equal( App.counter , 3 )
+
+			App.condition( true )
+			$mol_assert_equal( App.result() , 23 )
+			$mol_assert_equal( App.counter , 4 )
 
 		} ,
 

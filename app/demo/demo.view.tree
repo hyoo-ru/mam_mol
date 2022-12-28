@@ -101,6 +101,7 @@ $mol_app_demo_readme $mol_page
 	-
 	Readme $mol_text
 		text <= readme \
+		uri_base <= uri_base? \
 	Not_found $mol_view sub /
 		<= Not_found_caption @ \Readme not found
 

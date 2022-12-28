@@ -5,6 +5,10 @@ namespace $.$$ {
 		maximal_width() {
 			return this.text().length * this.letter_width()
 		}
+		
+		syntax() {
+			return this.$.$mol_syntax2_md_code
+		}
 
 		@ $mol_mem_key
 		tokens( path: number[] ) {
@@ -16,7 +20,7 @@ namespace $.$$ {
 				? this.tokens( path.slice( 0, path.length - 1 ) )[ path[ path.length - 1 ] ].found.slice( 1, -1 )
 				: this.text()
 			
-			this.$.$mol_syntax2_md_code.tokenize(
+			this.syntax().tokenize(
 				text,
 				( name , found , chunks )=> {
 					if( name === 'code-sexpr' ) {
@@ -79,6 +83,12 @@ namespace $.$$ {
 
 			return token.found
 
+		}
+		
+		@ $mol_mem_key
+		token_uri( path: number[] ) {
+			const uri = this.token_text( path )
+			return this.uri_resolve( uri )
 		}
 		
 		*view_find(

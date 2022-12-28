@@ -40,13 +40,13 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		header_level( index: number ) {
-			return 'h' + this.flow_tokens()[ index ].chunks[0].length
+			return this.flow_tokens()[ index ].chunks[0].length
 		}
 		
 		@ $mol_mem_key
 		header_arg( index: number ) {
 			return {
-				[ this.param() ]: this.flow_tokens()[ index ].chunks[2]
+				[ this.param() ]: this.block_text( index )
 			}
 		}
 		
@@ -109,13 +109,17 @@ namespace $.$$ {
 		@ $mol_mem_key
 		uri_resolve( uri: string ) {
 			
-			if( /^(\w+script+:)+/.test( uri ) ) return null
+			if( /^(\w+script+:)+/.test( uri ) ) return null as any as string
 			
 			const url = new URL( uri , this.uri_base() )
 			return url.toString()
 			
 		}
 		
+		code_syntax() {
+			return this.$.$mol_syntax2_md_code
+		}
+
 		@ $mol_mem_key
 		block_text( index: number ) {
 			
@@ -217,6 +221,14 @@ namespace $.$$ {
 			}
 		}
 
+	}
+	
+	export class $mol_text_header extends $.$mol_text_header {
+		
+		dom_name() {
+			return 'h' + this.level()
+		}
+		
 	}
 
 }
