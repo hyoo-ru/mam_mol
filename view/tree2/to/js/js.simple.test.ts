@@ -173,14 +173,16 @@ namespace $ {
 			const { Foo } = run(`
 				Foo $mol_object
 					button $mol_object
-					some true
-					sub /
-						1
+						some true
+						sub /
+							1
 			`)
 
 			const foo = Foo.make({ $ })
 
-			// $mol_assert_ok(typeof foo.button().sub === 'function')
+			$mol_assert_ok(typeof foo.button().sub === 'function')
+
+			$mol_assert_ok(typeof foo.button().some === 'function')
 
 			$mol_assert_like(
 				foo.button().sub()[0],
