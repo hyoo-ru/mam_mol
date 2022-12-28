@@ -25,10 +25,6 @@ namespace $ {
 				color: $mol_theme.hover,
 			},
 			
-			$mol_icon: {
-				transform: 'scale(1.5)',
-			},
-			
 		},
 
 		':focus': {
@@ -37,10 +33,6 @@ namespace $ {
 			
 			background: {
 				color: $mol_theme.hover,
-			},
-			
-			$mol_icon: {
-				transform: 'scale(1.5)',
 			},
 			
 		},

@@ -92,12 +92,6 @@
     "$mol_layer",
     "$mol_keyboard",
     "$mol_button_typed",
-    "$mol_icon",
-    "$mol_svg_root",
-    "$mol_svg",
-    "$mol_state_time",
-    "$mol_state",
-    "$mol_svg_path",
     "$mol_mem_cached"
   ],
   "dependencies": {
