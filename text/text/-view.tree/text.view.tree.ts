@@ -109,7 +109,7 @@ namespace $ {
 		 * ```tree
 		 * Header* $mol_text_header
 		 * 	minimal_height 40
-		 * 	dom_name <= header_level*
+		 * 	level <= header_level*
 		 * 	content <= block_content*
 		 * 	arg <= header_arg*
 		 * ```
@@ -119,7 +119,7 @@ namespace $ {
 			const obj = new this.$.$mol_text_header()
 			
 			obj.minimal_height = () => 40
-			obj.dom_name = () => this.header_level(id)
+			obj.level = () => this.header_level(id)
 			obj.content = () => this.block_content(id)
 			obj.arg = () => this.header_arg(id)
 			
@@ -370,11 +370,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * header_level* \h
+		 * header_level* 1
 		 * ```
 		 */
 		header_level(id: any) {
-			return "h"
+			return 1
 		}
 		
 		/**
@@ -510,6 +510,15 @@ namespace $ {
 	}
 	
 	export class $mol_text_header extends $mol_paragraph {
+		
+		/**
+		 * ```tree
+		 * level 1
+		 * ```
+		 */
+		level() {
+			return 1
+		}
 		
 		/**
 		 * ```tree

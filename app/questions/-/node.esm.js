@@ -7371,7 +7371,7 @@ var $;
         Header(id) {
             const obj = new this.$.$mol_text_header();
             obj.minimal_height = () => 40;
-            obj.dom_name = () => this.header_level(id);
+            obj.level = () => this.header_level(id);
             obj.content = () => this.block_content(id);
             obj.arg = () => this.header_arg(id);
             return obj;
@@ -7465,7 +7465,7 @@ var $;
             return "";
         }
         header_level(id) {
-            return "h";
+            return 1;
         }
         header_arg(id) {
             return {};
@@ -7554,6 +7554,9 @@ var $;
     ], $mol_text.prototype, "Embed", null);
     $.$mol_text = $mol_text;
     class $mol_text_header extends $mol_paragraph {
+        level() {
+            return 1;
+        }
         sub() {
             return [
                 this.Link()
@@ -7633,11 +7636,11 @@ var $;
                 return this.toString().replace(/^.*?\)\./, '').replace(/[()]/g, '');
             }
             header_level(index) {
-                return 'h' + this.flow_tokens()[index].chunks[0].length;
+                return this.flow_tokens()[index].chunks[0].length;
             }
             header_arg(index) {
                 return {
-                    [this.param()]: this.flow_tokens()[index].chunks[2]
+                    [this.param()]: this.block_text(index)
                 };
             }
             pre_text(index) {
@@ -7824,6 +7827,12 @@ var $;
             $mol_mem
         ], $mol_text.prototype, "auto_scroll", null);
         $$.$mol_text = $mol_text;
+        class $mol_text_header extends $.$mol_text_header {
+            dom_name() {
+                return 'h' + this.level();
+            }
+        }
+        $$.$mol_text_header = $mol_text_header;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/text/text/text.view.ts
