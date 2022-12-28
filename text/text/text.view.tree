@@ -20,7 +20,7 @@ $mol_text $mol_list
 		auto_scroll null
 	Header* $mol_text_header
 		minimal_height 40
-		dom_name <= header_level* \h
+		level <= header_level* 1
 		content <= block_content* /
 		arg <= header_arg* *
 	Pre* $mol_text_code
@@ -65,6 +65,7 @@ $mol_text $mol_list
 		title <= line_text* \
 
 $mol_text_header $mol_paragraph
+	level 1
 	sub /
 		<= Link $mol_link
 			arg <= arg *
