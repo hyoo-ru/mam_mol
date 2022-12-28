@@ -17,11 +17,6 @@
 	background-color: var(--mol_theme_hover);
 }
 
-[mol_button_typed]:hover [mol_icon] ,
-[mol_button_typed]:focus [mol_icon] {
-	transform: scale(1.5);
-}
-
 [mol_button_typed]:active {
 	color: var(--mol_theme_focus);
 }
