@@ -22,7 +22,7 @@ namespace $ {
 			const data = this.data()
 			if( next === undefined ) return data && data[ key ]!
 
-			const Constr = Reflect.getPrototypeOf( data as any )!.constructor as new ()=> Data
+			const Constr = Reflect.getPrototypeOf( data as any )!.constructor as new ()=> {}
 			
 			this.data( Object.assign( new Constr , data , { [ key ] : next } ) )
 
