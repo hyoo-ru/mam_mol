@@ -23,7 +23,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		state( next?: Record< string, string | number | boolean | null > ) {
+		state( next?: Record< string, string | number | boolean | null > | null ) {
 			return $mol_state_local.value( `${ this }.state()`, next ) ?? {}
 		}
 		
