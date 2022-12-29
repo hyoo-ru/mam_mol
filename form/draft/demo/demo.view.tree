@@ -1,0 +1,78 @@
+$mol_form_draft_demo_article $mol_object2
+	title? \
+	type? \
+	adult? false
+	content? \
+
+$mol_form_draft_demo $mol_example
+	title \Article draft form demo
+	-
+	message_done \Done
+	bid_required* \Required
+	bid_swearing* \No swearing
+	bid_short* \> 5 letters
+	bid_long* \> 100 letters
+	-
+	sub /
+		<= Form $mol_form_draft
+			model <= model $mol_form_draft_demo_article
+			submit? => publish?
+			submit_allowed => publish_allowed
+			value_str*? => value_str*?
+			changed => changed
+			form_fields /
+				<= Title_field $mol_form_field
+					name \Title
+					bids /
+						<= bid_swearing*title
+						<= bid_short*title
+					control <= Title $mol_string
+						hint \How I spent the summer..
+						value? <=> value_str*title?
+				<= Type_field $mol_form_field
+					name \Type
+					bids /
+						<= bid_required*type
+					control <= Type $mol_switch
+						value? <=> value_str*type?
+						options *
+							article \Article
+							news \News
+							question \Question
+				<= Adult_field $mol_form_field
+					name \Adult only
+					control <= Adult $mol_switch
+						value? <=> value_str*adult?
+						options *
+							false \No
+							true \Yes
+				<= Content_field $mol_form_field
+					name \Content
+					bids /
+						<= bid_swearing*content
+						<= bid_long*content
+					control <= Content $mol_textarea
+						hint \Long long story..
+						value? <=> value_str*content?
+			body <= form_body /
+				<= Title_field
+				<= Config $mol_form_group sub /
+					<= Adult_field
+					<= Type_field
+				<= Content_field
+			buttons /
+				<= Publish $mol_button_major
+					title \Publish
+					click? <=> publish?
+					enabled <= publish_allowed
+				<= Result $mol_status
+					message <= result? \
+	tags /
+		\$mol_form_field
+		\$mol_button
+		\$mol_string
+		\$mol_switch
+		\form
+		\bids
+		\validation
+		\field

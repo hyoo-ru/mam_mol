@@ -1,4 +1,4 @@
-$mol_form_demo_bids $mol_example
+$mol_form_demo $mol_example
 	title \Sign Up form demo
 	message *
 		required \Required
