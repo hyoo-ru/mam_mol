@@ -205,9 +205,10 @@ namespace $ {
 											over.data( oname ),
 										] ),
 									] ),
-									over.struct( '()',
-										over.hack( belt )
-									),
+									over.struct( '=>', [
+										over.struct( '(,)'),
+										over.struct( '()', over.hack( belt )),
+									] ),
 								] ),
 							)
 							

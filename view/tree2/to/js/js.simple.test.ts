@@ -44,7 +44,7 @@ namespace $ {
 			
 		},
 		
-		'Boolean channel'( $ ) {
+		'Boolean channel array'( $ ) {
 			
 			const { Foo } = run(`
 				Foo $mol_object
@@ -60,7 +60,7 @@ namespace $ {
 			
 		},
 		
-		'Number channel'( $ ) {
+		'Number channel array'( $ ) {
 			
 			const { Foo } = run(`
 				Foo $mol_object
@@ -138,51 +138,58 @@ namespace $ {
 			})
 		},
 
-		'Structural channel'( $ ) {
-			
+		'two classes'( $ ) {
+			const { A2, B2 } = run(`
+				A2 $mol_object
+					str \\some
+				
+				B2 A2
+					str \\some2
+			`)
+			const a = A2.make( { $ })
+			const b = B2.make( { $ })
+
+			$mol_assert_ok(b instanceof A2)
+			$mol_assert_ok(b instanceof B2)
+
+			$mol_assert_like( a.str(), 'some')
+			$mol_assert_like( b.str(), 'some2')
+		},
+
+		'commented node'( $ ) {
+			const { A2, B2 } = run(`
+				A2 $mol_object
+					str \\some
+				- B2 A2
+					str \\some2
+			`)
+
+			const a = A2.make( { $ })
+			$mol_assert_ok(a instanceof A2)
+			$mol_assert_ok(B2 === undefined)
+		},
+
+		'factory props'( $ ) {
 			const { Foo } = run(`
 				Foo $mol_object
-					bar *
-						alpha 1
-						beta *
-						xxx <= lol 2
+					button $mol_object
+						some true
+						sub /
+							1
 			`)
-			
+
+			const foo = Foo.make({ $ })
+
+			$mol_assert_ok(typeof foo.button().sub === 'function')
+
+			$mol_assert_ok(typeof foo.button().some === 'function')
+
 			$mol_assert_like(
-				Foo.make({ $ }).bar(),
-				{
-					alpha: 1,
-					beta: {},
-					xxx: 2,
-				},
+				foo.button().sub()[0],
+				1
 			)
-			
 		},
-		
-		'Structural channel with inheritance'( $ ) {
-			
-			const { Foo, Bar } = run(`
-				Foo $mol_object
-					field *
-						xxx 123
-				Bar Foo
-					field *
-						yyy 234
-						^
-						zzz 345
-			`)
-			
-			$mol_assert_like(
-				Bar.make({ $ }).field(),
-				{
-					yyy: 234,
-					xxx: 123,
-					zzz: 345,
-				},
-			)
-			
-		},
-		
+
 	})
 	
 }
