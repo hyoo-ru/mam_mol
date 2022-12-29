@@ -14,7 +14,7 @@
 	transform: rotateZ(0deg);
 }
 
-:where([mol_check_checked]) [mol_check_expand_icon_path] {
+:where([mol_check_checked]) [mol_check_expand_icon] {
 	transform: rotateZ(90deg);
 }
 
