@@ -1552,6 +1552,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_form extends $mol_list {
+        submit_allowed(): boolean;
         submit_blocked(): boolean;
         event(): {
             keydown: (event?: any) => any;
@@ -1566,9 +1567,6 @@ declare namespace $ {
         foot(): readonly $mol_view[];
         Foot(): $mol_row;
     }
-}
-
-declare namespace $ {
 }
 
 declare namespace $.$$ {

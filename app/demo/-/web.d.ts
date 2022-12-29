@@ -5692,6 +5692,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_form extends $mol_list {
+        submit_allowed(): boolean;
         submit_blocked(): boolean;
         event(): {
             keydown: (event?: any) => any;
@@ -5706,9 +5707,6 @@ declare namespace $ {
         foot(): readonly $mol_view[];
         Foot(): $mol_row;
     }
-}
-
-declare namespace $ {
 }
 
 declare namespace $.$$ {
@@ -5849,7 +5847,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_form_demo_bids extends $mol_example {
+    class $mol_form_demo extends $mol_example {
         title(): string;
         message(): {
             required: string;
@@ -5918,7 +5916,7 @@ declare namespace $ {
 }
 
 declare namespace $.$$ {
-    class $mol_form_demo_bids extends $.$mol_form_demo_bids {
+    class $mol_form_demo extends $.$mol_form_demo {
         name_first(next?: string): string;
         name_first_bid(): string;
         name_nick(next?: string): string;
@@ -5936,14 +5934,36 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_form_demo_draft_model extends $mol_object2 {
-        title(val?: any): string;
-        type(val?: any): string;
-        content(val?: any): string;
+    class $mol_form_draft extends $mol_form {
+        model(): $mol_object2;
     }
-    class $mol_form_demo_draft extends $mol_example {
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_form_draft extends $.$mol_form_draft {
+        value_str(field: string, next?: string | null): string;
+        value_numb(field: string, next?: boolean | null): number;
+        value_bool(field: string, next?: boolean | null): boolean;
+        value(field: string, next?: string | number | boolean | null): any;
+        state(next?: Record<string, string | number | boolean | null> | null): Record<string, string | number | boolean | null>;
+        changed(): boolean;
+        submit_allowed(): boolean;
+        submit(next?: Event): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_form_draft_demo_article extends $mol_object2 {
+        title(next?: any): string;
+        type(next?: any): string;
+        adult(next?: any): boolean;
+        content(next?: any): string;
+    }
+    class $mol_form_draft_demo extends $mol_example {
         title(): string;
-        model(): $mol_form_demo_draft_model;
         message_done(): string;
         bid_required(id: any): string;
         bid_swearing(id: any): string;
@@ -5951,40 +5971,38 @@ declare namespace $ {
         bid_long(id: any): string;
         sub(): readonly any[];
         tags(): readonly any[];
-        value_str(id: any, val?: any): string;
+        model(): $mol_form_draft_demo_article;
         Title(): $$.$mol_string;
         Title_field(): $$.$mol_form_field;
         Type(): $$.$mol_switch;
         Type_field(): $$.$mol_form_field;
-        Main(): $mol_form_group;
+        Adult(): $$.$mol_switch;
+        Adult_field(): $$.$mol_form_field;
         Content(): $$.$mol_textarea;
         Content_field(): $$.$mol_form_field;
+        Config(): $mol_form_group;
         form_body(): readonly any[];
-        publish(event?: any): any;
         Publish(): $mol_button_major;
-        result(val?: any): string;
+        result(next?: any): string;
         Result(): $$.$mol_status;
+        publish(next?: any): void;
         publish_allowed(): boolean;
-        Form(): $$.$mol_form;
-        Flow(): $$.$mol_list;
+        value_str(id: any, next?: any): string;
+        changed(): boolean;
+        Form(): $$.$mol_form_draft;
     }
 }
 
 declare namespace $.$$ {
-    type Field = $mol_type_keys_extract<$mol_form_demo_draft_model, () => string>;
-    export class $mol_form_demo_draft extends $.$mol_form_demo_draft {
-        value_str(field: Field, next?: string | null): any;
+    class $mol_form_draft_demo extends $.$mol_form_draft_demo {
         form_body(): ($mol_form_field | $mol_form_group)[];
-        bid_required(field: Field): string;
-        bid_short(field: Field): string;
-        bid_long(field: Field): string;
-        bid_swearing(field: Field): string;
-        changed(): boolean;
-        publish_allowed(): boolean;
-        publish(next?: Event): void;
+        bid_required(field: string): string;
+        bid_short(field: string): string;
+        bid_long(field: string): string;
+        bid_swearing(field: string): string;
         result(next?: string): string;
+        publish(): void;
     }
-    export {};
 }
 
 declare namespace $ {

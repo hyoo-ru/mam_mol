@@ -3,6 +3,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * submit_allowed true
+		 * ```
+		 */
+		submit_allowed() {
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * submit_blocked false
 		 * ```
 		 */

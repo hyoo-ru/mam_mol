@@ -32,8 +32,8 @@ include \/mol/drag/demo
 include \/mol/dump/demo
 include \/mol/expander/demo
 include \/mol/float/demo
-include \/mol/form/demo/bids
-include \/mol/form/demo/draft
+include \/mol/form/demo
+include \/mol/form/draft/demo
 include \/mol/format/demo
 include \/mol/frame/demo
 - include \/mol/grid/demo

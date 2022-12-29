@@ -4818,6 +4818,9 @@ var $;
 var $;
 (function ($) {
     class $mol_form extends $mol_list {
+        submit_allowed() {
+            return true;
+        }
         submit_blocked() {
             return false;
         }
@@ -4881,13 +4884,6 @@ var $;
     $.$mol_form = $mol_form;
 })($ || ($ = {}));
 //mol/form/-view.tree/form.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/form/form.css", "[mol_form_foot] {\n\tmargin: var(--mol_gap_block);\n}\n");
-})($ || ($ = {}));
-//mol/form/-css/form.css.ts
 ;
 "use strict";
 var $;

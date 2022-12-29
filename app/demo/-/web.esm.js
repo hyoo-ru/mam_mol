@@ -21288,6 +21288,9 @@ var $;
 var $;
 (function ($) {
     class $mol_form extends $mol_list {
+        submit_allowed() {
+            return true;
+        }
         submit_blocked() {
             return false;
         }
@@ -21351,13 +21354,6 @@ var $;
     $.$mol_form = $mol_form;
 })($ || ($ = {}));
 //mol/form/-view.tree/form.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/form/form.css", "[mol_form_foot] {\n\tmargin: var(--mol_gap_block);\n}\n");
-})($ || ($ = {}));
-//mol/form/-css/form.css.ts
 ;
 "use strict";
 var $;
@@ -21929,7 +21925,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_form_demo_bids extends $mol_example {
+    class $mol_form_demo extends $mol_example {
         title() {
             return "Sign Up form demo";
         }
@@ -22207,114 +22203,114 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "avatars", null);
+    ], $mol_form_demo.prototype, "avatars", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Avatars_control", null);
+    ], $mol_form_demo.prototype, "Avatars_control", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Avatars_field", null);
+    ], $mol_form_demo.prototype, "Avatars_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "name_first", null);
+    ], $mol_form_demo.prototype, "name_first", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Name_first_control", null);
+    ], $mol_form_demo.prototype, "Name_first_control", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Name_first_field", null);
+    ], $mol_form_demo.prototype, "Name_first_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "name_nick", null);
+    ], $mol_form_demo.prototype, "name_nick", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Name_nick_control", null);
+    ], $mol_form_demo.prototype, "Name_nick_control", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Name_nick_field", null);
+    ], $mol_form_demo.prototype, "Name_nick_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "name_second", null);
+    ], $mol_form_demo.prototype, "name_second", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Name_second_control", null);
+    ], $mol_form_demo.prototype, "Name_second_control", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Name_second_field", null);
+    ], $mol_form_demo.prototype, "Name_second_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Names", null);
+    ], $mol_form_demo.prototype, "Names", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "age", null);
+    ], $mol_form_demo.prototype, "age", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Age_control", null);
+    ], $mol_form_demo.prototype, "Age_control", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Age_field", null);
+    ], $mol_form_demo.prototype, "Age_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "sex", null);
+    ], $mol_form_demo.prototype, "sex", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Sex_control", null);
+    ], $mol_form_demo.prototype, "Sex_control", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Sex_field", null);
+    ], $mol_form_demo.prototype, "Sex_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "color", null);
+    ], $mol_form_demo.prototype, "color", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Color_control", null);
+    ], $mol_form_demo.prototype, "Color_control", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Color_field", null);
+    ], $mol_form_demo.prototype, "Color_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Parameters", null);
+    ], $mol_form_demo.prototype, "Parameters", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "mail", null);
+    ], $mol_form_demo.prototype, "mail", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Mail_control", null);
+    ], $mol_form_demo.prototype, "Mail_control", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Mail_field", null);
+    ], $mol_form_demo.prototype, "Mail_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "signup", null);
+    ], $mol_form_demo.prototype, "signup", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Signup", null);
+    ], $mol_form_demo.prototype, "Signup", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "result", null);
+    ], $mol_form_demo.prototype, "result", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Result", null);
+    ], $mol_form_demo.prototype, "Result", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_bids.prototype, "Form", null);
-    $.$mol_form_demo_bids = $mol_form_demo_bids;
+    ], $mol_form_demo.prototype, "Form", null);
+    $.$mol_form_demo = $mol_form_demo;
 })($ || ($ = {}));
-//mol/form/demo/bids/-view.tree/bids.view.tree.ts
+//mol/form/demo/-view.tree/demo.view.tree.ts
 ;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/form/demo/bids/bids.view.css", "[mol_form_demo_bids] {\n\twidth: 80rem;\n\tflex-direction: column;\n}\n");
+    $mol_style_attach("mol/form/demo/demo.view.css", "[mol_form_demo] {\n\twidth: 80rem;\n\tflex-direction: column;\n}\n");
 })($ || ($ = {}));
-//mol/form/demo/bids/-css/bids.view.css.ts
+//mol/form/demo/-css/demo.view.css.ts
 ;
 "use strict";
 var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $mol_form_demo_bids extends $.$mol_form_demo_bids {
+        class $mol_form_demo extends $.$mol_form_demo {
             name_first(next) {
                 return $mol_state_local.value(this.state_key('name_first'), next) || '';
             }
@@ -22388,48 +22384,149 @@ var $;
                 this.result(`Hello, ${this.sex()} ${this.name_first()} (${this.name_nick()}) ${this.name_second()} from  ${this.mail()}!`);
             }
         }
-        $$.$mol_form_demo_bids = $mol_form_demo_bids;
+        $$.$mol_form_demo = $mol_form_demo;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-//mol/form/demo/bids/bids.view.ts
+//mol/form/demo/demo.view.ts
 ;
 "use strict";
 var $;
 (function ($) {
-    class $mol_form_demo_draft_model extends $mol_object2 {
-        title(val) {
-            if (val !== undefined)
-                return val;
+    class $mol_form_draft extends $mol_form {
+        model() {
+            const obj = new this.$.$mol_object2();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_form_draft.prototype, "model", null);
+    $.$mol_form_draft = $mol_form_draft;
+})($ || ($ = {}));
+//mol/form/draft/-view.tree/draft.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/form/draft/draft.view.css", "[mol_form_draft] {\n\twidth: 100%;\n}\n");
+})($ || ($ = {}));
+//mol/form/draft/-css/draft.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_form_draft extends $.$mol_form_draft {
+            value_str(field, next) {
+                return String(this.value(field, next) ?? '');
+            }
+            value_numb(field, next) {
+                return Number(this.value(field, next) ?? 0);
+            }
+            value_bool(field, next) {
+                return Boolean(this.value(field, next) ?? false);
+            }
+            value(field, next) {
+                return this.state(next?.valueOf && { ...this.state(), [field]: next })[field]
+                    ?? this.model()[field]();
+            }
+            state(next) {
+                return $mol_state_local.value(`${this}.state()`, next) ?? {};
+            }
+            changed() {
+                return Object.keys(this.state()).length > 0;
+            }
+            submit_allowed() {
+                return this.changed() && super.submit_allowed();
+            }
+            submit(next) {
+                const model = this.model();
+                for (let [field, next] of Object.entries(this.state())) {
+                    const prev = model[field]();
+                    switch (typeof prev) {
+                        case 'boolean':
+                            next = next === 'true';
+                            break;
+                        case 'number':
+                            next = Number(next);
+                            break;
+                        case 'string':
+                            next = String(next);
+                            break;
+                    }
+                    model[field](next);
+                }
+                this.state(null);
+            }
+        }
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_draft.prototype, "value_str", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_draft.prototype, "value_numb", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_draft.prototype, "value_bool", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_draft.prototype, "value", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form_draft.prototype, "state", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form_draft.prototype, "changed", null);
+        __decorate([
+            $mol_action
+        ], $mol_form_draft.prototype, "submit", null);
+        $$.$mol_form_draft = $mol_form_draft;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/form/draft/draft.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_form_draft_demo_article extends $mol_object2 {
+        title(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
-        type(val) {
-            if (val !== undefined)
-                return val;
+        type(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
-        content(val) {
-            if (val !== undefined)
-                return val;
+        adult(next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        content(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
     }
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft_model.prototype, "title", null);
+    ], $mol_form_draft_demo_article.prototype, "title", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft_model.prototype, "type", null);
+    ], $mol_form_draft_demo_article.prototype, "type", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft_model.prototype, "content", null);
-    $.$mol_form_demo_draft_model = $mol_form_demo_draft_model;
-    class $mol_form_demo_draft extends $mol_example {
+    ], $mol_form_draft_demo_article.prototype, "adult", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form_draft_demo_article.prototype, "content", null);
+    $.$mol_form_draft_demo_article = $mol_form_draft_demo_article;
+    class $mol_form_draft_demo extends $mol_example {
         title() {
             return "Article draft form demo";
-        }
-        model() {
-            const obj = new this.$.$mol_form_demo_draft_model();
-            return obj;
         }
         message_done() {
             return "Done";
@@ -22448,7 +22545,7 @@ var $;
         }
         sub() {
             return [
-                this.Flow()
+                this.Form()
             ];
         }
         tags() {
@@ -22463,15 +22560,14 @@ var $;
                 "field"
             ];
         }
-        value_str(id, val) {
-            if (val !== undefined)
-                return val;
-            return "";
+        model() {
+            const obj = new this.$.$mol_form_draft_demo_article();
+            return obj;
         }
         Title() {
             const obj = new this.$.$mol_string();
             obj.hint = () => "How I spent the summer..";
-            obj.value = (val) => this.value_str("title", val);
+            obj.value = (next) => this.value_str("title", next);
             return obj;
         }
         Title_field() {
@@ -22486,7 +22582,7 @@ var $;
         }
         Type() {
             const obj = new this.$.$mol_switch();
-            obj.value = (val) => this.value_str("type", val);
+            obj.value = (next) => this.value_str("type", next);
             obj.options = () => ({
                 article: "Article",
                 news: "News",
@@ -22503,18 +22599,25 @@ var $;
             obj.control = () => this.Type();
             return obj;
         }
-        Main() {
-            const obj = new this.$.$mol_form_group();
-            obj.sub = () => [
-                this.Title_field(),
-                this.Type_field()
-            ];
+        Adult() {
+            const obj = new this.$.$mol_switch();
+            obj.value = (next) => this.value_str("adult", next);
+            obj.options = () => ({
+                false: "No",
+                true: "Yes"
+            });
+            return obj;
+        }
+        Adult_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => "Adult only";
+            obj.control = () => this.Adult();
             return obj;
         }
         Content() {
             const obj = new this.$.$mol_textarea();
             obj.hint = () => "Long long story..";
-            obj.value = (val) => this.value_str("content", val);
+            obj.value = (next) => this.value_str("content", next);
             return obj;
         }
         Content_field() {
@@ -22527,27 +22630,31 @@ var $;
             obj.control = () => this.Content();
             return obj;
         }
+        Config() {
+            const obj = new this.$.$mol_form_group();
+            obj.sub = () => [
+                this.Adult_field(),
+                this.Type_field()
+            ];
+            return obj;
+        }
         form_body() {
             return [
-                this.Main(),
+                this.Title_field(),
+                this.Config(),
                 this.Content_field()
             ];
-        }
-        publish(event) {
-            if (event !== undefined)
-                return event;
-            return null;
         }
         Publish() {
             const obj = new this.$.$mol_button_major();
             obj.title = () => "Publish";
-            obj.click = (event) => this.publish(event);
+            obj.click = (next) => this.publish(next);
             obj.enabled = () => this.publish_allowed();
             return obj;
         }
-        result(val) {
-            if (val !== undefined)
-                return val;
+        result(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         Result() {
@@ -22555,90 +22662,91 @@ var $;
             obj.message = () => this.result();
             return obj;
         }
+        publish(next) {
+            return this.Form().submit(next);
+        }
         publish_allowed() {
             return this.Form().submit_allowed();
         }
+        value_str(id, next) {
+            return this.Form().value_str(id, next);
+        }
+        changed() {
+            return this.Form().changed();
+        }
         Form() {
-            const obj = new this.$.$mol_form();
+            const obj = new this.$.$mol_form_draft();
+            obj.model = () => this.model();
+            obj.form_fields = () => [
+                this.Title_field(),
+                this.Type_field(),
+                this.Adult_field(),
+                this.Content_field()
+            ];
             obj.body = () => this.form_body();
-            obj.submit = (event) => this.publish(event);
             obj.buttons = () => [
                 this.Publish(),
                 this.Result()
             ];
             return obj;
         }
-        Flow() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Form()
-            ];
-            return obj;
-        }
     }
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "model", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_form_demo_draft.prototype, "value_str", null);
+    ], $mol_form_draft_demo.prototype, "model", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "Title", null);
+    ], $mol_form_draft_demo.prototype, "Title", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "Title_field", null);
+    ], $mol_form_draft_demo.prototype, "Title_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "Type", null);
+    ], $mol_form_draft_demo.prototype, "Type", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "Type_field", null);
+    ], $mol_form_draft_demo.prototype, "Type_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "Main", null);
+    ], $mol_form_draft_demo.prototype, "Adult", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "Content", null);
+    ], $mol_form_draft_demo.prototype, "Adult_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "Content_field", null);
+    ], $mol_form_draft_demo.prototype, "Content", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "publish", null);
+    ], $mol_form_draft_demo.prototype, "Content_field", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "Publish", null);
+    ], $mol_form_draft_demo.prototype, "Config", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "result", null);
+    ], $mol_form_draft_demo.prototype, "Publish", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "Result", null);
+    ], $mol_form_draft_demo.prototype, "result", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "Form", null);
+    ], $mol_form_draft_demo.prototype, "Result", null);
     __decorate([
         $mol_mem
-    ], $mol_form_demo_draft.prototype, "Flow", null);
-    $.$mol_form_demo_draft = $mol_form_demo_draft;
+    ], $mol_form_draft_demo.prototype, "Form", null);
+    $.$mol_form_draft_demo = $mol_form_draft_demo;
 })($ || ($ = {}));
-//mol/form/demo/draft/-view.tree/draft.view.tree.ts
+//mol/form/draft/demo/-view.tree/demo.view.tree.ts
 ;
 "use strict";
 var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $mol_form_demo_draft extends $.$mol_form_demo_draft {
-            value_str(field, next) {
-                return $mol_state_local.value(`${this}.value_str(${JSON.stringify(field)})`, next)
-                    ?? this.model()[field]()
-                    ?? '';
-            }
+        class $mol_form_draft_demo extends $.$mol_form_draft_demo {
             form_body() {
                 return [
-                    this.Main(),
+                    this.Title_field(),
+                    this.Config(),
                     ...this.value_str('type') ? [this.Content_field()] : [],
                 ];
             }
@@ -22654,62 +22762,40 @@ var $;
             bid_swearing(field) {
                 return /\bfuck/.test(this.value_str(field)) ? super.bid_swearing(field) : '';
             }
-            changed() {
-                const model = this.model();
-                for (const field of ['title', 'type', 'content']) {
-                    if (model[field]() === this.value_str(field))
-                        continue;
-                    return true;
-                }
-                return false;
-            }
-            publish_allowed() {
-                return this.changed() && super.publish_allowed();
-            }
-            publish(next) {
-                const model = this.model();
-                for (const field of ['title', 'type', 'content']) {
-                    model[field](this.value_str(field));
-                    this.value_str(field, null);
-                }
-                this.result(this.message_done());
-            }
             result(next = '') {
                 this.changed();
                 return next;
             }
+            publish() {
+                super.publish();
+                this.result(this.message_done());
+            }
         }
         __decorate([
+            $mol_mem
+        ], $mol_form_draft_demo.prototype, "form_body", null);
+        __decorate([
             $mol_mem_key
-        ], $mol_form_demo_draft.prototype, "value_str", null);
+        ], $mol_form_draft_demo.prototype, "bid_required", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_draft_demo.prototype, "bid_short", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_draft_demo.prototype, "bid_long", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_form_draft_demo.prototype, "bid_swearing", null);
         __decorate([
             $mol_mem
-        ], $mol_form_demo_draft.prototype, "form_body", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_form_demo_draft.prototype, "bid_required", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_form_demo_draft.prototype, "bid_short", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_form_demo_draft.prototype, "bid_long", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_form_demo_draft.prototype, "bid_swearing", null);
-        __decorate([
-            $mol_mem
-        ], $mol_form_demo_draft.prototype, "changed", null);
+        ], $mol_form_draft_demo.prototype, "result", null);
         __decorate([
             $mol_action
-        ], $mol_form_demo_draft.prototype, "publish", null);
-        __decorate([
-            $mol_mem
-        ], $mol_form_demo_draft.prototype, "result", null);
-        $$.$mol_form_demo_draft = $mol_form_demo_draft;
+        ], $mol_form_draft_demo.prototype, "publish", null);
+        $$.$mol_form_draft_demo = $mol_form_draft_demo;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-//mol/form/demo/draft/draft.view.ts
+//mol/form/draft/demo/demo.view.ts
 ;
 "use strict";
 var $;

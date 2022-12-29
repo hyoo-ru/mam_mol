@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_form_demo_bids extends $mol_example {
+	export class $mol_form_demo extends $mol_example {
 		
 		/**
 		 * ```tree

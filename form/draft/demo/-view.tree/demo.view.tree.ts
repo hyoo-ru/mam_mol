@@ -1,41 +1,52 @@
 namespace $ {
-	export class $mol_form_demo_draft_model extends $mol_object2 {
+	export class $mol_form_draft_demo_article extends $mol_object2 {
 		
 		/**
 		 * ```tree
-		 * title?val \
+		 * title? \
 		 * ```
 		 */
 		@ $mol_mem
-		title(val?: any) {
-			if ( val !== undefined ) return val as never
+		title(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * type?val \
+		 * type? \
 		 * ```
 		 */
 		@ $mol_mem
-		type(val?: any) {
-			if ( val !== undefined ) return val as never
+		type(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * content?val \
+		 * adult? false
 		 * ```
 		 */
 		@ $mol_mem
-		content(val?: any) {
-			if ( val !== undefined ) return val as never
+		adult(next?: any) {
+			if ( next !== undefined ) return next as never
+			return false
+		}
+		
+		/**
+		 * ```tree
+		 * content? \
+		 * ```
+		 */
+		@ $mol_mem
+		content(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 	}
 	
-	export class $mol_form_demo_draft extends $mol_example {
+	export class $mol_form_draft_demo extends $mol_example {
 		
 		/**
 		 * ```tree
@@ -44,18 +55,6 @@ namespace $ {
 		 */
 		title() {
 			return "Article draft form demo"
-		}
-		
-		/**
-		 * ```tree
-		 * model $mol_form_demo_draft_model
-		 * ```
-		 */
-		@ $mol_mem
-		model() {
-			const obj = new this.$.$mol_form_demo_draft_model()
-			
-			return obj
 		}
 		
 		/**
@@ -105,12 +104,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Flow
+		 * sub / <= Form
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Flow()
+				this.Form()
 			] as readonly any[]
 		}
 		
@@ -142,20 +141,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value_str*title?val \
+		 * model $mol_form_draft_demo_article
 		 * ```
 		 */
-		@ $mol_mem_key
-		value_str(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
-			return ""
+		@ $mol_mem
+		model() {
+			const obj = new this.$.$mol_form_draft_demo_article()
+			
+			return obj
 		}
 		
 		/**
 		 * ```tree
 		 * Title $mol_string
 		 * 	hint \How I spent the summer..
-		 * 	value?val <=> value_str*title?val
+		 * 	value? <=> value_str*title?
 		 * ```
 		 */
 		@ $mol_mem
@@ -163,7 +163,7 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.hint = () => "How I spent the summer.."
-			obj.value = (val?: any) => this.value_str("title", val)
+			obj.value = (next?: any) => this.value_str("title", next)
 			
 			return obj
 		}
@@ -195,7 +195,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Type $mol_switch
-		 * 	value?val <=> value_str*type?val
+		 * 	value? <=> value_str*type?
 		 * 	options *
 		 * 		article \Article
 		 * 		news \News
@@ -206,7 +206,7 @@ namespace $ {
 		Type() {
 			const obj = new this.$.$mol_switch()
 			
-			obj.value = (val?: any) => this.value_str("type", val)
+			obj.value = (next?: any) => this.value_str("type", next)
 			obj.options = () => ({
 				article: "Article",
 				news: "News",
@@ -239,19 +239,39 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Main $mol_form_group sub /
-		 * 	<= Title_field
-		 * 	<= Type_field
+		 * Adult $mol_switch
+		 * 	value? <=> value_str*adult?
+		 * 	options *
+		 * 		false \No
+		 * 		true \Yes
 		 * ```
 		 */
 		@ $mol_mem
-		Main() {
-			const obj = new this.$.$mol_form_group()
+		Adult() {
+			const obj = new this.$.$mol_switch()
 			
-			obj.sub = () => [
-				this.Title_field(),
-				this.Type_field()
-			] as readonly any[]
+			obj.value = (next?: any) => this.value_str("adult", next)
+			obj.options = () => ({
+				false: "No",
+				true: "Yes"
+			})
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Adult_field $mol_form_field
+		 * 	name \Adult only
+		 * 	control <= Adult
+		 * ```
+		 */
+		@ $mol_mem
+		Adult_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => "Adult only"
+			obj.control = () => this.Adult()
 			
 			return obj
 		}
@@ -260,7 +280,7 @@ namespace $ {
 		 * ```tree
 		 * Content $mol_textarea
 		 * 	hint \Long long story..
-		 * 	value?val <=> value_str*content?val
+		 * 	value? <=> value_str*content?
 		 * ```
 		 */
 		@ $mol_mem
@@ -268,7 +288,7 @@ namespace $ {
 			const obj = new this.$.$mol_textarea()
 			
 			obj.hint = () => "Long long story.."
-			obj.value = (val?: any) => this.value_str("content", val)
+			obj.value = (next?: any) => this.value_str("content", next)
 			
 			return obj
 		}
@@ -299,34 +319,44 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Config $mol_form_group sub /
+		 * 	<= Adult_field
+		 * 	<= Type_field
+		 * ```
+		 */
+		@ $mol_mem
+		Config() {
+			const obj = new this.$.$mol_form_group()
+			
+			obj.sub = () => [
+				this.Adult_field(),
+				this.Type_field()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * form_body /
-		 * 	<= Main
+		 * 	<= Title_field
+		 * 	<= Config
 		 * 	<= Content_field
 		 * ```
 		 */
 		form_body() {
 			return [
-				this.Main(),
+				this.Title_field(),
+				this.Config(),
 				this.Content_field()
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * publish?event null
-		 * ```
-		 */
-		@ $mol_mem
-		publish(event?: any) {
-			if ( event !== undefined ) return event as never
-			return null as any
-		}
-		
-		/**
-		 * ```tree
 		 * Publish $mol_button_major
 		 * 	title \Publish
-		 * 	click?event <=> publish?event
+		 * 	click? <=> publish?
 		 * 	enabled <= publish_allowed
 		 * ```
 		 */
@@ -335,7 +365,7 @@ namespace $ {
 			const obj = new this.$.$mol_button_major()
 			
 			obj.title = () => "Publish"
-			obj.click = (event?: any) => this.publish(event)
+			obj.click = (next?: any) => this.publish(next)
 			obj.enabled = () => this.publish_allowed()
 			
 			return obj
@@ -343,18 +373,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * result?val \
+		 * result? \
 		 * ```
 		 */
 		@ $mol_mem
-		result(val?: any) {
-			if ( val !== undefined ) return val as never
+		result(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * Result $mol_status message <= result?val
+		 * Result $mol_status message <= result?
 		 * ```
 		 */
 		@ $mol_mem
@@ -368,6 +398,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * publish?
+		 * ```
+		 */
+		publish(next?: any) {
+			return this.Form().submit(next)
+		}
+		
+		/**
+		 * ```tree
 		 * publish_allowed
 		 * ```
 		 */
@@ -377,10 +416,36 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Form $mol_form
-		 * 	body <= form_body
-		 * 	submit?event <=> publish?event
+		 * value_str*?
+		 * ```
+		 */
+		value_str(id: any, next?: any) {
+			return this.Form().value_str(id, next)
+		}
+		
+		/**
+		 * ```tree
+		 * changed
+		 * ```
+		 */
+		changed() {
+			return this.Form().changed()
+		}
+		
+		/**
+		 * ```tree
+		 * Form $mol_form_draft
+		 * 	model <= model
+		 * 	submit? => publish?
 		 * 	submit_allowed => publish_allowed
+		 * 	value_str*? => value_str*?
+		 * 	changed => changed
+		 * 	form_fields /
+		 * 		<= Title_field
+		 * 		<= Type_field
+		 * 		<= Adult_field
+		 * 		<= Content_field
+		 * 	body <= form_body
 		 * 	buttons /
 		 * 		<= Publish
 		 * 		<= Result
@@ -388,29 +453,19 @@ namespace $ {
 		 */
 		@ $mol_mem
 		Form() {
-			const obj = new this.$.$mol_form()
+			const obj = new this.$.$mol_form_draft()
 			
+			obj.model = () => this.model()
+			obj.form_fields = () => [
+				this.Title_field(),
+				this.Type_field(),
+				this.Adult_field(),
+				this.Content_field()
+			] as readonly any[]
 			obj.body = () => this.form_body()
-			obj.submit = (event?: any) => this.publish(event)
 			obj.buttons = () => [
 				this.Publish(),
 				this.Result()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Flow $mol_list rows / <= Form
-		 * ```
-		 */
-		@ $mol_mem
-		Flow() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Form()
 			] as readonly any[]
 			
 			return obj
