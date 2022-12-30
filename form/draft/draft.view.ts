@@ -44,7 +44,7 @@ namespace $.$$ {
 			for( let [ field, next ] of Object.entries( this.state() ) ) {
 				const prev = model[ field ]()
 				switch( typeof prev ) {
-					case 'boolean': next = next === 'true'; break
+					case 'boolean': next = String( next ) === 'true'; break
 					case 'number': next = Number( next ); break
 					case 'string': next = String( next ); break
 				}

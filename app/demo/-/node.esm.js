@@ -22815,7 +22815,7 @@ var $;
                     const prev = model[field]();
                     switch (typeof prev) {
                         case 'boolean':
-                            next = next === 'true';
+                            next = String(next) === 'true';
                             break;
                         case 'number':
                             next = Number(next);
