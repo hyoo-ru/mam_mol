@@ -1,5 +1,6 @@
 $mol_canvas $mol_view
 	dom_name \canvas
+	context CanvasRenderingContext2D
 	attr *
 		^
 		width <= width 400

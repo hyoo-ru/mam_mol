@@ -4,7 +4,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		context() {
-			return ( this.dom_node() as HTMLCanvasElement ).getContext( '2d' )
+			return ( this.dom_node() as HTMLCanvasElement ).getContext( '2d' )!
 		}
 
 		render() {

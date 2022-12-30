@@ -21050,6 +21050,25 @@ var $;
             ];
             return obj;
         }
+        preview_dom() {
+            return null;
+        }
+        preview() {
+            return null;
+        }
+        Preview_dom() {
+            const obj = new this.$.$mol_view();
+            obj.dom_node = () => this.preview_dom();
+            obj.dom_node_actual = () => this.preview();
+            return obj;
+        }
+        Preview() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.Preview_dom()
+            ];
+            return obj;
+        }
         row_values(id) {
             return [];
         }
@@ -21064,6 +21083,7 @@ var $;
         }
         expand_content() {
             return [
+                this.Preview(),
                 this.Row("0")
             ];
         }
@@ -21091,6 +21111,12 @@ var $;
         $mol_mem
     ], $mol_dump_value.prototype, "Expand_head", null);
     __decorate([
+        $mol_mem
+    ], $mol_dump_value.prototype, "Preview_dom", null);
+    __decorate([
+        $mol_mem
+    ], $mol_dump_value.prototype, "Preview", null);
+    __decorate([
         $mol_mem_key
     ], $mol_dump_value.prototype, "Row", null);
     __decorate([
@@ -21103,7 +21129,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/dump/value/value.view.css", "[mol_dump_value] {\n\tmin-height: 2.5rem;\n\tmin-width: 2.5rem;\n}\n\n[mol_dump_value_simple] {\n\tpadding: 0;\n}\n\n[mol_dump_value_expand_content] {\n\tpadding-left: 1.5rem;\n}\n\n[mol_dump_value_expand_title_rows],\n[mol_dump_value_simple_rows],\n[mol_dump_value_expand_head] {\n\tpadding: 0;\n}\n");
+    $mol_style_attach("mol/dump/value/value.view.css", "[mol_dump_value] {\n\tmin-height: 2.5rem;\n\tmin-width: 2.5rem;\n}\n\n[mol_dump_value_simple] {\n\tpadding: 0;\n}\n\n[mol_dump_value_expand_content] {\n\tpadding-left: 1.5rem;\n\talign-items: flex-start;\n}\n\n[mol_dump_value_expand_title_rows],\n[mol_dump_value_simple_rows],\n[mol_dump_value_expand_head] {\n\tpadding: 0;\n}\n");
 })($ || ($ = {}));
 //mol/dump/value/-css/value.view.css.ts
 ;
@@ -21206,8 +21232,20 @@ var $;
                 }
                 return res;
             }
+            preview_dom() {
+                const value = this.value();
+                if (value instanceof Element) {
+                    if (value.isConnected)
+                        return null;
+                    return value;
+                }
+                return null;
+            }
             expand_content() {
-                return this.rows_values().map((_, index) => this.Row(index));
+                return [
+                    ...this.preview_dom() ? [this.Preview()] : [],
+                    ...this.rows_values().map((_, index) => this.Row(index)),
+                ];
             }
             row_values(index) {
                 return this.rows_values()[index];
@@ -21218,6 +21256,8 @@ var $;
                 blacklist.add(this.value());
                 this.expanded(true);
                 for (const row of this.expand_content()) {
+                    if (!(row instanceof $mol_dump_list))
+                        continue;
                     if (row.values()[0] === '__proto__:')
                         continue;
                     row.expand_all(event, blacklist);
@@ -21236,6 +21276,9 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_dump_value.prototype, "rows_values", null);
+        __decorate([
+            $mol_mem
+        ], $mol_dump_value.prototype, "preview_dom", null);
         __decorate([
             $mol_mem
         ], $mol_dump_value.prototype, "expand_content", null);
@@ -32235,10 +32278,14 @@ var $;
             }
             code_enhanced() {
                 let code = this.code();
-                code = code.replaceAll(/^([ \t]*)(?:const|var|let|class|function) +(\w+)/mig, (found, indent, name) => `spy( ()=>[ "${indent}${name} =", ${name} ] );${found}`);
+                code = code.replaceAll(/^([ \t]*)(?:const|var|let|class|function) +(\w+)/mig, (found, indent, name) => `__spy__( ()=>[ "${indent}${name} =", ${name} ] );${found}`);
                 return code;
             }
             execute() {
+                if (!this.run())
+                    return [];
+                this.code();
+                this.result([]);
                 const console = new Proxy(this.$.console, {
                     get: (target, field) => {
                         if (typeof target[field] !== 'function')
@@ -32249,8 +32296,11 @@ var $;
                         };
                     }
                 });
-                const spy = this.spy.bind(this);
-                return ['=', $mol_try(() => eval(this.code_enhanced()))];
+                const __spy__ = this.spy.bind(this);
+                const __res__ = ['=', $mol_try(() => eval(this.code_enhanced()))];
+                __spy__(() => __res__);
+                this.spy_run();
+                return __res__;
             }
             error_pos() {
                 const [eq, val] = this.execute();
@@ -32262,7 +32312,7 @@ var $;
                 const [line, col] = pos[1].split(':').map(Number);
                 const row = this.Code().View().Row(line);
                 const shift = this.code_enhanced().split('\n')[line - 1]
-                    ?.match(/^\w*spy\( \(\).*?\);/)?.[0]?.length ?? 0;
+                    ?.match(/^\w*__spy__\( \(\).*?\);/)?.[0]?.length ?? 0;
                 return row.find_pos(col - 1 - shift);
             }
             error_anchor() {
@@ -32278,19 +32328,21 @@ var $;
             Error_mark() {
                 return this.run() ? super.Error_mark() : null;
             }
-            spy(args) {
-                Promise.resolve().then(() => {
-                    try {
-                        this.result([...this.result(), args()]);
-                    }
-                    catch { }
-                });
+            spy_queue = [];
+            spy_run() {
+                this.result([
+                    ...this.result(),
+                    ...this.spy_queue.splice(0).map(task => task()),
+                ]);
             }
-            result(next) {
-                this.code();
-                if (next)
-                    return next;
-                return [this.execute()];
+            spy(task) {
+                this.spy_queue.push(task);
+                if (this.spy_queue.length > 1)
+                    return;
+                Promise.resolve().then(() => this.spy_run());
+            }
+            result(next = []) {
+                return next;
             }
             logs() {
                 return this.result().map((_, index) => this.Log(index));
@@ -32335,6 +32387,9 @@ var $;
         __decorate([
             $mol_mem
         ], $hyoo_js_eval.prototype, "error_offset", null);
+        __decorate([
+            $mol_action
+        ], $hyoo_js_eval.prototype, "spy_run", null);
         __decorate([
             $mol_mem
         ], $hyoo_js_eval.prototype, "result", null);

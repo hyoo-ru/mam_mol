@@ -119,6 +119,57 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * preview_dom null
+		 * ```
+		 */
+		preview_dom() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * preview null
+		 * ```
+		 */
+		preview() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * Preview_dom $mol_view
+		 * 	dom_node <= preview_dom
+		 * 	dom_node_actual <= preview
+		 * ```
+		 */
+		@ $mol_mem
+		Preview_dom() {
+			const obj = new this.$.$mol_view()
+			
+			obj.dom_node = () => this.preview_dom()
+			obj.dom_node_actual = () => this.preview()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Preview $mol_view sub / <= Preview_dom
+		 * ```
+		 */
+		@ $mol_mem
+		Preview() {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => [
+				this.Preview_dom()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * row_values* /
 		 * ```
 		 */
@@ -155,11 +206,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * expand_content / <= Row*0
+		 * expand_content /
+		 * 	<= Preview
+		 * 	<= Row*0
 		 * ```
 		 */
 		expand_content() {
 			return [
+				this.Preview(),
 				this.Row("0")
 			] as readonly any[]
 		}

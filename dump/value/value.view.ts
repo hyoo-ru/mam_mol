@@ -116,8 +116,24 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		preview_dom() {
+			
+			const value = this.value()
+			
+			if( value instanceof Element ) {
+				if( value.isConnected ) return null
+				return value
+			}
+			
+			return null
+		}
+		
+		@ $mol_mem
 		expand_content() {
-			return this.rows_values().map( (_,index)=> this.Row( index ) )
+			return [
+				... this.preview_dom() ? [ this.Preview() ] : [],
+				... this.rows_values().map( (_,index)=> this.Row( index ) ),
+			]
 		}
 		
 		row_values( index: number ) {
@@ -131,6 +147,7 @@ namespace $.$$ {
 			
 			this.expanded( true )
 			for( const row of this.expand_content() ) {
+				if(!( row instanceof $mol_dump_list )) continue
 				if( row.values()[0] === '__proto__:' ) continue
 				row.expand_all( event, blacklist )
 			}
