@@ -2152,7 +2152,7 @@ $mol_dump_value $mol_view
 				<= Preview $mol_view sub /
 					<= Preview_dom $mol_view
 						dom_node <= preview_dom null
-						dom_node_actual <= preview null
+						render <= preview null
 				<= Row*0 $mol_dump_list
 					values <= row_values* /
 					prototypes <= prototypes false

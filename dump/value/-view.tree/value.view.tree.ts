@@ -139,7 +139,7 @@ namespace $ {
 		 * ```tree
 		 * Preview_dom $mol_view
 		 * 	dom_node <= preview_dom
-		 * 	dom_node_actual <= preview
+		 * 	render <= preview
 		 * ```
 		 */
 		@ $mol_mem
@@ -147,7 +147,7 @@ namespace $ {
 			const obj = new this.$.$mol_view()
 			
 			obj.dom_node = () => this.preview_dom()
-			obj.dom_node_actual = () => this.preview()
+			obj.render = () => this.preview()
 			
 			return obj
 		}

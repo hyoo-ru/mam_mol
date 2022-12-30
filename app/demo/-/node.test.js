@@ -21059,7 +21059,7 @@ var $;
         Preview_dom() {
             const obj = new this.$.$mol_view();
             obj.dom_node = () => this.preview_dom();
-            obj.dom_node_actual = () => this.preview();
+            obj.render = () => this.preview();
             return obj;
         }
         Preview() {
@@ -21235,6 +21235,8 @@ var $;
             preview_dom() {
                 const value = this.value();
                 if (value instanceof Element) {
+                    if ($mol_try(() => value.localName) instanceof Error)
+                        return null;
                     if (value.isConnected)
                         return null;
                     return value;
