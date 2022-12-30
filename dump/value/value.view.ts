@@ -121,6 +121,7 @@ namespace $.$$ {
 			const value = this.value()
 			
 			if( value instanceof Element ) {
+				if( $mol_try( ()=> value.localName ) instanceof Error ) return null
 				if( value.isConnected ) return null
 				return value
 			}
