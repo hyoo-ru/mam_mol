@@ -4198,7 +4198,7 @@ var $;
         $mol_keyboard_code[$mol_keyboard_code["quoteSingle"] = 222] = "quoteSingle";
     })($mol_keyboard_code = $.$mol_keyboard_code || ($.$mol_keyboard_code = {}));
 })($ || ($ = {}));
-//mol/keyboard/code.ts
+//mol/keyboard/code/code.ts
 ;
 "use strict";
 var $;

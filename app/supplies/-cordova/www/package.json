@@ -114,6 +114,7 @@
     "$mol_compare_array",
     "$mol_string",
     "$mol_hotkey",
+    "$mol_keyboard_code",
     "$mol_keyboard",
     "$mol_layer",
     "$mol_form_field",
