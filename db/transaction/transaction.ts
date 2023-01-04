@@ -45,7 +45,7 @@ namespace $ {
 		/** Instant commits transaction. Without errors commit proceed automatically later. */
 		commit() {
 			
-			this.native.commit()
+			this.native.commit?.()
 			
 			return new Promise< void >( ( done, fail )=> {
 				this.native.onerror = ()=> fail( new Error( this.native.error!.message ) )

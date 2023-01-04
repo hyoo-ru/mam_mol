@@ -31870,7 +31870,7 @@ var $;
             }
             code_enhanced() {
                 let code = this.code();
-                code = code.replaceAll(/^([ \t]*)(?:const|var|let|class|function) +(\w+)/mig, (found, indent, name) => `__spy__( ()=>[ "${indent}${name} =", ${name} ] );${found}`);
+                code = code.replaceAll(/^([ \t]*)(?:const|var|let|class|function) +(\w+)/mig, (found, indent, name) => `__spy__( "${indent}${name} =", ()=>[ ${name} ] );${found}`);
                 return code;
             }
             execute() {
@@ -31883,14 +31883,14 @@ var $;
                         if (typeof target[field] !== 'function')
                             return target[field];
                         return (...args) => {
-                            this.spy(() => [`${String(field)}:`, ...args]);
+                            this.spy(`${String(field)}:`, () => [...args]);
                             return target[field](...args);
                         };
                     }
                 });
                 const __spy__ = this.spy.bind(this);
                 const __res__ = ['=', $mol_try(() => eval(this.code_enhanced()))];
-                __spy__(() => __res__);
+                __spy__('=', () => __res__.slice(1));
                 this.spy_run();
                 return __res__;
             }
@@ -31904,7 +31904,7 @@ var $;
                 const [line, col] = pos[1].split(':').map(Number);
                 const row = this.Code().View().Row(line);
                 const shift = this.code_enhanced().split('\n')[line - 1]
-                    ?.match(/^\w*__spy__\( \(\).*?\);/)?.[0]?.length ?? 0;
+                    ?.match(/^\w*__spy__\( .*?\);/)?.[0]?.length ?? 0;
                 return row.find_pos(col - 1 - shift);
             }
             error_anchor() {
@@ -31924,11 +31924,11 @@ var $;
             spy_run() {
                 this.result([
                     ...this.result(),
-                    ...this.spy_queue.splice(0).map(task => task()),
+                    ...this.spy_queue.splice(0).map(([name, task]) => [name, ...[].concat($mol_try(() => task()))]),
                 ]);
             }
-            spy(task) {
-                this.spy_queue.push(task);
+            spy(name, task) {
+                this.spy_queue.push([name, task]);
                 if (this.spy_queue.length > 1)
                     return;
                 Promise.resolve().then(() => this.spy_run());
@@ -31937,6 +31937,7 @@ var $;
                 return next;
             }
             logs() {
+                this.execute();
                 return this.result().map((_, index) => this.Log(index));
             }
             log(index) {

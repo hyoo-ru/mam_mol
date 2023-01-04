@@ -8453,9 +8453,9 @@ declare namespace $.$$ {
         error_offset(): number[];
         error_message(): any;
         Error_mark(): any;
-        spy_queue: (() => any[])[];
+        spy_queue: [string, () => any[]][];
         spy_run(): void;
-        spy(task: () => any[]): void;
+        spy(name: string, task: () => any[]): void;
         result(next?: any[]): any[];
         logs(): $mol_dump_list[];
         log(index: number): any;
