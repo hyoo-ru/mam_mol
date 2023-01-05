@@ -44,6 +44,7 @@
     "$mol_key",
     "$mol_guid",
     "$mol_wire_method",
+    "$mol_type_foot",
     "$mol_type_tail",
     "$mol_wire_plex",
     "$mol_file",

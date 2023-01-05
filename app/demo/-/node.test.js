@@ -2369,6 +2369,12 @@ var $;
 //mol/wire/method/method.ts
 ;
 "use strict";
+//mol/type/tail/tail.ts
+;
+"use strict";
+//mol/type/foot/foot.ts
+;
+"use strict";
 var $;
 (function ($) {
     class $mol_wire_atom extends $mol_wire_fiber {
@@ -2421,6 +2427,20 @@ var $;
         }
         once() {
             return this.sync();
+        }
+        channel() {
+            return Object.assign((next) => {
+                if (next !== undefined)
+                    return this.resync([...this.args, next]);
+                if (!$mol_wire_fiber.warm)
+                    return this.result();
+                if ($mol_wire_auto() instanceof $mol_wire_task) {
+                    return this.once();
+                }
+                else {
+                    return this.sync();
+                }
+            }, { atom: this });
         }
         destructor() {
             super.destructor();
@@ -2475,9 +2495,6 @@ var $;
     $mol_wire_atom.watch();
 })($ || ($ = {}));
 //mol/wire/atom/atom.ts
-;
-"use strict";
-//mol/type/tail/tail.ts
 ;
 "use strict";
 var $;
@@ -25691,9 +25708,6 @@ var $;
 //mol/func/is/class/class.ts
 ;
 "use strict";
-//mol/type/foot/foot.ts
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_data_pipe(...funcs) {
@@ -31543,6 +31557,19 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_wire_let(host) {
+        for (const field of Object.keys(host)) {
+            host[field] = new $mol_wire_atom(field, host[field], host).channel();
+        }
+        return host;
+    }
+    $.$mol_wire_let = $mol_wire_let;
+})($ || ($ = {}));
+//mol/wire/let/let.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_wire_set extends Set {
         pub = new $mol_wire_pub;
         has(value) {
@@ -36141,6 +36168,9 @@ var $;
 //mol/dict/dict.test.tsx
 ;
 "use strict";
+//mol/type/foot/foot.test.ts
+;
+"use strict";
 var $;
 (function ($) {
     $mol_wire_log.active();
@@ -38824,9 +38854,6 @@ var $;
 //mol/func/is/class/class.test.ts
 ;
 "use strict";
-//mol/type/foot/foot.test.ts
-;
-"use strict";
 var $;
 (function ($) {
     $mol_test({
@@ -39397,6 +39424,34 @@ var $;
     });
 })($ || ($ = {}));
 //mol/wire/field/field.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'define as methods'() {
+            const { foo, bar } = $mol_wire_let({
+                foo(next = 1) { return next; },
+                bar() { return this.foo() + 1; },
+            });
+            $mol_assert_equal(foo(), 1);
+            $mol_assert_equal(bar(), 2);
+            $mol_assert_equal(foo(5), 5);
+            $mol_assert_equal(bar(), 6);
+        },
+        'define as closures'() {
+            const { foo, bar } = $mol_wire_let({
+                foo: (next = 1) => next,
+                bar: () => foo() + 1,
+            });
+            $mol_assert_equal(foo(), 1);
+            $mol_assert_equal(bar(), 2);
+            $mol_assert_equal(foo(5), 5);
+            $mol_assert_equal(bar(), 6);
+        },
+    });
+})($ || ($ = {}));
+//mol/wire/let/let.test.ts
 ;
 "use strict";
 var $;

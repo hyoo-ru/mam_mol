@@ -93,6 +93,21 @@ namespace $ {
 			return this.sync()
 		}
 		
+		channel() {
+			return Object.assign( ( next?: $mol_type_foot< Args > )=> {
+					
+				if( next !== undefined ) return this.resync( [ ... this.args, next ] as any ) as never
+				if( !$mol_wire_fiber.warm ) return this.result() as never
+				
+				if( $mol_wire_auto() instanceof $mol_wire_task ) {
+					return this.once()
+				} else {
+					return this.sync()
+				}
+				
+			}, { atom: this as $mol_wire_atom< Host, Args, Result > } )
+		}
+		
 		destructor() {
 			
 			super.destructor()

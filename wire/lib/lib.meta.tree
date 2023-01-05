@@ -15,6 +15,7 @@ include \/mol/wire/field
 include \/mol/wire/easing
 include \/mol/wire/method
 include \/mol/wire/patch
+include \/mol/wire/let
 include \/mol/wire/set
 include \/mol/wire/dict
 include \/mol/wait/timeout
