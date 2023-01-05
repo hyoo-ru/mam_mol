@@ -307,7 +307,7 @@ var $;
     class $hyoo_crowd_node extends Object {
         land;
         head;
-        constructor(land, head) {
+        constructor(land = new $hyoo_crowd_land, head = '0_0') {
             super();
             this.land = land;
             this.head = head;
