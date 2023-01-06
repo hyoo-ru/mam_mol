@@ -93,7 +93,7 @@ namespace $ {
 			
 			/** Background images. */
 			image?:
-			| readonly( readonly [ $mol_style_func<'url'> ] )[]
+			| readonly( readonly [ $mol_style_func<'url'> | string&{} ] )[]
 			| 'none' | Common
 			
 			/** How background images are repeated. */
