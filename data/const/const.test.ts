@@ -16,5 +16,13 @@ namespace $ {
 			$mol_assert_fail( ()=> Five( 6 as any ) , '6 is not 5' )
 		} ,
 
+		'is different object' () {
+			const Tags = $mol_data_const({ tags: [ 'deep', 'equals' ] })
+			$mol_assert_fail(
+				()=> Tags({ tags: [ 'shallow', 'equals' ] }),
+				`{"tags":["shallow","equals"]} is not {"tags":["deep","equals"]}`,
+			)
+		} ,
+
 	})
 }

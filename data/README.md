@@ -8,6 +8,28 @@ undefined is not a string
 undefined is not a number
 ```
 
+# Known parsers
+
+- [$mol_data_boolean](https://github.com/hyoo-ru/mam_mol/tree/master/data/boolean) - boolean type
+- [$mol_data_number](https://github.com/hyoo-ru/mam_mol/tree/master/data/number) - number type
+- [$mol_data_integer](https://github.com/hyoo-ru/mam_mol/tree/master/data/integer) - integer type
+- [$mol_data_range](https://github.com/hyoo-ru/mam_mol/tree/master/data/range) - range restriction
+- [$mol_data_string](https://github.com/hyoo-ru/mam_mol/tree/master/data/string) - string type
+- [$mol_data_pattern](https://github.com/hyoo-ru/mam_mol/tree/master/data/pattern) - string by pattern
+- [$mol_data_email](https://github.com/hyoo-ru/mam_mol/tree/master/data/email) - email string
+- [$mol_data_nominal](https://github.com/hyoo-ru/mam_mol/tree/master/data/nominal) - tagged primitive type
+- [$mol_data_nullable](https://github.com/hyoo-ru/mam_mol/tree/master/data/nullable) - nullable version of given type
+- [$mol_data_optional](https://github.com/hyoo-ru/mam_mol/tree/master/data/optional) - optional version of given type
+- [$mol_data_variant](https://github.com/hyoo-ru/mam_mol/tree/master/data/variant) - one of set of types
+- [$mol_data_const](https://github.com/hyoo-ru/mam_mol/tree/master/data/const) - deep equal to given value
+- [$mol_data_array](https://github.com/hyoo-ru/mam_mol/tree/master/data/array) - array of given type
+- [$mol_data_record](https://github.com/hyoo-ru/mam_mol/tree/master/data/record) - maps given fields to runtypes
+- [$mol_data_dict](https://github.com/hyoo-ru/mam_mol/tree/master/data/dict) - dictionary maps string to given type
+- [$mol_data_enum](https://github.com/hyoo-ru/mam_mol/tree/master/data/enum) - value of given enum
+- [$mol_data_instance](https://github.com/hyoo-ru/mam_mol/tree/master/data/instance) - instance of class
+- [$mol_data_pipe](https://github.com/hyoo-ru/mam_mol/tree/master/data/pipe) - pipeline of runtypes
+
+
 # Usage examples
 
 ## Entities

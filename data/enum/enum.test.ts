@@ -8,6 +8,7 @@ namespace $ {
 	}
 	
 	// Test disabled due https://github.com/microsoft/TypeScript/issues/46112
+	// const Sex = $mol_data_enum( 'sex' , sex )
 	// type sex_value =  $mol_type_assert< typeof Sex.Value , sex >
 	
 	$mol_test({
