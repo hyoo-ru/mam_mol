@@ -4,7 +4,7 @@ namespace $ {
 
 		return $mol_data_setup( ( val : Val ) => {
 			
-			if( Object.is( val , ref ) ) return ref
+			if( $mol_compare_deep( val , ref ) ) return ref
 			
 			return $mol_fail( new $mol_data_error( `${ val } is not ${ ref }` ) )
 
