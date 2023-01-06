@@ -116,6 +116,43 @@ JSON.stringify( Duration( 'P1D' ) ) // "P1DT"
 JSON.stringify( Duration( 1000 ) ) // "PT1S"
 ```
 
+## Custom runtypes
+
+```typescript
+const Password = $mol_data_setup( ( val: string ) => {
+	
+	const str = $mol_data_string( val )
+	if( str.length >= 8 ) return str
+	
+	return $mol_fail(
+		new $mol_data_error( `${ val } have length less than 8` )
+	)
+	
+} )
+
+Password( 123 ) // ❌ 123 is not a string
+Password( 'qwerty' ) // ❌ qwerty have length less than 8
+Password( 'qwertyuiop' ) // ✅
+```
+
+```typescript
+const MinLength = ( minLength = 8 )=> $mol_data_setup( ( val: string ) => {
+		
+	const str = $mol_data_string( val )
+	if( str.length >= minLength ) return str
+	
+	return $mol_fail(
+		new $mol_data_error( `${ val } have length less than ${minLength}` )
+	)
+	
+}, minLength )
+
+const Password = MinLength(8)
+Password( 123 ) // ❌ 123 is not a string
+Password( 'qwerty' ) // ❌ qwerty have length less than 8
+Password( 'qwertyuiop' ) // ✅
+```
+
 # Usage from NPM
 
 ```
