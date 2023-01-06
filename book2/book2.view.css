@@ -30,6 +30,14 @@
 	top: -.5rem;
 	left: -.35rem;
 }
+[mol_book2] > *:not(:last-child):after {
+	display: block;
+	content: '=';
+	opacity: .5;
+	position: absolute;
+	top: -.5rem;
+	right: -.35rem;
+}
 
 [mol_book2] > * {
 	background-color: var(--mol_theme_card);
