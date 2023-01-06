@@ -2,7 +2,13 @@ namespace $ {
 	$mol_test({
 
 		'is same number' () {
-			$mol_data_const( Number.NaN )( Number.NaN )
+			const Nan = $mol_data_const( Number.NaN )
+			Nan( Number.NaN )
+		} ,
+
+		'is equal object' () {
+			const Tags = $mol_data_const({ tags: [ 'deep', 'equals' ] })
+			Tags({ tags: [ 'deep', 'equals' ] })
 		} ,
 
 		'is different number' () {
