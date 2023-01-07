@@ -3,6 +3,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * enabled? true
+		 * ```
+		 */
+		@ $mol_mem
+		enabled(next?: any) {
+			if ( next !== undefined ) return next as never
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * event *
 		 * 	dragenter?event <=> enter?event
 		 * 	dragover?event <=> move?event

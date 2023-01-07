@@ -3606,6 +3606,15 @@ var $;
             this._joined = false;
             this.pub.emit();
         }
+        allowed_add(peer = this.peer().id) {
+            return this.level(peer) >= $hyoo_crowd_peer_level.add;
+        }
+        allowed_mod(peer = this.peer().id) {
+            return this.level(peer) >= $hyoo_crowd_peer_level.mod;
+        }
+        allowed_law(peer = this.peer().id) {
+            return this.level(peer) >= $hyoo_crowd_peer_level.law;
+        }
         level_base(next) {
             this.level('0_0', next);
         }
@@ -3672,6 +3681,11 @@ var $;
                 authors.add(unit.auth);
             }
             return authors;
+        }
+        steal_rights(donor) {
+            for (const peer of donor.peers()) {
+                this.level(peer, donor.level(peer));
+            }
         }
         first_stamp() {
             this.pub.promote();
@@ -6691,7 +6705,7 @@ var $;
         boxSizing: 'border-box',
         position: 'relative',
         minWidth: rem(2.5),
-        gap: $mol_gap.space,
+        gap: $mol_gap.block,
         border: {
             radius: $mol_gap.round,
         },
@@ -20330,6 +20344,11 @@ var $;
 var $;
 (function ($) {
     class $mol_drop extends $mol_ghost {
+        enabled(next) {
+            if (next !== undefined)
+                return next;
+            return true;
+        }
         event() {
             return {
                 dragenter: (event) => this.enter(event),
@@ -20381,6 +20400,9 @@ var $;
     }
     __decorate([
         $mol_mem
+    ], $mol_drop.prototype, "enabled", null);
+    __decorate([
+        $mol_mem
     ], $mol_drop.prototype, "adopt", null);
     __decorate([
         $mol_mem
@@ -20415,6 +20437,8 @@ var $;
             enter(event) {
                 if (event.defaultPrevented)
                     return;
+                if (!this.enabled())
+                    return;
                 this.status('drag');
                 this._target = event.target;
                 event.dataTransfer.dropEffect = 'move';
@@ -20422,6 +20446,8 @@ var $;
             }
             move(event) {
                 if (event.defaultPrevented)
+                    return;
+                if (!this.enabled())
                     return;
                 event.dataTransfer.dropEffect = 'move';
                 event.preventDefault();

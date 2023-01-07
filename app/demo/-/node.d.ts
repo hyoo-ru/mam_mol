@@ -906,12 +906,16 @@ declare namespace $ {
         _joined: boolean;
         join(): true | undefined;
         leave(): false | undefined;
+        allowed_add(peer?: `${string}_${string}`): boolean;
+        allowed_mod(peer?: `${string}_${string}`): boolean;
+        allowed_law(peer?: `${string}_${string}`): boolean;
         level_base(next?: $hyoo_crowd_peer_level): void;
         level(peer: $mol_int62_string | '', next?: $hyoo_crowd_peer_level): $hyoo_crowd_peer_level;
         grabbed(): boolean;
         peers(): readonly `${string}_${string}`[];
         residents(): readonly `${string}_${string}`[];
         authors(): Set<`${string}_${string}`>;
+        steal_rights(donor: $hyoo_crowd_land): void;
         first_stamp(): number | null;
         last_stamp(): number;
         selection(peer: $mol_int62_string): $hyoo_crowd_reg;
@@ -5464,6 +5468,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_drop extends $mol_ghost {
+        enabled(next?: any): boolean;
         event(): {
             dragenter: (event?: any) => any;
             dragover: (event?: any) => any;
