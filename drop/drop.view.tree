@@ -1,4 +1,5 @@
 $mol_drop $mol_ghost
+	enabled? true
 	event *
 		dragenter?event <=> enter?event null
 		dragover?event <=> move?event null

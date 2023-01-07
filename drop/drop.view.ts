@@ -9,6 +9,7 @@ namespace $.$$ {
 		enter( event : DragEvent ) {
 
 			if( event.defaultPrevented ) return
+			if( !this.enabled() ) return
 			// if( !this.adopt( event.dataTransfer! ) ) return
 
 			this.status( 'drag' )
@@ -22,6 +23,7 @@ namespace $.$$ {
 		move( event : DragEvent ) {
 			
 			if( event.defaultPrevented ) return
+			if( !this.enabled() ) return
 
 			// if( !this.adopt( event.dataTransfer! ) ) return
 			
