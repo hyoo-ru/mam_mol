@@ -76,7 +76,7 @@ namespace $.$$ {
 		col_head_content( col : string ) {
 			return [
 				this.col_head_title( col ) ,
-				... ( this.col_sort() === col ) ? [ this.Col_head_sort( col ) ] : []
+				... ( this.col_sort() === col ) ? [ ' ', this.Col_head_sort( col ) ] : []
 			]
 		}
 		

@@ -24,7 +24,7 @@
 }
 [mol_book2] > * + *:not([mol_book2_placeholder]):before {
 	display: block;
-	content: '=';
+	content: '-';
 	opacity: .5;
 	position: absolute;
 	top: -.5rem;
@@ -32,7 +32,7 @@
 }
 [mol_book2] > *:not(:last-child):after {
 	display: block;
-	content: '=';
+	content: '-';
 	opacity: .5;
 	position: absolute;
 	top: -.5rem;
