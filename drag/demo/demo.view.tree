@@ -10,7 +10,7 @@ $mol_drag_demo $mol_example_large
 					receive?obj <=> receive_trash?obj null
 					Sub <= Trash $mol_float sub /
 						<= Trash_icon $mol_icon_trash_can_outline
-						\Trash
+						\ Trash
 				<= List $mol_list
 					rows <= task_rows /
 	Task_row* $mol_drag

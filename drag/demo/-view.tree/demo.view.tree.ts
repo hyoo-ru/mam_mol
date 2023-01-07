@@ -120,7 +120,7 @@ namespace $ {
 		 * ```tree
 		 * Trash $mol_float sub /
 		 * 	<= Trash_icon
-		 * 	\Trash
+		 * 	\ Trash
 		 * ```
 		 */
 		@ $mol_mem
@@ -129,7 +129,7 @@ namespace $ {
 			
 			obj.sub = () => [
 				this.Trash_icon(),
-				"Trash"
+				" Trash"
 			] as readonly any[]
 			
 			return obj
