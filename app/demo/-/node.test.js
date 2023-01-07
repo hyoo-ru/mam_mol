@@ -6559,7 +6559,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/icon/icon.view.css", "[mol_icon] {\n\tfill: currentColor;\n\tstroke: none;\n\twidth: 1.5rem;\n\theight: 1.5rem;\n\tflex: 0 0 auto;\n\tvertical-align: top;\n\tmargin: 0 -.25rem;\n\tdisplay: inline-block;\n\tfilter: drop-shadow(0px 1px 1px var(--mol_theme_back));\n\ttransform-origin: center;\n}\n\n[mol_icon_path] {\n\ttransform-origin: center;\n}\n");
+    $mol_style_attach("mol/icon/icon.view.css", "[mol_icon] {\n\tfill: currentColor;\n\tstroke: none;\n\twidth: 1.5rem;\n\theight: 1.5rem;\n\tflex: 0 0 auto;\n\tvertical-align: top;\n\tdisplay: inline-block;\n\tfilter: drop-shadow(0px 1px 1px var(--mol_theme_back));\n\ttransform-origin: center;\n}\n\n[mol_icon_path] {\n\ttransform-origin: center;\n}\n");
 })($ || ($ = {}));
 //mol/icon/-css/icon.view.css.ts
 ;
@@ -8018,7 +8018,7 @@ var $;
                         color: $mol_theme.card,
                     },
                 },
-                transform: 'translate(-6px,-2px)',
+                transform: 'translate(-10px,-2px)',
             },
             '@': {
                 'mol_text_code_sidebar_showed': {
@@ -25454,7 +25454,7 @@ var $;
                 },
                 Label: {
                     padding: {
-                        left: rem(2.5),
+                        left: rem(3),
                     },
                 },
             },
@@ -25625,7 +25625,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/list/demo/tree/tree.view.css", "[mol_list_demo_tree_row_content] {\n\tpadding-left: .75rem;\n\tdisplay: block;\n}\n\n[mol_list_demo_tree_row] [mol_list_demo_tree_row] {\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n\tbackground: hsla( 0deg , 0% , 50% , .05 );\n}\n");
+    $mol_style_attach("mol/list/demo/tree/tree.view.css", "[mol_list_demo_tree_row_content] {\n\tpadding-left: 1.5rem;\n\tdisplay: block;\n}\n\n[mol_list_demo_tree_row] [mol_list_demo_tree_row] {\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n\tbackground: hsla( 0deg , 0% , 50% , .05 );\n}\n");
 })($ || ($ = {}));
 //mol/list/demo/tree/-css/tree.view.css.ts
 ;
