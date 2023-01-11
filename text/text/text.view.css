@@ -105,11 +105,6 @@ h6[mol_text_header] {
 	white-space: nowrap;
 }
 
-[mol_text_link_http_icon],
-[mol_text_link_icon] {
-	margin: .25rem;
-}
-
 [mol_text_link_icon] + [mol_text_embed] {
 	margin-left: -1.5rem;
 }
@@ -143,6 +138,7 @@ h6[mol_text_header] {
 	white-space: pre;
 	overflow-x: auto;
 	tab-size: 2;
+	padding-left: var(--mol_gap_block);
 }
 
 [mol_text_code_line] {

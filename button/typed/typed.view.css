@@ -3,7 +3,7 @@
 	align-items: center;
 	padding: var(--mol_gap_text);
 	border-radius: var(--mol_gap_round);
-	gap: var(--mol_gap_space);
+	gap: var(--mol_gap_block);
 	user-select: none;
 	cursor: pointer;
 }

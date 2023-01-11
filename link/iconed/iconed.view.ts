@@ -27,7 +27,7 @@ namespace $.$$ {
 		sub() {
 			return [
 				... this.host() ? [ this.Icon() ] : [],
-				... this.content(),
+				... this.content() ? [ ' ', ... this.content() ] : [],
 			] as readonly any[]
 		}
 
