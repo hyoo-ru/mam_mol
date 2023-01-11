@@ -1,7 +1,3 @@
-[mol_link_iconed_demo_input] {
-	display: block;
-}
-
-[mol_link_iconed_demo_output] {
-	display: block;
+[mol_link_iconed_demo_blocks] {
+	flex: 1;
 }
