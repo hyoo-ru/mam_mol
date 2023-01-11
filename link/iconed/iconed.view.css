@@ -2,7 +2,6 @@
 	align-items: baseline;
 	display: inline-flex;
 	padding: var(--mol_gap_text);
-	gap: var(--mol_gap_space);
 }
 
 [mol_link_iconed_icon] {
