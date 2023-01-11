@@ -16,4 +16,5 @@
 [mol_dump_value_simple_rows],
 [mol_dump_value_expand_head] {
 	padding: 0;
+	gap: 0;
 }

@@ -41,9 +41,7 @@ namespace $.$$ {
 			},
 
 			Icon: {
-				Path: {
-					transform: 'rotate(90deg)',
-				},
+				transform: 'rotate(90deg)',
 			},
 
 		},
@@ -59,9 +57,7 @@ namespace $.$$ {
 					Expand: {
 
 						Icon: {
-							Path: {
-								transform: 'rotate(90deg) scaleX(-1)',
-							},
+							transform: 'rotate(270deg)',
 						},
 			
 					},
