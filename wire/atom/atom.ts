@@ -129,7 +129,13 @@ namespace $ {
 			
 			const prev = this.cache
 			
-			if( next !== prev ) {
+			update: if( next !== prev ) {
+				
+				try {
+					if( $mol_compare_deep( prev, next ) ) break update
+				} catch( error: any ) {
+					$mol_fail_log( error )
+				}
 				
 				if( $mol_owning_check( this, prev ) ) {
 					prev.destructor()
@@ -145,11 +151,7 @@ namespace $ {
 					}
 				}
 				
-				if( this.sub_from < this.data.length ) {
-					if( !$mol_compare_deep( prev, next ) ) {
-						this.emit()
-					}
-				}
+				if( !this.sub_empty ) this.emit()
 				
 			}
 			
