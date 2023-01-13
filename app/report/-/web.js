@@ -1936,7 +1936,7 @@ var $;
             }
         }
         title() {
-            return this.constructor.toString();
+            return this.toString().match(/.*\.(\w+)/)?.[1] ?? this.toString();
         }
         focused(next) {
             let node = this.dom_node();
@@ -2223,6 +2223,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_view.prototype, "autorun", null);
+    __decorate([
+        $mol_mem
+    ], $mol_view.prototype, "title", null);
     __decorate([
         $mol_mem
     ], $mol_view.prototype, "focused", null);

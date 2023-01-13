@@ -12,6 +12,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Spread_content $mol_row sub / <= Filler
+		 * ```
+		 */
+		@ $mol_mem
+		Spread_content() {
+			const obj = new this.$.$mol_row()
+			
+			obj.sub = () => [
+				this.Filler()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * sub / <= Calatog
 		 * ```
 		 */
@@ -49,15 +65,39 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Articles_content $mol_row sub / \Articles content
+		 * Filler $mol_filler
 		 * ```
 		 */
 		@ $mol_mem
-		Articles_content() {
-			const obj = new this.$.$mol_row()
+		Filler() {
+			const obj = new this.$.$mol_filler()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Add_icon $mol_icon_plus
+		 * ```
+		 */
+		@ $mol_mem
+		Add_icon() {
+			const obj = new this.$.$mol_icon_plus()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Add $mol_button_minor sub / <= Add_icon
+		 * ```
+		 */
+		@ $mol_mem
+		Add() {
+			const obj = new this.$.$mol_button_minor()
 			
 			obj.sub = () => [
-				"Articles content"
+				this.Add_icon()
 			] as readonly any[]
 			
 			return obj
@@ -65,18 +105,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Articles $mol_page
-		 * 	title \Articles
-		 * 	body / <= Articles_content
+		 * Cats $mol_page
+		 * 	title \🐱 Cats
+		 * 	tools / <= Spread_close
+		 * 	body / <= Spread_content
 		 * ```
 		 */
 		@ $mol_mem
-		Articles() {
+		Cats() {
 			const obj = new this.$.$mol_page()
 			
-			obj.title = () => "Articles"
+			obj.title = () => "🐱 Cats"
+			obj.tools = () => [
+				this.Spread_close()
+			] as readonly any[]
 			obj.body = () => [
-				this.Articles_content()
+				this.Spread_content()
 			] as readonly any[]
 			
 			return obj
@@ -84,34 +128,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Images_content $mol_row sub / \Images content
+		 * Dogs $mol_page
+		 * 	title \🐶 Dogs
+		 * 	tools / <= Spread_close
+		 * 	body / <= Spread_content
 		 * ```
 		 */
 		@ $mol_mem
-		Images_content() {
-			const obj = new this.$.$mol_row()
-			
-			obj.sub = () => [
-				"Images content"
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Images $mol_page
-		 * 	title \Images
-		 * 	body / <= Images_content
-		 * ```
-		 */
-		@ $mol_mem
-		Images() {
+		Dogs() {
 			const obj = new this.$.$mol_page()
 			
-			obj.title = () => "Images"
+			obj.title = () => "🐶 Dogs"
+			obj.tools = () => [
+				this.Spread_close()
+			] as readonly any[]
 			obj.body = () => [
-				this.Images_content()
+				this.Spread_content()
 			] as readonly any[]
 			
 			return obj
@@ -119,48 +151,215 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Maps_content $mol_row sub / \Maps content
+		 * Horses $mol_page
+		 * 	title \🐴 Horses
+		 * 	tools / <= Spread_close
+		 * 	body / <= Spread_content
 		 * ```
 		 */
 		@ $mol_mem
-		Maps_content() {
-			const obj = new this.$.$mol_row()
-			
-			obj.sub = () => [
-				"Maps content"
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Maps $mol_page
-		 * 	title \Maps
-		 * 	body / <= Maps_content
-		 * ```
-		 */
-		@ $mol_mem
-		Maps() {
+		Horses() {
 			const obj = new this.$.$mol_page()
 			
-			obj.title = () => "Maps"
+			obj.title = () => "🐴 Horses"
+			obj.tools = () => [
+				this.Spread_close()
+			] as readonly any[]
 			obj.body = () => [
-				this.Maps_content()
+				this.Spread_content()
 			] as readonly any[]
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Racoons $mol_page
+		 * 	title \🦝 Racoons
+		 * 	tools / <= Spread_close
+		 * 	body / <= Spread_content
+		 * ```
+		 */
+		@ $mol_mem
+		Racoons() {
+			const obj = new this.$.$mol_page()
+			
+			obj.title = () => "🦝 Racoons"
+			obj.tools = () => [
+				this.Spread_close()
+			] as readonly any[]
+			obj.body = () => [
+				this.Spread_content()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Pigs $mol_page
+		 * 	title \🐷 Pigs 
+		 * 	tools / <= Spread_close
+		 * 	body / <= Spread_content
+		 * ```
+		 */
+		@ $mol_mem
+		Pigs() {
+			const obj = new this.$.$mol_page()
+			
+			obj.title = () => "🐷 Pigs "
+			obj.tools = () => [
+				this.Spread_close()
+			] as readonly any[]
+			obj.body = () => [
+				this.Spread_content()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Rabbits $mol_page
+		 * 	title \🐰 Rabbits
+		 * 	tools / <= Spread_close
+		 * 	body / <= Spread_content
+		 * ```
+		 */
+		@ $mol_mem
+		Rabbits() {
+			const obj = new this.$.$mol_page()
+			
+			obj.title = () => "🐰 Rabbits"
+			obj.tools = () => [
+				this.Spread_close()
+			] as readonly any[]
+			obj.body = () => [
+				this.Spread_content()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Wolfs $mol_page
+		 * 	title \🐺 Wolfs
+		 * 	tools / <= Spread_close
+		 * 	body / <= Spread_content
+		 * ```
+		 */
+		@ $mol_mem
+		Wolfs() {
+			const obj = new this.$.$mol_page()
+			
+			obj.title = () => "🐺 Wolfs"
+			obj.tools = () => [
+				this.Spread_close()
+			] as readonly any[]
+			obj.body = () => [
+				this.Spread_content()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Mice $mol_page
+		 * 	title \🐭 Mice
+		 * 	tools / <= Spread_close
+		 * 	body / <= Spread_content
+		 * ```
+		 */
+		@ $mol_mem
+		Mice() {
+			const obj = new this.$.$mol_page()
+			
+			obj.title = () => "🐭 Mice"
+			obj.tools = () => [
+				this.Spread_close()
+			] as readonly any[]
+			obj.body = () => [
+				this.Spread_content()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Ants $mol_page
+		 * 	title \🐜 Ants
+		 * 	tools / <= Spread_close
+		 * 	body / <= Spread_content
+		 * ```
+		 */
+		@ $mol_mem
+		Ants() {
+			const obj = new this.$.$mol_page()
+			
+			obj.title = () => "🐜 Ants"
+			obj.tools = () => [
+				this.Spread_close()
+			] as readonly any[]
+			obj.body = () => [
+				this.Spread_content()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Bugs $mol_page
+		 * 	title \🐛 Bugs
+		 * 	tools / <= Spread_close
+		 * 	body / <= Spread_content
+		 * ```
+		 */
+		@ $mol_mem
+		Bugs() {
+			const obj = new this.$.$mol_page()
+			
+			obj.title = () => "🐛 Bugs"
+			obj.tools = () => [
+				this.Spread_close()
+			] as readonly any[]
+			obj.body = () => [
+				this.Spread_content()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Spread_close
+		 * ```
+		 */
+		Spread_close() {
+			return this.Calatog().Spread_close()
 		}
 		
 		/**
 		 * ```tree
 		 * Calatog $mol_book2_catalog
 		 * 	param \mol_book2_catalog_demo
-		 * 	menu_title \Sections
+		 * 	menu_title \Animals
+		 * 	Spread_close => Spread_close
+		 * 	menu_tools / <= Add
 		 * 	spreads *
-		 * 		articles <= Articles
-		 * 		images <= Images
-		 * 		maps <= Maps
+		 * 		cats <= Cats
+		 * 		dogs <= Dogs
+		 * 		horses <= Horses
+		 * 		racoons <= Racoons
+		 * 		pigs <= Pigs
+		 * 		rabbits <= Rabbits
+		 * 		wolfs <= Wolfs
+		 * 		mice <= Mice
+		 * 		ants <= Ants
+		 * 		bugs <= Bugs
 		 * ```
 		 */
 		@ $mol_mem
@@ -168,11 +367,21 @@ namespace $ {
 			const obj = new this.$.$mol_book2_catalog()
 			
 			obj.param = () => "mol_book2_catalog_demo"
-			obj.menu_title = () => "Sections"
+			obj.menu_title = () => "Animals"
+			obj.menu_tools = () => [
+				this.Add()
+			] as readonly any[]
 			obj.spreads = () => ({
-				articles: this.Articles(),
-				images: this.Images(),
-				maps: this.Maps()
+				cats: this.Cats(),
+				dogs: this.Dogs(),
+				horses: this.Horses(),
+				racoons: this.Racoons(),
+				pigs: this.Pigs(),
+				rabbits: this.Rabbits(),
+				wolfs: this.Wolfs(),
+				mice: this.Mice(),
+				ants: this.Ants(),
+				bugs: this.Bugs()
 			})
 			
 			return obj
