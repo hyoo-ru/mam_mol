@@ -1,7 +1,3 @@
-[mol_book2_catalog_menu_body] {
-	padding: var(--mol_gap_block);
-}
-
 [mol_book2_catalog_menu_filter] {
 	flex-shrink: 0;
 	flex-grow: 0;

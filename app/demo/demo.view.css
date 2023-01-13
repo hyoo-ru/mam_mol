@@ -4,7 +4,6 @@
 
 [mol_app_demo_menu_list] {
 	display: flex;
-	padding: var(--mol_gap_block);
 }
 
 [mol_app_demo_menu_tools] {
@@ -105,10 +104,6 @@
 
 [mol_app_demo_readme] {
 	flex: 1 0 40rem;
-}
-
-[mol_app_demo_readme_readme] {
-	padding: var(--mol_gap_block);
 }
 
 [mol_app_demo_readme_not_found] {

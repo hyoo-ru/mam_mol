@@ -12,7 +12,6 @@
 }
 
 [mol_attach_add] {
-	margin: .375rem;
 	background: var(--mol_theme_card);
 	width: 6rem;
 	height: 6rem;

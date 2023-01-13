@@ -1,7 +1,7 @@
 $mol_switch_demo $mol_example
 	title \Color switchers in various state
 	sub /
-		<= Demo_items $mol_row
+		<= Demo_items $mol_list
 			sub /
 				<= Enabled_labeler $mol_labeler
 					title \Read/Write

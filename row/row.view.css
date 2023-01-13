@@ -4,13 +4,13 @@
 	align-items: flex-start;
 	align-content: flex-start;
 	justify-content: flex-start;
-	padding: .375rem;
+	padding: var(--mol_gap_block);
+	gap: var(--mol_gap_block);
 	flex: 0 0 auto;
 	box-sizing: border-box;
 	max-width: 100%;
 }
 
 [mol_row] > * {
-	margin: .375rem;
 	max-width: 100%;
 }
