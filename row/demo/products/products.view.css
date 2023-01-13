@@ -5,5 +5,5 @@
 }
 
 [mol_row_demo_products_product] {
-	min-height: 8rem;
+	align-self: stretch;
 }

@@ -1,9 +1,13 @@
 [mol_list_demo_tree_row_content] {
-	padding-left: 1.5rem;
+	padding-left: 2.25rem;
 	display: block;
 }
 
 [mol_list_demo_tree_row] [mol_list_demo_tree_row] {
 	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	background: hsla( 0deg , 0% , 50% , .05 );
+}
+
+[mol_list_demo_tree_row_title] {
+	flex-shrink: 1;
 }
