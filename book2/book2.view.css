@@ -28,7 +28,7 @@
 	opacity: .5;
 	position: absolute;
 	top: -.5rem;
-	left: -.35rem;
+	left: 0;
 }
 [mol_book2] > *:not(:last-child):after {
 	display: block;
@@ -36,7 +36,7 @@
 	opacity: .5;
 	position: absolute;
 	top: -.5rem;
-	right: -.35rem;
+	right: 0;
 }
 
 [mol_book2] > * {
