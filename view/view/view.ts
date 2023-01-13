@@ -57,8 +57,9 @@ namespace $ {
 			
 		}
 		
-		title() : string {
-			return this.constructor.toString()
+		@ $mol_mem
+		title() {
+			return this.toString().match( /.*\.(\w+)/ )?.[1] ?? this.toString()
 		}
 		
 		@ $mol_mem
