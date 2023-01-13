@@ -170,14 +170,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Demo_items $mol_row sub /
+		 * Demo_items $mol_list sub /
 		 * 	<= Enabled_labeler
 		 * 	<= Disabled_labeler
 		 * ```
 		 */
 		@ $mol_mem
 		Demo_items() {
-			const obj = new this.$.$mol_row()
+			const obj = new this.$.$mol_list()
 			
 			obj.sub = () => [
 				this.Enabled_labeler(),

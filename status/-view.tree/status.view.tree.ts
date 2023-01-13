@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * status null
+		 * status <= title
 		 * ```
 		 */
 		status() {
-			return null as any
+			return this.title()
 		}
 		
 		/**

@@ -89,26 +89,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Foot_content $mol_row sub / <= Button_foot
-		 * ```
-		 */
-		@ $mol_mem
-		Foot_content() {
-			const obj = new this.$.$mol_row()
-			
-			obj.sub = () => [
-				this.Button_foot()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * Page $mol_page
 		 * 	tools / <= Button_tools
 		 * 	body / <= Text
-		 * 	foot / <= Foot_content
+		 * 	foot / <= Button_foot
 		 * ```
 		 */
 		@ $mol_mem
@@ -122,7 +106,7 @@ namespace $ {
 				this.Text()
 			] as readonly any[]
 			obj.foot = () => [
-				this.Foot_content()
+				this.Button_foot()
 			] as readonly any[]
 			
 			return obj

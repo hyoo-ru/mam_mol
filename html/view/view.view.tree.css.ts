@@ -4,8 +4,6 @@ namespace $ {
 	
 	$mol_style_define( $mol_html_view , {
 
-		padding: $mol_gap.block,
-
 		Heading: {
 
 			padding: $mol_gap.text,

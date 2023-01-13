@@ -1,56 +1,79 @@
 $mol_book2_catalog_demo $mol_example_large
 	title \Catalog of pages
-	Spread_content $mol_row sub /
-		<= Filler $mol_filler
+	Content $mol_filler
+	Empty $mol_status
 	sub /
 		<= Calatog $mol_book2_catalog
 			param \mol_book2_catalog_demo
-			menu_title \Animals
+			menu_title \Catalog
 			Spread_close => Spread_close
-			menu_tools /
-				<= Add $mol_button_minor
-					sub / <= Add_icon $mol_icon_plus
 			spreads *
-				cats <= Cats $mol_page
-					title \🐱 Cats
-					tools / <= Spread_close
-					body / <= Spread_content
-				dogs <= Dogs $mol_page
-					title \🐶 Dogs
-					tools / <= Spread_close
-					body / <= Spread_content
-				horses <= Horses $mol_page
-					title \🐴 Horses
-					tools / <= Spread_close
-					body / <= Spread_content
-				racoons <= Racoons $mol_page
-					title \🦝 Racoons
-					tools / <= Spread_close
-					body / <= Spread_content
-				pigs <= Pigs $mol_page
-					title \🐷 Pigs 
-					tools / <= Spread_close
-					body / <= Spread_content
-				rabbits <= Rabbits $mol_page
-					title \🐰 Rabbits
-					tools / <= Spread_close
-					body / <= Spread_content
-				wolfs <= Wolfs $mol_page
-					title \🐺 Wolfs
-					tools / <= Spread_close
-					body / <= Spread_content
-				mice <= Mice $mol_page
-					title \🐭 Mice
-					tools / <= Spread_close
-					body / <= Spread_content
-				ants <= Ants $mol_page
-					title \🐜 Ants
-					tools / <= Spread_close
-					body / <= Spread_content
-				bugs <= Bugs $mol_page
-					title \🐛 Bugs
-					tools / <= Spread_close
-					body / <= Spread_content
+				foods <= Foods $mol_book2_catalog
+					param \mol_book2_catalog_demo_foods
+					menu_title \Foods
+					menu_tools /
+						<= Spread_close
+					Spread_close => Foods_spread_close
+					spreads *
+						pizza <= Pizza $mol_page
+							title \🍕 Pizzas
+							tools / <= Foods_spread_close
+							body / <= Empty
+						hot_dogs <= Hot_dogs $mol_page
+							title \🌭 Hot Dogs
+							tools / <= Foods_spread_close
+							body / <= Empty
+						fries <= Fries $mol_page
+							title \🍟 Fries
+							tools / <= Foods_spread_close
+							body / <= Empty
+				anials <= Animals $mol_book2_catalog
+					param \mol_book2_catalog_demo_animals
+					menu_title \Animals
+					menu_tools /
+						<= Spread_close
+					Spread_close => Animals_spread_close
+					spreads *
+						cats <= Cats $mol_page
+							title \🐱 Cats
+							tools / <= Animals_spread_close
+							body / <= Content
+						dogs <= Dogs $mol_page
+							title \🐶 Dogs
+							tools / <= Animals_spread_close
+							body / <= Content
+						horses <= Horses $mol_page
+							title \🐴 Horses
+							tools / <= Animals_spread_close
+							body / <= Content
+						racoons <= Racoons $mol_page
+							title \🦝 Racoons
+							tools / <= Animals_spread_close
+							body / <= Content
+						pigs <= Pigs $mol_page
+							title \🐷 Pigs 
+							tools / <= Animals_spread_close
+							body / <= Content
+						rabbits <= Rabbits $mol_page
+							title \🐰 Rabbits
+							tools / <= Animals_spread_close
+							body / <= Content
+						wolfs <= Wolfs $mol_page
+							title \🐺 Wolfs
+							tools / <= Animals_spread_close
+							body / <= Content
+						mice <= Mice $mol_page
+							title \🐭 Mice
+							tools / <= Animals_spread_close
+							body / <= Content
+						ants <= Ants $mol_page
+							title \🐜 Ants
+							tools / <= Animals_spread_close
+							body / <= Content
+						bugs <= Bugs $mol_page
+							title \🐛 Bugs
+							tools / <= Animals_spread_close
+							body / <= Content
 	tags /
 		\$mol_page
 		\app

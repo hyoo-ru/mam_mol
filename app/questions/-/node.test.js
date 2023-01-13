@@ -3366,6 +3366,7 @@ var $;
                     shrink: 1,
                     basis: per(100),
                 },
+                padding: $mol_gap.block,
             },
             Foot: {
                 display: 'flex',
@@ -3381,6 +3382,10 @@ var $;
                 },
                 boxShadow: `0 -0.5rem 0.5rem -0.5rem hsla(0,0%,0%,.25)`,
                 zIndex: 1,
+                padding: $mol_gap.block,
+                ':empty': {
+                    display: 'none',
+                },
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
