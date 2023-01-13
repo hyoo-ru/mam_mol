@@ -30,7 +30,7 @@
 	top: -.5rem;
 	left: 0;
 }
-[mol_book2] > *:not(:last-child):after {
+[mol_book2] > *:not([mol_book2_placeholder]):not(:last-of-type):after {
 	display: block;
 	content: '-';
 	opacity: .5;

@@ -1,25 +1,56 @@
 $mol_book2_catalog_demo $mol_example_large
 	title \Catalog of pages
+	Spread_content $mol_row sub /
+		<= Filler $mol_filler
 	sub /
 		<= Calatog $mol_book2_catalog
 			param \mol_book2_catalog_demo
-			menu_title \Sections
+			menu_title \Animals
+			Spread_close => Spread_close
+			menu_tools /
+				<= Add $mol_button_minor
+					sub / <= Add_icon $mol_icon_plus
 			spreads *
-				articles <= Articles $mol_page
-					title \Articles
-					body /
-						<= Articles_content $mol_row
-							sub / \Articles content
-				images <= Images $mol_page
-					title \Images
-					body /
-						<= Images_content $mol_row
-							sub / \Images content
-				maps <= Maps $mol_page
-					title \Maps
-					body /
-						<= Maps_content $mol_row
-							sub / \Maps content
+				cats <= Cats $mol_page
+					title \🐱 Cats
+					tools / <= Spread_close
+					body / <= Spread_content
+				dogs <= Dogs $mol_page
+					title \🐶 Dogs
+					tools / <= Spread_close
+					body / <= Spread_content
+				horses <= Horses $mol_page
+					title \🐴 Horses
+					tools / <= Spread_close
+					body / <= Spread_content
+				racoons <= Racoons $mol_page
+					title \🦝 Racoons
+					tools / <= Spread_close
+					body / <= Spread_content
+				pigs <= Pigs $mol_page
+					title \🐷 Pigs 
+					tools / <= Spread_close
+					body / <= Spread_content
+				rabbits <= Rabbits $mol_page
+					title \🐰 Rabbits
+					tools / <= Spread_close
+					body / <= Spread_content
+				wolfs <= Wolfs $mol_page
+					title \🐺 Wolfs
+					tools / <= Spread_close
+					body / <= Spread_content
+				mice <= Mice $mol_page
+					title \🐭 Mice
+					tools / <= Spread_close
+					body / <= Spread_content
+				ants <= Ants $mol_page
+					title \🐜 Ants
+					tools / <= Spread_close
+					body / <= Spread_content
+				bugs <= Bugs $mol_page
+					title \🐛 Bugs
+					tools / <= Spread_close
+					body / <= Spread_content
 	tags /
 		\$mol_page
 		\app
