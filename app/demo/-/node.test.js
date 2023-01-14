@@ -2503,7 +2503,6 @@ var $;
                 if ($mol_owning_check(this, prev)) {
                     prev.destructor();
                 }
-                this.cache = next;
                 if ($mol_owning_catch(this, next)) {
                     try {
                         next[Symbol.toStringTag] = this[Symbol.toStringTag];
@@ -2515,6 +2514,7 @@ var $;
                 if (!this.sub_empty)
                     this.emit();
             }
+            this.cache = next;
             this.cursor = $mol_wire_cursor.fresh;
             if (next instanceof Promise)
                 return next;
