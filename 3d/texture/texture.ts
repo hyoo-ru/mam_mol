@@ -64,7 +64,6 @@ namespace $ {
 			this.api.bindTexture( this.api.TEXTURE_2D_ARRAY, this.native )
 			
 			const size = data[0].width
-			const levels = Math.ceil( Math.log2( size ) )
 			
 			this.api.texImage3D(
 				this.api.TEXTURE_2D_ARRAY,
@@ -96,6 +95,10 @@ namespace $ {
 				)
 				
 			}
+			
+			const anisotropic = this.api.getExtension( 'EXT_texture_filter_anisotropic' ) as any
+			const max = this.api.getParameter( anisotropic.MAX_TEXTURE_MAX_ANISOTROPY_EXT )
+			this.api.texParameterf( this.api.TEXTURE_2D_ARRAY, anisotropic.TEXTURE_MAX_ANISOTROPY_EXT, max )
 			
 			this.api.texParameteri( this.api.TEXTURE_2D_ARRAY, this.api.TEXTURE_MIN_FILTER, this.api.LINEAR_MIPMAP_LINEAR )
 			this.api.texParameteri( this.api.TEXTURE_2D_ARRAY, this.api.TEXTURE_MAG_FILTER, this.api.LINEAR )
