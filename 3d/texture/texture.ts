@@ -66,13 +66,17 @@ namespace $ {
 			const size = data[0].width
 			const levels = Math.ceil( Math.log2( size ) )
 			
-			this.api.texStorage3D(
+			this.api.texImage3D(
 				this.api.TEXTURE_2D_ARRAY,
-				levels,
-				this.api.RGBA8,
+				0,
+				this.api.RGBA,
 				size,
 				size,
 				data.length,
+				0,
+				this.api.RGBA,
+				this.api.UNSIGNED_BYTE,
+				null,
 			)
 			
 			for( let i = 0; i < data.length; ++i ) {
