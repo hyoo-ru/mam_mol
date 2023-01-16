@@ -103,6 +103,9 @@ namespace $ {
 			this.api.texParameteri( this.api.TEXTURE_2D_ARRAY, this.api.TEXTURE_MIN_FILTER, this.api.LINEAR_MIPMAP_LINEAR )
 			this.api.texParameteri( this.api.TEXTURE_2D_ARRAY, this.api.TEXTURE_MAG_FILTER, this.api.LINEAR )
 			
+			this.api.pixelStorei( this.api.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true )
+			this.api.blendFunc( this.api.ONE, this.api.ONE_MINUS_SRC_ALPHA )
+			
 			this.api.generateMipmap( this.api.TEXTURE_2D_ARRAY )
 			
 			return data

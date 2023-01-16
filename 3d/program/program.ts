@@ -27,6 +27,7 @@ namespace $ {
 			api.enable( api.CULL_FACE ) // hide back sides
 			api.enable( api.DEPTH_TEST ) // order indepenent overlap
 			api.enable( api.SCISSOR_TEST ) // allow partial render
+			api.enable( api.BLEND ) // allow texture alpha
 			super()
 		}
 		
