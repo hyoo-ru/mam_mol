@@ -11,8 +11,8 @@
 }
 	
 :root, [mol_theme] {
-	--mol_theme_back: hsl( var(--mol_theme_hue), 50% , calc( 55% + 45% * var(--mol_theme_luma) ) );
-	--mol_theme_text: hsl( var(--mol_theme_hue), 0% , calc( 50% - 30% * var(--mol_theme_luma) ) );
+	--mol_theme_back: hsl( var(--mol_theme_hue), 50%, calc( 55% + 45% * var(--mol_theme_luma) ) );
+	--mol_theme_text: hsl( var(--mol_theme_hue), 0%, calc( 50% - 30% * var(--mol_theme_luma) ) );
 	--mol_theme_field: hsl( var(--mol_theme_hue), 50%, calc( 54% + 46% * var(--mol_theme_luma) ), .25 );
 	
 	--mol_theme_card: hsl( var(--mol_theme_hue), 0%, 50%, .05 );
@@ -45,11 +45,11 @@
 }
 
 [mol_theme="$mol_theme_current"] {
-	--mol_theme_back: hsl( calc( var(--mol_theme_hue) - 90deg ), 50%, calc( 50% + 25% * var(--mol_theme_luma) ) );
+	--mol_theme_back: hsl( calc( var(--mol_theme_hue) - 90deg ), 50%, calc( 53% + 43% * var(--mol_theme_luma) ) );
 }
 
 [mol_theme="$mol_theme_special"] {
-	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 90deg ), 50%, calc( 50% + 25% * var(--mol_theme_luma) ) );
+	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 90deg ), 50%, calc( 53% + 43% * var(--mol_theme_luma) ) );
 }
 
 [mol_theme="$mol_theme_accent"] {
