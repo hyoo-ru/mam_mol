@@ -39,7 +39,7 @@
 	right: 0;
 }
 
-[mol_book2] > * {
+:where([mol_book2]) > * {
 	background-color: var(--mol_theme_card);
 	box-shadow: inset 0 0 0 1px var(--mol_theme_back);
 }
