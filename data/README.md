@@ -17,7 +17,7 @@ undefined is not a number
 - [$mol_data_string](https://github.com/hyoo-ru/mam_mol/tree/master/data/string) - string type
 - [$mol_data_pattern](https://github.com/hyoo-ru/mam_mol/tree/master/data/pattern) - string by pattern
 - [$mol_data_email](https://github.com/hyoo-ru/mam_mol/tree/master/data/email) - email string
-- [$mol_data_nominal](https://github.com/hyoo-ru/mam_mol/tree/master/data/nominal) - tagged primitive type
+- [$mol_data_tagged](https://github.com/hyoo-ru/mam_mol/tree/master/data/tagged) - tagged primitive type
 - [$mol_data_nullable](https://github.com/hyoo-ru/mam_mol/tree/master/data/nullable) - nullable version of given type
 - [$mol_data_optional](https://github.com/hyoo-ru/mam_mol/tree/master/data/optional) - optional version of given type
 - [$mol_data_variant](https://github.com/hyoo-ru/mam_mol/tree/master/data/variant) - one of set of types
@@ -89,7 +89,7 @@ printName( UserDTO( json ) )
 ## Units
 
 ```typescript
-const { Weight, Length } = $mol_data_nominal({
+const { Weight, Length } = $mol_data_tagged({
 	Weight: $mol_data_integer,
 	Length: $mol_data_integer,
 })
@@ -166,14 +166,14 @@ npm install mol_data_all
 
 ```typescript
 import {
-  $mol_data_nominal as Nominal,
+  $mol_data_tagged as Tagged,
   $mol_data_integer as Integer,
 } from "mol_data_all"
 
-const { Int } = Nominal({ Int: Integer })
+const { Int } = Tagged({ Int: Integer })
 
-const i = Int(1)
-const j: typeof Int.Value = Int( i + 1 )
+let i = Int( 1 )
+i = Int( i + 1 )
 ```
 
 [More complex example.](https://www.typescriptlang.org/play/?downlevelIteration=true&experimentalDecorators=true&emitDecoratorMetadata=true&ssl=1&ssc=1&pln=61&pc=1#code/JYWwDg9gTgLgBAbwFBzgEhBANgfQCYCGMBOAzjFMAHYDmcBpcAyhQDQrqa6HE7UwBTGgKj1GASSox2qDNnxESUAQGNoeMXABKqmZ3k8SEMDGAQqBLJoCyBAJ4AjAXrndFOAG4FKBKZoBq3nYuXAq8AiAEwFYMcLbRIQbuYMBgApoACqkCSAC+cABmUBAgcABEoYY4llhlANxISCpYDIzWdgAiROkIcByoalTkUACuKjDQABReWCMCAFxww9Q0AJSIcLn9cHYC3gCEi1QjIE5Q25hSABaHcMenItuEdrf3Z3mNg+RwAKqkIh0ACoAeTgAF5tKpJsgAJAWEDpRYsUTsGEEYRwRa2RwCSZwSTwdaohzAWBXZ6YuBZNJ45FwVhxTrdOBEpAwsBXcyIuCBKB2WkUen4vysmGRaKU+JWdi5VaNAD08rgAFEhiNlHAYFdgIwdfRfv9zl94AArajgg0AkHQtnw7kAcgAUtR7fS2ejuQBmT1umEkskUxb2gCMAE4ABwAFgAtAAGcNxyOu1EcrmUgDsoeDACZPZGAKwANnT4dDsdR4qsQYKEAgAAEBAAPAjgLACAB00BoybycqQis1djSEAKcDNVHBYIhyAHMOUBDw5iwdjuLYWSwoKwas-ni6oy-owgA-EcTmc4AAfOAjKh4AQFagCPDbpVzvZ7g-+rXPLElARSF84DfBclxXVMqAEE8N0oWhLzuM8REA4CPxXStFmWWhAK2fslQAQSwLAIAAdzgUDLSgUgkAKG9xjMCcwBgmAADk1zxEZDUpGAhwEEdyKBYF20CWZ0nWWEvmwDtCJoNjDXbO0WQ+JAGP4FiETxccFJwuAAHVilgk1SHMQpilKQ0PEeY0x0Midp1tNdKSdF1fQ9SlvV9L9yXsBywyjOME1jJNfXA7lMxzPMixLMsKyiKs4HtAAeeVSBUSgTAAPh7fJYl8OwFSVLQb1MBE4BEYooEWABtCoYrKABdOBEuS1KYDSuA9SoCB4AIOB5XbABqOt+vlJTGNU3E+OtKyjPWOUgA)

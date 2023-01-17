@@ -1,24 +1,25 @@
 namespace $ {
 	
-	type $mol_data_nominal_type< Value, Tag extends PropertyKey > = Value | { [ Key in Tag ]: Value }
+	type $mol_data_nominal_type< Value, Nominal > = Value | { $mol_data_nominal: Nominal }
 	
-	type $mol_data_nominal_parser< Input, Output > = {
-		Value: Output
+	type $mol_data_nominal_parser< Input extends any[], Output > = {
+		Value : Output
 	} & (
-		( val: $mol_data_nominal_type< Input, never > )=> Output
+		( ... val: Input )=> Output
 	)
 
+	/** @deprecated Use $mol_data_tagged instead */
 	export function $mol_data_nominal<
-		Config extends Record< string, $mol_data_value >,
+		Nominal extends string ,
+		Sub extends $mol_data_value ,
+		Value = $mol_data_nominal_type<ReturnType< Sub >, Nominal >,
 	>(
-		config: Config
-	) {
-		return config as any as {
-			[ Type in keyof Config ]: $mol_data_nominal_parser<
-				Parameters< Config[ Type ] >[0],
-				$mol_data_nominal_type< ReturnType< Config[ Type ] >, Type >
-			>
-		}
+		config : { [ key in Nominal ] : Sub }
+	) : $mol_data_nominal_parser< Parameters<Sub>, Value > {
+
+		const nominal = Object.keys( config )[0] as Nominal
+		return config[ nominal ] as any
+		
 	}
 
 }
