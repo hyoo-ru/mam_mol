@@ -170,10 +170,10 @@ import {
   $mol_data_integer as Integer,
 } from "mol_data_all"
 
-const { Int } = Tagged({ Int: Integer })
+const { Age } = Tagged({ Age: Integer })
 
-let i = Int( 1 )
-i = Int( i + 1 )
+let age = Age( 17 )
+age = Age( age + 1 )
 ```
 
 [More complex example.](https://www.typescriptlang.org/play/?downlevelIteration=true&experimentalDecorators=true&emitDecoratorMetadata=true&ssl=1&ssc=1&pln=61&pc=1#code/JYWwDg9gTgLgBAbwFBzgEhBANgfQCYCGMBOAzjFMAHYDmcBpcAyhQDQrqa6HE7UwBTGgKj1GASSox2qDNnxESUAQGNoeMXABKqmZ3k8SEMDGAQqBLJoCyBAJ4AjAXrndFOAG4FKBKZoBq3nYuXAq8AiAEwFYMcLbRIQbuYMBgApoACqkCSAC+cABmUBAgcABEoYY4llhlANxISCpYDIzWdgAiROkIcByoalTkUACuKjDQABReWCMCAFxww9Q0AJSIcLn9cHYC3gCEi1QjIE5Q25hSABaHcMenItuEdrf3Z3mNg+RwAKqkIh0ACoAeTgAF5tKpJsgAJAWEDpRYsUTsGEEYRwRa2RwCSZwSTwdaohzAWBXZ6YuBZNJ45FwVhxTrdOBEpAwsBXcyIuCBKB2WkUen4vysmGRaKU+JWdi5VaNAD08rgAFEhiNlHAYFdgIwdfRfv9zl94AArajgg0AkHQtnw7kAcgAUtR7fS2ejuQBmT1umEkskUxb2gCMAE4ABwAFgAtAAGcNxyOu1EcrmUgDsoeDACZPZGAKwANnT4dDsdR4qsQYKEAgAAEBAAPAjgLACAB00BoybycqQis1djSEAKcDNVHBYIhyAHMOUBDw5iwdjuLYWSwoKwas-ni6oy-owgA-EcTmc4AAfOAjKh4AQFagCPDbpVzvZ7g-+rXPLElARSF84DfBclxXVMqAEE8N0oWhLzuM8REA4CPxXStFmWWhAK2fslQAQSwLAIAAdzgUDLSgUgkAKG9xjMCcwBgmAADk1zxEZDUpGAhwEEdyKBYF20CWZ0nWWEvmwDtCJoNjDXbO0WQ+JAGP4FiETxccFJwuAAHVilgk1SHMQpilKQ0PEeY0x0Midp1tNdKSdF1fQ9SlvV9L9yXsBywyjOME1jJNfXA7lMxzPMixLMsKyiKs4HtAAeeVSBUSgTAAPh7fJYl8OwFSVLQb1MBE4BEYooEWABtCoYrKABdOBEuS1KYDSuA9SoCB4AIOB5XbABqOt+vlJTGNU3E+OtKyjPWOUgA)
