@@ -17,29 +17,12 @@
 /* 	flex: none; */
 	scroll-snap-stop: always;
 	scroll-snap-align: center;
-	scroll-margin: 0 .25rem;
 	position: relative;
 	min-height: 100%;
 	max-height: 100%;
 	max-width: 100%;
 	flex-shrink: 0;
 }
-/* [mol_book2] > * + *:not([mol_book2_placeholder]):before {
-	display: block;
-	content: '-';
-	opacity: .5;
-	position: absolute;
-	top: -.5rem;
-	left: 0;
-}
-[mol_book2] > *:not([mol_book2_placeholder]):not(:last-of-type):after {
-	display: block;
-	content: '-';
-	opacity: .5;
-	position: absolute;
-	top: -.5rem;
-	right: 0;
-} */
 
 :where([mol_book2]) > * {
 	background-color: var(--mol_theme_card);
