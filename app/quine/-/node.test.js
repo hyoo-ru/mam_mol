@@ -5619,7 +5619,7 @@ var $;
                         color: $mol_theme.card,
                     },
                 },
-                transform: 'translate( -14px, 0px )',
+                transform: 'translate( -.25rem, 0px )',
             },
             '@': {
                 'mol_text_code_sidebar_showed': {

@@ -21,7 +21,7 @@ namespace $.$$ {
 					color: $mol_theme.card,
 				},
 			},
-			transform: 'translate( -14px, 0px )',
+			transform: 'translate( -.25rem, 0px )',
 		},
 		
 		'@': {
