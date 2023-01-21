@@ -7723,11 +7723,8 @@ var $;
                 padding: $mol_gap.text,
             },
             Copy: {
-                position: 'sticky',
                 alignSelf: 'flex-start',
                 justifySelf: 'flex-start',
-                top: 0,
-                left: 0,
                 Icon: {
                     background: {
                         color: $mol_theme.card,
