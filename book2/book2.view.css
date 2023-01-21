@@ -11,6 +11,7 @@
 	overflow: overlay;
 	scroll-snap-type: x mandatory;
 	padding: .25rem;
+	scroll-padding: .25rem;
 }
 
 [mol_book2] > * {
@@ -44,4 +45,10 @@
 [mol_book2_placeholder] {
 	flex: 1 1 0;
 	/* background: var(--mol_theme_back); */
+}
+
+[mol_book2_gap] {
+	background: none;
+	flex-grow: 1;
+	scroll-snap-align: none;
 }

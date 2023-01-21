@@ -33,6 +33,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Gap* $mol_view
+		 * ```
+		 */
+		@ $mol_mem_key
+		Gap(id: any) {
+			const obj = new this.$.$mol_view()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * pages /$mol_view
 		 * ```
 		 */

@@ -49,7 +49,7 @@
 }
 
 [mol_theme="$mol_theme_special"] {
-	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 90deg ), 50%, calc( 53% + 43% * var(--mol_theme_luma) ) );
+	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 90deg ), 50%, calc( 55% + 43% * var(--mol_theme_luma) ) );
 }
 
 [mol_theme="$mol_theme_accent"] {
