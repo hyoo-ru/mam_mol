@@ -8,3 +8,7 @@ $mol_drop $mol_ghost
 	attr * mol_drop_status <= status?val \ready
 	adopt?transfer *
 	receive?transfer null
+	allow /
+		\link
+		\copy
+		\move
