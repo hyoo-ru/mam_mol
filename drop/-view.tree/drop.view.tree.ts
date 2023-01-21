@@ -66,6 +66,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * allow /
+		 * 	\link
+		 * 	\copy
+		 * 	\move
+		 * ```
+		 */
+		allow() {
+			return [
+				"link",
+				"copy",
+				"move"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * enter?event null
 		 * ```
 		 */

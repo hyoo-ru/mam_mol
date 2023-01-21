@@ -15,7 +15,7 @@ namespace $.$$ {
 			this.status( 'drag' )
 			this._target = event.target
 			
-			event.dataTransfer!.dropEffect = 'move'
+			event.dataTransfer!.dropEffect = this.decide_action( event )
 			event.preventDefault()
 			
 		}
@@ -27,9 +27,18 @@ namespace $.$$ {
 
 			// if( !this.adopt( event.dataTransfer! ) ) return
 			
-			event.dataTransfer!.dropEffect = 'move'
+			event.dataTransfer!.dropEffect = this.decide_action( event )
+			
 			event.preventDefault()
 
+		}
+		
+		decide_action( event: DragEvent ) {
+			const allow = this.allow()
+			if( allow.includes( 'move' ) && event.shiftKey ) return 'move'
+			else if( allow.includes( 'copy' ) && event.ctrlKey ) return 'copy'
+			else if( allow.includes( 'link' ) && event.altKey ) return 'link'
+			else return allow[0]
 		}
 
 		leave( event : DragEvent ) {
