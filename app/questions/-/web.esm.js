@@ -2709,7 +2709,7 @@ var $;
             sub() {
                 const next = [...this.pages(), this.Placeholder()];
                 const prev = $mol_mem_cached(() => this.sub()) ?? [];
-                for (let i = 2; i++;) {
+                for (let i = 1; i++;) {
                     const p = prev[prev.length - i];
                     const n = next[next.length - i];
                     if (!n)
