@@ -33,12 +33,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Gap* $mol_view
+		 * Gap* $mol_view title \
 		 * ```
 		 */
 		@ $mol_mem_key
 		Gap(id: any) {
 			const obj = new this.$.$mol_view()
+			
+			obj.title = () => ""
 			
 			return obj
 		}

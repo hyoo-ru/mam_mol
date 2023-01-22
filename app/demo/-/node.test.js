@@ -5194,6 +5194,7 @@ var $;
         }
         Gap(id) {
             const obj = new this.$.$mol_view();
+            obj.title = () => "";
             return obj;
         }
         pages() {
