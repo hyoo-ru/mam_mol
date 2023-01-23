@@ -46,9 +46,9 @@ Text format with **lightweight consistent formatting**
 
 == Comments
 
-" " " Typical user: Not supported anywhere, go to --ass-- ++assassins++ with this syntax!
+" " " Typical user: Isn't supported anywhere, go to --ass-- ++assassins++ with this syntax!
 " " 
-" " But we are programmers, we can fix it.. You don't even need to be an expert on ;;C++;; to do this ..
+" " But we are **programmers**, we can //fix// it.. You don't even need to be an expert on ;;C++;; to do this ..
 " 
 " No one needs it (c) Sofa Expert
 
