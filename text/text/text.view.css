@@ -98,6 +98,14 @@ h6[mol_text_header] {
 	border-radius: 0;
 }
 
+[mol_text_grid_cell] {
+	width: auto;
+	display: table-cell;
+	vertical-align: baseline;
+	padding: 0;
+	border-radius: 0;
+}
+
 [mol_text_cut] {
 	border: none;
 	width: 100%;

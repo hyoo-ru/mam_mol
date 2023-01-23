@@ -31,11 +31,13 @@
 	box-shadow: inset 1px 1px 0 0 var(--mol_theme_line);
 }
 
-[mol_grid_head] > * {
+[mol_grid_head] > *,
+[mol_grid_row]:first-child > * {
 	box-shadow: inset 1px 0 0 0 var(--mol_theme_line);
 }
 
-[mol_grid_head] > *:first-child {
+[mol_grid_head] > *:first-child,
+[mol_grid_row]:first-child > *:first-child {
 	box-shadow: none;
 }
 

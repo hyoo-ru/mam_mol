@@ -3,7 +3,6 @@
 	transition-duration: .2s;
 	transition-timing-function: ease-out;
 	-webkit-appearance: none;
-	word-break: break-word;
 	box-sizing: border-box;
 	display: flex;
 	flex-shrink: 0;

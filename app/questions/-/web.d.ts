@@ -1115,6 +1115,7 @@ declare namespace $ {
         code: RegExp;
         'code-indent': RegExp;
         table: RegExp;
+        grid: RegExp;
         cut: RegExp;
         block: RegExp;
     }>;
@@ -2186,6 +2187,9 @@ declare namespace $ {
         Table(id: any): $$.$mol_grid;
         Table_row(id: any): $mol_grid_row;
         Table_cell(id: any): $$.$mol_text;
+        Grid(id: any): $$.$mol_grid;
+        Grid_row(id: any): $mol_grid_row;
+        Grid_cell(id: any): $$.$mol_text;
         String(id: any): $$.$mol_dimmer;
         Span(id: any): $mol_text_span;
         Code_line(id: any): $$.$mol_text_code_row;
@@ -2207,6 +2211,9 @@ declare namespace $ {
         table_rows(id: any): readonly any[];
         table_cells(id: any): readonly any[];
         table_cell_text(id: any): string;
+        grid_rows(id: any): readonly any[];
+        grid_cells(id: any): readonly any[];
+        grid_cell_text(id: any): string;
         line_text(id: any): string;
         line_type(id: any): string;
         line_content(id: any): readonly any[];
@@ -2258,6 +2265,17 @@ declare namespace $.$$ {
             row: number;
         }): $mol_text[];
         table_cell_text(id: {
+            block: number;
+            row: number;
+            cell: number;
+        }): string;
+        grid_content(indexBlock: number): string[][];
+        grid_rows(blockId: number): $mol_grid_row[];
+        grid_cells(id: {
+            block: number;
+            row: number;
+        }): $mol_text[];
+        grid_cell_text(id: {
             block: number;
             row: number;
             cell: number;

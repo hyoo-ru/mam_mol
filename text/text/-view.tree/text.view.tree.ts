@@ -215,6 +215,55 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Grid* $mol_grid rows <= grid_rows*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Grid(id: any) {
+			const obj = new this.$.$mol_grid()
+			
+			obj.rows = () => this.grid_rows(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Grid_row* $mol_grid_row cells <= grid_cells*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Grid_row(id: any) {
+			const obj = new this.$.$mol_grid_row()
+			
+			obj.cells = () => this.grid_cells(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Grid_cell* $mol_text
+		 * 	auto_scroll null
+		 * 	highlight <= highlight
+		 * 	uri_resolve* <= uri_resolve*
+		 * 	text <= grid_cell_text*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Grid_cell(id: any) {
+			const obj = new this.$.$mol_text()
+			
+			obj.auto_scroll = () => null as any
+			obj.highlight = () => this.highlight()
+			obj.uri_resolve = (id: any) => this.uri_resolve(id)
+			obj.text = () => this.grid_cell_text(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * String* $mol_dimmer
 		 * 	dom_name \span
 		 * 	needle <= highlight
@@ -464,6 +513,35 @@ namespace $ {
 		 * ```
 		 */
 		table_cell_text(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * grid_rows* /
+		 * ```
+		 */
+		grid_rows(id: any) {
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * grid_cells* /
+		 * ```
+		 */
+		grid_cells(id: any) {
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * grid_cell_text* \
+		 * ```
+		 */
+		grid_cell_text(id: any) {
 			return ""
 		}
 		

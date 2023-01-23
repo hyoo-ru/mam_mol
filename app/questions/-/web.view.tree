@@ -422,6 +422,16 @@ $mol_text $mol_list
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
 		text <= table_cell_text* \
+	- \Grid
+	Grid* $mol_grid
+		rows <= grid_rows* /
+	Grid_row* $mol_grid_row
+		cells <= grid_cells* /
+	Grid_cell* $mol_text
+		auto_scroll null
+		highlight <= highlight \
+		uri_resolve* <= uri_resolve* \
+		text <= grid_cell_text* \
 	- \Lines
 	String* $mol_dimmer
 		dom_name \span

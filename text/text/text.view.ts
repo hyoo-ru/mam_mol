@@ -27,6 +27,7 @@ namespace $.$$ {
 					case 'code': return this.Pre( index )
 					case 'code-indent': return this.Pre( index )
 					case 'table': return this.Table( index )
+					case 'grid': return this.Grid( index )
 					case 'cut': return this.Cut( index )
 					default: return this.Paragraph( index )
 				}
@@ -101,6 +102,37 @@ namespace $.$$ {
 		@ $mol_mem_key
 		table_cell_text( id : { block : number , row : number , cell : number } ) {
 			return this.cell_content( id.block )[ id.row ][ id.cell ]
+		}
+		
+		@ $mol_mem_key
+		grid_content( indexBlock: number ) {
+			return [ ... this.flow_tokens()[ indexBlock ].chunks[ 0 ].match( /(?:^! .*?$\r?\n)+(?:^ +! .*?$\r?\n)*/gm )! ]
+			.map( ( row , rowId ) => {
+				const cells = [] as string[]
+				for( const line of row.trim().split( /\r?\n/ ) ) {
+					const [ _, indent, content ] = /^( *)! (.*)/.exec( line )!
+					const col = Math.ceil( indent.length / 2 )
+					cells[ col ] = ( cells[ col ] ? cells[ col ] + '\n' : '' ) + content
+				}
+				return cells
+			} )
+		}
+		
+		@ $mol_mem_key
+		grid_rows( blockId: number ) {
+			return this.grid_content( blockId )
+			.map( ( row, rowId )=> this.Grid_row({ block: blockId , row: rowId }) )
+		}
+		
+		@ $mol_mem_key
+		grid_cells( id: { block: number, row: number } ) {
+			return this.grid_content( id.block )[ id.row ]
+			.map( ( cell , cellId )=> this.Grid_cell({ block: id.block, row: id.row, cell: cellId }) )
+		}
+		
+		@ $mol_mem_key
+		grid_cell_text( id: { block: number, row: number, cell: number } ) {
+			return this.grid_content( id.block )[ id.row ][ id.cell ]
 		}
 		
 		uri_base() {
