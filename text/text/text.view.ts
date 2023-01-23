@@ -152,7 +152,7 @@ namespace $.$$ {
 			} catch( error ) {
 				
 				$mol_fail_log( error )
-				return null
+				return null as any as string
 				
 			}
 			
