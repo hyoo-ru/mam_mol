@@ -15,27 +15,23 @@ namespace $ {
 			
 			get: ( mutable, field )=> mutable(
 				value[ field ],
-				next => {
-					const next2 = Array.isArray( value ) && typeof field === 'string'
-						? [
-							... value.slice( 0, Number( field ) ),
-							next,
-							... value.slice( Number( field ) + 1 ),
-						] as Value
-						: { ... value, [ field ]: next }
-					value = update( next2 )
-					return value[ field ]
-				},
+				Array.isArray( value )
+					? next => update( value = [
+						... ( value as any[] ).slice( 0, Number( field ) ),
+						next,
+						... ( value as any[] ).slice( Number( field ) + 1 ),
+					] as Value )[ field ]
+					: next => update( value = { ... value, [ field ]: next } )[ field ],
 			),
 			
 			set: ( mutable, field, next )=> {
-				value = update( next )
+				update( value = next )
 				return true
 			},
 			
 			apply: ( mutable, self, [ patch ] )=> {
-				if( !patch ) return value
-				return value = update( patch( value ) )
+				if( patch ) update( value = patch( value ) )
+				return value
 			},
 			
 		} ) as any
