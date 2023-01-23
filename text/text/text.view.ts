@@ -27,6 +27,7 @@ namespace $.$$ {
 					case 'code': return this.Pre( index )
 					case 'code-indent': return this.Pre( index )
 					case 'table': return this.Table( index )
+					case 'cut': return this.Cut( index )
 					default: return this.Paragraph( index )
 				}
 				
@@ -53,12 +54,12 @@ namespace $.$$ {
 		@ $mol_mem_key
 		pre_text( index : number ) {
 			const token = this.flow_tokens()[ index ]
-			return ( token.chunks[2] ?? token.chunks[0].replace( /^(\t|    )/gm , '' ) ).replace( /[\n\r]*$/ , '' )
+			return ( token.chunks[2] ?? token.chunks[0].replace( /^(\t|  (?:\+\+|--|\*\*|  ))/gm , '' ) ).replace( /[\n\r]*$/ , '' )
 		}
 		
 		@ $mol_mem_key
 		quote_text( index : number ) {
-			return this.flow_tokens()[ index ].chunks[0].replace( /^> /mg , '' )
+			return this.flow_tokens()[ index ].chunks[0].replace( /^[>"] /mg , '' )
 		}
 		
 		@ $mol_mem_key
@@ -166,8 +167,14 @@ namespace $.$$ {
 			
 			if( path.length === 1 ) return this.block_text( path[0] )
 			
-			const { found, chunks } = this.line_token( path )
-			return ( chunks[0] || chunks[1] ) ?? found
+			const { name, found, chunks } = this.line_token( path )
+			
+			switch( name ) {
+				case 'link': return chunks[0] || chunks[1].replace( /^.*?\/\/|\/.*$/g, '' )
+				case 'text-link': return chunks[0] || chunks[1].replace( /^.*?\/\/|\/.*$/g, '' )
+				default: return ( chunks[0] || chunks[1] || chunks[2] ) ?? found
+			}
+			
 		}
 		
 		@ $mol_mem_key
@@ -177,10 +184,11 @@ namespace $.$$ {
 				const path2 = [ ... path, index ]
 				
 				switch( name ) {
+					case 'embed': return this.Embed( path2 )
+					case 'link' : return this.Link( path2 )
 					case 'text-link-http': return this.Link_http( path2 )
 					case 'text-link' : return this.Link( path2 )
 					case 'image-link': return this.Embed( path2 )
-					case 'code3': return this.Code_line( path2 )
 					case 'code': return this.Code_line( path2 )
 					case '': return this.String( path2 )
 					default: return this.Span( path2 )
