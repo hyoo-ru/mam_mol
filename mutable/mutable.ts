@@ -1,7 +1,7 @@
 namespace $ {
 	
 	export type $mol_mutable_wrapper< Value > = {
-		( patch?: ( next: Value )=> Value ): Value
+		( patch?: ( next: $mol_type_immutable_deep< Value > )=> $mol_type_immutable_deep< Value > ): $mol_type_immutable_deep< Value >
 	} & {
 		[ Field in keyof Value ]: $mol_mutable_wrapper< Value[ Field ] >
 	}
