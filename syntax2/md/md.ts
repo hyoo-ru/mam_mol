@@ -14,7 +14,7 @@ namespace $ {
 	
 	export var $mol_syntax2_md_line = new $mol_syntax2({
 		'strong' : /\*\*(.+?)\*\*/ ,
-		'emphasis' : /\*(?!\s)(.+?)\*/ ,
+		'emphasis' : /\*(?!\s)(.+?)\*|\/\/(?!\s)(.+?)\/\// ,
 		'code' : /```(.+?)```|;;(.+?);;|`(.+?)`/ ,
 		'insert' : /\+\+(.+?)\+\+/ ,
 		'delete' : /~~(.+?)~~|--(.+?)--/ ,
