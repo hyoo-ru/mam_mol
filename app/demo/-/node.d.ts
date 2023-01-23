@@ -2147,14 +2147,17 @@ declare namespace $ {
         code: RegExp;
         'code-indent': RegExp;
         table: RegExp;
+        cut: RegExp;
         block: RegExp;
     }>;
     var $mol_syntax2_md_line: $mol_syntax2<{
         strong: RegExp;
         emphasis: RegExp;
-        code3: RegExp;
         code: RegExp;
-        strike: RegExp;
+        insert: RegExp;
+        delete: RegExp;
+        embed: RegExp;
+        link: RegExp;
         'image-link': RegExp;
         'text-link': RegExp;
         'text-link-http': RegExp;
@@ -2954,6 +2957,7 @@ declare namespace $ {
         List(id: any): $$.$mol_text;
         Header(id: any): $$.$mol_text_header;
         Pre(id: any): $$.$mol_text_code;
+        Cut(id: any): $mol_view;
         Table(id: any): $$.$mol_grid;
         Table_row(id: any): $mol_grid_row;
         Table_cell(id: any): $$.$mol_text;
@@ -3012,7 +3016,7 @@ declare namespace $.$$ {
             chunks: string[];
         }[];
         block_type(index: number): string;
-        rows(): ($mol_paragraph | $mol_text_code | $mol_grid | $mol_text | $mol_text_header)[];
+        rows(): ($mol_view | $mol_paragraph | $mol_text_code | $mol_grid | $mol_text_header)[];
         param(): string;
         header_level(index: number): number;
         header_arg(index: number): {
@@ -6949,19 +6953,21 @@ declare namespace $ {
     class $hyoo_marked_app extends $mol_book2 {
         plugins(): readonly any[];
         pages(): readonly any[];
+        Preview_close(): $$.$mol_link;
         Theme(): $$.$mol_theme_auto;
         Lights(): $$.$mol_lights_toggle;
         Source(): $mol_link_source;
-        html_show_label(): string;
-        Html_show(): $$.$mol_link;
+        preview(next?: any): string;
+        Preview(): $$.$mol_switch;
         marked(val?: any): string;
         Marked_text(): $$.$mol_textarea;
         Marked(): $mol_page;
-        Close_icon(): $mol_icon_cross;
-        Close(): $$.$mol_link;
         html(): string;
         Html_text(): $$.$mol_text_code;
         Html(): $mol_page;
+        View_text(): $$.$mol_text;
+        View(): $mol_page;
+        Preview_close_icon(): $mol_icon_cross;
     }
 }
 
@@ -7140,7 +7146,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $hyoo_marked_app extends $.$hyoo_marked_app {
-        html_show(): boolean;
+        preview(next?: string): string;
         pages(): $mol_page[];
         html(): string;
         marked(next?: string): string;

@@ -98,6 +98,12 @@ h6[mol_text_header] {
 	border-radius: 0;
 }
 
+[mol_text_cut] {
+	border: none;
+	width: 100%;
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+}
+
 [mol_text_link_http],
 [mol_text_link] {
 	padding: 0;
@@ -155,7 +161,11 @@ h6[mol_text_header] {
 	font-style: italic;
 }
 
-[mol_text_type="strike"] {
+[mol_text_type="insert"] {
+	color: var(--mol_theme_special);
+}
+
+[mol_text_type="delete"] {
 	color: var(--mol_theme_shade);
 }
 

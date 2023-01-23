@@ -1291,14 +1291,17 @@ declare namespace $ {
         code: RegExp;
         'code-indent': RegExp;
         table: RegExp;
+        cut: RegExp;
         block: RegExp;
     }>;
     var $mol_syntax2_md_line: $mol_syntax2<{
         strong: RegExp;
         emphasis: RegExp;
-        code3: RegExp;
         code: RegExp;
-        strike: RegExp;
+        insert: RegExp;
+        delete: RegExp;
+        embed: RegExp;
+        link: RegExp;
         'image-link': RegExp;
         'text-link': RegExp;
         'text-link-http': RegExp;
@@ -2207,6 +2210,7 @@ declare namespace $ {
         List(id: any): $$.$mol_text;
         Header(id: any): $$.$mol_text_header;
         Pre(id: any): $$.$mol_text_code;
+        Cut(id: any): $mol_view;
         Table(id: any): $$.$mol_grid;
         Table_row(id: any): $mol_grid_row;
         Table_cell(id: any): $$.$mol_text;
@@ -2265,7 +2269,7 @@ declare namespace $.$$ {
             chunks: string[];
         }[];
         block_type(index: number): string;
-        rows(): ($mol_paragraph | $mol_text_code | $mol_grid | $mol_text | $mol_text_header)[];
+        rows(): ($mol_view | $mol_paragraph | $mol_text_code | $mol_grid | $mol_text_header)[];
         param(): string;
         header_level(index: number): number;
         header_arg(index: number): {

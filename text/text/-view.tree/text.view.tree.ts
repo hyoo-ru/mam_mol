@@ -149,6 +149,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Cut* $mol_view dom_name \hr
+		 * ```
+		 */
+		@ $mol_mem_key
+		Cut(id: any) {
+			const obj = new this.$.$mol_view()
+			
+			obj.dom_name = () => "hr"
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * Table* $mol_grid
 		 * 	head_cells <= table_head_cells*
 		 * 	rows <= table_rows*

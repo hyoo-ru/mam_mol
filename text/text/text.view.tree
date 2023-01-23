@@ -28,6 +28,7 @@ $mol_text $mol_list
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
 		sidebar_showed <= pre_sidebar_showed <= code_sidebar_showed true
+	Cut* $mol_view dom_name \hr
 	- \Table
 	Table* $mol_grid
 		head_cells <= table_head_cells* /

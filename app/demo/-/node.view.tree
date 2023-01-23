@@ -509,6 +509,7 @@ $mol_text $mol_list
 		highlight <= highlight \
 		uri_resolve* <= uri_resolve* \
 		sidebar_showed <= pre_sidebar_showed <= code_sidebar_showed true
+	Cut* $mol_view dom_name \hr
 	- \Table
 	Table* $mol_grid
 		head_cells <= table_head_cells* /
@@ -2972,25 +2973,31 @@ $hyoo_marked_app $mol_book2
 				<= Lights $mol_lights_toggle
 				<= Source $mol_link_source
 					uri \https://github.com/hyoo-ru/marked.hyoo.ru/
-				<= Html_show $mol_link 
-					sub /
-						<= html_show_label \HTML
-					arg *
-						html \
+				<= Preview $mol_switch
+					value? <=> preview? \
+					options *
+						html \HTML
+						view \View
 			body /
 				<= Marked_text $mol_textarea
 					value?val <=> marked?val \
 		<= Html $mol_page
 			title \HTML
 			tools /
-				<= Close $mol_link 
-					sub /
-						<= Close_icon $mol_icon_cross
-					arg *
-						html null
+				<= Preview_close
 			body /
 				<= Html_text $mol_text_code
 					text <= html \
+		<= View $mol_page
+			title \View
+			tools /
+				<= Preview_close
+			body /
+				<= View_text $mol_text
+					text <= marked
+	Preview_close $mol_link 
+		sub / <= Preview_close_icon $mol_icon_cross
+		arg * preview null
 
 $hyoo_marked_demo $mol_example_large
 	title \CROWD Text Merge

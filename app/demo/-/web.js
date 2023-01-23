@@ -7154,20 +7154,23 @@ var $;
 var $;
 (function ($) {
     $.$mol_syntax2_md_flow = new $mol_syntax2({
-        'quote': /^((?:(?:> )(?:[^]*?)$(\r?\n?))+)([\n\r]*)/,
-        'header': /^(#+)(\s+)(.*?)$([\n\r]*)/,
+        'quote': /^((?:(?:[>"] )(?:[^]*?)$(\r?\n?))+)([\n\r]*)/,
+        'header': /^([#=]+)(\s+)(.*?)$([\n\r]*)/,
         'list': /^((?:(?: ?[*+-]|\d+\.) +(?:[^]*?)$(?:\r?\n?)(?:  (?:[^]*?)$(?:\r?\n?))*)+)((?:\r?\n)*)/,
         'code': /^(```\s*)([\w.-]*)[\r\n]+([^]*?)^(```)$([\n\r]*)/,
         'code-indent': /^((?:(?:  |\t)(?:[^]*?)$([\n\r]*))+)/,
         'table': /((?:^\|.+?$\r?\n)+)([\n\r]*)/,
+        'cut': /^--+$((?:\r?\n)*)/,
         'block': /^(.*?)$((?:\r?\n)*)/,
     });
     $.$mol_syntax2_md_line = new $mol_syntax2({
         'strong': /\*\*(.+?)\*\*/,
         'emphasis': /\*(?!\s)(.+?)\*/,
-        'code3': /```(.+?)```/,
-        'code': /`(.+?)`/,
-        'strike': /~~(.+?)~~/,
+        'code': /```(.+?)```|;;(.+?);;|`(.+?)`/,
+        'insert': /\+\+(.+?)\+\+/,
+        'delete': /~~(.+?)~~|--(.+?)--/,
+        'embed': /""(?:(.*?)\\)?(.*?)""/,
+        'link': /\\\\(?:(.*?)\\)?(.*?)\\\\/,
         'image-link': /!\[([^\[\]]*?)\]\((.*?)\)/,
         'text-link': /\[(.*?(?:\[.*?\].*?)*)\]\((.*?)\)/,
         'text-link-http': /\b(https?:\/\/[^\s,.;:!?")]+(?:[,.;:!?")][^\s,.;:!?")]+)+)/,
@@ -9478,6 +9481,11 @@ var $;
             obj.sidebar_showed = () => this.pre_sidebar_showed();
             return obj;
         }
+        Cut(id) {
+            const obj = new this.$.$mol_view();
+            obj.dom_name = () => "hr";
+            return obj;
+        }
         Table(id) {
             const obj = new this.$.$mol_grid();
             obj.head_cells = () => this.table_head_cells(id);
@@ -9621,6 +9629,9 @@ var $;
     ], $mol_text.prototype, "Pre", null);
     __decorate([
         $mol_mem_key
+    ], $mol_text.prototype, "Cut", null);
+    __decorate([
+        $mol_mem_key
     ], $mol_text.prototype, "Table", null);
     __decorate([
         $mol_mem_key
@@ -9695,7 +9706,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/text/text/text.view.css", "[mol_text] {\n\tline-height: 1.5em;\n\tbox-sizing: border-box;\n\tborder-radius: var(--mol_gap_round);\n\twhite-space: pre-line;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex: 0 0 auto;\n\ttab-size: 4;\n}\n\n[mol_text_paragraph] {\n\tpadding: var(--mol_gap_text);\n\toverflow: auto;\n\tmax-width: 100%;\n\tdisplay: block;\n\tmax-width: 50rem;\n}\n\n[mol_text_span] {\n\tdisplay: inline;\n}\n\n[mol_text_string] {\n\tdisplay: inline;\n\tflex: 0 1 auto;\n\twhite-space: normal;\n}\n\n[mol_text_quote] {\n\tmargin: var(--mol_gap_block);\n\tpadding: var(--mol_gap_block);\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_text_header] {\n\tdisplay: block;\n\ttext-shadow: 0 0;\n\tfont-weight: normal;\n}\n\n* + [mol_text_header] {\n\tmargin-top: 0.75rem;\n}\n\nh1[mol_text_header] {\n\tfont-size: 1.5rem;\n}\n\nh2[mol_text_header] {\n\tfont-size: 1.5rem;\n\tfont-style: italic;\n}\n\nh3[mol_text_header] {\n\tfont-size: 1.25rem;\n}\n\nh4[mol_text_header] {\n\tfont-size: 1.25em;\n\tfont-style: italic;\n}\n\nh5[mol_text_header] {\n\tfont-size: 1rem;\n}\n\nh6[mol_text_header] {\n\tfont-size: 1rem;\n\tfont-style: italic;\n}\n\n[mol_text_header_link] {\n\tcolor: inherit;\n}\n\n[mol_text_list] {\n\tpadding-left: 1.5rem;\n}\n\n[mol_text_list_paragraph] {\n\tdisplay: list-item;\n}\n\n[mol_text_list_paragraph]::before {\n\tcontent: '•';\n\twidth: 1.5rem;\n\tdisplay: inline-block;\n\tposition: absolute;\n\tmargin-left: -1.25rem;\n}\n\n[mol_text_table_cell] {\n\twidth: auto;\n\tdisplay: table-cell;\n\tvertical-align: baseline;\n\tpadding: 0;\n\tborder-radius: 0;\n}\n\n[mol_text_link_http],\n[mol_text_link] {\n\tpadding: 0;\n\tdisplay: inline;\n\twhite-space: nowrap;\n}\n\n[mol_text_link_icon] + [mol_text_embed] {\n\tmargin-left: -1.5rem;\n}\n\n[mol_text_embed_youtube] {\n\tdisplay: inline;\n}\n\n[mol_text_embed_youtube_image],\n[mol_text_embed_youtube_frame],\n[mol_text_embed_object] {\n\tobject-fit: contain;\n\tobject-position: center;\n\tdisplay: inline;\n\twidth: 100vw;\n\tmax-height: calc( 100vh - 6rem );\n\tvertical-align: top;\n}\n[mol_text_embed_object_fallback] {\n\tpadding: 0;\n}\n[mol_text_embed_image] {\n\tobject-fit: contain;\n\tobject-position: center;\n\tdisplay: inline;\n\t/* max-height: calc( 100vh - 6rem ); */\n\tvertical-align: top;\n}\n\n[mol_text_pre] {\n\twhite-space: pre;\n\toverflow-x: auto;\n\ttab-size: 2;\n\tpadding-left: var(--mol_gap_block);\n}\n\n[mol_text_code_line] {\n\tdisplay: inline-block;\n\twhite-space: nowrap;\n}\n\n[mol_text_type=\"strong\"] {\n\ttext-shadow: 0 0;\n\tfilter: contrast(1.5);\n}\n\n[mol_text_type=\"emphasis\"] {\n\tfont-style: italic;\n}\n\n[mol_text_type=\"strike\"] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_text_type=\"remark\"] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_text_type=\"quote\"] {\n\tfont-style: italic;\n}\n");
+    $mol_style_attach("mol/text/text/text.view.css", "[mol_text] {\n\tline-height: 1.5em;\n\tbox-sizing: border-box;\n\tborder-radius: var(--mol_gap_round);\n\twhite-space: pre-line;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex: 0 0 auto;\n\ttab-size: 4;\n}\n\n[mol_text_paragraph] {\n\tpadding: var(--mol_gap_text);\n\toverflow: auto;\n\tmax-width: 100%;\n\tdisplay: block;\n\tmax-width: 50rem;\n}\n\n[mol_text_span] {\n\tdisplay: inline;\n}\n\n[mol_text_string] {\n\tdisplay: inline;\n\tflex: 0 1 auto;\n\twhite-space: normal;\n}\n\n[mol_text_quote] {\n\tmargin: var(--mol_gap_block);\n\tpadding: var(--mol_gap_block);\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_text_header] {\n\tdisplay: block;\n\ttext-shadow: 0 0;\n\tfont-weight: normal;\n}\n\n* + [mol_text_header] {\n\tmargin-top: 0.75rem;\n}\n\nh1[mol_text_header] {\n\tfont-size: 1.5rem;\n}\n\nh2[mol_text_header] {\n\tfont-size: 1.5rem;\n\tfont-style: italic;\n}\n\nh3[mol_text_header] {\n\tfont-size: 1.25rem;\n}\n\nh4[mol_text_header] {\n\tfont-size: 1.25em;\n\tfont-style: italic;\n}\n\nh5[mol_text_header] {\n\tfont-size: 1rem;\n}\n\nh6[mol_text_header] {\n\tfont-size: 1rem;\n\tfont-style: italic;\n}\n\n[mol_text_header_link] {\n\tcolor: inherit;\n}\n\n[mol_text_list] {\n\tpadding-left: 1.5rem;\n}\n\n[mol_text_list_paragraph] {\n\tdisplay: list-item;\n}\n\n[mol_text_list_paragraph]::before {\n\tcontent: '•';\n\twidth: 1.5rem;\n\tdisplay: inline-block;\n\tposition: absolute;\n\tmargin-left: -1.25rem;\n}\n\n[mol_text_table_cell] {\n\twidth: auto;\n\tdisplay: table-cell;\n\tvertical-align: baseline;\n\tpadding: 0;\n\tborder-radius: 0;\n}\n\n[mol_text_cut] {\n\tborder: none;\n\twidth: 100%;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n}\n\n[mol_text_link_http],\n[mol_text_link] {\n\tpadding: 0;\n\tdisplay: inline;\n\twhite-space: nowrap;\n}\n\n[mol_text_link_icon] + [mol_text_embed] {\n\tmargin-left: -1.5rem;\n}\n\n[mol_text_embed_youtube] {\n\tdisplay: inline;\n}\n\n[mol_text_embed_youtube_image],\n[mol_text_embed_youtube_frame],\n[mol_text_embed_object] {\n\tobject-fit: contain;\n\tobject-position: center;\n\tdisplay: inline;\n\twidth: 100vw;\n\tmax-height: calc( 100vh - 6rem );\n\tvertical-align: top;\n}\n[mol_text_embed_object_fallback] {\n\tpadding: 0;\n}\n[mol_text_embed_image] {\n\tobject-fit: contain;\n\tobject-position: center;\n\tdisplay: inline;\n\t/* max-height: calc( 100vh - 6rem ); */\n\tvertical-align: top;\n}\n\n[mol_text_pre] {\n\twhite-space: pre;\n\toverflow-x: auto;\n\ttab-size: 2;\n\tpadding-left: var(--mol_gap_block);\n}\n\n[mol_text_code_line] {\n\tdisplay: inline-block;\n\twhite-space: nowrap;\n}\n\n[mol_text_type=\"strong\"] {\n\ttext-shadow: 0 0;\n\tfilter: contrast(1.5);\n}\n\n[mol_text_type=\"emphasis\"] {\n\tfont-style: italic;\n}\n\n[mol_text_type=\"insert\"] {\n\tcolor: var(--mol_theme_special);\n}\n\n[mol_text_type=\"delete\"] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_text_type=\"remark\"] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_text_type=\"quote\"] {\n\tfont-style: italic;\n}\n");
 })($ || ($ = {}));
 //mol/text/text/-css/text.view.css.ts
 ;
@@ -9722,6 +9733,7 @@ var $;
                         case 'code': return this.Pre(index);
                         case 'code-indent': return this.Pre(index);
                         case 'table': return this.Table(index);
+                        case 'cut': return this.Cut(index);
                         default: return this.Paragraph(index);
                     }
                 });
@@ -9739,10 +9751,10 @@ var $;
             }
             pre_text(index) {
                 const token = this.flow_tokens()[index];
-                return (token.chunks[2] ?? token.chunks[0].replace(/^(\t|    )/gm, '')).replace(/[\n\r]*$/, '');
+                return (token.chunks[2] ?? token.chunks[0].replace(/^(\t|  (?:\+\+|--|\*\*|  ))/gm, '')).replace(/[\n\r]*$/, '');
             }
             quote_text(index) {
-                return this.flow_tokens()[index].chunks[0].replace(/^> /mg, '');
+                return this.flow_tokens()[index].chunks[0].replace(/^[>"] /mg, '');
             }
             list_text(index) {
                 return this.flow_tokens()[index].chunks[0].replace(/^([-*+ ]|\d+\.) ?/mg, '').replace(/^  /mg, '');
@@ -9810,17 +9822,22 @@ var $;
             line_text(path) {
                 if (path.length === 1)
                     return this.block_text(path[0]);
-                const { found, chunks } = this.line_token(path);
-                return (chunks[0] || chunks[1]) ?? found;
+                const { name, found, chunks } = this.line_token(path);
+                switch (name) {
+                    case 'link': return chunks[0] || chunks[1].replace(/^.*?\/\/|\/.*$/g, '');
+                    case 'text-link': return chunks[0] || chunks[1].replace(/^.*?\/\/|\/.*$/g, '');
+                    default: return (chunks[0] || chunks[1] || chunks[2]) ?? found;
+                }
             }
             line_content(path) {
                 return this.line_tokens(path).map(({ name, chunks }, index) => {
                     const path2 = [...path, index];
                     switch (name) {
+                        case 'embed': return this.Embed(path2);
+                        case 'link': return this.Link(path2);
                         case 'text-link-http': return this.Link_http(path2);
                         case 'text-link': return this.Link(path2);
                         case 'image-link': return this.Embed(path2);
-                        case 'code3': return this.Code_line(path2);
                         case 'code': return this.Code_line(path2);
                         case '': return this.String(path2);
                         default: return this.Span(path2);
@@ -26095,8 +26112,19 @@ var $;
         pages() {
             return [
                 this.Marked(),
-                this.Html()
+                this.Html(),
+                this.View()
             ];
+        }
+        Preview_close() {
+            const obj = new this.$.$mol_link();
+            obj.sub = () => [
+                this.Preview_close_icon()
+            ];
+            obj.arg = () => ({
+                preview: null
+            });
+            return obj;
         }
         Theme() {
             const obj = new this.$.$mol_theme_auto();
@@ -26111,16 +26139,17 @@ var $;
             obj.uri = () => "https://github.com/hyoo-ru/marked.hyoo.ru/";
             return obj;
         }
-        html_show_label() {
-            return "HTML";
+        preview(next) {
+            if (next !== undefined)
+                return next;
+            return "";
         }
-        Html_show() {
-            const obj = new this.$.$mol_link();
-            obj.sub = () => [
-                this.html_show_label()
-            ];
-            obj.arg = () => ({
-                html: ""
+        Preview() {
+            const obj = new this.$.$mol_switch();
+            obj.value = (next) => this.preview(next);
+            obj.options = () => ({
+                html: "HTML",
+                view: "View"
             });
             return obj;
         }
@@ -26140,25 +26169,11 @@ var $;
             obj.tools = () => [
                 this.Lights(),
                 this.Source(),
-                this.Html_show()
+                this.Preview()
             ];
             obj.body = () => [
                 this.Marked_text()
             ];
-            return obj;
-        }
-        Close_icon() {
-            const obj = new this.$.$mol_icon_cross();
-            return obj;
-        }
-        Close() {
-            const obj = new this.$.$mol_link();
-            obj.sub = () => [
-                this.Close_icon()
-            ];
-            obj.arg = () => ({
-                html: null
-            });
             return obj;
         }
         html() {
@@ -26173,14 +26188,37 @@ var $;
             const obj = new this.$.$mol_page();
             obj.title = () => "HTML";
             obj.tools = () => [
-                this.Close()
+                this.Preview_close()
             ];
             obj.body = () => [
                 this.Html_text()
             ];
             return obj;
         }
+        View_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => this.marked();
+            return obj;
+        }
+        View() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => "View";
+            obj.tools = () => [
+                this.Preview_close()
+            ];
+            obj.body = () => [
+                this.View_text()
+            ];
+            return obj;
+        }
+        Preview_close_icon() {
+            const obj = new this.$.$mol_icon_cross();
+            return obj;
+        }
     }
+    __decorate([
+        $mol_mem
+    ], $hyoo_marked_app.prototype, "Preview_close", null);
     __decorate([
         $mol_mem
     ], $hyoo_marked_app.prototype, "Theme", null);
@@ -26192,7 +26230,10 @@ var $;
     ], $hyoo_marked_app.prototype, "Source", null);
     __decorate([
         $mol_mem
-    ], $hyoo_marked_app.prototype, "Html_show", null);
+    ], $hyoo_marked_app.prototype, "preview", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_marked_app.prototype, "Preview", null);
     __decorate([
         $mol_mem
     ], $hyoo_marked_app.prototype, "marked", null);
@@ -26204,16 +26245,19 @@ var $;
     ], $hyoo_marked_app.prototype, "Marked", null);
     __decorate([
         $mol_mem
-    ], $hyoo_marked_app.prototype, "Close_icon", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_marked_app.prototype, "Close", null);
-    __decorate([
-        $mol_mem
     ], $hyoo_marked_app.prototype, "Html_text", null);
     __decorate([
         $mol_mem
     ], $hyoo_marked_app.prototype, "Html", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_marked_app.prototype, "View_text", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_marked_app.prototype, "View", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_marked_app.prototype, "Preview_close_icon", null);
     $.$hyoo_marked_app = $hyoo_marked_app;
 })($ || ($ = {}));
 //hyoo/marked/app/-view.tree/app.view.tree.ts
@@ -26530,7 +26574,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("hyoo/marked/app/app.view.css", "[hyoo_marked_app_marked] {\n\tflex: 1000 1 40rem;\n}\n\n[hyoo_marked_app_marked_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_marked_app_html_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_marked_app_html] {\n\tflex: 1000 1 40rem;\n}\n");
+    $mol_style_attach("hyoo/marked/app/app.view.css", "[hyoo_marked_app_marked] {\n\tflex: 1000 1 40rem;\n}\n\n[hyoo_marked_app_preview] {\n\tflex-grow: 0;\n}\n\n[hyoo_marked_app_html] {\n\tflex: 1000 1 40rem;\n}\n\n[hyoo_marked_app_view] {\n\tflex: 1000 1 40rem;\n}\n");
 })($ || ($ = {}));
 //hyoo/marked/app/-css/app.view.css.ts
 ;
@@ -26540,13 +26584,14 @@ var $;
     var $$;
     (function ($$) {
         class $hyoo_marked_app extends $.$hyoo_marked_app {
-            html_show() {
-                return this.$.$mol_state_arg.value('html') === '';
+            preview(next) {
+                return this.$.$mol_state_arg.value('preview', next) ?? '';
             }
             pages() {
                 return [
                     this.Marked(),
-                    ...this.html_show() ? [this.Html()] : []
+                    ...this.preview() === 'html' ? [this.Html()] : [],
+                    ...this.preview() === 'view' ? [this.View()] : [],
                 ];
             }
             html() {
