@@ -9,10 +9,10 @@ const prev = {
 }
 
 const mut = $mol_mutable( data )
-mut.foo[1] = 7
+mut.foo[1]( v => -v )
 const next = mut()
 
 // prev !== next
-// next.foo == [ 1, 7, 3 ]
+// next.foo == [ 1, -2, 3 ]
 // prev.bar === next.bar
 ```
