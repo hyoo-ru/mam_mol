@@ -27,6 +27,23 @@ namespace $ {
 			
 		},
 		
+		'Array insert'() {
+			
+			const val = [[ 1, 2, 3, 4 ]]
+			const mut = $mol_mutable( val )
+			
+			$mol_assert_like(
+				mut[0]( a => [ ... a.slice( 0, 2 ), 7, ... a.slice( 2 ) ] ),
+				[ 1, 2, 7, 3, 4 ],
+			)
+			
+			$mol_assert_like(
+				mut(),
+				[[ 1, 2, 7, 3, 4 ]],
+			)
+			
+		},
+		
 		'Deep objects'() {
 			
 			const val = { a: { x: 1 }, b: { y: 2 }, c: { z: 3 } }
