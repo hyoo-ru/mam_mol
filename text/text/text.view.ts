@@ -144,8 +144,17 @@ namespace $.$$ {
 			
 			if( /^(\w+script+:)+/.test( uri ) ) return null as any as string
 			
-			const url = new URL( uri , this.uri_base() )
-			return url.toString()
+			try {
+				
+				const url = new URL( uri , this.uri_base() )
+				return url.toString()
+				
+			} catch( error ) {
+				
+				$mol_fail_log( error )
+				return null as any as string
+				
+			}
 			
 		}
 		
