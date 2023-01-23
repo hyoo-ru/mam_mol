@@ -1,9 +1,7 @@
 namespace $ {
 	
 	export type $mol_mutable_wrapper< Value > = {
-		(
-			patch?: ( next: $mol_type_immutable_deep< Value > )=> $mol_type_immutable_deep< Value >
-		): $mol_type_immutable_deep< Value >
+		( patch?: ( next: $mol_type_immutable_deep< Value > )=> $mol_type_immutable_deep< Value > ): $mol_type_immutable_deep< Value >
 	} & {
 		[ Field in keyof Value ]: $mol_mutable_wrapper< Value[ Field ] >
 	}
@@ -13,8 +11,7 @@ namespace $ {
 		update: ( next: Value )=> Value = next => input = next,
 	): $mol_mutable_wrapper< Value > {
 		
-		let output = undefined as undefined | Value
-		
+		let output = undefined as any as Value
 		const clone = Array.isArray( input )
 			? ()=> [ ... input as any ] as Value
 			: ()=> ({ ... input })
