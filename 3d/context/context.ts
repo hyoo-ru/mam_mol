@@ -18,12 +18,22 @@ namespace $ {
 			
 			const ok = gl.getShaderParameter( shader, gl.COMPILE_STATUS )
 			if( ok ) return shader
-		  
+			
 			const log = gl.getShaderInfoLog( shader )
 			gl.deleteShader( shader )
 			
 			throw new Error( String( log ) )
-	  	}
+		}
+		
+		func< Face extends $mol_3d_program_face >(
+			name: string,
+			face: Face,
+		) {
+			return this.program( face,
+				$mol_3d_glsl_both + $mol_3d_glsl_vert + `void main() { ${name}(); }`,
+				$mol_3d_glsl_both + $mol_3d_glsl_frag + `void main() { ${name}(); }`,
+			)
+		}
 		
 		program< Face extends $mol_3d_program_face >(
 			face: Face,
@@ -75,5 +85,5 @@ namespace $ {
 	  	}
 		
 	}
-			
+	
 }
