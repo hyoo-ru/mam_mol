@@ -6082,15 +6082,9 @@ var $;
     ], $mol_grid.prototype, "Cell_dimmer", null);
     $.$mol_grid = $mol_grid;
     class $mol_grid_table extends $mol_list {
-        dom_name() {
-            return "table";
-        }
     }
     $.$mol_grid_table = $mol_grid_table;
     class $mol_grid_row extends $mol_view {
-        dom_name() {
-            return "tr";
-        }
         sub() {
             return this.cells();
         }
@@ -6100,9 +6094,6 @@ var $;
     }
     $.$mol_grid_row = $mol_grid_row;
     class $mol_grid_cell extends $mol_view {
-        dom_name() {
-            return "td";
-        }
         minimal_height() {
             return 40;
         }

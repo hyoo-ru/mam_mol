@@ -367,27 +367,9 @@ namespace $ {
 	}
 	
 	export class $mol_grid_table extends $mol_list {
-		
-		/**
-		 * ```tree
-		 * dom_name \table
-		 * ```
-		 */
-		dom_name() {
-			return "table"
-		}
 	}
 	
 	export class $mol_grid_row extends $mol_view {
-		
-		/**
-		 * ```tree
-		 * dom_name \tr
-		 * ```
-		 */
-		dom_name() {
-			return "tr"
-		}
 		
 		/**
 		 * ```tree
@@ -410,15 +392,6 @@ namespace $ {
 	}
 	
 	export class $mol_grid_cell extends $mol_view {
-		
-		/**
-		 * ```tree
-		 * dom_name \td
-		 * ```
-		 */
-		dom_name() {
-			return "td"
-		}
 		
 		/**
 		 * ```tree

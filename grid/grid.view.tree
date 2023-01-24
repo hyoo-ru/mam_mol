@@ -39,14 +39,14 @@ $mol_grid $mol_view
 			haystack <= cell_value* \
 
 $mol_grid_table $mol_list
-	dom_name \table
+	- dom_name \table
 
 $mol_grid_row $mol_view
-	dom_name \tr
+	- dom_name \tr
 	sub <= cells /$mol_view
 
 $mol_grid_cell $mol_view
-	dom_name \td
+	- dom_name \td
 	minimal_height 40
 
 $mol_grid_number $mol_grid_cell

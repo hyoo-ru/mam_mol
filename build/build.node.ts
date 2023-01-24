@@ -114,6 +114,21 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
+		glslTranspile( path : string ) {
+
+			const file = $mol_file.absolute( path )
+			const name = file.name()
+			const type = name.match( /\.(vert|frag)\./ )?.[1] ?? 'both'
+			const script = file.parent().resolve( `-glsl/${ name }.ts` )
+			
+			const styles = file.text()
+			const code = `namespace $ { $.$`+`mol_3d_glsl_${ type } += ${ JSON.stringify( styles ) } }\n`
+			script.text( code )
+			
+			return [ script ]
+		}
+
+		@ $mol_mem_key
 		mods( { path , exclude } : { path : string , exclude? : string[] } ) {
 
 			const parent = $mol_file.absolute( path )
@@ -135,6 +150,8 @@ namespace $ {
 						mods.push( ... this.viewTreeTranspile( child.path() ) )
 					} else if( /(\.css)$/.test( name ) ) {
 						mods.push( ... this.cssTranspile( child.path() ) )
+					} else if( /(\.glsl)$/.test( name ) ) {
+						mods.push( ... this.glslTranspile( child.path() ) )
 					}
 
 					mods.push( child )
@@ -1529,7 +1546,7 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/\$([a-z0-9]{2,})(?:((?:[._A-Z0-9][a-z0-9]+)+)|\[\s*['"]([^'"]+?)['"]\s*\])?/g , ( str , pack , path , name )=> {
+					/\$([a-z0-9]{2,})(?:((?:[\._A-Z0-9][a-z0-9]+)+)|\[\s*['"]([^'"]+?)['"]\s*\])?/g , ( str , pack , path , name )=> {
 						if( path ) path = '/' + pack + path.replace( /(?=[A-Z])/g , '_' ).toLowerCase().replace( /[_.\[\]'"]+/g , '/' )
 						if( name ) name = '/' + pack + '/' + name
 						pack = '/' + pack
@@ -1594,6 +1611,41 @@ namespace $ {
 						return str
 					}
 				)
+			}
+		)
+
+		return depends
+	}
+	
+	$mol_build.dependors[ 'glsl' ] = source => {
+
+		var depends : { [ index : string ] : number } = {
+			'/mol/3d/glsl': 0,
+		}
+		
+		var lines = String( source.text() )
+		.replace( /\/\*[^]*?\*\//g , '' ) // drop block comments
+		.replace( /\/\/.*$/gm , '' ) // drop inline comments
+		.split( '\n' )
+		
+		lines.forEach(
+			function( line ) {
+				
+				var indent = /^([\s\t]*)/.exec( line )!
+				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
+				
+				line.replace(
+					/([a-z][a-z0-9]+(?:_+[a-z0-9]+)+)/ig , ( str , name )=> {
+						
+						const path = name.split( /_+/g )
+						if( path[0] === 'gl' ) return str
+						
+						$mol_build_depsMerge( depends , { [ '/' + path.join( '/' ) ] : priority } )
+						return str
+						
+					}
+				)
+				
 			}
 		)
 

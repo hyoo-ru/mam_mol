@@ -2627,15 +2627,12 @@ declare namespace $ {
         Cell_dimmer(id: any): $$.$mol_dimmer;
     }
     class $mol_grid_table extends $mol_list {
-        dom_name(): string;
     }
     class $mol_grid_row extends $mol_view {
-        dom_name(): string;
         sub(): readonly $mol_view[];
         cells(): readonly $mol_view[];
     }
     class $mol_grid_cell extends $mol_view {
-        dom_name(): string;
         minimal_height(): number;
     }
     class $mol_grid_number extends $mol_grid_cell {

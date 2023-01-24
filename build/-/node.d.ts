@@ -1055,6 +1055,7 @@ declare namespace $ {
         metaTreeTranspile(path: string): $mol_file[];
         viewTreeTranspile(path: string): $mol_file[];
         cssTranspile(path: string): $mol_file[];
+        glslTranspile(path: string): $mol_file[];
         mods({ path, exclude }: {
             path: string;
             exclude?: string[];
