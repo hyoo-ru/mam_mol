@@ -16,7 +16,7 @@ namespace $ {
 			const res = [] as $mol_wire_pub[]
 			const max = this.cursor >=0 ? this.cursor : this.sub_from
 			for( let i = this.pub_from; i < max; i += 2 ) {
-				res.push( this.data[i] as $mol_wire_pub )
+				if( this.data[i] ) res.push( this.data[i] as $mol_wire_pub )
 			}
 			return res
 		}
