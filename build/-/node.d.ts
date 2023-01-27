@@ -962,6 +962,13 @@ declare namespace $ {
         unlink(from: Node, to: Node): void;
         acyclic(get_weight: (edge: Edge) => number): void;
         get sorted(): Set<Node>;
+        get roots(): Node[];
+        depth(select: (left: number, right: number) => number): Map<Node, number>;
+        get depth_min(): Map<Node, number>;
+        get depth_max(): Map<Node, number>;
+        group_depth(select: (left: number, right: number) => number): Node[][];
+        get group_depth_min(): Node[][];
+        get proup_depth_max(): Node[][];
     }
 }
 

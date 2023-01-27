@@ -4096,6 +4096,51 @@ var $;
             }
             return sorted;
         }
+        get roots() {
+            const roots = [];
+            for (const node of this.nodes) {
+                if (this.edges_in.get(node)?.size)
+                    continue;
+                roots.push(node);
+            }
+            return roots;
+        }
+        depth(select) {
+            const stat = new Map();
+            const visit = (node, depth = 0) => {
+                if (stat.has(node))
+                    stat.set(node, select(depth, stat.get(node)));
+                else
+                    stat.set(node, depth);
+                for (const kid of this.edges_out.get(node)?.keys() ?? [])
+                    visit(kid, depth + 1);
+            };
+            for (const root of this.roots)
+                visit(root);
+            return stat;
+        }
+        get depth_min() {
+            return this.depth(Math.min);
+        }
+        get depth_max() {
+            return this.depth(Math.max);
+        }
+        group_depth(select) {
+            const groups = [];
+            for (const [node, depth] of this.depth(select).entries()) {
+                if (groups[depth])
+                    groups[depth].push(node);
+                else
+                    groups[depth] = [node];
+            }
+            return groups;
+        }
+        get group_depth_min() {
+            return this.group_depth(Math.min);
+        }
+        get proup_depth_max() {
+            return this.group_depth(Math.max);
+        }
     }
     $.$mol_graph = $mol_graph;
 })($ || ($ = {}));
@@ -8633,7 +8678,7 @@ var $;
             atom.watch();
         }
         else {
-            $mol_fail(new Error('Atom is equired for watching'));
+            $mol_fail(new Error('Atom is required for watching'));
         }
     }
     $.$mol_wire_watch = $mol_wire_watch;

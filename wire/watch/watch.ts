@@ -9,7 +9,7 @@ namespace $ {
 		if( atom instanceof $mol_wire_atom ) {
 			atom.watch()
 		} else {
-			$mol_fail( new Error( 'Atom is equired for watching' ) )
+			$mol_fail( new Error( 'Atom is required for watching' ) )
 		}
 	}
 	

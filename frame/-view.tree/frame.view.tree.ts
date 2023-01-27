@@ -81,13 +81,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * uri?val \
+		 * uri?val \about:config
 		 * ```
 		 */
 		@ $mol_mem
 		uri(val?: any) {
 			if ( val !== undefined ) return val as never
-			return ""
+			return "about:config"
 		}
 		
 		/**

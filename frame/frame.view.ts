@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $mol_frame extends $.$mol_frame {
 		
 		window() {
-			if( this.html() ) return ( this.dom_node() as HTMLIFrameElement ).contentWindow!
+			// if( this.html() ) return ( this.dom_node() as HTMLIFrameElement ).contentWindow!
 			return super.window()
 		}
 

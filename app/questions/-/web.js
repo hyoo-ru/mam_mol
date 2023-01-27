@@ -1697,7 +1697,7 @@ var $;
             atom.watch();
         }
         else {
-            $mol_fail(new Error('Atom is equired for watching'));
+            $mol_fail(new Error('Atom is required for watching'));
         }
     }
     $.$mol_wire_watch = $mol_wire_watch;
@@ -6752,7 +6752,7 @@ var $;
         uri(val) {
             if (val !== undefined)
                 return val;
-            return "";
+            return "about:config";
         }
         html() {
             return null;
@@ -6790,8 +6790,6 @@ var $;
     (function ($$) {
         class $mol_frame extends $.$mol_frame {
             window() {
-                if (this.html())
-                    return this.dom_node().contentWindow;
                 return super.window();
             }
             allow() {

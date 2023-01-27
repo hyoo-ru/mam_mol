@@ -2182,7 +2182,7 @@ var $;
             atom.watch();
         }
         else {
-            $mol_fail(new Error('Atom is equired for watching'));
+            $mol_fail(new Error('Atom is required for watching'));
         }
     }
     $.$mol_wire_watch = $mol_wire_watch;

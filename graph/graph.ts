@@ -152,6 +152,64 @@ namespace $ {
 			return sorted
 		}
 		
+		get roots() {
+			
+			const roots = [] as Node[]
+			for( const node of this.nodes ) {
+				
+				if( this.edges_in.get( node )?.size ) continue
+				roots.push( node )
+				
+			}
+			
+			return roots
+		}
+		
+		depth( select: ( left: number, right: number )=> number ) {
+			
+			const stat = new Map< Node, number >()
+			const visit = ( node: Node, depth = 0 )=> {
+				
+				if( stat.has( node ) ) stat.set( node, select( depth, stat.get( node )! ) )
+				else stat.set( node, depth )
+				
+				for( const kid of this.edges_out.get( node )?.keys() ?? [] ) visit( kid, depth + 1 )
+				
+			}
+			for( const root of this.roots ) visit( root )
+			
+			return stat
+		}
+		
+		get depth_min() {
+			return this.depth( Math.min )
+		}
+		
+		get depth_max() {
+			return this.depth( Math.max )
+		}
+		
+		group_depth( select: ( left: number, right: number )=> number ) {
+			
+			const groups = [] as Node[][]
+			for( const [ node, depth ] of this.depth( select ).entries() ) {
+				
+				if( groups[ depth ] ) groups[ depth ].push( node )
+				else groups[ depth ] = [ node ]
+				
+			}
+			
+			return groups
+		}
+		
+		get group_depth_min() {
+			return this.group_depth( Math.min )
+		}
+		
+		get proup_depth_max() {
+			return this.group_depth( Math.max )
+		}
+		
 	}
 	
 }
