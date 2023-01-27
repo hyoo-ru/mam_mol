@@ -10,8 +10,8 @@
 	transition: none;
 	overflow: overlay;
 	scroll-snap-type: x mandatory;
-	padding: .25rem;
-	scroll-padding: .25rem;
+	padding: 0 .25rem;
+	scroll-padding: 0 .25rem;
 }
 
 [mol_book2] > * {
