@@ -1,8 +1,8 @@
 $mol_canvas $mol_view
 	dom_name \canvas
 	context CanvasRenderingContext2D
-	attr *
+	field *
 		^
-		width <= width 400
-		height <= height 300
+		width <= width 0
+		height <= height 0
 	paint null
