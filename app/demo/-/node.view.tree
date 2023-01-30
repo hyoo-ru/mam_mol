@@ -2778,6 +2778,26 @@ $mol_labeler_demo $mol_example_small
 		\field
 		\caption
 
+$mol_canvas $mol_view
+	dom_name \canvas
+	context CanvasRenderingContext2D
+	field *
+		^
+		width <= width 0
+		height <= height 0
+	paint null
+
+$mol_layout_demo $mol_example_large
+	title \Custom flex layout engine
+	sub /
+		<= Sample $mol_canvas
+			paint <= paint null
+			context => context
+			width => width
+			height => height
+	tags /
+		\layout
+
 $mol_icon_download $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
 
 $mol_link_demo $mol_example_small

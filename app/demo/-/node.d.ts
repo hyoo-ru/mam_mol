@@ -6457,6 +6457,135 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    const enum $mol_layout_break {
+        taboo = "taboo",
+        allow = "allow",
+        force = "force"
+    }
+}
+
+declare namespace $ {
+    class $mol_layout extends $mol_object {
+        ortho: $mol_layout | null;
+        pos: number;
+        size: number;
+        min: number;
+        max: number;
+        base: number;
+        break_before(): $mol_layout_break;
+        break_after(): $mol_layout_break;
+        before(): number;
+        after(): number;
+        padding(): number;
+        limit(): number;
+        grow(): number;
+        shrink(): number;
+        up(): void;
+        down(): void;
+        fresh(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_canvas extends $mol_view {
+        dom_name(): string;
+        context(): CanvasRenderingContext2D;
+        field(): {
+            width: number;
+            height: number;
+        };
+        paint(): any;
+        width(): number;
+        height(): number;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $.$$ {
+    class $mol_canvas extends $.$mol_canvas {
+        context(): CanvasRenderingContext2D;
+        width(): number;
+        height(): number;
+        render(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_layout_demo extends $mol_example_large {
+        title(): string;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        paint(): any;
+        context(): CanvasRenderingContext2D;
+        width(): number;
+        height(): number;
+        Sample(): $$.$mol_canvas;
+    }
+}
+
+declare namespace $ {
+    class $mol_layout_tree extends $mol_layout {
+        kids: $mol_layout[];
+        ortho: $mol_layout_tree | null;
+    }
+}
+
+declare namespace $ {
+    class $mol_layout_stack extends $mol_layout_tree {
+        up(): void;
+        down(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_layout_flex extends $mol_layout_tree {
+        up(): void;
+        down(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_layout_col extends $mol_layout_stack {
+        ortho: $mol_layout_flex;
+        down(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_layout_row extends $mol_layout_flex {
+        ortho: $mol_layout_stack;
+        down(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_layout_wrap extends $mol_layout_flex {
+        ortho: $mol_layout_flex;
+        down(): void;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_layout_demo extends $.$mol_layout_demo {
+        font(): string;
+        widgets_left(): {
+            layout: $mol_layout;
+            text: string;
+            font: string;
+        }[];
+        widgets_right(): {
+            layout: $mol_layout;
+            text: string;
+            font: string;
+        }[];
+        layout(): $mol_layout_col;
+        paint(): void;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_download extends $mol_icon {
         path(): string;
     }

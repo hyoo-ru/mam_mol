@@ -24999,6 +24999,514 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    let $mol_layout_break;
+    (function ($mol_layout_break) {
+        $mol_layout_break["taboo"] = "taboo";
+        $mol_layout_break["allow"] = "allow";
+        $mol_layout_break["force"] = "force";
+    })($mol_layout_break = $.$mol_layout_break || ($.$mol_layout_break = {}));
+})($ || ($ = {}));
+//mol/layout/break/break.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_layout extends $mol_object {
+        ortho = null;
+        pos = 0;
+        size = 0;
+        min = 0;
+        max = 0;
+        base = 0;
+        break_before() { return $mol_layout_break.allow; }
+        break_after() { return $mol_layout_break.allow; }
+        before() { return 0; }
+        after() { return 0; }
+        padding() { return this.before() + this.after(); }
+        limit() { return this.size - this.padding(); }
+        grow() { return Math.max(0, this.max - this.min); }
+        shrink() { return this.min || 1; }
+        up() { }
+        down() { }
+        fresh() {
+            this.up();
+            this.down();
+            this.ortho?.fresh();
+        }
+    }
+    $.$mol_layout = $mol_layout;
+})($ || ($ = {}));
+//mol/layout/layout.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_canvas extends $mol_view {
+        dom_name() {
+            return "canvas";
+        }
+        context() {
+            const obj = new this.$.CanvasRenderingContext2D();
+            return obj;
+        }
+        field() {
+            return {
+                ...super.field(),
+                width: this.width(),
+                height: this.height()
+            };
+        }
+        paint() {
+            return null;
+        }
+        width() {
+            return 0;
+        }
+        height() {
+            return 0;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_canvas.prototype, "context", null);
+    $.$mol_canvas = $mol_canvas;
+})($ || ($ = {}));
+//mol/canvas/-view.tree/canvas.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($mol_canvas, {
+            alignSelf: 'stretch',
+            justifySelf: 'stretch',
+            flex: {
+                grow: 1,
+                shrink: 1,
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/canvas/canvas.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_canvas extends $.$mol_canvas {
+            context() {
+                return this.dom_node().getContext('2d');
+            }
+            width() {
+                return Math.ceil((this.view_rect()?.width ?? 0) * this.$.$mol_dom_context.devicePixelRatio);
+            }
+            height() {
+                return Math.ceil((this.view_rect()?.height ?? 0) * this.$.$mol_dom_context.devicePixelRatio);
+            }
+            render() {
+                super.render();
+                this.paint();
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_canvas.prototype, "context", null);
+        __decorate([
+            $mol_mem
+        ], $mol_canvas.prototype, "width", null);
+        __decorate([
+            $mol_mem
+        ], $mol_canvas.prototype, "height", null);
+        $$.$mol_canvas = $mol_canvas;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/canvas/canvas.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_layout_demo extends $mol_example_large {
+        title() {
+            return "Custom flex layout engine";
+        }
+        sub() {
+            return [
+                this.Sample()
+            ];
+        }
+        tags() {
+            return [
+                "layout"
+            ];
+        }
+        paint() {
+            return null;
+        }
+        context() {
+            return this.Sample().context();
+        }
+        width() {
+            return this.Sample().width();
+        }
+        height() {
+            return this.Sample().height();
+        }
+        Sample() {
+            const obj = new this.$.$mol_canvas();
+            obj.paint = () => this.paint();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_layout_demo.prototype, "Sample", null);
+    $.$mol_layout_demo = $mol_layout_demo;
+})($ || ($ = {}));
+//mol/layout/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_layout_tree extends $mol_layout {
+        kids = [];
+        ortho = null;
+    }
+    $.$mol_layout_tree = $mol_layout_tree;
+})($ || ($ = {}));
+//mol/layout/tree/tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_layout_stack extends $mol_layout_tree {
+        up() {
+            let base = 0;
+            for (const kid of this.kids) {
+                kid.up();
+                base = Math.max(base, kid.base);
+            }
+            this.base = base + this.before();
+            let min = 0;
+            let max = 0;
+            for (const kid of this.kids) {
+                const shift = base - kid.base;
+                min = Math.max(min, kid.min + shift);
+                max = Math.max(max, kid.max + shift);
+            }
+            const padding = this.padding();
+            this.min = min + padding;
+            this.max = max + padding;
+        }
+        down() {
+            const pos = this.pos + this.before();
+            const base = this.base - this.before();
+            const limit = this.limit();
+            for (const kid of this.kids) {
+                const shift = base - kid.base;
+                kid.pos = pos + shift;
+                kid.size = kid.grow() ? limit : Math.min(kid.max, limit);
+                kid.down();
+            }
+        }
+    }
+    $.$mol_layout_stack = $mol_layout_stack;
+})($ || ($ = {}));
+//mol/layout/stack/stack.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_layout_flex extends $mol_layout_tree {
+        up() {
+            let min = this.padding();
+            let max = min;
+            for (const kid of this.kids) {
+                kid.up();
+                min += kid.min;
+                max += kid.max;
+            }
+            this.min = min;
+            this.max = max;
+            this.base = this.before() + (this.kids[0]?.base ?? 0);
+        }
+        down() {
+            const limit = this.limit();
+            const min = this.min - this.padding();
+            const diff = limit - this.min;
+            let pos = this.pos + this.before();
+            if (diff < 0) {
+                let mult = limit / min;
+                if (!Number.isFinite(mult))
+                    mult = 0;
+                for (const kid of this.kids) {
+                    kid.pos = pos;
+                    pos += kid.size = Math.min(limit, Math.floor(kid.shrink() * mult));
+                    kid.down();
+                }
+            }
+            else if (diff > 0) {
+                let mult = diff / this.grow();
+                if (!Number.isFinite(mult))
+                    mult = 0;
+                for (const kid of this.kids) {
+                    kid.pos = pos;
+                    pos += kid.size = kid.min + Math.floor(kid.grow() * mult);
+                    kid.down();
+                }
+            }
+            else {
+                for (const kid of this.kids) {
+                    kid.pos = pos;
+                    pos += kid.size = kid.min;
+                    kid.down();
+                }
+            }
+        }
+    }
+    $.$mol_layout_flex = $mol_layout_flex;
+})($ || ($ = {}));
+//mol/layout/flex/flex.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_layout_col extends $mol_layout_stack {
+        ortho = $mol_layout_flex.make({});
+        down() {
+            super.down();
+            this.ortho.kids = this.kids.map(kid => kid.ortho);
+        }
+    }
+    $.$mol_layout_col = $mol_layout_col;
+})($ || ($ = {}));
+//mol/layout/col/col.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_layout_row extends $mol_layout_flex {
+        ortho = $mol_layout_stack.make({});
+        down() {
+            super.down();
+            this.ortho.kids = this.kids.map(kid => kid.ortho);
+        }
+    }
+    $.$mol_layout_row = $mol_layout_row;
+})($ || ($ = {}));
+//mol/layout/row/row.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_layout_wrap extends $mol_layout_flex {
+        ortho = $mol_layout_flex.make({});
+        down() {
+            const limit = this.limit();
+            this.ortho.kids = [];
+            let index = 0;
+            all: while (index < this.kids.length) {
+                const group = $mol_layout_flex.make({
+                    pos: this.pos,
+                    size: this.size,
+                    before: () => this.before(),
+                    after: () => this.after(),
+                    ortho: $mol_layout_stack.make({})
+                });
+                group: while (index < this.kids.length) {
+                    const line = [];
+                    let frag;
+                    let ind = index;
+                    let line_min = 0;
+                    let line_max = 0;
+                    let break_after;
+                    let break_before;
+                    line: while (true) {
+                        frag = this.kids[ind];
+                        line.push(frag);
+                        line_min = Math.max(line_min, frag.min);
+                        line_max += frag.max;
+                        ++ind;
+                        const next = this.kids[ind];
+                        if (!next)
+                            break;
+                        break_after = frag.break_after();
+                        break_before = next.break_before();
+                        if (break_after === $mol_layout_break.force)
+                            break line;
+                        if (break_before === $mol_layout_break.force)
+                            break line;
+                        if (break_after === $mol_layout_break.taboo)
+                            continue line;
+                        if (break_before === $mol_layout_break.taboo)
+                            continue line;
+                        break line;
+                    }
+                    group.max += line_max;
+                    if (group.kids.length > 0) {
+                        if (group.max > limit)
+                            break group;
+                    }
+                    group.min = Math.max(group.min, line_min);
+                    group.kids.push(...line);
+                    group.ortho.kids.push(...line.map(frag => frag.ortho));
+                    index += line.length;
+                    if (break_after === $mol_layout_break.force)
+                        break group;
+                    if (break_before === $mol_layout_break.force)
+                        break group;
+                }
+                group.down();
+                this.ortho.kids.push(group.ortho);
+            }
+        }
+    }
+    $.$mol_layout_wrap = $mol_layout_wrap;
+})($ || ($ = {}));
+//mol/layout/wrap/wrap.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_layout_demo extends $.$mol_layout_demo {
+            font() {
+                return `${16 * this.$.$mol_dom_context.devicePixelRatio}px sans-serif`;
+            }
+            widgets_left() {
+                return Array.from({ length: 10 }, (_, i) => {
+                    const text = (i || 'canvas ') + ' ';
+                    const font = this.font();
+                    const width = Math.ceil($mol_font_measure(font, text));
+                    const layout = $mol_layout.make({
+                        min: width,
+                        max: width,
+                        ortho: $mol_layout.make({
+                            min: 24,
+                            max: 24,
+                            base: 16,
+                        })
+                    });
+                    return { layout, text, font };
+                });
+            }
+            widgets_right() {
+                return Array.from({ length: 20 }, (_, i) => {
+                    const text = (i || 'render ') + ' ';
+                    const font = this.font();
+                    const width = Math.ceil($mol_font_measure(font, text));
+                    const layout = $mol_layout.make({
+                        min: width,
+                        max: width,
+                        ortho: $mol_layout.make({
+                            min: 24,
+                            max: 24,
+                            base: 16,
+                        }),
+                    });
+                    return { layout, text, font };
+                });
+            }
+            layout() {
+                return $mol_layout_col.make({
+                    before: () => 12,
+                    after: () => 12,
+                    ortho: $mol_layout_flex.make({
+                        before: () => 12,
+                        after: () => 12,
+                    }),
+                    kids: [
+                        $mol_layout.make({ ortho: $mol_layout.make({ max: 1 }), }),
+                        $mol_layout_row.make({
+                            before: () => 12,
+                            after: () => 12,
+                            ortho: $mol_layout_stack.make({
+                                before: () => 12,
+                                after: () => 12,
+                            }),
+                            kids: [
+                                $mol_layout.make({ max: 1, ortho: $mol_layout.make({}), }),
+                                $mol_layout_wrap.make({
+                                    before: () => 12,
+                                    after: () => 12,
+                                    ortho: $mol_layout_flex.make({
+                                        before: () => 8,
+                                        after: () => 8,
+                                    }),
+                                    kids: this.widgets_left().map(w => w.layout),
+                                }),
+                                $mol_layout.make({ max: 1, ortho: $mol_layout.make({}), }),
+                                $mol_layout_wrap.make({
+                                    before: () => 12,
+                                    after: () => 12,
+                                    ortho: $mol_layout_flex.make({
+                                        before: () => 8,
+                                        after: () => 8,
+                                    }),
+                                    kids: this.widgets_right().map(w => w.layout),
+                                }),
+                                $mol_layout.make({ max: 1, ortho: $mol_layout.make({}), }),
+                            ],
+                        }),
+                        $mol_layout.make({ ortho: $mol_layout.make({ max: 1 }), }),
+                    ]
+                });
+            }
+            paint() {
+                this.$.$mol_lights();
+                const layout = this.layout();
+                layout.size = this.width() + 1;
+                layout.ortho.size = this.height() + 1;
+                layout.fresh();
+                const context = this.context();
+                context.strokeStyle = this.$.$mol_dom_context.getComputedStyle(this.dom_node()).getPropertyValue('--mol_theme_line');
+                context.fillStyle = this.$.$mol_dom_context.getComputedStyle(this.dom_node()).getPropertyValue('--mol_theme_text');
+                function rects(x) {
+                    const y = x.ortho;
+                    context.strokeRect(x.pos - .5, y.pos - .5, x.size - 1, y.size - 1);
+                    for (const kid of x?.kids ?? [])
+                        rects(kid);
+                }
+                rects(layout);
+                for (const widget of this.widgets_left()) {
+                    const x = widget.layout;
+                    const y = x.ortho;
+                    context.font = widget.font;
+                    context.fillText(widget.text, x.pos, y.pos + y.base, x.size);
+                }
+                for (const widget of this.widgets_right()) {
+                    const x = widget.layout;
+                    const y = x.ortho;
+                    context.font = widget.font;
+                    context.fillText(widget.text, x.pos, y.pos + y.base, x.size);
+                }
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_layout_demo.prototype, "font", null);
+        __decorate([
+            $mol_mem
+        ], $mol_layout_demo.prototype, "widgets_left", null);
+        __decorate([
+            $mol_mem
+        ], $mol_layout_demo.prototype, "widgets_right", null);
+        __decorate([
+            $mol_mem
+        ], $mol_layout_demo.prototype, "layout", null);
+        __decorate([
+            $mol_mem
+        ], $mol_layout_demo.prototype, "paint", null);
+        $$.$mol_layout_demo = $mol_layout_demo;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/layout/demo/demo.view.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_download extends $mol_icon {
         path() {
             return "M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z";

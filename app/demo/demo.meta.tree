@@ -41,6 +41,7 @@ include \/mol/gallery/demo
 include \/mol/html/view/demo
 include \/mol/infinite/demo
 include \/mol/labeler/demo
+include \/mol/layout/demo
 include \/mol/link/demo
 include \/mol/link/iconed/demo
 include \/mol/link/lazy/demo
