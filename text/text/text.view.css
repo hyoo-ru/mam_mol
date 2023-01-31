@@ -75,7 +75,7 @@ h6[mol_text_header] {
 }
 
 [mol_text_list] {
-	padding-left: 1.5rem;
+	padding-left: 1.75rem;
 }
 
 [mol_text_list_paragraph] {
@@ -87,7 +87,7 @@ h6[mol_text_header] {
 	width: 1.5rem;
 	display: inline-block;
 	position: absolute;
-	margin-left: -1.25rem;
+	margin-left: -1.5rem;
 }
 
 [mol_text_table_cell] {
@@ -152,7 +152,6 @@ h6[mol_text_header] {
 	white-space: pre;
 	overflow-x: auto;
 	tab-size: 2;
-	padding-left: var(--mol_gap_block);
 }
 
 [mol_text_code_line] {
