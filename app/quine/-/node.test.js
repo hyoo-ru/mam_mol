@@ -6480,7 +6480,7 @@ var $;
         boxSizing: 'border-box',
         position: 'relative',
         minWidth: rem(2.5),
-        gap: $mol_gap.space,
+        gap: $mol_gap.block,
         border: {
             radius: $mol_gap.round,
         },
