@@ -1,15 +1,23 @@
-# $mol
+# $mol - Reactive micro-modular UI framework. Very simple, but very powerful!
 
-Reactive micro-modular UI framework. Very simple, but very powerful!
+## Quick start
+
+- [Быстрый старт на $mol за 5 минут](https://www.youtube.com/watch?v=PyK3if5sgN0)
+- [Путь друкона - учебный курс (3 часа)](https://www.youtube.com/playlist?list=PLXyFFhv8ucKRBg76o0YXnmQFT1LglSaND)
+
+
+## Documentation
+
+- [Создание проекта](https://mol.hyoo.ru/#!Description=Create%20MAM%20project) 
 
 ![](https://habrastorage.org/webt/0r/l1/70/0rl170zizkwddstnp5mt5bruroa.png)
 
 # Contents
 
-- [Features](#features)
-- [Review](#reviews)
 - [Quick start](#quick-start)
 - [Tutorials](#tutorials)
+- [Features](#features)
+- [Review](#reviews)
 - [Rationale](#rationale)
 - [Modules](#modules)
 - [Usage from NPM](#usage-from-npm-ecosystem)
