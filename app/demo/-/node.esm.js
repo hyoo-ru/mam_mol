@@ -25236,18 +25236,19 @@ var $;
             const min = this.min - this.padding();
             const diff = limit - min;
             let pos = this.pos + this.before();
-            shrink: if (diff < 0) {
-                let mult = diff / min;
-                if (!Number.isFinite(mult))
-                    mult = 0;
-                for (const kid of this.kids) {
-                    kid.pos = pos;
-                    pos += kid.size = Math.min(limit, kid.min + Math.floor(kid.shrink() * mult));
-                    kid.down();
+            if (diff < 0)
+                shrink: {
+                    let mult = diff / min;
+                    if (!Number.isFinite(mult))
+                        mult = 0;
+                    for (const kid of this.kids) {
+                        kid.pos = pos;
+                        pos += kid.size = Math.min(limit, kid.min + Math.floor(kid.shrink() * mult));
+                        kid.down();
+                    }
                 }
-            }
-            else
-                grow: if (diff > 0) {
+            else if (diff > 0)
+                grow: {
                     let mult = diff / this.grow();
                     if (!Number.isFinite(mult))
                         mult = 0;
@@ -25257,14 +25258,14 @@ var $;
                         kid.down();
                     }
                 }
-                else
-                    fit: {
-                        for (const kid of this.kids) {
-                            kid.pos = pos;
-                            pos += kid.size = kid.min;
-                            kid.down();
-                        }
+            else
+                fit: {
+                    for (const kid of this.kids) {
+                        kid.pos = pos;
+                        pos += kid.size = kid.min;
+                        kid.down();
                     }
+                }
         }
     }
     $.$mol_layout_flex = $mol_layout_flex;
