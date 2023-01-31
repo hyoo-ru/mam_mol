@@ -18,7 +18,6 @@ namespace $.$$ {
 					color: $mol_theme.card,
 				},
 			},
-			transform: 'translate( -.25rem, 0px )',
 		},
 		
 		'@': {
@@ -26,7 +25,7 @@ namespace $.$$ {
 				true: {
 					$mol_text_code_row: {
 						margin: {
-							left: rem(1.5),
+							left: rem(1.75),
 						},
 					},
 				},
