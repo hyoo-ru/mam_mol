@@ -17,7 +17,7 @@
 	--mol_theme_text: hsl( var(--mol_theme_hue), 0%, calc( 40% - 40% * var(--mol_theme_luma) ) );
 	--mol_theme_field: hsl( var(--mol_theme_hue), 50%, calc( 54% + 46% * var(--mol_theme_luma) ), .25 );
 	
-	--mol_theme_card: hsl( var(--mol_theme_hue), 40%, calc( 50% + 30% * var(--mol_theme_luma) ), .333 );
+	--mol_theme_card: hsl( var(--mol_theme_hue), 50%, calc( 50% + 30% * var(--mol_theme_luma) ), .333 );
 	--mol_theme_hover: hsl( var(--mol_theme_hue), 0%, 50%, .1 );
 	--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .2 );
 	--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 50%, 1 );
@@ -52,7 +52,7 @@
 }
 
 [mol_theme="$mol_theme_special"] {
-	--mol_theme_card: hsl( calc( var(--mol_theme_hue) + 90deg ), 40%, calc( 50% + 30% * var(--mol_theme_luma) ), .333 );
+	--mol_theme_card: hsl( calc( var(--mol_theme_hue) + 90deg ), 50%, calc( 50% + 30% * var(--mol_theme_luma) ), .333 );
 }
 
 [mol_theme="$mol_theme_accent"] {
