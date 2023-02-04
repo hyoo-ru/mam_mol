@@ -13,11 +13,6 @@ namespace $.$$ {
 		Copy: {
 			alignSelf: 'flex-start',
 			justifySelf: 'flex-start',
-			Icon: {
-				background: {
-					color: $mol_theme.card,
-				},
-			},
 		},
 		
 		'@': {
