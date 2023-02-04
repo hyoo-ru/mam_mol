@@ -26,10 +26,6 @@ namespace $.$$ {
 			},
 			minWidth: 0,
 			maxHeight: rem(2.5),
-			background: {
-				color: $mol_theme.back,
-			},
-			boxShadow: `0 0 0 1px ${ $mol_theme.back }`,
 		},
 
 		Expand: {
