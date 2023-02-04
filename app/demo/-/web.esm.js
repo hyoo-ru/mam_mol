@@ -5025,25 +5025,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_media extends $mol_object2 {
-        static match(query, next) {
-            if (next !== undefined)
-                return next;
-            const res = this.$.$mol_dom_context.matchMedia?.(query) ?? {};
-            res.onchange = () => this.match(query, res.matches);
-            return res.matches;
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $mol_media, "match", null);
-    $.$mol_media = $mol_media;
-})($ || ($ = {}));
-//mol/media/media.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_state_local extends $mol_object {
         static 'native()';
         static native() {
@@ -5117,7 +5098,7 @@ var $;
     }
     function $mol_lights(next) {
         const arg = parse(this.$mol_state_arg.value('mol_lights'));
-        const base = this.$mol_media.match('(prefers-color-scheme: light)');
+        const base = false;
         if (next === undefined) {
             return arg ?? this.$mol_state_local.value('$mol_lights') ?? base;
         }

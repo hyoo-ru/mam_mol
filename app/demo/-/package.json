@@ -149,7 +149,6 @@
     "$mol_lights",
     "$mol_state_arg",
     "$mol_state",
-    "$mol_media",
     "$mol_state_local",
     "$mol_button_major",
     "$mol_button",
