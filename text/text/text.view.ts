@@ -56,6 +56,10 @@ namespace $.$$ {
 			return this.flow_tokens()[ index ].chunks[1] ?? ''
 		}
 		
+		item_index( index: number ) {
+			return this.flow_tokens().slice( 0, index ).filter( token => token.name === 'block' ).length + 1
+		}
+		
 		@ $mol_mem_key
 		pre_text( index : number ) {
 			const token = this.flow_tokens()[ index ]

@@ -30,6 +30,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * row_width 0
+		 * ```
+		 */
+		row_width() {
+			return 0
+		}
+		
+		/**
+		 * ```tree
 		 * sub / <= title
 		 * ```
 		 */

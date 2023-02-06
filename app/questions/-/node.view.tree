@@ -53,6 +53,7 @@ $mol_paragraph $mol_view
 	line_height 24
 	letter_width 7
 	width_limit +Infinity
+	row_width 0
 	sub / <= title
 
 $mol_dimmer $mol_paragraph
@@ -398,6 +399,7 @@ $mol_text $mol_list
 		type <= list_type* \-
 		text <= list_text* \
 		highlight <= highlight \
+	item_index* 0
 	Header* $mol_text_header
 		minimal_height 40
 		level <= header_level* 1
@@ -497,6 +499,14 @@ $mol_text_list $mol_text
 	attr *
 		^
 		mol_text_list_type <= type \
+	Paragraph* $mol_text_list_item
+		index <= item_index*
+		sub <= block_content*
+
+$mol_text_list_item $mol_paragraph
+	attr *
+		^
+		mol_text_list_item_index <= index 0
 
 $mol_app_questions $mol_book2
 	plugins /

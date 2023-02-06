@@ -107,6 +107,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * item_index* 0
+		 * ```
+		 */
+		item_index(id: any) {
+			return 0
+		}
+		
+		/**
+		 * ```tree
 		 * Header* $mol_text_header
 		 * 	minimal_height 40
 		 * 	level <= header_level*

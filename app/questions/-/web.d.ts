@@ -907,6 +907,7 @@ declare namespace $ {
         line_height(): number;
         letter_width(): number;
         width_limit(): number;
+        row_width(): number;
         sub(): readonly any[];
     }
 }
@@ -2172,6 +2173,7 @@ declare namespace $ {
         Paragraph(id: any): $$.$mol_paragraph;
         Quote(id: any): $$.$mol_text;
         List(id: any): $mol_text_list;
+        item_index(id: any): number;
         Header(id: any): $$.$mol_text_header;
         Pre(id: any): $$.$mol_text_code;
         Cut(id: any): $mol_view;
@@ -2247,6 +2249,7 @@ declare namespace $.$$ {
             [x: string]: string;
         };
         list_type(index: number): string;
+        item_index(index: number): number;
         pre_text(index: number): string;
         quote_text(index: number): string;
         list_text(index: number): string;
@@ -2398,8 +2401,18 @@ declare namespace $ {
         attr(): {
             mol_text_list_type: string;
         };
+        Paragraph(id: any): $mol_text_list_item;
         type(): string;
     }
+    class $mol_text_list_item extends $mol_paragraph {
+        attr(): {
+            mol_text_list_item_index: number;
+        };
+        index(): number;
+    }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
