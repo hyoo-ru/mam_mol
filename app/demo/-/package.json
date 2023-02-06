@@ -196,6 +196,7 @@
     "$mol_string",
     "$mol_hotkey",
     "$mol_text_text",
+    "$mol_text_list",
     "$mol_grid",
     "$mol_float",
     "$mol_check_expand",

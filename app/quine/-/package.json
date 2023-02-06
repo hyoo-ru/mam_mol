@@ -113,6 +113,7 @@
     "$mol_support_css",
     "$mol_support",
     "$mol_paragraph",
+    "$mol_text_list",
     "$mol_text_code",
     "$mol_text_code_row",
     "$mol_text_code_token",

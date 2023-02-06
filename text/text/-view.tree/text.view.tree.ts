@@ -86,21 +86,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * List* $mol_text
+		 * List* $mol_text_list
 		 * 	uri_resolve* <= uri_resolve*
+		 * 	type <= list_type*
 		 * 	text <= list_text*
 		 * 	highlight <= highlight
-		 * 	auto_scroll null
 		 * ```
 		 */
 		@ $mol_mem_key
 		List(id: any) {
-			const obj = new this.$.$mol_text()
+			const obj = new this.$.$mol_text_list()
 			
 			obj.uri_resolve = (id: any) => this.uri_resolve(id)
+			obj.type = () => this.list_type(id)
 			obj.text = () => this.list_text(id)
 			obj.highlight = () => this.highlight()
-			obj.auto_scroll = () => null as any
 			
 			return obj
 		}
@@ -420,6 +420,15 @@ namespace $ {
 		 */
 		highlight() {
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * list_type* \-
+		 * ```
+		 */
+		list_type(id: any) {
+			return "-"
 		}
 		
 		/**

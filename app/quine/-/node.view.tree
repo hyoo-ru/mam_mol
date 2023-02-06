@@ -387,11 +387,11 @@ $mol_text $mol_list
 		text <= quote_text* \
 		highlight <= highlight \
 		auto_scroll null
-	List* $mol_text
+	List* $mol_text_list
 		uri_resolve* <= uri_resolve* \
+		type <= list_type* \-
 		text <= list_text* \
 		highlight <= highlight \
-		auto_scroll null
 	Header* $mol_text_header
 		minimal_height 40
 		level <= header_level* 1
@@ -478,3 +478,9 @@ $mol_app_quine $mol_page
 		\mol/app/quine/quine.view.ts
 		\mol/app/quine/index.html
 		\mol/app/quine/quine.locale=ru.json
+
+$mol_text_list $mol_text
+	auto_scroll null
+	attr *
+		^
+		mol_text_list_type <= type \
