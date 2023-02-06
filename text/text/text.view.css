@@ -75,28 +75,6 @@ h6[mol_text_header] {
 	color: inherit;
 }
 
-[mol_text_list] {
-	padding-left: 1.75rem;
-}
-
-[mol_text_list_paragraph] {
-	contain: none;
-	display: list-item;
-}
-
-[mol_text_list_paragraph]::before {
-	content: counter( list-item ) ".";
-	width: 1.5rem;
-	display: inline-block;
-	position: absolute;
-	margin-left: -1.5rem;
-}
-
-[mol_text_list_type="-"] > [mol_text_list_paragraph]::before,
-[mol_text_list_type="*"] > [mol_text_list_paragraph]::before {
-	content: "•";
-}
-
 [mol_text_table_cell] {
 	width: auto;
 	display: table-cell;

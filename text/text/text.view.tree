@@ -18,6 +18,7 @@ $mol_text $mol_list
 		type <= list_type* \-
 		text <= list_text* \
 		highlight <= highlight \
+	item_index* 0
 	Header* $mol_text_header
 		minimal_height 40
 		level <= header_level* 1
