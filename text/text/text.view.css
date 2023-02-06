@@ -77,16 +77,15 @@ h6[mol_text_header] {
 
 [mol_text_list] {
 	padding-left: 1.75rem;
-	counter-reset: mol_text_list;
 }
 
 [mol_text_list_paragraph] {
-	counter-increment: mol_text_list;
 	contain: none;
+	display: list-item;
 }
 
 [mol_text_list_paragraph]::before {
-	content: counter( mol_text_list ) ".";
+	content: counter( list-item ) ".";
 	width: 1.5rem;
 	display: inline-block;
 	position: absolute;
