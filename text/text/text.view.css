@@ -77,18 +77,25 @@ h6[mol_text_header] {
 
 [mol_text_list] {
 	padding-left: 1.75rem;
+	counter-reset: mol_text_list;
 }
 
 [mol_text_list_paragraph] {
-	display: list-item;
+	counter-increment: mol_text_list;
+	contain: none;
 }
 
 [mol_text_list_paragraph]::before {
-	content: '•';
+	content: counter( mol_text_list ) ".";
 	width: 1.5rem;
 	display: inline-block;
 	position: absolute;
 	margin-left: -1.5rem;
+}
+
+[mol_text_list_type="-"] > [mol_text_list_paragraph]::before,
+[mol_text_list_type="*"] > [mol_text_list_paragraph]::before {
+	content: "•";
 }
 
 [mol_text_table_cell] {

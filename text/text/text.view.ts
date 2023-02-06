@@ -52,6 +52,10 @@ namespace $.$$ {
 			}
 		}
 		
+		list_type( index: number ) {
+			return this.flow_tokens()[ index ].chunks[1] ?? ''
+		}
+		
 		@ $mol_mem_key
 		pre_text( index : number ) {
 			const token = this.flow_tokens()[ index ]
@@ -65,7 +69,7 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		list_text( index : number ) {
-			return this.flow_tokens()[ index ].chunks[0].replace( /^([-*+ ]|\d+\.) ?/mg , '' ).replace( /^  /mg, '' )
+			return this.flow_tokens()[ index ].chunks[0].replace( /^([-*+]|(?:\d+[\.\)])+) ?/mg , '' ).replace( /^  ?/mg, '' )
 		}
 		
 		@ $mol_mem_key
