@@ -20,32 +20,6 @@ declare namespace $ {
 declare namespace $ {
 }
 
-interface $node {
-    [key: string]: any;
-}
-declare var $node: $node;
-
-declare namespace $ {
-    type $mol_log3_event<Fields> = {
-        [key in string]: unknown;
-    } & {
-        time?: string;
-        place: unknown;
-        message: string;
-    } & Fields;
-    type $mol_log3_logger<Fields, Res = void> = (this: $, event: $mol_log3_event<Fields>) => Res;
-    let $mol_log3_come: $mol_log3_logger<{}>;
-    let $mol_log3_done: $mol_log3_logger<{}>;
-    let $mol_log3_fail: $mol_log3_logger<{}>;
-    let $mol_log3_warn: $mol_log3_logger<{
-        hint: string;
-    }>;
-    let $mol_log3_rise: $mol_log3_logger<{}>;
-    let $mol_log3_area: $mol_log3_logger<{}, () => void>;
-    function $mol_log3_area_lazy(this: $, event: $mol_log3_event<{}>): () => void;
-    let $mol_log3_stack: (() => void)[];
-}
-
 declare namespace $ {
     const $mol_ambient_ref: unique symbol;
     type $mol_ambient_context = $;
@@ -97,6 +71,32 @@ declare namespace $ {
         toString(): string;
         toJSON(): any;
     }
+}
+
+interface $node {
+    [key: string]: any;
+}
+declare var $node: $node;
+
+declare namespace $ {
+    type $mol_log3_event<Fields> = {
+        [key in string]: unknown;
+    } & {
+        time?: string;
+        place: unknown;
+        message: string;
+    } & Fields;
+    type $mol_log3_logger<Fields, Res = void> = (this: $, event: $mol_log3_event<Fields>) => Res;
+    let $mol_log3_come: $mol_log3_logger<{}>;
+    let $mol_log3_done: $mol_log3_logger<{}>;
+    let $mol_log3_fail: $mol_log3_logger<{}>;
+    let $mol_log3_warn: $mol_log3_logger<{
+        hint: string;
+    }>;
+    let $mol_log3_rise: $mol_log3_logger<{}>;
+    let $mol_log3_area: $mol_log3_logger<{}, () => void>;
+    function $mol_log3_area_lazy(this: $, event: $mol_log3_event<{}>): () => void;
+    let $mol_log3_stack: (() => void)[];
 }
 
 declare namespace $ {
@@ -582,7 +582,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $hyoo_crowd_node extends Object {
+    class $hyoo_crowd_node extends $mol_object2 {
         readonly land: $hyoo_crowd_land;
         readonly head: $mol_int62_string;
         constructor(land?: $hyoo_crowd_land, head?: $mol_int62_string);
@@ -722,7 +722,7 @@ declare namespace $ {
         list(next?: readonly unknown[]): readonly unknown[];
         set(next?: ReadonlySet<string | number | boolean | null>): Set<unknown>;
         insert(next: readonly unknown[], from?: number, to?: number): void;
-        move(from: number, to: number): $hyoo_crowd_unit;
+        move(from: number, to: number): void;
         cut(seat: number): $hyoo_crowd_unit;
         has(val: string | number | boolean | null): boolean;
         add(val: string | number | boolean | null): void;
@@ -930,8 +930,8 @@ declare namespace $ {
         selection(peer: $mol_int62_string): $hyoo_crowd_reg;
         put(head: $mol_int62_string, self: $mol_int62_string, prev: $mol_int62_string, data: unknown): $hyoo_crowd_unit;
         wipe(unit: $hyoo_crowd_unit): $hyoo_crowd_unit;
-        move(unit: $hyoo_crowd_unit, head: $mol_int62_string, prev: $mol_int62_string): $hyoo_crowd_unit;
-        insert(unit: $hyoo_crowd_unit, head: $mol_int62_string, seat: number): $hyoo_crowd_unit;
+        move(unit: $hyoo_crowd_unit, head: $mol_int62_string, prev: $mol_int62_string): void;
+        insert(unit: $hyoo_crowd_unit, head: $mol_int62_string, seat: number): void;
     }
 }
 

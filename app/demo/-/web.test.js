@@ -412,6 +412,72 @@ var $;
 var $;
 (function ($) {
     $mol_test({
+        'get'() {
+            const proxy = $mol_delegate({}, () => ({ foo: 777 }));
+            $mol_assert_equal(proxy.foo, 777);
+        },
+        'has'() {
+            const proxy = $mol_delegate({}, () => ({ foo: 777 }));
+            $mol_assert_equal('foo' in proxy, true);
+        },
+        'set'() {
+            const target = { foo: 777 };
+            const proxy = $mol_delegate({}, () => target);
+            proxy.foo = 123;
+            $mol_assert_equal(target.foo, 123);
+        },
+        'getOwnPropertyDescriptor'() {
+            const proxy = $mol_delegate({}, () => ({ foo: 777 }));
+            $mol_assert_like(Object.getOwnPropertyDescriptor(proxy, 'foo'), {
+                value: 777,
+                writable: true,
+                enumerable: true,
+                configurable: true,
+            });
+        },
+        'ownKeys'() {
+            const proxy = $mol_delegate({}, () => ({ foo: 777, [Symbol.toStringTag]: 'bar' }));
+            $mol_assert_like(Reflect.ownKeys(proxy), ['foo', Symbol.toStringTag]);
+        },
+        'getPrototypeOf'() {
+            class Foo {
+            }
+            const proxy = $mol_delegate({}, () => new Foo);
+            $mol_assert_equal(Object.getPrototypeOf(proxy), Foo.prototype);
+        },
+        'setPrototypeOf'() {
+            class Foo {
+            }
+            const target = {};
+            const proxy = $mol_delegate({}, () => target);
+            Object.setPrototypeOf(proxy, Foo.prototype);
+            $mol_assert_equal(Object.getPrototypeOf(target), Foo.prototype);
+        },
+        'instanceof'() {
+            class Foo {
+            }
+            const proxy = $mol_delegate({}, () => new Foo);
+            $mol_assert_ok(proxy instanceof Foo);
+            $mol_assert_ok(proxy instanceof $mol_delegate);
+        },
+        'autobind'() {
+            class Foo {
+            }
+            const proxy = $mol_delegate({}, () => new Foo);
+            $mol_assert_ok(proxy instanceof Foo);
+            $mol_assert_ok(proxy instanceof $mol_delegate);
+        },
+    });
+})($ || ($ = {}));
+//mol/delegate/delegate.test.ts
+;
+"use strict";
+//mol/type/writable/writable.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
         'config by value'() {
             const N = $mol_data_setup((a) => a, 5);
             $mol_assert_equal(N.config, 5);
@@ -607,72 +673,6 @@ var $;
     });
 })($ || ($ = {}));
 //hyoo/crowd/unit/unit.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'get'() {
-            const proxy = $mol_delegate({}, () => ({ foo: 777 }));
-            $mol_assert_equal(proxy.foo, 777);
-        },
-        'has'() {
-            const proxy = $mol_delegate({}, () => ({ foo: 777 }));
-            $mol_assert_equal('foo' in proxy, true);
-        },
-        'set'() {
-            const target = { foo: 777 };
-            const proxy = $mol_delegate({}, () => target);
-            proxy.foo = 123;
-            $mol_assert_equal(target.foo, 123);
-        },
-        'getOwnPropertyDescriptor'() {
-            const proxy = $mol_delegate({}, () => ({ foo: 777 }));
-            $mol_assert_like(Object.getOwnPropertyDescriptor(proxy, 'foo'), {
-                value: 777,
-                writable: true,
-                enumerable: true,
-                configurable: true,
-            });
-        },
-        'ownKeys'() {
-            const proxy = $mol_delegate({}, () => ({ foo: 777, [Symbol.toStringTag]: 'bar' }));
-            $mol_assert_like(Reflect.ownKeys(proxy), ['foo', Symbol.toStringTag]);
-        },
-        'getPrototypeOf'() {
-            class Foo {
-            }
-            const proxy = $mol_delegate({}, () => new Foo);
-            $mol_assert_equal(Object.getPrototypeOf(proxy), Foo.prototype);
-        },
-        'setPrototypeOf'() {
-            class Foo {
-            }
-            const target = {};
-            const proxy = $mol_delegate({}, () => target);
-            Object.setPrototypeOf(proxy, Foo.prototype);
-            $mol_assert_equal(Object.getPrototypeOf(target), Foo.prototype);
-        },
-        'instanceof'() {
-            class Foo {
-            }
-            const proxy = $mol_delegate({}, () => new Foo);
-            $mol_assert_ok(proxy instanceof Foo);
-            $mol_assert_ok(proxy instanceof $mol_delegate);
-        },
-        'autobind'() {
-            class Foo {
-            }
-            const proxy = $mol_delegate({}, () => new Foo);
-            $mol_assert_ok(proxy instanceof Foo);
-            $mol_assert_ok(proxy instanceof $mol_delegate);
-        },
-    });
-})($ || ($ = {}));
-//mol/delegate/delegate.test.ts
-;
-"use strict";
-//mol/type/writable/writable.test.ts
 ;
 "use strict";
 var $;
@@ -2222,6 +2222,30 @@ var $;
             store.chief.as($hyoo_crowd_list).move(0, 2);
             $mol_assert_like(store.chief.as($hyoo_crowd_text).str(), 'BarFooLol');
         },
+        async 'Many moves'() {
+            const store = await make_land();
+            const text = store.chief.as($hyoo_crowd_text);
+            const list = store.chief.as($hyoo_crowd_list);
+            text.str('FooBarLol');
+            list.move(2, 1);
+            list.move(2, 1);
+            list.move(0, 3);
+            list.move(2, 1);
+            $mol_assert_like(text.str(), 'BarFooLol');
+        },
+        async 'Separated sublists'() {
+            const store = await make_land();
+            const text = store.chief.as($hyoo_crowd_text);
+            const list = store.chief.as($hyoo_crowd_list);
+            text.str('AaBbCcDdEeFf');
+            list.move(3, 5);
+            list.move(3, 5);
+            list.move(5, 4);
+            list.move(0, 2);
+            list.move(0, 2);
+            list.move(2, 1);
+            $mol_assert_like(text.str(), 'AaCcBbDdFfEe');
+        },
         async 'Deltas for different versions'() {
             const store = await make_land();
             Object.assign(store.peer(), { key_public_serial: null });
@@ -2367,7 +2391,7 @@ var $;
             const right_delta = right.delta(base.clocks);
             left.apply(right_delta);
             right.apply(left_delta);
-            $mol_assert_like(left.chief.as($hyoo_crowd_text).str(), right.chief.as($hyoo_crowd_text).str(), 'XxxBarFooZak');
+            $mol_assert_like(left.chief.as($hyoo_crowd_text).str(), right.chief.as($hyoo_crowd_text).str(), 'BarFooXxxZak');
         },
         async 'Insert before moved left'() {
             const base = await make_land();
@@ -2385,17 +2409,17 @@ var $;
         },
         async 'Insert before moved right'() {
             const base = await make_land();
-            base.chief.as($hyoo_crowd_text).str('FooBarZak');
+            base.chief.as($hyoo_crowd_text).str('FooBarZakPew');
             const left = base.fork(await $hyoo_crowd_peer.generate());
-            left.chief.as($hyoo_crowd_text).str('FooXxxBarZak');
+            left.chief.as($hyoo_crowd_text).str('FooXxxBarZakPew');
             const right = base.fork(await $hyoo_crowd_peer.generate());
             right.clock_data.tick(right.peer().id);
-            right.insert(right.chief.units()[1], '0_0', 3);
+            right.insert(right.chief.units()[1], '0_0', 4);
             const left_delta = left.delta(base.clocks);
             const right_delta = right.delta(base.clocks);
             left.apply(right_delta);
             right.apply(left_delta);
-            $mol_assert_like(left.chief.as($hyoo_crowd_text).str(), right.chief.as($hyoo_crowd_text).str(), 'FooXxxZakBar');
+            $mol_assert_like(left.chief.as($hyoo_crowd_text).str(), right.chief.as($hyoo_crowd_text).str(), 'FooZakXxxPewBar');
         },
         async 'Insert after removed'() {
             const base = await make_land();
@@ -2413,18 +2437,18 @@ var $;
         },
         async 'Insert after removed out'() {
             const base = await make_land();
-            $hyoo_crowd_text.for(base, '1_1').str('FooBarZak');
+            base.node('1_1', $hyoo_crowd_text).str('FooBarZak');
             const left = base.fork(await $hyoo_crowd_peer.generate());
-            $hyoo_crowd_text.for(left, '1_1').str('FooBarXxxZak');
+            left.node('1_1', $hyoo_crowd_text).str('FooBarXxxZak');
             const right = base.fork(await $hyoo_crowd_peer.generate());
             right.clock_data.tick(right.peer().id);
-            right.insert($hyoo_crowd_node.for(right, '1_1').units()[1], '2_2', 0);
+            right.insert(right.node('1_1', $hyoo_crowd_node).units()[1], '2_2', 0);
             const left_delta = left.delta(base.clocks);
             const right_delta = right.delta(base.clocks);
             left.apply(right_delta);
             right.apply(left_delta);
-            $mol_assert_like($hyoo_crowd_text.for(left, '1_1').str(), $hyoo_crowd_text.for(right, '1_1').str(), 'FooXxxZak');
-            $mol_assert_like($hyoo_crowd_text.for(left, '2_2').str(), $hyoo_crowd_text.for(right, '2_2').str(), 'Bar');
+            $mol_assert_like(left.node('1_1', $hyoo_crowd_text).str(), right.node('1_1', $hyoo_crowd_text).str(), 'FooZakXxx');
+            $mol_assert_like(left.node('2_2', $hyoo_crowd_text).str(), left.node('2_2', $hyoo_crowd_text).str(), 'Bar');
         },
         async 'Insert before changed'() {
             const base = await make_land();

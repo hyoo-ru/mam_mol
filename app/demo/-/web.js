@@ -113,6 +113,156 @@ var $;
 //hyoo/hyoo.ts
 ;
 "use strict";
+var $;
+(function ($) {
+    $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
+    function $mol_ambient(overrides) {
+        return Object.setPrototypeOf(overrides, this || $);
+    }
+    $.$mol_ambient = $mol_ambient;
+})($ || ($ = {}));
+//mol/ambient/ambient.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const instances = new WeakSet();
+    function $mol_delegate(proto, target) {
+        const proxy = new Proxy(proto, {
+            get: (_, field) => {
+                const obj = target();
+                let val = Reflect.get(obj, field);
+                if (typeof val === 'function') {
+                    val = val.bind(obj);
+                }
+                return val;
+            },
+            has: (_, field) => Reflect.has(target(), field),
+            set: (_, field, value) => Reflect.set(target(), field, value),
+            getOwnPropertyDescriptor: (_, field) => Reflect.getOwnPropertyDescriptor(target(), field),
+            ownKeys: () => Reflect.ownKeys(target()),
+            getPrototypeOf: () => Reflect.getPrototypeOf(target()),
+            setPrototypeOf: (_, donor) => Reflect.setPrototypeOf(target(), donor),
+            isExtensible: () => Reflect.isExtensible(target()),
+            preventExtensions: () => Reflect.preventExtensions(target()),
+            apply: (_, self, args) => Reflect.apply(target(), self, args),
+            construct: (_, args, retarget) => Reflect.construct(target(), args, retarget),
+            defineProperty: (_, field, descr) => Reflect.defineProperty(target(), field, descr),
+            deleteProperty: (_, field) => Reflect.deleteProperty(target(), field),
+        });
+        instances.add(proxy);
+        return proxy;
+    }
+    $.$mol_delegate = $mol_delegate;
+    Reflect.defineProperty($mol_delegate, Symbol.hasInstance, {
+        value: (obj) => instances.has(obj),
+    });
+})($ || ($ = {}));
+//mol/delegate/delegate.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_owning_map = new WeakMap();
+    function $mol_owning_allow(having) {
+        try {
+            if (!having)
+                return false;
+            if (typeof having !== 'object')
+                return false;
+            if (having instanceof $mol_delegate)
+                return false;
+            if (typeof having['destructor'] !== 'function')
+                return false;
+            return true;
+        }
+        catch {
+            return false;
+        }
+    }
+    $.$mol_owning_allow = $mol_owning_allow;
+    function $mol_owning_get(having, Owner) {
+        if (!$mol_owning_allow(having))
+            return null;
+        while (true) {
+            const owner = $.$mol_owning_map.get(having);
+            if (!owner)
+                return owner;
+            if (!Owner)
+                return owner;
+            if (owner instanceof Owner)
+                return owner;
+            having = owner;
+        }
+    }
+    $.$mol_owning_get = $mol_owning_get;
+    function $mol_owning_check(owner, having) {
+        if (!$mol_owning_allow(having))
+            return false;
+        if ($.$mol_owning_map.get(having) !== owner)
+            return false;
+        return true;
+    }
+    $.$mol_owning_check = $mol_owning_check;
+    function $mol_owning_catch(owner, having) {
+        if (!$mol_owning_allow(having))
+            return false;
+        if ($.$mol_owning_map.get(having))
+            return false;
+        $.$mol_owning_map.set(having, owner);
+        return true;
+    }
+    $.$mol_owning_catch = $mol_owning_catch;
+})($ || ($ = {}));
+//mol/owning/owning.ts
+;
+"use strict";
+//mol/type/writable/writable.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_object2 {
+        static $ = $;
+        [$mol_ambient_ref] = null;
+        get $() {
+            if (this[$mol_ambient_ref])
+                return this[$mol_ambient_ref];
+            const owner = $mol_owning_get(this);
+            return this[$mol_ambient_ref] = owner?.$ || $mol_object2.$;
+        }
+        set $(next) {
+            if (this[$mol_ambient_ref])
+                $mol_fail_hidden(new Error('Context already defined'));
+            this[$mol_ambient_ref] = next;
+        }
+        static create(init) {
+            const obj = new this;
+            if (init)
+                init(obj);
+            return obj;
+        }
+        static [Symbol.toPrimitive]() {
+            return this.toString();
+        }
+        static toString() {
+            if (Symbol.toStringTag in this)
+                return this[Symbol.toStringTag];
+            return this.name;
+        }
+        destructor() { }
+        toString() {
+            return this[Symbol.toStringTag] || this.constructor.name + '()';
+        }
+        toJSON() {
+            return this.toString();
+        }
+    }
+    $.$mol_object2 = $mol_object2;
+})($ || ($ = {}));
+//mol/object2/object2.ts
+;
+"use strict";
 //node/node.ts
 ;
 "use strict";
@@ -614,7 +764,7 @@ var $;
                 case $hyoo_crowd_unit_kind.give:
                     return $mol_dev_format_div({}, $mol_dev_format_native(this), $mol_dev_format_shade(' 🏅 ', this.self, ' '), $mol_dev_format_native($hyoo_crowd_peer_level[this.data] ?? this.data));
                 case $hyoo_crowd_unit_kind.data:
-                    return $mol_dev_format_div({}, $mol_dev_format_native(this), $mol_dev_format_shade(' 📦 ', this.head, ' '), $mol_dev_format_native(this.data));
+                    return $mol_dev_format_div({}, $mol_dev_format_native(this), $mol_dev_format_shade(' 📦 ', this.head, '!', this.self, ' '), $mol_dev_format_native(this.data));
             }
         }
     }
@@ -984,156 +1134,6 @@ var $;
     $.$mol_wire_pub_sub = $mol_wire_pub_sub;
 })($ || ($ = {}));
 //mol/wire/pub/sub/sub.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
-    function $mol_ambient(overrides) {
-        return Object.setPrototypeOf(overrides, this || $);
-    }
-    $.$mol_ambient = $mol_ambient;
-})($ || ($ = {}));
-//mol/ambient/ambient.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const instances = new WeakSet();
-    function $mol_delegate(proto, target) {
-        const proxy = new Proxy(proto, {
-            get: (_, field) => {
-                const obj = target();
-                let val = Reflect.get(obj, field);
-                if (typeof val === 'function') {
-                    val = val.bind(obj);
-                }
-                return val;
-            },
-            has: (_, field) => Reflect.has(target(), field),
-            set: (_, field, value) => Reflect.set(target(), field, value),
-            getOwnPropertyDescriptor: (_, field) => Reflect.getOwnPropertyDescriptor(target(), field),
-            ownKeys: () => Reflect.ownKeys(target()),
-            getPrototypeOf: () => Reflect.getPrototypeOf(target()),
-            setPrototypeOf: (_, donor) => Reflect.setPrototypeOf(target(), donor),
-            isExtensible: () => Reflect.isExtensible(target()),
-            preventExtensions: () => Reflect.preventExtensions(target()),
-            apply: (_, self, args) => Reflect.apply(target(), self, args),
-            construct: (_, args, retarget) => Reflect.construct(target(), args, retarget),
-            defineProperty: (_, field, descr) => Reflect.defineProperty(target(), field, descr),
-            deleteProperty: (_, field) => Reflect.deleteProperty(target(), field),
-        });
-        instances.add(proxy);
-        return proxy;
-    }
-    $.$mol_delegate = $mol_delegate;
-    Reflect.defineProperty($mol_delegate, Symbol.hasInstance, {
-        value: (obj) => instances.has(obj),
-    });
-})($ || ($ = {}));
-//mol/delegate/delegate.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_owning_map = new WeakMap();
-    function $mol_owning_allow(having) {
-        try {
-            if (!having)
-                return false;
-            if (typeof having !== 'object')
-                return false;
-            if (having instanceof $mol_delegate)
-                return false;
-            if (typeof having['destructor'] !== 'function')
-                return false;
-            return true;
-        }
-        catch {
-            return false;
-        }
-    }
-    $.$mol_owning_allow = $mol_owning_allow;
-    function $mol_owning_get(having, Owner) {
-        if (!$mol_owning_allow(having))
-            return null;
-        while (true) {
-            const owner = $.$mol_owning_map.get(having);
-            if (!owner)
-                return owner;
-            if (!Owner)
-                return owner;
-            if (owner instanceof Owner)
-                return owner;
-            having = owner;
-        }
-    }
-    $.$mol_owning_get = $mol_owning_get;
-    function $mol_owning_check(owner, having) {
-        if (!$mol_owning_allow(having))
-            return false;
-        if ($.$mol_owning_map.get(having) !== owner)
-            return false;
-        return true;
-    }
-    $.$mol_owning_check = $mol_owning_check;
-    function $mol_owning_catch(owner, having) {
-        if (!$mol_owning_allow(having))
-            return false;
-        if ($.$mol_owning_map.get(having))
-            return false;
-        $.$mol_owning_map.set(having, owner);
-        return true;
-    }
-    $.$mol_owning_catch = $mol_owning_catch;
-})($ || ($ = {}));
-//mol/owning/owning.ts
-;
-"use strict";
-//mol/type/writable/writable.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_object2 {
-        static $ = $;
-        [$mol_ambient_ref] = null;
-        get $() {
-            if (this[$mol_ambient_ref])
-                return this[$mol_ambient_ref];
-            const owner = $mol_owning_get(this);
-            return this[$mol_ambient_ref] = owner?.$ || $mol_object2.$;
-        }
-        set $(next) {
-            if (this[$mol_ambient_ref])
-                $mol_fail_hidden(new Error('Context already defined'));
-            this[$mol_ambient_ref] = next;
-        }
-        static create(init) {
-            const obj = new this;
-            if (init)
-                init(obj);
-            return obj;
-        }
-        static [Symbol.toPrimitive]() {
-            return this.toString();
-        }
-        static toString() {
-            if (Symbol.toStringTag in this)
-                return this[Symbol.toStringTag];
-            return this.name;
-        }
-        destructor() { }
-        toString() {
-            return this[Symbol.toStringTag] || this.constructor.name + '()';
-        }
-        toJSON() {
-            return this.toString();
-        }
-    }
-    $.$mol_object2 = $mol_object2;
-})($ || ($ = {}));
-//mol/object2/object2.ts
 ;
 "use strict";
 var $;
@@ -1905,7 +1905,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $hyoo_crowd_node extends Object {
+    class $hyoo_crowd_node extends $mol_object2 {
         land;
         head;
         constructor(land = new $hyoo_crowd_land, head = '0_0') {
@@ -1941,7 +1941,7 @@ var $;
             return `${this.constructor.name}("${this.land.id()}","${this.head}")`;
         }
         [$mol_dev_format_head]() {
-            return $mol_dev_format_span({}, $mol_dev_format_native(this), $mol_dev_format_shade('/'), $mol_dev_format_auto(this.units().map(unit => unit.data)), $mol_dev_format_shade('/'), $mol_dev_format_auto(this.nodes($hyoo_crowd_node)));
+            return $mol_dev_format_span({}, $mol_dev_format_native(this), $mol_dev_format_shade(':'), $mol_dev_format_auto(this.land.unit_list(this.head)));
         }
     }
     __decorate([
@@ -2386,7 +2386,7 @@ var $;
         move(from, to) {
             const units = this.units();
             const lead = to ? units[to - 1] : null;
-            return this.land.move(units[from], this.head, lead?.self ?? '0_0');
+            this.land.move(units[from], this.head, lead?.self ?? '0_0');
         }
         cut(seat) {
             return this.land.wipe(this.units()[seat]);
@@ -3121,6 +3121,12 @@ var $;
         }
         resort(head) {
             const kids = this._unit_lists.get(head);
+            if (!kids.dirty)
+                return kids;
+            if (kids.length < 2) {
+                kids.dirty = true;
+                return kids;
+            }
             const queue = kids.splice(0).sort((left, right) => -$hyoo_crowd_unit_compare(left, right));
             const locate = (self) => {
                 for (let i = kids.length - 1; i >= 0; --i) {
@@ -3129,25 +3135,35 @@ var $;
                 }
                 return -1;
             };
-            for (let cursor = queue.length - 1; cursor >= 0; --cursor) {
-                const kid = queue[cursor];
-                let index = 0;
-                if (kid.prev !== '0_0') {
-                    index = locate(kid.prev) + 1;
-                    if (!index) {
-                        index = kids.length;
-                        if (kid.next !== '0_0') {
-                            index = locate(kid.next);
-                            if (index === -1)
-                                continue;
-                        }
+            while (queue.length) {
+                kids.push(queue.pop());
+                for (let cursor = queue.length - 1; cursor >= 0; --cursor) {
+                    const kid = queue[cursor];
+                    let index = 0;
+                    if (kid.prev !== '0_0') {
+                        index = locate(kid.prev) + 1;
+                        if (!index)
+                            continue;
                     }
+                    while (kids[index] && ($hyoo_crowd_unit_compare(kids[index], kid) > 0))
+                        ++index;
+                    const exists = locate(kid.self);
+                    if (index === exists) {
+                        if (cursor === queue.length - 1)
+                            queue.pop();
+                        continue;
+                    }
+                    if (exists >= 0) {
+                        kids.splice(exists, 1);
+                        if (exists < index)
+                            --index;
+                    }
+                    kids.splice(index, 0, kid);
+                    if (cursor === queue.length - 1)
+                        queue.pop();
+                    cursor = queue.length;
                 }
-                kids.splice(index, 0, kid);
-                queue.splice(cursor, 1);
-                cursor = queue.length;
             }
-            this._unit_lists.set(head, kids);
             kids.dirty = false;
             return kids;
         }
@@ -3160,13 +3176,14 @@ var $;
                 if (prev) {
                     if ($hyoo_crowd_unit_compare(prev, next) > 0)
                         continue;
-                    kids.splice(kids.indexOf(prev), 1, next);
+                    kids[kids.indexOf(prev)] = next;
                 }
                 else {
                     kids.push(next);
                 }
                 this._unit_all.set(next_id, next);
-                kids.dirty = true;
+                if (kids.length > 1)
+                    kids.dirty = true;
                 this._unit_alives.set(next.head, undefined);
             }
             this.pub.emit();
@@ -3317,6 +3334,7 @@ var $;
             const unit_new = new $hyoo_crowd_unit(this.id(), auth, head, self, next, prev, time, data, null);
             this._unit_all.set(old_id, unit_new);
             unit_list.splice(seat, 0, unit_new);
+            unit_list.dirty = true;
             this._unit_alives.set(head, undefined);
             this.pub.emit();
             return unit_new;
@@ -3330,8 +3348,13 @@ var $;
             return this.put(unit.head, unit.self, prev, null);
         }
         move(unit, head, prev) {
+            const unit_list = this.unit_list(unit.head);
+            const seat = unit_list.indexOf(unit);
+            const next = unit_list[seat + 1];
             this.wipe(unit);
-            return this.put(head, unit.self, prev, unit.data);
+            if (next)
+                this.put(next.head, next.self, unit_list[unit_list.indexOf(next) - 2]?.self ?? '0_0', next.data);
+            this.put(head, unit.self, prev, unit.data);
         }
         insert(unit, head, seat) {
             const list = this.unit_list(head);
@@ -7154,8 +7177,8 @@ var $;
         'list': /^((?:(?: ?([*+-])|(?:\d+[\.\)])+) +(?:[^]*?)$(?:\r?\n?)(?:  (?:[^]*?)$(?:\r?\n?))*)+)((?:\r?\n)*)/,
         'code': /^(```\s*)([\w.-]*)[\r\n]+([^]*?)^(```)$([\n\r]*)/,
         'code-indent': /^((?:(?:  |\t)(?:[^]*?)$([\n\r]*))+)/,
-        'table': /((?:^\|.+?$\r?\n)+)([\n\r]*)/,
-        'grid': /((?:^ *! .+?$\r?\n)+)([\n\r]*)/,
+        'table': /((?:^\|.+?$\r?\n?)+)([\n\r]*)/,
+        'grid': /((?:^ *! .*?$\r?\n?)+)([\n\r]*)/,
         'cut': /^--+$((?:\r?\n)*)/,
         'block': /^(.*?)$((?:\r?\n)*)/,
     });
@@ -9808,7 +9831,7 @@ var $;
                 return this.cell_content(id.block)[id.row][id.cell];
             }
             grid_content(indexBlock) {
-                return [...this.flow_tokens()[indexBlock].chunks[0].match(/(?:^! .*?$\r?\n)+(?:^ +! .*?$\r?\n)*/gm)]
+                return [...this.flow_tokens()[indexBlock].chunks[0].match(/(?:^! .*?$\r?\n?)+(?:^ +! .*?$\r?\n?)*/gm)]
                     .map((row, rowId) => {
                     const cells = [];
                     for (const line of row.trim().split(/\r?\n/)) {

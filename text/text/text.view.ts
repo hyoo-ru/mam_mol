@@ -114,7 +114,7 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		grid_content( indexBlock: number ) {
-			return [ ... this.flow_tokens()[ indexBlock ].chunks[ 0 ].match( /(?:^! .*?$\r?\n)+(?:^ +! .*?$\r?\n)*/gm )! ]
+			return [ ... this.flow_tokens()[ indexBlock ].chunks[ 0 ].match( /(?:^! .*?$\r?\n?)+(?:^ +! .*?$\r?\n?)*/gm )! ]
 			.map( ( row , rowId ) => {
 				const cells = [] as string[]
 				for( const line of row.trim().split( /\r?\n/ ) ) {
