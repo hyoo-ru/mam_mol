@@ -128,6 +128,87 @@ namespace $ {
 
 		}
 		
+		acyclic2( compare : ( left : Edge, right : Edge )=> number ) {
+			
+			const checked = [] as Node[]
+			
+			const pick = ( left: Edge | null, right: Edge | null )=> {
+				if( left === null ) return right
+				if( right === null ) return left
+				if( compare( left, right ) < 0 ) return left
+				return right
+			}
+			
+			for( const start of this.nodes ) {
+				
+				const path = [] as Node[]
+				
+				const visit = ( from : Node ) : Edge | null => {
+
+					if( checked.includes( from ) ) return null
+
+					const index = path.lastIndexOf( from )
+					if( index > -1 ) {
+
+						const cycle = path.slice( index )
+
+						return cycle.reduce(
+							( weak , node , index )=> pick(
+								weak ,
+								this.edge_out( node , cycle[ ( index + 1 ) % cycle.length ] )!,
+							) ,
+							null as Edge | null,
+						)
+
+					}
+
+					path.push( from )
+
+					dive: try {
+
+						const deps = this.edges_out.get( from )
+						if( !deps ) break dive
+
+						for( const [ to , edge ] of deps ) {
+
+							if( to === from ) {
+								this.unlink( from , to )
+								continue
+							}
+
+							const min = visit( to )
+							if( min === null ) continue
+							
+							const cmp = compare( edge, min )
+							if( cmp > 0 ) return min
+							if( cmp === 0 ) {
+								
+								this.unlink( from , to )
+								
+								if( path.length > 1 ) {
+									const enter = path[ path.length - 2 ]
+									this.link( enter , to , edge )
+								}
+								
+							}
+							
+						}
+
+					} finally {
+						path.pop()
+					}
+
+					checked.push( from )
+
+					return null
+				}
+
+				visit( start )
+
+			}
+
+		}
+		
 		get sorted() {
 
 			const sorted = new Set< Node >()
