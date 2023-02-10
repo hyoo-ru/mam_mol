@@ -4,7 +4,7 @@ namespace $ {
 		'//cse.google.com/adsense/search/async-ads.js'
 	])
 
-	export function $mol_offline( uri = 'web.js' ) {
+	export function $mol_offline() {
 		
 		if( typeof window === 'undefined' ) {
 			
@@ -13,9 +13,13 @@ namespace $ {
 			} )
 
 			self.addEventListener( 'activate' , ( event : any )=> {
+				
 				caches.delete( 'v1' )
+				caches.delete( '$mol_offline' )
+				
 				self['clients'].claim()
 				console.info( '$mol_offline activated' )
+				
 			} )
 
 			self.addEventListener( 'fetch' , ( event : any )=> {
@@ -32,20 +36,24 @@ namespace $ {
 					)
 				}
 				
-				const fresh = fetch( event.request )
-				.then( async( response )=> {
+				if( event.request.method !== 'GET' ) {
+					event.respondWith( fetch( event.request ) )
+				}
+				
+				const fresh = fetch( event.request ).then( response => {
 
-					if( event.request.method !== 'GET' ) return response
-
-					const cache = await caches.open( 'v1' )
-					cache.put( event.request , response.clone() )
+					event.waitUntil(
+						caches.open( '$mol_offline' ).then(
+							cache => cache.put( event.request , response )
+						)
+					)
 					
-					return response
+					return response.clone()
 				} )
+				event.waitUntil( fresh )
 			
 				event.respondWith(
-					caches.match( event.request )
-					.then( response => response || fresh )
+					caches.match( event.request ).then( response => response || fresh )
 				)
 				
 			})
@@ -60,7 +68,7 @@ namespace $ {
 		} else if( !navigator.serviceWorker ) {
 			console.warn( 'Service Worker is not supported.' )
 		} else {
-			navigator.serviceWorker.register( uri )
+			navigator.serviceWorker.register( 'web.js' )
 		}
 
 	}
