@@ -31,26 +31,6 @@ $node[ "../mam.ts" ] = $node[ "../mam.ts" ] = module.exports }.call( {} , {} )
 "use strict";
 var $;
 (function ($) {
-    function $mol_fail(error) {
-        throw error;
-    }
-    $.$mol_fail = $mol_fail;
-})($ || ($ = {}));
-//mol/fail/fail.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fail_hidden(error) {
-        throw error;
-    }
-    $.$mol_fail_hidden = $mol_fail_hidden;
-})($ || ($ = {}));
-//mol/fail/hidden/hidden.ts
-;
-"use strict";
-var $;
-(function ($) {
     const blacklist = new Set([
         '//cse.google.com/adsense/search/async-ads.js'
     ]);
@@ -60,6 +40,7 @@ var $;
                 self['skipWaiting']();
             });
             self.addEventListener('activate', (event) => {
+                caches.delete('v1');
                 self['clients'].claim();
                 console.info('$mol_offline activated');
             });
@@ -70,18 +51,16 @@ var $;
                         statusText: 'Blocked'
                     }));
                 }
-                event.respondWith(fetch(event.request)
-                    .then(response => {
+                const fresh = fetch(event.request)
+                    .then(async (response) => {
                     if (event.request.method !== 'GET')
                         return response;
-                    event.waitUntil(caches.open('v1')
-                        .then(cache => cache.put(event.request, response)));
-                    return response.clone();
-                })
-                    .catch(error => {
-                    return caches.match(event.request)
-                        .catch(error2 => $mol_fail_hidden(error));
-                }));
+                    const cache = await caches.open('v1');
+                    cache.put(event.request, response.clone());
+                    return response;
+                });
+                event.respondWith(caches.match(event.request)
+                    .then(response => response || fresh));
             });
             self.addEventListener('beforeinstallprompt', (event) => {
                 console.log(event);
@@ -215,6 +194,26 @@ var $;
     $.$mol_owning_catch = $mol_owning_catch;
 })($ || ($ = {}));
 //mol/owning/owning.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail(error) {
+        throw error;
+    }
+    $.$mol_fail = $mol_fail;
+})($ || ($ = {}));
+//mol/fail/fail.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail_hidden(error) {
+        throw error;
+    }
+    $.$mol_fail_hidden = $mol_fail_hidden;
+})($ || ($ = {}));
+//mol/fail/hidden/hidden.ts
 ;
 "use strict";
 //mol/type/writable/writable.ts
