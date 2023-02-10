@@ -13,6 +13,7 @@ namespace $ {
 			} )
 
 			self.addEventListener( 'activate' , ( event : any )=> {
+				caches.delete( 'v1' )
 				self['clients'].claim()
 				console.info( '$mol_offline activated' )
 			} )
@@ -31,28 +32,20 @@ namespace $ {
 					)
 				}
 				
+				const fresh = fetch( event.request )
+				.then( async( response )=> {
+
+					if( event.request.method !== 'GET' ) return response
+
+					const cache = await caches.open( 'v1' )
+					cache.put( event.request , response.clone() )
+					
+					return response
+				} )
+			
 				event.respondWith(
-
-					fetch( event.request )
-					.then( response => {
-
-						if( event.request.method !== 'GET' ) return response
-
-						event.waitUntil(
-							caches.open( 'v1' )
-							.then( cache => cache.put( event.request , response ) )
-						)
-
-						return response.clone()
-
-					} )
-					.catch( error => {
-
-						return caches.match( event.request )
-						.catch( error2 => $mol_fail_hidden( error ) )
-
-					} )
-
+					caches.match( event.request )
+					.then( response => response || fresh )
 				)
 				
 			})
