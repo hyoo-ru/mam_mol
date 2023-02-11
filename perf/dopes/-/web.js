@@ -1066,9 +1066,12 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const named = new WeakSet();
     function $mol_func_name(func) {
         let name = func.name;
         if (name?.length > 1)
+            return name;
+        if (named.has(func))
             return name;
         for (let key in this) {
             try {
@@ -1080,6 +1083,7 @@ var $;
             }
             catch { }
         }
+        named.add(func);
         return name;
     }
     $.$mol_func_name = $mol_func_name;
