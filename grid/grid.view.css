@@ -2,6 +2,7 @@
 	display: block;
 	flex: 0 1 auto;
 	position: relative;
+	overflow-x: auto;
 }
 
 [mol_grid_gap] {
