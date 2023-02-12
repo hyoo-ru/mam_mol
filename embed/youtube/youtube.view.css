@@ -1,5 +1,6 @@
 [mol_embed_youtube] {
 	padding: 0;
+	max-width: 100%;
 }
 
 [mol_embed_youtube_image]:not(:hover):not(:focus) {
