@@ -57,8 +57,7 @@ Nevertheless, it is a useful exercise in design.
 == Links
 
 - Online sandbox: \\https://marked.hyoo.ru/\\
-- \\Article about MarkedText (Russian)\https://github.com/nin-jin/HabHub/issues/39\\
-- \\Parser on TS\https://github.com/hyoo-ru/marked.hyoo.ru/\\
-- \\MarkedText => HTML converter on TS\https://github.com/hyoo-ru/marked.hyoo.ru/tree/master/to/html\\
-- ""Build results of $mol_regexp\https://github.com/hyoo-ru/mam_mol/workflows/mol_regexp/badge.svg""
+- \\Article about MarkedText\https://github.com/nin-jin/HabHub/issues/39\\
+- \\TypeScript API\https://github.com/hyoo-ru/marked.hyoo.ru/\\
+- ""Map of our projects\https://raw.githubusercontent.com/hyoo-ru/hyoo.ru/master/hyoo.svg""
 ```
