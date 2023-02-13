@@ -3,16 +3,16 @@ $mol_textarea_demo $mol_example_small
 	sub /
 		<= Empty_descr $mol_textarea
 			hint \source code
-			value?val <=> empty_descr?val \
+			value? <=> empty_descr? \
 		<= Filled_descr $mol_textarea
 			sidebar_showed true
-			value?val <=> filled_descr?val \
+			value? <=> filled_descr? \
 				\function hello( name = 'World' ) {
 				\	return `Hello, ${ name }!`
 				\}
 		<= Disabled $mol_textarea
 			enabled false
-			value?val <=> filled_descr?val
+			value <= symbols_hint \
 	tags /
 		\textarea
 		\code
