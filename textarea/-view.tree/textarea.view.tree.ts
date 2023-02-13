@@ -47,6 +47,98 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * symbols_alt *
+		 * 	comma \<
+		 * 	period \>
+		 * 	dash \−
+		 * 	equals \≈
+		 * 	graveAccent \́
+		 * 	forwardSlash \÷
+		 * 	E \€
+		 * 	X \×
+		 * 	C \©
+		 * 	P \§
+		 * 	H \₽
+		 * 	key0 \°
+		 * 	key8 \•
+		 * 	key2 \@
+		 * 	key3 \#
+		 * 	key4 \$
+		 * 	key6 \^
+		 * 	key7 \&
+		 * 	bracketOpen \[
+		 * 	bracketClose \]
+		 * 	slashBack \|
+		 * ```
+		 */
+		symbols_alt() {
+			return {
+				comma: "<",
+				period: ">",
+				dash: "−",
+				equals: "≈",
+				graveAccent: "́",
+				forwardSlash: "÷",
+				E: "€",
+				X: "×",
+				C: "©",
+				P: "§",
+				H: "₽",
+				key0: "°",
+				key8: "•",
+				key2: "@",
+				key3: "#",
+				key4: "$",
+				key6: "^",
+				key7: "&",
+				bracketOpen: "[",
+				bracketClose: "]",
+				slashBack: "|"
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * symbols_alt_shift *
+		 * 	V \✅
+		 * 	X \❌
+		 * 	O \⭕
+		 * 	key1 \❗
+		 * 	key4 \💲
+		 * 	key7 \❓
+		 * 	comma \«
+		 * 	period \»
+		 * 	semicolon \“
+		 * 	quoteSingle \”
+		 * 	dash \—
+		 * 	equals \≠
+		 * 	graveAccent \̱
+		 * 	bracketOpen \{
+		 * 	bracketClose \}
+		 * ```
+		 */
+		symbols_alt_shift() {
+			return {
+				V: "✅",
+				X: "❌",
+				O: "⭕",
+				key1: "❗",
+				key4: "💲",
+				key7: "❓",
+				comma: "«",
+				period: "»",
+				semicolon: "“",
+				quoteSingle: "”",
+				dash: "—",
+				equals: "≠",
+				graveAccent: "̱",
+				bracketOpen: "{",
+				bracketClose: "}"
+			}
+		}
+		
+		/**
+		 * ```tree
 		 * clickable?val false
 		 * ```
 		 */

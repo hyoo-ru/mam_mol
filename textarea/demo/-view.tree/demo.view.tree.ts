@@ -44,12 +44,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * empty_descr?val \
+		 * empty_descr? \
 		 * ```
 		 */
 		@ $mol_mem
-		empty_descr(val?: any) {
-			if ( val !== undefined ) return val as never
+		empty_descr(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -57,7 +57,7 @@ namespace $ {
 		 * ```tree
 		 * Empty_descr $mol_textarea
 		 * 	hint \source code
-		 * 	value?val <=> empty_descr?val
+		 * 	value? <=> empty_descr?
 		 * ```
 		 */
 		@ $mol_mem
@@ -65,22 +65,22 @@ namespace $ {
 			const obj = new this.$.$mol_textarea()
 			
 			obj.hint = () => "source code"
-			obj.value = (val?: any) => this.empty_descr(val)
+			obj.value = (next?: any) => this.empty_descr(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * filled_descr?val \
+		 * filled_descr? \
 		 * 	\function hello( name = 'World' ) {
 		 * 	\	return `Hello, ${ name }!`
 		 * 	\}
 		 * ```
 		 */
 		@ $mol_mem
-		filled_descr(val?: any) {
-			if ( val !== undefined ) return val as never
+		filled_descr(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "function hello( name = 'World' ) {\n\treturn `Hello, ${ name }!`\n}"
 		}
 		
@@ -88,7 +88,7 @@ namespace $ {
 		 * ```tree
 		 * Filled_descr $mol_textarea
 		 * 	sidebar_showed true
-		 * 	value?val <=> filled_descr?val
+		 * 	value? <=> filled_descr?
 		 * ```
 		 */
 		@ $mol_mem
@@ -96,16 +96,25 @@ namespace $ {
 			const obj = new this.$.$mol_textarea()
 			
 			obj.sidebar_showed = () => true
-			obj.value = (val?: any) => this.filled_descr(val)
+			obj.value = (next?: any) => this.filled_descr(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
+		 * symbols_hint \
+		 * ```
+		 */
+		symbols_hint() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * Disabled $mol_textarea
 		 * 	enabled false
-		 * 	value?val <=> filled_descr?val
+		 * 	value <= symbols_hint
 		 * ```
 		 */
 		@ $mol_mem
@@ -113,7 +122,7 @@ namespace $ {
 			const obj = new this.$.$mol_textarea()
 			
 			obj.enabled = () => false
-			obj.value = (val?: any) => this.filled_descr(val)
+			obj.value = () => this.symbols_hint()
 			
 			return obj
 		}

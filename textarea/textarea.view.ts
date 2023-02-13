@@ -21,18 +21,38 @@ namespace $.$$ {
 
 		}
 		
+		symbol_insert( event: KeyboardEvent ) {
+			
+			const symbol = event.shiftKey
+				? this.symbols_alt_shift()[ $mol_keyboard_code[ event.keyCode ] ]
+				: this.symbols_alt()[ $mol_keyboard_code[ event.keyCode ] ]
+				
+			if( !symbol ) return
+			
+			document.execCommand( 'insertText', false, symbol )
+			
+		}
+		
 		hover( event : PointerEvent ) {
 			this.clickable( event.ctrlKey )
 		}
 		
 		press( event : KeyboardEvent ) {
+			
+			if( event.altKey && !event.ctrlKey ) {
+				
+				this.symbol_insert( event )
+				
+			} else {
 
-			switch( event.keyCode ) {
-				case $mol_keyboard_code.tab : this.indent_inc() ; break
-				case event.shiftKey && $mol_keyboard_code.tab : this.indent_dec() ; break
-				default : return
+				switch( event.keyCode ) {
+					case $mol_keyboard_code.tab : this.indent_inc() ; break
+					case event.shiftKey && $mol_keyboard_code.tab : this.indent_dec() ; break
+					default : return
+				}
+			
 			}
-
+			
 			event.preventDefault()
 
 		}

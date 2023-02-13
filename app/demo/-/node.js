@@ -8467,6 +8467,50 @@ var $;
                 this.View()
             ];
         }
+        symbols_alt() {
+            return {
+                comma: "<",
+                period: ">",
+                dash: "−",
+                equals: "≈",
+                graveAccent: "́",
+                forwardSlash: "÷",
+                E: "€",
+                X: "×",
+                C: "©",
+                P: "§",
+                H: "₽",
+                key0: "°",
+                key8: "•",
+                key2: "@",
+                key3: "#",
+                key4: "$",
+                key6: "^",
+                key7: "&",
+                bracketOpen: "[",
+                bracketClose: "]",
+                slashBack: "|"
+            };
+        }
+        symbols_alt_shift() {
+            return {
+                V: "✅",
+                X: "❌",
+                O: "⭕",
+                key1: "❗",
+                key4: "💲",
+                key7: "❓",
+                comma: "«",
+                period: "»",
+                semicolon: "“",
+                quoteSingle: "”",
+                dash: "—",
+                equals: "≠",
+                graveAccent: "̱",
+                bracketOpen: "{",
+                bracketClose: "}"
+            };
+        }
         clickable(val) {
             if (val !== undefined)
                 return val;
@@ -8591,18 +8635,31 @@ var $;
             }
             indent_dec() {
             }
+            symbol_insert(event) {
+                const symbol = event.shiftKey
+                    ? this.symbols_alt_shift()[$mol_keyboard_code[event.keyCode]]
+                    : this.symbols_alt()[$mol_keyboard_code[event.keyCode]];
+                if (!symbol)
+                    return;
+                document.execCommand('insertText', false, symbol);
+            }
             hover(event) {
                 this.clickable(event.ctrlKey);
             }
             press(event) {
-                switch (event.keyCode) {
-                    case $mol_keyboard_code.tab:
-                        this.indent_inc();
-                        break;
-                    case event.shiftKey && $mol_keyboard_code.tab:
-                        this.indent_dec();
-                        break;
-                    default: return;
+                if (event.altKey && !event.ctrlKey) {
+                    this.symbol_insert(event);
+                }
+                else {
+                    switch (event.keyCode) {
+                        case $mol_keyboard_code.tab:
+                            this.indent_inc();
+                            break;
+                        case event.shiftKey && $mol_keyboard_code.tab:
+                            this.indent_dec();
+                            break;
+                        default: return;
+                    }
                 }
                 event.preventDefault();
             }
@@ -32284,32 +32341,35 @@ var $;
                 "syntax highlighting"
             ];
         }
-        empty_descr(val) {
-            if (val !== undefined)
-                return val;
+        empty_descr(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         Empty_descr() {
             const obj = new this.$.$mol_textarea();
             obj.hint = () => "source code";
-            obj.value = (val) => this.empty_descr(val);
+            obj.value = (next) => this.empty_descr(next);
             return obj;
         }
-        filled_descr(val) {
-            if (val !== undefined)
-                return val;
+        filled_descr(next) {
+            if (next !== undefined)
+                return next;
             return "function hello( name = 'World' ) {\n\treturn `Hello, ${ name }!`\n}";
         }
         Filled_descr() {
             const obj = new this.$.$mol_textarea();
             obj.sidebar_showed = () => true;
-            obj.value = (val) => this.filled_descr(val);
+            obj.value = (next) => this.filled_descr(next);
             return obj;
+        }
+        symbols_hint() {
+            return "";
         }
         Disabled() {
             const obj = new this.$.$mol_textarea();
             obj.enabled = () => false;
-            obj.value = (val) => this.filled_descr(val);
+            obj.value = () => this.symbols_hint();
             return obj;
         }
     }
