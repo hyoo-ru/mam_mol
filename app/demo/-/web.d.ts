@@ -8455,6 +8455,12 @@ declare namespace $ {
 declare namespace $ {
 }
 
+declare namespace $.$$ {
+    class $mol_textarea_demo extends $.$mol_textarea_demo {
+        symbols_hint(): string;
+    }
+}
+
 declare namespace $ {
     function $mol_assert_ok(value: any): void;
     function $mol_assert_not(value: any): void;

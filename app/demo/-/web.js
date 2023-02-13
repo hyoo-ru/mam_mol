@@ -32012,6 +32012,30 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_textarea_demo extends $.$mol_textarea_demo {
+            symbols_hint() {
+                let rows = [
+                    ...Object.entries(this.Disabled().symbols_alt())
+                        .map(([name, val]) => `Alt + ${name}: ${val}`),
+                    ...Object.entries(this.Disabled().symbols_alt_shift())
+                        .map(([name, val]) => `Alt + Shift + ${name}: ${val}`),
+                ];
+                return rows.join('\n');
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_textarea_demo.prototype, "symbols_hint", null);
+        $$.$mol_textarea_demo = $mol_textarea_demo;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/textarea/demo/demo.view.ts
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_assert_ok(value) {
         if (value)
             return;
