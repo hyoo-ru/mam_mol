@@ -5,13 +5,13 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	mol_theme \$mol_theme_accent
+		 * 	mol_theme <= theme
 		 * ```
 		 */
 		attr() {
 			return {
 				...super.attr(),
-				mol_theme: "$mol_theme_accent"
+				mol_theme: this.theme()
 			}
 		}
 		
@@ -38,6 +38,15 @@ namespace $ {
 			return [
 				this.value()
 			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * theme \$mol_theme_accent
+		 * ```
+		 */
+		theme() {
+			return "$mol_theme_accent"
 		}
 		
 		/**

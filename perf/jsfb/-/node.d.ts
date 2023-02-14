@@ -921,6 +921,7 @@ declare namespace $ {
             minHeight: string;
         };
         sub(): readonly any[];
+        theme(): string;
         value(): any;
     }
 }
