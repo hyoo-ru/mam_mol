@@ -42,7 +42,7 @@ $mol_form_demo $mol_example
 					<= Age_field $mol_form_field
 						name \Age
 						bid <= age_bid \
-						control <= Age_control $mol_number
+						Content <= Age_control $mol_number
 							value?val <=> age?val 0
 					<= Sex_field $mol_form_field
 						name <= sex_label \Sex
@@ -56,7 +56,7 @@ $mol_form_demo $mol_example
 					<= Color_field $mol_form_field
 						name \Skin color
 						bid <= color_bid \
-						control <= Color_control $mol_select
+						Content <= Color_control $mol_select
 							value?val <=> color?val \
 							dictionary *
 								\

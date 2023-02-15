@@ -359,7 +359,7 @@ namespace $ {
 		 * Age_field $mol_form_field
 		 * 	name \Age
 		 * 	bid <= age_bid
-		 * 	control <= Age_control
+		 * 	Content <= Age_control
 		 * ```
 		 */
 		@ $mol_mem
@@ -368,7 +368,7 @@ namespace $ {
 			
 			obj.name = () => "Age"
 			obj.bid = () => this.age_bid()
-			obj.control = () => this.Age_control()
+			obj.Content = () => this.Age_control()
 			
 			return obj
 		}
@@ -508,7 +508,7 @@ namespace $ {
 		 * Color_field $mol_form_field
 		 * 	name \Skin color
 		 * 	bid <= color_bid
-		 * 	control <= Color_control
+		 * 	Content <= Color_control
 		 * ```
 		 */
 		@ $mol_mem
@@ -517,7 +517,7 @@ namespace $ {
 			
 			obj.name = () => "Skin color"
 			obj.bid = () => this.color_bid()
-			obj.control = () => this.Color_control()
+			obj.Content = () => this.Color_control()
 			
 			return obj
 		}

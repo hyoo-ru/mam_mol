@@ -175,7 +175,7 @@ namespace $ {
 		 * 	bids /
 		 * 		<= bid_swearing*title
 		 * 		<= bid_short*title
-		 * 	control <= Title
+		 * 	Content <= Title
 		 * ```
 		 */
 		@ $mol_mem
@@ -187,7 +187,7 @@ namespace $ {
 				this.bid_swearing("title"),
 				this.bid_short("title")
 			] as readonly any[]
-			obj.control = () => this.Title()
+			obj.Content = () => this.Title()
 			
 			return obj
 		}
@@ -221,7 +221,7 @@ namespace $ {
 		 * Type_field $mol_form_field
 		 * 	name \Type
 		 * 	bids / <= bid_required*type
-		 * 	control <= Type
+		 * 	Content <= Type
 		 * ```
 		 */
 		@ $mol_mem
@@ -232,7 +232,7 @@ namespace $ {
 			obj.bids = () => [
 				this.bid_required("type")
 			] as readonly any[]
-			obj.control = () => this.Type()
+			obj.Content = () => this.Type()
 			
 			return obj
 		}
@@ -263,7 +263,7 @@ namespace $ {
 		 * ```tree
 		 * Adult_field $mol_form_field
 		 * 	name \Adult only
-		 * 	control <= Adult
+		 * 	Content <= Adult
 		 * ```
 		 */
 		@ $mol_mem
@@ -271,7 +271,7 @@ namespace $ {
 			const obj = new this.$.$mol_form_field()
 			
 			obj.name = () => "Adult only"
-			obj.control = () => this.Adult()
+			obj.Content = () => this.Adult()
 			
 			return obj
 		}
@@ -300,7 +300,7 @@ namespace $ {
 		 * 	bids /
 		 * 		<= bid_swearing*content
 		 * 		<= bid_long*content
-		 * 	control <= Content
+		 * 	Content <= Content
 		 * ```
 		 */
 		@ $mol_mem
@@ -312,7 +312,7 @@ namespace $ {
 				this.bid_swearing("content"),
 				this.bid_long("content")
 			] as readonly any[]
-			obj.control = () => this.Content()
+			obj.Content = () => this.Content()
 			
 			return obj
 		}

@@ -22982,7 +22982,7 @@ var $;
             const obj = new this.$.$mol_form_field();
             obj.name = () => "Age";
             obj.bid = () => this.age_bid();
-            obj.control = () => this.Age_control();
+            obj.Content = () => this.Age_control();
             return obj;
         }
         sex_label() {
@@ -23040,7 +23040,7 @@ var $;
             const obj = new this.$.$mol_form_field();
             obj.name = () => "Skin color";
             obj.bid = () => this.color_bid();
-            obj.control = () => this.Color_control();
+            obj.Content = () => this.Color_control();
             return obj;
         }
         Parameters() {
@@ -23490,7 +23490,7 @@ var $;
                 this.bid_swearing("title"),
                 this.bid_short("title")
             ];
-            obj.control = () => this.Title();
+            obj.Content = () => this.Title();
             return obj;
         }
         Type() {
@@ -23509,7 +23509,7 @@ var $;
             obj.bids = () => [
                 this.bid_required("type")
             ];
-            obj.control = () => this.Type();
+            obj.Content = () => this.Type();
             return obj;
         }
         Adult() {
@@ -23524,7 +23524,7 @@ var $;
         Adult_field() {
             const obj = new this.$.$mol_form_field();
             obj.name = () => "Adult only";
-            obj.control = () => this.Adult();
+            obj.Content = () => this.Adult();
             return obj;
         }
         Content() {
@@ -23540,7 +23540,7 @@ var $;
                 this.bid_swearing("content"),
                 this.bid_long("content")
             ];
-            obj.control = () => this.Content();
+            obj.Content = () => this.Content();
             return obj;
         }
         Config() {

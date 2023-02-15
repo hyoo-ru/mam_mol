@@ -2492,7 +2492,7 @@ $mol_form_demo $mol_example
 					<= Age_field $mol_form_field
 						name \Age
 						bid <= age_bid \
-						control <= Age_control $mol_number
+						Content <= Age_control $mol_number
 							value?val <=> age?val 0
 					<= Sex_field $mol_form_field
 						name <= sex_label \Sex
@@ -2506,7 +2506,7 @@ $mol_form_demo $mol_example
 					<= Color_field $mol_form_field
 						name \Skin color
 						bid <= color_bid \
-						control <= Color_control $mol_select
+						Content <= Color_control $mol_select
 							value?val <=> color?val \
 							dictionary *
 								\
@@ -2571,14 +2571,14 @@ $mol_form_draft_demo $mol_example
 					bids /
 						<= bid_swearing*title
 						<= bid_short*title
-					control <= Title $mol_string
+					Content <= Title $mol_string
 						hint \How I spent the summer..
 						value? <=> value_str*title?
 				<= Type_field $mol_form_field
 					name \Type
 					bids /
 						<= bid_required*type
-					control <= Type $mol_switch
+					Content <= Type $mol_switch
 						value? <=> value_str*type?
 						options *
 							article \Article
@@ -2586,7 +2586,7 @@ $mol_form_draft_demo $mol_example
 							question \Question
 				<= Adult_field $mol_form_field
 					name \Adult only
-					control <= Adult $mol_switch
+					Content <= Adult $mol_switch
 						value? <=> value_str*adult?
 						options *
 							false \No
@@ -2596,7 +2596,7 @@ $mol_form_draft_demo $mol_example
 					bids /
 						<= bid_swearing*content
 						<= bid_long*content
-					control <= Content $mol_textarea
+					Content <= Content $mol_textarea
 						hint \Long long story..
 						value? <=> value_str*content?
 			body <= form_body /
