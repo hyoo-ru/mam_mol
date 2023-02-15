@@ -53,7 +53,7 @@ var $;
                     }));
                 }
                 if (event.request.method !== 'GET') {
-                    event.respondWith(fetch(event.request));
+                    return event.respondWith(fetch(event.request));
                 }
                 const fresh = fetch(event.request).then(response => {
                     event.waitUntil(caches.open('$mol_offline').then(cache => cache.put(event.request, response)));
