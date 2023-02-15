@@ -26,14 +26,14 @@ $mol_form_draft_demo $mol_example
 					bids /
 						<= bid_swearing*title
 						<= bid_short*title
-					control <= Title $mol_string
+					Content <= Title $mol_string
 						hint \How I spent the summer..
 						value? <=> value_str*title?
 				<= Type_field $mol_form_field
 					name \Type
 					bids /
 						<= bid_required*type
-					control <= Type $mol_switch
+					Content <= Type $mol_switch
 						value? <=> value_str*type?
 						options *
 							article \Article
@@ -41,7 +41,7 @@ $mol_form_draft_demo $mol_example
 							question \Question
 				<= Adult_field $mol_form_field
 					name \Adult only
-					control <= Adult $mol_switch
+					Content <= Adult $mol_switch
 						value? <=> value_str*adult?
 						options *
 							false \No
@@ -51,7 +51,7 @@ $mol_form_draft_demo $mol_example
 					bids /
 						<= bid_swearing*content
 						<= bid_long*content
-					control <= Content $mol_textarea
+					Content <= Content $mol_textarea
 						hint \Long long story..
 						value? <=> value_str*content?
 			body <= form_body /
