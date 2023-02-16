@@ -29596,38 +29596,65 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_cloud extends $mol_icon {
-        path() {
-            return "M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14C0,17.31 2.69,20 6,20H19C21.76,20 24,17.76 24,15C24,12.36 21.95,10.22 19.35,10.03Z";
-        }
-    }
-    $.$mol_icon_cloud = $mol_icon_cloud;
+    $.$mol_blob = ($node.buffer?.Blob ?? $mol_dom_context.Blob);
 })($ || ($ = {}));
-//mol/icon/cloud/-view.tree/cloud.view.tree.ts
+//mol/blob/blob.ts
 ;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_cloud_download extends $mol_icon {
-        path() {
-            return "M17,13L12,18L7,13H10V9H14V13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14C0,17.31 2.69,20 6,20H19C21.76,20 24,17.76 24,15C24,12.36 21.95,10.22 19.35,10.03Z";
+    class $mol_button_download extends $mol_button_minor {
+        blob() {
+            return null;
+        }
+        uri() {
+            return "";
+        }
+        file_name() {
+            return "blob.bin";
+        }
+        sub() {
+            return [
+                this.Icon(),
+                this.title()
+            ];
+        }
+        Icon() {
+            const obj = new this.$.$mol_icon_download();
+            return obj;
+        }
+        title() {
+            return "";
         }
     }
-    $.$mol_icon_cloud_download = $mol_icon_cloud_download;
+    __decorate([
+        $mol_mem
+    ], $mol_button_download.prototype, "Icon", null);
+    $.$mol_button_download = $mol_button_download;
 })($ || ($ = {}));
-//mol/icon/cloud/download/-view.tree/download.view.tree.ts
+//mol/button/download/-view.tree/download.view.tree.ts
 ;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_cloud_download_outline extends $mol_icon {
-        path() {
-            return "M8,13H10.55V10H13.45V13H16L12,17L8,13M19.35,10.04C21.95,10.22 24,12.36 24,15C24,17.76 21.76,20 19,20H6C2.69,20 0,17.31 0,14C0,10.91 2.34,8.36 5.35,8.04C6.6,5.64 9.11,4 12,4C15.64,4 18.67,6.59 19.35,10.04M19,18C20.66,18 22,16.66 22,15C22,13.45 20.78,12.14 19.22,12.04L17.69,11.93L17.39,10.43C16.88,7.86 14.62,6 12,6C9.94,6 8.08,7.14 7.13,8.97L6.63,9.92L5.56,10.03C3.53,10.24 2,11.95 2,14C2,16.21 3.79,18 6,18H19Z";
+    var $$;
+    (function ($$) {
+        class $mol_button_download extends $.$mol_button_download {
+            uri() {
+                return URL.createObjectURL(this.blob());
+            }
+            click() {
+                const a = $mol_jsx("a", { href: this.uri(), download: this.file_name() });
+                a.click();
+            }
         }
-    }
-    $.$mol_icon_cloud_download_outline = $mol_icon_cloud_download_outline;
+        __decorate([
+            $mol_mem
+        ], $mol_button_download.prototype, "uri", null);
+        $$.$mol_button_download = $mol_button_download;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-//mol/icon/cloud/download/outline/-view.tree/outline.view.tree.ts
+//mol/button/download/download.view.tsx
 ;
 "use strict";
 var $;
@@ -29776,28 +29803,22 @@ var $;
             ];
             return obj;
         }
-        menu_item_download_hint() {
-            return "Download some json";
-        }
-        menu_item_download_uri() {
-            return "";
-        }
-        menu_item_download_icon() {
-            const obj = new this.$.$mol_icon_cloud_download_outline();
-            return obj;
-        }
         menu_item_download_label() {
             return "Download";
         }
+        menu_item_download_hint() {
+            return "Download some json";
+        }
+        menu_item_download_blob() {
+            const obj = new this.$.$mol_blob();
+            return obj;
+        }
         Menu_item_download() {
-            const obj = new this.$.$mol_link_lazy();
+            const obj = new this.$.$mol_button_download();
+            obj.title = () => this.menu_item_download_label();
             obj.hint = () => this.menu_item_download_hint();
-            obj.uri_generated = () => this.menu_item_download_uri();
+            obj.blob = () => this.menu_item_download_blob();
             obj.file_name = () => "demo.json";
-            obj.sub = () => [
-                this.menu_item_download_icon(),
-                this.menu_item_download_label()
-            ];
             return obj;
         }
         menu_item_delete_click(val) {
@@ -29916,7 +29937,7 @@ var $;
     ], $mol_pick_demo.prototype, "Menu_item_copy", null);
     __decorate([
         $mol_mem
-    ], $mol_pick_demo.prototype, "menu_item_download_icon", null);
+    ], $mol_pick_demo.prototype, "menu_item_download_blob", null);
     __decorate([
         $mol_mem
     ], $mol_pick_demo.prototype, "Menu_item_download", null);
@@ -29988,13 +30009,13 @@ var $;
     var $$;
     (function ($$) {
         class $mol_pick_demo extends $.$mol_pick_demo {
-            menu_item_download_uri() {
+            menu_item_download_blob() {
                 const data = {
                     foo: 'bar',
                     arr: [1, 2, 3]
                 };
-                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'text/json' });
-                return $mol_dom_context.URL.createObjectURL(blob);
+                const text = JSON.stringify(data, null, '\t');
+                return new $mol_blob([text], { type: 'text/json' });
             }
             hide_options_menu() {
                 this.Options_pop().focused(false);

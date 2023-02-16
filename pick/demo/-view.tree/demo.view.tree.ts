@@ -354,36 +354,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * menu_item_download_hint \Download some json
-		 * ```
-		 */
-		menu_item_download_hint() {
-			return "Download some json"
-		}
-		
-		/**
-		 * ```tree
-		 * menu_item_download_uri \
-		 * ```
-		 */
-		menu_item_download_uri() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * menu_item_download_icon $mol_icon_cloud_download_outline
-		 * ```
-		 */
-		@ $mol_mem
-		menu_item_download_icon() {
-			const obj = new this.$.$mol_icon_cloud_download_outline()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * menu_item_download_label \Download
 		 * ```
 		 */
@@ -393,26 +363,42 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Menu_item_download $mol_link_lazy
+		 * menu_item_download_hint \Download some json
+		 * ```
+		 */
+		menu_item_download_hint() {
+			return "Download some json"
+		}
+		
+		/**
+		 * ```tree
+		 * menu_item_download_blob $mol_blob
+		 * ```
+		 */
+		@ $mol_mem
+		menu_item_download_blob() {
+			const obj = new this.$.$mol_blob()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Menu_item_download $mol_button_download
+		 * 	title <= menu_item_download_label
 		 * 	hint <= menu_item_download_hint
-		 * 	uri_generated <= menu_item_download_uri
+		 * 	blob <= menu_item_download_blob
 		 * 	file_name \demo.json
-		 * 	sub /
-		 * 		<= menu_item_download_icon
-		 * 		<= menu_item_download_label
 		 * ```
 		 */
 		@ $mol_mem
 		Menu_item_download() {
-			const obj = new this.$.$mol_link_lazy()
+			const obj = new this.$.$mol_button_download()
 			
+			obj.title = () => this.menu_item_download_label()
 			obj.hint = () => this.menu_item_download_hint()
-			obj.uri_generated = () => this.menu_item_download_uri()
+			obj.blob = () => this.menu_item_download_blob()
 			obj.file_name = () => "demo.json"
-			obj.sub = () => [
-				this.menu_item_download_icon(),
-				this.menu_item_download_label()
-			] as readonly any[]
 			
 			return obj
 		}

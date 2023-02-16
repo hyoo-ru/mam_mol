@@ -6,14 +6,14 @@ $mol_pick_demo $mol_example_small
 	sub /
 		<= Demo_caption $mol_view sub /
 			<= title
-		- 1. Simple Pop-up example
+		- \Simple Pop-up example
 		<= Simple_pop $mol_pick
 			hint \Click to show simple popup
 			trigger_content /
 				<= pick_trigger \?
 			bubble_content /
 				<= pick_content \This is popup content
-		- 2. More complex info Pop-up example
+		- \More complex info Pop-up example
 		<= Info_pop $mol_pick
 			hint \Click to show info popup
 			trigger_content /
@@ -25,7 +25,7 @@ $mol_pick_demo $mol_example_small
 						\## Info Pop-up
 						\**This is Markdown text content**
 						\More complex info Pop-up example
-		- 3. Options Pop-up example
+		- \Options Pop-up example
 		<= Options_pop $mol_pick
 			hint \Click to show options menu
 			trigger_content <= options_trigger_content /
@@ -39,13 +39,11 @@ $mol_pick_demo $mol_example_small
 			sub /
 				<= menu_item_copy_icon $mol_icon_content_copy
 				<= menu_item_copy_label \Copy
-		<= Menu_item_download $mol_link_lazy
+		<= Menu_item_download $mol_button_download
+			title <= menu_item_download_label \Download
 			hint <= menu_item_download_hint \Download some json
-			uri_generated <= menu_item_download_uri \
+			blob <= menu_item_download_blob $mol_blob
 			file_name \demo.json
-			sub /
-				<= menu_item_download_icon $mol_icon_cloud_download_outline
-				<= menu_item_download_label \Download
 		<= Menu_item_delete $mol_button_minor
 			style *
 				color \red

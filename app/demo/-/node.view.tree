@@ -3420,11 +3420,13 @@ $mol_icon_help_circle_outline $mol_icon path \M11,18H13V16H11V18M12,2C6.48,2 2,6
 
 $mol_icon_content_copy $mol_icon path \M19,21H8V7H19M19,5H8C6.9,5 6,5.9 6,7V21C6,22.1 6.9,23 8,23H19C20.1,23 21,22.1 21,21V7C21,5.9 20.1,5 19,5M16,1H4C2.9,1 2,1.9 2,3V17H4V3H16V1Z
 
-$mol_icon_cloud $mol_icon path \M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14C0,17.31 2.69,20 6,20H19C21.76,20 24,17.76 24,15C24,12.36 21.95,10.22 19.35,10.03Z
-
-$mol_icon_cloud_download $mol_icon path \M17,13L12,18L7,13H10V9H14V13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14C0,17.31 2.69,20 6,20H19C21.76,20 24,17.76 24,15C24,12.36 21.95,10.22 19.35,10.03Z
-
-$mol_icon_cloud_download_outline $mol_icon path \M8,13H10.55V10H13.45V13H16L12,17L8,13M19.35,10.04C21.95,10.22 24,12.36 24,15C24,17.76 21.76,20 19,20H6C2.69,20 0,17.31 0,14C0,10.91 2.34,8.36 5.35,8.04C6.6,5.64 9.11,4 12,4C15.64,4 18.67,6.59 19.35,10.04M19,18C20.66,18 22,16.66 22,15C22,13.45 20.78,12.14 19.22,12.04L17.69,11.93L17.39,10.43C16.88,7.86 14.62,6 12,6C9.94,6 8.08,7.14 7.13,8.97L6.63,9.92L5.56,10.03C3.53,10.24 2,11.95 2,14C2,16.21 3.79,18 6,18H19Z
+$mol_button_download $mol_button_minor
+	blob null
+	uri \
+	file_name \blob.bin
+	sub /
+		<= Icon $mol_icon_download
+		<= title \
 
 $mol_pick_demo $mol_example_small
 	title \Simple and complex popups
@@ -3434,14 +3436,14 @@ $mol_pick_demo $mol_example_small
 	sub /
 		<= Demo_caption $mol_view sub /
 			<= title
-		- 1. Simple Pop-up example
+		- \Simple Pop-up example
 		<= Simple_pop $mol_pick
 			hint \Click to show simple popup
 			trigger_content /
 				<= pick_trigger \?
 			bubble_content /
 				<= pick_content \This is popup content
-		- 2. More complex info Pop-up example
+		- \More complex info Pop-up example
 		<= Info_pop $mol_pick
 			hint \Click to show info popup
 			trigger_content /
@@ -3453,7 +3455,7 @@ $mol_pick_demo $mol_example_small
 						\## Info Pop-up
 						\**This is Markdown text content**
 						\More complex info Pop-up example
-		- 3. Options Pop-up example
+		- \Options Pop-up example
 		<= Options_pop $mol_pick
 			hint \Click to show options menu
 			trigger_content <= options_trigger_content /
@@ -3467,13 +3469,11 @@ $mol_pick_demo $mol_example_small
 			sub /
 				<= menu_item_copy_icon $mol_icon_content_copy
 				<= menu_item_copy_label \Copy
-		<= Menu_item_download $mol_link_lazy
+		<= Menu_item_download $mol_button_download
+			title <= menu_item_download_label \Download
 			hint <= menu_item_download_hint \Download some json
-			uri_generated <= menu_item_download_uri \
+			blob <= menu_item_download_blob $mol_blob
 			file_name \demo.json
-			sub /
-				<= menu_item_download_icon $mol_icon_cloud_download_outline
-				<= menu_item_download_label \Download
 		<= Menu_item_delete $mol_button_minor
 			style *
 				color \red

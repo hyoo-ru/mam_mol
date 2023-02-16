@@ -7751,20 +7751,28 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_icon_cloud extends $mol_icon {
-        path(): string;
-    }
+    type $mol_blob = Blob;
+    let $mol_blob: {
+        new (blobParts?: BlobPart[] | undefined, options?: BlobPropertyBag | undefined): Blob;
+        prototype: Blob;
+    };
 }
 
 declare namespace $ {
-    class $mol_icon_cloud_download extends $mol_icon {
-        path(): string;
+    class $mol_button_download extends $mol_button_minor {
+        blob(): any;
+        uri(): string;
+        file_name(): string;
+        sub(): readonly any[];
+        Icon(): $mol_icon_download;
+        title(): string;
     }
 }
 
-declare namespace $ {
-    class $mol_icon_cloud_download_outline extends $mol_icon {
-        path(): string;
+declare namespace $.$$ {
+    class $mol_button_download extends $.$mol_button_download {
+        uri(): string;
+        click(): void;
     }
 }
 
@@ -7795,11 +7803,10 @@ declare namespace $ {
         menu_item_copy_icon(): $mol_icon_content_copy;
         menu_item_copy_label(): string;
         Menu_item_copy(): $mol_button_minor;
-        menu_item_download_hint(): string;
-        menu_item_download_uri(): string;
-        menu_item_download_icon(): $mol_icon_cloud_download_outline;
         menu_item_download_label(): string;
-        Menu_item_download(): $$.$mol_link_lazy;
+        menu_item_download_hint(): string;
+        menu_item_download_blob(): Blob;
+        Menu_item_download(): $$.$mol_button_download;
         menu_item_delete_click(val?: any): any;
         menu_item_delete_icon(): $mol_icon_trash_can_outline;
         menu_item_delete_label(): string;
@@ -7823,7 +7830,7 @@ declare namespace $.$$ {
 declare namespace $.$$ {
     type Confirmations = keyof ReturnType<typeof $.$mol_pick_demo.prototype.confirmation_popup_content>;
     export class $mol_pick_demo extends $.$mol_pick_demo {
-        menu_item_download_uri(): string;
+        menu_item_download_blob(): Blob;
         hide_options_menu(): void;
         show_confirmation(confirmation: Confirmations): void;
         showed_confirmation(next?: Confirmations | null): "delete" | null;
