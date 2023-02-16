@@ -300,7 +300,9 @@ namespace $ {
 			const classes = [] as ( typeof $mol_view )[]
 			
 			while( current ) {
-				classes.push( current.constructor as typeof $mol_view )
+				if( current.constructor.name !== classes.at(-1)?.name ) {
+					classes.push( current.constructor as typeof $mol_view )
+				}
 				if(!( current instanceof $mol_view )) break
 				current = Object.getPrototypeOf( current )
 			}
@@ -308,42 +310,55 @@ namespace $ {
 			return classes
 		}
 		
+		static _view_names?: Map< string, string[] >
+		static view_names( suffix: string ) {
+			
+			let cache = Reflect.getOwnPropertyDescriptor( this, '_view_names' )?.value
+			if( !cache ) cache = this._view_names = new Map
+			
+			const cached = cache.get( suffix )
+			if( cached ) return cached
+			
+			const names = [] as string[]
+			const suffix2 = '_' + suffix[0].toLowerCase() + suffix.substring(1)
+			
+			for( const Class of this.view_classes() ) {
+				if( suffix in Class.prototype ) names.push( this.$.$mol_func_name( Class ) + suffix2 )
+				else break
+			}
+			
+			cache.set( suffix, names )
+			return names
+		}
+		
 		@ $mol_memo.method
 		view_names_owned() {
 			const names = [] as string[]
 			let owner = $mol_owning_get( this ) as $mol_wire_fiber< any, any[], any >
 
-			if( owner?.host instanceof $mol_view ) {
+			if(!( owner?.host instanceof $mol_view )) return names
 
-				const suffix = owner.task.name.trim()
-				const suffix2 = '_' + suffix[0].toLowerCase() + suffix.substring(1)
-				
-				for( let Class of ( owner.host.constructor as typeof $mol_view ).view_classes() ) {
-					if( suffix in Class.prototype ) names.push( this.$.$mol_func_name( Class ) + suffix2 )
-					else break
-				}
-				
-				for( let prefix of owner.host.view_names_owned() ) {
-					names.push( prefix + suffix2 )
-				}
+			const suffix = owner.task.name.trim()
+			const suffix2 = '_' + suffix[0].toLowerCase() + suffix.substring(1)
 			
+			names.push( ... ( owner.host.constructor as typeof $mol_view ).view_names( suffix ) )
+			
+			for( let prefix of owner.host.view_names_owned() ) {
+				names.push( prefix + suffix2 )
 			}
-
+			
 			return names
 		}
 
 		@ $mol_memo.method
 		view_names() {
-			const names = [] as string[]
+			const names = new Set< string >()
 			
-			for( let name of this.view_names_owned() ) {
-				if( names.indexOf( name ) < 0 ) names.push( name )
-			}
+			for( let name of this.view_names_owned() ) names.add( name )
 
 			for( let Class of ( this.constructor as typeof $mol_view ).view_classes() ) {
 				const name = this.$.$mol_func_name( Class )
-				if( !name ) continue
-				if( names.indexOf( name ) < 0 ) names.push( name )
+				if( name ) names.add( name )
 			}
 
 			return names

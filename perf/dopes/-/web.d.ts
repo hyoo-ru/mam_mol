@@ -572,8 +572,10 @@ declare namespace $ {
         auto(): any;
         render(): void;
         static view_classes(): (typeof $mol_view)[];
+        static _view_names?: Map<string, string[]>;
+        static view_names(suffix: string): string[];
         view_names_owned(): string[];
-        view_names(): string[];
+        view_names(): Set<string>;
         attr_static(): {
             [key: string]: string | number | boolean | null;
         };
