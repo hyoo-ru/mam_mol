@@ -2,4 +2,5 @@ $mol_button_copy $mol_button_minor
 	text \
 	sub /
 		<= Icon $mol_icon_clipboard_outline
+		<= title \
 
