@@ -5093,12 +5093,16 @@ var $;
         }
         sub() {
             return [
-                this.Icon()
+                this.Icon(),
+                this.title()
             ];
         }
         Icon() {
             const obj = new this.$.$mol_icon_clipboard_outline();
             return obj;
+        }
+        title() {
+            return "";
         }
     }
     __decorate([

@@ -12,12 +12,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Icon
+		 * sub /
+		 * 	<= Icon
+		 * 	<= title
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Icon()
+				this.Icon(),
+				this.title()
 			] as readonly any[]
 		}
 		
@@ -31,6 +34,15 @@ namespace $ {
 			const obj = new this.$.$mol_icon_clipboard_outline()
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * title \
+		 * ```
+		 */
+		title() {
+			return ""
 		}
 	}
 	

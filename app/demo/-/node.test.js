@@ -7937,12 +7937,16 @@ var $;
         }
         sub() {
             return [
-                this.Icon()
+                this.Icon(),
+                this.title()
             ];
         }
         Icon() {
             const obj = new this.$.$mol_icon_clipboard_outline();
             return obj;
+        }
+        title() {
+            return "";
         }
     }
     __decorate([
@@ -27629,10 +27633,24 @@ var $;
             if (token.paragraph) {
                 if (!token.content)
                     return '';
-                return $mol_jsx("p", null,
-                    NL,
-                    line(token.content),
-                    NL);
+                const content = line(token.content);
+                if (content.length !== 1)
+                    return $mol_jsx("p", null,
+                        NL,
+                        content,
+                        NL);
+                if (typeof content[0] === 'string')
+                    return $mol_jsx("p", null,
+                        NL,
+                        content,
+                        NL);
+                switch (content[0].localName) {
+                    case 'object': return content[0];
+                    default: return $mol_jsx("p", null,
+                        NL,
+                        content,
+                        NL);
+                }
             }
             return $mol_fail(new SyntaxError(`Unknown token`));
         }).filter(Boolean);
@@ -27717,7 +27735,13 @@ var $;
                 return $mol_jsx("a", { href: token.uri }, line(token.content || token.uri));
             }
             if (token.embed) {
-                return $mol_jsx("object", { data: token.uri }, line(token.content || token.uri));
+                if (/\.(png|jpg|jpeg|webp|gif)$/.test(token.uri)) {
+                    return $mol_jsx("img", { src: token.uri, alt: token.content });
+                }
+                return ($mol_jsx("object", { data: token.uri },
+                    NL,
+                    $mol_jsx("iframe", { src: token.uri }, token.uri),
+                    NL));
             }
             return token[0];
         }).filter(Boolean);
