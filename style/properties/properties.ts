@@ -2,7 +2,9 @@ namespace $ {
 
 	export type $mol_style_properties = Partial< $mol_type_override< CSSStyleDeclaration , Overrides > >
 
-	type Common = 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer'
+	type Common =
+	| 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer'
+	| $mol_style_func< 'var' >
 
 	type Color =
 	| 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure'
@@ -52,14 +54,14 @@ namespace $ {
 		left?: Value ,
 	}
 
-	type Span_align = 'none' | 'start' | 'end' | 'center'
-	type Snap_axis = 'x' | 'y' | 'block' | 'inline' | 'both'
+	type Span_align = 'none' | 'start' | 'end' | 'center' | $mol_style_func< 'var' >
+	type Snap_axis = 'x' | 'y' | 'block' | 'inline' | 'both' | $mol_style_func< 'var' >
 
 	type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common
 
-	type ContainRule = 'size' | 'layout' | 'style' | 'paint'
+	type ContainRule = 'size' | 'layout' | 'style' | 'paint' | $mol_style_func< 'var' >
 
-	type Repeat = 'repeat-x' | 'repeat-y' | 'repeat' | 'space' | 'round' | 'no-repeat'
+	type Repeat = 'repeat-x' | 'repeat-y' | 'repeat' | 'space' | 'round' | 'no-repeat' | $mol_style_func< 'var' >
 	type BG_size = Length | 'auto' | 'contain' | 'cover'
 
 	interface Overrides {
@@ -100,13 +102,13 @@ namespace $ {
 			repeat?: Repeat | [ Repeat, Repeat ] | Common
 			
 			// @TODO add more variants
-			position?: 'left' | 'right' | 'top' | 'bottom' | 'center'
+			position?: 'left' | 'right' | 'top' | 'bottom' | 'center' | Common
 			
 			size?: ( BG_size | [ BG_size, BG_size ] )[]
 			
 		}
 		
-		backdropFilter: string
+		backdropFilter: string | Common
 
 		box?: {
 
@@ -193,7 +195,7 @@ namespace $ {
 		| 'pre' | 'pre-wrap' | 'pre-line'
 		| Common
 
-		webkitOverflowScrolling?: 'auto' | 'touch'
+		webkitOverflowScrolling?: 'auto' | 'touch' | Common
 
 		scrollbar?: {
 			
@@ -250,7 +252,7 @@ namespace $ {
 		padding?: Directions< Length | 'auto' >
 
 		/** How an element is positioned in a document. The `top`, `right`, `bottom`, and `left` properties determine the final location of positioned elements. */
-		position?: 'static' | 'relative' | 'absolute' | 'sticky' | 'fixed'
+		position?: 'static' | 'relative' | 'absolute' | 'sticky' | 'fixed' | Common
 
 		top?: Length | 'auto' | Common
 		right?: Length | 'auto' | Common
@@ -291,10 +293,10 @@ namespace $ {
 			shrink?: number | Common
 			
 			/** Preferred size of the flex item. A value of 0 must have a unit to avoid being interpreted as a flexibility. Defaults to 0 when omitted. */
-			basis?: Size
+			basis?: Size | Common
 
 			/** How flex items are placed in the flex container defining the main axis and the direction (normal or reversed). */
-			direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse'
+			direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse' | Common
 
 			/** Whether flex items are forced onto one line or can wrap onto multiple lines. If wrapping is allowed, it sets the direction that lines are stacked. */
 			wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | Common
@@ -302,10 +304,10 @@ namespace $ {
 		}
 
 		/** Z-order of a positioned element and its descendants or flex items. Overlapping elements with a larger z-index cover those with a smaller one. */
-		zIndex: number
+		zIndex: number | Common
 
 		/** Degree to which content behind an element is hidden, and is the opposite of transparency. */
-		opacity: number
+		opacity: number | Common
 		
 	}
 
