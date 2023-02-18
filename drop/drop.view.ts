@@ -12,10 +12,12 @@ namespace $.$$ {
 			if( !this.enabled() ) return
 			// if( !this.adopt( event.dataTransfer! ) ) return
 
-			this.status( 'drag' )
+			const action = this.decide_action( event )
+			event.dataTransfer!.dropEffect = action
+			
+			if( action !== 'none' ) this.status( 'drag' )
 			this._target = event.target
 			
-			event.dataTransfer!.dropEffect = this.decide_action( event )
 			event.preventDefault()
 			
 		}
