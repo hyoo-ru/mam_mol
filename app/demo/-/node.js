@@ -3014,7 +3014,9 @@ var $;
             this.Node = Node;
         }
         Item(id) {
-            const [land, head = '0_0'] = id.split('!');
+            const [land, head] = id.split('!');
+            if (!head)
+                return this.Item(`${land}!0_0`);
             return this.world.land_sync(land).node(head, this.Node);
         }
         make(law = [''], mod = [], add = []) {
@@ -21245,9 +21247,11 @@ var $;
                     return;
                 if (!this.enabled())
                     return;
-                this.status('drag');
+                const action = this.decide_action(event);
+                event.dataTransfer.dropEffect = action;
+                if (action !== 'none')
+                    this.status('drag');
                 this._target = event.target;
-                event.dataTransfer.dropEffect = this.decide_action(event);
                 event.preventDefault();
             }
             move(event) {
