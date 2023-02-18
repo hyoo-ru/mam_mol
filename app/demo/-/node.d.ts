@@ -3371,12 +3371,23 @@ declare namespace $ {
 declare namespace $ {
     class $mol_audio_demo extends $mol_example_small {
         title(): string;
-        play(): void;
-        Room(): $mol_audio_room;
+        beep_play(): void;
+        Beep(): $mol_audio_room;
+        noise_play(): void;
+        Noise(): $mol_audio_room;
         sub(): readonly any[];
         tags(): readonly any[];
-        Vibe(): $mol_audio_vibe;
-        Play(): $mol_button_major;
+        Beep_vibe(): $mol_audio_vibe;
+        noise_freq(): number;
+        Noise_vibe(): $mol_audio_vibe;
+        Beep_play(): $mol_button_minor;
+        Noise_play(): $mol_button_minor;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_audio_demo extends $.$mol_audio_demo {
+        noise_freq(): number;
     }
 }
 

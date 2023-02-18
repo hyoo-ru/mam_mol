@@ -12,28 +12,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * play
+		 * beep_play
 		 * ```
 		 */
-		play() {
-			return this.Room().play()
+		beep_play() {
+			return this.Beep().play()
 		}
 		
 		/**
 		 * ```tree
-		 * Room $mol_audio_room
-		 * 	play => play
-		 * 	duration 500
-		 * 	input / <= Vibe
+		 * Beep $mol_audio_room
+		 * 	play => beep_play
+		 * 	duration 100
+		 * 	input / <= Beep_vibe
 		 * ```
 		 */
 		@ $mol_mem
-		Room() {
+		Beep() {
 			const obj = new this.$.$mol_audio_room()
 			
-			obj.duration = () => 500
+			obj.duration = () => 100
 			obj.input = () => [
-				this.Vibe()
+				this.Beep_vibe()
 			] as readonly any[]
 			
 			return obj
@@ -41,12 +41,44 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Play
+		 * noise_play
+		 * ```
+		 */
+		noise_play() {
+			return this.Noise().play()
+		}
+		
+		/**
+		 * ```tree
+		 * Noise $mol_audio_room
+		 * 	play => noise_play
+		 * 	duration 1000
+		 * 	input / <= Noise_vibe
+		 * ```
+		 */
+		@ $mol_mem
+		Noise() {
+			const obj = new this.$.$mol_audio_room()
+			
+			obj.duration = () => 1000
+			obj.input = () => [
+				this.Noise_vibe()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * sub /
+		 * 	<= Beep_play
+		 * 	<= Noise_play
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Play()
+				this.Beep_play(),
+				this.Noise_play()
 			] as readonly any[]
 		}
 		
@@ -66,11 +98,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Vibe $mol_audio_vibe freq 440
+		 * Beep_vibe $mol_audio_vibe freq 440
 		 * ```
 		 */
 		@ $mol_mem
-		Vibe() {
+		Beep_vibe() {
 			const obj = new this.$.$mol_audio_vibe()
 			
 			obj.freq = () => 440
@@ -80,17 +112,57 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Play $mol_button_major
-		 * 	click <= play
-		 * 	title \Play
+		 * noise_freq 440
+		 * ```
+		 */
+		noise_freq() {
+			return 440
+		}
+		
+		/**
+		 * ```tree
+		 * Noise_vibe $mol_audio_vibe freq <= noise_freq
 		 * ```
 		 */
 		@ $mol_mem
-		Play() {
-			const obj = new this.$.$mol_button_major()
+		Noise_vibe() {
+			const obj = new this.$.$mol_audio_vibe()
 			
-			obj.click = () => this.play()
-			obj.title = () => "Play"
+			obj.freq = () => this.noise_freq()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Beep_play $mol_button_minor
+		 * 	click <= beep_play
+		 * 	title \Beep
+		 * ```
+		 */
+		@ $mol_mem
+		Beep_play() {
+			const obj = new this.$.$mol_button_minor()
+			
+			obj.click = () => this.beep_play()
+			obj.title = () => "Beep"
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Noise_play $mol_button_minor
+		 * 	click <= noise_play
+		 * 	title \Noise
+		 * ```
+		 */
+		@ $mol_mem
+		Noise_play() {
+			const obj = new this.$.$mol_button_minor()
+			
+			obj.click = () => this.noise_play()
+			obj.title = () => "Noise"
 			
 			return obj
 		}

@@ -11013,12 +11013,16 @@ var $;
     class $mol_audio_vibe extends $mol_audio_node {
         node() { return this.audio().createOscillator(); }
         freq(next = 440) { return next; }
-        active(next = false) {
-            if (next)
+        active(next) {
+            $mol_wire_solid();
+            const prev = $mol_wire_probe(() => this.active());
+            if (prev === next)
+                return next ?? false;
+            if (next === true)
                 this.node().start();
-            else if (next !== undefined)
+            else if (prev === true)
                 this.node().stop();
-            return next;
+            return next ?? false;
         }
         output() {
             this.node().frequency.setValueAtTime(this.freq(), this.time());
@@ -11053,20 +11057,32 @@ var $;
         title() {
             return "WebAudio API example";
         }
-        play() {
-            return this.Room().play();
+        beep_play() {
+            return this.Beep().play();
         }
-        Room() {
+        Beep() {
             const obj = new this.$.$mol_audio_room();
-            obj.duration = () => 500;
+            obj.duration = () => 100;
             obj.input = () => [
-                this.Vibe()
+                this.Beep_vibe()
+            ];
+            return obj;
+        }
+        noise_play() {
+            return this.Noise().play();
+        }
+        Noise() {
+            const obj = new this.$.$mol_audio_room();
+            obj.duration = () => 1000;
+            obj.input = () => [
+                this.Noise_vibe()
             ];
             return obj;
         }
         sub() {
             return [
-                this.Play()
+                this.Beep_play(),
+                this.Noise_play()
             ];
         }
         tags() {
@@ -11075,30 +11091,69 @@ var $;
                 "Sound"
             ];
         }
-        Vibe() {
+        Beep_vibe() {
             const obj = new this.$.$mol_audio_vibe();
             obj.freq = () => 440;
             return obj;
         }
-        Play() {
-            const obj = new this.$.$mol_button_major();
-            obj.click = () => this.play();
-            obj.title = () => "Play";
+        noise_freq() {
+            return 440;
+        }
+        Noise_vibe() {
+            const obj = new this.$.$mol_audio_vibe();
+            obj.freq = () => this.noise_freq();
+            return obj;
+        }
+        Beep_play() {
+            const obj = new this.$.$mol_button_minor();
+            obj.click = () => this.beep_play();
+            obj.title = () => "Beep";
+            return obj;
+        }
+        Noise_play() {
+            const obj = new this.$.$mol_button_minor();
+            obj.click = () => this.noise_play();
+            obj.title = () => "Noise";
             return obj;
         }
     }
     __decorate([
         $mol_mem
-    ], $mol_audio_demo.prototype, "Room", null);
+    ], $mol_audio_demo.prototype, "Beep", null);
     __decorate([
         $mol_mem
-    ], $mol_audio_demo.prototype, "Vibe", null);
+    ], $mol_audio_demo.prototype, "Noise", null);
     __decorate([
         $mol_mem
-    ], $mol_audio_demo.prototype, "Play", null);
+    ], $mol_audio_demo.prototype, "Beep_vibe", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_demo.prototype, "Noise_vibe", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_demo.prototype, "Beep_play", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_demo.prototype, "Noise_play", null);
     $.$mol_audio_demo = $mol_audio_demo;
 })($ || ($ = {}));
 //mol/audio/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_audio_demo extends $.$mol_audio_demo {
+            noise_freq() {
+                $mol_wire_watch();
+                return Math.random() * 1000;
+            }
+        }
+        $$.$mol_audio_demo = $mol_audio_demo;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/audio/demo/demo.view.ts
 ;
 "use strict";
 var $;
