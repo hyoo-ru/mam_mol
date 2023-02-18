@@ -747,6 +747,22 @@ $mol_attach_demo $mol_example_small
 		\image
 		\upload
 
+$mol_audio_demo $mol_example_small
+	title \WebAudio API example
+	Room $mol_audio_room
+		play => play
+		duration 500
+		input /
+			<= Vibe $mol_audio_vibe
+				freq 440
+	sub /
+		<= Play $mol_button_major
+			click <= play
+			title \Play
+	tags /
+		\Audio
+		\Sound
+
 $mol_bar $mol_view
 
 $mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z

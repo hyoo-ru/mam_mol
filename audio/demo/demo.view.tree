@@ -1,0 +1,15 @@
+$mol_audio_demo $mol_example_small
+	title \WebAudio API example
+	Room $mol_audio_room
+		play => play
+		duration 500
+		input /
+			<= Vibe $mol_audio_vibe
+				freq 440
+	sub /
+		<= Play $mol_button_major
+			click <= play
+			title \Play
+	tags /
+		\Audio
+		\Sound

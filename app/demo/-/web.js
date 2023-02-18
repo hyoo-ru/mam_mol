@@ -10951,6 +10951,158 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_audio_node extends $mol_object2 {
+        audio(next = new AudioContext) { return next; }
+        node() { return this.audio().destination; }
+        input(next = []) { return next; }
+        output() {
+            const audio = this.audio();
+            const node = this.node();
+            for (const src of this.input()) {
+                src.audio(audio);
+                src.output().connect(node);
+            }
+            return node;
+        }
+        time() { return this.audio().currentTime; }
+        destructor() {
+            const node = this.node();
+            for (const src of this.input()) {
+                src.output().disconnect(node);
+            }
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_audio_node.prototype, "audio", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_node.prototype, "node", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_node.prototype, "input", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_node.prototype, "output", null);
+    $.$mol_audio_node = $mol_audio_node;
+})($ || ($ = {}));
+//mol/audio/node/node.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_audio_room extends $mol_audio_node {
+        duration() {
+            return 1000;
+        }
+        play() {
+            this.output();
+            this.$.$mol_wait_timeout(this.duration());
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_audio_room.prototype, "play", null);
+    $.$mol_audio_room = $mol_audio_room;
+})($ || ($ = {}));
+//mol/audio/room/room.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_audio_vibe extends $mol_audio_node {
+        node() { return this.audio().createOscillator(); }
+        freq(next = 440) { return next; }
+        active(next = false) {
+            if (next)
+                this.node().start();
+            else if (next !== undefined)
+                this.node().stop();
+            return next;
+        }
+        output() {
+            this.node().frequency.setValueAtTime(this.freq(), this.time());
+            this.active(true);
+            return super.output();
+        }
+        destructor() {
+            this.active(false);
+            super.destructor();
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_audio_vibe.prototype, "node", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_vibe.prototype, "freq", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_vibe.prototype, "active", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_vibe.prototype, "output", null);
+    $.$mol_audio_vibe = $mol_audio_vibe;
+})($ || ($ = {}));
+//mol/audio/vibe/vibe.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_audio_demo extends $mol_example_small {
+        title() {
+            return "WebAudio API example";
+        }
+        play() {
+            return this.Room().play();
+        }
+        Room() {
+            const obj = new this.$.$mol_audio_room();
+            obj.duration = () => 500;
+            obj.input = () => [
+                this.Vibe()
+            ];
+            return obj;
+        }
+        sub() {
+            return [
+                this.Play()
+            ];
+        }
+        tags() {
+            return [
+                "Audio",
+                "Sound"
+            ];
+        }
+        Vibe() {
+            const obj = new this.$.$mol_audio_vibe();
+            obj.freq = () => 440;
+            return obj;
+        }
+        Play() {
+            const obj = new this.$.$mol_button_major();
+            obj.click = () => this.play();
+            obj.title = () => "Play";
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_audio_demo.prototype, "Room", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_demo.prototype, "Vibe", null);
+    __decorate([
+        $mol_mem
+    ], $mol_audio_demo.prototype, "Play", null);
+    $.$mol_audio_demo = $mol_audio_demo;
+})($ || ($ = {}));
+//mol/audio/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_bar extends $mol_view {
     }
     $.$mol_bar = $mol_bar;
