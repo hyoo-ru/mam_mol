@@ -8,10 +8,17 @@ namespace $ {
 		freq( next = 440 ) { return next }
 		
 		@ $mol_mem
-		active( next = false ) {
-			if( next ) this.node().start()
-			else if( next !== undefined ) this.node().stop()
-			return next
+		active( next?: boolean ): boolean {
+			
+			$mol_wire_solid()
+			
+			const prev = $mol_wire_probe( ()=> this.active() )
+			if( prev === next ) return next ?? false
+			
+			if( next === true ) this.node().start()
+			else if( prev === true ) this.node().stop()
+			
+			return next ?? false
 		}
 		
 		@ $mol_mem
