@@ -1,0 +1,41 @@
+$mol_audio_demo_vibe $mol_example_small
+	title \WebAudio API complex example
+	Room $mol_audio_room
+		play => play
+		duration <= duration -
+		input /
+			<= Beep_vibe $mol_audio_vibe
+				freq <= frequency -
+				shape <= shape -
+	sub /
+		<= List $mol_list rows /
+			<= Duration $mol_labeler
+				title <= duration_label \Duration, ms
+				content /
+					<= Duration_num $mol_number
+						value? <=> duration? 500
+			<= Frequency $mol_labeler
+				title <= frequency_label \Frequency, Hz
+				content /
+					<= Frequency_num $mol_number
+						value? <=> frequency? 700
+			<= Shape $mol_labeler
+				title <= shape_label \Shape
+				content /
+					<= Shape_select $mol_select
+						Filter null
+						value? <=> shape? null
+						options /$mol_audio_vibe_shape
+							\sine 
+							\square
+							\sawtooth
+							\triangle
+			<= Button_row $mol_row sub /
+				<= Play_button $mol_button_major
+					click <= play -
+					sub /
+						<= Play_icon $mol_icon_play
+						\Play
+	tags /
+		\Audio
+		\Sound

@@ -222,6 +222,7 @@
     "$mol_example_small",
     "$mol_audio_demo",
     "$mol_audio",
+    "$mol_audio_demo_vibe",
     "$mol_bar_demo",
     "$mol_bar",
     "$mol_check_box",
