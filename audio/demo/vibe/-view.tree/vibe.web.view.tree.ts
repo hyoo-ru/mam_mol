@@ -103,13 +103,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Duration_num $mol_number value? <=> duration?
+		 * Duration_num $mol_number
+		 * 	precision_change 50
+		 * 	value? <=> duration?
 		 * ```
 		 */
 		@ $mol_mem
 		Duration_num() {
 			const obj = new this.$.$mol_number()
 			
+			obj.precision_change = () => 50
 			obj.value = (next?: any) => this.duration(next)
 			
 			return obj
@@ -156,13 +159,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Frequency_num $mol_number value? <=> frequency?
+		 * Frequency_num $mol_number
+		 * 	precision_change 50
+		 * 	value? <=> frequency?
 		 * ```
 		 */
 		@ $mol_mem
 		Frequency_num() {
 			const obj = new this.$.$mol_number()
 			
+			obj.precision_change = () => 50
 			obj.value = (next?: any) => this.frequency(next)
 			
 			return obj

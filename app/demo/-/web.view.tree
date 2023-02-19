@@ -914,11 +914,13 @@ $mol_audio_demo_vibe $mol_example_small
 				title <= duration_label \Duration, ms
 				content /
 					<= Duration_num $mol_number
+						precision_change 50
 						value? <=> duration? 500
 			<= Frequency $mol_labeler
 				title <= frequency_label \Frequency, Hz
 				content /
 					<= Frequency_num $mol_number
+						precision_change 50
 						value? <=> frequency? 700
 			<= Shape $mol_labeler
 				title <= shape_label \Shape
