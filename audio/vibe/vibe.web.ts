@@ -2,7 +2,7 @@ namespace $ {
 	export class $mol_audio_vibe extends $mol_audio_node {
 		
 		@ $mol_mem
-		node() { return this.audio().createOscillator() }
+		node() { return $mol_audio_node.context.createOscillator() }
 		
 		@ $mol_mem
 		freq( next = 440 ) { return next }

@@ -747,31 +747,6 @@ $mol_attach_demo $mol_example_small
 		\image
 		\upload
 
-$mol_audio_demo $mol_example_small
-	title \WebAudio API example
-	Beep $mol_audio_room
-		play => beep_play
-		duration 100
-		input /
-			<= Beep_vibe $mol_audio_vibe
-				freq 440
-	Noise $mol_audio_room
-		play => noise_play
-		duration 1000
-		input /
-			<= Noise_vibe $mol_audio_vibe
-				freq <= noise_freq 440
-	sub /
-		<= Beep_play $mol_button_minor
-			click <= beep_play
-			title \Beep
-		<= Noise_play $mol_button_minor
-			click <= noise_play
-			title \Noise
-	tags /
-		\Audio
-		\Sound
-
 $mol_bar $mol_view
 
 $mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z

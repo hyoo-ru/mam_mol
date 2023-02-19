@@ -3,7 +3,7 @@ namespace $ {
 	export class $mol_audio_gain extends $mol_audio_node {
 		
 		@ $mol_mem
-		node() { return this.audio().createGain() }
+		node() { return $mol_audio_node.context.createGain() }
 		
 		@ $mol_mem
 		gain( next = 1 ) { return next }

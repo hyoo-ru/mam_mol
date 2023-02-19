@@ -3341,57 +3341,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_audio_node extends $mol_object2 {
-        audio(next?: AudioContext): AudioContext;
-        node(): AudioNode;
-        input(next?: readonly $mol_audio_node[]): readonly $mol_audio_node[];
-        output(): AudioNode;
-        time(): number;
-        destructor(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_audio_room extends $mol_audio_node {
-        duration(): number;
-        play(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_audio_vibe extends $mol_audio_node {
-        node(): OscillatorNode;
-        freq(next?: number): number;
-        active(next?: boolean): boolean;
-        output(): AudioNode;
-        destructor(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_audio_demo extends $mol_example_small {
-        title(): string;
-        beep_play(): void;
-        Beep(): $mol_audio_room;
-        noise_play(): void;
-        Noise(): $mol_audio_room;
-        sub(): readonly any[];
-        tags(): readonly any[];
-        Beep_vibe(): $mol_audio_vibe;
-        noise_freq(): number;
-        Noise_vibe(): $mol_audio_vibe;
-        Beep_play(): $mol_button_minor;
-        Noise_play(): $mol_button_minor;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_audio_demo extends $.$mol_audio_demo {
-        noise_freq(): number;
-    }
-}
-
-declare namespace $ {
     class $mol_bar extends $mol_view {
     }
 }
