@@ -1825,15 +1825,15 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const cacthed = new WeakMap();
+    const catched = new WeakMap();
     function $mol_fail_catch(error) {
         if (typeof error !== 'object')
             return false;
         if (error instanceof Promise)
             $mol_fail_hidden(error);
-        if (cacthed.get(error))
+        if (catched.get(error))
             return false;
-        cacthed.set(error, true);
+        catched.set(error, true);
         return true;
     }
     $.$mol_fail_catch = $mol_fail_catch;
