@@ -11,38 +11,40 @@ namespace $ {
 		@ $mol_action
 		static fit(
 			image: CanvasImageSource | Blob | string,
-			limit: { width: number, height: number },
+			width: number,
+			height = width,
 		) {
 			
 			if( image instanceof Blob ) image = $mol_wire_sync( URL ).createObjectURL( image )
 			if( typeof image === 'string' ) image = $mol_wire_sync( this ).load( image ) 
 			
-			let { width, height } = this.sizes( image )
+			let [ w, h ] = this.sizes( image )
 			
-			if( width > limit.width ) {
-				height *= limit.width / width
-				width = limit.width
+			if( w > width ) {
+				h *= width / w
+				w = width
 			}
 			
-			if( height > limit.height ) {
-				width *= limit.height / height
-				height = limit.height
+			if( h > height ) {
+				w *= height / h
+				h = height
 			}
 			
-			return this.make( image, { width, height } )
+			return this.make( image, w, h )
 			
 		}
 		
 		static make(
 			image: CanvasImageSource,
-			size: { width: number, height: number },
+			width: number,
+			height = width,
 		) {
 			
 			const canvas = $mol_dom_context.document.createElement( 'canvas' )
-			Object.assign( canvas, size )
+			Object.assign( canvas, { width, height } )
 			
 			const context = canvas.getContext( '2d' )!
-			context.drawImage( image, 0, 0, size.width, size.height )
+			context.drawImage( image, 0, 0, width, height )
 		
 			return new this( canvas )
 		}
@@ -54,7 +56,7 @@ namespace $ {
 			if( typeof width !== 'number' ) width = width.baseVal.value
 			if( typeof height !== 'number' ) height = height.baseVal.value
 			
-			return { width, height }
+			return [ width, height ]
 		}
 		
 		static async load( uri: string ) {
