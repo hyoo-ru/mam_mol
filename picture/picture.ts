@@ -3,9 +3,13 @@ namespace $ {
 	export class $mol_picture extends Object {
 		
 		constructor(
-			readonly native: HTMLCanvasElement
+			readonly canvas: HTMLCanvasElement
 		) {
 			super()
+		}
+		
+		get context() {
+			return this.canvas.getContext( '2d' )
 		}
 		
 		@ $mol_action
@@ -77,7 +81,7 @@ namespace $ {
 			quality = .9,
 		) {
 			return new Promise(
-				done => this.native.toBlob( done, type, quality )
+				done => this.canvas.toBlob( done, type, quality )
 			) as any as Blob | null
 		}
 		
