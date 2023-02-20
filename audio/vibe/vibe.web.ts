@@ -1,4 +1,12 @@
 namespace $ {
+
+	export type $mol_audio_vibe_shape =
+	| 'sine' 
+	| 'square' 
+	| 'sawtooth' 
+	| 'triangle' 
+	| 'custom'
+
 	export class $mol_audio_vibe extends $mol_audio_node {
 		
 		@ $mol_mem
@@ -6,6 +14,9 @@ namespace $ {
 		
 		@ $mol_mem
 		freq( next = 440 ) { return next }
+
+		@ $mol_mem
+		shape( next: $mol_audio_vibe_shape = 'sine' ) { return next }
 		
 		@ $mol_mem
 		active( next?: boolean ): boolean {
@@ -23,7 +34,11 @@ namespace $ {
 		
 		@ $mol_mem
 		output() {
-			this.node().frequency.setValueAtTime( this.freq(), this.time() )
+			const node = this.node()
+			
+			node.frequency.setValueAtTime( this.freq(), this.time() )
+			node.type = this.shape()
+			
 			this.active( true )
 			return super.output()
 		}
