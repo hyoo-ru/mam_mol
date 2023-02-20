@@ -21,3 +21,8 @@ const blob = pict.format( 'image/jpeg' )
 const pict = $mol_picture.make( img, 1920, 1080 )
 const blob = pict.format( 'image/webp' )
 ```
+
+```ts
+pict.canvas // canvas element
+pict.context // drawing context
+```
