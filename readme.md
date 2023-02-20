@@ -99,6 +99,21 @@ Add **web entry point** at `./my/hello/index.html`:
 
 Your application will be served at **`http://localhost:9080/my/hello/`**. Open it. You should refresh page to view your changes.
 
+### All special chars
+
+- `-` - remarks, ignored by code generation
+- `$` - component name prefix, e.g `$mol_button`
+- `/` - array, optionally you can set type of array, e.g `sub /number`
+- `*` - dictionary (string keys, any values)
+- `^` - return value of the same property from super class
+- `\` - raw string, e.g. `message \Hello`
+- `@` - localized string, e.g. `message @ \Hello world`
+- `<=` - provides read-only property from owner to sub-componen
+- `=>` - provides read-only property from sub-componen to owner
+- `<=>` - fully replace sub component property by owner's one
+- property + `*` or `!` - property takes ID as first argument, e.g. `Task_row* $mol_view`
+- property + `?` - property can be changed by providing an additional optional argument, e.g. `value <=> name?val \`
+
 Add **[declarative component description](view)** at `./my/hello/hello.view.tree` with string input field and greeting message:
 
 ```tree
