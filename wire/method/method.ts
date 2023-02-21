@@ -3,11 +3,10 @@ namespace $ {
 	export function $mol_wire_method<
 		Host extends object,
 		Args extends readonly any[],
-		Result,
 	>(
 		host : Host,
 		field : PropertyKey,
-		descr? : TypedPropertyDescriptor< ( ... args: Args )=> Result >,
+		descr? : TypedPropertyDescriptor< ( ... args: Args )=> any >,
 	) {
 		
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field ) as any
@@ -21,7 +20,7 @@ namespace $ {
 		const temp = $mol_wire_task.getter( orig )
 		const value = function( this: Host, ... args: Args ) {
 			const fiber = temp( this ?? null as any, args )
-			return fiber.sync() as Result
+			return fiber.sync()
 		}
 		
 		Object.defineProperty( value , 'name' , { value : orig.name + ' ' } )
