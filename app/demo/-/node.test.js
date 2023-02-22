@@ -4909,12 +4909,6 @@ var $;
 //mol/example/large/-css/large.view.css.ts
 ;
 "use strict";
-//mol/type/result/result.ts
-;
-"use strict";
-//mol/type/error/error.ts
-;
-"use strict";
 //mol/style/properties/properties.ts
 ;
 "use strict";
@@ -4922,6 +4916,9 @@ var $;
 ;
 "use strict";
 //mol/style/pseudo/element.ts
+;
+"use strict";
+//mol/type/error/error.ts
 ;
 "use strict";
 //mol/style/guard/guard.ts
@@ -26773,6 +26770,9 @@ var $;
 //mol/func/is/class/class.ts
 ;
 "use strict";
+//mol/type/result/result.ts
+;
+"use strict";
 var $;
 (function ($) {
     function $mol_data_pipe(...funcs) {
@@ -39244,9 +39244,6 @@ var $;
 //mol/view/tree/tree.ts
 ;
 "use strict";
-//mol/type/result/result.test.ts
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_style_sheet_test1 extends $mol_view {
@@ -40037,6 +40034,9 @@ var $;
     });
 })($ || ($ = {}));
 //mol/func/is/class/class.test.ts
+;
+"use strict";
+//mol/type/result/result.test.ts
 ;
 "use strict";
 var $;

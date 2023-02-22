@@ -4498,12 +4498,6 @@ var $;
 //mol/example/large/-css/large.view.css.ts
 ;
 "use strict";
-//mol/type/result/result.ts
-;
-"use strict";
-//mol/type/error/error.ts
-;
-"use strict";
 //mol/style/properties/properties.ts
 ;
 "use strict";
@@ -4511,6 +4505,9 @@ var $;
 ;
 "use strict";
 //mol/style/pseudo/element.ts
+;
+"use strict";
+//mol/type/error/error.ts
 ;
 "use strict";
 //mol/style/guard/guard.ts
@@ -26931,6 +26928,9 @@ var $;
     $.$mol_func_is_class = $mol_func_is_class;
 })($ || ($ = {}));
 //mol/func/is/class/class.ts
+;
+"use strict";
+//mol/type/result/result.ts
 ;
 "use strict";
 var $;
