@@ -13,11 +13,12 @@ $mol_text $mol_list
 		text <= quote_text* \
 		highlight <= highlight \
 		auto_scroll null
-	List* $mol_text
+	List* $mol_text_list
 		uri_resolve* <= uri_resolve* \
+		type <= list_type* \-
 		text <= list_text* \
 		highlight <= highlight \
-		auto_scroll null
+	item_index* 0
 	Header* $mol_text_header
 		minimal_height 40
 		level <= header_level* 1

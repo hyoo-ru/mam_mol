@@ -1,0 +1,22 @@
+[mol_text_list] {
+	padding-left: 1.75rem;
+}
+
+[mol_text_list_item] {
+	contain: none;
+	display: list-item;
+}
+
+[mol_text_list_item]::before {
+	content: attr( mol_text_list_item_index ) ".";
+	width: 1.25rem;
+	display: inline-block;
+	position: absolute;
+	margin-left: -1.75rem;
+	text-align: end;
+}
+
+[mol_text_list_type="-"] > [mol_text_list_item]::before,
+[mol_text_list_type="*"] > [mol_text_list_item]::before {
+	content: "•";
+}

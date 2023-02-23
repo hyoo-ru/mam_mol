@@ -32,7 +32,7 @@ namespace $ {
 
 			let pos = this.pos + this.before()
 
-			if( diff < 0 ) { // shrink
+			if( diff < 0 ) shrink: {
 
 				let mult = diff / min
 				if( !Number.isFinite( mult ) ) mult = 0
@@ -43,7 +43,7 @@ namespace $ {
 					kid.down()
 				}
 
-			} else if( diff > 0 ) { // grow
+			} else if( diff > 0 ) grow: {
 				
 				let mult = diff / this.grow()
 				if( !Number.isFinite( mult ) ) mult = 0
@@ -54,7 +54,7 @@ namespace $ {
 					kid.down()
 				}
 				
-			} else { // fit
+			} else fit: {
 				
 				for( const kid of this.kids ) {
 					kid.pos = pos

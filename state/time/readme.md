@@ -6,7 +6,7 @@ State of time moment.
 
 **```now( precision? : number ) : number```**
 
-Returns timestamp that updates every ```precision``` ms. If ```precision``` is not defined, updates every animation frame.
+Returns timestamp that updates every ```precision``` ms. If ```precision``` is zero, then updates every animation frame.
 
 ## Usage example
 

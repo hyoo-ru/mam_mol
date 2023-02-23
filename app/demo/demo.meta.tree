@@ -5,6 +5,8 @@ include \/mol/offline/install
 
 include \/hyoo/crowd/text/demo
 include \/mol/attach/demo
+include \/mol/audio/demo
+include \/mol/audio/demo/vibe
 include \/mol/bar/demo
 include \/mol/bench/demo
 include \/mol/book2/demo
@@ -41,6 +43,7 @@ include \/mol/gallery/demo
 include \/mol/html/view/demo
 include \/mol/infinite/demo
 include \/mol/labeler/demo
+include \/mol/layout/demo
 include \/mol/link/demo
 include \/mol/link/iconed/demo
 include \/mol/link/lazy/demo

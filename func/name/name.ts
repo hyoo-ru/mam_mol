@@ -1,9 +1,12 @@
 namespace $ {
 	
+	const named = new WeakSet< Function >()
+	
 	export function $mol_func_name( this : $ , func : Function ) : string {
 		
 		let name = func.name
 		if( name?.length > 1 ) return name
+		if( named.has( func ) ) return name
 
 		for( let key in this ) {
 			try {
@@ -14,7 +17,9 @@ namespace $ {
 			} catch {}
 		}
 
+		named.add( func )
 		return name
+		
 	}
 
 	export function $mol_func_name_from< Target extends Function >( target : Target , source : Function ) {

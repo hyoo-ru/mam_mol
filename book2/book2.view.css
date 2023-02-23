@@ -12,6 +12,7 @@
 	scroll-snap-type: x mandatory;
 	padding: 0 .25rem;
 	scroll-padding: 0 .25rem;
+	gap: 1px;
 }
 
 [mol_book2] > * {
@@ -27,7 +28,7 @@
 
 :where([mol_book2]) > * {
 	background-color: var(--mol_theme_card);
-	box-shadow: inset 0 0 0 1px var(--mol_theme_back);
+	/* box-shadow: 0 0 0 1px var(--mol_theme_back); */
 }
 
 [mol_book2] > [mol_book2] {
@@ -44,11 +45,13 @@
 
 [mol_book2_placeholder] {
 	flex: 1 1 0;
-	/* background: var(--mol_theme_back); */
+	background: none;
 }
 
 [mol_book2_gap] {
 	background: none;
 	flex-grow: 1;
 	scroll-snap-align: none;
+	margin-right: -1px;
+	box-shadow: none;
 }

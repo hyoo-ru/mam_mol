@@ -52,6 +52,14 @@ namespace $.$$ {
 			}
 		}
 		
+		list_type( index: number ) {
+			return this.flow_tokens()[ index ].chunks[1] ?? ''
+		}
+		
+		item_index( index: number ) {
+			return this.flow_tokens().slice( 0, index ).filter( token => token.name === 'block' ).length + 1
+		}
+		
 		@ $mol_mem_key
 		pre_text( index : number ) {
 			const token = this.flow_tokens()[ index ]
@@ -65,7 +73,7 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		list_text( index : number ) {
-			return this.flow_tokens()[ index ].chunks[0].replace( /^([-*+ ]|\d+\.) ?/mg , '' ).replace( /^  /mg, '' )
+			return this.flow_tokens()[ index ].chunks[0].replace( /^([-*+]|(?:\d+[\.\)])+) ?/mg , '' ).replace( /^  ?/mg, '' )
 		}
 		
 		@ $mol_mem_key
@@ -106,7 +114,7 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		grid_content( indexBlock: number ) {
-			return [ ... this.flow_tokens()[ indexBlock ].chunks[ 0 ].match( /(?:^! .*?$\r?\n)+(?:^ +! .*?$\r?\n)*/gm )! ]
+			return [ ... this.flow_tokens()[ indexBlock ].chunks[ 0 ].match( /(?:^! .*?$\r?\n?)+(?:^ +! .*?$\r?\n?)*/gm )! ]
 			.map( ( row , rowId ) => {
 				const cells = [] as string[]
 				for( const line of row.trim().split( /\r?\n/ ) ) {

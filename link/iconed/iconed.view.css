@@ -11,7 +11,7 @@
 	flex: 0 0 auto;
 	display: inline-block;
 	align-self: normal;
-	vertical-align: text-top;
+	vertical-align: top;
 	border-radius: 0;
 	object-fit: scale-down;
 }
