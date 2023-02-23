@@ -1,20 +1,23 @@
 $mol_number $mol_view
 	precision_view <= precision 1
 	precision_change <= precision 1
-	value?val +NaN
+	max_value +NaN
+	min_value +NaN
+	value? +NaN
+	enabled true
 	sub /
 		<= String $mol_string
 			- \ we don't want native number controls in mobile devices
 			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
 			type \tel
-			value?val <=> value_string?val \
+			value? <=> value_string? \
 			hint <= hint \ 
-			enabled <= string_enabled <= enabled true
+			enabled <= string_enabled <= enabled -
 		<= Dec $mol_button_minor
-			event_click?val <=> event_dec?val null
-			enabled <= dec_enabled <= enabled true
+			event_click? <=> event_dec? null
+			enabled <= dec_enabled <= enabled -
 			sub / <= dec_icon $mol_icon_minus
 		<= Inc $mol_button_minor
-			event_click?val <=> event_inc?val null
-			enabled <= inc_enabled <= enabled true
+			event_click? <=> event_inc? null
+			enabled <= inc_enabled <= enabled -
 			sub / <= inc_icon $mol_icon_plus
