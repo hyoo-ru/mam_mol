@@ -42,6 +42,7 @@ Reactive micro-modular UI framework. Very simple, but very powerful!
 - [$mol: 4 года спустя](https://mol.hyoo.ru/#!section=articles/author=nin-jin/repo=HabHub/article=23) - State of $mol after 4 years
 
 # Quick start
+[Documentation from the Сommunity $mol](https://lyumihs-organization.gitbook.io/mol-doc/)
 
 [Video of this process](https://www.youtube.com/watch?v=PyK3if5sgN0)
 
