@@ -7,6 +7,7 @@ include \/hyoo/crowd/text/demo
 include \/mol/attach/demo
 include \/mol/audio/demo
 include \/mol/audio/demo/vibe
+include \/mol/avatar/demo
 include \/mol/bar/demo
 include \/mol/bench/demo
 include \/mol/book2/demo
@@ -47,6 +48,7 @@ include \/mol/layout/demo
 include \/mol/link/demo
 include \/mol/link/iconed/demo
 include \/mol/link/lazy/demo
+include \/mol/list/demo
 include \/mol/list/demo/table
 include \/mol/list/demo/tree
 include \/mol/map/yandex/demo

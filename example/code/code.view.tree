@@ -5,3 +5,8 @@ $mol_example_code $mol_example
 			Perf null
 			Bookmark null
 			code? <=> code? \
+	tags /
+		\sandbox
+		\eval
+		\js
+		\javascript

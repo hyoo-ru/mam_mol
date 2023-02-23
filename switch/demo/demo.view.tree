@@ -24,3 +24,5 @@ $mol_switch_demo $mol_example
 	tags /
 		\switch
 		\option
+		\group
+		\radio

@@ -1,0 +1,11 @@
+$mol_list_demo $mol_example_small
+	rows 100
+	sub /
+		<= Items $mol_list
+			rows <= list_rows /
+				<= Item*0 $mol_link
+					title <= item_title* \
+	tags /
+		\list
+		\rows
+		\stack
