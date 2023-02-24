@@ -57,6 +57,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * type \tel
+		 * ```
+		 */
+		type() {
+			return "tel"
+		}
+		
+		/**
+		 * ```tree
 		 * value_string?val \
 		 * ```
 		 */
@@ -96,7 +105,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * String $mol_string
-		 * 	type \tel
+		 * 	type <= type
 		 * 	value?val <=> value_string?val
 		 * 	hint <= hint
 		 * 	enabled <= string_enabled
@@ -106,7 +115,7 @@ namespace $ {
 		String() {
 			const obj = new this.$.$mol_string()
 			
-			obj.type = () => "tel"
+			obj.type = () => this.type()
 			obj.value = (val?: any) => this.value_string(val)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.string_enabled()

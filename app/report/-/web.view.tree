@@ -281,7 +281,7 @@ $mol_number $mol_view
 		<= String $mol_string
 			- \ we don't want native number controls in mobile devices
 			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
-			type \tel
+			type <= type \tel
 			value?val <=> value_string?val \
 			hint <= hint \ 
 			enabled <= string_enabled <= enabled true
