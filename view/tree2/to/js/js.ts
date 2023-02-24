@@ -206,7 +206,7 @@ namespace $ {
 										] ),
 									] ),
 									over.struct( '=>', [
-										over.struct( '(,)'),
+										args_of( over ),
 										over.struct( '()', over.hack( belt )),
 									] ),
 								] ),
