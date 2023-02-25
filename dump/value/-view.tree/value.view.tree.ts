@@ -12,6 +12,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * preview_show true
+		 * ```
+		 */
+		preview_show() {
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * sub /
 		 * 	<= Simple
 		 * 	<= Expand
@@ -60,6 +69,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * expandable true
+		 * ```
+		 */
+		expandable() {
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * expand_all? null
 		 * ```
 		 */
@@ -97,7 +115,8 @@ namespace $ {
 		 * Expand_head $mol_check_expand
 		 * 	minimal_height 24
 		 * 	minimal_width 24
-		 * 	checked? <=> expanded?
+		 * 	expanded? <=> expanded?
+		 * 	expandable <= expandable
 		 * 	clicks? <=> expand_all?
 		 * 	label / <= Expand_title
 		 * ```
@@ -108,7 +127,8 @@ namespace $ {
 			
 			obj.minimal_height = () => 24
 			obj.minimal_width = () => 24
-			obj.checked = (next?: any) => this.expanded(next)
+			obj.expanded = (next?: any) => this.expanded(next)
+			obj.expandable = () => this.expandable()
 			obj.clicks = (next?: any) => this.expand_all(next)
 			obj.label = () => [
 				this.Expand_title()
@@ -192,6 +212,7 @@ namespace $ {
 		 * Row*0 $mol_dump_list
 		 * 	values <= row_values*
 		 * 	prototypes <= prototypes
+		 * 	preview_show <= preview_show
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -200,6 +221,7 @@ namespace $ {
 			
 			obj.values = () => this.row_values(id)
 			obj.prototypes = () => this.prototypes()
+			obj.preview_show = () => this.preview_show()
 			
 			return obj
 		}

@@ -53,10 +53,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * preview_show true
+		 * ```
+		 */
+		preview_show() {
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * Dump*0 $mol_dump_value
 		 * 	value <= dump_value*
 		 * 	expanded? <=> dump_expanded*?
 		 * 	prototypes <= prototypes
+		 * 	preview_show <= preview_show
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -66,6 +76,7 @@ namespace $ {
 			obj.value = () => this.dump_value(id)
 			obj.expanded = (next?: any) => this.dump_expanded(id, next)
 			obj.prototypes = () => this.prototypes()
+			obj.preview_show = () => this.preview_show()
 			
 			return obj
 		}

@@ -28,6 +28,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * expandable true
+		 * ```
+		 */
+		expandable() {
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * label / <= title
 		 * ```
 		 */
@@ -41,6 +50,7 @@ namespace $ {
 		 * ```tree
 		 * Trigger $mol_check_expand
 		 * 	checked?val <=> expanded?val
+		 * 	expandable <= expandable
 		 * 	label <= label
 		 * ```
 		 */
@@ -49,6 +59,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_expand()
 			
 			obj.checked = (val?: any) => this.expanded(val)
+			obj.expandable = () => this.expandable()
 			obj.label = () => this.label()
 			
 			return obj
