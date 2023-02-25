@@ -58,10 +58,11 @@ namespace $ {
 		}
 		
 		static watching = new Set< $mol_wire_atom< any, any, any > >()
+		static watcher = null as $mol_after_frame | null
 		
 		static watch() {
 		
-			new $mol_after_frame( $mol_wire_atom.watch )
+			$mol_wire_atom.watcher = new $mol_after_frame( $mol_wire_atom.watch )
 			
 			for( const atom of $mol_wire_atom.watching ) {
 				
@@ -77,7 +78,13 @@ namespace $ {
 		}
 		
 		watch() {
+			
+			if( !$mol_wire_atom.watcher ) {
+				$mol_wire_atom.watcher = new $mol_after_frame( $mol_wire_atom.watch )
+			}
+			
 			$mol_wire_atom.watching.add( this )
+			
 		}
 		
 		/**
@@ -165,6 +172,6 @@ namespace $ {
 		
 	}
 	
-	$mol_wire_atom.watch()
+	// $mol_wire_atom.watch()
 	
 }
