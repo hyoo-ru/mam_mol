@@ -22525,6 +22525,8 @@ var $;
                             res.push([kid]);
                         }
                         for (const attr of value.attributes) {
+                            if (attr.nodeName === 'id')
+                                continue;
                             res.push([attr.nodeName, '=', attr.nodeValue]);
                         }
                     }
