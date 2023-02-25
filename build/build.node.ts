@@ -801,7 +801,6 @@ namespace $ {
 			var envsDef = [ 'web' , 'node' ]
 			var envs = bundle ? [] as string[] : envsDef.slice()
 			var stages = [ 'test' , 'dev' ]
-			var moduleTargets = ['', 'esm']
 			if( bundle ) {
 				
 				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(audit\.js|test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(
@@ -828,11 +827,8 @@ namespace $ {
 						res = res.concat( this.bundleCSS( { path , exclude , bundle : env } ) )
 					}
 					if( !type || type === 'js' ) {
-						moduleTargets.forEach(
-							moduleTarget => {
-								res = res.concat( this.bundleJS( { path , exclude , bundle : env, moduleTarget } ) )
-							}
-						)
+						res = res.concat( this.bundleJS( { path , exclude , bundle : env } ) )
+							.concat( this.bundleJS( { path , exclude , bundle : env, moduleTarget: 'mjs' } ) )
 					}
 					if( !type || type === 'test.js' ) {
 						res = res.concat( this.bundleTestJS( { path , exclude , bundle : env } ) )
@@ -897,12 +893,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleJS( { path , exclude , bundle , moduleTarget } : { path : string , exclude : string[] , bundle : string, moduleTarget? : string } ) : $mol_file[] {
+		bundleJS( { path , exclude , bundle , moduleTarget = 'js' } : { path : string , exclude : string[] , bundle : string, moduleTarget? : string } ) : $mol_file[] {
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
-			var mt = moduleTarget ? `.${moduleTarget}` : ''
-			var target = pack.resolve( `-/${bundle}${mt}.js` )
-			var targetMap = pack.resolve( `-/${bundle}${mt}.js.map` )
+			var target = pack.resolve( `-/${bundle}.${moduleTarget}` )
+			var targetMap = pack.resolve( `-/${bundle}.${moduleTarget}.map` )
 			
 			var sources = this.sourcesJS( { path , exclude } )
 			if( sources.length === 0 ) return []
@@ -946,7 +941,7 @@ namespace $ {
 					}
 				}
 			)
-			if( moduleTarget === 'esm' ) {
+			if( moduleTarget === 'mjs' ) {
 				concater.add( 'export default $', '-' )
 			}
 			target.text( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
@@ -1194,10 +1189,19 @@ namespace $ {
 			let json = {
 				name ,
 				version : '0.0.0' ,
-				main : 'node.js' ,
-				module : 'node.esm.js',
-				browser : 'web.js',
-				types : 'web.d.ts',
+				exports: {
+					node: {
+						import : './node.mjs',
+						default : './node.js'
+					},
+					types : './web.d.ts',
+					import : './web.mjs',
+					default : './web.js'
+				},
+				main : './web.js' ,
+				module : './web.mjs',
+				browser : './web.js',
+				types : './web.d.ts',
 				keywords: [] as string[],
 				dependencies : {} as { [ key : string ] : string }
 			}
