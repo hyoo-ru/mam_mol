@@ -4,6 +4,7 @@ $mol_expander $mol_list
 			sub /
 				<= Trigger $mol_check_expand
 					checked?val <=> expanded?val false
+					expandable <= expandable true
 					label <= label /
 						<= title
 				<= Tools null

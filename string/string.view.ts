@@ -7,6 +7,7 @@ namespace $.$$ {
 			const from = el.selectionStart
 			const to = el.selectionEnd
 			el.value = this.value_changed( el.value )
+			if( to === null ) return 
 			el.selectionEnd = to
 			el.selectionStart = from
 			this.selection_change( next )
@@ -49,10 +50,14 @@ namespace $.$$ {
 		}
 		
 		selection_start() {
+			const el = this.dom_node() as HTMLInputElement
+			if( el.selectionStart === null ) return undefined as any as number
 			return this.selection()[0]
 		}
 
 		selection_end() {
+			const el = this.dom_node() as HTMLInputElement
+			if( el.selectionEnd === null ) return undefined as any as number
 			return this.selection()[1]
 		}
 
