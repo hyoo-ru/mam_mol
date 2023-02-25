@@ -2,29 +2,29 @@ namespace $.$$ {
 	export class $mol_number extends $.$mol_number {
 
 		value_in_range( val : number ) : number {			
-			const min = this.min_value()
-			const max = this.max_value()
+			const min = this.value_min()
+			const max = this.value_max()
 
 			if( val < min ) return min
-			if( max < val ) return max
+			if( val > max ) return max
 			
 			return val
 		}
 
-	 	override event_dec( next? : Event ) {
+		value_change( step : number ) {
 			this.value(
 				this.value_in_range(
-					( Number( this.value() ) || 0 ) - this.precision_change() 
+					( Number( this.value() ) || 0 ) + step 
 				)
 			)
 		}
 
+	 	override event_dec( next? : Event ) {
+			this.value_change( -this.precision_change() )
+		}
+
 		override event_inc( next? : Event ) {
-			this.value(
-				this.value_in_range(
-					( Number( this.value() ) || 0 ) + this.precision_change()
-				)
-			)
+			this.value_change( this.precision_change() )
 		}
 		
 		override value_string( next? : string ) {
@@ -52,18 +52,14 @@ namespace $.$$ {
 		@ $mol_mem
 		override dec_enabled() : boolean {
 			return this.enabled() && (
-				Number.isFinite( this.min_value() )
-					? ( this.value() || 0 )  > this.min_value() 
-					: true
+				!( ( this.value() || 0 ) <= this.value_min() )
 			)
 		}
 
 		@ $mol_mem
 		override inc_enabled() : boolean {
 			return this.enabled() && ( 
-				Number.isFinite( this.max_value() )
-					? ( this.value() || 0 ) < this.max_value()
-					: true
+				!( ( this.value() || 0 ) >= this.value_max() )
 			)
 		}
 

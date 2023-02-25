@@ -1,8 +1,8 @@
 $mol_number $mol_view
 	precision_view <= precision 1
 	precision_change <= precision 1
-	max_value +NaN
-	min_value +NaN
+	value_min +NaN
+	value_max +NaN
 	value? +NaN
 	enabled true
 	sub /
@@ -12,12 +12,12 @@ $mol_number $mol_view
 			type \tel
 			value? <=> value_string? \
 			hint <= hint \ 
-			enabled <= string_enabled <= enabled -
+			enabled <= string_enabled <= enabled
 		<= Dec $mol_button_minor
 			event_click? <=> event_dec? null
-			enabled <= dec_enabled <= enabled -
+			enabled <= dec_enabled <= enabled
 			sub / <= dec_icon $mol_icon_minus
 		<= Inc $mol_button_minor
 			event_click? <=> event_inc? null
-			enabled <= inc_enabled <= enabled -
+			enabled <= inc_enabled <= enabled
 			sub / <= inc_icon $mol_icon_plus
