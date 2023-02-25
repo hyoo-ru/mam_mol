@@ -5101,7 +5101,6 @@ var $;
             var envsDef = ['web', 'node'];
             var envs = bundle ? [] : envsDef.slice();
             var stages = ['test', 'dev'];
-            var moduleTargets = ['', 'esm'];
             if (bundle) {
                 var [bundle, tags, type, locale] = /^(.*?)(?:\.(audit\.js|test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(bundle);
                 tags.split('.').forEach(tag => {
@@ -5119,9 +5118,8 @@ var $;
                     res = res.concat(this.bundleCSS({ path, exclude, bundle: env }));
                 }
                 if (!type || type === 'js') {
-                    moduleTargets.forEach(moduleTarget => {
-                        res = res.concat(this.bundleJS({ path, exclude, bundle: env, moduleTarget }));
-                    });
+                    res = res.concat(this.bundleJS({ path, exclude, bundle: env }))
+                        .concat(this.bundleJS({ path, exclude, bundle: env, moduleTarget: 'mjs' }));
                 }
                 if (!type || type === 'test.js') {
                     res = res.concat(this.bundleTestJS({ path, exclude, bundle: env }));
@@ -5169,12 +5167,11 @@ var $;
                 path,
             });
         }
-        bundleJS({ path, exclude, bundle, moduleTarget }) {
+        bundleJS({ path, exclude, bundle, moduleTarget = 'js' }) {
             const start = Date.now();
             var pack = $mol_file.absolute(path);
-            var mt = moduleTarget ? `.${moduleTarget}` : '';
-            var target = pack.resolve(`-/${bundle}${mt}.js`);
-            var targetMap = pack.resolve(`-/${bundle}${mt}.js.map`);
+            var target = pack.resolve(`-/${bundle}.${moduleTarget}`);
+            var targetMap = pack.resolve(`-/${bundle}.${moduleTarget}.map`);
             var sources = this.sourcesJS({ path, exclude });
             if (sources.length === 0)
                 return [];
@@ -5210,7 +5207,7 @@ var $;
                     errors.push(error);
                 }
             });
-            if (moduleTarget === 'esm') {
+            if (moduleTarget === 'mjs') {
                 concater.add('export default $', '-');
             }
             target.text(concater.content + '\n//# sourceMappingURL=' + targetMap.relate(target.parent()) + '\n');
@@ -5385,10 +5382,19 @@ var $;
             let json = {
                 name,
                 version: '0.0.0',
-                main: 'node.js',
-                module: 'node.esm.js',
-                browser: 'web.js',
-                types: 'web.d.ts',
+                exports: {
+                    node: {
+                        import: './node.mjs',
+                        default: './node.js'
+                    },
+                    types: './web.d.ts',
+                    import: './web.mjs',
+                    default: './web.js'
+                },
+                main: './web.js',
+                module: './web.mjs',
+                browser: './web.js',
+                types: './web.d.ts',
                 keywords: [],
                 dependencies: {}
             };
