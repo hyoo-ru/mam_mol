@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/mol_plot_all.yml'
       - 'plot/**'
+      - 'build/**'
   pull_request:
   schedule:
     - cron: "0 7 * * *"
