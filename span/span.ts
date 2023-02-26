@@ -15,7 +15,7 @@ namespace $ {
 		}
 
 		/** Span for begin of unknown resource */
-		static unknown = $mol_span.begin('unknown')
+		static unknown = $mol_span.begin('?')
 
 		/** Makes new span for begin of resource. */
 		static begin( uri: string, source = '' ) {
