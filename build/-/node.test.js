@@ -2258,7 +2258,7 @@ var $;
             this.length = length;
             this[Symbol.toStringTag] = `${this.uri}#${this.row}:${this.col}/${this.length}`;
         }
-        static unknown = $mol_span.begin('unknown');
+        static unknown = $mol_span.begin('?');
         static begin(uri, source = '') {
             return new $mol_span(uri, source, 1, 1, 0);
         }
