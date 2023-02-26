@@ -66,7 +66,7 @@ namespace $ {
 			const cut : { [ key : string ] : string } = {}
 			
 			for( const key in dict ) {
-				if( except.indexOf( key ) >= 0 ) continue
+				if( except.indexOf( key ) >= 0 ) break
 				cut[ key ] = dict[ key ]
 			}
 			
