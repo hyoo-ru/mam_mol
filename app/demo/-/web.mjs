@@ -4977,7 +4977,7 @@ var $;
             const cut = {};
             for (const key in dict) {
                 if (except.indexOf(key) >= 0)
-                    continue;
+                    break;
                 cut[key] = dict[key];
             }
             return cut;
@@ -35449,7 +35449,7 @@ var $;
         $$.$mol_app_demo = $mol_app_demo;
         class $mol_app_demo_menu extends $.$mol_app_demo_menu {
             filter(next) {
-                return this.$.$mol_state_arg.value('filter', next === '' ? null : next) ?? super.filter();
+                return this.$.$mol_state_session.value('filter', next === '' ? null : next) ?? super.filter();
             }
             options() {
                 return this.names().map(id => this.Option(id));
