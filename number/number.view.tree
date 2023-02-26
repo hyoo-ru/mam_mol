@@ -1,8 +1,8 @@
 $mol_number $mol_view
 	precision_view <= precision 1
 	precision_change <= precision 1
-	value_min +NaN
-	value_max +NaN
+	value_min -Infinity
+	value_max +Infinity
 	value? +NaN
 	enabled true
 	sub /

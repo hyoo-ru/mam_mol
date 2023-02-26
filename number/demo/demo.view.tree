@@ -139,13 +139,27 @@ $mol_number_demo $mol_example_small
 								value? <=> value_max_100? 100
 								value_max 100
 								precision_change 10
-					<= Range_number_label $mol_labeler
+					<= Range_number_case1_label $mol_labeler
 						title \Value from -5 to 5
 						content /
-							<= Range_number $mol_number
-								value? <=> value_range? 0
+							<= Range_case1_number $mol_number
+								value? <=> value_case1_range? 0
 								value_min -5
 								value_max 5
+					<= Range_number_case2_label $mol_labeler
+						title \Value from 5 to 10
+						content /
+							<= Range_case2_number $mol_number
+								value? <=> value_case2_range? null
+								value_min 5
+								value_max 10
+					<= Range_number_case3_label $mol_labeler
+						title \Value from -10 to -5
+						content /
+							<= Range_case3_number $mol_number
+								value? <=> value_case3_range? null
+								value_min -10
+								value_max -5
 	tags /
 		\$mol_labeler
 		\$mol_number
