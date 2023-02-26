@@ -3,6 +3,10 @@
 	max-width: 100%;
 }
 
+[mol_embed_youtube_image] {
+	flex: auto 1 1;
+}
+
 [mol_embed_youtube_image]:not(:hover):not(:focus) {
 	opacity: .75;
 }

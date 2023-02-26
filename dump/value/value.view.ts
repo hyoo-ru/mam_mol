@@ -83,6 +83,7 @@ namespace $.$$ {
 						res.push([ kid ])
 					}
 					for( const attr of value.attributes ) {
+						if( attr.nodeName === 'id' ) continue
 						res.push([ attr.nodeName, '=', attr.nodeValue ])
 					}
 				} catch {}
@@ -132,9 +133,13 @@ namespace $.$$ {
 		@ $mol_mem
 		expand_content() {
 			return [
-				... this.preview_dom() ? [ this.Preview() ] : [],
+				... this.preview_show() && this.preview_dom() ? [ this.Preview() ] : [],
 				... this.rows_values().map( (_,index)=> this.Row( index ) ),
 			]
+		}
+		
+		expandable() {
+			return this.expand_content().length > 0
 		}
 		
 		row_values( index: number ) {

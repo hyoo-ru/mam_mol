@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/mol_key.yml'
       - 'key/**'
+      - 'build/**'
   pull_request:
   schedule:
     - cron: "0 7 * * *"

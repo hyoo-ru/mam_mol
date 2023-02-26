@@ -88,7 +88,6 @@ namespace $ {
 
 		Strong: {
 			display: 'inline',
-			color: $mol_theme.special,
 			textShadow: '0 0',
 		},
 

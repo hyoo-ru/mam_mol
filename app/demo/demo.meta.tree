@@ -5,6 +5,8 @@ include \/mol/offline/install
 
 include \/hyoo/crowd/text/demo
 include \/mol/attach/demo
+include \/mol/audio/demo
+include \/mol/audio/demo/vibe
 include \/mol/bar/demo
 include \/mol/bench/demo
 include \/mol/book2/demo

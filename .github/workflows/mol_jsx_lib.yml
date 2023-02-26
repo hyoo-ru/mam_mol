@@ -9,6 +9,7 @@ on:
       - '.github/workflows/mol_jsx_lib.yml'
       - 'jsx/**'
       - 'wire/**'
+      - 'build/**'
   pull_request:
   schedule:
     - cron: "0 7 * * *"
