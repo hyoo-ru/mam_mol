@@ -3288,7 +3288,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_audio_node extends $mol_object2 {
-        static context: AudioContext;
+        static context(): AudioContext;
         node(): AudioNode;
         input(next?: readonly $mol_audio_node[]): readonly $mol_audio_node[];
         input_connected(): readonly $mol_audio_node[];

@@ -10961,8 +10961,10 @@ var $;
 var $;
 (function ($) {
     class $mol_audio_node extends $mol_object2 {
-        static context = new AudioContext;
-        node() { return $mol_audio_node.context.destination; }
+        static context() {
+            return new AudioContext;
+        }
+        node() { return $mol_audio_node.context().destination; }
         input(next = []) { return next; }
         input_connected() {
             const node = this.node();
@@ -10982,7 +10984,7 @@ var $;
             this.input_connected();
             return this.node();
         }
-        time() { return $mol_audio_node.context.currentTime; }
+        time() { return $mol_audio_node.context().currentTime; }
         destructor() {
             const node = this.node();
             for (const src of this.input()) {
@@ -11002,6 +11004,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_audio_node.prototype, "output", null);
+    __decorate([
+        $mol_memo.method
+    ], $mol_audio_node, "context", null);
     $.$mol_audio_node = $mol_audio_node;
 })($ || ($ = {}));
 //mol/audio/node/node.web.ts
@@ -11029,7 +11034,7 @@ var $;
 var $;
 (function ($) {
     class $mol_audio_vibe extends $mol_audio_node {
-        node() { return $mol_audio_node.context.createOscillator(); }
+        node() { return $mol_audio_node.context().createOscillator(); }
         freq(next = 440) { return next; }
         shape(next = 'sine') { return next; }
         active(next) {

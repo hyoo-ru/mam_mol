@@ -1,10 +1,13 @@
 namespace $ {
 	export class $mol_audio_node extends $mol_object2 {
 		
-		static context = new AudioContext
+		@ $mol_memo.method
+		static context() {
+			return new AudioContext
+		}
 		
 		@ $mol_mem
-		node() { return $mol_audio_node.context.destination as AudioNode }
+		node() { return $mol_audio_node.context().destination as AudioNode }
 		
 		@ $mol_mem
 		input( next = [] as readonly $mol_audio_node[] ) { return next }
@@ -35,7 +38,7 @@ namespace $ {
 			return this.node()
 		}
 		
-		time() { return $mol_audio_node.context.currentTime }
+		time() { return $mol_audio_node.context().currentTime }
 		
 		destructor() {
 			
