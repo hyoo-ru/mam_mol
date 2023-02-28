@@ -267,6 +267,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * submit_with_ctrl false
+		 * ```
+		 */
+		submit_with_ctrl() {
+			return false
+		}
+		
+		/**
+		 * ```tree
 		 * submit?event null
 		 * ```
 		 */
@@ -278,13 +287,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Submit $mol_hotkey key * enter?event <=> submit?event
+		 * Submit $mol_hotkey
+		 * 	mod_ctrl <= submit_with_ctrl
+		 * 	key * enter?event <=> submit?event
 		 * ```
 		 */
 		@ $mol_mem
 		Submit() {
 			const obj = new this.$.$mol_hotkey()
 			
+			obj.mod_ctrl = () => this.submit_with_ctrl()
 			obj.key = () => ({
 				enter: (event?: any) => this.submit(event)
 			})

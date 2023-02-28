@@ -297,6 +297,7 @@ $mol_string $mol_view
 		input?event <=> event_change?event null
 	plugins /
 		<= Submit $mol_hotkey
+			mod_ctrl <= submit_with_ctrl false
 			key * enter?event <=> submit?event null
 
 $mol_textarea $mol_stack
@@ -316,6 +317,8 @@ $mol_textarea $mol_stack
 			length_max <= length_max +Infinity
 			selection?val <=> selection?val /number
 			bring => bring
+			submit? <=> submit? null
+			submit_with_ctrl true
 		<= View $mol_text_code
 			text <= value
 			render_visible_only false

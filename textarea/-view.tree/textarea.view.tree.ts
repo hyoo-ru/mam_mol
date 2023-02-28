@@ -240,6 +240,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * submit? null
+		 * ```
+		 */
+		@ $mol_mem
+		submit(next?: any) {
+			if ( next !== undefined ) return next as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * bring
 		 * ```
 		 */
@@ -257,6 +268,8 @@ namespace $ {
 		 * 	length_max <= length_max
 		 * 	selection?val <=> selection?val
 		 * 	bring => bring
+		 * 	submit? <=> submit?
+		 * 	submit_with_ctrl true
 		 * ```
 		 */
 		@ $mol_mem
@@ -269,6 +282,8 @@ namespace $ {
 			obj.spellcheck = () => this.spellcheck()
 			obj.length_max = () => this.length_max()
 			obj.selection = (val?: any) => this.selection(val)
+			obj.submit = (next?: any) => this.submit(next)
+			obj.submit_with_ctrl = () => true
 			
 			return obj
 		}

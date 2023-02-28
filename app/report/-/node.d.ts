@@ -1514,6 +1514,7 @@ declare namespace $ {
         length_max(): number;
         type(val?: any): string;
         event_change(event?: any): any;
+        submit_with_ctrl(): boolean;
         submit(event?: any): any;
         Submit(): $$.$mol_hotkey;
     }

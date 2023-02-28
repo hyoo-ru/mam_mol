@@ -2512,6 +2512,7 @@ declare namespace $ {
         length_max(): number;
         type(val?: any): string;
         event_change(event?: any): any;
+        submit_with_ctrl(): boolean;
         submit(event?: any): any;
         Submit(): $$.$mol_hotkey;
     }
@@ -2594,6 +2595,7 @@ declare namespace $ {
         spellcheck(): boolean;
         length_max(): number;
         selection(val?: any): readonly number[];
+        submit(next?: any): any;
         bring(): void;
         Edit(): $mol_textarea_edit;
         row_numb(id: any): number;
