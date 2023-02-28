@@ -8,6 +8,7 @@ $mol_expander_demo $mol_example_small
 	tags /
 		\$mol_filler
 		\expander
+		\accordion
 		\expand
 		\container
 		\fold

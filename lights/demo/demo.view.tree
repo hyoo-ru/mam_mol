@@ -6,3 +6,8 @@ $mol_lights_demo $mol_example_small
 				<= Theme $mol_theme_auto
 			sub /
 				<= Lighter $mol_lights_toggle
+	tags /
+		\light
+		\dark
+		\theme
+		\switcher

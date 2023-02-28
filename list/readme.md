@@ -6,6 +6,8 @@ The list of rows with lazy/virtual rendering support based on `minimal_height` o
 
 ## Usage example
 
+Static list:
+
 ```
 <= Users $mol_list
 	rows /$mol_view
@@ -14,6 +16,15 @@ The list of rows with lazy/virtual rendering support based on `minimal_height` o
 		<= User_3 $mol_view
 	Empty <= Users_empty $mol_paragraph
 		title \No users
+```
+
+Dynamic list:
+
+```
+<= Items $mol_list
+	rows <= list_items /
+		<= Item*0 $mol_link
+			title <= item_title* \
 ```
 
 ## Properties

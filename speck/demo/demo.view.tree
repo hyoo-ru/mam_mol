@@ -26,4 +26,5 @@ $mol_speck_demo $mol_example_small
 		\$mol_button
 		\speck
 		\highlight
+		\badge
 
