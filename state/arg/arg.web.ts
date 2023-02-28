@@ -56,7 +56,7 @@ namespace $ {
 				}
 			)
 			
-			return params
+			return params as Readonly< typeof params >
 		}
 
 		@ $mol_mem_key

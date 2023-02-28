@@ -1958,9 +1958,9 @@ declare namespace $ {
         static href_normal(): string;
         static dict(next?: {
             [key: string]: string | null;
-        }): {
+        }): Readonly<{
             [key: string]: string;
-        };
+        }>;
         static value(key: string, next?: string | null): string | null;
         static link(next: any): string;
         static make_link(next: {
