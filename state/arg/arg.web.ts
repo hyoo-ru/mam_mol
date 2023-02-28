@@ -56,7 +56,7 @@ namespace $ {
 				}
 			)
 			
-			return params
+			return params as Readonly< typeof params >
 		}
 
 		@ $mol_mem_key
@@ -66,7 +66,7 @@ namespace $ {
 			const cut : { [ key : string ] : string } = {}
 			
 			for( const key in dict ) {
-				if( except.indexOf( key ) >= 0 ) continue
+				if( except.indexOf( key ) >= 0 ) break
 				cut[ key ] = dict[ key ]
 			}
 			

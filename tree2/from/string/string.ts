@@ -4,7 +4,7 @@ namespace $ {
 	export function $mol_tree2_from_string(
 		this: $,
 		str: string,
-		uri = 'unknown',
+		uri = '?',
 	) : $mol_tree2 {
 
 		const span = $mol_span.entire( uri, str )

@@ -10,8 +10,8 @@
 	transition: none;
 	overflow: overlay;
 	scroll-snap-type: x mandatory;
-	padding: 0 .25rem;
-	scroll-padding: 0 .25rem;
+	padding: 0 1px;
+	scroll-padding: 0 1px;
 	gap: 1px;
 }
 

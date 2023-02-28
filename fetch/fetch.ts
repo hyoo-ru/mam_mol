@@ -6,6 +6,19 @@ namespace $ {
 			super()
 		}
 
+		status() {
+			const types = [ 'unknown', 'inform', 'success', 'redirect', 'wrong', 'failed' ] as const
+			return types[ Math.floor( this.native.status / 100 ) ]
+		}
+		
+		code() {
+			return this.native.status
+		}
+		
+		message() {
+			return this.native.statusText || `HTTP Error ${ this.code() }`
+		}
+
 		headers() {
 			return this.native.headers
 		}
@@ -85,46 +98,51 @@ namespace $ {
 
 		@ $mol_action
 		static response( input: RequestInfo, init?: RequestInit ) {
+			return new $mol_fetch_response( $mol_wire_sync( this ).request( input , init ) )
+		}
 
-			const response = $mol_wire_sync( this ).request( input , init )
-			if( Math.floor( response.status / 100 ) === 2 ) return new $mol_fetch_response( response )
+		@ $mol_action
+		static success( input: RequestInfo, init?: RequestInit ) {
+
+			const response = this.response( input , init )
+			if( response.status() === 'success' ) return response
 			
-			throw new Error( response.statusText || `HTTP Error ${ response.status }` )
+			throw new Error( response.message() )
 		}
 
 		@ $mol_action
 		static stream( input: RequestInfo, init?: RequestInit ) {
-			return this.response( input , init ).stream()
+			return this.success( input , init ).stream()
 		}
 
 		@ $mol_action
 		static text( input: RequestInfo, init?: RequestInit ) {
-			return this.response( input , init ).text()
+			return this.success( input , init ).text()
 		}	
 
 		@ $mol_action
 		static json( input: RequestInfo, init?: RequestInit ) {
-			return this.response( input , init ).json()
+			return this.success( input , init ).json()
 		}	
 
 		@ $mol_action
 		static buffer( input: RequestInfo, init?: RequestInit ) {
-			return this.response( input , init ).buffer()
+			return this.success( input , init ).buffer()
 		}	
 
 		@ $mol_action
 		static xml( input: RequestInfo, init?: RequestInit ) {
-			return this.response( input , init ).xml()
+			return this.success( input , init ).xml()
 		}
 
 		@ $mol_action
 		static xhtml( input: RequestInfo, init?: RequestInit ) {
-			return this.response( input , init ).xhtml()
+			return this.success( input , init ).xhtml()
 		}
 
 		@ $mol_action
 		static html( input: RequestInfo, init?: RequestInit ) {
-			return this.response( input , init ).html()
+			return this.success( input , init ).html()
 		}
 
 	}
