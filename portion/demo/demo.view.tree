@@ -10,3 +10,4 @@ $mol_portion_demo $mol_example_small
 	tags /
 		\dashboard
 		\progress
+		\slider

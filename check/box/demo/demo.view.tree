@@ -26,3 +26,4 @@ $mol_check_box_demo $mol_example_small
 				enabled false
 	tags /
 		\checkbox
+		\switch

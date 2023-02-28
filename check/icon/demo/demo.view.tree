@@ -16,5 +16,6 @@ $mol_check_icon_demo $mol_example_small
 	tags /
 		\$mol_icon
 		\checkbox
+		\switch
 		\button
 		\icon

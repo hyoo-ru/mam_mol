@@ -18,3 +18,4 @@ $mol_gallery_demo $mol_example
 		\gallery
 		\image
 		\adaptive
+		\masonry

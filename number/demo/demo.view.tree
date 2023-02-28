@@ -1,34 +1,170 @@
 $mol_number_demo $mol_example_small
 	title \Number input control with various configuration
+	value? +NaN
 	sub /
-		<= zero $mol_number
-		<= one $mol_number
-			value?val <=> year?val +NaN
-		<= two $mol_number
-			value?val <=> year?val +NaN
-			hint \2016
-		<= three $mol_number
-			value?val <=> age?val 32
-			hint \18-99
-			enabled false
-		<= four $mol_number
-			value?val <=> year?val +NaN
-			string_enabled false
-		<= five $mol_number
-			value?val <=> age?val 32
-			dec_enabled false
-		<= six $mol_number
-			value?val <=> year?val +NaN
-			inc_enabled false
-		<= seven $mol_number
-			value?val <=> year?val +NaN
-			precision_change 10
-		<= eight $mol_number
-			value?val <=> year?val +NaN
-			precision_view 0.01
-		<= nine $mol_number
-			value?val <=> year?val +NaN
-			precision 1000
+		<= Rows $mol_list rows /
+			<= Section_value $mol_section
+				title \Stringified number value
+				content /
+					<= Section_value_row $mol_row sub /
+						<= Section_value_bar $mol_bar sub /
+							<= Value_string $mol_string
+								value <= value_string \
+								disabled true
+							<= Reset $mol_button_major
+								title \Reset
+								enabled? <= reset_enabled true
+								click? <=> reset_value? null
+			-
+			<= Section_initial $mol_section
+				title \Simple
+				content / <= Section_initial_row $mol_row sub /
+					<= Initial_number_label $mol_labeler
+						title \Initial
+						content /
+							<= Initial_number $mol_number
+								value? <=> value?
+					-
+					<= Hint_number_label $mol_labeler
+						title \Hint showed (if empty value)
+						content /
+							<= Hint_number $mol_number
+								hint \Any number
+								value? <=> value?
+			-
+			<= Section_disabled $mol_section
+				title \Disabled
+				content / <= Section_disabled_row $mol_row sub /
+					<= Value_field_disabled_number_label $mol_labeler
+						title \Value field disabled
+						content /
+							<= Value_field_disabled_number $mol_number
+								hint \This hint not showed while string_enabled is false
+								value? <=> value?
+								string_enabled false
+					-
+					<= Disabled_number_label $mol_labeler
+						title \Disabled
+						content /
+							<= Disabled_number $mol_number
+								hint \This hint not showed while enabled is false
+								value? <= value?
+								enabled false
+					-
+					<= Dec_disabled_number_label $mol_labeler
+						title \Decrement disabled
+						content /
+							<= Dec_disabled_number $mol_number
+								value? <=> value?
+								dec_enabled false
+					-
+					<= Inc_disabled_number_label $mol_labeler
+						title \Increment disabled
+						content /
+							<= Inc_disabled_number $mol_number
+								value? <=> value?
+								inc_enabled false
+			-
+			<= Section_precision $mol_section
+				title \Precision
+				content / <= Section_precision_row $mol_row sub /
+					<= Precision_change_10_number_label $mol_labeler
+						title \Precision change 10
+						content /
+							<= Precision_change_10_number $mol_number
+								value? <=> value?
+								precision_change 10
+					-
+					<= Precision_change_01_number_label $mol_labeler
+						title \⚠️ Precision change 0.1
+						content /
+							<= Precision_change_01_number $mol_number
+								value? <=> value?
+								precision_change 0.1
+					-
+					<= Precision_100_number_label $mol_labeler
+						title \Precision 100
+						content /
+							<= Precision_100_number_number $mol_number
+								value? <=> value?
+								precision 100
+					-
+					<= Precision_5_number_label $mol_labeler
+						title \Precision 5
+						content /
+							<= Precision_5_number_number $mol_number
+								value? <=> value?
+								precision 5
+					-
+					<= Precision_01_number_label $mol_labeler
+						title \Precision 0.1
+						content /
+							<= Precision_01_number_number $mol_number
+								value? <=> value?
+								precision 0.1
+					-
+					<= Precision_005_number_label $mol_labeler
+						title \Precision 0.05
+						content /
+							<= Precision_005_number_number $mol_number
+								value? <=> value?
+								precision 0.05
+					-
+					<= Precision_view_001_number_label $mol_labeler
+						title \Precision view 0.001
+						content /
+							<= Precision_view_001_number $mol_number
+								value? <=> value?
+								precision_view 0.001
+					-
+					<= Precision_view_10_number_label $mol_labeler
+						title \⚠️ Precision view 10
+						content /
+							<= Precision_view_10_number $mol_number
+								value? <=> value?
+								precision_view 10
+			<= Section_range $mol_section
+				title \Range
+				content / <= Section_range_row $mol_row sub /
+					<= Min_0_number_label $mol_labeler
+						title \Min value 0
+						content /
+							<= Min_0_number $mol_number
+								value? <=> value_min_0? +NaN
+								value_min 0
+					<= Max_100_number_label $mol_labeler
+						title \Max value 100
+						content /
+							<= Max_100_number $mol_number
+								value? <=> value_max_100? 100
+								value_max 100
+								precision_change 10
+					<= Range_number_case1_label $mol_labeler
+						title \Value from -5 to 5
+						content /
+							<= Range_case1_number $mol_number
+								value? <=> value_case1_range? 0
+								value_min -5
+								value_max 5
+					<= Range_number_case2_label $mol_labeler
+						title \Value from 5 to 10
+						content /
+							<= Range_case2_number $mol_number
+								value? <=> value_case2_range? null
+								value_min 5
+								value_max 10
+					<= Range_number_case3_label $mol_labeler
+						title \Value from -10 to -5
+						content /
+							<= Range_case3_number $mol_number
+								value? <=> value_case3_range? null
+								value_min -10
+								value_max -5
 	tags /
+		\$mol_labeler
+		\$mol_number
+		\$mol_section
 		\number
 		\field
+		\label
+		\section

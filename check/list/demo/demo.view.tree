@@ -15,3 +15,4 @@ $mol_check_list_demo $mol_example_small
 	tags /
 		\checkbox
 		\option
+		\toggle

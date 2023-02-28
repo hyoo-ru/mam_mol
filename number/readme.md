@@ -11,7 +11,9 @@ Component for entering, incrementing and decrementing numeric values.
 	value?val <=> fees?val null
 	hint \0.01 .. 10.00
 	enabled <= fees_changeable true
-	precision 0.01
+	precision0 .01
+	value_min 0.01
+	value_max 10
 ```
 
 ## Properties
@@ -44,3 +46,11 @@ Precision of the input field. For example, set `precision_view` to `0.01` for `0
 **`precision_change() : number`**
 
 Step value for increase/decrease buttons.
+
+**`value_min() : number`**
+
+Limit the minimum value
+
+**`value_max() : number`**
+
+Limit the maximum value
