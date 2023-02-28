@@ -18,4 +18,6 @@ $mol_book2_demo $mol_example_large
 		\navigation
 		\transition
 		\multipage
-
+		\dialog
+		\breadcrumbs
+		\drawer

@@ -44,6 +44,8 @@ namespace $ {
 		 * 	\list
 		 * 	\table
 		 * 	\scroll
+		 * 	\divider
+		 * 	\grid
 		 * ```
 		 */
 		tags() {
@@ -55,7 +57,9 @@ namespace $ {
 				"$mol_link",
 				"list",
 				"table",
-				"scroll"
+				"scroll",
+				"divider",
+				"grid"
 			] as readonly any[]
 		}
 		

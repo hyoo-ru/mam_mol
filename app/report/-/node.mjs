@@ -6209,10 +6209,19 @@ var $;
         precision_change() {
             return this.precision();
         }
-        value(val) {
-            if (val !== undefined)
-                return val;
+        value_min() {
+            return -Infinity;
+        }
+        value_max() {
+            return +Infinity;
+        }
+        value(next) {
+            if (next !== undefined)
+                return next;
             return +NaN;
+        }
+        enabled() {
+            return true;
         }
         sub() {
             return [
@@ -6235,9 +6244,6 @@ var $;
         hint() {
             return " ";
         }
-        enabled() {
-            return true;
-        }
         string_enabled() {
             return this.enabled();
         }
@@ -6249,9 +6255,9 @@ var $;
             obj.enabled = () => this.string_enabled();
             return obj;
         }
-        event_dec(val) {
-            if (val !== undefined)
-                return val;
+        event_dec(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         dec_enabled() {
@@ -6263,16 +6269,16 @@ var $;
         }
         Dec() {
             const obj = new this.$.$mol_button_minor();
-            obj.event_click = (val) => this.event_dec(val);
+            obj.event_click = (next) => this.event_dec(next);
             obj.enabled = () => this.dec_enabled();
             obj.sub = () => [
                 this.dec_icon()
             ];
             return obj;
         }
-        event_inc(val) {
-            if (val !== undefined)
-                return val;
+        event_inc(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         inc_enabled() {
@@ -6284,7 +6290,7 @@ var $;
         }
         Inc() {
             const obj = new this.$.$mol_button_minor();
-            obj.event_click = (val) => this.event_inc(val);
+            obj.event_click = (next) => this.event_inc(next);
             obj.enabled = () => this.inc_enabled();
             obj.sub = () => [
                 this.inc_icon()
@@ -6336,31 +6342,54 @@ var $;
     var $$;
     (function ($$) {
         class $mol_number extends $.$mol_number {
+            value_limited(next) {
+                if (next === undefined)
+                    return this.value();
+                if (next === '')
+                    return this.value(null);
+                const min = this.value_min();
+                const max = this.value_max();
+                const val = Number(next);
+                if (val < min)
+                    return this.value(min);
+                if (val > max)
+                    return this.value(max);
+                return this.value(val);
+            }
             event_dec(next) {
-                this.value((Number(this.value()) || 0) - this.precision_change());
+                this.value_limited((this.value_limited() || 0) - this.precision_change());
             }
             event_inc(next) {
-                this.value((Number(this.value()) || 0) + this.precision_change());
+                this.value_limited((this.value_limited() || 0) + this.precision_change());
             }
             value_string(next) {
-                if (next !== void 0) {
-                    this.value(next === '' ? null : Number(next));
-                }
+                const next_num = this.value_limited(next);
                 const precisionView = this.precision_view();
-                const value = next ? Number(next) : this.value();
-                if (value === 0)
+                if (next_num === 0)
                     return '0';
-                if (!value)
+                if (!next_num)
                     return '';
                 if (precisionView >= 1) {
-                    return (value / precisionView).toFixed();
+                    return (next_num / precisionView).toFixed();
                 }
                 else {
                     const fixedNumber = Math.log10(1 / precisionView);
-                    return value.toFixed(fixedNumber);
+                    return next_num.toFixed(Math.ceil(fixedNumber));
                 }
             }
+            dec_enabled() {
+                return this.enabled() && (!((this.value() || 0) <= this.value_min()));
+            }
+            inc_enabled() {
+                return this.enabled() && (!((this.value() || 0) >= this.value_max()));
+            }
         }
+        __decorate([
+            $mol_mem
+        ], $mol_number.prototype, "dec_enabled", null);
+        __decorate([
+            $mol_mem
+        ], $mol_number.prototype, "inc_enabled", null);
         $$.$mol_number = $mol_number;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

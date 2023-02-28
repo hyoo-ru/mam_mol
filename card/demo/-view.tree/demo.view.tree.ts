@@ -30,13 +30,15 @@ namespace $ {
 		 * 	\card
 		 * 	\status
 		 * 	\container
+		 * 	\paper
 		 * ```
 		 */
 		tags() {
 			return [
 				"card",
 				"status",
-				"container"
+				"container",
+				"paper"
 			] as readonly any[]
 		}
 		

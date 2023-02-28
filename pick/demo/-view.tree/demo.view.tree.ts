@@ -104,6 +104,7 @@ namespace $ {
 		 * 	\container
 		 * 	\confirm
 		 * 	\markdown
+		 * 	\modal
 		 * ```
 		 */
 		tags() {
@@ -120,7 +121,8 @@ namespace $ {
 				"icon",
 				"container",
 				"confirm",
-				"markdown"
+				"markdown",
+				"modal"
 			] as readonly any[]
 		}
 		

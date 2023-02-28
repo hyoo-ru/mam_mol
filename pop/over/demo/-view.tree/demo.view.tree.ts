@@ -29,6 +29,7 @@ namespace $ {
 		 * 	\pop
 		 * 	\menu
 		 * 	\hover
+		 * 	\tooltip
 		 * ```
 		 */
 		tags() {
@@ -37,7 +38,8 @@ namespace $ {
 				"popover",
 				"pop",
 				"menu",
-				"hover"
+				"hover",
+				"tooltip"
 			] as readonly any[]
 		}
 		

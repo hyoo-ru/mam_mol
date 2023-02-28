@@ -31,12 +31,14 @@ namespace $ {
 		 * tags /
 		 * 	\dashboard
 		 * 	\progress
+		 * 	\slider
 		 * ```
 		 */
 		tags() {
 			return [
 				"dashboard",
-				"progress"
+				"progress",
+				"slider"
 			] as readonly any[]
 		}
 		

@@ -28,6 +28,7 @@ namespace $ {
 		 * 	\$mol_button
 		 * 	\speck
 		 * 	\highlight
+		 * 	\badge
 		 * ```
 		 */
 		tags() {
@@ -37,7 +38,8 @@ namespace $ {
 				"$mol_paragraph",
 				"$mol_button",
 				"speck",
-				"highlight"
+				"highlight",
+				"badge"
 			] as readonly any[]
 		}
 		

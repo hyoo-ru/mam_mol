@@ -26,6 +26,7 @@ namespace $ {
 		 * tags /
 		 * 	\search
 		 * 	\suggest
+		 * 	\autocomplete
 		 * 	\string
 		 * 	\fulltext
 		 * 	\filter
@@ -35,6 +36,7 @@ namespace $ {
 			return [
 				"search",
 				"suggest",
+				"autocomplete",
 				"string",
 				"fulltext",
 				"filter"

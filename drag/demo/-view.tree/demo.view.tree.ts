@@ -56,6 +56,7 @@ namespace $ {
 		 * 	\drag
 		 * 	\dragndrop
 		 * 	\list
+		 * 	\transfer
 		 * ```
 		 */
 		tags() {
@@ -67,7 +68,8 @@ namespace $ {
 				"$mol_scroll",
 				"drag",
 				"dragndrop",
-				"list"
+				"list",
+				"transfer"
 			] as readonly any[]
 		}
 		

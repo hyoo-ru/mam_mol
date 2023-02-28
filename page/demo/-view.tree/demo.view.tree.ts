@@ -32,6 +32,10 @@ namespace $ {
 		 * 	\header
 		 * 	\footer
 		 * 	\toolbar
+		 * 	\app
+		 * 	\bar
+		 * 	\bottom
+		 * 	\navigator
 		 * ```
 		 */
 		tags() {
@@ -43,7 +47,11 @@ namespace $ {
 				"container",
 				"header",
 				"footer",
-				"toolbar"
+				"toolbar",
+				"app",
+				"bar",
+				"bottom",
+				"navigator"
 			] as readonly any[]
 		}
 		

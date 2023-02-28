@@ -63,6 +63,7 @@ namespace $ {
 		 * 	\gallery
 		 * 	\image
 		 * 	\adaptive
+		 * 	\masonry
 		 * ```
 		 */
 		tags() {
@@ -71,7 +72,8 @@ namespace $ {
 				"$mol_paragraph",
 				"gallery",
 				"image",
-				"adaptive"
+				"adaptive",
+				"masonry"
 			] as readonly any[]
 		}
 		

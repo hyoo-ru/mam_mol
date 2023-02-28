@@ -30,6 +30,9 @@ namespace $ {
 		 * 	\navigation
 		 * 	\transition
 		 * 	\multipage
+		 * 	\dialog
+		 * 	\breadcrumbs
+		 * 	\drawer
 		 * ```
 		 */
 		tags() {
@@ -39,7 +42,10 @@ namespace $ {
 				"book",
 				"navigation",
 				"transition",
-				"multipage"
+				"multipage",
+				"dialog",
+				"breadcrumbs",
+				"drawer"
 			] as readonly any[]
 		}
 		

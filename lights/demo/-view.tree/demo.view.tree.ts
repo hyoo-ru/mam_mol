@@ -23,6 +23,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\light
+		 * 	\dark
+		 * 	\theme
+		 * 	\switcher
+		 * ```
+		 */
+		tags() {
+			return [
+				"light",
+				"dark",
+				"theme",
+				"switcher"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Theme $mol_theme_auto
 		 * ```
 		 */

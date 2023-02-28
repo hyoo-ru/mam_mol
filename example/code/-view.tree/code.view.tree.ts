@@ -14,6 +14,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags /
+		 * 	\sandbox
+		 * 	\eval
+		 * 	\js
+		 * 	\javascript
+		 * ```
+		 */
+		tags() {
+			return [
+				"sandbox",
+				"eval",
+				"js",
+				"javascript"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * code? \
 		 * ```
 		 */

@@ -5,6 +5,7 @@
 	"$hyoo_js_eval_Perf_hint": "Измерить скорость",
 	"$hyoo_js_eval_result_label": "Результат",
 	"$mol_app_demo_detail_Readme_hint": "Readme",
+	"$mol_app_demo_detail_close_hint": "Закрыть панель",
 	"$mol_app_demo_detail_edit_hint": "Открыть демо приложение в студии",
 	"$mol_app_demo_detail_empty_postfix": "\" ни одного демо не найдено",
 	"$mol_app_demo_detail_empty_prefix": "По префиксу \"",

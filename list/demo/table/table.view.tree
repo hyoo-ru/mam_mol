@@ -51,3 +51,5 @@ $mol_list_demo_table $mol_example
 		\list
 		\table
 		\scroll
+		\divider
+		\grid

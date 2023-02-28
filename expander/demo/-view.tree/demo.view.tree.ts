@@ -26,6 +26,7 @@ namespace $ {
 		 * tags /
 		 * 	\$mol_filler
 		 * 	\expander
+		 * 	\accordion
 		 * 	\expand
 		 * 	\container
 		 * 	\fold
@@ -35,6 +36,7 @@ namespace $ {
 			return [
 				"$mol_filler",
 				"expander",
+				"accordion",
 				"expand",
 				"container",
 				"fold"

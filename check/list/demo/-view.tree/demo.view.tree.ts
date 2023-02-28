@@ -26,12 +26,14 @@ namespace $ {
 		 * tags /
 		 * 	\checkbox
 		 * 	\option
+		 * 	\toggle
 		 * ```
 		 */
 		tags() {
 			return [
 				"checkbox",
-				"option"
+				"option",
+				"toggle"
 			] as readonly any[]
 		}
 		

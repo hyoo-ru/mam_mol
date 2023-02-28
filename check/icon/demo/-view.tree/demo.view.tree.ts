@@ -31,6 +31,7 @@ namespace $ {
 		 * tags /
 		 * 	\$mol_icon
 		 * 	\checkbox
+		 * 	\switch
 		 * 	\button
 		 * 	\icon
 		 * ```
@@ -39,6 +40,7 @@ namespace $ {
 			return [
 				"$mol_icon",
 				"checkbox",
+				"switch",
 				"button",
 				"icon"
 			] as readonly any[]

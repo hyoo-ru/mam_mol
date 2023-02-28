@@ -21,13 +21,40 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value?val +NaN
+		 * value_min -Infinity
+		 * ```
+		 */
+		value_min() {
+			return -Infinity
+		}
+		
+		/**
+		 * ```tree
+		 * value_max +Infinity
+		 * ```
+		 */
+		value_max() {
+			return +Infinity
+		}
+		
+		/**
+		 * ```tree
+		 * value? +NaN
 		 * ```
 		 */
 		@ $mol_mem
-		value(val?: any) {
-			if ( val !== undefined ) return val as never
+		value(next?: any) {
+			if ( next !== undefined ) return next as never
 			return +NaN
+		}
+		
+		/**
+		 * ```tree
+		 * enabled true
+		 * ```
+		 */
+		enabled() {
+			return true
 		}
 		
 		/**
@@ -86,15 +113,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * enabled true
-		 * ```
-		 */
-		enabled() {
-			return true
-		}
-		
-		/**
-		 * ```tree
 		 * string_enabled <= enabled
 		 * ```
 		 */
@@ -125,12 +143,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * event_dec?val null
+		 * event_dec? null
 		 * ```
 		 */
 		@ $mol_mem
-		event_dec(val?: any) {
-			if ( val !== undefined ) return val as never
+		event_dec(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -158,7 +176,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Dec $mol_button_minor
-		 * 	event_click?val <=> event_dec?val
+		 * 	event_click? <=> event_dec?
 		 * 	enabled <= dec_enabled
 		 * 	sub / <= dec_icon
 		 * ```
@@ -167,7 +185,7 @@ namespace $ {
 		Dec() {
 			const obj = new this.$.$mol_button_minor()
 			
-			obj.event_click = (val?: any) => this.event_dec(val)
+			obj.event_click = (next?: any) => this.event_dec(next)
 			obj.enabled = () => this.dec_enabled()
 			obj.sub = () => [
 				this.dec_icon()
@@ -178,12 +196,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * event_inc?val null
+		 * event_inc? null
 		 * ```
 		 */
 		@ $mol_mem
-		event_inc(val?: any) {
-			if ( val !== undefined ) return val as never
+		event_inc(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -211,7 +229,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Inc $mol_button_minor
-		 * 	event_click?val <=> event_inc?val
+		 * 	event_click? <=> event_inc?
 		 * 	enabled <= inc_enabled
 		 * 	sub / <= inc_icon
 		 * ```
@@ -220,7 +238,7 @@ namespace $ {
 		Inc() {
 			const obj = new this.$.$mol_button_minor()
 			
-			obj.event_click = (val?: any) => this.event_inc(val)
+			obj.event_click = (next?: any) => this.event_inc(next)
 			obj.enabled = () => this.inc_enabled()
 			obj.sub = () => [
 				this.inc_icon()

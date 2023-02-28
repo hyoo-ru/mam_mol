@@ -23,12 +23,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags / \checkbox
+		 * tags /
+		 * 	\checkbox
+		 * 	\switch
 		 * ```
 		 */
 		tags() {
 			return [
-				"checkbox"
+				"checkbox",
+				"switch"
 			] as readonly any[]
 		}
 		

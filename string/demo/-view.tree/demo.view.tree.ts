@@ -36,13 +36,15 @@ namespace $ {
 		 * 	\input
 		 * 	\string
 		 * 	\text
+		 * 	\field
 		 * ```
 		 */
 		tags() {
 			return [
 				"input",
 				"string",
-				"text"
+				"text",
+				"field"
 			] as readonly any[]
 		}
 		

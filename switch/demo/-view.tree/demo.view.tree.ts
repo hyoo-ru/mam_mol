@@ -26,12 +26,16 @@ namespace $ {
 		 * tags /
 		 * 	\switch
 		 * 	\option
+		 * 	\group
+		 * 	\radio
 		 * ```
 		 */
 		tags() {
 			return [
 				"switch",
-				"option"
+				"option",
+				"group",
+				"radio"
 			] as readonly any[]
 		}
 		

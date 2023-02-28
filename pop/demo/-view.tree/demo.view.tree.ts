@@ -34,6 +34,7 @@ namespace $ {
 		 * 	\menu
 		 * 	\align
 		 * 	\container
+		 * 	\modal
 		 * ```
 		 */
 		tags() {
@@ -44,7 +45,8 @@ namespace $ {
 				"popup",
 				"menu",
 				"align",
-				"container"
+				"container",
+				"modal"
 			] as readonly any[]
 		}
 		

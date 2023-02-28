@@ -3362,20 +3362,22 @@ declare namespace $ {
     class $mol_number extends $mol_view {
         precision_view(): number;
         precision_change(): number;
-        value(val?: any): number;
+        value_min(): number;
+        value_max(): number;
+        value(next?: any): number;
+        enabled(): boolean;
         sub(): readonly any[];
         precision(): number;
         type(): string;
         value_string(val?: any): string;
         hint(): string;
-        enabled(): boolean;
         string_enabled(): boolean;
         String(): $$.$mol_string;
-        event_dec(val?: any): any;
+        event_dec(next?: any): any;
         dec_enabled(): boolean;
         dec_icon(): $mol_icon_minus;
         Dec(): $mol_button_minor;
-        event_inc(val?: any): any;
+        event_inc(next?: any): any;
         inc_enabled(): boolean;
         inc_icon(): $mol_icon_plus;
         Inc(): $mol_button_minor;
@@ -3387,9 +3389,12 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_number extends $.$mol_number {
+        value_limited(next?: any): number;
         event_dec(next?: Event): void;
         event_inc(next?: Event): void;
         value_string(next?: string): string;
+        dec_enabled(): boolean;
+        inc_enabled(): boolean;
     }
 }
 
@@ -3614,6 +3619,43 @@ declare namespace $.$$ {
     class $mol_audio_demo_vibe extends $.$mol_audio_demo_vibe {
         shape(next?: $mol_audio_vibe_shape): $mol_audio_vibe_shape;
     }
+}
+
+declare namespace $ {
+    class $mol_avatar extends $mol_icon {
+        view_box(): string;
+        id(): string;
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    function $mol_hash_string(str: string, seed?: number): number;
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_avatar extends $.$mol_avatar {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_avatar_demo extends $mol_example_small {
+        title(): string;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        avatar_id(next?: any): string;
+        Avatar_id_value(): $$.$mol_string;
+        Avatar_id_label(): $mol_labeler;
+        Avatar(): $$.$mol_avatar;
+        Avatar_label(): $mol_labeler;
+    }
+}
+
+declare namespace $.$$ {
 }
 
 declare namespace $ {
@@ -6523,27 +6565,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_avatar extends $mol_icon {
-        view_box(): string;
-        id(): string;
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    function $mol_hash_string(str: string, seed?: number): number;
-}
-
-declare namespace $ {
-}
-
-declare namespace $.$$ {
-    class $mol_avatar extends $.$mol_avatar {
-        path(): string;
-    }
-}
-
-declare namespace $ {
     class $mol_infinite_demo extends $mol_example_large {
         title(): string;
         chunk_size(): number;
@@ -6802,6 +6823,28 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_link_lazy_demo extends $.$mol_link_lazy_demo {
         uri_generated(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_list_demo extends $mol_example_small {
+        sub(): readonly any[];
+        tags(): readonly any[];
+        items_сount(next?: any): number;
+        Items_count(): $$.$mol_number;
+        Items_count_label(): $mol_labeler;
+        item_title(id: any): string;
+        Item(id: any): $$.$mol_link;
+        list_items(): readonly any[];
+        List_empty(): $$.$mol_paragraph;
+        Items(): $$.$mol_list;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_list_demo extends $.$mol_list_demo {
+        item_title(id: number): string;
+        list_items(): $mol_link[];
     }
 }
 
@@ -7494,20 +7537,77 @@ declare namespace $ {
 declare namespace $ {
     class $mol_number_demo extends $mol_example_small {
         title(): string;
+        value(next?: any): number;
         sub(): readonly any[];
         tags(): readonly any[];
-        zero(): $$.$mol_number;
-        year(val?: any): number;
-        one(): $$.$mol_number;
-        two(): $$.$mol_number;
-        age(val?: any): number;
-        three(): $$.$mol_number;
-        four(): $$.$mol_number;
-        five(): $$.$mol_number;
-        six(): $$.$mol_number;
-        seven(): $$.$mol_number;
-        eight(): $$.$mol_number;
-        nine(): $$.$mol_number;
+        value_string(): string;
+        Value_string(): $$.$mol_string;
+        reset_enabled(): boolean;
+        reset_value(next?: any): any;
+        Reset(): $mol_button_major;
+        Section_value_bar(): $mol_bar;
+        Section_value_row(): $mol_row;
+        Section_value(): $mol_section;
+        Initial_number(): $$.$mol_number;
+        Initial_number_label(): $mol_labeler;
+        Hint_number(): $$.$mol_number;
+        Hint_number_label(): $mol_labeler;
+        Section_initial_row(): $mol_row;
+        Section_initial(): $mol_section;
+        Value_field_disabled_number(): $$.$mol_number;
+        Value_field_disabled_number_label(): $mol_labeler;
+        Disabled_number(): $$.$mol_number;
+        Disabled_number_label(): $mol_labeler;
+        Dec_disabled_number(): $$.$mol_number;
+        Dec_disabled_number_label(): $mol_labeler;
+        Inc_disabled_number(): $$.$mol_number;
+        Inc_disabled_number_label(): $mol_labeler;
+        Section_disabled_row(): $mol_row;
+        Section_disabled(): $mol_section;
+        Precision_change_10_number(): $$.$mol_number;
+        Precision_change_10_number_label(): $mol_labeler;
+        Precision_change_01_number(): $$.$mol_number;
+        Precision_change_01_number_label(): $mol_labeler;
+        Precision_100_number_number(): $$.$mol_number;
+        Precision_100_number_label(): $mol_labeler;
+        Precision_5_number_number(): $$.$mol_number;
+        Precision_5_number_label(): $mol_labeler;
+        Precision_01_number_number(): $$.$mol_number;
+        Precision_01_number_label(): $mol_labeler;
+        Precision_005_number_number(): $$.$mol_number;
+        Precision_005_number_label(): $mol_labeler;
+        Precision_view_001_number(): $$.$mol_number;
+        Precision_view_001_number_label(): $mol_labeler;
+        Precision_view_10_number(): $$.$mol_number;
+        Precision_view_10_number_label(): $mol_labeler;
+        Section_precision_row(): $mol_row;
+        Section_precision(): $mol_section;
+        value_min_0(next?: any): number;
+        Min_0_number(): $$.$mol_number;
+        Min_0_number_label(): $mol_labeler;
+        value_max_100(next?: any): number;
+        Max_100_number(): $$.$mol_number;
+        Max_100_number_label(): $mol_labeler;
+        value_case1_range(next?: any): number;
+        Range_case1_number(): $$.$mol_number;
+        Range_number_case1_label(): $mol_labeler;
+        value_case2_range(next?: any): any;
+        Range_case2_number(): $$.$mol_number;
+        Range_number_case2_label(): $mol_labeler;
+        value_case3_range(next?: any): any;
+        Range_case3_number(): $$.$mol_number;
+        Range_number_case3_label(): $mol_labeler;
+        Section_range_row(): $mol_row;
+        Section_range(): $mol_section;
+        Rows(): $$.$mol_list;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_number_demo extends $.$mol_number_demo {
+        value_string(): string;
+        reset_value(): void;
+        reset_enabled(): boolean;
     }
 }
 
@@ -8782,6 +8882,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_example_code extends $mol_example {
         sub(): readonly any[];
+        tags(): readonly any[];
         code(next?: any): string;
         Sandbox(): $$.$hyoo_js_eval;
     }
@@ -8991,6 +9092,7 @@ declare namespace $ {
     class $mol_lights_demo extends $mol_example_small {
         title(): string;
         sub(): readonly any[];
+        tags(): readonly any[];
         Theme(): $$.$mol_theme_auto;
         Lighter(): $$.$mol_lights_toggle;
         Sample(): $mol_view;

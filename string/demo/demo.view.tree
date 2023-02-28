@@ -17,4 +17,5 @@ $mol_string_demo $mol_example_small
 		\input
 		\string
 		\text
+		\field
 
