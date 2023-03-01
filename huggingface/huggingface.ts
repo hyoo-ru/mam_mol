@@ -8,7 +8,7 @@ namespace $ {
 		this: $,
 		space: string,
 		method: string | number,
-		... data: readonly string[]
+		... data: readonly any[]
 	) {
 		
 		if( typeof method === 'number' ) {
@@ -28,7 +28,7 @@ namespace $ {
 	export function $mol_huggingface_async(
 		space: string,
 		method: number,
-		... data: readonly string[]
+		... data: readonly any[]
 	) {
 		
 		const session_hash = $mol_guid()
@@ -37,7 +37,13 @@ namespace $ {
 		
 		const promise = new Promise<[ string ]>( ( done, fail )=> {
 			
-			socket.onerror = socket.onclose = fail
+			socket.onclose = event => {
+				if( event.reason ) fail( new Error( event.reason ) )
+			}
+		
+			socket.onerror = event => {
+				fail( new Error( 'Scoket error' ) )
+			}
 		
 			socket.onmessage = event => {
 				
@@ -55,7 +61,11 @@ namespace $ {
 					case 'process_starts': return
 				
 					case 'process_completed':
-						return done( message.output.data )
+						if( message.success ) {
+							return done( message.output.data )
+						} else {
+							return fail( new Error( message.output.error ?? 'Unknown api error' ) )
+						}
 					
 					default:
 						fail( new Error( `Unknown message type ${ message.msg }` ) )
