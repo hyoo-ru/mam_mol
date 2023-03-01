@@ -343,6 +343,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * enter \enter
+		 * ```
+		 */
+		enter() {
+			return "enter"
+		}
+		
+		/**
+		 * ```tree
 		 * field *
 		 * 	^
 		 * 	scrollTop 0

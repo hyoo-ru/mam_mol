@@ -46,6 +46,7 @@ $mol_string $mol_view
 		selectionEnd <= selection_end 0
 		selectionStart <= selection_start 0
 		inputMode <= keyboard \text
+		enterkeyhint <= enter \go
 	attr *
 		^
 		maxlength <= length_max +Infinity
@@ -361,6 +362,7 @@ $mol_search $mol_pop
 				hint <= hint @ \Search...
 				submit?event <=> submit?event null
 				enabled <= enabled true
+				enter <= enter \search
 				bring => bring
 			<= Clear $mol_button_minor
 				hint @ \Clear

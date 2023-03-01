@@ -76,6 +76,7 @@ namespace $ {
 		 * 	selectionEnd <= selection_end
 		 * 	selectionStart <= selection_start
 		 * 	inputMode <= keyboard
+		 * 	enterkeyhint <= enter
 		 * ```
 		 */
 		field() {
@@ -88,7 +89,8 @@ namespace $ {
 				autocomplete: this.autocomplete_native(),
 				selectionEnd: this.selection_end(),
 				selectionStart: this.selection_start(),
-				inputMode: this.keyboard()
+				inputMode: this.keyboard(),
+				enterkeyhint: this.enter()
 			}
 		}
 		
@@ -232,6 +234,15 @@ namespace $ {
 		 */
 		keyboard() {
 			return "text"
+		}
+		
+		/**
+		 * ```tree
+		 * enter \go
+		 * ```
+		 */
+		enter() {
+			return "go"
 		}
 		
 		/**
