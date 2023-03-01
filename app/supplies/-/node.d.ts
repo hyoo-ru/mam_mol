@@ -2365,6 +2365,7 @@ declare namespace $ {
         hint(): string;
         submit(event?: any): any;
         enabled(): boolean;
+        keyboard(): string;
         enter(): string;
         bring(): void;
         Query(): $$.$mol_string;

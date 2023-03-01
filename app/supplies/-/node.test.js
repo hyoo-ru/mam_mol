@@ -7958,6 +7958,9 @@ var $;
         enabled() {
             return true;
         }
+        keyboard() {
+            return "search";
+        }
         enter() {
             return "search";
         }
@@ -7970,6 +7973,7 @@ var $;
             obj.hint = () => this.hint();
             obj.submit = (event) => this.submit(event);
             obj.enabled = () => this.enabled();
+            obj.keyboard = () => this.keyboard();
             obj.enter = () => this.enter();
             return obj;
         }

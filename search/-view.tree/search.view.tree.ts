@@ -205,6 +205,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * keyboard \search
+		 * ```
+		 */
+		keyboard() {
+			return "search"
+		}
+		
+		/**
+		 * ```tree
 		 * enter \search
 		 * ```
 		 */
@@ -228,6 +237,7 @@ namespace $ {
 		 * 	hint <= hint
 		 * 	submit?event <=> submit?event
 		 * 	enabled <= enabled
+		 * 	keyboard <= keyboard
 		 * 	enter <= enter
 		 * 	bring => bring
 		 * ```
@@ -240,6 +250,7 @@ namespace $ {
 			obj.hint = () => this.hint()
 			obj.submit = (event?: any) => this.submit(event)
 			obj.enabled = () => this.enabled()
+			obj.keyboard = () => this.keyboard()
 			obj.enter = () => this.enter()
 			
 			return obj

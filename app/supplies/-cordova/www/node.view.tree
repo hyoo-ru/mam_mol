@@ -362,6 +362,7 @@ $mol_search $mol_pop
 				hint <= hint @ \Search...
 				submit?event <=> submit?event null
 				enabled <= enabled true
+				keyboard <= keyboard \search
 				enter <= enter \search
 				bring => bring
 			<= Clear $mol_button_minor
