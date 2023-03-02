@@ -15,8 +15,3 @@
 [mol_number_string]::-webkit-inner-spin-button {
 	display: none;
 }
-
-[mol_number_inc][disabled],
-[mol_number_dec][disabled] {
-	visibility: hidden;
-}

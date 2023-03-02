@@ -64,6 +64,7 @@ $mol_textarea $mol_stack
 
 $mol_textarea_edit $mol_string
 	dom_name \textarea
+	enter \enter
 	field *
 		^
 		scrollTop 0
