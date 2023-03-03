@@ -4638,7 +4638,7 @@ var $;
         mods({ path, exclude }) {
             const parent = $mol_file.absolute(path);
             const mods = [];
-            parent.sub().forEach(child => {
+            parent.sub().slice().sort((a, b) => a.name().length - b.name().length).forEach(child => {
                 const name = child.name();
                 if (!/^[a-z0-9]/i.test(name))
                     return false;

@@ -134,7 +134,7 @@ namespace $ {
 			const parent = $mol_file.absolute( path )
 			const mods : $mol_file[] = []
 			
-			parent.sub().forEach(
+			parent.sub().slice().sort( ( a, b )=> a.name().length - b.name().length ).forEach(
 				child => {
 					
 					const name = child.name()

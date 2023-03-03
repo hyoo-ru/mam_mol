@@ -50,6 +50,8 @@ $mol_paragraph $mol_view
 	row_width 0
 	sub / <= title
 
+$mol_stack $mol_view
+
 $mol_dimmer $mol_paragraph
 	haystack \
 	needle \
@@ -92,8 +94,6 @@ $mol_text_code_row $mol_paragraph
 		needle <= highlight \
 		uri <= token_uri* \
 	find_pos* null
-
-$mol_stack $mol_view
 
 $mol_speck $mol_view
 	attr *
@@ -468,20 +468,6 @@ $mol_text_span $mol_paragraph
 
 $mol_row $mol_view
 
-$mol_app_quine $mol_page
-	title @ \Quine - Application that prints self sources
-	body /
-		<= Content $mol_row
-			sub /
-				<= Text $mol_text
-					text <= content \
-	-
-	paths /
-		\mol/app/quine/quine.view.tree
-		\mol/app/quine/quine.view.ts
-		\mol/app/quine/index.html
-		\mol/app/quine/quine.locale=ru.json
-
 $mol_text_list $mol_text
 	auto_scroll null
 	attr *
@@ -495,3 +481,17 @@ $mol_text_list_item $mol_paragraph
 	attr *
 		^
 		mol_text_list_item_index <= index 0
+
+$mol_app_quine $mol_page
+	title @ \Quine - Application that prints self sources
+	body /
+		<= Content $mol_row
+			sub /
+				<= Text $mol_text
+					text <= content \
+	-
+	paths /
+		\mol/app/quine/quine.view.tree
+		\mol/app/quine/quine.view.ts
+		\mol/app/quine/index.html
+		\mol/app/quine/quine.locale=ru.json

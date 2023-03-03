@@ -56,6 +56,8 @@ $mol_paragraph $mol_view
 	row_width 0
 	sub / <= title
 
+$mol_stack $mol_view
+
 $mol_dimmer $mol_paragraph
 	haystack \
 	needle \
@@ -98,8 +100,6 @@ $mol_text_code_row $mol_paragraph
 		needle <= highlight \
 		uri <= token_uri* \
 	find_pos* null
-
-$mol_stack $mol_view
 
 $mol_speck $mol_view
 	attr *
