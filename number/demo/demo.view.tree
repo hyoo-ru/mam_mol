@@ -126,12 +126,42 @@ $mol_number_demo $mol_example_small
 			<= Section_range $mol_section
 				title \Range
 				content / <= Section_range_row $mol_row sub /
+					<= Min_m5_number_label $mol_labeler
+						title \Min value -5
+						content /
+							<= Min_m5_number $mol_number
+								value? <=> value_min_m5? +NaN
+								value_min -5
 					<= Min_0_number_label $mol_labeler
 						title \Min value 0
 						content /
 							<= Min_0_number $mol_number
 								value? <=> value_min_0? +NaN
 								value_min 0
+					<= Min_5_number_label $mol_labeler
+						title \Min value 5
+						content /
+							<= Min_5_number $mol_number
+								value? <=> value_min_5? +NaN
+								value_min 5
+					<= Max_m5_number_label $mol_labeler
+						title \Max value -5
+						content /
+							<= Max_m5_number $mol_number
+								value? <=> value_max_m5? +NaN
+								value_max -5
+					<= Max_0_number_label $mol_labeler
+						title \Max value 0
+						content /
+							<= Max_0_number $mol_number
+								value? <=> value_max_0? +NaN
+								value_max 0
+					<= Max_5_number_label $mol_labeler
+						title \Max value 5
+						content /
+							<= Max_5_number $mol_number
+								value? <=> value_max_5? +NaN
+								value_max 5
 					<= Max_100_number_label $mol_labeler
 						title \Max value 100
 						content /
