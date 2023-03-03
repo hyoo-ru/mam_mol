@@ -24,7 +24,9 @@ namespace $ {
 
 			self.addEventListener( 'fetch' , ( event : any )=> {
 				
-				if( blacklist.has( event.request.url.replace( /^https?:/, '' ) ) ) {
+				const request = event.request as Request
+				
+				if( blacklist.has( request.url.replace( /^https?:/, '' ) ) ) {
 					return event.respondWith(
 						new Response(
 							null,
@@ -36,8 +38,8 @@ namespace $ {
 					)
 				}
 				
-				if( event.request.method !== 'GET' ) {
-					return event.respondWith( fetch( event.request ) )
+				if( request.method !== 'GET' || !/^https?:/.test( request.url ) ) {
+					return event.respondWith( fetch( request ) )
 				}
 				
 				const fresh = fetch( event.request ).then( response => {
