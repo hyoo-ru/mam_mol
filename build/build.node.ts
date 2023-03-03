@@ -1572,6 +1572,13 @@ namespace $ {
 		return depends
 	}
 	
+	// $mol_build.dependors[ 'test.ts' ] = source => {
+	// 	var ts = './' + source.name().replace( /\.test\./ , '.' )
+	// 	var depends : { [ index : string ] : number } = { [ ts ] : 0 }
+	// 	$mol_build_depsMerge( depends , $mol_build.dependors[ 'ts' ]!( source ) )
+	// 	return depends
+	// }
+	
 	$mol_build.dependors[ 'view.ts' ] = source => {
 		var treeName = './' + source.name().replace( /ts$/ , 'tree' )
 		var depends : { [ index : string ] : number } = { [ treeName ] : 0 }

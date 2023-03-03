@@ -6470,6 +6470,9 @@ var $;
 //mol/link/-view.tree/link.view.tree.ts
 ;
 "use strict";
+//mol/state/arg/arg.ts
+;
+"use strict";
 var $;
 (function ($) {
     $.$mol_action = $mol_wire_method;

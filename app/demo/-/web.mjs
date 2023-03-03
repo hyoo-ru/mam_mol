@@ -4931,6 +4931,9 @@ var $;
 //mol/theme/auto/-view.tree/auto.view.tree.ts
 ;
 "use strict";
+//mol/state/arg/arg.ts
+;
+"use strict";
 var $;
 (function ($) {
     class $mol_state_arg extends $mol_object {
