@@ -9,6 +9,14 @@ namespace $.$$ {
 			return val.length > 8 ? '____-__-__ __:__' : '____-__-__ '
 		}
 
+		override input_content() {
+			return [
+				this.Today(),
+				this.Input(),
+				... this.value() ? [ this.Clear() ] : [],
+			]
+		}
+
 		@ $mol_mem
 		value( val? : string ) {
 			
@@ -22,6 +30,16 @@ namespace $.$$ {
 			this.value_moment( moment2! )
 			
 			return val
+		}
+
+		override clear() {
+			
+			this.value( '' )
+
+			this.Input().focused( true )
+
+			this.Input().selection( [ 0 , 0 ] )
+
 		}
 
 		@ $mol_mem
@@ -61,6 +79,18 @@ namespace $.$$ {
 		
 		next() {
 			this.month_moment( this.month_moment().shift({ month : +1 }) )
+		}
+		
+		@ $mol_mem
+		override today_enabled() {
+			return (
+				!this.value() || 
+				this.value() !== new $mol_time_moment().toString( 'YYYY-MM-DD hh:mm' )
+			)
+		}
+
+		override today_click() {
+			this.value_moment( new $mol_time_moment() )
 		}
 		
  	}
