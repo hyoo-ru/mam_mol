@@ -92,11 +92,7 @@ namespace $.$$ {
 		}
 
 		override today_click() {
-			this.value( 
-				new $mol_time_moment().toString(
-					this.value_today()
-				) 
-			)
+			this.value( this.value_today() )
 		}
 		
  	}
