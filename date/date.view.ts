@@ -32,20 +32,25 @@ namespace $.$$ {
 			return val
 		}
 
-		override clear() {
-			
-			this.value( '' )
-
-			this.Input().focused( true )
-
-			this.Input().selection( [ 0 , 0 ] )
-
-		}
-
 		@ $mol_mem
 		value_moment( val? : $mol_time_moment ) {
 			const stamp = this.value_number( val && val.valueOf() )
 			return isNaN( stamp ) ? null! : new $mol_time_moment( stamp )
+		}
+
+		@ $mol_mem
+		value_today() {
+			const val = this.value().trimEnd()
+
+			return new $mol_time_moment().toString(
+				val.length > 10 ? 'YYYY-MM-DD hh:mm' : 'YYYY-MM-DD' 
+			)
+		}
+
+		override clear() {
+			this.value( '' )
+			this.Input().focused( true )
+			this.Input().selection( [ 0 , 0 ] )
 		}
 
 		@ $mol_mem
@@ -83,14 +88,15 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		override today_enabled() {
-			return (
-				!this.value() || 
-				this.value() !== new $mol_time_moment().toString( 'YYYY-MM-DD hh:mm' )
-			)
+			return this.value() !== this.value_today()
 		}
 
 		override today_click() {
-			this.value_moment( new $mol_time_moment() )
+			this.value( 
+				new $mol_time_moment().toString(
+					this.value_today()
+				) 
+			)
 		}
 		
  	}
