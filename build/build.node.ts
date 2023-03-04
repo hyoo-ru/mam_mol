@@ -134,7 +134,7 @@ namespace $ {
 			const parent = $mol_file.absolute( path )
 			const mods : $mol_file[] = []
 			
-			parent.sub().forEach(
+			parent.sub().slice().sort( ( a, b )=> a.name().length - b.name().length ).forEach(
 				child => {
 					
 					const name = child.name()
@@ -1571,6 +1571,13 @@ namespace $ {
 		
 		return depends
 	}
+	
+	// $mol_build.dependors[ 'test.ts' ] = source => {
+	// 	var ts = './' + source.name().replace( /\.test\./ , '.' )
+	// 	var depends : { [ index : string ] : number } = { [ ts ] : 0 }
+	// 	$mol_build_depsMerge( depends , $mol_build.dependors[ 'ts' ]!( source ) )
+	// 	return depends
+	// }
 	
 	$mol_build.dependors[ 'view.ts' ] = source => {
 		var treeName = './' + source.name().replace( /ts$/ , 'tree' )
