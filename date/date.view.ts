@@ -39,12 +39,8 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		value_today() {
-			const val = this.value().trimEnd()
-
-			return new $mol_time_moment().toString(
-				val.length > 10 ? 'YYYY-MM-DD hh:mm' : 'YYYY-MM-DD' 
-			)
+		value_moment_today() {
+			return new $mol_time_moment().mask( this.value() )
 		}
 
 		override clear() {
@@ -88,11 +84,12 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		override today_enabled() {
-			return this.value() !== this.value_today()
+			const val = this.value_moment()
+			return !val || val.valueOf() !== this.value_moment_today().valueOf()
 		}
 
 		override today_click() {
-			this.value( this.value_today() )
+			this.value_moment( this.value_moment_today() )
 		}
 		
  	}
