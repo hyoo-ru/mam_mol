@@ -1,7 +1,7 @@
 namespace $ {
 	
 	const { begin, end, latin_only: letter, optional, repeat_greedy } = $mol_regexp
-	
+
 	export let $mol_view_tree2_prop_signature = $mol_regexp.from([
 		begin,
 		{ name: repeat_greedy( letter, 1 ) },

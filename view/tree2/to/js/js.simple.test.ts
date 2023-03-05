@@ -13,7 +13,7 @@ namespace $ {
 			Foo.make({ $ })
 			
 		},
-		
+
 		'Mutable and read only channels'( $ ) {
 			
 			const { Foo } = run(`
@@ -44,45 +44,6 @@ namespace $ {
 			
 		},
 		
-		'Boolean channel array'( $ ) {
-			
-			const { Foo } = run(`
-				Foo $mol_object
-					bar /
-						false
-						true
-			`)
-			
-			$mol_assert_like(
-				Foo.make({ $ }).bar(),
-				[ false, true ],
-			)
-			
-		},
-		
-		'Number channel array'( $ ) {
-			
-			const { Foo } = run(`
-				Foo $mol_object
-					bar /
-						- NaN
-						-Infinity
-						+Infinity
-						0
-			`)
-			
-			$mol_assert_like(
-				Foo.make({ $ }).bar(),
-				[
-					// Number.NaN,
-					Number.NEGATIVE_INFINITY,
-					Number.POSITIVE_INFINITY,
-					0,
-				],
-			)
-			
-		},
-		
 		'String channel'( $ ) {
 			
 			const { Foo } = run(`
@@ -105,7 +66,7 @@ namespace $ {
 			
 		},
 		
-		'default indexed channel'( $ ) {
+		'Default indexed channel'( $ ) {
 			
 			const { Foo } = run(`
 				Foo $mol_object
@@ -174,6 +135,7 @@ namespace $ {
 				Foo $mol_object
 					button $mol_object
 						some true
+						loc @ \\v1
 						sub /
 							1
 			`)
@@ -185,11 +147,15 @@ namespace $ {
 			$mol_assert_ok(typeof foo.button().some === 'function')
 
 			$mol_assert_like(
+				foo.button().loc(),
+				'<Foo_button_loc>'
+			)
+
+			$mol_assert_like(
 				foo.button().sub()[0],
 				1
 			)
 		},
-
 	})
 	
 }

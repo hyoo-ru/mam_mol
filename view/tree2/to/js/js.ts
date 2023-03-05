@@ -26,11 +26,13 @@ namespace $ {
 		const { key, next } = prop_parts(prop)
 		
 		return prop.struct( '(,)', [
-			... key ? [ prop.data( key.length > 1 ? key.slice(1) : 'id' ) ] : [],
+			... key ? [ prop.struct( key.length > 1 ? key.slice(1) : 'id' ) ] : [],
 			... ( bidi && next ) ? [ prop.struct( 'next' ) ] : [],
 		] )
 		
 	}
+
+	type Context = { chain?: string[] }
 	
 	const localized_string = $$.$mol_tree2_from_string(`
 		()
@@ -73,11 +75,16 @@ namespace $ {
 		
 		if( next ) addons.push( decorate() )
 		
-		const val = prop.hack({
+		const val = prop.hack<Context>({
 			
-			'@': ( locale, belt )=> localized_string.hack({
-				'#key': key => [ locale.data( `${ klass.type }_${ name }` ) ],
-			}),
+			'@': ( locale, belt, context )=> {
+				const chain = context.chain?.join('_')
+
+				return localized_string.hack({
+					'#key': key => [ locale.data( `${ klass.type }_${ name }${
+						chain ? `_${chain}` : ''}` ) ],
+				})
+			},
 			
 			'<=': bind => [
 				bind.struct( '()', [
@@ -104,30 +111,30 @@ namespace $ {
 			'^': ( ref )=> [
 				ref.struct( '...', [
 					ref.struct( '()', [
-						ref.struct( 'super' ),
+						ref.struct( ref.kids[0]?.type ? 'this' : 'super' ),
 						ref.struct( '[]', [
-							ref.data( name ),
+							ref.data( ref.kids[0]?.type ?? name ),
 						] ),
 						ref.struct( '(,)' )
 					]),
 				] ),
 			],
 			
-			'*': ( obj, belt )=> [
+			'*': ( obj, belt, context )=> [
 				
 				obj.struct('{,}',
 					obj.kids.map( field => {
 						
 						if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
-						
+						const field_name = field.type.replace(/\?\w*$/, '')
 						return field.struct( ':', [
-							field.data( name_of( field ) ),
+							field.data( field_name ),
 							field.kids[0].type === '<=>'
 								? field.struct( '=>', [
 									params_of( field ),
 									... field.hack( belt ),
 								] )
-								: field.hack( belt )[0],
+								: field.hack<Context>( belt, {... context, chain: [...context.chain ?? [], field_name] })[0],
 						] )
 						
 					} ).filter( this.$mol_guard_defined )
@@ -153,9 +160,7 @@ namespace $ {
 						
 						const oname = name_of( over )
 						const bind = over.kids[0]
-						
 						if( bind.type === '@' ) {
-							
 							overrides.push(
 								over.struct( '=', [
 									over.struct( '()', [
@@ -185,6 +190,10 @@ namespace $ {
 										over.struct( 'return', [
 											over.struct( '()', [
 												over.struct( 'this' ),
+												over.struct( '[]', [
+													over.data( name ),
+												] ),
+												args_of( prop ),
 												over.struct( '[]', [
 													over.data( oname ),
 												] ),
@@ -220,7 +229,13 @@ namespace $ {
 						input.struct( 'const', [
 							input.struct( 'obj' ),
 							input.struct( 'new', [
-								input.struct( input.type ),
+								input.struct( 'this' ),
+								input.struct('[]', [
+									input.data( '$' ),
+								]),
+								input.struct('[]', [
+									input.data( input.type ),
+								]),
 								input.struct( '(,)', input.select( '/', null ).hack( belt ) ),
 							] ),
 						] ),
