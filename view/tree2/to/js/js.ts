@@ -126,7 +126,7 @@ namespace $ {
 					obj.kids.map( field => {
 						
 						if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
-						const field_name = field.type.replace('?', '')
+						const field_name = field.type.replace(/\?\w*$/, '')
 						return field.struct( ':', [
 							field.data( field_name ),
 							field.kids[0].type === '<=>'
