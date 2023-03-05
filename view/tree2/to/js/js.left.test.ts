@@ -113,6 +113,10 @@ namespace $ {
 				foo.a(),
 				1
 			)
+			$mol_assert_unique(
+				foo.a(2),
+				foo.c()
+			)
 		},
 
 

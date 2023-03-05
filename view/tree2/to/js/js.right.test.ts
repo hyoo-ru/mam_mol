@@ -11,7 +11,7 @@ namespace $ {
 				Bar $mol_object
 					Obj Foo
 						a*? => b*?
-			`, $)
+			`)
 
 			const { Bar } = $2
 			
@@ -31,7 +31,7 @@ namespace $ {
 				Bar $mol_object
 					foo <= Cls Foo
 						a => b
-			`, $)
+			`)
 
 			const { Bar } = $2
 			
@@ -57,7 +57,7 @@ namespace $ {
 				Bar $mol_object
 					Cls* Foo
 						a => b*
-			`, $)
+			`)
 
 			const { Bar } = $2
 			
@@ -73,8 +73,8 @@ namespace $ {
 				{ some: 123 }
 			)
 
-			$mol_assert_not(
-				bar.Cls(1).a() === bar.b(2)
+			$mol_assert_unique(
+				bar.Cls(1).a(), bar.b(2)
 			)
 		}
 

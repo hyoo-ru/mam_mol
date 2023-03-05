@@ -98,7 +98,6 @@ namespace $ {
 					bar *
 						$a 1
 						b-t *
-						c()[] *
 			`)
 			
 			$mol_assert_like(
@@ -106,7 +105,6 @@ namespace $ {
 				{
 					'$a': 1,
 					'b-t': {},
-					'c()[]': {},
 				},
 			)
 			

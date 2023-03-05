@@ -1,8 +1,8 @@
 namespace $ {
 	
-	const { begin, end, latin_only: letter, optional, repeat_greedy } = $mol_regexp
+	const { begin, end, char_only, latin_only: letter, optional, repeat_greedy } = $mol_regexp
 
-	const name = $mol_regexp.from( /[\w\.\-$()\[\]]/gsu )
+	const name = char_only( letter, '$-' )
 
 	export let $mol_view_tree2_prop_signature = $mol_regexp.from([
 		begin,

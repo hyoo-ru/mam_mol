@@ -64,7 +64,10 @@ namespace $ {
 							nul null
 			`)
 
-			$mol_assert_like(Foo.make({ $ }).complex(), [ [ 'test1' ], { str: 'some', nul: null } ])
+			$mol_assert_like(
+				Foo.make({ $ }).complex(),
+				[ [ 'test1' ], { str: 'some', nul: null } ]
+			)
 
 		},
 

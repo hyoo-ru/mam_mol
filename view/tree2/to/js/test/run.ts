@@ -10,10 +10,10 @@ namespace $ {
 		$mol_tree2_text_to_string_mapped_js,
 	).bind( $ )
 
-	export function $mol_view_tree2_to_js_test_run( tree: string, ctx?: typeof $$ ): any {
+	export function $mol_view_tree2_to_js_test_run( tree: string ): any {
 		class $mol_object3 extends $mol_object {
 		}
-		const $ = { ...ctx, $mol_object: $mol_object3, js: '', js_node: undefined as undefined | $mol_tree2 }
+		const $ = { $mol_object: $mol_object3, js: '', js_node: undefined as undefined | $mol_tree2 }
 		$mol_object3[$mol_ambient_ref] = $
 		const js_node = compile( tree )
 		const js = compile2( js_node )
