@@ -2729,7 +2729,9 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_section extends $mol_list {
+        level(): number;
         rows(): readonly any[];
+        title_dom_name(): string;
         Title(): $$.$mol_paragraph;
         tools(): readonly any[];
         Tools(): $mol_view;
@@ -2737,6 +2739,12 @@ declare namespace $ {
         Head(): $mol_view;
         content(): readonly any[];
         Content(): $$.$mol_list;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_section extends $.$mol_section {
+        title_dom_name(): string;
     }
 }
 
@@ -2807,14 +2815,14 @@ declare namespace $ {
         attachments(): readonly string[];
         attach_new(val?: any): any;
         Attach(): $$.$mol_attach;
-        Attach_section(): $mol_section;
+        Attach_section(): $$.$mol_section;
         positions_title(): string;
         cost(): $mol_unit_money;
         Cost_value(): $$.$mol_cost;
         positions_head(): readonly any[];
         positions(): readonly $mol_view[];
         Positions(): $$.$mol_list;
-        Positions_section(): $mol_section;
+        Positions_section(): $$.$mol_section;
         Content(): $$.$mol_list;
         approved(val?: any): boolean;
         approved_title(): string;

@@ -3,6 +3,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * level 1
+		 * ```
+		 */
+		level() {
+			return 1
+		}
+		
+		/**
+		 * ```tree
 		 * rows /
 		 * 	<= Head
 		 * 	<= Content
@@ -17,13 +26,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Title $mol_paragraph title <= title
+		 * title_dom_name \h1
+		 * ```
+		 */
+		title_dom_name() {
+			return "h1"
+		}
+		
+		/**
+		 * ```tree
+		 * Title $mol_paragraph
+		 * 	dom_name <= title_dom_name
+		 * 	title <= title
 		 * ```
 		 */
 		@ $mol_mem
 		Title() {
 			const obj = new this.$.$mol_paragraph()
 			
+			obj.dom_name = () => this.title_dom_name()
 			obj.title = () => this.title()
 			
 			return obj

@@ -532,13 +532,17 @@ $mol_attach $mol_view
 				title \
 				uri <= item_uri* \
 
-$mol_section $mol_list rows /
-	<= Head $mol_view
-		sub <= head /
-			<= Title $mol_paragraph title <= title
-			<= Tools $mol_view sub <= tools /
-	<= Content $mol_list
-		rows <= content /
+$mol_section $mol_list
+	level 1
+	rows /
+		<= Head $mol_view
+			sub <= head /
+				<= Title $mol_paragraph
+					dom_name <= title_dom_name \h1
+					title <= title
+				<= Tools $mol_view sub <= tools /
+		<= Content $mol_list
+			rows <= content /
 
 $mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
 

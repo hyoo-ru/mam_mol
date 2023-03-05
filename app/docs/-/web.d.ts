@@ -3547,7 +3547,9 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_section extends $mol_list {
+        level(): number;
         rows(): readonly any[];
+        title_dom_name(): string;
         Title(): $$.$mol_paragraph;
         tools(): readonly any[];
         Tools(): $mol_view;
@@ -3555,6 +3557,12 @@ declare namespace $ {
         Head(): $mol_view;
         content(): readonly any[];
         Content(): $$.$mol_list;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_section extends $.$mol_section {
+        title_dom_name(): string;
     }
 }
 
@@ -3586,7 +3594,7 @@ declare namespace $ {
         Stats(): $$.$mol_text;
         delta_view(): {};
         Delta(): $$.$mol_grid;
-        Delta_section(): $mol_section;
+        Delta_section(): $$.$mol_section;
     }
 }
 
@@ -7763,13 +7771,13 @@ declare namespace $ {
         Reset(): $mol_button_major;
         Section_value_bar(): $mol_bar;
         Section_value_row(): $mol_row;
-        Section_value(): $mol_section;
+        Section_value(): $$.$mol_section;
         Initial_number(): $$.$mol_number;
         Initial_number_label(): $mol_labeler;
         Hint_number(): $$.$mol_number;
         Hint_number_label(): $mol_labeler;
         Section_initial_row(): $mol_row;
-        Section_initial(): $mol_section;
+        Section_initial(): $$.$mol_section;
         Value_field_disabled_number(): $$.$mol_number;
         Value_field_disabled_number_label(): $mol_labeler;
         Disabled_number(): $$.$mol_number;
@@ -7779,7 +7787,7 @@ declare namespace $ {
         Inc_disabled_number(): $$.$mol_number;
         Inc_disabled_number_label(): $mol_labeler;
         Section_disabled_row(): $mol_row;
-        Section_disabled(): $mol_section;
+        Section_disabled(): $$.$mol_section;
         Precision_change_10_number(): $$.$mol_number;
         Precision_change_10_number_label(): $mol_labeler;
         Precision_change_01_number(): $$.$mol_number;
@@ -7797,7 +7805,7 @@ declare namespace $ {
         Precision_view_10_number(): $$.$mol_number;
         Precision_view_10_number_label(): $mol_labeler;
         Section_precision_row(): $mol_row;
-        Section_precision(): $mol_section;
+        Section_precision(): $$.$mol_section;
         value_min_m5(next?: any): number;
         Min_m5_number(): $$.$mol_number;
         Min_m5_number_label(): $mol_labeler;
@@ -7829,7 +7837,7 @@ declare namespace $ {
         Range_case3_number(): $$.$mol_number;
         Range_number_case3_label(): $mol_labeler;
         Section_range_row(): $mol_row;
-        Section_range(): $mol_section;
+        Section_range(): $$.$mol_section;
         Rows(): $$.$mol_list;
     }
 }
@@ -8315,7 +8323,7 @@ declare namespace $ {
         sub(): readonly any[];
         tags(): readonly any[];
         Section_content(): $mol_filler;
-        Section(): $mol_section;
+        Section(): $$.$mol_section;
     }
 }
 
