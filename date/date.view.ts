@@ -1,11 +1,11 @@
 namespace $.$$ {
- 	export class $mol_date extends $.$mol_date {
-		 
+	export class $mol_date extends $.$mol_date {
+
 		trigger_content() {
 			return [ this.value_moment()?.toString( 'YYYY-MM-DD hh:mm' ) ?? this.Icon() ]
 		}
-		
-		input_mask( val: string ) {
+
+		input_mask( val : string ) {
 			return val.length > 8 ? '____-__-__ __:__' : '____-__-__ '
 		}
 
@@ -19,16 +19,16 @@ namespace $.$$ {
 
 		@ $mol_mem
 		value( val? : string ) {
-			
+
 			const moment = this.value_moment()
-			
+
 			if( val === undefined ) return moment?.toString( 'YYYY-MM-DD hh:mm' ) ?? ''
-				
+
 			const moment2 = $mol_try( ()=> val && new $mol_time_moment( val ) ) || null
 			if( moment2 instanceof Error ) return val
-			
+
 			this.value_moment( moment2! )
-			
+
 			return val
 		}
 
@@ -40,7 +40,9 @@ namespace $.$$ {
 
 		@ $mol_mem
 		value_moment_today() {
-			return new $mol_time_moment().mask( this.value() )
+			return this.value()
+				? new $mol_time_moment().mask( this.value() )
+				: new $mol_time_moment()
 		}
 
 		override clear() {
@@ -54,11 +56,11 @@ namespace $.$$ {
 
 			if( next ) return next
 
-			let moment = $mol_try( ()=> new $mol_time_moment( this.value() ) ) 
+			let moment = $mol_try( ()=> new $mol_time_moment( this.value() ) )
 			if( moment instanceof Error || !moment.year ) return new $mol_time_moment
 
 			if( moment.month === undefined ) {
-				moment = moment.merge({ month : 0 })
+				moment = moment.merge( { month: 0 } )
 			}
 
 			return moment
@@ -75,13 +77,13 @@ namespace $.$$ {
 		}
 
 		prev() {
-			this.month_moment( this.month_moment().shift({ month : -1 }) )
+			this.month_moment( this.month_moment().shift( { month : -1 } ) )
 		}
-		
+
 		next() {
-			this.month_moment( this.month_moment().shift({ month : +1 }) )
+			this.month_moment( this.month_moment().shift( { month : +1 } ) )
 		}
-		
+
 		@ $mol_mem
 		override today_enabled() {
 			const val = this.value_moment()
@@ -91,7 +93,7 @@ namespace $.$$ {
 		override today_click() {
 			this.value_moment( this.value_moment_today() )
 		}
-		
- 	}
+
+	}
 
 }
