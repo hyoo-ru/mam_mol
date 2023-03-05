@@ -15,7 +15,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		video_preview() {
-			return `https://i.ytimg.com/vi_webp/${ this.video_id() }/hq720.webp`
+			return `https://i.ytimg.com/vi/${ this.video_id() }/hqdefault.jpg`
 		}
 		
 		@ $mol_mem
