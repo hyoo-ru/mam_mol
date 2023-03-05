@@ -16,13 +16,13 @@ namespace $ {
 		/**
 		 * ```tree
 		 * bubble_content /
-		 * 	<= Input
+		 * 	<= Input_row
 		 * 	<= Calendar
 		 * ```
 		 */
 		bubble_content() {
 			return [
-				this.Input(),
+				this.Input_row(),
 				this.Calendar()
 			] as readonly any[]
 		}
@@ -47,6 +47,61 @@ namespace $ {
 		value_moment(val?: any) {
 			if ( val !== undefined ) return val as never
 			const obj = new this.$.$mol_time_moment()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * today_enabled true
+		 * ```
+		 */
+		today_enabled() {
+			return true
+		}
+		
+		/**
+		 * ```tree
+		 * today_click?event null
+		 * ```
+		 */
+		@ $mol_mem
+		today_click(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * Today_icon $mol_icon_calendar_today
+		 * ```
+		 */
+		@ $mol_mem
+		Today_icon() {
+			const obj = new this.$.$mol_icon_calendar_today()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Today $mol_button_minor
+		 * 	hint @ \Today
+		 * 	enabled <= today_enabled
+		 * 	click?event <=> today_click?event
+		 * 	sub / <= Today_icon
+		 * ```
+		 */
+		@ $mol_mem
+		Today() {
+			const obj = new this.$.$mol_button_minor()
+			
+			obj.hint = () => this.$.$mol_locale.text( '$mol_date_Today_hint' )
+			obj.enabled = () => this.today_enabled()
+			obj.click = (event?: any) => this.today_click(event)
+			obj.sub = () => [
+				this.Today_icon()
+			] as readonly any[]
 			
 			return obj
 		}
@@ -95,6 +150,80 @@ namespace $ {
 			obj.value = (val?: any) => this.value(val)
 			obj.mask = (id: any) => this.input_mask(id)
 			obj.enabled = () => this.enabled()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * clear?event null
+		 * ```
+		 */
+		@ $mol_mem
+		clear(event?: any) {
+			if ( event !== undefined ) return event as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * Clear_icon $mol_icon_cross
+		 * ```
+		 */
+		@ $mol_mem
+		Clear_icon() {
+			const obj = new this.$.$mol_icon_cross()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Clear $mol_button_minor
+		 * 	hint @ \Clear
+		 * 	click?event <=> clear?event
+		 * 	sub / <= Clear_icon
+		 * ```
+		 */
+		@ $mol_mem
+		Clear() {
+			const obj = new this.$.$mol_button_minor()
+			
+			obj.hint = () => this.$.$mol_locale.text( '$mol_date_Clear_hint' )
+			obj.click = (event?: any) => this.clear(event)
+			obj.sub = () => [
+				this.Clear_icon()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * input_content /
+		 * 	<= Today
+		 * 	<= Input
+		 * 	<= Clear
+		 * ```
+		 */
+		input_content() {
+			return [
+				this.Today(),
+				this.Input(),
+				this.Clear()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Input_row $mol_view sub <= input_content
+		 * ```
+		 */
+		@ $mol_mem
+		Input_row() {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => this.input_content()
 			
 			return obj
 		}

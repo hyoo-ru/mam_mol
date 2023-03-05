@@ -5797,6 +5797,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_calendar_today extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_format extends $mol_string {
         allow(): string;
         hint(): string;
@@ -5833,10 +5839,19 @@ declare namespace $ {
         bubble_content(): readonly any[];
         value_number(val?: any): number;
         value_moment(val?: any): $mol_time_moment;
+        today_enabled(): boolean;
+        today_click(event?: any): any;
+        Today_icon(): $mol_icon_calendar_today;
+        Today(): $mol_button_minor;
         value(val?: any): string;
         input_mask(id: any): string;
         enabled(): boolean;
         Input(): $$.$mol_format;
+        clear(event?: any): any;
+        Clear_icon(): $mol_icon_cross;
+        Clear(): $mol_button_minor;
+        input_content(): readonly any[];
+        Input_row(): $mol_view;
         month_moment(): $mol_time_moment;
         day_selected(id: any): boolean;
         day_click(id: any, event?: any): any;
@@ -5867,13 +5882,18 @@ declare namespace $.$$ {
     class $mol_date extends $.$mol_date {
         trigger_content(): string[];
         input_mask(val: string): "____-__-__ __:__" | "____-__-__ ";
+        input_content(): ($mol_button_minor | $mol_format)[];
         value(val?: string): string;
         value_moment(val?: $mol_time_moment): $mol_time_moment;
+        value_moment_today(): $mol_time_moment;
+        clear(): void;
         month_moment(next?: $mol_time_moment): $mol_time_moment;
         day_selected(day: string): boolean;
         day_click(day: string): void;
         prev(): void;
         next(): void;
+        today_enabled(): boolean;
+        today_click(): void;
     }
 }
 
@@ -7778,9 +7798,24 @@ declare namespace $ {
         Precision_view_10_number_label(): $mol_labeler;
         Section_precision_row(): $mol_row;
         Section_precision(): $mol_section;
+        value_min_m5(next?: any): number;
+        Min_m5_number(): $$.$mol_number;
+        Min_m5_number_label(): $mol_labeler;
         value_min_0(next?: any): number;
         Min_0_number(): $$.$mol_number;
         Min_0_number_label(): $mol_labeler;
+        value_min_5(next?: any): number;
+        Min_5_number(): $$.$mol_number;
+        Min_5_number_label(): $mol_labeler;
+        value_max_m5(next?: any): number;
+        Max_m5_number(): $$.$mol_number;
+        Max_m5_number_label(): $mol_labeler;
+        value_max_0(next?: any): number;
+        Max_0_number(): $$.$mol_number;
+        Max_0_number_label(): $mol_labeler;
+        value_max_5(next?: any): number;
+        Max_5_number(): $$.$mol_number;
+        Max_5_number_label(): $mol_labeler;
         value_max_100(next?: any): number;
         Max_100_number(): $$.$mol_number;
         Max_100_number_label(): $mol_labeler;

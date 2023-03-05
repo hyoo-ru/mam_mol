@@ -18,6 +18,8 @@
 	"$mol_button_share_hint": "Share",
 	"$mol_chat_title": "Discussion",
 	"$mol_code_scan_label": "Scan",
+	"$mol_date_Clear_hint": "Clear",
+	"$mol_date_Today_hint": "Today",
 	"$mol_date_next_hint": "Next month",
 	"$mol_date_prev_hint": "Previous month",
 	"$mol_lights_toggle_hint": "Toggle lights",

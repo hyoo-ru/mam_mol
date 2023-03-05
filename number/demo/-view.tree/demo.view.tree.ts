@@ -812,6 +812,53 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * value_min_m5? +NaN
+		 * ```
+		 */
+		@ $mol_mem
+		value_min_m5(next?: any) {
+			if ( next !== undefined ) return next as never
+			return +NaN
+		}
+		
+		/**
+		 * ```tree
+		 * Min_m5_number $mol_number
+		 * 	value? <=> value_min_m5?
+		 * 	value_min -5
+		 * ```
+		 */
+		@ $mol_mem
+		Min_m5_number() {
+			const obj = new this.$.$mol_number()
+			
+			obj.value = (next?: any) => this.value_min_m5(next)
+			obj.value_min = () => -5
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Min_m5_number_label $mol_labeler
+		 * 	title \Min value -5
+		 * 	content / <= Min_m5_number
+		 * ```
+		 */
+		@ $mol_mem
+		Min_m5_number_label() {
+			const obj = new this.$.$mol_labeler()
+			
+			obj.title = () => "Min value -5"
+			obj.content = () => [
+				this.Min_m5_number()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * value_min_0? +NaN
 		 * ```
 		 */
@@ -852,6 +899,194 @@ namespace $ {
 			obj.title = () => "Min value 0"
 			obj.content = () => [
 				this.Min_0_number()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * value_min_5? +NaN
+		 * ```
+		 */
+		@ $mol_mem
+		value_min_5(next?: any) {
+			if ( next !== undefined ) return next as never
+			return +NaN
+		}
+		
+		/**
+		 * ```tree
+		 * Min_5_number $mol_number
+		 * 	value? <=> value_min_5?
+		 * 	value_min 5
+		 * ```
+		 */
+		@ $mol_mem
+		Min_5_number() {
+			const obj = new this.$.$mol_number()
+			
+			obj.value = (next?: any) => this.value_min_5(next)
+			obj.value_min = () => 5
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Min_5_number_label $mol_labeler
+		 * 	title \Min value 5
+		 * 	content / <= Min_5_number
+		 * ```
+		 */
+		@ $mol_mem
+		Min_5_number_label() {
+			const obj = new this.$.$mol_labeler()
+			
+			obj.title = () => "Min value 5"
+			obj.content = () => [
+				this.Min_5_number()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * value_max_m5? +NaN
+		 * ```
+		 */
+		@ $mol_mem
+		value_max_m5(next?: any) {
+			if ( next !== undefined ) return next as never
+			return +NaN
+		}
+		
+		/**
+		 * ```tree
+		 * Max_m5_number $mol_number
+		 * 	value? <=> value_max_m5?
+		 * 	value_max -5
+		 * ```
+		 */
+		@ $mol_mem
+		Max_m5_number() {
+			const obj = new this.$.$mol_number()
+			
+			obj.value = (next?: any) => this.value_max_m5(next)
+			obj.value_max = () => -5
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Max_m5_number_label $mol_labeler
+		 * 	title \Max value -5
+		 * 	content / <= Max_m5_number
+		 * ```
+		 */
+		@ $mol_mem
+		Max_m5_number_label() {
+			const obj = new this.$.$mol_labeler()
+			
+			obj.title = () => "Max value -5"
+			obj.content = () => [
+				this.Max_m5_number()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * value_max_0? +NaN
+		 * ```
+		 */
+		@ $mol_mem
+		value_max_0(next?: any) {
+			if ( next !== undefined ) return next as never
+			return +NaN
+		}
+		
+		/**
+		 * ```tree
+		 * Max_0_number $mol_number
+		 * 	value? <=> value_max_0?
+		 * 	value_max 0
+		 * ```
+		 */
+		@ $mol_mem
+		Max_0_number() {
+			const obj = new this.$.$mol_number()
+			
+			obj.value = (next?: any) => this.value_max_0(next)
+			obj.value_max = () => 0
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Max_0_number_label $mol_labeler
+		 * 	title \Max value 0
+		 * 	content / <= Max_0_number
+		 * ```
+		 */
+		@ $mol_mem
+		Max_0_number_label() {
+			const obj = new this.$.$mol_labeler()
+			
+			obj.title = () => "Max value 0"
+			obj.content = () => [
+				this.Max_0_number()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * value_max_5? +NaN
+		 * ```
+		 */
+		@ $mol_mem
+		value_max_5(next?: any) {
+			if ( next !== undefined ) return next as never
+			return +NaN
+		}
+		
+		/**
+		 * ```tree
+		 * Max_5_number $mol_number
+		 * 	value? <=> value_max_5?
+		 * 	value_max 5
+		 * ```
+		 */
+		@ $mol_mem
+		Max_5_number() {
+			const obj = new this.$.$mol_number()
+			
+			obj.value = (next?: any) => this.value_max_5(next)
+			obj.value_max = () => 5
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Max_5_number_label $mol_labeler
+		 * 	title \Max value 5
+		 * 	content / <= Max_5_number
+		 * ```
+		 */
+		@ $mol_mem
+		Max_5_number_label() {
+			const obj = new this.$.$mol_labeler()
+			
+			obj.title = () => "Max value 5"
+			obj.content = () => [
+				this.Max_5_number()
 			] as readonly any[]
 			
 			return obj
@@ -1056,7 +1291,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Section_range_row $mol_row sub /
+		 * 	<= Min_m5_number_label
 		 * 	<= Min_0_number_label
+		 * 	<= Min_5_number_label
+		 * 	<= Max_m5_number_label
+		 * 	<= Max_0_number_label
+		 * 	<= Max_5_number_label
 		 * 	<= Max_100_number_label
 		 * 	<= Range_number_case1_label
 		 * 	<= Range_number_case2_label
@@ -1068,7 +1308,12 @@ namespace $ {
 			const obj = new this.$.$mol_row()
 			
 			obj.sub = () => [
+				this.Min_m5_number_label(),
 				this.Min_0_number_label(),
+				this.Min_5_number_label(),
+				this.Max_m5_number_label(),
+				this.Max_0_number_label(),
+				this.Max_5_number_label(),
 				this.Max_100_number_label(),
 				this.Range_number_case1_label(),
 				this.Range_number_case2_label(),
