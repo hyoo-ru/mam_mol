@@ -77,10 +77,14 @@ namespace $ {
 		
 		const val = prop.hack<Context>({
 			
-			'@': ( locale, belt, context )=> localized_string.hack({
-				'#key': key => [ locale.data( `${ klass.type }_${ name }${
-					context.chain?.length ? `_${context.chain.join('_')}` : ''}` ) ],
-			}),
+			'@': ( locale, belt, context )=> {
+				const chain = context.chain?.join('_')
+
+				return localized_string.hack({
+					'#key': key => [ locale.data( `${ klass.type }_${ name }${
+						chain ? `_${chain}` : ''}` ) ],
+				})
+			},
 			
 			'<=': bind => [
 				bind.struct( '()', [
@@ -122,7 +126,7 @@ namespace $ {
 					obj.kids.map( field => {
 						
 						if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
-						const field_name = name_of( field )
+						const field_name = field.type.replace('?', '')
 						return field.struct( ':', [
 							field.data( field_name ),
 							field.kids[0].type === '<=>'
