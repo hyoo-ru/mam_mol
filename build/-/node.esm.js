@@ -3251,7 +3251,7 @@ var $;
         end,
     ]);
 })($ || ($ = {}));
-//mol/view/tree2/prop/sigrature.ts
+//mol/view/tree2/prop/signature.ts
 ;
 "use strict";
 var $;
