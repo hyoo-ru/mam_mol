@@ -7,4 +7,32 @@
 [mol_section_title] {
 	padding: var(--mol_gap_text);
 	text-shadow: 0 0;
+	font-weight: normal;
+}
+
+h1[mol_section_title] {
+	font-size: 1.5rem;
+}
+
+h2[mol_section_title] {
+	font-size: 1.5rem;
+	font-style: italic;
+}
+
+h3[mol_section_title] {
+	font-size: 1.25rem;
+}
+
+h4[mol_section_title] {
+	font-size: 1.25rem;
+	font-style: italic;
+}
+
+h5[mol_section_title] {
+	font-size: 1rem;
+}
+
+h6[mol_section_title] {
+	font-size: 1rem;
+	font-style: italic;
 }
