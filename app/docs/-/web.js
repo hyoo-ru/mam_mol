@@ -8478,7 +8478,7 @@ var $;
                     ?? 'about:blank';
             }
             video_preview() {
-                return `https://i.ytimg.com/vi_webp/${this.video_id()}/sddefault.webp`;
+                return `https://i.ytimg.com/vi_webp/${this.video_id()}/hq720.webp`;
             }
             sub() {
                 return [this.active() ? this.Frame() : this.Image()];
