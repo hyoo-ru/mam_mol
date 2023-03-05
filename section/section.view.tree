@@ -1,7 +1,11 @@
-$mol_section $mol_list rows /
-	<= Head $mol_view
-		sub <= head /
-			<= Title $mol_paragraph title <= title
-			<= Tools $mol_view sub <= tools /
-	<= Content $mol_list
-		rows <= content /
+$mol_section $mol_list
+	level 1
+	rows /
+		<= Head $mol_view
+			sub <= head /
+				<= Title $mol_paragraph
+					dom_name <= title_dom_name \h1
+					title <= title
+				<= Tools $mol_view sub <= tools /
+		<= Content $mol_list
+			rows <= content /
