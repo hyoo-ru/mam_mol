@@ -3,7 +3,7 @@ namespace $ {
 	const run = $mol_view_tree2_to_js_test_run
 
 	$mol_test({
-		'Fallback bind'( $ ) {
+		'Bidi bind fallback'( $ ) {
 			
 			const { Foo } = run(`
 				Foo $mol_object
@@ -44,7 +44,7 @@ namespace $ {
 			
 		},
 
-		'legacy bind'( $ ) {
+		'Bidi bind legacy value'( $ ) {
 			const { Foo } = run(`
 				Foo $mol_object
 					a?v <=> b?v 1
@@ -64,24 +64,8 @@ namespace $ {
 				2,
 			)
 		},
-
-		'localized default value'( $ ) {
-			
-			const { Foo } = run(`
-				Foo $mol_object
-					a? <=> b? @ \some1
-			`)
-			const foo = Foo.make({ $ })
-
-			$mol_assert_like(
-				foo.b(),
-				foo.a(),
-				'<Foo_b>',
-			)
 		
-		},
-		
-		'Structural bidi channel'( $ ) {
+		'Bidi bind in dictionary'( $ ) {
 			
 			const { Foo } = run(`
 				Foo $mol_object
@@ -96,7 +80,7 @@ namespace $ {
 			
 		},
 
-		'bind, chaining'( $ ) {
+		'Bidi bind chaining'( $ ) {
 			const { Foo } = run(`
 				Foo $mol_object
 					a? <=> b? <=> c? null
@@ -110,38 +94,77 @@ namespace $ {
 			)
 		},
 
-		'bind, no default not throws error'( $ ) {
+		'Bidi bind indexed'( $ ) {
 			const { Foo } = run(`
 				Foo $mol_object
-					a? <=> b?
+					indexed*? <=> owner*? null
 			`)
 			const foo = Foo.make({ $ })
 
-			$mol_assert_fail(() => {
-				foo.a()
-			})
+			foo.owner(1, 'a')
+			foo.owner(2, 'b'),
+
+			$mol_assert_like(
+				foo.owner(1),
+				foo.indexed(1),
+				'a'
+			)
+
+			$mol_assert_like(
+				foo.owner(1, 'a2'),
+				foo.indexed(1),
+				'a2'
+			)
+
+			$mol_assert_like(
+				foo.owner(2),
+				foo.indexed(2),
+				'b'
+			)
 		},
 
-		'bind, default no args not throws error'( $ ) {
+		'Bidi bind indexed second level'( $ ) {
 			const { Foo } = run(`
 				Foo $mol_object
-					a? <=> b?
-					b null
+					indexed*? $mol_object
+						expanded <=> owner*? null
+			`)
+			const foo = Foo.make({ $ })
+
+
+			foo.owner(1, 'a')
+			foo.owner(2, 'b')
+
+			$mol_assert_like(
+				foo.owner(1),
+				foo.indexed(1).expanded(),
+				'a'
+			)
+
+			$mol_assert_like(
+				foo.owner(2),
+				foo.indexed(2).expanded(),
+				'b'
+			)
+		},
+
+		'Bidi bind doubing right part with same default'( $ ) {
+			const { Foo } = run(`
+				Foo $mol_object
+					a? <=> b? null
+					c? <=> b? null
 			`)
 			const foo = Foo.make({ $ })
 
 			$mol_assert_like(
-				foo.b(1),
+				foo.b(),
+				foo.c(),
+				foo.a(),
 				null
 			)
-
-			$mol_assert_like(
-				foo.a(1),
-				1
-			)
 		},
 
-		'bind with separate default'( $ ) {
+		'Bidi bind with separate default in right part'( $ ) {
 
 			const { Foo } = run(`
 				Foo $mol_object
@@ -156,7 +179,7 @@ namespace $ {
 			)
 		},
 
-		'bind, index from outer scope throws error'( $ ) {
+		'Bidi bind index from outer scope throws error'( $ ) {
 			$mol_assert_fail(() => {
 				const { Foo } = run(`
 					Foo $mol_object
@@ -166,54 +189,54 @@ namespace $ {
 			})
 		},
 
-		'bind, method defined with another value error'( $ ) {
-			$mol_assert_fail(() => {
-				const { Foo } = run(`
-					Foo $mol_object
-						arr /
-							*
-								loc?v <=> loc_outer?v @ \test1
-							*
-								loc?v <=> loc_outer?v @ \test2
-				`)
-			})
-		},
-
-		'bind, structural bidi localize'( $ ) {
-			const { Foo } = run(`
-				Foo $mol_object
-					arr /
-						*
-							loc?v <=> loc_outer?v @ \\test1
-						*
-							loc?v <=> loc_outer?v @ \\test1
-			`)
-			const foo = Foo.make({ $ })
-
-			$mol_assert_like(
-				foo.arr()[1].loc(),
-				foo.arr()[0].loc(),
-				'<Foo_loc_outer>'
-			)
-		},
-
-		'bind with default object'( $ ) {
+		'Bidi bind with default object'( $ ) {
 
 			const { Foo } = run(`
 				Foo $mol_object
-					class?val <=> class_owner?val $mol_object
+					class?val <=> owner?val $mol_object
 			`)
 			const foo = Foo.make({ $ })
 			const view = new $mol_object
-			foo.class_owner(view)
+			foo.owner(view)
 
 			$mol_assert_like(
-				foo.class_owner(),
+				foo.owner(),
 				foo.class(),
 				view
 			)
 		},
 		
+		'Bidi bind localized default value'( $ ) {
+			
+			const { Foo } = run(`
+				Foo $mol_object
+					a? <=> b? @ \\some1
+			`)
+			const foo = Foo.make({ $ })
+
+			$mol_assert_like(
+				foo.b(),
+				foo.a(),
+				'<Foo_b>',
+			)
+		
+		},
+
+		'Bidi bind localized in object'( $ ) {
+			const { Foo } = run(`
+				Foo $mol_object
+					obj *
+						loc? <=> outer? @ \\test1
+			`)
+			const foo = Foo.make({ $ })
+
+			$mol_assert_like(
+				foo.obj().loc(),
+				foo.outer(),
+				'<Foo_outer>'
+			)
+		},
+
 	})
 	
 }
