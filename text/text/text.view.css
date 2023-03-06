@@ -12,6 +12,7 @@
 [mol_text_paragraph] {
 	padding: var(--mol_gap_text);
 	overflow: auto;
+	overflow-x: overlay;
 	max-width: 100%;
 	display: block;
 	max-width: 50rem;
@@ -136,6 +137,7 @@ h6[mol_text_header] {
 [mol_text_pre] {
 	white-space: pre;
 	overflow-x: auto;
+	overflow-x: overlay;
 	tab-size: 2;
 }
 
