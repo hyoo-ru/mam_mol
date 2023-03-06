@@ -14971,26 +14971,181 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_filler extends $mol_view {
-        minimal_height() {
-            return 500;
+    class $mol_filler extends $mol_paragraph {
+        min_symbols() {
+            return 7000;
         }
         sub() {
+            return this.filler_lines();
+        }
+        filler_lines() {
             return [
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.",
-                "Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. Maecenas convallis ullamcorper ultricies. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. Fusce eget orci a orci congue vestibulum. Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. Curabitur venenatis pulvinar tellus gravida ornare. Sed et erat faucibus nunc euismod ultricies ut id justo. Nullam cursus suscipit nisi, et ultrices justo sodales nec. Fusce venenatis facilisis lectus ac semper. Aliquam at massa ipsum. Quisque bibendum purus convallis nulla ultrices ultricies. Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. Fusce vel volutpat elit. Nam sagittis nisi dui.",
-                "Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. Etiam luctus porttitor lorem, sed suscipit est rutrum non. Curabitur lobortis nisl a enim congue semper. Aenean commodo ultrices imperdiet. Vestibulum ut justo vel sapien venenatis tincidunt. Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. Aliquam ut massa in turpis dapibus convallis. Praesent elit lacus, vestibulum at malesuada et, ornare et est. Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. Mauris ut placerat justo. Mauris in ultricies enim. Quisque nec est eleifend nulla ultrices egestas quis ut quam. Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. Cras quis ligula sem, vel elementum mi. Phasellus non ullamcorper urna.",
-                "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In euismod ultrices facilisis. Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. Proin quis dictum nisl. Morbi id quam sapien, sed vestibulum sem. Duis elementum rutrum mauris sed convallis. Proin vestibulum magna mi. Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. Sed non tortor sodales quam auctor elementum. Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. Donec vel.",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.",
-                "Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. Maecenas convallis ullamcorper ultricies. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. Fusce eget orci a orci congue vestibulum. Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. Curabitur venenatis pulvinar tellus gravida ornare. Sed et erat faucibus nunc euismod ultricies ut id justo. Nullam cursus suscipit nisi, et ultrices justo sodales nec. Fusce venenatis facilisis lectus ac semper. Aliquam at massa ipsum. Quisque bibendum purus convallis nulla ultrices ultricies. Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. Fusce vel volutpat elit. Nam sagittis nisi dui.",
-                "Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. Etiam luctus porttitor lorem, sed suscipit est rutrum non. Curabitur lobortis nisl a enim congue semper. Aenean commodo ultrices imperdiet. Vestibulum ut justo vel sapien venenatis tincidunt. Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. Aliquam ut massa in turpis dapibus convallis. Praesent elit lacus, vestibulum at malesuada et, ornare et est. Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. Mauris ut placerat justo. Mauris in ultricies enim. Quisque nec est eleifend nulla ultrices egestas quis ut quam. Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. Cras quis ligula sem, vel elementum mi. Phasellus non ullamcorper urna.",
-                "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In euismod ultrices facilisis. Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. Proin quis dictum nisl. Morbi id quam sapien, sed vestibulum sem. Duis elementum rutrum mauris sed convallis. Proin vestibulum magna mi. Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. Sed non tortor sodales quam auctor elementum. Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. Donec vel."
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+                "Donec a diam lectus. ",
+                "Sed sit amet ipsum mauris. ",
+                "Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. ",
+                "Donec et mollis dolor. ",
+                "Praesent et diam eget libero egestas mattis sit amet vitae augue. ",
+                "Nam tincidunt congue enim, ut porta lorem lacinia consectetur. ",
+                "Donec ut libero sed arcu vehicula ultricies a non tortor. ",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+                "Aenean ut gravida lorem. ",
+                "Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. ",
+                "Pellentesque auctor nisi id magna consequat sagittis. ",
+                "Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. ",
+                "Ut convallis libero in urna ultrices accumsan. ",
+                "Donec sed odio eros. ",
+                "Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. ",
+                "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. ",
+                "In rutrum accumsan ultricies. ",
+                "Mauris vitae nisi at sem facilisis semper ac in est. ",
+                "Vivamus fermentum semper porta. ",
+                "Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. ",
+                "Maecenas convallis ullamcorper ultricies. ",
+                "Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. ",
+                "Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. ",
+                "Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. ",
+                "Fusce eget orci a orci congue vestibulum. ",
+                "Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. ",
+                "Curabitur venenatis pulvinar tellus gravida ornare. ",
+                "Sed et erat faucibus nunc euismod ultricies ut id justo. ",
+                "Nullam cursus suscipit nisi, et ultrices justo sodales nec. ",
+                "Fusce venenatis facilisis lectus ac semper. ",
+                "Aliquam at massa ipsum. ",
+                "Quisque bibendum purus convallis nulla ultrices ultricies. ",
+                "Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. ",
+                "Fusce vel volutpat elit. ",
+                "Nam sagittis nisi dui. ",
+                "Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. ",
+                "Etiam luctus porttitor lorem, sed suscipit est rutrum non. ",
+                "Curabitur lobortis nisl a enim congue semper. ",
+                "Aenean commodo ultrices imperdiet. ",
+                "Vestibulum ut justo vel sapien venenatis tincidunt. ",
+                "Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. ",
+                "Aliquam ut massa in turpis dapibus convallis. ",
+                "Praesent elit lacus, vestibulum at malesuada et, ornare et est. ",
+                "Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. ",
+                "Mauris ut placerat justo. ",
+                "Mauris in ultricies enim. ",
+                "Quisque nec est eleifend nulla ultrices egestas quis ut quam. ",
+                "Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. ",
+                "Cras quis ligula sem, vel elementum mi. ",
+                "Phasellus non ullamcorper urna. ",
+                "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. ",
+                "In euismod ultrices facilisis. ",
+                "Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. ",
+                "Proin quis dictum nisl. ",
+                "Morbi id quam sapien, sed vestibulum sem. ",
+                "Duis elementum rutrum mauris sed convallis. ",
+                "Proin vestibulum magna mi. ",
+                "Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. ",
+                "Sed non tortor sodales quam auctor elementum. ",
+                "Donec hendrerit nunc eget elit pharetra pulvinar. ",
+                "Suspendisse id tempus tortor. ",
+                "Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. ",
+                "Donec vel. ",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+                "Donec a diam lectus. ",
+                "Sed sit amet ipsum mauris. ",
+                "Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. ",
+                "Donec et mollis dolor. ",
+                "Praesent et diam eget libero egestas mattis sit amet vitae augue. ",
+                "Nam tincidunt congue enim, ut porta lorem lacinia consectetur. ",
+                "Donec ut libero sed arcu vehicula ultricies a non tortor. ",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+                "Aenean ut gravida lorem. ",
+                "Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. ",
+                "Pellentesque auctor nisi id magna consequat sagittis. ",
+                "Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. ",
+                "Ut convallis libero in urna ultrices accumsan. ",
+                "Donec sed odio eros. ",
+                "Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. ",
+                "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. ",
+                "In rutrum accumsan ultricies. ",
+                "Mauris vitae nisi at sem facilisis semper ac in est. ",
+                "Vivamus fermentum semper porta. ",
+                "Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. ",
+                "Maecenas convallis ullamcorper ultricies. ",
+                "Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. ",
+                "Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. ",
+                "Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. ",
+                "Fusce eget orci a orci congue vestibulum. ",
+                "Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. ",
+                "Curabitur venenatis pulvinar tellus gravida ornare. ",
+                "Sed et erat faucibus nunc euismod ultricies ut id justo. ",
+                "Nullam cursus suscipit nisi, et ultrices justo sodales nec. ",
+                "Fusce venenatis facilisis lectus ac semper. ",
+                "Aliquam at massa ipsum. ",
+                "Quisque bibendum purus convallis nulla ultrices ultricies. ",
+                "Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. ",
+                "Fusce vel volutpat elit. ",
+                "Nam sagittis nisi dui. ",
+                "Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. ",
+                "Etiam luctus porttitor lorem, sed suscipit est rutrum non. ",
+                "Curabitur lobortis nisl a enim congue semper. ",
+                "Aenean commodo ultrices imperdiet. ",
+                "Vestibulum ut justo vel sapien venenatis tincidunt. ",
+                "Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. ",
+                "Aliquam ut massa in turpis dapibus convallis. ",
+                "Praesent elit lacus, vestibulum at malesuada et, ornare et est. ",
+                "Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. ",
+                "Mauris ut placerat justo. ",
+                "Mauris in ultricies enim. ",
+                "Quisque nec est eleifend nulla ultrices egestas quis ut quam. ",
+                "Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. ",
+                "Cras quis ligula sem, vel elementum mi. ",
+                "Phasellus non ullamcorper urna. ",
+                "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. ",
+                "In euismod ultrices facilisis. ",
+                "Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. ",
+                "Proin quis dictum nisl. ",
+                "Morbi id quam sapien, sed vestibulum sem. ",
+                "Duis elementum rutrum mauris sed convallis. ",
+                "Proin vestibulum magna mi. ",
+                "Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. ",
+                "Sed non tortor sodales quam auctor elementum. ",
+                "Donec hendrerit nunc eget elit pharetra pulvinar. ",
+                "Suspendisse id tempus tortor. ",
+                "Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. ",
+                "Donec vel. "
             ];
         }
     }
     $.$mol_filler = $mol_filler;
 })($ || ($ = {}));
 //mol/filler/-view.tree/filler.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_array_lottery(list) {
+        return list[Math.floor(Math.random() * list.length)];
+    }
+    $.$mol_array_lottery = $mol_array_lottery;
+})($ || ($ = {}));
+//mol/array/lottery/lottery.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_filler extends $.$mol_filler {
+            filler_lines() {
+                const lines = [];
+                let len_cur = 0;
+                while (len_cur < this.min_symbols()) {
+                    const line = this.$.$mol_array_lottery(super.filler_lines());
+                    len_cur += line.length;
+                    lines.push(line);
+                }
+                return lines;
+            }
+        }
+        $$.$mol_filler = $mol_filler;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/filler/filler.view.ts
 ;
 "use strict";
 var $;
@@ -24039,6 +24194,40 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_filler_demo extends $mol_example_small {
+        title() {
+            return "Prints large bulk of text";
+        }
+        sub() {
+            return [
+                this.Filler()
+            ];
+        }
+        tags() {
+            return [
+                "filler",
+                "fake",
+                "lorem",
+                "ipsum",
+                "dolor"
+            ];
+        }
+        Filler() {
+            const obj = new this.$.$mol_filler();
+            obj.min_symbols = () => 6000;
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_filler_demo.prototype, "Filler", null);
+    $.$mol_filler_demo = $mol_filler_demo;
+})($ || ($ = {}));
+//mol/filler/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_float_demo extends $mol_example_large {
         title() {
             return "Floating header example";
@@ -25575,16 +25764,6 @@ var $;
     $.$mol_gallery_demo = $mol_gallery_demo;
 })($ || ($ = {}));
 //mol/gallery/demo/-view.tree/demo.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_array_lottery(list) {
-        return list[Math.floor(Math.random() * list.length)];
-    }
-    $.$mol_array_lottery = $mol_array_lottery;
-})($ || ($ = {}));
-//mol/array/lottery/lottery.ts
 ;
 "use strict";
 var $;
@@ -32624,6 +32803,177 @@ var $;
     $.$mol_section_demo = $mol_section_demo;
 })($ || ($ = {}));
 //mol/section/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_section_demo_level extends $mol_example_small {
+        title() {
+            return "Section with header";
+        }
+        sub() {
+            return [
+                this.Section_h1(),
+                this.Section_h2(),
+                this.Section_h3(),
+                this.Section_h4(),
+                this.Section_h5(),
+                this.Section_h6(),
+                this.Section_h7()
+            ];
+        }
+        tags() {
+            return [
+                "section",
+                "header",
+                "level",
+                "h1"
+            ];
+        }
+        Section_h1_content() {
+            const obj = new this.$.$mol_filler();
+            obj.min_symbols = () => 250;
+            return obj;
+        }
+        Section_h1() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 1;
+            obj.title = () => "Section h1";
+            obj.content = () => [
+                this.Section_h1_content()
+            ];
+            return obj;
+        }
+        Section_h2_content() {
+            const obj = new this.$.$mol_filler();
+            obj.min_symbols = () => 250;
+            return obj;
+        }
+        Section_h2() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 2;
+            obj.title = () => "Section h2";
+            obj.content = () => [
+                this.Section_h2_content()
+            ];
+            return obj;
+        }
+        Section_h3_content() {
+            const obj = new this.$.$mol_filler();
+            obj.min_symbols = () => 250;
+            return obj;
+        }
+        Section_h3() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 3;
+            obj.title = () => "Section h3";
+            obj.content = () => [
+                this.Section_h3_content()
+            ];
+            return obj;
+        }
+        Section_h4_content() {
+            const obj = new this.$.$mol_filler();
+            obj.min_symbols = () => 250;
+            return obj;
+        }
+        Section_h4() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 4;
+            obj.title = () => "Section h4";
+            obj.content = () => [
+                this.Section_h4_content()
+            ];
+            return obj;
+        }
+        Section_h5_content() {
+            const obj = new this.$.$mol_filler();
+            obj.min_symbols = () => 250;
+            return obj;
+        }
+        Section_h5() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 5;
+            obj.title = () => "Section h5";
+            obj.content = () => [
+                this.Section_h5_content()
+            ];
+            return obj;
+        }
+        Section_h6_content() {
+            const obj = new this.$.$mol_filler();
+            obj.min_symbols = () => 250;
+            return obj;
+        }
+        Section_h6() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 6;
+            obj.title = () => "Section h6";
+            obj.content = () => [
+                this.Section_h6_content()
+            ];
+            return obj;
+        }
+        Section_h7_content() {
+            const obj = new this.$.$mol_filler();
+            obj.min_symbols = () => 250;
+            return obj;
+        }
+        Section_h7() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 7;
+            obj.title = () => "Section h7";
+            obj.content = () => [
+                this.Section_h7_content()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h1_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h1", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h2_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h2", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h3_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h3", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h4_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h4", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h5_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h5", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h6_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h6", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h7_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h7", null);
+    $.$mol_section_demo_level = $mol_section_demo_level;
+})($ || ($ = {}));
+//mol/section/demo/level/-view.tree/level.view.tree.ts
 ;
 "use strict";
 var $;

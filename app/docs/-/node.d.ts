@@ -4101,9 +4101,20 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_filler extends $mol_view {
-        minimal_height(): number;
-        sub(): readonly any[];
+    class $mol_filler extends $mol_paragraph {
+        min_symbols(): number;
+        sub(): readonly string[];
+        filler_lines(): readonly string[];
+    }
+}
+
+declare namespace $ {
+    function $mol_array_lottery<Value>(list: readonly Value[]): Value;
+}
+
+declare namespace $.$$ {
+    class $mol_filler extends $.$mol_filler {
+        filler_lines(): string[];
     }
 }
 
@@ -4113,7 +4124,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_book2_catalog_demo extends $mol_example_large {
         title(): string;
-        Content(): $mol_filler;
+        Content(): $$.$mol_filler;
         Empty(): $$.$mol_status;
         sub(): readonly any[];
         tags(): readonly any[];
@@ -6149,8 +6160,17 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
-        Content(): $mol_filler;
+        Content(): $$.$mol_filler;
         Expander(): $$.$mol_expander;
+    }
+}
+
+declare namespace $ {
+    class $mol_filler_demo extends $mol_example_small {
+        title(): string;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        Filler(): $$.$mol_filler;
     }
 }
 
@@ -6162,8 +6182,8 @@ declare namespace $ {
         Head_content(): $$.$mol_paragraph;
         Head_row(): $mol_row;
         Head(): $mol_float;
-        Filler1(): $mol_filler;
-        Filler2(): $mol_filler;
+        Filler1(): $$.$mol_filler;
+        Filler2(): $$.$mol_filler;
         Content(): $$.$mol_list;
         Scroll(): $$.$mol_scroll;
     }
@@ -6613,10 +6633,6 @@ declare namespace $ {
         item_title(id: any): string;
         Item_title(id: any): $$.$mol_paragraph;
     }
-}
-
-declare namespace $ {
-    function $mol_array_lottery<Value>(list: readonly Value[]): Value;
 }
 
 declare namespace $ {
@@ -7821,7 +7837,7 @@ declare namespace $ {
         sub(): readonly any[];
         tags(): readonly any[];
         Button_tools(): $mol_button_minor;
-        Text(): $mol_filler;
+        Text(): $$.$mol_filler;
         Button_foot(): $mol_button_minor;
         Page(): $mol_page;
     }
@@ -8250,16 +8266,16 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
-        Filler0(): $mol_filler;
-        Filler1(): $mol_filler;
-        Filler2(): $mol_filler;
-        Filler3(): $mol_filler;
-        Filler4(): $mol_filler;
-        Filler5(): $mol_filler;
-        Filler6(): $mol_filler;
-        Filler7(): $mol_filler;
-        Filler8(): $mol_filler;
-        Filler9(): $mol_filler;
+        Filler0(): $$.$mol_filler;
+        Filler1(): $$.$mol_filler;
+        Filler2(): $$.$mol_filler;
+        Filler3(): $$.$mol_filler;
+        Filler4(): $$.$mol_filler;
+        Filler5(): $$.$mol_filler;
+        Filler6(): $$.$mol_filler;
+        Filler7(): $$.$mol_filler;
+        Filler8(): $$.$mol_filler;
+        Filler9(): $$.$mol_filler;
         Content(): $$.$mol_list;
         Scroll(): $$.$mol_scroll;
     }
@@ -8287,8 +8303,30 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
-        Section_content(): $mol_filler;
+        Section_content(): $$.$mol_filler;
         Section(): $$.$mol_section;
+    }
+}
+
+declare namespace $ {
+    class $mol_section_demo_level extends $mol_example_small {
+        title(): string;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        Section_h1_content(): $$.$mol_filler;
+        Section_h1(): $$.$mol_section;
+        Section_h2_content(): $$.$mol_filler;
+        Section_h2(): $$.$mol_section;
+        Section_h3_content(): $$.$mol_filler;
+        Section_h3(): $$.$mol_section;
+        Section_h4_content(): $$.$mol_filler;
+        Section_h4(): $$.$mol_section;
+        Section_h5_content(): $$.$mol_filler;
+        Section_h5(): $$.$mol_section;
+        Section_h6_content(): $$.$mol_filler;
+        Section_h6(): $$.$mol_section;
+        Section_h7_content(): $$.$mol_filler;
+        Section_h7(): $$.$mol_section;
     }
 }
 

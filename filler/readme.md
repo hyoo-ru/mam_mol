@@ -6,4 +6,5 @@ Prints large bulk of text.
 
 ```tree
 <= Description $mol_filler
+	min_symbols 500
 ```

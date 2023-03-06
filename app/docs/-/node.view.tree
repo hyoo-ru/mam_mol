@@ -1176,17 +1176,137 @@ $mol_book2_catalog $mol_book2
 		sub /
 			<= Spread_close_icon $mol_icon_cross
 
-$mol_filler $mol_view
-	minimal_height 500
-	sub /
-		\Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.
-		\Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. Maecenas convallis ullamcorper ultricies. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. Fusce eget orci a orci congue vestibulum. Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. Curabitur venenatis pulvinar tellus gravida ornare. Sed et erat faucibus nunc euismod ultricies ut id justo. Nullam cursus suscipit nisi, et ultrices justo sodales nec. Fusce venenatis facilisis lectus ac semper. Aliquam at massa ipsum. Quisque bibendum purus convallis nulla ultrices ultricies. Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. Fusce vel volutpat elit. Nam sagittis nisi dui.
-		\Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. Etiam luctus porttitor lorem, sed suscipit est rutrum non. Curabitur lobortis nisl a enim congue semper. Aenean commodo ultrices imperdiet. Vestibulum ut justo vel sapien venenatis tincidunt. Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. Aliquam ut massa in turpis dapibus convallis. Praesent elit lacus, vestibulum at malesuada et, ornare et est. Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. Mauris ut placerat justo. Mauris in ultricies enim. Quisque nec est eleifend nulla ultrices egestas quis ut quam. Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. Cras quis ligula sem, vel elementum mi. Phasellus non ullamcorper urna.
-		\Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In euismod ultrices facilisis. Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. Proin quis dictum nisl. Morbi id quam sapien, sed vestibulum sem. Duis elementum rutrum mauris sed convallis. Proin vestibulum magna mi. Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. Sed non tortor sodales quam auctor elementum. Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. Donec vel.
-		\Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.
-		\Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. Maecenas convallis ullamcorper ultricies. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. Fusce eget orci a orci congue vestibulum. Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. Curabitur venenatis pulvinar tellus gravida ornare. Sed et erat faucibus nunc euismod ultricies ut id justo. Nullam cursus suscipit nisi, et ultrices justo sodales nec. Fusce venenatis facilisis lectus ac semper. Aliquam at massa ipsum. Quisque bibendum purus convallis nulla ultrices ultricies. Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. Fusce vel volutpat elit. Nam sagittis nisi dui.
-		\Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. Etiam luctus porttitor lorem, sed suscipit est rutrum non. Curabitur lobortis nisl a enim congue semper. Aenean commodo ultrices imperdiet. Vestibulum ut justo vel sapien venenatis tincidunt. Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. Aliquam ut massa in turpis dapibus convallis. Praesent elit lacus, vestibulum at malesuada et, ornare et est. Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. Mauris ut placerat justo. Mauris in ultricies enim. Quisque nec est eleifend nulla ultrices egestas quis ut quam. Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. Cras quis ligula sem, vel elementum mi. Phasellus non ullamcorper urna.
-		\Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In euismod ultrices facilisis. Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. Proin quis dictum nisl. Morbi id quam sapien, sed vestibulum sem. Duis elementum rutrum mauris sed convallis. Proin vestibulum magna mi. Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. Sed non tortor sodales quam auctor elementum. Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. Donec vel.
+$mol_filler $mol_paragraph
+	min_symbols 7000
+	sub <= filler_lines /string
+		\Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+		\Donec a diam lectus. 
+		\Sed sit amet ipsum mauris. 
+		\Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. 
+		\Donec et mollis dolor. 
+		\Praesent et diam eget libero egestas mattis sit amet vitae augue. 
+		\Nam tincidunt congue enim, ut porta lorem lacinia consectetur. 
+		\Donec ut libero sed arcu vehicula ultricies a non tortor. 
+		\Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+		\Aenean ut gravida lorem. 
+		\Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. 
+		\Pellentesque auctor nisi id magna consequat sagittis. 
+		\Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. 
+		\Ut convallis libero in urna ultrices accumsan. 
+		\Donec sed odio eros. 
+		\Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. 
+		\Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+		\In rutrum accumsan ultricies. 
+		\Mauris vitae nisi at sem facilisis semper ac in est. 
+		\Vivamus fermentum semper porta. 
+		\Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. 
+		\Maecenas convallis ullamcorper ultricies. 
+		\Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. 
+		\Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. 
+		\Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. 
+		\Fusce eget orci a orci congue vestibulum. 
+		\Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. 
+		\Curabitur venenatis pulvinar tellus gravida ornare. 
+		\Sed et erat faucibus nunc euismod ultricies ut id justo. 
+		\Nullam cursus suscipit nisi, et ultrices justo sodales nec. 
+		\Fusce venenatis facilisis lectus ac semper. 
+		\Aliquam at massa ipsum. 
+		\Quisque bibendum purus convallis nulla ultrices ultricies. 
+		\Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. 
+		\Fusce vel volutpat elit. 
+		\Nam sagittis nisi dui. 
+		\Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. 
+		\Etiam luctus porttitor lorem, sed suscipit est rutrum non. 
+		\Curabitur lobortis nisl a enim congue semper. 
+		\Aenean commodo ultrices imperdiet. 
+		\Vestibulum ut justo vel sapien venenatis tincidunt. 
+		\Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. 
+		\Aliquam ut massa in turpis dapibus convallis. 
+		\Praesent elit lacus, vestibulum at malesuada et, ornare et est. 
+		\Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. 
+		\Mauris ut placerat justo. 
+		\Mauris in ultricies enim. 
+		\Quisque nec est eleifend nulla ultrices egestas quis ut quam. 
+		\Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. 
+		\Cras quis ligula sem, vel elementum mi. 
+		\Phasellus non ullamcorper urna. 
+		\Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. 
+		\In euismod ultrices facilisis. 
+		\Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. 
+		\Proin quis dictum nisl. 
+		\Morbi id quam sapien, sed vestibulum sem. 
+		\Duis elementum rutrum mauris sed convallis. 
+		\Proin vestibulum magna mi. 
+		\Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. 
+		\Sed non tortor sodales quam auctor elementum. 
+		\Donec hendrerit nunc eget elit pharetra pulvinar. 
+		\Suspendisse id tempus tortor. 
+		\Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. 
+		\Donec vel. 
+		\Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+		\Donec a diam lectus. 
+		\Sed sit amet ipsum mauris. 
+		\Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. 
+		\Donec et mollis dolor. 
+		\Praesent et diam eget libero egestas mattis sit amet vitae augue. 
+		\Nam tincidunt congue enim, ut porta lorem lacinia consectetur. 
+		\Donec ut libero sed arcu vehicula ultricies a non tortor. 
+		\Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+		\Aenean ut gravida lorem. 
+		\Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. 
+		\Pellentesque auctor nisi id magna consequat sagittis. 
+		\Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. 
+		\Ut convallis libero in urna ultrices accumsan. 
+		\Donec sed odio eros. 
+		\Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. 
+		\Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+		\In rutrum accumsan ultricies. 
+		\Mauris vitae nisi at sem facilisis semper ac in est. 
+		\Vivamus fermentum semper porta. 
+		\Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. 
+		\Maecenas convallis ullamcorper ultricies. 
+		\Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. 
+		\Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. 
+		\Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. 
+		\Fusce eget orci a orci congue vestibulum. 
+		\Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. 
+		\Curabitur venenatis pulvinar tellus gravida ornare. 
+		\Sed et erat faucibus nunc euismod ultricies ut id justo. 
+		\Nullam cursus suscipit nisi, et ultrices justo sodales nec. 
+		\Fusce venenatis facilisis lectus ac semper. 
+		\Aliquam at massa ipsum. 
+		\Quisque bibendum purus convallis nulla ultrices ultricies. 
+		\Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. 
+		\Fusce vel volutpat elit. 
+		\Nam sagittis nisi dui. 
+		\Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. 
+		\Etiam luctus porttitor lorem, sed suscipit est rutrum non. 
+		\Curabitur lobortis nisl a enim congue semper. 
+		\Aenean commodo ultrices imperdiet. 
+		\Vestibulum ut justo vel sapien venenatis tincidunt. 
+		\Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. 
+		\Aliquam ut massa in turpis dapibus convallis. 
+		\Praesent elit lacus, vestibulum at malesuada et, ornare et est. 
+		\Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. 
+		\Mauris ut placerat justo. 
+		\Mauris in ultricies enim. 
+		\Quisque nec est eleifend nulla ultrices egestas quis ut quam. 
+		\Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. 
+		\Cras quis ligula sem, vel elementum mi. 
+		\Phasellus non ullamcorper urna. 
+		\Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. 
+		\In euismod ultrices facilisis. 
+		\Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. 
+		\Proin quis dictum nisl. 
+		\Morbi id quam sapien, sed vestibulum sem. 
+		\Duis elementum rutrum mauris sed convallis. 
+		\Proin vestibulum magna mi. 
+		\Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. 
+		\Sed non tortor sodales quam auctor elementum. 
+		\Donec hendrerit nunc eget elit pharetra pulvinar. 
+		\Suspendisse id tempus tortor. 
+		\Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. 
+		\Donec vel. 
 
 $mol_book2_catalog_demo $mol_example_large
 	title \Catalog of pages
@@ -2534,6 +2654,18 @@ $mol_expander_demo $mol_example_small
 		\expand
 		\container
 		\fold
+
+$mol_filler_demo $mol_example_small
+	title \Prints large bulk of text
+	sub /
+		<= Filler $mol_filler
+			min_symbols 6000
+	tags /
+		\filler
+		\fake
+		\lorem
+		\ipsum
+		\dolor
 
 $mol_float_demo $mol_example_large
 	title \Floating header example
@@ -3992,6 +4124,57 @@ $mol_section_demo $mol_example_small
 		\section
 		\container
 		\header
+
+$mol_section_demo_level $mol_example_small
+	title \Section with header
+	sub /
+		<= Section_h1 $mol_section
+			level 1
+			title \Section h1
+			content /
+				<= Section_h1_content $mol_filler
+					min_symbols 250
+		<= Section_h2 $mol_section
+			level 2
+			title \Section h2
+			content /
+				<= Section_h2_content $mol_filler
+					min_symbols 250
+		<= Section_h3 $mol_section
+			level 3
+			title \Section h3
+			content /
+				<= Section_h3_content $mol_filler
+					min_symbols 250
+		<= Section_h4 $mol_section
+			level 4
+			title \Section h4
+			content /
+				<= Section_h4_content $mol_filler
+					min_symbols 250
+		<= Section_h5 $mol_section
+			level 5
+			title \Section h5
+			content /
+				<= Section_h5_content $mol_filler
+					min_symbols 250
+		<= Section_h6 $mol_section
+			level 6
+			title \Section h6
+			content /
+				<= Section_h6_content $mol_filler
+					min_symbols 250
+		<= Section_h7 $mol_section
+			level 7
+			title \Section h7
+			content /
+				<= Section_h7_content $mol_filler
+					min_symbols 250
+	tags /
+		\section
+		\header
+		\level
+		\h1
 
 $mol_select_demo_colors $mol_example_small
 	title \Color picker with filter and custom rows

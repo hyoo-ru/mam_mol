@@ -36,6 +36,7 @@ include \/mol/dimmer/demo
 include \/mol/drag/demo
 include \/mol/dump/demo
 include \/mol/expander/demo
+include \/mol/filler/demo
 include \/mol/float/demo
 include \/mol/form/demo
 include \/mol/form/draft/demo
@@ -72,6 +73,7 @@ include \/mol/row/demo/products
 include \/mol/scroll/demo
 include \/mol/search/demo
 include \/mol/section/demo
+include \/mol/section/demo/level
 include \/mol/select/demo/colors
 include \/mol/select/demo/month
 include \/mol/select/demo/priority
