@@ -70,6 +70,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Menu $mol_app_demo_menu
+		 * 	title <= menu_title
 		 * 	names <= names_demo_filtered
 		 * 	filter_suggests <= filter_suggests
 		 * 	tools <= tools
@@ -79,6 +80,7 @@ namespace $ {
 		Menu() {
 			const obj = new this.$.$mol_app_demo_menu()
 			
+			obj.title = () => this.menu_title()
 			obj.names = () => this.names_demo_filtered()
 			obj.filter_suggests = () => this.filter_suggests()
 			obj.tools = () => this.tools()
@@ -218,6 +220,15 @@ namespace $ {
 			obj.mod_ctrl = () => true
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * menu_title @ \$mol examples
+		 * ```
+		 */
+		menu_title() {
+			return this.$.$mol_locale.text( '$mol_app_demo_menu_title' )
 		}
 		
 		/**
@@ -404,15 +415,6 @@ namespace $ {
 		filter_suggests() {
 			return [
 			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
-		 * title @ \$mol examples
-		 * ```
-		 */
-		title() {
-			return this.$.$mol_locale.text( '$mol_app_demo_menu_title' )
 		}
 		
 		/**

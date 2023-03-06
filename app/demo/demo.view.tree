@@ -13,6 +13,7 @@ $mol_app_demo $mol_book2
 		\$mol_example_small
 		\$mol_example_large
 	Menu $mol_app_demo_menu
+		title <= menu_title @ \$mol examples
 		names <= names_demo_filtered /string
 		filter_suggests <= filter_suggests /string
 		tools <= tools /
@@ -39,7 +40,6 @@ $mol_app_demo $mol_book2
 $mol_app_demo_menu $mol_page
 	names /string
 	filter_suggests /string
-	title @ \$mol examples
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /

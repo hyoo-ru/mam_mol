@@ -48,7 +48,9 @@ namespace $.$$ {
 		
 		spread_title( spread: string ) {
 			const page = this.spreads()[ spread ]
-			return page instanceof $mol_book2 && page.pages()[0]?.title() || page.title()
+			return page instanceof $mol_book2
+				&& page.pages()[0]?.title()
+				|| page.title()
 		}
 		
 	}
