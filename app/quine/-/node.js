@@ -7187,7 +7187,7 @@ var $;
                     ?? 'about:blank';
             }
             video_preview() {
-                return `https://i.ytimg.com/vi/${this.video_id()}/maxresdefault.jpg`;
+                return `https://i.ytimg.com/vi/${this.video_id()}/sddefault.jpg`;
             }
             sub() {
                 return [this.active() ? this.Frame() : this.Image()];
