@@ -1,6 +1,5 @@
-$mol_filler $mol_view
-	minimal_height 500
-	min_simbols 7000
+$mol_filler $mol_paragraph
+	min_symbols 7000
 	sub <= filler_lines /string
 		\Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
 		\Donec a diam lectus. 

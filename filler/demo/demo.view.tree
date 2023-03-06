@@ -2,8 +2,7 @@ $mol_filler_demo $mol_example_small
 	title \Prints large bulk of text
 	sub /
 		<= Filler $mol_filler
-			minimal_height 450
-			min_simbols 6000
+			min_symbols 6000
 	tags /
 		\filler
 		\fake
