@@ -67,15 +67,18 @@
 
 @keyframes mol_view_wait_move {
 	from {
-		background-position: 0 0;
+		background-position: -100vmax 0;
 	}
 	to {
-		background-position: 200vmax 0;
+		background-position: 100vmax 0;
 	}
 }
 
 @keyframes mol_view_wait_show {
-	to {
+	from {
+		background-image: none;
+	}
+	50%, to {
 		background-image: repeating-linear-gradient(
 			45deg,
 			hsla( 0 , 0% , 50% , .5 ) 0% ,
@@ -86,11 +89,11 @@
 			hsla( 0 , 0% , 50% , 0 ) 95% ,
 			hsla( 0 , 0% , 50% , .5 ) 100%
 		);
-		background-size: 200vmax 200vmax;
 	}
 }
 
 [mol_view][mol_view_error="Promise"] {
-	animation: mol_view_wait_show .5s .5s linear forwards , mol_view_wait_move 1s linear infinite;
+	background-size: 200vmax 200vmax;
+	animation: mol_view_wait_show 1s linear forwards , mol_view_wait_move 1s linear infinite;
 	opacity: .75;
 }
