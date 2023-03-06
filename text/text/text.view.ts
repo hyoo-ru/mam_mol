@@ -152,6 +152,20 @@ namespace $.$$ {
 			
 			if( /^(\w+script+:)+/.test( uri ) ) return null as any as string
 			
+			if( /^#\!/.test( uri ) ) {
+				
+				const params: Record< string, string > = {}
+			
+				for( const chunk of uri.slice(2).split( this.$.$mol_state_arg.separator ) ) {
+					if( !chunk ) continue
+					const vals = chunk.split( '=' ).map( decodeURIComponent )
+					params[ vals.shift()! ] = vals.join( '=' )
+				}
+				
+				return this.$.$mol_state_arg.link( params )
+	
+			}
+			
 			try {
 				
 				const url = new URL( uri , this.uri_base() )

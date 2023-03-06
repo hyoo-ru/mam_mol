@@ -2,6 +2,9 @@ namespace $ {
 
 	export class $mol_state_arg extends $mol_object {
 		
+		static prolog = ''
+		static separator = ' '
+		
 		@ $mol_mem
 		static href( next? : string ) : string {
 			return next || process.argv.slice( 2 ).join( ' ' )
