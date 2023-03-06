@@ -10,9 +10,7 @@ namespace $.$$ {
 			let len_cur = 0
 
 			while ( len_cur < this.min_simbols() ) {
-				const line = super.filler_lines()[ 
-					Math.round( Math.random() * ( filler_lines_len - 1 ) ) 
-				]
+				const line = this.$.$mol_array_lottery( super.filler_lines() )
 
 				len_cur += line.length
 
