@@ -16,6 +16,7 @@ $mol_app_demo $mol_book2
 		title <= menu_title @ \$mol examples
 		names <= names_demo_filtered /string
 		filter_suggests <= filter_suggests /string
+		tags_selected? <=> tags_selected? /string
 		tools <= tools /
 			<= Sources $mol_link_source
 				uri <= sources_uri \https://github.com/hyoo-ru/mam_mol/
@@ -43,6 +44,13 @@ $mol_app_demo_menu $mol_page
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /
+				<= Tags $mol_select_list
+					trigger_enabled false
+					popup_after_select false
+					value?val <=> tags_selected?val /string
+					dictionary <= tags *
+						card \Card
+						button \Button
 				<= Filter $mol_search
 					query?val <=> filter?val \
 					- suggests <= filter_suggests

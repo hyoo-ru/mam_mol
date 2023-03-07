@@ -10,7 +10,9 @@ namespace $.$$ {
 			
 			if( !key ) return ''
 			this.value([ ... this.value() , key ])
-			
+
+			if (! this.popup_after_select()) return ''
+
 			new $mol_after_frame(()=> {
 				if( !this.pick_enabled() ) return
 				this.Pick().Trigger().focused( true )

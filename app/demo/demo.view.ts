@@ -98,10 +98,17 @@ namespace $.$$ {
 		@ $mol_mem
 		override names_demo_filtered() {
 			const words = this.filter_words()
+			let names = this.names_demo_all()
+
+			const tags_selected = new Set(this.tags_selected())
+
+			if (tags_selected.size > 0) names = names.filter(name =>
+				this.widget_tags( name ).some(tag => tags_selected.has(tag))
+			)
 
 			if( words.length !== 0 ) {
 
-				return this.names_demo_all().filter( name => {
+				names = names.filter( name => {
 					const title = this.widget_title( name )
 
 					const component_keywords = [
@@ -114,11 +121,9 @@ namespace $.$$ {
 					)
 				} )
 
-			} else {
-
-				return this.names_demo_all()
-
 			}
+
+			return names
 		}
 
 		@ $mol_mem
