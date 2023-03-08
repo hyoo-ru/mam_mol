@@ -2,10 +2,71 @@ $mol_tag_tree_demo $mol_example
 	title \Autoatic tag tree
 	sub /
 		<= Tree $mol_tag_tree
-			ids <= item_ids /string
-			tags* <= item_tags* /string
+			- ids <= item_ids /string
+			- tags* <= item_tags* /string
 			Item* <= Item* $mol_button_minor
 				title <= item_title* \
+			ids_tags *
+				batman /
+					\good
+					\dc
+					\male
+				superman /
+					\good
+					\dc
+					\male
+				aquaman /
+					\good
+					\dc
+					\male
+				flash /
+					\good
+					\dc
+					\male
+				jocker /
+					\bad
+					\dc
+					\male
+				harley /
+					\bad
+					\dc
+					\female
+				deadshot /
+					\bad
+					\dc
+					\male
+				wonderwoman /
+					\good
+					\dc
+					\female
+				ironman /
+					\good
+					\marvel
+					\male
+				hulk /
+					\good
+					\marvel
+					\male
+				thor /
+					\good
+					\marvel
+					\male
+				spiderman /
+					\good
+					\marvel
+					\male
+				thanos /
+					\bad
+					\marvel
+					\male
+				locky /
+					\bad
+					\marvel
+					\male
+				hela /
+					\bad
+					\marvel
+					\female
 	tags /
 		\tags
 		\tree
