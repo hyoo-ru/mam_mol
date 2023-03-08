@@ -1,0 +1,13 @@
+$mol_tag_tree_demo $mol_example
+	title \Autoatic tag tree
+	sub /
+		<= Tree $mol_tag_tree
+			ids <= item_ids /string
+			tags* <= item_tags* /string
+			Item* <= Item* $mol_button_minor
+				title <= item_title* \
+	tags /
+		\tags
+		\tree
+		\taxonomy
+		\menu
