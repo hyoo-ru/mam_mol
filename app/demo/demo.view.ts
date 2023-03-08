@@ -139,12 +139,7 @@ namespace $.$$ {
 
 			return [ ...tag_weights.entries() ]
 				.filter( ( [ , weight ] ) => weight > 2 )
-				.sort( ( [ av, aw ], [ bv, bw ] ) => {
-					const dw = bw - aw
-					if ( dw === 0 ) return av > bv ? 1 : ( av < bv ? -1 : 0 )
-
-					return dw
-				})
+				.sort( ( [, aw ], [, bw ] ) => bw - aw )
 				.reduce( ( acc, [ tag ] ) => {
 					acc[ tag ] = tag
 					return acc
