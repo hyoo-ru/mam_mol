@@ -3,7 +3,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		ids() {
-			return Object.keys( this.ids_tags() )
+			return Object.keys( this.ids_tags() ) as readonly string[]
 		}
 		
 		@ $mol_mem_key
