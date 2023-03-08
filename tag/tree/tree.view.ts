@@ -8,15 +8,14 @@ namespace $.$$ {
 		@ $mol_mem
 		tags_ids() {
 			
-			const ids = this.ids()
 			const all = {} as Record< string, string[] >
 			
-			for( const id of ids ) for( const tag of this.tags( id ) ) {
+			for( const id of this.ids() ) for( const tag of this.tags( id ) ) {
 					
 				let ids = all[ tag ]
 				if( !ids ) ids = all[ tag ] = []
 				
-				ids!.push( id )
+				ids.push( id )
 					
 			}
 			
@@ -40,17 +39,27 @@ namespace $.$$ {
 				.filter( tag => all.get( tag )!.size > 3 )
 			
 			while( all.size ) {
-				
-				tags.sort( (a,b)=> all.get( b )!.size - all.get( a )!.size )
-				
-				if( !tags.length ) {
+
+				let best_index = -1
+				let last_size = -1
+
+				for (let i = 0; i < tags.length; i++) {
+					const item = all.get(tags[i])
+
+					if (item && item.size > last_size) {
+						best_index = i
+						last_size = item.size
+					}
+				}
+
+				if (best_index === -1) {
 					for( const ids of all.values() ) for( const id of ids ) tail.add( id )
 					break
 				}
-					
-				const best = tags[0]
+
+				const best = tags[best_index]
 				groups[ best ] = [ ... all.get( best )! ]
-				tags.splice( tags.indexOf( best ), 1 )
+				tags.splice( best_index, 1 )
 				
 				for( const id of groups[ best ] ) for( const [ tag, ids ] of all ) {
 					ids.delete( id )

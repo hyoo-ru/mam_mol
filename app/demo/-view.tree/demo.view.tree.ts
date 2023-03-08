@@ -69,10 +69,31 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Menu2 $mol_app_demo_menu2
+		 * 	item_ids <= names_demo_all
+		 * 	item_tags* <= widget_tags*
+		 * 	title <= menu_title
+		 * ```
+		 */
+		@ $mol_mem
+		Menu2() {
+			const obj = new this.$.$mol_app_demo_menu2()
+			
+			obj.item_ids = () => this.names_demo_all()
+			obj.item_tags = (id: any) => this.widget_tags(id)
+			obj.title = () => this.menu_title()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * Menu $mol_app_demo_menu
 		 * 	title <= menu_title
 		 * 	names <= names_demo_filtered
 		 * 	filter_suggests <= filter_suggests
+		 * 	tags_selected? <=> tags_selected?
+		 * 	tags_dictionary <= tags_dictionary
 		 * 	tools <= tools
 		 * ```
 		 */
@@ -83,6 +104,8 @@ namespace $ {
 			obj.title = () => this.menu_title()
 			obj.names = () => this.names_demo_filtered()
 			obj.filter_suggests = () => this.filter_suggests()
+			obj.tags_selected = (next?: any) => this.tags_selected(next)
+			obj.tags_dictionary = () => this.tags_dictionary()
 			obj.tools = () => this.tools()
 			
 			return obj
@@ -224,6 +247,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * names_demo_all /string
+		 * ```
+		 */
+		names_demo_all() {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * widget_tags* /string
+		 * ```
+		 */
+		widget_tags(id: any) {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
 		 * menu_title @ \$mol examples
 		 * ```
 		 */
@@ -249,6 +292,28 @@ namespace $ {
 		filter_suggests() {
 			return [
 			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags_selected? /string
+		 * ```
+		 */
+		@ $mol_mem
+		tags_selected(next?: any) {
+			if ( next !== undefined ) return next as never
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags_dictionary *
+		 * ```
+		 */
+		tags_dictionary() {
+			return {
+			}
 		}
 		
 		/**
@@ -395,6 +460,103 @@ namespace $ {
 		}
 	}
 	
+	export class $mol_app_demo_menu2 extends $mol_page {
+		
+		/**
+		 * ```tree
+		 * Body $mol_scroll sub / <= List
+		 * ```
+		 */
+		@ $mol_mem
+		Body() {
+			const obj = new this.$.$mol_scroll()
+			
+			obj.sub = () => [
+				this.List()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * item_ids /string
+		 * ```
+		 */
+		item_ids() {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * item_tags* /string
+		 * ```
+		 */
+		item_tags(id: any) {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * item_title* \
+		 * ```
+		 */
+		item_title(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Item* $mol_button_minor title <= item_title*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Item(id: any) {
+			const obj = new this.$.$mol_button_minor()
+			
+			obj.title = () => this.item_title(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Tree $mol_tag_tree
+		 * 	ids <= item_ids
+		 * 	tags* <= item_tags*
+		 * 	Item* <= Item*
+		 * ```
+		 */
+		@ $mol_mem
+		Tree() {
+			const obj = new this.$.$mol_tag_tree()
+			
+			obj.ids = () => this.item_ids()
+			obj.tags = (id: any) => this.item_tags(id)
+			obj.Item = (id: any) => this.Item(id)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * List $mol_list rows / <= Tree
+		 * ```
+		 */
+		@ $mol_mem
+		List() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => [
+				this.Tree()
+			] as readonly any[]
+			
+			return obj
+		}
+	}
+	
 	export class $mol_app_demo_menu extends $mol_page {
 		
 		/**
@@ -454,6 +616,45 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * tags_selected?val /string
+		 * ```
+		 */
+		@ $mol_mem
+		tags_selected(val?: any) {
+			if ( val !== undefined ) return val as never
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * tags_dictionary *
+		 * ```
+		 */
+		tags_dictionary() {
+			return {
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * Tags $mol_select_list
+		 * 	value?val <=> tags_selected?val
+		 * 	dictionary <= tags_dictionary
+		 * ```
+		 */
+		@ $mol_mem
+		Tags() {
+			const obj = new this.$.$mol_select_list()
+			
+			obj.value = (val?: any) => this.tags_selected(val)
+			obj.dictionary = () => this.tags_dictionary()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * filter?val \
 		 * ```
 		 */
@@ -504,6 +705,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * List $mol_list rows /
+		 * 	<= Tags
 		 * 	<= Filter
 		 * 	<= Options
 		 * ```
@@ -513,6 +715,7 @@ namespace $ {
 			const obj = new this.$.$mol_list()
 			
 			obj.rows = () => [
+				this.Tags(),
 				this.Filter(),
 				this.Options()
 			] as readonly any[]
