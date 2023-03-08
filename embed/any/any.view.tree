@@ -1,4 +1,4 @@
-$mol_embed_any $mol_ghost
+$mol_embed_any $mol_view
 	Image $mol_image
 		title <= title \
 		uri <= uri \

@@ -22,11 +22,11 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		Sub() {
+		sub() {
 			switch( this.type() ) {
-				case 'image': return this.Image()
-				case 'youtube': return this.Youtube()
-				default: return this.Object()
+				case 'image': return [ this.Image() ]
+				case 'youtube': return [ this.Youtube() ]
+				default: return [ this.Object() ]
 			}
 		}
 		

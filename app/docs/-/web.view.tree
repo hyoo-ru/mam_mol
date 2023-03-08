@@ -544,9 +544,6 @@ $mol_link_iconed $mol_link
 		<= title <= uri
 	host \
 
-$mol_ghost $mol_view
-	Sub $mol_view
-
 $mol_embed_youtube $mol_check
 	uri \
 	video_preview \
@@ -561,7 +558,7 @@ $mol_embed_youtube $mol_check
 			uri <= video_embed \
 
 
-$mol_embed_any $mol_ghost
+$mol_embed_any $mol_view
 	Image $mol_image
 		title <= title \
 		uri <= uri \
@@ -2635,6 +2632,9 @@ $mol_dimmer_demo $mol_example_small
 		\dimmer
 		\search
 		\highlight
+
+$mol_ghost $mol_view
+	Sub $mol_view
 
 $mol_drag $mol_ghost
 	event *
