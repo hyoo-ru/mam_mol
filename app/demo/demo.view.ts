@@ -127,7 +127,32 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		tags_demo_filtered() {
+		tags_dictionary() {
+			const tag_weights = new Map<string, number>()
+
+			for (const name of this.names_demo_all()) {
+				for (const tag of this.widget_tags( name )) {
+					const weight = tag_weights.get(tag)
+					tag_weights.set(tag, weight === undefined ? 0 : weight + 1)
+				}
+			}
+
+			return [ ...tag_weights.entries() ]
+				.filter( ( [ , weight ] ) => weight > 2 )
+				.sort( ( [ av, aw ], [ bv, bw ] ) => {
+					const dw = bw - aw
+					if ( dw === 0 ) return av > bv ? 1 : ( av < bv ? -1 : 0 )
+
+					return dw
+				})
+				.reduce( ( acc, [ tag ] ) => {
+					acc[ tag ] = tag
+					return acc
+				}, {} as Record<string, string>)
+		}
+
+		@ $mol_mem
+		tags_filtered() {
 			return [... new Set(
 				this.names_demo_filtered().flatMap( name => this.widget_tags( name ) )
 			) ]
@@ -140,13 +165,13 @@ namespace $.$$ {
 		override filter_suggests() {
 			const filter_words = this.filter_words()
 
-			if( filter_words.length === 0 ) return this.tags_demo_filtered()
+			if( filter_words.length === 0 ) return this.tags_filtered()
 
 			const filtered_names = this.names_demo_filtered()
 
 			if( filtered_names.length <= 1 ) return []
 
-			const tags = this.tags_demo_filtered()
+			const tags = this.tags_filtered()
 
 			const filter_last_word = filter_words.slice( -1 )[ 0 ]
 
@@ -202,7 +227,7 @@ namespace $.$$ {
 		override blocks() {
 			let sub : $mol_view[] = []
 			
-			sub.push( this.Menu2() )
+			sub.push( this.Menu() )
 			
 			const selected = this.selected()
 			if( !selected ) return sub
@@ -239,7 +264,7 @@ namespace $.$$ {
 
 			return source_link
 		}
-		
+
 		@ $mol_mem_key
 		name_parse( name: string ) {
 			const split = name.replace( /_demo.*$/ , '' ).split('_')

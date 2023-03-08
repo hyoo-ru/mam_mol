@@ -8,15 +8,14 @@ namespace $.$$ {
 		@ $mol_mem
 		tags_ids() {
 			
-			const ids = this.ids()
 			const all = {} as Record< string, string[] >
 			
-			for( const id of ids ) for( const tag of this.tags( id ) ) {
+			for( const id of this.ids() ) for( const tag of this.tags( id ) ) {
 					
 				let ids = all[ tag ]
 				if( !ids ) ids = all[ tag ] = []
 				
-				ids!.push( id )
+				ids.push( id )
 					
 			}
 			
