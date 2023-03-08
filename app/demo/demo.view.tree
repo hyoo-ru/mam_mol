@@ -12,10 +12,16 @@ $mol_app_demo $mol_book2
 	demo_block_list /
 		\$mol_example_small
 		\$mol_example_large
+	Menu2 $mol_app_demo_menu2
+		item_ids <= names_demo_all /string
+		item_tags* <= widget_tags* /string
+		title <= menu_title @ \$mol examples
 	Menu $mol_app_demo_menu
 		title <= menu_title @ \$mol examples
 		names <= names_demo_filtered /string
 		filter_suggests <= filter_suggests /string
+		tags_selected? <=> tags_selected? /string
+		tags_dictionary <= tags_dictionary *
 		tools <= tools /
 			<= Sources $mol_link_source
 				uri <= sources_uri \https://github.com/hyoo-ru/mam_mol/
@@ -37,12 +43,25 @@ $mol_app_demo $mol_book2
 			<= selected \
 			<= detail_empty_postfix @ \"
 
+$mol_app_demo_menu2 $mol_page
+	Body $mol_scroll
+		sub /
+			<= List $mol_list rows /
+				<= Tree $mol_tag_tree
+					ids <= item_ids /string
+					tags* <= item_tags* /string
+					Item* <= Item* $mol_button_minor
+						title <= item_title* \
+
 $mol_app_demo_menu $mol_page
 	names /string
 	filter_suggests /string
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /
+				<= Tags $mol_select_list
+					value?val <=> tags_selected?val /string
+					dictionary <= tags_dictionary *
 				<= Filter $mol_search
 					query?val <=> filter?val \
 					- suggests <= filter_suggests
