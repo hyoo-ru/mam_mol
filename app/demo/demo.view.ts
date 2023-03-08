@@ -202,7 +202,7 @@ namespace $.$$ {
 		override blocks() {
 			let sub : $mol_view[] = []
 			
-			sub.push( this.Menu() )
+			sub.push( this.Menu2() )
 			
 			const selected = this.selected()
 			if( !selected ) return sub
@@ -296,6 +296,12 @@ namespace $.$$ {
 			return '$'+ id.replace( '_demo_', '/' ).replace( '_demo', '' )
 		}
 		
+	}
+
+	export class $mol_app_demo_menu2 extends $.$mol_app_demo_menu2 {
+		override item_title(id: string) {
+			return id
+		}
 	}
 
 	export class $mol_app_demo_readme_not_found_error extends Error {
