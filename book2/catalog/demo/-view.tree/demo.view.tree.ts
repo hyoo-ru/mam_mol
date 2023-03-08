@@ -481,7 +481,7 @@ namespace $ {
 		 * 	Spread_close => Spread_close
 		 * 	spreads *
 		 * 		foods <= Foods
-		 * 		anials <= Animals
+		 * 		animals <= Animals
 		 * ```
 		 */
 		@ $mol_mem
@@ -492,7 +492,7 @@ namespace $ {
 			obj.menu_title = () => "Catalog"
 			obj.spreads = () => ({
 				foods: this.Foods(),
-				anials: this.Animals()
+				animals: this.Animals()
 			})
 			
 			return obj

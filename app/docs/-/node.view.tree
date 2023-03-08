@@ -1337,7 +1337,7 @@ $mol_book2_catalog_demo $mol_example_large
 							title \🍟 Fries
 							tools / <= Foods_spread_close
 							body / <= Empty
-				anials <= Animals $mol_book2_catalog
+				animals <= Animals $mol_book2_catalog
 					param \mol_book2_catalog_demo_animals
 					menu_title \Animals
 					menu_tools /

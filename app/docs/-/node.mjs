@@ -14861,7 +14861,7 @@ var $;
             obj.menu_title = () => "Catalog";
             obj.spreads = () => ({
                 foods: this.Foods(),
-                anials: this.Animals()
+                animals: this.Animals()
             });
             return obj;
         }
