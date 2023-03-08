@@ -34419,6 +34419,254 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_tag_tree extends $mol_list {
+        tag_current(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        ids() {
+            return [];
+        }
+        tags(id) {
+            return [];
+        }
+        Item(id) {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.item_title(id)
+            ];
+            return obj;
+        }
+        sub() {
+            return [
+                this.Tag("0")
+            ];
+        }
+        item_title(id) {
+            return "";
+        }
+        tag_name(id) {
+            return "";
+        }
+        tag_expanded(id, next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        tag_ids(id) {
+            return [];
+        }
+        Tag_tree(id) {
+            const obj = new this.$.$mol_tag_tree();
+            obj.ids = () => this.tag_ids(id);
+            obj.tags = (id) => this.tags(id);
+            obj.Item = (id) => this.Item(id);
+            return obj;
+        }
+        Tag(id) {
+            const obj = new this.$.$mol_expander();
+            obj.title = () => this.tag_name(id);
+            obj.expanded = (next) => this.tag_expanded(id, next);
+            obj.content = () => [
+                this.Tag_tree(id)
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_tag_tree.prototype, "tag_current", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_tag_tree.prototype, "Item", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_tag_tree.prototype, "tag_expanded", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_tag_tree.prototype, "Tag_tree", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_tag_tree.prototype, "Tag", null);
+    $.$mol_tag_tree = $mol_tag_tree;
+})($ || ($ = {}));
+//mol/tag/tree/-view.tree/tree.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_tag_tree extends $.$mol_tag_tree {
+            tag_expanded(id, next) {
+                return this.tag_current(next?.valueOf && (next ? id : '')) === id;
+            }
+            tags_ids() {
+                const ids = this.ids();
+                const all = {};
+                for (const id of ids)
+                    for (const tag of this.tags(id)) {
+                        let ids = all[tag];
+                        if (!ids)
+                            ids = all[tag] = [];
+                        ids.push(id);
+                    }
+                return all;
+            }
+            groups() {
+                const ids = this.ids();
+                const all = new Map(Object.entries(this.tags_ids())
+                    .map(([tag, ids]) => [tag, new Set(ids)]));
+                const groups = {};
+                const tail = new Set();
+                const tags = [...all.keys()]
+                    .filter(tag => all.get(tag).size < ids.length * .9)
+                    .filter(tag => all.get(tag).size > 3);
+                while (all.size) {
+                    tags.sort((a, b) => all.get(b).size - all.get(a).size);
+                    if (!tags.length) {
+                        for (const ids of all.values())
+                            for (const id of ids)
+                                tail.add(id);
+                        break;
+                    }
+                    const best = tags[0];
+                    groups[best] = [...all.get(best)];
+                    tags.splice(tags.indexOf(best), 1);
+                    for (const id of groups[best])
+                        for (const [tag, ids] of all) {
+                            ids.delete(id);
+                            if (!ids.size)
+                                all.delete(tag);
+                        }
+                }
+                return { ...groups, '': [...tail] };
+            }
+            tag_ids(tag) {
+                return this.tags_ids()[tag];
+            }
+            sub() {
+                const { '': ids = [], ...groups } = this.groups();
+                return [
+                    ...Object.keys(groups).map(tag => this.Tag(tag)),
+                    ...ids.map(id => this.Item(id)),
+                ];
+            }
+            tag_name(tag) {
+                return tag;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_tag_tree.prototype, "tags_ids", null);
+        __decorate([
+            $mol_mem
+        ], $mol_tag_tree.prototype, "groups", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_tag_tree.prototype, "tag_ids", null);
+        __decorate([
+            $mol_mem
+        ], $mol_tag_tree.prototype, "sub", null);
+        $$.$mol_tag_tree = $mol_tag_tree;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/tag/tree/tree.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/tag/tree/tree.view.css", "[mol_tag_tree_tag_content] {\r\n\tpadding-left: 1.5rem;\r\n}\r\n\r\n[mol_tag_tree_item] {\r\n\tpadding: var(--mol_gap_text);\r\n}");
+})($ || ($ = {}));
+//mol/tag/tree/-css/tree.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_tag_tree_demo extends $mol_example {
+        title() {
+            return "Autoatic tag tree";
+        }
+        sub() {
+            return [
+                this.Tree()
+            ];
+        }
+        tags() {
+            return [
+                "tags",
+                "tree",
+                "taxonomy",
+                "menu"
+            ];
+        }
+        item_ids() {
+            return [];
+        }
+        item_tags(id) {
+            return [];
+        }
+        item_title(id) {
+            return "";
+        }
+        Item(id) {
+            const obj = new this.$.$mol_button_minor();
+            obj.title = () => this.item_title(id);
+            return obj;
+        }
+        Tree() {
+            const obj = new this.$.$mol_tag_tree();
+            obj.ids = () => this.item_ids();
+            obj.tags = (id) => this.item_tags(id);
+            obj.Item = (id) => this.Item(id);
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_tag_tree_demo.prototype, "Item", null);
+    __decorate([
+        $mol_mem
+    ], $mol_tag_tree_demo.prototype, "Tree", null);
+    $.$mol_tag_tree_demo = $mol_tag_tree_demo;
+})($ || ($ = {}));
+//mol/tag/tree/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_tag_tree_demo extends $.$mol_tag_tree_demo {
+            item_ids() {
+                return Array.from({ length: 100 }, $mol_stub_code);
+            }
+            item_tags(id) {
+                return [
+                    id,
+                    $mol_stub_city(),
+                    $mol_stub_company_name_small(),
+                ];
+            }
+            item_title(id) {
+                return id;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_tag_tree_demo.prototype, "item_ids", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_tag_tree_demo.prototype, "item_tags", null);
+        $$.$mol_tag_tree_demo = $mol_tag_tree_demo;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/tag/tree/demo/demo.view.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_text_code_demo extends $mol_example_small {
         title() {
             return "Markdow visualization example";

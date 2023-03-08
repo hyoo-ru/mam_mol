@@ -1,0 +1,16 @@
+$mol_tag_tree $mol_list
+	tag_current? \
+	ids /
+	tags* /
+	Item* $mol_view
+		sub /
+			<= item_title* \
+	sub /
+		<= Tag*0 $mol_expander
+			title <= tag_name* \
+			expanded? <=> tag_expanded*? false
+			content /
+				<= Tag_tree* $mol_tag_tree
+					ids <= tag_ids* /
+					tags* <= tags*
+					Item* <= Item*

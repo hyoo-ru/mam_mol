@@ -8831,6 +8831,59 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_tag_tree extends $mol_list {
+        tag_current(next?: any): string;
+        ids(): readonly any[];
+        tags(id: any): readonly any[];
+        Item(id: any): $mol_view;
+        sub(): readonly any[];
+        item_title(id: any): string;
+        tag_name(id: any): string;
+        tag_expanded(id: any, next?: any): boolean;
+        tag_ids(id: any): readonly any[];
+        Tag_tree(id: any): $$.$mol_tag_tree;
+        Tag(id: any): $$.$mol_expander;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_tag_tree extends $.$mol_tag_tree {
+        tag_expanded(id: string, next?: boolean): boolean;
+        tags_ids(): Record<string, string[]>;
+        groups(): {
+            '': string[];
+        };
+        tag_ids(tag: string): string[];
+        sub(): $mol_view[];
+        tag_name(tag: string): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_tag_tree_demo extends $mol_example {
+        title(): string;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        item_ids(): readonly string[];
+        item_tags(id: any): readonly string[];
+        item_title(id: any): string;
+        Item(id: any): $mol_button_minor;
+        Tree(): $$.$mol_tag_tree;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_tag_tree_demo extends $.$mol_tag_tree_demo {
+        item_ids(): string[];
+        item_tags(id: string): string[];
+        item_title(id: string): string;
+    }
+}
+
+declare namespace $ {
     class $mol_text_code_demo extends $mol_example_small {
         title(): string;
         sub(): readonly any[];

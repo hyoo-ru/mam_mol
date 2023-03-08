@@ -4414,6 +4414,37 @@ $mol_switch_demo $mol_example
 		\group
 		\radio
 
+$mol_tag_tree $mol_list
+	tag_current? \
+	ids /
+	tags* /
+	Item* $mol_view
+		sub /
+			<= item_title* \
+	sub /
+		<= Tag*0 $mol_expander
+			title <= tag_name* \
+			expanded? <=> tag_expanded*? false
+			content /
+				<= Tag_tree* $mol_tag_tree
+					ids <= tag_ids* /
+					tags* <= tags*
+					Item* <= Item*
+
+$mol_tag_tree_demo $mol_example
+	title \Autoatic tag tree
+	sub /
+		<= Tree $mol_tag_tree
+			ids <= item_ids /string
+			tags* <= item_tags* /string
+			Item* <= Item* $mol_button_minor
+				title <= item_title* \
+	tags /
+		\tags
+		\tree
+		\taxonomy
+		\menu
+
 $mol_text_code_demo $mol_example_small
 	title \Markdow visualization example
 	sub /
