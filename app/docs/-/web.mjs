@@ -5316,6 +5316,9 @@ var $;
                 return next;
             return "";
         }
+        ids_tags() {
+            return {};
+        }
         ids() {
             return [];
         }
@@ -5390,6 +5393,12 @@ var $;
     var $$;
     (function ($$) {
         class $mol_tag_tree extends $.$mol_tag_tree {
+            ids() {
+                return Object.keys(this.ids_tags());
+            }
+            tags(id) {
+                return this.ids_tags()[id];
+            }
             tag_expanded(id, next) {
                 return this.tag_current(next?.valueOf && (next ? id : '')) === id;
             }
@@ -5455,6 +5464,12 @@ var $;
                 return tag;
             }
         }
+        __decorate([
+            $mol_mem
+        ], $mol_tag_tree.prototype, "ids", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_tag_tree.prototype, "tags", null);
         __decorate([
             $mol_mem
         ], $mol_tag_tree.prototype, "tags_ids", null);
@@ -34756,12 +34771,6 @@ var $;
                 "menu"
             ];
         }
-        item_ids() {
-            return [];
-        }
-        item_tags(id) {
-            return [];
-        }
         item_title(id) {
             return "";
         }
@@ -34772,9 +34781,84 @@ var $;
         }
         Tree() {
             const obj = new this.$.$mol_tag_tree();
-            obj.ids = () => this.item_ids();
-            obj.tags = (id) => this.item_tags(id);
             obj.Item = (id) => this.Item(id);
+            obj.ids_tags = () => ({
+                batman: [
+                    "side:good",
+                    "universe:dc",
+                    "sex:male"
+                ],
+                superman: [
+                    "side:good",
+                    "universe:dc",
+                    "sex:male"
+                ],
+                aquaman: [
+                    "side:good",
+                    "universe:dc",
+                    "sex:male"
+                ],
+                flash: [
+                    "side:good",
+                    "universe:dc",
+                    "sex:male"
+                ],
+                jocker: [
+                    "side:bad",
+                    "universe:dc",
+                    "sex:male"
+                ],
+                harley: [
+                    "side:bad",
+                    "universe:dc",
+                    "sex:female"
+                ],
+                deadshot: [
+                    "side:bad",
+                    "universe:dc",
+                    "sex:male"
+                ],
+                wonderwoman: [
+                    "side:good",
+                    "universe:dc",
+                    "sex:female"
+                ],
+                ironman: [
+                    "side:good",
+                    "universe:marvel",
+                    "sex:male"
+                ],
+                hulk: [
+                    "side:good",
+                    "universe:marvel",
+                    "sex:male"
+                ],
+                thor: [
+                    "side:good",
+                    "universe:marvel",
+                    "sex:male"
+                ],
+                spiderman: [
+                    "side:good",
+                    "universe:marvel",
+                    "sex:male"
+                ],
+                thanos: [
+                    "side:bad",
+                    "universe:marvel",
+                    "sex:male"
+                ],
+                locky: [
+                    "side:bad",
+                    "universe:marvel",
+                    "sex:male"
+                ],
+                hela: [
+                    "side:bad",
+                    "universe:marvel",
+                    "sex:female"
+                ]
+            });
             return obj;
         }
     }

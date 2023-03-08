@@ -14,6 +14,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * ids_tags *
+		 * ```
+		 */
+		ids_tags() {
+			return {
+			}
+		}
+		
+		/**
+		 * ```tree
 		 * ids /
 		 * ```
 		 */

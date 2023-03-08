@@ -1,5 +1,6 @@
 $mol_tag_tree $mol_list
 	tag_current? \
+	ids_tags *
 	ids /
 	tags* /
 	Item* $mol_view

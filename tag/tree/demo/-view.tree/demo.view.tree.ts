@@ -41,26 +41,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * item_ids /string
-		 * ```
-		 */
-		item_ids() {
-			return [
-			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
-		 * item_tags* /string
-		 * ```
-		 */
-		item_tags(id: any) {
-			return [
-			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
 		 * item_title* \
 		 * ```
 		 */
@@ -85,18 +65,152 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Tree $mol_tag_tree
-		 * 	ids <= item_ids
-		 * 	tags* <= item_tags*
 		 * 	Item* <= Item*
+		 * 	ids_tags *
+		 * 		batman /
+		 * 			\side:good
+		 * 			\universe:dc
+		 * 			\sex:male
+		 * 		superman /
+		 * 			\side:good
+		 * 			\universe:dc
+		 * 			\sex:male
+		 * 		aquaman /
+		 * 			\side:good
+		 * 			\universe:dc
+		 * 			\sex:male
+		 * 		flash /
+		 * 			\side:good
+		 * 			\universe:dc
+		 * 			\sex:male
+		 * 		jocker /
+		 * 			\side:bad
+		 * 			\universe:dc
+		 * 			\sex:male
+		 * 		harley /
+		 * 			\side:bad
+		 * 			\universe:dc
+		 * 			\sex:female
+		 * 		deadshot /
+		 * 			\side:bad
+		 * 			\universe:dc
+		 * 			\sex:male
+		 * 		wonderwoman /
+		 * 			\side:good
+		 * 			\universe:dc
+		 * 			\sex:female
+		 * 		ironman /
+		 * 			\side:good
+		 * 			\universe:marvel
+		 * 			\sex:male
+		 * 		hulk /
+		 * 			\side:good
+		 * 			\universe:marvel
+		 * 			\sex:male
+		 * 		thor /
+		 * 			\side:good
+		 * 			\universe:marvel
+		 * 			\sex:male
+		 * 		spiderman /
+		 * 			\side:good
+		 * 			\universe:marvel
+		 * 			\sex:male
+		 * 		thanos /
+		 * 			\side:bad
+		 * 			\universe:marvel
+		 * 			\sex:male
+		 * 		locky /
+		 * 			\side:bad
+		 * 			\universe:marvel
+		 * 			\sex:male
+		 * 		hela /
+		 * 			\side:bad
+		 * 			\universe:marvel
+		 * 			\sex:female
 		 * ```
 		 */
 		@ $mol_mem
 		Tree() {
 			const obj = new this.$.$mol_tag_tree()
 			
-			obj.ids = () => this.item_ids()
-			obj.tags = (id: any) => this.item_tags(id)
 			obj.Item = (id: any) => this.Item(id)
+			obj.ids_tags = () => ({
+				batman: [
+					"side:good",
+					"universe:dc",
+					"sex:male"
+				] as readonly any[],
+				superman: [
+					"side:good",
+					"universe:dc",
+					"sex:male"
+				] as readonly any[],
+				aquaman: [
+					"side:good",
+					"universe:dc",
+					"sex:male"
+				] as readonly any[],
+				flash: [
+					"side:good",
+					"universe:dc",
+					"sex:male"
+				] as readonly any[],
+				jocker: [
+					"side:bad",
+					"universe:dc",
+					"sex:male"
+				] as readonly any[],
+				harley: [
+					"side:bad",
+					"universe:dc",
+					"sex:female"
+				] as readonly any[],
+				deadshot: [
+					"side:bad",
+					"universe:dc",
+					"sex:male"
+				] as readonly any[],
+				wonderwoman: [
+					"side:good",
+					"universe:dc",
+					"sex:female"
+				] as readonly any[],
+				ironman: [
+					"side:good",
+					"universe:marvel",
+					"sex:male"
+				] as readonly any[],
+				hulk: [
+					"side:good",
+					"universe:marvel",
+					"sex:male"
+				] as readonly any[],
+				thor: [
+					"side:good",
+					"universe:marvel",
+					"sex:male"
+				] as readonly any[],
+				spiderman: [
+					"side:good",
+					"universe:marvel",
+					"sex:male"
+				] as readonly any[],
+				thanos: [
+					"side:bad",
+					"universe:marvel",
+					"sex:male"
+				] as readonly any[],
+				locky: [
+					"side:bad",
+					"universe:marvel",
+					"sex:male"
+				] as readonly any[],
+				hela: [
+					"side:bad",
+					"universe:marvel",
+					"sex:female"
+				] as readonly any[]
+			})
 			
 			return obj
 		}

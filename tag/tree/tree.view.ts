@@ -1,6 +1,16 @@
 namespace $.$$ {
 	export class $mol_tag_tree extends $.$mol_tag_tree {
 		
+		@ $mol_mem
+		ids() {
+			return Object.keys( this.ids_tags() ) as readonly string[]
+		}
+		
+		@ $mol_mem_key
+		tags( id: string ) {
+			return this.ids_tags()[ id ]
+		}
+		
 		tag_expanded( id: string, next?: boolean ) {
 			return this.tag_current( next?.valueOf && ( next ? id : '' ) ) === id
 		}

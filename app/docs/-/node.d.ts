@@ -1765,6 +1765,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_tag_tree extends $mol_list {
         tag_current(next?: any): string;
+        ids_tags(): {};
         ids(): readonly any[];
         tags(id: any): readonly any[];
         Item(id: any): $mol_view;
@@ -1780,6 +1781,8 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_tag_tree extends $.$mol_tag_tree {
+        ids(): readonly string[];
+        tags(id: string): any;
         tag_expanded(id: string, next?: boolean): boolean;
         tags_ids(): Record<string, string[]>;
         groups(): {
@@ -8855,8 +8858,6 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
-        item_ids(): readonly string[];
-        item_tags(id: any): readonly string[];
         item_title(id: any): string;
         Item(id: any): $mol_button_minor;
         Tree(): $$.$mol_tag_tree;
