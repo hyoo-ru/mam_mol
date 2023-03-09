@@ -5,11 +5,11 @@ namespace $.$$ {
 			
 			const { stamp, date, iso, internal } = $mol_wire_let({
 				
-				iso: ( next?: string )=> undefined as typeof next,
-				stamp: ( next?: number )=> next,
-				date: ( next?: Date )=> undefined as typeof next,
+				iso: ( next?: string )=> undefined as any as string,
+				stamp: ( next = 3 )=> next,
+				date: ( next?: Date )=> undefined as any as Date,
 				
-				internal: $mol_wire_map< string | undefined, string | undefined >(
+				internal: $mol_wire_map< string >(
 					next => iso( next ),
 					next => $mol_maybe(
 						stamp( next?.valueOf && new Date( next ).valueOf() )
@@ -21,9 +21,9 @@ namespace $.$$ {
 			})
 			
 			$mol_assert_like( iso(), undefined )
-			$mol_assert_like( stamp(), undefined )
+			$mol_assert_like( stamp(), 3 )
 			$mol_assert_like( date(), undefined )
-			$mol_assert_like( internal(), '' )
+			$mol_assert_like( internal(), '1970-01-01T00:00:00.003Z' )
 			
 			$mol_assert_like( stamp( 5 ), 5 )
 			

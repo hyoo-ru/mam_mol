@@ -1,10 +1,10 @@
 namespace $ {
     
-    export function $mol_wire_map< Next, Res >(
-		... ways: (( next?: Next )=> Res )[]
+    export function $mol_wire_map< Val >(
+		... ways: (( next?: Val )=> Val )[]
 	) {
-        return ( next?: Next )=> {
-            let res: Res | undefined
+        return ( next?: Val )=> {
+            let res: Val | undefined
             for( const way of ways ) res ??= way( next )
             return res ?? next
         }
