@@ -40,7 +40,7 @@ namespace $.$$ {
 					this.value_number( moment.valueOf() )
 					return moment_str
 				} else {
-					const moment_try = $mol_try( ()=> new $mol_time_moment( value ) )
+					const moment_try = $mol_try( ()=> new $mol_time_moment( value_number ) )
 					const moment = moment_try instanceof Error? new $mol_time_moment() : moment_try
 					const moment_str = moment.toString( 'YYYY-MM-DD hh:mm' )
 					this.value( moment_str )
