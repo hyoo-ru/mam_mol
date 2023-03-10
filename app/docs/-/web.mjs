@@ -22995,7 +22995,7 @@ var $;
     (function ($$) {
         class $mol_date extends $.$mol_date {
             trigger_content() {
-                return [this.value_moment()?.toString('YYYY-MM-DD hh:mm') ?? this.Icon()];
+                return [this.value() || this.Icon()];
             }
             input_mask(val) {
                 return val.length > 8 ? '____-__-__ __:__' : '____-__-__ ';
@@ -23017,9 +23017,27 @@ var $;
                 this.value_moment(moment2);
                 return val;
             }
-            value_moment(val) {
-                const stamp = this.value_number(val && val.valueOf());
-                return isNaN(stamp) ? null : new $mol_time_moment(stamp);
+            value_moment(next) {
+                const stamp = this.value_number();
+                if (next === undefined) {
+                    return isNaN(stamp) ? null : new $mol_time_moment(stamp);
+                }
+                this.value_number(next?.valueOf() ?? NaN);
+                return next;
+            }
+            value_number(next) {
+                const value = this.value();
+                if (next === undefined) {
+                    if (!value)
+                        return NaN;
+                    const moment = $mol_try(() => new $mol_time_moment(value));
+                    if (moment instanceof Error)
+                        return NaN;
+                    return moment.valueOf() ?? NaN;
+                }
+                const moment = $mol_try(() => new $mol_time_moment(next));
+                this.value(moment.toString(value.length > 12 ? 'YYYY-MM-DD hh:mm' : 'YYYY-MM-DD'));
+                return next;
             }
             value_moment_today() {
                 return this.value()
@@ -23070,6 +23088,9 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_date.prototype, "value_moment", null);
+        __decorate([
+            $mol_mem
+        ], $mol_date.prototype, "value_number", null);
         __decorate([
             $mol_mem
         ], $mol_date.prototype, "value_moment_today", null);
@@ -29660,12 +29681,14 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const { or } = $mol_regexp;
+    const { or, tab, char_any, repeat, line_end, vary } = $mol_regexp;
     $.$hyoo_marked_script_line = $mol_regexp.from([
-        '  ',
-        { marker: ['  ', or, '++', or, '--', or, '**'] },
-        { content: $hyoo_marked_line_content },
-        $mol_regexp.line_end,
+        vary([
+            tab,
+            ['  ', { marker: ['  ', or, '++', or, '--', or, '**'] }],
+        ]),
+        { content: repeat(char_any) },
+        line_end,
     ]);
     $.$hyoo_marked_script = $mol_regexp.repeat_greedy($.$hyoo_marked_script_line, 1);
 })($ || ($ = {}));

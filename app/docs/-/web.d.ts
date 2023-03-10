@@ -6002,11 +6002,12 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_date extends $.$mol_date {
-        trigger_content(): string[];
+        trigger_content(): (string | $mol_icon_calendar)[];
         input_mask(val: string): "____-__-__ __:__" | "____-__-__ ";
         input_content(): ($mol_button_minor | $mol_format)[];
         value(val?: string): string;
-        value_moment(val?: $mol_time_moment): $mol_time_moment;
+        value_moment(next?: $mol_time_moment): $mol_time_moment;
+        value_number(next?: number): number;
         value_moment_today(): $mol_time_moment;
         clear(): void;
         month_moment(next?: $mol_time_moment): $mol_time_moment;
@@ -7722,7 +7723,6 @@ declare namespace $ {
         [x: string]: string;
         readonly win_end: string;
         readonly mac_end: string;
-        readonly marker: string;
         readonly content: string;
     }>;
     let $hyoo_marked_script: $mol_regexp<{
@@ -7731,7 +7731,6 @@ declare namespace $ {
         [x: string]: string;
         readonly win_end: string;
         readonly mac_end: string;
-        readonly marker: string;
         readonly content: string;
     }>;
 }
@@ -7757,10 +7756,10 @@ declare namespace $ {
         readonly script: string;
         readonly win_end: string;
         readonly mac_end: string;
-        readonly marker: string;
         readonly content: string;
         readonly kids: string;
         readonly indent: string;
+        readonly marker: string;
     }>;
 }
 
