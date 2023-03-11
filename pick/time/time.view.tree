@@ -6,40 +6,15 @@ $mol_pick_time $mol_pick
 			value? <=> value? \
 			mask \__:__
 			enabled <= enabled true
-		<= Matrix $mol_row
+		<= Pickers $mol_row
 			sub /
-				<= Hours $mol_pick_time_numbers
-					number_matrix <= hour_matrix /
-					number_selected* <= hour_selected* false
-					number_click*?event <=> hour_click*?event null
+				<= Hours $mol_switch
+					value? <=> hour_selected? \
+					options <= hour_options *
 				<= Delimiter $mol_paragraph
 					title \:
-				<= Minutes $mol_pick_time_numbers
-					number_matrix <= minute_matrix /
-					number_selected* <= minute_selected* false
-					number_click*?event <=> minute_click*?event null
+				<= Minutes $mol_switch
+					value? <=> minute_selected? \
+					options <= minute_options *
 	-
 	value_moment? $mol_time_moment
-
-$mol_pick_time_numbers $mol_row
-	number_matrix /
-	sub /
-		<= Column*0 $mol_list
-			sub <= numbers* /$mol_pick_time_number
-	number_text* null
-	number_content* /
-		<= Number_button* $mol_button_minor
-			title <= number_text*
-			event_click?event <=> number_click*?event null
-			minimal_height 24
-	Number* $mol_pick_time_number
-		selected <= number_selected* false
-		theme <= number_theme* \
-		sub <= number_content*
-
-$mol_pick_time_number $mol_view
-	minimal_height 24
-	minimal_width 36
-	attr *
-		mol_selected <= selected false
-		mol_theme <= theme \
