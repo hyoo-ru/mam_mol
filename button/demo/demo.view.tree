@@ -30,6 +30,6 @@ $mol_button_demo $mol_example_small
 	tags /
 		\button
 	aspects /
-		\kind:widget
+		\ui:form
 		\input:button
 
