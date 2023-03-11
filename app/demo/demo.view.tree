@@ -64,6 +64,9 @@ $mol_app_demo_detail $mol_page
 			hint @ \Readme
 			sub /
 				<= readme_icon $mol_icon_information_outline
+		<= Source_link $mol_link_source
+			uri <= source_link \
+			hint <= source_hint @ \Source code of this demo
 		<= Chat $mol_chat
 			pages => chat_pages
 			seed <= chat_seed \0_0
@@ -89,9 +92,6 @@ $mol_app_demo_readme $mol_page
 	module /string
 	title @ \Readme
 	tools /
-		<= Source_link $mol_link_source
-			uri <= source_link \
-			hint <= source_hint @ \Source code of this demo
 		<= Close $mol_link 
 			hint @ \Close panel
 			sub /
