@@ -2031,24 +2031,6 @@ $mol_svg_rect $mol_svg
 		x <= pos_x \
 		y <= pos_y \
 
-$mol_svg_text_box $mol_svg_group
-	font_size 16
-	width 0
-	sub /
-		<= Back $mol_svg_rect
-			width <= box_width \0.5rem
-			height <= box_height \1rem
-			pos /
-				<= box_pos_x <= pos_x
-				<= box_pos_y \0
-		<= Text $mol_svg_text
-			pos /
-				<= pos_x \0
-				<= pos_y \100%
-			align <= align \start
-			sub /
-				<= text \
-
 $mol_plot_ruler $mol_plot_graph
 	step 0
 	scale_axis 1
@@ -2072,7 +2054,7 @@ $mol_plot_ruler $mol_plot_graph
 		<= Curve $mol_svg_path
 			geometry <= curve \
 		<= labels_formatted /
-		<= Title $mol_svg_text_box
+		<= Title $mol_svg_text
 			pos_x <= title_pos_x \0
 			pos_y <= title_pos_y \100%
 			align <= title_align \start
@@ -2102,6 +2084,24 @@ $mol_plot_ruler_hor $mol_plot_ruler
 
 $mol_plot_mark_hor $mol_plot_ruler_hor
 	labels /string
+
+$mol_svg_text_box $mol_svg_group
+	font_size 16
+	width 0
+	sub /
+		<= Back $mol_svg_rect
+			width <= box_width \0.5rem
+			height <= box_height \1rem
+			pos /
+				<= box_pos_x <= pos_x
+				<= box_pos_y \0
+		<= Text $mol_svg_text
+			pos /
+				<= pos_x \0
+				<= pos_y \100%
+			align <= align \start
+			sub /
+				<= text \
 
 $mol_plot_mark_cross $mol_plot_graph
 	labels /string

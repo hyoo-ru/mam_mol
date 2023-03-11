@@ -257,7 +257,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Title $mol_svg_text_box
+		 * Title $mol_svg_text
 		 * 	pos_x <= title_pos_x
 		 * 	pos_y <= title_pos_y
 		 * 	align <= title_align
@@ -266,7 +266,7 @@ namespace $ {
 		 */
 		@ $mol_mem
 		Title() {
-			const obj = new this.$.$mol_svg_text_box()
+			const obj = new this.$.$mol_svg_text()
 			
 			obj.pos_x = () => this.title_pos_x()
 			obj.pos_y = () => this.title_pos_y()

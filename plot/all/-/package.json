@@ -1,6 +1,6 @@
 {
   "name": "mol_plot_all",
-  "version": "1.2.535",
+  "version": "1.2.536",
   "exports": {
     "node": {
       "import": "./node.mjs",
@@ -118,16 +118,16 @@
     "$mol_plot_ruler",
     "$mol_svg_text",
     "$mol_svg_rect",
-    "$mol_svg_text_box",
-    "$mol_font_measure",
-    "$mol_font",
-    "$mol_font_canvas",
     "$mol_math_round_expand",
     "$mol_math_round",
     "$mol_math",
     "$mol_plot_ruler_hor",
     "$mol_plot_mark_cross",
     "$mol_plot_mark",
+    "$mol_svg_text_box",
+    "$mol_font_measure",
+    "$mol_font",
+    "$mol_font_canvas",
     "$mol_plot_mark_hor"
   ],
   "dependencies": {
