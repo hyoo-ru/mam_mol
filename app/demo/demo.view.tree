@@ -3,25 +3,16 @@ $mol_app_demo $mol_book2
 	source_prefix \https://github.com/hyoo-ru/mam_mol/tree/master/
 	repo_dict *
 		mol \hyoo-ru/mam_mol
-	pages <= blocks /
 	plugins /
 		<= Theme $mol_theme_auto
-		<= Search_start $mol_hotkey
-			key * F? <=> search_start? null
-			mod_ctrl true
 	demo_block_list /
 		\$mol_example_small
 		\$mol_example_large
-	Menu2 $mol_app_demo_menu2
-		item_ids <= names_demo_all /string
-		item_tags* <= widget_tags* /string
-		title <= menu_title @ \$mol examples
 	Menu $mol_app_demo_menu
 		title <= menu_title @ \$mol examples
-		names <= names_demo_filtered /string
-		filter_suggests <= filter_suggests /string
-		tags_selected? <=> tags_selected? /string
-		tags_dictionary <= tags_dictionary *
+		names <= names /string
+		widget_tags* <= widget_tags* /string
+		widget_title* <= widget_title* \
 		tools <= tools /
 			<= Sources $mol_link_source
 				uri <= sources_uri \https://github.com/hyoo-ru/mam_mol/
@@ -42,13 +33,3 @@ $mol_app_demo $mol_book2
 			<= detail_empty_prefix @ \No one demo with prefix "
 			<= selected \
 			<= detail_empty_postfix @ \"
-
-$mol_app_demo_menu2 $mol_page
-	Body $mol_scroll
-		sub /
-			<= List $mol_list rows /
-				<= Tree $mol_tag_tree
-					ids <= item_ids /string
-					tags* <= item_tags* /string
-					Item* <= Item* $mol_button_minor
-						title <= item_title* \

@@ -1,6 +1,11 @@
 $mol_app_demo_menu $mol_page
 	names /string
-	filter_suggests /string
+	widget_tags* /string
+	widget_title* \
+	plugins /
+		<= Search_start $mol_hotkey
+			key * F? <=> search_start? null
+			mod_ctrl true
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /

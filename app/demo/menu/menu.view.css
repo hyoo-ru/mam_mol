@@ -1,0 +1,20 @@
+[mol_app_demo_menu] {
+	flex: 0 0 18rem;
+}
+
+[mol_app_demo_menu_list] {
+	display: flex;
+}
+
+[mol_app_demo_menu_tools] {
+	padding: 0;
+}
+
+[mol_app_demo_menu_themes] {
+	flex: none;
+}
+
+[mol_app_demo_menu_filter] {
+	align-self: stretch;
+	flex: 0 0 auto;
+}
