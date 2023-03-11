@@ -6,11 +6,13 @@
 
 [mol_plot_ruler_label] {
 	color: var(--mol_theme_text);
+	text-shadow: 0 -1px var(--mol_theme_back), 0px 1px var(--mol_theme_back);
 }
 
 [mol_plot_ruler_title] {
 	color: var(--mol_theme_shade);
 	background-color: var(--mol_theme_back);
+	text-shadow: 0 -1px var(--mol_theme_back), 0px 1px var(--mol_theme_back);
 }
 
 [mol_plot_ruler_background] {
