@@ -18,4 +18,6 @@ $mol_string_demo $mol_example_small
 		\string
 		\text
 		\field
-
+	aspects /
+		\kind:widget
+		\input:string

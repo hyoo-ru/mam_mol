@@ -12,3 +12,6 @@ $mol_card_demo $mol_example_small
 		\status
 		\container
 		\paper
+	aspects /
+		\kind:widget
+		\display:card
