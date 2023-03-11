@@ -2,10 +2,7 @@ $mol_app_demo_menu $mol_page
 	names /string
 	widget_tags* /string
 	widget_title* \
-	plugins /
-		<= Search_start $mol_hotkey
-			key * F? <=> search_start? null
-			mod_ctrl true
+	search_start? null
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /

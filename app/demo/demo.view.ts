@@ -56,9 +56,18 @@ namespace $.$$ {
 
 		}
 
+		override search_start( event?: Event ) {
+			return this.Menu().search_start(event)
+		}
+
 		@ $mol_mem_key
 		widget_title( name: string ) {
 			return this.Widget( name ).title()
+		}
+
+		@ $mol_mem_key
+		widget_aspects( name: string ) {
+			return this.Widget( name ).aspects()
 		}
 
 		override selected() {
