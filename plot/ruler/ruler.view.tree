@@ -21,7 +21,7 @@ $mol_plot_ruler $mol_plot_graph
 		<= Curve $mol_svg_path
 			geometry <= curve \
 		<= labels_formatted /
-		<= Title $mol_svg_text_box
+		<= Title $mol_svg_text
 			pos_x <= title_pos_x \0
 			pos_y <= title_pos_y \100%
 			align <= title_align \start
