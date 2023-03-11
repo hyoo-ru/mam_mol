@@ -30,6 +30,6 @@ $mol_button_demo $mol_example_small
 	tags /
 		\button
 	aspects /
-		\ui:form
-		\input:button
+		\gui/input
+		\input/button
 

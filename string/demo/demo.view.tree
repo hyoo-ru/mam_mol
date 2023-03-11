@@ -19,5 +19,5 @@ $mol_string_demo $mol_example_small
 		\text
 		\field
 	aspects /
-		\ui:form
-		\input:string
+		\gui/input
+		\input/string
