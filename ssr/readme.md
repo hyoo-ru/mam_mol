@@ -1,11 +1,9 @@
-# $mol_offline
+# $mol_ssr
 
-Installs service worker proxy, which caches all requests and respond from cache on http errors.
+Simple prerender page with puppeteer.
 
 # How to use
 
-**Make manifest** like [this one](../app/demo/manifest.json).
+**Include $mol_offline_install** by adding `include \/mol/ssr/install` into your `*.meta.tree`. Or *Run $mol_ssr* manually.
 
-**Include $mol_offline_install** by adding `include \/mol/offline/install` into your `*.meta.tree`. Or *Run $mol_offline* manually.
-
-**Enable HTTPS on your web server**.
+Run node.js bundle.
