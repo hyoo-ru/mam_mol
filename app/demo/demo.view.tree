@@ -6,7 +6,7 @@ $mol_app_demo $mol_book2
 	plugins /
 		<= Theme $mol_theme_auto
 		<= Search_start $mol_hotkey
-			key * F? <=> search_start? null
+			key * F? <=> search_start?
 			mod_ctrl true
 	demo_block_list /
 		\$mol_example_small
@@ -16,6 +16,7 @@ $mol_app_demo $mol_book2
 		names <= names /string
 		widget_tags* <= widget_tags* /string
 		widget_title* <= widget_title* \
+		search_start? => search_start?
 		tools <= tools /
 			<= Sources $mol_link_source
 				uri <= sources_uri \https://github.com/hyoo-ru/mam_mol/

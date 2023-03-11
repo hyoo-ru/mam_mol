@@ -56,10 +56,6 @@ namespace $.$$ {
 
 		}
 
-		override search_start( event?: Event ) {
-			return this.Menu().search_start(event)
-		}
-
 		@ $mol_mem_key
 		widget_title( name: string ) {
 			return this.Widget( name ).title()
