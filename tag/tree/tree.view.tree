@@ -18,13 +18,13 @@ $mol_tag_tree $mol_list
 		^
 			Items /$mol_view
 	Tag* $mol_expander
-		title <= tag_name_translated* \
+		title <= tag_name* \
 		expanded? <=> tag_expanded*? false
 		content /
 			<= Tag_tree* $mol_tag_tree
 				tree_path <= tree_path_id* /string
 				tree <= tree
 				Item* <= Item*
-				tag_name_translated* <= tag_name_translated*
+				tag_name* <= tag_name*
 				item_title* <= item_title*
 				tag_expanded*? <=> tag_expanded*?

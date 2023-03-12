@@ -1,24 +1,17 @@
 namespace $.$$ {
 	type Tree = {  [K: string]: Tree } & { __ids?: string[] } 
 
-	function defaultSortFn(a: string, b: string) {
-		if ( a > b ) return 1
-		if ( a < b ) return -1
-
-		return 0
-	}
-
 	function sort_object<Obj extends Record<PropertyKey, any>>(
 		obj: Obj,
-		sortFn = defaultSortFn
+		sort_cb = $mol_compare_text()
 	) {
-		return Object.keys(obj).sort(sortFn).reduce((acc, key) => {
+		return Object.keys(obj).sort(sort_cb).reduce((acc, key) => {
 			let sub = obj[key]
 
 			if (sub instanceof Array) {
-				sub = [ ...sub ].sort(sortFn)
+				sub = [ ...sub ].sort(sort_cb)
 			} else if ( sub instanceof Object ) {
-				sub = sort_object(sub, sortFn)
+				sub = sort_object(sub, sort_cb)
 			}
 
 			acc[(key as keyof typeof obj)] = sub
@@ -99,10 +92,7 @@ namespace $.$$ {
 			return {} as Record<string, string>
 		}
 
-		override tag_name_translated( tree_path: readonly string[] ) {
-			const outer = this.tag_name(tree_path)
-			if (outer) return outer
-
+		override tag_name( tree_path: readonly string[] ) {
 			const names = this.tag_names()
 			const last_segment = tree_path.at(-1)!
 
