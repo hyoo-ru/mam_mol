@@ -330,6 +330,8 @@ $mol_tag_tree $mol_list
 	tag_names *
 	tag_name* \
 	levels_expanded 0
+	sort_tags null
+	sort_items null
 	Item* $mol_view
 		sub /
 			<= item_title* \

@@ -2012,6 +2012,8 @@ declare namespace $ {
         tag_names(): {};
         tag_name(id: any): string;
         levels_expanded(): number;
+        sort_tags(): any;
+        sort_items(): any;
         Item(id: any): $mol_view;
         Tags(): readonly $mol_view[];
         Items(): readonly $mol_view[];
@@ -2039,6 +2041,8 @@ declare namespace $.$$ {
         tag_expanded_default(id: readonly string[]): boolean;
         ids_tags(): Record<string, readonly string[]>;
         tree(): Tree;
+        sort_tags(): (a: unknown, b: unknown) => number;
+        sort_items(): (a: unknown, b: unknown) => number;
         tree_sub(): Tree;
         Tags(): $mol_expander[];
         Items(): $mol_view[];

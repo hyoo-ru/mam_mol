@@ -6867,6 +6867,12 @@ var $;
         levels_expanded() {
             return 0;
         }
+        sort_tags() {
+            return null;
+        }
+        sort_items() {
+            return null;
+        }
         Item(id) {
             const obj = new this.$.$mol_view();
             obj.sub = () => [
@@ -6966,14 +6972,14 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        function sort_object(obj, sort_cb = $mol_compare_text()) {
-            return Object.keys(obj).sort(sort_cb).reduce((acc, key) => {
+        function sort_object(obj, sort_tags = $mol_compare_text(), sort_items = sort_tags) {
+            return Object.keys(obj).sort(sort_tags).reduce((acc, key) => {
                 let sub = obj[key];
                 if (sub instanceof Array) {
-                    sub = [...sub].sort(sort_cb);
+                    sub = [...sub].sort(sort_items);
                 }
                 else if (sub instanceof Object) {
-                    sub = sort_object(sub, sort_cb);
+                    sub = sort_object(sub, sort_tags, sort_items);
                 }
                 acc[key] = sub;
                 return acc;
@@ -7008,7 +7014,13 @@ var $;
                         ptr.__ids.push(id);
                     }
                 }
-                return sort_object(tree);
+                return sort_object(tree, this.sort_tags(), this.sort_items());
+            }
+            sort_tags() {
+                return $mol_compare_text();
+            }
+            sort_items() {
+                return this.sort_tags();
             }
             tree_sub() {
                 const path = this.tree_path();
@@ -7045,6 +7057,12 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_tag_tree.prototype, "tree", null);
+        __decorate([
+            $mol_mem
+        ], $mol_tag_tree.prototype, "sort_tags", null);
+        __decorate([
+            $mol_mem
+        ], $mol_tag_tree.prototype, "sort_items", null);
         __decorate([
             $mol_mem
         ], $mol_tag_tree.prototype, "tree_sub", null);

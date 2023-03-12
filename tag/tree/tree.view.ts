@@ -3,15 +3,16 @@ namespace $.$$ {
 
 	function sort_object<Obj extends Record<PropertyKey, any>>(
 		obj: Obj,
-		sort_cb = $mol_compare_text()
+		sort_tags = $mol_compare_text(),
+		sort_items = sort_tags,
 	) {
-		return Object.keys(obj).sort(sort_cb).reduce((acc, key) => {
+		return Object.keys(obj).sort(sort_tags).reduce((acc, key) => {
 			let sub = obj[key]
 
 			if (sub instanceof Array) {
-				sub = [ ...sub ].sort(sort_cb)
+				sub = [ ...sub ].sort(sort_items)
 			} else if ( sub instanceof Object ) {
-				sub = sort_object(sub, sort_cb)
+				sub = sort_object(sub, sort_tags, sort_items)
 			}
 
 			acc[(key as keyof typeof obj)] = sub
@@ -64,7 +65,17 @@ namespace $.$$ {
 
 			}
 
-			return sort_object(tree)
+			return sort_object(tree, this.sort_tags(), this.sort_items())
+		}
+
+		@ $mol_mem
+		override sort_tags() {
+			return $mol_compare_text()
+		}
+
+		@ $mol_mem
+		override sort_items() {
+			return this.sort_tags()
 		}
 
 		@ $mol_mem
