@@ -22,7 +22,7 @@ namespace $.$$ {
 		// }
 		
 		override option_arg( id: readonly string[] ) {
-			return { 'demo' : id.at(-1)?.substring(1) }
+			return { 'demo' : id.at(-1)?.replace(/^\$*/, '') }
 		}
 		
 		override option_title( path_id: readonly string[] ) {
