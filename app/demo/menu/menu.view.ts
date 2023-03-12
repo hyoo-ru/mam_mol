@@ -70,7 +70,7 @@ namespace $.$$ {
 
 
 		@ $mol_mem
-		override tags_dictionary() {
+		tags_dictionary() {
 			const tag_weights = new Map<string, number>()
 
 			for (const name of this.names()) {
@@ -143,11 +143,12 @@ namespace $.$$ {
 			const words = this.filter_words()
 			let names = this.names()
 
-			const tags_selected = new Set(this.tags_selected())
+			const tags_selected = this.tags_selected()
 
-			if (tags_selected.size > 0) names = names.filter(name =>
-				this.widget_tags( name ).some(tag => tags_selected.has(tag))
-			)
+			if (tags_selected.length > 0) names = names.filter(name => {
+				const tags = this.widget_tags( name )
+				return tags_selected.every(tag_selected => tags.includes(tag_selected))
+			})
 
 			if( words.length !== 0 ) {
 

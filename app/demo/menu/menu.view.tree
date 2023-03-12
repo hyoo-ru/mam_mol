@@ -4,15 +4,23 @@ $mol_app_demo_menu $mol_page
 	widget_aspects* /string
 	widget_title* \
 	search_start? null
+	tags_selected? /string
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /
-				<= Tags $mol_select_list
-					value?val <=> tags_selected?val /string
-					dictionary <= tags_dictionary *
-				<= Filter $mol_search
-					query?val <=> filter?val \
-					- suggests <= filter_suggests
+				<= Selector $mol_row sub /
+					<= Filter $mol_search
+						query?val <=> filter?val \
+						- suggests <= filter_suggests
+					- <= Tags $mol_select_list
+						value? <=> tags_selected? /string
+						dictionary <= tags_dictionary *
+						badges_list /$mol_view
+						Badges => Badges
+				- <= Badges_list $mol_row
+					sub /
+						^
+							Badges
 				<= Tree $mol_tag_tree
 					Item* <= Option*
 					ids_tags <= ids_tags *

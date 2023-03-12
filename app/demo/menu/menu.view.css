@@ -2,8 +2,19 @@
 	flex: 0 0 18rem;
 }
 
-[mol_app_demo_menu_list] {
+[mol_app_demo_menu_selector] {
 	display: flex;
+	flex-wrap: nowrap;
+	gap: 0;
+}
+
+[mol_app_demo_menu_badges_list] {
+	gap: 0;
+}
+
+[mol_app_demo_menu_tags] {
+	flex-shrink: 0;
+	flex-basis: 2rem;
 }
 
 [mol_app_demo_menu_tools] {
@@ -16,5 +27,6 @@
 
 [mol_app_demo_menu_filter] {
 	align-self: stretch;
-	flex: 0 0 auto;
+	flex-grow: 1;
+	flex-shrink: 1;
 }
