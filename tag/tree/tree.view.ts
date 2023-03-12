@@ -10,10 +10,6 @@ namespace $.$$ {
 		// 	return this.tag_current(next ? id : '') === id
 		// }
 
-		override tree_path(next?: readonly string[]) {
-			return next ?? []
-		}
-
 		override ids_tags() {
 			return {} as Record<string, readonly string[]>
 		}
@@ -60,9 +56,8 @@ namespace $.$$ {
 		@ $mol_mem
 		override sub() {
 			const path = this.tree_path()
-			const last_segment = path[ path.length - 1 ]
 
-			if (last_segment === 'untagged') return [ this.Untagged() ]
+			if (path.at(-1) === 'untagged') return [ this.Untagged() ]
 
 			return super.sub()
 		}
@@ -87,13 +82,13 @@ namespace $.$$ {
 		
 		override tag_name( tree_path: readonly string[] ) {
 			const names = this.tag_names()
-			const last_segment = tree_path[tree_path.length - 1]
+			const last_segment = tree_path.at(-1)!
 
 			return names[last_segment] ?? last_segment
 		}
 
 		override item_title(id: readonly string[]) {
-			return id[id.length - 1]
+			return id.at(-1)!
 		}
 
 		override tree_path_id(id: readonly string[]) {

@@ -28,3 +28,4 @@ $mol_tag_tree $mol_list
 				tree <= tree
 				Item* <= Item*
 				tag_name* <= tag_name*
+				item_title* <= item_title*
