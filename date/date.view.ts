@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $mol_date extends $.$mol_date {
 
 		trigger_content() {
-			return [ this.value_moment()?.toString( 'YYYY-MM-DD hh:mm' ) ?? this.Icon() ]
+			return [ this.value() || this.Icon() ]
 		}
 
 		input_mask( val : string ) {
@@ -33,9 +33,37 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		value_moment( val? : $mol_time_moment ) {
-			const stamp = this.value_number( val && val.valueOf() )
-			return isNaN( stamp ) ? null! : new $mol_time_moment( stamp )
+		value_moment( next? : $mol_time_moment ) {
+
+			const stamp = this.value_number()
+			
+			if( next === undefined ) {
+				return isNaN( stamp ) ? null! : new $mol_time_moment( stamp )
+			}
+			
+			this.value_number( next?.valueOf() ?? NaN )
+
+			return next
+		}
+
+		@ $mol_mem
+		value_number( next? : number ): number {
+
+			const value = this.value()
+
+			if( next === undefined ) {
+
+				if (!value) return NaN
+				const moment = $mol_try( ()=> new $mol_time_moment( value ) )
+				if( moment instanceof Error ) return NaN
+				return moment!.valueOf() ?? NaN
+
+			}
+
+			const moment = $mol_try( ()=> new $mol_time_moment( next ) )
+			this.value(moment.toString(value.length > 12 ? 'YYYY-MM-DD hh:mm': 'YYYY-MM-DD' ))
+
+			return next
 		}
 
 		@ $mol_mem

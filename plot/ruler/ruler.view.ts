@@ -74,7 +74,11 @@ namespace $.$$ {
 		}
 
 		front() {
-			return [this.Background(), ...this.labels_formatted(), this.Title()] as readonly $.$mol_svg[]
+			return [
+				// this.Background(),
+				...this.labels_formatted(),
+				this.Title()
+			] as readonly $.$mol_svg[]
 		}
 	}
 }
