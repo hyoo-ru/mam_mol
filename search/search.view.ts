@@ -21,13 +21,11 @@ namespace $.$$ {
 		}
 
 		suggest_selected( next? : string ) {
+			
 			if( next === undefined ) return
 			
 			this.query( next )
-			
-			$mol_fiber_defer( ()=> {
-				this.Query().focused( true )
-			} )
+			this.Query().focused( true )
 			
 		}
 		
