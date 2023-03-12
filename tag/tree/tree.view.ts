@@ -49,15 +49,6 @@ namespace $.$$ {
 			return path.reduce((ptr, segment) => ptr[segment], this.tree())
 		}
 
-		@ $mol_mem
-		override sub() {
-			const path = this.tree_path()
-
-			if (path.at(-1) === 'untagged') return [ this.Untagged() ]
-
-			return super.sub()
-		}
-
 		override Tags() {
 			const path = this.tree_path()
 
