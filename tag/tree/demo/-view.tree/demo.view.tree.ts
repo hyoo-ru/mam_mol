@@ -92,6 +92,7 @@ namespace $ {
 		 * 		marvel @ \Marvel
 		 * 		dc @ \DC
 		 * 	ids_tags *
+		 * 		valera / \side/bomj
 		 * 		batman /
 		 * 			\side/good
 		 * 			\universe/dc
@@ -172,6 +173,9 @@ namespace $ {
 				dc: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_dc' )
 			})
 			obj.ids_tags = () => ({
+				valera: [
+					"side/bomj"
+				] as readonly any[],
 				batman: [
 					"side/good",
 					"universe/dc",

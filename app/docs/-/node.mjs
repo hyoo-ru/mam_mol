@@ -6985,6 +6985,28 @@ var $;
                 return acc;
             }, {});
         }
+        function move_single_id_to_root(tree, root = tree) {
+            for (const key of Object.keys(tree)) {
+                if (key === '__ids')
+                    continue;
+                const obj = tree[key];
+                if ((obj.__ids?.length ?? 0) <= 1) {
+                    root.__ids = root.__ids ?? [];
+                    const id = obj.__ids?.[0];
+                    if (id)
+                        root.__ids.push(id);
+                    obj.__ids = undefined;
+                    if (Object.keys(obj).length === 1) {
+                        delete tree[key];
+                        continue;
+                    }
+                }
+                if (obj instanceof Object) {
+                    tree[key] = move_single_id_to_root(obj, root);
+                }
+            }
+            return tree;
+        }
         class $mol_tag_tree extends $.$mol_tag_tree {
             tag_expanded(id, next) {
                 return next ?? this.tag_expanded_default(id);
@@ -7014,7 +7036,7 @@ var $;
                         ptr.__ids.push(id);
                     }
                 }
-                return sort_object(tree, this.sort_tags(), this.sort_items());
+                return sort_object(move_single_id_to_root(tree), this.sort_tags(), this.sort_items());
             }
             sort_tags() {
                 return $mol_compare_text();
@@ -34954,6 +34976,9 @@ var $;
                 dc: this.$.$mol_locale.text('$mol_tag_tree_demo_Tree_tag_names_dc')
             });
             obj.ids_tags = () => ({
+                valera: [
+                    "side/bomj"
+                ],
                 batman: [
                     "side/good",
                     "universe/dc",
