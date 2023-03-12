@@ -14,6 +14,11 @@ namespace $ {
 			const sub = json.map( json => $mol_tree2_from_json( json , span ) )
 			return new $mol_tree2( '/' , '', sub, span )
 		}
+		
+		if( ArrayBuffer.isView( json ) ) {
+			const buf = new Uint8Array( json.buffer, json.byteOffset, json.byteLength )
+			return $mol_tree2.data( String.fromCharCode( ... buf ) , [], span )
+		}
 			
 		if( json instanceof Date ) {
 			return new $mol_tree2( '', json.toISOString() , [] , span )
