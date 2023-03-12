@@ -32,15 +32,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * pages <= blocks
-		 * ```
-		 */
-		pages() {
-			return this.blocks()
-		}
-		
-		/**
-		 * ```tree
 		 * plugins /
 		 * 	<= Theme
 		 * 	<= Search_start
@@ -69,31 +60,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Menu2 $mol_app_demo_menu2
-		 * 	item_ids <= names_demo_all
-		 * 	item_tags* <= widget_tags*
-		 * 	title <= menu_title
+		 * search_start?
 		 * ```
 		 */
-		@ $mol_mem
-		Menu2() {
-			const obj = new this.$.$mol_app_demo_menu2()
-			
-			obj.item_ids = () => this.names_demo_all()
-			obj.item_tags = (id: any) => this.widget_tags(id)
-			obj.title = () => this.menu_title()
-			
-			return obj
+		search_start(next?: any) {
+			return this.Menu().search_start(next)
 		}
 		
 		/**
 		 * ```tree
 		 * Menu $mol_app_demo_menu
 		 * 	title <= menu_title
-		 * 	names <= names_demo_filtered
-		 * 	filter_suggests <= filter_suggests
-		 * 	tags_selected? <=> tags_selected?
-		 * 	tags_dictionary <= tags_dictionary
+		 * 	names <= names
+		 * 	widget_tags* <= widget_tags*
+		 * 	widget_aspects* <= widget_aspects*
+		 * 	widget_title* <= widget_title*
+		 * 	search_start? => search_start?
 		 * 	tools <= tools
 		 * ```
 		 */
@@ -102,10 +84,10 @@ namespace $ {
 			const obj = new this.$.$mol_app_demo_menu()
 			
 			obj.title = () => this.menu_title()
-			obj.names = () => this.names_demo_filtered()
-			obj.filter_suggests = () => this.filter_suggests()
-			obj.tags_selected = (next?: any) => this.tags_selected(next)
-			obj.tags_dictionary = () => this.tags_dictionary()
+			obj.names = () => this.names()
+			obj.widget_tags = (id: any) => this.widget_tags(id)
+			obj.widget_aspects = (id: any) => this.widget_aspects(id)
+			obj.widget_title = (id: any) => this.widget_title(id)
 			obj.tools = () => this.tools()
 			
 			return obj
@@ -195,16 +177,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * blocks /
-		 * ```
-		 */
-		blocks() {
-			return [
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
 		 * Theme $mol_theme_auto
 		 * ```
 		 */
@@ -213,17 +185,6 @@ namespace $ {
 			const obj = new this.$.$mol_theme_auto()
 			
 			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * search_start? null
-		 * ```
-		 */
-		@ $mol_mem
-		search_start(next?: any) {
-			if ( next !== undefined ) return next as never
-			return null as any
 		}
 		
 		/**
@@ -247,10 +208,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * names_demo_all /string
+		 * menu_title @ \$mol examples
 		 * ```
 		 */
-		names_demo_all() {
+		menu_title() {
+			return this.$.$mol_locale.text( '$mol_app_demo_menu_title' )
+		}
+		
+		/**
+		 * ```tree
+		 * names /string
+		 * ```
+		 */
+		names() {
 			return [
 			] as readonly string[]
 		}
@@ -267,53 +237,21 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * menu_title @ \$mol examples
+		 * widget_aspects* /string
 		 * ```
 		 */
-		menu_title() {
-			return this.$.$mol_locale.text( '$mol_app_demo_menu_title' )
-		}
-		
-		/**
-		 * ```tree
-		 * names_demo_filtered /string
-		 * ```
-		 */
-		names_demo_filtered() {
+		widget_aspects(id: any) {
 			return [
 			] as readonly string[]
 		}
 		
 		/**
 		 * ```tree
-		 * filter_suggests /string
+		 * widget_title* \
 		 * ```
 		 */
-		filter_suggests() {
-			return [
-			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
-		 * tags_selected? /string
-		 * ```
-		 */
-		@ $mol_mem
-		tags_selected(next?: any) {
-			if ( next !== undefined ) return next as never
-			return [
-			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
-		 * tags_dictionary *
-		 * ```
-		 */
-		tags_dictionary() {
-			return {
-			}
+		widget_title(id: any) {
+			return ""
 		}
 		
 		/**
@@ -457,744 +395,6 @@ namespace $ {
 		 */
 		detail_empty_postfix() {
 			return this.$.$mol_locale.text( '$mol_app_demo_detail_empty_postfix' )
-		}
-	}
-	
-	export class $mol_app_demo_menu2 extends $mol_page {
-		
-		/**
-		 * ```tree
-		 * Body $mol_scroll sub / <= List
-		 * ```
-		 */
-		@ $mol_mem
-		Body() {
-			const obj = new this.$.$mol_scroll()
-			
-			obj.sub = () => [
-				this.List()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * item_ids /string
-		 * ```
-		 */
-		item_ids() {
-			return [
-			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
-		 * item_tags* /string
-		 * ```
-		 */
-		item_tags(id: any) {
-			return [
-			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
-		 * item_title* \
-		 * ```
-		 */
-		item_title(id: any) {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Item* $mol_button_minor title <= item_title*
-		 * ```
-		 */
-		@ $mol_mem_key
-		Item(id: any) {
-			const obj = new this.$.$mol_button_minor()
-			
-			obj.title = () => this.item_title(id)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Tree $mol_tag_tree
-		 * 	ids <= item_ids
-		 * 	tags* <= item_tags*
-		 * 	Item* <= Item*
-		 * ```
-		 */
-		@ $mol_mem
-		Tree() {
-			const obj = new this.$.$mol_tag_tree()
-			
-			obj.ids = () => this.item_ids()
-			obj.tags = (id: any) => this.item_tags(id)
-			obj.Item = (id: any) => this.Item(id)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * List $mol_list rows / <= Tree
-		 * ```
-		 */
-		@ $mol_mem
-		List() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Tree()
-			] as readonly any[]
-			
-			return obj
-		}
-	}
-	
-	export class $mol_app_demo_menu extends $mol_page {
-		
-		/**
-		 * ```tree
-		 * names /string
-		 * ```
-		 */
-		names() {
-			return [
-			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
-		 * filter_suggests /string
-		 * ```
-		 */
-		filter_suggests() {
-			return [
-			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
-		 * Body $mol_scroll sub / <= List
-		 * ```
-		 */
-		@ $mol_mem
-		Body() {
-			const obj = new this.$.$mol_scroll()
-			
-			obj.sub = () => [
-				this.List()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Option* $mol_link
-		 * 	arg <= option_arg*
-		 * 	sub / <= Option_title*
-		 * ```
-		 */
-		@ $mol_mem_key
-		Option(id: any) {
-			const obj = new this.$.$mol_link()
-			
-			obj.arg = () => this.option_arg(id)
-			obj.sub = () => [
-				this.Option_title(id)
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * tags_selected?val /string
-		 * ```
-		 */
-		@ $mol_mem
-		tags_selected(val?: any) {
-			if ( val !== undefined ) return val as never
-			return [
-			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
-		 * tags_dictionary *
-		 * ```
-		 */
-		tags_dictionary() {
-			return {
-			}
-		}
-		
-		/**
-		 * ```tree
-		 * Tags $mol_select_list
-		 * 	value?val <=> tags_selected?val
-		 * 	dictionary <= tags_dictionary
-		 * ```
-		 */
-		@ $mol_mem
-		Tags() {
-			const obj = new this.$.$mol_select_list()
-			
-			obj.value = (val?: any) => this.tags_selected(val)
-			obj.dictionary = () => this.tags_dictionary()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * filter?val \
-		 * ```
-		 */
-		@ $mol_mem
-		filter(val?: any) {
-			if ( val !== undefined ) return val as never
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Filter $mol_search query?val <=> filter?val
-		 * ```
-		 */
-		@ $mol_mem
-		Filter() {
-			const obj = new this.$.$mol_search()
-			
-			obj.query = (val?: any) => this.filter(val)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * options /
-		 * ```
-		 */
-		options() {
-			return [
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * Options $mol_list rows <= options
-		 * ```
-		 */
-		@ $mol_mem
-		Options() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => this.options()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * List $mol_list rows /
-		 * 	<= Tags
-		 * 	<= Filter
-		 * 	<= Options
-		 * ```
-		 */
-		@ $mol_mem
-		List() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Tags(),
-				this.Filter(),
-				this.Options()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * option_arg* *
-		 * ```
-		 */
-		option_arg(id: any) {
-			return {
-			}
-		}
-		
-		/**
-		 * ```tree
-		 * option_title* \
-		 * ```
-		 */
-		option_title(id: any) {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Option_title* $mol_dimmer
-		 * 	haystack <= option_title*
-		 * 	needle <= filter?val
-		 * ```
-		 */
-		@ $mol_mem_key
-		Option_title(id: any) {
-			const obj = new this.$.$mol_dimmer()
-			
-			obj.haystack = () => this.option_title(id)
-			obj.needle = () => this.filter()
-			
-			return obj
-		}
-	}
-	
-	export class $mol_app_demo_detail extends $mol_page {
-		
-		/**
-		 * ```tree
-		 * description \
-		 * ```
-		 */
-		description() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * tools /
-		 * 	<= Readme
-		 * 	<= Chat
-		 * 	<= Edit
-		 * 	<= Close
-		 * ```
-		 */
-		tools() {
-			return [
-				this.Readme(),
-				this.Chat(),
-				this.Edit(),
-				this.Close()
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * body / <= Demo
-		 * ```
-		 */
-		body() {
-			return [
-				this.Demo()
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * readme_icon $mol_icon_information_outline
-		 * ```
-		 */
-		@ $mol_mem
-		readme_icon() {
-			const obj = new this.$.$mol_icon_information_outline()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Readme $mol_link
-		 * 	arg * readme \
-		 * 	hint @ \Readme
-		 * 	sub / <= readme_icon
-		 * ```
-		 */
-		@ $mol_mem
-		Readme() {
-			const obj = new this.$.$mol_link()
-			
-			obj.arg = () => ({
-				readme: ""
-			})
-			obj.hint = () => this.$.$mol_locale.text( '$mol_app_demo_detail_Readme_hint' )
-			obj.sub = () => [
-				this.readme_icon()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * chat_seed \0_0
-		 * ```
-		 */
-		chat_seed() {
-			return "0_0"
-		}
-		
-		/**
-		 * ```tree
-		 * chat_pages
-		 * ```
-		 */
-		chat_pages() {
-			return this.Chat().pages()
-		}
-		
-		/**
-		 * ```tree
-		 * Chat $mol_chat
-		 * 	pages => chat_pages
-		 * 	seed <= chat_seed
-		 * ```
-		 */
-		@ $mol_mem
-		Chat() {
-			const obj = new this.$.$mol_chat()
-			
-			obj.seed = () => this.chat_seed()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * edit_hint @ \Edit this demo in studio
-		 * ```
-		 */
-		edit_hint() {
-			return this.$.$mol_locale.text( '$mol_app_demo_detail_edit_hint' )
-		}
-		
-		/**
-		 * ```tree
-		 * Edit_speck $mol_speck value \β
-		 * ```
-		 */
-		@ $mol_mem
-		Edit_speck() {
-			const obj = new this.$.$mol_speck()
-			
-			obj.value = () => "β"
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Edit_icon $mol_icon_settings
-		 * ```
-		 */
-		@ $mol_mem
-		Edit_icon() {
-			const obj = new this.$.$mol_icon_settings()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * edit_uri \
-		 * ```
-		 */
-		edit_uri() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Edit $mol_link
-		 * 	hint <= edit_hint
-		 * 	sub /
-		 * 		<= Edit_speck
-		 * 		<= Edit_icon
-		 * 	uri <= edit_uri
-		 * ```
-		 */
-		@ $mol_mem
-		Edit() {
-			const obj = new this.$.$mol_link()
-			
-			obj.hint = () => this.edit_hint()
-			obj.sub = () => [
-				this.Edit_speck(),
-				this.Edit_icon()
-			] as readonly any[]
-			obj.uri = () => this.edit_uri()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * close_hint @ \Close panel
-		 * ```
-		 */
-		close_hint() {
-			return this.$.$mol_locale.text( '$mol_app_demo_detail_close_hint' )
-		}
-		
-		/**
-		 * ```tree
-		 * Close_icon $mol_icon_cross
-		 * ```
-		 */
-		@ $mol_mem
-		Close_icon() {
-			const obj = new this.$.$mol_icon_cross()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * close_arg * demo null
-		 * ```
-		 */
-		close_arg() {
-			return {
-				demo: null as any
-			}
-		}
-		
-		/**
-		 * ```tree
-		 * Close $mol_link
-		 * 	hint <= close_hint
-		 * 	sub / <= Close_icon
-		 * 	arg <= close_arg
-		 * ```
-		 */
-		@ $mol_mem
-		Close() {
-			const obj = new this.$.$mol_link()
-			
-			obj.hint = () => this.close_hint()
-			obj.sub = () => [
-				this.Close_icon()
-			] as readonly any[]
-			obj.arg = () => this.close_arg()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Demo $mol_view
-		 * ```
-		 */
-		@ $mol_mem
-		Demo() {
-			const obj = new this.$.$mol_view()
-			
-			return obj
-		}
-	}
-	
-	export class $mol_app_demo_readme extends $mol_page {
-		
-		/**
-		 * ```tree
-		 * link_template \https://raw.githubusercontent.com/{repo}/master/{module}/readme.md
-		 * ```
-		 */
-		link_template() {
-			return "https://raw.githubusercontent.com/{repo}/master/{module}/readme.md"
-		}
-		
-		/**
-		 * ```tree
-		 * repo \
-		 * ```
-		 */
-		repo() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * module /string
-		 * ```
-		 */
-		module() {
-			return [
-			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
-		 * title @ \Readme
-		 * ```
-		 */
-		title() {
-			return this.$.$mol_locale.text( '$mol_app_demo_readme_title' )
-		}
-		
-		/**
-		 * ```tree
-		 * tools /
-		 * 	<= Source_link
-		 * 	<= Close
-		 * ```
-		 */
-		tools() {
-			return [
-				this.Source_link(),
-				this.Close()
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * Readme $mol_text
-		 * 	text <= readme
-		 * 	uri_base <= uri_base?
-		 * ```
-		 */
-		@ $mol_mem
-		Readme() {
-			const obj = new this.$.$mol_text()
-			
-			obj.text = () => this.readme()
-			obj.uri_base = () => this.uri_base()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Not_found $mol_view sub / <= Not_found_caption
-		 * ```
-		 */
-		@ $mol_mem
-		Not_found() {
-			const obj = new this.$.$mol_view()
-			
-			obj.sub = () => [
-				this.Not_found_caption()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * source_link \
-		 * ```
-		 */
-		source_link() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * source_hint @ \Source code of this demo
-		 * ```
-		 */
-		source_hint() {
-			return this.$.$mol_locale.text( '$mol_app_demo_readme_source_hint' )
-		}
-		
-		/**
-		 * ```tree
-		 * Source_link $mol_link_source
-		 * 	uri <= source_link
-		 * 	hint <= source_hint
-		 * ```
-		 */
-		@ $mol_mem
-		Source_link() {
-			const obj = new this.$.$mol_link_source()
-			
-			obj.uri = () => this.source_link()
-			obj.hint = () => this.source_hint()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Close_icon $mol_icon_cross
-		 * ```
-		 */
-		@ $mol_mem
-		Close_icon() {
-			const obj = new this.$.$mol_icon_cross()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * close_arg * readme null
-		 * ```
-		 */
-		close_arg() {
-			return {
-				readme: null as any
-			}
-		}
-		
-		/**
-		 * ```tree
-		 * Close $mol_link
-		 * 	hint @ \Close panel
-		 * 	sub / <= Close_icon
-		 * 	arg <= close_arg
-		 * ```
-		 */
-		@ $mol_mem
-		Close() {
-			const obj = new this.$.$mol_link()
-			
-			obj.hint = () => this.$.$mol_locale.text( '$mol_app_demo_readme_Close_hint' )
-			obj.sub = () => [
-				this.Close_icon()
-			] as readonly any[]
-			obj.arg = () => this.close_arg()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * readme \
-		 * ```
-		 */
-		readme() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * uri_base? \
-		 * ```
-		 */
-		@ $mol_mem
-		uri_base(next?: any) {
-			if ( next !== undefined ) return next as never
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Not_found_caption @ \Readme not found
-		 * ```
-		 */
-		Not_found_caption() {
-			return this.$.$mol_locale.text( '$mol_app_demo_readme_Not_found_caption' )
 		}
 	}
 	

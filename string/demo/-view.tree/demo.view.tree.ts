@@ -50,6 +50,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects /
+		 * 	\gui/input
+		 * 	\input/string
+		 * ```
+		 */
+		aspects() {
+			return [
+				"gui/input",
+				"input/string"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * name?val \
 		 * ```
 		 */

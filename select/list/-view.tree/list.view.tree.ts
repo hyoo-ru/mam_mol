@@ -25,6 +25,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Badges /$mol_view
+		 * ```
+		 */
+		Badges() {
+			return [
+			] as readonly $mol_view[]
+		}
+		
+		/**
+		 * ```tree
+		 * badges_list /$mol_view
+		 * ```
+		 */
+		badges_list() {
+			return [
+			] as readonly $mol_view[]
+		}
+		
+		/**
+		 * ```tree
 		 * Badge* $mol_button_minor
 		 * 	title <= badge_title*
 		 * 	click?event <=> remove*?event
@@ -46,29 +66,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Pick $mol_select
-		 * 	align_hor <= align_hor
-		 * 	options <= options_pickable
-		 * 	value?val <=> pick?val
-		 * 	option_label* <= option_title*
-		 * 	trigger_enabled <= pick_enabled
-		 * 	hint <= pick_hint
-		 * 	Trigger_icon <= Pick_icon
+		 * sub /$mol_view
+		 * 	<= Pick
+		 * 	^ badges_list <= Badges
 		 * ```
 		 */
-		@ $mol_mem
-		Pick() {
-			const obj = new this.$.$mol_select()
-			
-			obj.align_hor = () => this.align_hor()
-			obj.options = () => this.options_pickable()
-			obj.value = (val?: any) => this.pick(val)
-			obj.option_label = (id: any) => this.option_title(id)
-			obj.trigger_enabled = () => this.pick_enabled()
-			obj.hint = () => this.pick_hint()
-			obj.Trigger_icon = () => this.Pick_icon()
-			
-			return obj
+		sub() {
+			return [
+				this.Pick(),
+				...this.badges_list()
+			] as readonly $mol_view[]
 		}
 		
 		/**
@@ -192,6 +199,33 @@ namespace $ {
 		@ $mol_mem
 		Pick_icon() {
 			const obj = new this.$.$mol_icon_plus()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Pick $mol_select
+		 * 	align_hor <= align_hor
+		 * 	options <= options_pickable
+		 * 	value?val <=> pick?val
+		 * 	option_label* <= option_title*
+		 * 	trigger_enabled <= pick_enabled
+		 * 	hint <= pick_hint
+		 * 	Trigger_icon <= Pick_icon
+		 * ```
+		 */
+		@ $mol_mem
+		Pick() {
+			const obj = new this.$.$mol_select()
+			
+			obj.align_hor = () => this.align_hor()
+			obj.options = () => this.options_pickable()
+			obj.value = (val?: any) => this.pick(val)
+			obj.option_label = (id: any) => this.option_title(id)
+			obj.trigger_enabled = () => this.pick_enabled()
+			obj.hint = () => this.pick_hint()
+			obj.Trigger_icon = () => this.Pick_icon()
 			
 			return obj
 		}

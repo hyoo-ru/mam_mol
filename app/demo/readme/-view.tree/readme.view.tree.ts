@@ -1,0 +1,198 @@
+namespace $ {
+	export class $mol_app_demo_readme extends $mol_page {
+		
+		/**
+		 * ```tree
+		 * link_template \https://raw.githubusercontent.com/{repo}/master/{module}/readme.md
+		 * ```
+		 */
+		link_template() {
+			return "https://raw.githubusercontent.com/{repo}/master/{module}/readme.md"
+		}
+		
+		/**
+		 * ```tree
+		 * repo \
+		 * ```
+		 */
+		repo() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * module /string
+		 * ```
+		 */
+		module() {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * title @ \Readme
+		 * ```
+		 */
+		title() {
+			return this.$.$mol_locale.text( '$mol_app_demo_readme_title' )
+		}
+		
+		/**
+		 * ```tree
+		 * tools /
+		 * 	<= Source_link
+		 * 	<= Close
+		 * ```
+		 */
+		tools() {
+			return [
+				this.Source_link(),
+				this.Close()
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * Readme $mol_text
+		 * 	text <= readme
+		 * 	uri_base <= uri_base?
+		 * ```
+		 */
+		@ $mol_mem
+		Readme() {
+			const obj = new this.$.$mol_text()
+			
+			obj.text = () => this.readme()
+			obj.uri_base = () => this.uri_base()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Not_found $mol_view sub / <= Not_found_caption
+		 * ```
+		 */
+		@ $mol_mem
+		Not_found() {
+			const obj = new this.$.$mol_view()
+			
+			obj.sub = () => [
+				this.Not_found_caption()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * source_link \
+		 * ```
+		 */
+		source_link() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * source_hint @ \Source code of this demo
+		 * ```
+		 */
+		source_hint() {
+			return this.$.$mol_locale.text( '$mol_app_demo_readme_source_hint' )
+		}
+		
+		/**
+		 * ```tree
+		 * Source_link $mol_link_source
+		 * 	uri <= source_link
+		 * 	hint <= source_hint
+		 * ```
+		 */
+		@ $mol_mem
+		Source_link() {
+			const obj = new this.$.$mol_link_source()
+			
+			obj.uri = () => this.source_link()
+			obj.hint = () => this.source_hint()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Close_icon $mol_icon_cross
+		 * ```
+		 */
+		@ $mol_mem
+		Close_icon() {
+			const obj = new this.$.$mol_icon_cross()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * close_arg * readme null
+		 * ```
+		 */
+		close_arg() {
+			return {
+				readme: null as any
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * Close $mol_link
+		 * 	hint @ \Close panel
+		 * 	sub / <= Close_icon
+		 * 	arg <= close_arg
+		 * ```
+		 */
+		@ $mol_mem
+		Close() {
+			const obj = new this.$.$mol_link()
+			
+			obj.hint = () => this.$.$mol_locale.text( '$mol_app_demo_readme_Close_hint' )
+			obj.sub = () => [
+				this.Close_icon()
+			] as readonly any[]
+			obj.arg = () => this.close_arg()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * readme \
+		 * ```
+		 */
+		readme() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * uri_base? \
+		 * ```
+		 */
+		@ $mol_mem
+		uri_base(next?: any) {
+			if ( next !== undefined ) return next as never
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Not_found_caption @ \Readme not found
+		 * ```
+		 */
+		Not_found_caption() {
+			return this.$.$mol_locale.text( '$mol_app_demo_readme_Not_found_caption' )
+		}
+	}
+	
+}
+

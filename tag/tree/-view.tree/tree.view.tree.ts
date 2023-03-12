@@ -3,17 +3,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tag_current? \
-		 * ```
-		 */
-		@ $mol_mem
-		tag_current(next?: any) {
-			if ( next !== undefined ) return next as never
-			return ""
-		}
-		
-		/**
-		 * ```tree
 		 * ids_tags *
 		 * ```
 		 */
@@ -24,22 +13,59 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * ids /
+		 * tree *
 		 * ```
 		 */
-		ids() {
-			return [
-			] as readonly any[]
+		tree() {
+			return {
+			}
 		}
 		
 		/**
 		 * ```tree
-		 * tags* /
+		 * tree_path /string
 		 * ```
 		 */
-		tags(id: any) {
+		tree_path() {
 			return [
-			] as readonly any[]
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * path_sep \/
+		 * ```
+		 */
+		path_sep() {
+			return "/"
+		}
+		
+		/**
+		 * ```tree
+		 * tag_names *
+		 * ```
+		 */
+		tag_names() {
+			return {
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * tag_name* \
+		 * ```
+		 */
+		tag_name(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * levels_expanded 0
+		 * ```
+		 */
+		levels_expanded() {
+			return 0
 		}
 		
 		/**
@@ -60,13 +86,57 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Tag*0
+		 * Tags /$mol_view
+		 * ```
+		 */
+		Tags() {
+			return [
+			] as readonly $mol_view[]
+		}
+		
+		/**
+		 * ```tree
+		 * Items /$mol_view
+		 * ```
+		 */
+		Items() {
+			return [
+			] as readonly $mol_view[]
+		}
+		
+		/**
+		 * ```tree
+		 * sub /$mol_view
+		 * 	^ Tags /$mol_view
+		 * 	^ Items /$mol_view
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Tag("0")
+				...this.Tags(),
+				...this.Items()
+			] as readonly $mol_view[]
+		}
+		
+		/**
+		 * ```tree
+		 * Tag* $mol_expander
+		 * 	title <= tag_name*
+		 * 	expanded? <=> tag_expanded*?
+		 * 	content / <= Tag_tree*
+		 * ```
+		 */
+		@ $mol_mem_key
+		Tag(id: any) {
+			const obj = new this.$.$mol_expander()
+			
+			obj.title = () => this.tag_name(id)
+			obj.expanded = (next?: any) => this.tag_expanded(id, next)
+			obj.content = () => [
+				this.Tag_tree(id)
 			] as readonly any[]
+			
+			return obj
 		}
 		
 		/**
@@ -75,15 +145,6 @@ namespace $ {
 		 * ```
 		 */
 		item_title(id: any) {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * tag_name* \
-		 * ```
-		 */
-		tag_name(id: any) {
 			return ""
 		}
 		
@@ -100,50 +161,35 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tag_ids* /
+		 * tree_path_id* /string
 		 * ```
 		 */
-		tag_ids(id: any) {
+		tree_path_id(id: any) {
 			return [
-			] as readonly any[]
+			] as readonly string[]
 		}
 		
 		/**
 		 * ```tree
 		 * Tag_tree* $mol_tag_tree
-		 * 	ids <= tag_ids*
-		 * 	tags* <= tags*
+		 * 	tree_path <= tree_path_id*
+		 * 	tree <= tree
 		 * 	Item* <= Item*
+		 * 	tag_name* <= tag_name*
+		 * 	item_title* <= item_title*
+		 * 	tag_expanded*? <=> tag_expanded*?
 		 * ```
 		 */
 		@ $mol_mem_key
 		Tag_tree(id: any) {
 			const obj = new this.$.$mol_tag_tree()
 			
-			obj.ids = () => this.tag_ids(id)
-			obj.tags = (id: any) => this.tags(id)
+			obj.tree_path = () => this.tree_path_id(id)
+			obj.tree = () => this.tree()
 			obj.Item = (id: any) => this.Item(id)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Tag*0 $mol_expander
-		 * 	title <= tag_name*
-		 * 	expanded? <=> tag_expanded*?
-		 * 	content / <= Tag_tree*
-		 * ```
-		 */
-		@ $mol_mem_key
-		Tag(id: any) {
-			const obj = new this.$.$mol_expander()
-			
-			obj.title = () => this.tag_name(id)
-			obj.expanded = (next?: any) => this.tag_expanded(id, next)
-			obj.content = () => [
-				this.Tag_tree(id)
-			] as readonly any[]
+			obj.tag_name = (id: any) => this.tag_name(id)
+			obj.item_title = (id: any) => this.item_title(id)
+			obj.tag_expanded = (id: any, next?: any) => this.tag_expanded(id, next)
 			
 			return obj
 		}

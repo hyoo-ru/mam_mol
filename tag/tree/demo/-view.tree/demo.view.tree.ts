@@ -41,6 +41,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects /
+		 * 	\nav/tag
+		 * 	\gui/input/link
+		 * ```
+		 */
+		aspects() {
+			return [
+				"nav/tag",
+				"gui/input/link"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * item_title* \
 		 * ```
 		 */
@@ -66,67 +80,78 @@ namespace $ {
 		 * ```tree
 		 * Tree $mol_tag_tree
 		 * 	Item* <= Item*
+		 * 	levels_expanded 1
+		 * 	tag_names *
+		 * 		side @ \Side
+		 * 		good @ \Good
+		 * 		bad @ \Bad
+		 * 		sex @ \Sex
+		 * 		male @ \Male
+		 * 		female @ \Female
+		 * 		universe @ \Universe
+		 * 		marvel @ \Marvel
+		 * 		dc @ \DC
 		 * 	ids_tags *
 		 * 		batman /
-		 * 			\side:good
-		 * 			\universe:dc
-		 * 			\sex:male
+		 * 			\side/good
+		 * 			\universe/dc
+		 * 			\sex/male
 		 * 		superman /
-		 * 			\side:good
-		 * 			\universe:dc
-		 * 			\sex:male
+		 * 			\side/good
+		 * 			\universe/dc
+		 * 			\sex/male
 		 * 		aquaman /
-		 * 			\side:good
-		 * 			\universe:dc
-		 * 			\sex:male
+		 * 			\side/good
+		 * 			\universe/dc
+		 * 			\sex/male
 		 * 		flash /
-		 * 			\side:good
-		 * 			\universe:dc
-		 * 			\sex:male
+		 * 			\side/good
+		 * 			\universe/dc
+		 * 			\sex/male
 		 * 		jocker /
-		 * 			\side:bad
-		 * 			\universe:dc
-		 * 			\sex:male
+		 * 			\side/bad
+		 * 			\universe/dc
+		 * 			\sex/male
 		 * 		harley /
-		 * 			\side:bad
-		 * 			\universe:dc
-		 * 			\sex:female
+		 * 			\side/bad
+		 * 			\universe/dc
+		 * 			\sex/female
 		 * 		deadshot /
-		 * 			\side:bad
-		 * 			\universe:dc
-		 * 			\sex:male
+		 * 			\side/bad
+		 * 			\universe/dc
+		 * 			\sex/male
 		 * 		wonderwoman /
-		 * 			\side:good
-		 * 			\universe:dc
-		 * 			\sex:female
+		 * 			\side/good
+		 * 			\universe/dc
+		 * 			\sex/female
 		 * 		ironman /
-		 * 			\side:good
-		 * 			\universe:marvel
-		 * 			\sex:male
+		 * 			\side/good
+		 * 			\universe/marvel
+		 * 			\sex/male
 		 * 		hulk /
-		 * 			\side:good
-		 * 			\universe:marvel
-		 * 			\sex:male
+		 * 			\side/good
+		 * 			\universe/marvel
+		 * 			\sex/male
 		 * 		thor /
-		 * 			\side:good
-		 * 			\universe:marvel
-		 * 			\sex:male
+		 * 			\side/good
+		 * 			\universe/marvel
+		 * 			\sex/male
 		 * 		spiderman /
-		 * 			\side:good
-		 * 			\universe:marvel
-		 * 			\sex:male
+		 * 			\side/good
+		 * 			\universe/marvel
+		 * 			\sex/male
 		 * 		thanos /
-		 * 			\side:bad
-		 * 			\universe:marvel
-		 * 			\sex:male
+		 * 			\side/bad
+		 * 			\universe/marvel
+		 * 			\sex/male
 		 * 		locky /
-		 * 			\side:bad
-		 * 			\universe:marvel
-		 * 			\sex:male
+		 * 			\side/bad
+		 * 			\universe/marvel
+		 * 			\sex/male
 		 * 		hela /
-		 * 			\side:bad
-		 * 			\universe:marvel
-		 * 			\sex:female
+		 * 			\side/bad
+		 * 			\universe/marvel
+		 * 			\sex/female
 		 * ```
 		 */
 		@ $mol_mem
@@ -134,81 +159,93 @@ namespace $ {
 			const obj = new this.$.$mol_tag_tree()
 			
 			obj.Item = (id: any) => this.Item(id)
+			obj.levels_expanded = () => 1
+			obj.tag_names = () => ({
+				side: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_side' ),
+				good: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_good' ),
+				bad: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_bad' ),
+				sex: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_sex' ),
+				male: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_male' ),
+				female: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_female' ),
+				universe: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_universe' ),
+				marvel: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_marvel' ),
+				dc: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_dc' )
+			})
 			obj.ids_tags = () => ({
 				batman: [
-					"side:good",
-					"universe:dc",
-					"sex:male"
+					"side/good",
+					"universe/dc",
+					"sex/male"
 				] as readonly any[],
 				superman: [
-					"side:good",
-					"universe:dc",
-					"sex:male"
+					"side/good",
+					"universe/dc",
+					"sex/male"
 				] as readonly any[],
 				aquaman: [
-					"side:good",
-					"universe:dc",
-					"sex:male"
+					"side/good",
+					"universe/dc",
+					"sex/male"
 				] as readonly any[],
 				flash: [
-					"side:good",
-					"universe:dc",
-					"sex:male"
+					"side/good",
+					"universe/dc",
+					"sex/male"
 				] as readonly any[],
 				jocker: [
-					"side:bad",
-					"universe:dc",
-					"sex:male"
+					"side/bad",
+					"universe/dc",
+					"sex/male"
 				] as readonly any[],
 				harley: [
-					"side:bad",
-					"universe:dc",
-					"sex:female"
+					"side/bad",
+					"universe/dc",
+					"sex/female"
 				] as readonly any[],
 				deadshot: [
-					"side:bad",
-					"universe:dc",
-					"sex:male"
+					"side/bad",
+					"universe/dc",
+					"sex/male"
 				] as readonly any[],
 				wonderwoman: [
-					"side:good",
-					"universe:dc",
-					"sex:female"
+					"side/good",
+					"universe/dc",
+					"sex/female"
 				] as readonly any[],
 				ironman: [
-					"side:good",
-					"universe:marvel",
-					"sex:male"
+					"side/good",
+					"universe/marvel",
+					"sex/male"
 				] as readonly any[],
 				hulk: [
-					"side:good",
-					"universe:marvel",
-					"sex:male"
+					"side/good",
+					"universe/marvel",
+					"sex/male"
 				] as readonly any[],
 				thor: [
-					"side:good",
-					"universe:marvel",
-					"sex:male"
+					"side/good",
+					"universe/marvel",
+					"sex/male"
 				] as readonly any[],
 				spiderman: [
-					"side:good",
-					"universe:marvel",
-					"sex:male"
+					"side/good",
+					"universe/marvel",
+					"sex/male"
 				] as readonly any[],
 				thanos: [
-					"side:bad",
-					"universe:marvel",
-					"sex:male"
+					"side/bad",
+					"universe/marvel",
+					"sex/male"
 				] as readonly any[],
 				locky: [
-					"side:bad",
-					"universe:marvel",
-					"sex:male"
+					"side/bad",
+					"universe/marvel",
+					"sex/male"
 				] as readonly any[],
 				hela: [
-					"side:bad",
-					"universe:marvel",
-					"sex:female"
+					"side/bad",
+					"universe/marvel",
+					"sex/female"
 				] as readonly any[]
 			})
 			

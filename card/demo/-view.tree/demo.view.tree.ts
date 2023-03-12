@@ -44,6 +44,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \gui/island
+		 * ```
+		 */
+		aspects() {
+			return [
+				"gui/island"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Simple $mol_card content / \Hello world!
 		 * ```
 		 */

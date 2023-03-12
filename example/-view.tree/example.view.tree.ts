@@ -10,6 +10,16 @@ namespace $ {
 			return [
 			] as readonly string[]
 		}
+		
+		/**
+		 * ```tree
+		 * aspects /string
+		 * ```
+		 */
+		aspects() {
+			return [
+			] as readonly string[]
+		}
 	}
 	
 }

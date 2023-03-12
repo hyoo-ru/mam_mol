@@ -73,6 +73,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects /
+		 * 	\gui/layout
+		 * 	\nav/menu
+		 * ```
+		 */
+		aspects() {
+			return [
+				"gui/layout",
+				"nav/menu"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Pizza $mol_page
 		 * 	title \🍕 Pizzas
 		 * 	tools / <= Foods_spread_close

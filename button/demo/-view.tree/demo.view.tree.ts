@@ -45,6 +45,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects /
+		 * 	\gui/input
+		 * 	\input/button
+		 * ```
+		 */
+		aspects() {
+			return [
+				"gui/input",
+				"input/button"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * fail?event null
 		 * ```
 		 */

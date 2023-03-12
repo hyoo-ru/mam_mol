@@ -51,6 +51,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \gui/layout
+		 * ```
+		 */
+		aspects() {
+			return [
+				"gui/layout"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Side $mol_view sub / \Side
 		 * ```
 		 */
