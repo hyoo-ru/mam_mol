@@ -16,6 +16,8 @@ $mol_tag_tree_demo $mol_example
 				marvel @ \Marvel
 				dc @ \DC
 			ids_tags *
+				valera /
+					\side/bomj
 				batman /
 					\side/good
 					\universe/dc
