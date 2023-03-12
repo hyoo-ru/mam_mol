@@ -35,7 +35,7 @@ namespace $.$$ {
 		hour_selected( hour_str?: string ): string {
 
 			if( hour_str === undefined ) {
-				return this.value_moment().toString( 'h' )
+				return this.value_moment()?.toString( 'h' )
 			}
 
 			const moment = this.value_moment()
@@ -50,7 +50,7 @@ namespace $.$$ {
 		minute_selected( minute_str?: string ) {
 
 			if( minute_str === undefined ) {
-				return this.value_moment().toString( 'm' )
+				return this.value_moment()?.toString( 'm' )
 			}
 
 			const moment = this.value_moment()
