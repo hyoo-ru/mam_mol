@@ -18,7 +18,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		override options() {
-			return this.names().map( id => this.Option( id ) )
+			return this.names_filtered().map( id => this.Option( id ) )
 		}
 		
 		override option_arg( id: string ) {
