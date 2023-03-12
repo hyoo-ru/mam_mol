@@ -10,8 +10,8 @@ namespace $.$$ {
 		// 	return this.tag_current(next ? id : '') === id
 		// }
 
-		override tree_path(next?: string) {
-			return next ?? ''
+		override tree_path(next?: readonly string[]) {
+			return next ?? []
 		}
 
 		override ids_tags() {
@@ -54,25 +54,20 @@ namespace $.$$ {
 		tree_sub() {
 			const path = this.tree_path()
 
-			if (! path) return this.tree()
-
-			const segments = path.split(this.path_sep())
-
-			return segments.reduce((ptr, segment) => ptr[segment], this.tree())
+			return path.reduce((ptr, segment) => ptr[segment], this.tree())
 		}
 
 		@ $mol_mem
 		override sub() {
 			const tree = this.tree_sub()
 			const path = this.tree_path()
-			const prefix = path ? (path + this.path_sep()) : ''
 
 			return [
 				... Object.keys( tree )
-					.filter(key => key !== '__ids')
-					.map( tag => this.Tag( prefix + tag ) ),
+					.filter(key => key !== '__ids' )
+					.map( tag => this.Tag( [ ...path, tag ] ) ),
 
-				... tree.__ids?.map( id => this.Item( prefix + id ) ) ?? [],
+				... tree.__ids?.map( id => this.Item( [ ...path, id ]) ) ?? [],
 			]
 		}
 
@@ -80,19 +75,19 @@ namespace $.$$ {
 			return {} as Record<string, string>
 		}
 		
-		override tag_name( tag: string ) {
+		override tag_name( tree_path: readonly string[] ) {
 			const names = this.tag_names()
-			const localize_id = tag.substring(tag.lastIndexOf(this.path_sep()) + 1)
+			const last_segment = tree_path[tree_path.length - 1]
 
-			return names[localize_id] ?? localize_id
+			return names[last_segment] ?? last_segment
 		}
 
-		override item_title(id: string) {
-			return id
+		override item_title(id: readonly string[]) {
+			return id[id.length - 1]
 		}
 
-		override tree_path_fix(id: string) {
-			return id ?? ''
+		override tree_path_id(id: readonly string[]) {
+			return id ?? []
 		}
 		
 	}

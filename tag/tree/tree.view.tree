@@ -2,7 +2,7 @@ $mol_tag_tree $mol_list
 	ids_tags *
 	- tag_current? \
 	tree *
-	tree_path \
+	tree_path /string
 	path_sep \/
 	tag_names *
 	Item* $mol_view
@@ -13,7 +13,7 @@ $mol_tag_tree $mol_list
 		- expanded? <=> tag_expanded*? false
 		content /
 			<= Tag_tree* $mol_tag_tree
-				tree_path <= tree_path_fix* \
+				tree_path <= tree_path_id* /string
 				tree <= tree
 				Item* <= Item*
 				tag_name* <= tag_name*
