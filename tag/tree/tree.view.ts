@@ -28,19 +28,21 @@ namespace $.$$ {
 			const obj = tree[key]
 
 			if ( ( obj.__ids?.length ?? 0 ) <= 1 ) {
-				root.__ids = root.__ids ?? []
 				const id = obj.__ids?.[0]
-				if (id) root.__ids.push(id)
-				obj.__ids = undefined
-				if (Object.keys(obj).length === 1) {
+				
+				if (id) {
+					root.__ids = root.__ids ?? []
+					root.__ids.push(id)
+					obj.__ids = undefined
+				}
+
+				if (Object.keys(obj).length <= 1) {
 					delete tree[key]
 					continue
 				}
 			}
 
-			if ( obj instanceof Object ) {
-				tree[key] = move_single_id_to_root(obj, root)
-			}
+			if ( obj instanceof Object ) move_single_id_to_root(obj, root)
 		}
 
 		return tree
