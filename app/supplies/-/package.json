@@ -178,8 +178,6 @@
     "$mol_type_equals",
     "$mol_type_intersect",
     "$mol_unicode",
-    "$mol_fiber",
-    "$mol_wire_sync",
     "$mol_cordova",
     "$mol_app_supplies_detail",
     "$mol_app_supplies_position",
