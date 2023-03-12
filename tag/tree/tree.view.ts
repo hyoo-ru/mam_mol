@@ -27,14 +27,10 @@ namespace $.$$ {
 				if (! tags.length) tags = [ 'untagged' ]
 
 				tags.forEach(tag => {
-					let ptr = tree
-
-					tag.split(sep).forEach(segment => {
-
-						if (! ptr[segment]) ptr[segment] = { }
-						ptr = ptr[segment]
-
-					})
+					const ptr = tag.split(sep).reduce(
+						(ptr, segment) => ptr[segment] = ptr[segment] ?? {},
+						tree
+					)
 
 					if (! ptr.__ids) ptr.__ids = []
 					ptr.__ids.push(id)
