@@ -60,10 +60,9 @@ namespace $.$$ {
 
 			for (const name of this.names_filtered()) {
 				let aspects = this.widget_aspects( name )
-				if (! aspects.length) aspects = [ 'untagged' ]
+				result[name] = result[name] ?? []
 
 				for (const tag of aspects) {
-					result[name] = result[name] ?? []
 					result[name].push(tag)
 				}
 			}

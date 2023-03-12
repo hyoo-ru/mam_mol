@@ -1,10 +1,9 @@
 namespace $.$$ {
 	type Tree = {  [K: string]: Tree } & { __ids?: string[] } 
 
-
 	function defaultSortFn(a: string, b: string) {
-		if ( a > b || a === 'untagged' ) return 1
-		if ( a < b || b === 'untagged' ) return -1
+		if ( a > b ) return 1
+		if ( a < b ) return -1
 
 		return 0
 	}
@@ -50,8 +49,11 @@ namespace $.$$ {
 
 			ids.forEach(id => {
 
-				let tags = ids_tags[id]
-				if (! tags.length) tags = [ 'untagged' ]
+				const tags = ids_tags[id]
+				if (! tags.length) {
+					if (! tree.__ids) tree.__ids = []
+					tree.__ids.push(id)
+				}
 
 				tags.forEach(tag => {
 					const ptr = tag.split(sep).reduce(
