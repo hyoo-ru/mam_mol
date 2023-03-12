@@ -1,6 +1,33 @@
 namespace $.$$ {
 	type Tree = {  [K: string]: Tree } & { __ids?: string[] } 
 
+
+	function defaultSortFn(a: string, b: string) {
+		if ( a > b || a === 'untagged' ) return 1
+		if ( a < b || b === 'untagged' ) return -1
+
+		return 0
+	}
+
+	function sort_object<Obj extends Record<PropertyKey, any>>(
+		obj: Obj,
+		sortFn = defaultSortFn
+	) {
+		return Object.keys(obj).sort(sortFn).reduce((acc, key) => {
+			let sub = obj[key]
+
+			if (sub instanceof Array) {
+				sub = [ ...sub ].sort(sortFn)
+			} else if ( sub instanceof Object ) {
+				sub = sort_object(sub, sortFn)
+			}
+
+			acc[(key as keyof typeof obj)] = sub
+
+			return acc
+		}, {} as typeof obj)
+	}
+
 	export class $mol_tag_tree extends $.$mol_tag_tree {
 
 		// @ $mol_mem_key
@@ -39,7 +66,9 @@ namespace $.$$ {
 
 			})
 
-			return tree
+			const norm = sort_object(tree)
+
+			return norm
 		}
 
 		@ $mol_mem

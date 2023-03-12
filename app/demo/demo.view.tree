@@ -15,6 +15,7 @@ $mol_app_demo $mol_book2
 		title <= menu_title @ \$mol examples
 		names <= names /string
 		widget_tags* <= widget_tags* /string
+		widget_aspects* <= widget_aspects* /string
 		widget_title* <= widget_title* \
 		search_start? => search_start?
 		tools <= tools /

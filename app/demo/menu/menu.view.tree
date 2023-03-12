@@ -1,6 +1,7 @@
 $mol_app_demo_menu $mol_page
 	names /string
 	widget_tags* /string
+	widget_aspects* /string
 	widget_title* \
 	search_start? null
 	Body $mol_scroll
@@ -12,7 +13,21 @@ $mol_app_demo_menu $mol_page
 				<= Filter $mol_search
 					query?val <=> filter?val \
 					- suggests <= filter_suggests
-				<= Options $mol_list
+				<= Tree $mol_tag_tree
+					Item* <= OptionItem* $mol_button_minor
+						title <= option_path_title* \
+					ids_tags <= ids_tags *
+					tag_names *
+						gui @ \GUI
+						input @ \Input
+						island @ \Island
+						layout @ \Layout
+						nav @ \Navigation
+						menu @ \Menu
+						string @ \Input strings
+						button @ \Button
+						untagged @ \Untagged
+				- <= Options $mol_list
 					rows <= options /
 	Option* $mol_link
 		arg <= option_arg* *

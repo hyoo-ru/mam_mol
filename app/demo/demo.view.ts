@@ -4,7 +4,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		component_name( name: string ) {
-			return '$'+ name.split( '_demo' )?.[ 0 ] ?? name
+			return name.split( '_demo' )?.[ 0 ] ?? name
 		}
 		
 		override detail_title() {
@@ -30,14 +30,14 @@ namespace $.$$ {
 
 				if ( this.demo_block_list().includes( name ) ) continue
 				
-				next.push( name.substring( 1 ) )
+				next.push( name )
 			}
 
 			return next.sort()
 		}
 
 		@ $mol_mem_key
-		widget_tags( name: string ) {
+		override widget_tags( name: string ) {
 			const component_name = this.component_name( name )
 
 			const tags = this.Widget( name ).tags().map( tag => tag.toLowerCase() )
@@ -57,17 +57,20 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		widget_title( name: string ) {
+		override widget_title( name: string ) {
 			return this.Widget( name ).title()
 		}
 
 		@ $mol_mem_key
-		widget_aspects( name: string ) {
+		override widget_aspects( name: string ) {
 			return this.Widget( name ).aspects()
 		}
 
 		override selected() {
-			return $mol_state_arg.value( 'demo' ) || ''
+			let value = $mol_state_arg.value( 'demo' ) || ''
+			if (! value.startsWith('$')) value = '$' + value
+
+			return value
 		}
 		
 		readme_page() {
@@ -75,12 +78,12 @@ namespace $.$$ {
 		}
 
 		selected_class_name() {
-			return '$' + this.selected()
+			return this.selected()
 		}
 
 		@ $mol_mem_key
 		Widget( name : string ) {
-			const Class : typeof $mol_example = this.$[ '$' + name ]
+			const Class : typeof $mol_example = this.$[ name ]
 			return new Class()
 		}
 		
@@ -156,7 +159,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		override edit_uri() {
-			const source = encodeURIComponent( `$${''}my_app $${ this.selected() }` )
+			const source = encodeURIComponent( `$${''}my_app ${ this.selected() }` )
 			const pack = encodeURIComponent( this.$.$mol_state_arg.make_link({}) )
 			return `https://studio.hyoo.ru/#!pack=${ pack }/source=${ source }/preview`
 		}

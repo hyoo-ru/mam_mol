@@ -16,17 +16,21 @@ namespace $.$$ {
 			return this.$.$mol_state_session.value( 'filter' , next === '' ? null : next ) ?? super.filter() as string
 		}
 		
-		@ $mol_mem
-		override options() {
-			return this.names_filtered().map( id => this.Option( id ) )
-		}
+		// @ $mol_mem
+		// override options() {
+		// 	return this.names_filtered().map( id => this.Option( id ) )
+		// }
 		
-		override option_arg( id: string ) {
+		override option_arg( id: string[] ) {
 			return { 'demo' : id }
 		}
 		
 		override option_title( id: string ) {
-			return '$'+ id.replace( '_demo_', '/' ).replace( '_demo', '' )
+			return id.replace( '_demo_', '/' ).replace( '_demo', '' )
+		}
+
+		override option_path_title(id: readonly string[]) {
+			return id.at(-1)!
 		}
 
 		override search_start( event?: Event ) {
@@ -49,6 +53,24 @@ namespace $.$$ {
 
 			return [ ... new Set( words ) ].map( word => word.toLowerCase() )
 		}
+
+		@ $mol_mem
+		override ids_tags() {
+			const result = {} as Record<string, string[]>
+
+			for (const name of this.names_filtered()) {
+				let aspects = this.widget_aspects( name )
+				if (! aspects.length) aspects = [ 'untagged' ]
+
+				for (const tag of aspects) {
+					result[name] = result[name] ?? []
+					result[name].push(tag)
+				}
+			}
+
+			return result
+		}
+
 
 		@ $mol_mem
 		override tags_dictionary() {
