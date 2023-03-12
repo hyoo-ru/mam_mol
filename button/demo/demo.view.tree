@@ -29,4 +29,7 @@ $mol_button_demo $mol_example_small
 				\Minor with Icon
 	tags /
 		\button
+	aspects /
+		\gui/input
+		\input/button
 

@@ -1,19 +1,10 @@
 namespace $.$$ {
 	
-	/** The component tags should be at the end of the list */
-	const compare_names = ( a: string, b: string )=> {
-		if ( a[ 0 ] === '$' && b[ 0 ] !== '$') return 1
-		if ( a[ 0 ] !== '$' && b[ 0 ] === '$' ) return -1
-		if ( a > b ) return 1
-		if ( a < b ) return -1
-		return 0
-	}
-
 	export class $mol_app_demo extends $.$mol_app_demo {
 
 		@ $mol_mem_key
 		component_name( name: string ) {
-			return '$'+ name.split( '_demo' )?.[ 0 ] ?? name
+			return name.split( '_demo' )?.[ 0 ] ?? name
 		}
 		
 		override detail_title() {
@@ -27,7 +18,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		names_demo_all() {
+		override names() {
 			const next : string[] = []
 
 			for( const name in this.$ ) {
@@ -39,14 +30,14 @@ namespace $.$$ {
 
 				if ( this.demo_block_list().includes( name ) ) continue
 				
-				next.push( name.substring( 1 ) )
+				next.push( name )
 			}
 
 			return next.sort()
 		}
 
 		@ $mol_mem_key
-		widget_tags( name: string ) {
+		override widget_tags( name: string ) {
 			const component_name = this.component_name( name )
 
 			const tags = this.Widget( name ).tags().map( tag => tag.toLowerCase() )
@@ -66,137 +57,20 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		widget_title( name: string ) {
+		override widget_title( name: string ) {
 			return this.Widget( name ).title()
 		}
 
-		search_start( event?: Event ) {
-			this.Menu().Filter().Query().bring()
-			event?.preventDefault()
-		}
-		
-		filter() {
-			return this.Menu().filter()
-		}
-
-		/** Filter string not empty and ends with space */
-		@ $mol_mem
-		filter_last_word_completed() {
-			return /[^\s]+\s+$/.test( this.filter() )
-		}
-
-		/** Filter string uniq words */
-		@ $mol_mem
-		filter_words() {
-			const filter = this.filter().trim()
-
-			const words = filter !== '' ? filter.split( /\s+/ ) : []
-
-			return [ ... new Set( words ) ].map( word => word.toLowerCase() )
-		}
-
-		@ $mol_mem
-		override names_demo_filtered() {
-			const words = this.filter_words()
-			let names = this.names_demo_all()
-
-			const tags_selected = new Set(this.tags_selected())
-
-			if (tags_selected.size > 0) names = names.filter(name =>
-				this.widget_tags( name ).some(tag => tags_selected.has(tag))
-			)
-
-			if( words.length !== 0 ) {
-
-				names = names.filter( name => {
-					const title = this.widget_title( name )
-
-					const component_keywords = [
-						...( title ? [ title.toLowerCase() ] : [] ),
-						...this.widget_tags( name )
-					]
-
-					return words.every(
-						word => component_keywords.some( kw => kw.includes( word ) )
-					)
-				} )
-
-			}
-
-			return names
-		}
-
-		@ $mol_mem
-		tags_dictionary() {
-			const tag_weights = new Map<string, number>()
-
-			for (const name of this.names_demo_all()) {
-				for (const tag of this.widget_tags( name )) {
-					const weight = tag_weights.get(tag)
-					tag_weights.set(tag, weight === undefined ? 0 : weight + 1)
-				}
-			}
-
-			return [ ...tag_weights.entries() ]
-				.filter( ( [ , weight ] ) => weight > 2 )
-				.sort( ( [, aw ], [, bw ] ) => bw - aw )
-				.reduce( ( acc, [ tag ] ) => {
-					acc[ tag ] = tag
-					return acc
-				}, {} as Record<string, string>)
-		}
-
-		@ $mol_mem
-		tags_filtered() {
-			return [... new Set(
-				this.names_demo_filtered().flatMap( name => this.widget_tags( name ) )
-			) ]
-				.map( tag => tag.trim().toLowerCase() )
-				.filter( tag => tag !== '')
-				.sort( compare_names )
-		}
-
-		@ $mol_mem
-		override filter_suggests() {
-			const filter_words = this.filter_words()
-
-			if( filter_words.length === 0 ) return this.tags_filtered()
-
-			const filtered_names = this.names_demo_filtered()
-
-			if( filtered_names.length <= 1 ) return []
-
-			const tags = this.tags_filtered()
-
-			const filter_last_word = filter_words.slice( -1 )[ 0 ]
-
-			const filter_last_word_completed = this.filter_last_word_completed()
-			
-			/** Tags suggests */
-			const suggests: string[] = []
-
-			for( const tag of tags ) {
-				if( filter_words.includes( tag ) ) continue
-
-				if ( filter_last_word_completed ) {
-					suggests.push(
-						`${ filter_words.join( ' ' ) } ${ tag }`
-					)
-				} else if ( 
-					tag.indexOf( filter_last_word ) === 0 &&
-					( filter_last_word.length < tag.length )
-				) {
-					suggests.push(
-						`${ filter_words.slice( 0, -1 ).join( ' ' ) } ${ tag }`
-					)
-				}
-			}
-
-			return suggests
+		@ $mol_mem_key
+		override widget_aspects( name: string ) {
+			return this.Widget( name ).aspects()
 		}
 
 		override selected() {
-			return $mol_state_arg.value( 'demo' ) || ''
+			let value = $mol_state_arg.value( 'demo' ) || ''
+			if (value && ! value.startsWith('$')) value = '$' + value
+
+			return value
 		}
 		
 		readme_page() {
@@ -204,12 +78,12 @@ namespace $.$$ {
 		}
 
 		selected_class_name() {
-			return '$' + this.selected()
+			return this.selected()
 		}
 
 		@ $mol_mem_key
 		Widget( name : string ) {
-			const Class : typeof $mol_example = this.$[ '$' + name ]
+			const Class : typeof $mol_example = this.$[ name ]
 			return new Class()
 		}
 		
@@ -219,7 +93,7 @@ namespace $.$$ {
 			return [ selected ]
 		}
 		
-		override blocks() {
+		override pages() {
 			let sub : $mol_view[] = []
 			
 			sub.push( this.Menu() )
@@ -240,10 +114,6 @@ namespace $.$$ {
 		override Demo() {
 			return this.Widget( this.selected() )
 		}
-		
-		// override chat_seed( id: string ) {
-		// 	return '#!demo=' + id
-		// }
 		
 		logo_uri() {
 			return $mol_file.relative( '/mol/logo/logo.svg' ).path()
@@ -289,89 +159,11 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		override edit_uri() {
-			const source = encodeURIComponent( `$${''}my_app $${ this.selected() }` )
+			const source = encodeURIComponent( `$${''}my_app ${ this.selected() }` )
 			const pack = encodeURIComponent( this.$.$mol_state_arg.make_link({}) )
 			return `https://studio.hyoo.ru/#!pack=${ pack }/source=${ source }/preview`
 		}
 		
 	}
-	
-	export class $mol_app_demo_menu extends $.$mol_app_demo_menu {
 
-		@ $mol_mem
-		override filter( next?: string ) {
-			return this.$.$mol_state_session.value( 'filter' , next === '' ? null : next ) ?? super.filter() as string
-		}
-		
-		@ $mol_mem
-		override options() {
-			return this.names().map( id => this.Option( id ) )
-		}
-		
-		override option_arg( id: string ) {
-			return { 'demo' : id }
-		}
-		
-		override option_title( id: string ) {
-			return '$'+ id.replace( '_demo_', '/' ).replace( '_demo', '' )
-		}
-		
-	}
-
-	export class $mol_app_demo_menu2 extends $.$mol_app_demo_menu2 {
-		override item_title(id: string) {
-			return id
-		}
-	}
-
-	export class $mol_app_demo_readme_not_found_error extends Error {
-		constructor( public module: readonly string[] ) {
-			super( 'Readme not found' )
-		}
-	}
-	
-	export class $mol_app_demo_readme extends $.$mol_app_demo_readme {
-
-		link( module: readonly string[] ) {
-			return this.link_template().replace( '{repo}', this.repo() ).replace( '{module}' , module.join('/') )
-		}
-		
-		@ $mol_mem
-		uri_base( next = ''  ) {
-			$mol_wire_solid()
-			return next
-		}
-
-		@ $mol_mem
-		override readme(): string {
-			let module = this.module()
-
-			while( module.length ) {
-				try {
-					const link =  this.link( module )
-					const text = this.$.$mol_fetch.text( link )
-					this.uri_base( `https://github.com/${this.repo()}/tree/master/${module.join('/')}/` )
-					return text
-				} catch( error: any ) {
-					if( error instanceof Promise ) $mol_fail_hidden( error )
-					module = module.slice( 0 , -1 )
-				}
-			}
-			
-			throw new $mol_app_demo_readme_not_found_error( module )
-		}
-
-		@ $mol_mem
-		override body() {
-			try {
-				this.readme()
-				return [ this.Readme() ]
-			} catch ( err ) {
-				if( err instanceof Promise ) $mol_fail_hidden( err )
-				return [ this.Not_found() ]
-			}
-		}
-		
-	}
-	
 }

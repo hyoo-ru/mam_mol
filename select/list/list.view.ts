@@ -1,12 +1,12 @@
 namespace $.$$ {
 	export class $mol_select_list extends $.$mol_select_list {
 
-		value( val? : string[] ) {
+		override value( val? : string[] ) {
 			return super.value( val ) as readonly string[]
 		}
 
 		@ $mol_mem
-		pick( key? : string ) {
+		override pick( key? : string ) {
 			
 			if( !key ) return ''
 			this.value([ ... this.value() , key ])
@@ -21,12 +21,12 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		options() {
+		override options() {
 			return Object.keys( this.dictionary() ) as readonly string[]
 		}
 
 		@ $mol_mem
-		options_pickable() : readonly string[] {
+		override options_pickable() : readonly string[] {
 			
 			if( !this.enabled() ) return []
 			
@@ -35,37 +35,33 @@ namespace $.$$ {
 			
 		}
 
-		option_title( key : string ) {
+		override option_title( key : string ) {
 			const value = this.dictionary()[ key ] as string
 			return value == null ? key : value
 		}
 		
-		badge_title( index: number ) {
+		override badge_title( index: number ) {
 			return this.option_title( this.value()[ index ] )
 		}
 		
 		@ $mol_mem
-		pick_enabled() {
+		override pick_enabled() {
 			return this.options_pickable().length > 0
 		}
 
-		@ $mol_mem
-		sub() {
-			return [
-				this.Pick(),
-				... this.value()
-					.map( ( _, index )=> this.Badge( index ) )
-					.reverse(),
-			]
+		override Badges() {
+			return this.value()
+				.map( ( _, index )=> this.Badge( index ) )
+				.reverse()
 		}
 
 		@ $mol_mem
-		title() {
+		override title() {
 			return this.value().map( key => this.option_title( key ) ).join( ' + ' )
 		}
 
 		@ $mol_action
-		remove( index: number ) {
+		override remove( index: number ) {
 			const value = this.value()
 			this.value([
 				... value.slice( 0 , index ),

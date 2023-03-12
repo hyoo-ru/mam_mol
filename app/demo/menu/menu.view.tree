@@ -1,0 +1,35 @@
+$mol_app_demo_menu $mol_page
+	names /string
+	widget_tags* /string
+	widget_aspects* /string
+	widget_title* \
+	search_start? null
+	Body $mol_scroll
+		sub /
+			<= List $mol_list rows /
+				<= Selector $mol_row sub /
+					<= Filter $mol_search
+						query?val <=> filter?val \
+						- suggests <= filter_suggests
+				- <= Badges_list $mol_row
+					sub /
+						^ Badges
+				<= Tree $mol_tag_tree
+					Item* <= Option*
+					ids_tags <= ids_tags *
+					levels_expanded <= levels_expanded <= levels_expanded_default 1
+					tag_names *
+						gui @ \GUI
+						input @ \Input
+						island @ \Island
+						layout @ \Layout
+						nav @ \Navigation
+						menu @ \Menu
+						string @ \Input strings
+						button @ \Button
+	Option* $mol_link
+		arg <= option_arg* *
+		sub /
+			<= Option_title* $mol_dimmer
+				haystack <= option_title* \
+				needle <= filter?val \
