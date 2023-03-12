@@ -59,16 +59,26 @@ namespace $.$$ {
 
 		@ $mol_mem
 		override sub() {
-			const tree = this.tree_sub()
+			const path = this.tree_path()
+			const last_segment = path[ path.length - 1 ]
+
+			if (last_segment === 'untagged') return [ this.Untagged() ]
+
+			return super.sub()
+		}
+
+		override Tags() {
 			const path = this.tree_path()
 
-			return [
-				... Object.keys( tree )
-					.filter(key => key !== '__ids' )
-					.map( tag => this.Tag( [ ...path, tag ] ) ),
+			return Object.keys( this.tree_sub() )
+				.filter(key => key !== '__ids' )
+				.map( tag => this.Tag( [ ...path, tag ] ) )
+		}
 
-				... tree.__ids?.map( id => this.Item( [ ...path, id ]) ) ?? [],
-			]
+		override Items() {
+			const path = this.tree_path()
+
+			return this.tree_sub().__ids?.map( id => this.Item( [ ...path, id ]) ) ?? []
 		}
 
 		override tag_names() {

@@ -8,6 +8,17 @@ $mol_tag_tree $mol_list
 	Item* $mol_view
 		sub /
 			<= item_title* \
+	Untagged $mol_view
+		sub /
+			^
+				Items /$mol_view
+	Tags /$mol_view
+	Items /$mol_view
+	sub /$mol_view
+		^
+			Tags /$mol_view
+		^
+			Items /$mol_view
 	Tag* $mol_expander
 		title <= tag_name* \
 		- expanded? <=> tag_expanded*? false

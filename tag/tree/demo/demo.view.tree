@@ -13,6 +13,7 @@ $mol_tag_tree_demo $mol_example
 				menu @ \Menu
 				string @ \Input strings
 				button @ \Button
+				untagged @ \Untagged
 			ids_tags *
 				$mol_string /string
 					\gui/input/string
@@ -23,6 +24,7 @@ $mol_tag_tree_demo $mol_example
 				$mol_catalog /string
 					\gui/layout
 					\nav/menu
+				$mol_book /string
 	tags /
 		\tags
 		\tree
