@@ -14,9 +14,10 @@ namespace $ {
 
 			if( !event.time ) event = { time : new Date().toISOString() , ... event }
 
-			const tree = this.$mol_tree.fromJSON( event ).clone({ type })
+			let tree = this.$mol_tree2_from_json( event )
+			tree = tree.struct( type, tree.kids )
+			
 			let str = color( tree.toString() )
-
 			;( this.console[ level ] as any )( str )
 	
 			const self = this
