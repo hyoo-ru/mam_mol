@@ -27,8 +27,6 @@ $mol_app_demo_menu $mol_page
 						menu @ \Menu
 						string @ \Input strings
 						button @ \Button
-				- <= Options $mol_list
-					rows <= options /
 	Option* $mol_link
 		arg <= option_arg* *
 		sub /
