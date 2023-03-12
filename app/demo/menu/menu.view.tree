@@ -14,8 +14,7 @@ $mol_app_demo_menu $mol_page
 					query?val <=> filter?val \
 					- suggests <= filter_suggests
 				<= Tree $mol_tag_tree
-					Item* <= OptionItem* $mol_button_minor
-						title <= option_path_title* \
+					Item* <= Option*
 					ids_tags <= ids_tags *
 					tag_names *
 						gui @ \GUI

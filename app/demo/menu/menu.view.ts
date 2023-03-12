@@ -21,16 +21,14 @@ namespace $.$$ {
 		// 	return this.names_filtered().map( id => this.Option( id ) )
 		// }
 		
-		override option_arg( id: string[] ) {
-			return { 'demo' : id }
+		override option_arg( id: readonly string[] ) {
+			return { 'demo' : id.at(-1)?.substring(1) }
 		}
 		
-		override option_title( id: string ) {
-			return id.replace( '_demo_', '/' ).replace( '_demo', '' )
-		}
+		override option_title( path_id: readonly string[] ) {
+			const id = path_id.at(-1)!
 
-		override option_path_title(id: readonly string[]) {
-			return id.at(-1)!
+			return id.replace( '_demo_', '/' ).replace( '_demo', '' )
 		}
 
 		override search_start( event?: Event ) {
