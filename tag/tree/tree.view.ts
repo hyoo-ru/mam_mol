@@ -49,15 +49,16 @@ namespace $.$$ {
 			const ids_tags = this.ids_tags()
 			const ids = Object.keys(ids_tags)
 
-			ids.forEach(id => {
+			for (const id of ids) {
 
 				const tags = ids_tags[id]
+
 				if (! tags.length) {
 					if (! tree.__ids) tree.__ids = []
 					tree.__ids.push(id)
 				}
 
-				tags.forEach(tag => {
+				for (const tag of tags) {
 					const ptr = tag.split(sep).reduce(
 						(ptr, segment) => ptr[segment] = ptr[segment] ?? {},
 						tree
@@ -66,13 +67,11 @@ namespace $.$$ {
 					if (! ptr.__ids) ptr.__ids = []
 					ptr.__ids.push(id)
 
-				})
+				}
 
-			})
+			}
 
-			const norm = sort_object(tree)
-
-			return norm
+			return sort_object(tree)
 		}
 
 		@ $mol_mem

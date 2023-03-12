@@ -14,16 +14,16 @@ $mol_tag_tree_demo $mol_example
 				string @ \Input strings
 				button @ \Button
 			ids_tags *
-				$mol_string /string
+				mol_string /string
 					\gui/input/string
-				$mol_button /string
+				mol_button /string
 					\gui/input/button
-				$mol_card /string
+				mol_card /string
 					\gui/island
-				$mol_catalog /string
+				mol_catalog /string
 					\gui/layout
 					\nav/menu
-				$mol_book /string
+				mol_book /string
 	tags /
 		\tags
 		\tree
