@@ -72,7 +72,7 @@ namespace $.$$ {
 					.filter(key => key !== '__ids')
 					.map( tag => this.Tag( prefix + tag ) ),
 
-				... tree.__ids?.map( id => this.Item( id ) ) ?? [],
+				... tree.__ids?.map( id => this.Item( prefix + id ) ) ?? [],
 			]
 		}
 
