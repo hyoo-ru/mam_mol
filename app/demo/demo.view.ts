@@ -68,7 +68,7 @@ namespace $.$$ {
 
 		override selected() {
 			let value = $mol_state_arg.value( 'demo' ) || ''
-			if (! value.startsWith('$')) value = '$' + value
+			if (value && ! value.startsWith('$')) value = '$' + value
 
 			return value
 		}
