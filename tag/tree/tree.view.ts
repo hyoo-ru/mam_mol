@@ -8,7 +8,7 @@ namespace $.$$ {
 	) {
 		return Object.keys(obj).sort(sort_tags).reduce((acc, key) => {
 			let sub = obj[key]
-
+			
 			if (sub instanceof Array) {
 				sub = [ ...sub ].sort(sort_items)
 			} else if ( sub instanceof Object ) {
@@ -19,6 +19,33 @@ namespace $.$$ {
 
 			return acc
 		}, {} as typeof obj)
+	}
+
+	function move_single_id_to_root(tree: Tree, root = tree) {
+		for (const key of Object.keys(tree)) {
+			if ( key === '__ids' ) continue
+
+			const obj = tree[key]
+
+			if ( ( obj.__ids?.length ?? 0 ) <= 1 ) {
+				const id = obj.__ids?.[0]
+				
+				if (id) {
+					root.__ids = root.__ids ?? []
+					root.__ids.push(id)
+					obj.__ids = undefined
+				}
+
+				if (Object.keys(obj).length <= 1) {
+					delete tree[key]
+					continue
+				}
+			}
+
+			if ( obj instanceof Object ) move_single_id_to_root(obj, root)
+		}
+
+		return tree
 	}
 
 	export class $mol_tag_tree extends $.$mol_tag_tree {
@@ -65,7 +92,7 @@ namespace $.$$ {
 
 			}
 
-			return sort_object(tree, this.sort_tags(), this.sort_items())
+			return sort_object(move_single_id_to_root(tree), this.sort_tags(), this.sort_items())
 		}
 
 		@ $mol_mem
