@@ -5,6 +5,8 @@ $mol_tag_tree $mol_list
 	tree_path /string
 	path_sep \/
 	tag_names *
+	tag_name* \
+	levels_expanded 0
 	Item* $mol_view
 		sub /
 			<= item_title* \
@@ -16,12 +18,13 @@ $mol_tag_tree $mol_list
 		^
 			Items /$mol_view
 	Tag* $mol_expander
-		title <= tag_name* \
-		- expanded? <=> tag_expanded*? false
+		title <= tag_name_translated* \
+		expanded? <=> tag_expanded*? false
 		content /
 			<= Tag_tree* $mol_tag_tree
 				tree_path <= tree_path_id* /string
 				tree <= tree
 				Item* <= Item*
-				tag_name* <= tag_name*
+				tag_name_translated* <= tag_name_translated*
 				item_title* <= item_title*
+				tag_expanded*? <=> tag_expanded*?

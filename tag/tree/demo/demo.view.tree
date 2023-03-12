@@ -1,7 +1,7 @@
 $mol_tag_tree_demo $mol_example
 	title \Autoatic tag tree
 	sub /
-		<= Tree1 $mol_tag_tree
+		<= Tree $mol_tag_tree
 			Item* <= Item* $mol_button_minor
 				title <= item_title* \
 			tag_names *

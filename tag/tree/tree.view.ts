@@ -29,12 +29,14 @@ namespace $.$$ {
 
 	export class $mol_tag_tree extends $.$mol_tag_tree {
 
-		// @ $mol_mem_key
-		// tag_expanded( id: string, next?: boolean ) {
-		// 	if (next === undefined) return this.tag_current() === id
+		@ $mol_mem_key
+		tag_expanded( id: readonly string[], next?: boolean ) {
+			return next ?? this.tag_expanded_default(id)
+		}
 
-		// 	return this.tag_current(next ? id : '') === id
-		// }
+		tag_expanded_default(id: readonly string[]) {
+			return this.levels_expanded() >= id.length
+		}
 
 		override ids_tags() {
 			return {} as Record<string, readonly string[]>
@@ -97,8 +99,11 @@ namespace $.$$ {
 		override tag_names() {
 			return {} as Record<string, string>
 		}
-		
-		override tag_name( tree_path: readonly string[] ) {
+
+		override tag_name_translated( tree_path: readonly string[] ) {
+			const outer = this.tag_name(tree_path)
+			if (outer) return outer
+
 			const names = this.tag_names()
 			const last_segment = tree_path.at(-1)!
 
