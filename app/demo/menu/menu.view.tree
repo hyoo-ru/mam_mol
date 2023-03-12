@@ -24,7 +24,7 @@ $mol_app_demo_menu $mol_page
 				<= Tree $mol_tag_tree
 					Item* <= Option*
 					ids_tags <= ids_tags *
-					levels_expanded 1
+					levels_expanded <= levels_expanded <= levels_expanded_default 1
 					tag_names *
 						gui @ \GUI
 						input @ \Input

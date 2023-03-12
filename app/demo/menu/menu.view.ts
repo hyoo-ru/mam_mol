@@ -138,6 +138,12 @@ namespace $.$$ {
 			return suggests
 		}
 
+		levels_expanded() {
+			if (this.filter_words().length) return 99
+
+			return super.levels_expanded()
+		}
+
 		@ $mol_mem
 		names_filtered() {
 			const words = this.filter_words()
