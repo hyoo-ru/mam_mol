@@ -16,11 +16,6 @@ namespace $.$$ {
 			return this.$.$mol_state_session.value( 'filter' , next === '' ? null : next ) ?? super.filter() as string
 		}
 		
-		// @ $mol_mem
-		// override options() {
-		// 	return this.names_filtered().map( id => this.Option( id ) )
-		// }
-		
 		override option_arg( id: readonly string[] ) {
 			return { 'demo' : id.at(-1)?.replace(/^\$*/, '') }
 		}
@@ -69,27 +64,6 @@ namespace $.$$ {
 			}
 
 			return result
-		}
-
-
-		@ $mol_mem
-		tags_dictionary() {
-			const tag_weights = new Map<string, number>()
-
-			for (const name of this.names()) {
-				for (const tag of this.widget_tags( name )) {
-					const weight = tag_weights.get(tag)
-					tag_weights.set(tag, weight === undefined ? 0 : weight + 1)
-				}
-			}
-
-			return [ ...tag_weights.entries() ]
-				.filter( ( [ , weight ] ) => weight > 2 )
-				.sort( ( [, aw ], [, bw ] ) => bw - aw )
-				.reduce( ( acc, [ tag ] ) => {
-					acc[ tag ] = tag
-					return acc
-				}, {} as Record<string, string>)
 		}
 
 		@ $mol_mem
@@ -151,13 +125,6 @@ namespace $.$$ {
 		names_filtered() {
 			const words = this.filter_words()
 			let names = this.names()
-
-			const tags_selected = this.tags_selected()
-
-			if (tags_selected.length > 0) names = names.filter(name => {
-				const tags = this.widget_tags( name )
-				return tags_selected.every(tag_selected => tags.includes(tag_selected))
-			})
 
 			if( words.length !== 0 ) {
 
