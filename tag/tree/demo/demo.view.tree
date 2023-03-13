@@ -2,73 +2,87 @@ $mol_tag_tree_demo $mol_example
 	title \Autoatic tag tree
 	sub /
 		<= Tree $mol_tag_tree
-			- ids <= item_ids /string
-			- tags* <= item_tags* /string
 			Item* <= Item* $mol_button_minor
 				title <= item_title* \
+			levels_expanded 1
+			tag_names *
+				side @ \Side
+				good @ \Good
+				bad @ \Bad
+				sex @ \Sex
+				male @ \Male
+				female @ \Female
+				universe @ \Universe
+				marvel @ \Marvel
+				dc @ \DC
 			ids_tags *
+				valera /
+					\side/bomj
 				batman /
-					\side:good
-					\universe:dc
-					\sex:male
+					\side/good
+					\universe/dc
+					\sex/male
 				superman /
-					\side:good
-					\universe:dc
-					\sex:male
+					\side/good
+					\universe/dc
+					\sex/male
 				aquaman /
-					\side:good
-					\universe:dc
-					\sex:male
+					\side/good
+					\universe/dc
+					\sex/male
 				flash /
-					\side:good
-					\universe:dc
-					\sex:male
+					\side/good
+					\universe/dc
+					\sex/male
 				jocker /
-					\side:bad
-					\universe:dc
-					\sex:male
+					\side/bad
+					\universe/dc
+					\sex/male
 				harley /
-					\side:bad
-					\universe:dc
-					\sex:female
+					\side/bad
+					\universe/dc
+					\sex/female
 				deadshot /
-					\side:bad
-					\universe:dc
-					\sex:male
+					\side/bad
+					\universe/dc
+					\sex/male
 				wonderwoman /
-					\side:good
-					\universe:dc
-					\sex:female
+					\side/good
+					\universe/dc
+					\sex/female
 				ironman /
-					\side:good
-					\universe:marvel
-					\sex:male
+					\side/good
+					\universe/marvel
+					\sex/male
 				hulk /
-					\side:good
-					\universe:marvel
-					\sex:male
+					\side/good
+					\universe/marvel
+					\sex/male
 				thor /
-					\side:good
-					\universe:marvel
-					\sex:male
+					\side/good
+					\universe/marvel
+					\sex/male
 				spiderman /
-					\side:good
-					\universe:marvel
-					\sex:male
+					\side/good
+					\universe/marvel
+					\sex/male
 				thanos /
-					\side:bad
-					\universe:marvel
-					\sex:male
+					\side/bad
+					\universe/marvel
+					\sex/male
 				locky /
-					\side:bad
-					\universe:marvel
-					\sex:male
+					\side/bad
+					\universe/marvel
+					\sex/male
 				hela /
-					\side:bad
-					\universe:marvel
-					\sex:female
+					\side/bad
+					\universe/marvel
+					\sex/female
 	tags /
 		\tags
 		\tree
 		\taxonomy
 		\menu
+	aspects /
+		\nav/tag
+		\gui/input/link
