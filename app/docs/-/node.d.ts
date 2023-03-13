@@ -3326,9 +3326,8 @@ declare namespace $ {
     };
 }
 
-/// <reference types="node" />
 declare namespace $ {
-    var $mol_crypto_native: import("crypto").webcrypto.Crypto;
+    var $mol_crypto_native: Crypto;
 }
 
 declare namespace $ {
