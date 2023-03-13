@@ -33,13 +33,13 @@ namespace $.$$ {
 				if (id) {
 					root.__ids = root.__ids ?? []
 					root.__ids.push(id)
-					obj.__ids = undefined
 				}
 
-				if (Object.keys(obj).length <= 1) {
-					delete tree[key]
-					continue
-				}
+				delete obj.__ids
+
+				move_single_id_to_root(obj, root)
+				if ( ! Object.keys(obj).length ) delete tree[key]
+				continue
 			}
 
 			if ( obj instanceof Object ) move_single_id_to_root(obj, root)
