@@ -11,6 +11,10 @@ namespace $.$$ {
 				}
 			} ).reverse().filter( Boolean ).join( ' | ' )
 		}
+		
+		menu_title() {
+			return this.pages()[0]?.title() || this.title()
+		}
 
 		@ $mol_mem
 		sub() {
