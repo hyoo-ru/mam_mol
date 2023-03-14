@@ -59,6 +59,252 @@ $.$mol_wire_plex( User.prototype, 'finger_exists' )
 $.$mol_wire_task( User.prototype, 'finger_cut' )
 ```
 
+## Core concepts
+
+### Channels
+
+**Channels** are our fundamental unit of reactivity. A channel behaves like a **getter** when it's called without arguments and as a **setter** otherwise.
+
+Here's an example of a very simple channel:
+
+
+```ts
+let _title = ''
+const title = ( text = _title )=> _title = text
+
+title()                  // getter, returns ''
+title( 'Buy some milk' ) // setter, sets and returns 'Buy some milk'
+title()                  // getter, returns 'Buy some milk'
+```
+
+You can notice that this is similar to how some JQuery methods are used.
+
+We abstract the extra variable away using a decorator:
+
+```ts
+import { $mol_wire_solo as solo } from 'mol_wire_lib'
+
+class Store {
+	@solo title( text = '' ) { return text }
+}
+```
+
+Channels either **store** values or **compute** new values based on other channels.
+
+The **computed** values will recompute when one of their **dependencies** is changed.
+
+```ts
+import { $mol_wire_solo as solo } from 'mol_wire_lib'
+
+class User {
+	// stores a value
+	@solo name_first( next = 'Thomas' ) {
+		return next
+  }
+
+	// stores a value
+	@solo name_last( next = 'Anderson' ) {
+		return next
+  }
+
+	// computes a value based on other channels and memoizes it
+	@solo name() {
+		console.log('compute name')
+		return `${this.name_first()} ${this.name_last()}`
+	}
+}
+
+const user = new User()
+
+console.log(user.name()) // logs: Thomas Anderson, compute name
+console.log(user.name()) // logs: Thomas Anderson
+
+user.name_last('William') // setter, triggers compute name
+
+console.log(user.name()) // logs: Thomas William
+```
+
+### Memoization
+
+Channels marked with the `@solo` decorator are memoized until a new value is set to them or one of their **dependencies** change.
+
+- We can use memoization to cache expensive computations:
+
+```ts
+import { $mol_wire_solo as solo } from 'mol_wire_lib'
+
+class Task {
+	@solo title( title = '' ) {
+		return title
+	}
+
+	// won't recompute until a dependency is changed
+	@solo mirrored_title() {
+		const segmenter = new Intl.Segmenter()
+		const segments = [ ... segmenter.segment( this.title() ) ]
+		return segments.map( s => s.segment ).reverse().join('')
+	}
+}
+```
+
+- Or to guarantee that a reference to an object will stay the same
+
+```ts
+import { $mol_wire_solo as solo } from 'mol_wire_lib'
+
+class Task {
+	@solo timestamp( value = 0 ) {
+		return value
+	}
+
+	// won't create new instances until the dependency is changed
+	@solo moment() {
+		return new Moment(this.timestamp())
+	}
+}
+```
+
+### Destructors
+
+We can take use of **memoization** even further by leveraging **destructors**.
+
+`$mol_wire` will call a special method named `destructor` on an object that is no longer needed:
+
+```ts
+import { $mol_wire_solo as solo } from 'mol_wire_lib'
+
+class Timeout {
+	id: any
+
+	constructor(
+		public delay : number ,
+		public task : ()=> void ,
+	) {
+		super()
+		this.id = setTimeout( task , delay )
+	}
+
+	// the special method
+	destructor() {
+		clearTimeout( this.id )
+	}
+}
+
+class Widget {
+	@solo opacity( next = 0 ) {
+		return next
+	}
+
+	@solo animation_delay( next = 1000 ) {
+		return next
+	}
+
+	@solo animate() {
+		// appear
+		this.opacity(1)
+
+		// schedule the disappearance
+		return new Timeout(
+			this.animation_delay(),
+			() => {
+				// disappear
+				this.opacity(0)
+			}
+		)
+	}
+}
+
+const widget = new Widget()
+
+// schedule an animation
+widget.animate()
+
+// Change a property the animation is dependent on,
+// so the animation will recompute and the previous value get destructured.
+// Effectively, this cancels the previous animation and schedules a new one
+widget.animation_delay(500)
+```
+
+### Asynchronous computed values
+
+Unlike many other reactivity systems, `$mol_wire` allows you to have computeds that depend on asynchronous values.
+
+We make it possible by using an implementaion of Suspense API where an asynchronous task throws an exception, effectively pausing the computation until it finishes. You can read more about it (here)[TODO]
+
+```ts
+import {
+	$mol_wire_solo as solo,
+	$mol_wire_sync,
+  $mol_wire_async
+} from 'mol_wire_lib'
+
+// produce a value with 1 second delay
+function value_async(): Promise<number> {
+	return new Promise((resolve) => {
+		const value = 25
+		setTimeout(() => resolve(value), 1000)
+	})
+}
+
+class App {
+	@solo value() {
+		// convert the asynchronous function to a synchronous one
+		const value_sync = $mol_wire_sync(value_async)
+
+		// treat the value as it is already there
+		return value_sync() * 2
+	}
+
+	run() {
+		console.log(this.value())
+	}
+}
+
+const app = new App()
+
+// run the application in a Suspense environment
+$mol_wire_async(app).run()
+
+// logs out: 50
+```
+
+### Cancelling asynchronous tasks
+
+We can cancel asynchronous tasks when we no longer need them by using **destructors** again.
+
+Here's an example of a cancelable `fetch`:
+
+```ts
+const fetchJSON = $mol_wire_sync( function fetch_abortable(
+	input: RequestInfo,
+	init: RequestInit = {}
+) {
+	const controller = new AbortController
+	init.signal ||= controller.signal
+	
+	const promise = fetch( input, init )
+		.then( response => response.json() )
+	
+	// this destructor cancels the request
+	const destructor = ()=> controller.abort()
+	return Object.assign( promise, { destructor } )
+	
+} )
+```
+
+Then, we could use it in our computeds or a more interesting use case could look like this:
+
+```ts
+button.onclick = $mol_wire_async( function() {
+	const { profile } = fetchJSON( 'https://example.org/input' )
+	console.log( profile )
+} )
+```
+
+In the above example clicking the button will trigger an HTTP request. If it doesn't succeed until the user clicks the button again, a new request will be sent and the previous one will get **cancelled**.
+
+## Infrastructure
+
 ### [mol_wire_pub](https://github.com/hyoo-ru/mam_mol/tree/master/wire/pub)
 
 Tiny lib to making any state observabe for other $mol_wire based libs.
