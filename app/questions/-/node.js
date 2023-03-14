@@ -3225,6 +3225,9 @@ var $;
 var $;
 (function ($) {
     class $mol_book2 extends $mol_scroll {
+        menu_title() {
+            return "";
+        }
         sub() {
             return this.pages();
         }
@@ -3276,6 +3279,9 @@ var $;
                         $mol_fail_log(error);
                     }
                 }).reverse().filter(Boolean).join(' | ');
+            }
+            menu_title() {
+                return this.pages()[0]?.title() || this.title();
             }
             sub() {
                 const next = [...this.pages(), this.Placeholder()];

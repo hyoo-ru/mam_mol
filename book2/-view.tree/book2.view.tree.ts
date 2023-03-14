@@ -3,6 +3,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * menu_title \
+		 * ```
+		 */
+		menu_title() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * sub <= pages
 		 * ```
 		 */
