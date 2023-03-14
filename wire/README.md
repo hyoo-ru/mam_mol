@@ -27,6 +27,8 @@ npm install mol_wire_lib
 
 7KB [![](https://badgen.net/bundlephobia/minzip/mol_wire_lib)](https://bundlephobia.com/package/mol_wire_lib)
 
+### TypeScript example:
+
 ```ts
 import {
 	$mol_wire_solo as solo,
@@ -41,12 +43,10 @@ class User {
 }
 ```
 
+### JavaScript example:
+
 ```js
-const {
-	$mol_wire_solo as solo,
-	$mol_wire_plex as plex,
-	$mol_wire_method as task,
-} = require( 'mol_wire_lib' )
+const $ = require( 'mol_wire_lib' )
 
 class User {
 	age( next = 0 ) { return next }
@@ -54,9 +54,9 @@ class User {
 	finger_cut( id: string ) { this.finger_exists( id, false ) }
 }
 
-solo( User.prototype, 'age' )
-plex( User.prototype, 'finger_exists' )
-task( User.prototype, 'finger_cut' )
+$.$mol_wire_solo( User.prototype, 'age' )
+$.$mol_wire_plex( User.prototype, 'finger_exists' )
+$.$mol_wire_task( User.prototype, 'finger_cut' )
 ```
 
 ### [mol_wire_pub](https://github.com/hyoo-ru/mam_mol/tree/master/wire/pub)
