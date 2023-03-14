@@ -1,6 +1,6 @@
 # $mol_wire
 
-Auto wiring modules. It gives ability to:
+A reactivity system. It gives ability to:
 
 - Make any state observable using only 1.5KB lib. [$hyoo_crowd](https://github.com/hyoo-ru/crowd.hyoo.ru) as example.
 - Automatic dynamic track runtime value dependencies and optimize task execution order.
