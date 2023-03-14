@@ -100,12 +100,12 @@ class User {
 	// stores a value
 	@solo name_first( next = 'Thomas' ) {
 		return next
-  }
+	}
 
 	// stores a value
 	@solo name_last( next = 'Anderson' ) {
 		return next
-  }
+	}
 
 	// computes a value based on other channels and memoizes it
 	@solo name() {
