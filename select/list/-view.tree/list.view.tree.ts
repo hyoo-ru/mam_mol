@@ -25,22 +25,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Badges /$mol_view
-		 * ```
-		 */
-		Badges() {
-			return [
-			] as readonly $mol_view[]
-		}
-		
-		/**
-		 * ```tree
-		 * badges_list /$mol_view
+		 * badges_list <= Badges
 		 * ```
 		 */
 		badges_list() {
-			return [
-			] as readonly $mol_view[]
+			return this.Badges()
 		}
 		
 		/**
@@ -68,13 +57,23 @@ namespace $ {
 		 * ```tree
 		 * sub /$mol_view
 		 * 	<= Pick
-		 * 	^ badges_list <= Badges
+		 * 	^ badges_list
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Pick(),
 				...this.badges_list()
+			] as readonly $mol_view[]
+		}
+		
+		/**
+		 * ```tree
+		 * Badges /$mol_view
+		 * ```
+		 */
+		Badges() {
+			return [
 			] as readonly $mol_view[]
 		}
 		
