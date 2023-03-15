@@ -7,13 +7,9 @@ $mol_app_demo_menu $mol_page
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /
-				<= Selector $mol_row sub /
-					<= Filter $mol_search
-						query?val <=> filter?val \
-						- suggests <= filter_suggests
-				- <= Badges_list $mol_row
-					sub /
-						^ Badges
+				<= Filter $mol_search
+					query?val <=> filter?val \
+					- suggests <= filter_suggests
 				<= Tree $mol_tag_tree
 					Item* <= Option*
 					ids_tags <= ids_tags *
