@@ -6559,22 +6559,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_row extends $mol_view {
-    }
-    $.$mol_row = $mol_row;
-})($ || ($ = {}));
-//mol/row/-view.tree/row.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: var(--mol_gap_block);\n\tgap: var(--mol_gap_block);\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmax-width: 100%;\n}\n");
-})($ || ($ = {}));
-//mol/row/-css/row.view.css.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_check extends $mol_button_minor {
         attr() {
             return {
@@ -7152,13 +7136,6 @@ var $;
             obj.query = (val) => this.filter(val);
             return obj;
         }
-        Selector() {
-            const obj = new this.$.$mol_row();
-            obj.sub = () => [
-                this.Filter()
-            ];
-            return obj;
-        }
         ids_tags() {
             return {};
         }
@@ -7188,7 +7165,7 @@ var $;
         List() {
             const obj = new this.$.$mol_list();
             obj.rows = () => [
-                this.Selector(),
+                this.Filter(),
                 this.Tree()
             ];
             return obj;
@@ -7221,9 +7198,6 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_app_demo_menu.prototype, "Filter", null);
-    __decorate([
-        $mol_mem
-    ], $mol_app_demo_menu.prototype, "Selector", null);
     __decorate([
         $mol_mem
     ], $mol_app_demo_menu.prototype, "Tree", null);
@@ -13667,6 +13641,22 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_row extends $mol_view {
+    }
+    $.$mol_row = $mol_row;
+})($ || ($ = {}));
+//mol/row/-view.tree/row.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: var(--mol_gap_block);\n\tgap: var(--mol_gap_block);\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmax-width: 100%;\n}\n");
+})($ || ($ = {}));
+//mol/row/-css/row.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_attach extends $mol_view {
         items(val) {
             if (val !== undefined)
@@ -17136,7 +17126,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/card/card.view.css", "[mol_card] {\n\tbackground: var(--mol_theme_card);\n\tcolor: var(--mol_theme_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tflex-direction: column;\n\tposition: relative;\n\toverflow: hidden;\n}\n\n[mol_card_content] {\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tmargin: 0;\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n\ttext-transform: capitalize;\n\tpadding: var(--mol_gap_text);\n\tmargin: 0;\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n}\n");
+    $mol_style_attach("mol/card/card.view.css", "[mol_card] {\n\tbackground: var(--mol_theme_card);\n\tcolor: var(--mol_theme_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tflex-direction: column;\n\tposition: relative;\n\t/* overflow: hidden; */\n}\n\n[mol_card_content] {\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tmargin: 0;\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n\ttext-transform: capitalize;\n\tpadding: var(--mol_gap_text);\n\tmargin: 0;\n}\n\n[mol_card_status] {\n\tbackground: var(--mol_theme_line);\n}\n");
 })($ || ($ = {}));
 //mol/card/-css/card.view.css.ts
 ;
@@ -32852,6 +32842,267 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/pick/demo/demo.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_clock extends $mol_icon {
+        path() {
+            return "M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z";
+        }
+    }
+    $.$mol_icon_clock = $mol_icon_clock;
+})($ || ($ = {}));
+//mol/icon/clock/-view.tree/clock.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_pick_time extends $mol_pick {
+        Icon() {
+            const obj = new this.$.$mol_icon_clock();
+            return obj;
+        }
+        bubble_content() {
+            return [
+                this.Input(),
+                this.Pickers()
+            ];
+        }
+        value_moment(next) {
+            if (next !== undefined)
+                return next;
+            const obj = new this.$.$mol_time_moment();
+            return obj;
+        }
+        value(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        enabled() {
+            return true;
+        }
+        Input() {
+            const obj = new this.$.$mol_format();
+            obj.value = (next) => this.value(next);
+            obj.mask = () => "__:__";
+            obj.enabled = () => this.enabled();
+            return obj;
+        }
+        hour_selected(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        hour_options() {
+            return {};
+        }
+        Hours() {
+            const obj = new this.$.$mol_switch();
+            obj.value = (next) => this.hour_selected(next);
+            obj.options = () => this.hour_options();
+            return obj;
+        }
+        Delimiter() {
+            const obj = new this.$.$mol_paragraph();
+            obj.title = () => ":";
+            return obj;
+        }
+        minute_selected(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        minute_options() {
+            return {};
+        }
+        Minutes() {
+            const obj = new this.$.$mol_switch();
+            obj.value = (next) => this.minute_selected(next);
+            obj.options = () => this.minute_options();
+            return obj;
+        }
+        Pickers() {
+            const obj = new this.$.$mol_row();
+            obj.sub = () => [
+                this.Hours(),
+                this.Delimiter(),
+                this.Minutes()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_pick_time.prototype, "Icon", null);
+    __decorate([
+        $mol_mem
+    ], $mol_pick_time.prototype, "value_moment", null);
+    __decorate([
+        $mol_mem
+    ], $mol_pick_time.prototype, "value", null);
+    __decorate([
+        $mol_mem
+    ], $mol_pick_time.prototype, "Input", null);
+    __decorate([
+        $mol_mem
+    ], $mol_pick_time.prototype, "hour_selected", null);
+    __decorate([
+        $mol_mem
+    ], $mol_pick_time.prototype, "Hours", null);
+    __decorate([
+        $mol_mem
+    ], $mol_pick_time.prototype, "Delimiter", null);
+    __decorate([
+        $mol_mem
+    ], $mol_pick_time.prototype, "minute_selected", null);
+    __decorate([
+        $mol_mem
+    ], $mol_pick_time.prototype, "Minutes", null);
+    __decorate([
+        $mol_mem
+    ], $mol_pick_time.prototype, "Pickers", null);
+    $.$mol_pick_time = $mol_pick_time;
+})($ || ($ = {}));
+//mol/pick/time/-view.tree/time.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_pick_time extends $.$mol_pick_time {
+            trigger_content() {
+                return [this.value() || this.Icon()];
+            }
+            value_moment(next) {
+                if (next === undefined) {
+                    const moment = $mol_wire_probe(() => this.value_moment());
+                    return time_with_moment(this.value(), moment);
+                }
+                this.value(next?.toString('hh:mm') || '');
+                return next;
+            }
+            value(next) {
+                if (next === undefined) {
+                    const moment = this.value_moment();
+                    return moment?.toString('hh:mm') || '';
+                }
+                this.value_moment(time_with_moment(next, this.value_moment()));
+                return next;
+            }
+            hour_selected(hour_str) {
+                if (hour_str === undefined) {
+                    return this.value_moment()?.toString('h');
+                }
+                const moment = this.value_moment();
+                const minute = moment?.minute ?? 0;
+                const hour = Number(hour_str);
+                this.value_moment(moment?.merge({ hour, minute }) || new $mol_time_moment({ hour, minute }));
+                return hour_str;
+            }
+            minute_selected(minute_str) {
+                if (minute_str === undefined) {
+                    return this.value_moment()?.toString('m');
+                }
+                const moment = this.value_moment();
+                const hour = moment?.hour ?? new $mol_time_moment().hour;
+                const minute = Number(minute_str);
+                this.value_moment(moment?.merge({ hour, minute }) || new $mol_time_moment({ hour, minute }));
+                this.showed(false);
+                return minute_str;
+            }
+            hour_options() {
+                return {
+                    '0': '00', '1': '01', '2': '02', '3': '03', '4': '04', '5': '05',
+                    '6': '06', '7': '07', '8': '08', '9': '09', '10': '10', '11': '11',
+                    '12': '12', '13': '13', '14': '14', '15': '15', '16': '16', '17': '17',
+                    '18': '18', '19': '19', '20': '20', '21': '21', '22': '22', '23': '23',
+                };
+            }
+            minute_options() {
+                return {
+                    '0': '00', '5': '05', '10': '10', '15': '15', '20': '20', '25': '25',
+                    '30': '30', '35': '35', '40': '40', '45': '45', '50': '50', '55': '55',
+                };
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_pick_time.prototype, "value_moment", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pick_time.prototype, "value", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pick_time.prototype, "hour_selected", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pick_time.prototype, "minute_selected", null);
+        $$.$mol_pick_time = $mol_pick_time;
+        function time_with_moment(value_str, moment) {
+            const [hour, minute] = value_str.split(':').map(str => Number(str));
+            if (value_str) {
+                return moment ?
+                    moment.merge(new $mol_time_moment({ hour, minute })) :
+                    new $mol_time_moment({ hour, minute });
+            }
+            else {
+                return moment ?
+                    new $mol_time_moment(moment.toString('YYYY-MM-DD')) :
+                    new $mol_time_moment({});
+            }
+        }
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/pick/time/time.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/pick/time/time.view.css", "[mol_pick_time_bubble] {\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_pick_time_pickers] {\n\tpadding: 0;\n\talign-items: center;\n}\n\n[mol_pick_time_hours],\n[mol_pick_time_minutes] {\n\tdisplay: grid;\n\tgrid-auto-flow: column;\n\tgrid-template-rows: repeat(6, 1fr);\n}\n\n[mol_pick_time_hours_option],\n[mol_pick_time_minutes_option] {\n\tjustify-content: center;\t\n}\n");
+})($ || ($ = {}));
+//mol/pick/time/-css/time.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_pick_time_demo extends $mol_example_small {
+        sub() {
+            return [
+                this.Picker()
+            ];
+        }
+        tags() {
+            return [
+                "$mol_time_moment",
+                "timepicker",
+                "time",
+                "datetime"
+            ];
+        }
+        moment(next) {
+            if (next !== undefined)
+                return next;
+            const obj = new this.$.$mol_time_moment();
+            return obj;
+        }
+        Picker() {
+            const obj = new this.$.$mol_pick_time();
+            obj.value_moment = (next) => this.moment(next);
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_pick_time_demo.prototype, "moment", null);
+    __decorate([
+        $mol_mem
+    ], $mol_pick_time_demo.prototype, "Picker", null);
+    $.$mol_pick_time_demo = $mol_pick_time_demo;
+})($ || ($ = {}));
+//mol/pick/time/demo/-view.tree/demo.view.tree.ts
 ;
 "use strict";
 var $;

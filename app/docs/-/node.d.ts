@@ -1998,14 +1998,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_row extends $mol_view {
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_check extends $mol_button_minor {
         attr(): {
             mol_check_checked: boolean;
@@ -2159,7 +2151,6 @@ declare namespace $ {
         Option(id: any): $$.$mol_link;
         filter(val?: any): string;
         Filter(): $$.$mol_search;
-        Selector(): $mol_row;
         ids_tags(): {};
         levels_expanded_default(): number;
         levels_expanded(): number;
@@ -3892,6 +3883,14 @@ declare namespace $.$$ {
     class $mol_button_open_native extends $.$mol_button_open_native {
         dom_node(): HTMLInputElement;
         picked(): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_row extends $mol_view {
     }
 }
 
@@ -8344,6 +8343,93 @@ declare namespace $.$$ {
 }
 
 declare namespace $.$$ {
+}
+
+declare namespace $ {
+    class $mol_icon_clock extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_pick_time extends $mol_pick {
+        Icon(): $mol_icon_clock;
+        bubble_content(): readonly any[];
+        value_moment(next?: any): $mol_time_moment;
+        value(next?: any): string;
+        enabled(): boolean;
+        Input(): $$.$mol_format;
+        hour_selected(next?: any): string;
+        hour_options(): {};
+        Hours(): $$.$mol_switch;
+        Delimiter(): $$.$mol_paragraph;
+        minute_selected(next?: any): string;
+        minute_options(): {};
+        Minutes(): $$.$mol_switch;
+        Pickers(): $mol_row;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_pick_time extends $.$mol_pick_time {
+        trigger_content(): (string | $mol_icon_clock)[];
+        value_moment(next?: $mol_time_moment): $mol_time_moment;
+        value(next?: string): string;
+        hour_selected(hour_str?: string): string;
+        minute_selected(minute_str?: string): string;
+        hour_options(): {
+            '0': string;
+            '1': string;
+            '2': string;
+            '3': string;
+            '4': string;
+            '5': string;
+            '6': string;
+            '7': string;
+            '8': string;
+            '9': string;
+            '10': string;
+            '11': string;
+            '12': string;
+            '13': string;
+            '14': string;
+            '15': string;
+            '16': string;
+            '17': string;
+            '18': string;
+            '19': string;
+            '20': string;
+            '21': string;
+            '22': string;
+            '23': string;
+        };
+        minute_options(): {
+            '0': string;
+            '5': string;
+            '10': string;
+            '15': string;
+            '20': string;
+            '25': string;
+            '30': string;
+            '35': string;
+            '40': string;
+            '45': string;
+            '50': string;
+            '55': string;
+        };
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_pick_time_demo extends $mol_example_small {
+        sub(): readonly any[];
+        tags(): readonly any[];
+        moment(next?: any): $mol_time_moment;
+        Picker(): $$.$mol_pick_time;
+    }
 }
 
 declare namespace $ {

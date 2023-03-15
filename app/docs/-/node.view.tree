@@ -283,8 +283,6 @@ $mol_search $mol_pop
 				haystack <= suggest_label* \
 				needle <= query?val \
 
-$mol_row $mol_view
-
 $mol_check $mol_button_minor
 	attr *
 		^
@@ -364,13 +362,9 @@ $mol_app_demo_menu $mol_page
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /
-				<= Selector $mol_row sub /
-					<= Filter $mol_search
-						query?val <=> filter?val \
-						- suggests <= filter_suggests
-				- <= Badges_list $mol_row
-					sub /
-						^ Badges
+				<= Filter $mol_search
+					query?val <=> filter?val \
+					- suggests <= filter_suggests
 				<= Tree $mol_tag_tree
 					Item* <= Option*
 					ids_tags <= ids_tags *
@@ -1035,6 +1029,8 @@ $mol_button_open_native $mol_view
 		multiple <= multiple true
 	event *
 		change?next <=> picked?next null
+
+$mol_row $mol_view
 
 $mol_attach $mol_view
 	items?val /string
@@ -4089,6 +4085,39 @@ $mol_pick_demo $mol_example_small
 		\confirm
 		\markdown
 		\modal
+
+$mol_icon_clock $mol_icon path \M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z
+
+$mol_pick_time $mol_pick
+	Icon $mol_icon_clock
+	-
+	bubble_content /
+		<= Input $mol_format
+			value? <=> value? \
+			mask \__:__
+			enabled <= enabled true
+		<= Pickers $mol_row
+			sub /
+				<= Hours $mol_switch
+					value? <=> hour_selected? \
+					options <= hour_options *
+				<= Delimiter $mol_paragraph
+					title \:
+				<= Minutes $mol_switch
+					value? <=> minute_selected? \
+					options <= minute_options *
+	-
+	value_moment? $mol_time_moment
+
+$mol_pick_time_demo $mol_example_small
+	sub /
+		<= Picker $mol_pick_time
+			value_moment? <=> moment? $mol_time_moment
+	tags /
+		\$mol_time_moment
+		\timepicker
+		\time
+		\datetime
 
 $mol_row_demo_form $mol_example
 	title \Some controls in one row with equal paddings and wrapping support

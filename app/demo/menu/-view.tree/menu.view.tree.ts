@@ -113,22 +113,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Selector $mol_row sub / <= Filter
-		 * ```
-		 */
-		@ $mol_mem
-		Selector() {
-			const obj = new this.$.$mol_row()
-			
-			obj.sub = () => [
-				this.Filter()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * ids_tags *
 		 * ```
 		 */
@@ -196,7 +180,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * List $mol_list rows /
-		 * 	<= Selector
+		 * 	<= Filter
 		 * 	<= Tree
 		 * ```
 		 */
@@ -205,7 +189,7 @@ namespace $ {
 			const obj = new this.$.$mol_list()
 			
 			obj.rows = () => [
-				this.Selector(),
+				this.Filter(),
 				this.Tree()
 			] as readonly any[]
 			
