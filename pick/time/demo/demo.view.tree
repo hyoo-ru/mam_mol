@@ -2,24 +2,6 @@ $mol_pick_time_demo $mol_example_small
 	sub /
 		<= Picker $mol_pick_time
 			value_moment? <=> moment? $mol_time_moment
-			value? => time?
-			hour_selected? => hour?
-			minute_selected? => minute?
-		<= Hour_card $mol_card
-			content /
-				<= Hour $mol_paragraph
-					title? <= hour?
-				\h
-		<= Minute_card $mol_card
-			content /
-				<= Minute $mol_paragraph
-					title? <= minute?
-				\min
-		<= Iso_card $mol_card
-			content /
-				<= Date $mol_paragraph
-					title? <= moment?
-				\(iso8601)
 	tags /
 		\$mol_time_moment
 		\timepicker
