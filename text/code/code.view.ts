@@ -7,7 +7,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		text_lines() {
-			return this.text().split( '\n' ) as readonly string[]
+			return this.text().replace( /\n$/, '' ).split( '\n' ) as readonly string[]
 		}
 		
 		@ $mol_mem
