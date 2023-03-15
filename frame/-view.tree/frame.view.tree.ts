@@ -81,6 +81,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * clipboard_read true
+		 * ```
+		 */
+		clipboard_read() {
+			return true
+		}
+		
+		/**
+		 * ```tree
+		 * clipboard_write true
+		 * ```
+		 */
+		clipboard_write() {
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * uri?val \about:config
 		 * ```
 		 */

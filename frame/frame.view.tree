@@ -13,3 +13,5 @@ $mol_frame $mol_embed_native
 	encription true
 	gyroscope true
 	pip true
+	clipboard_read true
+	clipboard_write true
