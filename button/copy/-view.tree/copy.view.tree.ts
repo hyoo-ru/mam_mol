@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * text \
+		 * text <= title
 		 * ```
 		 */
 		text() {
-			return ""
+			return this.title()
 		}
 		
 		/**
@@ -26,6 +26,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * title \
+		 * ```
+		 */
+		title() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * Icon $mol_icon_clipboard_outline
 		 * ```
 		 */
@@ -34,15 +43,6 @@ namespace $ {
 			const obj = new this.$.$mol_icon_clipboard_outline()
 			
 			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * title \
-		 * ```
-		 */
-		title() {
-			return ""
 		}
 	}
 	

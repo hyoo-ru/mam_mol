@@ -4664,7 +4664,7 @@ var $;
 (function ($) {
     class $mol_button_copy extends $mol_button_minor {
         text() {
-            return "";
+            return this.title();
         }
         sub() {
             return [
@@ -4672,12 +4672,12 @@ var $;
                 this.title()
             ];
         }
+        title() {
+            return "";
+        }
         Icon() {
             const obj = new this.$.$mol_icon_clipboard_outline();
             return obj;
-        }
-        title() {
-            return "";
         }
     }
     __decorate([
