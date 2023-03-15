@@ -3,12 +3,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Icon $mol_icon_clock
+		 * Icon $mol_icon_clock_outline
 		 * ```
 		 */
 		@ $mol_mem
 		Icon() {
-			const obj = new this.$.$mol_icon_clock()
+			const obj = new this.$.$mol_icon_clock_outline()
 			
 			return obj
 		}

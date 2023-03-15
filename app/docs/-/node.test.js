@@ -32850,9 +32850,21 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_clock_outline extends $mol_icon {
+        path() {
+            return "M12,20C16.42,20 20,16.42 20,12C20,7.58 16.42,4 12,4C7.58,4 4,7.58 4,12C4,16.42 7.58,20 12,20M12,2C17.52,2 22,6.48 22,12C22,17.52 17.52,22 12,22C6.47,22 2,17.5 2,12C2,6.48 6.48,2 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z";
+        }
+    }
+    $.$mol_icon_clock_outline = $mol_icon_clock_outline;
+})($ || ($ = {}));
+//mol/icon/clock/outline/-view.tree/outline.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_pick_time extends $mol_pick {
         Icon() {
-            const obj = new this.$.$mol_icon_clock();
+            const obj = new this.$.$mol_icon_clock_outline();
             return obj;
         }
         bubble_content() {

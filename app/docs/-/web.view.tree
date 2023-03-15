@@ -4159,8 +4159,10 @@ $mol_pick_demo $mol_example_small
 
 $mol_icon_clock $mol_icon path \M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z
 
+$mol_icon_clock_outline $mol_icon path \M12,20C16.42,20 20,16.42 20,12C20,7.58 16.42,4 12,4C7.58,4 4,7.58 4,12C4,16.42 7.58,20 12,20M12,2C17.52,2 22,6.48 22,12C22,17.52 17.52,22 12,22C6.47,22 2,17.5 2,12C2,6.48 6.48,2 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z
+
 $mol_pick_time $mol_pick
-	Icon $mol_icon_clock
+	Icon $mol_icon_clock_outline
 	-
 	bubble_content /
 		<= Input $mol_format

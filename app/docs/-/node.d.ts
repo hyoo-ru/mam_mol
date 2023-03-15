@@ -8352,8 +8352,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_clock_outline extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_pick_time extends $mol_pick {
-        Icon(): $mol_icon_clock;
+        Icon(): $mol_icon_clock_outline;
         bubble_content(): readonly any[];
         value_moment(next?: any): $mol_time_moment;
         value(next?: any): string;
@@ -8372,7 +8378,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_pick_time extends $.$mol_pick_time {
-        trigger_content(): (string | $mol_icon_clock)[];
+        trigger_content(): (string | $mol_icon_clock_outline)[];
         value_moment(next?: $mol_time_moment): $mol_time_moment;
         value(next?: string): string;
         hour_selected(hour_str?: string): string;

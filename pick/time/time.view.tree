@@ -1,5 +1,5 @@
 $mol_pick_time $mol_pick
-	Icon $mol_icon_clock
+	Icon $mol_icon_clock_outline
 	-
 	bubble_content /
 		<= Input $mol_format
