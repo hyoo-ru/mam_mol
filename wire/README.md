@@ -63,10 +63,9 @@ $.$mol_wire_task( User.prototype, 'finger_cut' )
 
 ### Channels
 
-**Channels** are our fundamental unit of reactivity. A channel behaves like a **getter** when it's called without arguments and as a **setter** otherwise.
+In `$mol_wire` the fundamental units of reactivity are **channels**. A channel behaves like a **getter** when it's called without arguments and as a **setter** otherwise. This approach is very [flexible and powerful](TODO).
 
-Here's an example of a very simple channel:
-
+Here's an example of a simple channel:
 
 ```ts
 let _title = ''
@@ -77,9 +76,9 @@ title( 'Buy some milk' ) // setter, sets and returns 'Buy some milk'
 title()                  // getter, returns 'Buy some milk'
 ```
 
-You can notice that this is similar to how some JQuery methods are used.
+You can notice that this is similar to some [JQuery methods](https://api.jquery.com/val/).
 
-We abstract the extra variable away using a decorator:
+Instead of a plain function and a variable `$mol_wire` uses class methods with an appropriate decorator:
 
 ```ts
 import { $mol_wire_solo as solo } from 'mol_wire_lib'
@@ -87,11 +86,21 @@ import { $mol_wire_solo as solo } from 'mol_wire_lib'
 class Store {
 	@solo title( text = '' ) { return text }
 }
+
+const store = new Store()
+
+store.title()                  // getter, returns ''
+store.title( 'Buy some milk' ) // setter, sets and returns 'Buy some milk'
+store.title()                  // getter, returns 'Buy some milk'
 ```
 
-Channels either **store** values or **compute** new values based on other channels.
+The decorator **memoizes** what's been returned from the method so when someone uses it as getter the method itself is not called and instead the memoized value is returned.
 
-The **computed** values will recompute when one of their **dependencies** is changed.
+**Channels** either:
+  - **store** values
+  - or **compute** new values based on **other channels**.
+
+The **computed** channels will only recompute when one of their **dependencies** change.
 
 ```ts
 import { $mol_wire_solo as solo } from 'mol_wire_lib'
@@ -107,7 +116,7 @@ class User {
 		return next
 	}
 
-	// computes a value based on other channels and memoizes it
+	// computes a value based on other channels
 	@solo name() {
 		console.log('compute name')
 		return `${this.name_first()} ${this.name_last()}`
@@ -116,17 +125,17 @@ class User {
 
 const user = new User()
 
-console.log(user.name()) // logs: Thomas Anderson, compute name
-console.log(user.name()) // logs: Thomas Anderson
+console.log(user.name()) // logs: 'Thomas Anderson', 'compute name'
+console.log(user.name()) // logs: 'Thomas Anderson'
 
-user.name_last('William') // setter, triggers compute name
+user.name_last('William') // setter, triggers 'compute name'
 
-console.log(user.name()) // logs: Thomas William
+console.log(user.name()) // logs: 'Thomas William'
 ```
 
 ### Memoization
 
-Channels marked with the `@solo` decorator are memoized until a new value is set to them or one of their **dependencies** change.
+Channels marked with a `@solo` or `@plex` decorator are memoized until a new value is set to them or one of their **dependencies** change.
 
 - We can use memoization to cache expensive computations:
 
@@ -147,7 +156,7 @@ class Task {
 }
 ```
 
-- Or to guarantee that a reference to an object will stay the same
+- To guarantee that a reference to an object will stay the same:
 
 ```ts
 import { $mol_wire_solo as solo } from 'mol_wire_lib'
@@ -164,9 +173,73 @@ class Task {
 }
 ```
 
+- With `$mol_wire_plex` (as in multiplexing) store multiple values:
+
+```ts
+import { $mol_wire_plex as plex } from 'mol_wire_lib'
+
+class Project {
+	@plex task( id: number ) {
+		return new Task( id )
+	}
+}
+
+const project = new Project()
+const task1 = project.task(1)
+const task2 = project.task(2)
+```
+
+### Hacking
+
+Another piece of flexibility that **channels** give is what's called **hacking**. It allows us to impose custom rules on how channels are read or set:
+
+```ts
+import {
+	$mol_wire_solo as solo,
+	$mol_wire_plex as plex,
+} from 'mol_wire_lib'
+
+class Task {
+	// task has a duration
+	@solo duration( dur?: number ) {
+		return dur
+	}
+}
+
+class Project_limited {
+	// project has many tasks
+	@plex task( id: number ) {
+		const task = new Task()
+
+		// the "hacking" technique:
+		// when someone tries to get or set the duration for a task
+		// we proxy this through our own method imposing a limitation for maximum duration
+		task.duration = ( duration ) => this.task_duration( id, duration )
+
+		return task
+	}
+
+	@plex task_duration( id: number, duration = 1 ) {
+		// clamp the duration to the maximum value
+		return Math.min( duration, this.duration_max() )
+	}
+
+	duration_max() {
+		return 10
+	}
+}
+
+const project_limited = new Project_limited()
+
+const task_limited = project_limited.task(1)
+task_limited.duration(20) // try to set 20 for the duration
+
+console.log(task_limited.duration()) // logs: 10
+```
+
 ### Destructors
 
-We can take use of **memoization** even further by leveraging **destructors**.
+We can take the use of **memoization** even further by leveraging **destructors**.
 
 `$mol_wire` will call a special method named `destructor` on an object that is no longer needed:
 
@@ -229,13 +302,13 @@ widget.animation_delay(500)
 
 Unlike many other reactivity systems, `$mol_wire` allows you to have computeds that depend on asynchronous values.
 
-We make it possible by using an implementaion of Suspense API where an asynchronous task throws an exception, effectively pausing the computation until it finishes. You can read more about it (here)[TODO]
+`$mol_wire` makes it possible by using an implementaion of Suspense API where an asynchronous task throws an exception to pause the computation until it's value arrive. You can read more about it [here](TODO)
 
 ```ts
 import {
 	$mol_wire_solo as solo,
 	$mol_wire_sync,
-  $mol_wire_async
+	$mol_wire_async,
 } from 'mol_wire_lib'
 
 // produce a value with 1 second delay
@@ -265,7 +338,7 @@ const app = new App()
 // run the application in a Suspense environment
 $mol_wire_async(app).run()
 
-// logs out: 50
+// logs: 50
 ```
 
 ### Cancelling asynchronous tasks
@@ -275,33 +348,48 @@ We can cancel asynchronous tasks when we no longer need them by using **destruct
 Here's an example of a cancelable `fetch`:
 
 ```ts
+import { $mol_wire_sync } from 'mol_wire_lib'
+
 const fetchJSON = $mol_wire_sync( function fetch_abortable(
 	input: RequestInfo,
 	init: RequestInit = {}
 ) {
 	const controller = new AbortController
 	init.signal ||= controller.signal
-	
+
 	const promise = fetch( input, init )
 		.then( response => response.json() )
-	
-	// this destructor cancels the request
+
+	// assign a destructor to cancel the request
 	const destructor = ()=> controller.abort()
 	return Object.assign( promise, { destructor } )
-	
 } )
 ```
 
-Then, we could use it in our computeds or a more interesting use case could look like this:
+Then, we can use it in our computeds:
 
 ```ts
+import { $mol_wire_plex as plex } from 'mol_wire_lib'
+
+class GitHub {
+	@plex static issue( id: number ) {
+		return fetchJSON( `https://api.github.com/repos/nin-jin/HabHub/issues/${id}` )
+	}
+}
+```
+
+or a more interesting use case could look like this:
+
+```ts
+import { $mol_wire_async } from 'mol_wire_lib'
+
 button.onclick = $mol_wire_async( function() {
 	const { profile } = fetchJSON( 'https://example.org/input' )
 	console.log( profile )
 } )
 ```
 
-In the above example clicking the button will trigger an HTTP request. If it doesn't succeed until the user clicks the button again, a new request will be sent and the previous one will get **cancelled**.
+In the above example clicking the button will trigger an HTTP request. If it doesn't resolve until the user clicks the button again, a new request will be sent and the previous one will get **cancelled**.
 
 ## Infrastructure
 
