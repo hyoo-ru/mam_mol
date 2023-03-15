@@ -341,6 +341,44 @@ $mol_wire_async(app).run()
 // logs: 50
 ```
 
+### Side effects in asynchronous computations
+
+In `$mol_wire` we treat values that are computed **asynchronously** as they're **already there**. This is thanks to **Suspense API**: when an asynchronous task starts in a **method** it throws an exception and when it finishes the **method** is **called again**.
+
+Because of that we have to be a little careful about how we make **side effects** inside our methods.
+
+The `@method` decorator prevents methods from being called multiple times:
+
+```ts
+import {
+	$mol_wire_method as method,
+	$mol_wire_sync,
+} from 'mol_wire_lib'
+
+class App {
+	// Auto wrap method to task
+	@method main() {
+		// Convert async api to sync
+		const syncFetch = $mol_wire_sync( fetch )
+
+		this.log( 'Request' ) // 3 calls, 1 log
+		const response = syncFetch( 'https://example.org' ) // Sync but non-blocking
+		const syncResponse = $mol_wire_sync( response )
+
+		this.log( 'Parse' ) // 2 calls, 1 log
+		const response = syncResponse.json() // Sync but non-blocking
+
+		this.log( 'Done' ) // 1 call, 1 log
+	}
+
+	// Auto wrap method to sub-task
+	@method log( ... args: any[] ) {
+		console.log( ... args )
+		// No restarts within a portion of a task
+	}
+}
+```
+
 ### Cancelling asynchronous tasks
 
 We can cancel asynchronous tasks when we no longer need them by using **destructors** again.
