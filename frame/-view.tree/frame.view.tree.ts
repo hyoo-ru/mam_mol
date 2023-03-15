@@ -19,7 +19,6 @@ namespace $ {
 		 * 	src <= uri?val
 		 * 	srcdoc <= html
 		 * 	allow <= allow
-		 * 	allowfullscreen <= fullscreen
 		 * ```
 		 */
 		attr() {
@@ -29,9 +28,17 @@ namespace $ {
 				type: null as any,
 				src: this.uri(),
 				srcdoc: this.html(),
-				allow: this.allow(),
-				allowfullscreen: this.fullscreen()
+				allow: this.allow()
 			}
+		}
+		
+		/**
+		 * ```tree
+		 * fullscreen true
+		 * ```
+		 */
+		fullscreen() {
+			return true
 		}
 		
 		/**
@@ -124,15 +131,6 @@ namespace $ {
 		 */
 		allow() {
 			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * fullscreen true
-		 * ```
-		 */
-		fullscreen() {
-			return true
 		}
 	}
 	

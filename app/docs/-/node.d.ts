@@ -2292,8 +2292,8 @@ declare namespace $ {
             src: string;
             srcdoc: any;
             allow: string;
-            allowfullscreen: boolean;
         };
+        fullscreen(): boolean;
         accelerometer(): boolean;
         autoplay(): boolean;
         encription(): boolean;
@@ -2304,7 +2304,6 @@ declare namespace $ {
         uri(val?: any): string;
         html(): any;
         allow(): string;
-        fullscreen(): boolean;
     }
 }
 

@@ -6597,9 +6597,11 @@ var $;
                 type: null,
                 src: this.uri(),
                 srcdoc: this.html(),
-                allow: this.allow(),
-                allowfullscreen: this.fullscreen()
+                allow: this.allow()
             };
+        }
+        fullscreen() {
+            return true;
         }
         accelerometer() {
             return true;
@@ -6633,9 +6635,6 @@ var $;
         allow() {
             return "";
         }
-        fullscreen() {
-            return true;
-        }
     }
     __decorate([
         $mol_mem
@@ -6661,9 +6660,9 @@ var $;
                     ...this.encription() ? ['encrypted-media'] : [],
                     ...this.gyroscope() ? ['gyroscope'] : [],
                     ...this.pip() ? ['picture-in-picture'] : [],
-                    ...this.clipboard_read() ? [`clipboard-read self ${this.uri()}`] : [],
-                    ...this.clipboard_write() ? [`clipboard-write self ${this.uri()}`] : [],
-                ].join(';');
+                    ...this.clipboard_read() ? [`clipboard-read ${this.uri()}`] : [],
+                    ...this.clipboard_write() ? [`clipboard-write ${this.uri()}`] : [],
+                ].join('; ');
             }
         }
         $$.$mol_frame = $mol_frame;
