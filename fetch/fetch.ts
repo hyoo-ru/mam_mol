@@ -90,7 +90,7 @@ namespace $ {
 			return Object.assign( promise, {
 				destructor: ()=> {
 					// Abort of done request breaks response parsing
-					if( !done ) controller.abort()
+					if( !done && !controller.signal.aborted ) controller.abort()
 				},
 			} )
 			
