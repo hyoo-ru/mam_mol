@@ -83,5 +83,5 @@
 
 [mol_view][mol_view_error="Promise"] {
 	background-size: 200vmax 200vmax;
-	animation: mol_view_wait 1s linear infinite;
+	animation: mol_view_wait 1s steps( 10, end ) infinite;
 }
