@@ -32850,6 +32850,7 @@ var $;
             const obj = new this.$.$mol_format();
             obj.value = (next) => this.value(next);
             obj.mask = () => "__:__";
+            obj.allow = () => "0123456789.";
             obj.enabled = () => this.enabled();
             return obj;
         }
@@ -32937,20 +32938,20 @@ var $;
     (function ($$) {
         class $mol_pick_time extends $.$mol_pick_time {
             trigger_content() {
-                return [this.value() || this.Icon()];
+                return [this.value_moment().toString('hh:mm.sss') || this.Icon()];
             }
             value_moment(next) {
                 if (next === undefined) {
                     const moment = $mol_wire_probe(() => this.value_moment());
                     return time_with_moment(this.value(), moment);
                 }
-                this.value(next?.toString('hh:mm') || '');
+                this.value(next?.toString('hh:mm.sss') || '');
                 return next;
             }
             value(next) {
                 if (next === undefined) {
                     const moment = this.value_moment();
-                    return moment?.toString('hh:mm') || '';
+                    return moment?.toString('hh:mm.sss') || '';
                 }
                 this.value_moment(time_with_moment(next, this.value_moment()));
                 return next;
@@ -33052,7 +33053,7 @@ var $;
         moment(next) {
             if (next !== undefined)
                 return next;
-            const obj = new this.$.$mol_time_moment();
+            const obj = new this.$.$mol_time_moment("T01:23");
             return obj;
         }
         Picker() {

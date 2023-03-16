@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $mol_pick_time extends $.$mol_pick_time {
 
 		trigger_content() {
-			return [ this.value() || this.Icon() ]
+			return [ this.value_moment().toString( 'hh:mm.sss' ) || this.Icon() ]
 		}
 
 		@ $mol_mem
@@ -13,7 +13,7 @@ namespace $.$$ {
 				return time_with_moment( this.value(), moment )
 			}
 
-			this.value( next?.toString( 'hh:mm' ) || '' )
+			this.value( next?.toString( 'hh:mm.sss' ) || '' )
 
 			return next
 		}
@@ -23,7 +23,7 @@ namespace $.$$ {
 
 			if( next === undefined ) {
 				const moment = this.value_moment()
-				return moment?.toString( 'hh:mm' ) || ''
+				return moment?.toString( 'hh:mm.sss' ) || ''
 			}
 
 			this.value_moment( time_with_moment( next, this.value_moment() ) )

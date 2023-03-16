@@ -32,13 +32,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * moment? $mol_time_moment
+		 * moment? $mol_time_moment / \T01:23
 		 * ```
 		 */
 		@ $mol_mem
 		moment(next?: any) {
 			if ( next !== undefined ) return next as never
-			const obj = new this.$.$mol_time_moment()
+			const obj = new this.$.$mol_time_moment(
+				"T01:23"
+			)
 			
 			return obj
 		}

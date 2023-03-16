@@ -65,6 +65,7 @@ namespace $ {
 		 * Input $mol_format
 		 * 	value? <=> value?
 		 * 	mask \__:__
+		 * 	allow \0123456789.
 		 * 	enabled <= enabled
 		 * ```
 		 */
@@ -74,6 +75,7 @@ namespace $ {
 			
 			obj.value = (next?: any) => this.value(next)
 			obj.mask = () => "__:__"
+			obj.allow = () => "0123456789."
 			obj.enabled = () => this.enabled()
 			
 			return obj
