@@ -34,8 +34,8 @@ namespace $ {
 		 * ```tree
 		 * Item* $mol_link
 		 * 	minimal_width 100
-		 * 	uri \https://thiscatdoesnotexist.com/
-		 * 	style * backgroundImage \url('https://thiscatdoesnotexist.com/')
+		 * 	uri \https://picsum.photos/200
+		 * 	style * backgroundImage \url('https://picsum.photos/200')
 		 * 	sub / <= Item_title*
 		 * ```
 		 */
@@ -44,9 +44,9 @@ namespace $ {
 			const obj = new this.$.$mol_link()
 			
 			obj.minimal_width = () => 100
-			obj.uri = () => "https://thiscatdoesnotexist.com/"
+			obj.uri = () => "https://picsum.photos/200"
 			obj.style = () => ({
-				backgroundImage: "url('https://thiscatdoesnotexist.com/')"
+				backgroundImage: "url('https://picsum.photos/200')"
 			})
 			obj.sub = () => [
 				this.Item_title(id)
