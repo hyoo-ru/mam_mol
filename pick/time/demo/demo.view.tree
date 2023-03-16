@@ -1,7 +1,7 @@
 $mol_pick_time_demo $mol_example_small
 	sub /
 		<= Picker $mol_pick_time
-			value_moment? <=> moment? $mol_time_moment
+			value_moment? <=> moment? $mol_time_moment / \T01:23
 	tags /
 		\$mol_time_moment
 		\timepicker
