@@ -23195,13 +23195,24 @@ var $;
             ];
             return obj;
         }
+        Spam_content() {
+            const obj = new this.$.$mol_filler();
+            return obj;
+        }
+        Spam() {
+            const obj = new this.$.$mol_card();
+            obj.title = () => "Spam";
+            obj.Content = () => this.Spam_content();
+            return obj;
+        }
         Deck() {
             const obj = new this.$.$mol_deck();
             obj.items = () => [
                 this.Greeting(),
                 this.Question(),
                 this.Answer(),
-                this.Command()
+                this.Command(),
+                this.Spam()
             ];
             return obj;
         }
@@ -23218,6 +23229,12 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_deck_demo.prototype, "Command", null);
+    __decorate([
+        $mol_mem
+    ], $mol_deck_demo.prototype, "Spam_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_deck_demo.prototype, "Spam", null);
     __decorate([
         $mol_mem
     ], $mol_deck_demo.prototype, "Deck", null);

@@ -119,11 +119,41 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Spam_content $mol_filler
+		 * ```
+		 */
+		@ $mol_mem
+		Spam_content() {
+			const obj = new this.$.$mol_filler()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Spam $mol_card
+		 * 	title \Spam
+		 * 	Content <= Spam_content
+		 * ```
+		 */
+		@ $mol_mem
+		Spam() {
+			const obj = new this.$.$mol_card()
+			
+			obj.title = () => "Spam"
+			obj.Content = () => this.Spam_content()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * Deck $mol_deck items /
 		 * 	<= Greeting
 		 * 	<= Question
 		 * 	<= Answer
 		 * 	<= Command
+		 * 	<= Spam
 		 * ```
 		 */
 		@ $mol_mem
@@ -134,7 +164,8 @@ namespace $ {
 				this.Greeting(),
 				this.Question(),
 				this.Answer(),
-				this.Command()
+				this.Command(),
+				this.Spam()
 			] as readonly any[]
 			
 			return obj

@@ -5991,6 +5991,8 @@ declare namespace $ {
         Question(): $$.$mol_card;
         Answer(): $$.$mol_card;
         Command(): $$.$mol_card;
+        Spam_content(): $$.$mol_filler;
+        Spam(): $$.$mol_card;
         Deck(): $$.$mol_deck;
     }
 }
