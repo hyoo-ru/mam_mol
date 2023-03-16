@@ -32,6 +32,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * prefer \vert
+		 * ```
+		 */
+		prefer() {
+			return "vert"
+		}
+		
+		/**
+		 * ```tree
 		 * sub / <= Anchor
 		 * ```
 		 */

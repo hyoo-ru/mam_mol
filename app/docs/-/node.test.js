@@ -3895,6 +3895,9 @@ var $;
         align_hor() {
             return "";
         }
+        prefer() {
+            return "vert";
+        }
         sub() {
             return [
                 this.Anchor()
@@ -4012,7 +4015,11 @@ var $;
                 return 0;
             }
             align() {
-                return `${this.align_vert()}_${this.align_hor()}`;
+                switch (this.prefer()) {
+                    case 'hor': return `${this.align_hor()}_${this.align_vert()}`;
+                    case 'vert': return `${this.align_vert()}_${this.align_hor()}`;
+                    default: return this.prefer();
+                }
             }
             align_vert() {
                 const viewport = this.view_port();
@@ -4076,7 +4083,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/pop/pop.view.css", "[mol_pop] {\n\tposition: relative;\n\tdisplay: inline-flex;\n}\n\n[mol_pop_bubble] {\n\tbox-shadow: 0 0 1rem hsla(0,0%,0%,.5);\n\tborder-radius: var(--mol_gap_round);\n\tposition: absolute;\n\tz-index: var(--mol_layer_popup);\n\tbackground: var(--mol_theme_back);\n\tmax-width: none;\n\tmax-height: none;\n\t/* overflow: hidden;\n\toverflow-y: scroll;\n\toverflow-y: overlay; */\n\tword-break: normal;\n\twidth: max-content;\n\theight: max-content;\n\tflex-direction: column;\n}\n\n[mol_pop_bubble] > * {\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_pop_bubble][mol_scroll] {\n\tbackground: var(--mol_theme_back);\n}\n\n[mol_pop_bubble]:focus {\n\toutline: none;\n}\n\n[mol_pop_align=\"suspense\"] {\n\tdisplay: none;\n}\n\n[mol_pop_align=\"left_top\"] {\n\ttransform: translate(-100%);\n\tleft: 0;\n\tbottom: 0;\n}\n\n[mol_pop_align=\"left_center\"] {\n\ttransform: translate(-100%, -50%);\n\tleft: 0;\n\ttop: 50%;\n}\n\n[mol_pop_align=\"left_bottom\"] {\n\ttransform: translate(-100%);\n\tleft: 0;\n\ttop: 0;\n}\n\n[mol_pop_align=\"right_top\"] {\n\ttransform: translate(100%);\n\tright: 0;\n\tbottom: 0;\n}\n\n[mol_pop_align=\"right_center\"] {\n\ttransform: translate(100%, -50%);\n\tright: 0;\n\ttop: 50%;\n}\n\n[mol_pop_align=\"right_bottom\"] {\n\ttransform: translate(100%);\n\tright: 0;\n\ttop: 0;\n}\n\n[mol_pop_align=\"center\"] {\n\tleft: 50%;\n\ttop: 50%;\n\ttransform: translate(-50%, -50%);\n}\n\n[mol_pop_align=\"top_left\"] {\n\tright: 0;\n\tbottom: 100%;\n}\n\n[mol_pop_align=\"top_center\"] {\n\ttransform: translate(-50%);\n\tleft: 50%;\n\tbottom: 100%;\n}\n\n[mol_pop_align=\"top_right\"] {\n\tleft: 0;\n\tbottom: 100%;\n}\n\n[mol_pop_align=\"bottom_left\"] {\n\tright: 0;\n\ttop: 100%;\n}\n\n[mol_pop_align=\"bottom_center\"] {\n\ttransform: translate(-50%);\n\tleft: 50%;\n\ttop: 100%;\n}\n\n[mol_pop_align=\"bottom_right\"] {\n\tleft: 0;\n\ttop: 100%;\n}\n");
+    $mol_style_attach("mol/pop/pop.view.css", "[mol_pop] {\n\tposition: relative;\n\tdisplay: inline-flex;\n}\n\n[mol_pop_bubble] {\n\tbox-shadow: 0 0 1rem hsla(0,0%,0%,.5);\n\tborder-radius: var(--mol_gap_round);\n\tposition: absolute;\n\tz-index: var(--mol_layer_popup);\n\tbackground: var(--mol_theme_back);\n\tmax-width: none;\n\tmax-height: none;\n\t/* overflow: hidden;\n\toverflow-y: scroll;\n\toverflow-y: overlay; */\n\tword-break: normal;\n\twidth: max-content;\n\theight: max-content;\n\tflex-direction: column;\n\tmax-width: 80vw;\n\tmax-height: 80vw;\n}\n\n:where( [mol_pop_bubble] > * ) {\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_pop_bubble][mol_scroll] {\n\tbackground: var(--mol_theme_back);\n}\n\n[mol_pop_bubble]:focus {\n\toutline: none;\n}\n\n[mol_pop_align=\"suspense\"] {\n\tdisplay: none;\n}\n\n[mol_pop_align=\"left_top\"] {\n\ttransform: translate(-100%);\n\tleft: 0;\n\tbottom: 0;\n}\n\n[mol_pop_align=\"left_center\"] {\n\ttransform: translate(-100%, -50%);\n\tleft: 0;\n\ttop: 50%;\n}\n\n[mol_pop_align=\"left_bottom\"] {\n\ttransform: translate(-100%);\n\tleft: 0;\n\ttop: 0;\n}\n\n[mol_pop_align=\"right_top\"] {\n\ttransform: translate(100%);\n\tright: 0;\n\tbottom: 0;\n}\n\n[mol_pop_align=\"right_center\"] {\n\ttransform: translate(100%, -50%);\n\tright: 0;\n\ttop: 50%;\n}\n\n[mol_pop_align=\"right_bottom\"] {\n\ttransform: translate(100%);\n\tright: 0;\n\ttop: 0;\n}\n\n[mol_pop_align=\"center\"] {\n\tleft: 50%;\n\ttop: 50%;\n\ttransform: translate(-50%, -50%);\n}\n\n[mol_pop_align=\"top_left\"] {\n\tright: 0;\n\tbottom: 100%;\n}\n\n[mol_pop_align=\"top_center\"] {\n\ttransform: translate(-50%);\n\tleft: 50%;\n\tbottom: 100%;\n}\n\n[mol_pop_align=\"top_right\"] {\n\tleft: 0;\n\tbottom: 100%;\n}\n\n[mol_pop_align=\"bottom_left\"] {\n\tright: 0;\n\ttop: 100%;\n}\n\n[mol_pop_align=\"bottom_center\"] {\n\ttransform: translate(-50%);\n\tleft: 50%;\n\ttop: 100%;\n}\n\n[mol_pop_align=\"bottom_right\"] {\n\tleft: 0;\n\ttop: 100%;\n}\n");
 })($ || ($ = {}));
 //mol/pop/-css/pop.view.css.ts
 ;
@@ -21968,7 +21975,9 @@ var $;
             return true;
         }
         trigger_content() {
-            return [];
+            return [
+                this.title()
+            ];
         }
         hint() {
             return "";
@@ -22021,7 +22030,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/pick/pick.view.css", "[mol_pick_trigger] {\n\talign-items: center;\n}\n");
+    $mol_style_attach("mol/pick/pick.view.css", "[mol_pick_trigger] {\n\talign-items: center;\n\tflex-grow: 1;\n}\n");
 })($ || ($ = {}));
 //mol/pick/-css/pick.view.css.ts
 ;
@@ -32353,50 +32362,14 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_help extends $mol_icon {
+    class $mol_icon_menu extends $mol_icon {
         path() {
-            return "M10,19H13V22H10V19M12,2C17.35,2.22 19.68,7.62 16.5,11.67C15.67,12.67 14.33,13.33 13.67,14.17C13,15 13,16 13,17H10C10,15.33 10,13.92 10.67,12.92C11.33,11.92 12.67,11.33 13.5,10.67C15.92,8.43 15.32,5.26 12,5C10.34,5 9,6.34 9,8H6C6,4.69 8.69,2 12,2Z";
+            return "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z";
         }
     }
-    $.$mol_icon_help = $mol_icon_help;
+    $.$mol_icon_menu = $mol_icon_menu;
 })($ || ($ = {}));
-//mol/icon/help/-view.tree/help.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_help_circle extends $mol_icon {
-        path() {
-            return "M15.07,11.25L14.17,12.17C13.45,12.89 13,13.5 13,15H11V14.5C11,13.39 11.45,12.39 12.17,11.67L13.41,10.41C13.78,10.05 14,9.55 14,9C14,7.89 13.1,7 12,7C10.9,7 10,7.9 10,9H8C8,6.79 9.79,5 12,5C14.21,5 16,6.79 16,9C16,9.88 15.64,10.67 15.07,11.25M13,19H11V17H13M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.47 17.5,2 12,2Z";
-        }
-    }
-    $.$mol_icon_help_circle = $mol_icon_help_circle;
-})($ || ($ = {}));
-//mol/icon/help/circle/-view.tree/circle.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_help_circle_outline extends $mol_icon {
-        path() {
-            return "M11,18H13V16H11V18M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6C9.79,6 8,7.79 8,10H10C10,8.9 10.9,8 12,8C13.1,8 14,8.9 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10C16,7.79 14.21,6 12,6Z";
-        }
-    }
-    $.$mol_icon_help_circle_outline = $mol_icon_help_circle_outline;
-})($ || ($ = {}));
-//mol/icon/help/circle/outline/-view.tree/outline.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_content_copy extends $mol_icon {
-        path() {
-            return "M19,21H8V7H19M19,5H8C6.9,5 6,5.9 6,7V21C6,22.1 6.9,23 8,23H19C20.1,23 21,22.1 21,21V7C21,5.9 20.1,5 19,5M16,1H4C2.9,1 2,1.9 2,3V17H4V3H16V1Z";
-        }
-    }
-    $.$mol_icon_content_copy = $mol_icon_content_copy;
-})($ || ($ = {}));
-//mol/icon/content/copy/-view.tree/copy.view.tree.ts
+//mol/icon/menu/-view.tree/menu.view.tree.ts
 ;
 "use strict";
 var $;
@@ -32468,38 +32441,11 @@ var $;
         title() {
             return "Simple and complex popups";
         }
-        confirmation_popup_content() {
-            return {
-                delete: this.Delete_confirm_content()
-            };
-        }
-        showed_confirmation() {
-            return null;
-        }
         sub() {
             return [
-                this.Demo_caption(),
-                this.Simple_pop(),
                 this.Info_pop(),
                 this.Options_pop()
             ];
-        }
-        Options_content() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Menu_item_copy(),
-                this.Menu_item_download(),
-                this.Menu_item_delete()
-            ];
-            return obj;
-        }
-        Delete_confirm_content() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Delete_message(),
-                this.Delete_buttons()
-            ];
-            return obj;
         }
         tags() {
             return [
@@ -32519,118 +32465,42 @@ var $;
                 "modal"
             ];
         }
-        Demo_caption() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => [
-                this.title()
-            ];
-            return obj;
-        }
-        pick_trigger() {
-            return "?";
-        }
-        pick_content() {
-            return "This is popup content";
-        }
-        Simple_pop() {
-            const obj = new this.$.$mol_pick();
-            obj.hint = () => "Click to show simple popup";
-            obj.trigger_content = () => [
-                this.pick_trigger()
-            ];
-            obj.bubble_content = () => [
-                this.pick_content()
-            ];
-            return obj;
-        }
-        info_trigger() {
-            const obj = new this.$.$mol_icon_help_circle_outline();
-            return obj;
-        }
         info_content_text() {
-            return "## Info Pop-up\n**This is Markdown text content**\nMore complex info Pop-up example";
+            return "## Info Pop-up\n**Markdown text content**";
         }
-        info_content() {
+        Info_content() {
             const obj = new this.$.$mol_text();
-            obj.minimal_width = () => 200;
             obj.text = () => this.info_content_text();
             return obj;
         }
         Info_pop() {
             const obj = new this.$.$mol_pick();
-            obj.hint = () => "Click to show info popup";
-            obj.trigger_content = () => [
-                this.info_trigger()
-            ];
+            obj.title = () => "Info";
             obj.bubble_content = () => [
-                this.info_content()
+                this.Info_content()
             ];
             return obj;
         }
-        options_trigger() {
-            const obj = new this.$.$mol_icon_dots_vertical();
+        Options_trigger_icon() {
+            const obj = new this.$.$mol_icon_menu();
             return obj;
-        }
-        options_trigger_content() {
-            return [
-                this.options_trigger()
-            ];
-        }
-        options_bubble_content() {
-            return [
-                this.Options_content()
-            ];
-        }
-        Options_pop() {
-            const obj = new this.$.$mol_pick();
-            obj.hint = () => "Click to show options menu";
-            obj.trigger_content = () => this.options_trigger_content();
-            obj.bubble_content = () => this.options_bubble_content();
-            return obj;
-        }
-        menu_item_copy_click(val) {
-            if (val !== undefined)
-                return val;
-            return null;
-        }
-        menu_item_copy_icon() {
-            const obj = new this.$.$mol_icon_content_copy();
-            return obj;
-        }
-        menu_item_copy_label() {
-            return "Copy";
         }
         Menu_item_copy() {
-            const obj = new this.$.$mol_button_minor();
-            obj.event_click = (val) => this.menu_item_copy_click(val);
-            obj.sub = () => [
-                this.menu_item_copy_icon(),
-                this.menu_item_copy_label()
-            ];
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => "Copy";
+            obj.text = () => "Hello, World!";
             return obj;
         }
-        menu_item_download_label() {
-            return "Download";
-        }
-        menu_item_download_hint() {
-            return "Download some json";
-        }
-        menu_item_download_blob() {
+        Menu_item_download_blob() {
             const obj = new this.$.$mol_blob();
             return obj;
         }
         Menu_item_download() {
             const obj = new this.$.$mol_button_download();
-            obj.title = () => this.menu_item_download_label();
-            obj.hint = () => this.menu_item_download_hint();
-            obj.blob = () => this.menu_item_download_blob();
-            obj.file_name = () => "demo.json";
+            obj.title = () => "Download";
+            obj.blob = () => this.Menu_item_download_blob();
+            obj.file_name = () => "demo.bin";
             return obj;
-        }
-        menu_item_delete_click(val) {
-            if (val !== undefined)
-                return val;
-            return null;
         }
         menu_item_delete_icon() {
             const obj = new this.$.$mol_icon_trash_can_outline();
@@ -32639,144 +32509,85 @@ var $;
         menu_item_delete_label() {
             return "Delete";
         }
-        Menu_item_delete() {
-            const obj = new this.$.$mol_button_minor();
-            obj.style = () => ({
-                color: "red"
-            });
-            obj.event_click = (val) => this.menu_item_delete_click(val);
-            obj.sub = () => [
-                this.menu_item_delete_icon(),
-                this.menu_item_delete_label()
-            ];
-            return obj;
-        }
-        delete_message() {
-            return "Something will be deleted. This can't be undone.";
-        }
-        Delete_message_text() {
-            const obj = new this.$.$mol_view();
-            obj.sub = () => [
-                this.delete_message()
-            ];
-            return obj;
-        }
-        Delete_message() {
-            const obj = new this.$.$mol_row();
-            obj.sub = () => [
-                this.Delete_message_text()
-            ];
-            return obj;
-        }
-        delete_confirm_title() {
-            return "Delete";
-        }
-        delete_confirm_click(val) {
-            if (val !== undefined)
-                return val;
+        delete_confirm(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Delete_confirm() {
             const obj = new this.$.$mol_button_major();
-            obj.title = () => this.delete_confirm_title();
-            obj.event_click = (val) => this.delete_confirm_click(val);
+            obj.title = () => "Confirm";
+            obj.click = (next) => this.delete_confirm(next);
             return obj;
         }
-        delete_cancel_title() {
-            return "Cancel";
-        }
-        delete_cancel_click(val) {
-            if (val !== undefined)
-                return val;
-            return null;
-        }
-        Delete_cancel() {
-            const obj = new this.$.$mol_button_minor();
-            obj.title = () => this.delete_cancel_title();
-            obj.event_click = (val) => this.delete_cancel_click(val);
+        Menu_item_delete() {
+            const obj = new this.$.$mol_pick();
+            obj.trigger_content = () => [
+                this.menu_item_delete_icon(),
+                this.menu_item_delete_label()
+            ];
+            obj.bubble_content = () => [
+                this.Delete_confirm()
+            ];
             return obj;
         }
-        Delete_buttons() {
-            const obj = new this.$.$mol_row();
-            obj.sub = () => [
-                this.Delete_confirm(),
-                this.Delete_cancel()
+        Options_content() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Menu_item_copy(),
+                this.Menu_item_download(),
+                this.Menu_item_delete()
+            ];
+            return obj;
+        }
+        Options_pop() {
+            const obj = new this.$.$mol_pick();
+            obj.hint = () => "Click to show options menu";
+            obj.trigger_content = () => [
+                this.Options_trigger_icon()
+            ];
+            obj.bubble_content = () => [
+                this.Options_content()
             ];
             return obj;
         }
     }
     __decorate([
         $mol_mem
-    ], $mol_pick_demo.prototype, "Options_content", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pick_demo.prototype, "Delete_confirm_content", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pick_demo.prototype, "Demo_caption", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pick_demo.prototype, "Simple_pop", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pick_demo.prototype, "info_trigger", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pick_demo.prototype, "info_content", null);
+    ], $mol_pick_demo.prototype, "Info_content", null);
     __decorate([
         $mol_mem
     ], $mol_pick_demo.prototype, "Info_pop", null);
     __decorate([
         $mol_mem
-    ], $mol_pick_demo.prototype, "options_trigger", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pick_demo.prototype, "Options_pop", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pick_demo.prototype, "menu_item_copy_click", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pick_demo.prototype, "menu_item_copy_icon", null);
+    ], $mol_pick_demo.prototype, "Options_trigger_icon", null);
     __decorate([
         $mol_mem
     ], $mol_pick_demo.prototype, "Menu_item_copy", null);
     __decorate([
         $mol_mem
-    ], $mol_pick_demo.prototype, "menu_item_download_blob", null);
+    ], $mol_pick_demo.prototype, "Menu_item_download_blob", null);
     __decorate([
         $mol_mem
     ], $mol_pick_demo.prototype, "Menu_item_download", null);
     __decorate([
         $mol_mem
-    ], $mol_pick_demo.prototype, "menu_item_delete_click", null);
-    __decorate([
-        $mol_mem
     ], $mol_pick_demo.prototype, "menu_item_delete_icon", null);
     __decorate([
         $mol_mem
-    ], $mol_pick_demo.prototype, "Menu_item_delete", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pick_demo.prototype, "Delete_message_text", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pick_demo.prototype, "Delete_message", null);
-    __decorate([
-        $mol_mem
-    ], $mol_pick_demo.prototype, "delete_confirm_click", null);
+    ], $mol_pick_demo.prototype, "delete_confirm", null);
     __decorate([
         $mol_mem
     ], $mol_pick_demo.prototype, "Delete_confirm", null);
     __decorate([
         $mol_mem
-    ], $mol_pick_demo.prototype, "delete_cancel_click", null);
+    ], $mol_pick_demo.prototype, "Menu_item_delete", null);
     __decorate([
         $mol_mem
-    ], $mol_pick_demo.prototype, "Delete_cancel", null);
+    ], $mol_pick_demo.prototype, "Options_content", null);
     __decorate([
         $mol_mem
-    ], $mol_pick_demo.prototype, "Delete_buttons", null);
+    ], $mol_pick_demo.prototype, "Options_pop", null);
     $.$mol_pick_demo = $mol_pick_demo;
 })($ || ($ = {}));
 //mol/pick/demo/-view.tree/demo.view.tree.ts
@@ -32787,89 +32598,14 @@ var $;
     var $$;
     (function ($$) {
         class $mol_pick_demo extends $.$mol_pick_demo {
-            menu_item_download_blob() {
-                const data = {
-                    foo: 'bar',
-                    arr: [1, 2, 3]
-                };
-                const text = JSON.stringify(data, null, '\t');
-                return new $mol_blob([text], { type: 'text/json' });
-            }
-            hide_options_menu() {
-                this.Options_pop().focused(false);
-            }
-            show_confirmation(confirmation) {
-                this.showed_confirmation(confirmation);
-                this.Options_pop().focused(true);
-            }
-            showed_confirmation(next) {
-                this.Options_pop().showed();
-                return next !== undefined ? next : null;
-            }
-            options_bubble_content() {
-                const showed_confirmation = this.showed_confirmation();
-                if (showed_confirmation !== null) {
-                    return [this.confirmation_popup_content()[showed_confirmation]];
-                }
-                else {
-                    return super.options_bubble_content();
-                }
-            }
-            menu_item_copy_click(event) {
-                this.hide_options_menu();
-                event?.preventDefault();
-            }
-            menu_item_delete_click(event) {
-                this.show_confirmation('delete');
-                event?.preventDefault();
-            }
-            delete_confirm_click(event) {
-                this.hide_options_menu();
-                event?.preventDefault();
-            }
-            delete_cancel_click(event) {
-                this.hide_options_menu();
-                event?.preventDefault();
+            delete_confirm() {
+                this.Options_pop().showed(false);
             }
         }
-        __decorate([
-            $mol_mem
-        ], $mol_pick_demo.prototype, "showed_confirmation", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pick_demo.prototype, "options_bubble_content", null);
         $$.$mol_pick_demo = $mol_pick_demo;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/pick/demo/demo.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const { rem } = $mol_style_unit;
-        $mol_style_define($mol_pick_demo, {
-            Demo_caption: {
-                padding: $mol_gap.text
-            },
-            Simple_pop: {
-                Trigger: {
-                    justifyContent: 'center'
-                },
-                Bubble: {
-                    padding: rem(0.5)
-                }
-            },
-            Delete_buttons: {
-                flex: {
-                    wrap: 'nowrap'
-                }
-            }
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/pick/demo/demo.view.css.ts
 ;
 "use strict";
 var $;
@@ -34280,18 +34016,6 @@ var $;
     $.$mol_select_list_demo = $mol_select_list_demo;
 })($ || ($ = {}));
 //mol/select/list/demo/-view.tree/demo.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_menu extends $mol_icon {
-        path() {
-            return "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z";
-        }
-    }
-    $.$mol_icon_menu = $mol_icon_menu;
-})($ || ($ = {}));
-//mol/icon/menu/-view.tree/menu.view.tree.ts
 ;
 "use strict";
 var $;
@@ -37176,6 +36900,18 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/toolbar/toolbar.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_content_copy extends $mol_icon {
+        path() {
+            return "M19,21H8V7H19M19,5H8C6.9,5 6,5.9 6,7V21C6,22.1 6.9,23 8,23H19C20.1,23 21,22.1 21,21V7C21,5.9 20.1,5 19,5M16,1H4C2.9,1 2,1.9 2,3V17H4V3H16V1Z";
+        }
+    }
+    $.$mol_icon_content_copy = $mol_icon_content_copy;
+})($ || ($ = {}));
+//mol/icon/content/copy/-view.tree/copy.view.tree.ts
 ;
 "use strict";
 var $;

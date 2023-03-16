@@ -12,80 +12,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * confirmation_popup_content * delete <= Delete_confirm_content
-		 * ```
-		 */
-		confirmation_popup_content() {
-			return {
-				delete: this.Delete_confirm_content()
-			}
-		}
-		
-		/**
-		 * ```tree
-		 * showed_confirmation null
-		 * ```
-		 */
-		showed_confirmation() {
-			return null as any
-		}
-		
-		/**
-		 * ```tree
 		 * sub /
-		 * 	<= Demo_caption
-		 * 	<= Simple_pop
 		 * 	<= Info_pop
 		 * 	<= Options_pop
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Demo_caption(),
-				this.Simple_pop(),
 				this.Info_pop(),
 				this.Options_pop()
 			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * Options_content $mol_list rows /
-		 * 	<= Menu_item_copy
-		 * 	<= Menu_item_download
-		 * 	<= Menu_item_delete
-		 * ```
-		 */
-		@ $mol_mem
-		Options_content() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Menu_item_copy(),
-				this.Menu_item_download(),
-				this.Menu_item_delete()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Delete_confirm_content $mol_list rows /
-		 * 	<= Delete_message
-		 * 	<= Delete_buttons
-		 * ```
-		 */
-		@ $mol_mem
-		Delete_confirm_content() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Delete_message(),
-				this.Delete_buttons()
-			] as readonly any[]
-			
-			return obj
 		}
 		
 		/**
@@ -128,97 +64,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Demo_caption $mol_view sub / <= title
-		 * ```
-		 */
-		@ $mol_mem
-		Demo_caption() {
-			const obj = new this.$.$mol_view()
-			
-			obj.sub = () => [
-				this.title()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * pick_trigger \?
-		 * ```
-		 */
-		pick_trigger() {
-			return "?"
-		}
-		
-		/**
-		 * ```tree
-		 * pick_content \This is popup content
-		 * ```
-		 */
-		pick_content() {
-			return "This is popup content"
-		}
-		
-		/**
-		 * ```tree
-		 * Simple_pop $mol_pick
-		 * 	hint \Click to show simple popup
-		 * 	trigger_content / <= pick_trigger
-		 * 	bubble_content / <= pick_content
-		 * ```
-		 */
-		@ $mol_mem
-		Simple_pop() {
-			const obj = new this.$.$mol_pick()
-			
-			obj.hint = () => "Click to show simple popup"
-			obj.trigger_content = () => [
-				this.pick_trigger()
-			] as readonly any[]
-			obj.bubble_content = () => [
-				this.pick_content()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * info_trigger $mol_icon_help_circle_outline
-		 * ```
-		 */
-		@ $mol_mem
-		info_trigger() {
-			const obj = new this.$.$mol_icon_help_circle_outline()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * info_content_text \
 		 * 	\## Info Pop-up
-		 * 	\**This is Markdown text content**
-		 * 	\More complex info Pop-up example
+		 * 	\**Markdown text content**
 		 * ```
 		 */
 		info_content_text() {
-			return "## Info Pop-up\n**This is Markdown text content**\nMore complex info Pop-up example"
+			return "## Info Pop-up\n**Markdown text content**"
 		}
 		
 		/**
 		 * ```tree
-		 * info_content $mol_text
-		 * 	minimal_width 200
-		 * 	text <= info_content_text
+		 * Info_content $mol_text text <= info_content_text
 		 * ```
 		 */
 		@ $mol_mem
-		info_content() {
+		Info_content() {
 			const obj = new this.$.$mol_text()
 			
-			obj.minimal_width = () => 200
 			obj.text = () => this.info_content_text()
 			
 			return obj
@@ -227,21 +90,17 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Info_pop $mol_pick
-		 * 	hint \Click to show info popup
-		 * 	trigger_content / <= info_trigger
-		 * 	bubble_content / <= info_content
+		 * 	title \Info
+		 * 	bubble_content / <= Info_content
 		 * ```
 		 */
 		@ $mol_mem
 		Info_pop() {
 			const obj = new this.$.$mol_pick()
 			
-			obj.hint = () => "Click to show info popup"
-			obj.trigger_content = () => [
-				this.info_trigger()
-			] as readonly any[]
+			obj.title = () => "Info"
 			obj.bubble_content = () => [
-				this.info_content()
+				this.Info_content()
 			] as readonly any[]
 			
 			return obj
@@ -249,136 +108,40 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * options_trigger $mol_icon_dots_vertical
+		 * Options_trigger_icon $mol_icon_menu
 		 * ```
 		 */
 		@ $mol_mem
-		options_trigger() {
-			const obj = new this.$.$mol_icon_dots_vertical()
+		Options_trigger_icon() {
+			const obj = new this.$.$mol_icon_menu()
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * options_trigger_content / <= options_trigger
-		 * ```
-		 */
-		options_trigger_content() {
-			return [
-				this.options_trigger()
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * options_bubble_content / <= Options_content
-		 * ```
-		 */
-		options_bubble_content() {
-			return [
-				this.Options_content()
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * Options_pop $mol_pick
-		 * 	hint \Click to show options menu
-		 * 	trigger_content <= options_trigger_content
-		 * 	bubble_content <= options_bubble_content
-		 * ```
-		 */
-		@ $mol_mem
-		Options_pop() {
-			const obj = new this.$.$mol_pick()
-			
-			obj.hint = () => "Click to show options menu"
-			obj.trigger_content = () => this.options_trigger_content()
-			obj.bubble_content = () => this.options_bubble_content()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * menu_item_copy_click?val null
-		 * ```
-		 */
-		@ $mol_mem
-		menu_item_copy_click(val?: any) {
-			if ( val !== undefined ) return val as never
-			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * menu_item_copy_icon $mol_icon_content_copy
-		 * ```
-		 */
-		@ $mol_mem
-		menu_item_copy_icon() {
-			const obj = new this.$.$mol_icon_content_copy()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * menu_item_copy_label \Copy
-		 * ```
-		 */
-		menu_item_copy_label() {
-			return "Copy"
-		}
-		
-		/**
-		 * ```tree
-		 * Menu_item_copy $mol_button_minor
-		 * 	event_click?val <=> menu_item_copy_click?val
-		 * 	sub /
-		 * 		<= menu_item_copy_icon
-		 * 		<= menu_item_copy_label
+		 * Menu_item_copy $mol_button_copy
+		 * 	title \Copy
+		 * 	text \Hello, World!
 		 * ```
 		 */
 		@ $mol_mem
 		Menu_item_copy() {
-			const obj = new this.$.$mol_button_minor()
+			const obj = new this.$.$mol_button_copy()
 			
-			obj.event_click = (val?: any) => this.menu_item_copy_click(val)
-			obj.sub = () => [
-				this.menu_item_copy_icon(),
-				this.menu_item_copy_label()
-			] as readonly any[]
+			obj.title = () => "Copy"
+			obj.text = () => "Hello, World!"
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * menu_item_download_label \Download
-		 * ```
-		 */
-		menu_item_download_label() {
-			return "Download"
-		}
-		
-		/**
-		 * ```tree
-		 * menu_item_download_hint \Download some json
-		 * ```
-		 */
-		menu_item_download_hint() {
-			return "Download some json"
-		}
-		
-		/**
-		 * ```tree
-		 * menu_item_download_blob $mol_blob
+		 * Menu_item_download_blob $mol_blob
 		 * ```
 		 */
 		@ $mol_mem
-		menu_item_download_blob() {
+		Menu_item_download_blob() {
 			const obj = new this.$.$mol_blob()
 			
 			return obj
@@ -387,33 +150,20 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Menu_item_download $mol_button_download
-		 * 	title <= menu_item_download_label
-		 * 	hint <= menu_item_download_hint
-		 * 	blob <= menu_item_download_blob
-		 * 	file_name \demo.json
+		 * 	title \Download
+		 * 	blob <= Menu_item_download_blob
+		 * 	file_name \demo.bin
 		 * ```
 		 */
 		@ $mol_mem
 		Menu_item_download() {
 			const obj = new this.$.$mol_button_download()
 			
-			obj.title = () => this.menu_item_download_label()
-			obj.hint = () => this.menu_item_download_hint()
-			obj.blob = () => this.menu_item_download_blob()
-			obj.file_name = () => "demo.json"
+			obj.title = () => "Download"
+			obj.blob = () => this.Menu_item_download_blob()
+			obj.file_name = () => "demo.bin"
 			
 			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * menu_item_delete_click?val null
-		 * ```
-		 */
-		@ $mol_mem
-		menu_item_delete_click(val?: any) {
-			if ( val !== undefined ) return val as never
-			return null as any
 		}
 		
 		/**
@@ -439,159 +189,95 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Menu_item_delete $mol_button_minor
-		 * 	style * color \red
-		 * 	event_click?val <=> menu_item_delete_click?val
-		 * 	sub /
-		 * 		<= menu_item_delete_icon
-		 * 		<= menu_item_delete_label
+		 * delete_confirm? null
 		 * ```
 		 */
 		@ $mol_mem
-		Menu_item_delete() {
-			const obj = new this.$.$mol_button_minor()
-			
-			obj.style = () => ({
-				color: "red"
-			})
-			obj.event_click = (val?: any) => this.menu_item_delete_click(val)
-			obj.sub = () => [
-				this.menu_item_delete_icon(),
-				this.menu_item_delete_label()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * delete_message \Something will be deleted. This can't be undone.
-		 * ```
-		 */
-		delete_message() {
-			return "Something will be deleted. This can't be undone."
-		}
-		
-		/**
-		 * ```tree
-		 * Delete_message_text $mol_view sub / <= delete_message
-		 * ```
-		 */
-		@ $mol_mem
-		Delete_message_text() {
-			const obj = new this.$.$mol_view()
-			
-			obj.sub = () => [
-				this.delete_message()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Delete_message $mol_row sub / <= Delete_message_text
-		 * ```
-		 */
-		@ $mol_mem
-		Delete_message() {
-			const obj = new this.$.$mol_row()
-			
-			obj.sub = () => [
-				this.Delete_message_text()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * delete_confirm_title \Delete
-		 * ```
-		 */
-		delete_confirm_title() {
-			return "Delete"
-		}
-		
-		/**
-		 * ```tree
-		 * delete_confirm_click?val null
-		 * ```
-		 */
-		@ $mol_mem
-		delete_confirm_click(val?: any) {
-			if ( val !== undefined ) return val as never
+		delete_confirm(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
 		 * Delete_confirm $mol_button_major
-		 * 	title <= delete_confirm_title
-		 * 	event_click?val <=> delete_confirm_click?val
+		 * 	title \Confirm
+		 * 	click? <=> delete_confirm?
 		 * ```
 		 */
 		@ $mol_mem
 		Delete_confirm() {
 			const obj = new this.$.$mol_button_major()
 			
-			obj.title = () => this.delete_confirm_title()
-			obj.event_click = (val?: any) => this.delete_confirm_click(val)
+			obj.title = () => "Confirm"
+			obj.click = (next?: any) => this.delete_confirm(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * delete_cancel_title \Cancel
-		 * ```
-		 */
-		delete_cancel_title() {
-			return "Cancel"
-		}
-		
-		/**
-		 * ```tree
-		 * delete_cancel_click?val null
+		 * Menu_item_delete $mol_pick
+		 * 	trigger_content /
+		 * 		<= menu_item_delete_icon
+		 * 		<= menu_item_delete_label
+		 * 	bubble_content / <= Delete_confirm
 		 * ```
 		 */
 		@ $mol_mem
-		delete_cancel_click(val?: any) {
-			if ( val !== undefined ) return val as never
-			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * Delete_cancel $mol_button_minor
-		 * 	title <= delete_cancel_title
-		 * 	event_click?val <=> delete_cancel_click?val
-		 * ```
-		 */
-		@ $mol_mem
-		Delete_cancel() {
-			const obj = new this.$.$mol_button_minor()
+		Menu_item_delete() {
+			const obj = new this.$.$mol_pick()
 			
-			obj.title = () => this.delete_cancel_title()
-			obj.event_click = (val?: any) => this.delete_cancel_click(val)
+			obj.trigger_content = () => [
+				this.menu_item_delete_icon(),
+				this.menu_item_delete_label()
+			] as readonly any[]
+			obj.bubble_content = () => [
+				this.Delete_confirm()
+			] as readonly any[]
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * Delete_buttons $mol_row sub /
-		 * 	<= Delete_confirm
-		 * 	<= Delete_cancel
+		 * Options_content $mol_list rows /
+		 * 	<= Menu_item_copy
+		 * 	<= Menu_item_download
+		 * 	<= Menu_item_delete
 		 * ```
 		 */
 		@ $mol_mem
-		Delete_buttons() {
-			const obj = new this.$.$mol_row()
+		Options_content() {
+			const obj = new this.$.$mol_list()
 			
-			obj.sub = () => [
-				this.Delete_confirm(),
-				this.Delete_cancel()
+			obj.rows = () => [
+				this.Menu_item_copy(),
+				this.Menu_item_download(),
+				this.Menu_item_delete()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Options_pop $mol_pick
+		 * 	hint \Click to show options menu
+		 * 	trigger_content / <= Options_trigger_icon
+		 * 	bubble_content / <= Options_content
+		 * ```
+		 */
+		@ $mol_mem
+		Options_pop() {
+			const obj = new this.$.$mol_pick()
+			
+			obj.hint = () => "Click to show options menu"
+			obj.trigger_content = () => [
+				this.Options_trigger_icon()
+			] as readonly any[]
+			obj.bubble_content = () => [
+				this.Options_content()
 			] as readonly any[]
 			
 			return obj

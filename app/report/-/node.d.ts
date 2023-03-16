@@ -1092,6 +1092,7 @@ declare namespace $ {
         showed(val?: any): boolean;
         align_vert(): string;
         align_hor(): string;
+        prefer(): string;
         sub(): readonly any[];
         sub_visible(): readonly any[];
         Anchor(): any;
@@ -1911,11 +1912,11 @@ declare namespace $.$$ {
         options_filtered(): readonly string[];
         option_label(id: string): any;
         option_rows(): $mol_button_minor[];
-        option_focused(component?: $mol_view): $mol_view | $mol_string | null;
+        option_focused(component?: $mol_view): $mol_view | $mol_button_minor | $mol_string | null;
         event_select(id: string, event?: MouseEvent): void;
         nav_components(): ($mol_button_minor | $mol_string)[];
         trigger_content(): readonly $mol_view_content[];
-        menu_content(): $mol_view[];
+        menu_content(): ($mol_view | $mol_button_minor)[];
     }
 }
 

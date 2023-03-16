@@ -68,6 +68,7 @@ $mol_pop $mol_view
 	showed?val false
 	align_vert \
 	align_hor \
+	prefer \vert
 	sub /
 		<= Anchor null
 	sub_visible /
@@ -2440,6 +2441,7 @@ $mol_pick $mol_pop
 		enabled <= trigger_enabled true
 		checked?val <=> showed?val
 		sub <= trigger_content /$mol_view_content
+			<= title
 		hint <= hint \
 
 $mol_icon_calendar $mol_icon path \M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z
@@ -3999,13 +4001,7 @@ $mol_portion_demo $mol_example_small
 		\progress
 		\slider
 
-$mol_icon_help $mol_icon path \M10,19H13V22H10V19M12,2C17.35,2.22 19.68,7.62 16.5,11.67C15.67,12.67 14.33,13.33 13.67,14.17C13,15 13,16 13,17H10C10,15.33 10,13.92 10.67,12.92C11.33,11.92 12.67,11.33 13.5,10.67C15.92,8.43 15.32,5.26 12,5C10.34,5 9,6.34 9,8H6C6,4.69 8.69,2 12,2Z
-
-$mol_icon_help_circle $mol_icon path \M15.07,11.25L14.17,12.17C13.45,12.89 13,13.5 13,15H11V14.5C11,13.39 11.45,12.39 12.17,11.67L13.41,10.41C13.78,10.05 14,9.55 14,9C14,7.89 13.1,7 12,7C10.9,7 10,7.9 10,9H8C8,6.79 9.79,5 12,5C14.21,5 16,6.79 16,9C16,9.88 15.64,10.67 15.07,11.25M13,19H11V17H13M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.47 17.5,2 12,2Z
-
-$mol_icon_help_circle_outline $mol_icon path \M11,18H13V16H11V18M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6C9.79,6 8,7.79 8,10H10C10,8.9 10.9,8 12,8C13.1,8 14,8.9 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10C16,7.79 14.21,6 12,6Z
-
-$mol_icon_content_copy $mol_icon path \M19,21H8V7H19M19,5H8C6.9,5 6,5.9 6,7V21C6,22.1 6.9,23 8,23H19C20.1,23 21,22.1 21,21V7C21,5.9 20.1,5 19,5M16,1H4C2.9,1 2,1.9 2,3V17H4V3H16V1Z
+$mol_icon_menu $mol_icon path \M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z
 
 $mol_button_download $mol_button_minor
 	blob null
@@ -4017,69 +4013,38 @@ $mol_button_download $mol_button_minor
 
 $mol_pick_demo $mol_example_small
 	title \Simple and complex popups
-	confirmation_popup_content *
-		delete <= Delete_confirm_content
-	showed_confirmation null
 	sub /
-		<= Demo_caption $mol_view sub /
-			<= title
-		- \Simple Pop-up example
-		<= Simple_pop $mol_pick
-			hint \Click to show simple popup
-			trigger_content /
-				<= pick_trigger \?
-			bubble_content /
-				<= pick_content \This is popup content
-		- \More complex info Pop-up example
 		<= Info_pop $mol_pick
-			hint \Click to show info popup
-			trigger_content /
-				<= info_trigger $mol_icon_help_circle_outline
+			title \Info
 			bubble_content /
-				<= info_content $mol_text
-					minimal_width 200
+				<= Info_content $mol_text
 					text <= info_content_text \
 						\## Info Pop-up
-						\**This is Markdown text content**
-						\More complex info Pop-up example
-		- \Options Pop-up example
+						\**Markdown text content**
+		-
 		<= Options_pop $mol_pick
 			hint \Click to show options menu
-			trigger_content <= options_trigger_content /
-				<= options_trigger $mol_icon_dots_vertical
-			bubble_content <= options_bubble_content /
-				<= Options_content
+			trigger_content /
+				<= Options_trigger_icon $mol_icon_menu
+			bubble_content /
+				<= Options_content $mol_list rows /
+					<= Menu_item_copy $mol_button_copy
+						title \Copy
+						text \Hello, World!
+					<= Menu_item_download $mol_button_download
+						title \Download
+						blob <= Menu_item_download_blob $mol_blob
+						file_name \demo.bin
+					<= Menu_item_delete $mol_pick
+						- prefer \hor
+						trigger_content /
+							<= menu_item_delete_icon $mol_icon_trash_can_outline
+							<= menu_item_delete_label \Delete
+						bubble_content /
+							<= Delete_confirm $mol_button_major
+								title \Confirm
+								click? <=> delete_confirm? null
 	-
-	Options_content $mol_list rows /
-		<= Menu_item_copy $mol_button_minor
-			event_click?val <=> menu_item_copy_click?val null
-			sub /
-				<= menu_item_copy_icon $mol_icon_content_copy
-				<= menu_item_copy_label \Copy
-		<= Menu_item_download $mol_button_download
-			title <= menu_item_download_label \Download
-			hint <= menu_item_download_hint \Download some json
-			blob <= menu_item_download_blob $mol_blob
-			file_name \demo.json
-		<= Menu_item_delete $mol_button_minor
-			style *
-				color \red
-			event_click?val <=> menu_item_delete_click?val null
-			sub /
-				<= menu_item_delete_icon $mol_icon_trash_can_outline
-				<= menu_item_delete_label \Delete
-	-
-	Delete_confirm_content $mol_list rows /
-		<= Delete_message $mol_row sub /
-			<= Delete_message_text $mol_view sub / 
-				<= delete_message \Something will be deleted. This can't be undone.
-		<= Delete_buttons $mol_row sub /
-			<= Delete_confirm $mol_button_major
-				title <= delete_confirm_title \Delete
-				event_click?val <=> delete_confirm_click?val null
-			<= Delete_cancel $mol_button_minor
-				title <= delete_cancel_title \Cancel
-				event_click?val <=> delete_cancel_click?val null
 	tags /
 		\$mol_link_lazy
 		\$mol_icon
@@ -4394,8 +4359,6 @@ $mol_select_list_demo $mol_example_small
 		\select
 		\tags
 		\multiselect
-
-$mol_icon_menu $mol_icon path \M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z
 
 $mol_speck_demo $mol_example_small
 	sub /
@@ -4920,6 +4883,8 @@ $mol_toolbar $mol_view
 			sub <= items /$mol_view
 		<= Expand $mol_check_expand
 			checked?val <=> expanded?val false
+
+$mol_icon_content_copy $mol_icon path \M19,21H8V7H19M19,5H8C6.9,5 6,5.9 6,7V21C6,22.1 6.9,23 8,23H19C20.1,23 21,22.1 21,21V7C21,5.9 20.1,5 19,5M16,1H4C2.9,1 2,1.9 2,3V17H4V3H16V1Z
 
 $mol_icon_content_cut $mol_icon path \M19,3L13,9L15,11L22,4V3M12,12.5C11.72,12.5 11.5,12.28 11.5,12C11.5,11.72 11.72,11.5 12,11.5C12.28,11.5 12.5,11.72 12.5,12C12.5,12.28 12.28,12.5 12,12.5M6,20C4.9,20 4,19.1 4,18C4,16.89 4.9,16 6,16C7.1,16 8,16.9 8,18C8,19.11 7.1,20 6,20M6,8C4.9,8 4,7.1 4,6C4,4.89 4.9,4 6,4C7.1,4 8,4.9 8,6C8,7.11 7.1,8 6,8M9.64,7.64C9.87,7.14 10,6.59 10,6C10,3.79 8.21,2 6,2C3.79,2 2,3.79 2,6C2,8.21 3.79,10 6,10C6.59,10 7.14,9.87 7.64,9.64L10,12L7.64,14.36C7.14,14.13 6.59,14 6,14C3.79,14 2,15.79 2,18C2,20.21 3.79,22 6,22C8.21,22 10,20.21 10,18C10,17.41 9.87,16.86 9.64,16.36L12,14L19,21H22V20L9.64,7.64Z
 

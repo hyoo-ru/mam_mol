@@ -8,4 +8,5 @@ $mol_pick $mol_pop
 		enabled <= trigger_enabled true
 		checked?val <=> showed?val
 		sub <= trigger_content /$mol_view_content
+			<= title
 		hint <= hint \

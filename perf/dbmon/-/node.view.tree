@@ -23,6 +23,7 @@ $mol_pop $mol_view
 	showed?val false
 	align_vert \
 	align_hor \
+	prefer \vert
 	sub /
 		<= Anchor null
 	sub_visible /

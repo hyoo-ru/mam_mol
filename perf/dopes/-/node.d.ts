@@ -1005,7 +1005,7 @@ declare namespace $.$$ {
         started_once(next?: boolean): boolean;
         data(next?: $mol_perf_dopes_info[]): $mol_perf_dopes_info[];
         labels(): $mol_view[];
-        sub(): $mol_view[];
+        sub(): ($mol_view | $mol_button_major)[];
         clock(next?: number): number;
         start(): void;
         stop(): void;

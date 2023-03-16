@@ -1,68 +1,37 @@
 $mol_pick_demo $mol_example_small
 	title \Simple and complex popups
-	confirmation_popup_content *
-		delete <= Delete_confirm_content
-	showed_confirmation null
 	sub /
-		<= Demo_caption $mol_view sub /
-			<= title
-		- \Simple Pop-up example
-		<= Simple_pop $mol_pick
-			hint \Click to show simple popup
-			trigger_content /
-				<= pick_trigger \?
-			bubble_content /
-				<= pick_content \This is popup content
-		- \More complex info Pop-up example
 		<= Info_pop $mol_pick
-			hint \Click to show info popup
-			trigger_content /
-				<= info_trigger $mol_icon_help_circle_outline
+			title \Info
 			bubble_content /
-				<= info_content $mol_text
-					minimal_width 200
+				<= Info_content $mol_text
 					text <= info_content_text \
 						\## Info Pop-up
-						\**This is Markdown text content**
-						\More complex info Pop-up example
-		- \Options Pop-up example
+						\**Markdown text content**
+		-
 		<= Options_pop $mol_pick
 			hint \Click to show options menu
-			trigger_content <= options_trigger_content /
-				<= options_trigger $mol_icon_dots_vertical
-			bubble_content <= options_bubble_content /
-				<= Options_content
+			trigger_content /
+				<= Options_trigger_icon $mol_icon_menu
+			bubble_content /
+				<= Options_content $mol_list rows /
+					<= Menu_item_copy $mol_button_copy
+						title \Copy
+						text \Hello, World!
+					<= Menu_item_download $mol_button_download
+						title \Download
+						blob <= Menu_item_download_blob $mol_blob
+						file_name \demo.bin
+					<= Menu_item_delete $mol_pick
+						- prefer \hor
+						trigger_content /
+							<= menu_item_delete_icon $mol_icon_trash_can_outline
+							<= menu_item_delete_label \Delete
+						bubble_content /
+							<= Delete_confirm $mol_button_major
+								title \Confirm
+								click? <=> delete_confirm? null
 	-
-	Options_content $mol_list rows /
-		<= Menu_item_copy $mol_button_minor
-			event_click?val <=> menu_item_copy_click?val null
-			sub /
-				<= menu_item_copy_icon $mol_icon_content_copy
-				<= menu_item_copy_label \Copy
-		<= Menu_item_download $mol_button_download
-			title <= menu_item_download_label \Download
-			hint <= menu_item_download_hint \Download some json
-			blob <= menu_item_download_blob $mol_blob
-			file_name \demo.json
-		<= Menu_item_delete $mol_button_minor
-			style *
-				color \red
-			event_click?val <=> menu_item_delete_click?val null
-			sub /
-				<= menu_item_delete_icon $mol_icon_trash_can_outline
-				<= menu_item_delete_label \Delete
-	-
-	Delete_confirm_content $mol_list rows /
-		<= Delete_message $mol_row sub /
-			<= Delete_message_text $mol_view sub / 
-				<= delete_message \Something will be deleted. This can't be undone.
-		<= Delete_buttons $mol_row sub /
-			<= Delete_confirm $mol_button_major
-				title <= delete_confirm_title \Delete
-				event_click?val <=> delete_confirm_click?val null
-			<= Delete_cancel $mol_button_minor
-				title <= delete_cancel_title \Cancel
-				event_click?val <=> delete_cancel_click?val null
 	tags /
 		\$mol_link_lazy
 		\$mol_icon

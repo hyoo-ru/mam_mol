@@ -36,6 +36,7 @@ $mol_pop $mol_view
 	showed?val false
 	align_vert \
 	align_hor \
+	prefer \vert
 	sub /
 		<= Anchor null
 	sub_visible /
@@ -114,6 +115,7 @@ $mol_pick $mol_pop
 		enabled <= trigger_enabled true
 		checked?val <=> showed?val
 		sub <= trigger_content /$mol_view_content
+			<= title
 		hint <= hint \
 
 $mol_hotkey $mol_plugin

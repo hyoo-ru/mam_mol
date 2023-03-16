@@ -1000,6 +1000,7 @@ declare namespace $ {
         showed(val?: any): boolean;
         align_vert(): string;
         align_hor(): string;
+        prefer(): string;
         sub(): readonly any[];
         sub_visible(): readonly any[];
         Anchor(): any;

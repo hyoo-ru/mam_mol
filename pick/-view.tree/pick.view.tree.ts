@@ -46,11 +46,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * trigger_content /$mol_view_content
+		 * trigger_content /$mol_view_content <= title
 		 * ```
 		 */
 		trigger_content() {
 			return [
+				this.title()
 			] as readonly $mol_view_content[]
 		}
 		

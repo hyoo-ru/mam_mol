@@ -990,6 +990,7 @@ declare namespace $ {
         showed(val?: any): boolean;
         align_vert(): string;
         align_hor(): string;
+        prefer(): string;
         sub(): readonly any[];
         sub_visible(): readonly any[];
         Anchor(): any;
@@ -1901,7 +1902,7 @@ declare namespace $.$$ {
         suggests_showed(next?: boolean): boolean;
         suggest_selected(next?: string): void;
         nav_components(): ($mol_string | $mol_button_minor)[];
-        nav_focused(component?: $mol_view): $mol_view | $mol_string | null;
+        nav_focused(component?: $mol_view): $mol_view | $mol_string | $mol_button_minor | null;
         suggest_label(key: string): string;
         menu_items(): $mol_button_minor[];
         suggest_select(id: string, event?: MouseEvent): void;
@@ -3997,11 +3998,11 @@ declare namespace $.$$ {
         options_filtered(): readonly string[];
         option_label(id: string): any;
         option_rows(): $mol_button_minor[];
-        option_focused(component?: $mol_view): $mol_view | $mol_string | null;
+        option_focused(component?: $mol_view): $mol_view | $mol_string | $mol_button_minor | null;
         event_select(id: string, event?: MouseEvent): void;
         nav_components(): ($mol_string | $mol_button_minor)[];
         trigger_content(): readonly $mol_view_content[];
-        menu_content(): $mol_view[];
+        menu_content(): ($mol_view | $mol_button_minor)[];
     }
 }
 
@@ -7740,8 +7741,8 @@ declare namespace $ {
         [x: string]: string;
         readonly list: string;
         readonly table: string;
-        readonly header: string;
         readonly cut: string;
+        readonly header: string;
         readonly quote: string;
         readonly paragraph: string;
         readonly script: string;
@@ -8219,25 +8220,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_icon_help extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_help_circle extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_help_circle_outline extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_content_copy extends $mol_icon {
+    class $mol_icon_menu extends $mol_icon {
         path(): string;
     }
 }
@@ -8271,68 +8254,29 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_pick_demo extends $mol_example_small {
         title(): string;
-        confirmation_popup_content(): {
-            delete: $$.$mol_list;
-        };
-        showed_confirmation(): any;
         sub(): readonly any[];
-        Options_content(): $$.$mol_list;
-        Delete_confirm_content(): $$.$mol_list;
         tags(): readonly any[];
-        Demo_caption(): $mol_view;
-        pick_trigger(): string;
-        pick_content(): string;
-        Simple_pop(): $$.$mol_pick;
-        info_trigger(): $mol_icon_help_circle_outline;
         info_content_text(): string;
-        info_content(): $$.$mol_text;
+        Info_content(): $$.$mol_text;
         Info_pop(): $$.$mol_pick;
-        options_trigger(): $mol_icon_dots_vertical;
-        options_trigger_content(): readonly any[];
-        options_bubble_content(): readonly any[];
-        Options_pop(): $$.$mol_pick;
-        menu_item_copy_click(val?: any): any;
-        menu_item_copy_icon(): $mol_icon_content_copy;
-        menu_item_copy_label(): string;
-        Menu_item_copy(): $mol_button_minor;
-        menu_item_download_label(): string;
-        menu_item_download_hint(): string;
-        menu_item_download_blob(): Blob;
+        Options_trigger_icon(): $mol_icon_menu;
+        Menu_item_copy(): $$.$mol_button_copy;
+        Menu_item_download_blob(): Blob;
         Menu_item_download(): $$.$mol_button_download;
-        menu_item_delete_click(val?: any): any;
         menu_item_delete_icon(): $mol_icon_trash_can_outline;
         menu_item_delete_label(): string;
-        Menu_item_delete(): $mol_button_minor;
-        delete_message(): string;
-        Delete_message_text(): $mol_view;
-        Delete_message(): $mol_row;
-        delete_confirm_title(): string;
-        delete_confirm_click(val?: any): any;
+        delete_confirm(next?: any): any;
         Delete_confirm(): $mol_button_major;
-        delete_cancel_title(): string;
-        delete_cancel_click(val?: any): any;
-        Delete_cancel(): $mol_button_minor;
-        Delete_buttons(): $mol_row;
+        Menu_item_delete(): $$.$mol_pick;
+        Options_content(): $$.$mol_list;
+        Options_pop(): $$.$mol_pick;
     }
 }
 
 declare namespace $.$$ {
-    type Confirmations = keyof ReturnType<typeof $.$mol_pick_demo.prototype.confirmation_popup_content>;
-    export class $mol_pick_demo extends $.$mol_pick_demo {
-        menu_item_download_blob(): Blob;
-        hide_options_menu(): void;
-        show_confirmation(confirmation: Confirmations): void;
-        showed_confirmation(next?: Confirmations | null): "delete" | null;
-        options_bubble_content(): readonly any[];
-        menu_item_copy_click(event?: MouseEvent): void;
-        menu_item_delete_click(event?: MouseEvent): void;
-        delete_confirm_click(event?: MouseEvent): void;
-        delete_cancel_click(event?: MouseEvent): void;
+    class $mol_pick_demo extends $.$mol_pick_demo {
+        delete_confirm(): void;
     }
-    export {};
-}
-
-declare namespace $.$$ {
 }
 
 declare namespace $ {
@@ -8824,12 +8768,6 @@ declare namespace $ {
         Friends(): $$.$mol_select_list;
         Friends_disabled(): $$.$mol_select_list;
         Demo_items(): $$.$mol_list;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_menu extends $mol_icon {
-        path(): string;
     }
 }
 
@@ -9389,6 +9327,12 @@ declare namespace $.$$ {
 
 declare namespace $.$$ {
     class $mol_toolbar extends $.$mol_toolbar {
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_content_copy extends $mol_icon {
+        path(): string;
     }
 }
 
