@@ -4107,7 +4107,7 @@ $mol_pick_demo $mol_example_small
 						blob <= Menu_item_download_blob $mol_blob
 						file_name \demo.bin
 					<= Menu_item_delete $mol_pick
-						- prefer \hor
+						align \center
 						trigger_content /
 							<= menu_item_delete_icon $mol_icon_trash_can_outline
 							<= menu_item_delete_label \Delete

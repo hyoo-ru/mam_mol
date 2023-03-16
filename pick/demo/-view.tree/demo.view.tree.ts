@@ -218,6 +218,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Menu_item_delete $mol_pick
+		 * 	align \center
 		 * 	trigger_content /
 		 * 		<= menu_item_delete_icon
 		 * 		<= menu_item_delete_label
@@ -228,6 +229,7 @@ namespace $ {
 		Menu_item_delete() {
 			const obj = new this.$.$mol_pick()
 			
+			obj.align = () => "center"
 			obj.trigger_content = () => [
 				this.menu_item_delete_icon(),
 				this.menu_item_delete_label()

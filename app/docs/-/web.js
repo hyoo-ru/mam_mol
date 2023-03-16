@@ -32462,6 +32462,7 @@ var $;
         }
         Menu_item_delete() {
             const obj = new this.$.$mol_pick();
+            obj.align = () => "center";
             obj.trigger_content = () => [
                 this.menu_item_delete_icon(),
                 this.menu_item_delete_label()
