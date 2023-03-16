@@ -1100,7 +1100,7 @@ declare namespace $ {
         height_max(): number;
         Bubble(): $mol_pop_bubble;
     }
-    class $mol_pop_bubble extends $mol_scroll {
+    class $mol_pop_bubble extends $mol_view {
         sub(): readonly $mol_view_content[];
         style(): {
             maxHeight: number;
@@ -1893,6 +1893,7 @@ declare namespace $ {
         Nav(): $$.$mol_nav;
         menu_content(): readonly $mol_view[];
         Menu(): $$.$mol_list;
+        Bubble_pane(): $$.$mol_scroll;
         submit(event?: any): any;
         enabled(): boolean;
     }

@@ -43,27 +43,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * greet_message \Hello, world!
-		 * ```
-		 */
-		greet_message() {
-			return "Hello, world!"
-		}
-		
-		/**
-		 * ```tree
-		 * Greeter $mol_card
+		 * Greeting $mol_card
 		 * 	title \Greeting
-		 * 	content / <= greet_message
+		 * 	content / \Hello, world!
 		 * ```
 		 */
 		@ $mol_mem
-		Greeter() {
+		Greeting() {
 			const obj = new this.$.$mol_card()
 			
 			obj.title = () => "Greeting"
 			obj.content = () => [
-				this.greet_message()
+				"Hello, world!"
 			] as readonly any[]
 			
 			return obj
@@ -71,27 +62,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * quest_message \How are you?
-		 * ```
-		 */
-		quest_message() {
-			return "How are you?"
-		}
-		
-		/**
-		 * ```tree
-		 * Quester $mol_card
+		 * Question $mol_card
 		 * 	title \Question
-		 * 	content / <= quest_message
+		 * 	content / \How are you?
 		 * ```
 		 */
 		@ $mol_mem
-		Quester() {
+		Question() {
 			const obj = new this.$.$mol_card()
 			
 			obj.title = () => "Question"
 			obj.content = () => [
-				this.quest_message()
+				"How are you?"
 			] as readonly any[]
 			
 			return obj
@@ -99,27 +81,37 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * command_message \Let us do it right!
+		 * Answer $mol_card
+		 * 	title \Answer
+		 * 	content / \The Answer to the Ultimate Question of Life, the Universe, and Everything is 42
 		 * ```
 		 */
-		command_message() {
-			return "Let us do it right!"
+		@ $mol_mem
+		Answer() {
+			const obj = new this.$.$mol_card()
+			
+			obj.title = () => "Answer"
+			obj.content = () => [
+				"The Answer to the Ultimate Question of Life, the Universe, and Everything is 42"
+			] as readonly any[]
+			
+			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * Commander $mol_card
+		 * Command $mol_card
 		 * 	title \Command
-		 * 	content / <= command_message
+		 * 	content / \Let's do it right!
 		 * ```
 		 */
 		@ $mol_mem
-		Commander() {
+		Command() {
 			const obj = new this.$.$mol_card()
 			
 			obj.title = () => "Command"
 			obj.content = () => [
-				this.command_message()
+				"Let's do it right!"
 			] as readonly any[]
 			
 			return obj
@@ -128,9 +120,10 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Deck $mol_deck items /
-		 * 	<= Greeter
-		 * 	<= Quester
-		 * 	<= Commander
+		 * 	<= Greeting
+		 * 	<= Question
+		 * 	<= Answer
+		 * 	<= Command
 		 * ```
 		 */
 		@ $mol_mem
@@ -138,9 +131,10 @@ namespace $ {
 			const obj = new this.$.$mol_deck()
 			
 			obj.items = () => [
-				this.Greeter(),
-				this.Quester(),
-				this.Commander()
+				this.Greeting(),
+				this.Question(),
+				this.Answer(),
+				this.Command()
 			] as readonly any[]
 			
 			return obj

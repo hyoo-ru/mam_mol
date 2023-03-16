@@ -103,13 +103,13 @@ namespace $ {
 		 * ```tree
 		 * bubble_content /
 		 * 	<= Filter
-		 * 	<= Menu
+		 * 	<= Bubble_pane
 		 * ```
 		 */
 		bubble_content() {
 			return [
 				this.Filter(),
-				this.Menu()
+				this.Bubble_pane()
 			] as readonly any[]
 		}
 		
@@ -285,6 +285,22 @@ namespace $ {
 			const obj = new this.$.$mol_list()
 			
 			obj.rows = () => this.menu_content()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Bubble_pane $mol_scroll sub / <= Menu
+		 * ```
+		 */
+		@ $mol_mem
+		Bubble_pane() {
+			const obj = new this.$.$mol_scroll()
+			
+			obj.sub = () => [
+				this.Menu()
+			] as readonly any[]
 			
 			return obj
 		}

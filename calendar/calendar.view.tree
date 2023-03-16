@@ -23,7 +23,7 @@ $mol_calendar $mol_list
 		ghost <= day_ghost* false
 		holiday <= day_holiday* false
 		selected <= day_selected* false
-		theme <= day_theme* \
+		theme <= day_theme* null
 		sub <= day_content* /
 			<= day_text* \
 	-
@@ -37,4 +37,4 @@ $mol_calendar_day $mol_view
 		mol_calendar_holiday <= holiday false
 		mol_calendar_ghost <= ghost false
 		mol_calendar_selected <= selected false
-		mol_theme <= theme \
+		mol_theme <= theme null

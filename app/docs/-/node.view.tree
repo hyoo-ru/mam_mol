@@ -77,7 +77,7 @@ $mol_pop $mol_view
 			content <= bubble_content /$mol_view_content
 			height_max <= height_max 9999
 
-$mol_pop_bubble $mol_scroll
+$mol_pop_bubble $mol_view
 	sub <= content /$mol_view_content
 	style *
 		^
@@ -1563,7 +1563,7 @@ $mol_calendar $mol_list
 		ghost <= day_ghost* false
 		holiday <= day_holiday* false
 		selected <= day_selected* false
-		theme <= day_theme* \
+		theme <= day_theme* null
 		sub <= day_content* /
 			<= day_text* \
 	-
@@ -1577,7 +1577,7 @@ $mol_calendar_day $mol_view
 		mol_calendar_holiday <= holiday false
 		mol_calendar_ghost <= ghost false
 		mol_calendar_selected <= selected false
-		mol_theme <= theme \
+		mol_theme <= theme null
 
 $mol_calendar_demo_holiday $mol_example_small
 	title \Days of month 2018-01 with custom holidays
@@ -2533,15 +2533,18 @@ $mol_deck_demo $mol_example_small
 	title \Simple deck with tabbar
 	sub /
 		<= Deck $mol_deck items /
-			<= Greeter $mol_card
+			<= Greeting $mol_card
 				title \Greeting
-				content / <= greet_message \Hello, world!
-			<= Quester $mol_card
+				content / \Hello, world!
+			<= Question $mol_card
 				title \Question
-				content / <= quest_message \How are you?
-			<= Commander $mol_card
+				content / \How are you?
+			<= Answer $mol_card
+				title \Answer
+				content / \The Answer to the Ultimate Question of Life, the Universe, and Everything is 42
+			<= Command $mol_card
 				title \Command
-				content / <= command_message \Let us do it right!
+				content / \Let's do it right!
 	tags /
 		\$mol_card
 		\deck
@@ -2827,8 +2830,9 @@ $mol_select $mol_pick
 	hint @ \Pick..
 	bubble_content /
 		<= Filter
-		<= Menu $mol_list
-			rows <= menu_content /$mol_view
+		<= Bubble_pane $mol_scroll sub /
+			<= Menu $mol_list
+				rows <= menu_content /$mol_view
 	Filter $mol_string
 		value?val <=> filter_pattern?val \
 		hint @ \Filter..

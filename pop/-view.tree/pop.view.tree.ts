@@ -112,7 +112,7 @@ namespace $ {
 		}
 	}
 	
-	export class $mol_pop_bubble extends $mol_scroll {
+	export class $mol_pop_bubble extends $mol_view {
 		
 		/**
 		 * ```tree

@@ -21,8 +21,9 @@ $mol_select $mol_pick
 	hint @ \Pick..
 	bubble_content /
 		<= Filter
-		<= Menu $mol_list
-			rows <= menu_content /$mol_view
+		<= Bubble_pane $mol_scroll sub /
+			<= Menu $mol_list
+				rows <= menu_content /$mol_view
 	Filter $mol_string
 		value?val <=> filter_pattern?val \
 		hint @ \Filter..

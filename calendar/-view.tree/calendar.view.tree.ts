@@ -245,11 +245,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * day_theme* \
+		 * day_theme* null
 		 * ```
 		 */
 		day_theme(id: any) {
-			return ""
+			return null as any
 		}
 		
 		/**
@@ -340,11 +340,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * theme \
+		 * theme null
 		 * ```
 		 */
 		theme() {
-			return ""
+			return null as any
 		}
 	}
 	
