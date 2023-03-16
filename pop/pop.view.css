@@ -18,9 +18,11 @@
 	width: max-content;
 	height: max-content;
 	flex-direction: column;
+	max-width: 80vw;
+	max-height: 80vw;
 }
 
-[mol_pop_bubble] > * {
+:where( [mol_pop_bubble] > * ) {
 	background: var(--mol_theme_card);
 }
 
