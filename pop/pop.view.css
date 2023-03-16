@@ -34,8 +34,8 @@
 	outline: none;
 }
 
-[mol_pop_align="suspense"] {
-	display: none;
+[mol_pop_align="suspense_suspense"] {
+	opacity: 0;
 }
 
 [mol_pop_align="left_top"] {
