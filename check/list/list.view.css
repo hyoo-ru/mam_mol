@@ -1,7 +1,7 @@
 [mol_check_list] {
 	display: flex;
 	flex-wrap: wrap;
-	flex: 1 0 auto;
+	flex: 1 1 auto;
 	border-radius: var(--mol_gap_round);
 	gap: 1px;
 }

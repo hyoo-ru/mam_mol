@@ -2,15 +2,18 @@ $mol_deck_demo $mol_example_small
 	title \Simple deck with tabbar
 	sub /
 		<= Deck $mol_deck items /
-			<= Greeter $mol_card
+			<= Greeting $mol_card
 				title \Greeting
-				content / <= greet_message \Hello, world!
-			<= Quester $mol_card
+				content \Hello, world!
+			<= Question $mol_card
 				title \Question
-				content / <= quest_message \How are you?
-			<= Commander $mol_card
+				content \How are you?
+			<= Answer $mol_card
+				title \Answer
+				content \The Answer to the Ultimate Question of Life, the Universe, and Everything is 42
+			<= Command $mol_card
 				title \Command
-				content / <= command_message \Let us do it right!
+				content \Let's do it right!
 	tags /
 		\$mol_card
 		\deck
