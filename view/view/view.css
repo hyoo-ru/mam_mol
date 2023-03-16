@@ -67,10 +67,13 @@
 
 @keyframes mol_view_wait {
 	from {
-		opacity: 1;
+		opacity: .75;
+	}
+	80% {
+		opacity: .25;
 	}
 	to {
-		opacity: .5;
+		opacity: .75;
 	}
 }
 
