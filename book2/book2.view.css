@@ -28,10 +28,10 @@
 
 [mol_book2] > *:not(:first-of-type):before {
 	content: '';
-	width: 1px;
+	width: 3px;
 	height: 2rem;
 	top: 1rem;
-	left: -1px;
+	left: -2px;
 	position: absolute;
 	background: var(--mol_theme_line);
 	border-radius: var(--mol_gap_round);
@@ -39,10 +39,10 @@
 
 [mol_book2] > *:not(:last-of-type)::after {
 	content: '';
-	width: 1px;
+	width: 3px;
 	height: 2rem;
 	top: 1rem;
-	right: -1px;
+	right: -2px;
 	position: absolute;
 	background: var(--mol_theme_line);
 	border-radius: var(--mol_gap_round);
