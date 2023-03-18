@@ -1,4 +1,8 @@
 namespace $.$$ {
+
+	/**
+	 * Marker on top of another component with tracking of its position.
+	 */
 	export class $mol_follower extends $.$mol_follower {
 		
 		@ $mol_mem

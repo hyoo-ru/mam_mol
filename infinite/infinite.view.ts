@@ -1,5 +1,8 @@
 namespace $.$$ {
 
+	/**
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_infinite_demo
+	 */
 	export class $mol_infinite extends $.$mol_infinite {
 
 		@ $mol_mem_key

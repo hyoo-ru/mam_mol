@@ -1,4 +1,9 @@
 namespace $.$$ {
+
+	/**
+	 * Checkbox UI component. See Variants for more concrete implementations.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_check_box_demo
+	 */
 	export class $mol_check extends $.$mol_check {
 
 		click( next? : Event ) {

@@ -1,5 +1,9 @@
 namespace $.$$ {
-	
+
+	/**
+	 * Prints large bulk of text.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_filler_demo
+	 */
 	export class $mol_filler extends $.$mol_filler {
 
 		override filler_lines() {

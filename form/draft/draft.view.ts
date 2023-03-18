@@ -1,4 +1,8 @@
 namespace $.$$ {
+
+	/**
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_form_draft_demo
+	 */
 	export class $mol_form_draft extends $.$mol_form_draft {
 		
 		@ $mol_mem_key

@@ -1,4 +1,5 @@
 namespace $.$$ {
+	/** Horizontal list of blocks. */
 	export class $mol_hor extends $.$mol_hor {
 		
 		@ $mol_mem

@@ -1,5 +1,9 @@
 namespace $.$$ {
 	
+	/**
+	 * List of checkboxes
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_check_list_demo
+	 */
 	export class $mol_check_list extends $.$mol_check_list {
 
 		options() : { [ key : string ] : string } {
