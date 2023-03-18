@@ -4119,7 +4119,7 @@ var $;
                 if (event.defaultPrevented)
                     return;
                 let name = $mol_keyboard_code[event.keyCode];
-                if (this.mod_ctrl() !== event.ctrlKey)
+                if (this.mod_ctrl() !== (event.ctrlKey || event.metaKey))
                     return;
                 if (this.mod_alt() !== event.altKey)
                     return;
