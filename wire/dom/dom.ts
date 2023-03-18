@@ -141,6 +141,7 @@ namespace $ {
 		$mol_wire_dom( this )[ field ] = getter
 	}
 	
+	/** Polyfill makes DOM reactive. */
 	export function $mol_wire_dom< El extends Element >( el: El ) {
 		
 		if( el.__defineGetter__ === redefine ) return el

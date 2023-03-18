@@ -1,5 +1,6 @@
 namespace $ {
 
+	/** Repeatable fiber */
 	export class $mol_wire_atom<
 		Host,
 		Args extends readonly unknown[],

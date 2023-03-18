@@ -16,6 +16,10 @@ namespace $ {
 	
 	const error_showed = new WeakMap< Error, $mol_view >()
 
+	/**
+	 * The base class for all visual components. It provides the infrastructure for reactive lazy rendering, handling exceptions. By default it finds or creates a `div` without child node changing and additional attributes, fields and event handler creation. You can customize it by inheritance or properties overriding at instantiating.
+	 * @see https://mol.hyoo.ru/#!section=docs/=vv2nig_s5zr0f
+	 */
 	/// Reactive statefull lazy ViewModel
 	export class $mol_view extends $mol_object {
 		

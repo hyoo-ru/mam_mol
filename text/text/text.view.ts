@@ -1,4 +1,8 @@
 namespace $.$$ {
+	/**
+	 * Markdown visualizer.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_text_demo
+	 */
 	export class $mol_text extends $.$mol_text {
 		
 		@ $mol_mem

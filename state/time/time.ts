@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** State of time moment */
 	export class $mol_state_time extends $mol_object {
 		
 		@ $mol_mem_key

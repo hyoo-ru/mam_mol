@@ -9,6 +9,12 @@ namespace $ {
 		second? : number
 	}
 
+	/**
+	 * Small, simple, powerful, and fast TypeScript/JavaScript library for proper date/time/duration/interval arithmetic.
+	 *
+	 * Immutable iso8601 time duration representation.
+	 * @see http://localhost:9080/mol/app/docs/-/test.html#!demo=mol_time_demo
+	 */
 	export class $mol_time_duration extends $mol_time_base {
 
 		constructor( config : $mol_time_duration_config = 0 ) {

@@ -2,6 +2,10 @@ namespace $ {
 
 	const { vary } = $mol_style_func
 
+	/**
+	 * Theme css variables
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
+	 */
 	export const $mol_theme = {
 		back: vary('--mol_theme_back'),
 		hover: vary('--mol_theme_hover'),

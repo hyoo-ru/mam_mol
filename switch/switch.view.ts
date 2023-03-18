@@ -1,5 +1,9 @@
 namespace $.$$ {
 	
+	/**
+	 * Buttons which switching the state
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_switch_demo
+	 */
 	export class $mol_switch extends $.$mol_switch {
 
 		value( next? : any ) {

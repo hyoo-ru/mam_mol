@@ -1,5 +1,15 @@
 namespace $ {
 	
+	/**
+	 * State of arguments.
+	 * When document location like ```#foo=bar/xxx``` or ```?foo=bar&xxx```:
+	 * @example
+	 * $mol_state_arg.value( 'foo' ) // 'bar'
+	 * $mol_state_arg.value( 'xxx' ) // ''
+	 * $mol_state_arg.value( 'help' ) // null
+	 * $mol_state_arg.value( 'xxx' , null ) // Location is '#foo=bar' now
+	 * $mol_state_arg.link({ xxx : '' , abc : 'hello' }) // '#foo=bar/xxx/abc=hello'
+	 */
 	export class $mol_state_arg extends $mol_object {
 		
 		@ $mol_mem

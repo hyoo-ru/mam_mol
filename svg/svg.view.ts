@@ -1,4 +1,5 @@
 namespace $.$$ {
+	/** Base SVG component to display SVG images or icons. */
 	export class $mol_svg extends $.$mol_svg {
 		@$mol_mem
 		computed_style() {

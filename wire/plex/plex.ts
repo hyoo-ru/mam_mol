@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** Reactive memoizing multiplexed property decorator */
 	export function $mol_wire_plex< Args extends [ any, ... any[] ] >(
 		host: object,
 		field: string,
