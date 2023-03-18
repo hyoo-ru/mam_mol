@@ -1,4 +1,10 @@
 namespace $.$$ {
+
+	/**
+	 * Pop-up display and hide by mouse click, also hide by unfocus.
+	 * Based on [$mol_pop](https://mol.hyoo.ru/#!section=demos/demo=mol_pop_demo) component.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_pick_demo
+	 */
 	export class $mol_pick extends $.$mol_pick {
 		
 		keydown( event : KeyboardEvent ) {

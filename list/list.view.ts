@@ -1,5 +1,10 @@
 namespace $.$$ {
 
+	/**
+	 * The list of rows with lazy/virtual rendering support based on `minimal_height` of rows.
+	 * `$mol_list` should contain only components that inherits `$mol_view`. You should not place raw strings or numbers in list.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_list_demo
+	 */
 	export class $mol_list extends $.$mol_list {
 		
 		@ $mol_mem

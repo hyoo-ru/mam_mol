@@ -1,4 +1,9 @@
 namespace $.$$ {
+
+	/**
+	 * Time picker.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_pick_time_demo
+	 */
 	export class $mol_pick_time extends $.$mol_pick_time {
 
 		trigger_content() {
