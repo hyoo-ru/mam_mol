@@ -1,7 +1,7 @@
 namespace $ {
 	/**
 	* Key names code for hotkey
-	* @see [$mol_hotkey](../../hotkey/hotkey.view.ts)
+	* @see [mol_hotkey](../../hotkey/hotkey.view.ts)
 	*/
 	export enum $mol_keyboard_code {
 		backspace = 8,

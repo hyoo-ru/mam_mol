@@ -1,6 +1,6 @@
 namespace $ {
 	
-	/** Decorates solo object channel to [$mol_wire_atom](../atom/atom.ts). */
+	/** Decorates solo object channel to [mol_wire_atom](../atom/atom.ts). */
 	export function $mol_wire_solo< Args extends any[] >(
 		host: object,
 		field: string,

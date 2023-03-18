@@ -2,7 +2,7 @@ namespace $.$$ {
 
 	/**
 	 * Plugin for touch gestures.
-	 * @see [$mol_plugin](../plugin/readme.md)
+	 * @see [mol_plugin](../plugin/readme.md)
 	 */
 	export class $mol_touch extends $.$mol_touch {
 		

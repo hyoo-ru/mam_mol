@@ -1,7 +1,7 @@
 namespace $ {
 
 	/**
-	 * Reactive memoizing solo property decorator from [$mol_wire](../wire/README.md)
+	 * Reactive memoizing solo property decorator from [mol_wire](../wire/README.md)
 	 * @example
 	 * '@' $mol_mem
 	 * name(next?: string) {
@@ -16,7 +16,7 @@ namespace $ {
 	export let $mol_mem = $mol_wire_solo
 
 	/**
-	 * Reactive memoizing multiplexed property decorator [$mol_wire](../wire/README.md)
+	 * Reactive memoizing multiplexed property decorator [mol_wire](../wire/README.md)
 	 * @example
 	 * '@' $mol_mem_key
 	 * name(id: number, next?: string) {
