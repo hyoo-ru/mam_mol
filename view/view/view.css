@@ -78,7 +78,7 @@
 }
 
 :where([mol_view][mol_view_error="Promise"]) {
-	background: var(--mol_theme_card);
+	background: var(--mol_theme_hover);
 }
 
 [mol_view][mol_view_error="Promise"] {
