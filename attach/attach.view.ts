@@ -1,5 +1,10 @@
 namespace $.$$ {
 
+	/**
+	 * Component that helps to upload files to server.
+	 * 
+	 * @tutorial https://mol.hyoo.ru/#!section=demos/demo=mol_attach_demo
+	 */
 	export class $mol_attach extends $.$mol_attach {
 
 		attach_new( files: File[] ) {
