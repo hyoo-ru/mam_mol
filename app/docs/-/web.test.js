@@ -4006,7 +4006,7 @@ var $;
             $mol_assert_like(land1.delta().length, 4);
             level_get: {
                 const batch = await world2.delta_batch(land2);
-                $mol_assert_like([...(await world1.apply(batch)).forbid.values()], ['Level too low', 'Level too low', 'Level too low']);
+                $mol_assert_like([...(await world1.apply(batch)).forbid.values()], ['Level too low', 'Level too low']);
                 $mol_assert_like(land1.delta().length, 5);
                 $mol_assert_like(land1.chief.sub('foo', $hyoo_crowd_reg).numb(), 123);
                 $mol_assert_like(land1.chief.sub('bar', $hyoo_crowd_reg).numb(), 0);
@@ -4015,7 +4015,7 @@ var $;
             level_add: {
                 land1.level(land2.peer().id, $hyoo_crowd_peer_level.add);
                 const batch = await world2.delta_batch(land2);
-                $mol_assert_like([...(await world1.apply(batch)).forbid.values()], ['Level too low', 'Level too low']);
+                $mol_assert_like([...(await world1.apply(batch)).forbid.values()], ['Level too low']);
                 $mol_assert_like(land1.delta().length, 7);
                 $mol_assert_like(land1.chief.sub('foo', $hyoo_crowd_reg).numb(), 123);
                 $mol_assert_like(land1.chief.sub('bar', $hyoo_crowd_reg).numb(), 234);
@@ -4024,7 +4024,7 @@ var $;
             level_mod: {
                 land1.level(land2.peer().id, $hyoo_crowd_peer_level.mod);
                 const batch = await world2.delta_batch(land2);
-                $mol_assert_like([...(await world1.apply(batch)).forbid.values()], ['Level too low']);
+                $mol_assert_like([...(await world1.apply(batch)).forbid.values()], []);
                 $mol_assert_like(land1.delta().length, 7);
                 $mol_assert_like(land1.chief.sub('foo', $hyoo_crowd_reg).numb(), 234);
                 $mol_assert_like(land1.chief.sub('bar', $hyoo_crowd_reg).numb(), 234);
@@ -4032,6 +4032,10 @@ var $;
             }
             level_law: {
                 land1.level(land2.peer().id, $hyoo_crowd_peer_level.law);
+                for await (const batch of world1.delta()) {
+                    $mol_assert_like([...(await world2.apply(batch)).forbid.values()], []);
+                }
+                land2.level(peer.id, $hyoo_crowd_peer_level.law);
                 const batch = await world2.delta_batch(land2);
                 $mol_assert_like([...(await world1.apply(batch)).forbid.values()], []);
                 $mol_assert_like(land1.delta().length, 8);
@@ -4056,7 +4060,7 @@ var $;
             level_add: {
                 land1.level_base($hyoo_crowd_peer_level.add);
                 const batch = await world2.delta_batch(land2);
-                $mol_assert_like([...(await world1.apply(batch)).forbid.values()], ['Level too low', 'Level too low']);
+                $mol_assert_like([...(await world1.apply(batch)).forbid.values()], ['Level too low']);
                 $mol_assert_like(land1.delta().length, 7);
                 $mol_assert_like(land1.chief.sub('foo', $hyoo_crowd_reg).numb(), 123);
                 $mol_assert_like(land1.chief.sub('bar', $hyoo_crowd_reg).numb(), 234);
@@ -4065,7 +4069,7 @@ var $;
             level_mod: {
                 land1.level_base($hyoo_crowd_peer_level.mod);
                 const batch = await world2.delta_batch(land2);
-                $mol_assert_like([...(await world1.apply(batch)).forbid.values()], ['Level too low']);
+                $mol_assert_like([...(await world1.apply(batch)).forbid.values()], []);
                 $mol_assert_like(land1.delta().length, 7);
                 $mol_assert_like(land1.chief.sub('foo', $hyoo_crowd_reg).numb(), 234);
                 $mol_assert_like(land1.chief.sub('bar', $hyoo_crowd_reg).numb(), 234);
@@ -4073,9 +4077,13 @@ var $;
             }
             level_law: {
                 land1.level_base($hyoo_crowd_peer_level.law);
+                for await (const batch of world1.delta()) {
+                    $mol_assert_like([...(await world2.apply(batch)).forbid.values()], []);
+                }
+                land2.level(peer.id, $hyoo_crowd_peer_level.law);
                 const batch = await world2.delta_batch(land2);
                 $mol_assert_like([...(await world1.apply(batch)).forbid.values()], []);
-                $mol_assert_like(land1.delta().length, 8);
+                $mol_assert_like(land1.delta().length, 7);
                 $mol_assert_like(land1.chief.sub('foo', $hyoo_crowd_reg).numb(), 234);
                 $mol_assert_like(land1.chief.sub('bar', $hyoo_crowd_reg).numb(), 234);
                 $mol_assert_like(land1.level(peer.id), $hyoo_crowd_peer_level.law);
@@ -4088,25 +4096,24 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    async function make_land(id = '2_b') {
-        return $hyoo_crowd_land.make({
-            id: $mol_const(id),
-            peer: $mol_const(await $hyoo_crowd_peer.generate()),
-        });
+    async function make_land() {
+        const world = new $hyoo_crowd_world(await $hyoo_crowd_peer.generate());
+        return world.grab();
     }
     $mol_test({
         async 'Join & Leave'() {
             const store = await make_land();
-            $mol_assert_like(store.peers(), []);
+            $mol_assert_like(store.peers(), [store.id(), store.peer_id()]);
             $mol_assert_like(store.residents(), []);
+            const peer = await $hyoo_crowd_peer.generate();
             store.join();
-            $mol_assert_like(store.peers(), []);
+            $mol_assert_like(store.peers(), [store.id(), store.peer_id()]);
             $mol_assert_like(store.residents(), [store.peer_id()]);
-            store.level(store.peer_id(), $hyoo_crowd_peer_level.add);
-            $mol_assert_like(store.peers(), [store.peer_id()]);
+            store.level(peer.id, $hyoo_crowd_peer_level.add);
+            $mol_assert_like(store.peers(), [store.id(), store.peer_id(), peer.id]);
             $mol_assert_like(store.residents(), [store.peer_id()]);
             store.leave();
-            $mol_assert_like(store.peers(), [store.peer_id()]);
+            $mol_assert_like(store.peers(), [store.id(), store.peer_id(), peer.id]);
             $mol_assert_like(store.residents(), []);
         },
         async 'Default state'() {
@@ -4116,7 +4123,7 @@ var $;
             $mol_assert_like(store.chief.as($hyoo_crowd_reg).numb(), 0);
             $mol_assert_like(store.chief.as($hyoo_crowd_reg).str(), '');
             $mol_assert_like(store.chief.as($hyoo_crowd_list).list(), []);
-            $mol_assert_like(store.delta(), []);
+            $mol_assert_like(store.delta().length, 2);
         },
         async 'Return default state'() {
             const store = await make_land();
@@ -4150,7 +4157,7 @@ var $;
             store.chief.as($hyoo_crowd_reg).value(null);
             $mol_assert_like(store.chief.as($hyoo_crowd_reg).value(), null);
             $mol_assert_like(store.chief.as($hyoo_crowd_list).list(), []);
-            $mol_assert_like(store.delta().map(unit => unit.data), [null]);
+            $mol_assert_like(store.delta().map(unit => unit.data).slice(1), [3, null]);
         },
         async 'Name spaces'() {
             const store = await make_land();
@@ -4164,7 +4171,7 @@ var $;
         async 'Name spaces merging'() {
             const left = await make_land();
             left.chief.sub('foo', $hyoo_crowd_list).list([111]);
-            const right = await make_land('a_2');
+            const right = await make_land();
             right.clock_data.tick(right.peer().id);
             right.chief.sub('foo', $hyoo_crowd_list).list([222]);
             const left_delta = left.delta();
@@ -4179,7 +4186,7 @@ var $;
             const time = store.clock_data.last_time;
             store.chief.as($hyoo_crowd_reg).str('foo');
             store.chief.as($hyoo_crowd_list).list(['foo']);
-            $mol_assert_like(store.delta().map(unit => unit.time), [time, time]);
+            $mol_assert_like(store.delta().map(unit => unit.time).slice(2), [time + 2, time]);
         },
         async 'Serial insert values'() {
             const store = await make_land();
@@ -4255,25 +4262,25 @@ var $;
                 new $hyoo_crowd_clock([
                     [store.peer().id, store.clock_data.last_time - 3],
                 ])
-            ]).map(unit => unit.data), ['foo', 'bar', 'lol']);
+            ]).map(unit => unit.data).slice(2), ['foo', 'bar', 'lol']);
             $mol_assert_like(store.delta([
                 new $hyoo_crowd_clock,
                 new $hyoo_crowd_clock([
                     [store.peer().id, store.clock_data.last_time - 2],
                 ])
-            ]).map(unit => unit.data), ['bar', 'lol']);
+            ]).map(unit => unit.data).slice(2), ['bar', 'lol']);
             $mol_assert_like(store.delta([
                 new $hyoo_crowd_clock,
                 new $hyoo_crowd_clock([
                     [store.peer().id, store.clock_data.last_time - 1],
                 ])
-            ]).map(unit => unit.data), ['lol']);
+            ]).map(unit => unit.data).slice(2), ['lol']);
             $mol_assert_like(store.delta([
                 new $hyoo_crowd_clock,
                 new $hyoo_crowd_clock([
                     [store.peer().id, store.clock_data.last_time],
                 ])
-            ]), []);
+            ]).slice(2), []);
         },
         async 'Delete without subtree and ignore inserted into deleted'() {
             const store = await make_land();
@@ -4355,7 +4362,7 @@ var $;
         async 'Merge different sequences'() {
             const left = await make_land();
             left.chief.as($hyoo_crowd_text).str('foo bar.');
-            const right = await make_land('a_2');
+            const right = await make_land();
             right.clock_data.tick(right.peer().id);
             right.chief.as($hyoo_crowd_text).str('xxx yyy.');
             const left_delta = left.delta();
