@@ -1,5 +1,11 @@
 $mol_button_copy $mol_button_minor
-	text <= title \
+	data *
+		text/plain <= text_blob? $mol_blob /
+			/BlobPart <= text <= title
+			* type \text/plain
+		text/html <= html_blob? $mol_blob /
+			/BlobPart <= html \
+			* type \text/html
 	sub /
 		<= Icon $mol_icon_clipboard_outline
 		<= title \

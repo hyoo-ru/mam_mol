@@ -1529,6 +1529,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_blob = Blob;
+    let $mol_blob: {
+        new (blobParts?: BlobPart[] | undefined, options?: BlobPropertyBag | undefined): Blob;
+        prototype: Blob;
+    };
+}
+
+declare namespace $ {
     class $mol_svg extends $mol_view {
         dom_name(): string;
         dom_name_space(): string;
@@ -1616,15 +1624,28 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_button_copy extends $mol_button_minor {
-        text(): string;
+        data(): {
+            "text/plain": Blob;
+            "text/html": Blob;
+        };
         sub(): readonly any[];
-        title(): string;
+        text(): string;
+        text_blob(next?: any): Blob;
+        html(): string;
+        html_blob(next?: any): Blob;
         Icon(): $mol_icon_clipboard_outline;
+        title(): string;
     }
+}
+
+declare namespace $ {
+    function $mol_html_encode(text: string): string;
 }
 
 declare namespace $.$$ {
     class $mol_button_copy extends $.$mol_button_copy {
+        html(): string;
+        attachments(): ClipboardItem[];
         click(event?: Event): void;
     }
 }

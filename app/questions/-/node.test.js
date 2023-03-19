@@ -4989,6 +4989,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$mol_blob = ($node.buffer?.Blob ?? $mol_dom_context.Blob);
+})($ || ($ = {}));
+//mol/blob/blob.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_svg extends $mol_view {
         dom_name() {
             return "svg";
@@ -5193,8 +5200,11 @@ var $;
 var $;
 (function ($) {
     class $mol_button_copy extends $mol_button_minor {
-        text() {
-            return this.title();
+        data() {
+            return {
+                "text/plain": this.text_blob(),
+                "text/html": this.html_blob()
+            };
         }
         sub() {
             return [
@@ -5202,14 +5212,46 @@ var $;
                 this.title()
             ];
         }
-        title() {
+        text() {
+            return this.title();
+        }
+        text_blob(next) {
+            if (next !== undefined)
+                return next;
+            const obj = new this.$.$mol_blob([
+                this.text()
+            ], {
+                type: "text/plain"
+            });
+            return obj;
+        }
+        html() {
             return "";
+        }
+        html_blob(next) {
+            if (next !== undefined)
+                return next;
+            const obj = new this.$.$mol_blob([
+                this.html()
+            ], {
+                type: "text/html"
+            });
+            return obj;
         }
         Icon() {
             const obj = new this.$.$mol_icon_clipboard_outline();
             return obj;
         }
+        title() {
+            return "";
+        }
     }
+    __decorate([
+        $mol_mem
+    ], $mol_button_copy.prototype, "text_blob", null);
+    __decorate([
+        $mol_mem
+    ], $mol_button_copy.prototype, "html_blob", null);
     __decorate([
         $mol_mem
     ], $mol_button_copy.prototype, "Icon", null);
@@ -5220,13 +5262,68 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const mapping = {
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        '&': '&amp;',
+    };
+    function $mol_html_encode(text) {
+        return text.replace(/[&<">]/gi, str => mapping[str]);
+    }
+    $.$mol_html_encode = $mol_html_encode;
+})($ || ($ = {}));
+//mol/html/encode/encode.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_sync(obj) {
+        return new Proxy(obj, {
+            get(obj, field) {
+                const val = obj[field];
+                if (typeof val !== 'function')
+                    return val;
+                const temp = $mol_wire_task.getter(val);
+                return function $mol_wire_sync(...args) {
+                    const fiber = temp(obj, args);
+                    return fiber.sync();
+                };
+            },
+            apply(obj, self, args) {
+                const temp = $mol_wire_task.getter(obj);
+                const fiber = temp(self, args);
+                return fiber.sync();
+            },
+        });
+    }
+    $.$mol_wire_sync = $mol_wire_sync;
+})($ || ($ = {}));
+//mol/wire/sync/sync.ts
+;
+"use strict";
+var $;
+(function ($) {
     var $$;
     (function ($$) {
         class $mol_button_copy extends $.$mol_button_copy {
+            html() {
+                return $mol_html_encode(this.text());
+            }
+            attachments() {
+                return [new ClipboardItem(this.data())];
+            }
             click(event) {
-                this.$.$mol_dom_context.navigator.clipboard.writeText(this.text());
+                const cb = $mol_wire_sync(this.$.$mol_dom_context.navigator.clipboard);
+                cb.write(this.attachments());
             }
         }
+        __decorate([
+            $mol_mem
+        ], $mol_button_copy.prototype, "html", null);
+        __decorate([
+            $mol_mem
+        ], $mol_button_copy.prototype, "attachments", null);
         $$.$mol_button_copy = $mol_button_copy;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -6987,32 +7084,6 @@ var $;
     $.$mol_embed_native = $mol_embed_native;
 })($ || ($ = {}));
 //mol/embed/native/-view.tree/native.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_sync(obj) {
-        return new Proxy(obj, {
-            get(obj, field) {
-                const val = obj[field];
-                if (typeof val !== 'function')
-                    return val;
-                const temp = $mol_wire_task.getter(val);
-                return function $mol_wire_sync(...args) {
-                    const fiber = temp(obj, args);
-                    return fiber.sync();
-                };
-            },
-            apply(obj, self, args) {
-                const temp = $mol_wire_task.getter(obj);
-                const fiber = temp(self, args);
-                return fiber.sync();
-            },
-        });
-    }
-    $.$mol_wire_sync = $mol_wire_sync;
-})($ || ($ = {}));
-//mol/wire/sync/sync.ts
 ;
 "use strict";
 var $;
