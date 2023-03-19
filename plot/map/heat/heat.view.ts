@@ -1,4 +1,8 @@
 namespace $.$$ {
+	/**
+	 * Heat map graph.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_plot_map_heat_demo
+	 */
 	export class $mol_plot_map_heat extends $.$mol_plot_map_heat {
 		
 		@ $mol_mem

@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** Transition atom value */
 	export function $mol_wire_easing( next: any ) {
 		
 		const atom = $mol_wire_auto()

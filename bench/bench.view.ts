@@ -1,5 +1,9 @@
 namespace $.$$ {
 	
+	/**
+	 * Benchmark results visualizer.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_bench_demo
+	 */
 	export class $mol_bench extends $.$mol_bench {
 		
 		@ $mol_mem

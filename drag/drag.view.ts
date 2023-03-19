@@ -1,4 +1,8 @@
 namespace $.$$ {
+	
+	/**
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_drag_demo
+	 */
 	export class $mol_drag extends $.$mol_drag {
 
 		@ $mol_mem

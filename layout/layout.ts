@@ -1,6 +1,9 @@
 namespace $ {
 
-	/** Layout independent of content. */
+	/**
+	 * Layout independent of content. 
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_layout_demo
+	 */
 	export class $mol_layout extends $mol_object {
 		
 		/** Orthogonal layout */

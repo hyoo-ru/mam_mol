@@ -1,4 +1,9 @@
 namespace $.$$ {
+	
+	/**
+	 * Simple button.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
+	 */
 	export class $mol_button extends $.$mol_button {
 
 		@ $mol_mem

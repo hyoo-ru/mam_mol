@@ -1,5 +1,10 @@
 /** @jsx $mol_jsx */
 namespace $.$$ {
+
+	/**
+	 * Button download file from uri() or a blob()
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
+	 */
 	export class $mol_button_download extends $.$mol_button_download {
 
 		@ $mol_mem

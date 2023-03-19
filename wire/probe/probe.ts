@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** Run code without state changes */
 	export function $mol_wire_probe< Value >(
 		task : ()=> Value, next?: Value
 	) : Value | undefined {

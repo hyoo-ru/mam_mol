@@ -1,5 +1,9 @@
 namespace $.$$ {
 	
+	/**
+	 * Dynamic hyperlink. It can to add, change or remove parameters. The link leads to current page would be stylized in other way.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_link_demo
+	 */
 	export class $mol_link extends $.$mol_link {
 		
 		@ $mol_mem

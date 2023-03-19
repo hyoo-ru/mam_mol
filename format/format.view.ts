@@ -1,4 +1,8 @@
 namespace $.$$ {
+	/**
+	 * Formatted string input/output
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_format_demo
+	 */
 	export class $mol_format extends $.$mol_format {
 		
 		@ $mol_mem

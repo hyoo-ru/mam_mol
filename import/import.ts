@@ -1,5 +1,6 @@
 namespace $ {
 
+	/** Dynamic sources import. */
 	export class $mol_import extends $mol_object2 {
 		
 		@ $mol_mem_key

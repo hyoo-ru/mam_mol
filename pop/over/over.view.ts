@@ -1,4 +1,9 @@
 namespace $.$$ {
+
+	/**
+	 * Bubble that can be shown anchored to Anchor element.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_pop_over_demo
+	 */
 	export class $mol_pop_over extends $.$mol_pop_over {
 		
 		event_show( event? : MouseEvent ) {

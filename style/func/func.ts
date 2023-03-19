@@ -11,6 +11,10 @@ namespace $ {
 
 	const { per } = $mol_style_unit
 	
+	/**
+	 * CSS Functions
+	 * @see https://mol.hyoo.ru/#!section=docs/=xwq9q5_f966fg
+	 */
 	export class $mol_style_func<
 		Name extends $mol_style_func_name ,
 		Value = unknown,

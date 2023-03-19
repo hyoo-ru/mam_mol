@@ -26,6 +26,12 @@ namespace $ {
 		$mol_fail( new Error( `Wrong time component ${ str }` ) )
 	}
 
+	/**
+	 * Small, simple, powerful, and fast TypeScript/JavaScript library for proper date/time/duration/interval arithmetic.
+	 *
+	 * Immutable iso8601 time moment representation.
+	 * @see http://localhost:9080/mol/app/docs/-/test.html#!demo=mol_time_demo
+	 */
 	export class $mol_time_moment extends $mol_time_base {
 
 		constructor( config : $mol_time_moment_config = new Date ) {

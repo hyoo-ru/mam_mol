@@ -17,6 +17,10 @@ namespace $ {
 		
 	}
 	
+	/**
+	 * Draft of compact spell checker.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_spell_demo
+	 */
 	export class $mol_spell extends Object {
 		
 		static head = new $mol_spell_morphs

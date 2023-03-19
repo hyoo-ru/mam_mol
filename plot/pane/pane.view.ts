@@ -1,5 +1,9 @@
 namespace $.$$ {
 
+	/**
+	 * Fastest plot lib for vector graphics.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_plot_demo
+	 */
 	export class $mol_plot_pane extends $.$mol_plot_pane {
 		
 		@ $mol_mem
