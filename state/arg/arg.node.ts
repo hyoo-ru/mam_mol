@@ -1,12 +1,6 @@
 namespace $ {
 
-	/**
-	 * When command line arguments like ```foo=bar xxx```:
-	 * @example
-	 * $mol_state_arg.value( 'foo' ) // 'bar'
-	 * $mol_state_arg.value( 'xxx' ) // ''
-	 * $mol_state_arg.value( 'help' ) // null
-	 */
+	/** State of arguments like `foo=bar xxx` */
 	export class $mol_state_arg extends $mol_object {
 		
 		static prolog = ''

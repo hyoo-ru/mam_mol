@@ -1,10 +1,8 @@
 namespace $ { 
 	/**
-	 * Returns closure that returns constant value. Value can be accessed by `"()"` field.
+	 * Returns closure that returns constant value.
 	 * @example
-	 * const foo = { bar : $mol_const( Math.random() ) }
-	 * $mol_assert_equal( foo.bar() , foo.bar() )
-	 * $mol_assert_equal( foo.bar() , foo.bar['()'] )
+	 * const rnd = $mol_const( Math.random() )
 	 */
 	export function $mol_const< Value >( value : Value ) {
 		var getter = <{ () : Value , '()' : Value }> ( () => value )

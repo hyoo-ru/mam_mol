@@ -15,9 +15,9 @@ namespace $ {
 
 	/**
 	 * JSX adapter that makes DOM tree.
-	 * Generates global unique ids for every DOM-element by components tree with ids. 
+	 * Generates global unique ids for every DOM-element by components tree with ids.
 	 * Ensures all local ids are unique.
-	 * Can reuse an existing nodes by GUIDs when used inside [`$mol_jsx_attach`](https://github.com/hyoo-ru/mam_mol/tree/master/jsx/attach).
+	 * Can reuse an existing nodes by GUIDs when used inside [`mol_jsx_attach`](https://github.com/hyoo-ru/mam_mol/tree/master/jsx/attach).
 	 */
 	export function $mol_jsx<
 		Props extends $mol_jsx.JSX.IntrinsicAttributes,

@@ -27,10 +27,9 @@ namespace $ {
 	/**
 	 * Handler must throw an error.
 	 * @example
-	 * $mol_assert_fail( ()=>{ throw new Error( 'lol' ) } ) // Passes because throws error
-	 * $mol_assert_fail( ()=>{ throw new Error( 'lol' ) } , 'lol' ) // Passes because throws right message
-	 * $mol_assert_fail( ()=>{ throw new Error( 'lol' ) } , Error ) // Passes because throws right class
-	 * $mol_assert_fail( ()=>{ throw new Error( 'lol' ) } , RangeError ) // Fails because error isn't RangeError
+	 * $mol_assert_fail( ()=>{ throw new Error( 'Parse error' ) } ) // Passes because throws error
+	 * $mol_assert_fail( ()=>{ throw new Error( 'Parse error' ) } , 'Parse error' ) // Passes because throws right message
+	 * $mol_assert_fail( ()=>{ throw new Error( 'Parse error' ) } , Error ) // Passes because throws right class
 	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
 	 */
 	export function $mol_assert_fail( handler : ()=> any , ErrorRight? : any ) {
