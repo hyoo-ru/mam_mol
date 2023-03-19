@@ -3,10 +3,6 @@ namespace $ {
 	/**
 	 * CSS in TS.
 	 * Statically typed CSS style sheets. Following samples show which CSS code are generated from TS code.
-	 * @example
-	 * $mol_style_define( $mol_page , {
-	 *  	cursor: 'pointer'
-	 * } )
 	 * @see https://mol.hyoo.ru/#!section=docs/=xwq9q5_f966fg
 	 */
 	export function $mol_style_define<
