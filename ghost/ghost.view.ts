@@ -1,5 +1,8 @@
 namespace $.$$ {
 
+	/**
+	 * Mixin view logic to DOM node of another component.
+	 */
 	export class $mol_ghost extends $.$mol_ghost {
 		
 		@ $mol_mem

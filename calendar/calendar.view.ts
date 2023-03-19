@@ -1,5 +1,8 @@
 namespace $.$$ {
-	
+	/**
+	 * Draws all days of month as table.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_calendar_demo_holiday
+	 */
  	export class $mol_calendar extends $.$mol_calendar {
 
 		@ $mol_mem

@@ -5,6 +5,11 @@ namespace $ {
 		results: SpeechRecognitionResultList
 	}
 	
+	/**
+	 * Web Speech API
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_speech_demo
+	 * @see https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API
+	 */
 	export class $mol_speech extends $mol_plugin {
 		
 		static speaker_make() {

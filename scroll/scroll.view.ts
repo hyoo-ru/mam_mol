@@ -1,5 +1,9 @@
 namespace $.$$ {
 	
+	/**
+	 * Scrolling pane.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_scroll_demo
+	 */
 	export class $mol_scroll extends $.$mol_scroll {
 
 		@ $mol_mem

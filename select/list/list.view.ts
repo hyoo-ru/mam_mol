@@ -1,4 +1,9 @@
 namespace $.$$ {
+	
+	/**
+	 * Allow user to select value from various options and displays current value.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_select_demo_colors
+	 */
 	export class $mol_select_list extends $.$mol_select_list {
 
 		override value( val? : string[] ) {

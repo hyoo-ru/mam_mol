@@ -1,6 +1,6 @@
 # $mol_switch 
 
-Buttons which switching the sate;
+Buttons which switching the state
 
 ## [Online demo](http://mol.hyoo.ru/#!section=demos/readme/demo=mol_switch_demo)
 

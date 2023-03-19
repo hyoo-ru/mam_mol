@@ -1,4 +1,7 @@
 namespace $.$$ {
+	/**
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_gallery_demo
+	 */
 	export class $mol_gallery extends $.$mol_gallery {
 		
 		@ $mol_mem

@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** Image processing. */
 	export class $mol_picture extends Object {
 		
 		constructor(

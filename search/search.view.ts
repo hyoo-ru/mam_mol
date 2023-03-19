@@ -1,5 +1,9 @@
 namespace $.$$ {
 	
+	/**
+	 * Search input with suggest and clear button.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_search_demo
+	 */
 	export class $mol_search extends $.$mol_search {
 		
 		@ $mol_mem

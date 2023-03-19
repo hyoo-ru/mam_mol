@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** Manages system notifications. Notifications of same context are auto joined to one notification. */
 	export class $mol_notify {
 		
 		@ $mol_mem

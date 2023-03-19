@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** One-shot fiber */
 	export class $mol_wire_task<
 		Host,
 		Args extends readonly unknown[],

@@ -12,6 +12,10 @@ namespace $ {
 
 	export type $mol_style_unit_any = $mol_style_unit_length | $mol_style_unit_angle | $mol_style_unit_time
 	
+	/**
+	 * CSS Units
+	 * @see https://mol.hyoo.ru/#!section=docs/=xwq9q5_f966fg
+	 */
 	export class $mol_style_unit<
 		Literal extends $mol_style_unit_any
 	> extends $mol_decor< number > {

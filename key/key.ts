@@ -2,6 +2,7 @@ namespace $ {
 	
 	export const $mol_key_store = new WeakMap< object, string >()
 
+	/** Returns string key for any value. */
 	export function $mol_key< Value >( value : Value ) : string {
 		
 		if( !value ) return JSON.stringify( value )

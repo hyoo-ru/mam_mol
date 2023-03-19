@@ -1,4 +1,8 @@
 namespace $.$$ {
+
+	/**
+	 * Prints [money unit](https://github.com/hyoo-ru/mam_mol/tree/master/unit/money) in right format.
+	 */
 	export class $mol_cost extends $.$mol_cost {
 		
 		value() {

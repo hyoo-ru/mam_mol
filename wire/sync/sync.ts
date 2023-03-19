@@ -1,5 +1,9 @@
 namespace $ {
 	
+	/**
+	 * Returns proxy that converts all asynchronous methods (that returns a Promise) to synchronous (that instantly returns a result) in [mol_wire](../README.md)
+	 * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
+	 */
 	export function $mol_wire_sync< Host extends object >( obj: Host ) {
 		return new Proxy( obj, {
 			

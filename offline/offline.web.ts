@@ -4,6 +4,7 @@ namespace $ {
 		'//cse.google.com/adsense/search/async-ads.js'
 	])
 
+	/** Installs service worker proxy, which caches all requests and respond from cache on http errors. */
 	export function $mol_offline() {
 		
 		if( typeof window === 'undefined' ) {
