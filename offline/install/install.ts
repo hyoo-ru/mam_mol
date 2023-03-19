@@ -1,3 +1,7 @@
 namespace $ {
-	$mol_offline()
+	try {
+		$mol_offline()
+	} catch( error ) {
+		console.error( error )
+	}
 }
