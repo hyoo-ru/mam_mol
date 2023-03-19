@@ -5949,16 +5949,6 @@ var $;
         socket() {
             const socket = new $node.ws.Server({
                 server: this.http(),
-                perMessageDeflate: {
-                    zlibDeflateOptions: {
-                        chunkSize: 1024,
-                        memLevel: 7,
-                        level: 3
-                    },
-                    zlibInflateOptions: {
-                        chunkSize: 10 * 1024
-                    },
-                }
             });
             socket.on('connection', line => {
                 this.connections.add(line);
