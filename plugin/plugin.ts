@@ -1,6 +1,6 @@
 namespace $ {
 
-	/** Plugin is component without its own DOM element, but instead uses the owner DOM element (like Angular's directives). */
+	/** Plugin is component without its own DOM element, but instead uses the owner DOM element */
 	export class $mol_plugin extends $mol_view {
 
 		@ $mol_mem
