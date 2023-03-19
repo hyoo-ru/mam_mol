@@ -1,4 +1,9 @@
 namespace $.$$ {
+
+	/**
+	 * Button Share title() and uri() to other app
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_share_demo
+	 */
 	export class $mol_button_share extends $.$mol_button_share {
 		
 		capture() {

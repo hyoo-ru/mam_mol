@@ -2,6 +2,10 @@ namespace $.$$ {
 
 	const warned = new Set< string >()
 
+	/**
+	 * Safe virtualized view of raw HTML.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_html_view_demo
+	 */
 	export class $mol_html_view extends $.$mol_html_view {
 
 		@ $mol_mem

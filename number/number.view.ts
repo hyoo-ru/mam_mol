@@ -1,4 +1,9 @@
 namespace $.$$ {
+
+	/**
+	 * Component for entering, incrementing and decrementing numeric values.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_number_demo
+	 */
 	export class $mol_number extends $.$mol_number {
 		
 		value_limited( next? : any ) : number {

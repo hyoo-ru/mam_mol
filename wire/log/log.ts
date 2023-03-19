@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** Watch and logs reactive states. Logger automatically added to test bundle which is adding to `test.html`. */
 	export class $mol_wire_log extends $mol_object2 {
 		
 		@ $mol_mem

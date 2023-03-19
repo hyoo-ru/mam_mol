@@ -1,5 +1,6 @@
 namespace $.$$ {
 
+	/** Draws generic user message */
 	export class $mol_message extends $.$mol_message {
 
 		moment_string() {

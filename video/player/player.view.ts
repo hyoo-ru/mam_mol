@@ -1,4 +1,9 @@
 namespace $.$$ {
+
+	/**
+	 * Video player component
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_video_player_demo
+	 */
 	export class $mol_video_player extends $.$mol_video_player {
 		
 		dom_node() {

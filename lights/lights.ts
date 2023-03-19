@@ -6,6 +6,10 @@ namespace $ {
 		return null
 	}
 	
+	/**
+	 * Switcher between light/dark themes (usually for `mol_theme_auto` plugin).
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_lights_demo
+	 */
 	export function $mol_lights( this : $ , next? : boolean ) {
 		
 		const arg = parse( this.$mol_state_arg.value( 'mol_lights' ) )

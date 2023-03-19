@@ -8,6 +8,7 @@ namespace $ {
 		[ Field in keyof Value ]: $mol_mutable_wrapper< Value[ Field ] >
 	}
 	
+	/** Mutable way for immutable patch */
 	export function $mol_mutable< Value >(
 		input: Value,
 		update: ( next: Value )=> Value = next => input = next,

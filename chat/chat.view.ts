@@ -1,5 +1,9 @@
 namespace $.$$ {
 
+	/**
+	 * Button to open embedded chat.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_chat_demo
+	 */
 	export class $mol_chat extends $.$mol_chat {
 		
 		opened() {

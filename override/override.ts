@@ -1,5 +1,6 @@
 namespace $ {
 
+	/** Checks them member is override of same member of superclass. */
 	export function $mol_override< Sup >( sup : new()=> Sup ) {
 
 		return <

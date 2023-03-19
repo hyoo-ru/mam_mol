@@ -1,5 +1,6 @@
 namespace $ {
 
+	/** Creates lexer by dictionary of lexems. Lexem that started first wins. Then lexem that declared earlier wins. Use regexp capture to take parts of token. */
 	export class $mol_syntax2< Lexems extends { [ name : string ] : RegExp } > {
 		
 		constructor(

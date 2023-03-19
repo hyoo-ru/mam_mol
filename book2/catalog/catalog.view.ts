@@ -1,4 +1,9 @@
 namespace $.$$ {
+
+	/**
+	 * Variant of [mol_book2](../book2.view.ts) which draws menu in side bar on opens one of taken spreads.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_book2_catalog_demo
+	 */
 	export class $mol_book2_catalog extends $.$mol_book2_catalog {
 		
 		@ $mol_mem

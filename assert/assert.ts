@@ -1,15 +1,37 @@
 namespace $ {
 	
+	/**
+	 * Argument must be Truthy
+	 * @example
+	 * $mol_assert_ok( 1 ) // Passes
+	 * $mol_assert_ok( 0 ) // Fails because Falsy
+	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
+	 */
 	export function $mol_assert_ok( value : any ) {
 		if( value ) return
 		$mol_fail( new Error( `${value} ≠ true` ) )
 	}
 	
+	/**
+	 * Argument must be Falsy
+	 * @example
+	 * $mol_assert_ok( 0 ) // Passes
+	 * $mol_assert_ok( 1 ) // Fails because Truthy
+	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
+	 */
 	export function $mol_assert_not( value : any ) {
 		if( !value ) return
 		$mol_fail( new Error( `${value} ≠ false` ) )
 	}
 	
+	/**
+	 * Handler must throw an error.
+	 * @example
+	 * $mol_assert_fail( ()=>{ throw new Error( 'Parse error' ) } ) // Passes because throws error
+	 * $mol_assert_fail( ()=>{ throw new Error( 'Parse error' ) } , 'Parse error' ) // Passes because throws right message
+	 * $mol_assert_fail( ()=>{ throw new Error( 'Parse error' ) } , Error ) // Passes because throws right class
+	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
+	 */
 	export function $mol_assert_fail( handler : ()=> any , ErrorRight? : any ) {
 		
 		const fail = $.$mol_fail
@@ -40,6 +62,13 @@ namespace $ {
 		$mol_fail( new Error( 'Not failed' ) )
 	}
 	
+	/**
+	 * All arguments must be equal.
+	 * @example
+	 * $mol_assert_equal( 1 , 1 , 1 ) // Passes
+	 * $mol_assert_equal( 1 , 1 , 2 ) // Fails because 1 !== 2
+	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
+	 */
 	export function $mol_assert_equal< Value >( ... args : [ Value, Value, ...Value[] ] ) {
 		for( let i = 0 ; i < args.length ; ++i ) {
 			for( let j = 0 ; j < args.length ; ++j ) {
@@ -50,6 +79,13 @@ namespace $ {
 		}
 	}
 	
+	/**
+	 * All arguments must be not equal to each other.
+	 * @example
+	 * $mol_assert_unique( 1 , 2 , 3 ) // Passes
+	 * $mol_assert_unique( 1 , 1 , 2 ) // Fails because 1 === 1
+	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
+	 */
 	export function $mol_assert_unique( ... args : [ any, any, ...any[] ] ) {
 		for( let i = 0 ; i < args.length ; ++i ) {
 			for( let j = 0 ; j < args.length ; ++j ) {
@@ -61,6 +97,13 @@ namespace $ {
 		}
 	}
 	
+	/**
+	 * All arguments must be like each other (deep structural comparison).
+	 * @example
+	 * $mol_assert_like( [1] , [1] , [1] ) // Passes
+	 * $mol_assert_like( [1] , [1] , [2] ) // Fails because 1 !== 2
+	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
+	 */
 	export function $mol_assert_like< Value >( head : Value, ... tail : Value[]) {
 		for( let [ index, value ] of Object.entries( tail ) ) {
 

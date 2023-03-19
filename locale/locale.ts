@@ -4,6 +4,10 @@ namespace $ {
 		[ key : string ] : string
 	}
 	
+	/**
+	 * Localisation in $mol framework
+	 * @see https://mol.hyoo.ru/#!section=docs/=s5aqnb_odub8l
+	 */
 	export class $mol_locale extends $mol_object {
 		
 		@ $mol_mem

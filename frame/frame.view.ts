@@ -1,4 +1,8 @@
 namespace $.$$ {
+
+	/**
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_frame_demo
+	 */
 	export class $mol_frame extends $.$mol_frame {
 		
 		window() {
