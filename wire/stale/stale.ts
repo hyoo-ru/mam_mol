@@ -1,5 +1,5 @@
 namespace $ {
-	export function $mol_wire_stale< Res >( task: ()=> Res ) {
+	export function $mol_wire_stale< Res >( task: ()=> Res ): Res | undefined {
 		
 		try {
 			return task()
