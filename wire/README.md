@@ -11,8 +11,8 @@ Auto wiring modules. It gives ability to:
 
 ## Articles about
 
-- [Main Aspects of Reactivity](https://github.com/nin-jin/slides/tree/master/reactivity#readme)
-- [Designing an ideal reactivity system](https://github.com/nin-jin/HabHub/issues/48)
+- [Main Aspects of Reactivity](https://page.hyoo.ru/#!=2xsr05_hu0zzh)
+- [Design of ideal reactivity system](https://page.hyoo.ru/#!=yj0h42_ixzv4p)
 - [JS Proposal: Auto Wire](https://gist.github.com/nin-jin/6b9765fb9d0d50c2e1d37689008f5357)
 
 ## High level API
