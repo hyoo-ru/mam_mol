@@ -184,9 +184,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * text_export \
+		 * ```
+		 */
+		text_export() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * Copy $mol_button_copy
 		 * 	hint @ \Copy whole code
-		 * 	text <= text
+		 * 	text <= text_export
 		 * ```
 		 */
 		@ $mol_mem
@@ -194,7 +203,7 @@ namespace $ {
 			const obj = new this.$.$mol_button_copy()
 			
 			obj.hint = () => this.$.$mol_locale.text( '$mol_text_code_Copy_hint' )
-			obj.text = () => this.text()
+			obj.text = () => this.text_export()
 			
 			return obj
 		}
