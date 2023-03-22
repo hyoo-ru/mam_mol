@@ -65,10 +65,10 @@ namespace $ {
 		context.Math = Object.create( Math )
 		context.Math.random = ()=> Math.sin( seed++ )
 
-		const forbidden = [ 'XMLHttpRequest' , 'fetch' ]
+		const forbidden = [ 'XMLHttpRequest' , 'fetch' ] as const
 
 		for( let api of forbidden ) {
-			context[ api ] = new Proxy( function(){} , {
+			context[ api ] = new Proxy( function(){} as any , {
 				get() {
 					$mol_fail_hidden( new Error( `${ api } is forbidden in tests` ) )
 				} ,

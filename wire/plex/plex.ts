@@ -1,6 +1,6 @@
 namespace $ {
 	
-	/** Reactive memoizing multiplexed property decorator */
+	/** Reactive memoizing multiplexed property decorator. */
 	export function $mol_wire_plex< Args extends [ any, ... any[] ] >(
 		host: object,
 		field: string,
@@ -8,11 +8,11 @@ namespace $ {
 	) {
 
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
-		const orig = descr?.value! ?? host[ field ]
+		const orig = descr?.value! ?? (host as any)[ field ]
 		
 		const sup = Reflect.getPrototypeOf( host )!
-		if( typeof sup[ field ] === 'function' ) {
-			Object.defineProperty( orig , 'name' , { value : sup[ field ].name } )
+		if( typeof (sup as any)[ field ] === 'function' ) {
+			Object.defineProperty( orig , 'name' , { value : (sup as any)[ field ].name } )
 		}
 		
 		const descr2 = {

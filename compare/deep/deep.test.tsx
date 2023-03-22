@@ -53,10 +53,10 @@ namespace $ {
 		'same POJOs with cyclic reference'() {
 
 			const a = { foo : {} }
-			a['self'] = a
+			;(a as any)['self'] = a
 
 			const b = { foo : {} }
-			b['self'] = b
+			;(b as any)['self'] = b
 
 			$mol_assert_ok( $mol_compare_deep( a , b ) )
 
