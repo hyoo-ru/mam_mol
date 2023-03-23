@@ -164,9 +164,11 @@ reactivate( document.body )
 
 ## Core concepts
 
+In `$mol_wire` we build reactive systems using classes that have reactive properties. We represent a reactive property using a class method with an appropriate decorator.
+
 ### Channels
 
-In `$mol_wire` the fundamental units of reactivity are **channels**. A channel behaves like a **getter** when it's called without arguments and as a **setter** otherwise. This approach is very [flexible and powerful](TODO).
+We define properties in accordance to the pattern of **channels**. A channel behaves like a **getter** when called without arguments and as a **getter-setter** otherwise. This approach proves to be more flexible than [others](https://mol.hyoo.ru/#!section=docs/=uuueew_u63ko8).
 
 Here's an example of a simple channel:
 
@@ -175,7 +177,7 @@ let _title = ''
 const title = ( text = _title )=> _title = text
 
 title()                  // getter, returns ''
-title( 'Buy some milk' ) // setter, sets and returns 'Buy some milk'
+title( 'Buy some milk' ) // getter-setter, sets and returns 'Buy some milk'
 title()                  // getter, returns 'Buy some milk'
 ```
 
@@ -193,11 +195,11 @@ class Store {
 const store = new Store()
 
 store.title()                  // getter, returns ''
-store.title( 'Buy some milk' ) // setter, sets and returns 'Buy some milk'
+store.title( 'Buy some milk' ) // getter-setter, sets and returns 'Buy some milk'
 store.title()                  // getter, returns 'Buy some milk'
 ```
 
-The decorator **memoizes** what's been returned from the method so when someone uses it as getter the method itself is not called and instead the memoized value is returned.
+The decorator **memoizes** what's been returned from the method so when someone uses it as a **getter** the method itself is not called and instead the memoized value is returned.
 
 **Channels** either:
   - **store** values
