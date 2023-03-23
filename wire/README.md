@@ -359,56 +359,43 @@ We can take the use of **memoization** even further by leveraging **destructors*
 ```ts
 import { $mol_wire_solo as solo } from 'mol_wire_lib'
 
-class Timeout {
-	id: any
+class ExampleAPI {
+	socket: WebSocket
 
-	constructor(
-		public delay : number ,
-		public task : ()=> void ,
+	constructor (
+		public api_key : string ,
 	) {
-		super()
-		this.id = setTimeout( task , delay )
+		this.socket = new WebSocket(`wss://example.com?api_key=${api_key}`)
 	}
 
 	// the special method
 	destructor() {
-		clearTimeout( this.id )
+		this.socket.close()
 	}
 }
 
-class Widget {
-	@solo opacity( next = 0 ) {
-		return next
+class App {
+	@solo api_key( value = '' ) {
+		return value
 	}
 
-	@solo animation_delay( next = 1000 ) {
-		return next
-	}
-
-	@solo animate() {
-		// appear
-		this.opacity(1)
-
-		// schedule the disappearance
-		return new Timeout(
-			this.animation_delay(),
-			() => {
-				// disappear
-				this.opacity(0)
-			}
-		)
+	@solo api() {
+		return new ExampleAPI( this.api_key() )
 	}
 }
 
-const widget = new Widget()
+const app = new App()
 
-// schedule an animation
-widget.animate()
+// set an api key
+app.api_key('testkey1')
 
-// Change a property the animation is dependent on,
-// so the animation will recompute and the previous value get destructured.
-// Effectively, this cancels the previous animation and schedules a new one
-widget.animation_delay(500)
+// create an instance of WebSocket, establish a connection
+app.api()
+
+// change the api key
+// this will trigger creation of a new web socket
+// and the old one will get destructured
+app.api_key('testkey2')
 ```
 
 ### Asynchronous computed values
