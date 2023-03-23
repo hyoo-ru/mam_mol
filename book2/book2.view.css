@@ -26,26 +26,22 @@
 	flex-shrink: 0;
 }
 
-[mol_book2] > *:not(:first-of-type):before {
-	content: '';
-	width: 3px;
-	height: 2rem;
-	top: 1rem;
-	left: -2px;
-	position: absolute;
-	background: var(--mol_theme_line);
-	border-radius: var(--mol_gap_round);
-}
-
+[mol_book2] > *:not(:first-of-type):before,
 [mol_book2] > *:not(:last-of-type)::after {
 	content: '';
-	width: 3px;
-	height: 2rem;
-	top: 1rem;
-	right: -2px;
 	position: absolute;
-	background: var(--mol_theme_line);
+	top: 1.5rem;
+	width: 1px;
+	height: 1rem;
+	background: var(--mol_theme_special);
 	border-radius: var(--mol_gap_round);
+	opacity: .5;
+}
+[mol_book2] > *:not(:first-of-type):before {
+	left: -1px;
+}
+[mol_book2] > *:not(:last-of-type)::after {
+	right: -1px;
 }
 
 :where([mol_book2]) > * {
