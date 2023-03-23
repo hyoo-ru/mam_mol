@@ -137,26 +137,7 @@ console.log(user.name()) // logs: 'Thomas William'
 
 Channels marked with a `@solo` or `@plex` decorator are memoized until a new value is set to them or one of their **dependencies** change.
 
-- We can use memoization to cache expensive computations:
-
-```ts
-import { $mol_wire_solo as solo } from 'mol_wire_lib'
-
-class Task {
-	@solo title( title = '' ) {
-		return title
-	}
-
-	// won't recompute until a dependency is changed
-	@solo mirrored_title() {
-		const segmenter = new Intl.Segmenter()
-		const segments = [ ... segmenter.segment( this.title() ) ]
-		return segments.map( s => s.segment ).reverse().join('')
-	}
-}
-```
-
-- To guarantee that a reference to an object will stay the same:
+We can use memoization to guarantee that a reference to an object will stay the same:
 
 ```ts
 import { $mol_wire_solo as solo } from 'mol_wire_lib'
@@ -166,14 +147,38 @@ class Task {
 		return value
 	}
 
-	// won't create new instances until the dependency is changed
+	// won't create new instances until `timestamp` is changed
 	@solo moment() {
 		return new Moment(this.timestamp())
 	}
 }
 ```
 
-- With `$mol_wire_plex` (as in multiplexing) store multiple values:
+Or with memoization we can cache expensive computations:
+
+```ts
+import { $mol_wire_solo as solo } from 'mol_wire_lib'
+
+class Task {
+	@solo title( title = '' ) {
+		return title
+	}
+
+	// won't recompute
+	@solo segmenter() {
+		return new Intl.Segmenter()
+	}
+
+	// won't recompute until `title` is changed
+	@solo mirrored_title() {
+		const segmenter = this.segmenter()
+		const segments = [ ... segmenter.segment( this.title() ) ]
+		return segments.map( s => s.segment ).reverse().join('')
+	}
+}
+```
+
+With `$mol_wire_plex` (as in multiplexing) we can store multiple values:
 
 ```ts
 import { $mol_wire_plex as plex } from 'mol_wire_lib'
