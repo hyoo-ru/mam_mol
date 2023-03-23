@@ -29,7 +29,7 @@ namespace $ {
 			$mol_assert_not( $mol_compare_deep( { a : 1 } , { b : 2 } ) )
 			$mol_assert_not( $mol_compare_deep( { a : 1 } , { a : 2 } ) )
 			$mol_assert_not( $mol_compare_deep( {} , { a : undefined } ) )
-			$mol_assert_ok( $mol_compare_deep( { a: 1, b: 2 } , { b: 2, a: 1 } ) )
+			$mol_assert_not( $mol_compare_deep( { a: 1, b: 2 } , { b: 2, a: 1 } ) )
 			$mol_assert_ok( $mol_compare_deep( { a : { b : 1 } } , { a : { b : 1 } } ) )
 			$mol_assert_ok( $mol_compare_deep( Object.create(null), Object.create(null) )
 		} ,
@@ -49,6 +49,12 @@ namespace $ {
 			$mol_assert_not( $mol_compare_deep( ()=> 1 , ()=>1 ) )
 			$mol_assert_not( $mol_compare_deep( new RangeError( 'Test error' ) , new RangeError( 'Test error' ) ) )
 			
+		} ,
+
+		'POJO with symbols'() {
+			const sym = Symbol()
+			$mol_assert_ok( $mol_compare_deep( { [ sym ]: true }, { [ sym ]: true } ) )
+			$mol_assert_not( $mol_compare_deep( { [ Symbol() ]: true }, { [ Symbol() ]: true } ) )
 		} ,
 
 		'same POJOs with cyclic reference'() {
