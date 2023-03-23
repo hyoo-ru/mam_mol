@@ -201,11 +201,11 @@ store.title()                  // getter, returns 'Buy some milk'
 
 The decorator **memoizes** what's been returned from the method so when someone uses it as a **getter** the method itself is not called and instead the memoized value is returned.
 
-**Channels** either:
+Properties either:
   - **store** values
-  - or **compute** new values based on **other channels**.
+  - or **compute** new values based on **other** properties.
 
-The **computed** channels will only recompute when one of their **dependencies** change.
+The **computed** properties will only recompute when one of their **dependencies** change.
 
 ```ts
 import { $mol_wire_solo as solo } from 'mol_wire_lib'
@@ -230,11 +230,14 @@ class User {
 
 const user = new User()
 
-console.log(user.name()) // logs: 'Thomas Anderson', 'compute name'
+console.log(user.name()) // logs: 'compute name', 'Thomas Anderson'
 console.log(user.name()) // logs: 'Thomas Anderson'
 
-user.name_last('William') // setter, triggers 'compute name'
+// setter, marks 'name' as a subject to recomputation,
+// but doesn't recompute immediately
+user.name_last('William')
 
+console.log(user.name()) // logs: 'compute name', 'Thomas William'
 console.log(user.name()) // logs: 'Thomas William'
 ```
 
