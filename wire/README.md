@@ -302,7 +302,7 @@ widget.animation_delay(500)
 
 Unlike many other reactivity systems, `$mol_wire` allows you to have computeds that depend on asynchronous values.
 
-`$mol_wire` makes it possible by using an implementaion of Suspense API where an asynchronous task throws an exception to pause the computation until it's value arrive. You can read more about it [here](TODO)
+`$mol_wire` makes it possible by using an implementaion of Suspense API where an asynchronous task throws an exception to pause the computation until the task resolves. You can read more about it [here](https://mol.hyoo.ru/#!section=docs/=h5rg2r_mmlg15).
 
 ```ts
 import {
@@ -343,7 +343,7 @@ $mol_wire_async(app).run()
 
 ### Side effects in asynchronous computations
 
-In `$mol_wire` we treat values that are computed **asynchronously** as they're **already there**. This is thanks to **Suspense API**: when an asynchronous task starts in a **method** it throws an exception and when it finishes the **method** is **called again**.
+In `$mol_wire` we treat values that are computed **asynchronously** as they're **already there**. This is thanks to **Suspense API**: when an asynchronous task starts in a **method** it throws an exception and when it finishes the **method** is **called again**. A more detailed description is [here](https://mol.hyoo.ru/#!section=docs/=3b4eua_31c025).
 
 Because of that we have to be a little careful about how we make **side effects** inside our methods.
 
