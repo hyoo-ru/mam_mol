@@ -321,7 +321,9 @@ function value_async(): Promise<number> {
 
 class App {
 	@solo value() {
-		// convert the asynchronous function to a synchronous one
+		// convert asynchronous function to a synchronous one
+		// NOTE closures won't work here,
+		// NOTE only use references to pre-defined functions or object methods
 		const value_sync = $mol_wire_sync(value_async)
 
 		// treat the value as it is already there
