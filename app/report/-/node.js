@@ -923,7 +923,9 @@ var $;
         }
         let result;
         try {
-            if (left_proto && !Reflect.getPrototypeOf(left_proto))
+            if (!left_proto)
+                result = compare_pojo(left, right);
+            else if (!Reflect.getPrototypeOf(left_proto))
                 result = compare_pojo(left, right);
             else if (Array.isArray(left))
                 result = compare_array(left, right);
@@ -991,10 +993,18 @@ var $;
     function compare_pojo(left, right) {
         const left_keys = Object.getOwnPropertyNames(left);
         const right_keys = Object.getOwnPropertyNames(right);
-        if (left_keys.length !== right_keys.length)
+        if (!compare_array(left_keys, right_keys))
             return false;
         for (let key of left_keys) {
-            if (!$mol_compare_deep(left[key], Reflect.get(right, key)))
+            if (!$mol_compare_deep(left[key], right[key]))
+                return false;
+        }
+        const left_syms = Object.getOwnPropertySymbols(left);
+        const right_syms = Object.getOwnPropertySymbols(right);
+        if (!compare_array(left_syms, right_syms))
+            return false;
+        for (let key of left_syms) {
+            if (!$mol_compare_deep(left[key], right[key]))
                 return false;
         }
         return true;
