@@ -347,17 +347,17 @@ In `$mol_wire` we treat values that are computed **asynchronously** as they're *
 
 Because of that we have to be a little careful about how we make **side effects** inside our methods.
 
-The `@method` decorator prevents methods from being called multiple times:
+The `@action` decorator (in `$mol` it's called `$mol_action`) prevents methods from being called multiple times:
 
 ```ts
 import {
-	$mol_wire_method as method,
+	$mol_wire_method as action,
 	$mol_wire_sync,
 } from 'mol_wire_lib'
 
 class App {
 	// Auto wrap method to task
-	@method main() {
+	@action main() {
 		// Convert async api to sync
 		const syncFetch = $mol_wire_sync( fetch )
 
@@ -372,7 +372,7 @@ class App {
 	}
 
 	// Auto wrap method to sub-task
-	@method log( ... args: any[] ) {
+	@action log( ... args: any[] ) {
 		console.log( ... args )
 		// No restarts within a portion of a task
 	}
