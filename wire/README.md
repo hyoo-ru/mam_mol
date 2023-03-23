@@ -427,7 +427,20 @@ button.onclick = $mol_wire_async( function() {
 } )
 ```
 
-In the above example clicking the button will trigger an HTTP request. If it doesn't resolve until the user clicks the button again, a new request will be sent and the previous one will get **cancelled**.
+In the above example clicking the button will trigger an HTTP request. If it doesn't resolve until the user clicks again, a new request will be sent and the previous one will get **cancelled**.
+
+And this is how easy it is to add debounce to this function:
+
+```diff
+button.onclick = $mol_wire_async( function() {
++	// schedule a timer
++	// the execution won't go past this point until it resolves
++	// if onclick is called again the timer gets rescheduled
++	$mol_wait_timeout( 1000 )
+	const { profile } = fetchJSON( 'https://example.org/input' )
+	console.log( profile )
+} )
+```
 
 ## Infrastructure
 
