@@ -31,7 +31,7 @@ namespace $ {
 			$mol_assert_not( $mol_compare_deep( {} , { a : undefined } ) )
 			$mol_assert_not( $mol_compare_deep( { a: 1, b: 2 } , { b: 2, a: 1 } ) )
 			$mol_assert_ok( $mol_compare_deep( { a : { b : 1 } } , { a : { b : 1 } } ) )
-			$mol_assert_ok( $mol_compare_deep( Object.create(null), Object.create(null) )
+			$mol_assert_ok( $mol_compare_deep( Object.create(null), Object.create(null) ) )
 		} ,
 
 		'Array'() {
