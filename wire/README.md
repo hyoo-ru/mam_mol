@@ -347,7 +347,7 @@ In `$mol_wire` we treat values that are computed **asynchronously** as they're *
 
 Because of that we have to be a little careful about how we make **side effects** inside our methods.
 
-The `@action` decorator (in `$mol` it's called `$mol_action`) prevents methods from being called multiple times:
+The `@$mol_wire_method` decorator (which is usually aliased to `@action`) prevents methods from being called multiple times:
 
 ```ts
 import {
