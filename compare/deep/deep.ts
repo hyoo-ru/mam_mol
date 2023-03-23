@@ -45,7 +45,8 @@ namespace $ {
 
 		try {
 			
-			if( left_proto && !Reflect.getPrototypeOf( left_proto ) ) result = compare_pojo( left, right as any )
+			if( !left_proto ) result = compare_pojo( left, right as any )
+			else if( !Reflect.getPrototypeOf( left_proto ) ) result = compare_pojo( left, right as any )
 			else if( Array.isArray( left ) ) result = compare_array( left, right as any )
 			else if( left instanceof Set ) result = compare_set( left, right as any )
 			else if( left instanceof Map ) result = compare_map( left, right as any )
