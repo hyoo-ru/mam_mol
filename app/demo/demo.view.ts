@@ -73,8 +73,8 @@ namespace $.$$ {
 			return value
 		}
 		
-		readme_page() {
-			return $mol_state_arg.value( 'readme' ) === ''
+		readme_page( next?: boolean ) {
+			return $mol_state_session.value( 'readme', next ) ?? false
 		}
 
 		selected_class_name() {
