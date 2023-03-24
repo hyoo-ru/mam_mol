@@ -41,6 +41,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * readme? false
+		 * ```
+		 */
+		@ $mol_mem
+		readme(next?: any) {
+			if ( next !== undefined ) return next as never
+			return false
+		}
+		
+		/**
+		 * ```tree
 		 * readme_icon $mol_icon_information_outline
 		 * ```
 		 */
@@ -53,23 +64,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Readme $mol_link
-		 * 	arg * readme \
+		 * Readme $mol_check_icon
+		 * 	checked? <=> readme?
 		 * 	hint @ \Readme
-		 * 	sub / <= readme_icon
+		 * 	Icon <= readme_icon
 		 * ```
 		 */
 		@ $mol_mem
 		Readme() {
-			const obj = new this.$.$mol_link()
+			const obj = new this.$.$mol_check_icon()
 			
-			obj.arg = () => ({
-				readme: ""
-			})
+			obj.checked = (next?: any) => this.readme(next)
 			obj.hint = () => this.$.$mol_locale.text( '$mol_app_demo_detail_Readme_hint' )
-			obj.sub = () => [
-				this.readme_icon()
-			] as readonly any[]
+			obj.Icon = () => this.readme_icon()
 			
 			return obj
 		}

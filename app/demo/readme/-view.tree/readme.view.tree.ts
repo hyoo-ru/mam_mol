@@ -40,6 +40,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * opened? false
+		 * ```
+		 */
+		@ $mol_mem
+		opened(next?: any) {
+			if ( next !== undefined ) return next as never
+			return false
+		}
+		
+		/**
+		 * ```tree
 		 * tools /
 		 * 	<= Source_link
 		 * 	<= Close
@@ -134,32 +145,32 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * close_arg * readme null
+		 * close? null
 		 * ```
 		 */
-		close_arg() {
-			return {
-				readme: null as any
-			}
+		@ $mol_mem
+		close(next?: any) {
+			if ( next !== undefined ) return next as never
+			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * Close $mol_link
+		 * Close $mol_button_minor
 		 * 	hint @ \Close panel
 		 * 	sub / <= Close_icon
-		 * 	arg <= close_arg
+		 * 	click? <=> close?
 		 * ```
 		 */
 		@ $mol_mem
 		Close() {
-			const obj = new this.$.$mol_link()
+			const obj = new this.$.$mol_button_minor()
 			
 			obj.hint = () => this.$.$mol_locale.text( '$mol_app_demo_readme_Close_hint' )
 			obj.sub = () => [
 				this.Close_icon()
 			] as readonly any[]
-			obj.arg = () => this.close_arg()
+			obj.click = (next?: any) => this.close(next)
 			
 			return obj
 		}

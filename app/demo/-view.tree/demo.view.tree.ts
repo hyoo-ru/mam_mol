@@ -110,6 +110,7 @@ namespace $ {
 		 * 	title <= detail_title
 		 * 	description <= detail_description
 		 * 	edit_uri <= edit_uri
+		 * 	readme? <=> readme_page?
 		 * 	Demo <= Demo
 		 * ```
 		 */
@@ -121,6 +122,7 @@ namespace $ {
 			obj.title = () => this.detail_title()
 			obj.description = () => this.detail_description()
 			obj.edit_uri = () => this.edit_uri()
+			obj.readme = (next?: any) => this.readme_page(next)
 			obj.Demo = () => this.Demo()
 			
 			return obj
@@ -130,6 +132,7 @@ namespace $ {
 		 * ```tree
 		 * Readme_page $mol_app_demo_readme
 		 * 	repo <= repo
+		 * 	opened? <=> readme_page?
 		 * 	module <= module
 		 * 	source_link <= source_link
 		 * ```
@@ -139,6 +142,7 @@ namespace $ {
 			const obj = new this.$.$mol_app_demo_readme()
 			
 			obj.repo = () => this.repo()
+			obj.opened = (next?: any) => this.readme_page(next)
 			obj.module = () => this.module()
 			obj.source_link = () => this.source_link()
 			
@@ -328,6 +332,17 @@ namespace $ {
 		 */
 		edit_uri() {
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * readme_page? false
+		 * ```
+		 */
+		@ $mol_mem
+		readme_page(next?: any) {
+			if ( next !== undefined ) return next as never
+			return false
 		}
 		
 		/**

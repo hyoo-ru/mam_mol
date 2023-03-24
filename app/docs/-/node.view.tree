@@ -390,6 +390,8 @@ $mol_icon_information $mol_icon path \M13,9H11V7H13M13,17H11V11H13M12,2C6.48,2 2
 
 $mol_icon_information_outline $mol_icon path \M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M11,17H13V11H11V17Z
 
+$mol_check_icon $mol_check
+
 $mol_icon_forum $mol_icon path \M17,12V3C17,2.45 16.55,2 16,2H3C2.45,2 2,2.45 2,3V17L6,13H16C16.55,13 17,12.55 17,12M21,6H19V15H6V17C6,17.55 6.45,18 7,18H18L22,22V7C22,6.45 21.55,6 21,6Z
 
 $mol_icon_forum_outline $mol_icon path \M15,4V11H5.17L4,12.17V4H15M16,2H3C2.45,2 2,2.45 2,3V17L6,13H16C16.55,13 17,12.55 17,12V3C17,2.45 16.55,2 16,2M21,6H19V15H6V17C6,17.55 6.45,18 7,18H18L22,22V7C22,6.45 21.55,6 21,6Z
@@ -458,12 +460,10 @@ $mol_icon_settings $mol_icon path \M12,15.5C10.07,15.5 8.5,13.93 8.5,12C8.5,10.0
 $mol_app_demo_detail $mol_page
 	description \
 	tools /
-		<= Readme $mol_link
-			arg *
-				readme \
+		<= Readme $mol_check_icon
+			checked? <=> readme? false
 			hint @ \Readme
-			sub /
-				<= readme_icon $mol_icon_information_outline
+			Icon <= readme_icon $mol_icon_information_outline
 		<= Chat $mol_chat
 			pages => chat_pages
 			seed <= chat_seed \0_0
@@ -779,16 +779,16 @@ $mol_app_demo_readme $mol_page
 	repo \
 	module /string
 	title @ \Readme
+	opened? false
 	tools /
 		<= Source_link $mol_link_source
 			uri <= source_link \
 			hint <= source_hint @ \Source code of this demo
-		<= Close $mol_link 
+		<= Close $mol_button_minor
 			hint @ \Close panel
 			sub /
 				<= Close_icon $mol_icon_cross
-			arg <= close_arg *
-				readme null
+			click? <=> close? null
 	-
 	Readme $mol_text
 		text <= readme \
@@ -805,8 +805,6 @@ $mol_status $mol_view
 
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
-
-$mol_check_icon $mol_check
 
 $mol_icon_brightness_6 $mol_icon path \M12,18V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z
 
@@ -845,9 +843,11 @@ $mol_app_demo $mol_book2
 		title <= detail_title
 		description <= detail_description \
 		edit_uri <= edit_uri \
+		readme? <=> readme_page? false
 		Demo <= Demo $mol_view
 	Readme_page $mol_app_demo_readme
 		repo <= repo \
+		opened? <=> readme_page? false
 		module <= module /string
 		source_link <= source_link \
 	Detail_empty_message $mol_status
