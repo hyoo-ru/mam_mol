@@ -10,7 +10,7 @@ Major button:
 
 ```
 <= Submit $mol_button_major
-	event_click?val <=> event_submit?val null
+	click? <=> submit? null
 	title <= submit_label @ \Submit form
 ```
 
@@ -18,7 +18,7 @@ Minor button with custom content (icon and title):
 
 ```
 <= Submit $mol_button_minor
-	event_click?val <=> event_submit?val null
+	click? <=> submit? null
 	sub /
 		<= Submit_icon $mol_icon_cursor_default_click
 		<= submit_label @ \Submit form
@@ -46,6 +46,6 @@ Minor button with custom content (icon and title):
 
 The button can only be pressed when it is enabled.
 
-**`event_click( next? : Event ) : Event`**
+**`click( next? : Event ) : Event`**
 
 Stores last event when button activated. Overload this property to do your action instead.
