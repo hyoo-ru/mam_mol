@@ -6,6 +6,10 @@ namespace $.$$ {
 	}
 
 	export class $mol_app_demo_readme extends $.$mol_app_demo_readme {
+		
+		close() {
+			this.opened( false )
+		}
 
 		link( module: readonly string[] ) {
 			return this.link_template().replace( '{repo}', this.repo() ).replace( '{module}' , module.join('/') )

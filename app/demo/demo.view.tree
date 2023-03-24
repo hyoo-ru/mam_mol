@@ -28,9 +28,11 @@ $mol_app_demo $mol_book2
 		title <= detail_title
 		description <= detail_description \
 		edit_uri <= edit_uri \
+		readme? <=> readme_page? false
 		Demo <= Demo $mol_view
 	Readme_page $mol_app_demo_readme
 		repo <= repo \
+		opened? <=> readme_page? false
 		module <= module /string
 		source_link <= source_link \
 	Detail_empty_message $mol_status

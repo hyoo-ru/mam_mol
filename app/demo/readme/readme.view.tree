@@ -3,16 +3,16 @@ $mol_app_demo_readme $mol_page
 	repo \
 	module /string
 	title @ \Readme
+	opened? false
 	tools /
 		<= Source_link $mol_link_source
 			uri <= source_link \
 			hint <= source_hint @ \Source code of this demo
-		<= Close $mol_link 
+		<= Close $mol_button_minor
 			hint @ \Close panel
 			sub /
 				<= Close_icon $mol_icon_cross
-			arg <= close_arg *
-				readme null
+			click? <=> close? null
 	-
 	Readme $mol_text
 		text <= readme \
