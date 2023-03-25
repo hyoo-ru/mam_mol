@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export function $mol_tree2_xml_from_dom( dom: Node ): $mol_tree2 {
+	export function $mol_tree2_xml_from_dom( dom: InstanceType< typeof $mol_dom_context.Node > ): $mol_tree2 {
 		
 		switch( dom.nodeType ) {
 			
