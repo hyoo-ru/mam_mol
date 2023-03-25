@@ -1740,7 +1740,7 @@ var $;
                     let line_end = str.indexOf('\n', pos);
                     if (line_end === -1)
                         line_end = str.length;
-                    const sp = span.span(row, error_start - line_start, pos - error_start + 1);
+                    const sp = span.span(row, error_start - line_start + 1, pos - error_start);
                     this.$mol_fail(new this.$mol_error_syntax(`Wrong nodes separator`, str.substring(line_start, line_end), sp));
                 }
                 var type_start = pos;
