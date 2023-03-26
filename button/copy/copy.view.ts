@@ -6,6 +6,12 @@ namespace $.$$ {
 	 */
 	export class $mol_button_copy extends $.$mol_button_copy {
 		
+		data() {
+			return Object.fromEntries(
+				this.blobs().map( blob => [ blob.type, blob ] )
+			)
+		}
+		
 		@ $mol_mem
 		html() {
 			return $mol_html_encode( this.text() )
