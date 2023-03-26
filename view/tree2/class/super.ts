@@ -16,7 +16,7 @@ namespace $ {
 		)
 
 		if( !class_regex.test( superclass.type ) ) return this.$mol_fail(
-			err`Wrong super class name at ${superclass.span}`
+			err`Wrong super class name ${JSON.stringify(superclass.type).replace(/(^"|"$)/g, "")} at ${superclass.span}`
 		)
 
 		return superclass
