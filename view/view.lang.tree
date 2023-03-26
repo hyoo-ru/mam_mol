@@ -4,10 +4,10 @@ view kind
 	[] * struct \Mapping keys to values
 	[: / struct \Array
 	[] ^ operator \Spread array/struct property here
-	[] @ operator \Lacalizable value
-	[] <= operator \Hack object to take owner's state
-	[] <=> operator \Hack object to use owner's state
-	[] => operator \Alias object's property to owner
+	[] @ operator \Localizable value
+	[] <= operator \Hack controlled object to take owner's value
+	[] => operator \Alias controlled object's property to owner
+	[] <=> operator \Hack controlled object to take/put owner's value
 	[] NaN number \Not a Number
 	[: + number \Positive Number
 	[: - number \Negative Number
@@ -17,4 +17,4 @@ view kind
 	[] \
 		string \Raw string without escaping
 	[: \
-		property \Object propery
+		property \Object property
