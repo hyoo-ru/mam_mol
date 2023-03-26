@@ -3,15 +3,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * blobs /$mol_blob
+		 * 	<= text_blob?
+		 * 	<= html_blob?
+		 * ```
+		 */
+		blobs() {
+			return [
+				this.text_blob(),
+				this.html_blob()
+			] as readonly $mol_blob[]
+		}
+		
+		/**
+		 * ```tree
 		 * data *
-		 * 	text/plain <= text_blob?
-		 * 	text/html <= html_blob?
 		 * ```
 		 */
 		data() {
 			return {
-				"text/plain": this.text_blob(),
-				"text/html": this.html_blob()
 			}
 		}
 		
