@@ -1,10 +1,10 @@
 view kind
 	[] - comment \Whole subtree is ignored
-	[: $ class \Fully Qualified Name of cass
+	[: $ class \Fully Qualified Name of class
 	[] * struct \Mapping keys to values
 	[: / struct \Array
 	[] ^ operator \Spread array/struct property here
-	[] @ operator \Lacalizable value
+	[] @ operator \Localizable value
 	[] <= operator \Hack controlled object to take owner's value
 	[] => operator \Alias controlled object's property to owner
 	[] <=> operator \Hack controlled object to take/put owner's value
@@ -17,4 +17,4 @@ view kind
 	[] \
 		string \Raw string without escaping
 	[: \
-		property \Object propery
+		property \Object property
