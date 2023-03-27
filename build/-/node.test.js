@@ -2882,7 +2882,7 @@ var $;
         if (!superclass)
             return this.$mol_fail(err `No super class at ${klass.span}`);
         if (!class_regex.test(superclass.type))
-            return this.$mol_fail(err `Wrong super class name at ${superclass.span}`);
+            return this.$mol_fail(err `Wrong super class name ${JSON.stringify(superclass.type).replace(/(^"|"$)/g, "")} at ${superclass.span}`);
         return superclass;
     }
     $.$mol_view_tree2_class_super = $mol_view_tree2_class_super;
