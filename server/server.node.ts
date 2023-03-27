@@ -11,7 +11,7 @@ namespace $ {
 			return express
 		}
 
-		get_internal_ip() {
+		internal_ip() {
 			const nets = $node.os.networkInterfaces() as unknown as any[]
 			const results = Object.create( null )
 
@@ -49,8 +49,7 @@ namespace $ {
 					this.$.$mol_log3_done({
 						place: `${ this }` ,
 						message: `Started` ,
-						location: `http://127.0.0.1:${ ports[0] }/`,
-						internal: `http://${ this.get_internal_ip() }:${ ports[ 0 ] }/`
+						location: `http://${ this.internal_ip() }:${ ports[ 0 ] }/`
 					})
 				}
 			)
