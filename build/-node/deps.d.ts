@@ -8,6 +8,7 @@ interface $node {
 	"sourcemap-codec" : typeof import( "sourcemap-codec" )
 	"typescript" : typeof import( "typescript" )
 	"express" : typeof import( "express" )
+	"os" : typeof import( "os" )
 	"http" : typeof import( "http" )
 	"portastic" : typeof import( "portastic" )
 	"ws" : typeof import( "ws" )

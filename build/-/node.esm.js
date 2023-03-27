@@ -5939,6 +5939,23 @@ var $;
             this.expressHandlers().forEach(plugin => express.use(plugin));
             return express;
         }
+        internal_ip() {
+            const nets = $node.os.networkInterfaces();
+            const results = Object.create(null);
+            for (const name of Object.keys(nets)) {
+                for (const net of nets[name]) {
+                    const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4;
+                    if (net.family === familyV4Value && !net.internal) {
+                        if (!results[name]) {
+                            results[name] = [];
+                        }
+                        results[name].push(net.address);
+                    }
+                }
+            }
+            const internal = Object.values(results).at(-1);
+            return internal[0];
+        }
         http() {
             const server = $node.http.createServer(this.express());
             $node['portastic'].find({
@@ -5950,7 +5967,7 @@ var $;
                 this.$.$mol_log3_done({
                     place: `${this}`,
                     message: `Started`,
-                    location: `http://127.0.0.1:${ports[0]}/`
+                    location: `http://${this.internal_ip()}:${ports[0]}/`
                 });
             });
             return server;
