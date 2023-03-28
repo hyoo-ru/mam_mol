@@ -42,13 +42,23 @@ namespace $ {
 
 		},
 
-		'Wrong nodes separator'( $ ) {
+		'Wrong nodes separator at start'( $ ) {
+
+			const tree = `foo\n \tbar\n`
+
+			$mol_assert_fail( ()=> {
+				$.$mol_tree2_from_string( tree , 'test' )
+			}, 'Wrong nodes separator\ntest#2:1/2\n!!\n \tbar' )
+
+		},
+
+		'Wrong nodes separator in the middle'( $ ) {
 
 			const tree = `foo  bar\n`
 
 			$mol_assert_fail( ()=> {
 				$.$mol_tree2_from_string( tree , 'test' )
-			}, 'Wrong nodes separator\ntest#1:4/2\n   !!\nfoo  bar' )
+			}, 'Wrong nodes separator\ntest#1:5/1\n    !\nfoo  bar' )
 
 		},
 
@@ -77,7 +87,7 @@ namespace $ {
 			const res = $$.$mol_tree2_from_string( tree , 'test' )
 
 			$mol_assert_like( errors, [
-				'Wrong nodes separator\ntest#1:4/2\n   !!\nfoo  bar',
+				'Wrong nodes separator\ntest#1:5/1\n    !\nfoo  bar',
 				'Unexpected EOF, LF required\ntest#1:9/1\n        !\nfoo  bar',
 			] )
 

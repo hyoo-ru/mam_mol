@@ -16,7 +16,7 @@ namespace $ {
 		@ $mol_action
 		static fit(
 			image: CanvasImageSource | Blob | string,
-			width: number,
+			width = Number.POSITIVE_INFINITY,
 			height = width,
 		) {
 			
