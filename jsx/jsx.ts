@@ -102,7 +102,7 @@ namespace $ {
 				
 				node = view.valueOf()
 				
-				(node as any)![ String(Elem) ] = view
+				;(node as any)![ String(Elem) ] = view
 				
 				return node!
 
