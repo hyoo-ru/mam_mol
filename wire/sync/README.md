@@ -1,6 +1,6 @@
 ## $mol_wire_sync
 
-Returns proxy that converts all asynchronous methods (that returns a Promise) to synchronous (that instantly returns a result).
+Convert asynchronous (promise-based) API to synchronous by wrapping calls in a fiber with proxy.
 
 ```typescript
 const User = {

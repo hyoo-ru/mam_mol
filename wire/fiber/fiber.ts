@@ -14,7 +14,7 @@ namespace $ {
 		Args extends readonly unknown[],
 		Result,
 	> extends $mol_wire_pub_sub {
-		
+	
 		static warm = true
 		
 		static planning = new Set< $mol_wire_fiber< any, any, any > >()
@@ -64,6 +64,8 @@ namespace $ {
 			
 		}
 		
+		[Symbol.toStringTag]!: string
+
 		public cache: Result | Error | Promise< Result | Error > = undefined as any
 		
 		get args() {
@@ -130,7 +132,7 @@ namespace $ {
 		}
 		
 		get $() {
-			return ( this.host ?? this.task )['$']
+			return ( this.host ?? this.task as any )['$']
 		}
 		
 		emit( quant = $mol_wire_cursor.stale ) {
@@ -176,7 +178,7 @@ namespace $ {
 					}
 					
 					result = Object.assign( result.then( put, put ), {
-						destructor: result['destructor'] ?? (()=> {})
+						destructor: (result as any)['destructor'] ?? (()=> {})
 					} )
 					
 					handled.add( result )
@@ -195,7 +197,7 @@ namespace $ {
 					result = Object.assign( result.finally( ()=> {
 						if( this.cache === result ) this.absorb()
 					} ), {
-						destructor: result['destructor'] ?? (()=> {})
+						destructor: (result as any)['destructor'] ?? (()=> {})
 					} )
 					
 					handled.add( result )
