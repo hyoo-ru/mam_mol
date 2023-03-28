@@ -23,13 +23,13 @@ namespace $ {
 				type Args = ConstructorParameters< Class >
 				type Result = InstanceType< Class >
 
-				const construct = ( target : new ( ... args : Args )=> Result , args : Args )=> new Class( ... args )
+				const construct = ( target : Class , args : Args )=> new Class( ... args )
 
-				const handler = {
+				const handler: ProxyHandler<Class> = {
 					construct : this.func( construct )
-				}
+				} 
 
-				handler[ Symbol.toStringTag ] = Class.name + '#'
+				;(handler as any)[ Symbol.toStringTag ] = Class.name + '#'
 
 				return new Proxy( Class , handler )
 				

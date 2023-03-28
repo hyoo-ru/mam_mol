@@ -160,6 +160,7 @@ var $;
 (function ($) {
     class $mol_object2 {
         static $ = $;
+        [Symbol.toStringTag];
         [$mol_ambient_ref] = null;
         get $() {
             if (this[$mol_ambient_ref])
@@ -313,7 +314,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $['devtoolsFormatters'] = $['devtoolsFormatters'] || [];
+    $['devtoolsFormatters'] ||= [];
     function $mol_dev_format_register(config) {
         $['devtoolsFormatters'].push(config);
     }
@@ -631,6 +632,7 @@ var $;
                 }
             }
         }
+        [Symbol.toStringTag];
         cache = undefined;
         get args() {
             return this.data.slice(0, this.pub_from);
@@ -899,9 +901,9 @@ var $;
         if (left instanceof Date)
             return Object.is(left.valueOf(), right['valueOf']());
         if (left instanceof RegExp)
-            return left.source === right['source'] && left.flags === right['flags'];
+            return left.source === right.source && left.flags === right.flags;
         if (left instanceof Error)
-            return left.message === right['message'] && left.stack === right['stack'];
+            return left.message === right.message && left.stack === right.stack;
         let left_cache = $.$mol_compare_deep_cache.get(left);
         if (left_cache) {
             const right_cache = left_cache.get(right);
@@ -1562,7 +1564,7 @@ var $;
 var $;
 (function ($) {
     function $mol_const(value) {
-        var getter = (() => value);
+        const getter = (() => value);
         getter['()'] = value;
         getter[Symbol.toStringTag] = value;
         return getter;

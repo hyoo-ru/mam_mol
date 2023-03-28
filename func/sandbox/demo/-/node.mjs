@@ -234,6 +234,7 @@ var $;
 (function ($) {
     class $mol_object2 {
         static $ = $;
+        [Symbol.toStringTag];
         [$mol_ambient_ref] = null;
         get $() {
             if (this[$mol_ambient_ref])

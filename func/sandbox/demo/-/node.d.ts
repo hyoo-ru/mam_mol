@@ -84,6 +84,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_object2 {
         static $: typeof $$;
+        [Symbol.toStringTag]: string;
         [$mol_ambient_ref]: typeof $$;
         get $(): $;
         set $(next: $);
@@ -108,7 +109,7 @@ declare namespace $ {
         static begin(uri: string, source?: string): $mol_span;
         static end(uri: string, source: string): $mol_span;
         static entire(uri: string, source: string): $mol_span;
-        toString(): any;
+        toString(): string;
         toJSON(): {
             uri: string;
             row: number;

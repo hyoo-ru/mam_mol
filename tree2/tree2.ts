@@ -39,7 +39,7 @@ namespace $ {
 
 		) {
 			super()
-			this[ Symbol.toStringTag ] = type || '\\' + value
+			;(this as any)[ Symbol.toStringTag ] = type || '\\' + value
 		}
 
 		/** Makes collection node. */
@@ -257,7 +257,7 @@ namespace $ {
 
 				let handle = belt[ child.type ] || belt[ '' ]
 				
-				if( !handle || handle === Object.prototype[ child.type ] ) {
+				if( !handle || handle === Object.prototype[ child.type as keyof Object ] ) {
 					handle = ( input, belt, context )=> [
 						input.clone( input.hack( belt, context ), context.span )
 					]

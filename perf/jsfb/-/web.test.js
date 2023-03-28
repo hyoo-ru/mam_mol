@@ -163,7 +163,7 @@ var $;
         }
         if (typeof Elem !== 'string') {
             if ('prototype' in Elem) {
-                const view = node && node[Elem] || new Elem;
+                const view = node && node[String(Elem)] || new Elem;
                 Object.assign(view, props);
                 view[Symbol.toStringTag] = guid;
                 view.childNodes = childNodes;
@@ -171,7 +171,7 @@ var $;
                     view.ownerDocument = $.$mol_jsx_document;
                 view.className = (crumbs_self ? crumbs_self + ' ' : '') + (Elem['name'] || Elem);
                 node = view.valueOf();
-                node[Elem] = view;
+                node[String(Elem)] = view;
                 return node;
             }
             else {

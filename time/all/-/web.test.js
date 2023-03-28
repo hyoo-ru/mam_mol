@@ -244,7 +244,7 @@ var $;
         }
         if (typeof Elem !== 'string') {
             if ('prototype' in Elem) {
-                const view = node && node[Elem] || new Elem;
+                const view = node && node[String(Elem)] || new Elem;
                 Object.assign(view, props);
                 view[Symbol.toStringTag] = guid;
                 view.childNodes = childNodes;
@@ -252,7 +252,7 @@ var $;
                     view.ownerDocument = $.$mol_jsx_document;
                 view.className = (crumbs_self ? crumbs_self + ' ' : '') + (Elem['name'] || Elem);
                 node = view.valueOf();
-                node[Elem] = view;
+                node[String(Elem)] = view;
                 return node;
             }
             else {
@@ -428,9 +428,9 @@ var $;
         if (left instanceof Date)
             return Object.is(left.valueOf(), right['valueOf']());
         if (left instanceof RegExp)
-            return left.source === right['source'] && left.flags === right['flags'];
+            return left.source === right.source && left.flags === right.flags;
         if (left instanceof Error)
-            return left.message === right['message'] && left.stack === right['stack'];
+            return left.message === right.message && left.stack === right.stack;
         let left_cache = $.$mol_compare_deep_cache.get(left);
         if (left_cache) {
             const right_cache = left_cache.get(right);
