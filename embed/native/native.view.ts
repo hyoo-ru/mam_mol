@@ -46,7 +46,7 @@ namespace $.$$ {
 			if( event.source !== this.window() ) return
 			if( !Array.isArray( event.data ) ) return
 			
-			this.message()[ event.data[0] ]?.( event )
+			(this.message() as any)[ event.data[0] ]?.( event )
 		}
 
 		uri_change( event: MessageEvent<[ string, string ]> ) {

@@ -58,7 +58,7 @@ namespace $ {
 				arr: [
 					"test1",
 					"test2"
-				] as readonly any[],
+				] as any[],
 				child: {
 					str: "some",
 					num: 12317,

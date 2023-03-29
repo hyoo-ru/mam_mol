@@ -25,14 +25,13 @@ namespace $ {
 		]
 
 		if (type_str === '') {
-			type_body.push(operator.data('readonly any[]'))
+			type_body.push(operator.data('any[]'))
 		} else if (type_str === 'const') {
 			type_body.push(operator.data('const'))
 		} else {
 			const type = $mol_tree2.data(type_str, [], operator.span.slice(1, type_str.length))
 			const is_array = type.value.indexOf('[') !== -1
 
-			type_body.push(operator.data('readonly '))
 			if (is_array) type_body.push(operator.data('('))
 			type_body.push(type)
 			if (is_array) type_body.push(operator.data(')'))

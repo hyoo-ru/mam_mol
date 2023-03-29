@@ -90,7 +90,7 @@ namespace $ {
 				{
 					loc: this.loc_outer()
 				}
-			] as readonly any[]
+			] as any[]
 		}
 		
 		/**
@@ -220,7 +220,7 @@ namespace $ {
 		 */
 		main_content() {
 			return [
-			] as readonly any[]
+			] as any[]
 		}
 		
 		/**

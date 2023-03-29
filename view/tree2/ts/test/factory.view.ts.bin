@@ -42,7 +42,7 @@ namespace $ {
 			obj.arr = () => [
 				"test1",
 				"test2"
-			] as readonly any[]
+			] as any[]
 			obj.dict = () => ({
 				str: "some2",
 				localized: this.$.$mol_locale.text( '$mol_view_tree2_ts_test_factory_Complex_dict_localized' )

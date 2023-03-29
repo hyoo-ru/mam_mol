@@ -85,7 +85,7 @@ namespace $ {
 				{
 					loc: (v?: any) => this.loc_outer(v)
 				}
-			] as readonly any[]
+			] as any[]
 		}
 		
 		/**

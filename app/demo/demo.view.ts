@@ -22,11 +22,13 @@ namespace $.$$ {
 			const next : string[] = []
 
 			for( const name in this.$ ) {
-				if( typeof this.$[ name ] !== 'function' ) continue
+				const ctor = this.$[name as keyof $]
+				
+				if( typeof ctor !== 'function' ) continue
 
-				if( !$mol_func_is_class( this.$[ name ] ) ) continue
+				if( !$mol_func_is_class( ctor ) ) continue
 
-				if( !( this.$[ name ].prototype instanceof $mol_example ) ) continue
+				if( !( ctor.prototype instanceof $mol_example ) ) continue
 
 				if ( this.demo_block_list().includes( name ) ) continue
 				
@@ -83,8 +85,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		Widget( name : string ) {
-			const Class : typeof $mol_example = this.$[ name ]
-			return new Class()
+			return new (this.$ as any)[name] as $mol_example
 		}
 		
 		@ $mol_mem
@@ -128,6 +129,11 @@ namespace $.$$ {
 			const source_link = this.source_prefix() + pieces.join('/')
 
 			return source_link
+		}
+
+		repo_dict() {
+			// 🕵️
+			return super.repo_dict() as Record<'mol' | (string & {}), string>
 		}
 
 		@ $mol_mem_key
