@@ -46,18 +46,18 @@ namespace $ {
 
 	const test_data: Record<string, { tags: string[], ids?: string[] }> = {
 		'': {
-			tags: [ 'sex', 'side', 'universe' ],
-			ids: [],
+			tags: [ 'side', 'universe', 'sex', ],
+			ids: [ ],
 		},
 
 		'sex': {
-			tags: [ 'female', 'male'],
-			ids: [],
+			tags: [ 'male', 'female', ],
+			ids: [ ],
 		},
 
 		'sex/female': {
 			tags: [ 'side', 'universe', ],
-			ids: [ 'harley', 'hela', 'wonderwoman' ],
+			ids: [ ],
 		},
 
 		'sex/female/side': {

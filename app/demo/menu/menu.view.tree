@@ -14,7 +14,7 @@ $mol_app_demo_menu $mol_page
 				- <= Badges_list $mol_row
 					sub /
 						^ Badges
-				- <= Tree $mol_tag_tree
+				<= Tree $mol_tag_tree
 					Item* <= Option*
 					ids_tags <= ids_tags *
 					levels_expanded <= levels_expanded <= levels_expanded_default 1

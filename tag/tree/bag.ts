@@ -10,103 +10,91 @@ namespace $ {
 		}
 
 		tags() {
-			return this.tags_ids().tags
+			return this.ids_tags_initial().tags
 		}
 
 		ids() {
-			return this.tags_ids().ids
+			return this.ids_tags_initial().ids
 		}
 
-		@ $mol_mem
-		tags_ids() {
-			const ids = new Set<string>()
-			const tags_ids = { } as Record<string, string[]>
-			const ids_tags = this.ids_tags()
-			const separator = this.separator()
-
-			for (const id of Object.keys(ids_tags)) {
-				const tags = ids_tags[id]
-
-				if (! tags?.length) {
-					ids.add(id)
-					continue
-				}
-				const subtags = tags.filter(tag => tag.startsWith('#')).map(tag => tag.substring(1))
-
-				for (const tag of subtags.length ? subtags : tags) {
-					const pos = tag.indexOf(separator)
-					const subtag = tag.substring(0, pos === -1 ? undefined : pos)
-
-					if (! subtag) {
-						ids.add(id)
-						continue
-					}
-
-					if (! tags_ids[subtag]) tags_ids[subtag] = []
-					tags_ids[subtag].push(id)
-				}
-			}
-
-			const keys = Object.keys(tags_ids)
-			const tags = [] as string[]
-
-			for (const tag of keys) {
-				if (tags_ids[tag].length !== 1 && keys.length !== 1) {
-					tags.push(tag)
-					continue
-				}
-
-				for (const id of tags_ids[tag]) ids.add(id)
-			}
-
-			return {
-				ids: Array.from(ids),
-				tags
-			}
+		ids_tags_initial() {
+			return this.ids_tags_filtered('')
 		}
 
 		@ $mol_mem_key
 		ids_tags_filtered(prefix: string) {
-			const ids_tags_filtered = { } as Record<string, string[]>
-			const ids_tags = this.ids_tags()
+			const ids = new Set<string>()
+			const ids_tags = { } as Record<string, string[]>
 
-			if (! prefix) return ids_tags
+			const ids_tags_initial = prefix ? this.ids_tags_initial().ids_tags : this.ids_tags()
 
 			const separator = this.separator()
 			const tags_ids = {} as Record<string, string[]>
 
-			for (const id of Object.keys(ids_tags)) {
-				const tags = ids_tags[id]
-				const next_tags = [] as typeof tags
-				let prefix_matched = false
+			for (const id of Object.keys(ids_tags_initial)) {
+				const tags = ids_tags_initial[id]
 
-				for (let tag of tags) {
-					tag = tag.startsWith('#') ? tag.substring(1) : tag
-					let next_tag = tag
-					if (next_tag === prefix) next_tag = ''
-					else if (next_tag.startsWith(prefix + separator)) {
-						next_tag = next_tag.substring(prefix.length + separator.length)
-					}
+				const unmatched_tags = [] as typeof tags
+				const prefixed_tags = [] as typeof tags
 
-					if (next_tag !== tag) {
+				let prefix_matched = prefix === ''
+
+				for (const tag of tags) {
+					if (tag === prefix) {
 						prefix_matched = true
-						if (next_tag) next_tag = '#' + next_tag
+						continue
 					}
-					if (! next_tag) continue
 
-					next_tags.push(next_tag)
+					let next = tag
 
-					if (!tags_ids[next_tag]) tags_ids[next_tag] = []
+					if (prefix && tag.startsWith(prefix + separator)) {
+						prefix_matched = true
+						next = tag.substring(prefix.length + separator.length)
+						prefixed_tags.push(next)
+					}
 
-					tags_ids[next_tag].push(id)
+					unmatched_tags.push(next)
 				}
 
-				if (prefix_matched) ids_tags_filtered[id] = next_tags
+				if (! prefix_matched) continue
+
+				ids_tags[id] = unmatched_tags
+
+				if (! unmatched_tags?.length) {
+					ids.add(id)
+					continue
+				}
+
+				for (const tag of prefixed_tags.length ? prefixed_tags : unmatched_tags) {
+					const sep_pos = tag.indexOf(separator)
+					const first_segment = sep_pos === -1 ? tag : tag.substring(0, sep_pos)
+
+					if (! first_segment) {
+						ids.add(id)
+						continue
+					}
+
+					if (! tags_ids[first_segment]) tags_ids[first_segment] = []
+					tags_ids[first_segment].push(id)
+				}
 			}
 
-			console.log(ids_tags_filtered)
+			const tags_raw = Object.keys(tags_ids)
+			const tags = [] as string[]
+			if (tags_raw.length === 1) {
+				for (const id of tags_ids[tags_raw[0]]) ids.add(id)
+			} else {
+				for (const tag of tags_raw) {
+					if (tags_ids[tag].length > 1) tags.push(tag)
+					else for (const id of tags_ids[tag]) ids.add(id)
+				}
+			}
 
-			return ids_tags_filtered
+			return {
+				ids_tags,
+				tags,
+				ids: Array.from(ids),
+			}
 		}
 
 		prefix() {
@@ -120,7 +108,7 @@ namespace $ {
 
 		select(id: string) {
 			const bag = new $mol_tag_tree_bag
-			bag.ids_tags = () => this.ids_tags_filtered(id)
+			bag.ids_tags_initial = () => this.ids_tags_filtered(id)
 			bag.prefix = () => this.prefix_sub(id)
 
 			return bag
