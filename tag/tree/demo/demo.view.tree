@@ -16,15 +16,6 @@ $mol_tag_tree_demo $mol_example
 				marvel @ \Marvel
 				dc @ \DC
 			ids_tags *
-				button /
-					\Widget
-				card /
-					\Widget
-				some1 /
-					\Widget/Layout
-				some2 /
-					\Widget/Layout
-			- ids_tags *
 				batman /
 					\side/good
 					\universe/dc
