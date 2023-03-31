@@ -22,5 +22,3 @@ $mol_audio_demo $mol_example_small
 	tags /
 		\Audio
 		\Sound
-	aspects /
-		\Util
