@@ -26,4 +26,4 @@ $mol_format_demo $mol_example_small
 		\$mol_phone
 		\input
 	aspects /
-		\ui
+		\UI

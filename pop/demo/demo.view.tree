@@ -51,4 +51,4 @@ $mol_pop_demo $mol_example
 		\container
 		\modal
 	aspects /
-		\ui
+		\UI

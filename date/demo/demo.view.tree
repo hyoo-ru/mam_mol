@@ -11,4 +11,4 @@ $mol_date_demo $mol_example_small
 		\datepicker
 		\format
 	aspects /
-		\ui
+		\UI

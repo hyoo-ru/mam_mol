@@ -14,10 +14,6 @@ $mol_app_demo_menu $mol_page
 					Item* <= Option*
 					ids_tags <= ids_tags *
 					levels_expanded <= levels_expanded <= levels_expanded_default 1
-					tag_names *
-						ui \UI
-						layout \Layout
-						util \Util
 	Option* $mol_link
 		arg <= option_arg* *
 		sub /

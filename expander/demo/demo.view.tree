@@ -13,4 +13,4 @@ $mol_expander_demo $mol_example_small
 		\container
 		\fold
 	aspects /
-		\ui
+		\UI

@@ -9,4 +9,4 @@ $mol_layout_demo $mol_example_large
 	tags /
 		\layout
 	aspects /
-		\ui/layout
+		\UI/Layout

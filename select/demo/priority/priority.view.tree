@@ -13,4 +13,4 @@ $mol_select_demo_priority $mol_example_small
 	tags /
 		\select
 	aspects /
-		\ui
+		\UI

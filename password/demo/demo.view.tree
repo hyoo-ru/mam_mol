@@ -10,4 +10,4 @@ $mol_password_demo $mol_example_small
 		\password
 		\input
 	aspects /
-		\ui
+		\UI
