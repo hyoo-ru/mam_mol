@@ -106,6 +106,7 @@ namespace $ {
 			return [ ...this.prefix(), id ]
 		}
 
+		@ $mol_mem_key
 		select(id: string) {
 			const bag = new $mol_tag_tree_bag
 			bag.ids_tags_initial = () => this.ids_tags_filtered(id)

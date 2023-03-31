@@ -6,12 +6,12 @@ $mol_tag_tree $mol_list
 	sort_items null
 	sort_tags null
 	sub /$mol_view
-		^ Tags /$mol_view
-		^ Items /$mol_view
+		^ tag_list /$mol_view
+		^ item_list /$mol_view
 	tag_name* \
 	tag_names *
-	Tags /$mol_view
-	Items /$mol_view
+	tag_list /$mol_view
+	item_list /$mol_view
 	Item* $mol_view
 		sub /
 			<= item_title* \
