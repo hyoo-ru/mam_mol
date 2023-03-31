@@ -7415,7 +7415,7 @@ var $;
             const en = this.texts('en')[key];
             if (!en)
                 return key;
-            const cache_key = `$mol_locale.text(${JSON.stringify(key)})`;
+            const cache_key = `$mol_locale.text(${JSON.stringify(key)}):${lang}`;
             const cached = this.$.$mol_state_local.value(cache_key);
             if (cached)
                 return cached;
