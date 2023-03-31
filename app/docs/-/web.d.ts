@@ -1983,6 +1983,28 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_tag_sieve extends $mol_object2 {
+        ids_tags(): Record<string, string[]>;
+        separator(): string;
+        tags(): string[];
+        ids(): string[];
+        ids_tags_initial(): {
+            ids_tags: Record<string, string[]>;
+            tags: string[];
+            ids: string[];
+        };
+        ids_tags_filtered(prefix: string): {
+            ids_tags: Record<string, string[]>;
+            tags: string[];
+            ids: string[];
+        };
+        prefix(): string[];
+        prefix_sub(id: string): string[];
+        select(id: string): $mol_tag_sieve;
+    }
+}
+
+declare namespace $ {
     class $mol_check extends $mol_button_minor {
         attr(): {
             mol_check_checked: boolean;
@@ -2069,23 +2091,22 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_tag_tree extends $mol_list {
-        ids_tags(): {};
-        tree(): {};
-        tree_path(): readonly string[];
-        path_sep(): string;
-        tag_names(): {};
-        tag_name(id: any): string;
+        sieve(): $mol_tag_sieve;
         levels_expanded(): number;
-        sort_tags(): any;
         sort_items(): any;
-        Item(id: any): $mol_view;
-        Tags(): readonly $mol_view[];
-        Items(): readonly $mol_view[];
+        sort_tags(): any;
         sub(): readonly $mol_view[];
+        tag_name(id: any): string;
+        tag_names(): {};
+        tag_list(): readonly $mol_view[];
+        item_list(): readonly $mol_view[];
+        Item(id: any): $mol_view;
         Tag(id: any): $$.$mol_expander;
+        ids_tags(): {};
+        separator(): string;
         item_title(id: any): string;
         tag_expanded(id: any, next?: any): boolean;
-        tree_path_id(id: any): readonly string[];
+        sieve_sub(id: any): $mol_tag_sieve;
         Tag_tree(id: any): $$.$mol_tag_tree;
     }
 }
@@ -2095,27 +2116,18 @@ declare namespace $ {
 }
 
 declare namespace $.$$ {
-    type Tree = {
-        [K: string]: Tree;
-    } & {
-        __ids?: string[];
-    };
-    export class $mol_tag_tree extends $.$mol_tag_tree {
+    class $mol_tag_tree extends $.$mol_tag_tree {
+        sieve_sub(path: readonly string[]): $mol_tag_sieve;
+        item_list(): $mol_view[];
+        tag_list(): $mol_expander[];
         tag_expanded(id: readonly string[], next?: boolean): boolean;
         tag_expanded_default(id: readonly string[]): boolean;
-        ids_tags(): Record<string, readonly string[]>;
-        tree(): Tree;
         sort_tags(): (a: unknown, b: unknown) => number;
         sort_items(): (a: unknown, b: unknown) => number;
-        tree_sub(): Tree;
-        Tags(): $mol_expander[];
-        Items(): $mol_view[];
         tag_names(): Record<string, string>;
-        tag_name(tree_path: readonly string[]): string;
+        tag_name(path: readonly string[]): string;
         item_title(id: readonly string[]): string;
-        tree_path_id(id: readonly string[]): readonly string[];
     }
-    export {};
 }
 
 declare namespace $ {
@@ -6524,6 +6536,7 @@ declare namespace $ {
         };
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         avatars_bid(): string;
         avatars(val?: any): readonly string[];
         Avatars_control(): $$.$mol_attach;

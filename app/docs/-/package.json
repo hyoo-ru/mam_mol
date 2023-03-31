@@ -183,6 +183,7 @@
     "$mol_unicode",
     "$mol_tag_tree",
     "$mol_tag",
+    "$mol_tag_sieve",
     "$mol_expander",
     "$mol_check_expand",
     "$mol_check",

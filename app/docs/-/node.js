@@ -7005,6 +7005,115 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_tag_sieve extends $mol_object2 {
+        ids_tags() {
+            return {};
+        }
+        separator() {
+            return '/';
+        }
+        tags() {
+            return this.ids_tags_initial().tags;
+        }
+        ids() {
+            return this.ids_tags_initial().ids;
+        }
+        ids_tags_initial() {
+            return this.ids_tags_filtered('');
+        }
+        ids_tags_filtered(prefix) {
+            const ids = new Set();
+            const ids_tags = {};
+            const ids_tags_initial = prefix ? this.ids_tags_initial().ids_tags : this.ids_tags();
+            const separator = this.separator();
+            const tags_ids = {};
+            for (const id of Object.keys(ids_tags_initial)) {
+                const tags = ids_tags_initial[id];
+                const unmatched_tags = [];
+                const prefixed_tags = [];
+                let prefix_matched = prefix === '';
+                for (const tag of tags) {
+                    if (tag === prefix) {
+                        prefix_matched = true;
+                        continue;
+                    }
+                    let next = tag;
+                    if (prefix && tag.startsWith(prefix + separator)) {
+                        prefix_matched = true;
+                        next = tag.substring(prefix.length + separator.length);
+                        prefixed_tags.push(next);
+                    }
+                    unmatched_tags.push(next);
+                }
+                if (!prefix_matched)
+                    continue;
+                ids_tags[id] = unmatched_tags;
+                if (!unmatched_tags?.length) {
+                    ids.add(id);
+                    continue;
+                }
+                for (const tag of prefixed_tags.length ? prefixed_tags : unmatched_tags) {
+                    const sep_pos = tag.indexOf(separator);
+                    const first_segment = sep_pos === -1 ? tag : tag.substring(0, sep_pos);
+                    if (!first_segment) {
+                        ids.add(id);
+                        continue;
+                    }
+                    if (!tags_ids[first_segment])
+                        tags_ids[first_segment] = [];
+                    tags_ids[first_segment].push(id);
+                }
+            }
+            const tags_raw = Object.keys(tags_ids);
+            const tags = [];
+            if (tags_raw.length === 1) {
+                for (const id of tags_ids[tags_raw[0]])
+                    ids.add(id);
+            }
+            else {
+                for (const tag of tags_raw) {
+                    if (tags_ids[tag].length > 1)
+                        tags.push(tag);
+                    else
+                        for (const id of tags_ids[tag])
+                            ids.add(id);
+                }
+            }
+            return {
+                ids_tags,
+                tags,
+                ids: Array.from(ids),
+            };
+        }
+        prefix() {
+            return [];
+        }
+        prefix_sub(id) {
+            return [...this.prefix(), id];
+        }
+        select(id) {
+            const bag = new $mol_tag_sieve;
+            bag.ids_tags_initial = () => this.ids_tags_filtered(id);
+            bag.prefix = () => this.prefix_sub(id);
+            return bag;
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_tag_sieve.prototype, "ids_tags_filtered", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_tag_sieve.prototype, "prefix_sub", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_tag_sieve.prototype, "select", null);
+    $.$mol_tag_sieve = $mol_tag_sieve;
+})($ || ($ = {}));
+//mol/tag/sieve/sieve.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_check extends $mol_button_minor {
         attr() {
             return {
@@ -7282,32 +7391,38 @@ var $;
 var $;
 (function ($) {
     class $mol_tag_tree extends $mol_list {
-        ids_tags() {
-            return {};
-        }
-        tree() {
-            return {};
-        }
-        tree_path() {
-            return [];
-        }
-        path_sep() {
-            return "/";
-        }
-        tag_names() {
-            return {};
-        }
-        tag_name(id) {
-            return "";
+        sieve() {
+            const obj = new this.$.$mol_tag_sieve();
+            obj.ids_tags = () => this.ids_tags();
+            obj.separator = () => this.separator();
+            return obj;
         }
         levels_expanded() {
             return 0;
         }
+        sort_items() {
+            return null;
+        }
         sort_tags() {
             return null;
         }
-        sort_items() {
-            return null;
+        sub() {
+            return [
+                ...this.tag_list(),
+                ...this.item_list()
+            ];
+        }
+        tag_name(id) {
+            return "";
+        }
+        tag_names() {
+            return {};
+        }
+        tag_list() {
+            return [];
+        }
+        item_list() {
+            return [];
         }
         Item(id) {
             const obj = new this.$.$mol_view();
@@ -7316,26 +7431,21 @@ var $;
             ];
             return obj;
         }
-        Tags() {
-            return [];
-        }
-        Items() {
-            return [];
-        }
-        sub() {
-            return [
-                ...this.Tags(),
-                ...this.Items()
-            ];
-        }
         Tag(id) {
             const obj = new this.$.$mol_expander();
-            obj.title = () => this.tag_name(id);
+            obj.expandable = () => true;
             obj.expanded = (next) => this.tag_expanded(id, next);
+            obj.title = () => this.tag_name(id);
             obj.content = () => [
                 this.Tag_tree(id)
             ];
             return obj;
+        }
+        ids_tags() {
+            return {};
+        }
+        separator() {
+            return "/";
         }
         item_title(id) {
             return "";
@@ -7345,20 +7455,23 @@ var $;
                 return next;
             return false;
         }
-        tree_path_id(id) {
-            return [];
+        sieve_sub(id) {
+            const obj = new this.$.$mol_tag_sieve();
+            return obj;
         }
         Tag_tree(id) {
             const obj = new this.$.$mol_tag_tree();
-            obj.tree_path = () => this.tree_path_id(id);
-            obj.tree = () => this.tree();
+            obj.sieve = () => this.sieve_sub(id);
             obj.Item = (id) => this.Item(id);
-            obj.tag_name = (id) => this.tag_name(id);
             obj.item_title = (id) => this.item_title(id);
             obj.tag_expanded = (id, next) => this.tag_expanded(id, next);
+            obj.tag_name = (id) => this.tag_name(id);
             return obj;
         }
     }
+    __decorate([
+        $mol_mem
+    ], $mol_tag_tree.prototype, "sieve", null);
     __decorate([
         $mol_mem_key
     ], $mol_tag_tree.prototype, "Item", null);
@@ -7368,6 +7481,9 @@ var $;
     __decorate([
         $mol_mem_key
     ], $mol_tag_tree.prototype, "tag_expanded", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_tag_tree.prototype, "sieve_sub", null);
     __decorate([
         $mol_mem_key
     ], $mol_tag_tree.prototype, "Tag_tree", null);
@@ -7408,71 +7524,23 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        function sort_object(obj, sort_tags = $mol_compare_text(), sort_items = sort_tags) {
-            return Object.keys(obj).sort(sort_tags).reduce((acc, key) => {
-                let sub = obj[key];
-                if (sub instanceof Array) {
-                    sub = [...sub].sort(sort_items);
-                }
-                else if (sub instanceof Object) {
-                    sub = sort_object(sub, sort_tags, sort_items);
-                }
-                acc[key] = sub;
-                return acc;
-            }, {});
-        }
-        function move_single_id_to_root(tree, root = tree) {
-            for (const key of Object.keys(tree)) {
-                if (key === '__ids')
-                    continue;
-                const obj = tree[key];
-                if ((obj.__ids?.length ?? 0) <= 1) {
-                    root.__ids = root.__ids ?? [];
-                    const id = obj.__ids?.[0];
-                    if (id)
-                        root.__ids.push(id);
-                    obj.__ids = undefined;
-                    if (Object.keys(obj).length === 1) {
-                        delete tree[key];
-                        continue;
-                    }
-                }
-                if (obj instanceof Object) {
-                    tree[key] = move_single_id_to_root(obj, root);
-                }
-            }
-            return tree;
-        }
         class $mol_tag_tree extends $.$mol_tag_tree {
+            sieve_sub(path) {
+                return this.sieve().select(path.at(-1));
+            }
+            item_list() {
+                const prefix = this.sieve().prefix();
+                return this.sieve().ids().sort(this.sort_items()).map(id => this.Item([...prefix, id]));
+            }
+            tag_list() {
+                const prefix = this.sieve().prefix();
+                return this.sieve().tags().sort(this.sort_tags()).map(tag => this.Tag([...prefix, tag]));
+            }
             tag_expanded(id, next) {
                 return next ?? this.tag_expanded_default(id);
             }
             tag_expanded_default(id) {
                 return this.levels_expanded() >= id.length;
-            }
-            ids_tags() {
-                return {};
-            }
-            tree() {
-                const tree = {};
-                const sep = this.path_sep();
-                const ids_tags = this.ids_tags();
-                const ids = Object.keys(ids_tags);
-                for (const id of ids) {
-                    const tags = ids_tags[id];
-                    if (!tags.length) {
-                        if (!tree.__ids)
-                            tree.__ids = [];
-                        tree.__ids.push(id);
-                    }
-                    for (const tag of tags) {
-                        const ptr = tag.split(sep).reduce((ptr, segment) => ptr[segment] = ptr[segment] ?? {}, tree);
-                        if (!ptr.__ids)
-                            ptr.__ids = [];
-                        ptr.__ids.push(id);
-                    }
-                }
-                return sort_object(move_single_id_to_root(tree), this.sort_tags(), this.sort_items());
             }
             sort_tags() {
                 return $mol_compare_text();
@@ -7480,50 +7548,35 @@ var $;
             sort_items() {
                 return this.sort_tags();
             }
-            tree_sub() {
-                const path = this.tree_path();
-                return path.reduce((ptr, segment) => ptr[segment], this.tree());
-            }
-            Tags() {
-                const path = this.tree_path();
-                return Object.keys(this.tree_sub())
-                    .filter(key => key !== '__ids')
-                    .map(tag => this.Tag([...path, tag]));
-            }
-            Items() {
-                const path = this.tree_path();
-                return this.tree_sub().__ids?.map(id => this.Item([...path, id])) ?? [];
-            }
             tag_names() {
                 return {};
             }
-            tag_name(tree_path) {
-                const names = this.tag_names();
-                const last_segment = tree_path.at(-1);
-                return names[last_segment] ?? last_segment;
+            tag_name(path) {
+                const id = path.at(-1);
+                return this.tag_names()[id] ?? id;
             }
             item_title(id) {
                 return id.at(-1);
             }
-            tree_path_id(id) {
-                return id ?? [];
-            }
         }
         __decorate([
             $mol_mem_key
-        ], $mol_tag_tree.prototype, "tag_expanded", null);
+        ], $mol_tag_tree.prototype, "sieve_sub", null);
         __decorate([
             $mol_mem
-        ], $mol_tag_tree.prototype, "tree", null);
+        ], $mol_tag_tree.prototype, "item_list", null);
+        __decorate([
+            $mol_mem
+        ], $mol_tag_tree.prototype, "tag_list", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_tag_tree.prototype, "tag_expanded", null);
         __decorate([
             $mol_mem
         ], $mol_tag_tree.prototype, "sort_tags", null);
         __decorate([
             $mol_mem
         ], $mol_tag_tree.prototype, "sort_items", null);
-        __decorate([
-            $mol_mem
-        ], $mol_tag_tree.prototype, "tree_sub", null);
         $$.$mol_tag_tree = $mol_tag_tree;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -25375,6 +25428,11 @@ var $;
                 "field"
             ];
         }
+        aspects() {
+            return [
+                "gui/form"
+            ];
+        }
         avatars_bid() {
             return "";
         }
@@ -35217,7 +35275,7 @@ var $;
         Tree() {
             const obj = new this.$.$mol_tag_tree();
             obj.Item = (id) => this.Item(id);
-            obj.levels_expanded = () => 1;
+            obj.levels_expanded = () => 0;
             obj.tag_names = () => ({
                 side: this.$.$mol_locale.text('$mol_tag_tree_demo_Tree_tag_names_side'),
                 good: this.$.$mol_locale.text('$mol_tag_tree_demo_Tree_tag_names_good'),
@@ -35230,9 +35288,6 @@ var $;
                 dc: this.$.$mol_locale.text('$mol_tag_tree_demo_Tree_tag_names_dc')
             });
             obj.ids_tags = () => ({
-                valera: [
-                    "side/bomj"
-                ],
                 batman: [
                     "side/good",
                     "universe/dc",
@@ -35258,20 +35313,10 @@ var $;
                     "universe/dc",
                     "sex/male"
                 ],
-                harley: [
-                    "side/bad",
-                    "universe/dc",
-                    "sex/female"
-                ],
                 deadshot: [
                     "side/bad",
                     "universe/dc",
                     "sex/male"
-                ],
-                wonderwoman: [
-                    "side/good",
-                    "universe/dc",
-                    "sex/female"
                 ],
                 ironman: [
                     "side/good",
@@ -35302,6 +35347,16 @@ var $;
                     "side/bad",
                     "universe/marvel",
                     "sex/male"
+                ],
+                harley: [
+                    "side/bad",
+                    "universe/dc",
+                    "sex/female"
+                ],
+                wonderwoman: [
+                    "side/good",
+                    "universe/dc",
+                    "sex/female"
                 ],
                 hela: [
                     "side/bad",

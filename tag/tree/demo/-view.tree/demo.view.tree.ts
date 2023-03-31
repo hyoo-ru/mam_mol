@@ -80,7 +80,7 @@ namespace $ {
 		 * ```tree
 		 * Tree $mol_tag_tree
 		 * 	Item* <= Item*
-		 * 	levels_expanded 1
+		 * 	levels_expanded 0
 		 * 	tag_names *
 		 * 		side @ \Side
 		 * 		good @ \Good
@@ -92,7 +92,6 @@ namespace $ {
 		 * 		marvel @ \Marvel
 		 * 		dc @ \DC
 		 * 	ids_tags *
-		 * 		valera / \side/bomj
 		 * 		batman /
 		 * 			\side/good
 		 * 			\universe/dc
@@ -113,18 +112,10 @@ namespace $ {
 		 * 			\side/bad
 		 * 			\universe/dc
 		 * 			\sex/male
-		 * 		harley /
-		 * 			\side/bad
-		 * 			\universe/dc
-		 * 			\sex/female
 		 * 		deadshot /
 		 * 			\side/bad
 		 * 			\universe/dc
 		 * 			\sex/male
-		 * 		wonderwoman /
-		 * 			\side/good
-		 * 			\universe/dc
-		 * 			\sex/female
 		 * 		ironman /
 		 * 			\side/good
 		 * 			\universe/marvel
@@ -149,6 +140,14 @@ namespace $ {
 		 * 			\side/bad
 		 * 			\universe/marvel
 		 * 			\sex/male
+		 * 		harley /
+		 * 			\side/bad
+		 * 			\universe/dc
+		 * 			\sex/female
+		 * 		wonderwoman /
+		 * 			\side/good
+		 * 			\universe/dc
+		 * 			\sex/female
 		 * 		hela /
 		 * 			\side/bad
 		 * 			\universe/marvel
@@ -160,7 +159,7 @@ namespace $ {
 			const obj = new this.$.$mol_tag_tree()
 			
 			obj.Item = (id: any) => this.Item(id)
-			obj.levels_expanded = () => 1
+			obj.levels_expanded = () => 0
 			obj.tag_names = () => ({
 				side: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_side' ),
 				good: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_good' ),
@@ -173,9 +172,6 @@ namespace $ {
 				dc: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_dc' )
 			})
 			obj.ids_tags = () => ({
-				valera: [
-					"side/bomj"
-				] as readonly any[],
 				batman: [
 					"side/good",
 					"universe/dc",
@@ -201,20 +197,10 @@ namespace $ {
 					"universe/dc",
 					"sex/male"
 				] as readonly any[],
-				harley: [
-					"side/bad",
-					"universe/dc",
-					"sex/female"
-				] as readonly any[],
 				deadshot: [
 					"side/bad",
 					"universe/dc",
 					"sex/male"
-				] as readonly any[],
-				wonderwoman: [
-					"side/good",
-					"universe/dc",
-					"sex/female"
 				] as readonly any[],
 				ironman: [
 					"side/good",
@@ -245,6 +231,16 @@ namespace $ {
 					"side/bad",
 					"universe/marvel",
 					"sex/male"
+				] as readonly any[],
+				harley: [
+					"side/bad",
+					"universe/dc",
+					"sex/female"
+				] as readonly any[],
+				wonderwoman: [
+					"side/good",
+					"universe/dc",
+					"sex/female"
 				] as readonly any[],
 				hela: [
 					"side/bad",

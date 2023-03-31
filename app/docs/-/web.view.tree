@@ -322,37 +322,32 @@ $mol_expander $mol_list
 			rows <= content /
 
 $mol_tag_tree $mol_list
-	ids_tags *
-	- tag_current? \
-	tree *
-	tree_path /string
-	path_sep \/
-	tag_names *
-	tag_name* \
+	sieve $mol_tag_sieve
+		ids_tags <= ids_tags *
+		separator <= separator \/
 	levels_expanded 0
-	sort_tags null
 	sort_items null
+	sort_tags null
+	sub /$mol_view
+		^ tag_list /$mol_view
+		^ item_list /$mol_view
+	tag_name* \
+	tag_names *
+	tag_list /$mol_view
+	item_list /$mol_view
 	Item* $mol_view
 		sub /
 			<= item_title* \
-	Tags /$mol_view
-	Items /$mol_view
-	sub /$mol_view
-		^
-			Tags /$mol_view
-		^
-			Items /$mol_view
 	Tag* $mol_expander
-		title <= tag_name* \
+		expandable true
 		expanded? <=> tag_expanded*? false
-		content /
-			<= Tag_tree* $mol_tag_tree
-				tree_path <= tree_path_id* /string
-				tree <= tree
-				Item* <= Item*
-				tag_name* <= tag_name*
-				item_title* <= item_title*
-				tag_expanded*? <=> tag_expanded*?
+		title <= tag_name* \
+		content / <= Tag_tree* $mol_tag_tree
+			sieve <= sieve_sub* $mol_tag_sieve
+			Item* <= Item*
+			item_title* <= item_title*
+			tag_expanded*? <=> tag_expanded*?
+			tag_name* <= tag_name*
 
 $mol_app_demo_menu $mol_page
 	names /string
@@ -1657,7 +1652,6 @@ $mol_button_demo $mol_example_small
 	aspects /
 		\gui/input
 		\input/button
-
 
 $mol_icon_share $mol_icon path \M21,12L14,5V9C7,10 4,15 3,20C5.5,16.5 9,14.9 14,14.9V19L21,12Z
 
@@ -3014,6 +3008,8 @@ $mol_form_demo $mol_example
 		\bids
 		\validation
 		\field
+	aspects /
+		\gui/form
 
 $mol_form_draft $mol_form
 	model $mol_object2
@@ -4572,7 +4568,7 @@ $mol_tag_tree_demo $mol_example
 		<= Tree $mol_tag_tree
 			Item* <= Item* $mol_button_minor
 				title <= item_title* \
-			levels_expanded 1
+			levels_expanded 0
 			tag_names *
 				side @ \Side
 				good @ \Good
@@ -4584,8 +4580,6 @@ $mol_tag_tree_demo $mol_example
 				marvel @ \Marvel
 				dc @ \DC
 			ids_tags *
-				valera /
-					\side/bomj
 				batman /
 					\side/good
 					\universe/dc
@@ -4606,18 +4600,10 @@ $mol_tag_tree_demo $mol_example
 					\side/bad
 					\universe/dc
 					\sex/male
-				harley /
-					\side/bad
-					\universe/dc
-					\sex/female
 				deadshot /
 					\side/bad
 					\universe/dc
 					\sex/male
-				wonderwoman /
-					\side/good
-					\universe/dc
-					\sex/female
 				ironman /
 					\side/good
 					\universe/marvel
@@ -4642,6 +4628,14 @@ $mol_tag_tree_demo $mol_example
 					\side/bad
 					\universe/marvel
 					\sex/male
+				harley /
+					\side/bad
+					\universe/dc
+					\sex/female
+				wonderwoman /
+					\side/good
+					\universe/dc
+					\sex/female
 				hela /
 					\side/bad
 					\universe/marvel

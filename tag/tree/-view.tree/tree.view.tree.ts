@@ -3,41 +3,69 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * ids_tags *
+		 * sieve $mol_tag_sieve
+		 * 	ids_tags <= ids_tags
+		 * 	separator <= separator
 		 * ```
 		 */
-		ids_tags() {
-			return {
-			}
+		@ $mol_mem
+		sieve() {
+			const obj = new this.$.$mol_tag_sieve()
+			
+			obj.ids_tags = () => this.ids_tags()
+			obj.separator = () => this.separator()
+			
+			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * tree *
+		 * levels_expanded 0
 		 * ```
 		 */
-		tree() {
-			return {
-			}
+		levels_expanded() {
+			return 0
 		}
 		
 		/**
 		 * ```tree
-		 * tree_path /string
+		 * sort_items null
 		 * ```
 		 */
-		tree_path() {
+		sort_items() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * sort_tags null
+		 * ```
+		 */
+		sort_tags() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * sub /$mol_view
+		 * 	^ tag_list /$mol_view
+		 * 	^ item_list /$mol_view
+		 * ```
+		 */
+		sub() {
 			return [
-			] as readonly string[]
+				...this.tag_list(),
+				...this.item_list()
+			] as readonly $mol_view[]
 		}
 		
 		/**
 		 * ```tree
-		 * path_sep \/
+		 * tag_name* \
 		 * ```
 		 */
-		path_sep() {
-			return "/"
+		tag_name(id: any) {
+			return ""
 		}
 		
 		/**
@@ -52,38 +80,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tag_name* \
+		 * tag_list /$mol_view
 		 * ```
 		 */
-		tag_name(id: any) {
-			return ""
+		tag_list() {
+			return [
+			] as readonly $mol_view[]
 		}
 		
 		/**
 		 * ```tree
-		 * levels_expanded 0
+		 * item_list /$mol_view
 		 * ```
 		 */
-		levels_expanded() {
-			return 0
-		}
-		
-		/**
-		 * ```tree
-		 * sort_tags null
-		 * ```
-		 */
-		sort_tags() {
-			return null as any
-		}
-		
-		/**
-		 * ```tree
-		 * sort_items null
-		 * ```
-		 */
-		sort_items() {
-			return null as any
+		item_list() {
+			return [
+			] as readonly $mol_view[]
 		}
 		
 		/**
@@ -104,43 +116,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Tags /$mol_view
-		 * ```
-		 */
-		Tags() {
-			return [
-			] as readonly $mol_view[]
-		}
-		
-		/**
-		 * ```tree
-		 * Items /$mol_view
-		 * ```
-		 */
-		Items() {
-			return [
-			] as readonly $mol_view[]
-		}
-		
-		/**
-		 * ```tree
-		 * sub /$mol_view
-		 * 	^ Tags /$mol_view
-		 * 	^ Items /$mol_view
-		 * ```
-		 */
-		sub() {
-			return [
-				...this.Tags(),
-				...this.Items()
-			] as readonly $mol_view[]
-		}
-		
-		/**
-		 * ```tree
 		 * Tag* $mol_expander
-		 * 	title <= tag_name*
+		 * 	expandable true
 		 * 	expanded? <=> tag_expanded*?
+		 * 	title <= tag_name*
 		 * 	content / <= Tag_tree*
 		 * ```
 		 */
@@ -148,13 +127,33 @@ namespace $ {
 		Tag(id: any) {
 			const obj = new this.$.$mol_expander()
 			
-			obj.title = () => this.tag_name(id)
+			obj.expandable = () => true
 			obj.expanded = (next?: any) => this.tag_expanded(id, next)
+			obj.title = () => this.tag_name(id)
 			obj.content = () => [
 				this.Tag_tree(id)
 			] as readonly any[]
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * ids_tags *
+		 * ```
+		 */
+		ids_tags() {
+			return {
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * separator \/
+		 * ```
+		 */
+		separator() {
+			return "/"
 		}
 		
 		/**
@@ -179,35 +178,35 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tree_path_id* /string
+		 * sieve_sub* $mol_tag_sieve
 		 * ```
 		 */
-		tree_path_id(id: any) {
-			return [
-			] as readonly string[]
+		@ $mol_mem_key
+		sieve_sub(id: any) {
+			const obj = new this.$.$mol_tag_sieve()
+			
+			return obj
 		}
 		
 		/**
 		 * ```tree
 		 * Tag_tree* $mol_tag_tree
-		 * 	tree_path <= tree_path_id*
-		 * 	tree <= tree
+		 * 	sieve <= sieve_sub*
 		 * 	Item* <= Item*
-		 * 	tag_name* <= tag_name*
 		 * 	item_title* <= item_title*
 		 * 	tag_expanded*? <=> tag_expanded*?
+		 * 	tag_name* <= tag_name*
 		 * ```
 		 */
 		@ $mol_mem_key
 		Tag_tree(id: any) {
 			const obj = new this.$.$mol_tag_tree()
 			
-			obj.tree_path = () => this.tree_path_id(id)
-			obj.tree = () => this.tree()
+			obj.sieve = () => this.sieve_sub(id)
 			obj.Item = (id: any) => this.Item(id)
-			obj.tag_name = (id: any) => this.tag_name(id)
 			obj.item_title = (id: any) => this.item_title(id)
 			obj.tag_expanded = (id: any, next?: any) => this.tag_expanded(id, next)
+			obj.tag_name = (id: any) => this.tag_name(id)
 			
 			return obj
 		}

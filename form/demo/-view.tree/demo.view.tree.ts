@@ -79,6 +79,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \gui/form
+		 * ```
+		 */
+		aspects() {
+			return [
+				"gui/form"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * avatars_bid \
 		 * ```
 		 */
