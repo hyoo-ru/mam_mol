@@ -1,32 +1,27 @@
 $mol_tag_tree $mol_list
-	ids_tags *
-	- tag_current? \
-	tree *
-	tree_path /string
-	path_sep \/
-	tag_names *
-	tag_name* \
+	sieve $mol_tag_sieve
+		ids_tags <= ids_tags *
+		separator <= separator \/
 	levels_expanded 0
-	sort_tags null
 	sort_items null
+	sort_tags null
+	sub /$mol_view
+		^ tag_list /$mol_view
+		^ item_list /$mol_view
+	tag_name* \
+	tag_names *
+	tag_list /$mol_view
+	item_list /$mol_view
 	Item* $mol_view
 		sub /
 			<= item_title* \
-	Tags /$mol_view
-	Items /$mol_view
-	sub /$mol_view
-		^
-			Tags /$mol_view
-		^
-			Items /$mol_view
 	Tag* $mol_expander
-		title <= tag_name* \
+		expandable true
 		expanded? <=> tag_expanded*? false
-		content /
-			<= Tag_tree* $mol_tag_tree
-				tree_path <= tree_path_id* /string
-				tree <= tree
-				Item* <= Item*
-				tag_name* <= tag_name*
-				item_title* <= item_title*
-				tag_expanded*? <=> tag_expanded*?
+		title <= tag_name* \
+		content / <= Tag_tree* $mol_tag_tree
+			sieve <= sieve_sub* $mol_tag_sieve
+			Item* <= Item*
+			item_title* <= item_title*
+			tag_expanded*? <=> tag_expanded*?
+			tag_name* <= tag_name*
