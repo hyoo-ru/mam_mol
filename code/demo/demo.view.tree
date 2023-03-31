@@ -26,3 +26,5 @@ $mol_code_demo $mol_example_small
 		\scanner
 		\scan
 		\cordova
+	aspects /
+		\ui

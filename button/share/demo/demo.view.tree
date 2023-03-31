@@ -18,3 +18,5 @@ $mol_button_share_demo $mol_example_small
 		\share
 		\button
 		\icon
+	aspects /
+		\ui

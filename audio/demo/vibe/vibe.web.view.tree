@@ -41,3 +41,5 @@ $mol_audio_demo_vibe $mol_example_small
 	tags /
 		\Audio
 		\Sound
+	aspects /
+		\util

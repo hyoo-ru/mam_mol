@@ -19,3 +19,5 @@ $mol_gallery_demo $mol_example
 		\image
 		\adaptive
 		\masonry
+	aspects /
+		\ui

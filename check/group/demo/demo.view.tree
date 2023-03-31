@@ -40,3 +40,5 @@ $mol_check_group_demo $mol_example_small
 		\checkbox
 		\multi
 		\group
+	aspects /
+		\ui

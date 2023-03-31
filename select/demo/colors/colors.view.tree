@@ -22,6 +22,8 @@ $mol_select_demo_colors $mol_example_small
 		\color
 		\colorpicker
 		\filter
+	aspects /
+		\ui
 
 $mol_select_colors_color_preview $mol_view
 	style *

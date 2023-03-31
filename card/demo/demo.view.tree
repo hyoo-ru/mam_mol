@@ -13,4 +13,4 @@ $mol_card_demo $mol_example_small
 		\container
 		\paper
 	aspects /
-		\gui/island
+		\ui

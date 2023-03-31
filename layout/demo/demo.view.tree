@@ -8,3 +8,5 @@ $mol_layout_demo $mol_example_large
 			height => height
 	tags /
 		\layout
+	aspects /
+		\ui/layout

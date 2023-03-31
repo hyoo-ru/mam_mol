@@ -9,3 +9,5 @@ $mol_password_demo $mol_example_small
 	tags /
 		\password
 		\input
+	aspects /
+		\ui

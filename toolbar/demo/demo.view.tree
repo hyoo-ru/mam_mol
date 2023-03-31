@@ -26,3 +26,5 @@ $mol_toolbar_demo $mol_example_small
 		\toolbar
 		\button
 		\icon
+	aspects /
+		\ui

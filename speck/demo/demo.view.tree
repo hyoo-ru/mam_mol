@@ -27,4 +27,5 @@ $mol_speck_demo $mol_example_small
 		\speck
 		\highlight
 		\badge
-
+	aspects /
+		\ui

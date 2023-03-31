@@ -29,3 +29,5 @@ $mol_chart_demo_forces $mol_example_large
 		\plot
 		\visualization
 		\dashboard
+	aspects /
+		\ui

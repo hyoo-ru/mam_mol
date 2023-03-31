@@ -22,3 +22,5 @@ $mol_calendar_demo_holiday $mol_example_small
 	tags /
 		\calendar
 		\date
+	aspects /
+		\ui

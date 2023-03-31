@@ -39,3 +39,5 @@ $mol_chart_demo_simple $mol_example_large
 		\plot
 		\visualization
 		\dashboard
+	aspects /
+		\ui

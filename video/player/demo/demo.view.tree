@@ -42,4 +42,5 @@ $mol_video_player_demo $mol_example_large
 		\palyback
 		\upload
 		\media
-
+	aspects /
+		\ui

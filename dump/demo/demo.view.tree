@@ -11,3 +11,5 @@ $mol_dump_demo $mol_example_small
 		\dump
 		\javascript
 		\debug
+	aspects /
+		\ui

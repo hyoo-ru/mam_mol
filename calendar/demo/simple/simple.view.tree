@@ -6,3 +6,5 @@ $mol_calendar_demo_simple $mol_example_small
 	tags /
 		\calendar
 		\date
+	aspects /
+		\ui
