@@ -6,6 +6,18 @@ namespace $.$$ {
 	 */
 	export class $mol_button_copy extends $.$mol_button_copy {
 		
+		@ $mol_mem
+		text_blob(next?: $mol_blob) {
+			if ( next !== undefined ) return next
+			return new $mol_blob([this.text()], {type: "text/plain"})
+		}
+
+		@ $mol_mem
+		html_blob(next?: $mol_blob) {
+			if ( next !== undefined ) return next
+			return new $mol_blob([this.html()], {type: "text/html"})
+		}
+
 		data() {
 			return Object.fromEntries(
 				this.blobs().map( blob => [ blob.type, blob ] )

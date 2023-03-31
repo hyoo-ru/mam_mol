@@ -90,7 +90,7 @@ namespace $ {
 				{
 					loc: this.loc_outer()
 				}
-			] as any[]
+			] as readonly any[]
 		}
 		
 		/**
