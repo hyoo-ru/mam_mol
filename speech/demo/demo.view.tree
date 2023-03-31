@@ -18,4 +18,4 @@ $mol_speech_demo $mol_example_small
 		\recognition
 		\dictation
 	aspects /
-		\UI
+		\Widget

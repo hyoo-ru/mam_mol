@@ -12,4 +12,4 @@ $mol_dump_demo $mol_example_small
 		\javascript
 		\debug
 	aspects /
-		\UI
+		\Widget

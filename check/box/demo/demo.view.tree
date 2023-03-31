@@ -28,4 +28,4 @@ $mol_check_box_demo $mol_example_small
 		\checkbox
 		\switch
 	aspects /
-		\UI
+		\Widget

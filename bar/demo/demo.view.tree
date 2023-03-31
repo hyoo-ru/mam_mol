@@ -24,4 +24,4 @@ $mol_bar_demo $mol_example_small
 		\group
 		\container
 	aspects /
-		\UI
+		\Widget

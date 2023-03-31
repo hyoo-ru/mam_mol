@@ -12,4 +12,4 @@ $mol_lights_demo $mol_example_small
 		\theme
 		\switcher
 	aspects /
-		\UI
+		\Widget

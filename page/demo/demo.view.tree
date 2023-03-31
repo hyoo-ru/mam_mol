@@ -24,4 +24,4 @@ $mol_page_demo $mol_example_large
 		\bottom
 		\navigator
 	aspects /
-		\UI/Layout
+		\Widget/Layout

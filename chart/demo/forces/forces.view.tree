@@ -30,4 +30,4 @@ $mol_chart_demo_forces $mol_example_large
 		\visualization
 		\dashboard
 	aspects /
-		\UI
+		\Widget

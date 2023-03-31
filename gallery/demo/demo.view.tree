@@ -20,4 +20,4 @@ $mol_gallery_demo $mol_example
 		\adaptive
 		\masonry
 	aspects /
-		\UI
+		\Widget

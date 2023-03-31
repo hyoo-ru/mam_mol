@@ -16,4 +16,4 @@ $mol_labeler_demo $mol_example_small
 		\field
 		\caption
 	aspects /
-		\UI
+		\Widget

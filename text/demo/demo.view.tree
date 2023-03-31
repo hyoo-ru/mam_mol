@@ -106,4 +106,4 @@ $mol_text_demo $mol_example_large
 		\text
 		\markdown
 	aspects /
-		\UI
+		\Widget

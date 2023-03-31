@@ -33,4 +33,4 @@ $mol_pop_over_demo $mol_example_small
 		\hover
 		\tooltip
 	aspects /
-		\UI
+		\Widget

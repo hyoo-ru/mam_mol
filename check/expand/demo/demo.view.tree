@@ -23,4 +23,4 @@ $mol_check_expand_demo $mol_example_small
 		\expand
 		\fold
 	aspects /
-		\UI
+		\Widget
