@@ -10,7 +10,7 @@ namespace $ {
 
 		for( let key in this ) {
 			try {
-				if( this[ key ] !== func ) continue
+				if( (this as any)[ key ] !== func ) continue
 				name = key
 				Object.defineProperty( func , 'name' , { value : name } )
 				break

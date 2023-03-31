@@ -47,7 +47,7 @@ namespace $ {
 
 				const name = nodes.item( i ).getAttribute( 'mol_view_root' )!
 				
-				const View = $[ name ] as typeof $mol_view
+				const View = ($ as any)[ name ] as typeof $mol_view
 				if( !View ) {
 					console.error( `Can not attach view. Class not found: ${ name }` )
 					continue

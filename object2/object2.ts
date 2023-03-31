@@ -4,6 +4,8 @@ namespace $ {
 		
 		static $ = $ as $
 		
+		[Symbol.toStringTag]!: string
+
 		[ $mol_ambient_ref ] = null as any as $
 		get $() {
 			if( this[ $mol_ambient_ref ] ) return this[ $mol_ambient_ref ]
