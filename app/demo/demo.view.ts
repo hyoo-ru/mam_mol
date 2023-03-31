@@ -131,21 +131,17 @@ namespace $.$$ {
 			return source_link
 		}
 
-		repo_dict() {
-			// 🕵️
-			return super.repo_dict() as Record<'mol' | (string & {}), string>
-		}
-
 		@ $mol_mem_key
 		name_parse( name: string ) {
 			const split = name.replace( /_demo.*$/ , '' ).split('_')
 			
+			const repos = this.repo_dict() as Record<string, string>
 			const keys = split.map( ( _ , index ) => split.slice( 0 , -1-index ).join('_') )
-			const key = keys.find( key => this.repo_dict()[ key ] )
+			const key = keys.find( key => key in repos )
 			
 			if ( !key ) throw new Error(`${ this }.name_parse("${ name }"): Key "${ key }" not found`)
 
-			const repo = this.repo_dict()[ key ]
+			const repo = repos[ key ]
 			const module = split.slice( key.split('_').length )
 			
 			return { repo , module }
