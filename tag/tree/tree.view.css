@@ -5,3 +5,7 @@
 [mol_tag_tree_item] {
 	padding: var(--mol_gap_text);
 }
+
+[mol_tag_tree_tag_trigger] {
+	padding-left: var(--mol_gap_text);
+}
