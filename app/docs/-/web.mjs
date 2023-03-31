@@ -1924,6 +1924,9 @@ var $;
         static scale(zoom) {
             return new $mol_style_func('scale', [zoom]);
         }
+        static cubic_bezier(x1, y1, x2, y2) {
+            return new $mol_style_func('cubic-bezier', [x1, y1, x2, y2]);
+        }
     }
     $.$mol_style_func = $mol_style_func;
 })($ || ($ = {}));
