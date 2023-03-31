@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** Image processing. */
 	export class $mol_picture extends Object {
 		
 		constructor(
@@ -15,7 +16,7 @@ namespace $ {
 		@ $mol_action
 		static fit(
 			image: CanvasImageSource | Blob | string,
-			width: number,
+			width = Number.POSITIVE_INFINITY,
 			height = width,
 		) {
 			

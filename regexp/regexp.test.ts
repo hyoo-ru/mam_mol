@@ -464,12 +464,12 @@ namespace $ {
 			$mol_assert_like(
 				[ ... 'foo.bar@example.org'.matchAll( mail ) ][0].groups,
 				{
-					domain: "example.org",
 					dot_atom: "foo.bar",
+					quoted_name: "",
 					name: "",
 					name_letter: "",
-					quoted_name: "",
 					quoted_pair: "",
+					domain: "example.org",
 				}
 			)
 			

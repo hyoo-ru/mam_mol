@@ -16,6 +16,10 @@ namespace $ {
 	
 	const error_showed = new WeakMap< Error, $mol_view >()
 
+	/**
+	 * The base class for all visual components. It provides the infrastructure for reactive lazy rendering, handling exceptions.
+	 * @see https://mol.hyoo.ru/#!section=docs/=vv2nig_s5zr0f
+	 */
 	/// Reactive statefull lazy ViewModel
 	export class $mol_view extends $mol_object {
 		
@@ -43,7 +47,7 @@ namespace $ {
 
 				const name = nodes.item( i ).getAttribute( 'mol_view_root' )!
 				
-				const View = $[ name ] as typeof $mol_view
+				const View = ($ as any)[ name ] as typeof $mol_view
 				if( !View ) {
 					console.error( `Can not attach view. Class not found: ${ name }` )
 					continue

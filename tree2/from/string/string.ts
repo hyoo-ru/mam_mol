@@ -76,7 +76,7 @@ namespace $ {
 				if( pos > error_start ) {
 					let line_end = str.indexOf( '\n' , pos )
 					if( line_end === -1 ) line_end = str.length
-					const sp = span.span( row, error_start - line_start, pos - error_start + 1 )
+					const sp = span.span( row, error_start - line_start + 1, pos - error_start )
 					this.$mol_fail( new this.$mol_error_syntax(
 						`Wrong nodes separator`,
 						str.substring( line_start, line_end ),
@@ -134,7 +134,7 @@ namespace $ {
 			if( str.length === pos && stack.length > 0 ) {
 				const sp = span.span( row, pos - line_start + 1, 1 )
 				this.$mol_fail( new this.$mol_error_syntax(
-					`Undexpected EOF, LF required`,
+					`Unexpected EOF, LF required`,
 					str.substring( line_start, str.length ),
 					sp,
 				) )

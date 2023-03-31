@@ -25,8 +25,8 @@ namespace $ {
 		if( left instanceof Number ) return Object.is( left.valueOf(), right['valueOf']() )
 		if( left instanceof String ) return Object.is( left.valueOf(), right['valueOf']() )
 		if( left instanceof Date ) return Object.is( left.valueOf(), right['valueOf']() )
-		if( left instanceof RegExp ) return left.source === right['source'] && left.flags === right['flags']
-		if( left instanceof Error ) return left.message === right['message'] && left.stack === right['stack']
+		if( left instanceof RegExp ) return left.source === (right as any).source && left.flags === (right as any).flags
+		if( left instanceof Error ) return left.message === (right as any).message && left.stack === (right as any).stack
 
 		let left_cache = $mol_compare_deep_cache.get( left )
 		if( left_cache ) {
@@ -45,7 +45,8 @@ namespace $ {
 
 		try {
 			
-			if( left_proto && !Reflect.getPrototypeOf( left_proto ) ) result = compare_pojo( left, right as any )
+			if( !left_proto ) result = compare_pojo( left, right as any )
+			else if( !Reflect.getPrototypeOf( left_proto ) ) result = compare_pojo( left, right as any )
 			else if( Array.isArray( left ) ) result = compare_array( left, right as any )
 			else if( left instanceof Set ) result = compare_set( left, right as any )
 			else if( left instanceof Map ) result = compare_map( left, right as any )
@@ -78,7 +79,7 @@ namespace $ {
 		if( len !== right.byteLength ) return false
 		
 		for( let i = 0; i < len; ++i ) {
-			if( left[i] !== right[i] ) return false
+			if( (left as any)[i] !== (right as any)[i] ) return false
 		}
 		
 		return true
@@ -121,10 +122,19 @@ namespace $ {
 		const left_keys = Object.getOwnPropertyNames( left )
 		const right_keys = Object.getOwnPropertyNames( right )
 		
-		if( left_keys.length !== right_keys.length ) return false
+		if( !compare_array( left_keys, right_keys ) ) return false
 
 		for( let key of left_keys ) {
-			if( !$mol_compare_deep( left[ key ], Reflect.get( right, key ) ) ) return false
+			if( !$mol_compare_deep( ( left as any )[ key ], ( right as any )[ key ] ) ) return false
+		}
+
+		const left_syms = Object.getOwnPropertySymbols( left )
+		const right_syms = Object.getOwnPropertySymbols( right )
+		
+		if( !compare_array( left_syms, right_syms ) ) return false
+
+		for( let key of left_syms ) {
+			if( !$mol_compare_deep( ( left as any )[ key ], ( right as any )[ key ] ) ) return false
 		}
 
 		return true
@@ -132,8 +142,8 @@ namespace $ {
 	
 	function compare_primitive( left: {}, right: {} ): boolean {
 		return Object.is(
-			left[ Symbol.toPrimitive ]( 'default' ),
-			right[ Symbol.toPrimitive ]( 'default' ),
+			(left as any)[ Symbol.toPrimitive ]( 'default' ),
+			(right as any)[ Symbol.toPrimitive ]( 'default' ),
 		)
 	}
 	

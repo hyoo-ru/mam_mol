@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** One-shot fiber */
 	export class $mol_wire_task<
 		Host,
 		Args extends readonly unknown[],
@@ -35,7 +36,7 @@ namespace $ {
 				// 	$mol_fail( new Error( `$mol_wire_task detects nonidempotency\n${existen}` ) )
 				// }
 				
-				return new $mol_wire_task( `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, task, host, args )
+				return new $mol_wire_task( `${ (host as any)?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, task, host, args )
 			}
 			
 		}

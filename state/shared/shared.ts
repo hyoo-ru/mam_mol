@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** Shared local-first offline-ready store with [CROWD](https://github.com/hyoo-ru/crowd.hyoo.ru) conflict resolution. */
 	export class $mol_state_shared extends $mol_object2 {
 		
 		@ $mol_mem

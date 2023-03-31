@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** Starts subtasks concurrently instead of serial. */
 	export function $mol_wire_race<
 		Tasks extends ( ( ... args: any )=> any )[]
 	>( ... tasks: Tasks ): {

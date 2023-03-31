@@ -1,10 +1,11 @@
 $mol_pick_time $mol_pick
-	Icon $mol_icon_clock
+	Icon $mol_icon_clock_outline
 	-
 	bubble_content /
 		<= Input $mol_format
 			value? <=> value? \
 			mask \__:__
+			allow \0123456789.
 			enabled <= enabled true
 		<= Pickers $mol_row
 			sub /

@@ -1,5 +1,6 @@
 namespace $ {
 
+	/** Lazy computed lists with native Array interface. $mol_range2_array is mutable but all derived ranges are immutable. */
 	export function $mol_range2< Item = number >(
 		item : ( index : number )=> Item = index => index as any ,
 		size = ()=> Number.POSITIVE_INFINITY ,

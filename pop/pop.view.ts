@@ -1,4 +1,9 @@
 namespace $.$$ {
+
+	/**
+	 * `Bubble` that can be shown anchored to `Anchor` element.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_pop_demo
+	 */
 	export class $mol_pop extends $.$mol_pop {
 		
 		@ $mol_mem
@@ -30,7 +35,11 @@ namespace $.$$ {
 
 		@ $mol_mem
 		align() {
-			return `${ this.align_vert() }_${ this.align_hor() }`
+			switch( this.prefer() ) {
+				case 'hor': return `${ this.align_hor() }_${ this.align_vert() }`
+				case 'vert': return `${ this.align_vert() }_${ this.align_hor() }`
+				default: return this.prefer()
+			}
 		}
 
 		@ $mol_mem

@@ -7,6 +7,9 @@ namespace $ {
 	| 'triangle' 
 	| 'custom'
 
+	/**
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_audio_demo_vibe
+	 */
 	export class $mol_audio_vibe extends $mol_audio_node {
 		
 		@ $mol_mem

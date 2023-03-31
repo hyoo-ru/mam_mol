@@ -1,5 +1,8 @@
 namespace $ {
 
+	/**
+	 * Checks that a member does not override the same member of the superclass.
+	 */
 	export function $mol_define< Sup >( sup : new()=> Sup ) {
 		
 		return <

@@ -46,6 +46,9 @@ namespace $.$$ {
 		return tree
 	}
 
+	/**
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_tag_tree_demo
+	 */
 	export class $mol_tag_tree extends $.$mol_tag_tree {
 
 		@ $mol_mem_key

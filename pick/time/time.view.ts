@@ -1,8 +1,13 @@
 namespace $.$$ {
+
+	/**
+	 * Time picker.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_pick_time_demo
+	 */
 	export class $mol_pick_time extends $.$mol_pick_time {
 
 		trigger_content() {
-			return [ this.value() || this.Icon() ]
+			return [ this.value_moment().toString( 'hh:mm.sss' ) || this.Icon() ]
 		}
 
 		@ $mol_mem
@@ -13,7 +18,7 @@ namespace $.$$ {
 				return time_with_moment( this.value(), moment )
 			}
 
-			this.value( next?.toString( 'hh:mm' ) || '' )
+			this.value( next?.toString( 'hh:mm.sss' ) || '' )
 
 			return next
 		}
@@ -23,7 +28,7 @@ namespace $.$$ {
 
 			if( next === undefined ) {
 				const moment = this.value_moment()
-				return moment?.toString( 'hh:mm' ) || ''
+				return moment?.toString( 'hh:mm.sss' ) || ''
 			}
 
 			this.value_moment( time_with_moment( next, this.value_moment() ) )
@@ -38,29 +43,34 @@ namespace $.$$ {
 				return this.value_moment()?.toString( 'h' )
 			}
 
-			const moment = this.value_moment()
+			let moment = this.value_moment()
 			const minute = moment?.minute ?? 0
-			const hour = Number( hour_str )
-			this.value_moment( moment?.merge( { hour, minute } ) || new $mol_time_moment( { hour, minute } ) )
+			const hour = Number( hour_str || moment.hour )
+			moment = this.value_moment( moment?.merge( { hour, minute } ) || new $mol_time_moment( { hour, minute } ) )
 
-			return hour_str
+			return String( moment.hour )
 		}
 
 		@ $mol_mem
 		minute_selected( minute_str?: string ) {
 
-			if( minute_str === undefined ) {
-				return this.value_moment()?.toString( 'm' )
+			if( minute_str !== undefined ) {
+				
+				const moment = this.value_moment()
+				const hour = moment?.hour ?? new $mol_time_moment().hour
+				const minute = Number( minute_str || moment.minute )
+				this.value_moment( moment?.merge( { hour, minute } ) || new $mol_time_moment( { hour, minute } ) )
+				
+				this.showed( false )
+				
 			}
 
 			const moment = this.value_moment()
-			const hour = moment?.hour ?? new $mol_time_moment().hour
-			const minute = Number( minute_str )
-			this.value_moment( moment?.merge( { hour, minute } ) || new $mol_time_moment( { hour, minute } ) )
-
-			this.showed( false )
-
-			return minute_str
+			if( !moment ) return ''
+			if( moment.minute === undefined ) return ''
+			
+			return String( Math.floor( moment.minute / 5 ) * 5 )
+			
 		}
 
 		hour_options() {

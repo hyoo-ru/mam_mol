@@ -1,4 +1,8 @@
 namespace $.$$ {
+	/**
+	 * Plugin which adds handlers for keyboard keys.
+	 * @see [mol_keyboard_code](../keyboard/code/code.ts)
+	 */
 	export class $mol_hotkey extends $.$mol_hotkey {
 
 		key() {
@@ -14,7 +18,7 @@ namespace $.$$ {
 
 			let name = $mol_keyboard_code[ event.keyCode ] as keyof typeof $mol_keyboard_code
 			
-			if( this.mod_ctrl() !== event.ctrlKey ) return
+			if( this.mod_ctrl() !== ( event.ctrlKey || event.metaKey ) ) return
 			if( this.mod_alt() !== event.altKey ) return
 			if( this.mod_shift() !== event.shiftKey ) return
 			

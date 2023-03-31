@@ -2,6 +2,7 @@ $mol_pop $mol_view
 	showed?val false
 	align_vert \
 	align_hor \
+	prefer \vert
 	sub /
 		<= Anchor null
 	sub_visible /
@@ -11,7 +12,7 @@ $mol_pop $mol_view
 			content <= bubble_content /$mol_view_content
 			height_max <= height_max 9999
 
-$mol_pop_bubble $mol_scroll
+$mol_pop_bubble $mol_view
 	sub <= content /$mol_view_content
 	style *
 		^

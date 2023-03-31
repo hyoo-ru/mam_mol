@@ -1,4 +1,5 @@
 namespace $ {
+	/** reactive Dictionary */
 	export class $mol_wire_dict< Key, Value > extends Map< Key, Value > {
 
 		pub = new $mol_wire_pub

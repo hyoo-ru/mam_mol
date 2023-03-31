@@ -1,4 +1,9 @@
 namespace $.$$ {
+
+	/**
+	 * Dumps any JS values.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_dump_demo
+	 */
 	export class $mol_dump_value extends $.$mol_dump_value {
 		
 		@ $mol_mem

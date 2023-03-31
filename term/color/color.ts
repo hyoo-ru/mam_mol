@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** Module for working with terminal. Text coloring when output in terminal */
 	export class $mol_term_color {
 		
 		static reset = this.ansi( 0, 0 )

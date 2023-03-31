@@ -5,6 +5,7 @@
 
 [mol_calendar_head] {
 	display: table-caption;
+	background: inherit;
 }
 
 [mol_calendar_title] {

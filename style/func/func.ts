@@ -8,9 +8,14 @@ namespace $ {
 	| 'clamp'
 	| 'url'
 	| 'scale'
+	| 'cubic-bezier'
 
 	const { per } = $mol_style_unit
 	
+	/**
+	 * CSS Functions
+	 * @see https://mol.hyoo.ru/#!section=docs/=xwq9q5_f966fg
+	 */
 	export class $mol_style_func<
 		Name extends $mol_style_func_name ,
 		Value = unknown,
@@ -77,6 +82,15 @@ namespace $ {
 			zoom: number,
 		) {
 			return new $mol_style_func( 'scale', [ zoom ] )
+		}
+		
+		static cubic_bezier(
+			x1: number,
+			y1: number,
+			x2: number,
+			y2: number
+		){
+			return new $mol_style_func( 'cubic-bezier', [ x1, y1, x2, y2 ]);
 		}
 	
 	}

@@ -1,5 +1,6 @@
 namespace $ {
 	
+	/** Decorates solo object channel to [mol_wire_atom](../atom/atom.ts). */
 	export function $mol_wire_solo< Args extends any[] >(
 		host: object,
 		field: string,
@@ -7,11 +8,11 @@ namespace $ {
 	) {
 
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
-		const orig = descr?.value! ?? host[ field ]
+		const orig = descr?.value! ?? (host as any)[ field ]
 		
 		const sup = Reflect.getPrototypeOf( host )!
-		if( typeof sup[ field ] === 'function' ) {
-			Object.defineProperty( orig , 'name' , { value : sup[ field ].name } )
+		if( typeof (sup as any)[ field ] === 'function' ) {
+			Object.defineProperty( orig , 'name' , { value : (sup as any)[ field ].name } )
 		}
 		
 		const descr2 = {

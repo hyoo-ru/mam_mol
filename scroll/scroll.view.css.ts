@@ -14,7 +14,7 @@ namespace $.$$ {
 			direction: 'column',
 			grow: 1,
 			shrink: 1,
-			basis: 0,
+			// basis: 0,
 		},
 		outline: 'none',
 		alignSelf: 'stretch',
@@ -34,6 +34,13 @@ namespace $.$$ {
 			},
 		},
 
+		'::before': {
+			display: 'none',
+		},
+		'::after': {
+			display: 'none',
+		},
+		
 		'::-webkit-scrollbar': {
 			width: rem(.25),
 			height: rem(.25),

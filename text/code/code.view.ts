@@ -1,4 +1,9 @@
 namespace $.$$ {
+
+	/**
+	 * Code visualizer.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_text_code_demo
+	 */
 	export class $mol_text_code extends $.$mol_text_code {
 		
 		render_visible_only() {
@@ -71,6 +76,10 @@ namespace $.$$ {
 				
 			}
 			
+		}
+		
+		text_export() {
+			return this.text() + '\n'
 		}
 		
 	}
