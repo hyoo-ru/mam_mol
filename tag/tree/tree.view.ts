@@ -2,22 +2,22 @@ namespace $.$$ {
 
 	export class $mol_tag_tree extends $.$mol_tag_tree {
 		@ $mol_mem_key
-		override tree_sub(path: readonly string[]) {
-			return this.tree().select(path.at(-1)!)
+		override sieve_sub(path: readonly string[]) {
+			return this.sieve().select(path.at(-1)!)
 		}
 
 		@ $mol_mem
-		override Items() {
-			const prefix = this.tree().prefix()
+		override item_list() {
+			const prefix = this.sieve().prefix()
 
-			return this.tree().ids().sort(this.sort_items()).map(id => this.Item([ ...prefix, id ]))
+			return this.sieve().ids().sort(this.sort_items()).map(id => this.Item([ ...prefix, id ]))
 		}
 
 		@ $mol_mem
-		override Tags() {
-			const prefix = this.tree().prefix()
+		override tag_list() {
+			const prefix = this.sieve().prefix()
 
-			return this.tree().tags().sort(this.sort_tags()).map(tag => this.Tag([ ...prefix, tag ]))
+			return this.sieve().tags().sort(this.sort_tags()).map(tag => this.Tag([ ...prefix, tag ]))
 		}
 
 		@ $mol_mem_key

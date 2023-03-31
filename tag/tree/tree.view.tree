@@ -1,5 +1,5 @@
 $mol_tag_tree $mol_list
-	tree $mol_tag_tree_bag
+	sieve $mol_tag_sieve
 		ids_tags <= ids_tags *
 		separator <= separator \/
 	levels_expanded 0
@@ -20,7 +20,7 @@ $mol_tag_tree $mol_list
 		expanded? <=> tag_expanded*? false
 		title <= tag_name* \
 		content / <= Tag_tree* $mol_tag_tree
-			tree <= tree_sub* $mol_tag_tree_bag
+			sieve <= sieve_sub* $mol_tag_sieve
 			Item* <= Item*
 			item_title* <= item_title*
 			tag_expanded*? <=> tag_expanded*?

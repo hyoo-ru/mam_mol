@@ -1,12 +1,12 @@
 namespace $ {
-	function create_bag({
+	function create_sieve({
 		path = '',
 		ids_tags
 	}: {
 		path: string
 		ids_tags: Record<string, string[]>
 	}) {
-		let bag = new $mol_tag_tree_bag
+		let bag = new $mol_tag_sieve
 		bag.ids_tags = () => ids_tags
 
 		if (path) {
@@ -75,7 +75,7 @@ namespace $ {
 		return {
 			...acc,
 			[`select ${path}`]() {
-				const bag = create_bag({ path, ids_tags })
+				const bag = create_sieve({ path, ids_tags })
 				$mol_assert_like(bag.tags(), test_data[path].tags)
 				$mol_assert_like(bag.ids(), test_data[path].ids)
 			}

@@ -1,6 +1,6 @@
 namespace $ {
 
-	export class $mol_tag_tree_bag extends $mol_object2 {
+	export class $mol_tag_sieve extends $mol_object2 {
 		ids_tags() {
 			return {} as Record<string, string[]>
 		}
@@ -108,7 +108,7 @@ namespace $ {
 
 		@ $mol_mem_key
 		select(id: string) {
-			const bag = new $mol_tag_tree_bag
+			const bag = new $mol_tag_sieve
 			bag.ids_tags_initial = () => this.ids_tags_filtered(id)
 			bag.prefix = () => this.prefix_sub(id)
 
