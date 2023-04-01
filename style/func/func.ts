@@ -11,6 +11,7 @@ namespace $ {
 	| 'cubic-bezier'
 	| 'linear'
 	| 'steps'
+	| 'blur'
 
 	const { per } = $mol_style_unit
 	
@@ -112,6 +113,10 @@ namespace $ {
 		
 		static steps(value: number, step_position:  'jump-start' | 'jump-end' | 'jump-none' | 'jump-both' | 'start' | 'end'){
 			return new $mol_style_func( 'steps', [ value, step_position ] )
+		}
+		
+		static blur(value?: $mol_style_unit<$mol_style_unit_length>){
+			return new $mol_style_func( 'blur', value ?? "" );
 		}
 	
 	}
