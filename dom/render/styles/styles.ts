@@ -10,9 +10,9 @@ namespace $ {
 			const style = ( el as HTMLElement ).style as any
 			
 			if( typeof val === 'number' ) {
-				style[ name ] = `${ val }px`
+				style.setProperty(name, `${ val }px`);
 			} else {
-				style[ name ] = val
+				style.setProperty(name, val);
 			}
 			
 		}
