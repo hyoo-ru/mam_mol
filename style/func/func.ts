@@ -10,6 +10,7 @@ namespace $ {
 	| 'scale'
 	| 'cubic-bezier'
 	| 'linear'
+	| 'steps'
 
 	const { per } = $mol_style_unit
 	
@@ -107,6 +108,10 @@ namespace $ {
 			y2: number
 		){
 			return new $mol_style_func( 'cubic-bezier', [ x1, y1, x2, y2 ]);
+		}
+		
+		static steps(value: number, step_position:  'jump-start' | 'jump-end' | 'jump-none' | 'jump-both' | 'start' | 'end'){
+			return new $mol_style_func( 'steps', [ value, step_position ] )
 		}
 	
 	}
