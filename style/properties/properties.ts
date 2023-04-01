@@ -199,6 +199,65 @@ namespace $ {
 		 */
 		animationTimingFunction : Easing_function | Easing_function[][] | Common
 		
+		animation: {
+			/**
+			 * Specifies the composite operation to use when multiple animations affect the same property simultaneously.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-composition
+			 */
+			composition : Single_animation_composition | (Single_animation_composition)[][] | Common
+			
+			/**
+			 * Specifies the amount of time to wait from applying the animation to an element before beginning to perform the animation.
+			 * The animation can start later, immediately from its beginning, or immediately and partway through the animation.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay
+			 */
+			delay : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
+			
+			/**
+			 * Sets whether an animation should play forward, backward, or alternate back and forth between playing the sequence forward and backward.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-direction
+			 */
+			direction : Single_animation_direction | Single_animation_direction[][] | Common
+			
+			/**
+			 * Sets the length of time that an animation takes to complete one cycle.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration
+			 */
+			duration : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
+			
+			/**
+			 * Sets how a CSS animation applies styles to its target before and after its execution.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode
+			 */
+			fillMode : Single_animation_fill_mode | Single_animation_fill_mode[][] | Common
+			
+			/**
+			 * Sets the number of times an animation sequence should be played before stopping.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count
+			 */
+			iterationCount : Single_animation_iteration_count | Single_animation_iteration_count[][] | Common
+			
+			/**
+			 * Specifies the names of one or more keyframes at-rules that describe the animation to apply to an element.
+			 * Multiple keyframe at-rules are specified as a comma-separated list of names.
+			 * If the specified name does not match any keyframe at-rule, no properties are animated.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name
+			 */
+			name : 'none' | (string & {}) | ('none' | (string & {}))[][] | Common
+			
+			/**
+			 * Sets whether an animation is running or paused.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-play-state
+			 */
+			playState : Single_animation_play_state | Single_animation_play_state[][] | Common
+			
+			/**
+			 * Sets how an animation progresses through the duration of each cycle.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function
+			 */
+			timingFunction : Easing_function | Easing_function[][] | Common
+		}
+		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
 		 * @see https://developer.mozilla.org/ru/docs/Web/CSS/justify-content
