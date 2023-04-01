@@ -53,6 +53,8 @@ namespace $ {
 		bottom?: Value ,
 		left?: Value ,
 	}
+	
+	type Single_animation_composition = 'replace' | 'add' | 'accumulate'
 
 	type Baseline_position = 'baseline' | `${'first'|'last'} baseline`
 
@@ -131,6 +133,12 @@ namespace $ {
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/all
 		 */
 		all? : Common
+		
+		/**
+		 * Specifies the composite operation to use when multiple animations affect the same property simultaneously.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-composition
+		 */
+		animationComposition : Single_animation_composition | Single_animation_composition[][]
 		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
