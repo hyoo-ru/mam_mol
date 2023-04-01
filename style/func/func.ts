@@ -12,6 +12,7 @@ namespace $ {
 	| 'linear'
 	| 'steps'
 	| 'blur'
+	| 'brightness'
 
 	const { per } = $mol_style_unit
 	
@@ -117,6 +118,10 @@ namespace $ {
 		
 		static blur(value?: $mol_style_unit<$mol_style_unit_length>){
 			return new $mol_style_func( 'blur', value ?? "" );
+		}
+		
+		static brightness(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'brightness', value ?? "" );
 		}
 	
 	}
