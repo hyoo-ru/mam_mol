@@ -19,6 +19,7 @@ namespace $ {
 	| 'hue-rotate'
 	| 'invert'
 	| 'opacity'
+	| 'sepia'
 
 	const { per } = $mol_style_unit
 	
@@ -162,6 +163,10 @@ namespace $ {
 		
 		static opacity(value?: number | $mol_style_unit<'%'>){
 			return new $mol_style_func( 'opacity', value ?? "" );
+		}
+		
+		static sepia(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'sepia', value ?? "" );
 		}
 	
 	}
