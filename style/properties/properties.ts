@@ -56,7 +56,9 @@ namespace $ {
 
 	type Baseline_position = 'baseline' | `${'first'|'last'} baseline`
 
+	type Content_distribution = 'space-between' | 'space-around' | 'space-evenly' | 'stretch' 
 	type Self_position = 'center' | 'start' | 'end' | 'self-start' | 'self-end' | 'flex-start' | 'flex-end'
+	type Content_position = 'center' | 'start' | 'end' | 'flex-start' | 'flex-end'
 	type Span_align = 'none' | 'start' | 'end' | 'center' | $mol_style_func< 'var' >
 	type Snap_axis = 'x' | 'y' | 'block' | 'inline' | 'both' | $mol_style_func< 'var' >
 
@@ -80,12 +82,7 @@ namespace $ {
 		 * Distribution of space between and around content items along a flexbox's cross-axis or a grid's block axis.
 		 * @see https://developer.mozilla.org/ru/docs/Web/CSS/align-content
 		 */
-		alignContent? :
-		| 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end'
-		| 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch'
-		| readonly [ 'first' | 'last' , 'baseline' ]
-		| readonly [ 'safe' | 'unsafe' , 'start' | 'end' | 'flex-start' | 'flex-end' ]
-		| Common
+		alignContent? : 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common
 		
 		/**
 		 * Sets the align-self value on all direct children as a group.
