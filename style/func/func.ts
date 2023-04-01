@@ -17,6 +17,7 @@ namespace $ {
 	| 'drop-shadow'
 	| 'grayscale'
 	| 'hue-rotate'
+	| 'invert'
 
 	const { per } = $mol_style_unit
 	
@@ -152,6 +153,10 @@ namespace $ {
 		
 		static hue_rotate(value?: 0 | $mol_style_unit<$mol_style_unit_angle>){
 			return new $mol_style_func( 'hue-rotate', value ?? "")
+		}
+		
+		static invert(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'invert', value ?? "" );
 		}
 	
 	}
