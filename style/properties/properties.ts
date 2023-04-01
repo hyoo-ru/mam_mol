@@ -63,6 +63,9 @@ namespace $ {
 	type Linear_easing_function = 'linear' | $mol_style_func<'linear'>
 	type Cubic_bezier_easing_function = 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | $mol_style_func<'cubic-bezier'>
 	type Step_easing_function = 'step-start' | 'step-end' | $mol_style_func<'steps'>
+	type Compat_auto = 'searchfield' | 'textarea' | 'push-button' | 'slider-horizontal' | 'checkbox' | 'radio'
+	| 'menulist' | 'listbox' | 'meter' | 'progress-bar' | 'button'
+	type Compat_special = 'textfield' | 'menulist-button'
 
 	type Baseline_position = 'baseline' | `${'first'|'last'} baseline`
 
@@ -257,6 +260,12 @@ namespace $ {
 			 */
 			timingFunction : Easing_function | Easing_function[][] | Common
 		}
+		
+		/**
+		 * Used to control native appearance of UI controls, that are based on operating system's theme.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/appearance
+		 */
+		appearance: 'none' | 'auto' | Compat_auto | Compat_special | Common
 		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
