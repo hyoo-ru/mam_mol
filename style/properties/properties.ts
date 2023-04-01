@@ -100,6 +100,13 @@ namespace $ {
 		 */
 		alignSelf? : 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
 
+		/**
+		 * resets all of an element's properties except unicode-bidi, direction, and CSS Custom Properties.
+		 * It can set properties to their initial or inherited values, or to the values specified in another cascade layer or stylesheet origin.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/all
+		 */
+		all? : Common
+		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
 		 * @see https://developer.mozilla.org/ru/docs/Web/CSS/justify-content
