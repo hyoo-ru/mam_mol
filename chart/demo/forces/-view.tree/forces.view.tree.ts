@@ -59,6 +59,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * forces_left_title \Left wheel
 		 * ```
 		 */

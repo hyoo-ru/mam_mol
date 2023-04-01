@@ -41,6 +41,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Head_content $mol_paragraph title \Float header
 		 * ```
 		 */

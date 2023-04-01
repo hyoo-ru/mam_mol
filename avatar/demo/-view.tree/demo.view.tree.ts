@@ -44,6 +44,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * avatar_id? \$mol_avatar
 		 * ```
 		 */

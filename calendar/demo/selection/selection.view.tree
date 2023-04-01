@@ -17,3 +17,5 @@ $mol_calendar_demo_selection $mol_example_small
 		\calendar
 		\date
 		\period
+	aspects /
+		\Widget

@@ -44,6 +44,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Share_page $mol_button_share
 		 * 	title <= title
 		 * 	hint \Share this page with screenshot

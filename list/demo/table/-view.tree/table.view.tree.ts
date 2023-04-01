@@ -65,6 +65,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * check_list /$mol_check
 		 * ```
 		 */

@@ -34,6 +34,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget/Layout
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget/Layout"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * paint null
 		 * ```
 		 */

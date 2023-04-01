@@ -57,6 +57,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget/Layout
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget/Layout"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Button_tools $mol_button_minor title \Toolbar Button
 		 * ```
 		 */

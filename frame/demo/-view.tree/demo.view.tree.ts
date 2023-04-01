@@ -30,6 +30,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Frame $mol_frame
 		 * 	title \Another page inside that
 		 * 	uri \https://mol.hyoo.ru/

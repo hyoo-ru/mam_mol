@@ -43,6 +43,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Greeting $mol_card
 		 * 	title \Greeting
 		 * 	content / \Hello, world!

@@ -52,6 +52,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Nav $mol_nav
 		 * 	keys_x <= tab_list
 		 * 	current_x?val <=> tab_current?val

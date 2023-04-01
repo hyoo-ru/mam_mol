@@ -145,15 +145,6 @@ namespace $ {
 		 * 	Item* <= Option*
 		 * 	ids_tags <= ids_tags
 		 * 	levels_expanded <= levels_expanded
-		 * 	tag_names *
-		 * 		gui @ \GUI
-		 * 		input @ \Input
-		 * 		island @ \Island
-		 * 		layout @ \Layout
-		 * 		nav @ \Navigation
-		 * 		menu @ \Menu
-		 * 		string @ \Input strings
-		 * 		button @ \Button
 		 * ```
 		 */
 		@ $mol_mem
@@ -163,16 +154,6 @@ namespace $ {
 			obj.Item = (id: any) => this.Option(id)
 			obj.ids_tags = () => this.ids_tags()
 			obj.levels_expanded = () => this.levels_expanded()
-			obj.tag_names = () => ({
-				gui: this.$.$mol_locale.text( '$mol_app_demo_menu_Tree_tag_names_gui' ),
-				input: this.$.$mol_locale.text( '$mol_app_demo_menu_Tree_tag_names_input' ),
-				island: this.$.$mol_locale.text( '$mol_app_demo_menu_Tree_tag_names_island' ),
-				layout: this.$.$mol_locale.text( '$mol_app_demo_menu_Tree_tag_names_layout' ),
-				nav: this.$.$mol_locale.text( '$mol_app_demo_menu_Tree_tag_names_nav' ),
-				menu: this.$.$mol_locale.text( '$mol_app_demo_menu_Tree_tag_names_menu' ),
-				string: this.$.$mol_locale.text( '$mol_app_demo_menu_Tree_tag_names_string' ),
-				button: this.$.$mol_locale.text( '$mol_app_demo_menu_Tree_tag_names_button' )
-			})
 			
 			return obj
 		}

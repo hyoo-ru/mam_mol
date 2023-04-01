@@ -39,6 +39,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * One $mol_dimmer
 		 * 	haystack \Don't put all your eggs in one basket
 		 * 	needle \eggs

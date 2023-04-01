@@ -46,6 +46,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Provider $mol_labeler
 		 * 	title \Provider
 		 * 	content / \ACME Provider Inc.

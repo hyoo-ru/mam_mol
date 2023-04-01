@@ -27,3 +27,5 @@ $mol_check_box_demo $mol_example_small
 	tags /
 		\checkbox
 		\switch
+	aspects /
+		\Widget

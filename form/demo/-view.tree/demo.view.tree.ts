@@ -79,12 +79,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \gui/form
+		 * aspects / \Widget
 		 * ```
 		 */
 		aspects() {
 			return [
-				"gui/form"
+				"Widget"
 			] as readonly any[]
 		}
 		

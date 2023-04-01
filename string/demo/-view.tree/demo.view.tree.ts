@@ -50,15 +50,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects /
-		 * 	\gui/input
-		 * 	\input/string
+		 * aspects / \Widget
 		 * ```
 		 */
 		aspects() {
 			return [
-				"gui/input",
-				"input/string"
+				"Widget"
 			] as readonly any[]
 		}
 		

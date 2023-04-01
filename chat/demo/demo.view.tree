@@ -9,3 +9,5 @@ $mol_chat_demo $mol_example_small
 	tags /
 		\chat
 		\communication
+	aspects /
+		\Widget

@@ -39,6 +39,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Html $mol_html_view html \
 		 * 	\ <h1>HTML Example</h1>
 		 * 	\ <h2>Headings</h2>

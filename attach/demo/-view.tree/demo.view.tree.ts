@@ -41,6 +41,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * filled_items?val /
 		 * 	\https://thiscatdoesnotexist.com/
 		 * 	\https://thiscatdoesnotexist.com/

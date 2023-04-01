@@ -28,6 +28,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Back $mol_image uri \https://thiscatdoesnotexist.com/
 		 * ```
 		 */

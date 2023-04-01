@@ -64,6 +64,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Widget
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Widget"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * info_content_text \
 		 * 	\## Info Pop-up
 		 * 	\**Markdown text content**

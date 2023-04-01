@@ -23,3 +23,5 @@ $mol_bar_demo $mol_example_small
 		\bar
 		\group
 		\container
+	aspects /
+		\Widget

@@ -4009,6 +4009,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         filled_items(val?: any): readonly any[];
         Filled(): $$.$mol_attach;
     }
@@ -4053,6 +4054,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         avatar_id(next?: any): string;
         Avatar_id_value(): $$.$mol_string;
         Avatar_id_label(): $mol_labeler;
@@ -4092,6 +4094,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         mail_hint(): string;
         mail(val?: any): string;
         Two_mail(): $$.$mol_string;
@@ -4206,6 +4209,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         col_sort(val?: any): string;
         result(): {};
         View(): $$.$mol_bench;
@@ -4480,6 +4484,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Share_page(): $$.$mol_button_share;
         Share_screenshot(): $$.$mol_button_share;
         Share_hyoo(): $$.$mol_button_share;
@@ -4690,6 +4695,7 @@ declare namespace $ {
         holidays(): readonly any[];
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         month(): string;
         holiday(id: any): boolean;
         Calendar(): $$.$mol_calendar;
@@ -4712,6 +4718,7 @@ declare namespace $ {
         days(): readonly any[];
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         month(): string;
         selected(id: any): boolean;
         Calendar(): $$.$mol_calendar;
@@ -4750,6 +4757,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         today(): $mol_time_moment;
         Calendar(): $$.$mol_calendar;
     }
@@ -5526,6 +5534,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         plan_title(): string;
         plan(): readonly any[];
         Plan(): $$.$mol_plot_bar;
@@ -5567,6 +5576,7 @@ declare namespace $ {
         samples_count(): number;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         receipts_title(): string;
         series_x(): readonly number[];
         series_2_y(): readonly number[];
@@ -5622,6 +5632,7 @@ declare namespace $ {
         points_max(): number;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         forces_left_title(): string;
         forces_left_x(): readonly number[];
         forces_left_y(): readonly number[];
@@ -5656,6 +5667,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         chat_pages(): $mol_page[];
         Chat(): $$.$mol_chat;
     }
@@ -5669,6 +5681,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         base_checked(val?: any): boolean;
         c1Label(): string;
         Labeled_base(): $mol_check_box;
@@ -5719,6 +5732,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         right(id: any, val?: any): boolean;
         Rights(): $$.$mol_check_list;
     }
@@ -5729,6 +5743,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         base_expanded(val?: any): boolean;
         c1Label(): string;
         Labeled_base(): $$.$mol_check_expand;
@@ -5775,6 +5790,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         All(): $$.$mol_check_group;
         strength_title(): string;
         strength(val?: any): boolean;
@@ -5816,6 +5832,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Base_icon(): $mol_icon_microphone;
         base_checked(val?: any): boolean;
         Base(): $mol_check_icon;
@@ -5862,6 +5879,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Qr(): $$.$mol_code;
         Matrix(): $$.$mol_code;
         Upc_e(): $$.$mol_code;
@@ -6012,6 +6030,7 @@ declare namespace $ {
     class $mol_date_demo extends $mol_example_small {
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         date(val?: any): $mol_time_moment;
         Date(): $$.$mol_date;
         formatted(): string;
@@ -6065,6 +6084,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Greeting(): $$.$mol_card;
         Question(): $$.$mol_card;
         Answer(): $$.$mol_card;
@@ -6080,6 +6100,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         One(): $$.$mol_dimmer;
         Two(): $$.$mol_dimmer;
         Three(): $$.$mol_dimmer;
@@ -6202,6 +6223,7 @@ declare namespace $ {
         sub(): readonly any[];
         Task_row(id: any): $$.$mol_drag;
         tags(): readonly any[];
+        aspects(): readonly any[];
         transfer_adopt(transfer?: any): any;
         receive(obj?: any): any;
         receive_trash(obj?: any): any;
@@ -6330,6 +6352,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         value(): any;
         Dump_short(): $$.$mol_dump_value;
         Dump_long(): $$.$mol_dump_value;
@@ -6359,6 +6382,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Content(): $$.$mol_filler;
         Expander(): $$.$mol_expander;
     }
@@ -6369,6 +6393,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Filler(): $$.$mol_filler;
     }
 }
@@ -6378,6 +6403,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Head_content(): $$.$mol_paragraph;
         Head_row(): $mol_row;
         Head(): $mol_float;
@@ -6682,6 +6708,7 @@ declare namespace $ {
         bid_long(id: any): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         model(): $mol_form_draft_demo_article;
         Title(): $$.$mol_string;
         Title_field(): $$.$mol_form_field;
@@ -6778,6 +6805,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         ip(next?: any): string;
         Ip(): $$.$mol_format;
         Ip_card(): $$.$mol_card;
@@ -6797,6 +6825,7 @@ declare namespace $ {
     class $mol_frame_demo extends $mol_example_large {
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Frame(): $$.$mol_frame;
     }
 }
@@ -6829,6 +6858,7 @@ declare namespace $ {
         sub(): readonly any[];
         Item(id: any): $$.$mol_link;
         tags(): readonly any[];
+        aspects(): readonly any[];
         items(): readonly any[];
         App(): $$.$mol_gallery;
         item_title(id: any): string;
@@ -6945,6 +6975,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Html(): $$.$mol_html_view;
     }
 }
@@ -6980,6 +7011,7 @@ declare namespace $ {
         chunk_size(): number;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         before(id: any): readonly any[];
         after(id: any): readonly any[];
         id(id: any): string;
@@ -7012,6 +7044,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Provider(): $mol_labeler;
         user_name(val?: any): string;
         Name_control(): $$.$mol_string;
@@ -7080,6 +7113,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         paint(): any;
         context(): CanvasRenderingContext2D;
         width(): number;
@@ -7159,6 +7193,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         this_label(): string;
         This(): $$.$mol_link;
         red_label(): string;
@@ -7188,6 +7223,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         uri(val?: any): string;
         Input(): $$.$mol_string;
         Output(): $$.$mol_link_iconed;
@@ -7222,6 +7258,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         uri_generated(): string;
         download_file(): string;
         Download_icon(): $mol_icon_download;
@@ -7240,6 +7277,7 @@ declare namespace $ {
     class $mol_list_demo extends $mol_example_small {
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         items_сount(next?: any): number;
         Items_count(): $$.$mol_number;
         Items_count_label(): $mol_labeler;
@@ -7264,6 +7302,7 @@ declare namespace $ {
         count(): number;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         check_list(): readonly $mol_check[];
         Check(): $$.$mol_check_group;
         Head(): $mol_row;
@@ -7476,6 +7515,7 @@ declare namespace $ {
         sub(): readonly any[];
         Row(id: any): $$.$mol_expander;
         tags(): readonly any[];
+        aspects(): readonly any[];
         root_rows(): readonly any[];
         Content(): $$.$mol_list;
         row_title(id: any): string;
@@ -7631,6 +7671,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         place_title(): string;
         place_addres(): string;
         place_content(): string;
@@ -7913,6 +7954,7 @@ declare namespace $ {
         plugins(): readonly any[];
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Nav(): $$.$mol_nav;
         tab_current(val?: any): string;
         tab_list(): readonly string[];
@@ -7933,6 +7975,7 @@ declare namespace $ {
         value(next?: any): number;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         value_string(): string;
         Value_string(): $$.$mol_string;
         reset_enabled(): boolean;
@@ -8024,6 +8067,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Button_tools(): $mol_button_minor;
         Text(): $$.$mol_filler;
         Button_foot(): $mol_button_minor;
@@ -8062,6 +8106,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         page(val?: any): number;
         Pages(): $$.$mol_paginator;
     }
@@ -8074,6 +8119,7 @@ declare namespace $ {
         frequency(): number;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         saturation_series(): readonly any[];
         Saturation_fill(): $$.$mol_plot_fill;
         Saturation_line(): $$.$mol_plot_line;
@@ -8150,6 +8196,7 @@ declare namespace $ {
         count_z(): number;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         terrain_x(): readonly number[];
         terrain_y(): readonly number[];
         terrain_z(): readonly number[];
@@ -8178,6 +8225,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         show_title(): string;
         pop_showed_check_hint(): string;
         pop_showed(val?: any): boolean;
@@ -8248,6 +8296,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         file_title(): string;
         open_title(): string;
         Open(): $mol_button_minor;
@@ -8276,6 +8325,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         fist(): number;
         Empty(): $$.$mol_portion;
         second(): number;
@@ -8314,6 +8364,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         info_content_text(): string;
         Info_content(): $$.$mol_text;
         Info_pop(): $$.$mol_pick;
@@ -8425,6 +8476,7 @@ declare namespace $ {
     class $mol_pick_time_demo extends $mol_example_small {
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         moment(next?: any): $mol_time_moment;
         Picker(): $$.$mol_pick_time;
     }
@@ -8435,6 +8487,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         name_hint(): string;
         name(val?: any): string;
         suggest1(): string;
@@ -8461,6 +8514,7 @@ declare namespace $ {
         Product(id: any): $$.$mol_card;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         product_title(id: any): string;
         products(): readonly any[];
         Products(): $mol_row;
@@ -8482,6 +8536,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Filler0(): $$.$mol_filler;
         Filler1(): $$.$mol_filler;
         Filler2(): $$.$mol_filler;
@@ -8502,6 +8557,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         suggests(): readonly any[];
         query(): string;
         Search(): $$.$mol_search;
@@ -8519,6 +8575,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Section_content(): $$.$mol_filler;
         Section(): $$.$mol_section;
     }
@@ -8529,6 +8586,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Section_h1_content(): $$.$mol_filler;
         Section_h1(): $$.$mol_section;
         Section_h2_content(): $$.$mol_filler;
@@ -8551,6 +8609,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         color(val?: any): string;
         colors(): {};
         color_name(id: any): string;
@@ -8735,6 +8794,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         month(val?: any): string;
         months(): {
             jan: string;
@@ -8759,6 +8819,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         priority(val?: any): string;
         Priority(): $$.$mol_select;
     }
@@ -8812,6 +8873,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         friends(val?: any): readonly any[];
         suggestions(): {
             jocker: string;
@@ -8833,6 +8895,7 @@ declare namespace $ {
     class $mol_speck_demo extends $mol_example_small {
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Link_speck(): $mol_speck;
         Link_icon(): $mol_icon_settings;
         Link(): $$.$mol_link;
@@ -8883,6 +8946,7 @@ declare namespace $ {
     class $mol_speech_demo extends $mol_example_small {
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Toggle_icon(): $mol_icon_microphone;
         hearing(val?: any): boolean;
         Toggle(): $mol_check_icon;
@@ -8922,6 +8986,7 @@ declare namespace $ {
     class $mol_spell_demo extends $mol_example_small {
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         article(next?: any): string;
         Article(): $$.$mol_textarea;
         report(): string;
@@ -8958,6 +9023,7 @@ declare namespace $ {
     class $mol_stack_demo extends $mol_example_small {
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Back(): $mol_image;
         Front(): $mol_view;
         Collage(): $mol_stack;
@@ -8996,6 +9062,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         color(val?: any): string;
         option_red(): string;
         option_green(): string;
@@ -9032,6 +9099,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         source(): string;
         syntax(): any;
         uri_resolve(id: any): string;
@@ -9097,6 +9165,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         search(next?: any): string;
         Search(): $$.$mol_search_jumper;
         Edit_icon(): $mol_icon_pencil;
@@ -9128,6 +9197,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         empty_descr(next?: any): string;
         Empty_descr(): $$.$mol_textarea;
         filled_descr(next?: any): string;
@@ -9357,6 +9427,7 @@ declare namespace $ {
     class $mol_example_code extends $mol_example {
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         code(next?: any): string;
         Sandbox(): $$.$hyoo_js_eval;
     }
@@ -9423,6 +9494,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         search_hint(): string;
         Search(): $$.$mol_string;
         replace_hint(): string;
@@ -9502,6 +9574,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         files(): readonly any[];
         Open(): $mol_button_open;
         Playing_icon(): $mol_icon_play;
@@ -9561,6 +9634,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         pass(val?: any): string;
         Simple(): $$.$mol_password;
         pass2(val?: any): string;
@@ -9573,6 +9647,7 @@ declare namespace $ {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Theme(): $$.$mol_theme_auto;
         Lighter(): $$.$mol_lights_toggle;
         Sample(): $mol_view;

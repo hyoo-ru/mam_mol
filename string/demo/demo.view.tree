@@ -19,5 +19,4 @@ $mol_string_demo $mol_example_small
 		\text
 		\field
 	aspects /
-		\gui/input
-		\input/string
+		\Widget

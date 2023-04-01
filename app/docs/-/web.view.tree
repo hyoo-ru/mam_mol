@@ -365,15 +365,6 @@ $mol_app_demo_menu $mol_page
 					Item* <= Option*
 					ids_tags <= ids_tags *
 					levels_expanded <= levels_expanded <= levels_expanded_default 1
-					tag_names *
-						gui @ \GUI
-						input @ \Input
-						island @ \Island
-						layout @ \Layout
-						nav @ \Navigation
-						menu @ \Menu
-						string @ \Input strings
-						button @ \Button
 	Option* $mol_link
 		arg <= option_arg* *
 		sub /
@@ -1065,6 +1056,8 @@ $mol_attach_demo $mol_example_small
 		\file
 		\image
 		\upload
+	aspects /
+		\Widget
 
 $mol_audio_demo $mol_example_small
 	title \WebAudio API example
@@ -1246,6 +1239,8 @@ $mol_avatar_demo $mol_example_small
 		\generated
 		\identity
 		\user
+	aspects /
+		\Widget
 
 
 $mol_bar $mol_view
@@ -1280,6 +1275,8 @@ $mol_bar_demo $mol_example_small
 		\bar
 		\group
 		\container
+	aspects /
+		\Widget
 
 $mol_icon_sort $mol_icon path \M10,13V11H18V13H10M10,19V17H14V19H10M10,7V5H22V7H10M6,17H8.5L5,20.5L1.5,17H4V7H1.5L5,3.5L8.5,7H6V17Z
 
@@ -1333,6 +1330,8 @@ $mol_bench_demo $mol_example_small
 		\$mol_grid
 		\benchmark
 		\perfomance
+	aspects /
+		\Widget
 
 $mol_book2_demo $mol_example_large
 	title \Adaprive layout for various sizes of screen
@@ -1358,7 +1357,7 @@ $mol_book2_demo $mol_example_large
 		\breadcrumbs
 		\drawer
 	aspects /
-		\gui/layout
+		\Widget/Layout
 
 $mol_book2_catalog $mol_book2
 	param \
@@ -1609,8 +1608,7 @@ $mol_book2_catalog_demo $mol_example_large
 		\transition
 		\multipage
 	aspects /
-		\gui/layout
-		\nav/menu
+		\Widget/Layout
 
 $mol_icon_cursor_default $mol_icon path \M13.64,21.97C13.14,22.21 12.54,22 12.31,21.5L10.13,16.76L7.62,18.78C7.45,18.92 7.24,19 7,19C6.45,19 6,18.55 6,18V3C6,2.45 6.45,2 7,2C7.24,2 7.47,2.09 7.64,2.23L7.65,2.22L19.14,11.86C19.57,12.22 19.62,12.85 19.27,13.27C19.12,13.45 18.91,13.57 18.7,13.61L15.54,14.23L17.74,18.96C18,19.46 17.76,20.05 17.26,20.28L13.64,21.97Z
 
@@ -1650,8 +1648,7 @@ $mol_button_demo $mol_example_small
 	tags /
 		\button
 	aspects /
-		\gui/input
-		\input/button
+		\Widget
 
 $mol_icon_share $mol_icon path \M21,12L14,5V9C7,10 4,15 3,20C5.5,16.5 9,14.9 14,14.9V19L21,12Z
 
@@ -1684,6 +1681,8 @@ $mol_button_share_demo $mol_example_small
 		\share
 		\button
 		\icon
+	aspects /
+		\Widget
 
 $mol_hor $mol_view
 
@@ -1752,6 +1751,8 @@ $mol_calendar_demo_holiday $mol_example_small
 	tags /
 		\calendar
 		\date
+	aspects /
+		\Widget
 
 $mol_calendar_demo_selection $mol_example_small
 	title \Days of month 2018-01 with custom selection
@@ -1772,6 +1773,8 @@ $mol_calendar_demo_selection $mol_example_small
 		\calendar
 		\date
 		\period
+	aspects /
+		\Widget
 
 $mol_calendar_demo_simple $mol_example_small
 	title \Days of curret month
@@ -1781,6 +1784,8 @@ $mol_calendar_demo_simple $mol_example_small
 	tags /
 		\calendar
 		\date
+	aspects /
+		\Widget
 
 $mol_card $mol_list
 	attr *
@@ -1810,7 +1815,7 @@ $mol_card_demo $mol_example_small
 		\container
 		\paper
 	aspects /
-		\gui/island
+		\Widget
 
 $mol_svg_group $mol_svg
 	dom_name \g
@@ -2278,6 +2283,8 @@ $mol_chart_demo_simple $mol_example_large
 		\plot
 		\visualization
 		\dashboard
+	aspects /
+		\Widget
 
 $mol_plot_fill $mol_plot_line
 	threshold 4
@@ -2333,6 +2340,8 @@ $mol_chart_demo_styles $mol_example_large
 		\plot
 		\visualization
 		\dashboard
+	aspects /
+		\Widget
 
 $mol_chart_demo_forces $mol_example_large
 	title \Fake wheel forces
@@ -2365,6 +2374,8 @@ $mol_chart_demo_forces $mol_example_large
 		\plot
 		\visualization
 		\dashboard
+	aspects /
+		\Widget
 
 $mol_chat_demo $mol_example_small
 	title \Feed of comments for this page
@@ -2377,6 +2388,8 @@ $mol_chat_demo $mol_example_small
 	tags /
 		\chat
 		\communication
+	aspects /
+		\Widget
 
 $mol_check_box_demo $mol_example_small
 	title \Checkboxes in various states
@@ -2407,6 +2420,8 @@ $mol_check_box_demo $mol_example_small
 	tags /
 		\checkbox
 		\switch
+	aspects /
+		\Widget
 
 $mol_check_list $mol_view
 	Option* $mol_check
@@ -2438,6 +2453,8 @@ $mol_check_list_demo $mol_example_small
 		\checkbox
 		\option
 		\toggle
+	aspects /
+		\Widget
 
 $mol_check_expand_demo $mol_example_small
 	title \Checkbox-expand in various states
@@ -2463,7 +2480,8 @@ $mol_check_expand_demo $mol_example_small
 	tags /
 		\expand
 		\fold
-
+	aspects /
+		\Widget
 
 $mol_check_group $mol_check_box
 	checks /$mol_check
@@ -2515,6 +2533,8 @@ $mol_check_group_demo $mol_example_small
 		\checkbox
 		\multi
 		\group
+	aspects /
+		\Widget
 
 $mol_icon_microphone $mol_icon path \M12,2C13.66,2 15,3.34 15,5V11C15,12.66 13.66,14 12,14C10.34,14 9,12.66 9,11V5C9,3.34 10.34,2 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7C7,13.76 9.24,16 12,16C14.76,16 17,13.76 17,11H19Z
 
@@ -2539,6 +2559,8 @@ $mol_check_icon_demo $mol_example_small
 		\switch
 		\button
 		\icon
+	aspects /
+		\Widget
 
 $mol_code $mol_view
 	sub /
@@ -2578,6 +2600,8 @@ $mol_code_demo $mol_example_small
 		\scanner
 		\scan
 		\cordova
+	aspects /
+		\Widget
 
 $mol_icon_calendar $mol_icon path \M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z
 
@@ -2654,6 +2678,8 @@ $mol_date_demo $mol_example_small
 		\date
 		\datepicker
 		\format
+	aspects /
+		\Widget
 
 $mol_switch $mol_check_list
 	value?val \
@@ -2691,6 +2717,8 @@ $mol_deck_demo $mol_example_small
 		\card
 		\tabs
 		\container
+	aspects /
+		\Widget
 
 $mol_dimmer_demo $mol_example_small
 	title \Text with highlighted found substring
@@ -2718,6 +2746,8 @@ $mol_dimmer_demo $mol_example_small
 		\dimmer
 		\search
 		\highlight
+	aspects /
+		\Widget
 
 $mol_ghost $mol_view
 	Sub $mol_view
@@ -2794,7 +2824,8 @@ $mol_drag_demo $mol_example_large
 		\dragndrop
 		\list
 		\transfer
-
+	aspects /
+		\Widget
 
 $mol_dump_list $mol_view
 	values /
@@ -2845,6 +2876,8 @@ $mol_dump_demo $mol_example_small
 		\dump
 		\javascript
 		\debug
+	aspects /
+		\Widget
 
 $mol_expander_demo $mol_example_small
 	title \Simple spoiler
@@ -2860,6 +2893,8 @@ $mol_expander_demo $mol_example_small
 		\expand
 		\container
 		\fold
+	aspects /
+		\Widget
 
 $mol_filler_demo $mol_example_small
 	title \Prints large bulk of text
@@ -2872,6 +2907,8 @@ $mol_filler_demo $mol_example_small
 		\lorem
 		\ipsum
 		\dolor
+	aspects /
+		\Widget
 
 $mol_float_demo $mol_example_large
 	title \Floating header example
@@ -2893,6 +2930,8 @@ $mol_float_demo $mol_example_large
 		\$mol_filler
 		\scroll
 		\container
+	aspects /
+		\Widget
 
 $mol_form_field $mol_labeler
 	bids /string
@@ -3009,7 +3048,7 @@ $mol_form_demo $mol_example
 		\validation
 		\field
 	aspects /
-		\gui/form
+		\Widget
 
 $mol_form_draft $mol_form
 	model $mol_object2
@@ -3092,6 +3131,8 @@ $mol_form_draft_demo $mol_example
 		\bids
 		\validation
 		\field
+	aspects /
+		\Widget
 
 $mol_phone $mol_format
 	mask* \+___ (___) ___-__-__
@@ -3124,6 +3165,8 @@ $mol_format_demo $mol_example_small
 		\$mol_string
 		\$mol_phone
 		\input
+	aspects /
+		\Widget
 
 $mol_frame_demo $mol_example_large
 	sub /
@@ -3134,6 +3177,8 @@ $mol_frame_demo $mol_example_large
 		\frame
 		\iframe
 		\container
+	aspects /
+		\Widget
 
 $mol_gallery $mol_view
 	sub <= items /$mol_view
@@ -3163,6 +3208,8 @@ $mol_gallery_demo $mol_example
 		\image
 		\adaptive
 		\masonry
+	aspects /
+		\Widget
 
 $mol_html_view $mol_list
 	html \
@@ -3243,6 +3290,8 @@ $mol_html_view_demo $mol_example
 		\$mol_scroll
 		\html
 		\render
+	aspects /
+		\Widget
 
 $mol_infinite $mol_list
 	before* /
@@ -3281,6 +3330,8 @@ $mol_infinite_demo $mol_example_large
 		\scroll
 		\virtual
 		\container
+	aspects /
+		\Widget
 
 $mol_labeler_demo $mol_example_small
 	title \Labeled content of some types
@@ -3299,6 +3350,8 @@ $mol_labeler_demo $mol_example_small
 		\form
 		\field
 		\caption
+	aspects /
+		\Widget
 
 $mol_canvas $mol_view
 	dom_name \canvas
@@ -3319,6 +3372,8 @@ $mol_layout_demo $mol_example_large
 			height => height
 	tags /
 		\layout
+	aspects /
+		\Widget/Layout
 
 $mol_icon_download $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
 
@@ -3361,6 +3416,8 @@ $mol_link_demo $mol_example_small
 		\navigation
 		\router
 		\url
+	aspects /
+		\Widget
 
 $mol_link_iconed_demo $mol_example_small
 	title \Link with icon
@@ -3378,7 +3435,8 @@ $mol_link_iconed_demo $mol_example_small
 		\link
 		\icon
 		\url
-
+	aspects /
+		\Widget
 
 $mol_link_lazy $mol_link
 	uri?val \
@@ -3404,6 +3462,8 @@ $mol_link_lazy_demo $mol_example_small
 		\link
 		\lazy
 		\download
+	aspects /
+		\Widget
 
 $mol_list_demo $mol_example_small
 	sub /
@@ -3425,6 +3485,8 @@ $mol_list_demo $mol_example_small
 		\list
 		\rows
 		\stack
+	aspects /
+		\Widget
 
 $mol_list_demo_table $mol_example
 	title \Large list of rows with dynamic content
@@ -3481,6 +3543,8 @@ $mol_list_demo_table $mol_example
 		\scroll
 		\divider
 		\grid
+	aspects /
+		\Widget
 
 $mol_list_demo_tree $mol_example_large
 	title \Large list of rows with dynamic content
@@ -3501,6 +3565,8 @@ $mol_list_demo_tree $mol_example_large
 		\hierarchy
 		\container
 		\nested
+	aspects /
+		\Widget
 
 $mol_map_yandex_mark $mol_object
 	pos $mol_vector_2d /
@@ -3536,7 +3602,8 @@ $mol_map_yandex_demo $mol_example_large
 					content <= place_content \It is Russia's second-largest city after Moscow
 	tags /
 		\map
-
+	aspects /
+		\Widget
 
 $hyoo_marked_app $mol_book2
 	plugins /
@@ -3641,6 +3708,8 @@ $mol_nav_demo $mol_example
 		\$mol_switch
 		\navigation
 		\keyboard
+	aspects /
+		\Widget
 
 
 $mol_number_demo $mol_example_small
@@ -3843,6 +3912,8 @@ $mol_number_demo $mol_example_small
 		\field
 		\label
 		\section
+	aspects /
+		\Widget
 
 $mol_page_demo $mol_example_large
 	title \Page with header, body and footer
@@ -3869,6 +3940,8 @@ $mol_page_demo $mol_example_large
 		\bar
 		\bottom
 		\navigator
+	aspects /
+		\Widget/Layout
 
 $mol_paginator $mol_bar
 	sub /
@@ -3890,6 +3963,8 @@ $mol_paginator_demo $mol_example_small
 	tags /
 		\paginator
 		\navigation
+	aspects /
+		\Widget
 
 $mol_plot_demo $mol_example_large
 	title \Dynamic lightweight graphs
@@ -3920,6 +3995,8 @@ $mol_plot_demo $mol_example_large
 		\chart
 		\graph
 		\dashboard
+	aspects /
+		\Widget
 
 $mol_plot_map_heat $mol_plot_group
 	series_z /number
@@ -3959,6 +4036,8 @@ $mol_plot_map_heat_demo $mol_example_large
 		\heatmap
 		\graph
 		\dashboard
+	aspects /
+		\Widget
 
 $mol_icon_anchor $mol_icon path \M12,2C10.34,2 9,3.34 9,5C9,6.27 9.8,7.4 11,7.83V10H8V12H11V18.92C9.16,18.63 7.53,17.57 6.53,16H8V14H3V19H5V17.3C6.58,19.61 9.2,21 12,21C14.8,21 17.42,19.61 19,17.31V19H21V14H16V16H17.46C16.46,17.56 14.83,18.63 13,18.92V12H16V10H13V7.82C14.2,7.4 15,6.27 15,5C15,3.34 13.66,2 12,2M12,4C12.55,4 13,4.45 13,5C13,5.55 12.55,6 12,6C11.45,6 11,5.55 11,5C11,4.45 11.45,4 12,4Z
 
@@ -4014,7 +4093,8 @@ $mol_pop_demo $mol_example
 		\align
 		\container
 		\modal
-
+	aspects /
+		\Widget
 
 $mol_pop_over $mol_pop
 	showed <= hovered?val false
@@ -4060,6 +4140,8 @@ $mol_pop_over_demo $mol_example_small
 		\menu
 		\hover
 		\tooltip
+	aspects /
+		\Widget
 
 $mol_portion_demo $mol_example_small
 	title \Progress bar in various states
@@ -4074,6 +4156,8 @@ $mol_portion_demo $mol_example_small
 		\dashboard
 		\progress
 		\slider
+	aspects /
+		\Widget
 
 $mol_icon_menu $mol_icon path \M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z
 
@@ -4134,6 +4218,8 @@ $mol_pick_demo $mol_example_small
 		\confirm
 		\markdown
 		\modal
+	aspects /
+		\Widget
 
 $mol_icon_clock $mol_icon path \M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z
 
@@ -4170,6 +4256,8 @@ $mol_pick_time_demo $mol_example_small
 		\timepicker
 		\time
 		\datetime
+	aspects /
+		\Widget
 
 $mol_row_demo_form $mol_example
 	title \Some controls in one row with equal paddings and wrapping support
@@ -4203,6 +4291,8 @@ $mol_row_demo_form $mol_example
 		\flex
 		\identation
 		\space
+	aspects /
+		\Widget
 
 $mol_row_demo_products $mol_example
 	title \Product catalog
@@ -4219,7 +4309,8 @@ $mol_row_demo_products $mol_example
 		\products
 		\grid
 		\scroll
-
+	aspects /
+		\Widget
 
 $mol_scroll_demo $mol_example_large
 	title \Simple scroll pane
@@ -4241,7 +4332,8 @@ $mol_scroll_demo $mol_example_large
 		\$mol_filler
 		\scroll
 		\container
-
+	aspects /
+		\Widget
 
 $mol_search_demo $mol_example_small
 	title \Search field with suggest 
@@ -4256,6 +4348,8 @@ $mol_search_demo $mol_example_small
 		\string
 		\fulltext
 		\filter
+	aspects /
+		\Widget
 
 $mol_section_demo $mol_example_small
 	title \Section with header
@@ -4269,6 +4363,8 @@ $mol_section_demo $mol_example_small
 		\section
 		\container
 		\header
+	aspects /
+		\Widget
 
 $mol_section_demo_level $mol_example_small
 	title \Section with header
@@ -4320,6 +4416,8 @@ $mol_section_demo_level $mol_example_small
 		\header
 		\level
 		\h1
+	aspects /
+		\Widget
 
 $mol_select_demo_colors $mol_example_small
 	title \Color picker with filter and custom rows
@@ -4345,6 +4443,8 @@ $mol_select_demo_colors $mol_example_small
 		\color
 		\colorpicker
 		\filter
+	aspects /
+		\Widget
 
 $mol_select_colors_color_preview $mol_view
 	style *
@@ -4372,6 +4472,8 @@ $mol_select_demo_month $mol_example_small
 				dec \December
 	tags /
 		\select
+	aspects /
+		\Widget
 
 $mol_select_demo_priority $mol_example_small
 	title \Priority picker
@@ -4387,6 +4489,8 @@ $mol_select_demo_priority $mol_example_small
 				\Lowest
 	tags /
 		\select
+	aspects /
+		\Widget
 
 $mol_select_list $mol_view
 	value?val /string
@@ -4432,6 +4536,8 @@ $mol_select_list_demo $mol_example_small
 		\select
 		\tags
 		\multiselect
+	aspects /
+		\Widget
 
 $mol_speck_demo $mol_example_small
 	sub /
@@ -4462,7 +4568,8 @@ $mol_speck_demo $mol_example_small
 		\speck
 		\highlight
 		\badge
-
+	aspects /
+		\Widget
 
 $mol_speech_demo $mol_example_small
 	sub /
@@ -4483,7 +4590,8 @@ $mol_speech_demo $mol_example_small
 		\voice
 		\recognition
 		\dictation
-		
+	aspects /
+		\Widget
 
 $mol_spell_demo $mol_example_small
 	sub /
@@ -4495,7 +4603,8 @@ $mol_spell_demo $mol_example_small
 		\$mol_spell_check
 		\$mol_textarea
 		\spellcheck
-
+	aspects /
+		\Widget
 
 $mol_stack_demo $mol_example_small
 	sub /
@@ -4506,6 +4615,8 @@ $mol_stack_demo $mol_example_small
 	tags /
 		\$mol_stack
 		\layout
+	aspects /
+		\Widget
 
 $mol_string_button $mol_string
 
@@ -4530,8 +4641,7 @@ $mol_string_demo $mol_example_small
 		\text
 		\field
 	aspects /
-		\gui/input
-		\input/string
+		\Widget
 
 $mol_switch_demo $mol_example
 	title \Color switchers in various state
@@ -4561,6 +4671,8 @@ $mol_switch_demo $mol_example
 		\option
 		\group
 		\radio
+	aspects /
+		\Widget
 
 $mol_tag_tree_demo $mol_example
 	title \Autoatic tag tree
@@ -4646,8 +4758,7 @@ $mol_tag_tree_demo $mol_example
 		\taxonomy
 		\menu
 	aspects /
-		\nav/tag
-		\gui/input/link
+		\Widget
 
 $mol_text_code_demo $mol_example_small
 	title \Markdow visualization example
@@ -4662,6 +4773,8 @@ $mol_text_code_demo $mol_example_small
 		\text
 		\code
 		\syntax highlighting
+	aspects /
+		\Widget
 
 $mol_search_jumper $mol_search
 	Root $mol_view
@@ -4788,6 +4901,8 @@ $mol_text_demo $mol_example_large
 	tags /
 		\text
 		\markdown
+	aspects /
+		\Widget
 
 $mol_textarea_demo $mol_example_small
 	title \Text input field in various states
@@ -4808,6 +4923,8 @@ $mol_textarea_demo $mol_example_small
 		\textarea
 		\code
 		\syntax highlighting
+	aspects /
+		\Widget
 
 $mol_icon_bookmark $mol_icon path \M17,3H7C5.9,3 5,3.9 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z
 
@@ -4924,6 +5041,8 @@ $mol_example_code $mol_example
 		\eval
 		\js
 		\javascript
+	aspects /
+		\Widget
 
 $mol_time_demo $mol_example_code
 	title \Time processing library sandbox
@@ -4989,6 +5108,8 @@ $mol_toolbar_demo $mol_example_small
 		\toolbar
 		\button
 		\icon
+	aspects /
+		\Widget
 
 $mol_video_player $mol_view
 	dom_name \video
@@ -5054,7 +5175,8 @@ $mol_video_player_demo $mol_example_large
 		\palyback
 		\upload
 		\media
-
+	aspects /
+		\Widget
 
 $mol_icon_eye $mol_icon path \M12,9C10.34,9 9,10.34 9,12C9,13.66 10.34,15 12,15C13.66,15 15,13.66 15,12C15,10.34 13.66,9 12,9M12,17C9.24,17 7,14.76 7,12C7,9.24 9.24,7 12,7C14.76,7 17,9.24 17,12C17,14.76 14.76,17 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z
 
@@ -5082,6 +5204,8 @@ $mol_password_demo $mol_example_small
 	tags /
 		\password
 		\input
+	aspects /
+		\Widget
 
 $mol_lights_demo $mol_example_small
 	title \Switcher between light/dark themes (usually for `$mol_theme_auto` plugin).
@@ -5096,3 +5220,5 @@ $mol_lights_demo $mol_example_small
 		\dark
 		\theme
 		\switcher
+	aspects /
+		\Widget

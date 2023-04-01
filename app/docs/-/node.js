@@ -7650,16 +7650,6 @@ var $;
             obj.Item = (id) => this.Option(id);
             obj.ids_tags = () => this.ids_tags();
             obj.levels_expanded = () => this.levels_expanded();
-            obj.tag_names = () => ({
-                gui: this.$.$mol_locale.text('$mol_app_demo_menu_Tree_tag_names_gui'),
-                input: this.$.$mol_locale.text('$mol_app_demo_menu_Tree_tag_names_input'),
-                island: this.$.$mol_locale.text('$mol_app_demo_menu_Tree_tag_names_island'),
-                layout: this.$.$mol_locale.text('$mol_app_demo_menu_Tree_tag_names_layout'),
-                nav: this.$.$mol_locale.text('$mol_app_demo_menu_Tree_tag_names_nav'),
-                menu: this.$.$mol_locale.text('$mol_app_demo_menu_Tree_tag_names_menu'),
-                string: this.$.$mol_locale.text('$mol_app_demo_menu_Tree_tag_names_string'),
-                button: this.$.$mol_locale.text('$mol_app_demo_menu_Tree_tag_names_button')
-            });
             return obj;
         }
         List() {
@@ -14154,6 +14144,11 @@ var $;
                 "upload"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         filled_items(val) {
             if (val !== undefined)
                 return val;
@@ -14322,6 +14317,11 @@ var $;
                 "user"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         avatar_id(next) {
             if (next !== undefined)
                 return next;
@@ -14461,6 +14461,11 @@ var $;
                 "bar",
                 "group",
                 "container"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         mail_hint() {
@@ -14853,6 +14858,11 @@ var $;
                 "perfomance"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         col_sort(val) {
             if (val !== undefined)
                 return val;
@@ -14933,7 +14943,7 @@ var $;
         }
         aspects() {
             return [
-                "gui/layout"
+                "Widget/Layout"
             ];
         }
         Side() {
@@ -15461,8 +15471,7 @@ var $;
         }
         aspects() {
             return [
-                "gui/layout",
-                "nav/menu"
+                "Widget/Layout"
             ];
         }
         Pizza() {
@@ -15781,8 +15790,7 @@ var $;
         }
         aspects() {
             return [
-                "gui/input",
-                "input/button"
+                "Widget"
             ];
         }
         fail(event) {
@@ -16208,6 +16216,11 @@ var $;
                 "share",
                 "button",
                 "icon"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         Share_page() {
@@ -17169,6 +17182,11 @@ var $;
                 "date"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         month() {
             return "2018-01";
         }
@@ -17236,6 +17254,11 @@ var $;
                 "calendar",
                 "date",
                 "period"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         month() {
@@ -17374,6 +17397,11 @@ var $;
                 "date"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         today() {
             const obj = new this.$.$mol_time_moment();
             return obj;
@@ -17508,7 +17536,7 @@ var $;
         }
         aspects() {
             return [
-                "gui/island"
+                "Widget"
             ];
         }
         Simple() {
@@ -20650,6 +20678,11 @@ var $;
                 "dashboard"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         plan_title() {
             return "Plan";
         }
@@ -20836,6 +20869,11 @@ var $;
                 "plot",
                 "visualization",
                 "dashboard"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         receipts_title() {
@@ -21134,6 +21172,11 @@ var $;
                 "dashboard"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         forces_left_title() {
             return "Left wheel";
         }
@@ -21298,6 +21341,11 @@ var $;
                 "communication"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         chat_pages() {
             return this.Chat().pages();
         }
@@ -21337,6 +21385,11 @@ var $;
             return [
                 "checkbox",
                 "switch"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         base_checked(val) {
@@ -21551,6 +21604,11 @@ var $;
                 "toggle"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         right(id, val) {
             if (val !== undefined)
                 return val;
@@ -21598,6 +21656,11 @@ var $;
             return [
                 "expand",
                 "fold"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         base_expanded(val) {
@@ -21780,6 +21843,11 @@ var $;
                 "checkbox",
                 "multi",
                 "group"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         All() {
@@ -22013,6 +22081,11 @@ var $;
                 "icon"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         Base_icon() {
             const obj = new this.$.$mol_icon_microphone();
             return obj;
@@ -22224,6 +22297,11 @@ var $;
                 "scanner",
                 "scan",
                 "cordova"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         Qr() {
@@ -22940,6 +23018,11 @@ var $;
                 "format"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         date(val) {
             if (val !== undefined)
                 return val;
@@ -23129,6 +23212,11 @@ var $;
                 "container"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         Greeting() {
             const obj = new this.$.$mol_card();
             obj.title = () => "Greeting";
@@ -23225,6 +23313,11 @@ var $;
                 "dimmer",
                 "search",
                 "highlight"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         One() {
@@ -23718,6 +23811,11 @@ var $;
                 "dragndrop",
                 "list",
                 "transfer"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         transfer_adopt(transfer) {
@@ -24466,6 +24564,11 @@ var $;
                 "debug"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         value() {
             return null;
         }
@@ -24546,6 +24649,11 @@ var $;
                 "fold"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         Content() {
             const obj = new this.$.$mol_filler();
             return obj;
@@ -24590,6 +24698,11 @@ var $;
                 "dolor"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         Filler() {
             const obj = new this.$.$mol_filler();
             obj.min_symbols = () => 6000;
@@ -24621,6 +24734,11 @@ var $;
                 "$mol_filler",
                 "scroll",
                 "container"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         Head_content() {
@@ -25431,7 +25549,7 @@ var $;
         }
         aspects() {
             return [
-                "gui/form"
+                "Widget"
             ];
         }
         avatars_bid() {
@@ -26034,6 +26152,11 @@ var $;
                 "field"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         model() {
             const obj = new this.$.$mol_form_draft_demo_article();
             return obj;
@@ -26371,6 +26494,11 @@ var $;
                 "input"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         ip(next) {
             if (next !== undefined)
                 return next;
@@ -26493,6 +26621,11 @@ var $;
                 "frame",
                 "iframe",
                 "container"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         Frame() {
@@ -26622,6 +26755,11 @@ var $;
                 "image",
                 "adaptive",
                 "masonry"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         items() {
@@ -27255,6 +27393,11 @@ var $;
                 "render"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         Html() {
             const obj = new this.$.$mol_html_view();
             obj.html = () => " <h1>HTML Example</h1>\n <h2>Headings</h2>\n \t<h3>Level 3</h3>\n \t<h4>Level 4</h4>\n \t<h5>Level 5</h5>\n \t<h6>Level 6</h6>\n <h2>Inline elements</h2>\n <p>\n \t<strong>strong</strong>,\n \t<em>emphasis</em>,\n \t<ins>inserted</ins>,\n \t<del>deleted</del>,\n \t<br />\n \t<b>bold</b>,\n \t<i>italic</i>,\n \t<u>underlined</u>,\n \t<s>strikethrough</s>,\n \t<br />\n \t<code>code</code>,\n \t<a href=\"#\">safe link</a>,\n \t<a href=\"javascript:alert(1)\">unsafe link</a>,\n \tnormal text.\n </p>\n <h2>Media elements</h2>\n <p>\n \t<img src=\"https://mol.hyoo.ru/mol/logo/logo.svg\" />\n </p>\n <h2>Block elements</h2>\n <blockquote><p>Block quotation</p></blockquote>\n <pre><code>Block code</code></pre>";
@@ -27415,6 +27558,11 @@ var $;
                 "container"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         before(id) {
             return [];
         }
@@ -27564,6 +27712,11 @@ var $;
                 "form",
                 "field",
                 "caption"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         Provider() {
@@ -27751,6 +27904,11 @@ var $;
         tags() {
             return [
                 "layout"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget/Layout"
             ];
         }
         paint() {
@@ -28155,6 +28313,11 @@ var $;
                 "url"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         this_label() {
             return "This page";
         }
@@ -28316,6 +28479,11 @@ var $;
                 "url"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         uri(val) {
             if (val !== undefined)
                 return val;
@@ -28435,6 +28603,11 @@ var $;
                 "download"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         uri_generated() {
             return "";
         }
@@ -28501,6 +28674,11 @@ var $;
                 "list",
                 "rows",
                 "stack"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         items_сount(next) {
@@ -28620,6 +28798,11 @@ var $;
                 "scroll",
                 "divider",
                 "grid"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         check_list() {
@@ -29159,6 +29342,11 @@ var $;
                 "nested"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         root_rows() {
             return [];
         }
@@ -29637,6 +29825,11 @@ var $;
         tags() {
             return [
                 "map"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         place_title() {
@@ -30573,6 +30766,11 @@ var $;
                 "keyboard"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         Nav() {
             const obj = new this.$.$mol_nav();
             obj.keys_x = () => this.tab_list();
@@ -30689,6 +30887,11 @@ var $;
                 "field",
                 "label",
                 "section"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         value_string() {
@@ -31502,6 +31705,11 @@ var $;
                 "navigator"
             ];
         }
+        aspects() {
+            return [
+                "Widget/Layout"
+            ];
+        }
         Button_tools() {
             const obj = new this.$.$mol_button_minor();
             obj.title = () => "Toolbar Button";
@@ -31689,6 +31897,11 @@ var $;
                 "navigation"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         page(val) {
             if (val !== undefined)
                 return val;
@@ -31736,6 +31949,11 @@ var $;
                 "chart",
                 "graph",
                 "dashboard"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         saturation_series() {
@@ -32070,6 +32288,11 @@ var $;
                 "dashboard"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         terrain_x() {
             return [];
         }
@@ -32180,6 +32403,11 @@ var $;
                 "align",
                 "container",
                 "modal"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         show_title() {
@@ -32462,6 +32690,11 @@ var $;
                 "tooltip"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         file_title() {
             return "File";
         }
@@ -32614,6 +32847,11 @@ var $;
                 "slider"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         fist() {
             return 0;
         }
@@ -32749,6 +32987,11 @@ var $;
                 "confirm",
                 "markdown",
                 "modal"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         info_content_text() {
@@ -33150,6 +33393,11 @@ var $;
                 "datetime"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         moment(next) {
             if (next !== undefined)
                 return next;
@@ -33196,6 +33444,11 @@ var $;
                 "flex",
                 "identation",
                 "space"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         name_hint() {
@@ -33339,6 +33592,11 @@ var $;
                 "scroll"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         product_title(id) {
             return "";
         }
@@ -33406,6 +33664,11 @@ var $;
                 "$mol_filler",
                 "scroll",
                 "container"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         Filler0() {
@@ -33534,6 +33797,11 @@ var $;
                 "filter"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         suggests() {
             return [];
         }
@@ -33596,6 +33864,11 @@ var $;
                 "header"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         Section_content() {
             const obj = new this.$.$mol_filler();
             return obj;
@@ -33643,6 +33916,11 @@ var $;
                 "header",
                 "level",
                 "h1"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         Section_h1_content() {
@@ -33812,6 +34090,11 @@ var $;
                 "filter"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         color(val) {
             if (val !== undefined)
                 return val;
@@ -33939,6 +34222,11 @@ var $;
                 "select"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         month(val) {
             if (val !== undefined)
                 return val;
@@ -33993,6 +34281,11 @@ var $;
         tags() {
             return [
                 "select"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         priority(val) {
@@ -34249,6 +34542,11 @@ var $;
                 "multiselect"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         friends(val) {
             if (val !== undefined)
                 return val;
@@ -34325,6 +34623,11 @@ var $;
                 "speck",
                 "highlight",
                 "badge"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         Link_speck() {
@@ -34676,6 +34979,11 @@ var $;
                 "dictation"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         Toggle_icon() {
             const obj = new this.$.$mol_icon_microphone();
             return obj;
@@ -34872,6 +35180,11 @@ var $;
                 "spellcheck"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         article(next) {
             if (next !== undefined)
                 return next;
@@ -34987,6 +35300,11 @@ var $;
                 "layout"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         Back() {
             const obj = new this.$.$mol_image();
             obj.uri = () => "https://thiscatdoesnotexist.com/";
@@ -35070,8 +35388,7 @@ var $;
         }
         aspects() {
             return [
-                "gui/input",
-                "input/string"
+                "Widget"
             ];
         }
         name(val) {
@@ -35155,6 +35472,11 @@ var $;
                 "option",
                 "group",
                 "radio"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         color(val) {
@@ -35261,8 +35583,7 @@ var $;
         }
         aspects() {
             return [
-                "nav/tag",
-                "gui/input/link"
+                "Widget"
             ];
         }
         item_title(id) {
@@ -35411,6 +35732,11 @@ var $;
                 "text",
                 "code",
                 "syntax highlighting"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         source() {
@@ -35633,6 +35959,11 @@ var $;
                 "markdown"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         search(next) {
             if (next !== undefined)
                 return next;
@@ -35814,6 +36145,11 @@ var $;
                 "textarea",
                 "code",
                 "syntax highlighting"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         empty_descr(next) {
@@ -37008,6 +37344,11 @@ var $;
                 "javascript"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         code(next) {
             if (next !== undefined)
                 return next;
@@ -37253,6 +37594,11 @@ var $;
                 "toolbar",
                 "button",
                 "icon"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         search_hint() {
@@ -37626,6 +37972,11 @@ var $;
                 "media"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         files() {
             return this.Open().files();
         }
@@ -37907,6 +38258,11 @@ var $;
                 "input"
             ];
         }
+        aspects() {
+            return [
+                "Widget"
+            ];
+        }
         pass(val) {
             if (val !== undefined)
                 return val;
@@ -37963,6 +38319,11 @@ var $;
                 "dark",
                 "theme",
                 "switcher"
+            ];
+        }
+        aspects() {
+            return [
+                "Widget"
             ];
         }
         Theme() {

@@ -16,4 +16,6 @@ $mol_avatar_demo $mol_example_small
 		\generated
 		\identity
 		\user
+	aspects /
+		\Widget
 
