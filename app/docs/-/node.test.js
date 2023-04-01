@@ -7015,61 +7015,62 @@ var $;
         }
         ids_tags_filtered(prefix) {
             const ids = new Set();
-            const ids_tags = {};
-            const ids_tags_initial = prefix ? this.ids_tags_initial().ids_tags : this.ids_tags();
             const separator = this.separator();
-            const tags_ids = {};
-            for (const id of Object.keys(ids_tags_initial)) {
-                const tags = ids_tags_initial[id];
-                const unmatched_tags = [];
-                const prefixed_tags = [];
-                let prefix_matched = prefix === '';
-                for (const tag of tags) {
-                    if (tag === prefix) {
-                        prefix_matched = true;
+            let ids_tags_initial = prefix ? this.ids_tags_initial().ids_tags : this.ids_tags();
+            let tags_raw = [];
+            let tags_ids = {};
+            let ids_tags = {};
+            do {
+                tags_ids = {};
+                ids_tags = {};
+                for (const id of Object.keys(ids_tags_initial)) {
+                    const tags = ids_tags_initial[id];
+                    const unmatched_tags = [];
+                    const prefixed_tags = [];
+                    let prefix_matched = prefix === '';
+                    for (const tag of tags) {
+                        if (tag === prefix) {
+                            prefix_matched = true;
+                            continue;
+                        }
+                        let next = tag;
+                        if (prefix && tag.startsWith(prefix + separator)) {
+                            prefix_matched = true;
+                            next = tag.substring(prefix.length + separator.length);
+                            prefixed_tags.push(next);
+                        }
+                        unmatched_tags.push(next);
+                    }
+                    if (!prefix_matched)
                         continue;
-                    }
-                    let next = tag;
-                    if (prefix && tag.startsWith(prefix + separator)) {
-                        prefix_matched = true;
-                        next = tag.substring(prefix.length + separator.length);
-                        prefixed_tags.push(next);
-                    }
-                    unmatched_tags.push(next);
-                }
-                if (!prefix_matched)
-                    continue;
-                ids_tags[id] = unmatched_tags;
-                if (!unmatched_tags?.length) {
-                    ids.add(id);
-                    continue;
-                }
-                for (const tag of prefixed_tags.length ? prefixed_tags : unmatched_tags) {
-                    const sep_pos = tag.indexOf(separator);
-                    const first_segment = sep_pos === -1 ? tag : tag.substring(0, sep_pos);
-                    if (!first_segment) {
+                    ids_tags[id] = unmatched_tags;
+                    if (!unmatched_tags?.length) {
                         ids.add(id);
                         continue;
                     }
-                    if (!tags_ids[first_segment])
-                        tags_ids[first_segment] = [];
-                    tags_ids[first_segment].push(id);
-                }
-            }
-            const tags_raw = Object.keys(tags_ids);
-            const tags = [];
-            if (tags_raw.length === 1) {
-                for (const id of tags_ids[tags_raw[0]])
-                    ids.add(id);
-            }
-            else {
-                for (const tag of tags_raw) {
-                    if (tags_ids[tag].length > 1)
-                        tags.push(tag);
-                    else
-                        for (const id of tags_ids[tag])
+                    for (const tag of prefixed_tags.length ? prefixed_tags : unmatched_tags) {
+                        const sep_pos = tag.indexOf(separator);
+                        const first_segment = sep_pos === -1 ? tag : tag.substring(0, sep_pos);
+                        if (!first_segment) {
                             ids.add(id);
+                            continue;
+                        }
+                        if (!tags_ids[first_segment])
+                            tags_ids[first_segment] = [];
+                        tags_ids[first_segment].push(id);
+                    }
                 }
+                tags_raw = Object.keys(tags_ids);
+                ids_tags_initial = ids_tags;
+                prefix = tags_raw[0];
+            } while (tags_raw.length === 1 && !ids.size);
+            const tags = [];
+            for (const tag of tags_raw) {
+                if (tags_ids[tag].length > 1)
+                    tags.push(tag);
+                else
+                    for (const id of tags_ids[tag])
+                        ids.add(id);
             }
             return {
                 ids_tags,
@@ -7577,7 +7578,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/tag/tree/tree.view.css", "[mol_tag_tree_tag_content] {\r\n\tpadding-left: 1.5rem;\r\n}\r\n\r\n[mol_tag_tree_item] {\r\n\tpadding: var(--mol_gap_text);\r\n}");
+    $mol_style_attach("mol/tag/tree/tree.view.css", "[mol_tag_tree_tag_content] {\n\tpadding-left: var(--mol_gap_block);\n    margin-left: var(--mol_gap_block);\n    box-shadow: inset 1px 0 0 0 var(--mol_theme_line);\n}\n\n[mol_tag_tree_item] {\n\tpadding: var(--mol_gap_text);\n\tpadding-left: 0;\n}\n\n[mol_tag_tree_tag_trigger] {\n\tpadding-left: 0rem;\n\tmargin-left: -0.5rem;\n}\n");
 })($ || ($ = {}));
 //mol/tag/tree/-css/tree.view.css.ts
 ;
@@ -41538,66 +41539,91 @@ var $;
         }
         return bag;
     }
-    const ids_tags = {
-        thanos: [
-            'side/bad',
-            'universe/marvel',
-            'sex/male',
-        ],
-        locky: [
-            'side/bad',
-            'universe/marvel',
-            'sex/male',
-        ],
-        harley: [
-            'side/bad',
-            'universe/dc',
-            'sex/female',
-        ],
-        wonderwoman: [
-            'side/good',
-            'universe/dc',
-            'sex/female',
-        ],
-        hela: [
-            'side/bad',
-            'universe/marvel',
-            'sex/female',
-        ],
-    };
-    const test_data = {
-        '': {
-            tags: ['side', 'universe', 'sex',],
-            ids: [],
-        },
-        'sex': {
-            tags: ['male', 'female',],
-            ids: [],
-        },
-        'sex/female': {
-            tags: ['side', 'universe',],
-            ids: [],
-        },
-        'sex/female/side': {
-            tags: ['bad'],
-            ids: ['wonderwoman'],
-        },
-        'sex/female/side/bad': {
-            tags: [],
-            ids: ['harley', 'hela'],
-        },
-    };
-    const tests = Object.keys(test_data).reduce((acc, path) => {
-        return {
-            ...acc,
-            [`select ${path}`]() {
-                const bag = create_sieve({ path, ids_tags });
-                $mol_assert_like(bag.tags(), test_data[path].tags);
-                $mol_assert_like(bag.ids(), test_data[path].ids);
+    function create_tests({ title, ids_tags, test_data }) {
+        return Object.keys(test_data).reduce((acc, path) => {
+            return {
+                ...acc,
+                [`${title} ${path}`]() {
+                    const bag = create_sieve({ path, ids_tags });
+                    $mol_assert_like(bag.tags(), test_data[path].tags);
+                    $mol_assert_like(bag.ids(), test_data[path].ids);
+                }
+            };
+        }, {});
+    }
+    $mol_test({
+        ...create_tests({
+            title: 'ony tag on level without ids',
+            ids_tags: {
+                button: ['widget'],
+                card: ['widget'],
+                some1: ['widget/layout'],
+                some2: ['widget/layout'],
+            },
+            test_data: {
+                '': {
+                    tags: ['layout'],
+                    ids: ['button', 'card'],
+                },
+                'layout': {
+                    tags: [],
+                    ids: ['some1', 'some2'],
+                }
             }
-        };
-    }, {});
-    $mol_test(tests);
+        }),
+        ...create_tests({
+            title: 'select heroes',
+            ids_tags: {
+                thanos: [
+                    'side/bad',
+                    'universe/marvel',
+                    'sex/male',
+                ],
+                locky: [
+                    'side/bad',
+                    'universe/marvel',
+                    'sex/male',
+                ],
+                harley: [
+                    'side/bad',
+                    'universe/dc',
+                    'sex/female',
+                ],
+                wonderwoman: [
+                    'side/good',
+                    'universe/dc',
+                    'sex/female',
+                ],
+                hela: [
+                    'side/bad',
+                    'universe/marvel',
+                    'sex/female',
+                ],
+            },
+            test_data: {
+                '': {
+                    tags: ['side', 'universe', 'sex',],
+                    ids: [],
+                },
+                'sex': {
+                    tags: ['male', 'female',],
+                    ids: [],
+                },
+                'sex/female': {
+                    tags: ['side', 'universe',],
+                    ids: [],
+                },
+                'sex/female/side': {
+                    tags: ['bad'],
+                    ids: ['wonderwoman'],
+                },
+                'sex/female/side/bad': {
+                    tags: [],
+                    ids: ['harley', 'hela'],
+                },
+            }
+        })
+    });
 })($ || ($ = {}));
 //mol/tag/sieve/sieve.test.ts
 ;
