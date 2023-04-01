@@ -22,4 +22,5 @@ $mol_check_expand_demo $mol_example_small
 	tags /
 		\expand
 		\fold
-
+	aspects /
+		\Widget

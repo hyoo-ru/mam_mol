@@ -34,4 +34,5 @@ $mol_drag_demo $mol_example_large
 		\dragndrop
 		\list
 		\transfer
-
+	aspects /
+		\Widget

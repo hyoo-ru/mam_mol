@@ -47,3 +47,5 @@ $mol_pick_demo $mol_example_small
 		\confirm
 		\markdown
 		\modal
+	aspects /
+		\Widget
