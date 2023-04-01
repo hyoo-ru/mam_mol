@@ -57,6 +57,7 @@ namespace $ {
 	type Single_animation_composition = 'replace' | 'add' | 'accumulate'
 	type Single_animation_direction = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
 	type Single_animation_fill_mode = 'none' | 'forwards' | 'backwards' | 'both'
+	type Single_animation_iteration_count = 'infinite' | number
 
 	type Baseline_position = 'baseline' | `${'first'|'last'} baseline`
 
@@ -166,6 +167,12 @@ namespace $ {
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode
 		 */
 		animationFillMode : Single_animation_fill_mode | Single_animation_fill_mode[][] | Common
+		
+		/**
+		 * Sets the number of times an animation sequence should be played before stopping.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count
+		 */
+		animationIterationCount : Single_animation_iteration_count | Single_animation_iteration_count[][] | Common
 		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
