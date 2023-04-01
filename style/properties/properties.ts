@@ -273,7 +273,14 @@ namespace $ {
 		 */
 		aspectRatio: 'auto' | number | `${number} / ${number}`
 		
-		
+		/**
+		 * lets you apply graphical effects such as blurring or color shifting to the area behind an element.
+		 * Because it applies to everything behind the element, to see the effect you must make the element
+		 * or its background at least partially transparent.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter
+		 */
+		backdropFilter: 'none' | $mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'>
+		| ($mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'>)[][] | Common
 		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
@@ -326,9 +333,6 @@ namespace $ {
 			size?: ( BG_size | [ BG_size, BG_size ] )[]
 			
 		}
-		
-		/** @see https://developer.mozilla.org/ru/docs/Web/CSS/backdrop-filter */
-		backdropFilter: string | Common
 
 		/** @see https://developer.mozilla.org/ru/docs/Web/CSS/box-shadow */
 		box?: {
