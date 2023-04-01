@@ -18,6 +18,7 @@ namespace $ {
 	| 'grayscale'
 	| 'hue-rotate'
 	| 'invert'
+	| 'opacity'
 
 	const { per } = $mol_style_unit
 	
@@ -157,6 +158,10 @@ namespace $ {
 		
 		static invert(value?: number | $mol_style_unit<'%'>){
 			return new $mol_style_func( 'invert', value ?? "" );
+		}
+		
+		static opacity(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'opacity', value ?? "" );
 		}
 	
 	}
