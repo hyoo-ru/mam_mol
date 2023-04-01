@@ -15,6 +15,7 @@ namespace $ {
 	| 'brightness'
 	| 'contrast'
 	| 'drop-shadow'
+	| 'grayscale'
 
 	const { per } = $mol_style_unit
 	
@@ -142,6 +143,10 @@ namespace $ {
 					? [color, x_offset, y_offset, blur_radius]
 					: [color, x_offset, y_offset]
 			);
+		}
+		
+		static grayscale(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'grayscale', value ?? "" );
 		}
 	
 	}
