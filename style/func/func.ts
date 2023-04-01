@@ -14,6 +14,7 @@ namespace $ {
 	| 'blur'
 	| 'brightness'
 	| 'contrast'
+	| 'drop-shadow'
 
 	const { per } = $mol_style_unit
 	
@@ -127,6 +128,20 @@ namespace $ {
 		
 		static contrast(value?: number | $mol_style_unit<'%'>){
 			return new $mol_style_func( 'contrast', value ?? "" );
+		}
+		
+		static drop_shadow(
+			color: $mol_style_properties_color,
+			x_offset: $mol_style_unit<$mol_style_unit_length>,
+			y_offset: $mol_style_unit<$mol_style_unit_length>,
+			blur_radius?: $mol_style_unit<$mol_style_unit_length>
+		) {
+			return new $mol_style_func(
+				"drop-shadow",
+				blur_radius
+					? [color, x_offset, y_offset, blur_radius]
+					: [color, x_offset, y_offset]
+			);
 		}
 	
 	}
