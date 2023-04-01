@@ -59,6 +59,10 @@ namespace $ {
 	type Single_animation_fill_mode = 'none' | 'forwards' | 'backwards' | 'both'
 	type Single_animation_iteration_count = 'infinite' | number
 	type Single_animation_play_state = 'running' | 'paused'
+	type Easing_function = Linear_easing_function | Cubic_bezier_easing_function | Step_easing_function
+	type Linear_easing_function = 'linear' | $mol_style_func<'linear'>
+	type Cubic_bezier_easing_function = 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | $mol_style_func<'cubic-bezier'>
+	type Step_easing_function = 'step-start' | 'step-end' | $mol_style_func<'steps'>
 
 	type Baseline_position = 'baseline' | `${'first'|'last'} baseline`
 
@@ -188,6 +192,12 @@ namespace $ {
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-play-state
 		 */
 		animationPlayState : Single_animation_play_state | Single_animation_play_state[][] | Common
+		
+		/**
+		 * Sets how an animation progresses through the duration of each cycle.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function
+		 */
+		animationTimingFunction : Easing_function | Easing_function[][] | Common
 		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
