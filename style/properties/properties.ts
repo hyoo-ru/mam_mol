@@ -66,6 +66,9 @@ namespace $ {
 	type Compat_auto = 'searchfield' | 'textarea' | 'push-button' | 'slider-horizontal' | 'checkbox' | 'radio'
 	| 'menulist' | 'listbox' | 'meter' | 'progress-bar' | 'button'
 	type Compat_special = 'textfield' | 'menulist-button'
+	type Mix_blend_mode = Blend_mode | 'plus-darker' | 'plus-lighter'
+	type Blend_mode = 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' |	'color-dodge' |	'color-burn'
+	| 'hard-light' | 'soft-light' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity'
 
 	type Baseline_position = 'baseline' | `${'first'|'last'} baseline`
 
@@ -293,6 +296,12 @@ namespace $ {
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment
 		 */
 		backgroundAttachment: 'scroll' | 'fixed' | 'local' | ('scroll' | 'fixed' | 'local')[][] | Common
+		
+		/**
+		 * Sets how an element's background images should blend with each other and with the element's background color.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode
+		 */
+		backgroundBlendMode: Mix_blend_mode | Mix_blend_mode[][] | Common
 		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
