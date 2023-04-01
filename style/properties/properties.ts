@@ -288,6 +288,12 @@ namespace $ {
 		 */
 		backfaceVisibility: 'visible' | 'hidden' | Common
 		
+		/**
+		 * Sets whether a background image's position is fixed within the viewport, or scrolls with its containing block.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment
+		 */
+		backgroundAttachment: 'scroll' | 'fixed' | 'local' | ('scroll' | 'fixed' | 'local')[][] | Common
+		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
 		 * @see https://developer.mozilla.org/ru/docs/Web/CSS/justify-content
