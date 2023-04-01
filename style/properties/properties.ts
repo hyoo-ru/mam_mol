@@ -58,6 +58,7 @@ namespace $ {
 	type Single_animation_direction = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
 	type Single_animation_fill_mode = 'none' | 'forwards' | 'backwards' | 'both'
 	type Single_animation_iteration_count = 'infinite' | number
+	type Single_animation_play_state = 'running' | 'paused'
 
 	type Baseline_position = 'baseline' | `${'first'|'last'} baseline`
 
@@ -181,6 +182,12 @@ namespace $ {
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name
 		 */
 		animationName : 'none' | (string & {}) | ('none' | (string & {}))[][] | Common
+		
+		/**
+		 * Sets whether an animation is running or paused.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-play-state
+		 */
+		animationPlayState : Single_animation_play_state | Single_animation_play_state[][] | Common
 		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
