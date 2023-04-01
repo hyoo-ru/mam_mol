@@ -11,7 +11,9 @@ namespace $ {
 	| 'cubic-bezier'
 	| 'linear'
 	| 'steps'
-	| 'blur'
+	| $mol_style_func_filter
+	
+	export type $mol_style_func_filter = 'blur'
 	| 'brightness'
 	| 'contrast'
 	| 'drop-shadow'
