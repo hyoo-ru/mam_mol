@@ -92,6 +92,13 @@ namespace $ {
 		 */
 		alignItems? : 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
 		
+		/**
+		 * Overrides a grid or flex item's align-items value.
+		 * In Grid, it aligns the item inside the grid area.
+		 * In Flexbox, it aligns the item on the cross axis.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-self
+		 */
+		alignSelf? : 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
 
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
