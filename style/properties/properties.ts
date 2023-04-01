@@ -267,6 +267,12 @@ namespace $ {
 		 */
 		appearance: 'none' | 'auto' | Compat_auto | Compat_special | Common
 		
+		/**
+		 * Sets a preferred aspect ratio for the box, which will be used in the calculation of auto sizes and some other layout functions.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio
+		 */
+		aspectRatio: 'auto' | number | `${number} / ${number}`
+		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
 		 * @see https://developer.mozilla.org/ru/docs/Web/CSS/justify-content
