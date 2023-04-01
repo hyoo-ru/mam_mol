@@ -100,6 +100,31 @@ namespace $ {
 		 */
 		alignSelf? : 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
 
+		align: {
+			
+			/** 
+			 * Distribution of space between and around content items along a flexbox's cross-axis or a grid's block axis.
+			 * @see https://developer.mozilla.org/ru/docs/Web/CSS/align-content
+			 */
+			content : 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common
+			
+			/**
+			 * Sets the align-self value on all direct children as a group.
+			 * In Flexbox, it controls the alignment of items on the Cross Axis.
+			 * In Grid Layout, it controls the alignment of items on the Block Axis within their grid area.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-items
+			 */
+			items : 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
+			
+			/**
+			 * Overrides a grid or flex item's align-items value.
+			 * In Grid, it aligns the item inside the grid area.
+			 * In Flexbox, it aligns the item on the cross axis.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-self
+			 */
+			self : 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
+		}
+		
 		/**
 		 * resets all of an element's properties except unicode-bidi, direction, and CSS Custom Properties.
 		 * It can set properties to their initial or inherited values, or to the values specified in another cascade layer or stylesheet origin.
