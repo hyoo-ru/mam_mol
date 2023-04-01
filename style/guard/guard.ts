@@ -35,6 +35,9 @@ namespace $ {
 		: key extends '@media'
 		? Medias< View , Config[key] >
 		
+		: key extends `--${string}`
+		? any
+		
 		: key extends keyof $
 			? $mol_style_guard<
 				InstanceType< Extract< $[ key ], typeof $mol_view > >,
