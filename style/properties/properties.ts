@@ -69,6 +69,7 @@ namespace $ {
 	type Mix_blend_mode = Blend_mode | 'plus-darker' | 'plus-lighter'
 	type Blend_mode = 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' |	'color-dodge' |	'color-burn'
 	| 'hard-light' | 'soft-light' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity'
+	type Box = 'border-box' | 'padding-box' | 'content-box'
 
 	type Baseline_position = 'baseline' | `${'first'|'last'} baseline`
 
@@ -302,6 +303,12 @@ namespace $ {
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode
 		 */
 		backgroundBlendMode: Mix_blend_mode | Mix_blend_mode[][] | Common
+		
+		/**
+		 * Sets whether an element's background extends underneath its border box, padding box, or content box.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip
+		 */
+		backgroundClip: Box | Box[][] | Common
 		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
