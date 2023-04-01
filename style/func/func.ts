@@ -16,6 +16,7 @@ namespace $ {
 	| 'contrast'
 	| 'drop-shadow'
 	| 'grayscale'
+	| 'hue-rotate'
 
 	const { per } = $mol_style_unit
 	
@@ -147,6 +148,10 @@ namespace $ {
 		
 		static grayscale(value?: number | $mol_style_unit<'%'>){
 			return new $mol_style_func( 'grayscale', value ?? "" );
+		}
+		
+		static hue_rotate(value?: 0 | $mol_style_unit<$mol_style_unit_angle>){
+			return new $mol_style_func( 'hue-rotate', value ?? "")
 		}
 	
 	}
