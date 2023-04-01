@@ -13,6 +13,7 @@ namespace $ {
 	| 'steps'
 	| 'blur'
 	| 'brightness'
+	| 'contrast'
 
 	const { per } = $mol_style_unit
 	
@@ -122,6 +123,10 @@ namespace $ {
 		
 		static brightness(value?: number | $mol_style_unit<'%'>){
 			return new $mol_style_func( 'brightness', value ?? "" );
+		}
+		
+		static contrast(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'contrast', value ?? "" );
 		}
 	
 	}
