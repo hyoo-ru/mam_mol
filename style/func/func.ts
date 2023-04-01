@@ -20,6 +20,7 @@ namespace $ {
 	| 'invert'
 	| 'opacity'
 	| 'sepia'
+	| 'saturate'
 
 	const { per } = $mol_style_unit
 	
@@ -167,6 +168,10 @@ namespace $ {
 		
 		static sepia(value?: number | $mol_style_unit<'%'>){
 			return new $mol_style_func( 'sepia', value ?? "" );
+		}
+		
+		static saturate(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'saturate', value ?? "" );
 		}
 	
 	}
