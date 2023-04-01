@@ -93,7 +93,7 @@ namespace $ {
 		 * In Grid Layout, it controls the alignment of items on the Block Axis within their grid area.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-items
 		 */
-		alignItems? : 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}`
+		alignItems? : 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
 		
 
 		/** 
