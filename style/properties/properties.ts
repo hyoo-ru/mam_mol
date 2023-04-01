@@ -310,6 +310,12 @@ namespace $ {
 		 */
 		backgroundClip: Box | Box[][] | Common
 		
+		/**
+		 * Sets the background color of an element.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-color
+		 */
+		backgroundColor: $mol_style_properties_color | Common
+		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
 		 * @see https://developer.mozilla.org/ru/docs/Web/CSS/justify-content
