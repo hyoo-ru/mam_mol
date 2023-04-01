@@ -37,8 +37,8 @@ namespace $ {
 			return new $mol_style_func( 'calc' , value )
 		}
 
-		static vary< Name extends string >( name : Name ) {
-			return new $mol_style_func( 'var' , name )
+		static vary< Name extends string, Value extends string >( name : Name, defaultValue? : Value ) {
+			return new $mol_style_func( 'var' , defaultValue ? [name, defaultValue] : name )
 		}
 
 		static url< Href extends string >( href : Href ) {
