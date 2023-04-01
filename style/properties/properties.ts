@@ -154,6 +154,12 @@ namespace $ {
 		 */
 		animationDirection : Single_animation_direction | Single_animation_direction[][] | Common
 		
+		/**
+		 * Sets the length of time that an animation takes to complete one cycle.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration
+		 */
+		animationDuration : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
+		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
 		 * @see https://developer.mozilla.org/ru/docs/Web/CSS/justify-content
