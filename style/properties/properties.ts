@@ -282,6 +282,12 @@ namespace $ {
 		backdropFilter: 'none' | $mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'>
 		| ($mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'>)[][] | Common
 		
+		/**
+		 * Sets whether the back face of an element is visible when turned towards the user.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/backface-visibility	
+		 */
+		backfaceVisibility: 'visible' | 'hidden' | Common
+		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
 		 * @see https://developer.mozilla.org/ru/docs/Web/CSS/justify-content
