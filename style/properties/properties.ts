@@ -55,6 +55,7 @@ namespace $ {
 	}
 	
 	type Single_animation_composition = 'replace' | 'add' | 'accumulate'
+	type Single_animation_direction = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse'
 
 	type Baseline_position = 'baseline' | `${'first'|'last'} baseline`
 
@@ -146,6 +147,12 @@ namespace $ {
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay
 		 */
 		animationDelay : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
+		
+		/**
+		 * Sets whether an animation should play forward, backward, or alternate back and forth between playing the sequence forward and backward.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-direction
+		 */
+		animationDirection : Single_animation_direction | Single_animation_direction[][] | Common
 		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
