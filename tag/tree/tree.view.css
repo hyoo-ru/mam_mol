@@ -9,7 +9,7 @@
 	padding-left: 0;
 }
 
-[mol_tag_tree_tag_trigger] {
-	padding-left: 0rem;
-	margin-left: -0.5rem;
+[mol_tag_tree_tag_trigger_icon] {
+    margin-left: -1rem;
+    margin-right: -0.25rem;
 }
