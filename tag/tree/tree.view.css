@@ -1,5 +1,5 @@
 [mol_tag_tree_tag_content] {
-	padding-left: 0.75rem;
+	padding-left: var(--mol_gap_block);
     margin-left: var(--mol_gap_block);
     box-shadow: inset 1px 0 0 0 var(--mol_theme_line);
 }
