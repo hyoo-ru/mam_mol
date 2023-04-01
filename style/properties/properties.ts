@@ -54,10 +54,14 @@ namespace $ {
 		left?: Value ,
 	}
 
+	type Baseline_position = 'baseline' | `${'first'|'last'} baseline`
+
+	type Self_position = 'center' | 'start' | 'end' | 'self-start' | 'self-end' | 'flex-start' | 'flex-end'
 	type Span_align = 'none' | 'start' | 'end' | 'center' | $mol_style_func< 'var' >
 	type Snap_axis = 'x' | 'y' | 'block' | 'inline' | 'both' | $mol_style_func< 'var' >
 
 	type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common
+	type Overflow_position = 'unsafe'  | 'safe';
 
 	type ContainRule = 'size' | 'layout' | 'style' | 'paint' | $mol_style_func< 'var' >
 
@@ -76,6 +80,15 @@ namespace $ {
 		| readonly [ 'first' | 'last' , 'baseline' ]
 		| readonly [ 'safe' | 'unsafe' , 'start' | 'end' | 'flex-start' | 'flex-end' ]
 		| Common
+		
+		/**
+		 * Sets the align-self value on all direct children as a group.
+		 * In Flexbox, it controls the alignment of items on the Cross Axis.
+		 * In Grid Layout, it controls the alignment of items on the Block Axis within their grid area.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-items
+		 */
+		alignItems? : 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}`
+		
 
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
