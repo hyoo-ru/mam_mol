@@ -10,3 +10,5 @@ $mol_date_demo $mol_example_small
 		\date
 		\datepicker
 		\format
+	aspects /
+		\Widget

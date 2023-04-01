@@ -10,3 +10,5 @@ $mol_bench_demo $mol_example_small
 		\$mol_grid
 		\benchmark
 		\perfomance
+	aspects /
+		\Widget

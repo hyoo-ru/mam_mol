@@ -30,5 +30,4 @@ $mol_button_demo $mol_example_small
 	tags /
 		\button
 	aspects /
-		\gui/input
-		\input/button
+		\Widget

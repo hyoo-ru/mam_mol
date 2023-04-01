@@ -11,3 +11,5 @@ $mol_portion_demo $mol_example_small
 		\dashboard
 		\progress
 		\slider
+	aspects /
+		\Widget

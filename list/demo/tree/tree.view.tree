@@ -17,3 +17,5 @@ $mol_list_demo_tree $mol_example_large
 		\hierarchy
 		\container
 		\nested
+	aspects /
+		\Widget
