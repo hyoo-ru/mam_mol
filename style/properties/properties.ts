@@ -174,6 +174,14 @@ namespace $ {
 		 */
 		animationIterationCount : Single_animation_iteration_count | Single_animation_iteration_count[][] | Common
 		
+		/**
+		 * Specifies the names of one or more keyframes at-rules that describe the animation to apply to an element.
+		 * Multiple keyframe at-rules are specified as a comma-separated list of names.
+		 * If the specified name does not match any keyframe at-rule, no properties are animated.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name
+		 */
+		animationName : 'none' | (string & {}) | ('none' | (string & {}))[][] | Common
+		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
 		 * @see https://developer.mozilla.org/ru/docs/Web/CSS/justify-content
