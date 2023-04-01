@@ -9,6 +9,7 @@ namespace $ {
 	| 'url'
 	| 'scale'
 	| 'cubic-bezier'
+	| 'linear'
 
 	const { per } = $mol_style_unit
 	
@@ -82,6 +83,21 @@ namespace $ {
 			zoom: number,
 		) {
 			return new $mol_style_func( 'scale', [ zoom ] )
+		}
+		
+		static linear(
+			...breakpoints : Array<number | [number, number | $mol_style_unit<'%'>]>
+		){
+			return new $mol_style_func(
+				"linear",
+				breakpoints.map((e) =>
+					Array.isArray(e)
+						? String(e[0]) +
+						  " " +
+						  (typeof e[1] === "number" ? e[1] + "%" : e[1].toString())
+						: String(e)
+				)
+			);
 		}
 		
 		static cubic_bezier(
