@@ -138,7 +138,14 @@ namespace $ {
 		 * Specifies the composite operation to use when multiple animations affect the same property simultaneously.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-composition
 		 */
-		animationComposition : Single_animation_composition | Single_animation_composition[][]
+		animationComposition : Single_animation_composition | (Single_animation_composition)[][] | Common
+		
+		/**
+		 * Specifies the amount of time to wait from applying the animation to an element before beginning to perform the animation.
+		 * The animation can start later, immediately from its beginning, or immediately and partway through the animation.
+		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay
+		 */
+		animationDelay : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
 		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
