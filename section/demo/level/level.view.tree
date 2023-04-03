@@ -1,48 +1,55 @@
 $mol_section_demo_level $mol_example_small
 	title \Section with header
 	sub /
-		<= Section_h1 $mol_section
-			level 1
-			title \Section h1
-			content /
-				<= Section_h1_content $mol_filler
-					min_symbols 250
-		<= Section_h2 $mol_section
-			level 2
-			title \Section h2
-			content /
-				<= Section_h2_content $mol_filler
-					min_symbols 250
-		<= Section_h3 $mol_section
-			level 3
-			title \Section h3
-			content /
-				<= Section_h3_content $mol_filler
-					min_symbols 250
-		<= Section_h4 $mol_section
-			level 4
-			title \Section h4
-			content /
-				<= Section_h4_content $mol_filler
-					min_symbols 250
-		<= Section_h5 $mol_section
-			level 5
-			title \Section h5
-			content /
-				<= Section_h5_content $mol_filler
-					min_symbols 250
-		<= Section_h6 $mol_section
-			level 6
-			title \Section h6
-			content /
-				<= Section_h6_content $mol_filler
-					min_symbols 250
-		<= Section_h7 $mol_section
-			level 7
-			title \Section h7
-			content /
-				<= Section_h7_content $mol_filler
-					min_symbols 250
+		<= Section_h1
+	Section_h1 $mol_section
+		level 1
+		title \Section h1
+		content /
+			<= Section_h1_content $mol_filler
+				min_symbols 250
+			<= Section_h2
+	Section_h2 $mol_section
+		level 2
+		title \Section h2
+		content /
+			<= Section_h2_content $mol_filler
+				min_symbols 250
+			<= Section_h3
+	Section_h3 $mol_section
+		level 3
+		title \Section h3
+		content /
+			<= Section_h3_content $mol_filler
+				min_symbols 250
+			<= Section_h4
+	Section_h4 $mol_section
+		level 4
+		title \Section h4
+		content /
+			<= Section_h4_content $mol_filler
+				min_symbols 250
+			<= Section_h5
+	Section_h5 $mol_section
+		level 5
+		title \Section h5
+		content /
+			<= Section_h5_content $mol_filler
+				min_symbols 250
+			<= Section_h6
+	Section_h6 $mol_section
+		level 6
+		title \Section h6
+		content /
+			<= Section_h6_content $mol_filler
+				min_symbols 250
+			<= Section_h7
+	Section_h7 $mol_section
+		level 7
+		title \Section h7
+		content /
+			<= Section_h7_content $mol_filler
+				min_symbols 250
 	tags /
 		\section
 		\header
