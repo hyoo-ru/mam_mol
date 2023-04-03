@@ -33892,75 +33892,75 @@ var $;
         }
         sub() {
             return [
-                this.Section_h1()
+                this.Section1()
             ];
         }
-        Section_h1() {
+        Section1() {
             const obj = new this.$.$mol_section();
             obj.level = () => 1;
-            obj.title = () => "Section h1";
+            obj.title = () => "Level 1";
             obj.content = () => [
-                this.Section_h1_content(),
-                this.Section_h2()
+                this.Section1_text(),
+                this.Section2()
             ];
             return obj;
         }
-        Section_h2() {
+        Section2() {
             const obj = new this.$.$mol_section();
             obj.level = () => 2;
-            obj.title = () => "Section h2";
+            obj.title = () => "Level 2";
             obj.content = () => [
-                this.Section_h2_content(),
-                this.Section_h3()
+                this.Section2_text(),
+                this.Section3()
             ];
             return obj;
         }
-        Section_h3() {
+        Section3() {
             const obj = new this.$.$mol_section();
             obj.level = () => 3;
-            obj.title = () => "Section h3";
+            obj.title = () => "Level 3";
             obj.content = () => [
-                this.Section_h3_content(),
-                this.Section_h4()
+                this.Section3_text(),
+                this.Section4()
             ];
             return obj;
         }
-        Section_h4() {
+        Section4() {
             const obj = new this.$.$mol_section();
             obj.level = () => 4;
-            obj.title = () => "Section h4";
+            obj.title = () => "Level 4";
             obj.content = () => [
-                this.Section_h4_content(),
-                this.Section_h5()
+                this.Section4_text(),
+                this.Section5()
             ];
             return obj;
         }
-        Section_h5() {
+        Section5() {
             const obj = new this.$.$mol_section();
             obj.level = () => 5;
-            obj.title = () => "Section h5";
+            obj.title = () => "Level 5";
             obj.content = () => [
-                this.Section_h5_content(),
-                this.Section_h6()
+                this.Section5_text(),
+                this.Section6()
             ];
             return obj;
         }
-        Section_h6() {
+        Section6() {
             const obj = new this.$.$mol_section();
             obj.level = () => 6;
-            obj.title = () => "Section h6";
+            obj.title = () => "Level 6";
             obj.content = () => [
-                this.Section_h6_content(),
-                this.Section_h7()
+                this.Section6_text(),
+                this.Section7()
             ];
             return obj;
         }
-        Section_h7() {
+        Section7() {
             const obj = new this.$.$mol_section();
             obj.level = () => 7;
-            obj.title = () => "Section h7";
+            obj.title = () => "Level 7";
             obj.content = () => [
-                this.Section_h7_content()
+                this.Section7_text()
             ];
             return obj;
         }
@@ -33977,37 +33977,37 @@ var $;
                 "Widget"
             ];
         }
-        Section_h1_content() {
+        Section1_text() {
             const obj = new this.$.$mol_filler();
             obj.min_symbols = () => 250;
             return obj;
         }
-        Section_h2_content() {
+        Section2_text() {
             const obj = new this.$.$mol_filler();
             obj.min_symbols = () => 250;
             return obj;
         }
-        Section_h3_content() {
+        Section3_text() {
             const obj = new this.$.$mol_filler();
             obj.min_symbols = () => 250;
             return obj;
         }
-        Section_h4_content() {
+        Section4_text() {
             const obj = new this.$.$mol_filler();
             obj.min_symbols = () => 250;
             return obj;
         }
-        Section_h5_content() {
+        Section5_text() {
             const obj = new this.$.$mol_filler();
             obj.min_symbols = () => 250;
             return obj;
         }
-        Section_h6_content() {
+        Section6_text() {
             const obj = new this.$.$mol_filler();
             obj.min_symbols = () => 250;
             return obj;
         }
-        Section_h7_content() {
+        Section7_text() {
             const obj = new this.$.$mol_filler();
             obj.min_symbols = () => 250;
             return obj;
@@ -34015,46 +34015,46 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h1", null);
+    ], $mol_section_demo_level.prototype, "Section1", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h2", null);
+    ], $mol_section_demo_level.prototype, "Section2", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h3", null);
+    ], $mol_section_demo_level.prototype, "Section3", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h4", null);
+    ], $mol_section_demo_level.prototype, "Section4", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h5", null);
+    ], $mol_section_demo_level.prototype, "Section5", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h6", null);
+    ], $mol_section_demo_level.prototype, "Section6", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h7", null);
+    ], $mol_section_demo_level.prototype, "Section7", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h1_content", null);
+    ], $mol_section_demo_level.prototype, "Section1_text", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h2_content", null);
+    ], $mol_section_demo_level.prototype, "Section2_text", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h3_content", null);
+    ], $mol_section_demo_level.prototype, "Section3_text", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h4_content", null);
+    ], $mol_section_demo_level.prototype, "Section4_text", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h5_content", null);
+    ], $mol_section_demo_level.prototype, "Section5_text", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h6_content", null);
+    ], $mol_section_demo_level.prototype, "Section6_text", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h7_content", null);
+    ], $mol_section_demo_level.prototype, "Section7_text", null);
     $.$mol_section_demo_level = $mol_section_demo_level;
 })($ || ($ = {}));
 //mol/section/demo/level/-view.tree/level.view.tree.ts

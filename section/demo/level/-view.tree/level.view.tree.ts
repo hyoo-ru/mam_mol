@@ -12,34 +12,34 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub / <= Section_h1
+		 * sub / <= Section1
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Section_h1()
+				this.Section1()
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * Section_h1 $mol_section
+		 * Section1 $mol_section
 		 * 	level 1
-		 * 	title \Section h1
+		 * 	title \Level 1
 		 * 	content /
-		 * 		<= Section_h1_content
-		 * 		<= Section_h2
+		 * 		<= Section1_text
+		 * 		<= Section2
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h1() {
+		Section1() {
 			const obj = new this.$.$mol_section()
 			
 			obj.level = () => 1
-			obj.title = () => "Section h1"
+			obj.title = () => "Level 1"
 			obj.content = () => [
-				this.Section_h1_content(),
-				this.Section_h2()
+				this.Section1_text(),
+				this.Section2()
 			] as readonly any[]
 			
 			return obj
@@ -47,23 +47,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h2 $mol_section
+		 * Section2 $mol_section
 		 * 	level 2
-		 * 	title \Section h2
+		 * 	title \Level 2
 		 * 	content /
-		 * 		<= Section_h2_content
-		 * 		<= Section_h3
+		 * 		<= Section2_text
+		 * 		<= Section3
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h2() {
+		Section2() {
 			const obj = new this.$.$mol_section()
 			
 			obj.level = () => 2
-			obj.title = () => "Section h2"
+			obj.title = () => "Level 2"
 			obj.content = () => [
-				this.Section_h2_content(),
-				this.Section_h3()
+				this.Section2_text(),
+				this.Section3()
 			] as readonly any[]
 			
 			return obj
@@ -71,23 +71,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h3 $mol_section
+		 * Section3 $mol_section
 		 * 	level 3
-		 * 	title \Section h3
+		 * 	title \Level 3
 		 * 	content /
-		 * 		<= Section_h3_content
-		 * 		<= Section_h4
+		 * 		<= Section3_text
+		 * 		<= Section4
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h3() {
+		Section3() {
 			const obj = new this.$.$mol_section()
 			
 			obj.level = () => 3
-			obj.title = () => "Section h3"
+			obj.title = () => "Level 3"
 			obj.content = () => [
-				this.Section_h3_content(),
-				this.Section_h4()
+				this.Section3_text(),
+				this.Section4()
 			] as readonly any[]
 			
 			return obj
@@ -95,23 +95,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h4 $mol_section
+		 * Section4 $mol_section
 		 * 	level 4
-		 * 	title \Section h4
+		 * 	title \Level 4
 		 * 	content /
-		 * 		<= Section_h4_content
-		 * 		<= Section_h5
+		 * 		<= Section4_text
+		 * 		<= Section5
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h4() {
+		Section4() {
 			const obj = new this.$.$mol_section()
 			
 			obj.level = () => 4
-			obj.title = () => "Section h4"
+			obj.title = () => "Level 4"
 			obj.content = () => [
-				this.Section_h4_content(),
-				this.Section_h5()
+				this.Section4_text(),
+				this.Section5()
 			] as readonly any[]
 			
 			return obj
@@ -119,23 +119,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h5 $mol_section
+		 * Section5 $mol_section
 		 * 	level 5
-		 * 	title \Section h5
+		 * 	title \Level 5
 		 * 	content /
-		 * 		<= Section_h5_content
-		 * 		<= Section_h6
+		 * 		<= Section5_text
+		 * 		<= Section6
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h5() {
+		Section5() {
 			const obj = new this.$.$mol_section()
 			
 			obj.level = () => 5
-			obj.title = () => "Section h5"
+			obj.title = () => "Level 5"
 			obj.content = () => [
-				this.Section_h5_content(),
-				this.Section_h6()
+				this.Section5_text(),
+				this.Section6()
 			] as readonly any[]
 			
 			return obj
@@ -143,23 +143,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h6 $mol_section
+		 * Section6 $mol_section
 		 * 	level 6
-		 * 	title \Section h6
+		 * 	title \Level 6
 		 * 	content /
-		 * 		<= Section_h6_content
-		 * 		<= Section_h7
+		 * 		<= Section6_text
+		 * 		<= Section7
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h6() {
+		Section6() {
 			const obj = new this.$.$mol_section()
 			
 			obj.level = () => 6
-			obj.title = () => "Section h6"
+			obj.title = () => "Level 6"
 			obj.content = () => [
-				this.Section_h6_content(),
-				this.Section_h7()
+				this.Section6_text(),
+				this.Section7()
 			] as readonly any[]
 			
 			return obj
@@ -167,20 +167,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h7 $mol_section
+		 * Section7 $mol_section
 		 * 	level 7
-		 * 	title \Section h7
-		 * 	content / <= Section_h7_content
+		 * 	title \Level 7
+		 * 	content / <= Section7_text
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h7() {
+		Section7() {
 			const obj = new this.$.$mol_section()
 			
 			obj.level = () => 7
-			obj.title = () => "Section h7"
+			obj.title = () => "Level 7"
 			obj.content = () => [
-				this.Section_h7_content()
+				this.Section7_text()
 			] as readonly any[]
 			
 			return obj
@@ -217,11 +217,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h1_content $mol_filler min_symbols 250
+		 * Section1_text $mol_filler min_symbols 250
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h1_content() {
+		Section1_text() {
 			const obj = new this.$.$mol_filler()
 			
 			obj.min_symbols = () => 250
@@ -231,11 +231,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h2_content $mol_filler min_symbols 250
+		 * Section2_text $mol_filler min_symbols 250
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h2_content() {
+		Section2_text() {
 			const obj = new this.$.$mol_filler()
 			
 			obj.min_symbols = () => 250
@@ -245,11 +245,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h3_content $mol_filler min_symbols 250
+		 * Section3_text $mol_filler min_symbols 250
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h3_content() {
+		Section3_text() {
 			const obj = new this.$.$mol_filler()
 			
 			obj.min_symbols = () => 250
@@ -259,11 +259,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h4_content $mol_filler min_symbols 250
+		 * Section4_text $mol_filler min_symbols 250
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h4_content() {
+		Section4_text() {
 			const obj = new this.$.$mol_filler()
 			
 			obj.min_symbols = () => 250
@@ -273,11 +273,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h5_content $mol_filler min_symbols 250
+		 * Section5_text $mol_filler min_symbols 250
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h5_content() {
+		Section5_text() {
 			const obj = new this.$.$mol_filler()
 			
 			obj.min_symbols = () => 250
@@ -287,11 +287,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h6_content $mol_filler min_symbols 250
+		 * Section6_text $mol_filler min_symbols 250
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h6_content() {
+		Section6_text() {
 			const obj = new this.$.$mol_filler()
 			
 			obj.min_symbols = () => 250
@@ -301,11 +301,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Section_h7_content $mol_filler min_symbols 250
+		 * Section7_text $mol_filler min_symbols 250
 		 * ```
 		 */
 		@ $mol_mem
-		Section_h7_content() {
+		Section7_text() {
 			const obj = new this.$.$mol_filler()
 			
 			obj.min_symbols = () => 250
