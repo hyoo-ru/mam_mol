@@ -33892,14 +33892,77 @@ var $;
         }
         sub() {
             return [
-                this.Section_h1(),
-                this.Section_h2(),
-                this.Section_h3(),
-                this.Section_h4(),
-                this.Section_h5(),
-                this.Section_h6(),
+                this.Section_h1()
+            ];
+        }
+        Section_h1() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 1;
+            obj.title = () => "Section h1";
+            obj.content = () => [
+                this.Section_h1_content(),
+                this.Section_h2()
+            ];
+            return obj;
+        }
+        Section_h2() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 2;
+            obj.title = () => "Section h2";
+            obj.content = () => [
+                this.Section_h2_content(),
+                this.Section_h3()
+            ];
+            return obj;
+        }
+        Section_h3() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 3;
+            obj.title = () => "Section h3";
+            obj.content = () => [
+                this.Section_h3_content(),
+                this.Section_h4()
+            ];
+            return obj;
+        }
+        Section_h4() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 4;
+            obj.title = () => "Section h4";
+            obj.content = () => [
+                this.Section_h4_content(),
+                this.Section_h5()
+            ];
+            return obj;
+        }
+        Section_h5() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 5;
+            obj.title = () => "Section h5";
+            obj.content = () => [
+                this.Section_h5_content(),
+                this.Section_h6()
+            ];
+            return obj;
+        }
+        Section_h6() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 6;
+            obj.title = () => "Section h6";
+            obj.content = () => [
+                this.Section_h6_content(),
                 this.Section_h7()
             ];
+            return obj;
+        }
+        Section_h7() {
+            const obj = new this.$.$mol_section();
+            obj.level = () => 7;
+            obj.title = () => "Section h7";
+            obj.content = () => [
+                this.Section_h7_content()
+            ];
+            return obj;
         }
         tags() {
             return [
@@ -33919,27 +33982,9 @@ var $;
             obj.min_symbols = () => 250;
             return obj;
         }
-        Section_h1() {
-            const obj = new this.$.$mol_section();
-            obj.level = () => 1;
-            obj.title = () => "Section h1";
-            obj.content = () => [
-                this.Section_h1_content()
-            ];
-            return obj;
-        }
         Section_h2_content() {
             const obj = new this.$.$mol_filler();
             obj.min_symbols = () => 250;
-            return obj;
-        }
-        Section_h2() {
-            const obj = new this.$.$mol_section();
-            obj.level = () => 2;
-            obj.title = () => "Section h2";
-            obj.content = () => [
-                this.Section_h2_content()
-            ];
             return obj;
         }
         Section_h3_content() {
@@ -33947,27 +33992,9 @@ var $;
             obj.min_symbols = () => 250;
             return obj;
         }
-        Section_h3() {
-            const obj = new this.$.$mol_section();
-            obj.level = () => 3;
-            obj.title = () => "Section h3";
-            obj.content = () => [
-                this.Section_h3_content()
-            ];
-            return obj;
-        }
         Section_h4_content() {
             const obj = new this.$.$mol_filler();
             obj.min_symbols = () => 250;
-            return obj;
-        }
-        Section_h4() {
-            const obj = new this.$.$mol_section();
-            obj.level = () => 4;
-            obj.title = () => "Section h4";
-            obj.content = () => [
-                this.Section_h4_content()
-            ];
             return obj;
         }
         Section_h5_content() {
@@ -33975,27 +34002,9 @@ var $;
             obj.min_symbols = () => 250;
             return obj;
         }
-        Section_h5() {
-            const obj = new this.$.$mol_section();
-            obj.level = () => 5;
-            obj.title = () => "Section h5";
-            obj.content = () => [
-                this.Section_h5_content()
-            ];
-            return obj;
-        }
         Section_h6_content() {
             const obj = new this.$.$mol_filler();
             obj.min_symbols = () => 250;
-            return obj;
-        }
-        Section_h6() {
-            const obj = new this.$.$mol_section();
-            obj.level = () => 6;
-            obj.title = () => "Section h6";
-            obj.content = () => [
-                this.Section_h6_content()
-            ];
             return obj;
         }
         Section_h7_content() {
@@ -34003,58 +34012,49 @@ var $;
             obj.min_symbols = () => 250;
             return obj;
         }
-        Section_h7() {
-            const obj = new this.$.$mol_section();
-            obj.level = () => 7;
-            obj.title = () => "Section h7";
-            obj.content = () => [
-                this.Section_h7_content()
-            ];
-            return obj;
-        }
     }
-    __decorate([
-        $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h1_content", null);
     __decorate([
         $mol_mem
     ], $mol_section_demo_level.prototype, "Section_h1", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h2_content", null);
-    __decorate([
-        $mol_mem
     ], $mol_section_demo_level.prototype, "Section_h2", null);
-    __decorate([
-        $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h3_content", null);
     __decorate([
         $mol_mem
     ], $mol_section_demo_level.prototype, "Section_h3", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h4_content", null);
-    __decorate([
-        $mol_mem
     ], $mol_section_demo_level.prototype, "Section_h4", null);
-    __decorate([
-        $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h5_content", null);
     __decorate([
         $mol_mem
     ], $mol_section_demo_level.prototype, "Section_h5", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h6_content", null);
-    __decorate([
-        $mol_mem
     ], $mol_section_demo_level.prototype, "Section_h6", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h7_content", null);
+    ], $mol_section_demo_level.prototype, "Section_h7", null);
     __decorate([
         $mol_mem
-    ], $mol_section_demo_level.prototype, "Section_h7", null);
+    ], $mol_section_demo_level.prototype, "Section_h1_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h2_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h3_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h4_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h5_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h6_content", null);
+    __decorate([
+        $mol_mem
+    ], $mol_section_demo_level.prototype, "Section_h7_content", null);
     $.$mol_section_demo_level = $mol_section_demo_level;
 })($ || ($ = {}));
 //mol/section/demo/level/-view.tree/level.view.tree.ts

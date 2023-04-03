@@ -8585,22 +8585,22 @@ declare namespace $ {
     class $mol_section_demo_level extends $mol_example_small {
         title(): string;
         sub(): readonly any[];
+        Section_h1(): $$.$mol_section;
+        Section_h2(): $$.$mol_section;
+        Section_h3(): $$.$mol_section;
+        Section_h4(): $$.$mol_section;
+        Section_h5(): $$.$mol_section;
+        Section_h6(): $$.$mol_section;
+        Section_h7(): $$.$mol_section;
         tags(): readonly any[];
         aspects(): readonly any[];
         Section_h1_content(): $$.$mol_filler;
-        Section_h1(): $$.$mol_section;
         Section_h2_content(): $$.$mol_filler;
-        Section_h2(): $$.$mol_section;
         Section_h3_content(): $$.$mol_filler;
-        Section_h3(): $$.$mol_section;
         Section_h4_content(): $$.$mol_filler;
-        Section_h4(): $$.$mol_section;
         Section_h5_content(): $$.$mol_filler;
-        Section_h5(): $$.$mol_section;
         Section_h6_content(): $$.$mol_filler;
-        Section_h6(): $$.$mol_section;
         Section_h7_content(): $$.$mol_filler;
-        Section_h7(): $$.$mol_section;
     }
 }
 
