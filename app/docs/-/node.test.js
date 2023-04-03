@@ -14145,8 +14145,7 @@ var $;
             if (val !== undefined)
                 return val;
             return [
-                "https://thiscatdoesnotexist.com/",
-                "https://thiscatdoesnotexist.com/"
+                "https://picsum.photos/200"
             ];
         }
         Filled() {

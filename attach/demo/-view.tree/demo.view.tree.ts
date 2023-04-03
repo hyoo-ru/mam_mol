@@ -52,17 +52,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * filled_items?val /
-		 * 	\https://thiscatdoesnotexist.com/
-		 * 	\https://thiscatdoesnotexist.com/
+		 * filled_items?val / \https://picsum.photos/200
 		 * ```
 		 */
 		@ $mol_mem
 		filled_items(val?: any) {
 			if ( val !== undefined ) return val as never
 			return [
-				"https://thiscatdoesnotexist.com/",
-				"https://thiscatdoesnotexist.com/"
+				"https://picsum.photos/200"
 			] as readonly any[]
 		}
 		
