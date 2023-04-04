@@ -43,4 +43,4 @@ $mol_video_player_demo $mol_example_large
 		\upload
 		\media
 	aspects /
-		\Widget
+		\Widget/Integration

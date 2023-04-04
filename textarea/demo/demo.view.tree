@@ -18,4 +18,4 @@ $mol_textarea_demo $mol_example_small
 		\code
 		\syntax highlighting
 	aspects /
-		\Widget
+		\Widget/Control

@@ -38,4 +38,4 @@ $mol_html_view_demo $mol_example
 		\html
 		\render
 	aspects /
-		\Widget
+		\Widget/Layout

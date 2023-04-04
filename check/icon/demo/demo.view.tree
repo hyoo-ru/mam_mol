@@ -20,4 +20,4 @@ $mol_check_icon_demo $mol_example_small
 		\button
 		\icon
 	aspects /
-		\Widget
+		\Widget/Control

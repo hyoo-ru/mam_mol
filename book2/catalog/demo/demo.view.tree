@@ -84,4 +84,4 @@ $mol_book2_catalog_demo $mol_example_large
 		\transition
 		\multipage
 	aspects /
-		\Widget/Layout
+		\Widget/Navigation

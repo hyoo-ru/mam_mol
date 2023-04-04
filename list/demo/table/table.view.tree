@@ -54,4 +54,4 @@ $mol_list_demo_table $mol_example
 		\divider
 		\grid
 	aspects /
-		\Widget
+		\Widget/Layout

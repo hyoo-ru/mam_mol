@@ -18,4 +18,4 @@ $mol_calendar_demo_selection $mol_example_small
 		\date
 		\period
 	aspects /
-		\Widget
+		\Widget/Layout

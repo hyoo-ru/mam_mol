@@ -199,4 +199,4 @@ $mol_number_demo $mol_example_small
 		\label
 		\section
 	aspects /
-		\Widget
+		\Widget/Control
