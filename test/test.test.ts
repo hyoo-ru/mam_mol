@@ -25,7 +25,7 @@ namespace $ {
 			for( let mock of $mol_test_mocks ) await mock( context )
 			
 			const res = test( context )
-			if( res instanceof Promise ) {
+			if( $mol_promise_like( res ) ) {
 				await new Promise( ( done, fail )=> {
 					res.then( done, fail )
 					setTimeout( ()=> fail( new Error( 'Test timeout: ' + test.name ) ), 1000 )
