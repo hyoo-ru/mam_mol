@@ -3036,7 +3036,7 @@ var $;
                 return res;
             };
             for (const key of Object.keys(config).reverse()) {
-                if (/^[a-z]/.test(key)) {
+                if (/^(--)?[a-z]/.test(key)) {
                     const addProp = (keys, val) => {
                         if (Array.isArray(val)) {
                             if (val[0] && [Array, Object].includes(val[0].constructor)) {
