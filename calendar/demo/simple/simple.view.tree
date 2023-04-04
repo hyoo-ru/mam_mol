@@ -7,5 +7,5 @@ $mol_calendar_demo_simple $mol_example_small
 		\calendar
 		\date
 	aspects /
-		\Widget/Layout
+		\Widget
 		\Type/Date
