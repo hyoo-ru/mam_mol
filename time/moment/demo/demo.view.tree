@@ -8,4 +8,4 @@ $mol_time_moment_demo $mol_example_code
 		\$mol_time
 		\moment
 	aspects /
-		\Time
+		\Type/Time

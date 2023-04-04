@@ -8,3 +8,4 @@ $mol_calendar_demo_simple $mol_example_small
 		\date
 	aspects /
 		\Widget/Layout
+		\Type/Date

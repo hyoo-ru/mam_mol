@@ -200,3 +200,4 @@ $mol_number_demo $mol_example_small
 		\section
 	aspects /
 		\Widget/Control
+		\Type/Number

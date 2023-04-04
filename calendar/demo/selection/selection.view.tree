@@ -19,3 +19,4 @@ $mol_calendar_demo_selection $mol_example_small
 		\period
 	aspects /
 		\Widget/Layout
+		\Type/Date

@@ -12,3 +12,4 @@ $mol_date_demo $mol_example_small
 		\format
 	aspects /
 		\Widget/Control
+		\Type/Date

@@ -7,4 +7,4 @@ $mol_time_interval_demo $mol_example_code
 		\$mol_time
 		\interval
 	aspects /
-		\Time
+		\Type/Time

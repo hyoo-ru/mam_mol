@@ -35,4 +35,4 @@ $mol_drag_demo $mol_example_large
 		\list
 		\transfer
 	aspects /
-		\Widget/Control
+		\Widget/Plugin

@@ -9,3 +9,4 @@ $mol_pick_time_demo $mol_example_small
 		\datetime
 	aspects /
 		\Widget/Control
+		\Type/Time

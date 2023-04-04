@@ -24,3 +24,4 @@ $mol_calendar_demo_holiday $mol_example_small
 		\date
 	aspects /
 		\Widget/Layout
+		\Type/Date

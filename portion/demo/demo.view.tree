@@ -12,4 +12,4 @@ $mol_portion_demo $mol_example_small
 		\progress
 		\slider
 	aspects /
-		\Widget/Layout
+		\Widget/Draw

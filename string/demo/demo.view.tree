@@ -20,3 +20,4 @@ $mol_string_demo $mol_example_small
 		\field
 	aspects /
 		\Widget/Control
+		\Type/String

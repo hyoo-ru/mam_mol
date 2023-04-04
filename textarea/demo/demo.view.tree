@@ -19,3 +19,4 @@ $mol_textarea_demo $mol_example_small
 		\syntax highlighting
 	aspects /
 		\Widget/Control
+		\Type/String
