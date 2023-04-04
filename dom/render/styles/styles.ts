@@ -8,11 +8,12 @@ namespace $ {
 			let val = styles[ name ]
 			
 			const style = ( el as HTMLElement ).style as any
+			const kebab = ( name : string )=> name.replace( /[A-Z]/g , letter => '-' + letter.toLowerCase() )
 			
 			if( typeof val === 'number' ) {
-				style.setProperty(name, `${ val }px`);
+				style.setProperty(kebab(name), `${ val }px`);
 			} else {
-				style.setProperty(name, val);
+				style.setProperty(kebab(name), val);
 			}
 			
 		}
