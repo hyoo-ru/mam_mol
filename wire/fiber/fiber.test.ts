@@ -91,7 +91,7 @@ namespace $ {
 					try {
 						return $mol_wire_sync( Handle ).sum( 1, 2 )
 					} catch( error: any ) {
-						if( error instanceof Promise ) $mol_fail_hidden( error )
+						if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
 						$mol_assert_equal( error.message, 'test error 3' )
 					}
 				}
