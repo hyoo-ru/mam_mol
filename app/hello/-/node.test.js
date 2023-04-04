@@ -2215,10 +2215,10 @@ var $;
             let val = styles[name];
             const style = el.style;
             if (typeof val === 'number') {
-                style[name] = `${val}px`;
+                style.setProperty(name, `${val}px`);
             }
             else {
-                style[name] = val;
+                style.setProperty(name, val);
             }
         }
     }
