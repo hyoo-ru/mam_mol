@@ -2222,11 +2222,12 @@ var $;
         for (let name in styles) {
             let val = styles[name];
             const style = el.style;
+            const kebab = (name) => name.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
             if (typeof val === 'number') {
-                style.setProperty(name, `${val}px`);
+                style.setProperty(kebab(name), `${val}px`);
             }
             else {
-                style.setProperty(name, val);
+                style.setProperty(kebab(name), val);
             }
         }
     }
