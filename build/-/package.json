@@ -40,6 +40,8 @@
     "$mol_after_frame",
     "$mol_after",
     "$mol_after_timeout",
+    "$mol_promise_like",
+    "$mol_promise",
     "$mol_wire_task",
     "$mol_compare_deep",
     "$mol_compare",

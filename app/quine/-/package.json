@@ -45,6 +45,8 @@
     "$mol_after_frame",
     "$mol_after",
     "$mol_after_timeout",
+    "$mol_promise_like",
+    "$mol_promise",
     "$mol_func_name",
     "$mol_func",
     "$mol_key",
@@ -196,7 +198,7 @@
     "$mol_embed_native",
     "$mol_wait_timeout",
     "$mol_wait",
-    "$mol_promise",
+    "$mol_promise_promise",
     "$mol_embed_youtube",
     "$mol_frame",
     "$mol_row"

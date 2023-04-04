@@ -34,7 +34,7 @@ namespace $ {
 				try {
 					this.view.dom_tree()
 				} catch( error: unknown ) {
-					if( error instanceof Promise ) return
+					if( $mol_promise_like( error ) ) return
 					$mol_fail_hidden( error )
 				}
 				

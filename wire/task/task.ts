@@ -42,7 +42,7 @@ namespace $ {
 		}
 
 		complete() {
-			if( this.cache instanceof Promise ) return
+			if( $mol_promise_like( this.cache ) ) return
 			this.destructor()
 		}
 		
@@ -51,7 +51,7 @@ namespace $ {
 			const prev = this.cache
 			this.cache = next
 			
-			if( next instanceof Promise ) {
+			if( $mol_promise_like( next ) ) {
 				
 				this.cursor = $mol_wire_cursor.fresh
 				if( next !== prev ) this.emit()

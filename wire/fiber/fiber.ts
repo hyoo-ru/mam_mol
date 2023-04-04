@@ -73,7 +73,7 @@ namespace $ {
 		}
 		
 		result() {
-			if( this.cache instanceof Promise ) return
+			if( $mol_promise_like( this.cache ) ) return
 			if( this.cache instanceof Error ) return
 			return this.cache
 		}
@@ -170,7 +170,7 @@ namespace $ {
 					default: result = (this.task as any).call( this.host!, ... this.args ); break
 				}
 				
-				if( result instanceof Promise ) {
+				if( $mol_promise_like( result ) ) {
 					
 					const put = ( res: Result )=> {
 						if( this.cache === result ) this.put( res )
@@ -186,13 +186,13 @@ namespace $ {
 				
 			} catch( error: any ) {
 				
-				if( error instanceof Error || error instanceof Promise ) {
+				if( error instanceof Error || $mol_promise_like( error ) ) {
 					result = error
 				} else {
 					result = new Error( String( error ), { cause: error } )
 				}
 				
-				if( result instanceof Promise && !handled.has( result ) ) {
+				if( $mol_promise_like( result ) && !handled.has( result ) ) {
 					
 					result = Object.assign( result.finally( ()=> {
 						if( this.cache === result ) this.absorb()
@@ -205,7 +205,7 @@ namespace $ {
 				
 			}
 			
-			if(!( result instanceof Promise )) {
+			if( ! $mol_promise_like( result ) ) {
 				this.track_cut()
 			}
 			
@@ -238,7 +238,7 @@ namespace $ {
 				return $mol_fail_hidden( this.cache )
 			}
 			
-			if( this.cache instanceof Promise ) {
+			if( $mol_promise_like( this.cache ) ) {
 				return $mol_fail_hidden( this.cache )
 			}
 			
@@ -259,7 +259,7 @@ namespace $ {
 					$mol_fail_hidden( this.cache )
 				}
 				
-				if(!( this.cache instanceof Promise )) return this.cache
+				if( ! $mol_promise_like( this.cache ) ) return this.cache
 					
 				await this.cache
 					

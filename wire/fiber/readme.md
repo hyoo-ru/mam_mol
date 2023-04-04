@@ -20,7 +20,7 @@ try {
 	// touch other fibers
 } catch( error: unknown ) {
 	
-	if( error instanceof Promise ) {
+	if( $mol_promise_like( error ) ) {
 		$mol_fail_hidden( error )
 	}
 	
