@@ -4862,6 +4862,347 @@ var $;
 var $;
 (function ($) {
     $mol_test({
+        'return result without errors'() {
+            $mol_assert_equal($mol_try(() => false), false);
+        },
+    });
+})($ || ($ = {}));
+//mol/try/try.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        'Cached field'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static low = 1;
+                static get high() {
+                    return this.low + 1;
+                }
+                static set high(next) {
+                    this.low = next - 1;
+                }
+                static test() {
+                    $mol_assert_equal(App.high, 2);
+                    App.high = 3;
+                    $mol_assert_equal(App.high, 3);
+                }
+            }
+            __decorate([
+                $mol_wire_field
+            ], App, "low", void 0);
+            __decorate([
+                $mol_wire_field
+            ], App, "high", null);
+            __decorate([
+                $mol_wire_method
+            ], App, "test", null);
+            App.test();
+        },
+    });
+})($ || ($ = {}));
+//mol/wire/field/field.test.ts
+;
+"use strict";
+//mol/type/result/result.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'define as methods'() {
+            const { foo, bar, lol } = $mol_wire_let({
+                foo(next = 1) { return next; },
+                bar() { return this.foo() + 1; },
+                lol(next) { return this.foo(next); },
+            });
+            $mol_assert_equal(foo(), 1);
+            $mol_assert_equal(bar(), 2);
+            $mol_assert_equal(foo(5), 5);
+            $mol_assert_equal(bar(), 6);
+            $mol_assert_equal(lol(10), 10);
+            $mol_assert_equal(bar(), 11);
+        },
+        'define as closures'() {
+            const { foo, bar, lol } = $mol_wire_let({
+                foo: (next = 1) => next,
+                bar: () => foo() + 1,
+                lol: (next) => foo(next),
+            });
+            $mol_assert_equal(foo(), 1);
+            $mol_assert_equal(bar(), 2);
+            $mol_assert_equal(foo(5), 5);
+            $mol_assert_equal(bar(), 6);
+            $mol_assert_equal(lol(10), 10);
+            $mol_assert_equal(bar(), 11);
+        },
+    });
+})($ || ($ = {}));
+//mol/wire/let/let.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        'Watch one value'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static set = new $mol_wire_set();
+                static lucky() {
+                    return this.set.has(777);
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "lucky", null);
+            $mol_assert_equal(App.lucky(), false);
+            App.set.add(666);
+            $mol_assert_equal(App.lucky(), false);
+            App.set.add(777);
+            $mol_assert_equal(App.lucky(), true);
+            App.set.delete(777);
+            $mol_assert_equal(App.lucky(), false);
+        },
+        'Watch item channel'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static set = new $mol_wire_set();
+                static lucky() {
+                    return this.set.item(777);
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "lucky", null);
+            $mol_assert_equal(App.lucky(), false);
+            App.set.item(666, true);
+            $mol_assert_equal(App.lucky(), false);
+            App.set.item(777, true);
+            $mol_assert_equal(App.lucky(), true);
+            App.set.item(777, false);
+            $mol_assert_equal(App.lucky(), false);
+        },
+        'Watch size'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static set = new $mol_wire_set();
+                static size() {
+                    return this.set.size;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "size", null);
+            $mol_assert_equal(App.size(), 0);
+            App.set.add(666);
+            $mol_assert_equal(App.size(), 1);
+            App.set.add(777);
+            $mol_assert_equal(App.size(), 2);
+            App.set.delete(777);
+            $mol_assert_equal(App.size(), 1);
+        },
+        'Watch for-of'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static set = new $mol_wire_set();
+                static sum() {
+                    let res = 0;
+                    for (const val of this.set) {
+                        res += val;
+                    }
+                    return res;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "sum", null);
+            $mol_assert_equal(App.sum(), 0);
+            App.set.add(111);
+            $mol_assert_equal(App.sum(), 111);
+            App.set.add(222);
+            $mol_assert_equal(App.sum(), 333);
+            App.set.delete(111);
+            $mol_assert_equal(App.sum(), 222);
+        },
+        'Watch forEach'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static set = new $mol_wire_set();
+                static sum() {
+                    let res = 0;
+                    this.set.forEach(val => res += val);
+                    return res;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "sum", null);
+            $mol_assert_equal(App.sum(), 0);
+            App.set.add(111);
+            $mol_assert_equal(App.sum(), 111);
+            App.set.add(222);
+            $mol_assert_equal(App.sum(), 333);
+            App.set.delete(111);
+            $mol_assert_equal(App.sum(), 222);
+        },
+    });
+})($ || ($ = {}));
+//mol/wire/set/set.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        'Watch one value'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static dict = new $mol_wire_dict();
+                static lucky() {
+                    return this.dict.get(777);
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "lucky", null);
+            $mol_assert_equal(App.lucky(), undefined);
+            App.dict.set(666, 6666);
+            $mol_assert_equal(App.lucky(), undefined);
+            App.dict.set(777, 7777);
+            $mol_assert_equal(App.lucky(), 7777);
+            App.dict.delete(777);
+            $mol_assert_equal(App.lucky(), undefined);
+        },
+        'Watch item channel'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static dict = new $mol_wire_dict();
+                static lucky() {
+                    return this.dict.item(777);
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "lucky", null);
+            $mol_assert_equal(App.lucky(), null);
+            App.dict.item(666, 6666);
+            $mol_assert_equal(App.lucky(), null);
+            App.dict.item(777, 7777);
+            $mol_assert_equal(App.lucky(), 7777);
+            App.dict.item(777, null);
+            $mol_assert_equal(App.lucky(), null);
+        },
+        'Watch size'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static dict = new $mol_wire_dict();
+                static size() {
+                    return this.dict.size;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "size", null);
+            $mol_assert_equal(App.size(), 0);
+            App.dict.set(666, 6666);
+            $mol_assert_equal(App.size(), 1);
+            App.dict.set(777, 7777);
+            $mol_assert_equal(App.size(), 2);
+            App.dict.delete(777);
+            $mol_assert_equal(App.size(), 1);
+        },
+        'Watch for-of'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static dict = new $mol_wire_dict();
+                static sum() {
+                    let keys = 0;
+                    let vals = 0;
+                    for (const [key, val] of this.dict) {
+                        keys += key;
+                        vals += val;
+                    }
+                    return [keys, vals];
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "sum", null);
+            $mol_assert_like(App.sum(), [0, 0]);
+            App.dict.set(111, 1111);
+            $mol_assert_like(App.sum(), [111, 1111]);
+            App.dict.set(222, 2222);
+            $mol_assert_like(App.sum(), [333, 3333]);
+            App.dict.delete(111);
+            $mol_assert_like(App.sum(), [222, 2222]);
+        },
+        'Watch forEach'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static dict = new $mol_wire_dict();
+                static sum() {
+                    let keys = 0;
+                    let vals = 0;
+                    this.dict.forEach((val, key) => {
+                        keys += key;
+                        vals += val;
+                    });
+                    return [keys, vals];
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "sum", null);
+            $mol_assert_like(App.sum(), [0, 0]);
+            App.dict.set(111, 1111);
+            $mol_assert_like(App.sum(), [111, 1111]);
+            App.dict.set(222, 2222);
+            $mol_assert_like(App.sum(), [333, 3333]);
+            App.dict.delete(111);
+            $mol_assert_like(App.sum(), [222, 2222]);
+        },
+    });
+})($ || ($ = {}));
+//mol/wire/dict/dict.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'empty array'() {
+            $mol_assert_like($mol_array_chunks([], () => true), []);
+        },
+        'one chunk'() {
+            $mol_assert_like($mol_array_chunks([1, 2, 3, 4, 5], () => false), [[1, 2, 3, 4, 5]]);
+        },
+        'last empty chunk'() {
+            $mol_assert_like($mol_array_chunks([1, 2, 3, 4, 5], (_, i) => i === 4), [[1, 2, 3, 4, 5]]);
+        },
+        'chunk for every item'() {
+            $mol_assert_like($mol_array_chunks([1, 2, 3, 4, 5], () => true), [[1], [2], [3], [4], [5]]);
+        },
+    });
+})($ || ($ = {}));
+//mol/array/chunks/chunks.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'trim array'() {
+            const array = [undefined, null, 0, false, null, undefined, undefined];
+            const correct = [undefined, null, 0, false, null];
+            $mol_array_trim(array);
+            $mol_assert_like(array, correct);
+        }
+    });
+})($ || ($ = {}));
+//mol/array/trim/trim.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
         'parse and serial'() {
             $mol_assert_equal(new $mol_time_duration('P42.1Y').toString(), 'P42.1YT');
             $mol_assert_equal(new $mol_time_duration('P42.1M').toString(), 'P42.1MT');
@@ -5053,17 +5394,6 @@ var $;
 var $;
 (function ($) {
     $mol_test({
-        'return result without errors'() {
-            $mol_assert_equal($mol_try(() => false), false);
-        },
-    });
-})($ || ($ = {}));
-//mol/try/try.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
         'lazy calls'() {
             let calls = 0;
             const list = $mol_range2(index => (++calls, index), () => 10);
@@ -5234,9 +5564,6 @@ var $;
 ;
 "use strict";
 //mol/type/param/param.test.ts
-;
-"use strict";
-//mol/type/result/result.test.ts
 ;
 "use strict";
 var $;
@@ -5661,298 +5988,5 @@ var $;
     });
 })($ || ($ = {}));
 //mol/spell/any/any.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        'Cached field'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static low = 1;
-                static get high() {
-                    return this.low + 1;
-                }
-                static set high(next) {
-                    this.low = next - 1;
-                }
-                static test() {
-                    $mol_assert_equal(App.high, 2);
-                    App.high = 3;
-                    $mol_assert_equal(App.high, 3);
-                }
-            }
-            __decorate([
-                $mol_wire_field
-            ], App, "low", void 0);
-            __decorate([
-                $mol_wire_field
-            ], App, "high", null);
-            __decorate([
-                $mol_wire_method
-            ], App, "test", null);
-            App.test();
-        },
-    });
-})($ || ($ = {}));
-//mol/wire/field/field.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'define as methods'() {
-            const { foo, bar, lol } = $mol_wire_let({
-                foo(next = 1) { return next; },
-                bar() { return this.foo() + 1; },
-                lol(next) { return this.foo(next); },
-            });
-            $mol_assert_equal(foo(), 1);
-            $mol_assert_equal(bar(), 2);
-            $mol_assert_equal(foo(5), 5);
-            $mol_assert_equal(bar(), 6);
-            $mol_assert_equal(lol(10), 10);
-            $mol_assert_equal(bar(), 11);
-        },
-        'define as closures'() {
-            const { foo, bar, lol } = $mol_wire_let({
-                foo: (next = 1) => next,
-                bar: () => foo() + 1,
-                lol: (next) => foo(next),
-            });
-            $mol_assert_equal(foo(), 1);
-            $mol_assert_equal(bar(), 2);
-            $mol_assert_equal(foo(5), 5);
-            $mol_assert_equal(bar(), 6);
-            $mol_assert_equal(lol(10), 10);
-            $mol_assert_equal(bar(), 11);
-        },
-    });
-})($ || ($ = {}));
-//mol/wire/let/let.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        'Watch one value'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static set = new $mol_wire_set();
-                static lucky() {
-                    return this.set.has(777);
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "lucky", null);
-            $mol_assert_equal(App.lucky(), false);
-            App.set.add(666);
-            $mol_assert_equal(App.lucky(), false);
-            App.set.add(777);
-            $mol_assert_equal(App.lucky(), true);
-            App.set.delete(777);
-            $mol_assert_equal(App.lucky(), false);
-        },
-        'Watch item channel'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static set = new $mol_wire_set();
-                static lucky() {
-                    return this.set.item(777);
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "lucky", null);
-            $mol_assert_equal(App.lucky(), false);
-            App.set.item(666, true);
-            $mol_assert_equal(App.lucky(), false);
-            App.set.item(777, true);
-            $mol_assert_equal(App.lucky(), true);
-            App.set.item(777, false);
-            $mol_assert_equal(App.lucky(), false);
-        },
-        'Watch size'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static set = new $mol_wire_set();
-                static size() {
-                    return this.set.size;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "size", null);
-            $mol_assert_equal(App.size(), 0);
-            App.set.add(666);
-            $mol_assert_equal(App.size(), 1);
-            App.set.add(777);
-            $mol_assert_equal(App.size(), 2);
-            App.set.delete(777);
-            $mol_assert_equal(App.size(), 1);
-        },
-        'Watch for-of'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static set = new $mol_wire_set();
-                static sum() {
-                    let res = 0;
-                    for (const val of this.set) {
-                        res += val;
-                    }
-                    return res;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "sum", null);
-            $mol_assert_equal(App.sum(), 0);
-            App.set.add(111);
-            $mol_assert_equal(App.sum(), 111);
-            App.set.add(222);
-            $mol_assert_equal(App.sum(), 333);
-            App.set.delete(111);
-            $mol_assert_equal(App.sum(), 222);
-        },
-        'Watch forEach'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static set = new $mol_wire_set();
-                static sum() {
-                    let res = 0;
-                    this.set.forEach(val => res += val);
-                    return res;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "sum", null);
-            $mol_assert_equal(App.sum(), 0);
-            App.set.add(111);
-            $mol_assert_equal(App.sum(), 111);
-            App.set.add(222);
-            $mol_assert_equal(App.sum(), 333);
-            App.set.delete(111);
-            $mol_assert_equal(App.sum(), 222);
-        },
-    });
-})($ || ($ = {}));
-//mol/wire/set/set.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        'Watch one value'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static dict = new $mol_wire_dict();
-                static lucky() {
-                    return this.dict.get(777);
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "lucky", null);
-            $mol_assert_equal(App.lucky(), undefined);
-            App.dict.set(666, 6666);
-            $mol_assert_equal(App.lucky(), undefined);
-            App.dict.set(777, 7777);
-            $mol_assert_equal(App.lucky(), 7777);
-            App.dict.delete(777);
-            $mol_assert_equal(App.lucky(), undefined);
-        },
-        'Watch item channel'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static dict = new $mol_wire_dict();
-                static lucky() {
-                    return this.dict.item(777);
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "lucky", null);
-            $mol_assert_equal(App.lucky(), null);
-            App.dict.item(666, 6666);
-            $mol_assert_equal(App.lucky(), null);
-            App.dict.item(777, 7777);
-            $mol_assert_equal(App.lucky(), 7777);
-            App.dict.item(777, null);
-            $mol_assert_equal(App.lucky(), null);
-        },
-        'Watch size'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static dict = new $mol_wire_dict();
-                static size() {
-                    return this.dict.size;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "size", null);
-            $mol_assert_equal(App.size(), 0);
-            App.dict.set(666, 6666);
-            $mol_assert_equal(App.size(), 1);
-            App.dict.set(777, 7777);
-            $mol_assert_equal(App.size(), 2);
-            App.dict.delete(777);
-            $mol_assert_equal(App.size(), 1);
-        },
-        'Watch for-of'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static dict = new $mol_wire_dict();
-                static sum() {
-                    let keys = 0;
-                    let vals = 0;
-                    for (const [key, val] of this.dict) {
-                        keys += key;
-                        vals += val;
-                    }
-                    return [keys, vals];
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "sum", null);
-            $mol_assert_like(App.sum(), [0, 0]);
-            App.dict.set(111, 1111);
-            $mol_assert_like(App.sum(), [111, 1111]);
-            App.dict.set(222, 2222);
-            $mol_assert_like(App.sum(), [333, 3333]);
-            App.dict.delete(111);
-            $mol_assert_like(App.sum(), [222, 2222]);
-        },
-        'Watch forEach'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static dict = new $mol_wire_dict();
-                static sum() {
-                    let keys = 0;
-                    let vals = 0;
-                    this.dict.forEach((val, key) => {
-                        keys += key;
-                        vals += val;
-                    });
-                    return [keys, vals];
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "sum", null);
-            $mol_assert_like(App.sum(), [0, 0]);
-            App.dict.set(111, 1111);
-            $mol_assert_like(App.sum(), [111, 1111]);
-            App.dict.set(222, 2222);
-            $mol_assert_like(App.sum(), [333, 3333]);
-            App.dict.delete(111);
-            $mol_assert_like(App.sum(), [222, 2222]);
-        },
-    });
-})($ || ($ = {}));
-//mol/wire/dict/dict.test.ts
 
 //# sourceMappingURL=web.test.js.map

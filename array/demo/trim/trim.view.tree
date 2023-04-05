@@ -1,0 +1,7 @@
+$mol_array_demo_trim $mol_example_code
+	code? \
+		\const array_with_undefined = [ undefined , null , 0, false , null , undefined , undefined ]
+		\const trimmed_array = $mol_array_trim(array_with_undefined)
+	tags /
+		\array
+		\trim
