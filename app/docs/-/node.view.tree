@@ -1168,26 +1168,35 @@ $mol_example_code $mol_example
 	aspects /
 		\Widget
 
-$mol_array_demo_chunks $mol_example_code
+$mol_array_chunks_demo $mol_example_code
 	code? \
-		\const chunked_every = $mol_array_chunks( [ 1, 2, 3, 4, 5 ], () => true )
-		\const chunked_second = $mol_array_chunks( [ 1, 2, 3, 4, 5 ], (_,i)=> i === 2 )
+		\const res = $mol_array_chunks(
+		\	[ 1, 2, 3, 4, 5 ],
+		\	n => n % 2,
+		\)
 	tags /
 		\array
 		\chunks
 
-$mol_array_demo_lottery $mol_example_code
+$mol_array_lottery_demo $mol_example_code
 	code? \
-		\const some_array = [1,2,3,4,5,6,7,8,9]
-		\const random_item = $mol_array_lottery(some_array)
+		\const rates = [ 1, 2, 3, 4, 5 ]
+		\const vote = $mol_array_lottery( rates )
 	tags /
 		\array
 		\random
 
-$mol_array_demo_trim $mol_example_code
+$mol_array_trim_demo $mol_example_code
 	code? \
-		\const array_with_undefined = [ undefined , null , 0, false , null , undefined , undefined ]
-		\const trimmed_array = $mol_array_trim(array_with_undefined)
+		\const res = $mol_array_trim([
+		\	undefined,
+		\	null,
+		\	0,
+		\	false,
+		\	null,
+		\	undefined,
+		\	undefined,
+		\])
 	tags /
 		\array
 		\trim

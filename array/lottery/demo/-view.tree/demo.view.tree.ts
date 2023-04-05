@@ -1,17 +1,17 @@
 namespace $ {
-	export class $mol_array_demo_lottery extends $mol_example_code {
+	export class $mol_array_lottery_demo extends $mol_example_code {
 		
 		/**
 		 * ```tree
 		 * code? \
-		 * 	\const some_array = [1,2,3,4,5,6,7,8,9]
-		 * 	\const random_item = $mol_array_lottery(some_array)
+		 * 	\const rates = [ 1, 2, 3, 4, 5 ]
+		 * 	\const vote = $mol_array_lottery( rates )
 		 * ```
 		 */
 		@ $mol_mem
 		code(next?: any) {
 			if ( next !== undefined ) return next as never
-			return "const some_array = [1,2,3,4,5,6,7,8,9]\nconst random_item = $mol_array_lottery(some_array)"
+			return "const rates = [ 1, 2, 3, 4, 5 ]\nconst vote = $mol_array_lottery( rates )"
 		}
 		
 		/**

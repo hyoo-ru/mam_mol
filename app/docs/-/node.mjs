@@ -13871,6 +13871,27 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_array_chunks(array, br) {
+        let chunk = [];
+        const chunks = [chunk];
+        for (let i = 0; i < array.length; ++i) {
+            const item = array[i];
+            chunk.push(item);
+            if (br(item, i)) {
+                chunks.push(chunk = []);
+            }
+        }
+        if (chunk.length === 0)
+            chunks.pop();
+        return chunks;
+    }
+    $.$mol_array_chunks = $mol_array_chunks;
+})($ || ($ = {}));
+//mol/array/chunks/chunks.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_import extends $mol_object2 {
         static module(uri) {
             return $mol_wire_sync(this).module_async(uri);
@@ -15559,32 +15580,11 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_array_chunks(array, br) {
-        let chunk = [];
-        const chunks = [chunk];
-        for (let i = 0; i < array.length; ++i) {
-            const item = array[i];
-            chunk.push(item);
-            if (br(item, i)) {
-                chunks.push(chunk = []);
-            }
-        }
-        if (chunk.length === 0)
-            chunks.pop();
-        return chunks;
-    }
-    $.$mol_array_chunks = $mol_array_chunks;
-})($ || ($ = {}));
-//mol/array/chunks/chunks.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_array_demo_chunks extends $mol_example_code {
+    class $mol_array_chunks_demo extends $mol_example_code {
         code(next) {
             if (next !== undefined)
                 return next;
-            return "const chunked_every = $mol_array_chunks( [ 1, 2, 3, 4, 5 ], () => true )\nconst chunked_second = $mol_array_chunks( [ 1, 2, 3, 4, 5 ], (_,i)=> i === 2 )";
+            return "const res = $mol_array_chunks(\n\t[ 1, 2, 3, 4, 5 ],\n\tn => n % 2,\n)";
         }
         tags() {
             return [
@@ -15595,10 +15595,10 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $mol_array_demo_chunks.prototype, "code", null);
-    $.$mol_array_demo_chunks = $mol_array_demo_chunks;
+    ], $mol_array_chunks_demo.prototype, "code", null);
+    $.$mol_array_chunks_demo = $mol_array_chunks_demo;
 })($ || ($ = {}));
-//mol/array/demo/chunks/-view.tree/chunks.view.tree.ts
+//mol/array/chunks/demo/-view.tree/demo.view.tree.ts
 ;
 "use strict";
 var $;
@@ -15613,11 +15613,11 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_array_demo_lottery extends $mol_example_code {
+    class $mol_array_lottery_demo extends $mol_example_code {
         code(next) {
             if (next !== undefined)
                 return next;
-            return "const some_array = [1,2,3,4,5,6,7,8,9]\nconst random_item = $mol_array_lottery(some_array)";
+            return "const rates = [ 1, 2, 3, 4, 5 ]\nconst vote = $mol_array_lottery( rates )";
         }
         tags() {
             return [
@@ -15628,10 +15628,10 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $mol_array_demo_lottery.prototype, "code", null);
-    $.$mol_array_demo_lottery = $mol_array_demo_lottery;
+    ], $mol_array_lottery_demo.prototype, "code", null);
+    $.$mol_array_lottery_demo = $mol_array_lottery_demo;
 })($ || ($ = {}));
-//mol/array/demo/lottery/-view.tree/lottery.view.tree.ts
+//mol/array/lottery/demo/-view.tree/demo.view.tree.ts
 ;
 "use strict";
 var $;
@@ -15655,11 +15655,11 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_array_demo_trim extends $mol_example_code {
+    class $mol_array_trim_demo extends $mol_example_code {
         code(next) {
             if (next !== undefined)
                 return next;
-            return "const array_with_undefined = [ undefined , null , 0, false , null , undefined , undefined ]\nconst trimmed_array = $mol_array_trim(array_with_undefined)";
+            return "const res = $mol_array_trim([\n\tundefined,\n\tnull,\n\t0,\n\tfalse,\n\tnull,\n\tundefined,\n\tundefined,\n])";
         }
         tags() {
             return [
@@ -15670,10 +15670,10 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $mol_array_demo_trim.prototype, "code", null);
-    $.$mol_array_demo_trim = $mol_array_demo_trim;
+    ], $mol_array_trim_demo.prototype, "code", null);
+    $.$mol_array_trim_demo = $mol_array_trim_demo;
 })($ || ($ = {}));
-//mol/array/demo/trim/-view.tree/trim.view.tree.ts
+//mol/array/trim/demo/-view.tree/demo.view.tree.ts
 ;
 "use strict";
 var $;

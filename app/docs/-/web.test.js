@@ -4862,6 +4862,26 @@ var $;
 var $;
 (function ($) {
     $mol_test({
+        'empty array'() {
+            $mol_assert_like($mol_array_chunks([], () => true), []);
+        },
+        'one chunk'() {
+            $mol_assert_like($mol_array_chunks([1, 2, 3, 4, 5], () => false), [[1, 2, 3, 4, 5]]);
+        },
+        'last empty chunk'() {
+            $mol_assert_like($mol_array_chunks([1, 2, 3, 4, 5], (_, i) => i === 4), [[1, 2, 3, 4, 5]]);
+        },
+        'chunk for every item'() {
+            $mol_assert_like($mol_array_chunks([1, 2, 3, 4, 5], () => true), [[1], [2], [3], [4], [5]]);
+        },
+    });
+})($ || ($ = {}));
+//mol/array/chunks/chunks.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
         'return result without errors'() {
             $mol_assert_equal($mol_try(() => false), false);
         },
@@ -5164,26 +5184,6 @@ var $;
     });
 })($ || ($ = {}));
 //mol/wire/dict/dict.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'empty array'() {
-            $mol_assert_like($mol_array_chunks([], () => true), []);
-        },
-        'one chunk'() {
-            $mol_assert_like($mol_array_chunks([1, 2, 3, 4, 5], () => false), [[1, 2, 3, 4, 5]]);
-        },
-        'last empty chunk'() {
-            $mol_assert_like($mol_array_chunks([1, 2, 3, 4, 5], (_, i) => i === 4), [[1, 2, 3, 4, 5]]);
-        },
-        'chunk for every item'() {
-            $mol_assert_like($mol_array_chunks([1, 2, 3, 4, 5], () => true), [[1], [2], [3], [4], [5]]);
-        },
-    });
-})($ || ($ = {}));
-//mol/array/chunks/chunks.test.ts
 ;
 "use strict";
 var $;

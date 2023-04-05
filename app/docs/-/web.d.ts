@@ -3801,6 +3801,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_array_chunks<Item>(array: Item[], br: (item: Item, index: number) => boolean): Item[][];
+}
+
+declare namespace $ {
     class $mol_import extends $mol_object2 {
         static module(uri: string): any;
         static module_async(uri: string): Promise<any>;
@@ -4157,11 +4161,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_array_chunks<Item>(array: Item[], br: (item: Item, index: number) => boolean): Item[][];
-}
-
-declare namespace $ {
-    class $mol_array_demo_chunks extends $mol_example_code {
+    class $mol_array_chunks_demo extends $mol_example_code {
         code(next?: any): string;
         tags(): readonly any[];
     }
@@ -4172,7 +4172,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_array_demo_lottery extends $mol_example_code {
+    class $mol_array_lottery_demo extends $mol_example_code {
         code(next?: any): string;
         tags(): readonly any[];
     }
@@ -4183,7 +4183,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_array_demo_trim extends $mol_example_code {
+    class $mol_array_trim_demo extends $mol_example_code {
         code(next?: any): string;
         tags(): readonly any[];
     }

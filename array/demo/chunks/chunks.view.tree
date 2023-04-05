@@ -1,7 +1,0 @@
-$mol_array_demo_chunks $mol_example_code
-	code? \
-		\const chunked_every = $mol_array_chunks( [ 1, 2, 3, 4, 5 ], () => true )
-		\const chunked_second = $mol_array_chunks( [ 1, 2, 3, 4, 5 ], (_,i)=> i === 2 )
-	tags /
-		\array
-		\chunks
