@@ -9,7 +9,7 @@ namespace $.$$ {
 				
 				const uri = this.uri()
 				
-				if( /\.(png|gif|jpg|jpeg|webp|svg)$/.test( uri ) ) return 'image'
+				if( /\b(png|gif|jpg|jpeg|jfif|webp|svg)\b/.test( uri ) ) return 'image'
 				if( /^https:\/\/www\.youtube\.com\//.test( uri ) ) return 'youtube'
 				if( /^https:\/\/youtu\.be\//.test( uri ) ) return 'youtube'
 				

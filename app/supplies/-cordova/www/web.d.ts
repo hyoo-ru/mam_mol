@@ -2708,12 +2708,30 @@ declare namespace $ {
             decoding: string;
             crossOrigin: any;
         };
+        attr(): {
+            width: number;
+            height: number;
+        };
+        event(): {
+            load: (next?: any) => any;
+        };
         minimal_width(): number;
         minimal_height(): number;
         uri(): string;
         loading(): string;
         decoding(): string;
         cors(): any;
+        natural_width(next?: any): number;
+        natural_height(next?: any): number;
+        load(next?: any): any;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_image extends $.$mol_image {
+        natural_width(next?: null): number;
+        natural_height(next?: null): number;
+        load(): void;
     }
 }
 
@@ -2732,7 +2750,7 @@ declare namespace $ {
         attach_new(val?: any): any;
         item_drop(id: any, event?: any): any;
         item_uri(id: any): string;
-        Image(id: any): $mol_image;
+        Image(id: any): $$.$mol_image;
     }
 }
 

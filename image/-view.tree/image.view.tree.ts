@@ -34,6 +34,33 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * attr *
+		 * 	^
+		 * 	width <= natural_width?
+		 * 	height <= natural_height?
+		 * ```
+		 */
+		attr() {
+			return {
+				...super.attr(),
+				width: this.natural_width(),
+				height: this.natural_height()
+			}
+		}
+		
+		/**
+		 * ```tree
+		 * event * load? <=> load?
+		 * ```
+		 */
+		event() {
+			return {
+				load: (next?: any) => this.load(next)
+			}
+		}
+		
+		/**
+		 * ```tree
 		 * minimal_width 16
 		 * ```
 		 */
@@ -83,6 +110,39 @@ namespace $ {
 		 * ```
 		 */
 		cors() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * natural_width? 0
+		 * ```
+		 */
+		@ $mol_mem
+		natural_width(next?: any) {
+			if ( next !== undefined ) return next as never
+			return 0
+		}
+		
+		/**
+		 * ```tree
+		 * natural_height? 0
+		 * ```
+		 */
+		@ $mol_mem
+		natural_height(next?: any) {
+			if ( next !== undefined ) return next as never
+			return 0
+		}
+		
+		/**
+		 * ```tree
+		 * load? null
+		 * ```
+		 */
+		@ $mol_mem
+		load(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 	}

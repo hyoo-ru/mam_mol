@@ -9149,6 +9149,18 @@ var $;
                 crossOrigin: this.cors()
             };
         }
+        attr() {
+            return {
+                ...super.attr(),
+                width: this.natural_width(),
+                height: this.natural_height()
+            };
+        }
+        event() {
+            return {
+                load: (next) => this.load(next)
+            };
+        }
         minimal_width() {
             return 16;
         }
@@ -9167,10 +9179,70 @@ var $;
         cors() {
             return null;
         }
+        natural_width(next) {
+            if (next !== undefined)
+                return next;
+            return 0;
+        }
+        natural_height(next) {
+            if (next !== undefined)
+                return next;
+            return 0;
+        }
+        load(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
     }
+    __decorate([
+        $mol_mem
+    ], $mol_image.prototype, "natural_width", null);
+    __decorate([
+        $mol_mem
+    ], $mol_image.prototype, "natural_height", null);
+    __decorate([
+        $mol_mem
+    ], $mol_image.prototype, "load", null);
     $.$mol_image = $mol_image;
 })($ || ($ = {}));
 //mol/image/-view.tree/image.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_image extends $.$mol_image {
+            natural_width(next) {
+                const dom = this.dom_node();
+                if (dom.naturalWidth)
+                    return dom.naturalWidth;
+                const found = this.uri().match(/\bwidth=(\d+)/);
+                return found ? Number(found[1]) : null;
+            }
+            natural_height(next) {
+                const dom = this.dom_node();
+                if (dom.naturalWidth)
+                    return dom.naturalWidth;
+                const found = this.uri().match(/\bheight=(\d+)/);
+                return found ? Number(found[1]) : null;
+            }
+            load() {
+                this.natural_width(null);
+                this.natural_height(null);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_image.prototype, "natural_width", null);
+        __decorate([
+            $mol_mem
+        ], $mol_image.prototype, "natural_height", null);
+        $$.$mol_image = $mol_image;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/image/image.view.ts
 ;
 "use strict";
 var $;
@@ -9422,7 +9494,7 @@ var $;
             type() {
                 try {
                     const uri = this.uri();
-                    if (/\.(png|gif|jpg|jpeg|webp|svg)$/.test(uri))
+                    if (/\b(png|gif|jpg|jpeg|jfif|webp|svg)\b/.test(uri))
                         return 'image';
                     if (/^https:\/\/www\.youtube\.com\//.test(uri))
                         return 'youtube';
