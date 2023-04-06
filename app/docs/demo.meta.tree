@@ -6,6 +6,11 @@ include \/mol/offline/install
 include \/mol/app/demo
 
 include \/hyoo/crowd/text/demo
+
+include \/mol/array/chunks/demo
+include \/mol/array/lottery/demo
+include \/mol/array/trim/demo
+include \/mol/assert/demo
 include \/mol/attach/demo
 include \/mol/audio/demo
 include \/mol/audio/demo/vibe
