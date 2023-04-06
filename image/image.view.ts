@@ -16,7 +16,7 @@ namespace $.$$ {
 		natural_height( next?: null ) {
 			
 			const dom = this.dom_node() as HTMLImageElement
-			if( dom.naturalHeight ) return dom.naturalWidth
+			if( dom.naturalHeight ) return dom.naturalHeight
 			
 			const found = this.uri().match( /\bheight=(\d+)/ )
 			return found ? Number( found[1] ) : null! 
