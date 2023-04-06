@@ -5,17 +5,17 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	mol_check_checked <= checked?val
-		 * 	aria-checked <= checked?val
-		 * 	role \checkbox
+		 * 	mol_check_checked <= checked?
+		 * 	aria-checked <= aria_checked
+		 * 	role <= aria_role
 		 * ```
 		 */
 		attr() {
 			return {
 				...super.attr(),
 				mol_check_checked: this.checked(),
-				"aria-checked": this.checked(),
-				role: "checkbox"
+				"aria-checked": this.aria_checked(),
+				role: this.aria_role()
 			}
 		}
 		
@@ -35,13 +35,31 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * checked?val false
+		 * checked? false
 		 * ```
 		 */
 		@ $mol_mem
-		checked(val?: any) {
-			if ( val !== undefined ) return val as never
+		checked(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
+		}
+		
+		/**
+		 * ```tree
+		 * aria_checked \false
+		 * ```
+		 */
+		aria_checked() {
+			return "false"
+		}
+		
+		/**
+		 * ```tree
+		 * aria_role \checkbox
+		 * ```
+		 */
+		aria_role() {
+			return "checkbox"
 		}
 		
 		/**

@@ -209,9 +209,9 @@ $mol_float $mol_view
 $mol_check $mol_button_minor
 	attr *
 		^
-		mol_check_checked <= checked?val false
-		aria-checked <= checked?val false
-		role \checkbox
+		mol_check_checked <= checked? false
+		aria-checked <= aria_checked \false
+		role <= aria_role \checkbox
 	sub /$mol_view_content
 		<= Icon null
 		<= label /
