@@ -7324,7 +7324,7 @@ var $;
             }
             natural_height(next) {
                 const dom = this.dom_node();
-                if (dom.naturalWidth)
+                if (dom.naturalHeight)
                     return dom.naturalWidth;
                 const found = this.uri().match(/\bheight=(\d+)/);
                 return found ? Number(found[1]) : null;
