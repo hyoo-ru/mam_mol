@@ -9498,15 +9498,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_time_demo extends $mol_example_code {
-        title(): string;
-        code(next?: any): string;
-        tags(): readonly any[];
-        aspects(): readonly any[];
-    }
-}
-
-declare namespace $ {
     class $mol_time_duration_demo extends $mol_example_code {
         title(): string;
         code(next?: any): string;

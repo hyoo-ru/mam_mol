@@ -37612,39 +37612,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_time_demo extends $mol_example_code {
-        title() {
-            return "Time processing library sandbox";
-        }
-        code(next) {
-            if (next !== undefined)
-                return next;
-            return "const now = new $mol_time_moment\nconst today = now.toString( 'YYYY-MM-DD' )\nconst tomorrow = now.shift( 'P1D' ).toString( 'DD Mon' )\n\nconst week = new $mol_time_duration( 'P7D' )\nconst days = week.count( 'P1D' )\n\nconst nextYear = new $mol_time_interval( '/P1Y' )\nconst anniversary = nextYear.end.toString( 'YYYY-MM-DD hh:mm' )";
-        }
-        tags() {
-            return [
-                "$mol_time",
-                "moment",
-                "duraion",
-                "interval"
-            ];
-        }
-        aspects() {
-            return [
-                "Type/Time"
-            ];
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_time_demo.prototype, "code", null);
-    $.$mol_time_demo = $mol_time_demo;
-})($ || ($ = {}));
-//mol/time/demo/-view.tree/demo.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_time_duration_demo extends $mol_example_code {
         title() {
             return "Time processing library sandbox";

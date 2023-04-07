@@ -95,7 +95,6 @@ include \/mol/tag/tree/demo
 include \/mol/text/code/demo
 include \/mol/text/demo
 include \/mol/textarea/demo
-include \/mol/time/demo
 include \/mol/time/duration/demo
 include \/mol/time/interval/demo
 include \/mol/time/moment/demo
