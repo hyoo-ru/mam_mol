@@ -4346,6 +4346,7 @@ declare namespace $ {
         Noise(): $mol_audio_room;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Beep_vibe(): $mol_audio_vibe;
         noise_freq(): number;
         Noise_vibe(): $mol_audio_vibe;
@@ -4509,6 +4510,7 @@ declare namespace $ {
         Room(): $mol_audio_room;
         sub(): readonly any[];
         tags(): readonly any[];
+        aspects(): readonly any[];
         Beep_vibe(): $mol_audio_vibe;
         duration_label(): string;
         duration(next?: any): number;
@@ -9484,6 +9486,34 @@ declare namespace $ {
         title(): string;
         code(next?: any): string;
         tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_time_duration_demo extends $mol_example_code {
+        title(): string;
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_time_interval_demo extends $mol_example_code {
+        title(): string;
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_time_moment_demo extends $mol_example_code {
+        title(): string;
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
     }
 }
 

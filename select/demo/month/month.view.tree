@@ -20,4 +20,4 @@ $mol_select_demo_month $mol_example_small
 	tags /
 		\select
 	aspects /
-		\Widget
+		\Widget/Control

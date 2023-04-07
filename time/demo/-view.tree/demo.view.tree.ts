@@ -47,6 +47,17 @@ namespace $ {
 				"interval"
 			] as readonly any[]
 		}
+		
+		/**
+		 * ```tree
+		 * aspects / \Type/Time
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Type/Time"
+			] as readonly any[]
+		}
 	}
 	
 }

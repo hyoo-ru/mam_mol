@@ -37,12 +37,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget
+		 * aspects / \Widget/Text
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget"
+				"Widget/Text"
 			] as readonly any[]
 		}
 		

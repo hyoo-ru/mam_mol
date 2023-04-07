@@ -25,4 +25,4 @@ $mol_dimmer_demo $mol_example_small
 		\search
 		\highlight
 	aspects /
-		\Widget
+		\Widget/Text

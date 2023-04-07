@@ -66,6 +66,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * aspects / \Media
+		 * ```
+		 */
+		aspects() {
+			return [
+				"Media"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * Beep_vibe $mol_audio_vibe
 		 * 	freq <= frequency
 		 * 	shape <= shape

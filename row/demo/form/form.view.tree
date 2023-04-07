@@ -31,4 +31,4 @@ $mol_row_demo_form $mol_example
 		\identation
 		\space
 	aspects /
-		\Widget
+		\Widget/Layout

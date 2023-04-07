@@ -8,4 +8,4 @@ $mol_frame_demo $mol_example_large
 		\iframe
 		\container
 	aspects /
-		\Widget
+		\Widget/Integration

@@ -206,12 +206,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget
+		 * aspects / \Widget/Layout
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget"
+				"Widget/Layout"
 			] as readonly any[]
 		}
 		

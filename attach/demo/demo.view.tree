@@ -10,4 +10,4 @@ $mol_attach_demo $mol_example_small
 		\image
 		\upload
 	aspects /
-		\Widget
+		\Widget/Control

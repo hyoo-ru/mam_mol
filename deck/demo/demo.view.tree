@@ -24,4 +24,4 @@ $mol_deck_demo $mol_example_small
 		\tabs
 		\container
 	aspects /
-		\Widget
+		\Widget/Layout

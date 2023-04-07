@@ -39,12 +39,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget
+		 * aspects / \Widget/Scroll
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget"
+				"Widget/Scroll"
 			] as readonly any[]
 		}
 		
