@@ -10,4 +10,4 @@ $mol_filler_demo $mol_example_small
 		\ipsum
 		\dolor
 	aspects /
-		\Widget
+		\Widget/Text

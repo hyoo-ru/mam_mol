@@ -19,4 +19,4 @@ $mol_list_demo $mol_example_small
 		\rows
 		\stack
 	aspects /
-		\Widget
+		\Widget/Layout

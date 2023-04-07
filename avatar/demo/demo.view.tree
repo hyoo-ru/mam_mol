@@ -17,5 +17,5 @@ $mol_avatar_demo $mol_example_small
 		\identity
 		\user
 	aspects /
-		\Widget
+		\Widget/Draw
 

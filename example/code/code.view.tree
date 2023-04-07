@@ -11,4 +11,4 @@ $mol_example_code $mol_example
 		\js
 		\javascript
 	aspects /
-		\Widget
+		\Widget/Playground
