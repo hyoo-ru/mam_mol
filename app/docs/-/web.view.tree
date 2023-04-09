@@ -3480,11 +3480,11 @@ $mol_infinite $mol_list
 	Before* $mol_view
 		minimal_width 0
 		minimal_height 0
-		auto <= before_load* null
+		sub / <= before_load* null
 	After* $mol_view
 		minimal_width 0
 		minimal_height 0
-		auto <= after_load* null
+		sub / <= after_load* null
 
 $mol_infinite_demo $mol_example_large
 	title \Infinite list demo

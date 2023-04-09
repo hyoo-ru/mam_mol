@@ -4994,7 +4994,12 @@ var $;
 var $;
 (function ($) {
     function $hyoo_lingua_translate(lang, text) {
-        return this.$mol_huggingface_run('hyoo-translate', 0, lang, text)[0];
+        const cache_key = `$hyoo_lingua_translate(${JSON.stringify(lang)},${JSON.stringify(text)})`;
+        const cached = this.$mol_state_local.value(cache_key);
+        if (cached)
+            return String(cached);
+        const translated = this.$mol_huggingface_run('hyoo-translate', 0, lang, text)[0];
+        return this.$mol_state_local.value(cache_key, translated);
     }
     $.$hyoo_lingua_translate = $hyoo_lingua_translate;
 })($ || ($ = {}));
@@ -28806,14 +28811,18 @@ var $;
             const obj = new this.$.$mol_view();
             obj.minimal_width = () => 0;
             obj.minimal_height = () => 0;
-            obj.auto = () => this.before_load(id);
+            obj.sub = () => [
+                this.before_load(id)
+            ];
             return obj;
         }
         After(id) {
             const obj = new this.$.$mol_view();
             obj.minimal_width = () => 0;
             obj.minimal_height = () => 0;
-            obj.auto = () => this.after_load(id);
+            obj.sub = () => [
+                this.after_load(id)
+            ];
             return obj;
         }
         before_load(id) {
@@ -28897,7 +28906,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/infinite/infinite.view.css", "[mol_infinite_before],\n[mol_infinite_after] {\n\toverflow-anchor: none;\n}\n\n[mol_infinite_after][mol_view_error=\"Promise\"] {\n\theight: 100vh;\n}\n");
+    $mol_style_attach("mol/infinite/infinite.view.css", "[mol_infinite_before],\n[mol_infinite_after] {\n\toverflow-anchor: none;\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_infinite_after]:where([mol_view_error=\"Promise\"]) {\n\theight: 100vh;\n}\n");
 })($ || ($ = {}));
 //mol/infinite/-css/infinite.view.css.ts
 ;

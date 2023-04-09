@@ -1209,7 +1209,7 @@ declare namespace $ {
     class $mol_fetch_response extends $mol_object2 {
         readonly native: Response;
         constructor(native: Response);
-        status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
+        status(): "unknown" | "success" | "inform" | "redirect" | "wrong" | "failed";
         code(): number;
         message(): string;
         headers(): Headers;
@@ -1246,7 +1246,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $hyoo_lingua_translate(this: $, lang: string, text: string): any;
+    function $hyoo_lingua_translate(this: $, lang: string, text: string): string;
 }
 
 declare namespace $ {
@@ -1258,7 +1258,7 @@ declare namespace $ {
         static lang(next?: string): string;
         static source(lang: string): any;
         static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): unknown;
+        static text(key: string): string;
         static warn(key: string): null;
     }
 }
@@ -1767,15 +1767,15 @@ declare namespace $ {
         entered(val?: any): boolean;
         minimal_width(): number;
         sub(): readonly any[];
-        loginLabel(): unknown;
+        loginLabel(): string;
         login(val?: any): string;
         loginControl(): $$.$mol_string;
         loginField(): $$.$mol_form_field;
-        passwordLabel(): unknown;
+        passwordLabel(): string;
         password(val?: any): string;
         passControl(): $$.$mol_string;
         passwordField(): $$.$mol_form_field;
-        submitLabel(): unknown;
+        submitLabel(): string;
         event_submit(val?: any): any;
         submit_blocked(): boolean;
         submit(): $mol_button_major;
@@ -2181,14 +2181,14 @@ declare namespace $ {
         minimal_height(): number;
         sub(): readonly any[];
         status(): string;
-        code_title(): unknown;
+        code_title(): string;
         code(): string;
         Code_item(): $mol_labeler;
-        cost_title(): unknown;
+        cost_title(): string;
         cost(): $mol_unit_money;
         Cost(): $$.$mol_cost;
         Cost_item(): $mol_labeler;
-        provider_title(): unknown;
+        provider_title(): string;
         provider_name(): string;
         Provider_item(): $mol_labeler;
         items(): readonly any[];
@@ -2527,7 +2527,7 @@ declare namespace $ {
         nav_focused(component?: any): any;
         Nav(): $$.$mol_nav;
         suggests_showed(val?: any): boolean;
-        hint(): unknown;
+        hint(): string;
         submit(event?: any): any;
         enabled(): boolean;
         keyboard(): string;
@@ -2571,7 +2571,7 @@ declare namespace $ {
         hint(): string;
         Manual(): $$.$mol_search;
         event_scan(val?: any): any;
-        scan_label(): unknown;
+        scan_label(): string;
         Scan(): $$.$mol_button;
     }
 }
@@ -2599,7 +2599,7 @@ declare namespace $ {
         tools(): readonly any[];
         body(): readonly any[];
         Supply_row(id: any): $$.$mol_app_supplies_card;
-        search_hint(): unknown;
+        search_hint(): string;
         search_query(val?: any): string;
         Search(): $$.$mol_code;
         supply_rows(): readonly $mol_view[];
@@ -2628,29 +2628,29 @@ declare namespace $ {
         minimal_height(): number;
         position(): $mol_app_supplies_domain_supply_position;
         Content(): $mol_view;
-        product_title(): unknown;
+        product_title(): string;
         product_name(): string;
         Product_item(): $mol_labeler;
-        cost_title(): unknown;
+        cost_title(): string;
         cost(): $mol_unit_money;
         Cost(): $$.$mol_cost;
         Cost_item(): $mol_labeler;
         Main_group(): $mol_row;
-        division_title(): unknown;
+        division_title(): string;
         division_name(): string;
         Division_item(): $mol_labeler;
-        price_label(): unknown;
+        price_label(): string;
         price(): $mol_unit_money;
         Price(): $$.$mol_cost;
         Price_item(): $mol_labeler;
         Addon_group(): $mol_row;
-        quantity_title(): unknown;
+        quantity_title(): string;
         quantity(): string;
         Quantity_item(): $mol_labeler;
-        supply_date_title(): unknown;
+        supply_date_title(): string;
         supply_date(): string;
         Supply_date_item(): $mol_labeler;
-        store_title(): unknown;
+        store_title(): string;
         store_name(): string;
         Store_item(): $mol_labeler;
         Supply_group(): $mol_row;
@@ -2938,7 +2938,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_app_supplies_detail extends $mol_page {
         supply(): any;
-        title(): unknown;
+        title(): string;
         tools(): readonly any[];
         body(): readonly any[];
         foot(): readonly any[];
@@ -2948,44 +2948,44 @@ declare namespace $ {
             supply: any;
         };
         Close(): $$.$mol_link;
-        org_title(): unknown;
-        provider_title(): unknown;
+        org_title(): string;
+        provider_title(): string;
         provider_name(): string;
         Provider(): $mol_labeler;
-        customer_label(): unknown;
+        customer_label(): string;
         consumer_name(): string;
         Consumer(): $mol_labeler;
-        supply_group_title(): unknown;
+        supply_group_title(): string;
         supply_group_name(): string;
         Supply_group(): $mol_labeler;
-        ballance_unit_title(): unknown;
+        ballance_unit_title(): string;
         ballance_unit_name(): string;
         Ballance_unit_item(): $mol_labeler;
         org_items(): readonly any[];
         Org(): $mol_row;
-        cons_title(): unknown;
-        contract_title(): unknown;
+        cons_title(): string;
+        contract_title(): string;
         contract_id(): string;
         Contract(): $mol_labeler;
-        pay_method_title(): unknown;
+        pay_method_title(): string;
         pay_method_name(): string;
         Pay_method(): $mol_labeler;
-        manager_title(): unknown;
+        manager_title(): string;
         manager_name(): string;
         Manager(): $mol_labeler;
-        debitod_title(): unknown;
+        debitod_title(): string;
         debitor_name(): string;
         Debitor(): $mol_labeler;
         cons_items(): readonly any[];
         Cons(): $mol_row;
         Descr_deck(): $$.$mol_deck;
         Descr_card(): $$.$mol_card;
-        attach_title(): unknown;
+        attach_title(): string;
         attachments(): readonly string[];
         attach_new(val?: any): any;
         Attach(): $$.$mol_attach;
         Attach_section(): $$.$mol_section;
-        positions_title(): unknown;
+        positions_title(): string;
         cost(): $mol_unit_money;
         Cost_value(): $$.$mol_cost;
         positions_head(): readonly any[];
@@ -2994,7 +2994,7 @@ declare namespace $ {
         Positions_section(): $$.$mol_section;
         Content(): $$.$mol_list;
         approved(val?: any): boolean;
-        approved_title(): unknown;
+        approved_title(): string;
         Approve(): $mol_check_box;
         actions(): readonly any[];
         Actions(): $mol_row;
@@ -3039,7 +3039,7 @@ declare namespace $ {
         entered(val?: any): boolean;
         supplies(): readonly $mol_app_supplies_domain_supply[];
         tools_root(): readonly any[];
-        list_title(): unknown;
+        list_title(): string;
         supply_id(val?: any): string;
         supply(): any;
     }

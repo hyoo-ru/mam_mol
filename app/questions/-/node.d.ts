@@ -1863,7 +1863,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $hyoo_lingua_translate(this: $, lang: string, text: string): any;
+    function $hyoo_lingua_translate(this: $, lang: string, text: string): string;
 }
 
 declare namespace $ {
@@ -1875,7 +1875,7 @@ declare namespace $ {
         static lang(next?: string): string;
         static source(lang: string): any;
         static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): unknown;
+        static text(key: string): string;
         static warn(key: string): null;
     }
 }
@@ -2594,7 +2594,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_lights_toggle extends $mol_check_icon {
         Icon(): $mol_icon_brightness_6;
-        hint(): unknown;
+        hint(): string;
         checked(val?: any): boolean;
         Lights_icon(): $mol_icon_brightness_6;
         lights(val?: any): boolean;
@@ -2615,7 +2615,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_link_source extends $mol_link {
-        hint(): unknown;
+        hint(): string;
         sub(): readonly any[];
         Icon(): $mol_icon_github_circle;
     }
@@ -2662,7 +2662,7 @@ declare namespace $ {
         Question_link(id: any): $$.$mol_link;
         Tag(id: any): $mol_view;
         Themme(): $$.$mol_theme_auto;
-        title_default(): unknown;
+        title_default(): string;
         Lights(): $$.$mol_lights_toggle;
         Source_link(): $mol_link_source;
         menu_rows(): readonly any[];

@@ -59,7 +59,7 @@ namespace $ {
 		 * Before* $mol_view
 		 * 	minimal_width 0
 		 * 	minimal_height 0
-		 * 	auto <= before_load*
+		 * 	sub / <= before_load*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -68,7 +68,9 @@ namespace $ {
 			
 			obj.minimal_width = () => 0
 			obj.minimal_height = () => 0
-			obj.auto = () => this.before_load(id)
+			obj.sub = () => [
+				this.before_load(id)
+			] as readonly any[]
 			
 			return obj
 		}
@@ -78,7 +80,7 @@ namespace $ {
 		 * After* $mol_view
 		 * 	minimal_width 0
 		 * 	minimal_height 0
-		 * 	auto <= after_load*
+		 * 	sub / <= after_load*
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -87,7 +89,9 @@ namespace $ {
 			
 			obj.minimal_width = () => 0
 			obj.minimal_height = () => 0
-			obj.auto = () => this.after_load(id)
+			obj.sub = () => [
+				this.after_load(id)
+			] as readonly any[]
 			
 			return obj
 		}

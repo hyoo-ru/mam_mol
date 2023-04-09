@@ -985,7 +985,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $hyoo_lingua_translate(this: $, lang: string, text: string): any;
+    function $hyoo_lingua_translate(this: $, lang: string, text: string): string;
 }
 
 declare namespace $ {
@@ -997,7 +997,7 @@ declare namespace $ {
         static lang(next?: string): string;
         static source(lang: string): any;
         static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): unknown;
+        static text(key: string): string;
         static warn(key: string): null;
     }
 }

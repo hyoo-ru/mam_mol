@@ -1164,7 +1164,7 @@ declare namespace $ {
     class $mol_fetch_response extends $mol_object2 {
         readonly native: Response;
         constructor(native: Response);
-        status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
+        status(): "unknown" | "success" | "inform" | "redirect" | "wrong" | "failed";
         code(): number;
         message(): string;
         headers(): Headers;
@@ -1201,7 +1201,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $hyoo_lingua_translate(this: $, lang: string, text: string): any;
+    function $hyoo_lingua_translate(this: $, lang: string, text: string): string;
 }
 
 declare namespace $ {
@@ -1213,7 +1213,7 @@ declare namespace $ {
         static lang(next?: string): string;
         static source(lang: string): any;
         static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): unknown;
+        static text(key: string): string;
         static warn(key: string): null;
     }
 }
@@ -1999,7 +1999,7 @@ declare namespace $ {
         Option_row(id: any): $mol_button_minor;
         No_options(): $mol_view;
         plugins(): readonly any[];
-        hint(): unknown;
+        hint(): string;
         bubble_content(): readonly any[];
         Filter(): $$.$mol_string;
         Trigger_icon(): $mol_icon_dots_vertical;
@@ -2008,7 +2008,7 @@ declare namespace $ {
         filter_pattern(val?: any): string;
         Option_label(id: any): $$.$mol_dimmer;
         option_content(id: any): readonly any[];
-        no_options_message(): unknown;
+        no_options_message(): string;
         nav_components(): readonly $mol_view[];
         option_focused(component?: any): any;
         nav_cycle(val?: any): boolean;
@@ -2098,7 +2098,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_app_report extends $mol_page {
-        title(): unknown;
+        title(): string;
         body(): readonly any[];
         rower(id: any): $mol_app_report_rower;
         cell(id: any): $mol_app_report_cell;

@@ -1164,7 +1164,7 @@ declare namespace $ {
     class $mol_fetch_response extends $mol_object2 {
         readonly native: Response;
         constructor(native: Response);
-        status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
+        status(): "unknown" | "success" | "inform" | "redirect" | "wrong" | "failed";
         code(): number;
         message(): string;
         headers(): Headers;
@@ -1201,7 +1201,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $hyoo_lingua_translate(this: $, lang: string, text: string): any;
+    function $hyoo_lingua_translate(this: $, lang: string, text: string): string;
 }
 
 declare namespace $ {
@@ -1213,7 +1213,7 @@ declare namespace $ {
         static lang(next?: string): string;
         static source(lang: string): any;
         static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): unknown;
+        static text(key: string): string;
         static warn(key: string): null;
     }
 }
@@ -2565,7 +2565,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_app_quine extends $mol_page {
-        title(): unknown;
+        title(): string;
         body(): readonly any[];
         paths(): readonly any[];
         content(): string;
