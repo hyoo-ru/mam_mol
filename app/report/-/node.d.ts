@@ -1194,14 +1194,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_huggingface_run(this: $, space: string, method: string | number, ...data: readonly any[]): readonly string[];
-    function $mol_huggingface_async(space: string, method: number, ...data: readonly any[]): Promise<[string]> & {
+    function $mol_huggingface_run(this: $, space: string, method: string | number, ...data: readonly any[]): any[] | readonly string[];
+    function $mol_huggingface_async(space: string, method: number, ...data: readonly any[]): Promise<any[]> & {
         destructor: () => void;
     };
 }
 
 declare namespace $ {
-    function $hyoo_lingua_translate(this: $, lang: string, text: string): string;
+    function $hyoo_lingua_translate(this: $, lang: string, text: string): any;
 }
 
 declare namespace $ {
@@ -1213,7 +1213,7 @@ declare namespace $ {
         static lang(next?: string): string;
         static source(lang: string): any;
         static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): string;
+        static text(key: string): unknown;
         static warn(key: string): null;
     }
 }
@@ -1999,7 +1999,7 @@ declare namespace $ {
         Option_row(id: any): $mol_button_minor;
         No_options(): $mol_view;
         plugins(): readonly any[];
-        hint(): string;
+        hint(): unknown;
         bubble_content(): readonly any[];
         Filter(): $$.$mol_string;
         Trigger_icon(): $mol_icon_dots_vertical;
@@ -2008,7 +2008,7 @@ declare namespace $ {
         filter_pattern(val?: any): string;
         Option_label(id: any): $$.$mol_dimmer;
         option_content(id: any): readonly any[];
-        no_options_message(): string;
+        no_options_message(): unknown;
         nav_components(): readonly $mol_view[];
         option_focused(component?: any): any;
         nav_cycle(val?: any): boolean;
@@ -2098,7 +2098,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_app_report extends $mol_page {
-        title(): string;
+        title(): unknown;
         body(): readonly any[];
         rower(id: any): $mol_app_report_rower;
         cell(id: any): $mol_app_report_cell;
