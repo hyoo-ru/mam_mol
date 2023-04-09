@@ -12,7 +12,23 @@ namespace $ {
 	) {
 		
 		if( typeof method === 'number' ) {
-			return $mol_wire_sync( this ).$mol_huggingface_async( space, method, ... data )
+			while( true ) {
+
+				try {
+					return $mol_wire_sync( this ).$mol_huggingface_async( space, method, ... data )
+				} catch( error ) {
+
+					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+
+					if( error instanceof Error && error.message === `Queue full` ) {
+						$mol_fail_log( error )
+						continue
+					}
+
+					$mol_fail_hidden( error )
+				}
+
+			}
 		}
 		
 		const response = $mol_fetch.json( `https://${space}.hf.space/run/${method}`, {
@@ -35,7 +51,7 @@ namespace $ {
 		const fn_index = method
 		const socket = new WebSocket( `wss://${space}.hf.space/queue/join` )
 		
-		const promise = new Promise<[ string ]>( ( done, fail )=> {
+		const promise = new Promise< any[] >( ( done, fail )=> {
 			
 			socket.onclose = event => {
 				if( event.reason ) fail( new Error( event.reason ) )
@@ -54,6 +70,9 @@ namespace $ {
 						return socket.send( JSON.stringify({ session_hash, fn_index }) )
 				
 					case 'estimation': return
+					
+					case 'queue_full':
+						fail( new Error( `Queue full` ) )
 				
 					case 'send_data':
 						return socket.send( JSON.stringify({ session_hash, fn_index, data }) )
