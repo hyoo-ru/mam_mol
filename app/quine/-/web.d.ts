@@ -1066,7 +1066,7 @@ declare namespace $ {
         static lang(next?: string): string;
         static source(lang: string): any;
         static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): {} | null;
+        static text(key: string): string;
         static warn(key: string): null;
     }
 }
@@ -2435,7 +2435,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_app_quine extends $mol_page {
-        title(): {} | null;
+        title(): string;
         body(): readonly any[];
         paths(): readonly any[];
         content(): string;

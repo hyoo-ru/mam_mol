@@ -3588,7 +3588,7 @@ var $;
             const cache_key = `$mol_locale.text(${JSON.stringify(key)}):${lang}`;
             const cached = this.$.$mol_state_local.value(cache_key);
             if (cached)
-                return cached;
+                return String(cached);
             try {
                 const translated = $mol_wire_sync($hyoo_lingua_translate).call(this.$, lang, en);
                 return this.$.$mol_state_local.value(cache_key, translated);

@@ -1617,7 +1617,7 @@ declare namespace $ {
         static lang(next?: string): string;
         static source(lang: string): any;
         static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): {} | null;
+        static text(key: string): string;
         static warn(key: string): null;
     }
 }
@@ -1950,7 +1950,7 @@ declare namespace $ {
         nav_focused(component?: any): any;
         Nav(): $$.$mol_nav;
         suggests_showed(val?: any): boolean;
-        hint(): {} | null;
+        hint(): string;
         submit(event?: any): any;
         enabled(): boolean;
         keyboard(): string;
@@ -2328,11 +2328,11 @@ declare namespace $ {
         arg(): {
             mol_chat: string;
         };
-        hint(): {} | null;
+        hint(): string;
         sub(): readonly any[];
         pages(): readonly any[];
         Icon(): $mol_icon_forum_outline;
-        title(): {} | null;
+        title(): string;
         standalone(): string;
         Standalone_icon(): $mol_icon_open_in_new;
         Esternal(): $$.$mol_link;
@@ -2377,12 +2377,12 @@ declare namespace $ {
         chat_seed(): string;
         chat_pages(): $mol_page[];
         Chat(): $$.$mol_chat;
-        edit_hint(): {} | null;
+        edit_hint(): string;
         Edit_speck(): $mol_speck;
         Edit_icon(): $mol_icon_settings;
         edit_uri(): string;
         Edit(): $$.$mol_link;
-        close_hint(): {} | null;
+        close_hint(): string;
         Close_icon(): $mol_icon_cross;
         close_arg(): {
             demo: any;
@@ -3045,7 +3045,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_link_source extends $mol_link {
-        hint(): {} | null;
+        hint(): string;
         sub(): readonly any[];
         Icon(): $mol_icon_github_circle;
     }
@@ -3076,20 +3076,20 @@ declare namespace $ {
         link_template(): string;
         repo(): string;
         module(): readonly string[];
-        title(): {} | null;
+        title(): string;
         opened(next?: any): boolean;
         tools(): readonly any[];
         Readme(): $$.$mol_text;
         Not_found(): $mol_view;
         source_link(): string;
-        source_hint(): {} | null;
+        source_hint(): string;
         Source_link(): $mol_link_source;
         Close_icon(): $mol_icon_cross;
         close(next?: any): any;
         Close(): $mol_button_minor;
         readme(): string;
         uri_base(next?: any): string;
-        Not_found_caption(): {} | null;
+        Not_found_caption(): string;
     }
 }
 
@@ -3150,7 +3150,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_lights_toggle extends $mol_check_icon {
         Icon(): $mol_icon_brightness_6;
-        hint(): {} | null;
+        hint(): string;
         checked(val?: any): boolean;
         Lights_icon(): $mol_icon_brightness_6;
         lights(val?: any): boolean;
@@ -3181,7 +3181,7 @@ declare namespace $ {
         detail_title(): string;
         Theme(): $$.$mol_theme_auto;
         Search_start(): $$.$mol_hotkey;
-        menu_title(): {} | null;
+        menu_title(): string;
         names(): readonly string[];
         widget_tags(id: any): readonly string[];
         widget_aspects(id: any): readonly string[];
@@ -3198,9 +3198,9 @@ declare namespace $ {
         repo(): string;
         module(): readonly string[];
         source_link(): string;
-        detail_empty_prefix(): {} | null;
+        detail_empty_prefix(): string;
         selected(): string;
-        detail_empty_postfix(): {} | null;
+        detail_empty_postfix(): string;
     }
 }
 
@@ -4013,7 +4013,7 @@ declare namespace $ {
         Error_view(): $mol_view;
         Error_mark(): $$.$mol_follower;
         Code_page(): $mol_page;
-        result_label(): {} | null;
+        result_label(): string;
         Results_close_icon(): $mol_icon_cross;
         Results_close(): $$.$mol_link;
         log(id: any): readonly any[];
@@ -4458,7 +4458,7 @@ declare namespace $ {
         Option_row(id: any): $mol_button_minor;
         No_options(): $mol_view;
         plugins(): readonly any[];
-        hint(): {} | null;
+        hint(): string;
         bubble_content(): readonly any[];
         Filter(): $$.$mol_string;
         Trigger_icon(): $mol_icon_dots_vertical;
@@ -4467,7 +4467,7 @@ declare namespace $ {
         filter_pattern(val?: any): string;
         Option_label(id: any): $$.$mol_dimmer;
         option_content(id: any): readonly any[];
-        no_options_message(): {} | null;
+        no_options_message(): string;
         nav_components(): readonly $mol_view[];
         option_focused(component?: any): any;
         nav_cycle(val?: any): boolean;
@@ -4675,10 +4675,10 @@ declare namespace $ {
             click: (val?: any) => any;
         };
         attr(): {
-            title: {} | null;
+            title: string;
         };
         event_click(val?: any): any;
-        hint(): {} | null;
+        hint(): string;
     }
 }
 
@@ -4916,7 +4916,7 @@ declare namespace $ {
     class $mol_button_share extends $mol_button_minor {
         uri(): string;
         capture(): any;
-        hint(): {} | null;
+        hint(): string;
         sub(): readonly any[];
         Icon(): $mol_icon_share_variant;
     }
@@ -6349,7 +6349,7 @@ declare namespace $ {
         hint(): string;
         Manual(): $$.$mol_search;
         event_scan(val?: any): any;
-        scan_label(): {} | null;
+        scan_label(): string;
         Scan(): $$.$mol_button;
     }
 }
@@ -6454,11 +6454,11 @@ declare namespace $ {
         month_moment(): $mol_time_moment;
         day_selected(id: any): boolean;
         day_click(id: any, event?: any): any;
-        prev_hint(): {} | null;
+        prev_hint(): string;
         prev(event?: any): any;
         Prev_icon(): $mol_icon_chevron_left;
         Prev(): $mol_button_minor;
-        next_hint(): {} | null;
+        next_hint(): string;
         next(event?: any): any;
         Next_icon(): $mol_icon_chevron_right;
         Next(): $mol_button_minor;
@@ -8343,13 +8343,13 @@ declare namespace $ {
 declare namespace $ {
     class $mol_paginator extends $mol_bar {
         sub(): readonly any[];
-        backward_hint(): {} | null;
+        backward_hint(): string;
         backward(event?: any): any;
         Backward_icon(): $mol_icon_chevron_left;
         Backward(): $mol_button_minor;
         value(val?: any): number;
         Value(): $mol_view;
-        forward_hint(): {} | null;
+        forward_hint(): string;
         forward(event?: any): any;
         Forward_icon(): $mol_icon_chevron_right;
         Forward(): $mol_button_minor;
@@ -9100,7 +9100,7 @@ declare namespace $ {
         Badges(): readonly $mol_view[];
         badge_title(id: any): string;
         remove(id: any, event?: any): any;
-        badge_hint(): {} | null;
+        badge_hint(): string;
         enabled(): boolean;
         drop_enabled(): boolean;
         align_hor(): string;
@@ -9109,7 +9109,7 @@ declare namespace $ {
         pick(val?: any): string;
         option_title(id: any): string;
         pick_enabled(): boolean;
-        pick_hint(): {} | null;
+        pick_hint(): string;
         Pick_icon(): $mol_icon_plus;
         Pick(): $$.$mol_select;
     }
