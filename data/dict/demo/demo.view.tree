@@ -9,5 +9,5 @@ $mol_data_dict_demo $mol_example_code
 		\validation
 		\dict
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

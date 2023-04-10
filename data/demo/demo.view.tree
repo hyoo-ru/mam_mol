@@ -47,5 +47,5 @@ $mol_data_demo $mol_example_code
 		\ianstormtaylor/superstruct
 		\jquense/yup
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

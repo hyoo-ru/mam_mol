@@ -15,5 +15,5 @@ $mol_csv_parse_demo $mol_example_code
 		\data
 		\serial
 	aspects /
-		\Parser/CSV
+		\Language/CSV
 		\Type/CSV

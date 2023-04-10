@@ -12,5 +12,5 @@ $mol_data_record_demo $mol_example_code
 		\validation
 		\record
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

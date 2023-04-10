@@ -9,5 +9,5 @@ $mol_data_boolean_demo $mol_example_code
 		\validation
 		\boolean
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

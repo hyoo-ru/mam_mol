@@ -16,5 +16,5 @@ $mol_data_enum_demo $mol_example_code
 		\validation
 		\enum
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

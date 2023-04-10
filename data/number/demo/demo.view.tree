@@ -9,5 +9,5 @@ $mol_data_number_demo $mol_example_code
 		\validation
 		\number
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

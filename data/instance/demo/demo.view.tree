@@ -9,5 +9,5 @@ $mol_data_instance_demo $mol_example_code
 		\validation
 		\instance
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

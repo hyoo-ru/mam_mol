@@ -10,5 +10,5 @@ $mol_data_optional_demo $mol_example_code
 		\validation
 		\optional
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

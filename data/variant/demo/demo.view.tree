@@ -16,5 +16,5 @@ $mol_data_variant_demo $mol_example_code
 		\validation
 		\variant
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

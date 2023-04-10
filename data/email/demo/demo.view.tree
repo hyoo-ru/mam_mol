@@ -9,5 +9,5 @@ $mol_data_email_demo $mol_example_code
 		\validation
 		\email
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

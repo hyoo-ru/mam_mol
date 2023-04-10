@@ -10,5 +10,5 @@ $mol_data_nullable_demo $mol_example_code
 		\validation
 		\nullable
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

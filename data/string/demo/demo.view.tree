@@ -9,5 +9,5 @@ $mol_data_string_demo $mol_example_code
 		\validation
 		\string
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

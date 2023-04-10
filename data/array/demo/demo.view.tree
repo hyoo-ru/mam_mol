@@ -9,5 +9,5 @@ $mol_data_array_demo $mol_example_code
 		\validation
 		\array
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON

@@ -9,5 +9,5 @@ $mol_data_integer_demo $mol_example_code
 		\validation
 		\integer
 	aspects /
-		\Parser/JSON
+		\Assert/JSON
 		\Type/JSON
