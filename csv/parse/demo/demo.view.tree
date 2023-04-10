@@ -1,0 +1,19 @@
+$mol_csv_parse_demo $mol_example_code
+	code? \
+		\const data = [
+		\	{ foo: '123', bar: '456' },
+		\	{ foo: 'x"xx', bar: 'y"y"y' },
+		\]
+		\
+		\const serialized = $mol_csv_serial( data )
+		\
+		\$mol_csv_parse( serialized )
+	tags /
+		\parser
+		\csv
+		\excel
+		\data
+		\serial
+	aspects /
+		\Parser/CSV
+		\Type/CSV

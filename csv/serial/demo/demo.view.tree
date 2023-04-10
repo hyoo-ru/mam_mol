@@ -1,0 +1,16 @@
+$mol_csv_serial_demo $mol_example_code
+	code? \
+		\const csv = 'foo,bar\n"123","456"\n"x""xx","y""y""y"'
+		\
+		\const parsed = $mol_csv_parse( csv )
+		\
+		\$mol_csv_serial( parsed )
+	tags /
+		\parser
+		\csv
+		\excel
+		\data
+		\serial
+	aspects /
+		\Parser/CSV
+		\Type/CSV
