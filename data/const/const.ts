@@ -1,7 +1,6 @@
 namespace $ {
 
 	/**
-	 * 
 	 * Checks for equality to given value and returns expected type.
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_const_demo
 	 */
