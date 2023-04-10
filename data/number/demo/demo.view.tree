@@ -1,0 +1,13 @@
+$mol_data_number_demo $mol_example_code
+	code? \
+		\const Pos = $mol_data_number
+		\const pos = Pos( 1.25 ) // ✅
+		\
+		\Pos( 'xxx' ) // ❌ xxx is not a number
+	tags /
+		\runtime
+		\validation
+		\number
+	aspects /
+		\Parser/JSON
+		\Type/JSON
