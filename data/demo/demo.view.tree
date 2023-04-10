@@ -1,0 +1,51 @@
+$mol_data_demo $mol_example_code
+	title \Defines static typed DTO with strict runtime validation and user friendly error messages
+	code? \
+		\const PersonDTO = $mol_data_record({
+		\	name : $mol_data_string ,
+		\	age : $mol_data_optional( $mol_data_integer ) ,
+		\	birthday : $mol_data_pipe( $mol_data_string , $mol_time_moment ) ,
+		\})
+		\
+		\const UserDTO = $mol_data_record({
+		\	... PersonDTO.config,
+		\	phone: $mol_data_variant( $mol_data_string , $mol_data_integer ),
+		\	mail: $mol_data_email,
+		\})
+		\
+		\const jin = UserDTO({
+		\	name : 'Jin' ,
+		\	age : 33 ,
+		\	birthday : '1984-08-04T12:00:00Z' ,
+		\	phone : 791234567890,
+		\	mail : 'foo@example.org' ,
+		\})
+		\
+		\//function printName( user : typeof UserDTO.Value ) {
+		\function printName( user ) {
+		\	console.log( user.name )
+		\}
+		\
+		\printName( jin )
+		\const json = {
+		\	name : 'Jin' ,
+		\	age : 33 ,
+		\	birthday : '1984-08-04T12:00:00Z' ,
+		\	phone : 791234567890,
+		\	mail : '</script>' , // !
+		\}
+		\
+		\// Runtime error: ["mail"] </script> is not a /.+@.+/
+		\printName( UserDTO( json ) )
+	tags /
+		\runtime
+		\validation
+		\dto
+		\gcanti/io-ts
+		\pelotom/runtypes
+		\vriad/zod
+		\ianstormtaylor/superstruct
+		\jquense/yup
+	aspects /
+		\Parser/JSON
+		\Type/JSON
