@@ -1,0 +1,22 @@
+$mol_fetch_demo $mol_example_small
+	title \Simple spoiler
+	sub /
+		<= Fetch $mol_button_major
+			click? <= fetch_data? null
+		<= Url $mol_string
+			value? <=> url? \https://jsonplaceholder.typicode.com/users
+		<= Data $mol_text_code
+			text <= data \
+	tags /
+		\fetch
+		\data
+		\error
+		\initial
+		\loading
+		\finished
+		\api
+		\axios
+		\recoil
+		\graphql
+	aspects /
+		\Widget/Layout

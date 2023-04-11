@@ -41,6 +41,7 @@ include \/mol/dimmer/demo
 include \/mol/drag/demo
 include \/mol/dump/demo
 include \/mol/expander/demo
+include \/mol/fetch/demo
 include \/mol/filler/demo
 include \/mol/float/demo
 include \/mol/form/demo
