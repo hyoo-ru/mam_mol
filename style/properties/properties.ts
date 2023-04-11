@@ -462,6 +462,8 @@ namespace $ {
 		 */
 		opacity: number | Common
 		
+		aspectRatio: number | Common
+		
 	}
 
 }
