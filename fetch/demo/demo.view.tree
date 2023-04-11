@@ -18,5 +18,7 @@ $mol_fetch_demo $mol_example_small
 		\axios
 		\recoil
 		\graphql
+		\response
+		\request
 	aspects /
-		\Widget/Layout
+		\Api
