@@ -31717,7 +31717,7 @@ var $;
                 return $mol_jsx("a", { href: token.uri }, line(token.content || token.uri));
             }
             if (token.embed) {
-                if (/\.(png|jpg|jpeg|webp|gif)$/.test(token.uri)) {
+                if (/\b(png|gif|jpg|jpeg|jfif|webp|svg)\b/.test(token.uri)) {
                     return $mol_jsx("img", { src: token.uri, alt: token.content });
                 }
                 return ($mol_jsx("object", { data: token.uri },
