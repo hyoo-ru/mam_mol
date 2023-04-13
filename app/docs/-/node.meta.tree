@@ -1,0 +1,212 @@
+\/
+	pack hyoo git \https://github.com/hyoo-ru/mam_hyoo.git
+	pack jin git \https://github.com/nin-jin/mam_jin.git
+	pack node git \https://github.com/hyoo-ru/mam_node.git
+	pack mol git \https://github.com/hyoo-ru/mam_mol.git
+	pack lib git \https://github.com/hyoo-ru/mam_lib.git
+	pack piterjs git \https://github.com/piterjs/piterjs.git
+	pack psb git \https://github.com/MolDevHack/psb.git
+\/mol
+	pack icon git \https://github.com/nin-jin/mol_icon.git
+\/mol/view
+	include \/mol/view/tree/test
+\/hyoo
+	pack about git \https://github.com/hyoo-ru/about.hyoo.ru.git
+	pack artist git \https://github.com/hyoo-ru/artist.hyoo.ru.git
+	pack apps git \https://github.com/hyoo-ru/apps.hyoo.ru.git
+	pack aura git \https://github.com/hyoo-ru/aura.hyoo.ru.git
+	pack bench git \https://github.com/hyoo-ru/bench.hyoo.ru.git
+	pack board git \https://github.com/hyoo-ru/board.hyoo.ru.git
+	pack calc git \https://github.com/hyoo-ru/calc.hyoo.ru.git
+	pack case git \https://github.com/hyoo-ru/case.hyoo.ru.git
+	pack crowd git \https://github.com/hyoo-ru/crowd.hyoo.ru.git
+	pack draw git \https://github.com/hyoo-ru/draw.hyoo.ru.git
+	pack game git \https://github.com/hyoo-ru/game.hyoo.ru.git
+	pack github git \https://github.com/hyoo-ru/github.hyoo.ru.git
+	pack habhub git \https://github.com/hyoo-ru/habhub.hyoo.ru.git
+	pack harp git \https://github.com/hyoo-ru/harp.hyoo.ru.git
+	pack http git \https://github.com/hyoo-ru/http.hyoo.ru.git
+	pack fallacy git \https://github.com/hyoo-ru/fallacy.hyoo.ru.git
+	pack invest git \https://github.com/hyoo-ru/invest.hyoo.ru.git
+	pack iq git \https://github.com/hyoo-ru/iq.hyoo.ru.git
+	pack js git \https://github.com/hyoo-ru/hyoo_js.git
+	pack lamps git \https://github.com/hyoo-ru/lamps.hyoo.ru.git
+	pack life git \https://github.com/hyoo-ru/life.hyoo.ru.git
+	pack lingua git \https://github.com/hyoo-ru/lingua.hyoo.ru.git
+	pack mail git \https://github.com/hyoo-ru/mail.hyoo.ru.git
+	pack map git \https://github.com/hyoo-ru/map.hyoo.ru.git
+	pack marked git \https://github.com/hyoo-ru/marked.hyoo.ru.git
+	pack meme git \https://github.com/hyoo-ru/meme.hyoo.ru.git
+	pack meta git \https://github.com/hyoo-ru/hyoo_meta.git
+	pack mill git \https://github.com/hyoo-ru/mill.git
+	pack mol git \https://github.com/hyoo-ru/mol.hyoo.ru.git
+	pack notes git \https://github.com/hyoo-ru/notes.hyoo.ru.git
+	pack offer git \https://github.com/hyoo-ru/offer.hyoo.ru.git
+	pack page git \https://github.com/hyoo-ru/page.hyoo.ru.git
+	pack play git \https://github.com/hyoo-ru/play.hyoo.ru.git
+	pack rdf git \https://github.com/hyoo-ru/rdf.hyoo.ru.git
+	pack realworld git \https://github.com/hyoo-ru/realworld.hyoo.ru.git
+	pack scout git \https://github.com/hyoo-ru/scout.hyoo.ru.git
+	pack search git \https://github.com/hyoo-ru/search.hyoo.ru.git
+	pack shelter git \https://github.com/hyoo-ru/shelter.hyoo.ru.git
+	pack showcase git \https://github.com/hyoo-ru/showcase.hyoo.ru.git
+	pack speculant git \https://github.com/hyoo-ru/speculant.hyoo.ru.git
+	pack sketch git \https://github.com/hyoo-ru/sketch.hyoo.ru.git
+	pack slides git \https://github.com/hyoo-ru/slides.hyoo.ru.git
+	pack studio git \https://github.com/hyoo-ru/studio.hyoo.ru.git
+	pack sporno git \https://github.com/hyoo-ru/hyoo_sporno.git
+	pack static git \https://github.com/hyoo-ru/hyoo_static.git
+	pack talks git \https://github.com/hyoo-ru/talks.hyoo.ru.git
+	pack todomvc git \https://github.com/hyoo-ru/todomvc.hyoo.ru.git
+	pack toys git \https://github.com/hyoo-ru/toys.hyoo.ru.git
+	pack tree git \https://github.com/hyoo-ru/tree.hyoo.ru.git
+	pack webdav git \https://github.com/hyoo-ru/webdav.hyoo.ru.git
+	pack when git \https://github.com/hyoo-ru/when.hyoo.ru.git
+	pack sync git \https://github.com/hyoo-ru/sync.hyoo.ru.git
+	pack home git \https://github.com/hyoo-ru/hyoo.ru.git
+	pack idea git \https://github.com/hyoo-ru/idea.hyoo.ru.git
+\/mol/app/demo/main
+	deploy \/mol/readme.md
+\/hyoo/crowd/app
+	deploy \/hyoo/crowd/logo/logo.svg
+\/hyoo/js
+	pack eval git \https://github.com/hyoo-ru/eval.js.hyoo.ru.git
+	pack opt git \https://github.com/hyoo-ru/opt.js.hyoo.ru.git
+	pack perf git \https://github.com/hyoo-ru/perf.js.hyoo.ru.git
+	pack sandbox git \https://github.com/hyoo-ru/sandbox.js.hyoo.ru.git
+\/mol/wire/lib
+	include \/mol/wire/pub
+	include \/mol/wire/pub/sub
+	include \/mol/wire/fiber
+	include \/mol/wire/task
+	include \/mol/wire/atom
+	include \/mol/wire/probe
+	include \/mol/wire/solid
+	include \/mol/wire/watch
+	include \/mol/wire/sync
+	include \/mol/wire/async
+	include \/mol/wire/race
+	include \/mol/wire/solo
+	include \/mol/wire/plex
+	include \/mol/wire/field
+	include \/mol/wire/easing
+	include \/mol/wire/method
+	include \/mol/wire/patch
+	include \/mol/wire/let
+	include \/mol/wire/set
+	include \/mol/wire/dict
+	include \/mol/wait/timeout
+	include \/mol/wire/log
+\/hyoo/js/eval
+	include \/mol/assert
+	include \/mol/offline/install
+	include \/mol/import
+	include \/mol/wire/lib
+	deploy \/hyoo/js/eval/logo/logo.svg
+\/hyoo/marked/app
+	deploy \/hyoo/marked/readme.md
+	deploy \/hyoo/marked/logo/logo.svg
+\/hyoo/harp/app
+	deploy \/hyoo/harp/logo/logo.svg
+	include \/mol/offline/install
+\/mol/app/docs
+	deploy \/mol/logo/logo.svg
+	deploy \/mol/app/docs/manifest.json
+	include \/mol/offline/install
+	include \/mol/app/demo
+	include \/hyoo/crowd/text/demo
+	include \/mol/array/chunks/demo
+	include \/mol/array/lottery/demo
+	include \/mol/array/trim/demo
+	include \/mol/assert/demo
+	include \/mol/attach/demo
+	include \/mol/audio/demo
+	include \/mol/audio/demo/vibe
+	include \/mol/avatar/demo
+	include \/mol/bar/demo
+	include \/mol/bench/demo
+	include \/mol/book2/demo
+	include \/mol/book2/catalog/demo
+	include \/mol/button/demo
+	include \/mol/button/share/demo
+	include \/mol/calendar/demo/holiday
+	include \/mol/calendar/demo/selection
+	include \/mol/calendar/demo/simple
+	include \/mol/card/demo
+	include \/mol/chart/demo/simple
+	include \/mol/chart/demo/styles
+	include \/mol/chart/demo/forces
+	include \/mol/chat/demo
+	include \/mol/check/box/demo
+	include \/mol/check/list/demo
+	include \/mol/check/expand/demo
+	include \/mol/check/group/demo
+	include \/mol/check/icon/demo
+	include \/mol/code/demo
+	include \/mol/date/demo
+	include \/mol/deck/demo
+	include \/mol/dimmer/demo
+	include \/mol/drag/demo
+	include \/mol/dump/demo
+	include \/mol/expander/demo
+	include \/mol/filler/demo
+	include \/mol/float/demo
+	include \/mol/form/demo
+	include \/mol/form/draft/demo
+	include \/mol/format/demo
+	include \/mol/frame/demo
+	- include \/mol/grid/demo
+	include \/mol/gallery/demo
+	include \/mol/html/view/demo
+	include \/mol/infinite/demo
+	include \/mol/labeler/demo
+	include \/mol/layout/demo
+	include \/mol/link/demo
+	include \/mol/link/iconed/demo
+	include \/mol/link/lazy/demo
+	include \/mol/list/demo
+	include \/mol/list/demo/table
+	include \/mol/list/demo/tree
+	include \/mol/map/yandex/demo
+	include \/hyoo/marked/demo
+	include \/hyoo/harp/demo
+	- include \/mol/message/demo
+	include \/mol/nav/demo
+	include \/mol/number/demo
+	include \/mol/page/demo
+	include \/mol/paginator/demo
+	include \/mol/plot/demo
+	include \/mol/plot/map/heat/demo
+	include \/mol/pop/demo
+	include \/mol/pop/over/demo
+	include \/mol/portion/demo
+	include \/mol/pick/demo
+	include \/mol/pick/time/demo
+	include \/mol/row/demo/form
+	include \/mol/row/demo/products
+	include \/mol/scroll/demo
+	include \/mol/search/demo
+	include \/mol/section/demo
+	include \/mol/section/demo/level
+	include \/mol/select/demo/colors
+	include \/mol/select/demo/month
+	include \/mol/select/demo/priority
+	include \/mol/select/list/demo
+	include \/mol/speck/demo
+	include \/mol/speech/demo
+	include \/mol/spell/demo
+	include \/mol/stack/demo
+	include \/mol/string/demo
+	include \/mol/string/button/demo
+	include \/mol/switch/demo
+	include \/mol/tag/tree/demo
+	include \/mol/text/code/demo
+	include \/mol/text/demo
+	include \/mol/textarea/demo
+	include \/mol/time/duration/demo
+	include \/mol/time/interval/demo
+	include \/mol/time/moment/demo
+	include \/mol/toolbar/demo
+	include \/mol/video/player/demo
+	include \/mol/password/demo
+	include \/mol/lights/demo

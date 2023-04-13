@@ -1270,6 +1270,11 @@ declare namespace $ {
             exclude?: string[];
             bundle: string;
         }): $mol_file[];
+        bundleMetaTree({ path, exclude, bundle }: {
+            path: string;
+            exclude?: string[];
+            bundle: string;
+        }): $mol_file[];
         nodeDeps({ path, exclude }: {
             path: string;
             exclude: string[];

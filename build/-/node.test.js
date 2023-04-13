@@ -5426,6 +5426,7 @@ var $;
             this.bundle({ path, bundle: 'web.test.js' });
             this.bundle({ path, bundle: 'web.test.html' });
             this.bundle({ path, bundle: 'web.view.tree' });
+            this.bundle({ path, bundle: 'web.meta.tree' });
             this.bundle({ path, bundle: 'web.locale=en.json' });
             return null;
         }
@@ -5438,6 +5439,7 @@ var $;
             this.bundle({ path, bundle: 'node.js' });
             this.bundle({ path, bundle: 'node.test.js' });
             this.bundle({ path, bundle: 'node.view.tree' });
+            this.bundle({ path, bundle: 'node.meta.tree' });
             this.bundle({ path, bundle: 'node.locale=en.json' });
             return null;
         }
@@ -5494,6 +5496,9 @@ var $;
                 }
                 if (!type || type === 'view.tree') {
                     res = res.concat(this.bundleViewTree({ path, exclude, bundle: env }));
+                }
+                if (!type || type === 'meta.tree') {
+                    res = res.concat(this.bundleMetaTree({ path, exclude, bundle: env }));
                 }
                 if (!type || /^locale=(\w+).json$/.test(type)) {
                     res = res.concat(this.bundleLocale({
@@ -5696,6 +5701,24 @@ var $;
             if (sources.length === 0)
                 return [];
             target.text(sources.map(src => src.text()).join('\n'));
+            this.logBundle(target, Date.now() - start);
+            return [target];
+        }
+        bundleMetaTree({ path, exclude, bundle }) {
+            const start = Date.now();
+            var pack = $mol_file.absolute(path);
+            var target = pack.resolve(`-/${bundle}.meta.tree`);
+            const sortedPaths = this.graph({ path, exclude }).sorted;
+            const namedMetas = [];
+            sortedPaths.forEach(path => {
+                const meta = this.modMeta(this.root().resolve(path).path());
+                if (meta.sub.length > 0) {
+                    namedMetas.push(meta.clone({ value: '/' + path }));
+                }
+            });
+            if (namedMetas.length === 0)
+                return [];
+            target.text(new $mol_tree({ sub: namedMetas }).toString());
             this.logBundle(target, Date.now() - start);
             return [target];
         }
@@ -6075,6 +6098,9 @@ var $;
     __decorate([
         $mol_mem_key
     ], $mol_build.prototype, "bundleViewTree", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_build.prototype, "bundleMetaTree", null);
     __decorate([
         $mol_mem_key
     ], $mol_build.prototype, "nodeDeps", null);
