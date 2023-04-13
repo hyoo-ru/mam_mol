@@ -11,3 +11,5 @@ $mol_text_code_demo $mol_example_small
 		\text
 		\code
 		\syntax highlighting
+	aspects /
+		\Widget/Text

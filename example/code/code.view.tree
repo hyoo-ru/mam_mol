@@ -10,3 +10,5 @@ $mol_example_code $mol_example
 		\eval
 		\js
 		\javascript
+	aspects /
+		\Widget/Playground

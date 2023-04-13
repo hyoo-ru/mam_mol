@@ -29,4 +29,6 @@ $mol_nav_demo $mol_example
 		\$mol_switch
 		\navigation
 		\keyboard
+	aspects /
+		\Widget/Plugin
 

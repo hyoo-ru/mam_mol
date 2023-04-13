@@ -6,6 +6,11 @@ include \/mol/offline/install
 include \/mol/app/demo
 
 include \/hyoo/crowd/text/demo
+
+include \/mol/array/chunks/demo
+include \/mol/array/lottery/demo
+include \/mol/array/trim/demo
+include \/mol/assert/demo
 include \/mol/attach/demo
 include \/mol/audio/demo
 include \/mol/audio/demo/vibe
@@ -90,7 +95,9 @@ include \/mol/tag/tree/demo
 include \/mol/text/code/demo
 include \/mol/text/demo
 include \/mol/textarea/demo
-include \/mol/time/demo
+include \/mol/time/duration/demo
+include \/mol/time/interval/demo
+include \/mol/time/moment/demo
 include \/mol/toolbar/demo
 include \/mol/video/player/demo
 include \/mol/password/demo

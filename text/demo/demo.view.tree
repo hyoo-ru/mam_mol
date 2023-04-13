@@ -105,3 +105,5 @@ $mol_text_demo $mol_example_large
 	tags /
 		\text
 		\markdown
+	aspects /
+		\Widget/Text

@@ -164,7 +164,7 @@ namespace $ {
 			this.cache = next
 			this.cursor = $mol_wire_cursor.fresh
 			
-			if( next instanceof Promise ) return next
+			if( $mol_promise_like( next ) ) return next
 			
 			this.complete_pubs()
 			

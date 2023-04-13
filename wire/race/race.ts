@@ -19,7 +19,7 @@ namespace $ {
 			
 		} )
 		
-		const promises = results.filter( res => res instanceof Promise )
+		const promises = results.filter( res => $mol_promise_like( res ) )
 		if( promises.length ) $mol_fail( Promise.race( promises ) )
 		
 		const error = results.find( res => res instanceof Error )

@@ -7,3 +7,5 @@ $mol_stack_demo $mol_example_small
 	tags /
 		\$mol_stack
 		\layout
+	aspects /
+		\Widget/Layout

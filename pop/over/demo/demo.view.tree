@@ -32,3 +32,5 @@ $mol_pop_over_demo $mol_example_small
 		\menu
 		\hover
 		\tooltip
+	aspects /
+		\Widget/Float

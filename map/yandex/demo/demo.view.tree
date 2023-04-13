@@ -9,4 +9,5 @@ $mol_map_yandex_demo $mol_example_large
 					content <= place_content \It is Russia's second-largest city after Moscow
 	tags /
 		\map
-
+	aspects /
+		\Widget/Integration

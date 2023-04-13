@@ -17,3 +17,6 @@ $mol_textarea_demo $mol_example_small
 		\textarea
 		\code
 		\syntax highlighting
+	aspects /
+		\Widget/Control
+		\Type/String

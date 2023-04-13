@@ -7,3 +7,5 @@ $mol_frame_demo $mol_example_large
 		\frame
 		\iframe
 		\container
+	aspects /
+		\Widget/Integration

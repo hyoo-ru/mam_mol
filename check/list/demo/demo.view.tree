@@ -16,3 +16,5 @@ $mol_check_list_demo $mol_example_small
 		\checkbox
 		\option
 		\toggle
+	aspects /
+		\Widget/Control

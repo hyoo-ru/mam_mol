@@ -23,3 +23,5 @@ $mol_page_demo $mol_example_large
 		\bar
 		\bottom
 		\navigator
+	aspects /
+		\Widget/Layout

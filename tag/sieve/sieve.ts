@@ -24,70 +24,74 @@ namespace $ {
 		@ $mol_mem_key
 		ids_tags_filtered(prefix: string) {
 			const ids = new Set<string>()
-			const ids_tags = { } as Record<string, string[]>
-
-			const ids_tags_initial = prefix ? this.ids_tags_initial().ids_tags : this.ids_tags()
-
 			const separator = this.separator()
-			const tags_ids = {} as Record<string, string[]>
+			let ids_tags_initial = prefix ? this.ids_tags_initial().ids_tags : this.ids_tags()
+			let tags_raw = [ ] as string[]
+			let tags_ids = { } as Record<string, string[]>
+			let ids_tags = { } as Record<string, string[]>
 
-			for (const id of Object.keys(ids_tags_initial)) {
-				const tags = ids_tags_initial[id]
+			do {
+				tags_ids = {}
+				ids_tags = {}
 
-				const unmatched_tags = [] as typeof tags
-				const prefixed_tags = [] as typeof tags
+				for (const id of Object.keys(ids_tags_initial)) {
+					const tags = ids_tags_initial[id]
 
-				let prefix_matched = prefix === ''
+					const unmatched_tags = [] as typeof tags
+					const prefixed_tags = [] as typeof tags
 
-				for (const tag of tags) {
-					if (tag === prefix) {
-						prefix_matched = true
-						continue
+					let prefix_matched = prefix === ''
+
+					for (const tag of tags) {
+						if (tag === prefix) {
+							prefix_matched = true
+							continue
+						}
+
+						let next = tag
+
+						if (prefix && tag.startsWith(prefix + separator)) {
+							prefix_matched = true
+							next = tag.substring(prefix.length + separator.length)
+							prefixed_tags.push(next)
+						}
+
+						unmatched_tags.push(next)
 					}
 
-					let next = tag
+					if (! prefix_matched) continue
 
-					if (prefix && tag.startsWith(prefix + separator)) {
-						prefix_matched = true
-						next = tag.substring(prefix.length + separator.length)
-						prefixed_tags.push(next)
-					}
+					ids_tags[id] = unmatched_tags
 
-					unmatched_tags.push(next)
-				}
-
-				if (! prefix_matched) continue
-
-				ids_tags[id] = unmatched_tags
-
-				if (! unmatched_tags?.length) {
-					ids.add(id)
-					continue
-				}
-
-				for (const tag of prefixed_tags.length ? prefixed_tags : unmatched_tags) {
-					const sep_pos = tag.indexOf(separator)
-					const first_segment = sep_pos === -1 ? tag : tag.substring(0, sep_pos)
-
-					if (! first_segment) {
+					if (! unmatched_tags?.length) {
 						ids.add(id)
 						continue
 					}
 
-					if (! tags_ids[first_segment]) tags_ids[first_segment] = []
-					tags_ids[first_segment].push(id)
-				}
-			}
+					for (const tag of prefixed_tags.length ? prefixed_tags : unmatched_tags) {
+						const sep_pos = tag.indexOf(separator)
+						const first_segment = sep_pos === -1 ? tag : tag.substring(0, sep_pos)
 
-			const tags_raw = Object.keys(tags_ids)
-			const tags = [] as string[]
-			if (tags_raw.length === 1) {
-				for (const id of tags_ids[tags_raw[0]]) ids.add(id)
-			} else {
-				for (const tag of tags_raw) {
-					if (tags_ids[tag].length > 1) tags.push(tag)
-					else for (const id of tags_ids[tag]) ids.add(id)
+						if (! first_segment) {
+							ids.add(id)
+							continue
+						}
+
+						if (! tags_ids[first_segment]) tags_ids[first_segment] = []
+						tags_ids[first_segment].push(id)
+					}
 				}
+
+				tags_raw = Object.keys(tags_ids)
+				ids_tags_initial = ids_tags
+				prefix = tags_raw[0]
+			} while (tags_raw.length === 1 && !ids.size)
+
+			const tags = [] as string[]
+
+			for (const tag of tags_raw) {
+				if (tags_ids[tag].length > 1) tags.push(tag)
+				else for (const id of tags_ids[tag]) ids.add(id)
 			}
 
 			return {

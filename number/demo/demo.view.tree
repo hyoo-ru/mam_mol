@@ -198,3 +198,6 @@ $mol_number_demo $mol_example_small
 		\field
 		\label
 		\section
+	aspects /
+		\Widget/Control
+		\Type/Number

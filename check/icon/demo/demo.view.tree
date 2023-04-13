@@ -19,3 +19,5 @@ $mol_check_icon_demo $mol_example_small
 		\switch
 		\button
 		\icon
+	aspects /
+		\Widget/Control

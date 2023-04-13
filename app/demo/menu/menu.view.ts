@@ -50,13 +50,10 @@ namespace $.$$ {
 		@ $mol_mem
 		override ids_tags() {
 			const result = {} as Record<string, string[]>
-			const is_tag_tree = this.$.$mol_state_arg.value('dbg_tag_tree') ?? false
 
 			for (const name of this.names_filtered()) {
 				let aspects = this.widget_aspects( name )
 				result[name] = result[name] ?? []
-
-				if (! is_tag_tree) continue
 
 				for (const tag of aspects) {
 					result[name].push(tag)
