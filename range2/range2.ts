@@ -17,7 +17,7 @@ namespace $ {
 					if( index === Math.trunc( index ) ) return item( index )
 				}
 
-				return target[ field ]
+				return target[ field as any ]
 			} ,
 
 			set( target , field ) {
