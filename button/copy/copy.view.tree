@@ -1,7 +1,12 @@
 $mol_button_copy $mol_button_minor
 	blobs /$mol_blob
-		<= text_blob? $mol_blob
-		<= html_blob? $mol_blob 
+		<= text_blob? $mol_blob /
+			/BlobPart <= text <= title
+			* type \text/plain
+		<= html_blob? $mol_blob /
+			/BlobPart <= html \
+			* type \text/html
+	data *
 	sub /
 		<= Icon $mol_icon_clipboard_outline
 		<= title \

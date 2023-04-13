@@ -249,7 +249,7 @@ namespace $ {
 						case 'false' :
 							return [value.type]
 						case 'null' :
-							return ['null!']
+							return ['null as any']
 					}
 					
 					if( Number( value.type ).toString() == value.type ) return [value.type]

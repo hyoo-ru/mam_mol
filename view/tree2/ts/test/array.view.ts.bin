@@ -95,9 +95,10 @@ namespace $ {
 				{
 					str: "some",
 					nul: null as any
-				}
+				} as Record< string, any >
 			] as readonly any[]
 		}
 	}
 	
 }
+

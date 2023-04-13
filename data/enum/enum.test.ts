@@ -36,7 +36,7 @@ namespace $ {
 
 		'Is wrong value of enum' () {
 			const Sex = $mol_data_enum( 'sex' , sex )
-			$mol_assert_fail( ()=> Sex(2) , `2 is not value of sex enum` )
+			$mol_assert_fail( ()=> Sex( 2 as any ) , `2 is not value of sex enum` )
 		} ,
 
 		'Is name instead of value' () {
