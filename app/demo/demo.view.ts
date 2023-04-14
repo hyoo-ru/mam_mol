@@ -127,7 +127,7 @@ namespace $.$$ {
 			const str = this.$.$mol_fetch.text( uri )
 			const tree = this.$.$mol_tree2_from_string( str )
 			
-			const dict = {}
+			const dict: Record<string, string> = {}
 			tree.kids.forEach( meta => {
 				const packs = meta.select( 'pack' )
 				
