@@ -111,25 +111,21 @@ namespace $ {
 	}
 
 	export function $mol_view_tree_compile( tree : $mol_tree) {
-		const splittedUri = tree.uri.split(/[#\\\/]/);
-		splittedUri.pop();
-		const fileName = splittedUri.pop()!;
+		const splittedUri = tree.uri.split(/[#\\\/]/)
+		splittedUri.pop()
+		const fileName = splittedUri.pop()!
 
-		// const SourceNode = $node['source-map'].SourceNode
-		// type SourceNode = InstanceType< typeof SourceNode >
 		const SourceNode = ( row : number , col : number , fileName : string , text : string ) => text
-		type StringNodeArray = string[] //(string | SourceNode)[];
 		
-		var content: StringNodeArray = []
-		var locales : { [ key : string ] : string } = {}
+		var content: string[] = []
+		var locales :Record<string, string> = {}
 		
 		for( let def of $mol_view_tree_classes( tree ).sub ) {
 			if( !/^\$\w+$/.test( def.type ) ) throw def.error( 'Wrong component name' )
 			
-			var parent = def.sub[0]
+			const parent = def.sub[0]
 			
-			// var propDefs : { [ key : string ] : $mol_tree } = {}
-			var members : { [ key : string ] : StringNodeArray } = {}
+			const members : Record<string, string[]> = {}
 			
 			for( let param of $mol_view_tree_class_props( def ).sub ) { try {
 				var needSet = false
@@ -150,7 +146,7 @@ namespace $ {
 					needCache = true
 				}
 				
-				const getValue = ( value : $mol_tree , definition? : boolean ) : StringNodeArray | null=> { try {
+				const getValue = ( value : $mol_tree , definition? : boolean ) : string[] | null=> { try {
 					switch( true ) {
 						case( value.type === '' ) :
 							return [JSON.stringify( value.value )]
@@ -162,7 +158,7 @@ namespace $ {
 							return null
 						case( value.type[0] === '/' ) :
 							const item_type = value.type.substring( 1 )
-							var items : StringNodeArray = []
+							var items : string[] = []
 							value.sub.forEach( item => {
 								if( item.type === '-' ) return
 								if( item.type === '^' ) {
@@ -172,11 +168,11 @@ namespace $ {
 								var val = getValue( item )
 								if( val ) items.push( val.join("") )
 							} )
-							return [`[`, items.join(' , '),  `]` , ( item_type ? ` as readonly ( ${ item_type } )[]` : ` as readonly any[]` )]
+							return [`[`, items.join(' , '),  `]` , ( item_type ? ` as ( ${ item_type } )[]` : ` as any[]` )]
 						case( value.type[0] === '$' ) :
 							if( !definition ) throw value.error( 'Objects should be bound' )
 							needCache = true
-							var overs : StringNodeArray = []
+							const overs : string[] = []
 							value.sub.forEach( over => {
 								if( /^[-\/]?$/.test( over.type ) ) return ''
 								var overName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
@@ -209,21 +205,30 @@ namespace $ {
 							const object_args = value.select( '/' , '' ).sub.map( arg => getValue( arg ) ).join( ' , ' ) as string
 							return ['(( obj )=>{\n', ...overs, '\t\t\treturn obj\n\t\t})( new this.$.', SourceNode(value.row, value.col, fileName, value.type) , '( ' , object_args , ' ) )']
 						case( value.type === '*' ) :
-							var opts : StringNodeArray = []
-							value.sub.forEach( opt => {
-								if( opt.type === '-' ) return ''
+							const opts : string[] = []
+
+							for (const opt of value.sub) {
+								if( opt.type === '-' ) continue 
 								if( opt.type === '^' ) {
 									opts.push( `\t\t\t...super.${ param.type }() ,\n` )
-									return
+									continue
 								}
 								
-								var key = /(.*?)(?:\?(\w+))?$/.exec( opt.type )!
-								var ns = needSet
-								var v = getValue( opt.sub[0] )
-								var arg = key[2] ? ` ( ${ key[2] }? : any )=> ` : ''
-								opts.push( ...['\t\t\t"', SourceNode(opt.row, opt.col, fileName, key[1]+ '" : '), arg,' ', ...(v || []) , ' ,\n'] )
+								const key = /(.*?)(?:\?(\w+))?$/.exec( opt.type )!
+								const ns = needSet
+								const v = getValue( opt.sub[0] )
+								const arg = key[2] ? ` ( ${ key[2] }? : any )=> ` : ''
+								opts.push( ...[
+									'\t\t\t"',
+									SourceNode(opt.row, opt.col, fileName, key[1]+ '" : '),
+									arg,
+									' ',
+									...(v || []) ,
+									' ,\n']
+								)
 								needSet = ns
-							} )
+							}
+
 							return ['({\n', opts.join( '' ), '\t\t})']
 						case( value.type === '<=>' ) :
 							if( value.sub.length === 1 ) {
@@ -272,7 +277,7 @@ namespace $ {
 					]
 					val = ['return ', ...val]
 
-					var decl: StringNodeArray = ['\t', SourceNode(param.row, param.col, fileName, propName[1]),'(', args.join(',') , ') {\n\t\t' , ...val , '\n\t}\n\n']
+					let decl: string[] = ['\t', SourceNode(param.row, param.col, fileName, propName[1]),'(', args.join(',') , ') {\n\t\t' , ...val , '\n\t}\n\n']
 					if( needCache ) {
 						if( propName[2] ) decl = ['\t@ $' , 'mol_mem_key\n', ...decl]
 						else decl = ['\t@ $', 'mol_mem\n', ...decl]
@@ -289,20 +294,14 @@ namespace $ {
 			var body = Object.keys( members ).reduce( function( acc, name ) {
 				const items = members[ name ] ? members[name] : ['\t' , name ,'() { return null as any }\n\t}\n']
 				return [...acc, ...items]
-			}, [] as StringNodeArray)
-			var classes: StringNodeArray = [ 'namespace $ { export class ', SourceNode(def.row, def.col, fileName, def.type ), ' extends ', SourceNode(parent.row, parent.col, fileName, parent.type), ' {\n\n', ...body, '} }\n'] 
+			}, [] as string[])
+			var classes: string[] = [ 'namespace $ { export class ', SourceNode(def.row, def.col, fileName, def.type ), ' extends ', SourceNode(parent.row, parent.col, fileName, parent.type), ' {\n\n', ...body, '} }\n'] 
 			
 			content = [...content, ...classes]
 		}
 
 		return { script : content.join('') , locales }
 
-		// splittedUri.push(`-view.tree`,`${ fileName }.map`)
-
-		// const node = SourceNode(null as any, null as any, fileName, content as any);
-		// node.add(`//@ sourceMappingURL=${splittedUri.join($node.path.sep)}`);
-		// const codeWithSourceMap= node.toStringWithSourceMap();
-		// return { script : codeWithSourceMap.code, locales : locales, map: codeWithSourceMap.map.toString() }
 	}
 
 }

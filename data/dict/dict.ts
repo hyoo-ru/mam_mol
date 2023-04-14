@@ -12,12 +12,12 @@ namespace $ {
 				return $mol_fail( new $mol_data_error( `${ val } is not an Object` ) )
 			}
 
-			const res = {}
+			const res = {} as Record< string , ReturnType< Sub > >
 			
 			for( const field in val as Object ) {
 
 				try {
-					res[ field ] = sub( ( val as Object )[ field ] )
+					res[ field ] = sub( ( val as any )[ field ] )
 				} catch( error: any ) {
 
 					if( error instanceof Promise ) return $mol_fail_hidden( error )

@@ -31,36 +31,36 @@ namespace $ {
 			return this.literal
 		}
 
-		static per( value : number ) { return new $mol_style_unit( value , '%' ) }
-		static px( value : number ) { return new $mol_style_unit( value , 'px' ) }
-		static mm( value : number ) { return new $mol_style_unit( value , 'mm' ) }
-		static cm( value : number ) { return new $mol_style_unit( value , 'cm' ) }
-		static Q( value : number ) { return new $mol_style_unit( value , 'Q' ) }
-		static in( value : number ) { return new $mol_style_unit( value , 'in' ) }
-		static pc( value : number ) { return new $mol_style_unit( value , 'pc' ) }
-		static pt( value : number ) { return new $mol_style_unit( value , 'pt' ) }
-		static cap( value : number ) { return new $mol_style_unit( value , 'cap' ) }
-		static ch( value : number ) { return new $mol_style_unit( value , 'ch' ) }
-		static em( value : number ) { return new $mol_style_unit( value , 'em' ) }
-		static rem( value : number ) { return new $mol_style_unit( value , 'rem' ) }
-		static ex( value : number ) { return new $mol_style_unit( value , 'ex' ) }
-		static ic( value : number ) { return new $mol_style_unit( value , 'ic' ) }
-		static lh( value : number ) { return new $mol_style_unit( value , 'lh' ) }
-		static rlh( value : number ) { return new $mol_style_unit( value , 'rlh' ) }
-		static vh( value : number ) { return new $mol_style_unit( value , 'vh' ) }
-		static vw( value : number ) { return new $mol_style_unit( value , 'vw' ) }
-		static vi( value : number ) { return new $mol_style_unit( value , 'vi' ) }
-		static vb( value : number ) { return new $mol_style_unit( value , 'vb' ) }
-		static vmin( value : number ) { return new $mol_style_unit( value , 'vmin' ) }
-		static vmax( value : number ) { return new $mol_style_unit( value , 'vmax' ) }
+		static per( value : number ) { return `${value}%` as const }
+		static px( value : number ) { return `${ value }px` as const }
+		static mm( value : number ) { return `${value}mm` as const }
+		static cm( value : number ) { return `${value}cm` as const }
+		static Q( value : number ) { return `${value}Q` as const }
+		static in( value : number ) { return `${value}in` as const }
+		static pc( value : number ) { return `${value}pc` as const }
+		static pt( value : number ) { return `${value}pt` as const }
+		static cap( value : number ) { return `${value}cap` as const }
+		static ch( value : number ) { return `${value}ch` as const }
+		static em( value : number ) { return `${value}em` as const }
+		static rem( value : number ) { return `${value}rem` as const }
+		static ex( value : number ) { return `${value}ex` as const }
+		static ic( value : number ) { return `${value}ic` as const }
+		static lh( value : number ) { return `${value}lh` as const }
+		static rlh( value : number ) { return `${value}rlh` as const }
+		static vh( value : number ) { return `${value}vh` as const }
+		static vw( value : number ) { return `${value}vw` as const }
+		static vi( value : number ) { return `${value}vi` as const }
+		static vb( value : number ) { return `${value}vb` as const }
+		static vmin( value : number ) { return `${value}vmin` as const }
+		static vmax( value : number ) { return `${value}vmax` as const }
 		
-		static deg( value : number ) { return new $mol_style_unit( value , 'deg' ) }
-		static rad( value : number ) { return new $mol_style_unit( value , 'rad' ) }
-		static grad( value : number ) { return new $mol_style_unit( value , 'grad' ) }
-		static turn( value : number ) { return new $mol_style_unit( value , 'turn' ) }
+		static deg( value : number ) { return `${value}deg` as const }
+		static rad( value : number ) { return `${value}rad` as const }
+		static grad( value : number ) { return `${value}grad` as const }
+		static turn( value : number ) { return `${value}turn` as const }
 
-		static s( value : number ) { return new $mol_style_unit( value , 's' ) }
-		static ms( value : number ) { return new $mol_style_unit( value , 'ms' ) }
+		static s( value : number ) { return `${value}s` as const }
+		static ms( value : number ) { return `${value}ms` as const }
 	
 	}
 

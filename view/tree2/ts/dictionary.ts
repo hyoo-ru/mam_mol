@@ -78,7 +78,7 @@ namespace $ {
 		return [
 			dictionary.data('{'),
 			dictionary.struct('indent', sub),
-			dictionary.data('}'),
+			dictionary.data('} as Record< string, any >'),
 		]
 	}
 

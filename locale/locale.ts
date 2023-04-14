@@ -35,14 +35,14 @@ namespace $ {
 				if( $mol_fail_catch( error ) ) {
 					const def = this.lang_default()
 					if( lang === def ) throw error
-					return {}
 				}
 			}
 			
+			return {}
 		}
 		
 		@ $mol_mem_key
-		static text( key : string ) {
+		static text( key : string ): string {
 			
 			const lang = this.lang()
 

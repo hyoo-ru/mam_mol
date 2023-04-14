@@ -7,12 +7,12 @@ namespace $ {
 		static separator = ' '
 		
 		@ $mol_mem
-		static href( next? : string ) : string {
+		static href( next? : string ) {
 			return next || process.argv.slice( 2 ).join( ' ' )
 		}
 		
 		@ $mol_mem
-		static href_normal(): string {
+		static href_normal() {
 			return this.link({})
 		}
 		
@@ -42,8 +42,8 @@ namespace $ {
 			return next
 		}
 		
-		static link( next : any ) {
-			var params : { [ key : string ] : any } = {}
+		static link( next : Record<string, string | null> ) {
+			const params : Record<string, string | null> = {}
 			
 			var prev = this.dict()
 			for( var key in prev ) {
@@ -57,11 +57,12 @@ namespace $ {
 			return this.make_link( params )
 		}
 		
-		static make_link( next : { [ key : string ] : any } ) {
-			var chunks : string[] = []
-			for( var key in next ) {
-				if( null == next[ key ] ) continue
-				chunks.push( [ key ].concat( next[ key ] ).map( encodeURIComponent ).join( '=' ) )
+		static make_link( next : Record<string, string | null>) {
+			const chunks : string[] = []
+			for( const key in next ) {
+				if( next[ key ] !== null ) {
+					chunks.push([key, next[key]!].map(encodeURIComponent).join('='))
+				}
 			}
 			
 			return chunks.join( ' ' )
@@ -84,9 +85,9 @@ namespace $ {
 			return new ( this.constructor as typeof $mol_state_arg )( this.prefix + postfix + '.' )
 		}
 		
-		link( next : { [ key : string ] : string } ) {
-			var prefix = this.prefix
-			var dict : { [ key : string ] : any } = {}
+		link( next : Record<string, string | null> ) {
+			const prefix = this.prefix
+			const dict : Record<string, string | null> = {}
 			for( var key in next ) {
 				dict[ prefix + key ] = next[ key ]
 			}
