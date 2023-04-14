@@ -2996,7 +2996,7 @@ $mol_data_optional_demo $mol_example_code
 		\const age1 = Age( 18 ) // ✅
 		\const age2 = Age( undefined ) // ✅
 		\
-		\Age( 'xxx' ) // ❌ xxx is not a numberconst Pos = $mol_data_number
+		\Age( 'xxx' ) // ❌ xxx is not a number
 	tags /
 		\runtime
 		\validation

@@ -8,13 +8,13 @@ namespace $ {
 		 * 	\const age1 = Age( 18 ) // ✅
 		 * 	\const age2 = Age( undefined ) // ✅
 		 * 	\
-		 * 	\Age( 'xxx' ) // ❌ xxx is not a numberconst Pos = $mol_data_number
+		 * 	\Age( 'xxx' ) // ❌ xxx is not a number
 		 * ```
 		 */
 		@ $mol_mem
 		code(next?: any) {
 			if ( next !== undefined ) return next as never
-			return "const Age = $mol_data_optional( $mol_data_integer )\nconst age1 = Age( 18 ) // ✅\nconst age2 = Age( undefined ) // ✅\n\nAge( 'xxx' ) // ❌ xxx is not a numberconst Pos = $mol_data_number"
+			return "const Age = $mol_data_optional( $mol_data_integer )\nconst age1 = Age( 18 ) // ✅\nconst age2 = Age( undefined ) // ✅\n\nAge( 'xxx' ) // ❌ xxx is not a number"
 		}
 		
 		/**

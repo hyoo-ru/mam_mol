@@ -24870,7 +24870,7 @@ var $;
         code(next) {
             if (next !== undefined)
                 return next;
-            return "const Age = $mol_data_optional( $mol_data_integer )\nconst age1 = Age( 18 ) // ✅\nconst age2 = Age( undefined ) // ✅\n\nAge( 'xxx' ) // ❌ xxx is not a numberconst Pos = $mol_data_number";
+            return "const Age = $mol_data_optional( $mol_data_integer )\nconst age1 = Age( 18 ) // ✅\nconst age2 = Age( undefined ) // ✅\n\nAge( 'xxx' ) // ❌ xxx is not a number";
         }
         tags() {
             return [
