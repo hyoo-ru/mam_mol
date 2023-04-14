@@ -23,8 +23,8 @@ namespace $ {
 		return new Proxy( $mol_mutable, {
 			
 			get: ( Mut, field )=> Mut(
-				input[ field ],
-				next => ( output ?? ( output = update( clone() ) ) )[ field ] = next,
+				input[ field as keyof Value ],
+				next => ( output ?? ( output = update( clone() ) ) )[ field as keyof Value ] = next,
 			),
 			
 			set: ()=> false,
