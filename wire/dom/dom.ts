@@ -138,7 +138,7 @@ namespace $ {
 	}
 	
 	function redefine( this: Element, field: string, getter: ()=> any ) {
-		$mol_wire_dom( this )[ field ] = getter
+		;( $mol_wire_dom( this ) as any )[ field ] = getter
 	}
 	
 	/** Polyfill makes DOM reactive. */
