@@ -24243,6 +24243,948 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_csv_parse(text, delimiter = ',') {
+        var lines = text.split(/\r?\n/g);
+        var header = lines.shift().split(delimiter);
+        var res = [];
+        for (const line of lines) {
+            if (!line)
+                continue;
+            var row = {};
+            for (const [index, val] of line.split(delimiter).entries()) {
+                row[header[index]] = val.replace(/^"|"$/g, '').replace(/""/g, '"');
+            }
+            res.push(row);
+        }
+        return res;
+    }
+    $.$mol_csv_parse = $mol_csv_parse;
+})($ || ($ = {}));
+//mol/csv/parse/parse.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_csv_parse_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const text = 'foo,bar\\n\"123\",\"456\"\\n\"x\"\"xx\",\"y\"\"y\"\"y\"'\nconst data = $mol_csv_parse( csv )";
+        }
+        tags() {
+            return [
+                "table"
+            ];
+        }
+        aspects() {
+            return [
+                "Language/CSV",
+                "Serializer"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_csv_parse_demo.prototype, "code", null);
+    $.$mol_csv_parse_demo = $mol_csv_parse_demo;
+})($ || ($ = {}));
+//mol/csv/parse/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_csv_serial(data, delimiter = ',') {
+        const fields = new Set();
+        for (const item of data) {
+            for (const field of Object.keys(item)) {
+                fields.add(field);
+            }
+        }
+        const rows = [[...fields]];
+        for (const item of data) {
+            const row = [];
+            rows.push(row);
+            for (const field of fields) {
+                const val = String(item[field] ?? '');
+                row.push('"' + val.replace(/"/g, '""') + '"');
+            }
+        }
+        return rows.map(row => row.join(delimiter)).join('\n');
+    }
+    $.$mol_csv_serial = $mol_csv_serial;
+})($ || ($ = {}));
+//mol/csv/serial/serial.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_csv_serial_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const data = [\n\t{ foo: '123', bar: '456' },\n\t{ foo: 'x\"xx', bar: 'y\"y\"y' },\n]\nconst text = $mol_csv_serial( data )";
+        }
+        tags() {
+            return [
+                "table"
+            ];
+        }
+        aspects() {
+            return [
+                "Language/CSV",
+                "Parser"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_csv_serial_demo.prototype, "code", null);
+    $.$mol_csv_serial_demo = $mol_csv_serial_demo;
+})($ || ($ = {}));
+//mol/csv/serial/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_array(sub) {
+        return $mol_data_setup((val) => {
+            if (!Array.isArray(val))
+                return $mol_fail(new $mol_data_error(`${val} is not an array`));
+            return val.map((item, index) => {
+                try {
+                    return sub(item);
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        return $mol_fail_hidden(error);
+                    error.message = `[${index}] ${error.message}`;
+                    return $mol_fail(error);
+                }
+            });
+        }, sub);
+    }
+    $.$mol_data_array = $mol_data_array;
+})($ || ($ = {}));
+//mol/data/array/array.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_data_number = (val) => {
+        if (typeof val === 'number')
+            return val;
+        return $mol_fail(new $mol_data_error(`${val} is not a number`));
+    };
+})($ || ($ = {}));
+//mol/data/number/number.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_array_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Samples = $mol_data_array( $mol_data_number )\nconst samples = Samples( [ 1, 2, 3, 4, 5 ] ) // ✅\n\nSamples([ 1, 'foo' ]) // ❌ [1] foo is not a number";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert",
+                "Type/Array"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_array_demo.prototype, "code", null);
+    $.$mol_data_array_demo = $mol_data_array_demo;
+})($ || ($ = {}));
+//mol/data/array/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_data_boolean = (val) => {
+        if (typeof val === 'boolean')
+            return val;
+        return $mol_fail(new $mol_data_error(`${val} is not a boolean`));
+    };
+})($ || ($ = {}));
+//mol/data/boolean/boolean.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_boolean_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const IsAdult = $mol_data_boolean\nconst isAdult = IsAdult( false ) // ✅\n\nIsAdult( 0 ) // ❌ 0 is not a boolean";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert",
+                "Type/Boolean"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_boolean_demo.prototype, "code", null);
+    $.$mol_data_boolean_demo = $mol_data_boolean_demo;
+})($ || ($ = {}));
+//mol/data/boolean/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_const(ref) {
+        return $mol_data_setup((val) => {
+            if ($mol_compare_deep(val, ref))
+                return ref;
+            return $mol_fail(new $mol_data_error(`${JSON.stringify(val)} is not ${JSON.stringify(ref)}`));
+        }, ref);
+    }
+    $.$mol_data_const = $mol_data_const;
+})($ || ($ = {}));
+//mol/data/const/const.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_const_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const OK = $mol_data_const({ done: true })\nconst ok = OK({ done: true }) // ✅\n\nOK({ done: false }) // ❌ {\"done\":false} is not {\"done\":true}";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation",
+                "equals"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_const_demo.prototype, "code", null);
+    $.$mol_data_const_demo = $mol_data_const_demo;
+})($ || ($ = {}));
+//mol/data/const/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_dict(sub) {
+        return $mol_data_setup((val) => {
+            if (Object.getPrototypeOf(val) !== Object.prototype) {
+                return $mol_fail(new $mol_data_error(`${val} is not an Object`));
+            }
+            const res = {};
+            for (const field in val) {
+                try {
+                    res[field] = sub(val[field]);
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        return $mol_fail_hidden(error);
+                    error.message = `[${JSON.stringify(field)}] ${error.message}`;
+                    return $mol_fail(error);
+                }
+            }
+            return res;
+        }, sub);
+    }
+    $.$mol_data_dict = $mol_data_dict;
+})($ || ($ = {}));
+//mol/data/dict/dict.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_data_string = (val) => {
+        if (typeof val === 'string')
+            return val;
+        return $mol_fail(new $mol_data_error(`${val} is not a string`));
+    };
+})($ || ($ = {}));
+//mol/data/string/string.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_dict_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Names = $mol_data_dict( $mol_data_string )\nconst names = Names({ jin: 'Jin', john: 'John' }) // ✅\n\nNames({ jin: 'Jin', john: 5 }) // ❌ [\"john\"] 5 is not a string";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert",
+                "Type/Dictionary"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_dict_demo.prototype, "code", null);
+    $.$mol_data_dict_demo = $mol_data_dict_demo;
+})($ || ($ = {}));
+//mol/data/dict/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_pattern(pattern) {
+        return $mol_data_setup((val) => {
+            const val2 = $mol_data_string(val);
+            if (pattern.test(val2))
+                return val2;
+            return $mol_fail(new $mol_data_error(`${val} is not a ${pattern}`));
+        }, pattern);
+    }
+    $.$mol_data_pattern = $mol_data_pattern;
+})($ || ($ = {}));
+//mol/data/pattern/pattern.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_data_email = $mol_data_pattern(/.+@.+/);
+})($ || ($ = {}));
+//mol/data/email/email.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_email_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const From = $mol_data_email\nconst from = From( 'jin@example.org' ) // ✅\n\nFrom( 'jin' ) // ❌ jin is not a /.+@.+/";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert",
+                "Type/Email"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_email_demo.prototype, "code", null);
+    $.$mol_data_email_demo = $mol_data_email_demo;
+})($ || ($ = {}));
+//mol/data/email/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_enum_demo_number extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "enum SexValues { male, female }\nconst Sex = $mol_data_enum( 'Sex', SexValues )\nconst sex = Sex( 0 ) // ✅\n\nSamples( 3 ) // ❌ 3 is not value of Sex enum";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation",
+                "enum"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert",
+                "Type/Number"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_enum_demo_number.prototype, "code", null);
+    $.$mol_data_enum_demo_number = $mol_data_enum_demo_number;
+    class $mol_data_enum_demo_string extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "enum SexValues { male = 'male', female = 'female' }\nconst Sex = $mol_data_enum( 'Sex', SexValues )\nconst sex = Sex( 'male' ) // ✅\n\nSamples( 'helicopter' ) // ❌ helicopter is not value of Sex enum";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation",
+                "enum"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert",
+                "Type/String"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_enum_demo_string.prototype, "code", null);
+    $.$mol_data_enum_demo_string = $mol_data_enum_demo_string;
+})($ || ($ = {}));
+//mol/data/enum/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_instance(Instance) {
+        return $mol_data_setup((val) => {
+            if (val instanceof Instance)
+                return val;
+            return $mol_fail(new $mol_data_error(`${val} is not a ${Instance.name}`));
+        }, Instance);
+    }
+    $.$mol_data_instance = $mol_data_instance;
+})($ || ($ = {}));
+//mol/data/instance/instance.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_instance_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Created = $mol_data_instance( Date )\nconst created = Created( new Date ) // ✅\n\nCreated( '2023-01-01' ) // ❌ 2023-01-01 is not a Date";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation",
+                "instance"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_instance_demo.prototype, "code", null);
+    $.$mol_data_instance_demo = $mol_data_instance_demo;
+})($ || ($ = {}));
+//mol/data/instance/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_integer(val) {
+        const val2 = $mol_data_number(val);
+        if (Math.floor(val2) === val2)
+            return val2;
+        return $mol_fail(new $mol_data_error(`${val} is not an integer`));
+    }
+    $.$mol_data_integer = $mol_data_integer;
+})($ || ($ = {}));
+//mol/data/integer/integer.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_integer_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Age = $mol_data_integer\nconst age = Age( 18 ) // ✅\n\nAge( 18.5 ) // ❌ 18.5 is not an integer";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert",
+                "Type/Integer"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_integer_demo.prototype, "code", null);
+    $.$mol_data_integer_demo = $mol_data_integer_demo;
+})($ || ($ = {}));
+//mol/data/integer/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_tagged(config) {
+        return config;
+    }
+    $.$mol_data_tagged = $mol_data_tagged;
+})($ || ($ = {}));
+//mol/data/tagged/tagged.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_nominal(config) {
+        const nominal = Object.keys(config)[0];
+        return config[nominal];
+    }
+    $.$mol_data_nominal = $mol_data_nominal;
+})($ || ($ = {}));
+//mol/data/nominal/nominal.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_nullable(sub) {
+        return $mol_data_setup((val) => {
+            if (val === null)
+                return null;
+            return sub(val);
+        }, sub);
+    }
+    $.$mol_data_nullable = $mol_data_nullable;
+})($ || ($ = {}));
+//mol/data/nullable/nullable.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_nullable_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Age = $mol_data_nullable( $mol_data_integer )\nconst age1 = Age( 18 ) // ✅\nconst age2 = Age( null ) // ✅\n\nAge( 'xxx' ) // ❌ xxx is not a number";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation",
+                "nullable"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_nullable_demo.prototype, "code", null);
+    $.$mol_data_nullable_demo = $mol_data_nullable_demo;
+})($ || ($ = {}));
+//mol/data/nullable/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_number_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Pos = $mol_data_number\nconst pos = Pos( 1.25 ) // ✅\n\nPos( 'xxx' ) // ❌ xxx is not a number";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert",
+                "Type/Number"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_number_demo.prototype, "code", null);
+    $.$mol_data_number_demo = $mol_data_number_demo;
+})($ || ($ = {}));
+//mol/data/number/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_optional(sub, fallback) {
+        return $mol_data_setup((val) => {
+            if (val === undefined) {
+                return fallback?.();
+            }
+            return sub(val);
+        }, { sub, fallback });
+    }
+    $.$mol_data_optional = $mol_data_optional;
+})($ || ($ = {}));
+//mol/data/optional/optional.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_optional_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Age = $mol_data_optional( $mol_data_integer )\nconst age1 = Age( 18 ) // ✅\nconst age2 = Age( undefined ) // ✅\n\nAge( 'xxx' ) // ❌ xxx is not a numberconst Pos = $mol_data_number";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation",
+                "optional",
+                "maybe"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_optional_demo.prototype, "code", null);
+    $.$mol_data_optional_demo = $mol_data_optional_demo;
+})($ || ($ = {}));
+//mol/data/optional/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_pattern_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Birthday = $mol_data_pattern( /^\\d{4}-\\d{2}-\\d{2}$/ )\nconst birthday = Birthday( '2023-01-06' ) // ✅\n\nBirthday( '2023-1-6' ) // ❌ 2023-01-06 is not a /^\\d{4}-\\d{2}-\\d{2}$/";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation",
+                "pattern"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert",
+                "Type/String"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_pattern_demo.prototype, "code", null);
+    $.$mol_data_pattern_demo = $mol_data_pattern_demo;
+})($ || ($ = {}));
+//mol/data/pattern/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+//mol/type/unary/unary.ts
+;
+"use strict";
+//mol/type/param/param.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_pipe(...funcs) {
+        return $mol_data_setup(function (input) {
+            let value = input;
+            for (const func of funcs)
+                value = $mol_func_is_class(func) ? new func(value) : func.call(this, value);
+            return value;
+        }, { funcs });
+    }
+    $.$mol_data_pipe = $mol_data_pipe;
+})($ || ($ = {}));
+//mol/data/pipe/pipe.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_pipe_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Birthday = $mol_data_pipe(\n\t$mol_data_string,\n\t$mol_time_moment,\n\t( moment: $mol_time_moment )=> moment.toOffset( 'Z' ),\n)\nconst birthday = Birthday( '2023-01-06' ) // ✅\n\nBirthday( 123 ) // ❌ 2023-01-06 is not a number";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation",
+                "pipe"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_pipe_demo.prototype, "code", null);
+    $.$mol_data_pipe_demo = $mol_data_pipe_demo;
+})($ || ($ = {}));
+//mol/data/pipe/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_range(from, to) {
+        return $mol_data_setup((val) => {
+            if (val > from && val < to)
+                return val;
+            return $mol_fail(new $mol_data_error(`${val} is out range (${from},${to})`));
+        }, [from, to]);
+    }
+    $.$mol_data_range = $mol_data_range;
+})($ || ($ = {}));
+//mol/data/range/range.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_range_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Portion = $mol_data_range( 0, 1 )\nconst portion = Portion( 0.5 ) // ✅\n\nPortion( 0 ) // ❌ 0 is out range (0,1)";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation",
+                "range"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert",
+                "Type/Number"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_range_demo.prototype, "code", null);
+    $.$mol_data_range_demo = $mol_data_range_demo;
+})($ || ($ = {}));
+//mol/data/range/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+//mol/type/partial/undefined/undefined.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_record(sub) {
+        return $mol_data_setup((val) => {
+            let res = {};
+            for (const field in sub) {
+                try {
+                    res[field] = sub[field](val[field]);
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        return $mol_fail_hidden(error);
+                    error.message = `[${JSON.stringify(field)}] ${error.message}`;
+                    return $mol_fail(error);
+                }
+            }
+            return res;
+        }, sub);
+    }
+    $.$mol_data_record = $mol_data_record;
+})($ || ($ = {}));
+//mol/data/record/record.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_record_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Person = $mol_data_record({\n\tname: $mol_data_string,\n\tage: $mol_data_integer,\n})\nconst person = Person({ name: 'jin', age: 100 }) // ✅\n\nPerson({ name: 'jin' }) // ❌ [\"age\"] undefined is not a number";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert",
+                "Type/Record"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_record_demo.prototype, "code", null);
+    $.$mol_data_record_demo = $mol_data_record_demo;
+})($ || ($ = {}));
+//mol/data/record/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_string_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Name = $mol_data_string\nconst name = Name( 'Jin' ) // ✅\n\nName( 7 ) // ❌ 7 is not a string";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert",
+                "Type/String"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_string_demo.prototype, "code", null);
+    $.$mol_data_string_demo = $mol_data_string_demo;
+})($ || ($ = {}));
+//mol/data/string/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_tagged_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const { Weight, Length } = $mol_data_tagged({\n\tWeight: $mol_data_integer,\n\tLength: $mol_data_integer,\n})\n\nlet weight = Weight( 50 ) // ✅\nweight = Length( 50 ) // ❌ Type '\"Weight\"' is not assignable to type '\"Length\"'";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation",
+                "tagged"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_tagged_demo.prototype, "code", null);
+    $.$mol_data_tagged_demo = $mol_data_tagged_demo;
+})($ || ($ = {}));
+//mol/data/tagged/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_variant(...sub) {
+        return $mol_data_setup((val) => {
+            const errors = [];
+            for (const type of sub) {
+                let hidden = $.$mol_fail_hidden;
+                try {
+                    $.$mol_fail = $.$mol_fail_hidden;
+                    return type(val);
+                }
+                catch (error) {
+                    $.$mol_fail = hidden;
+                    if (error instanceof $mol_data_error) {
+                        errors.push(error);
+                    }
+                    else {
+                        return $mol_fail_hidden(error);
+                    }
+                }
+            }
+            return $mol_fail(new $mol_data_error(`${val} is not any of variants`, ...errors));
+        }, sub);
+    }
+    $.$mol_data_variant = $mol_data_variant;
+})($ || ($ = {}));
+//mol/data/variant/variant.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_variant_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const Phone = $mol_data_variant(\n\t$mol_data_number,\n\t$mol_data_string,\n)\nconst phone1 = Phone( 1234567890 ) // ✅\nconst phone2 = Phone( '+1(23)456-78-90' ) // ✅\n\nPhone( null )\n// ❌ null is not any of variants\n// ❌ null is not a number\n// ❌ null is not a string";
+        }
+        tags() {
+            return [
+                "runtime",
+                "validation",
+                "variant",
+                "adt"
+            ];
+        }
+        aspects() {
+            return [
+                "Assert"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_data_variant_demo.prototype, "code", null);
+    $.$mol_data_variant_demo = $mol_data_variant_demo;
+})($ || ($ = {}));
+//mol/data/variant/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_pick extends $mol_pop {
         event() {
             return {
@@ -30880,89 +31822,6 @@ var $;
     $.$mol_map_yandex_mark = $mol_map_yandex_mark;
 })($ || ($ = {}));
 //mol/map/yandex/mark/-view.tree/mark.view.tree.ts
-;
-"use strict";
-//mol/type/unary/unary.ts
-;
-"use strict";
-//mol/type/param/param.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_data_pipe(...funcs) {
-        return $mol_data_setup(function (input) {
-            let value = input;
-            for (const func of funcs)
-                value = $mol_func_is_class(func) ? new func(value) : func.call(this, value);
-            return value;
-        }, { funcs });
-    }
-    $.$mol_data_pipe = $mol_data_pipe;
-})($ || ($ = {}));
-//mol/data/pipe/pipe.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_data_string = (val) => {
-        if (typeof val === 'string')
-            return val;
-        return $mol_fail(new $mol_data_error(`${val} is not a string`));
-    };
-})($ || ($ = {}));
-//mol/data/string/string.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_data_array(sub) {
-        return $mol_data_setup((val) => {
-            if (!Array.isArray(val))
-                return $mol_fail(new $mol_data_error(`${val} is not an array`));
-            return val.map((item, index) => {
-                try {
-                    return sub(item);
-                }
-                catch (error) {
-                    if (error instanceof Promise)
-                        return $mol_fail_hidden(error);
-                    error.message = `[${index}] ${error.message}`;
-                    return $mol_fail(error);
-                }
-            });
-        }, sub);
-    }
-    $.$mol_data_array = $mol_data_array;
-})($ || ($ = {}));
-//mol/data/array/array.ts
-;
-"use strict";
-//mol/type/partial/undefined/undefined.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_data_record(sub) {
-        return $mol_data_setup((val) => {
-            let res = {};
-            for (const field in sub) {
-                try {
-                    res[field] = sub[field](val[field]);
-                }
-                catch (error) {
-                    if (error instanceof Promise)
-                        return $mol_fail_hidden(error);
-                    error.message = `[${JSON.stringify(field)}] ${error.message}`;
-                    return $mol_fail(error);
-                }
-            }
-            return res;
-        }, sub);
-    }
-    $.$mol_data_record = $mol_data_record;
-})($ || ($ = {}));
-//mol/data/record/record.ts
 ;
 "use strict";
 var $;
@@ -44076,6 +44935,456 @@ var $;
 var $;
 (function ($) {
     $mol_test({
+        'serial & parse'() {
+            const data = [
+                { foo: '123', bar: '456' },
+                { foo: 'x"xx', bar: 'y"y"y' },
+            ];
+            $mol_assert_like($mol_csv_parse($mol_csv_serial(data)), data);
+        },
+        'parse & serial'() {
+            const csv = 'foo,bar\n"123","456"\n"x""xx","y""y""y"';
+            $mol_assert_like($mol_csv_serial($mol_csv_parse(csv)), csv);
+        },
+    });
+})($ || ($ = {}));
+//mol/csv/csv.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is number'() {
+            $mol_data_number(0);
+        },
+        'Is not number'() {
+            $mol_assert_fail(() => {
+                $mol_data_number('x');
+            }, 'x is not a number');
+        },
+        'Is object number'() {
+            $mol_assert_fail(() => {
+                $mol_data_number(new Number(''));
+            }, '0 is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/number/number.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is empty array'() {
+            $mol_data_array($mol_data_number)([]);
+        },
+        'Is array'() {
+            $mol_data_array($mol_data_number)([1, 2]);
+        },
+        'Is not array'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_number)({ [0]: 1, length: 1, map: () => { } });
+            }, '[object Object] is not an array');
+        },
+        'Has wrong item'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_number)([1, '1']);
+            }, '[1] 1 is not a number');
+        },
+        'Has wrong deep item'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_array($mol_data_number))([[], [0, 0, false]]);
+            }, '[1] [2] false is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/array/array.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is boolean - true'() {
+            $mol_data_boolean(true);
+        },
+        'Is boolean - false'() {
+            $mol_data_boolean(false);
+        },
+        'Is not boolean'() {
+            $mol_assert_fail(() => {
+                $mol_data_boolean('x');
+            }, 'x is not a boolean');
+        },
+        'Is object boolean'() {
+            $mol_assert_fail(() => {
+                $mol_data_boolean(new Boolean(''));
+            }, 'false is not a boolean');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/boolean/boolean.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'is same number'() {
+            const Nan = $mol_data_const(Number.NaN);
+            Nan(Number.NaN);
+        },
+        'is equal object'() {
+            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
+            Tags({ tags: ['deep', 'equals'] });
+        },
+        'is different number'() {
+            const Five = $mol_data_const(5);
+            $mol_assert_fail(() => Five(6), '6 is not 5');
+        },
+        'is different object'() {
+            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
+            $mol_assert_fail(() => Tags({ tags: ['shallow', 'equals'] }), `{"tags":["shallow","equals"]} is not {"tags":["deep","equals"]}`);
+        },
+    });
+})($ || ($ = {}));
+//mol/data/const/const.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is empty dict'() {
+            $mol_data_dict($mol_data_number)({});
+        },
+        'Is dict'() {
+            $mol_data_dict($mol_data_number)({ foo: 123 });
+        },
+        'Is not dict'() {
+            $mol_assert_fail(() => {
+                $mol_data_dict($mol_data_number)([123]);
+            }, '123 is not an Object');
+        },
+        'Has wrong item'() {
+            $mol_assert_fail(() => {
+                $mol_data_dict($mol_data_number)({ foo: 1, bar: '1' });
+            }, '["bar"] 1 is not a number');
+        },
+        'Has wrong deep item'() {
+            $mol_assert_fail(() => {
+                $mol_data_dict($mol_data_dict($mol_data_number))({ foo: { bar: false } });
+            }, '["foo"] ["bar"] false is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/dict/dict.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is string'() {
+            $mol_data_string('');
+        },
+        'Is not string'() {
+            $mol_assert_fail(() => {
+                $mol_data_string(0);
+            }, '0 is not a string');
+        },
+        'Is object string'() {
+            $mol_assert_fail(() => {
+                $mol_data_string(new String('x'));
+            }, 'x is not a string');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/string/string.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is fit'() {
+            $mol_data_pattern(/^-$/)('-');
+        },
+        'Is not fit'() {
+            $mol_assert_fail(() => {
+                $mol_data_pattern(/^-$/)('+');
+            }, '+ is not a /^-$/');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/pattern/pattern.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is email'() {
+            $mol_data_email('foo@bar');
+        },
+        'Has not host'() {
+            $mol_assert_fail(() => {
+                $mol_data_email('foo@');
+            }, 'foo@ is not a /.+@.+/');
+        },
+        'Has not name'() {
+            $mol_assert_fail(() => {
+                $mol_data_email('@bar');
+            }, '@bar is not a /.+@.+/');
+        },
+        'Has not @'() {
+            $mol_assert_fail(() => {
+                $mol_data_email('foo.bar');
+            }, 'foo.bar is not a /.+@.+/');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/email/email.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is same class'() {
+            $mol_data_instance(Date)(new Date);
+        },
+        'Is sub class'() {
+            $mol_data_instance(Object)(new Date);
+        },
+        'Is super class'() {
+            $mol_assert_fail(() => {
+                $mol_data_instance(Date)(new Object);
+            }, '[object Object] is not a Date');
+        },
+        'Is another class'() {
+            $mol_assert_fail(() => {
+                $mol_data_instance(Date)(new Array);
+            }, ' is not a Date');
+        },
+        'Is not object'() {
+            $mol_assert_fail(() => {
+                $mol_data_instance(Date)(null);
+            }, 'null is not a Date');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/instance/instance.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is integer'() {
+            $mol_data_integer(0);
+        },
+        'Is float'() {
+            $mol_assert_fail(() => {
+                $mol_data_integer(1.1);
+            }, '1.1 is not an integer');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/integer/integer.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'tagged typing'() {
+            const { Weight, Length } = $mol_data_tagged({
+                Weight: $mol_data_integer,
+                Length: $mol_data_integer,
+            });
+            Length(20);
+            let len = Length(10);
+            len = 20;
+            let num = len;
+            len = Length(Weight(20));
+        },
+    });
+})($ || ($ = {}));
+//mol/data/tagged/tagged.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Nominal typing'() {
+            const Weight = $mol_data_nominal({ Weight: $mol_data_integer });
+            const Length = $mol_data_nominal({ Length: $mol_data_integer });
+            let len = Length(10);
+            len = Length(20);
+            len = 20;
+            let num = len;
+            len = Weight(20);
+        },
+    });
+})($ || ($ = {}));
+//mol/data/nominal/nominal.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is null'() {
+            $mol_data_nullable($mol_data_number)(null);
+        },
+        'Is not null'() {
+            $mol_data_nullable($mol_data_number)(0);
+        },
+        'Is undefined'() {
+            $mol_assert_fail(() => {
+                const Type = $mol_data_nullable($mol_data_number);
+                Type(undefined);
+            }, 'undefined is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/nullable/nullable.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const Age = $mol_data_optional($mol_data_number);
+    const Age_or_zero = $mol_data_optional($mol_data_number, () => 0);
+    $mol_test({
+        'Is not present'() {
+            $mol_assert_equal(Age(undefined), undefined);
+        },
+        'Is present'() {
+            $mol_assert_equal(Age(0), 0);
+        },
+        'Fallbacked'() {
+            $mol_assert_equal(Age_or_zero(undefined), 0);
+        },
+        'Is null'() {
+            $mol_assert_fail(() => Age(null), 'null is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/optional/optional.test.ts
+;
+"use strict";
+//mol/type/param/param.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'single function'() {
+            const stringify = $mol_data_pipe((input) => input.toString());
+            $mol_assert_equal(stringify(5), '5');
+        },
+        'two functions'() {
+            const isLong = $mol_data_pipe((input) => input.toString(), (input) => input.length > 2);
+            $mol_assert_equal(isLong(5.0), false);
+            $mol_assert_equal(isLong(5.1), true);
+        },
+        'three functions'() {
+            const pattern = $mol_data_pipe((input) => input.toString(), (input) => new RegExp(input), (input) => input.toString());
+            $mol_assert_equal(pattern(5), '/5/');
+        },
+        'classes'() {
+            class Box {
+                value;
+                constructor(value) {
+                    this.value = value;
+                }
+            }
+            const boxify = $mol_data_pipe((input) => input.toString(), Box);
+            $mol_assert_ok(boxify(5) instanceof Box);
+            $mol_assert_like(boxify(5).value, '5');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/pipe/pipe.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Closed number range'() {
+            const Pos = $mol_data_range(0, 1);
+            Pos(Number.EPSILON);
+            $mol_assert_fail(() => Pos(1), '1 is out range (0,1)');
+            $mol_assert_fail(() => Pos(0), '0 is out range (0,1)');
+            $mol_assert_fail(() => Pos(Number.POSITIVE_INFINITY), 'Infinity is out range (0,1)');
+            $mol_assert_fail(() => Pos(Number.NEGATIVE_INFINITY), '-Infinity is out range (0,1)');
+            $mol_assert_fail(() => Pos(NaN), 'NaN is out range (0,1)');
+        },
+        'Open number range'() {
+            const Pos = $mol_data_range(0, Number.POSITIVE_INFINITY);
+            Pos(Number.EPSILON);
+            Pos(Number.MAX_VALUE);
+            $mol_assert_fail(() => Pos(0), '0 is out range (0,Infinity)');
+            $mol_assert_fail(() => Pos(Number.POSITIVE_INFINITY), 'Infinity is out range (0,Infinity)');
+            $mol_assert_fail(() => Pos(Number.NEGATIVE_INFINITY), '-Infinity is out range (0,Infinity)');
+            $mol_assert_fail(() => Pos(NaN), 'NaN is out range (0,Infinity)');
+        },
+        'String range'() {
+            const Code = $mol_data_range('A', 'B');
+            Code('Aa');
+            Code('AZ');
+            $mol_assert_fail(() => Code('A'), 'A is out range (A,B)');
+            $mol_assert_fail(() => Code('B'), 'B is out range (A,B)');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/range/range.test.ts
+;
+"use strict";
+//mol/type/partial/undefined/undefined.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Fit to record'() {
+            const User = $mol_data_record({ age: $mol_data_number });
+            User({ age: 0 });
+        },
+        'Extends record'() {
+            const User = $mol_data_record({ age: $mol_data_number });
+            User({ age: 0, name: 'Jin' });
+        },
+        'Shrinks record'() {
+            $mol_assert_fail(() => {
+                const User = $mol_data_record({ age: $mol_data_number, name: $mol_data_string });
+                User({ age: 0 });
+            }, '["name"] undefined is not a string');
+        },
+        'Shrinks deep record'() {
+            $mol_assert_fail(() => {
+                const User = $mol_data_record({ wife: $mol_data_record({ age: $mol_data_number }) });
+                User({ wife: {} });
+            }, '["wife"] ["age"] undefined is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/record/record.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is first'() {
+            $mol_data_variant($mol_data_number, $mol_data_string)(0);
+        },
+        'Is second'() {
+            $mol_data_variant($mol_data_number, $mol_data_string)('');
+        },
+        'Is false'() {
+            $mol_assert_fail(() => {
+                $mol_data_variant($mol_data_number, $mol_data_string)(false);
+            }, 'false is not any of variants\nfalse is not a number\nfalse is not a string');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/variant/variant.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
         'lazy calls'() {
             let calls = 0;
             const list = $mol_range2(index => (++calls, index), () => 10);
@@ -44243,154 +45552,6 @@ var $;
     });
 })($ || ($ = {}));
 //mol/unit/unit.test.ts
-;
-"use strict";
-//mol/type/param/param.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'single function'() {
-            const stringify = $mol_data_pipe((input) => input.toString());
-            $mol_assert_equal(stringify(5), '5');
-        },
-        'two functions'() {
-            const isLong = $mol_data_pipe((input) => input.toString(), (input) => input.length > 2);
-            $mol_assert_equal(isLong(5.0), false);
-            $mol_assert_equal(isLong(5.1), true);
-        },
-        'three functions'() {
-            const pattern = $mol_data_pipe((input) => input.toString(), (input) => new RegExp(input), (input) => input.toString());
-            $mol_assert_equal(pattern(5), '/5/');
-        },
-        'classes'() {
-            class Box {
-                value;
-                constructor(value) {
-                    this.value = value;
-                }
-            }
-            const boxify = $mol_data_pipe((input) => input.toString(), Box);
-            $mol_assert_ok(boxify(5) instanceof Box);
-            $mol_assert_like(boxify(5).value, '5');
-        },
-    });
-})($ || ($ = {}));
-//mol/data/pipe/pipe.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is string'() {
-            $mol_data_string('');
-        },
-        'Is not string'() {
-            $mol_assert_fail(() => {
-                $mol_data_string(0);
-            }, '0 is not a string');
-        },
-        'Is object string'() {
-            $mol_assert_fail(() => {
-                $mol_data_string(new String('x'));
-            }, 'x is not a string');
-        },
-    });
-})($ || ($ = {}));
-//mol/data/string/string.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_data_number = (val) => {
-        if (typeof val === 'number')
-            return val;
-        return $mol_fail(new $mol_data_error(`${val} is not a number`));
-    };
-})($ || ($ = {}));
-//mol/data/number/number.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is number'() {
-            $mol_data_number(0);
-        },
-        'Is not number'() {
-            $mol_assert_fail(() => {
-                $mol_data_number('x');
-            }, 'x is not a number');
-        },
-        'Is object number'() {
-            $mol_assert_fail(() => {
-                $mol_data_number(new Number(''));
-            }, '0 is not a number');
-        },
-    });
-})($ || ($ = {}));
-//mol/data/number/number.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is empty array'() {
-            $mol_data_array($mol_data_number)([]);
-        },
-        'Is array'() {
-            $mol_data_array($mol_data_number)([1, 2]);
-        },
-        'Is not array'() {
-            $mol_assert_fail(() => {
-                $mol_data_array($mol_data_number)({ [0]: 1, length: 1, map: () => { } });
-            }, '[object Object] is not an array');
-        },
-        'Has wrong item'() {
-            $mol_assert_fail(() => {
-                $mol_data_array($mol_data_number)([1, '1']);
-            }, '[1] 1 is not a number');
-        },
-        'Has wrong deep item'() {
-            $mol_assert_fail(() => {
-                $mol_data_array($mol_data_array($mol_data_number))([[], [0, 0, false]]);
-            }, '[1] [2] false is not a number');
-        },
-    });
-})($ || ($ = {}));
-//mol/data/array/array.test.ts
-;
-"use strict";
-//mol/type/partial/undefined/undefined.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Fit to record'() {
-            const User = $mol_data_record({ age: $mol_data_number });
-            User({ age: 0 });
-        },
-        'Extends record'() {
-            const User = $mol_data_record({ age: $mol_data_number });
-            User({ age: 0, name: 'Jin' });
-        },
-        'Shrinks record'() {
-            $mol_assert_fail(() => {
-                const User = $mol_data_record({ age: $mol_data_number, name: $mol_data_string });
-                User({ age: 0 });
-            }, '["name"] undefined is not a string');
-        },
-        'Shrinks deep record'() {
-            $mol_assert_fail(() => {
-                const User = $mol_data_record({ wife: $mol_data_record({ age: $mol_data_number }) });
-                User({ wife: {} });
-            }, '["wife"] ["age"] undefined is not a number');
-        },
-    });
-})($ || ($ = {}));
-//mol/data/record/record.test.ts
 ;
 "use strict";
 var $;

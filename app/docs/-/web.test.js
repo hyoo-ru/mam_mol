@@ -5288,6 +5288,456 @@ var $;
 var $;
 (function ($) {
     $mol_test({
+        'serial & parse'() {
+            const data = [
+                { foo: '123', bar: '456' },
+                { foo: 'x"xx', bar: 'y"y"y' },
+            ];
+            $mol_assert_like($mol_csv_parse($mol_csv_serial(data)), data);
+        },
+        'parse & serial'() {
+            const csv = 'foo,bar\n"123","456"\n"x""xx","y""y""y"';
+            $mol_assert_like($mol_csv_serial($mol_csv_parse(csv)), csv);
+        },
+    });
+})($ || ($ = {}));
+//mol/csv/csv.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is number'() {
+            $mol_data_number(0);
+        },
+        'Is not number'() {
+            $mol_assert_fail(() => {
+                $mol_data_number('x');
+            }, 'x is not a number');
+        },
+        'Is object number'() {
+            $mol_assert_fail(() => {
+                $mol_data_number(new Number(''));
+            }, '0 is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/number/number.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is empty array'() {
+            $mol_data_array($mol_data_number)([]);
+        },
+        'Is array'() {
+            $mol_data_array($mol_data_number)([1, 2]);
+        },
+        'Is not array'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_number)({ [0]: 1, length: 1, map: () => { } });
+            }, '[object Object] is not an array');
+        },
+        'Has wrong item'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_number)([1, '1']);
+            }, '[1] 1 is not a number');
+        },
+        'Has wrong deep item'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_array($mol_data_number))([[], [0, 0, false]]);
+            }, '[1] [2] false is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/array/array.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is boolean - true'() {
+            $mol_data_boolean(true);
+        },
+        'Is boolean - false'() {
+            $mol_data_boolean(false);
+        },
+        'Is not boolean'() {
+            $mol_assert_fail(() => {
+                $mol_data_boolean('x');
+            }, 'x is not a boolean');
+        },
+        'Is object boolean'() {
+            $mol_assert_fail(() => {
+                $mol_data_boolean(new Boolean(''));
+            }, 'false is not a boolean');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/boolean/boolean.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'is same number'() {
+            const Nan = $mol_data_const(Number.NaN);
+            Nan(Number.NaN);
+        },
+        'is equal object'() {
+            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
+            Tags({ tags: ['deep', 'equals'] });
+        },
+        'is different number'() {
+            const Five = $mol_data_const(5);
+            $mol_assert_fail(() => Five(6), '6 is not 5');
+        },
+        'is different object'() {
+            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
+            $mol_assert_fail(() => Tags({ tags: ['shallow', 'equals'] }), `{"tags":["shallow","equals"]} is not {"tags":["deep","equals"]}`);
+        },
+    });
+})($ || ($ = {}));
+//mol/data/const/const.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is empty dict'() {
+            $mol_data_dict($mol_data_number)({});
+        },
+        'Is dict'() {
+            $mol_data_dict($mol_data_number)({ foo: 123 });
+        },
+        'Is not dict'() {
+            $mol_assert_fail(() => {
+                $mol_data_dict($mol_data_number)([123]);
+            }, '123 is not an Object');
+        },
+        'Has wrong item'() {
+            $mol_assert_fail(() => {
+                $mol_data_dict($mol_data_number)({ foo: 1, bar: '1' });
+            }, '["bar"] 1 is not a number');
+        },
+        'Has wrong deep item'() {
+            $mol_assert_fail(() => {
+                $mol_data_dict($mol_data_dict($mol_data_number))({ foo: { bar: false } });
+            }, '["foo"] ["bar"] false is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/dict/dict.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is string'() {
+            $mol_data_string('');
+        },
+        'Is not string'() {
+            $mol_assert_fail(() => {
+                $mol_data_string(0);
+            }, '0 is not a string');
+        },
+        'Is object string'() {
+            $mol_assert_fail(() => {
+                $mol_data_string(new String('x'));
+            }, 'x is not a string');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/string/string.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is fit'() {
+            $mol_data_pattern(/^-$/)('-');
+        },
+        'Is not fit'() {
+            $mol_assert_fail(() => {
+                $mol_data_pattern(/^-$/)('+');
+            }, '+ is not a /^-$/');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/pattern/pattern.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is email'() {
+            $mol_data_email('foo@bar');
+        },
+        'Has not host'() {
+            $mol_assert_fail(() => {
+                $mol_data_email('foo@');
+            }, 'foo@ is not a /.+@.+/');
+        },
+        'Has not name'() {
+            $mol_assert_fail(() => {
+                $mol_data_email('@bar');
+            }, '@bar is not a /.+@.+/');
+        },
+        'Has not @'() {
+            $mol_assert_fail(() => {
+                $mol_data_email('foo.bar');
+            }, 'foo.bar is not a /.+@.+/');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/email/email.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is same class'() {
+            $mol_data_instance(Date)(new Date);
+        },
+        'Is sub class'() {
+            $mol_data_instance(Object)(new Date);
+        },
+        'Is super class'() {
+            $mol_assert_fail(() => {
+                $mol_data_instance(Date)(new Object);
+            }, '[object Object] is not a Date');
+        },
+        'Is another class'() {
+            $mol_assert_fail(() => {
+                $mol_data_instance(Date)(new Array);
+            }, ' is not a Date');
+        },
+        'Is not object'() {
+            $mol_assert_fail(() => {
+                $mol_data_instance(Date)(null);
+            }, 'null is not a Date');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/instance/instance.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is integer'() {
+            $mol_data_integer(0);
+        },
+        'Is float'() {
+            $mol_assert_fail(() => {
+                $mol_data_integer(1.1);
+            }, '1.1 is not an integer');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/integer/integer.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'tagged typing'() {
+            const { Weight, Length } = $mol_data_tagged({
+                Weight: $mol_data_integer,
+                Length: $mol_data_integer,
+            });
+            Length(20);
+            let len = Length(10);
+            len = 20;
+            let num = len;
+            len = Length(Weight(20));
+        },
+    });
+})($ || ($ = {}));
+//mol/data/tagged/tagged.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Nominal typing'() {
+            const Weight = $mol_data_nominal({ Weight: $mol_data_integer });
+            const Length = $mol_data_nominal({ Length: $mol_data_integer });
+            let len = Length(10);
+            len = Length(20);
+            len = 20;
+            let num = len;
+            len = Weight(20);
+        },
+    });
+})($ || ($ = {}));
+//mol/data/nominal/nominal.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is null'() {
+            $mol_data_nullable($mol_data_number)(null);
+        },
+        'Is not null'() {
+            $mol_data_nullable($mol_data_number)(0);
+        },
+        'Is undefined'() {
+            $mol_assert_fail(() => {
+                const Type = $mol_data_nullable($mol_data_number);
+                Type(undefined);
+            }, 'undefined is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/nullable/nullable.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const Age = $mol_data_optional($mol_data_number);
+    const Age_or_zero = $mol_data_optional($mol_data_number, () => 0);
+    $mol_test({
+        'Is not present'() {
+            $mol_assert_equal(Age(undefined), undefined);
+        },
+        'Is present'() {
+            $mol_assert_equal(Age(0), 0);
+        },
+        'Fallbacked'() {
+            $mol_assert_equal(Age_or_zero(undefined), 0);
+        },
+        'Is null'() {
+            $mol_assert_fail(() => Age(null), 'null is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/optional/optional.test.ts
+;
+"use strict";
+//mol/type/param/param.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'single function'() {
+            const stringify = $mol_data_pipe((input) => input.toString());
+            $mol_assert_equal(stringify(5), '5');
+        },
+        'two functions'() {
+            const isLong = $mol_data_pipe((input) => input.toString(), (input) => input.length > 2);
+            $mol_assert_equal(isLong(5.0), false);
+            $mol_assert_equal(isLong(5.1), true);
+        },
+        'three functions'() {
+            const pattern = $mol_data_pipe((input) => input.toString(), (input) => new RegExp(input), (input) => input.toString());
+            $mol_assert_equal(pattern(5), '/5/');
+        },
+        'classes'() {
+            class Box {
+                value;
+                constructor(value) {
+                    this.value = value;
+                }
+            }
+            const boxify = $mol_data_pipe((input) => input.toString(), Box);
+            $mol_assert_ok(boxify(5) instanceof Box);
+            $mol_assert_like(boxify(5).value, '5');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/pipe/pipe.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Closed number range'() {
+            const Pos = $mol_data_range(0, 1);
+            Pos(Number.EPSILON);
+            $mol_assert_fail(() => Pos(1), '1 is out range (0,1)');
+            $mol_assert_fail(() => Pos(0), '0 is out range (0,1)');
+            $mol_assert_fail(() => Pos(Number.POSITIVE_INFINITY), 'Infinity is out range (0,1)');
+            $mol_assert_fail(() => Pos(Number.NEGATIVE_INFINITY), '-Infinity is out range (0,1)');
+            $mol_assert_fail(() => Pos(NaN), 'NaN is out range (0,1)');
+        },
+        'Open number range'() {
+            const Pos = $mol_data_range(0, Number.POSITIVE_INFINITY);
+            Pos(Number.EPSILON);
+            Pos(Number.MAX_VALUE);
+            $mol_assert_fail(() => Pos(0), '0 is out range (0,Infinity)');
+            $mol_assert_fail(() => Pos(Number.POSITIVE_INFINITY), 'Infinity is out range (0,Infinity)');
+            $mol_assert_fail(() => Pos(Number.NEGATIVE_INFINITY), '-Infinity is out range (0,Infinity)');
+            $mol_assert_fail(() => Pos(NaN), 'NaN is out range (0,Infinity)');
+        },
+        'String range'() {
+            const Code = $mol_data_range('A', 'B');
+            Code('Aa');
+            Code('AZ');
+            $mol_assert_fail(() => Code('A'), 'A is out range (A,B)');
+            $mol_assert_fail(() => Code('B'), 'B is out range (A,B)');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/range/range.test.ts
+;
+"use strict";
+//mol/type/partial/undefined/undefined.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Fit to record'() {
+            const User = $mol_data_record({ age: $mol_data_number });
+            User({ age: 0 });
+        },
+        'Extends record'() {
+            const User = $mol_data_record({ age: $mol_data_number });
+            User({ age: 0, name: 'Jin' });
+        },
+        'Shrinks record'() {
+            $mol_assert_fail(() => {
+                const User = $mol_data_record({ age: $mol_data_number, name: $mol_data_string });
+                User({ age: 0 });
+            }, '["name"] undefined is not a string');
+        },
+        'Shrinks deep record'() {
+            $mol_assert_fail(() => {
+                const User = $mol_data_record({ wife: $mol_data_record({ age: $mol_data_number }) });
+                User({ wife: {} });
+            }, '["wife"] ["age"] undefined is not a number');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/record/record.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is first'() {
+            $mol_data_variant($mol_data_number, $mol_data_string)(0);
+        },
+        'Is second'() {
+            $mol_data_variant($mol_data_number, $mol_data_string)('');
+        },
+        'Is false'() {
+            $mol_assert_fail(() => {
+                $mol_data_variant($mol_data_number, $mol_data_string)(false);
+            }, 'false is not any of variants\nfalse is not a number\nfalse is not a string');
+        },
+    });
+})($ || ($ = {}));
+//mol/data/variant/variant.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
         'lazy calls'() {
             let calls = 0;
             const list = $mol_range2(index => (++calls, index), () => 10);
@@ -5455,154 +5905,6 @@ var $;
     });
 })($ || ($ = {}));
 //mol/unit/unit.test.ts
-;
-"use strict";
-//mol/type/param/param.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'single function'() {
-            const stringify = $mol_data_pipe((input) => input.toString());
-            $mol_assert_equal(stringify(5), '5');
-        },
-        'two functions'() {
-            const isLong = $mol_data_pipe((input) => input.toString(), (input) => input.length > 2);
-            $mol_assert_equal(isLong(5.0), false);
-            $mol_assert_equal(isLong(5.1), true);
-        },
-        'three functions'() {
-            const pattern = $mol_data_pipe((input) => input.toString(), (input) => new RegExp(input), (input) => input.toString());
-            $mol_assert_equal(pattern(5), '/5/');
-        },
-        'classes'() {
-            class Box {
-                value;
-                constructor(value) {
-                    this.value = value;
-                }
-            }
-            const boxify = $mol_data_pipe((input) => input.toString(), Box);
-            $mol_assert_ok(boxify(5) instanceof Box);
-            $mol_assert_like(boxify(5).value, '5');
-        },
-    });
-})($ || ($ = {}));
-//mol/data/pipe/pipe.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is string'() {
-            $mol_data_string('');
-        },
-        'Is not string'() {
-            $mol_assert_fail(() => {
-                $mol_data_string(0);
-            }, '0 is not a string');
-        },
-        'Is object string'() {
-            $mol_assert_fail(() => {
-                $mol_data_string(new String('x'));
-            }, 'x is not a string');
-        },
-    });
-})($ || ($ = {}));
-//mol/data/string/string.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_data_number = (val) => {
-        if (typeof val === 'number')
-            return val;
-        return $mol_fail(new $mol_data_error(`${val} is not a number`));
-    };
-})($ || ($ = {}));
-//mol/data/number/number.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is number'() {
-            $mol_data_number(0);
-        },
-        'Is not number'() {
-            $mol_assert_fail(() => {
-                $mol_data_number('x');
-            }, 'x is not a number');
-        },
-        'Is object number'() {
-            $mol_assert_fail(() => {
-                $mol_data_number(new Number(''));
-            }, '0 is not a number');
-        },
-    });
-})($ || ($ = {}));
-//mol/data/number/number.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is empty array'() {
-            $mol_data_array($mol_data_number)([]);
-        },
-        'Is array'() {
-            $mol_data_array($mol_data_number)([1, 2]);
-        },
-        'Is not array'() {
-            $mol_assert_fail(() => {
-                $mol_data_array($mol_data_number)({ [0]: 1, length: 1, map: () => { } });
-            }, '[object Object] is not an array');
-        },
-        'Has wrong item'() {
-            $mol_assert_fail(() => {
-                $mol_data_array($mol_data_number)([1, '1']);
-            }, '[1] 1 is not a number');
-        },
-        'Has wrong deep item'() {
-            $mol_assert_fail(() => {
-                $mol_data_array($mol_data_array($mol_data_number))([[], [0, 0, false]]);
-            }, '[1] [2] false is not a number');
-        },
-    });
-})($ || ($ = {}));
-//mol/data/array/array.test.ts
-;
-"use strict";
-//mol/type/partial/undefined/undefined.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Fit to record'() {
-            const User = $mol_data_record({ age: $mol_data_number });
-            User({ age: 0 });
-        },
-        'Extends record'() {
-            const User = $mol_data_record({ age: $mol_data_number });
-            User({ age: 0, name: 'Jin' });
-        },
-        'Shrinks record'() {
-            $mol_assert_fail(() => {
-                const User = $mol_data_record({ age: $mol_data_number, name: $mol_data_string });
-                User({ age: 0 });
-            }, '["name"] undefined is not a string');
-        },
-        'Shrinks deep record'() {
-            $mol_assert_fail(() => {
-                const User = $mol_data_record({ wife: $mol_data_record({ age: $mol_data_number }) });
-                User({ wife: {} });
-            }, '["wife"] ["age"] undefined is not a number');
-        },
-    });
-})($ || ($ = {}));
-//mol/data/record/record.test.ts
 ;
 "use strict";
 var $;

@@ -6131,6 +6131,329 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_csv_parse(text: string, delimiter?: string): Record<string, any>[];
+}
+
+declare namespace $ {
+    class $mol_csv_parse_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    function $mol_csv_serial(data: Record<string, any>[], delimiter?: string): string;
+}
+
+declare namespace $ {
+    class $mol_csv_serial_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    function $mol_data_array<Sub extends $mol_data_value>(sub: Sub): ((val: readonly Parameters<Sub>[0][]) => readonly ReturnType<Sub>[]) & {
+        config: Sub;
+        Value: readonly ReturnType<Sub>[];
+    };
+}
+
+declare namespace $ {
+    let $mol_data_number: (val: number) => number;
+}
+
+declare namespace $ {
+    class $mol_data_array_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    let $mol_data_boolean: (val: boolean) => boolean;
+}
+
+declare namespace $ {
+    class $mol_data_boolean_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    function $mol_data_const<Val>(ref: Val): ((val: Val) => Val) & {
+        config: Val;
+        Value: Val;
+    };
+}
+
+declare namespace $ {
+    class $mol_data_const_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    function $mol_data_dict<Sub extends $mol_data_value>(sub: Sub): ((val: Readonly<Record<string, ReturnType<Sub>>>) => Readonly<Record<string, ReturnType<Sub>>>) & {
+        config: Sub;
+        Value: Readonly<Record<string, ReturnType<Sub>>>;
+    };
+}
+
+declare namespace $ {
+    let $mol_data_string: (val: string) => string;
+}
+
+declare namespace $ {
+    class $mol_data_dict_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    function $mol_data_pattern(pattern: RegExp): ((val: string) => string) & {
+        config: RegExp;
+        Value: string;
+    };
+}
+
+declare namespace $ {
+    let $mol_data_email: ((val: string) => string) & {
+        config: RegExp;
+        Value: string;
+    };
+}
+
+declare namespace $ {
+    class $mol_data_email_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_data_enum_demo_number extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+    class $mol_data_enum_demo_string extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    function $mol_data_instance<Instance extends new (...args: any[]) => any>(Instance: Instance): ((val: InstanceType<Instance>) => InstanceType<Instance>) & {
+        config: Instance;
+        Value: InstanceType<Instance>;
+    };
+}
+
+declare namespace $ {
+    class $mol_data_instance_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    function $mol_data_integer(val: number): number;
+}
+
+declare namespace $ {
+    class $mol_data_integer_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    type $mol_data_tagged_type<Value, Tag extends PropertyKey> = Value & {
+        [Key in Tag]: Value;
+    };
+    type $mol_data_tagged_parser<Input, Output> = {
+        Value: Output;
+    } & ((val: $mol_data_tagged_type<Input, never>) => Output);
+    export function $mol_data_tagged<Config extends Record<string, $mol_data_value>>(config: Config): { [Type in keyof Config]: $mol_data_tagged_parser<Parameters<Config[Type]>[0], $mol_data_tagged_type<ReturnType<Config[Type]>, Type>>; };
+    export {};
+}
+
+declare namespace $ {
+    type $mol_data_nominal_type<Value, Nominal> = Value | {
+        $mol_data_nominal: Nominal;
+    };
+    type $mol_data_nominal_parser<Input extends any[], Output> = {
+        Value: Output;
+    } & ((...val: Input) => Output);
+    export function $mol_data_nominal<Nominal extends string, Sub extends $mol_data_value, Value = $mol_data_nominal_type<ReturnType<Sub>, Nominal>>(config: {
+        [key in Nominal]: Sub;
+    }): $mol_data_nominal_parser<Parameters<Sub>, Value>;
+    export {};
+}
+
+declare namespace $ {
+    function $mol_data_nullable<Sub extends $mol_data_value>(sub: Sub): ((val: Parameters<Sub>[0] | null) => ReturnType<Sub> | null) & {
+        config: Sub;
+        Value: ReturnType<Sub> | null;
+    };
+}
+
+declare namespace $ {
+    class $mol_data_nullable_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_data_number_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    function $mol_data_optional<Sub extends $mol_data_value, Fallback extends undefined | (() => ReturnType<Sub>)>(sub: Sub, fallback?: Fallback): ((val: Parameters<Sub>[0] | undefined) => ReturnType<Sub> | (Fallback extends undefined ? undefined : ReturnType<Extract<Fallback, () => any>>)) & {
+        config: {
+            sub: Sub;
+            fallback: Fallback | undefined;
+        };
+        Value: ReturnType<Sub> | (Fallback extends undefined ? undefined : ReturnType<Extract<Fallback, () => any>>);
+    };
+}
+
+declare namespace $ {
+    class $mol_data_optional_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_data_pattern_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    type $mol_type_unary_func = ((param: any) => any);
+    type $mol_type_unary_class = new (param: any) => any;
+    type $mol_type_unary = $mol_type_unary_func | $mol_type_unary_class;
+}
+
+declare namespace $ {
+    type $mol_type_param<Func, Index extends number> = Func extends (...params: infer Params) => any ? Params[Index] : Func extends new (...params: infer Params2) => any ? Params2[Index] : never;
+}
+
+declare namespace $ {
+    type Guard_value<Funcs extends $mol_type_unary[], Index extends keyof Funcs> = $mol_type_param<Index extends keyof $mol_type_tail<Funcs> ? $mol_type_tail<Funcs>[Index] : any, 0>;
+    type Guard<Funcs extends $mol_type_unary[]> = {
+        [Index in keyof Funcs]: (Funcs[Index] extends $mol_type_unary_func ? (input: $mol_type_param<Funcs[Index], 0>) => Guard_value<Funcs, Index> : new (input: $mol_type_param<Funcs[Index], 0>) => Guard_value<Funcs, Index>);
+    };
+    export function $mol_data_pipe<Funcs extends $mol_type_unary[]>(...funcs: Funcs & Guard<Funcs>): ((this: any, input: $mol_type_param<Funcs[0], 0>) => $mol_type_result<$mol_type_foot<Funcs>>) & {
+        config: {
+            funcs: Funcs & Guard<Funcs>;
+        };
+        Value: $mol_type_result<$mol_type_foot<Funcs>>;
+    };
+    export {};
+}
+
+declare namespace $ {
+    class $mol_data_pipe_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    function $mol_data_range<Value>(from: Value, to: Value): ((val: Value) => Value) & {
+        config: Value[];
+        Value: Value;
+    };
+}
+
+declare namespace $ {
+    class $mol_data_range_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    type $mol_type_partial_undefined<Val> = $mol_type_merge<Partial<Val> & Pick<Val, {
+        [Field in keyof Val]: undefined extends Val[Field] ? never : Field;
+    }[keyof Val]>>;
+}
+
+declare namespace $ {
+    function $mol_data_record<Sub extends Record<string, $mol_data_value>>(sub: Sub): ((val: $mol_type_merge<Partial<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }> & Pick<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }, ({ [key in keyof Sub]: Parameters<Sub[key]>[0]; } extends infer T ? { [Field in keyof T]: undefined extends { [key in keyof Sub]: Parameters<Sub[key]>[0]; }[Field] ? never : Field; } : never)[keyof Sub]>>) => Readonly<$mol_type_merge<Partial<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }> & Pick<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }, ({ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; } extends infer T_1 ? { [Field_1 in keyof T_1]: undefined extends { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }[Field_1] ? never : Field_1; } : never)[keyof Sub]>>>) & {
+        config: Sub;
+        Value: Readonly<$mol_type_merge<Partial<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }> & Pick<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }, ({ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; } extends infer T_2 ? { [Field_1 in keyof T_2]: undefined extends { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }[Field_1] ? never : Field_1; } : never)[keyof Sub]>>>;
+    };
+}
+
+declare namespace $ {
+    class $mol_data_record_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_data_string_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_data_tagged_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    function $mol_data_variant<Sub extends $mol_data_value[]>(...sub: Sub): ((val: Parameters<Sub[number]>[0]) => ReturnType<Sub[number]>) & {
+        config: Sub;
+        Value: ReturnType<Sub[number]>;
+    };
+}
+
+declare namespace $ {
+    class $mol_data_variant_demo extends $mol_example_code {
+        code(next?: any): string;
+        tags(): readonly any[];
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
     class $mol_icon_calendar extends $mol_icon {
         path(): string;
     }
@@ -7482,54 +7805,6 @@ declare namespace $ {
         box_lon(): $mol_vector_range<number>;
         address(): string;
     }
-}
-
-declare namespace $ {
-    type $mol_type_unary_func = ((param: any) => any);
-    type $mol_type_unary_class = new (param: any) => any;
-    type $mol_type_unary = $mol_type_unary_func | $mol_type_unary_class;
-}
-
-declare namespace $ {
-    type $mol_type_param<Func, Index extends number> = Func extends (...params: infer Params) => any ? Params[Index] : Func extends new (...params: infer Params2) => any ? Params2[Index] : never;
-}
-
-declare namespace $ {
-    type Guard_value<Funcs extends $mol_type_unary[], Index extends keyof Funcs> = $mol_type_param<Index extends keyof $mol_type_tail<Funcs> ? $mol_type_tail<Funcs>[Index] : any, 0>;
-    type Guard<Funcs extends $mol_type_unary[]> = {
-        [Index in keyof Funcs]: (Funcs[Index] extends $mol_type_unary_func ? (input: $mol_type_param<Funcs[Index], 0>) => Guard_value<Funcs, Index> : new (input: $mol_type_param<Funcs[Index], 0>) => Guard_value<Funcs, Index>);
-    };
-    export function $mol_data_pipe<Funcs extends $mol_type_unary[]>(...funcs: Funcs & Guard<Funcs>): ((this: any, input: $mol_type_param<Funcs[0], 0>) => $mol_type_result<$mol_type_foot<Funcs>>) & {
-        config: {
-            funcs: Funcs & Guard<Funcs>;
-        };
-        Value: $mol_type_result<$mol_type_foot<Funcs>>;
-    };
-    export {};
-}
-
-declare namespace $ {
-    let $mol_data_string: (val: string) => string;
-}
-
-declare namespace $ {
-    function $mol_data_array<Sub extends $mol_data_value>(sub: Sub): ((val: readonly Parameters<Sub>[0][]) => readonly ReturnType<Sub>[]) & {
-        config: Sub;
-        Value: readonly ReturnType<Sub>[];
-    };
-}
-
-declare namespace $ {
-    type $mol_type_partial_undefined<Val> = $mol_type_merge<Partial<Val> & Pick<Val, {
-        [Field in keyof Val]: undefined extends Val[Field] ? never : Field;
-    }[keyof Val]>>;
-}
-
-declare namespace $ {
-    function $mol_data_record<Sub extends Record<string, $mol_data_value>>(sub: Sub): ((val: $mol_type_merge<Partial<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }> & Pick<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }, ({ [key in keyof Sub]: Parameters<Sub[key]>[0]; } extends infer T ? { [Field in keyof T]: undefined extends { [key in keyof Sub]: Parameters<Sub[key]>[0]; }[Field] ? never : Field; } : never)[keyof Sub]>>) => Readonly<$mol_type_merge<Partial<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }> & Pick<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }, ({ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; } extends infer T_1 ? { [Field_1 in keyof T_1]: undefined extends { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }[Field_1] ? never : Field_1; } : never)[keyof Sub]>>>) & {
-        config: Sub;
-        Value: Readonly<$mol_type_merge<Partial<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }> & Pick<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }, ({ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; } extends infer T_2 ? { [Field_1 in keyof T_2]: undefined extends { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }[Field_1] ? never : Field_1; } : never)[keyof Sub]>>>;
-    };
 }
 
 declare namespace $ {

@@ -2819,6 +2819,303 @@ $mol_code_demo $mol_example_small
 	aspects /
 		\Widget/Control
 
+$mol_csv_parse_demo $mol_example_code
+	code? \
+		\const text = 'foo,bar\n"123","456"\n"x""xx","y""y""y"'
+		\const data = $mol_csv_parse( csv )
+	tags /
+		\table
+	aspects /
+		\Language/CSV
+		\Serializer
+
+$mol_csv_serial_demo $mol_example_code
+	code? \
+		\const data = [
+		\	{ foo: '123', bar: '456' },
+		\	{ foo: 'x"xx', bar: 'y"y"y' },
+		\]
+		\const text = $mol_csv_serial( data )
+	tags /
+		\table
+	aspects /
+		\Language/CSV
+		\Parser
+
+$mol_data_array_demo $mol_example_code
+	code? \
+		\const Samples = $mol_data_array( $mol_data_number )
+		\const samples = Samples( [ 1, 2, 3, 4, 5 ] ) // ✅
+		\
+		\Samples([ 1, 'foo' ]) // ❌ [1] foo is not a number
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Assert
+		\Type/Array
+
+$mol_data_boolean_demo $mol_example_code
+	code? \
+		\const IsAdult = $mol_data_boolean
+		\const isAdult = IsAdult( false ) // ✅
+		\
+		\IsAdult( 0 ) // ❌ 0 is not a boolean
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Assert
+		\Type/Boolean
+
+$mol_data_const_demo $mol_example_code
+	code? \
+		\const OK = $mol_data_const({ done: true })
+		\const ok = OK({ done: true }) // ✅
+		\
+		\OK({ done: false }) // ❌ {"done":false} is not {"done":true}
+	tags /
+		\runtime
+		\validation
+		\equals
+	aspects /
+		\Assert
+
+$mol_data_dict_demo $mol_example_code
+	code? \
+		\const Names = $mol_data_dict( $mol_data_string )
+		\const names = Names({ jin: 'Jin', john: 'John' }) // ✅
+		\
+		\Names({ jin: 'Jin', john: 5 }) // ❌ ["john"] 5 is not a string
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Assert
+		\Type/Dictionary
+
+$mol_data_email_demo $mol_example_code
+	code? \
+		\const From = $mol_data_email
+		\const from = From( 'jin@example.org' ) // ✅
+		\
+		\From( 'jin' ) // ❌ jin is not a /.+@.+/
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Assert
+		\Type/Email
+
+$mol_data_enum_demo_number $mol_example_code
+	code? \
+		\enum SexValues { male, female }
+		\const Sex = $mol_data_enum( 'Sex', SexValues )
+		\const sex = Sex( 0 ) // ✅
+		\
+		\Samples( 3 ) // ❌ 3 is not value of Sex enum
+	tags /
+		\runtime
+		\validation
+		\enum
+	aspects /
+		\Assert
+		\Type/Number
+
+$mol_data_enum_demo_string $mol_example_code
+	code? \
+		\enum SexValues { male = 'male', female = 'female' }
+		\const Sex = $mol_data_enum( 'Sex', SexValues )
+		\const sex = Sex( 'male' ) // ✅
+		\
+		\Samples( 'helicopter' ) // ❌ helicopter is not value of Sex enum
+	tags /
+		\runtime
+		\validation
+		\enum
+	aspects /
+		\Assert
+		\Type/String
+
+$mol_data_instance_demo $mol_example_code
+	code? \
+		\const Created = $mol_data_instance( Date )
+		\const created = Created( new Date ) // ✅
+		\
+		\Created( '2023-01-01' ) // ❌ 2023-01-01 is not a Date
+	tags /
+		\runtime
+		\validation
+		\instance
+	aspects /
+		\Assert
+
+$mol_data_integer_demo $mol_example_code
+	code? \
+		\const Age = $mol_data_integer
+		\const age = Age( 18 ) // ✅
+		\
+		\Age( 18.5 ) // ❌ 18.5 is not an integer
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Assert
+		\Type/Integer
+
+$mol_data_nullable_demo $mol_example_code
+	code? \
+		\const Age = $mol_data_nullable( $mol_data_integer )
+		\const age1 = Age( 18 ) // ✅
+		\const age2 = Age( null ) // ✅
+		\
+		\Age( 'xxx' ) // ❌ xxx is not a number
+	tags /
+		\runtime
+		\validation
+		\nullable
+	aspects /
+		\Assert
+
+$mol_data_number_demo $mol_example_code
+	code? \
+		\const Pos = $mol_data_number
+		\const pos = Pos( 1.25 ) // ✅
+		\
+		\Pos( 'xxx' ) // ❌ xxx is not a number
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Assert
+		\Type/Number
+
+$mol_data_optional_demo $mol_example_code
+	code? \
+		\const Age = $mol_data_optional( $mol_data_integer )
+		\const age1 = Age( 18 ) // ✅
+		\const age2 = Age( undefined ) // ✅
+		\
+		\Age( 'xxx' ) // ❌ xxx is not a numberconst Pos = $mol_data_number
+	tags /
+		\runtime
+		\validation
+		\optional
+		\maybe
+	aspects /
+		\Assert
+
+$mol_data_pattern_demo $mol_example_code
+	code? \
+		\const Birthday = $mol_data_pattern( /^\d{4}-\d{2}-\d{2}$/ )
+		\const birthday = Birthday( '2023-01-06' ) // ✅
+		\
+		\Birthday( '2023-1-6' ) // ❌ 2023-01-06 is not a /^\d{4}-\d{2}-\d{2}$/
+	tags /
+		\runtime
+		\validation
+		\pattern
+	aspects /
+		\Assert
+		\Type/String
+
+$mol_data_pipe_demo $mol_example_code
+	code? \
+		\const Birthday = $mol_data_pipe(
+		\	$mol_data_string,
+		\	$mol_time_moment,
+		\	( moment: $mol_time_moment )=> moment.toOffset( 'Z' ),
+		\)
+		\const birthday = Birthday( '2023-01-06' ) // ✅
+		\
+		\Birthday( 123 ) // ❌ 2023-01-06 is not a number
+	tags /
+		\runtime
+		\validation
+		\pipe
+	aspects /
+		\Assert
+
+$mol_data_range_demo $mol_example_code
+	code? \
+		\const Portion = $mol_data_range( 0, 1 )
+		\const portion = Portion( 0.5 ) // ✅
+		\
+		\Portion( 0 ) // ❌ 0 is out range (0,1)
+	tags /
+		\runtime
+		\validation
+		\range
+	aspects /
+		\Assert
+		\Type/Number
+
+$mol_data_record_demo $mol_example_code
+	code? \
+		\const Person = $mol_data_record({
+		\	name: $mol_data_string,
+		\	age: $mol_data_integer,
+		\})
+		\const person = Person({ name: 'jin', age: 100 }) // ✅
+		\
+		\Person({ name: 'jin' }) // ❌ ["age"] undefined is not a number
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Assert
+		\Type/Record
+
+$mol_data_string_demo $mol_example_code
+	code? \
+		\const Name = $mol_data_string
+		\const name = Name( 'Jin' ) // ✅
+		\
+		\Name( 7 ) // ❌ 7 is not a string
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Assert
+		\Type/String
+
+$mol_data_tagged_demo $mol_example_code
+	code? \
+		\const { Weight, Length } = $mol_data_tagged({
+		\	Weight: $mol_data_integer,
+		\	Length: $mol_data_integer,
+		\})
+		\
+		\let weight = Weight( 50 ) // ✅
+		\weight = Length( 50 ) // ❌ Type '"Weight"' is not assignable to type '"Length"'
+	tags /
+		\runtime
+		\validation
+		\tagged
+	aspects /
+		\Assert
+
+$mol_data_variant_demo $mol_example_code
+	code? \
+		\const Phone = $mol_data_variant(
+		\	$mol_data_number,
+		\	$mol_data_string,
+		\)
+		\const phone1 = Phone( 1234567890 ) // ✅
+		\const phone2 = Phone( '+1(23)456-78-90' ) // ✅
+		\
+		\Phone( null )
+		\// ❌ null is not any of variants
+		\// ❌ null is not a number
+		\// ❌ null is not a string
+	tags /
+		\runtime
+		\validation
+		\variant
+		\adt
+	aspects /
+		\Assert
+
 $mol_icon_calendar $mol_icon path \M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z
 
 $mol_icon_calendar_today $mol_icon path \M7,10H12V15H7M19,19H5V8H19M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3Z
