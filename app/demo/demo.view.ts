@@ -120,20 +120,36 @@ namespace $.$$ {
 			return $mol_file.relative( '/mol/logo/logo.svg' ).path()
 		}
 
-		override source_link() {
+		@ $mol_mem
+		repo_dict() {
+			const base_url = this.$.$mol_state_arg.make_link({})
+			const uri = new URL( 'web.meta.tree', base_url ).toString()
+			const str = this.$.$mol_fetch.text( uri )
+			const tree = this.$.$mol_tree2_from_string( str )
 			
-			const demo = $mol_state_arg.value('demo')
-			if( !demo ) return this.source_prefix()
-
-			const pieces = demo.split('_').slice(1)
-			const source_link = this.source_prefix() + pieces.join('/')
-
-			return source_link
+			const dict = {}
+			tree.kids.forEach( meta => {
+				const packs = meta.select( 'pack' )
+				
+				packs.kids.forEach( pack => {
+					const module_name = meta.value === '/' ? pack.kids[0]?.type :
+						[ ...meta.value.split('/').slice( 1 ), pack.kids[0]?.type ].join('_')
+					
+					const repo = pack.kids[0]?.kids[0]?.kids[0]?.value
+						.split('.git')[0].split('/').slice( -2 ).join('/')
+					
+					if (!repo) throw new Error(`${ this }.repo_dict(): Pack node "${ pack.toString() }" does not contain a valid git url`)
+					
+					dict[module_name] = repo
+				} )
+			} )
+			
+			return dict
 		}
 
 		@ $mol_mem_key
 		name_parse( name: string ) {
-			const split = name.replace( /_demo.*$/ , '' ).split('_')
+			const split = name.split('_')
 			
 			const repos = this.repo_dict() as Record<string, string>
 			const keys = split.map( ( _ , index ) => split.slice( 0 , -1-index ).join('_') )

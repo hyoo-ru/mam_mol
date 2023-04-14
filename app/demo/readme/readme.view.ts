@@ -32,7 +32,7 @@ namespace $.$$ {
 
 			while( module.length ) {
 				try {
-					const link =  this.link( this.link_template(), this.repo(), module )
+					const link =  this.link( this.readme_link_template(), this.repo(), module )
 					const text = this.$.$mol_fetch.text( link )
 					this.uri_base( this.link( this.source_link_template(), this.repo(), module ) )
 					return text
