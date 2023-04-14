@@ -12,21 +12,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * source_prefix \https://github.com/hyoo-ru/mam_mol/tree/master/
-		 * ```
-		 */
-		source_prefix() {
-			return "https://github.com/hyoo-ru/mam_mol/tree/master/"
-		}
-		
-		/**
-		 * ```tree
-		 * repo_dict * mol \hyoo-ru/mam_mol
+		 * repo_dict *
 		 * ```
 		 */
 		repo_dict() {
 			return {
-				mol: "hyoo-ru/mam_mol"
 			} as Record< string, any >
 		}
 		
@@ -134,7 +124,6 @@ namespace $ {
 		 * 	repo <= repo
 		 * 	opened? <=> readme_page?
 		 * 	module <= module
-		 * 	source_link <= source_link
 		 * ```
 		 */
 		@ $mol_mem
@@ -144,7 +133,6 @@ namespace $ {
 			obj.repo = () => this.repo()
 			obj.opened = (next?: any) => this.readme_page(next)
 			obj.module = () => this.module()
-			obj.source_link = () => this.source_link()
 			
 			return obj
 		}
@@ -374,15 +362,6 @@ namespace $ {
 		module() {
 			return [
 			] as readonly string[]
-		}
-		
-		/**
-		 * ```tree
-		 * source_link \
-		 * ```
-		 */
-		source_link() {
-			return ""
 		}
 		
 		/**

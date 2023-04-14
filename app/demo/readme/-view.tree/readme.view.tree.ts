@@ -3,11 +3,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * link_template \https://raw.githubusercontent.com/{repo}/master/{module}/readme.md
+		 * readme_link_template \https://raw.githubusercontent.com/{repo}/HEAD/{module}/readme.md
 		 * ```
 		 */
-		link_template() {
-			return "https://raw.githubusercontent.com/{repo}/master/{module}/readme.md"
+		readme_link_template() {
+			return "https://raw.githubusercontent.com/{repo}/HEAD/{module}/readme.md"
+		}
+		
+		/**
+		 * ```tree
+		 * source_link_template \https://github.com/{repo}/tree/HEAD/{module}
+		 * ```
+		 */
+		source_link_template() {
+			return "https://github.com/{repo}/tree/HEAD/{module}"
 		}
 		
 		/**

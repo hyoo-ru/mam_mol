@@ -2909,7 +2909,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_app_demo_readme extends $mol_page {
-        link_template(): string;
+        readme_link_template(): string;
+        source_link_template(): string;
         repo(): string;
         module(): readonly string[];
         title(): string;
@@ -2936,8 +2937,9 @@ declare namespace $.$$ {
     }
     class $mol_app_demo_readme extends $.$mol_app_demo_readme {
         close(): void;
-        link(module: readonly string[]): string;
+        link(template: string, repo: string, module: readonly string[]): string;
         uri_base(next?: string): string;
+        source_link(): string;
         readme(): string;
         body(): $mol_view[];
     }
@@ -3000,7 +3002,6 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_app_demo extends $mol_book2 {
         editor_title(): string;
-        source_prefix(): string;
         repo_dict(): Record<string, any>;
         plugins(): readonly any[];
         demo_block_list(): readonly any[];
@@ -3029,7 +3030,6 @@ declare namespace $ {
         Demo(): $mol_view;
         repo(): string;
         module(): readonly string[];
-        source_link(): string;
         detail_empty_prefix(): string;
         selected(): string;
         detail_empty_postfix(): string;
@@ -3038,6 +3038,45 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_func_is_class(func: Function): boolean;
+}
+
+declare namespace $ {
+    class $mol_span extends $mol_object2 {
+        readonly uri: string;
+        readonly source: string;
+        readonly row: number;
+        readonly col: number;
+        readonly length: number;
+        constructor(uri: string, source: string, row: number, col: number, length: number);
+        static unknown: $mol_span;
+        static begin(uri: string, source?: string): $mol_span;
+        static end(uri: string, source: string): $mol_span;
+        static entire(uri: string, source: string): $mol_span;
+        toString(): string;
+        toJSON(): {
+            uri: string;
+            row: number;
+            col: number;
+            length: number;
+        };
+        error(message: string, Class?: ErrorConstructor): Error;
+        span(row: number, col: number, length: number): $mol_span;
+        after(length?: number): $mol_span;
+        slice(begin: number, end?: number): $mol_span;
+    }
+}
+
+declare namespace $ {
+    class $mol_error_syntax extends SyntaxError {
+        reason: string;
+        line: string;
+        span: $mol_span;
+        constructor(reason: string, line: string, span: $mol_span);
+    }
+}
+
+declare namespace $ {
+    function $mol_tree2_from_string(this: $, str: string, uri?: string): $mol_tree2;
 }
 
 declare namespace $ {
@@ -3060,6 +3099,44 @@ declare namespace $.$$ {
     }
 }
 
+declare namespace $ {
+    function $mol_tree2_to_string(this: $, tree: $mol_tree2): string;
+}
+
+declare namespace $ {
+    type $mol_tree2_path = Array<string | number | null>;
+    type $mol_tree2_hack<Context> = (input: $mol_tree2, belt: $mol_tree2_belt<Context>, context: Context) => readonly $mol_tree2[];
+    type $mol_tree2_belt<Context> = Record<string, $mol_tree2_hack<Context>>;
+    class $mol_tree2 extends Object {
+        readonly type: string;
+        readonly value: string;
+        readonly kids: readonly $mol_tree2[];
+        readonly span: $mol_span;
+        constructor(type: string, value: string, kids: readonly $mol_tree2[], span: $mol_span);
+        static list(kids: readonly $mol_tree2[], span?: $mol_span): $mol_tree2;
+        list(kids: readonly $mol_tree2[]): $mol_tree2;
+        static data(value: string, kids?: readonly $mol_tree2[], span?: $mol_span): $mol_tree2;
+        data(value: string, kids?: readonly $mol_tree2[]): $mol_tree2;
+        static struct(type: string, kids?: readonly $mol_tree2[], span?: $mol_span): $mol_tree2;
+        struct(type: string, kids?: readonly $mol_tree2[]): $mol_tree2;
+        clone(kids: readonly $mol_tree2[], span?: $mol_span): $mol_tree2;
+        text(): string;
+        static fromString(str: string, uri?: string): $mol_tree2;
+        toString(): string;
+        insert(value: $mol_tree2 | null, ...path: $mol_tree2_path): $mol_tree2;
+        select(...path: $mol_tree2_path): $mol_tree2;
+        filter(path: string[], value?: string): $mol_tree2;
+        hack<Context extends {
+            span?: $mol_span;
+            [key: string]: unknown;
+        } = {}>(belt: $mol_tree2_belt<Context>, context?: Context): $mol_tree2[];
+        error(message: string, Class?: ErrorConstructor): Error;
+    }
+    class $mol_tree2_empty extends $mol_tree2 {
+        constructor();
+    }
+}
+
 declare namespace $.$$ {
     class $mol_app_demo extends $.$mol_app_demo {
         component_name(name: string): string;
@@ -3077,7 +3154,7 @@ declare namespace $.$$ {
         pages(): $mol_view[];
         Demo(): $mol_example;
         logo_uri(): string;
-        source_link(): string;
+        repo_dict(): Record<string, string>;
         name_parse(name: string): {
             repo: string;
             module: string[];

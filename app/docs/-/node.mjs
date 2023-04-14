@@ -10699,8 +10699,11 @@ var $;
 var $;
 (function ($) {
     class $mol_app_demo_readme extends $mol_page {
-        link_template() {
-            return "https://raw.githubusercontent.com/{repo}/master/{module}/readme.md";
+        readme_link_template() {
+            return "https://raw.githubusercontent.com/{repo}/HEAD/{module}/readme.md";
+        }
+        source_link_template() {
+            return "https://github.com/{repo}/tree/HEAD/{module}";
         }
         repo() {
             return "";
@@ -10822,20 +10825,23 @@ var $;
             close() {
                 this.opened(false);
             }
-            link(module) {
-                return this.link_template().replace('{repo}', this.repo()).replace('{module}', module.join('/'));
+            link(template, repo, module) {
+                return template.replace('{repo}', repo).replace('{module}', module.join('/'));
             }
             uri_base(next = '') {
                 $mol_wire_solid();
                 return next;
             }
+            source_link() {
+                return this.link(this.source_link_template(), this.repo(), this.module());
+            }
             readme() {
                 let module = this.module();
                 while (module.length) {
                     try {
-                        const link = this.link(module);
+                        const link = this.link(this.readme_link_template(), this.repo(), module);
                         const text = this.$.$mol_fetch.text(link);
-                        this.uri_base(`https://github.com/${this.repo()}/tree/master/${module.join('/')}/`);
+                        this.uri_base(this.link(this.source_link_template(), this.repo(), module));
                         return text;
                     }
                     catch (error) {
@@ -10861,6 +10867,9 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_app_demo_readme.prototype, "uri_base", null);
+        __decorate([
+            $mol_mem
+        ], $mol_app_demo_readme.prototype, "source_link", null);
         __decorate([
             $mol_mem
         ], $mol_app_demo_readme.prototype, "readme", null);
@@ -11026,13 +11035,8 @@ var $;
         editor_title() {
             return this.detail_title();
         }
-        source_prefix() {
-            return "https://github.com/hyoo-ru/mam_mol/tree/master/";
-        }
         repo_dict() {
-            return {
-                mol: "hyoo-ru/mam_mol"
-            };
+            return {};
         }
         plugins() {
             return [
@@ -11077,7 +11081,6 @@ var $;
             obj.repo = () => this.repo();
             obj.opened = (next) => this.readme_page(next);
             obj.module = () => this.module();
-            obj.source_link = () => this.source_link();
             return obj;
         }
         Detail_empty_message() {
@@ -11160,9 +11163,6 @@ var $;
         }
         module() {
             return [];
-        }
-        source_link() {
-            return "";
         }
         detail_empty_prefix() {
             return this.$.$mol_locale.text('$mol_app_demo_detail_empty_prefix');
@@ -11379,16 +11379,28 @@ var $;
             logo_uri() {
                 return $mol_file.relative('/mol/logo/logo.svg').path();
             }
-            source_link() {
-                const demo = $mol_state_arg.value('demo');
-                if (!demo)
-                    return this.source_prefix();
-                const pieces = demo.split('_').slice(1);
-                const source_link = this.source_prefix() + pieces.join('/');
-                return source_link;
+            repo_dict() {
+                const base_url = this.$.$mol_state_arg.make_link({});
+                const uri = new URL('web.meta.tree', base_url).toString();
+                const str = this.$.$mol_fetch.text(uri);
+                const tree = this.$.$mol_tree2_from_string(str);
+                const dict = {};
+                tree.kids.forEach(meta => {
+                    const packs = meta.select('pack');
+                    packs.kids.forEach(pack => {
+                        const module_name = meta.value === '/' ? pack.kids[0]?.type :
+                            [...meta.value.split('/').slice(1), pack.kids[0]?.type].join('_');
+                        const repo = pack.kids[0]?.kids[0]?.kids[0]?.value
+                            .split('.git')[0].split('/').slice(-2).join('/');
+                        if (!repo)
+                            throw new Error(`${this}.repo_dict(): Pack node "${pack.toString()}" does not contain a valid git url`);
+                        dict[module_name] = repo;
+                    });
+                });
+                return dict;
             }
             name_parse(name) {
-                const split = name.replace(/_demo.*$/, '').split('_');
+                const split = name.split('_');
                 const repos = this.repo_dict();
                 const keys = split.map((_, index) => split.slice(0, -1 - index).join('_'));
                 const key = keys.find(key => key in repos);
@@ -11434,6 +11446,9 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_app_demo.prototype, "names_demo", null);
+        __decorate([
+            $mol_mem
+        ], $mol_app_demo.prototype, "repo_dict", null);
         __decorate([
             $mol_mem_key
         ], $mol_app_demo.prototype, "name_parse", null);

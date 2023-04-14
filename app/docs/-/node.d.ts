@@ -3039,7 +3039,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_app_demo_readme extends $mol_page {
-        link_template(): string;
+        readme_link_template(): string;
+        source_link_template(): string;
         repo(): string;
         module(): readonly string[];
         title(): string;
@@ -3066,8 +3067,9 @@ declare namespace $.$$ {
     }
     class $mol_app_demo_readme extends $.$mol_app_demo_readme {
         close(): void;
-        link(module: readonly string[]): string;
+        link(template: string, repo: string, module: readonly string[]): string;
         uri_base(next?: string): string;
+        source_link(): string;
         readme(): string;
         body(): $mol_view[];
     }
@@ -3130,7 +3132,6 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_app_demo extends $mol_book2 {
         editor_title(): string;
-        source_prefix(): string;
         repo_dict(): Record<string, any>;
         plugins(): readonly any[];
         demo_block_list(): readonly any[];
@@ -3159,7 +3160,6 @@ declare namespace $ {
         Demo(): $mol_view;
         repo(): string;
         module(): readonly string[];
-        source_link(): string;
         detail_empty_prefix(): string;
         selected(): string;
         detail_empty_postfix(): string;
@@ -3207,7 +3207,7 @@ declare namespace $.$$ {
         pages(): $mol_view[];
         Demo(): $mol_example;
         logo_uri(): string;
-        source_link(): string;
+        repo_dict(): Record<string, string>;
         name_parse(name: string): {
             repo: string;
             module: string[];
