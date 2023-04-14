@@ -5779,10 +5779,11 @@ var $;
                 return '';
             if (!harp)
                 return '';
-            const order = harp['+'] === true ? '+' : harp['+'] === false ? '-' : '';
-            const filter = harp['='] ? '=' : harp['!='] ? '!=' : '';
+            const harp2 = harp;
+            const order = harp2['+'] === true ? '+' : harp2['+'] === false ? '-' : '';
+            const filter = harp2['='] ? '=' : harp2['!='] ? '!=' : '';
             const name = encodeURIComponent(field);
-            let values = (harp['='] || harp['!='] || []).map(([min, max]) => {
+            let values = (harp2['='] || harp2['!='] || []).map(([min, max]) => {
                 if (max === undefined || min === max)
                     return encodeURIComponent(String(min)) + '=';
                 min = (min === undefined) ? '' : encodeURIComponent(String(min));

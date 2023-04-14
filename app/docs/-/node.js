@@ -31446,16 +31446,12 @@ var $;
     const { optional, slash_back, char_any, char_except, repeat } = $mol_regexp;
     $.$hyoo_marked_line_content = repeat(char_except('\r\n'), 1);
     const uri = repeat(char_except(slash_back));
-    function with_marker(marker, content = $mol_regexp.from({
-        content: $.$hyoo_marked_line_content
-    })) {
-        return $mol_regexp.from([{ marker }, content, marker]);
-    }
-    const strong = with_marker('**');
-    const emphasis = with_marker('//');
-    const insertion = with_marker('++');
-    const deletion = with_marker('--');
-    const code = with_marker(';;');
+    const content = { content: $.$hyoo_marked_line_content };
+    const strong = $mol_regexp.from([{ marker: '**' }, content, '**']);
+    const emphasis = $mol_regexp.from([{ marker: '//' }, content, '//']);
+    const insertion = $mol_regexp.from([{ marker: '++' }, content, '++']);
+    const deletion = $mol_regexp.from([{ marker: '--' }, content, '--']);
+    const code = $mol_regexp.from([{ marker: ';;' }, content, ';;']);
     const with_uri = $mol_regexp.from([
         optional([
             { content: $.$hyoo_marked_line_content },
@@ -31463,8 +31459,8 @@ var $;
         ]),
         { uri },
     ]);
-    const link = with_marker('\\\\', with_uri);
-    const embed = with_marker('""', with_uri);
+    const link = $mol_regexp.from([{ marker: '\\\\' }, with_uri, '\\\\']);
+    const embed = $mol_regexp.from([{ marker: '""' }, with_uri, '""']);
     const inline = $mol_regexp.from({ strong, emphasis, insertion, deletion, code, link, embed });
     $.$hyoo_marked_line = $mol_regexp.from({ inline });
 })($ || ($ = {}));
