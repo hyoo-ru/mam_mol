@@ -73,13 +73,13 @@
 
 @keyframes mol_view_wait {
 	from {
-		opacity: .75;
+		opacity: .25;
 	}
-	80% {
-		opacity: .5;
+	20% {
+		opacity: .75;
 	}
 	to {
-		opacity: .75;
+		opacity: .25;
 	}
 }
 
@@ -88,5 +88,5 @@
 }
 
 [mol_view][mol_view_error="Promise"] {
-	animation: mol_view_wait 1s steps( 10, end ) infinite;
+	animation: mol_view_wait 1s steps( 20, end ) infinite;
 }

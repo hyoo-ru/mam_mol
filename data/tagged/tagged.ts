@@ -8,6 +8,10 @@ namespace $ {
 		( val: $mol_data_tagged_type< Input, never > )=> Output
 	)
 
+	/**
+	 * Checks for given runtype and returns tagged version of returned type.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_tagged_demo
+	 */
 	export function $mol_data_tagged<
 		Config extends Record< string, $mol_data_value >,
 	>(

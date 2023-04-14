@@ -1,6 +1,6 @@
 namespace $.$$ {
 	
-	export const $mol_phone_formats = {
+	export const $mol_phone_formats: Record< string, string > = {
 		
 		// Common
 		'': '+___________',
