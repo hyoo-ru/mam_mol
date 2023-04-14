@@ -7,7 +7,6 @@ $mol_data_array_demo $mol_example_code
 	tags /
 		\runtime
 		\validation
-		\array
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert
+		\Type/Array

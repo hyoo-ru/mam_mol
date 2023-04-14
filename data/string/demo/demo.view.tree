@@ -7,7 +7,6 @@ $mol_data_string_demo $mol_example_code
 	tags /
 		\runtime
 		\validation
-		\string
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert
+		\Type/String

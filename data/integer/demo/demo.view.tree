@@ -7,7 +7,6 @@ $mol_data_integer_demo $mol_example_code
 	tags /
 		\runtime
 		\validation
-		\integer
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert
+		\Type/Integer

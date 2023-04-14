@@ -7,7 +7,6 @@ $mol_data_const_demo $mol_example_code
 	tags /
 		\runtime
 		\validation
-		\const
+		\equals
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert

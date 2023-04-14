@@ -15,6 +15,6 @@ $mol_data_variant_demo $mol_example_code
 		\runtime
 		\validation
 		\variant
+		\adt
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert

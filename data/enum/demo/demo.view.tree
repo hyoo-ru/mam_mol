@@ -1,11 +1,20 @@
-$mol_data_enum_demo $mol_example_code
+$mol_data_enum_demo_number $mol_example_code
 	code? \
 		\enum SexValues { male, female }
 		\const Sex = $mol_data_enum( 'Sex', SexValues )
 		\const sex = Sex( 0 ) // ✅
 		\
 		\Samples( 3 ) // ❌ 3 is not value of Sex enum
-		\
+	tags /
+		\runtime
+		\validation
+		\enum
+	aspects /
+		\Assert
+		\Type/Number
+
+$mol_data_enum_demo_string $mol_example_code
+	code? \
 		\enum SexValues { male = 'male', female = 'female' }
 		\const Sex = $mol_data_enum( 'Sex', SexValues )
 		\const sex = Sex( 'male' ) // ✅
@@ -16,5 +25,5 @@ $mol_data_enum_demo $mol_example_code
 		\validation
 		\enum
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert
+		\Type/String

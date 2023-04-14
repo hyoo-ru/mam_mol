@@ -9,5 +9,5 @@ $mol_data_range_demo $mol_example_code
 		\validation
 		\range
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert
+		\Type/Number

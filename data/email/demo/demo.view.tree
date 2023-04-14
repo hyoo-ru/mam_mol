@@ -7,7 +7,6 @@ $mol_data_email_demo $mol_example_code
 	tags /
 		\runtime
 		\validation
-		\email
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert
+		\Type/Email

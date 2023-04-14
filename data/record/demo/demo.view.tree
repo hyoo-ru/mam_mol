@@ -10,7 +10,6 @@ $mol_data_record_demo $mol_example_code
 	tags /
 		\runtime
 		\validation
-		\record
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert
+		\Type/Record

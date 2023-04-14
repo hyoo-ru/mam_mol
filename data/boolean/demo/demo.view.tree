@@ -7,7 +7,6 @@ $mol_data_boolean_demo $mol_example_code
 	tags /
 		\runtime
 		\validation
-		\boolean
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert
+		\Type/Boolean

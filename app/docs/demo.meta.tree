@@ -37,7 +37,6 @@ include \/mol/check/icon/demo
 include \/mol/code/demo
 include \/mol/csv/parse/demo
 include \/mol/csv/serial/demo
-include \/mol/data/demo
 include \/mol/data/array/demo
 include \/mol/data/boolean/demo
 include \/mol/data/const/demo

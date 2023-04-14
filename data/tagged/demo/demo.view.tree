@@ -12,5 +12,4 @@ $mol_data_tagged_demo $mol_example_code
 		\validation
 		\tagged
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert

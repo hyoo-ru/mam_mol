@@ -7,7 +7,6 @@ $mol_data_number_demo $mol_example_code
 	tags /
 		\runtime
 		\validation
-		\number
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert
+		\Type/Number

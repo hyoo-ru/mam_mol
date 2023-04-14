@@ -7,7 +7,6 @@ $mol_data_dict_demo $mol_example_code
 	tags /
 		\runtime
 		\validation
-		\dict
 	aspects /
-		\Assert/JSON
-		\Type/JSON
+		\Assert
+		\Type/Dictionary
