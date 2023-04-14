@@ -43,7 +43,7 @@ namespace $ {
 		 */
 		switch_options() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

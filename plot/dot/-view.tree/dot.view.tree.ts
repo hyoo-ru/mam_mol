@@ -30,7 +30,7 @@ namespace $ {
 			return {
 				...super.style(),
 				"stroke-width": this.diameter()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

@@ -3169,7 +3169,7 @@ var $;
                 });
                 const regexp = new $mol_regexp(`(?:${chunks.join('|')})`, flags, groups);
                 const validator = new RegExp('^' + regexp.source + '$', flags);
-                regexp.generate = params => {
+                regexp.generate = (params) => {
                     for (let option in source) {
                         if (option in params) {
                             if (typeof params[option] === 'boolean') {
@@ -3936,9 +3936,9 @@ var $;
                     const def = this.lang_default();
                     if (lang === def)
                         throw error;
-                    return {};
                 }
             }
+            return {};
         }
         static text(key) {
             const lang = this.lang();
@@ -4293,7 +4293,7 @@ var $;
         return [
             dictionary.data('{'),
             dictionary.struct('indent', sub),
-            dictionary.data('}'),
+            dictionary.data('} as Record< string, any >'),
         ];
     }
     $.$mol_view_tree2_ts_dictionary = $mol_view_tree2_ts_dictionary;
@@ -5234,7 +5234,7 @@ var $;
                 };
             }
         }
-        sourcesJS({ path, exclude }) {
+        sources_js({ path, exclude }) {
             var sources = this.sourcesAll({ path, exclude });
             const types = {
                 'svg': 'image/svg+xml',
@@ -5547,7 +5547,7 @@ var $;
             var pack = $mol_file.absolute(path);
             var target = pack.resolve(`-/${bundle}.${moduleTarget}`);
             var targetMap = pack.resolve(`-/${bundle}.${moduleTarget}.map`);
-            var sources = this.sourcesJS({ path, exclude });
+            var sources = this.sources_js({ path, exclude });
             if (sources.length === 0)
                 return [];
             var concater = new $mol_sourcemap_builder(target.name(), ';');
@@ -5624,8 +5624,8 @@ var $;
             var concater = new $mol_sourcemap_builder(target.name(), ';');
             concater.add('"use strict"');
             var exclude_ext = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
-            var sources = this.sourcesJS({ path, exclude: exclude_ext });
-            var sourcesNoTest = new Set(this.sourcesJS({ path, exclude }));
+            var sources = this.sources_js({ path, exclude: exclude_ext });
+            var sourcesNoTest = new Set(this.sources_js({ path, exclude }));
             var sourcesTest = sources.filter(src => !sourcesNoTest.has(src));
             if (bundle === 'node') {
                 sourcesTest = [...sourcesNoTest, ...sourcesTest];
@@ -6045,7 +6045,7 @@ var $;
     ], $mol_build.prototype, "js_content", null);
     __decorate([
         $mol_mem_key
-    ], $mol_build.prototype, "sourcesJS", null);
+    ], $mol_build.prototype, "sources_js", null);
     __decorate([
         $mol_mem_key
     ], $mol_build.prototype, "sourcesDTS", null);

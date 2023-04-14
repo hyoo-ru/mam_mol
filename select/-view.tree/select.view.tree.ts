@@ -10,7 +10,7 @@ namespace $ {
 		dictionary(val?: any) {
 			if ( val !== undefined ) return val as never
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

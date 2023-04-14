@@ -21,7 +21,7 @@ namespace $ {
 			return {
 				...super.field(),
 				tabIndex: this.tabindex()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

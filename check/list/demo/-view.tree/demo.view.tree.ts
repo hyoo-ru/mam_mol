@@ -88,7 +88,7 @@ namespace $ {
 				ping: "Allow Ping",
 				api: "Allow API Access",
 				docs: "Allow Read Documentation"
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}

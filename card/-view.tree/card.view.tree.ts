@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_card_status_type: this.status()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

@@ -34,7 +34,7 @@ namespace $ {
 			return {
 				...super.field(),
 				tabIndex: this.tabindex()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -48,7 +48,7 @@ namespace $ {
 			return {
 				...super.event(),
 				scroll: (event?: any) => this.event_scroll(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**

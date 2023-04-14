@@ -47,7 +47,7 @@ namespace $ {
 			obj.uri = () => "https://picsum.photos/200"
 			obj.style = () => ({
 				backgroundImage: "url('https://picsum.photos/200')"
-			})
+			} as Record< string, any >)
 			obj.sub = () => [
 				this.Item_title(id)
 			] as readonly any[]

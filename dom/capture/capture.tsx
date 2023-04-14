@@ -16,7 +16,7 @@ namespace $ {
 		function restyle( el: HTMLElement, styles: CSSStyleDeclaration ) {
 			for( let i= 0; i < styles.length; ++i ) {
 				const prop = styles[ i ]
-				el.style[ prop ] = styles[ prop ]
+				el.style[ prop as any ] = styles[ prop as any ]
 			}
 		}
 		
@@ -30,7 +30,7 @@ namespace $ {
 				context.drawImage( el, 0, 0 )
 				
 				try {
-					re['src'] = canvas.toDataURL() // external urls don't works
+					;( re as HTMLImageElement ).src = canvas.toDataURL() // external urls don't works
 				} catch( error ) {
 					$mol_fail_log( error ) // CORS don't supported
 				}
@@ -38,12 +38,12 @@ namespace $ {
 			}
 			
 			if( re instanceof HTMLInputElement ) {
-				re.setAttribute( 'value', el['value'] )
-				if( el['checked'] ) re.setAttribute( 'checked', '' )
+				re.setAttribute( 'value', ( el as HTMLInputElement ).value )
+				if( ( el as HTMLInputElement ).checked ) re.setAttribute( 'checked', '' )
 			}
 
 			if( re instanceof HTMLTextAreaElement ) {
-				re.setAttribute( 'value', el['value'] )
+				re.setAttribute( 'value', ( el as HTMLTextAreaElement ).value )
 			}
 
 			const styles = $mol_dom_context.getComputedStyle( el as HTMLElement )

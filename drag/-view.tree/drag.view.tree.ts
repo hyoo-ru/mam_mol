@@ -14,7 +14,7 @@ namespace $ {
 				dragstart: (event?: any) => this.drag_start(event),
 				drag: (event?: any) => this.drag_move(event),
 				dragend: (event?: any) => this.drag_end(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -28,7 +28,7 @@ namespace $ {
 			return {
 				draggable: true,
 				mol_drag_status: this.status()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -44,7 +44,7 @@ namespace $ {
 				"text/plain": "",
 				"text/html": "",
 				"text/uri-list": ""
-			}
+			} as Record< string, any >
 		}
 		
 		/**

@@ -339,7 +339,7 @@ namespace $ {
 				...super.style(),
 				"touch-action": "none",
 				"overscroll-behavior": "none"
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -361,7 +361,7 @@ namespace $ {
 				pointerup: (event?: any) => this.event_end(event),
 				pointerleave: (event?: any) => this.event_leave(event),
 				wheel: (event?: any) => this.event_wheel(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**

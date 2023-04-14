@@ -113,7 +113,7 @@ namespace $ {
 				type: "file",
 				accept: this.accept(),
 				multiple: this.multiple()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -124,7 +124,7 @@ namespace $ {
 		event() {
 			return {
 				change: (next?: any) => this.picked(next)
-			}
+			} as Record< string, any >
 		}
 		
 		/**

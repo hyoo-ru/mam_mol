@@ -120,7 +120,7 @@ namespace $ {
 			
 			obj.key = () => ({
 				escape: (val?: any) => this.clear(val)
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}

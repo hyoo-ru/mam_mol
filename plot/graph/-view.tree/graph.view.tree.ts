@@ -32,7 +32,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_plot_graph_type: this.type()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -46,7 +46,7 @@ namespace $ {
 			return {
 				...super.style(),
 				color: this.color()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -455,7 +455,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_plot_graph_type: this.type()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -469,7 +469,7 @@ namespace $ {
 			return {
 				...super.style(),
 				color: this.color()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

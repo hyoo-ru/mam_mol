@@ -9,7 +9,7 @@ namespace $ {
 		attr() {
 			return {
 				mol_theme: this.theme()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

@@ -466,7 +466,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		sourcesJS( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
+		sources_js( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
 
 			var sources = this.sourcesAll( { path , exclude } )
 			
@@ -480,12 +480,10 @@ namespace $ {
 				'bin' : 'application/octet-stream' ,
 			}
 
-			// this.tsTranspile({ path , exclude , bundle : 'web' })
-
 			sources = sources.map(
 				src => {
 
-					const ext = src.ext().replace( /^.*\./ , '' )
+					const ext = src.ext().replace( /^.*\./ , '' ) as keyof typeof types 
 
 					if( types[ ext ] ) {
 
@@ -499,12 +497,8 @@ namespace $ {
 						return script
 					}
 
-					// if( /^tsx?$/.test( ext ) ) {
-						// 	return src.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
-						// }
 						
 					if( /^[jt]sx?$/.test( ext ) ) {
-					// if( 'js' === ext ) {
 						return src
 					}
 					
@@ -904,7 +898,7 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.${moduleTarget}` )
 			var targetMap = pack.resolve( `-/${bundle}.${moduleTarget}.map` )
 			
-			var sources = this.sourcesJS( { path , exclude } )
+			var sources = this.sources_js( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
 			var concater = new $mol_sourcemap_builder( target.name(), ';')
@@ -1009,8 +1003,8 @@ namespace $ {
 			concater.add( '"use strict"' )
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
-			var sources = this.sourcesJS( { path , exclude : exclude_ext } )
-			var sourcesNoTest = new Set( this.sourcesJS( { path , exclude } ) )
+			var sources = this.sources_js( { path , exclude : exclude_ext } )
+			var sourcesNoTest = new Set( this.sources_js( { path , exclude } ) )
 			var sourcesTest = sources.filter( src => !sourcesNoTest.has( src ) )
 			if( bundle === 'node' ) {
 				sourcesTest = [ ... sourcesNoTest , ... sourcesTest ]
@@ -1445,7 +1439,7 @@ namespace $ {
 
 				}
 				
-				const locale_sorted = {}
+				const locale_sorted = {} as Record<string, string>
 
 				for( let key of Object.keys( locale ).sort() ) {
 					locale_sorted[ key ] = locale[ key ]

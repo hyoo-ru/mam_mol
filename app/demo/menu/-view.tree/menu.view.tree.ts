@@ -118,7 +118,7 @@ namespace $ {
 		 */
 		ids_tags() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -184,7 +184,7 @@ namespace $ {
 		 */
 		option_arg(id: any) {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

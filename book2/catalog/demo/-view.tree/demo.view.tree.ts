@@ -189,7 +189,7 @@ namespace $ {
 				pizza: this.Pizza(),
 				hot_dogs: this.Hot_dogs(),
 				fries: this.Fries()
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}
@@ -473,7 +473,7 @@ namespace $ {
 				mice: this.Mice(),
 				ants: this.Ants(),
 				bugs: this.Bugs()
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}
@@ -507,7 +507,7 @@ namespace $ {
 			obj.spreads = () => ({
 				foods: this.Foods(),
 				animals: this.Animals()
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}

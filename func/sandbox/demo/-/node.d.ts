@@ -230,7 +230,7 @@ declare namespace $ {
         static blacklist: Set<Function>;
         static whitelist: WeakSet<object>;
         static _make: (contexts: Object[]) => (code: string) => () => any;
-        static get make(): ((contexts: Object[]) => (code: string) => () => any) | ((...args: Object[]) => (code: string) => () => any);
+        static get make(): ((contexts: Object[]) => (code: string) => () => any) | ((...args: Record<string, any>[]) => (code: string) => () => any);
         constructor(...contexts: Object[]);
         contexts: Object[];
         _eval: ((code: string) => () => any) | undefined;

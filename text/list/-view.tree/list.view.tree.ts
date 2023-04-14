@@ -21,7 +21,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_text_list_type: this.type()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -64,7 +64,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_text_list_item_index: this.index()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

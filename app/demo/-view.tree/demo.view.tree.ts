@@ -27,7 +27,7 @@ namespace $ {
 		repo_dict() {
 			return {
 				mol: "hyoo-ru/mam_mol"
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -204,7 +204,7 @@ namespace $ {
 			
 			obj.key = () => ({
 				F: (next?: any) => this.search_start(next)
-			})
+			} as Record< string, any >)
 			obj.mod_ctrl = () => true
 			
 			return obj

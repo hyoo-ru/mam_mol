@@ -35,7 +35,7 @@ namespace $ {
 				x: this.pos_x(),
 				y: this.pos_y(),
 				"text-anchor": this.align()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

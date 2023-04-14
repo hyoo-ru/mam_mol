@@ -27,7 +27,7 @@ namespace $ {
 		arg() {
 			return {
 				mol_chat: ""
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -147,7 +147,7 @@ namespace $ {
 			
 			obj.arg = () => ({
 				mol_chat: null as any
-			})
+			} as Record< string, any >)
 			obj.sub = () => [
 				this.Close_icon()
 			] as readonly any[]

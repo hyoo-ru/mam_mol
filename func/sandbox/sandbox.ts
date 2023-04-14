@@ -62,7 +62,7 @@ namespace $ {
 			// Stop event-loop and break all async operations
 			$mol_dom_context.document.body.removeChild( frame )
 			
-			let context_default = {}
+			let context_default = {} as Record< string, any >
 
 			function clean( obj : object ) {
 
@@ -125,9 +125,9 @@ namespace $ {
 				return proxy
 			}
 
-			return this._make = ( ( ... contexts : Object[] )=> {
+			return this._make = ( ( ... contexts : Record< string, any >[] )=> {
 
-				const context_merged = {}
+				const context_merged = {} as Record< string, any >
 
 				for( let context of contexts ) {
 					for( let name of Object.getOwnPropertyNames( context ) ) {

@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				...super.style(),
 				width: this.width_style()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

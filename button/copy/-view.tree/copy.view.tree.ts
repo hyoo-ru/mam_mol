@@ -22,7 +22,7 @@ namespace $ {
 		 */
 		data() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -64,7 +64,7 @@ namespace $ {
 				] as readonly BlobPart[],
 				{
 					type: "text/plain"
-				}
+				} as Record< string, any >
 			)
 			
 			return obj
@@ -95,7 +95,7 @@ namespace $ {
 				] as readonly BlobPart[],
 				{
 					type: "text/html"
-				}
+				} as Record< string, any >
 			)
 			
 			return obj

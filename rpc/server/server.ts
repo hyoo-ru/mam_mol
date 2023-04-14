@@ -7,7 +7,7 @@ namespace $ {
 			return new this.$.$mol_dom_listener(
 				this.$.$mol_dom_context ,
 				'message' ,
-				$mol_fiber_root( ( event : MessageEvent )=> this.handle( event.data ) ),
+				event => $mol_wire_async(this).handle(event.data),
 			)
 		}
 
@@ -27,8 +27,8 @@ namespace $ {
 
 		}
 
-		handlers() {
-			return {}
+		handlers(): Record<string, any> {
+			return {} 
 		}
 
 	}

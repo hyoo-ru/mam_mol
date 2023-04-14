@@ -29,7 +29,7 @@ namespace $ {
 				loading: this.loading(),
 				decoding: this.decoding(),
 				crossOrigin: this.cors()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -45,7 +45,7 @@ namespace $ {
 				...super.attr(),
 				width: this.natural_width(),
 				height: this.natural_height()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -56,7 +56,7 @@ namespace $ {
 		event() {
 			return {
 				load: (next?: any) => this.load(next)
-			}
+			} as Record< string, any >
 		}
 		
 		/**

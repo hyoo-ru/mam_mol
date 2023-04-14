@@ -37,7 +37,7 @@ namespace $ {
 				dots_inside: "Dots can't be at edge",
 				no_space_domain: "No space in domain name",
 				need_username: "Username required"
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -426,7 +426,7 @@ namespace $ {
 				male: "Male",
 				intersex: "Intersex",
 				female: "Female"
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -509,7 +509,7 @@ namespace $ {
 				yellow: "🟨 Yellow",
 				brown: "🟫 Brown",
 				red: "🟥 Red"
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}

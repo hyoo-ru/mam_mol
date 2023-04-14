@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_theme: this.theme()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -26,7 +26,7 @@ namespace $ {
 			return {
 				...super.style(),
 				minHeight: "1em"
-			}
+			} as Record< string, any >
 		}
 		
 		/**

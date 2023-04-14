@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_toolbar_expanded: this.expanded()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

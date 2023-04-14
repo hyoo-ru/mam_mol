@@ -20,7 +20,7 @@ namespace $ {
 		 */
 		dictionary() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

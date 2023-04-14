@@ -48,7 +48,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				d: this.curve()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

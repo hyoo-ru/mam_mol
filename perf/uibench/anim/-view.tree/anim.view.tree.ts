@@ -21,7 +21,7 @@ namespace $ {
 			return {
 				...super.attr_static(),
 				class: "Anim"
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -91,7 +91,7 @@ namespace $ {
 				...super.attr(),
 				class: "AnimBox",
 				"data-id": this.id()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -107,7 +107,7 @@ namespace $ {
 				...super.style(),
 				borderRadius: this.style_radius(),
 				background: this.style_color()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

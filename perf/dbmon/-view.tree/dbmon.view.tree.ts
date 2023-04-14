@@ -236,7 +236,7 @@ namespace $ {
 			
 			obj.attr = () => ({
 				mol_perf_dbmon_query_count_label: this.label_mod()
-			})
+			} as Record< string, any >)
 			obj.sub = () => [
 				this.count()
 			] as readonly any[]
@@ -316,7 +316,7 @@ namespace $ {
 			
 			obj.attr = () => ({
 				mol_perf_dbmon_query_elapsed: this.elapsed_mod()
-			})
+			} as Record< string, any >)
 			obj.sub = () => [
 				this.elapsed()
 			] as readonly any[]

@@ -91,7 +91,7 @@ namespace $ {
 				selectionStart: this.selection_start(),
 				inputMode: this.keyboard(),
 				enterkeyhint: this.enter()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -107,7 +107,7 @@ namespace $ {
 				...super.attr(),
 				maxlength: this.length_max(),
 				type: this.type()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -121,7 +121,7 @@ namespace $ {
 			return {
 				...super.event(),
 				input: (event?: any) => this.event_change(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -310,7 +310,7 @@ namespace $ {
 			obj.mod_ctrl = () => this.submit_with_ctrl()
 			obj.key = () => ({
 				enter: (event?: any) => this.submit(event)
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}

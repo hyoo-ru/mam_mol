@@ -99,7 +99,7 @@ namespace $ {
 		 */
 		hour_options() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -151,7 +151,7 @@ namespace $ {
 		 */
 		minute_options() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

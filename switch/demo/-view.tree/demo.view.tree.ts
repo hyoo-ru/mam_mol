@@ -118,7 +118,7 @@ namespace $ {
 				green: this.option_green(),
 				blue: this.option_blue(),
 				infernal: this.option_infernal()
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}
@@ -161,7 +161,7 @@ namespace $ {
 				red: this.option_red(),
 				green: this.option_green(),
 				blue: this.option_blue()
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}

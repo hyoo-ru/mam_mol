@@ -85,7 +85,7 @@ namespace $ {
 				oct: "October",
 				nov: "November",
 				dec: "December"
-			}
+			} as Record< string, any >
 		}
 		
 		/**

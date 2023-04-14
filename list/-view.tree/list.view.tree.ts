@@ -51,7 +51,7 @@ namespace $ {
 			
 			obj.style = () => ({
 				paddingTop: this.gap_before()
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}
@@ -67,7 +67,7 @@ namespace $ {
 			
 			obj.style = () => ({
 				paddingTop: this.gap_after()
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}

@@ -308,7 +308,7 @@ namespace $ {
 				mol_calendar_ghost: this.ghost(),
 				mol_calendar_selected: this.selected(),
 				mol_theme: this.theme()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

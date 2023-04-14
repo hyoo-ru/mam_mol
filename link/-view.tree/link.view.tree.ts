@@ -38,7 +38,7 @@ namespace $ {
 				target: this.target(),
 				download: this.file_name(),
 				mol_link_current: this.current()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -59,7 +59,7 @@ namespace $ {
 		 */
 		arg() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -73,7 +73,7 @@ namespace $ {
 			return {
 				...super.event(),
 				click: (event?: any) => this.click(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**

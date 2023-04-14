@@ -4,7 +4,7 @@ namespace $.$$ {
 		@$mol_mem
 		computed_style() {
 			const win = this.$.$mol_dom_context
-			const style = win.getComputedStyle(this.dom_node())
+			const style = win.getComputedStyle(this.dom_node()) as Record<string, any>
 
 			if(!style['font-size']) $mol_state_time.now( 0 )
 

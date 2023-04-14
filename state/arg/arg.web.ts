@@ -81,7 +81,7 @@ namespace $ {
 			return ( next2 == null ) ? null : next2
 		}
 		
-		static link( next : { [ key : string ] : string } ) {
+		static link( next : Record<string, string | null> ) {
 			return this.make_link({
 				... this.dict_cut( Object.keys( next ) ),
 				... next,
@@ -124,9 +124,9 @@ namespace $ {
 			return new ( this.constructor as typeof $mol_state_arg )( this.prefix + postfix + '.' )
 		}
 		
-		link( next : { [ key : string ] : string } ) {
+		link( next : Record<string, string | null> ) {
 			var prefix = this.prefix
-			var dict : { [ key : string ] : string } = {}
+			var dict : typeof next = {}
 			for( var key in next ) {
 				dict[ prefix + key ] = next[ key ]
 			}
@@ -135,8 +135,8 @@ namespace $ {
 		
 	}
 
-	const $mol_state_arg_change = ( event : Event )=> {
-		$mol_state_arg.href( $mol_dom_context.location.href ) 
+	function $mol_state_arg_change( ) {
+		$mol_state_arg.href( $mol_dom_context.location.href )
 	}
 
 	self.addEventListener( 'hashchange' , $mol_state_arg_change )

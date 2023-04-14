@@ -77,10 +77,16 @@ namespace $ {
 		static hearer() {
 			
 			$mol_wire_solid()
+
+			let Api
+
+			for (const prefix of ['', 'webkit', 'moz', 'ms']) {
+				if (Api = (window as any)[prefix + 'SpeechRecognition']) {
+					break
+				}
+			}
 			
-			const API = window['SpeechRecognition'] || window['webkitSpeechRecognition'] || window['mozSpeechRecognition'] || window['msSpeechRecognition']
-			
-			const api = new API
+			const api = new Api
 			
 			api.interimResults = true
 			api.maxAlternatives = 1

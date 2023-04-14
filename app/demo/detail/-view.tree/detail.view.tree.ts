@@ -212,7 +212,7 @@ namespace $ {
 		close_arg() {
 			return {
 				demo: null as any
-			}
+			} as Record< string, any >
 		}
 		
 		/**

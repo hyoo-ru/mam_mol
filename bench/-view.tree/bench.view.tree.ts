@@ -59,7 +59,7 @@ namespace $ {
 		 */
 		result() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -163,7 +163,7 @@ namespace $ {
 			return {
 				...super.event(),
 				click: (val?: any) => this.event_click(val)
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -177,7 +177,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				title: this.hint()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

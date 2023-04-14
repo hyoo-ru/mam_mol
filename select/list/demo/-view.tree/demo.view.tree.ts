@@ -83,7 +83,7 @@ namespace $ {
 				freeze: "Mister Freeze",
 				clay: "Clayface",
 				mask: "Black Mask"
-			}
+			} as Record< string, any >
 		}
 		
 		/**

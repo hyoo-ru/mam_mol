@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				...super.style(),
 				minHeight: "auto"
-			}
+			} as Record< string, any >
 		}
 	}
 	

@@ -69,7 +69,7 @@ namespace $ {
 				autoplay: this.autoplay(),
 				loop: this.loop(),
 				poster: this.poster()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -91,7 +91,7 @@ namespace $ {
 				playing: (event?: any) => this.play_started(event),
 				play: (event?: any) => this.play(event),
 				pause: (event?: any) => this.pause(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**

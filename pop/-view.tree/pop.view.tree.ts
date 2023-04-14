@@ -143,7 +143,7 @@ namespace $ {
 			return {
 				...super.style(),
 				maxHeight: this.height_max()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -159,7 +159,7 @@ namespace $ {
 				...super.attr(),
 				mol_pop_align: this.align(),
 				tabindex: 0
-			}
+			} as Record< string, any >
 		}
 		
 		/**

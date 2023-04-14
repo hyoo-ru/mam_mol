@@ -22,11 +22,13 @@ namespace $.$$ {
 			const next : string[] = []
 
 			for( const name in this.$ ) {
-				if( typeof this.$[ name ] !== 'function' ) continue
+				const ctor = this.$[name as keyof $]
+				
+				if( typeof ctor !== 'function' ) continue
 
-				if( !$mol_func_is_class( this.$[ name ] ) ) continue
+				if( !$mol_func_is_class( ctor ) ) continue
 
-				if( !( this.$[ name ].prototype instanceof $mol_example ) ) continue
+				if( !( ctor.prototype instanceof $mol_example ) ) continue
 
 				if ( this.demo_block_list().includes( name ) ) continue
 				
@@ -83,8 +85,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		Widget( name : string ) {
-			const Class : typeof $mol_example = this.$[ name ]
-			return new Class()
+			return new (this.$ as any)[name] as $mol_example
 		}
 		
 		@ $mol_mem
@@ -134,12 +135,13 @@ namespace $.$$ {
 		name_parse( name: string ) {
 			const split = name.replace( /_demo.*$/ , '' ).split('_')
 			
+			const repos = this.repo_dict() as Record<string, string>
 			const keys = split.map( ( _ , index ) => split.slice( 0 , -1-index ).join('_') )
-			const key = keys.find( key => this.repo_dict()[ key ] )
+			const key = keys.find( key => key in repos )
 			
 			if ( !key ) throw new Error(`${ this }.name_parse("${ name }"): Key "${ key }" not found`)
 
-			const repo = this.repo_dict()[ key ]
+			const repo = repos[ key ]
 			const module = split.slice( key.split('_').length )
 			
 			return { repo , module }

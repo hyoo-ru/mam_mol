@@ -43,7 +43,7 @@ namespace $ {
 				...super.attr(),
 				data: this.uri(),
 				type: this.mime()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -65,7 +65,7 @@ namespace $ {
 		message() {
 			return {
 				hashchange: (next?: any) => this.uri_change(next)
-			}
+			} as Record< string, any >
 		}
 		
 		/**

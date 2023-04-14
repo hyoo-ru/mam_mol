@@ -37,7 +37,7 @@ namespace $ {
 				height: this.height(),
 				x: this.pos_x(),
 				y: this.pos_y()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

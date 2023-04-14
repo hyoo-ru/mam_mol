@@ -14,7 +14,7 @@ namespace $ {
 				...super.attr(),
 				mol_textarea_clickable: this.clickable(),
 				mol_textarea_sidebar_showed: this.sidebar_showed()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -28,7 +28,7 @@ namespace $ {
 			return {
 				keydown: (event?: any) => this.press(event),
 				pointermove: (event?: any) => this.hover(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -94,7 +94,7 @@ namespace $ {
 				bracketOpen: "[",
 				bracketClose: "]",
 				slashBack: "|"
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -134,7 +134,7 @@ namespace $ {
 				graveAccent: "̱",
 				bracketOpen: "{",
 				bracketClose: "}"
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -361,7 +361,7 @@ namespace $ {
 			return {
 				...super.field(),
 				scrollTop: 0
-			}
+			} as Record< string, any >
 		}
 	}
 	

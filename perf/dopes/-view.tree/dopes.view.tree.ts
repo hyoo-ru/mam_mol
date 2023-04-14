@@ -44,7 +44,7 @@ namespace $ {
 			obj.style = () => ({
 				color: this.label_color(id),
 				transform: this.label_transform(id)
-			})
+			} as Record< string, any >)
 			obj.sub = () => [
 				"Dope"
 			] as readonly any[]

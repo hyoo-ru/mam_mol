@@ -31,7 +31,7 @@ namespace $ {
 		 */
 		options() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

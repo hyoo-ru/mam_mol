@@ -46,7 +46,7 @@ namespace $ {
 		 */
 		records() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

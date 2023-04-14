@@ -16,7 +16,7 @@ namespace $ {
 				mol_check_checked: this.checked(),
 				"aria-checked": this.aria_checked(),
 				role: this.aria_role()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

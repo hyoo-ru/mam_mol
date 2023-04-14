@@ -30,7 +30,7 @@ namespace $ {
 			return {
 				...super.event(),
 				keydown: (event?: any) => this.keydown(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**

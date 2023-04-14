@@ -137,7 +137,7 @@ namespace $ {
 		supply_arg(id: any) {
 			return {
 				supply: this.supply_id(id)
-			}
+			} as Record< string, any >
 		}
 	}
 	

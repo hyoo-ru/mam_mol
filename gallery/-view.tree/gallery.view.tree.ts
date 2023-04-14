@@ -23,7 +23,7 @@ namespace $ {
 			
 			obj.style = () => ({
 				flexGrow: this.side_size(id)
-			})
+			} as Record< string, any >)
 			obj.items = () => this.side_items(id)
 			
 			return obj

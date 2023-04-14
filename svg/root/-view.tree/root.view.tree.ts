@@ -23,7 +23,7 @@ namespace $ {
 				...super.attr(),
 				viewBox: this.view_box(),
 				preserveAspectRatio: this.aspect()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

@@ -179,7 +179,7 @@ namespace $ {
 				bottom_left: "bottom_left",
 				bottom_center: "bottom_center",
 				bottom_right: "bottom_right"
-			}
+			} as Record< string, any >
 		}
 		
 		/**

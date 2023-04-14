@@ -29,7 +29,7 @@ namespace $ {
 		style() {
 			return {
 				transform: this.transform()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -197,7 +197,7 @@ namespace $ {
 				borderRadius: this.radius(),
 				lineHeight: this.size_px(),
 				background: this.color()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -213,7 +213,7 @@ namespace $ {
 				...super.event(),
 				mouseenter: (val?: any) => this.enter(val),
 				mouseleave: (val?: any) => this.leave(val)
-			}
+			} as Record< string, any >
 		}
 		
 		/**

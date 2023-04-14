@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				...super.event(),
 				keydown: (event?: any) => this.keydown(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -22,7 +22,7 @@ namespace $ {
 		 */
 		key() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

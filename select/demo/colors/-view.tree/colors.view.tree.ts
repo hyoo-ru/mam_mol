@@ -72,7 +72,7 @@ namespace $ {
 		 */
 		colors() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -202,7 +202,7 @@ namespace $ {
 			return {
 				...super.style(),
 				background: this.color()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

@@ -14,7 +14,7 @@ namespace $ {
 		class $mol_object3 extends $mol_object {
 		}
 		const $ = { $mol_object: $mol_object3, js: '', js_node: undefined as undefined | $mol_tree2 }
-		$mol_object3[$mol_ambient_ref] = $
+		;( $mol_object3 as any )[$mol_ambient_ref] = $
 		const js_node = compile( tree )
 		const js = compile2( js_node )
 		eval( js )

@@ -86,7 +86,7 @@ namespace $ {
 		close_arg() {
 			return {
 				supply: null as any
-			}
+			} as Record< string, any >
 		}
 		
 		/**

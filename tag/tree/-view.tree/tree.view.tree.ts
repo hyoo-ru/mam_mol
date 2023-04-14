@@ -75,7 +75,7 @@ namespace $ {
 		 */
 		tag_names() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -144,7 +144,7 @@ namespace $ {
 		 */
 		ids_tags() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

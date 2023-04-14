@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				...super.style(),
 				"stroke-width": this.stroke_width()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

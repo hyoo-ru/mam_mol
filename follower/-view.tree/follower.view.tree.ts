@@ -38,7 +38,7 @@ namespace $ {
 			return {
 				...super.style(),
 				transform: this.transform()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

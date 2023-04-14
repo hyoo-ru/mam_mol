@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_text_code_token_type: this.type()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -58,7 +58,7 @@ namespace $ {
 				...super.attr(),
 				href: this.uri(),
 				target: "_blank"
-			}
+			} as Record< string, any >
 		}
 		
 		/**

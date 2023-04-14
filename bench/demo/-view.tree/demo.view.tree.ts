@@ -70,7 +70,7 @@ namespace $ {
 		 */
 		result() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

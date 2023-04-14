@@ -41,7 +41,7 @@ namespace $ {
 			return {
 				...super.event(),
 				mousedown: (event?: any) => this.generate(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**

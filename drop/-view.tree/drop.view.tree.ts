@@ -27,7 +27,7 @@ namespace $ {
 				dragover: (event?: any) => this.move(event),
 				dragleave: (event?: any) => this.leave(event),
 				drop: (event?: any) => this.drop(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -38,7 +38,7 @@ namespace $ {
 		attr() {
 			return {
 				mol_drop_status: this.status()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -50,7 +50,7 @@ namespace $ {
 		adopt(transfer?: any) {
 			if ( transfer !== undefined ) return transfer as never
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

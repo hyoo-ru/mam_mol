@@ -44,7 +44,7 @@ namespace $ {
 		 */
 		style_size() {
 			return {
-			}
+			} as Record< string, any >
 		}
 	}
 	

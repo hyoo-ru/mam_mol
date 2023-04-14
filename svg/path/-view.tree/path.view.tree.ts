@@ -21,7 +21,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				d: this.geometry()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

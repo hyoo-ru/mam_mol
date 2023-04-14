@@ -89,7 +89,7 @@ namespace $ {
 			obj.mod_shift = () => true
 			obj.key = () => ({
 				enter: (event?: any) => this.backward(event)
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}
@@ -119,7 +119,7 @@ namespace $ {
 			obj.key = () => ({
 				enter: (event?: any) => this.forward(event),
 				escape: (val?: any) => this.escape(val)
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}

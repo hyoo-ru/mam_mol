@@ -47,7 +47,7 @@ namespace $ {
 				click: (event?: any) => this.event_activate(event),
 				dblclick: (event?: any) => this.clicks(event),
 				keydown: (event?: any) => this.event_key_press(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -67,7 +67,7 @@ namespace $ {
 				role: "button",
 				tabindex: this.tab_index(),
 				title: this.hint_safe()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

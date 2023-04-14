@@ -271,7 +271,7 @@ namespace $ {
 			] as readonly any[]
 			obj.arg = () => ({
 				question: null as any
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}
@@ -339,7 +339,7 @@ namespace $ {
 		 */
 		question_arg_by_index(id: any) {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

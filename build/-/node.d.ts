@@ -1181,7 +1181,7 @@ declare namespace $ {
             text: string;
             map: $mol_sourcemap_raw | undefined;
         };
-        sourcesJS({ path, exclude }: {
+        sources_js({ path, exclude }: {
             path: string;
             exclude: string[];
         }): $mol_file[];

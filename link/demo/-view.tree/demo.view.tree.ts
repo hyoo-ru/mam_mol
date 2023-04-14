@@ -105,7 +105,7 @@ namespace $ {
 			
 			obj.arg = () => ({
 				color: "red"
-			})
+			} as Record< string, any >)
 			obj.sub = () => [
 				this.red_label()
 			] as readonly any[]
@@ -135,7 +135,7 @@ namespace $ {
 			
 			obj.arg = () => ({
 				color: "green"
-			})
+			} as Record< string, any >)
 			obj.sub = () => [
 				this.green_label()
 			] as readonly any[]
@@ -165,7 +165,7 @@ namespace $ {
 			
 			obj.arg = () => ({
 				color: "blue"
-			})
+			} as Record< string, any >)
 			obj.sub = () => [
 				this.blue_label()
 			] as readonly any[]

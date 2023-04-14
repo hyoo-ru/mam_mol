@@ -399,7 +399,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_perf_jsfb_row_selected: this.selected()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

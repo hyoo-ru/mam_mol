@@ -28,7 +28,7 @@ namespace $ {
 		 */
 		spreads() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -138,7 +138,7 @@ namespace $ {
 		 */
 		arg(id: any) {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -294,7 +294,7 @@ namespace $ {
 		 */
 		spread_close_arg() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**

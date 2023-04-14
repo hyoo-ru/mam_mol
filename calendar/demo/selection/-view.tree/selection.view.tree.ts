@@ -21,7 +21,7 @@ namespace $ {
 			return {
 				start: "2018-01-05",
 				end: "2018-01-10"
-			}
+			} as Record< string, any >
 		}
 		
 		/**

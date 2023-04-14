@@ -628,12 +628,8 @@ declare namespace $ {
     class $mol_scroll extends $mol_view {
         scroll_top(val?: any): number;
         scroll_left(val?: any): number;
-        field(): {
-            tabIndex: number;
-        };
-        event(): {
-            scroll: (event?: any) => any;
-        };
+        field(): Record<string, any>;
+        event(): Record<string, any>;
         tabindex(): number;
         event_scroll(event?: any): any;
     }
@@ -865,9 +861,7 @@ declare namespace $ {
     class $mol_perf_uibench_table extends $mol_list {
         state(): any;
         dom_name(): string;
-        attr_static(): {
-            class: string;
-        };
+        attr_static(): Record<string, any>;
         sub(): readonly any[];
         Row(id: any): $$.$mol_perf_uibench_table_row;
         rows(): readonly any[];
@@ -877,10 +871,7 @@ declare namespace $ {
         state(): any;
         minimal_height(): number;
         dom_name(): string;
-        attr(): {
-            class: string;
-            "data-id": number;
-        };
+        attr(): Record<string, any>;
         sub(): readonly any[];
         Cell(id: any): $$.$mol_perf_uibench_table_cell;
         classes(): string;
@@ -892,12 +883,8 @@ declare namespace $ {
     }
     class $mol_perf_uibench_table_cell extends $mol_view {
         dom_name(): string;
-        attr_static(): {
-            class: string;
-        };
-        event(): {
-            click: (val?: any) => any;
-        };
+        attr_static(): Record<string, any>;
+        event(): Record<string, any>;
         sub(): readonly any[];
         click(val?: any): any;
         text(): string;
@@ -935,9 +922,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_perf_uibench_anim extends $mol_view {
         state(): any;
-        attr_static(): {
-            class: string;
-        };
+        attr_static(): Record<string, any>;
         sub(): readonly any[];
         Box(id: any): $$.$mol_perf_uibench_anim_box;
         boxes(): readonly any[];
@@ -945,14 +930,8 @@ declare namespace $ {
     }
     class $mol_perf_uibench_anim_box extends $mol_view {
         state(): any;
-        attr(): {
-            class: string;
-            "data-id": string;
-        };
-        style(): {
-            borderRadius: string;
-            background: string;
-        };
+        attr(): Record<string, any>;
+        style(): Record<string, any>;
         id(): string;
         style_radius(): string;
         style_color(): string;
@@ -982,9 +961,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_perf_uibench_tree extends $mol_view {
         state(): any;
-        attr_static(): {
-            class: string;
-        };
+        attr_static(): Record<string, any>;
         sub(): readonly any[];
         root_state(): any;
         Root(): $$.$mol_perf_uibench_tree_branch;
@@ -992,9 +969,7 @@ declare namespace $ {
     class $mol_perf_uibench_tree_branch extends $mol_list {
         state(): any;
         dom_name(): string;
-        attr_static(): {
-            class: string;
-        };
+        attr_static(): Record<string, any>;
         Branch(id: any): $$.$mol_perf_uibench_tree_branch;
         Leaf(id: any): $mol_perf_uibench_tree_leaf;
         branch_state(id: any): any;
@@ -1003,9 +978,7 @@ declare namespace $ {
     class $mol_perf_uibench_tree_leaf extends $mol_view {
         minimal_height(): number;
         dom_name(): string;
-        attr_static(): {
-            class: string;
-        };
+        attr_static(): Record<string, any>;
         sub(): readonly any[];
         text(): string;
     }
@@ -1030,9 +1003,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_perf_uibench extends $mol_scroll {
-        attr_static(): {
-            class: string;
-        };
+        attr_static(): Record<string, any>;
         sub(): readonly any[];
         table_state(): any;
         Table(): $$.$mol_perf_uibench_table;

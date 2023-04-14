@@ -31,7 +31,7 @@ namespace $.$$ {
 			return this.question_short( index ).tags.map( ( name , i ) => this.Tag({ row : index , tag : i }) )
 		}
 		
-		tag_name( id : { row : number , tag : string } ) {
+		tag_name( id : { row : number , tag : number } ) {
 			return this.question_short( id.row ).tags[ id.tag ]
 		}
 		

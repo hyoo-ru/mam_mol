@@ -35,7 +35,7 @@ namespace $ {
 				...super.field(),
 				width: this.width(),
 				height: this.height()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

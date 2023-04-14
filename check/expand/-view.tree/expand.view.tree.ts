@@ -33,7 +33,7 @@ namespace $ {
 			return {
 				...super.style(),
 				paddingLeft: this.level_style()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

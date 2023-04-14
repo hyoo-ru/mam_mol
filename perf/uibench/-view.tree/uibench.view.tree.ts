@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				...super.attr_static(),
 				class: "Main"
-			}
+			} as Record< string, any >
 		}
 		
 		/**

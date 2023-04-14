@@ -3728,7 +3728,7 @@ var $;
             return next;
         }
         static link(next) {
-            var params = {};
+            const params = {};
             var prev = this.dict();
             for (var key in prev) {
                 params[key] = prev[key];
@@ -3739,11 +3739,11 @@ var $;
             return this.make_link(params);
         }
         static make_link(next) {
-            var chunks = [];
-            for (var key in next) {
-                if (null == next[key])
-                    continue;
-                chunks.push([key].concat(next[key]).map(encodeURIComponent).join('='));
+            const chunks = [];
+            for (const key in next) {
+                if (next[key] !== null) {
+                    chunks.push([key, next[key]].map(encodeURIComponent).join('='));
+                }
             }
             return chunks.join(' ');
         }
@@ -3761,8 +3761,8 @@ var $;
             return new this.constructor(this.prefix + postfix + '.');
         }
         link(next) {
-            var prefix = this.prefix;
-            var dict = {};
+            const prefix = this.prefix;
+            const dict = {};
             for (var key in next) {
                 dict[prefix + key] = next[key];
             }
@@ -3871,7 +3871,6 @@ var $;
 var $;
 (function ($) {
     const { rem } = $mol_style_unit;
-    const { scale } = $mol_style_func;
     $mol_style_define($mol_link, {
         textDecoration: 'none',
         color: $mol_theme.control,
@@ -5474,9 +5473,9 @@ var $;
                     const def = this.lang_default();
                     if (lang === def)
                         throw error;
-                    return {};
                 }
             }
+            return {};
         }
         static text(key) {
             const lang = this.lang();
@@ -6489,7 +6488,7 @@ var $;
                 });
                 const regexp = new $mol_regexp(`(?:${chunks.join('|')})`, flags, groups);
                 const validator = new RegExp('^' + regexp.source + '$', flags);
-                regexp.generate = params => {
+                regexp.generate = (params) => {
                     for (let option in source) {
                         if (option in params) {
                             if (typeof params[option] === 'boolean') {
@@ -11304,11 +11303,12 @@ var $;
             names() {
                 const next = [];
                 for (const name in this.$) {
-                    if (typeof this.$[name] !== 'function')
+                    const ctor = this.$[name];
+                    if (typeof ctor !== 'function')
                         continue;
-                    if (!$mol_func_is_class(this.$[name]))
+                    if (!$mol_func_is_class(ctor))
                         continue;
-                    if (!(this.$[name].prototype instanceof $mol_example))
+                    if (!(ctor.prototype instanceof $mol_example))
                         continue;
                     if (this.demo_block_list().includes(name))
                         continue;
@@ -11346,8 +11346,7 @@ var $;
                 return this.selected();
             }
             Widget(name) {
-                const Class = this.$[name];
-                return new Class();
+                return new this.$[name];
             }
             names_demo() {
                 const selected = this.selected();
@@ -11382,11 +11381,12 @@ var $;
             }
             name_parse(name) {
                 const split = name.replace(/_demo.*$/, '').split('_');
+                const repos = this.repo_dict();
                 const keys = split.map((_, index) => split.slice(0, -1 - index).join('_'));
-                const key = keys.find(key => this.repo_dict()[key]);
+                const key = keys.find(key => key in repos);
                 if (!key)
                     throw new Error(`${this}.name_parse("${name}"): Key "${key}" not found`);
-                const repo = this.repo_dict()[key];
+                const repo = repos[key];
                 const module = split.slice(key.split('_').length);
                 return { repo, module };
             }
@@ -17962,19 +17962,20 @@ var $;
                 const context = canvas.getContext('2d');
                 context.drawImage(el, 0, 0);
                 try {
-                    re['src'] = canvas.toDataURL();
+                    ;
+                    re.src = canvas.toDataURL();
                 }
                 catch (error) {
                     $mol_fail_log(error);
                 }
             }
             if (re instanceof HTMLInputElement) {
-                re.setAttribute('value', el['value']);
-                if (el['checked'])
+                re.setAttribute('value', el.value);
+                if (el.checked)
                     re.setAttribute('checked', '');
             }
             if (re instanceof HTMLTextAreaElement) {
-                re.setAttribute('value', el['value']);
+                re.setAttribute('value', el.value);
             }
             const styles = $mol_dom_context.getComputedStyle(el);
             restyle(re, styles);
@@ -25024,7 +25025,7 @@ var $;
                 return options;
             }
             Content() {
-                return this.items()[this.current()];
+                return this.items()[Number(this.current())];
             }
         }
         __decorate([
@@ -27422,6 +27423,7 @@ var $;
                             next = String(next);
                             break;
                     }
+                    ;
                     model[field](next);
                 }
                 this.state(null);
@@ -36187,8 +36189,13 @@ var $;
         }
         static hearer() {
             $mol_wire_solid();
-            const API = window['SpeechRecognition'] || window['webkitSpeechRecognition'] || window['mozSpeechRecognition'] || window['msSpeechRecognition'];
-            const api = new API;
+            let Api;
+            for (const prefix of ['', 'webkit', 'moz', 'ms']) {
+                if (Api = window[prefix + 'SpeechRecognition']) {
+                    break;
+                }
+            }
+            const api = new Api;
             api.interimResults = true;
             api.maxAlternatives = 1;
             api.continuous = true;
@@ -41274,8 +41281,8 @@ var $;
         for (let def of $mol_view_tree_classes(tree).sub) {
             if (!/^\$\w+$/.test(def.type))
                 throw def.error('Wrong component name');
-            var parent = def.sub[0];
-            var members = {};
+            const parent = def.sub[0];
+            const members = {};
             for (let param of $mol_view_tree_class_props(def).sub) {
                 try {
                     var needSet = false;
@@ -41316,12 +41323,12 @@ var $;
                                         if (val)
                                             items.push(val.join(""));
                                     });
-                                    return [`[`, items.join(' , '), `]`, (item_type ? ` as readonly ( ${item_type} )[]` : ` as readonly any[]`)];
+                                    return [`[`, items.join(' , '), `]`, (item_type ? ` as ( ${item_type} )[]` : ` as any[]`)];
                                 case (value.type[0] === '$'):
                                     if (!definition)
                                         throw value.error('Objects should be bound');
                                     needCache = true;
-                                    var overs = [];
+                                    const overs = [];
                                     value.sub.forEach(over => {
                                         if (/^[-\/]?$/.test(over.type))
                                             return '';
@@ -41353,21 +41360,28 @@ var $;
                                     const object_args = value.select('/', '').sub.map(arg => getValue(arg)).join(' , ');
                                     return ['(( obj )=>{\n', ...overs, '\t\t\treturn obj\n\t\t})( new this.$.', SourceNode(value.row, value.col, fileName, value.type), '( ', object_args, ' ) )'];
                                 case (value.type === '*'):
-                                    var opts = [];
-                                    value.sub.forEach(opt => {
+                                    const opts = [];
+                                    for (const opt of value.sub) {
                                         if (opt.type === '-')
-                                            return '';
+                                            continue;
                                         if (opt.type === '^') {
                                             opts.push(`\t\t\t...super.${param.type}() ,\n`);
-                                            return;
+                                            continue;
                                         }
-                                        var key = /(.*?)(?:\?(\w+))?$/.exec(opt.type);
-                                        var ns = needSet;
-                                        var v = getValue(opt.sub[0]);
-                                        var arg = key[2] ? ` ( ${key[2]}? : any )=> ` : '';
-                                        opts.push(...['\t\t\t"', SourceNode(opt.row, opt.col, fileName, key[1] + '" : '), arg, ' ', ...(v || []), ' ,\n']);
+                                        const key = /(.*?)(?:\?(\w+))?$/.exec(opt.type);
+                                        const ns = needSet;
+                                        const v = getValue(opt.sub[0]);
+                                        const arg = key[2] ? ` ( ${key[2]}? : any )=> ` : '';
+                                        opts.push(...[
+                                            '\t\t\t"',
+                                            SourceNode(opt.row, opt.col, fileName, key[1] + '" : '),
+                                            arg,
+                                            ' ',
+                                            ...(v || []),
+                                            ' ,\n'
+                                        ]);
                                         needSet = ns;
-                                    });
+                                    }
                                     return ['({\n', opts.join(''), '\t\t})'];
                                 case (value.type === '<=>'):
                                     if (value.sub.length === 1) {
@@ -41414,7 +41428,7 @@ var $;
                                 ...val
                             ];
                         val = ['return ', ...val];
-                        var decl = ['\t', SourceNode(param.row, param.col, fileName, propName[1]), '(', args.join(','), ') {\n\t\t', ...val, '\n\t}\n\n'];
+                        let decl = ['\t', SourceNode(param.row, param.col, fileName, propName[1]), '(', args.join(','), ') {\n\t\t', ...val, '\n\t}\n\n'];
                         if (needCache) {
                             if (propName[2])
                                 decl = ['\t@ $', 'mol_mem_key\n', ...decl];

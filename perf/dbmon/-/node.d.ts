@@ -770,12 +770,8 @@ declare namespace $ {
     class $mol_scroll extends $mol_view {
         scroll_top(val?: any): number;
         scroll_left(val?: any): number;
-        field(): {
-            tabIndex: number;
-        };
-        event(): {
-            scroll: (event?: any) => any;
-        };
+        field(): Record<string, any>;
+        event(): Record<string, any>;
         tabindex(): number;
         event_scroll(event?: any): any;
     }
@@ -1019,13 +1015,8 @@ declare namespace $ {
     }
     class $mol_pop_bubble extends $mol_view {
         sub(): readonly $mol_view_content[];
-        style(): {
-            maxHeight: number;
-        };
-        attr(): {
-            mol_pop_align: string;
-            tabindex: number;
-        };
+        style(): Record<string, any>;
+        attr(): Record<string, any>;
         content(): readonly $mol_view_content[];
         height_max(): number;
         align(): string;
@@ -1076,13 +1067,8 @@ declare namespace $ {
 declare namespace $ {
     class $mol_pop_over extends $mol_pop {
         showed(): boolean;
-        attr(): {
-            tabindex: number;
-        };
-        event(): {
-            mouseenter: (event?: any) => any;
-            mouseleave: (event?: any) => any;
-        };
+        attr(): Record<string, any>;
+        event(): Record<string, any>;
         hovered(val?: any): boolean;
         event_show(event?: any): any;
         event_hide(event?: any): any;

@@ -298,7 +298,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_html_view_heading: this.level()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

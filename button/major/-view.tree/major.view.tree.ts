@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_theme: "$mol_theme_accent"
-			}
+			} as Record< string, any >
 		}
 	}
 	

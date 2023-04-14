@@ -21,7 +21,7 @@ namespace $ {
 			return {
 				...super.attr_static(),
 				class: "Tree"
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -90,7 +90,7 @@ namespace $ {
 			return {
 				...super.attr_static(),
 				class: "TreeNode"
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -171,7 +171,7 @@ namespace $ {
 			return {
 				...super.attr_static(),
 				class: "TreeLeaf"
-			}
+			} as Record< string, any >
 		}
 		
 		/**

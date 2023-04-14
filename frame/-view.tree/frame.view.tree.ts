@@ -29,7 +29,7 @@ namespace $ {
 				src: this.uri(),
 				srcdoc: this.html(),
 				allow: this.allow()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

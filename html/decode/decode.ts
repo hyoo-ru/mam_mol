@@ -13,7 +13,7 @@ namespace $ {
 				'amp' : '&' ,
 			}
 			
-			return mapping[ name ]
+			return mapping[ name as keyof typeof mapping ]
 		} )
 		
 	}

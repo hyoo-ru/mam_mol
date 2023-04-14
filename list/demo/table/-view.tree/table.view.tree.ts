@@ -304,7 +304,7 @@ namespace $ {
 				minor: "Store",
 				major: "Sale",
 				critical: "Support"
-			}
+			} as Record< string, any >
 		}
 		
 		/**

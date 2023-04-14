@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_theme: "$mol_theme_auto"
-			}
+			} as Record< string, any >
 		}
 		
 		/**

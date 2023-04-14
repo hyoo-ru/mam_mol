@@ -122,7 +122,7 @@ namespace $ {
 				first: "First",
 				second: "Second",
 				third: "Third"
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}
@@ -167,7 +167,7 @@ namespace $ {
 				first: "First",
 				second: "Second",
 				third: "Third"
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}

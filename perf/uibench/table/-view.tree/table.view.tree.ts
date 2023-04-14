@@ -30,7 +30,7 @@ namespace $ {
 			return {
 				...super.attr_static(),
 				class: "Table"
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -118,7 +118,7 @@ namespace $ {
 				...super.attr(),
 				class: this.classes(),
 				"data-id": this.id()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -232,7 +232,7 @@ namespace $ {
 			return {
 				...super.attr_static(),
 				class: "TableCell"
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -246,7 +246,7 @@ namespace $ {
 			return {
 				...super.event(),
 				click: (val?: any) => this.click(val)
-			}
+			} as Record< string, any >
 		}
 		
 		/**

@@ -127,7 +127,7 @@ namespace $ {
 			return {
 				...super.style(),
 				opacity: this.opacity()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

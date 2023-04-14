@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				a: 0,
 				b: 2
-			}
+			} as Record< string, any >
 		}
 	}
 	
@@ -29,7 +29,7 @@ namespace $ {
 			return {
 				...super.some(),
 				a: 1
-			}
+			} as Record< string, any >
 		}
 	}
 	

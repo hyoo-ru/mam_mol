@@ -222,7 +222,7 @@ namespace $ {
 				article: "Article",
 				news: "News",
 				question: "Question"
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}
@@ -265,7 +265,7 @@ namespace $ {
 			obj.options = () => ({
 				false: "No",
 				true: "Yes"
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}

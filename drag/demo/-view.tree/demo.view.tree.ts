@@ -39,7 +39,7 @@ namespace $ {
 				"text/plain": this.task_title(id),
 				"text/html": this.task_html(id),
 				"text/uri-list": this.task_uri(id)
-			})
+			} as Record< string, any >)
 			obj.Sub = () => this.Task_drop(id)
 			
 			return obj

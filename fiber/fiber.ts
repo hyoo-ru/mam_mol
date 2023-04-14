@@ -20,7 +20,7 @@ namespace $ {
 			return fiber.async()
 		} as any as Calculate
 		
-		wrapper[ Symbol.toStringTag ] = calculate.name
+		;( wrapper as any )[ Symbol.toStringTag ] = calculate.name
 		
 		return wrapper
 	}

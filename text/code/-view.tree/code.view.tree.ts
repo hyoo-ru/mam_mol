@@ -12,7 +12,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_text_code_sidebar_showed: this.sidebar_showed()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

@@ -465,7 +465,7 @@ namespace $ {
 		 */
 		header_arg(id: any) {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -648,7 +648,7 @@ namespace $ {
 		 */
 		arg() {
 			return {
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -703,7 +703,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				mol_text_type: this.type()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

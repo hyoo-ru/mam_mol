@@ -167,7 +167,7 @@ namespace $ {
 				universe: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_universe' ),
 				marvel: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_marvel' ),
 				dc: this.$.$mol_locale.text( '$mol_tag_tree_demo_Tree_tag_names_dc' )
-			})
+			} as Record< string, any >)
 			obj.ids_tags = () => ({
 				batman: [
 					"side/good",
@@ -244,7 +244,7 @@ namespace $ {
 					"universe/marvel",
 					"sex/female"
 				] as readonly any[]
-			})
+			} as Record< string, any >)
 			
 			return obj
 		}

@@ -233,7 +233,7 @@ namespace $ {
 		 */
 		cell_options(id: any) {
 			return {
-			}
+			} as Record< string, any >
 		}
 	}
 	
@@ -323,7 +323,7 @@ namespace $ {
 				...super.attr(),
 				colspan: this.cols(),
 				rowspan: this.rows()
-			}
+			} as Record< string, any >
 		}
 		
 		/**

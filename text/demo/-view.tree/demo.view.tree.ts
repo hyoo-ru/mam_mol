@@ -99,7 +99,7 @@ namespace $ {
 			
 			obj.arg = () => ({
 				edit: ""
-			})
+			} as Record< string, any >)
 			obj.sub = () => [
 				this.Edit_icon()
 			] as readonly any[]
@@ -175,7 +175,7 @@ namespace $ {
 			
 			obj.arg = () => ({
 				edit: null as any
-			})
+			} as Record< string, any >)
 			obj.sub = () => [
 				this.Close_icon()
 			] as readonly any[]

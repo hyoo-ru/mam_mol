@@ -2862,12 +2862,13 @@ var $;
     function $mol_offline() {
         if (typeof window === 'undefined') {
             self.addEventListener('install', (event) => {
-                self['skipWaiting']();
+                ;
+                self.skipWaiting();
             });
             self.addEventListener('activate', (event) => {
                 caches.delete('v1');
                 caches.delete('$mol_offline');
-                self['clients'].claim();
+                self.clients.claim();
                 console.info('$mol_offline activated');
             });
             self.addEventListener('fetch', (event) => {

@@ -21,7 +21,7 @@ namespace $ {
 			return {
 				...super.attr(),
 				tabindex: 0
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -37,7 +37,7 @@ namespace $ {
 				...super.event(),
 				mouseenter: (event?: any) => this.event_show(event),
 				mouseleave: (event?: any) => this.event_hide(event)
-			}
+			} as Record< string, any >
 		}
 		
 		/**
