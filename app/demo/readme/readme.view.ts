@@ -11,8 +11,8 @@ namespace $.$$ {
 			this.opened( false )
 		}
 
-		link( module: readonly string[] ) {
-			return this.link_template().replace( '{repo}', this.repo() ).replace( '{module}' , module.join('/') )
+		link( template: string, repo: string, module: readonly string[] ) {
+			return template.replace( '{repo}', repo ).replace( '{module}' , module.join('/') )
 		}
 		
 		@ $mol_mem
@@ -22,14 +22,19 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		source_link() {
+			return this.link( this.source_link_template(), this.repo(), this.module() )
+		}
+
+		@ $mol_mem
 		override readme(): string {
 			let module = this.module()
 
 			while( module.length ) {
 				try {
-					const link =  this.link( module )
+					const link =  this.link( this.readme_link_template(), this.repo(), module )
 					const text = this.$.$mol_fetch.text( link )
-					this.uri_base( `https://github.com/${this.repo()}/tree/master/${module.join('/')}/` )
+					this.uri_base( this.link( this.source_link_template(), this.repo(), module ) )
 					return text
 				} catch( error: any ) {
 					if( error instanceof Promise ) $mol_fail_hidden( error )
