@@ -3344,6 +3344,7 @@ declare namespace $ {
         nodes<Node extends typeof $hyoo_crowd_node>(Node: Node): InstanceType<Node>[];
         virgin(): boolean;
         [Symbol.toPrimitive](): string;
+        toJSON(): `${string}_${string}`;
     }
 }
 
