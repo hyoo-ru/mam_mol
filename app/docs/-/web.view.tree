@@ -3369,6 +3369,26 @@ $mol_expander_demo $mol_example_small
 	aspects /
 		\Widget/Layout
 
+$mol_fetch_demo $mol_example_small
+	title \Simple spoiler
+	sub /
+		<= Content $mol_list rows /
+			<= Request $mol_view sub /
+				<= Url $mol_string
+					value? <=> url? \https://jsonplaceholder.typicode.com/users
+				<= Fetch $mol_button_major
+					click? <= fetch_data? null
+			<= Data $mol_dump_value
+				value <= data? null
+	tags /
+		\fetch
+		\load
+		\api
+		\response
+		\request
+	aspects /
+		\Network/HTTP
+
 $mol_filler_demo $mol_example_small
 	title \Prints large bulk of text
 	sub /

@@ -27040,6 +27040,122 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_fetch_demo extends $mol_example_small {
+        title() {
+            return "Simple spoiler";
+        }
+        sub() {
+            return [
+                this.Content()
+            ];
+        }
+        tags() {
+            return [
+                "fetch",
+                "load",
+                "api",
+                "response",
+                "request"
+            ];
+        }
+        aspects() {
+            return [
+                "Network/HTTP"
+            ];
+        }
+        url(next) {
+            if (next !== undefined)
+                return next;
+            return "https://jsonplaceholder.typicode.com/users";
+        }
+        Url() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.url(next);
+            return obj;
+        }
+        fetch_data(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Fetch() {
+            const obj = new this.$.$mol_button_major();
+            obj.click = (next) => this.fetch_data();
+            return obj;
+        }
+        Request() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.Url(),
+                this.Fetch()
+            ];
+            return obj;
+        }
+        data(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Data() {
+            const obj = new this.$.$mol_dump_value();
+            obj.value = () => this.data();
+            return obj;
+        }
+        Content() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Request(),
+                this.Data()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_fetch_demo.prototype, "url", null);
+    __decorate([
+        $mol_mem
+    ], $mol_fetch_demo.prototype, "Url", null);
+    __decorate([
+        $mol_mem
+    ], $mol_fetch_demo.prototype, "fetch_data", null);
+    __decorate([
+        $mol_mem
+    ], $mol_fetch_demo.prototype, "Fetch", null);
+    __decorate([
+        $mol_mem
+    ], $mol_fetch_demo.prototype, "Request", null);
+    __decorate([
+        $mol_mem
+    ], $mol_fetch_demo.prototype, "data", null);
+    __decorate([
+        $mol_mem
+    ], $mol_fetch_demo.prototype, "Data", null);
+    __decorate([
+        $mol_mem
+    ], $mol_fetch_demo.prototype, "Content", null);
+    $.$mol_fetch_demo = $mol_fetch_demo;
+})($ || ($ = {}));
+//mol/fetch/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_fetch_demo extends $.$mol_fetch_demo {
+            fetch_data() {
+                this.data($mol_fetch.json(this.url()));
+            }
+        }
+        $$.$mol_fetch_demo = $mol_fetch_demo;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/fetch/demo/demo.view.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_filler_demo extends $mol_example_small {
         title() {
             return "Prints large bulk of text";

@@ -6900,6 +6900,29 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_fetch_demo extends $mol_example_small {
+        title(): string;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        aspects(): readonly any[];
+        url(next?: any): string;
+        Url(): $$.$mol_string;
+        fetch_data(next?: any): any;
+        Fetch(): $mol_button_major;
+        Request(): $mol_view;
+        data(next?: any): any;
+        Data(): $$.$mol_dump_value;
+        Content(): $$.$mol_list;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_fetch_demo extends $.$mol_fetch_demo {
+        fetch_data(): void;
+    }
+}
+
+declare namespace $ {
     class $mol_filler_demo extends $mol_example_small {
         title(): string;
         sub(): readonly any[];
