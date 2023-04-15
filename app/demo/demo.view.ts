@@ -121,10 +121,14 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		meta_bundle_base(){
+			return this.$.$mol_state_arg.make_link({})
+		}
+
+		@ $mol_mem
 		repo_dict() {
-			const base_url = this.$.$mol_state_arg.make_link({})
-			const uri = new URL( 'web.meta.tree', base_url ).toString()
-			const str = this.$.$mol_fetch.text( uri )
+			const meta_uri = new URL( 'web.meta.tree', this.meta_bundle_base() ).toString()
+			const str = this.$.$mol_fetch.text( meta_uri )
 			const tree = this.$.$mol_tree2_from_string( str )
 			
 			const dict: Record<string, string> = {}
@@ -149,7 +153,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		name_parse( name: string ) {
-			const split = name.split('_')
+			const split = name.replace( /\$/, '' ).split('_')
 			
 			const repos = this.repo_dict() as Record<string, string>
 			const keys = split.map( ( _ , index ) => split.slice( 0 , -1-index ).join('_') )
@@ -168,7 +172,7 @@ namespace $.$$ {
 		}
 		
 		override module() {
-			return this.name_parse( $mol_state_arg.value( 'demo' )! ).module
+			return this.name_parse( this.selected() ).module
 		}
 		
 		chat_link() {

@@ -3132,6 +3132,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_app_demo extends $mol_book2 {
         editor_title(): string;
+        meta_bundle_base(): string;
         repo_dict(): Record<string, any>;
         plugins(): readonly any[];
         demo_block_list(): readonly any[];
@@ -3207,6 +3208,7 @@ declare namespace $.$$ {
         pages(): $mol_view[];
         Demo(): $mol_example;
         logo_uri(): string;
+        meta_bundle_base(): string;
         repo_dict(): Record<string, string>;
         name_parse(name: string): {
             repo: string;

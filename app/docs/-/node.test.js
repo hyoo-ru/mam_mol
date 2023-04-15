@@ -11027,6 +11027,9 @@ var $;
         editor_title() {
             return this.detail_title();
         }
+        meta_bundle_base() {
+            return "";
+        }
         repo_dict() {
             return {};
         }
@@ -11371,10 +11374,12 @@ var $;
             logo_uri() {
                 return $mol_file.relative('/mol/logo/logo.svg').path();
             }
+            meta_bundle_base() {
+                return this.$.$mol_state_arg.make_link({});
+            }
             repo_dict() {
-                const base_url = this.$.$mol_state_arg.make_link({});
-                const uri = new URL('web.meta.tree', base_url).toString();
-                const str = this.$.$mol_fetch.text(uri);
+                const meta_uri = new URL('web.meta.tree', this.meta_bundle_base()).toString();
+                const str = this.$.$mol_fetch.text(meta_uri);
                 const tree = this.$.$mol_tree2_from_string(str);
                 const dict = {};
                 tree.kids.forEach(meta => {
@@ -11392,7 +11397,7 @@ var $;
                 return dict;
             }
             name_parse(name) {
-                const split = name.split('_');
+                const split = name.replace(/\$/, '').split('_');
                 const repos = this.repo_dict();
                 const keys = split.map((_, index) => split.slice(0, -1 - index).join('_'));
                 const key = keys.find(key => key in repos);
@@ -11406,7 +11411,7 @@ var $;
                 return this.name_parse($mol_state_arg.value('demo')).repo;
             }
             module() {
-                return this.name_parse($mol_state_arg.value('demo')).module;
+                return this.name_parse(this.selected()).module;
             }
             chat_link() {
                 return $mol_state_arg.make_link({ demo: this.selected() });
@@ -11438,6 +11443,9 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_app_demo.prototype, "names_demo", null);
+        __decorate([
+            $mol_mem
+        ], $mol_app_demo.prototype, "meta_bundle_base", null);
         __decorate([
             $mol_mem
         ], $mol_app_demo.prototype, "repo_dict", null);

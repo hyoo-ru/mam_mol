@@ -809,6 +809,7 @@ $mol_lights_toggle $mol_check_icon
 
 $mol_app_demo $mol_book2
 	editor_title <= detail_title \$mol
+	meta_bundle_base \
 	repo_dict *
 	plugins /
 		<= Theme $mol_theme_auto

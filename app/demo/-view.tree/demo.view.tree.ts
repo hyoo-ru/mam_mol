@@ -12,6 +12,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * meta_bundle_base \
+		 * ```
+		 */
+		meta_bundle_base() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * repo_dict *
 		 * ```
 		 */
