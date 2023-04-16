@@ -13,6 +13,7 @@ namespace $ {
 
 		@ $mol_mem_key
 		static script( uri: string ): any {
+			$mol_wire_solid()
 			return $mol_wire_sync( this ).script_async( uri )
 		}
 
