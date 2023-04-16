@@ -13961,6 +13961,7 @@ var $;
 (function ($) {
     class $mol_import extends $mol_object2 {
         static module(uri) {
+            $mol_wire_solid();
             return $mol_wire_sync(this).module_async(uri);
         }
         static module_async(uri) {
