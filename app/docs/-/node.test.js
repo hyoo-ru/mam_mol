@@ -329,9 +329,9 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    let auto = null;
-    function $mol_wire_auto(next = auto) {
-        return auto = next;
+    $.$mol_wire_auto_sub = null;
+    function $mol_wire_auto(next = $.$mol_wire_auto_sub) {
+        return $.$mol_wire_auto_sub = next;
     }
     $.$mol_wire_auto = $mol_wire_auto;
     $.$mol_wire_affected = [];

@@ -127,6 +127,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    let $mol_wire_auto_sub: $mol_wire_sub | null;
     function $mol_wire_auto(next?: $mol_wire_sub | null): $mol_wire_sub | null;
     const $mol_wire_affected: (number | $mol_wire_sub)[];
 }
