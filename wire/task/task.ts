@@ -22,7 +22,7 @@ namespace $ {
 				
 				reuse: if( existen ) {
 					
-					if( existen.constructor.name !== '$mol_wire_task' ) break reuse
+					if( !existen.temp ) break reuse
 					
 					if( existen.host !== host ) break reuse
 					if( existen.task !== task ) break reuse
@@ -41,6 +41,10 @@ namespace $ {
 			
 		}
 
+		get temp() {
+			return true
+		}
+		
 		complete() {
 			if( $mol_promise_like( this.cache ) ) return
 			this.destructor()
