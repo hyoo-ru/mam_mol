@@ -22,7 +22,7 @@ namespace $ {
 				
 				reuse: if( existen ) {
 					
-					if(!( existen.constructor.name === '$mol_wire_task' )) break reuse
+					if( existen.constructor.name !== '$mol_wire_task' ) break reuse
 					
 					if( existen.host !== host ) break reuse
 					if( existen.task !== task ) break reuse
