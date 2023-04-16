@@ -1056,7 +1056,7 @@ var $;
                 const sub = $mol_wire_auto();
                 const existen = sub?.track_next();
                 reuse: if (existen) {
-                    if (!(existen instanceof $mol_wire_task))
+                    if (!(existen.constructor.name === '$mol_wire_task'))
                         break reuse;
                     if (existen.host !== host)
                         break reuse;
