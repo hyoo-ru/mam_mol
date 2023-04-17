@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_textarea_demo extends $mol_example_small {
+	export class $mol_textarea_demo extends $mol_example {
 		
 		/**
 		 * ```tree
@@ -12,17 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Empty_descr
-		 * 	<= Filled_descr
-		 * 	<= Disabled
+		 * sub / <= Content
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Empty_descr(),
-				this.Filled_descr(),
-				this.Disabled()
+				this.Content()
 			] as readonly any[]
 		}
 		
@@ -58,34 +53,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * empty_descr? \
-		 * ```
-		 */
-		@ $mol_mem
-		empty_descr(next?: any) {
-			if ( next !== undefined ) return next as never
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * Empty_descr $mol_textarea
-		 * 	hint \source code
-		 * 	value? <=> empty_descr?
-		 * ```
-		 */
-		@ $mol_mem
-		Empty_descr() {
-			const obj = new this.$.$mol_textarea()
-			
-			obj.hint = () => "source code"
-			obj.value = (next?: any) => this.empty_descr(next)
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
 		 * filled_descr? \
 		 * 	\function hello( name = 'World' ) {
 		 * 	\	return `Hello, ${ name }!`
@@ -102,6 +69,7 @@ namespace $ {
 		 * ```tree
 		 * Filled_descr $mol_textarea
 		 * 	sidebar_showed true
+		 * 	hint \source code
 		 * 	value? <=> filled_descr?
 		 * ```
 		 */
@@ -110,6 +78,7 @@ namespace $ {
 			const obj = new this.$.$mol_textarea()
 			
 			obj.sidebar_showed = () => true
+			obj.hint = () => "source code"
 			obj.value = (next?: any) => this.filled_descr(next)
 			
 			return obj
@@ -137,6 +106,25 @@ namespace $ {
 			
 			obj.enabled = () => false
 			obj.value = () => this.symbols_hint()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Content $mol_list rows /
+		 * 	<= Filled_descr
+		 * 	<= Disabled
+		 * ```
+		 */
+		@ $mol_mem
+		Content() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => [
+				this.Filled_descr(),
+				this.Disabled()
+			] as readonly any[]
 			
 			return obj
 		}

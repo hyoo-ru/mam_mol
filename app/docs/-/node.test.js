@@ -38541,15 +38541,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_textarea_demo extends $mol_example_small {
+    class $mol_textarea_demo extends $mol_example {
         title() {
             return "Text input field in various states";
         }
         sub() {
             return [
-                this.Empty_descr(),
-                this.Filled_descr(),
-                this.Disabled()
+                this.Content()
             ];
         }
         tags() {
@@ -38565,17 +38563,6 @@ var $;
                 "Type/String"
             ];
         }
-        empty_descr(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        Empty_descr() {
-            const obj = new this.$.$mol_textarea();
-            obj.hint = () => "source code";
-            obj.value = (next) => this.empty_descr(next);
-            return obj;
-        }
         filled_descr(next) {
             if (next !== undefined)
                 return next;
@@ -38584,6 +38571,7 @@ var $;
         Filled_descr() {
             const obj = new this.$.$mol_textarea();
             obj.sidebar_showed = () => true;
+            obj.hint = () => "source code";
             obj.value = (next) => this.filled_descr(next);
             return obj;
         }
@@ -38596,13 +38584,15 @@ var $;
             obj.value = () => this.symbols_hint();
             return obj;
         }
+        Content() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Filled_descr(),
+                this.Disabled()
+            ];
+            return obj;
+        }
     }
-    __decorate([
-        $mol_mem
-    ], $mol_textarea_demo.prototype, "empty_descr", null);
-    __decorate([
-        $mol_mem
-    ], $mol_textarea_demo.prototype, "Empty_descr", null);
     __decorate([
         $mol_mem
     ], $mol_textarea_demo.prototype, "filled_descr", null);
@@ -38612,6 +38602,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_textarea_demo.prototype, "Disabled", null);
+    __decorate([
+        $mol_mem
+    ], $mol_textarea_demo.prototype, "Content", null);
     $.$mol_textarea_demo = $mol_textarea_demo;
 })($ || ($ = {}));
 //mol/textarea/demo/-view.tree/demo.view.tree.ts

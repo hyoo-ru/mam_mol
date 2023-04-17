@@ -9468,17 +9468,16 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_textarea_demo extends $mol_example_small {
+    class $mol_textarea_demo extends $mol_example {
         title(): string;
         sub(): readonly any[];
         tags(): readonly any[];
         aspects(): readonly any[];
-        empty_descr(next?: any): string;
-        Empty_descr(): $$.$mol_textarea;
         filled_descr(next?: any): string;
         Filled_descr(): $$.$mol_textarea;
         symbols_hint(): string;
         Disabled(): $$.$mol_textarea;
+        Content(): $$.$mol_list;
     }
 }
 
