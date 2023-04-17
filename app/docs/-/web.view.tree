@@ -1008,9 +1008,12 @@ $hyoo_crowd_text_demo $mol_example_large
 	sub /
 		<= Sandbox $hyoo_crowd_app
 	tags /
-		\CROWD
 		\text
 		\merge
+	aspects /
+		\Application
+		\Type/String
+		\Algorithm/Merge
 
 $mol_app_hello $mol_view
 	sub /
@@ -4227,9 +4230,12 @@ $hyoo_marked_demo $mol_example_large
 	sub /
 		<= Sandbox $hyoo_marked_app
 	tags /
-		\MarkedText
 		\MarkDown
 		\HTML
+	aspects /
+		\Language/MarkedText
+		\Algorithm/Parse
+		\Algorithm/Transform
 
 $hyoo_harp_app $mol_page
 	title \HARP - Humane API REST Protocol
@@ -4257,6 +4263,9 @@ $hyoo_harp_demo $mol_example_large
 		\API
 		\Query
 		\REST
+	aspects /
+		\Language/HARP Query
+		\Algorithm/Parse
 
 $mol_nav_demo $mol_example
 	title \Number input control with various configuration

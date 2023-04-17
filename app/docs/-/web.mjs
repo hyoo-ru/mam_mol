@@ -13719,9 +13719,15 @@ var $;
         }
         tags() {
             return [
-                "CROWD",
                 "text",
                 "merge"
+            ];
+        }
+        aspects() {
+            return [
+                "Application",
+                "Type/String",
+                "Algorithm/Merge"
             ];
         }
         Sandbox() {
@@ -34124,9 +34130,15 @@ var $;
         }
         tags() {
             return [
-                "MarkedText",
                 "MarkDown",
                 "HTML"
+            ];
+        }
+        aspects() {
+            return [
+                "Language/MarkedText",
+                "Algorithm/Parse",
+                "Algorithm/Transform"
             ];
         }
         Sandbox() {
@@ -34431,6 +34443,12 @@ var $;
                 "API",
                 "Query",
                 "REST"
+            ];
+        }
+        aspects() {
+            return [
+                "Language/HARP Query",
+                "Algorithm/Parse"
             ];
         }
         title() {
