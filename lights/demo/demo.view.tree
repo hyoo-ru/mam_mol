@@ -11,5 +11,7 @@ $mol_lights_demo $mol_example_small
 		\dark
 		\theme
 		\switcher
+		\toggle
 	aspects /
-		\Widget
+		\Widget/Control/Button
+		\Theme

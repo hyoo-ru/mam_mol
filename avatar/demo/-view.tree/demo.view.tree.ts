@@ -27,7 +27,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\avatar
 		 * 	\generated
 		 * 	\identity
 		 * 	\user
@@ -35,7 +34,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"avatar",
 				"generated",
 				"identity",
 				"user"
@@ -44,12 +42,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Draw
+		 * aspects /
+		 * 	\Widget/Draw
+		 * 	\Algorithm/Hash
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Draw"
+				"Widget/Draw",
+				"Algorithm/Hash"
 			] as readonly any[]
 		}
 		

@@ -3,8 +3,5 @@ $mol_time_duration_demo $mol_example_code
 	code? \
 		\const week = new $mol_time_duration( 'P7D' )
 		\const days = week.count( 'P1D' )
-	tags /
-		\$mol_time
-		\duraion
 	aspects /
 		\Type/Time

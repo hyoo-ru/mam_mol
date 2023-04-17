@@ -35,9 +35,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_labeler
-		 * 	\$mol_number
-		 * 	\$mol_section
 		 * 	\number
 		 * 	\field
 		 * 	\label
@@ -46,9 +43,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_labeler",
-				"$mol_number",
-				"$mol_section",
 				"number",
 				"field",
 				"label",

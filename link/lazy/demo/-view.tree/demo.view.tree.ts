@@ -41,12 +41,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Navigation
+		 * aspects /
+		 * 	\Navigation
+		 * 	\Widget/Button
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Navigation"
+				"Navigation",
+				"Widget/Button"
 			] as readonly any[]
 		}
 		

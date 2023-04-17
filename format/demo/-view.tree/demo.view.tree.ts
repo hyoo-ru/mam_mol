@@ -31,29 +31,34 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_format
-		 * 	\$mol_string
-		 * 	\$mol_phone
+		 * 	\phone
+		 * 	\ip
+		 * 	\car
+		 * 	\datetime
 		 * 	\input
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_format",
-				"$mol_string",
-				"$mol_phone",
+				"phone",
+				"ip",
+				"car",
+				"datetime",
 				"input"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Control
+		 * aspects /
+		 * 	\Widget/Control
+		 * 	\Type/String
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Control"
+				"Widget/Control",
+				"Type/String"
 			] as readonly any[]
 		}
 		

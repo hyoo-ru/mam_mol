@@ -12,12 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * body / <= Content
+		 * body / <= Text
 		 * ```
 		 */
 		body() {
 			return [
-				this.Content()
+				this.Text()
 			] as readonly any[]
 		}
 		
@@ -58,22 +58,6 @@ namespace $ {
 			const obj = new this.$.$mol_text()
 			
 			obj.text = () => this.content()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Content $mol_row sub / <= Text
-		 * ```
-		 */
-		@ $mol_mem
-		Content() {
-			const obj = new this.$.$mol_row()
-			
-			obj.sub = () => [
-				this.Text()
-			] as readonly any[]
 			
 			return obj
 		}

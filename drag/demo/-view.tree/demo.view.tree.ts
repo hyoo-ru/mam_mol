@@ -48,39 +48,32 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_drop
-		 * 	\$mol_float
-		 * 	\$mol_link
-		 * 	\$mol_icon
-		 * 	\$mol_scroll
 		 * 	\drag
 		 * 	\dragndrop
-		 * 	\list
+		 * 	\reorder
 		 * 	\transfer
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_drop",
-				"$mol_float",
-				"$mol_link",
-				"$mol_icon",
-				"$mol_scroll",
 				"drag",
 				"dragndrop",
-				"list",
+				"reorder",
 				"transfer"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Plugin
+		 * aspects /
+		 * 	\Widget/Plugin
+		 * 	\Drag'n'Drop
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Plugin"
+				"Widget/Plugin",
+				"Drag'n'Drop"
 			] as readonly any[]
 		}
 		

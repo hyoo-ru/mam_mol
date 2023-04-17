@@ -24,30 +24,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_search
-		 * 	\$mol_number
-		 * 	\$mol_portion
-		 * 	\$mol_check
-		 * 	\$mol_button
 		 * 	\row
 		 * 	\container
 		 * 	\flex
-		 * 	\identation
-		 * 	\space
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_search",
-				"$mol_number",
-				"$mol_portion",
-				"$mol_check",
-				"$mol_button",
 				"row",
 				"container",
-				"flex",
-				"identation",
-				"space"
+				"flex"
 			] as readonly any[]
 		}
 		

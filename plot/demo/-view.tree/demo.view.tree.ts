@@ -61,12 +61,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Draw
+		 * aspects /
+		 * 	\Widget/Draw/Chart/Line
+		 * 	\Widget/Draw/Chart/Fill
+		 * 	\Widget/Draw/Chart/Dot
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Draw"
+				"Widget/Draw/Chart/Line",
+				"Widget/Draw/Chart/Fill",
+				"Widget/Draw/Chart/Dot"
 			] as readonly any[]
 		}
 		

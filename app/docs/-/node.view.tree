@@ -364,7 +364,7 @@ $mol_app_demo_menu $mol_page
 				<= Tree $mol_tag_tree
 					Item* <= Option*
 					ids_tags <= ids_tags *
-					levels_expanded <= levels_expanded <= levels_expanded_default 1
+					levels_expanded <= levels_expanded <= levels_expanded_default 0
 	Option* $mol_link
 		arg <= option_arg* *
 		sub /
@@ -1012,7 +1012,222 @@ $hyoo_crowd_text_demo $mol_example_large
 		\text
 		\merge
 
+$mol_app_hello $mol_view
+	sub /
+		<= Name $mol_string
+			hint <= name_hint \Name
+			value?val <=> name?val \
+		<= Greeting $mol_view
+			sub /
+				<= greeting \
+
+$mol_app_hello_demo $mol_example_large
+	title \Simpliest application
+	sub /
+		<= App $mol_app_hello
+	aspects /
+		\Application
+
+$mol_icon_external $mol_icon path \M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z
+
+$mol_app_questions $mol_book2
+	plugins /
+		<= Themme $mol_theme_auto
+	-
+	Menu $mol_page
+		title <= title_default @ \Questions
+		tools /
+			<= Lights $mol_lights_toggle
+			<= Source_link $mol_link_source
+				uri \https://github.com/eigenmethod/mol/tree/master/app/questions
+		body /
+			<= Menu_links $mol_list
+				rows <= menu_rows /
+	-
+	Details* $mol_page
+		title <= question_title* \
+		tools /
+			<= Details_permalink* $mol_link
+				uri <= question_permalink* \
+				sub /
+					<= Details_permalink_icon* $mol_icon_external
+			<= Details_close* $mol_link
+				sub /
+					<= Details_close_icon* $mol_icon_cross
+				arg *
+					question null
+		body /
+			<= Details_descr* $mol_text
+				text <= question_descr* \
+			<= Answers* $mol_list
+				rows <= answers* /
+	-
+	Answer* $mol_text
+		text <= question_answer* \
+	-
+	Question_link* $mol_link
+		minimal_width 64
+		minimal_height 64
+		arg <= question_arg_by_index* *
+		sub /
+			<= Question_title* $mol_view
+				sub /
+					<= question_title_by_index* \
+			<= Question_tags* $mol_view
+				sub <= question_tags_by_index* /
+	-
+	Tag* $mol_view
+		sub /
+			<= tag_name* \ 
+
+$mol_app_questions_demo $mol_example_large
+	title \New questions from StackOverflow
+	sub /
+		<= App $mol_app_questions
+	aspects /
+		\Application
+		\Network/HTTP
+		\Integration
+
+$mol_app_quine $mol_page
+	title @ \Quine - Application that prints self sources
+	body /
+		<= Text $mol_text
+			text <= content \
+	-
+	paths /
+		\mol/app/quine/quine.view.tree
+		\mol/app/quine/quine.view.ts
+		\mol/app/quine/index.html
+		\mol/app/quine/quine.locale=ru.json
+
+$mol_app_quine_demo $mol_example_large
+	sub /
+		<= App $mol_app_quine
+	aspects /
+		\Application
+		\Network/HTTP
+
+$mol_pick $mol_pop
+	event *
+		^
+		keydown?event <=> keydown?event null
+	Anchor <= Trigger $mol_check
+		minimal_width 40
+		minimal_height 40
+		enabled <= trigger_enabled true
+		checked?val <=> showed?val
+		sub <= trigger_content /$mol_view_content
+			<= title
+		hint <= hint \
+
+$mol_icon_dots_vertical $mol_icon path \M12,16C13.1,16 14,16.9 14,18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18C10,16.9 10.9,16 12,16M12,10C13.1,10 14,10.9 14,12C14,13.1 13.1,14 12,14C10.9,14 10,13.1 10,12C10,10.9 10.9,10 12,10M12,4C13.1,4 14,4.9 14,6C14,7.1 13.1,8 12,8C10.9,8 10,7.1 10,6C10,4.9 10.9,4 12,4Z
+
+$mol_select $mol_pick
+	dictionary?val *
+	options /string
+	value?val \
+	option_label_default \
+	Option_row* $mol_button_minor
+		event_click?event <=> event_select*?event null
+		sub <= option_content* /
+			<= Option_label* $mol_dimmer
+				haystack <= option_label* \
+				needle <= filter_pattern?val \
+	No_options $mol_view
+		sub /
+			<= no_options_message @ \No options
+	plugins /
+		^
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y?component <=> option_focused?component null
+			cycle?val <=> nav_cycle?val true
+	hint @ \Pick..
+	bubble_content /
+		<= Filter
+		<= Bubble_pane $mol_scroll sub /
+			<= Menu $mol_list
+				rows <= menu_content /$mol_view
+	Filter $mol_string
+		value?val <=> filter_pattern?val \
+		hint @ \Filter..
+		submit?event <=> submit?event null
+		enabled <= enabled true
+	Trigger_icon $mol_icon_dots_vertical
+
+$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
+
 $mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
+
+$mol_number $mol_view
+	precision_view <= precision 1
+	precision_change <= precision 1
+	value_min -Infinity
+	value_max +Infinity
+	value? +NaN
+	enabled true
+	sub /
+		<= String $mol_string
+			- \ we don't want native number controls in mobile devices
+			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
+			type <= type \tel
+			value?val <=> value_string?val \
+			hint <= hint \ 
+			enabled <= string_enabled <= enabled
+		<= Dec $mol_button_minor
+			event_click? <=> event_dec? null
+			enabled <= dec_enabled <= enabled
+			sub / <= dec_icon $mol_icon_minus
+		<= Inc $mol_button_minor
+			event_click? <=> event_inc? null
+			enabled <= inc_enabled <= enabled
+			sub / <= inc_icon $mol_icon_plus
+
+$mol_app_report $mol_page
+	title @ \Pump #1337 - Technical passport
+	body /
+		<= descriptor $mol_view
+			sub / <= description \
+		<= tabler $mol_app_report_tabler
+			rows <= rows /
+				<= headRower $mol_app_report_rower
+					cells <= headCells /
+	rower* $mol_app_report_rower
+		cells <= rowerCells* /
+	cell* $mol_app_report_cell
+		content <= cell_content* null
+		rows <= cellrows* 1
+		cols <= cellCols* 1
+	texter* $mol_view
+		sub / <= cell_value*?val null
+	select* $mol_select
+		value?val <=> cell_value*?val null
+		dictionary <= cell_options* *
+	number* $mol_number
+		value?val <=> cell_value*?val null
+
+$mol_app_report_tabler $mol_view
+	dom_name \table
+	sub <= rows /
+	
+$mol_app_report_rower $mol_view
+	dom_name \tr
+	sub <= cells /
+
+$mol_app_report_cell $mol_view
+	dom_name \td
+	attr *
+		^
+		colspan <= cols 1
+		rowspan <= rows 1
+	sub / <= content null
+
+$mol_app_report_demo $mol_example_large
+	sub /
+		<= App $mol_app_report
+	aspects /
+		\Widget/Form
 
 $mol_icon_bookmark $mol_icon path \M17,3H7C5.9,3 5,3.9 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z
 
@@ -1179,17 +1394,17 @@ $mol_array_chunks_demo $mol_example_code
 		\	[ 1, 2, 3, 4, 5 ],
 		\	n => n % 2,
 		\)
-	tags /
-		\array
-		\chunks
+	aspects /
+		\Type/List
+		\Algorithm/Transform
 
 $mol_array_lottery_demo $mol_example_code
 	code? \
 		\const rates = [ 1, 2, 3, 4, 5 ]
 		\const vote = $mol_array_lottery( rates )
-	tags /
-		\array
-		\random
+	aspects /
+		\Type/List
+		\Algorithm/Random
 
 $mol_array_trim_demo $mol_example_code
 	code? \
@@ -1202,22 +1417,17 @@ $mol_array_trim_demo $mol_example_code
 		\	undefined,
 		\	undefined,
 		\])
-	tags /
-		\array
-		\trim
+	aspects /
+		\Type/List
 
 $mol_assert_demo $mol_example_code
 	code? \
 		\$mol_assert_unique( 1 , 2 , 3 )
 		\$mol_assert_equal( 1 , 1 , 1 )
 		\$mol_assert_like( [1] , [1] , [1] )
-	tags /
-		\testing
-		\jest
-		\assert
-		\mocha
-		\chai
-		\unit
+	aspects /
+		\Algorithm/Assert
+		\Testing
 
 $mol_icon_upload $mol_icon path \M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z
 
@@ -1263,12 +1473,12 @@ $mol_attach_demo $mol_example_small
 			items?val <=> filled_items?val /
 				\https://picsum.photos/200
 	tags /
-		\attach
 		\file
 		\image
 		\upload
 	aspects /
 		\Widget/Control
+		\Type/File
 
 $mol_avatar $mol_icon
 	view_box \0 0 24 24
@@ -1299,13 +1509,12 @@ $mol_avatar_demo $mol_example_small
 				<= Avatar $mol_avatar
 					id <= avatar_id -
 	tags /
-		\avatar
 		\generated
 		\identity
 		\user
 	aspects /
 		\Widget/Draw
-
+		\Algorithm/Hash
 
 $mol_bar $mol_view
 
@@ -1333,14 +1542,11 @@ $mol_bar_demo $mol_example_small
 					title <= confirm_title \Confirm
 					checked?val <=> confirmed?val false
 	tags /
-		\$mol_string
-		\$mol_check
-		\$mol_button
-		\bar
 		\group
 		\container
 	aspects /
 		\Widget/Layout
+		\Widget/Island
 
 $mol_icon_sort $mol_icon path \M10,13V11H18V13H10M10,19V17H14V19H10M10,7V5H22V7H10M6,17H8.5L5,20.5L1.5,17H4V7H1.5L5,3.5L8.5,7H6V17Z
 
@@ -1389,13 +1595,10 @@ $mol_bench_demo $mol_example_small
 			col_sort?val <=> col_sort?val \mid
 			result <= result *
 	tags /
-		\$mol_portion
-		\$mol_float
-		\$mol_grid
-		\benchmark
 		\perfomance
+		\comparison
 	aspects /
-		\Widget
+		\Widget/Grid
 
 $mol_book2_demo $mol_example_large
 	title \Adaprive layout for various sizes of screen
@@ -1413,7 +1616,6 @@ $mol_book2_demo $mol_example_large
 	tags /
 		\app
 		\page
-		\book
 		\navigation
 		\transition
 		\multipage
@@ -1663,16 +1865,14 @@ $mol_book2_catalog_demo $mol_example_large
 							tools / <= Animals_spread_close
 							body / <= Content
 	tags /
-		\$mol_page
 		\app
 		\page
-		\book
 		\menu
 		\navigation
 		\transition
 		\multipage
 	aspects /
-		\Widget/Navigation
+		\Navigation
 		\Widget/Layout
 
 $mol_icon_cursor_default $mol_icon path \M13.64,21.97C13.14,22.21 12.54,22 12.31,21.5L10.13,16.76L7.62,18.78C7.45,18.92 7.24,19 7,19C6.45,19 6,18.55 6,18V3C6,2.45 6.45,2 7,2C7.24,2 7.47,2.09 7.64,2.23L7.65,2.22L19.14,11.86C19.57,12.22 19.62,12.85 19.27,13.27C19.12,13.45 18.91,13.57 18.7,13.61L15.54,14.23L17.74,18.96C18,19.46 17.76,20.05 17.26,20.28L13.64,21.97Z
@@ -1710,8 +1910,6 @@ $mol_button_demo $mol_example_small
 			sub /
 				<= Minor_iconed_icon $mol_icon_cursor_default_click_outline
 				\Minor with Icon
-	tags /
-		\button
 	aspects /
 		\Widget/Control/Button
 
@@ -1742,10 +1940,6 @@ $mol_button_share_demo $mol_example_small
 			hint \Share hyoo.ru
 			uri \https://hyoo.ru
 			capture null
-	tags /
-		\share
-		\button
-		\icon
 	aspects /
 		\Widget/Control/Button
 
@@ -1814,10 +2008,9 @@ $mol_calendar_demo_holiday $mol_example_small
 			month_string <= month \2018-01
 			day_holiday* <= holiday* false
 	tags /
-		\calendar
-		\date
+		\month
 	aspects /
-		\Widget
+		\Widget/Grid
 		\Type/Date
 
 $mol_calendar_demo_selection $mol_example_small
@@ -1836,11 +2029,9 @@ $mol_calendar_demo_selection $mol_example_small
 			month_string <= month \2018-01
 			day_selected* <= selected* false
 	tags /
-		\calendar
-		\date
-		\period
+		\month
 	aspects /
-		\Widget
+		\Widget/Grid
 		\Type/Date
 
 $mol_calendar_demo_simple $mol_example_small
@@ -1849,10 +2040,9 @@ $mol_calendar_demo_simple $mol_example_small
 		<= Calendar $mol_calendar
 			month_moment <= today $mol_time_moment
 	tags /
-		\calendar
-		\date
+		\month
 	aspects /
-		\Widget
+		\Widget/Grid
 		\Type/Date
 
 $mol_card $mol_list
@@ -1878,12 +2068,12 @@ $mol_card_demo $mol_example_small
 			title \Hello pending!
 			status \pending
 	tags /
-		\card
 		\status
 		\container
-		\paper
+		\sticker
 	aspects /
 		\Widget/Layout
+		\Widget/Island
 
 $mol_svg_group $mol_svg
 	dom_name \g
@@ -2346,13 +2536,13 @@ $mol_chart_demo_simple $mol_example_large
 						<= Plan
 						<= Fact_dots
 	tags /
-		\$mol_plot
-		\chart
 		\plot
 		\visualization
 		\dashboard
 	aspects /
-		\Widget/Draw
+		\Widget/Draw/Chart/Line
+		\Widget/Draw/Chart/Dot
+		\Widget/Draw/Chart/Bar
 
 $mol_plot_fill $mol_plot_line
 	threshold 4
@@ -2403,13 +2593,14 @@ $mol_chart_demo_styles $mol_example_large
 					title <= day_title \Day
 					series_x <= series_x /number
 	tags /
-		\$mol_plot
-		\chart
 		\plot
 		\visualization
 		\dashboard
 	aspects /
-		\Widget/Draw
+		\Widget/Draw/Chart/Line
+		\Widget/Draw/Chart/Dot
+		\Widget/Draw/Chart/Bar
+		\Widget/Draw/Chart/Fill
 
 $mol_chart_demo_forces $mol_example_large
 	title \Fake wheel forces
@@ -2438,12 +2629,12 @@ $mol_chart_demo_forces $mol_example_large
 						<= Forces_left
 						<= Forces_right
 	tags /
-		\chart
 		\plot
 		\visualization
 		\dashboard
 	aspects /
-		\Widget/Draw
+		\Widget/Draw/Chart/Line
+		\Widget/Draw/Chart/Dot
 
 $mol_chat_demo $mol_example_small
 	title \Feed of comments for this page
@@ -2454,10 +2645,10 @@ $mol_chat_demo $mol_example_small
 		- <= Pages $mol_view
 			sub <= chat_pages
 	tags /
-		\chat
 		\communication
 	aspects /
-		\Widget/Integration
+		\Integration
+		\Widget/Button
 
 $mol_check_box_demo $mol_example_small
 	title \Checkboxes in various states
@@ -2486,10 +2677,11 @@ $mol_check_box_demo $mol_example_small
 				checked true
 				enabled false
 	tags /
-		\checkbox
 		\switch
+		\toggle
 	aspects /
-		\Widget/Control
+		\Widget/Control/Button
+		\Type/Boolean
 
 $mol_check_list $mol_view
 	Option* $mol_check
@@ -2518,11 +2710,11 @@ $mol_check_list_demo $mol_example_small
 				api \Allow API Access
 				docs \Allow Read Documentation
 	tags /
-		\checkbox
 		\option
+		\switch
 		\toggle
 	aspects /
-		\Widget/Control
+		\Widget/Control/Button
 
 $mol_check_expand_demo $mol_example_small
 	title \Checkbox-expand in various states
@@ -2546,10 +2738,10 @@ $mol_check_expand_demo $mol_example_small
 			<= Empty_expanded $mol_check_expand
 				checked?val <=> expanded_expanded?val true
 	tags /
-		\expand
 		\fold
 	aspects /
-		\Widget/Control
+		\Widget/Control/Button
+		\Type/Boolean
 
 $mol_check_group $mol_check_box
 	checks /$mol_check
@@ -2597,12 +2789,10 @@ $mol_check_group_demo $mol_example_small
 						title <= luck_title \Luck
 						checked?val <=> luck?val true
 	tags /
-		\$mol_check_box
-		\checkbox
 		\multi
 		\group
 	aspects /
-		\Widget/Control
+		\Widget/Control/Button
 
 $mol_icon_microphone $mol_icon path \M12,2C13.66,2 15,3.34 15,5V11C15,12.66 13.66,14 12,14C10.34,14 9,12.66 9,11V5C9,3.34 10.34,2 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7C7,13.76 9.24,16 12,16C14.76,16 17,13.76 17,11H19Z
 
@@ -2622,13 +2812,10 @@ $mol_check_icon_demo $mol_example_small
 			checked true
 			enabled false
 	tags /
-		\$mol_icon
-		\checkbox
 		\switch
-		\button
-		\icon
+		\toggle
 	aspects /
-		\Widget/Control
+		\Widget/Control/Button
 
 $mol_code $mol_view
 	sub /
@@ -2662,10 +2849,8 @@ $mol_code_demo $mol_example_small
 		<= Itf $mol_code
 			format \ITF
 	tags /
-		\code
 		\qrcode
 		\barcode
-		\scanner
 		\scan
 		\cordova
 	aspects /
@@ -2679,7 +2864,8 @@ $mol_csv_parse_demo $mol_example_code
 		\table
 	aspects /
 		\Language/CSV
-		\Serializer
+		\Language/TSV
+		\Algorithm/Serial
 
 $mol_csv_serial_demo $mol_example_code
 	code? \
@@ -2692,7 +2878,8 @@ $mol_csv_serial_demo $mol_example_code
 		\table
 	aspects /
 		\Language/CSV
-		\Parser
+		\Language/TSV
+		\Algorithm/Parse
 
 $mol_data_array_demo $mol_example_code
 	code? \
@@ -2704,8 +2891,8 @@ $mol_data_array_demo $mol_example_code
 		\runtime
 		\validation
 	aspects /
-		\Assert
-		\Type/Array
+		\Algorithm/Assert
+		\Type/List
 
 $mol_data_boolean_demo $mol_example_code
 	code? \
@@ -2717,7 +2904,7 @@ $mol_data_boolean_demo $mol_example_code
 		\runtime
 		\validation
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/Boolean
 
 $mol_data_const_demo $mol_example_code
@@ -2731,7 +2918,7 @@ $mol_data_const_demo $mol_example_code
 		\validation
 		\equals
 	aspects /
-		\Assert
+		\Algorithm/Assert
 
 $mol_data_dict_demo $mol_example_code
 	code? \
@@ -2743,7 +2930,7 @@ $mol_data_dict_demo $mol_example_code
 		\runtime
 		\validation
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/Dictionary
 
 $mol_data_email_demo $mol_example_code
@@ -2756,7 +2943,7 @@ $mol_data_email_demo $mol_example_code
 		\runtime
 		\validation
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/Email
 
 $mol_data_enum_demo_number $mol_example_code
@@ -2771,7 +2958,7 @@ $mol_data_enum_demo_number $mol_example_code
 		\validation
 		\enum
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/Number
 
 $mol_data_enum_demo_string $mol_example_code
@@ -2786,7 +2973,7 @@ $mol_data_enum_demo_string $mol_example_code
 		\validation
 		\enum
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/String
 
 $mol_data_instance_demo $mol_example_code
@@ -2800,7 +2987,7 @@ $mol_data_instance_demo $mol_example_code
 		\validation
 		\instance
 	aspects /
-		\Assert
+		\Algorithm/Assert
 
 $mol_data_integer_demo $mol_example_code
 	code? \
@@ -2812,8 +2999,8 @@ $mol_data_integer_demo $mol_example_code
 		\runtime
 		\validation
 	aspects /
-		\Assert
-		\Type/Integer
+		\Algorithm/Assert
+		\Type/Number/Integer
 
 $mol_data_nullable_demo $mol_example_code
 	code? \
@@ -2827,7 +3014,7 @@ $mol_data_nullable_demo $mol_example_code
 		\validation
 		\nullable
 	aspects /
-		\Assert
+		\Algorithm/Assert
 
 $mol_data_number_demo $mol_example_code
 	code? \
@@ -2839,7 +3026,7 @@ $mol_data_number_demo $mol_example_code
 		\runtime
 		\validation
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/Number
 
 $mol_data_optional_demo $mol_example_code
@@ -2855,7 +3042,7 @@ $mol_data_optional_demo $mol_example_code
 		\optional
 		\maybe
 	aspects /
-		\Assert
+		\Algorithm/Assert
 
 $mol_data_pattern_demo $mol_example_code
 	code? \
@@ -2868,7 +3055,7 @@ $mol_data_pattern_demo $mol_example_code
 		\validation
 		\pattern
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/String
 
 $mol_data_pipe_demo $mol_example_code
@@ -2886,7 +3073,8 @@ $mol_data_pipe_demo $mol_example_code
 		\validation
 		\pipe
 	aspects /
-		\Assert
+		\Algorithm/Assert
+		\Algorithm/Compose
 
 $mol_data_range_demo $mol_example_code
 	code? \
@@ -2899,7 +3087,7 @@ $mol_data_range_demo $mol_example_code
 		\validation
 		\range
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/Number
 
 $mol_data_record_demo $mol_example_code
@@ -2915,7 +3103,7 @@ $mol_data_record_demo $mol_example_code
 		\runtime
 		\validation
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/Record
 
 $mol_data_string_demo $mol_example_code
@@ -2928,7 +3116,7 @@ $mol_data_string_demo $mol_example_code
 		\runtime
 		\validation
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/String
 
 $mol_data_tagged_demo $mol_example_code
@@ -2945,7 +3133,7 @@ $mol_data_tagged_demo $mol_example_code
 		\validation
 		\tagged
 	aspects /
-		\Assert
+		\Algorithm/Assert
 
 $mol_data_variant_demo $mol_example_code
 	code? \
@@ -2966,20 +3154,7 @@ $mol_data_variant_demo $mol_example_code
 		\variant
 		\adt
 	aspects /
-		\Assert
-
-$mol_pick $mol_pop
-	event *
-		^
-		keydown?event <=> keydown?event null
-	Anchor <= Trigger $mol_check
-		minimal_width 40
-		minimal_height 40
-		enabled <= trigger_enabled true
-		checked?val <=> showed?val
-		sub <= trigger_content /$mol_view_content
-			<= title
-		hint <= hint \
+		\Algorithm/Assert
 
 $mol_icon_calendar $mol_icon path \M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z
 
@@ -3052,12 +3227,11 @@ $mol_date_demo $mol_example_small
 			sub /
 				<= formatted \
 	tags /
-		\$mol_time_moment
-		\date
+		\time
 		\datepicker
 		\format
 	aspects /
-		\Widget/Control
+		\Widget/Control/Button/Picker
 		\Type/Date
 
 $mol_switch $mol_check_list
@@ -3091,9 +3265,6 @@ $mol_deck_demo $mol_example_small
 				title \Spam
 				Content <= Spam_content $mol_filler
 	tags /
-		\$mol_card
-		\deck
-		\card
 		\tabs
 		\container
 	aspects /
@@ -3122,11 +3293,11 @@ $mol_dimmer_demo $mol_example_small
 				haystack \Let's search nothing
 				needle \
 	tags /
-		\dimmer
 		\search
 		\highlight
 	aspects /
 		\Widget/Text
+		\Type/String
 
 $mol_drag $mol_ghost
 	event *
@@ -3145,6 +3316,10 @@ $mol_drag $mol_ghost
 	allow_move true
 	image <= dom_node
 
+$mol_icon_trash_can $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z
+
+$mol_icon_trash_can_outline $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z
+
 $mol_drop $mol_ghost
 	enabled? true
 	event *
@@ -3159,10 +3334,6 @@ $mol_drop $mol_ghost
 		\link
 		\copy
 		\move
-
-$mol_icon_trash_can $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z
-
-$mol_icon_trash_can_outline $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z
 
 $mol_drag_demo $mol_example_large
 	task_count 100
@@ -3191,17 +3362,13 @@ $mol_drag_demo $mol_example_large
 				uri <= task_uri* \
 				sub / <= task_title* \
 	tags /
-		\$mol_drop
-		\$mol_float
-		\$mol_link
-		\$mol_icon
-		\$mol_scroll
 		\drag
 		\dragndrop
-		\list
+		\reorder
 		\transfer
 	aspects /
 		\Widget/Plugin
+		\Drag'n'Drop
 
 $mol_dump_demo $mol_example_small
 	title \Attach files an show them
@@ -3212,8 +3379,8 @@ $mol_dump_demo $mol_example_small
 			value <= value null
 			prototypes true
 	tags /
-		\$mol_list
 		\dump
+		\json
 		\javascript
 		\debug
 	aspects /
@@ -3227,7 +3394,6 @@ $mol_expander_demo $mol_example_small
 			content /
 				<= Content $mol_filler
 	tags /
-		\$mol_filler
 		\expander
 		\accordion
 		\expand
@@ -3286,8 +3452,6 @@ $mol_float_demo $mol_example_large
 						<= Filler1 $mol_filler
 						<= Filler2 $mol_filler
 	tags /
-		\$mol_scroll
-		\$mol_filler
 		\scroll
 		\container
 	aspects /
@@ -3315,67 +3479,6 @@ $mol_form $mol_list
 			sub <= foot <= buttons /$mol_view
 
 $mol_form_group $mol_view
-
-$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
-
-$mol_number $mol_view
-	precision_view <= precision 1
-	precision_change <= precision 1
-	value_min -Infinity
-	value_max +Infinity
-	value? +NaN
-	enabled true
-	sub /
-		<= String $mol_string
-			- \ we don't want native number controls in mobile devices
-			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
-			type <= type \tel
-			value?val <=> value_string?val \
-			hint <= hint \ 
-			enabled <= string_enabled <= enabled
-		<= Dec $mol_button_minor
-			event_click? <=> event_dec? null
-			enabled <= dec_enabled <= enabled
-			sub / <= dec_icon $mol_icon_minus
-		<= Inc $mol_button_minor
-			event_click? <=> event_inc? null
-			enabled <= inc_enabled <= enabled
-			sub / <= inc_icon $mol_icon_plus
-
-$mol_icon_dots_vertical $mol_icon path \M12,16C13.1,16 14,16.9 14,18C14,19.1 13.1,20 12,20C10.9,20 10,19.1 10,18C10,16.9 10.9,16 12,16M12,10C13.1,10 14,10.9 14,12C14,13.1 13.1,14 12,14C10.9,14 10,13.1 10,12C10,10.9 10.9,10 12,10M12,4C13.1,4 14,4.9 14,6C14,7.1 13.1,8 12,8C10.9,8 10,7.1 10,6C10,4.9 10.9,4 12,4Z
-
-$mol_select $mol_pick
-	dictionary?val *
-	options /string
-	value?val \
-	option_label_default \
-	Option_row* $mol_button_minor
-		event_click?event <=> event_select*?event null
-		sub <= option_content* /
-			<= Option_label* $mol_dimmer
-				haystack <= option_label* \
-				needle <= filter_pattern?val \
-	No_options $mol_view
-		sub /
-			<= no_options_message @ \No options
-	plugins /
-		^
-		<= Nav $mol_nav
-			keys_y <= nav_components /$mol_view
-			current_y?component <=> option_focused?component null
-			cycle?val <=> nav_cycle?val true
-	hint @ \Pick..
-	bubble_content /
-		<= Filter
-		<= Bubble_pane $mol_scroll sub /
-			<= Menu $mol_list
-				rows <= menu_content /$mol_view
-	Filter $mol_string
-		value?val <=> filter_pattern?val \
-		hint @ \Filter..
-		submit?event <=> submit?event null
-		enabled <= enabled true
-	Trigger_icon $mol_icon_dots_vertical
 
 $mol_form_demo $mol_example
 	title \Sign Up form demo
@@ -3582,12 +3685,14 @@ $mol_format_demo $mol_example_small
 				mask \__.__.____ __:__
 				value? <=> moment? \
 	tags /
-		\$mol_format
-		\$mol_string
-		\$mol_phone
+		\phone
+		\ip
+		\car
+		\datetime
 		\input
 	aspects /
 		\Widget/Control
+		\Type/String
 
 $mol_frame_demo $mol_example_large
 	sub /
@@ -3595,11 +3700,11 @@ $mol_frame_demo $mol_example_large
 			title \Another page inside that
 			uri \https://mol.hyoo.ru/
 	tags /
-		\frame
 		\iframe
 		\container
 	aspects /
 		\Widget/Integration
+		\Widget/Island
 
 $mol_gallery $mol_view
 	sub <= items /$mol_view
@@ -3623,8 +3728,6 @@ $mol_gallery_demo $mol_example
 			<= Item_title* $mol_paragraph
 				title <= item_title* \
 	tags /
-		\$mol_link
-		\$mol_paragraph
 		\gallery
 		\image
 		\adaptive
@@ -3708,11 +3811,11 @@ $mol_html_view_demo $mol_example
 				\ <blockquote><p>Block quotation</p></blockquote>
 				\ <pre><code>Block code</code></pre>
 	tags /
-		\$mol_scroll
 		\html
 		\render
 	aspects /
 		\Widget
+		\Type/HTML
 
 $mol_infinite $mol_list
 	before* /
@@ -3744,9 +3847,7 @@ $mol_infinite_demo $mol_example_large
 							<= Name* $mol_paragraph title <= name* \
 							<= City* $mol_paragraph title <= city* \
 	tags /
-		\$mol_filler
-		\$mol_list
-		\$mol_avatar
+		\avatar
 		\infinite
 		\scroll
 		\virtual
@@ -3766,7 +3867,6 @@ $mol_labeler_demo $mol_example_small
 				hint \Jack Sparrow
 				value?val <=> user_name?val \
 	tags /
-		\$mol_string
 		\label
 		\form
 		\field
@@ -3791,10 +3891,8 @@ $mol_layout_demo $mol_example_large
 			context => context
 			width => width
 			height => height
-	tags /
-		\layout
 	aspects /
-		\Widget
+		\Algorithm/Constraint
 
 $mol_icon_download $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
 
@@ -3838,7 +3936,8 @@ $mol_link_demo $mol_example_small
 		\router
 		\url
 	aspects /
-		\Widget/Navigation
+		\Navigation
+		\Widget/Button
 
 $mol_link_iconed_demo $mol_example_small
 	title \Link with icon
@@ -3850,14 +3949,12 @@ $mol_link_iconed_demo $mol_example_small
 				<= Output $mol_link_iconed
 					uri <= uri?val
 	tags /
-		\$mol_link
-		\$mol_icon
-		\$mol_string
 		\link
 		\icon
 		\url
 	aspects /
-		\Widget/Navigation
+		\Navigation
+		\Widget/Button
 
 $mol_link_lazy $mol_link
 	uri?val \
@@ -3884,7 +3981,8 @@ $mol_link_lazy_demo $mol_example_small
 		\lazy
 		\download
 	aspects /
-		\Widget/Navigation
+		\Navigation
+		\Widget/Button
 
 $mol_list_demo $mol_example_small
 	sub /
@@ -3954,11 +4052,6 @@ $mol_list_demo_table $mol_example
 						Content <= Date* $mol_date
 							value_moment?val <=> row_moment*?val $mol_time_moment
 	tags /
-		\$mol_row
-		\$mol_check
-		\$mol_switch
-		\$mol_time
-		\$mol_link
 		\list
 		\table
 		\scroll
@@ -3978,9 +4071,6 @@ $mol_list_demo_tree $mol_example_large
 		Content <= Row_content* $mol_list
 			rows <= row_content* /
 	tags /
-		\$mol_expander
-		\$mol_list
-		\$mol_paragraph
 		\list
 		\tree
 		\hierarchy
@@ -4021,10 +4111,9 @@ $mol_map_yandex_demo $mol_example_large
 					title <= place_title \
 					address <= place_addres \Saint-Petersburg
 					content <= place_content \It is Russia's second-largest city after Moscow
-	tags /
-		\map
 	aspects /
-		\Widget/Integration
+		\Integration
+		\Widget/Map
 
 $hyoo_marked_app $mol_book2
 	plugins /
@@ -4125,12 +4214,10 @@ $mol_nav_demo $mol_example
 						third \Third
 			status \Select option and use keys to switch
 	tags /
-		\$mol_card
-		\$mol_switch
 		\navigation
-		\keyboard
 	aspects /
 		\Widget/Plugin
+		\Controler/Keyboard
 
 
 $mol_number_demo $mol_example_small
@@ -4326,9 +4413,6 @@ $mol_number_demo $mol_example_small
 								value_min -10
 								value_max -5
 	tags /
-		\$mol_labeler
-		\$mol_number
-		\$mol_section
 		\number
 		\field
 		\label
@@ -4350,10 +4434,6 @@ $mol_page_demo $mol_example_large
 				<= Button_foot $mol_button_minor
 					title \Footer Button
 	tags /
-		\$mol_filler
-		\$mol_row
-		\$mol_button
-		\page
 		\container
 		\header
 		\footer
@@ -4387,6 +4467,7 @@ $mol_paginator_demo $mol_example_small
 		\navigation
 	aspects /
 		\Widget/Control
+		\Type/Number/Integer
 
 $mol_plot_demo $mol_example_large
 	title \Dynamic lightweight graphs
@@ -4418,7 +4499,9 @@ $mol_plot_demo $mol_example_large
 		\graph
 		\dashboard
 	aspects /
-		\Widget/Draw
+		\Widget/Draw/Chart/Line
+		\Widget/Draw/Chart/Fill
+		\Widget/Draw/Chart/Dot
 
 $mol_plot_map_heat $mol_plot_group
 	series_z /number
@@ -4459,7 +4542,7 @@ $mol_plot_map_heat_demo $mol_example_large
 		\graph
 		\dashboard
 	aspects /
-		\Widget/Draw
+		\Widget/Draw/Chart/Heat
 
 $mol_icon_anchor $mol_icon path \M12,2C10.34,2 9,3.34 9,5C9,6.27 9.8,7.4 11,7.83V10H8V12H11V18.92C9.16,18.63 7.53,17.57 6.53,16H8V14H3V19H5V17.3C6.58,19.61 9.2,21 12,21C14.8,21 17.42,19.61 19,17.31V19H21V14H16V16H17.46C16.46,17.56 14.83,18.63 13,18.92V12H16V10H13V7.82C14.2,7.4 15,6.27 15,5C15,3.34 13.66,2 12,2M12,4C12.55,4 13,4.45 13,5C13,5.55 12.55,6 12,6C11.45,6 11,5.55 11,5C11,4.45 11.45,4 12,4Z
 
@@ -4507,9 +4590,6 @@ $mol_pop_demo $mol_example
 								\This is
 								\bubble_content
 	tags /
-		\$mol_row
-		\$mol_button
-		\$mol_labeler
 		\popup
 		\menu
 		\align
@@ -4556,7 +4636,6 @@ $mol_pop_over_demo $mol_example_small
 								<= About $mol_button_minor
 									title <= about_title \About
 	tags /
-		\$mol_button
 		\popover
 		\pop
 		\menu
@@ -4575,11 +4654,10 @@ $mol_portion_demo $mol_example_small
 		<= Full $mol_portion
 			portion <= third 1
 	tags /
-		\dashboard
 		\progress
 		\slider
 	aspects /
-		\Widget/Draw
+		\Widget/Draw/Chart/Bar
 
 $mol_icon_menu $mol_icon path \M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z
 
@@ -4626,22 +4704,17 @@ $mol_pick_demo $mol_example_small
 								click? <=> delete_confirm? null
 	-
 	tags /
-		\$mol_link_lazy
-		\$mol_icon
-		\$mol_text
-		\$mol_check
 		\pick
 		\popup
 		\info
 		\menu
-		\download
 		\icon
 		\container
 		\confirm
-		\markdown
 		\modal
 	aspects /
 		\Widget/Float
+		\Widget/Control/Button/Picker
 
 $mol_icon_clock $mol_icon path \M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z
 
@@ -4679,7 +4752,7 @@ $mol_pick_time_demo $mol_example_small
 		\time
 		\datetime
 	aspects /
-		\Widget/Control
+		\Widget/Control/Button/Picker
 		\Type/Time
 
 $mol_row_demo_form $mol_example
@@ -4704,16 +4777,9 @@ $mol_row_demo_form $mol_example
 				<= Drop $mol_button_minor
 					title <= drop_title \Drop
 	tags /
-		\$mol_search
-		\$mol_number
-		\$mol_portion
-		\$mol_check
-		\$mol_button
 		\row
 		\container
 		\flex
-		\identation
-		\space
 	aspects /
 		\Widget/Layout
 
@@ -4728,7 +4794,6 @@ $mol_row_demo_products $mol_example
 		<= Products $mol_row
 			sub <= products /
 	tags /
-		\$mol_card
 		\products
 		\grid
 		\scroll
@@ -4752,7 +4817,6 @@ $mol_scroll_demo $mol_example_large
 					<= Filler8 $mol_filler
 					<= Filler9 $mol_filler
 	tags /
-		\$mol_filler
 		\scroll
 		\container
 	aspects /
@@ -4773,6 +4837,7 @@ $mol_search_demo $mol_example_small
 		\filter
 	aspects /
 		\Widget/Control
+		\Type/String
 
 $mol_section_demo $mol_example_small
 	title \Section with header
@@ -4782,8 +4847,6 @@ $mol_section_demo $mol_example_small
 			content /
 				<= Section_content $mol_filler
 	tags /
-		\$mol_filler
-		\section
 		\container
 		\header
 	aspects /
@@ -4842,7 +4905,6 @@ $mol_section_demo_level $mol_example_small
 			<= Section7_text $mol_filler
 				min_symbols 250
 	tags /
-		\section
 		\header
 		\level
 		\h1
@@ -4867,11 +4929,9 @@ $mol_select_demo_colors $mol_example_small
 							needle <= color_filter
 					minimal_height 40
 	tags /
-		\$mol_dimmer
-		\$mol_list
 		\select
 		\color
-		\colorpicker
+		\picker
 		\filter
 	aspects /
 		\Widget/Control
@@ -4902,6 +4962,7 @@ $mol_select_demo_month $mol_example_small
 				dec \December
 	tags /
 		\select
+		\month
 	aspects /
 		\Widget/Control
 
@@ -4919,6 +4980,7 @@ $mol_select_demo_priority $mol_example_small
 				\Lowest
 	tags /
 		\select
+		\priority
 	aspects /
 		\Widget/Control
 
@@ -4968,6 +5030,7 @@ $mol_select_list_demo $mol_example_small
 		\multiselect
 	aspects /
 		\Widget/Control
+		\Type/List
 
 $mol_speck_demo $mol_example_small
 	sub /
@@ -4991,10 +5054,6 @@ $mol_speck_demo $mol_example_small
 				<= Message_speck $mol_speck
 				<= message_text \Created
 	tags /
-		\$mol_link
-		\$mol_icon
-		\$mol_paragraph
-		\$mol_button
 		\speck
 		\highlight
 		\badge
@@ -5013,16 +5072,13 @@ $mol_speech_demo $mol_example_small
 			click?val <=> speak?val null
 			sub / \Speak
 	tags /
-		\$mol_icon
-		\$mol_row
-		\$mol_button
 		\speech
 		\voice
 		\recognition
 		\dictation
 	aspects /
 		\Widget/Plugin
-		\Widget/Media
+		\Media/Audio
 
 $mol_spell_demo $mol_example_small
 	sub /
@@ -5035,7 +5091,7 @@ $mol_spell_demo $mol_example_small
 		\$mol_textarea
 		\spellcheck
 	aspects /
-		\Widget
+		\Algorithm/Validate
 
 $mol_stack_demo $mol_example_small
 	sub /
@@ -5043,9 +5099,6 @@ $mol_stack_demo $mol_example_small
 			sub /
 				<= Back $mol_image uri \https://thiscatdoesnotexist.com/
 				<= Front $mol_view sub / \❤🧡💛💚💙💜🤎🖤
-	tags /
-		\$mol_stack
-		\layout
 	aspects /
 		\Widget/Layout
 
@@ -5068,7 +5121,6 @@ $mol_string_demo $mol_example_small
 			value?val <=> name2?val
 	tags /
 		\input
-		\string
 		\text
 		\field
 	aspects /
@@ -5099,7 +5151,6 @@ $mol_switch_demo $mol_example
 							green <= option_green
 							blue <= option_blue
 	tags /
-		\switch
 		\option
 		\group
 		\radio
@@ -5185,8 +5236,6 @@ $mol_tag_tree_demo $mol_example
 					\universe/marvel
 					\sex/female
 	tags /
-		\tags
-		\tree
 		\taxonomy
 		\menu
 	aspects /
@@ -5201,12 +5250,12 @@ $mol_text_code_demo $mol_example_small
 			syntax <= syntax null
 			uri_resolve* <= uri_resolve* \
 	tags /
-		\$mol_list
 		\text
 		\code
 		\syntax highlighting
 	aspects /
 		\Widget/Text
+		\Type/String
 
 $mol_search_jumper $mol_search
 	Root $mol_view
@@ -5331,10 +5380,11 @@ $mol_text_demo $mol_example_large
 								\| ~~Row~~ 9 | ~~Cell~~ 1x9 | ~~Cell~~ 2x9 | ~~Cell~~ 3x9
 								\
 	tags /
-		\text
 		\markdown
+		\marked
 	aspects /
 		\Widget/Text
+		\Type/String
 
 $mol_textarea_demo $mol_example
 	title \Text input field in various states
@@ -5351,9 +5401,9 @@ $mol_textarea_demo $mol_example
 				enabled false
 				value <= symbols_hint \
 	tags /
-		\textarea
 		\code
-		\syntax highlighting
+		\syntax
+		\highlight
 	aspects /
 		\Widget/Control
 		\Type/String
@@ -5363,9 +5413,6 @@ $mol_time_duration_demo $mol_example_code
 	code? \
 		\const week = new $mol_time_duration( 'P7D' )
 		\const days = week.count( 'P1D' )
-	tags /
-		\$mol_time
-		\duraion
 	aspects /
 		\Type/Time
 
@@ -5374,9 +5421,6 @@ $mol_time_interval_demo $mol_example_code
 	code? \
 		\const nextYear = new $mol_time_interval( '/P1Y' )
 		\const anniversary = nextYear.end.toString( 'YYYY-MM-DD hh:mm' )
-	tags /
-		\$mol_time
-		\interval
 	aspects /
 		\Type/Time
 
@@ -5386,9 +5430,6 @@ $mol_time_moment_demo $mol_example_code
 		\const now = new $mol_time_moment
 		\const today = now.toString( 'YYYY-MM-DD' )
 		\const tomorrow = now.shift( 'P1D' ).toString( 'DD Mon' )
-	tags /
-		\$mol_time
-		\moment
 	aspects /
 		\Type/Time
 
@@ -5431,13 +5472,6 @@ $mol_toolbar_demo $mol_example_small
 					<= Paste_icon $mol_icon_content_paste
 				<= Delete $mol_button_minor sub /
 					<= Delete_icon $mol_icon_delete
-	tags /
-		\$mol_string
-		\$mol_button
-		\$mol_icon
-		\toolbar
-		\button
-		\icon
 	aspects /
 		\Widget/Layout
 
@@ -5494,19 +5528,9 @@ $mol_video_player_demo $mol_example_large
 			time?val => time?val
 			duration => duration
 	tags /
-		\$mol_row
-		\$mol_button
-		\$mol_check
-		\$mol_paragraph
-		\$mol_number
-		\$mol_labeler
-		\video
-		\player
 		\palyback
-		\upload
-		\media
 	aspects /
-		\Media
+		\Media/Video
 
 $mol_icon_eye $mol_icon path \M12,9C10.34,9 9,10.34 9,12C9,13.66 10.34,15 12,15C13.66,15 15,13.66 15,12C15,10.34 13.66,9 12,9M12,17C9.24,17 7,14.76 7,12C7,9.24 9.24,7 12,7C14.76,7 17,9.24 17,12C17,14.76 14.76,17 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z
 
@@ -5532,10 +5556,10 @@ $mol_password_demo $mol_example_small
 			value?val <=> pass2?val \
 			hint \Top secret
 	tags /
-		\password
 		\input
 	aspects /
 		\Widget/Control
+		\Type/String
 
 $mol_lights_demo $mol_example_small
 	title \Switcher between light/dark themes (usually for `$mol_theme_auto` plugin).
@@ -5550,5 +5574,7 @@ $mol_lights_demo $mol_example_small
 		\dark
 		\theme
 		\switcher
+		\toggle
 	aspects /
-		\Widget
+		\Widget/Control/Button
+		\Theme

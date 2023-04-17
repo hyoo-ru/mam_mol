@@ -38,12 +38,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Assert
+		 * aspects /
+		 * 	\Algorithm/Assert
+		 * 	\Algorithm/Compose
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Assert"
+				"Algorithm/Assert",
+				"Algorithm/Compose"
 			] as readonly any[]
 		}
 	}

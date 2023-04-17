@@ -22,10 +22,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_link
-		 * 	\$mol_icon
-		 * 	\$mol_paragraph
-		 * 	\$mol_button
 		 * 	\speck
 		 * 	\highlight
 		 * 	\badge
@@ -33,10 +29,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_link",
-				"$mol_icon",
-				"$mol_paragraph",
-				"$mol_button",
 				"speck",
 				"highlight",
 				"badge"

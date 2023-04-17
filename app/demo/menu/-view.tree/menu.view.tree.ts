@@ -123,11 +123,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * levels_expanded_default 1
+		 * levels_expanded_default 0
 		 * ```
 		 */
 		levels_expanded_default() {
-			return 1
+			return 0
 		}
 		
 		/**

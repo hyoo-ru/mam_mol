@@ -2408,14 +2408,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_row extends $mol_view {
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_text_list extends $mol_text {
         auto_scroll(): any;
         attr(): Record<string, any>;
@@ -2438,7 +2430,6 @@ declare namespace $ {
         paths(): readonly any[];
         content(): string;
         Text(): $$.$mol_text;
-        Content(): $mol_row;
     }
 }
 

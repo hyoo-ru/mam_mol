@@ -41,20 +41,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\code
 		 * 	\qrcode
 		 * 	\barcode
-		 * 	\scanner
 		 * 	\scan
 		 * 	\cordova
 		 * ```
 		 */
 		tags() {
 			return [
-				"code",
 				"qrcode",
 				"barcode",
-				"scanner",
 				"scan",
 				"cordova"
 			] as readonly any[]

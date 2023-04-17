@@ -9,5 +9,5 @@ $mol_data_pattern_demo $mol_example_code
 		\validation
 		\pattern
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/String

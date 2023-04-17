@@ -30,12 +30,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget
+		 * aspects / \Algorithm/Validate
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget"
+				"Algorithm/Validate"
 			] as readonly any[]
 		}
 		

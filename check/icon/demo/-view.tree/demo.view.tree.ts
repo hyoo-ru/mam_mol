@@ -29,31 +29,25 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_icon
-		 * 	\checkbox
 		 * 	\switch
-		 * 	\button
-		 * 	\icon
+		 * 	\toggle
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_icon",
-				"checkbox",
 				"switch",
-				"button",
-				"icon"
+				"toggle"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Control
+		 * aspects / \Widget/Control/Button
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Control"
+				"Widget/Control/Button"
 			] as readonly any[]
 		}
 		

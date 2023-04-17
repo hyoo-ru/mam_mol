@@ -24,9 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_link
-		 * 	\$mol_icon
-		 * 	\$mol_string
 		 * 	\link
 		 * 	\icon
 		 * 	\url
@@ -34,9 +31,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_link",
-				"$mol_icon",
-				"$mol_string",
 				"link",
 				"icon",
 				"url"
@@ -45,12 +39,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Navigation
+		 * aspects /
+		 * 	\Navigation
+		 * 	\Widget/Button
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Navigation"
+				"Navigation",
+				"Widget/Button"
 			] as readonly any[]
 		}
 		

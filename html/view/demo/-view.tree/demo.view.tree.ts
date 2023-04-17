@@ -24,14 +24,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_scroll
 		 * 	\html
 		 * 	\render
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_scroll",
 				"html",
 				"render"
 			] as readonly any[]
@@ -39,12 +37,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget
+		 * aspects /
+		 * 	\Widget
+		 * 	\Type/HTML
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget"
+				"Widget",
+				"Type/HTML"
 			] as readonly any[]
 		}
 		

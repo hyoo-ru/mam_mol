@@ -26,7 +26,6 @@ namespace $ {
 		 * tags /
 		 * 	\app
 		 * 	\page
-		 * 	\book
 		 * 	\navigation
 		 * 	\transition
 		 * 	\multipage
@@ -39,7 +38,6 @@ namespace $ {
 			return [
 				"app",
 				"page",
-				"book",
 				"navigation",
 				"transition",
 				"multipage",

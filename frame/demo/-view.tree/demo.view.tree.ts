@@ -15,14 +15,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\frame
 		 * 	\iframe
 		 * 	\container
 		 * ```
 		 */
 		tags() {
 			return [
-				"frame",
 				"iframe",
 				"container"
 			] as readonly any[]
@@ -30,12 +28,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Integration
+		 * aspects /
+		 * 	\Widget/Integration
+		 * 	\Widget/Island
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Integration"
+				"Widget/Integration",
+				"Widget/Island"
 			] as readonly any[]
 		}
 		

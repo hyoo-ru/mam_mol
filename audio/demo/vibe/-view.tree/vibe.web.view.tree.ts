@@ -52,26 +52,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\Audio
-		 * 	\Sound
+		 * tags / \sound
 		 * ```
 		 */
 		tags() {
 			return [
-				"Audio",
-				"Sound"
+				"sound"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Media
+		 * aspects / \Media/Audio
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Media"
+				"Media/Audio"
 			] as readonly any[]
 		}
 		

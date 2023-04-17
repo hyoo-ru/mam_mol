@@ -24,10 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_filler
-		 * 	\$mol_row
-		 * 	\$mol_button
-		 * 	\page
 		 * 	\container
 		 * 	\header
 		 * 	\footer
@@ -40,10 +36,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_filler",
-				"$mol_row",
-				"$mol_button",
-				"page",
 				"container",
 				"header",
 				"footer",

@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\switch
 		 * 	\option
 		 * 	\group
 		 * 	\radio
@@ -32,7 +31,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"switch",
 				"option",
 				"group",
 				"radio"

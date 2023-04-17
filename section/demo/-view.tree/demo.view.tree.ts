@@ -24,16 +24,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_filler
-		 * 	\section
 		 * 	\container
 		 * 	\header
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_filler",
-				"section",
 				"container",
 				"header"
 			] as readonly any[]

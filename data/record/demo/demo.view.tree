@@ -11,5 +11,5 @@ $mol_data_record_demo $mol_example_code
 		\runtime
 		\validation
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/Record

@@ -23,26 +23,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\expand
-		 * 	\fold
+		 * tags / \fold
 		 * ```
 		 */
 		tags() {
 			return [
-				"expand",
 				"fold"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Control
+		 * aspects /
+		 * 	\Widget/Control/Button
+		 * 	\Type/Boolean
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Control"
+				"Widget/Control/Button",
+				"Type/Boolean"
 			] as readonly any[]
 		}
 		

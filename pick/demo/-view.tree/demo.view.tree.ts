@@ -27,49 +27,40 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_link_lazy
-		 * 	\$mol_icon
-		 * 	\$mol_text
-		 * 	\$mol_check
 		 * 	\pick
 		 * 	\popup
 		 * 	\info
 		 * 	\menu
-		 * 	\download
 		 * 	\icon
 		 * 	\container
 		 * 	\confirm
-		 * 	\markdown
 		 * 	\modal
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_link_lazy",
-				"$mol_icon",
-				"$mol_text",
-				"$mol_check",
 				"pick",
 				"popup",
 				"info",
 				"menu",
-				"download",
 				"icon",
 				"container",
 				"confirm",
-				"markdown",
 				"modal"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Float
+		 * aspects /
+		 * 	\Widget/Float
+		 * 	\Widget/Control/Button/Picker
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Float"
+				"Widget/Float",
+				"Widget/Control/Button/Picker"
 			] as readonly any[]
 		}
 		

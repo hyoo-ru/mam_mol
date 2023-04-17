@@ -45,12 +45,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Control
+		 * aspects /
+		 * 	\Widget/Control
+		 * 	\Type/String
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Control"
+				"Widget/Control",
+				"Type/String"
 			] as readonly any[]
 		}
 		

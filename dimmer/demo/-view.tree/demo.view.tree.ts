@@ -24,14 +24,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\dimmer
 		 * 	\search
 		 * 	\highlight
 		 * ```
 		 */
 		tags() {
 			return [
-				"dimmer",
 				"search",
 				"highlight"
 			] as readonly any[]
@@ -39,12 +37,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Text
+		 * aspects /
+		 * 	\Widget/Text
+		 * 	\Type/String
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Text"
+				"Widget/Text",
+				"Type/String"
 			] as readonly any[]
 		}
 		

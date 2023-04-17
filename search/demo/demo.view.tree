@@ -13,3 +13,4 @@ $mol_search_demo $mol_example_small
 		\filter
 	aspects /
 		\Widget/Control
+		\Type/String

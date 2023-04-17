@@ -15,7 +15,6 @@ $mol_string_demo $mol_example_small
 			value?val <=> name2?val
 	tags /
 		\input
-		\string
 		\text
 		\field
 	aspects /

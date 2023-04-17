@@ -24,16 +24,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\tags
-		 * 	\tree
 		 * 	\taxonomy
 		 * 	\menu
 		 * ```
 		 */
 		tags() {
 			return [
-				"tags",
-				"tree",
 				"taxonomy",
 				"menu"
 			] as readonly any[]

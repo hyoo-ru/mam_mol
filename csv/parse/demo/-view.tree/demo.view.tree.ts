@@ -29,13 +29,15 @@ namespace $ {
 		 * ```tree
 		 * aspects /
 		 * 	\Language/CSV
-		 * 	\Serializer
+		 * 	\Language/TSV
+		 * 	\Algorithm/Serial
 		 * ```
 		 */
 		aspects() {
 			return [
 				"Language/CSV",
-				"Serializer"
+				"Language/TSV",
+				"Algorithm/Serial"
 			] as readonly any[]
 		}
 	}

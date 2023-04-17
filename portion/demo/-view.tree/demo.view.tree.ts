@@ -29,14 +29,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\dashboard
 		 * 	\progress
 		 * 	\slider
 		 * ```
 		 */
 		tags() {
 			return [
-				"dashboard",
 				"progress",
 				"slider"
 			] as readonly any[]
@@ -44,12 +42,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Draw
+		 * aspects / \Widget/Draw/Chart/Bar
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Draw"
+				"Widget/Draw/Chart/Bar"
 			] as readonly any[]
 		}
 		

@@ -24,16 +24,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\textarea
 		 * 	\code
-		 * 	\syntax highlighting
+		 * 	\syntax
+		 * 	\highlight
 		 * ```
 		 */
 		tags() {
 			return [
-				"textarea",
 				"code",
-				"syntax highlighting"
+				"syntax",
+				"highlight"
 			] as readonly any[]
 		}
 		

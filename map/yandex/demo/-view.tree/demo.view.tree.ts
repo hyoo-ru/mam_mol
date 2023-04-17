@@ -23,23 +23,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags / \map
-		 * ```
-		 */
-		tags() {
-			return [
-				"map"
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * aspects / \Widget/Integration
+		 * aspects /
+		 * 	\Integration
+		 * 	\Widget/Map
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Integration"
+				"Integration",
+				"Widget/Map"
 			] as readonly any[]
 		}
 		

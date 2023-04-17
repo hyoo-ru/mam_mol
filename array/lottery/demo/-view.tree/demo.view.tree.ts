@@ -16,15 +16,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\array
-		 * 	\random
+		 * aspects /
+		 * 	\Type/List
+		 * 	\Algorithm/Random
 		 * ```
 		 */
-		tags() {
+		aspects() {
 			return [
-				"array",
-				"random"
+				"Type/List",
+				"Algorithm/Random"
 			] as readonly any[]
 		}
 	}

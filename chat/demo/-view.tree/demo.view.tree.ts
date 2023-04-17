@@ -23,26 +23,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\chat
-		 * 	\communication
+		 * tags / \communication
 		 * ```
 		 */
 		tags() {
 			return [
-				"chat",
 				"communication"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Integration
+		 * aspects /
+		 * 	\Integration
+		 * 	\Widget/Button
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Integration"
+				"Integration",
+				"Widget/Button"
 			] as readonly any[]
 		}
 		

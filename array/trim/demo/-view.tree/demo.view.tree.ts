@@ -23,15 +23,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\array
-		 * 	\trim
+		 * aspects / \Type/List
 		 * ```
 		 */
-		tags() {
+		aspects() {
 			return [
-				"array",
-				"trim"
+				"Type/List"
 			] as readonly any[]
 		}
 	}

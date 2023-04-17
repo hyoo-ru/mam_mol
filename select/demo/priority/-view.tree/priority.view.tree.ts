@@ -23,12 +23,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags / \select
+		 * tags /
+		 * 	\select
+		 * 	\priority
 		 * ```
 		 */
 		tags() {
 			return [
-				"select"
+				"select",
+				"priority"
 			] as readonly any[]
 		}
 		

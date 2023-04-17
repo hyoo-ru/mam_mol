@@ -9,4 +9,4 @@ $mol_data_instance_demo $mol_example_code
 		\validation
 		\instance
 	aspects /
-		\Assert
+		\Algorithm/Assert

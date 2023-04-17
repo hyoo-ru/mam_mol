@@ -9,6 +9,5 @@ $mol_array_trim_demo $mol_example_code
 		\	undefined,
 		\	undefined,
 		\])
-	tags /
-		\array
-		\trim
+	aspects /
+		\Type/List

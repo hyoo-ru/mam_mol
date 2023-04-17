@@ -57,30 +57,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\calendar
-		 * 	\date
-		 * 	\period
+		 * tags / \month
 		 * ```
 		 */
 		tags() {
 			return [
-				"calendar",
-				"date",
-				"period"
+				"month"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
 		 * aspects /
-		 * 	\Widget
+		 * 	\Widget/Grid
 		 * 	\Type/Date
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget",
+				"Widget/Grid",
 				"Type/Date"
 			] as readonly any[]
 		}

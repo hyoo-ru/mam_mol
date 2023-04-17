@@ -27,20 +27,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_string
-		 * 	\$mol_check
-		 * 	\$mol_button
-		 * 	\bar
 		 * 	\group
 		 * 	\container
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_string",
-				"$mol_check",
-				"$mol_button",
-				"bar",
 				"group",
 				"container"
 			] as readonly any[]
@@ -48,12 +40,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Layout
+		 * aspects /
+		 * 	\Widget/Layout
+		 * 	\Widget/Island
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Layout"
+				"Widget/Layout",
+				"Widget/Island"
 			] as readonly any[]
 		}
 		

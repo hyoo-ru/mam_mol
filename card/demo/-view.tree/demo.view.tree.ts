@@ -27,29 +27,30 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\card
 		 * 	\status
 		 * 	\container
-		 * 	\paper
+		 * 	\sticker
 		 * ```
 		 */
 		tags() {
 			return [
-				"card",
 				"status",
 				"container",
-				"paper"
+				"sticker"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Layout
+		 * aspects /
+		 * 	\Widget/Layout
+		 * 	\Widget/Island
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Layout"
+				"Widget/Layout",
+				"Widget/Island"
 			] as readonly any[]
 		}
 		

@@ -17,4 +17,4 @@ $mol_data_variant_demo $mol_example_code
 		\variant
 		\adt
 	aspects /
-		\Assert
+		\Algorithm/Assert

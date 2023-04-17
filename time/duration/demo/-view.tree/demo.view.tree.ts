@@ -25,20 +25,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\$mol_time
-		 * 	\duraion
-		 * ```
-		 */
-		tags() {
-			return [
-				"$mol_time",
-				"duraion"
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
 		 * aspects / \Type/Time
 		 * ```
 		 */

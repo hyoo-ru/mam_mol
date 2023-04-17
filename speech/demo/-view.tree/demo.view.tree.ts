@@ -20,9 +20,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_icon
-		 * 	\$mol_row
-		 * 	\$mol_button
 		 * 	\speech
 		 * 	\voice
 		 * 	\recognition
@@ -31,9 +28,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_icon",
-				"$mol_row",
-				"$mol_button",
 				"speech",
 				"voice",
 				"recognition",
@@ -45,13 +39,13 @@ namespace $ {
 		 * ```tree
 		 * aspects /
 		 * 	\Widget/Plugin
-		 * 	\Widget/Media
+		 * 	\Media/Audio
 		 * ```
 		 */
 		aspects() {
 			return [
 				"Widget/Plugin",
-				"Widget/Media"
+				"Media/Audio"
 			] as readonly any[]
 		}
 		

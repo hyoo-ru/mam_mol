@@ -33,9 +33,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_filler
-		 * 	\$mol_list
-		 * 	\$mol_avatar
+		 * 	\avatar
 		 * 	\infinite
 		 * 	\scroll
 		 * 	\virtual
@@ -44,9 +42,7 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_filler",
-				"$mol_list",
-				"$mol_avatar",
+				"avatar",
 				"infinite",
 				"scroll",
 				"virtual",

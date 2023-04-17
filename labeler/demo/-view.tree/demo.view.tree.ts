@@ -27,7 +27,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_string
 		 * 	\label
 		 * 	\form
 		 * 	\field
@@ -36,7 +35,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_string",
 				"label",
 				"form",
 				"field",

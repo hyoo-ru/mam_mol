@@ -48,10 +48,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_page
 		 * 	\app
 		 * 	\page
-		 * 	\book
 		 * 	\menu
 		 * 	\navigation
 		 * 	\transition
@@ -60,10 +58,8 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_page",
 				"app",
 				"page",
-				"book",
 				"menu",
 				"navigation",
 				"transition",
@@ -74,13 +70,13 @@ namespace $ {
 		/**
 		 * ```tree
 		 * aspects /
-		 * 	\Widget/Navigation
+		 * 	\Navigation
 		 * 	\Widget/Layout
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Navigation",
+				"Navigation",
 				"Widget/Layout"
 			] as readonly any[]
 		}

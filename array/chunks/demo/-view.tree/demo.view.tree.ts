@@ -18,15 +18,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\array
-		 * 	\chunks
+		 * aspects /
+		 * 	\Type/List
+		 * 	\Algorithm/Transform
 		 * ```
 		 */
-		tags() {
+		aspects() {
 			return [
-				"array",
-				"chunks"
+				"Type/List",
+				"Algorithm/Transform"
 			] as readonly any[]
 		}
 	}

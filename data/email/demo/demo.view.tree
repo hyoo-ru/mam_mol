@@ -8,5 +8,5 @@ $mol_data_email_demo $mol_example_code
 		\runtime
 		\validation
 	aspects /
-		\Assert
+		\Algorithm/Assert
 		\Type/Email

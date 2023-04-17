@@ -36,11 +36,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_row
-		 * 	\$mol_check
-		 * 	\$mol_switch
-		 * 	\$mol_time
-		 * 	\$mol_link
 		 * 	\list
 		 * 	\table
 		 * 	\scroll
@@ -50,11 +45,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_row",
-				"$mol_check",
-				"$mol_switch",
-				"$mol_time",
-				"$mol_link",
 				"list",
 				"table",
 				"scroll",

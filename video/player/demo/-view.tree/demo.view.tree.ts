@@ -26,44 +26,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\$mol_row
-		 * 	\$mol_button
-		 * 	\$mol_check
-		 * 	\$mol_paragraph
-		 * 	\$mol_number
-		 * 	\$mol_labeler
-		 * 	\video
-		 * 	\player
-		 * 	\palyback
-		 * 	\upload
-		 * 	\media
+		 * tags / \palyback
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_row",
-				"$mol_button",
-				"$mol_check",
-				"$mol_paragraph",
-				"$mol_number",
-				"$mol_labeler",
-				"video",
-				"player",
-				"palyback",
-				"upload",
-				"media"
+				"palyback"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Media
+		 * aspects / \Media/Video
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Media"
+				"Media/Video"
 			] as readonly any[]
 		}
 		

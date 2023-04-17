@@ -1,7 +1,3 @@
-[mol_app_supplies_detail] [mol_labeler_label] {
-	padding: 0;
-}
-
 [mol_app_supplies_detail_content] {
 	padding: 0 .75rem;
 	background: var(--mol_theme_field);

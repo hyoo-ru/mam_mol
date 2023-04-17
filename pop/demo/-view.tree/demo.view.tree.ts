@@ -27,9 +27,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_row
-		 * 	\$mol_button
-		 * 	\$mol_labeler
 		 * 	\popup
 		 * 	\menu
 		 * 	\align
@@ -39,9 +36,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_row",
-				"$mol_button",
-				"$mol_labeler",
 				"popup",
 				"menu",
 				"align",

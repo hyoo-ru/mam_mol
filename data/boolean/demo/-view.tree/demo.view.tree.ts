@@ -33,13 +33,13 @@ namespace $ {
 		/**
 		 * ```tree
 		 * aspects /
-		 * 	\Assert
+		 * 	\Algorithm/Assert
 		 * 	\Type/Boolean
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Assert",
+				"Algorithm/Assert",
 				"Type/Boolean"
 			] as readonly any[]
 		}

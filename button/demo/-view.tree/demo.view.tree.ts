@@ -34,17 +34,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags / \button
-		 * ```
-		 */
-		tags() {
-			return [
-				"button"
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
 		 * aspects / \Widget/Control/Button
 		 * ```
 		 */

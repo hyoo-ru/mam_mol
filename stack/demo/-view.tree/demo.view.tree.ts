@@ -14,20 +14,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\$mol_stack
-		 * 	\layout
-		 * ```
-		 */
-		tags() {
-			return [
-				"$mol_stack",
-				"layout"
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
 		 * aspects / \Widget/Layout
 		 * ```
 		 */

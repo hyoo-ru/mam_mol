@@ -24,16 +24,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_check_box
-		 * 	\checkbox
 		 * 	\multi
 		 * 	\group
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_check_box",
-				"checkbox",
 				"multi",
 				"group"
 			] as readonly any[]
@@ -41,12 +37,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Control
+		 * aspects / \Widget/Control/Button
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Control"
+				"Widget/Control/Button"
 			] as readonly any[]
 		}
 		

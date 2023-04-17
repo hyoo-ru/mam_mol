@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\attach
 		 * 	\file
 		 * 	\image
 		 * 	\upload
@@ -32,7 +31,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"attach",
 				"file",
 				"image",
 				"upload"
@@ -41,12 +39,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Control
+		 * aspects /
+		 * 	\Widget/Control
+		 * 	\Type/File
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Control"
+				"Widget/Control",
+				"Type/File"
 			] as readonly any[]
 		}
 		

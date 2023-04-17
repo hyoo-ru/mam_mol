@@ -7805,22 +7805,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_row extends $mol_view {
-    }
-    $.$mol_row = $mol_row;
-})($ || ($ = {}));
-//mol/row/-view.tree/row.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: var(--mol_gap_block);\n\tgap: var(--mol_gap_block);\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmax-width: 100%;\n}\n");
-})($ || ($ = {}));
-//mol/row/-css/row.view.css.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_text_list extends $mol_text {
         auto_scroll() {
             return null;
@@ -7876,7 +7860,7 @@ var $;
         }
         body() {
             return [
-                this.Content()
+                this.Text()
             ];
         }
         paths() {
@@ -7895,20 +7879,10 @@ var $;
             obj.text = () => this.content();
             return obj;
         }
-        Content() {
-            const obj = new this.$.$mol_row();
-            obj.sub = () => [
-                this.Text()
-            ];
-            return obj;
-        }
     }
     __decorate([
         $mol_mem
     ], $mol_app_quine.prototype, "Text", null);
-    __decorate([
-        $mol_mem
-    ], $mol_app_quine.prototype, "Content", null);
     $.$mol_app_quine = $mol_app_quine;
 })($ || ($ = {}));
 //mol/app/quine/-view.tree/quine.view.tree.ts

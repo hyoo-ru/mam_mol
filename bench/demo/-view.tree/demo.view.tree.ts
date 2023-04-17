@@ -24,31 +24,25 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_portion
-		 * 	\$mol_float
-		 * 	\$mol_grid
-		 * 	\benchmark
 		 * 	\perfomance
+		 * 	\comparison
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_portion",
-				"$mol_float",
-				"$mol_grid",
-				"benchmark",
-				"perfomance"
+				"perfomance",
+				"comparison"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget
+		 * aspects / \Widget/Grid
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget"
+				"Widget/Grid"
 			] as readonly any[]
 		}
 		

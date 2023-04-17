@@ -24,25 +24,28 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\text
 		 * 	\markdown
+		 * 	\marked
 		 * ```
 		 */
 		tags() {
 			return [
-				"text",
-				"markdown"
+				"markdown",
+				"marked"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Text
+		 * aspects /
+		 * 	\Widget/Text
+		 * 	\Type/String
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Text"
+				"Widget/Text",
+				"Type/String"
 			] as readonly any[]
 		}
 		

@@ -34,7 +34,6 @@ namespace $ {
 		 * ```tree
 		 * tags /
 		 * 	\input
-		 * 	\string
 		 * 	\text
 		 * 	\field
 		 * ```
@@ -42,7 +41,6 @@ namespace $ {
 		tags() {
 			return [
 				"input",
-				"string",
 				"text",
 				"field"
 			] as readonly any[]

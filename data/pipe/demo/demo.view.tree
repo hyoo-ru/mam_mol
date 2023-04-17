@@ -13,4 +13,5 @@ $mol_data_pipe_demo $mol_example_code
 		\validation
 		\pipe
 	aspects /
-		\Assert
+		\Algorithm/Assert
+		\Algorithm/Compose

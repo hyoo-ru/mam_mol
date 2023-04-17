@@ -28,6 +28,7 @@ namespace $ {
 		 * 	\dark
 		 * 	\theme
 		 * 	\switcher
+		 * 	\toggle
 		 * ```
 		 */
 		tags() {
@@ -35,18 +36,22 @@ namespace $ {
 				"light",
 				"dark",
 				"theme",
-				"switcher"
+				"switcher",
+				"toggle"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget
+		 * aspects /
+		 * 	\Widget/Control/Button
+		 * 	\Theme
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget"
+				"Widget/Control/Button",
+				"Theme"
 			] as readonly any[]
 		}
 		

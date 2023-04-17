@@ -18,16 +18,14 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_time_moment
-		 * 	\date
+		 * 	\time
 		 * 	\datepicker
 		 * 	\format
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_time_moment",
-				"date",
+				"time",
 				"datepicker",
 				"format"
 			] as readonly any[]
@@ -36,13 +34,13 @@ namespace $ {
 		/**
 		 * ```tree
 		 * aspects /
-		 * 	\Widget/Control
+		 * 	\Widget/Control/Button/Picker
 		 * 	\Type/Date
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Control",
+				"Widget/Control/Button/Picker",
 				"Type/Date"
 			] as readonly any[]
 		}

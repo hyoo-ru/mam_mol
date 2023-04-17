@@ -6,4 +6,5 @@ $mol_csv_parse_demo $mol_example_code
 		\table
 	aspects /
 		\Language/CSV
-		\Serializer
+		\Language/TSV
+		\Algorithm/Serial

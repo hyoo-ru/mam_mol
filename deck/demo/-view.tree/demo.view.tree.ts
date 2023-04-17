@@ -24,18 +24,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_card
-		 * 	\deck
-		 * 	\card
 		 * 	\tabs
 		 * 	\container
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_card",
-				"deck",
-				"card",
 				"tabs",
 				"container"
 			] as readonly any[]

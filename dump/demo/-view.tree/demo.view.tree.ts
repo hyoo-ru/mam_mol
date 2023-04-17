@@ -27,16 +27,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_list
 		 * 	\dump
+		 * 	\json
 		 * 	\javascript
 		 * 	\debug
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_list",
 				"dump",
+				"json",
 				"javascript",
 				"debug"
 			] as readonly any[]

@@ -23,23 +23,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags / \layout
-		 * ```
-		 */
-		tags() {
-			return [
-				"layout"
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * aspects / \Widget
+		 * aspects / \Algorithm/Constraint
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget"
+				"Algorithm/Constraint"
 			] as readonly any[]
 		}
 		

@@ -24,7 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_filler
 		 * 	\expander
 		 * 	\accordion
 		 * 	\expand
@@ -34,7 +33,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_filler",
 				"expander",
 				"accordion",
 				"expand",

@@ -189,7 +189,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\section
 		 * 	\header
 		 * 	\level
 		 * 	\h1
@@ -197,7 +196,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"section",
 				"header",
 				"level",
 				"h1"

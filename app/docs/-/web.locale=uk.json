@@ -8,6 +8,8 @@
 	"$mol_app_demo_readme_Close_hint": "Закрити панель",
 	"$mol_app_demo_readme_Not_found_caption": "Readme не знайдено",
 	"$mol_app_demo_readme_title": "Readme",
+	"$mol_app_questions_title_default": "Питання",
+	"$mol_app_quine_title": "Quine це додаток, що виводить власний вихідний код",
 	"$mol_bench_head_hint": "Натисніть для сортування по цій колонці",
 	"$mol_button_share_hint": "Поділитися",
 	"$mol_chat_title": "Дискусія",

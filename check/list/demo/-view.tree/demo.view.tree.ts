@@ -24,27 +24,27 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\checkbox
 		 * 	\option
+		 * 	\switch
 		 * 	\toggle
 		 * ```
 		 */
 		tags() {
 			return [
-				"checkbox",
 				"option",
+				"switch",
 				"toggle"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Control
+		 * aspects / \Widget/Control/Button
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Control"
+				"Widget/Control/Button"
 			] as readonly any[]
 		}
 		

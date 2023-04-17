@@ -58,8 +58,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_link
-		 * 	\$mol_paragraph
 		 * 	\gallery
 		 * 	\image
 		 * 	\adaptive
@@ -68,8 +66,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_link",
-				"$mol_paragraph",
 				"gallery",
 				"image",
 				"adaptive",

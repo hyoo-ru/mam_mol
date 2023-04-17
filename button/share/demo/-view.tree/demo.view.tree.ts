@@ -28,22 +28,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\share
-		 * 	\button
-		 * 	\icon
-		 * ```
-		 */
-		tags() {
-			return [
-				"share",
-				"button",
-				"icon"
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
 		 * aspects / \Widget/Control/Button
 		 * ```
 		 */

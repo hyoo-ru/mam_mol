@@ -188,8 +188,7 @@
     "$mol_wait",
     "$mol_promise_promise",
     "$mol_embed_youtube",
-    "$mol_frame",
-    "$mol_row"
+    "$mol_frame"
   ],
   "dependencies": {
     "jsdom": "*",

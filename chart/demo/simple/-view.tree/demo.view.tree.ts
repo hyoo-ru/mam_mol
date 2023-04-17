@@ -24,8 +24,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_plot
-		 * 	\chart
 		 * 	\plot
 		 * 	\visualization
 		 * 	\dashboard
@@ -33,8 +31,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_plot",
-				"chart",
 				"plot",
 				"visualization",
 				"dashboard"
@@ -43,12 +39,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Draw
+		 * aspects /
+		 * 	\Widget/Draw/Chart/Line
+		 * 	\Widget/Draw/Chart/Dot
+		 * 	\Widget/Draw/Chart/Bar
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Draw"
+				"Widget/Draw/Chart/Line",
+				"Widget/Draw/Chart/Dot",
+				"Widget/Draw/Chart/Bar"
 			] as readonly any[]
 		}
 		

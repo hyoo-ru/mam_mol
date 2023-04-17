@@ -34,30 +34,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\$mol_card
-		 * 	\$mol_switch
-		 * 	\navigation
-		 * 	\keyboard
+		 * tags / \navigation
 		 * ```
 		 */
 		tags() {
 			return [
-				"$mol_card",
-				"$mol_switch",
-				"navigation",
-				"keyboard"
+				"navigation"
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * aspects / \Widget/Plugin
+		 * aspects /
+		 * 	\Widget/Plugin
+		 * 	\Controler/Keyboard
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Widget/Plugin"
+				"Widget/Plugin",
+				"Controler/Keyboard"
 			] as readonly any[]
 		}
 		

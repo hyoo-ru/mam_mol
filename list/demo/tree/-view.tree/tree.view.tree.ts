@@ -45,9 +45,6 @@ namespace $ {
 		/**
 		 * ```tree
 		 * tags /
-		 * 	\$mol_expander
-		 * 	\$mol_list
-		 * 	\$mol_paragraph
 		 * 	\list
 		 * 	\tree
 		 * 	\hierarchy
@@ -57,9 +54,6 @@ namespace $ {
 		 */
 		tags() {
 			return [
-				"$mol_expander",
-				"$mol_list",
-				"$mol_paragraph",
 				"list",
 				"tree",
 				"hierarchy",

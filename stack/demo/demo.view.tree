@@ -4,8 +4,5 @@ $mol_stack_demo $mol_example_small
 			sub /
 				<= Back $mol_image uri \https://thiscatdoesnotexist.com/
 				<= Front $mol_view sub / \❤🧡💛💚💙💜🤎🖤
-	tags /
-		\$mol_stack
-		\layout
 	aspects /
 		\Widget/Layout

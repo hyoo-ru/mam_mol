@@ -17,23 +17,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * tags /
-		 * 	\testing
-		 * 	\jest
-		 * 	\assert
-		 * 	\mocha
-		 * 	\chai
-		 * 	\unit
+		 * aspects /
+		 * 	\Algorithm/Assert
+		 * 	\Testing
 		 * ```
 		 */
-		tags() {
+		aspects() {
 			return [
-				"testing",
-				"jest",
-				"assert",
-				"mocha",
-				"chai",
-				"unit"
+				"Algorithm/Assert",
+				"Testing"
 			] as readonly any[]
 		}
 	}
