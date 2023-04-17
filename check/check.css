@@ -14,7 +14,3 @@
 [mol_check_title] {
 	flex-shrink: 1;
 }
-
-[mol_check_checked] {
-	color: var(--mol_theme_current);
-}
