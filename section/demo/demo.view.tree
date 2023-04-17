@@ -6,8 +6,6 @@ $mol_section_demo $mol_example_small
 			content /
 				<= Section_content $mol_filler
 	tags /
-		\$mol_filler
-		\section
 		\container
 		\header
 	aspects /

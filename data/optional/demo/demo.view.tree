@@ -11,4 +11,4 @@ $mol_data_optional_demo $mol_example_code
 		\optional
 		\maybe
 	aspects /
-		\Assert
+		\Algorithm/Assert

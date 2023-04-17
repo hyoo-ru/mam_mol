@@ -10,6 +10,7 @@
 	margin: 1rem;
 	border-collapse: collapse;
 	display: table;
+	width: max-content;
 }
 
 [mol_app_report_descriptor] {

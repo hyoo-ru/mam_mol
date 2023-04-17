@@ -9,4 +9,5 @@ $mol_csv_serial_demo $mol_example_code
 		\table
 	aspects /
 		\Language/CSV
-		\Parser
+		\Language/TSV
+		\Algorithm/Parse

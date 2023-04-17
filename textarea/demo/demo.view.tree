@@ -13,9 +13,9 @@ $mol_textarea_demo $mol_example
 				enabled false
 				value <= symbols_hint \
 	tags /
-		\textarea
 		\code
-		\syntax highlighting
+		\syntax
+		\highlight
 	aspects /
 		\Widget/Control
 		\Type/String

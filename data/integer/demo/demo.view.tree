@@ -8,5 +8,5 @@ $mol_data_integer_demo $mol_example_code
 		\runtime
 		\validation
 	aspects /
-		\Assert
-		\Type/Integer
+		\Algorithm/Assert
+		\Type/Number/Integer

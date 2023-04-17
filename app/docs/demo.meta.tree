@@ -7,6 +7,11 @@ include \/mol/app/demo
 
 include \/hyoo/crowd/text/demo
 
+include \/mol/app/hello/demo
+include \/mol/app/questions/demo
+include \/mol/app/quine/demo
+include \/mol/app/report/demo
+
 include \/mol/array/chunks/demo
 include \/mol/array/lottery/demo
 include \/mol/array/trim/demo

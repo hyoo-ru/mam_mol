@@ -3,8 +3,5 @@ $mol_time_interval_demo $mol_example_code
 	code? \
 		\const nextYear = new $mol_time_interval( '/P1Y' )
 		\const anniversary = nextYear.end.toString( 'YYYY-MM-DD hh:mm' )
-	tags /
-		\$mol_time
-		\interval
 	aspects /
 		\Type/Time
