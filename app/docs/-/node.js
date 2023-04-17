@@ -33836,6 +33836,7 @@ var $;
         }
         aspects() {
             return [
+                "Application",
                 "Language/MarkedText",
                 "Algorithm/Parse",
                 "Algorithm/Transform"
@@ -34147,6 +34148,7 @@ var $;
         }
         aspects() {
             return [
+                "Application",
                 "Language/HARP Query",
                 "Algorithm/Parse"
             ];

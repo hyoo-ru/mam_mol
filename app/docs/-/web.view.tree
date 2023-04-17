@@ -4233,6 +4233,7 @@ $hyoo_marked_demo $mol_example_large
 		\MarkDown
 		\HTML
 	aspects /
+		\Application
 		\Language/MarkedText
 		\Algorithm/Parse
 		\Algorithm/Transform
@@ -4264,6 +4265,7 @@ $hyoo_harp_demo $mol_example_large
 		\Query
 		\REST
 	aspects /
+		\Application
 		\Language/HARP Query
 		\Algorithm/Parse
 
