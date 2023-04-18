@@ -15,6 +15,7 @@ console.log( mut.foo() ) // [ 1, 0 , 3 ]
 
 const next = mut()
 // prev !== next
+// prev.foo == [ 1, 2, 3 ]
 // next.foo == [ 1, 0, 3 ]
 // prev.bar === next.bar
 ```
