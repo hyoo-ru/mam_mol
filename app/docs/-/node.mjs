@@ -14974,12 +14974,18 @@ var $;
         string_enabled() {
             return this.enabled();
         }
+        submit(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
         String() {
             const obj = new this.$.$mol_string();
             obj.type = () => this.type();
             obj.value = (val) => this.value_string(val);
             obj.hint = () => this.hint();
             obj.enabled = () => this.string_enabled();
+            obj.submit = (next) => this.submit(next);
             return obj;
         }
         event_dec(next) {
@@ -15031,6 +15037,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_number.prototype, "value_string", null);
+    __decorate([
+        $mol_mem
+    ], $mol_number.prototype, "submit", null);
     __decorate([
         $mol_mem
     ], $mol_number.prototype, "String", null);

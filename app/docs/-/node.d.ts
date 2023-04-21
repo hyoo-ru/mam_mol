@@ -4035,6 +4035,7 @@ declare namespace $ {
         value_string(val?: any): string;
         hint(): string;
         string_enabled(): boolean;
+        submit(next?: any): any;
         String(): $$.$mol_string;
         event_dec(next?: any): any;
         dec_enabled(): boolean;

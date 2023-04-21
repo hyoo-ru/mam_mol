@@ -122,11 +122,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * submit? null
+		 * ```
+		 */
+		@ $mol_mem
+		submit(next?: any) {
+			if ( next !== undefined ) return next as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * String $mol_string
 		 * 	type <= type
 		 * 	value?val <=> value_string?val
 		 * 	hint <= hint
 		 * 	enabled <= string_enabled
+		 * 	submit? <=> submit?
 		 * ```
 		 */
 		@ $mol_mem
@@ -137,6 +149,7 @@ namespace $ {
 			obj.value = (val?: any) => this.value_string(val)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.string_enabled()
+			obj.submit = (next?: any) => this.submit(next)
 			
 			return obj
 		}
