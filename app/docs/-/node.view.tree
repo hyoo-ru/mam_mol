@@ -4143,6 +4143,7 @@ $hyoo_marked_app $mol_book2
 				<= Preview_close
 			body /
 				<= Html_text $mol_text_code
+					sidebar_showed true
 					text <= html \
 		<= View $mol_page
 			title \View

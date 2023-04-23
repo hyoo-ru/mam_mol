@@ -33374,6 +33374,7 @@ var $;
         }
         Html_text() {
             const obj = new this.$.$mol_text_code();
+            obj.sidebar_showed = () => true;
             obj.text = () => this.html();
             return obj;
         }
