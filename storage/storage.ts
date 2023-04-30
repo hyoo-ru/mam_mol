@@ -16,7 +16,7 @@ namespace $ {
 		}
 		
 		static estimate() {
-			return this.native().estimate
+			return this.native().estimate()
 		}
 		
 		static dir() {
