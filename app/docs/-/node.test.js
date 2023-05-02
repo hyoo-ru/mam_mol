@@ -12738,6 +12738,9 @@ var $;
             this.pub.promote();
             return this._clocks;
         }
+        get clocks_bin() {
+            return new Uint8Array($hyoo_crowd_clock_bin.from(this.id(), this._clocks).buffer);
+        }
         pub = new $mol_wire_pub;
         _clocks = [new $hyoo_crowd_clock, new $hyoo_crowd_clock];
         _unit_all = new Map();
