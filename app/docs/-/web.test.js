@@ -4185,7 +4185,7 @@ var $;
             const clocks1 = [new $hyoo_crowd_clock, new $hyoo_crowd_clock];
             clocks1[$hyoo_crowd_unit_group.auth].see_peer('b_33', 1);
             clocks1[$hyoo_crowd_unit_group.data].see_peer('b_33', 2);
-            const bin = $hyoo_crowd_clock_bin.from('2_b', clocks1);
+            const bin = $hyoo_crowd_clock_bin.from('2_b', clocks1, 0);
             $mol_assert_like(bin.land(), '2_b');
             const clocks2 = [new $hyoo_crowd_clock, new $hyoo_crowd_clock];
             clocks2[$hyoo_crowd_unit_group.auth].see_bin(bin, $hyoo_crowd_unit_group.auth);
@@ -4284,7 +4284,7 @@ var $;
             land1.leave();
             const batch2 = await world1.delta_batch(land1);
             $mol_assert_like([...(await world2.apply(batch2)).forbid.values()], ['No auth key']);
-            $mol_assert_like(land2.chief.as($hyoo_crowd_reg).numb(), 234);
+            $mol_assert_like(land2.chief.as($hyoo_crowd_reg).numb(), 123);
         },
         async 'levels'() {
             const world1 = new $hyoo_crowd_world(await $hyoo_crowd_peer.generate());

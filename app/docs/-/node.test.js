@@ -12400,16 +12400,18 @@ var $;
     const offset = {
         land_lo: 0,
         land_hi: 4,
-        clocks: 8,
+        count: 8,
+        clocks: 16,
     };
     class $hyoo_crowd_clock_bin extends DataView {
-        static from(land_id, clocks) {
+        static from(land_id, clocks, count) {
             const size = offset.clocks + clocks[0].size * 16;
             const mem = new Uint8Array(size);
             const bin = new $hyoo_crowd_clock_bin(mem.buffer);
             const land = $mol_int62_from_string(land_id);
             bin.setInt32(offset.land_lo, land.lo ^ (1 << 31), true);
             bin.setInt32(offset.land_hi, land.hi, true);
+            bin.setInt32(offset.count, count, true);
             let cursor = offset.clocks;
             for (const [peer_id, time] of clocks[0]) {
                 const peer = $mol_int62_from_string(peer_id);
@@ -12426,6 +12428,9 @@ var $;
                 lo: this.getInt32(offset.land_lo, true) << 1 >> 1,
                 hi: this.getInt32(offset.land_hi, true) << 1 >> 1,
             });
+        }
+        count() {
+            return this.getInt32(offset.count, true);
         }
     }
     $.$hyoo_crowd_clock_bin = $hyoo_crowd_clock_bin;
@@ -12656,7 +12661,7 @@ var $;
 (function ($) {
     class $hyoo_crowd_reg extends $hyoo_crowd_node {
         value(next) {
-            const unit = this.units()[0];
+            const unit = this.units().at(-1);
             if (next === undefined)
                 return unit?.data ?? null;
             if ($mol_compare_deep(unit?.data, next))
@@ -12739,7 +12744,7 @@ var $;
             return this._clocks;
         }
         get clocks_bin() {
-            return new Uint8Array($hyoo_crowd_clock_bin.from(this.id(), this._clocks).buffer);
+            return new Uint8Array($hyoo_crowd_clock_bin.from(this.id(), this._clocks, this._unit_all.size).buffer);
         }
         pub = new $mol_wire_pub;
         _clocks = [new $hyoo_crowd_clock, new $hyoo_crowd_clock];
@@ -44770,7 +44775,7 @@ var $;
             const clocks1 = [new $hyoo_crowd_clock, new $hyoo_crowd_clock];
             clocks1[$hyoo_crowd_unit_group.auth].see_peer('b_33', 1);
             clocks1[$hyoo_crowd_unit_group.data].see_peer('b_33', 2);
-            const bin = $hyoo_crowd_clock_bin.from('2_b', clocks1);
+            const bin = $hyoo_crowd_clock_bin.from('2_b', clocks1, 0);
             $mol_assert_like(bin.land(), '2_b');
             const clocks2 = [new $hyoo_crowd_clock, new $hyoo_crowd_clock];
             clocks2[$hyoo_crowd_unit_group.auth].see_bin(bin, $hyoo_crowd_unit_group.auth);
@@ -44869,7 +44874,7 @@ var $;
             land1.leave();
             const batch2 = await world1.delta_batch(land1);
             $mol_assert_like([...(await world2.apply(batch2)).forbid.values()], ['No auth key']);
-            $mol_assert_like(land2.chief.as($hyoo_crowd_reg).numb(), 234);
+            $mol_assert_like(land2.chief.as($hyoo_crowd_reg).numb(), 123);
         },
         async 'levels'() {
             const world1 = new $hyoo_crowd_world(await $hyoo_crowd_peer.generate());
