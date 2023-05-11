@@ -87,7 +87,7 @@ h6[mol_text_header] {
 [mol_text_grid_cell] {
 	width: auto;
 	display: table-cell;
-	vertical-align: baseline;
+	vertical-align: top;
 	padding: 0;
 	border-radius: 0;
 }
