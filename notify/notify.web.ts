@@ -60,7 +60,7 @@ namespace $ {
 		
 		self.addEventListener( 'notificationclick', $mol_service_handler( async ( event: any )=> {
 			
-			const clients: any[] = await self['clients'].matchAll({ includeUncontrolled: true })
+			const clients: any[] = await ( self as any ).clients.matchAll({ includeUncontrolled: true })
 			event.notification.close()
 
 			if( clients.length ) {
@@ -71,7 +71,7 @@ namespace $ {
 				
 			} else {
 				
-				await self['clients'].openWindow( event.notification.data )
+				await ( self as any ).clients.openWindow( event.notification.data )
 				
 			}
 			
