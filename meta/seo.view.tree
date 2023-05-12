@@ -1,4 +1,4 @@
-$mol_seo $mol_view
+$mol_meta $mol_view
 	name \
 	content \
 	dom_name \meta
@@ -6,13 +6,13 @@ $mol_seo $mol_view
 		name <= name
 		content <= content
 
-$mol_seo_description $mol_seo
+$mol_meta_description $mol_meta
 	name \description
 
-$mol_seo_robots $mol_seo
+$mol_meta_robots $mol_meta
 	name \robots
 
-$mol_seo_canonical $mol_view
+$mol_meta_canonical $mol_view
 	content \
 	dom_name \link
 	attr *
