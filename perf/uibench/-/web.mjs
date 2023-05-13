@@ -1530,11 +1530,14 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_wire_probe(task, next) {
+    function $mol_wire_probe(task, def) {
         const warm = $mol_wire_fiber.warm;
         try {
             $mol_wire_fiber.warm = false;
-            return task();
+            const res = task();
+            if (res === undefined)
+                return def;
+            return res;
         }
         finally {
             $mol_wire_fiber.warm = warm;
