@@ -1053,10 +1053,25 @@ namespace $ {
 			const pack = $mol_file.absolute( path )
 			const source = pack.resolve( 'index.html' )
 			const target = pack.resolve( `-/test.html` )
+			const fqn = `$${pack.relate().replaceAll('/', '_')}`
 
 			let content = source.exists()
 				? source.text()
-				: `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`
+				: `
+					<!doctype html>
+					<html mol_view_root>
+						<meta charset="utf-8" />
+						<body mol_view_root>
+							<div mol_view_root="$hyoo_studio" />
+							<script src="web.js" charset="utf-8"></script>
+							<script>
+								addEventListener( 'load', ()=> setTimeout( ()=> {
+									$hyoo_studio.Root(0).pack(location.href)
+									$hyoo_studio.Root(0).source('$hyoo_studio_example $mol_example_small sub / <= Module ${fqn}')
+									$hyoo_studio.Root(0).preview_show(true)
+								}, 500 ) )
+							</script>
+				`
 			
 			content = content.replace(
 				/(<\/body>|$)/ , `
