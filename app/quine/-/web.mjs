@@ -7067,7 +7067,7 @@ var $;
                     ?? 'about:blank';
             }
             video_preview() {
-                return `https://i.ytimg.com/vi/${this.video_id()}/sddefault.jpg`;
+                return `https://i.ytimg.com/vi/${this.video_id()}/hqdefault.jpg`;
             }
             sub() {
                 return [this.active() ? this.Frame() : this.Image()];
