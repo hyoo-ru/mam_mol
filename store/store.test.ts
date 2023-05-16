@@ -127,7 +127,7 @@ namespace $ {
 					
 					const lens = this.sub( 'members' )
 					
-					return new Proxy( {} , {
+					return new Proxy< Record< string , Person > >( {} , {
 						get : ( _ , id : string )=> lens.sub( id , new Person ) ,
 					} )
 
