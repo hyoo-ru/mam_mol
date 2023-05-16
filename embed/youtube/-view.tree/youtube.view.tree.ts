@@ -41,12 +41,14 @@ namespace $ {
 		 * ```tree
 		 * sub /
 		 * 	<= Image
+		 * 	<= Hint
 		 * 	<= Frame
 		 * ```
 		 */
 		sub() {
 			return [
 				this.Image(),
+				this.Hint(),
 				this.Frame()
 			] as readonly any[]
 		}
@@ -84,6 +86,18 @@ namespace $ {
 			
 			obj.title = () => this.title()
 			obj.uri = () => this.video_preview()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Hint $mol_icon_youtube
+		 * ```
+		 */
+		@ $mol_mem
+		Hint() {
+			const obj = new this.$.$mol_icon_youtube()
 			
 			return obj
 		}

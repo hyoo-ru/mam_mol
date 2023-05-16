@@ -2051,6 +2051,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_youtube extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_frame extends $mol_embed_native {
         dom_name(): string;
         attr(): Record<string, any>;
@@ -2088,6 +2094,7 @@ declare namespace $ {
         active(next?: any): boolean;
         title(): string;
         Image(): $$.$mol_image;
+        Hint(): $mol_icon_youtube;
         video_embed(): string;
         Frame(): $$.$mol_frame;
     }
@@ -2098,7 +2105,7 @@ declare namespace $.$$ {
         video_embed(): string;
         video_id(): string;
         video_preview(): string;
-        sub(): ($mol_image | $mol_frame)[];
+        sub(): $mol_frame[] | ($mol_image | $mol_icon_youtube)[];
     }
 }
 
