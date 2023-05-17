@@ -14,9 +14,7 @@ $mol_float_demo $mol_example_large
 						<= Filler1 $mol_filler
 						<= Filler2 $mol_filler
 	tags /
-		\$mol_scroll
-		\$mol_filler
 		\scroll
 		\container
 	aspects /
-		\Widget
+		\Widget/Float

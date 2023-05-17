@@ -1,0 +1,12 @@
+$mol_data_array_demo $mol_example_code
+	code? \
+		\const Samples = $mol_data_array( $mol_data_number )
+		\const samples = Samples( [ 1, 2, 3, 4, 5 ] ) // ✅
+		\
+		\Samples([ 1, 'foo' ]) // ❌ [1] foo is not a number
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Algorithm/Assert
+		\Type/List

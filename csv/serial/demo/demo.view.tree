@@ -1,0 +1,13 @@
+$mol_csv_serial_demo $mol_example_code
+	code? \
+		\const data = [
+		\	{ foo: '123', bar: '456' },
+		\	{ foo: 'x"xx', bar: 'y"y"y' },
+		\]
+		\const text = $mol_csv_serial( data )
+	tags /
+		\table
+	aspects /
+		\Language/CSV
+		\Language/TSV
+		\Algorithm/Parse

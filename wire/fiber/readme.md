@@ -7,7 +7,7 @@ Code inside fibers which calls other fibers must be idempotent because it may be
 Instead of direct usage it's prefer to use:
 
  - Decorators: [$mol_wire_method](../method), [$mol_wire_solo](../solo), [$mol_wire_plex](../plex)
- - Proxies: [$mol_wire_sync](../sync), [$mol_wire_sync](../async)
+ - Proxies: [$mol_wire_sync](../sync), [$mol_wire_async](../async)
 
 ## Error handling
 

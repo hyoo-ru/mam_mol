@@ -31,16 +31,6 @@ $mol_video_player_demo $mol_example_large
 			time?val => time?val
 			duration => duration
 	tags /
-		\$mol_row
-		\$mol_button
-		\$mol_check
-		\$mol_paragraph
-		\$mol_number
-		\$mol_labeler
-		\video
-		\player
 		\palyback
-		\upload
-		\media
 	aspects /
-		\Widget
+		\Media/Video

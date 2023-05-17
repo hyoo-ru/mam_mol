@@ -5,6 +5,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		static module( uri: string ): any {
+			$mol_wire_solid()
 			return $mol_wire_sync( this ).module_async( uri )
 		}
 		static module_async( uri: string ) {
@@ -13,6 +14,7 @@ namespace $ {
 
 		@ $mol_mem_key
 		static script( uri: string ): any {
+			$mol_wire_solid()
 			return $mol_wire_sync( this ).script_async( uri )
 		}
 

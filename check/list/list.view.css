@@ -10,11 +10,11 @@
 	flex: 0 1 auto;
 }
 
-[mol_check_list_option][mol_check_checked="true"] {
+[mol_check_list_option]:where([mol_check_checked="true"]) {
 	text-shadow: 0 0;
 	color: var(--mol_theme_current);
 }
 
-[mol_check_list_option][mol_check_checked="true"][disabled] {
+[mol_check_list_option]:where([mol_check_checked="true"][disabled]) {
 	color: var(--mol_theme_text);
 }

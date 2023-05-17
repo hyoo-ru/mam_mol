@@ -15,12 +15,14 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		video_preview() {
-			return `https://i.ytimg.com/vi/${ this.video_id() }/sddefault.jpg`
+			return `https://i.ytimg.com/vi/${ this.video_id() }/hqdefault.jpg`
 		}
 		
 		@ $mol_mem
 		sub() {
-			return [ this.active() ? this.Frame() : this.Image() ]
+			return this.active()
+				? [ this.Frame() ]
+				: [ this.Image(), this.Hint() ]
 		}
 		
 	}

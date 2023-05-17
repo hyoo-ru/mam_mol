@@ -1,0 +1,13 @@
+$mol_data_range_demo $mol_example_code
+	code? \
+		\const Portion = $mol_data_range( 0, 1 )
+		\const portion = Portion( 0.5 ) // ✅
+		\
+		\Portion( 0 ) // ❌ 0 is out range (0,1)
+	tags /
+		\runtime
+		\validation
+		\range
+	aspects /
+		\Algorithm/Assert
+		\Type/Number

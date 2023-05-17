@@ -8,8 +8,7 @@ $mol_portion_demo $mol_example_small
 		<= Full $mol_portion
 			portion <= third 1
 	tags /
-		\dashboard
 		\progress
 		\slider
 	aspects /
-		\Widget
+		\Widget/Draw/Chart/Bar

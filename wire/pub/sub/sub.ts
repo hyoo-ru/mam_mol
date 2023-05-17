@@ -12,6 +12,10 @@ namespace $ {
 		protected pub_from = 0 // 4B
 		protected cursor = $mol_wire_cursor.stale // 4B
 		
+		get temp() {
+			return false
+		}
+		
 		get pub_list() {
 			const res = [] as $mol_wire_pub[]
 			const max = this.cursor >=0 ? this.cursor : this.sub_from

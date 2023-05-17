@@ -8,11 +8,9 @@ $mol_link_iconed_demo $mol_example_small
 				<= Output $mol_link_iconed
 					uri <= uri?val
 	tags /
-		\$mol_link
-		\$mol_icon
-		\$mol_string
 		\link
 		\icon
 		\url
 	aspects /
-		\Widget
+		\Navigation
+		\Widget/Button

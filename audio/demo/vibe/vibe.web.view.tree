@@ -39,5 +39,6 @@ $mol_audio_demo_vibe $mol_example_small
 						<= Play_icon $mol_icon_play
 						\Play
 	tags /
-		\Audio
-		\Sound
+		\sound
+	aspects /
+		\Media/Audio

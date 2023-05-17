@@ -25,7 +25,7 @@ namespace $ {
 					
 					if( !$mol_wire_fiber.warm ) return atom.result()
 					
-					if( $mol_wire_auto() instanceof $mol_wire_task ) {
+					if( $mol_wire_auto()?.temp ) {
 						return atom.once()
 					} else {
 						return atom.sync()

@@ -1,5 +1,9 @@
 namespace $ {
 
+	/**
+	 * Checks for matching to given regular expression.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_pattern_demo
+	 */
 	export function $mol_data_pattern( pattern : RegExp ) {
 
 		return $mol_data_setup( ( val : string ) => {

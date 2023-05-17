@@ -8,7 +8,7 @@ namespace $ {
 	}
 	
 	export function $mol_html_encode( text : string ) {
-		return text.replace( /[&<">]/gi , str => mapping[ str ] )
+		return text.replace( /[&<">]/gi , str => mapping[ str as keyof typeof mapping ] )
 	}
 	
 }

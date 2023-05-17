@@ -2,3 +2,7 @@ $mol_app_questions_demo $mol_example_large
 	title \New questions from StackOverflow
 	sub /
 		<= App $mol_app_questions
+	aspects /
+		\Application
+		\Network/HTTP
+		\Integration

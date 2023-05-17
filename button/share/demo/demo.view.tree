@@ -14,9 +14,5 @@ $mol_button_share_demo $mol_example_small
 			hint \Share hyoo.ru
 			uri \https://hyoo.ru
 			capture null
-	tags /
-		\share
-		\button
-		\icon
 	aspects /
-		\Widget
+		\Widget/Control/Button

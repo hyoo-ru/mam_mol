@@ -8,4 +8,5 @@ $mol_pick_time_demo $mol_example_small
 		\time
 		\datetime
 	aspects /
-		\Widget
+		\Widget/Control/Button/Picker
+		\Type/Time

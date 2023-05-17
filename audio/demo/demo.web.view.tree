@@ -20,5 +20,6 @@ $mol_audio_demo $mol_example_small
 			click <= noise_play
 			title \Noise
 	tags /
-		\Audio
-		\Sound
+		\sound
+	aspects /
+		\Media/Audio

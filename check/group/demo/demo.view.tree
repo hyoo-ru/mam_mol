@@ -36,9 +36,7 @@ $mol_check_group_demo $mol_example_small
 						title <= luck_title \Luck
 						checked?val <=> luck?val true
 	tags /
-		\$mol_check_box
-		\checkbox
 		\multi
 		\group
 	aspects /
-		\Widget
+		\Widget/Control/Button

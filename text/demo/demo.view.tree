@@ -103,7 +103,8 @@ $mol_text_demo $mol_example_large
 								\| ~~Row~~ 9 | ~~Cell~~ 1x9 | ~~Cell~~ 2x9 | ~~Cell~~ 3x9
 								\
 	tags /
-		\text
 		\markdown
+		\marked
 	aspects /
-		\Widget
+		\Widget/Text
+		\Type/String

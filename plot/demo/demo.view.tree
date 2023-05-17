@@ -28,4 +28,6 @@ $mol_plot_demo $mol_example_large
 		\graph
 		\dashboard
 	aspects /
-		\Widget
+		\Widget/Draw/Chart/Line
+		\Widget/Draw/Chart/Fill
+		\Widget/Draw/Chart/Dot

@@ -6,7 +6,5 @@ $mol_layout_demo $mol_example_large
 			context => context
 			width => width
 			height => height
-	tags /
-		\layout
 	aspects /
-		\Widget/Layout
+		\Algorithm/Constraint

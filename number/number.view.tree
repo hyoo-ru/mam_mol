@@ -13,6 +13,7 @@ $mol_number $mol_view
 			value?val <=> value_string?val \
 			hint <= hint \ 
 			enabled <= string_enabled <= enabled
+			submit? <=> submit? null
 		<= Dec $mol_button_minor
 			event_click? <=> event_dec? null
 			enabled <= dec_enabled <= enabled

@@ -34,8 +34,8 @@ $mol_html_view_demo $mol_example
 				\ <blockquote><p>Block quotation</p></blockquote>
 				\ <pre><code>Block code</code></pre>
 	tags /
-		\$mol_scroll
 		\html
 		\render
 	aspects /
 		\Widget
+		\Type/HTML

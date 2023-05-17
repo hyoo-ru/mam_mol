@@ -1,5 +1,9 @@
 namespace $ {
 
+	/**
+	 * Checks for record of given fields with by its runtypes and returns expected type.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_record_demo
+	 */
 	export function $mol_data_record<
 		Sub extends Record< string , $mol_data_value >
 	>( sub : Sub ) {

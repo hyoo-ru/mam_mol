@@ -14,4 +14,5 @@ $mol_link_lazy_demo $mol_example_small
 		\lazy
 		\download
 	aspects /
-		\Widget
+		\Navigation
+		\Widget/Button

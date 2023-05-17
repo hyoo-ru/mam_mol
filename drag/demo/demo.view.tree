@@ -25,14 +25,10 @@ $mol_drag_demo $mol_example_large
 				uri <= task_uri* \
 				sub / <= task_title* \
 	tags /
-		\$mol_drop
-		\$mol_float
-		\$mol_link
-		\$mol_icon
-		\$mol_scroll
 		\drag
 		\dragndrop
-		\list
+		\reorder
 		\transfer
 	aspects /
-		\Widget
+		\Widget/Plugin
+		\Drag'n'Drop

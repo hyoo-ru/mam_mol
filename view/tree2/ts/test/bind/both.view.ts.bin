@@ -81,10 +81,10 @@ namespace $ {
 			return [
 				{
 					loc: (v?: any) => this.loc_outer(v)
-				},
+				} as Record< string, any >,
 				{
 					loc: (v?: any) => this.loc_outer(v)
-				}
+				} as Record< string, any >
 			] as readonly any[]
 		}
 		

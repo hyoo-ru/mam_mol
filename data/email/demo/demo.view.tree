@@ -1,0 +1,12 @@
+$mol_data_email_demo $mol_example_code
+	code? \
+		\const From = $mol_data_email
+		\const from = From( 'jin@example.org' ) // ✅
+		\
+		\From( 'jin' ) // ❌ jin is not a /.+@.+/
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Algorithm/Assert
+		\Type/Email

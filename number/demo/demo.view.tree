@@ -191,12 +191,10 @@ $mol_number_demo $mol_example_small
 								value_min -10
 								value_max -5
 	tags /
-		\$mol_labeler
-		\$mol_number
-		\$mol_section
 		\number
 		\field
 		\label
 		\section
 	aspects /
-		\Widget
+		\Widget/Control
+		\Type/Number

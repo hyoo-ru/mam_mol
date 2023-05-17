@@ -38,4 +38,5 @@ $mol_link_demo $mol_example_small
 		\router
 		\url
 	aspects /
-		\Widget
+		\Navigation
+		\Widget/Button

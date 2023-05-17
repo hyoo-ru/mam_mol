@@ -35,14 +35,14 @@ namespace $ {
 				if( $mol_fail_catch( error ) ) {
 					const def = this.lang_default()
 					if( lang === def ) throw error
-					return {}
 				}
 			}
 			
+			return {}
 		}
 		
 		@ $mol_mem_key
-		static text( key : string ) {
+		static text( key : string ): string {
 			
 			const lang = this.lang()
 
@@ -54,13 +54,8 @@ namespace $ {
 			const en = this.texts( 'en' )[ key ]
 			if( !en ) return key
 			
-			const cache_key = `$mol_locale.text(${ JSON.stringify(key) }):${lang}`
-			const cached = this.$.$mol_state_local.value( cache_key )
-			if( cached ) return cached
-			
 			try {
-				const translated = $mol_wire_sync( $hyoo_lingua_translate ).call( this.$, lang, en )
-				return this.$.$mol_state_local.value( cache_key, translated )
+				return $mol_wire_sync( $hyoo_lingua_translate ).call( this.$, lang, en )
 			} catch( error ) {
 				$mol_fail_log( error )
 			}

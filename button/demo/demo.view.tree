@@ -27,7 +27,5 @@ $mol_button_demo $mol_example_small
 			sub /
 				<= Minor_iconed_icon $mol_icon_cursor_default_click_outline
 				\Minor with Icon
-	tags /
-		\button
 	aspects /
-		\Widget
+		\Widget/Control/Button
