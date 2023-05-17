@@ -6160,7 +6160,7 @@ var $;
                 if (next === undefined)
                     return this.value();
                 if (next === '')
-                    return this.value(null);
+                    return this.value(Number.NaN);
                 const min = this.value_min();
                 const max = this.value_max();
                 const val = Number(next);

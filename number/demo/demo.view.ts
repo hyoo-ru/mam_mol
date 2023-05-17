@@ -6,12 +6,12 @@ namespace $.$$ {
 		}
 
 		override reset_value() {
-			this.value(null)
+			this.value( Number.NaN )
 		}
 		
 		@ $mol_mem
 		override reset_enabled() {
-			return ! ( Number.isNaN( this.value() ) || this.value() === null )
+			return Number.isFinite( this.value() )
 		}
 	}
 }
