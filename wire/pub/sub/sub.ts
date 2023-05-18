@@ -180,6 +180,15 @@ namespace $ {
 				cursor += 2
 			) {
 				const pub = this.data[ cursor ] as $mol_wire_pub
+				if( pub?.incompleted ) return 
+			}
+			
+			for(
+				let cursor = this.pub_from;
+				cursor < limit;
+				cursor += 2
+			) {
+				const pub = this.data[ cursor ] as $mol_wire_pub
 				pub?.complete()
 			}
 			
