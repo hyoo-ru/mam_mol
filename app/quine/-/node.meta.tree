@@ -65,6 +65,7 @@
 	pack sync git \https://github.com/hyoo-ru/sync.hyoo.ru.git
 	pack home git \https://github.com/hyoo-ru/hyoo.ru.git
 	pack idea git \https://github.com/hyoo-ru/idea.hyoo.ru.git
+	pack intern git \https://github.com/hyoo-ru/intern.hyoo.ru.git
 \/mol/app/quine
 	deploy \/mol/app/quine/quine.view.tree
 	deploy \/mol/app/quine/quine.view.ts

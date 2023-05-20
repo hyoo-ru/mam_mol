@@ -25,14 +25,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Back $mol_image uri \https://thiscatdoesnotexist.com/
+		 * Back $mol_image uri \https://cataas.com/cat
 		 * ```
 		 */
 		@ $mol_mem
 		Back() {
 			const obj = new this.$.$mol_image()
 			
-			obj.uri = () => "https://thiscatdoesnotexist.com/"
+			obj.uri = () => "https://cataas.com/cat"
 			
 			return obj
 		}

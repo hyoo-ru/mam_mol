@@ -39070,7 +39070,7 @@ var $;
         }
         Back() {
             const obj = new this.$.$mol_image();
-            obj.uri = () => "https://thiscatdoesnotexist.com/";
+            obj.uri = () => "https://cataas.com/cat";
             return obj;
         }
         Front() {
