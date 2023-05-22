@@ -51,6 +51,7 @@ namespace $ {
 			else if( left instanceof Set ) result = compare_set( left, right as any )
 			else if( left instanceof Map ) result = compare_map( left, right as any )
 			else if( ArrayBuffer.isView( left ) ) result = compare_buffer( left, right as any )
+			else if( Symbol.iterator in left ) result = compare_iterator( ( left as any )[ Symbol.iterator ](), ( right as any )[ Symbol.iterator ]() )
 			else if( Symbol.toPrimitive in left ) result = compare_primitive( left, right )
 			else result = false
 

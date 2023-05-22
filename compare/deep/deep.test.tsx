@@ -116,7 +116,7 @@ namespace $ {
 			$mol_assert_not( $mol_compare_deep( new Uint8Array([ 0 ]) , new Uint8Array([ 1 ]) ) )
 		} ,
 		
-		'Custom comparator'() {
+		'Serializale'() {
 			
 			class User {
 				
@@ -134,6 +134,12 @@ namespace $ {
 			$mol_assert_ok( $mol_compare_deep( new User( 'Jin' ), new User( 'Jin' ) ) )
 			$mol_assert_not( $mol_compare_deep( new User( 'Jin' ), new User( 'John' ) ) )
 			
+		} ,
+		
+		'Iterable'() {
+			$mol_assert_ok( $mol_compare_deep( new URLSearchParams({ foo: 'bar' }), new URLSearchParams({ foo: 'bar' }) ) )
+			$mol_assert_not( $mol_compare_deep( new URLSearchParams({ foo: 'xxx' }), new URLSearchParams({ foo: 'yyy' }) ) )
+			$mol_assert_not( $mol_compare_deep( new URLSearchParams({ foo: 'xxx', bar: 'yyy' }), new URLSearchParams({ bar: 'yyy', foo: 'xxx' }) ) )
 		} ,
 		
 	})
