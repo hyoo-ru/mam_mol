@@ -825,9 +825,6 @@ namespace $ {
 					if( !type || type === 'js' ) {
 						res = res.concat( this.bundleJS( { path , exclude , bundle : env } ) )
 					}
-					if( !type || type === 'mjs' ) {
-						res = res.concat( this.bundleJS( { path , exclude , bundle : env, moduleTarget: 'mjs' } ) )
-					}
 					if( !type || type === 'test.js' ) {
 						res = res.concat( this.bundleTestJS( { path , exclude , bundle : env } ) )
 					}
@@ -894,16 +891,16 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleJS( { path , exclude , bundle , moduleTarget = 'js' } : { path : string , exclude : string[] , bundle : string, moduleTarget? : string } ) : $mol_file[] {
+		bundleJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
-			var target = pack.resolve( `-/${bundle}.${moduleTarget}` )
-			var targetMap = pack.resolve( `-/${bundle}.${moduleTarget}.map` )
+			var targetJS = pack.resolve( `-/${bundle}.js` )
+			var targetJSMap = pack.resolve( `-/${bundle}.js.map` )
 			
 			var sources = this.sources_js( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var concater = new $mol_sourcemap_builder( target.name(), ';')
+			var concater = new $mol_sourcemap_builder( targetJS.name(), ';')
 			concater.add( '"use strict"' )
 
 			if( bundle === 'node' ) {
@@ -929,7 +926,7 @@ namespace $ {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
 
-						concater.add( content.text , src.relate( target.parent() ) , content.map )
+						concater.add( content.text , src.relate( targetJS.parent() ) , content.map )
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
@@ -942,17 +939,22 @@ namespace $ {
 					}
 				}
 			)
-			if( moduleTarget === 'mjs' ) {
-				concater.add( 'export default $', '-' )
-			}
-			target.text( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
-			targetMap.text( concater.toString() )
+			const suffix = '\n//# sourceMappingURL=' + targetJSMap.relate( targetJS.parent() )+'\n'
+			const content = concater.content
+			const map = concater.toJSON()
+			targetJS.text( content + suffix )
+			targetJSMap.text( JSON.stringify(map) )
 			
-			this.logBundle( target , Date.now() - start )
+			var targetMJS = pack.resolve( `-/${bundle}.mjs` )
+			var targetMJSMap = pack.resolve( `-/${bundle}.mjs.map` )
+			targetMJS.text( content + '\nexport default $' + suffix )
+			targetMJSMap.text( JSON.stringify({ ... map, file: targetMJS.name() }) )
+
+			this.logBundle( targetJS , Date.now() - start )
 
 			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
 			
-			return [ target , targetMap ]
+			return [ targetJS , targetJSMap, targetMJS, targetMJSMap ]
 		}
 		
 		@ $mol_mem_key
