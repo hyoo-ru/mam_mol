@@ -31,7 +31,13 @@ namespace $ {
 			)
 		}
 		
-		static async from( serial: BufferSource ) {
+		static async from( serial: BufferSource | string ) {
+			
+			if( typeof serial === 'string' ) {
+				serial = $mol_charset_encode( serial )
+				serial = await $mol_crypto_native.subtle.digest( 'SHA-256', serial )
+			}
+			
 			return new this(
 				await $mol_crypto_native.subtle.importKey(
 					'raw',
@@ -41,6 +47,7 @@ namespace $ {
 					[ 'encrypt', 'decrypt' ],
 				) as CryptoKey & { type: 'private' }
 			)
+			
 		}
 		
 		/** 16 bytes */
