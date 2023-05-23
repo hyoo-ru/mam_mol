@@ -5504,8 +5504,10 @@ var $;
                     res = res.concat(this.bundleCSS({ path, exclude, bundle: env }));
                 }
                 if (!type || type === 'js') {
-                    res = res.concat(this.bundleJS({ path, exclude, bundle: env }))
-                        .concat(this.bundleJS({ path, exclude, bundle: env, moduleTarget: 'mjs' }));
+                    res = res.concat(this.bundleJS({ path, exclude, bundle: env }));
+                }
+                if (!type || type === 'mjs') {
+                    res = res.concat(this.bundleJS({ path, exclude, bundle: env, moduleTarget: 'mjs' }));
                 }
                 if (!type || type === 'test.js') {
                     res = res.concat(this.bundleTestJS({ path, exclude, bundle: env }));
