@@ -12,7 +12,7 @@ namespace $ {
 		sourceRoot?: string
 		sourcesContent?: (string|null)[]
 		mappings: string | SourceMapLine[]
-		file: string
+		file?: string
 	}
 
 	export class $mol_sourcemap_builder {
@@ -22,8 +22,7 @@ namespace $ {
 
 		protected separator_count: number
 
-		constructor( readonly file: string, readonly separator = '' ) {
-			const dir = path.dirname(file)
+		constructor( dir: string, readonly separator = '', readonly file?: string ) {
 			this.sourceRoot = dir && dir !== '.' ? (dir + '/') : ''
 			this.separator += '\n'
 			this.separator_count = separator.split('\n').length - 2

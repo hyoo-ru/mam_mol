@@ -894,14 +894,15 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		bundleJSCommon( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) {
+		bundleJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			var targetJS = pack.resolve( `-/${bundle}.js` )
 			
 			var sources = this.sources_js( { path , exclude } )
-			if( sources.length === 0 ) return undefined
+			if( sources.length === 0 ) return []
 			
-			var concater = new $mol_sourcemap_builder( targetJS.name(), ';')
+			var concater = new $mol_sourcemap_builder( $node.path.dirname(targetJS.name()), ';')
 			concater.add( '"use strict"' )
 
 			if( bundle === 'node' ) {
@@ -942,25 +943,10 @@ namespace $ {
 			)
 			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
 
-			const content = concater.content
-			const map = concater.toJSON()
-			const parent = targetJS.parent()
-
-			return { content, map, parent, targetJS, pack }
-		}
-
-		@ $mol_mem_key
-		bundleJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
-			const start = Date.now()
-			const common = this.bundleJSCommon({ path, exclude, bundle })
-			if (! common) return []
-
-			const { content, map, parent, targetJS, pack } = common
-
 			var targetJSMap = pack.resolve( `-/${bundle}.js.map` )
 	
-			targetJS.text( content + '\n//# sourceMappingURL=' + targetJSMap.relate( parent ) + '\n' )
-			targetJSMap.text( JSON.stringify(map) )
+			targetJS.text( concater.content + '\n//# sourceMappingURL=' + targetJSMap.relate( targetJS.parent() ) + '\n' )
+			targetJSMap.text( concater.toString() )
 			
 			this.logBundle( targetJS , Date.now() - start )
 
@@ -970,20 +956,17 @@ namespace $ {
 		@ $mol_mem_key
 		bundleMJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
 			const start = Date.now()
-			const common = this.bundleJSCommon({ path, exclude, bundle })
-			if (! common) return []
+			const [ targetJS, targetJSMap ] = this.bundleJS({ path, exclude, bundle })
+			if (! targetJS) return []
 
-			const { content, map, parent, targetJS, pack } = common
+			const targetMJS = targetJS.parent().resolve( targetJS.name().replace(/\.js$/, '.mjs') )
+			const targetMJSMap = targetJSMap.parent().resolve( targetJSMap.name().replace(/\.js./, '.mjs.') )
+			targetMJSMap.buffer(targetJSMap.buffer())
+			targetMJS.text( targetJS.text().replace(/(^\/\/# sourceMappingURL.*)/, 'export default $\n$1') )
 
-			var targetMJS = pack.resolve( `-/${bundle}.mjs` )
-			var targetMJSMap = pack.resolve( `-/${bundle}.mjs.map` )
-	
-			targetMJS.text( content + '\nexport default $' + '\n//# sourceMappingURL=' + targetMJSMap.relate( parent ) + '\n' )
-			targetMJSMap.text( JSON.stringify({ ... map, file: targetMJS.name() }) )
+			this.logBundle( targetMJS , Date.now() - start )
 
-			this.logBundle( targetJS , Date.now() - start )
-
-			return [ targetMJS, targetMJSMap ]
+			return [ targetMJS, targetJSMap ]
 		}
 
 		@ $mol_mem_key
@@ -1032,7 +1015,7 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = new $mol_sourcemap_builder( target.name(), ';')
+			var concater = new $mol_sourcemap_builder( $node.path.dirname(target.name()), ';')
 			concater.add( '"use strict"' )
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
@@ -1123,7 +1106,7 @@ namespace $ {
 			var sources = this.sourcesDTS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var concater = new $mol_sourcemap_builder( target.name() )
+			var concater = new $mol_sourcemap_builder( $node.path.dirname(target.name()) )
 			
 			sources.forEach(
 				function( src ) {
