@@ -960,8 +960,6 @@ namespace $ {
 			if (! targetJS) return []
 
 			const targetMJS = targetJS.parent().resolve( targetJS.name().replace(/\.js$/, '.mjs') )
-			const targetMJSMap = targetJSMap.parent().resolve( targetJSMap.name().replace(/\.js\.map$/, '.mjs.map') )
-			targetMJSMap.buffer(targetJSMap.buffer())
 			targetMJS.text( targetJS.text().replace(/(^\/\/# sourceMappingURL.*)/, 'export default $\n$1') )
 
 			this.logBundle( targetMJS , Date.now() - start )
