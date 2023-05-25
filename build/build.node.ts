@@ -902,7 +902,7 @@ namespace $ {
 			var sources = this.sources_js( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var concater = new $mol_sourcemap_builder( $node.path.dirname(targetJS.name()), ';')
+			var concater = new $mol_sourcemap_builder( targetJS.parent().name(), ';')
 			concater.add( '"use strict"' )
 
 			if( bundle === 'node' ) {
@@ -1013,7 +1013,7 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = new $mol_sourcemap_builder( $node.path.dirname(target.name()), ';')
+			var concater = new $mol_sourcemap_builder( target.parent().name(), ';')
 			concater.add( '"use strict"' )
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
@@ -1104,7 +1104,7 @@ namespace $ {
 			var sources = this.sourcesDTS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var concater = new $mol_sourcemap_builder( $node.path.dirname(target.name()) )
+			var concater = new $mol_sourcemap_builder( target.parent().name() )
 			
 			sources.forEach(
 				function( src ) {
