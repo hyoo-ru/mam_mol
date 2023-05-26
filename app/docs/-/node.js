@@ -18674,6 +18674,9 @@ var $;
             ];
             return obj;
         }
+        Menu_logo() {
+            return null;
+        }
         menu_title() {
             return "";
         }
@@ -18746,6 +18749,7 @@ var $;
         }
         Menu() {
             const obj = new this.$.$mol_page();
+            obj.Logo = () => this.Menu_logo();
             obj.title = () => this.menu_title();
             obj.tools = () => this.menu_tools();
             obj.head = () => this.menu_head();

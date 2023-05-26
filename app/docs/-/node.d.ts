@@ -4862,6 +4862,7 @@ declare namespace $ {
         Spread(): $mol_view;
         pages(): readonly any[];
         Spread_close(): $$.$mol_link;
+        Menu_logo(): any;
         menu_title(): string;
         menu_tools(): readonly any[];
         menu_head(): readonly any[];

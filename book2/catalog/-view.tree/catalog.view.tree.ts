@@ -75,6 +75,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Menu_logo null
+		 * ```
+		 */
+		Menu_logo() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * menu_title \
 		 * ```
 		 */
@@ -265,6 +274,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Menu $mol_page
+		 * 	Logo <= Menu_logo
 		 * 	Title => Menu_title
 		 * 	title <= menu_title
 		 * 	Tools => Menu_tools
@@ -278,6 +288,7 @@ namespace $ {
 		Menu() {
 			const obj = new this.$.$mol_page()
 			
+			obj.Logo = () => this.Menu_logo()
 			obj.title = () => this.menu_title()
 			obj.tools = () => this.menu_tools()
 			obj.head = () => this.menu_head()
