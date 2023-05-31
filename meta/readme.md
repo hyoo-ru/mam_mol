@@ -1,4 +1,4 @@
-# $mol_seo
+# $mol_meta
 
 Components for best SEO.
 
