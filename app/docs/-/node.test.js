@@ -40469,6 +40469,353 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_video_camera extends $mol_video_player {
+        controls() {
+            return false;
+        }
+        video_constraints() {
+            return {
+                facingMode: this.facing()
+            };
+        }
+        video_settings() {
+            return {
+                brightness: this.brightness(),
+                sharpness: this.sharpness(),
+                contrast: this.contrast(),
+                saturation: this.saturation(),
+                advanced: [
+                    {
+                        colorTemperature: this.temperature()
+                    },
+                    {
+                        torch: this.torch()
+                    }
+                ]
+            };
+        }
+        facing() {
+            return "user";
+        }
+        brightness() {
+            return 128;
+        }
+        sharpness() {
+            return 3;
+        }
+        contrast() {
+            return 32;
+        }
+        saturation() {
+            return 64;
+        }
+        temperature() {
+            return 4000;
+        }
+        torch() {
+            return true;
+        }
+    }
+    $.$mol_video_camera = $mol_video_camera;
+})($ || ($ = {}));
+//mol/video/camera/-view.tree/camera.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_video_camera extends $.$mol_video_camera {
+            stream_raw() {
+                const stream = $mol_wire_sync(navigator.mediaDevices).getUserMedia({
+                    video: this.video_constraints(),
+                });
+                return Object.assign(stream, {
+                    destructor: () => stream.getTracks().forEach(track => track.stop())
+                });
+            }
+            stream() {
+                const settings = this.video_settings();
+                const stream = this.stream_raw();
+                for (const track of stream.getVideoTracks()) {
+                    for (const param in settings) {
+                        try {
+                            track.applyConstraints({ [param]: settings[param] });
+                        }
+                        catch (error) {
+                            $mol_fail_log(error);
+                        }
+                    }
+                }
+                return stream;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_video_camera.prototype, "stream_raw", null);
+        __decorate([
+            $mol_mem
+        ], $mol_video_camera.prototype, "stream", null);
+        $$.$mol_video_camera = $mol_video_camera;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/video/camera/camera.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_flashlight extends $mol_icon {
+        path() {
+            return "M9,10L6,5H18L15,10H9M18,4H6V2H18V4M9,22V11H15V22H9M12,13C11.45,13 11,13.45 11,14C11,14.55 11.45,15 12,15C12.55,15 13,14.55 13,14C13,13.45 12.55,13 12,13Z";
+        }
+    }
+    $.$mol_icon_flashlight = $mol_icon_flashlight;
+})($ || ($ = {}));
+//mol/icon/flashlight/-view.tree/flashlight.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_video_camera_demo extends $mol_example_large {
+        title() {
+            return "Reactive video camera";
+        }
+        sub() {
+            return [
+                this.View(),
+                this.Controls()
+            ];
+        }
+        tags() {
+            return [
+                "capture"
+            ];
+        }
+        aspects() {
+            return [
+                "Media/Video"
+            ];
+        }
+        Player() {
+            const obj = new this.$.$mol_video_camera();
+            obj.torch = () => this.torch();
+            obj.brightness = () => this.brightness();
+            obj.sharpness = () => this.sharpness();
+            obj.contrast = () => this.contrast();
+            obj.saturation = () => this.saturation();
+            obj.temperature = () => this.temperature();
+            return obj;
+        }
+        View() {
+            const obj = new this.$.$mol_row();
+            obj.sub = () => [
+                this.Player()
+            ];
+            return obj;
+        }
+        torch(next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        Torch_icon() {
+            const obj = new this.$.$mol_icon_flashlight();
+            return obj;
+        }
+        Torch() {
+            const obj = new this.$.$mol_check_icon();
+            obj.checked = (next) => this.torch(next);
+            obj.Icon = () => this.Torch_icon();
+            return obj;
+        }
+        Torch_labeler() {
+            const obj = new this.$.$mol_labeler();
+            obj.title = () => "Torch";
+            obj.content = () => [
+                this.Torch()
+            ];
+            return obj;
+        }
+        brightness(next) {
+            if (next !== undefined)
+                return next;
+            return 128;
+        }
+        Brightness() {
+            const obj = new this.$.$mol_number();
+            obj.value = (next) => this.brightness(next);
+            obj.precision_change = () => 8;
+            return obj;
+        }
+        Brightness_labeler() {
+            const obj = new this.$.$mol_labeler();
+            obj.title = () => "Brightness";
+            obj.content = () => [
+                this.Brightness()
+            ];
+            return obj;
+        }
+        sharpness(next) {
+            if (next !== undefined)
+                return next;
+            return 3;
+        }
+        Sharpness() {
+            const obj = new this.$.$mol_number();
+            obj.value = (next) => this.sharpness(next);
+            return obj;
+        }
+        Sharpness_labeler() {
+            const obj = new this.$.$mol_labeler();
+            obj.title = () => "Sharpness";
+            obj.content = () => [
+                this.Sharpness()
+            ];
+            return obj;
+        }
+        contrast(next) {
+            if (next !== undefined)
+                return next;
+            return 32;
+        }
+        Contrast() {
+            const obj = new this.$.$mol_number();
+            obj.value = (next) => this.contrast(next);
+            obj.precision_change = () => 4;
+            return obj;
+        }
+        Contrast_labeler() {
+            const obj = new this.$.$mol_labeler();
+            obj.title = () => "Contrast";
+            obj.content = () => [
+                this.Contrast()
+            ];
+            return obj;
+        }
+        saturation(next) {
+            if (next !== undefined)
+                return next;
+            return 64;
+        }
+        Saturation() {
+            const obj = new this.$.$mol_number();
+            obj.value = (next) => this.saturation(next);
+            obj.precision_change = () => 8;
+            return obj;
+        }
+        Saturation_labeler() {
+            const obj = new this.$.$mol_labeler();
+            obj.title = () => "Saturation";
+            obj.content = () => [
+                this.Saturation()
+            ];
+            return obj;
+        }
+        temperature(next) {
+            if (next !== undefined)
+                return next;
+            return 4000;
+        }
+        Temperature() {
+            const obj = new this.$.$mol_number();
+            obj.value = (next) => this.temperature(next);
+            obj.precision_change = () => 100;
+            return obj;
+        }
+        Temperature_labeler() {
+            const obj = new this.$.$mol_labeler();
+            obj.title = () => "Temperature";
+            obj.content = () => [
+                this.Temperature()
+            ];
+            return obj;
+        }
+        Controls() {
+            const obj = new this.$.$mol_row();
+            obj.sub = () => [
+                this.Torch_labeler(),
+                this.Brightness_labeler(),
+                this.Sharpness_labeler(),
+                this.Contrast_labeler(),
+                this.Saturation_labeler(),
+                this.Temperature_labeler()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Player", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "View", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "torch", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Torch_icon", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Torch", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Torch_labeler", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "brightness", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Brightness", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Brightness_labeler", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "sharpness", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Sharpness", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Sharpness_labeler", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "contrast", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Contrast", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Contrast_labeler", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "saturation", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Saturation", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Saturation_labeler", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "temperature", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Temperature", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Temperature_labeler", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Controls", null);
+    $.$mol_video_camera_demo = $mol_video_camera_demo;
+})($ || ($ = {}));
+//mol/video/camera/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_eye extends $mol_icon {
         path() {
             return "M12,9C10.34,9 9,10.34 9,12C9,13.66 10.34,15 12,15C13.66,15 15,13.66 15,12C15,10.34 13.66,9 12,9M12,17C9.24,17 7,14.76 7,12C7,9.24 9.24,7 12,7C14.76,7 17,9.24 17,12C17,14.76 14.76,17 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z";

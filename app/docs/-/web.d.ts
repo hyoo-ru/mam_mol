@@ -9940,6 +9940,69 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_video_camera extends $mol_video_player {
+        controls(): boolean;
+        video_constraints(): Record<string, any>;
+        video_settings(): Record<string, any>;
+        facing(): string;
+        brightness(): number;
+        sharpness(): number;
+        contrast(): number;
+        saturation(): number;
+        temperature(): number;
+        torch(): boolean;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_video_camera extends $.$mol_video_camera {
+        stream_raw(): MediaStream & {
+            destructor: () => void;
+        };
+        stream(): MediaStream & {
+            destructor: () => void;
+        };
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_flashlight extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_video_camera_demo extends $mol_example_large {
+        title(): string;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        aspects(): readonly any[];
+        Player(): $$.$mol_video_camera;
+        View(): $mol_row;
+        torch(next?: any): boolean;
+        Torch_icon(): $mol_icon_flashlight;
+        Torch(): $mol_check_icon;
+        Torch_labeler(): $mol_labeler;
+        brightness(next?: any): number;
+        Brightness(): $$.$mol_number;
+        Brightness_labeler(): $mol_labeler;
+        sharpness(next?: any): number;
+        Sharpness(): $$.$mol_number;
+        Sharpness_labeler(): $mol_labeler;
+        contrast(next?: any): number;
+        Contrast(): $$.$mol_number;
+        Contrast_labeler(): $mol_labeler;
+        saturation(next?: any): number;
+        Saturation(): $$.$mol_number;
+        Saturation_labeler(): $mol_labeler;
+        temperature(next?: any): number;
+        Temperature(): $$.$mol_number;
+        Temperature_labeler(): $mol_labeler;
+        Controls(): $mol_row;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_eye extends $mol_icon {
         path(): string;
     }

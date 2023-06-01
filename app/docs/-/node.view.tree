@@ -5551,6 +5551,74 @@ $mol_video_player_demo $mol_example_large
 	aspects /
 		\Media/Video
 
+$mol_video_camera $mol_video_player
+	controls false
+	video_constraints *
+		facingMode <= facing \user
+	video_settings *
+		brightness <= brightness 128
+		sharpness <= sharpness 3
+		contrast <= contrast 32
+		saturation <= saturation 64
+		advanced /
+			* colorTemperature <= temperature 4000
+			* torch <= torch true
+
+
+$mol_icon_flashlight $mol_icon path \M9,10L6,5H18L15,10H9M18,4H6V2H18V4M9,22V11H15V22H9M12,13C11.45,13 11,13.45 11,14C11,14.55 11.45,15 12,15C12.55,15 13,14.55 13,14C13,13.45 12.55,13 12,13Z
+
+$mol_video_camera_demo $mol_example_large
+	title \Reactive video camera
+	sub /
+		<= View $mol_row sub /
+			<= Player $mol_video_camera
+				torch <= torch
+				brightness <= brightness
+				sharpness <= sharpness
+				contrast <= contrast
+				saturation <= saturation
+				temperature <= temperature
+		<= Controls $mol_row sub /
+			<= Torch_labeler $mol_labeler
+				title \Torch
+				content /
+					<= Torch $mol_check_icon
+						checked? <=> torch? false
+						Icon <= Torch_icon $mol_icon_flashlight
+			<= Brightness_labeler $mol_labeler
+				title \Brightness
+				content /
+					<= Brightness $mol_number
+						value? <=> brightness? 128
+						precision_change 8
+			<= Sharpness_labeler $mol_labeler
+				title \Sharpness
+				content /
+					<= Sharpness $mol_number
+						value? <=> sharpness? 3
+			<= Contrast_labeler $mol_labeler
+				title \Contrast
+				content /
+					<= Contrast $mol_number
+						value? <=> contrast? 32
+						precision_change 4
+			<= Saturation_labeler $mol_labeler
+				title \Saturation
+				content /
+					<= Saturation $mol_number
+						value? <=> saturation? 64
+						precision_change 8
+			<= Temperature_labeler $mol_labeler
+				title \Temperature
+				content /
+					<= Temperature $mol_number
+						value? <=> temperature? 4000
+						precision_change 100
+	tags /
+		\capture
+	aspects /
+		\Media/Video
+
 $mol_icon_eye $mol_icon path \M12,9C10.34,9 9,10.34 9,12C9,13.66 10.34,15 12,15C13.66,15 15,13.66 15,12C15,10.34 13.66,9 12,9M12,17C9.24,17 7,14.76 7,12C7,9.24 9.24,7 12,7C14.76,7 17,9.24 17,12C17,14.76 14.76,17 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z
 
 $mol_password $mol_view

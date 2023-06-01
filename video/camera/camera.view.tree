@@ -7,7 +7,7 @@ $mol_video_camera $mol_video_player
 		sharpness <= sharpness 3
 		contrast <= contrast 32
 		saturation <= saturation 64
-		colorTemperature <= temperature 4000
 		advanced /
+			* colorTemperature <= temperature 4000
 			* torch <= torch true
 
