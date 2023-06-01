@@ -74,6 +74,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * field * srcObject <= stream
+		 * ```
+		 */
+		field() {
+			return {
+				srcObject: this.stream()
+			} as Record< string, any >
+		}
+		
+		/**
+		 * ```tree
 		 * event *
 		 * 	volumechange?event <=> revolume?event
 		 * 	timeupdate?event <=> retime?event
@@ -137,6 +148,15 @@ namespace $ {
 		 */
 		poster() {
 			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * stream null
+		 * ```
+		 */
+		stream() {
+			return null as any
 		}
 		
 		/**

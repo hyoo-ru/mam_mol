@@ -1,0 +1,3 @@
+$mol_video_camera $mol_video_player
+	facing? \user
+	controls false

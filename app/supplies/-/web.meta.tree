@@ -34,6 +34,7 @@
 	pack lamps git \https://github.com/hyoo-ru/lamps.hyoo.ru.git
 	pack life git \https://github.com/hyoo-ru/life.hyoo.ru.git
 	pack lingua git \https://github.com/hyoo-ru/lingua.hyoo.ru.git
+	pack lupa git \https://github.com/hyoo-ru/lupa.hyoo.ru.git
 	pack mail git \https://github.com/hyoo-ru/mail.hyoo.ru.git
 	pack map git \https://github.com/hyoo-ru/map.hyoo.ru.git
 	pack marked git \https://github.com/hyoo-ru/marked.hyoo.ru.git

@@ -9875,12 +9875,14 @@ declare namespace $ {
         time(val?: any): number;
         duration(): number;
         attr(): Record<string, any>;
+        field(): Record<string, any>;
         event(): Record<string, any>;
         uri(): string;
         controls(): boolean;
         autoplay(): boolean;
         loop(): boolean;
         poster(): string;
+        stream(): any;
         revolume(event?: any): any;
         retime(event?: any): any;
         redurate(event?: any): any;
