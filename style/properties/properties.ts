@@ -410,6 +410,19 @@ namespace $ {
 
 		}
 
+		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-top */
+		borderTop?: Overrides['border'],
+
+		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-right */
+		borderRight?: Overrides['border'],
+
+		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-bottom */
+		borderBottom?: Overrides['border'],
+
+		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-left */
+		borderLeft?: Overrides['border'],
+
+
 		/** 
 		 * How a flex item will grow or shrink to fit the space available in its flex container. It is a shorthand for `flexGrow`, `flexShrink`, and `flexBasis`.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex
