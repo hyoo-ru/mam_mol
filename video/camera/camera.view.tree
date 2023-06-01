@@ -1,3 +1,12 @@
 $mol_video_camera $mol_video_player
-	facing? \user
 	controls false
+	video_constraints *
+		facingMode <= facing? \user
+		width * min <= width_min 720
+		height * min <= height_min 720
+	video_settings *
+		brightness <= brightness 128
+		sharpness <= sharpness 3
+		contrast <= contrast 32
+		saturation <= saturation 64
+		colorTemperature <= temperature 4000

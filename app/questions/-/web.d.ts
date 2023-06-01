@@ -1869,7 +1869,7 @@ declare namespace $.$$ {
         col_head_content(colId: string): readonly string[];
         rows(): readonly $mol_view[];
         cells(row_id: string[]): readonly $mol_view[];
-        col_type(col_id: string): "text" | "number" | "branch";
+        col_type(col_id: string): "number" | "branch" | "text";
         Cell(id: {
             row: string[];
             col: string;
@@ -2149,7 +2149,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_embed_any extends $.$mol_embed_any {
-        type(): "image" | "object" | "youtube";
+        type(): "object" | "image" | "youtube";
         sub(): $mol_image[] | $mol_embed_youtube[] | $mol_embed_native[];
     }
 }
