@@ -40890,8 +40890,7 @@ var $;
         }
         sub() {
             return [
-                this.View(),
-                this.Controls()
+                this.Scroll()
             ];
         }
         tags() {
@@ -41050,6 +41049,14 @@ var $;
             ];
             return obj;
         }
+        Scroll() {
+            const obj = new this.$.$mol_scroll();
+            obj.sub = () => [
+                this.View(),
+                this.Controls()
+            ];
+            return obj;
+        }
     }
     __decorate([
         $mol_mem
@@ -41117,6 +41124,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_video_camera_demo.prototype, "Controls", null);
+    __decorate([
+        $mol_mem
+    ], $mol_video_camera_demo.prototype, "Scroll", null);
     $.$mol_video_camera_demo = $mol_video_camera_demo;
 })($ || ($ = {}));
 //mol/video/camera/demo/-view.tree/demo.view.tree.ts

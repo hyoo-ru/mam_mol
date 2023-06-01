@@ -12,15 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= View
-		 * 	<= Controls
+		 * sub / <= Scroll
 		 * ```
 		 */
 		sub() {
 			return [
-				this.View(),
-				this.Controls()
+				this.Scroll()
 			] as readonly any[]
 		}
 		
@@ -400,6 +397,25 @@ namespace $ {
 				this.Contrast_labeler(),
 				this.Saturation_labeler(),
 				this.Temperature_labeler()
+			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Scroll $mol_scroll sub /
+		 * 	<= View
+		 * 	<= Controls
+		 * ```
+		 */
+		@ $mol_mem
+		Scroll() {
+			const obj = new this.$.$mol_scroll()
+			
+			obj.sub = () => [
+				this.View(),
+				this.Controls()
 			] as readonly any[]
 			
 			return obj

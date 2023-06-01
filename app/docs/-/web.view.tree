@@ -5641,50 +5641,51 @@ $mol_icon_flashlight $mol_icon path \M9,10L6,5H18L15,10H9M18,4H6V2H18V4M9,22V11H
 $mol_video_camera_demo $mol_example_large
 	title \Reactive video camera
 	sub /
-		<= View $mol_row sub /
-			<= Player $mol_video_camera
-				torch <= torch
-				brightness <= brightness
-				sharpness <= sharpness
-				contrast <= contrast
-				saturation <= saturation
-				temperature <= temperature
-		<= Controls $mol_row sub /
-			<= Torch_labeler $mol_labeler
-				title \Torch
-				content /
-					<= Torch $mol_check_icon
-						checked? <=> torch? false
-						Icon <= Torch_icon $mol_icon_flashlight
-			<= Brightness_labeler $mol_labeler
-				title \Brightness
-				content /
-					<= Brightness $mol_number
-						value? <=> brightness? 128
-						precision_change 8
-			<= Sharpness_labeler $mol_labeler
-				title \Sharpness
-				content /
-					<= Sharpness $mol_number
-						value? <=> sharpness? 3
-			<= Contrast_labeler $mol_labeler
-				title \Contrast
-				content /
-					<= Contrast $mol_number
-						value? <=> contrast? 32
-						precision_change 4
-			<= Saturation_labeler $mol_labeler
-				title \Saturation
-				content /
-					<= Saturation $mol_number
-						value? <=> saturation? 64
-						precision_change 8
-			<= Temperature_labeler $mol_labeler
-				title \Temperature
-				content /
-					<= Temperature $mol_number
-						value? <=> temperature? 4000
-						precision_change 100
+		<= Scroll $mol_scroll sub /
+			<= View $mol_row sub /
+				<= Player $mol_video_camera
+					torch <= torch
+					brightness <= brightness
+					sharpness <= sharpness
+					contrast <= contrast
+					saturation <= saturation
+					temperature <= temperature
+			<= Controls $mol_row sub /
+				<= Torch_labeler $mol_labeler
+					title \Torch
+					content /
+						<= Torch $mol_check_icon
+							checked? <=> torch? false
+							Icon <= Torch_icon $mol_icon_flashlight
+				<= Brightness_labeler $mol_labeler
+					title \Brightness
+					content /
+						<= Brightness $mol_number
+							value? <=> brightness? 128
+							precision_change 8
+				<= Sharpness_labeler $mol_labeler
+					title \Sharpness
+					content /
+						<= Sharpness $mol_number
+							value? <=> sharpness? 3
+				<= Contrast_labeler $mol_labeler
+					title \Contrast
+					content /
+						<= Contrast $mol_number
+							value? <=> contrast? 32
+							precision_change 4
+				<= Saturation_labeler $mol_labeler
+					title \Saturation
+					content /
+						<= Saturation $mol_number
+							value? <=> saturation? 64
+							precision_change 8
+				<= Temperature_labeler $mol_labeler
+					title \Temperature
+					content /
+						<= Temperature $mol_number
+							value? <=> temperature? 4000
+							precision_change 100
 	tags /
 		\capture
 	aspects /
