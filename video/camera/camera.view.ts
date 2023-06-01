@@ -21,7 +21,13 @@ namespace $.$$ {
 			const stream = this.stream_raw()
 			
 			for( const track of stream.getVideoTracks() ) {
-				track.applyConstraints( settings )
+				for( const param in settings ) {
+					try {
+						track.applyConstraints({ [ param ]: settings[ param ] })
+					} catch( error ) {
+						$mol_fail_log( error )
+					}
+				}
 			}
 			
 			return stream
