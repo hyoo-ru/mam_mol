@@ -56,17 +56,26 @@ namespace $ {
 		
 		static sizes( image: CanvasImageSource ) {
 		
-			let { width, height } = image
+			if( image instanceof VideoFrame ) return [
+				image.codedWidth,
+				image.codedHeight,
+			]
 			
-			if( image instanceof HTMLVideoElement ) {
-				width ||= image.videoWidth
-				height ||= image.videoHeight
-			}
+			if( image instanceof HTMLVideoElement ) return [
+				image.videoWidth,
+				image.videoHeight,
+			]
 			
-			if( typeof width !== 'number' ) width = width.baseVal.value
-			if( typeof height !== 'number' ) height = height.baseVal.value
+			if( image instanceof SVGImageElement ) return [
+				image.width.baseVal.value,
+				image.height.baseVal.value,
+			]
+				
+			return [
+				image.width,
+				image.height,
+			]
 			
-			return [ width, height ]
 		}
 		
 		static async load( uri: string ) {
