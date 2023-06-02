@@ -826,7 +826,7 @@ namespace $ {
 						res = res.concat( this.bundleJS( { path , exclude , bundle : env } ) )
 					}
 					if( !type || type === 'mjs' ) {
-						res = res.concat( this.bundleJS( { path , exclude , bundle : env, moduleTarget: 'mjs' } ) )
+						res = res.concat( this.bundleMJS( { path , exclude , bundle : env } ) )
 					}
 					if( !type || type === 'test.js' ) {
 						res = res.concat( this.bundleTestJS( { path , exclude , bundle : env } ) )
@@ -892,18 +892,17 @@ namespace $ {
 			})
 
 		}
-		
+
 		@ $mol_mem_key
-		bundleJS( { path , exclude , bundle , moduleTarget = 'js' } : { path : string , exclude : string[] , bundle : string, moduleTarget? : string } ) : $mol_file[] {
+		bundleJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
-			var target = pack.resolve( `-/${bundle}.${moduleTarget}` )
-			var targetMap = pack.resolve( `-/${bundle}.${moduleTarget}.map` )
+			var targetJS = pack.resolve( `-/${bundle}.js` )
 			
 			var sources = this.sources_js( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var concater = new $mol_sourcemap_builder( target.name(), ';')
+			var concater = new $mol_sourcemap_builder( targetJS.parent().path(), ';')
 			concater.add( '"use strict"' )
 
 			if( bundle === 'node' ) {
@@ -929,7 +928,7 @@ namespace $ {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
 
-						concater.add( content.text , src.relate( target.parent() ) , content.map )
+						concater.add( content.text , src.relate( targetJS.parent() ) , content.map )
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
@@ -942,19 +941,32 @@ namespace $ {
 					}
 				}
 			)
-			if( moduleTarget === 'mjs' ) {
-				concater.add( 'export default $', '-' )
-			}
-			target.text( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
-			targetMap.text( concater.toString() )
-			
-			this.logBundle( target , Date.now() - start )
-
 			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
+
+			var targetJSMap = pack.resolve( `-/${bundle}.js.map` )
+	
+			targetJS.text( concater.content + '\n//# sourceMappingURL=' + targetJSMap.relate( targetJS.parent() ) + '\n' )
+			targetJSMap.text( concater.toString() )
 			
-			return [ target , targetMap ]
+			this.logBundle( targetJS , Date.now() - start )
+
+			return [ targetJS , targetJSMap ]
 		}
 		
+		@ $mol_mem_key
+		bundleMJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
+			const start = Date.now()
+			const [ targetJS, targetJSMap ] = this.bundleJS({ path, exclude, bundle })
+			if (! targetJS) return []
+
+			const targetMJS = targetJS.parent().resolve( targetJS.name().replace(/\.js$/, '.mjs') )
+			targetMJS.text( targetJS.text().replace(/(^\/\/# sourceMappingURL.*)/, 'export default $\n$1') )
+
+			this.logBundle( targetMJS , Date.now() - start )
+
+			return [ targetMJS, targetJSMap ]
+		}
+
 		@ $mol_mem_key
 		bundleAuditJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
 
@@ -1001,7 +1013,7 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = new $mol_sourcemap_builder( target.name(), ';')
+			var concater = new $mol_sourcemap_builder( target.parent().path(), ';')
 			concater.add( '"use strict"' )
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
@@ -1092,7 +1104,7 @@ namespace $ {
 			var sources = this.sourcesDTS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var concater = new $mol_sourcemap_builder( target.name() )
+			var concater = new $mol_sourcemap_builder( target.parent().path() )
 			
 			sources.forEach(
 				function( src ) {
