@@ -1,0 +1,13 @@
+$mol_video_camera $mol_video_player
+	controls false
+	video_constraints *
+		facingMode <= facing \user
+	video_settings *
+		brightness <= brightness 128
+		sharpness <= sharpness 3
+		contrast <= contrast 32
+		saturation <= saturation 64
+		advanced /
+			* colorTemperature <= temperature 4000
+			* torch <= torch true
+
