@@ -58,6 +58,11 @@ namespace $ {
 		
 			let { width, height } = image
 			
+			if( image instanceof HTMLVideoElement ) {
+				width ||= image.videoWidth
+				height ||= image.videoHeight
+			}
+			
 			if( typeof width !== 'number' ) width = width.baseVal.value
 			if( typeof height !== 'number' ) height = height.baseVal.value
 			
