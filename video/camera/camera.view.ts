@@ -51,5 +51,9 @@ namespace $.$$ {
 			return stream
 		}
 		
+		dom_node_actual() {
+			return super.dom_node_actual() as HTMLVideoElement
+		}
+		
 	}
 }
