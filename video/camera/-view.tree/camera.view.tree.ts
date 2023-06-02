@@ -117,11 +117,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sharpness 3
+		 * sharpness 2
 		 * ```
 		 */
 		sharpness() {
-			return 3
+			return 2
 		}
 		
 		/**

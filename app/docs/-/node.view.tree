@@ -5560,7 +5560,7 @@ $mol_video_camera $mol_video_player
 		height * ideal <= height <= size
 	video_settings *
 		brightness <= brightness 128
-		sharpness <= sharpness 3
+		sharpness <= sharpness 2
 		contrast <= contrast 32
 		saturation <= saturation 64
 		advanced /
