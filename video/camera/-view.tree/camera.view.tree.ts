@@ -12,12 +12,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * video_constraints * facingMode <= facing
+		 * video_constraints *
+		 * 	facingMode <= facing
+		 * 	aspectRatio <= aspect
+		 * 	width * ideal <= width
+		 * 	height * ideal <= height
 		 * ```
 		 */
 		video_constraints() {
 			return {
-				facingMode: this.facing()
+				facingMode: this.facing(),
+				aspectRatio: this.aspect(),
+				width: {
+					ideal: this.width()
+				} as Record< string, any >,
+				height: {
+					ideal: this.height()
+				} as Record< string, any >
 			} as Record< string, any >
 		}
 		
@@ -57,6 +68,42 @@ namespace $ {
 		 */
 		facing() {
 			return "user"
+		}
+		
+		/**
+		 * ```tree
+		 * aspect 1
+		 * ```
+		 */
+		aspect() {
+			return 1
+		}
+		
+		/**
+		 * ```tree
+		 * size 720
+		 * ```
+		 */
+		size() {
+			return 720
+		}
+		
+		/**
+		 * ```tree
+		 * width <= size
+		 * ```
+		 */
+		width() {
+			return this.size()
+		}
+		
+		/**
+		 * ```tree
+		 * height <= size
+		 * ```
+		 */
+		height() {
+			return this.size()
 		}
 		
 		/**

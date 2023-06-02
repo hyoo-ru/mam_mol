@@ -2,6 +2,9 @@ $mol_video_camera $mol_video_player
 	controls false
 	video_constraints *
 		facingMode <= facing \user
+		aspectRatio <= aspect 1
+		width * ideal <= width <= size 720
+		height * ideal <= height <= size
 	video_settings *
 		brightness <= brightness 128
 		sharpness <= sharpness 3
