@@ -376,7 +376,7 @@ namespace $ {
 		left?: Length | 'auto' | Common
 
 		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/border */
-		border?: {
+		border?: Directions<{
 
 			/** 
 			 * Rounds the corners of an element's outer border edge. You can set a single radius to make circular corners, or two radii to make elliptical corners.
@@ -400,15 +400,15 @@ namespace $ {
 			 * Color of element's border.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-color
 			 */
-			color?: Directions< Color > | Common
+			color?: Color | Common
 
 			/** 
 			 * Width of element's border.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-width
 			 */
-			width?: Directions< Length > | Common
+			width?: Length | Common
 
-		}
+		}>
 
 		/** 
 		 * How a flex item will grow or shrink to fit the space available in its flex container. It is a shorthand for `flexGrow`, `flexShrink`, and `flexBasis`.
