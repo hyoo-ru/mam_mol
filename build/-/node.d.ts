@@ -1056,15 +1056,15 @@ declare namespace $ {
         sourceRoot?: string;
         sourcesContent?: (string | null)[];
         mappings: string | SourceMapLine[];
-        file: string;
+        file?: string;
     }
     export class $mol_sourcemap_builder {
-        readonly file: string;
         readonly separator: string;
+        readonly file?: string | undefined;
         version: number;
         protected sourceRoot: string;
         protected separator_count: number;
-        constructor(file: string, separator?: string);
+        constructor(dir: string, separator?: string, file?: string | undefined);
         protected chunks: string[];
         protected segment_lines: SourceMapLine[];
         protected sources: string[];
@@ -1247,11 +1247,15 @@ declare namespace $ {
             bundle?: string;
         }): $mol_file[];
         logBundle(target: $mol_file, duration: number): void;
-        bundleJS({ path, exclude, bundle, moduleTarget }: {
+        bundleJS({ path, exclude, bundle }: {
             path: string;
             exclude: string[];
             bundle: string;
-            moduleTarget?: string;
+        }): $mol_file[];
+        bundleMJS({ path, exclude, bundle }: {
+            path: string;
+            exclude: string[];
+            bundle: string;
         }): $mol_file[];
         bundleAuditJS({ path, exclude, bundle }: {
             path: string;

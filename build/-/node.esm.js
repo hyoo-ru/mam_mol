@@ -4566,15 +4566,14 @@ var $;
     const sourcemap_codec = $node['sourcemap-codec'];
     const path = $node.path;
     class $mol_sourcemap_builder {
-        file;
         separator;
+        file;
         version = 3;
         sourceRoot;
         separator_count;
-        constructor(file, separator = '') {
-            this.file = file;
+        constructor(dir, separator = '', file) {
             this.separator = separator;
-            const dir = path.dirname(file);
+            this.file = file;
             this.sourceRoot = dir && dir !== '.' ? (dir + '/') : '';
             this.separator += '\n';
             this.separator_count = separator.split('\n').length - 2;
@@ -5515,7 +5514,7 @@ var $;
                     res = res.concat(this.bundleJS({ path, exclude, bundle: env }));
                 }
                 if (!type || type === 'mjs') {
-                    res = res.concat(this.bundleJS({ path, exclude, bundle: env, moduleTarget: 'mjs' }));
+                    res = res.concat(this.bundleMJS({ path, exclude, bundle: env }));
                 }
                 if (!type || type === 'test.js') {
                     res = res.concat(this.bundleTestJS({ path, exclude, bundle: env }));
@@ -5566,15 +5565,14 @@ var $;
                 path,
             });
         }
-        bundleJS({ path, exclude, bundle, moduleTarget = 'js' }) {
+        bundleJS({ path, exclude, bundle }) {
             const start = Date.now();
             var pack = $mol_file.absolute(path);
-            var target = pack.resolve(`-/${bundle}.${moduleTarget}`);
-            var targetMap = pack.resolve(`-/${bundle}.${moduleTarget}.map`);
+            var targetJS = pack.resolve(`-/${bundle}.js`);
             var sources = this.sources_js({ path, exclude });
             if (sources.length === 0)
                 return [];
-            var concater = new $mol_sourcemap_builder(target.name(), ';');
+            var concater = new $mol_sourcemap_builder(targetJS.parent().path(), ';');
             concater.add('"use strict"');
             if (bundle === 'node') {
                 concater.add('var exports = void 0');
@@ -5595,7 +5593,7 @@ var $;
                     if (isCommonJs) {
                         concater.add(`\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate(this.root().resolve('node_modules')) + `/" ) ] }; \n`, '-');
                     }
-                    concater.add(content.text, src.relate(target.parent()), content.map);
+                    concater.add(content.text, src.relate(targetJS.parent()), content.map);
                     if (isCommonJs) {
                         const idFull = src.relate(this.root().resolve('node_modules'));
                         const idShort = idFull.replace(/\/index\.js$/, '').replace(/\.js$/, '');
@@ -5606,15 +5604,23 @@ var $;
                     errors.push(error);
                 }
             });
-            if (moduleTarget === 'mjs') {
-                concater.add('export default $', '-');
-            }
-            target.text(concater.content + '\n//# sourceMappingURL=' + targetMap.relate(target.parent()) + '\n');
-            targetMap.text(concater.toString());
-            this.logBundle(target, Date.now() - start);
             if (errors.length)
                 $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, ...errors));
-            return [target, targetMap];
+            var targetJSMap = pack.resolve(`-/${bundle}.js.map`);
+            targetJS.text(concater.content + '\n//# sourceMappingURL=' + targetJSMap.relate(targetJS.parent()) + '\n');
+            targetJSMap.text(concater.toString());
+            this.logBundle(targetJS, Date.now() - start);
+            return [targetJS, targetJSMap];
+        }
+        bundleMJS({ path, exclude, bundle }) {
+            const start = Date.now();
+            const [targetJS, targetJSMap] = this.bundleJS({ path, exclude, bundle });
+            if (!targetJS)
+                return [];
+            const targetMJS = targetJS.parent().resolve(targetJS.name().replace(/\.js$/, '.mjs'));
+            targetMJS.text(targetJS.text().replace(/(^\/\/# sourceMappingURL.*)/, 'export default $\n$1'));
+            this.logBundle(targetMJS, Date.now() - start);
+            return [targetMJS, targetJSMap];
         }
         bundleAuditJS({ path, exclude, bundle }) {
             const start = Date.now();
@@ -5645,7 +5651,7 @@ var $;
             var root = this.root();
             var target = pack.resolve(`-/${bundle}.test.js`);
             var targetMap = pack.resolve(`-/${bundle}.test.js.map`);
-            var concater = new $mol_sourcemap_builder(target.name(), ';');
+            var concater = new $mol_sourcemap_builder(target.parent().path(), ';');
             concater.add('"use strict"');
             var exclude_ext = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
             var sources = this.sources_js({ path, exclude: exclude_ext });
@@ -5714,7 +5720,7 @@ var $;
             var sources = this.sourcesDTS({ path, exclude });
             if (sources.length === 0)
                 return [];
-            var concater = new $mol_sourcemap_builder(target.name());
+            var concater = new $mol_sourcemap_builder(target.parent().path());
             sources.forEach(function (src) {
                 if (!src.exists() || !src.text())
                     return;
@@ -6115,6 +6121,9 @@ var $;
     __decorate([
         $mol_mem_key
     ], $mol_build.prototype, "bundleJS", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_build.prototype, "bundleMJS", null);
     __decorate([
         $mol_mem_key
     ], $mol_build.prototype, "bundleAuditJS", null);

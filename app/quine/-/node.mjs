@@ -8571,6 +8571,5 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/app/quine/quine.view.ts
-;
-export default $
-//# sourceMappingURL=node.mjs.map
+
+//# sourceMappingURL=node.js.map

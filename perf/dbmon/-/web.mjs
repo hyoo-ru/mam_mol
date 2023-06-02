@@ -3498,6 +3498,5 @@ var $;
     $mol_style_attach("mol/perf/dbmon/dbmon.view.css", "[mol_perf_dbmon_databases] {\n\tdisplay: table;\n\twidth: 100%;\n}\n\n[mol_perf_dbmon_database] {\n\tdisplay: table-row;\n\tbackground: white;\n}\n\n[mol_perf_dbmon_database] > * {\n\tdisplay: table-cell;\n\tpadding: .5rem;\n\tborder-top: 1px solid #ddd;\n}\n\n[mol_perf_dbmon_database]:nth-child(odd) {\n\tbackground: #f9f9f9;\n}\n\n[mol_perf_dbmon_query_count] {\n\twidth: 2.75rem;\n}\n\n[mol_perf_dbmon_query_count_label] {\n\tborder-radius: .25em;\n\tcolor: #fff;\n\tfont-size: 75%;\n\tfont-weight: 700;\n\tline-height: 1;\n\tpadding: .25em .5em;\n\tjustify-content: flex-end;\n}\n\n[mol_perf_dbmon_query_count_label~=\"label-success\"] {\n\tbackground-color: #5cb85c;\n}\n\n[mol_perf_dbmon_query_count_label~=\"label-warning\"] {\n\tbackground-color: #f0ad4e;\n}\n\n[mol_perf_dbmon_query_bubble] {\n\tpadding: .5rem;\n}\n");
 })($ || ($ = {}));
 //mol/perf/dbmon/-css/dbmon.view.css.ts
-;
-export default $
-//# sourceMappingURL=web.mjs.map
+
+//# sourceMappingURL=web.js.map

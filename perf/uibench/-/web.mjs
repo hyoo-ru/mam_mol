@@ -3493,6 +3493,5 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/perf/uibench/uibench.view.ts
-;
-export default $
-//# sourceMappingURL=web.mjs.map
+
+//# sourceMappingURL=web.js.map

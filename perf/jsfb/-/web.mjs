@@ -4068,6 +4068,5 @@ var $;
     $mol_style_attach("mol/perf/jsfb/jsfb.view.css", "[mol_theme=\"$mol_theme_light\"] {\n\t--mol_theme_back: white;\n}\n\n[mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: #337ab7;\n\t--mol_theme_hover: #286090;\n}\n\n[mol_perf_jsfb] {\n\tflex-direction: row;\n}\n\n[mol_perf_jsfb_content] {\n\tflex: 0 1 60rem;\n\tmargin: 0 auto;\n}\n\n[mol_perf_jsfb_head] {\n\tbackground: #eee;\n\tborder-radius: var(--mol_gap_round);\n\tmargin: var(--mol_gap_block);\n\tjustify-content: space-around;\n}\n\n[mol_perf_jsfb_title] {\n\tfont-size: 2.5rem;\n\tline-height: 2.5rem;\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_perf_jsfb_controls] {\n\tdisplay: grid;\n\tgrid-auto-columns: auto;\n\tgrid-template-areas: \"a a\";\n}\n\n[mol_perf_jsfb_controls] > * {\n\tflex: 1 0 auto;\n}\n\n[mol_perf_jsfb_rows] {\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_perf_jsfb_row] {\n\tbox-shadow: 0 -1px 0 0 var(--mol_theme_line);\n}\n\n[mol_perf_jsfb_row]:nth-of-type(odd) {\n    background-color: #f9f9f9;\n}\n\n[mol_perf_jsfb_row][mol_perf_jsfb_row_selected] > *,\n[mol_perf_jsfb_row][mol_perf_jsfb_row_selected] {\n\tbackground: #ebcccc;\n}\n\n[mol_perf_jsfb_row_id] {\n\tpadding: var(--mol_gap_text);\n\tflex: 0 0 5rem;\n}\n\n[mol_perf_jsfb_row_title] {\n\tflex: 0 1 20rem;\n}\n\n[mol_perf_jsfb_row_drop] {\n\tflex: 0 0 auto;\n}\n");
 })($ || ($ = {}));
 //mol/perf/jsfb/-css/jsfb.view.css.ts
-;
-export default $
-//# sourceMappingURL=web.mjs.map
+
+//# sourceMappingURL=web.js.map

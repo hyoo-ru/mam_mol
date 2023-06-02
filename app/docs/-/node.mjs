@@ -41078,6 +41078,5 @@ var $;
     $.$mol_lights_demo = $mol_lights_demo;
 })($ || ($ = {}));
 //mol/lights/demo/-view.tree/demo.view.tree.ts
-;
-export default $
-//# sourceMappingURL=node.mjs.map
+
+//# sourceMappingURL=node.js.map

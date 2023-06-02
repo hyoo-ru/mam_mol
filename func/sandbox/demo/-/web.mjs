@@ -177,6 +177,5 @@ var $;
     $.$mol_func_sandbox = $mol_func_sandbox;
 })($ || ($ = {}));
 //mol/func/sandbox/sandbox.ts
-;
-export default $
-//# sourceMappingURL=web.mjs.map
+
+//# sourceMappingURL=web.js.map

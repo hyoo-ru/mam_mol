@@ -3582,6 +3582,5 @@ var $;
     $mol_style_attach("mol/perf/dopes/dopes.view.css", "[mol_perf_dopes] {\n\tposition: absolute;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n\toverflow: hidden;\n\tjustify-content: center;\n\tbackground-color: black;\n\tfont-size: 15px;\n\tcolor: white;\n\tpadding: 10px;\n\toverflow: hidden;\n}\n\n[mol_perf_dopes_speed] {\n\tbackground-color: red;\n    position: absolute;\n    top: 20px;\n    width: 180px;\n    padding: 7px;\n\tz-index: 1;\n\tjustify-content: center;\n}\n\n[mol_perf_dopes] [mol_button_major] {\n    position: absolute;\n    bottom: 20px;\n    border: none;\n    color: white;\n    height: 30px;\n    width: 96px;\n    font-size: 15px;\n    z-index: 1;\n}\n\n[mol_perf_dopes_start] {\n\tbackground-color: green;\n}\n[mol_perf_dopes_stop] {\n    background-color: red;\n}\n\n[mol_perf_dopes_labels] {\n\tposition: absolute;\n\tleft: 0;\n\ttop: 0;\n\twidth: 100%;\n\theight: 100%;\n\toverflow: hidden;\n}\n\n[mol_perf_dopes_label] {\n\tposition: absolute;\n\ttransition: none;\n}\n");
 })($ || ($ = {}));
 //mol/perf/dopes/-css/dopes.view.css.ts
-;
-export default $
-//# sourceMappingURL=node.mjs.map
+
+//# sourceMappingURL=node.js.map

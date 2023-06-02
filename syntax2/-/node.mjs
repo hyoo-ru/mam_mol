@@ -90,6 +90,5 @@ var $;
     $.$mol_syntax2 = $mol_syntax2;
 })($ || ($ = {}));
 //mol/syntax2/syntax2.ts
-;
-export default $
-//# sourceMappingURL=node.mjs.map
+
+//# sourceMappingURL=node.js.map

@@ -3209,6 +3209,5 @@ var $;
     $mol_style_attach("mol/perf/sierp/sierp.view.css", "[mol_perf_sierp] {\n\tposition: absolute;\n\tdisplay: block;\n\ttransform-origin: 0 0;\n\tleft: 50%;\n\ttop: 50%;\n\tzoom: .75;\n\ttransition: none;\n\twidth: 0px;\n\theight: 0px;\n}\n\n[mol_perf_sierp_dot] {\n\twidth: 10px;\n\theight: 10px;\n\tposition: absolute;\n\tdisplay: block;\n\tbackground: #61dafb;\n\tcolor: black;\n\tfont: normal 15px sans-serif;\n\ttext-align: center;\n\tcursor: pointer;\n}\n");
 })($ || ($ = {}));
 //mol/perf/sierp/-css/sierp.view.css.ts
-;
-export default $
-//# sourceMappingURL=node.mjs.map
+
+//# sourceMappingURL=node.js.map
