@@ -1,5 +1,7 @@
 $mol_video_camera $mol_video_player
 	controls false
+	style *
+		transform <= transform \
 	video_constraints *
 		facingMode <= facing \user
 		aspectRatio <= aspect 1
