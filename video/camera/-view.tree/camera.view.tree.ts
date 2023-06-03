@@ -12,6 +12,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * style * transform <= transform
+		 * ```
+		 */
+		style() {
+			return {
+				transform: this.transform()
+			} as Record< string, any >
+		}
+		
+		/**
+		 * ```tree
 		 * video_constraints *
 		 * 	facingMode <= facing
 		 * 	aspectRatio <= aspect
@@ -59,6 +70,15 @@ namespace $ {
 					} as Record< string, any >
 				] as readonly any[]
 			} as Record< string, any >
+		}
+		
+		/**
+		 * ```tree
+		 * transform \
+		 * ```
+		 */
+		transform() {
+			return ""
 		}
 		
 		/**

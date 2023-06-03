@@ -40484,6 +40484,11 @@ var $;
         controls() {
             return false;
         }
+        style() {
+            return {
+                transform: this.transform()
+            };
+        }
         video_constraints() {
             return {
                 facingMode: this.facing(),
@@ -40511,6 +40516,9 @@ var $;
                     }
                 ]
             };
+        }
+        transform() {
+            return "";
         }
         facing() {
             return "user";
@@ -40593,6 +40601,9 @@ var $;
             }
             dom_node_actual() {
                 return super.dom_node_actual();
+            }
+            transform() {
+                return this.facing() === 'user' ? 'scaleX(-1)' : '';
             }
         }
         __decorate([

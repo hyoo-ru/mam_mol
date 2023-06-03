@@ -9882,8 +9882,10 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_video_camera extends $mol_video_player {
         controls(): boolean;
+        style(): Record<string, any>;
         video_constraints(): Record<string, any>;
         video_settings(): Record<string, any>;
+        transform(): string;
         facing(): string;
         aspect(): number;
         size(): number;
@@ -9907,6 +9909,7 @@ declare namespace $.$$ {
             destructor: () => void;
         };
         dom_node_actual(): HTMLVideoElement;
+        transform(): "" | "scaleX(-1)";
     }
 }
 
