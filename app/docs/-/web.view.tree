@@ -5573,6 +5573,7 @@ $mol_video_player $mol_view
 		src <= uri \
 		controls <= controls true
 		autoplay <= autoplay true
+		playsinline <= inline true
 		loop <= loop false
 		poster <= poster \
 	field *

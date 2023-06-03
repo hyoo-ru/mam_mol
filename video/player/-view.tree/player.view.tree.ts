@@ -58,6 +58,7 @@ namespace $ {
 		 * 	src <= uri
 		 * 	controls <= controls
 		 * 	autoplay <= autoplay
+		 * 	playsinline <= inline
 		 * 	loop <= loop
 		 * 	poster <= poster
 		 * ```
@@ -67,6 +68,7 @@ namespace $ {
 				src: this.uri(),
 				controls: this.controls(),
 				autoplay: this.autoplay(),
+				playsinline: this.inline(),
 				loop: this.loop(),
 				poster: this.poster()
 			} as Record< string, any >
@@ -129,6 +131,15 @@ namespace $ {
 		 * ```
 		 */
 		autoplay() {
+			return true
+		}
+		
+		/**
+		 * ```tree
+		 * inline true
+		 * ```
+		 */
+		inline() {
 			return true
 		}
 		
