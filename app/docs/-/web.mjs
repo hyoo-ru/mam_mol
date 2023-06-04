@@ -12336,6 +12336,7 @@ var $;
                 id: $mol_const(knight.id),
                 peer: $mol_const(knight),
             });
+            land_outer.join();
             for (const peer of law)
                 land_outer.level(peer || this.peer.id, $hyoo_crowd_peer_level.law);
             for (const peer of mod)
@@ -38225,6 +38226,7 @@ var $;
                 new $mol_after_frame(() => {
                     if (!this.pick_enabled())
                         return;
+                    this.Pick().filter_pattern('');
                     this.Pick().Trigger().focused(true);
                     this.Pick().open();
                 });
