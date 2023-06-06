@@ -5012,6 +5012,7 @@ declare namespace $ {
         hint(): string;
         sub(): readonly any[];
         Icon(): $mol_icon_share_variant;
+        title(): string;
     }
 }
 

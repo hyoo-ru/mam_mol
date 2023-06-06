@@ -2002,6 +2002,7 @@ $mol_button_share $mol_button_minor
 	hint @ \Share
 	sub /
 		<= Icon $mol_icon_share_variant
+		<= title \
 
 $mol_button_share_demo $mol_example_small
 	title \Share button demo
