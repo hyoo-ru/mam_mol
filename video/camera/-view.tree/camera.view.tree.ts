@@ -173,11 +173,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * torch true
+		 * torch false
 		 * ```
 		 */
 		torch() {
-			return true
+			return false
 		}
 	}
 	

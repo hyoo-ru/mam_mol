@@ -5640,7 +5640,7 @@ $mol_video_camera $mol_video_player
 		saturation <= saturation 64
 		advanced /
 			* colorTemperature <= temperature 4000
-			* torch <= torch true
+			* torch <= torch false
 
 
 $mol_icon_flashlight $mol_icon path \M9,10L6,5H18L15,10H9M18,4H6V2H18V4M9,22V11H15V22H9M12,13C11.45,13 11,13.45 11,14C11,14.55 11.45,15 12,15C12.55,15 13,14.55 13,14C13,13.45 12.55,13 12,13Z
