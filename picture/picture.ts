@@ -56,7 +56,7 @@ namespace $ {
 		
 		static sizes( image: CanvasImageSource ) {
 		
-			if( image instanceof VideoFrame ) return [
+			if( typeof VideoFrame === 'function' && image instanceof VideoFrame ) return [
 				image.codedWidth,
 				image.codedHeight,
 			]
