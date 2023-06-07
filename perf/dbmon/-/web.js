@@ -2275,7 +2275,12 @@ var $;
         ensure_visible(view, align = "start") {
             const path = this.view_find(v => v === view).next().value;
             this.force_render(new Set(path));
-            this.dom_final();
+            try {
+                this.dom_final();
+            }
+            catch (err) {
+                $mol_fail_log(err);
+            }
             view.dom_node().scrollIntoView({ block: align });
         }
         bring() {
