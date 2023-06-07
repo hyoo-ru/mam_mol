@@ -15,7 +15,7 @@ namespace $ {
 		
 		@ $mol_action
 		static fit(
-			image: CanvasImageSource | Blob | string,
+			image: Exclude< CanvasImageSource, VideoFrame > | Blob | string,
 			width = Number.POSITIVE_INFINITY,
 			height = width,
 		) {
@@ -40,7 +40,7 @@ namespace $ {
 		}
 		
 		static make(
-			image: CanvasImageSource,
+			image: Exclude< CanvasImageSource, VideoFrame >,
 			width: number,
 			height = width,
 		) {
