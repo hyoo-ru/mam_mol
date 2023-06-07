@@ -54,13 +54,8 @@ namespace $ {
 			return new this( canvas )
 		}
 		
-		static sizes( image: CanvasImageSource ) {
+		static sizes( image: Exclude< CanvasImageSource, VideoFrame > ) {
 		
-			if( typeof VideoFrame === 'function' && image instanceof VideoFrame ) return [
-				image.codedWidth,
-				image.codedHeight,
-			]
-			
 			if( image instanceof HTMLVideoElement ) return [
 				image.videoWidth,
 				image.videoHeight,
