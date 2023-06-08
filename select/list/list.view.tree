@@ -1,5 +1,5 @@
 $mol_select_list $mol_view
-	value?val /string
+	value? /string
 	dictionary *
 	badges_list <= Badges /$mol_view
 	Badge* $mol_button_minor
@@ -11,7 +11,7 @@ $mol_select_list $mol_view
 		<= Pick $mol_select
 			align_hor <= align_hor \right
 			options <= options_pickable <= options /string
-			value?val <=> pick?val \
+			value? <=> pick? \
 			option_label* <= option_title* \
 			trigger_enabled <= pick_enabled <= enabled true
 			hint <= pick_hint @ \Add..

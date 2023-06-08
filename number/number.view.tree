@@ -10,7 +10,7 @@ $mol_number $mol_view
 			- \ we don't want native number controls in mobile devices
 			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
 			type <= type \tel
-			value?val <=> value_string?val \
+			value? <=> value_string? \
 			hint <= hint \ 
 			enabled <= string_enabled <= enabled
 			submit? <=> submit? null

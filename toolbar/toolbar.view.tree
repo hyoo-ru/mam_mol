@@ -6,4 +6,4 @@ $mol_toolbar $mol_view
 		<= Bar $mol_view
 			sub <= items /$mol_view
 		<= Expand $mol_check_expand
-			checked?val <=> expanded?val false
+			checked? <=> expanded? false

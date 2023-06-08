@@ -5,7 +5,7 @@ $mol_list_demo_tree $mol_example_large
 			rows <= root_rows /
 	Row* $mol_expander
 		label / <= Row_title* $mol_paragraph sub / <= row_title* \
-		expanded?val <=> row_expanded*?val false
+		expanded? <=> row_expanded*? false
 		Content <= Row_content* $mol_list
 			rows <= row_content* /
 	tags /

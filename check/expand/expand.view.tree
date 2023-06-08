@@ -4,5 +4,5 @@ $mol_check_expand $mol_check
 	style *
 		^
 		paddingLeft <= level_style \0px
-	checked?val <=> expanded?val false
+	checked? <=> expanded? false
 	enabled <= expandable false

@@ -193,7 +193,7 @@ namespace $ {
 
 			const { Foo } = run(`
 				Foo $mol_object
-					class?val <=> owner?val $mol_object
+					class? <=> owner? $mol_object
 			`)
 			const foo = Foo.make({ $ })
 			const view = new $mol_object

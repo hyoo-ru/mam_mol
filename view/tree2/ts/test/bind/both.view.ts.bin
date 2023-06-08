@@ -3,7 +3,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * writable?val <=> writable_owner?val
+		 * writable? <=> writable_owner?
 		 * ```
 		 */
 		writable(val?: any) {
@@ -12,7 +12,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * writable_default?val <=> writable_default_owner?val
+		 * writable_default? <=> writable_default_owner?
 		 * ```
 		 */
 		writable_default(val?: any) {
@@ -21,7 +21,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * class?val <=> class_owner?val
+		 * class? <=> class_owner?
 		 * ```
 		 */
 		class(val?: any) {
@@ -30,7 +30,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * indexed*?val <=> indexed_owner*?val
+		 * indexed*? <=> indexed_owner*?
 		 * ```
 		 */
 		indexed(id: any, val?: any) {
@@ -48,7 +48,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * class_indexed*?val $mol_view expanded <=> cell_expanded*?val
+		 * class_indexed*? $mol_view expanded <=> cell_expanded*?
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -63,7 +63,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * class_writable?val <=> class_writable_owner?val
+		 * class_writable? <=> class_writable_owner?
 		 * ```
 		 */
 		class_writable(val?: any) {
@@ -99,7 +99,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * event_catch?val <=> event_next?val
+		 * event_catch? <=> event_next?
 		 * ```
 		 */
 		event_catch(val?: any) {
@@ -108,7 +108,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * writable_default_owner?val null
+		 * writable_default_owner? null
 		 * ```
 		 */
 		@ $mol_mem
@@ -119,7 +119,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * class_owner?val $mol_view
+		 * class_owner? $mol_view
 		 * ```
 		 */
 		@ $mol_mem
@@ -132,7 +132,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * indexed_owner*?val null
+		 * indexed_owner*? null
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -143,7 +143,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * localized_owner?val @ \some1
+		 * localized_owner? @ \some1
 		 * ```
 		 */
 		@ $mol_mem
@@ -174,9 +174,9 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * class_writable_owner?val $mol_view
-		 * 	some?val <=> twice?val
-		 * 	localized?val <=> localized_owner?val
+		 * class_writable_owner? $mol_view
+		 * 	some? <=> twice?
+		 * 	localized? <=> localized_owner?
 		 * 	chain?v <=> chain1?v
 		 * ```
 		 */

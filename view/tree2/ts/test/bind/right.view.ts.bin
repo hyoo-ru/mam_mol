@@ -12,7 +12,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * writable_outer?val
+		 * writable_outer?
 		 * ```
 		 */
 		writable_outer(val?: any) {
@@ -30,7 +30,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * indexed_writable_outer*?val
+		 * indexed_writable_outer*?
 		 * ```
 		 */
 		indexed_writable_outer(id: any, val?: any) {
@@ -41,9 +41,9 @@ namespace $ {
 		 * ```tree
 		 * Cls $mol_view
 		 * 	inner => outer
-		 * 	writable?val => writable_outer?val
+		 * 	writable? => writable_outer?
 		 * 	indexed* => indexed_outer*
-		 * 	indexed_writable*?val => indexed_writable_outer*?val
+		 * 	indexed_writable*? => indexed_writable_outer*?
 		 * ```
 		 */
 		@ $mol_mem

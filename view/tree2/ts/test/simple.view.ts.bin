@@ -59,7 +59,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * same?val \
+		 * same? \
 		 * ```
 		 */
 		@ $mol_mem

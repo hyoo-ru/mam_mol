@@ -2,7 +2,7 @@ $mol_paginator_demo $mol_example_small
 	title \Page switcher
 	sub /
 		<= Pages $mol_paginator
-			value?val <=> page?val 0
+			value? <=> page? 0
 	tags /
 		\paginator
 		\navigation

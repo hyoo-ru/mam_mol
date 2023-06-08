@@ -57,7 +57,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * writable <= writable_owner?val
+		 * writable <= writable_owner?
 		 * ```
 		 */
 		writable() {
@@ -143,7 +143,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * writable_owner?val \
+		 * writable_owner? \
 		 * ```
 		 */
 		@ $mol_mem
@@ -154,7 +154,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * same?val \
+		 * same? \
 		 * ```
 		 */
 		@ $mol_mem
@@ -194,7 +194,7 @@ namespace $ {
 		 * ```tree
 		 * class_indexed_owner* $mol_view
 		 * 	title @ \some1
-		 * 	same <= same?val
+		 * 	same <= same?
 		 * 	some <= twice
 		 * 	localized <= localized_owner*
 		 * 	chain <= chain1

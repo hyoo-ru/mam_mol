@@ -8,7 +8,7 @@ $mol_app_demo_menu $mol_page
 		sub /
 			<= List $mol_list rows /
 				<= Filter $mol_search
-					query?val <=> filter?val \
+					query? <=> filter? \
 					- suggests <= filter_suggests
 				<= Tree $mol_tag_tree
 					Item* <= Option*
@@ -19,4 +19,4 @@ $mol_app_demo_menu $mol_page
 		sub /
 			<= Option_title* $mol_dimmer
 				haystack <= option_title* \
-				needle <= filter?val \
+				needle <= filter? \

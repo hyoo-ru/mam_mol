@@ -1,10 +1,10 @@
 $mol_meter $mol_plugin
 	zoom 1
 	-
-	width?val 0
-	height?val 0
+	width? 0
+	height? 0
 	-
-	left?val 0
-	right?val 0
-	bottom?val 0
-	top?val 0
+	left? 0
+	right? 0
+	bottom? 0
+	top? 0

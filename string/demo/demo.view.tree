@@ -2,17 +2,17 @@ $mol_string_demo $mol_example_small
 	title \String input field in various states
 	sub /
 		<= Simple $mol_string
-			value?val <=> name?val \
+			value? <=> name? \
 		<= Hint $mol_string
 			hint \Batman
-			value?val <=> name?val \
+			value? <=> name? \
 		<= Filled $mol_string
-			value?val <=> name2?val \Jocker
+			value? <=> name2? \Jocker
 		<= Disabled $mol_string
 			disabled true
-			value?val <=> name2?val
+			value? <=> name2?
 		<= Button $mol_string_button
-			value?val <=> name2?val
+			value? <=> name2?
 	tags /
 		\input
 		\text
