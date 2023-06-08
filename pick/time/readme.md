@@ -12,7 +12,7 @@ Time in `hh:mm` format.
 
 ```
 <= Time $mol_pick_time
-	value?val <=> time?val \04:20
+	value? <=> time? \04:20
 ```
 
 **`value_moment( next? : $mol_time_moment ) : $mol_time_moment`**
@@ -21,5 +21,5 @@ Instance $mol_time_moment. (The component only changes the time in moment. The d
 
 ```
 <= Time $mol_pick_time
-	value_moment?val <=> plan_date?val $mol_time_moment
+	value_moment? <=> plan_date? $mol_time_moment
 ```

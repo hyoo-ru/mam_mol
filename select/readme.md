@@ -8,7 +8,7 @@ Allow user to select value from various options and displays current value.
 
 ```
 <= Color $mol_select
-	value?val <=> color?val \
+	value? <=> color? \
 	dictionary <= colors *
 		red \Red
 		green \Green

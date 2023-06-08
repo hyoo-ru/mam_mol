@@ -11,17 +11,17 @@ Form, that contains form fields and action buttons.
    			name <= name_label @ \User name
    			bid <= name_bid \
    			control <= Name_control $mol_string
-   				value?val <=> name?val \
+   				value? <=> name? \
    		<= pass_field $mol_form_field
    			name <= pass_label @ \Pass word
    			bid <= pass_bid \
    			control <= Pass_control $mol_string
-   				value?val <=> pass?val \
+   				value? <=> pass? \
    				type \password
    	buttons /
    		<= Login_submit $mol_button_major
    			title <= login_submit_label @ \Submit
-   			event_click?val <=> event_submit?val null
+   			event_click? <=> event_submit? null
 ```
 
 ## Properties of $mol_form

@@ -9,8 +9,8 @@ Plugin for touch gestures.
 ```
 plugins /
 	<= Touch $mol_touch
-		zoom?val <=> zoom?val 1
-		pan?val <=> pan?val /
+		zoom? <=> zoom? 1
+		pan? <=> pan? /
 			0
 			0
 		swipe_right?event <=> open_menu?event null

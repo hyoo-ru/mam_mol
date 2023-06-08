@@ -8,7 +8,7 @@ Search input with suggest and clear button.
 
 ```
 <= Words $mol_search
-	query?val <=> word?val \
+	query? <=> word? \
 	suggests <= suggests /
 		\delirious
 		\stupendous
