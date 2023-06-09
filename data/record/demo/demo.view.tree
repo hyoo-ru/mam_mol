@@ -1,0 +1,15 @@
+$mol_data_record_demo $mol_example_code
+	code? \
+		\const Person = $mol_data_record({
+		\	name: $mol_data_string,
+		\	age: $mol_data_integer,
+		\})
+		\const person = Person({ name: 'jin', age: 100 }) // ✅
+		\
+		\Person({ name: 'jin' }) // ❌ ["age"] undefined is not a number
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Algorithm/Assert
+		\Type/Record

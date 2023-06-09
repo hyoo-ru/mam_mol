@@ -57,26 +57,26 @@ namespace $ {
 
 	}
 
-	export function $mol_model_prop< Value , Json >(
-		field : string ,
-		make : ( json : Json )=> Value ,
-	) {
-		return < Raw extends Object , Host extends $mol_model< Raw > >(
-			host : Host ,
-			prop : string ,
-			descr : TypedPropertyDescriptor< ( next?: Value )=> Value >
-		)=> {
-			if( field ) field = prop
+	// export function $mol_model_prop< Value , Json >(
+	// 	field : keyof Json ,
+	// 	make : ( json : Json )=> Value ,
+	// ) {
+	// 	return < Raw extends Object , Host extends $mol_model< Raw > >(
+	// 		host : Host ,
+	// 		prop : keyof Json ,
+	// 		descr : TypedPropertyDescriptor< ( next?: Value )=> Value >
+	// 	)=> {
+	// 		if( field ) field = prop
 
-			const value = descr.value!
+	// 		const value = descr.value!
 
-			descr.value = function( this : Host , next? : Value ) {
-				const val = this.json( next === undefined ? undefined : { ... this.json() , [ field ] : next } )[ field ]
-				if( val === undefined ) return value.call( this )
-				if( make ) return make( val )
-				return val
-			}
-		}
-	}
+	// 		descr.value = function( this : Host , next? : Value ) {
+	// 			const val = this.json( next === undefined ? undefined : { ... this.json() , [ field ] : next } )[ field ]
+	// 			if( val === undefined ) return value.call( this )
+	// 			if( make ) return make( val )
+	// 			return val
+	// 		}
+	// 	}
+	// }
 
 }

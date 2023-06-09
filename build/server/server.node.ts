@@ -137,18 +137,16 @@ namespace $ {
 						<style>
 							body {
 								display: flex;
+								flex-direction: column;
 								flex-wrap: wrap;
 								font: 1rem/1.5rem sans-serif;
-								align-items: flex-start;
-								justify-content: center;
-								align-content: flex-start;
+								height: 100%;
+								margin: 0;
+								padding: 0.75rem;
+								box-sizing: border-box;
 							}
 							a {
-								display: flex;
-								padding: 0.75rem;
 								text-decoration: none;
-								flex: 0 1 10rem;
-								justify-content: center;
 								color: rgb(57, 115, 172);
 								font-weight: bolder;
 							}

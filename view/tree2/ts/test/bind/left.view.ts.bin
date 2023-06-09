@@ -86,10 +86,10 @@ namespace $ {
 				this.Detail_list(),
 				{
 					loc: this.loc_outer()
-				},
+				} as Record< string, any >,
 				{
 					loc: this.loc_outer()
-				}
+				} as Record< string, any >
 			] as readonly any[]
 		}
 		

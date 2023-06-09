@@ -19,4 +19,4 @@ $mol_plot_map_heat_demo $mol_example_large
 		\graph
 		\dashboard
 	aspects /
-		\Widget
+		\Widget/Draw/Chart/Heat

@@ -1,3 +1,6 @@
 $mol_app_quine_demo $mol_example_large
 	sub /
 		<= App $mol_app_quine
+	aspects /
+		\Application
+		\Network/HTTP

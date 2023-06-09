@@ -6,11 +6,10 @@ $mol_expander_demo $mol_example_small
 			content /
 				<= Content $mol_filler
 	tags /
-		\$mol_filler
 		\expander
 		\accordion
 		\expand
 		\container
 		\fold
 	aspects /
-		\Widget
+		\Widget/Layout

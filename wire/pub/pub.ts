@@ -87,6 +87,10 @@ namespace $ {
 		 */
 		complete() {}
 		
+		get incompleted() {
+			return false
+		}
+		
 		/**
 		 * Notify subscribers about self changes.
 		 */

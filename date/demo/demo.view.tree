@@ -6,9 +6,9 @@ $mol_date_demo $mol_example_small
 			sub /
 				<= formatted \
 	tags /
-		\$mol_time_moment
-		\date
+		\time
 		\datepicker
 		\format
 	aspects /
-		\Widget
+		\Widget/Control/Button/Picker
+		\Type/Date

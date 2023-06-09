@@ -51,9 +51,8 @@ $mol_section_demo_level $mol_example_small
 			<= Section7_text $mol_filler
 				min_symbols 250
 	tags /
-		\section
 		\header
 		\level
 		\h1
 	aspects /
-		\Widget
+		\Widget/Layout

@@ -8,11 +8,14 @@ const prev = {
 	bar: { lol: 'xxx' },
 }
 
-const mut = $mol_mutable( data )
+const mut = $mol_mutable( prev )
 mut.foo[1]( v => -v )
-const next = mut()
+mut.foo[1]( v => v + 2 )
+console.log( mut.foo() ) // [ 1, 0 , 3 ]
 
+const next = mut()
 // prev !== next
-// next.foo == [ 1, -2, 3 ]
+// prev.foo == [ 1, 2, 3 ]
+// next.foo == [ 1, 0, 3 ]
 // prev.bar === next.bar
 ```

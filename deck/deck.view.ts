@@ -20,7 +20,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		Content() {
-			return this.items()[ this.current() ]
+			return this.items()[ Number( this.current() ) ]
 		}
 		
 	}

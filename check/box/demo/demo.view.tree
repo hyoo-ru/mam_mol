@@ -25,7 +25,8 @@ $mol_check_box_demo $mol_example_small
 				checked true
 				enabled false
 	tags /
-		\checkbox
 		\switch
+		\toggle
 	aspects /
-		\Widget
+		\Widget/Control/Button
+		\Type/Boolean

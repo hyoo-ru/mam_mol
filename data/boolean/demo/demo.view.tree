@@ -1,0 +1,12 @@
+$mol_data_boolean_demo $mol_example_code
+	code? \
+		\const IsAdult = $mol_data_boolean
+		\const isAdult = IsAdult( false ) // ✅
+		\
+		\IsAdult( 0 ) // ❌ 0 is not a boolean
+	tags /
+		\runtime
+		\validation
+	aspects /
+		\Algorithm/Assert
+		\Type/Boolean

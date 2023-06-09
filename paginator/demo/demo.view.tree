@@ -7,4 +7,5 @@ $mol_paginator_demo $mol_example_small
 		\paginator
 		\navigation
 	aspects /
-		\Widget
+		\Widget/Control
+		\Type/Number/Integer

@@ -78,6 +78,10 @@ namespace $ {
 			return this.cache
 		}
 		
+		get incompleted() {
+			return $mol_promise_like( this.cache )
+		}
+		
 		field() {
 			return this.task.name + '()'
 		}

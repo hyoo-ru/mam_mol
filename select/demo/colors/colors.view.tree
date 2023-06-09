@@ -16,14 +16,12 @@ $mol_select_demo_colors $mol_example_small
 							needle <= color_filter
 					minimal_height 40
 	tags /
-		\$mol_dimmer
-		\$mol_list
 		\select
 		\color
-		\colorpicker
+		\picker
 		\filter
 	aspects /
-		\Widget
+		\Widget/Control
 
 $mol_select_colors_color_preview $mol_view
 	style *

@@ -45,8 +45,8 @@ namespace $ {
 				this.root = undefined
 			}
 			
-			attributeChangedCallback( name: string, prev: string, next: string ) {
-				this.view[ name ]( JSON.parse( next ) )
+			attributeChangedCallback( name: keyof this, prev: string, next: string ) {
+				( this.view as any )[ name ]( JSON.parse( next ) )
 			}
 			
 			toString() {

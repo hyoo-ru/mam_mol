@@ -20,7 +20,7 @@ $mol_check_expand_demo $mol_example_small
 			<= Empty_expanded $mol_check_expand
 				checked?val <=> expanded_expanded?val true
 	tags /
-		\expand
 		\fold
 	aspects /
-		\Widget
+		\Widget/Control/Button
+		\Type/Boolean

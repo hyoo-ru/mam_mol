@@ -12,4 +12,5 @@ $mol_search_demo $mol_example_small
 		\fulltext
 		\filter
 	aspects /
-		\Widget
+		\Widget/Control
+		\Type/String

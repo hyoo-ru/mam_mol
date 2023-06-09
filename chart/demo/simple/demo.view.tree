@@ -34,10 +34,10 @@ $mol_chart_demo_simple $mol_example_large
 						<= Plan
 						<= Fact_dots
 	tags /
-		\$mol_plot
-		\chart
 		\plot
 		\visualization
 		\dashboard
 	aspects /
-		\Widget
+		\Widget/Draw/Chart/Line
+		\Widget/Draw/Chart/Dot
+		\Widget/Draw/Chart/Bar

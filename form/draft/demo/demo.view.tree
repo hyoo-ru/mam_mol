@@ -77,4 +77,4 @@ $mol_form_draft_demo $mol_example
 		\validation
 		\field
 	aspects /
-		\Widget
+		\Widget/Form

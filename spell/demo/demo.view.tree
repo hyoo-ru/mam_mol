@@ -9,4 +9,4 @@ $mol_spell_demo $mol_example_small
 		\$mol_textarea
 		\spellcheck
 	aspects /
-		\Widget
+		\Algorithm/Validate

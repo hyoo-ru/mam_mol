@@ -61,14 +61,14 @@ namespace $ {
 				const params = name.select( '=>', null )
 				section.push( ... array_prolog( params ) )
 				for( const param of params.kids ) {
-					section.push( ... bytes( [ $mol_wasm_bin_valtype[ param.type ] ], param.span ) )
+					section.push( ... bytes( [ ( $mol_wasm_bin_valtype as any )[ param.type ] ], param.span ) )
 				}
 				
 				const results = name.select( '<=', null )
 				section.push( ... array_prolog( results ) )
 				for( const result of results.kids ) {
 					section.push(
-						... bytes( [ $mol_wasm_bin_valtype[ result.type ] ], result.span ),
+						... bytes( [ ( $mol_wasm_bin_valtype as any )[ result.type ] ], result.span ),
 					)
 				}
 				
@@ -212,17 +212,17 @@ namespace $ {
 				
 				for( const expr of func.kids[0].kids ) {
 					
-					if( typeof $mol_wasm_bin_instr_unary[ expr.type ] === 'number' ) {
+					if( typeof ( $mol_wasm_bin_instr_unary as any )[ expr.type ] === 'number' ) {
 						body.push(
-							... bytes( [ $mol_wasm_bin_instr_unary[ expr.type ] ], expr.span ),
+							... bytes( [ ( $mol_wasm_bin_instr_unary as any )[ expr.type ] ], expr.span ),
 							... int( Number( expr.kids[0].type ), expr.kids[0].span ),
 						)
 						continue
 					}
 					
-					if( typeof $mol_wasm_bin_instr_nullary[ expr.type ] === 'number' ) {
+					if( typeof ( $mol_wasm_bin_instr_nullary as any )[ expr.type ] === 'number' ) {
 						body.push(
-							... bytes( [ $mol_wasm_bin_instr_nullary[ expr.type ] ], expr.span ),
+							... bytes( [ ( $mol_wasm_bin_instr_nullary as any )[ expr.type ] ], expr.span ),
 						)
 						continue
 					}

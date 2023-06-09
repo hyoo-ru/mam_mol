@@ -13,12 +13,10 @@ $mol_infinite_demo $mol_example_large
 							<= Name* $mol_paragraph title <= name* \
 							<= City* $mol_paragraph title <= city* \
 	tags /
-		\$mol_filler
-		\$mol_list
-		\$mol_avatar
+		\avatar
 		\infinite
 		\scroll
 		\virtual
 		\container
 	aspects /
-		\Widget
+		\Widget/Layout

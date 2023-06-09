@@ -14,10 +14,7 @@ $mol_check_icon_demo $mol_example_small
 			checked true
 			enabled false
 	tags /
-		\$mol_icon
-		\checkbox
 		\switch
-		\button
-		\icon
+		\toggle
 	aspects /
-		\Widget
+		\Widget/Control/Button

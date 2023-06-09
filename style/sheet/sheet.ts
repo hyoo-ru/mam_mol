@@ -26,7 +26,7 @@ namespace $ {
 			
 			for( const key of Object.keys( config ).reverse() ) {
 
-				if( /^[a-z]/.test(key) ) {
+				if( /^(--)?[a-z]/.test(key) ) {
 					
 					const addProp = ( keys : string[] , val : any  )=> {
 

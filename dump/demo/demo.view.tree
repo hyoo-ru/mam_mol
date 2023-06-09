@@ -7,8 +7,8 @@ $mol_dump_demo $mol_example_small
 			value <= value null
 			prototypes true
 	tags /
-		\$mol_list
 		\dump
+		\json
 		\javascript
 		\debug
 	aspects /

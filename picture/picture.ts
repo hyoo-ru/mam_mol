@@ -15,7 +15,7 @@ namespace $ {
 		
 		@ $mol_action
 		static fit(
-			image: CanvasImageSource | Blob | string,
+			image: Exclude< CanvasImageSource, VideoFrame > | Blob | string,
 			width = Number.POSITIVE_INFINITY,
 			height = width,
 		) {
@@ -40,7 +40,7 @@ namespace $ {
 		}
 		
 		static make(
-			image: CanvasImageSource,
+			image: Exclude< CanvasImageSource, VideoFrame >,
 			width: number,
 			height = width,
 		) {
@@ -54,14 +54,23 @@ namespace $ {
 			return new this( canvas )
 		}
 		
-		static sizes( image: CanvasImageSource ) {
+		static sizes( image: Exclude< CanvasImageSource, VideoFrame > ) {
 		
-			let { width, height } = image
+			if( image instanceof HTMLVideoElement ) return [
+				image.videoWidth,
+				image.videoHeight,
+			]
 			
-			if( typeof width !== 'number' ) width = width.baseVal.value
-			if( typeof height !== 'number' ) height = height.baseVal.value
+			if( image instanceof SVGImageElement ) return [
+				image.width.baseVal.value,
+				image.height.baseVal.value,
+			]
+				
+			return [
+				image.width,
+				image.height,
+			]
 			
-			return [ width, height ]
 		}
 		
 		static async load( uri: string ) {

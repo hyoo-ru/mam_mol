@@ -23,7 +23,7 @@ namespace $.$$ {
 		@ $mol_mem_key
 		value( field: string, next?: string | number | boolean | null ) {
 			return this.state( next?.valueOf && { ... this.state(), [ field ]: next } )[ field ]
-				?? this.model()[ field ]()
+				?? ( this.model() as any )[ field ]()
 		}
 		
 		@ $mol_mem
@@ -46,13 +46,13 @@ namespace $.$$ {
 			const model = this.model()
 			
 			for( let [ field, next ] of Object.entries( this.state() ) ) {
-				const prev = model[ field ]()
+				const prev = ( model as any )[ field ]()
 				switch( typeof prev ) {
 					case 'boolean': next = String( next ) === 'true'; break
 					case 'number': next = Number( next ); break
 					case 'string': next = String( next ); break
 				}
-				model[ field ]( next )
+				;( model as any )[ field ]( next )
 			}
 			
 			this.state( null )

@@ -38,7 +38,7 @@ namespace $ {
 	| $mol_style_func< 'hsla' | 'rgba' | 'var' >
 	| `#${string}`
 	
-	type Length = 0 | $mol_style_unit< $mol_style_unit_length > | $mol_style_func< 'calc' | 'var' | 'clamp' >
+	type Length = 0 | `${number}${ $mol_style_unit_length }` | $mol_style_func< 'calc' | 'var' | 'clamp' >
 
 	type Size =
 	| 'auto' | 'max-content' | 'min-content' | 'fit-content'
@@ -612,7 +612,7 @@ namespace $ {
 		left?: Length | 'auto' | Common
 
 		/** @see https://developer.mozilla.org/en-US/docs/Web/CSS/border */
-		border?: {
+		border?: Directions<{
 
 			/** 
 			 * Rounds the corners of an element's outer border edge. You can set a single radius to make circular corners, or two radii to make elliptical corners.
@@ -636,15 +636,15 @@ namespace $ {
 			 * Color of element's border.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-color
 			 */
-			color?: Directions< $mol_style_properties_color > | Common
+			color?: $mol_style_properties_color | Common
 
 			/** 
 			 * Width of element's border.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-width
 			 */
-			width?: Directions< Length > | Common
+			width?: Length | Common
 
-		}
+		}>
 
 		/** 
 		 * How a flex item will grow or shrink to fit the space available in its flex container. It is a shorthand for `flexGrow`, `flexShrink`, and `flexBasis`.
@@ -697,6 +697,8 @@ namespace $ {
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/opacity
 		 */
 		opacity: number | Common
+		
+		aspectRatio: number | Common
 		
 	}
 

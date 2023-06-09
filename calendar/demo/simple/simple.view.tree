@@ -4,7 +4,7 @@ $mol_calendar_demo_simple $mol_example_small
 		<= Calendar $mol_calendar
 			month_moment <= today $mol_time_moment
 	tags /
-		\calendar
-		\date
+		\month
 	aspects /
-		\Widget
+		\Widget/Grid
+		\Type/Date

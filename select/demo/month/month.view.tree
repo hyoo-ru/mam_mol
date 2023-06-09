@@ -19,5 +19,6 @@ $mol_select_demo_month $mol_example_small
 				dec \December
 	tags /
 		\select
+		\month
 	aspects /
-		\Widget
+		\Widget/Control

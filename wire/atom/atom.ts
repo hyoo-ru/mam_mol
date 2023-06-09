@@ -107,7 +107,7 @@ namespace $ {
 				if( next !== undefined ) return this.resync( [ ... this.args, next ] as any ) as never
 				if( !$mol_wire_fiber.warm ) return this.result() as never
 				
-				if( $mol_wire_auto() instanceof $mol_wire_task ) {
+				if( $mol_wire_auto()?.temp ) {
 					return this.once()
 				} else {
 					return this.sync()

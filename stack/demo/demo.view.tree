@@ -2,10 +2,7 @@ $mol_stack_demo $mol_example_small
 	sub /
 		<= Collage $mol_stack
 			sub /
-				<= Back $mol_image uri \https://thiscatdoesnotexist.com/
+				<= Back $mol_image uri \https://cataas.com/cat
 				<= Front $mol_view sub / \❤🧡💛💚💙💜🤎🖤
-	tags /
-		\$mol_stack
-		\layout
 	aspects /
-		\Widget
+		\Widget/Layout

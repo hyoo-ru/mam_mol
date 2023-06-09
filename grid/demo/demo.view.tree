@@ -11,4 +11,4 @@ $mol_grid_demo $mol_example_large
 		\table
 		\rows
 	aspects /
-		\Widget
+		\Widget/Layout

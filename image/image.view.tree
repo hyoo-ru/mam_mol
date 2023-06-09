@@ -7,5 +7,11 @@ $mol_image $mol_view
 		loading <= loading \eager
 		decoding <= decoding \async
 		crossOrigin <= cors null
+	attr *
+		^
+		width <= natural_width? 0
+		height <= natural_height? 0
+	event *
+		load? <=> load? null
 	minimal_width 16
 	minimal_height 16

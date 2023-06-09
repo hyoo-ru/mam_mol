@@ -16,7 +16,7 @@ namespace $ {
 				...super.super_prop(),
 				str2: "some",
 				...this.test()
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -36,7 +36,7 @@ namespace $ {
 				bool: true,
 				nul: null as any,
 				localized: this.$.$mol_locale.text( '$mol_view_tree2_ts_test_dictionary_simple_localized' )
-			}
+			} as Record< string, any >
 		}
 		
 		/**
@@ -65,8 +65,8 @@ namespace $ {
 					bool: true,
 					nul: null as any,
 					localized: this.$.$mol_locale.text( '$mol_view_tree2_ts_test_dictionary_complex_child_localized' )
-				}
-			}
+				} as Record< string, any >
+			} as Record< string, any >
 		}
 	}
 	

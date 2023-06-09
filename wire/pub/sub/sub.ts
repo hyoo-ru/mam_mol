@@ -12,6 +12,10 @@ namespace $ {
 		protected pub_from = 0 // 4B
 		protected cursor = $mol_wire_cursor.stale // 4B
 		
+		get temp() {
+			return false
+		}
+		
 		get pub_list() {
 			const res = [] as $mol_wire_pub[]
 			const max = this.cursor >=0 ? this.cursor : this.sub_from
@@ -169,6 +173,15 @@ namespace $ {
 		complete_pubs() {
 			
 			const limit = this.cursor < 0 ? this.sub_from : this.cursor 
+			
+			for(
+				let cursor = this.pub_from;
+				cursor < limit;
+				cursor += 2
+			) {
+				const pub = this.data[ cursor ] as $mol_wire_pub
+				if( pub?.incompleted ) return 
+			}
 			
 			for(
 				let cursor = this.pub_from;

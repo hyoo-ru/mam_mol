@@ -8,8 +8,11 @@ $mol_video_player $mol_view
 		src <= uri \
 		controls <= controls true
 		autoplay <= autoplay true
+		playsinline <= inline true
 		loop <= loop false
 		poster <= poster \
+	field *
+		srcObject <= stream null
 	event *
 		volumechange?event <=> revolume?event null
 		timeupdate?event <=> retime?event null

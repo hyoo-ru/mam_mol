@@ -1,3 +1,5 @@
 $mol_app_report_demo $mol_example_large
 	sub /
 		<= App $mol_app_report
+	aspects /
+		\Widget/Form

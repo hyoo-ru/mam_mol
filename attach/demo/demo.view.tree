@@ -5,9 +5,9 @@ $mol_attach_demo $mol_example_small
 			items?val <=> filled_items?val /
 				\https://picsum.photos/200
 	tags /
-		\attach
 		\file
 		\image
 		\upload
 	aspects /
-		\Widget
+		\Widget/Control
+		\Type/File

@@ -1,8 +1,7 @@
 $mol_app_demo $mol_book2
 	editor_title <= detail_title \$mol
-	source_prefix \https://github.com/hyoo-ru/mam_mol/tree/master/
+	meta_bundle_base \
 	repo_dict *
-		mol \hyoo-ru/mam_mol
 	plugins /
 		<= Theme $mol_theme_auto
 		<= Search_start $mol_hotkey
@@ -34,7 +33,6 @@ $mol_app_demo $mol_book2
 		repo <= repo \
 		opened? <=> readme_page? false
 		module <= module /string
-		source_link <= source_link \
 	Detail_empty_message $mol_status
 		sub /
 			<= detail_empty_prefix @ \No one demo with prefix "

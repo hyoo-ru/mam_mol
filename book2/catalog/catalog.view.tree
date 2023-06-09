@@ -5,6 +5,7 @@ $mol_book2_catalog $mol_book2
 	Spread $mol_view
 	pages /
 		<= Menu $mol_page
+			Logo <= Menu_logo null
 			Title => Menu_title
 			title <= menu_title \
 			Tools => Menu_tools

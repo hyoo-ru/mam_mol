@@ -1,0 +1,13 @@
+$mol_array_trim_demo $mol_example_code
+	code? \
+		\const res = $mol_array_trim([
+		\	undefined,
+		\	null,
+		\	0,
+		\	false,
+		\	null,
+		\	undefined,
+		\	undefined,
+		\])
+	aspects /
+		\Type/List

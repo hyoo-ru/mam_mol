@@ -4,8 +4,8 @@ $mol_frame_demo $mol_example_large
 			title \Another page inside that
 			uri \https://mol.hyoo.ru/
 	tags /
-		\frame
 		\iframe
 		\container
 	aspects /
-		\Widget
+		\Widget/Integration
+		\Widget/Island

@@ -21,9 +21,11 @@ $mol_format_demo $mol_example_small
 				mask \__.__.____ __:__
 				value? <=> moment? \
 	tags /
-		\$mol_format
-		\$mol_string
-		\$mol_phone
+		\phone
+		\ip
+		\car
+		\datetime
 		\input
 	aspects /
-		\Widget
+		\Widget/Control
+		\Type/String

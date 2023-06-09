@@ -1,5 +1,9 @@
 namespace $ {
 
+	/**
+	 * Checks for some of given runtype or throws error.
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_variant_demo
+	 */
 	export function $mol_data_variant< Sub extends $mol_data_value[] >( ... sub : Sub ) {
 
 		return $mol_data_setup( ( val : Parameters< Sub[ number ] >[0] ) => {
