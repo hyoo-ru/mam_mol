@@ -1335,7 +1335,7 @@ declare namespace $ {
         internal_ip(): string;
         http(): import("http").Server<typeof import("http").IncomingMessage, typeof import("http").ServerResponse>;
         connections: Set<import("ws")>;
-        socket(): import("ws").Server<import("ws").WebSocket>;
+        socket(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
         expressHandlers(): any[];
         expressCompressor(): unknown;
         expressCors(): unknown;
@@ -1355,6 +1355,7 @@ declare namespace $ {
     function $mol_wire_solid(): void;
 }
 
+/// <reference types="node" />
 declare namespace $ {
     class $mol_build_server extends $mol_server {
         static trace: boolean;
@@ -1365,8 +1366,8 @@ declare namespace $ {
         expressIndex(): (req: typeof $node.express.request, res: typeof $node.express.response, next: () => void) => void | import("express").Response<any, Record<string, any>>;
         port(): number;
         lines(next?: Map<import("ws"), string>): Map<import("ws"), string>;
-        socket(): import("ws").Server<import("ws").WebSocket>;
-        start(): import("ws").Server<import("ws").WebSocket>;
+        socket(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
+        start(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
         notify([line, path]: [InstanceType<$node['ws']>, string]): boolean;
     }
 }
