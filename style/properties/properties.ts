@@ -95,33 +95,11 @@ namespace $ {
 		 */
 		accentColor?: $mol_style_properties_color | Common;
 		
-		/** 
-		 * Distribution of space between and around content items along a flexbox's cross-axis or a grid's block axis.
-		 * @see https://developer.mozilla.org/ru/docs/Web/CSS/align-content
-		 */
-		alignContent? : 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common
-		
-		/**
-		 * Sets the align-self value on all direct children as a group.
-		 * In Flexbox, it controls the alignment of items on the Cross Axis.
-		 * In Grid Layout, it controls the alignment of items on the Block Axis within their grid area.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-items
-		 */
-		alignItems? : 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
-		
-		/**
-		 * Overrides a grid or flex item's align-items value.
-		 * In Grid, it aligns the item inside the grid area.
-		 * In Flexbox, it aligns the item on the cross axis.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-self
-		 */
-		alignSelf? : 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
-
 		align: {
 			
 			/** 
 			 * Distribution of space between and around content items along a flexbox's cross-axis or a grid's block axis.
-			 * @see https://developer.mozilla.org/ru/docs/Web/CSS/align-content
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-content
 			 */
 			content : 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common
 			
@@ -140,6 +118,29 @@ namespace $ {
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-self
 			 */
 			self : 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
+			
+		}
+		
+		justify: {
+			
+			/** 
+			 * Distribution of space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
+			 */
+			content : 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common
+			
+			/**
+			 * Sets the justify-self value on all direct children as a group.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/justify-items
+			 */
+			items : 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
+			
+			/**
+			 * Way a box is justified inside its alignment container along the appropriate axis.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/justify-self
+			 */
+			self : 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
+			
 		}
 		
 		/**
