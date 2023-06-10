@@ -9,6 +9,20 @@ namespace $ {
 	| 'url'
 	| 'scale'
 	| 'cubic-bezier'
+	| 'linear'
+	| 'steps'
+	| $mol_style_func_filter
+	
+	export type $mol_style_func_filter = 'blur'
+	| 'brightness'
+	| 'contrast'
+	| 'drop-shadow'
+	| 'grayscale'
+	| 'hue-rotate'
+	| 'invert'
+	| 'opacity'
+	| 'sepia'
+	| 'saturate'
 
 	const { per } = $mol_style_unit
 	
@@ -35,8 +49,8 @@ namespace $ {
 			return new $mol_style_func( 'calc' , value )
 		}
 
-		static vary< Name extends string >( name : Name ) {
-			return new $mol_style_func( 'var' , name )
+		static vary< Name extends string, Value extends string >( name : Name, defaultValue? : Value ) {
+			return new $mol_style_func( 'var' , defaultValue ? [name, defaultValue] : name )
 		}
 
 		static url< Href extends string >( href : Href ) {
@@ -84,6 +98,21 @@ namespace $ {
 			return new $mol_style_func( 'scale', [ zoom ] )
 		}
 		
+		static linear(
+			...breakpoints : Array<number | [number, number | $mol_style_unit<'%'>]>
+		){
+			return new $mol_style_func(
+				"linear",
+				breakpoints.map((e) =>
+					Array.isArray(e)
+						? String(e[0]) +
+						  " " +
+						  (typeof e[1] === "number" ? e[1] + "%" : e[1].toString())
+						: String(e)
+				)
+			);
+		}
+		
 		static cubic_bezier(
 			x1: number,
 			y1: number,
@@ -91,6 +120,60 @@ namespace $ {
 			y2: number
 		){
 			return new $mol_style_func( 'cubic-bezier', [ x1, y1, x2, y2 ]);
+		}
+		
+		static steps(value: number, step_position:  'jump-start' | 'jump-end' | 'jump-none' | 'jump-both' | 'start' | 'end'){
+			return new $mol_style_func( 'steps', [ value, step_position ] )
+		}
+		
+		static blur(value?: $mol_style_unit<$mol_style_unit_length>){
+			return new $mol_style_func( 'blur', value ?? "" );
+		}
+		
+		static brightness(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'brightness', value ?? "" );
+		}
+		
+		static contrast(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'contrast', value ?? "" );
+		}
+		
+		static drop_shadow(
+			color: $mol_style_properties_color,
+			x_offset: $mol_style_unit<$mol_style_unit_length>,
+			y_offset: $mol_style_unit<$mol_style_unit_length>,
+			blur_radius?: $mol_style_unit<$mol_style_unit_length>
+		) {
+			return new $mol_style_func(
+				"drop-shadow",
+				blur_radius
+					? [color, x_offset, y_offset, blur_radius]
+					: [color, x_offset, y_offset]
+			);
+		}
+		
+		static grayscale(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'grayscale', value ?? "" );
+		}
+		
+		static hue_rotate(value?: 0 | $mol_style_unit<$mol_style_unit_angle>){
+			return new $mol_style_func( 'hue-rotate', value ?? "")
+		}
+		
+		static invert(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'invert', value ?? "" );
+		}
+		
+		static opacity(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'opacity', value ?? "" );
+		}
+		
+		static sepia(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'sepia', value ?? "" );
+		}
+		
+		static saturate(value?: number | $mol_style_unit<'%'>){
+			return new $mol_style_func( 'saturate', value ?? "" );
 		}
 	
 	}
