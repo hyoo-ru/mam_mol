@@ -772,6 +772,8 @@ namespace $ {
 		@ $mol_action
 		bundleAll( { path } : { path : string } ) {
 
+
+			this.bundle({ path , bundle : 'index.xml.tree' })
 			this.bundle({ path , bundle : 'index.html' })
 			this.bundle({ path , bundle : 'test.html' })
 			
@@ -863,6 +865,10 @@ namespace $ {
 			
 			if( !bundle || bundle === 'readme.md' ) {
 				res = res.concat( this.bundleReadmeMd( { path , exclude : [ 'web' ] } ) )
+			}
+
+			if( !bundle || bundle === "index.xml.tree" ) {
+				res = res.concat( this.bundleIndexXmlTree( { path }) )
 			}
 			
 			if( !bundle || bundle === 'index.html' ) {
@@ -1310,6 +1316,31 @@ namespace $ {
 				this.logBundle( html_target , Date.now() - start )	
 			}
 			
+			return targets
+		}
+
+		@ $mol_mem_key
+		bundleIndexXmlTree( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+
+			const pack = $mol_file.absolute( path )
+
+			const targets: $mol_file[] = []
+
+			const start = Date.now()
+			const index_tree = pack.resolve( 'index.xml.tree' )
+
+			if( index_tree.exists() ) {
+				const tree_target = pack.resolve( '-/index.html' )
+
+				const tree = this.$.$mol_tree2_from_string( index_tree.text() )
+				const text = this.$.$mol_tree2_xml_to_text( tree )
+				const xml = this.$.$mol_tree2_text_to_string( text )
+
+				tree_target.text( xml )
+				targets.push( tree_target )
+				this.logBundle( tree_target, Date.now() - start )
+			}
+
 			return targets
 		}
 		
