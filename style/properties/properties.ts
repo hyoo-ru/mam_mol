@@ -95,13 +95,13 @@ namespace $ {
 		 */
 		accentColor?: $mol_style_properties_color | Common;
 		
-		align: {
+		align?: {
 			
 			/** 
 			 * Distribution of space between and around content items along a flexbox's cross-axis or a grid's block axis.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-content
 			 */
-			content : 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common
+			content? : 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common
 			
 			/**
 			 * Sets the align-self value on all direct children as a group.
@@ -109,7 +109,7 @@ namespace $ {
 			 * In Grid Layout, it controls the alignment of items on the Block Axis within their grid area.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-items
 			 */
-			items : 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
+			items? : 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
 			
 			/**
 			 * Overrides a grid or flex item's align-items value.
@@ -117,29 +117,29 @@ namespace $ {
 			 * In Flexbox, it aligns the item on the cross axis.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-self
 			 */
-			self : 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
+			self? : 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
 			
 		}
 		
-		justify: {
+		justify?: {
 			
 			/** 
 			 * Distribution of space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
 			 */
-			content : 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common
+			content? : 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common
 			
 			/**
 			 * Sets the justify-self value on all direct children as a group.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/justify-items
 			 */
-			items : 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
+			items? : 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
 			
 			/**
 			 * Way a box is justified inside its alignment container along the appropriate axis.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/justify-self
 			 */
-			self : 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
+			self? : 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common
 			
 		}
 		
@@ -150,100 +150,44 @@ namespace $ {
 		 */
 		all? : Common
 		
-		/**
-		 * Specifies the composite operation to use when multiple animations affect the same property simultaneously.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-composition
-		 */
-		animationComposition : Single_animation_composition | (Single_animation_composition)[][] | Common
-		
-		/**
-		 * Specifies the amount of time to wait from applying the animation to an element before beginning to perform the animation.
-		 * The animation can start later, immediately from its beginning, or immediately and partway through the animation.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay
-		 */
-		animationDelay : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
-		
-		/**
-		 * Sets whether an animation should play forward, backward, or alternate back and forth between playing the sequence forward and backward.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-direction
-		 */
-		animationDirection : Single_animation_direction | Single_animation_direction[][] | Common
-		
-		/**
-		 * Sets the length of time that an animation takes to complete one cycle.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration
-		 */
-		animationDuration : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
-		
-		/**
-		 * Sets how a CSS animation applies styles to its target before and after its execution.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode
-		 */
-		animationFillMode : Single_animation_fill_mode | Single_animation_fill_mode[][] | Common
-		
-		/**
-		 * Sets the number of times an animation sequence should be played before stopping.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count
-		 */
-		animationIterationCount : Single_animation_iteration_count | Single_animation_iteration_count[][] | Common
-		
-		/**
-		 * Specifies the names of one or more keyframes at-rules that describe the animation to apply to an element.
-		 * Multiple keyframe at-rules are specified as a comma-separated list of names.
-		 * If the specified name does not match any keyframe at-rule, no properties are animated.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name
-		 */
-		animationName : 'none' | (string & {}) | ('none' | (string & {}))[][] | Common
-		
-		/**
-		 * Sets whether an animation is running or paused.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-play-state
-		 */
-		animationPlayState : Single_animation_play_state | Single_animation_play_state[][] | Common
-		
-		/**
-		 * Sets how an animation progresses through the duration of each cycle.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function
-		 */
-		animationTimingFunction : Easing_function | Easing_function[][] | Common
-		
-		animation: {
+		animation?: {
+			
 			/**
 			 * Specifies the composite operation to use when multiple animations affect the same property simultaneously.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-composition
 			 */
-			composition : Single_animation_composition | (Single_animation_composition)[][] | Common
+			composition? : Single_animation_composition | Single_animation_composition[][] | Common
 			
 			/**
 			 * Specifies the amount of time to wait from applying the animation to an element before beginning to perform the animation.
 			 * The animation can start later, immediately from its beginning, or immediately and partway through the animation.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay
 			 */
-			delay : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
+			delay? : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
 			
 			/**
 			 * Sets whether an animation should play forward, backward, or alternate back and forth between playing the sequence forward and backward.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-direction
 			 */
-			direction : Single_animation_direction | Single_animation_direction[][] | Common
+			direction? : Single_animation_direction | Single_animation_direction[][] | Common
 			
 			/**
 			 * Sets the length of time that an animation takes to complete one cycle.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration
 			 */
-			duration : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
+			duration? : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
 			
 			/**
 			 * Sets how a CSS animation applies styles to its target before and after its execution.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode
 			 */
-			fillMode : Single_animation_fill_mode | Single_animation_fill_mode[][] | Common
+			fillMode? : Single_animation_fill_mode | Single_animation_fill_mode[][] | Common
 			
 			/**
 			 * Sets the number of times an animation sequence should be played before stopping.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count
 			 */
-			iterationCount : Single_animation_iteration_count | Single_animation_iteration_count[][] | Common
+			iterationCount? : Single_animation_iteration_count | Single_animation_iteration_count[][] | Common
 			
 			/**
 			 * Specifies the names of one or more keyframes at-rules that describe the animation to apply to an element.
@@ -251,32 +195,33 @@ namespace $ {
 			 * If the specified name does not match any keyframe at-rule, no properties are animated.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name
 			 */
-			name : 'none' | (string & {}) | ('none' | (string & {}))[][] | Common
+			name? : 'none' | string&{} | ( 'none' | string&{} )[][] | Common
 			
 			/**
 			 * Sets whether an animation is running or paused.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-play-state
 			 */
-			playState : Single_animation_play_state | Single_animation_play_state[][] | Common
+			playState? : Single_animation_play_state | Single_animation_play_state[][] | Common
 			
 			/**
 			 * Sets how an animation progresses through the duration of each cycle.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function
 			 */
-			timingFunction : Easing_function | Easing_function[][] | Common
+			timingFunction? : Easing_function | Easing_function[][] | Common
+			
 		}
 		
 		/**
 		 * Used to control native appearance of UI controls, that are based on operating system's theme.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/appearance
 		 */
-		appearance: 'none' | 'auto' | Compat_auto | Compat_special | Common
+		appearance?: 'none' | 'auto' | Compat_auto | Compat_special | Common
 		
 		/**
 		 * Sets a preferred aspect ratio for the box, which will be used in the calculation of auto sizes and some other layout functions.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio
 		 */
-		aspectRatio: 'auto' | number | `${number} / ${number}`
+		aspectRatio?: 'auto' | number | `${number} / ${number}`
 		
 		/**
 		 * lets you apply graphical effects such as blurring or color shifting to the area behind an element.
@@ -284,38 +229,16 @@ namespace $ {
 		 * or its background at least partially transparent.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter
 		 */
-		backdropFilter: 'none' | $mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'>
-		| ($mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'>)[][] | Common
+		backdropFilter:
+		| $mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'>
+		| ( $mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'> )[][]
+		|'none' | Common
 		
 		/**
 		 * Sets whether the back face of an element is visible when turned towards the user.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/backface-visibility	
 		 */
 		backfaceVisibility: 'visible' | 'hidden' | Common
-		
-		/**
-		 * Sets whether a background image's position is fixed within the viewport, or scrolls with its containing block.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment
-		 */
-		backgroundAttachment: 'scroll' | 'fixed' | 'local' | ('scroll' | 'fixed' | 'local')[][] | Common
-		
-		/**
-		 * Sets how an element's background images should blend with each other and with the element's background color.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode
-		 */
-		backgroundBlendMode: Mix_blend_mode | Mix_blend_mode[][] | Common
-		
-		/**
-		 * Sets whether an element's background extends underneath its border box, padding box, or content box.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip
-		 */
-		backgroundClip: Box | Box[][] | Common
-		
-		/**
-		 * Sets the background color of an element.
-		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-color
-		 */
-		backgroundColor: $mol_style_properties_color | Common
 		
 		/** 
 		 * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
@@ -340,6 +263,24 @@ namespace $ {
 		| 'none'
 		| {
 
+			/**
+			 * Sets whether a background image's position is fixed within the viewport, or scrolls with its containing block.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment
+			 */
+			attachment?: 'scroll' | 'fixed' | 'local' | ('scroll' | 'fixed' | 'local')[][] | Common
+			
+			/**
+			 * Sets how an element's background images should blend with each other and with the element's background color.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode
+			 */
+			blendMode?: Mix_blend_mode | Mix_blend_mode[][] | Common
+			
+			/**
+			 * Sets whether an element's background extends underneath its border box, padding box, or content box.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip
+			 */
+			clip?: Box | Box[][] | Common
+			
 			/** 
 			 * Background color.
 			 * @see https://developer.mozilla.org/ru/docs/Web/CSS/background-color 
@@ -558,11 +499,13 @@ namespace $ {
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/width
 		 */
 		width?: Size
+		
 		/** 
 		 * Minimum width of an element. It prevents the used value of the `width` property from becoming smaller than the value specified for `minWidth`.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/min-width
 		 */
 		minWidth?: Size
+		
 		/** 
 		 * Maximum width of an element. It prevents the used value of the `width` property from becoming larger than the value specified for `maxWidth`.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/max-width
@@ -574,11 +517,13 @@ namespace $ {
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/height
 		 */
 		height?: Size
+		
 		/** 
 		 * Minimum height of an element. It prevents the used value of the `height` property from becoming smaller than the value specified for `minHeight`.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/min-height 
 		 */
 		minHeight?: Size
+		
 		/** 
 		 * Maximum height of an element. It prevents the used value of the `height` property from becoming larger than the value specified for `maxHeight`.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/max-height
