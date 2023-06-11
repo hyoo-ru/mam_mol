@@ -1303,25 +1303,22 @@ namespace $ {
 			const start = Date.now()
 			const html = pack.resolve( 'index.html' )
 			const tree = pack.resolve( 'index.xml.tree' )
+			const target = pack.resolve( '-/index.html' )
 
 			if( tree.exists() ) {
-				const tree_target = pack.resolve( '-/index.html' )
-
 				const xml_tree = this.$.$mol_tree2_from_string( tree.text() )
 				const text = this.$.$mol_tree2_xml_to_text( xml_tree )
 				const xml = this.$.$mol_tree2_text_to_string( text )
-				tree_target.text( xml )
-
-				targets.push( tree_target )
-				this.logBundle( tree_target, Date.now() - start )
+				target.text( xml )
 			} else if( html.exists() ) {
-				const html_target = pack.resolve( '-/index.html' )
-				html_target.text( html.text() )
-
-				targets.push( html_target )
-				this.logBundle( html_target, Date.now() - start )
+				target.text( html.text() )
 			}
-			
+
+			if( target.exists() ) {
+				targets.push( target )
+				this.logBundle( target, Date.now() - start )
+			}
+
 			return targets
 		}
 		
