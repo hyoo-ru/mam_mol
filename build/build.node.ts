@@ -865,7 +865,6 @@ namespace $ {
 				res = res.concat( this.bundleReadmeMd( { path , exclude : [ 'web' ] } ) )
 			}
 
-			
 			if( !bundle || bundle === 'index.html' ) {
 				res = res.concat( this.bundleIndexHtml( { path } ) )
 			}
