@@ -71,7 +71,7 @@ namespace $ {
 			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="foo" class="Title">foo</body></html>' )
 			
 			title.value( 'bar' )
-			await $mol_wire_fiber.sync()
+			$mol_wire_fiber.sync()
 			
 			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="foo" class="Title">bar</body></html>' )
 			
@@ -122,7 +122,7 @@ namespace $ {
 			)
 
 			App.of( root ).title( 'barbar' )
-			await $mol_wire_fiber.sync()
+			$mol_wire_fiber.sync()
 			
 			$mol_assert_equal( Task.of( root.firstElementChild! ).title(), 'barbar' )
 			$mol_assert_equal(
@@ -131,7 +131,7 @@ namespace $ {
 			)
 			
 			Task.of( root.firstElementChild! ).title( 'foofoo' )
-			await $mol_wire_fiber.sync()
+			$mol_wire_fiber.sync()
 			
 			$mol_assert_equal( App.of( root ).title(), 'foofoo' )
 			$mol_assert_equal(

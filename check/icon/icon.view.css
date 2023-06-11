@@ -1,0 +1,3 @@
+[mol_check_icon]:where([mol_check_checked]) {
+	color: var(--mol_theme_current);
+}

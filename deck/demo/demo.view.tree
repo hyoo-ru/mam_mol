@@ -18,8 +18,7 @@ $mol_deck_demo $mol_example_small
 				title \Spam
 				Content <= Spam_content $mol_filler
 	tags /
-		\$mol_card
-		\deck
-		\card
 		\tabs
 		\container
+	aspects /
+		\Widget/Layout

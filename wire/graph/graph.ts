@@ -6,15 +6,20 @@ namespace $ {
 		
 		function visit( sub: $mol_wire_pub ) {
 			
-			try {
-				sub['sync']?.()
-			} catch( error: any ) {
-				if( 'then' in error ) $mol_fail_hidden( error )
-			}
-			
-			for( const [ index, pub ] of ( sub['pub_list']?.entries() ?? [] ) as [ number, $mol_wire_pub ][] ) {
-				graph.link( sub, pub, index )
-				visit( pub )
+			if( 'sync' in sub ) {
+				
+				const fiber = sub as $mol_wire_fiber< any, any, any >
+				try {
+					fiber.sync()
+				} catch( error: any ) {
+					if( 'then' in error ) $mol_fail_hidden( error )
+				}
+				
+				for( const [ index, pub ] of fiber.pub_list.entries() ) {
+					graph.link( sub, pub, index )
+					visit( pub )
+				}
+				
 			}
 			
 		}

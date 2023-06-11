@@ -41,7 +41,7 @@ namespace $ {
 			$mol_assert_like(
 				foo.some(),
 				foo.some(1),
-				'<Foo_some>'
+				'Foo_some'
 			)
 
 			$mol_assert_equal(

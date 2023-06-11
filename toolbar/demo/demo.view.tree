@@ -19,10 +19,5 @@ $mol_toolbar_demo $mol_example_small
 					<= Paste_icon $mol_icon_content_paste
 				<= Delete $mol_button_minor sub /
 					<= Delete_icon $mol_icon_delete
-	tags /
-		\$mol_string
-		\$mol_button
-		\$mol_icon
-		\toolbar
-		\button
-		\icon
+	aspects /
+		\Widget/Layout

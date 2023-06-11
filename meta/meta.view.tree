@@ -1,0 +1,20 @@
+$mol_meta $mol_view
+	name \
+	content \
+	dom_name \meta
+	attr *
+		name <= name
+		content <= content
+
+$mol_meta_description $mol_meta
+	name \description
+
+$mol_meta_robots $mol_meta
+	name \robots
+
+$mol_meta_canonical $mol_view
+	content \
+	dom_name \link
+	attr *
+		rel \canonical
+		href <= content

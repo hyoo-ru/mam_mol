@@ -10,11 +10,10 @@ $mol_speech_demo $mol_example_small
 			click?val <=> speak?val null
 			sub / \Speak
 	tags /
-		\$mol_icon
-		\$mol_row
-		\$mol_button
 		\speech
 		\voice
 		\recognition
 		\dictation
-		
+	aspects /
+		\Widget/Plugin
+		\Media/Audio

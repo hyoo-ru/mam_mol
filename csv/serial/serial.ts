@@ -1,5 +1,9 @@
 namespace $ {
 	
+	/**
+	 * Serialize csv data with delimiter
+	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_csv_serial
+	 */
 	export function $mol_csv_serial( data: Record< string, any >[], delimiter = ',' ) {
 		
 		const fields = new Set< string >()

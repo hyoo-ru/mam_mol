@@ -5,7 +5,7 @@ namespace $ {
 	export function $mol_fail_catch( error: unknown ) {
 		
 		if( typeof error !== 'object' ) return false
-		if( error instanceof Promise ) $mol_fail_hidden( error )
+		if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
 		if( catched.get( error ) ) return false
 		
 		catched.set( error , true )

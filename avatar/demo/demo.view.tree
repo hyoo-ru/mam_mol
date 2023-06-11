@@ -12,8 +12,9 @@ $mol_avatar_demo $mol_example_small
 				<= Avatar $mol_avatar
 					id <= avatar_id -
 	tags /
-		\avatar
 		\generated
 		\identity
 		\user
-
+	aspects /
+		\Widget/Draw
+		\Algorithm/Hash

@@ -8,4 +8,5 @@ $mol_spell_demo $mol_example_small
 		\$mol_spell_check
 		\$mol_textarea
 		\spellcheck
-
+	aspects /
+		\Algorithm/Validate

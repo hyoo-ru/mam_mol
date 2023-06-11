@@ -1,0 +1,10 @@
+$mol_csv_parse_demo $mol_example_code
+	code? \
+		\const text = 'foo,bar\n"123","456"\n"x""xx","y""y""y"'
+		\const data = $mol_csv_parse( csv )
+	tags /
+		\table
+	aspects /
+		\Language/CSV
+		\Language/TSV
+		\Algorithm/Serial

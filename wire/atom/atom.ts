@@ -1,6 +1,6 @@
 namespace $ {
 
-	/** Repeatable fiber */
+	/** Long-living fiber. */
 	export class $mol_wire_atom<
 		Host,
 		Args extends readonly unknown[],
@@ -21,11 +21,11 @@ namespace $ {
 			const existen = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
 			if( existen ) return existen
 			
-			const prefix = host?.[ Symbol.toStringTag ] ?? ( host instanceof Function ? $$.$mol_func_name( host ) : host )
+			const prefix = (host as any)?.[ Symbol.toStringTag ] ?? ( host instanceof Function ? $$.$mol_func_name( host ) : host )
 			const key = `${ prefix }.${ field }`
 			
 			const fiber = new $mol_wire_atom( key, task, host, [] as any as Args )
-			;( host ?? task )[ field ] = fiber
+			;( host as any ?? task )[ field ] = fiber
 			
 			return fiber
 		}
@@ -42,14 +42,14 @@ namespace $ {
 			
 			const field = task.name + '()'
 			let dict = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
-			const prefix = host?.[ Symbol.toStringTag ] ?? ( host instanceof Function ? $$.$mol_func_name( host ) : host )
+			const prefix = (host as any)?.[ Symbol.toStringTag ] ?? ( host instanceof Function ? $$.$mol_func_name( host ) : host )
 			const id = `${ prefix }.${ task.name }(${ $mol_key( key ) })`
 			
 			if( dict ) {
 				const existen = dict.get( id )
 				if( existen ) return existen
 			} else {
-				dict = ( host ?? task )[ field ] = new Map<any,any>()
+				dict = ( host as any ?? task )[ field ] = new Map<any,any>()
 			}
 			
 			const fiber = new $mol_wire_atom( id, task, host, [ key ] as any as Args )
@@ -107,7 +107,7 @@ namespace $ {
 				if( next !== undefined ) return this.resync( [ ... this.args, next ] as any ) as never
 				if( !$mol_wire_fiber.warm ) return this.result() as never
 				
-				if( $mol_wire_auto() instanceof $mol_wire_task ) {
+				if( $mol_wire_auto()?.temp ) {
 					return this.once()
 				} else {
 					return this.sync()
@@ -126,9 +126,9 @@ namespace $ {
 			}
 			
 			if( this.pub_from === 0 ) {
-				;( this.host ?? this.task )[ this.field() ] = null
+				;( this.host as any ?? this.task )[ this.field() ] = null
 			} else {
-				;( this.host ?? this.task )[ this.field() ].delete( this[ Symbol.toStringTag ] )
+				;( this.host as any ?? this.task )[ this.field() ].delete((this as any)[ Symbol.toStringTag ] )
 			}
 			
 		}
@@ -151,9 +151,9 @@ namespace $ {
 				
 				if( $mol_owning_catch( this, next ) ) {
 					try {
-						next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
-					} catch { // Promises throws in strict mode
-						Object.defineProperty( next, Symbol.toStringTag, { value: this[ Symbol.toStringTag ] } )
+						(next as any)[ Symbol.toStringTag ] = (this as any)[ Symbol.toStringTag ]
+					} catch { // Promises throw in strict mode
+						Object.defineProperty( next, Symbol.toStringTag, { value: (this as any)[ Symbol.toStringTag ] } )
 					}
 				}
 				
@@ -164,7 +164,7 @@ namespace $ {
 			this.cache = next
 			this.cursor = $mol_wire_cursor.fresh
 			
-			if( next instanceof Promise ) return next
+			if( $mol_promise_like( next ) ) return next
 			
 			this.complete_pubs()
 			
@@ -172,7 +172,4 @@ namespace $ {
 		}
 		
 	}
-	
-	// $mol_wire_atom.watch()
-	
 }

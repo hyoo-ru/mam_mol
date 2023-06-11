@@ -10,7 +10,7 @@ namespace $ {
 		if( typeof window === 'undefined' ) {
 			
 			self.addEventListener( 'install' , ( event : any )=> {
-				self['skipWaiting']()
+				;( self as any ).skipWaiting()
 			} )
 
 			self.addEventListener( 'activate' , ( event : any )=> {
@@ -18,7 +18,7 @@ namespace $ {
 				caches.delete( 'v1' )
 				caches.delete( '$mol_offline' )
 				
-				self['clients'].claim()
+				;( self as any ).clients.claim()
 				console.info( '$mol_offline activated' )
 				
 			} )

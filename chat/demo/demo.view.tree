@@ -7,5 +7,7 @@ $mol_chat_demo $mol_example_small
 		- <= Pages $mol_view
 			sub <= chat_pages
 	tags /
-		\chat
 		\communication
+	aspects /
+		\Integration
+		\Widget/Button

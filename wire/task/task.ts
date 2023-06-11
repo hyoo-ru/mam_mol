@@ -13,17 +13,17 @@ namespace $ {
 			Result,
 		>(
 			task: ( this : Host , ... args : Args )=> Result,
-		): ( host: Host, args: Args )=> $mol_wire_task< Host, [ ... Args ], Result > {
+		): ( host: Host, args: Args )=> $mol_wire_task< Host, Args, Result > {
 			
 			return function $mol_wire_task_get( host: Host, args: Args ) {
 				
 				const sub = $mol_wire_auto()
-				const existen = sub?.track_next()
-			
+				const existen = sub?.track_next() as $mol_wire_task< Host, Args, Result > | undefined
+				
 				reuse: if( existen ) {
 					
-					if(!( existen instanceof $mol_wire_task )) break reuse
-				
+					if( !existen.temp ) break reuse
+					
 					if( existen.host !== host ) break reuse
 					if( existen.task !== task ) break reuse
 					if( !$mol_compare_deep( existen.args, args ) ) break reuse
@@ -36,13 +36,17 @@ namespace $ {
 				// 	$mol_fail( new Error( `$mol_wire_task detects nonidempotency\n${existen}` ) )
 				// }
 				
-				return new $mol_wire_task( `${ host?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, task, host, args )
+				return new $mol_wire_task( `${ (host as any)?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, task, host, args )
 			}
 			
 		}
 
+		get temp() {
+			return true
+		}
+		
 		complete() {
-			if( this.cache instanceof Promise ) return
+			if( $mol_promise_like( this.cache ) ) return
 			this.destructor()
 		}
 		
@@ -51,7 +55,7 @@ namespace $ {
 			const prev = this.cache
 			this.cache = next
 			
-			if( next instanceof Promise ) {
+			if( $mol_promise_like( next ) ) {
 				
 				this.cursor = $mol_wire_cursor.fresh
 				if( next !== prev ) this.emit()

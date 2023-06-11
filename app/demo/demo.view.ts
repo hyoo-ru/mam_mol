@@ -22,11 +22,13 @@ namespace $.$$ {
 			const next : string[] = []
 
 			for( const name in this.$ ) {
-				if( typeof this.$[ name ] !== 'function' ) continue
+				const ctor = this.$[name as keyof $]
+				
+				if( typeof ctor !== 'function' ) continue
 
-				if( !$mol_func_is_class( this.$[ name ] ) ) continue
+				if( !$mol_func_is_class( ctor ) ) continue
 
-				if( !( this.$[ name ].prototype instanceof $mol_example ) ) continue
+				if( !( ctor.prototype instanceof $mol_example ) ) continue
 
 				if ( this.demo_block_list().includes( name ) ) continue
 				
@@ -83,8 +85,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		Widget( name : string ) {
-			const Class : typeof $mol_example = this.$[ name ]
-			return new Class()
+			return new (this.$ as any)[name] as $mol_example
 		}
 		
 		@ $mol_mem
@@ -119,27 +120,48 @@ namespace $.$$ {
 			return $mol_file.relative( '/mol/logo/logo.svg' ).path()
 		}
 
-		override source_link() {
+		@ $mol_mem
+		meta_bundle_base(){
+			return this.$.$mol_state_arg.make_link({})
+		}
+
+		@ $mol_mem
+		repo_dict() {
+			const meta_uri = new URL( 'web.meta.tree', this.meta_bundle_base() ).toString()
+			const str = this.$.$mol_fetch.text( meta_uri )
+			const tree = this.$.$mol_tree2_from_string( str )
 			
-			const demo = $mol_state_arg.value('demo')
-			if( !demo ) return this.source_prefix()
-
-			const pieces = demo.split('_').slice(1)
-			const source_link = this.source_prefix() + pieces.join('/')
-
-			return source_link
+			const dict: Record<string, string> = {}
+			tree.kids.forEach( meta => {
+				const packs = meta.select( 'pack' )
+				
+				packs.kids.forEach( pack => {
+					const module_name = meta.value === '/' ? pack.kids[0]?.type :
+						[ ...meta.value.split('/').slice( 1 ), pack.kids[0]?.type ].join('_')
+					
+					const repo = pack.kids[0]?.kids[0]?.kids[0]?.value
+						.split('.git')[0].split('/').slice( -2 ).join('/')
+					
+					if (!repo) throw new Error(`${ this }.repo_dict(): Pack node "${ pack.toString() }" does not contain a valid git url`)
+					
+					dict[module_name] = repo
+				} )
+			} )
+			
+			return dict
 		}
 
 		@ $mol_mem_key
 		name_parse( name: string ) {
-			const split = name.replace( /_demo.*$/ , '' ).split('_')
+			const split = name.replace( /\$/, '' ).split('_')
 			
+			const repos = this.repo_dict() as Record<string, string>
 			const keys = split.map( ( _ , index ) => split.slice( 0 , -1-index ).join('_') )
-			const key = keys.find( key => this.repo_dict()[ key ] )
+			const key = keys.find( key => key in repos )
 			
 			if ( !key ) throw new Error(`${ this }.name_parse("${ name }"): Key "${ key }" not found`)
 
-			const repo = this.repo_dict()[ key ]
+			const repo = repos[ key ]
 			const module = split.slice( key.split('_').length )
 			
 			return { repo , module }
@@ -150,7 +172,7 @@ namespace $.$$ {
 		}
 		
 		override module() {
-			return this.name_parse( $mol_state_arg.value( 'demo' )! ).module
+			return this.name_parse( this.selected() ).module
 		}
 		
 		chat_link() {

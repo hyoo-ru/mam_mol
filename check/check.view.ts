@@ -22,6 +22,10 @@ namespace $.$$ {
 		label() {
 			return this.title() ? super.label() : []
 		}
+		
+		aria_checked() {
+			return String( this.checked() )
+		}
 
 	}
 }

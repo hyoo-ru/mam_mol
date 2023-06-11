@@ -1,8 +1,9 @@
 [mol_infinite_before],
 [mol_infinite_after] {
 	overflow-anchor: none;
+	border-radius: var(--mol_gap_round);
 }
 
-[mol_infinite_after][mol_view_error="Promise"] {
+[mol_infinite_after]:where([mol_view_error="Promise"]) {
 	height: 100vh;
 }

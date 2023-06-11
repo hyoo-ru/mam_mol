@@ -20,9 +20,9 @@ $mol_code_demo $mol_example_small
 		<= Itf $mol_code
 			format \ITF
 	tags /
-		\code
 		\qrcode
 		\barcode
-		\scanner
 		\scan
 		\cordova
+	aspects /
+		\Widget/Control

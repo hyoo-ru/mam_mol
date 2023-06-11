@@ -84,8 +84,8 @@ namespace $ {
 			$mol_assert_like(
 				foo.bar(),
 				{
-					'loc': '<Foo_bar_loc>',
-					'baz': { 'loc2': '<Foo_bar_baz_loc2>' }
+					'loc': 'Foo_bar_loc',
+					'baz': { 'loc2': 'Foo_bar_baz_loc2' }
 				},
 			)
 			

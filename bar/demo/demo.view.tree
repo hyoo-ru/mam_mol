@@ -17,9 +17,8 @@ $mol_bar_demo $mol_example_small
 					title <= confirm_title \Confirm
 					checked?val <=> confirmed?val false
 	tags /
-		\$mol_string
-		\$mol_check
-		\$mol_button
-		\bar
 		\group
 		\container
+	aspects /
+		\Widget/Layout
+		\Widget/Island

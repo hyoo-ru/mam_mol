@@ -25,7 +25,9 @@ $mol_chart_demo_forces $mol_example_large
 						<= Forces_left
 						<= Forces_right
 	tags /
-		\chart
 		\plot
 		\visualization
 		\dashboard
+	aspects /
+		\Widget/Draw/Chart/Line
+		\Widget/Draw/Chart/Dot

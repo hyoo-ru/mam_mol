@@ -106,24 +106,23 @@ namespace $ {
 				next : () => void
 			) => {
 				
-				const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
-				if (! match) return next()
-				
-				const root = $mol_file.absolute(this.rootPublic())
-
-				const file = root.resolve(`${req.path}index.html`)
-
-				if (file.exists()) {
-					return res.redirect(301, `${match[1]}-/test.html${match[2] ?? ''}`)
-				}
-				
-				const dir = root.resolve(req.path)
-				
+				const root = $mol_file.absolute( this.rootPublic() )
+				const dir = root.resolve( req.path )				
 				const build = this.build()
+
 				build.modEnsure( dir.path() )
+
+				const match =  req.url.match( /(\/|.*[^\-]\/)([\?#].*)?$/ )
+				if( !match) return next()				
+
+				const file = root.resolve( `${req.path}index.html` )
+
+				if( file.exists() ) {
+					return res.redirect( 301, `${match[1]}-/test.html${match[2] ?? ''}` )
+				}				
 				
 				if( dir.type() === 'dir' ) {
-					const files = new Set< string >([ '-' ])
+					const files = new Set<string>( [ '-' ] )
 					for( const file of dir.sub() ) {
 						files.add( file.name() )
 						if( /\.meta\.tree$/.test( file.name() ) ) {
@@ -137,18 +136,16 @@ namespace $ {
 						<style>
 							body {
 								display: flex;
+								flex-direction: column;
 								flex-wrap: wrap;
 								font: 1rem/1.5rem sans-serif;
-								align-items: flex-start;
-								justify-content: center;
-								align-content: flex-start;
+								height: 100%;
+								margin: 0;
+								padding: 0.75rem;
+								box-sizing: border-box;
 							}
 							a {
-								display: flex;
-								padding: 0.75rem;
 								text-decoration: none;
-								flex: 0 1 10rem;
-								justify-content: center;
 								color: rgb(57, 115, 172);
 								font-weight: bolder;
 							}
@@ -156,7 +153,7 @@ namespace $ {
 								background: hsl( 0deg, 0%, 0%, .05 )
 							}
 						</style>
-					` + [ ... files ].sort().map( file => `<a href="${file}">${file}</a>` ).join('\n')
+					` + [ ... files ].sort().map( file => `<a href="${file}">${file}</a>` ).join( '\n' )
 					
 					res.writeHead( 200, {
 						'Content-Type': 'text/html',

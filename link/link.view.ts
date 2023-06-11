@@ -1,7 +1,7 @@
 namespace $.$$ {
 	
 	/**
-	 * Dynamic hyperlink. It can to add, change or remove parameters. The link leads to current page would be stylized in other way.
+	 * Dynamic hyperlink. It can add, change or remove parameters. A link that leads to the current page has [mol_link_current] attribute set to true.
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_link_demo
 	 */
 	export class $mol_link extends $.$mol_link {
@@ -18,7 +18,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		uri_off() {
-			const arg2 = {}
+			const arg2: Record<string, string | null> = {}
 			for( let i in this.arg() ) arg2[i] = null
 			
 			return new this.$.$mol_state_arg( this.state_key() ).link( arg2 )
@@ -38,7 +38,7 @@ namespace $.$$ {
 
 			if( base === target ) return true
 			
-			const args = this.arg()
+			const args = this.arg() as Record<string, string>
 			
 			const keys = Object.keys( args ).filter( key => args[ key ] != null )
 			if( keys.length === 0 ) return false

@@ -13,9 +13,9 @@ $mol_gallery_demo $mol_example
 			<= Item_title* $mol_paragraph
 				title <= item_title* \
 	tags /
-		\$mol_link
-		\$mol_paragraph
 		\gallery
 		\image
 		\adaptive
 		\masonry
+	aspects /
+		\Widget/Layout

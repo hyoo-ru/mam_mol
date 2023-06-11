@@ -9,3 +9,5 @@ $mol_filler_demo $mol_example_small
 		\lorem
 		\ipsum
 		\dolor
+	aspects /
+		\Widget/Text

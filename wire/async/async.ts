@@ -1,6 +1,6 @@
 namespace $ {
 	
-	/** Returns proxy that converts all synchronous methods (that can access to fibers) to asynchronous (that returns a Promise). */
+	/** Convert a pseudo-synchronous (Suspense API) API to an explicit asynchronous one (for integrating with external systems). */
 	export function $mol_wire_async< Host extends object >( obj: Host ) {
 		
 		let fiber: $mol_wire_fiber< any, any, any >
@@ -10,7 +10,7 @@ namespace $ {
 			
 			get( obj, field ) {
 				
-				const val = obj[ field ]
+				const val = (obj as any)[ field ]
 				if( typeof val !== 'function' ) return val
 				
 				let fiber: $mol_wire_fiber< any, any, any >

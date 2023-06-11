@@ -5,7 +5,7 @@ namespace $ {
 			return task()
 		} catch( error ) {
 			
-			if(!( error instanceof Promise )) return $mol_fail_hidden( error )
+			if( ! $mol_promise_like( error ) ) return $mol_fail_hidden( error )
 			
 			const fiber = $mol_wire_auto()
 			if(!( fiber instanceof $mol_wire_fiber )) return

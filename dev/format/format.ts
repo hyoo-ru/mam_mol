@@ -1,7 +1,7 @@
 namespace $ {
 
 	// https://docs.google.com/document/d/1FTascZXT9cxfetuPRT2eXPQKXui4nWFivUnS_335T3U/preview#
-	$['devtoolsFormatters'] = $['devtoolsFormatters'] || []
+	($ as any)['devtoolsFormatters'] ||= []
 
 	export function $mol_dev_format_register( config : {
 		header : ( val : any , config : any )=> any
@@ -11,7 +11,7 @@ namespace $ {
 		hasBody : ( val : any , config : any )=> boolean
 		body : ( val : any , config : any )=> any
 	} ) {
-		$['devtoolsFormatters'].push( config )
+		($ as any)['devtoolsFormatters'].push( config )
 	}
 
 	export let $mol_dev_format_head = Symbol( '$mol_dev_format_head' )
@@ -80,7 +80,7 @@ namespace $ {
 			
 		const styles = [] as string[]
 		
-		for( let key in style ) styles.push( `${ key } : ${ style[key] }` )
+		for( let key in style ) styles.push( `${ key } : ${ (style as any)[key] }` )
 		
 		return [
 			element ,

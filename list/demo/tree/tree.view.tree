@@ -9,11 +9,10 @@ $mol_list_demo_tree $mol_example_large
 		Content <= Row_content* $mol_list
 			rows <= row_content* /
 	tags /
-		\$mol_expander
-		\$mol_list
-		\$mol_paragraph
 		\list
 		\tree
 		\hierarchy
 		\container
 		\nested
+	aspects /
+		\Widget/Layout

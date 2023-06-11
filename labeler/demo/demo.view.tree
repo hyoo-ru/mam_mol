@@ -10,8 +10,9 @@ $mol_labeler_demo $mol_example_small
 				hint \Jack Sparrow
 				value?val <=> user_name?val \
 	tags /
-		\$mol_string
 		\label
 		\form
 		\field
 		\caption
+	aspects /
+		\Widget/Layout

@@ -42,12 +42,10 @@ $mol_pop_demo $mol_example
 								\This is
 								\bubble_content
 	tags /
-		\$mol_row
-		\$mol_button
-		\$mol_labeler
 		\popup
 		\menu
 		\align
 		\container
 		\modal
-
+	aspects /
+		\Widget/Float

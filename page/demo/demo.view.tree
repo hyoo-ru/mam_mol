@@ -11,10 +11,6 @@ $mol_page_demo $mol_example_large
 				<= Button_foot $mol_button_minor
 					title \Footer Button
 	tags /
-		\$mol_filler
-		\$mol_row
-		\$mol_button
-		\page
 		\container
 		\header
 		\footer
@@ -23,3 +19,5 @@ $mol_page_demo $mol_example_large
 		\bar
 		\bottom
 		\navigator
+	aspects /
+		\Widget/Layout

@@ -20,7 +20,9 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		sub() {
-			return [ this.active() ? this.Frame() : this.Image() ]
+			return this.active()
+				? [ this.Frame() ]
+				: [ this.Image(), this.Hint() ]
 		}
 		
 	}

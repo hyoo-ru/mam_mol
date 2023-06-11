@@ -26,7 +26,7 @@ namespace $ {
 			
 			for( const key of Object.keys( config ).reverse() ) {
 
-				if( /^[a-z]/.test(key) ) {
+				if( /^(--)?[a-z]/.test(key) ) {
 					
 					const addProp = ( keys : string[] , val : any  )=> {
 
@@ -60,15 +60,15 @@ namespace $ {
 						
 					}
 
-					addProp( [ kebab(key) ] , config[key] )
+					addProp( [ kebab(key) ] , (config as any)[key] )
 
 				} else if( /^[A-Z]/.test(key) ) {
 
-					make_class( prefix , [ ... path , key.toLowerCase() ] , config[key] )
+					make_class( prefix , [ ... path , key.toLowerCase() ] , (config as any)[key] )
 
 				} else if( key[0] === '$' ) {
 
-					make_class( selector( prefix , path ) + ' :where([' + $mol_dom_qname( key ) + '])' , [] , config[key] )
+					make_class( selector( prefix , path ) + ' :where([' + $mol_dom_qname( key ) + '])' , [] , (config as any)[key] )
 
 				} else if( key === '>' ) {
 
@@ -90,7 +90,7 @@ namespace $ {
 
 				} else if( key === '@media' ) {
 
-					const media = config[key] as any
+					const media = (config as any)[key] as any
 
 					for( let query in media ) {
 
@@ -104,7 +104,7 @@ namespace $ {
 
 				} else {
 
-					make_class( selector( prefix , path ) + key , [] , config[key] )
+					make_class( selector( prefix , path ) + key , [] , (config as any)[key] )
 
 				}
 

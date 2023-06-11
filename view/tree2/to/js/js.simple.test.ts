@@ -61,7 +61,7 @@ namespace $ {
 			
 			$mol_assert_like(
 				Foo.make({ $ }).localized(),
-				'<Foo_localized>',
+				'Foo_localized',
 			)
 			
 		},
@@ -148,7 +148,7 @@ namespace $ {
 
 			$mol_assert_like(
 				foo.button().loc(),
-				'<Foo_button_loc>'
+				'Foo_button_loc'
 			)
 
 			$mol_assert_like(

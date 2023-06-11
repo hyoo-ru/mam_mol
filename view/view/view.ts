@@ -47,7 +47,7 @@ namespace $ {
 
 				const name = nodes.item( i ).getAttribute( 'mol_view_root' )!
 				
-				const View = $[ name ] as typeof $mol_view
+				const View = ($ as any)[ name ] as typeof $mol_view
 				if( !View ) {
 					console.error( `Can not attach view. Class not found: ${ name }` )
 					continue
@@ -230,7 +230,7 @@ namespace $ {
 				
 				$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
 				
-				if( error instanceof Promise ) break render
+				if( $mol_promise_like( error ) ) break render
 				if( ( error_showed.get( error ) ?? this ) !== this ) break render
 				
 				try {
@@ -428,7 +428,7 @@ namespace $ {
 					}
 				}
 			} catch( error: unknown ) {
-				if( error instanceof Promise ) $mol_fail_hidden( error )
+				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
 				$mol_fail_log( error )
 			}
 			
@@ -461,7 +461,11 @@ namespace $ {
 			const path = this.view_find( v => v === view ).next().value
 			this.force_render( new Set( path ) )
 			
-			this.dom_final()
+			try {
+				this.dom_final()
+			} catch(err) {
+				$mol_fail_log(err)
+			}
 
 			view.dom_node().scrollIntoView({ block: align })
 

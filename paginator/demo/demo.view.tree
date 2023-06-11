@@ -6,3 +6,6 @@ $mol_paginator_demo $mol_example_small
 	tags /
 		\paginator
 		\navigation
+	aspects /
+		\Widget/Control
+		\Type/Number/Integer

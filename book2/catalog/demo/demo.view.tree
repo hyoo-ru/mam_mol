@@ -75,14 +75,12 @@ $mol_book2_catalog_demo $mol_example_large
 							tools / <= Animals_spread_close
 							body / <= Content
 	tags /
-		\$mol_page
 		\app
 		\page
-		\book
 		\menu
 		\navigation
 		\transition
 		\multipage
 	aspects /
-		\gui/layout
-		\nav/menu
+		\Navigation
+		\Widget/Layout

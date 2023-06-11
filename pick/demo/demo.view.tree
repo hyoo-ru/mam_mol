@@ -33,17 +33,14 @@ $mol_pick_demo $mol_example_small
 								click? <=> delete_confirm? null
 	-
 	tags /
-		\$mol_link_lazy
-		\$mol_icon
-		\$mol_text
-		\$mol_check
 		\pick
 		\popup
 		\info
 		\menu
-		\download
 		\icon
 		\container
 		\confirm
-		\markdown
 		\modal
+	aspects /
+		\Widget/Float
+		\Widget/Control/Button/Picker

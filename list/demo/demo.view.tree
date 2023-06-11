@@ -18,3 +18,5 @@ $mol_list_demo $mol_example_small
 		\list
 		\rows
 		\stack
+	aspects /
+		\Widget/Layout

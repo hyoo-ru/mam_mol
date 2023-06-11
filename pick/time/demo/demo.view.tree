@@ -7,3 +7,6 @@ $mol_pick_time_demo $mol_example_small
 		\timepicker
 		\time
 		\datetime
+	aspects /
+		\Widget/Control/Button/Picker
+		\Type/Time

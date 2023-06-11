@@ -1,50 +1,58 @@
 $mol_section_demo_level $mol_example_small
 	title \Section with header
 	sub /
-		<= Section_h1 $mol_section
-			level 1
-			title \Section h1
-			content /
-				<= Section_h1_content $mol_filler
-					min_symbols 250
-		<= Section_h2 $mol_section
-			level 2
-			title \Section h2
-			content /
-				<= Section_h2_content $mol_filler
-					min_symbols 250
-		<= Section_h3 $mol_section
-			level 3
-			title \Section h3
-			content /
-				<= Section_h3_content $mol_filler
-					min_symbols 250
-		<= Section_h4 $mol_section
-			level 4
-			title \Section h4
-			content /
-				<= Section_h4_content $mol_filler
-					min_symbols 250
-		<= Section_h5 $mol_section
-			level 5
-			title \Section h5
-			content /
-				<= Section_h5_content $mol_filler
-					min_symbols 250
-		<= Section_h6 $mol_section
-			level 6
-			title \Section h6
-			content /
-				<= Section_h6_content $mol_filler
-					min_symbols 250
-		<= Section_h7 $mol_section
-			level 7
-			title \Section h7
-			content /
-				<= Section_h7_content $mol_filler
-					min_symbols 250
+		<= Section1
+	Section1 $mol_section
+		level 1
+		title \Level 1
+		content /
+			<= Section1_text $mol_filler
+				min_symbols 250
+			<= Section2
+	Section2 $mol_section
+		level 2
+		title \Level 2
+		content /
+			<= Section2_text $mol_filler
+				min_symbols 250
+			<= Section3
+	Section3 $mol_section
+		level 3
+		title \Level 3
+		content /
+			<= Section3_text $mol_filler
+				min_symbols 250
+			<= Section4
+	Section4 $mol_section
+		level 4
+		title \Level 4
+		content /
+			<= Section4_text $mol_filler
+				min_symbols 250
+			<= Section5
+	Section5 $mol_section
+		level 5
+		title \Level 5
+		content /
+			<= Section5_text $mol_filler
+				min_symbols 250
+			<= Section6
+	Section6 $mol_section
+		level 6
+		title \Level 6
+		content /
+			<= Section6_text $mol_filler
+				min_symbols 250
+			<= Section7
+	Section7 $mol_section
+		level 7
+		title \Level 7
+		content /
+			<= Section7_text $mol_filler
+				min_symbols 250
 	tags /
-		\section
 		\header
 		\level
 		\h1
+	aspects /
+		\Widget/Layout

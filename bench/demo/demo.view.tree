@@ -5,8 +5,7 @@ $mol_bench_demo $mol_example_small
 			col_sort?val <=> col_sort?val \mid
 			result <= result *
 	tags /
-		\$mol_portion
-		\$mol_float
-		\$mol_grid
-		\benchmark
 		\perfomance
+		\comparison
+	aspects /
+		\Widget/Grid

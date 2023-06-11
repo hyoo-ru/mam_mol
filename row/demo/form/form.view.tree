@@ -20,13 +20,8 @@ $mol_row_demo_form $mol_example
 				<= Drop $mol_button_minor
 					title <= drop_title \Drop
 	tags /
-		\$mol_search
-		\$mol_number
-		\$mol_portion
-		\$mol_check
-		\$mol_button
 		\row
 		\container
 		\flex
-		\identation
-		\space
+	aspects /
+		\Widget/Layout

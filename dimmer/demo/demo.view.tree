@@ -21,6 +21,8 @@ $mol_dimmer_demo $mol_example_small
 				haystack \Let's search nothing
 				needle \
 	tags /
-		\dimmer
 		\search
 		\highlight
+	aspects /
+		\Widget/Text
+		\Type/String

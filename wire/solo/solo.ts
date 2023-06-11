@@ -8,11 +8,11 @@ namespace $ {
 	) {
 
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field )
-		const orig = descr?.value! ?? host[ field ]
+		const orig = descr?.value! ?? (host as any)[ field ]
 		
 		const sup = Reflect.getPrototypeOf( host )!
-		if( typeof sup[ field ] === 'function' ) {
-			Object.defineProperty( orig , 'name' , { value : sup[ field ].name } )
+		if( typeof (sup as any)[ field ] === 'function' ) {
+			Object.defineProperty( orig , 'name' , { value : (sup as any)[ field ].name } )
 		}
 		
 		const descr2 = {
@@ -25,7 +25,7 @@ namespace $ {
 					
 					if( !$mol_wire_fiber.warm ) return atom.result()
 					
-					if( $mol_wire_auto() instanceof $mol_wire_task ) {
+					if( $mol_wire_auto()?.temp ) {
 						return atom.once()
 					} else {
 						return atom.sync()

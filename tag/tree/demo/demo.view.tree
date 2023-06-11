@@ -4,7 +4,7 @@ $mol_tag_tree_demo $mol_example
 		<= Tree $mol_tag_tree
 			Item* <= Item* $mol_button_minor
 				title <= item_title* \
-			levels_expanded 1
+			levels_expanded 0
 			tag_names *
 				side @ \Side
 				good @ \Good
@@ -16,8 +16,6 @@ $mol_tag_tree_demo $mol_example
 				marvel @ \Marvel
 				dc @ \DC
 			ids_tags *
-				valera /
-					\side/bomj
 				batman /
 					\side/good
 					\universe/dc
@@ -38,18 +36,10 @@ $mol_tag_tree_demo $mol_example
 					\side/bad
 					\universe/dc
 					\sex/male
-				harley /
-					\side/bad
-					\universe/dc
-					\sex/female
 				deadshot /
 					\side/bad
 					\universe/dc
 					\sex/male
-				wonderwoman /
-					\side/good
-					\universe/dc
-					\sex/female
 				ironman /
 					\side/good
 					\universe/marvel
@@ -74,15 +64,20 @@ $mol_tag_tree_demo $mol_example
 					\side/bad
 					\universe/marvel
 					\sex/male
+				harley /
+					\side/bad
+					\universe/dc
+					\sex/female
+				wonderwoman /
+					\side/good
+					\universe/dc
+					\sex/female
 				hela /
 					\side/bad
 					\universe/marvel
 					\sex/female
 	tags /
-		\tags
-		\tree
 		\taxonomy
 		\menu
 	aspects /
-		\nav/tag
-		\gui/input/link
+		\Widget/Layout

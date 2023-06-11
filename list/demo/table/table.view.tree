@@ -43,13 +43,10 @@ $mol_list_demo_table $mol_example
 						Content <= Date* $mol_date
 							value_moment?val <=> row_moment*?val $mol_time_moment
 	tags /
-		\$mol_row
-		\$mol_check
-		\$mol_switch
-		\$mol_time
-		\$mol_link
 		\list
 		\table
 		\scroll
 		\divider
 		\grid
+	aspects /
+		\Widget/Layout

@@ -20,11 +20,8 @@ $mol_speck_demo $mol_example_small
 				<= Message_speck $mol_speck
 				<= message_text \Created
 	tags /
-		\$mol_link
-		\$mol_icon
-		\$mol_paragraph
-		\$mol_button
 		\speck
 		\highlight
 		\badge
-
+	aspects /
+		\Widget

@@ -6,6 +6,16 @@ include \/mol/offline/install
 include \/mol/app/demo
 
 include \/hyoo/crowd/text/demo
+
+include \/mol/app/hello/demo
+include \/mol/app/questions/demo
+include \/mol/app/quine/demo
+include \/mol/app/report/demo
+
+include \/mol/array/chunks/demo
+include \/mol/array/lottery/demo
+include \/mol/array/trim/demo
+include \/mol/assert/demo
 include \/mol/attach/demo
 include \/mol/audio/demo
 include \/mol/audio/demo/vibe
@@ -30,12 +40,34 @@ include \/mol/check/expand/demo
 include \/mol/check/group/demo
 include \/mol/check/icon/demo
 include \/mol/code/demo
+include \/mol/csv/parse/demo
+include \/mol/csv/serial/demo
+include \/mol/data/array/demo
+include \/mol/data/boolean/demo
+include \/mol/data/const/demo
+include \/mol/data/dict/demo
+include \/mol/data/email/demo
+include \/mol/data/enum/demo
+include \/mol/data/instance/demo
+include \/mol/data/integer/demo
+include \/mol/data/nominal/demo
+include \/mol/data/nullable/demo
+include \/mol/data/number/demo
+include \/mol/data/optional/demo
+include \/mol/data/pattern/demo
+include \/mol/data/pipe/demo
+include \/mol/data/range/demo
+include \/mol/data/record/demo
+include \/mol/data/string/demo
+include \/mol/data/tagged/demo
+include \/mol/data/variant/demo
 include \/mol/date/demo
 include \/mol/deck/demo
 include \/mol/dimmer/demo
 include \/mol/drag/demo
 include \/mol/dump/demo
 include \/mol/expander/demo
+include \/mol/fetch/demo
 include \/mol/filler/demo
 include \/mol/float/demo
 include \/mol/form/demo
@@ -90,8 +122,11 @@ include \/mol/tag/tree/demo
 include \/mol/text/code/demo
 include \/mol/text/demo
 include \/mol/textarea/demo
-include \/mol/time/demo
+include \/mol/time/duration/demo
+include \/mol/time/interval/demo
+include \/mol/time/moment/demo
 include \/mol/toolbar/demo
 include \/mol/video/player/demo
+include \/mol/video/camera/demo
 include \/mol/password/demo
 include \/mol/lights/demo

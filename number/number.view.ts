@@ -8,7 +8,7 @@ namespace $.$$ {
 		
 		value_limited( next? : any ) : number {
 			if ( next === undefined ) return this.value()
-			if ( next === '' ) return this.value( null )
+			if ( next === '' ) return this.value( Number.NaN )
 
 			const min = this.value_min()
 			const max = this.value_max()

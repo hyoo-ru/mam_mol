@@ -1,0 +1,7 @@
+$mol_array_lottery_demo $mol_example_code
+	code? \
+		\const rates = [ 1, 2, 3, 4, 5 ]
+		\const vote = $mol_array_lottery( rates )
+	aspects /
+		\Type/List
+		\Algorithm/Random

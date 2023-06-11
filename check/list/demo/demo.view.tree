@@ -13,6 +13,8 @@ $mol_check_list_demo $mol_example_small
 				api \Allow API Access
 				docs \Allow Read Documentation
 	tags /
-		\checkbox
 		\option
+		\switch
 		\toggle
+	aspects /
+		\Widget/Control/Button

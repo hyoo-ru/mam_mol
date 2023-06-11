@@ -1,7 +1,7 @@
 namespace $ {
 	
 	/**
-	 * Returns proxy that converts all asynchronous methods (that returns a Promise) to synchronous (that instantly returns a result) in [mol_wire](../README.md)
+	 * Convert asynchronous (promise-based) API to synchronous by wrapping function and method calls in a fiber.
 	 * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
 	 */
 	export function $mol_wire_sync< Host extends object >( obj: Host ) {
@@ -9,7 +9,7 @@ namespace $ {
 			
 			get( obj, field ) {
 				
-				const val = obj[ field ]
+				const val = (obj as any)[ field ]
 				if( typeof val !== 'function' ) return val
 				
 				const temp = $mol_wire_task.getter( val )

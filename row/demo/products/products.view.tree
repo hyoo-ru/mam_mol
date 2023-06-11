@@ -9,8 +9,8 @@ $mol_row_demo_products $mol_example
 		<= Products $mol_row
 			sub <= products /
 	tags /
-		\$mol_card
 		\products
 		\grid
 		\scroll
-
+	aspects /
+		\Widget/Layout

@@ -8,9 +8,9 @@ $mol_card_demo $mol_example_small
 			title \Hello pending!
 			status \pending
 	tags /
-		\card
 		\status
 		\container
-		\paper
+		\sticker
 	aspects /
-		\gui/island
+		\Widget/Layout
+		\Widget/Island

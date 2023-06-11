@@ -7,7 +7,9 @@ $mol_text_code_demo $mol_example_small
 			syntax <= syntax null
 			uri_resolve* <= uri_resolve* \
 	tags /
-		\$mol_list
 		\text
 		\code
 		\syntax highlighting
+	aspects /
+		\Widget/Text
+		\Type/String

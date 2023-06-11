@@ -13,16 +13,7 @@ $mol_app_demo_menu $mol_page
 				<= Tree $mol_tag_tree
 					Item* <= Option*
 					ids_tags <= ids_tags *
-					levels_expanded <= levels_expanded <= levels_expanded_default 1
-					tag_names *
-						gui @ \GUI
-						input @ \Input
-						island @ \Island
-						layout @ \Layout
-						nav @ \Navigation
-						menu @ \Menu
-						string @ \Input strings
-						button @ \Button
+					levels_expanded <= levels_expanded <= levels_expanded_default 0
 	Option* $mol_link
 		arg <= option_arg* *
 		sub /

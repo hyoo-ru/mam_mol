@@ -7,5 +7,7 @@ $mol_password_demo $mol_example_small
 			value?val <=> pass2?val \
 			hint \Top secret
 	tags /
-		\password
 		\input
+	aspects /
+		\Widget/Control
+		\Type/String

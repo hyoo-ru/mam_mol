@@ -90,7 +90,7 @@ namespace $ {
 
 			if( 'prototype' in Elem ) {
 
-				const view = node && node[ Elem as any ] || new ( Elem as any )
+				const view = node && (node as any)[ String(Elem) ] || new ( Elem as any )
 				
 				Object.assign( view , props )
 				view[ Symbol.toStringTag ] = guid
@@ -102,7 +102,7 @@ namespace $ {
 				
 				node = view.valueOf()
 				
-				node![ Elem as any ] = view
+				;(node as any)![ String(Elem) ] = view
 				
 				return node!
 
@@ -147,8 +147,8 @@ namespace $ {
 			
 			if( typeof props[ key ] === 'string' ) {
 				
-				if( typeof node[ key as any ] === 'string' ) node[ key as any ] = props[ key ]
-				;( node as Element ).setAttribute( key , props[ key as any ] )
+				if( typeof (node as any)[ key ] === 'string' ) (node as any)[ key ] = props[ key ]
+				;( node as Element ).setAttribute( key , (props as any)[ key ] )
 				
 			} else if(
 				props[ key ] &&
@@ -156,20 +156,20 @@ namespace $ {
 				Reflect.getPrototypeOf( props[ key ] as any ) === Reflect.getPrototypeOf({})
 			) {
 
-				if( typeof node[ key as any ] === 'object' ) {
+				if( typeof (node as any)[ key ] === 'object' ) {
 					Object.assign( ( node as any )[ key ] , props[ key ] )
 					continue
 				}
 
 			} else {
 
-				node[ key as any ] = props[ key ]
+				(node as any)[ key ] = props[ key ]
 				
 			}
 
 		}
 
-		if( $mol_jsx_crumbs ) ( node as Element ).className = ( props?.['class'] ? props['class'] + ' ' : '' ) + crumbs_self
+		if( $mol_jsx_crumbs ) ( node as Element ).className = ( (props as any)?.['class'] ? (props as any)['class'] + ' ' : '' ) + crumbs_self
 
 		return node
 

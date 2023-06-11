@@ -12,3 +12,6 @@ $mol_select_demo_priority $mol_example_small
 				\Lowest
 	tags /
 		\select
+		\priority
+	aspects /
+		\Widget/Control

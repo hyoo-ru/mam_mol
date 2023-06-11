@@ -26,9 +26,10 @@ $mol_pop_over_demo $mol_example_small
 								<= About $mol_button_minor
 									title <= about_title \About
 	tags /
-		\$mol_button
 		\popover
 		\pop
 		\menu
 		\hover
 		\tooltip
+	aspects /
+		\Widget/Float

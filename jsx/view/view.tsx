@@ -6,7 +6,7 @@ namespace $ {
 
 		/** Returns component instance for DOM node. */
 		static of< This extends typeof $mol_jsx_view >( this: This, node: Element ) {
-			return node[ this as any ] as InstanceType< This >
+			return (node as any)[ this ] as InstanceType< This >
 		}
 		
 		// Allow overriding of all fields via attributes

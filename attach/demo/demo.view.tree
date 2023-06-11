@@ -3,10 +3,11 @@ $mol_attach_demo $mol_example_small
 	sub /
 		<= Filled $mol_attach
 			items?val <=> filled_items?val /
-				\https://thiscatdoesnotexist.com/
-				\https://thiscatdoesnotexist.com/
+				\https://picsum.photos/200
 	tags /
-		\attach
 		\file
 		\image
 		\upload
+	aspects /
+		\Widget/Control
+		\Type/File

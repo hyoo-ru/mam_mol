@@ -25,8 +25,8 @@ $mol_nav_demo $mol_example
 						third \Third
 			status \Select option and use keys to switch
 	tags /
-		\$mol_card
-		\$mol_switch
 		\navigation
-		\keyboard
+	aspects /
+		\Widget/Plugin
+		\Controler/Keyboard
 

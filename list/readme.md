@@ -43,7 +43,7 @@ or similar form with `Item` under `list_items`
 
 > `Item*0` [explain](https://mol.hyoo.ru/#!section=view.tree/source=%24my_example%20%24mol_object%0A%09foo%20%3C%3D%20spreads*foo%0A%09item_at_0%20%3C%3D%20items*0%0A) 
 
-Override `list_items` in `view.ts` file
+Override `list_items` in `view.ts` file:
 
 ```ts
 @ $mol_mem_key
@@ -52,9 +52,13 @@ override item_title( id : string ) {
 }
 
 override list_items() {
-	return this.list_items_ids.map( id => {
+	return this.list_items_ids().map( id => {
 		return this.Item( id )
 	} )
+}
+
+list_items_ids() { // declare your logic
+	return [1,2,3]
 }
 ```
 

@@ -372,7 +372,7 @@ namespace $ {
 
 					groups.push( name )
 
-					const regexp = $mol_regexp.from( source[ name ] )
+					const regexp = $mol_regexp.from( (source as any)[ name ] )
 					groups.push( ... regexp.groups )
 					
 					return `(${regexp.source})`
@@ -386,29 +386,29 @@ namespace $ {
 				)
 				
 				const validator = new RegExp( '^' + regexp.source + '$', flags )
-				regexp.generate = params => {
+				regexp.generate = (params: any) => {
 					
 					for( let option in source ) {
 						
 						if( option in params ) {
 							
-							if( typeof params[ option as any ] === 'boolean' ) {
+							if( typeof params[ option ] === 'boolean' ) {
 								
 								if( !params[ option as any ] ) continue
 								
 							} else {
 								
-								const str = String( params[ option as any ] )
+								const str = String( params[ option ] )
 								if( str.match( validator ) ) return str
 								
 								$mol_fail( new Error( `Wrong param: ${option}=${str}` ) )
 							}
 							
 						} else {
-							if( typeof source[ option as any ] !== 'object' ) continue
+							if( typeof (source as any)[ option ] !== 'object' ) continue
 						}
 						
-						const res = $mol_regexp.from( source[ option as any ] ).generate( params )
+						const res = $mol_regexp.from( (source as any)[ option  ] ).generate( params )
 						if( res ) return res
 						
 					}

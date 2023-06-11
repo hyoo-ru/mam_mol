@@ -217,7 +217,7 @@ namespace $ {
 			$mol_assert_like(
 				foo.b(),
 				foo.a(),
-				'<Foo_b>',
+				'Foo_b',
 			)
 		
 		},
@@ -233,7 +233,7 @@ namespace $ {
 			$mol_assert_like(
 				foo.obj().loc(),
 				foo.outer(),
-				'<Foo_outer>'
+				'Foo_outer'
 			)
 		},
 

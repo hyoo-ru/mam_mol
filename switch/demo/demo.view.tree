@@ -22,7 +22,8 @@ $mol_switch_demo $mol_example
 							green <= option_green
 							blue <= option_blue
 	tags /
-		\switch
 		\option
 		\group
 		\radio
+	aspects /
+		\Widget/Control

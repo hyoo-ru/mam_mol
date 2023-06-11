@@ -14,7 +14,7 @@ namespace $ {
 		}
 
 		static base = $mol_dom_context.document
-			? new URL( '.' , $mol_dom_context.document.currentScript!['src'] ).toString()
+			? new URL( '.' , ($mol_dom_context.document.currentScript as any)['src'] ).toString()
 			: ''
 		
 		@ $mol_mem

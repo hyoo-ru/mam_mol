@@ -20,5 +20,7 @@ $mol_calendar_demo_holiday $mol_example_small
 			month_string <= month \2018-01
 			day_holiday* <= holiday* false
 	tags /
-		\calendar
-		\date
+		\month
+	aspects /
+		\Widget/Grid
+		\Type/Date

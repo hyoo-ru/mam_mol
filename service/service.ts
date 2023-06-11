@@ -1,14 +1,20 @@
 namespace $ {
 	
+	function worker() {
+		return navigator.serviceWorker.ready
+	}
+	
 	export function $mol_service() {
-		return ( typeof window === 'undefined' )
-			? self['registration'] as ServiceWorkerRegistration
-			: $mol_fiber_sync( ()=> navigator.serviceWorker.ready )()
+		if( typeof window === 'undefined' ) {
+			return ( self as any ).registration as ServiceWorkerRegistration
+		} else {
+			return $mol_wire_sync( worker )()
+		}
 	}
 	
 	export function $mol_service_handler< E extends Event >( handle : ( event: E )=> Promise<any> ) {
 		return ( event: E )=> {
-			event['waitUntil']( handle( event ) )
+			;( event as any ).waitUntil( handle( event ) )
 		}
 	}
 	

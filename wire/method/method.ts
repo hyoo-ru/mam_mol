@@ -13,11 +13,11 @@ namespace $ {
 	) {
 		
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host , field ) as any
-		const orig = descr?.value! ?? host[ field ]
+		const orig = descr?.value! ?? (host as any)[ field ]
 		
 		const sup = Reflect.getPrototypeOf( host )!	
-		if( typeof sup[ field as any ] === 'function' ) {
-			Object.defineProperty( orig , 'name' , { value : sup[ field as any ].name } )
+		if( typeof (sup as any)[ field ] === 'function' ) {
+			Object.defineProperty( orig , 'name' , { value : (sup as any)[ field ].name } )
 		}
 		
 		const temp = $mol_wire_task.getter( orig )

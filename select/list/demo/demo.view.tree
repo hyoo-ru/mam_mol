@@ -22,3 +22,6 @@ $mol_select_list_demo $mol_example_small
 		\select
 		\tags
 		\multiselect
+	aspects /
+		\Widget/Control
+		\Type/List

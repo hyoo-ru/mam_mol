@@ -25,7 +25,7 @@ namespace $ {
 			for( let mock of $mol_test_mocks ) await mock( context )
 			
 			const res = test( context )
-			if( res instanceof Promise ) {
+			if( $mol_promise_like( res ) ) {
 				await new Promise( ( done, fail )=> {
 					res.then( done, fail )
 					setTimeout( ()=> fail( new Error( 'Test timeout: ' + test.name ) ), 1000 )
@@ -65,10 +65,10 @@ namespace $ {
 		context.Math = Object.create( Math )
 		context.Math.random = ()=> Math.sin( seed++ )
 
-		const forbidden = [ 'XMLHttpRequest' , 'fetch' ]
+		const forbidden = [ 'XMLHttpRequest' , 'fetch' ] as const
 
 		for( let api of forbidden ) {
-			context[ api ] = new Proxy( function(){} , {
+			context[ api ] = new Proxy( function(){} as any , {
 				get() {
 					$mol_fail_hidden( new Error( `${ api } is forbidden in tests` ) )
 				} ,

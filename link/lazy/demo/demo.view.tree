@@ -13,3 +13,6 @@ $mol_link_lazy_demo $mol_example_small
 		\link
 		\lazy
 		\download
+	aspects /
+		\Navigation
+		\Widget/Button

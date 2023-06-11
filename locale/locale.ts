@@ -32,25 +32,35 @@ namespace $ {
 			try {
 				return this.source( lang ).valueOf()
 			} catch( error: any ) {
-				if( error instanceof Promise ) $mol_fail_hidden( error )
-				const def = this.lang_default()
-				if( lang === def ) throw error
-				return this.source( def )
+				if( $mol_fail_catch( error ) ) {
+					const def = this.lang_default()
+					if( lang === def ) throw error
+				}
 			}
+			
+			return {}
 		}
 		
 		@ $mol_mem_key
-		static text( key : string ) {
+		static text( key : string ): string {
+			
+			const lang = this.lang()
 
-			for( let lang of [ this.lang() , 'en' ] ) {
-				
-				const text = this.texts( lang )[ key ]
-				if( text ) return text
-
-				this.warn( key )
+			const target = this.texts( lang )[ key ]
+			if( target ) return target
+			
+			this.warn( key )
+			
+			const en = this.texts( 'en' )[ key ]
+			if( !en ) return key
+			
+			try {
+				return $mol_wire_sync( $hyoo_lingua_translate ).call( this.$, lang, en )
+			} catch( error ) {
+				$mol_fail_log( error )
 			}
-						
-			return `<${ key }>`
+			
+			return en
 		}
 		
 		@ $mol_mem_key

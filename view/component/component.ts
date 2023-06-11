@@ -34,7 +34,7 @@ namespace $ {
 				try {
 					this.view.dom_tree()
 				} catch( error: unknown ) {
-					if( error instanceof Promise ) return
+					if( $mol_promise_like( error ) ) return
 					$mol_fail_hidden( error )
 				}
 				
@@ -45,8 +45,8 @@ namespace $ {
 				this.root = undefined
 			}
 			
-			attributeChangedCallback( name: string, prev: string, next: string ) {
-				this.view[ name ]( JSON.parse( next ) )
+			attributeChangedCallback( name: keyof this, prev: string, next: string ) {
+				( this.view as any )[ name ]( JSON.parse( next ) )
 			}
 			
 			toString() {
