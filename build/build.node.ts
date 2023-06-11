@@ -772,7 +772,6 @@ namespace $ {
 		@ $mol_action
 		bundleAll( { path } : { path : string } ) {
 
-
 			this.bundle({ path , bundle : 'index.html' })
 			this.bundle({ path , bundle : 'test.html' })
 			
