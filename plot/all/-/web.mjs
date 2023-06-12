@@ -5710,4 +5710,5 @@ var $;
 })($ || ($ = {}));
 //mol/plot/mark/hor/-css/hor.view.css.ts
 
+export default $
 //# sourceMappingURL=web.js.map

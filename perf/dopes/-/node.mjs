@@ -3636,4 +3636,5 @@ var $;
 })($ || ($ = {}));
 //mol/perf/dopes/-css/dopes.view.css.ts
 
+export default $
 //# sourceMappingURL=node.js.map

@@ -5610,7 +5610,7 @@ var $;
             if (!targetJS)
                 return [];
             const targetMJS = targetJS.parent().resolve(targetJS.name().replace(/\.js$/, '.mjs'));
-            targetMJS.text(targetJS.text().replace(/(^\/\/# sourceMappingURL.*)/, 'export default $\n$1'));
+            targetMJS.text(targetJS.text().replace(/(^\/\/# sourceMappingURL.*)/m, 'export default $\n$1'));
             this.logBundle(targetMJS, Date.now() - start);
             return [targetMJS, targetJSMap];
         }

@@ -9968,4 +9968,5 @@ var $;
 })($ || ($ = {}));
 //mol/app/supplies/-css/supplies.view.css.ts
 
+export default $
 //# sourceMappingURL=web.js.map

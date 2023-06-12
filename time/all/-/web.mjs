@@ -661,4 +661,5 @@ var $;
 })($ || ($ = {}));
 //mol/time/interval/interval.ts
 
+export default $
 //# sourceMappingURL=web.js.map

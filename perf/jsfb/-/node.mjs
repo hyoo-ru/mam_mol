@@ -4665,4 +4665,5 @@ var $;
 })($ || ($ = {}));
 //mol/perf/jsfb/-css/jsfb.view.css.ts
 
+export default $
 //# sourceMappingURL=node.js.map

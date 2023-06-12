@@ -41176,4 +41176,5 @@ var $;
 })($ || ($ = {}));
 //mol/lights/demo/-view.tree/demo.view.tree.ts
 
+export default $
 //# sourceMappingURL=node.js.map

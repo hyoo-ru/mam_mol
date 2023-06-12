@@ -3546,4 +3546,5 @@ var $;
 })($ || ($ = {}));
 //mol/perf/dbmon/-css/dbmon.view.css.ts
 
+export default $
 //# sourceMappingURL=web.js.map

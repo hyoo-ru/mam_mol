@@ -6731,4 +6731,5 @@ var $;
 })($ || ($ = {}));
 //mol/app/report/-css/report.view.css.ts
 
+export default $
 //# sourceMappingURL=web.js.map

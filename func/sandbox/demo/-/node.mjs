@@ -952,4 +952,5 @@ var $;
 })($ || ($ = {}));
 //mol/func/sandbox/sandbox.ts
 
+export default $
 //# sourceMappingURL=node.js.map

@@ -7996,4 +7996,5 @@ var $;
 })($ || ($ = {}));
 //mol/app/quine/quine.view.ts
 
+export default $
 //# sourceMappingURL=web.js.map

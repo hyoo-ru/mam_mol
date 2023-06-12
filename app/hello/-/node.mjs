@@ -3517,4 +3517,5 @@ var $;
 })($ || ($ = {}));
 //mol/app/hello/-css/hello.view.css.ts
 
+export default $
 //# sourceMappingURL=node.js.map

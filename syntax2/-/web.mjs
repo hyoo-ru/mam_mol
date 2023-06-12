@@ -91,4 +91,5 @@ var $;
 })($ || ($ = {}));
 //mol/syntax2/syntax2.ts
 
+export default $
 //# sourceMappingURL=web.js.map

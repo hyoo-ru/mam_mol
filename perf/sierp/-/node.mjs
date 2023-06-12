@@ -3263,4 +3263,5 @@ var $;
 })($ || ($ = {}));
 //mol/perf/sierp/-css/sierp.view.css.ts
 
+export default $
 //# sourceMappingURL=node.js.map
