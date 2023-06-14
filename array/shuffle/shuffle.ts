@@ -1,7 +1,7 @@
 namespace $ {
 
 	export function $mol_array_shuffle<Item>(
-		array: Item[],
+		array: readonly Item[],
 	) {
 
 		const res = array.slice()

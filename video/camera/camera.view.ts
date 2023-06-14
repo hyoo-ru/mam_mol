@@ -51,5 +51,13 @@ namespace $.$$ {
 			return stream
 		}
 		
+		dom_node_actual() {
+			return super.dom_node_actual() as HTMLVideoElement
+		}
+		
+		transform() {
+			return this.facing() === 'user' ? 'scaleX(-1)' : ''
+		}
+		
 	}
 }
