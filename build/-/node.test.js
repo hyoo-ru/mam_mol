@@ -6330,7 +6330,8 @@ var $;
                 this.$.$mol_log3_done({
                     place: `${this}`,
                     message: `Started`,
-                    location: `http://${this.internal_ip()}:${ports[0]}/`
+                    network: `http://${this.internal_ip()}:${ports[0]}/`,
+                    loopback: `http://localhost:${ports[0]}/`,
                 });
             });
             return server;
