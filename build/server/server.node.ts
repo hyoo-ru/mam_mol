@@ -155,7 +155,14 @@ namespace $ {
 							a:hover {
 								background: hsl( 0deg, 0%, 0%, .05 )
 							}
+							a[href^="."], a[href^="-"], a[href="node_modules"] {
+								opacity: 0.5;
+							}
+							a[href=".."] {
+								opacity: 1;
+							}
 						</style>
+						<a href="..">&#x1F4C1; ..</a>
 						` + files
 						.sort((a,b) => {
 							if (a.type > b.type) return 1
