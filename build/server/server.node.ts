@@ -164,13 +164,7 @@ namespace $ {
 						</style>
 						<a href="..">&#x1F4C1; ..</a>
 						` + files
-						.sort((a,b) => {
-							if (a.type > b.type) return 1
-							if (a.type < b.type) return -1
-							if (a.name > b.name) return 1
-							if (a.name < b.name) return -1
-							return 0
-						})
+						.sort($mol_compare_text((item) => item.type))
 						.map( file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>` )
 						.join( '\n' )
 					
