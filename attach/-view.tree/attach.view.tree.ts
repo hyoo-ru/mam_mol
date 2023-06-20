@@ -3,12 +3,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * items?val /string
+		 * items? /string
 		 * ```
 		 */
 		@ $mol_mem
-		items(val?: any) {
-			if ( val !== undefined ) return val as never
+		items(next?: any) {
+			if ( next !== undefined ) return next as never
 			return [
 			] as readonly string[]
 		}
@@ -28,7 +28,7 @@ namespace $ {
 		 * ```tree
 		 * Add $mol_button_open
 		 * 	title <= attach_title
-		 * 	files?val <=> attach_new?val
+		 * 	files? <=> attach_new?
 		 * ```
 		 */
 		@ $mol_mem
@@ -36,7 +36,7 @@ namespace $ {
 			const obj = new this.$.$mol_button_open()
 			
 			obj.title = () => this.attach_title()
-			obj.files = (val?: any) => this.attach_new(val)
+			obj.files = (next?: any) => this.attach_new(next)
 			
 			return obj
 		}
@@ -95,12 +95,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * attach_new?val null
+		 * attach_new? null
 		 * ```
 		 */
 		@ $mol_mem
-		attach_new(val?: any) {
-			if ( val !== undefined ) return val as never
+		attach_new(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		

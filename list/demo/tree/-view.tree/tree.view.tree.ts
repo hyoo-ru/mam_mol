@@ -25,7 +25,7 @@ namespace $ {
 		 * ```tree
 		 * Row* $mol_expander
 		 * 	label / <= Row_title*
-		 * 	expanded?val <=> row_expanded*?val
+		 * 	expanded? <=> row_expanded*?
 		 * 	Content <= Row_content*
 		 * ```
 		 */
@@ -36,7 +36,7 @@ namespace $ {
 			obj.label = () => [
 				this.Row_title(id)
 			] as readonly any[]
-			obj.expanded = (val?: any) => this.row_expanded(id, val)
+			obj.expanded = (next?: any) => this.row_expanded(id, next)
 			obj.Content = () => this.Row_content(id)
 			
 			return obj
@@ -124,12 +124,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_expanded*?val false
+		 * row_expanded*? false
 		 * ```
 		 */
 		@ $mol_mem_key
-		row_expanded(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
+		row_expanded(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		

@@ -57,7 +57,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * writable <= writable_owner?val
+		 * writable <= writable_owner?
 		 * ```
 		 */
 		writable() {
@@ -143,23 +143,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * writable_owner?val \
+		 * writable_owner? \
 		 * ```
 		 */
 		@ $mol_mem
-		writable_owner(val?: any) {
-			if ( val !== undefined ) return val as never
+		writable_owner(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * same?val \
+		 * same? \
 		 * ```
 		 */
 		@ $mol_mem
-		same(val?: any) {
-			if ( val !== undefined ) return val as never
+		same(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -194,7 +194,7 @@ namespace $ {
 		 * ```tree
 		 * class_indexed_owner* $mol_view
 		 * 	title @ \some1
-		 * 	same <= same?val
+		 * 	same <= same?
 		 * 	some <= twice
 		 * 	localized <= localized_owner*
 		 * 	chain <= chain1

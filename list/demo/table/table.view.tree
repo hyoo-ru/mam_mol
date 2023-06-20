@@ -41,7 +41,7 @@ $mol_list_demo_table $mol_example
 					<= Date_labeler* $mol_labeler
 						title \Supply Time
 						Content <= Date* $mol_date
-							value_moment?val <=> row_moment*?val $mol_time_moment
+							value_moment? <=> row_moment*? $mol_time_moment
 	tags /
 		\list
 		\table

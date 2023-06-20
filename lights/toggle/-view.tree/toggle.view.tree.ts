@@ -21,11 +21,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * checked?val <=> lights?val
+		 * checked? <=> lights?
 		 * ```
 		 */
-		checked(val?: any) {
-			return this.lights(val)
+		checked(next?: any) {
+			return this.lights(next)
 		}
 		
 		/**
@@ -42,12 +42,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * lights?val false
+		 * lights? false
 		 * ```
 		 */
 		@ $mol_mem
-		lights(val?: any) {
-			if ( val !== undefined ) return val as never
+		lights(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 	}

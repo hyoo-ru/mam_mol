@@ -38,11 +38,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * checked?val <=> expanded?val
+		 * checked? <=> expanded?
 		 * ```
 		 */
-		checked(val?: any) {
-			return this.expanded(val)
+		checked(next?: any) {
+			return this.expanded(next)
 		}
 		
 		/**
@@ -65,12 +65,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * expanded?val false
+		 * expanded? false
 		 * ```
 		 */
 		@ $mol_mem
-		expanded(val?: any) {
-			if ( val !== undefined ) return val as never
+		expanded(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		

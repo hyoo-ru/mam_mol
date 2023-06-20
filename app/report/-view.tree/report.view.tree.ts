@@ -59,7 +59,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * texter* $mol_view sub / <= cell_value*?val
+		 * texter* $mol_view sub / <= cell_value*?
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -76,7 +76,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * select* $mol_select
-		 * 	value?val <=> cell_value*?val
+		 * 	value? <=> cell_value*?
 		 * 	dictionary <= cell_options*
 		 * ```
 		 */
@@ -84,7 +84,7 @@ namespace $ {
 		select(id: any) {
 			const obj = new this.$.$mol_select()
 			
-			obj.value = (val?: any) => this.cell_value(id, val)
+			obj.value = (next?: any) => this.cell_value(id, next)
 			obj.dictionary = () => this.cell_options(id)
 			
 			return obj
@@ -92,14 +92,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * number* $mol_number value?val <=> cell_value*?val
+		 * number* $mol_number value? <=> cell_value*?
 		 * ```
 		 */
 		@ $mol_mem_key
 		number(id: any) {
 			const obj = new this.$.$mol_number()
 			
-			obj.value = (val?: any) => this.cell_value(id, val)
+			obj.value = (next?: any) => this.cell_value(id, next)
 			
 			return obj
 		}
@@ -217,12 +217,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cell_value*?val null
+		 * cell_value*? null
 		 * ```
 		 */
 		@ $mol_mem_key
-		cell_value(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
+		cell_value(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		

@@ -53,32 +53,32 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * uri?val \https://www.google.com/search?q=%24mol
+		 * uri? \https://www.google.com/search?q=%24mol
 		 * ```
 		 */
 		@ $mol_mem
-		uri(val?: any) {
-			if ( val !== undefined ) return val as never
+		uri(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "https://www.google.com/search?q=%24mol"
 		}
 		
 		/**
 		 * ```tree
-		 * Input $mol_string value?val <=> uri?val
+		 * Input $mol_string value? <=> uri?
 		 * ```
 		 */
 		@ $mol_mem
 		Input() {
 			const obj = new this.$.$mol_string()
 			
-			obj.value = (val?: any) => this.uri(val)
+			obj.value = (next?: any) => this.uri(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * Output $mol_link_iconed uri <= uri?val
+		 * Output $mol_link_iconed uri <= uri?
 		 * ```
 		 */
 		@ $mol_mem

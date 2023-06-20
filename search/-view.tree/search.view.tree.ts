@@ -3,12 +3,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * query?val \
+		 * query? \
 		 * ```
 		 */
 		@ $mol_mem
-		query(val?: any) {
-			if ( val !== undefined ) return val as never
+		query(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -40,11 +40,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * showed?val <=> suggests_showed?val
+		 * showed? <=> suggests_showed?
 		 * ```
 		 */
-		showed(val?: any) {
-			return this.suggests_showed(val)
+		showed(next?: any) {
+			return this.suggests_showed(next)
 		}
 		
 		/**
@@ -100,18 +100,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * clear?val null
+		 * clear? null
 		 * ```
 		 */
 		@ $mol_mem
-		clear(val?: any) {
-			if ( val !== undefined ) return val as never
+		clear(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * Hotkey $mol_hotkey key * escape?val <=> clear?val
+		 * Hotkey $mol_hotkey key * escape? <=> clear?
 		 * ```
 		 */
 		@ $mol_mem
@@ -119,7 +119,7 @@ namespace $ {
 			const obj = new this.$.$mol_hotkey()
 			
 			obj.key = () => ({
-				escape: (val?: any) => this.clear(val)
+				escape: (next?: any) => this.clear(next)
 			} as Record< string, any >)
 			
 			return obj
@@ -165,12 +165,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * suggests_showed?val false
+		 * suggests_showed? false
 		 * ```
 		 */
 		@ $mol_mem
-		suggests_showed(val?: any) {
-			if ( val !== undefined ) return val as never
+		suggests_showed(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -233,7 +233,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Query $mol_string
-		 * 	value?val <=> query?val
+		 * 	value? <=> query?
 		 * 	hint <= hint
 		 * 	submit?event <=> submit?event
 		 * 	enabled <= enabled
@@ -246,7 +246,7 @@ namespace $ {
 		Query() {
 			const obj = new this.$.$mol_string()
 			
-			obj.value = (val?: any) => this.query(val)
+			obj.value = (next?: any) => this.query(next)
 			obj.hint = () => this.hint()
 			obj.submit = (event?: any) => this.submit(event)
 			obj.enabled = () => this.enabled()
@@ -351,7 +351,7 @@ namespace $ {
 		 * ```tree
 		 * Suggest_label* $mol_dimmer
 		 * 	haystack <= suggest_label*
-		 * 	needle <= query?val
+		 * 	needle <= query?
 		 * ```
 		 */
 		@ $mol_mem_key

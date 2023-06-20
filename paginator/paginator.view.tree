@@ -4,7 +4,7 @@ $mol_paginator $mol_bar
 			hint <= backward_hint @ \Backward
 			click?event <=> backward?event null
 			sub / <= Backward_icon $mol_icon_chevron_left
-		<= Value $mol_view sub / <= value?val 0
+		<= Value $mol_view sub / <= value? 0
 		<= Forward $mol_button_minor
 			hint <= forward_hint @ \Forward
 			click?event <=> forward?event null

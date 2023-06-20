@@ -50,12 +50,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * color?val \red
+		 * color? \red
 		 * ```
 		 */
 		@ $mol_mem
-		color(val?: any) {
-			if ( val !== undefined ) return val as never
+		color(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "red"
 		}
 		
@@ -98,7 +98,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Enabled $mol_switch
-		 * 	value?val <=> color?val
+		 * 	value? <=> color?
 		 * 	options *
 		 * 		red <= option_red
 		 * 		green <= option_green
@@ -110,7 +110,7 @@ namespace $ {
 		Enabled() {
 			const obj = new this.$.$mol_switch()
 			
-			obj.value = (val?: any) => this.color(val)
+			obj.value = (next?: any) => this.color(next)
 			obj.options = () => ({
 				red: this.option_red(),
 				green: this.option_green(),
@@ -141,7 +141,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Disabled $mol_switch
-		 * 	value?val <=> color?val
+		 * 	value? <=> color?
 		 * 	enabled false
 		 * 	options *
 		 * 		red <= option_red
@@ -153,7 +153,7 @@ namespace $ {
 		Disabled() {
 			const obj = new this.$.$mol_switch()
 			
-			obj.value = (val?: any) => this.color(val)
+			obj.value = (next?: any) => this.color(next)
 			obj.enabled = () => false
 			obj.options = () => ({
 				red: this.option_red(),

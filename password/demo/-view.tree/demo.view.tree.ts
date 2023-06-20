@@ -51,44 +51,44 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * pass?val \Hello world
+		 * pass? \Hello world
 		 * ```
 		 */
 		@ $mol_mem
-		pass(val?: any) {
-			if ( val !== undefined ) return val as never
+		pass(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "Hello world"
 		}
 		
 		/**
 		 * ```tree
-		 * Simple $mol_password value?val <=> pass?val
+		 * Simple $mol_password value? <=> pass?
 		 * ```
 		 */
 		@ $mol_mem
 		Simple() {
 			const obj = new this.$.$mol_password()
 			
-			obj.value = (val?: any) => this.pass(val)
+			obj.value = (next?: any) => this.pass(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * pass2?val \
+		 * pass2? \
 		 * ```
 		 */
 		@ $mol_mem
-		pass2(val?: any) {
-			if ( val !== undefined ) return val as never
+		pass2(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
 		 * Hint $mol_password
-		 * 	value?val <=> pass2?val
+		 * 	value? <=> pass2?
 		 * 	hint \Top secret
 		 * ```
 		 */
@@ -96,7 +96,7 @@ namespace $ {
 		Hint() {
 			const obj = new this.$.$mol_password()
 			
-			obj.value = (val?: any) => this.pass2(val)
+			obj.value = (next?: any) => this.pass2(next)
 			obj.hint = () => "Top secret"
 			
 			return obj

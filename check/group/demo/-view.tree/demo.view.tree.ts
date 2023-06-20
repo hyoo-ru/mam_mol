@@ -89,12 +89,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * strength?val false
+		 * strength? false
 		 * ```
 		 */
 		@ $mol_mem
-		strength(val?: any) {
-			if ( val !== undefined ) return val as never
+		strength(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -102,7 +102,7 @@ namespace $ {
 		 * ```tree
 		 * Strength $mol_check_box
 		 * 	title <= strength_title
-		 * 	checked?val <=> strength?val
+		 * 	checked? <=> strength?
 		 * ```
 		 */
 		@ $mol_mem
@@ -110,7 +110,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_box()
 			
 			obj.title = () => this.strength_title()
-			obj.checked = (val?: any) => this.strength(val)
+			obj.checked = (next?: any) => this.strength(next)
 			
 			return obj
 		}
@@ -126,12 +126,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * perception?val true
+		 * perception? true
 		 * ```
 		 */
 		@ $mol_mem
-		perception(val?: any) {
-			if ( val !== undefined ) return val as never
+		perception(next?: any) {
+			if ( next !== undefined ) return next as never
 			return true
 		}
 		
@@ -139,7 +139,7 @@ namespace $ {
 		 * ```tree
 		 * Perception $mol_check_box
 		 * 	title <= perception_title
-		 * 	checked?val <=> perception?val
+		 * 	checked? <=> perception?
 		 * ```
 		 */
 		@ $mol_mem
@@ -147,7 +147,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_box()
 			
 			obj.title = () => this.perception_title()
-			obj.checked = (val?: any) => this.perception(val)
+			obj.checked = (next?: any) => this.perception(next)
 			
 			return obj
 		}
@@ -163,12 +163,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * endurance?val false
+		 * endurance? false
 		 * ```
 		 */
 		@ $mol_mem
-		endurance(val?: any) {
-			if ( val !== undefined ) return val as never
+		endurance(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -176,7 +176,7 @@ namespace $ {
 		 * ```tree
 		 * Endurance $mol_check_box
 		 * 	title <= endurance_title
-		 * 	checked?val <=> endurance?val
+		 * 	checked? <=> endurance?
 		 * ```
 		 */
 		@ $mol_mem
@@ -184,7 +184,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_box()
 			
 			obj.title = () => this.endurance_title()
-			obj.checked = (val?: any) => this.endurance(val)
+			obj.checked = (next?: any) => this.endurance(next)
 			
 			return obj
 		}
@@ -200,12 +200,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * charisma?val false
+		 * charisma? false
 		 * ```
 		 */
 		@ $mol_mem
-		charisma(val?: any) {
-			if ( val !== undefined ) return val as never
+		charisma(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -213,7 +213,7 @@ namespace $ {
 		 * ```tree
 		 * Charisma $mol_check_box
 		 * 	title <= charisma_title
-		 * 	checked?val <=> charisma?val
+		 * 	checked? <=> charisma?
 		 * ```
 		 */
 		@ $mol_mem
@@ -221,7 +221,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_box()
 			
 			obj.title = () => this.charisma_title()
-			obj.checked = (val?: any) => this.charisma(val)
+			obj.checked = (next?: any) => this.charisma(next)
 			
 			return obj
 		}
@@ -237,12 +237,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * intelligence?val true
+		 * intelligence? true
 		 * ```
 		 */
 		@ $mol_mem
-		intelligence(val?: any) {
-			if ( val !== undefined ) return val as never
+		intelligence(next?: any) {
+			if ( next !== undefined ) return next as never
 			return true
 		}
 		
@@ -250,7 +250,7 @@ namespace $ {
 		 * ```tree
 		 * Intelligence $mol_check_box
 		 * 	title <= intelligence_title
-		 * 	checked?val <=> intelligence?val
+		 * 	checked? <=> intelligence?
 		 * ```
 		 */
 		@ $mol_mem
@@ -258,7 +258,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_box()
 			
 			obj.title = () => this.intelligence_title()
-			obj.checked = (val?: any) => this.intelligence(val)
+			obj.checked = (next?: any) => this.intelligence(next)
 			
 			return obj
 		}
@@ -274,12 +274,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * agility?val true
+		 * agility? true
 		 * ```
 		 */
 		@ $mol_mem
-		agility(val?: any) {
-			if ( val !== undefined ) return val as never
+		agility(next?: any) {
+			if ( next !== undefined ) return next as never
 			return true
 		}
 		
@@ -287,7 +287,7 @@ namespace $ {
 		 * ```tree
 		 * Agility $mol_check_box
 		 * 	title <= agility_title
-		 * 	checked?val <=> agility?val
+		 * 	checked? <=> agility?
 		 * ```
 		 */
 		@ $mol_mem
@@ -295,7 +295,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_box()
 			
 			obj.title = () => this.agility_title()
-			obj.checked = (val?: any) => this.agility(val)
+			obj.checked = (next?: any) => this.agility(next)
 			
 			return obj
 		}
@@ -311,12 +311,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * luck?val true
+		 * luck? true
 		 * ```
 		 */
 		@ $mol_mem
-		luck(val?: any) {
-			if ( val !== undefined ) return val as never
+		luck(next?: any) {
+			if ( next !== undefined ) return next as never
 			return true
 		}
 		
@@ -324,7 +324,7 @@ namespace $ {
 		 * ```tree
 		 * Luck $mol_check_box
 		 * 	title <= luck_title
-		 * 	checked?val <=> luck?val
+		 * 	checked? <=> luck?
 		 * ```
 		 */
 		@ $mol_mem
@@ -332,7 +332,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_box()
 			
 			obj.title = () => this.luck_title()
-			obj.checked = (val?: any) => this.luck(val)
+			obj.checked = (next?: any) => this.luck(next)
 			
 			return obj
 		}

@@ -203,7 +203,7 @@ namespace $ {
 		 * Cell_branch* $mol_check_expand
 		 * 	level <= cell_level*
 		 * 	label <= cell_content*
-		 * 	expanded?val <=> cell_expanded*?val
+		 * 	expanded? <=> cell_expanded*?
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -212,7 +212,7 @@ namespace $ {
 			
 			obj.level = () => this.cell_level(id)
 			obj.label = () => this.cell_content(id)
-			obj.expanded = (val?: any) => this.cell_expanded(id, val)
+			obj.expanded = (next?: any) => this.cell_expanded(id, next)
 			
 			return obj
 		}
@@ -321,12 +321,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cell_expanded*?val false
+		 * cell_expanded*? false
 		 * ```
 		 */
 		@ $mol_mem_key
-		cell_expanded(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
+		cell_expanded(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		

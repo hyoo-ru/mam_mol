@@ -12,7 +12,7 @@ $mol_string $mol_view
 	enabled true
 	minimal_height 40
 	autocomplete false
-	selection?val /number
+	selection? /number
 		0
 		0
 	auto /
@@ -20,7 +20,7 @@ $mol_string $mol_view
 	field *
 		^
 		disabled <= disabled false
-		value <= value_changed?val <=> value?val \
+		value <= value_changed? <=> value? \
 		placeholder <= hint_visible <= hint \
 		spellcheck <= spellcheck true
 		autocomplete <= autocomplete_native \
@@ -31,7 +31,7 @@ $mol_string $mol_view
 	attr *
 		^
 		maxlength <= length_max +Infinity
-		type <= type?val \text
+		type <= type? \text
 	event *
 		^
 		input?event <=> event_change?event null
@@ -44,7 +44,7 @@ $mol_app_hello $mol_view
 	sub /
 		<= Name $mol_string
 			hint <= name_hint \Name
-			value?val <=> name?val \
+			value? <=> name? \
 		<= Greeting $mol_view
 			sub /
 				<= greeting \

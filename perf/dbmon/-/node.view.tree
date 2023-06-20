@@ -1,6 +1,6 @@
 $mol_scroll $mol_view
-	scroll_top?val 0
-	scroll_left?val 0
+	scroll_top? 0
+	scroll_left? 0
 	field *
 		^
 		tabIndex <= tabindex -1
@@ -20,7 +20,7 @@ $mol_list $mol_view
 		0
 
 $mol_pop $mol_view
-	showed?val false
+	showed? false
 	align_vert \
 	align_hor \
 	prefer \vert
@@ -44,7 +44,7 @@ $mol_pop_bubble $mol_view
 		tabindex 0
 
 $mol_pop_over $mol_pop
-	showed <= hovered?val false
+	showed <= hovered? false
 	attr *
 		^
 		tabindex 0

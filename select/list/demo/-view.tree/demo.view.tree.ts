@@ -53,12 +53,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * friends?val /
+		 * friends? /
 		 * ```
 		 */
 		@ $mol_mem
-		friends(val?: any) {
-			if ( val !== undefined ) return val as never
+		friends(next?: any) {
+			if ( next !== undefined ) return next as never
 			return [
 			] as readonly any[]
 		}
@@ -92,7 +92,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Friends $mol_select_list
-		 * 	value?val <=> friends?val
+		 * 	value? <=> friends?
 		 * 	dictionary <= suggestions
 		 * ```
 		 */
@@ -100,7 +100,7 @@ namespace $ {
 		Friends() {
 			const obj = new this.$.$mol_select_list()
 			
-			obj.value = (val?: any) => this.friends(val)
+			obj.value = (next?: any) => this.friends(next)
 			obj.dictionary = () => this.suggestions()
 			
 			return obj
@@ -109,7 +109,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Friends_disabled $mol_select_list
-		 * 	value?val <=> friends?val
+		 * 	value? <=> friends?
 		 * 	dictionary <= suggestions
 		 * 	enabled false
 		 * ```
@@ -118,7 +118,7 @@ namespace $ {
 		Friends_disabled() {
 			const obj = new this.$.$mol_select_list()
 			
-			obj.value = (val?: any) => this.friends(val)
+			obj.value = (next?: any) => this.friends(next)
 			obj.dictionary = () => this.suggestions()
 			obj.enabled = () => false
 			

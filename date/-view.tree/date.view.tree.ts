@@ -29,23 +29,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value_number?val +NaN
+		 * value_number? +NaN
 		 * ```
 		 */
 		@ $mol_mem
-		value_number(val?: any) {
-			if ( val !== undefined ) return val as never
+		value_number(next?: any) {
+			if ( next !== undefined ) return next as never
 			return +NaN
 		}
 		
 		/**
 		 * ```tree
-		 * value_moment?val $mol_time_moment
+		 * value_moment? $mol_time_moment
 		 * ```
 		 */
 		@ $mol_mem
-		value_moment(val?: any) {
-			if ( val !== undefined ) return val as never
+		value_moment(next?: any) {
+			if ( next !== undefined ) return next as never
 			const obj = new this.$.$mol_time_moment()
 			
 			return obj
@@ -108,12 +108,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value?val \
+		 * value? \
 		 * ```
 		 */
 		@ $mol_mem
-		value(val?: any) {
-			if ( val !== undefined ) return val as never
+		value(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -138,7 +138,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Input $mol_format
-		 * 	value?val <=> value?val
+		 * 	value? <=> value?
 		 * 	mask* <= input_mask*
 		 * 	enabled <= enabled
 		 * ```
@@ -147,7 +147,7 @@ namespace $ {
 		Input() {
 			const obj = new this.$.$mol_format()
 			
-			obj.value = (val?: any) => this.value(val)
+			obj.value = (next?: any) => this.value(next)
 			obj.mask = (id: any) => this.input_mask(id)
 			obj.enabled = () => this.enabled()
 			

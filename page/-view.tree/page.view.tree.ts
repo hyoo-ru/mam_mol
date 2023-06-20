@@ -158,17 +158,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * body_scroll_top?val
+		 * body_scroll_top?
 		 * ```
 		 */
-		body_scroll_top(val?: any) {
-			return this.Body().scroll_top(val)
+		body_scroll_top(next?: any) {
+			return this.Body().scroll_top(next)
 		}
 		
 		/**
 		 * ```tree
 		 * Body $mol_scroll
-		 * 	scroll_top?val => body_scroll_top?val
+		 * 	scroll_top? => body_scroll_top?
 		 * 	sub <= body
 		 * ```
 		 */

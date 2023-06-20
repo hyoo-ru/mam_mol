@@ -3,12 +3,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * dictionary?val *
+		 * dictionary? *
 		 * ```
 		 */
 		@ $mol_mem
-		dictionary(val?: any) {
-			if ( val !== undefined ) return val as never
+		dictionary(next?: any) {
+			if ( next !== undefined ) return next as never
 			return {
 			} as Record< string, any >
 		}
@@ -25,12 +25,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value?val \
+		 * value? \
 		 * ```
 		 */
 		@ $mol_mem
-		value(val?: any) {
-			if ( val !== undefined ) return val as never
+		value(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -116,7 +116,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Filter $mol_string
-		 * 	value?val <=> filter_pattern?val
+		 * 	value? <=> filter_pattern?
 		 * 	hint @ \Filter..
 		 * 	submit?event <=> submit?event
 		 * 	enabled <= enabled
@@ -126,7 +126,7 @@ namespace $ {
 		Filter() {
 			const obj = new this.$.$mol_string()
 			
-			obj.value = (val?: any) => this.filter_pattern(val)
+			obj.value = (next?: any) => this.filter_pattern(next)
 			obj.hint = () => this.$.$mol_locale.text( '$mol_select_Filter_hint' )
 			obj.submit = (event?: any) => this.submit(event)
 			obj.enabled = () => this.enabled()
@@ -168,12 +168,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * filter_pattern?val \
+		 * filter_pattern? \
 		 * ```
 		 */
 		@ $mol_mem
-		filter_pattern(val?: any) {
-			if ( val !== undefined ) return val as never
+		filter_pattern(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -181,7 +181,7 @@ namespace $ {
 		 * ```tree
 		 * Option_label* $mol_dimmer
 		 * 	haystack <= option_label*
-		 * 	needle <= filter_pattern?val
+		 * 	needle <= filter_pattern?
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -237,12 +237,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * nav_cycle?val true
+		 * nav_cycle? true
 		 * ```
 		 */
 		@ $mol_mem
-		nav_cycle(val?: any) {
-			if ( val !== undefined ) return val as never
+		nav_cycle(next?: any) {
+			if ( next !== undefined ) return next as never
 			return true
 		}
 		
@@ -251,7 +251,7 @@ namespace $ {
 		 * Nav $mol_nav
 		 * 	keys_y <= nav_components
 		 * 	current_y?component <=> option_focused?component
-		 * 	cycle?val <=> nav_cycle?val
+		 * 	cycle? <=> nav_cycle?
 		 * ```
 		 */
 		@ $mol_mem
@@ -260,7 +260,7 @@ namespace $ {
 			
 			obj.keys_y = () => this.nav_components()
 			obj.current_y = (component?: any) => this.option_focused(component)
-			obj.cycle = (val?: any) => this.nav_cycle(val)
+			obj.cycle = (next?: any) => this.nav_cycle(next)
 			
 			return obj
 		}

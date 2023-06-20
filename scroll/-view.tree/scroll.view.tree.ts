@@ -3,23 +3,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * scroll_top?val 0
+		 * scroll_top? 0
 		 * ```
 		 */
 		@ $mol_mem
-		scroll_top(val?: any) {
-			if ( val !== undefined ) return val as never
+		scroll_top(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 		
 		/**
 		 * ```tree
-		 * scroll_left?val 0
+		 * scroll_left? 0
 		 * ```
 		 */
 		@ $mol_mem
-		scroll_left(val?: any) {
-			if ( val !== undefined ) return val as never
+		scroll_left(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 		

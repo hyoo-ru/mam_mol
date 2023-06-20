@@ -375,12 +375,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_moment*?val $mol_time_moment
+		 * row_moment*? $mol_time_moment
 		 * ```
 		 */
 		@ $mol_mem_key
-		row_moment(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
+		row_moment(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
 			const obj = new this.$.$mol_time_moment()
 			
 			return obj
@@ -388,14 +388,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Date* $mol_date value_moment?val <=> row_moment*?val
+		 * Date* $mol_date value_moment? <=> row_moment*?
 		 * ```
 		 */
 		@ $mol_mem_key
 		Date(id: any) {
 			const obj = new this.$.$mol_date()
 			
-			obj.value_moment = (val?: any) => this.row_moment(id, val)
+			obj.value_moment = (next?: any) => this.row_moment(id, next)
 			
 			return obj
 		}

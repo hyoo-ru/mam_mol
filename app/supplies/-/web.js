@@ -2444,14 +2444,14 @@ var $;
 var $;
 (function ($) {
     class $mol_scroll extends $mol_view {
-        scroll_top(val) {
-            if (val !== undefined)
-                return val;
+        scroll_top(next) {
+            if (next !== undefined)
+                return next;
             return 0;
         }
-        scroll_left(val) {
-            if (val !== undefined)
-                return val;
+        scroll_left(next) {
+            if (next !== undefined)
+                return next;
             return 0;
         }
         field() {
@@ -3918,9 +3918,9 @@ var $;
         autocomplete() {
             return false;
         }
-        selection(val) {
-            if (val !== undefined)
-                return val;
+        selection(next) {
+            if (next !== undefined)
+                return next;
             return [
                 0,
                 0
@@ -3969,13 +3969,13 @@ var $;
         disabled() {
             return false;
         }
-        value(val) {
-            if (val !== undefined)
-                return val;
+        value(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
-        value_changed(val) {
-            return this.value(val);
+        value_changed(next) {
+            return this.value(next);
         }
         hint() {
             return "";
@@ -4004,9 +4004,9 @@ var $;
         length_max() {
             return +Infinity;
         }
-        type(val) {
-            if (val !== undefined)
-                return val;
+        type(next) {
+            if (next !== undefined)
+                return next;
             return "text";
         }
         event_change(event) {
@@ -4853,9 +4853,9 @@ var $;
 var $;
 (function ($) {
     class $mol_app_supplies_enter extends $mol_view {
-        entered(val) {
-            if (val !== undefined)
-                return val;
+        entered(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         minimal_width() {
@@ -4869,14 +4869,14 @@ var $;
         loginLabel() {
             return this.$.$mol_locale.text('$mol_app_supplies_enter_loginLabel');
         }
-        login(val) {
-            if (val !== undefined)
-                return val;
+        login(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         loginControl() {
             const obj = new this.$.$mol_string();
-            obj.value = (val) => this.login(val);
+            obj.value = (next) => this.login(next);
             return obj;
         }
         loginField() {
@@ -4888,14 +4888,14 @@ var $;
         passwordLabel() {
             return this.$.$mol_locale.text('$mol_app_supplies_enter_passwordLabel');
         }
-        password(val) {
-            if (val !== undefined)
-                return val;
+        password(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         passControl() {
             const obj = new this.$.$mol_string();
-            obj.value = (val) => this.password(val);
+            obj.value = (next) => this.password(next);
             obj.type = () => "password";
             return obj;
         }
@@ -4908,9 +4908,9 @@ var $;
         submitLabel() {
             return this.$.$mol_locale.text('$mol_app_supplies_enter_submitLabel');
         }
-        event_submit(val) {
-            if (val !== undefined)
-                return val;
+        event_submit(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         submit_blocked() {
@@ -4921,7 +4921,7 @@ var $;
             obj.sub = () => [
                 this.submitLabel()
             ];
-            obj.click = (val) => this.event_submit(val);
+            obj.click = (next) => this.event_submit(next);
             obj.disabled = () => this.submit_blocked();
             return obj;
         }
@@ -5055,8 +5055,8 @@ var $;
         body() {
             return [];
         }
-        body_scroll_top(val) {
-            return this.Body().scroll_top(val);
+        body_scroll_top(next) {
+            return this.Body().scroll_top(next);
         }
         Body() {
             const obj = new this.$.$mol_scroll();
@@ -6699,9 +6699,9 @@ var $;
 var $;
 (function ($) {
     class $mol_pop extends $mol_view {
-        showed(val) {
-            if (val !== undefined)
-                return val;
+        showed(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         align_vert() {
@@ -6901,9 +6901,9 @@ var $;
 var $;
 (function ($) {
     class $mol_nav extends $mol_plugin {
-        cycle(val) {
-            if (val !== undefined)
-                return val;
+        cycle(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         mod_ctrl() {
@@ -6915,24 +6915,24 @@ var $;
         mod_alt() {
             return false;
         }
-        keys_x(val) {
-            if (val !== undefined)
-                return val;
+        keys_x(next) {
+            if (next !== undefined)
+                return next;
             return [];
         }
-        keys_y(val) {
-            if (val !== undefined)
-                return val;
+        keys_y(next) {
+            if (next !== undefined)
+                return next;
             return [];
         }
-        current_x(val) {
-            if (val !== undefined)
-                return val;
+        current_x(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        current_y(val) {
-            if (val !== undefined)
-                return val;
+        current_y(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         event_up(event) {
@@ -7778,9 +7778,9 @@ var $;
 var $;
 (function ($) {
     class $mol_search extends $mol_pop {
-        query(val) {
-            if (val !== undefined)
-                return val;
+        query(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         suggests() {
@@ -7793,8 +7793,8 @@ var $;
                 this.Nav()
             ];
         }
-        showed(val) {
-            return this.suggests_showed(val);
+        showed(next) {
+            return this.suggests_showed(next);
         }
         align_hor() {
             return "right";
@@ -7815,15 +7815,15 @@ var $;
             obj.sub = () => this.suggest_content(id);
             return obj;
         }
-        clear(val) {
-            if (val !== undefined)
-                return val;
+        clear(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Hotkey() {
             const obj = new this.$.$mol_hotkey();
             obj.key = () => ({
-                escape: (val) => this.clear(val)
+                escape: (next) => this.clear(next)
             });
             return obj;
         }
@@ -7841,9 +7841,9 @@ var $;
             obj.current_y = (component) => this.nav_focused(component);
             return obj;
         }
-        suggests_showed(val) {
-            if (val !== undefined)
-                return val;
+        suggests_showed(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         hint() {
@@ -7868,7 +7868,7 @@ var $;
         }
         Query() {
             const obj = new this.$.$mol_string();
-            obj.value = (val) => this.query(val);
+            obj.value = (next) => this.query(next);
             obj.hint = () => this.hint();
             obj.submit = (event) => this.submit(event);
             obj.enabled = () => this.enabled();
@@ -8067,9 +8067,9 @@ var $;
                 this.Scan()
             ];
         }
-        value(val) {
-            if (val !== undefined)
-                return val;
+        value(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         format() {
@@ -8080,13 +8080,13 @@ var $;
         }
         Manual() {
             const obj = new this.$.$mol_search();
-            obj.query = (val) => this.value(val);
+            obj.query = (next) => this.value(next);
             obj.hint = () => this.hint();
             return obj;
         }
-        event_scan(val) {
-            if (val !== undefined)
-                return val;
+        event_scan(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         scan_label() {
@@ -8094,7 +8094,7 @@ var $;
         }
         Scan() {
             const obj = new this.$.$mol_button();
-            obj.event_click = (val) => this.event_scan(val);
+            obj.event_click = (next) => this.event_scan(next);
             obj.sub = () => [
                 this.scan_label()
             ];
@@ -8196,15 +8196,15 @@ var $;
         search_hint() {
             return this.$.$mol_locale.text('$mol_app_supplies_list_search_hint');
         }
-        search_query(val) {
-            if (val !== undefined)
-                return val;
+        search_query(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         Search() {
             const obj = new this.$.$mol_code();
             obj.hint = () => this.search_hint();
-            obj.value = (val) => this.search_query(val);
+            obj.value = (next) => this.search_query(next);
             return obj;
         }
         supply_rows() {
@@ -8629,7 +8629,7 @@ var $;
     class $mol_check_list extends $mol_view {
         Option(id) {
             const obj = new this.$.$mol_check();
-            obj.checked = (val) => this.option_checked(id, val);
+            obj.checked = (next) => this.option_checked(id, next);
             obj.label = () => this.option_label(id);
             obj.enabled = () => this.option_enabled(id);
             obj.hint = () => this.option_hint(id);
@@ -8645,9 +8645,9 @@ var $;
         sub() {
             return this.items();
         }
-        option_checked(id, val) {
-            if (val !== undefined)
-                return val;
+        option_checked(id, next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         option_title(id) {
@@ -8722,9 +8722,9 @@ var $;
 var $;
 (function ($) {
     class $mol_switch extends $mol_check_list {
-        value(val) {
-            if (val !== undefined)
-                return val;
+        value(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
     }
@@ -8821,9 +8821,9 @@ var $;
                 this.Content()
             ];
         }
-        current(val) {
-            if (val !== undefined)
-                return val;
+        current(next) {
+            if (next !== undefined)
+                return next;
             return "0";
         }
         switch_options() {
@@ -8831,7 +8831,7 @@ var $;
         }
         Switch() {
             const obj = new this.$.$mol_switch();
-            obj.value = (val) => this.current(val);
+            obj.value = (next) => this.current(next);
             obj.options = () => this.switch_options();
             return obj;
         }
@@ -9130,9 +9130,9 @@ var $;
 var $;
 (function ($) {
     class $mol_attach extends $mol_view {
-        items(val) {
-            if (val !== undefined)
-                return val;
+        items(next) {
+            if (next !== undefined)
+                return next;
             return [];
         }
         sub() {
@@ -9143,7 +9143,7 @@ var $;
         Add() {
             const obj = new this.$.$mol_button_open();
             obj.title = () => this.attach_title();
-            obj.files = (val) => this.attach_new(val);
+            obj.files = (next) => this.attach_new(next);
             return obj;
         }
         Item(id) {
@@ -9165,9 +9165,9 @@ var $;
         attach_title() {
             return "";
         }
-        attach_new(val) {
-            if (val !== undefined)
-                return val;
+        attach_new(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         item_drop(id, event) {
@@ -9586,15 +9586,15 @@ var $;
         attachments() {
             return [];
         }
-        attach_new(val) {
-            if (val !== undefined)
-                return val;
+        attach_new(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Attach() {
             const obj = new this.$.$mol_attach();
             obj.items = () => this.attachments();
-            obj.attach_new = (val) => this.attach_new(val);
+            obj.attach_new = (next) => this.attach_new(next);
             return obj;
         }
         Attach_section() {
@@ -9649,9 +9649,9 @@ var $;
             ];
             return obj;
         }
-        approved(val) {
-            if (val !== undefined)
-                return val;
+        approved(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         approved_title() {
@@ -9659,7 +9659,7 @@ var $;
         }
         Approve() {
             const obj = new this.$.$mol_check_box();
-            obj.checked = (val) => this.approved(val);
+            obj.checked = (next) => this.approved(next);
             obj.title = () => this.approved_title();
             return obj;
         }
@@ -9858,7 +9858,7 @@ var $;
         }
         enter() {
             const obj = new this.$.$mol_app_supplies_enter();
-            obj.entered = (val) => this.entered(val);
+            obj.entered = (next) => this.entered(next);
             return obj;
         }
         List() {
@@ -9866,7 +9866,7 @@ var $;
             obj.supplies = () => this.supplies();
             obj.tools = () => this.tools_root();
             obj.title = () => this.list_title();
-            obj.search_query = (val) => this.supply_id(val);
+            obj.search_query = (next) => this.supply_id(next);
             return obj;
         }
         Detail(id) {
@@ -9874,9 +9874,9 @@ var $;
             obj.supply = () => this.supply();
             return obj;
         }
-        entered(val) {
-            if (val !== undefined)
-                return val;
+        entered(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         supplies() {
@@ -9888,9 +9888,9 @@ var $;
         list_title() {
             return this.$.$mol_locale.text('$mol_app_supplies_list_title');
         }
-        supply_id(val) {
-            if (val !== undefined)
-                return val;
+        supply_id(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         supply() {

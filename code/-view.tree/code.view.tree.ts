@@ -17,12 +17,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value?val \
+		 * value? \
 		 * ```
 		 */
 		@ $mol_mem
-		value(val?: any) {
-			if ( val !== undefined ) return val as never
+		value(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -47,7 +47,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Manual $mol_search
-		 * 	query?val <=> value?val
+		 * 	query? <=> value?
 		 * 	hint <= hint
 		 * ```
 		 */
@@ -55,7 +55,7 @@ namespace $ {
 		Manual() {
 			const obj = new this.$.$mol_search()
 			
-			obj.query = (val?: any) => this.value(val)
+			obj.query = (next?: any) => this.value(next)
 			obj.hint = () => this.hint()
 			
 			return obj
@@ -63,12 +63,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * event_scan?val null
+		 * event_scan? null
 		 * ```
 		 */
 		@ $mol_mem
-		event_scan(val?: any) {
-			if ( val !== undefined ) return val as never
+		event_scan(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -84,7 +84,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Scan $mol_button
-		 * 	event_click?val <=> event_scan?val
+		 * 	event_click? <=> event_scan?
 		 * 	sub / <= scan_label
 		 * ```
 		 */
@@ -92,7 +92,7 @@ namespace $ {
 		Scan() {
 			const obj = new this.$.$mol_button()
 			
-			obj.event_click = (val?: any) => this.event_scan(val)
+			obj.event_click = (next?: any) => this.event_scan(next)
 			obj.sub = () => [
 				this.scan_label()
 			] as readonly any[]

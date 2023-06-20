@@ -14,12 +14,12 @@ $mol_app_report $mol_page
 		rows <= cellrows* 1
 		cols <= cellCols* 1
 	texter* $mol_view
-		sub / <= cell_value*?val null
+		sub / <= cell_value*? null
 	select* $mol_select
-		value?val <=> cell_value*?val null
+		value? <=> cell_value*? null
 		dictionary <= cell_options* *
 	number* $mol_number
-		value?val <=> cell_value*?val null
+		value? <=> cell_value*? null
 
 $mol_app_report_tabler $mol_view
 	dom_name \table

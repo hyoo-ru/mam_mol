@@ -3,7 +3,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * showed <= hovered?val
+		 * showed <= hovered?
 		 * ```
 		 */
 		showed() {
@@ -42,12 +42,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hovered?val false
+		 * hovered? false
 		 * ```
 		 */
 		@ $mol_mem
-		hovered(val?: any) {
-			if ( val !== undefined ) return val as never
+		hovered(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		

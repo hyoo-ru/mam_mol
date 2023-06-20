@@ -26,7 +26,7 @@ Checkbox UI component. See Variants for more concrete implementations.
 ```
 <= Spam $mol_check_box
 	title <= spam_title @ \Send me some spam
-	checked?val <=> spam_needed?val true
+	checked? <=> spam_needed? true
 	enabled <= spam_enabled false
 ```
 

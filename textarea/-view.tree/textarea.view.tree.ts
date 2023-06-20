@@ -5,7 +5,7 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	^
-		 * 	mol_textarea_clickable <= clickable?val
+		 * 	mol_textarea_clickable <= clickable?
 		 * 	mol_textarea_sidebar_showed <= sidebar_showed
 		 * ```
 		 */
@@ -139,12 +139,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * clickable?val false
+		 * clickable? false
 		 * ```
 		 */
 		@ $mol_mem
-		clickable(val?: any) {
-			if ( val !== undefined ) return val as never
+		clickable(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -181,12 +181,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value?val \
+		 * value? \
 		 * ```
 		 */
 		@ $mol_mem
-		value(val?: any) {
-			if ( val !== undefined ) return val as never
+		value(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -228,12 +228,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * selection?val /number
+		 * selection? /number
 		 * ```
 		 */
 		@ $mol_mem
-		selection(val?: any) {
-			if ( val !== undefined ) return val as never
+		selection(next?: any) {
+			if ( next !== undefined ) return next as never
 			return [
 			] as readonly number[]
 		}
@@ -261,12 +261,12 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Edit $mol_textarea_edit
-		 * 	value?val <=> value?val
+		 * 	value? <=> value?
 		 * 	hint <= hint
 		 * 	enabled <= enabled
 		 * 	spellcheck <= spellcheck
 		 * 	length_max <= length_max
-		 * 	selection?val <=> selection?val
+		 * 	selection? <=> selection?
 		 * 	bring => bring
 		 * 	submit? <=> submit?
 		 * 	submit_with_ctrl true
@@ -276,12 +276,12 @@ namespace $ {
 		Edit() {
 			const obj = new this.$.$mol_textarea_edit()
 			
-			obj.value = (val?: any) => this.value(val)
+			obj.value = (next?: any) => this.value(next)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.enabled()
 			obj.spellcheck = () => this.spellcheck()
 			obj.length_max = () => this.length_max()
-			obj.selection = (val?: any) => this.selection(val)
+			obj.selection = (next?: any) => this.selection(next)
 			obj.submit = (next?: any) => this.submit(next)
 			obj.submit_with_ctrl = () => true
 			

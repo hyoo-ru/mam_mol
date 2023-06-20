@@ -55,25 +55,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * expanded?val false
+		 * expanded? false
 		 * ```
 		 */
 		@ $mol_mem
-		expanded(val?: any) {
-			if ( val !== undefined ) return val as never
+		expanded(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
 		/**
 		 * ```tree
-		 * Expand $mol_check_expand checked?val <=> expanded?val
+		 * Expand $mol_check_expand checked? <=> expanded?
 		 * ```
 		 */
 		@ $mol_mem
 		Expand() {
 			const obj = new this.$.$mol_check_expand()
 			
-			obj.checked = (val?: any) => this.expanded(val)
+			obj.checked = (next?: any) => this.expanded(next)
 			
 			return obj
 		}

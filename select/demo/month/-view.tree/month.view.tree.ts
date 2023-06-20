@@ -48,12 +48,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * month?val \jan
+		 * month? \jan
 		 * ```
 		 */
 		@ $mol_mem
-		month(val?: any) {
-			if ( val !== undefined ) return val as never
+		month(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "jan"
 		}
 		
@@ -95,7 +95,7 @@ namespace $ {
 		 * ```tree
 		 * Month $mol_select
 		 * 	no_options_message \Not found
-		 * 	value?val <=> month?val
+		 * 	value? <=> month?
 		 * 	dictionary <= months
 		 * ```
 		 */
@@ -104,7 +104,7 @@ namespace $ {
 			const obj = new this.$.$mol_select()
 			
 			obj.no_options_message = () => "Not found"
-			obj.value = (val?: any) => this.month(val)
+			obj.value = (next?: any) => this.month(next)
 			obj.dictionary = () => this.months()
 			
 			return obj

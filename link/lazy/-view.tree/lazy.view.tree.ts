@@ -3,12 +3,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * uri?val \
+		 * uri? \
 		 * ```
 		 */
 		@ $mol_mem
-		uri(val?: any) {
-			if ( val !== undefined ) return val as never
+		uri(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		

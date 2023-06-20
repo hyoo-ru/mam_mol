@@ -17,14 +17,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * enter $mol_app_supplies_enter entered?val <=> entered?val
+		 * enter $mol_app_supplies_enter entered? <=> entered?
 		 * ```
 		 */
 		@ $mol_mem
 		enter() {
 			const obj = new this.$.$mol_app_supplies_enter()
 			
-			obj.entered = (val?: any) => this.entered(val)
+			obj.entered = (next?: any) => this.entered(next)
 			
 			return obj
 		}
@@ -35,7 +35,7 @@ namespace $ {
 		 * 	supplies <= supplies
 		 * 	tools <= tools_root
 		 * 	title <= list_title
-		 * 	search_query?val <=> supply_id?val
+		 * 	search_query? <=> supply_id?
 		 * ```
 		 */
 		@ $mol_mem
@@ -45,7 +45,7 @@ namespace $ {
 			obj.supplies = () => this.supplies()
 			obj.tools = () => this.tools_root()
 			obj.title = () => this.list_title()
-			obj.search_query = (val?: any) => this.supply_id(val)
+			obj.search_query = (next?: any) => this.supply_id(next)
 			
 			return obj
 		}
@@ -66,12 +66,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * entered?val false
+		 * entered? false
 		 * ```
 		 */
 		@ $mol_mem
-		entered(val?: any) {
-			if ( val !== undefined ) return val as never
+		entered(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -106,12 +106,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * supply_id?val \
+		 * supply_id? \
 		 * ```
 		 */
 		@ $mol_mem
-		supply_id(val?: any) {
-			if ( val !== undefined ) return val as never
+		supply_id(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		

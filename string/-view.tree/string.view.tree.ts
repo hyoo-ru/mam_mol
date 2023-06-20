@@ -39,14 +39,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * selection?val /number
+		 * selection? /number
 		 * 	0
 		 * 	0
 		 * ```
 		 */
 		@ $mol_mem
-		selection(val?: any) {
-			if ( val !== undefined ) return val as never
+		selection(next?: any) {
+			if ( next !== undefined ) return next as never
 			return [
 				0,
 				0
@@ -69,7 +69,7 @@ namespace $ {
 		 * field *
 		 * 	^
 		 * 	disabled <= disabled
-		 * 	value <= value_changed?val
+		 * 	value <= value_changed?
 		 * 	placeholder <= hint_visible
 		 * 	spellcheck <= spellcheck
 		 * 	autocomplete <= autocomplete_native
@@ -99,7 +99,7 @@ namespace $ {
 		 * attr *
 		 * 	^
 		 * 	maxlength <= length_max
-		 * 	type <= type?val
+		 * 	type <= type?
 		 * ```
 		 */
 		attr() {
@@ -155,22 +155,22 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value?val \
+		 * value? \
 		 * ```
 		 */
 		@ $mol_mem
-		value(val?: any) {
-			if ( val !== undefined ) return val as never
+		value(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * value_changed?val <=> value?val
+		 * value_changed? <=> value?
 		 * ```
 		 */
-		value_changed(val?: any) {
-			return this.value(val)
+		value_changed(next?: any) {
+			return this.value(next)
 		}
 		
 		/**
@@ -256,12 +256,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * type?val \text
+		 * type? \text
 		 * ```
 		 */
 		@ $mol_mem
-		type(val?: any) {
-			if ( val !== undefined ) return val as never
+		type(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "text"
 		}
 		

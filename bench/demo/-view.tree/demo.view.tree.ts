@@ -48,12 +48,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * col_sort?val \mid
+		 * col_sort? \mid
 		 * ```
 		 */
 		@ $mol_mem
-		col_sort(val?: any) {
-			if ( val !== undefined ) return val as never
+		col_sort(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "mid"
 		}
 		
@@ -70,7 +70,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * View $mol_bench
-		 * 	col_sort?val <=> col_sort?val
+		 * 	col_sort? <=> col_sort?
 		 * 	result <= result
 		 * ```
 		 */
@@ -78,7 +78,7 @@ namespace $ {
 		View() {
 			const obj = new this.$.$mol_bench()
 			
-			obj.col_sort = (val?: any) => this.col_sort(val)
+			obj.col_sort = (next?: any) => this.col_sort(next)
 			obj.result = () => this.result()
 			
 			return obj

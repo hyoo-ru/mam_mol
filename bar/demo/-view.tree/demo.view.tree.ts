@@ -63,12 +63,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * mail?val \
+		 * mail? \
 		 * ```
 		 */
 		@ $mol_mem
-		mail(val?: any) {
-			if ( val !== undefined ) return val as never
+		mail(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -76,7 +76,7 @@ namespace $ {
 		 * ```tree
 		 * Two_mail $mol_string
 		 * 	hint <= mail_hint
-		 * 	value?val <=> mail?val
+		 * 	value? <=> mail?
 		 * ```
 		 */
 		@ $mol_mem
@@ -84,7 +84,7 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.hint = () => this.mail_hint()
-			obj.value = (val?: any) => this.mail(val)
+			obj.value = (next?: any) => this.mail(next)
 			
 			return obj
 		}
@@ -135,7 +135,7 @@ namespace $ {
 		 * ```tree
 		 * Three_mail $mol_string
 		 * 	hint <= mail_hint
-		 * 	value?val <=> mail?val
+		 * 	value? <=> mail?
 		 * ```
 		 */
 		@ $mol_mem
@@ -143,7 +143,7 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.hint = () => this.mail_hint()
-			obj.value = (val?: any) => this.mail(val)
+			obj.value = (next?: any) => this.mail(next)
 			
 			return obj
 		}
@@ -159,12 +159,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * confirmed?val false
+		 * confirmed? false
 		 * ```
 		 */
 		@ $mol_mem
-		confirmed(val?: any) {
-			if ( val !== undefined ) return val as never
+		confirmed(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -172,7 +172,7 @@ namespace $ {
 		 * ```tree
 		 * Three_confirm $mol_check_box
 		 * 	title <= confirm_title
-		 * 	checked?val <=> confirmed?val
+		 * 	checked? <=> confirmed?
 		 * ```
 		 */
 		@ $mol_mem
@@ -180,7 +180,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_box()
 			
 			obj.title = () => this.confirm_title()
-			obj.checked = (val?: any) => this.confirmed(val)
+			obj.checked = (next?: any) => this.confirmed(next)
 			
 			return obj
 		}

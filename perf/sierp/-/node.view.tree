@@ -1,6 +1,6 @@
 $mol_perf_sierp $mol_view
 	size_target 25
-	elapsed?val 0
+	elapsed? 0
 	style *
 		transform <= transform \
 	sub / <= Dots $mol_view sub <= dots /
@@ -13,7 +13,7 @@ $mol_perf_sierp $mol_view
 $mol_perf_sierp_dot $mol_view
 	size 25
 	size_px \25px
-	hover?val false
+	hover? false
 	sub /
 		<= text \
 	style *
@@ -26,5 +26,5 @@ $mol_perf_sierp_dot $mol_view
 		background <= color \
 	event *
 		^
-		mouseenter?val <=> enter?val null
-		mouseleave?val <=> leave?val null
+		mouseenter? <=> enter? null
+		mouseleave? <=> leave? null

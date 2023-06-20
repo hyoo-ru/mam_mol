@@ -53,12 +53,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * filled_items?val / \https://picsum.photos/200
+		 * filled_items? / \https://picsum.photos/200
 		 * ```
 		 */
 		@ $mol_mem
-		filled_items(val?: any) {
-			if ( val !== undefined ) return val as never
+		filled_items(next?: any) {
+			if ( next !== undefined ) return next as never
 			return [
 				"https://picsum.photos/200"
 			] as readonly any[]
@@ -66,14 +66,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Filled $mol_attach items?val <=> filled_items?val
+		 * Filled $mol_attach items? <=> filled_items?
 		 * ```
 		 */
 		@ $mol_mem
 		Filled() {
 			const obj = new this.$.$mol_attach()
 			
-			obj.items = (val?: any) => this.filled_items(val)
+			obj.items = (next?: any) => this.filled_items(next)
 			
 			return obj
 		}

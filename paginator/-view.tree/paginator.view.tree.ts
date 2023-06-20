@@ -72,18 +72,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value?val 0
+		 * value? 0
 		 * ```
 		 */
 		@ $mol_mem
-		value(val?: any) {
-			if ( val !== undefined ) return val as never
+		value(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 		
 		/**
 		 * ```tree
-		 * Value $mol_view sub / <= value?val
+		 * Value $mol_view sub / <= value?
 		 * ```
 		 */
 		@ $mol_mem

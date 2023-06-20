@@ -106,7 +106,7 @@ $my_hello $mol_view
 	sub /
 		<= Name $mol_string
 			hint \Name
-			value?val <=> name?val \
+			value? <=> name? \
 		<= message \
 ```
 

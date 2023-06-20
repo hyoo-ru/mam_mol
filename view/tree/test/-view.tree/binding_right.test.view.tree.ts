@@ -27,12 +27,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * width?val 0
+		 * width? 0
 		 * ```
 		 */
 		@ $mol_mem
-		width(val?: any) {
-			if ( val !== undefined ) return val as never
+		width(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 	}

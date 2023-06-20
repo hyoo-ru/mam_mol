@@ -93,12 +93,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value_string?val \
+		 * value_string? \
 		 * ```
 		 */
 		@ $mol_mem
-		value_string(val?: any) {
-			if ( val !== undefined ) return val as never
+		value_string(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -135,7 +135,7 @@ namespace $ {
 		 * ```tree
 		 * String $mol_string
 		 * 	type <= type
-		 * 	value?val <=> value_string?val
+		 * 	value? <=> value_string?
 		 * 	hint <= hint
 		 * 	enabled <= string_enabled
 		 * 	submit? <=> submit?
@@ -146,7 +146,7 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.type = () => this.type()
-			obj.value = (val?: any) => this.value_string(val)
+			obj.value = (next?: any) => this.value_string(next)
 			obj.hint = () => this.hint()
 			obj.enabled = () => this.string_enabled()
 			obj.submit = (next?: any) => this.submit(next)

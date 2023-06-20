@@ -1,8 +1,8 @@
 $mol_video_player $mol_view
 	dom_name \video
-	playing?val false
-	volume?val 0
-	time?val 0
+	playing? false
+	volume? 0
+	time? 0
 	duration 0
 	attr *
 		src <= uri \

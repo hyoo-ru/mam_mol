@@ -12,12 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * elapsed?val 0
+		 * elapsed? 0
 		 * ```
 		 */
 		@ $mol_mem
-		elapsed(val?: any) {
-			if ( val !== undefined ) return val as never
+		elapsed(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 		
@@ -156,12 +156,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hover?val false
+		 * hover? false
 		 * ```
 		 */
 		@ $mol_mem
-		hover(val?: any) {
-			if ( val !== undefined ) return val as never
+		hover(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -204,15 +204,15 @@ namespace $ {
 		 * ```tree
 		 * event *
 		 * 	^
-		 * 	mouseenter?val <=> enter?val
-		 * 	mouseleave?val <=> leave?val
+		 * 	mouseenter? <=> enter?
+		 * 	mouseleave? <=> leave?
 		 * ```
 		 */
 		event() {
 			return {
 				...super.event(),
-				mouseenter: (val?: any) => this.enter(val),
-				mouseleave: (val?: any) => this.leave(val)
+				mouseenter: (next?: any) => this.enter(next),
+				mouseleave: (next?: any) => this.leave(next)
 			} as Record< string, any >
 		}
 		
@@ -281,23 +281,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * enter?val null
+		 * enter? null
 		 * ```
 		 */
 		@ $mol_mem
-		enter(val?: any) {
-			if ( val !== undefined ) return val as never
+		enter(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * leave?val null
+		 * leave? null
 		 * ```
 		 */
 		@ $mol_mem
-		leave(val?: any) {
-			if ( val !== undefined ) return val as never
+		leave(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 	}

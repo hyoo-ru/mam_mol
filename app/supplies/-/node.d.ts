@@ -938,8 +938,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_scroll extends $mol_view {
-        scroll_top(val?: any): number;
-        scroll_left(val?: any): number;
+        scroll_top(next?: any): number;
+        scroll_left(next?: any): number;
         field(): Record<string, any>;
         event(): Record<string, any>;
         tabindex(): number;
@@ -1483,7 +1483,7 @@ declare namespace $ {
         enabled(): boolean;
         minimal_height(): number;
         autocomplete(): boolean;
-        selection(val?: any): readonly number[];
+        selection(next?: any): readonly number[];
         auto(): readonly any[];
         field(): Record<string, any>;
         attr(): Record<string, any>;
@@ -1491,8 +1491,8 @@ declare namespace $ {
         plugins(): readonly any[];
         selection_watcher(): any;
         disabled(): boolean;
-        value(val?: any): string;
-        value_changed(val?: any): string;
+        value(next?: any): string;
+        value_changed(next?: any): string;
         hint(): string;
         hint_visible(): string;
         spellcheck(): boolean;
@@ -1502,7 +1502,7 @@ declare namespace $ {
         keyboard(): string;
         enter(): string;
         length_max(): number;
-        type(val?: any): string;
+        type(next?: any): string;
         event_change(event?: any): any;
         submit_with_ctrl(): boolean;
         submit(event?: any): any;
@@ -1715,19 +1715,19 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_app_supplies_enter extends $mol_view {
-        entered(val?: any): boolean;
+        entered(next?: any): boolean;
         minimal_width(): number;
         sub(): readonly any[];
         loginLabel(): string;
-        login(val?: any): string;
+        login(next?: any): string;
         loginControl(): $$.$mol_string;
         loginField(): $$.$mol_form_field;
         passwordLabel(): string;
-        password(val?: any): string;
+        password(next?: any): string;
         passControl(): $$.$mol_string;
         passwordField(): $$.$mol_form_field;
         submitLabel(): string;
-        event_submit(val?: any): any;
+        event_submit(next?: any): any;
         submit_blocked(): boolean;
         submit(): $mol_button_major;
         form(): $$.$mol_form;
@@ -1757,7 +1757,7 @@ declare namespace $ {
         head(): readonly any[];
         Head(): $mol_view;
         body(): readonly $mol_view_content[];
-        body_scroll_top(val?: any): number;
+        body_scroll_top(next?: any): number;
         Body(): $$.$mol_scroll;
         foot(): readonly $mol_view[];
         Foot(): $mol_view;
@@ -2151,7 +2151,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_pop extends $mol_view {
-        showed(val?: any): boolean;
+        showed(next?: any): boolean;
         align_vert(): string;
         align_hor(): string;
         prefer(): string;
@@ -2211,14 +2211,14 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_nav extends $mol_plugin {
-        cycle(val?: any): boolean;
+        cycle(next?: any): boolean;
         mod_ctrl(): boolean;
         mod_shift(): boolean;
         mod_alt(): boolean;
-        keys_x(val?: any): readonly any[];
-        keys_y(val?: any): readonly any[];
-        current_x(val?: any): any;
-        current_y(val?: any): any;
+        keys_x(next?: any): readonly any[];
+        keys_y(next?: any): readonly any[];
+        current_x(next?: any): any;
+        current_y(next?: any): any;
         event_up(event?: any): any;
         event_down(event?: any): any;
         event_left(event?: any): any;
@@ -2453,20 +2453,20 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_search extends $mol_pop {
-        query(val?: any): string;
+        query(next?: any): string;
         suggests(): readonly string[];
         plugins(): readonly $mol_plugin[];
-        showed(val?: any): boolean;
+        showed(next?: any): boolean;
         align_hor(): string;
         Anchor(): $mol_view;
         bubble_content(): readonly $mol_view_content[];
         Suggest(id: any): $mol_button_minor;
-        clear(val?: any): any;
+        clear(next?: any): any;
         Hotkey(): $$.$mol_hotkey;
         nav_components(): readonly $mol_view[];
         nav_focused(component?: any): any;
         Nav(): $$.$mol_nav;
-        suggests_showed(val?: any): boolean;
+        suggests_showed(next?: any): boolean;
         hint(): string;
         submit(event?: any): any;
         enabled(): boolean;
@@ -2506,11 +2506,11 @@ declare namespace $ {
 declare namespace $ {
     class $mol_code extends $mol_view {
         sub(): readonly any[];
-        value(val?: any): string;
+        value(next?: any): string;
         format(): string;
         hint(): string;
         Manual(): $$.$mol_search;
-        event_scan(val?: any): any;
+        event_scan(next?: any): any;
         scan_label(): string;
         Scan(): $$.$mol_button;
     }
@@ -2540,7 +2540,7 @@ declare namespace $ {
         body(): readonly any[];
         Supply_row(id: any): $$.$mol_app_supplies_card;
         search_hint(): string;
-        search_query(val?: any): string;
+        search_query(next?: any): string;
         Search(): $$.$mol_code;
         supply_rows(): readonly $mol_view[];
         Supply_rows(): $$.$mol_list;
@@ -2647,7 +2647,7 @@ declare namespace $ {
         options(): Record<string, any>;
         keys(): readonly string[];
         sub(): readonly $mol_check[];
-        option_checked(id: any, val?: any): boolean;
+        option_checked(id: any, next?: any): boolean;
         option_title(id: any): string;
         option_label(id: any): readonly any[];
         enabled(): boolean;
@@ -2673,7 +2673,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_switch extends $mol_check_list {
-        value(val?: any): string;
+        value(next?: any): string;
     }
 }
 
@@ -2702,7 +2702,7 @@ declare namespace $ {
     class $mol_deck extends $mol_list {
         items(): readonly $mol_view[];
         rows(): readonly $mol_view[];
-        current(val?: any): string;
+        current(next?: any): string;
         switch_options(): Record<string, any>;
         Switch(): $$.$mol_switch;
         Content(): $mol_view;
@@ -2784,14 +2784,14 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_attach extends $mol_view {
-        items(val?: any): readonly string[];
+        items(next?: any): readonly string[];
         sub(): readonly any[];
         Add(): $mol_button_open;
         Item(id: any): $mol_button_minor;
         content(): readonly $mol_view[];
         Content(): $mol_row;
         attach_title(): string;
-        attach_new(val?: any): any;
+        attach_new(next?: any): any;
         item_drop(id: any, event?: any): any;
         item_uri(id: any): string;
         Image(id: any): $$.$mol_image;
@@ -2894,7 +2894,7 @@ declare namespace $ {
         Descr_card(): $$.$mol_card;
         attach_title(): string;
         attachments(): readonly string[];
-        attach_new(val?: any): any;
+        attach_new(next?: any): any;
         Attach(): $$.$mol_attach;
         Attach_section(): $$.$mol_section;
         positions_title(): string;
@@ -2905,7 +2905,7 @@ declare namespace $ {
         Positions(): $$.$mol_list;
         Positions_section(): $$.$mol_section;
         Content(): $$.$mol_list;
-        approved(val?: any): boolean;
+        approved(next?: any): boolean;
         approved_title(): string;
         Approve(): $mol_check_box;
         actions(): readonly any[];
@@ -2946,11 +2946,11 @@ declare namespace $ {
         enter(): $$.$mol_app_supplies_enter;
         List(): $$.$mol_app_supplies_list;
         Detail(id: any): $$.$mol_app_supplies_detail;
-        entered(val?: any): boolean;
+        entered(next?: any): boolean;
         supplies(): readonly $mol_app_supplies_domain_supply[];
         tools_root(): readonly any[];
         list_title(): string;
-        supply_id(val?: any): string;
+        supply_id(next?: any): string;
         supply(): any;
     }
 }

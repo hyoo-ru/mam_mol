@@ -63,12 +63,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hearing?val false
+		 * hearing? false
 		 * ```
 		 */
 		@ $mol_mem
-		hearing(val?: any) {
-			if ( val !== undefined ) return val as never
+		hearing(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -76,7 +76,7 @@ namespace $ {
 		 * ```tree
 		 * Toggle $mol_check_icon
 		 * 	Icon <= Toggle_icon
-		 * 	checked?val <=> hearing?val
+		 * 	checked? <=> hearing?
 		 * ```
 		 */
 		@ $mol_mem
@@ -84,7 +84,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_icon()
 			
 			obj.Icon = () => this.Toggle_icon()
-			obj.checked = (val?: any) => this.hearing(val)
+			obj.checked = (next?: any) => this.hearing(next)
 			
 			return obj
 		}
@@ -116,19 +116,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * speak?val null
+		 * speak? null
 		 * ```
 		 */
 		@ $mol_mem
-		speak(val?: any) {
-			if ( val !== undefined ) return val as never
+		speak(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
 		 * Speak $mol_button_major
-		 * 	click?val <=> speak?val
+		 * 	click? <=> speak?
 		 * 	sub / \Speak
 		 * ```
 		 */
@@ -136,7 +136,7 @@ namespace $ {
 		Speak() {
 			const obj = new this.$.$mol_button_major()
 			
-			obj.click = (val?: any) => this.speak(val)
+			obj.click = (next?: any) => this.speak(next)
 			obj.sub = () => [
 				"Speak"
 			] as readonly any[]

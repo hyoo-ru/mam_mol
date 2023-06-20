@@ -82,7 +82,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Playing $mol_check_icon
-		 * 	checked?val <=> playing?val
+		 * 	checked? <=> playing?
 		 * 	Icon <= Playing_icon
 		 * ```
 		 */
@@ -90,7 +90,7 @@ namespace $ {
 		Playing() {
 			const obj = new this.$.$mol_check_icon()
 			
-			obj.checked = (val?: any) => this.playing(val)
+			obj.checked = (next?: any) => this.playing(next)
 			obj.Icon = () => this.Playing_icon()
 			
 			return obj
@@ -134,7 +134,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Time $mol_number
-		 * 	value?val <=> time?val
+		 * 	value? <=> time?
 		 * 	precision_view 0.001
 		 * ```
 		 */
@@ -142,7 +142,7 @@ namespace $ {
 		Time() {
 			const obj = new this.$.$mol_number()
 			
-			obj.value = (val?: any) => this.time(val)
+			obj.value = (next?: any) => this.time(next)
 			obj.precision_view = () => 0.001
 			
 			return obj
@@ -170,7 +170,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Volume $mol_number
-		 * 	value?val <=> volume?val
+		 * 	value? <=> volume?
 		 * 	precision 0.001
 		 * ```
 		 */
@@ -178,7 +178,7 @@ namespace $ {
 		Volume() {
 			const obj = new this.$.$mol_number()
 			
-			obj.value = (val?: any) => this.volume(val)
+			obj.value = (next?: any) => this.volume(next)
 			obj.precision = () => 0.001
 			
 			return obj
@@ -239,29 +239,29 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * playing?val
+		 * playing?
 		 * ```
 		 */
-		playing(val?: any) {
-			return this.Player().playing(val)
+		playing(next?: any) {
+			return this.Player().playing(next)
 		}
 		
 		/**
 		 * ```tree
-		 * volume?val
+		 * volume?
 		 * ```
 		 */
-		volume(val?: any) {
-			return this.Player().volume(val)
+		volume(next?: any) {
+			return this.Player().volume(next)
 		}
 		
 		/**
 		 * ```tree
-		 * time?val
+		 * time?
 		 * ```
 		 */
-		time(val?: any) {
-			return this.Player().time(val)
+		time(next?: any) {
+			return this.Player().time(next)
 		}
 		
 		/**
@@ -277,9 +277,9 @@ namespace $ {
 		 * ```tree
 		 * Player $mol_video_player
 		 * 	uri <= uri
-		 * 	playing?val => playing?val
-		 * 	volume?val => volume?val
-		 * 	time?val => time?val
+		 * 	playing? => playing?
+		 * 	volume? => volume?
+		 * 	time? => time?
 		 * 	duration => duration
 		 * ```
 		 */

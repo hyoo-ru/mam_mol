@@ -12,23 +12,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hue_base?val +NaN
+		 * hue_base? +NaN
 		 * ```
 		 */
 		@ $mol_mem
-		hue_base(val?: any) {
-			if ( val !== undefined ) return val as never
+		hue_base(next?: any) {
+			if ( next !== undefined ) return next as never
 			return +NaN
 		}
 		
 		/**
 		 * ```tree
-		 * hue_shift?val 111
+		 * hue_shift? 111
 		 * ```
 		 */
 		@ $mol_mem
-		hue_shift(val?: any) {
-			if ( val !== undefined ) return val as never
+		hue_shift(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 111
 		}
 		
@@ -139,14 +139,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * shift?val $mol_vector_2d /
+		 * shift? $mol_vector_2d /
 		 * 	0
 		 * 	0
 		 * ```
 		 */
 		@ $mol_mem
-		shift(val?: any) {
-			if ( val !== undefined ) return val as never
+		shift(next?: any) {
+			if ( next !== undefined ) return next as never
 			const obj = new this.$.$mol_vector_2d(
 				0,
 				0
@@ -191,14 +191,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * scale?val $mol_vector_2d /
+		 * scale? $mol_vector_2d /
 		 * 	1
 		 * 	-1
 		 * ```
 		 */
 		@ $mol_mem
-		scale(val?: any) {
-			if ( val !== undefined ) return val as never
+		scale(next?: any) {
+			if ( next !== undefined ) return next as never
 			const obj = new this.$.$mol_vector_2d(
 				1,
 				-1
@@ -209,23 +209,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * scale_x?val 1
+		 * scale_x? 1
 		 * ```
 		 */
 		@ $mol_mem
-		scale_x(val?: any) {
-			if ( val !== undefined ) return val as never
+		scale_x(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 1
 		}
 		
 		/**
 		 * ```tree
-		 * scale_y?val -1
+		 * scale_y? -1
 		 * ```
 		 */
 		@ $mol_mem
-		scale_y(val?: any) {
-			if ( val !== undefined ) return val as never
+		scale_y(next?: any) {
+			if ( next !== undefined ) return next as never
 			return -1
 		}
 		
@@ -539,12 +539,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * zoom?val 1
+		 * zoom? 1
 		 * ```
 		 */
 		@ $mol_mem
-		zoom(val?: any) {
-			if ( val !== undefined ) return val as never
+		zoom(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 1
 		}
 		
@@ -638,8 +638,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Touch $mol_touch
-		 * 	zoom?val <=> zoom?val
-		 * 	pan?val <=> shift?val
+		 * 	zoom? <=> zoom?
+		 * 	pan? <=> shift?
 		 * 	pointer_center => cursor_position
 		 * 	allow_draw <= allow_draw
 		 * 	allow_pan <= allow_pan
@@ -655,8 +655,8 @@ namespace $ {
 		Touch() {
 			const obj = new this.$.$mol_touch()
 			
-			obj.zoom = (val?: any) => this.zoom(val)
-			obj.pan = (val?: any) => this.shift(val)
+			obj.zoom = (next?: any) => this.zoom(next)
+			obj.pan = (next?: any) => this.shift(next)
 			obj.allow_draw = () => this.allow_draw()
 			obj.allow_pan = () => this.allow_pan()
 			obj.allow_zoom = () => this.allow_zoom()

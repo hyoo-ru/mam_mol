@@ -62,25 +62,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * name?val \
+		 * name? \
 		 * ```
 		 */
 		@ $mol_mem
-		name(val?: any) {
-			if ( val !== undefined ) return val as never
+		name(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * Simple $mol_string value?val <=> name?val
+		 * Simple $mol_string value? <=> name?
 		 * ```
 		 */
 		@ $mol_mem
 		Simple() {
 			const obj = new this.$.$mol_string()
 			
-			obj.value = (val?: any) => this.name(val)
+			obj.value = (next?: any) => this.name(next)
 			
 			return obj
 		}
@@ -89,7 +89,7 @@ namespace $ {
 		 * ```tree
 		 * Hint $mol_string
 		 * 	hint \Batman
-		 * 	value?val <=> name?val
+		 * 	value? <=> name?
 		 * ```
 		 */
 		@ $mol_mem
@@ -97,32 +97,32 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.hint = () => "Batman"
-			obj.value = (val?: any) => this.name(val)
+			obj.value = (next?: any) => this.name(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * name2?val \Jocker
+		 * name2? \Jocker
 		 * ```
 		 */
 		@ $mol_mem
-		name2(val?: any) {
-			if ( val !== undefined ) return val as never
+		name2(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "Jocker"
 		}
 		
 		/**
 		 * ```tree
-		 * Filled $mol_string value?val <=> name2?val
+		 * Filled $mol_string value? <=> name2?
 		 * ```
 		 */
 		@ $mol_mem
 		Filled() {
 			const obj = new this.$.$mol_string()
 			
-			obj.value = (val?: any) => this.name2(val)
+			obj.value = (next?: any) => this.name2(next)
 			
 			return obj
 		}
@@ -131,7 +131,7 @@ namespace $ {
 		 * ```tree
 		 * Disabled $mol_string
 		 * 	disabled true
-		 * 	value?val <=> name2?val
+		 * 	value? <=> name2?
 		 * ```
 		 */
 		@ $mol_mem
@@ -139,21 +139,21 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.disabled = () => true
-			obj.value = (val?: any) => this.name2(val)
+			obj.value = (next?: any) => this.name2(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * Button $mol_string_button value?val <=> name2?val
+		 * Button $mol_string_button value? <=> name2?
 		 * ```
 		 */
 		@ $mol_mem
 		Button() {
 			const obj = new this.$.$mol_string_button()
 			
-			obj.value = (val?: any) => this.name2(val)
+			obj.value = (next?: any) => this.name2(next)
 			
 			return obj
 		}

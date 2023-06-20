@@ -7,12 +7,12 @@ $mol_pop_demo $mol_example
 				content /
 					<= Show_check $mol_check_box
 						hint <= pop_showed_check_hint \$mol_pop showed
-						checked?val <=> pop_showed?val true
+						checked? <=> pop_showed? true
 			<= Align $mol_labeler
 				title <= align_title \Align
 				content /
 					<= Align_select $mol_switch
-						value?val <=> pop_align?val \bottom_right
+						value? <=> pop_align? \bottom_right
 						options <= aligins *
 							left_top \left_top
 							left_center \left_center

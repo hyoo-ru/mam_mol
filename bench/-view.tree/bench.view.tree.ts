@@ -12,19 +12,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * col_sort?val \
+		 * col_sort? \
 		 * ```
 		 */
 		@ $mol_mem
-		col_sort(val?: any) {
-			if ( val !== undefined ) return val as never
+		col_sort(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
 		 * Col_head* $mol_bench_head
-		 * 	event_click?val <=> event_sort_toggle*?val
+		 * 	event_click? <=> event_sort_toggle*?
 		 * 	sub <= col_head_content*
 		 * ```
 		 */
@@ -32,7 +32,7 @@ namespace $ {
 		Col_head(id: any) {
 			const obj = new this.$.$mol_bench_head()
 			
-			obj.event_click = (val?: any) => this.event_sort_toggle(id, val)
+			obj.event_click = (next?: any) => this.event_sort_toggle(id, next)
 			obj.sub = () => this.col_head_content(id)
 			
 			return obj
@@ -64,12 +64,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * event_sort_toggle*?val null
+		 * event_sort_toggle*? null
 		 * ```
 		 */
 		@ $mol_mem_key
-		event_sort_toggle(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
+		event_sort_toggle(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -156,13 +156,13 @@ namespace $ {
 		 * ```tree
 		 * event *
 		 * 	^
-		 * 	click?val <=> event_click?val
+		 * 	click? <=> event_click?
 		 * ```
 		 */
 		event() {
 			return {
 				...super.event(),
-				click: (val?: any) => this.event_click(val)
+				click: (next?: any) => this.event_click(next)
 			} as Record< string, any >
 		}
 		
@@ -182,12 +182,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * event_click?val null
+		 * event_click? null
 		 * ```
 		 */
 		@ $mol_mem
-		event_click(val?: any) {
-			if ( val !== undefined ) return val as never
+		event_click(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		

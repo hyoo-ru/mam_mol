@@ -26,12 +26,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * name?val \
+		 * name? \
 		 * ```
 		 */
 		@ $mol_mem
-		name(val?: any) {
-			if ( val !== undefined ) return val as never
+		name(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -39,7 +39,7 @@ namespace $ {
 		 * ```tree
 		 * Name $mol_string
 		 * 	hint <= name_hint
-		 * 	value?val <=> name?val
+		 * 	value? <=> name?
 		 * ```
 		 */
 		@ $mol_mem
@@ -47,7 +47,7 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.hint = () => this.name_hint()
-			obj.value = (val?: any) => this.name(val)
+			obj.value = (next?: any) => this.name(next)
 			
 			return obj
 		}

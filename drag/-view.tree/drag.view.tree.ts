@@ -21,7 +21,7 @@ namespace $ {
 		 * ```tree
 		 * attr *
 		 * 	draggable true
-		 * 	mol_drag_status <= status?val
+		 * 	mol_drag_status <= status?
 		 * ```
 		 */
 		attr() {
@@ -145,12 +145,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * status?val \ready
+		 * status? \ready
 		 * ```
 		 */
 		@ $mol_mem
-		status(val?: any) {
-			if ( val !== undefined ) return val as never
+		status(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "ready"
 		}
 	}

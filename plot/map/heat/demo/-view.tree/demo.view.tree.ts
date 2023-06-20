@@ -130,18 +130,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * zoom?val
+		 * zoom?
 		 * ```
 		 */
-		zoom(val?: any) {
-			return this.Plot().scale_y(val)
+		zoom(next?: any) {
+			return this.Plot().scale_y(next)
 		}
 		
 		/**
 		 * ```tree
 		 * Plot $mol_plot_pane
-		 * 	scale_y?val => zoom?val
-		 * 	zoom?val <=> zoom?val
+		 * 	scale_y? => zoom?
+		 * 	zoom? <=> zoom?
 		 * 	graphs / <= Terrain
 		 * ```
 		 */
@@ -149,7 +149,7 @@ namespace $ {
 		Plot() {
 			const obj = new this.$.$mol_plot_pane()
 			
-			obj.zoom = (val?: any) => this.zoom(val)
+			obj.zoom = (next?: any) => this.zoom(next)
 			obj.graphs = () => [
 				this.Terrain()
 			] as readonly any[]

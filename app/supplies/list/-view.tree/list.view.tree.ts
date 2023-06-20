@@ -61,12 +61,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * search_query?val \
+		 * search_query? \
 		 * ```
 		 */
 		@ $mol_mem
-		search_query(val?: any) {
-			if ( val !== undefined ) return val as never
+		search_query(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -74,7 +74,7 @@ namespace $ {
 		 * ```tree
 		 * Search $mol_code
 		 * 	hint <= search_hint
-		 * 	value?val <=> search_query?val
+		 * 	value? <=> search_query?
 		 * ```
 		 */
 		@ $mol_mem
@@ -82,7 +82,7 @@ namespace $ {
 			const obj = new this.$.$mol_code()
 			
 			obj.hint = () => this.search_hint()
-			obj.value = (val?: any) => this.search_query(val)
+			obj.value = (next?: any) => this.search_query(next)
 			
 			return obj
 		}

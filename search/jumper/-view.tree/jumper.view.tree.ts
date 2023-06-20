@@ -34,7 +34,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Index $mol_paginator
-		 * 	value?val <=> index?val
+		 * 	value? <=> index?
 		 * 	forward?event => forward?event
 		 * 	backward?event => backward?event
 		 * ```
@@ -43,7 +43,7 @@ namespace $ {
 		Index() {
 			const obj = new this.$.$mol_paginator()
 			
-			obj.value = (val?: any) => this.index(val)
+			obj.value = (next?: any) => this.index(next)
 			
 			return obj
 		}
@@ -66,12 +66,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * index?val 0
+		 * index? 0
 		 * ```
 		 */
 		@ $mol_mem
-		index(val?: any) {
-			if ( val !== undefined ) return val as never
+		index(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 		
@@ -96,12 +96,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * escape?val null
+		 * escape? null
 		 * ```
 		 */
 		@ $mol_mem
-		escape(val?: any) {
-			if ( val !== undefined ) return val as never
+		escape(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -109,7 +109,7 @@ namespace $ {
 		 * ```tree
 		 * Forward $mol_hotkey key *
 		 * 	enter?event <=> forward?event
-		 * 	escape?val <=> escape?val
+		 * 	escape? <=> escape?
 		 * ```
 		 */
 		@ $mol_mem
@@ -118,7 +118,7 @@ namespace $ {
 			
 			obj.key = () => ({
 				enter: (event?: any) => this.forward(event),
-				escape: (val?: any) => this.escape(val)
+				escape: (next?: any) => this.escape(next)
 			} as Record< string, any >)
 			
 			return obj

@@ -1,6 +1,6 @@
 $mol_scroll $mol_view
-	scroll_top?val 0
-	scroll_left?val 0
+	scroll_top? 0
+	scroll_left? 0
 	field *
 		^
 		tabIndex <= tabindex -1
@@ -51,7 +51,7 @@ $mol_perf_uibench_table_cell $mol_view
 		class \TableCell
 	event *
 		^
-		click?val <=> click?val null
+		click? <=> click? null
 	sub /
 		<= text \
 

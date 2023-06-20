@@ -1,6 +1,6 @@
 $mol_scroll $mol_view
-	scroll_top?val 0
-	scroll_left?val 0
+	scroll_top? 0
+	scroll_left? 0
 	field *
 		^
 		tabIndex <= tabindex -1
@@ -32,7 +32,7 @@ $mol_string $mol_view
 	enabled true
 	minimal_height 40
 	autocomplete false
-	selection?val /number
+	selection? /number
 		0
 		0
 	auto /
@@ -40,7 +40,7 @@ $mol_string $mol_view
 	field *
 		^
 		disabled <= disabled false
-		value <= value_changed?val <=> value?val \
+		value <= value_changed? <=> value? \
 		placeholder <= hint_visible <= hint \
 		spellcheck <= spellcheck true
 		autocomplete <= autocomplete_native \
@@ -51,7 +51,7 @@ $mol_string $mol_view
 	attr *
 		^
 		maxlength <= length_max +Infinity
-		type <= type?val \text
+		type <= type? \text
 	event *
 		^
 		input?event <=> event_change?event null
@@ -144,22 +144,22 @@ $mol_form $mol_list
 			sub <= foot <= buttons /$mol_view
 
 $mol_app_supplies_enter $mol_view
-	entered?val false
+	entered? false
 	minimal_width 400
 	sub / <= form $mol_form
 		form_fields /
 			<= loginField $mol_form_field
 				name <= loginLabel @ \User name
-				control <= loginControl $mol_string value?val <=> login?val \
+				control <= loginControl $mol_string value? <=> login? \
 			<= passwordField $mol_form_field
 				name <= passwordLabel @ \Pass word
 				control <= passControl $mol_string
-					value?val <=> password?val \
+					value? <=> password? \
 					type \password
 		buttons /
 			<= submit $mol_button_major
 				sub / <= submitLabel @ \Log In
-				click?val <=> event_submit?val null
+				click? <=> event_submit? null
 				disabled <= submit_blocked false
 
 $mol_page $mol_view
@@ -180,7 +180,7 @@ $mol_page $mol_view
 				<= Tools $mol_view
 					sub <= tools /$mol_view_content
 		<= Body $mol_scroll
-			scroll_top?val => body_scroll_top?val
+			scroll_top? => body_scroll_top?
 			sub <= body /$mol_view_content
 		<= Foot $mol_view
 			dom_name \footer
@@ -250,7 +250,7 @@ $mol_app_supplies_card $mol_link
 						content / <= provider_name \
 
 $mol_pop $mol_view
-	showed?val false
+	showed? false
 	align_vert \
 	align_hor \
 	prefer \vert
@@ -276,17 +276,17 @@ $mol_pop_bubble $mol_view
 $mol_button_minor $mol_button_typed
 
 $mol_nav $mol_plugin
-	cycle?val false
+	cycle? false
 	-
 	mod_ctrl false
 	mod_shift false
 	mod_alt false
 	-
-	keys_x?val /
-	keys_y?val /
+	keys_x? /
+	keys_y? /
 	-
-	current_x?val null
-	current_y?val null
+	current_x? null
+	current_y? null
 	-
 	event_up?event null
 	event_down?event null
@@ -346,21 +346,21 @@ $mol_dimmer $mol_paragraph
 			<= string* \
 
 $mol_search $mol_pop
-	query?val \
+	query? \
 	suggests /string
 	plugins /$mol_plugin
 		^
 		<= Hotkey $mol_hotkey
-			key * escape?val <=> clear?val null
+			key * escape? <=> clear? null
 		<= Nav $mol_nav
 			keys_y <= nav_components /$mol_view
 			current_y?component <=> nav_focused?component null
-	showed?val <=> suggests_showed?val false
+	showed? <=> suggests_showed? false
 	align_hor \right
 	Anchor $mol_view
 		sub <= anchor_content /
 			<= Query $mol_string
-				value?val <=> query?val \
+				value? <=> query? \
 				hint <= hint @ \Search...
 				submit?event <=> submit?event null
 				enabled <= enabled true
@@ -380,15 +380,15 @@ $mol_search $mol_pop
 		sub <= suggest_content* /$mol_view_content
 			<= Suggest_label* $mol_dimmer
 				haystack <= suggest_label* \
-				needle <= query?val \
+				needle <= query? \
 
 $mol_code $mol_view
 	sub /
 		<= Manual $mol_search
-			query?val <=> value?val \
+			query? <=> value? \
 			hint <= hint <= format \
 		<= Scan $mol_button
-			event_click?val <=> event_scan?val null
+			event_click? <=> event_scan? null
 			sub /
 				<= scan_label @ \Scan
 
@@ -397,7 +397,7 @@ $mol_app_supplies_list $mol_page
 	tools /
 		<= Search $mol_code
 			hint <= search_hint @ \Search supply by bar code
-			value?val <=> search_query?val \
+			value? <=> search_query? \
 	body /
 		<= Supply_rows $mol_list
 			rows <= supply_rows /$mol_view
@@ -466,7 +466,7 @@ $mol_check $mol_button_minor
 
 $mol_check_list $mol_view
 	Option* $mol_check
-		checked?val <=> option_checked*?val false
+		checked? <=> option_checked*? false
 		label <= option_label* /
 			<= option_title* \
 		enabled <= option_enabled* <= enabled true
@@ -477,13 +477,13 @@ $mol_check_list $mol_view
 	sub <= items /$mol_check
 
 $mol_switch $mol_check_list
-	value?val \
+	value? \
 
 $mol_deck $mol_list
 	items /$mol_view
 	rows /$mol_view
 		<= Switch $mol_switch
-			value?val <=> current?val \0
+			value? <=> current? \0
 			options <= switch_options *
 		<= Content $mol_view
 
@@ -526,13 +526,13 @@ $mol_image $mol_view
 	minimal_height 16
 
 $mol_attach $mol_view
-	items?val /string
+	items? /string
 	sub /
 		<= Content $mol_row
 			sub <= content /$mol_view
 	Add $mol_button_open
 		title <= attach_title \
-		files?val <=> attach_new?val null
+		files? <=> attach_new? null
 	Item* $mol_button_minor
 		click?event <=> item_drop*?event null
 		sub /
@@ -606,7 +606,7 @@ $mol_app_supplies_detail $mol_page
 					content /
 						<= Attach $mol_attach
 							items <= attachments /string
-							attach_new?val <=> attach_new?val null
+							attach_new? <=> attach_new? null
 				<= Positions_section $mol_section
 					head <= positions_head /
 						<= positions_title @ \Positions
@@ -619,7 +619,7 @@ $mol_app_supplies_detail $mol_page
 		<= Actions $mol_row
 			sub <= actions /
 				<= Approve $mol_check_box
-					checked?val <=> approved?val false
+					checked? <=> approved? false
 					title <= approved_title @ \Approved
 	-
 	Position* $mol_app_supplies_position
@@ -631,13 +631,13 @@ $mol_app_supplies $mol_book2
 		mol_theme \$mol_theme_auto
 	-
 	enter $mol_app_supplies_enter
-		entered?val <=> entered?val false
+		entered? <=> entered? false
 	-
 	List $mol_app_supplies_list
 		supplies <= supplies /$mol_app_supplies_domain_supply
 		tools <= tools_root /
 		title <= list_title @ \Supplies
-		search_query?val <=> supply_id?val \
+		search_query? <=> supply_id? \
 	-
 	Detail* $mol_app_supplies_detail
 		supply <= supply null

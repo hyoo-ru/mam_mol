@@ -4,7 +4,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Option* $mol_check
-		 * 	checked?val <=> option_checked*?val
+		 * 	checked? <=> option_checked*?
 		 * 	label <= option_label*
 		 * 	enabled <= option_enabled*
 		 * 	hint <= option_hint*
@@ -15,7 +15,7 @@ namespace $ {
 		Option(id: any) {
 			const obj = new this.$.$mol_check()
 			
-			obj.checked = (val?: any) => this.option_checked(id, val)
+			obj.checked = (next?: any) => this.option_checked(id, next)
 			obj.label = () => this.option_label(id)
 			obj.enabled = () => this.option_enabled(id)
 			obj.hint = () => this.option_hint(id)
@@ -55,12 +55,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * option_checked*?val false
+		 * option_checked*? false
 		 * ```
 		 */
 		@ $mol_mem_key
-		option_checked(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
+		option_checked(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		

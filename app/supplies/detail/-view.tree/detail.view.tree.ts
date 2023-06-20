@@ -546,12 +546,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * attach_new?val null
+		 * attach_new? null
 		 * ```
 		 */
 		@ $mol_mem
-		attach_new(val?: any) {
-			if ( val !== undefined ) return val as never
+		attach_new(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -559,7 +559,7 @@ namespace $ {
 		 * ```tree
 		 * Attach $mol_attach
 		 * 	items <= attachments
-		 * 	attach_new?val <=> attach_new?val
+		 * 	attach_new? <=> attach_new?
 		 * ```
 		 */
 		@ $mol_mem
@@ -567,7 +567,7 @@ namespace $ {
 			const obj = new this.$.$mol_attach()
 			
 			obj.items = () => this.attachments()
-			obj.attach_new = (val?: any) => this.attach_new(val)
+			obj.attach_new = (next?: any) => this.attach_new(next)
 			
 			return obj
 		}
@@ -708,12 +708,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * approved?val false
+		 * approved? false
 		 * ```
 		 */
 		@ $mol_mem
-		approved(val?: any) {
-			if ( val !== undefined ) return val as never
+		approved(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -729,7 +729,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Approve $mol_check_box
-		 * 	checked?val <=> approved?val
+		 * 	checked? <=> approved?
 		 * 	title <= approved_title
 		 * ```
 		 */
@@ -737,7 +737,7 @@ namespace $ {
 		Approve() {
 			const obj = new this.$.$mol_check_box()
 			
-			obj.checked = (val?: any) => this.approved(val)
+			obj.checked = (next?: any) => this.approved(next)
 			obj.title = () => this.approved_title()
 			
 			return obj

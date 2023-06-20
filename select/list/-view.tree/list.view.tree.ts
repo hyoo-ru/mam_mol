@@ -3,12 +3,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value?val /string
+		 * value? /string
 		 * ```
 		 */
 		@ $mol_mem
-		value(val?: any) {
-			if ( val !== undefined ) return val as never
+		value(next?: any) {
+			if ( next !== undefined ) return next as never
 			return [
 			] as readonly string[]
 		}
@@ -154,12 +154,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * pick?val \
+		 * pick? \
 		 * ```
 		 */
 		@ $mol_mem
-		pick(val?: any) {
-			if ( val !== undefined ) return val as never
+		pick(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -207,7 +207,7 @@ namespace $ {
 		 * Pick $mol_select
 		 * 	align_hor <= align_hor
 		 * 	options <= options_pickable
-		 * 	value?val <=> pick?val
+		 * 	value? <=> pick?
 		 * 	option_label* <= option_title*
 		 * 	trigger_enabled <= pick_enabled
 		 * 	hint <= pick_hint
@@ -220,7 +220,7 @@ namespace $ {
 			
 			obj.align_hor = () => this.align_hor()
 			obj.options = () => this.options_pickable()
-			obj.value = (val?: any) => this.pick(val)
+			obj.value = (next?: any) => this.pick(next)
 			obj.option_label = (id: any) => this.option_title(id)
 			obj.trigger_enabled = () => this.pick_enabled()
 			obj.hint = () => this.pick_hint()

@@ -16,7 +16,7 @@ namespace $ {
 		 * 	^
 		 * 	data null
 		 * 	type null
-		 * 	src <= uri?val
+		 * 	src <= uri?
 		 * 	srcdoc <= html
 		 * 	allow <= allow
 		 * ```
@@ -106,12 +106,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * uri?val \about:config
+		 * uri? \about:config
 		 * ```
 		 */
 		@ $mol_mem
-		uri(val?: any) {
-			if ( val !== undefined ) return val as never
+		uri(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "about:config"
 		}
 		

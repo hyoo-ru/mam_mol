@@ -3007,9 +3007,9 @@ var $;
         size_target() {
             return 25;
         }
-        elapsed(val) {
-            if (val !== undefined)
-                return val;
+        elapsed(next) {
+            if (next !== undefined)
+                return next;
             return 0;
         }
         style() {
@@ -3071,9 +3071,9 @@ var $;
         size_px() {
             return "25px";
         }
-        hover(val) {
-            if (val !== undefined)
-                return val;
+        hover(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         sub() {
@@ -3095,8 +3095,8 @@ var $;
         event() {
             return {
                 ...super.event(),
-                mouseenter: (val) => this.enter(val),
-                mouseleave: (val) => this.leave(val)
+                mouseenter: (next) => this.enter(next),
+                mouseleave: (next) => this.leave(next)
             };
         }
         text() {
@@ -3120,14 +3120,14 @@ var $;
         color() {
             return "";
         }
-        enter(val) {
-            if (val !== undefined)
-                return val;
+        enter(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        leave(val) {
-            if (val !== undefined)
-                return val;
+        leave(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
     }

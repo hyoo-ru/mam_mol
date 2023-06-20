@@ -65,12 +65,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * base_checked?val false
+		 * base_checked? false
 		 * ```
 		 */
 		@ $mol_mem
-		base_checked(val?: any) {
-			if ( val !== undefined ) return val as never
+		base_checked(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -78,7 +78,7 @@ namespace $ {
 		 * ```tree
 		 * Base $mol_check_icon
 		 * 	Icon <= Base_icon
-		 * 	checked?val <=> base_checked?val
+		 * 	checked? <=> base_checked?
 		 * ```
 		 */
 		@ $mol_mem
@@ -86,7 +86,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_icon()
 			
 			obj.Icon = () => this.Base_icon()
-			obj.checked = (val?: any) => this.base_checked(val)
+			obj.checked = (next?: any) => this.base_checked(next)
 			
 			return obj
 		}
@@ -105,12 +105,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * checked_checked?val true
+		 * checked_checked? true
 		 * ```
 		 */
 		@ $mol_mem
-		checked_checked(val?: any) {
-			if ( val !== undefined ) return val as never
+		checked_checked(next?: any) {
+			if ( next !== undefined ) return next as never
 			return true
 		}
 		
@@ -118,7 +118,7 @@ namespace $ {
 		 * ```tree
 		 * Checked $mol_check_icon
 		 * 	Icon <= Checked_icon
-		 * 	checked?val <=> checked_checked?val
+		 * 	checked? <=> checked_checked?
 		 * ```
 		 */
 		@ $mol_mem
@@ -126,7 +126,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_icon()
 			
 			obj.Icon = () => this.Checked_icon()
-			obj.checked = (val?: any) => this.checked_checked(val)
+			obj.checked = (next?: any) => this.checked_checked(next)
 			
 			return obj
 		}

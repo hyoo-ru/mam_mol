@@ -59,12 +59,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * name?val \
+		 * name? \
 		 * ```
 		 */
 		@ $mol_mem
-		name(val?: any) {
-			if ( val !== undefined ) return val as never
+		name(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -90,7 +90,7 @@ namespace $ {
 		 * ```tree
 		 * Name $mol_search
 		 * 	hint <= name_hint
-		 * 	query?val <=> name?val
+		 * 	query? <=> name?
 		 * 	suggests /
 		 * 		<= suggest1
 		 * 		<= suggest2
@@ -101,7 +101,7 @@ namespace $ {
 			const obj = new this.$.$mol_search()
 			
 			obj.hint = () => this.name_hint()
-			obj.query = (val?: any) => this.name(val)
+			obj.query = (next?: any) => this.name(next)
 			obj.suggests = () => [
 				this.suggest1(),
 				this.suggest2()
@@ -121,12 +121,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * count?val null
+		 * count? null
 		 * ```
 		 */
 		@ $mol_mem
-		count(val?: any) {
-			if ( val !== undefined ) return val as never
+		count(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -134,7 +134,7 @@ namespace $ {
 		 * ```tree
 		 * Count $mol_number
 		 * 	hint <= count_hint
-		 * 	value?val <=> count?val
+		 * 	value? <=> count?
 		 * ```
 		 */
 		@ $mol_mem
@@ -142,7 +142,7 @@ namespace $ {
 			const obj = new this.$.$mol_number()
 			
 			obj.hint = () => this.count_hint()
-			obj.value = (val?: any) => this.count(val)
+			obj.value = (next?: any) => this.count(next)
 			
 			return obj
 		}
@@ -181,12 +181,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * publish?val false
+		 * publish? false
 		 * ```
 		 */
 		@ $mol_mem
-		publish(val?: any) {
-			if ( val !== undefined ) return val as never
+		publish(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -194,7 +194,7 @@ namespace $ {
 		 * ```tree
 		 * Publish $mol_check_box
 		 * 	title <= publish_label
-		 * 	checked?val <=> publish?val
+		 * 	checked? <=> publish?
 		 * ```
 		 */
 		@ $mol_mem
@@ -202,7 +202,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_box()
 			
 			obj.title = () => this.publish_label()
-			obj.checked = (val?: any) => this.publish(val)
+			obj.checked = (next?: any) => this.publish(next)
 			
 			return obj
 		}

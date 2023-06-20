@@ -61,9 +61,9 @@ namespace $ {
 		 * ```tree
 		 * Nav $mol_nav
 		 * 	keys_x <= tab_list
-		 * 	current_x?val <=> tab_current?val
+		 * 	current_x? <=> tab_current?
 		 * 	keys_y <= row_list
-		 * 	current_y?val <=> row_current?val
+		 * 	current_y? <=> row_current?
 		 * ```
 		 */
 		@ $mol_mem
@@ -71,21 +71,21 @@ namespace $ {
 			const obj = new this.$.$mol_nav()
 			
 			obj.keys_x = () => this.tab_list()
-			obj.current_x = (val?: any) => this.tab_current(val)
+			obj.current_x = (next?: any) => this.tab_current(next)
 			obj.keys_y = () => this.row_list()
-			obj.current_y = (val?: any) => this.row_current(val)
+			obj.current_y = (next?: any) => this.row_current(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * tab_current?val \
+		 * tab_current? \
 		 * ```
 		 */
 		@ $mol_mem
-		tab_current(val?: any) {
-			if ( val !== undefined ) return val as never
+		tab_current(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -102,7 +102,7 @@ namespace $ {
 		 * ```tree
 		 * Tab_list $mol_switch
 		 * 	keys => tab_list
-		 * 	value?val <=> tab_current?val
+		 * 	value? <=> tab_current?
 		 * 	options *
 		 * 		first \First
 		 * 		second \Second
@@ -113,7 +113,7 @@ namespace $ {
 		Tab_list() {
 			const obj = new this.$.$mol_switch()
 			
-			obj.value = (val?: any) => this.tab_current(val)
+			obj.value = (next?: any) => this.tab_current(next)
 			obj.options = () => ({
 				first: "First",
 				second: "Second",
@@ -125,12 +125,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * row_current?val \
+		 * row_current? \
 		 * ```
 		 */
 		@ $mol_mem
-		row_current(val?: any) {
-			if ( val !== undefined ) return val as never
+		row_current(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -147,7 +147,7 @@ namespace $ {
 		 * ```tree
 		 * Row_list $mol_switch
 		 * 	keys => row_list
-		 * 	value?val <=> row_current?val
+		 * 	value? <=> row_current?
 		 * 	options *
 		 * 		first \First
 		 * 		second \Second
@@ -158,7 +158,7 @@ namespace $ {
 		Row_list() {
 			const obj = new this.$.$mol_switch()
 			
-			obj.value = (val?: any) => this.row_current(val)
+			obj.value = (next?: any) => this.row_current(next)
 			obj.options = () => ({
 				first: "First",
 				second: "Second",

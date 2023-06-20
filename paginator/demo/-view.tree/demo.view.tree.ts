@@ -51,25 +51,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * page?val 0
+		 * page? 0
 		 * ```
 		 */
 		@ $mol_mem
-		page(val?: any) {
-			if ( val !== undefined ) return val as never
+		page(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 		
 		/**
 		 * ```tree
-		 * Pages $mol_paginator value?val <=> page?val
+		 * Pages $mol_paginator value? <=> page?
 		 * ```
 		 */
 		@ $mol_mem
 		Pages() {
 			const obj = new this.$.$mol_paginator()
 			
-			obj.value = (val?: any) => this.page(val)
+			obj.value = (next?: any) => this.page(next)
 			
 			return obj
 		}

@@ -12,12 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * spread?val \
+		 * spread? \
 		 * ```
 		 */
 		@ $mol_mem
-		spread(val?: any) {
-			if ( val !== undefined ) return val as never
+		spread(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		

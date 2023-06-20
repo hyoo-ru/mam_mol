@@ -50,19 +50,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * right*?val false
+		 * right*? false
 		 * ```
 		 */
 		@ $mol_mem_key
-		right(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
+		right(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
 		/**
 		 * ```tree
 		 * Rights $mol_check_list
-		 * 	option_checked*?val <=> right*?val
+		 * 	option_checked*? <=> right*?
 		 * 	options *
 		 * 		read \Allow Read
 		 * 		write \Allow Write
@@ -78,7 +78,7 @@ namespace $ {
 		Rights() {
 			const obj = new this.$.$mol_check_list()
 			
-			obj.option_checked = (id: any, val?: any) => this.right(id, val)
+			obj.option_checked = (id: any, next?: any) => this.right(id, next)
 			obj.options = () => ({
 				read: "Allow Read",
 				write: "Allow Write",

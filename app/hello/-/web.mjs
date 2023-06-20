@@ -2631,9 +2631,9 @@ var $;
         autocomplete() {
             return false;
         }
-        selection(val) {
-            if (val !== undefined)
-                return val;
+        selection(next) {
+            if (next !== undefined)
+                return next;
             return [
                 0,
                 0
@@ -2682,13 +2682,13 @@ var $;
         disabled() {
             return false;
         }
-        value(val) {
-            if (val !== undefined)
-                return val;
+        value(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
-        value_changed(val) {
-            return this.value(val);
+        value_changed(next) {
+            return this.value(next);
         }
         hint() {
             return "";
@@ -2717,9 +2717,9 @@ var $;
         length_max() {
             return +Infinity;
         }
-        type(val) {
-            if (val !== undefined)
-                return val;
+        type(next) {
+            if (next !== undefined)
+                return next;
             return "text";
         }
         event_change(event) {
@@ -2895,15 +2895,15 @@ var $;
         name_hint() {
             return "Name";
         }
-        name(val) {
-            if (val !== undefined)
-                return val;
+        name(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         Name() {
             const obj = new this.$.$mol_string();
             obj.hint = () => this.name_hint();
-            obj.value = (val) => this.name(val);
+            obj.value = (next) => this.name(next);
             return obj;
         }
         greeting() {

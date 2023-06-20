@@ -1,9 +1,9 @@
 $mol_code $mol_view
 	sub /
 		<= Manual $mol_search
-			query?val <=> value?val \
+			query? <=> value? \
 			hint <= hint <= format \
 		<= Scan $mol_button
-			event_click?val <=> event_scan?val null
+			event_click? <=> event_scan? null
 			sub /
 				<= scan_label @ \Scan

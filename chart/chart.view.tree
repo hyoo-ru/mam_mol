@@ -10,8 +10,8 @@ $mol_chart $mol_view
 		<= Legend $mol_chart_legend
 			graphs <= graphs_colored
 		<= Plot $mol_plot_pane
-			scale_x?val => zoom?val
-			zoom?val <=> zoom?val
+			scale_x? => zoom?
+			zoom? <=> zoom?
 			gap_left <= gap_left
 			gap_right <= gap_right
 			gap_bottom <= gap_bottom

@@ -48,12 +48,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * priority?val \Lowest
+		 * priority? \Lowest
 		 * ```
 		 */
 		@ $mol_mem
-		priority(val?: any) {
-			if ( val !== undefined ) return val as never
+		priority(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "Lowest"
 		}
 		
@@ -61,7 +61,7 @@ namespace $ {
 		 * ```tree
 		 * Priority $mol_select
 		 * 	Filter null
-		 * 	value?val <=> priority?val
+		 * 	value? <=> priority?
 		 * 	options /
 		 * 		\Highest 
 		 * 		\High
@@ -75,7 +75,7 @@ namespace $ {
 			const obj = new this.$.$mol_select()
 			
 			obj.Filter = () => null as any
-			obj.value = (val?: any) => this.priority(val)
+			obj.value = (next?: any) => this.priority(next)
 			obj.options = () => [
 				"Highest ",
 				"High",

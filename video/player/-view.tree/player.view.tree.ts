@@ -12,34 +12,34 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * playing?val false
+		 * playing? false
 		 * ```
 		 */
 		@ $mol_mem
-		playing(val?: any) {
-			if ( val !== undefined ) return val as never
+		playing(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
 		/**
 		 * ```tree
-		 * volume?val 0
+		 * volume? 0
 		 * ```
 		 */
 		@ $mol_mem
-		volume(val?: any) {
-			if ( val !== undefined ) return val as never
+		volume(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 		
 		/**
 		 * ```tree
-		 * time?val 0
+		 * time? 0
 		 * ```
 		 */
 		@ $mol_mem
-		time(val?: any) {
-			if ( val !== undefined ) return val as never
+		time(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 		

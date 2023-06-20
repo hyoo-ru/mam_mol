@@ -3,12 +3,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * showed?val false
+		 * showed? false
 		 * ```
 		 */
 		@ $mol_mem
-		showed(val?: any) {
-			if ( val !== undefined ) return val as never
+		showed(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		

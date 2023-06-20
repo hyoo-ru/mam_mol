@@ -47,12 +47,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * date?val $mol_time_moment
+		 * date? $mol_time_moment
 		 * ```
 		 */
 		@ $mol_mem
-		date(val?: any) {
-			if ( val !== undefined ) return val as never
+		date(next?: any) {
+			if ( next !== undefined ) return next as never
 			const obj = new this.$.$mol_time_moment()
 			
 			return obj
@@ -60,14 +60,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Date $mol_date value_moment?val <=> date?val
+		 * Date $mol_date value_moment? <=> date?
 		 * ```
 		 */
 		@ $mol_mem
 		Date() {
 			const obj = new this.$.$mol_date()
 			
-			obj.value_moment = (val?: any) => this.date(val)
+			obj.value_moment = (next?: any) => this.date(next)
 			
 			return obj
 		}

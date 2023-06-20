@@ -3,34 +3,34 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * start_zoom?val 0
+		 * start_zoom? 0
 		 * ```
 		 */
 		@ $mol_mem
-		start_zoom(val?: any) {
-			if ( val !== undefined ) return val as never
+		start_zoom(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 		
 		/**
 		 * ```tree
-		 * start_distance?val 0
+		 * start_distance? 0
 		 * ```
 		 */
 		@ $mol_mem
-		start_distance(val?: any) {
-			if ( val !== undefined ) return val as never
+		start_distance(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 		
 		/**
 		 * ```tree
-		 * zoom?val 1
+		 * zoom? 1
 		 * ```
 		 */
 		@ $mol_mem
-		zoom(val?: any) {
-			if ( val !== undefined ) return val as never
+		zoom(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 1
 		}
 		
@@ -63,25 +63,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * action_type?val \
+		 * action_type? \
 		 * ```
 		 */
 		@ $mol_mem
-		action_type(val?: any) {
-			if ( val !== undefined ) return val as never
+		action_type(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * action_point?val $mol_vector_2d /
+		 * action_point? $mol_vector_2d /
 		 * 	NaN
 		 * 	NaN
 		 * ```
 		 */
 		@ $mol_mem
-		action_point(val?: any) {
-			if ( val !== undefined ) return val as never
+		action_point(next?: any) {
+			if ( next !== undefined ) return next as never
 			const obj = new this.$.$mol_vector_2d(
 				NaN,
 				NaN
@@ -92,14 +92,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * start_pan?val /
+		 * start_pan? /
 		 * 	0
 		 * 	0
 		 * ```
 		 */
 		@ $mol_mem
-		start_pan(val?: any) {
-			if ( val !== undefined ) return val as never
+		start_pan(next?: any) {
+			if ( next !== undefined ) return next as never
 			return [
 				0,
 				0
@@ -108,14 +108,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * pan?val $mol_vector_2d /
+		 * pan? $mol_vector_2d /
 		 * 	0
 		 * 	0
 		 * ```
 		 */
 		@ $mol_mem
-		pan(val?: any) {
-			if ( val !== undefined ) return val as never
+		pan(next?: any) {
+			if ( next !== undefined ) return next as never
 			const obj = new this.$.$mol_vector_2d(
 				0,
 				0
@@ -143,12 +143,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * start_pos?val null
+		 * start_pos? null
 		 * ```
 		 */
 		@ $mol_mem
-		start_pos(val?: any) {
-			if ( val !== undefined ) return val as never
+		start_pos(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -163,133 +163,133 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * swipe_right?val null
+		 * swipe_right? null
 		 * ```
 		 */
 		@ $mol_mem
-		swipe_right(val?: any) {
-			if ( val !== undefined ) return val as never
+		swipe_right(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * swipe_bottom?val null
+		 * swipe_bottom? null
 		 * ```
 		 */
 		@ $mol_mem
-		swipe_bottom(val?: any) {
-			if ( val !== undefined ) return val as never
+		swipe_bottom(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * swipe_left?val null
+		 * swipe_left? null
 		 * ```
 		 */
 		@ $mol_mem
-		swipe_left(val?: any) {
-			if ( val !== undefined ) return val as never
+		swipe_left(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * swipe_top?val null
+		 * swipe_top? null
 		 * ```
 		 */
 		@ $mol_mem
-		swipe_top(val?: any) {
-			if ( val !== undefined ) return val as never
+		swipe_top(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * swipe_from_right?val null
+		 * swipe_from_right? null
 		 * ```
 		 */
 		@ $mol_mem
-		swipe_from_right(val?: any) {
-			if ( val !== undefined ) return val as never
+		swipe_from_right(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * swipe_from_bottom?val null
+		 * swipe_from_bottom? null
 		 * ```
 		 */
 		@ $mol_mem
-		swipe_from_bottom(val?: any) {
-			if ( val !== undefined ) return val as never
+		swipe_from_bottom(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * swipe_from_left?val null
+		 * swipe_from_left? null
 		 * ```
 		 */
 		@ $mol_mem
-		swipe_from_left(val?: any) {
-			if ( val !== undefined ) return val as never
+		swipe_from_left(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * swipe_from_top?val null
+		 * swipe_from_top? null
 		 * ```
 		 */
 		@ $mol_mem
-		swipe_from_top(val?: any) {
-			if ( val !== undefined ) return val as never
+		swipe_from_top(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * swipe_to_right?val null
+		 * swipe_to_right? null
 		 * ```
 		 */
 		@ $mol_mem
-		swipe_to_right(val?: any) {
-			if ( val !== undefined ) return val as never
+		swipe_to_right(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * swipe_to_bottom?val null
+		 * swipe_to_bottom? null
 		 * ```
 		 */
 		@ $mol_mem
-		swipe_to_bottom(val?: any) {
-			if ( val !== undefined ) return val as never
+		swipe_to_bottom(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * swipe_to_left?val null
+		 * swipe_to_left? null
 		 * ```
 		 */
 		@ $mol_mem
-		swipe_to_left(val?: any) {
-			if ( val !== undefined ) return val as never
+		swipe_to_left(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * swipe_to_top?val null
+		 * swipe_to_top? null
 		 * ```
 		 */
 		@ $mol_mem
-		swipe_to_top(val?: any) {
-			if ( val !== undefined ) return val as never
+		swipe_to_top(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		

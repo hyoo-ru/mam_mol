@@ -2444,14 +2444,14 @@ var $;
 var $;
 (function ($) {
     class $mol_scroll extends $mol_view {
-        scroll_top(val) {
-            if (val !== undefined)
-                return val;
+        scroll_top(next) {
+            if (next !== undefined)
+                return next;
             return 0;
         }
-        scroll_left(val) {
-            if (val !== undefined)
-                return val;
+        scroll_left(next) {
+            if (next !== undefined)
+                return next;
             return 0;
         }
         field() {
@@ -2983,9 +2983,9 @@ var $;
 var $;
 (function ($) {
     class $mol_pop extends $mol_view {
-        showed(val) {
-            if (val !== undefined)
-                return val;
+        showed(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         align_vert() {
@@ -3206,9 +3206,9 @@ var $;
                 mouseleave: (event) => this.event_hide(event)
             };
         }
-        hovered(val) {
-            if (val !== undefined)
-                return val;
+        hovered(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         event_show(event) {

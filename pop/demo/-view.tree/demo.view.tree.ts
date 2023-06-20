@@ -75,12 +75,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * pop_showed?val true
+		 * pop_showed? true
 		 * ```
 		 */
 		@ $mol_mem
-		pop_showed(val?: any) {
-			if ( val !== undefined ) return val as never
+		pop_showed(next?: any) {
+			if ( next !== undefined ) return next as never
 			return true
 		}
 		
@@ -88,7 +88,7 @@ namespace $ {
 		 * ```tree
 		 * Show_check $mol_check_box
 		 * 	hint <= pop_showed_check_hint
-		 * 	checked?val <=> pop_showed?val
+		 * 	checked? <=> pop_showed?
 		 * ```
 		 */
 		@ $mol_mem
@@ -96,7 +96,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_box()
 			
 			obj.hint = () => this.pop_showed_check_hint()
-			obj.checked = (val?: any) => this.pop_showed(val)
+			obj.checked = (next?: any) => this.pop_showed(next)
 			
 			return obj
 		}
@@ -131,12 +131,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * pop_align?val \bottom_right
+		 * pop_align? \bottom_right
 		 * ```
 		 */
 		@ $mol_mem
-		pop_align(val?: any) {
-			if ( val !== undefined ) return val as never
+		pop_align(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "bottom_right"
 		}
 		
@@ -179,7 +179,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Align_select $mol_switch
-		 * 	value?val <=> pop_align?val
+		 * 	value? <=> pop_align?
 		 * 	options <= aligins
 		 * ```
 		 */
@@ -187,7 +187,7 @@ namespace $ {
 		Align_select() {
 			const obj = new this.$.$mol_switch()
 			
-			obj.value = (val?: any) => this.pop_align(val)
+			obj.value = (next?: any) => this.pop_align(next)
 			obj.options = () => this.aligins()
 			
 			return obj

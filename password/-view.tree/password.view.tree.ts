@@ -3,12 +3,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * type?val \password
+		 * type? \password
 		 * ```
 		 */
 		@ $mol_mem
-		type(val?: any) {
-			if ( val !== undefined ) return val as never
+		type(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "password"
 		}
 		
@@ -32,12 +32,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value?val \
+		 * value? \
 		 * ```
 		 */
 		@ $mol_mem
-		value(val?: any) {
-			if ( val !== undefined ) return val as never
+		value(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -66,7 +66,7 @@ namespace $ {
 		 * Pass $mol_string
 		 * 	type <= type
 		 * 	hint <= hint
-		 * 	value?val <=> value?val
+		 * 	value? <=> value?
 		 * 	submit?event <=> submit?event
 		 * 	enabled <= enabled
 		 * ```
@@ -77,7 +77,7 @@ namespace $ {
 			
 			obj.type = () => this.type()
 			obj.hint = () => this.hint()
-			obj.value = (val?: any) => this.value(val)
+			obj.value = (next?: any) => this.value(next)
 			obj.submit = (event?: any) => this.submit(event)
 			obj.enabled = () => this.enabled()
 			
@@ -86,12 +86,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * checked?val true
+		 * checked? true
 		 * ```
 		 */
 		@ $mol_mem
-		checked(val?: any) {
-			if ( val !== undefined ) return val as never
+		checked(next?: any) {
+			if ( next !== undefined ) return next as never
 			return true
 		}
 		
@@ -110,7 +110,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Show $mol_check_icon
-		 * 	checked?val <=> checked?val
+		 * 	checked? <=> checked?
 		 * 	Icon <= Show_icon
 		 * ```
 		 */
@@ -118,7 +118,7 @@ namespace $ {
 		Show() {
 			const obj = new this.$.$mol_check_icon()
 			
-			obj.checked = (val?: any) => this.checked(val)
+			obj.checked = (next?: any) => this.checked(next)
 			obj.Icon = () => this.Show_icon()
 			
 			return obj

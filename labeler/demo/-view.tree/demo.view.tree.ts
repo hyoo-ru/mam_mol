@@ -74,12 +74,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * user_name?val \
+		 * user_name? \
 		 * ```
 		 */
 		@ $mol_mem
-		user_name(val?: any) {
-			if ( val !== undefined ) return val as never
+		user_name(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -87,7 +87,7 @@ namespace $ {
 		 * ```tree
 		 * Name_control $mol_string
 		 * 	hint \Jack Sparrow
-		 * 	value?val <=> user_name?val
+		 * 	value? <=> user_name?
 		 * ```
 		 */
 		@ $mol_mem
@@ -95,7 +95,7 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.hint = () => "Jack Sparrow"
-			obj.value = (val?: any) => this.user_name(val)
+			obj.value = (next?: any) => this.user_name(next)
 			
 			return obj
 		}

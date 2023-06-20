@@ -32,7 +32,7 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * attr * mol_drop_status <= status?val
+		 * attr * mol_drop_status <= status?
 		 * ```
 		 */
 		attr() {
@@ -126,12 +126,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * status?val \ready
+		 * status? \ready
 		 * ```
 		 */
 		@ $mol_mem
-		status(val?: any) {
-			if ( val !== undefined ) return val as never
+		status(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "ready"
 		}
 	}

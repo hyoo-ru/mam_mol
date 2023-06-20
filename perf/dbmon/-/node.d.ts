@@ -938,8 +938,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_scroll extends $mol_view {
-        scroll_top(val?: any): number;
-        scroll_left(val?: any): number;
+        scroll_top(next?: any): number;
+        scroll_left(next?: any): number;
         field(): Record<string, any>;
         event(): Record<string, any>;
         tabindex(): number;
@@ -1066,7 +1066,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_pop extends $mol_view {
-        showed(val?: any): boolean;
+        showed(next?: any): boolean;
         align_vert(): string;
         align_hor(): string;
         prefer(): string;
@@ -1134,7 +1134,7 @@ declare namespace $ {
         showed(): boolean;
         attr(): Record<string, any>;
         event(): Record<string, any>;
-        hovered(val?: any): boolean;
+        hovered(next?: any): boolean;
         event_show(event?: any): any;
         event_hide(event?: any): any;
     }

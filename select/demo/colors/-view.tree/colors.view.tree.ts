@@ -52,12 +52,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * color?val \
+		 * color? \
 		 * ```
 		 */
 		@ $mol_mem
-		color(val?: any) {
-			if ( val !== undefined ) return val as never
+		color(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -166,7 +166,7 @@ namespace $ {
 		 * ```tree
 		 * Color $mol_select
 		 * 	filter_pattern => color_filter
-		 * 	value?val <=> color?val
+		 * 	value? <=> color?
 		 * 	dictionary <= colors
 		 * 	option_label* <= color_name*
 		 * 	option_content* <= option_content*
@@ -176,7 +176,7 @@ namespace $ {
 		Color() {
 			const obj = new this.$.$mol_select()
 			
-			obj.value = (val?: any) => this.color(val)
+			obj.value = (next?: any) => this.color(next)
 			obj.dictionary = () => this.colors()
 			obj.option_label = (id: any) => this.color_name(id)
 			obj.option_content = (id: any) => this.option_content(id)

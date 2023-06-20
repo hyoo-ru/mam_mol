@@ -12,12 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * count?val 20
+		 * count? 20
 		 * ```
 		 */
 		@ $mol_mem
-		count(val?: any) {
-			if ( val !== undefined ) return val as never
+		count(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 20
 		}
 		

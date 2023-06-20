@@ -3,25 +3,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * zoom?val 2
+		 * zoom? 2
 		 * ```
 		 */
 		@ $mol_mem
-		zoom(val?: any) {
-			if ( val !== undefined ) return val as never
+		zoom(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 2
 		}
 		
 		/**
 		 * ```tree
-		 * center?val /
+		 * center? /
 		 * 	0
 		 * 	0
 		 * ```
 		 */
 		@ $mol_mem
-		center(val?: any) {
-			if ( val !== undefined ) return val as never
+		center(next?: any) {
+			if ( next !== undefined ) return next as never
 			return [
 				0,
 				0

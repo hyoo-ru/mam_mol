@@ -83,12 +83,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * normalize?val 0
+		 * normalize? 0
 		 * ```
 		 */
 		@ $mol_mem
-		normalize(val?: any) {
-			if ( val !== undefined ) return val as never
+		normalize(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 		

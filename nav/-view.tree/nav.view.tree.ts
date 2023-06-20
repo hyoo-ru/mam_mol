@@ -3,12 +3,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cycle?val false
+		 * cycle? false
 		 * ```
 		 */
 		@ $mol_mem
-		cycle(val?: any) {
-			if ( val !== undefined ) return val as never
+		cycle(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -41,47 +41,47 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * keys_x?val /
+		 * keys_x? /
 		 * ```
 		 */
 		@ $mol_mem
-		keys_x(val?: any) {
-			if ( val !== undefined ) return val as never
+		keys_x(next?: any) {
+			if ( next !== undefined ) return next as never
 			return [
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * keys_y?val /
+		 * keys_y? /
 		 * ```
 		 */
 		@ $mol_mem
-		keys_y(val?: any) {
-			if ( val !== undefined ) return val as never
+		keys_y(next?: any) {
+			if ( next !== undefined ) return next as never
 			return [
 			] as readonly any[]
 		}
 		
 		/**
 		 * ```tree
-		 * current_x?val null
+		 * current_x? null
 		 * ```
 		 */
 		@ $mol_mem
-		current_x(val?: any) {
-			if ( val !== undefined ) return val as never
+		current_x(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * current_y?val null
+		 * current_y? null
 		 * ```
 		 */
 		@ $mol_mem
-		current_y(val?: any) {
-			if ( val !== undefined ) return val as never
+		current_y(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		

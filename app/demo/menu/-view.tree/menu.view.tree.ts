@@ -88,25 +88,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * filter?val \
+		 * filter? \
 		 * ```
 		 */
 		@ $mol_mem
-		filter(val?: any) {
-			if ( val !== undefined ) return val as never
+		filter(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * Filter $mol_search query?val <=> filter?val
+		 * Filter $mol_search query? <=> filter?
 		 * ```
 		 */
 		@ $mol_mem
 		Filter() {
 			const obj = new this.$.$mol_search()
 			
-			obj.query = (val?: any) => this.filter(val)
+			obj.query = (next?: any) => this.filter(next)
 			
 			return obj
 		}
@@ -200,7 +200,7 @@ namespace $ {
 		 * ```tree
 		 * Option_title* $mol_dimmer
 		 * 	haystack <= option_title*
-		 * 	needle <= filter?val
+		 * 	needle <= filter?
 		 * ```
 		 */
 		@ $mol_mem_key

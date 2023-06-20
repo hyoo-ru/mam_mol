@@ -7,6 +7,6 @@ $mol_view_tree2_ts_test_simple $mol_view
 	multi_str \
 		\one
 		\two
-	same?val \
+	same? \
 	- commented_node /
 		<= Notes_page_title!tag

@@ -48,12 +48,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * base_expanded?val false
+		 * base_expanded? false
 		 * ```
 		 */
 		@ $mol_mem
-		base_expanded(val?: any) {
-			if ( val !== undefined ) return val as never
+		base_expanded(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -69,7 +69,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Labeled_base $mol_check_expand
-		 * 	checked?val <=> base_expanded?val
+		 * 	checked? <=> base_expanded?
 		 * 	title <= c1Label
 		 * ```
 		 */
@@ -77,7 +77,7 @@ namespace $ {
 		Labeled_base() {
 			const obj = new this.$.$mol_check_expand()
 			
-			obj.checked = (val?: any) => this.base_expanded(val)
+			obj.checked = (next?: any) => this.base_expanded(next)
 			obj.title = () => this.c1Label()
 			
 			return obj
@@ -94,12 +94,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * expanded_expanded?val true
+		 * expanded_expanded? true
 		 * ```
 		 */
 		@ $mol_mem
-		expanded_expanded(val?: any) {
-			if ( val !== undefined ) return val as never
+		expanded_expanded(next?: any) {
+			if ( next !== undefined ) return next as never
 			return true
 		}
 		
@@ -107,7 +107,7 @@ namespace $ {
 		 * ```tree
 		 * Labeled_expanded $mol_check_expand
 		 * 	title <= c2Label
-		 * 	checked?val <=> expanded_expanded?val
+		 * 	checked? <=> expanded_expanded?
 		 * ```
 		 */
 		@ $mol_mem
@@ -115,7 +115,7 @@ namespace $ {
 			const obj = new this.$.$mol_check_expand()
 			
 			obj.title = () => this.c2Label()
-			obj.checked = (val?: any) => this.expanded_expanded(val)
+			obj.checked = (next?: any) => this.expanded_expanded(next)
 			
 			return obj
 		}
@@ -148,28 +148,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Empty_base $mol_check_expand checked?val <=> base_expanded?val
+		 * Empty_base $mol_check_expand checked? <=> base_expanded?
 		 * ```
 		 */
 		@ $mol_mem
 		Empty_base() {
 			const obj = new this.$.$mol_check_expand()
 			
-			obj.checked = (val?: any) => this.base_expanded(val)
+			obj.checked = (next?: any) => this.base_expanded(next)
 			
 			return obj
 		}
 		
 		/**
 		 * ```tree
-		 * Empty_expanded $mol_check_expand checked?val <=> expanded_expanded?val
+		 * Empty_expanded $mol_check_expand checked? <=> expanded_expanded?
 		 * ```
 		 */
 		@ $mol_mem
 		Empty_expanded() {
 			const obj = new this.$.$mol_check_expand()
 			
-			obj.checked = (val?: any) => this.expanded_expanded(val)
+			obj.checked = (next?: any) => this.expanded_expanded(next)
 			
 			return obj
 		}

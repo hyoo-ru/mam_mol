@@ -797,7 +797,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_perf_sierp extends $mol_view {
         size_target(): number;
-        elapsed(val?: any): number;
+        elapsed(next?: any): number;
         style(): Record<string, any>;
         sub(): readonly any[];
         Dot(id: any): $$.$mol_perf_sierp_dot;
@@ -812,7 +812,7 @@ declare namespace $ {
     class $mol_perf_sierp_dot extends $mol_view {
         size(): number;
         size_px(): string;
-        hover(val?: any): boolean;
+        hover(next?: any): boolean;
         sub(): readonly any[];
         style(): Record<string, any>;
         event(): Record<string, any>;
@@ -823,8 +823,8 @@ declare namespace $ {
         top(): number;
         radius(): number;
         color(): string;
-        enter(val?: any): any;
-        leave(val?: any): any;
+        enter(next?: any): any;
+        leave(next?: any): any;
     }
 }
 

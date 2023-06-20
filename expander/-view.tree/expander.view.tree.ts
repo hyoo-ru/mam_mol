@@ -17,12 +17,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * expanded?val false
+		 * expanded? false
 		 * ```
 		 */
 		@ $mol_mem
-		expanded(val?: any) {
-			if ( val !== undefined ) return val as never
+		expanded(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -49,7 +49,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Trigger $mol_check_expand
-		 * 	checked?val <=> expanded?val
+		 * 	checked? <=> expanded?
 		 * 	expandable <= expandable
 		 * 	label <= label
 		 * ```
@@ -58,7 +58,7 @@ namespace $ {
 		Trigger() {
 			const obj = new this.$.$mol_check_expand()
 			
-			obj.checked = (val?: any) => this.expanded(val)
+			obj.checked = (next?: any) => this.expanded(next)
 			obj.expandable = () => this.expandable()
 			obj.label = () => this.label()
 			

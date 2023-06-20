@@ -239,13 +239,13 @@ namespace $ {
 		 * ```tree
 		 * event *
 		 * 	^
-		 * 	click?val <=> click?val
+		 * 	click? <=> click?
 		 * ```
 		 */
 		event() {
 			return {
 				...super.event(),
-				click: (val?: any) => this.click(val)
+				click: (next?: any) => this.click(next)
 			} as Record< string, any >
 		}
 		
@@ -262,12 +262,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * click?val null
+		 * click? null
 		 * ```
 		 */
 		@ $mol_mem
-		click(val?: any) {
-			if ( val !== undefined ) return val as never
+		click(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		

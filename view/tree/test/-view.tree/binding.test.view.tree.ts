@@ -3,11 +3,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value?val <=> task_title_new?val
+		 * value? <=> task_title_new?
 		 * ```
 		 */
-		value(val?: any) {
-			return this.task_title_new(val)
+		value(next?: any) {
+			return this.task_title_new(next)
 		}
 		
 		/**
@@ -21,12 +21,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * task_title_new?val \123
+		 * task_title_new? \123
 		 * ```
 		 */
 		@ $mol_mem
-		task_title_new(val?: any) {
-			if ( val !== undefined ) return val as never
+		task_title_new(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "123"
 		}
 		

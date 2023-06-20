@@ -27,12 +27,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * current?val \0
+		 * current? \0
 		 * ```
 		 */
 		@ $mol_mem
-		current(val?: any) {
-			if ( val !== undefined ) return val as never
+		current(next?: any) {
+			if ( next !== undefined ) return next as never
 			return "0"
 		}
 		
@@ -49,7 +49,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Switch $mol_switch
-		 * 	value?val <=> current?val
+		 * 	value? <=> current?
 		 * 	options <= switch_options
 		 * ```
 		 */
@@ -57,7 +57,7 @@ namespace $ {
 		Switch() {
 			const obj = new this.$.$mol_switch()
 			
-			obj.value = (val?: any) => this.current(val)
+			obj.value = (next?: any) => this.current(next)
 			obj.options = () => this.switch_options()
 			
 			return obj

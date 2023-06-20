@@ -99,26 +99,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * avatars?val /string
+		 * avatars? /string
 		 * ```
 		 */
 		@ $mol_mem
-		avatars(val?: any) {
-			if ( val !== undefined ) return val as never
+		avatars(next?: any) {
+			if ( next !== undefined ) return next as never
 			return [
 			] as readonly string[]
 		}
 		
 		/**
 		 * ```tree
-		 * Avatars_control $mol_attach items?val <=> avatars?val
+		 * Avatars_control $mol_attach items? <=> avatars?
 		 * ```
 		 */
 		@ $mol_mem
 		Avatars_control() {
 			const obj = new this.$.$mol_attach()
 			
-			obj.items = (val?: any) => this.avatars(val)
+			obj.items = (next?: any) => this.avatars(next)
 			
 			return obj
 		}
@@ -153,12 +153,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * name_first?val \
+		 * name_first? \
 		 * ```
 		 */
 		@ $mol_mem
-		name_first(val?: any) {
-			if ( val !== undefined ) return val as never
+		name_first(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -166,7 +166,7 @@ namespace $ {
 		 * ```tree
 		 * Name_first_control $mol_string
 		 * 	hint \Jack
-		 * 	value?val <=> name_first?val
+		 * 	value? <=> name_first?
 		 * ```
 		 */
 		@ $mol_mem
@@ -174,7 +174,7 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.hint = () => "Jack"
-			obj.value = (val?: any) => this.name_first(val)
+			obj.value = (next?: any) => this.name_first(next)
 			
 			return obj
 		}
@@ -209,12 +209,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * name_nick?val \
+		 * name_nick? \
 		 * ```
 		 */
 		@ $mol_mem
-		name_nick(val?: any) {
-			if ( val !== undefined ) return val as never
+		name_nick(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -222,7 +222,7 @@ namespace $ {
 		 * ```tree
 		 * Name_nick_control $mol_string
 		 * 	hint \Capitan
-		 * 	value?val <=> name_nick?val
+		 * 	value? <=> name_nick?
 		 * ```
 		 */
 		@ $mol_mem
@@ -230,7 +230,7 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.hint = () => "Capitan"
-			obj.value = (val?: any) => this.name_nick(val)
+			obj.value = (next?: any) => this.name_nick(next)
 			
 			return obj
 		}
@@ -265,12 +265,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * name_second?val \
+		 * name_second? \
 		 * ```
 		 */
 		@ $mol_mem
-		name_second(val?: any) {
-			if ( val !== undefined ) return val as never
+		name_second(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -278,7 +278,7 @@ namespace $ {
 		 * ```tree
 		 * Name_second_control $mol_string
 		 * 	hint \Sparrow
-		 * 	value?val <=> name_second?val
+		 * 	value? <=> name_second?
 		 * ```
 		 */
 		@ $mol_mem
@@ -286,7 +286,7 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.hint = () => "Sparrow"
-			obj.value = (val?: any) => this.name_second(val)
+			obj.value = (next?: any) => this.name_second(next)
 			
 			return obj
 		}
@@ -342,25 +342,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * age?val 0
+		 * age? 0
 		 * ```
 		 */
 		@ $mol_mem
-		age(val?: any) {
-			if ( val !== undefined ) return val as never
+		age(next?: any) {
+			if ( next !== undefined ) return next as never
 			return 0
 		}
 		
 		/**
 		 * ```tree
-		 * Age_control $mol_number value?val <=> age?val
+		 * Age_control $mol_number value? <=> age?
 		 * ```
 		 */
 		@ $mol_mem
 		Age_control() {
 			const obj = new this.$.$mol_number()
 			
-			obj.value = (val?: any) => this.age(val)
+			obj.value = (next?: any) => this.age(next)
 			
 			return obj
 		}
@@ -404,12 +404,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sex?val \
+		 * sex? \
 		 * ```
 		 */
 		@ $mol_mem
-		sex(val?: any) {
-			if ( val !== undefined ) return val as never
+		sex(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -432,7 +432,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Sex_control $mol_switch
-		 * 	value?val <=> sex?val
+		 * 	value? <=> sex?
 		 * 	options <= sex_options
 		 * ```
 		 */
@@ -440,7 +440,7 @@ namespace $ {
 		Sex_control() {
 			const obj = new this.$.$mol_switch()
 			
-			obj.value = (val?: any) => this.sex(val)
+			obj.value = (next?: any) => this.sex(next)
 			obj.options = () => this.sex_options()
 			
 			return obj
@@ -476,19 +476,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * color?val \
+		 * color? \
 		 * ```
 		 */
 		@ $mol_mem
-		color(val?: any) {
-			if ( val !== undefined ) return val as never
+		color(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
 		 * Color_control $mol_select
-		 * 	value?val <=> color?val
+		 * 	value? <=> color?
 		 * 	dictionary *
 		 * 		\
 		 * 			\❔
@@ -502,7 +502,7 @@ namespace $ {
 		Color_control() {
 			const obj = new this.$.$mol_select()
 			
-			obj.value = (val?: any) => this.color(val)
+			obj.value = (next?: any) => this.color(next)
 			obj.dictionary = () => ({
 				"": "❔",
 				white: "⬜ White",
@@ -565,12 +565,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * mail?val \
+		 * mail? \
 		 * ```
 		 */
 		@ $mol_mem
-		mail(val?: any) {
-			if ( val !== undefined ) return val as never
+		mail(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -578,7 +578,7 @@ namespace $ {
 		 * ```tree
 		 * Mail_control $mol_string
 		 * 	hint \name@domain.com
-		 * 	value?val <=> mail?val
+		 * 	value? <=> mail?
 		 * ```
 		 */
 		@ $mol_mem
@@ -586,7 +586,7 @@ namespace $ {
 			const obj = new this.$.$mol_string()
 			
 			obj.hint = () => "name@domain.com"
-			obj.value = (val?: any) => this.mail(val)
+			obj.value = (next?: any) => this.mail(next)
 			
 			return obj
 		}
@@ -612,12 +612,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * signup?val null
+		 * signup? null
 		 * ```
 		 */
 		@ $mol_mem
-		signup(val?: any) {
-			if ( val !== undefined ) return val as never
+		signup(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -625,7 +625,7 @@ namespace $ {
 		 * ```tree
 		 * Signup $mol_button_major
 		 * 	title \Sign Up
-		 * 	click?val <=> signup?val
+		 * 	click? <=> signup?
 		 * 	enabled <= signup_allowed
 		 * ```
 		 */
@@ -634,7 +634,7 @@ namespace $ {
 			const obj = new this.$.$mol_button_major()
 			
 			obj.title = () => "Sign Up"
-			obj.click = (val?: any) => this.signup(val)
+			obj.click = (next?: any) => this.signup(next)
 			obj.enabled = () => this.signup_allowed()
 			
 			return obj
@@ -642,18 +642,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * result?val \
+		 * result? \
 		 * ```
 		 */
 		@ $mol_mem
-		result(val?: any) {
-			if ( val !== undefined ) return val as never
+		result(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * Result $mol_status message <= result?val
+		 * Result $mol_status message <= result?
 		 * ```
 		 */
 		@ $mol_mem
@@ -682,7 +682,7 @@ namespace $ {
 		 * 		<= Names
 		 * 		<= Parameters
 		 * 		<= Mail_field
-		 * 	submit?val <=> signup?val
+		 * 	submit? <=> signup?
 		 * 	submit_allowed => signup_allowed
 		 * 	buttons /
 		 * 		<= Signup
@@ -699,7 +699,7 @@ namespace $ {
 				this.Parameters(),
 				this.Mail_field()
 			] as readonly any[]
-			obj.submit = (val?: any) => this.signup(val)
+			obj.submit = (next?: any) => this.signup(next)
 			obj.buttons = () => [
 				this.Signup(),
 				this.Result()

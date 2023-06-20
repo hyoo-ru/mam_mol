@@ -796,8 +796,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_scroll extends $mol_view {
-        scroll_top(val?: any): number;
-        scroll_left(val?: any): number;
+        scroll_top(next?: any): number;
+        scroll_left(next?: any): number;
         field(): Record<string, any>;
         event(): Record<string, any>;
         tabindex(): number;
@@ -951,7 +951,7 @@ declare namespace $ {
         attr_static(): Record<string, any>;
         event(): Record<string, any>;
         sub(): readonly any[];
-        click(val?: any): any;
+        click(next?: any): any;
         text(): string;
     }
 }

@@ -3,12 +3,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * entered?val false
+		 * entered? false
 		 * ```
 		 */
 		@ $mol_mem
-		entered(val?: any) {
-			if ( val !== undefined ) return val as never
+		entered(next?: any) {
+			if ( next !== undefined ) return next as never
 			return false
 		}
 		
@@ -43,25 +43,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * login?val \
+		 * login? \
 		 * ```
 		 */
 		@ $mol_mem
-		login(val?: any) {
-			if ( val !== undefined ) return val as never
+		login(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
-		 * loginControl $mol_string value?val <=> login?val
+		 * loginControl $mol_string value? <=> login?
 		 * ```
 		 */
 		@ $mol_mem
 		loginControl() {
 			const obj = new this.$.$mol_string()
 			
-			obj.value = (val?: any) => this.login(val)
+			obj.value = (next?: any) => this.login(next)
 			
 			return obj
 		}
@@ -94,19 +94,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * password?val \
+		 * password? \
 		 * ```
 		 */
 		@ $mol_mem
-		password(val?: any) {
-			if ( val !== undefined ) return val as never
+		password(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
 		/**
 		 * ```tree
 		 * passControl $mol_string
-		 * 	value?val <=> password?val
+		 * 	value? <=> password?
 		 * 	type \password
 		 * ```
 		 */
@@ -114,7 +114,7 @@ namespace $ {
 		passControl() {
 			const obj = new this.$.$mol_string()
 			
-			obj.value = (val?: any) => this.password(val)
+			obj.value = (next?: any) => this.password(next)
 			obj.type = () => "password"
 			
 			return obj
@@ -148,12 +148,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * event_submit?val null
+		 * event_submit? null
 		 * ```
 		 */
 		@ $mol_mem
-		event_submit(val?: any) {
-			if ( val !== undefined ) return val as never
+		event_submit(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -170,7 +170,7 @@ namespace $ {
 		 * ```tree
 		 * submit $mol_button_major
 		 * 	sub / <= submitLabel
-		 * 	click?val <=> event_submit?val
+		 * 	click? <=> event_submit?
 		 * 	disabled <= submit_blocked
 		 * ```
 		 */
@@ -181,7 +181,7 @@ namespace $ {
 			obj.sub = () => [
 				this.submitLabel()
 			] as readonly any[]
-			obj.click = (val?: any) => this.event_submit(val)
+			obj.click = (next?: any) => this.event_submit(next)
 			obj.disabled = () => this.submit_blocked()
 			
 			return obj
