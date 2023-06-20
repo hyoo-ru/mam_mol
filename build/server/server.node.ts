@@ -122,13 +122,16 @@ namespace $ {
 				}				
 				
 				if( dir.type() === 'dir' ) {
-					const files = new Set<string>( [ '-' ] )
+					const files = [ {name: '-', type: 'dir'} ]
 					for( const file of dir.sub() ) {
-						files.add( file.name() )
+						if (!files.find(( {name} ) => name === file.name())) {
+							files.push( {name: file.name(), type: file.type()} )
+						}
 						if( /\.meta\.tree$/.test( file.name() ) ) {
 							const meta = $$.$mol_tree2_from_string( file.text() )
 							for( const pack of meta.select( 'pack', null ).kids ) {
-								files.add( pack.type )
+								if (!files.find(( {name} ) => name !== pack.type))
+									files.push( {name: pack.type, type: 'dir'} )
 							}
 						}
 					}
@@ -153,7 +156,16 @@ namespace $ {
 								background: hsl( 0deg, 0%, 0%, .05 )
 							}
 						</style>
-					` + [ ... files ].sort().map( file => `<a href="${file}">${file}</a>` ).join( '\n' )
+						` + files
+						.sort((a,b) => {
+							if (a.type > b.type) return 1
+							if (a.type < b.type) return -1
+							if (a.name > b.name) return 1
+							if (a.name < b.name) return -1
+							return 0
+						})
+						.map( file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>` )
+						.join( '\n' )
 					
 					res.writeHead( 200, {
 						'Content-Type': 'text/html',
