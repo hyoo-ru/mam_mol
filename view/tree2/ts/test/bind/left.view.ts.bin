@@ -147,8 +147,8 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		writable_owner(val?: any) {
-			if ( val !== undefined ) return val as never
+		writable_owner(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		
@@ -158,8 +158,8 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		same(val?: any) {
-			if ( val !== undefined ) return val as never
+		same(next?: any) {
+			if ( next !== undefined ) return next as never
 			return ""
 		}
 		

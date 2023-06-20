@@ -6,8 +6,8 @@ namespace $ {
 		 * writable? <=> writable_owner?
 		 * ```
 		 */
-		writable(val?: any) {
-			return this.writable_owner(val)
+		writable(next?: any) {
+			return this.writable_owner(next)
 		}
 		
 		/**
@@ -15,8 +15,8 @@ namespace $ {
 		 * writable_default? <=> writable_default_owner?
 		 * ```
 		 */
-		writable_default(val?: any) {
-			return this.writable_default_owner(val)
+		writable_default(next?: any) {
+			return this.writable_default_owner(next)
 		}
 		
 		/**
@@ -24,8 +24,8 @@ namespace $ {
 		 * class? <=> class_owner?
 		 * ```
 		 */
-		class(val?: any) {
-			return this.class_owner(val)
+		class(next?: any) {
+			return this.class_owner(next)
 		}
 		
 		/**
@@ -33,8 +33,8 @@ namespace $ {
 		 * indexed*? <=> indexed_owner*?
 		 * ```
 		 */
-		indexed(id: any, val?: any) {
-			return this.indexed_owner(id, val)
+		indexed(id: any, next?: any) {
+			return this.indexed_owner(id, next)
 		}
 		
 		/**
@@ -52,11 +52,11 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem_key
-		class_indexed(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
+		class_indexed(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
 			const obj = new this.$.$mol_view()
 			
-			obj.expanded = () => this.cell_expanded(id, val)
+			obj.expanded = () => this.cell_expanded(id, next)
 			
 			return obj
 		}
@@ -66,8 +66,8 @@ namespace $ {
 		 * class_writable? <=> class_writable_owner?
 		 * ```
 		 */
-		class_writable(val?: any) {
-			return this.class_writable_owner(val)
+		class_writable(next?: any) {
+			return this.class_writable_owner(next)
 		}
 		
 		/**
@@ -102,8 +102,8 @@ namespace $ {
 		 * event_catch? <=> event_next?
 		 * ```
 		 */
-		event_catch(val?: any) {
-			return this.event_next(val)
+		event_catch(next?: any) {
+			return this.event_next(next)
 		}
 		
 		/**
@@ -112,8 +112,8 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		writable_default_owner(val?: any) {
-			if ( val !== undefined ) return val as never
+		writable_default_owner(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -123,8 +123,8 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		class_owner(val?: any) {
-			if ( val !== undefined ) return val as never
+		class_owner(next?: any) {
+			if ( next !== undefined ) return next as never
 			const obj = new this.$.$mol_view()
 			
 			return obj
@@ -136,8 +136,8 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem_key
-		indexed_owner(id: any, val?: any) {
-			if ( val !== undefined ) return val as never
+		indexed_owner(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
@@ -147,8 +147,8 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		localized_owner(val?: any) {
-			if ( val !== undefined ) return val as never
+		localized_owner(next?: any) {
+			if ( next !== undefined ) return next as never
 			return this.$.$mol_locale.text( '$mol_view_tree2_ts_test_bind_both_localized_owner' )
 		}
 		
@@ -181,12 +181,12 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		class_writable_owner(val?: any) {
-			if ( val !== undefined ) return val as never
+		class_writable_owner(next?: any) {
+			if ( next !== undefined ) return next as never
 			const obj = new this.$.$mol_view()
 			
-			obj.some = (val?: any) => this.twice(val)
-			obj.localized = (val?: any) => this.localized_owner(val)
+			obj.some = (next?: any) => this.twice(next)
+			obj.localized = (next?: any) => this.localized_owner(next)
 			obj.chain = (v?: any) => this.chain1(v)
 			
 			return obj
