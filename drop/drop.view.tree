@@ -5,7 +5,7 @@ $mol_drop $mol_ghost
 		dragover?event <=> move?event null
 		dragleave?event <=> leave?event null
 		drop?event <=> drop?event null
-	attr * mol_drop_status <= status?val \ready
+	attr * mol_drop_status <= status? \ready
 	adopt?transfer *
 	receive?transfer null
 	allow /

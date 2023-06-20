@@ -47,7 +47,7 @@ $mol_app_supplies_detail $mol_page
 					content /
 						<= Attach $mol_attach
 							items <= attachments /string
-							attach_new?val <=> attach_new?val null
+							attach_new? <=> attach_new? null
 				<= Positions_section $mol_section
 					head <= positions_head /
 						<= positions_title @ \Positions
@@ -60,7 +60,7 @@ $mol_app_supplies_detail $mol_page
 		<= Actions $mol_row
 			sub <= actions /
 				<= Approve $mol_check_box
-					checked?val <=> approved?val false
+					checked? <=> approved? false
 					title <= approved_title @ \Approved
 	-
 	Position* $mol_app_supplies_position

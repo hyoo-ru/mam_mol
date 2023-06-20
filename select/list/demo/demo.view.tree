@@ -4,7 +4,7 @@ $mol_select_list_demo $mol_example_small
 		<= Demo_items $mol_list
 			rows /
 				<= Friends $mol_select_list
-					value?val <=> friends?val /
+					value? <=> friends? /
 					dictionary <= suggestions *
 						jocker \Jocker
 						harley \Harley Quinn
@@ -15,7 +15,7 @@ $mol_select_list_demo $mol_example_small
 						clay \Clayface
 						mask \Black Mask
 				<= Friends_disabled $mol_select_list
-					value?val <=> friends?val /
+					value? <=> friends? /
 					dictionary <= suggestions
 					enabled false
 	tags /

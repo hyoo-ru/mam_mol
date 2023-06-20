@@ -1,14 +1,14 @@
 $mol_select $mol_pick
-	dictionary?val *
+	dictionary? *
 	options /string
-	value?val \
+	value? \
 	option_label_default \
 	Option_row* $mol_button_minor
 		event_click?event <=> event_select*?event null
 		sub <= option_content* /
 			<= Option_label* $mol_dimmer
 				haystack <= option_label* \
-				needle <= filter_pattern?val \
+				needle <= filter_pattern? \
 	No_options $mol_view
 		sub /
 			<= no_options_message @ \No options
@@ -17,7 +17,7 @@ $mol_select $mol_pick
 		<= Nav $mol_nav
 			keys_y <= nav_components /$mol_view
 			current_y?component <=> option_focused?component null
-			cycle?val <=> nav_cycle?val true
+			cycle? <=> nav_cycle? true
 	hint @ \Pick..
 	bubble_content /
 		<= Filter
@@ -25,7 +25,7 @@ $mol_select $mol_pick
 			<= Menu $mol_list
 				rows <= menu_content /$mol_view
 	Filter $mol_string
-		value?val <=> filter_pattern?val \
+		value? <=> filter_pattern? \
 		hint @ \Filter..
 		submit?event <=> submit?event null
 		enabled <= enabled true

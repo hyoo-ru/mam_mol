@@ -6,7 +6,7 @@ $mol_switch_demo $mol_example
 				<= Enabled_labeler $mol_labeler
 					title \Read/Write
 					Content <= Enabled $mol_switch
-						value?val <=> color?val \red
+						value? <=> color? \red
 						options *
 							red <= option_red \Red
 							green <= option_green \Green
@@ -15,7 +15,7 @@ $mol_switch_demo $mol_example
 				<= Disabled_labeler $mol_labeler
 					title \Read only
 					Content <= Disabled $mol_switch
-						value?val <=> color?val
+						value? <=> color?
 						enabled false
 						options *
 							red <= option_red

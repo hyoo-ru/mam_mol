@@ -3,7 +3,7 @@ $mol_select_demo_colors $mol_example_small
 	sub /
 		<= Color $mol_select
 			filter_pattern => color_filter
-			value?val <=> color?val \
+			value? <=> color? \
 			dictionary <= colors *
 			option_label* <= color_name* \
 			option_content* <= option_content* /

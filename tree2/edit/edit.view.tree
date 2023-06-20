@@ -1,12 +1,12 @@
 $mol_tree2_edit $mol_list
 	schema $mol_tree2_empty
-	value?val $mol_tree2_empty
+	value? $mol_tree2_empty
 	rows /
 		<= Self $mol_search
 			hint \
-			query?val <=> self?val \
+			query? <=> self? \
 			suggests <= self_suggests /string
 		<= Kids $mol_list rows <= kids /
 	Kid* $mol_tree2_edit
 		schema <= schema
-		value?val <=> kid*?val $mol_tree2_empty
+		value? <=> kid*? $mol_tree2_empty

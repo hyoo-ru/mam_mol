@@ -4,13 +4,13 @@ $mol_app_supplies $mol_book2
 		mol_theme \$mol_theme_auto
 	-
 	enter $mol_app_supplies_enter
-		entered?val <=> entered?val false
+		entered? <=> entered? false
 	-
 	List $mol_app_supplies_list
 		supplies <= supplies /$mol_app_supplies_domain_supply
 		tools <= tools_root /
 		title <= list_title @ \Supplies
-		search_query?val <=> supply_id?val \
+		search_query? <=> supply_id? \
 	-
 	Detail* $mol_app_supplies_detail
 		supply <= supply null

@@ -1,6 +1,6 @@
 $mol_book2_catalog $mol_book2
 	param \
-	spread?val \
+	spread? \
 	spreads *
 	Spread $mol_view
 	pages /

@@ -10,7 +10,7 @@ $mol_plot_ruler $mol_plot_graph
 		Infinity
 		-Infinity
 	axis_points /number
-	normalize?val 0
+	normalize? 0
 	precision 1
 	sub /
 		<= Background $mol_svg_rect
