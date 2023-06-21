@@ -158,7 +158,7 @@ namespace $ {
 							a[href^="."], a[href^="-"], a[href="node_modules"] {
 								opacity: 0.5;
 							}
-							a[href=".."] {
+							a[href=".."], a[href="-"] {
 								opacity: 1;
 							}
 						</style>
