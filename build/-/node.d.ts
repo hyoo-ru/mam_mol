@@ -1355,6 +1355,10 @@ declare namespace $ {
     function $mol_wire_solid(): void;
 }
 
+declare namespace $ {
+    function $mol_compare_text<Item>(item?: (item: Item) => string): (a: Item, b: Item) => number;
+}
+
 /// <reference types="node" />
 declare namespace $ {
     class $mol_build_server extends $mol_server {

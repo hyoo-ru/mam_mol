@@ -75,6 +75,7 @@
     "$mol_build_server",
     "$mol_server",
     "$mol_wire_solid",
+    "$mol_compare_text",
     "$mol_tree",
     "$mol_view_tree2_ts",
     "$mol_view_tree2",

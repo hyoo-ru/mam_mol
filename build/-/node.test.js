@@ -6434,6 +6434,34 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_compare_text(item = (item) => String(item)) {
+        return (a, b) => {
+            const text_a = item(a).trim().toLowerCase();
+            const text_b = item(b).trim().toLowerCase();
+            const parts_a = text_a.split(/(\d+)/);
+            const parts_b = text_b.split(/(\d+)/);
+            const count = Math.max(parts_a.length, parts_b.length);
+            for (let i = 0; i < count; ++i) {
+                const part_a = parts_a[i] || '';
+                const part_b = parts_b[i] || '';
+                const diff = Number(part_a) - Number(part_b);
+                if (diff)
+                    return diff;
+                if (part_a > part_b)
+                    return 1;
+                if (part_a < part_b)
+                    return -1;
+            }
+            return parts_a.length - parts_b.length;
+        };
+    }
+    $.$mol_compare_text = $mol_compare_text;
+})($ || ($ = {}));
+//mol/compare/text/text.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_build_server extends $mol_server {
         static trace = false;
         expressGenerator() {
@@ -6511,13 +6539,16 @@ var $;
                     return res.redirect(301, `${match[1]}-/test.html${match[2] ?? ''}`);
                 }
                 if (dir.type() === 'dir') {
-                    const files = new Set(['-']);
+                    const files = [{ name: '-', type: 'dir' }];
                     for (const file of dir.sub()) {
-                        files.add(file.name());
+                        if (!files.find(({ name }) => name === file.name())) {
+                            files.push({ name: file.name(), type: file.type() });
+                        }
                         if (/\.meta\.tree$/.test(file.name())) {
                             const meta = $$.$mol_tree2_from_string(file.text());
                             for (const pack of meta.select('pack', null).kids) {
-                                files.add(pack.type);
+                                if (!files.find(({ name }) => name !== pack.type))
+                                    files.push({ name: pack.type, type: 'dir' });
                             }
                         }
                     }
@@ -6541,8 +6572,18 @@ var $;
 							a:hover {
 								background: hsl( 0deg, 0%, 0%, .05 )
 							}
+							a[href^="."], a[href^="-"], a[href="node_modules"] {
+								opacity: 0.5;
+							}
+							a[href=".."], a[href="-"] {
+								opacity: 1;
+							}
 						</style>
-					` + [...files].sort().map(file => `<a href="${file}">${file}</a>`).join('\n');
+						<a href="..">&#x1F4C1; ..</a>
+						` + files
+                        .sort($mol_compare_text((item) => item.type))
+                        .map(file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>`)
+                        .join('\n');
                     res.writeHead(200, {
                         'Content-Type': 'text/html',
                         'Access-Control-Allow-Origin': '*',
@@ -10976,5 +11017,33 @@ var $;
     });
 })($ || ($ = {}));
 //mol/tree2/from/json/json.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'simple sort'() {
+            const list = ['abc', 'ac', 'ab'];
+            list.sort($mol_compare_text());
+            $mol_assert_equal(`${list}`, 'ab,abc,ac');
+        },
+        'sort ignoring spaces around'() {
+            const list = [' a', '\tb', ' b'];
+            list.sort($mol_compare_text());
+            $mol_assert_equal(`${list}`, ' a,\tb, b');
+        },
+        'sort ignoring letter case'() {
+            const list = ['A', 'B', 'a'];
+            list.sort($mol_compare_text());
+            $mol_assert_equal(`${list}`, 'A,a,B');
+        },
+        'sort with custom serializer'() {
+            const list = ['abc', 'ab', 'ac'];
+            list.sort($mol_compare_text(str => str.split('').reverse().join('')));
+            $mol_assert_equal(`${list}`, 'ab,ac,abc');
+        },
+    });
+})($ || ($ = {}));
+//mol/compare/text/text.test.ts
 
 //# sourceMappingURL=node.test.js.map
