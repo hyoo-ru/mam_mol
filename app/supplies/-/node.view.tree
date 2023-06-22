@@ -149,16 +149,16 @@ $mol_app_supplies_enter $mol_view
 	sub / <= form $mol_form
 		form_fields /
 			<= loginField $mol_form_field
-				name <= loginLabel @ \User name
+				name <= loginLabel \User name
 				control <= loginControl $mol_string value? <=> login? \
 			<= passwordField $mol_form_field
-				name <= passwordLabel @ \Pass word
+				name <= passwordLabel \Pass word
 				control <= passControl $mol_string
 					value? <=> password? \
 					type \password
 		buttons /
 			<= submit $mol_button_major
-				sub / <= submitLabel @ \Log In
+				sub / <= submitLabel \Log In
 				click? <=> event_submit? null
 				disabled <= submit_blocked false
 
@@ -238,15 +238,15 @@ $mol_app_supplies_card $mol_link
 			Content <= Group $mol_row
 				sub <= items /
 					<= Code_item $mol_labeler
-						title <= code_title @ \Code
+						title <= code_title \Code
 						content / <= code \
 					<= Cost_item $mol_labeler
-						title <= cost_title @ \Cost
+						title <= cost_title \Cost
 						content / <= Cost $mol_cost
 							value <= cost $mol_unit_money
 								valueOf 0
 					<= Provider_item $mol_labeler
-						title <= provider_title @ \Provider
+						title <= provider_title \Provider
 						content / <= provider_name \
 
 $mol_pop $mol_view
@@ -396,7 +396,7 @@ $mol_app_supplies_list $mol_page
 	supplies /$mol_app_supplies_domain_supply
 	tools /
 		<= Search $mol_code
-			hint <= search_hint @ \Search supply by bar code
+			hint <= search_hint \Search supply by bar code
 			value? <=> search_query? \
 	body /
 		<= Supply_rows $mol_list
@@ -416,11 +416,11 @@ $mol_app_supplies_position $mol_card
 		<= Main_group $mol_row sub /
 			
 			<= Product_item $mol_labeler
-				title <= product_title @ \Product
+				title <= product_title \Product
 				content / <= product_name \
 			
 			<= Cost_item $mol_labeler
-				title <= cost_title @ \Cost
+				title <= cost_title \Cost
 				content / <= Cost $mol_cost
 					value <= cost $mol_unit_money
 						valueOf 0
@@ -428,11 +428,11 @@ $mol_app_supplies_position $mol_card
 		<= Addon_group $mol_row sub /
 			
 			<= Division_item $mol_labeler
-				title <= division_title @ \Division
+				title <= division_title \Division
 				content / <= division_name \
 			
 			<= Price_item $mol_labeler
-				title <= price_label @ \Price
+				title <= price_label \Price
 				content / <= Price $mol_cost
 					value <= price $mol_unit_money
 						valueOf 0
@@ -440,15 +440,15 @@ $mol_app_supplies_position $mol_card
 		<= Supply_group $mol_row sub /
 			
 			<= Quantity_item $mol_labeler
-				title <= quantity_title @ \Quantity
+				title <= quantity_title \Quantity
 				content / <= quantity \
 			
 			<= Supply_date_item $mol_labeler
-				title <= supply_date_title @ \Supply date
+				title <= supply_date_title \Supply date
 				content / <= supply_date \
 			
 			<= Store_item $mol_labeler
-				title <= store_title @ \Store
+				title <= store_title \Store
 				content / <= store_name \
 
 $mol_check $mol_button_minor
@@ -559,7 +559,7 @@ $mol_check_box $mol_check
 
 $mol_app_supplies_detail $mol_page
 	supply null
-	title @ \Supply
+	title \Supply
 	tools /
 		<= Close $mol_link
 			sub / <= Close_icon $mol_icon_cross
@@ -572,55 +572,53 @@ $mol_app_supplies_detail $mol_page
 					Content <= Descr_deck $mol_deck
 						items /
 							<= Org $mol_row
-								title <= org_title @ \Organization
+								title <= org_title \Organization
 								sub <= org_items /
 									<= Provider $mol_labeler
-										title <= provider_title @ \Provider
+										title <= provider_title \Provider
 										content / <= provider_name \
 									<= Consumer $mol_labeler
-										title <= customer_label @ \Consumer
+										title <= customer_label \Consumer
 										content / <= consumer_name \
 									<= Supply_group $mol_labeler
-										title <= supply_group_title @ \Supply Group
+										title <= supply_group_title \Supply Group
 										content / <= supply_group_name \
 									<= Ballance_unit_item $mol_labeler
-										title <= ballance_unit_title @ \Ballance Unit
+										title <= ballance_unit_title \Ballance Unit
 										content / <= ballance_unit_name \
 							<= Cons $mol_row
-								title <= cons_title @ \Consumer
+								title <= cons_title \Consumer
 								sub <= cons_items /
 									<= Contract $mol_labeler
-										title <= contract_title @ \Contract
+										title <= contract_title \Contract
 										content / <= contract_id \
 									<= Pay_method $mol_labeler
-										title <= pay_method_title @ \Pay Method
+										title <= pay_method_title \Pay Method
 										content / <= pay_method_name \
 									<= Manager $mol_labeler
-										title <= manager_title @ \Manager
+										title <= manager_title \Manager
 										content / <= manager_name \
 									<= Debitor $mol_labeler
-										title <= debitod_title @ \Debitor
+										title <= debitod_title \Debitor
 										content / <= debitor_name \
 				<= Attach_section $mol_section
-					head / <= attach_title @ \Attachments
+					head / <= attach_title \Attachments
 					content /
 						<= Attach $mol_attach
 							items <= attachments /string
 							attach_new? <=> attach_new? null
 				<= Positions_section $mol_section
 					head <= positions_head /
-						<= positions_title @ \Positions
+						<= positions_title \Positions
 						<= Cost_value $mol_cost
 							value <= cost $mol_unit_money
 								valueOf 0
 					Content <= Positions $mol_list
 						rows <= positions /$mol_view
-	foot /
-		<= Actions $mol_row
-			sub <= actions /
-				<= Approve $mol_check_box
-					checked? <=> approved? false
-					title <= approved_title @ \Approved
+	foot <= actions /
+		<= Approve $mol_check_box
+			checked? <=> approved? false
+			title <= approved_title \Approved
 	-
 	Position* $mol_app_supplies_position
 		position <= position* null
@@ -636,7 +634,7 @@ $mol_app_supplies $mol_book2
 	List $mol_app_supplies_list
 		supplies <= supplies /$mol_app_supplies_domain_supply
 		tools <= tools_root /
-		title <= list_title @ \Supplies
+		title <= list_title \Supplies
 		search_query? <=> supply_id? \
 	-
 	Detail* $mol_app_supplies_detail

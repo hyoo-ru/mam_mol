@@ -97,11 +97,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * list_title @ \Supplies
+		 * list_title \Supplies
 		 * ```
 		 */
 		list_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_list_title' )
+			return "Supplies"
 		}
 		
 		/**

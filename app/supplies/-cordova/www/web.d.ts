@@ -982,141 +982,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    type $mol_charset_encoding = 'utf8' | 'utf-16le' | 'utf-16be' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
-}
-
-declare namespace $ {
-    function $mol_charset_decode(buffer: BufferSource, encoding?: $mol_charset_encoding): string;
-}
-
-declare var $node: any;
-
-declare namespace $ {
-    function $mol_charset_encode(value: string): Uint8Array;
-}
-
-declare namespace $ {
-    type $mol_file_type = 'file' | 'dir' | 'link';
-    interface $mol_file_stat {
-        type: $mol_file_type;
-        size: number;
-        atime: Date;
-        mtime: Date;
-        ctime: Date;
-    }
-    class $mol_file_not_found extends Error {
-    }
-    abstract class $mol_file extends $mol_object {
-        static absolute(path: string): $mol_file;
-        static relative(path: string): $mol_file;
-        static base: string;
-        path(): string;
-        parent(): $mol_file;
-        abstract stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
-        reset(): void;
-        version(): string;
-        abstract ensure(): void;
-        watcher(): {
-            destructor(): void;
-        };
-        exists(next?: boolean): boolean;
-        type(): "" | $mol_file_type;
-        name(): string;
-        ext(): string;
-        abstract buffer(next?: Uint8Array): Uint8Array;
-        text(next?: string, virt?: 'virt'): string;
-        abstract sub(): $mol_file[];
-        abstract resolve(path: string): $mol_file;
-        abstract relate(base?: $mol_file): string;
-        abstract append(next: Uint8Array | string): void;
-        find(include?: RegExp, exclude?: RegExp): $mol_file[];
-        size(): number;
-    }
-}
-
-declare namespace $ {
-    function $mol_wire_sync<Host extends object>(obj: Host): (Host extends (...args: infer Args) => infer Res ? Res extends Promise<infer Res2> ? (...args: Args) => Res2 : Host : {}) & { [key in keyof Host]: Host[key] extends (...args: infer Args_1) => Promise<infer Res_1> ? (...args: Args_1) => Res_1 : Host[key]; };
-}
-
-declare namespace $ {
-    function $mol_dom_parse(text: string, type?: DOMParserSupportedType): Document;
-}
-
-declare namespace $ {
-    class $mol_fetch_response extends $mol_object2 {
-        readonly native: Response;
-        constructor(native: Response);
-        status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
-        code(): number;
-        message(): string;
-        headers(): Headers;
-        mime(): string | null;
-        stream(): ReadableStream<Uint8Array> | null;
-        text(): string;
-        json(): unknown;
-        buffer(): ArrayBuffer;
-        xml(): Document;
-        xhtml(): Document;
-        html(): Document;
-    }
-    class $mol_fetch extends $mol_object2 {
-        static request(input: RequestInfo, init?: RequestInit): Promise<Response> & {
-            destructor: () => void;
-        };
-        static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
-        static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
-        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array> | null;
-        static text(input: RequestInfo, init?: RequestInit): string;
-        static json(input: RequestInfo, init?: RequestInit): unknown;
-        static buffer(input: RequestInfo, init?: RequestInit): ArrayBuffer;
-        static xml(input: RequestInfo, init?: RequestInit): Document;
-        static xhtml(input: RequestInfo, init?: RequestInit): Document;
-        static html(input: RequestInfo, init?: RequestInit): Document;
-    }
-}
-
-declare namespace $ {
-    class $mol_file_web extends $mol_file {
-        static absolute(path: string): $mol_file_web;
-        static relative(path: string): $mol_file_web;
-        static base: string;
-        buffer(next?: Uint8Array): Uint8Array;
-        stat(next?: $mol_file_stat, virt?: 'virt'): $mol_file_stat;
-        resolve(path: string): $mol_file_web;
-        ensure(): void;
-        sub(): $mol_file[];
-        relate(base?: $mol_file): string;
-        append(next: Uint8Array | string): void;
-    }
-}
-
-declare namespace $ {
-    function $mol_huggingface_run(this: $, space: string, method: string | number, ...data: readonly any[]): readonly any[];
-    function $mol_huggingface_rest(space: string, method: string, ...data: readonly any[]): readonly any[];
-    function $mol_huggingface_ws(space: string, fn_index: number, ...data: readonly any[]): Promise<readonly any[]> & {
-        destructor: () => void;
-    };
-}
-
-declare namespace $ {
-    function $hyoo_lingua_translate(this: $, lang: string, text: string): string;
-}
-
-declare namespace $ {
-    interface $mol_locale_dict {
-        [key: string]: string;
-    }
-    class $mol_locale extends $mol_object {
-        static lang_default(): string;
-        static lang(next?: string): string;
-        static source(lang: string): any;
-        static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): string;
-        static warn(key: string): null;
-    }
-}
-
-declare namespace $ {
     class $mol_hotkey extends $mol_plugin {
         event(): Record<string, any>;
         key(): Record<string, any>;
@@ -2105,6 +1970,141 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    type $mol_charset_encoding = 'utf8' | 'utf-16le' | 'utf-16be' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
+}
+
+declare namespace $ {
+    function $mol_charset_decode(buffer: BufferSource, encoding?: $mol_charset_encoding): string;
+}
+
+declare var $node: any;
+
+declare namespace $ {
+    function $mol_charset_encode(value: string): Uint8Array;
+}
+
+declare namespace $ {
+    type $mol_file_type = 'file' | 'dir' | 'link';
+    interface $mol_file_stat {
+        type: $mol_file_type;
+        size: number;
+        atime: Date;
+        mtime: Date;
+        ctime: Date;
+    }
+    class $mol_file_not_found extends Error {
+    }
+    abstract class $mol_file extends $mol_object {
+        static absolute(path: string): $mol_file;
+        static relative(path: string): $mol_file;
+        static base: string;
+        path(): string;
+        parent(): $mol_file;
+        abstract stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
+        reset(): void;
+        version(): string;
+        abstract ensure(): void;
+        watcher(): {
+            destructor(): void;
+        };
+        exists(next?: boolean): boolean;
+        type(): "" | $mol_file_type;
+        name(): string;
+        ext(): string;
+        abstract buffer(next?: Uint8Array): Uint8Array;
+        text(next?: string, virt?: 'virt'): string;
+        abstract sub(): $mol_file[];
+        abstract resolve(path: string): $mol_file;
+        abstract relate(base?: $mol_file): string;
+        abstract append(next: Uint8Array | string): void;
+        find(include?: RegExp, exclude?: RegExp): $mol_file[];
+        size(): number;
+    }
+}
+
+declare namespace $ {
+    function $mol_wire_sync<Host extends object>(obj: Host): (Host extends (...args: infer Args) => infer Res ? Res extends Promise<infer Res2> ? (...args: Args) => Res2 : Host : {}) & { [key in keyof Host]: Host[key] extends (...args: infer Args_1) => Promise<infer Res_1> ? (...args: Args_1) => Res_1 : Host[key]; };
+}
+
+declare namespace $ {
+    function $mol_dom_parse(text: string, type?: DOMParserSupportedType): Document;
+}
+
+declare namespace $ {
+    class $mol_fetch_response extends $mol_object2 {
+        readonly native: Response;
+        constructor(native: Response);
+        status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
+        code(): number;
+        message(): string;
+        headers(): Headers;
+        mime(): string | null;
+        stream(): ReadableStream<Uint8Array> | null;
+        text(): string;
+        json(): unknown;
+        buffer(): ArrayBuffer;
+        xml(): Document;
+        xhtml(): Document;
+        html(): Document;
+    }
+    class $mol_fetch extends $mol_object2 {
+        static request(input: RequestInfo, init?: RequestInit): Promise<Response> & {
+            destructor: () => void;
+        };
+        static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array> | null;
+        static text(input: RequestInfo, init?: RequestInit): string;
+        static json(input: RequestInfo, init?: RequestInit): unknown;
+        static buffer(input: RequestInfo, init?: RequestInit): ArrayBuffer;
+        static xml(input: RequestInfo, init?: RequestInit): Document;
+        static xhtml(input: RequestInfo, init?: RequestInit): Document;
+        static html(input: RequestInfo, init?: RequestInit): Document;
+    }
+}
+
+declare namespace $ {
+    class $mol_file_web extends $mol_file {
+        static absolute(path: string): $mol_file_web;
+        static relative(path: string): $mol_file_web;
+        static base: string;
+        buffer(next?: Uint8Array): Uint8Array;
+        stat(next?: $mol_file_stat, virt?: 'virt'): $mol_file_stat;
+        resolve(path: string): $mol_file_web;
+        ensure(): void;
+        sub(): $mol_file[];
+        relate(base?: $mol_file): string;
+        append(next: Uint8Array | string): void;
+    }
+}
+
+declare namespace $ {
+    function $mol_huggingface_run(this: $, space: string, method: string | number, ...data: readonly any[]): readonly any[];
+    function $mol_huggingface_rest(space: string, method: string, ...data: readonly any[]): readonly any[];
+    function $mol_huggingface_ws(space: string, fn_index: number, ...data: readonly any[]): Promise<readonly any[]> & {
+        destructor: () => void;
+    };
+}
+
+declare namespace $ {
+    function $hyoo_lingua_translate(this: $, lang: string, text: string): string;
+}
+
+declare namespace $ {
+    interface $mol_locale_dict {
+        [key: string]: string;
+    }
+    class $mol_locale extends $mol_object {
+        static lang_default(): string;
+        static lang(next?: string): string;
+        static source(lang: string): any;
+        static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
+        static text(key: string): string;
+        static warn(key: string): null;
+    }
+}
+
+declare namespace $ {
     class $mol_svg extends $mol_view {
         dom_name(): string;
         dom_name_space(): string;
@@ -2779,7 +2779,6 @@ declare namespace $ {
         approved_title(): string;
         Approve(): $mol_check_box;
         actions(): readonly any[];
-        Actions(): $mol_row;
         position(id: any): any;
     }
 }

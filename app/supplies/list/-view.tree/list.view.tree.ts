@@ -52,11 +52,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * search_hint @ \Search supply by bar code
+		 * search_hint \Search supply by bar code
 		 * ```
 		 */
 		search_hint() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_list_search_hint' )
+			return "Search supply by bar code"
 		}
 		
 		/**

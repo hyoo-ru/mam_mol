@@ -3130,604 +3130,6 @@ var $;
 //mol/theme/auto/auto.view.ts
 ;
 "use strict";
-//mol/charset/encoding/encoding.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const decoders = {};
-    function $mol_charset_decode(buffer, encoding = 'utf8') {
-        let decoder = decoders[encoding];
-        if (!decoder)
-            decoder = decoders[encoding] = new TextDecoder(encoding);
-        return decoder.decode(buffer);
-    }
-    $.$mol_charset_decode = $mol_charset_decode;
-})($ || ($ = {}));
-//mol/charset/decode/decode.ts
-;
-"use strict";
-//node/node.ts
-;
-"use strict";
-var $node = $node || {};
-//node/node.web.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const TextEncoder = globalThis.TextEncoder ?? $node.util.TextEncoder;
-    const encoder = new TextEncoder();
-    function $mol_charset_encode(value) {
-        return encoder.encode(value);
-    }
-    $.$mol_charset_encode = $mol_charset_encode;
-})($ || ($ = {}));
-//mol/charset/encode/encode.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_file_not_found extends Error {
-    }
-    $.$mol_file_not_found = $mol_file_not_found;
-    class $mol_file extends $mol_object {
-        static absolute(path) {
-            throw new Error('Not implemented yet');
-        }
-        static relative(path) {
-            throw new Error('Not implemented yet');
-        }
-        static base = '';
-        path() {
-            return '.';
-        }
-        parent() {
-            return this.resolve('..');
-        }
-        reset() {
-            try {
-                this.stat(null);
-            }
-            catch (error) {
-                if (error instanceof $mol_file_not_found)
-                    return;
-                return $mol_fail_hidden(error);
-            }
-        }
-        version() {
-            return this.stat()?.mtime.getTime().toString(36).toUpperCase() ?? '';
-        }
-        watcher() {
-            console.warn('$mol_file_web.watcher() not implemented');
-            return {
-                destructor() { }
-            };
-        }
-        exists(next) {
-            let exists = Boolean(this.stat());
-            if (next === undefined)
-                return exists;
-            if (next === exists)
-                return exists;
-            if (next)
-                this.parent().exists(true);
-            this.ensure();
-            this.reset();
-            return next;
-        }
-        type() {
-            return this.stat()?.type ?? '';
-        }
-        name() {
-            return this.path().replace(/^.*\//, '');
-        }
-        ext() {
-            const match = /((?:\.\w+)+)$/.exec(this.path());
-            return match ? match[1].substring(1) : '';
-        }
-        text(next, virt) {
-            if (virt) {
-                const now = new Date;
-                this.stat({
-                    type: 'file',
-                    size: 0,
-                    atime: now,
-                    mtime: now,
-                    ctime: now,
-                }, 'virt');
-                return next;
-            }
-            if (next === undefined) {
-                return $mol_charset_decode(this.buffer(undefined));
-            }
-            else {
-                const buffer = next === undefined ? undefined : $mol_charset_encode(next);
-                this.buffer(buffer);
-                return next;
-            }
-        }
-        find(include, exclude) {
-            const found = [];
-            const sub = this.sub();
-            for (const child of sub) {
-                const child_path = child.path();
-                if (exclude && child_path.match(exclude))
-                    continue;
-                if (!include || child_path.match(include))
-                    found.push(child);
-                if (child.type() === 'dir') {
-                    const sub_child = child.find(include, exclude);
-                    for (const child of sub_child)
-                        found.push(child);
-                }
-            }
-            return found;
-        }
-        size() {
-            switch (this.type()) {
-                case 'file': return this.stat()?.size ?? 0;
-                default: return 0;
-            }
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_file.prototype, "exists", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file.prototype, "text", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_file, "absolute", null);
-    $.$mol_file = $mol_file;
-})($ || ($ = {}));
-//mol/file/file.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_sync(obj) {
-        return new Proxy(obj, {
-            get(obj, field) {
-                const val = obj[field];
-                if (typeof val !== 'function')
-                    return val;
-                const temp = $mol_wire_task.getter(val);
-                return function $mol_wire_sync(...args) {
-                    const fiber = temp(obj, args);
-                    return fiber.sync();
-                };
-            },
-            apply(obj, self, args) {
-                const temp = $mol_wire_task.getter(obj);
-                const fiber = temp(self, args);
-                return fiber.sync();
-            },
-        });
-    }
-    $.$mol_wire_sync = $mol_wire_sync;
-})($ || ($ = {}));
-//mol/wire/sync/sync.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
-        const parser = new $mol_dom_context.DOMParser();
-        const doc = parser.parseFromString(text, type);
-        const error = doc.getElementsByTagName('parsererror');
-        if (error.length)
-            throw new Error(error[0].textContent);
-        return doc;
-    }
-    $.$mol_dom_parse = $mol_dom_parse;
-})($ || ($ = {}));
-//mol/dom/parse/parse.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_fetch_response extends $mol_object2 {
-        native;
-        constructor(native) {
-            super();
-            this.native = native;
-        }
-        status() {
-            const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
-            return types[Math.floor(this.native.status / 100)];
-        }
-        code() {
-            return this.native.status;
-        }
-        message() {
-            return this.native.statusText || `HTTP Error ${this.code()}`;
-        }
-        headers() {
-            return this.native.headers;
-        }
-        mime() {
-            return this.headers().get('content-type');
-        }
-        stream() {
-            return this.native.body;
-        }
-        text() {
-            const buffer = this.buffer();
-            const native = this.native;
-            const mime = native.headers.get('content-type') || '';
-            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
-            const decoder = new TextDecoder(charset);
-            return decoder.decode(buffer);
-        }
-        json() {
-            return $mol_wire_sync(this.native).json();
-        }
-        buffer() {
-            return $mol_wire_sync(this.native).arrayBuffer();
-        }
-        xml() {
-            return $mol_dom_parse(this.text(), 'application/xml');
-        }
-        xhtml() {
-            return $mol_dom_parse(this.text(), 'application/xhtml+xml');
-        }
-        html() {
-            return $mol_dom_parse(this.text(), 'text/html');
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "stream", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "text", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "buffer", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "xml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "xhtml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "html", null);
-    $.$mol_fetch_response = $mol_fetch_response;
-    class $mol_fetch extends $mol_object2 {
-        static request(input, init = {}) {
-            const native = globalThis.fetch ?? $node['undici'].fetch;
-            const controller = new AbortController();
-            let done = false;
-            const promise = native(input, {
-                ...init,
-                signal: controller.signal,
-            }).finally(() => {
-                done = true;
-            });
-            return Object.assign(promise, {
-                destructor: () => {
-                    if (!done && !controller.signal.aborted)
-                        controller.abort();
-                },
-            });
-        }
-        static response(input, init) {
-            return new $mol_fetch_response($mol_wire_sync(this).request(input, init));
-        }
-        static success(input, init) {
-            const response = this.response(input, init);
-            if (response.status() === 'success')
-                return response;
-            throw new Error(response.message());
-        }
-        static stream(input, init) {
-            return this.success(input, init).stream();
-        }
-        static text(input, init) {
-            return this.success(input, init).text();
-        }
-        static json(input, init) {
-            return this.success(input, init).json();
-        }
-        static buffer(input, init) {
-            return this.success(input, init).buffer();
-        }
-        static xml(input, init) {
-            return this.success(input, init).xml();
-        }
-        static xhtml(input, init) {
-            return this.success(input, init).xhtml();
-        }
-        static html(input, init) {
-            return this.success(input, init).html();
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "response", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "success", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "stream", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "text", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "json", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "buffer", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "xml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "xhtml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "html", null);
-    $.$mol_fetch = $mol_fetch;
-})($ || ($ = {}));
-//mol/fetch/fetch.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_file_web extends $mol_file {
-        static absolute(path) {
-            return this.make({
-                path: $mol_const(path)
-            });
-        }
-        static relative(path) {
-            return this.absolute(new URL(path, this.base).toString());
-        }
-        static base = $mol_dom_context.document
-            ? new URL('.', $mol_dom_context.document.currentScript['src']).toString()
-            : '';
-        buffer(next) {
-            if (next !== undefined)
-                throw new Error(`Saving content not supported: ${this.path}`);
-            const response = $mol_fetch.response(this.path());
-            if (response.native.status === 404)
-                throw new $mol_file_not_found(`File not found: ${this.path()}`);
-            return new Uint8Array(response.buffer());
-        }
-        stat(next, virt) {
-            let stat = next;
-            if (next === undefined) {
-                const content = this.text();
-                const ctime = new Date();
-                stat = {
-                    type: 'file',
-                    size: content.length,
-                    ctime,
-                    atime: ctime,
-                    mtime: ctime
-                };
-            }
-            this.parent().watcher();
-            return stat;
-        }
-        resolve(path) {
-            let res = this.path() + '/' + path;
-            while (true) {
-                let prev = res;
-                res = res.replace(/\/[^\/.]+\/\.\.\//, '/');
-                if (prev === res)
-                    break;
-            }
-            return this.constructor.absolute(res);
-        }
-        ensure() {
-            throw new Error('$mol_file_web.ensure() not implemented');
-        }
-        sub() {
-            throw new Error('$mol_file_web.sub() not implemented');
-        }
-        relate(base = this.constructor.relative('.')) {
-            throw new Error('$mol_file_web.relate() not implemented');
-        }
-        append(next) {
-            throw new Error('$mol_file_web.append() not implemented');
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_file_web.prototype, "buffer", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_web.prototype, "stat", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_web.prototype, "sub", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_file_web, "absolute", null);
-    $.$mol_file_web = $mol_file_web;
-    $.$mol_file = $mol_file_web;
-})($ || ($ = {}));
-//mol/file/file.web.ts
-;
-"use strict";
-//hyoo/hyoo.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_huggingface_run(space, method, ...data) {
-        while (true) {
-            try {
-                if (typeof method === 'number') {
-                    return $mol_wire_sync(this).$mol_huggingface_ws(space, method, ...data);
-                }
-                else {
-                    return this.$mol_huggingface_rest(space, method, ...data);
-                }
-            }
-            catch (error) {
-                if ($mol_promise_like(error))
-                    $mol_fail_hidden(error);
-                if (error instanceof Error && error.message === `Queue full`) {
-                    $mol_fail_log(error);
-                    continue;
-                }
-                $mol_fail_hidden(error);
-            }
-        }
-    }
-    $.$mol_huggingface_run = $mol_huggingface_run;
-    function $mol_huggingface_rest(space, method, ...data) {
-        const uri = `https://${space}.hf.space/run/${method}`;
-        const response = $mol_fetch.json(uri, {
-            method: 'post',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data }),
-        });
-        if ('error' in response) {
-            $mol_fail(new Error(response.error ?? 'Unknown API error'));
-        }
-        return response.data;
-    }
-    $.$mol_huggingface_rest = $mol_huggingface_rest;
-    function $mol_huggingface_ws(space, fn_index, ...data) {
-        const session_hash = $mol_guid();
-        const socket = new WebSocket(`wss://${space}.hf.space/queue/join`);
-        const promise = new Promise((done, fail) => {
-            socket.onclose = event => {
-                if (event.reason)
-                    fail(new Error(event.reason));
-            };
-            socket.onerror = event => {
-                fail(new Error(`Socket error`));
-            };
-            socket.onmessage = event => {
-                const message = JSON.parse(event.data);
-                switch (message.msg) {
-                    case 'send_hash':
-                        return socket.send(JSON.stringify({ session_hash, fn_index }));
-                    case 'estimation': return;
-                    case 'queue_full':
-                        fail(new Error(`Queue full`));
-                    case 'send_data':
-                        return socket.send(JSON.stringify({ session_hash, fn_index, data }));
-                    case 'process_starts': return;
-                    case 'process_completed':
-                        if (message.success) {
-                            return done(message.output.data);
-                        }
-                        else {
-                            return fail(new Error(message.output.error ?? `Unknown API error`));
-                        }
-                    default:
-                        return fail(new Error(`Unknown message type: ${message.msg}`));
-                }
-            };
-        });
-        return Object.assign(promise, {
-            destructor: () => socket.close()
-        });
-    }
-    $.$mol_huggingface_ws = $mol_huggingface_ws;
-})($ || ($ = {}));
-//mol/huggingface/huggingface.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $hyoo_lingua_translate(lang, text) {
-        if (!text.trim())
-            return '';
-        const cache_key = `$hyoo_lingua_translate(${JSON.stringify(lang)},${JSON.stringify(text)})`;
-        const cached = this.$mol_state_local.value(cache_key);
-        if (cached)
-            return String(cached);
-        const translated = this.$mol_huggingface_run('hyoo-translate', 0, lang, text)[0];
-        return this.$mol_state_local.value(cache_key, translated);
-    }
-    $.$hyoo_lingua_translate = $hyoo_lingua_translate;
-})($ || ($ = {}));
-//hyoo/lingua/translate/translate.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_locale extends $mol_object {
-        static lang_default() {
-            return 'en';
-        }
-        static lang(next) {
-            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
-        }
-        static source(lang) {
-            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
-        }
-        static texts(lang, next) {
-            if (next)
-                return next;
-            try {
-                return this.source(lang).valueOf();
-            }
-            catch (error) {
-                if ($mol_fail_catch(error)) {
-                    const def = this.lang_default();
-                    if (lang === def)
-                        throw error;
-                }
-            }
-            return {};
-        }
-        static text(key) {
-            const lang = this.lang();
-            const target = this.texts(lang)[key];
-            if (target)
-                return target;
-            this.warn(key);
-            const en = this.texts('en')[key];
-            if (!en)
-                return key;
-            try {
-                return $mol_wire_sync($hyoo_lingua_translate).call(this.$, lang, en);
-            }
-            catch (error) {
-                $mol_fail_log(error);
-            }
-            return en;
-        }
-        static warn(key) {
-            console.warn(`Not translated to "${this.lang()}": ${key}`);
-            return null;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_locale, "lang_default", null);
-    __decorate([
-        $mol_mem
-    ], $mol_locale, "lang", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "source", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "texts", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "text", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "warn", null);
-    $.$mol_locale = $mol_locale;
-})($ || ($ = {}));
-//mol/locale/locale.ts
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_hotkey extends $mol_plugin {
@@ -4867,7 +4269,7 @@ var $;
             ];
         }
         loginLabel() {
-            return this.$.$mol_locale.text('$mol_app_supplies_enter_loginLabel');
+            return "User name";
         }
         login(next) {
             if (next !== undefined)
@@ -4886,7 +4288,7 @@ var $;
             return obj;
         }
         passwordLabel() {
-            return this.$.$mol_locale.text('$mol_app_supplies_enter_passwordLabel');
+            return "Pass word";
         }
         password(next) {
             if (next !== undefined)
@@ -4906,7 +4308,7 @@ var $;
             return obj;
         }
         submitLabel() {
-            return this.$.$mol_locale.text('$mol_app_supplies_enter_submitLabel');
+            return "Log In";
         }
         event_submit(next) {
             if (next !== undefined)
@@ -6569,7 +5971,7 @@ var $;
             return "";
         }
         code_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_card_code_title');
+            return "Code";
         }
         code() {
             return "";
@@ -6583,7 +5985,7 @@ var $;
             return obj;
         }
         cost_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_card_cost_title');
+            return "Cost";
         }
         cost() {
             const obj = new this.$.$mol_unit_money();
@@ -6604,7 +6006,7 @@ var $;
             return obj;
         }
         provider_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_card_provider_title');
+            return "Provider";
         }
         provider_name() {
             return "";
@@ -7098,6 +6500,604 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/nav/nav.view.ts
+;
+"use strict";
+//mol/charset/encoding/encoding.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const decoders = {};
+    function $mol_charset_decode(buffer, encoding = 'utf8') {
+        let decoder = decoders[encoding];
+        if (!decoder)
+            decoder = decoders[encoding] = new TextDecoder(encoding);
+        return decoder.decode(buffer);
+    }
+    $.$mol_charset_decode = $mol_charset_decode;
+})($ || ($ = {}));
+//mol/charset/decode/decode.ts
+;
+"use strict";
+//node/node.ts
+;
+"use strict";
+var $node = $node || {};
+//node/node.web.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const TextEncoder = globalThis.TextEncoder ?? $node.util.TextEncoder;
+    const encoder = new TextEncoder();
+    function $mol_charset_encode(value) {
+        return encoder.encode(value);
+    }
+    $.$mol_charset_encode = $mol_charset_encode;
+})($ || ($ = {}));
+//mol/charset/encode/encode.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file_not_found extends Error {
+    }
+    $.$mol_file_not_found = $mol_file_not_found;
+    class $mol_file extends $mol_object {
+        static absolute(path) {
+            throw new Error('Not implemented yet');
+        }
+        static relative(path) {
+            throw new Error('Not implemented yet');
+        }
+        static base = '';
+        path() {
+            return '.';
+        }
+        parent() {
+            return this.resolve('..');
+        }
+        reset() {
+            try {
+                this.stat(null);
+            }
+            catch (error) {
+                if (error instanceof $mol_file_not_found)
+                    return;
+                return $mol_fail_hidden(error);
+            }
+        }
+        version() {
+            return this.stat()?.mtime.getTime().toString(36).toUpperCase() ?? '';
+        }
+        watcher() {
+            console.warn('$mol_file_web.watcher() not implemented');
+            return {
+                destructor() { }
+            };
+        }
+        exists(next) {
+            let exists = Boolean(this.stat());
+            if (next === undefined)
+                return exists;
+            if (next === exists)
+                return exists;
+            if (next)
+                this.parent().exists(true);
+            this.ensure();
+            this.reset();
+            return next;
+        }
+        type() {
+            return this.stat()?.type ?? '';
+        }
+        name() {
+            return this.path().replace(/^.*\//, '');
+        }
+        ext() {
+            const match = /((?:\.\w+)+)$/.exec(this.path());
+            return match ? match[1].substring(1) : '';
+        }
+        text(next, virt) {
+            if (virt) {
+                const now = new Date;
+                this.stat({
+                    type: 'file',
+                    size: 0,
+                    atime: now,
+                    mtime: now,
+                    ctime: now,
+                }, 'virt');
+                return next;
+            }
+            if (next === undefined) {
+                return $mol_charset_decode(this.buffer(undefined));
+            }
+            else {
+                const buffer = next === undefined ? undefined : $mol_charset_encode(next);
+                this.buffer(buffer);
+                return next;
+            }
+        }
+        find(include, exclude) {
+            const found = [];
+            const sub = this.sub();
+            for (const child of sub) {
+                const child_path = child.path();
+                if (exclude && child_path.match(exclude))
+                    continue;
+                if (!include || child_path.match(include))
+                    found.push(child);
+                if (child.type() === 'dir') {
+                    const sub_child = child.find(include, exclude);
+                    for (const child of sub_child)
+                        found.push(child);
+                }
+            }
+            return found;
+        }
+        size() {
+            switch (this.type()) {
+                case 'file': return this.stat()?.size ?? 0;
+                default: return 0;
+            }
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_file.prototype, "exists", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file.prototype, "text", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_file, "absolute", null);
+    $.$mol_file = $mol_file;
+})($ || ($ = {}));
+//mol/file/file.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_sync(obj) {
+        return new Proxy(obj, {
+            get(obj, field) {
+                const val = obj[field];
+                if (typeof val !== 'function')
+                    return val;
+                const temp = $mol_wire_task.getter(val);
+                return function $mol_wire_sync(...args) {
+                    const fiber = temp(obj, args);
+                    return fiber.sync();
+                };
+            },
+            apply(obj, self, args) {
+                const temp = $mol_wire_task.getter(obj);
+                const fiber = temp(self, args);
+                return fiber.sync();
+            },
+        });
+    }
+    $.$mol_wire_sync = $mol_wire_sync;
+})($ || ($ = {}));
+//mol/wire/sync/sync.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
+        const parser = new $mol_dom_context.DOMParser();
+        const doc = parser.parseFromString(text, type);
+        const error = doc.getElementsByTagName('parsererror');
+        if (error.length)
+            throw new Error(error[0].textContent);
+        return doc;
+    }
+    $.$mol_dom_parse = $mol_dom_parse;
+})($ || ($ = {}));
+//mol/dom/parse/parse.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_fetch_response extends $mol_object2 {
+        native;
+        constructor(native) {
+            super();
+            this.native = native;
+        }
+        status() {
+            const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
+            return types[Math.floor(this.native.status / 100)];
+        }
+        code() {
+            return this.native.status;
+        }
+        message() {
+            return this.native.statusText || `HTTP Error ${this.code()}`;
+        }
+        headers() {
+            return this.native.headers;
+        }
+        mime() {
+            return this.headers().get('content-type');
+        }
+        stream() {
+            return this.native.body;
+        }
+        text() {
+            const buffer = this.buffer();
+            const native = this.native;
+            const mime = native.headers.get('content-type') || '';
+            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
+            const decoder = new TextDecoder(charset);
+            return decoder.decode(buffer);
+        }
+        json() {
+            return $mol_wire_sync(this.native).json();
+        }
+        buffer() {
+            return $mol_wire_sync(this.native).arrayBuffer();
+        }
+        xml() {
+            return $mol_dom_parse(this.text(), 'application/xml');
+        }
+        xhtml() {
+            return $mol_dom_parse(this.text(), 'application/xhtml+xml');
+        }
+        html() {
+            return $mol_dom_parse(this.text(), 'text/html');
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "stream", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "text", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "buffer", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "xml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "xhtml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "html", null);
+    $.$mol_fetch_response = $mol_fetch_response;
+    class $mol_fetch extends $mol_object2 {
+        static request(input, init = {}) {
+            const native = globalThis.fetch ?? $node['undici'].fetch;
+            const controller = new AbortController();
+            let done = false;
+            const promise = native(input, {
+                ...init,
+                signal: controller.signal,
+            }).finally(() => {
+                done = true;
+            });
+            return Object.assign(promise, {
+                destructor: () => {
+                    if (!done && !controller.signal.aborted)
+                        controller.abort();
+                },
+            });
+        }
+        static response(input, init) {
+            return new $mol_fetch_response($mol_wire_sync(this).request(input, init));
+        }
+        static success(input, init) {
+            const response = this.response(input, init);
+            if (response.status() === 'success')
+                return response;
+            throw new Error(response.message());
+        }
+        static stream(input, init) {
+            return this.success(input, init).stream();
+        }
+        static text(input, init) {
+            return this.success(input, init).text();
+        }
+        static json(input, init) {
+            return this.success(input, init).json();
+        }
+        static buffer(input, init) {
+            return this.success(input, init).buffer();
+        }
+        static xml(input, init) {
+            return this.success(input, init).xml();
+        }
+        static xhtml(input, init) {
+            return this.success(input, init).xhtml();
+        }
+        static html(input, init) {
+            return this.success(input, init).html();
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "response", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "success", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "stream", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "text", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "json", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "buffer", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "xml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "xhtml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "html", null);
+    $.$mol_fetch = $mol_fetch;
+})($ || ($ = {}));
+//mol/fetch/fetch.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file_web extends $mol_file {
+        static absolute(path) {
+            return this.make({
+                path: $mol_const(path)
+            });
+        }
+        static relative(path) {
+            return this.absolute(new URL(path, this.base).toString());
+        }
+        static base = $mol_dom_context.document
+            ? new URL('.', $mol_dom_context.document.currentScript['src']).toString()
+            : '';
+        buffer(next) {
+            if (next !== undefined)
+                throw new Error(`Saving content not supported: ${this.path}`);
+            const response = $mol_fetch.response(this.path());
+            if (response.native.status === 404)
+                throw new $mol_file_not_found(`File not found: ${this.path()}`);
+            return new Uint8Array(response.buffer());
+        }
+        stat(next, virt) {
+            let stat = next;
+            if (next === undefined) {
+                const content = this.text();
+                const ctime = new Date();
+                stat = {
+                    type: 'file',
+                    size: content.length,
+                    ctime,
+                    atime: ctime,
+                    mtime: ctime
+                };
+            }
+            this.parent().watcher();
+            return stat;
+        }
+        resolve(path) {
+            let res = this.path() + '/' + path;
+            while (true) {
+                let prev = res;
+                res = res.replace(/\/[^\/.]+\/\.\.\//, '/');
+                if (prev === res)
+                    break;
+            }
+            return this.constructor.absolute(res);
+        }
+        ensure() {
+            throw new Error('$mol_file_web.ensure() not implemented');
+        }
+        sub() {
+            throw new Error('$mol_file_web.sub() not implemented');
+        }
+        relate(base = this.constructor.relative('.')) {
+            throw new Error('$mol_file_web.relate() not implemented');
+        }
+        append(next) {
+            throw new Error('$mol_file_web.append() not implemented');
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_file_web.prototype, "buffer", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_web.prototype, "stat", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_web.prototype, "sub", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_file_web, "absolute", null);
+    $.$mol_file_web = $mol_file_web;
+    $.$mol_file = $mol_file_web;
+})($ || ($ = {}));
+//mol/file/file.web.ts
+;
+"use strict";
+//hyoo/hyoo.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_huggingface_run(space, method, ...data) {
+        while (true) {
+            try {
+                if (typeof method === 'number') {
+                    return $mol_wire_sync(this).$mol_huggingface_ws(space, method, ...data);
+                }
+                else {
+                    return this.$mol_huggingface_rest(space, method, ...data);
+                }
+            }
+            catch (error) {
+                if ($mol_promise_like(error))
+                    $mol_fail_hidden(error);
+                if (error instanceof Error && error.message === `Queue full`) {
+                    $mol_fail_log(error);
+                    continue;
+                }
+                $mol_fail_hidden(error);
+            }
+        }
+    }
+    $.$mol_huggingface_run = $mol_huggingface_run;
+    function $mol_huggingface_rest(space, method, ...data) {
+        const uri = `https://${space}.hf.space/run/${method}`;
+        const response = $mol_fetch.json(uri, {
+            method: 'post',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ data }),
+        });
+        if ('error' in response) {
+            $mol_fail(new Error(response.error ?? 'Unknown API error'));
+        }
+        return response.data;
+    }
+    $.$mol_huggingface_rest = $mol_huggingface_rest;
+    function $mol_huggingface_ws(space, fn_index, ...data) {
+        const session_hash = $mol_guid();
+        const socket = new WebSocket(`wss://${space}.hf.space/queue/join`);
+        const promise = new Promise((done, fail) => {
+            socket.onclose = event => {
+                if (event.reason)
+                    fail(new Error(event.reason));
+            };
+            socket.onerror = event => {
+                fail(new Error(`Socket error`));
+            };
+            socket.onmessage = event => {
+                const message = JSON.parse(event.data);
+                switch (message.msg) {
+                    case 'send_hash':
+                        return socket.send(JSON.stringify({ session_hash, fn_index }));
+                    case 'estimation': return;
+                    case 'queue_full':
+                        fail(new Error(`Queue full`));
+                    case 'send_data':
+                        return socket.send(JSON.stringify({ session_hash, fn_index, data }));
+                    case 'process_starts': return;
+                    case 'process_completed':
+                        if (message.success) {
+                            return done(message.output.data);
+                        }
+                        else {
+                            return fail(new Error(message.output.error ?? `Unknown API error`));
+                        }
+                    default:
+                        return fail(new Error(`Unknown message type: ${message.msg}`));
+                }
+            };
+        });
+        return Object.assign(promise, {
+            destructor: () => socket.close()
+        });
+    }
+    $.$mol_huggingface_ws = $mol_huggingface_ws;
+})($ || ($ = {}));
+//mol/huggingface/huggingface.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $hyoo_lingua_translate(lang, text) {
+        if (!text.trim())
+            return '';
+        const cache_key = `$hyoo_lingua_translate(${JSON.stringify(lang)},${JSON.stringify(text)})`;
+        const cached = this.$mol_state_local.value(cache_key);
+        if (cached)
+            return String(cached);
+        const translated = this.$mol_huggingface_run('hyoo-translate', 0, lang, text)[0];
+        return this.$mol_state_local.value(cache_key, translated);
+    }
+    $.$hyoo_lingua_translate = $hyoo_lingua_translate;
+})($ || ($ = {}));
+//hyoo/lingua/translate/translate.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_locale extends $mol_object {
+        static lang_default() {
+            return 'en';
+        }
+        static lang(next) {
+            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
+        }
+        static source(lang) {
+            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
+        }
+        static texts(lang, next) {
+            if (next)
+                return next;
+            try {
+                return this.source(lang).valueOf();
+            }
+            catch (error) {
+                if ($mol_fail_catch(error)) {
+                    const def = this.lang_default();
+                    if (lang === def)
+                        throw error;
+                }
+            }
+            return {};
+        }
+        static text(key) {
+            const lang = this.lang();
+            const target = this.texts(lang)[key];
+            if (target)
+                return target;
+            this.warn(key);
+            const en = this.texts('en')[key];
+            if (!en)
+                return key;
+            try {
+                return $mol_wire_sync($hyoo_lingua_translate).call(this.$, lang, en);
+            }
+            catch (error) {
+                $mol_fail_log(error);
+            }
+            return en;
+        }
+        static warn(key) {
+            console.warn(`Not translated to "${this.lang()}": ${key}`);
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "lang_default", null);
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "lang", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "source", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "texts", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "text", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "warn", null);
+    $.$mol_locale = $mol_locale;
+})($ || ($ = {}));
+//mol/locale/locale.ts
 ;
 "use strict";
 var $;
@@ -8194,7 +8194,7 @@ var $;
             return obj;
         }
         search_hint() {
-            return this.$.$mol_locale.text('$mol_app_supplies_list_search_hint');
+            return "Search supply by bar code";
         }
         search_query(next) {
             if (next !== undefined)
@@ -8289,7 +8289,7 @@ var $;
             return this.Row();
         }
         product_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_position_product_title');
+            return "Product";
         }
         product_name() {
             return "";
@@ -8303,7 +8303,7 @@ var $;
             return obj;
         }
         cost_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_position_cost_title');
+            return "Cost";
         }
         cost() {
             const obj = new this.$.$mol_unit_money();
@@ -8332,7 +8332,7 @@ var $;
             return obj;
         }
         division_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_position_division_title');
+            return "Division";
         }
         division_name() {
             return "";
@@ -8346,7 +8346,7 @@ var $;
             return obj;
         }
         price_label() {
-            return this.$.$mol_locale.text('$mol_app_supplies_position_price_label');
+            return "Price";
         }
         price() {
             const obj = new this.$.$mol_unit_money();
@@ -8375,7 +8375,7 @@ var $;
             return obj;
         }
         quantity_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_position_quantity_title');
+            return "Quantity";
         }
         quantity() {
             return "";
@@ -8389,7 +8389,7 @@ var $;
             return obj;
         }
         supply_date_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_position_supply_date_title');
+            return "Supply date";
         }
         supply_date() {
             return "";
@@ -8403,7 +8403,7 @@ var $;
             return obj;
         }
         store_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_position_store_title');
+            return "Store";
         }
         store_name() {
             return "";
@@ -8523,7 +8523,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/app/supplies/position/position.view.css", "[mol_app_supplies_position] {\n\tflex: 1 1 auto;\n}\n[mol_app_supplies_position_row] {\n\talign-items: stretch;\n\tpadding: 0;\n\tbox-shadow: none;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n[mol_app_supplies_position_row] > * {\n\talign-items: baseline;\n\tmargin: 0;\n}\n\n[mol_app_supplies_position_main_group] {\n\tflex: 1 1 12rem;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n}\n\n[mol_app_supplies_position_addon_group] {\n\tflex: 1 1 12rem;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n}\n\n[mol_app_supplies_position_supply_group] {\n\tflex: 1 1 24rem;\n\tflex-direction: row-reverse;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n}\n\n[mol_app_supplies_position_division_item] {\n\tflex: 1000 1 6rem;\n}\n\n[mol_app_supplies_position_product_item] {\n\tflex: 1000 1 6rem;\n}\n\n[mol_app_supplies_position_price_item] {\n\tflex: 1 0 3rem;\n\talign-items: flex-end;\n}\n\n[mol_app_supplies_position_quantity_item] {\n\tflex: 1 0 4rem;\n\talign-items: flex-end;\n}\n\n[mol_app_supplies_position_cost_item] {\n\tflex: 1 0 3rem;\n\talign-items: flex-end;\n}\n\n[mol_app_supplies_position_supply_date_item] {\n\tflex: 0 0 6rem;\n}\n\n[mol_app_supplies_position_store_item] {\n\tflex: 1 1 10rem;\n}\n");
+    $mol_style_attach("mol/app/supplies/position/position.view.css", "[mol_app_supplies_position] {\n\tflex: 1 1 auto;\n}\n[mol_app_supplies_position_row] {\n\talign-items: stretch;\n\tpadding: 0;\n\tbox-shadow: none;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n[mol_app_supplies_position_row] > * {\n\talign-items: baseline;\n\tmargin: 0;\n}\n\n[mol_app_supplies_position_main_group] {\n\tflex: 1 1 12rem;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n}\n\n[mol_app_supplies_position_addon_group] {\n\tflex: 1 1 12rem;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n}\n\n[mol_app_supplies_position_supply_group] {\n\tflex: 1 1 24rem;\n\tflex-direction: row-reverse;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n}\n\n[mol_app_supplies_position_division_item] {\n\tflex: 1000 1 6rem;\n}\n\n[mol_app_supplies_position_product_item] {\n\tflex: 1000 1 6rem;\n}\n\n[mol_app_supplies_position_price_item] {\n\tflex: 1 0 3rem;\n\talign-items: flex-end;\n}\n\n[mol_app_supplies_position_quantity_item] {\n\tflex: 1 0 4rem;\n\talign-items: flex-end;\n}\n\n[mol_app_supplies_position_cost_item] {\n\tflex: 1 0 3rem;\n\talign-items: flex-end;\n}\n\n[mol_app_supplies_position_supply_date_item] {\n\tflex: 0 0 9rem;\n}\n\n[mol_app_supplies_position_store_item] {\n\tflex: 1 1 12rem;\n}\n");
 })($ || ($ = {}));
 //mol/app/supplies/position/-css/position.view.css.ts
 ;
@@ -9382,7 +9382,7 @@ var $;
             return null;
         }
         title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_title');
+            return "Supply";
         }
         tools() {
             return [
@@ -9395,9 +9395,7 @@ var $;
             ];
         }
         foot() {
-            return [
-                this.Actions()
-            ];
+            return this.actions();
         }
         Position(id) {
             const obj = new this.$.$mol_app_supplies_position();
@@ -9422,10 +9420,10 @@ var $;
             return obj;
         }
         org_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_org_title');
+            return "Organization";
         }
         provider_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_provider_title');
+            return "Provider";
         }
         provider_name() {
             return "";
@@ -9439,7 +9437,7 @@ var $;
             return obj;
         }
         customer_label() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_customer_label');
+            return "Consumer";
         }
         consumer_name() {
             return "";
@@ -9453,7 +9451,7 @@ var $;
             return obj;
         }
         supply_group_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_supply_group_title');
+            return "Supply Group";
         }
         supply_group_name() {
             return "";
@@ -9467,7 +9465,7 @@ var $;
             return obj;
         }
         ballance_unit_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_ballance_unit_title');
+            return "Ballance Unit";
         }
         ballance_unit_name() {
             return "";
@@ -9495,10 +9493,10 @@ var $;
             return obj;
         }
         cons_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_cons_title');
+            return "Consumer";
         }
         contract_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_contract_title');
+            return "Contract";
         }
         contract_id() {
             return "";
@@ -9512,7 +9510,7 @@ var $;
             return obj;
         }
         pay_method_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_pay_method_title');
+            return "Pay Method";
         }
         pay_method_name() {
             return "";
@@ -9526,7 +9524,7 @@ var $;
             return obj;
         }
         manager_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_manager_title');
+            return "Manager";
         }
         manager_name() {
             return "";
@@ -9540,7 +9538,7 @@ var $;
             return obj;
         }
         debitod_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_debitod_title');
+            return "Debitor";
         }
         debitor_name() {
             return "";
@@ -9581,7 +9579,7 @@ var $;
             return obj;
         }
         attach_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_attach_title');
+            return "Attachments";
         }
         attachments() {
             return [];
@@ -9608,7 +9606,7 @@ var $;
             return obj;
         }
         positions_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_positions_title');
+            return "Positions";
         }
         cost() {
             const obj = new this.$.$mol_unit_money();
@@ -9655,7 +9653,7 @@ var $;
             return false;
         }
         approved_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_detail_approved_title');
+            return "Approved";
         }
         Approve() {
             const obj = new this.$.$mol_check_box();
@@ -9667,11 +9665,6 @@ var $;
             return [
                 this.Approve()
             ];
-        }
-        Actions() {
-            const obj = new this.$.$mol_row();
-            obj.sub = () => this.actions();
-            return obj;
         }
         position(id) {
             return null;
@@ -9752,9 +9745,6 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_app_supplies_detail.prototype, "Approve", null);
-    __decorate([
-        $mol_mem
-    ], $mol_app_supplies_detail.prototype, "Actions", null);
     $.$mol_app_supplies_detail = $mol_app_supplies_detail;
 })($ || ($ = {}));
 //mol/app/supplies/detail/-view.tree/detail.view.tree.ts
@@ -9842,7 +9832,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/app/supplies/detail/detail.view.css", "[mol_app_supplies_detail_content] {\n\tpadding: 0 .75rem;\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_app_supplies_detail_content] > * {\n\tmargin: .75rem 0;\n}\n\n[mol_app_supplies_detail_positions] > * {\n\tmargin: .25rem 0;\n}\n\n[mol_app_supplies_detail_descr_deck] {\n\tmargin: 0;\n}\n\n[mol_app_supplies_detail_cons_content] {\n\talign-items: baseline;\n}\n\n[mol_app_supplies_detail_cons_content] > * {\n\tflex: 1 1 10rem;\n}\n\n[mol_app_supplies_detail_org_content] {\n\talign-items: baseline;\n}\n\n[mol_app_supplies_detail_org_content] > * {\n\tflex: 1 1 10rem;\n}\n\n[mol_app_supplies_detail_cost] {\n\ttext-align: right;\n\tmargin: 0;\n}\n");
+    $mol_style_attach("mol/app/supplies/detail/detail.view.css", "[mol_app_supplies_detail_content] {\n\tpadding: 0 .75rem;\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_app_supplies_detail_content] > * {\n\tmargin: .75rem 0;\n}\n\n[mol_app_supplies_detail_positions] {\n\tgap: .75rem;\n}\n\n[mol_app_supplies_detail_descr_deck] {\n\tmargin: 0;\n}\n\n[mol_app_supplies_detail_cons_content] {\n\talign-items: baseline;\n}\n\n[mol_app_supplies_detail_cons_content] > * {\n\tflex: 1 1 10rem;\n}\n\n[mol_app_supplies_detail_org_content] {\n\talign-items: baseline;\n}\n\n[mol_app_supplies_detail_org_content] > * {\n\tflex: 1 1 10rem;\n}\n\n[mol_app_supplies_detail_cost] {\n\ttext-align: right;\n\tmargin: 0;\n}\n");
 })($ || ($ = {}));
 //mol/app/supplies/detail/-css/detail.view.css.ts
 ;
@@ -9886,7 +9876,7 @@ var $;
             return [];
         }
         list_title() {
-            return this.$.$mol_locale.text('$mol_app_supplies_list_title');
+            return "Supplies";
         }
         supply_id(next) {
             if (next !== undefined)

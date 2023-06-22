@@ -41,11 +41,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * code_title @ \Code
+		 * code_title \Code
 		 * ```
 		 */
 		code_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_card_code_title' )
+			return "Code"
 		}
 		
 		/**
@@ -78,11 +78,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cost_title @ \Cost
+		 * cost_title \Cost
 		 * ```
 		 */
 		cost_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_card_cost_title' )
+			return "Cost"
 		}
 		
 		/**
@@ -134,11 +134,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * provider_title @ \Provider
+		 * provider_title \Provider
 		 * ```
 		 */
 		provider_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_card_provider_title' )
+			return "Provider"
 		}
 		
 		/**

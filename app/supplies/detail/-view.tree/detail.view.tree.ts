@@ -12,11 +12,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * title @ \Supply
+		 * title \Supply
 		 * ```
 		 */
 		title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_title' )
+			return "Supply"
 		}
 		
 		/**
@@ -43,13 +43,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * foot / <= Actions
+		 * foot <= actions
 		 * ```
 		 */
 		foot() {
-			return [
-				this.Actions()
-			] as readonly any[]
+			return this.actions()
 		}
 		
 		/**
@@ -110,20 +108,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * org_title @ \Organization
+		 * org_title \Organization
 		 * ```
 		 */
 		org_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_org_title' )
+			return "Organization"
 		}
 		
 		/**
 		 * ```tree
-		 * provider_title @ \Provider
+		 * provider_title \Provider
 		 * ```
 		 */
 		provider_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_provider_title' )
+			return "Provider"
 		}
 		
 		/**
@@ -156,11 +154,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * customer_label @ \Consumer
+		 * customer_label \Consumer
 		 * ```
 		 */
 		customer_label() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_customer_label' )
+			return "Consumer"
 		}
 		
 		/**
@@ -193,11 +191,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * supply_group_title @ \Supply Group
+		 * supply_group_title \Supply Group
 		 * ```
 		 */
 		supply_group_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_supply_group_title' )
+			return "Supply Group"
 		}
 		
 		/**
@@ -230,11 +228,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * ballance_unit_title @ \Ballance Unit
+		 * ballance_unit_title \Ballance Unit
 		 * ```
 		 */
 		ballance_unit_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_ballance_unit_title' )
+			return "Ballance Unit"
 		}
 		
 		/**
@@ -302,20 +300,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cons_title @ \Consumer
+		 * cons_title \Consumer
 		 * ```
 		 */
 		cons_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_cons_title' )
+			return "Consumer"
 		}
 		
 		/**
 		 * ```tree
-		 * contract_title @ \Contract
+		 * contract_title \Contract
 		 * ```
 		 */
 		contract_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_contract_title' )
+			return "Contract"
 		}
 		
 		/**
@@ -348,11 +346,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * pay_method_title @ \Pay Method
+		 * pay_method_title \Pay Method
 		 * ```
 		 */
 		pay_method_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_pay_method_title' )
+			return "Pay Method"
 		}
 		
 		/**
@@ -385,11 +383,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * manager_title @ \Manager
+		 * manager_title \Manager
 		 * ```
 		 */
 		manager_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_manager_title' )
+			return "Manager"
 		}
 		
 		/**
@@ -422,11 +420,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * debitod_title @ \Debitor
+		 * debitod_title \Debitor
 		 * ```
 		 */
 		debitod_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_debitod_title' )
+			return "Debitor"
 		}
 		
 		/**
@@ -527,11 +525,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * attach_title @ \Attachments
+		 * attach_title \Attachments
 		 * ```
 		 */
 		attach_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_attach_title' )
+			return "Attachments"
 		}
 		
 		/**
@@ -595,11 +593,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * positions_title @ \Positions
+		 * positions_title \Positions
 		 * ```
 		 */
 		positions_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_positions_title' )
+			return "Positions"
 		}
 		
 		/**
@@ -719,11 +717,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * approved_title @ \Approved
+		 * approved_title \Approved
 		 * ```
 		 */
 		approved_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_detail_approved_title' )
+			return "Approved"
 		}
 		
 		/**
@@ -752,20 +750,6 @@ namespace $ {
 			return [
 				this.Approve()
 			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * Actions $mol_row sub <= actions
-		 * ```
-		 */
-		@ $mol_mem
-		Actions() {
-			const obj = new this.$.$mol_row()
-			
-			obj.sub = () => this.actions()
-			
-			return obj
 		}
 		
 		/**

@@ -33,11 +33,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * product_title @ \Product
+		 * product_title \Product
 		 * ```
 		 */
 		product_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_position_product_title' )
+			return "Product"
 		}
 		
 		/**
@@ -70,11 +70,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * cost_title @ \Cost
+		 * cost_title \Cost
 		 * ```
 		 */
 		cost_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_position_cost_title' )
+			return "Cost"
 		}
 		
 		/**
@@ -145,11 +145,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * division_title @ \Division
+		 * division_title \Division
 		 * ```
 		 */
 		division_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_position_division_title' )
+			return "Division"
 		}
 		
 		/**
@@ -182,11 +182,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * price_label @ \Price
+		 * price_label \Price
 		 * ```
 		 */
 		price_label() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_position_price_label' )
+			return "Price"
 		}
 		
 		/**
@@ -257,11 +257,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * quantity_title @ \Quantity
+		 * quantity_title \Quantity
 		 * ```
 		 */
 		quantity_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_position_quantity_title' )
+			return "Quantity"
 		}
 		
 		/**
@@ -294,11 +294,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * supply_date_title @ \Supply date
+		 * supply_date_title \Supply date
 		 * ```
 		 */
 		supply_date_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_position_supply_date_title' )
+			return "Supply date"
 		}
 		
 		/**
@@ -331,11 +331,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * store_title @ \Store
+		 * store_title \Store
 		 * ```
 		 */
 		store_title() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_position_store_title' )
+			return "Store"
 		}
 		
 		/**

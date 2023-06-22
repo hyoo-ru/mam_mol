@@ -34,11 +34,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * loginLabel @ \User name
+		 * loginLabel \User name
 		 * ```
 		 */
 		loginLabel() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_enter_loginLabel' )
+			return "User name"
 		}
 		
 		/**
@@ -85,11 +85,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * passwordLabel @ \Pass word
+		 * passwordLabel \Pass word
 		 * ```
 		 */
 		passwordLabel() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_enter_passwordLabel' )
+			return "Pass word"
 		}
 		
 		/**
@@ -139,11 +139,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * submitLabel @ \Log In
+		 * submitLabel \Log In
 		 * ```
 		 */
 		submitLabel() {
-			return this.$.$mol_locale.text( '$mol_app_supplies_enter_submitLabel' )
+			return "Log In"
 		}
 		
 		/**
