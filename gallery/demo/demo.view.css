@@ -13,13 +13,9 @@
 	opacity: .9;
 }
 
-[mol_gallery_demo_item_title] {
-	text-align: center;
-	display: block;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	background: hsla( 0, 0%, 100%, .25 );
-	color: black;
+[mol_gallery_demo_item_image] {
+	align-self: stretch;
+	justify-self: stretch;
+	width: auto;
+	height: auto;
 }
