@@ -4,7 +4,7 @@ $mol_frame $mol_embed_native
 		^
 		data null
 		type null
-		src <= uri?val \about:config
+		src <= uri? \about:config
 		srcdoc <= html null
 		allow <= allow \
 		- allowfullscreen <=

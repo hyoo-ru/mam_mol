@@ -9,7 +9,7 @@ The component for grouping several components in one composite control.
 <= Search $mol_bar
 	sub /
 		<= String $mol_string
-			value?val <=> query?val \
+			value? <=> query? \
 		<= Submit $mol_button_minor
 			title <= submit_label @ \Submit
 ```

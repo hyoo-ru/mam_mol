@@ -8,7 +8,7 @@ An input field for entering multiline text.
 
 ```tree
 <= Description $mol_textarea
-	value?val <=> description?val \
+	value? <=> description? \
 	hint <= description_hint @ \Descr
 	enabled <= description_changeable true
 ```

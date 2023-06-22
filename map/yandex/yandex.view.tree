@@ -1,6 +1,6 @@
 $mol_map_yandex $mol_view
-	zoom?val 2
-	center?val /
+	zoom? 2
+	center? /
 		0
 		0
 	objects /$mol_map_yandex_mark

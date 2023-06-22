@@ -30,7 +30,7 @@ $mol_perf_uibench_table_cell $mol_view
 		class \TableCell
 	event *
 		^
-		click?val <=> click?val null
+		click? <=> click? null
 	sub /
 		<= text \
 

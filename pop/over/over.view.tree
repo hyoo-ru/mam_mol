@@ -1,5 +1,5 @@
 $mol_pop_over $mol_pop
-	showed <= hovered?val false
+	showed <= hovered? false
 	attr *
 		^
 		tabindex 0

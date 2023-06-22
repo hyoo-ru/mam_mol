@@ -8,11 +8,11 @@
 
 ```
 <= Hint $mol_pop
-	showed <= hint_showed?val 0
+	showed <= hint_showed? 0
 	align \bottom_center
 	Anchor <= Hint_trigger $mol_check
 		title \?
-		checked?val <=> hint_showed?val 0
+		checked? <=> hint_showed? 0
 	bubble_content /
 		<= hint_message @ \You can see me wen you want.
 ```

@@ -1,42 +1,42 @@
 $mol_touch $mol_plugin
-	start_zoom?val 0
-	start_distance?val 0
-	zoom?val 1
+	start_zoom? 0
+	start_distance? 0
+	zoom? 1
 	allow_draw true
 	allow_pan true
 	allow_zoom true
-	action_type?val \
-	action_point?val $mol_vector_2d /
+	action_type? \
+	action_point? $mol_vector_2d /
 		NaN
 		NaN
 	-
-	start_pan?val /
+	start_pan? /
 		0
 		0
-	pan?val $mol_vector_2d /
+	pan? $mol_vector_2d /
 		0
 		0
 	pointer_center $mol_vector_2d /
 		NaN
 		NaN
 	-
-	start_pos?val null
+	start_pos? null
 	swipe_precision 16
 	-
-	swipe_right?val null
-	swipe_bottom?val null
-	swipe_left?val null
-	swipe_top?val null
+	swipe_right? null
+	swipe_bottom? null
+	swipe_left? null
+	swipe_top? null
 	-
-	swipe_from_right?val null
-	swipe_from_bottom?val null
-	swipe_from_left?val null
-	swipe_from_top?val null
+	swipe_from_right? null
+	swipe_from_bottom? null
+	swipe_from_left? null
+	swipe_from_top? null
 	-
-	swipe_to_right?val null
-	swipe_to_bottom?val null
-	swipe_to_left?val null
-	swipe_to_top?val null
+	swipe_to_right? null
+	swipe_to_bottom? null
+	swipe_to_left? null
+	swipe_to_top? null
 	-
 	draw_start?event null
 	draw?event null

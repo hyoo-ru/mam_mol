@@ -3,12 +3,12 @@ $mol_check_box_demo $mol_example_small
 	sub /
 		<= Demo_items $mol_list rows /
 			<= Labeled_base $mol_check_box
-				checked?val <=> base_checked?val false
+				checked? <=> base_checked? false
 				title <= c1Label \Base
 			-
 			<= Labeled_checked $mol_check_box
 				title <= c2Label \Checked
-				checked?val <=> checked_checked?val true
+				checked? <=> checked_checked? true
 			-
 			<= Labeled_disabled $mol_check_box
 				title <= c6Label \Disabled
@@ -16,10 +16,10 @@ $mol_check_box_demo $mol_example_small
 				enabled false
 			-
 			<= Alone_base $mol_check_box
-				checked?val <=> base_checked?val false
+				checked? <=> base_checked? false
 			-
 			<= Alone_checked $mol_check_box
-				checked?val <=> checked_checked?val true
+				checked? <=> checked_checked? true
 			-
 			<= Alone_disabled $mol_check_box
 				checked true

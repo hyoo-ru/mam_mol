@@ -122,13 +122,16 @@ namespace $ {
 				}				
 				
 				if( dir.type() === 'dir' ) {
-					const files = new Set<string>( [ '-' ] )
+					const files = [ {name: '-', type: 'dir'} ]
 					for( const file of dir.sub() ) {
-						files.add( file.name() )
+						if (!files.find(( {name} ) => name === file.name())) {
+							files.push( {name: file.name(), type: file.type()} )
+						}
 						if( /\.meta\.tree$/.test( file.name() ) ) {
 							const meta = $$.$mol_tree2_from_string( file.text() )
 							for( const pack of meta.select( 'pack', null ).kids ) {
-								files.add( pack.type )
+								if (!files.find(( {name} ) => name !== pack.type))
+									files.push( {name: pack.type, type: 'dir'} )
 							}
 						}
 					}
@@ -152,8 +155,18 @@ namespace $ {
 							a:hover {
 								background: hsl( 0deg, 0%, 0%, .05 )
 							}
+							a[href^="."], a[href^="-"], a[href="node_modules"] {
+								opacity: 0.5;
+							}
+							a[href=".."], a[href="-"] {
+								opacity: 1;
+							}
 						</style>
-					` + [ ... files ].sort().map( file => `<a href="${file}">${file}</a>` ).join( '\n' )
+						<a href="..">&#x1F4C1; ..</a>
+						` + files
+						.sort($mol_compare_text((item) => item.type))
+						.map( file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>` )
+						.join( '\n' )
 					
 					res.writeHead( 200, {
 						'Content-Type': 'text/html',

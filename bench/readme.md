@@ -8,8 +8,8 @@ Benchmark results visualizer.
 
 ```
 <= Result $mol_bench
-	col_sort?val <=> result_sort?val \
-	result?val <=> result_data?val *
+	col_sort? <=> result_sort? \
+	result? <=> result_data? *
 ```
 
 ## Properties

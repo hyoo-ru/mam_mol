@@ -16,25 +16,25 @@ $mol_check_group_demo $mol_example_small
 				<= Partial $mol_list rows /
 					<= Strength $mol_check_box
 						title <= strength_title \Strength
-						checked?val <=> strength?val false
+						checked? <=> strength? false
 					<= Perception $mol_check_box
 						title <= perception_title \Perception
-						checked?val <=> perception?val true
+						checked? <=> perception? true
 					<= Endurance $mol_check_box
 						title <= endurance_title \Endurance
-						checked?val <=> endurance?val false
+						checked? <=> endurance? false
 					<= Charisma $mol_check_box
 						title <= charisma_title \Charisma
-						checked?val <=> charisma?val false
+						checked? <=> charisma? false
 					<= Intelligence $mol_check_box
 						title <= intelligence_title \Intelligence
-						checked?val <=> intelligence?val true
+						checked? <=> intelligence? true
 					<= Agility $mol_check_box
 						title <= agility_title \Agility
-						checked?val <=> agility?val true
+						checked? <=> agility? true
 					<= Luck $mol_check_box
 						title <= luck_title \Luck
-						checked?val <=> luck?val true
+						checked? <=> luck? true
 	tags /
 		\multi
 		\group

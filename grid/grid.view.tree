@@ -32,7 +32,7 @@ $mol_grid $mol_view
 	Cell_branch* $mol_check_expand
 		level <= cell_level* 0
 		label <= cell_content* /$mol_view_content
-		expanded?val <=> cell_expanded*?val false
+		expanded? <=> cell_expanded*? false
 	Cell_content* /
 		<= Cell_dimmer* $mol_dimmer
 			needle <= needle \
