@@ -10,12 +10,7 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		item_title( id: number ) {
-			return $mol_stub_person_name()
-		}
-		
-		@ $mol_mem_key
-		item_uri( id: number ) {
-			return $mol_stub_person_avatar( 80 )
+			return String( id )
 		}
 		
 	}

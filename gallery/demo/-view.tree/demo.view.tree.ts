@@ -32,24 +32,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Item* $mol_link
-		 * 	minimal_width 100
-		 * 	uri \https://picsum.photos/200
-		 * 	style * backgroundImage \url('https://picsum.photos/200')
-		 * 	sub / <= Item_title*
+		 * Item* $mol_stack sub / <= Item_image*
 		 * ```
 		 */
 		@ $mol_mem_key
 		Item(id: any) {
-			const obj = new this.$.$mol_link()
+			const obj = new this.$.$mol_stack()
 			
-			obj.minimal_width = () => 100
-			obj.uri = () => "https://picsum.photos/200"
-			obj.style = () => ({
-				backgroundImage: "url('https://picsum.photos/200')"
-			} as Record< string, any >)
 			obj.sub = () => [
-				this.Item_title(id)
+				this.Item_image(id)
 			] as readonly any[]
 			
 			return obj
@@ -119,14 +110,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Item_title* $mol_paragraph title <= item_title*
+		 * Item_image* $mol_avatar id <= item_title*
 		 * ```
 		 */
 		@ $mol_mem_key
-		Item_title(id: any) {
-			const obj = new this.$.$mol_paragraph()
+		Item_image(id: any) {
+			const obj = new this.$.$mol_avatar()
 			
-			obj.title = () => this.item_title(id)
+			obj.id = () => this.item_title(id)
 			
 			return obj
 		}

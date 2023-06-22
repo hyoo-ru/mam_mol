@@ -3728,14 +3728,10 @@ $mol_gallery_demo $mol_example
 	sub /
 		<= App $mol_gallery
 			items <= items /
-	Item* $mol_link
-		minimal_width 100
-		uri \https://picsum.photos/200
-		style *
-			backgroundImage \url('https://picsum.photos/200')
+	Item* $mol_stack
 		sub /
-			<= Item_title* $mol_paragraph
-				title <= item_title* \
+			<= Item_image* $mol_avatar
+				id <= item_title* \
 	tags /
 		\gallery
 		\image
