@@ -4,15 +4,15 @@ $mol_app_supplies_enter $mol_view
 	sub / <= form $mol_form
 		form_fields /
 			<= loginField $mol_form_field
-				name <= loginLabel @ \User name
+				name <= loginLabel \User name
 				control <= loginControl $mol_string value? <=> login? \
 			<= passwordField $mol_form_field
-				name <= passwordLabel @ \Pass word
+				name <= passwordLabel \Pass word
 				control <= passControl $mol_string
 					value? <=> password? \
 					type \password
 		buttons /
 			<= submit $mol_button_major
-				sub / <= submitLabel @ \Log In
+				sub / <= submitLabel \Log In
 				click? <=> event_submit? null
 				disabled <= submit_blocked false
