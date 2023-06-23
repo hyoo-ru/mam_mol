@@ -1,5 +1,5 @@
 $mol_link_lazy $mol_link
-	uri?val \
+	uri? \
 	uri_generated \
 	current false
 	event *

@@ -1,19 +1,19 @@
 $mol_search $mol_pop
-	query?val \
+	query? \
 	suggests /string
 	plugins /$mol_plugin
 		^
 		<= Hotkey $mol_hotkey
-			key * escape?val <=> clear?val null
+			key * escape? <=> clear? null
 		<= Nav $mol_nav
 			keys_y <= nav_components /$mol_view
 			current_y?component <=> nav_focused?component null
-	showed?val <=> suggests_showed?val false
+	showed? <=> suggests_showed? false
 	align_hor \right
 	Anchor $mol_view
 		sub <= anchor_content /
 			<= Query $mol_string
-				value?val <=> query?val \
+				value? <=> query? \
 				hint <= hint @ \Search...
 				submit?event <=> submit?event null
 				enabled <= enabled true
@@ -33,4 +33,4 @@ $mol_search $mol_pop
 		sub <= suggest_content* /$mol_view_content
 			<= Suggest_label* $mol_dimmer
 				haystack <= suggest_label* \
-				needle <= query?val \
+				needle <= query? \

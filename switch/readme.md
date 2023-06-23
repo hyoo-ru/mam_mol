@@ -8,7 +8,7 @@ Buttons which switching the state
 
 ```
 <= Color $mol_switch
-	value?val <=> color?val \red
+	value? <=> color? \red
 	options <= colors *
 		red \Red
 		green \Green

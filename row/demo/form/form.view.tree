@@ -5,18 +5,18 @@ $mol_row_demo_form $mol_example
 			sub /
 				<= Name $mol_search
 					hint <= name_hint \Jack Sparrow
-					query?val <=> name?val \
+					query? <=> name? \
 					suggests /
 						<= suggest1 \Jack Sparrow
 						<= suggest2 \Bruce Wayne
 				<= Count $mol_number
 					hint <= count_hint \Count
-					value?val <=> count?val null
+					value? <=> count? null
 				<= Progress $mol_portion
 					portion <= progress 0.33
 				<= Publish $mol_check_box
 					title <= publish_label \Shared
-					checked?val <=> publish?val false
+					checked? <=> publish? false
 				<= Drop $mol_button_minor
 					title <= drop_title \Drop
 	tags /

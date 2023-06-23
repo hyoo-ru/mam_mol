@@ -8,7 +8,7 @@ $mol_labeler_demo $mol_example_small
 			title \User name
 			Content <= Name_control $mol_string
 				hint \Jack Sparrow
-				value?val <=> user_name?val \
+				value? <=> user_name? \
 	tags /
 		\label
 		\form

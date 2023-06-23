@@ -3,22 +3,22 @@ $mol_nav_demo $mol_example
 	plugins /
 		<= Nav $mol_nav
 			keys_x <= tab_list
-			current_x?val <=> tab_current?val
+			current_x? <=> tab_current?
 			keys_y <= row_list
-			current_y?val <=> row_current?val
+			current_y? <=> row_current?
 	sub /
 		<= Demo_items $mol_card
 			content /
 				<= Tab_list $mol_switch
 					keys => tab_list
-					value?val <=> tab_current?val \
+					value? <=> tab_current? \
 					options *
 						first \First
 						second \Second
 						third \Third
 				<= Row_list $mol_switch
 					keys => row_list
-					value?val <=> row_current?val \
+					value? <=> row_current? \
 					options *
 						first \First
 						second \Second

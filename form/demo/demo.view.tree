@@ -18,37 +18,37 @@ $mol_form_demo $mol_example
 					name \Avatars
 					bid <= avatars_bid \
 					Content <= Avatars_control $mol_attach
-						items?val <=> avatars?val /string
+						items? <=> avatars? /string
 				<= Names $mol_form_group sub /
 					<= Name_first_field $mol_form_field
 						name \First Name
 						bid <= name_first_bid \
 						Content <= Name_first_control $mol_string
 							hint \Jack
-							value?val <=> name_first?val \
+							value? <=> name_first? \
 					<= Name_nick_field $mol_form_field
 						name \Nick Name
 						bid <= name_nick_bid \
 						Content <= Name_nick_control $mol_string
 							hint \Capitan
-							value?val <=> name_nick?val \
+							value? <=> name_nick? \
 					<= Name_second_field $mol_form_field
 						name \Second Name
 						bid <= name_second_bid \
 						Content <= Name_second_control $mol_string
 							hint \Sparrow
-							value?val <=> name_second?val \
+							value? <=> name_second? \
 				<= Parameters $mol_form_group sub /
 					<= Age_field $mol_form_field
 						name \Age
 						bid <= age_bid \
 						Content <= Age_control $mol_number
-							value?val <=> age?val 0
+							value? <=> age? 0
 					<= Sex_field $mol_form_field
 						name <= sex_label \Sex
 						bid <= sex_bid \
 						Content <= Sex_control $mol_switch
-							value?val <=> sex?val \
+							value? <=> sex? \
 							options <= sex_options *
 								male \Male
 								intersex \Intersex
@@ -57,7 +57,7 @@ $mol_form_demo $mol_example
 						name \Skin color
 						bid <= color_bid \
 						Content <= Color_control $mol_select
-							value?val <=> color?val \
+							value? <=> color? \
 							dictionary *
 								\
 									\❔
@@ -70,16 +70,16 @@ $mol_form_demo $mol_example
 					bid <= mail_bid \
 					Content <= Mail_control $mol_string
 						hint \name@domain.com
-						value?val <=> mail?val \
-			submit?val <=> signup?val null
+						value? <=> mail? \
+			submit? <=> signup? null
 			submit_allowed => signup_allowed
 			buttons /
 				<= Signup $mol_button_major
 					title \Sign Up
-					click?val <=> signup?val null
+					click? <=> signup? null
 					enabled <= signup_allowed
 				<= Result $mol_status
-					message <= result?val \
+					message <= result? \
 	tags /
 		\$mol_form_field
 		\$mol_button

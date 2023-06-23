@@ -270,7 +270,7 @@ Reactions on DOM-events are required for two-way binding. For example, lets poin
 $my_remover $mol_view
 	event *
 		^
-		click?val <=> remove?val null 
+		click? <=> remove? null 
 	sub /
 		\Remove
 ```
@@ -355,10 +355,10 @@ $my_greeter $mol_view
 	sub /
 		<= Input $mol_string
 			hint \Name
-			value?val <=> name?val \
+			value? <=> name? \
 		<= Output $mol_view
 			sub /
-				<= name?val \
+				<= name? \
 ```
 
 ```typescript
@@ -523,7 +523,7 @@ Note: There is old way howto to use property with id. Instead of `*` you can wri
 - `=>` - provides read-only property from sub-componen to owner
 - `<=>` - fully replace sub component property by owner's one
 - property + `*` or `!` - property takes ID as first argument, e.g. `Task_row* $mol_view`
-- property + `?` - property can be changed by providing an additional optional argument, e.g. `value <=> name?val \`
+- property + `?` - property can be changed by providing an additional optional argument, e.g. `value <=> name? \`
 
 ## view.ts
 
@@ -536,7 +536,7 @@ $my_hello $mol_view
 	sub /
 		<= Input $mol_string
 			hint \Name
-			value?val <=> name?val \
+			value? <=> name? \
 		<= message \
 ```
 
@@ -557,7 +557,7 @@ namespace $ {
 			] as readonly any[]
 		}
 		
-		// name?val \
+		// name? \
 		@ $mol_mem
 		name(val?: any) {
 			if ( val !== undefined ) return val as never
@@ -566,7 +566,7 @@ namespace $ {
 		
 		// Input $mol_string
 		// 	hint \Name
-		// 	value?val <=> name?val
+		// 	value? <=> name?
 		@ $mol_mem
 		Input() {
 			const obj = new this.$.$mol_string()

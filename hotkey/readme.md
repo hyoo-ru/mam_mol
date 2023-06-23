@@ -7,8 +7,8 @@ Plugin which adds handlers for keyboard keys.
 plugins /
 	<= Hotkey $mol_hotkey
 		key *
-			escape?val <=> clear?val null
-			enter?val <=> submit?val null
+			escape? <=> clear? null
+			enter? <=> submit? null
 ```
 
 ## Properties

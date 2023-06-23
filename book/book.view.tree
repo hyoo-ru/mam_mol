@@ -6,8 +6,8 @@ $mol_book $mol_view
 		<= Meter $mol_meter
 			width => width
 		<= Touch $mol_touch
-			swipe_from_left?val <=> event_front_up?val null
-			swipe_to_left?val <=> event_front_down?val null
+			swipe_from_left? <=> event_front_up? null
+			swipe_to_left? <=> event_front_down? null
 	Page* $mol_book_page
 		Sub <= page* null
 		visible <= page_visible* true

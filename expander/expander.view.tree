@@ -3,7 +3,7 @@ $mol_expander $mol_list
 		<= Label $mol_view
 			sub /
 				<= Trigger $mol_check_expand
-					checked?val <=> expanded?val false
+					checked? <=> expanded? false
 					expandable <= expandable true
 					label <= label /
 						<= title

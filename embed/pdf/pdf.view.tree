@@ -13,7 +13,7 @@ $mol_embed_pdf_page $mol_view
 	scale_over 1.25
 	plugins /
 		<= Touch $mol_touch
-			zoom?val <=> scale?val 1
+			zoom? <=> scale? 1
 	style *
 		zoom <= zoom 0.8
 	field *

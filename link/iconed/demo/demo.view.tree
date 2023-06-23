@@ -4,9 +4,9 @@ $mol_link_iconed_demo $mol_example_small
 		<= Blocks $mol_list
 			rows /
 				<= Input $mol_string
-					value?val <=> uri?val \https://www.google.com/search?q=%24mol
+					value? <=> uri? \https://www.google.com/search?q=%24mol
 				<= Output $mol_link_iconed
-					uri <= uri?val
+					uri <= uri?
 	tags /
 		\link
 		\icon
