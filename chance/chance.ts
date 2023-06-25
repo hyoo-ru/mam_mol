@@ -1,8 +1,10 @@
 namespace $ {
 
-	type $mol_chance_result< List extends Array< [ number, any ] > > = $mol_type_result< List[ number ][ 1 ] >
+	export type $mol_chance_list = Array< [ number, ()=> any ] >
 
-	export function $mol_chance< List extends Array< [ number, any ] > >( ... chance_list: List ): $mol_chance_result< List > | never {
+	export type $mol_chance_result< List extends $mol_chance_list > = $mol_type_result< List[ number ][ 1 ] >
+
+	export function $mol_chance< List extends $mol_chance_list >( ... chance_list: List ): $mol_chance_result< List > | never {
 
 		const prob_sum = chance_list.reduce( ( sum, { 0: prob } )=> {
 			if (
@@ -32,17 +34,13 @@ namespace $ {
 		var prob_total = 0
 		for ( var i = 0; i < chance_list.length; i ++ ) {
 
-			const { 0: prob_percent, 1: value } = chance_list[ i ]
+			const { 0: prob_percent, 1: fn } = chance_list[ i ]
 
 			const prob = prob_total + prob_percent / 100
 
 			if ( random < prob ) {
 
-				if ( value instanceof Function ) {
-					return value()
-				}
-
-				return value
+				return fn()
 
 			}
 			else {

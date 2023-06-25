@@ -5,14 +5,14 @@ Returns one of the values with the specified probability.
 ## API
 
 ```ts
-$mol_chance( ... chance_list: Array< [ number, T | ( ()=> T ) ] > ): T
+$mol_chance( ... chance_list: Array< [ number, ( ()=> T ) ] > ): T
 ```
 
 ```ts
 const color = $mol_chance(
-	[ 60, 'black' ],
-	[ 20, 'white' ],
-	[ 15, 'red' ],
+	[ 60, ()=> 'black' ],
+	[ 20, ()=> 'white' ],
+	[ 15, ()=> 'red' ],
 	[ 5, ()=> random_color() ],
 )
 

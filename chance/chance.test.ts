@@ -7,9 +7,9 @@ namespace $ {
 			$mol_assert_fail( ()=> {
 
 				$mol_chance(
-					[ 50, 1 ],
-					[ -10, 2 ],
-					[ 50, 3 ],
+					[ 50, ()=> 1 ],
+					[ -10, ()=> 2 ],
+					[ 50, ()=> 3 ],
 				)
 
 			} )
@@ -21,9 +21,9 @@ namespace $ {
 			$mol_assert_fail( ()=> {
 
 				$mol_chance(
-					[ 50, 1 ],
-					[ 50, 2 ],
-					[ 1, 3 ],
+					[ 50, ()=> 1 ],
+					[ 50, ()=> 2 ],
+					[ 1, ()=> 3 ],
 				)
 
 			} )
@@ -35,23 +35,23 @@ namespace $ {
 			$mol_assert_fail( ()=> {
 
 				$mol_chance(
-					[ 50, 1 ],
-					[ 30, 2 ],
-					[ 10, 3 ],
+					[ 50, ()=> 1 ],
+					[ 30, ()=> 2 ],
+					[ 10, ()=> 3 ],
 				)
 
 			} )
 
 		},
 
-		"Result should be one of chance values"() {
+		"Result should be one of chance's fn return values"() {
 
 			const result = $mol_chance(
-				[ 10, 1 ],
-				[ 10, 2 ],
-				[ 40, 3 ],
-				[ 30, 4 ],
-				[ 10, 5 ],
+				[ 10, ()=> 1 ],
+				[ 10, ()=> 2 ],
+				[ 40, ()=> 3 ],
+				[ 30, ()=> 4 ],
+				[ 10, ()=> 5 ],
 			)
 
 			$mol_assert_ok(
@@ -69,7 +69,7 @@ namespace $ {
 			var match_count = 0
 			for ( var i = 0; i < 500; ++ i ) {
 
-				const result = $mol_chance( [ 100, 0 ] )
+				const result = $mol_chance( [ 100, ()=> 0 ] )
 
 				if ( result === 0 ) match_count += 1
 
@@ -85,9 +85,9 @@ namespace $ {
 			for ( var i = 0; i < 500; ++ i ) {
 
 				const result = $mol_chance(
-					[ 60, 60 ],
-					[ 0, 0 ],
-					[ 40, 40 ],
+					[ 60, ()=> 60 ],
+					[ 0, ()=> 0 ],
+					[ 40, ()=> 40 ],
 				)
 
 				if ( result === 0 ) match_count += 1
@@ -111,9 +111,9 @@ namespace $ {
 		"Correct type inference"() {
 
 			const result = $mol_chance(
-				[ 10, 1 ],
+				[ 10, ()=> 1 ],
 				[ 20, ()=> 'str' ],
-				[ 30, false ],
+				[ 30, ()=> false ],
 				[ 40, ()=> ( { a: 1, b: true } ) ]
 			)
 
@@ -121,7 +121,7 @@ namespace $ {
 
 			type Check = $mol_type_assert<
 				Result,
-				number | 'str' | boolean | { a: number, b: boolean }
+				number | string | boolean | { a: number, b: boolean }
 			>
 
 		},
