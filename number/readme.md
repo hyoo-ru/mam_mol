@@ -8,7 +8,7 @@ Component for entering, incrementing and decrementing numeric values.
 
 ```
 <= Fees $mol_number
-	value?val <=> fees?val null
+	value? <=> fees? null
 	hint \0.01 .. 10.00
 	enabled <= fees_changeable true
 	precision0 .01

@@ -9,7 +9,7 @@ Machine readable code input. On Cordova displays button to call native scanner.
 ```
 <= Product_code $mol_code
 	format \EAN_13
-	value?val <=> product_code?val \
+	value? <=> product_code? \
 ```
 
 ## Properties

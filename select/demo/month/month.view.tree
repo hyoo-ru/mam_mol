@@ -3,7 +3,7 @@ $mol_select_demo_month $mol_example_small
 	sub /
 		<= Month $mol_select
 			no_options_message \Not found
-			value?val <=> month?val \jan
+			value? <=> month? \jan
 			dictionary <= months *
 				jan \January
 				feb \February

@@ -1,6 +1,6 @@
 $mol_plot_demo $mol_example_large
 	title \Dynamic lightweight graphs
-	count?val 20
+	count? 20
 	frequency 8
 	sub /
 		<= Plot $mol_plot_pane

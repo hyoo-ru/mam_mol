@@ -12,11 +12,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * writable_outer?val
+		 * writable_outer?
 		 * ```
 		 */
-		writable_outer(val?: any) {
-			return this.Cls().writable(val)
+		writable_outer(next?: any) {
+			return this.Cls().writable(next)
 		}
 		
 		/**
@@ -30,20 +30,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * indexed_writable_outer*?val
+		 * indexed_writable_outer*?
 		 * ```
 		 */
-		indexed_writable_outer(id: any, val?: any) {
-			return this.Cls().indexed_writable(id, val)
+		indexed_writable_outer(id: any, next?: any) {
+			return this.Cls().indexed_writable(id, next)
 		}
 		
 		/**
 		 * ```tree
 		 * Cls $mol_view
 		 * 	inner => outer
-		 * 	writable?val => writable_outer?val
+		 * 	writable? => writable_outer?
 		 * 	indexed* => indexed_outer*
-		 * 	indexed_writable*?val => indexed_writable_outer*?val
+		 * 	indexed_writable*? => indexed_writable_outer*?
 		 * ```
 		 */
 		@ $mol_mem

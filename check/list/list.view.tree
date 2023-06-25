@@ -1,6 +1,6 @@
 $mol_check_list $mol_view
 	Option* $mol_check
-		checked?val <=> option_checked*?val false
+		checked? <=> option_checked*? false
 		label <= option_label* /
 			<= option_title* \
 		enabled <= option_enabled* <= enabled true

@@ -8,7 +8,7 @@ An input field for entering single line text.
 
 ```tree
 <= Name $mol_string
-	value?val <=> name?val \
+	value? <=> name? \
 	hint <= name_hint @ \Alice Smith
 	enabled <= name_changeable true
 ```

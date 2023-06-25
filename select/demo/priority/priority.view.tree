@@ -3,7 +3,7 @@ $mol_select_demo_priority $mol_example_small
 	sub /
 		<= Priority $mol_select
 			Filter null
-			value?val <=> priority?val \Lowest
+			value? <=> priority? \Lowest
 			options /
 				\Highest 
 				\High

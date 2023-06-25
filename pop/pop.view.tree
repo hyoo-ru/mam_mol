@@ -1,5 +1,5 @@
 $mol_pop $mol_view
-	showed?val false
+	showed? false
 	align_vert \
 	align_hor \
 	prefer \vert

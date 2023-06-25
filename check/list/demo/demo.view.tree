@@ -2,7 +2,7 @@ $mol_check_list_demo $mol_example_small
 	title \Set of toggles
 	sub /
 		<= Rights $mol_check_list
-			option_checked*?val <=> right*?val false
+			option_checked*? <=> right*? false
 			options *
 				read \Allow Read
 				write \Allow Write

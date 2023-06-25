@@ -2,8 +2,8 @@ $mol_app_supplies_list $mol_page
 	supplies /$mol_app_supplies_domain_supply
 	tools /
 		<= Search $mol_code
-			hint <= search_hint @ \Search supply by bar code
-			value?val <=> search_query?val \
+			hint <= search_hint \Search supply by bar code
+			value? <=> search_query? \
 	body /
 		<= Supply_rows $mol_list
 			rows <= supply_rows /$mol_view

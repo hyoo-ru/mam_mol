@@ -1,7 +1,7 @@
 $mol_search_jumper $mol_search
 	Root $mol_view
 	Index $mol_paginator
-		value?val <=> index?val 0
+		value? <=> index? 0
 		forward?event => forward?event
 		backward?event => backward?event
 	plugins /
@@ -12,4 +12,4 @@ $mol_search_jumper $mol_search
 		<= Forward $mol_hotkey
 			key *
 				enter?event <=> forward?event
-				escape?val <=> escape?val null
+				escape? <=> escape? null

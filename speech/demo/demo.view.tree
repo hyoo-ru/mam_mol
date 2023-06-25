@@ -2,12 +2,12 @@ $mol_speech_demo $mol_example_small
 	sub /
 		<= Toggle $mol_check_icon
 			Icon <= Toggle_icon $mol_icon_microphone
-			checked?val <=> hearing?val false
+			checked? <=> hearing? false
 		<= Message $mol_row
 			sub /
 				<= message \
 		<= Speak $mol_button_major
-			click?val <=> speak?val null
+			click? <=> speak? null
 			sub / \Speak
 	tags /
 		\speech

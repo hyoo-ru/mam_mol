@@ -9,7 +9,7 @@ Plugin which can navigate in list of items
 plugins /
 	<= Nav $mol_nav
 		keys_y <= component_list /
-		current_y?val <=> selected_component?val 0
+		current_y? <=> selected_component? 0
 ```
 
 ## Properties

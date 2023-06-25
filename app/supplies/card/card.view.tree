@@ -7,13 +7,13 @@ $mol_app_supplies_card $mol_link
 			Content <= Group $mol_row
 				sub <= items /
 					<= Code_item $mol_labeler
-						title <= code_title @ \Code
+						title <= code_title \Code
 						content / <= code \
 					<= Cost_item $mol_labeler
-						title <= cost_title @ \Cost
+						title <= cost_title \Cost
 						content / <= Cost $mol_cost
 							value <= cost $mol_unit_money
 								valueOf 0
 					<= Provider_item $mol_labeler
-						title <= provider_title @ \Provider
+						title <= provider_title \Provider
 						content / <= provider_name \

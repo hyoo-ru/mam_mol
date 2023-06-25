@@ -10,7 +10,7 @@ $mol_date $mol_pick
 				sub /
 					<= Today_icon $mol_icon_calendar_today
 			<= Input $mol_format
-				value?val <=> value?val \
+				value? <=> value? \
 				mask* <= input_mask* \
 				enabled <= enabled true
 			<= Clear $mol_button_minor
@@ -38,8 +38,8 @@ $mol_date $mol_pick
 							sub /
 								<= Next_icon $mol_icon_chevron_right
 	-
-	value_number?val +NaN
-	value_moment?val $mol_time_moment
+	value_number? +NaN
+	value_moment? $mol_time_moment
 
 $mol_date_calendar $mol_calendar
 	day_content* /

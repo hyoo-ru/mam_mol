@@ -9,7 +9,7 @@ namespace $ {
 	 * 	^
 	 * 	str \str
 	 * 	q1 <= q2 $mo
-	 * 	v1?val <=> s1?val null
+	 * 	v1? <=> s1? null
 	 * 	prop_a?v <=> a?v $mol_page
 	 * 		test 123
 	 * ```

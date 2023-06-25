@@ -5,7 +5,7 @@ $mol_drag $mol_ghost
 		dragend?event <=> drag_end?event <=> end?event null
 	attr *
 		draggable true
-		mol_drag_status <= status?val \ready
+		mol_drag_status <= status? \ready
 	transfer *
 		text/plain \
 		text/html \
