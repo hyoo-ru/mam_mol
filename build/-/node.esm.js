@@ -4783,6 +4783,106 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const mapping = {
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        '&': '&amp;',
+    };
+    function $mol_html_encode(text) {
+        return text.replace(/[&<">]/gi, str => mapping[str]);
+    }
+    $.$mol_html_encode = $mol_html_encode;
+})($ || ($ = {}));
+//mol/html/encode/encode.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function attrs_belt(separator) {
+        return {
+            '': (input) => [
+                input.data(' '),
+                input.data($mol_html_encode(input.type)),
+                ...input.value ? [
+                    input.data('"'),
+                    input.data($mol_html_encode(input.value)),
+                    input.data('"'),
+                ] : [],
+                ...input.hack({
+                    '': (input) => {
+                        if (!input.type)
+                            return [
+                                input.data(separator),
+                                input.data('"'),
+                                input.data($mol_html_encode(input.text())),
+                                input.data('"'),
+                            ];
+                        $mol_fail(new SyntaxError('Wrong attribute value'));
+                    },
+                }),
+            ],
+        };
+    }
+    function $mol_tree2_xml_to_text(xml) {
+        return xml.list(xml.hack({
+            '@': (input, belt) => [],
+            '--': (input, belt) => [
+                xml.struct('line', [
+                    input.data('<!-- '),
+                    ...input.hack(belt),
+                    input.data(' -->'),
+                ]),
+            ],
+            '?': (input, belt) => [
+                xml.struct('line', [
+                    input.data('<?'),
+                    input.kids[0].data(input.kids[0].type),
+                    ...input.kids[0].hack(attrs_belt('=')),
+                    input.data('?>'),
+                ]),
+            ],
+            '!': (input, belt) => [
+                xml.struct('line', [
+                    input.data('<!'),
+                    input.kids[0].data(input.kids[0].type),
+                    ...input.kids[0].hack(attrs_belt(' ')),
+                    input.data('>'),
+                ]),
+            ],
+            '': (input, belt) => {
+                if (!input.type)
+                    return [
+                        input.data($mol_html_encode(input.text())),
+                    ];
+                const attrs = input.select('@', null).hack(attrs_belt('='));
+                const content = input.hack(belt);
+                return [
+                    input.struct('line', [
+                        input.data(`<`),
+                        input.data(input.type),
+                        ...attrs,
+                        ...content.length ? [
+                            input.data(`>`),
+                            input.struct('indent', content),
+                            input.data(`</`),
+                            input.data(input.type),
+                            input.data(`>`),
+                        ] : [
+                            input.data(` />`),
+                        ]
+                    ]),
+                ];
+            },
+        }));
+    }
+    $.$mol_tree2_xml_to_text = $mol_tree2_xml_to_text;
+})($ || ($ = {}));
+//mol/tree2/xml/to/text/text.ts
+;
+"use strict";
+var $;
+(function ($) {
     const err = $mol_view_tree2_error_str;
     function $mol_view_tree2_ts_array_body(operator, parent_context, super_method) {
         if (operator.type[0] !== '/')
@@ -5860,11 +5960,20 @@ var $;
             const targets = [];
             const start = Date.now();
             const html = pack.resolve('index.html');
-            if (html.exists()) {
-                const html_target = pack.resolve('-/index.html');
-                html_target.text(html.text());
-                targets.push(html_target);
-                this.logBundle(html_target, Date.now() - start);
+            const tree = pack.resolve('index.xml.tree');
+            const target = pack.resolve('-/index.html');
+            if (tree.exists()) {
+                const xml_tree = this.$.$mol_tree2_from_string(tree.text());
+                const text = this.$.$mol_tree2_xml_to_text(xml_tree);
+                const xml = this.$.$mol_tree2_text_to_string(text);
+                target.text(xml);
+            }
+            else if (html.exists()) {
+                target.text(html.text());
+            }
+            if (target.exists()) {
+                targets.push(target);
+                this.logBundle(target, Date.now() - start);
             }
             return targets;
         }

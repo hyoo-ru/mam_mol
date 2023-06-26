@@ -115,7 +115,12 @@
     "$mol_base64",
     "$mol_error_mix",
     "$mol_diff_path",
-    "$mol_diff"
+    "$mol_diff",
+    "$mol_tree2_xml_to_text",
+    "$mol_tree2_xml_to",
+    "$mol_tree2_xml",
+    "$mol_html_encode",
+    "$mol_html"
   ],
   "dependencies": {
     "chokidar": "*",

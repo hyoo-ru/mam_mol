@@ -1107,6 +1107,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_html_encode(text: string): string;
+}
+
+declare namespace $ {
+    function $mol_tree2_xml_to_text(xml: $mol_tree2): $mol_tree2;
+}
+
+declare namespace $ {
     function $mol_view_tree2_ts_array_body(this: $, operator: $mol_tree2, parent_context: $mol_view_tree2_context, super_method?: $mol_view_tree2_prop): $mol_tree2;
 }
 
