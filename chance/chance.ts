@@ -9,34 +9,27 @@ namespace $ {
 		const prob_sum = chance_list.reduce( ( sum, { 0: prob } )=> {
 			if (
 				prob < 0
-				|| prob > 100
 				|| Number.isNaN( prob )
 				|| prob === Infinity
 			) {
-				throw new Error( `Incorrect probability value: ${ prob }, only numbers from 0 to 100 are allowed` )
+				throw new Error( `Incorrect probability value: ${ prob }, but only positive numbers are allowed` )
 			}
 
 			sum += prob
 
-			if ( sum > 100 ) {
-				throw new Error( `Incorrect probability sum: ${ sum }, but 100 is max` )
-			}
-
 			return sum
 		}, 0 )
-
-		if ( prob_sum < 100 ) {
-			throw new Error( `Incorrect probability sum: ${ prob_sum }, but needs 100` )
-		}
 
 		const random = Math.random()
 
 		var prob_total = 0
-		for ( var i = 0; i < chance_list.length; i ++ ) {
+		for( var i = 0; i < chance_list.length; ++ i ) {
 
-			const { 0: prob_percent, 1: fn } = chance_list[ i ]
+			var { 0: prob_raw, 1: fn } = chance_list[ i ]
 
-			const prob = prob_total + prob_percent / 100
+			var prob_percent = ( prob_raw / prob_sum ) * 100
+
+			var prob = prob_total + ( prob_percent / 100 )
 
 			if ( random < prob ) {
 
@@ -53,7 +46,7 @@ namespace $ {
 
 		}
 
-		throw new Error( `Incorrect probability sum: ${ prob_sum }, but needs 100` )
+		throw new Error( `Incorrect probability sum: ${ prob_sum }` )
 
 	}
 

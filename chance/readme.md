@@ -20,4 +20,4 @@ const color = $mol_chance(
 // in 5% will be called function to generate random color.
 ```
 
-**Total sum of probabilities should be 100.**
+Note: chances are normalized by their values sum. Example: chances [ 20, 50 ] will be converted to ~71% and ~29% respectively.
