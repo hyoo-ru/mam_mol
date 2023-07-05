@@ -6,6 +6,7 @@ namespace $.$$ {
 
 		display: 'flex',
 		overflow: 'auto',
+		overflowY: 'scroll',
 		flex: {
 			direction: 'column',
 			grow: 1,
