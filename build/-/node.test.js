@@ -2323,6 +2323,7 @@ var $;
             if (this.type() !== 'dir')
                 return [];
             const path = this.path();
+            this.stat();
             try {
                 return $node.fs.readdirSync(path)
                     .filter(name => !/^\.+$/.test(name))
@@ -5426,11 +5427,12 @@ var $;
         }
         modEnsure(path) {
             var mod = $mol_file.absolute(path);
-            if (mod === this.root())
-                return false;
             var parent = mod.parent();
-            this.modEnsure(parent.path());
-            var mapping = this.modMeta(parent.path());
+            if (mod !== this.root())
+                this.modEnsure(parent.path());
+            var mapping = mod === this.root()
+                ? $mol_tree.fromString(`pack ${mod.name()} git \\https://github.com/hyoo-ru/mam.git\n`)
+                : this.modMeta(parent.path());
             if (mod.exists()) {
                 try {
                     if (mod.type() !== 'dir')

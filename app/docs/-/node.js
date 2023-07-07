@@ -5175,6 +5175,7 @@ var $;
             if (this.type() !== 'dir')
                 return [];
             const path = this.path();
+            this.stat();
             try {
                 return $node.fs.readdirSync(path)
                     .filter(name => !/^\.+$/.test(name))
