@@ -1,6 +1,15 @@
 {
   "name": "mam",
-  "version": "1.11.33",
+  "version": "1.11.36",
+  "exports": {
+    "node": {
+      "import": "./node.mjs",
+      "default": "./node.js"
+    },
+    "types": "./web.d.ts",
+    "import": "./web.mjs",
+    "default": "./web.js"
+  },
   "main": "./node.js",
   "module": "./node.mjs",
   "browser": "./web.js",
@@ -92,9 +101,7 @@
     "$mol_view_tree2_ts_bind",
     "$mol_view_tree2_bind",
     "$mol_view_tree2_ts_array",
-    "$mol_tree2_text_to_string",
-    "$mol_tree2_text_to",
-    "$mol_tree2_text",
+    "$mol_view_tree2_value",
     "$mol_locale",
     "$mol_state_local",
     "$mol_state",
@@ -108,7 +115,9 @@
     "$mol_fetch",
     "$mol_action",
     "$mol_dom_parse",
-    "$mol_view_tree2_value",
+    "$mol_tree2_text_to_string",
+    "$mol_tree2_text_to",
+    "$mol_tree2_text",
     "$mol_graph",
     "$mol_sourcemap",
     "$mol_base64_encode",
@@ -135,15 +144,6 @@
     "cors": "*",
     "body-parser": "*",
     "serve-index": "*"
-  },
-  "exports": {
-    "node": {
-      "import": "./node.mjs",
-      "default": "./node.js"
-    },
-    "types": "./web.d.ts",
-    "import": "./web.mjs",
-    "default": "./web.js"
   },
   "bin": {
     "mam": "./bin/mam"

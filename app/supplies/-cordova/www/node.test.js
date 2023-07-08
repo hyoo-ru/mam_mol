@@ -1389,9 +1389,9 @@ var $node = new Proxy({ require }, {
         while (!fs.existsSync(path.join(dir, suffix))) {
             const parent = path.resolve(dir, '..');
             if (parent === dir) {
-                $$.$mol_exec('.', 'npm', 'install', '--omit=dev', name);
+                $$.$mol_exec('.', 'npm', 'install', '--omit=dev', '--no-save', name);
                 try {
-                    $$.$mol_exec('.', 'npm', 'install', '--omit=dev', '@types/' + name);
+                    $$.$mol_exec('.', 'npm', 'install', '--omit=dev', '--no-save', '@types/' + name);
                 }
                 catch { }
                 break;

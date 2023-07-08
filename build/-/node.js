@@ -1,18 +1,5 @@
 "use strict";
 var exports = void 0;
-"use strict"
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	else for (var i = decorators.length - 1; i >= 0; i--) if ((d = decorators[i])) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-var $ = ( typeof module === 'object' ) ? ( module['export'+'s'] = globalThis ) : globalThis
-$.$$ = $
-
-;
 
 var $node = $node || {}
 void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "../" ) ] }; 
@@ -27,6 +14,19 @@ module.exports = $;
 ;
 
 $node[ "../mam.ts" ] = $node[ "../mam.ts" ] = module.exports }.call( {} , {} )
+;
+"use strict"
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	else for (var i = decorators.length - 1; i >= 0; i--) if ((d = decorators[i])) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var $ = ( typeof module === 'object' ) ? ( module['export'+'s'] = globalThis ) : globalThis
+$.$$ = $
+
 ;
 "use strict";
 var $;
@@ -1936,9 +1936,9 @@ var $node = new Proxy({ require }, {
         while (!fs.existsSync(path.join(dir, suffix))) {
             const parent = path.resolve(dir, '..');
             if (parent === dir) {
-                $$.$mol_exec('.', 'npm', 'install', '--omit=dev', name);
+                $$.$mol_exec('.', 'npm', 'install', '--omit=dev', '--no-save', name);
                 try {
-                    $$.$mol_exec('.', 'npm', 'install', '--omit=dev', '@types/' + name);
+                    $$.$mol_exec('.', 'npm', 'install', '--omit=dev', '--no-save', '@types/' + name);
                 }
                 catch { }
                 break;
@@ -3349,222 +3349,64 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_tree2_text_to_string(text) {
-        let res = '';
-        function visit(text, prefix, inline) {
-            if (text.type === 'indent') {
-                if (inline)
-                    res += '\n';
-                for (let kid of text.kids) {
-                    visit(kid, prefix + '\t', false);
-                }
-                if (inline)
-                    res += prefix;
-            }
-            else if (text.type === 'line') {
-                if (!inline)
-                    res += prefix;
-                for (let kid of text.kids) {
-                    visit(kid, prefix, true);
-                }
-                if (!inline)
-                    res += '\n';
-            }
-            else {
-                if (!inline)
-                    res += prefix;
-                res += text.text();
-                if (!inline)
-                    res += '\n';
-            }
+    const err = $mol_view_tree2_error_str;
+    function $mol_view_tree2_value_type(val) {
+        switch (val.type) {
+            case 'true': return 'bool';
+            case 'false': return 'bool';
+            case 'null': return 'null';
+            case '*': return 'dict';
+            case '@': return 'locale';
+            case '': return 'string';
+            case '<=': return 'get';
+            case '<=>': return 'bind';
+            case '=>': return 'put';
         }
-        for (let kid of text.kids) {
-            visit(kid, '', false);
-        }
-        return res;
+        const first_char = val.type && val.type[0];
+        if (first_char === '/')
+            return 'list';
+        if (Number(val.type).toString() == val.type)
+            return 'number';
+        if (/^[$A-Z]/.test(first_char))
+            return 'object';
+        return this.$mol_fail(err `Unknown value type ${val.type} at ${val.span}`);
     }
-    $.$mol_tree2_text_to_string = $mol_tree2_text_to_string;
+    $.$mol_view_tree2_value_type = $mol_view_tree2_value_type;
 })($ || ($ = {}));
-//mol/tree2/text/to/string/string.ts
+//mol/view/tree2/value/type.ts
 ;
 "use strict";
 var $;
 (function ($) {
     const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_bind_both_parts(operator) {
-        if (operator.type !== '<=>')
-            return this.$mol_fail(err `Need an \`<=>\` at ${operator.span}, use ${example}`);
-        const owner = operator.kids.length === 1 ? operator.kids[0] : undefined;
-        if (!owner)
-            return this.$mol_fail(err `Need an owner part at ${operator.span}, use ${example}`);
-        if (owner.kids.length > 1)
-            return this.$mol_fail(err `Only one sub allowed at ${owner.span}, use ${example}`);
-        const owner_parts = this.$mol_view_tree2_prop_split(owner);
-        if (!owner_parts.next)
-            return this.$mol_fail(err `Next argument required at ${owner.span}, use ${example}`);
-        const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined;
-        return {
-            owner_parts,
-            default_value
-        };
+    function $mol_view_tree2_value(value) {
+        const type = value.type;
+        const kids = value.kids;
+        if (type === '') {
+            if (kids.length === 0)
+                return value.data(JSON.stringify(value.value));
+            return value.data(JSON.stringify(kids.map(node => node.value).join('\n')));
+        }
+        if (kids.length !== 0)
+            return this.$mol_fail(err `Kids are not allowed at ${value.span}, use ${example}`);
+        if (type === 'false' || type === 'true')
+            return value.data(type);
+        if (type === 'null')
+            return value.data(type);
+        if (Number(type).toString() === type.replace(/^\+/, ''))
+            return value.data(type);
+        return this.$mol_fail(err `Value ${value.toString()} not allowed at ${value.span}, use ${example}`);
     }
-    $.$mol_view_tree2_bind_both_parts = $mol_view_tree2_bind_both_parts;
+    $.$mol_view_tree2_value = $mol_view_tree2_value;
     const example = new $mol_view_tree2_error_suggestions([
-        'having?next <=> owner?next',
-        'having?next <=> owner?next \\default',
-        'having!key?next <=> owner!key?next',
+        'false',
+        'true',
+        '123',
+        'null',
+        '\\some'
     ]);
 })($ || ($ = {}));
-//mol/view/tree2/bind/both_parts.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_bind_left_parts(operator, having_parts) {
-        if (operator.type !== '<=')
-            return this.$mol_fail(err `Need an \`<=\` at ${operator.span}`);
-        const owner = operator.kids.length === 1 ? operator.kids[0] : undefined;
-        if (!owner)
-            return this.$mol_fail(err `Need an owner part at ${operator.span}`);
-        if (owner.kids.length > 1)
-            return this.$mol_fail(err `Owner at ${owner.span} can't have more that 1 value, given ${owner.kids.map(node => node.span)}`);
-        const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined;
-        const owner_parts = this.$mol_view_tree2_prop_split(owner);
-        const owner_call_parts = owner_parts.next
-            ? { ...owner_parts, next: undefined }
-            : owner_parts;
-        return {
-            default_value,
-            owner_call_parts,
-            owner_parts
-        };
-    }
-    $.$mol_view_tree2_bind_left_parts = $mol_view_tree2_bind_left_parts;
-})($ || ($ = {}));
-//mol/view/tree2/bind/left_parts.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_bind_right_parts(operator, having_parts, factory) {
-        if (operator.type !== '=>')
-            return this.$mol_fail(err `Need an \`=>\` at ${operator.span}, use ${example}`);
-        const owner = operator.kids.length === 1 ? operator.kids[0] : undefined;
-        if (!owner)
-            return this.$mol_fail(err `Need an owner part at ${operator.span}, use ${example}`);
-        if (owner.kids.length !== 0)
-            return this.$mol_fail(err `Owner at ${owner.span} can\'t have values at ${owner.kids.map(node => node.span)}, use ${example}`);
-        const owner_parts = this.$mol_view_tree2_prop_split(owner);
-        const owner_key = owner_parts.key;
-        const having_key = having_parts.key;
-        if (owner_key && having_key && having_key.data !== owner_key.data)
-            return this.$mol_fail(err `Key ${owner_key.value} at ${owner_key.span} must be equal to key ${having_key.span} at ${having_key.span}, ${example}`);
-        if (!owner_key && having_key)
-            return this.$mol_fail(err `Name ${owner_parts.name.value} at ${owner_parts.name.span} need a key like ${having_key.value} at ${having_key.span}, ${example}`);
-        if (owner_key && (!having_key && !factory.key))
-            return this.$mol_fail(err `Can't use key ${owner_key.value} at ${owner_key.span} without key at ${having_parts.name.span} or at ${factory.src.span}, ${example}`);
-        const owner_next = owner_parts.next;
-        const having_next = having_parts.next;
-        if (owner_next && !having_next)
-            return this.$mol_fail(err `Can't use next ${owner_next.value} at ${owner_next.span} without next at ${having_parts.name.span}, ${example}`);
-        return {
-            owner_parts
-        };
-    }
-    $.$mol_view_tree2_bind_right_parts = $mol_view_tree2_bind_right_parts;
-    const example = new $mol_view_tree2_error_suggestions([
-        'having => owner',
-        'having?next => owner?next',
-        'having!key => owner!key',
-        'having!key?next => owner!key?next'
-    ]);
-})($ || ($ = {}));
-//mol/view/tree2/bind/right_parts.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_ts_bind_both(operator, context) {
-        const { owner_parts, default_value } = this.$mol_view_tree2_bind_both_parts(operator);
-        context.check_scope_vars(owner_parts);
-        if (default_value && !context.get_method(owner_parts)) {
-            this.$mol_view_tree2_ts_method_body(owner_parts, context.root());
-        }
-        return [operator.struct('line', [
-                owner_parts.name.data('this.'),
-                this.$mol_view_tree2_ts_function_call(owner_parts),
-            ])];
-    }
-    $.$mol_view_tree2_ts_bind_both = $mol_view_tree2_ts_bind_both;
-    const example = new $mol_view_tree2_error_suggestions([
-        'having?next <=> owner?next',
-        'having?next <=> owner?next \\default',
-        'having!key?next <=> owner!key?next',
-    ]);
-})($ || ($ = {}));
-//mol/view/tree2/ts/bind/both.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_ts_bind_left(operator, context, having_parts) {
-        const { default_value, owner_parts, owner_call_parts } = this.$mol_view_tree2_bind_left_parts(operator, having_parts);
-        context.check_scope_vars(owner_call_parts);
-        if (default_value && !context.get_method(owner_parts)) {
-            this.$mol_view_tree2_ts_method_body(owner_parts, context.root());
-        }
-        return [operator.struct('line', [
-                owner_parts.name.data('this.'),
-                this.$mol_view_tree2_ts_function_call(owner_call_parts),
-            ])];
-    }
-    $.$mol_view_tree2_ts_bind_left = $mol_view_tree2_ts_bind_left;
-})($ || ($ = {}));
-//mol/view/tree2/ts/bind/left.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_ts_bind_right(operator, having_parts, factory, context) {
-        const { owner_parts } = this.$mol_view_tree2_bind_right_parts(operator, having_parts, factory);
-        const prev = context.get_method(owner_parts);
-        if (prev)
-            return this.$mol_fail(err `Method ${owner_parts.name.value} at ${owner_parts.name.span} already defined at ${prev.src.span}, ${example}`);
-        const index = context.index(owner_parts);
-        const body = operator.struct('indent', [
-            operator.struct('line', [
-                owner_parts.name.data('return this.'),
-                this.$mol_view_tree2_ts_function_call({ ...factory, key: factory.key?.data('id') }),
-                owner_parts.name.data('.'),
-                this.$mol_view_tree2_ts_function_call(having_parts),
-            ])
-        ]);
-        const method = [
-            ...this.$mol_view_tree2_ts_comment_doc(owner_parts.src),
-            operator.struct('line', [
-                owner_parts.name,
-                $mol_view_tree2_ts_function_declaration(owner_parts, context.types),
-                owner_parts.name.data(' {'),
-            ]),
-            body,
-            owner_parts.name.data('}'),
-        ];
-        context.method(index, method);
-    }
-    $.$mol_view_tree2_ts_bind_right = $mol_view_tree2_ts_bind_right;
-    const example = new $mol_view_tree2_error_suggestions([
-        'having => owner',
-        'having?next => owner?next',
-        'having!key => owner!key',
-        'having!key?next => owner!key?next'
-    ]);
-})($ || ($ = {}));
-//mol/view/tree2/ts/bind/right.ts
+//mol/view/tree2/value/value.ts
 ;
 "use strict";
 var $;
@@ -4010,64 +3852,222 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_value_type(val) {
-        switch (val.type) {
-            case 'true': return 'bool';
-            case 'false': return 'bool';
-            case 'null': return 'null';
-            case '*': return 'dict';
-            case '@': return 'locale';
-            case '': return 'string';
-            case '<=': return 'get';
-            case '<=>': return 'bind';
-            case '=>': return 'put';
+    function $mol_tree2_text_to_string(text) {
+        let res = '';
+        function visit(text, prefix, inline) {
+            if (text.type === 'indent') {
+                if (inline)
+                    res += '\n';
+                for (let kid of text.kids) {
+                    visit(kid, prefix + '\t', false);
+                }
+                if (inline)
+                    res += prefix;
+            }
+            else if (text.type === 'line') {
+                if (!inline)
+                    res += prefix;
+                for (let kid of text.kids) {
+                    visit(kid, prefix, true);
+                }
+                if (!inline)
+                    res += '\n';
+            }
+            else {
+                if (!inline)
+                    res += prefix;
+                res += text.text();
+                if (!inline)
+                    res += '\n';
+            }
         }
-        const first_char = val.type && val.type[0];
-        if (first_char === '/')
-            return 'list';
-        if (Number(val.type).toString() == val.type)
-            return 'number';
-        if (/^[$A-Z]/.test(first_char))
-            return 'object';
-        return this.$mol_fail(err `Unknown value type ${val.type} at ${val.span}`);
+        for (let kid of text.kids) {
+            visit(kid, '', false);
+        }
+        return res;
     }
-    $.$mol_view_tree2_value_type = $mol_view_tree2_value_type;
+    $.$mol_tree2_text_to_string = $mol_tree2_text_to_string;
 })($ || ($ = {}));
-//mol/view/tree2/value/type.ts
+//mol/tree2/text/to/string/string.ts
 ;
 "use strict";
 var $;
 (function ($) {
     const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_value(value) {
-        const type = value.type;
-        const kids = value.kids;
-        if (type === '') {
-            if (kids.length === 0)
-                return value.data(JSON.stringify(value.value));
-            return value.data(JSON.stringify(kids.map(node => node.value).join('\n')));
-        }
-        if (kids.length !== 0)
-            return this.$mol_fail(err `Kids are not allowed at ${value.span}, use ${example}`);
-        if (type === 'false' || type === 'true')
-            return value.data(type);
-        if (type === 'null')
-            return value.data(type);
-        if (Number(type).toString() === type.replace(/^\+/, ''))
-            return value.data(type);
-        return this.$mol_fail(err `Value ${value.toString()} not allowed at ${value.span}, use ${example}`);
+    function $mol_view_tree2_bind_both_parts(operator) {
+        if (operator.type !== '<=>')
+            return this.$mol_fail(err `Need an \`<=>\` at ${operator.span}, use ${example}`);
+        const owner = operator.kids.length === 1 ? operator.kids[0] : undefined;
+        if (!owner)
+            return this.$mol_fail(err `Need an owner part at ${operator.span}, use ${example}`);
+        if (owner.kids.length > 1)
+            return this.$mol_fail(err `Only one sub allowed at ${owner.span}, use ${example}`);
+        const owner_parts = this.$mol_view_tree2_prop_split(owner);
+        if (!owner_parts.next)
+            return this.$mol_fail(err `Next argument required at ${owner.span}, use ${example}`);
+        const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined;
+        return {
+            owner_parts,
+            default_value
+        };
     }
-    $.$mol_view_tree2_value = $mol_view_tree2_value;
+    $.$mol_view_tree2_bind_both_parts = $mol_view_tree2_bind_both_parts;
     const example = new $mol_view_tree2_error_suggestions([
-        'false',
-        'true',
-        '123',
-        'null',
-        '\\some'
+        'having?next <=> owner?next',
+        'having?next <=> owner?next \\default',
+        'having!key?next <=> owner!key?next',
     ]);
 })($ || ($ = {}));
-//mol/view/tree2/value/value.ts
+//mol/view/tree2/bind/both_parts.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const err = $mol_view_tree2_error_str;
+    function $mol_view_tree2_bind_left_parts(operator, having_parts) {
+        if (operator.type !== '<=')
+            return this.$mol_fail(err `Need an \`<=\` at ${operator.span}`);
+        const owner = operator.kids.length === 1 ? operator.kids[0] : undefined;
+        if (!owner)
+            return this.$mol_fail(err `Need an owner part at ${operator.span}`);
+        if (owner.kids.length > 1)
+            return this.$mol_fail(err `Owner at ${owner.span} can't have more that 1 value, given ${owner.kids.map(node => node.span)}`);
+        const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined;
+        const owner_parts = this.$mol_view_tree2_prop_split(owner);
+        const owner_call_parts = owner_parts.next
+            ? { ...owner_parts, next: undefined }
+            : owner_parts;
+        return {
+            default_value,
+            owner_call_parts,
+            owner_parts
+        };
+    }
+    $.$mol_view_tree2_bind_left_parts = $mol_view_tree2_bind_left_parts;
+})($ || ($ = {}));
+//mol/view/tree2/bind/left_parts.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const err = $mol_view_tree2_error_str;
+    function $mol_view_tree2_bind_right_parts(operator, having_parts, factory) {
+        if (operator.type !== '=>')
+            return this.$mol_fail(err `Need an \`=>\` at ${operator.span}, use ${example}`);
+        const owner = operator.kids.length === 1 ? operator.kids[0] : undefined;
+        if (!owner)
+            return this.$mol_fail(err `Need an owner part at ${operator.span}, use ${example}`);
+        if (owner.kids.length !== 0)
+            return this.$mol_fail(err `Owner at ${owner.span} can\'t have values at ${owner.kids.map(node => node.span)}, use ${example}`);
+        const owner_parts = this.$mol_view_tree2_prop_split(owner);
+        const owner_key = owner_parts.key;
+        const having_key = having_parts.key;
+        if (owner_key && having_key && having_key.data !== owner_key.data)
+            return this.$mol_fail(err `Key ${owner_key.value} at ${owner_key.span} must be equal to key ${having_key.span} at ${having_key.span}, ${example}`);
+        if (!owner_key && having_key)
+            return this.$mol_fail(err `Name ${owner_parts.name.value} at ${owner_parts.name.span} need a key like ${having_key.value} at ${having_key.span}, ${example}`);
+        if (owner_key && (!having_key && !factory.key))
+            return this.$mol_fail(err `Can't use key ${owner_key.value} at ${owner_key.span} without key at ${having_parts.name.span} or at ${factory.src.span}, ${example}`);
+        const owner_next = owner_parts.next;
+        const having_next = having_parts.next;
+        if (owner_next && !having_next)
+            return this.$mol_fail(err `Can't use next ${owner_next.value} at ${owner_next.span} without next at ${having_parts.name.span}, ${example}`);
+        return {
+            owner_parts
+        };
+    }
+    $.$mol_view_tree2_bind_right_parts = $mol_view_tree2_bind_right_parts;
+    const example = new $mol_view_tree2_error_suggestions([
+        'having => owner',
+        'having?next => owner?next',
+        'having!key => owner!key',
+        'having!key?next => owner!key?next'
+    ]);
+})($ || ($ = {}));
+//mol/view/tree2/bind/right_parts.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const err = $mol_view_tree2_error_str;
+    function $mol_view_tree2_ts_bind_both(operator, context) {
+        const { owner_parts, default_value } = this.$mol_view_tree2_bind_both_parts(operator);
+        context.check_scope_vars(owner_parts);
+        if (default_value && !context.get_method(owner_parts)) {
+            this.$mol_view_tree2_ts_method_body(owner_parts, context.root());
+        }
+        return [operator.struct('line', [
+                owner_parts.name.data('this.'),
+                this.$mol_view_tree2_ts_function_call(owner_parts),
+            ])];
+    }
+    $.$mol_view_tree2_ts_bind_both = $mol_view_tree2_ts_bind_both;
+    const example = new $mol_view_tree2_error_suggestions([
+        'having?next <=> owner?next',
+        'having?next <=> owner?next \\default',
+        'having!key?next <=> owner!key?next',
+    ]);
+})($ || ($ = {}));
+//mol/view/tree2/ts/bind/both.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const err = $mol_view_tree2_error_str;
+    function $mol_view_tree2_ts_bind_left(operator, context, having_parts) {
+        const { default_value, owner_parts, owner_call_parts } = this.$mol_view_tree2_bind_left_parts(operator, having_parts);
+        context.check_scope_vars(owner_call_parts);
+        if (default_value && !context.get_method(owner_parts)) {
+            this.$mol_view_tree2_ts_method_body(owner_parts, context.root());
+        }
+        return [operator.struct('line', [
+                owner_parts.name.data('this.'),
+                this.$mol_view_tree2_ts_function_call(owner_call_parts),
+            ])];
+    }
+    $.$mol_view_tree2_ts_bind_left = $mol_view_tree2_ts_bind_left;
+})($ || ($ = {}));
+//mol/view/tree2/ts/bind/left.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const err = $mol_view_tree2_error_str;
+    function $mol_view_tree2_ts_bind_right(operator, having_parts, factory, context) {
+        const { owner_parts } = this.$mol_view_tree2_bind_right_parts(operator, having_parts, factory);
+        const prev = context.get_method(owner_parts);
+        if (prev)
+            return this.$mol_fail(err `Method ${owner_parts.name.value} at ${owner_parts.name.span} already defined at ${prev.src.span}, ${example}`);
+        const index = context.index(owner_parts);
+        const body = operator.struct('indent', [
+            operator.struct('line', [
+                owner_parts.name.data('return this.'),
+                this.$mol_view_tree2_ts_function_call({ ...factory, key: factory.key?.data('id') }),
+                owner_parts.name.data('.'),
+                this.$mol_view_tree2_ts_function_call(having_parts),
+            ])
+        ]);
+        const method = [
+            ...this.$mol_view_tree2_ts_comment_doc(owner_parts.src),
+            operator.struct('line', [
+                owner_parts.name,
+                $mol_view_tree2_ts_function_declaration(owner_parts, context.types),
+                owner_parts.name.data(' {'),
+            ]),
+            body,
+            owner_parts.name.data('}'),
+        ];
+        context.method(index, method);
+    }
+    $.$mol_view_tree2_ts_bind_right = $mol_view_tree2_ts_bind_right;
+    const example = new $mol_view_tree2_error_suggestions([
+        'having => owner',
+        'having?next => owner?next',
+        'having!key => owner!key',
+        'having!key?next => owner!key?next'
+    ]);
+})($ || ($ = {}));
+//mol/view/tree2/ts/bind/right.ts
 ;
 "use strict";
 var $;
@@ -4104,24 +4104,32 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_view_tree2_ts_comment(item) {
-        return item.kids.map(chunk => item.data('// ' + chunk.type));
+    function $mol_view_tree2_ts_value(src) {
+        const converted = this.$mol_view_tree2_value(src);
+        if (src.type === 'null')
+            return [converted.struct('line', [
+                    converted.data(converted.value),
+                    converted.data(' as any'),
+                ])];
+        return [converted];
     }
-    $.$mol_view_tree2_ts_comment = $mol_view_tree2_ts_comment;
-    function $mol_view_tree2_ts_comment_doc(item) {
-        const chunks = item.toString().trim().split('\n');
-        return [
-            item.data(''),
-            item.data('/**'),
-            item.data(' * ```tree'),
-            ...chunks.map(chunk => item.data(' * ' + chunk)),
-            item.data(' * ```'),
-            item.data(' */'),
-        ];
-    }
-    $.$mol_view_tree2_ts_comment_doc = $mol_view_tree2_ts_comment_doc;
+    $.$mol_view_tree2_ts_value = $mol_view_tree2_ts_value;
 })($ || ($ = {}));
-//mol/view/tree2/ts/comment.ts
+//mol/view/tree2/ts/value.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_view_tree2_ts_locale(operator, context) {
+        return [operator.struct('line', [
+                operator.data('this.$.$mol_locale.text( \''),
+                context.locale(operator),
+                operator.data('\' )'),
+            ])];
+    }
+    $.$mol_view_tree2_ts_locale = $mol_view_tree2_ts_locale;
+})($ || ($ = {}));
+//mol/view/tree2/ts/locale.ts
 ;
 "use strict";
 var $;
@@ -4143,19 +4151,6 @@ var $;
     $.$mol_view_tree2_ts_module = $mol_view_tree2_ts_module;
 })($ || ($ = {}));
 //mol/view/tree2/ts/module.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_ts_compile(tree2_module) {
-        const locales = {};
-        const ts_module = this.$mol_view_tree2_ts_module(tree2_module, locales);
-        const script = this.$mol_tree2_text_to_string(ts_module);
-        return { script, locales };
-    }
-    $.$mol_view_tree2_ts_compile = $mol_view_tree2_ts_compile;
-})($ || ($ = {}));
-//mol/view/tree2/ts/compile.ts
 ;
 "use strict";
 var $;
@@ -4237,32 +4232,37 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_view_tree2_ts_locale(operator, context) {
-        return [operator.struct('line', [
-                operator.data('this.$.$mol_locale.text( \''),
-                context.locale(operator),
-                operator.data('\' )'),
-            ])];
+    function $mol_view_tree2_ts_comment(item) {
+        return item.kids.map(chunk => item.data('// ' + chunk.type));
     }
-    $.$mol_view_tree2_ts_locale = $mol_view_tree2_ts_locale;
+    $.$mol_view_tree2_ts_comment = $mol_view_tree2_ts_comment;
+    function $mol_view_tree2_ts_comment_doc(item) {
+        const chunks = item.toString().trim().split('\n');
+        return [
+            item.data(''),
+            item.data('/**'),
+            item.data(' * ```tree'),
+            ...chunks.map(chunk => item.data(' * ' + chunk)),
+            item.data(' * ```'),
+            item.data(' */'),
+        ];
+    }
+    $.$mol_view_tree2_ts_comment_doc = $mol_view_tree2_ts_comment_doc;
 })($ || ($ = {}));
-//mol/view/tree2/ts/locale.ts
+//mol/view/tree2/ts/comment.ts
 ;
 "use strict";
 var $;
 (function ($) {
-    function $mol_view_tree2_ts_value(src) {
-        const converted = this.$mol_view_tree2_value(src);
-        if (src.type === 'null')
-            return [converted.struct('line', [
-                    converted.data(converted.value),
-                    converted.data(' as any'),
-                ])];
-        return [converted];
+    function $mol_view_tree2_ts_compile(tree2_module) {
+        const locales = {};
+        const ts_module = this.$mol_view_tree2_ts_module(tree2_module, locales);
+        const script = this.$mol_tree2_text_to_string(ts_module);
+        return { script, locales };
     }
-    $.$mol_view_tree2_ts_value = $mol_view_tree2_ts_value;
+    $.$mol_view_tree2_ts_compile = $mol_view_tree2_ts_compile;
 })($ || ($ = {}));
-//mol/view/tree2/ts/value.ts
+//mol/view/tree2/ts/compile.ts
 ;
 "use strict";
 var $;

@@ -28,4 +28,5 @@ var $ = ( typeof module === 'object' ) ? ( module['export'+'s'] = globalThis ) :
 $.$$ = $
 
 
+export default $
 //# sourceMappingURL=web.js.map
