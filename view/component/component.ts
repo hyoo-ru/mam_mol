@@ -77,6 +77,7 @@ namespace $ {
 
 		customElements.define( Component.tag, Component )
 		
+		return Component
 	}
 
 }
