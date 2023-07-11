@@ -3176,7 +3176,7 @@ var $;
         static relative(path) {
             return this.absolute(new URL(path, this.base).toString());
         }
-        static base = $mol_dom_context.document
+        static base = $mol_dom_context.document?.currentScript
             ? new URL('.', $mol_dom_context.document.currentScript['src']).toString()
             : '';
         buffer(next) {
