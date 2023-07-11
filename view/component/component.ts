@@ -23,7 +23,7 @@ namespace $ {
 					node.setAttribute( 'mol_view_root', '' )
 					
 					this.shadowRoot!.append(
-						document.getElementById( `$mol_style_attach` )!.cloneNode( true ),
+						$mol_style_attach_force().cloneNode( true ),
 						node,
 					)
 						
