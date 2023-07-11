@@ -2845,6 +2845,9 @@ var $;
             }
             return names;
         }
+        theme() {
+            return null;
+        }
         attr_static() {
             let attrs = {};
             for (let name of this.view_names())
@@ -2852,7 +2855,9 @@ var $;
             return attrs;
         }
         attr() {
-            return {};
+            return {
+                mol_theme: this.theme(),
+            };
         }
         style_size() {
             return {

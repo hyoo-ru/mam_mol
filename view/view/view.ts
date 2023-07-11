@@ -368,6 +368,10 @@ namespace $ {
 			return names
 		}
 		
+		theme() {
+			return null as null | string
+		}
+		
 		attr_static() : { [ key : string ] : string|number|boolean|null } {
 			let attrs : any = {}
 			
@@ -377,7 +381,9 @@ namespace $ {
 		}
 		
 		attr() {
-			return {}
+			return {
+				mol_theme: this.theme(),
+			} as {}
 		}
 		
 		style_size() {
