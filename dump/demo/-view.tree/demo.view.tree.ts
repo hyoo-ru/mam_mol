@@ -12,15 +12,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub /
-		 * 	<= Dump_short
-		 * 	<= Dump_long
+		 * sub / <= Dump_list
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Dump_short(),
-				this.Dump_long()
+				this.Dump_list()
 			] as readonly any[]
 		}
 		
@@ -89,6 +86,25 @@ namespace $ {
 			
 			obj.value = () => this.value()
 			obj.prototypes = () => true
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Dump_list $mol_list rows /
+		 * 	<= Dump_short
+		 * 	<= Dump_long
+		 * ```
+		 */
+		@ $mol_mem
+		Dump_list() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => [
+				this.Dump_short(),
+				this.Dump_long()
+			] as readonly any[]
 			
 			return obj
 		}

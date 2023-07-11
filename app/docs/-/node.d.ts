@@ -7156,6 +7156,7 @@ declare namespace $ {
         value(): any;
         Dump_short(): $$.$mol_dump_value;
         Dump_long(): $$.$mol_dump_value;
+        Dump_list(): $$.$mol_list;
     }
 }
 

@@ -3382,11 +3382,12 @@ $mol_drag_demo $mol_example_large
 $mol_dump_demo $mol_example_small
 	title \Attach files an show them
 	sub /
-		<= Dump_short $mol_dump_value
-			value <= value null
-		<= Dump_long $mol_dump_value
-			value <= value null
-			prototypes true
+		<= Dump_list $mol_list rows /
+			<= Dump_short $mol_dump_value
+				value <= value null
+			<= Dump_long $mol_dump_value
+				value <= value null
+				prototypes true
 	tags /
 		\dump
 		\json
