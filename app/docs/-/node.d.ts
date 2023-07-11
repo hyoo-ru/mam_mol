@@ -4316,8 +4316,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_dump_value extends $mol_view {
-        value(): any;
-        preview_show(): boolean;
+        value(next?: any): any;
+        preview_show(next?: any): boolean;
         sub(): readonly any[];
         simple(): string;
         Simple(): $$.$mol_text_code;

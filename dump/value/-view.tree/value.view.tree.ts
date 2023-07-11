@@ -3,19 +3,23 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * value null
+		 * value? null
 		 * ```
 		 */
-		value() {
+		@ $mol_mem
+		value(next?: any) {
+			if ( next !== undefined ) return next as never
 			return null as any
 		}
 		
 		/**
 		 * ```tree
-		 * preview_show true
+		 * preview_show? true
 		 * ```
 		 */
-		preview_show() {
+		@ $mol_mem
+		preview_show(next?: any) {
+			if ( next !== undefined ) return next as never
 			return true
 		}
 		

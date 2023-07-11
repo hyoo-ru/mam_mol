@@ -1257,8 +1257,8 @@ $mol_follower $mol_ghost
 		transform <= transform \
 
 $mol_dump_value $mol_view
-	value null
-	preview_show true
+	value? null
+	preview_show? true
 	sub /
 		<= Simple $mol_text_code
 			text <= simple \
