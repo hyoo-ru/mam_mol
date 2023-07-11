@@ -368,8 +368,9 @@ namespace $ {
 			return names
 		}
 		
-		theme() {
-			return null as null | string
+		@ $mol_mem
+		theme( next = null as null | string ) {
+			return next
 		}
 		
 		attr_static() : { [ key : string ] : string|number|boolean|null } {
