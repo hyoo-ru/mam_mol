@@ -65,7 +65,7 @@ namespace $ {
 				const descr = Reflect.getOwnPropertyDescriptor( proto, field )!
 				
 				if( typeof descr.value !== 'function' ) continue
-				if( descr.value.length === 0 ) continue
+				// if( descr.value.length === 0 ) continue
 				
 				Component.observedAttributes.add( field )
 			}
