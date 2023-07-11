@@ -7,7 +7,7 @@ namespace $ {
 					
 		class Component extends HTMLElement {
 			
-			static tag = View.name.replace( /\W/g , '' ).replace( /^(?=\d+)/ , '-' ).replace( /_/g , '-' )
+			static tag = $$.$mol_func_name( View ).replace( /\W/g , '' ).replace( /^(?=\d+)/ , '-' ).replace( /_/g , '-' )
 			static observedAttributes = new Set
 			
 			view = new View
