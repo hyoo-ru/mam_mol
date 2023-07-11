@@ -23,7 +23,7 @@ Dumps any JS values.
 
 ## NPM Usage
 
-[Sandox](https://codesandbox.io/s/mol-dump-lib-8ly34z?file=/index.html)
+**[Sandbox](https://codesandbox.io/s/mol-dump-lib-8ly34z?file=/index.html)**
 
 ```js
 import { $mol_view_component, $mol_dump_value } from "mol_dump_lib"
