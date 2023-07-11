@@ -2359,6 +2359,15 @@ var $;
     let all = [];
     let el = null;
     let timer = null;
+    function $mol_style_attach_force() {
+        if (all.length) {
+            el.innerHTML += '\n' + all.join('\n\n');
+            all = [];
+        }
+        timer = null;
+        return el;
+    }
+    $.$mol_style_attach_force = $mol_style_attach_force;
     function $mol_style_attach(id, text) {
         all.push(`/* ${id} */\n\n${text}`);
         if (timer)
@@ -2369,12 +2378,7 @@ var $;
         el = doc.createElement('style');
         el.id = `$mol_style_attach`;
         doc.head.appendChild(el);
-        timer = new $mol_after_tick(() => {
-            el.innerHTML = '\n' + all.join('\n\n');
-            all = [];
-            el = null;
-            timer = null;
-        });
+        timer = new $mol_after_tick($mol_style_attach_force);
         return el;
     }
     $.$mol_style_attach = $mol_style_attach;

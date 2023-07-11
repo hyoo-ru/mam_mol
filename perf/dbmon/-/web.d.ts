@@ -438,6 +438,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_style_attach_force(): HTMLStyleElement;
     function $mol_style_attach(id: string, text: string): HTMLStyleElement | null;
 }
 
