@@ -26,9 +26,9 @@ namespace $ {
 
 			var [ prob_raw, fn ] = chance_list[ i ]
 
-			var prob_percent = ( prob_raw / prob_sum ) * 100
+			var prob_current = ( prob_raw / prob_sum )
 
-			var prob = prob_total + ( prob_percent / 100 )
+			var prob = prob_total + prob_current
 
 			if ( random < prob ) {
 
