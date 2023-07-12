@@ -241,11 +241,7 @@ namespace $ {
 				const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
 				
 				for( const src of sources ) src.buffer()	
-				this.$.$mol_log3_rise({
-					place: `${this}`,
-					message: `$mol_build_obsolete`,
-					path
-				})
+				
 			} catch (error) {
 				this.$.$mol_log3_fail({
 					place: `${this}`,
@@ -258,7 +254,11 @@ namespace $ {
 			// ignore initial
 			if( !$mol_mem_cached( ()=> this.notify([ line, path ]) ) ) return true
 
-			
+			this.$.$mol_log3_rise({
+				place: `${this}`,
+				message: `$mol_build_obsolete`,
+				path
+			})
 				
 			line.send( '$mol_build_obsolete' )
 
