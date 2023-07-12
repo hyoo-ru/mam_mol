@@ -232,21 +232,33 @@ namespace $ {
 		@ $mol_mem_key
 		notify( [ line, path ]: [ InstanceType<$node['ws']>, string ] ) {
 			
-			const build = this.build()
-			const bundle = build.root().resolve( path )
-
-			// watch changes
-			const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
-			for( const src of sources ) src.buffer()
+			try {
+			
+				const build = this.build()
+				const bundle = build.root().resolve( path )
+			
+				// watch changes
+				const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
+				
+				for( const src of sources ) src.buffer()	
+				this.$.$mol_log3_rise({
+					place: `${this}`,
+					message: `$mol_build_obsolete`,
+					path
+				})
+			} catch (error) {
+				this.$.$mol_log3_fail({
+					place: `${this}`,
+					message: (error as any)?.message,
+					path
+				})
+			}
+			
 
 			// ignore initial
 			if( !$mol_mem_cached( ()=> this.notify([ line, path ]) ) ) return true
 
-			this.$.$mol_log3_rise({
-				place: `${this}`,
-				message: `$mol_build_obsolete`,
-				path
-			})
+			
 				
 			line.send( '$mol_build_obsolete' )
 
