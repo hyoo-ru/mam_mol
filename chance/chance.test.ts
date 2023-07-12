@@ -2,6 +2,19 @@ namespace $ {
 
 	$mol_test({
 
+		'Probability should be a number'() {
+
+			$mol_assert_fail( ()=> {
+
+				$mol_chance(
+					[ 50, ()=> 1 ],
+					[ NaN, ()=> 2 ],
+				)
+
+			} )
+
+		},
+
 		'Probability should not be negative'() {
 
 			$mol_assert_fail( ()=> {

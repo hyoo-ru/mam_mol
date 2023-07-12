@@ -9,8 +9,7 @@ namespace $ {
 		const prob_sum = chance_list.reduce( ( sum, { 0: prob } )=> {
 			if (
 				prob < 0
-				|| Number.isNaN( prob )
-				|| prob === Infinity
+				|| !Number.isFinite( prob )
 			) {
 				throw new Error( `Incorrect probability value: ${ prob }, but only positive numbers are allowed` )
 			}
