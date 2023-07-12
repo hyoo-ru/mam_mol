@@ -6,7 +6,7 @@ namespace $ {
 
 	export function $mol_chance< List extends $mol_chance_list >( ... chance_list: List ): $mol_chance_result< List > | never {
 
-		const prob_sum = chance_list.reduce( ( sum, { 0: prob } )=> {
+		const prob_sum = chance_list.reduce( ( sum, [ prob ] )=> {
 			if (
 				prob < 0
 				|| !Number.isFinite( prob )
@@ -24,7 +24,7 @@ namespace $ {
 		var prob_total = 0
 		for( var i = 0; i < chance_list.length; ++ i ) {
 
-			var { 0: prob_raw, 1: fn } = chance_list[ i ]
+			var [ prob_raw, fn ] = chance_list[ i ]
 
 			var prob_percent = ( prob_raw / prob_sum ) * 100
 
