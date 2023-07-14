@@ -1344,8 +1344,7 @@ namespace $ {
 					this.logBundle( target , Date.now() - start )
 				}
 
-				const addFilesRecursive = (path:$mol_file|$mol_tree) =>{
-					const file = path instanceof $mol_file?path:root.resolve(path.value.replace( /^\// , '' ) )
+				const addFilesRecursive = (file:$mol_file) =>{
 					
 					if ( ! file.exists() ) return
 					if( file.type() === 'dir') {
@@ -1360,7 +1359,7 @@ namespace $ {
 				}
 
 				tree.select( 'deploy' ).sub.forEach( deploy => {
-					addFilesRecursive(deploy)
+					addFilesRecursive(root.resolve(deploy.value.replace( /^\// , '' )))
 				} )
 				
 			} )
