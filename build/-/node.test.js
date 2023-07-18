@@ -6748,11 +6748,20 @@ var $;
             return socket;
         }
         notify([line, path]) {
-            const build = this.build();
-            const bundle = build.root().resolve(path);
-            const sources = build.sourcesAll({ path: bundle.path(), exclude: ['node'] });
-            for (const src of sources)
-                src.buffer();
+            try {
+                const build = this.build();
+                const bundle = build.root().resolve(path);
+                const sources = build.sourcesAll({ path: bundle.path(), exclude: ['node'] });
+                for (const src of sources)
+                    src.buffer();
+            }
+            catch (error) {
+                this.$.$mol_log3_fail({
+                    place: `${this}`,
+                    message: error?.message,
+                    path
+                });
+            }
             if (!$mol_mem_cached(() => this.notify([line, path])))
                 return true;
             this.$.$mol_log3_rise({
