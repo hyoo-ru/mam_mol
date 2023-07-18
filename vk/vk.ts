@@ -11,7 +11,7 @@ namespace $ {
 			const glob = $mol_dom_context as any
 			
 			glob.AndroidBridge?.[ handler ]( JSON.stringify( params ) )
-			glob.webkit.messageHandlers?.[ handler ].postMessage( params )
+			glob.webkit?.messageHandlers?.[ handler ].postMessage( params )
 			glob.ReactNativeWebView?.postMessage({ handler, params })
 			glob.parent.postMessage({ handler, params, type: 'vk-connect' }, '*')
 			
