@@ -1335,15 +1335,31 @@ namespace $ {
 
 			sources.forEach( source => {
 				const tree = $mol_tree.fromString( source.text() , source.path() )
-				
-				tree.select( 'deploy' ).sub.forEach( deploy => {
+
+				const pushFile = (file:$mol_file) => {
 					const start = Date.now()
-					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
-					if ( ! file.exists() ) return
 					const target = pack.resolve( `-/${ file.relate( root ) }` )
 					target.buffer( file.buffer() )
 					targets.push( target )
 					this.logBundle( target , Date.now() - start )
+				}
+
+				const addFilesRecursive = (file:$mol_file) =>{
+					
+					if ( ! file.exists() ) return
+					if( file.type() === 'dir') {
+						file.sub().forEach(sub => {
+							addFilesRecursive(sub)
+						})
+					}
+					else {
+						pushFile(file)
+					}
+					
+				}
+
+				tree.select( 'deploy' ).sub.forEach( deploy => {
+					addFilesRecursive(root.resolve(deploy.value.replace( /^\// , '' )))
 				} )
 				
 			} )
