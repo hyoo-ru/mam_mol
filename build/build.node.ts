@@ -351,7 +351,6 @@ namespace $ {
 				
 				{
 					... $node.typescript.sys ,
-					watchDirectory: (()=>{}) as any,
 					writeFile : (path , data )=> {
 						$mol_file.relative( path ).text( data, 'virt' )
 					},
