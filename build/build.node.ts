@@ -339,7 +339,7 @@ namespace $ {
 
 			const watchers = new Map< string , ( path : string , kind : number )=> void >()
 			let run = ()=> {}
-
+			
 			var host = $node.typescript.createWatchCompilerHost(
 
 				paths ,
@@ -351,6 +351,9 @@ namespace $ {
 				
 				{
 					... $node.typescript.sys ,
+					watchDirectory: () => { 
+						return { close(){} }
+					},
 					writeFile : (path , data )=> {
 						$mol_file.relative( path ).text( data, 'virt' )
 					},
