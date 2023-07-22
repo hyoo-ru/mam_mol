@@ -33,4 +33,25 @@ namespace $ {
 
 	>
 
+	type pick1 = $mol_type_assert<
+
+		$mol_type_fold_keys_pick<
+			type_obj,
+			Array< number >
+		>,
+		'foo.lis'
+
+	>
+
+	type pick2 = $mol_type_assert<
+
+		$mol_type_fold_keys_pick<
+			type_obj_partial,
+			| ( ()=> number )
+			| undefined
+		>,
+		'foo.bar.wee.too'
+
+	>
+
 }
