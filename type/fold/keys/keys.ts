@@ -11,19 +11,22 @@ namespace $ {
 			T extends Array< any >
 			? ''
 			:
-				{
-					[ Key in keyof T ]-?:
-						Key extends string
-						?
-							| Key
-							| $mol_type_case_dot<
-								Key,
-								$mol_type_fold_keys<
-									Required< T >[ Key ]
-								>
-							 >
-						: never
-				}[ keyof T ]
+				T extends Promise< any >
+				? ''
+				:
+					{
+						[ Key in keyof T ]-?:
+							Key extends string
+							?
+								| Key
+								| $mol_type_case_dot<
+									Key,
+									$mol_type_fold_keys<
+										Required< T >[ Key ]
+									>
+								 >
+							: never
+					}[ keyof T ]
 		: ''
 
 	/**

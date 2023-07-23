@@ -9,10 +9,22 @@ namespace $ {
 				kek: string
 			}
 			lis: Array< number >
+			prom: Promise< any >
 		}
 	}
 
-	type type_obj_partial = $mol_type_partial_deep< type_obj >
+	type type_obj_optional = {
+		foo?: {
+			bar?: {
+				wee?: {
+					too?: ()=> number
+				}
+				kek?: string
+			}
+			lis?: Array< number >
+			prom?: Promise< any >
+		}
+	}
 
 
 	type keys1 = $mol_type_assert<
@@ -20,16 +32,16 @@ namespace $ {
 		$mol_type_fold_keys<
 			type_obj
 		>,
-		'foo' | 'foo.bar' | 'foo.lis' | 'foo.bar.wee' | 'foo.bar.kek' | 'foo.bar.wee.too'
+		'foo' | 'foo.bar' | 'foo.lis' | 'foo.prom' | 'foo.bar.wee' | 'foo.bar.kek' | 'foo.bar.wee.too'
 
 	>
 
 	type keys2 = $mol_type_assert<
 
 		$mol_type_fold_keys<
-			type_obj_partial
+			type_obj_optional
 		>,
-		'foo' | 'foo.bar' | 'foo.lis' | 'foo.bar.wee' | 'foo.bar.kek' | 'foo.bar.wee.too'
+		'foo' | 'foo.bar' | 'foo.lis' | 'foo.prom' | 'foo.bar.wee' | 'foo.bar.kek' | 'foo.bar.wee.too'
 
 	>
 
@@ -46,7 +58,7 @@ namespace $ {
 	type pick2 = $mol_type_assert<
 
 		$mol_type_fold_keys_pick<
-			type_obj_partial,
+			type_obj_optional,
 			| ( ()=> number )
 			| undefined
 		>,
@@ -61,18 +73,18 @@ namespace $ {
 			| string
 			| ( ()=> number )
 		>,
-		'foo' | 'foo.bar' | 'foo.lis' | 'foo.bar.wee'
+		'foo' | 'foo.bar' | 'foo.lis' | 'foo.prom' | 'foo.bar.wee'
 
 	>
 
 	type omit2 = $mol_type_assert<
 
 		$mol_type_fold_keys_omit<
-			type_obj_partial,
-			| Array< number | undefined >
+			type_obj_optional,
+			| Array< number >
 			| undefined
 		>,
-		'foo' | 'foo.bar' | 'foo.bar.wee' | 'foo.bar.kek' | 'foo.bar.wee.too'
+		'foo' | 'foo.bar' | 'foo.prom' | 'foo.bar.wee' | 'foo.bar.kek' | 'foo.bar.wee.too'
 
 	>
 
