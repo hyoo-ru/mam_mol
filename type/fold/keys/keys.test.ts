@@ -45,6 +45,17 @@ namespace $ {
 
 	>
 
+	type keys3 = $mol_type_assert<
+
+		$mol_type_fold_keys<
+			{
+				a: { prop1: string } | number | { prop2: number }
+			}
+		>,
+		'a' | 'a.prop1' | 'a.prop2'
+
+	>
+
 	type point = { x: number; y: number }
 	type endpoint1 = $mol_type_assert<
 

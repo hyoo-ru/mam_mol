@@ -1,5 +1,13 @@
 namespace $ {
 
+	type join_keys< K1, K2 > =
+		K1 extends string
+		?
+			K2 extends string
+			? $mol_type_case_dot< K1, K2 >
+			: never
+		: never
+
 	/**
 	 * Folded nested structure key names. Endpoint specifies structures, whose keys should not be folded.
 	 *
@@ -22,7 +30,7 @@ namespace $ {
 								Key extends string
 								?
 									| Key
-									| $mol_type_case_dot<
+									| join_keys<
 										Key,
 										$mol_type_fold_keys<
 											Required< T >[ Key ],
@@ -40,6 +48,7 @@ namespace $ {
 	 */
 	export type $mol_type_fold_keys_pick< T, Pick > =
 		{
+			// @ts-ignore
 			[ K in $mol_type_fold_keys< T > ]:
 				$mol_type_unfold< T, K > extends Pick
 				? K
@@ -53,6 +62,7 @@ namespace $ {
 	 */
 	export type $mol_type_fold_keys_omit< T, Omit > =
 		{
+			// @ts-ignore
 			[ K in $mol_type_fold_keys< T > ]:
 				$mol_type_unfold< T, K > extends Omit
 				? never
