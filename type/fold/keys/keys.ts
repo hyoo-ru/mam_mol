@@ -1,11 +1,11 @@
 namespace $ {
 
 	/**
-	 * Folded nested structure key names
+	 * Folded nested structure key names. Endpoint specifies structures, whose keys should not be folded.
 	 *
 	 * 	type keys = $mol_type_fold_keys< { a: { b: { c: number }, d: string } } > // 'a' | 'a.b' | 'a.d' | 'a.b.c'
 	 */
-	export type $mol_type_fold_keys< T > =
+	export type $mol_type_fold_keys< T, Endpoint = never > =
 		T extends object
 		?
 			T extends Array< any >
@@ -14,19 +14,23 @@ namespace $ {
 				T extends Promise< any >
 				? ''
 				:
-					{
-						[ Key in keyof T ]-?:
-							Key extends string
-							?
-								| Key
-								| $mol_type_case_dot<
-									Key,
-									$mol_type_fold_keys<
-										Required< T >[ Key ]
-									>
-								 >
-							: never
-					}[ keyof T ]
+					T extends Endpoint
+					? ''
+					:
+						{
+							[ Key in keyof T ]-?:
+								Key extends string
+								?
+									| Key
+									| $mol_type_case_dot<
+										Key,
+										$mol_type_fold_keys<
+											Required< T >[ Key ],
+											Endpoint
+										>
+									 >
+								: never
+						}[ keyof T ]
 		: ''
 
 	/**

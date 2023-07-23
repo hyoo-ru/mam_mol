@@ -45,6 +45,17 @@ namespace $ {
 
 	>
 
+	type point = { x: number; y: number }
+	type endpoint1 = $mol_type_assert<
+
+		$mol_type_fold_keys<
+			type_obj & { position: point },
+			point
+		>,
+		'foo' | 'position' | 'foo.bar' | 'foo.lis' | 'foo.prom' | 'foo.bar.wee' | 'foo.bar.kek' | 'foo.bar.wee.too'
+
+	>
+
 	type pick1 = $mol_type_assert<
 
 		$mol_type_fold_keys_pick<
