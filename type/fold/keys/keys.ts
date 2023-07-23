@@ -42,4 +42,17 @@ namespace $ {
 				: never
 		}[ $mol_type_fold_keys< T > ]
 
+	/**
+	 * Omit folded nested structure key names by property type
+	 *
+	 * 	type not_string_keys = $mol_type_fold_keys_omit< { a: { b: { c: number }, d: string } }, string > // 'a' | 'a.b' | 'a.b.c'
+	 */
+	export type $mol_type_fold_keys_omit< T, Omit > =
+		{
+			[ K in $mol_type_fold_keys< T > ]:
+				$mol_type_unfold< T, K > extends Omit
+				? never
+				: K
+		}[ $mol_type_fold_keys< T > ]
+
 }

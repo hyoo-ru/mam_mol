@@ -54,4 +54,26 @@ namespace $ {
 
 	>
 
+	type omit1 = $mol_type_assert<
+
+		$mol_type_fold_keys_omit<
+			type_obj,
+			| string
+			| ( ()=> number )
+		>,
+		'foo' | 'foo.bar' | 'foo.lis' | 'foo.bar.wee'
+
+	>
+
+	type omit2 = $mol_type_assert<
+
+		$mol_type_fold_keys_omit<
+			type_obj_partial,
+			| Array< number | undefined >
+			| undefined
+		>,
+		'foo' | 'foo.bar' | 'foo.bar.wee' | 'foo.bar.kek' | 'foo.bar.wee.too'
+
+	>
+
 }
