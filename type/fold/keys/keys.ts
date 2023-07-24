@@ -16,31 +16,25 @@ namespace $ {
 	export type $mol_type_fold_keys< T, Endpoint = never > =
 		T extends object
 		?
-			T extends Array< any >
+			T extends Array< any > | Function | Promise< any >
 			? ''
 			:
-				T extends Function
+				T extends Endpoint
 				? ''
 				:
-					T extends Promise< any >
-					? ''
-					:
-						T extends Endpoint
-						? ''
-						:
-							{
-								[ Key in keyof T ]-?:
-									Key extends string
-									?
-										join_keys<
-											Key,
-											$mol_type_fold_keys<
-												Required< T >[ Key ],
-												Endpoint
-											>
-										>
-									: never
-							}[ keyof T ]
+					{
+						[ Key in keyof T ]-?:
+							Key extends string
+							?
+								join_keys<
+									Key,
+									$mol_type_fold_keys<
+										Required< T >[ Key ],
+										Endpoint
+									>
+								>
+							: never
+					}[ keyof T ]
 		: ''
 
 
@@ -52,29 +46,26 @@ namespace $ {
 	export type $mol_type_fold_keys_all< T, Endpoint = never > =
 		T extends object
 		?
-			T extends Array< any >
+			T extends Array< any > | Promise< any >
 			? ''
 			:
-				T extends Promise< any >
+				T extends Endpoint
 				? ''
 				:
-					T extends Endpoint
-					? ''
-					:
-						{
-							[ Key in keyof T ]-?:
-								Key extends string
-								?
-									| Key
-									| join_keys<
-										Key,
-										$mol_type_fold_keys_all<
-											Required< T >[ Key ],
-											Endpoint
-										>
-									 >
-								: never
-						}[ keyof T ]
+					{
+						[ Key in keyof T ]-?:
+							Key extends string
+							?
+								| Key
+								| join_keys<
+									Key,
+									$mol_type_fold_keys_all<
+										Required< T >[ Key ],
+										Endpoint
+									>
+								 >
+							: never
+					}[ keyof T ]
 		: ''
 
 }
