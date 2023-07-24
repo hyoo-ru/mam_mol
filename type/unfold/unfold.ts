@@ -5,12 +5,13 @@ namespace $ {
 	 *
 	 * 	type abc_type = $mol_type_unfold< { a: { b: { c: number }, d: string }, 'a.b.c' } > // number
 	 */
-	export type $mol_type_unfold< T, K > =
-		K extends keyof T
-		? Exclude< T, undefined >[ K ]
-		: K extends `${ infer Left }.${ infer Right }`
-			? Left extends keyof T
-				? $mol_type_unfold< Exclude< T[ Left ], undefined >, Right >
-				: never
+	export type $mol_type_unfold< T, K extends string | number > =
+		$mol_type_access< T, K > extends never
+		? K extends `${ infer Left }.${ infer Right }`
+			? $mol_type_access< T, Left > extends never
+				? never
+				: $mol_type_unfold< $mol_type_access< T, Left >, Right >
 			: never
+		: $mol_type_access< T, K >
+
 }

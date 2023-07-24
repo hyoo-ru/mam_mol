@@ -75,4 +75,26 @@ namespace $ {
 
 	>
 
+	type unfold5 = $mol_type_assert<
+
+		$mol_type_unfold<
+			| { a: number }
+			| undefined,
+			'a'
+		>,
+		number
+
+	>
+
+	type unfold6 = $mol_type_assert<
+
+		$mol_type_unfold<
+			| { a?: { b: { c: number } | undefined } }
+			| undefined,
+			'a.b.c'
+		>,
+		number
+
+	>
+
 }
