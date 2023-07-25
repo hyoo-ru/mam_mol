@@ -11,7 +11,7 @@ namespace $ {
 			$mol_type_override<
 				Type,
 				{
-					[ Key in $mol_type_keys_undefined< Type > ]?:
+					[ Key in $mol_type_keys_extract< Type, any, undefined > ]?:
 						Type[ Key ]
 				}
 			>
