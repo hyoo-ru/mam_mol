@@ -5,8 +5,6 @@ namespace $.$$ {
 			return this.row_content( [] )
 		}
 		
-		#titles = new Map< string, string >()
-		
 		@ $mol_mem_key
 		row_title( id : number[] ) {
 			$mol_wire_solid()
