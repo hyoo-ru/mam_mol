@@ -32972,6 +32972,7 @@ var $;
                 this.Row_title(id)
             ];
             obj.expanded = (next) => this.row_expanded(id, next);
+            obj.expandable = () => true;
             obj.Content = () => this.Row_content(id);
             return obj;
         }
@@ -33049,7 +33050,6 @@ var $;
             root_rows() {
                 return this.row_content([]);
             }
-            #titles = new Map();
             row_title(id) {
                 $mol_wire_solid();
                 return `Node ${id.join('.')}: ${$mol_stub_message(512)} `;

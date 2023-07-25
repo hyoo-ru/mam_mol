@@ -26,6 +26,7 @@ namespace $ {
 		 * Row* $mol_expander
 		 * 	label / <= Row_title*
 		 * 	expanded? <=> row_expanded*?
+		 * 	expandable true
 		 * 	Content <= Row_content*
 		 * ```
 		 */
@@ -37,6 +38,7 @@ namespace $ {
 				this.Row_title(id)
 			] as readonly any[]
 			obj.expanded = (next?: any) => this.row_expanded(id, next)
+			obj.expandable = () => true
 			obj.Content = () => this.Row_content(id)
 			
 			return obj

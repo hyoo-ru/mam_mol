@@ -8172,7 +8172,6 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_list_demo_tree extends $.$mol_list_demo_tree {
-        #private;
         root_rows(): $mol_expander[];
         row_title(id: number[]): string;
         row_content(id: number[]): $mol_expander[];
