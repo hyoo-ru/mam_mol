@@ -16,7 +16,7 @@ namespace $ {
 	export type $mol_type_fold_keys< T, Endpoint = never > =
 		T extends object
 		?
-			T extends Array< any > | Function | Promise< any >
+			T extends Readonly< Array< any > > | Function | Promise< any >
 			? ''
 			:
 				T extends Endpoint
@@ -46,7 +46,7 @@ namespace $ {
 	export type $mol_type_fold_keys_all< T, Endpoint = never > =
 		T extends object
 		?
-			T extends Array< any > | Promise< any >
+			T extends Readonly< Array< any > > | Promise< any >
 			? ''
 			:
 				T extends Endpoint
