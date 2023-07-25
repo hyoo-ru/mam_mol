@@ -6,12 +6,12 @@ namespace $ {
 	 * 	// number
 	 * 	type a_type = $mol_type_access< { a: number } | boolean, 'a' >
 	 */
-	export type $mol_type_access< T, K extends string | number > =
-		$mol_type_filter_keys< T, K > extends never
+	export type $mol_type_access< Type, Keys extends string | number > =
+		$mol_type_filter_keys< Type, Keys > extends never
 		? never
 		:
-			K extends keyof $mol_type_filter_keys< T, K >
-			? $mol_type_filter_keys< T, K >[ K ]
+			Keys extends keyof $mol_type_filter_keys< Type, Keys >
+			? $mol_type_filter_keys< Type, Keys >[ Keys ]
 			: never
 
 }

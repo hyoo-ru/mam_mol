@@ -6,12 +6,12 @@ namespace $ {
 	 * 	// 'a'
 	 * 	type undefined_keys = $mol_type_keys_undefined< { a: number | undefined; b: string } >
 	 */
-	export type $mol_type_keys_undefined< T > =
+	export type $mol_type_keys_undefined< Type > =
 		{
-			[ K in keyof T ]:
-				undefined extends T[ K ]
-				? K
+			[ Key in keyof Type ]:
+				undefined extends Type[ Key ]
+				? Key
 				: never
-		}[ keyof T ]
+		}[ keyof Type ]
 
 }

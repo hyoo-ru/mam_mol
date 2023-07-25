@@ -6,23 +6,24 @@ namespace $ {
 	 * 	// { a: { b: number; c: { d: string } } }
 	 * 	type unfolded = $mol_type_unfold< { 'a.b': number; 'a.c.d': string } >
 	 */
-	export type $mol_type_unfold< T extends object > =
+	export type $mol_type_unfold< Type extends object > =
 		$mol_type_merge<
 			$mol_type_intersect<
 				{
-					[ K in keyof T ]:
-						K extends `${ infer Left }.${ infer Right }`
+					[ Key in keyof Type ]:
+						Key extends `${ infer Left }.${ infer Right }`
 						?
 							{
-								[ _ in Left ]: $mol_type_unfold< { [ _ in Right ]: T[ K ] } >
+								[ _ in Left ]:
+									$mol_type_unfold< { [ _ in Right ]: Type[ Key ] } >
 							}
 						:
 							$mol_type_partial_undefined2<
 								{
-									[ _ in K ]: T[ K ]
+									[ _ in Key ]: Type[ Key ]
 								}
 							>
-				}[ keyof T ]
+				}[ keyof Type ]
 			>
 		>
 

@@ -6,13 +6,13 @@ namespace $ {
 	 * 	// { a?: number | undefined; b: string }
 	 * 	type optional = $mol_type_partial_undefined2< { a: number | undefined; b: string } >
 	 */
-	export type $mol_type_partial_undefined2< T > =
+	export type $mol_type_partial_undefined2< Type > =
 		$mol_type_merge<
 			$mol_type_override<
-				T,
+				Type,
 				{
-					[ K in $mol_type_keys_undefined< T > ]?:
-						T[ K ]
+					[ Key in $mol_type_keys_undefined< Type > ]?:
+						Type[ Key ]
 				}
 			>
 		>

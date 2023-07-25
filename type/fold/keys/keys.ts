@@ -1,10 +1,10 @@
 namespace $ {
 
-	type join_keys< K1, K2 > =
-		K1 extends string
+	type join_keys< Key1, Key2 > =
+		Key1 extends string
 		?
-			K2 extends string
-			? $mol_type_case_dot< K1, K2 >
+			Key2 extends string
+			? $mol_type_case_dot< Key1, Key2 >
 			: never
 		: never
 
@@ -13,28 +13,28 @@ namespace $ {
 	 *
 	 * 	type keys = $mol_type_fold_keys< { a: { b: { c: number }, d: string } } > // 'a.d' | 'a.b.c'
 	 */
-	export type $mol_type_fold_keys< T, Endpoint = never > =
-		T extends object
+	export type $mol_type_fold_keys< Type, Endpoint = never > =
+		Type extends object
 		?
-			T extends Readonly< Array< any > > | Function | Promise< any >
+			Type extends Readonly< Array< any > > | Function | Promise< any >
 			? ''
 			:
-				T extends Endpoint
+				Type extends Endpoint
 				? ''
 				:
 					{
-						[ Key in keyof T ]-?:
+						[ Key in keyof Type ]-?:
 							Key extends string
 							?
 								join_keys<
 									Key,
 									$mol_type_fold_keys<
-										Required< T >[ Key ],
+										Required< Type >[ Key ],
 										Endpoint
 									>
 								>
 							: never
-					}[ keyof T ]
+					}[ keyof Type ]
 		: ''
 
 
@@ -43,29 +43,29 @@ namespace $ {
 	 *
 	 * 	type all_keys = $mol_type_fold_keys_all< { a: { b: { c: number }, d: string } } > // 'a' | 'a.b' | 'a.d' | 'a.b.c'
 	 */
-	export type $mol_type_fold_keys_all< T, Endpoint = never > =
-		T extends object
+	export type $mol_type_fold_keys_all< Type, Endpoint = never > =
+		Type extends object
 		?
-			T extends Readonly< Array< any > > | Promise< any >
+			Type extends Readonly< Array< any > > | Promise< any >
 			? ''
 			:
-				T extends Endpoint
+				Type extends Endpoint
 				? ''
 				:
 					{
-						[ Key in keyof T ]-?:
+						[ Key in keyof Type ]-?:
 							Key extends string
 							?
 								| Key
 								| join_keys<
 									Key,
 									$mol_type_fold_keys_all<
-										Required< T >[ Key ],
+										Required< Type >[ Key ],
 										Endpoint
 									>
 								 >
 							: never
-					}[ keyof T ]
+					}[ keyof Type ]
 		: ''
 
 }
