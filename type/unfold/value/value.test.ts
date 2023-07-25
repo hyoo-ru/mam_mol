@@ -25,9 +25,9 @@ namespace $ {
 	}
 
 
-	type unfold1 = $mol_type_assert<
+	type value1 = $mol_type_assert<
 
-		$mol_type_unfold<
+		$mol_type_unfold_value<
 			type_obj,
 			'foo'
 		>,
@@ -43,9 +43,9 @@ namespace $ {
 
 	>
 
-	type unfold2 = $mol_type_assert<
+	type value2 = $mol_type_assert<
 
-		$mol_type_unfold<
+		$mol_type_unfold_value<
 			type_obj,
 			'foo.bar.wee.too'
 		>,
@@ -53,9 +53,9 @@ namespace $ {
 
 	>
 
-	type unfold3 = $mol_type_assert<
+	type value3 = $mol_type_assert<
 
-		$mol_type_unfold<
+		$mol_type_unfold_value<
 			type_obj_partial,
 			'foo.lis'
 		>,
@@ -64,9 +64,9 @@ namespace $ {
 
 	>
 
-	type unfold4 = $mol_type_assert<
+	type value4 = $mol_type_assert<
 
-		$mol_type_unfold<
+		$mol_type_unfold_value<
 			type_obj_partial,
 			'foo.bar.wee.too'
 		>,
@@ -75,9 +75,9 @@ namespace $ {
 
 	>
 
-	type unfold5 = $mol_type_assert<
+	type value5 = $mol_type_assert<
 
-		$mol_type_unfold<
+		$mol_type_unfold_value<
 			| { a: number }
 			| undefined,
 			'a'
@@ -86,9 +86,9 @@ namespace $ {
 
 	>
 
-	type unfold6 = $mol_type_assert<
+	type value6 = $mol_type_assert<
 
-		$mol_type_unfold<
+		$mol_type_unfold_value<
 			| { a?: { b: { c: number } | undefined } }
 			| undefined,
 			'a.b.c'
