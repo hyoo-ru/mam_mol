@@ -5288,7 +5288,9 @@ var $;
                 emitDeclarationOnly: true,
             }, {
                 ...$node.typescript.sys,
-                watchDirectory: (() => { }),
+                watchDirectory: () => {
+                    return { close() { } };
+                },
                 writeFile: (path, data) => {
                     $mol_file.relative(path).text(data, 'virt');
                 },
