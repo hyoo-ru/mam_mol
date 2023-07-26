@@ -19,10 +19,19 @@ namespace $ {
 		$mol_type_string_join< Parts, '-' >
 
 	/**
+	 * Join strings in dot.case.
+	 *
+	 * 	// 'foo.bar.wee'
+	 * 	$mol_type_case_dot< [ 'foo', 'bar', 'wee' ] >
+	 */
+	export type $mol_type_case_dot< Parts extends Array< string > > =
+		$mol_type_string_join< Parts, '.' >
+
+	/**
 	 * Join strings in camelCase.
 	 *
 	 * 	// 'fooBarWee'
-	 * 	$mol_type_case_kebab< [ 'foo', 'bar', 'wee' ] >
+	 * 	$mol_type_case_camel< [ 'foo', 'bar', 'wee' ] >
 	 */
 	export type $mol_type_case_camel< Parts extends Array< string > > =
 		$mol_type_string_join<

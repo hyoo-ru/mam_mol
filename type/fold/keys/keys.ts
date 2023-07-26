@@ -4,7 +4,7 @@ namespace $ {
 		Key1 extends string
 		?
 			Key2 extends string
-			? $mol_type_case_dot< Key1, Key2 >
+			? $mol_type_case_dot< [ Key1, Key2 ] >
 			: never
 		: never
 

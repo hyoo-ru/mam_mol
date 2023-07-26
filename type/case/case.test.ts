@@ -18,6 +18,15 @@ namespace $ {
 
 	>
 
+	type dot1 = $mol_type_assert<
+
+		$mol_type_case_dot<
+			[ 'foo', 'bar', 'wee' ]
+		>,
+		'foo.bar.wee'
+
+	>
+
 	type camel1 = $mol_type_assert<
 
 		$mol_type_case_camel<
