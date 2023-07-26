@@ -18,4 +18,22 @@ namespace $ {
 
 	>
 
+	type camel1 = $mol_type_assert<
+
+		$mol_type_case_camel<
+			[ 'foo', 'bar', 'wee' ]
+		>,
+		'fooBarWee'
+
+	>
+
+	type camel2 = $mol_type_assert<
+
+		$mol_type_case_camel<
+			[ 'FOO', 'BAR', 'WEE' ]
+		>,
+		'fooBarWee'
+
+	>
+
 }
