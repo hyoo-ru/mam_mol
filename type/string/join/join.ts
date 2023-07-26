@@ -17,13 +17,7 @@ namespace $ {
 			? Parts[ 0 ]
 			:
 				Parts[ 'length' ] extends 2
-				?
-					Parts[ 0 ] extends string
-					?
-						Parts[ 1 ] extends string
-						? `${Parts[ 0 ]}${ '' extends Parts[ 1 ] ? '' : Separator }${ Parts[ 1 ] }`
-						: never
-					: never
+				? `${ Extract< Parts[ 0 ], string > }${ '' extends Parts[ 1 ] ? '' : Separator }${ Extract< Parts[ 1 ], string > }`
 				:
 					$mol_type_string_join<
 						[
