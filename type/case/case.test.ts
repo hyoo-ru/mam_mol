@@ -63,4 +63,22 @@ namespace $ {
 
 	>
 
+	type cobra1 = $mol_type_assert<
+
+		$mol_type_case_cobra<
+			[ 'foo', 'bar', 'wee' ]
+		>,
+		'Foo_bar_wee'
+
+	>
+
+	type cobra2 = $mol_type_assert<
+
+		$mol_type_case_cobra<
+			[ 'FOO', 'BAR', 'WEE' ]
+		>,
+		'Foo_bar_wee'
+
+	>
+
 }

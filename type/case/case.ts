@@ -65,4 +65,24 @@ namespace $ {
 			''
 		>
 
+	/**
+	 * Join strings in Cobra_case.
+	 *
+	 * 	// 'Foo_bar_wee'
+	 * 	$mol_type_case_cobra< [ 'foo', 'bar', 'wee' ] >
+	 */
+	export type $mol_type_case_cobra< Parts extends Array< string > > =
+		$mol_type_string_join<
+			[
+				Capitalize< Lowercase< $mol_type_head< Parts > > >,
+				... Extract<
+					$mol_type_case_lower_values<
+						$mol_type_tail< Parts >
+					>,
+					Array< string >
+				>,
+			],
+			'_'
+		>
+
 }
