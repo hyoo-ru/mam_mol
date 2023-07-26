@@ -45,4 +45,22 @@ namespace $ {
 
 	>
 
+	type pascal1 = $mol_type_assert<
+
+		$mol_type_case_pascal<
+			[ 'foo', 'bar', 'wee' ]
+		>,
+		'FooBarWee'
+
+	>
+
+	type pascal2 = $mol_type_assert<
+
+		$mol_type_case_pascal<
+			[ 'FOO', 'BAR', 'WEE' ]
+		>,
+		'FooBarWee'
+
+	>
+
 }

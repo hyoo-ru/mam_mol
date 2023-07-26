@@ -49,4 +49,20 @@ namespace $ {
 			''
 		>
 
+	/**
+	 * Join strings in PascalCase.
+	 *
+	 * 	// 'FooBarWee'
+	 * 	$mol_type_case_pascal< [ 'foo', 'bar', 'wee' ] >
+	 */
+	export type $mol_type_case_pascal< Parts extends Array< string > > =
+		$mol_type_string_join<
+			$mol_type_case_capital_values<
+				$mol_type_case_lower_values<
+					Parts
+				>
+			>,
+			''
+		>
+
 }
