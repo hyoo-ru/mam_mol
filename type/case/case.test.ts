@@ -45,6 +45,15 @@ namespace $ {
 
 	>
 
+	type camel3 = $mol_type_assert<
+
+		$mol_type_case_camel<
+			[ 'FOO' ]
+		>,
+		'foo'
+
+	>
+
 	type pascal1 = $mol_type_assert<
 
 		$mol_type_case_pascal<
@@ -63,6 +72,15 @@ namespace $ {
 
 	>
 
+	type pascal3 = $mol_type_assert<
+
+		$mol_type_case_pascal<
+			[ 'FOO' ]
+		>,
+		'Foo'
+
+	>
+
 	type cobra1 = $mol_type_assert<
 
 		$mol_type_case_cobra<
@@ -78,6 +96,15 @@ namespace $ {
 			[ 'FOO', 'BAR', 'WEE' ]
 		>,
 		'Foo_bar_wee'
+
+	>
+
+	type cobra3 = $mol_type_assert<
+
+		$mol_type_case_cobra<
+			[ 'FOO' ]
+		>,
+		'Foo'
 
 	>
 
