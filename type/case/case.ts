@@ -85,4 +85,16 @@ namespace $ {
 			'_'
 		>
 
+	/**
+	 * Join strings in SCREAM_CASE.
+	 *
+	 * 	// 'FOO_BAR_WEE'
+	 * 	$mol_type_case_scream< [ 'foo', 'bar', 'wee' ] >
+	 */
+	export type $mol_type_case_scream< Parts extends Array< string > > =
+		$mol_type_string_join<
+			$mol_type_case_upper_values< Parts >,
+			'_'
+		>
+
 }

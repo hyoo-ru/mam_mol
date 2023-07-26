@@ -81,4 +81,13 @@ namespace $ {
 
 	>
 
+	type scream1 = $mol_type_assert<
+
+		$mol_type_case_scream<
+			[ 'foo', 'bar', 'wee' ]
+		>,
+		'FOO_BAR_WEE'
+
+	>
+
 }
