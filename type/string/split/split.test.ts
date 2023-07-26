@@ -40,4 +40,14 @@ namespace $ {
 
 	>
 
+	type split5 = $mol_type_assert<
+
+		$mol_type_string_split<
+			'+foo',
+			'+'
+		>,
+		[ 'foo' ]
+
+	>
+
 }

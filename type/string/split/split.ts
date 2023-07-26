@@ -14,7 +14,11 @@ namespace $ {
 		? []
 		:
 			String extends `${ infer Left }${ Separator }${ infer Right }`
-			? [ Left, ... $mol_type_string_split< Right, Separator > ]
+			?
+				[
+					... ( '' extends Left ? [] : [ Left ] ),
+					... $mol_type_string_split< Right, Separator >
+				]
 			: [ String ]
 
 }
