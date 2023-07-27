@@ -9,11 +9,12 @@ namespace $ {
 		: never
 
 	/**
-	 * Folded nested structure key names, leading to non-object types. Endpoint specifies structures, whose keys should not be folded.
+	 * Flat structure key names, leading to non-object types. Endpoint specifies structures, whose keys should not be flat.
 	 *
-	 * 	type keys = $mol_type_fold_keys< { a: { b: { c: number }, d: string } } > // 'a.d' | 'a.b.c'
+	 * 	// 'a.d' | 'a.b.c'
+	 * 	type keys = $mol_type_flat_keys< { a: { b: { c: number }, d: string } } >
 	 */
-	export type $mol_type_fold_keys< Type, Endpoint = never > =
+	export type $mol_type_flat_keys< Type, Endpoint = never > =
 		Type extends object
 		?
 			Type extends Readonly< Array< any > > | Function | Promise< any >
@@ -28,7 +29,7 @@ namespace $ {
 							?
 								join_keys<
 									Key,
-									$mol_type_fold_keys<
+									$mol_type_flat_keys<
 										Required< Type >[ Key ],
 										Endpoint
 									>
@@ -39,11 +40,12 @@ namespace $ {
 
 
 	/**
-	 * Folded all nested structure key names. Endpoint specifies structures, whose keys should not be folded.
+	 * All flat structure key names. Endpoint specifies structures, whose keys should not be flat.
 	 *
-	 * 	type all_keys = $mol_type_fold_keys_all< { a: { b: { c: number }, d: string } } > // 'a' | 'a.b' | 'a.d' | 'a.b.c'
+	 * 	// 'a' | 'a.b' | 'a.d' | 'a.b.c'
+	 * 	type all_keys = $mol_type_flat_keys_all< { a: { b: { c: number }, d: string } } >
 	 */
-	export type $mol_type_fold_keys_all< Type, Endpoint = never > =
+	export type $mol_type_flat_keys_all< Type, Endpoint = never > =
 		Type extends object
 		?
 			Type extends Readonly< Array< any > > | Promise< any >
@@ -59,7 +61,7 @@ namespace $ {
 								| Key
 								| join_keys<
 									Key,
-									$mol_type_fold_keys_all<
+									$mol_type_flat_keys_all<
 										Required< Type >[ Key ],
 										Endpoint
 									>

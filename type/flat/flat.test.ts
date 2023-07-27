@@ -27,9 +27,9 @@ namespace $ {
 	type point = { x: number; y: number }
 
 
-	type fold1 = $mol_type_assert<
+	type flat1 = $mol_type_assert<
 
-		$mol_type_fold<
+		$mol_type_flat<
 			type_obj
 		>,
 		{
@@ -40,9 +40,9 @@ namespace $ {
 
 	>
 
-	type fold2 = $mol_type_assert<
+	type flat2 = $mol_type_assert<
 
-		$mol_type_fold<
+		$mol_type_flat<
 			type_obj_optional
 		>,
 		{
@@ -53,9 +53,9 @@ namespace $ {
 
 	>
 
-	type fold_endpoint1 = $mol_type_assert<
+	type flat_endpoint1 = $mol_type_assert<
 
-		$mol_type_fold<
+		$mol_type_flat<
 			{
 				foo: { bar: { position: point } }
 			},
@@ -67,9 +67,9 @@ namespace $ {
 
 	>
 
-	type fold_endpoint2 = $mol_type_assert<
+	type flat_endpoint2 = $mol_type_assert<
 
-		$mol_type_fold<
+		$mol_type_flat<
 			{
 				foo: { bar: { position: point | number } }
 			},
