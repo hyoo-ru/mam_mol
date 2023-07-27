@@ -1,12 +1,12 @@
 namespace $ {
 
 	/**
-	 * Unfold structure with folded key names
+	 * Volume structure from flat.
 	 *
 	 * 	// { a: { b: number; c: { d: string } } }
-	 * 	type unfolded = $mol_type_unfold< { 'a.b': number; 'a.c.d': string } >
+	 * 	type volume = $mol_type_volume< { 'a.b': number; 'a.c.d': string } >
 	 */
-	export type $mol_type_unfold< Type extends object > =
+	export type $mol_type_volume< Type extends object > =
 		$mol_type_merge<
 			$mol_type_intersect<
 				{
@@ -15,7 +15,7 @@ namespace $ {
 						?
 							{
 								[ _ in Left ]:
-									$mol_type_unfold< { [ _ in Right ]: Type[ Key ] } >
+									$mol_type_volume< { [ _ in Right ]: Type[ Key ] } >
 							}
 						:
 							$mol_type_partial_undefined2<

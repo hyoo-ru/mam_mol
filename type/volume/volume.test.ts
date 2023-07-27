@@ -1,17 +1,17 @@
 namespace $ {
 
-	type unfold1 = $mol_type_assert<
+	type volume1 = $mol_type_assert<
 
-		$mol_type_unfold<
+		$mol_type_volume<
 			{ a: number; b: string }
 		>,
 		{ a: number; b: string }
 
 	>
 
-	type unfold2 = $mol_type_assert<
+	type volume2 = $mol_type_assert<
 
-		$mol_type_unfold<
+		$mol_type_volume<
 			{
 				'foo.bar': number
 				'foo.wee': Array< string >
@@ -36,9 +36,9 @@ namespace $ {
 
 	>
 
-	type unfold3 = $mol_type_assert<
+	type volume3 = $mol_type_assert<
 
-		$mol_type_unfold<
+		$mol_type_volume<
 			{
 				'jey': number | undefined
 				'pou.lou': string | undefined

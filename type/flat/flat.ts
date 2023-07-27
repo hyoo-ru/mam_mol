@@ -4,7 +4,7 @@ namespace $ {
 	 * Make flat structure from volume.
 	 *
 	 * 	// { fooBarWee: number; fooToo: string }
-	 * 	type keys = $mol_type_flat< { foo: { bar: { wee: number }, too: string } } >
+	 * 	type flat = $mol_type_flat< { foo: { bar: { wee: number }; too: string } } >
 	 */
 	export type $mol_type_flat< Type, Endpoint = never > =
 		// @ts-ignore
@@ -18,7 +18,7 @@ namespace $ {
 						$mol_type_case_dot_parse< FlatKey >
 					>
 				]:
-					$mol_type_unfold_value< Type, FlatKey >
+					$mol_type_volume_value< Type, FlatKey >
 			}
 		>
 
