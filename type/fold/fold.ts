@@ -12,7 +12,10 @@ namespace $ {
 				[
 					// @ts-ignore
 					FoldedKey in $mol_type_fold_keys< Type, Endpoint >
-					as $mol_type_case_dot_to_camel< FoldedKey >
+					as
+					$mol_type_case_camel<
+						$mol_type_case_dot_parse< FoldedKey >
+					>
 				]:
 					$mol_type_unfold_value< Type, FoldedKey >
 			}
