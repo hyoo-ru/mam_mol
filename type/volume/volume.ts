@@ -1,7 +1,7 @@
 namespace $ {
 
 	/**
-	 * Volume structure from flat.
+	 * Volume structure from flat with dot.case key names.
 	 *
 	 * 	// { a: { b: number; c: { d: string } } }
 	 * 	type volume = $mol_type_volume< { 'a.b': number; 'a.c.d': string } >
