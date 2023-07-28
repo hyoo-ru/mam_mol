@@ -34,7 +34,7 @@ namespace $ {
 		$mol_type_flat_keys<
 			type_obj
 		>,
-		'foo.lis' | 'foo.prom' | 'foo.bar.kek' | 'foo.bar.wee.too'
+		[ 'foo', 'lis' ] | [ 'foo', 'prom' ] | [ 'foo', 'bar', 'kek' ] | [ 'foo', 'bar', 'wee', 'too' ]
 
 	>
 
@@ -43,7 +43,7 @@ namespace $ {
 		$mol_type_flat_keys<
 			type_obj_optional
 		>,
-		'foo.lis' | 'foo.prom' | 'foo.bar.kek' | 'foo.bar.wee.too'
+		[ 'foo', 'lis' ] | [ 'foo', 'prom' ] | [ 'foo', 'bar', 'kek' ] | [ 'foo', 'bar', 'wee', 'too' ]
 
 	>
 
@@ -54,7 +54,7 @@ namespace $ {
 				a: { prop1: string } | number | { prop2: number }
 			}
 		>,
-		'a' | 'a.prop1' | 'a.prop2'
+		[ 'a' ] | [ 'a', 'prop1' ] | [ 'a', 'prop2' ]
 
 	>
 
@@ -65,7 +65,7 @@ namespace $ {
 				a: { prop1: { prop2: number } } | number | { prop3: number }
 			}
 		>,
-		'a' | 'a.prop1.prop2' | 'a.prop3'
+		[ 'a' ] | [ 'a', 'prop1', 'prop2' ] | [ 'a', 'prop3' ]
 
 	>
 
@@ -74,7 +74,7 @@ namespace $ {
 		$mol_type_flat_keys<
 			{ a: { b: { c: { d: string } | number } } }
 		>,
-		'a.b.c' | 'a.b.c.d'
+		[ 'a', 'b', 'c' ] | [ 'a', 'b', 'c', 'd' ]
 
 	>
 
@@ -84,7 +84,7 @@ namespace $ {
 			type_obj & { position: point },
 			point
 		>,
-		'position' | 'foo.lis' | 'foo.prom' | 'foo.bar.kek' | 'foo.bar.wee.too'
+		[ 'position' ] | [ 'foo', 'lis' ] | [ 'foo', 'prom' ] | [ 'foo', 'bar', 'kek' ] | [ 'foo', 'bar', 'wee', 'too' ]
 
 	>
 
@@ -94,7 +94,7 @@ namespace $ {
 			{ a: { b: { c: { position: point } } } },
 			point
 		>,
-		'a.b.c.position'
+		[ 'a', 'b', 'c', 'position' ]
 
 	>
 
@@ -103,7 +103,7 @@ namespace $ {
 		$mol_type_flat_keys_all<
 			type_obj
 		>,
-		'foo' | 'foo.bar' | 'foo.lis' | 'foo.prom' | 'foo.bar.wee' | 'foo.bar.kek' | 'foo.bar.wee.too'
+		[ 'foo' ] | [ 'foo', 'bar' ] | [ 'foo', 'lis' ] | [ 'foo', 'prom' ] | [ 'foo', 'bar', 'wee' ] | [ 'foo', 'bar', 'kek' ] | [ 'foo', 'bar', 'wee', 'too' ]
 
 	>
 
@@ -112,7 +112,7 @@ namespace $ {
 		$mol_type_flat_keys_all<
 			type_obj_optional
 		>,
-		'foo' | 'foo.bar' | 'foo.lis' | 'foo.prom' | 'foo.bar.wee' | 'foo.bar.kek' | 'foo.bar.wee.too'
+		[ 'foo' ] | [ 'foo', 'bar' ] | [ 'foo', 'lis' ] | [ 'foo', 'prom' ] | [ 'foo', 'bar', 'wee' ] | [ 'foo', 'bar', 'kek' ] | [ 'foo', 'bar', 'wee', 'too' ]
 
 	>
 
@@ -123,7 +123,7 @@ namespace $ {
 				a: { prop1: string } | number | { prop2: number }
 			}
 		>,
-		'a' | 'a.prop1' | 'a.prop2'
+		[ 'a' ] | [ 'a', 'prop1' ] | [ 'a', 'prop2' ]
 
 	>
 
@@ -134,7 +134,7 @@ namespace $ {
 				a: { prop1: { prop2: number } } | number | { prop3: number }
 			}
 		>,
-		'a' | 'a.prop1' | 'a.prop1.prop2' | 'a.prop3'
+		[ 'a' ] | [ 'a', 'prop1' ] | [ 'a', 'prop1', 'prop2' ] | [ 'a', 'prop3' ]
 
 	>
 
@@ -143,7 +143,7 @@ namespace $ {
 		$mol_type_flat_keys_all<
 			{ a: { b: { c: { d: string } | number } } }
 		>,
-		'a' | 'a.b' | 'a.b.c' | 'a.b.c.d'
+		[ 'a' ] | [ 'a', 'b' ] | [ 'a', 'b', 'c' ] | [ 'a', 'b', 'c', 'd' ]
 
 	>
 
@@ -153,7 +153,7 @@ namespace $ {
 			type_obj & { position: point },
 			point
 		>,
-		'foo' | 'position' | 'foo.bar' | 'foo.lis' | 'foo.prom' | 'foo.bar.wee' | 'foo.bar.kek' | 'foo.bar.wee.too'
+		[ 'foo' ] | [ 'position' ] | [ 'foo', 'bar' ] | [ 'foo', 'lis' ] | [ 'foo', 'prom' ] | [ 'foo', 'bar', 'wee' ] | [ 'foo', 'bar', 'kek' ] | [ 'foo', 'bar', 'wee', 'too' ]
 
 	>
 
@@ -163,7 +163,7 @@ namespace $ {
 			{ a: { b: { c: { position: point } } } },
 			point
 		>,
-		'a' | 'a.b' | 'a.b.c' | 'a.b.c.position'
+		[ 'a' ] | [ 'a', 'b' ] | [ 'a', 'b', 'c' ] | [ 'a', 'b', 'c', 'position' ]
 
 	>
 

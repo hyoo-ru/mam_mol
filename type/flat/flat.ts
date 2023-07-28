@@ -12,13 +12,12 @@ namespace $ {
 			{
 				[
 					// @ts-ignore
-					FlatKey in $mol_type_flat_keys< Type, Endpoint >
-					as
-					$mol_type_case_camel<
-						$mol_type_case_dot_parse< FlatKey >
-					>
+					FlatKeys in $mol_type_flat_keys< Type, Endpoint >
+					// @ts-ignore
+					as $mol_type_case_camel< FlatKeys >
 				]:
-					$mol_type_volume_value< Type, FlatKey >
+					// @ts-ignore
+					$mol_type_volume_value< Type, $mol_type_case_dot< FlatKeys > >
 			}
 		>
 
