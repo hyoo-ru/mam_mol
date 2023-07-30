@@ -9,7 +9,7 @@ namespace $ {
 		Val extends object
 		?
 			Val extends Function
-			? Val | undefined
+			? Val
 			:
 				{
 					[ field in keyof Val ]? :
