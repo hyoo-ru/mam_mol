@@ -29,7 +29,7 @@ namespace $ {
 
 	type flat1 = $mol_type_assert<
 
-		$mol_type_flat<
+		$mol_type_flat_camel<
 			type_obj
 		>,
 		{
@@ -42,7 +42,7 @@ namespace $ {
 
 	type flat2 = $mol_type_assert<
 
-		$mol_type_flat<
+		$mol_type_flat_camel<
 			type_obj_optional
 		>,
 		{
@@ -55,7 +55,7 @@ namespace $ {
 
 	type flat_endpoint1 = $mol_type_assert<
 
-		$mol_type_flat<
+		$mol_type_flat_camel<
 			{
 				foo: { bar: { position: point } }
 			},
@@ -69,7 +69,7 @@ namespace $ {
 
 	type flat_endpoint2 = $mol_type_assert<
 
-		$mol_type_flat<
+		$mol_type_flat_camel<
 			{
 				foo: { bar: { position: point | number } }
 			},
