@@ -18,7 +18,7 @@ namespace $ {
 									$mol_type_volume< { [ _ in Right ]: Type[ Key ] } >
 							}
 						:
-							$mol_type_partial_undefined2<
+							$mol_type_partial_undefined<
 								{
 									[ _ in Key ]: Type[ Key ]
 								}

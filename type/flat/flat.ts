@@ -8,7 +8,7 @@ namespace $ {
 	 */
 	export type $mol_type_flat< Type, Endpoint = never > =
 		// @ts-ignore
-		$mol_type_partial_undefined2<
+		$mol_type_partial_undefined<
 			{
 				[
 					// @ts-ignore
