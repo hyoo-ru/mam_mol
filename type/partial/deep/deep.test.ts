@@ -27,5 +27,14 @@ namespace $ {
 		}
 
 	>
+	
+	type deep_partial3 = $mol_type_assert<
+	
+		$mol_type_partial_deep<
+			number
+		>,
+		number
+	
+	>
 
 }

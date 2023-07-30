@@ -12,8 +12,10 @@ namespace $ {
 			? Val | undefined
 			:
 				{
-					[ field in keyof Val ]? : $mol_type_partial_deep< Val[ field ] >
+					[ field in keyof Val ]? :
+						| $mol_type_partial_deep< Val[ field ] >
+						| undefined
 				}
-		: Val | undefined
+		: Val
 
 }
