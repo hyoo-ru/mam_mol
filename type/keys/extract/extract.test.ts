@@ -25,4 +25,19 @@ namespace $ {
 		'b' | 'c' | 'd'
 	>
 
+	type only_undefined = $mol_type_assert<
+
+		$mol_type_keys_extract<
+			{
+				a: number | undefined
+				b: number
+				c: { d: number } | undefined
+			},
+			any,
+			undefined
+		>,
+		'a' | 'c'
+
+	>
+
 }

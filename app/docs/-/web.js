@@ -27118,7 +27118,8 @@ var $;
             let res = {};
             for (const field in sub) {
                 try {
-                    res[field] = sub[field](val[field]);
+                    res[field] =
+                        sub[field](val[field]);
                 }
                 catch (error) {
                     if (error instanceof Promise)
