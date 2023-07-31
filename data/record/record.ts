@@ -23,7 +23,8 @@ namespace $ {
 			for( const field in sub ) {
 
 				try {
-					res[field] = sub[field]( ( val as Input )[ field ] )
+					res[field as any as keyof Output ] =
+						sub[field]( ( val as Input )[ field as any as keyof Input ] )
 				} catch( error: any ) {
 
 					if( error instanceof Promise ) return $mol_fail_hidden( error )
