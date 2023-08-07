@@ -1,6 +1,6 @@
-# $mol_theme_create
+# $mol_style_prop
 
-Create theme object from CSS variables.
+Create record of CSS variables.
 
 
 ## Signature
@@ -8,7 +8,7 @@ Create theme object from CSS variables.
 ```ts
 type Result = Record< string , $mol_style_func< 'var' > >
 
-$mol_theme_create( prefix : string , postfixes : Array< string > ) : Result
+$mol_style_prop( prefix : string , postfixes : Array< string > ) : Result
 ```
 
 
@@ -27,7 +27,7 @@ $mol_theme_create( prefix : string , postfixes : Array< string > ) : Result
 ### theme.ts
 
 ```ts
-export const my_app_theme = $mol_theme_create(
+export const my_app_theme = $mol_style_prop(
 	'my_app_theme',
 	[ 'main', 'main_light', 'border' ]
 )
