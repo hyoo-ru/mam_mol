@@ -102,6 +102,7 @@
     "$mol_style_attach",
     "$mol_style",
     "$mol_theme",
+    "$mol_style_prop",
     "$mol_style_func",
     "$mol_style_unit",
     "$mol_decor",
