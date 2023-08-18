@@ -2168,7 +2168,8 @@ var $;
             }
             catch (error) {
                 $mol_fail_log(error);
-                $mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
+                const mol_view_error = $mol_promise_like(error) ? 'Promise' : error.name || error.constructor.name;
+                $mol_dom_render_attributes(node, { mol_view_error });
                 if ($mol_promise_like(error))
                     break render;
                 if ((error_showed.get(error) ?? this) !== this)
