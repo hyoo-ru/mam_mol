@@ -1,11 +1,7 @@
 namespace $ {
 	export class $mol_jwt extends $mol_object {
 		decode(raw: string): unknown {
-			const token = raw.split('.')[1]
-			if (! token) throw new Error(`Format error`)
-
 			let line = 'split'
-
 			try {
 				const token = raw.split('.')[1]
 				if (! token) throw new Error(`No second chunk, splitted by "." in token`)
