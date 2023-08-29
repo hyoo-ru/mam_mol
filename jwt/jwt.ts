@@ -6,11 +6,8 @@ namespace $ {
 				const token = raw.split('.')[1]
 				if (! token) throw new Error(`No second chunk, splitted by "." in token`)
 
-				line = 'decode_base64'
-				const bytes = this.$.$mol_base64_decode(token)
-
-				line = 'decode_string'
-				const str = new TextDecoder().decode(bytes)
+				line = 'decode'
+				const str = this.$.$mol_base64_decode_string(token)
 
 				line = 'parse'
 				return JSON.parse(str)
