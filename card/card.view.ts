@@ -6,7 +6,7 @@ namespace $.$$ {
 	 */
 	export class $mol_card extends $.$mol_card {
 
-		rows() {
+		rows(): readonly $mol_view[] {
 			return [
 				this.Content() ,
 				... this.status_text() ? [ this.Status() ] : [],
