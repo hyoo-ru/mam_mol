@@ -1,4 +1,9 @@
 namespace $ {
+
+	function decode_base64(base64: string): string {
+		return $mol_charset_decode($mol_base64_decode(base64))
+	}
+
 	export function $mol_jwt_decode(raw: string): unknown {
 		let line = 'split'
 		try {
@@ -6,11 +11,11 @@ namespace $ {
 			if (! payload_raw) throw new Error(`No second chunk, splitted by "." in token`)
 
 			line = 'decode payload'
-			const payload_str = $mol_base64_decode_string(payload_raw)
+			const payload_str = decode_base64(payload_raw)
 			line = 'parse payload'
 			const payload = JSON.parse(payload_str)
 			line = 'decode headers'
-			const headers_str = $mol_base64_decode_string(headers_raw)
+			const headers_str = decode_base64(headers_raw)
 			line = 'parse headers'
 			const headers = JSON.parse(headers_str)
 
