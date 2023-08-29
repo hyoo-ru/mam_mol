@@ -2,14 +2,18 @@ namespace $ {
 	export function $mol_jwt_decode(raw: string): unknown {
 		let line = 'split'
 		try {
-			const token = raw.split('.')[1]
-			if (! token) throw new Error(`No second chunk, splitted by "." in token`)
+			const [ headers_raw, payload_raw ] = raw.split('.')
+			if (! payload_raw) throw new Error(`No second chunk, splitted by "." in token`)
 
-			line = 'decode'
-			const str = $mol_base64_decode_string(token)
+			line = 'decode payload'
+			const payload_str = $mol_base64_decode_string(payload_raw)
+			line = 'parse payload'
+			const payload = JSON.parse(payload_str)
+			line = 'decode headers'
+			const headers_str = $mol_base64_decode_string(headers_raw)
+			const headers = JSON.parse(headers_str)
 
-			line = 'parse'
-			return JSON.parse(str)
+			return { payload, headers }
 		} catch (e) {
 			if ($mol_promise_like(e)) return $mol_fail_hidden(e)
 

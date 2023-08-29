@@ -3,11 +3,20 @@ namespace $ {
 
 	$mol_test({
 		'jwt decode'() {
-			$mol_assert_like($mol_jwt_decode(token), {
-				"sub": "1234567890",
-				"name": "John Doe",
-				"iat": 1516239022
-			  })
+			$mol_assert_like(
+				$mol_jwt_decode(token),
+				{
+					payload: {
+						sub: "1234567890",
+						name: "John Doe",
+						iat: 1516239022
+					},
+					headers:{
+						alg:"HS256",
+						typ:"JWT"
+					}
+				}
+			)
 		},
 	})
 }
