@@ -8533,6 +8533,7 @@ var $;
             }
             click(event) {
                 const cb = $mol_wire_sync(this.$.$mol_dom_context.navigator.clipboard);
+                cb.writeText(this.text());
                 cb.write(this.attachments());
             }
         }
