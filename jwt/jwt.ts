@@ -11,6 +11,7 @@ namespace $ {
 			const payload = JSON.parse(payload_str)
 			line = 'decode headers'
 			const headers_str = $mol_base64_decode_string(headers_raw)
+			line = 'parse headers'
 			const headers = JSON.parse(headers_str)
 
 			return { payload, headers }
