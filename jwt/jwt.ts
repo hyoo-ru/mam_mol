@@ -1,10 +1,10 @@
 namespace $ {
 
 	function decode_base64(base64: string): string {
-		return $mol_charset_decode($mol_base64_decode(base64))
+		return $mol_charset_decode($mol_base64_decode(base64.replace(/-/g, '+').replace(/_/g, '/')))
 	}
 
-	export function $mol_jwt_decode(raw: string): unknown {
+	export function $mol_jwt_decode(raw: string) {
 		let line = 'split'
 		try {
 			const [ headers_raw, payload_raw ] = raw.split('.')
@@ -28,7 +28,9 @@ namespace $ {
 
 				(e.cause as { raw?: string}).raw = raw
 
-				e.message += `, ${line} error`
+				Object.defineProperty(e, 'message', {
+					value: `${e.message}, ${line} error`
+				})
 			}
 
 			$mol_fail_hidden(e)
