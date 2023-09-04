@@ -50,7 +50,7 @@ namespace $.$$ {
 		override Spread_item(id: string) {
 			return this.spreads()[ id ]
 		}
-		
+
 		override Spread() {
 			return this.Spread_item( this.spread() )
 		}
@@ -69,7 +69,7 @@ namespace $.$$ {
 		}
 		
 		override spread_title( spread: string ) {
-			const page = this.spreads()[ spread ]
+			const page = this.Spread_item( spread )
 			return page instanceof $mol_book2
 				&& page.menu_title()
 				|| page.title()
