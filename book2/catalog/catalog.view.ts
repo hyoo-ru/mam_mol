@@ -20,6 +20,11 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		override spread_ids() {
+			return Object.keys( this.spreads() )
+		}
+		
+		@ $mol_mem
 		override menu_body() {
 			return [
 				... this.menu_filter_enabled() ? [ this.Menu_filter() ] : [],
@@ -27,19 +32,18 @@ namespace $.$$ {
 			]
 		}
 
-		@ $mol_mem
 		override menu_filter_enabled() {
-			return Object.keys( this.spreads() ).length >= 10
+			return this.spread_ids().length >= 10
 		}
 		
 		@ $mol_mem
 		override menu_links() {
-			return this.spread_ids()
+			return this.spread_ids_filtered()
 				.map( spread => this.Menu_link( spread ) )
 		}
 
-		override spread_ids() {
-			return Object.keys(this.spreads())
+		override spread_ids_filtered() {
+			return this.spread_ids()
 				.filter( $mol_match_text( this.menu_filter(), spread => [ this.spread_title( spread ) ] ) )
 		}
 		
