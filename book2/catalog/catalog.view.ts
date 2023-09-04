@@ -8,7 +8,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		pages() {
-			const spread = this.Spread()
+			const spread = this.spread() === '' ? this.Spread_default() : this.Spread(this.spread())
 			return [
 				this.Menu(),
 				... spread
@@ -47,12 +47,8 @@ namespace $.$$ {
 				.filter( $mol_match_text( this.menu_filter(), spread => [ this.spread_title( spread ) ] ) )
 		}
 		
-		override Spread_item(id: string) {
+		override Spread(id: string) {
 			return this.spreads()[ id ]
-		}
-
-		override Spread() {
-			return this.spread() ? this.Spread_item( this.spread() ) : this.Spread_default()
 		}
 
 		override Spread_default() {
@@ -73,7 +69,7 @@ namespace $.$$ {
 		}
 		
 		override spread_title( spread: string ) {
-			const page = this.Spread_item( spread )
+			const page = this.Spread( spread )
 			return page instanceof $mol_book2
 				&& page.menu_title()
 				|| page.title()
