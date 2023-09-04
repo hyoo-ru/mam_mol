@@ -4964,6 +4964,10 @@ declare namespace $ {
         spread(next?: any): string;
         spreads(): Record<string, any>;
         Spread(): $mol_view;
+        Spread_item(id: any): $mol_view;
+        spread_ids(): readonly string[];
+        menu_filter_enabled(): boolean;
+        spread_ids_filtered(): readonly string[];
         pages(): readonly any[];
         Spread_close(): $$.$mol_link;
         Menu_logo(): any;
@@ -4992,8 +4996,12 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_book2_catalog extends $.$mol_book2_catalog {
         pages(): any[];
+        spread_ids(): string[];
         menu_body(): ($mol_list | $mol_search)[];
+        menu_filter_enabled(): boolean;
         menu_links(): $mol_link[];
+        spread_ids_filtered(): string[];
+        Spread_item(id: string): any;
         Spread(): any;
         spread(next?: string): string;
         arg(spread: string): {

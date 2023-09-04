@@ -45,6 +45,47 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Spread_item* $mol_view
+		 * ```
+		 */
+		@ $mol_mem_key
+		Spread_item(id: any) {
+			const obj = new this.$.$mol_view()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * spread_ids /string
+		 * ```
+		 */
+		spread_ids() {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * menu_filter_enabled false
+		 * ```
+		 */
+		menu_filter_enabled() {
+			return false
+		}
+		
+		/**
+		 * ```tree
+		 * spread_ids_filtered /string
+		 * ```
+		 */
+		spread_ids_filtered() {
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
 		 * pages / <= Menu
 		 * ```
 		 */
