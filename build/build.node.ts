@@ -582,9 +582,7 @@ namespace $ {
 			var mod = $mol_file.absolute( path )
 			var parent = mod.parent()
 			
-			if( mod !== this.root() ) {
-				this.modEnsure( parent.path() )
-			}
+			if( mod !== this.root() ) this.modEnsure( parent.path() )
 			
 			var mapping = mod === this.root()
 				? $mol_tree.fromString( `pack ${ mod.name() } git \\https://github.com/hyoo-ru/mam.git\n` )
@@ -988,7 +986,6 @@ namespace $ {
 			const paths = this.tsPaths({ path , exclude: exclude_ext , bundle })
 
 			for( const path of paths ) {
-				console.log(paths)
 
 				this.js_content( path ) // recheck on file change
 
