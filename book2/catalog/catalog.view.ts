@@ -27,9 +27,13 @@ namespace $.$$ {
 		@ $mol_mem
 		override menu_body() {
 			return [
-				... this.spread_ids().length >= 10 ? [ this.Menu_filter() ] : [],
+				... this.menu_filter_enabled() ? [ this.Menu_filter() ] : [],
 				this.Menu_links(),
 			]
+		}
+
+		override menu_filter_enabled() {
+			return this.spread_ids().length >= 10
 		}
 		
 		@ $mol_mem
@@ -38,7 +42,7 @@ namespace $.$$ {
 				.map( spread => this.Menu_link( spread ) )
 		}
 
-		spread_ids_filtered() {
+		override spread_ids_filtered() {
 			return this.spread_ids()
 				.filter( $mol_match_text( this.menu_filter(), spread => [ this.spread_title( spread ) ] ) )
 		}
