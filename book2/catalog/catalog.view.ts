@@ -18,40 +18,53 @@ namespace $.$$ {
 					: [],
 			]
 		}
+
+		@ $mol_mem
+		override spread_ids() {
+			return Object.keys( this.spreads() )
+		}
 		
 		@ $mol_mem
-		menu_body() {
+		override menu_body() {
 			return [
-				... Object.keys( this.spreads() ).length >= 10 ? [ this.Menu_filter() ] : [],
+				... this.spread_ids().length >= 10 ? [ this.Menu_filter() ] : [],
 				this.Menu_links(),
 			]
 		}
 		
 		@ $mol_mem
-		menu_links() {
-			return Object.keys( this.spreads() )
-				.filter( $mol_match_text( this.menu_filter(), spread => [ this.spread_title( spread ) ] ) )
+		override menu_links() {
+			return this.spread_ids_filtered()
 				.map( spread => this.Menu_link( spread ) )
 		}
+
+		spread_ids_filtered() {
+			return this.spread_ids()
+				.filter( $mol_match_text( this.menu_filter(), spread => [ this.spread_title( spread ) ] ) )
+		}
 		
-		Spread() {
-			return this.spreads()[ this.spread() ]
+		override Spread_item(id: string) {
+			return this.spreads()[ id ]
+		}
+		
+		override Spread() {
+			return this.Spread_item( this.spread() )
 		}
 		
 		@ $mol_mem
-		spread( next?: string ) {
+		override spread( next?: string ) {
 			return this.$.$mol_state_arg.value( this.param(), next ) ?? ''
 		}
 		
-		arg( spread: string ) {
+		override arg( spread: string ) {
 			return { [ this.param() ]: spread || null }
 		}
 		
-		spread_close_arg() {
+		override spread_close_arg() {
 			return { [ this.param() ]: null }
 		}
 		
-		spread_title( spread: string ) {
+		override spread_title( spread: string ) {
 			const page = this.spreads()[ spread ]
 			return page instanceof $mol_book2
 				&& page.menu_title()

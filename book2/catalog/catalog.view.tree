@@ -3,6 +3,8 @@ $mol_book2_catalog $mol_book2
 	spread? \
 	spreads *
 	Spread $mol_view
+	Spread_item* $mol_view
+	spread_ids /string
 	pages /
 		<= Menu $mol_page
 			Logo <= Menu_logo null
