@@ -4902,8 +4902,8 @@ declare namespace $ {
         param(): string;
         spread(next?: any): string;
         spreads(): Record<string, any>;
-        Spread(): $mol_view;
-        Spread_item(id: any): $mol_view;
+        Spread(id: any): $mol_view;
+        Spread_default(): any;
         spread_ids(): readonly string[];
         menu_filter_enabled(): boolean;
         spread_ids_filtered(): readonly string[];
@@ -4940,8 +4940,8 @@ declare namespace $.$$ {
         menu_filter_enabled(): boolean;
         menu_links(): $mol_link[];
         spread_ids_filtered(): string[];
-        Spread_item(id: string): any;
-        Spread(): any;
+        Spread(id: string): any;
+        Spread_default(): any;
         spread(next?: string): string;
         arg(spread: string): {
             [x: string]: string | null;

@@ -33,11 +33,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Spread $mol_view
+		 * Spread* $mol_view
 		 * ```
 		 */
-		@ $mol_mem
-		Spread() {
+		@ $mol_mem_key
+		Spread(id: any) {
 			const obj = new this.$.$mol_view()
 			
 			return obj
@@ -45,14 +45,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Spread_item* $mol_view
+		 * Spread_default null
 		 * ```
 		 */
-		@ $mol_mem_key
-		Spread_item(id: any) {
-			const obj = new this.$.$mol_view()
-			
-			return obj
+		Spread_default() {
+			return null as any
 		}
 		
 		/**

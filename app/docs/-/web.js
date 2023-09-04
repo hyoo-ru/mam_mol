@@ -19042,13 +19042,12 @@ var $;
         spreads() {
             return {};
         }
-        Spread() {
+        Spread(id) {
             const obj = new this.$.$mol_view();
             return obj;
         }
-        Spread_item(id) {
-            const obj = new this.$.$mol_view();
-            return obj;
+        Spread_default() {
+            return null;
         }
         spread_ids() {
             return [];
@@ -19167,11 +19166,8 @@ var $;
         $mol_mem
     ], $mol_book2_catalog.prototype, "spread", null);
     __decorate([
-        $mol_mem
-    ], $mol_book2_catalog.prototype, "Spread", null);
-    __decorate([
         $mol_mem_key
-    ], $mol_book2_catalog.prototype, "Spread_item", null);
+    ], $mol_book2_catalog.prototype, "Spread", null);
     __decorate([
         $mol_mem
     ], $mol_book2_catalog.prototype, "Spread_close", null);
@@ -19207,7 +19203,7 @@ var $;
     (function ($$) {
         class $mol_book2_catalog extends $.$mol_book2_catalog {
             pages() {
-                const spread = this.Spread();
+                const spread = this.spread() === '' ? this.Spread_default() : this.Spread(this.spread());
                 return [
                     this.Menu(),
                     ...spread
@@ -19237,11 +19233,11 @@ var $;
                 return this.spread_ids()
                     .filter($mol_match_text(this.menu_filter(), spread => [this.spread_title(spread)]));
             }
-            Spread_item(id) {
+            Spread(id) {
                 return this.spreads()[id];
             }
-            Spread() {
-                return this.Spread_item(this.spread());
+            Spread_default() {
+                return this.spreads()[''];
             }
             spread(next) {
                 return this.$.$mol_state_arg.value(this.param(), next) ?? '';
@@ -19253,7 +19249,7 @@ var $;
                 return { [this.param()]: null };
             }
             spread_title(spread) {
-                const page = this.Spread_item(spread);
+                const page = this.Spread(spread);
                 return page instanceof $mol_book2
                     && page.menu_title()
                     || page.title();
