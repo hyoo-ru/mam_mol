@@ -3,6 +3,7 @@ $mol_book2_catalog $mol_book2
 	spread? \
 	spreads *
 	Spread $mol_view
+	Spread_default null
 	Spread_item* $mol_view
 	spread_ids /string
 	menu_filter_enabled false
