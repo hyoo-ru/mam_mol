@@ -52,7 +52,7 @@ namespace $.$$ {
 		}
 
 		override Spread() {
-			return this.Spread_item( this.spread() )
+			return this.spread() ? this.Spread_item( this.spread() ) : null
 		}
 		
 		@ $mol_mem
