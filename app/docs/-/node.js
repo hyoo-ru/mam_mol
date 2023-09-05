@@ -18778,6 +18778,9 @@ var $;
         menu_title() {
             return "";
         }
+        menu_title_custom() {
+            return this.menu_title();
+        }
         menu_tools() {
             return [];
         }
@@ -18848,7 +18851,7 @@ var $;
         Menu() {
             const obj = new this.$.$mol_page();
             obj.Logo = () => this.Menu_logo();
-            obj.title = () => this.menu_title();
+            obj.title = () => this.menu_title_custom();
             obj.tools = () => this.menu_tools();
             obj.head = () => this.menu_head();
             obj.body = () => this.menu_body();
