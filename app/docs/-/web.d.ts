@@ -4972,7 +4972,7 @@ declare namespace $ {
         Spread_close(): $$.$mol_link;
         Menu_logo(): any;
         menu_title(): string;
-        menu_title_custom(): string;
+        menu_item_title(): string;
         menu_tools(): readonly any[];
         menu_head(): readonly any[];
         menu_filter(next?: any): string;

@@ -19077,7 +19077,7 @@ var $;
         menu_title() {
             return "";
         }
-        menu_title_custom() {
+        menu_item_title() {
             return this.menu_title();
         }
         menu_tools() {
@@ -19150,7 +19150,7 @@ var $;
         Menu() {
             const obj = new this.$.$mol_page();
             obj.Logo = () => this.Menu_logo();
-            obj.title = () => this.menu_title_custom();
+            obj.title = () => this.menu_item_title();
             obj.tools = () => this.menu_tools();
             obj.head = () => this.menu_head();
             obj.body = () => this.menu_body();

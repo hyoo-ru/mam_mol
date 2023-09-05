@@ -1645,7 +1645,7 @@ $mol_book2_catalog $mol_book2
 		<= Menu $mol_page
 			Logo <= Menu_logo null
 			Title => Menu_title
-			title <= menu_title_custom <= menu_title \
+			title <= menu_item_title <= menu_title \
 			Tools => Menu_tools
 			tools <= menu_tools /
 			head <= menu_head /
