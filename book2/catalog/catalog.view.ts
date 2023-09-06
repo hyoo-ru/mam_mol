@@ -20,7 +20,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		override spread_ids() {
+		override spread_ids(): readonly string[] {
 			return Object.keys( this.spreads() )
 		}
 		
