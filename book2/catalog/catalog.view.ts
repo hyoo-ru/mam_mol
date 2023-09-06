@@ -1,5 +1,10 @@
 namespace $.$$ {
 
+	export type $mol_book2_catalog_spread = $mol_view
+		| {
+			page: $mol_view
+			menu_item_title: string
+		}
 	/**
 	 * Variant of [mol_book2](../book2.view.ts) which draws menu in side bar on opens one of taken spreads.
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_book2_catalog_demo
@@ -8,7 +13,9 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		pages() {
-			const spread = this.spread() === '' ? this.Spread_default() : this.Spread(this.spread())
+			const spread_item = this.spread() === '' ? this.Spread_default() : this.Spread(this.spread())
+			const spread = spread_item instanceof $mol_view ? spread_item : spread_item?.page
+
 			return [
 				this.Menu(),
 				... spread
@@ -19,7 +26,7 @@ namespace $.$$ {
 			]
 		}
 
-		override spreads(): Record<string, $mol_view & { menu_item_title?(): string }> {
+		override spreads(): Record<string, $mol_book2_catalog_spread | undefined | null> {
 			return super.spreads()
 		}
 
@@ -74,11 +81,14 @@ namespace $.$$ {
 		
 		override spread_title( spread: string ) {
 			const page = this.Spread( spread )
-			if (page.menu_item_title) return page.menu_item_title?.()
 
-			return page instanceof $mol_book2
-				? page.menu_title()
-				: page.title()
+			if (! page) throw new Error('No spread definition for "' + spread + '"')
+
+			if (page instanceof $mol_book2) return page.menu_title()
+
+			if (page instanceof $mol_view) return page.title()
+
+			return page.menu_item_title
 		}
 		
 	}

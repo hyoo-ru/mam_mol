@@ -2,7 +2,7 @@ $mol_book2_catalog $mol_book2
 	param \
 	spread? \
 	spreads *
-	Spread* $mol_view
+	Spread* $mol_book2_catalog_spread
 	Spread_default null
 	spread_ids /string
 	menu_filter_enabled false
@@ -13,7 +13,7 @@ $mol_book2_catalog $mol_book2
 			title <= menu_title \
 			title_content <= menu_title_content /
 				<= Menu_logo null
-				<= menu_page_title
+				<= menu_title
 			Tools => Menu_tools
 			tools <= menu_tools /
 			head <= menu_head /

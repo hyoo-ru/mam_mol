@@ -14,7 +14,9 @@ Variant of [$mol_book2](..) which draws menu in side bar on opens one of taken s
 	spreads *
 		small <= Small $mol_page
 		medium <= Medium $mol_page
-		large <= Large $mol_page
+		large *
+			page <= Large $mol_page
+			menu_item_title \Custom item title
 ```
 
 ## Main Properties
