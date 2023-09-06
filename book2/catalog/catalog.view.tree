@@ -11,9 +11,6 @@ $mol_book2_catalog $mol_book2
 		<= Menu $mol_page
 			Title => Menu_title
 			title <= menu_title \
-			title_content <= menu_title_content /
-				<= Menu_logo null
-				<= menu_title
 			Tools => Menu_tools
 			tools <= menu_tools /
 			head <= menu_head /
