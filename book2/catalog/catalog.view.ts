@@ -8,9 +8,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		pages() {
-			const spread_item = this.spread() === '' ? this.Spread_default() : this.Spread(this.spread())
-			const spread = spread_item instanceof $mol_view ? spread_item : spread_item?.page
-
+			const spread = this.spread() === '' ? this.Spread_default() : this.Spread(this.spread())
 			return [
 				this.Menu(),
 				... spread
@@ -21,12 +19,8 @@ namespace $.$$ {
 			]
 		}
 
-		override spreads(): Record<string, $mol_book2_catalog_spread | undefined | null> {
-			return super.spreads()
-		}
-
 		@ $mol_mem
-		override spread_ids(): readonly string[] {
+		override spread_ids() {
 			return Object.keys( this.spreads() )
 		}
 		
@@ -76,14 +70,9 @@ namespace $.$$ {
 		
 		override spread_title( spread: string ) {
 			const page = this.Spread( spread )
-
-			if (! page) throw new Error('No spread definition for "' + spread + '"')
-
-			if (page instanceof $mol_book2) return page.menu_title()
-
-			if (page instanceof $mol_view) return page.title()
-
-			return page.menu_item_title
+			return page instanceof $mol_book2
+				&& page.menu_title()
+				|| page.title()
 		}
 		
 	}
