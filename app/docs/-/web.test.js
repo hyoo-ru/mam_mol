@@ -5980,6 +5980,15 @@ var $;
             $mol_assert_equal(list[3], 7);
             $mol_assert_equal(calls, 10);
         },
+        'reverse'() {
+            let calls = 0;
+            const list = $mol_range2(index => (++calls, index), () => 10).reverse().slice(0, 3);
+            $mol_assert_ok(list instanceof Array);
+            $mol_assert_equal(list.length, 3);
+            $mol_assert_equal(list[0], 9);
+            $mol_assert_equal(list[3], 6);
+            $mol_assert_equal(calls, 2);
+        },
         'reduce'() {
             let calls = 0;
             const list = $mol_range2().slice(1, 6);

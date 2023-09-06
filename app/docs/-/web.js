@@ -28790,6 +28790,9 @@ var $;
             }
             return result;
         }
+        reverse() {
+            return $mol_range2(index => this[this.length - 1 - index], () => this.length);
+        }
         slice(from = 0, to = this.length) {
             return $mol_range2(index => this[from + index], () => Math.min(to, this.length) - from);
         }

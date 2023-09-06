@@ -114,6 +114,13 @@ namespace $ {
 			return result
 		}
 
+		reverse(): Item[] {
+			return $mol_range2(
+				index => this[ this.length - 1 - index ] ,
+				()=> this.length ,
+			)
+		}
+
 		slice( from = 0 , to = this.length ) : Item[] {
 			return $mol_range2(
 				index => this[ from + index ] ,
