@@ -1,10 +1,5 @@
 namespace $.$$ {
 
-	export type $mol_book2_catalog_spread = $mol_view
-		| {
-			page: $mol_view
-			menu_item_title: string
-		}
 	/**
 	 * Variant of [mol_book2](../book2.view.ts) which draws menu in side bar on opens one of taken spreads.
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_book2_catalog_demo
@@ -31,7 +26,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		override spread_ids() {
+		override spread_ids(): readonly string[] {
 			return Object.keys( this.spreads() )
 		}
 		

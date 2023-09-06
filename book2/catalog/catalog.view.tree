@@ -2,7 +2,7 @@ $mol_book2_catalog $mol_book2
 	param \
 	spread? \
 	spreads *
-	Spread* $mol_book2_catalog_spread
+	Spread* null
 	Spread_default null
 	spread_ids /string
 	menu_filter_enabled false
