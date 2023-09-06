@@ -19,6 +19,10 @@ namespace $.$$ {
 			]
 		}
 
+		override spreads(): Record<string, $mol_view & { menu_item_title?(): string }> {
+			return super.spreads()
+		}
+
 		@ $mol_mem
 		override spread_ids() {
 			return Object.keys( this.spreads() )
@@ -70,9 +74,11 @@ namespace $.$$ {
 		
 		override spread_title( spread: string ) {
 			const page = this.Spread( spread )
+			if (page.menu_item_title) return page.menu_item_title?.()
+
 			return page instanceof $mol_book2
-				&& page.menu_title()
-				|| page.title()
+				? page.menu_title()
+				: page.title()
 		}
 		
 	}
