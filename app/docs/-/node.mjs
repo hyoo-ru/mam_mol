@@ -18772,14 +18772,8 @@ var $;
             ];
             return obj;
         }
-        Menu_logo() {
-            return null;
-        }
         menu_title() {
             return "";
-        }
-        menu_item_title() {
-            return this.menu_title();
         }
         menu_tools() {
             return [];
@@ -18850,8 +18844,7 @@ var $;
         }
         Menu() {
             const obj = new this.$.$mol_page();
-            obj.Logo = () => this.Menu_logo();
-            obj.title = () => this.menu_item_title();
+            obj.title = () => this.menu_title();
             obj.tools = () => this.menu_tools();
             obj.head = () => this.menu_head();
             obj.body = () => this.menu_body();

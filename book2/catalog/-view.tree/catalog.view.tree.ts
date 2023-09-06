@@ -113,29 +113,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Menu_logo null
-		 * ```
-		 */
-		Menu_logo() {
-			return null as any
-		}
-		
-		/**
-		 * ```tree
 		 * menu_title \
 		 * ```
 		 */
 		menu_title() {
 			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * menu_item_title <= menu_title
-		 * ```
-		 */
-		menu_item_title() {
-			return this.menu_title()
 		}
 		
 		/**
@@ -321,9 +303,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Menu $mol_page
-		 * 	Logo <= Menu_logo
 		 * 	Title => Menu_title
-		 * 	title <= menu_item_title
+		 * 	title <= menu_title
 		 * 	Tools => Menu_tools
 		 * 	tools <= menu_tools
 		 * 	head <= menu_head
@@ -335,8 +316,7 @@ namespace $ {
 		Menu() {
 			const obj = new this.$.$mol_page()
 			
-			obj.Logo = () => this.Menu_logo()
-			obj.title = () => this.menu_item_title()
+			obj.title = () => this.menu_title()
 			obj.tools = () => this.menu_tools()
 			obj.head = () => this.menu_head()
 			obj.body = () => this.menu_body()
