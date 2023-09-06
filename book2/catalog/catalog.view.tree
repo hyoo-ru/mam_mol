@@ -10,10 +10,10 @@ $mol_book2_catalog $mol_book2
 	pages /
 		<= Menu $mol_page
 			Title => Menu_title
-			title <= page_title <= menu_title \
+			title <= menu_page_title <= menu_title \
 			title_content <= menu_title_content /
 				<= Menu_logo null
-				<= page_title
+				<= menu_page_title
 			Tools => Menu_tools
 			tools <= menu_tools /
 			head <= menu_head /
