@@ -2,19 +2,18 @@ namespace $ {
 	$mol_test({
 		
 		async 'Error caching' ($) {
-			let throwed: unknown
-			const err = new Error('Fatal')
+			const next_cached = 123
 
 			class Some extends $mol_object2 {
 
 				static $ = $
 
 				@ $mol_wire_plex
-				static data( id: string, next?: unknown, cache?: unknown | Error ): unknown {
-					if (cache instanceof Error) return cache as never
+				static data( id: string, next?: unknown): unknown {
+					if (next) return next as never
 
 					setTimeout(() => {
-						$mol_wire_async(this).data(id, null, err)
+						$mol_wire_async(this).data(id, next_cached)
 					}, 10)
 
 					$mol_fail_hidden(new Promise(() => {}))
@@ -22,18 +21,13 @@ namespace $ {
 
 				@ $mol_wire_method
 				static run() {
-					try {
-						this.data('1')
-					} catch (e) {
-						if (! $mol_promise_like(e)) throwed = e
-						else throw e
-					}
+					return this.data('1')
 				}
 
 			}
 
-			await $mol_wire_async(Some).run()
-			$mol_assert_equal(throwed, err)
+			const val = await $mol_wire_async(Some).run()
+			$mol_assert_equal(val, next_cached)
 		} ,
 
 		'Memoize by single simple key' ($) {
