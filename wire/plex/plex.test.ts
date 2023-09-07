@@ -1,6 +1,42 @@
 namespace $ {
 	$mol_test({
 		
+		async 'Error caching' ($) {
+			let throwed = 0
+
+			class Some extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_plex
+				static data( id: string, next?: unknown, cache?: unknown | Error ): unknown {
+					if (cache instanceof Error) return cache as never
+
+					setTimeout($mol_wire_async(() => {
+						try {
+							this.data(id, null, new Error('Fatal'))
+						} catch (e) {}
+					}), 10)
+
+					$mol_fail_hidden(new Promise(() => {}))
+				}
+
+				@ $mol_wire_method
+				static run() {
+					try {
+						this.data('1')
+					} catch (e) {
+						if (! $mol_promise_like(e)) throwed++
+						else throw e
+					}
+					$mol_assert_equal(throwed, 1)
+				}
+
+			}
+
+			await $mol_wire_async(Some).run()
+		} ,
+
 		'Memoize by single simple key' ($) {
 
 			class Team extends $mol_object2 {
