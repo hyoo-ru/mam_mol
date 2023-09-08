@@ -15,6 +15,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * trigger_enabled <= enabled
+		 * ```
+		 */
+		trigger_enabled() {
+			return this.enabled()
+		}
+		
+		/**
+		 * ```tree
 		 * bubble_content /
 		 * 	<= Input
 		 * 	<= Pickers
@@ -42,6 +51,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * enabled true
+		 * ```
+		 */
+		enabled() {
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * value? \
 		 * ```
 		 */
@@ -49,15 +67,6 @@ namespace $ {
 		value(next?: any) {
 			if ( next !== undefined ) return next as never
 			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * enabled true
-		 * ```
-		 */
-		enabled() {
-			return true
 		}
 		
 		/**

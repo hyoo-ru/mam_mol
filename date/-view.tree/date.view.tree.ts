@@ -53,10 +53,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * today_enabled true
+		 * enabled true
 		 * ```
 		 */
-		today_enabled() {
+		enabled() {
 			return true
 		}
 		
@@ -87,7 +87,7 @@ namespace $ {
 		 * ```tree
 		 * Today $mol_button_minor
 		 * 	hint @ \Today
-		 * 	enabled <= today_enabled
+		 * 	enabled <= enabled
 		 * 	click?event <=> today_click?event
 		 * 	sub / <= Today_icon
 		 * ```
@@ -97,7 +97,7 @@ namespace $ {
 			const obj = new this.$.$mol_button_minor()
 			
 			obj.hint = () => this.$.$mol_locale.text( '$mol_date_Today_hint' )
-			obj.enabled = () => this.today_enabled()
+			obj.enabled = () => this.enabled()
 			obj.click = (event?: any) => this.today_click(event)
 			obj.sub = () => [
 				this.Today_icon()
@@ -124,15 +124,6 @@ namespace $ {
 		 */
 		input_mask(id: any) {
 			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * enabled true
-		 * ```
-		 */
-		enabled() {
-			return true
 		}
 		
 		/**
@@ -167,12 +158,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Clear_icon $mol_icon_cross
+		 * Clear_icon $mol_icon_trash_can_outline
 		 * ```
 		 */
 		@ $mol_mem
 		Clear_icon() {
-			const obj = new this.$.$mol_icon_cross()
+			const obj = new this.$.$mol_icon_trash_can_outline()
 			
 			return obj
 		}
@@ -181,6 +172,7 @@ namespace $ {
 		 * ```tree
 		 * Clear $mol_button_minor
 		 * 	hint @ \Clear
+		 * 	enabled <= enabled
 		 * 	click?event <=> clear?event
 		 * 	sub / <= Clear_icon
 		 * ```
@@ -190,6 +182,7 @@ namespace $ {
 			const obj = new this.$.$mol_button_minor()
 			
 			obj.hint = () => this.$.$mol_locale.text( '$mol_date_Clear_hint' )
+			obj.enabled = () => this.enabled()
 			obj.click = (event?: any) => this.clear(event)
 			obj.sub = () => [
 				this.Clear_icon()
@@ -396,6 +389,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Calendar $mol_date_calendar
+		 * 	enabled <= enabled
 		 * 	month_moment <= month_moment
 		 * 	day_selected* <= day_selected*
 		 * 	day_click*?event <=> day_click*?event
@@ -407,6 +401,7 @@ namespace $ {
 		Calendar() {
 			const obj = new this.$.$mol_date_calendar()
 			
+			obj.enabled = () => this.enabled()
 			obj.month_moment = () => this.month_moment()
 			obj.day_selected = (id: any) => this.day_selected(id)
 			obj.day_click = (id: any, event?: any) => this.day_click(id, event)
@@ -444,10 +439,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * enabled true
+		 * ```
+		 */
+		enabled() {
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * Day_button* $mol_button_minor
 		 * 	title <= day_text*
 		 * 	event_click?event <=> day_click*?event
 		 * 	minimal_height 24
+		 * 	enabled <= enabled
 		 * ```
 		 */
 		@ $mol_mem_key
@@ -457,6 +462,7 @@ namespace $ {
 			obj.title = () => this.day_text(id)
 			obj.event_click = (event?: any) => this.day_click(id, event)
 			obj.minimal_height = () => 24
+			obj.enabled = () => this.enabled()
 			
 			return obj
 		}

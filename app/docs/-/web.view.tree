@@ -3248,6 +3248,10 @@ $mol_format $mol_string
 	hint <= mask*0 \
 	keyboard \numeric
 
+$mol_icon_trash_can $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z
+
+$mol_icon_trash_can_outline $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z
+
 $mol_icon_chevron_left $mol_icon path \M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z
 
 $mol_icon_chevron_right $mol_icon path \M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z
@@ -3259,7 +3263,7 @@ $mol_date $mol_pick
 		<= Input_row $mol_view sub <= input_content /
 			<= Today $mol_button_minor
 				hint @ \Today
-				enabled <= today_enabled true
+				enabled <= enabled true
 				click?event <=> today_click?event null
 				sub /
 					<= Today_icon $mol_icon_calendar_today
@@ -3269,10 +3273,12 @@ $mol_date $mol_pick
 				enabled <= enabled true
 			<= Clear $mol_button_minor
 				hint @ \Clear
+				enabled <= enabled true
 				click?event <=> clear?event null
 				sub /
-					<= Clear_icon $mol_icon_cross
+					<= Clear_icon $mol_icon_trash_can_outline
 		<= Calendar $mol_date_calendar
+			enabled <= enabled true
 			month_moment <= month_moment <= value_moment
 			day_selected* <= day_selected* false
 			day_click*?event <=> day_click*?event null
@@ -3301,6 +3307,7 @@ $mol_date_calendar $mol_calendar
 			title <= day_text*
 			event_click?event <=> day_click*?event null
 			minimal_height 24
+			enabled <= enabled true
 
 $mol_date_demo $mol_example_small
 	sub /
@@ -3398,10 +3405,6 @@ $mol_drag $mol_ghost
 	allow_link true
 	allow_move true
 	image <= dom_node
-
-$mol_icon_trash_can $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z
-
-$mol_icon_trash_can_outline $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z
 
 $mol_drop $mol_ghost
 	enabled? true
@@ -4812,6 +4815,7 @@ $mol_icon_clock_outline $mol_icon path \M12,20C16.42,20 20,16.42 20,12C20,7.58 1
 
 $mol_pick_time $mol_pick
 	Icon $mol_icon_clock_outline
+	trigger_enabled <= enabled true
 	-
 	bubble_content /
 		<= Input $mol_format
