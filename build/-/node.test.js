@@ -6674,7 +6674,7 @@ var $;
                         if (/\.meta\.tree$/.test(file.name())) {
                             const meta = $$.$mol_tree2_from_string(file.text());
                             for (const pack of meta.select('pack', null).kids) {
-                                if (!files.find(({ name }) => name !== pack.type))
+                                if (!files.find(({ name }) => name === pack.type))
                                     files.push({ name: pack.type, type: 'dir' });
                             }
                         }
