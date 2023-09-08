@@ -9,6 +9,12 @@ namespace $.$$ {
 		Rows: {
 			padding: $mol_gap.text,
 		},
+
+		Row: {
+			font: {
+				family: 'inherit',
+			},
+		},
 		
 		Copy: {
 			alignSelf: 'flex-start',
