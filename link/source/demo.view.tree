@@ -1,0 +1,18 @@
+$mol_link_source_demo $mol_example_small
+	title \Link with icon
+	sub /
+		<= Blocks $mol_list
+			rows /
+				<= Input $mol_string
+					value? <=> uri? \https://github.com/hyoo-ru/mam_mol/
+				<= Output $mol_link_source
+					uri <= uri?
+	tags /
+		\link
+		\icon
+		\source
+		\github
+		\url
+	aspects /
+		\Navigation
+		\Widget/Button
