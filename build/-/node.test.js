@@ -9558,14 +9558,18 @@ var $;
         dom_id() {
             return this.toString();
         }
-        dom_node(next) {
-            $mol_wire_solid();
-            const node = next || $mol_dom_context.document.createElementNS(this.dom_name_space(), this.dom_name());
+        dom_node_external(next) {
+            const node = next ?? $mol_dom_context.document.createElementNS(this.dom_name_space(), this.dom_name());
             const id = this.dom_id();
             node.setAttribute('id', id);
             node.toString = $mol_const('<#' + id + '>');
+            return node;
+        }
+        dom_node(next) {
+            $mol_wire_solid();
+            const node = this.dom_node_external(next);
             $mol_dom_render_attributes(node, this.attr_static());
-            const events = $mol_wire_async(this.event());
+            const events = this.event_async();
             $mol_dom_render_events(node, events);
             return node;
         }
@@ -9738,6 +9742,9 @@ var $;
         event() {
             return {};
         }
+        event_async() {
+            return { ...$mol_wire_async(this.event()) };
+        }
         plugins() {
             return [];
         }
@@ -9794,6 +9801,17 @@ var $;
                 this.focused(true);
             });
         }
+        destructor() {
+            const node = $mol_wire_probe(() => this.dom_node());
+            if (!node)
+                return;
+            const events = $mol_wire_probe(() => this.event_async());
+            if (!events)
+                return;
+            for (let event_name in events) {
+                node.removeEventListener(event_name, events[event_name]);
+            }
+        }
     }
     __decorate([
         $mol_mem
@@ -9840,6 +9858,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_view.prototype, "theme", null);
+    __decorate([
+        $mol_mem
+    ], $mol_view.prototype, "event_async", null);
     __decorate([
         $mol_mem_key
     ], $mol_view, "Root", null);
@@ -10102,28 +10123,17 @@ var $;
 var $;
 (function ($) {
     class $mol_plugin extends $mol_view {
-        dom_node(next) {
-            const node = next || $mol_owning_get(this).host.dom_node();
-            $mol_dom_render_attributes(node, this.attr_static());
-            const events = $mol_wire_async(this.event());
-            for (let event_name in events) {
-                node.addEventListener(event_name, events[event_name], { passive: false });
-            }
-            return node;
+        dom_node_external(next) {
+            const host = $mol_owning_get(this).host;
+            return next ?? host.dom_node();
         }
         attr_static() {
-            return {};
-        }
-        event() {
             return {};
         }
         render() {
             this.dom_node_actual();
         }
     }
-    __decorate([
-        $mol_mem
-    ], $mol_plugin.prototype, "dom_node", null);
     $.$mol_plugin = $mol_plugin;
 })($ || ($ = {}));
 //mol/plugin/plugin.ts

@@ -385,10 +385,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_wire_solid(): void;
-}
-
-declare namespace $ {
     function $mol_const<Value>(value: Value): {
         (): Value;
         '()': Value;
@@ -396,13 +392,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_dom_render_attributes(el: Element, attrs: {
-        [key: string]: string | number | boolean | null;
-    }): void;
+    function $mol_wire_solid(): void;
 }
 
 declare namespace $ {
-    function $mol_wire_async<Host extends object>(obj: Host): (Host extends (...args: infer Args) => infer Res ? Res extends Promise<any> ? Host : (...args: Args) => Promise<Res> : {}) & { [key in keyof Host]: Host[key] extends (...args: infer Args_1) => infer Res_1 ? Res_1 extends Promise<any> ? Host[key] : (...args: Args_1) => Promise<Res_1> : Host[key]; };
+    function $mol_dom_render_attributes(el: Element, attrs: {
+        [key: string]: string | number | boolean | null;
+    }): void;
 }
 
 declare namespace $ {
@@ -425,6 +421,10 @@ declare namespace $ {
     function $mol_dom_render_fields(el: Element, fields: {
         [key: string]: any;
     }): void;
+}
+
+declare namespace $ {
+    function $mol_wire_async<Host extends object>(obj: Host): (Host extends (...args: infer Args) => infer Res ? Res extends Promise<any> ? Host : (...args: Args) => Promise<Res> : {}) & { [key in keyof Host]: Host[key] extends (...args: infer Args_1) => infer Res_1 ? Res_1 extends Promise<any> ? Host[key] : (...args: Args_1) => Promise<Res_1> : Host[key]; };
 }
 
 declare namespace $ {
@@ -725,6 +725,7 @@ declare namespace $ {
             bottom: number;
         } | null;
         dom_id(): string;
+        dom_node_external(next?: Element): Element;
         dom_node(next?: Element): Element;
         dom_final(): Element | undefined;
         dom_tree(next?: Element): Element;
@@ -753,11 +754,15 @@ declare namespace $ {
         event(): {
             [key: string]: (event: Event) => void;
         };
+        event_async(): {
+            [x: string]: (event: Event) => Promise<void>;
+        };
         plugins(): readonly $mol_view[];
         view_find(check: (path: $mol_view, text?: string) => boolean, path?: $mol_view[]): Generator<$mol_view[]>;
         force_render(path: Set<$mol_view>): void;
         ensure_visible(view: $mol_view, align?: ScrollLogicalPosition): void;
         bring(): void;
+        destructor(): void;
     }
     type $mol_view_all = $mol_type_pick<$, typeof $mol_view>;
 }
@@ -773,12 +778,9 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_plugin extends $mol_view {
-        dom_node(next?: Element): Element;
+        dom_node_external(next?: Element): Element;
         attr_static(): {
             [key: string]: string | number | boolean;
-        };
-        event(): {
-            [key: string]: (event: Event) => void;
         };
         render(): void;
     }
