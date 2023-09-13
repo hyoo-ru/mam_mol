@@ -11,7 +11,7 @@ namespace $ {
 
 			const events = this.event_async()
 
-			for( const event_name of Object.keys(events) ) {
+			for( let event_name in events ) {
 				node.addEventListener(
 					event_name ,
 					events[ event_name ] ,
@@ -36,9 +36,9 @@ namespace $ {
 
 		destructor(): void {
 			const node = this.dom_node()
-			const events = this.event_async()
+			const events = $mol_wire_probe(() => this.event_async()) ?? {}
 
-			for( const event_name of Object.keys(events) ) {
+			for( let event_name in events ) {
 				node.removeEventListener(
 					event_name ,
 					events[ event_name ]
