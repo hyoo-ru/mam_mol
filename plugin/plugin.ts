@@ -1,14 +1,17 @@
 namespace $ {
 	/** Plugin is component without its own DOM element, but instead uses the owner DOM element */
 	export class $mol_plugin extends $mol_view {
+		@ $mol_mem
+		event_async() {
+			const result = {} as Record<string, (e: Event) => Promise<void>>
+			const events = this.event()
+			const wrapped = $mol_wire_async(events)
 
-		event_names() {
-			return Object.keys(this.event())
-		}
+			for (const name of Object.keys(events)) {
+				result[name] = wrapped[name]
+			}
 
-		@ $mol_mem_key
-		event_async(event_name: string) {
-			return $mol_wire_async(this.event())[event_name]
+			return result
 		}
 
 		@ $mol_mem
@@ -18,10 +21,12 @@ namespace $ {
 
 			$mol_dom_render_attributes( node , this.attr_static() )
 
-			for( const event_name of this.event_names() ) {
+			const events = this.event_async()
+
+			for( const event_name of Object.keys(events) ) {
 				node.addEventListener(
 					event_name ,
-					this.event_async(event_name) ,
+					events[ event_name ] ,
 					{ passive : false } as any ,
 				)
 			}
@@ -43,11 +48,12 @@ namespace $ {
 
 		destructor(): void {
 			const node = this.dom_node()
+			const events = this.event_async()
 
-			for( const event_name of this.event_names() ) {
+			for( const event_name of Object.keys(events) ) {
 				node.removeEventListener(
 					event_name ,
-					this.event_async(event_name)
+					events[ event_name ]
 				)
 			}
 		}
