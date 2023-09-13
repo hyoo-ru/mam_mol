@@ -165,9 +165,7 @@ namespace $ {
 			return this.toString()
 		}
 	
-		dom_node_create( next?: Element) {
-			$mol_wire_solid()
-
+		dom_node_configured( next?: Element) {
 			const node = next ?? $mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
 
 			const id = this.dom_id()
@@ -179,7 +177,8 @@ namespace $ {
 
 		@ $mol_mem
 		dom_node( next? : Element ) {
-			const node = this.dom_node_create( next )
+			$mol_wire_solid()
+			const node = this.dom_node_configured( next )
 			$mol_dom_render_attributes( node , this.attr_static() )
 			
 			const events = this.event_async()
