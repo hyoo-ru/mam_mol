@@ -15,10 +15,6 @@ namespace $ {
 			this.dom_node_actual()
 		}
 
-		destructor(): void {
-			this.event_remove()
-		}
-
 	}
 
 }

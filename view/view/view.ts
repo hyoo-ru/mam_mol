@@ -501,7 +501,7 @@ namespace $ {
 			
 		}
 
-		event_remove() {
+		override destructor() {
 			const node = $mol_wire_probe(() => this.dom_node())
 			if (! node) return
 
