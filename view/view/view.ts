@@ -497,6 +497,18 @@ namespace $ {
 			
 		}
 
+		destructor(): void {
+			const node = this.dom_node()
+			const events = $mol_wire_probe(() => this.event_async()) ?? {}
+
+			for( let event_name in events ) {
+				node.removeEventListener(
+					event_name ,
+					events[ event_name ]
+				)
+			}
+		}
+
 	}
 
 	export type $mol_view_all = $mol_type_pick< $ , typeof $mol_view >
