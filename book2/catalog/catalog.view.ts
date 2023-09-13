@@ -42,12 +42,13 @@ namespace $.$$ {
 				.map( spread => this.Menu_link( spread ) )
 		}
 
+		@ $mol_mem
 		override spread_ids_filtered() {
 			return this.spread_ids()
 				.filter( $mol_match_text( this.menu_filter(), spread => [ this.spread_title( spread ) ] ) )
 		}
 		
-		override Spread(id: string) {
+		override Spread(id: string): $mol_view {
 			return this.spreads()[ id ]
 		}
 
