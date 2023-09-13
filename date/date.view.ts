@@ -117,12 +117,6 @@ namespace $.$$ {
 			this.month_moment( this.month_moment().shift( { month : +1 } ) )
 		}
 
-		@ $mol_mem
-		override today_enabled() {
-			const val = this.value_moment()
-			return !val || val.valueOf() !== this.value_moment_today().valueOf()
-		}
-
 		override today_click() {
 			this.value_moment( this.value_moment_today() )
 		}
