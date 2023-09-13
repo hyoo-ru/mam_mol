@@ -408,6 +408,19 @@ namespace $ {
 			return {}
 		}
 		
+		@ $mol_mem
+		event_async() {
+			const result = {} as Record<string, (e: Event) => Promise<void>>
+			const events = this.event()
+			const wrapped = $mol_wire_async(events)
+
+			for (const name of Object.keys(events)) {
+				result[name] = e => wrapped[name](e)
+			}
+
+			return result
+		}
+
 		plugins() {
 			return [] as readonly $mol_view[]
 		}

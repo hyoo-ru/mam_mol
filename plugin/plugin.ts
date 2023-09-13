@@ -1,18 +1,6 @@
 namespace $ {
 	/** Plugin is component without its own DOM element, but instead uses the owner DOM element */
 	export class $mol_plugin extends $mol_view {
-		@ $mol_mem
-		event_async() {
-			const result = {} as Record<string, (e: Event) => Promise<void>>
-			const events = this.event()
-			const wrapped = $mol_wire_async(events)
-
-			for (const name of Object.keys(events)) {
-				result[name] = wrapped[name]
-			}
-
-			return result
-		}
 
 		@ $mol_mem
 		dom_node( next? : Element ) {
