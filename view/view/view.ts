@@ -178,7 +178,7 @@ namespace $ {
 
 			$mol_dom_render_attributes( node , this.attr_static() )
 			
-			const events = $mol_wire_async( this.event() )
+			const events = this.event_async()
 			$mol_dom_render_events(node, events)
 
 			return node
@@ -410,15 +410,7 @@ namespace $ {
 		
 		@ $mol_mem
 		event_async() {
-			const result = {} as Record<string, (e: Event) => Promise<void>>
-			const events = this.event()
-			const wrapped = $mol_wire_async(events)
-
-			for (const name of Object.keys(events)) {
-				result[name] = e => wrapped[name](e)
-			}
-
-			return result
+			return { ... $mol_wire_async(this.event()) }
 		}
 
 		plugins() {
