@@ -164,26 +164,29 @@ namespace $ {
 		dom_id() {
 			return this.toString()
 		}
-		
-		@ $mol_mem
-		dom_node( next? : Element ) {
-			
-			$mol_wire_solid()
-			
-			const node = next || $mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
+	
+		dom_node_external( next?: Element) {
+			const node = next ?? $mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
 
 			const id = this.dom_id()
 			node.setAttribute( 'id' , id )
 			node.toString = $mol_const( '<#' + id + '>' )
 
+			return node
+		}
+
+		@ $mol_mem
+		dom_node( next? : Element ) {
+			$mol_wire_solid()
+			const node = this.dom_node_external( next )
 			$mol_dom_render_attributes( node , this.attr_static() )
 			
-			const events = $mol_wire_async( this.event() )
+			const events = this.event_async()
 			$mol_dom_render_events(node, events)
 
 			return node
 		}
-		
+
 		@ $mol_mem
 		dom_final() {
 			
@@ -408,6 +411,11 @@ namespace $ {
 			return {}
 		}
 		
+		@ $mol_mem
+		event_async() {
+			return { ... $mol_wire_async(this.event()) }
+		}
+
 		plugins() {
 			return [] as readonly $mol_view[]
 		}
@@ -492,6 +500,20 @@ namespace $ {
 			
 		}
 
+		override destructor() {
+			const node = $mol_wire_probe(() => this.dom_node())
+			if (! node) return
+
+			const events = $mol_wire_probe(() => this.event_async())
+			if (! events) return
+
+			for( let event_name in events ) {
+				node.removeEventListener(
+					event_name ,
+					events[ event_name ]
+				)
+			}
+		}
 	}
 
 	export type $mol_view_all = $mol_type_pick< $ , typeof $mol_view >
