@@ -11,4 +11,3 @@ $mol_drop $mol_ghost
 	allow /
 		\copy
 		\move
-		\link
