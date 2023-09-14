@@ -5,14 +5,8 @@ namespace $.$$ {
 	 */
 	export class $mol_ghost extends $.$mol_ghost {
 		
-		@ $mol_mem
-		dom_node( next?: Element ) {
-			const node = this.Sub().dom_node( next )
-
-			$mol_dom_render_attributes( node , this.attr_static() )
-			$mol_dom_render_events( node , this.event() )
-			
-			return node
+		override dom_node_external( next?: Element ) {
+			return this.Sub().dom_node( next )
 		}
 		
 		@ $mol_mem
