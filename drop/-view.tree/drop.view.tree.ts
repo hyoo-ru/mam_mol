@@ -67,16 +67,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * allow /
-		 * 	\link
 		 * 	\copy
 		 * 	\move
+		 * 	\link
 		 * ```
 		 */
 		allow() {
 			return [
-				"link",
 				"copy",
-				"move"
+				"move",
+				"link"
 			] as readonly any[]
 		}
 		

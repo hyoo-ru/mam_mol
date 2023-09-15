@@ -3693,6 +3693,7 @@ declare namespace $ {
         length_max(): number;
         selection(next?: any): readonly number[];
         submit(next?: any): any;
+        submit_with_ctrl(): boolean;
         bring(): void;
         Edit(): $mol_textarea_edit;
         row_numb(id: any): number;

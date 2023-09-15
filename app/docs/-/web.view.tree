@@ -886,7 +886,7 @@ $mol_textarea $mol_stack
 			selection? <=> selection? /number
 			bring => bring
 			submit? <=> submit? null
-			submit_with_ctrl true
+			submit_with_ctrl <= submit_with_ctrl true
 		<= View $mol_text_code
 			text <= value
 			render_visible_only false
@@ -3417,9 +3417,9 @@ $mol_drop $mol_ghost
 	adopt?transfer *
 	receive?transfer null
 	allow /
-		\link
 		\copy
 		\move
+		\link
 
 $mol_drag_demo $mol_example_large
 	task_count 100

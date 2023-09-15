@@ -251,6 +251,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * submit_with_ctrl true
+		 * ```
+		 */
+		submit_with_ctrl() {
+			return true
+		}
+		
+		/**
+		 * ```tree
 		 * bring
 		 * ```
 		 */
@@ -269,7 +278,7 @@ namespace $ {
 		 * 	selection? <=> selection?
 		 * 	bring => bring
 		 * 	submit? <=> submit?
-		 * 	submit_with_ctrl true
+		 * 	submit_with_ctrl <= submit_with_ctrl
 		 * ```
 		 */
 		@ $mol_mem
@@ -283,7 +292,7 @@ namespace $ {
 			obj.length_max = () => this.length_max()
 			obj.selection = (next?: any) => this.selection(next)
 			obj.submit = (next?: any) => this.submit(next)
-			obj.submit_with_ctrl = () => true
+			obj.submit_with_ctrl = () => this.submit_with_ctrl()
 			
 			return obj
 		}
