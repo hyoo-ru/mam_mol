@@ -16,7 +16,7 @@ $mol_textarea $mol_stack
 			selection? <=> selection? /number
 			bring => bring
 			submit? <=> submit? null
-			submit_with_ctrl true
+			submit_with_ctrl <= submit_with_ctrl true
 		<= View $mol_text_code
 			text <= value
 			render_visible_only false

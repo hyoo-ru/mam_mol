@@ -9,6 +9,6 @@ $mol_drop $mol_ghost
 	adopt?transfer *
 	receive?transfer null
 	allow /
-		\link
 		\copy
 		\move
+		\link
