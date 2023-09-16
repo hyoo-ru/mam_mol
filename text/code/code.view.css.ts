@@ -5,6 +5,9 @@ namespace $.$$ {
 	$mol_style_define( $mol_text_code, {
 
 		whiteSpace: 'pre-wrap',
+		font: {
+			faily: 'monospace',
+		},
 		
 		Rows: {
 			padding: $mol_gap.text,
