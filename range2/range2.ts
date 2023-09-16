@@ -1,15 +1,16 @@
 namespace $ {
+	const options_key = Symbol('$mol_range2_options')
 
 	/** Lazy computed lists with native Array interface. $mol_range2_array is mutable but all derived ranges are immutable. */
 	export function $mol_range2< Item = number >(
 		item : ( index : number )=> Item = index => index as any ,
 		size = ()=> Number.POSITIVE_INFINITY ,
+		sample = new $mol_range2_array<Item>
 	) : Item[] {
 
-		return new Proxy( new $mol_range2_array< Item >() , {
+		return new Proxy( sample , {
 
 			get( target , field ) {
-
 				if( typeof field === 'string' ) {
 					if( field === 'length' ) return size()
 					
@@ -21,7 +22,7 @@ namespace $ {
 			} ,
 
 			set( target , field ) {
-				return $mol_fail( new TypeError( 'Lazy range is read only' ) )
+				return $mol_fail( new TypeError( `Lazy range is read only, ${String(field)}` ) )
 			} ,
 
 			ownKeys( target ) {
@@ -126,6 +127,10 @@ namespace $ {
 				index => this[ from + index ] ,
 				()=> Math.min( to , this.length ) - from ,
 			)
+		}
+
+		at(index: number): Item | undefined {
+			return this[index >= 0 ? index : this.length + index]
 		}
 
 		some< Context > (
