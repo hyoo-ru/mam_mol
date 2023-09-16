@@ -480,7 +480,7 @@ declare namespace $ {
 /// <reference types="node" />
 /// <reference types="node" />
 declare namespace $ {
-    function $mol_exec(this: $, dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
+    function $mol_exec(this: $, dir: string, command: string, ...args: string[]): import("node:child_process").SpawnSyncReturns<Buffer>;
 }
 
 declare namespace $ {
@@ -1341,9 +1341,9 @@ declare namespace $ {
     class $mol_server extends $mol_object {
         express(): import("express-serve-static-core").Express;
         internal_ip(): string;
-        http(): import("http").Server<typeof import("http").IncomingMessage, typeof import("http").ServerResponse>;
+        http(): import("node:http").Server<typeof import("node:http").IncomingMessage, typeof import("node:http").ServerResponse>;
         connections: Set<import("ws")>;
-        socket(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
+        socket(): import("ws").Server<typeof import("ws"), typeof import("node:http").IncomingMessage>;
         expressHandlers(): any[];
         expressCompressor(): unknown;
         expressCors(): unknown;
@@ -1378,8 +1378,8 @@ declare namespace $ {
         expressIndex(): (req: typeof $node.express.request, res: typeof $node.express.response, next: () => void) => void | import("express").Response<any, Record<string, any>>;
         port(): number;
         lines(next?: Map<import("ws"), string>): Map<import("ws"), string>;
-        socket(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
-        start(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
+        socket(): import("ws").Server<typeof import("ws"), typeof import("node:http").IncomingMessage>;
+        start(): import("ws").Server<typeof import("ws"), typeof import("node:http").IncomingMessage>;
         notify([line, path]: [InstanceType<$node['ws']>, string]): boolean;
     }
 }
