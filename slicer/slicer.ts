@@ -1,5 +1,5 @@
 namespace $ {
-	export class $mol_range3<Item> extends $mol_range2_array<Item> {
+	export class $mol_slicer<Item> extends $mol_object {
 		count(): number {
 			throw new Error('implement')
 		}
@@ -73,7 +73,7 @@ namespace $ {
 
 		@ $mol_mem
 		range() {
-			return $mol_range2(index => this.at(index), () => this.length, this) as readonly Item[]
+			return $mol_range2(index => this.at(index), () => this.length) as readonly Item[]
 		}
 
 	}
