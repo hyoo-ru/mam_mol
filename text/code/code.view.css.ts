@@ -6,7 +6,7 @@ namespace $.$$ {
 
 		whiteSpace: 'pre-wrap',
 		font: {
-			faily: 'monospace',
+			family: 'monospace',
 		},
 		
 		Rows: {
