@@ -73,7 +73,7 @@ namespace $ {
 
 		@ $mol_mem
 		range() {
-			return $mol_range2(index => this.at(index), () => this.length, this)
+			return $mol_range2(index => this.at(index), () => this.length, this) as readonly Item[]
 		}
 
 	}
