@@ -696,7 +696,7 @@ namespace $ {
 					try {
 						this.modEnsure( dep.path() )
 					} catch( error: any ) {
-						error.message = `${ error.message }\nDependency "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
+						error.message = `${ error.message }\nDependency "${p}" -> "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
 						$mol_fail_hidden(error)
 					}
 					
