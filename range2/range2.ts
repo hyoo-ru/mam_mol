@@ -5,10 +5,9 @@ namespace $ {
 	export function $mol_range2< Item = number >(
 		item : ( index : number )=> Item = index => index as any ,
 		size = ()=> Number.POSITIVE_INFINITY ,
-		sample = new $mol_range2_array<Item>
 	) : Item[] {
 
-		return new Proxy( sample , {
+		return new Proxy( new $mol_range2_array< Item >() , {
 
 			get( target , field ) {
 				if( typeof field === 'string' ) {
