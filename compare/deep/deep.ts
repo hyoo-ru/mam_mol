@@ -21,10 +21,10 @@ namespace $ {
 		
 		if( left_proto !== right_proto ) return false
 
-		if( left instanceof Boolean ) return Object.is( left.valueOf(), right['valueOf']() )
-		if( left instanceof Number ) return Object.is( left.valueOf(), right['valueOf']() )
-		if( left instanceof String ) return Object.is( left.valueOf(), right['valueOf']() )
-		if( left instanceof Date ) return Object.is( left.valueOf(), right['valueOf']() )
+		if( left instanceof Boolean ) return Object.is( left.valueOf(), ( right as any )['valueOf']() )
+		if( left instanceof Number ) return Object.is( left.valueOf(), ( right as any )['valueOf']() )
+		if( left instanceof String ) return Object.is( left.valueOf(), ( right as any )['valueOf']() )
+		if( left instanceof Date ) return Object.is( left.valueOf(), ( right as any )['valueOf']() )
 		if( left instanceof RegExp ) return left.source === (right as any).source && left.flags === (right as any).flags
 		if( left instanceof Error ) return left.message === (right as any).message && left.stack === (right as any).stack
 
