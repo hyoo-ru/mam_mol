@@ -5678,7 +5678,7 @@ var $;
             var sources = this.sources_js({ path, exclude });
             if (sources.length === 0)
                 return [];
-            var concater = new $mol_sourcemap_builder(targetJS.parent().path(), ';');
+            var concater = new $mol_sourcemap_builder(this.root().relate(targetJS.parent()), ';');
             concater.add('"use strict"');
             if (bundle === 'node') {
                 concater.add('var exports = void 0');
@@ -5699,7 +5699,7 @@ var $;
                     if (isCommonJs) {
                         concater.add(`\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate(this.root().resolve('node_modules')) + `/" ) ] }; \n`, '-');
                     }
-                    concater.add(content.text, src.relate(targetJS.parent()), content.map);
+                    concater.add(content.text, '', content.map);
                     if (isCommonJs) {
                         const idFull = src.relate(this.root().resolve('node_modules'));
                         const idShort = idFull.replace(/\/index\.js$/, '').replace(/\.js$/, '');
