@@ -160,11 +160,11 @@ namespace $ {
 		}
 
 		reverse() {
-			return $mol_fail( new TypeError( `Lazy range is read only (trying to reverse)`  ) )
+			return $mol_fail( new TypeError( `Mutable reverse is forbidden. Use toReversed instead.`  ) )
 		}
 
 		sort() {
-			return $mol_fail( new TypeError( `Lazy range is read only (trying to sort)`  ) )
+			return $mol_fail( new TypeError( `Mutable sort is forbidden. Use toSorted instead.`  ) )
 		}
 
 	}
