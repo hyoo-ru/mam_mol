@@ -23,7 +23,7 @@ namespace $ {
 			} ,
 
 			set( target , field ) {
-				return $mol_fail( new TypeError( 'Lazy range is read only' ) )
+				return $mol_fail( new TypeError( `Lazy range is read only (trying to set field ${ JSON.stringify( field ) })`  ) )
 			} ,
 
 			ownKeys( target ) {
@@ -54,7 +54,7 @@ namespace $ {
 	}
 
 	export class $mol_range2_array< Item > extends Array< Item > {
-
+		
 		// Lazy
 		concat( ... tail : Item[][] ) : Item[] {
 			if( tail.length === 0 ) return this as any
@@ -157,6 +157,14 @@ namespace $ {
 				if( !check.call( context as Context , this[ index ] , index , this ) ) return false
 			}
 			return true
+		}
+
+		reverse() {
+			return $mol_fail( new TypeError( `Lazy range is read only (trying to reverse)`  ) )
+		}
+
+		sort() {
+			return $mol_fail( new TypeError( `Lazy range is read only (trying to sort)`  ) )
 		}
 
 	}

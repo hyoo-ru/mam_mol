@@ -242,14 +242,17 @@ namespace $ {
 
 			const list = $mol_range2( i => i , ()=> 5 )
 
-			$mol_assert_fail( ()=> ( list as any ).push( 4 ) , TypeError )
-			$mol_assert_fail( ()=> ( list as any ).pop() , TypeError )
+			$mol_assert_fail( ()=> list.push( 4 ) , TypeError )
+			$mol_assert_fail( ()=> list.pop() , TypeError )
 			
-			$mol_assert_fail( ()=> ( list as any ).unshift( 4 ) , TypeError )
-			$mol_assert_fail( ()=> ( list as any ).shift() , TypeError )
-
-			$mol_assert_fail( ()=> ( list as any ).splice( 1 , 2 ) , TypeError )
-			$mol_assert_fail( ()=> ( list as any )[ 1 ] = 2 , TypeError )
+			$mol_assert_fail( ()=> list.unshift( 4 ) , TypeError )
+			$mol_assert_fail( ()=> list.shift() , TypeError )
+			
+			$mol_assert_fail( ()=> list.splice( 1 , 2 ) , TypeError )
+			$mol_assert_fail( ()=> list[ 1 ] = 2 , TypeError )
+			
+			$mol_assert_fail( ()=> list.reverse() , TypeError )
+			$mol_assert_fail( ()=> list.sort() , TypeError )
 
 			$mol_assert_equal( list.toString() , '0,1,2,3,4' )
 
