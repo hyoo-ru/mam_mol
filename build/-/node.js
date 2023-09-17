@@ -5757,7 +5757,7 @@ var $;
             var root = this.root();
             var target = pack.resolve(`-/${bundle}.test.js`);
             var targetMap = pack.resolve(`-/${bundle}.test.js.map`);
-            var concater = new $mol_sourcemap_builder(target.parent().path(), ';');
+            var concater = new $mol_sourcemap_builder(this.root().relate(target.parent()), ';');
             concater.add('"use strict"');
             var exclude_ext = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
             var sources = this.sources_js({ path, exclude: exclude_ext });
@@ -5780,7 +5780,7 @@ var $;
                 }
                 try {
                     const content = this.js_content(src.path());
-                    concater.add(content.text, src.relate(target.parent()), content.map);
+                    concater.add(content.text, '', content.map);
                 }
                 catch (error) {
                     errors.push(error);
