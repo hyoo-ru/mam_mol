@@ -14,6 +14,8 @@ namespace $ {
 					if( field === 'length' ) return size()
 					
 					const index = Number( field )
+					if( index < 0 ) return undefined
+					if( index >= size() ) return undefined
 					if( index === Math.trunc( index ) ) return item( index )
 				}
 
@@ -53,7 +55,8 @@ namespace $ {
 
 	export class $mol_range2_array< Item > extends Array< Item > {
 
-		concat( ... tail : this[] ) : Item[] {
+		// Lazy
+		concat( ... tail : Item[][] ) : Item[] {
 			if( tail.length === 0 ) return this as any
 
 			if( tail.length > 1 ) {
@@ -68,6 +71,7 @@ namespace $ {
 			)
 		}
 
+		// Diligent
 		filter< Context > (
 			check : ( val : Item , index : number , list : Item[] )=> boolean ,
 			context? : Context ,
@@ -80,6 +84,7 @@ namespace $ {
 			return filtered
 		}
 
+		// Diligent
 		forEach< Context > (
 			proceed : ( this : Context , val : Item , index : number , list : Item[] )=> void ,
 			context? : Context,
@@ -87,6 +92,7 @@ namespace $ {
 			for( let [ key , value ] of this.entries() ) proceed.call( context as Context , value , key , this )
 		}
 
+		// Lazy
 		map< Item_out , Context > (
 			proceed : ( this : Context , val : Item , index : number , list : Item[] )=> Item_out ,
 			context? : Context ,
@@ -97,6 +103,7 @@ namespace $ {
 			)
 		}
 
+		// Diligent
 		reduce< Result > (
 			merge : ( result : Result , val : Item , index : number , list : Item[] )=> Result ,
 			result? : Result ,
@@ -114,20 +121,23 @@ namespace $ {
 			return result
 		}
 
-		reverse(): Item[] {
+		// Lazy
+		toReversed(): Item[] {
 			return $mol_range2(
 				index => this[ this.length - 1 - index ] ,
 				()=> this.length ,
 			)
 		}
 
-		slice( from = 0 , to = this.length ) : Item[] {
+		// Lazy
+		slice( from = 0 , to = this.length ) {
 			return $mol_range2(
 				index => this[ from + index ] ,
 				()=> Math.min( to , this.length ) - from ,
 			)
 		}
 
+		// Lazy
 		some< Context > (
 			check : ( this : Context , val : Item , index : number , list : Item[] )=> boolean ,
 			context? : Context ,
@@ -138,6 +148,7 @@ namespace $ {
 			return false
 		}
 
+		// Lazy
 		every< Context = null > (
 			check : ( this : Context , val : Item , index : number , list : Item[] )=> boolean ,
 			context? : Context ,

@@ -35,6 +35,7 @@ const array = [ ... range ]
 - concat
 - map
 - slice
+- toReversed
 - some
 - every
 - entries
