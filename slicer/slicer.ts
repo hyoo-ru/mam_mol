@@ -28,14 +28,16 @@ namespace $ {
 			return id
 		}
 
+		protected temp = [] as Item[]
+
 		@ $mol_mem
-		temp(next?: readonly Item[]) {
-			return next ?? []
+		temp_len(next?: number) {
+			return next ?? 0
 		}
 
 		temp_push(...ids: readonly Item[]) {
-			this.temp([ ...this.temp(), ...ids ])
-			this.temp_cut()
+			this.temp.push(...ids)
+			this.temp_len(this.temp.length)
 
 			return this.length
 		}
@@ -45,30 +47,30 @@ namespace $ {
 		}
 
 		temp_cut() {
-			const temp = this.temp()
-			if (! temp) return
+			if (! this.temp.length) return
 
 			const limit = this.chunk_size()
 			const addenum = this.count() % limit
-			const delete_chunks = Math.ceil((temp.length - addenum) / limit) - this.temp_chunk_min()
+			const delete_chunks = Math.ceil((this.temp.length - addenum) / limit) - this.temp_chunk_min()
 			if (delete_chunks <= 0) return
 
 			const delete_count = delete_chunks * limit
-			const next = temp.slice()
-			next.splice(addenum, delete_count)
-			this.temp(next)
+			this.temp.splice(addenum, delete_count)
 			this.removed_count += delete_count
+			this.temp_len(this.temp.length)
 		}
 
 		at(index: number) {
 			if (index < 0) index = Math.max(0, this.length + index)
 			const count = this.count()
 			const addenum = count % this.chunk_size()
-			const temp = this.temp()
+			const temp_len = this.temp_len()
 
 			let temp_index = index - count
-			if (temp_index > addenum) temp_index -= this.removed_count
-			if (temp_index >= 0 && temp_index < temp.length) return temp[temp_index]
+
+			if (temp_index >= 0 && temp_index < temp_len && temp_index < addenum) return this.temp[temp_index]
+			temp_index -= this.removed_count
+			if (temp_index >= 0 && temp_index < temp_len) return this.temp[temp_index]
 
 			return this.item(index)
 		}
@@ -76,7 +78,7 @@ namespace $ {
 		protected removed_count = 0
 
 		get length() {
-			return this.count() + this.removed_count + this.temp().length
+			return this.count() + this.removed_count + this.temp_len()
 		}
 
 		@ $mol_mem

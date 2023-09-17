@@ -38,22 +38,33 @@ namespace $ {
 
 		'multiple push'($) {
 			const { range, stub } = make_range()
+
 			const arr = range.range()
 
+			let calls = 0
+			const fresh_stub = stub_ids(10)
+			range.chunk = () => {
+				calls++
+				return fresh_stub
+			}
 			const appended = stub_ids(30)
 			range.temp_push(...appended)
 
 			$mol_assert_equal(arr.length, appended.length + stub.length)
+			$mol_assert_equal(arr[29], appended[4])
+			$mol_assert_equal(arr[30], appended[5])
+			range.temp_cut()
+			$mol_assert_equal(arr.length, appended.length + stub.length)
+			$mol_assert_equal(arr[29], appended[4])
+			$mol_assert_equal(arr[30], fresh_stub[0])
+			$mol_assert_equal(calls, 1)
 
-			let calls = 0
-			range.chunk = offset => {
-				calls++
-				return []
-			}
+			const appended2 = stub_ids(30)
+			range.temp_push(...appended2)
+			$mol_assert_equal(arr[60], appended2[5])
+			range.temp_cut()
+			$mol_assert_equal(arr[60], fresh_stub[0])
 
-			arr[50]
-
-			$mol_assert_equal(calls, 0)
 		},
 	})
 }
