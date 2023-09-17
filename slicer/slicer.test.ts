@@ -7,41 +7,54 @@ namespace $ {
 		return ids
 	}
 
-	function make_range() {
-		const chunk_size = 10
-		const chunks = [
-			stub_ids(chunk_size),
-			stub_ids(chunk_size),
-			stub_ids(chunk_size / 2),
-		]
-		const count = chunks.reduce((acc, row) => acc + row.length, 0)
-
+	function make_range(count = 25, chunk_size = 10) {
+		const stub = stub_ids(count)
 		const range = new $mol_slicer<string>()
 		range.count = () => count
 		range.chunk_size = () => chunk_size
-		range.chunk = offset => chunks[offset / chunk_size]
+		range.chunk = offset => stub.slice(offset, offset + chunk_size)
 
-		return { range, chunks, count }
+		return { range, stub, chunk_size }
 	}
 
 	$mol_test({
 
 		'chunk addressing'($) {
-			const { range, chunks, count } = make_range()
+			const { range, stub } = make_range()
 			const arr = range.range()
-			$mol_assert_equal(arr[1], chunks[0][1])
-			$mol_assert_equal(arr.at(-1), chunks.at(-1)?.at(-1))
+			$mol_assert_equal(range.length, stub.length)
+			$mol_assert_equal(arr[1], stub[1])
+			$mol_assert_equal(arr.at(-1), stub.at(-1))
 		},
 
 		'push temp'($) {
-			const { range, chunks, count } = make_range()
+			const { range, stub } = make_range()
 			const arr = range.range()
-			$mol_assert_equal(arr.length, count)
-			range.push('123')
-			$mol_assert_equal(arr.length, count + 1)
+			$mol_assert_equal(arr.length, stub.length)
+			range.temp_push('123')
+			$mol_assert_equal(arr.length, stub.length + 1)
 			$mol_assert_equal(arr.at(-1), '123')
-		}
+		},
 
+		'multiple push'($) {
+			const { range, stub } = make_range()
+			const arr = range.range()
+
+			const appended = stub_ids(30)
+			range.temp_push(...appended)
+
+			$mol_assert_equal(arr.length, appended.length + stub.length)
+
+			let calls = 0
+			range.chunk = offset => {
+				calls++
+				return []
+			}
+
+			arr[50]
+
+			$mol_assert_equal(calls, 0)
+		},
 	})
 }
 

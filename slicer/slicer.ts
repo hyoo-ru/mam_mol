@@ -33,7 +33,7 @@ namespace $ {
 			return next ?? []
 		}
 
-		push(...ids: readonly Item[]) {
+		temp_push(...ids: readonly Item[]) {
 			this.temp([ ...this.temp(), ...ids ])
 			this.temp_cut()
 
@@ -49,20 +49,28 @@ namespace $ {
 			if (! temp) return
 
 			const limit = this.chunk_size()
-			const delete_chunks = Math.ceil(temp.length / limit) - this.temp_chunk_min()
+			const addenum = this.count() % limit
+			const delete_chunks = Math.ceil((temp.length - addenum) / limit) - this.temp_chunk_min()
 			if (delete_chunks <= 0) return
 
 			const delete_count = delete_chunks * limit
-			this.removed_count = this.removed_count + delete_count
-			this.temp(temp.slice(delete_count))
+			const next = temp.slice()
+			next.splice(addenum, delete_count)
+			this.temp(next)
+			this.removed_count += delete_count
 		}
 
 		at(index: number) {
-			const count = this.count() + this.removed_count
-			if (index < 0) index = Math.max(0, count + this.temp().length + index)
+			if (index < 0) index = Math.max(0, this.length + index)
+			const count = this.count()
+			const addenum = count % this.chunk_size()
+			const temp = this.temp()
 
-			if (index < count) return this.item(index)
-			return this.temp()[index - count]
+			let temp_index = index - count
+			if (temp_index > addenum) temp_index -= this.removed_count
+			if (temp_index >= 0 && temp_index < temp.length) return temp[temp_index]
+
+			return this.item(index)
 		}
 
 		protected removed_count = 0
