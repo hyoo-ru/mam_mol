@@ -696,7 +696,7 @@ namespace $ {
 					try {
 						this.modEnsure( dep.path() )
 					} catch( error: any ) {
-						error.message = `${ error.message }\nDependency "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
+						error.message = `${ error.message }\nDependency "${p}" -> "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
 						$mol_fail_hidden(error)
 					}
 					
@@ -905,7 +905,7 @@ namespace $ {
 			var sources = this.sources_js( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var concater = new $mol_sourcemap_builder( targetJS.parent().path(), ';')
+			var concater = new $mol_sourcemap_builder( this.root().relate( targetJS.parent() ), ';')
 			concater.add( '"use strict"' )
 
 			if( bundle === 'node' ) {
@@ -931,7 +931,7 @@ namespace $ {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
 
-						concater.add( content.text , src.relate( targetJS.parent() ) , content.map )
+						concater.add( content.text , '' , content.map )
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
@@ -1016,7 +1016,7 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = new $mol_sourcemap_builder( target.parent().path(), ';')
+			var concater = new $mol_sourcemap_builder( this.root().relate( target.parent() ), ';')
 			concater.add( '"use strict"' )
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
@@ -1041,7 +1041,7 @@ namespace $ {
 					}
 					try {
 						const content = this.js_content( src.path() )
-						concater.add( content.text, src.relate( target.parent() ), content.map)
+						concater.add( content.text, '', content.map)
 					} catch( error: any ) {
 						errors.push( error )
 					}

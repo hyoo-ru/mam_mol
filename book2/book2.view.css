@@ -33,7 +33,7 @@
 	top: 1.5rem;
 	width: 1px;
 	height: 1rem;
-	background: var(--mol_theme_special);
+	background: var(--mol_theme_focus);
 	border-radius: var(--mol_gap_round);
 	opacity: .5;
 }

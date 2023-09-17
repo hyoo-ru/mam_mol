@@ -2,7 +2,7 @@ namespace $ {
 
 	export class $mol_object2 {
 		
-		static $ = $ as $
+		static $ = $ as any as $
 		
 		[Symbol.toStringTag]!: string
 
@@ -31,7 +31,7 @@ namespace $ {
 		}
 		
 		static toString() {
-			if( Symbol.toStringTag in this ) return this[ Symbol.toStringTag ] as string
+			if( Symbol.toStringTag in this ) return ( this as any )[ Symbol.toStringTag ] as string
 			return this.name
 		}
 		
