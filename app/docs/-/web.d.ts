@@ -7174,6 +7174,8 @@ declare namespace $ {
         slice(from?: number, to?: number): Item[];
         some<Context>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
         every<Context = null>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
+        reverse(): never;
+        sort(): never;
     }
 }
 

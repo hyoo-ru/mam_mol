@@ -6056,6 +6056,8 @@ var $;
             $mol_assert_fail(() => list.shift(), TypeError);
             $mol_assert_fail(() => list.splice(1, 2), TypeError);
             $mol_assert_fail(() => list[1] = 2, TypeError);
+            $mol_assert_fail(() => list.reverse(), TypeError);
+            $mol_assert_fail(() => list.sort(), TypeError);
             $mol_assert_equal(list.toString(), '0,1,2,3,4');
         }
     });

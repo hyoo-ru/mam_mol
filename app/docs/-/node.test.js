@@ -28438,7 +28438,7 @@ var $;
                 return target[field];
             },
             set(target, field) {
-                return $mol_fail(new TypeError('Lazy range is read only'));
+                return $mol_fail(new TypeError(`Lazy range is read only (trying to set field ${JSON.stringify(field)})`));
             },
             ownKeys(target) {
                 return [...Array(size())].map((v, i) => String(i)).concat('length');
@@ -28520,6 +28520,12 @@ var $;
                     return false;
             }
             return true;
+        }
+        reverse() {
+            return $mol_fail(new TypeError(`Lazy range is read only (trying to reverse)`));
+        }
+        sort() {
+            return $mol_fail(new TypeError(`Lazy range is read only (trying to sort)`));
         }
     }
     $.$mol_range2_array = $mol_range2_array;
@@ -47246,6 +47252,8 @@ var $;
             $mol_assert_fail(() => list.shift(), TypeError);
             $mol_assert_fail(() => list.splice(1, 2), TypeError);
             $mol_assert_fail(() => list[1] = 2, TypeError);
+            $mol_assert_fail(() => list.reverse(), TypeError);
+            $mol_assert_fail(() => list.sort(), TypeError);
             $mol_assert_equal(list.toString(), '0,1,2,3,4');
         }
     });
