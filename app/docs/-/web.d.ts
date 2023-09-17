@@ -7165,12 +7165,12 @@ declare namespace $ {
 declare namespace $ {
     function $mol_range2<Item = number>(item?: (index: number) => Item, size?: () => number): Item[];
     class $mol_range2_array<Item> extends Array<Item> {
-        concat(...tail: this[]): Item[];
+        concat(...tail: Item[][]): Item[];
         filter<Context>(check: (val: Item, index: number, list: Item[]) => boolean, context?: Context): Item[];
         forEach<Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => void, context?: Context): void;
         map<Item_out, Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => Item_out, context?: Context): Item_out[];
         reduce<Result>(merge: (result: Result, val: Item, index: number, list: Item[]) => Result, result?: Result): Result | undefined;
-        reverse(): Item[];
+        toReversed(): Item[];
         slice(from?: number, to?: number): Item[];
         some<Context>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
         every<Context = null>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;

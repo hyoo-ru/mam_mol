@@ -28436,6 +28436,10 @@ var $;
                     if (field === 'length')
                         return size();
                     const index = Number(field);
+                    if (index < 0)
+                        return undefined;
+                    if (index >= size())
+                        return undefined;
                     if (index === Math.trunc(index))
                         return item(index);
                 }
@@ -28505,7 +28509,7 @@ var $;
             }
             return result;
         }
-        reverse() {
+        toReversed() {
             return $mol_range2(index => this[this.length - 1 - index], () => this.length);
         }
         slice(from = 0, to = this.length) {

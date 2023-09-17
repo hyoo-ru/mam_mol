@@ -11,13 +11,13 @@ namespace $ {
 			$mol_assert_ok( list instanceof Array )
 			$mol_assert_equal( list.length , 10 )
 
-			$mol_assert_equal( list[-1] , -1 )
+			$mol_assert_equal( list[-1] , undefined )
 			$mol_assert_equal( list[0] , 0 )
 			$mol_assert_equal( list[9] , 9 )
 			$mol_assert_equal( list[9.5] , undefined )
-			$mol_assert_equal( list[10] , 10 )
+			$mol_assert_equal( list[10] , undefined )
 
-			$mol_assert_equal( calls , 4 )
+			$mol_assert_equal( calls , 2 )
 
 		} ,
 
@@ -32,9 +32,9 @@ namespace $ {
 			$mol_assert_equal( list[0] , 0 )
 			$mol_assert_equal( list[4] , 4 )
 			$mol_assert_equal( list[Number.MAX_SAFE_INTEGER] , Number.MAX_SAFE_INTEGER )
-			$mol_assert_equal( list[Number.POSITIVE_INFINITY] , Number.POSITIVE_INFINITY )
+			$mol_assert_equal( list[Number.POSITIVE_INFINITY] , undefined )
 			
-			$mol_assert_equal( calls , 4 )
+			$mol_assert_equal( calls , 3 )
 
 		} ,
 
@@ -100,10 +100,10 @@ namespace $ {
 			$mol_assert_equal( list[9] , 4 )
 			$mol_assert_equal( list[10] , 0 )
 			$mol_assert_equal( list[14] , 4 )
-			$mol_assert_equal( list[15] , 5 )
+			$mol_assert_equal( list[15] , undefined )
 			
 			$mol_assert_equal( calls1 , 2 )
-			$mol_assert_equal( calls2 , 3 )
+			$mol_assert_equal( calls2 , 2 )
 
 		} ,
 
@@ -118,7 +118,7 @@ namespace $ {
 
 			$mol_assert_equal( list[0] , 1 )
 			$mol_assert_equal( list[2] , 5 )
-			$mol_assert_equal( list[3] , 7 )
+			$mol_assert_equal( list[3] , undefined )
 			
 			$mol_assert_equal( calls , 10 )
 			// $mol_assert_equal( calls , 6 ) // TODO: lazy filter
@@ -128,13 +128,14 @@ namespace $ {
 		'reverse'() {
 			let calls = 0
 
-			const list = $mol_range2( index => ( ++ calls , index ) , ()=> 10 ).reverse().slice(0, 3)
+			const list = $mol_range2( index => ( ++ calls , index ) , ()=> 10 ).toReversed().slice(0, 3)
 
 			$mol_assert_ok( list instanceof Array )
 			$mol_assert_equal( list.length , 3 )
 
 			$mol_assert_equal( list[0] , 9 )
-			$mol_assert_equal( list[3] , 6 )
+			$mol_assert_equal( list[2] , 7 )
+			$mol_assert_equal( list[3] , undefined )
 			$mol_assert_equal( calls , 2 )
 
 		} ,
@@ -170,10 +171,10 @@ namespace $ {
 
 			$mol_assert_equal( target[0] , 10 )
 			$mol_assert_equal( target[4] , 14 )
-			$mol_assert_equal( target[5] , 15 )
+			$mol_assert_equal( target[5] , undefined )
 			
-			$mol_assert_equal( calls1 , 3 )
-			$mol_assert_equal( calls2 , 3 )
+			$mol_assert_equal( calls1 , 2 )
+			$mol_assert_equal( calls2 , 2 )
 
 		} ,
 
@@ -188,9 +189,9 @@ namespace $ {
 
 			$mol_assert_equal( list[0] , 3 )
 			$mol_assert_equal( list[3] , 6 )
-			$mol_assert_equal( list[4] , 7 )
+			$mol_assert_equal( list[4] , undefined )
 			
-			$mol_assert_equal( calls , 3 )
+			$mol_assert_equal( calls , 2 )
 
 		} ,
 
@@ -231,9 +232,9 @@ namespace $ {
 			
 			$mol_assert_equal( list[0] , 12 )
 			$mol_assert_equal( list[3] , 15 )
-			$mol_assert_equal( list[4] , Number.NaN )
+			$mol_assert_equal( list[4] , undefined )
 			
-			$mol_assert_equal( calls , 3 )
+			$mol_assert_equal( calls , 2 )
 
 		} ,
 
@@ -241,14 +242,14 @@ namespace $ {
 
 			const list = $mol_range2( i => i , ()=> 5 )
 
-			$mol_assert_fail( ()=> list.push( 4 ) , TypeError )
-			$mol_assert_fail( ()=> list.pop() , TypeError )
+			$mol_assert_fail( ()=> ( list as any ).push( 4 ) , TypeError )
+			$mol_assert_fail( ()=> ( list as any ).pop() , TypeError )
 			
-			$mol_assert_fail( ()=> list.unshift( 4 ) , TypeError )
-			$mol_assert_fail( ()=> list.shift() , TypeError )
+			$mol_assert_fail( ()=> ( list as any ).unshift( 4 ) , TypeError )
+			$mol_assert_fail( ()=> ( list as any ).shift() , TypeError )
 
-			$mol_assert_fail( ()=> list.splice( 1 , 2 ) , TypeError )
-			$mol_assert_fail( ()=> list[ 1 ] = 2 , TypeError )
+			$mol_assert_fail( ()=> ( list as any ).splice( 1 , 2 ) , TypeError )
+			$mol_assert_fail( ()=> ( list as any )[ 1 ] = 2 , TypeError )
 
 			$mol_assert_equal( list.toString() , '0,1,2,3,4' )
 
