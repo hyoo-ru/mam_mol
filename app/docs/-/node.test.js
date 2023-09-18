@@ -31065,9 +31065,9 @@ var $;
             rows() {
                 const ids = this.row_ids();
                 return [
-                    this.Before(ids.at(0)),
+                    this.Before(ids.at(0) ?? null),
                     ...ids.map(id => this.Row(id)),
-                    this.After(ids.at(-1)),
+                    this.After(ids.at(-1) ?? null),
                 ];
             }
         }
