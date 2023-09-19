@@ -18,8 +18,8 @@ namespace $ {
 			const bar = Bar.make({ $: $2 })
 
 			$mol_assert_like(
-				bar.Obj().a(),
-				bar.b()
+				bar.Obj().a(1),
+				bar.b(1)
 			)
 			
 		},
