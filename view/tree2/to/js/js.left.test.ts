@@ -39,7 +39,7 @@ namespace $ {
 
 			$mol_assert_ok(foo.owner() instanceof $mol_object)
 			$mol_assert_like(
-				foo.some(),
+				foo.some(1),
 				foo.some(1),
 				'Foo_some'
 			)
@@ -50,8 +50,8 @@ namespace $ {
 			)
 
 			$mol_assert_equal(
-				foo.owner().localized(),
-				foo.some(),
+				foo.owner(1).localized(),
+				foo.some(1),
 			)
 
 			$mol_assert_equal(
