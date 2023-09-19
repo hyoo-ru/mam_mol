@@ -7490,7 +7490,7 @@ var $;
             title() {
                 const uri = this.uri();
                 const host = this.host();
-                const suffix = (host ? uri.split(this.host(), 2)[1] : uri).replace(/^[\/\?#!]+/, '');
+                const suffix = (host ? uri.split(this.host(), 2)[1] : uri)?.replace(/^[\/\?#!]+/, '');
                 return decodeURIComponent(suffix || host).replace(/^\//, ' ');
             }
             sub() {
