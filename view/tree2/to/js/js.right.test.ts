@@ -52,7 +52,7 @@ namespace $ {
 		'Right bind indexed'( $ ) {
 			const $2 = run(`
 				Foo $mol_object
-					a*? *
+					a? *
 						some 123
 				Bar $mol_object
 					Cls* Foo
