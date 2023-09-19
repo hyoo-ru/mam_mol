@@ -37,7 +37,7 @@ namespace $ {
 			`)
 			const foo = Foo.make({ $ })
 
-			$mol_assert_ok(foo.owner() instanceof $mol_object)
+			$mol_assert_ok(foo.owner(1) instanceof $mol_object)
 			$mol_assert_like(
 				foo.some(1),
 				foo.some(1),
