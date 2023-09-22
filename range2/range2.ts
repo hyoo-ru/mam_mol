@@ -166,6 +166,10 @@ namespace $ {
 		sort() {
 			return $mol_fail( new TypeError( `Mutable sort is forbidden. Use toSorted instead.`  ) )
 		}
+		
+		[Symbol.toPrimitive]() {
+			return $mol_guid()
+		}
 
 	}
 
