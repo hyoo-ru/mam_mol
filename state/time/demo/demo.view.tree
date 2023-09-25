@@ -3,4 +3,4 @@ $mol_state_time_demo $mol_example_small
 	sub /
 		<= Some $mol_view
 			sub /
-				<= status \test
+				<= status2 \test

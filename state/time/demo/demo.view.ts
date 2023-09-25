@@ -2,7 +2,6 @@ namespace $.$$ {
 	const p = Promise.resolve()
 	export class $mol_state_time_demo extends $.$mol_state_time_demo {
 		some1() {
-			console.log('init')
 			return p
 		}
 
@@ -15,9 +14,15 @@ namespace $.$$ {
 
 		@ $mol_mem
 		status() {
-			console.log('status')
 			this.self_count()
 			return 'bla'
+		}
+
+		@ $mol_mem
+		status2() {
+			console.log('status2')
+			this.status()
+			return 'bla2'
 		}
 	}
 }
