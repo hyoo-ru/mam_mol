@@ -1,0 +1,6 @@
+$mol_state_time_demo $mol_example_small
+	title \Time demo
+	sub /
+		<= Some $mol_view
+			sub /
+				<= status \test
