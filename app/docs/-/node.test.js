@@ -20606,6 +20606,7 @@ var $;
             obj.ghost = () => this.day_ghost(id);
             obj.holiday = () => this.day_holiday(id);
             obj.selected = () => this.day_selected(id);
+            obj.today = () => this.day_today(id);
             obj.theme = () => this.day_theme(id);
             obj.sub = () => this.day_content(id);
             return obj;
@@ -20664,6 +20665,9 @@ var $;
         day_selected(id) {
             return false;
         }
+        day_today(id) {
+            return false;
+        }
         day_theme(id) {
             return null;
         }
@@ -20710,6 +20714,7 @@ var $;
                 mol_calendar_holiday: this.holiday(),
                 mol_calendar_ghost: this.ghost(),
                 mol_calendar_selected: this.selected(),
+                mol_calendar_today: this.today(),
                 mol_theme: this.theme()
             };
         }
@@ -20720,6 +20725,9 @@ var $;
             return false;
         }
         selected() {
+            return false;
+        }
+        today() {
             return false;
         }
         theme() {
@@ -20794,11 +20802,14 @@ var $;
             day_holiday(day) {
                 return this.weekend(new $mol_time_moment(day).weekday);
             }
+            today() {
+                return new $mol_time_moment();
+            }
+            day_today(day) {
+                return this.today().toString('YYYY-MM-DD') === day;
+            }
             day_ghost(day) {
                 return new $mol_time_moment(day).toString('YYYY-MM') !== this.day_first().toString('YYYY-MM');
-            }
-            day_selected(day) {
-                return new $mol_time_moment().toString('YYYY-MM-DD') === day;
             }
             day_theme(day) {
                 return this.day_selected(day) ? '$mol_theme_current' : super.day_theme(day);
@@ -20838,11 +20849,14 @@ var $;
             $mol_mem_key
         ], $mol_calendar.prototype, "day_holiday", null);
         __decorate([
-            $mol_mem_key
-        ], $mol_calendar.prototype, "day_ghost", null);
+            $mol_mem
+        ], $mol_calendar.prototype, "today", null);
         __decorate([
             $mol_mem_key
-        ], $mol_calendar.prototype, "day_selected", null);
+        ], $mol_calendar.prototype, "day_today", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_calendar.prototype, "day_ghost", null);
         $$.$mol_calendar = $mol_calendar;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -20851,7 +20865,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/calendar/calendar.view.css", "[mol_calendar] {\n\tdisplay: table;\n\tfont-family: monospace;\n}\n\n[mol_calendar_head] {\n\tdisplay: table-caption;\n\tbackground: inherit;\n}\n\n[mol_calendar_title] {\n\tjustify-content: center;\n}\n\n[mol_calendar_weekdays] ,\n[mol_calendar_week] {\n\tdisplay: table-row;\n\tpadding: 0;\n}\n\n[mol_calendar_day] {\n\tdisplay: table-cell;\n\tpadding: .25rem .5rem;\n\ttext-align: center;\n\tword-break: normal;\n\tbox-shadow: none;\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_calendar_weekday] {\n\tcolor: var(--mol_theme_shade);\n\tborder-bottom: 1px solid var(--mol_theme_line);\n}\n\n[mol_calendar_holiday] {\n\tcolor: var(--mol_theme_special);\n}\n\n[mol_calendar_ghost] {\n\topacity: .2;\n}\n");
+    $mol_style_attach("mol/calendar/calendar.view.css", "[mol_calendar] {\n\tdisplay: table;\n\tfont-family: monospace;\n}\n\n[mol_calendar_head] {\n\tdisplay: table-caption;\n\tbackground: inherit;\n}\n\n[mol_calendar_title] {\n\tjustify-content: center;\n}\n\n[mol_calendar_weekdays] ,\n[mol_calendar_week] {\n\tdisplay: table-row;\n\tpadding: 0;\n}\n\n[mol_calendar_day] {\n\tdisplay: table-cell;\n\tpadding: .25rem .5rem;\n\ttext-align: center;\n\tword-break: normal;\n\tbox-shadow: none;\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_calendar_weekday] {\n\tcolor: var(--mol_theme_shade);\n\tborder-bottom: 1px solid var(--mol_theme_line);\n}\n\n[mol_calendar_holiday] {\n\tcolor: var(--mol_theme_special);\n}\n\n[mol_calendar_today] {\n\tfont-weight: bolder;\n}\n\n[mol_calendar_ghost] {\n\topacity: .2;\n}\n");
 })($ || ($ = {}));
 //mol/calendar/-css/calendar.view.css.ts
 ;

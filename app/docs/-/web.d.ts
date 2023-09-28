@@ -5349,6 +5349,7 @@ declare namespace $ {
         day_ghost(id: any): boolean;
         day_holiday(id: any): boolean;
         day_selected(id: any): boolean;
+        day_today(id: any): boolean;
         day_theme(id: any): any;
         day_text(id: any): string;
         day_content(id: any): readonly any[];
@@ -5360,6 +5361,7 @@ declare namespace $ {
         holiday(): boolean;
         ghost(): boolean;
         selected(): boolean;
+        today(): boolean;
         theme(): any;
     }
 }
@@ -5379,8 +5381,9 @@ declare namespace $.$$ {
         week_days(index: number): $mol_view[];
         day_text(day: string): string;
         day_holiday(day: string): boolean;
+        today(): $mol_time_moment;
+        day_today(day: string): boolean;
         day_ghost(day: string): boolean;
-        day_selected(day: string): boolean;
         day_theme(day: string): any;
     }
 }

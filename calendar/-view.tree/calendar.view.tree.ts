@@ -73,6 +73,7 @@ namespace $ {
 		 * 	ghost <= day_ghost*
 		 * 	holiday <= day_holiday*
 		 * 	selected <= day_selected*
+		 * 	today <= day_today*
 		 * 	theme <= day_theme*
 		 * 	sub <= day_content*
 		 * ```
@@ -84,6 +85,7 @@ namespace $ {
 			obj.ghost = () => this.day_ghost(id)
 			obj.holiday = () => this.day_holiday(id)
 			obj.selected = () => this.day_selected(id)
+			obj.today = () => this.day_today(id)
 			obj.theme = () => this.day_theme(id)
 			obj.sub = () => this.day_content(id)
 			
@@ -245,6 +247,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * day_today* false
+		 * ```
+		 */
+		day_today(id: any) {
+			return false
+		}
+		
+		/**
+		 * ```tree
 		 * day_theme* null
 		 * ```
 		 */
@@ -299,6 +310,7 @@ namespace $ {
 		 * 	mol_calendar_holiday <= holiday
 		 * 	mol_calendar_ghost <= ghost
 		 * 	mol_calendar_selected <= selected
+		 * 	mol_calendar_today <= today
 		 * 	mol_theme <= theme
 		 * ```
 		 */
@@ -307,6 +319,7 @@ namespace $ {
 				mol_calendar_holiday: this.holiday(),
 				mol_calendar_ghost: this.ghost(),
 				mol_calendar_selected: this.selected(),
+				mol_calendar_today: this.today(),
 				mol_theme: this.theme()
 			} as Record< string, any >
 		}
@@ -335,6 +348,15 @@ namespace $ {
 		 * ```
 		 */
 		selected() {
+			return false
+		}
+		
+		/**
+		 * ```tree
+		 * today false
+		 * ```
+		 */
+		today() {
 			return false
 		}
 		
