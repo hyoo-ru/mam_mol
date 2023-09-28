@@ -2,7 +2,7 @@ namespace $.$$ {
 
 	type Primitive = string | number | boolean
 
-	type Value = readonly Primitive[] | Primitive
+	type Value = readonly Primitive[] | Primitive | Record<string, boolean>
 	type Model = Record<string, (next?: Value | null) => Value>
 
 	function norm_string(val: unknown) {
@@ -27,13 +27,8 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		value_arr_num( field: string, next? : readonly number[] | null ) {
-			return this.value( field, next )?.map(norm_number) ?? []
-		}
-
-		@ $mol_mem_key
-		value_arr_bool( field: string, next? : readonly boolean[] | null ) {
-			return this.value( field, next )?.map(norm_bool) ?? []
+		value_rec_str( field: string, next? : Record<string, boolean> | null ) {
+			return this.value( field, next ) ?? {}
 		}
 
 		@ $mol_mem_key
