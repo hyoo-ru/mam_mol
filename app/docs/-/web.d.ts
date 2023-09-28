@@ -6941,6 +6941,7 @@ declare namespace $ {
         Today(): $mol_button_minor;
         value(next?: any): string;
         input_mask(id: any): string;
+        value_changed(next?: any): string;
         Input(): $$.$mol_format;
         clear(event?: any): any;
         Clear_icon(): $mol_icon_trash_can_outline;
@@ -6997,10 +6998,12 @@ declare namespace $ {
         sub(): readonly any[];
         tags(): readonly any[];
         aspects(): readonly any[];
-        date(next?: any): $mol_time_moment;
-        Date(): $$.$mol_date;
+        date_current(next?: any): $mol_time_moment;
+        Current(): $$.$mol_date;
         formatted(): string;
         Formatted(): $mol_view;
+        date_empty(next?: any): any;
+        Empty(): $$.$mol_date;
     }
 }
 

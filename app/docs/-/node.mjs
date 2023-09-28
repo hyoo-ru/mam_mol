@@ -27252,6 +27252,9 @@ var $;
         input_mask(id) {
             return "";
         }
+        value_changed(next) {
+            return this.Input().value_changed(next);
+        }
         Input() {
             const obj = new this.$.$mol_format();
             obj.value = (next) => this.value(next);
@@ -27528,7 +27531,7 @@ var $;
             month_moment(next) {
                 if (next)
                     return next;
-                let moment = $mol_try(() => new $mol_time_moment(this.value()));
+                let moment = $mol_try(() => new $mol_time_moment(this.value_changed().replace(/\D+$/, '')));
                 if (moment instanceof Error || !moment.year)
                     return new $mol_time_moment;
                 if (moment.month === undefined) {
@@ -27587,8 +27590,9 @@ var $;
     class $mol_date_demo extends $mol_example_small {
         sub() {
             return [
-                this.Date(),
-                this.Formatted()
+                this.Current(),
+                this.Formatted(),
+                this.Empty()
             ];
         }
         tags() {
@@ -27604,15 +27608,15 @@ var $;
                 "Type/Date"
             ];
         }
-        date(next) {
+        date_current(next) {
             if (next !== undefined)
                 return next;
             const obj = new this.$.$mol_time_moment();
             return obj;
         }
-        Date() {
+        Current() {
             const obj = new this.$.$mol_date();
-            obj.value_moment = (next) => this.date(next);
+            obj.value_moment = (next) => this.date_current(next);
             return obj;
         }
         formatted() {
@@ -27625,16 +27629,32 @@ var $;
             ];
             return obj;
         }
+        date_empty(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        Empty() {
+            const obj = new this.$.$mol_date();
+            obj.value_moment = (next) => this.date_empty(next);
+            return obj;
+        }
     }
     __decorate([
         $mol_mem
-    ], $mol_date_demo.prototype, "date", null);
+    ], $mol_date_demo.prototype, "date_current", null);
     __decorate([
         $mol_mem
-    ], $mol_date_demo.prototype, "Date", null);
+    ], $mol_date_demo.prototype, "Current", null);
     __decorate([
         $mol_mem
     ], $mol_date_demo.prototype, "Formatted", null);
+    __decorate([
+        $mol_mem
+    ], $mol_date_demo.prototype, "date_empty", null);
+    __decorate([
+        $mol_mem
+    ], $mol_date_demo.prototype, "Empty", null);
     $.$mol_date_demo = $mol_date_demo;
 })($ || ($ = {}));
 //mol/date/demo/-view.tree/demo.view.tree.ts
@@ -27646,7 +27666,7 @@ var $;
     (function ($$) {
         class $mol_date_demo extends $.$mol_date_demo {
             formatted() {
-                return this.date()?.toString('DD Month YYYY hh:mm');
+                return this.date_current()?.toString('DD Month YYYY hh:mm');
             }
         }
         $$.$mol_date_demo = $mol_date_demo;

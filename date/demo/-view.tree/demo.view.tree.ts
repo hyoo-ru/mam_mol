@@ -4,14 +4,16 @@ namespace $ {
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Date
+		 * 	<= Current
 		 * 	<= Formatted
+		 * 	<= Empty
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Date(),
-				this.Formatted()
+				this.Current(),
+				this.Formatted(),
+				this.Empty()
 			] as readonly any[]
 		}
 		
@@ -47,11 +49,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * date? $mol_time_moment
+		 * date_current? $mol_time_moment
 		 * ```
 		 */
 		@ $mol_mem
-		date(next?: any) {
+		date_current(next?: any) {
 			if ( next !== undefined ) return next as never
 			const obj = new this.$.$mol_time_moment()
 			
@@ -60,14 +62,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Date $mol_date value_moment? <=> date?
+		 * Current $mol_date value_moment? <=> date_current?
 		 * ```
 		 */
 		@ $mol_mem
-		Date() {
+		Current() {
 			const obj = new this.$.$mol_date()
 			
-			obj.value_moment = (next?: any) => this.date(next)
+			obj.value_moment = (next?: any) => this.date_current(next)
 			
 			return obj
 		}
@@ -93,6 +95,31 @@ namespace $ {
 			obj.sub = () => [
 				this.formatted()
 			] as readonly any[]
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * date_empty? null
+		 * ```
+		 */
+		@ $mol_mem
+		date_empty(next?: any) {
+			if ( next !== undefined ) return next as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * Empty $mol_date value_moment? <=> date_empty?
+		 * ```
+		 */
+		@ $mol_mem
+		Empty() {
+			const obj = new this.$.$mol_date()
+			
+			obj.value_moment = (next?: any) => this.date_empty(next)
 			
 			return obj
 		}

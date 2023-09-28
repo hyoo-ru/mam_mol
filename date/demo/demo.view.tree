@@ -1,10 +1,12 @@
 $mol_date_demo $mol_example_small
 	sub /
-		<= Date $mol_date
-			value_moment? <=> date? $mol_time_moment
+		<= Current $mol_date
+			value_moment? <=> date_current? $mol_time_moment
 		<= Formatted $mol_view
 			sub /
 				<= formatted \
+		<= Empty $mol_date
+			value_moment? <=> date_empty? null
 	tags /
 		\time
 		\datepicker

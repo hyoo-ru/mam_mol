@@ -128,8 +128,18 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * value_changed?
+		 * ```
+		 */
+		value_changed(next?: any) {
+			return this.Input().value_changed(next)
+		}
+		
+		/**
+		 * ```tree
 		 * Input $mol_format
 		 * 	value? <=> value?
+		 * 	value_changed? => value_changed?
 		 * 	mask* <= input_mask*
 		 * 	enabled <= enabled
 		 * ```
