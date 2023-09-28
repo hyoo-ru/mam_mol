@@ -60,12 +60,7 @@ namespace $.$$ {
 				this.After( ids.at(-1) ?? null ),
 			]
 			
-		}		tmp_after_add(criteria: Criteria, item: Item) {
-			const chunk = this.nearest_chunk(criteria)
-			if (! chunk) return
-			this.after(criteria, [ ...chunk, item ])
 		}
-
 		
 	}
 
