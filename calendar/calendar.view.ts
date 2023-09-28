@@ -91,15 +91,20 @@ namespace $.$$ {
 		day_holiday( day : string ) {
 			return this.weekend( new $mol_time_moment( day ).weekday )
 		}
+		
+		@ $mol_mem
+		today() {
+			return new $mol_time_moment()
+		}
+
+		@ $mol_mem_key
+		day_today( day : string ) {
+			return this.today().toString( 'YYYY-MM-DD' ) === day
+		}
 
 		@ $mol_mem_key
 		day_ghost( day : string ) {
 			return new $mol_time_moment( day ).toString( 'YYYY-MM' ) !== this.day_first().toString( 'YYYY-MM' )
-		}
-
-		@ $mol_mem_key
-		day_selected( day : string ) {
-			return new $mol_time_moment().toString( 'YYYY-MM-DD' ) === day
 		}
 
 		day_theme( day : string ) {
