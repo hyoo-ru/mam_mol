@@ -89,7 +89,7 @@ namespace $.$$ {
 
 			if( next ) return next
 
-			let moment = $mol_try( ()=> new $mol_time_moment( this.value() ) )
+			let moment = $mol_try( ()=> new $mol_time_moment( this.value_changed().replace( /\D+$/, '' ) ) )
 			if( moment instanceof Error || !moment.year ) return new $mol_time_moment
 
 			if( moment.month === undefined ) {

@@ -11,6 +11,7 @@ $mol_date $mol_pick
 					<= Today_icon $mol_icon_calendar_today
 			<= Input $mol_format
 				value? <=> value? \
+				value_changed? => value_changed?
 				mask* <= input_mask* \
 				enabled <= enabled true
 			<= Clear $mol_button_minor
