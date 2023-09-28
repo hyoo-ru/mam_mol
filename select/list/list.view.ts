@@ -6,7 +6,7 @@ namespace $.$$ {
 	 */
 	export class $mol_select_list extends $.$mol_select_list {
 
-		override value( val? : string[] ) {
+		override value( val? : readonly string[] ) {
 			return super.value( val ) as readonly string[]
 		}
 
