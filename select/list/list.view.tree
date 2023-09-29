@@ -10,8 +10,6 @@ $mol_select_list $mol_view
 	filter_auto_clean true
 	sub /$mol_view
 		<= Pick $mol_select
-			bubble_minimal_width <= bubble_minimal_width 200
-			bubble_minimal_height <= bubble_minimal_height 30
 			align_hor <= align_hor \right
 			options <= options_pickable <= options /string
 			value? <=> pick? \

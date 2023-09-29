@@ -24,8 +24,7 @@ $mol_select $mol_pick
 		<= Bubble_pane $mol_scroll
 			sub /
 				<= Menu $mol_list
-					minimal_width <= bubble_minimal_width 200
-					minimal_height <= bubble_minimal_height 30
+					minimal_height 30
 					rows <= menu_content /$mol_view
 	Filter $mol_search
 		query? <=> filter_pattern? \

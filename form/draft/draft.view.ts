@@ -37,7 +37,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		value_rec_bool( field: string, next? : Record<string, boolean> | null ): Record<string, boolean> {
+		dictionary_bool( field: string, next? : Record<string, boolean> | null ): Record<string, boolean> {
 			if (next) {
 				const prev = this.model_pick(field) as Record<string, boolean>
 				const normalized = {} as typeof next

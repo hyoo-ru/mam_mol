@@ -22,7 +22,7 @@ $mol_form_draft_demo $mol_example
 			submit_allowed => publish_allowed
 			value_str*? => value_str*?
 			list_string*? => list_string*?
-			value_rec_bool*? => value_rec_bool*?
+			dictionary_bool*? => dictionary_bool*?
 			changed => changed
 			reset? => reset?
 			form_fields /
@@ -62,7 +62,7 @@ $mol_form_draft_demo $mol_example
 				<= Hobbies_field $mol_form_field
 					name \Hobbies
 					Content <= Hobbies $mol_check_list
-						dictionary_checked? <=> value_rec_bool*hobbies?
+						dictionary_checked? <=> dictionary_bool*hobbies?
 						options *
 							programming \Programming
 							bikinkg \Biking
