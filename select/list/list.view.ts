@@ -18,7 +18,7 @@ namespace $.$$ {
 
 			new $mol_after_frame(()=> {
 				if( !this.pick_enabled() ) return
-				this.Pick().filter_pattern( '' )
+				if (this.filter_auto_clean()) this.Pick().filter_pattern( '' )
 				this.Pick().Trigger().focused( true )
 				this.Pick().open()
 			})
