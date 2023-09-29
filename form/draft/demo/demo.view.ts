@@ -8,6 +8,7 @@ namespace $.$$ {
 				this.Title_field(),
 				this.Config(),
 				... this.value_str( 'type' ) ? [ this.Content_field() ] : [],
+				this.Friends_field(),
 			]
 		}
 		
