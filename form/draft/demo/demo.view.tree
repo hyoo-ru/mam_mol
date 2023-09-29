@@ -24,6 +24,7 @@ $mol_form_draft_demo $mol_example
 			list_string*? => list_string*?
 			value_rec_bool*? => value_rec_bool*?
 			changed => changed
+			reset? => reset?
 			form_fields /
 				<= Title_field $mol_form_field
 					name \Title
@@ -93,6 +94,10 @@ $mol_form_draft_demo $mol_example
 					enabled <= publish_allowed
 				<= Result $mol_status
 					message <= result? \
+				<= Reset $mol_button_minor
+					title \Сбросить
+					click? <=> reset?
+					enabled <= changed
 	tags /
 		\$mol_form_field
 		\$mol_button

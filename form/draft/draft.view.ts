@@ -55,11 +55,23 @@ namespace $.$$ {
 		value_bool( field: string, next? : boolean | null ) {
 			return norm_bool( this.value( field, next ) )
 		}
-		
+
+		model_pick(field: string, next?: Value | null) {
+			return (this.model() as unknown as Model)[field](next)
+		}
+
+		state_pick(field: string, next?: Value | null) {
+			return this.state( next === undefined ? next : { ... this.state(), [ field ]: next } )[ field ]
+		}
+
 		@ $mol_mem_key
-		value<T extends Value>( field: string, next?: T | null ) {
-			return this.state( next?.valueOf && { ... this.state(), [ field ]: next } )[ field ] as T | undefined
-				?? ( this.model() as unknown as Model )[ field ]() as T
+		value<T extends Value>( field: string, next?: T | null ): T {
+			return this.state_pick(field, next) as T ?? this.model_pick(field)
+		}
+
+		@ $mol_mem_key
+		value_changed(field: string) {
+			return ! $mol_compare_deep(this.state_pick(field), this.model_pick(field))
 		}
 		
 		@ $mol_mem
@@ -69,21 +81,23 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		changed() {
-			return Object.keys( this.state() ).length > 0
+			return Object.keys(this.state()).some(field => this.value_changed(field))
 		}
 		
 		submit_allowed() {
 			return this.changed() && super.submit_allowed()
 		}
 
+		reset() {
+			this.state(null)
+		}
+
 		@ $mol_action
 		submit( next? : Event ) {
 			
-			const model = this.model() as unknown as Model
-
 			const tasks = Object.entries( this.state() ).map(
 				([ field, next ]) => () => {
-					const prev = model[ field ]()
+					const prev = this.model_pick(field)
 
 					return {
 						field,
@@ -94,9 +108,9 @@ namespace $.$$ {
 
 			const normalized = $mol_wire_race(...tasks)
 
-			$mol_wire_race(...normalized.map(({ field, next }) => () => model[ field ]( next )))
+			$mol_wire_race(...normalized.map(({ field, next }) => () => this.model_pick( field, next )))
 			
-			this.state( null )
+			this.reset()
 			
 		}
 		
