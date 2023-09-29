@@ -6,15 +6,15 @@ namespace $.$$ {
 	type Model = Record<string, (next?: Value | null) => Value>
 
 	function norm_string(val: unknown) {
-		return String(val) ?? ''
+		return String(val ?? '')
 	}
 
 	function norm_number(val: unknown) {
-		return Number(val) ?? 0
+		return Number(val ?? 0)
 	}
 
 	function norm_bool(val: unknown) {
-		return Boolean(val) ?? false
+		return Boolean(val ?? false)
 	}
 
 	function normalize_val(prev: Value, next: Value | null) {
@@ -38,7 +38,17 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		value_rec_bool( field: string, next? : Record<string, boolean> | null ) {
-			return this.value( field, next ) ?? {}
+			if (next) {
+				const prev = this.model_pick(field) as Record<string, boolean>
+				const normalized = {} as typeof next
+				for (const key in next) {
+					if (next[key] || key in prev ) normalized[key] = next[key]
+				}
+
+				return this.value( field, normalized ) ?? {}
+			}
+
+			return this.value( field ) ?? {}
 		}
 
 		@ $mol_mem_key
@@ -66,12 +76,17 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		value<T extends Value>( field: string, next?: T | null ): T {
+			if (Array.isArray(next) && next.length === 0 && ! this.model_pick(field)) next = null
 			return this.state_pick(field, next) as T ?? this.model_pick(field)
 		}
 
 		@ $mol_mem_key
 		value_changed(field: string) {
-			return ! $mol_compare_deep(this.state_pick(field), this.model_pick(field))
+			const next = this.state_pick(field)
+			const prev = this.model_pick(field)
+			const next_norm = normalize_val(prev, next)
+
+			return ! $mol_compare_deep(next_norm, prev)
 		}
 		
 		@ $mol_mem
