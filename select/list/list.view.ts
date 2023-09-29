@@ -46,8 +46,8 @@ namespace $.$$ {
 			return value == null ? key : value
 		}
 		
-		override badge_title( index: number ) {
-			return this.option_title( this.value()[ index ] )
+		override badge_title( key: string ) {
+			return this.option_title( key )
 		}
 		
 		@ $mol_mem
@@ -57,7 +57,7 @@ namespace $.$$ {
 
 		override Badges() {
 			return this.value()
-				.map( ( _, index )=> this.Badge( index ) )
+				.map( id => this.Badge( id ) )
 				.reverse()
 		}
 
@@ -67,12 +67,8 @@ namespace $.$$ {
 		}
 
 		@ $mol_action
-		override remove( index: number ) {
-			const value = this.value()
-			this.value([
-				... value.slice( 0 , index ),
-				... value.slice( index + 1 ),
-			])
+		override remove( key: string ) {
+			this.value(this.value().filter(id => id !== key))
 		}
 
 	}
