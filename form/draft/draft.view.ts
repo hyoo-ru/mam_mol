@@ -32,7 +32,7 @@ namespace $.$$ {
 	 */
 	export class $mol_form_draft extends $.$mol_form_draft {
 		@ $mol_mem_key
-		value_arr_str( field: string, next? : readonly string[] | null ) {
+		list_string( field: string, next? : readonly string[] | null ) {
 			return this.value( field, next )?.map(norm_string) ?? []
 		}
 

@@ -10,18 +10,18 @@ namespace $.$$ {
 			return {}
 		}
 
-		override options_checked(next?: Record<string, boolean>) {
+		override dictionary_checked(next?: Record<string, boolean>) {
 			return next ?? {}
 		}
 
 		override option_checked(id: string, next?: boolean | null) {
-			const prev = this.options_checked()
-			if (next === undefined) return prev[id]
+			const prev = this.dictionary_checked()
+			if (next === undefined) return prev[id] ?? null
 
 			const next_rec = { ... prev, [id]: next } as Record<string, boolean>
 			if (next === null) delete next_rec[id]
 
-			return this.options_checked(next_rec)[id]
+			return this.dictionary_checked(next_rec)[id] ?? null
 		}
 
 		@ $mol_mem

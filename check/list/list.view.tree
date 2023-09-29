@@ -1,5 +1,5 @@
 $mol_check_list $mol_view
-	options_checked *
+	dictionary_checked *
 	Option* $mol_check
 		checked? <=> option_checked*? false
 		label <= option_label* /
