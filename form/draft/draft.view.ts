@@ -17,6 +17,16 @@ namespace $.$$ {
 		return Boolean(val) ?? false
 	}
 
+	function normalize_val(prev: Value, next: Value | null) {
+		switch( typeof prev ) {
+			case 'boolean': return String( next ) === 'true'
+			case 'number': return Number( next )
+			case 'string': return String( next )
+		}
+
+		return next
+	}
+
 	/**
 	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_form_draft_demo
 	 */
@@ -27,7 +37,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		value_rec_str( field: string, next? : Record<string, boolean> | null ) {
+		value_rec_bool( field: string, next? : Record<string, boolean> | null ) {
 			return this.value( field, next ) ?? {}
 		}
 
@@ -70,16 +80,21 @@ namespace $.$$ {
 		submit( next? : Event ) {
 			
 			const model = this.model() as unknown as Model
-			
-			for( let [ field, next ] of Object.entries( this.state() ) ) {
-				const prev = model[ field ]()
-				switch( typeof prev ) {
-					case 'boolean': next = String( next ) === 'true'; break
-					case 'number': next = Number( next ); break
-					case 'string': next = String( next ); break
+
+			const tasks = Object.entries( this.state() ).map(
+				([ field, next ]) => () => {
+					const prev = model[ field ]()
+
+					return {
+						field,
+						next: normalize_val(prev, next)
+					}
 				}
-				model[ field ]( next )
-			}
+			)
+
+			const normalized = $mol_wire_race(...tasks)
+
+			$mol_wire_race(...normalized.map(({ field, next }) => () => model[ field ]( next )))
 			
 			this.state( null )
 			

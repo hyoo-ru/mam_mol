@@ -4,6 +4,7 @@ $mol_form_draft_demo_article $mol_object2
 	adult? false
 	content? \
 	friends? /string
+	hobbies? *
 
 $mol_form_draft_demo $mol_example
 	title \Article draft form demo
@@ -21,6 +22,7 @@ $mol_form_draft_demo $mol_example
 			submit_allowed => publish_allowed
 			value_str*? => value_str*?
 			value_arr_str*? => value_arr_str*?
+			value_rec_bool*? => value_rec_bool*?
 			changed => changed
 			form_fields /
 				<= Title_field $mol_form_field
@@ -56,6 +58,14 @@ $mol_form_draft_demo $mol_example
 					Content <= Content $mol_textarea
 						hint \Long long story..
 						value? <=> value_str*content?
+				<= Hobbies_field $mol_form_field
+					name \Hobbies
+					Content <= Hobbies $mol_check_list
+						options_checked? <=> value_rec_bool*hobbies?
+						options *
+							programming \Programming
+							bikinkg \Biking
+							fishing \Fishing
 				<= Friends_field $mol_form_field
 					name \Friends
 					Content <= Friends $mol_select_list

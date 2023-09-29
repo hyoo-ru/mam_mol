@@ -7,6 +7,7 @@ namespace $.$$ {
 			return [
 				this.Title_field(),
 				this.Config(),
+				this.Hobbies_field(),
 				... this.value_str( 'type' ) ? [ this.Content_field() ] : [],
 				this.Friends_field(),
 			]
