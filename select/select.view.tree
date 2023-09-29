@@ -26,7 +26,7 @@ $mol_select $mol_pick
 				rows <= menu_content /$mol_view
 	Filter $mol_string
 		value? <=> filter_pattern? \
-		hint @ \Filter..
+		hint <= filter_hint @ \Filter..
 		submit?event <=> submit?event null
 		enabled <= enabled true
 	Trigger_icon $mol_icon_dots_vertical
