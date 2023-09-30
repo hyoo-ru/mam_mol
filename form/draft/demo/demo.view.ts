@@ -44,6 +44,12 @@ namespace $.$$ {
 			super.publish()
 			this.result( this.message_done() )
 		}
+
+		override friends_suggestions() {
+			if (! this.friends_showed()) return {}
+			this.$.$mol_wait_timeout(1000)
+			return super.friends_suggestions()
+		}
 		
 	}
 }

@@ -7,9 +7,10 @@ $mol_select_list $mol_view
 		click?event <=> remove*?event null
 		hint <= badge_hint @ \Drop
 		enabled <= drop_enabled <= enabled true
-	filter_auto_clean true
 	sub /$mol_view
 		<= Pick $mol_select
+			showed? <=> showed? false
+			event_select*? <=> event_select*? null
 			align_hor <= align_hor \right
 			options <= options_pickable <= options /string
 			value? <=> pick? \

@@ -16,14 +16,12 @@ namespace $.$$ {
 			if( !key ) return ''
 			this.value([ ... this.value() , key ])
 
-			new $mol_after_frame(()=> {
-				if( !this.pick_enabled() ) return
-				if (this.filter_auto_clean()) this.Pick().filter_pattern( '' )
-				this.Pick().Trigger().focused( true )
-				this.Pick().open()
-			})
-			
 			return ''
+		}
+
+		override event_select( id : string , event? : MouseEvent ) {
+			event?.preventDefault()
+			this.pick( id )
 		}
 
 		@ $mol_mem

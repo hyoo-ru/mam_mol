@@ -70,6 +70,8 @@ $mol_form_draft_demo $mol_example
 				<= Friends_field $mol_form_field
 					name \Friends
 					Content <= Friends $mol_select_list
+						pick_enabled true
+						showed => friends_showed
 						dictionary <= friends_suggestions *
 							jocker \Jocker
 							harley \Harley Quinn
