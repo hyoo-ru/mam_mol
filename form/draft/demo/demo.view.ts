@@ -47,9 +47,14 @@ namespace $.$$ {
 
 		@ $mol_mem
 		override friends_suggestions() {
-			if (! this.friends_showed()) return {}
 			this.$.$mol_wait_timeout(500)
+			this.friends_filter_pattern()
 			return super.friends_suggestions()
+		}
+
+		override friends_option_title(id: string) {
+			if (! id) return ''
+			return this.friends_suggestions()[id]
 		}
 		
 	}

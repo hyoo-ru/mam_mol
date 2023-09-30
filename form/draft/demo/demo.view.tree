@@ -71,7 +71,8 @@ $mol_form_draft_demo $mol_example
 					name \Friends
 					Content <= Friends $mol_select_list
 						pick_enabled true
-						showed => friends_showed
+						filter_pattern => friends_filter_pattern
+						option_title* <= friends_option_title* \
 						dictionary <= friends_suggestions *
 							jocker \Jocker
 							harley \Harley Quinn

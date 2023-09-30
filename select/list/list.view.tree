@@ -9,7 +9,6 @@ $mol_select_list $mol_view
 		enabled <= drop_enabled <= enabled true
 	sub /$mol_view
 		<= Pick $mol_select
-			showed? <=> showed? false
 			event_select*? <=> event_select*? null
 			align_hor <= align_hor \right
 			options <= options_pickable <= options /string
