@@ -45,9 +45,10 @@ namespace $.$$ {
 			this.result( this.message_done() )
 		}
 
+		@ $mol_mem
 		override friends_suggestions() {
 			if (! this.friends_showed()) return {}
-			this.$.$mol_wait_timeout(1000)
+			this.$.$mol_wait_timeout(500)
 			return super.friends_suggestions()
 		}
 		
