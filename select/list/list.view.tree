@@ -16,7 +16,6 @@ $mol_select_list $mol_view
 			option_label* <= option_title* \
 			trigger_enabled <= pick_enabled <= enabled true
 			hint <= pick_hint @ \Add..
-			filter_pattern? <=> filter_pattern? \
-			filter_hint <= filter_hint @ \Filter..
+			filter_pattern? => filter_pattern?
 			Trigger_icon <= Pick_icon $mol_icon_plus
 		^ badges_list

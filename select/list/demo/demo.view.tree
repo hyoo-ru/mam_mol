@@ -5,6 +5,9 @@ $mol_select_list_demo $mol_example_small
 			rows /
 				<= Friends $mol_select_list
 					value? <=> friends? /
+					option_title* <= option_title* \
+					filter_pattern? => filter_pattern?
+					pick_enabled true
 					dictionary <= suggestions *
 						jocker \Jocker
 						harley \Harley Quinn
@@ -16,6 +19,7 @@ $mol_select_list_demo $mol_example_small
 						mask \Black Mask
 				<= Friends_disabled $mol_select_list
 					value? <=> friends? /
+					option_title* <= option_title* \
 					dictionary <= suggestions
 					enabled false
 	tags /
