@@ -3,6 +3,8 @@ $mol_form_draft_demo_article $mol_object2
 	type? \
 	adult? false
 	content? \
+	friends? /string
+	hobbies? *
 
 $mol_form_draft_demo $mol_example
 	title \Article draft form demo
@@ -19,7 +21,10 @@ $mol_form_draft_demo $mol_example
 			submit? => publish?
 			submit_allowed => publish_allowed
 			value_str*? => value_str*?
+			list_string*? => list_string*?
+			dictionary_bool*? => dictionary_bool*?
 			changed => changed
+			reset? => reset?
 			form_fields /
 				<= Title_field $mol_form_field
 					name \Title
@@ -54,12 +59,34 @@ $mol_form_draft_demo $mol_example
 					Content <= Content $mol_textarea
 						hint \Long long story..
 						value? <=> value_str*content?
+				<= Hobbies_field $mol_form_field
+					name \Hobbies
+					Content <= Hobbies $mol_check_list
+						dictionary? <=> dictionary_bool*hobbies?
+						options *
+							programming \Programming
+							bikinkg \Biking
+							fishing \Fishing
+				<= Friends_field $mol_form_field
+					name \Friends
+					Content <= Friends $mol_select_list
+						dictionary *
+							jocker \Jocker
+							harley \Harley Quinn
+							penguin \Penguin
+							riddler \Riddler
+							bane \Bane
+							freeze \Mister Freeze
+							clay \Clayface
+							mask \Black Mask
+						value? <=> list_string*friends?
 			body <= form_body /
 				<= Title_field
 				<= Config $mol_form_group sub /
 					<= Adult_field
 					<= Type_field
 				<= Content_field
+				<= Friends_field
 			buttons /
 				<= Publish $mol_button_major
 					title \Publish
@@ -67,6 +94,10 @@ $mol_form_draft_demo $mol_example
 					enabled <= publish_allowed
 				<= Result $mol_status
 					message <= result? \
+				<= Reset $mol_button_minor
+					title \Сбросить
+					click? <=> reset?
+					enabled <= changed
 	tags /
 		\$mol_form_field
 		\$mol_button

@@ -18,6 +18,12 @@ $mol_select_list_demo $mol_example_small
 					value? <=> friends? /
 					dictionary <= suggestions
 					enabled false
+				<= Friends_lazy $mol_select_list
+					value? <=> friends_lazy? /
+					option_title* <= option_title* \
+					filter_pattern? => filter_pattern?
+					pick_enabled true
+					dictionary <= suggestions_lazy <= suggestions
 	tags /
 		\select
 		\tags
