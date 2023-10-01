@@ -1,6 +1,8 @@
 {
 	"$mol_app_report_title": "Pump #1337 - Technical passport",
-	"$mol_select_Filter_hint": "Filter..",
+	"$mol_search_Clear_hint": "Clear",
+	"$mol_search_hint": "Search...",
+	"$mol_select_filter_hint": "Filter..",
 	"$mol_select_hint": "Pick..",
 	"$mol_select_no_options_message": "No options"
 }

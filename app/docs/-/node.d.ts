@@ -4024,7 +4024,7 @@ declare namespace $ {
         plugins(): readonly any[];
         hint(): string;
         bubble_content(): readonly any[];
-        Filter(): $$.$mol_string;
+        Filter(): $$.$mol_search;
         Trigger_icon(): $mol_icon_dots_vertical;
         event_select(id: any, event?: any): any;
         option_label(id: any): string;
@@ -4039,6 +4039,7 @@ declare namespace $ {
         menu_content(): readonly $mol_view[];
         Menu(): $$.$mol_list;
         Bubble_pane(): $$.$mol_scroll;
+        filter_hint(): string;
         submit(event?: any): any;
         enabled(): boolean;
     }
@@ -4056,9 +4057,9 @@ declare namespace $.$$ {
         options_filtered(): readonly string[];
         option_label(id: string): any;
         option_rows(): $mol_button_minor[];
-        option_focused(component?: $mol_view): $mol_view | $mol_string | $mol_button_minor | null;
+        option_focused(component?: $mol_view): $mol_view | $mol_search | $mol_button_minor | null;
         event_select(id: string, event?: MouseEvent): void;
-        nav_components(): ($mol_string | $mol_button_minor)[];
+        nav_components(): ($mol_search | $mol_button_minor)[];
         trigger_content(): readonly $mol_view_content[];
         menu_content(): ($mol_view | $mol_button_minor)[];
     }
@@ -6300,6 +6301,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_check_list extends $mol_view {
+        dictionary(): Record<string, any>;
         Option(id: any): $$.$mol_check;
         options(): Record<string, any>;
         keys(): readonly string[];
@@ -6319,6 +6321,8 @@ declare namespace $.$$ {
         options(): {
             [key: string]: string;
         };
+        dictionary(next?: Record<string, boolean>): Record<string, boolean>;
+        option_checked(id: string, next?: boolean | null): boolean;
         keys(): readonly string[];
         items(): $mol_check[];
         option_title(key: string): string;
@@ -7379,19 +7383,74 @@ declare namespace $ {
 }
 
 declare namespace $.$$ {
-    class $mol_form_draft extends $.$mol_form_draft {
+    type Primitive = string | number | boolean;
+    type Value = readonly Primitive[] | Primitive | Record<string, boolean>;
+    export class $mol_form_draft extends $.$mol_form_draft {
+        list_string(field: string, next?: readonly string[] | null): string[];
+        dictionary_bool(field: string, next?: Record<string, boolean> | null): Record<string, boolean>;
         value_str(field: string, next?: string | null): string;
         value_numb(field: string, next?: boolean | null): number;
         value_bool(field: string, next?: boolean | null): boolean;
-        value(field: string, next?: string | number | boolean | null): any;
-        state(next?: Record<string, string | number | boolean | null> | null): Record<string, string | number | boolean | null>;
+        model_pick(field: string, next?: Value | null): Value;
+        state_pick(field: string, next?: Value | null): Value | null;
+        value<T extends Value>(field: string, next?: T | null): T;
+        value_changed(field: string): boolean;
+        state(next?: Record<string, Value | null> | null): Record<string, Value | null>;
         changed(): boolean;
         submit_allowed(): boolean;
+        reset(next?: unknown): void;
         submit(next?: Event): void;
     }
+    export {};
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_select_list extends $mol_view {
+        value(next?: any): readonly string[];
+        dictionary(): Record<string, any>;
+        badges_list(): readonly $mol_view[];
+        Badge(id: any): $mol_button_minor;
+        sub(): readonly $mol_view[];
+        Badges(): readonly $mol_view[];
+        badge_title(id: any): string;
+        remove(id: any, event?: any): any;
+        badge_hint(): string;
+        enabled(): boolean;
+        drop_enabled(): boolean;
+        event_select(id: any, next?: any): any;
+        align_hor(): string;
+        options(): readonly string[];
+        options_pickable(): readonly string[];
+        pick(next?: any): string;
+        option_title(id: any): string;
+        pick_enabled(): boolean;
+        pick_hint(): string;
+        Pick_icon(): $mol_icon_plus;
+        filter_pattern(next?: any): string;
+        Pick(): $$.$mol_select;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_select_list extends $.$mol_select_list {
+        value(val?: readonly string[]): readonly string[];
+        pick(key?: string): string;
+        event_select(id: string, event?: MouseEvent): void;
+        options(): readonly string[];
+        options_pickable(): readonly string[];
+        option_title(key: string): string;
+        badge_title(key: string): string;
+        pick_enabled(): boolean;
+        Badges(): $mol_button_minor[];
+        title(): string;
+        remove(key: string): void;
+    }
+}
+
+declare namespace $.$$ {
 }
 
 declare namespace $ {
@@ -7400,6 +7459,8 @@ declare namespace $ {
         type(next?: any): string;
         adult(next?: any): boolean;
         content(next?: any): string;
+        friends(next?: any): readonly string[];
+        hobbies(next?: any): Record<string, any>;
     }
     class $mol_form_draft_demo extends $mol_example {
         title(): string;
@@ -7420,15 +7481,23 @@ declare namespace $ {
         Adult_field(): $$.$mol_form_field;
         Content(): $$.$mol_textarea;
         Content_field(): $$.$mol_form_field;
+        Hobbies(): $$.$mol_check_list;
+        Hobbies_field(): $$.$mol_form_field;
+        Friends(): $$.$mol_select_list;
+        Friends_field(): $$.$mol_form_field;
         Config(): $mol_form_group;
         form_body(): readonly any[];
         Publish(): $mol_button_major;
         result(next?: any): string;
         Result(): $$.$mol_status;
+        Reset(): $mol_button_minor;
         publish(next?: any): void;
         publish_allowed(): boolean;
         value_str(id: any, next?: any): string;
+        list_string(id: any, next?: any): string[];
+        dictionary_bool(id: any, next?: any): Record<string, boolean>;
         changed(): boolean;
+        reset(next?: any): void;
         Form(): $$.$mol_form_draft;
     }
 }
@@ -9395,49 +9464,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_select_list extends $mol_view {
-        value(next?: any): readonly string[];
-        dictionary(): Record<string, any>;
-        badges_list(): readonly $mol_view[];
-        Badge(id: any): $mol_button_minor;
-        sub(): readonly $mol_view[];
-        Badges(): readonly $mol_view[];
-        badge_title(id: any): string;
-        remove(id: any, event?: any): any;
-        badge_hint(): string;
-        enabled(): boolean;
-        drop_enabled(): boolean;
-        align_hor(): string;
-        options(): readonly string[];
-        options_pickable(): readonly string[];
-        pick(next?: any): string;
-        option_title(id: any): string;
-        pick_enabled(): boolean;
-        pick_hint(): string;
-        Pick_icon(): $mol_icon_plus;
-        Pick(): $$.$mol_select;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_select_list extends $.$mol_select_list {
-        value(val?: string[]): readonly string[];
-        pick(key?: string): string;
-        options(): readonly string[];
-        options_pickable(): readonly string[];
-        option_title(key: string): string;
-        badge_title(index: number): string;
-        pick_enabled(): boolean;
-        Badges(): $mol_button_minor[];
-        title(): string;
-        remove(index: number): void;
-    }
-}
-
-declare namespace $.$$ {
-}
-
-declare namespace $ {
     class $mol_select_list_demo extends $mol_example_small {
         title(): string;
         sub(): readonly any[];
@@ -9447,7 +9473,19 @@ declare namespace $ {
         suggestions(): Record<string, any>;
         Friends(): $$.$mol_select_list;
         Friends_disabled(): $$.$mol_select_list;
+        friends_lazy(next?: any): readonly any[];
+        option_title(id: any): string;
+        suggestions_lazy(): Record<string, any>;
+        filter_pattern(next?: any): string;
+        Friends_lazy(): $$.$mol_select_list;
         Demo_items(): $$.$mol_list;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_select_list_demo extends $.$mol_select_list_demo {
+        suggestions_lazy(): Record<string, any>;
+        option_title(id: string): any;
     }
 }
 

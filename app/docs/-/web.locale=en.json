@@ -31,7 +31,7 @@
 	"$mol_paginator_forward_hint": "Forward",
 	"$mol_search_Clear_hint": "Clear",
 	"$mol_search_hint": "Search...",
-	"$mol_select_Filter_hint": "Filter..",
+	"$mol_select_filter_hint": "Filter..",
 	"$mol_select_hint": "Pick..",
 	"$mol_select_list_badge_hint": "Drop",
 	"$mol_select_list_pick_hint": "Add..",

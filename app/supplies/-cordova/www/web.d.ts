@@ -2499,6 +2499,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_check_list extends $mol_view {
+        dictionary(): Record<string, any>;
         Option(id: any): $$.$mol_check;
         options(): Record<string, any>;
         keys(): readonly string[];
@@ -2518,6 +2519,8 @@ declare namespace $.$$ {
         options(): {
             [key: string]: string;
         };
+        dictionary(next?: Record<string, boolean>): Record<string, boolean>;
+        option_checked(id: string, next?: boolean | null): boolean;
         keys(): readonly string[];
         items(): $mol_check[];
         option_title(key: string): string;

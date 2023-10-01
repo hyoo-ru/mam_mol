@@ -115,19 +115,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Filter $mol_string
-		 * 	value? <=> filter_pattern?
-		 * 	hint @ \Filter..
+		 * Filter $mol_search
+		 * 	query? <=> filter_pattern?
+		 * 	hint <= filter_hint
 		 * 	submit?event <=> submit?event
 		 * 	enabled <= enabled
 		 * ```
 		 */
 		@ $mol_mem
 		Filter() {
-			const obj = new this.$.$mol_string()
+			const obj = new this.$.$mol_search()
 			
-			obj.value = (next?: any) => this.filter_pattern(next)
-			obj.hint = () => this.$.$mol_locale.text( '$mol_select_Filter_hint' )
+			obj.query = (next?: any) => this.filter_pattern(next)
+			obj.hint = () => this.filter_hint()
 			obj.submit = (event?: any) => this.submit(event)
 			obj.enabled = () => this.enabled()
 			
@@ -303,6 +303,15 @@ namespace $ {
 			] as readonly any[]
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * filter_hint @ \Filter..
+		 * ```
+		 */
+		filter_hint() {
+			return this.$.$mol_locale.text( '$mol_select_filter_hint' )
 		}
 		
 		/**

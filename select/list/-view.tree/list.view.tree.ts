@@ -126,6 +126,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * event_select*? null
+		 * ```
+		 */
+		@ $mol_mem_key
+		event_select(id: any, next?: any) {
+			if ( next !== undefined ) return next as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * align_hor \right
 		 * ```
 		 */
@@ -204,13 +215,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * filter_pattern?
+		 * ```
+		 */
+		filter_pattern(next?: any) {
+			return this.Pick().filter_pattern(next)
+		}
+		
+		/**
+		 * ```tree
 		 * Pick $mol_select
+		 * 	event_select*? <=> event_select*?
 		 * 	align_hor <= align_hor
 		 * 	options <= options_pickable
 		 * 	value? <=> pick?
 		 * 	option_label* <= option_title*
 		 * 	trigger_enabled <= pick_enabled
 		 * 	hint <= pick_hint
+		 * 	filter_pattern? => filter_pattern?
 		 * 	Trigger_icon <= Pick_icon
 		 * ```
 		 */
@@ -218,6 +240,7 @@ namespace $ {
 		Pick() {
 			const obj = new this.$.$mol_select()
 			
+			obj.event_select = (id: any, next?: any) => this.event_select(id, next)
 			obj.align_hor = () => this.align_hor()
 			obj.options = () => this.options_pickable()
 			obj.value = (next?: any) => this.pick(next)

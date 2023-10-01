@@ -127,9 +127,71 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * friends_lazy? /
+		 * ```
+		 */
+		@ $mol_mem
+		friends_lazy(next?: any) {
+			if ( next !== undefined ) return next as never
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * option_title* \
+		 * ```
+		 */
+		option_title(id: any) {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * suggestions_lazy <= suggestions
+		 * ```
+		 */
+		suggestions_lazy() {
+			return this.suggestions()
+		}
+		
+		/**
+		 * ```tree
+		 * filter_pattern?
+		 * ```
+		 */
+		filter_pattern(next?: any) {
+			return this.Friends_lazy().filter_pattern(next)
+		}
+		
+		/**
+		 * ```tree
+		 * Friends_lazy $mol_select_list
+		 * 	value? <=> friends_lazy?
+		 * 	option_title* <= option_title*
+		 * 	filter_pattern? => filter_pattern?
+		 * 	pick_enabled true
+		 * 	dictionary <= suggestions_lazy
+		 * ```
+		 */
+		@ $mol_mem
+		Friends_lazy() {
+			const obj = new this.$.$mol_select_list()
+			
+			obj.value = (next?: any) => this.friends_lazy(next)
+			obj.option_title = (id: any) => this.option_title(id)
+			obj.pick_enabled = () => true
+			obj.dictionary = () => this.suggestions_lazy()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * Demo_items $mol_list rows /
 		 * 	<= Friends
 		 * 	<= Friends_disabled
+		 * 	<= Friends_lazy
 		 * ```
 		 */
 		@ $mol_mem
@@ -138,7 +200,8 @@ namespace $ {
 			
 			obj.rows = () => [
 				this.Friends(),
-				this.Friends_disabled()
+				this.Friends_disabled(),
+				this.Friends_lazy()
 			] as readonly any[]
 			
 			return obj

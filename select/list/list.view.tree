@@ -9,11 +9,13 @@ $mol_select_list $mol_view
 		enabled <= drop_enabled <= enabled true
 	sub /$mol_view
 		<= Pick $mol_select
+			event_select*? <=> event_select*? null
 			align_hor <= align_hor \right
 			options <= options_pickable <= options /string
 			value? <=> pick? \
 			option_label* <= option_title* \
 			trigger_enabled <= pick_enabled <= enabled true
 			hint <= pick_hint @ \Add..
+			filter_pattern? => filter_pattern?
 			Trigger_icon <= Pick_icon $mol_icon_plus
 		^ badges_list

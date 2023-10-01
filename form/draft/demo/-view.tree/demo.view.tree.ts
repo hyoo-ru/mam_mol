@@ -44,6 +44,30 @@ namespace $ {
 			if ( next !== undefined ) return next as never
 			return ""
 		}
+		
+		/**
+		 * ```tree
+		 * friends? /string
+		 * ```
+		 */
+		@ $mol_mem
+		friends(next?: any) {
+			if ( next !== undefined ) return next as never
+			return [
+			] as readonly string[]
+		}
+		
+		/**
+		 * ```tree
+		 * hobbies? *
+		 * ```
+		 */
+		@ $mol_mem
+		hobbies(next?: any) {
+			if ( next !== undefined ) return next as never
+			return {
+			} as Record< string, any >
+		}
 	}
 	
 	export class $mol_form_draft_demo extends $mol_example {
@@ -330,6 +354,98 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Hobbies $mol_check_list
+		 * 	dictionary? <=> dictionary_bool*hobbies?
+		 * 	options *
+		 * 		programming \Programming
+		 * 		bikinkg \Biking
+		 * 		fishing \Fishing
+		 * ```
+		 */
+		@ $mol_mem
+		Hobbies() {
+			const obj = new this.$.$mol_check_list()
+			
+			obj.dictionary = (next?: any) => this.dictionary_bool("hobbies", next)
+			obj.options = () => ({
+				programming: "Programming",
+				bikinkg: "Biking",
+				fishing: "Fishing"
+			} as Record< string, any >)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Hobbies_field $mol_form_field
+		 * 	name \Hobbies
+		 * 	Content <= Hobbies
+		 * ```
+		 */
+		@ $mol_mem
+		Hobbies_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => "Hobbies"
+			obj.Content = () => this.Hobbies()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Friends $mol_select_list
+		 * 	dictionary *
+		 * 		jocker \Jocker
+		 * 		harley \Harley Quinn
+		 * 		penguin \Penguin
+		 * 		riddler \Riddler
+		 * 		bane \Bane
+		 * 		freeze \Mister Freeze
+		 * 		clay \Clayface
+		 * 		mask \Black Mask
+		 * 	value? <=> list_string*friends?
+		 * ```
+		 */
+		@ $mol_mem
+		Friends() {
+			const obj = new this.$.$mol_select_list()
+			
+			obj.dictionary = () => ({
+				jocker: "Jocker",
+				harley: "Harley Quinn",
+				penguin: "Penguin",
+				riddler: "Riddler",
+				bane: "Bane",
+				freeze: "Mister Freeze",
+				clay: "Clayface",
+				mask: "Black Mask"
+			} as Record< string, any >)
+			obj.value = (next?: any) => this.list_string("friends", next)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Friends_field $mol_form_field
+		 * 	name \Friends
+		 * 	Content <= Friends
+		 * ```
+		 */
+		@ $mol_mem
+		Friends_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => "Friends"
+			obj.Content = () => this.Friends()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * Config $mol_form_group sub /
 		 * 	<= Adult_field
 		 * 	<= Type_field
@@ -353,13 +469,15 @@ namespace $ {
 		 * 	<= Title_field
 		 * 	<= Config
 		 * 	<= Content_field
+		 * 	<= Friends_field
 		 * ```
 		 */
 		form_body() {
 			return [
 				this.Title_field(),
 				this.Config(),
-				this.Content_field()
+				this.Content_field(),
+				this.Friends_field()
 			] as readonly any[]
 		}
 		
@@ -409,6 +527,25 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * Reset $mol_button_minor
+		 * 	title \Сбросить
+		 * 	click? <=> reset?
+		 * 	enabled <= changed
+		 * ```
+		 */
+		@ $mol_mem
+		Reset() {
+			const obj = new this.$.$mol_button_minor()
+			
+			obj.title = () => "Сбросить"
+			obj.click = (next?: any) => this.reset(next)
+			obj.enabled = () => this.changed()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
 		 * publish?
 		 * ```
 		 */
@@ -436,6 +573,24 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * list_string*?
+		 * ```
+		 */
+		list_string(id: any, next?: any) {
+			return this.Form().list_string(id, next)
+		}
+		
+		/**
+		 * ```tree
+		 * dictionary_bool*?
+		 * ```
+		 */
+		dictionary_bool(id: any, next?: any) {
+			return this.Form().dictionary_bool(id, next)
+		}
+		
+		/**
+		 * ```tree
 		 * changed
 		 * ```
 		 */
@@ -445,21 +600,36 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * reset?
+		 * ```
+		 */
+		reset(next?: any) {
+			return this.Form().reset(next)
+		}
+		
+		/**
+		 * ```tree
 		 * Form $mol_form_draft
 		 * 	model <= model
 		 * 	submit? => publish?
 		 * 	submit_allowed => publish_allowed
 		 * 	value_str*? => value_str*?
+		 * 	list_string*? => list_string*?
+		 * 	dictionary_bool*? => dictionary_bool*?
 		 * 	changed => changed
+		 * 	reset? => reset?
 		 * 	form_fields /
 		 * 		<= Title_field
 		 * 		<= Type_field
 		 * 		<= Adult_field
 		 * 		<= Content_field
+		 * 		<= Hobbies_field
+		 * 		<= Friends_field
 		 * 	body <= form_body
 		 * 	buttons /
 		 * 		<= Publish
 		 * 		<= Result
+		 * 		<= Reset
 		 * ```
 		 */
 		@ $mol_mem
@@ -471,12 +641,15 @@ namespace $ {
 				this.Title_field(),
 				this.Type_field(),
 				this.Adult_field(),
-				this.Content_field()
+				this.Content_field(),
+				this.Hobbies_field(),
+				this.Friends_field()
 			] as readonly any[]
 			obj.body = () => this.form_body()
 			obj.buttons = () => [
 				this.Publish(),
-				this.Result()
+				this.Result(),
+				this.Reset()
 			] as readonly any[]
 			
 			return obj

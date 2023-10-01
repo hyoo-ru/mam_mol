@@ -3,6 +3,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * dictionary *
+		 * ```
+		 */
+		dictionary() {
+			return {
+			} as Record< string, any >
+		}
+		
+		/**
+		 * ```tree
 		 * Option* $mol_check
 		 * 	checked? <=> option_checked*?
 		 * 	label <= option_label*

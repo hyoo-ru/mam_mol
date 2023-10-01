@@ -465,6 +465,7 @@ $mol_check $mol_button_minor
 					<= title \
 
 $mol_check_list $mol_view
+	dictionary *
 	Option* $mol_check
 		checked? <=> option_checked*? false
 		label <= option_label* /

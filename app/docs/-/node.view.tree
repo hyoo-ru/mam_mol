@@ -1152,12 +1152,13 @@ $mol_select $mol_pick
 	hint @ \Pick..
 	bubble_content /
 		<= Filter
-		<= Bubble_pane $mol_scroll sub /
-			<= Menu $mol_list
-				rows <= menu_content /$mol_view
-	Filter $mol_string
-		value? <=> filter_pattern? \
-		hint @ \Filter..
+		<= Bubble_pane $mol_scroll
+			sub /
+				<= Menu $mol_list
+					rows <= menu_content /$mol_view
+	Filter $mol_search
+		query? <=> filter_pattern? \
+		hint <= filter_hint @ \Filter..
 		submit?event <=> submit?event null
 		enabled <= enabled true
 	Trigger_icon $mol_icon_dots_vertical
@@ -2698,6 +2699,7 @@ $mol_check_box_demo $mol_example_small
 		\Type/Boolean
 
 $mol_check_list $mol_view
+	dictionary *
 	Option* $mol_check
 		checked? <=> option_checked*? false
 		label <= option_label* /
@@ -3598,11 +3600,35 @@ $mol_form_demo $mol_example
 $mol_form_draft $mol_form
 	model $mol_object2
 
+$mol_select_list $mol_view
+	value? /string
+	dictionary *
+	badges_list <= Badges /$mol_view
+	Badge* $mol_button_minor
+		title <= badge_title* \badge
+		click?event <=> remove*?event null
+		hint <= badge_hint @ \Drop
+		enabled <= drop_enabled <= enabled true
+	sub /$mol_view
+		<= Pick $mol_select
+			event_select*? <=> event_select*? null
+			align_hor <= align_hor \right
+			options <= options_pickable <= options /string
+			value? <=> pick? \
+			option_label* <= option_title* \
+			trigger_enabled <= pick_enabled <= enabled true
+			hint <= pick_hint @ \Add..
+			filter_pattern? => filter_pattern?
+			Trigger_icon <= Pick_icon $mol_icon_plus
+		^ badges_list
+
 $mol_form_draft_demo_article $mol_object2
 	title? \
 	type? \
 	adult? false
 	content? \
+	friends? /string
+	hobbies? *
 
 $mol_form_draft_demo $mol_example
 	title \Article draft form demo
@@ -3619,7 +3645,10 @@ $mol_form_draft_demo $mol_example
 			submit? => publish?
 			submit_allowed => publish_allowed
 			value_str*? => value_str*?
+			list_string*? => list_string*?
+			dictionary_bool*? => dictionary_bool*?
 			changed => changed
+			reset? => reset?
 			form_fields /
 				<= Title_field $mol_form_field
 					name \Title
@@ -3654,12 +3683,34 @@ $mol_form_draft_demo $mol_example
 					Content <= Content $mol_textarea
 						hint \Long long story..
 						value? <=> value_str*content?
+				<= Hobbies_field $mol_form_field
+					name \Hobbies
+					Content <= Hobbies $mol_check_list
+						dictionary? <=> dictionary_bool*hobbies?
+						options *
+							programming \Programming
+							bikinkg \Biking
+							fishing \Fishing
+				<= Friends_field $mol_form_field
+					name \Friends
+					Content <= Friends $mol_select_list
+						dictionary *
+							jocker \Jocker
+							harley \Harley Quinn
+							penguin \Penguin
+							riddler \Riddler
+							bane \Bane
+							freeze \Mister Freeze
+							clay \Clayface
+							mask \Black Mask
+						value? <=> list_string*friends?
 			body <= form_body /
 				<= Title_field
 				<= Config $mol_form_group sub /
 					<= Adult_field
 					<= Type_field
 				<= Content_field
+				<= Friends_field
 			buttons /
 				<= Publish $mol_button_major
 					title \Publish
@@ -3667,6 +3718,10 @@ $mol_form_draft_demo $mol_example
 					enabled <= publish_allowed
 				<= Result $mol_status
 					message <= result? \
+				<= Reset $mol_button_minor
+					title \Сбросить
+					click? <=> reset?
+					enabled <= changed
 	tags /
 		\$mol_form_field
 		\$mol_button
@@ -5012,26 +5067,6 @@ $mol_select_demo_priority $mol_example_small
 	aspects /
 		\Widget/Control
 
-$mol_select_list $mol_view
-	value? /string
-	dictionary *
-	badges_list <= Badges /$mol_view
-	Badge* $mol_button_minor
-		title <= badge_title* \badge
-		click?event <=> remove*?event null
-		hint <= badge_hint @ \Drop
-		enabled <= drop_enabled <= enabled true
-	sub /$mol_view
-		<= Pick $mol_select
-			align_hor <= align_hor \right
-			options <= options_pickable <= options /string
-			value? <=> pick? \
-			option_label* <= option_title* \
-			trigger_enabled <= pick_enabled <= enabled true
-			hint <= pick_hint @ \Add..
-			Trigger_icon <= Pick_icon $mol_icon_plus
-		^ badges_list
-
 $mol_select_list_demo $mol_example_small
 	title \Friends picker
 	sub /
@@ -5052,6 +5087,12 @@ $mol_select_list_demo $mol_example_small
 					value? <=> friends? /
 					dictionary <= suggestions
 					enabled false
+				<= Friends_lazy $mol_select_list
+					value? <=> friends_lazy? /
+					option_title* <= option_title* \
+					filter_pattern? => filter_pattern?
+					pick_enabled true
+					dictionary <= suggestions_lazy <= suggestions
 	tags /
 		\select
 		\tags
