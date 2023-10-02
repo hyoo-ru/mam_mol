@@ -26516,8 +26516,7 @@ var $;
         aspects() {
             return [
                 "Language/CSV",
-                "Language/TSV",
-                "Algorithm/Parse"
+                "Language/TSV"
             ];
         }
     }
