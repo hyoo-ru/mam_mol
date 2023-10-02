@@ -32725,7 +32725,6 @@ var $;
         }
         aspects() {
             return [
-                "Navigation",
                 "Widget/Button"
             ];
         }
