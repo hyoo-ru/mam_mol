@@ -1,23 +1,20 @@
 namespace $ {
 
 	$mol_test({
-
 		'test types'( $ ) {
 			class A {
-				a() {
+				static a() {
 					return ''
 				}
-				b() {
+				static b() {
 					return $mol_wire_async(this).a()
 				}
 			}
-		
-			const a = new A()
-			const b = a.b()
-			type Check = $mol_type_assert<typeof b, Promise<string>>
+
+			type Check = $mol_type_assert<ReturnType<typeof A['b']>, Promise<string>>
 		},
 		
-		'Latest method calls wins'( $ ) {
+		async 'Latest method calls wins'( $ ) {
 			
 			class NameLogger extends $mol_object2 {
 				

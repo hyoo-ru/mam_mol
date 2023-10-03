@@ -4,18 +4,16 @@ namespace $ {
 
 		'test types'( $ ) {
 			class A {
-				a() {
+				static a() {
 					return Promise.resolve('')
 				}
 
-				b() {
+				static b() {
 					return $mol_wire_sync(this).a()
 				}
 			}
 		
-			const a = new A()
-			const b = a.b()
-			type Check = $mol_type_assert<typeof b, string>
+			type Check = $mol_type_assert<ReturnType<typeof A['b']>, string>
 		},
 	})
 
