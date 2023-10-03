@@ -30,16 +30,20 @@ namespace $ {
 				return fiber.async()
 			},
 			
-		} ) as any as MethodsResultPromisify<Host>
+		} ) as any as ObjectOrFunctionResultPromisify<Host>
 		
 	}
 
-	type PromiseWrap<P> = P extends PromiseLike<unknown> ? P : Promise<P>
+	type FunctionResultPromisify<Some> = Some extends (...args: infer Args) => infer Res
+		? Res extends PromiseLike<unknown> ? Some : (...args: Args) => Promise<Res>
+		: Some
 
 	type MethodsResultPromisify<Host extends Object> = {
-		[K in keyof Host]: Host[K] extends (...args: infer Args) => infer Res
-			? (...args: Args) => PromiseWrap<Res>
-			: Host[K]
+		[K in keyof Host]: FunctionResultPromisify<Host[K]>
 	}
+
+	type ObjectOrFunctionResultPromisify<Some> = Some extends (...args: any) => unknown
+		? FunctionResultPromisify<Some>
+		: Some extends Object ? MethodsResultPromisify<Some> : Some
 
 }

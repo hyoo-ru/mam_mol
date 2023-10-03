@@ -26,13 +26,19 @@ namespace $ {
 				return fiber.sync()
 			},
 			
-		} ) as any as MethodsResultAwaited<Host>
+		} ) as any as ObjectOrFunctionResultAwaited<Host>
 	}
 
+	type FunctionResultAwaited<Some> = Some extends (...args: infer Args) => infer Res
+		? (...args: Args) => Awaited<Res>
+		: Some
+
 	type MethodsResultAwaited<Host extends Object> = {
-		[K in keyof Host]: Host[K] extends (...args: infer Args) => infer Res
-			? (...args: Args) => Awaited<Res>
-			: Host[K]
+		[K in keyof Host]: FunctionResultAwaited<Host[K]>
 	}
+
+	type ObjectOrFunctionResultAwaited<Some> = Some extends (...args: any) => unknown
+		? FunctionResultAwaited<Some>
+		: Some extends Object ? MethodsResultAwaited<Some> : Some
 
 }
