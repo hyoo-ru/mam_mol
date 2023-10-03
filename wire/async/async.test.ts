@@ -17,7 +17,7 @@ namespace $ {
 			type Check = $mol_type_assert<typeof b, Promise<string>>
 		},
 		
-		async 'Latest method calls wins'( $ ) {
+		'Latest method calls wins'( $ ) {
 			
 			class NameLogger extends $mol_object2 {
 				
