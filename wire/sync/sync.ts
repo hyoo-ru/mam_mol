@@ -26,17 +26,13 @@ namespace $ {
 				return fiber.sync()
 			},
 			
-		} ) as any as (
-			Host extends ( ... args: infer Args )=> infer Res
-				? Res extends Promise< infer Res2 >
-					? ( ... args: Args )=> Res2
-					: Host
-				: {}
-		) & {
-			[ key in keyof Host ]: Host[ key ] extends ( ... args: infer Args )=> Promise< infer Res >
-				? ( ... args: Args )=> Res
-				: Host[ key ]
-		}
+		} ) as any as MethodsResultAwaited<Host>
+	}
+
+	type MethodsResultAwaited<Host extends Object> = {
+		[K in keyof Host]: Host[K] extends (...args: infer Args) => infer Res
+			? (...args: Args) => Awaited<Res>
+			: Host[K]
 	}
 
 }
