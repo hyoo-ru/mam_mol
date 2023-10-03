@@ -42,8 +42,8 @@ namespace $ {
 		[K in keyof Host]: FunctionResultPromisify<Host[K]>
 	}
 
-	type ObjectOrFunctionResultPromisify<Some> = Some extends (...args: any) => unknown
-		? FunctionResultPromisify<Some>
-		: Some extends Object ? MethodsResultPromisify<Some> : Some
+	type ObjectOrFunctionResultPromisify<Some> = (
+			Some extends (...args: any) => unknown ? FunctionResultPromisify<Some> : {}
+	) & ( Some extends Object ? MethodsResultPromisify<Some> : Some )
 
 }

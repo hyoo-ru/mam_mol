@@ -37,8 +37,8 @@ namespace $ {
 		[K in keyof Host]: FunctionResultAwaited<Host[K]>
 	}
 
-	type ObjectOrFunctionResultAwaited<Some> = Some extends (...args: any) => unknown
-		? FunctionResultAwaited<Some>
-		: Some extends Object ? MethodsResultAwaited<Some> : Some
+	type ObjectOrFunctionResultAwaited<Some> = (
+			Some extends (...args: any) => unknown ? FunctionResultAwaited<Some> : {}
+	) & ( Some extends Object ? MethodsResultAwaited<Some> : Some )
 
 }
