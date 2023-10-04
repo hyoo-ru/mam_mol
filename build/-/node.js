@@ -6601,8 +6601,8 @@ var $;
         static trace = false;
         expressGenerator() {
             const self = $mol_wire_async(this);
-            return function (...args) {
-                return self.handleRequest.apply(self, args);
+            return function (req, res, next) {
+                return self.handleRequest.call(self, req, res, next);
             };
         }
         handleRequest(req, res, next) {

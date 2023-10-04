@@ -6593,8 +6593,8 @@ var $;
         static trace = false;
         expressGenerator() {
             const self = $mol_wire_async(this);
-            return function (...args) {
-                return self.handleRequest.apply(self, args);
+            return function (req, res, next) {
+                return self.handleRequest.call(self, req, res, next);
             };
         }
         handleRequest(req, res, next) {
@@ -7927,6 +7927,24 @@ var $;
 ;
 "use strict";
 var $;
+(function ($_1) {
+    $mol_test({
+        'test types'($) {
+            class A {
+                static a() {
+                    return Promise.resolve('');
+                }
+                static b() {
+                    return $mol_wire_sync(this).a();
+                }
+            }
+        },
+    });
+})($ || ($ = {}));
+//mol/wire/sync/sync.test.ts
+;
+"use strict";
+var $;
 (function ($) {
     function $mol_promise() {
         let done;
@@ -7966,6 +7984,16 @@ var $;
 var $;
 (function ($_1) {
     $mol_test({
+        'test types'($) {
+            class A {
+                static a() {
+                    return '';
+                }
+                static b() {
+                    return $mol_wire_async(this).a();
+                }
+            }
+        },
         async 'Latest method calls wins'($) {
             class NameLogger extends $mol_object2 {
                 static $ = $;

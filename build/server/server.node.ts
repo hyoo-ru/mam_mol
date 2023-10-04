@@ -6,8 +6,9 @@ namespace $ {
 
 		expressGenerator() {
 			const self = $mol_wire_async( this )
-			return function( ... args: any[] ) {
-				return self.handleRequest.apply( self, args )
+
+			return function( req : any , res : any , next : () => void ) {
+				return self.handleRequest.call( self, req, res, next )
 			}
 		}
 		
