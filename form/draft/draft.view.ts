@@ -32,12 +32,12 @@ namespace $.$$ {
 	 */
 	export class $mol_form_draft extends $.$mol_form_draft {
 		@ $mol_mem_key
-		list_string( field: string, next? : readonly string[] | null ) {
+		override list_string( field: string, next? : readonly string[] | null ) {
 			return this.value( field, next )?.map(norm_string) ?? []
 		}
 
 		@ $mol_mem_key
-		dictionary_bool( field: string, next? : Record<string, boolean> | null ): Record<string, boolean> {
+		override dictionary_bool( field: string, next? : Record<string, boolean> | null ): Record<string, boolean> {
 			if (next) {
 				const prev = this.model_pick(field) as Record<string, boolean>
 				const normalized = {} as typeof next
@@ -52,17 +52,17 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		value_str( field: string, next? : string | null ) {
+		override value_str( field: string, next? : string | null ) {
 			return norm_string( this.value( field, next ) )
 		}
 		
 		@ $mol_mem_key
-		value_numb( field: string, next? : boolean | null ) {
+		override value_number( field: string, next? : boolean | null ) {
 			return norm_number( this.value( field, next ) )
 		}
 		
 		@ $mol_mem_key
-		value_bool( field: string, next? : boolean | null ) {
+		override value_bool( field: string, next? : boolean | null ) {
 			return norm_bool( this.value( field, next ) )
 		}
 
@@ -81,7 +81,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem_key
-		value_changed(field: string) {
+		override value_changed(field: string) {
 			const next = this.state_pick(field)
 			const prev = this.model_pick(field)
 			const next_norm = normalize_val(prev, next)
@@ -95,20 +95,20 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		changed() {
+		override changed() {
 			return Object.keys(this.state()).some(field => this.value_changed(field))
 		}
 		
-		submit_allowed() {
+		override submit_allowed() {
 			return this.changed() && super.submit_allowed()
 		}
 
-		reset(next?: unknown) {
+		override reset(next?: unknown) {
 			this.state(null)
 		}
 
 		@ $mol_action
-		submit( next? : Event ) {
+		override submit( next? : Event ) {
 			
 			const tasks = Object.entries( this.state() ).map(
 				([ field, next ]) => () => {
