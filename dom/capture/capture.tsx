@@ -50,7 +50,7 @@ namespace $ {
 			restyle( re, styles )
 
 			const before = $mol_dom_context.getComputedStyle( el as HTMLElement, ':before' )
-			if( before.content && before.content !== 'none' ) {
+			if( before.content[0] === '"' ) {
 				const kid = <span>{ JSON.parse( before.content ) }</span>
 				restyle( kid, before )
 				re.appendChild( kid )
@@ -64,7 +64,7 @@ namespace $ {
 			}
 			
 			const after = $mol_dom_context.getComputedStyle( el as HTMLElement, ':after' )
-			if( after.content && after.content !== 'none' ) {
+			if( after.content[0] === '"' ) {
 				const kid = <span>{ JSON.parse( after.content ) }</span>
 				restyle( kid, after )
 				re.appendChild( kid )
