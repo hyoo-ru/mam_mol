@@ -7452,6 +7452,14 @@ declare namespace $ {
 declare namespace $ {
     class $mol_form_draft extends $mol_form {
         model(): $mol_object2;
+        changed(): boolean;
+        value_str(id: any, next?: any): string;
+        value_bool(id: any, next?: any): boolean;
+        value_number(id: any, next?: any): number;
+        dictionary_bool(id: any, next?: any): Record<string, any>;
+        list_string(id: any, next?: any): readonly string[];
+        value_changed(id: any): boolean;
+        reset(next?: any): any;
     }
 }
 
@@ -7462,7 +7470,7 @@ declare namespace $.$$ {
         list_string(field: string, next?: readonly string[] | null): string[];
         dictionary_bool(field: string, next?: Record<string, boolean> | null): Record<string, boolean>;
         value_str(field: string, next?: string | null): string;
-        value_numb(field: string, next?: boolean | null): number;
+        value_number(field: string, next?: boolean | null): number;
         value_bool(field: string, next?: boolean | null): boolean;
         model_pick(field: string, next?: Value | null): Value;
         state_pick(field: string, next?: Value | null): Value | null;

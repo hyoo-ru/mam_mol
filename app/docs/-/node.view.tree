@@ -3598,6 +3598,15 @@ $mol_form_demo $mol_example
 
 $mol_form_draft $mol_form
 	model $mol_object2
+	changed false
+	value_str*? \
+	value_bool*? false
+	value_number*? 0
+	dictionary_bool*? *
+	list_string*? /string
+	value_changed* false
+	reset? null
+
 
 $mol_select_list $mol_view
 	value? /string
