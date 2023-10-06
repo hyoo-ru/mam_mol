@@ -52,7 +52,6 @@ namespace $.$$ {
 			el.selectionStart = from
 
 			if( to !== from && el.selectionEnd === el.selectionStart ) {
-				el.selectionStart = from
 				el.selectionEnd = to
 			}
 			
