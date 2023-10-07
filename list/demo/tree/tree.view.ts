@@ -14,7 +14,10 @@ namespace $.$$ {
 		@ $mol_mem_key
 		row_content( id : number[] ) {
 			$mol_wire_solid()
-			return [ ... $mol_range2( index => this.Row([ ... id , index ]) , ()=> Math.floor( Math.random() * 10 + 5 ) ) ]
+			return Array.from(
+				{ length: Math.floor( Math.random() * 10 + 5 ) },
+				( _, index )=> this.Row([ ... id , index ]),
+			)
 		}
 
 		@ $mol_mem_key
