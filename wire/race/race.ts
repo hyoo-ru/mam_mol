@@ -4,9 +4,7 @@ namespace $ {
 	export function $mol_wire_race<
 		Tasks extends ( ( ... args: any )=> any )[]
 	>( ... tasks: Tasks ): {
-		[ index in keyof Tasks ]: index extends number
-			? ReturnType< Tasks[ index ] >
-			: Tasks[ index ]
+		[ index in keyof Tasks ]: ReturnType< Tasks[ index ] > 
 	} {
 		
 		const results = tasks.map( task => {
