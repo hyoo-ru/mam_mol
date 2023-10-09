@@ -4,6 +4,15 @@ namespace $ {
 	let el : HTMLStyleElement | null = null
 	let timer : $mol_after_tick | null = null
 
+	export function $mol_style_attach_force() {
+		if( all.length ) {
+			el!.innerHTML += '\n' + all.join( '\n\n' )
+			all = []
+		}
+		timer = null
+		return el!
+	}
+	
 	export function $mol_style_attach(
 		id : string ,
 		text : string ,
@@ -20,12 +29,7 @@ namespace $ {
 		el.id = `$mol_style_attach`
 		doc.head.appendChild( el )
 
-		timer = new $mol_after_tick( ()=> {
-			el!.innerHTML = '\n' + all.join( '\n\n' )
-			all = []
-			el = null
-			timer = null
-		} )
+		timer = new $mol_after_tick( $mol_style_attach_force )
 
 		return el
 

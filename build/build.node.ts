@@ -339,7 +339,7 @@ namespace $ {
 
 			const watchers = new Map< string , ( path : string , kind : number )=> void >()
 			let run = ()=> {}
-
+			
 			var host = $node.typescript.createWatchCompilerHost(
 
 				paths ,
@@ -351,7 +351,9 @@ namespace $ {
 				
 				{
 					... $node.typescript.sys ,
-					watchDirectory: (()=>{}) as any,
+					watchDirectory: () => { 
+						return { close(){} }
+					},
 					writeFile : (path , data )=> {
 						$mol_file.relative( path ).text( data, 'virt' )
 					},
@@ -578,12 +580,13 @@ namespace $ {
 		modEnsure( path : string ) {
 
 			var mod = $mol_file.absolute( path )
-			if( mod === this.root() ) return false
-
 			var parent = mod.parent()
-			this.modEnsure( parent.path() )
 			
-			var mapping = this.modMeta( parent.path() )
+			if( mod !== this.root() ) this.modEnsure( parent.path() )
+			
+			var mapping = mod === this.root()
+				? $mol_tree.fromString( `pack ${ mod.name() } git \\https://github.com/hyoo-ru/mam.git\n` )
+				: this.modMeta( parent.path() )
 			
 			if( mod.exists() ) {
 
@@ -693,7 +696,7 @@ namespace $ {
 					try {
 						this.modEnsure( dep.path() )
 					} catch( error: any ) {
-						error.message = `${ error.message }\nDependency "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
+						error.message = `${ error.message }\nDependency "${p}" -> "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
 						$mol_fail_hidden(error)
 					}
 					
@@ -864,7 +867,7 @@ namespace $ {
 			if( !bundle || bundle === 'readme.md' ) {
 				res = res.concat( this.bundleReadmeMd( { path , exclude : [ 'web' ] } ) )
 			}
-			
+
 			if( !bundle || bundle === 'index.html' ) {
 				res = res.concat( this.bundleIndexHtml( { path } ) )
 			}
@@ -902,7 +905,7 @@ namespace $ {
 			var sources = this.sources_js( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var concater = new $mol_sourcemap_builder( targetJS.parent().path(), ';')
+			var concater = new $mol_sourcemap_builder( this.root().relate( targetJS.parent() ), ';')
 			concater.add( '"use strict"' )
 
 			if( bundle === 'node' ) {
@@ -928,7 +931,7 @@ namespace $ {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
 
-						concater.add( content.text , src.relate( targetJS.parent() ) , content.map )
+						concater.add( content.text , '' , content.map )
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
@@ -1013,7 +1016,7 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = new $mol_sourcemap_builder( target.parent().path(), ';')
+			var concater = new $mol_sourcemap_builder( this.root().relate( target.parent() ), ';')
 			concater.add( '"use strict"' )
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
@@ -1038,7 +1041,7 @@ namespace $ {
 					}
 					try {
 						const content = this.js_content( src.path() )
-						concater.add( content.text, src.relate( target.parent() ), content.map)
+						concater.add( content.text, '', content.map)
 					} catch( error: any ) {
 						errors.push( error )
 					}
@@ -1302,14 +1305,23 @@ namespace $ {
 
 			const start = Date.now()
 			const html = pack.resolve( 'index.html' )
+			const tree = pack.resolve( 'index.xml.tree' )
+			const target = pack.resolve( '-/index.html' )
 
-			if ( html.exists() ) {
-				const html_target = pack.resolve( '-/index.html' )
-				html_target.text( html.text() )
-				targets.push( html_target )
-				this.logBundle( html_target , Date.now() - start )	
+			if( tree.exists() ) {
+				const xml_tree = this.$.$mol_tree2_from_string( tree.text() )
+				const text = this.$.$mol_tree2_xml_to_text( xml_tree )
+				const xml = this.$.$mol_tree2_text_to_string( text )
+				target.text( xml )
+			} else if( html.exists() ) {
+				target.text( html.text() )
 			}
-			
+
+			if( target.exists() ) {
+				targets.push( target )
+				this.logBundle( target, Date.now() - start )
+			}
+
 			return targets
 		}
 		
@@ -1325,15 +1337,31 @@ namespace $ {
 
 			sources.forEach( source => {
 				const tree = $mol_tree.fromString( source.text() , source.path() )
-				
-				tree.select( 'deploy' ).sub.forEach( deploy => {
+
+				const pushFile = (file:$mol_file) => {
 					const start = Date.now()
-					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
-					if ( ! file.exists() ) return
 					const target = pack.resolve( `-/${ file.relate( root ) }` )
 					target.buffer( file.buffer() )
 					targets.push( target )
 					this.logBundle( target , Date.now() - start )
+				}
+
+				const addFilesRecursive = (file:$mol_file) =>{
+					
+					if ( ! file.exists() ) return
+					if( file.type() === 'dir') {
+						file.sub().forEach(sub => {
+							addFilesRecursive(sub)
+						})
+					}
+					else {
+						pushFile(file)
+					}
+					
+				}
+
+				tree.select( 'deploy' ).sub.forEach( deploy => {
+					addFilesRecursive(root.resolve(deploy.value.replace( /^\// , '' )))
 				} )
 				
 			} )
@@ -1656,7 +1684,7 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/(?:--|[\[\.#])([a-z][a-z0-9]+(?:[-_][a-z0-9]+)+)/ig , ( str , name )=> {
+					/(?:--|\[)([a-z][a-z0-9]+(?:[_][a-z0-9]+)+)/ig , ( str , name )=> {
 						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[._-]/g , '/' ) ] : priority } )
 						return str
 					}

@@ -35,10 +35,16 @@ namespace $ {
 		} ,
 
 		'Array'() {
+			
 			$mol_assert_ok( $mol_compare_deep( [] , [] ) )
 			$mol_assert_ok( $mol_compare_deep( [ 1 , [2] ] , [ 1 , [2] ] ) )
+			
 			$mol_assert_not( $mol_compare_deep( [ 1 , 2 ] , [ 1 , 3 ] ) )
 			$mol_assert_not( $mol_compare_deep( [ 1 , 2 , ] , [ 1 , 3 , undefined ] ) )
+			
+			$mol_assert_not( $mol_compare_deep( $mol_range2().slice(0,0), new Array() ) )
+			$mol_assert_not( $mol_compare_deep( $mol_range2(), $mol_range2() ) )
+			
 		} ,
 
 		'Non POJO are different'() {

@@ -31,17 +31,29 @@
 	content: '';
 	position: absolute;
 	top: 1.5rem;
-	width: 1px;
+	width: 3px;
 	height: 1rem;
-	background: var(--mol_theme_special);
+	background: linear-gradient(
+		to bottom,
+		var(--mol_theme_focus) 0%,
+		var(--mol_theme_focus) 15%,
+		transparent 15%,
+		transparent 45%,
+		var(--mol_theme_focus) 45%,
+		var(--mol_theme_focus) 55%,
+		transparent 55%,
+		transparent 85%,
+		var(--mol_theme_focus) 85%,
+		var(--mol_theme_focus) 100%
+	);
 	border-radius: var(--mol_gap_round);
 	opacity: .5;
 }
 [mol_book2] > *:not(:first-of-type):before {
-	left: -1px;
+	left: -2px;
 }
 [mol_book2] > *:not(:last-of-type)::after {
-	right: -1px;
+	right: -2px;
 }
 
 :where([mol_book2]) > * {

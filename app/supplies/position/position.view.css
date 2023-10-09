@@ -54,9 +54,9 @@
 }
 
 [mol_app_supplies_position_supply_date_item] {
-	flex: 0 0 6rem;
+	flex: 0 0 9rem;
 }
 
 [mol_app_supplies_position_store_item] {
-	flex: 1 1 10rem;
+	flex: 1 1 12rem;
 }

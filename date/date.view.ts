@@ -89,7 +89,7 @@ namespace $.$$ {
 
 			if( next ) return next
 
-			let moment = $mol_try( ()=> new $mol_time_moment( this.value() ) )
+			let moment = $mol_try( ()=> new $mol_time_moment( this.value_changed().replace( /\D+$/, '' ) ) )
 			if( moment instanceof Error || !moment.year ) return new $mol_time_moment
 
 			if( moment.month === undefined ) {
@@ -115,12 +115,6 @@ namespace $.$$ {
 
 		next() {
 			this.month_moment( this.month_moment().shift( { month : +1 } ) )
-		}
-
-		@ $mol_mem
-		override today_enabled() {
-			const val = this.value_moment()
-			return !val || val.valueOf() !== this.value_moment_today().valueOf()
 		}
 
 		override today_click() {

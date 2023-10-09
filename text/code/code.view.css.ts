@@ -5,9 +5,18 @@ namespace $.$$ {
 	$mol_style_define( $mol_text_code, {
 
 		whiteSpace: 'pre-wrap',
+		font: {
+			family: 'monospace',
+		},
 		
 		Rows: {
 			padding: $mol_gap.text,
+		},
+
+		Row: {
+			font: {
+				family: 'inherit',
+			},
 		},
 		
 		Copy: {

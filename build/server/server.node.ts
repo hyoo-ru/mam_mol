@@ -6,8 +6,9 @@ namespace $ {
 
 		expressGenerator() {
 			const self = $mol_wire_async( this )
-			return function( ... args: any[] ) {
-				return self.handleRequest.apply( self, args )
+
+			return function( req : any , res : any , next : () => void ) {
+				return self.handleRequest.call( self, req, res, next )
 			}
 		}
 		
@@ -122,13 +123,16 @@ namespace $ {
 				}				
 				
 				if( dir.type() === 'dir' ) {
-					const files = new Set<string>( [ '-' ] )
+					const files = [ {name: '-', type: 'dir'} ]
 					for( const file of dir.sub() ) {
-						files.add( file.name() )
+						if (!files.find(( {name} ) => name === file.name())) {
+							files.push( {name: file.name(), type: file.type()} )
+						}
 						if( /\.meta\.tree$/.test( file.name() ) ) {
 							const meta = $$.$mol_tree2_from_string( file.text() )
 							for( const pack of meta.select( 'pack', null ).kids ) {
-								files.add( pack.type )
+								if (!files.find(( {name} ) => name === pack.type))
+									files.push( {name: pack.type, type: 'dir'} )
 							}
 						}
 					}
@@ -152,8 +156,18 @@ namespace $ {
 							a:hover {
 								background: hsl( 0deg, 0%, 0%, .05 )
 							}
+							a[href^="."], a[href^="-"], a[href="node_modules"] {
+								opacity: 0.5;
+							}
+							a[href=".."], a[href="-"] {
+								opacity: 1;
+							}
 						</style>
-					` + [ ... files ].sort().map( file => `<a href="${file}">${file}</a>` ).join( '\n' )
+						<a href="..">&#x1F4C1; ..</a>
+						` + files
+						.sort($mol_compare_text((item) => item.type))
+						.map( file => `<a href="${file.name}">${file.type === 'dir' ? '&#x1F4C1;' : '&#128196;'} ${file.name}</a>` )
+						.join( '\n' )
 					
 					res.writeHead( 200, {
 						'Content-Type': 'text/html',
@@ -219,12 +233,24 @@ namespace $ {
 		@ $mol_mem_key
 		notify( [ line, path ]: [ InstanceType<$node['ws']>, string ] ) {
 			
-			const build = this.build()
-			const bundle = build.root().resolve( path )
-
-			// watch changes
-			const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
-			for( const src of sources ) src.buffer()
+			try {
+			
+				const build = this.build()
+				const bundle = build.root().resolve( path )
+			
+				// watch changes
+				const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
+				
+				for( const src of sources ) src.buffer()	
+				
+			} catch (error) {
+				this.$.$mol_log3_fail({
+					place: `${this}`,
+					message: (error as any)?.message,
+					path
+				})
+			}
+			
 
 			// ignore initial
 			if( !$mol_mem_cached( ()=> this.notify([ line, path ]) ) ) return true

@@ -59,6 +59,7 @@
 [mol_theme="$mol_theme_accent"] {
 	background-color: var(--mol_theme_back);
 	--mol_theme_luma: -2;
+	--mol_theme_shade: hsl( var(--mol_theme_hue), 50%, 95%, .8 );
 	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 180deg ), 90%, 50% );
 	--mol_theme_hover: hsl( calc( var(--mol_theme_hue) + 180deg ), 80%, 35% );
 }

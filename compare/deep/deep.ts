@@ -21,10 +21,10 @@ namespace $ {
 		
 		if( left_proto !== right_proto ) return false
 
-		if( left instanceof Boolean ) return Object.is( left.valueOf(), right['valueOf']() )
-		if( left instanceof Number ) return Object.is( left.valueOf(), right['valueOf']() )
-		if( left instanceof String ) return Object.is( left.valueOf(), right['valueOf']() )
-		if( left instanceof Date ) return Object.is( left.valueOf(), right['valueOf']() )
+		if( left instanceof Boolean ) return Object.is( left.valueOf(), ( right as any )['valueOf']() )
+		if( left instanceof Number ) return Object.is( left.valueOf(), ( right as any )['valueOf']() )
+		if( left instanceof String ) return Object.is( left.valueOf(), ( right as any )['valueOf']() )
+		if( left instanceof Date ) return Object.is( left.valueOf(), ( right as any )['valueOf']() )
 		if( left instanceof RegExp ) return left.source === (right as any).source && left.flags === (right as any).flags
 		if( left instanceof Error ) return left.message === (right as any).message && left.stack === (right as any).stack
 
@@ -47,12 +47,12 @@ namespace $ {
 			
 			if( !left_proto ) result = compare_pojo( left, right as any )
 			else if( !Reflect.getPrototypeOf( left_proto ) ) result = compare_pojo( left, right as any )
+			else if( Symbol.toPrimitive in left ) result = compare_primitive( left, right )
 			else if( Array.isArray( left ) ) result = compare_array( left, right as any )
 			else if( left instanceof Set ) result = compare_set( left, right as any )
 			else if( left instanceof Map ) result = compare_map( left, right as any )
 			else if( ArrayBuffer.isView( left ) ) result = compare_buffer( left, right as any )
 			else if( Symbol.iterator in left ) result = compare_iterator( ( left as any )[ Symbol.iterator ](), ( right as any )[ Symbol.iterator ]() )
-			else if( Symbol.toPrimitive in left ) result = compare_primitive( left, right )
 			else result = false
 
 		} finally {

@@ -7,7 +7,7 @@ namespace $ {
 					
 		class Component extends HTMLElement {
 			
-			static tag = View.name.replace( /\W/g , '' ).replace( /^(?=\d+)/ , '-' ).replace( /_/g , '-' )
+			static tag = $$.$mol_func_name( View ).replace( /\W/g , '' ).replace( /^(?=\d+)/ , '-' ).replace( /_/g , '-' )
 			static observedAttributes = new Set
 			
 			view = new View
@@ -23,7 +23,7 @@ namespace $ {
 					node.setAttribute( 'mol_view_root', '' )
 					
 					this.shadowRoot!.append(
-						document.getElementById( `$mol_style_attach` )!.cloneNode( true ),
+						$mol_style_attach_force().cloneNode( true ),
 						node,
 					)
 						
@@ -65,7 +65,7 @@ namespace $ {
 				const descr = Reflect.getOwnPropertyDescriptor( proto, field )!
 				
 				if( typeof descr.value !== 'function' ) continue
-				if( descr.value.length === 0 ) continue
+				// if( descr.value.length === 0 ) continue
 				
 				Component.observedAttributes.add( field )
 			}
@@ -77,6 +77,7 @@ namespace $ {
 
 		customElements.define( Component.tag, Component )
 		
+		return Component
 	}
 
 }

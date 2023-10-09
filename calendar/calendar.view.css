@@ -36,6 +36,10 @@
 	color: var(--mol_theme_special);
 }
 
+[mol_calendar_today] {
+	font-weight: bolder;
+}
+
 [mol_calendar_ghost] {
 	opacity: .2;
 }

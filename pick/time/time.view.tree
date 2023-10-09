@@ -1,5 +1,6 @@
 $mol_pick_time $mol_pick
 	Icon $mol_icon_clock_outline
+	trigger_enabled <= enabled true
 	-
 	bubble_content /
 		<= Input $mol_format

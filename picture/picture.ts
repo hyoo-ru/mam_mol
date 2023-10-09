@@ -1,7 +1,7 @@
 namespace $ {
 	
 	/** Image processing. */
-	export class $mol_picture extends Object {
+	export class $mol_picture extends $mol_object2 {
 		
 		constructor(
 			readonly canvas: HTMLCanvasElement

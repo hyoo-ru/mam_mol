@@ -6,14 +6,15 @@ namespace $ {
 	 * 	type User = $mol_type_partial_undefined<{ name : string , age : number | undefined }> // { name : string , age? : number | undefined }
 	 */
 	export type $mol_type_partial_undefined< Val > = $mol_type_merge<
-		Partial< Val >
-		&
-		Pick< Val , {
-			[ Field in keyof Val ]
-				: undefined extends Val[Field]
-				? never
-				: Field
-		}[ keyof Val ] >
+		$mol_type_override<
+			Partial< Val > ,
+			Pick< Val , {
+				[ Field in keyof Val ]
+					: undefined extends Val[Field]
+					? never
+					: Field
+			}[ keyof Val ] >
+		>
 	>
 
 }

@@ -10,4 +10,3 @@ $mol_csv_serial_demo $mol_example_code
 	aspects /
 		\Language/CSV
 		\Language/TSV
-		\Algorithm/Parse

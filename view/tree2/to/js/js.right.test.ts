@@ -18,8 +18,8 @@ namespace $ {
 			const bar = Bar.make({ $: $2 })
 
 			$mol_assert_like(
-				bar.Obj().a(),
-				bar.b()
+				bar.Obj().a(1),
+				bar.b(1)
 			)
 			
 		},
@@ -52,7 +52,7 @@ namespace $ {
 		'Right bind indexed'( $ ) {
 			const $2 = run(`
 				Foo $mol_object
-					a*? *
+					a? *
 						some 123
 				Bar $mol_object
 					Cls* Foo

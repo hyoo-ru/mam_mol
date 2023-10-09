@@ -20,3 +20,20 @@ Dumps any JS values.
 		123
 		456
 ```
+
+## NPM Usage
+
+**[Sandbox](https://codesandbox.io/s/mol-dump-lib-8ly34z?file=/index.html)**
+
+```js
+import { $mol_view_component, $mol_dump_value } from "mol_dump_lib"
+$mol_view_component( $mol_dump_value )
+```
+
+```html
+<mol-dump-value value='{ "foo": 777 }'></mol-dump-value>
+```
+
+```js
+el.view.value( [777] )
+```

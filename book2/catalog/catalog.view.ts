@@ -8,7 +8,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		pages() {
-			const spread = this.Spread()
+			const spread = this.spread() === '' ? this.Spread_default() : this.Spread(this.spread())
 			return [
 				this.Menu(),
 				... spread
@@ -18,41 +18,59 @@ namespace $.$$ {
 					: [],
 			]
 		}
+
+		@ $mol_mem
+		override spread_ids(): readonly string[] {
+			return Object.keys( this.spreads() )
+		}
 		
 		@ $mol_mem
-		menu_body() {
+		override menu_body() {
 			return [
-				... Object.keys( this.spreads() ).length >= 10 ? [ this.Menu_filter() ] : [],
+				... this.menu_filter_enabled() ? [ this.Menu_filter() ] : [],
 				this.Menu_links(),
 			]
 		}
+
+		override menu_filter_enabled() {
+			return this.spread_ids().length >= 10
+		}
 		
 		@ $mol_mem
-		menu_links() {
-			return Object.keys( this.spreads() )
-				.filter( $mol_match_text( this.menu_filter(), spread => [ this.spread_title( spread ) ] ) )
+		override menu_links() {
+			return this.spread_ids_filtered()
 				.map( spread => this.Menu_link( spread ) )
 		}
+
+		@ $mol_mem
+		override spread_ids_filtered() {
+			return this.spread_ids()
+				.filter( $mol_match_text( this.menu_filter(), spread => [ this.spread_title( spread ) ] ) )
+		}
 		
-		Spread() {
-			return this.spreads()[ this.spread() ]
+		override Spread(id: string): $mol_view {
+			return this.spreads()[ id ]
+		}
+
+		override Spread_default() {
+			return this.spreads()['']
 		}
 		
 		@ $mol_mem
-		spread( next?: string ) {
+		override spread( next?: string ) {
 			return this.$.$mol_state_arg.value( this.param(), next ) ?? ''
 		}
 		
-		arg( spread: string ) {
+		override arg( spread: string ) {
 			return { [ this.param() ]: spread || null }
 		}
 		
-		spread_close_arg() {
+		override spread_close_arg() {
 			return { [ this.param() ]: null }
 		}
 		
-		spread_title( spread: string ) {
-			const page = this.spreads()[ spread ]
+		override spread_title( spread: string ) {
+			const page = this.Spread( spread )
 			return page instanceof $mol_book2
 				&& page.menu_title()
 				|| page.title()

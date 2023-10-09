@@ -5,20 +5,23 @@ $mol_date $mol_pick
 		<= Input_row $mol_view sub <= input_content /
 			<= Today $mol_button_minor
 				hint @ \Today
-				enabled <= today_enabled true
+				enabled <= enabled true
 				click?event <=> today_click?event null
 				sub /
 					<= Today_icon $mol_icon_calendar_today
 			<= Input $mol_format
 				value? <=> value? \
+				value_changed? => value_changed?
 				mask* <= input_mask* \
 				enabled <= enabled true
 			<= Clear $mol_button_minor
 				hint @ \Clear
+				enabled <= enabled true
 				click?event <=> clear?event null
 				sub /
-					<= Clear_icon $mol_icon_cross
+					<= Clear_icon $mol_icon_trash_can_outline
 		<= Calendar $mol_date_calendar
+			enabled <= enabled true
 			month_moment <= month_moment <= value_moment
 			day_selected* <= day_selected* false
 			day_click*?event <=> day_click*?event null
@@ -47,3 +50,4 @@ $mol_date_calendar $mol_calendar
 			title <= day_text*
 			event_click?event <=> day_click*?event null
 			minimal_height 24
+			enabled <= enabled true

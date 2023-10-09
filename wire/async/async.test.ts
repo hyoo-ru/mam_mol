@@ -1,6 +1,18 @@
 namespace $ {
 
 	$mol_test({
+		'test types'( $ ) {
+			class A {
+				static a() {
+					return ''
+				}
+				static b() {
+					return $mol_wire_async(this).a()
+				}
+			}
+
+			type Check = $mol_type_assert<ReturnType<typeof A['b']>, Promise<string>>
+		},
 		
 		async 'Latest method calls wins'( $ ) {
 			
