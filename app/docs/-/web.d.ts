@@ -8076,6 +8076,19 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_link_source_demo extends $mol_example_small {
+        title(): string;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        aspects(): readonly any[];
+        uri(next?: any): string;
+        Input(): $$.$mol_string;
+        Output(): $mol_link_source;
+        Blocks(): $$.$mol_list;
+    }
+}
+
+declare namespace $ {
     class $mol_list_demo extends $mol_example_small {
         sub(): readonly any[];
         tags(): readonly any[];

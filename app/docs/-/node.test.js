@@ -32840,6 +32840,73 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_link_source_demo extends $mol_example_small {
+        title() {
+            return "Link with icon";
+        }
+        sub() {
+            return [
+                this.Blocks()
+            ];
+        }
+        tags() {
+            return [
+                "link",
+                "icon",
+                "source",
+                "github",
+                "url"
+            ];
+        }
+        aspects() {
+            return [
+                "Navigation",
+                "Widget/Button"
+            ];
+        }
+        uri(next) {
+            if (next !== undefined)
+                return next;
+            return "https://github.com/hyoo-ru/mam_mol/";
+        }
+        Input() {
+            const obj = new this.$.$mol_string();
+            obj.value = (next) => this.uri(next);
+            return obj;
+        }
+        Output() {
+            const obj = new this.$.$mol_link_source();
+            obj.uri = () => this.uri();
+            return obj;
+        }
+        Blocks() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Input(),
+                this.Output()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_link_source_demo.prototype, "uri", null);
+    __decorate([
+        $mol_mem
+    ], $mol_link_source_demo.prototype, "Input", null);
+    __decorate([
+        $mol_mem
+    ], $mol_link_source_demo.prototype, "Output", null);
+    __decorate([
+        $mol_mem
+    ], $mol_link_source_demo.prototype, "Blocks", null);
+    $.$mol_link_source_demo = $mol_link_source_demo;
+})($ || ($ = {}));
+//mol/link/source/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_list_demo extends $mol_example_small {
         sub() {
             return [

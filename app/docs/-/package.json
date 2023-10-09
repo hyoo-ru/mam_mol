@@ -521,6 +521,7 @@
     "$mol_link_iconed_demo",
     "$mol_link_lazy_demo",
     "$mol_link_lazy",
+    "$mol_link_source_demo",
     "$mol_list_demo",
     "$mol_list_demo_table",
     "$mol_colors",

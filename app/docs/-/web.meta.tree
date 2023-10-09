@@ -200,6 +200,7 @@
 	include \/mol/link/demo
 	include \/mol/link/iconed/demo
 	include \/mol/link/lazy/demo
+	include \/mol/link/source/demo
 	include \/mol/list/demo
 	include \/mol/list/demo/table
 	include \/mol/list/demo/tree
