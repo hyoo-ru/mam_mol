@@ -21,6 +21,33 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * uri_off \
+		 * ```
+		 */
+		uri_off() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * uri_native null
+		 * ```
+		 */
+		uri_native() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * external false
+		 * ```
+		 */
+		external() {
+			return false
+		}
+		
+		/**
+		 * ```tree
 		 * attr *
 		 * 	^
 		 * 	href <= uri_toggle

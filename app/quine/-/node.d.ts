@@ -2082,6 +2082,9 @@ declare namespace $ {
     class $mol_link extends $mol_view {
         uri(): string;
         dom_name(): string;
+        uri_off(): string;
+        uri_native(): any;
+        external(): boolean;
         attr(): Record<string, any>;
         sub(): readonly $mol_view_content[];
         arg(): Record<string, any>;
