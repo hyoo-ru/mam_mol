@@ -592,6 +592,10 @@ namespace $ {
 
 		}>
 
+		text?: {
+			wrap?: 'wrap' | 'nowrap' | Common
+		},
+
 		/** 
 		 * How a flex item will grow or shrink to fit the space available in its flex container. It is a shorthand for `flexGrow`, `flexShrink`, and `flexBasis`.
 		 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex
