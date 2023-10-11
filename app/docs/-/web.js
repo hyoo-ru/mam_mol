@@ -23335,7 +23335,7 @@ var $;
                 return (8 / Math.sqrt(this.indexes().length)).toPrecision(2) + '%';
             }
             color() {
-                return `hsl( ${this.hue()} , 70% , 85% )`;
+                return `hsl( ${this.hue()} , 80% , 85% )`;
             }
             dimensions() {
                 let next = new this.$.$mol_vector_2d($mol_vector_range_full.inversed, new this.$.$mol_vector_range(0, 0));
