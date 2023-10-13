@@ -1,4 +1,5 @@
 [mol_svg_text_box_back] {
 	stroke: none;
 	fill: var(--mol_theme_back);
+	transition: none;
 }

@@ -1,6 +1,7 @@
 $mol_plot_mark_cross $mol_plot_graph
 	labels /string
 	title_x_gap 4
+	title_y_gap 22
 	threshold 16
 	graphs /$mol_plot_graph
 	dimensions $mol_vector_2d /
