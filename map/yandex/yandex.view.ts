@@ -6,8 +6,12 @@ namespace $.$$ {
 	 */
 	export class $mol_map_yandex extends $.$mol_map_yandex {
 
+		static api_key() {
+			return ""
+		}
+
 		static api() {
-			return $mol_import.script( `https://api-maps.yandex.ru/2.1/?lang=${ $mol_locale.lang() }` ).ymaps
+			return $mol_import.script( `https://api-maps.yandex.ru/2.1/?apikey=${this.api_key()}&lang=${ $mol_locale.lang() }` ).ymaps
 		}
 		
 		wait_ready( ymaps: any ) {
