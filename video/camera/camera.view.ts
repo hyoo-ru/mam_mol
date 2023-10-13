@@ -55,7 +55,7 @@ namespace $.$$ {
 			return super.dom_node_actual() as HTMLVideoElement
 		}
 		
-		transform() {
+		transform(): string {
 			return this.facing() === 'user' ? 'scaleX(-1)' : ''
 		}
 		
