@@ -7,7 +7,7 @@ namespace $.$$ {
 	export class $mol_map_yandex extends $.$mol_map_yandex {
 
 		static api_key() {
-			return "3b2caac0-490e-4fdc-92de-d2a09e400365"
+			return ""
 		}
 
 		static api() {
