@@ -50,6 +50,7 @@
 	color: var(--mol_theme_text);
 	contain: unset; /** Fixes bg ignoring when applied to body on Chrome */
 	tab-size: 4;
+	overscroll-behavior: contain; /** Disable navigation gestures **/
 }
 
 @media print {
