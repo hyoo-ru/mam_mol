@@ -5901,6 +5901,8 @@ declare namespace $ {
         pos_x(): string;
         pos_y(): string;
         align(): string;
+        align_hor(): string;
+        align_vert(): string;
         text(): string;
     }
 }
@@ -6108,6 +6110,7 @@ declare namespace $ {
     class $mol_plot_mark_cross extends $mol_plot_graph {
         labels(): readonly string[];
         title_x_gap(): number;
+        title_y_gap(): number;
         threshold(): number;
         graphs(): readonly $mol_plot_graph[];
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
@@ -6140,6 +6143,7 @@ declare namespace $.$$ {
         title_x_pos_y(): string;
         title_y(): string;
         title_y_pos_y(): string;
+        title_y_pos_x(): string;
     }
 }
 

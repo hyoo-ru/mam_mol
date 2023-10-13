@@ -26,7 +26,8 @@ namespace $ {
 		 * 	^
 		 * 	x <= pos_x
 		 * 	y <= pos_y
-		 * 	text-anchor <= align
+		 * 	text-anchor <= align_hor
+		 * 	alignment-baseline <= align_vert
 		 * ```
 		 */
 		attr() {
@@ -34,7 +35,8 @@ namespace $ {
 				...super.attr(),
 				x: this.pos_x(),
 				y: this.pos_y(),
-				"text-anchor": this.align()
+				"text-anchor": this.align_hor(),
+				"alignment-baseline": this.align_vert()
 			} as Record< string, any >
 		}
 		
@@ -74,6 +76,24 @@ namespace $ {
 		 */
 		align() {
 			return "middle"
+		}
+		
+		/**
+		 * ```tree
+		 * align_hor <= align
+		 * ```
+		 */
+		align_hor() {
+			return this.align()
+		}
+		
+		/**
+		 * ```tree
+		 * align_vert \baseline
+		 * ```
+		 */
+		align_vert() {
+			return "baseline"
 		}
 		
 		/**

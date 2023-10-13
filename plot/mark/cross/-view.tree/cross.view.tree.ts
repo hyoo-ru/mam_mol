@@ -22,6 +22,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * title_y_gap 22
+		 * ```
+		 */
+		title_y_gap() {
+			return 22
+		}
+		
+		/**
+		 * ```tree
 		 * threshold 16
 		 * ```
 		 */

@@ -5331,7 +5331,8 @@ var $;
                 ...super.attr(),
                 x: this.pos_x(),
                 y: this.pos_y(),
-                "text-anchor": this.align()
+                "text-anchor": this.align_hor(),
+                "alignment-baseline": this.align_vert()
             };
         }
         sub() {
@@ -5347,6 +5348,12 @@ var $;
         }
         align() {
             return "middle";
+        }
+        align_hor() {
+            return this.align();
+        }
+        align_vert() {
+            return "baseline";
         }
         text() {
             return "";
@@ -5979,7 +5986,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/svg/text/box/box.view.css", "[mol_svg_text_box_back] {\n\tstroke: none;\n\tfill: var(--mol_theme_back);\n}\n");
+    $mol_style_attach("mol/svg/text/box/box.view.css", "[mol_svg_text_box_back] {\n\tstroke: none;\n\tfill: var(--mol_theme_back);\n\ttransition: none;\n}\n");
 })($ || ($ = {}));
 //mol/svg/text/box/-css/box.view.css.ts
 ;
@@ -5992,6 +5999,9 @@ var $;
         }
         title_x_gap() {
             return 4;
+        }
+        title_y_gap() {
+            return 22;
         }
         threshold() {
             return 16;
@@ -6158,6 +6168,13 @@ var $;
                 if (!nearest)
                     return '0';
                 return nearest.scaled.y.toFixed(3);
+            }
+            title_y_pos_x() {
+                const nearest = this.nearest();
+                if (!nearest)
+                    return '0';
+                const pos = this.title_y_gap();
+                return pos.toFixed(3);
             }
         }
         __decorate([

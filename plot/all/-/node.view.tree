@@ -318,7 +318,8 @@ $mol_svg_text $mol_svg
 		^
 		x <= pos_x \
 		y <= pos_y \
-		text-anchor <= align \middle
+		text-anchor <= align_hor <= align \middle
+		alignment-baseline <= align_vert \baseline
 	sub /
 		<= text \
 
@@ -404,6 +405,7 @@ $mol_svg_text_box $mol_svg_group
 $mol_plot_mark_cross $mol_plot_graph
 	labels /string
 	title_x_gap 4
+	title_y_gap 22
 	threshold 16
 	graphs /$mol_plot_graph
 	dimensions $mol_vector_2d /
