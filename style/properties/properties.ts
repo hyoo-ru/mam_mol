@@ -364,6 +364,7 @@ namespace $ {
 			 * @see https://developer.mozilla.org/ru/docs/Web/CSS/font-family
 			 */
 			family?:
+			| string & {}
 			| 'serif' | 'sans-serif' | 'monospace'
 			| 'cursive' | 'fantasy'
 			| 'system-ui' | 'ui-serif' | 'ui-sans-serif' | 'ui-monospace' | 'ui-rounded'
