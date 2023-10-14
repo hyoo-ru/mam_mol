@@ -7,7 +7,7 @@ namespace $ {
 		}
 		
 		accuracy_high() {
-			return false
+			return true
 		}
 
 		@ $mol_mem
