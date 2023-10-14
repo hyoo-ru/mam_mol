@@ -3,7 +3,11 @@ namespace $ {
 	export class $mol_geo_position extends $mol_object {
 
 		options() {
-			return { enableHighAccuracy: true }
+			return { enableHighAccuracy: this.accuracy_high() }
+		}
+		
+		accuracy_high() {
+			return false
 		}
 
 		@ $mol_mem
