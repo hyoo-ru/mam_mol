@@ -238,7 +238,7 @@ var $;
             return new $mol_span(uri, source, 1, 1, 0);
         }
         static end(uri, source) {
-            return new $mol_span(uri, source, 1, source.length + 1, length);
+            return new $mol_span(uri, source, 1, source.length + 1, 0);
         }
         static entire(uri, source) {
             return new $mol_span(uri, source, 1, 1, source.length);
