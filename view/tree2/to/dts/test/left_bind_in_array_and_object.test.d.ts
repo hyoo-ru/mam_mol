@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_object__rows_2B435VAM = $mol_type_enforce< 
+	type $mol_object__rows_UM3R0F4Z = $mol_type_enforce< 
 		ReturnType< Foo["content"] >,
 		ReturnType< $mol_object["rows"] >
 	>
@@ -8,8 +8,8 @@ declare namespace $ {
 		obj( ): ({ 
 			'prop': ReturnType< Foo["Obj"] >,
 		})
-		arr( ): readonly unknown[]
-		content( ): readonly unknown[]
+		arr( ): readonly any[]
+		content( ): readonly any[]
 		Obj( ): $mol_object
 	}
 	

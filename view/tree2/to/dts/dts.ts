@@ -104,7 +104,7 @@ namespace $ {
 							
 							if( input.type[0] === '/' ) return [
 								input.data('readonly '),
-								input.data( input.type.slice(1) || 'unknown' ),
+								input.data( input.type.slice(1) || 'any' ),
 								input.data('[]'),
 							]
 							

@@ -1,7 +1,7 @@
 declare namespace $ {
 
 	export class Foo extends $mol_object {
-		complex( ): readonly unknown[]
+		complex( ): readonly any[]
 	}
 	
 }

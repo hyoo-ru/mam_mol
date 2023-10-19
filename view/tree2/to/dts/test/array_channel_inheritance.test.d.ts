@@ -1,11 +1,11 @@
 declare namespace $ {
 
 	export class Foo extends $mol_object {
-		arr( ): readonly unknown[]
+		arr( ): readonly any[]
 	}
 	
 	export class Bar extends Foo {
-		arr( ): readonly unknown[]
+		arr( ): readonly any[]
 	}
 	
 }

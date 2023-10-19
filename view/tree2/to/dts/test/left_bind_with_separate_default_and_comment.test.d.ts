@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_object__rows_ZZ2VUPVS = $mol_type_enforce< 
+	type $mol_object__rows_FH910Z2K = $mol_type_enforce< 
 		ReturnType< Foo["content"] >,
 		ReturnType< $mol_object["rows"] >
 	>
