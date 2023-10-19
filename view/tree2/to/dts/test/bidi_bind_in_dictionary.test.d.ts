@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _bidi_bind_in_dictionary {
 
 	export class Foo extends $mol_object {
 		event( ): ({ 

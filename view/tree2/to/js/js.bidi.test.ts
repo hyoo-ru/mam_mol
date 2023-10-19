@@ -124,11 +124,15 @@ namespace $ {
 		},
 
 		'Bidi bind indexed second level'( $ ) {
-			const { Foo } = run(`
+			const { Foo, Bar } = run(`
+				Bar $mol_object
+					expanded false
 				Foo $mol_object
-					indexed*? $mol_object
-						expanded <=> owner*? null
+					indexed*? Bar
+						expanded <=> owner*? false
 			`)
+			Foo.$.Bar = Bar
+
 			const foo = Foo.make({ $ })
 
 

@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _right_bind_indexed {
 
 	export class Foo extends $mol_object {
 		a( next?: ({ 
@@ -8,7 +8,7 @@ declare namespace $ {
 		})
 	}
 	
-	type Foo__a_YR1ZROQX = $mol_type_enforce< 
+	type Foo__a_QYLYNT1E = $mol_type_enforce< 
 		ReturnType< Bar["b"] >,
 		ReturnType< Foo["a"] >
 	>

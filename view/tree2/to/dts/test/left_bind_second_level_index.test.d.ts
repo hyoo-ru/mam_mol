@@ -1,6 +1,6 @@
-declare namespace $ {
+declare namespace _left_bind_second_level_index {
 
-	type $mol_object__localized_XB1UI9TS = $mol_type_enforce< 
+	type $mol_object__localized_KDIAWS5L = $mol_type_enforce< 
 		ReturnType< Foo["some"] >,
 		ReturnType< $mol_object["localized"] >
 	>

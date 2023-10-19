@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _simple_commented_node {
 
 	export class A2 extends $mol_object {
 		str( ): string

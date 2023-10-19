@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _array_channel_number {
 
 	export class Foo extends $mol_object {
 		bar( ): readonly any[]

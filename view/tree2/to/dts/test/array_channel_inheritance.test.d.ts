@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _array_channel_inheritance {
 
 	export class Foo extends $mol_object {
 		arr( ): readonly any[]

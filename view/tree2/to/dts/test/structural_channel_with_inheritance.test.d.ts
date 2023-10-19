@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _structural_channel_with_inheritance {
 
 	export class Foo extends $mol_object {
 		field( ): ({ 

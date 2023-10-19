@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _left_bind_read_only {
 
 	export class Foo extends $mol_object {
 		bar1( ): ReturnType< Foo["bar2"] >

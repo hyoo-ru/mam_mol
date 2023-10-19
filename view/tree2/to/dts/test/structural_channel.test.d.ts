@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _structural_channel {
 
 	export class Foo extends $mol_object {
 		bar( ): ({ 

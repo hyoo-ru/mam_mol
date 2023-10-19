@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _bidi_bind_with_separate_default_in_right_part {
 
 	export class Foo extends $mol_object {
 		a( next?: ReturnType< Foo["b"] > ): ReturnType< Foo["b"] >

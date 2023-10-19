@@ -1,10 +1,10 @@
-declare namespace $ {
+declare namespace _right_bind_read_only {
 
 	export class Foo extends $mol_object {
 		a( id: any, next?: any ): any
 	}
 	
-	type Foo__a_SJ1R2SRB = $mol_type_enforce< 
+	type Foo__a_2HF0Z2KM = $mol_type_enforce< 
 		ReturnType< Bar["b"] >,
 		ReturnType< Foo["a"] >
 	>

@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _bidi_bind_localized_in_object {
 
 	export class Foo extends $mol_object {
 		obj( ): ({ 

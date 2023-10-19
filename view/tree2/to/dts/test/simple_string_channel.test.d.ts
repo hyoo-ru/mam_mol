@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _simple_string_channel {
 
 	export class Foo extends $mol_object {
 		hardcoded( ): string

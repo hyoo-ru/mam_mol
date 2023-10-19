@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _bidi_bind_indexed {
 
 	export class Foo extends $mol_object {
 		indexed( id: any, next?: ReturnType< Foo["owner"] > ): ReturnType< Foo["owner"] >

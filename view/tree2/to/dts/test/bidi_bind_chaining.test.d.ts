@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _bidi_bind_chaining {
 
 	export class Foo extends $mol_object {
 		a( next?: ReturnType< Foo["b"] > ): ReturnType< Foo["b"] >

@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _simple_default_indexed_channel {
 
 	export class Foo extends $mol_object {
 		a( id: any, next?: any ): any

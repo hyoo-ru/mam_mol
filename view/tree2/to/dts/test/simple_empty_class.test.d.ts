@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _simple_empty_class {
 
 	export class Foo extends $mol_object {
 	}

@@ -30,7 +30,10 @@ namespace $ {
 			?.split('\n').at(2)?.match(/ at (.*) \(/)
 			?.[1].toLowerCase().replace(/[ .]/g, '_') ?? ''
 
-		$mol_view_tree2_to_js_test_saver(`mol/view/tree2/to/dts/test/${name}.test.d.ts`, types)
+		$mol_view_tree2_to_js_test_saver(
+			`mol/view/tree2/to/dts/test/${name}.test.d.ts`,
+			types.replace(/^(declare namespace )\$/, `$1_${name}`)
+		)
 
 		eval( js )
 

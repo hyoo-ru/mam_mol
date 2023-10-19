@@ -1,4 +1,4 @@
-declare namespace $ {
+declare namespace _simple_mutable_and_read_only_channels {
 
 	export class Foo extends $mol_object {
 		readonly( ): any
