@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_object__expanded_4S11TBZN = $mol_type_enforce< 
+	type $mol_object__expanded_9OBYE6AG = $mol_type_enforce< 
 		ReturnType< Foo["owner"] >,
 		ReturnType< $mol_object["expanded"] >
 	>

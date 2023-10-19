@@ -1,14 +1,14 @@
 declare namespace $ {
 
-	type $mol_object__some_I46F6Q4E = $mol_type_enforce< 
+	type $mol_object__some_MEU8ZDON = $mol_type_enforce< 
 		boolean,
 		ReturnType< $mol_object["some"] >
 	>
-	type $mol_object__loc_6BTVTBWV = $mol_type_enforce< 
+	type $mol_object__loc_QAO95716 = $mol_type_enforce< 
 		string,
 		ReturnType< $mol_object["loc"] >
 	>
-	type $mol_object__sub_9823RHYT = $mol_type_enforce< 
+	type $mol_object__sub_E04KCN5P = $mol_type_enforce< 
 		readonly any[],
 		ReturnType< $mol_object["sub"] >
 	>

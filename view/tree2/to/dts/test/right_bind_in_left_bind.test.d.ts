@@ -4,7 +4,7 @@ declare namespace $ {
 		a( ): any
 	}
 	
-	type Foo__a_Q3RZHY1O = $mol_type_enforce< 
+	type Foo__a_EURM0I7U = $mol_type_enforce< 
 		ReturnType< Bar["b"] >,
 		ReturnType< Foo["a"] >
 	>
