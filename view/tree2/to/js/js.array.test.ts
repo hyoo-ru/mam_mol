@@ -46,7 +46,7 @@ namespace $ {
 		'Array channel with types'( $ ) {
 			const { Foo } = run(`
 				Foo $mol_object
-					arr /readonly(number)[]
+					arr /readonly(number)
 			`)
 
 			$mol_assert_like(Foo.make({ $ }).arr(), [])
