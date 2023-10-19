@@ -87,7 +87,9 @@ namespace $ {
 								obj.kids.map( field => {
 									if( field.type === '^' ) return null
 									return field.struct( 'line', [
+										field.data('\''),
 										field.data( field.type ),
+										field.data('\''),
 										field.data( ': ' ),
 										... field.hack( belt ),
 										field.data( ',' ),
@@ -102,7 +104,7 @@ namespace $ {
 							
 							if( input.type[0] === '/' ) return [
 								input.data('readonly '),
-								input.data( input.type.slice(1) ),
+								input.data( input.type.slice(1) || 'unknown' ),
 								input.data('[]'),
 							]
 							

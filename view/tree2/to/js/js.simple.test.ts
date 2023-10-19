@@ -4,7 +4,7 @@ namespace $ {
 
 	$mol_test({
 		
-		'Empty class'( $ ) {
+		'simple empty class'( $ ) {
 			
 			const { Foo } = run(`
 				Foo $mol_object
@@ -14,7 +14,7 @@ namespace $ {
 			
 		},
 
-		'Mutable and read only channels'( $ ) {
+		'simple mutable and read only channels'( $ ) {
 			
 			const { Foo } = run(`
 				Foo $mol_object
@@ -44,7 +44,7 @@ namespace $ {
 			
 		},
 		
-		'String channel'( $ ) {
+		'simple string channel'( $ ) {
 			
 			const { Foo } = run(`
 				Foo $mol_object
@@ -66,7 +66,7 @@ namespace $ {
 			
 		},
 		
-		'Default indexed channel'( $ ) {
+		'simple default indexed channel'( $ ) {
 			
 			const { Foo } = run(`
 				Foo $mol_object
@@ -83,7 +83,7 @@ namespace $ {
 			
 		},
 
-		'empty legacy indexed channel throws error'( $ ) {
+		'simple empty legacy indexed channel throws error'( $ ) {
 			$mol_assert_fail(() => {
 				run(`
 					Foo $mol_object
@@ -99,7 +99,7 @@ namespace $ {
 			}, `Cannot destructure property 'name' of 'prop_parts(...)' as it is undefined. at ?#3:7/2` )
 		},
 
-		'two classes'( $ ) {
+		'simple two classes'( $ ) {
 			const { A2, B2 } = run(`
 				A2 $mol_object
 					str \\some
@@ -117,7 +117,7 @@ namespace $ {
 			$mol_assert_like( b.str(), 'some2')
 		},
 
-		'commented node'( $ ) {
+		'simple commented node'( $ ) {
 			const { A2, B2 } = run(`
 				A2 $mol_object
 					str \\some
@@ -130,7 +130,7 @@ namespace $ {
 			$mol_assert_ok(B2 === undefined)
 		},
 
-		'factory props'( $ ) {
+		'simple factory props'( $ ) {
 			const { Foo } = run(`
 				Foo $mol_object
 					button $mol_object
