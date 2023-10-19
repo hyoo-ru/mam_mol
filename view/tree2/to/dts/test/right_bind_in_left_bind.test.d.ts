@@ -4,7 +4,7 @@ declare namespace _right_bind_in_left_bind {
 		a( ): any
 	}
 	
-	type Foo__a_UIYUO0JW = $mol_type_enforce< 
+	type Foo__a_5ZQWI0UX = $mol_type_enforce< 
 		ReturnType< Bar["b"] >,
 		ReturnType< Foo["a"] >
 	>

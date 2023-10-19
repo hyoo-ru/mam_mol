@@ -4,7 +4,7 @@ declare namespace _right_bind_read_only {
 		a( id: any, next?: any ): any
 	}
 	
-	type Foo__a_2HF0Z2KM = $mol_type_enforce< 
+	type Foo__a_OWGUONH0 = $mol_type_enforce< 
 		ReturnType< Bar["b"] >,
 		ReturnType< Foo["a"] >
 	>

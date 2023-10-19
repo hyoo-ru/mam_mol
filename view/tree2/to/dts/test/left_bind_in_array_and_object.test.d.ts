@@ -1,6 +1,6 @@
 declare namespace _left_bind_in_array_and_object {
 
-	type $mol_object__rows_V83EJ9P9 = $mol_type_enforce< 
+	type $mol_object__rows_Y0ZPGRXV = $mol_type_enforce< 
 		ReturnType< Foo["content"] >,
 		ReturnType< $mol_object["rows"] >
 	>

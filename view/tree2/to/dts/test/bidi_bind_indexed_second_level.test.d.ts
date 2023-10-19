@@ -4,7 +4,7 @@ declare namespace _bidi_bind_indexed_second_level {
 		expanded( ): boolean
 	}
 	
-	type Bar__expanded_D1APEXB5 = $mol_type_enforce< 
+	type Bar__expanded_UPXW21P6 = $mol_type_enforce< 
 		ReturnType< Foo["owner"] >,
 		ReturnType< Bar["expanded"] >
 	>

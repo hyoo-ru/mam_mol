@@ -1,14 +1,14 @@
 declare namespace _simple_factory_props {
 
-	type $mol_object__some_ODAWC5JF = $mol_type_enforce< 
+	type $mol_object__some_NIWV42PT = $mol_type_enforce< 
 		boolean,
 		ReturnType< $mol_object["some"] >
 	>
-	type $mol_object__loc_UDO07ACF = $mol_type_enforce< 
+	type $mol_object__loc_SAA9OV61 = $mol_type_enforce< 
 		string,
 		ReturnType< $mol_object["loc"] >
 	>
-	type $mol_object__sub_XVYAJKRH = $mol_type_enforce< 
+	type $mol_object__sub_E1IRQUFO = $mol_type_enforce< 
 		readonly any[],
 		ReturnType< $mol_object["sub"] >
 	>

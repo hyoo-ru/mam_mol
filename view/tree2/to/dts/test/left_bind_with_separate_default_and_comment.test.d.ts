@@ -1,6 +1,6 @@
 declare namespace _left_bind_with_separate_default_and_comment {
 
-	type $mol_object__rows_L4S07X4S = $mol_type_enforce< 
+	type $mol_object__rows_7IN1BUGB = $mol_type_enforce< 
 		ReturnType< Foo["content"] >,
 		ReturnType< $mol_object["rows"] >
 	>

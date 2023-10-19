@@ -86,9 +86,10 @@ namespace $ {
 							obj.struct( 'indent',
 								obj.kids.map( field => {
 									if( field.type === '^' ) return null
+									const field_name = field.type.replace(/\?\w*$/, '')
 									return field.struct( 'line', [
 										field.data('\''),
-										field.data( field.type ),
+										field.data( field_name ),
 										field.data('\''),
 										field.data( ': ' ),
 										... field.hack( belt ),

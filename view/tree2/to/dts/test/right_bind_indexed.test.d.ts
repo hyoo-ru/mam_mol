@@ -8,7 +8,7 @@ declare namespace _right_bind_indexed {
 		})
 	}
 	
-	type Foo__a_QYLYNT1E = $mol_type_enforce< 
+	type Foo__a_9T0KZJNH = $mol_type_enforce< 
 		ReturnType< Bar["b"] >,
 		ReturnType< Foo["a"] >
 	>
