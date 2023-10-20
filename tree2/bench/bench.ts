@@ -12,10 +12,12 @@ namespace $ {
 
 	async function run() {
 
-		const src = 'https://raw.githubusercontent.com/discoveryjs/json-ext/b1ef3c85ac9e3224159d3747379fc024f80570f7/benchmarks/fixture/medium.json'
-		const res = await $node['node-fetch'].default( src )
-		const buf = await res.arrayBuffer()
-		$node.fs.writeFileSync( 'mol/tree2/bench/-big.json', Buffer.from( buf ) )
+		if( !$node.fs.existsSync( 'mol/tree2/bench/-big.json' ) ) {
+			const src = 'https://raw.githubusercontent.com/discoveryjs/json-ext/b1ef3c85ac9e3224159d3747379fc024f80570f7/benchmarks/fixture/medium.json'
+			const res = await fetch( src )
+			const buf = await res.arrayBuffer()
+			$node.fs.writeFileSync( 'mol/tree2/bench/-big.json', Buffer.from( buf ) )
+		}
 
 		await measure( 'json <= string <= file', async()=> {
 			json = JSON.parse( $node.fs.readFileSync('mol/tree2/bench/-big.json').toString() )
