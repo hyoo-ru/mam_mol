@@ -24,7 +24,7 @@ namespace $ {
 
 		/** Makes new span for end of resource. */
 		static end( uri: string , source: string ) {
-			return new $mol_span( uri , source, 1 , source.length + 1 , length )
+			return new $mol_span( uri , source, 1 , source.length + 1 , 0 )
 		}
 
 		/** Makes new span for entire resource. */
