@@ -49,11 +49,16 @@ namespace $ {
 			klass: $mol_tree2
 			addons: $mol_tree2[]
 			members: $mol_tree2[]
+			methods: Set<string>
 		},
 		prop: $mol_tree2
 	) {
-		const { klass, members, addons } = acc
+		const { klass, members, addons, methods } = acc
 		const { name, key, next } = prop_parts(prop)
+
+		if (methods.has(name)) return acc
+
+		methods.add(name)
 
 		const decorate = ()=> {
 			return prop.struct( '()', [
@@ -96,15 +101,18 @@ namespace $ {
 				] ),
 			],
 			
-			'<=>': bind => [
-				bind.struct( '()', [
-					bind.kids[0].struct( 'this' ),
-					bind.kids[0].struct( '[]', [
-						bind.kids[0].data( name_of( bind.kids[0] ) ),
+			'<=>': bind => {
+				const method_name = name_of( bind.kids[0] )
+				return [
+					bind.struct( '()', [
+						bind.kids[0].struct( 'this' ),
+						bind.kids[0].struct( '[]', [
+							bind.kids[0].data( method_name ),
+						] ),
+						args_of( bind.kids[0], true ),
 					] ),
-					args_of( bind.kids[0], true ),
-				] ),
-			],
+				]
+			},
 			
 			'=>': bind => [],
 			
@@ -288,7 +296,7 @@ namespace $ {
 			const props = this.$mol_view_tree2_class_props( klass )
 			const addons = [] as $mol_tree2[]
 			const members = [] as $mol_tree2[]
-			const acc = { klass, addons, members }
+			const acc = { klass, addons, members, methods: new Set<string>() }
 
 			for( const prop of props ) {
 				try {

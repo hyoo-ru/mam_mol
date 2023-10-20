@@ -1,0 +1,4 @@
+
+				Mvt2tjs_left_bind_read_onlyFoo $mol_object
+					bar1 <= bar2? 1
+			

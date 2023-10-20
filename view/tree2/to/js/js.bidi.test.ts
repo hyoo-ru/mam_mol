@@ -1,12 +1,14 @@
 namespace $ {
 
 	const run = $mol_view_tree2_to_js_test_run
+	const test_id = $mol_view_tree2_to_js_test_id
 
 	$mol_test({
 		'Bidi bind fallback'( $ ) {
+			const id = test_id()
 			
-			const { Foo } = run(`
-				Foo $mol_object
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					bar1? <=> bar2? 1
 			`)
 			
@@ -45,8 +47,9 @@ namespace $ {
 		},
 
 		'Bidi bind legacy value'( $ ) {
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					a?v <=> b?v 1
 			`)
 
@@ -66,9 +69,9 @@ namespace $ {
 		},
 		
 		'Bidi bind in dictionary'( $ ) {
-			
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					event *
 						click? <=> run? null
 			`)
@@ -81,8 +84,9 @@ namespace $ {
 		},
 
 		'Bidi bind chaining'( $ ) {
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					a? <=> b? <=> c? null
 			`)
 			const foo = Foo.make({ $ })
@@ -95,8 +99,9 @@ namespace $ {
 		},
 
 		'Bidi bind indexed'( $ ) {
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					indexed*? <=> owner*? null
 			`)
 			const foo = Foo.make({ $ })
@@ -124,10 +129,11 @@ namespace $ {
 		},
 
 		'Bidi bind indexed second level'( $ ) {
-			const { Foo, Bar } = run(`
-				Bar $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo, [`${id}Bar`]: Bar } = run(`
+				${id}Bar $mol_object
 					expanded false
-				Foo $mol_object
+				${id}Foo $mol_object
 					indexed*? Bar
 						expanded <=> owner*? false
 			`)
@@ -153,10 +159,11 @@ namespace $ {
 		},
 
 		'Bidi bind doubing right part with same default'( $ ) {
-			const { Foo } = run(`
-				Foo $mol_object
-					a? <=> b? null
-					c? <=> b? null
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
+					a? <=> b? false
+					c? <=> b? false
 			`)
 			const foo = Foo.make({ $ })
 
@@ -164,16 +171,16 @@ namespace $ {
 				foo.b(),
 				foo.c(),
 				foo.a(),
-				null
+				false
 			)
 		},
 
 		'Bidi bind with separate default in right part'( $ ) {
-
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
+					b? false
 					a? <=> b?
-					b? null
 			`)
 			const foo = Foo.make({ $ })
 
@@ -184,9 +191,10 @@ namespace $ {
 		},
 
 		'Bidi bind index from outer scope throws error'( $ ) {
+			const id = test_id()
 			$mol_assert_fail(() => {
-				const { Foo } = run(`
-					Foo $mol_object
+				const { [`${id}Foo`]: Foo } = run(`
+					${id}Foo $mol_object
 						a!? $mol_object
 							expanded <=> cell_expanded!? null
 				`)
@@ -194,9 +202,9 @@ namespace $ {
 		},
 
 		'Bidi bind with default object'( $ ) {
-
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					class? <=> owner? $mol_object
 			`)
 			const foo = Foo.make({ $ })
@@ -211,9 +219,9 @@ namespace $ {
 		},
 		
 		'Bidi bind localized default value'( $ ) {
-			
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					a? <=> b? @ \\some1
 			`)
 			const foo = Foo.make({ $ })
@@ -221,14 +229,15 @@ namespace $ {
 			$mol_assert_like(
 				foo.b(),
 				foo.a(),
-				'Foo_b',
+				`${id}Foo_b`,
 			)
 		
 		},
 
 		'Bidi bind localized in object'( $ ) {
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					obj *
 						loc? <=> outer? @ \\test1
 			`)
@@ -237,7 +246,7 @@ namespace $ {
 			$mol_assert_like(
 				foo.obj().loc(),
 				foo.outer(),
-				'Foo_outer'
+				`${id}Foo_outer`
 			)
 		},
 

@@ -30,6 +30,7 @@ namespace $ {
 		descr = $mol_view_tree2_classes( descr )
 		
 		const types = [] as $mol_tree2[]
+		const methods = new Set<string>()
 		
 		for( const klass of descr.kids ) {
 
@@ -48,7 +49,9 @@ namespace $ {
 				... props.map( prop => {
 					
 					const { name, key, next } = [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
-					
+					if (methods.has(name)) return undefined
+
+					methods.add(name)
 					const bind_res = ( bind: $mol_tree2 )=> [
 						bind.data( 'ReturnType< ' ),
 						klass.data( klass.type ),
@@ -207,7 +210,7 @@ namespace $ {
 						] )
 					] )
 					
-				} ),
+				} ).filter($mol_guard_defined),
 				... aliases,
 				klass.data( '}' ),
 				descr.data(''),

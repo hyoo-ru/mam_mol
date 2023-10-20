@@ -1,0 +1,7 @@
+
+				Mvt2tjs_structural_channelFoo $mol_object
+					bar *
+						alpha 1
+						beta *
+						xxx <= lol 2
+			

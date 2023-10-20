@@ -1,0 +1,8 @@
+
+				Mvt2tjs_array_channel_numberFoo $mol_object
+					bar /
+						- NaN
+						-Infinity
+						+Infinity
+						0
+			

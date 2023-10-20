@@ -1,13 +1,14 @@
 namespace $ {
 
 	const run = $mol_view_tree2_to_js_test_run
+	const test_id = $mol_view_tree2_to_js_test_id
 
 	$mol_test({
 		
 		'Left bind read only'( $ ) {
-			
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					bar1 <= bar2? 1
 			`)
 			
@@ -30,8 +31,9 @@ namespace $ {
 		},
 
 		'Left bind second level index'( $ ) {
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					cls* <= owner*? $mol_object
 						localized <= some*? @ \\v1
 			`)
@@ -41,7 +43,7 @@ namespace $ {
 			$mol_assert_like(
 				foo.some(1),
 				foo.some(1),
-				'Foo_some'
+				`${id}Foo_some`
 			)
 
 			$mol_assert_equal(
@@ -61,8 +63,9 @@ namespace $ {
 		},
 
 		'Left bind in array and object'( $ ) {
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					obj *
 						prop <= Obj
 					arr /
@@ -79,8 +82,9 @@ namespace $ {
 		},
 
 		'Left bind with separate default and comment'( $ ) {
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					content 123
 					Obj $mol_object
 						rows <= content - 321
@@ -94,8 +98,9 @@ namespace $ {
 		},
 
 		'Left bind chaining'( $ ) {
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					a? <= b? <= c? null
 			`)
 			const foo = Foo.make({ $ })

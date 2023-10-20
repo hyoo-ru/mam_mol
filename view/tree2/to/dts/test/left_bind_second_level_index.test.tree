@@ -1,0 +1,5 @@
+
+				Mvt2tjs_left_bind_second_level_indexFoo $mol_object
+					cls* <= owner*? $mol_object
+						localized <= some*? @ \v1
+			

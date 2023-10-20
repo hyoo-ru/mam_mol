@@ -1,0 +1,6 @@
+
+				Mvt2tjs_simple_two_classesFoo $mol_object
+					str \some
+				Mvt2tjs_simple_two_classesBar Mvt2tjs_simple_two_classesFoo
+					str \some2
+			

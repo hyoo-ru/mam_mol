@@ -1,13 +1,14 @@
 namespace $ {
 
 	const run = $mol_view_tree2_to_js_test_run
-
+	const test_id = $mol_view_tree2_to_js_test_id
+	
 	$mol_test({
 		
 		'Array channel boolean'( $ ) {
-			
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					bar /
 						false
 						true
@@ -21,9 +22,9 @@ namespace $ {
 		},
 		
 		'Array channel number'( $ ) {
-			
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					bar /
 						- NaN
 						-Infinity
@@ -44,8 +45,9 @@ namespace $ {
 		},
 		
 		'Array channel with types'( $ ) {
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					arr /(readonly(number)[])
 			`)
 
@@ -54,8 +56,9 @@ namespace $ {
 		},
 
 		'Array channel of array or object'( $ ) {
-			const { Foo } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo $mol_object
 					complex /
 						/
 							\\test1
@@ -72,11 +75,12 @@ namespace $ {
 		},
 
 		'Array channel inheritance'( $ ) {
-			const { Bar } = run(`
-				Foo $mol_object
+			const id = test_id()
+			const { [`${id}Bar`]: Bar } = run(`
+				${id}Foo $mol_object
 					arr /
 						\\v1
-				Bar Foo
+				${id}Bar ${id}Foo
 					arr /
 						\\v3
 						^
@@ -88,8 +92,9 @@ namespace $ {
 		},
 
 		'Array channel spread other channel'( $ ) {
-			const { Bar } = run(`
-				Bar $mol_object
+			const id = test_id()
+			const { [`${id}Bar`]: Bar } = run(`
+				${id}Bar $mol_object
 					sup /
 						\\v1
 					arr /

@@ -1,0 +1,10 @@
+
+				Mvt2tjs_structural_channel_with_inheritanceFoo $mol_object
+					field *
+						xxx 123
+				Mvt2tjs_structural_channel_with_inheritanceBar Mvt2tjs_structural_channel_with_inheritanceFoo
+					field *
+						yyy 234
+						^
+						zzz 345
+			

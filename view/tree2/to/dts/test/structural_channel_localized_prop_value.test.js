@@ -1,0 +1,7 @@
+	($.Mvt2tjs_structural_channel_localized_prop_valueFoo) = class Mvt2tjs_structural_channel_localized_prop_valueFoo extends ($.$mol_object) {
+		bar(){
+			return {"loc": (this.$.$mol_locale.text("Mvt2tjs_structural_channel_localized_prop_valueFoo_bar_loc")), "baz": {"loc2": (this.$.$mol_locale.text("Mvt2tjs_structural_channel_localized_prop_valueFoo_bar_baz_loc2"))}};
+		}
+	};
+
+//# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22structural_channel_localized_prop_value.test.tree%22%2C%22localized_string%22%5D%2C%22sourcesContent%22%3A%5B%22%5Cn%5Ct%5Ct%5Ct%5CtMvt2tjs_structural_channel_localized_prop_valueFoo%20%24mol_object%5Cn%5Ct%5Ct%5Ct%5Ct%5Ctbar%20*%5Cn%5Ct%5Ct%5Ct%5Ct%5Ct%5Ctloc%20%40%20%5C%5Cv1%5Cn%5Ct%5Ct%5Ct%5Ct%5Ct%5Ctbaz%20*%5Cn%5Ct%5Ct%5Ct%5Ct%5Ct%5Ct%5Ctloc2%20%40%20%5C%5Cv2%5Cn%5Ct%5Ct%5Ct%22%2C%22%5Cn%5Ct%5Ct()%5Cn%5Ct%5Ct%5Ctthis%5Cn%5Ct%5Ct%5Ct%5B%5D%20%5C%5C%24%5Cn%5Ct%5Ct%5Ct%5B%5D%20%5C%5C%24mol_locale%5Cn%5Ct%5Ct%5Ct%5B%5D%20%5C%5Ctext%5Cn%5Ct%5Ct%5Ct(%2C)%20%23key%5Cn%5Ct%22%5D%2C%22mappings%22%3A%22%3B%3BAAAA%2CAACI%2CmHAAmD%2CwBAAnD%3BAAAA%2CAACC%3BAAAA%2CAAAA%2CUAAI%2CCACH%2COCFJ%2CCACC%2CIACA%2CEACA%2CYACA%2CKACA%2CCDHO%2C4DCGP%2CCALD%2CCDCO%2CEAEH%2COAAI%2CCACH%2CQCJL%2CCACC%2CIACA%2CEACA%2CYACA%2CKACA%2CCDDS%2CiECCT%2CCALD%2CCDGQ%2CCAFD%2CCAAJ%3BAAAA%3BAADD%2CCADJ%3B%22%7D

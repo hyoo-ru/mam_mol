@@ -1,0 +1,7 @@
+
+				Mvt2tjs_structural_channel_localized_prop_valueFoo $mol_object
+					bar *
+						loc @ \v1
+						baz *
+							loc2 @ \v2
+			

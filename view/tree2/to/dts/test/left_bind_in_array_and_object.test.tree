@@ -1,0 +1,8 @@
+
+				Mvt2tjs_left_bind_in_array_and_objectFoo $mol_object
+					obj *
+						prop <= Obj
+					arr /
+						<= Obj $mol_object
+							rows <= content /
+			

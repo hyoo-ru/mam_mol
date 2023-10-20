@@ -1,19 +1,21 @@
 namespace $ {
 
 	const run = $mol_view_tree2_to_js_test_run
+	const test_id = $mol_view_tree2_to_js_test_id
 
 	$mol_test({
 		
 		'Right bind read only'( $ ) {
+			const id = test_id()
 			const $2 = run(`
-				Foo $mol_object
+				${id}Foo $mol_object
 					a*? null
-				Bar $mol_object
-					Obj Foo
+				${id}Bar $mol_object
+					Obj ${id}Foo
 						a*? => b*?
 			`)
 
-			const { Bar } = $2
+			const { [`${id}Bar`]: Bar } = $2
 			
 			const bar = Bar.make({ $: $2 })
 
@@ -25,15 +27,16 @@ namespace $ {
 		},
 
 		'Right bind in left bind'( $ ) {
+			const id = test_id()
 			const $2 = run(`
-				Foo $mol_object
+				${id}Foo $mol_object
 					a null
-				Bar $mol_object
-					foo <= Cls Foo
+				${id}Bar $mol_object
+					foo <= Cls ${id}Foo
 						a => b
 			`)
 
-			const { Bar } = $2
+			const { [`${id}Bar`]: Bar } = $2
 			
 			const bar = Bar.make({ $: $2 })
 
@@ -50,16 +53,17 @@ namespace $ {
 		},
 
 		'Right bind indexed'( $ ) {
+			const id = test_id()
 			const $2 = run(`
-				Foo $mol_object
+				${id}Foo $mol_object
 					a? *
 						some 123
-				Bar $mol_object
-					Cls* Foo
+				${id}Bar $mol_object
+					Cls* ${id}Foo
 						a => b*
 			`)
 
-			const { Bar } = $2
+			const { [`${id}Bar`]: Bar } = $2
 			
 			const bar = Bar.make({ $: $2 })
 

@@ -7,7 +7,6 @@ namespace $ {
 		map.mappings = ';;' + map.mappings
 		
 		let res = code
-		
 		const map_uri = `data:application/json,${ this.encodeURIComponent( JSON.stringify( map ) ) }`
 		
 		if( type === 'js' ) res += `\n//# sourceMappingURL=${ map_uri }`
@@ -22,7 +21,7 @@ namespace $ {
 	}
 	
 	export function $mol_tree2_text_to_string_mapped_css( this: $, text: $mol_tree2 ) {
-		return this.$mol_tree2_text_to_string_mapped( text, 'css' )
+		return this.$mol_tree2_text_to_string_mapped( text, 'css')
 	}
 	
 }

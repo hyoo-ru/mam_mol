@@ -1,0 +1,10 @@
+
+				Mvt2tjs_array_channel_inheritanceFoo $mol_object
+					arr /
+						\v1
+				Mvt2tjs_array_channel_inheritanceBar Mvt2tjs_array_channel_inheritanceFoo
+					arr /
+						\v3
+						^
+						\v4
+			

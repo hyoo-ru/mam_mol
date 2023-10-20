@@ -1,0 +1,5 @@
+
+				Mvt2tjs_bidi_bind_localized_in_objectFoo $mol_object
+					obj *
+						loc? <=> outer? @ \test1
+			
