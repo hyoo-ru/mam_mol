@@ -1,6 +1,0 @@
-
-				Mvt2tjs_simple_commented_nodeFoo $mol_object
-					str \some
-				- Mvt2tjs_simple_commented_nodeBar Mvt2tjs_simple_commented_nodeFoo
-					str \some2
-			

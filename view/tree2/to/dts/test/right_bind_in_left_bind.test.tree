@@ -1,7 +1,0 @@
-
-				Mvt2tjs_right_bind_in_left_bindFoo $mol_object
-					a null
-				Mvt2tjs_right_bind_in_left_bindBar $mol_object
-					foo <= Cls Mvt2tjs_right_bind_in_left_bindFoo
-						a => b
-			

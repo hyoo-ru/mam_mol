@@ -32,19 +32,19 @@ namespace $ {
 	export function $mol_view_tree2_to_js_test_run( tree: string ): any {
 		class $mol_object3 extends $mol_object {
 		}
-		const $ = { $mol_object: $mol_object3, js: '', js_node: undefined as undefined | $mol_tree2 }
+		const $ = { Object: $mol_object3, $mol_object: $mol_object3, js: '', js_node: undefined as undefined | $mol_tree2 }
 		;( $mol_object3 as any )[$mol_ambient_ref] = $
 
 		const name = $mol_view_tree2_to_js_test_id(2, true)
 
-		const path = 'mol/view/tree2/to/dts/test/'
+		const path = 'mol/view/tree2/to/js/test/-view.tree/'
 		const src_uri = `${name}.test.tree`
 		const js_node = str2js( tree, src_uri )
 		const js = js2text( js_node )
 
 		const types = make_types(tree, src_uri)
 
-		$mol_view_tree2_to_js_test_saver(path + src_uri, tree)
+		$mol_view_tree2_to_js_test_saver(path + src_uri, tree.replace(/[\t]{4}/g, '').trim() + '\n')
 		$mol_view_tree2_to_js_test_saver(path + src_uri.replace('.tree', '.d.ts'), types)
 		$mol_view_tree2_to_js_test_saver(path + src_uri.replace('.tree', '.js'), js)
 

@@ -1,8 +1,0 @@
-
-				Mvt2tjs_right_bind_indexedFoo $mol_object
-					a? *
-						some 123
-				Mvt2tjs_right_bind_indexedBar $mol_object
-					Cls* Mvt2tjs_right_bind_indexedFoo
-						a => b*
-			

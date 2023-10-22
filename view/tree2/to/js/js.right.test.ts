@@ -8,9 +8,9 @@ namespace $ {
 		'Right bind read only'( $ ) {
 			const id = test_id()
 			const $2 = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					a*? null
-				${id}Bar $mol_object
+				${id}Bar Object
 					Obj ${id}Foo
 						a*? => b*?
 			`)
@@ -29,9 +29,9 @@ namespace $ {
 		'Right bind in left bind'( $ ) {
 			const id = test_id()
 			const $2 = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					a null
-				${id}Bar $mol_object
+				${id}Bar Object
 					foo <= Cls ${id}Foo
 						a => b
 			`)
@@ -55,10 +55,10 @@ namespace $ {
 		'Right bind indexed'( $ ) {
 			const id = test_id()
 			const $2 = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					a? *
 						some 123
-				${id}Bar $mol_object
+				${id}Bar Object
 					Cls* ${id}Foo
 						a => b*
 			`)

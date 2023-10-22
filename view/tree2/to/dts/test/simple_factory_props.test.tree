@@ -1,8 +1,0 @@
-
-				Mvt2tjs_simple_factory_propsFoo $mol_object
-					button $mol_object
-						some true
-						loc @ \v1
-						sub /
-							1
-			

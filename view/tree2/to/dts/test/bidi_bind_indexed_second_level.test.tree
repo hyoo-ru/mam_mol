@@ -1,7 +1,0 @@
-
-				Mvt2tjs_bidi_bind_indexed_second_levelBar $mol_object
-					expanded false
-				Mvt2tjs_bidi_bind_indexed_second_levelFoo $mol_object
-					indexed*? Bar
-						expanded <=> owner*? false
-			

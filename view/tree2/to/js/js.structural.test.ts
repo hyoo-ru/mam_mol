@@ -8,7 +8,7 @@ namespace $ {
 		'Structural channel'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					bar *
 						alpha 1
 						beta *
@@ -26,12 +26,32 @@ namespace $ {
 			
 		},
 		
+		'Structural dict'( $ ) {
+			const id = test_id()
+			const { [`${id}Foo`]: Foo } = run(`
+				${id}Foo Object
+					bar *number|string
+						alpha 1
+						beta \\a
+			`)
+			
+			$mol_assert_like(
+				Foo.make({ $ }).bar(),
+				{
+					alpha: 1,
+					beta: 'a',
+				},
+			)
+			
+		},
+
 		'Structural channel with inheritance'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo, [`${id}Bar`]: Bar } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					field *
 						xxx 123
+						xxy \\test
 				${id}Bar ${id}Foo
 					field *
 						yyy 234
@@ -44,6 +64,7 @@ namespace $ {
 				{
 					yyy: 234,
 					xxx: 123,
+					xxy: 'test',
 					zzz: 345,
 				},
 			)
@@ -53,7 +74,7 @@ namespace $ {
 		'Structural channel spread other channel'( $ ) {
 			const id = test_id()
 			const { [`${id}Bar`]: Bar } = run(`
-				${id}Bar $mol_object
+				${id}Bar Object
 					test *
 						aaa 123
 					field *
@@ -74,7 +95,7 @@ namespace $ {
 		'Structural channel localized prop value'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					bar *
 						loc @ \\v1
 						baz *
@@ -95,7 +116,7 @@ namespace $ {
 		'Structural channel quoted props'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					bar *
 						$a 1
 						b-t *

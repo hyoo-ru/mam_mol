@@ -1,8 +1,0 @@
-
-				Mvt2tjs_array_channel_spread_other_channelBar $mol_object
-					sup /
-						\v1
-					arr /
-						\v2
-						^ sup
-			

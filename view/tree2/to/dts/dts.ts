@@ -30,14 +30,14 @@ namespace $ {
 		descr = $mol_view_tree2_classes( descr )
 		
 		const types = [] as $mol_tree2[]
-		const methods = new Set<string>()
 		
 		for( const klass of descr.kids ) {
-
+			
+			const methods = new Set<string>()
 			const parent = klass.kids[0]
 			const props = this.$mol_view_tree2_class_props(klass)
 			const aliases = [] as $mol_tree2[]
-			
+			const context = { objects: [] as $mol_tree2[] }
 			types.push(
 				klass.struct( 'line', [
 					klass.data( 'export class ' ),
@@ -73,39 +73,45 @@ namespace $ {
 						'<=': bind_res,
 						'=>': bind_res,
 						
-						'*': ( obj, belt )=> [
-							
-							... obj.select('^').kids.map( inherit => 
-								inherit.struct( 'line', [
-									inherit.data( 'ReturnType< ' ),
-									parent.data( parent.type ),
-									inherit.data( '["' ),
-									prop.data( name ),
-									inherit.data( '"] > & ' ),
-								] )
-							),
-							
-							obj.data('({ '),
-							obj.struct( 'indent',
-								obj.kids.map( field => {
-									if( field.type === '^' ) return null
-									const field_name = field.type.replace(/\?\w*$/, '')
-									return field.struct( 'line', [
-										field.data('\''),
-										field.data( field_name ),
-										field.data('\''),
-										field.data( ': ' ),
-										... field.hack( belt ),
-										field.data( ',' ),
-									] )
-								} ).filter( this.$mol_guard_defined )
-							),
-							obj.data('})'),
-							
-						],
-						
 						'': ( input, belt )=> {
-							
+							if (input.type[0] === '*') return [
+								... input.select('^').kids.map( inherit => 
+									inherit.struct( 'line', [
+										inherit.data( 'ReturnType< ' ),
+										parent.data( parent.type ),
+										inherit.data( '["' ),
+										prop.data( name ),
+										inherit.data( '"] > & ' ),
+									] )
+								),
+								... input.type.trim().length > 1 || ! input.kids?.length
+									? [
+										input.data('Record<string, '),
+										input.data(input.type.substring(1) || 'any'),
+										input.data('>'),
+									]
+									: [
+										input.data('Record<string, any>'),
+										// input.data('({ '),
+										// input.struct( 'indent',
+										// 	input.kids.map( field => {
+										// 		if( field.type === '^' ) return null
+										// 		const field_name = field.type.replace(/\?\w*$/, '')
+										// 		return field.struct( 'line', [
+										// 			field.data('\''),
+										// 			field.data( field_name ),
+										// 			field.data('\''),
+										// 			field.data( ': ' ),
+										// 			... field.hack( belt ),
+										// 			field.data( ',' ),
+										// 		] )
+										// 	} ).filter( this.$mol_guard_defined )
+										// ),
+										// input.data('})'),
+									]
+	
+							]
+
 							if( input.type[0] === '/' ) return [
 								input.data('readonly '),
 								input.type.trim().length > 1 ? input.data( input.type.slice(1) ) : input.data('any'),
@@ -199,7 +205,7 @@ namespace $ {
 							
 						},
 						
-					})
+					}, context)
 	
 					return prop.struct( 'indent', [
 						prop.struct( 'line', [

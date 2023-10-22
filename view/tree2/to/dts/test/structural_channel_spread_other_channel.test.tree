@@ -1,8 +1,0 @@
-
-				Mvt2tjs_structural_channel_spread_other_channelBar $mol_object
-					test *
-						aaa 123
-					field *
-						bbb 321
-						^ test
-			

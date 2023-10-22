@@ -8,7 +8,7 @@ namespace $ {
 			const id = test_id()
 			
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					bar1? <=> bar2? 1
 			`)
 			
@@ -49,7 +49,7 @@ namespace $ {
 		'Bidi bind legacy value'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					a?v <=> b?v 1
 			`)
 
@@ -71,7 +71,7 @@ namespace $ {
 		'Bidi bind in dictionary'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					event *
 						click? <=> run? null
 			`)
@@ -86,7 +86,7 @@ namespace $ {
 		'Bidi bind chaining'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					a? <=> b? <=> c? null
 			`)
 			const foo = Foo.make({ $ })
@@ -101,7 +101,7 @@ namespace $ {
 		'Bidi bind indexed'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					indexed*? <=> owner*? null
 			`)
 			const foo = Foo.make({ $ })
@@ -131,13 +131,13 @@ namespace $ {
 		'Bidi bind indexed second level'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo, [`${id}Bar`]: Bar } = run(`
-				${id}Bar $mol_object
+				${id}Bar Object
 					expanded false
-				${id}Foo $mol_object
-					indexed*? Bar
+				${id}Foo Object
+					indexed*? ${id}Bar
 						expanded <=> owner*? false
 			`)
-			Foo.$.Bar = Bar
+			Foo.$[`${id}Bar`] = Bar
 
 			const foo = Foo.make({ $ })
 
@@ -161,7 +161,7 @@ namespace $ {
 		'Bidi bind doubing right part with same default'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					a? <=> b? false
 					c? <=> b? false
 			`)
@@ -178,12 +178,11 @@ namespace $ {
 		'Bidi bind with separate default in right part'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					b? false
 					a? <=> b?
 			`)
 			const foo = Foo.make({ $ })
-
 			$mol_assert_like(
 				foo.b(),
 				foo.a()
@@ -194,8 +193,8 @@ namespace $ {
 			const id = test_id()
 			$mol_assert_fail(() => {
 				const { [`${id}Foo`]: Foo } = run(`
-					${id}Foo $mol_object
-						a!? $mol_object
+					${id}Foo Object
+						a!? Object
 							expanded <=> cell_expanded!? null
 				`)
 			}, `Cannot destructure property 'name' of 'prop_parts(...)' as it is undefined. at ?#3:7/3` )
@@ -204,11 +203,11 @@ namespace $ {
 		'Bidi bind with default object'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
-					class? <=> owner? $mol_object
+				${id}Foo Object
+					class? <=> owner? Object
 			`)
 			const foo = Foo.make({ $ })
-			const view = new $mol_object
+			const view = new Object
 			foo.owner(view)
 
 			$mol_assert_like(
@@ -221,7 +220,7 @@ namespace $ {
 		'Bidi bind localized default value'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					a? <=> b? @ \\some1
 			`)
 			const foo = Foo.make({ $ })
@@ -237,7 +236,7 @@ namespace $ {
 		'Bidi bind localized in object'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					obj *
 						loc? <=> outer? @ \\test1
 			`)

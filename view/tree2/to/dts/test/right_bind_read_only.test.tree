@@ -1,7 +1,0 @@
-
-				Mvt2tjs_right_bind_read_onlyFoo $mol_object
-					a*? null
-				Mvt2tjs_right_bind_read_onlyBar $mol_object
-					Obj Mvt2tjs_right_bind_read_onlyFoo
-						a*? => b*?
-			

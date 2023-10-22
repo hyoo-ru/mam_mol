@@ -128,29 +128,51 @@ namespace $ {
 				] ),
 			],
 			
-			'*': ( obj, belt, context )=> [
+			// '*': ( obj, belt, context )=> [
 				
-				obj.struct('{,}',
-					obj.kids.map( field => {
+			// 	obj.struct('{,}',
+			// 		obj.kids.map( field => {
 						
-						if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
-						const field_name = field.type.replace(/\?\w*$/, '')
-						return field.struct( ':', [
-							field.data( field_name ),
-							field.kids[0].type === '<=>'
-								? field.struct( '=>', [
-									params_of( field ),
-									... field.hack( belt ),
-								] )
-								: field.hack<Context>( belt, {... context, chain: [...context.chain ?? [], field_name] })[0],
-						] )
+			// 			if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
+			// 			const field_name = field.type.replace(/\?\w*$/, '')
+			// 			return field.struct( ':', [
+			// 				field.data( field_name ),
+			// 				field.kids[0].type === '<=>'
+			// 					? field.struct( '=>', [
+			// 						params_of( field ),
+			// 						... field.hack( belt ),
+			// 					] )
+			// 					: field.hack<Context>( belt, {... context, chain: [...context.chain ?? [], field_name] })[0],
+			// 			] )
 						
-					} ).filter( this.$mol_guard_defined )
-				),
+			// 		} ).filter( this.$mol_guard_defined )
+			// 	),
 				
-			],
+			// ],
 			
-			'': ( input, belt )=> {
+			'': ( input, belt, context )=> {
+
+				if( input.type[0] === '*' ) {
+					return [
+						input.struct('{,}',
+						input.kids.map( field => {
+							
+							if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
+							const field_name = field.type.replace(/\?\w*$/, '')
+							return field.struct( ':', [
+								field.data( field_name ),
+								field.kids[0].type === '<=>'
+									? field.struct( '=>', [
+										params_of( field ),
+										... field.hack( belt ),
+									] )
+									: field.hack<Context>( belt, {... context, chain: [...context.chain ?? [], field_name] })[0],
+							] )
+							
+						} ).filter( this.$mol_guard_defined )
+						)
+					]
+				}
 				
 				if( input.type[0] === '/' ) return [
 					input.struct( '[,]', input.hack( belt ) ),

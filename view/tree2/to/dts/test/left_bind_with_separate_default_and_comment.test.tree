@@ -1,6 +1,0 @@
-
-				Mvt2tjs_left_bind_with_separate_default_and_commentFoo $mol_object
-					content 123
-					Obj $mol_object
-						rows <= content - 321
-			

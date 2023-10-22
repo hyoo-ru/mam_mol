@@ -8,7 +8,7 @@ namespace $ {
 		'Left bind read only'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					bar1 <= bar2? 1
 			`)
 			
@@ -33,13 +33,13 @@ namespace $ {
 		'Left bind second level index'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
-					cls* <= owner*? $mol_object
+				${id}Foo Object
+					cls* <= owner*? Object
 						localized <= some*? @ \\v1
 			`)
 			const foo = Foo.make({ $ })
 
-			$mol_assert_ok(foo.owner(1) instanceof $mol_object)
+			$mol_assert_ok(foo.owner(1) instanceof Object)
 			$mol_assert_like(
 				foo.some(1),
 				foo.some(1),
@@ -65,11 +65,11 @@ namespace $ {
 		'Left bind in array and object'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					obj *
 						prop <= Obj
 					arr /
-						<= Obj $mol_object
+						<= Obj Object
 							rows <= content /
 			`)
 			const foo = Foo.make({ $ })
@@ -84,9 +84,9 @@ namespace $ {
 		'Left bind with separate default and comment'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					content 123
-					Obj $mol_object
+					Obj Object
 						rows <= content - 321
 			`)
 			const foo = Foo.make({ $ })
@@ -100,7 +100,7 @@ namespace $ {
 		'Left bind chaining'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					a? <= b? <= c? null
 			`)
 			const foo = Foo.make({ $ })

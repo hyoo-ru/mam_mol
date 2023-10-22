@@ -1,5 +1,0 @@
-
-				Mvt2tjs_bidi_bind_in_dictionaryFoo $mol_object
-					event *
-						click? <=> run? null
-			

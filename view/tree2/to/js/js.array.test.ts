@@ -8,7 +8,7 @@ namespace $ {
 		'Array channel boolean'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					bar /
 						false
 						true
@@ -24,7 +24,7 @@ namespace $ {
 		'Array channel number'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					bar /
 						- NaN
 						-Infinity
@@ -47,7 +47,7 @@ namespace $ {
 		'Array channel with types'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					arr /(readonly(number)[])
 			`)
 
@@ -58,7 +58,7 @@ namespace $ {
 		'Array channel of array or object'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					complex /
 						/
 							\\test1
@@ -77,7 +77,7 @@ namespace $ {
 		'Array channel inheritance'( $ ) {
 			const id = test_id()
 			const { [`${id}Bar`]: Bar } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					arr /
 						\\v1
 				${id}Bar ${id}Foo
@@ -94,7 +94,7 @@ namespace $ {
 		'Array channel spread other channel'( $ ) {
 			const id = test_id()
 			const { [`${id}Bar`]: Bar } = run(`
-				${id}Bar $mol_object
+				${id}Bar Object
 					sup /
 						\\v1
 					arr /

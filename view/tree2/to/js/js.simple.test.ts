@@ -8,7 +8,7 @@ namespace $ {
 		'simple empty class'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 			`)
 			
 			Foo.make({ $ })
@@ -18,7 +18,7 @@ namespace $ {
 		'simple mutable and read only channels'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					readonly null
 					mutable? null
 			`)
@@ -48,7 +48,7 @@ namespace $ {
 		'simple string channel'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					hardcoded \\
 						\\First
 						\\Second
@@ -70,7 +70,7 @@ namespace $ {
 		'simple default indexed channel'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					a*? null
 			`)
 
@@ -88,14 +88,14 @@ namespace $ {
 			const id = test_id()
 			$mol_assert_fail(() => {
 				run(`
-					${id}Foo $mol_object
+					${id}Foo Object
 						a!? null
 				`)
 			}, `Cannot destructure property 'name' of 'prop_parts(...)' as it is undefined. at ?#3:7/3` )
 
 			$mol_assert_fail(() => {
 				run(`
-					${id}Foo $mol_object
+					${id}Foo Object
 						b! 1
 				`)
 			}, `Cannot destructure property 'name' of 'prop_parts(...)' as it is undefined. at ?#3:7/2` )
@@ -104,7 +104,7 @@ namespace $ {
 		'simple two classes'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo, [`${id}Bar`]: Bar } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					str \\some
 				${id}Bar ${id}Foo
 					str \\some2
@@ -122,7 +122,7 @@ namespace $ {
 		'simple commented node'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo, [`${id}Bar`]: Bar } = run(`
-				${id}Foo $mol_object
+				${id}Foo Object
 					str \\some
 				- ${id}Bar ${id}Foo
 					str \\some2
@@ -136,8 +136,8 @@ namespace $ {
 		'simple factory props'( $ ) {
 			const id = test_id()
 			const { [`${id}Foo`]: Foo } = run(`
-				${id}Foo $mol_object
-					button $mol_object
+				${id}Foo Object
+					button Object
 						some true
 						loc @ \\v1
 						sub /
