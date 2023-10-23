@@ -1,6 +1,6 @@
 namespace $ {
 	
-	const prop_parts = $mol_view_tree2_prop_signature_parts
+	const prop_parts = $mol_view_tree2_prop_parts
 
 	function name_of( prop: $mol_tree2 ) {
 		return prop_parts(prop).name
