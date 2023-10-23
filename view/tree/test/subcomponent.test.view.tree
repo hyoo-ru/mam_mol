@@ -1,7 +1,0 @@
-$mol_view_tree_test_attributes_subcomponent $mol_view
-	- Comment
-	Page* $mol_view_tree_test_attributes_subcomponent_page
-		Sub <= page* null
-
-$mol_view_tree_test_attributes_subcomponent_page $mol_view
-	Sub null
