@@ -76,36 +76,9 @@ namespace $ {
 			return [ script ]
 
 		}
-
+	
+		@ $mol_mem_key
 		viewTreeTranspile( path : string ) {
-			if (this.$.$mol_env()?.['MOL_BUILD_TREE2']) return this.viewTreeTranspile2(path)
-
-			return this.viewTreeTranspile1(path)
-		}
-		
-		@ $mol_mem_key
-		viewTreeTranspile1( path : string ) {
-
-			const file = $mol_file.absolute( path )
-			const name = file.name()
-
-			const script = file.parent().resolve( `-view.tree/${ name }.ts` )
-			const sourceMap = file.parent().resolve( `-view.tree/${ name }.map` )
-			const locale = file.parent().resolve( `-view.tree/${ name }.locale=en.json` )
-			
-			const text = file.text()
-			const tree = this.$.$mol_tree2_from_string( text , file.path() )
-			const res = this.$.$mol_view_tree2_ts_compile( tree )
-
-			script.text( res.script )
-			// sourceMap.text( res.map )
-			locale.text( JSON.stringify( res.locales , null , '\t' ) )
-				
-			return [ script , locale ]
-		}
-
-		@ $mol_mem_key
-		viewTreeTranspile2( path : string ) {
 
 			const file = $mol_file.absolute( path )
 			const name = file.name()
