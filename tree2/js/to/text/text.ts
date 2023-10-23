@@ -225,7 +225,7 @@ namespace $ {
 				]
 				
 				// number
-				if( input.type === 'NaN' || !Number.isNaN( Number( input.type ) ) ) return [
+				if( input.type.match(/[+\-]?NaN/) || !Number.isNaN( Number( input.type ) ) ) return [
 					input.data( input.type )
 				]
 
