@@ -1,10 +1,7 @@
 namespace $ {
 
 	const err = $mol_view_tree2_error_str
-	
-	function prop_parts( prop: $mol_tree2 ) {
-		return [ ...prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
-	}
+	const prop_parts = $mol_view_tree2_prop_signature_parts
 
 	function name_of( prop: $mol_tree2 ) {
 		return prop_parts(prop).name
@@ -127,28 +124,6 @@ namespace $ {
 					]),
 				] ),
 			],
-			
-			// '*': ( obj, belt, context )=> [
-				
-			// 	obj.struct('{,}',
-			// 		obj.kids.map( field => {
-						
-			// 			if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
-			// 			const field_name = field.type.replace(/\?\w*$/, '')
-			// 			return field.struct( ':', [
-			// 				field.data( field_name ),
-			// 				field.kids[0].type === '<=>'
-			// 					? field.struct( '=>', [
-			// 						params_of( field ),
-			// 						... field.hack( belt ),
-			// 					] )
-			// 					: field.hack<Context>( belt, {... context, chain: [...context.chain ?? [], field_name] })[0],
-			// 			] )
-						
-			// 		} ).filter( this.$mol_guard_defined )
-			// 	),
-				
-			// ],
 			
 			'': ( input, belt, context )=> {
 

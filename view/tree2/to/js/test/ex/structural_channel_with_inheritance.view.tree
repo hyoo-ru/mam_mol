@@ -1,0 +1,10 @@
+$mol_view_tree2_to_js_test_ex_structural_channel_with_inheritance_foo $mol_view
+	field *
+		xxx 123
+		xxy \test
+
+$mol_view_tree2_to_js_test_ex_structural_channel_with_inheritance_bar $mol_view_tree2_to_js_test_ex_structural_channel_with_inheritance_foo
+	field *
+		yyy 234
+		^
+		zzz 345

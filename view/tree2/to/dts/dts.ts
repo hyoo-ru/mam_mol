@@ -1,12 +1,14 @@
 namespace $ {
 	
+	const prop_parts = $mol_view_tree2_prop_signature_parts
+
 	function name_of( prop: $mol_tree2 ) {
-		return [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!.name
+		return prop_parts(prop).name
 	}
 	
 	function params_of( prop: $mol_tree2, ... val: $mol_tree2[] ) {
 		
-		const { key, next } = [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
+		const { key, next } = prop_parts(prop)
 		
 		return prop.struct( 'line', [
 			prop.data('( '),
@@ -25,9 +27,9 @@ namespace $ {
 		
 	}
 	
-	export function $mol_view_tree2_to_dts(this: $, descr: $mol_tree2) {
+	export function $mol_view_tree2_to_dts(this: $, tree: $mol_tree2) {
 		
-		descr = $mol_view_tree2_classes( descr )
+		const descr = $mol_view_tree2_classes( tree )
 		
 		const types = [] as $mol_tree2[]
 		
@@ -48,7 +50,7 @@ namespace $ {
 				] ),
 				... props.map( prop => {
 					
-					const { name, key, next } = [ ... prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
+					const name = name_of(prop)
 					if (methods.has(name)) return undefined
 
 					methods.add(name)
