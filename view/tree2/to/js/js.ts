@@ -74,8 +74,9 @@ namespace $ {
 				] ),
 			] )
 		}
-		
-		if( next ) addons.push( decorate() )
+		const op = prop.kids[0]
+		const is_delegate = op?.type === '<=' || op?.type === '<=>'
+		if( ! is_delegate && next ) addons.push( decorate() )
 		
 		const val = prop.hack<Context>({
 			
@@ -154,7 +155,7 @@ namespace $ {
 				]
 				
 				if( /^[$A-Z]/.test( input.type ) ) {
-					
+					const is_delegate = input.type === '<=' || input.type === '<=>'
 					if( !next ) addons.push( decorate() )
 					
 					const overrides = [] as $mol_tree2[]
@@ -261,7 +262,7 @@ namespace $ {
 				prop.data( name ),
 				params_of( prop ),
 				prop.struct( '{;}', [
-					... next ? [
+					... next && ! is_delegate ? [
 						prop.struct( 'if', [
 							prop.struct( '(!==)', [
 								prop.struct( 'next' ),
