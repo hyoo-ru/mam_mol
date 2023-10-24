@@ -29,12 +29,12 @@ namespace $ {
 				1,
 			)
 			
-			// $mol_assert_equal(
-			// 	foo.bar2( 3 ),
-			// 	foo.bar2(),
-			// 	foo.bar1(),
-			// 	3,
-			// )
+			$mol_assert_equal(
+				foo.bar2( 3 ),
+				foo.bar2(),
+				foo.bar1(),
+				3,
+			)
 			
 		},
 
