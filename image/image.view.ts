@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $mol_image extends $.$mol_image {
 		
 		@ $mol_mem
-		natural_width( next?: null ) {
+		natural_width( next?: null | number ) {
 			
 			const dom = this.dom_node() as HTMLImageElement
 			if( dom.naturalWidth ) return dom.naturalWidth
@@ -13,7 +13,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		natural_height( next?: null ) {
+		natural_height( next?: null | number ) {
 			
 			const dom = this.dom_node() as HTMLImageElement
 			if( dom.naturalHeight ) return dom.naturalHeight
