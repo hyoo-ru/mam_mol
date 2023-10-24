@@ -162,9 +162,8 @@ namespace $ {
 												pr.struct( 'indent', [
 													pr.struct( 'line', [
 														pr.data( name_of( pr ) ),
-														bind.data( ': ' ),
 														params_of( pr, ... res ),
-														bind.data( '=> ' ),
+														bind.data( ': ' ),
 														... res,
 													] ),
 												] ),
