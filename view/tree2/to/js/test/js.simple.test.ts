@@ -5,8 +5,7 @@ namespace $ {
 		'simple empty class'( $ ) {
 			const _foo = $mol_view_tree2_to_js_test_ex_simple_empty_class_foo
 			
-			_foo.make({ $ })
-			
+			$mol_assert_ok(_foo.make({ $ }) instanceof _foo)
 		},
 
 		'simple mutable and read only channels'( $ ) {
@@ -14,7 +13,7 @@ namespace $ {
 			
 			const foo = _foo.make({ $ })
 			
-			$mol_assert_like(
+			$mol_assert_equal(
 				foo.readonly(),
 				// @ts-ignore
 				foo.readonly( 1 ),
@@ -22,12 +21,12 @@ namespace $ {
 				null,
 			)
 			
-			$mol_assert_like(
+			$mol_assert_equal(
 				foo.mutable(),
 				null,
 			)
 				
-			$mol_assert_like(
+			$mol_assert_equal(
 				foo.mutable(2),
 				foo.mutable(),
 				2,
@@ -38,12 +37,12 @@ namespace $ {
 		'simple string channel'( $ ) {
 			const _foo = $mol_view_tree2_to_js_test_ex_simple_string_channel_foo
 			
-			$mol_assert_like(
+			$mol_assert_equal(
 				_foo.make({ $ }).hardcoded(),
 				'First\nSecond',
 			)
 			
-			$mol_assert_like(
+			$mol_assert_equal(
 				_foo.make({ $ }).localized(),
 				`$mol_view_tree2_to_js_test_ex_simple_string_channel_foo_localized`,
 			)
@@ -54,12 +53,17 @@ namespace $ {
 
 			const foo = _foo.make({ $ })
 
-			$mol_assert_like(
-				foo.a(0, 1),
-				foo.a(0),
+			$mol_assert_equal(
+				foo.a_b(0, 1),
+				foo.a_b(0),
 				1
 			)
-			
+
+			$mol_assert_equal(
+				foo.legacy(0, 1),
+				foo.legacy(0),
+				1
+			)
 		},
 
 		'simple empty legacy indexed channel throws error'( $ ) {
@@ -87,8 +91,8 @@ namespace $ {
 			$mol_assert_ok(b instanceof _foo)
 			$mol_assert_ok(b instanceof _bar)
 
-			$mol_assert_like( a.str(), 'some')
-			$mol_assert_like( b.str(), 'some2')
+			$mol_assert_equal( a.str(), 'some')
+			$mol_assert_equal( b.str(), 'some2')
 		},
 
 		'simple commented node'( $ ) {
@@ -102,22 +106,40 @@ namespace $ {
 
 		'simple factory props'( $ ) {
 			const _foo = $mol_view_tree2_to_js_test_ex_simple_factory_props_foo
-
 			const foo = _foo.make({ $ })
 
 			$mol_assert_ok(typeof foo.button().sub === 'function')
 
 			$mol_assert_ok(typeof foo.button().some === 'function')
 
-			$mol_assert_like(
+			$mol_assert_equal(
 				foo.button().loc(),
 				`$mol_view_tree2_to_js_test_ex_simple_factory_props_foo_button_loc`
 			)
 
-			$mol_assert_like(
+			$mol_assert_equal(
 				foo.button().sub()[0],
 				1
 			)
+		},
+
+		'simple nan' ($) {
+			const _foo = $mol_view_tree2_to_js_test_ex_simple_nan_foo
+			const foo = _foo.make({ $ })
+			type assert_a = $mol_type_assert<ReturnType<typeof foo['a']>, number>
+			type assert_d = $mol_type_assert<ReturnType<typeof foo['d']>, number>
+			$mol_assert_equal(foo.a(), foo.b(), foo.c(), NaN)
+			$mol_assert_equal(foo.d(), Infinity)
+			$mol_assert_equal(foo.e(), -Infinity)
+		},
+
+		'extra char' ($) {
+			$mol_assert_fail(() => {
+				$mol_view_tree2_to_js_test_run(`
+					Foo $mol_view
+						item_чount 50
+				`)
+			})
 		},
 	})
 	

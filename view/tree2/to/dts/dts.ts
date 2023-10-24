@@ -1,14 +1,12 @@
 namespace $ {
 	
-	const prop_parts = $mol_view_tree2_prop_parts
-
 	function name_of( prop: $mol_tree2 ) {
-		return prop_parts(prop).name
+		return $mol_view_tree2_prop_parts(prop.type).name
 	}
 	
 	function params_of( prop: $mol_tree2, ... val: $mol_tree2[] ) {
 		
-		const { key, next } = prop_parts(prop)
+		const { key, next } = $mol_view_tree2_prop_parts(prop.type)
 		
 		return prop.struct( 'line', [
 			prop.data('( '),
@@ -119,11 +117,11 @@ namespace $ {
 								input.type.trim().length > 1 ? input.data( input.type.slice(1) ) : input.data('any'),
 								input.data('[]'),
 							]
-							
-							if( Number( input.type ).toString() === input.type.replace( /^\+/, '' ) ) return [
-								input.data( 'number' ),
+
+							if( input.type && (input.type.match(/[\+\-]*NaN/) || !Number.isNaN( Number( input.type ) ) ) ) return [
+								input.data( 'number'),
 							]
-							
+
 							if( /^[$A-Z]/.test( input.type ) ) {
 								
 								const first = input.kids[0]

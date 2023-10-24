@@ -1,15 +1,14 @@
 namespace $ {
 
 	const err = $mol_view_tree2_error_str
-	const prop_parts = $mol_view_tree2_prop_parts
 
 	function name_of( prop: $mol_tree2 ) {
-		return prop_parts(prop).name
+		return $mol_view_tree2_prop_parts(prop.type).name
 	}
 	
 	function params_of( prop: $mol_tree2, bidi = true ) {
 		
-		const { key, next } = prop_parts(prop)
+		const { key, next } = $mol_view_tree2_prop_parts(prop.type)
 
 		return prop.struct( '(,)', [
 			... key ? [ prop.struct( 'id' ) ] : [],
@@ -20,7 +19,7 @@ namespace $ {
 	
 	function args_of( prop: $mol_tree2, bidi = true ) {
 		
-		const { key, next } = prop_parts(prop)
+		const { key, next } = $mol_view_tree2_prop_parts(prop.type)
 		
 		return prop.struct( '(,)', [
 			... key ? [ prop.struct( key.length > 1 ? key.slice(1) : 'id' ) ] : [],
@@ -51,7 +50,7 @@ namespace $ {
 		prop: $mol_tree2
 	) {
 		const { klass, members, addons, methods } = acc
-		const { name, key, next } = prop_parts(prop)
+		const { name, key, next } = $mol_view_tree2_prop_parts(prop.type)
 
 		if (methods.has(name)) return acc
 
@@ -153,9 +152,11 @@ namespace $ {
 				if( input.type[0] === '/' ) return [
 					input.struct( '[,]', input.hack( belt ) ),
 				]
-				
+				if( input.type && (input.type.match(/[\+\-]*NaN/) || !Number.isNaN( Number( input.type ) ) ) ) return [
+					input
+				]
+
 				if( /^[$A-Z]/.test( input.type ) ) {
-					const is_delegate = input.type === '<=' || input.type === '<=>'
 					if( !next ) addons.push( decorate() )
 					
 					const overrides = [] as $mol_tree2[]
