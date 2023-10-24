@@ -29,8 +29,9 @@ namespace $ {
 		
 		'Array channel with types'( $ ) {
 			const _foo = $mol_view_tree2_to_js_test_ex_array_channel_with_types_foo
-
-			$mol_assert_like(_foo.make({ $ }).arr(), [])
+			const foo = _foo.make({ $ })
+			type assert_arr = $mol_type_assert<ReturnType<typeof foo['arr']>, readonly( readonly(number)[] )[]>
+			$mol_assert_like(foo.arr(), [])
 
 		},
 

@@ -113,9 +113,9 @@ namespace $ {
 							]
 
 							if( input.type[0] === '/' ) return [
-								input.data('readonly '),
+								input.data('readonly ('),
 								input.type.trim().length > 1 ? input.data( input.type.slice(1) ) : input.data('any'),
-								input.data('[]'),
+								input.data(')[]'),
 							]
 
 							if( input.type && (input.type.match(/[\+\-]*NaN/) || !Number.isNaN( Number( input.type ) ) ) ) return [
