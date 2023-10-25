@@ -980,11 +980,15 @@ $hyoo_crowd_app $mol_book2
 $hyoo_crowd_app_peer $mol_page
 	store $hyoo_crowd_land
 	sync 0
+	sync_clocks? /$hyoo_crowd_clock
+	changes 0
+	delta /$hyoo_crowd_unit
 	body /
 		<= Text $mol_textarea
 			hint <= hint \
 			value?val <=> text?val \
 			sidebar_showed true
+			
 		<= Stats $mol_text
 			text <= stats \
 				\# Stats

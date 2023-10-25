@@ -3724,6 +3724,9 @@ declare namespace $ {
     class $hyoo_crowd_app_peer extends $mol_page {
         store(): $hyoo_crowd_land;
         sync(): number;
+        sync_clocks(next?: any): readonly $hyoo_crowd_clock[];
+        changes(): number;
+        delta(): readonly $hyoo_crowd_unit[];
         body(): readonly any[];
         hint(): string;
         text(val?: any): string;
