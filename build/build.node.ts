@@ -83,7 +83,7 @@ namespace $ {
 			const file = $mol_file.absolute( path )
 			const name = file.name()
 
-			const script = file.parent().resolve( `-view.tree/${ name }.js` )
+			const js = file.parent().resolve( `-view.tree/${ name }.jam.js` )
 			const dts = file.parent().resolve( `-view.tree/${ name }.d.ts` )
 			const locale = file.parent().resolve( `-view.tree/${ name }.locale=en.json` )
 			
@@ -91,11 +91,11 @@ namespace $ {
 			const tree = this.$.$mol_tree2_from_string( text , name )
 			const res = this.$.$mol_view_tree2_to_full( tree )
 
-			script.text( res.js )
+			js.text( res.js )
 			dts.text( res.dts )
 			locale.text( JSON.stringify( res.locales , null , '\t' ) )
 
-			return [ script , dts, locale ]
+			return [ js , dts, locale ]
 		}
 
 		@ $mol_mem_key
@@ -684,7 +684,7 @@ namespace $ {
 				const checkDep = ( p : string )=> {
 
 					const isFile = /\.\w+$/.test( p )
-					
+
 					var dep = ( p[ 0 ] === '/' )
 					? this.root().resolve( p + ( isFile ? '' : '/' + p.replace( /.*\// , '' ) ) )
 					: ( p[ 0 ] === '.' )
@@ -1733,7 +1733,7 @@ namespace $ {
 	
 	$mol_build.dependors[ 'view.tree' ] = source => {
 		return {
-			[`/${ source.parent().relate() }/-view.tree/${ source.name() }.js`]: 0,
+			[`/${ source.parent().relate() }/-view.tree/${ source.name() }.jam.js`]: 0,
 			[`/${ source.parent().relate() }/-view.tree/${ source.name() }.d.ts`]: 0,
 		}
 	}
