@@ -83,7 +83,7 @@ namespace $ {
 			const file = $mol_file.absolute( path )
 			const name = file.name()
 
-			const js = file.parent().resolve( `-view.tree/${ name }.jam.js` )
+			const js = file.parent().resolve( `-view.tree/${ name }.js` )
 			const dts = file.parent().resolve( `-view.tree/${ name }.d.ts` )
 			const locale = file.parent().resolve( `-view.tree/${ name }.locale=en.json` )
 			
@@ -1602,7 +1602,7 @@ namespace $ {
 		return depends
 	}
 	
-	$mol_build.dependors[ 'ts' ] = $mol_build.dependors[ 'tsx' ] = $mol_build.dependors[ 'jam.js' ] = source => {
+	$mol_build.dependors[ 'ts' ] = $mol_build.dependors[ 'tsx' ] = $mol_build.dependors[ 'jam.js' ] = $mol_build.dependors[ 'tree.js' ] = source => {
 		var depends : { [ index : string ] : number } = {}
 		
 		var lines = String( source.text() )
@@ -1733,7 +1733,7 @@ namespace $ {
 	
 	$mol_build.dependors[ 'view.tree' ] = source => {
 		return {
-			[`/${ source.parent().relate() }/-view.tree/${ source.name() }.jam.js`]: 0,
+			[`/${ source.parent().relate() }/-view.tree/${ source.name() }.js`]: 0,
 			[`/${ source.parent().relate() }/-view.tree/${ source.name() }.d.ts`]: 0,
 		}
 	}
