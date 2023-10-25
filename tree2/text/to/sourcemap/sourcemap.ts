@@ -88,8 +88,9 @@ namespace $ {
 		}
 		next_line()
 		
-		const map = {
+		const map: $mol_sourcemap_raw = {
 			version: 3,
+			names: [],
 			sources: [ ... file_sources.keys() ],
 			sourcesContent: [ ... file_sources.values() ],
 			mappings,

@@ -2,7 +2,10 @@ namespace $ {
 
 	const str2js_dts = (function (this: $, data: string, url: string) {
 		const tree = this.$mol_tree2_from_string(data, url)
-		return this.$mol_view_tree2_to_full(tree)
+		const js_tree = this.$mol_view_tree2_to_js(tree)
+		const js_text = this.$mol_tree2_js_to_text(js_tree)
+		const js_str = this.$mol_tree2_text_to_string_mapped_js(js_text)
+		return js_str
 	}).bind($ as typeof $$)
 
 	function $mol_view_tree2_to_js_test_id(stack_index = 1, no_prefix = false) {
@@ -23,7 +26,7 @@ namespace $ {
 		const name = $mol_view_tree2_to_js_test_id(2, true)
 
 		const src_uri = `${name}.view.tree`
-		const { js } = str2js_dts( tree, src_uri )
+		const js = str2js_dts( tree, src_uri )
 
 		eval( js )
 		return $

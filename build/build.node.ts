@@ -82,20 +82,36 @@ namespace $ {
 
 			const file = $mol_file.absolute( path )
 			const name = file.name()
+			const parent = file.parent()
+			const prefix = `-view.tree/${ name }`
 
-			const js = file.parent().resolve( `-view.tree/${ name }.js` )
-			const dts = file.parent().resolve( `-view.tree/${ name }.d.ts` )
-			const locale = file.parent().resolve( `-view.tree/${ name }.locale=en.json` )
-			
 			const text = file.text()
-			const tree = this.$.$mol_tree2_from_string( text , name )
-			const res = this.$.$mol_view_tree2_to_full( tree )
+			const tree = this.$.$mol_tree2_from_string( text , '../' + name )
 
-			js.text( res.js )
-			dts.text( res.dts )
-			locale.text( JSON.stringify( res.locales , null , '\t' ) )
+			const dts_text = this.$.$mol_view_tree2_to_dts( tree )
+			const dts_data = this.$.$mol_tree2_text_to_string_mapped_js( dts_text )
+			const dts_file = parent.resolve( `${ prefix }.d.ts` )
+			dts_file.text(dts_data)
 
-			return [ js , dts, locale ]
+			// const dts_map = this.$.$mol_tree2_text_to_sourcemap( dts_text )
+			// const dts_map_file = parent.resolve( `${ prefix }.d.ts.map` )
+			// dts_map_file.text(JSON.stringify(dts_map))
+
+			const js_tree = this.$.$mol_view_tree2_to_js(tree)
+			const js_text = this.$.$mol_tree2_js_to_text(js_tree)
+			const js_data = this.$.$mol_tree2_text_to_string_mapped_js( js_text )
+			const js_file = parent.resolve( `${ prefix }.js` )
+			js_file.text(js_data)
+
+			// const js_map = this.$.$mol_tree2_text_to_sourcemap( js_text )
+			// const js_map_file = parent.resolve( `${ prefix }.js.map` )
+			// js_map_file.text(JSON.stringify(js_map))
+
+			const locale_file = parent.resolve( `${ prefix }.locale=en.json` )
+			const locales = this.$.$mol_view_tree2_to_locale(tree)
+			locale_file.text( JSON.stringify( locales , null , '\t' ) )
+
+			return [ js_file, dts_file, locale_file ]
 		}
 
 		@ $mol_mem_key
@@ -450,17 +466,16 @@ namespace $ {
 				map.sources = [ src.relate() ]
 				
 				return {
-					text : res.outputText.replace( /^\/\/#\ssourceMappingURL=[^\n]*/mg , '//' + src.relate() )+'\n',
+					text : this.$.$mol_sourcemap_strip(res.outputText),
+					// .replace( /^\/\/#\ssourceMappingURL=[^\n]*/mg , '//' + src.relate() )+'\n',
 					map : map,
 				}
 
 			} else {
 
-				const srcMap = src.parent().resolve( src.name() + '.map' );
-				
 				return {
-					text : src.text().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n',
-					map : srcMap.exists() ? JSON.parse( srcMap.text() ) as $mol_sourcemap_raw : undefined
+					text: this.$.$mol_sourcemap_strip(src.text()),
+					map: this.$.$mol_sourcemap_from_file(src)
 				}
 
 			}
@@ -887,11 +902,6 @@ namespace $ {
 			
 			this.$.$mol_log3_done({
 				place: this ,
-				sub_place: new Error()
-					.stack?.split('\n')
-					.slice(2, 5)
-					.map(item => item.match(/\s*at\s*(.*) .*/)?.[1])
-					.filter(Boolean) ?? 'unknown',
 				duration: `${duration}ms` ,
 				message: `Built` , 
 				path ,

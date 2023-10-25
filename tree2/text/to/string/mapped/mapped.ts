@@ -4,16 +4,9 @@ namespace $ {
 		
 		const code = this.$mol_tree2_text_to_string( text )
 		const map = this.$mol_tree2_text_to_sourcemap( text )
-		map.mappings = ';;' + map.mappings
-		
-		let res = code
-		const map_uri = `data:application/json,${ this.encodeURIComponent( JSON.stringify( map ) ) }`
-		
-		if( type === 'js' ) res += `\n//# sourceMappingURL=${ map_uri }`
-		else res += `\n/*# sourceMappingURL=${ map_uri } */`
-		
-		return res
 
+		const chunk = this.$mol_sourcemap_dataurl_encode( map, type )
+		return code + chunk
 	}
 
 	export function $mol_tree2_text_to_string_mapped_js( this: $, text: $mol_tree2 ) {
