@@ -64,7 +64,7 @@ namespace $ {
 			let content = ''
 			for( const step of tree.select( 'build' , '' ).kids ) {
 
-				const res = this.$.$mol_exec( file.parent().path() , step.value ).stdout.toString().trim()
+				const res = this.$.$mol_exec( file.parent().path() , step.text() ).stdout.toString().trim()
 				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
 
 			}
@@ -601,13 +601,13 @@ namespace $ {
 						
 						this.$.$mol_exec( mod.path() , 'git' , 'init' )
 						
-						const res = this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'show' , repo.value )
+						const res = this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'show' , repo.text() )
 						const matched = res.stdout.toString().match( /HEAD branch: (.*?)\n/ )
 						const head_branch_name = res instanceof Error || matched === null || !matched[1]
 							? 'master'
 							: matched[1]
 						
-						this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'add' , '--track' , head_branch_name! , 'origin' , repo.value )
+						this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'add' , '--track' , head_branch_name! , 'origin' , repo.text() )
 						this.$.$mol_exec( mod.path() , 'git' , 'pull', '--deepen=1' )
 						mod.reset()
 						for ( const sub of mod.sub() ) {
@@ -630,7 +630,7 @@ namespace $ {
 			}
 
 			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).kids ) {
-				this.$.$mol_exec( this.root().path() , 'git' , 'clone' , '--depth', '1', repo.value , mod.relate( this.root() ) )
+				this.$.$mol_exec( this.root().path() , 'git' , 'clone' , '--depth', '1' , repo.text() , mod.relate( this.root() ) )
 				mod.reset()
 				return true
 			}
@@ -887,6 +887,11 @@ namespace $ {
 			
 			this.$.$mol_log3_done({
 				place: this ,
+				sub_place: new Error()
+					.stack?.split('\n')
+					.slice(2, 5)
+					.map(item => item.match(/\s*at\s*(.*) .*/)?.[1])
+					.filter(Boolean) ?? 'unknown',
 				duration: `${duration}ms` ,
 				message: `Built` , 
 				path ,
@@ -1153,10 +1158,10 @@ namespace $ {
 			sortedPaths.forEach( path => {
 				const meta = this.modMeta( this.root().resolve( path ).path() )
 				if( meta.kids.length > 0 ) {
-					namedMetas.push( meta.data( '/' + path ) )
+					namedMetas.push( meta.data( '/' + path, meta.kids ) )
 				}
 			} )
-			
+
 			if( namedMetas.length === 0 ) return []
 			
 			target.text( this.$.$mol_tree2.list(namedMetas, namedMetas[0]?.span).toString() )
@@ -1330,7 +1335,6 @@ namespace $ {
 			.filter( src => /meta.tree$/.test( src.ext() ) )
 			
 			const targets : $mol_file[] = []
-
 			sources.forEach( source => {
 				const tree = this.$.$mol_tree2_from_string( source.text() , source.path() )
 
@@ -1355,9 +1359,8 @@ namespace $ {
 					}
 					
 				}
-
 				tree.select( 'deploy' ).kids.forEach( deploy => {
-					addFilesRecursive(root.resolve(deploy.value.replace( /^\// , '' )))
+					addFilesRecursive(root.resolve(deploy.text().replace( /^\// , '' )))
 				} )
 				
 			} )
@@ -1718,11 +1721,11 @@ namespace $ {
 		const tree = $$.$mol_tree2_from_string( source.text() , source.path() )		
 	
 		tree.select( 'require' ).kids.forEach( leaf => {
-			depends[ leaf.value ] = 0
+			depends[ leaf.text() ] = 0
 		} )
 		
 		tree.select( 'include' ).kids.forEach( leaf => {
-			depends[ leaf.value ] = -9000
+			depends[ leaf.text() ] = -9000
 		} )
 		
 		return depends
