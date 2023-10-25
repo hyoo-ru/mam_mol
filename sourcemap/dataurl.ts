@@ -8,20 +8,26 @@ namespace $ {
 
 		if (index === -1) return undefined
 
-		data = data.substring(index)
+		data = data.substring(index + prefix.length)
 
-		if (data.endsWith(end_comment)) data = data.substring(0, end_comment.length)
+		if (data.endsWith(end_comment)) data = data.substring(0, data.length - end_comment.length)
 
 		const decoded = this.decodeURIComponent(data)
-		const map = JSON.parse(decoded) as $mol_sourcemap_raw | null
 
-		if (! map) return undefined
+		try {
+			const map = JSON.parse(decoded) as $mol_sourcemap_raw | null
 
-		if (typeof map.mappings === 'string' && map.mappings.startsWith(';;')) {
-			map.mappings = map.mappings.substring(2)
+			if (! map) return undefined
+
+			if (typeof map.mappings === 'string' && map.mappings.startsWith(';;')) {
+				map.mappings = map.mappings.substring(2)
+			}
+
+			return map
+		} catch (e) {
+			if (e instanceof Error) e.message += ', origin=' + decoded
+			$mol_fail_hidden(e)
 		}
-
-		return map
 	}
 
 	export function $mol_sourcemap_dataurl_encode(this: $, map: $mol_sourcemap_raw, type = 'js' as 'js' | 'css') {

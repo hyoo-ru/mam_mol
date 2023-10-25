@@ -126,14 +126,16 @@ namespace $ {
 
 					if (segment.length >= 5) {
 						const nameIndex = segment[4]!
-						const name = raw.names[nameIndex]
-						let mergedNameIndex = name_indexes.get(name)
-						if (mergedNameIndex === undefined) {
-							mergedNameIndex = names.length
-							name_indexes.set(name, mergedNameIndex)
-							names.push(name)
+						const name = raw.names?.[nameIndex]
+						if (name !== undefined) {
+							let mergedNameIndex = name_indexes.get(name)
+							if (mergedNameIndex === undefined) {
+								mergedNameIndex = names.length
+								name_indexes.set(name, mergedNameIndex)
+								names.push(name)
+							}
+							mergedSegment.push(mergedNameIndex)
 						}
-						mergedSegment.push(mergedNameIndex)
 					}
 
 					mergedLine.push(mergedSegment)

@@ -7,7 +7,7 @@ namespace $ {
 	export interface $mol_sourcemap_raw {
 		version: number
 		sources: string[]
-		names: string[]
+		names?: string[]
 		sourceRoot?: string
 		sourcesContent?: (string | null)[]
 		mappings: string | $mol_sourcemap_line[]
