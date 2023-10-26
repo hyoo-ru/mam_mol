@@ -42,6 +42,15 @@ namespace $ {
 				return [ operator.clone([ prop.clone([]) ]) ]
 			},
 
+			'^': ( operator, belt) => {
+				if (operator.kids.length === 0) return [ operator ]
+				const prop = this.$mol_view_tree2_child( operator )
+				const defs = prop.hack( belt )
+				if( defs.length ) props_inner.push( prop.clone( defs ) )
+				
+				return [ operator.clone([ prop.clone([]) ]) ]
+			}
+
 		})
 
 		return [ ... props_root , ... props_inner ]

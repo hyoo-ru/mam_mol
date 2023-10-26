@@ -10,7 +10,7 @@ namespace $ {
 			const acc = { chain: [] as string[] }
 
 			for (const prop of props) {
-				const { name } = $mol_view_tree2_prop_parts(prop.type)
+				const { name } = this.$mol_view_tree2_prop_parts(prop)
 
 				prop.hack<typeof acc>({
 					'': ( input, belt, context )=> {
@@ -40,7 +40,7 @@ namespace $ {
 							for( const over of input.kids ) {
 								if( over.type === '/' ) continue
 
-								const oname = $mol_view_tree2_prop_parts( over.type ).name
+								const oname = this.$mol_view_tree2_prop_parts( over ).name
 								const bind = over.kids[0]
 
 								if( bind.type === '@' ) {

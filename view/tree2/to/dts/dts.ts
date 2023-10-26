@@ -1,12 +1,11 @@
 namespace $ {
-	
-	function name_of( prop: $mol_tree2 ) {
-		return $mol_view_tree2_prop_parts(prop.type).name
+	function name_of(this: $, prop: $mol_tree2) {
+		return this.$mol_view_tree2_prop_parts(prop).name
 	}
 	
-	function params_of( prop: $mol_tree2, ... val: $mol_tree2[] ) {
+	function params_of( this: $, prop: $mol_tree2, ... val: $mol_tree2[] ) {
 		
-		const { key, next } = $mol_view_tree2_prop_parts(prop.type)
+		const { key, next } = this.$mol_view_tree2_prop_parts(prop)
 		
 		return prop.struct( 'line', [
 			prop.data('( '),
@@ -48,7 +47,7 @@ namespace $ {
 				] ),
 				... props.map( prop => {
 					
-					const name = name_of(prop)
+					const name = name_of.call(this, prop)
 					if (methods.has(name)) return undefined
 
 					methods.add(name)
@@ -56,7 +55,7 @@ namespace $ {
 						bind.data( 'ReturnType< ' ),
 						klass.data( klass.type ),
 						bind.data( '["' ),
-						bind.kids[0].data( name_of( bind.kids[0] ) ),
+						bind.kids[0].data( name_of.call(this,  bind.kids[0] ) ),
 						bind.data( '"] >' ),
 					]
 				
@@ -143,7 +142,7 @@ namespace $ {
 								
 									for( const over of input.kids ) {
 										
-										const name = name_of( over )
+										const name = name_of.call(this,  over )
 										const bind = over.kids[0]
 										
 										if( bind.type === '=>' ) {
@@ -161,8 +160,8 @@ namespace $ {
 											aliases.push(
 												pr.struct( 'indent', [
 													pr.struct( 'line', [
-														pr.data( name_of( pr ) ),
-														params_of( pr, ... res ),
+														pr.data( name_of.call(this,  pr ) ),
+														params_of.call(this, pr, ... res ),
 														bind.data( ': ' ),
 														... res,
 													] ),
@@ -209,7 +208,7 @@ namespace $ {
 					return prop.struct( 'indent', [
 						prop.struct( 'line', [
 							prop.data( name ),
-							params_of( prop, ... val ),
+							params_of.call(this, prop, ... val ),
 							prop.data(': '),
 							... val,
 						] )

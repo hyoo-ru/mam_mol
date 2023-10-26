@@ -2,13 +2,13 @@ namespace $ {
 
 	const err = $mol_view_tree2_error_str
 
-	function name_of( prop: $mol_tree2 ) {
-		return $mol_view_tree2_prop_parts(prop.type).name
+	function name_of(this: $, prop: $mol_tree2 ) {
+		return this.$mol_view_tree2_prop_parts(prop).name
 	}
 	
-	function params_of( prop: $mol_tree2, bidi = true ) {
+	function params_of( this: $, prop: $mol_tree2, bidi = true ) {
 		
-		const { key, next } = $mol_view_tree2_prop_parts(prop.type)
+		const { key, next } = this.$mol_view_tree2_prop_parts(prop)
 
 		return prop.struct( '(,)', [
 			... key ? [ prop.struct( 'id' ) ] : [],
@@ -17,15 +17,27 @@ namespace $ {
 		
 	}
 	
-	function args_of( prop: $mol_tree2, bidi = true ) {
+	function args_of( this: $, prop: $mol_tree2, bidi = true ) {
 		
-		const { key, next } = $mol_view_tree2_prop_parts(prop.type)
+		const { key, next } = this.$mol_view_tree2_prop_parts(prop)
 		
 		return prop.struct( '(,)', [
 			... key ? [ prop.struct( key.length > 1 ? key.slice(1) : 'id' ) ] : [],
 			... ( bidi && next ) ? [ prop.struct( 'next' ) ] : [],
 		] )
 		
+	}
+
+	function call_of(this: $, bind: $mol_tree2, bidi = true) {
+		const child = this.$mol_view_tree2_child( bind )
+
+		return bind.struct( '()', [
+			child.struct( 'this' ),
+			child.struct( '[]', [
+				child.data( name_of.call( this, child ) ),
+			] ),
+			args_of.call(this, child, bidi ),
+		] )
 	}
 
 	type Context = { chain?: string[] }
@@ -45,16 +57,16 @@ namespace $ {
 			klass: $mol_tree2
 			addons: $mol_tree2[]
 			members: $mol_tree2[]
-			methods: Set<string>
+			methods: Map<string, $mol_tree2>
 		},
 		prop: $mol_tree2
 	) {
 		const { klass, members, addons, methods } = acc
-		const { name, key, next } = $mol_view_tree2_prop_parts(prop.type)
+		const { name, key, next } = this.$mol_view_tree2_prop_parts(prop)
 
 		if (methods.has(name)) return acc
 
-		methods.add(name)
+		methods.set(name, prop)
 
 		const decorate = ()=> {
 			return prop.struct( '()', [
@@ -88,28 +100,9 @@ namespace $ {
 				})
 			},
 			
-			'<=': bind => [
-				bind.struct( '()', [
-					bind.kids[0].struct( 'this' ),
-					bind.kids[0].struct( '[]', [
-						bind.kids[0].data( name_of( bind.kids[0] ) ),
-					] ),
-					args_of( bind.kids[0], false ),
-				] ),
-			],
-			
-			'<=>': bind => {
-				const method_name = name_of( bind.kids[0] )
-				return [
-					bind.struct( '()', [
-						bind.kids[0].struct( 'this' ),
-						bind.kids[0].struct( '[]', [
-							bind.kids[0].data( method_name ),
-						] ),
-						args_of( bind.kids[0], true ),
-					] ),
-				]
-			},
+			'<=': bind => [ call_of.call(this, bind, false) ],
+
+			'<=>': bind => [ call_of.call(this, bind, true) ],
 			
 			'=>': bind => [],
 			
@@ -118,7 +111,7 @@ namespace $ {
 					ref.struct( '()', [
 						ref.struct( ref.kids[0]?.type ? 'this' : 'super' ),
 						ref.struct( '[]', [
-							ref.data( ref.kids[0]?.type ?? name ),
+							ref.data( ref.kids[0]?.type ? name_of.call(this, ref.kids[0]) : name ),
 						] ),
 						ref.struct( '(,)' )
 					]),
@@ -138,7 +131,7 @@ namespace $ {
 								field.data( field_name ),
 								field.kids[0].type === '<=>'
 									? field.struct( '=>', [
-										params_of( field ),
+										params_of.call(this, field ),
 										... field.hack( belt ),
 									] )
 									: field.hack<Context>( belt, {... context, chain: [...context.chain ?? [], field_name] })[0],
@@ -165,7 +158,7 @@ namespace $ {
 						
 						if( over.type === '/' ) continue
 						
-						const oname = name_of( over )
+						const oname = name_of.call(this, over )
 						const bind = over.kids[0]
 						if( bind.type === '@' ) {
 							overrides.push(
@@ -177,7 +170,7 @@ namespace $ {
 										] ),
 									] ),
 									over.struct( '=>', [
-										params_of( over ),
+										params_of.call(this, over ),
 										... localized_string.hack({
 											'#key': key => [ bind.data( `${ klass.type }_${ name }_${ oname }` ) ],
 										}),
@@ -191,8 +184,8 @@ namespace $ {
 							
 							members.push(
 								pr.struct( '.', [
-									pr.data( name_of( pr ) ),
-									params_of( pr ),
+									pr.data( name_of.call(this, pr ) ),
+									params_of.call(this, pr ),
 									bind.struct( '{;}', [
 										over.struct( 'return', [
 											over.struct( '()', [
@@ -200,11 +193,11 @@ namespace $ {
 												over.struct( '[]', [
 													over.data( name ),
 												] ),
-												args_of( prop ),
+												args_of.call(this, prop ),
 												over.struct( '[]', [
 													over.data( oname ),
 												] ),
-												args_of( over ),
+												args_of.call(this, over ),
 											] ),
 										] )
 									] ),
@@ -222,7 +215,7 @@ namespace $ {
 										] ),
 									] ),
 									over.struct( '=>', [
-										args_of( over ),
+										args_of.call(this, over ),
 										over.struct( '()', over.hack( belt )),
 									] ),
 								] ),
@@ -261,7 +254,7 @@ namespace $ {
 		members.push(
 			prop.struct( '.', [
 				prop.data( name ),
-				params_of( prop ),
+				params_of.call(this, prop ),
 				prop.struct( '{;}', [
 					... next && ! is_delegate ? [
 						prop.struct( 'if', [
@@ -295,7 +288,7 @@ namespace $ {
 			const props = this.$mol_view_tree2_class_props( klass )
 			const addons = [] as $mol_tree2[]
 			const members = [] as $mol_tree2[]
-			const acc = { klass, addons, members, methods: new Set<string>() }
+			const acc = { klass, addons, members, methods: new Map<string, $mol_tree2>() }
 
 			for( const prop of props ) {
 				try {

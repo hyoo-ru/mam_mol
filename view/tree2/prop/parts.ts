@@ -1,7 +1,11 @@
 namespace $ {
-	export function $mol_view_tree2_prop_parts( prop: string ) {
-		const groups = [ ...prop.matchAll( $mol_view_tree2_prop_signature ) ][0]?.groups
-		if (! groups) throw new Error(`${$mol_view_tree2_prop_signature} not matched: ${prop}`)
+	export function $mol_view_tree2_prop_parts(this: $, prop: $mol_tree2 ) {
+		const groups = [ ...prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0]?.groups
+		if (! groups) {
+			this.$mol_fail(
+				$mol_view_tree2_error_str`Required prop like some*? at ${prop.span}`
+			)
+		}
 
 		return {
 			name: groups.name,
