@@ -493,7 +493,7 @@ namespace $ {
 			
 			new this.$.$mol_after_frame( ()=> {
 				
-				this.dom_node().scrollIntoView({ block: 'start', inline: 'end' })
+				this.dom_node().scrollIntoView({ block: 'start', inline: 'nearest' })
 				this.focused( true )
 				
 			} )
