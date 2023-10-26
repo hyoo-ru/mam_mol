@@ -32,7 +32,6 @@ namespace $ {
 		
 		for( const klass of descr.kids ) {
 			
-			const methods = new Set<string>()
 			const parent = klass.kids[0]
 			const props = this.$mol_view_tree2_class_props(klass)
 			const aliases = [] as $mol_tree2[]
@@ -48,9 +47,7 @@ namespace $ {
 				... props.map( prop => {
 					
 					const name = name_of.call(this, prop)
-					if (methods.has(name)) return undefined
 
-					methods.add(name)
 					const bind_res = ( bind: $mol_tree2 )=> [
 						bind.data( 'ReturnType< ' ),
 						klass.data( klass.type ),

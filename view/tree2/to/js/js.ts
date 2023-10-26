@@ -57,16 +57,11 @@ namespace $ {
 			klass: $mol_tree2
 			addons: $mol_tree2[]
 			members: $mol_tree2[]
-			methods: Map<string, $mol_tree2>
 		},
 		prop: $mol_tree2
 	) {
-		const { klass, members, addons, methods } = acc
+		const { klass, members, addons } = acc
 		const { name, key, next } = this.$mol_view_tree2_prop_parts(prop)
-
-		if (methods.has(name)) return acc
-
-		methods.set(name, prop)
 
 		const decorate = ()=> {
 			return prop.struct( '()', [
@@ -288,7 +283,7 @@ namespace $ {
 			const props = this.$mol_view_tree2_class_props( klass )
 			const addons = [] as $mol_tree2[]
 			const members = [] as $mol_tree2[]
-			const acc = { klass, addons, members, methods: new Map<string, $mol_tree2>() }
+			const acc = { klass, addons, members }
 
 			for( const prop of props ) {
 				try {

@@ -18,7 +18,15 @@ namespace $ {
 			})
 		)
 
-		const props_inner = [] as $mol_tree2[]
+		const props_inner = {} as Record<string, $mol_tree2>
+
+		const add_inner = ( prop: $mol_tree2 ) => {
+			const prev = props_inner[prop.type]
+			if (prev && prev.kids[0]?.type !== prop.kids[0]?.type) {
+				this.$mol_fail(err`Different kids ${prev.span} vs ${prop.span}`)
+			}
+			props_inner[prop.type] = prop
+		}
 
 		const props_root = props.hack({
 
@@ -27,7 +35,7 @@ namespace $ {
 				const prop = this.$mol_view_tree2_child( operator )
 				
 				const defs = prop.hack( belt )
-				if( defs.length ) props_inner.push( prop.clone( defs ) )
+				if( defs.length ) add_inner( prop.clone( defs ) )
 				
 				return [ operator.clone([ prop.clone([]) ]) ]
 			},
@@ -37,7 +45,7 @@ namespace $ {
 				const prop = this.$mol_view_tree2_child( operator )
 				
 				const defs = prop.hack( belt )
-				if( defs.length ) props_inner.push( prop.clone( defs ) )
+				if( defs.length ) add_inner( prop.clone( defs ) )
 				
 				return [ operator.clone([ prop.clone([]) ]) ]
 			},
@@ -46,14 +54,14 @@ namespace $ {
 				if (operator.kids.length === 0) return [ operator ]
 				const prop = this.$mol_view_tree2_child( operator )
 				const defs = prop.hack( belt )
-				if( defs.length ) props_inner.push( prop.clone( defs ) )
+				if( defs.length ) add_inner( prop.clone( defs ) )
 				
 				return [ operator.clone([ prop.clone([]) ]) ]
 			}
 
 		})
 
-		return [ ... props_root , ... props_inner ]
+		return [ ... props_root , ... Object.values(props_inner) ]
 	}
 
 }
