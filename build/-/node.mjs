@@ -6714,6 +6714,7 @@ var $;
 								opacity: 1;
 							}
 						</style>
+						<link href="/_logo.png" rel="icon" />
 						<a href="..">&#x1F4C1; ..</a>
 						` + files
                         .sort($mol_compare_text((item) => item.type))
