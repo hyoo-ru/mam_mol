@@ -13,7 +13,7 @@
 }
 
 [mol_button_typed]:hover ,
-[mol_button_typed]:focus {
+[mol_button_typed]:focus-visible {
 	background-color: var(--mol_theme_hover);
 }
 

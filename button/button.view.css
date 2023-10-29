@@ -17,7 +17,7 @@
 	z-index: var(--mol_layer_hover);
 }
 
-[mol_button]:focus {
+[mol_button]:focus-visible {
 	outline: none;
 	z-index: var(--mol_layer_focus);
 }
