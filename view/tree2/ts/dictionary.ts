@@ -44,7 +44,7 @@ namespace $ {
 			}
 
 			const context = dictionary_context.parent(info)
-			const operator = opt.kids.length > 0 ? opt.kids[0] : undefined
+			const operator = opt.kids.length > 0 ? opt.kids[ opt.kids.length - 1 ] : undefined
 
 			if (! operator) return this.$mol_fail(
 				err`Need an operator at ${opt.span}`
