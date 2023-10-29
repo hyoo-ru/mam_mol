@@ -639,11 +639,21 @@ declare namespace $ {
         protected added_nodes: Map<string, {
             src: $mol_tree2;
             name: $mol_tree2;
+            key?: undefined;
+            next?: undefined;
+        } | {
+            src: $mol_tree2;
+            name: $mol_tree2;
             key: $mol_tree2 | undefined;
             next: $mol_tree2 | undefined;
         }>;
         protected array?: $mol_tree2 | undefined;
         constructor($: $, parents: readonly $mol_view_tree2_prop[], locales: $mol_view_tree2_locales, methods: $mol_tree2[], types?: boolean, added_nodes?: Map<string, {
+            src: $mol_tree2;
+            name: $mol_tree2;
+            key?: undefined;
+            next?: undefined;
+        } | {
             src: $mol_tree2;
             name: $mol_tree2;
             key: $mol_tree2 | undefined;
@@ -654,6 +664,11 @@ declare namespace $ {
         root(): $mol_view_tree2_context;
         locale_disable(array: $mol_tree2): $mol_view_tree2_context;
         get_method({ name, src, key, next }: $mol_view_tree2_prop): {
+            src: $mol_tree2;
+            name: $mol_tree2;
+            key?: undefined;
+            next?: undefined;
+        } | {
             src: $mol_tree2;
             name: $mol_tree2;
             key: $mol_tree2 | undefined;
@@ -784,6 +799,11 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_view_tree2_prop_split(this: $, src: $mol_tree2): {
+        src: $mol_tree2;
+        name: $mol_tree2;
+        key?: undefined;
+        next?: undefined;
+    } | {
         src: $mol_tree2;
         name: $mol_tree2;
         key: $mol_tree2 | undefined;
@@ -939,10 +959,20 @@ declare namespace $ {
         owner_call_parts: {
             src: $mol_tree2;
             name: $mol_tree2;
+            key?: undefined;
+            next?: undefined;
+        } | {
+            src: $mol_tree2;
+            name: $mol_tree2;
             key: $mol_tree2 | undefined;
             next: $mol_tree2 | undefined;
         };
         owner_parts: {
+            src: $mol_tree2;
+            name: $mol_tree2;
+            key?: undefined;
+            next?: undefined;
+        } | {
             src: $mol_tree2;
             name: $mol_tree2;
             key: $mol_tree2 | undefined;
@@ -954,6 +984,11 @@ declare namespace $ {
 declare namespace $ {
     function $mol_view_tree2_bind_right_parts(this: $, operator: $mol_tree2, having_parts: $mol_view_tree2_prop, factory: $mol_view_tree2_prop): {
         owner_parts: {
+            src: $mol_tree2;
+            name: $mol_tree2;
+            key?: undefined;
+            next?: undefined;
+        } | {
             src: $mol_tree2;
             name: $mol_tree2;
             key: $mol_tree2 | undefined;
@@ -1001,11 +1036,21 @@ declare namespace $ {
         protected prop_parts?: {
             src: $mol_tree2;
             name: $mol_tree2;
+            key?: undefined;
+            next?: undefined;
+        } | {
+            src: $mol_tree2;
+            name: $mol_tree2;
             key: $mol_tree2 | undefined;
             next: $mol_tree2 | undefined;
         } | undefined;
         protected super_spread: $mol_tree2 | undefined;
         constructor($: $, prop_parts?: {
+            src: $mol_tree2;
+            name: $mol_tree2;
+            key?: undefined;
+            next?: undefined;
+        } | {
             src: $mol_tree2;
             name: $mol_tree2;
             key: $mol_tree2 | undefined;

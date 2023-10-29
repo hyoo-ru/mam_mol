@@ -5,7 +5,9 @@ namespace $ {
 	 * Extract property parts: page!index?next
 	 */
 	export function $mol_view_tree2_prop_split(this: $, src: $mol_tree2) {
+		
 		const prop_name = src.type
+		if( !prop_name ) return { src, name: src.data( src.value ) }
 
 		let key_pos = prop_name.indexOf('*')
 		let next_pos = prop_name.indexOf('?')

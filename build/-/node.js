@@ -3268,6 +3268,8 @@ var $;
     const err = $mol_view_tree2_error_str;
     function $mol_view_tree2_prop_split(src) {
         const prop_name = src.type;
+        if (!prop_name)
+            return { src, name: src.data(src.value) };
         let key_pos = prop_name.indexOf('*');
         let next_pos = prop_name.indexOf('?');
         let next_pos_orig = next_pos;
@@ -4288,7 +4290,7 @@ var $;
                 continue;
             }
             const context = dictionary_context.parent(info);
-            const operator = opt.kids.length > 0 ? opt.kids[0] : undefined;
+            const operator = opt.kids.length > 0 ? opt.kids[opt.kids.length - 1] : undefined;
             if (!operator)
                 return this.$mol_fail(err `Need an operator at ${opt.span}`);
             const type = operator.type;
