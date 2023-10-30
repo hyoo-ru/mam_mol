@@ -1,6 +1,6 @@
 [mol_gallery] {
 	flex-wrap: wrap;
 	flex: 1 1 auto;
-	align-items: flex-start;
-    align-content: flex-start;
+	align-items: stretch;
+    align-content: stretch;
 }
