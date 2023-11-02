@@ -262,7 +262,6 @@ namespace $ {
 
 			const attr = this.attr()
 			const style = this.style()
-			const fields = this.field()
 
 			$mol_dom_render_attributes( node , attr )
 			$mol_dom_render_styles( node , style )
@@ -386,7 +385,7 @@ namespace $ {
 		
 		attr() {
 			return {
-				mol_theme: this.theme(),
+				mol_theme: this.theme() || undefined,
 			} as {}
 		}
 		
