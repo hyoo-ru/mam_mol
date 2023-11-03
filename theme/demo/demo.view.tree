@@ -6,28 +6,20 @@ $mol_theme_demo $mol_example_large
 			value? <=> hue? 240
 			precision_change 15
 		<= Scroll $mol_scroll sub /
-			<= Cases $mol_list rows /
-				<= Case_dark $mol_theme_demo_cases
-					theme \$mol_theme_dark
-				<= Case_light $mol_theme_demo_cases
-					theme \$mol_theme_light
+			<= Cases $mol_theme_demo_case
+				title <= theme \Current light
+				inner /
+					<= Base $mol_theme_demo_case theme \$mol_theme_base
+					<= Accent $mol_theme_demo_case theme \$mol_theme_accent
+					<= Current $mol_theme_demo_case theme \$mol_theme_current
+					<= Special $mol_theme_demo_case theme \$mol_theme_special
 	tags /
 		\theme
 		\skin
 	aspects /
 		\Type/Color
 
-$mol_theme_demo_cases $mol_row
-	sub /
-		<= Default $mol_theme_demo_case
-			title <= theme \
-			inner /
-				<= Base $mol_theme_demo_case theme \$mol_theme_base
-				<= Accent $mol_theme_demo_case theme \$mol_theme_accent
-				<= Current $mol_theme_demo_case theme \$mol_theme_current
-				<= Special $mol_theme_demo_case theme \$mol_theme_special
-
-$mol_theme_demo_case $mol_scroll
+$mol_theme_demo_case $mol_view
 	title <= theme \
 	sub /
 		<= Self $mol_list rows /
@@ -47,4 +39,3 @@ $mol_theme_demo_case $mol_scroll
 			<= Special $mol_button_copy title \$mol_theme.special
 		^ inner 
 	inner /
-	Placeholder null

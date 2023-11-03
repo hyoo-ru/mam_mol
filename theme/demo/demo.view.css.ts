@@ -2,18 +2,6 @@ namespace $.$$ {
 	
 	$mol_style_define( $mol_theme_demo_case, {
 		
-		box: {
-			shadow: [{
-				x: 0,
-				y: 0,
-				blur: 0,
-				spread: `1px`,
-				color: $mol_theme.line,
-			}]
-		},
-		border: {
-			radius: $mol_gap.round,
-		},
 		flex: {
 			direction: `row`,
 			shrink: 0,
