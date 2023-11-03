@@ -2,11 +2,6 @@ namespace $.$$ {
 	
 	$mol_style_define( $mol_theme_demo_case, {
 		
-		flex: {
-			direction: `row`,
-			shrink: 0,
-			grow: 0,
-		},
 		gap: $mol_gap.block,
 		padding: $mol_gap.block,
 		

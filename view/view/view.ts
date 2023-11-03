@@ -385,7 +385,7 @@ namespace $ {
 		
 		attr() {
 			return {
-				mol_theme: this.theme() || undefined,
+				mol_theme: this.theme() ?? undefined,
 			} as {}
 		}
 		
