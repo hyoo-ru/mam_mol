@@ -38,15 +38,14 @@
 		var(--mol_theme_focus) 0%,
 		var(--mol_theme_focus) 15%,
 		transparent 15%,
-		transparent 45%,
-		var(--mol_theme_focus) 45%,
-		var(--mol_theme_focus) 55%,
-		transparent 55%,
+		transparent 42%,
+		var(--mol_theme_focus) 42%,
+		var(--mol_theme_focus) 58%,
+		transparent 58%,
 		transparent 85%,
 		var(--mol_theme_focus) 85%,
 		var(--mol_theme_focus) 100%
 	);
-	border-radius: var(--mol_gap_round);
 	opacity: .5;
 }
 [mol_book2] > *:not(:first-of-type):before {
