@@ -1,0 +1,50 @@
+$mol_theme_demo $mol_example_large
+	style *
+		--mol_theme_hue <= hue_deg \
+	sub /
+		<= Hue $mol_number
+			value? <=> hue? 240
+			precision_change 15
+		<= Scroll $mol_scroll sub /
+			<= Cases $mol_list rows /
+				<= Case_dark $mol_theme_demo_cases
+					theme \$mol_theme_dark
+				<= Case_light $mol_theme_demo_cases
+					theme \$mol_theme_light
+	tags /
+		\theme
+		\skin
+	aspects /
+		\Type/Color
+
+$mol_theme_demo_cases $mol_row
+	sub /
+		<= Default $mol_theme_demo_case
+			title <= theme
+			inner /
+				<= Base $mol_theme_demo_case theme \$mol_theme_base
+				<= Accent $mol_theme_demo_case theme \$mol_theme_accent
+				<= Current $mol_theme_demo_case theme \$mol_theme_current
+				<= Special $mol_theme_demo_case theme \$mol_theme_special
+
+$mol_theme_demo_case $mol_scroll
+	title <= theme \
+	sub /
+		<= Self $mol_list rows /
+			<= Card1 $mol_list rows /
+				<= Card2 $mol_row sub /
+					<= Card2_text $mol_button_copy title <= theme_code <= title
+				<= Card1_text $mol_button_copy title \	$mol_theme.card
+			<= Back $mol_button_copy title \$mol_theme.back
+			<= Line $mol_button_copy title \$mol_theme.line
+			<= Text $mol_button_copy title \$mol_theme.text
+			<= Field $mol_button_copy title \$mol_theme.field
+			<= Shade $mol_button_copy title \$mol_theme.shade
+			<= Focus $mol_button_copy title \$mol_theme.focus
+			<= Control $mol_button_copy title \$mol_theme.control
+			<= Hover $mol_button_copy title \$mol_theme.hover
+			<= Current $mol_button_copy title \$mol_theme.curent
+			<= Special $mol_button_copy title \$mol_theme.special
+		^ inner 
+	inner /
+	Placeholder null
