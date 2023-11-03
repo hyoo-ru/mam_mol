@@ -9862,27 +9862,18 @@ declare namespace $ {
         hue_deg(): string;
         hue(next?: any): number;
         Hue(): $$.$mol_number;
-        Case_dark(): $mol_theme_demo_cases;
-        Case_light(): $mol_theme_demo_cases;
-        Cases(): $$.$mol_list;
+        Base(): $mol_theme_demo_case;
+        Accent(): $mol_theme_demo_case;
+        Current(): $mol_theme_demo_case;
+        Special(): $mol_theme_demo_case;
+        Cases(): $mol_theme_demo_case;
         Scroll(): $$.$mol_scroll;
     }
-    class $mol_theme_demo_cases extends $mol_row {
-        sub(): readonly any[];
-        theme(): string;
-        Base(): $$.$mol_theme_demo_case;
-        Accent(): $$.$mol_theme_demo_case;
-        Current(): $$.$mol_theme_demo_case;
-        Special(): $$.$mol_theme_demo_case;
-        Default(): $$.$mol_theme_demo_case;
-    }
-    class $mol_theme_demo_case extends $mol_scroll {
+    class $mol_theme_demo_case extends $mol_view {
         title(): string;
         sub(): readonly any[];
         inner(): readonly any[];
-        Placeholder(): any;
         theme(): string;
-        theme_code(): string;
         Card2_text(): $$.$mol_button_copy;
         Card2(): $mol_row;
         Card1_text(): $$.$mol_button_copy;
@@ -9904,9 +9895,6 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_theme_demo extends $.$mol_theme_demo {
         hue_deg(): string;
-    }
-    class $mol_theme_demo_case extends $.$mol_theme_demo_case {
-        theme_code(): string;
     }
 }
 

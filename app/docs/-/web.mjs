@@ -2363,7 +2363,7 @@ var $;
         }
         attr() {
             return {
-                mol_theme: this.theme() || undefined,
+                mol_theme: this.theme() ?? undefined,
             };
         }
         style_size() {
@@ -40588,60 +40588,6 @@ var $;
             obj.precision_change = () => 15;
             return obj;
         }
-        Case_dark() {
-            const obj = new this.$.$mol_theme_demo_cases();
-            obj.theme = () => "$mol_theme_dark";
-            return obj;
-        }
-        Case_light() {
-            const obj = new this.$.$mol_theme_demo_cases();
-            obj.theme = () => "$mol_theme_light";
-            return obj;
-        }
-        Cases() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Case_dark(),
-                this.Case_light()
-            ];
-            return obj;
-        }
-        Scroll() {
-            const obj = new this.$.$mol_scroll();
-            obj.sub = () => [
-                this.Cases()
-            ];
-            return obj;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_theme_demo.prototype, "hue", null);
-    __decorate([
-        $mol_mem
-    ], $mol_theme_demo.prototype, "Hue", null);
-    __decorate([
-        $mol_mem
-    ], $mol_theme_demo.prototype, "Case_dark", null);
-    __decorate([
-        $mol_mem
-    ], $mol_theme_demo.prototype, "Case_light", null);
-    __decorate([
-        $mol_mem
-    ], $mol_theme_demo.prototype, "Cases", null);
-    __decorate([
-        $mol_mem
-    ], $mol_theme_demo.prototype, "Scroll", null);
-    $.$mol_theme_demo = $mol_theme_demo;
-    class $mol_theme_demo_cases extends $mol_row {
-        sub() {
-            return [
-                this.Default()
-            ];
-        }
-        theme() {
-            return "";
-        }
         Base() {
             const obj = new this.$.$mol_theme_demo_case();
             obj.theme = () => "$mol_theme_base";
@@ -40662,9 +40608,9 @@ var $;
             obj.theme = () => "$mol_theme_special";
             return obj;
         }
-        Default() {
+        Cases() {
             const obj = new this.$.$mol_theme_demo_case();
-            obj.title = () => this.theme();
+            obj.title = () => "Current light";
             obj.inner = () => [
                 this.Base(),
                 this.Accent(),
@@ -40673,24 +40619,40 @@ var $;
             ];
             return obj;
         }
+        Scroll() {
+            const obj = new this.$.$mol_scroll();
+            obj.sub = () => [
+                this.Cases()
+            ];
+            return obj;
+        }
     }
     __decorate([
         $mol_mem
-    ], $mol_theme_demo_cases.prototype, "Base", null);
+    ], $mol_theme_demo.prototype, "hue", null);
     __decorate([
         $mol_mem
-    ], $mol_theme_demo_cases.prototype, "Accent", null);
+    ], $mol_theme_demo.prototype, "Hue", null);
     __decorate([
         $mol_mem
-    ], $mol_theme_demo_cases.prototype, "Current", null);
+    ], $mol_theme_demo.prototype, "Base", null);
     __decorate([
         $mol_mem
-    ], $mol_theme_demo_cases.prototype, "Special", null);
+    ], $mol_theme_demo.prototype, "Accent", null);
     __decorate([
         $mol_mem
-    ], $mol_theme_demo_cases.prototype, "Default", null);
-    $.$mol_theme_demo_cases = $mol_theme_demo_cases;
-    class $mol_theme_demo_case extends $mol_scroll {
+    ], $mol_theme_demo.prototype, "Current", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo.prototype, "Special", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo.prototype, "Cases", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo.prototype, "Scroll", null);
+    $.$mol_theme_demo = $mol_theme_demo;
+    class $mol_theme_demo_case extends $mol_view {
         title() {
             return this.theme();
         }
@@ -40703,18 +40665,12 @@ var $;
         inner() {
             return [];
         }
-        Placeholder() {
-            return null;
-        }
         theme() {
             return "";
         }
-        theme_code() {
-            return this.title();
-        }
         Card2_text() {
             const obj = new this.$.$mol_button_copy();
-            obj.title = () => this.theme_code();
+            obj.title = () => this.title();
             return obj;
         }
         Card2() {
@@ -40865,12 +40821,6 @@ var $;
             }
         }
         $$.$mol_theme_demo = $mol_theme_demo;
-        class $mol_theme_demo_case extends $.$mol_theme_demo_case {
-            theme_code() {
-                return '\ttheme \\' + this.title();
-            }
-        }
-        $$.$mol_theme_demo_case = $mol_theme_demo_case;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/theme/demo/demo.view.ts
@@ -40881,23 +40831,6 @@ var $;
     var $$;
     (function ($$) {
         $mol_style_define($mol_theme_demo_case, {
-            box: {
-                shadow: [{
-                        x: 0,
-                        y: 0,
-                        blur: 0,
-                        spread: `1px`,
-                        color: $mol_theme.line,
-                    }]
-            },
-            border: {
-                radius: $mol_gap.round,
-            },
-            flex: {
-                direction: `row`,
-                shrink: 0,
-                grow: 0,
-            },
             gap: $mol_gap.block,
             padding: $mol_gap.block,
             $mol_button_copy: {

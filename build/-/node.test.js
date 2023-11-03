@@ -10036,7 +10036,7 @@ var $;
         }
         attr() {
             return {
-                mol_theme: this.theme() || undefined,
+                mol_theme: this.theme() ?? undefined,
             };
         }
         style_size() {

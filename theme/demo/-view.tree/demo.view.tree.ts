@@ -90,92 +90,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Case_dark $mol_theme_demo_cases theme \$mol_theme_dark
-		 * ```
-		 */
-		@ $mol_mem
-		Case_dark() {
-			const obj = new this.$.$mol_theme_demo_cases()
-			
-			obj.theme = () => "$mol_theme_dark"
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Case_light $mol_theme_demo_cases theme \$mol_theme_light
-		 * ```
-		 */
-		@ $mol_mem
-		Case_light() {
-			const obj = new this.$.$mol_theme_demo_cases()
-			
-			obj.theme = () => "$mol_theme_light"
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Cases $mol_list rows /
-		 * 	<= Case_dark
-		 * 	<= Case_light
-		 * ```
-		 */
-		@ $mol_mem
-		Cases() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Case_dark(),
-				this.Case_light()
-			] as readonly any[]
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * Scroll $mol_scroll sub / <= Cases
-		 * ```
-		 */
-		@ $mol_mem
-		Scroll() {
-			const obj = new this.$.$mol_scroll()
-			
-			obj.sub = () => [
-				this.Cases()
-			] as readonly any[]
-			
-			return obj
-		}
-	}
-	
-	export class $mol_theme_demo_cases extends $mol_row {
-		
-		/**
-		 * ```tree
-		 * sub / <= Default
-		 * ```
-		 */
-		sub() {
-			return [
-				this.Default()
-			] as readonly any[]
-		}
-		
-		/**
-		 * ```tree
-		 * theme \
-		 * ```
-		 */
-		theme() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
 		 * Base $mol_theme_demo_case theme \$mol_theme_base
 		 * ```
 		 */
@@ -232,8 +146,8 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Default $mol_theme_demo_case
-		 * 	title <= theme
+		 * Cases $mol_theme_demo_case
+		 * 	title \Current light
 		 * 	inner /
 		 * 		<= Base
 		 * 		<= Accent
@@ -242,10 +156,10 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		Default() {
+		Cases() {
 			const obj = new this.$.$mol_theme_demo_case()
 			
-			obj.title = () => this.theme()
+			obj.title = () => "Current light"
 			obj.inner = () => [
 				this.Base(),
 				this.Accent(),
@@ -255,9 +169,25 @@ namespace $ {
 			
 			return obj
 		}
+		
+		/**
+		 * ```tree
+		 * Scroll $mol_scroll sub / <= Cases
+		 * ```
+		 */
+		@ $mol_mem
+		Scroll() {
+			const obj = new this.$.$mol_scroll()
+			
+			obj.sub = () => [
+				this.Cases()
+			] as readonly any[]
+			
+			return obj
+		}
 	}
 	
-	export class $mol_theme_demo_case extends $mol_scroll {
+	export class $mol_theme_demo_case extends $mol_view {
 		
 		/**
 		 * ```tree
@@ -294,15 +224,6 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Placeholder null
-		 * ```
-		 */
-		Placeholder() {
-			return null as any
-		}
-		
-		/**
-		 * ```tree
 		 * theme \
 		 * ```
 		 */
@@ -312,23 +233,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * theme_code <= title
-		 * ```
-		 */
-		theme_code() {
-			return this.title()
-		}
-		
-		/**
-		 * ```tree
-		 * Card2_text $mol_button_copy title <= theme_code
+		 * Card2_text $mol_button_copy title <= title
 		 * ```
 		 */
 		@ $mol_mem
 		Card2_text() {
 			const obj = new this.$.$mol_button_copy()
 			
-			obj.title = () => this.theme_code()
+			obj.title = () => this.title()
 			
 			return obj
 		}
