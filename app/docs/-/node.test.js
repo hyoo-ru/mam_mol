@@ -40244,6 +40244,445 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_theme_demo extends $mol_example_large {
+        style() {
+            return {
+                "--mol_theme_hue": this.hue_deg()
+            };
+        }
+        sub() {
+            return [
+                this.Hue(),
+                this.Scroll()
+            ];
+        }
+        tags() {
+            return [
+                "theme",
+                "skin"
+            ];
+        }
+        aspects() {
+            return [
+                "Type/Color"
+            ];
+        }
+        hue_deg() {
+            return "";
+        }
+        hue(next) {
+            if (next !== undefined)
+                return next;
+            return 240;
+        }
+        Hue() {
+            const obj = new this.$.$mol_number();
+            obj.value = (next) => this.hue(next);
+            obj.precision_change = () => 15;
+            return obj;
+        }
+        Case_dark() {
+            const obj = new this.$.$mol_theme_demo_cases();
+            obj.theme = () => "$mol_theme_dark";
+            return obj;
+        }
+        Case_light() {
+            const obj = new this.$.$mol_theme_demo_cases();
+            obj.theme = () => "$mol_theme_light";
+            return obj;
+        }
+        Cases() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Case_dark(),
+                this.Case_light()
+            ];
+            return obj;
+        }
+        Scroll() {
+            const obj = new this.$.$mol_scroll();
+            obj.sub = () => [
+                this.Cases()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo.prototype, "hue", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo.prototype, "Hue", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo.prototype, "Case_dark", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo.prototype, "Case_light", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo.prototype, "Cases", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo.prototype, "Scroll", null);
+    $.$mol_theme_demo = $mol_theme_demo;
+    class $mol_theme_demo_cases extends $mol_row {
+        sub() {
+            return [
+                this.Default()
+            ];
+        }
+        theme() {
+            return "";
+        }
+        Base() {
+            const obj = new this.$.$mol_theme_demo_case();
+            obj.theme = () => "$mol_theme_base";
+            return obj;
+        }
+        Accent() {
+            const obj = new this.$.$mol_theme_demo_case();
+            obj.theme = () => "$mol_theme_accent";
+            return obj;
+        }
+        Current() {
+            const obj = new this.$.$mol_theme_demo_case();
+            obj.theme = () => "$mol_theme_current";
+            return obj;
+        }
+        Special() {
+            const obj = new this.$.$mol_theme_demo_case();
+            obj.theme = () => "$mol_theme_special";
+            return obj;
+        }
+        Default() {
+            const obj = new this.$.$mol_theme_demo_case();
+            obj.title = () => this.theme();
+            obj.inner = () => [
+                this.Base(),
+                this.Accent(),
+                this.Current(),
+                this.Special()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_cases.prototype, "Base", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_cases.prototype, "Accent", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_cases.prototype, "Current", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_cases.prototype, "Special", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_cases.prototype, "Default", null);
+    $.$mol_theme_demo_cases = $mol_theme_demo_cases;
+    class $mol_theme_demo_case extends $mol_scroll {
+        title() {
+            return this.theme();
+        }
+        sub() {
+            return [
+                this.Self(),
+                ...this.inner()
+            ];
+        }
+        inner() {
+            return [];
+        }
+        Placeholder() {
+            return null;
+        }
+        theme() {
+            return "";
+        }
+        theme_code() {
+            return this.title();
+        }
+        Card2_text() {
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => this.theme_code();
+            return obj;
+        }
+        Card2() {
+            const obj = new this.$.$mol_row();
+            obj.sub = () => [
+                this.Card2_text()
+            ];
+            return obj;
+        }
+        Card1_text() {
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => "\t$mol_theme.card";
+            return obj;
+        }
+        Card1() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Card2(),
+                this.Card1_text()
+            ];
+            return obj;
+        }
+        Back() {
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => "$mol_theme.back";
+            return obj;
+        }
+        Line() {
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => "$mol_theme.line";
+            return obj;
+        }
+        Text() {
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => "$mol_theme.text";
+            return obj;
+        }
+        Field() {
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => "$mol_theme.field";
+            return obj;
+        }
+        Shade() {
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => "$mol_theme.shade";
+            return obj;
+        }
+        Focus() {
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => "$mol_theme.focus";
+            return obj;
+        }
+        Control() {
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => "$mol_theme.control";
+            return obj;
+        }
+        Hover() {
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => "$mol_theme.hover";
+            return obj;
+        }
+        Current() {
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => "$mol_theme.curent";
+            return obj;
+        }
+        Special() {
+            const obj = new this.$.$mol_button_copy();
+            obj.title = () => "$mol_theme.special";
+            return obj;
+        }
+        Self() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => [
+                this.Card1(),
+                this.Back(),
+                this.Line(),
+                this.Text(),
+                this.Field(),
+                this.Shade(),
+                this.Focus(),
+                this.Control(),
+                this.Hover(),
+                this.Current(),
+                this.Special()
+            ];
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Card2_text", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Card2", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Card1_text", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Card1", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Back", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Line", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Text", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Field", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Shade", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Focus", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Control", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Hover", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Current", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Special", null);
+    __decorate([
+        $mol_mem
+    ], $mol_theme_demo_case.prototype, "Self", null);
+    $.$mol_theme_demo_case = $mol_theme_demo_case;
+})($ || ($ = {}));
+//mol/theme/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_theme_demo extends $.$mol_theme_demo {
+            hue_deg() {
+                return this.hue() + 'deg';
+            }
+        }
+        $$.$mol_theme_demo = $mol_theme_demo;
+        class $mol_theme_demo_case extends $.$mol_theme_demo_case {
+            theme_code() {
+                return '\ttheme \\' + this.title();
+            }
+        }
+        $$.$mol_theme_demo_case = $mol_theme_demo_case;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/theme/demo/demo.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($mol_theme_demo_case, {
+            box: {
+                shadow: [{
+                        x: 0,
+                        y: 0,
+                        blur: 0,
+                        spread: `1px`,
+                        color: $mol_theme.line,
+                    }]
+            },
+            border: {
+                radius: $mol_gap.round,
+            },
+            flex: {
+                direction: `row`,
+                shrink: 0,
+                grow: 0,
+            },
+            gap: $mol_gap.block,
+            padding: $mol_gap.block,
+            $mol_button_copy: {
+                color: `inherit`,
+                font: {
+                    family: `monospace`,
+                },
+            },
+            Shade: {
+                color: $mol_theme.shade,
+            },
+            Field: {
+                background: {
+                    color: $mol_theme.field,
+                },
+                box: {
+                    shadow: [{
+                            x: 0,
+                            y: 0,
+                            blur: 0,
+                            spread: `1px`,
+                            color: $mol_theme.line,
+                        }]
+                },
+            },
+            Line: {
+                box: {
+                    shadow: [{
+                            x: 0,
+                            y: 0,
+                            blur: 0,
+                            spread: `1px`,
+                            color: $mol_theme.line,
+                        }]
+                },
+            },
+            Focus: {
+                color: $mol_theme.focus,
+                background: {
+                    color: $mol_theme.field,
+                },
+                box: {
+                    shadow: [{
+                            x: 0,
+                            y: 0,
+                            blur: 0,
+                            spread: `1px`,
+                            color: $mol_theme.focus,
+                        }]
+                },
+            },
+            Control: {
+                color: $mol_theme.control,
+            },
+            Hover: {
+                color: $mol_theme.control,
+                background: {
+                    color: $mol_theme.hover,
+                },
+            },
+            Current: {
+                color: $mol_theme.current,
+            },
+            Special: {
+                color: $mol_theme.special,
+            },
+            Card1: {
+                background: {
+                    color: $mol_theme.card,
+                },
+                padding: $mol_gap.block,
+                border: {
+                    radius: $mol_gap.round,
+                },
+            },
+            Card2: {
+                textShadow: `0 0`,
+                background: {
+                    color: $mol_theme.card,
+                },
+                border: {
+                    radius: $mol_gap.round,
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/theme/demo/demo.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_time_duration_demo extends $mol_example_code {
         title() {
             return "Time processing library sandbox";

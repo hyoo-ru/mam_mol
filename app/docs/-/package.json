@@ -607,6 +607,7 @@
     "$mol_search_jumper",
     "$mol_icon_pencil",
     "$mol_textarea_demo",
+    "$mol_theme_demo",
     "$mol_time_duration_demo",
     "$mol_time_interval_demo",
     "$mol_time_moment_demo",

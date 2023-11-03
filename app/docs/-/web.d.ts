@@ -9915,6 +9915,66 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_theme_demo extends $mol_example_large {
+        style(): Record<string, any>;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        aspects(): readonly any[];
+        hue_deg(): string;
+        hue(next?: any): number;
+        Hue(): $$.$mol_number;
+        Case_dark(): $mol_theme_demo_cases;
+        Case_light(): $mol_theme_demo_cases;
+        Cases(): $$.$mol_list;
+        Scroll(): $$.$mol_scroll;
+    }
+    class $mol_theme_demo_cases extends $mol_row {
+        sub(): readonly any[];
+        theme(): string;
+        Base(): $$.$mol_theme_demo_case;
+        Accent(): $$.$mol_theme_demo_case;
+        Current(): $$.$mol_theme_demo_case;
+        Special(): $$.$mol_theme_demo_case;
+        Default(): $$.$mol_theme_demo_case;
+    }
+    class $mol_theme_demo_case extends $mol_scroll {
+        title(): string;
+        sub(): readonly any[];
+        inner(): readonly any[];
+        Placeholder(): any;
+        theme(): string;
+        theme_code(): string;
+        Card2_text(): $$.$mol_button_copy;
+        Card2(): $mol_row;
+        Card1_text(): $$.$mol_button_copy;
+        Card1(): $$.$mol_list;
+        Back(): $$.$mol_button_copy;
+        Line(): $$.$mol_button_copy;
+        Text(): $$.$mol_button_copy;
+        Field(): $$.$mol_button_copy;
+        Shade(): $$.$mol_button_copy;
+        Focus(): $$.$mol_button_copy;
+        Control(): $$.$mol_button_copy;
+        Hover(): $$.$mol_button_copy;
+        Current(): $$.$mol_button_copy;
+        Special(): $$.$mol_button_copy;
+        Self(): $$.$mol_list;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_theme_demo extends $.$mol_theme_demo {
+        hue_deg(): string;
+    }
+    class $mol_theme_demo_case extends $.$mol_theme_demo_case {
+        theme_code(): string;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
     class $mol_time_duration_demo extends $mol_example_code {
         title(): string;
         code(next?: any): string;
