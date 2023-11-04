@@ -10,6 +10,7 @@
 	
 :root, [mol_theme="$mol_theme_dark"], :where([mol_theme="$mol_theme_dark"]) [mol_theme]  {
 
+	--mol_thee_luma: -1;
 	--mol_theme_image: invert(1) hue-rotate( 180deg );
 
 	--mol_theme_back: oklch( 20% .03 var(--mol_theme_hue) );
@@ -30,6 +31,7 @@
 
 [mol_theme="$mol_theme_light"], :where([mol_theme="$mol_theme_light"]) [mol_theme] {
 	
+	--mol_thee_luma: 1;
 	--mol_theme_image: none;
 	
 	--mol_theme_back: oklch( 98% .01 var(--mol_theme_hue) );
