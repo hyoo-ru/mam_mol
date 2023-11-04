@@ -15,6 +15,7 @@ namespace $ {
 		 * sub /
 		 * 	<= Simple
 		 * 	<= Hint
+		 * 	<= Broken
 		 * 	<= Filled
 		 * 	<= Disabled
 		 * 	<= Button
@@ -24,6 +25,7 @@ namespace $ {
 			return [
 				this.Simple(),
 				this.Hint(),
+				this.Broken(),
 				this.Filled(),
 				this.Disabled(),
 				this.Button()
@@ -98,6 +100,34 @@ namespace $ {
 			
 			obj.hint = () => "Batman"
 			obj.value = (next?: any) => this.name(next)
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * broken? \
+		 * ```
+		 */
+		@ $mol_mem
+		broken(next?: any) {
+			if ( next !== undefined ) return next as never
+			return ""
+		}
+		
+		/**
+		 * ```tree
+		 * Broken $mol_string
+		 * 	hint \Broken
+		 * 	value? <=> broken?
+		 * ```
+		 */
+		@ $mol_mem
+		Broken() {
+			const obj = new this.$.$mol_string()
+			
+			obj.hint = () => "Broken"
+			obj.value = (next?: any) => this.broken(next)
 			
 			return obj
 		}

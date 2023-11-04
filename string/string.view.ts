@@ -5,16 +5,39 @@ namespace $.$$ {
 	 */
 	export class $mol_string extends $.$mol_string {
 		
+		@ $mol_action
 		event_change( next? : Event ) {
 			if( !next ) return
 			const el = next.target as HTMLInputElement
 			const from = el.selectionStart
 			const to = el.selectionEnd
-			el.value = this.value_changed( el.value )
+			try {
+				el.value = this.value_changed( el.value )
+			} catch( error ) {
+				const el = this.dom_node() as HTMLInputElement
+				if( error instanceof Error ) {
+					el.setCustomValidity( error.message )
+					el.reportValidity()
+				}
+				$mol_fail_hidden( error )
+			}
 			if( to === null ) return 
 			el.selectionEnd = to
 			el.selectionStart = from
 			this.selection_change( next )
+		}
+		
+		@ $mol_mem
+		error_report() {
+			try {
+				if( this.focused() ) this.value()
+			} catch( error ) {
+				const el = this.dom_node() as HTMLInputElement
+				if( error instanceof Error ) {
+					el.setCustomValidity( error.message )
+					el.reportValidity()
+				}
+			}
 		}
 
 		hint_visible() {

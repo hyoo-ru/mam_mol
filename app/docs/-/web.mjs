@@ -5067,7 +5067,8 @@ var $;
         }
         auto() {
             return [
-                this.selection_watcher()
+                this.selection_watcher(),
+                this.error_report()
             ];
         }
         field() {
@@ -5103,6 +5104,9 @@ var $;
             ];
         }
         selection_watcher() {
+            return null;
+        }
+        error_report() {
             return null;
         }
         disabled() {
@@ -5204,12 +5208,35 @@ var $;
                 const el = next.target;
                 const from = el.selectionStart;
                 const to = el.selectionEnd;
-                el.value = this.value_changed(el.value);
+                try {
+                    el.value = this.value_changed(el.value);
+                }
+                catch (error) {
+                    const el = this.dom_node();
+                    if (error instanceof Error) {
+                        el.setCustomValidity(error.message);
+                        el.reportValidity();
+                    }
+                    $mol_fail_hidden(error);
+                }
                 if (to === null)
                     return;
                 el.selectionEnd = to;
                 el.selectionStart = from;
                 this.selection_change(next);
+            }
+            error_report() {
+                try {
+                    if (this.focused())
+                        this.value();
+                }
+                catch (error) {
+                    const el = this.dom_node();
+                    if (error instanceof Error) {
+                        el.setCustomValidity(error.message);
+                        el.reportValidity();
+                    }
+                }
             }
             hint_visible() {
                 return (this.enabled() ? this.hint() : '') || ' ';
@@ -5250,6 +5277,12 @@ var $;
                 return this.selection()[1];
             }
         }
+        __decorate([
+            $mol_action
+        ], $mol_string.prototype, "event_change", null);
+        __decorate([
+            $mol_mem
+        ], $mol_string.prototype, "error_report", null);
         __decorate([
             $mol_mem
         ], $mol_string.prototype, "selection_watcher", null);
@@ -39695,6 +39728,7 @@ var $;
             return [
                 this.Simple(),
                 this.Hint(),
+                this.Broken(),
                 this.Filled(),
                 this.Disabled(),
                 this.Button()
@@ -39729,6 +39763,17 @@ var $;
             obj.value = (next) => this.name(next);
             return obj;
         }
+        broken(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Broken() {
+            const obj = new this.$.$mol_string();
+            obj.hint = () => "Broken";
+            obj.value = (next) => this.broken(next);
+            return obj;
+        }
         name2(next) {
             if (next !== undefined)
                 return next;
@@ -39760,6 +39805,12 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_string_demo.prototype, "Hint", null);
+    __decorate([
+        $mol_mem
+    ], $mol_string_demo.prototype, "broken", null);
+    __decorate([
+        $mol_mem
+    ], $mol_string_demo.prototype, "Broken", null);
     __decorate([
         $mol_mem
     ], $mol_string_demo.prototype, "name2", null);

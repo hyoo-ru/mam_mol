@@ -55,12 +55,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * auto / <= selection_watcher
+		 * auto /
+		 * 	<= selection_watcher
+		 * 	<= error_report
 		 * ```
 		 */
 		auto() {
 			return [
-				this.selection_watcher()
+				this.selection_watcher(),
+				this.error_report()
 			] as readonly any[]
 		}
 		
@@ -141,6 +144,15 @@ namespace $ {
 		 * ```
 		 */
 		selection_watcher() {
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * error_report null
+		 * ```
+		 */
+		error_report() {
 			return null as any
 		}
 		

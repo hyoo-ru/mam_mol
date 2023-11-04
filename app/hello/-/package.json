@@ -111,6 +111,7 @@
     "$mol_hotkey",
     "$mol_keyboard_code",
     "$mol_keyboard",
+    "$mol_action",
     "$mol_dom_listener",
     "$mol_layer"
   ],
