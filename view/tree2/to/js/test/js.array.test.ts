@@ -41,7 +41,7 @@ namespace $ {
 
 			$mol_assert_like(
 				_foo.make({ $ }).complex(),
-				[ [ 'test1' ], { str: 'some', nul: null } ]
+				[ [ 1, 'test1', 2 ], { a: 1, str: 'some', nul: null } ]
 			)
 
 		},
@@ -65,8 +65,8 @@ namespace $ {
 		'Array slot' ($) {
 			const _foo = $mol_view_tree2_to_js_test_ex_array_slot_foo
 			const foo = _foo.make({ $ })
-			type assert_foot = $mol_type_assert<ReturnType<typeof foo['foot']>, readonly(string | number)[]>
-			$mol_assert_like(foo.foot(), [ 'foot1', 'ins1', 1, 'ins2', 'foot2' ])
+			type assert_foot = $mol_type_assert<ReturnType<typeof foo['foot']>, readonly(string | number | boolean)[]>
+			$mol_assert_like(foo.foot(), [ 1, 2, true, 'foot1', 'ins1', 1, 'ins2', 'foot2' ])
 		},
 
 		'Array indexed' ($) {

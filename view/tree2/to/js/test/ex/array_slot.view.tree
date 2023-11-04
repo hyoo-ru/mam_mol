@@ -1,9 +1,13 @@
 $mol_view_tree2_to_js_test_ex_array_slot_foo $mol_view
-	foot /string|number
-		<= foot1 \foot1
+	foot /string|number|boolean
+		1
+		2
+		true
+		\foot1
 		^ insert /string|number
 			<= ins1 \ins1
 			^ sub_ins /number
 				<= sub_ins1 1
 			<= ins2 \ins2
 		<= foot2 \foot2
+

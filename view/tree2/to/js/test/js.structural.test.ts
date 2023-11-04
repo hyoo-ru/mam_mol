@@ -84,6 +84,20 @@ namespace $ {
 			
 		},
 
+		'Structural complex key'($) {
+			const _foo = $mol_view_tree2_to_js_test_ex_structural_complex_key_foo
+			const foo = _foo.make({ $ })
+
+			$mol_assert_like(
+				foo.dictionary(),
+				{
+					'raw data key': '1',
+					'key2': '2',
+					'key3': '3'
+				},
+			)
+		}
+
 	})
 	
 }

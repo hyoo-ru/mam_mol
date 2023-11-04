@@ -18,14 +18,7 @@ namespace $ {
 	}
 	
 	function args_of( this: $, prop: $mol_tree2, bidi = true ) {
-		
-		const { key, next } = this.$mol_view_tree2_prop_parts(prop)
-		
-		return prop.struct( '(,)', [
-			... key ? [ prop.struct( key.length > 1 ? key.slice(1) : 'id' ) ] : [],
-			... ( bidi && next ) ? [ prop.struct( 'next' ) ] : [],
-		] )
-		
+		return params_of.call(this, prop, bidi)	
 	}
 
 	function call_of(this: $, bind: $mol_tree2, bidi = true) {
@@ -121,7 +114,8 @@ namespace $ {
 						input.kids.map( field => {
 							
 							if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
-							const field_name = field.type.replace(/\?\w*$/, '')
+							const field_name = (field.type || field.value).replace(/\?\w*$/, '')
+
 							return field.struct( ':', [
 								field.data( field_name ),
 								field.kids[0].type === '<=>'
@@ -151,7 +145,7 @@ namespace $ {
 					
 					for( const over of input.kids ) {
 						
-						if( over.type === '/' ) continue
+						if( over.type?.[0] === '/' ) continue
 						
 						const oname = name_of.call(this, over )
 						const bind = over.kids[0]
