@@ -9,7 +9,7 @@ namespace $ {
 		},
 
 		'simple mutable and read only channels'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_simple_mutable_and_read_only_channels_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_simple_mutable_and_read_only_foo
 			
 			const foo = _foo.make({ $ })
 			
@@ -35,7 +35,7 @@ namespace $ {
 		},
 		
 		'simple string channel'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_simple_string_channel_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_simple_string_foo
 			
 			$mol_assert_equal(
 				_foo.make({ $ }).hardcoded(),
@@ -44,12 +44,12 @@ namespace $ {
 			
 			$mol_assert_equal(
 				_foo.make({ $ }).localized(),
-				`$mol_view_tree2_to_js_test_ex_simple_string_channel_foo_localized`,
+				`$mol_view_tree2_to_js_test_ex_simple_string_foo_localized`,
 			)
 		},
 		
 		'simple default indexed channel'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_simple_default_indexed_channel_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_simple_default_indexed_foo
 
 			const foo = _foo.make({ $ })
 

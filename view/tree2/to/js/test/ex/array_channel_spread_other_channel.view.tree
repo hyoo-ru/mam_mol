@@ -1,6 +1,0 @@
-$mol_view_tree2_to_js_test_ex_array_channel_spread_other_channel_bar $mol_view
-	sup /
-		\v1
-	arr /
-		\v2
-		^ sup

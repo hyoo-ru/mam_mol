@@ -1,0 +1,6 @@
+$mol_view_tree2_to_js_test_ex_left_second_level_index_bar $mol_view
+	localized \
+
+$mol_view_tree2_to_js_test_ex_left_second_level_index_foo $mol_view
+	cls* <= owner*? $mol_view_tree2_to_js_test_ex_left_second_level_index_bar
+		localized <= some*? @ \v1

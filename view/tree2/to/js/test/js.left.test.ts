@@ -3,7 +3,7 @@ namespace $ {
 	$mol_test({
 		
 		'Left bind read only'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_left_bind_read_only_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_left_read_only_foo
 			
 			const foo = _foo.make({ $ })
 			
@@ -25,14 +25,14 @@ namespace $ {
 		},
 
 		'Left bind second level index'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_left_bind_second_level_index_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_left_second_level_index_foo
 			const foo = _foo.make({ $ })
 
 			$mol_assert_ok(foo.owner(1) instanceof $mol_view)
 			$mol_assert_like(
 				foo.some(1),
 				foo.some(1),
-				`$mol_view_tree2_to_js_test_ex_left_bind_second_level_index_foo_some`
+				`$mol_view_tree2_to_js_test_ex_left_second_level_index_foo_some`
 			)
 
 			$mol_assert_equal(
@@ -52,7 +52,7 @@ namespace $ {
 		},
 
 		'Left bind in array and object'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_left_bind_in_array_and_object_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_left_in_array_and_object_foo
 			const foo = _foo.make({ $ })
 
 			$mol_assert_equal(
@@ -63,7 +63,7 @@ namespace $ {
 		},
 
 		'Left bind with separate default and comment'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_left_bind_with_separate_default_and_comment_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_foo
 			const foo = _foo.make({ $ })
 
 			$mol_assert_like(
@@ -73,7 +73,7 @@ namespace $ {
 		},
 
 		'Left bind chaining'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_left_bind_chaining_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_left_chaining_foo
 			const foo = _foo.make({ $ })
 
 			$mol_assert_equal(

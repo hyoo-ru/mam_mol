@@ -2,7 +2,7 @@ namespace $ {
 
 	$mol_test({
 		'Bidi bind fallback'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_bidi_bind_fallback_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_bidi_fallback_foo
 			const foo = _foo.make({ })
 			
 			$mol_assert_equal(
@@ -39,7 +39,7 @@ namespace $ {
 		},
 
 		'Bidi bind legacy value'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_bidi_bind_legacy_value_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_bidi_legacy_value_foo
 
 			const foo = _foo.make({ $ })
 			
@@ -57,7 +57,7 @@ namespace $ {
 		},
 		
 		'Bidi bind in dictionary'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_bidi_bind_in_dictionary_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_bidi_in_dictionary_foo
 			
 			$mol_assert_like(
 				_foo.make({ $ }).event().click({}),
@@ -67,7 +67,7 @@ namespace $ {
 		},
 
 		'Bidi bind chaining'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_bidi_bind_chaining_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_bidi_chaining_foo
 			const foo = _foo.make({ $ })
 
 			$mol_assert_like(
@@ -78,7 +78,7 @@ namespace $ {
 		},
 
 		'Bidi bind indexed'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_bidi_bind_indexed_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_bidi_indexed_foo
 			const foo = _foo.make({ $ })
 
 			foo.owner(1, 'a')
@@ -104,9 +104,9 @@ namespace $ {
 		},
 
 		'Bidi bind indexed second level'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_bidi_bind_indexed_second_level_foo
-			const _bar = $mol_view_tree2_to_js_test_ex_bidi_bind_indexed_second_level_bar
-			_foo.$.$mol_view_tree2_to_js_test_ex_bidi_bind_indexed_second_level_bar = _bar
+			const _foo = $mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_foo
+			const _bar = $mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar
+			_foo.$.$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar = _bar
 
 			const foo = _foo.make({ $ })
 
@@ -128,7 +128,7 @@ namespace $ {
 		},
 
 		'Bidi bind doubing right part with same default'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_bidi_bind_doubing_right_part_with_same_default_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_bidi_doubing_right_part_with_same_default_foo
 			const foo = _foo.make({ $ })
 
 			$mol_assert_like(
@@ -140,7 +140,7 @@ namespace $ {
 		},
 
 		'Bidi bind with separate default in right part'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_bidi_bind_with_separate_default_in_right_part_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_bidi_with_separate_default_in_right_part_foo
 			const foo = _foo.make({ $ })
 			$mol_assert_like(
 				foo.b(),
@@ -159,7 +159,7 @@ namespace $ {
 		},
 
 		'Bidi bind with default object'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_bidi_bind_with_default_object_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_bidi_with_default_object_foo
 			const foo = _foo.make({ $ })
 			const view = new $mol_view
 			foo.owner(view)
@@ -172,25 +172,25 @@ namespace $ {
 		},
 		
 		'Bidi bind localized default value'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_bidi_bind_localized_default_value_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_bidi_localized_default_value_foo
 			const foo = _foo.make({ $ })
 
 			$mol_assert_like(
 				foo.b(),
 				foo.a(),
-				`$mol_view_tree2_to_js_test_ex_bidi_bind_localized_default_value_foo_b`,
+				`$mol_view_tree2_to_js_test_ex_bidi_localized_default_value_foo_b`,
 			)
 		
 		},
 
 		'Bidi bind localized in object'( $ ) {
-			const _foo = $mol_view_tree2_to_js_test_ex_bidi_bind_localized_in_object_foo
+			const _foo = $mol_view_tree2_to_js_test_ex_bidi_localized_in_object_foo
 			const foo = _foo.make({ $ })
 
 			$mol_assert_like(
 				foo.obj().loc(),
 				foo.outer(),
-				`$mol_view_tree2_to_js_test_ex_bidi_bind_localized_in_object_foo_outer`
+				`$mol_view_tree2_to_js_test_ex_bidi_localized_in_object_foo_outer`
 			)
 		},
 

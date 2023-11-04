@@ -1,0 +1,4 @@
+$mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo $mol_view
+	blobs /$mol_view
+		<= text_blob? $mol_view_tree2_to_js_test_ex_klass_tuple /
+			/string <= text \123

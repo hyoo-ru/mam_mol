@@ -3,7 +3,7 @@ namespace $ {
 	$mol_test({
 		
 		'Right bind read only'( $ ) {
-			const _bar = $mol_view_tree2_to_js_test_ex_right_bind_read_only_bar
+			const _bar = $mol_view_tree2_to_js_test_ex_right_read_only_bar
 			
 			const bar = _bar.make({ $: _bar.$ })
 
@@ -15,7 +15,7 @@ namespace $ {
 		},
 
 		'Right bind in left bind'( $ ) {
-			const _bar = $mol_view_tree2_to_js_test_ex_right_bind_in_left_bind_bar
+			const _bar = $mol_view_tree2_to_js_test_ex_right_in_left_bar
 			
 			const bar = _bar.make({ $: _bar.$ })
 
@@ -32,7 +32,7 @@ namespace $ {
 		},
 
 		'Right bind indexed'( $ ) {
-			const _bar = $mol_view_tree2_to_js_test_ex_right_bind_indexed_bar
+			const _bar = $mol_view_tree2_to_js_test_ex_right_indexed_bar
 			
 			const bar = _bar.make({ $: _bar.$ })
 

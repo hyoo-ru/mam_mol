@@ -1,6 +1,0 @@
-$mol_view_tree2_to_js_test_ex_right_bind_indexed_foo $mol_view
-	a? *
-		some 123
-$mol_view_tree2_to_js_test_ex_right_bind_indexed_bar $mol_view
-	Cls* $mol_view_tree2_to_js_test_ex_right_bind_indexed_foo
-		a => b*

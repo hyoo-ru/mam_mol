@@ -1,0 +1,10 @@
+$mol_view_tree2_to_js_test_ex_array_of_array_or_object_foo $mol_view
+	complex /
+		/number|string
+			1
+			\test1
+			2
+		*Record<string,number|string|null>
+			a 1
+			str \some
+			nul null

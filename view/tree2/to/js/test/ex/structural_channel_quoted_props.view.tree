@@ -1,4 +1,0 @@
-$mol_view_tree2_to_js_test_ex_structural_channel_quoted_props_foo $mol_view
-	bar *
-		$a 1
-		b-t *

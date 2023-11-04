@@ -233,8 +233,22 @@ namespace $ {
 							}
 
 							if( /^[$A-Z]/.test( input.type ) ) {
-							
-								for( const over of input.kids ) {
+								const first = input.kids[0]
+								if( first?.type[0] === '/' ) {
+									
+									types.push(
+										first.data( `type ${ input.type }__${ this.$mol_guid() } = $mol_type_enforce< ` ),
+										first.struct( 'indent', [
+											first.struct( 'line', [
+												... input.hack( belt ),
+												input.data( ',' ),
+											] ),
+											input.data( `Parameters< ${ input.type } >` ),
+										] ),
+										input.data( '>' ),
+									)
+									
+								} else for( const over of input.kids ) {
 									
 									const name = name_of.call(this,  over )
 									const bind = over.kids[0]
