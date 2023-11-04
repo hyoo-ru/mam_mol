@@ -1441,6 +1441,7 @@ $mol_assert_demo $mol_example_code
 		\$mol_assert_unique( 1 , 2 , 3 )
 		\$mol_assert_equal( 1 , 1 , 1 )
 		\$mol_assert_like( [1] , [1] , [1] )
+		\$mol_assert_like( { a: 1 } , { a: 1 } , { a: 1 } )
 	aspects /
 		\Algorithm/Assert
 		\Testing
