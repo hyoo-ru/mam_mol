@@ -10,7 +10,7 @@
 	
 :root, [mol_theme="$mol_theme_dark"], :where([mol_theme="$mol_theme_dark"]) [mol_theme]  {
 
-	--mol_thee_luma: -1;
+	--mol_theme_luma: -1;
 	--mol_theme_image: invert(1) hue-rotate( 180deg );
 
 	--mol_theme_back: oklch( 20% .03 var(--mol_theme_hue) );
@@ -31,12 +31,12 @@
 
 [mol_theme="$mol_theme_light"], :where([mol_theme="$mol_theme_light"]) [mol_theme] {
 	
-	--mol_thee_luma: 1;
+	--mol_theme_luma: 1;
 	--mol_theme_image: none;
 	
-	--mol_theme_back: oklch( 98% .01 var(--mol_theme_hue) );
-	--mol_theme_card: oklch( 90% .05 var(--mol_theme_hue) / .25 );
-	--mol_theme_field: oklch( 100% 0 var(--mol_theme_hue) / .25 );
+	--mol_theme_back: oklch( 93% .01 var(--mol_theme_hue) );
+	--mol_theme_card: oklch( 100% .02 var(--mol_theme_hue) / .25 );
+	--mol_theme_field: oklch( 100% 0 var(--mol_theme_hue) / .5 );
 	--mol_theme_hover: oklch( 70% 0 var(--mol_theme_hue) / .1 );
 	
 	--mol_theme_text: oklch( 20% 0 var(--mol_theme_hue) );
@@ -44,9 +44,9 @@
 	--mol_theme_line: oklch( 70% 0 var(--mol_theme_hue) / .2 );
 	--mol_theme_focus: oklch( 20% .8 calc( var(--mol_theme_hue) + 120deg ) );
 	
-	--mol_theme_control: oklch( 40% .2 var(--mol_theme_hue) );
-	--mol_theme_current: oklch( 40% .5 calc( var(--mol_theme_hue) - 60deg ) );
-	--mol_theme_special: oklch( 40% .5 calc( var(--mol_theme_hue) + 60deg ) );
+	--mol_theme_control: oklch( 45% .2 var(--mol_theme_hue) );
+	--mol_theme_current: oklch( 45% .5 calc( var(--mol_theme_hue) - 60deg ) );
+	--mol_theme_special: oklch( 45% .5 calc( var(--mol_theme_hue) + 60deg ) );
 
 }
 
