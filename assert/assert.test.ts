@@ -32,6 +32,14 @@ namespace $ {
 		'three must be alike'() {
 			$mol_assert_like( [ 3 ] , [ 3 ] , [ 3 ] )
 		} ,
+
+		'two object must be alike'() {
+			$mol_assert_like( { a: 1 }, { a: 1 } )
+		} ,
+
+		'three object must be alike'() {
+			$mol_assert_like( { a: 1 }, { a: 1 }, { a: 1 } )
+		} ,
 		
 	} )
 }
