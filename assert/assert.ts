@@ -116,7 +116,7 @@ namespace $ {
 					if( 'outerHTML' in val ) return val.outerHTML
 					
 					try {
-						return JSON.stringify( val )
+						return JSON.stringify( val, null, '\t' )
 					} catch( error: any ) {
 						console.error( error )
 						return val
