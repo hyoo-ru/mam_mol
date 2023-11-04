@@ -20,7 +20,7 @@
 	--mol_theme_text: oklch( 80% 0 var(--mol_theme_hue) );
 	--mol_theme_shade: oklch( 60% 0 var(--mol_theme_hue) );
 	--mol_theme_line: oklch( 50% 0 var(--mol_theme_hue) / .2 );
-	--mol_theme_focus: oklch( 80% .15 calc( var(--mol_theme_hue) + 120deg ) );
+	--mol_theme_focus: oklch( 80% .2 calc( var(--mol_theme_hue) + 120deg ) );
 	
 	--mol_theme_control: oklch( 60% .1 var(--mol_theme_hue) );
 	--mol_theme_current: oklch( 70% .12 calc( var(--mol_theme_hue) - 60deg ) );
