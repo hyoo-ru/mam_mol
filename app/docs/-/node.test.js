@@ -39523,6 +39523,21 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_string_demo extends $.$mol_string_demo {
+            broken(next) {
+                return $mol_fail(new Error('Demo error'));
+            }
+        }
+        $$.$mol_string_demo = $mol_string_demo;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/string/demo/demo.view.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_switch_demo extends $mol_example {
         title() {
             return "Color switchers in various state";

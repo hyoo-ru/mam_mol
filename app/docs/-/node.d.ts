@@ -9699,6 +9699,12 @@ declare namespace $ {
     }
 }
 
+declare namespace $.$$ {
+    class $mol_string_demo extends $.$mol_string_demo {
+        broken(next?: string): never;
+    }
+}
+
 declare namespace $ {
     class $mol_switch_demo extends $mol_example {
         title(): string;
