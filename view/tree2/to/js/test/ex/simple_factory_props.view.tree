@@ -1,9 +1,9 @@
-$mol_view_tree2_to_js_test_ex_simple_factory_props_bar $mol_view
+$mol_view_tree2_to_js_test_ex_simple_factory_props_bar $mol_object
 	sub /number
 	loc \v2
 	some false
 
-$mol_view_tree2_to_js_test_ex_simple_factory_props_foo $mol_view
+$mol_view_tree2_to_js_test_ex_simple_factory_props_foo $mol_object
 	button $mol_view_tree2_to_js_test_ex_simple_factory_props_bar
 		some true
 		loc @ \v1

@@ -28,7 +28,7 @@ namespace $ {
 			const _foo = $mol_view_tree2_to_js_test_ex_left_second_level_index_foo
 			const foo = _foo.make({ $ })
 
-			$mol_assert_ok(foo.owner(1) instanceof $mol_view)
+			$mol_assert_ok(foo.owner(1) instanceof $mol_object)
 			$mol_assert_like(
 				foo.some(1),
 				foo.some(1),

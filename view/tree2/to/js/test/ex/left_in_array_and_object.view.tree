@@ -1,6 +1,6 @@
-$mol_view_tree2_to_js_test_ex_left_in_array_and_object_bar $mol_view
+$mol_view_tree2_to_js_test_ex_left_in_array_and_object_bar $mol_object
 	rows /
-$mol_view_tree2_to_js_test_ex_left_in_array_and_object_foo $mol_view
+$mol_view_tree2_to_js_test_ex_left_in_array_and_object_foo $mol_object
 	obj *
 		prop <= Obj
 	arr /

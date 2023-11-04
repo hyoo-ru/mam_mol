@@ -1,4 +1,4 @@
-$mol_view_tree2_to_js_test_ex_structural_spread_other_foo $mol_view
+$mol_view_tree2_to_js_test_ex_structural_spread_other_foo $mol_object
 	test *
 		aaa 123
 	field *

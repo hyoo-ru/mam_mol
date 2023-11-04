@@ -1,5 +1,5 @@
-$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar $mol_view
+$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar $mol_object
 	expanded \
-$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_foo $mol_view
+$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_foo $mol_object
 	indexed*? $mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar
 		expanded <=> owner*? \w

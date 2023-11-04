@@ -1,4 +1,4 @@
-$mol_view_tree2_to_js_test_ex_structural_dict_foo $mol_view
+$mol_view_tree2_to_js_test_ex_structural_dict_foo $mol_object
 	bar *
 		alpha 1
 		beta \a

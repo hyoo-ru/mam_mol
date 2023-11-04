@@ -1,6 +1,6 @@
-$mol_view_tree2_to_js_test_ex_right_indexed_foo $mol_view
+$mol_view_tree2_to_js_test_ex_right_indexed_foo $mol_object
 	a? *
 		some 123
-$mol_view_tree2_to_js_test_ex_right_indexed_bar $mol_view
+$mol_view_tree2_to_js_test_ex_right_indexed_bar $mol_object
 	Cls* $mol_view_tree2_to_js_test_ex_right_indexed_foo
 		a => b*

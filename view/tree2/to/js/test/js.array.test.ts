@@ -84,6 +84,16 @@ namespace $ {
 			const _foo = $mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo
 			const foo = _foo.make({ $ })
 
+			type a0 = $mol_type_assert<
+				ReturnType<typeof foo['text_blob']>,
+				$mol_view_tree2_to_js_test_ex_klass_tuple
+			>
+
+			type a1 = $mol_type_assert<
+				ReturnType<typeof foo['blobs']>,
+				readonly $mol_view_tree2_to_js_test_ex_klass_tuple[]
+			>
+
 			$mol_assert_like(
 				foo.text_blob().tuple,
 				[ '123' ]

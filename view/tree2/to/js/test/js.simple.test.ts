@@ -69,14 +69,14 @@ namespace $ {
 		'simple empty legacy indexed channel throws error'( $ ) {
 			$mol_assert_fail(() => {
 				$mol_view_tree2_to_js_test_run(`
-					Foo $mol_view
+					Foo $mol_object
 						a!? null
 				`)
 			}, `Cannot destructure property 'name' of 'prop_parts(...)' as it is undefined. at ?#3:7/3` )
 
 			$mol_assert_fail(() => {
 				$mol_view_tree2_to_js_test_run(`
-					Foo $mol_view
+					Foo $mol_object
 						b! 1
 				`)
 			}, `Cannot destructure property 'name' of 'prop_parts(...)' as it is undefined. at ?#3:7/2` )
@@ -97,8 +97,8 @@ namespace $ {
 
 		'simple commented node'( $ ) {
 			const { Foo } = $mol_view_tree2_to_js_test_run(`
-				- Foo $mol_view
-					a!? $mol_view
+				- Foo $mol_object
+					a!? $mol_object
 						expanded <=> cell_test_expanded!? null
 			`)
 			$mol_assert_ok(Foo === undefined)
@@ -136,7 +136,7 @@ namespace $ {
 		'extra char' ($) {
 			$mol_assert_fail(() => {
 				$mol_view_tree2_to_js_test_run(`
-					Foo $mol_view
+					Foo $mol_object
 						item_чount 50
 				`)
 			})

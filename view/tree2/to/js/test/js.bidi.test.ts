@@ -161,7 +161,7 @@ namespace $ {
 		'Bidi bind with default object'( $ ) {
 			const _foo = $mol_view_tree2_to_js_test_ex_bidi_with_default_object_foo
 			const foo = _foo.make({ $ })
-			const view = new $mol_view
+			const view = new $mol_object
 			foo.owner(view)
 
 			$mol_assert_like(
