@@ -802,22 +802,25 @@ var $;
                 }
                 if (!$mol_promise_like(this.cache))
                     return this.cache;
-                await Promise.race([
-                    this.cache,
-                    new Promise(done => {
-                        const sub = new $mol_wire_pub_sub;
-                        const prev = sub.track_on();
-                        sub.track_next(this);
-                        sub.track_off(prev);
-                        sub.absorb = done;
-                    })
-                ]);
+                await Promise.race([this.cache, this.step()]);
                 if (!$mol_promise_like(this.cache))
                     return this.cache;
                 if (this.cursor === $mol_wire_cursor.final) {
                     await new Promise(() => { });
                 }
             }
+        }
+        step() {
+            return new Promise(done => {
+                const sub = new $mol_wire_pub_sub;
+                const prev = sub.track_on();
+                sub.track_next(this);
+                sub.track_off(prev);
+                sub.absorb = () => {
+                    done(null);
+                    sub.destructor();
+                };
+            });
         }
     }
     $.$mol_wire_fiber = $mol_wire_fiber;
