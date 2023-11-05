@@ -1,6 +1,35 @@
 namespace $ {
 	$mol_test({
 		
+		async 'Error caching' ($) {
+			const next_cached = 123
+
+			class Some extends $mol_object2 {
+
+				static $ = $
+
+				@ $mol_wire_plex
+				static data( id: string, next?: unknown): unknown {
+					if (next) return next as never
+
+					setTimeout(() => {
+						$mol_wire_async(this).data(id, next_cached)
+					}, 10)
+
+					$mol_fail_hidden(new Promise(() => {}))
+				}
+
+				@ $mol_wire_method
+				static run() {
+					return this.data('1')
+				}
+
+			}
+
+			const val = await $mol_wire_async(Some).run()
+			$mol_assert_equal(val, next_cached)
+		} ,
+
 		'Memoize by single simple key' ($) {
 
 			class Team extends $mol_object2 {
