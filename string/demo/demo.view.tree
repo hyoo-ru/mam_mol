@@ -6,6 +6,9 @@ $mol_string_demo $mol_example_small
 		<= Hint $mol_string
 			hint \Batman
 			value? <=> name? \
+		<= Broken $mol_string
+			hint \Broken
+			value? <=> broken? \
 		<= Filled $mol_string
 			value? <=> name2? \Jocker
 		<= Disabled $mol_string

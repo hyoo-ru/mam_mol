@@ -11,7 +11,7 @@ Component for entering, incrementing and decrementing numeric values.
 	value? <=> fees? null
 	hint \0.01 .. 10.00
 	enabled <= fees_changeable true
-	precision0 .01
+	precision 0.01
 	value_min 0.01
 	value_max 10
 ```

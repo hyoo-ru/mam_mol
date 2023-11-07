@@ -9,7 +9,7 @@ const tree = $mol_tree2_from_string(`
 	foo
 		bar
 		lol
-	hello \world
+	hello \\world
 `)
 ```
 
