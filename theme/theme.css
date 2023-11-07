@@ -14,7 +14,7 @@
 	--mol_theme_image: invert(1) hue-rotate( 180deg );
 
 	--mol_theme_back: oklch( 20% .03 var(--mol_theme_hue) );
-	--mol_theme_card: oklch( 30% .05 var(--mol_theme_hue) / .25 );
+	--mol_theme_card: oklch( 35% .05 var(--mol_theme_hue) / .25 );
 	--mol_theme_field: oklch( 0% 0 var(--mol_theme_hue) / .25 );
 	--mol_theme_hover: oklch( 70% 0 var(--mol_theme_hue) / .1 );
 	
@@ -23,9 +23,9 @@
 	--mol_theme_line: oklch( 50% 0 var(--mol_theme_hue) / .2 );
 	--mol_theme_focus: oklch( 80% .2 calc( var(--mol_theme_hue) + 120deg ) );
 	
-	--mol_theme_control: oklch( 60% .1 var(--mol_theme_hue) );
-	--mol_theme_current: oklch( 70% .3 calc( var(--mol_theme_hue) - 60deg ) );
-	--mol_theme_special: oklch( 70% .3 calc( var(--mol_theme_hue) + 60deg ) );
+	--mol_theme_control: oklch( 70% .1 var(--mol_theme_hue) );
+	--mol_theme_current: oklch( 80% .2 calc( var(--mol_theme_hue) - 60deg ) );
+	--mol_theme_special: oklch( 80% .3 calc( var(--mol_theme_hue) + 60deg ) );
 
 }
 
