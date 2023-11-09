@@ -23,9 +23,9 @@
 	--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .2 );
 	--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 180deg ), 100%, 65% );
 	
-	--mol_theme_control: hsl( var(--mol_theme_hue), 60%, 70% );
-	--mol_theme_current: hsl( calc( var(--mol_theme_hue) - 60deg ), 60%, 70% );
-	--mol_theme_special: hsl( calc( var(--mol_theme_hue) + 60deg ), 60%, 70% );
+	--mol_theme_control: hsl( var(--mol_theme_hue), 60%, 65% );
+	--mol_theme_current: hsl( calc( var(--mol_theme_hue) - 60deg ), 60%, 65% );
+	--mol_theme_special: hsl( calc( var(--mol_theme_hue) + 60deg ), 60%, 65% );
 
 	/* --mol_theme_back: oklch( 20% .03 var(--mol_theme_hue) );
 	--mol_theme_card: oklch( 35% .05 var(--mol_theme_hue) / .25 );
@@ -79,14 +79,14 @@
 }
 
 :where( :root, [mol_theme="$mol_theme_dark"] ) [mol_theme="$mol_theme_base"] {
-	--mol_theme_back: hsl( var(--mol_theme_hue), 50%, 20% );
-	--mol_theme_card: hsl( var(--mol_theme_hue), 40%, 10%, .25 );
+	--mol_theme_back: hsl( var(--mol_theme_hue), 50%, 10% );
+	--mol_theme_card: hsl( var(--mol_theme_hue), 40%, 20%, .25 );
 	/* --mol_theme_back: oklch( 25% .05 var(--mol_theme_hue) );
 	--mol_theme_card: oklch( 35% .1 var(--mol_theme_hue) / .25 ); */
 }
 :where( [mol_theme="$mol_theme_light"] ) [mol_theme="$mol_theme_base"] {
-	--mol_theme_back: hsl( var(--mol_theme_hue), 50%, 90% );
-	--mol_theme_card: hsl( var(--mol_theme_hue), 80%, 99%, .25 );
+	--mol_theme_back: hsl( var(--mol_theme_hue), 50%, 80% );
+	--mol_theme_card: hsl( var(--mol_theme_hue), 80%, 95%, .25 );
 	/* --mol_theme_back: oklch( 95% .02 var(--mol_theme_hue) );
 	--mol_theme_card: oklch( 80% .05 var(--mol_theme_hue) / .25 ); */
 }
@@ -98,34 +98,34 @@
 	--mol_theme_card: oklch( 50% .3 calc( var(--mol_theme_hue) + 120deg ) / .25 ); */
 }
 :where( [mol_theme="$mol_theme_light"] ) [mol_theme="$mol_theme_accent"] {
-	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 180deg ), 90%, 80% );
-	--mol_theme_card: hsl( calc( var(--mol_theme_hue) + 180deg ), 80%, 95%, .25 );
+	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 180deg ), 90%, 75% );
+	--mol_theme_card: hsl( calc( var(--mol_theme_hue) + 180deg ), 80%, 90%, .25 );
 	/* --mol_theme_back: oklch( 90% .03 calc( var(--mol_theme_hue) + 120deg ) );
 	--mol_theme_card: oklch( 80% .05 calc( var(--mol_theme_hue) + 120deg ) / .25 ); */
 }
 
 :where( :root, [mol_theme="$mol_theme_dark"] ) [mol_theme="$mol_theme_current"] {
-	--mol_theme_back: hsl( calc( var(--mol_theme_hue) - 60deg ), 50%, 20% );
-	--mol_theme_card: hsl( calc( var(--mol_theme_hue) - 60deg ), 40%, 10%, .25 );
+	--mol_theme_back: hsl( calc( var(--mol_theme_hue) - 60deg ), 50%, 10% );
+	--mol_theme_card: hsl( calc( var(--mol_theme_hue) - 60deg ), 40%, 20%, .25 );
 	/* --mol_theme_back: oklch( 25% .05 calc( var(--mol_theme_hue) - 60deg ) );
 	--mol_theme_card: oklch( 35% .1 calc( var(--mol_theme_hue) - 60deg ) / .25 ); */
 }
 :where( [mol_theme="$mol_theme_light"] ) [mol_theme="$mol_theme_current"] {
-	--mol_theme_back: hsl( calc( var(--mol_theme_hue) - 60deg ), 50%, 90% );
-	--mol_theme_card: hsl( calc( var(--mol_theme_hue) - 60deg ), 80%, 99%, .25 );
+	--mol_theme_back: hsl( calc( var(--mol_theme_hue) - 60deg ), 50%, 80% );
+	--mol_theme_card: hsl( calc( var(--mol_theme_hue) - 60deg ), 80%, 95%, .25 );
 	/* --mol_theme_back: oklch( 95% .02 calc( var(--mol_theme_hue) - 60deg ) );
 	--mol_theme_card: oklch( 80% .05 calc( var(--mol_theme_hue) - 60deg ) / .25 ); */
 }
 
 :where( :root, [mol_theme="$mol_theme_dark"] ) [mol_theme="$mol_theme_special"] {
-	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 60deg ), 50%, 20% );
-	--mol_theme_card: hsl( calc( var(--mol_theme_hue) + 60deg ), 40%, 10%, .25 );
+	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 60deg ), 50%, 10% );
+	--mol_theme_card: hsl( calc( var(--mol_theme_hue) + 60deg ), 40%, 20%, .25 );
 	/* --mol_theme_back: oklch( 25% .05 calc( var(--mol_theme_hue) + 60deg ) );
 	--mol_theme_card: oklch( 35% .1 calc( var(--mol_theme_hue) + 60deg ) / .25 ); */
 }
 :where( [mol_theme="$mol_theme_light"] ) [mol_theme="$mol_theme_special"] {
-	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 60deg ), 50%, 90% );
-	--mol_theme_card: hsl( calc( var(--mol_theme_hue) + 60deg ), 80%, 99%, .25 );
+	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 60deg ), 50%, 80% );
+	--mol_theme_card: hsl( calc( var(--mol_theme_hue) + 60deg ), 80%, 95%, .25 );
 	/* --mol_theme_back: oklch( 95% .02 calc( var(--mol_theme_hue) + 60deg ) );
 	--mol_theme_card: oklch( 80% .05 calc( var(--mol_theme_hue) + 60deg ) / .25 ); */
 }
