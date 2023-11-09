@@ -1046,6 +1046,15 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_storage extends $mol_object2 {
+        static native(): null;
+        static persisted(next?: boolean): boolean;
+        static estimate(): number;
+        static dir(): FileSystemDirectoryHandle;
+    }
+}
+
+declare namespace $ {
     class $mol_state_local<Value> extends $mol_object {
         static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
         static native(): Storage | {

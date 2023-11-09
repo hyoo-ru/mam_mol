@@ -123,6 +123,7 @@
     "$mol_state",
     "$mol_action",
     "$mol_state_local",
+    "$mol_storage",
     "$mol_app_supplies_enter",
     "$mol_string",
     "$mol_hotkey",
