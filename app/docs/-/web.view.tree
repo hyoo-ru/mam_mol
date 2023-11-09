@@ -5593,7 +5593,7 @@ $mol_theme_demo $mol_example_large
 		--mol_theme_hue <= hue_deg \
 	sub /
 		<= Hue $mol_number
-			value? <=> hue? 240
+			value? <=> hue? 210
 			precision_change 15
 		<= Scroll $mol_scroll sub /
 			<= Cases $mol_theme_demo_case

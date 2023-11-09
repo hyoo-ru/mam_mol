@@ -62,13 +62,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hue? 240
+		 * hue? 210
 		 * ```
 		 */
 		@ $mol_mem
 		hue(next?: any) {
 			if ( next !== undefined ) return next as never
-			return 240
+			return 210
 		}
 		
 		/**
