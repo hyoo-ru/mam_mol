@@ -62,7 +62,9 @@ namespace $.$$ {
 			
 			const symbol = event.shiftKey
 				? this.symbols_alt_shift()[ $mol_keyboard_code[ event.keyCode ] ]
-				: this.symbols_alt()[ $mol_keyboard_code[ event.keyCode ] ]
+				: event.ctrlKey
+					? this.symbols_alt_ctrl()[ $mol_keyboard_code[ event.keyCode ] ]
+					: this.symbols_alt()[ $mol_keyboard_code[ event.keyCode ] ]
 				
 			if( !symbol ) return
 			
@@ -76,7 +78,7 @@ namespace $.$$ {
 		
 		press( event : KeyboardEvent ) {
 			
-			if( event.altKey && !event.ctrlKey ) {
+			if( event.altKey ) {
 				
 				this.symbol_insert( event )
 				

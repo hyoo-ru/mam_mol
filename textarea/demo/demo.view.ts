@@ -4,11 +4,16 @@ namespace $.$$ {
 		@ $mol_mem
 		symbols_hint() {
 			
+			const field = this.Filled_descr()
+			const row = ( prefix: string, name: string, value: string ) =>
+				`! ;;${prefix} + ${name};;\n  ! ${value}\n    ! ;;${ value.codePointAt(0)?.toString(16).toUpperCase().padStart(4,'0') };;`
+			
 			let rows = [
-				... Object.entries( this.Disabled().symbols_alt() )
-					.map( ([ name, val ])=> `Alt + ${name}: ${val}` ),
-				... Object.entries( this.Disabled().symbols_alt_shift() )
-					.map( ([ name, val ])=> `Alt + Shift + ${name}: ${val}` ),
+				... Object.entries( field.symbols_alt() ).map( ([ name, val ])=> row( 'Alt', name, val ) ),
+				'\n',
+				... Object.entries( field.symbols_alt_shift() ).map( ([ name, val ])=> row( 'Alt + Shift', name, val ) ),
+				'\n',
+				... Object.entries( field.symbols_alt_ctrl() ).map( ([ name, val ])=> row( 'Alt + Ctrl', name, val ) ),
 			]
 			
 			return rows.join( '\n' )
