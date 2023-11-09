@@ -44,8 +44,12 @@ namespace $ {
 			
 			if( next === void 0 ) return JSON.parse( this.native().getItem( key ) || 'null' )
 			
-			if( next === null ) this.native().removeItem( key )
-			else this.native().setItem( key , JSON.stringify( next ) )
+			if( next === null ) {
+				this.native().removeItem( key )
+			} else {
+				this.native().setItem( key , JSON.stringify( next ) )
+				this.$.$mol_storage.persisted( true )
+			}
 			
 			return next
 		}
