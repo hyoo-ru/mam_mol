@@ -905,6 +905,7 @@ $mol_textarea $mol_stack
 		graveAccent \́
 		forwardSlash \÷
 		E \€
+		V \✔
 		X \×
 		C \©
 		P \§
@@ -919,6 +920,8 @@ $mol_textarea $mol_stack
 		bracketOpen \[
 		bracketClose \]
 		slashBack \|
+	symbols_alt_ctrl *
+		space \ 
 	symbols_alt_shift *
 		V \✅
 		X \❌
@@ -5577,9 +5580,8 @@ $mol_textarea_demo $mol_example
 					\function hello( name = 'World' ) {
 					\	return `Hello, ${ name }!`
 					\}
-			<= Disabled $mol_textarea
-				enabled false
-				value <= symbols_hint \
+			<= Disabled $mol_text
+				text <= symbols_hint \
 	tags /
 		\code
 		\syntax

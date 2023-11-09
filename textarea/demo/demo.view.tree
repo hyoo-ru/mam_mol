@@ -9,9 +9,8 @@ $mol_textarea_demo $mol_example
 					\function hello( name = 'World' ) {
 					\	return `Hello, ${ name }!`
 					\}
-			<= Disabled $mol_textarea
-				enabled false
-				value <= symbols_hint \
+			<= Disabled $mol_text
+				text <= symbols_hint \
 	tags /
 		\code
 		\syntax

@@ -95,17 +95,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Disabled $mol_textarea
-		 * 	enabled false
-		 * 	value <= symbols_hint
+		 * Disabled $mol_text text <= symbols_hint
 		 * ```
 		 */
 		@ $mol_mem
 		Disabled() {
-			const obj = new this.$.$mol_textarea()
+			const obj = new this.$.$mol_text()
 			
-			obj.enabled = () => false
-			obj.value = () => this.symbols_hint()
+			obj.text = () => this.symbols_hint()
 			
 			return obj
 		}

@@ -13470,6 +13470,7 @@ var $;
                 graveAccent: "́",
                 forwardSlash: "÷",
                 E: "€",
+                V: "✔",
                 X: "×",
                 C: "©",
                 P: "§",
@@ -13484,6 +13485,11 @@ var $;
                 bracketOpen: "[",
                 bracketClose: "]",
                 slashBack: "|"
+            };
+        }
+        symbols_alt_ctrl() {
+            return {
+                space: " "
             };
         }
         symbols_alt_shift() {
@@ -13673,7 +13679,9 @@ var $;
             symbol_insert(event) {
                 const symbol = event.shiftKey
                     ? this.symbols_alt_shift()[$mol_keyboard_code[event.keyCode]]
-                    : this.symbols_alt()[$mol_keyboard_code[event.keyCode]];
+                    : event.ctrlKey
+                        ? this.symbols_alt_ctrl()[$mol_keyboard_code[event.keyCode]]
+                        : this.symbols_alt()[$mol_keyboard_code[event.keyCode]];
                 if (!symbol)
                     return;
                 document.execCommand('insertText', false, symbol);
@@ -13682,7 +13690,7 @@ var $;
                 this.clickable(event.ctrlKey);
             }
             press(event) {
-                if (event.altKey && !event.ctrlKey) {
+                if (event.altKey) {
                     this.symbol_insert(event);
                 }
                 else {
@@ -40287,9 +40295,8 @@ var $;
             return "";
         }
         Disabled() {
-            const obj = new this.$.$mol_textarea();
-            obj.enabled = () => false;
-            obj.value = () => this.symbols_hint();
+            const obj = new this.$.$mol_text();
+            obj.text = () => this.symbols_hint();
             return obj;
         }
         Content() {
@@ -40324,11 +40331,14 @@ var $;
     (function ($$) {
         class $mol_textarea_demo extends $.$mol_textarea_demo {
             symbols_hint() {
+                const field = this.Filled_descr();
+                const row = (prefix, name, value) => `! ;;${prefix} + ${name};;\n  ! ${value}\n    ! ;;${value.codePointAt(0)?.toString(16).toUpperCase().padStart(4, '0')};;`;
                 let rows = [
-                    ...Object.entries(this.Disabled().symbols_alt())
-                        .map(([name, val]) => `Alt + ${name}: ${val}`),
-                    ...Object.entries(this.Disabled().symbols_alt_shift())
-                        .map(([name, val]) => `Alt + Shift + ${name}: ${val}`),
+                    ...Object.entries(field.symbols_alt()).map(([name, val]) => row('Alt', name, val)),
+                    '\n',
+                    ...Object.entries(field.symbols_alt_shift()).map(([name, val]) => row('Alt + Shift', name, val)),
+                    '\n',
+                    ...Object.entries(field.symbols_alt_ctrl()).map(([name, val]) => row('Alt + Ctrl', name, val)),
                 ];
                 return rows.join('\n');
             }

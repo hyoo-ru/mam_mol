@@ -55,6 +55,7 @@ namespace $ {
 		 * 	graveAccent \́
 		 * 	forwardSlash \÷
 		 * 	E \€
+		 * 	V \✔
 		 * 	X \×
 		 * 	C \©
 		 * 	P \§
@@ -80,6 +81,7 @@ namespace $ {
 				graveAccent: "́",
 				forwardSlash: "÷",
 				E: "€",
+				V: "✔",
 				X: "×",
 				C: "©",
 				P: "§",
@@ -94,6 +96,17 @@ namespace $ {
 				bracketOpen: "[",
 				bracketClose: "]",
 				slashBack: "|"
+			} as Record< string, any >
+		}
+		
+		/**
+		 * ```tree
+		 * symbols_alt_ctrl * space \
+		 * ```
+		 */
+		symbols_alt_ctrl() {
+			return {
+				space: " "
 			} as Record< string, any >
 		}
 		
