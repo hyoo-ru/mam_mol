@@ -6,6 +6,10 @@ namespace $.$$ {
 			return this.hue() + 'deg'
 		}
 		
+		hue_spread_deg() {
+			return this.hue_spread() + 'deg'
+		}
+		
 	}
 	
 }

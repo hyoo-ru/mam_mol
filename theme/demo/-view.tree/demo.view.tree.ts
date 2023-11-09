@@ -3,25 +3,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * style * --mol_theme_hue <= hue_deg
+		 * style *
+		 * 	--mol_theme_hue <= hue_deg
+		 * 	--mol_theme_hue_spread <= hue_spread_deg
 		 * ```
 		 */
 		style() {
 			return {
-				"--mol_theme_hue": this.hue_deg()
+				"--mol_theme_hue": this.hue_deg(),
+				"--mol_theme_hue_spread": this.hue_spread_deg()
 			} as Record< string, any >
 		}
 		
 		/**
 		 * ```tree
 		 * sub /
-		 * 	<= Hue
+		 * 	<= Config
 		 * 	<= Scroll
 		 * ```
 		 */
 		sub() {
 			return [
-				this.Hue(),
+				this.Config(),
 				this.Scroll()
 			] as readonly any[]
 		}
@@ -62,6 +65,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * hue_spread_deg \
+		 * ```
+		 */
+		hue_spread_deg() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * hue? 210
 		 * ```
 		 */
@@ -84,6 +96,87 @@ namespace $ {
 			
 			obj.value = (next?: any) => this.hue(next)
 			obj.precision_change = () => 15
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Hue_field $mol_form_field
+		 * 	name \Hue
+		 * 	Content <= Hue
+		 * ```
+		 */
+		@ $mol_mem
+		Hue_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => "Hue"
+			obj.Content = () => this.Hue()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * hue_spread? 90
+		 * ```
+		 */
+		@ $mol_mem
+		hue_spread(next?: any) {
+			if ( next !== undefined ) return next as never
+			return 90
+		}
+		
+		/**
+		 * ```tree
+		 * Hue_spread $mol_number
+		 * 	value? <=> hue_spread?
+		 * 	precision_change 15
+		 * ```
+		 */
+		@ $mol_mem
+		Hue_spread() {
+			const obj = new this.$.$mol_number()
+			
+			obj.value = (next?: any) => this.hue_spread(next)
+			obj.precision_change = () => 15
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Hue_spread_field $mol_form_field
+		 * 	name \Hue spread
+		 * 	Content <= Hue_spread
+		 * ```
+		 */
+		@ $mol_mem
+		Hue_spread_field() {
+			const obj = new this.$.$mol_form_field()
+			
+			obj.name = () => "Hue spread"
+			obj.Content = () => this.Hue_spread()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * Config $mol_row sub /
+		 * 	<= Hue_field
+		 * 	<= Hue_spread_field
+		 * ```
+		 */
+		@ $mol_mem
+		Config() {
+			const obj = new this.$.$mol_row()
+			
+			obj.sub = () => [
+				this.Hue_field(),
+				this.Hue_spread_field()
+			] as readonly any[]
 			
 			return obj
 		}

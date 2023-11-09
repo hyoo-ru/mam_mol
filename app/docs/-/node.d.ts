@@ -9880,8 +9880,14 @@ declare namespace $ {
         tags(): readonly any[];
         aspects(): readonly any[];
         hue_deg(): string;
+        hue_spread_deg(): string;
         hue(next?: any): number;
         Hue(): $$.$mol_number;
+        Hue_field(): $$.$mol_form_field;
+        hue_spread(next?: any): number;
+        Hue_spread(): $$.$mol_number;
+        Hue_spread_field(): $$.$mol_form_field;
+        Config(): $mol_row;
         Base(): $mol_theme_demo_case;
         Accent(): $mol_theme_demo_case;
         Current(): $mol_theme_demo_case;
@@ -9915,6 +9921,7 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_theme_demo extends $.$mol_theme_demo {
         hue_deg(): string;
+        hue_spread_deg(): string;
     }
 }
 
