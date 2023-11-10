@@ -3,7 +3,7 @@ namespace $ {
 		
 		@ $mol_mem
 		static native() {
-			return null
+			return null as any
 		}
 		
 		@ $mol_mem
