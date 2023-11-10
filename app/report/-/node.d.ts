@@ -1047,7 +1047,7 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_storage extends $mol_object2 {
-        static native(): null;
+        static native(): any;
         static persisted(next?: boolean): boolean;
         static estimate(): number;
         static dir(): FileSystemDirectoryHandle;
