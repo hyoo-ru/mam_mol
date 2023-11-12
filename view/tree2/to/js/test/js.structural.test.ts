@@ -44,11 +44,21 @@ namespace $ {
 			
 		},
 		
-		'Structural channel spread other channel'( $ ) {
+		'Structural channel spread other'( $ ) {
 			const _foo = $mol_view_tree2_to_js_test_ex_structural_spread_other_foo
-			
+			const foo = _foo.make({ $ })
+
+			type a1 = $mol_type_assert<
+				ReturnType<typeof foo.field>,
+				{
+					aaa: number
+				} & {
+					bbb: number
+				}
+			>
+
 			$mol_assert_like(
-				_foo.make({ $ }).field(),
+				foo.field(),
 				{
 					bbb: 321,
 					aaa: 123,

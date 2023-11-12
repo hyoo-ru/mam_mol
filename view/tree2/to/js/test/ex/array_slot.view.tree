@@ -1,10 +1,11 @@
 $mol_view_tree2_to_js_test_ex_array_slot_foo $mol_object
 	foot /string|number|boolean
 		1
-		2
 		true
 		\foot1
-		^ insert /string|number
+		^ insert /
+			2
+			3
 			<= ins1 \ins1
 			^ sub_ins /number
 				<= sub_ins1 1

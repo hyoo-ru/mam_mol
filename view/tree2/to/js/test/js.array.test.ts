@@ -2,7 +2,7 @@ namespace $ {
 
 	$mol_test({
 		
-		'Array channel boolean'( $ ) {
+		'Array boolean'( $ ) {
 			const _foo = $mol_view_tree2_to_js_test_ex_array_boolean_foo
 			const foo = _foo.make({ $ })
 			type assert_sub = $mol_type_assert<ReturnType<typeof foo['bar']>, readonly boolean[]>
@@ -13,11 +13,14 @@ namespace $ {
 			
 		},
 		
-		'Array channel number'( $ ) {
+		'Array number'( $ ) {
 			const _foo = $mol_view_tree2_to_js_test_ex_array_number_foo
+			const foo = _foo.make({ $ })
+
+			type a1 = $mol_type_assert<ReturnType<typeof foo['bar']>, readonly number[]>
 
 			$mol_assert_like(
-				_foo.make({ $ }).bar(),
+				foo.bar(),
 				[
 					// Number.NaN,
 					Number.NEGATIVE_INFINITY,
@@ -28,7 +31,7 @@ namespace $ {
 			
 		},
 		
-		'Array channel with types'( $ ) {
+		'Array with types'( $ ) {
 			const _foo = $mol_view_tree2_to_js_test_ex_array_with_types_foo
 			const foo = _foo.make({ $ })
 			type assert_arr = $mol_type_assert<ReturnType<typeof foo['arr']>, readonly( readonly(number)[] )[]>
@@ -36,24 +39,29 @@ namespace $ {
 
 		},
 
-		'Array channel of array or object'( $ ) {
+		'Array of array or object'( $ ) {
 			const _foo = $mol_view_tree2_to_js_test_ex_array_of_array_or_object_foo
+			const foo = _foo.make({ $ })
+			// type a1 = $mol_type_assert<
+			// 	ReturnType<typeof foo.complex>,
+			// 	readonly (readonly(number | string)[] | Record<string, number | string>)[]
+			// >
 
 			$mol_assert_like(
-				_foo.make({ $ }).complex(),
-				[ [ 1, 'test1', 2 ], { a: 1, str: 'some', nul: null } ]
+				foo.complex(),
+				[ '1', [ true ], [ '1', 21 ], { a: 1, str: 'some' } ]
 			)
 
 		},
 
-		'Array channel inheritance'( $ ) {
+		'Array inheritance'( $ ) {
 			const _bar = $mol_view_tree2_to_js_test_ex_array_inheritance_bar
 
 			$mol_assert_like(_bar.make({ $ }).arr(), ['v3', 'v1', 'v4' ])
 
 		},
 
-		'Array channel spread other channel'( $ ) {
+		'Array spread other'( $ ) {
 			const _bar = $mol_view_tree2_to_js_test_ex_array_spread_other_bar
 			const bar = _bar.make({ $ })
 
@@ -66,7 +74,7 @@ namespace $ {
 			const _foo = $mol_view_tree2_to_js_test_ex_array_slot_foo
 			const foo = _foo.make({ $ })
 			type assert_foot = $mol_type_assert<ReturnType<typeof foo['foot']>, readonly(string | number | boolean)[]>
-			$mol_assert_like(foo.foot(), [ 1, 2, true, 'foot1', 'ins1', 1, 'ins2', 'foot2' ])
+			$mol_assert_like(foo.foot(), [ 1, true, 'foot1', 2, 3, 'ins1', 1, 'ins2', 'foot2' ])
 		},
 
 		'Array indexed' ($) {

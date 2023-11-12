@@ -1,4 +1,6 @@
 namespace $ {
+	const err = $mol_view_tree2_error_str
+
 	function name_of(this: $, prop: $mol_tree2) {
 		const name = prop.type
 			? this.$mol_view_tree2_prop_parts(prop).name
@@ -6,7 +8,7 @@ namespace $ {
 
 		if (! name) {
 			this.$mol_fail(
-				$mol_view_tree2_error_str`Required valid prop name at ${prop.span}`
+				err`Required valid prop name at ${prop.span}`
 			)
 		}
 
@@ -15,33 +17,27 @@ namespace $ {
 	
 	function params_of( this: $, prop: $mol_tree2, ... val: $mol_tree2[] ) {
 		
-		const { key, next } = this.$mol_view_tree2_prop_parts(prop)
-		
+		const { name, key, next } = this.$mol_view_tree2_prop_parts(prop)
+
+		if (next && (! val.length || ! val[0].value) ) {
+			this.$mol_fail(
+				err`Type empty for next value at ${prop.span}`
+			)
+		}
+
 		return prop.struct( 'line', [
+			prop.data(name),
 			prop.data('( '),
 			... key ? [
-				prop.data( 'id: ant' ),
-				prop.data('any, '),
+				prop.data( 'id: any' + (next ? ', ' : '') ),
 			] : [],
 			... next ? [
-				prop.data( 'next' ),
-				prop.data('?: '),
+				prop.data( 'next?: ' ),
 				... val,
-				prop.data(' '),
 			] : [],
-			prop.data(')'),
+			prop.data(' )'),
 		] )
 		
-	}
-
-	function param_of(this: $, klass: $mol_tree2, input: $mol_tree2, index = 0) {
-		return [
-			input.data( 'Parameters< ' ),
-			klass.data( klass.type ),
-			input.data( '["' ),
-			name_of.call(this,  input ),
-			input.data( `"] >[${index}]` ),
-		]
 	}
 
 	function return_type_raw(this: $, klass: $mol_tree2, input: $mol_tree2) {
@@ -76,6 +72,30 @@ namespace $ {
 		return input.data(type)
 	}
 
+	function readonly_arr(this: $, input: $mol_tree2, infered: readonly $mol_tree2[]) {
+		return infered.length === 1 ? [
+			input.data('readonly( '),
+			infered[0],
+			input.data(' )[]'),
+		] : [
+			input.data('readonly('),
+			input.struct( 'indent', infered),
+			input.data(')[]'),
+		]
+	}
+
+	function type_enforce(this: $, name: $mol_tree2, a: readonly $mol_tree2[], b: readonly $mol_tree2[]) {
+		return name.struct('line', [
+			name.data(`type ${ name.value }__${ this.$mol_guid() } = $mol_type_enforce<` ),
+			name.struct( 'indent', [
+				a[0].struct('line', a),
+				a[0].data(','),
+				b[0].struct('line', b),
+			]),
+			name.data( '>' ),
+		])
+	}
+
 	export function $mol_view_tree2_to_dts(this: $, tree: $mol_tree2) {
 		
 		const descr = $mol_view_tree2_classes( tree )
@@ -90,8 +110,6 @@ namespace $ {
 			const context = { objects: [] as $mol_tree2[] }
 			const br = bind_res.bind(this, klass)
 			const rt = return_type.bind(this, klass)
-			const rt_parent = return_type.bind(this, parent)
-			const param_of_method = param_of.bind(this, klass)
 
 			types.push(
 				klass.struct( 'line', [
@@ -103,11 +121,9 @@ namespace $ {
 				] ),
 				... props.map( prop => {
 					
-					const name = name_of.call(this, prop)
-
 					const val = prop.hack({
 						
-						'null': ( val, belt )=> [ val.data( 'any' ) ],
+						'null': ( val, belt )=> val.kids[0]?.value ? [ val.kids[0], val.data( ' | null' ) ]: [ val.data( 'any' ) ],
 						
 						'true': ( val, belt )=> [ val.data( 'boolean' ) ],
 						'false': ( val, belt )=> [ val.data( 'boolean' ) ],
@@ -117,141 +133,125 @@ namespace $ {
 						'<=>': br,
 						'<=': br,
 						'=>': br,
-						'^': ( ref )=> [
-							ref.struct( '...', [
-								ref.struct( '()', [
-									ref.struct( ref.kids[0]?.type ? 'this' : 'super' ),
-									ref.struct( '[]', [
-										name_of.call(this, ref.kids[0]?.type ? ref.kids[0] : prop),
-									] ),
-									ref.struct( '(,)' )
-								]),
-							] ),
-						],
-						'': ( input, belt )=> {
-							if (input.type[0] === '*') {
-								return [
-									... input.select('^').kids.map( inherit => 
-										inherit.struct( 'line', [
-											...rt_parent(prop),
-											inherit.data(' & '),
-										] )
-									),
-									... input.type.trim().length > 1 || ! input.kids?.length
-										? [
-											input.data('Record<string, '),
-											input.data(input.type.substring(1) || 'any'),
-											input.data('>'),
-										]
-										: [
-											// input.data('Record<string, any>'),
-											input.data('({ '),
-											input.struct( 'indent',
-												input.kids.map( field => {
-													if( field.type === '^' ) return null
-													const field_name = (field.type || field.value).replace(/\?\w*$/, '')
-													const child = field.kids[0]
+						'^': (input) => return_type.call(
+								this,
+								input.kids.length ? klass : parent,
+								input.kids.length ? input.kids[0] : prop
+						),
+						'': ( input, belt, context )=> {
 
-													return field.struct( 'line', [
-														field.data('\''),
-														field.data( field_name ),
-														field.data('\''),
-														field.data( ': ' ),
-														...child.type === '<=>' && child.kids[0].type.match(/\?|\*/)
-															? [
-																params_of.call(this, field, ...param_of_method(child.kids[0], 0) ),
-																field.data(' => '),
-																...field.hack( belt),
-															]
-															: field.hack( belt),
-														field.data( ',' ),
-													] )
-												} ).filter( this.$mol_guard_defined )
-											),
-											input.data('})'),
-										]
-		
+							if (input.type[0] === '*') {
+								let unions = [] as $mol_tree2[]
+
+								const hacked = ( [] as readonly $mol_tree2[] ).concat(
+									... input.kids.map( kid => {
+										if (kid.type[0] === '^') {
+											unions = unions.concat(kid.data(' & '), kid.hack_self(belt, context))
+											return []
+										}
+
+										const child = this.$mol_view_tree2_child(kid)
+										const ret = child.hack_self( belt )
+
+										return kid.struct( 'line', kid.type.match(/(?:\*|\?)/)
+											? [
+												params_of.call(this, kid, ...ret),
+												kid.data(': '),
+												...ret,
+												kid.data( ',' ),
+											]
+											: [
+												kid.data('\''),
+												kid.data( kid.type || kid.value ),
+												kid.data('\': '),
+												...ret,
+												kid.data( ',' ),
+											],
+										)
+									} )
+								)
+
+								if (input.type.length > 1 || ! hacked.length) {
+									return [
+										input.data('Record<string, '),
+										input.data(input.type.slice(1) || 'any'),
+										input.data('>'),
+										... unions
+									]
+								}
+
+								return [
+									input.data('({ '),
+									input.struct( 'indent', hacked),
+									input.data('}) '),
+									... unions
 								]
+
 							}
 
 							if( input.type[0] === '/' ) {
-								const hacked = [] as $mol_tree2[]
-								const dupes = new Set<string>()
-								let is_first = true
+								const dups = new Set<string>()
+								const infered = ( [] as readonly $mol_tree2[] ).concat(
+									... input.kids.map( (kid, index) => {
+										const result = kid.hack_self(belt, context) as $mol_tree2[]
+										const val = result[0].value
+										if (val === 'number' || val === 'string' || val === 'boolean') {
+											if (dups.has(val)) return []
+											dups.add(val)
+										}
 
-								for (const kid of input.kids) {
-									if (kid.type[0] === '/') hacked.push(...kid.hack(belt))
-									else if (kid.type[0] === '*') hacked.push(...kid.hack(belt))
-									else if (kid.type === '^' || kid.type === '<=') {
-										const first = kid.kids[0] ?? prop
-										if (! is_first) hacked.push(kid.data(' | '))
-										is_first = false
-										hacked.push(...kid.kids[0] ? rt(first) : rt_parent(first))
-										if (kid.type === '^') hacked.push(first.data('[number]'))
-									} else {
-										const pt = primitive_type(kid)
-										if (dupes.has(pt.value)) continue
-										dupes.add(pt.value)
-										if (! is_first) hacked.push(kid.data(' | '))
-										is_first = false
-										hacked.push(pt)
-									}
-								}
+										if (index !== 0) result.unshift(kid.data('| '))
+										if (kid.type[0] === '^') result.push((kid.kids[0] ?? prop).data('[number]'))
 
-								if (hacked.length) {
+										return kid.struct('line', result)
+									} )
+								)
+
+								const array_type = input.type.length > 1 ? input.data(input.type.slice(1)) : undefined
+
+								if (infered.length && array_type) {
 									types.push(
-										input.struct('line', [
-											input.data( `type `),
-											klass.data(klass.type),
-											klass.data('__'),
-											name_of.call(this, prop),
-											prop.data(` = $mol_type_enforce< ` ),
-										]),
-										input.struct( 'indent', [
-											input.struct('line', [
-												...rt(prop),
-												input.data(','),
-											]),
-											input.struct('line', [
-												input.data('readonly('),
-												...hacked,
-												input.data(')[]'),
-											]),
-										input.data( '>' ),
-									]))
+										type_enforce.call(
+											this,
+											input.data(`${ klass.type }_${prop.type.replace(/[\?\*]*/g, '')}`),
+											readonly_arr.call(this, input, infered),
+											readonly_arr.call(this, input, [ array_type ]),
+										)
+									)
 								}
 
-								if (input.type.length > 1 && input.kids.length === 0) {
-									hacked.push(input.data(input.type.slice(1)))
-								}
-
-								return [
-									input.data('readonly ('),
-									hacked.length ? input.struct('line', hacked) : input.data('any'),
-									input.data(')[]'),
-								]
+								const result = array_type || ! infered.length
+									? [ array_type ?? input.data('any') ]
+									: infered
+		
+								return readonly_arr.call(this, input, result)
 							}
 
-							if( /^[$A-Z]/.test( input.type ) ) {
+							if( input.type !== 'NaN' && /^[$A-Z]/.test( input.type ) ) {
 								const first = input.kids[0]
 								if( first?.type[0] === '/' ) {
 									
 									types.push(
-										first.data( `type ${ input.type }__${ this.$mol_guid() } = $mol_type_enforce< ` ),
-										first.struct( 'indent', [
-											first.struct( 'line', [
-												... input.hack( belt ),
-												input.data( ',' ),
-											] ),
-											input.data( `Parameters< ${ input.type } >` ),
-										] ),
-										input.data( '>' ),
+										type_enforce.call(
+											this,
+											first.data(`${ input.type }`),
+											[
+												first.data('[ '),
+												... first.hack( belt ),
+												first.data( ' ]' ),
+											],
+											[
+												input.data( `ConstructorParameters< typeof `),
+												input.data(input.type),
+												input.data(` >`),
+											],
+										),
 									)
 									
 								} else for( const over of input.kids ) {
 									
 									const name = name_of.call(this,  over )
-									const bind = over.kids[0]
+									const bind = this.$mol_view_tree2_child(over)
 									
 									if( bind.type === '=>' ) {
 										
@@ -266,7 +266,6 @@ namespace $ {
 										aliases.push(
 											pr.struct( 'indent', [
 												pr.struct( 'line', [
-													name_of.call(this,  pr ),
 													params_of.call(this, pr, ... res ),
 													bind.data( ': ' ),
 													... res,
@@ -276,19 +275,16 @@ namespace $ {
 									}
 										
 									types.push(
-										over.data( `type ${ input.type }__${ name.value }_${ this.$mol_guid() } = $mol_type_enforce< ` ),
-										over.struct( 'indent', [
-											over.struct( 'line', [
-												... over.hack( belt ),
-												input.data( ',' ),
-											] ),
-											over.struct( 'line', return_type.call(
+										type_enforce.call(
+											this,
+											over.data(`${ input.type }__${ name.value }`),
+											over.hack( belt ),
+											return_type.call(
 												this,
 												input,
 												over,
-											) ),
-										] ),
-										input.data( '>' ),
+											),
+										)
 									)
 								}
 								
@@ -308,8 +304,7 @@ namespace $ {
 	
 					return prop.struct( 'indent', [
 						prop.struct( 'line', [
-							name_of.call(this, prop),
-							params_of.call(this, prop, ... val ),
+							params_of.call(this, prop, ... val ), // Parameter, not Return
 							prop.data(': '),
 							... val,
 						] )

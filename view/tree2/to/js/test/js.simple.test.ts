@@ -133,6 +133,17 @@ namespace $ {
 			$mol_assert_equal(foo.e(), -Infinity)
 		},
 
+		'simple typed null'($) {
+			const _foo = $mol_view_tree2_to_js_test_ex_simple_typed_null_foo
+			const foo = _foo.make({ $ })
+			type a1 = $mol_type_assert<ReturnType<typeof foo.a>, string | number | null>
+
+			$mol_assert_equal(
+				foo.a(),
+				null
+			)
+		},
+
 		'extra char' ($) {
 			$mol_assert_fail(() => {
 				$mol_view_tree2_to_js_test_run(`
