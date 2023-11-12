@@ -3499,12 +3499,7 @@ var $;
             }
             else {
                 this.native().setItem(key, JSON.stringify(next));
-                try {
-                    this.$.$mol_storage.persisted(true);
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                }
+                this.$.$mol_storage.persisted(true);
             }
             return next;
         }

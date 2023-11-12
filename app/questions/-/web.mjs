@@ -4964,21 +4964,20 @@ var $;
 (function ($) {
     class $mol_storage extends $mol_object2 {
         static native() {
-            return $mol_wire_sync(this.$.$mol_dom_context.navigator.storage);
+            return this.$.$mol_dom_context.navigator.storage;
         }
         static persisted(next) {
             $mol_mem_persist();
             const native = this.native();
-            const prev = $mol_mem_cached(() => this.persisted()) ?? native.persisted();
-            if (next && !prev)
+            if (next)
                 native.persist();
-            return next ?? prev;
+            return next ?? $mol_wire_sync(native).persisted();
         }
         static estimate() {
-            return this.native().estimate();
+            return $mol_wire_sync(this.native()).estimate();
         }
         static dir() {
-            return this.native().getDirectory();
+            return $mol_wire_sync(this.native()).getDirectory();
         }
     }
     __decorate([
@@ -5032,12 +5031,7 @@ var $;
             }
             else {
                 this.native().setItem(key, JSON.stringify(next));
-                try {
-                    this.$.$mol_storage.persisted(true);
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                }
+                this.$.$mol_storage.persisted(true);
             }
             return next;
         }
