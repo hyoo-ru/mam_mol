@@ -72,6 +72,12 @@ namespace $.$$ {
 			
 		}
 		
+		@ $mol_mem
+		clickable( next?: boolean ) {
+			if( !this.enabled() ) return true
+			return next ?? false
+		}
+		
 		hover( event : PointerEvent ) {
 			this.clickable( event.ctrlKey )
 		}
