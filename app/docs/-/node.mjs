@@ -21834,6 +21834,84 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_gallery extends $mol_view {
+        sub() {
+            return this.items();
+        }
+        Side(id) {
+            const obj = new this.$.$mol_gallery();
+            obj.style = () => ({
+                flexGrow: this.side_size(id)
+            });
+            obj.items = () => this.side_items(id);
+            return obj;
+        }
+        items() {
+            return [];
+        }
+        side_size(id) {
+            return "1";
+        }
+        side_items(id) {
+            return [];
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_gallery.prototype, "Side", null);
+    $.$mol_gallery = $mol_gallery;
+})($ || ($ = {}));
+//mol/gallery/-view.tree/gallery.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_gallery extends $.$mol_gallery {
+            sub() {
+                const items = this.items();
+                if (items.length <= 3)
+                    return items;
+                return [
+                    this.Side(0),
+                    this.Side(1),
+                ];
+            }
+            side_items(id) {
+                const items = this.items();
+                const middle = items.length % 2
+                    ? Math.ceil(items.length / 3)
+                    : items.length / 2;
+                return id
+                    ? items.slice(middle)
+                    : items.slice(0, middle);
+            }
+            side_size(id) {
+                return String(this.side_items(id).length);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_gallery.prototype, "sub", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_gallery.prototype, "side_items", null);
+        $$.$mol_gallery = $mol_gallery;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/gallery/gallery.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/gallery/gallery.view.css", "[mol_gallery] {\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\talign-items: stretch;\n    align-content: stretch;\n}\n");
+})($ || ($ = {}));
+//mol/gallery/-css/gallery.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_chart_legend extends $mol_scroll {
         graphs() {
             return [];
@@ -21842,7 +21920,9 @@ var $;
             return [];
         }
         sub() {
-            return this.graph_legends();
+            return [
+                this.Gallery()
+            ];
         }
         Graph_legend(id) {
             const obj = new this.$.$mol_view();
@@ -21854,6 +21934,11 @@ var $;
         }
         graph_legends() {
             return [];
+        }
+        Gallery() {
+            const obj = new this.$.$mol_gallery();
+            obj.items = () => this.graph_legends();
+            return obj;
         }
         Graph_sample(id) {
             return null;
@@ -21879,6 +21964,9 @@ var $;
     __decorate([
         $mol_mem_key
     ], $mol_chart_legend.prototype, "Graph_legend", null);
+    __decorate([
+        $mol_mem
+    ], $mol_chart_legend.prototype, "Gallery", null);
     __decorate([
         $mol_mem_key
     ], $mol_chart_legend.prototype, "Graph_sample_box", null);
@@ -21919,7 +22007,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/chart/legend/legend.view.css", "[mol_chart_legend] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex-direction: row;\n\tpadding: .5rem;\n\tmargin: .5rem;\n\tflex: 0 1 auto;\n}\n\n[mol_chart_legend_graph_legend] {\n\tdisplay: flex;\n\tjustify-content: flex-start;\n\tflex: 1 1 8rem;\n\tpadding: .5rem;\n}\n\n[mol_chart_legend_graph_title] {\n\tmargin: 0 .25rem;\n\tflex: 1 1 auto;\n}\n\n[mol_chart_legend_graph_sample_box] {\n\tposition: relative;\n\twidth: 1.5rem;\n\tflex: none;\n}\n");
+    $mol_style_attach("mol/chart/legend/legend.view.css", "[mol_chart_legend] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex-direction: row;\n\tflex: 0 1 auto;\n}\n\n[mol_chart_legend_graph_legend] {\n\tdisplay: flex;\n\tjustify-content: flex-start;\n\tflex: 1 1 8rem;\n\tpadding: .5rem;\n}\n\n[mol_chart_legend_graph_title] {\n\tmargin: 0 .25rem;\n\tflex: 1 1 auto;\n}\n\n[mol_chart_legend_graph_sample_box] {\n\tposition: relative;\n\twidth: 1.5rem;\n\tflex: none;\n}\n");
 })($ || ($ = {}));
 //mol/chart/legend/-css/legend.view.css.ts
 ;
@@ -22991,10 +23079,10 @@ var $;
             return obj;
         }
         hue_base() {
-            return 140;
+            return 210;
         }
         hue_shift() {
-            return 111;
+            return 163;
         }
         zoom(next) {
             return this.Plot().scale_x(next);
@@ -23132,7 +23220,7 @@ var $;
                 return (8 / Math.sqrt(this.indexes().length)).toPrecision(2) + '%';
             }
             color() {
-                return `hsl( ${this.hue()} , 80% , 85% )`;
+                return `hsl( ${this.hue()} , 80% , 80% )`;
             }
             dimensions() {
                 let next = new this.$.$mol_vector_2d($mol_vector_range_full.inversed, new this.$.$mol_vector_range(0, 0));
@@ -30958,84 +31046,6 @@ var $;
     $.$mol_frame_demo = $mol_frame_demo;
 })($ || ($ = {}));
 //mol/frame/demo/-view.tree/demo.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_gallery extends $mol_view {
-        sub() {
-            return this.items();
-        }
-        Side(id) {
-            const obj = new this.$.$mol_gallery();
-            obj.style = () => ({
-                flexGrow: this.side_size(id)
-            });
-            obj.items = () => this.side_items(id);
-            return obj;
-        }
-        items() {
-            return [];
-        }
-        side_size(id) {
-            return "1";
-        }
-        side_items(id) {
-            return [];
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $mol_gallery.prototype, "Side", null);
-    $.$mol_gallery = $mol_gallery;
-})($ || ($ = {}));
-//mol/gallery/-view.tree/gallery.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_gallery extends $.$mol_gallery {
-            sub() {
-                const items = this.items();
-                if (items.length <= 3)
-                    return items;
-                return [
-                    this.Side(0),
-                    this.Side(1),
-                ];
-            }
-            side_items(id) {
-                const items = this.items();
-                const middle = items.length % 2
-                    ? Math.ceil(items.length / 3)
-                    : items.length / 2;
-                return id
-                    ? items.slice(middle)
-                    : items.slice(0, middle);
-            }
-            side_size(id) {
-                return String(this.side_items(id).length);
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_gallery.prototype, "sub", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_gallery.prototype, "side_items", null);
-        $$.$mol_gallery = $mol_gallery;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/gallery/gallery.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/gallery/gallery.view.css", "[mol_gallery] {\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\talign-items: stretch;\n    align-content: stretch;\n}\n");
-})($ || ($ = {}));
-//mol/gallery/-css/gallery.view.css.ts
 ;
 "use strict";
 var $;

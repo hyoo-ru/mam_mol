@@ -5616,12 +5616,34 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_gallery extends $mol_view {
+        sub(): readonly $mol_view[];
+        Side(id: any): $$.$mol_gallery;
+        items(): readonly $mol_view[];
+        side_size(id: any): string;
+        side_items(id: any): readonly $mol_view[];
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_gallery extends $.$mol_gallery {
+        sub(): readonly $mol_view[];
+        side_items(id: number): $mol_view[];
+        side_size(id: number): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_chart_legend extends $mol_scroll {
         graphs(): readonly $mol_plot_graph[];
         graphs_front(): readonly $mol_plot_graph[];
-        sub(): readonly $mol_view[];
+        sub(): readonly any[];
         Graph_legend(id: any): $mol_view;
         graph_legends(): readonly $mol_view[];
+        Gallery(): $$.$mol_gallery;
         Graph_sample(id: any): any;
         Graph_sample_box(id: any): $mol_view;
         graph_title(id: any): string;
@@ -7597,27 +7619,6 @@ declare namespace $ {
         aspects(): readonly any[];
         Frame(): $$.$mol_frame;
     }
-}
-
-declare namespace $ {
-    class $mol_gallery extends $mol_view {
-        sub(): readonly $mol_view[];
-        Side(id: any): $$.$mol_gallery;
-        items(): readonly $mol_view[];
-        side_size(id: any): string;
-        side_items(id: any): readonly $mol_view[];
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_gallery extends $.$mol_gallery {
-        sub(): readonly $mol_view[];
-        side_items(id: number): $mol_view[];
-        side_size(id: number): string;
-    }
-}
-
-declare namespace $ {
 }
 
 declare namespace $ {

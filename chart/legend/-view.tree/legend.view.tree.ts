@@ -23,11 +23,13 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * sub <= graph_legends
+		 * sub / <= Gallery
 		 * ```
 		 */
 		sub() {
-			return this.graph_legends()
+			return [
+				this.Gallery()
+			] as readonly any[]
 		}
 		
 		/**
@@ -57,6 +59,20 @@ namespace $ {
 		graph_legends() {
 			return [
 			] as readonly $mol_view[]
+		}
+		
+		/**
+		 * ```tree
+		 * Gallery $mol_gallery items <= graph_legends
+		 * ```
+		 */
+		@ $mol_mem
+		Gallery() {
+			const obj = new this.$.$mol_gallery()
+			
+			obj.items = () => this.graph_legends()
+			
+			return obj
 		}
 		
 		/**

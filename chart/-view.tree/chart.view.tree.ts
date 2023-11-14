@@ -95,20 +95,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * hue_base 140
+		 * hue_base 210
 		 * ```
 		 */
 		hue_base() {
-			return 140
+			return 210
 		}
 		
 		/**
 		 * ```tree
-		 * hue_shift 111
+		 * hue_shift 163
 		 * ```
 		 */
 		hue_shift() {
-			return 111
+			return 163
 		}
 		
 		/**

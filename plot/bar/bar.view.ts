@@ -64,7 +64,7 @@ namespace $.$$ {
 		}
 		
 		color() {
-			return `hsl( ${ this.hue() } , 80% , 85% )`
+			return `hsl( ${ this.hue() } , 80% , 80% )`
 		}
 		
 		@ $mol_mem
