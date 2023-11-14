@@ -2,8 +2,6 @@
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
-	padding: .5rem;
-	margin: .5rem;
 	flex: 0 1 auto;
 }
 

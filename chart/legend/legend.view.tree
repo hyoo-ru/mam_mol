@@ -1,7 +1,8 @@
 $mol_chart_legend $mol_scroll
 	graphs /$mol_plot_graph
 	graphs_front /$mol_plot_graph
-	sub <= graph_legends /$mol_view
+	sub /
+		<= Gallery $mol_gallery items <= graph_legends /$mol_view
 	-
 	Graph_legend* $mol_view
 		sub /
