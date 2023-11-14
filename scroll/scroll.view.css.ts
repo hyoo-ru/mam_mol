@@ -4,7 +4,7 @@ namespace $.$$ {
 
 	$mol_style_define( $mol_scroll , {
 
-		display: 'flex',
+		display: 'grid',
 		overflow: 'auto',
 		flex: {
 			direction: 'column',
@@ -27,6 +27,7 @@ namespace $.$$ {
 		'>': {
 			$mol_view: {
 				transform: 'translateZ(0)', // enforce gpu scroll in all agents
+				gridArea: '1/1',
 			},
 		},
 
