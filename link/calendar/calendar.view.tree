@@ -1,0 +1,8 @@
+$mol_link_calendar $mol_link
+	interval $mol_time_interval / *
+		start <= start $mol_time_moment
+		end <= end $mol_time_moment
+	details \
+	location \
+	sub /
+		<= Icon $mol_icon_calendar_plus
