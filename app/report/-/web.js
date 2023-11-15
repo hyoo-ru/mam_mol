@@ -3206,7 +3206,12 @@ var $;
                     shrink: 1,
                     basis: per(100),
                 },
+            },
+            Body_content: {
                 padding: $mol_gap.block,
+                justify: {
+                    self: 'stretch',
+                },
             },
             Foot: {
                 display: 'flex',
