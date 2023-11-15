@@ -148,12 +148,37 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * body /$mol_view_content
+		 * body /$mol_view
 		 * ```
 		 */
 		body() {
 			return [
-			] as readonly $mol_view_content[]
+			] as readonly $mol_view[]
+		}
+		
+		/**
+		 * ```tree
+		 * Body_content $mol_list rows <= body
+		 * ```
+		 */
+		@ $mol_mem
+		Body_content() {
+			const obj = new this.$.$mol_list()
+			
+			obj.rows = () => this.body()
+			
+			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * body_content / <= Body_content
+		 * ```
+		 */
+		body_content() {
+			return [
+				this.Body_content()
+			] as readonly any[]
 		}
 		
 		/**
@@ -169,14 +194,14 @@ namespace $ {
 		 * ```tree
 		 * Body $mol_scroll
 		 * 	scroll_top? => body_scroll_top?
-		 * 	sub <= body
+		 * 	sub <= body_content
 		 * ```
 		 */
 		@ $mol_mem
 		Body() {
 			const obj = new this.$.$mol_scroll()
 			
-			obj.sub = () => this.body()
+			obj.sub = () => this.body_content()
 			
 			return obj
 		}
