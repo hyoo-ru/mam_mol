@@ -83,9 +83,15 @@ namespace $.$$ {
 				shrink: 1,
 				basis: per(100),
 			},
-			padding: $mol_gap.block ,
 		},
-
+		
+		Body_content: {
+			padding: $mol_gap.block ,
+			justify: {
+				self: 'stretch',
+			},
+		},
+		
 		Foot: {
 			display: 'flex',
 			justifyContent: 'space-between',
