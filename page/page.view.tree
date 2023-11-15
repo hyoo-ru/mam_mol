@@ -19,7 +19,7 @@ $mol_page $mol_view
 			scroll_top? => body_scroll_top?
 			sub <= body_content /
 				<= Body_content $mol_list
-					rows <= body /$mol_view_content
+					rows <= body /$mol_view
 		<= Foot $mol_view
 			dom_name \footer
 			sub <= foot /$mol_view
