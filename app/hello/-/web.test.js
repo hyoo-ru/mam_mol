@@ -3011,6 +3011,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $.$mol_mem_cached = $mol_wire_probe;
+})($ || ($ = {}));
+//mol/mem/cached/cached.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_storage extends $mol_object2 {
         static native() {
             return this.$.$mol_dom_context.navigator.storage;
@@ -3020,7 +3027,7 @@ var $;
             if (cache)
                 return Boolean(next);
             const native = this.native();
-            if (next)
+            if (next && $mol_mem_cached(() => this.persisted())) {
                 native.persist().then(actual => {
                     this.persisted(actual, 'cache');
                     if (actual)
@@ -3028,6 +3035,7 @@ var $;
                     else
                         this.$.$mol_log3_fail({ place: this, message: `Non persist` });
                 });
+            }
             return next ?? $mol_wire_sync(native).persisted();
         }
         static estimate() {

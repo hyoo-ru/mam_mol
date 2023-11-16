@@ -3163,7 +3163,7 @@ var $;
             if (cache)
                 return Boolean(next);
             const native = this.native();
-            if (next)
+            if (next && $mol_mem_cached(() => this.persisted())) {
                 native.persist().then(actual => {
                     this.persisted(actual, 'cache');
                     if (actual)
@@ -3171,6 +3171,7 @@ var $;
                     else
                         this.$.$mol_log3_fail({ place: this, message: `Non persist` });
                 });
+            }
             return next ?? $mol_wire_sync(native).persisted();
         }
         static estimate() {
