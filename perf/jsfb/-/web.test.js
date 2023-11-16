@@ -2996,7 +2996,7 @@ var $;
             if (cache)
                 return Boolean(next);
             const native = this.native();
-            if (next && $mol_mem_cached(() => this.persisted())) {
+            if (next && !$mol_mem_cached(() => this.persisted())) {
                 native.persist().then(actual => {
                     setTimeout(() => this.persisted(actual, 'cache'), 5000);
                     if (actual)
