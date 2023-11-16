@@ -4,16 +4,14 @@ $mol_app_demo_menu $mol_page
 	widget_aspects* /string
 	widget_title* \
 	search_start? null
-	Body $mol_scroll
-		sub /
-			<= List $mol_list rows /
-				<= Filter $mol_search
-					query? <=> filter? \
-					- suggests <= filter_suggests
-				<= Tree $mol_tag_tree
-					Item* <= Option*
-					ids_tags <= ids_tags *
-					levels_expanded <= levels_expanded <= levels_expanded_default 0
+	body /
+		<= Filter $mol_search
+			query? <=> filter? \
+			- suggests <= filter_suggests
+		<= Tree $mol_tag_tree
+			Item* <= Option*
+			ids_tags <= ids_tags *
+			levels_expanded <= levels_expanded <= levels_expanded_default 0
 	Option* $mol_link
 		arg <= option_arg* *
 		sub /
