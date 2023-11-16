@@ -1682,6 +1682,7 @@ var $;
             $mol_assert_equal($mol_key(false), 'false');
             $mol_assert_equal($mol_key(true), 'true');
             $mol_assert_equal($mol_key(0), '0');
+            $mol_assert_equal($mol_key(1n << 64n), '18446744073709551616n');
             $mol_assert_equal($mol_key(''), '""');
         },
         'Array & POJO'() {

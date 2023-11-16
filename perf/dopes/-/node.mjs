@@ -888,11 +888,15 @@ var $;
 (function ($) {
     $.$mol_key_store = new WeakMap();
     function $mol_key(value) {
+        if (typeof value === 'bigint')
+            return value.toString() + 'n';
         if (!value)
             return JSON.stringify(value);
         if (typeof value !== 'object' && typeof value !== 'function')
             return JSON.stringify(value);
         return JSON.stringify(value, (field, value) => {
+            if (typeof value === 'bigint')
+                return value.toString() + 'n';
             if (!value)
                 return value;
             if (typeof value !== 'object' && typeof value !== 'function')
