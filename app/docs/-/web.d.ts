@@ -2106,7 +2106,7 @@ declare namespace $ {
         widget_aspects(id: any): readonly string[];
         widget_title(id: any): string;
         search_start(next?: any): any;
-        Body(): $$.$mol_scroll;
+        body(): readonly any[];
         Option(id: any): $$.$mol_link;
         filter(next?: any): string;
         Filter(): $$.$mol_search;
@@ -2114,7 +2114,6 @@ declare namespace $ {
         levels_expanded_default(): number;
         levels_expanded(): number;
         Tree(): $$.$mol_tag_tree;
-        List(): $$.$mol_list;
         option_arg(id: any): Record<string, any>;
         option_title(id: any): string;
         Option_title(id: any): $$.$mol_dimmer;

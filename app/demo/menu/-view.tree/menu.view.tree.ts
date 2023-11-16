@@ -53,18 +53,16 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Body $mol_scroll sub / <= List
+		 * body /
+		 * 	<= Filter
+		 * 	<= Tree
 		 * ```
 		 */
-		@ $mol_mem
-		Body() {
-			const obj = new this.$.$mol_scroll()
-			
-			obj.sub = () => [
-				this.List()
+		body() {
+			return [
+				this.Filter(),
+				this.Tree()
 			] as readonly any[]
-			
-			return obj
 		}
 		
 		/**
@@ -154,25 +152,6 @@ namespace $ {
 			obj.Item = (id: any) => this.Option(id)
 			obj.ids_tags = () => this.ids_tags()
 			obj.levels_expanded = () => this.levels_expanded()
-			
-			return obj
-		}
-		
-		/**
-		 * ```tree
-		 * List $mol_list rows /
-		 * 	<= Filter
-		 * 	<= Tree
-		 * ```
-		 */
-		@ $mol_mem
-		List() {
-			const obj = new this.$.$mol_list()
-			
-			obj.rows = () => [
-				this.Filter(),
-				this.Tree()
-			] as readonly any[]
 			
 			return obj
 		}
