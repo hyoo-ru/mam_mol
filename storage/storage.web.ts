@@ -7,10 +7,15 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		static persisted( next?: boolean ): boolean {
+		static persisted( next?: boolean, cache?: 'cache' ): boolean {
+			
 			$mol_mem_persist()
+			
+			if( cache ) return Boolean( next )
+			
 			const native = this.native()
-			if( next ) native.persist()
+			if( next ) native.persist().then( actual => this.persisted( actual, 'cache' ) )
+			
 			return next ?? $mol_wire_sync( native ).persisted()
 		}
 		

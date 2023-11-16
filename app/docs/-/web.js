@@ -4667,11 +4667,13 @@ var $;
         static native() {
             return this.$.$mol_dom_context.navigator.storage;
         }
-        static persisted(next) {
+        static persisted(next, cache) {
             $mol_mem_persist();
+            if (cache)
+                return Boolean(next);
             const native = this.native();
             if (next)
-                native.persist();
+                native.persist().then(actual => this.persisted(actual, 'cache'));
             return next ?? $mol_wire_sync(native).persisted();
         }
         static estimate() {
@@ -16580,7 +16582,7 @@ var $;
                 this.Bookmark(),
                 this.Run()
             ];
-            obj.body = () => [
+            obj.body_content = () => [
                 this.Code(),
                 this.Error_mark()
             ];
@@ -17409,7 +17411,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_menu_page] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_code_page] {\n\tflex: 1 0 auto;\n}\n\n[hyoo_js_eval_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_result] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 1 0 40rem;\n}\n\n[hyoo_js_eval_result_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_error_icon] {\n\tcolor: var(--mol_theme_focus);\n}\n");
+    $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_menu_page] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_code_page] {\n\tflex: 1 0 auto;\n}\n\n[hyoo_js_eval_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_code] {\n\tflex: 0 0 auto;\n}\n\n[hyoo_js_eval_result] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 1 0 40rem;\n}\n\n[hyoo_js_eval_error_icon] {\n\tcolor: var(--mol_theme_focus);\n}\n");
 })($ || ($ = {}));
 //hyoo/js/eval/-css/eval.view.css.ts
 ;

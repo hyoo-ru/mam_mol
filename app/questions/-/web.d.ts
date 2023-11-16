@@ -1583,7 +1583,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_storage extends $mol_object2 {
         static native(): StorageManager;
-        static persisted(next?: boolean): boolean;
+        static persisted(next?: boolean, cache?: 'cache'): boolean;
         static estimate(): StorageEstimate;
         static dir(): FileSystemDirectoryHandle;
     }

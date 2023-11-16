@@ -3060,11 +3060,13 @@ var $;
         static native() {
             return this.$.$mol_dom_context.navigator.storage;
         }
-        static persisted(next) {
+        static persisted(next, cache) {
             $mol_mem_persist();
+            if (cache)
+                return Boolean(next);
             const native = this.native();
             if (next)
-                native.persist();
+                native.persist().then(actual => this.persisted(actual, 'cache'));
             return next ?? $mol_wire_sync(native).persisted();
         }
         static estimate() {
