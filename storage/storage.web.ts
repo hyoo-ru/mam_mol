@@ -17,7 +17,7 @@ namespace $ {
 			if( next && $mol_mem_cached( ()=> this.persisted() ) ) {
 				native.persist().then( actual => {
 				
-					this.persisted( actual, 'cache' )
+					setTimeout( ()=> this.persisted( actual, 'cache' ), 5000 )
 					
 					if( actual ) this.$.$mol_log3_rise({ place: this, message: `Persist` })
 					else this.$.$mol_log3_fail({ place: this, message: `Non persist` })
