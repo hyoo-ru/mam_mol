@@ -11862,6 +11862,74 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_base64_encode(src) {
+        throw new Error('Not implemented');
+    }
+    $.$mol_base64_encode = $mol_base64_encode;
+})($ || ($ = {}));
+//mol/base64/encode/encode.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_encode_node(str) {
+        if (!str)
+            return '';
+        if (Buffer.isBuffer(str))
+            return str.toString('base64');
+        return Buffer.from(str).toString('base64');
+    }
+    $.$mol_base64_encode_node = $mol_base64_encode_node;
+    $.$mol_base64_encode = $mol_base64_encode_node;
+})($ || ($ = {}));
+//mol/base64/encode/encode.node.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_encode_safe(buffer) {
+        return $mol_base64_encode(buffer).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/, '');
+    }
+    $.$mol_base64_encode_safe = $mol_base64_encode_safe;
+})($ || ($ = {}));
+//mol/base64/encode/safe/safe.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_decode(base64) {
+        throw new Error('Not implemented');
+    }
+    $.$mol_base64_decode = $mol_base64_decode;
+})($ || ($ = {}));
+//mol/base64/decode/decode.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_decode_node(base64Str) {
+        base64Str = base64Str.replace(/-/g, '+').replace(/_/g, '/');
+        const buffer = Buffer.from(base64Str, 'base64');
+        return new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength);
+    }
+    $.$mol_base64_decode_node = $mol_base64_decode_node;
+    $.$mol_base64_decode = $mol_base64_decode_node;
+})($ || ($ = {}));
+//mol/base64/decode/decode.node.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_decode_safe(str) {
+        return $mol_base64_decode(str.replace(/-/g, '+').replace(/_/g, '/'));
+    }
+    $.$mol_base64_decode_safe = $mol_base64_decode_safe;
+})($ || ($ = {}));
+//mol/base64/decode/safe/safe.ts
+;
+"use strict";
+var $;
+(function ($) {
     const algorithm = {
         name: 'ECDSA',
         hash: 'SHA-256',
@@ -11877,12 +11945,17 @@ var $;
     $.$mol_crypto_auditor_pair = $mol_crypto_auditor_pair;
     class $mol_crypto_auditor_public extends Object {
         native;
-        static size = 86;
+        static size_str = 86;
+        static size_bin = 64;
         constructor(native) {
             super();
             this.native = native;
         }
         static async from(serial) {
+            if (typeof serial !== 'string') {
+                serial = $mol_base64_encode_safe(serial.subarray(0, 32))
+                    + $mol_base64_encode_safe(serial.subarray(32, 64));
+            }
             return new this(await $mol_crypto_native.subtle.importKey('jwk', {
                 crv: "P-256",
                 ext: true,
@@ -11896,6 +11969,13 @@ var $;
             const { x, y } = await $mol_crypto_native.subtle.exportKey('jwk', this.native);
             return x + y;
         }
+        async toArray() {
+            const { x, y, d } = await $mol_crypto_native.subtle.exportKey('jwk', this.native);
+            return new Uint8Array([
+                ...$mol_base64_decode_safe(x),
+                ...$mol_base64_decode_safe(y),
+            ]);
+        }
         async verify(data, sign) {
             return await $mol_crypto_native.subtle.verify(algorithm, this.native, sign, data);
         }
@@ -11903,12 +11983,18 @@ var $;
     $.$mol_crypto_auditor_public = $mol_crypto_auditor_public;
     class $mol_crypto_auditor_private extends Object {
         native;
-        static size = 129;
+        static size_str = 129;
+        static size_bin = 96;
         constructor(native) {
             super();
             this.native = native;
         }
         static async from(serial) {
+            if (typeof serial !== 'string') {
+                serial = $mol_base64_encode_safe(serial.subarray(0, 32))
+                    + $mol_base64_encode_safe(serial.subarray(32, 64))
+                    + $mol_base64_encode_safe(serial.subarray(64));
+            }
             return new this(await $mol_crypto_native.subtle.importKey('jwk', {
                 crv: "P-256",
                 ext: true,
@@ -11922,6 +12008,14 @@ var $;
         async serial() {
             const { x, y, d } = await $mol_crypto_native.subtle.exportKey('jwk', this.native);
             return x + y + d;
+        }
+        async toArray() {
+            const { x, y, d } = await $mol_crypto_native.subtle.exportKey('jwk', this.native);
+            return new Uint8Array([
+                ...$mol_base64_decode_safe(x),
+                ...$mol_base64_decode_safe(y),
+                ...$mol_base64_decode_safe(d),
+            ]);
         }
         async sign(data) {
             return await $mol_crypto_native.subtle.sign(algorithm, this.native, data);
@@ -46203,6 +46297,36 @@ var $;
     });
 })($ || ($ = {}));
 //mol/data/enum/enum.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const png = new Uint8Array([0x1a, 0x0a, 0x00, 0x49, 0x48, 0x78, 0xda]);
+    $mol_test({
+        'base64 encode string'() {
+            $mol_assert_equal($mol_base64_encode('Hello, ΧΨΩЫ'), 'SGVsbG8sIM6nzqjOqdCr');
+        },
+        'base64 encode binary'() {
+            $mol_assert_equal($mol_base64_encode(png), 'GgoASUh42g==');
+        },
+    });
+})($ || ($ = {}));
+//mol/base64/encode/encode.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const png = new Uint8Array([0x1a, 0x0a, 0x00, 0x49, 0x48, 0x78, 0xda]);
+    $mol_test({
+        'base64 decode string'() {
+            $mol_assert_like($mol_base64_decode('SGVsbG8sIM6nzqjOqdCr'), new TextEncoder().encode('Hello, ΧΨΩЫ'));
+        },
+        'base64 decode binary'() {
+            $mol_assert_like($mol_base64_decode('GgoASUh42g=='), png);
+        },
+    });
+})($ || ($ = {}));
+//mol/base64/decode/decode.test.ts
 ;
 "use strict";
 var $;

@@ -34,7 +34,8 @@ namespace $ {
 	export class $mol_crypto_auditor_public extends Object {
 		
 		/** Key size in bytes. */
-		static size = 86
+		static size_str = 86
+		static size_bin = 64
 		
 		constructor(
 			readonly native: CryptoKey & { type: 'public' }
@@ -42,7 +43,11 @@ namespace $ {
 			super()
 		}
 		
-		static async from( serial: string ) {
+		static async from( serial: string | Uint8Array ) {
+			if( typeof serial !== 'string' ) {
+				serial = $mol_base64_encode_safe( serial.subarray( 0, 32 ) )
+					+ $mol_base64_encode_safe( serial.subarray( 32, 64 ) )
+			}
 			return new this(
 				await $mol_crypto_native.subtle.importKey(
 					'jwk',
@@ -61,13 +66,22 @@ namespace $ {
 			)
 		}
 		
-		/** 62 bytes */
+		/** 86 bytes */
 		async serial(): Promise< string > {
 			const { x, y } = await $mol_crypto_native.subtle.exportKey(
 				'jwk',
 				this.native,
 			)
 			return x! + y!
+		}
+		
+		/** 64 bytes */
+		async toArray(): Promise< Uint8Array > {
+			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', this.native )
+			return new Uint8Array([
+				... $mol_base64_decode_safe( x! ),
+				... $mol_base64_decode_safe( y! ),
+			])
 		}
 		
 		async verify( data: BufferSource, sign: BufferSource ) {
@@ -85,7 +99,8 @@ namespace $ {
 	export class $mol_crypto_auditor_private extends Object {
 		
 		/** Key size in bytes. */
-		static size = 129
+		static size_str = 129
+		static size_bin = 96
 		
 		constructor(
 			readonly native: CryptoKey & { type: 'private' }
@@ -93,7 +108,12 @@ namespace $ {
 			super()
 		}
 	
-		static async from( serial: string ) {
+		static async from( serial: string | Uint8Array ) {
+			if( typeof serial !== 'string' ) {
+				serial = $mol_base64_encode_safe( serial.subarray( 0, 32 ) )
+					+ $mol_base64_encode_safe( serial.subarray( 32, 64 ) )
+					+ $mol_base64_encode_safe( serial.subarray( 64 ) )
+			}
 			return new this(
 				await $mol_crypto_native.subtle.importKey(
 					'jwk',
@@ -115,11 +135,18 @@ namespace $ {
 		
 		/** 129 bytes */
 		async serial(): Promise< string > {
-			const { x, y, d } = await $mol_crypto_native.subtle.exportKey(
-				'jwk',
-				this.native,
-			)
+			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', this.native )
 			return x! + y! + d!
+		}
+		
+		/** 96 bytes */
+		async toArray(): Promise< Uint8Array > {
+			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', this.native )
+			return new Uint8Array([
+				... $mol_base64_decode_safe( x! ),
+				... $mol_base64_decode_safe( y! ),
+				... $mol_base64_decode_safe( d! ),
+			])
 		}
 		
 		/** 64 bytes */
