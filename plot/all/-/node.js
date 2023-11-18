@@ -400,7 +400,6 @@ var $;
     $.$mol_dev_format_element = $mol_dev_format_element;
     function $mol_dev_format_span(style, ...content) {
         return $mol_dev_format_element('span', {
-            'vertical-align': '8%',
             ...style,
         }, ...content);
     }

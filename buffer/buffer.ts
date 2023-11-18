@@ -77,6 +77,16 @@ namespace $ {
 			$mol_fail( new Error( `Wrong uint64 value ${ next }` ) )
 		}
 		
+		float32( offset: number, next?: number ) {
+			if( next !== undefined ) this.setFloat32( offset, next, !!'LE' )
+			return this.getFloat32( offset, !!'LE' )
+		}
+		
+		float64( offset: number, next?: number ) {
+			if( next !== undefined ) this.setFloat64( offset, next, !!'LE' )
+			return this.getFloat64( offset, !!'LE' )
+		}
+		
 		asArray() {
 			return new Uint8Array( this.buffer, this.byteOffset, this.byteLength )
 		}
