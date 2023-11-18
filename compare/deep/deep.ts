@@ -76,6 +76,11 @@ namespace $ {
 	
 	function compare_buffer( left: ArrayBufferView, right: ArrayBufferView ): boolean {
 		
+		if( left instanceof DataView ) return compare_buffer(
+			new Uint8Array( left.buffer, left.byteOffset, left.byteLength ),
+			new Uint8Array( right.buffer, left.byteOffset, left.byteLength ),
+		)
+		
 		const len = left.byteLength
 		if( len !== right.byteLength ) return false
 		
