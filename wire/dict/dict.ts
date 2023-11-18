@@ -54,7 +54,7 @@ namespace $ {
 		set( key: Key, value: Value ) {
 			if( super.get( key ) === value ) return this
 			super.set( key, value )
-			this.pub.emit()
+			this.pub?.emit() // undefined in constructor
 			return this
 		}
 
