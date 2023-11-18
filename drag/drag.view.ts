@@ -14,7 +14,7 @@ namespace $.$$ {
 
 			const transfer = this.transfer()
 			for( let type in transfer ) {
-				event.dataTransfer!.setData( type , transfer[ type ] )
+				event.dataTransfer!.setData( type , transfer[ type as keyof typeof transfer] )
 			}
 
 			event.dataTransfer!.setDragImage( this.image() , 0 , -32 )

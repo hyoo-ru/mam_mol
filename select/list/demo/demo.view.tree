@@ -5,7 +5,7 @@ $mol_select_list_demo $mol_example_small
 			rows /
 				<= Friends $mol_select_list
 					value? <=> friends? /
-					dictionary <= suggestions *
+					dictionary <= suggestions *string
 						jocker \Jocker
 						harley \Harley Quinn
 						penguin \Penguin

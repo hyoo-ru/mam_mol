@@ -10,11 +10,11 @@ $mol_plot_graph $mol_svg_group
 		^
 		color <= color \
 	-
-	viewport $mol_vector_2d /
-		<= viewport_x $mol_vector_range /
+	viewport $mol_vector_2d<$mol_vector_range<number>> /
+		<= viewport_x $mol_vector_range<number> /
 			Infinity
 			-Infinity
-		<= viewport_y $mol_vector_range /
+		<= viewport_y $mol_vector_range<number> /
 			Infinity
 			-Infinity
 	shift /number
@@ -23,31 +23,31 @@ $mol_plot_graph $mol_svg_group
 	scale /number
 		1
 		1
-	cursor_position $mol_vector_2d /
+	cursor_position $mol_vector_2d<number> /
 		NaN
 		NaN
-	dimensions_pane $mol_vector_2d /
-		<= dimensions_pane_x $mol_vector_range /
+	dimensions_pane $mol_vector_2d<$mol_vector_range<number>> /
+		<= dimensions_pane_x $mol_vector_range<number> /
 			Infinity
 			-Infinity
-		<= dimensions_pane_y $mol_vector_range /
+		<= dimensions_pane_y $mol_vector_range<number> /
 			Infinity
 			-Infinity
-	dimensions $mol_vector_2d /
-		<= dimensions_x $mol_vector_range /
+	dimensions $mol_vector_2d<$mol_vector_range<number>> /
+		<= dimensions_x $mol_vector_range<number> /
 			Infinity
 			-Infinity
-		<= dimensions_y $mol_vector_range /
+		<= dimensions_y $mol_vector_range<number> /
 			Infinity
 			-Infinity
-	size_real $mol_vector_2d /
+	size_real $mol_vector_2d<number> /
 		0
 		0
-	gap $mol_vector_2d /
-		<= gap_x $mol_vector_range /
+	gap $mol_vector_2d<$mol_vector_range<number>> /
+		<= gap_x $mol_vector_range<number> /
 			0
 			0
-		<= gap_y $mol_vector_range /
+		<= gap_y $mol_vector_range<number> /
 			0
 			0
 	repos_x* 0

@@ -17,7 +17,7 @@ namespace $ {
 			const _foo = $mol_view_tree2_to_js_test_ex_array_number_foo
 			const foo = _foo.make({ $ })
 
-			type a1 = $mol_type_assert<ReturnType<typeof foo['bar']>, readonly number[]>
+			type a1 = $mol_type_assert<ReturnType<typeof foo['bar']>, any /* readonly number[] */ >
 
 			$mol_assert_like(
 				foo.bar(),
@@ -88,6 +88,13 @@ namespace $ {
 			$mol_assert_like(foo.slot(1), [ 't2' ])
 		},
 
+		'Array union' ($) {
+			const _foo = $mol_view_tree2_to_js_test_ex_array_union_foo
+			const foo = _foo.make({ $ })
+			type assert_tag = $mol_type_assert<ReturnType<typeof foo['bar']>[number], $mol_view_tree2_to_js_test_ex_klass_tuple_type>
+			$mol_assert_like(foo.bar(), [ 'a', 'c', 'b' ])
+		},
+
 		'Array constructor tuple'($) {
 			const _foo = $mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo
 			const foo = _foo.make({ $ })
@@ -99,7 +106,8 @@ namespace $ {
 
 			type a1 = $mol_type_assert<
 				ReturnType<typeof foo['blobs']>,
-				readonly $mol_view_tree2_to_js_test_ex_klass_tuple[]
+				readonly any[]
+				// readonly $mol_view_tree2_to_js_test_ex_klass_tuple[]
 			>
 
 			$mol_assert_like(

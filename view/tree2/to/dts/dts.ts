@@ -190,44 +190,44 @@ namespace $ {
 							}
 
 							if( input.type[0] === '/' ) {
-								const dups = new Set<string>()
+								const array_type = [
+									input.type.length > 1
+										? input.data(input.type.slice(1))
+										: input.data('any')
+									]
 
-								const infered = input.kids.map( (kid, index) => {
-									const result = kid.hack_self(belt, context) as $mol_tree2[]
+								if (array_type[0].value === 'any') {
+									return readonly_arr.call(this, input, array_type)
+								}
+
+								for (const kid of input.kids) {
+									let result = kid.hack_self(belt, context) as $mol_tree2[]
+
 									const val = result[0].value
 
-									if (val === 'number' || val === 'string' || val === 'boolean') {
-										if (dups.has(val)) return []
-										dups.add(val)
-									}
+									if (val === 'string') {
+										result = kid.value.includes('`')
+											? [ kid.data(JSON.stringify(kid.value))]
+											: [ kid.data('`'), kid , kid.data('`') ]
+									} else if (val === 'boolean') result = [ kid.data(kid.type) ]
+									else if (kid.type[0] === '^') {
+										 result.push((kid.kids[0] ?? prop).data('[number]'))
+									} else continue
 
-									if (index !== 0) result.unshift(kid.data('| '))
-									if (kid.type[0] === '^') result.push((kid.kids[0] ?? prop).data('[number]'))
-
-									return kid.struct('line', result)
-								} )
-
-								const array_type = input.type.length > 1 ? input.data(input.type.slice(1)) : undefined
-
-								if (infered.length && array_type) {
 									types.push(
 										type_enforce.call(
 											this,
 											input.data(`${ klass.type }_${prop.type.replace(/[\?\*]*/g, '')}`),
-											readonly_arr.call(this, input, infered),
-											readonly_arr.call(this, input, [ array_type ]),
+											result,
+											array_type
 										)
 									)
 								}
 
-								const result = array_type || ! infered.length
-									? [ array_type ?? input.data('any') ]
-									: infered
-		
-								return readonly_arr.call(this, input, result)
+								return readonly_arr.call(this, input, array_type)
 							}
 
-							if( input.type !== 'NaN' && /^[$A-Z]/.test( input.type ) ) {
+							if( input.type !== 'NaN' && input.type !== 'Infinity' && /^[$A-Z]/.test( input.type ) ) {
 								const first = input.kids[0]
 								if( first?.type[0] === '/' ) {
 
@@ -241,7 +241,7 @@ namespace $ {
 									types.push(
 										type_enforce.call(
 											this,
-											first.data(`${ input.type }`),
+											first.data(`${ input.type.replace(/<.*>$/, '') }`),
 											[
 												first.data('[ '),
 												...args,

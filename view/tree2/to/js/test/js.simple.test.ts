@@ -128,9 +128,11 @@ namespace $ {
 			const foo = _foo.make({ $ })
 			type assert_a = $mol_type_assert<ReturnType<typeof foo['a']>, number>
 			type assert_d = $mol_type_assert<ReturnType<typeof foo['d']>, number>
+			type assert_f = $mol_type_assert<ReturnType<typeof foo['f']>, number>
 			$mol_assert_equal(foo.a(), foo.b(), foo.c(), NaN)
 			$mol_assert_equal(foo.d(), Infinity)
 			$mol_assert_equal(foo.e(), -Infinity)
+			$mol_assert_equal(foo.f(), Infinity)
 		},
 
 		'simple typed null'($) {

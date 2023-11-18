@@ -6,17 +6,17 @@ $mol_touch $mol_plugin
 	allow_pan true
 	allow_zoom true
 	action_type? \
-	action_point? $mol_vector_2d /
+	action_point? $mol_vector_2d<number> /
 		NaN
 		NaN
 	-
 	start_pan? /
 		0
 		0
-	pan? $mol_vector_2d /
+	pan? $mol_vector_2d<number> /
 		0
 		0
-	pointer_center $mol_vector_2d /
+	pointer_center $mol_vector_2d<number> /
 		NaN
 		NaN
 	-

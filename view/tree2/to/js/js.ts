@@ -223,7 +223,7 @@ namespace $ {
 									input.data( '$' ),
 								]),
 								input.struct('[]', [
-									input.data( input.type ),
+									input.data( input.type.replace(/<.+>$/, '') ),
 								]),
 								input.struct( '(,)', input.select( '/', null ).hack( belt ) ),
 							] ),

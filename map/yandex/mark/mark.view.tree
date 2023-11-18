@@ -1,12 +1,12 @@
 $mol_map_yandex_mark $mol_object
-	pos $mol_vector_2d /
+	pos $mol_vector_2d<number> /
 		0
 		0
-	box $mol_vector_2d /
-		<= box_lat $mol_vector_range /
+	box $mol_vector_2d<$mol_vector_range<number>> /
+		<= box_lat $mol_vector_range<number> /
 			0
 			0
-		<= box_lon $mol_vector_range /
+		<= box_lon $mol_vector_range<number> /
 			0
 			0
 	hint \
