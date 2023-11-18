@@ -191,21 +191,21 @@ namespace $ {
 
 							if( input.type[0] === '/' ) {
 								const dups = new Set<string>()
-								const infered = ( [] as readonly $mol_tree2[] ).concat(
-									... input.kids.map( (kid, index) => {
-										const result = kid.hack_self(belt, context) as $mol_tree2[]
-										const val = result[0].value
-										if (val === 'number' || val === 'string' || val === 'boolean') {
-											if (dups.has(val)) return []
-											dups.add(val)
-										}
 
-										if (index !== 0) result.unshift(kid.data('| '))
-										if (kid.type[0] === '^') result.push((kid.kids[0] ?? prop).data('[number]'))
+								const infered = input.kids.map( (kid, index) => {
+									const result = kid.hack_self(belt, context) as $mol_tree2[]
+									const val = result[0].value
 
-										return kid.struct('line', result)
-									} )
-								)
+									if (val === 'number' || val === 'string' || val === 'boolean') {
+										if (dups.has(val)) return []
+										dups.add(val)
+									}
+
+									if (index !== 0) result.unshift(kid.data('| '))
+									if (kid.type[0] === '^') result.push((kid.kids[0] ?? prop).data('[number]'))
+
+									return kid.struct('line', result)
+								} )
 
 								const array_type = input.type.length > 1 ? input.data(input.type.slice(1)) : undefined
 
@@ -230,14 +230,21 @@ namespace $ {
 							if( input.type !== 'NaN' && /^[$A-Z]/.test( input.type ) ) {
 								const first = input.kids[0]
 								if( first?.type[0] === '/' ) {
-									
+
+									const args = first.kids.map( (kid, index) => {
+										const result = kid.hack_self(belt, context) as $mol_tree2[]
+										if (index !== 0) result.unshift(kid.data(', '))
+
+										return kid.struct('line', result)
+									} )
+										
 									types.push(
 										type_enforce.call(
 											this,
 											first.data(`${ input.type }`),
 											[
 												first.data('[ '),
-												... first.hack( belt ),
+												...args,
 												first.data( ' ]' ),
 											],
 											[
