@@ -8,7 +8,7 @@ namespace $ {
 	
 	export class $mol_crypto_key extends $mol_buffer {
 		
-		static from< This extends typeof $mol_crypto_key >( this: This, serial: string | Uint8Array ) {
+		static from< This extends typeof $mol_crypto_key >( this: This, serial: string | ArrayBufferView ) {
 			
 			if( typeof serial === 'string' ) {
 				serial = new Uint8Array([
@@ -85,7 +85,7 @@ namespace $ {
 			)
 			
 			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', pair.privateKey )
-			return $mol_crypto_key_private.from( x + y! + d! )
+			return this.from( x + y! + d! )
 			
 		}
 		
