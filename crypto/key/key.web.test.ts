@@ -1,7 +1,7 @@
 namespace $ {
 	$mol_test({
 		
-		async 'str sizes'() {
+		async 'str & bin sizes'() {
 			
 			const key_private = await $$.$mol_crypto_key_private.generate()
 			const key_public = key_private.public()
