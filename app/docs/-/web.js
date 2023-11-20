@@ -11772,7 +11772,7 @@ var $;
 var $;
 (function ($) {
     function $mol_base64_encode_safe(buffer) {
-        return $mol_base64_encode(buffer).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/, '');
+        return $mol_base64_encode(buffer).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
     }
     $.$mol_base64_encode_safe = $mol_base64_encode_safe;
 })($ || ($ = {}));
@@ -21098,8 +21098,8 @@ var $;
             'sss': (moment) => {
                 if (moment.second == null)
                     return '';
-                const millisecond = Math.floor((moment.second - Math.floor(moment.second)) * 1000);
-                return String(1000 + millisecond).slice(1);
+                const millisecond = (moment.second - Math.trunc(moment.second)).toFixed(3);
+                return millisecond.slice(2);
             },
             'Z': (moment) => {
                 const offset = moment.offset;
