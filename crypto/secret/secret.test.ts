@@ -47,11 +47,11 @@ namespace $ {
 		
 		async 'derivation from public & private keys'() {
 			
-			const A = await $$.$mol_crypto_auditor_pair()
-			const B = await $$.$mol_crypto_auditor_pair()
+			const A = await $mol_crypto_key_private.generate()
+			const B = await $mol_crypto_key_private.generate()
 			
-			const AK = await $mol_crypto_secret.derive( await A.private.serial(), await B.public.serial() )
-			const BK = await $mol_crypto_secret.derive( await B.private.serial(), await A.public.serial() )
+			const AK = await $mol_crypto_secret.derive( A.toString(), B.public().toString() )
+			const BK = await $mol_crypto_secret.derive( B.toString(), A.public().toString() )
 			
 			$mol_assert_like(
 				new Uint8Array( await AK.serial() ),
