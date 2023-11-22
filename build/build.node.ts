@@ -595,7 +595,16 @@ namespace $ {
 					if( mod.type() !== 'dir' ) return false
 					
 					const git_dir = mod.resolve( '.git' )
-					if( git_dir.exists() ) return false
+					// if( git_dir.exists() ) return false
+
+					if( git_dir.exists() ) {
+						this.$.$mol_exec( mod.path() , 'git' , 'pull' )
+						mod.reset()
+						for ( const sub of mod.sub() ) {
+							sub.reset()
+						}
+						return false
+					}
 
 					for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
 						
