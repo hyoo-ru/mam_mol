@@ -45,8 +45,8 @@ namespace $ {
 		
 		static async from( serial: string | Uint8Array ) {
 			if( typeof serial !== 'string' ) {
-				serial = $mol_base64_encode_safe( serial.subarray( 0, 32 ) )
-					+ $mol_base64_encode_safe( serial.subarray( 32, 64 ) )
+				serial = $mol_base64_url_encode( serial.subarray( 0, 32 ) )
+					+ $mol_base64_url_encode( serial.subarray( 32, 64 ) )
 			}
 			return new this(
 				await $mol_crypto_native.subtle.importKey(
@@ -79,8 +79,8 @@ namespace $ {
 		async toArray(): Promise< Uint8Array > {
 			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', this.native )
 			return new Uint8Array([
-				... $mol_base64_safe_decode( x! ),
-				... $mol_base64_safe_decode( y! ),
+				... $mol_base64_url_decode( x! ),
+				... $mol_base64_url_decode( y! ),
 			])
 		}
 		
@@ -110,9 +110,9 @@ namespace $ {
 	
 		static async from( serial: string | Uint8Array ) {
 			if( typeof serial !== 'string' ) {
-				serial = $mol_base64_encode_safe( serial.subarray( 0, 32 ) )
-					+ $mol_base64_encode_safe( serial.subarray( 32, 64 ) )
-					+ $mol_base64_encode_safe( serial.subarray( 64 ) )
+				serial = $mol_base64_url_encode( serial.subarray( 0, 32 ) )
+					+ $mol_base64_url_encode( serial.subarray( 32, 64 ) )
+					+ $mol_base64_url_encode( serial.subarray( 64 ) )
 			}
 			return new this(
 				await $mol_crypto_native.subtle.importKey(
@@ -143,9 +143,9 @@ namespace $ {
 		async toArray(): Promise< Uint8Array > {
 			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', this.native )
 			return new Uint8Array([
-				... $mol_base64_safe_decode( x! ),
-				... $mol_base64_safe_decode( y! ),
-				... $mol_base64_safe_decode( d! ),
+				... $mol_base64_url_decode( x! ),
+				... $mol_base64_url_decode( y! ),
+				... $mol_base64_url_decode( d! ),
 			])
 		}
 		

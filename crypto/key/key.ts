@@ -12,9 +12,9 @@ namespace $ {
 			
 			if( typeof serial === 'string' ) {
 				serial = new Uint8Array([
-					... $mol_base64_safe_decode( serial.slice( 0, 43 ) ),
-					... $mol_base64_safe_decode( serial.slice( 43, 86 ) ),
-					... $mol_base64_safe_decode( serial.slice( 86, 129 ) ),
+					... $mol_base64_url_decode( serial.slice( 0, 43 ) ),
+					... $mol_base64_url_decode( serial.slice( 43, 86 ) ),
+					... $mol_base64_url_decode( serial.slice( 86, 129 ) ),
 				])
 			}
 			
@@ -28,9 +28,9 @@ namespace $ {
 		@ $mol_memo.method
 		toString() {
 			const arr = this.asArray()
-			return $mol_base64_encode_safe( arr.subarray( 0, 32 ) )
-				+ $mol_base64_encode_safe( arr.subarray( 32, 64 ) )
-				+ $mol_base64_encode_safe( arr.subarray( 64 ) )
+			return $mol_base64_url_encode( arr.subarray( 0, 32 ) )
+				+ $mol_base64_url_encode( arr.subarray( 32, 64 ) )
+				+ $mol_base64_url_encode( arr.subarray( 64 ) )
 		}
 		
 	}
