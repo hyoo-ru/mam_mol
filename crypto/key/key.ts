@@ -12,9 +12,9 @@ namespace $ {
 			
 			if( typeof serial === 'string' ) {
 				serial = new Uint8Array([
-					... $mol_base64_decode_safe( serial.slice( 0, 43 ) ),
-					... $mol_base64_decode_safe( serial.slice( 43, 86 ) ),
-					... $mol_base64_decode_safe( serial.slice( 86, 129 ) ),
+					... $mol_base64_safe_decode( serial.slice( 0, 43 ) ),
+					... $mol_base64_safe_decode( serial.slice( 43, 86 ) ),
+					... $mol_base64_safe_decode( serial.slice( 86, 129 ) ),
 				])
 			}
 			

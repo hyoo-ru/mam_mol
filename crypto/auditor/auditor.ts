@@ -79,8 +79,8 @@ namespace $ {
 		async toArray(): Promise< Uint8Array > {
 			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', this.native )
 			return new Uint8Array([
-				... $mol_base64_decode_safe( x! ),
-				... $mol_base64_decode_safe( y! ),
+				... $mol_base64_safe_decode( x! ),
+				... $mol_base64_safe_decode( y! ),
 			])
 		}
 		
@@ -143,9 +143,9 @@ namespace $ {
 		async toArray(): Promise< Uint8Array > {
 			const { x, y, d } = await $mol_crypto_native.subtle.exportKey( 'jwk', this.native )
 			return new Uint8Array([
-				... $mol_base64_decode_safe( x! ),
-				... $mol_base64_decode_safe( y! ),
-				... $mol_base64_decode_safe( d! ),
+				... $mol_base64_safe_decode( x! ),
+				... $mol_base64_safe_decode( y! ),
+				... $mol_base64_safe_decode( d! ),
 			])
 		}
 		
