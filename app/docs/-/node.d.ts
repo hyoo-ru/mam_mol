@@ -1456,7 +1456,7 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_hotkey extends $.$mol_hotkey {
         key(): {
-            [x: number]: ((event: KeyboardEvent) => void) | undefined;
+            readonly [x: number]: ((event: KeyboardEvent) => void) | undefined;
             readonly backspace?: ((event: KeyboardEvent) => void) | undefined;
             readonly tab?: ((event: KeyboardEvent) => void) | undefined;
             readonly enter?: ((event: KeyboardEvent) => void) | undefined;
@@ -2441,7 +2441,7 @@ declare namespace $ {
     class $mol_app_demo_detail extends $mol_page {
         description(): string;
         tools(): readonly any[];
-        body(): readonly any[];
+        body_content(): readonly any[];
         readme(next?: any): boolean;
         readme_icon(): $mol_icon_information_outline;
         Readme(): $mol_check_icon;
@@ -3383,10 +3383,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_base64_encode_safe(buffer: Uint8Array): string;
-}
-
-declare namespace $ {
     function $mol_base64_decode(base64: string): Uint8Array;
 }
 
@@ -3395,7 +3391,8 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_base64_decode_safe(str: string): Uint8Array;
+    function $mol_base64_url_encode(buffer: Uint8Array): string;
+    function $mol_base64_url_decode(str: string): Uint8Array;
 }
 
 declare namespace $ {
@@ -3546,8 +3543,8 @@ declare namespace $ {
 declare namespace $ {
     class $hyoo_crowd_fund<Node extends typeof $hyoo_crowd_node> extends $mol_object {
         world: $hyoo_crowd_world;
-        Node: Node;
-        constructor(world: $hyoo_crowd_world, Node: Node);
+        node_class: Node;
+        constructor(world: $hyoo_crowd_world, node_class: Node);
         Item(id: $mol_int62_string | `${$mol_int62_string}!${$mol_int62_string}`): InstanceType<Node>;
         make(law?: readonly ("" | `${string}_${string}`)[], mod?: readonly ("" | `${string}_${string}`)[], add?: readonly ("" | `${string}_${string}`)[]): InstanceType<Node>;
     }

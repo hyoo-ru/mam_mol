@@ -30,10 +30,10 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * body / <= Demo
+		 * body_content / <= Demo
 		 * ```
 		 */
-		body() {
+		body_content() {
 			return [
 				this.Demo()
 			] as readonly any[]

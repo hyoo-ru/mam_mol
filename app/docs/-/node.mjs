@@ -366,7 +366,12 @@ var $;
             if (!val)
                 return null;
             if ($.$mol_dev_format_head in val) {
-                return val[$.$mol_dev_format_head]();
+                try {
+                    return val[$.$mol_dev_format_head]();
+                }
+                catch (error) {
+                    return $.$mol_dev_format_accent($mol_dev_format_native(val), '💨', $mol_dev_format_native(error), '');
+                }
             }
             if (typeof val === 'function') {
                 return $mol_dev_format_native(val);
@@ -8539,7 +8544,7 @@ var $;
                 this.Close()
             ];
         }
-        body() {
+        body_content() {
             return [
                 this.Demo()
             ];
@@ -11897,16 +11902,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_base64_encode_safe(buffer) {
-        return $mol_base64_encode(buffer).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
-    }
-    $.$mol_base64_encode_safe = $mol_base64_encode_safe;
-})($ || ($ = {}));
-//mol/base64/encode/safe/safe.ts
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_base64_decode(base64) {
         throw new Error('Not implemented');
     }
@@ -11930,12 +11925,16 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_base64_decode_safe(str) {
+    function $mol_base64_url_encode(buffer) {
+        return $mol_base64_encode(buffer).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+    }
+    $.$mol_base64_url_encode = $mol_base64_url_encode;
+    function $mol_base64_url_decode(str) {
         return $mol_base64_decode(str.replace(/-/g, '+').replace(/_/g, '/'));
     }
-    $.$mol_base64_decode_safe = $mol_base64_decode_safe;
+    $.$mol_base64_url_decode = $mol_base64_url_decode;
 })($ || ($ = {}));
-//mol/base64/decode/safe/safe.ts
+//mol/base64/url/url.ts
 ;
 "use strict";
 var $;
@@ -11963,8 +11962,8 @@ var $;
         }
         static async from(serial) {
             if (typeof serial !== 'string') {
-                serial = $mol_base64_encode_safe(serial.subarray(0, 32))
-                    + $mol_base64_encode_safe(serial.subarray(32, 64));
+                serial = $mol_base64_url_encode(serial.subarray(0, 32))
+                    + $mol_base64_url_encode(serial.subarray(32, 64));
             }
             return new this(await $mol_crypto_native.subtle.importKey('jwk', {
                 crv: "P-256",
@@ -11982,8 +11981,8 @@ var $;
         async toArray() {
             const { x, y, d } = await $mol_crypto_native.subtle.exportKey('jwk', this.native);
             return new Uint8Array([
-                ...$mol_base64_decode_safe(x),
-                ...$mol_base64_decode_safe(y),
+                ...$mol_base64_url_decode(x),
+                ...$mol_base64_url_decode(y),
             ]);
         }
         async verify(data, sign) {
@@ -12001,9 +12000,9 @@ var $;
         }
         static async from(serial) {
             if (typeof serial !== 'string') {
-                serial = $mol_base64_encode_safe(serial.subarray(0, 32))
-                    + $mol_base64_encode_safe(serial.subarray(32, 64))
-                    + $mol_base64_encode_safe(serial.subarray(64));
+                serial = $mol_base64_url_encode(serial.subarray(0, 32))
+                    + $mol_base64_url_encode(serial.subarray(32, 64))
+                    + $mol_base64_url_encode(serial.subarray(64));
             }
             return new this(await $mol_crypto_native.subtle.importKey('jwk', {
                 crv: "P-256",
@@ -12022,9 +12021,9 @@ var $;
         async toArray() {
             const { x, y, d } = await $mol_crypto_native.subtle.exportKey('jwk', this.native);
             return new Uint8Array([
-                ...$mol_base64_decode_safe(x),
-                ...$mol_base64_decode_safe(y),
-                ...$mol_base64_decode_safe(d),
+                ...$mol_base64_url_decode(x),
+                ...$mol_base64_url_decode(y),
+                ...$mol_base64_url_decode(d),
             ]);
         }
         async sign(data) {
@@ -12548,17 +12547,17 @@ var $;
 (function ($) {
     class $hyoo_crowd_fund extends $mol_object {
         world;
-        Node;
-        constructor(world, Node) {
+        node_class;
+        constructor(world, node_class) {
             super();
             this.world = world;
-            this.Node = Node;
+            this.node_class = node_class;
         }
         Item(id) {
             const [land, head] = id.split('!');
             if (!head)
                 return this.Item(`${land}!0_0`);
-            return this.world.land_sync(land).node(head, this.Node);
+            return this.world.land_sync(land).node(head, this.node_class);
         }
         make(law = [''], mod = [], add = []) {
             const land = $mol_wire_sync(this.world).grab(law, mod, add);
