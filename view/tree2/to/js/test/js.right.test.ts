@@ -50,6 +50,16 @@ namespace $ {
 				bar.Cls(1).a() === bar.b(2),
 				false,
 			)
+		},
+
+		'Right hierarchy'( $ ) {
+			const _foo = $mol_view_tree2_to_js_test_ex_right_hierarchy_foo
+			const foo = _foo.make({ $: _foo.$ })
+
+			$mol_assert_like(
+				foo.prj_user_id(1),
+				1
+			)
 		}
 
 	})

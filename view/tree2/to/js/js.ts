@@ -18,19 +18,26 @@ namespace $ {
 	}
 	
 	function args_of( this: $, prop: $mol_tree2, bidi = true ) {
-		return params_of.call(this, prop, bidi)	
+		return params_of.call(this, prop, bidi)
 	}
 
 	function call_of(this: $, bind: $mol_tree2, bidi = true) {
-		const child = this.$mol_view_tree2_child( bind )
+		if( bind.kids.length === 0 ) {
+			return this.$mol_fail(
+				err`Required one child at ${bind.span}`
+			)
+		}
 
-		return bind.struct( '()', [
-			child.struct( 'this' ),
-			child.struct( '[]', [
-				child.data( name_of.call( this, child ) ),
-			] ),
-			args_of.call(this, child, bidi ),
-		] )
+		const chain = [ bind.struct( 'this' ) ]
+
+		for (const child of bind.kids) {
+			chain.push(
+				bind.struct( '[]', [ child.data( name_of.call( this, child ) ) ] ),
+				params_of.call(this, child, bidi),
+			)
+		}
+
+		return bind.struct( '()', chain )
 	}
 
 	type Context = { chain?: string[] }
@@ -105,6 +112,8 @@ namespace $ {
 					]),
 				] ),
 			],
+
+			'=': bind => [ call_of.call(this, bind, false) ],
 			
 			'': ( input, belt, context )=> {
 
@@ -138,7 +147,7 @@ namespace $ {
 					input
 				]
 
-				if( /^[$A-Z]/.test( input.type ) ) {
+				if( $mol_view_tree2_class_match( input ) ) {
 					if( !next ) addons.push( decorate() )
 					
 					const overrides = [] as $mol_tree2[]
@@ -146,72 +155,32 @@ namespace $ {
 					for( const over of input.kids ) {
 						
 						if( over.type?.[0] === '/' ) continue
-						
-						const oname = name_of.call(this, over )
 						const bind = over.kids[0]
-						if( bind.type === '@' ) {
-							overrides.push(
-								over.struct( '=', [
-									over.struct( '()', [
-										over.struct( 'obj' ),
-										over.struct( '[]', [
-											over.data( oname ),
-										] ),
-									] ),
-									over.struct( '=>', [
-										params_of.call(this, over ),
-										... localized_string.hack({
-											'#key': key => [ bind.data( `${ klass.type }_${ name }_${ oname }` ) ],
-										}),
-									] ),
-								] ),
-							)
-							
-						} else if( bind.type === '=>' ) {
-							
-							const pr = bind.kids[0]
-							
-							members.push(
-								pr.struct( '.', [
-									pr.data( name_of.call(this, pr ) ),
-									params_of.call(this, pr ),
-									bind.struct( '{;}', [
-										over.struct( 'return', [
-											over.struct( '()', [
-												over.struct( 'this' ),
-												over.struct( '[]', [
-													over.data( name ),
-												] ),
-												args_of.call(this, prop ),
-												over.struct( '[]', [
-													over.data( oname ),
-												] ),
-												args_of.call(this, over ),
-											] ),
-										] )
+						if( bind.type === '=>' ) continue
+
+						const over_name = name_of.call(this, over )
+
+						const body = bind.type === '@' ? [
+							params_of.call(this, over ),
+							... localized_string.hack({
+								'#key': key => [ bind.data( `${ klass.type }_${ name }_${ over_name }` ) ],
+							}),
+						] : [
+							args_of.call(this, over ),
+							over.struct( '()', over.hack( belt )),
+						]
+
+						overrides.push(
+							over.struct( '=', [
+								over.struct( '()', [
+									over.struct( 'obj' ),
+									over.struct( '[]', [
+										over.data( over_name ),
 									] ),
 								] ),
-							)
-							
-						} else {
-							
-							overrides.push(
-								over.struct( '=', [
-									over.struct( '()', [
-										over.struct( 'obj' ),
-										over.struct( '[]', [
-											over.data( oname ),
-										] ),
-									] ),
-									over.struct( '=>', [
-										args_of.call(this, over ),
-										over.struct( '()', over.hack( belt )),
-									] ),
-								] ),
-							)
-							
-						}
-						
+								over.struct( '=>', body ),
+							] ),
+						)
 					}
 						
 					return [
@@ -223,7 +192,7 @@ namespace $ {
 									input.data( '$' ),
 								]),
 								input.struct('[]', [
-									input.data( input.type.replace(/<.+>$/, '') ),
+									input.data( input.type.replace(/<.+>/g, '') ),
 								]),
 								input.struct( '(,)', input.select( '/', null ).hack( belt ) ),
 							] ),

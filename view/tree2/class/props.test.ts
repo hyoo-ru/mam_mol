@@ -1,31 +1,68 @@
 namespace $.$$ {
+	const d = '$'
 	const src = `
-		$${''}my_test $${''}my_super
+		${d}my_test ${d}my_super
 			title @ \\title
 			sub /
-				<= Title $${''}mol_view
+				<= Title ${d}mol_view
 					sub /
 						<= title
-				<= Close $${''}mol_button
+				<= Close ${d}mol_button
 					title \close
 					click?event <=> close?event null
+			Some ${d}mol_speech
+				Text => f
+					g => h
 			plugins /
-				<= Speech $${''}mol_speech
-					text => speech
+				<= Speech ${d}mol_speech
+					Text => a
+						b => c
+							d => e
 	`
-	
+	/*
+	class A {
+		a() {
+			return this.Speech().text()
+		}
+		c() {
+			return this.a().b()
+		}
+	}
+	*/
+
 	const dest = $$.$mol_tree2_from_string(`
 		title @ \\title
 		sub /
 			<= Title
 			<= Close
+		Some ${d}mol_speech
+			Text => f
+				g => h
 		plugins / <= Speech
-		Title $${''}mol_view sub / <= title
+		Title ${d}mol_view sub / <= title
 		close?event null
-		Close $${''}mol_button
+		Close ${d}mol_button
 			title \close
 			click?event <=> close?event
-		Speech $${''}mol_speech text => speech
+		f =
+			Some ${d}mol_speech Text => f g => h
+			Text
+		h =
+			f
+			g
+		a =
+			Speech ${d}mol_speech Text => a b => c d => e
+			Text
+		c =
+			a
+			b
+		e =
+			c
+			d
+		Speech ${d}mol_speech
+			Text => a
+				b => c
+					d => e
 	`, 'reference')
 
 	$mol_test({

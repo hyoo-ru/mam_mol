@@ -272,7 +272,6 @@ namespace $ {
 			belt: $mol_tree2_belt< Context >,
 			context = {} as Context,
 		) {
-			const last = this.kids.length - 1
 			return ( [] as readonly $mol_tree2[] ).concat(
 				... this.kids.map( child => child.hack_self(belt, context) )
 			)

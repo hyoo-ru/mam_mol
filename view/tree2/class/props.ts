@@ -1,5 +1,6 @@
 namespace $ {
 	const err = $mol_view_tree2_error_str
+	type Context = { factory?: $mol_tree2 }
 
 	export function $mol_view_tree2_class_props(
 		this: $,
@@ -28,38 +29,49 @@ namespace $ {
 			props_inner[prop.type] = prop
 		}
 
+		const upper = (operator: $mol_tree2, belt: $mol_tree2_belt<Context>, context: Context) => {
+			const prop = this.$mol_view_tree2_child( operator )
+			const defs = prop.hack( belt, { factory: prop } )
+			if( defs.length ) add_inner( prop.clone( defs ) )
+
+			return [ operator.clone([ prop.clone([]) ]) ]
+		}
+
 		const props_root = props.hack({
+			'<=': upper,
 
-			'<=': ( operator, belt )=> {
-				
-				const prop = this.$mol_view_tree2_child( operator )
-				
-				const defs = prop.hack( belt )
-				if( defs.length ) add_inner( prop.clone( defs ) )
-				
-				return [ operator.clone([ prop.clone([]) ]) ]
-			},
-			
-			'<=>': ( operator, belt )=> {
-				
-				const prop = this.$mol_view_tree2_child( operator )
-				
-				const defs = prop.hack( belt )
-				if( defs.length ) add_inner( prop.clone( defs ) )
-				
-				return [ operator.clone([ prop.clone([]) ]) ]
-			},
+			'<=>': upper,
 
-			'^': ( operator, belt) => {
+			'^': ( operator, belt, context) => {
 				if (operator.kids.length === 0) return [ operator ]
-				const prop = this.$mol_view_tree2_child( operator )
-				const defs = prop.hack( belt )
-				if( defs.length ) add_inner( prop.clone( defs ) )
-				
-				return [ operator.clone([ prop.clone([]) ]) ]
+				return upper(operator, belt, context)
+			},
+
+			'': (left, belt, context) => {
+				let right
+				const operator = left.kids[0]
+
+				if (operator?.type === '=>') {
+					right = operator.kids[0]
+					if (! right) this.$mol_fail(err`Need a child ${operator.span}`)
+					if (! context.factory) this.$mol_fail(err`Need a parent ${left.span}`)
+
+					add_inner(right.clone([
+						right.struct('=', [
+							context.factory,
+							left.clone([])
+						]),
+					]))
+				}
+
+				if (right) context = { factory: right.clone([]) }
+				else if( operator && ! context.factory && $mol_view_tree2_class_match( operator ) ) context = { factory: left }
+
+				return [ left.clone( left.hack( belt, context ) ) ]
+
 			}
 
-		})
+		}, { factory: undefined } as Context)
 
 		return [ ... props_root , ... Object.values(props_inner) ]
 	}
