@@ -51,7 +51,7 @@ namespace $ {
 				let right
 				const operator = left.kids[0]
 
-				if (operator?.type === '=>') {
+				if (operator?.type === '=>' && context.factory) {
 					right = operator.kids[0]
 					if (! right) this.$mol_fail(err`Need a child ${operator.span}`)
 					if (! context.factory) this.$mol_fail(err`Need a parent ${left.span}`)

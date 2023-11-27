@@ -16,6 +16,13 @@ namespace $ {
 			})
 		},
 
+		'prop in upper case'($) {
+			const parts = get_parts('Close_icon')
+			$mol_assert_equal(parts.name, 'Close_icon')
+			$mol_assert_equal(parts.key, '')
+			$mol_assert_equal(parts.next, '')
+		},
+
 		'prop with index'($) {
 			const parts = get_parts('some_bla*')
 			$mol_assert_equal(parts.name, 'some_bla')

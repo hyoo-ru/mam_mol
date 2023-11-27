@@ -11,8 +11,9 @@ namespace $ {
 	export type $mol_style_unit_time = 's' | 'ms'
 
 	export type $mol_style_unit_any = $mol_style_unit_length | $mol_style_unit_angle | $mol_style_unit_time
-	export type $mol_style_unit_str< Quanity extends $mol_style_unit_any > = `${number}${Quanity}`
-	
+
+	export type $mol_style_unit_str< Quanity extends $mol_style_unit_any = $mol_style_unit_any> = `${number}${Quanity}`
+
 	/**
 	 * CSS Units
 	 * @see https://mol.hyoo.ru/#!section=docs/=xwq9q5_f966fg

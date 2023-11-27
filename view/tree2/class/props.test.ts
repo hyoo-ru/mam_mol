@@ -3,6 +3,8 @@ namespace $.$$ {
 	const src = `
 		${d}my_test ${d}my_super
 			title @ \\title
+			sub2 /
+				<= Сlose_icon ${d}mol_icon_cross
 			sub /
 				<= Title ${d}mol_view
 					sub /
@@ -32,6 +34,7 @@ namespace $.$$ {
 
 	const dest = $$.$mol_tree2_from_string(`
 		title @ \\title
+		sub2 / <= Сlose_icon
 		sub /
 			<= Title
 			<= Close
@@ -39,6 +42,7 @@ namespace $.$$ {
 			Text => f
 				g => h
 		plugins / <= Speech
+		Сlose_icon ${d}mol_icon_cross
 		Title ${d}mol_view sub / <= title
 		close?event null
 		Close ${d}mol_button

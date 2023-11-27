@@ -66,6 +66,15 @@ namespace $ {
 			)
 		},
 
+		'simple throw if cyrillic name'( $ ) {
+			$mol_assert_fail(() => {
+				$mol_view_tree2_to_js_test_run(`
+					Foo $mol_object
+						sub / <= Сlose_icon $mol_object
+				`)
+			})
+		},
+
 		'simple empty legacy indexed channel throws error'( $ ) {
 			$mol_assert_fail(() => {
 				$mol_view_tree2_to_js_test_run(`

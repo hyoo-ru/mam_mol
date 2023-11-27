@@ -16,7 +16,6 @@ namespace $ {
 	}
 	
 	function params_of( this: $, prop: $mol_tree2, ... val: $mol_tree2[] ) {
-		
 		const { name, key, next } = this.$mol_view_tree2_prop_parts(prop)
 
 		if (next && (! val.length || ! val[0].value) ) {
@@ -309,7 +308,6 @@ namespace $ {
 										)
 									)
 								}
-								
 								return [
 									input.data( input.type ),
 								]

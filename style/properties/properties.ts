@@ -163,7 +163,7 @@ namespace $ {
 			 * The animation can start later, immediately from its beginning, or immediately and partway through the animation.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay
 			 */
-			delay? : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
+			delay? : $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common
 			
 			/**
 			 * Sets whether an animation should play forward, backward, or alternate back and forth between playing the sequence forward and backward.
@@ -175,7 +175,7 @@ namespace $ {
 			 * Sets the length of time that an animation takes to complete one cycle.
 			 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration
 			 */
-			duration? : $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common
+			duration? : $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common
 			
 			/**
 			 * Sets how a CSS animation applies styles to its target before and after its execution.

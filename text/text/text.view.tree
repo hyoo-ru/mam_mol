@@ -3,6 +3,7 @@ $mol_text $mol_list
 	text \
 	param \
 	flow_tokens /
+	block_text* \
 	auto /
 		<= auto_scroll null
 	- \Blocks

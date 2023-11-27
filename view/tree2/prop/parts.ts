@@ -4,7 +4,7 @@ namespace $ {
 
 		if (! groups) {
 			this.$mol_fail(
-				$mol_view_tree2_error_str`Required prop like some*? at ${prop.span}`
+				$mol_view_tree2_error_str`${prop.type ? `Cyrillic symbol in ${prop.type}? ` : ''}Required prop like some*? at ${prop.span}`
 			)
 		}
 
