@@ -3036,9 +3036,9 @@ var $;
                 native.persist().then(actual => {
                     setTimeout(() => this.persisted(actual, 'cache'), 5000);
                     if (actual)
-                        this.$.$mol_log3_rise({ place: this, message: `Persist` });
+                        this.$.$mol_log3_rise({ place: `$mol_storage`, message: `Persist: Yes` });
                     else
-                        this.$.$mol_log3_fail({ place: this, message: `Non persist` });
+                        this.$.$mol_log3_fail({ place: `$mol_storage`, message: `Persist: No` });
                 });
             }
             return next ?? $mol_wire_sync(native).persisted();
