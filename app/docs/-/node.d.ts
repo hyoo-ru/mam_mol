@@ -1707,7 +1707,7 @@ declare namespace $ {
     class $mol_fetch_response extends $mol_object2 {
         readonly native: Response;
         constructor(native: Response);
-        status(): "success" | "redirect" | "unknown" | "inform" | "wrong" | "failed";
+        status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
         code(): number;
         message(): string;
         headers(): Headers;
@@ -8470,8 +8470,8 @@ declare namespace $ {
     let $hyoo_marked_line: $mol_regexp<{
         [x: string]: string;
         readonly inline: string;
-        readonly embed: string;
         readonly code: string;
+        readonly embed: string;
         readonly strong: string;
         readonly emphasis: string;
         readonly insertion: string;
