@@ -70,9 +70,9 @@ namespace $ {
 		}
 	
 		static clamp(
-			min: $mol_style_unit< any >,
-			mid: $mol_style_unit< any >,
-			max: $mol_style_unit< any >,
+			min: $mol_style_unit_str< any >,
+			mid: $mol_style_unit_str< any >,
+			max: $mol_style_unit_str< any >,
 		) {
 			return new $mol_style_func(
 				'clamp',
@@ -99,7 +99,7 @@ namespace $ {
 		}
 		
 		static linear(
-			...breakpoints : Array<number | [number, number | $mol_style_unit<'%'>]>
+			...breakpoints : Array<number | [number, number | $mol_style_unit_str<'%'>]>
 		){
 			return new $mol_style_func(
 				"linear",
@@ -126,23 +126,23 @@ namespace $ {
 			return new $mol_style_func( 'steps', [ value, step_position ] )
 		}
 		
-		static blur(value?: $mol_style_unit<$mol_style_unit_length>){
+		static blur(value?: $mol_style_unit_str<$mol_style_unit_length>){
 			return new $mol_style_func( 'blur', value ?? "" );
 		}
 		
-		static brightness(value?: number | $mol_style_unit<'%'>){
+		static brightness(value?: number | $mol_style_unit_str<'%'>){
 			return new $mol_style_func( 'brightness', value ?? "" );
 		}
 		
-		static contrast(value?: number | $mol_style_unit<'%'>){
+		static contrast(value?: number | $mol_style_unit_str<'%'>){
 			return new $mol_style_func( 'contrast', value ?? "" );
 		}
 		
 		static drop_shadow(
 			color: $mol_style_properties_color,
-			x_offset: $mol_style_unit<$mol_style_unit_length>,
-			y_offset: $mol_style_unit<$mol_style_unit_length>,
-			blur_radius?: $mol_style_unit<$mol_style_unit_length>
+			x_offset: $mol_style_unit_str<$mol_style_unit_length>,
+			y_offset: $mol_style_unit_str<$mol_style_unit_length>,
+			blur_radius?: $mol_style_unit_str<$mol_style_unit_length>
 		) {
 			return new $mol_style_func(
 				"drop-shadow",
@@ -152,27 +152,27 @@ namespace $ {
 			);
 		}
 		
-		static grayscale(value?: number | $mol_style_unit<'%'>){
+		static grayscale(value?: number | $mol_style_unit_str<'%'>){
 			return new $mol_style_func( 'grayscale', value ?? "" );
 		}
 		
-		static hue_rotate(value?: 0 | $mol_style_unit<$mol_style_unit_angle>){
+		static hue_rotate(value?: 0 | $mol_style_unit_str<$mol_style_unit_angle>){
 			return new $mol_style_func( 'hue-rotate', value ?? "")
 		}
 		
-		static invert(value?: number | $mol_style_unit<'%'>){
+		static invert(value?: number | $mol_style_unit_str<'%'>){
 			return new $mol_style_func( 'invert', value ?? "" );
 		}
 		
-		static opacity(value?: number | $mol_style_unit<'%'>){
+		static opacity(value?: number | $mol_style_unit_str<'%'>){
 			return new $mol_style_func( 'opacity', value ?? "" );
 		}
 		
-		static sepia(value?: number | $mol_style_unit<'%'>){
+		static sepia(value?: number | $mol_style_unit_str<'%'>){
 			return new $mol_style_func( 'sepia', value ?? "" );
 		}
 		
-		static saturate(value?: number | $mol_style_unit<'%'>){
+		static saturate(value?: number | $mol_style_unit_str<'%'>){
 			return new $mol_style_func( 'saturate', value ?? "" );
 		}
 	

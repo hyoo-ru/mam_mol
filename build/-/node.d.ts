@@ -73,6 +73,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_func_name(this: $, func: Function): string;
+    function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
+}
+
+declare namespace $ {
     class $mol_object2 {
         static $: typeof $$;
         [Symbol.toStringTag]: string;
@@ -84,6 +89,7 @@ declare namespace $ {
         static toString(): string;
         destructor(): void;
         toString(): string;
+        static toJSON(): string;
         toJSON(): any;
     }
 }
@@ -381,11 +387,6 @@ declare namespace $ {
             new (): Instance;
         }, config: Partial<Instance>): Instance;
     }
-}
-
-declare namespace $ {
-    function $mol_func_name(this: $, func: Function): string;
-    function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
 }
 
 declare namespace $ {

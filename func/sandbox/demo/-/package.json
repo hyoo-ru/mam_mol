@@ -37,6 +37,7 @@
     "$mol_fail",
     "$mol_type_writable",
     "$mol_type",
+    "$mol_func_name",
     "$mol_tree2_from_string",
     "$mol_error_syntax",
     "$mol_error",
