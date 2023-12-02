@@ -1,6 +1,11 @@
 namespace $ {
 	export class $mol_buffer extends DataView {
 		
+		static from< This extends typeof $mol_buffer >( this: This, array: string | Uint8Array ) {
+			if( typeof array === 'string' ) array = $mol_base64_ae_decode( array )
+			return new this( array.buffer, array.byteOffset, array.byteLength ) as InstanceType< This >
+		}
+		
 		static toString() {
 			return $$.$mol_func_name( this )
 		}
@@ -89,6 +94,10 @@ namespace $ {
 		
 		asArray() {
 			return new Uint8Array( this.buffer, this.byteOffset, this.byteLength )
+		}
+		
+		toString() {
+			return $mol_base64_ae_encode( this.asArray() )
 		}
 		
 	}

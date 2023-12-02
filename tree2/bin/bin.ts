@@ -5,8 +5,8 @@ namespace $ {
 	}
 
 	export function $mol_tree2_bin_from_bytes(
-		bytes : ArrayLike< number > ,
-		span : $mol_span ,
+		bytes : ArrayLike< number >,
+		span  = $mol_span.unknown,
 	) {
 		
 		return $mol_tree2.list( Array.from( bytes , code => {
@@ -15,7 +15,10 @@ namespace $ {
 		
 	}
 
-	export function $mol_tree2_bin_from_string( str : string , span : $mol_span ) {
+	export function $mol_tree2_bin_from_string(
+		str : string,
+		span = $mol_span.unknown,
+	) {
 		return $mol_tree2_bin_from_bytes( [ ... new TextEncoder().encode( str ) ] , span )
 	}
 
