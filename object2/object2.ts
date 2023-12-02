@@ -45,6 +45,10 @@ namespace $ {
 			return this[ Symbol.toStringTag ] || this.constructor.name + '()'
 		}
 		
+		static toJSON() {
+			return this.$.$mol_func_name( this )
+		}
+		
 		toJSON(): any {
 			return this.toString()
 		}
