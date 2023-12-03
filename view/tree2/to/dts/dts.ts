@@ -119,7 +119,14 @@ namespace $ {
 					
 					const val = prop.hack({
 						
-						'null': val => val.kids[0]?.value ? [ val.kids[0], val.data( ' | null' ) ]: [ val.data( 'any' ) ],
+						'null': val => {
+							const kid = val.kids[0]
+							const kid_data = kid?.type ? kid.data(kid.type) : undefined
+
+							return kid_data
+								? [ kid_data, val.data( ' | null' ) ]
+								: [ val.data( 'any' ) ]
+						},
 						
 						'true': val => [ val.data( 'boolean' ) ],
 						'false': val => [ val.data( 'boolean' ) ],

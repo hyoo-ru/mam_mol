@@ -336,7 +336,7 @@ namespace $ {
 		send( key: string, next?: readonly $hyoo_crowd_chunk[] ) {
 			
 			const socket = this.socket()
-			$mol_wire_sync( this ).wait_connection()
+			$mol_wire_sync( this ).wait_connection()/*  */
 			
 			if( socket.readyState !== socket.OPEN ) return
 			

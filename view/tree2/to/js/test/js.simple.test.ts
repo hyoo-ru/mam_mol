@@ -12,6 +12,8 @@ namespace $ {
 			const _foo = $mol_view_tree2_to_js_test_ex_simple_mutable_and_read_only_foo
 			
 			const foo = _foo.make({ $ })
+
+			type assert_ro = $mol_type_assert<ReturnType<typeof foo['readonly']>, any>
 			
 			$mol_assert_equal(
 				foo.readonly(),
