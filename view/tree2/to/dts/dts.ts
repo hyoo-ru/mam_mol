@@ -55,7 +55,7 @@ namespace $ {
 			klass,
 			input.data( '[\'' ),
 			name_of.call(this,  input ),
-			input.data( '\'] >' ),
+			input.data( `'] >`),
 		]
 	}
 
@@ -148,26 +148,50 @@ namespace $ {
 							const [ left, right ] = input.kids
 							const left_parts = this.$mol_view_tree2_prop_parts(left)
 							const right_parts = this.$mol_view_tree2_prop_parts(right)
-							const left_arg = left_parts.next || left_parts.key
-							const right_arg = right_parts.next || right_parts.key
-							const main = klass.data(klass.type)
-							if (left_arg && right_arg) {
-								this.$mol_fail(err`Parameters allowed only in ${left.span} or ${right.span}`)
+
+							let conflict: 'next' | 'key' | undefined
+
+							if (left_parts.next && right_parts.next) conflict = 'next'
+							if (left_parts.key && right_parts.key) conflict = 'key'
+
+							if (conflict) {
+								this.$mol_fail(err`Only one "${conflict}" allowed: ${
+									left_parts[conflict]} at ${left.span} or ${right_parts[conflict]} at ${right.span}`)
 							}
 
-							if (left_arg || right_arg) {
-								const host = ! left_arg && left.kids.length > 0
-									? left.kids[0].data(left.kids[0].type)
-									: main
+							const main = klass.data(klass.type)
+							const prop_parts = this.$mol_view_tree2_prop_parts(prop)
+							const method = prop.data(`${ klass.type }_${prop_parts.name}`)
 
-								types.push(
-									type_enforce.call(
+							if (prop_parts.key || prop_parts.next) {
+								const prop_params = parameters.call(this, main, prop)
+
+								const host = left.kids.length > 0
+									? left.kids[0].data(left.kids[0].type)
+									: undefined
+
+								if (prop_parts.key) {
+									const second_key = left_parts.key ? left : right
+									types.push( type_enforce.call(
 										this,
-										prop.data(`${ klass.type }_${prop.type.replace(/[\?\*]*/g, '')}`),
-										parameters.call(this, main, prop),
-										parameters.call(this, host, left_arg ? left : right),
-									)
-								)
+										method,
+										[ ...prop_params, prop.data('[0]') ],
+										[ ...parameters.call(this, right_parts.key && host ? host : main, second_key), second_key.data('[0]') ],
+									) )
+								}
+
+								if (prop_parts.next) {
+									const second_next = left_parts.next ? left : right
+									const second_parts = left_parts.next ? left_parts : right_parts
+
+									types.push( type_enforce.call(
+										this,
+										method,
+										[ ...prop_params, prop.data(`[${prop_parts.key ? '1' : '0'}]`) ],
+										[ ...parameters.call(this, right_parts.next && host ? host : main, second_next), 
+											second_next.data(`[${second_parts.key ? '1' : '0'}]`) ],
+									) )
+								}
 							}
 
 							return return_type.call(

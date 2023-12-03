@@ -113,7 +113,7 @@ namespace $ {
 				] ),
 			],
 
-			'=': bind => [ call_of.call(this, bind, false) ],
+			'=': bind => [ call_of.call(this, bind, true) ],
 			
 			'': ( input, belt, context )=> {
 

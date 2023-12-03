@@ -12,7 +12,7 @@ namespace $.$$ {
 				<= Close ${d}mol_button
 					title \close
 					click?event <=> close?event null
-			Some ${d}mol_speech
+			Some* ${d}mol_speech
 				Text => f
 					g => h
 			plugins /
@@ -38,7 +38,7 @@ namespace $.$$ {
 		sub /
 			<= Title
 			<= Close
-		Some ${d}mol_speech
+		Some* ${d}mol_speech
 			Text => f
 				g => h
 		plugins / <= Speech
@@ -49,7 +49,7 @@ namespace $.$$ {
 			title \close
 			click?event <=> close?event
 		f =
-			Some ${d}mol_speech Text => f g => h
+			Some* ${d}mol_speech Text => f g => h
 			Text
 		h =
 			f
