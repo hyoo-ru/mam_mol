@@ -81,7 +81,7 @@ namespace $ {
 			] )
 		}
 		const op = prop.kids[0]
-		const is_delegate = op?.type === '<=' || op?.type === '<=>'
+		const is_delegate = op?.type === '<=' || op?.type === '<=>' || op?.type === '='
 		if( ! is_delegate && next ) addons.push( decorate() )
 		
 		const val = prop.hack<Context>({
@@ -148,7 +148,7 @@ namespace $ {
 				]
 
 				if( $mol_view_tree2_class_match( input ) ) {
-					if( !next ) addons.push( decorate() )
+					if( ! next ) addons.push( decorate() )
 					
 					const overrides = [] as $mol_tree2[]
 					
