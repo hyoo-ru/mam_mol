@@ -36,6 +36,7 @@ namespace $ {
 		}
 		
 		destructor() { }
+		static destructor() { }
 		
 		//[ Symbol.toPrimitive ]( hint: string ) {
 		//	return hint === 'number' ? this.valueOf() : this.toString()
@@ -46,7 +47,7 @@ namespace $ {
 		}
 		
 		static toJSON() {
-			return this.$.$mol_func_name( this )
+			return ( this as any )[ Symbol.toStringTag ] || this.$.$mol_func_name( this )
 		}
 		
 		toJSON(): any {

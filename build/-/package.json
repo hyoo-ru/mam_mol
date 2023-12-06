@@ -108,6 +108,7 @@
     "$mol_dom_context",
     "$mol_dom",
     "$mol_storage",
+    "$mol_mem_persist",
     "$mol_wire_sync",
     "$hyoo_lingua_translate",
     "$hyoo_lingua",

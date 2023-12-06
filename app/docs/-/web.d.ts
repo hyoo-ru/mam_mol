@@ -74,8 +74,9 @@ declare namespace $ {
         static [Symbol.toPrimitive](): string;
         static toString(): string;
         destructor(): void;
+        static destructor(): void;
         toString(): string;
-        static toJSON(): string;
+        static toJSON(): any;
         toJSON(): any;
     }
 }
@@ -3152,7 +3153,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_func_is_class(func: Function): boolean;
+    function $mol_func_is_class<Func extends Function>(func: Func): func is Func & (new (...args: any[]) => any);
 }
 
 declare namespace $ {

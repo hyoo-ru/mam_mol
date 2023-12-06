@@ -97,8 +97,9 @@ declare namespace $ {
         static [Symbol.toPrimitive](): string;
         static toString(): string;
         destructor(): void;
+        static destructor(): void;
         toString(): string;
-        static toJSON(): string;
+        static toJSON(): any;
         toJSON(): any;
     }
 }
