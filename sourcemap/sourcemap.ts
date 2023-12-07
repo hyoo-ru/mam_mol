@@ -15,6 +15,6 @@ namespace $ {
 	}
 
 	export function $mol_sourcemap_strip(this: $, data: string) {
-		return data.replace( /^\/\/#\s*sourceMappingURL=/mg , '//' ) + '\n'
+		return data.replace( /^\/\/#\s*sourceMappingURL=[^\n]*/mg , '' ) + '\n'
 	}
 }
