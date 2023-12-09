@@ -22,6 +22,7 @@ namespace $ {
 			
 			if( 'toJSON' in value ) return value
 			if( value instanceof RegExp ) return value.toString()
+			if( value instanceof Uint8Array ) return [ ... value ]
 			
 			let key = $mol_key_store.get( value )
 			if( key ) return key
