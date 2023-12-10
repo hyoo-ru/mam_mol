@@ -1,4 +1,4 @@
 $mol_link_source $mol_link
 	hint @ \Source code
 	sub /
-		<= Icon $mol_icon_github_circle
+		<= Icon $mol_icon_script_text

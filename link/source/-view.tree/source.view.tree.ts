@@ -23,12 +23,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Icon $mol_icon_github_circle
+		 * Icon $mol_icon_script_text
 		 * ```
 		 */
 		@ $mol_mem
 		Icon() {
-			const obj = new this.$.$mol_icon_github_circle()
+			const obj = new this.$.$mol_icon_script_text()
 			
 			return obj
 		}
