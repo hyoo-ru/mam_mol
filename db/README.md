@@ -2,6 +2,43 @@
 
 Static typed facade for [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) with simple API.
 
+## Teaser
+
+```typescript
+type User = {
+	name: string
+	admin: boolean
+}
+
+// Static typed schema
+type DB = {
+	User: {
+		Key: [ string ]
+		Doc: User
+		Indexes: {
+			Name: [ string ]
+		}
+	}
+}
+
+// Automatic migrations
+const db = await $mol_db< DB >( '$my_app',
+	mig => mig.store_make( 'User' ),
+	mig => {
+		const { User } = mig.stores
+		User.index_make( 'Name', [ 'name' ] )
+	},
+)
+
+// Writing transaction
+const { User } = db.change( 'User' ).stores
+await User.put({ name: 'Jin', admin: true })
+
+// Reading transaction
+const { Name } = db.read( 'User' ).User.indexes
+const jins = await Name.select([ 'Jin' ])
+```
+
 ## IndexedDB Structure
 
 - **Database** contains named Stores
