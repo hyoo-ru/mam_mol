@@ -1636,7 +1636,7 @@ declare namespace $ {
         head(): readonly any[];
         Head(): $mol_view;
         body(): readonly $mol_view[];
-        Body_content(): $$.$mol_list;
+        Body_content(): $mol_view;
         body_content(): readonly any[];
         body_scroll_top(next?: any): number;
         Body(): $$.$mol_scroll;

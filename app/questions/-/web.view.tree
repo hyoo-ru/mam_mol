@@ -15,17 +15,6 @@ $mol_book2 $mol_scroll
 	Placeholder $mol_view
 	Gap* $mol_view title \
 
-$mol_list $mol_view
-	render_visible_only true
-	render_over 0
-	sub <= rows /$mol_view
-	Empty $mol_view
-	Gap_before $mol_view style * paddingTop <= gap_before 0
-	Gap_after $mol_view style * paddingTop <= gap_after 0
-	view_window /
-		0
-		0
-
 $mol_page $mol_view
 	dom_name \article
 	field *
@@ -46,11 +35,22 @@ $mol_page $mol_view
 		<= Body $mol_scroll
 			scroll_top? => body_scroll_top?
 			sub <= body_content /
-				<= Body_content $mol_list
-					rows <= body /$mol_view
+				<= Body_content $mol_view
+					sub <= body /$mol_view
 		<= Foot $mol_view
 			dom_name \footer
 			sub <= foot /$mol_view
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0
+	sub <= rows /$mol_view
+	Empty $mol_view
+	Gap_before $mol_view style * paddingTop <= gap_before 0
+	Gap_after $mol_view style * paddingTop <= gap_after 0
+	view_window /
+		0
+		0
 
 $mol_paragraph $mol_view
 	line_height 24

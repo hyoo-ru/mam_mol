@@ -23,17 +23,6 @@ $mol_example_small $mol_example
 
 $mol_example_large $mol_example
 
-$mol_list $mol_view
-	render_visible_only true
-	render_over 0
-	sub <= rows /$mol_view
-	Empty $mol_view
-	Gap_before $mol_view style * paddingTop <= gap_before 0
-	Gap_after $mol_view style * paddingTop <= gap_after 0
-	view_window /
-		0
-		0
-
 $mol_page $mol_view
 	dom_name \article
 	field *
@@ -54,8 +43,8 @@ $mol_page $mol_view
 		<= Body $mol_scroll
 			scroll_top? => body_scroll_top?
 			sub <= body_content /
-				<= Body_content $mol_list
-					rows <= body /$mol_view
+				<= Body_content $mol_view
+					sub <= body /$mol_view
 		<= Foot $mol_view
 			dom_name \footer
 			sub <= foot /$mol_view
@@ -234,6 +223,17 @@ $mol_icon $mol_svg_root
 			geometry <= path \
 
 $mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0
+	sub <= rows /$mol_view
+	Empty $mol_view
+	Gap_before $mol_view style * paddingTop <= gap_before 0
+	Gap_after $mol_view style * paddingTop <= gap_after 0
+	view_window /
+		0
+		0
 
 $mol_paragraph $mol_view
 	line_height 24

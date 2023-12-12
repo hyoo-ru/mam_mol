@@ -787,22 +787,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_list extends $mol_view {
-        render_visible_only(): boolean;
-        render_over(): number;
-        sub(): readonly $mol_view[];
-        Empty(): $mol_view;
-        Gap_before(): $mol_view;
-        Gap_after(): $mol_view;
-        view_window(): readonly any[];
-        rows(): readonly $mol_view[];
-        gap_before(): number;
-        gap_after(): number;
+    class $mol_scroll extends $mol_view {
+        scroll_top(next?: any): number;
+        scroll_left(next?: any): number;
+        field(): Record<string, any>;
+        event(): Record<string, any>;
+        tabindex(): number;
+        event_scroll(event?: any): any;
     }
-}
-
-declare namespace $ {
-    function $mol_support_css_overflow_anchor(this: $): boolean;
 }
 
 declare namespace $ {
@@ -825,37 +817,6 @@ declare namespace $ {
         static before(): $mol_dom_listener;
         static after(): $mol_dom_listener;
         static active(next?: boolean): boolean;
-    }
-}
-
-declare namespace $ {
-    let $mol_mem_cached: typeof $mol_wire_probe;
-}
-
-declare namespace $.$$ {
-    class $mol_list extends $.$mol_list {
-        sub(): readonly $mol_view[];
-        render_visible_only(): boolean;
-        view_window(next?: [number, number]): [number, number];
-        gap_before(): number;
-        gap_after(): number;
-        sub_visible(): $mol_view[];
-        minimal_height(): number;
-        force_render(path: Set<$mol_view>): void;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    class $mol_scroll extends $mol_view {
-        scroll_top(next?: any): number;
-        scroll_left(next?: any): number;
-        field(): Record<string, any>;
-        event(): Record<string, any>;
-        tabindex(): number;
-        event_scroll(event?: any): any;
     }
 }
 
@@ -928,7 +889,7 @@ declare namespace $ {
         head(): readonly any[];
         Head(): $mol_view;
         body(): readonly $mol_view[];
-        Body_content(): $$.$mol_list;
+        Body_content(): $mol_view;
         body_content(): readonly any[];
         body_scroll_top(next?: any): number;
         Body(): $$.$mol_scroll;
@@ -949,6 +910,10 @@ declare namespace $.$$ {
 
 declare namespace $ {
     let $mol_mem_persist: typeof $mol_wire_solid;
+}
+
+declare namespace $ {
+    let $mol_mem_cached: typeof $mol_wire_probe;
 }
 
 declare namespace $ {
@@ -1701,6 +1666,41 @@ declare namespace $ {
     class $mol_icon_cross extends $mol_icon {
         path(): string;
     }
+}
+
+declare namespace $ {
+    class $mol_list extends $mol_view {
+        render_visible_only(): boolean;
+        render_over(): number;
+        sub(): readonly $mol_view[];
+        Empty(): $mol_view;
+        Gap_before(): $mol_view;
+        Gap_after(): $mol_view;
+        view_window(): readonly any[];
+        rows(): readonly $mol_view[];
+        gap_before(): number;
+        gap_after(): number;
+    }
+}
+
+declare namespace $ {
+    function $mol_support_css_overflow_anchor(this: $): boolean;
+}
+
+declare namespace $.$$ {
+    class $mol_list extends $.$mol_list {
+        sub(): readonly $mol_view[];
+        render_visible_only(): boolean;
+        view_window(next?: [number, number]): [number, number];
+        gap_before(): number;
+        gap_after(): number;
+        sub_visible(): $mol_view[];
+        minimal_height(): number;
+        force_render(path: Set<$mol_view>): void;
+    }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {

@@ -158,14 +158,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Body_content $mol_list rows <= body
+		 * Body_content $mol_view sub <= body
 		 * ```
 		 */
 		@ $mol_mem
 		Body_content() {
-			const obj = new this.$.$mol_list()
+			const obj = new this.$.$mol_view()
 			
-			obj.rows = () => this.body()
+			obj.sub = () => this.body()
 			
 			return obj
 		}
