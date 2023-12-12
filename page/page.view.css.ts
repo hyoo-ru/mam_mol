@@ -87,6 +87,9 @@ namespace $.$$ {
 		
 		Body_content: {
 			padding: $mol_gap.block ,
+			flex: {
+				direction: 'column',
+			},
 			justify: {
 				self: 'stretch',
 			},
