@@ -1,5 +1,4 @@
-include \/mol/crypto/secret
-include \/mol/crypto/cipher
-include \/mol/crypto/auditor
+include \/mol/crypto/secret/id
+include \/mol/crypto/key
 include \/mol/crypto/hash
 include \/mol/crypto/salt
