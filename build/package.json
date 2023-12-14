@@ -2,7 +2,7 @@
 	"name": "mam",
 	"version": "1.11.0",
 	"bin": {
-		"mam": "./bin/mam"
+		"mam": "./mol/build/bin"
 	},
 	"dependencies": {
 		"@types/node": "*",
