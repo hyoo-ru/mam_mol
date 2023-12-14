@@ -32,7 +32,7 @@ namespace $ {
 				}
 				
 				// Disabled because non-idempotency is required for try-catch
-				// if( existen && sub instanceof $mol_wire_task ) {
+				// if( existen?.temp ) {
 				// 	$mol_fail( new Error( `$mol_wire_task detects nonidempotency\n${existen}` ) )
 				// }
 				
