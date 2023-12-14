@@ -1,0 +1,29 @@
+name: mam
+
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - master
+    paths:
+      - '.github/workflows/mam.yml'
+      - 'build/**'
+  pull_request:
+  schedule:
+    - cron: "0 7 * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: hyoo-ru/mam_build@master2
+      with:
+        package: mol
+        modules: build
+    - uses: JS-DevTools/npm-publish@v1
+      if: ${{ github.ref == 'refs/heads/master' }}
+      with:
+        token: ${{ secrets.NPM_AUTH_TOKEN }}
+        package: ./mol/build/-/package.json
