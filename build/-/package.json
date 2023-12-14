@@ -1,6 +1,6 @@
 {
   "name": "mam",
-  "version": "1.11.38",
+  "version": "1.11.39",
   "exports": {
     "node": {
       "import": "./node.mjs",
@@ -10,8 +10,8 @@
     "import": "./web.mjs",
     "default": "./web.js"
   },
-  "main": "./node.js",
-  "module": "./node.mjs",
+  "main": "./web.js",
+  "module": "./web.mjs",
   "browser": "./web.js",
   "types": "./web.d.ts",
   "keywords": [
@@ -134,6 +134,13 @@
     "$mol_html"
   ],
   "dependencies": {
+    "@types/node": "*",
+    "@types/express": "*",
+    "@types/compression": "*",
+    "@types/cors": "*",
+    "@types/body-parser": "*",
+    "@types/serve-index": "*",
+    "@types/ws": "*",
     "chokidar": "*",
     "jsdom": "*",
     "undici": "*",

@@ -6051,7 +6051,6 @@ var $;
             catch { }
             ++version[2];
             json.version = version.join('.');
-            json.dependencies = {};
             for (let dep of this.nodeDeps({ path, exclude })) {
                 if (require('module').builtinModules.includes(dep))
                     continue;
