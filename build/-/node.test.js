@@ -5556,7 +5556,7 @@ var $;
                             ? 'master'
                             : matched[1];
                         this.$.$mol_exec(mod.path(), 'git', 'remote', 'add', '--track', head_branch_name, 'origin', repo.value);
-                        this.$.$mol_exec(mod.path(), 'git', 'pull');
+                        this.$.$mol_exec(mod.path(), 'git', 'pull', '--deepen=1');
                         mod.reset();
                         for (const sub of mod.sub()) {
                             sub.reset();
@@ -5574,7 +5574,7 @@ var $;
                 return false;
             }
             for (let repo of mapping.select('pack', mod.name(), 'git').sub) {
-                this.$.$mol_exec(this.root().path(), 'git', 'clone', repo.value, mod.relate(this.root()));
+                this.$.$mol_exec(this.root().path(), 'git', 'clone', '--depth', '1', repo.value, mod.relate(this.root()));
                 mod.reset();
                 return true;
             }
