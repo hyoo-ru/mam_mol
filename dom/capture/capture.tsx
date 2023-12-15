@@ -1,17 +1,7 @@
 /** @jsx $mol_jsx */
 namespace $ {
 	
-	export async function $mol_dom_capture_image( el: Element ) {
-		
-		function wait_load( el: {
-			onload: null | ( ( value: any )=> any ),
-			onerror: null | ( ( error: Event )=> any ),
-		} ) {
-			return new Promise< typeof el >( ( done, fail )=> {
-				el.onload = ()=> done( el )
-				el.onerror = fail
-			} )
-		}
+	export async function $mol_dom_capture_svg( el: Element ) {
 		
 		function restyle( el: HTMLElement, styles: CSSStyleDeclaration ) {
 			for( let i= 0; i < styles.length; ++i ) {
@@ -23,6 +13,7 @@ namespace $ {
 		function clone( el: Element ) {
 			
 			const re = el.cloneNode() as HTMLElement
+			
 			if( el instanceof HTMLImageElement && !/^(data|blob):/.test( el.src ) ) {
 				
 				const canvas = <canvas width={ el.naturalWidth } height={ el.naturalHeight } ></canvas> as HTMLCanvasElement
@@ -75,9 +66,7 @@ namespace $ {
 
 		const { width, height } = el.getBoundingClientRect()
 		
-		// const styles = [ ... document.querySelectorAll( 'style' ) ].map( s => s.cloneNode( true ) )
-		
-		const svg = <svg
+		return <svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox={ `0 0 ${ width } ${ height }` }
 				width={ String( width ) }
@@ -87,14 +76,16 @@ namespace $ {
 				xmlns="http://www.w3.org/2000/svg"
 				width={ String( width ) }
 				height={ String( height ) }
-				>
-				{/* <base href={ location.href } /> */}
-				{/* { styles } */}
+			>
 				{ clone( el ) }
 			</foreignObject>
 		</svg>
 		
-		const xml = $mol_dom_serialize( svg )
+	}
+	
+	export async function $mol_dom_capture_image( el: Element ) {
+		
+		const xml = $mol_dom_serialize( await $mol_dom_capture_svg( el ) )
 		const uri = 'data:image/svg+xml,' + encodeURIComponent( xml )
 		
 		const image = <img src={ uri } /> as HTMLImageElement
@@ -115,4 +106,14 @@ namespace $ {
 		return canvas
 	}
 
+	function wait_load( el: {
+		onload: null | ( ( value: any )=> any ),
+		onerror: null | ( ( error: Event )=> any ),
+	} ) {
+		return new Promise< typeof el >( ( done, fail )=> {
+			el.onload = ()=> done( el )
+			el.onerror = fail
+		} )
+	}
+	
 }
