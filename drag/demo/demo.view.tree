@@ -4,14 +4,14 @@ $mol_drag_demo $mol_example_large
 		<= List_drop $mol_drop
 			adopt?transfer <=> transfer_adopt?transfer null
 			receive?obj <=> receive?obj null
-			Sub <= Scroll $mol_scroll sub /
-				<= Trash_drop $mol_drop
+			Sub <= Page $mol_page
+				head / <= Trash_drop $mol_drop
 					adopt?transfer <=> transfer_adopt?transfer null
 					receive?obj <=> receive_trash?obj null
-					Sub <= Trash $mol_float sub /
+					Sub <= Trash $mol_view sub /
 						<= Trash_icon $mol_icon_trash_can_outline
 						\ Trash
-				<= List $mol_list
+				Body_content <= List $mol_list
 					rows <= task_rows /
 	Task_row* $mol_drag
 		transfer *
