@@ -1,6 +1,6 @@
 {
   "name": "mam",
-  "version": "1.11.39",
+  "version": "1.11.46",
   "exports": {
     "node": {
       "import": "./node.mjs",
@@ -155,6 +155,6 @@
     "serve-index": "*"
   },
   "bin": {
-    "mam": "./bin/mam"
+    "mam": "./mol/build/bin"
   }
 }

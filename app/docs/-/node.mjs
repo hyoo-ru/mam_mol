@@ -20070,13 +20070,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    async function $mol_dom_capture_image(el) {
-        function wait_load(el) {
-            return new Promise((done, fail) => {
-                el.onload = () => done(el);
-                el.onerror = fail;
-            });
-        }
+    async function $mol_dom_capture_svg(el) {
         function restyle(el, styles) {
             for (let i = 0; i < styles.length; ++i) {
                 const prop = styles[i];
@@ -20128,9 +20122,12 @@ var $;
             return re;
         }
         const { width, height } = el.getBoundingClientRect();
-        const svg = $mol_jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: `0 0 ${width} ${height}`, width: String(width), height: String(height) },
+        return $mol_jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: `0 0 ${width} ${height}`, width: String(width), height: String(height) },
             $mol_jsx("foreignObject", { xmlns: "http://www.w3.org/2000/svg", width: String(width), height: String(height) }, clone(el)));
-        const xml = $mol_dom_serialize(svg);
+    }
+    $.$mol_dom_capture_svg = $mol_dom_capture_svg;
+    async function $mol_dom_capture_image(el) {
+        const xml = $mol_dom_serialize(await $mol_dom_capture_svg(el));
         const uri = 'data:image/svg+xml,' + encodeURIComponent(xml);
         const image = $mol_jsx("img", { src: uri });
         await wait_load(image);
@@ -20145,6 +20142,12 @@ var $;
         return canvas;
     }
     $.$mol_dom_capture_canvas = $mol_dom_capture_canvas;
+    function wait_load(el) {
+        return new Promise((done, fail) => {
+            el.onload = () => done(el);
+            el.onerror = fail;
+        });
+    }
 })($ || ($ = {}));
 //mol/dom/capture/capture.tsx
 ;

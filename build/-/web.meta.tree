@@ -10,3 +10,5 @@
 	pack bun git \https://github.com/spleekz/mam_bun
 \/mol
 	pack icon git \https://github.com/nin-jin/mol_icon.git
+\/mol/build
+	deploy \/mol/build/bin
