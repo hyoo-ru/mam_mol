@@ -2,10 +2,7 @@ namespace $ {
 	
 	/**
 	 * Argument must be Truthy
-	 * @example
-	 * $mol_assert_ok( 1 ) // Passes
-	 * $mol_assert_ok( 0 ) // Fails because Falsy
-	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
+	 * @deprecated use $mol_assert_equal instead
 	 */
 	export function $mol_assert_ok( value : any ) {
 		if( value ) return
@@ -14,10 +11,7 @@ namespace $ {
 	
 	/**
 	 * Argument must be Falsy
-	 * @example
-	 * $mol_assert_ok( 0 ) // Passes
-	 * $mol_assert_ok( 1 ) // Fails because Truthy
-	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
+	 * @deprecated use $mol_assert_equal instead
 	 */
 	export function $mol_assert_not( value : any ) {
 		if( !value ) return
@@ -62,77 +56,64 @@ namespace $ {
 		$mol_fail( new Error( 'Not failed' ) )
 	}
 	
-	/**
-	 * All arguments must be equal.
-	 * @example
-	 * $mol_assert_equal( 1 , 1 , 1 ) // Passes
-	 * $mol_assert_equal( 1 , 1 , 2 ) // Fails because 1 !== 2
-	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
-	 */
-	export function $mol_assert_equal< Value >( ... args : [ Value, Value, ...Value[] ] ) {
-		for( let i = 0 ; i < args.length ; ++i ) {
-			for( let j = 0 ; j < args.length ; ++j ) {
-				if( i === j ) continue
-				if( Number.isNaN( args[i] as any as number ) && Number.isNaN( args[j] as any as number ) ) continue
-				if( args[i] !== args[j] ) $mol_fail( new Error( `Not equal (${i+1}:${j+1})\n${ args[i] }\n${ args[j] }` ) )
-			}
-		}
+	/** @deprecated Use $mol_assert_equal */
+	export function $mol_assert_like< Value >( ... args : [ Value, Value, ...Value[] ] ) {
+		$mol_assert_equal( ... args )
 	}
 	
 	/**
-	 * All arguments must be not equal to each other.
+	 * All arguments must not be structural equal to each other.
 	 * @example
 	 * $mol_assert_unique( 1 , 2 , 3 ) // Passes
 	 * $mol_assert_unique( 1 , 1 , 2 ) // Fails because 1 === 1
 	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
 	 */
 	export function $mol_assert_unique( ... args : [ any, any, ...any[] ] ) {
+		
 		for( let i = 0 ; i < args.length ; ++i ) {
 			for( let j = 0 ; j < args.length ; ++j ) {
+				
 				if( i === j ) continue
-				if( args[i] === args[j] || ( Number.isNaN( args[i] as any as number ) && Number.isNaN( args[j] as any as number ) ) ) {
-					$mol_fail( new Error( `args[${ i }] = args[${ j }] = ${ args[i] }` ) )
-				}
+				if( !$mol_compare_deep( args[i], args[j] ) ) continue
+				
+				$mol_fail( new Error( `args[${ i }] = args[${ j }] = ${ args[i] }` ) )
+				
 			}
 		}
+		
 	}
 	
 	/**
-	 * All arguments must be like each other (deep structural comparison).
+	 * All arguments must be structural equal each other.
 	 * @example
 	 * $mol_assert_like( [1] , [1] , [1] ) // Passes
 	 * $mol_assert_like( [1] , [1] , [2] ) // Fails because 1 !== 2
 	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
 	 */
-	export function $mol_assert_like< Value >( head : Value, ... tail : Value[]) {
-		for( let [ index, value ] of Object.entries( tail ) ) {
-
-			if( !$mol_compare_deep( value , head ) ) {
-
-				const print = ( val : any ) => {
-					
-					if( !val ) return val
-					if( typeof val !== 'object' ) return val
-					if( 'outerHTML' in val ) return val.outerHTML
-					
-					try {
-						return JSON.stringify( val, ( k, v )=> typeof v === 'bigint' ? String(v) : v,'\t' )
-					} catch( error: any ) {
-						console.error( error )
-						return val
-					}
-					
-				}
-				
-				return $mol_fail( new Error( `Not like (1:${ + index + 2 })\n${ print( head ) }\n---\n${ print( value ) }` ) )
-
-			}
-
+	export function $mol_assert_equal< Value >( ... args : Value[] ) {
+		for( let i = 1 ; i < args.length ; ++i ) {
+			
+			if( $mol_compare_deep( args[0] , args[i] ) ) continue
+			if( args[0] instanceof Element && args[i] instanceof Element && args[0].outerHTML === ( args[i] as Element ).outerHTML ) continue
+			
+			return $mol_fail( new Error( `Not like (1:${i+1})\n${ print( args[0] ) }\n---\n${ print( args[i] ) }` ) )
+			
 		}
 	}
 	
-	export function $mol_assert_dom( left: Element, right: Element ) {
-		$mol_assert_equal( $mol_dom_serialize( left ), $mol_dom_serialize( right ) )
+	const print = ( val : any ) => {
+		
+		if( !val ) return val
+		if( typeof val !== 'object' ) return val
+		if( 'outerHTML' in val ) return val.outerHTML
+		
+		try {
+			return JSON.stringify( val, ( k, v )=> typeof v === 'bigint' ? String(v) : v,'\t' )
+		} catch( error: any ) {
+			console.error( error )
+			return val
+		}
+		
 	}
-
+	
 }

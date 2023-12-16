@@ -2,25 +2,25 @@
 
 Collection of assert functions.
 
-**`$mol_assert_unique< Value >( ... args : Value[] )`** - all arguments must be not equal to each other.
+**`$mol_assert_unique( ... args )`** - all arguments must not be structural equal to each other.
 
 ```typescript
 $mol_assert_unique( 1 , 2 , 3 ) // Passes
 $mol_assert_unique( 1 , 1 , 2 ) // Fails because 1 === 1
 ```
 
-**`$mol_assert_equal< Value >( ... args : Value[] )`** - all arguments must be equal.
+**`$mol_assert_equal( ... args )`** - all arguments must be structural equal.
 
 ```typescript
 $mol_assert_equal( 1 , 1 , 1 ) // Passes
 $mol_assert_equal( 1 , 1 , 2 ) // Fails because 1 !== 2
 ```
 
-**`$mol_assert_like< Value >( ... args : Value[] )`** - all arguments must be like each other (deep structural comparison).
+**`$mol_assert_equal( ... args )`** - all arguments must be equal dom tree.
 
 ```typescript
-$mol_assert_like( [1] , [1] , [1] ) // Passes
-$mol_assert_like( [1] , [1] , [2] ) // Fails because 1 !== 2
+$mol_assert_equal( 1 , 1 , 1 ) // Passes
+$mol_assert_equal( 1 , 1 , 2 ) // Fails because 1 !== 2
 ```
 
 **`$mol_assert_fail( handler : ()=> any , ErrorRight? : any )`** - handler must throw an error.
