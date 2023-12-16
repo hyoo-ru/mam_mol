@@ -3680,6 +3680,8 @@ var $;
                 padding: $mol_gap.block,
                 flex: {
                     direction: 'column',
+                    shrink: 1,
+                    grow: 1,
                 },
                 justify: {
                     self: 'stretch',

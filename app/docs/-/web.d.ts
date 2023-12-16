@@ -2343,7 +2343,7 @@ declare namespace $ {
     class $mol_app_demo_detail extends $mol_page {
         description(): string;
         tools(): readonly any[];
-        body_content(): readonly any[];
+        body(): readonly any[];
         readme(next?: any): boolean;
         readme_icon(): $mol_icon_information_outline;
         Readme(): $mol_check_icon;

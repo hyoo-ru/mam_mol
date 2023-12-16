@@ -470,7 +470,7 @@ $mol_app_demo_detail $mol_page
 				<= Close_icon $mol_icon_cross
 			arg <= close_arg *
 				demo null
-	body_content /
+	body /
 		<= Demo $mol_view
 
 $mol_stack $mol_view
