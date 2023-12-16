@@ -7,13 +7,13 @@ namespace $ {
 		'wrong order'($) {
 			$mol_assert_fail(() => {
 				get_parts('some_bla?*')
-			})
+			}, '`Cyrillic symbol in some_bla?*? `Required prop like some*? at `?#1:1/0`')
 		},
 
 		'empty'($) {
 			$mol_assert_fail(() => {
 				get_parts('')
-			})
+			}, '``Required prop like some*? at `?#1:1/0`')
 		},
 
 		'prop in upper case'($) {

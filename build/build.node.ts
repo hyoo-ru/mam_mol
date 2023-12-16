@@ -88,30 +88,19 @@ namespace $ {
 			const text = file.text()
 			const tree = this.$.$mol_tree2_from_string( text , '../' + name )
 
+			const js_path = parent.resolve( prefix ).path()
+	
 			const dts_text = this.$.$mol_view_tree2_to_dts( tree )
-			const dts_data = this.$.$mol_tree2_text_to_string_mapped_js( dts_text )
-			const dts_file = parent.resolve( `${ prefix }.d.ts` )
-			dts_file.text(dts_data)
+			const dts = this.$.$mol_tree2_text_to_file(dts_text, js_path + '.d.ts')
 
-			// const dts_map = this.$.$mol_tree2_text_to_sourcemap( dts_text )
-			// const dts_map_file = parent.resolve( `${ prefix }.d.ts.map` )
-			// dts_map_file.text(JSON.stringify(dts_map))
-
-			const js_tree = this.$.$mol_view_tree2_to_js(tree)
-			const js_text = this.$.$mol_tree2_js_to_text(js_tree)
-			const js_data = this.$.$mol_tree2_text_to_string_mapped_js( js_text )
-			const js_file = parent.resolve( `${ prefix }.js` )
-			js_file.text(js_data)
-
-			// const js_map = this.$.$mol_tree2_text_to_sourcemap( js_text )
-			// const js_map_file = parent.resolve( `${ prefix }.js.map` )
-			// js_map_file.text(JSON.stringify(js_map))
+			const js_text = this.$.$mol_tree2_js_to_text(this.$.$mol_view_tree2_to_js(tree))
+			const js = this.$.$mol_tree2_text_to_file(js_text, js_path + '.js')
 
 			const locale_file = parent.resolve( `${ prefix }.locale=en.json` )
 			const locales = this.$.$mol_view_tree2_to_locale(tree)
 			locale_file.text( JSON.stringify( locales , null , '\t' ) )
 
-			return [ js_file, dts_file, locale_file ]
+			return [ js.src, js.map, dts.src, dts.map, locale_file ]
 		}
 
 		@ $mol_mem_key
@@ -1648,6 +1637,13 @@ namespace $ {
 		return depends
 	}
 	
+	$mol_build.dependors[ 'view.ts' ] = source => {
+		var treeName = './' + source.name().replace( /ts$/ , 'tree' )
+		var depends : { [ index : string ] : number } = { [ treeName ] : 0 }
+		$mol_build_depsMerge( depends , $mol_build.dependors[ 'ts' ]!( source ) )
+		return depends
+	}
+
 	$mol_build.dependors[ 'node.ts' ] = $mol_build.dependors[ 'web.ts' ] = source => {
 		var common = './' + source.name().replace( /\.(node|web)\.ts$/ , '.ts' )
 		var depends : { [ index : string ] : number } = { [ common ] : 0 }
