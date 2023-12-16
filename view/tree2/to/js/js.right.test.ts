@@ -73,8 +73,9 @@ namespace $ {
 				{ some: 123 }
 			)
 
-			$mol_assert_unique(
-				bar.Cls(1).a(), bar.b(2)
+			$mol_assert_equal(
+				bar.Cls(1).a() === bar.b(2),
+				false,
 			)
 		}
 

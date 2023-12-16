@@ -18,11 +18,11 @@ namespace $ {
 		} ,
 		
 		'two must be unique'() {
-			$mol_assert_unique( [ 3 ] , [ 3 ] )
+			$mol_assert_unique( [ 2 ] , [ 3 ] )
 		} ,
 		
 		'three must be unique'() {
-			$mol_assert_unique( [ 3 ] , [ 3 ] , [ 3 ] )
+			$mol_assert_unique( [ 1 ] , [ 2 ] , [ 3 ] )
 		} ,
 		
 		'two must be alike'() {

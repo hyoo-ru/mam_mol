@@ -24,7 +24,7 @@ namespace $ {
 					
 					setTimeout( ()=> this.persisted( actual, 'cache' ), 5000 )
 					
-					if( actual ) this.$.$mol_log3_rise({ place: `$mol_storage`, message: `Persist: Yes` })
+					if( actual ) this.$.$mol_log3_done({ place: `$mol_storage`, message: `Persist: Yes` })
 					else this.$.$mol_log3_fail({ place: `$mol_storage`, message: `Persist: No` })
 					
 				} )

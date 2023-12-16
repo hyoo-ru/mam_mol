@@ -470,7 +470,7 @@ namespace $ {
 			$mol_assert_equal( App.result() , 1 )
 			
 			App.condition( true )
-			$mol_assert_fail( ()=> App.result() )
+			$mol_assert_fail( ()=> App.result(), 'test error' )
 			
 			App.condition( false )
 			$mol_assert_equal( App.result() , 1 )

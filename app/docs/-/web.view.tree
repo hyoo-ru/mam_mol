@@ -1443,10 +1443,10 @@ $mol_array_trim_demo $mol_example_code
 
 $mol_assert_demo $mol_example_code
 	code? \
-		\$mol_assert_unique( 1 , 2 , 3 )
-		\$mol_assert_equal( 1 , 1 , 1 )
-		\$mol_assert_like( [1] , [1] , [1] )
-		\$mol_assert_like( { a: 1 } , { a: 1 } , { a: 1 } )
+		\$mol_assert_unique( [1], [2], [3] )
+		\$mol_assert_equal( [7] , [7], [7] )
+		\$mol_assert_fail( ()=> { throw Error( 'test' ) }, 'test' )
+		\$mol_assert_fail( ()=> { throw RangeError( 'test' ) }, RangeError )
 	aspects /
 		\Algorithm/Assert
 		\Testing
