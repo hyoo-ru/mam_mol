@@ -5,6 +5,5 @@ interface $node {
 	"util" : typeof import( "util" )
 	"fs" : typeof import( "fs" )
 	"chokidar" : typeof import( "chokidar" )
-	"undici" : typeof import( "undici" )
 	"buffer" : typeof import( "buffer" )
 }

@@ -12,6 +12,8 @@
 	pack icon git \https://github.com/nin-jin/mol_icon.git
 \/mol/view
 	include \/mol/view/tree/test
+\/mol/app/demo/main
+	deploy \/mol/readme.md
 \/hyoo
 	pack about git \https://github.com/hyoo-ru/about.hyoo.ru.git
 	pack artist git \https://github.com/hyoo-ru/artist.hyoo.ru.git
@@ -70,8 +72,6 @@
 	pack home git \https://github.com/hyoo-ru/hyoo.ru.git
 	pack idea git \https://github.com/hyoo-ru/idea.hyoo.ru.git
 	pack intern git \https://github.com/hyoo-ru/intern.hyoo.ru.git
-\/mol/app/demo/main
-	deploy \/mol/readme.md
 \/hyoo/crowd/app
 	deploy \/hyoo/crowd/logo/logo.svg
 \/mol/app/quine
