@@ -1512,7 +1512,17 @@ var $;
                         break reuse;
                     return existen;
                 }
-                return new $mol_wire_task(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, args);
+                const next = new $mol_wire_task(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, args);
+                if (existen?.temp) {
+                    $$.$mol_log3_warn({
+                        place: '$mol_wire_task',
+                        message: `Non idempotency`,
+                        existen,
+                        next,
+                        hint: 'Ignore it',
+                    });
+                }
+                return next;
             };
         }
         get temp() {

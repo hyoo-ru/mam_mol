@@ -243,6 +243,39 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_log3_event<Fields> = {
+        [key in string]: unknown;
+    } & {
+        time?: string;
+        place: unknown;
+        message: string;
+    } & Fields;
+    type $mol_log3_logger<Fields, Res = void> = (this: $, event: $mol_log3_event<Fields>) => Res;
+    let $mol_log3_come: $mol_log3_logger<{}>;
+    let $mol_log3_done: $mol_log3_logger<{}>;
+    let $mol_log3_fail: $mol_log3_logger<{}>;
+    let $mol_log3_warn: $mol_log3_logger<{
+        hint: string;
+    }>;
+    let $mol_log3_rise: $mol_log3_logger<{}>;
+    let $mol_log3_area: $mol_log3_logger<{}, () => void>;
+    function $mol_log3_area_lazy(this: $, event: $mol_log3_event<{}>): () => void;
+    let $mol_log3_stack: (() => void)[];
+}
+
+declare namespace $ {
+    type $mol_type_keys_extract<Input, Upper, Lower = never> = {
+        [Field in keyof Input]: unknown extends Input[Field] ? never : Input[Field] extends never ? never : Input[Field] extends Upper ? [
+            Lower
+        ] extends [Input[Field]] ? Field : never : never;
+    }[keyof Input];
+}
+
+declare namespace $ {
+    function $mol_log3_web_make(level: $mol_type_keys_extract<Console, Function>, color: string): (this: $, event: $mol_log3_event<{}>) => () => void;
+}
+
+declare namespace $ {
     class $mol_wire_task<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
         static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result): (host: Host, args: Args) => $mol_wire_task<Host, Args, Result>;
         get temp(): boolean;
@@ -434,14 +467,6 @@ declare namespace $ {
     };
     type ObjectOrFunctionResultPromisify<Some> = (Some extends (...args: any) => unknown ? FunctionResultPromisify<Some> : {}) & (Some extends Object ? MethodsResultPromisify<Some> : Some);
     export {};
-}
-
-declare namespace $ {
-    type $mol_type_keys_extract<Input, Upper, Lower = never> = {
-        [Field in keyof Input]: unknown extends Input[Field] ? never : Input[Field] extends never ? never : Input[Field] extends Upper ? [
-            Lower
-        ] extends [Input[Field]] ? Field : never : never;
-    }[keyof Input];
 }
 
 declare namespace $ {

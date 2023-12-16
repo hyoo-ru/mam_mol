@@ -124,14 +124,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Trash $mol_float sub /
+		 * Trash $mol_view sub /
 		 * 	<= Trash_icon
 		 * 	\ Trash
 		 * ```
 		 */
 		@ $mol_mem
 		Trash() {
-			const obj = new this.$.$mol_float()
+			const obj = new this.$.$mol_view()
 			
 			obj.sub = () => [
 				this.Trash_icon(),
@@ -186,19 +186,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Scroll $mol_scroll sub /
-		 * 	<= Trash_drop
-		 * 	<= List
+		 * Page $mol_page
+		 * 	head / <= Trash_drop
+		 * 	Body_content <= List
 		 * ```
 		 */
 		@ $mol_mem
-		Scroll() {
-			const obj = new this.$.$mol_scroll()
+		Page() {
+			const obj = new this.$.$mol_page()
 			
-			obj.sub = () => [
-				this.Trash_drop(),
-				this.List()
+			obj.head = () => [
+				this.Trash_drop()
 			] as readonly any[]
+			obj.Body_content = () => this.List()
 			
 			return obj
 		}
@@ -208,7 +208,7 @@ namespace $ {
 		 * List_drop $mol_drop
 		 * 	adopt?transfer <=> transfer_adopt?transfer
 		 * 	receive?obj <=> receive?obj
-		 * 	Sub <= Scroll
+		 * 	Sub <= Page
 		 * ```
 		 */
 		@ $mol_mem
@@ -217,7 +217,7 @@ namespace $ {
 			
 			obj.adopt = (transfer?: any) => this.transfer_adopt(transfer)
 			obj.receive = (obj?: any) => this.receive(obj)
-			obj.Sub = () => this.Scroll()
+			obj.Sub = () => this.Page()
 			
 			return obj
 		}

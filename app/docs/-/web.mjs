@@ -1134,6 +1134,62 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_log3_area_lazy(event) {
+        const self = this;
+        const stack = self.$mol_log3_stack;
+        const deep = stack.length;
+        let logged = false;
+        stack.push(() => {
+            logged = true;
+            self.$mol_log3_area.call(self, event);
+        });
+        return () => {
+            if (logged)
+                self.console.groupEnd();
+            if (stack.length > deep)
+                stack.length = deep;
+        };
+    }
+    $.$mol_log3_area_lazy = $mol_log3_area_lazy;
+    $.$mol_log3_stack = [];
+})($ || ($ = {}));
+//mol/log3/log3.ts
+;
+"use strict";
+//mol/type/keys/extract/extract.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_log3_web_make(level, color) {
+        return function $mol_log3_logger(event) {
+            const pending = this.$mol_log3_stack.pop();
+            if (pending)
+                pending();
+            let tpl = '%c';
+            const chunks = Object.values(event);
+            for (let i = 0; i < chunks.length; ++i) {
+                tpl += (typeof chunks[i] === 'string') ? ' ▫ %s' : ' ▫ %o';
+            }
+            const style = `color:${color};font-weight:bolder`;
+            this.console[level](tpl, style, ...chunks);
+            const self = this;
+            return () => self.console.groupEnd();
+        };
+    }
+    $.$mol_log3_web_make = $mol_log3_web_make;
+    $.$mol_log3_come = $mol_log3_web_make('info', 'royalblue');
+    $.$mol_log3_done = $mol_log3_web_make('info', 'forestgreen');
+    $.$mol_log3_fail = $mol_log3_web_make('error', 'orangered');
+    $.$mol_log3_warn = $mol_log3_web_make('warn', 'goldenrod');
+    $.$mol_log3_rise = $mol_log3_web_make('log', 'magenta');
+    $.$mol_log3_area = $mol_log3_web_make('group', 'cyan');
+})($ || ($ = {}));
+//mol/log3/log3.web.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_wire_task extends $mol_wire_fiber {
         static getter(task) {
             return function $mol_wire_task_get(host, args) {
@@ -1150,7 +1206,17 @@ var $;
                         break reuse;
                     return existen;
                 }
-                return new $mol_wire_task(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, args);
+                const next = new $mol_wire_task(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, args);
+                if (existen?.temp) {
+                    $$.$mol_log3_warn({
+                        place: '$mol_wire_task',
+                        message: `Non idempotency`,
+                        existen,
+                        next,
+                        hint: 'Ignore it',
+                    });
+                }
+                return next;
             };
         }
         get temp() {
@@ -1862,9 +1928,6 @@ var $;
     $.$mol_wire_async = $mol_wire_async;
 })($ || ($ = {}));
 //mol/wire/async/async.ts
-;
-"use strict";
-//mol/type/keys/extract/extract.ts
 ;
 "use strict";
 //mol/type/pick/pick.ts
@@ -4438,59 +4501,6 @@ var $;
     $.$mol_mem_persist = $mol_wire_solid;
 })($ || ($ = {}));
 //mol/mem/persist/persist.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_log3_area_lazy(event) {
-        const self = this;
-        const stack = self.$mol_log3_stack;
-        const deep = stack.length;
-        let logged = false;
-        stack.push(() => {
-            logged = true;
-            self.$mol_log3_area.call(self, event);
-        });
-        return () => {
-            if (logged)
-                self.console.groupEnd();
-            if (stack.length > deep)
-                stack.length = deep;
-        };
-    }
-    $.$mol_log3_area_lazy = $mol_log3_area_lazy;
-    $.$mol_log3_stack = [];
-})($ || ($ = {}));
-//mol/log3/log3.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_log3_web_make(level, color) {
-        return function $mol_log3_logger(event) {
-            const pending = this.$mol_log3_stack.pop();
-            if (pending)
-                pending();
-            let tpl = '%c';
-            const chunks = Object.values(event);
-            for (let i = 0; i < chunks.length; ++i) {
-                tpl += (typeof chunks[i] === 'string') ? ' ⦙ %s' : ' ⦙ %o';
-            }
-            const style = `color:${color};font-weight:bolder`;
-            this.console[level](tpl, style, ...chunks);
-            const self = this;
-            return () => self.console.groupEnd();
-        };
-    }
-    $.$mol_log3_web_make = $mol_log3_web_make;
-    $.$mol_log3_come = $mol_log3_web_make('info', 'royalblue');
-    $.$mol_log3_done = $mol_log3_web_make('info', 'forestgreen');
-    $.$mol_log3_fail = $mol_log3_web_make('error', 'orangered');
-    $.$mol_log3_warn = $mol_log3_web_make('warn', 'goldenrod');
-    $.$mol_log3_rise = $mol_log3_web_make('log', 'magenta');
-    $.$mol_log3_area = $mol_log3_web_make('group', 'cyan');
-})($ || ($ = {}));
-//mol/log3/log3.web.ts
 ;
 "use strict";
 var $;
@@ -29036,7 +29046,7 @@ var $;
             return obj;
         }
         Trash() {
-            const obj = new this.$.$mol_float();
+            const obj = new this.$.$mol_view();
             obj.sub = () => [
                 this.Trash_icon(),
                 " Trash"
@@ -29058,19 +29068,19 @@ var $;
             obj.rows = () => this.task_rows();
             return obj;
         }
-        Scroll() {
-            const obj = new this.$.$mol_scroll();
-            obj.sub = () => [
-                this.Trash_drop(),
-                this.List()
+        Page() {
+            const obj = new this.$.$mol_page();
+            obj.head = () => [
+                this.Trash_drop()
             ];
+            obj.Body_content = () => this.List();
             return obj;
         }
         List_drop() {
             const obj = new this.$.$mol_drop();
             obj.adopt = (transfer) => this.transfer_adopt(transfer);
             obj.receive = (obj) => this.receive(obj);
-            obj.Sub = () => this.Scroll();
+            obj.Sub = () => this.Page();
             return obj;
         }
         task_title(id) {
@@ -29129,7 +29139,7 @@ var $;
     ], $mol_drag_demo.prototype, "List", null);
     __decorate([
         $mol_mem
-    ], $mol_drag_demo.prototype, "Scroll", null);
+    ], $mol_drag_demo.prototype, "Page", null);
     __decorate([
         $mol_mem
     ], $mol_drag_demo.prototype, "List_drop", null);
@@ -29339,7 +29349,7 @@ var $;
                 '@': {
                     mol_drop_status: {
                         drag: {
-                            boxShadow: `0 -1px 0 0px ${$mol_theme.focus}`,
+                            boxShadow: `inset 0 1px 0 0px ${$mol_theme.focus}`,
                         },
                     },
                 },
@@ -29348,20 +29358,18 @@ var $;
                 '@': {
                     mol_drop_status: {
                         drag: {
-                            '>': {
-                                $mol_view: {
-                                    ':last-child': {
-                                        boxShadow: `0 1px 0 0px ${$mol_theme.focus}`,
-                                    },
-                                },
+                            ':last-child': {
+                                boxShadow: `inset 0 -1px 0 0px ${$mol_theme.focus}`,
                             },
                         },
                     },
                 },
             },
             Trash: {
-                padding: $mol_gap.block,
-                display: 'block',
+                padding: $mol_gap.text,
+                flex: {
+                    grow: 1,
+                },
             },
             Trash_drop: {
                 '@': {
@@ -29373,6 +29381,9 @@ var $;
                         },
                     },
                 },
+            },
+            List: {
+                padding: $mol_gap.text,
             },
         });
     })($$ = $.$$ || ($.$$ = {}));

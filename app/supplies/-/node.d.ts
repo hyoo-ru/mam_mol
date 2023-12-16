@@ -257,91 +257,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_wire_task<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
-        static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result): (host: Host, args: Args) => $mol_wire_task<Host, Args, Result>;
-        get temp(): boolean;
-        complete(): void;
-        put(next: Result | Error | Promise<Result | Error>): Error | Result | Promise<Error | Result>;
-    }
-}
-
-declare namespace $ {
-    function $mol_wire_method<Host extends object, Args extends readonly any[]>(host: Host, field: PropertyKey, descr?: TypedPropertyDescriptor<(...args: Args) => any>): {
-        value: (this: Host, ...args: Args) => any;
-        enumerable?: boolean | undefined;
-        configurable?: boolean | undefined;
-        writable?: boolean | undefined;
-        get?: (() => (...args: Args) => any) | undefined;
-        set?: ((value: (...args: Args) => any) => void) | undefined;
-    };
-}
-
-declare namespace $ {
-    type $mol_type_tail<Tuple extends readonly any[]> = ((...tail: Tuple) => any) extends ((head: any, ...tail: infer Tail) => any) ? Tail : never;
-}
-
-declare namespace $ {
-    type $mol_type_foot<Tuple extends readonly any[]> = Tuple['length'] extends 0 ? never : Tuple[$mol_type_tail<Tuple>['length']];
-}
-
-declare namespace $ {
-    function $mol_fail_catch(error: unknown): boolean;
-}
-
-declare namespace $ {
-    function $mol_fail_log(error: unknown): boolean;
-}
-
-declare namespace $ {
-    class $mol_wire_atom<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
-        static solo<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result): $mol_wire_atom<Host, Args, Result>;
-        static plex<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result, key: Args[0]): $mol_wire_atom<Host, Args, Result>;
-        static watching: Set<$mol_wire_atom<any, any, any>>;
-        static watcher: $mol_after_frame | null;
-        static watch(): void;
-        watch(): void;
-        resync(args: Args): Error | Result | Promise<Error | Result>;
-        once(): Awaited<Result>;
-        channel(): ((next?: $mol_type_foot<Args>) => Awaited<Result>) & {
-            atom: $mol_wire_atom<Host, Args, Result>;
-        };
-        destructor(): void;
-        put(next: Result | Error | Promise<Result | Error>): Error | Result | Promise<Error | Result>;
-    }
-}
-
-declare namespace $ {
-    export function $mol_wire_solo<Args extends any[]>(host: object, field: string, descr?: TypedPropertyDescriptor<(...args: Args) => any>): TypedPropertyDescriptor<(...args: First_optional<Args>) => any>;
-    type First_optional<Args extends any[]> = Args extends [] ? [] : [Args[0] | undefined, ...$mol_type_tail<Args>];
-    export {};
-}
-
-declare namespace $ {
-    function $mol_wire_plex<Args extends [any, ...any[]]>(host: object, field: string, descr?: TypedPropertyDescriptor<(...args: Args) => any>): {
-        value: (this: typeof host, ...args: Args) => any;
-        enumerable?: boolean | undefined;
-        configurable?: boolean | undefined;
-        writable?: boolean | undefined;
-        get?: (() => (...args: Args) => any) | undefined;
-        set?: ((value: (...args: Args) => any) => void) | undefined;
-    };
-}
-
-declare namespace $ {
-    let $mol_mem: typeof $mol_wire_solo;
-    let $mol_mem_key: typeof $mol_wire_plex;
-}
-
-declare namespace $ {
-    var $mol_dom_context: typeof globalThis;
-}
-
-interface $node {
-    [key: string]: any;
-}
-declare var $node: $node;
-
-declare namespace $ {
     type $mol_log3_event<Fields> = {
         [key in string]: unknown;
     } & {
@@ -473,6 +388,91 @@ declare namespace $ {
 declare namespace $ {
     function $mol_log3_node_make(level: keyof Console, output: 'stdout' | 'stderr', type: string, color: (str: string) => string): (this: $, event: $mol_log3_event<{}>) => () => void;
 }
+
+declare namespace $ {
+    class $mol_wire_task<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
+        static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result): (host: Host, args: Args) => $mol_wire_task<Host, Args, Result>;
+        get temp(): boolean;
+        complete(): void;
+        put(next: Result | Error | Promise<Result | Error>): Error | Result | Promise<Error | Result>;
+    }
+}
+
+declare namespace $ {
+    function $mol_wire_method<Host extends object, Args extends readonly any[]>(host: Host, field: PropertyKey, descr?: TypedPropertyDescriptor<(...args: Args) => any>): {
+        value: (this: Host, ...args: Args) => any;
+        enumerable?: boolean | undefined;
+        configurable?: boolean | undefined;
+        writable?: boolean | undefined;
+        get?: (() => (...args: Args) => any) | undefined;
+        set?: ((value: (...args: Args) => any) => void) | undefined;
+    };
+}
+
+declare namespace $ {
+    type $mol_type_tail<Tuple extends readonly any[]> = ((...tail: Tuple) => any) extends ((head: any, ...tail: infer Tail) => any) ? Tail : never;
+}
+
+declare namespace $ {
+    type $mol_type_foot<Tuple extends readonly any[]> = Tuple['length'] extends 0 ? never : Tuple[$mol_type_tail<Tuple>['length']];
+}
+
+declare namespace $ {
+    function $mol_fail_catch(error: unknown): boolean;
+}
+
+declare namespace $ {
+    function $mol_fail_log(error: unknown): boolean;
+}
+
+declare namespace $ {
+    class $mol_wire_atom<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
+        static solo<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result): $mol_wire_atom<Host, Args, Result>;
+        static plex<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result, key: Args[0]): $mol_wire_atom<Host, Args, Result>;
+        static watching: Set<$mol_wire_atom<any, any, any>>;
+        static watcher: $mol_after_frame | null;
+        static watch(): void;
+        watch(): void;
+        resync(args: Args): Error | Result | Promise<Error | Result>;
+        once(): Awaited<Result>;
+        channel(): ((next?: $mol_type_foot<Args>) => Awaited<Result>) & {
+            atom: $mol_wire_atom<Host, Args, Result>;
+        };
+        destructor(): void;
+        put(next: Result | Error | Promise<Result | Error>): Error | Result | Promise<Error | Result>;
+    }
+}
+
+declare namespace $ {
+    export function $mol_wire_solo<Args extends any[]>(host: object, field: string, descr?: TypedPropertyDescriptor<(...args: Args) => any>): TypedPropertyDescriptor<(...args: First_optional<Args>) => any>;
+    type First_optional<Args extends any[]> = Args extends [] ? [] : [Args[0] | undefined, ...$mol_type_tail<Args>];
+    export {};
+}
+
+declare namespace $ {
+    function $mol_wire_plex<Args extends [any, ...any[]]>(host: object, field: string, descr?: TypedPropertyDescriptor<(...args: Args) => any>): {
+        value: (this: typeof host, ...args: Args) => any;
+        enumerable?: boolean | undefined;
+        configurable?: boolean | undefined;
+        writable?: boolean | undefined;
+        get?: (() => (...args: Args) => any) | undefined;
+        set?: ((value: (...args: Args) => any) => void) | undefined;
+    };
+}
+
+declare namespace $ {
+    let $mol_mem: typeof $mol_wire_solo;
+    let $mol_mem_key: typeof $mol_wire_plex;
+}
+
+declare namespace $ {
+    var $mol_dom_context: typeof globalThis;
+}
+
+interface $node {
+    [key: string]: any;
+}
+declare var $node: $node;
 
 declare namespace $ {
     function $mol_env(): Record<string, string | undefined>;

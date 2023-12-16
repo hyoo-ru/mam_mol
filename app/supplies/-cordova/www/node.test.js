@@ -1068,385 +1068,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_wire_task extends $mol_wire_fiber {
-        static getter(task) {
-            return function $mol_wire_task_get(host, args) {
-                const sub = $mol_wire_auto();
-                const existen = sub?.track_next();
-                reuse: if (existen) {
-                    if (!existen.temp)
-                        break reuse;
-                    if (existen.host !== host)
-                        break reuse;
-                    if (existen.task !== task)
-                        break reuse;
-                    if (!$mol_compare_deep(existen.args, args))
-                        break reuse;
-                    return existen;
-                }
-                return new $mol_wire_task(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, args);
-            };
-        }
-        get temp() {
-            return true;
-        }
-        complete() {
-            if ($mol_promise_like(this.cache))
-                return;
-            this.destructor();
-        }
-        put(next) {
-            const prev = this.cache;
-            this.cache = next;
-            if ($mol_promise_like(next)) {
-                this.cursor = $mol_wire_cursor.fresh;
-                if (next !== prev)
-                    this.emit();
-                return next;
-            }
-            this.cursor = $mol_wire_cursor.final;
-            if (this.sub_empty)
-                this.destructor();
-            else if (next !== prev)
-                this.emit();
-            return next;
-        }
-    }
-    $.$mol_wire_task = $mol_wire_task;
-})($ || ($ = {}));
-//mol/wire/task/task.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_method(host, field, descr) {
-        if (!descr)
-            descr = Reflect.getOwnPropertyDescriptor(host, field);
-        const orig = descr?.value ?? host[field];
-        const sup = Reflect.getPrototypeOf(host);
-        if (typeof sup[field] === 'function') {
-            Object.defineProperty(orig, 'name', { value: sup[field].name });
-        }
-        const temp = $mol_wire_task.getter(orig);
-        const value = function (...args) {
-            const fiber = temp(this ?? null, args);
-            return fiber.sync();
-        };
-        Object.defineProperty(value, 'name', { value: orig.name + ' ' });
-        Object.assign(value, { orig });
-        const descr2 = { ...descr, value };
-        Reflect.defineProperty(host, field, descr2);
-        return descr2;
-    }
-    $.$mol_wire_method = $mol_wire_method;
-})($ || ($ = {}));
-//mol/wire/method/method.ts
-;
-"use strict";
-//mol/type/tail/tail.ts
-;
-"use strict";
-//mol/type/foot/foot.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const catched = new WeakMap();
-    function $mol_fail_catch(error) {
-        if (typeof error !== 'object')
-            return false;
-        if ($mol_promise_like(error))
-            $mol_fail_hidden(error);
-        if (catched.get(error))
-            return false;
-        catched.set(error, true);
-        return true;
-    }
-    $.$mol_fail_catch = $mol_fail_catch;
-})($ || ($ = {}));
-//mol/fail/catch/catch.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fail_log(error) {
-        if ($mol_promise_like(error))
-            return false;
-        if (!$mol_fail_catch(error))
-            return false;
-        console.error(error);
-        return true;
-    }
-    $.$mol_fail_log = $mol_fail_log;
-})($ || ($ = {}));
-//mol/fail/log/log.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_wire_atom extends $mol_wire_fiber {
-        static solo(host, task) {
-            const field = task.name + '()';
-            const existen = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
-            if (existen)
-                return existen;
-            const prefix = host?.[Symbol.toStringTag] ?? (host instanceof Function ? $$.$mol_func_name(host) : host);
-            const key = `${prefix}.${field}`;
-            const fiber = new $mol_wire_atom(key, task, host, []);
-            (host ?? task)[field] = fiber;
-            return fiber;
-        }
-        static plex(host, task, key) {
-            const field = task.name + '()';
-            let dict = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
-            const prefix = host?.[Symbol.toStringTag] ?? (host instanceof Function ? $$.$mol_func_name(host) : host);
-            const id = `${prefix}.${task.name}(${$mol_key(key).replace(/^"|"$/g, "'")})`;
-            if (dict) {
-                const existen = dict.get(id);
-                if (existen)
-                    return existen;
-            }
-            else {
-                dict = (host ?? task)[field] = new Map();
-            }
-            const fiber = new $mol_wire_atom(id, task, host, [key]);
-            dict.set(id, fiber);
-            return fiber;
-        }
-        static watching = new Set();
-        static watcher = null;
-        static watch() {
-            $mol_wire_atom.watcher = new $mol_after_frame($mol_wire_atom.watch);
-            for (const atom of $mol_wire_atom.watching) {
-                if (atom.cursor === $mol_wire_cursor.final) {
-                    $mol_wire_atom.watching.delete(atom);
-                }
-                else {
-                    atom.cursor = $mol_wire_cursor.stale;
-                    atom.fresh();
-                }
-            }
-        }
-        watch() {
-            if (!$mol_wire_atom.watcher) {
-                $mol_wire_atom.watcher = new $mol_after_frame($mol_wire_atom.watch);
-            }
-            $mol_wire_atom.watching.add(this);
-        }
-        resync(args) {
-            return this.put(this.task.call(this.host, ...args));
-        }
-        once() {
-            return this.sync();
-        }
-        channel() {
-            return Object.assign((next) => {
-                if (next !== undefined)
-                    return this.resync([...this.args, next]);
-                if (!$mol_wire_fiber.warm)
-                    return this.result();
-                if ($mol_wire_auto()?.temp) {
-                    return this.once();
-                }
-                else {
-                    return this.sync();
-                }
-            }, { atom: this });
-        }
-        destructor() {
-            super.destructor();
-            const prev = this.cache;
-            if ($mol_owning_check(this, prev)) {
-                prev.destructor();
-            }
-            if (this.pub_from === 0) {
-                ;
-                (this.host ?? this.task)[this.field()] = null;
-            }
-            else {
-                ;
-                (this.host ?? this.task)[this.field()].delete(this[Symbol.toStringTag]);
-            }
-        }
-        put(next) {
-            const prev = this.cache;
-            update: if (next !== prev) {
-                try {
-                    if ($mol_compare_deep(prev, next))
-                        break update;
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                }
-                if ($mol_owning_check(this, prev)) {
-                    prev.destructor();
-                }
-                if ($mol_owning_catch(this, next)) {
-                    try {
-                        next[Symbol.toStringTag] = this[Symbol.toStringTag];
-                    }
-                    catch {
-                        Object.defineProperty(next, Symbol.toStringTag, { value: this[Symbol.toStringTag] });
-                    }
-                }
-                if (!this.sub_empty)
-                    this.emit();
-            }
-            this.cache = next;
-            this.cursor = $mol_wire_cursor.fresh;
-            if ($mol_promise_like(next))
-                return next;
-            this.complete_pubs();
-            return next;
-        }
-    }
-    __decorate([
-        $mol_wire_method
-    ], $mol_wire_atom.prototype, "resync", null);
-    __decorate([
-        $mol_wire_method
-    ], $mol_wire_atom.prototype, "once", null);
-    $.$mol_wire_atom = $mol_wire_atom;
-})($ || ($ = {}));
-//mol/wire/atom/atom.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_solo(host, field, descr) {
-        if (!descr)
-            descr = Reflect.getOwnPropertyDescriptor(host, field);
-        const orig = descr?.value ?? host[field];
-        const sup = Reflect.getPrototypeOf(host);
-        if (typeof sup[field] === 'function') {
-            Object.defineProperty(orig, 'name', { value: sup[field].name });
-        }
-        const descr2 = {
-            ...descr,
-            value: function (...args) {
-                let atom = $mol_wire_atom.solo(this, orig);
-                if ((args.length === 0) || (args[0] === undefined)) {
-                    if (!$mol_wire_fiber.warm)
-                        return atom.result();
-                    if ($mol_wire_auto()?.temp) {
-                        return atom.once();
-                    }
-                    else {
-                        return atom.sync();
-                    }
-                }
-                return atom.resync(args);
-            }
-        };
-        Reflect.defineProperty(descr2.value, 'name', { value: orig.name + ' ' });
-        Reflect.defineProperty(descr2.value, 'length', { value: orig.length });
-        Object.assign(descr2.value, { orig });
-        Reflect.defineProperty(host, field, descr2);
-        return descr2;
-    }
-    $.$mol_wire_solo = $mol_wire_solo;
-})($ || ($ = {}));
-//mol/wire/solo/solo.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wire_plex(host, field, descr) {
-        if (!descr)
-            descr = Reflect.getOwnPropertyDescriptor(host, field);
-        const orig = descr?.value ?? host[field];
-        const sup = Reflect.getPrototypeOf(host);
-        if (typeof sup[field] === 'function') {
-            Object.defineProperty(orig, 'name', { value: sup[field].name });
-        }
-        const descr2 = {
-            ...descr,
-            value: function (...args) {
-                let atom = $mol_wire_atom.plex(this, orig, args[0]);
-                if ((args.length === 1) || (args[1] === undefined)) {
-                    if (!$mol_wire_fiber.warm)
-                        return atom.result();
-                    if ($mol_wire_auto()?.temp) {
-                        return atom.once();
-                    }
-                    else {
-                        return atom.sync();
-                    }
-                }
-                return atom.resync(args);
-            }
-        };
-        Reflect.defineProperty(descr2.value, 'name', { value: orig.name + ' ' });
-        Reflect.defineProperty(descr2.value, 'length', { value: orig.length });
-        Object.assign(descr2.value, { orig });
-        Reflect.defineProperty(host, field, descr2);
-        return descr2;
-    }
-    $.$mol_wire_plex = $mol_wire_plex;
-})($ || ($ = {}));
-//mol/wire/plex/plex.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_mem = $mol_wire_solo;
-    $.$mol_mem_key = $mol_wire_plex;
-})($ || ($ = {}));
-//mol/mem/mem.ts
-;
-"use strict";
-var $;
-(function ($) {
-})($ || ($ = {}));
-//mol/dom/context/context.ts
-;
-"use strict";
-//node/node.ts
-;
-"use strict";
-var $node = new Proxy({ require }, {
-    get(target, name, wrapper) {
-        if (target[name])
-            return target[name];
-        const mod = target.require('module');
-        if (mod.builtinModules.indexOf(name) >= 0)
-            return target.require(name);
-        if (name[0] === '.')
-            return target.require(name);
-        const path = target.require('path');
-        const fs = target.require('fs');
-        let dir = path.resolve('.');
-        const suffix = `./node_modules/${name}`;
-        const $$ = $;
-        while (!fs.existsSync(path.join(dir, suffix))) {
-            const parent = path.resolve(dir, '..');
-            if (parent === dir) {
-                $$.$mol_exec('.', 'npm', 'install', '--omit=dev', name);
-                try {
-                    $$.$mol_exec('.', 'npm', 'install', '--omit=dev', '@types/' + name);
-                }
-                catch { }
-                break;
-            }
-            else {
-                dir = parent;
-            }
-        }
-        return target.require(name);
-    },
-    set(target, name, value) {
-        target[name] = value;
-        return true;
-    },
-});
-require = (req => Object.assign(function require(name) {
-    return $node[name];
-}, req))(require);
-//node/node.node.ts
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_log3_area_lazy(event) {
         const self = this;
         const stack = self.$mol_log3_stack;
@@ -1956,6 +1577,395 @@ var $;
     $.$mol_log3_area = $mol_log3_node_make('log', 'stdout', 'area', $mol_term_color.cyan);
 })($ || ($ = {}));
 //mol/log3/log3.node.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_wire_task extends $mol_wire_fiber {
+        static getter(task) {
+            return function $mol_wire_task_get(host, args) {
+                const sub = $mol_wire_auto();
+                const existen = sub?.track_next();
+                reuse: if (existen) {
+                    if (!existen.temp)
+                        break reuse;
+                    if (existen.host !== host)
+                        break reuse;
+                    if (existen.task !== task)
+                        break reuse;
+                    if (!$mol_compare_deep(existen.args, args))
+                        break reuse;
+                    return existen;
+                }
+                const next = new $mol_wire_task(`${host?.[Symbol.toStringTag] ?? host}.${task.name}(#)`, task, host, args);
+                if (existen?.temp) {
+                    $$.$mol_log3_warn({
+                        place: '$mol_wire_task',
+                        message: `Non idempotency`,
+                        existen,
+                        next,
+                        hint: 'Ignore it',
+                    });
+                }
+                return next;
+            };
+        }
+        get temp() {
+            return true;
+        }
+        complete() {
+            if ($mol_promise_like(this.cache))
+                return;
+            this.destructor();
+        }
+        put(next) {
+            const prev = this.cache;
+            this.cache = next;
+            if ($mol_promise_like(next)) {
+                this.cursor = $mol_wire_cursor.fresh;
+                if (next !== prev)
+                    this.emit();
+                return next;
+            }
+            this.cursor = $mol_wire_cursor.final;
+            if (this.sub_empty)
+                this.destructor();
+            else if (next !== prev)
+                this.emit();
+            return next;
+        }
+    }
+    $.$mol_wire_task = $mol_wire_task;
+})($ || ($ = {}));
+//mol/wire/task/task.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_method(host, field, descr) {
+        if (!descr)
+            descr = Reflect.getOwnPropertyDescriptor(host, field);
+        const orig = descr?.value ?? host[field];
+        const sup = Reflect.getPrototypeOf(host);
+        if (typeof sup[field] === 'function') {
+            Object.defineProperty(orig, 'name', { value: sup[field].name });
+        }
+        const temp = $mol_wire_task.getter(orig);
+        const value = function (...args) {
+            const fiber = temp(this ?? null, args);
+            return fiber.sync();
+        };
+        Object.defineProperty(value, 'name', { value: orig.name + ' ' });
+        Object.assign(value, { orig });
+        const descr2 = { ...descr, value };
+        Reflect.defineProperty(host, field, descr2);
+        return descr2;
+    }
+    $.$mol_wire_method = $mol_wire_method;
+})($ || ($ = {}));
+//mol/wire/method/method.ts
+;
+"use strict";
+//mol/type/tail/tail.ts
+;
+"use strict";
+//mol/type/foot/foot.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const catched = new WeakMap();
+    function $mol_fail_catch(error) {
+        if (typeof error !== 'object')
+            return false;
+        if ($mol_promise_like(error))
+            $mol_fail_hidden(error);
+        if (catched.get(error))
+            return false;
+        catched.set(error, true);
+        return true;
+    }
+    $.$mol_fail_catch = $mol_fail_catch;
+})($ || ($ = {}));
+//mol/fail/catch/catch.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail_log(error) {
+        if ($mol_promise_like(error))
+            return false;
+        if (!$mol_fail_catch(error))
+            return false;
+        console.error(error);
+        return true;
+    }
+    $.$mol_fail_log = $mol_fail_log;
+})($ || ($ = {}));
+//mol/fail/log/log.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_wire_atom extends $mol_wire_fiber {
+        static solo(host, task) {
+            const field = task.name + '()';
+            const existen = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
+            if (existen)
+                return existen;
+            const prefix = host?.[Symbol.toStringTag] ?? (host instanceof Function ? $$.$mol_func_name(host) : host);
+            const key = `${prefix}.${field}`;
+            const fiber = new $mol_wire_atom(key, task, host, []);
+            (host ?? task)[field] = fiber;
+            return fiber;
+        }
+        static plex(host, task, key) {
+            const field = task.name + '()';
+            let dict = Object.getOwnPropertyDescriptor(host ?? task, field)?.value;
+            const prefix = host?.[Symbol.toStringTag] ?? (host instanceof Function ? $$.$mol_func_name(host) : host);
+            const id = `${prefix}.${task.name}(${$mol_key(key).replace(/^"|"$/g, "'")})`;
+            if (dict) {
+                const existen = dict.get(id);
+                if (existen)
+                    return existen;
+            }
+            else {
+                dict = (host ?? task)[field] = new Map();
+            }
+            const fiber = new $mol_wire_atom(id, task, host, [key]);
+            dict.set(id, fiber);
+            return fiber;
+        }
+        static watching = new Set();
+        static watcher = null;
+        static watch() {
+            $mol_wire_atom.watcher = new $mol_after_frame($mol_wire_atom.watch);
+            for (const atom of $mol_wire_atom.watching) {
+                if (atom.cursor === $mol_wire_cursor.final) {
+                    $mol_wire_atom.watching.delete(atom);
+                }
+                else {
+                    atom.cursor = $mol_wire_cursor.stale;
+                    atom.fresh();
+                }
+            }
+        }
+        watch() {
+            if (!$mol_wire_atom.watcher) {
+                $mol_wire_atom.watcher = new $mol_after_frame($mol_wire_atom.watch);
+            }
+            $mol_wire_atom.watching.add(this);
+        }
+        resync(args) {
+            return this.put(this.task.call(this.host, ...args));
+        }
+        once() {
+            return this.sync();
+        }
+        channel() {
+            return Object.assign((next) => {
+                if (next !== undefined)
+                    return this.resync([...this.args, next]);
+                if (!$mol_wire_fiber.warm)
+                    return this.result();
+                if ($mol_wire_auto()?.temp) {
+                    return this.once();
+                }
+                else {
+                    return this.sync();
+                }
+            }, { atom: this });
+        }
+        destructor() {
+            super.destructor();
+            const prev = this.cache;
+            if ($mol_owning_check(this, prev)) {
+                prev.destructor();
+            }
+            if (this.pub_from === 0) {
+                ;
+                (this.host ?? this.task)[this.field()] = null;
+            }
+            else {
+                ;
+                (this.host ?? this.task)[this.field()].delete(this[Symbol.toStringTag]);
+            }
+        }
+        put(next) {
+            const prev = this.cache;
+            update: if (next !== prev) {
+                try {
+                    if ($mol_compare_deep(prev, next))
+                        break update;
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                }
+                if ($mol_owning_check(this, prev)) {
+                    prev.destructor();
+                }
+                if ($mol_owning_catch(this, next)) {
+                    try {
+                        next[Symbol.toStringTag] = this[Symbol.toStringTag];
+                    }
+                    catch {
+                        Object.defineProperty(next, Symbol.toStringTag, { value: this[Symbol.toStringTag] });
+                    }
+                }
+                if (!this.sub_empty)
+                    this.emit();
+            }
+            this.cache = next;
+            this.cursor = $mol_wire_cursor.fresh;
+            if ($mol_promise_like(next))
+                return next;
+            this.complete_pubs();
+            return next;
+        }
+    }
+    __decorate([
+        $mol_wire_method
+    ], $mol_wire_atom.prototype, "resync", null);
+    __decorate([
+        $mol_wire_method
+    ], $mol_wire_atom.prototype, "once", null);
+    $.$mol_wire_atom = $mol_wire_atom;
+})($ || ($ = {}));
+//mol/wire/atom/atom.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_solo(host, field, descr) {
+        if (!descr)
+            descr = Reflect.getOwnPropertyDescriptor(host, field);
+        const orig = descr?.value ?? host[field];
+        const sup = Reflect.getPrototypeOf(host);
+        if (typeof sup[field] === 'function') {
+            Object.defineProperty(orig, 'name', { value: sup[field].name });
+        }
+        const descr2 = {
+            ...descr,
+            value: function (...args) {
+                let atom = $mol_wire_atom.solo(this, orig);
+                if ((args.length === 0) || (args[0] === undefined)) {
+                    if (!$mol_wire_fiber.warm)
+                        return atom.result();
+                    if ($mol_wire_auto()?.temp) {
+                        return atom.once();
+                    }
+                    else {
+                        return atom.sync();
+                    }
+                }
+                return atom.resync(args);
+            }
+        };
+        Reflect.defineProperty(descr2.value, 'name', { value: orig.name + ' ' });
+        Reflect.defineProperty(descr2.value, 'length', { value: orig.length });
+        Object.assign(descr2.value, { orig });
+        Reflect.defineProperty(host, field, descr2);
+        return descr2;
+    }
+    $.$mol_wire_solo = $mol_wire_solo;
+})($ || ($ = {}));
+//mol/wire/solo/solo.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wire_plex(host, field, descr) {
+        if (!descr)
+            descr = Reflect.getOwnPropertyDescriptor(host, field);
+        const orig = descr?.value ?? host[field];
+        const sup = Reflect.getPrototypeOf(host);
+        if (typeof sup[field] === 'function') {
+            Object.defineProperty(orig, 'name', { value: sup[field].name });
+        }
+        const descr2 = {
+            ...descr,
+            value: function (...args) {
+                let atom = $mol_wire_atom.plex(this, orig, args[0]);
+                if ((args.length === 1) || (args[1] === undefined)) {
+                    if (!$mol_wire_fiber.warm)
+                        return atom.result();
+                    if ($mol_wire_auto()?.temp) {
+                        return atom.once();
+                    }
+                    else {
+                        return atom.sync();
+                    }
+                }
+                return atom.resync(args);
+            }
+        };
+        Reflect.defineProperty(descr2.value, 'name', { value: orig.name + ' ' });
+        Reflect.defineProperty(descr2.value, 'length', { value: orig.length });
+        Object.assign(descr2.value, { orig });
+        Reflect.defineProperty(host, field, descr2);
+        return descr2;
+    }
+    $.$mol_wire_plex = $mol_wire_plex;
+})($ || ($ = {}));
+//mol/wire/plex/plex.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_mem = $mol_wire_solo;
+    $.$mol_mem_key = $mol_wire_plex;
+})($ || ($ = {}));
+//mol/mem/mem.ts
+;
+"use strict";
+var $;
+(function ($) {
+})($ || ($ = {}));
+//mol/dom/context/context.ts
+;
+"use strict";
+//node/node.ts
+;
+"use strict";
+var $node = new Proxy({ require }, {
+    get(target, name, wrapper) {
+        if (target[name])
+            return target[name];
+        const mod = target.require('module');
+        if (mod.builtinModules.indexOf(name) >= 0)
+            return target.require(name);
+        if (name[0] === '.')
+            return target.require(name);
+        const path = target.require('path');
+        const fs = target.require('fs');
+        let dir = path.resolve('.');
+        const suffix = `./node_modules/${name}`;
+        const $$ = $;
+        while (!fs.existsSync(path.join(dir, suffix))) {
+            const parent = path.resolve(dir, '..');
+            if (parent === dir) {
+                $$.$mol_exec('.', 'npm', 'install', '--omit=dev', name);
+                try {
+                    $$.$mol_exec('.', 'npm', 'install', '--omit=dev', '@types/' + name);
+                }
+                catch { }
+                break;
+            }
+            else {
+                dir = parent;
+            }
+        }
+        return target.require(name);
+    },
+    set(target, name, value) {
+        target[name] = value;
+        return true;
+    },
+});
+require = (req => Object.assign(function require(name) {
+    return $node[name];
+}, req))(require);
+//node/node.node.ts
 ;
 "use strict";
 var $;
