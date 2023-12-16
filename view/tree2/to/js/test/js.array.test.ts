@@ -22,7 +22,7 @@ namespace $ {
 			$mol_assert_like(
 				foo.bar(),
 				[
-					// Number.NaN,
+					Number.NaN,
 					Number.NEGATIVE_INFINITY,
 					Number.POSITIVE_INFINITY,
 					0,
