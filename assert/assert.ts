@@ -26,7 +26,10 @@ namespace $ {
 	 * $mol_assert_fail( ()=>{ throw new Error( 'Parse error' ) } , Error ) // Passes because throws right class
 	 * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
 	 */
-	export function $mol_assert_fail( handler : ()=> any , ErrorRight? : any ) {
+	export function $mol_assert_fail(
+		handler: ()=> any ,
+		ErrorRight: string | typeof Error | typeof Promise
+	) {
 		
 		const fail = $.$mol_fail
 		
@@ -37,14 +40,12 @@ namespace $ {
 
 		} catch( error: any ) {
 			
-			if( !ErrorRight ) return error
-			
 			$.$mol_fail = fail
 
 			if( typeof ErrorRight === 'string' ) {
 				$mol_assert_equal( error.message, ErrorRight )
 			} else {
-				$mol_assert_ok( error instanceof ErrorRight )
+				$mol_assert_equal( error instanceof ErrorRight, true )
 			}
 			
 			return error
@@ -76,7 +77,7 @@ namespace $ {
 				if( i === j ) continue
 				if( !$mol_compare_deep( args[i], args[j] ) ) continue
 				
-				$mol_fail( new Error( `args[${ i }] = args[${ j }] = ${ args[i] }` ) )
+				$mol_fail( new Error( `args[${i}] = args[${j}] = ${ args[i] }` ) )
 				
 			}
 		}
@@ -96,7 +97,7 @@ namespace $ {
 			if( $mol_compare_deep( args[0] , args[i] ) ) continue
 			if( args[0] instanceof Element && args[i] instanceof Element && args[0].outerHTML === ( args[i] as Element ).outerHTML ) continue
 			
-			return $mol_fail( new Error( `Not like (1:${i+1})\n${ print( args[0] ) }\n---\n${ print( args[i] ) }` ) )
+			return $mol_fail( new Error( `args[0] ≠ args[${i}]\n${ print( args[0] ) }\n---\n${ print( args[i] ) }` ) )
 			
 		}
 	}
