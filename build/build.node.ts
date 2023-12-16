@@ -589,7 +589,8 @@ namespace $ {
 			if( mod !== this.root() ) this.modEnsure( parent.path() )
 			
 			var mapping = mod === this.root()
-				? this.$.$mol_tree2_from_string( `pack ${ mod.name() } git \\https://github.com/hyoo-ru/mam.git\n` )
+				? this.$.$mol_tree2_from_string( `pack ${ mod.name() } git \\https://github.com/hyoo-ru/mam.git
+` )
 				: this.modMeta( parent.path() )
 			
 			if( mod.exists() ) {

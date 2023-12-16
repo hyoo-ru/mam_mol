@@ -143,7 +143,7 @@ namespace $ {
 				if( input.type[0] === '/' ) return [
 					input.struct( '[,]', input.hack( belt ) ),
 				]
-				if( input.type && (input.type.match(/[\+\-]*NaN/) || !Number.isNaN( Number( input.type ) ) ) ) return [
+				if( input.type && $mol_view_tree2_value_number(input.type) ) return [
 					input
 				]
 
@@ -154,7 +154,7 @@ namespace $ {
 					
 					for( const over of input.kids ) {
 						
-						if( over.type?.[0] === '/' ) continue
+						if( over.type[0] === '/' ) continue
 						const bind = over.kids[0]
 						if( bind.type === '=>' ) continue
 

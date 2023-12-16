@@ -15,10 +15,10 @@ namespace $ {
 		return prop.data(name)
 	}
 	
-	function params_of( this: $, prop: $mol_tree2, ... val: $mol_tree2[] ) {
+	function channel_signature( this: $, prop: $mol_tree2, ... val: $mol_tree2[] ) {
 		const { name, key, next } = this.$mol_view_tree2_prop_parts(prop)
 
-		if (next && (! val.length || ! val[0].value) ) {
+		if (next && ! val[0]?.value ) {
 			this.$mol_fail(
 				err`Type empty for next value at ${prop.span}`
 			)
@@ -28,13 +28,16 @@ namespace $ {
 			prop.data(name),
 			prop.data('( '),
 			... key ? [
-				prop.data( 'id: any' + (next ? ', ' : '') ),
+				prop.data('id'),
+				prop.data( ': any' + ( next ? ', ' : '' ) ),
 			] : [],
 			... next ? [
-				prop.data( 'next?: ' ),
+				prop.data('next'),
+				prop.data( '?: ' ),
 				... val,
+				prop.data(' '),
 			] : [],
-			prop.data(' )'),
+			prop.data(')'),
 		] )
 		
 	}
@@ -61,24 +64,17 @@ namespace $ {
 
 	function primitive_type(input: $mol_tree2) {
 		let type = 'string'
-		if (input.type && (
-			input.type.match(/[\+\-]*NaN/)
-			|| !Number.isNaN( Number( input.type ) )
-		)) type = 'number'
+		if (input.type && $mol_view_tree2_value_number(input.type)) type = 'number'
 
 		if (input.type === 'true' || input.type === 'false') type = 'boolean'
 
 		return input.data(type)
 	}
 
-	function readonly_arr(this: $, input: $mol_tree2, infered: readonly $mol_tree2[]) {
-		return infered.length === 1 ? [
-			input.data('readonly( '),
-			infered[0],
-			input.data(' )[]'),
-		] : [
+	function readonly_arr(input: $mol_tree2, infered: readonly $mol_tree2[]) {
+		return [
 			input.data('readonly('),
-			input.struct( 'indent', infered),
+			infered.length === 1 ? infered[0] : input.struct( 'indent', infered),
 			input.data(')[]'),
 		]
 	}
@@ -121,10 +117,9 @@ namespace $ {
 						
 						'null': val => {
 							const kid = val.kids[0]
-							const kid_data = kid?.type ? kid.data(kid.type) : undefined
 
-							return kid_data
-								? [ kid_data, val.data( ' | null' ) ]
+							return kid?.type
+								? [ kid.data(kid.type), val.data( ' | null' ) ]
 								: [ val.data( 'any' ) ]
 						},
 						
@@ -219,7 +214,7 @@ namespace $ {
 
 										return kid.struct( 'line', kid.type.match(/(?:\*|\?)/)
 											? [
-												params_of.call(this, kid, ...ret),
+												channel_signature.call(this, kid, ...ret),
 												kid.data(': '),
 												...ret,
 												kid.data( ',' ),
@@ -261,7 +256,7 @@ namespace $ {
 									]
 
 								if (array_type[0].value === 'any') {
-									return readonly_arr.call(this, input, array_type)
+									return readonly_arr(input, array_type)
 								}
 
 								for (const kid of input.kids) {
@@ -288,7 +283,7 @@ namespace $ {
 									)
 								}
 
-								return readonly_arr.call(this, input, array_type)
+								return readonly_arr(input, array_type)
 							}
 
 							if( $mol_view_tree2_class_match( input ) ) {
@@ -355,7 +350,7 @@ namespace $ {
 	
 					return prop.struct( 'indent', [
 						prop.struct( 'line', [
-							params_of.call(this, prop, ... val ), // Parameter, not Return
+							channel_signature.call(this, prop, ... val ), // Parameter, not Return
 							prop.data(': '),
 							... val,
 						] )
