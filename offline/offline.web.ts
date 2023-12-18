@@ -19,7 +19,11 @@ namespace $ {
 				caches.delete( '$mol_offline' )
 				
 				;( self as any ).clients.claim()
-				console.info( '$mol_offline activated' )
+				
+				$$.$mol_log3_done({
+					place: '$mol_offline',
+					message: 'Activated',
+				})
 				
 			} )
 

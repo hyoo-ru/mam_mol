@@ -46,16 +46,16 @@ namespace $ {
 		'slice span - out of range'( $ ) {
 			const span = new $mol_span('test.ts', '', 1, 3, 5)
 
-			$mol_assert_fail(() => span.slice(-1, 3))
-			$mol_assert_fail(() => span.slice(1, 6))
-			$mol_assert_fail(() => span.slice(1, 10))
+			$mol_assert_fail( ()=> span.slice(-1, 3), `End value '3' can't be less than begin value (test.ts#1:3/5)` )
+			$mol_assert_fail( ()=> span.slice(1, 6), `End value '6' out of range (test.ts#1:3/5)` )
+			$mol_assert_fail( ()=> span.slice(1, 10), `End value '10' out of range (test.ts#1:3/5)` )
 		},
 
 		'error handling'( $ ) {
 			const span = new $mol_span('test.ts', '', 1, 3, 4)
-			const error = span.error('Some error\n')
+			const error = span.error('Some error')
 
-			$mol_assert_equal(error.message, 'Some error\ntest.ts#1:3/4')
+			$mol_assert_equal(error.message, 'Some error (test.ts#1:3/4)')
 		}
 
 	} )

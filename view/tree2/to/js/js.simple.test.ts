@@ -89,14 +89,14 @@ namespace $ {
 					Foo $mol_object
 						a!? null
 				`)
-			})
+			}, `Cannot destructure property 'name' of 'prop_parts(...)' as it is undefined. at ?#3:7/3` )
 
 			$mol_assert_fail(() => {
 				run(`
 					Foo $mol_object
 						b! 1
 				`)
-			})
+			}, `Cannot destructure property 'name' of 'prop_parts(...)' as it is undefined. at ?#3:7/2` )
 		},
 
 		'two classes'( $ ) {

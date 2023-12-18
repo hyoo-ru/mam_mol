@@ -27,7 +27,7 @@ namespace $ {
 				},
 			})
 			
-			$mol_assert_dom( list, <body>
+			$mol_assert_equal( list, <body>
 				<p data-rev="old">a</p>
 				<p data-rev="old">b</p>
 				<p data-rev="old">c</p>
@@ -59,7 +59,7 @@ namespace $ {
 				},
 			})
 			
-			$mol_assert_dom( list, <body>
+			$mol_assert_equal( list, <body>
 				<p data-rev="old">a</p>
 				<p data-rev="old">b</p>
 				<p data-rev="new">X</p>
@@ -93,7 +93,7 @@ namespace $ {
 				},
 			})
 			
-			$mol_assert_dom( list, <body>
+			$mol_assert_equal( list, <body>
 				<p data-rev="old">a</p>
 				<p data-rev="new">b</p>
 				<p data-rev="up">c</p>
@@ -128,7 +128,7 @@ namespace $ {
 				},
 			})
 			
-			$mol_assert_dom( list, <body>
+			$mol_assert_equal( list, <body>
 				<p data-rev="old">A</p>
 				<p data-rev="old">B</p>
 				<p data-rev="old">C</p>
@@ -161,7 +161,7 @@ namespace $ {
 				},
 			})
 			
-			$mol_assert_dom( list, <body>
+			$mol_assert_equal( list, <body>
 				<p data-rev="old">a</p>
 				<p data-rev="up">X</p>
 				<p data-rev="up">Y</p>

@@ -1002,7 +1002,7 @@ namespace $ {
 				$mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ... errors ) )
 			}
 
-			target.text( 'console.info("Audit passed")' )
+			target.text( `console.info( '%c ▫ $mol_build ▫ Audit passed', 'color:forestgreen; font-weight:bolder' )` )
 			
 			return [ target ]
 		}

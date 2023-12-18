@@ -28,14 +28,14 @@ namespace $ {
 
 			)
 
-			$mol_assert_fail( ()=> {
-				$.$mol_tree2_from_string( `
+			$mol_assert_fail(
+				()=> $.$mol_tree2_from_string( `
 					test
 						case \\foo
 						case \\bar
-				` )
-				.hack( root )
-			} )
+				` ).hack( root ),
+				'args[0] ≠ args[1]\n\\foo\n\n---\n\\bar\n\ntest\n?#2:6/4'
+			)
 
 		} ,
 
