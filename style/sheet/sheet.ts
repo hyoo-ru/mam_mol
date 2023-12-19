@@ -105,7 +105,7 @@ namespace $ {
 				} else if( key[0] === '[' && key[key.length-1] === ']' ) {
 
 					const attr = key.slice( 1, -1 )
-					const vals = config[ key as any ] as Record< string, any >
+					const vals = config[ key as any ] as any as Record< string, any >
 					
 					for( let val in vals ) {
 						make_class( selector( prefix , path ) + ':where([' + attr + '=' + JSON.stringify( val ) + '])' , [] , vals[val] )
