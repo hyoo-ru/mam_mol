@@ -20,6 +20,7 @@ namespace $ {
 
 	export type $mol_style_guard< View extends $mol_view , Config > =
 	& { [ key in Keys< View > ]?: unknown }
+	& $mol_style_properties
 	& {
 		[ key in keyof Config ]
 		
