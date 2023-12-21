@@ -13,6 +13,10 @@ namespace $ {
 			return this.canvas.getContext( '2d' )
 		}
 		
+		get bitmap() {
+			return this.context!.getImageData( 0, 0, this.canvas.width, this.canvas.height )
+		}
+		
 		@ $mol_action
 		static fit(
 			image: Exclude< CanvasImageSource, VideoFrame > | Blob | string,
