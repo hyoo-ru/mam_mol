@@ -28,7 +28,7 @@ $mol_audio_demo_vibe $mol_example_small
 						Filter null
 						value? <=> shape? null
 						options /$mol_audio_vibe_shape
-							\sine 
+							\sine
 							\square
 							\sawtooth
 							\triangle

@@ -9,6 +9,7 @@ namespace $ {
 			return .5
 		}
 
+		@ $mol_mem
 		duration() {
 			let duration = 0
 			for (const input of this.input_connected()) {

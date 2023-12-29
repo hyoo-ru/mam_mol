@@ -16,7 +16,7 @@ namespace $ {
 			return 1
 		}
 
-		promise = $mol_promise<void>()
+		protected promise = $mol_promise<void>()
 
 		@ $mol_mem
 		wait() {
