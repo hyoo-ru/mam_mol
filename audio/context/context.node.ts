@@ -18,14 +18,14 @@ namespace $ {
 		@ $mol_memo.method
 		static override context() {
 			const context = this.create_context()
+			context.outStream = process.stdout
 
-			const Speaker = this.$.$node['speaker']
-
-			context.outStream = new Speaker({
-				channels: context.format.numberOfChannels,
-				bitDepth: context.format.bitDepth,
-				sampleRate: context.sampleRate
-			})
+			// const Speaker = this.$.$node.speaker
+			// context.outStream = new Speaker({
+			// 	channels: context.format.numberOfChannels,
+			// 	bitDepth: context.format.bitDepth,
+			// 	sampleRate: context.sampleRate
+			// })
 
 			return context
 		}
