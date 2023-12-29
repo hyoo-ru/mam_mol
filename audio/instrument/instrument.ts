@@ -1,17 +1,15 @@
 namespace $ {
-	export class $mol_audio_scheduled extends $mol_audio_node {
-		@ $mol_mem
-		override node(): AudioScheduledSourceNode {
+	export class $mol_audio_instrument extends $mol_audio_node {
+		override node_raw(): AudioScheduledSourceNode {
 			throw new Error('implement')
 		}
 
-		duration() {
-			return 1000
+		override node() {
+			return this.node_raw()
 		}
 
-		@ $mol_mem
-		node_configured() {
-			return this.node()
+		duration() {
+			return 1
 		}
 
 		promise = $mol_promise<void>()
@@ -21,12 +19,16 @@ namespace $ {
 			return this.promise
 		}
 
+		end() {
+			this.active( false )
+		}
+
 		@ $mol_mem
 		active( next?: boolean ): boolean {
 			
 			$mol_wire_solid()
 			
-			const node = this.node_configured()
+			const node = this.node()
 
 			const prev = $mol_wire_probe( ()=> this.active() )
 			if( prev === next ) return next ?? false

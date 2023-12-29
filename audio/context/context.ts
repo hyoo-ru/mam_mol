@@ -1,3 +1,7 @@
 namespace $ {
-	export let $mol_audio_context = undefined as unknown as AudioContext
+	export class $mol_audio_context extends $mol_object2 {
+		static context(): AudioContext {
+			throw new Error('implement')
+		}
+	}
 }

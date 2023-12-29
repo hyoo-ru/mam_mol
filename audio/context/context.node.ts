@@ -1,12 +1,13 @@
 namespace $ {
-	// const api = require('web-audio-api') as { AudioContext: new() => AudioContext }
 
-	// export const $mol_audio_context_node = new api.AudioContext()
-	export const $mol_audio_context_node = new Proxy({} as AudioContext, {
-		get() {
-			throw new Error('Not implemented')
+	export class $mol_audio_context_node extends $mol_audio_context {
+
+		@ $mol_memo.method
+		static override context() {
+			const AudioContext = this.$.$mol_dom_context.AudioContext || this.$.$node['web-audio-api'].AudioContext
+			return new AudioContext()
 		}
-	})
+	}
 
 	$.$mol_audio_context = $mol_audio_context_node
 }

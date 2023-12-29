@@ -13,7 +13,7 @@ namespace $ {
 			let duration = 0
 			for (const input of this.input_connected()) {
 				if (input instanceof $mol_audio_room) duration += input.duration()
-				if (input instanceof $mol_audio_scheduled) duration += input.duration()
+				if (input instanceof $mol_audio_instrument) duration += input.duration()
 			}
 			return duration || this.duration_default()
 		}

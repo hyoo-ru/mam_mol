@@ -1,10 +1,10 @@
 namespace $ {
-	export class $mol_audio_sample extends $mol_audio_scheduled {
+	export class $mol_audio_sample extends $mol_audio_instrument {
 		@ $mol_mem
-		override node() { return this.context().createBufferSource() }
+		override node_raw() { return this.context().createBufferSource() }
 
 		override duration() {
-			return this.audio_buffer().duration * 1000
+			return this.audio_buffer().duration
 		}
 
 		buffer() {
@@ -17,10 +17,10 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		override node_configured() {
-			const node = this.node()
+		override node() {
+			const node = this.node_raw()
 			node.buffer = this.audio_buffer()
-			node.onended = $mol_wire_async(() => this.active(false))
+			node.onended = $mol_wire_async(() => this.end())
 
 			return node
 		}
