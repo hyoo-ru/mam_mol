@@ -1,7 +1,7 @@
 namespace $ {
 
 	type AudioContextNode = {
-		outStream?: InstanceType<typeof $node.stream.Writable> | null
+		outStream?: NodeJS.WriteStream | null
 		format: {
 			numberOfChannels: number
 			bitDepth: number
@@ -18,7 +18,6 @@ namespace $ {
 		@ $mol_memo.method
 		static override context() {
 			const context = this.create_context()
-			context.outStream = process.stdout
 
 			// const Speaker = this.$.$node.speaker
 			// context.outStream = new Speaker({
