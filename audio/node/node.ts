@@ -10,6 +10,15 @@ namespace $ {
 		}
 
 		@ $mol_mem
+		duration() {
+			let duration = 0
+			for (const input of this.input_connected()) duration = Math.max(duration, input.duration())
+
+			return duration
+		}
+		
+
+		@ $mol_mem
 		input( next = [] as readonly $mol_audio_node[] ) { return next }
 		
 		@ $mol_mem

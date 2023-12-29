@@ -21,6 +21,10 @@ namespace $ {
 		@ $mol_mem
 		shape( next: $mol_audio_vibe_shape = 'sine' ) { return next }
 
+		override duration() {
+			return 0.5
+		}
+
 		@ $mol_mem
 		override node() {
 			const node = super.node()

@@ -7,13 +7,9 @@ namespace $ {
 		@ $mol_mem
 		override node() {
 			const node = super.node()
-			node.onended = $mol_wire_async(() => this.end())
+			node.onended = $mol_wire_async((e: Event) => this.end(e))
 
 			return node
-		}
-
-		duration() {
-			return 1
 		}
 
 		protected promise = $mol_promise<void>()
@@ -23,7 +19,7 @@ namespace $ {
 			return this.promise
 		}
 
-		end() {
+		end(e: Event) {
 			this.active( false )
 		}
 
