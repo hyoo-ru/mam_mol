@@ -2,7 +2,7 @@ $mol_audio_demo $mol_example_small
 	title \WebAudio API example
 	Beep $mol_audio_room
 		play => beep_play
-		duration .1
+		duration 0.1
 		input /
 			<= Beep_vibe $mol_audio_vibe
 				freq 440

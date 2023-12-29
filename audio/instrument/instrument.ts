@@ -32,7 +32,7 @@ namespace $ {
 			
 			$mol_wire_solid()
 			
-			const node = this.node()
+			const node = next === false ? this.node_raw() : this.node()
 
 			const prev = $mol_wire_probe( ()=> this.active() )
 			if( prev === next ) return next ?? false
