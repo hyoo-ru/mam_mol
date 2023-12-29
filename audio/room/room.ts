@@ -20,7 +20,7 @@ namespace $ {
 		@ $mol_action
 		play() {
 			this.output()
-			this.$.$mol_wait_timeout( this.duration() )
+			this.$.$mol_wait_timeout( this.duration() * 1000 )
 		}
 		
 	}
