@@ -6,7 +6,7 @@ namespace $ {
 		node_raw() { return this.context().destination as AudioNode }
 
 		node() {
-			return this.node_raw()
+			return this.node_raw() as ReturnType<this['node_raw']>
 		}
 
 		@ $mol_mem

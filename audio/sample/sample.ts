@@ -18,9 +18,8 @@ namespace $ {
 
 		@ $mol_mem
 		override node() {
-			const node = this.node_raw()
+			const node = super.node()
 			node.buffer = this.audio_buffer()
-			node.onended = $mol_wire_async(() => this.end())
 
 			return node
 		}

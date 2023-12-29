@@ -4,8 +4,12 @@ namespace $ {
 			throw new Error('implement')
 		}
 
+		@ $mol_mem
 		override node() {
-			return this.node_raw()
+			const node = super.node()
+			node.onended = $mol_wire_async(() => this.end())
+
+			return node
 		}
 
 		duration() {

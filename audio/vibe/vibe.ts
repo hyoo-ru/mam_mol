@@ -23,7 +23,7 @@ namespace $ {
 
 		@ $mol_mem
 		override node() {
-			const node = this.node_raw()
+			const node = super.node()
 			node.frequency.setValueAtTime( this.freq(), this.time() )
 			node.type = this.shape()
 

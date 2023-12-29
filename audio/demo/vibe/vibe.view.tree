@@ -10,11 +10,11 @@ $mol_audio_demo_vibe $mol_example_small
 	sub /
 		<= List $mol_list rows /
 			<= Duration $mol_labeler
-				title <= duration_label \Duration, ms
+				title <= duration_label \Duration, s
 				content /
 					<= Duration_num $mol_number
-						precision_change 50
-						value? <=> duration? 500
+						precision_change 0.05
+						value? <=> duration? 0.5
 			<= Frequency $mol_labeler
 				title <= frequency_label \Frequency, Hz
 				content /
