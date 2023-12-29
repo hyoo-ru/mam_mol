@@ -14,7 +14,7 @@ namespace $ {
 		
 		@ $mol_mem
 		override node() { return this.context().createOscillator() }
-		
+
 		@ $mol_mem
 		freq( next = 440 ) { return next }
 

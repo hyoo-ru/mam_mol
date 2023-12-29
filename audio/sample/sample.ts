@@ -3,7 +3,7 @@ namespace $ {
 		@ $mol_mem
 		override node() { return this.context().createBufferSource() }
 
-		duration() {
+		override duration() {
 			return this.audio_buffer().duration * 1000
 		}
 

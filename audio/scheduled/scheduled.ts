@@ -5,6 +5,10 @@ namespace $ {
 			throw new Error('implement')
 		}
 
+		duration() {
+			return 1000
+		}
+
 		@ $mol_mem
 		node_configured() {
 			return this.node()
