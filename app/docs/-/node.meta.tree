@@ -24,6 +24,7 @@
 	pack calc git \https://github.com/hyoo-ru/calc.hyoo.ru.git
 	pack case git \https://github.com/hyoo-ru/case.hyoo.ru.git
 	pack crowd git \https://github.com/hyoo-ru/crowd.hyoo.ru.git
+	pack crus git \https://github.com/hyoo-ru/crus.hyoo.ru.git
 	pack draw git \https://github.com/hyoo-ru/draw.hyoo.ru.git
 	pack game git \https://github.com/hyoo-ru/game.hyoo.ru.git
 	pack github git \https://github.com/hyoo-ru/github.hyoo.ru.git
@@ -57,6 +58,7 @@
 	pack shelter git \https://github.com/hyoo-ru/shelter.hyoo.ru.git
 	pack showcase git \https://github.com/hyoo-ru/showcase.hyoo.ru.git
 	pack speculant git \https://github.com/hyoo-ru/speculant.hyoo.ru.git
+	pack square git \https://github.com/hyoo-ru/square.hyoo.ru.git
 	pack sketch git \https://github.com/hyoo-ru/sketch.hyoo.ru.git
 	pack slides git \https://github.com/hyoo-ru/slides.hyoo.ru.git
 	pack studio git \https://github.com/hyoo-ru/studio.hyoo.ru.git
