@@ -1,21 +1,30 @@
 namespace $ {
 	export class $mol_audio_node extends $mol_object2 {
-		
-		@ $mol_memo.method
-		static context() {
-			return new AudioContext
-		}
+		context() { return this.$.$mol_audio_context.context() }
 		
 		@ $mol_mem
-		node() { return $mol_audio_node.context().destination as AudioNode }
+		node_raw() { return this.context().destination as AudioNode }
+
+		node() {
+			return this.node_raw() as ReturnType<this['node_raw']>
+		}
+
+		@ $mol_mem
+		duration() {
+			let duration = 0
+			for (const input of this.input_connected()) duration = Math.max(duration, input.duration())
+
+			return duration
+		}
 		
+
 		@ $mol_mem
 		input( next = [] as readonly $mol_audio_node[] ) { return next }
 		
 		@ $mol_mem
 		input_connected() {
 			
-			const node = this.node()
+			const node = this.node_raw()
 			
 			const prev = $mol_mem_cached( ()=> this.input_connected() ) ?? []
 			const next = this.input()
@@ -35,14 +44,14 @@ namespace $ {
 		@ $mol_mem
 		output() {
 			this.input_connected()
-			return this.node()
+			return this.node_raw()
 		}
 		
-		time() { return $mol_audio_node.context().currentTime }
+		time() { return this.context().currentTime }
 		
 		destructor() {
 			
-			const node = this.node()
+			const node = this.node_raw()
 			
 			for( const src of this.input() ) {
 				src.output().disconnect( node )
