@@ -4697,9 +4697,17 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_audio_node extends $mol_object2 {
+    class $mol_audio_context extends $mol_object2 {
         static context(): AudioContext;
-        node(): AudioNode;
+    }
+}
+
+declare namespace $ {
+    class $mol_audio_node extends $mol_object2 {
+        context(): AudioContext;
+        node_raw(): AudioNode;
+        node(): ReturnType<this["node_raw"]>;
+        duration(): number;
         input(next?: readonly $mol_audio_node[]): readonly $mol_audio_node[];
         input_connected(): readonly $mol_audio_node[];
         output(): AudioNode;
@@ -4710,20 +4718,37 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_audio_room extends $mol_audio_node {
-        duration(): number;
         play(): void;
     }
 }
 
 declare namespace $ {
+    class $mol_audio_instrument extends $mol_audio_node {
+        node_raw(): AudioScheduledSourceNode;
+        node(): ReturnType<this["node_raw"]>;
+        protected promise: Promise<void> & {
+            done: (res: void | PromiseLike<void>) => void;
+            fail: (error?: any) => void;
+        };
+        wait(): Promise<void> & {
+            done: (res: void | PromiseLike<void>) => void;
+            fail: (error?: any) => void;
+        };
+        end(e: Event): void;
+        active(next?: boolean): boolean;
+        destructor(): void;
+        output(): AudioNode;
+    }
+}
+
+declare namespace $ {
     type $mol_audio_vibe_shape = 'sine' | 'square' | 'sawtooth' | 'triangle' | 'custom';
-    class $mol_audio_vibe extends $mol_audio_node {
-        node(): OscillatorNode;
+    class $mol_audio_vibe extends $mol_audio_instrument {
+        node_raw(): OscillatorNode;
         freq(next?: number): number;
         shape(next?: $mol_audio_vibe_shape): $mol_audio_vibe_shape;
-        active(next?: boolean): boolean;
-        output(): AudioNode;
-        destructor(): void;
+        duration(): number;
+        node(): ReturnType<this["node_raw"]>;
     }
 }
 

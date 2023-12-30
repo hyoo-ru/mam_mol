@@ -23,7 +23,7 @@ namespace $ {
 		 * ```tree
 		 * Beep $mol_audio_room
 		 * 	play => beep_play
-		 * 	duration 100
+		 * 	duration 0.1
 		 * 	input / <= Beep_vibe
 		 * ```
 		 */
@@ -31,7 +31,7 @@ namespace $ {
 		Beep() {
 			const obj = new this.$.$mol_audio_room()
 			
-			obj.duration = () => 100
+			obj.duration = () => 0.1
 			obj.input = () => [
 				this.Beep_vibe()
 			] as readonly any[]
@@ -52,7 +52,7 @@ namespace $ {
 		 * ```tree
 		 * Noise $mol_audio_room
 		 * 	play => noise_play
-		 * 	duration 1000
+		 * 	duration 1
 		 * 	input / <= Noise_vibe
 		 * ```
 		 */
@@ -60,7 +60,7 @@ namespace $ {
 		Noise() {
 			const obj = new this.$.$mol_audio_room()
 			
-			obj.duration = () => 1000
+			obj.duration = () => 1
 			obj.input = () => [
 				this.Noise_vibe()
 			] as readonly any[]

@@ -91,28 +91,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * duration_label \Duration, ms
+		 * duration_label \Duration, s
 		 * ```
 		 */
 		duration_label() {
-			return "Duration, ms"
+			return "Duration, s"
 		}
 		
 		/**
 		 * ```tree
-		 * duration? 500
+		 * duration? 0.5
 		 * ```
 		 */
 		@ $mol_mem
 		duration(next?: any) {
 			if ( next !== undefined ) return next as never
-			return 500
+			return 0.5
 		}
 		
 		/**
 		 * ```tree
 		 * Duration_num $mol_number
-		 * 	precision_change 50
+		 * 	precision_change 0.05
 		 * 	value? <=> duration?
 		 * ```
 		 */
@@ -120,7 +120,7 @@ namespace $ {
 		Duration_num() {
 			const obj = new this.$.$mol_number()
 			
-			obj.precision_change = () => 50
+			obj.precision_change = () => 0.05
 			obj.value = (next?: any) => this.duration(next)
 			
 			return obj
@@ -227,7 +227,7 @@ namespace $ {
 		 * 	Filter null
 		 * 	value? <=> shape?
 		 * 	options /$mol_audio_vibe_shape
-		 * 		\sine 
+		 * 		\sine
 		 * 		\square
 		 * 		\sawtooth
 		 * 		\triangle
@@ -240,7 +240,7 @@ namespace $ {
 			obj.Filter = () => null as any
 			obj.value = (next?: any) => this.shape(next)
 			obj.options = () => [
-				"sine ",
+				"sine",
 				"square",
 				"sawtooth",
 				"triangle"

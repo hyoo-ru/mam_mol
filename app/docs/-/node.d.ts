@@ -4725,6 +4725,133 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_audio_context extends $mol_object2 {
+        static context(): AudioContext;
+    }
+}
+
+declare namespace $ {
+    class $mol_audio_node extends $mol_object2 {
+        context(): AudioContext;
+        node_raw(): AudioNode;
+        node(): ReturnType<this["node_raw"]>;
+        duration(): number;
+        input(next?: readonly $mol_audio_node[]): readonly $mol_audio_node[];
+        input_connected(): readonly $mol_audio_node[];
+        output(): AudioNode;
+        time(): number;
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_audio_room extends $mol_audio_node {
+        play(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_audio_instrument extends $mol_audio_node {
+        node_raw(): AudioScheduledSourceNode;
+        node(): ReturnType<this["node_raw"]>;
+        protected promise: Promise<void> & {
+            done: (res: void | PromiseLike<void>) => void;
+            fail: (error?: any) => void;
+        };
+        wait(): Promise<void> & {
+            done: (res: void | PromiseLike<void>) => void;
+            fail: (error?: any) => void;
+        };
+        end(e: Event): void;
+        active(next?: boolean): boolean;
+        destructor(): void;
+        output(): AudioNode;
+    }
+}
+
+declare namespace $ {
+    type $mol_audio_vibe_shape = 'sine' | 'square' | 'sawtooth' | 'triangle' | 'custom';
+    class $mol_audio_vibe extends $mol_audio_instrument {
+        node_raw(): OscillatorNode;
+        freq(next?: number): number;
+        shape(next?: $mol_audio_vibe_shape): $mol_audio_vibe_shape;
+        duration(): number;
+        node(): ReturnType<this["node_raw"]>;
+    }
+}
+
+declare namespace $ {
+    class $mol_audio_demo extends $mol_example_small {
+        title(): string;
+        beep_play(): void;
+        Beep(): $mol_audio_room;
+        noise_play(): void;
+        Noise(): $mol_audio_room;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        aspects(): readonly any[];
+        Beep_vibe(): $mol_audio_vibe;
+        noise_freq(): number;
+        Noise_vibe(): $mol_audio_vibe;
+        Beep_play(): $mol_button_minor;
+        Noise_play(): $mol_button_minor;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_audio_demo extends $.$mol_audio_demo {
+        noise_freq(): number;
+    }
+}
+
+declare namespace $ {
+    class $mol_labeler extends $mol_list {
+        rows(): readonly any[];
+        label(): readonly $mol_view_content[];
+        Label(): $mol_view;
+        content(): readonly any[];
+        Content(): $mol_view;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_audio_demo_vibe extends $mol_example_small {
+        title(): string;
+        play(): void;
+        Room(): $mol_audio_room;
+        sub(): readonly any[];
+        tags(): readonly any[];
+        aspects(): readonly any[];
+        Beep_vibe(): $mol_audio_vibe;
+        duration_label(): string;
+        duration(next?: any): number;
+        Duration_num(): $$.$mol_number;
+        Duration(): $mol_labeler;
+        frequency_label(): string;
+        frequency(next?: any): number;
+        Frequency_num(): $$.$mol_number;
+        Frequency(): $mol_labeler;
+        shape_label(): string;
+        shape(next?: any): any;
+        Shape_select(): $$.$mol_select;
+        Shape(): $mol_labeler;
+        Play_icon(): $mol_icon_play;
+        Play_button(): $mol_button_major;
+        Button_row(): $mol_row;
+        List(): $$.$mol_list;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_audio_demo_vibe extends $.$mol_audio_demo_vibe {
+        shape(next?: $mol_audio_vibe_shape): $mol_audio_vibe_shape;
+    }
+}
+
+declare namespace $ {
     class $mol_avatar extends $mol_icon {
         view_box(): string;
         id(): string;
@@ -4739,19 +4866,6 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_avatar extends $.$mol_avatar {
         path(): string;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    class $mol_labeler extends $mol_list {
-        rows(): readonly any[];
-        label(): readonly $mol_view_content[];
-        Label(): $mol_view;
-        content(): readonly any[];
-        Content(): $mol_view;
     }
 }
 

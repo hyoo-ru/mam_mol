@@ -328,12 +328,17 @@
     "$mol_row",
     "$mol_audio_demo",
     "$mol_audio",
+    "$mol_audio_room",
+    "$mol_audio_node",
+    "$mol_audio_context",
+    "$mol_audio_vibe",
+    "$mol_audio_instrument",
     "$mol_audio_demo_vibe",
+    "$mol_labeler",
     "$mol_avatar_demo",
     "$mol_avatar",
     "$mol_hash_string",
     "$mol_hash",
-    "$mol_labeler",
     "$mol_bar_demo",
     "$mol_bar",
     "$mol_check_box",
@@ -635,6 +640,7 @@
   "dependencies": {
     "jsdom": "*",
     "chokidar": "*",
-    "undici": "*"
+    "undici": "*",
+    "web-audio-api": "*"
   }
 }

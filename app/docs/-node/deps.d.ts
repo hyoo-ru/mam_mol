@@ -8,4 +8,5 @@ interface $node {
 	"buffer" : typeof import( "buffer" )
 	"undici" : typeof import( "undici" )
 	"crypto" : typeof import( "crypto" )
+	"web-audio-api" : typeof import( "web-audio-api" )
 }

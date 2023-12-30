@@ -1507,13 +1507,13 @@ $mol_audio_demo $mol_example_small
 	title \WebAudio API example
 	Beep $mol_audio_room
 		play => beep_play
-		duration 100
+		duration 0.1
 		input /
 			<= Beep_vibe $mol_audio_vibe
 				freq 440
 	Noise $mol_audio_room
 		play => noise_play
-		duration 1000
+		duration 1
 		input /
 			<= Noise_vibe $mol_audio_vibe
 				freq <= noise_freq 440
@@ -1551,11 +1551,11 @@ $mol_audio_demo_vibe $mol_example_small
 	sub /
 		<= List $mol_list rows /
 			<= Duration $mol_labeler
-				title <= duration_label \Duration, ms
+				title <= duration_label \Duration, s
 				content /
 					<= Duration_num $mol_number
-						precision_change 50
-						value? <=> duration? 500
+						precision_change 0.05
+						value? <=> duration? 0.5
 			<= Frequency $mol_labeler
 				title <= frequency_label \Frequency, Hz
 				content /
@@ -1569,7 +1569,7 @@ $mol_audio_demo_vibe $mol_example_small
 						Filter null
 						value? <=> shape? null
 						options /$mol_audio_vibe_shape
-							\sine 
+							\sine
 							\square
 							\sawtooth
 							\triangle
