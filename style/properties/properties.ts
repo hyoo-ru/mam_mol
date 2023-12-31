@@ -292,7 +292,7 @@ namespace $ {
 			 * @see https://developer.mozilla.org/ru/docs/Web/CSS/background-image
 			 */
 			image?:
-			| readonly( readonly [ $mol_style_func<'url'> | string&{} ] )[]
+			| readonly( readonly [ $mol_style_func< $mol_style_func_image > | string&{} ] )[]
 			| 'none' | Common
 			
 			/** 
