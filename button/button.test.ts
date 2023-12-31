@@ -37,7 +37,7 @@ namespace $.$$ {
 			$mol_assert_not( clicked )
 		} ,
 		
-		'Store error'($) {
+		async 'Store error'($) {
 			
 			const clicker = $mol_button.make({
 				$,
@@ -46,6 +46,7 @@ namespace $.$$ {
 			
 			const event = $mol_dom_context.document.createEvent( 'mouseevent' )
 			$mol_assert_fail( ()=> clicker.event_activate( event ), 'Test error' )
+			await Promise.resolve()
 			$mol_assert_equal( clicker.status()[0].message, 'Test error' )
 			
 		} ,
