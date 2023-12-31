@@ -5051,10 +5051,11 @@ declare namespace $ {
         spread_ids(): readonly string[];
         menu_filter_enabled(): boolean;
         spread_ids_filtered(): readonly string[];
+        menu_tools(): readonly any[];
+        addon_tools(): readonly any[];
         pages(): readonly any[];
         Spread_close(): $$.$mol_link;
         menu_title(): string;
-        menu_tools(): readonly any[];
         menu_head(): readonly any[];
         menu_filter(next?: any): string;
         Menu_filter(): $$.$mol_search;

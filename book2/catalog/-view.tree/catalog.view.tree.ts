@@ -83,6 +83,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * menu_tools /
+		 * ```
+		 */
+		menu_tools() {
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * addon_tools /
+		 * ```
+		 */
+		addon_tools() {
+			return [
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
 		 * pages / <= Menu
 		 * ```
 		 */
@@ -118,16 +138,6 @@ namespace $ {
 		 */
 		menu_title() {
 			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * menu_tools /
-		 * ```
-		 */
-		menu_tools() {
-			return [
-			] as readonly any[]
 		}
 		
 		/**
@@ -306,7 +316,9 @@ namespace $ {
 		 * 	Title => Menu_title
 		 * 	title <= menu_title
 		 * 	Tools => Menu_tools
-		 * 	tools <= menu_tools
+		 * 	tools /
+		 * 		^ menu_tools
+		 * 		^ addon_tools
 		 * 	head <= menu_head
 		 * 	body <= menu_body
 		 * 	foot <= menu_foot
@@ -317,7 +329,10 @@ namespace $ {
 			const obj = new this.$.$mol_page()
 			
 			obj.title = () => this.menu_title()
-			obj.tools = () => this.menu_tools()
+			obj.tools = () => [
+				...this.menu_tools(),
+				...this.addon_tools()
+			] as readonly any[]
 			obj.head = () => this.menu_head()
 			obj.body = () => this.menu_body()
 			obj.foot = () => this.menu_foot()

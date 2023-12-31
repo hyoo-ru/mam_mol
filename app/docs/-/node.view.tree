@@ -1728,12 +1728,16 @@ $mol_book2_catalog $mol_book2
 	spread_ids /string
 	menu_filter_enabled false
 	spread_ids_filtered /string
+	menu_tools /
+	addon_tools /
 	pages /
 		<= Menu $mol_page
 			Title => Menu_title
 			title <= menu_title \
 			Tools => Menu_tools
-			tools <= menu_tools /
+			tools /
+				^ menu_tools
+				^ addon_tools
 			head <= menu_head /
 				<= Menu_title
 				<= Menu_tools
