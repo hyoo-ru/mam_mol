@@ -6,14 +6,21 @@ namespace $ {
 	| 'rgba'
 	| 'var'
 	| 'clamp'
-	| 'url'
 	| 'scale'
 	| 'cubic-bezier'
 	| 'linear'
 	| 'steps'
+	| $mol_style_func_image
 	| $mol_style_func_filter
 	
-	export type $mol_style_func_filter = 'blur'
+	export type $mol_style_func_image =
+	| 'url'
+	| 'linear-gradient'
+	| 'radial-gradient'
+	| 'conic-gradient'
+	
+	export type $mol_style_func_filter =
+	| 'blur'
 	| 'brightness'
 	| 'contrast'
 	| 'drop-shadow'
@@ -44,6 +51,10 @@ namespace $ {
 
 		prefix() { return this.name + '(' }
 		postfix() { return ')' }
+
+		static linear_gradient< Value >( value : Value ) {
+			return new $mol_style_func( 'linear-gradient' , value )
+		}
 
 		static calc< Value >( value : Value ) {
 			return new $mol_style_func( 'calc' , value )
