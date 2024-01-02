@@ -129,7 +129,7 @@ namespace $ {
 			if( this.pub_from === 0 ) {
 				;( this.host as any ?? this.task )[ this.field() ] = null
 			} else {
-				;( this.host as any ?? this.task )[ this.field() ].delete((this as any)[ Symbol.toStringTag ] )
+				;( this.host as any ?? this.task )[ this.field() ].delete( $mol_key( this.args[0] ) )
 			}
 			
 		}
