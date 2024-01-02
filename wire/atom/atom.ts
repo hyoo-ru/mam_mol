@@ -43,17 +43,18 @@ namespace $ {
 			const field = task.name + '()'
 			let dict = Object.getOwnPropertyDescriptor( host ?? task, field )?.value
 			const prefix = (host as any)?.[ Symbol.toStringTag ] ?? ( host instanceof Function ? $$.$mol_func_name( host ) : host )
-			const id = `${ prefix }.${ task.name }(${ $mol_key( key ).replace( /^"|"$/g, "'" ) })`
+			const key_str = $mol_key( key )
 			
 			if( dict ) {
-				const existen = dict.get( id )
+				const existen = dict.get( key_str )
 				if( existen ) return existen
 			} else {
 				dict = ( host as any ?? task )[ field ] = new Map<any,any>()
 			}
 			
+			const id = `${ prefix }.${ task.name }(${ key_str.replace( /^"|"$/g, "'" ) })`
 			const fiber = new $mol_wire_atom( id, task, host, [ key ] as any as Args )
-			dict.set( id, fiber )
+			dict.set( key_str, fiber )
 			
 			return fiber
 		}
