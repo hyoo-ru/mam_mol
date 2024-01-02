@@ -128,8 +128,10 @@ namespace $ {
 			}[ this.cursor ] ?? this.cursor.toString()
 			
 			return $mol_dev_format_div( {},
-				$mol_dev_format_native( this ),
-				$mol_dev_format_shade( cursor + ' ' ),
+				$mol_dev_format_auto({
+					[ $mol_dev_format_head ]: ()=> $mol_dev_format_shade( cursor ),
+					[ $mol_dev_format_body ]: ()=> $mol_dev_format_native( this ),
+				}),
 				$mol_dev_format_auto( this.cache ),
 			)
 			
