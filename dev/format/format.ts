@@ -66,10 +66,6 @@ namespace $ {
 		
 		if( obj == null ) return $mol_dev_format_shade( String( obj ) )
 
-		if( typeof obj === 'object' && $mol_dev_format_head in obj ) {
-			return obj[ $mol_dev_format_head ]()
-		}
-
 		return [
 			'object' ,
 			{
