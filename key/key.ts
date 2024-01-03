@@ -6,12 +6,14 @@ namespace $ {
 	export function $mol_key< Value >( value : Value ) : string {
 		
 		if( typeof value === 'bigint' ) return value.toString() + 'n'
+		if( typeof value === 'symbol' ) return value.description!
 		if( !value ) return JSON.stringify( value )
 		if( typeof value !== 'object' && typeof value !== 'function' ) return JSON.stringify( value )
 		
 		return JSON.stringify( value, ( field, value )=> {
 			
 			if( typeof value === 'bigint' ) return value.toString() + 'n'
+			if( typeof value === 'symbol' ) return value.description
 			if( !value ) return value
 			if( typeof value !== 'object' && typeof value !== 'function' ) return value
 			if( Array.isArray( value ) ) return value

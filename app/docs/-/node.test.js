@@ -912,6 +912,8 @@ var $;
     function $mol_key(value) {
         if (typeof value === 'bigint')
             return value.toString() + 'n';
+        if (typeof value === 'symbol')
+            return value.description;
         if (!value)
             return JSON.stringify(value);
         if (typeof value !== 'object' && typeof value !== 'function')
@@ -919,6 +921,8 @@ var $;
         return JSON.stringify(value, (field, value) => {
             if (typeof value === 'bigint')
                 return value.toString() + 'n';
+            if (typeof value === 'symbol')
+                return value.description;
             if (!value)
                 return value;
             if (typeof value !== 'object' && typeof value !== 'function')
