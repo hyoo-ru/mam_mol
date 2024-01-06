@@ -105,6 +105,8 @@ namespace $ {
 	const print = ( val : any ) => {
 		
 		if( !val ) return val
+		if( typeof val === 'bigint' ) return String(val) + 'n'
+		if( typeof val === 'symbol' ) return `Symbol(${val.description})`
 		if( typeof val !== 'object' ) return val
 		if( 'outerHTML' in val ) return val.outerHTML
 		
