@@ -31,7 +31,7 @@ namespace $ {
 					return existen
 				}
 				
-				const next = new $mol_wire_task( `${ (host as any)?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, task, host, args )
+				const next = new $mol_wire_task( `${ (host as any)?.[ Symbol.toStringTag ] ?? host }.${ task.name }<#>`, task, host, args )
 				
 				// Disabled because non-idempotency is required for try-catch
 				if( existen?.temp ) {
