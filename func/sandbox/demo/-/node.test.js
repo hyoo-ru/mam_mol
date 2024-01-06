@@ -288,7 +288,7 @@ var $;
         destructor() { }
         static destructor() { }
         toString() {
-            return this[Symbol.toStringTag] || this.constructor.name + '()';
+            return this[Symbol.toStringTag] || this.constructor.name + '<>';
         }
         static toJSON() {
             return this[Symbol.toStringTag] || this.$.$mol_func_name(this);

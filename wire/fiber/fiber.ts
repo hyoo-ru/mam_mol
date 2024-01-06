@@ -83,7 +83,7 @@ namespace $ {
 		}
 		
 		field() {
-			return this.task.name + '()'
+			return this.task.name + '<>'
 		}
 		
 		constructor(

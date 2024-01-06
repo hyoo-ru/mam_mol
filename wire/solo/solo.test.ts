@@ -609,7 +609,7 @@ namespace $ {
 
 			}
 
-			$mol_assert_equal( `${ App.title() }` , 'App.title()' )
+			$mol_assert_equal( `${ App.title() }` , 'App.title<>' )
 
 		} ,
 
