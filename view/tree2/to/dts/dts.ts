@@ -52,14 +52,20 @@ namespace $ {
 		]
 	}
 
-	function parameters(this: $, klass: $mol_tree2, input: $mol_tree2) {
-		return [
+	function parameters(this: $, klass: $mol_tree2, input: $mol_tree2, pick_index?: number) {
+		const result = [
 			input.data( 'Parameters< ' ),
 			klass,
 			input.data( '[\'' ),
 			name_of.call(this,  input ),
 			input.data( `'] >`),
 		]
+
+		if (pick_index !== undefined) {
+			result.push(input.data(`[${pick_index}]`))
+		}
+
+		return result
 	}
 
 	function primitive_type(input: $mol_tree2) {
@@ -131,6 +137,7 @@ namespace $ {
 						'<=>': (input) => return_type.call(this, klass.data( klass.type ), this.$mol_view_tree2_child(input)),
 						'<=': (input) => return_type.call(this, klass.data( klass.type ), this.$mol_view_tree2_child(input)),
 						'=>': () => [],
+
 						'^': (input) => {
 							const host = input.kids.length ? klass : parent
 							return return_type.call(
@@ -139,8 +146,11 @@ namespace $ {
 								input.kids.length ? input.kids[0] : prop
 							)
 						},
+
 						'=': (input) => {
-							const [ left, right ] = input.kids
+							const left = input.kids[0]
+							const right = left.kids[0]
+
 							const left_parts = this.$mol_view_tree2_prop_parts(left)
 							const right_parts = this.$mol_view_tree2_prop_parts(right)
 
@@ -151,52 +161,45 @@ namespace $ {
 
 							if (conflict) {
 								this.$mol_fail(err`Only one "${conflict}" allowed: ${
-									left_parts[conflict]} at ${left.span} or ${right_parts[conflict]} at ${right.span}`)
+									left_parts[conflict]} at ${left.span} or ${
+										right_parts[conflict]} at ${right.span}`)
 							}
 
 							const main = klass.data(klass.type)
 							const prop_parts = this.$mol_view_tree2_prop_parts(prop)
 							const method = prop.data(`${ klass.type }_${prop_parts.name}`)
+							const second_main = left_parts.key || left_parts.next ? main : left.struct('line',
+								return_type.call(this, main, left)
+							)
+							const second_key = left_parts.next || left_parts.key ? left : right
 
-							if (prop_parts.key || prop_parts.next) {
-								const prop_params = parameters.call(this, main, prop)
+							if (prop_parts.key) {
+								types.push( type_enforce.call(
+									this,
+									method,
+									parameters.call(this, main, prop, 0),
+									parameters.call(this, second_main, second_key, 0),
+								) )
+							}
 
-								const host = left.kids.length > 0
-									? left.kids[0].data(left.kids[0].type)
-									: undefined
-
-								if (prop_parts.key) {
-									const second_key = left_parts.key ? left : right
-									types.push( type_enforce.call(
-										this,
-										method,
-										[ ...prop_params, prop.data('[0]') ],
-										[ ...parameters.call(this, right_parts.key && host ? host : main, second_key), second_key.data('[0]') ],
-									) )
-								}
-
-								if (prop_parts.next) {
-									const second_next = left_parts.next ? left : right
-									const second_parts = left_parts.next ? left_parts : right_parts
-
-									types.push( type_enforce.call(
-										this,
-										method,
-										[ ...prop_params, prop.data(`[${prop_parts.key ? '1' : '0'}]`) ],
-										[ ...parameters.call(this, right_parts.next && host ? host : main, second_next), 
-											second_next.data(`[${second_parts.key ? '1' : '0'}]`) ],
-									) )
-								}
+							if (prop_parts.next) {
+								types.push( type_enforce.call(
+									this,
+									method,
+									parameters.call(this, main, prop, prop_parts.key ? 1 : 0),
+									parameters.call(this, second_main, second_key, (left_parts.next ? left_parts : right_parts).key ? 1 : 0),
+								) )
 							}
 
 							return return_type.call(
 								this,
 								left.struct('line',
-									return_type.call(this, main, name_of.call(this, left))
+									return_type.call(this, main, left)
 								),
 								name_of.call(this, right),
 							)
 						},
+
 						'': ( input, belt, context )=> {
 
 							if (input.type[0] === '*') {

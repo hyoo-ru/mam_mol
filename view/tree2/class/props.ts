@@ -58,14 +58,15 @@ namespace $ {
 
 					add_inner(right.clone([
 						right.struct('=', [
-							context.factory,
-							left.clone([])
+							context.factory.clone([ left.clone([]) ]),
 						]),
 					]))
 				}
 
 				if (right) context = { factory: right.clone([]) }
-				else if( operator && ! context.factory && $mol_view_tree2_class_match( operator ) ) context = { factory: left }
+				else if( operator && ! context.factory && $mol_view_tree2_class_match( operator ) ) {
+					context = { factory: left.clone([]) }
+				}
 
 				return [ left.clone( left.hack( belt, context ) ) ]
 

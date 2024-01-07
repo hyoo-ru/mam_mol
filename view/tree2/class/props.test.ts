@@ -10,16 +10,16 @@ namespace $.$$ {
 					sub /
 						<= title
 				<= Close ${d}mol_button
-					title \close
+					title \\close
 					click?event <=> close?event null
-			Some* ${d}mol_speech
-				Text => f
-					g => h
+			Dog ${d}mol_view_tree2_class_test_dog
+				Mouth => Dog_mouth
+					animation => dog_animation
 			plugins /
-				<= Speech ${d}mol_speech
-					Text => a
-						b => c
-							d => e
+				<= Human* ${d}mol_view_tree2_class_test_human
+					Mouth => Human_mouth
+						animation => human_animation
+							text => human_text
 	`
 	/*
 	class A {
@@ -38,35 +38,20 @@ namespace $.$$ {
 		sub /
 			<= Title
 			<= Close
-		Some* ${d}mol_speech
-			Text => f
-				g => h
-		plugins / <= Speech
+		Dog $mol_view_tree2_class_test_dog Mouth => Dog_mouth animation => dog_animation
+		plugins / <= Human*
 		Сlose_icon ${d}mol_icon_cross
 		Title ${d}mol_view sub / <= title
 		close?event null
 		Close ${d}mol_button
-			title \close
+			title \\close
 			click?event <=> close?event
-		f =
-			Some* ${d}mol_speech Text => f g => h
-			Text
-		h =
-			f
-			g
-		a =
-			Speech ${d}mol_speech Text => a b => c d => e
-			Text
-		c =
-			a
-			b
-		e =
-			c
-			d
-		Speech ${d}mol_speech
-			Text => a
-				b => c
-					d => e
+		Dog_mouth = Dog Mouth
+		dog_animation = Dog_mouth animation
+		Human_mouth = Human* Mouth
+		human_animation = Human_mouth animation
+		human_text = human_animation text
+		Human* $mol_view_tree2_class_test_human Mouth => Human_mouth animation => human_animation text => human_text
 	`, 'reference')
 
 	$mol_test({

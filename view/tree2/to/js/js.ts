@@ -21,6 +21,12 @@ namespace $ {
 		return params_of.call(this, prop, bidi)
 	}
 
+	function call_method_name(this: $, child: $mol_tree2) {
+		return child.struct( '[]', [
+			child.data( name_of.call( this, child ) )
+		] )
+	}
+
 	function call_of(this: $, bind: $mol_tree2, bidi = true) {
 		if( bind.kids.length === 0 ) {
 			return this.$mol_fail(
@@ -32,7 +38,7 @@ namespace $ {
 
 		for (const child of bind.kids) {
 			chain.push(
-				bind.struct( '[]', [ child.data( name_of.call( this, child ) ) ] ),
+				call_method_name.call(this, child),
 				params_of.call(this, child, bidi),
 			)
 		}
@@ -113,8 +119,14 @@ namespace $ {
 				] ),
 			],
 
-			'=': bind => [ call_of.call(this, bind, true) ],
-			
+			'=': bind => [ bind.struct( '()', [
+					bind.struct( 'this' ),
+					call_method_name.call(this, bind.kids[0]),
+					params_of.call(this, bind.kids[0]),
+					call_method_name.call(this, bind.kids[0].kids[0]),
+					params_of.call(this, bind.kids[0].kids[0]),
+			] ) ],
+				
 			'': ( input, belt, context )=> {
 
 				if( input.type[0] === '*' ) {
