@@ -116,6 +116,7 @@ $mol_pick $mol_pop
 		minimal_height 40
 		enabled <= trigger_enabled true
 		checked? <=> showed?
+		clicks? <=> clicks? null
 		sub <= trigger_content /$mol_view_content
 			<= title
 		hint <= hint \

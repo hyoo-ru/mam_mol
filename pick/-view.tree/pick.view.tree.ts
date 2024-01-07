@@ -46,6 +46,17 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * clicks? null
+		 * ```
+		 */
+		@ $mol_mem
+		clicks(next?: any) {
+			if ( next !== undefined ) return next as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
 		 * trigger_content /$mol_view_content <= title
 		 * ```
 		 */
@@ -71,6 +82,7 @@ namespace $ {
 		 * 	minimal_height 40
 		 * 	enabled <= trigger_enabled
 		 * 	checked? <=> showed?
+		 * 	clicks? <=> clicks?
 		 * 	sub <= trigger_content
 		 * 	hint <= hint
 		 * ```
@@ -83,6 +95,7 @@ namespace $ {
 			obj.minimal_height = () => 40
 			obj.enabled = () => this.trigger_enabled()
 			obj.checked = (next?: any) => this.showed(next)
+			obj.clicks = (next?: any) => this.clicks(next)
 			obj.sub = () => this.trigger_content()
 			obj.hint = () => this.hint()
 			
