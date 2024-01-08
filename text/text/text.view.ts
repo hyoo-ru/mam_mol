@@ -41,7 +41,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		param() {
-			return this.toString().replace( /^.*?\)\./, '' ).replace( /[()]/g, '' )
+			return this.toString().replace( /^.*?[\)>]\./, '' ).replace( /[(<>)]/g, '' )
 		}
 		
 		@ $mol_mem_key
