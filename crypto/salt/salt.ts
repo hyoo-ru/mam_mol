@@ -1,9 +1,9 @@
 namespace $ {
 	
-	/** 8 byte */
+	/** 16 byte */
 	export function $mol_crypto_salt() {
 		return $mol_crypto_native.getRandomValues(
-			new Uint8Array( 12 )
+			new Uint8Array( 16 )
 		)
 	}
 	
