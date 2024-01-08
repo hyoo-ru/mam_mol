@@ -76,13 +76,13 @@ namespace $ {
 	
 	function compare_buffer( left: ArrayBufferView, right: ArrayBufferView ): boolean {
 		
+		const len = left.byteLength
+		if( len !== right.byteLength ) return false
+		
 		if( left instanceof DataView ) return compare_buffer(
 			new Uint8Array( left.buffer, left.byteOffset, left.byteLength ),
 			new Uint8Array( right.buffer, left.byteOffset, left.byteLength ),
 		)
-		
-		const len = left.byteLength
-		if( len !== right.byteLength ) return false
 		
 		for( let i = 0; i < len; ++i ) {
 			if( (left as any)[i] !== (right as any)[i] ) return false
