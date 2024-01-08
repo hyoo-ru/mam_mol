@@ -218,6 +218,14 @@ namespace $ {
 		[ Symbol.toPrimitive ]( mode: 'default' | 'number' | 'string' ) {
 			return mode === 'number' ? this.valueOf() : this.toString()
 		}
+		
+		[ $mol_dev_format_head ]() {
+			return $mol_dev_format_span( {},
+				$mol_dev_format_native( this ),
+				' ',
+				$mol_dev_format_accent( this.toString( 'YYYY-MM-DD hh:mm:ss.sss Z' ) ),
+			)
+		}
 
 		/// Mnemonics:
 		///  * single letter for numbers: M - month number, D - day of month.

@@ -1,6 +1,6 @@
 {
   "name": "mol_time_all",
-  "version": "1.1.838",
+  "version": "1.1.839",
   "exports": {
     "node": {
       "import": "./node.mjs",
@@ -22,6 +22,8 @@
     "$mol_time_duration",
     "$mol_time_base",
     "$mol_fail",
+    "$mol_dev_format",
+    "$mol_dev",
     "$mol_time_interval"
   ],
   "dependencies": {}
