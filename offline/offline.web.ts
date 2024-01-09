@@ -43,9 +43,9 @@ namespace $ {
 					)
 				}
 				
-				if( request.method !== 'GET' || !/^https?:/.test( request.url ) ) {
-					return event.respondWith( fetch( request ) )
-				}
+				if( request.method !== 'GET' ) return
+				if( !/^https?:/.test( request.url ) ) return
+				if( /\?/.test( request.url ) ) return
 				
 				const fresh = fetch( event.request ).then( response => {
 
