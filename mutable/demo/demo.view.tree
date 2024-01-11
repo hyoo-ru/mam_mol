@@ -1,11 +1,11 @@
 $mol_mutable_demo $mol_example_code
 	code? \
-		\const person = [777, {id: '10', name: 'Jhon'}, false]
+		\const person = [{id: '10', name: 'Jhon'}, false]
 		\
 		\const mut = $mol_mutable(person)
+		\
 		\mut[1].id(v => '42')
-		\mut().push('Online')
-		\mut[1].name(() => 'Dave')
+		\mut[1].name(() => 'Dave') 
 		\mut[2]((v) => !v)
 		\
 		\const next = mut()
