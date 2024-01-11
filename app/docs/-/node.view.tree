@@ -4310,15 +4310,28 @@ $mol_map_yandex_demo $mol_example_large
 
 $mol_mutable_demo $mol_example_code
 	code? \
-		\const person = [{id: '10', name: 'Jhon'}, false]
+		\const articles_immutable = {
+		\	hello: {
+		\		title: 'Hello, World',
+		\		tags: [ 'javascript', 'immutablity' ],
+		\		author: {
+		\			name: 'Jin',
+		\		},
+		\	},
+		\}
 		\
-		\const mut = $mol_mutable(person)
+		\const articles_mutable = $mol_mutable( articles_immutable )
 		\
-		\mut[1].id(v => '42')
-		\mut[1].name(() => 'Dave') 
-		\mut[2]((v) => !v)
+		\articles_mutable.hello.title( prev => prev + '!' )
+		\articles_mutable.hello.tags( prev => [ ... prev, 'hello' ] )
+		\articles_mutable.hello.author.name( ()=> 'John' )
+		\articles_mutable.bye( ()=> ({
+		\	title: 'Bye, World!',
+		\	tags: [],
+		\	author: null,
+		\}) )
 		\
-		\const next = mut()
+		\const articles_new = articles_mutable()
 	aspects /
 		\Mutable
 		\Array
