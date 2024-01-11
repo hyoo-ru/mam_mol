@@ -10,5 +10,5 @@ $mol_mutable_demo $mol_example_code
 		\
 		\const next = mut()
 	aspects /
-		\Muttable
+		\Mutable
 		\Array
