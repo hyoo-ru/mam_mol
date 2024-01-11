@@ -2,7 +2,8 @@ namespace $ {
 
 	/** 
 	 * Generates unique identifier. 
-	 * @see https://mol.hyoo.ru/#!section=demos/demo=mol_guid_demo
+	 * @example mol_guid() // K6L1ARD7
+	 * @demo https://mol.hyoo.ru/#!section=demos/demo=mol_guid_demo
 	 * */
 	export function $mol_guid(
 		length = 8,
