@@ -34632,6 +34632,54 @@ var $;
 //mol/map/yandex/demo/-view.tree/demo.view.tree.ts
 ;
 "use strict";
+//mol/type/immutable/deep/deep/deep.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_mutable(input, update = next => input = next) {
+        let output = undefined;
+        const clone = Array.isArray(input)
+            ? () => [...input]
+            : () => ({ ...input });
+        return new Proxy($mol_mutable, {
+            get: (Mut, field) => Mut(input[field], next => (output ?? (output = update(clone())))[field] = next),
+            set: () => false,
+            apply: (Mut, self, [patch]) => {
+                if (patch)
+                    update(output = input = patch(input));
+                return output ?? input;
+            },
+        });
+    }
+    $.$mol_mutable = $mol_mutable;
+})($ || ($ = {}));
+//mol/mutable/mutable.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_mutable_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const person = [{id: '10', name: 'Jhon'}, false]\n\nconst mut = $mol_mutable(person)\n\nmut[1].id(v => '42')\nmut[1].name(() => 'Dave') \nmut[2]((v) => !v)\n\nconst next = mut()";
+        }
+        aspects() {
+            return [
+                "Mutable",
+                "Array"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_mutable_demo.prototype, "code", null);
+    $.$mol_mutable_demo = $mol_mutable_demo;
+})($ || ($ = {}));
+//mol/mutable/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
 var $;
 (function ($) {
     class $hyoo_marked_app extends $mol_book2 {

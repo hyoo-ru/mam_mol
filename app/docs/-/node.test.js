@@ -34754,6 +34754,54 @@ var $;
 //mol/map/yandex/demo/-view.tree/demo.view.tree.ts
 ;
 "use strict";
+//mol/type/immutable/deep/deep/deep.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_mutable(input, update = next => input = next) {
+        let output = undefined;
+        const clone = Array.isArray(input)
+            ? () => [...input]
+            : () => ({ ...input });
+        return new Proxy($mol_mutable, {
+            get: (Mut, field) => Mut(input[field], next => (output ?? (output = update(clone())))[field] = next),
+            set: () => false,
+            apply: (Mut, self, [patch]) => {
+                if (patch)
+                    update(output = input = patch(input));
+                return output ?? input;
+            },
+        });
+    }
+    $.$mol_mutable = $mol_mutable;
+})($ || ($ = {}));
+//mol/mutable/mutable.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_mutable_demo extends $mol_example_code {
+        code(next) {
+            if (next !== undefined)
+                return next;
+            return "const person = [{id: '10', name: 'Jhon'}, false]\n\nconst mut = $mol_mutable(person)\n\nmut[1].id(v => '42')\nmut[1].name(() => 'Dave') \nmut[2]((v) => !v)\n\nconst next = mut()";
+        }
+        aspects() {
+            return [
+                "Mutable",
+                "Array"
+            ];
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_mutable_demo.prototype, "code", null);
+    $.$mol_mutable_demo = $mol_mutable_demo;
+})($ || ($ = {}));
+//mol/mutable/demo/-view.tree/demo.view.tree.ts
+;
+"use strict";
 var $;
 (function ($) {
     class $hyoo_marked_app extends $mol_book2 {
@@ -48959,6 +49007,48 @@ var $;
     });
 })($ || ($ = {}));
 //mol/unit/unit.test.ts
+;
+"use strict";
+//mol/type/immutable/deep/deep/deep.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Wrap & unwrap'() {
+            const val = [1];
+            const mut = $mol_mutable(val);
+            $mol_assert_equal(val, mut());
+        },
+        'Deep array'() {
+            const val = [[1], [2], [3]];
+            const mut = $mol_mutable(val);
+            $mol_assert_equal(mut[1][0](v => -v), -2);
+            $mol_assert_unique(val, mut());
+            $mol_assert_equal(val[0], mut()[0]);
+            $mol_assert_equal(val[2], mut()[2]);
+            $mol_assert_unique(val[1], mut()[1]);
+            $mol_assert_like(mut()[1], [-2]);
+        },
+        'Array insert'() {
+            const val = [[1, 2, 3, 4]];
+            const mut = $mol_mutable(val);
+            $mol_assert_like(mut[0](a => [...a.slice(0, 2), 7, ...a.slice(2)]), [1, 2, 7, 3, 4]);
+            $mol_assert_like(mut(), [[1, 2, 7, 3, 4]]);
+        },
+        'Deep objects'() {
+            const val = { a: { x: 1 }, b: { y: 2 }, c: { z: 3 } };
+            const mut = $mol_mutable(val);
+            $mol_assert_equal(mut.b.y(v => -v), -2);
+            $mol_assert_unique(val, mut());
+            $mol_assert_equal(val.a, mut().a);
+            $mol_assert_equal(val.c, mut().c);
+            $mol_assert_unique(val.b, mut().b);
+            $mol_assert_like(mut().b, { y: -2 });
+        },
+    });
+})($ || ($ = {}));
+//mol/mutable/mutable.test.ts
 ;
 "use strict";
 var $;

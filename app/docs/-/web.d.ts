@@ -8531,6 +8531,28 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_type_immutable_deep<Val> = {
+        readonly [field in keyof Val]: $mol_type_immutable_deep<Val[field]>;
+    };
+}
+
+declare namespace $ {
+    type $mol_mutable_wrapper<Value> = {
+        (patch?: (next: $mol_type_immutable_deep<Value>) => $mol_type_immutable_deep<Value>): $mol_type_immutable_deep<Value>;
+    } & {
+        [Field in keyof Value]: $mol_mutable_wrapper<Value[Field]>;
+    };
+    function $mol_mutable<Value>(input: Value, update?: (next: Value) => Value): $mol_mutable_wrapper<Value>;
+}
+
+declare namespace $ {
+    class $mol_mutable_demo extends $mol_example_code {
+        code(next?: any): string;
+        aspects(): readonly any[];
+    }
+}
+
+declare namespace $ {
     class $hyoo_marked_app extends $mol_book2 {
         plugins(): readonly any[];
         pages(): readonly any[];

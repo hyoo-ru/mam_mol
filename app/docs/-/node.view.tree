@@ -4308,6 +4308,21 @@ $mol_map_yandex_demo $mol_example_large
 		\Integration
 		\Widget/Map
 
+$mol_mutable_demo $mol_example_code
+	code? \
+		\const person = [{id: '10', name: 'Jhon'}, false]
+		\
+		\const mut = $mol_mutable(person)
+		\
+		\mut[1].id(v => '42')
+		\mut[1].name(() => 'Dave') 
+		\mut[2]((v) => !v)
+		\
+		\const next = mut()
+	aspects /
+		\Mutable
+		\Array
+
 $hyoo_marked_app $mol_book2
 	plugins /
 		<= Theme $mol_theme_auto

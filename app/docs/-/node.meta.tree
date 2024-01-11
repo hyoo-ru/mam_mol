@@ -207,6 +207,7 @@
 	include \/mol/list/demo/table
 	include \/mol/list/demo/tree
 	include \/mol/map/yandex/demo
+	include \/mol/mutable/demo
 	include \/hyoo/marked/demo
 	include \/hyoo/harp/demo
 	- include \/mol/message/demo
