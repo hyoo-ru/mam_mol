@@ -76,6 +76,7 @@ include \/mol/format/demo
 include \/mol/frame/demo
 - include \/mol/grid/demo
 include \/mol/gallery/demo
+include \/mol/guid/demo
 include \/mol/html/view/demo
 include \/mol/infinite/demo
 include \/mol/labeler/demo

@@ -1,0 +1,9 @@
+$mol_guid_demo $mol_example_code
+	code? \
+		\const id = $mol_guid() // K6L1ARD7
+		\const id_short = $mol_guid(4) // G6AN
+	aspects /
+		\Random
+		\Generate
+		\GUID
+		\UUID
