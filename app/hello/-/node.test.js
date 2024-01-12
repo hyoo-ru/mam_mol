@@ -2739,7 +2739,7 @@ var $;
             }
         }
         dom_id() {
-            return this.toString();
+            return this.toString().replace(/</g, '(').replace(/>/g, ')');
         }
         dom_node_external(next) {
             const node = next ?? $mol_dom_context.document.createElementNS(this.dom_name_space(), this.dom_name());
@@ -3016,6 +3016,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_view.prototype, "view_rect", null);
+    __decorate([
+        $mol_memo.method
+    ], $mol_view.prototype, "dom_id", null);
     __decorate([
         $mol_mem
     ], $mol_view.prototype, "dom_node", null);
@@ -5862,8 +5865,8 @@ var $;
                 $mol_mem_key
             ], $mol_view_test_block.prototype, "element", null);
             var x = $mol_view_test_block.Root(0);
-            $mol_assert_equal(x.dom_node().id, '$mol_view_test_block.Root<0>');
-            $mol_assert_equal(x.element(0).dom_node().id, '$mol_view_test_block.Root<0>.element<0>');
+            $mol_assert_equal(x.dom_node().id, '$mol_view_test_block.Root(0)');
+            $mol_assert_equal(x.element(0).dom_node().id, '$mol_view_test_block.Root(0).element(0)');
         },
         'caching ref to dom node'($) {
             var x = new class extends $mol_view {

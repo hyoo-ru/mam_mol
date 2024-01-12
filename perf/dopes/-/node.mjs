@@ -2747,7 +2747,7 @@ var $;
             }
         }
         dom_id() {
-            return this.toString();
+            return this.toString().replace(/</g, '(').replace(/>/g, ')');
         }
         dom_node_external(next) {
             const node = next ?? $mol_dom_context.document.createElementNS(this.dom_name_space(), this.dom_name());
@@ -3024,6 +3024,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_view.prototype, "view_rect", null);
+    __decorate([
+        $mol_memo.method
+    ], $mol_view.prototype, "dom_id", null);
     __decorate([
         $mol_mem
     ], $mol_view.prototype, "dom_node", null);

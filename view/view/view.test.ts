@@ -18,8 +18,8 @@ namespace $ {
 			
 			var x = $mol_view_test_block.Root(0)
 			
-			$mol_assert_equal( x.dom_node().id , '$mol_view_test_block.Root<0>' )
-			$mol_assert_equal( x.element( 0 ).dom_node().id , '$mol_view_test_block.Root<0>.element<0>' )
+			$mol_assert_equal( x.dom_node().id , '$mol_view_test_block.Root(0)' )
+			$mol_assert_equal( x.element( 0 ).dom_node().id , '$mol_view_test_block.Root(0).element(0)' )
 			
 		} ,
 		
