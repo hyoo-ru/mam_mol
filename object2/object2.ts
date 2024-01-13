@@ -31,8 +31,11 @@ namespace $ {
 		}
 		
 		static toString() {
-			if( Symbol.toStringTag in this ) return ( this as any )[ Symbol.toStringTag ] as string
-			return this.name
+			return ( this as any )[ Symbol.toStringTag ] || this.$.$mol_func_name( this )
+		}
+		
+		static toJSON() {
+			return this.toString()
 		}
 		
 		destructor() { }
@@ -44,10 +47,6 @@ namespace $ {
 		
 		toString(): string {
 			return this[ Symbol.toStringTag ] || this.constructor.name + '<>'
-		}
-		
-		static toJSON() {
-			return ( this as any )[ Symbol.toStringTag ] || this.$.$mol_func_name( this )
 		}
 		
 		toJSON(): any {
