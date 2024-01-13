@@ -289,17 +289,15 @@ var $;
             return this.toString();
         }
         static toString() {
-            if (Symbol.toStringTag in this)
-                return this[Symbol.toStringTag];
-            return this.name;
+            return this[Symbol.toStringTag] || this.$.$mol_func_name(this);
+        }
+        static toJSON() {
+            return this.toString();
         }
         destructor() { }
         static destructor() { }
         toString() {
             return this[Symbol.toStringTag] || this.constructor.name + '<>';
-        }
-        static toJSON() {
-            return this[Symbol.toStringTag] || this.$.$mol_func_name(this);
         }
         toJSON() {
             return this.toString();

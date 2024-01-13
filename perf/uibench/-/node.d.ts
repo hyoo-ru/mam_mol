@@ -64,12 +64,12 @@ declare namespace $ {
         get $(): $;
         set $(next: $);
         static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
-        static [Symbol.toPrimitive](): string;
-        static toString(): string;
+        static [Symbol.toPrimitive](): any;
+        static toString(): any;
+        static toJSON(): any;
         destructor(): void;
         static destructor(): void;
         toString(): string;
-        static toJSON(): any;
         toJSON(): any;
     }
 }
