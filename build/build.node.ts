@@ -595,17 +595,15 @@ namespace $ {
 					if( mod.type() !== 'dir' ) return false
 					
 					const git_dir = mod.resolve( '.git' )
-					// if( git_dir.exists() ) return false
-
 					if( git_dir.exists() ) {
-						this.$.$mol_exec( mod.path() , 'git' , 'pull' )
-						mod.reset()
-						for ( const sub of mod.sub() ) {
-							sub.reset()
-						}
+						
+						this.$.$mol_exec( mod.path() , 'git' , 'pull', '--deepen=1' )
+						// mod.reset()
+						// for ( const sub of mod.sub() ) sub.reset()
+						
 						return false
 					}
-
+					
 					for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
 						
 						this.$.$mol_exec( mod.path() , 'git' , 'init' )
@@ -617,7 +615,7 @@ namespace $ {
 							: matched[1]
 						
 						this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'add' , '--track' , head_branch_name! , 'origin' , repo.value )
-						this.$.$mol_exec( mod.path() , 'git' , 'pull' )
+						this.$.$mol_exec( mod.path() , 'git' , 'pull', '--deepen=1' )
 						mod.reset()
 						for ( const sub of mod.sub() ) {
 							sub.reset()
@@ -639,7 +637,7 @@ namespace $ {
 			}
 
 			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
-				this.$.$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.relate( this.root() ) )
+				this.$.$mol_exec( this.root().path() , 'git' , 'clone' , '--depth', '1', repo.value , mod.relate( this.root() ) )
 				mod.reset()
 				return true
 			}
@@ -1011,7 +1009,7 @@ namespace $ {
 				$mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ... errors ) )
 			}
 
-			target.text( 'console.info("Audit passed")' )
+			target.text( `console.info( '%c ▫ $mol_build ▫ Audit passed', 'color:forestgreen; font-weight:bolder' )` )
 			
 			return [ target ]
 		}
@@ -1286,8 +1284,6 @@ namespace $ {
 
 			json.version = version.join( '.' )
 
-			json.dependencies = {}
-			
 			for( let dep of this.nodeDeps({ path , exclude }) ) {
 				if( require('module').builtinModules.includes(dep) ) continue
 				json.dependencies[ dep ] = `*`

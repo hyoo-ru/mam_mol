@@ -98,8 +98,8 @@ namespace $ {
 
 			}
 
-			$mol_assert_equal( `${ App.like(123) }` , 'App.like(123)' )
-			$mol_assert_equal( `${ App.relation([123,[456]]) }` , 'App.relation([123,[456]])' )
+			$mol_assert_equal( `${ App.like(123) }` , 'App.like<123>' )
+			$mol_assert_equal( `${ App.relation([123,[456]]) }` , 'App.relation<[123,[456]]>' )
 
 		} ,
 

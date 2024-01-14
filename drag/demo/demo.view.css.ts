@@ -8,7 +8,7 @@ namespace $.$$ {
 			'@': {
 				mol_drop_status: {
 					drag: {
-						boxShadow: `0 -1px 0 0px ${ $mol_theme.focus }`,
+						boxShadow: `inset 0 1px 0 0px ${ $mol_theme.focus }`,
 					},
 				},
 			},
@@ -18,21 +18,23 @@ namespace $.$$ {
 			'@': {
 				mol_drop_status: {
 					drag: {
-						'>' : {
-							$mol_view : {
+						// '>' : {
+						// 	$mol_view : {
 								':last-child': {
-									boxShadow: `0 1px 0 0px ${ $mol_theme.focus }`,
+									boxShadow: `inset 0 -1px 0 0px ${ $mol_theme.focus }`,
 								},
-							},
-						},
+						// 	},
+						// },
 					},
 				},
 			},
 		},
 		
 		Trash: {
-			padding: $mol_gap.block,
-			display: 'block',
+			padding: $mol_gap.text,
+			flex: {
+				grow: 1,
+			},
 		},
 
 		Trash_drop: {
@@ -47,6 +49,10 @@ namespace $.$$ {
 			},
 		},
 		
+		List: {
+			padding: $mol_gap.text,
+		},
+
 	})
 
 }

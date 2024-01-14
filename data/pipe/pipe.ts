@@ -38,7 +38,7 @@ namespace $ {
 		return $mol_data_setup(
 			function( this: any, input :  $mol_type_param< Funcs[0] , 0 > ) {
 				let value : any = input
-				for( const func of funcs as any ) value = $mol_func_is_class( func ) ? new func( value ) : func.call( this, value )
+				for( const func of funcs ) value = $mol_func_is_class( func ) ? new func( value ) : ( func as any ).call( this, value )
 				return value as $mol_type_result<
 					$mol_type_foot< Funcs >
 				>

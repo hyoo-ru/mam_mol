@@ -20,7 +20,9 @@ namespace $ {
 				{
 					ownKeys: ()=> [ ... this.native.objectStoreNames ],
 					has: ( _, name: string )=> this.native.objectStoreNames.contains( name ),
-					get: ( _, name: string )=> new $mol_db_store( this.native.objectStore( name ) ),
+					get: ( _, name: string, proxy )=> ( name in proxy )
+						? new $mol_db_store( this.native.objectStore( name ) )
+						: undefined,
 				},
 			)
 		}

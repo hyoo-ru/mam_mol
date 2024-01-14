@@ -31,18 +31,22 @@ namespace $ {
 		}
 		
 		static toString() {
-			if( Symbol.toStringTag in this ) return ( this as any )[ Symbol.toStringTag ] as string
-			return this.name
+			return ( this as any )[ Symbol.toStringTag ] || this.$.$mol_func_name( this )
+		}
+		
+		static toJSON() {
+			return this.toString()
 		}
 		
 		destructor() { }
+		static destructor() { }
 		
 		//[ Symbol.toPrimitive ]( hint: string ) {
 		//	return hint === 'number' ? this.valueOf() : this.toString()
 		//}
 		
 		toString(): string {
-			return this[ Symbol.toStringTag ] || this.constructor.name + '()'
+			return this[ Symbol.toStringTag ] || this.constructor.name + '<>'
 		}
 		
 		toJSON(): any {

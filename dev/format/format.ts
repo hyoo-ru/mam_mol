@@ -50,7 +50,8 @@ namespace $ {
 	export function $mol_dev_format_native( obj : any ) {
 		
 		if( typeof obj === 'undefined' ) return $mol_dev_format_shade( 'undefined' )
-		if( typeof obj !== 'object' && typeof obj !== 'function' ) return obj
+		
+		// if( ![ 'object', 'function', 'symbol' ].includes( typeof obj )  ) return obj
 
 		return [
 			'object' ,
@@ -65,10 +66,6 @@ namespace $ {
 	export function $mol_dev_format_auto( obj : any ) {
 		
 		if( obj == null ) return $mol_dev_format_shade( String( obj ) )
-
-		if( typeof obj === 'object' && $mol_dev_format_head in obj ) {
-			return obj[ $mol_dev_format_head ]()
-		}
 
 		return [
 			'object' ,

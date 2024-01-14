@@ -3,7 +3,12 @@ namespace $ {
 		
 		@ $mol_mem
 		static native() {
-			return this.$.$mol_dom_context.navigator.storage
+			return this.$.$mol_dom_context.navigator.storage ?? { // exists only in secure context
+				persisted: async ()=> false,
+				persist: async ()=> false,
+				estimate: async ()=> ({}),
+				getDirectory: async ()=> null! as FileSystemHandle,
+			} as StorageManager
 		}
 		
 		@ $mol_mem
@@ -16,11 +21,11 @@ namespace $ {
 			const native = this.native()
 			if( next && !$mol_mem_cached( ()=> this.persisted() ) ) {
 				native.persist().then( actual => {
-				
+					
 					setTimeout( ()=> this.persisted( actual, 'cache' ), 5000 )
 					
-					if( actual ) this.$.$mol_log3_rise({ place: this, message: `Persist` })
-					else this.$.$mol_log3_fail({ place: this, message: `Non persist` })
+					if( actual ) this.$.$mol_log3_done({ place: `$mol_storage`, message: `Persist: Yes` })
+					else this.$.$mol_log3_fail({ place: `$mol_storage`, message: `Persist: No` })
 					
 				} )
 			}
@@ -29,7 +34,7 @@ namespace $ {
 		}
 		
 		static estimate() {
-			return $mol_wire_sync( this.native() ).estimate()
+			return $mol_wire_sync( this.native() ?? {} ).estimate()
 		}
 		
 		static dir() {

@@ -31,12 +31,20 @@ namespace $ {
 					return existen
 				}
 				
-				// Disabled because non-idempotency is required for try-catch
-				// if( existen && sub instanceof $mol_wire_task ) {
-				// 	$mol_fail( new Error( `$mol_wire_task detects nonidempotency\n${existen}` ) )
-				// }
+				const next = new $mol_wire_task( `${ (host as any)?.[ Symbol.toStringTag ] ?? host }.${ task.name }<#>`, task, host, args )
 				
-				return new $mol_wire_task( `${ (host as any)?.[ Symbol.toStringTag ] ?? host }.${ task.name }(#)`, task, host, args )
+				// Disabled because non-idempotency is required for try-catch
+				if( existen?.temp ) {
+					$$.$mol_log3_warn({
+						place: '$mol_wire_task',
+						message: `Non idempotency`,
+						existen,
+						next,
+						hint: 'Ignore it',
+					})
+				}
+				
+				return next
 			}
 			
 		}

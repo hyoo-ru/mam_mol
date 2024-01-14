@@ -21,6 +21,14 @@ namespace $ {
 			
 		},
 		
+		'Uint8Array'() {
+			
+			$mol_assert_equal( $mol_key( new Uint8Array([ 1, 2 ]) ), '[1,2]' )
+			$mol_assert_equal( $mol_key([ new Uint8Array([ 1, 2 ]) ]), '[[1,2]]' )
+			$mol_assert_equal( $mol_key({ foo: new Uint8Array([ 1, 2 ]) }), '{"foo":[1,2]}' )
+			
+		},
+		
 		'Function'() {
 			
 			const func = ()=> {}

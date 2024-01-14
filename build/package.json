@@ -1,27 +1,16 @@
 {
-  "name": "mam",
-  "version": "1.11.0",
-  "exports": {
-	"node": {
-		"import": "./node.mjs",
-		"default": "./node.js"
+	"name": "mam",
+	"version": "1.11.0",
+	"bin": {
+		"mam": "./mol/build/bin"
 	},
-	"types": "./web.d.ts",
-	"import": "./web.mjs",
-	"default": "./web.js"
-  },
-  "main": "./node.js",
-  "module": "./node.mjs",
-  "browser": "./web.js",
-  "types": "./web.d.ts",
-  "bin": {
-    "mam": "./bin/mam"
-  },
-  "dependencies": {
-	"@types/compression": "*",
-	"@types/express": "*",
-	"@types/node": "*",
-	"@types/serve-index": "*",
-	"@types/ws": "*"
-  }
+	"dependencies": {
+		"@types/node": "*",
+		"@types/express": "*",
+		"@types/compression": "*",
+		"@types/cors": "*",
+		"@types/body-parser": "*",
+		"@types/serve-index": "*",
+		"@types/ws": "*"
+	}
 }

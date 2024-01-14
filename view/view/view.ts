@@ -161,8 +161,9 @@ namespace $ {
 			}
 		}
 
+		@ $mol_memo.method
 		dom_id() {
-			return this.toString()
+			return this.toString().replace( /</g, '(' ).replace( />/g, ')' )
 		}
 	
 		dom_node_external( next?: Element) {

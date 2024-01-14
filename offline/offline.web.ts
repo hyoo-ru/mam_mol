@@ -19,7 +19,11 @@ namespace $ {
 				caches.delete( '$mol_offline' )
 				
 				;( self as any ).clients.claim()
-				console.info( '$mol_offline activated' )
+				
+				$$.$mol_log3_done({
+					place: '$mol_offline',
+					message: 'Activated',
+				})
 				
 			} )
 
@@ -39,9 +43,9 @@ namespace $ {
 					)
 				}
 				
-				if( request.method !== 'GET' || !/^https?:/.test( request.url ) ) {
-					return event.respondWith( fetch( request ) )
-				}
+				if( request.method !== 'GET' ) return
+				if( !/^https?:/.test( request.url ) ) return
+				if( /\?/.test( request.url ) ) return
 				
 				const fresh = fetch( event.request ).then( response => {
 

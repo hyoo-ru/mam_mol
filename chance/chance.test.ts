@@ -4,28 +4,26 @@ namespace $ {
 
 		'Probability should be a number'() {
 
-			$mol_assert_fail( ()=> {
-
-				$mol_chance(
+			$mol_assert_fail(
+				()=> $mol_chance(
 					[ 50, ()=> 1 ],
 					[ NaN, ()=> 2 ],
-				)
-
-			} )
+				),
+				'Incorrect probability value: NaN, but only positive numbers are allowed',
+			)
 
 		},
 
 		'Probability should not be negative'() {
 
-			$mol_assert_fail( ()=> {
-
-				$mol_chance(
+			$mol_assert_fail(
+				()=> $mol_chance(
 					[ 50, ()=> 1 ],
 					[ -10, ()=> 2 ],
 					[ 50, ()=> 3 ],
-				)
-
-			} )
+				),
+				'Incorrect probability value: -10, but only positive numbers are allowed'
+			)
 
 		},
 
@@ -39,7 +37,7 @@ namespace $ {
 				[ 10, ()=> 5 ],
 			)
 
-			$mol_assert_ok(
+			$mol_assert_equal( true,
 				result === 1
 				|| result === 2
 				|| result === 3
@@ -55,7 +53,7 @@ namespace $ {
 				[ 1, ()=> ( { prop: false } ) ]
 			)
 
-			$mol_assert_like( result, { prop: false } )
+			$mol_assert_equal( result, { prop: false } )
 
 		},
 

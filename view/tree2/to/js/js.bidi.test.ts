@@ -186,7 +186,7 @@ namespace $ {
 						a!? $mol_object
 							expanded <=> cell_expanded!? null
 				`)
-			})
+			}, `Cannot destructure property 'name' of 'prop_parts(...)' as it is undefined. at ?#3:7/3` )
 		},
 
 		'Bidi bind with default object'( $ ) {

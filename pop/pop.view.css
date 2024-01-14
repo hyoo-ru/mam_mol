@@ -20,6 +20,7 @@
 	flex-direction: column;
 	max-width: 80vw;
 	max-height: 80vw;
+	contain: paint;
 }
 
 :where( [mol_pop_bubble] > * ) {

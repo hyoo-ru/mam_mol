@@ -17,7 +17,7 @@ namespace $ {
 			const chunks = Object.values( event )
 
 			for( let i = 0 ; i < chunks.length ; ++i ) {
-				tpl += ( typeof chunks[i] === 'string' ) ? ' ⦙ %s' : ' ⦙ %o'
+				tpl += ( typeof chunks[i] === 'string' ) ? ' ▫ %s' : ' ▫ %o'
 			}
 	
 			const style = `color:${color};font-weight:bolder`

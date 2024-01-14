@@ -1,0 +1,27 @@
+$mol_mutable_demo $mol_example_code
+	code? \
+		\const articles_immutable = {
+		\	hello: {
+		\		title: 'Hello, World',
+		\		tags: [ 'javascript', 'immutablity' ],
+		\		author: {
+		\			name: 'Jin',
+		\		},
+		\	},
+		\}
+		\
+		\const articles_mutable = $mol_mutable( articles_immutable )
+		\
+		\articles_mutable.hello.title( prev => prev + '!' )
+		\articles_mutable.hello.tags( prev => [ ... prev, 'hello' ] )
+		\articles_mutable.hello.author.name( ()=> 'John' )
+		\articles_mutable.bye( ()=> ({
+		\	title: 'Bye, World!',
+		\	tags: [],
+		\	author: null,
+		\}) )
+		\
+		\const articles_new = articles_mutable()
+	aspects /
+		\Mutable
+		\Array

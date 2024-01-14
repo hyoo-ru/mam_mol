@@ -41,7 +41,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		param() {
-			return this.toString().replace( /^.*?\)\./, '' ).replace( /[()]/g, '' )
+			return this.toString().replace( /^.*?[\)>]\./, '' ).replace( /[(<>)]/g, '' )
 		}
 		
 		@ $mol_mem_key
@@ -151,6 +151,11 @@ namespace $.$$ {
 			return $mol_dom_context.document.location.href
 		}
 		
+		@ $mol_mem
+		uri_base_abs() {
+			return new URL( this.uri_base() , $mol_dom_context.document.location.href )
+		}
+		
 		@ $mol_mem_key
 		uri_resolve( uri: string ) {
 			
@@ -172,7 +177,7 @@ namespace $.$$ {
 			
 			try {
 				
-				const url = new URL( uri , this.uri_base() )
+				const url = new URL( uri , this.uri_base_abs() )
 				return url.toString()
 				
 			} catch( error ) {
