@@ -77,7 +77,7 @@ namespace $ {
 				if( i === j ) continue
 				if( !$mol_compare_deep( args[i], args[j] ) ) continue
 				
-				$mol_fail( new Error( `args[${i}] = args[${j}] = ${ args[i] }` ) )
+				$mol_fail( new Error( `args[${i}] = args[${j}] = ${ print( args[i] ) }` ) )
 				
 			}
 		}

@@ -5297,8 +5297,10 @@ var $;
                     if (mod.type() !== 'dir')
                         return false;
                     const git_dir = mod.resolve('.git');
-                    if (git_dir.exists())
+                    if (git_dir.exists()) {
+                        this.$.$mol_exec(mod.path(), 'git', 'pull', '--deepen=1');
                         return false;
+                    }
                     for (let repo of mapping.select('pack', mod.name(), 'git').sub) {
                         this.$.$mol_exec(mod.path(), 'git', 'init');
                         const res = this.$.$mol_exec(mod.path(), 'git', 'remote', 'show', repo.value);
