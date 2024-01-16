@@ -1367,7 +1367,7 @@ $hyoo_js_eval $mol_book2
 					Icon <= Run_icon $mol_icon_play
 					checked?val <=> run?val true
 					hint <= result_label
-			body_content /
+			body /
 				<= Code $mol_textarea
 					bring => bring
 					hint \javascript..
