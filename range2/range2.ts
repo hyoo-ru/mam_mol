@@ -2,11 +2,18 @@ namespace $ {
 
 	/** Lazy computed lists with native Array interface. $mol_range2_array is mutable but all derived ranges are immutable. */
 	export function $mol_range2< Item = number >(
-		item : ( index : number )=> Item = index => index as any ,
+		item: Item[] | ( ( index : number )=> Item ) = index => index as any ,
 		size = ()=> Number.POSITIVE_INFINITY ,
-	) : Item[] {
+	): Item[] {
+		
+		const source = typeof item === 'function' ? new $mol_range2_array< Item >() : item
+		
+		if( typeof item !== 'function' ) {
+			item = index => source[ index ]
+			size = ()=> source.length
+		}
 
-		return new Proxy( new $mol_range2_array< Item >() , {
+		return new Proxy( source , {
 
 			get( target , field ) {
 
@@ -16,10 +23,10 @@ namespace $ {
 					const index = Number( field )
 					if( index < 0 ) return undefined
 					if( index >= size() ) return undefined
-					if( index === Math.trunc( index ) ) return item( index )
+					if( index === Math.trunc( index ) ) return ( item as any )( index )
 				}
 
-				return target[ field as any ]
+				return $mol_range2_array.prototype[ field as any ]
 			} ,
 
 			set( target , field ) {
