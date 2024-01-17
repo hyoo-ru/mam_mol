@@ -2,7 +2,7 @@
 
 Lazy computed lists with native Array interface. $mol_range2_array is mutable but all derived ranges are immutable.
 
-# Creating
+# Creation
 
 ```ts
 $mol_range2() // infinite number range from 0
