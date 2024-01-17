@@ -29354,13 +29354,13 @@ var $;
             const filtered = [];
             let cursor = -1;
             return $mol_range2(index => {
-                while (cursor < this.length && index >= filtered.length) {
+                while (cursor < this.length && index >= filtered.length - 1) {
                     const val = this[++cursor];
                     if (check(val, cursor, this))
                         filtered.push(val);
                 }
                 return filtered[index];
-            });
+            }, () => cursor < this.length ? Number.POSITIVE_INFINITY : filtered.length);
         }
         forEach(proceed, context) {
             for (let [key, value] of this.entries())

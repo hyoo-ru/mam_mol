@@ -111,7 +111,7 @@ namespace $ {
 
 			let calls = 0
 			
-			const list = $mol_range2( index => ( ++ calls , index ) , ()=> 10 ).filter( v => v % 2 ).slice( 0 , 3 )
+			const list = $mol_range2( index => ( ++ calls , index ) , ()=> 15 ).filter( v => v % 2 ).slice( 0 , 3 )
 
 			$mol_assert_ok( list instanceof Array )
 			$mol_assert_equal( list.length , 3 )
@@ -120,7 +120,7 @@ namespace $ {
 			$mol_assert_equal( list[2] , 5 )
 			$mol_assert_equal( list[3] , undefined )
 			
-			$mol_assert_equal( calls , 6 )
+			$mol_assert_equal( calls , 8 )
 
 		} ,
 

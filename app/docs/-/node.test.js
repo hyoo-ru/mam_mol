@@ -29346,13 +29346,13 @@ var $;
             const filtered = [];
             let cursor = -1;
             return $mol_range2(index => {
-                while (cursor < this.length && index >= filtered.length) {
+                while (cursor < this.length && index >= filtered.length - 1) {
                     const val = this[++cursor];
                     if (check(val, cursor, this))
                         filtered.push(val);
                 }
                 return filtered[index];
-            });
+            }, () => cursor < this.length ? Number.POSITIVE_INFINITY : filtered.length);
         }
         forEach(proceed, context) {
             for (let [key, value] of this.entries())
@@ -43163,13 +43163,13 @@ var $;
         },
         'filter'() {
             let calls = 0;
-            const list = $mol_range2(index => (++calls, index), () => 10).filter(v => v % 2).slice(0, 3);
+            const list = $mol_range2(index => (++calls, index), () => 15).filter(v => v % 2).slice(0, 3);
             $mol_assert_ok(list instanceof Array);
             $mol_assert_equal(list.length, 3);
             $mol_assert_equal(list[0], 1);
             $mol_assert_equal(list[2], 5);
             $mol_assert_equal(list[3], undefined);
-            $mol_assert_equal(calls, 6);
+            $mol_assert_equal(calls, 8);
         },
         'reverse'() {
             let calls = 0;
