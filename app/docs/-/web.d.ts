@@ -7288,7 +7288,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_range2<Item = number>(item?: (index: number) => Item, size?: () => number): Item[];
+    function $mol_range2<Item = number>(item?: Item[] | ((index: number) => Item), size?: () => number): Item[];
     class $mol_range2_array<Item> extends Array<Item> {
         concat(...tail: Item[][]): Item[];
         filter<Context>(check: (val: Item, index: number, list: Item[]) => boolean, context?: Context): Item[];
