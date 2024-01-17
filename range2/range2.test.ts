@@ -120,8 +120,7 @@ namespace $ {
 			$mol_assert_equal( list[2] , 5 )
 			$mol_assert_equal( list[3] , undefined )
 			
-			$mol_assert_equal( calls , 10 )
-			// $mol_assert_equal( calls , 6 ) // TODO: lazy filter
+			$mol_assert_equal( calls , 6 )
 
 		} ,
 
