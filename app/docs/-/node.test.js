@@ -29343,13 +29343,16 @@ var $;
             return $mol_range2(index => index < this.length ? this[index] : tail[0][index - this.length], () => this.length + tail[0].length);
         }
         filter(check, context) {
-            const filtered = new $mol_range2_array();
-            for (let index = 0; index < this.length; ++index) {
-                const item = this[index];
-                if (check.call(context, item, index, this))
-                    filtered.push(item);
-            }
-            return filtered;
+            const filtered = [];
+            let cursor = -1;
+            return $mol_range2(index => {
+                while (cursor < this.length && index >= filtered.length) {
+                    const val = this[++cursor];
+                    if (check(val, cursor, this))
+                        filtered.push(val);
+                }
+                return filtered[index];
+            });
         }
         forEach(proceed, context) {
             for (let [key, value] of this.entries())
@@ -43166,7 +43169,7 @@ var $;
             $mol_assert_equal(list[0], 1);
             $mol_assert_equal(list[2], 5);
             $mol_assert_equal(list[3], undefined);
-            $mol_assert_equal(calls, 10);
+            $mol_assert_equal(calls, 6);
         },
         'reverse'() {
             let calls = 0;

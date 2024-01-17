@@ -71,17 +71,25 @@ namespace $ {
 			)
 		}
 
-		// Diligent
+		// Lazy
 		filter< Context > (
 			check : ( val : Item , index : number , list : Item[] )=> boolean ,
 			context? : Context ,
 		) {
-			const filtered = new $mol_range2_array< Item >() as any as Item[]
-			for( let index = 0 ; index < this.length ; ++ index ) {
-				const item = this[ index ]
-				if( check.call( context , item , index , this ) ) filtered.push( item )
-			}
-			return filtered
+			
+			const filtered = [] as Item[]
+			let cursor = -1
+			
+			return $mol_range2( index => {
+				
+				while( cursor < this.length && index >= filtered.length ) {
+					const val = this[ ++ cursor ]
+					if( check( val, cursor, this ) ) filtered.push( val )
+				}
+				
+				return filtered[ index ]
+			} )
+			
 		}
 
 		// Diligent

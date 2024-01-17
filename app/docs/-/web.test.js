@@ -289,7 +289,7 @@ var $;
             $mol_assert_equal(list[0], 1);
             $mol_assert_equal(list[2], 5);
             $mol_assert_equal(list[3], undefined);
-            $mol_assert_equal(calls, 10);
+            $mol_assert_equal(calls, 6);
         },
         'reverse'() {
             let calls = 0;
