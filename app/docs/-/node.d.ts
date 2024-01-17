@@ -8576,6 +8576,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_mutable_demo extends $mol_example_code {
         code(next?: any): string;
+        tags(): readonly any[];
         aspects(): readonly any[];
     }
 }

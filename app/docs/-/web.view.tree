@@ -4332,9 +4332,11 @@ $mol_mutable_demo $mol_example_code
 		\}) )
 		\
 		\const articles_new = articles_mutable()
+	tags /
+		\mutable
+		\immutable
 	aspects /
-		\Mutable
-		\Array
+		\Algorithm/Lens
 
 $hyoo_marked_app $mol_book2
 	plugins /

@@ -36,15 +36,26 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * aspects /
-		 * 	\Mutable
-		 * 	\Array
+		 * tags /
+		 * 	\mutable
+		 * 	\immutable
+		 * ```
+		 */
+		tags() {
+			return [
+				"mutable",
+				"immutable"
+			] as readonly any[]
+		}
+		
+		/**
+		 * ```tree
+		 * aspects / \Algorithm/Lens
 		 * ```
 		 */
 		aspects() {
 			return [
-				"Mutable",
-				"Array"
+				"Algorithm/Lens"
 			] as readonly any[]
 		}
 	}
