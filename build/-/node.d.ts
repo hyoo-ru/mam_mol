@@ -1408,10 +1408,10 @@ declare namespace $ {
         start(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
         notify([line, path]: [InstanceType<$node['ws']>, string]): boolean;
         slave_commands(next?: string[]): string[];
-        slave_servers(): ((import("child_process").ChildProcess & {
+        slave_servers(): ((import("child_process").ChildProcessWithoutNullStreams & {
             destructor: () => void;
         }) | null)[];
-        slave_server(cmd: string): (import("child_process").ChildProcess & {
+        slave_server(cmd: string): (import("child_process").ChildProcessWithoutNullStreams & {
             destructor: () => void;
         }) | null;
         repl(): import("readline").Interface;

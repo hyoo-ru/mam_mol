@@ -6663,9 +6663,7 @@ var $;
                 message: 'Start',
                 command,
             });
-            const server = $node.child_process.spawn('node', [`./${path}/-/node.js`, ...args], {
-                stdio: 'inherit',
-            });
+            const server = $node.child_process.spawn('node', [`./${path}/-/node.js`, ...args]);
             return Object.assign(server, {
                 destructor: () => {
                     if (server.killed)
