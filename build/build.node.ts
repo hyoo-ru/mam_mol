@@ -918,6 +918,7 @@ namespace $ {
 			if( sources.length === 0 ) return []
 			
 			var concater = new $mol_sourcemap_builder( this.root().relate( targetJS.parent() ), ';')
+			concater.add( '#!/usr/bin/env node' )
 			concater.add( '"use strict"' )
 
 			if( bundle === 'node' ) {
