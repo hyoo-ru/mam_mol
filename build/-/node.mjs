@@ -6663,7 +6663,9 @@ var $;
                 message: 'Start',
                 command,
             });
-            const server = $node.child_process.spawn('node', [`./${path}/-/node.js`, ...args]);
+            const server = $node.child_process.spawn('node', [`./${path}/-/node.js`, ...args], {
+                stdio: ['pipe', 'inherit', 'inherit'],
+            });
             return Object.assign(server, {
                 destructor: () => {
                     if (server.killed)
@@ -6700,6 +6702,7 @@ var $;
                     default: return console.log(hint);
                 }
             })
+                .on('SIGINT', () => process.exit(0))
                 .on('close', () => process.exit(0));
             return terminal;
         }
