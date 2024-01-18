@@ -316,10 +316,7 @@ namespace $ {
 	
 			const server = $node.child_process.spawn(
 				'node',
-				[ `./${path}/-/node.js`, ... args ],
-				{
-					stdio: 'inherit',
-				}
+				[ `./${path}/-/node.js`, ... args ]
 			)
 			
 			return Object.assign( server, {
