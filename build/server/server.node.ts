@@ -316,7 +316,10 @@ namespace $ {
 	
 			const server = $node.child_process.spawn(
 				'node',
-				[ `./${path}/-/node.js`, ... args ]
+				[ `./${path}/-/node.js`, ... args ],
+				{
+					stdio: [ 'pipe', 'inherit', 'inherit' ],
+				}
 			)
 			
 			return Object.assign( server, {
@@ -363,6 +366,7 @@ namespace $ {
 				}
 				
 			})
+			.on( 'SIGINT', () => process.exit(0) )
 			.on( 'close', () => process.exit(0) )
 			
 			// this.$.$mol_log3_done({
