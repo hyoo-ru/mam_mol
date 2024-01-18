@@ -5135,7 +5135,8 @@ var $;
                 emitDeclarationOnly: true,
             }, {
                 ...$node.typescript.sys,
-                watchDirectory: () => {
+                watchDirectory: (path, cb) => {
+                    watchers.set(path, cb);
                     return { close() { } };
                 },
                 writeFile: (path, data) => {
@@ -5145,6 +5146,7 @@ var $;
                     run = cb;
                 },
                 watchFile: (path, cb) => {
+                    watchers.set(path, cb);
                     return { close() { } };
                 },
             }, $node.typescript.createSemanticDiagnosticsBuilderProgram, (diagnostic) => {
@@ -5163,14 +5165,23 @@ var $;
                     });
                 }
             }, () => { }, [], {
-                synchronousWatchDirectory: false,
-                watchFile: 4,
+                synchronousWatchDirectory: true,
+                watchFile: 5,
                 watchDirectory: 0,
             });
             const service = $node.typescript.createWatchProgram(host);
             const versions = {};
             return {
                 recheck: () => {
+                    for (const path of paths) {
+                        const version = $node.fs.statSync(path).mtime.valueOf();
+                        if (versions[path] && versions[path] !== version) {
+                            const watcher = watchers.get(path);
+                            if (watcher)
+                                watcher(path, 2);
+                        }
+                        versions[path] = version;
+                    }
                     run();
                 },
                 destructor: () => service.close()
@@ -5595,7 +5606,9 @@ var $;
             }
             this.logBundle(target, Date.now() - start);
             if (errors.length) {
-                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, ...errors));
+                const error = new $mol_error_mix(`Build fail ${path}`, ...errors);
+                target.text(`console.error(${JSON.stringify(error)})`);
+                $mol_fail_hidden(error);
             }
             target.text(`console.info( '%c ▫ $mol_build ▫ Audit passed', 'color:forestgreen; font-weight:bolder' )`);
             return [target];
@@ -6584,6 +6597,8 @@ var $;
             });
         }
         start() {
+            this.slave_servers();
+            this.repl();
             const socket = this.socket();
             for (const [line, path] of this.lines()) {
                 this.notify([line, path]);
@@ -6615,6 +6630,81 @@ var $;
             line.send('$mol_build_obsolete');
             return true;
         }
+        slave_commands(next = []) {
+            return next;
+        }
+        slave_servers() {
+            return this.slave_commands().map(cmd => this.slave_server(cmd));
+        }
+        slave_server(cmd) {
+            const [path, ...args] = cmd.split(' ');
+            const command = `node ./${path}/-/node.js ${args.join(' ')}`;
+            const prev = $mol_wire_probe(() => this.slave_server(cmd));
+            if (prev)
+                prev.destructor();
+            const build = this.build();
+            try {
+                for (const file of build.bundle({ path, bundle: 'node.js' }))
+                    file.stat();
+                for (const file of build.bundle({ path, bundle: 'node.audit.js' }))
+                    file.stat();
+                for (const file of build.bundle({ path, bundle: 'node.test.js' }))
+                    file.stat();
+            }
+            catch (error) {
+                this.$.$mol_log3_fail({
+                    place: this,
+                    message: error.message ?? error,
+                });
+                return null;
+            }
+            this.$.$mol_log3_come({
+                place: this,
+                message: 'Start',
+                command,
+            });
+            const server = $node.child_process.spawn('node', [`./${path}/-/node.js`, ...args], {
+                stdio: 'inherit',
+            });
+            return Object.assign(server, {
+                destructor: () => {
+                    if (server.killed)
+                        return;
+                    server.kill();
+                    this.$.$mol_log3_done({
+                        place: this,
+                        message: 'Stopped',
+                        command,
+                    });
+                }
+            });
+        }
+        repl() {
+            const terminal = $node.readline.createInterface({
+                input: process.stdin,
+                output: process.stdout,
+                history: [],
+                tabSize: 4,
+                prompt: '',
+            });
+            terminal.prompt();
+            const hint = 'start: + path/to/module args\nstop:  - path/to/module args';
+            terminal
+                .on('line', line => {
+                if (!line.trim())
+                    return;
+                const [action, ...params] = line.split(' ');
+                const command = params.join(' ');
+                switch (action) {
+                    case '+': return this.slave_commands([...this.slave_commands(), command]);
+                    case '-': return this.slave_commands(this.slave_commands().filter(cmd => cmd !== command));
+                    case '?':
+                    default: return console.log(hint);
+                }
+            })
+                .on('close', () => process.exit(0));
+            return terminal;
+        }
     }
     __decorate([
         $mol_mem_key
@@ -6631,6 +6721,18 @@ var $;
     __decorate([
         $mol_mem_key
     ], $mol_build_server.prototype, "notify", null);
+    __decorate([
+        $mol_mem
+    ], $mol_build_server.prototype, "slave_commands", null);
+    __decorate([
+        $mol_mem
+    ], $mol_build_server.prototype, "slave_servers", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_build_server.prototype, "slave_server", null);
+    __decorate([
+        $mol_mem
+    ], $mol_build_server.prototype, "repl", null);
     $.$mol_build_server = $mol_build_server;
 })($ || ($ = {}));
 //mol/build/server/server.node.ts

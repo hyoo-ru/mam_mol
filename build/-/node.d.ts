@@ -1392,6 +1392,8 @@ declare namespace $ {
 }
 
 /// <reference types="node" />
+/// <reference types="node" />
+/// <reference types="node" />
 declare namespace $ {
     class $mol_build_server extends $mol_server {
         static trace: boolean;
@@ -1405,6 +1407,14 @@ declare namespace $ {
         socket(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
         start(): import("ws").Server<typeof import("ws"), typeof import("http").IncomingMessage>;
         notify([line, path]: [InstanceType<$node['ws']>, string]): boolean;
+        slave_commands(next?: string[]): string[];
+        slave_servers(): ((import("child_process").ChildProcess & {
+            destructor: () => void;
+        }) | null)[];
+        slave_server(cmd: string): (import("child_process").ChildProcess & {
+            destructor: () => void;
+        }) | null;
+        repl(): import("readline").Interface;
     }
 }
 

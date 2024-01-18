@@ -222,6 +222,9 @@ namespace $ {
 		@ $mol_mem
 		start() {
 
+			this.slave_servers()
+			this.repl()
+			
 			const socket = this.socket()
 
 			for( const [ line, path ] of this.lines() ) {
@@ -266,6 +269,112 @@ namespace $ {
 
 			return true
 
+		}
+		
+		@ $mol_mem
+		slave_commands( next = [] as string[] ) {
+			return next
+		}
+		
+		@ $mol_mem
+		slave_servers() {
+			return this.slave_commands().map( cmd => this.slave_server( cmd ) )
+		}
+		
+		@ $mol_mem_key
+		slave_server( cmd: string ) {
+			
+			const [ path, ... args ] = cmd.split( ' ' )
+			const command = `node ./${path}/-/node.js ${args.join(' ')}`
+			
+			const prev = $mol_wire_probe( ()=> this.slave_server( cmd ) )
+			if( prev ) prev.destructor()
+			
+			const build = this.build()
+			
+			try {
+				
+				for( const file of build.bundle({ path, bundle: 'node.js' }) ) file.stat()
+				for( const file of build.bundle({ path, bundle: 'node.audit.js' }) ) file.stat()
+				for( const file of build.bundle({ path, bundle: 'node.test.js' }) ) file.stat()
+			
+			} catch( error: any ) {
+				
+				this.$.$mol_log3_fail({
+					place: this,
+					message: error.message ?? error,
+				})
+				
+				return null
+			}
+			
+			this.$.$mol_log3_come({
+				place: this,
+				message: 'Start',
+				command ,
+			})
+	
+			const server = $node.child_process.spawn(
+				'node',
+				[ `./${path}/-/node.js`, ... args ],
+				{
+					stdio: 'inherit',
+				}
+			)
+			
+			return Object.assign( server, {
+				destructor: ()=> {
+					if( server.killed ) return
+					server.kill()
+					this.$.$mol_log3_done({
+						place: this,
+						message: 'Stopped',
+						command ,
+					})
+				}
+			} )
+			
+		}
+		
+		@ $mol_mem
+		repl() {
+			
+			const terminal = $node.readline.createInterface({
+				input: process.stdin,
+				output: process.stdout,
+				history: [],
+				tabSize: 4,
+				prompt: '',
+			})
+			terminal.prompt()
+			
+			const hint = 'start: + path/to/module args\nstop:  - path/to/module args'
+			
+			terminal
+			.on( 'line', line => {
+				
+				if( !line.trim() ) return
+				
+				const [ action, ... params ] = line.split( ' ' )
+				const command = params.join(' ')
+				
+				switch( action ) {
+					case '+': return this.slave_commands([ ... this.slave_commands(), command ])
+					case '-': return this.slave_commands( this.slave_commands().filter( cmd => cmd !== command ) )
+					case '?':
+					default: return console.log( hint )
+				}
+				
+			})
+			.on( 'close', () => process.exit(0) )
+			
+			// this.$.$mol_log3_done({
+			// 	place: this,
+			// 	message: 'Watch dog started',
+			// 	hint,
+			// })
+	
+			return terminal
 		}
 		
 	}

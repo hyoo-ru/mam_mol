@@ -16,4 +16,6 @@ interface $node {
 	"cors" : typeof import( "cors" )
 	"body-parser" : typeof import( "body-parser" )
 	"serve-index" : typeof import( "serve-index" )
+	"child" : typeof import( "child" )
+	"readline" : typeof import( "readline" )
 }

@@ -145,7 +145,8 @@
     "compression": "*",
     "cors": "*",
     "body-parser": "*",
-    "serve-index": "*"
+    "serve-index": "*",
+    "child": "*"
   },
   "bin": {
     "mam": "./mol/build/bin"

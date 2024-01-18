@@ -351,17 +351,21 @@ namespace $ {
 				
 				{
 					... $node.typescript.sys ,
-					watchDirectory: () => { 
+					watchDirectory: ( path, cb ) => {
+						// console.log('watchDirectory', path )
+						watchers.set( path , cb )
 						return { close(){} }
 					},
 					writeFile : (path , data )=> {
 						$mol_file.relative( path ).text( data, 'virt' )
 					},
 					setTimeout : ( cb : any )=> {
+						// console.log('setTimeout' )
 						run = cb
 					} ,
 					watchFile : (path:string, cb:(path:string,kind:number)=>any )=> {
-						// watchers.set( path , cb )
+						// console.log('watchFile', path )
+						watchers.set( path , cb )
 						return { close(){ } }
 					},
 				},
@@ -377,6 +381,7 @@ namespace $ {
 							getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
 							getNewLine : ()=> '\n' ,
 						})
+						// console.log('XXX', error )
 						this.js_error( diagnostic.file.getSourceFile().fileName , error )
 						
 					} else {
@@ -393,8 +398,8 @@ namespace $ {
 				[], // project refs
 				
 				{ // watch options
-					synchronousWatchDirectory: false,
-					watchFile: 4,
+					synchronousWatchDirectory: true,
+					watchFile: 5,
 					watchDirectory: 0,
 				},
 				
@@ -406,15 +411,15 @@ namespace $ {
 
 			return {
 				recheck: ()=> {
-					// for( const path of paths ) {
-					// 	const version = $node.fs.statSync( path ).mtime.valueOf()
-					// 	this.js_error( path, null )
-					// 	if( versions[ path ] && versions[ path ] !== version ) {
-					// 		const watcher = watchers.get( path )
-					// 		if( watcher ) watcher( path , 2 )
-					// 	}
-					// 	versions[ path ] = version
-					// }
+					for( const path of paths ) {
+						const version = $node.fs.statSync( path ).mtime.valueOf()
+						// this.js_error( path, null )
+						if( versions[ path ] && versions[ path ] !== version ) {
+							const watcher = watchers.get( path )
+							if( watcher ) watcher( path , 2 )
+						}
+						versions[ path ] = version
+					}
 					run()
 				},
 				destructor : ()=> service.close()
@@ -1006,7 +1011,9 @@ namespace $ {
 			this.logBundle( target , Date.now() - start )
 			
 			if( errors.length ) {
-				$mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ... errors ) )
+				const error = new $mol_error_mix( `Build fail ${path}`, ... errors )
+				target.text( `console.error(${ JSON.stringify( error ) })` )
+				$mol_fail_hidden( error )
 			}
 
 			target.text( `console.info( '%c ▫ $mol_build ▫ Audit passed', 'color:forestgreen; font-weight:bolder' )` )
