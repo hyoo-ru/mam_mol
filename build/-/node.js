@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 var exports = void 0;
 
@@ -5539,8 +5540,7 @@ var $;
             if (sources.length === 0)
                 return [];
             var concater = new $mol_sourcemap_builder(this.root().relate(targetJS.parent()), ';');
-            concater.add('#!/usr/bin/env node');
-            concater.add('"use strict"');
+            concater.add('#!/usr/bin/env node\n"use strict"');
             if (bundle === 'node') {
                 concater.add('var exports = void 0');
             }

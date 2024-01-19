@@ -45,7 +45,7 @@
 	pack match git \https://github.com/hyoo-ru/match.hyoo.ru.git
 	pack meme git \https://github.com/hyoo-ru/meme.hyoo.ru.git
 	pack meta git \https://github.com/hyoo-ru/hyoo_meta.git
-	pack mill git \https://github.com/hyoo-ru/mill.git
+	pack mill git \https://github.com/hyoo-ru/hyoo_mill.git
 	pack mol git \https://github.com/hyoo-ru/mol.hyoo.ru.git
 	pack notes git \https://github.com/hyoo-ru/notes.hyoo.ru.git
 	pack offer git \https://github.com/hyoo-ru/offer.hyoo.ru.git
