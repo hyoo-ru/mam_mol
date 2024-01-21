@@ -35,18 +35,18 @@ $my_crud.serve()
 
 ```sh
 npm start
-+ my/server port=9090
++ my/crud port=9090
 ```
 
 ### Build release
 
 ```sh
-npm start my/server
+npm start my/crud
 ```
 
 ### Start release
 ```sh
-node my/server/-/node.js port=9090
+node my/crud/-/node.js port=9090
 ```
 
 ## HTTP Requests
