@@ -41,7 +41,7 @@ npm start
 ### Build release
 
 ```sh
-npm sart my/server
+npm start my/server
 ```
 
 ### Start release
@@ -52,7 +52,7 @@ node my/server/-/node.js port=9090
 ## HTTP Requests
 
 ```ts
-const query = $my_fetch.json( '/foo/bar=777/?xxx=lol' )
+const response = $my_fetch.json( '/foo/bar=777/?xxx=lol' )
 ```
 
 ## WebRTC Requests
@@ -89,7 +89,7 @@ chan.send( 'ping' )
 
 To do: **Better XML support**.
 
-```ts
+```tsx
 export class $my_name extends $mol_rest_resource {
 	
 	// Root handler
@@ -109,6 +109,7 @@ export class $my_name extends $mol_rest_resource {
 	
 	// Sync handler
 	GET( sock: $mol_rest_socket ) {
+		this.$.$mol_wait_timeout( 1000 )
 		sock.send( 'Jin' )
 	}
 	
@@ -118,7 +119,7 @@ export class $my_admin extends $mol_rest_resource {
 	
 	// Async handler
 	async GET( sock: $mol_rest_socket ) {
-		await new Promise( done => setTieout( done, 1000 ) )
+		await this.$.$mol_wait_timeout_async( 1000 )
 		sock.send( 'Admin Panel' )
 	}
 	
