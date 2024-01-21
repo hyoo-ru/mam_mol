@@ -41,7 +41,7 @@ npm start
 ### Build release
 
 ```sh
-npm sart my/server
+npm start my/server
 ```
 
 ### Start release
@@ -52,7 +52,7 @@ node my/server/-/node.js port=9090
 ## HTTP Requests
 
 ```ts
-const query = $my_fetch.json( '/foo/bar=777/?xxx=lol' )
+const response = $my_fetch.json( '/foo/bar=777/?xxx=lol' )
 ```
 
 ## WebRTC Requests
@@ -89,7 +89,7 @@ chan.send( 'ping' )
 
 To do: **Better XML support**.
 
-```ts
+```tsx
 export class $my_name extends $mol_rest_resource {
 	
 	// Root handler
