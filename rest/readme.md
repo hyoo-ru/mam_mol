@@ -71,7 +71,7 @@ await con.setLocalDescription()
 await new Promise( done => con.onicecandidate = ({ candidate })=> done( candidate ) )
 
 // Exchange SDP
-const sdp = await fetch( 'http://127.0.0.1:9090/p2p', {
+const sdp = await fetch( '/any/query', {
 	headers: { 'content-type': 'application/sdp' },
 	method: 'options',
 	body: on.localDescription.sdp,
