@@ -109,6 +109,7 @@ export class $my_name extends $mol_rest_resource {
 	
 	// Sync handler
 	GET( sock: $mol_rest_socket ) {
+		this.$.$mol_wait_timeout( 1000 )
 		sock.send( 'Jin' )
 	}
 	
@@ -118,7 +119,7 @@ export class $my_admin extends $mol_rest_resource {
 	
 	// Async handler
 	async GET( sock: $mol_rest_socket ) {
-		await new Promise( done => setTieout( done, 1000 ) )
+		await this.$.$mol_wait_timeout_async( 1000 )
 		sock.send( 'Admin Panel' )
 	}
 	
