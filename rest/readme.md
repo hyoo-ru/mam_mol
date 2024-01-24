@@ -8,6 +8,7 @@ Rich REST server. **Alpha-version**
 ## Simple CRUD
 
 ```ts
+@ $mol_rest_server.start
 export class $my_crud extends $mol_rest_resource {
 	
 	GET( msg: $mol_rest_message ) {
@@ -36,14 +37,13 @@ export class $my_crud extends $mol_rest_resource {
 	@ $mol_mem nested() { return $mol_rest_demo_crud.make({}) }
 	
 }
-$my_crud.serve()
 ```
 
 ### Start develop
 
 ```sh
 npm start
-+ my/crud port=9090
++ my/crud $my_crud=9090
 ```
 
 ### Build release
@@ -54,7 +54,7 @@ npm start my/crud
 
 ### Start release
 ```sh
-node my/crud/-/node.js port=9090
+node my/crud/-/node.js $my_crud=9090
 ```
 
 ## HTTP Requests
@@ -96,6 +96,7 @@ chan.send( 'ping' )
 ## Composing Resources
 
 ```tsx
+@ $mol_rest_server.start
 export class $my_name extends $mol_rest_resource {
 	
 	// Root handler

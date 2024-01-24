@@ -8,7 +8,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		run() {
+		start() {
 			this.http_server()
 		}
 		
@@ -47,8 +47,7 @@ namespace $ {
 			
 			$mol_wire_sync( this.$ ).$mol_log3_rise({
 				place: this,
-				message: 'REQUEST',
-				method: message.method(),
+				message: message.method(),
 				url: message.uri(),
 			})
 			
@@ -84,20 +83,18 @@ namespace $ {
 			return resource ?? $mol_rest_resource.make({})
 		}
 		
-		static run() {
+		static start< Resource extends typeof $mol_rest_resource >( Resource: Resource ) {
 			
-			const port = Number( this.$.$mol_state_arg.value( 'port' ) )
-			if( !port ) return
+			const name = $$.$mol_func_name( Resource )
 			
-			const server = this.port( port )
-			server.run()
+			const port = Number( $$.$mol_state_arg.value( name ) )
+			if( !port ) return null!
 			
-			return server
-		}
-		
-		@ $mol_mem_key
-		static port( port: number ) {
-			return this.make({ port: ()=> port })
+			const server = Resource.port( port )
+			server.root( Resource.make({}) )
+			server.start()
+			
+			return Resource
 		}
 		
 	}
