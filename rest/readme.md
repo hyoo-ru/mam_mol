@@ -82,7 +82,7 @@ await new Promise( done => con.onicecandidate = ({ candidate })=> done( candidat
 const sdp = await fetch( '/any/query', {
 	headers: { 'content-type': 'application/sdp' },
 	method: 'options',
-	body: on.localDescription.sdp,
+	body: con.localDescription.sdp,
 } ).then( res => res.text() )
 
 // Wait Connection
