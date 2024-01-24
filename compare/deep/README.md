@@ -9,20 +9,16 @@ Deeply compares two values. Supports cyclic references. Uses cache to prevent mu
 ## Usage from MAM
 
 ```js
-
-let x, y
+let x = { a: new Uint8Array([1]) }
+let y = { a: new Uint8Array([1]) }
+x.b = y
+y.b = x
 
 // true, equals
-$mol_compare_deep(
-	x = { a: [1], b: x },
-	y = { a: [1], b: y }],
-)
+$mol_compare_deep( x, y )
 
 // false, don't equals
-$mol_compare_deep(
-	x = { a: [1], b: x },
-	y = { a: [1], b: x }],
-)
+$mol_compare_deep( new Uint8Array([1]), new Uint8Array([2]) )
 ```
 
 ## Usage from NPM
