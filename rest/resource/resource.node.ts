@@ -1,64 +1,71 @@
 namespace $ {
 	
+	const makeURL = $mol_wire_sync( ( url: string | URL, base?: string | URL )=> new URL( url, base ))
+	
 	export class $mol_rest_resource extends $mol_object {
 		
 		@ $mol_action
-		REQUEST( sock: $mol_rest_socket, method: keyof this ) {
+		REQUEST( msg: $mol_rest_message ) {
 			
-			const field = ( Object.keys( sock.query() )[0] ?? '' ) as keyof this
-			if( field in this ) return ( this[ field ] as any )().REQUEST( sock, method )
+			const [ path, nest, tail ] = /^\/([^/]*)(.*)$/.exec( msg.uri().pathname ) ?? []
+			const field = nest.toLowerCase()
 			
-			return ( $mol_wire_sync( this )[ method as never ] as any )( sock )
+			if( field in this ) {
+				
+				const uri2 = makeURL( msg.uri().toString() )
+				uri2.pathname = tail ?? msg.uri().pathname
+				const msg2 = msg.route( uri2 )
+				
+				return ( this[ field as keyof typeof this ] as any )().REQUEST( msg2 )
+			}
+			
+			return ( $mol_wire_sync( this )[ msg.method() as never ] as any )( msg )
 		}
 		
-		async OPTIONS( sock: $mol_rest_socket ) {
+		async OPTIONS( msg: $mol_rest_message ) {
 			
-			if( sock.type() !== 'application/sdp' ) return sock.send( null )
+			if( msg.type() !== 'application/sdp' ) return msg.reply( null )
 			
 			const { RTCPeerConnection } = await import( 'node-datachannel/polyfill' )
 			const con = new RTCPeerConnection
 			
-			const chan = con.createDataChannel( 'xxx', { negotiated: true, id: 0 } )
-			chan.onmessage = event => {
-				const msg = $mol_rest_socket.make({
-					query: $mol_const( sock.query() ),
-					data: $mol_const( event.data ),
-					send: data => {
-						if( data === null ) return
-						if( typeof data === 'object' && Reflect.getPrototypeOf( data ) === Object.prototype ) {
-							data = JSON.stringify( data )
-						}
-						chan.send( data as any )
-					},
-				})
-				$mol_wire_async( this ).POST( msg )
+			const line = $mol_rest_channel.from( msg.channel().input(), null! )
+			line.send = data => {
+				if( data === null ) return
+				if( typeof data === 'object' && Reflect.getPrototypeOf( data ) === Object.prototype ) {
+					data = JSON.stringify( data )
+				}
+				chan.send( data as any )
 			}
 			
-			const sdp = await $mol_wire_async( sock ).text()
+			const chan = con.createDataChannel( msg.uri().toString(), { negotiated: true, id: 0 } )
+			chan.onmessage = event => $mol_wire_async( this ).POST( line.message( event.data ) )
+			
+			const sdp = await $mol_wire_async( msg ).text()
 			await con.setRemoteDescription({ sdp, type: 'offer' })
 			
 			con.setLocalDescription({ type: 'answer' })
 			await new Promise( done => con.onicecandidate = ({ candidate })=> done( candidate ) )
 			
-			sock.send( con.localDescription!.sdp )
+			msg.reply( con.localDescription!.sdp )
 		}
 		
-		HEAD( sock: $mol_rest_socket ) {
+		HEAD( msg: $mol_rest_message ) {
 		}
 		
-		GET( sock: $mol_rest_socket ) {
+		GET( msg: $mol_rest_message ) {
 		}
 		
-		PUT( sock: $mol_rest_socket ) {
+		PUT( msg: $mol_rest_message ) {
 		}
 		
-		PATCH( sock: $mol_rest_socket ) {
+		PATCH( msg: $mol_rest_message ) {
 		}
 		
-		POST( sock: $mol_rest_socket ) {
+		POST( msg: $mol_rest_message ) {
 		}
 		
-		DELETE( sock: $mol_rest_socket ) {
+		DELETE( msg: $mol_rest_message ) {
 		}
 		
 		@ $mol_mem_key
@@ -75,7 +82,7 @@ namespace $ {
 			if( !port ) return
 			
 			const server = this.port( port )
-			server.resource( new this )
+			server.root( new this )
 			server.run()
 			
 			return server
