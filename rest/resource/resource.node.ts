@@ -78,12 +78,13 @@ namespace $ {
 		
 		static serve() {
 			
-			const port = Number( this.$.$mol_state_arg.value( 'port' ) )
+			const name = this.$.$mol_func_name( this )
+			const port = Number( this.$.$mol_state_arg.value( name ) )
 			if( !port ) return
 			
 			const server = this.port( port )
 			server.root( new this )
-			server.run()
+			server.start()
 			
 			return server
 		}
