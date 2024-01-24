@@ -3,29 +3,37 @@
 Rich REST server. **Alpha-version**
 
 - **Composable.** One rest resource can be composed from others.
-- **Humane.** Parses url as HARP Query.
-- **Isomorphic**. Same API for HTTP, WebRTC, WebSocket(WIP).
+- **Isomorphic**. Same API for HTTP, WebRTC, Webmsget(WIP).
 
 ## Simple CRUD
 
 ```ts
 export class $my_crud extends $mol_rest_resource {
 	
-	GET( sock: $mol_rest_socket ) {
-		sock.send( sock.query() ) // returns received query
+	GET( msg: $mol_rest_message ) {
+		// returns received query as json
+		msg.reply({
+			path: msg.uri().pathname,
+			query: [ ... msg.uri().searchParams ],
+		})
 	}
 	
-	POST( sock: $mol_rest_socket ) {
-		sock.send( sock.data() ) // returns received body
+	POST( msg: $mol_rest_message ) {
+		// returns received body as is
+		msg.reply( msg.data() )
 	}
 	
-	PUT( sock: $mol_rest_socket ) {
-		sock.send( sock.type() ) // returns received type
+	PUT( msg: $mol_rest_message ) {
+		// returns received type in xml
+		msg.reply( <body>{ msg.type() }</body> )
 	}
 	
-	DELETE( sock: $mol_rest_socket ) {
-		sock.send( null ) // returns empty body
+	DELETE( msg: $mol_rest_message ) {
+		// returns empty body
+		msg.reply( null )
 	}
+	
+	@ $mol_mem nested() { return $mol_rest_demo_crud.make({}) }
 	
 }
 $my_crud.serve()
@@ -87,17 +95,17 @@ chan.send( 'ping' )
 
 ## Composing Resources
 
-To do: **Better XML support**.
-
 ```tsx
 export class $my_name extends $mol_rest_resource {
 	
 	// Root handler
-	GET( sock: $mol_rest_socket ) {
-		sock.send( (<body>
-			<a href="./name/">Name</a>
-			<a href="./admin/">Admin</a>
-		</body>).outerHTML, { type: 'text/html' } )
+	GET( msg: $mol_rest_message ) {
+		msg.reply(
+			<body>
+				<a href="./name/">Name</a>
+				<a href="./admin/">Admin</a>
+			</body>
+		)
 	}
 	
 	@ $mol_mem name() { return $my_name.make({}) }
@@ -108,9 +116,9 @@ export class $my_name extends $mol_rest_resource {
 export class $my_name extends $mol_rest_resource {
 	
 	// Sync handler
-	GET( sock: $mol_rest_socket ) {
+	GET( msg: $mol_rest_message ) {
 		this.$.$mol_wait_timeout( 1000 )
-		sock.send( 'Jin' )
+		msg.reply( 'Jin' )
 	}
 	
 }
@@ -118,9 +126,9 @@ export class $my_name extends $mol_rest_resource {
 export class $my_admin extends $mol_rest_resource {
 	
 	// Async handler
-	async GET( sock: $mol_rest_socket ) {
+	async GET( msg: $mol_rest_message ) {
 		await this.$.$mol_wait_timeout_async( 1000 )
-		sock.send( 'Admin Panel' )
+		msg.reply( 'Admin' )
 	}
 	
 }

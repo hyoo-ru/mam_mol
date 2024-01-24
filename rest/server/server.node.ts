@@ -40,15 +40,16 @@ namespace $ {
 			res: InstanceType< $node['http']['ServerResponse'] >,
 		) {
 			
-			const socket = $mol_rest_socket.from( req, res )
-			const query = socket.query()
+			const channel = $mol_rest_channel.from( req, res )
+			const message = $mol_rest_message.from( channel )
+			
+			res.statusCode = 400
 			
 			$mol_wire_sync( this.$ ).$mol_log3_rise({
 				place: this,
 				message: 'REQUEST',
-				method: req.method,
-				path: req.url,
-				query: $hyoo_harp_to_string( query ),
+				method: message.method(),
+				url: message.uri(),
 			})
 			
 			$mol_wire_sync( res ).setHeader( 'Access-Control-Allow-Origin', '*' )
@@ -57,7 +58,7 @@ namespace $ {
 			
 			try {
 				
-				$mol_wire_sync( this.resource() ).REQUEST( socket, req.method as any )
+				$mol_wire_sync( this.root() ).REQUEST( message )
 				
 			} catch( error: any ) {
 				
@@ -74,16 +75,11 @@ namespace $ {
 				
 			}
 			
-			if( !res.statusMessage ) {
-				res.statusCode = 400
-				res.statusMessage = 'Bad Request'
-			}
-			
 			res.end()
 		}
 		
 		@ $mol_mem
-		resource( resource?: $mol_rest_resource ) {
+		root( resource?: $mol_rest_resource ) {
 			$mol_wire_solid()
 			return resource ?? $mol_rest_resource.make({})
 		}
