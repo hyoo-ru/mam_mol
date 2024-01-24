@@ -12,7 +12,7 @@ namespace $ {
 			const salt = $mol_crypto_salt()
 			
 			const closed = await cipher.encrypt( data, salt )
-			$mol_assert_equal( closed.byteLength, 16 )
+			$mol_assert_equal( closed.byteLength, data.byteLength + $mol_crypto_secret.extra )
 			
 		},
 		

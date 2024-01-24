@@ -1,7 +1,7 @@
 namespace $ {
 	
 	const algorithm = {
-		name: 'AES-CBC',
+		name: 'AES-GCM',
 		length: 128,
 		tagLength: 32,
 	}
@@ -11,6 +11,9 @@ namespace $ {
 		
 		/** Key size in bytes. */
 		static size = 16
+		
+		/** Extra size in bytes to encrypted data. */
+		static extra = 4
 		
 		constructor(
 			readonly native: CryptoKey & { type: 'secret' }
@@ -101,7 +104,7 @@ namespace $ {
 			)
 		}
 
-		/** 16n bytes */
+		/** 4 bytes + data length */
 		async encrypt( open: BufferSource, salt: BufferSource ): Promise< ArrayBuffer > {
 			return await $mol_crypto_native.subtle.encrypt(
 				{
