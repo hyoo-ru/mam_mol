@@ -8,9 +8,9 @@ namespace $ {
 		REQUEST( msg: $mol_rest_message ) {
 			
 			const [ path, nest, tail ] = /^\/([a-zA-Z][^/]*)(.*)$/.exec( msg.uri().pathname ) ?? []
-			const field = nest.toLowerCase()
+			const field = nest?.toLowerCase()
 			
-			if( field in this && !( field in $mol_rest_resource.prototype ) ) {
+			if( field && field in this && !( field in $mol_rest_resource.prototype ) ) {
 				
 				const uri2 = makeURL( msg.uri().toString() )
 				uri2.pathname = tail ?? msg.uri().pathname
