@@ -61,6 +61,7 @@ namespace $ {
 			return $mol_rest_message.make({
 				channel: $mol_const( this ),
 				data: $mol_const( data ),
+				method: $mol_const( 'POST' ),
 			})
 		}
 		

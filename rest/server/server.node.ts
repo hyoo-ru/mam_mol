@@ -18,12 +18,17 @@ namespace $ {
 			const server = $node.http.createServer(
 				( req, res )=> $mol_wire_async( this ).http_income( req, res )
 			)
+			
+			server.on( 'upgrade',
+				( req, sock, head )=> $mol_wire_async( this ).ws_upgrade( req, sock, head )
+			)
+			
 			server.listen( this.port() )
 			
 			const ifaces = Object.entries( $node.os.networkInterfaces() )
 				.flatMap( ([ type, ifaces ])=> ifaces?.map(
-					iface => iface.family === 'IPv6' ? `[${iface.address}]` : iface.address ) ?? []
-				)
+					iface => iface.family === 'IPv6' ? `[${iface.address}]` : iface.address
+				) ?? [] )
 			
 			this.$.$mol_log3_done({
 				place: this,
@@ -75,6 +80,98 @@ namespace $ {
 			}
 			
 			res.end()
+		}
+		
+		@ $mol_action
+		ws_upgrade(
+			req: InstanceType< $node['http']['IncomingMessage'] >,
+			sock: InstanceType< $node['stream']['Duplex'] >,
+			head: Buffer,
+		) {
+			
+			const chan = $mol_rest_channel.from( req, null! )
+			chan.send = data => {
+				
+				let op: keyof typeof $mol_websocket_frame_op = 'pong'
+				
+				if( data && typeof data === 'object' && Reflect.getPrototypeOf( data ) === Object.prototype ) {
+					data = JSON.stringify( data )
+				}
+				
+				if( data && data instanceof $mol_dom_context.Element ) {
+					data = $mol_dom_serialize( data )
+				}
+				
+				if( typeof data === 'string' ) {
+					op = 'txt'
+					data = $mol_charset_encode( data )
+				} else if( data && data instanceof Uint8Array ) {
+					op = 'bin'
+				}
+				
+				sock.write( $mol_websocket_frame.make( op, ( data as Uint8Array ).byteLength ).asArray() )
+				if( data ) sock.write( data )
+				
+			}
+			
+			sock.on( 'data', ( msg: Buffer )=> $mol_wire_async( this ).ws_income( chan, msg ) )
+			
+			const key_in = req.headers["sec-websocket-key"]
+			const magic = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
+			const key_out =  $mol_base64_encode( $mol_crypto_hash( $mol_charset_encode( key_in + magic ) ) )
+			
+			sock.write(
+				'HTTP/1.1 101 WS Handshaked\r\n' +
+				'Upgrade: WebSocket\r\n' +
+				'Connection: Upgrade\r\n' +
+				`Sec-WebSocket-Accept: ${key_out}\r\n` +
+				'\r\n'
+			);
+			
+		}
+		
+		@ $mol_action
+		ws_income( channel: $mol_rest_channel, pack: Buffer ) {
+			
+			const frame = $mol_wire_sync( $mol_websocket_frame ).from( pack ) as $mol_websocket_frame
+			let data: string | Uint8Array = new Uint8Array( pack.buffer, pack.byteOffset + frame.size() )
+			
+			if( frame.data().mask ) {
+				const mask = frame.mask()
+				for( let i = 0; i < data.length; ++i ) {
+					data[ i ] ^= mask[ i % 4 ]
+				}
+			}
+			
+			const op = frame.kind().op
+			if( op === 'txt' ) data = $mol_charset_decode( data )
+			const message = channel.message( data )
+			
+			$mol_wire_sync( this.$ ).$mol_log3_rise({
+				place: this,
+				message: message.method(),
+				url: message.uri(),
+				frame: frame.toString(),
+			})
+			
+			if( op !== 'txt' && op !== 'bin' ) return
+			
+			try {
+				
+				$mol_wire_sync( this.root() ).REQUEST( message )
+				
+			} catch( error: any ) {
+				
+				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+					
+				$mol_wire_sync( $$ ).$mol_log3_fail({
+					place: this,
+					message: error.message ?? '',
+					stack: error.stack,
+				})
+				
+			}
+			
 		}
 		
 		@ $mol_mem

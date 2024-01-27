@@ -155,5 +155,41 @@ namespace $.$$ {
 			
 		},
 		
+		async "WebSocket conection"( $ ) {
+			
+			const url = new URL( './crud', document.location.href ) 
+			url.protocol = 'ws:'
+			
+			const ws = new WebSocket( url )
+			ws.binaryType = 'arraybuffer'
+			
+			await new Promise( ( done, fail )=> {
+				ws.onopen = done
+				ws.onerror = fail
+				ws.onmessage = console.log
+			} )
+			
+			ws.send( 'Hello, Мир!' )
+			
+			$mol_assert_equal(
+				await new Promise( ( done, fail )=> {
+					ws.onmessage = event => done( event.data )
+					ws.onerror = fail
+				} ),
+				'Hello, Мир!',
+			)
+			
+			ws.send( new Uint8Array([1,2,3]) )
+			
+			$mol_assert_equal(
+				await new Promise( ( done, fail )=> {
+					ws.onmessage = event => done( new Uint8Array( event.data ) )
+					ws.onerror = fail
+				} ),
+				new Uint8Array([1,2,3]),
+			)
+			
+		},
+		
 	})
 }

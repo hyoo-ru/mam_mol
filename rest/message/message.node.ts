@@ -63,6 +63,7 @@ namespace $ {
 			return $mol_rest_message.make({
 				uri: $mol_const( uri ),
 				data: ()=> this.data(),
+				method: ()=> this.method(),
 				channel: ()=> this.channel(),
 			})
 		}
