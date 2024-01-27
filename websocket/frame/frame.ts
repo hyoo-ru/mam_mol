@@ -18,7 +18,7 @@ namespace $ {
 	 * - masks
 	 * - payload >= 2^32
 	 */
-    export class $mol_websocket_frame extends $mol_buffer {
+	export class $mol_websocket_frame extends $mol_buffer {
 		
 		kind( next?: {
 			op: keyof typeof $mol_websocket_frame_op
@@ -68,16 +68,15 @@ namespace $ {
 		
 		static make(
 			op: keyof typeof $mol_websocket_frame_op,
-			data: number | Uint8Array = 0,
+			size = 0,
 			fin = true,
 		) {
 			
-			const length = typeof data === 'number' ? data : data.byteLength
-			const size = length === 127 ? 10 : length === 126 ? 4 : 2
-			const frame = $mol_websocket_frame.from( size )
+			const head = size === 127 ? 10 : size === 126 ? 4 : 2
+			const frame = $mol_websocket_frame.from( head )
 			
 			frame.kind({ op, fin })
-			frame.size_data( length )
+			frame.size_data( size )
 			
 			return frame
 		}
