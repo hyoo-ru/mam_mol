@@ -30,7 +30,7 @@ namespace $ {
 			} else {
 				const state = this.uint8( 0 )
 				const fin = state >> 7
-				const op = $mol_websocket_frame_op[ state & 0b1111 ]
+				const op = $mol_websocket_frame_op[ state & 0b1111 ] as keyof typeof $mol_websocket_frame_op
 				if( op === undefined ) $mol_fail( new Error( `Wrong op (${ state.toString(2) })` ) )
 				return { op, fin }
 			}
