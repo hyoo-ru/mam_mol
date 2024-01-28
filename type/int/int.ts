@@ -192,5 +192,4 @@ namespace $ {
 	/** Evaluates simple expression */
 	export type $mol_type_int_calc< Expr extends string > = Down< Calc< Expr > >
 	
-	type X = [0,0,0,0] extends [ ... infer A extends [0,0][] ] ? A : []
 }
