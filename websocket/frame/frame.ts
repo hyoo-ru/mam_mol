@@ -100,8 +100,8 @@ namespace $ {
 			fin = true,
 		) {
 			
-			const head = ( size === 127 ? 10 : size === 126 ? 4 : 2 ) + ( mask ? 4 : 0 )
-			const frame = $mol_websocket_frame.from( head )
+			const head = ( size >= 2**16 ? 10 : size >= 126 ? 4 : 2 ) + ( mask ? 4 : 0 )
+			const frame = $mol_websocket_frame.from( head ) 
 			
 			frame.kind({ op, fin })
 			frame.data({ size, mask })
