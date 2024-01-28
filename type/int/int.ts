@@ -3,7 +3,7 @@ namespace $ {
 	type Parse<
 		Str extends string,
 		Res extends Int = Zero,
-	> = Str extends `${ infer Letter }${ infer Tail }`
+	> = Str extends `${ infer Letter extends keyof Digits }${ infer Tail }`
 		? Parse<
 			Tail,
 			Plus<[
@@ -25,7 +25,7 @@ namespace $ {
 		Digits[ Extract< Letter, keyof Digits> ]
 	>
 
-	type Int = Up< any, any >
+	type Int = unknown[]
 	type Pair = [ Int, Int ]
 
 	type Zero = []
@@ -33,8 +33,8 @@ namespace $ {
 	type Ten = Up<10>
 
 	type Down<
-		Value extends Up< any, any >,
-	> = Extract< Value, any[] >["length"]
+		Value extends Int,
+	> = Value["length"]
 	
 	type Up<
 		Value extends number,
@@ -80,7 +80,7 @@ namespace $ {
 	type Minus<
 		Arg extends Pair
 	> = Arg[0] extends [ ... Arg[1], ... infer Res ]
-		? Res
+		? Extract< Res, Int >
 		: never
 
 	/** Number literal which is multiply of two another */
@@ -114,7 +114,7 @@ namespace $ {
 			Parse<`${Right}`>,
 		]>
 	>
-		
+	
 	type Pow<
 		Arg extends Pair,
 		Res extends Int = One,
@@ -125,18 +125,49 @@ namespace $ {
 			Mult<[ Res, Arg[0] ]>
 		>
 
+	/**
+	 * Range of number literals from Lo up to Hi
+	 * **Slow on large ranges**
+	 */
+	export type $mol_type_int_range<
+		Lo extends Check< Lo >,
+		Hi extends Check< Hi >
+	> = Down<
+		Range<[
+			Parse<`${Lo}`>,
+			Parse<`${Hi}`>
+		]>
+	>
+	
+	type Range<
+		Args extends Pair
+	> = keyof Args[0] extends keyof Args[1]
+		? Plus<[
+			Args[0],
+			Parse<
+				Exclude<
+					keyof Minus<[ Args[1], Args[0] ]>,
+					symbol | number
+				>
+			>
+		]>
+		: never
+	
 	/** Unknown when number literals is ordered */
 	export type $mol_type_int_ordered<
 		Left extends Check< Left >,
 		Right extends Check< Right >,
-	> = $mol_type_int_minus< Right, Left > extends never
-		? never
-		: unknown
+	> = keyof Parse<`${Left}`> extends keyof Parse<`${Right}`>
+		? unknown
+		: never
 	
 	type Calc< Expr extends string >
 		
 		= Expr extends `${ infer Left }(${ infer Inner })${ infer Right }`
 		? Calc< `${ Left }${ Down< Calc< Inner > > }${ Right}` >
+		
+		: Expr extends `${ infer Left }..${ infer Right }`
+		? Range<[ Calc< Left >, Calc< Right > ]>
 		
 		: Expr extends `${ infer Left }+${ infer Right }`
 		? Plus<[ Calc< Left >, Calc< Right > ]>
@@ -161,4 +192,5 @@ namespace $ {
 	/** Evaluates simple expression */
 	export type $mol_type_int_calc< Expr extends string > = Down< Calc< Expr > >
 	
+	type X = [0,0,0,0] extends [ ... infer A extends [0,0][] ] ? A : []
 }
