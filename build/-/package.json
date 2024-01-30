@@ -119,8 +119,6 @@
     "$mol_base64",
     "$mol_action",
     "$mol_error_mix",
-    "$mol_data_error",
-    "$mol_data",
     "$mol_tree2_xml_to_text",
     "$mol_tree2_xml_to",
     "$mol_tree2_xml",

@@ -4585,7 +4585,7 @@ var $;
 var $;
 (function ($) {
     class $mol_error_mix extends AggregateError {
-        name = '$mol_data_error';
+        name = '$mol_error_mix';
         constructor(message, ...errors) {
             super(errors, [message, ...errors.map(e => '  ' + e.message)].join('\n'));
         }
@@ -4856,16 +4856,6 @@ var $;
     $.$mol_view_tree2_ts_method = $mol_view_tree2_ts_method;
 })($ || ($ = {}));
 //mol/view/tree2/ts/method/method.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_data_error extends $mol_error_mix {
-        name = '$mol_data_error';
-    }
-    $.$mol_data_error = $mol_data_error;
-})($ || ($ = {}));
-//mol/data/error/error.ts
 ;
 "use strict";
 var $;

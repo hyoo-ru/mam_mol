@@ -1152,12 +1152,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_data_error extends $mol_error_mix {
-        name: string;
-    }
-}
-
-declare namespace $ {
     function $mol_build_start(this: $, paths: string[]): void;
     class $mol_build extends $mol_object {
         static root(path: string): $mol_build;
