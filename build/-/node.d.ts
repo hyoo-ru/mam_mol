@@ -1120,6 +1120,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_error_mix extends AggregateError {
+        name: string;
+        constructor(message: string, ...errors: Error[]);
+        toJSON(): string;
+    }
+}
+
+declare namespace $ {
     function $mol_html_encode(text: string): string;
 }
 
@@ -1141,6 +1149,12 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_view_tree2_ts_method(this: $, owner_parts: $mol_view_tree2_prop, body: $mol_tree2, types?: boolean): $mol_tree2[];
+}
+
+declare namespace $ {
+    class $mol_data_error extends $mol_error_mix {
+        name: string;
+    }
 }
 
 declare namespace $ {

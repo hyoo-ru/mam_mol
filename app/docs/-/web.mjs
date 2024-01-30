@@ -11627,11 +11627,24 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_data_error extends AggregateError {
+    class $mol_error_mix extends AggregateError {
         name = '$mol_data_error';
-        constructor(message, errors = []) {
+        constructor(message, ...errors) {
             super(errors, [message, ...errors.map(e => '  ' + e.message)].join('\n'));
         }
+        toJSON() {
+            return this.message;
+        }
+    }
+    $.$mol_error_mix = $mol_error_mix;
+})($ || ($ = {}));
+//mol/error/mix/mix.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_error extends $mol_error_mix {
+        name = '$mol_data_error';
     }
     $.$mol_data_error = $mol_data_error;
 })($ || ($ = {}));
@@ -27673,7 +27686,7 @@ var $;
                     }
                 }
             }
-            return $mol_fail(new $mol_data_error(`${val} is not any of variants`, errors));
+            return $mol_fail(new $mol_data_error(`${val} is not any of variants`, ...errors));
         }, sub);
     }
     $.$mol_data_variant = $mol_data_variant;

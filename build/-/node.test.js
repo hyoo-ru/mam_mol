@@ -4575,6 +4575,22 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_error_mix extends AggregateError {
+        name = '$mol_data_error';
+        constructor(message, ...errors) {
+            super(errors, [message, ...errors.map(e => '  ' + e.message)].join('\n'));
+        }
+        toJSON() {
+            return this.message;
+        }
+    }
+    $.$mol_error_mix = $mol_error_mix;
+})($ || ($ = {}));
+//mol/error/mix/mix.ts
+;
+"use strict";
+var $;
+(function ($) {
     const mapping = {
         '<': '&lt;',
         '>': '&gt;',
@@ -4831,6 +4847,16 @@ var $;
     $.$mol_view_tree2_ts_method = $mol_view_tree2_ts_method;
 })($ || ($ = {}));
 //mol/view/tree2/ts/method/method.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_error extends $mol_error_mix {
+        name = '$mol_data_error';
+    }
+    $.$mol_data_error = $mol_data_error;
+})($ || ($ = {}));
+//mol/data/error/error.ts
 ;
 "use strict";
 var $;
@@ -5513,7 +5539,7 @@ var $;
                 }
             });
             if (errors.length)
-                $mol_fail_hidden(new AggregateError(errors, `Build fail ${path}`));
+                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, ...errors));
             var targetJSMap = pack.resolve(`-/${bundle}.js.map`);
             targetJS.text(concater.content + '\n//# sourceMappingURL=' + targetJSMap.relate(targetJS.parent()) + '\n');
             targetJSMap.text(concater.toString());
@@ -5548,7 +5574,7 @@ var $;
             }
             this.logBundle(target, Date.now() - start);
             if (errors.length) {
-                const error = new AggregateError(errors, `Build fail ${path}`);
+                const error = new $mol_error_mix(`Build fail ${path}`, ...errors);
                 target.text(`console.error(${JSON.stringify(error)})`);
                 $mol_fail_hidden(error);
             }
@@ -5594,7 +5620,7 @@ var $;
             targetMap.text(concater.toString());
             this.logBundle(target, Date.now() - start);
             if (errors.length)
-                $mol_fail_hidden(new AggregateError(errors, `Build fail ${path}`));
+                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, ...errors));
             if (bundle === 'node') {
                 this.$.$mol_exec(this.root().path(), 'node', '--trace-uncaught', target.relate(this.root()));
             }

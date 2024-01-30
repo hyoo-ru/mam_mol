@@ -3348,9 +3348,16 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_data_error extends AggregateError {
+    class $mol_error_mix extends AggregateError {
         name: string;
-        constructor(message: string, errors?: Error[]);
+        constructor(message: string, ...errors: Error[]);
+        toJSON(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_data_error extends $mol_error_mix {
+        name: string;
     }
 }
 
