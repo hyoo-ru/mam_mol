@@ -112,9 +112,13 @@ namespace $ {
 				sock.write( $mol_websocket_frame.make( op, ( data as Uint8Array ).byteLength ).asArray() )
 				if( data ) sock.write( data )
 				
+				return true
 			}
 			
-			sock.on( 'data', ( msg: Buffer )=> $mol_wire_async( this ).ws_income( chan, msg ) )
+			sock.on( 'data', ( msg: Buffer )=> {
+				$mol_wire_async( this ).ws_income( chan, msg, sock )
+			} )
+			sock.on( 'end', ()=> chan.send = ()=> false )
 			
 			const key_in = req.headers["sec-websocket-key"]
 			const magic = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
@@ -131,10 +135,24 @@ namespace $ {
 		}
 		
 		@ $mol_action
-		ws_income( channel: $mol_rest_channel, pack: Buffer ) {
+		ws_income( channel: $mol_rest_channel, chunk: Buffer, sock: InstanceType< typeof $node.stream.Duplex > ) {
 			
-			const frame = $mol_wire_sync( $mol_websocket_frame ).from( pack ) as $mol_websocket_frame
-			let data: string | Uint8Array = new Uint8Array( pack.buffer, pack.byteOffset + frame.size() )
+			const frame = $mol_wire_sync( $mol_websocket_frame ).from( chunk ) as $mol_websocket_frame
+			const msg_size = frame.size() + frame.data().size
+			
+			if( msg_size > chunk.byteLength ) {
+				sock.unshift( chunk )
+				return
+			}
+			
+			sock.pause()
+			
+			if( msg_size < chunk.byteLength ) {
+				const tail = new Uint8Array( chunk.buffer, chunk.byteOffset + msg_size )
+				$mol_wire_sync( sock ).unshift( tail )
+			}
+			
+			let data: string | Uint8Array = new Uint8Array( chunk.buffer, chunk.byteOffset + frame.size(), frame.data().size )
 			
 			if( frame.data().mask ) {
 				const mask = frame.mask()
@@ -170,6 +188,8 @@ namespace $ {
 					stack: error.stack,
 				})
 				
+			} finally {
+				sock.resume()
 			}
 			
 		}

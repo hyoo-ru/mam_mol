@@ -25,7 +25,7 @@ namespace $ {
 			// if( data === undefined ) res.writeHead( 405, 'Method Not Allowed' )
 			if( data === null ) {
 				if( !meta?.code ) this.output().statusCode = 204
-				return
+				return true
 			}
 			
 			if( data && typeof data === 'object' && Reflect.getPrototypeOf( data ) === Object.prototype ) {
@@ -36,21 +36,21 @@ namespace $ {
 				if( !meta?.code ) this.output().statusCode = 200
 				if( !meta?.type ) this.output().setHeader( 'content-type', 'text/plain' )
 				this.output().write( data )
-				return
+				return true
 			}
 			
 			if( data instanceof Uint8Array ) {
 				if( !meta?.code ) this.output().statusCode = 200
 				if( !meta?.type ) this.output().setHeader( 'content-type', 'application/octet-stream' )
 				this.output().write( data )
-				return
+				return true
 			}
 			
 			if( data instanceof $mol_dom_context.Element ) {
 				if( !meta?.code ) this.output().statusCode = 200
 				if( !meta?.type ) this.output().setHeader( 'content-type', 'text/html' )
 				this.output().write( $mol_dom_serialize( data ) )
-				return
+				return true
 			}
 			
 			$mol_fail( new TypeError( `Wrong Response (${ data.constructor.name })` ) )
