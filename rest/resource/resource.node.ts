@@ -31,15 +31,17 @@ namespace $ {
 			
 			const line = $mol_rest_channel.from( msg.channel().input(), null! )
 			line.send = data => {
-				if( data === null ) return
+				if( data === null ) return true
 				if( typeof data === 'object' && Reflect.getPrototypeOf( data ) === Object.prototype ) {
 					data = JSON.stringify( data )
 				}
 				chan.send( data as any )
+				return true
 			}
 			
 			const chan = con.createDataChannel( msg.uri().toString(), { negotiated: true, id: 0 } )
 			chan.onmessage = event => $mol_wire_async( this ).POST( line.message( event.data ) )
+			chan.onclose = line.send = ()=> false
 			
 			const sdp = await $mol_wire_async( msg ).text()
 			await con.setRemoteDescription({ sdp, type: 'offer' })

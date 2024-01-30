@@ -84,7 +84,7 @@ namespace $ {
 		}
 		
 		mask() {
-			return new Uint8Array( this.buffer, this.size() - 4, 4 )
+			return new Uint8Array( this.buffer, this.byteOffset + this.size() - 4, 4 )
 		}
 		
 		toString() {
