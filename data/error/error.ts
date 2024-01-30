@@ -1,10 +1,7 @@
 namespace $ {
 
-	export class $mol_data_error extends AggregateError {
+	export class $mol_data_error extends $mol_error_mix {
 		name = '$mol_data_error'
-		constructor( message: string, errors = [] as Error[] ) {
-			super( errors, [ message, ... errors.map( e => '  ' + e.message ) ].join( '\n' ) )
-		}
 	}
 
 }
