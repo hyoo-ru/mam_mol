@@ -3896,42 +3896,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_test({
-        'equal paths'() {
-            const diff = $mol_diff_path([1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4]);
-            $mol_assert_like(diff, {
-                prefix: [1, 2, 3, 4],
-                suffix: [[], [], []],
-            });
-        },
-        'different suffix'() {
-            const diff = $mol_diff_path([1, 2, 3, 4], [1, 2, 3, 5], [1, 2, 5, 4]);
-            $mol_assert_like(diff, {
-                prefix: [1, 2],
-                suffix: [[3, 4], [3, 5], [5, 4]],
-            });
-        },
-        'one contains other'() {
-            const diff = $mol_diff_path([1, 2, 3, 4], [1, 2], [1, 2, 3]);
-            $mol_assert_like(diff, {
-                prefix: [1, 2],
-                suffix: [[3, 4], [], [3]],
-            });
-        },
-        'fully different'() {
-            const diff = $mol_diff_path([1, 2], [3, 4], [5, 6]);
-            $mol_assert_like(diff, {
-                prefix: [],
-                suffix: [[1, 2], [3, 4], [5, 6]],
-            });
-        },
-    });
-})($ || ($ = {}));
-//mol/diff/path/path.test.ts
-;
-"use strict";
-var $;
-(function ($) {
     let sex;
     (function (sex) {
         sex[sex["male"] = 0] = "male";
@@ -6186,7 +6150,7 @@ var $;
         'Is false'() {
             $mol_assert_fail(() => {
                 $mol_data_variant($mol_data_number, $mol_data_string)(false);
-            }, 'false is not any of variants\nfalse is not a number\nfalse is not a string');
+            }, 'false is not any of variants\n  false is not a number\n  false is not a string');
         },
     });
 })($ || ($ = {}));

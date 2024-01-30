@@ -4584,56 +4584,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_diff_path(...paths) {
-        const limit = Math.min(...paths.map(path => path.length));
-        lookup: for (var i = 0; i < limit; ++i) {
-            const first = paths[0][i];
-            for (let j = 1; j < paths.length; ++j) {
-                if (paths[j][i] !== first)
-                    break lookup;
-            }
-        }
-        return {
-            prefix: paths[0].slice(0, i),
-            suffix: paths.map(path => path.slice(i)),
-        };
-    }
-    $.$mol_diff_path = $mol_diff_path;
-})($ || ($ = {}));
-//mol/diff/path/path.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_error_mix extends Error {
-        errors;
-        constructor(message, ...errors) {
-            super(message);
-            this.errors = errors;
-            if (errors.length) {
-                const stacks = [...errors.map(error => error.stack), this.stack];
-                const diff = $mol_diff_path(...stacks.map(stack => {
-                    if (!stack)
-                        return [];
-                    return stack.split('\n').reverse();
-                }));
-                const head = diff.prefix.reverse().join('\n');
-                const tails = diff.suffix.map(path => path.reverse().map(line => line.replace(/^(?!\s+at)/, '\tat (.) ')).join('\n')).join('\n\tat (.) -----\n');
-                this.stack = `Error: ${this.constructor.name}\n\tat (.) /"""\\\n${tails}\n\tat (.) \\___/\n${head}`;
-                this.message += errors.map(error => '\n' + error.message).join('');
-            }
-        }
-        toJSON() {
-            return this.message;
-        }
-    }
-    $.$mol_error_mix = $mol_error_mix;
-})($ || ($ = {}));
-//mol/error/mix/mix.ts
-;
-"use strict";
-var $;
-(function ($) {
     const mapping = {
         '<': '&lt;',
         '>': '&gt;',
@@ -5572,7 +5522,7 @@ var $;
                 }
             });
             if (errors.length)
-                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, ...errors));
+                $mol_fail_hidden(new AggregateError(errors, `Build fail ${path}`));
             var targetJSMap = pack.resolve(`-/${bundle}.js.map`);
             targetJS.text(concater.content + '\n//# sourceMappingURL=' + targetJSMap.relate(targetJS.parent()) + '\n');
             targetJSMap.text(concater.toString());
@@ -5607,7 +5557,7 @@ var $;
             }
             this.logBundle(target, Date.now() - start);
             if (errors.length) {
-                const error = new $mol_error_mix(`Build fail ${path}`, ...errors);
+                const error = new AggregateError(errors, `Build fail ${path}`);
                 target.text(`console.error(${JSON.stringify(error)})`);
                 $mol_fail_hidden(error);
             }
@@ -5653,7 +5603,7 @@ var $;
             targetMap.text(concater.toString());
             this.logBundle(target, Date.now() - start);
             if (errors.length)
-                $mol_fail_hidden(new $mol_error_mix(`Build fail ${path}`, ...errors));
+                $mol_fail_hidden(new AggregateError(errors, `Build fail ${path}`));
             if (bundle === 'node') {
                 this.$.$mol_exec(this.root().path(), 'node', '--trace-uncaught', target.relate(this.root()));
             }

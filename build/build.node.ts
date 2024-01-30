@@ -956,7 +956,7 @@ namespace $ {
 					}
 				}
 			)
-			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
+			if( errors.length ) $mol_fail_hidden( new AggregateError( errors, `Build fail ${path}` ) )
 
 			var targetJSMap = pack.resolve( `-/${bundle}.js.map` )
 	
@@ -1011,7 +1011,7 @@ namespace $ {
 			this.logBundle( target , Date.now() - start )
 			
 			if( errors.length ) {
-				const error = new $mol_error_mix( `Build fail ${path}`, ... errors )
+				const error = new AggregateError( errors, `Build fail ${path}` )
 				target.text( `console.error(${ JSON.stringify( error ) })` )
 				$mol_fail_hidden( error )
 			}
@@ -1067,7 +1067,7 @@ namespace $ {
 			
 			this.logBundle( target , Date.now() - start )
 			
-			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
+			if( errors.length ) $mol_fail_hidden( new AggregateError( errors, `Build fail ${path}` ) )
 
 			if( bundle === 'node' ) {
 				this.$.$mol_exec( this.root().path() , 'node' , '--trace-uncaught', target.relate( this.root() ) )
