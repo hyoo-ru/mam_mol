@@ -1,5 +1,6 @@
 namespace $ {
 
+	/** @deprecated Use AggregateError instead */
 	export class $mol_error_mix extends Error {
 
 		errors : Error[]
