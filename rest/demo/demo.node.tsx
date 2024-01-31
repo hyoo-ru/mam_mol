@@ -29,7 +29,7 @@ namespace $ {
 		
 		POST( msg: $mol_rest_message ) {
 			// returns received body as is
-			msg.reply( msg.data() )
+			msg.reply( msg.data(), { type: msg.type() } )
 		}
 		
 		PUT( msg: $mol_rest_message ) {

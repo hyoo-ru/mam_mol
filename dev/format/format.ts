@@ -37,6 +37,10 @@ namespace $ {
 				return $mol_dev_format_native( val )
 			}
 			
+			if( Symbol.toStringTag in val ) {
+				return $mol_dev_format_native( val )
+			}
+			
 			return null
 			
 		} ,
