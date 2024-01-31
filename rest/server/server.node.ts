@@ -94,14 +94,19 @@ namespace $ {
 			chan.send_code = ()=> {}
 			chan.send_type = ()=> {}
 			
-			chan.send_nil = ()=> sock.write( $mol_websocket_frame.make( 'pong', 0 ).asArray() )
+			chan.send_nil = ()=> {
+				if( sock.writableEnded ) return
+				sock.write( $mol_websocket_frame.make( 'pong', 0 ).asArray() )
+			}
 			
 			chan.send_bin = data => {
+				if( sock.writableEnded ) return
 				sock.write( $mol_websocket_frame.make( 'bin', data.byteLength ).asArray() )
 				sock.write( data )
 			}
 			
 			chan.send_text = data => {
+				if( sock.writableEnded ) return
 				const bin = $mol_charset_encode( data )
 				sock.write( $mol_websocket_frame.make( 'txt', bin.byteLength ).asArray() )
 				sock.write( bin )
