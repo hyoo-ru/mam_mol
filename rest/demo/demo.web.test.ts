@@ -65,7 +65,7 @@ namespace $.$$ {
 			
 			$mol_assert_equal(
 				resp.headers.get( 'content-type' ),
-				'text/plain',
+				'text/plain;charset=UTF-8',
 			)
 			
 			$mol_assert_equal(
@@ -87,7 +87,7 @@ namespace $.$$ {
 			
 			$mol_assert_equal(
 				resp.headers.get( 'content-type' ),
-				'text/plain',
+				'text/plain;charset=UTF-8',
 			)
 			
 			$mol_assert_equal(

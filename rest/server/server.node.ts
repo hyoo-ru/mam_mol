@@ -45,7 +45,7 @@ namespace $ {
 			res: InstanceType< $node['http']['ServerResponse'] >,
 		) {
 			
-			const channel = $mol_rest_channel.from( req, res )
+			const channel = $mol_rest_channel_http.from( req, res )
 			const message = $mol_rest_message.from( channel )
 			
 			res.statusCode = 400
@@ -89,36 +89,27 @@ namespace $ {
 			head: Buffer,
 		) {
 			
-			const chan = $mol_rest_channel.from( req, null! )
-			chan.send = data => {
-				
-				let op: keyof typeof $mol_websocket_frame_op = 'pong'
-				
-				if( data && typeof data === 'object' && Reflect.getPrototypeOf( data ) === Object.prototype ) {
-					data = JSON.stringify( data )
-				}
-				
-				if( data && data instanceof $mol_dom_context.Element ) {
-					data = $mol_dom_serialize( data )
-				}
-				
-				if( typeof data === 'string' ) {
-					op = 'txt'
-					data = $mol_charset_encode( data )
-				} else if( data && data instanceof Uint8Array ) {
-					op = 'bin'
-				}
-				
-				sock.write( $mol_websocket_frame.make( op, ( data as Uint8Array ).byteLength ).asArray() )
-				if( data ) sock.write( data )
-				
-				return true
+			const chan = $mol_rest_channel_http.from( req, null! )
+			
+			chan.send_code = ()=> {}
+			chan.send_type = ()=> {}
+			
+			chan.send_nil = ()=> sock.write( $mol_websocket_frame.make( 'pong', 0 ).asArray() )
+			
+			chan.send_bin = data => {
+				sock.write( $mol_websocket_frame.make( 'bin', data.byteLength ).asArray() )
+				sock.write( data )
+			}
+			
+			chan.send_text = data => {
+				const bin = $mol_charset_encode( data )
+				sock.write( $mol_websocket_frame.make( 'txt', bin.byteLength ).asArray() )
+				sock.write( bin )
 			}
 			
 			sock.on( 'data', ( msg: Buffer )=> {
 				$mol_wire_async( this ).ws_income( chan, msg, sock )
 			} )
-			sock.on( 'end', ()=> chan.send = ()=> false )
 			
 			const key_in = req.headers["sec-websocket-key"]
 			const magic = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
@@ -135,7 +126,7 @@ namespace $ {
 		}
 		
 		@ $mol_action
-		ws_income( channel: $mol_rest_channel, chunk: Buffer, sock: InstanceType< typeof $node.stream.Duplex > ) {
+		ws_income( channel: $mol_rest_channel_http, chunk: Buffer, sock: InstanceType< typeof $node.stream.Duplex > ) {
 			
 			const frame = $mol_wire_sync( $mol_websocket_frame ).from( chunk ) as $mol_websocket_frame
 			const msg_size = frame.size() + frame.data().size

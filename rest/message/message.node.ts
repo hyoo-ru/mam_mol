@@ -2,7 +2,7 @@ namespace $ {
 	
 	export class $mol_rest_message extends $mol_object {
 		
-		channel(): $mol_rest_channel {
+		channel(): $mol_rest_channel_http {
 			return null!
 		}
 		
@@ -24,7 +24,7 @@ namespace $ {
 		
 		@ $mol_mem
 		type() {
-			return this.input().headers['content-type'] ?? 'application/octet-stream'
+			return ( this.input().headers['content-type'] ?? 'application/octet-stream' ) as $mol_rest_channel_mime
 		}
 		
 		@ $mol_mem
@@ -51,11 +51,34 @@ namespace $ {
 		}
 
 		@ $mol_mem
+		bin() {
+			let data = this.data()
+			if( data instanceof Uint8Array ) return data
+			if( data instanceof $mol_dom_context.Element ) data = $mol_dom_serialize( data )
+			if( typeof data !== 'string' ) data = JSON.stringify( data )
+			return $mol_charset_encode( data )
+		}
+		
+		@ $mol_mem
 		text() {
 			const data = this.data()
 			if( typeof data === 'string' ) return data
 			if( data instanceof Uint8Array ) return $mol_charset_decode( data )
+			if( data instanceof $mol_dom_context.Element ) return $mol_dom_serialize( data )
 			return JSON.stringify( data )
+		}
+		
+		reply(
+			data: null | string | Uint8Array | Element | object,
+			meta?: {
+				type?: $mol_rest_channel_mime,
+				code?: $mol_rest_code,
+			},
+		) {
+			const channel = this.channel()
+			if( meta?.code ) channel.send_code( meta.code )
+			if( meta?.type ) channel.send_type( meta.type )
+			channel.send_data( data )
 		}
 		
 		@ $mol_action
@@ -69,19 +92,8 @@ namespace $ {
 		}
 		
 		@ $mol_action
-		reply(
-			data: null | string | Uint8Array | object,
-			meta?: {
-				type?: string,
-				code?: number,
-			},
-		) {
-			this.channel().send( data, meta )
-		}
-		
-		@ $mol_action
 		static from(
-			channel: $mol_rest_channel,
+			channel: $mol_rest_channel_http,
 		) {
 			return this.make({
 				channel: $mol_const( channel ),

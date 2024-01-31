@@ -505,6 +505,9 @@ var $;
             if (typeof val === 'function') {
                 return $mol_dev_format_native(val);
             }
+            if (Symbol.toStringTag in val) {
+                return $mol_dev_format_native(val);
+            }
             return null;
         },
         hasBody: val => val[$.$mol_dev_format_body],

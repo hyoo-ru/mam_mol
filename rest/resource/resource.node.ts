@@ -24,24 +24,20 @@ namespace $ {
 		
 		async OPTIONS( msg: $mol_rest_message ) {
 			
-			if( msg.type() !== 'application/sdp' ) return msg.reply( null )
+			if( msg.type() !== 'application/sdp' ) return msg.channel().send_nil()
 			
 			const { RTCPeerConnection } = await import( 'node-datachannel/polyfill' )
 			const con = new RTCPeerConnection
 			
-			const line = $mol_rest_channel.from( msg.channel().input(), null! )
-			line.send = data => {
-				if( data === null ) return true
-				if( typeof data === 'object' && Reflect.getPrototypeOf( data ) === Object.prototype ) {
-					data = JSON.stringify( data )
-				}
-				chan.send( data as any )
-				return true
-			}
+			const line = $mol_rest_channel_http.from( msg.channel().input(), null! )
+			line.send_code = data => {}
+			line.send_type = data => {}
+			line.send_bin = data => chan.send( data )
+			line.send_text = data => chan.send( data )
 			
 			const chan = con.createDataChannel( msg.uri().toString(), { negotiated: true, id: 0 } )
 			chan.onmessage = event => $mol_wire_async( this ).POST( line.message( event.data ) )
-			chan.onclose = line.send = ()=> false
+			chan.onclose = line.send_bin = ()=> {}
 			
 			const sdp = await $mol_wire_async( msg ).text()
 			await con.setRemoteDescription({ sdp, type: 'offer' })
@@ -49,7 +45,8 @@ namespace $ {
 			con.setLocalDescription({ type: 'answer' })
 			await new Promise( done => con.onicecandidate = ({ candidate })=> done( candidate ) )
 			
-			msg.reply( con.localDescription!.sdp )
+			msg.channel().send_type( 'application/sdp' )
+			msg.channel().send_text( con.localDescription!.sdp )
 		}
 		
 		HEAD( msg: $mol_rest_message ) {
