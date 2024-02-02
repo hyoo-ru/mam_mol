@@ -1,3 +1,4 @@
+
 namespace $ {
 
 	export class $mol_memo extends $mol_wrapper {

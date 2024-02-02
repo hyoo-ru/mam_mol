@@ -4,6 +4,10 @@ namespace $ {
 		'//cse.google.com/adsense/search/async-ads.js'
 	])
 
+	// function is_fresh(res: Response) {
+	// 	res.headers.get('ca')
+	// }
+
 	/** Installs service worker proxy, which caches all requests and respond from cache on http errors. */
 	export function $mol_offline() {
 		
@@ -46,9 +50,11 @@ namespace $ {
 				if( request.method !== 'GET' ) return
 				if( !/^https?:/.test( request.url ) ) return
 				if( /\?/.test( request.url ) ) return
-				
-				const fresh = fetch( event.request ).then( response => {
+				if (request.cache === 'no-store') return
 
+				let fresh = null as null | Promise<Response>
+
+				const fetch_data = () => fresh = fresh ?? fetch( event.request ).then( response => {
 					event.waitUntil(
 						caches.open( '$mol_offline' ).then(
 							cache => cache.put( event.request , response )
@@ -57,10 +63,11 @@ namespace $ {
 					
 					return response.clone()
 				} )
-				event.waitUntil( fresh )
+
+				if (request.cache !== 'force-cache') event.waitUntil( fetch_data() )
 			
 				event.respondWith(
-					caches.match( event.request ).then( response => response || fresh )
+					caches.match( event.request ).then( response => response || fetch_data() )
 				)
 				
 			})
