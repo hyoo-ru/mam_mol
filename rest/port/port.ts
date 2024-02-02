@@ -1,11 +1,15 @@
 namespace $ {
 	
-	export type $mol_rest_channel_mime = `${ 'text' | 'application' }/${ string }`
+	export type $mol_rest_port_mime_hi =
+		| 'text' | 'application' | 'font'
+		| 'audio' | 'video' | 'image' | 'model'
 	
-	export class $mol_rest_channel extends $mol_object {
+	export type $mol_rest_port_mime = `${ $mol_rest_port_mime_hi }/${ string }`
+	
+	export class $mol_rest_port extends $mol_object {
 		
 		send_code( code: $mol_rest_code ) {}
-		send_type( mime: $mol_rest_channel_mime ) {}
+		send_type( mime: $mol_rest_port_mime ) {}
 		
 		@ $mol_action
 		send_data( data: null | string | Uint8Array | Element | object ) {
@@ -46,6 +50,14 @@ namespace $ {
 			this.send_code( 200 )
 			this.send_type( 'text/html' )
 			this.send_text( $mol_dom_serialize( data ) )
+		}
+		
+		@ $mol_action< any, any >
+		public static make< This extends typeof $mol_object >(
+			this: This,
+			config: Partial< InstanceType< This > >,
+		) {
+			return super.make( config ) as InstanceType< This >
 		}
 		
 	}

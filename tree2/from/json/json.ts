@@ -28,6 +28,10 @@ namespace $ {
 			return $mol_tree2_from_json( json.toJSON() )
 		}
 
+		if( json.toString !== Object.prototype.toString ) {
+			return $mol_tree2.data( json.toString() , [], span )
+		}
+
 		if( json instanceof Error ) {
 			const { name , message , stack } = json
 			json = { ... json, name, message, stack }
