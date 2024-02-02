@@ -45,6 +45,5 @@ namespace $ {
 		@ $mol_mem nested() { return $mol_rest_demo_crud.make({}) }
 		
 	}
-	// $mol_rest_demo_crud.serve()
 	
 }

@@ -100,7 +100,6 @@ declare namespace $ {
         destructor(): void;
         static destructor(): void;
         toString(): string;
-        toJSON(): any;
     }
 }
 

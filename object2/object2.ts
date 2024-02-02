@@ -49,9 +49,9 @@ namespace $ {
 			return this[ Symbol.toStringTag ] || this.constructor.name + '<>'
 		}
 		
-		toJSON(): any {
-			return this.toString()
-		}
+		// toJSON(): any {
+		// 	return this.toString()
+		// }
 
 	}
 }

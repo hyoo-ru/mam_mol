@@ -15,26 +15,29 @@ namespace $ {
 		@ $mol_mem
 		http_server() {
 			
-			const server = $node.http.createServer(
-				( req, res )=> $mol_wire_async( this ).http_income( req, res )
-			)
+			const server = $node.http.createServer( ( req, res )=> {
+				res.statusCode = 400
+				$mol_wire_async( this ).http_income( req, res )
+			} )
 			
 			server.on( 'upgrade',
 				( req, sock, head )=> $mol_wire_async( this ).ws_upgrade( req, sock, head )
 			)
 			
-			server.listen( this.port() )
-			
-			const ifaces = Object.entries( $node.os.networkInterfaces() )
-				.flatMap( ([ type, ifaces ])=> ifaces?.map(
-					iface => iface.family === 'IPv6' ? `[${iface.address}]` : iface.address
-				) ?? [] )
-			
-			this.$.$mol_log3_done({
-				place: this,
-				message: 'HTTP Server Started',
-				links: ifaces.map( iface => `http://${ iface }:${ this.port() }/` ),
-			})
+			server.listen( this.port(), ()=> {
+				
+				const ifaces = Object.entries( $node.os.networkInterfaces() )
+					.flatMap( ([ type, ifaces ])=> ifaces?.map(
+						iface => iface.family === 'IPv6' ? `[${iface.address}]` : iface.address
+					) ?? [] )
+				
+				this.$.$mol_log3_done({
+					place: this,
+					message: 'HTTP Server Started',
+					links: ifaces.map( iface => `http://${ iface }:${ this.port() }/` ),
+				})
+				
+			} )
 			
 			return server
 		}
@@ -45,15 +48,13 @@ namespace $ {
 			res: InstanceType< $node['http']['ServerResponse'] >,
 		) {
 			
-			const channel = $mol_rest_channel_http.from( req, res )
-			const message = $mol_rest_message.from( channel )
-			
-			res.statusCode = 400
+			const port = $mol_rest_port_http.make({ output: res })
+			const msg = $mol_rest_message_http.make({ port, input: req })
 			
 			$mol_wire_sync( this.$ ).$mol_log3_rise({
 				place: this,
-				message: message.method(),
-				url: message.uri(),
+				message: msg.method(),
+				url: msg.uri(),
 			})
 			
 			$mol_wire_sync( res ).setHeader( 'Access-Control-Allow-Origin', '*' )
@@ -62,7 +63,7 @@ namespace $ {
 			
 			try {
 				
-				$mol_wire_sync( this.root() ).REQUEST( message )
+				$mol_wire_sync( this.root() ).REQUEST( msg )
 				
 			} catch( error: any ) {
 				
@@ -76,7 +77,6 @@ namespace $ {
 				
 				$mol_wire_sync( res ).writeHead( 500, error.name || 'Server Error' )
 				
-				
 			}
 			
 			res.end()
@@ -85,42 +85,65 @@ namespace $ {
 		@ $mol_action
 		ws_upgrade(
 			req: InstanceType< $node['http']['IncomingMessage'] >,
-			sock: InstanceType< $node['stream']['Duplex'] >,
+			socket: InstanceType< $node['stream']['Duplex'] >,
 			head: Buffer,
 		) {
 			
-			const chan = $mol_rest_channel_http.from( req, null! )
+			const port = $mol_rest_port_ws.make({ socket })
+			const upgrade = $mol_rest_message_http.make({ port, input: req })
 			
-			chan.send_code = ()=> {}
-			chan.send_type = ()=> {}
-			
-			chan.send_nil = ()=> {
-				if( sock.writableEnded ) return
-				sock.write( $mol_websocket_frame.make( 'pong', 0 ).asArray() )
+			try {
+				
+				$mol_wire_sync( this.root() ).REQUEST(
+					upgrade.derive( 'OPEN', null )
+				)
+				
+			} catch( error: any ) {
+				
+				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+					
+				$mol_wire_sync( $$ ).$mol_log3_fail({
+					place: this,
+					message: error.message ?? '',
+					stack: error.stack,
+				})
+				
+				socket.end()
+				return
 			}
 			
-			chan.send_bin = data => {
-				if( sock.writableEnded ) return
-				sock.write( $mol_websocket_frame.make( 'bin', data.byteLength ).asArray() )
-				sock.write( data )
-			}
+			socket.on( 'end', $mol_wire_async( ()=> {
+				
+				try {
+				
+					$mol_wire_sync( this.root() ).REQUEST(
+						upgrade.derive( 'CLOSE', null )
+					)
+					
+				} catch( error: any ) {
+					
+					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+						
+					$mol_wire_sync( $$ ).$mol_log3_fail({
+						place: this,
+						message: error.message ?? '',
+						stack: error.stack,
+					})
+					
+					return
+				}
+				
+			} ) )
 			
-			chan.send_text = data => {
-				if( sock.writableEnded ) return
-				const bin = $mol_charset_encode( data )
-				sock.write( $mol_websocket_frame.make( 'txt', bin.byteLength ).asArray() )
-				sock.write( bin )
-			}
-			
-			sock.on( 'data', ( msg: Buffer )=> {
-				$mol_wire_async( this ).ws_income( chan, msg, sock )
+			socket.on( 'data', ( chunk: Buffer )=> {
+				$mol_wire_async( this ).ws_income( port, chunk, upgrade, socket )
 			} )
 			
 			const key_in = req.headers["sec-websocket-key"]
 			const magic = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
 			const key_out =  $mol_base64_encode( $mol_crypto_hash( $mol_charset_encode( key_in + magic ) ) )
 			
-			sock.write(
+			socket.write(
 				'HTTP/1.1 101 WS Handshaked\r\n' +
 				'Upgrade: WebSocket\r\n' +
 				'Connection: Upgrade\r\n' +
@@ -131,7 +154,12 @@ namespace $ {
 		}
 		
 		@ $mol_action
-		ws_income( channel: $mol_rest_channel_http, chunk: Buffer, sock: InstanceType< typeof $node.stream.Duplex > ) {
+		ws_income(
+			port: $mol_rest_port_ws,
+			chunk: Buffer,
+			upgrade: $mol_rest_message,
+			sock: InstanceType< typeof $node.stream.Duplex >,
+		) {
 			
 			const frame = $mol_wire_sync( $mol_websocket_frame ).from( chunk ) as $mol_websocket_frame
 			const msg_size = frame.size() + frame.data().size
@@ -159,17 +187,20 @@ namespace $ {
 			
 			const op = frame.kind().op
 			if( op === 'txt' ) data = $mol_charset_decode( data )
-			const message = channel.message( data )
 			
-			$mol_wire_sync( this.$ ).$mol_log3_rise({
-				place: this,
-				message: message.method(),
-				url: message.uri(),
-				frame: frame.toString(),
-			})
+			const message = upgrade.derive( 'POST', data )
 			
 			if( op !== 'txt' && op !== 'bin' ) return
 			
+			if( data.length !== 0 ) {
+				$mol_wire_sync( this.$ ).$mol_log3_rise({
+					place: this,
+					message: message.method(),
+					url: message.uri(),
+					frame: frame.toString(),
+				})
+			}
+		
 			try {
 				
 				$mol_wire_sync( this.root() ).REQUEST( message )

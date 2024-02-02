@@ -77,7 +77,6 @@ declare namespace $ {
         destructor(): void;
         static destructor(): void;
         toString(): string;
-        toJSON(): any;
     }
 }
 
@@ -85,9 +84,7 @@ declare namespace $ {
     namespace $$ { }
     const $mol_object_field: unique symbol;
     class $mol_object extends $mol_object2 {
-        static make<Instance>(this: {
-            new (): Instance;
-        }, config: Partial<Instance>): Instance;
+        static make<This extends typeof $mol_object>(this: This, config: Partial<InstanceType<This>>): InstanceType<This>;
     }
 }
 

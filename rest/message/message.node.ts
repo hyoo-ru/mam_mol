@@ -2,54 +2,28 @@ namespace $ {
 	
 	export class $mol_rest_message extends $mol_object {
 		
-		channel(): $mol_rest_channel_http {
-			return null!
-		}
-		
-		input() {
-			return this.channel().input()
-		}
+		port!: $mol_rest_port
 		
 		@ $mol_mem
 		method() {
-			return this.input().method ?? 'POST'
+			return 'POST'
 		}
 		
 		@ $mol_mem
 		uri() {
-			const addr = this.input().socket?.localAddress ?? 'localhost'
-			const port = this.input().socket?.localPort ?? '80'
-			return new URL( this.input().url!, `http://[${addr}]:${port}/` )
+			return new URL( `rest://localhost/` )
 		}
 		
 		@ $mol_mem
 		type() {
-			return ( this.input().headers['content-type'] ?? 'application/octet-stream' ) as $mol_rest_channel_mime
+			return 'application/octet-stream' as $mol_rest_port_mime
 		}
 		
 		@ $mol_mem
-		data(): string | Uint8Array | object {
-			
-			const consume = $mol_wire_sync( $node['stream/consumers'] )
-			
-			if( this.type().startsWith( 'text/' ) ) {
-				const text = consume.text( this.input() )
-				if( this.type() === 'text/html' ) {
-					return $mol_dom_parse( text, 'application/xhtml+xml' ).documentElement
-				}
-				return text
-			} else {
-				
-				if( this.type() === 'application/json' ) {
-					return consume.json( this.input() )
-				} else {
-					return new Uint8Array( consume.arrayBuffer( this.input() ) )
-				}
-				
-			}
-			
+		data(): null | string | Uint8Array | Element | object {
+			return null
 		}
-
+		
 		@ $mol_mem
 		bin() {
 			let data = this.data()
@@ -71,33 +45,45 @@ namespace $ {
 		reply(
 			data: null | string | Uint8Array | Element | object,
 			meta?: {
-				type?: $mol_rest_channel_mime,
+				type?: $mol_rest_port_mime,
 				code?: $mol_rest_code,
 			},
 		) {
-			const channel = this.channel()
-			if( meta?.code ) channel.send_code( meta.code )
-			if( meta?.type ) channel.send_type( meta.type )
-			channel.send_data( data )
+			if( meta?.code ) this.port.send_code( meta.code )
+			if( meta?.type ) this.port.send_type( meta.type )
+			this.port.send_data( data )
 		}
 		
 		@ $mol_action
 		route( uri: URL ) {
 			return $mol_rest_message.make({
-				uri: $mol_const( uri ),
-				data: ()=> this.data(),
+				port: this.port,
 				method: ()=> this.method(),
-				channel: ()=> this.channel(),
+				uri: $mol_const( uri ),
+				type: ()=> this.type(),
+				data: ()=> this.data(),
 			})
 		}
 		
 		@ $mol_action
-		static from(
-			channel: $mol_rest_channel_http,
+		derive(
+			method: string,
+			data: null | string | Uint8Array | Element | object,
 		) {
-			return this.make({
-				channel: $mol_const( channel ),
+			return $mol_rest_message.make({
+				port: this.port,
+				method: $mol_const( method ),
+				uri: ()=> this.uri(),
+				data: $mol_const( data ),
 			})
+		}
+		
+		@ $mol_action< any, any >
+		public static make< This extends typeof $mol_object >(
+			this: This,
+			config: Partial< InstanceType< This > >,
+		) {
+			return super.make( config ) as InstanceType< This >
 		}
 		
 	}

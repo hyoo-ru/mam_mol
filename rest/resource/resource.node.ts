@@ -24,48 +24,75 @@ namespace $ {
 		
 		async OPTIONS( msg: $mol_rest_message ) {
 			
-			if( msg.type() !== 'application/sdp' ) return msg.channel().send_nil()
+			if( msg.type() !== 'application/sdp' ) return msg.reply( null )
 			
 			const { RTCPeerConnection } = await import( 'node-datachannel/polyfill' )
-			const con = new RTCPeerConnection
+			const connection = new RTCPeerConnection
 			
-			const line = $mol_rest_channel_http.from( msg.channel().input(), null! )
-			line.send_code = data => {}
-			line.send_type = data => {}
-			line.send_bin = data => chan.send( data )
-			line.send_text = data => chan.send( data )
+			const channel = connection.createDataChannel( msg.uri().toString(), { negotiated: true, id: 0 } )
+			const port = $mol_rest_port_webrtc.make({ channel })
 			
-			const chan = con.createDataChannel( msg.uri().toString(), { negotiated: true, id: 0 } )
-			chan.onmessage = event => $mol_wire_async( this ).POST( line.message( event.data ) )
-			chan.onclose = line.send_bin = ()=> {}
+			$mol_wire_sync( this.$ ).$mol_log3_come({
+				place: this,
+				message: 'OPEN',
+				url: msg.uri(),
+				port: $mol_key( port ),
+			})
+			
+			$mol_wire_sync( this ).REQUEST(
+				msg.derive( 'OPEN', null )
+			)
+			
+			channel.onmessage = event => {
+				
+				const message = msg.derive( 'POST', event.data )
+				message.port = port
+				
+				this.$.$mol_log3_rise({
+					place: this,
+					message: message.method(),
+					url: message.uri(),
+					port: $mol_key( port ),
+				})
+
+				$mol_wire_async( this ).POST( message )
+				
+			}
+			
+			channel.onclose = ()=> {
+				
+				this.$.$mol_log3_done({
+					place: this,
+					message: 'CLOSE',
+					url: msg.uri(),
+					port: $mol_key( port ),
+				})
+				
+				$mol_wire_sync( this ).REQUEST(
+					msg.derive( 'CLOSE', null )
+				)
+				
+			}
 			
 			const sdp = await $mol_wire_async( msg ).text()
-			await con.setRemoteDescription({ sdp, type: 'offer' })
+			await connection.setRemoteDescription({ sdp, type: 'offer' })
 			
-			con.setLocalDescription({ type: 'answer' })
-			await new Promise( done => con.onicecandidate = ({ candidate })=> done( candidate ) )
+			connection.setLocalDescription({ type: 'answer' })
+			await new Promise( done => connection.onicecandidate = ({ candidate })=> done( candidate ) )
 			
-			msg.channel().send_type( 'application/sdp' )
-			msg.channel().send_text( con.localDescription!.sdp )
+			msg.port.send_type( 'application/sdp' )
+			msg.port.send_text( connection.localDescription!.sdp )
+			
 		}
 		
-		HEAD( msg: $mol_rest_message ) {
-		}
-		
-		GET( msg: $mol_rest_message ) {
-		}
-		
-		PUT( msg: $mol_rest_message ) {
-		}
-		
-		PATCH( msg: $mol_rest_message ) {
-		}
-		
-		POST( msg: $mol_rest_message ) {
-		}
-		
-		DELETE( msg: $mol_rest_message ) {
-		}
+		OPEN( msg: $mol_rest_message ) {}
+		CLOSE( msg: $mol_rest_message ) {}
+		HEAD( msg: $mol_rest_message ) {}
+		GET( msg: $mol_rest_message ) {}
+		PUT( msg: $mol_rest_message ) {}
+		PATCH( msg: $mol_rest_message ) {}
+		POST( msg: $mol_rest_message ) {}
+		DELETE( msg: $mol_rest_message ) {}
 		
 		@ $mol_mem_key
 		static port( port: number ) {
