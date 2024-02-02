@@ -39,7 +39,8 @@ namespace $ {
 						
 						{ resources.map( res => {
 							if( res === 'constructor' ) return null
-							return <a href={ res + '/' }>:{res}/<br/></a>
+							const uri = root.resolve( res )
+							return <a href={ uri.relate( file ) + '/' }>/{res}/<br/></a>
 						} ) }
 						
 						{ file.sub().map( kid => {
