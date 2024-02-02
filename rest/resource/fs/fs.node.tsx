@@ -26,16 +26,27 @@ namespace $ {
 					
 					const index = file.resolve( './index.html' )
 					if( index.exists() ) return msg.reply( index.buffer(), { type: 'text/html' } )
+					
+					const resources = Object.getOwnPropertyNames( Object.getPrototypeOf( this ) )
 				
 					return msg.reply( <body>
+						
 						<style>{`
 							body { background: black; font: 1rem/1.5rem monospace }
 							a { color: royalblue; text-decoration: none }
 							a:hover { color: skyblue }
 						`}</style>
-						{ file.sub().map( kid =>
-							<a href={ kid.relate( root ) }>{ kid.name() }<br/></a>
-						) }
+						
+						{ resources.map( res => {
+							if( res === 'constructor' ) return null
+							return <a href={ res + '/' }>:{res}/<br/></a>
+						} ) }
+						
+						{ file.sub().map( kid => {
+							const uri = kid.name() + ( kid.type() === 'dir' ? '/' : '' )
+							return <a href={uri}>{uri}<br/></a>
+						} ) }
+						
 					</body> )
 					
 				}
