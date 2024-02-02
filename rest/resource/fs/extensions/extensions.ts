@@ -35,6 +35,7 @@ namespace $ {
 		'jsx': 'text/javascript;charset=utf-8',
 		'json': 'application/json',
 		'jsonld': 'application/ld+json',
+		'map': 'application/json',
 		'md': 'text/plain;charset=utf-8',
 		'mid': 'audio/midi',
 		'midi': 'audio/midi',
