@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export class $mol_rest_port_ws extends $mol_rest_port {
+	export class $mol_rest_port_ws_node extends $mol_rest_port_ws {
 		
 		socket!: InstanceType< $node['stream']['Duplex'] >
 		
@@ -26,5 +26,7 @@ namespace $ {
 		}
 		
 	}
+	
+	$.$mol_rest_port_ws = $mol_rest_port_ws_node
 	
 }

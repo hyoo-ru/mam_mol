@@ -89,7 +89,7 @@ namespace $ {
 			head: Buffer,
 		) {
 			
-			const port = $mol_rest_port_ws.make({ socket })
+			const port = $mol_rest_port_ws_node.make({ socket })
 			const upgrade = $mol_rest_message_http.make({ port, input: req })
 			
 			try {
