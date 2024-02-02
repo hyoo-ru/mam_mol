@@ -114,6 +114,13 @@ namespace $ {
 			
 			socket.on( 'end', $mol_wire_async( ()=> {
 				
+				$mol_wire_sync( this.$ ).$mol_log3_done({
+					place: this,
+					message: 'CLOSE',
+					url: upgrade.uri(),
+					port: $mol_key( port ),
+				})
+				
 				try {
 				
 					$mol_wire_sync( this.root() ).REQUEST(
@@ -150,6 +157,13 @@ namespace $ {
 				`Sec-WebSocket-Accept: ${key_out}\r\n` +
 				'\r\n'
 			);
+			
+			$mol_wire_sync( this.$ ).$mol_log3_come({
+				place: this,
+				message: 'OPEN',
+				url: upgrade.uri(),
+				port: $mol_key( port ),
+			})
 			
 		}
 		
