@@ -5698,7 +5698,6 @@ var $;
                     if (!/^\/node(?:_modules)?\//.test(dep))
                         continue;
                     let mod = dep.replace(/^\/node(?:_modules)?\//, '').replace(/\/.*/g, '');
-                    console.log(mod, dep);
                     res.add(mod);
                 }
             }
