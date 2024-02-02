@@ -293,7 +293,7 @@ namespace $ {
 				const types = [] as string[]
 				
 				for( let dep of this.nodeDeps({ path , exclude }) ) {
-					types.push( '\t' + JSON.stringify( dep ) + ' : typeof import( ' + JSON.stringify( dep ) + ' )' )
+					types.push( '\t' + JSON.stringify( dep ) + ' : typeof import\( ' + JSON.stringify( dep ) + ' )' )
 				}
 				
 				const node_types = $mol_file.absolute( path ).resolve( `-node/deps.d.ts` )
@@ -1193,6 +1193,7 @@ namespace $ {
 				for( let dep in deps ) {
 					if( !/^\/node(?:_modules)?\//.test( dep ) ) continue
 					let mod = dep.replace( /^\/node(?:_modules)?\// , '' ).replace( /\/.*/g , '' )
+					console.log( mod, dep )
 					res.add( mod )
 				}
 			}
@@ -1602,7 +1603,7 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/require\(\s*['"](.*?)['"]\s*\)/ig , ( str , path )=> {
+					/\b(?:require|import)\(\s*['"]([^"'()]*?)['"]\s*\)/ig , ( str , path )=> {
 						path = path.replace( /(\/[^\/.]+)$/ , '$1.js' ).replace( /\/$/, '/index.js' )
 						if( path[0] === '.' ) path = '../' + path
 						$mol_build_depsMerge( depends , { [ path ] : priority } )
@@ -1640,11 +1641,12 @@ namespace $ {
 				
 				
 				line.replace(
-					/require\(\s*['"](.*?)['"]\s*\)/ig , ( str , path )=> {
+					/\b(?:require|import)\(\s*['"]([^"'()]*?)['"]\s*\)/ig , ( str , path )=> {
 						$mol_build_depsMerge( depends , { [ path ] : priority } )
 						return str
 					}
 				)
+				
 			}
 		)
 		

@@ -5072,7 +5072,7 @@ var $;
             if (sources.length && bundle === 'node') {
                 const types = [];
                 for (let dep of this.nodeDeps({ path, exclude })) {
-                    types.push('\t' + JSON.stringify(dep) + ' : typeof import( ' + JSON.stringify(dep) + ' )');
+                    types.push('\t' + JSON.stringify(dep) + ' : typeof import\( ' + JSON.stringify(dep) + ' )');
                 }
                 const node_types = $mol_file.absolute(path).resolve(`-node/deps.d.ts`);
                 node_types.text('interface $node {\n ' + types.join('\n') + '\n}');
@@ -5707,6 +5707,7 @@ var $;
                     if (!/^\/node(?:_modules)?\//.test(dep))
                         continue;
                     let mod = dep.replace(/^\/node(?:_modules)?\//, '').replace(/\/.*/g, '');
+                    console.log(mod, dep);
                     res.add(mod);
                 }
             }
@@ -6148,7 +6149,7 @@ var $;
         lines.forEach(function (line) {
             var indent = /^([\s\t]*)/.exec(line);
             var priority = -indent[0].replace(/\t/g, '    ').length / 4;
-            line.replace(/require\(\s*['"](.*?)['"]\s*\)/ig, (str, path) => {
+            line.replace(/\b(?:require|import)\(\s*['"]([^"'()]*?)['"]\s*\)/ig, (str, path) => {
                 path = path.replace(/(\/[^\/.]+)$/, '$1.js').replace(/\/$/, '/index.js');
                 if (path[0] === '.')
                     path = '../' + path;
@@ -6176,7 +6177,7 @@ var $;
                 $mol_build_depsMerge(depends, { [path || name || pack]: priority });
                 return str;
             });
-            line.replace(/require\(\s*['"](.*?)['"]\s*\)/ig, (str, path) => {
+            line.replace(/\b(?:require|import)\(\s*['"]([^"'()]*?)['"]\s*\)/ig, (str, path) => {
                 $mol_build_depsMerge(depends, { [path]: priority });
                 return str;
             });
