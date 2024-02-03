@@ -1961,7 +1961,13 @@ var $node = new Proxy({ require }, {
                 dir = parent;
             }
         }
-        return target.require(name);
+        try {
+            return target.require(name);
+        }
+        catch (error) {
+            $.$mol_fail_log(error);
+            return null;
+        }
     },
     set(target, name, value) {
         target[name] = value;

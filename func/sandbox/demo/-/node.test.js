@@ -30,6 +30,69 @@ var $;
 //node/node.ts
 ;
 "use strict";
+var $;
+(function ($) {
+    function $mol_fail(error) {
+        throw error;
+    }
+    $.$mol_fail = $mol_fail;
+})($ || ($ = {}));
+//mol/fail/fail.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_promise_like(val) {
+        return val && typeof val === 'object' && 'then' in val && typeof val.then === 'function';
+    }
+    $.$mol_promise_like = $mol_promise_like;
+})($ || ($ = {}));
+//mol/promise/like/like.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail_hidden(error) {
+        throw error;
+    }
+    $.$mol_fail_hidden = $mol_fail_hidden;
+})($ || ($ = {}));
+//mol/fail/hidden/hidden.ts
+;
+"use strict";
+var $;
+(function ($) {
+    const catched = new WeakMap();
+    function $mol_fail_catch(error) {
+        if (typeof error !== 'object')
+            return false;
+        if ($mol_promise_like(error))
+            $mol_fail_hidden(error);
+        if (catched.get(error))
+            return false;
+        catched.set(error, true);
+        return true;
+    }
+    $.$mol_fail_catch = $mol_fail_catch;
+})($ || ($ = {}));
+//mol/fail/catch/catch.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail_log(error) {
+        if ($mol_promise_like(error))
+            return false;
+        if (!$mol_fail_catch(error))
+            return false;
+        console.error(error);
+        return true;
+    }
+    $.$mol_fail_log = $mol_fail_log;
+})($ || ($ = {}));
+//mol/fail/log/log.ts
+;
+"use strict";
 var $node = new Proxy({ require }, {
     get(target, name, wrapper) {
         if (target[name])
@@ -58,7 +121,13 @@ var $node = new Proxy({ require }, {
                 dir = parent;
             }
         }
-        return target.require(name);
+        try {
+            return target.require(name);
+        }
+        catch (error) {
+            $.$mol_fail_log(error);
+            return null;
+        }
     },
     set(target, name, value) {
         target[name] = value;
@@ -197,26 +266,6 @@ var $;
     $.$mol_owning_catch = $mol_owning_catch;
 })($ || ($ = {}));
 //mol/owning/owning.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fail(error) {
-        throw error;
-    }
-    $.$mol_fail = $mol_fail;
-})($ || ($ = {}));
-//mol/fail/fail.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fail_hidden(error) {
-        throw error;
-    }
-    $.$mol_fail_hidden = $mol_fail_hidden;
-})($ || ($ = {}));
-//mol/fail/hidden/hidden.ts
 ;
 "use strict";
 //mol/type/writable/writable.ts
@@ -977,16 +1026,6 @@ var $;
     $.$mol_func_sandbox = $mol_func_sandbox;
 })($ || ($ = {}));
 //mol/func/sandbox/sandbox.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_promise_like(val) {
-        return val && typeof val === 'object' && 'then' in val && typeof val.then === 'function';
-    }
-    $.$mol_promise_like = $mol_promise_like;
-})($ || ($ = {}));
-//mol/promise/like/like.ts
 ;
 "use strict";
 var $;
