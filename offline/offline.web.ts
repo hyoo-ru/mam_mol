@@ -69,18 +69,17 @@ namespace $ {
 								? fresh
 									.then(actual => {
 										if (actual.status === cached.status) return actual
-										throw new Error('Cache fallback due fetch error', { cause: actual })
+										const statusText = actual.statusText ? ` (${actual.statusText})` : ''
+
+										throw new Error(
+											`HTTP error ${actual.status}${statusText}`,
+											{ cause: actual }
+										)
 									})
 									.catch((err: Error) => {
-										console.error(err)
 										const cloned = cached.clone()
-										cloned.headers.set('x-origin-response-error', err.message)
-	
-										if (err.cause instanceof Response) {
-											cloned.headers.set('x-origin-response-status', '' + err.cause.status)
-											cloned.headers.set('x-origin-response-status-text', err.cause.statusText)
-										}
-
+										const message = `$mol_offline fallback to cache due to ${err.message || 'unknown'}`
+										cloned.headers.set('x-origin-response-error', message)
 										return cloned
 									})
 								: fresh
