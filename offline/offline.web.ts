@@ -65,7 +65,17 @@ namespace $ {
 				event.waitUntil( fresh )
 			
 				event.respondWith(
-					caches.match( event.request ).then( response => request.cache === 'no-cache' ? fetch : (response || fresh) )
+					caches.match( event.request ).then(
+						response => request.cache === 'no-cache'
+							? ( response
+								? fresh.catch(err => {
+									console.error(err)
+									return response
+								})
+								: fresh
+							)
+							: ( response || fresh )
+					)
 				)
 				
 			})
