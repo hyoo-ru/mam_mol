@@ -64,7 +64,7 @@ namespace $ {
 			
 				event.respondWith(
 					caches.match( request ).then(
-						cached => request.cache === 'no-cache'
+						cached => request.cache === 'no-cache' || request.cache === 'reload'
 							? ( cached
 								? fresh
 									.then(actual => {
