@@ -50,14 +50,19 @@ namespace $ {
 
 				const fresh = fetch( request ).then( response => {
 					if (response.status !== 200) return response
+					const cached = response.clone()
+					cached.headers.set(
+						'x-origin-response',
+						`${response.status}${response.statusText ? ` ${response.statusText}` : ''}`
+					)
 
 					event.waitUntil(
 						caches.open( '$mol_offline' ).then(
-							cache => cache.put( request , response )
+							cache => cache.put( request , cached )
 						)
 					)
 					
-					return response.clone()
+					return response
 				} )
 
 				event.waitUntil( fresh )
@@ -77,7 +82,7 @@ namespace $ {
 									.catch((err: Error) => {
 										const cloned = cached.clone()
 										const message = `${err.cause instanceof Response ? '' : '500 '}${err.message} $mol_offline fallback to cache`
-										cloned.headers.set('x-origin-response-error', message)
+										cloned.headers.set('x-origin-response', message)
 										return cloned
 									})
 								: fresh
