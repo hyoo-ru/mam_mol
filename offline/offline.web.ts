@@ -53,6 +53,8 @@ namespace $ {
 				if (request.cache === 'no-store') return
 
 				const fresh = fetch( event.request ).then( response => {
+					if (response.status >= 500) return response
+
 					event.waitUntil(
 						caches.open( '$mol_offline' ).then(
 							cache => cache.put( event.request , response )
