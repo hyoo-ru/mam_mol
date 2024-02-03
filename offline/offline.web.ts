@@ -4,12 +4,8 @@ namespace $ {
 		'//cse.google.com/adsense/search/async-ads.js'
 	])
 
-	// function is_fresh(res: Response) {
-	// 	res.headers.get('ca')
-	// }
-
 	/** Installs service worker proxy, which caches all requests and respond from cache on http errors. */
-	export function $mol_offline() {
+	export function $mol_offline_web() {
 		
 		if( typeof window === 'undefined' ) {
 			
@@ -52,12 +48,12 @@ namespace $ {
 				if( /\?/.test( request.url ) ) return
 				if (request.cache === 'no-store') return
 
-				const fresh = fetch( event.request ).then( response => {
-					if (response.status >= 300) return response
+				const fresh = fetch( request ).then( response => {
+					if (response.status !== 200) return response
 
 					event.waitUntil(
 						caches.open( '$mol_offline' ).then(
-							cache => cache.put( event.request , response )
+							cache => cache.put( request , response )
 						)
 					)
 					
@@ -67,16 +63,29 @@ namespace $ {
 				event.waitUntil( fresh )
 			
 				event.respondWith(
-					caches.match( event.request ).then(
-						response => request.cache === 'no-cache'
-							? ( response
-								? fresh.catch(err => {
-									console.error(err)
-									return response
-								})
+					caches.match( request ).then(
+						cached => request.cache === 'no-cache'
+							? ( cached
+								? fresh
+									.then(actual => {
+										if (actual.status === cached.status) return actual
+										throw new Error('Cache fallback due fetch error', { cause: actual })
+									})
+									.catch(err => {
+										console.error(err)
+										const response = err.cause instanceof Response ? err.cause as Response : undefined
+										if (! response) return cached
+
+										const cloned = cached.clone()
+										cloned.headers.set('x-origin-response-error', err.message)
+										cloned.headers.set('x-origin-response-status', '' + response.status)
+										cloned.headers.set('x-origin-response-status-text', response.statusText)
+
+										return cloned
+									})
 								: fresh
 							)
-							: ( response || fresh )
+							: ( cached || fresh )
 					)
 				)
 				
@@ -96,5 +105,7 @@ namespace $ {
 		}
 
 	}
+
+	$.$mol_offline = $mol_offline_web
 
 }
