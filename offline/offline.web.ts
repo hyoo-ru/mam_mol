@@ -69,16 +69,14 @@ namespace $ {
 								? fresh
 									.then(actual => {
 										if (actual.status === cached.status) return actual
-										const statusText = actual.statusText ? ` (${actual.statusText})` : ''
-
 										throw new Error(
-											`HTTP error ${actual.status}${statusText}`,
+											`${actual.status}${actual.statusText ? ` ${actual.statusText}` : ''}`,
 											{ cause: actual }
 										)
 									})
 									.catch((err: Error) => {
 										const cloned = cached.clone()
-										const message = `$mol_offline fallback to cache due to ${err.message || 'unknown'}`
+										const message = `${err.cause instanceof Response ? '' : '500 '}${err.message} $mol_offline fallback to cache`
 										cloned.headers.set('x-origin-response-error', message)
 										return cloned
 									})
