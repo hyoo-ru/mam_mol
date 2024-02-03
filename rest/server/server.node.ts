@@ -55,6 +55,7 @@ namespace $ {
 				place: this,
 				message: msg.method(),
 				url: msg.uri(),
+				remote: req.socket.remoteAddress + ':' + req.socket.remotePort
 			})
 			
 			$mol_wire_sync( res ).setHeader( 'Access-Control-Allow-Origin', '*' )
