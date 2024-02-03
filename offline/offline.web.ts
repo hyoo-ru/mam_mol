@@ -71,15 +71,15 @@ namespace $ {
 										if (actual.status === cached.status) return actual
 										throw new Error('Cache fallback due fetch error', { cause: actual })
 									})
-									.catch(err => {
+									.catch((err: Error) => {
 										console.error(err)
-										const response = err.cause instanceof Response ? err.cause as Response : undefined
-										if (! response) return cached
-
 										const cloned = cached.clone()
 										cloned.headers.set('x-origin-response-error', err.message)
-										cloned.headers.set('x-origin-response-status', '' + response.status)
-										cloned.headers.set('x-origin-response-status-text', response.statusText)
+	
+										if (err.cause instanceof Response) {
+											cloned.headers.set('x-origin-response-status', '' + err.cause.status)
+											cloned.headers.set('x-origin-response-status-text', err.cause.statusText)
+										}
 
 										return cloned
 									})
