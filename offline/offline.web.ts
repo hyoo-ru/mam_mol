@@ -52,9 +52,7 @@ namespace $ {
 				if( /\?/.test( request.url ) ) return
 				if (request.cache === 'no-store') return
 
-				let fresh = null as null | Promise<Response>
-
-				const fetch_data = () => fresh = fresh ?? fetch( event.request ).then( response => {
+				const fresh = fetch( event.request ).then( response => {
 					event.waitUntil(
 						caches.open( '$mol_offline' ).then(
 							cache => cache.put( event.request , response )
@@ -64,10 +62,10 @@ namespace $ {
 					return response.clone()
 				} )
 
-				if (request.cache !== 'force-cache') event.waitUntil( fetch_data() )
+				event.waitUntil( fresh )
 			
 				event.respondWith(
-					caches.match( event.request ).then( response => response || fetch_data() )
+					caches.match( event.request ).then( response => request.cache === 'no-cache' ? fetch : (response || fresh) )
 				)
 				
 			})
