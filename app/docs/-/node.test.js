@@ -854,19 +854,25 @@ var $;
             return this.cache;
         }
         async async() {
-            while (true) {
-                this.fresh();
-                if (this.cache instanceof Error) {
-                    $mol_fail_hidden(this.cache);
+            try {
+                while (true) {
+                    this.fresh();
+                    if (this.cache instanceof Error) {
+                        $mol_fail_hidden(this.cache);
+                    }
+                    if (!$mol_promise_like(this.cache))
+                        return this.cache;
+                    await Promise.race([this.cache, this.step()]);
+                    if (!$mol_promise_like(this.cache))
+                        return this.cache;
+                    if (this.cursor === $mol_wire_cursor.final) {
+                        await new Promise(() => { });
+                    }
                 }
-                if (!$mol_promise_like(this.cache))
-                    return this.cache;
-                await Promise.race([this.cache, this.step()]);
-                if (!$mol_promise_like(this.cache))
-                    return this.cache;
-                if (this.cursor === $mol_wire_cursor.final) {
-                    await new Promise(() => { });
-                }
+            }
+            catch (e) {
+                console.log(e.stack);
+                throw e;
             }
         }
         step() {

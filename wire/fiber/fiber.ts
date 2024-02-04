@@ -258,7 +258,7 @@ namespace $ {
 		 * It's SuspenseAPI consumer. So SuspenseAPI providers can be called inside.
 		 */
 		async async() {
-			
+			try{
 			while( true ) {
 				
 				this.fresh()
@@ -278,7 +278,10 @@ namespace $ {
 				}
 				
 			}
-			
+		}catch(e:any) {
+			console.log( e.stack )
+			throw e
+		}
 		}
 		
 		step() {
