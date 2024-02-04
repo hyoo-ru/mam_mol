@@ -279,8 +279,7 @@ namespace $ {
 				
 			}
 		}catch(e:any) {
-			e.message += '\n' + e.stack
-			throw e
+			throw new Error( e.stack, { cause: e } )
 		}
 		}
 		
