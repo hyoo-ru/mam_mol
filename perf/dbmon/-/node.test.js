@@ -834,24 +834,19 @@ var $;
             return this.cache;
         }
         async async() {
-            try {
-                while (true) {
-                    this.fresh();
-                    if (this.cache instanceof Error) {
-                        $mol_fail_hidden(this.cache);
-                    }
-                    if (!$mol_promise_like(this.cache))
-                        return this.cache;
-                    await Promise.race([this.cache, this.step()]);
-                    if (!$mol_promise_like(this.cache))
-                        return this.cache;
-                    if (this.cursor === $mol_wire_cursor.final) {
-                        await new Promise(() => { });
-                    }
+            while (true) {
+                this.fresh();
+                if (this.cache instanceof Error) {
+                    $mol_fail_hidden(this.cache);
                 }
-            }
-            catch (e) {
-                throw new Error(e.stack, { cause: e });
+                if (!$mol_promise_like(this.cache))
+                    return this.cache;
+                await Promise.race([this.cache, this.step()]);
+                if (!$mol_promise_like(this.cache))
+                    return this.cache;
+                if (this.cursor === $mol_wire_cursor.final) {
+                    await new Promise(() => { });
+                }
             }
         }
         step() {
@@ -1708,6 +1703,7 @@ var $;
         if (!$mol_fail_catch(error))
             return false;
         console.error(error);
+        console.error(error.stack);
         return true;
     }
     $.$mol_fail_log = $mol_fail_log;
