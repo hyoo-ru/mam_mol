@@ -144,7 +144,7 @@ namespace $ {
 			} ) )
 			
 			socket.on( 'data', ( chunk: Buffer )=> {
-				$mol_wire_async( this ).ws_income( port, chunk, upgrade, socket )
+				$mol_wire_async( this ).ws_income( chunk, upgrade, socket )
 			} )
 			
 			const key_in = req.headers["sec-websocket-key"]
@@ -170,7 +170,6 @@ namespace $ {
 		
 		@ $mol_action
 		ws_income(
-			port: $mol_rest_port_ws,
 			chunk: Buffer,
 			upgrade: $mol_rest_message,
 			sock: InstanceType< typeof $node.stream.Duplex >,
@@ -219,6 +218,7 @@ namespace $ {
 			try {
 				
 				$mol_wire_sync( this.root() ).REQUEST( message )
+				sock.resume()
 				
 			} catch( error: any ) {
 				
@@ -230,8 +230,8 @@ namespace $ {
 					stack: error.stack,
 				})
 				
-			} finally {
 				sock.resume()
+				
 			}
 			
 		}
