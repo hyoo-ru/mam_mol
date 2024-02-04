@@ -14,6 +14,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_offline(): void;
+}
+
+declare namespace $ {
     type $mol_log3_event<Fields> = {
         [key in string]: unknown;
     } & {
@@ -47,7 +51,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_offline(): void;
+    function $mol_offline_web(): void;
 }
 
 declare namespace $ {

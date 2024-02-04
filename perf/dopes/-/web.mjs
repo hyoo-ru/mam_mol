@@ -3071,10 +3071,18 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_offline() { }
+    $.$mol_offline = $mol_offline;
+})($ || ($ = {}));
+//mol/offline/offline.ts
+;
+"use strict";
+var $;
+(function ($) {
     const blacklist = new Set([
         '//cse.google.com/adsense/search/async-ads.js'
     ]);
-    function $mol_offline() {
+    function $mol_offline_web() {
         if (typeof window === 'undefined') {
             self.addEventListener('install', (event) => {
                 ;
@@ -3103,12 +3111,31 @@ var $;
                     return;
                 if (/\?/.test(request.url))
                     return;
-                const fresh = fetch(event.request).then(response => {
-                    event.waitUntil(caches.open('$mol_offline').then(cache => cache.put(event.request, response)));
+                if (request.cache === 'no-store')
+                    return;
+                const fresh = fetch(request).then(response => {
+                    if (response.status !== 200)
+                        return response;
+                    event.waitUntil(caches.open('$mol_offline').then(cache => cache.put(request, response)));
                     return response.clone();
                 });
                 event.waitUntil(fresh);
-                event.respondWith(caches.match(event.request).then(response => response || fresh));
+                event.respondWith(caches.match(request).then(cached => request.cache === 'no-cache' || request.cache === 'reload'
+                    ? (cached
+                        ? fresh
+                            .then(actual => {
+                            if (actual.status === cached.status)
+                                return actual;
+                            throw new Error(`${actual.status}${actual.statusText ? ` ${actual.statusText}` : ''}`, { cause: actual });
+                        })
+                            .catch((err) => {
+                            const cloned = cached.clone();
+                            const message = `${err.cause instanceof Response ? '' : '500 '}${err.message} $mol_offline fallback to cache`;
+                            cloned.headers.set('$mol_offline_remote_status', message);
+                            return cloned;
+                        })
+                        : fresh)
+                    : (cached || fresh)));
             });
             self.addEventListener('beforeinstallprompt', (event) => {
                 console.log(event);
@@ -3125,7 +3152,8 @@ var $;
             navigator.serviceWorker.register('web.js');
         }
     }
-    $.$mol_offline = $mol_offline;
+    $.$mol_offline_web = $mol_offline_web;
+    $.$mol_offline = $mol_offline_web;
 })($ || ($ = {}));
 //mol/offline/offline.web.ts
 ;
