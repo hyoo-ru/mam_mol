@@ -279,7 +279,7 @@ namespace $ {
 				
 			}
 		}catch(e:any) {
-			console.log( e.stack )
+			e.message += '\n' + e.stack
 			throw e
 		}
 		}

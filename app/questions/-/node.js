@@ -860,7 +860,7 @@ var $;
                 }
             }
             catch (e) {
-                console.log(e.stack);
+                e.message += '\n' + e.stack;
                 throw e;
             }
         }
