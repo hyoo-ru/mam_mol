@@ -95,7 +95,6 @@ var $;
         if (!$mol_fail_catch(error))
             return false;
         console.error(error);
-        console.error(error.stack);
         return true;
     }
     $.$mol_fail_log = $mol_fail_log;
