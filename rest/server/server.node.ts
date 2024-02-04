@@ -191,7 +191,7 @@ namespace $ {
 			
 			if( this._ws_icome_partial.length ) {
 				this._ws_icome_partial.push( chunk )
-				chunk = Buffer.alloc( msg_size )
+				chunk = Buffer.alloc( patial_size + chunk.byteLength )
 				let offset = 0
 				for( const buf of this._ws_icome_partial.splice( 0 ) ) {
 					chunk.set( buf, offset )
