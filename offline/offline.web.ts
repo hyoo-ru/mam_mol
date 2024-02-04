@@ -49,15 +49,13 @@ namespace $ {
 				if (request.cache === 'no-store') return
 
 				const fresh = fetch( request ).then( response => {
-					if (response.status !== 200) return response
-					const cached = response.clone()
-					event.waitUntil(
+					if (response.status === 200) event.waitUntil(
 						caches.open( '$mol_offline' ).then(
-							cache => cache.put( request , cached )
+							cache => cache.put( request , response )
 						)
 					)
 					
-					return response
+					return response.clone()
 				} )
 
 				event.waitUntil( fresh )
