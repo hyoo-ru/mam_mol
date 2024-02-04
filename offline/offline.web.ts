@@ -77,7 +77,7 @@ namespace $ {
 									.catch((err: Error) => {
 										const cloned = cached.clone()
 										const message = `${err.cause instanceof Response ? '' : '500 '}${err.message} $mol_offline fallback to cache`
-										cloned.headers.set('x-origin-response', message)
+										cloned.headers.set('$mol_offline-response', message)
 										return cloned
 									})
 								: fresh
