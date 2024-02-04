@@ -51,11 +51,6 @@ namespace $ {
 				const fresh = fetch( request ).then( response => {
 					if (response.status !== 200) return response
 					const cached = response.clone()
-					cached.headers.set(
-						'x-origin-response',
-						`${response.status}${response.statusText ? ` ${response.statusText}` : ''}`
-					)
-
 					event.waitUntil(
 						caches.open( '$mol_offline' ).then(
 							cache => cache.put( request , cached )
