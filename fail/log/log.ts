@@ -6,6 +6,7 @@ namespace $ {
 		if( !$mol_fail_catch( error ) ) return false
 		
 		console.error( error )
+		console.error( ( error as Error ).stack )
 		return true
 		
 	}
