@@ -173,7 +173,7 @@ namespace $ {
 			upgrade: $mol_rest_message,
 			sock: InstanceType< typeof $node.stream.Duplex >,
 		) {
-			console.log(chunk.byteLength)
+			
 			sock.pause()
 			
 			this._ws_icome_partial.push( chunk )
