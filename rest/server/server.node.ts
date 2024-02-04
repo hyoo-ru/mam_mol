@@ -168,22 +168,35 @@ namespace $ {
 			
 		}
 		
+		_ws_icome_partial = [] as Uint8Array[]
+		
 		@ $mol_action
 		ws_income(
 			chunk: Buffer,
 			upgrade: $mol_rest_message,
 			sock: InstanceType< typeof $node.stream.Duplex >,
 		) {
-			
+			console.log(chunk.byteLength)
+			const patial_size = this._ws_icome_partial.reduce( ( sum, buf )=> sum + buf.byteLength, 0 )
 			const frame = $mol_wire_sync( $mol_websocket_frame ).from( chunk ) as $mol_websocket_frame
 			const msg_size = frame.size() + frame.data().size
 			
 			sock.pause()
 			
-			if( msg_size > chunk.byteLength ) {
-				sock.unshift( chunk )
+			if( msg_size > patial_size + chunk.byteLength ) {
 				setTimeout( ()=> sock.resume() )
+				this._ws_icome_partial.push( chunk )
 				return
+			}
+			
+			if( this._ws_icome_partial.length ) {
+				this._ws_icome_partial.push( chunk )
+				chunk = new Buffer( msg_size )
+				let offset = 0
+				for( const buf of this._ws_icome_partial ) {
+					chunk.set( buf, offset )
+					offset += buf.byteLength
+				}
 			}
 			
 			if( msg_size < chunk.byteLength ) {
