@@ -851,8 +851,7 @@ var $;
                 }
             }
             catch (e) {
-                e.message += '\n' + e.stack;
-                throw e;
+                throw new Error(e.stack, { cause: e });
             }
         }
         step() {
