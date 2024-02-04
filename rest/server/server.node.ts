@@ -144,10 +144,7 @@ namespace $ {
 			} ) )
 			
 			socket.on( 'data', ( chunk: Buffer )=> {
-				console.log( 'data in' )
-				$mol_wire_async( this ).ws_income( chunk, upgrade, socket ).catch(e => {
-					console.error( '[', e, e.stack,']' )
-				})
+				$mol_wire_async( this ).ws_income( chunk, upgrade, socket )
 			} )
 			
 			const key_in = req.headers["sec-websocket-key"]
@@ -181,12 +178,13 @@ namespace $ {
 			const frame = $mol_wire_sync( $mol_websocket_frame ).from( chunk ) as $mol_websocket_frame
 			const msg_size = frame.size() + frame.data().size
 			
+			sock.pause()
+			
 			if( msg_size > chunk.byteLength ) {
 				sock.unshift( chunk )
+				process.nextTick( ()=> sock.resume() )
 				return
 			}
-			
-			sock.pause()
 			
 			if( msg_size < chunk.byteLength ) {
 				const tail = new Uint8Array( chunk.buffer, chunk.byteOffset + msg_size )
