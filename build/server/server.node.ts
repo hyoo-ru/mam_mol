@@ -316,7 +316,7 @@ namespace $ {
 	
 			const server = $node.child_process.spawn(
 				'node',
-				[ `./${path}/-/node.js`, ... args ],
+				[ '--enable-source-maps', '--trace-uncaught', `./${path}/-/node.js`, ... args ],
 				{
 					stdio: [ 'pipe', 'inherit', 'inherit' ],
 				}
