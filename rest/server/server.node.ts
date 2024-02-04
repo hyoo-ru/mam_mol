@@ -144,7 +144,10 @@ namespace $ {
 			} ) )
 			
 			socket.on( 'data', ( chunk: Buffer )=> {
-				$mol_wire_async( this ).ws_income( chunk, upgrade, socket )
+				console.log( 'data in' )
+				$mol_wire_async( this ).ws_income( chunk, upgrade, socket ).catch(e => {
+					console.error( '[', e, e.stack,']' )
+				})
 			} )
 			
 			const key_in = req.headers["sec-websocket-key"]
