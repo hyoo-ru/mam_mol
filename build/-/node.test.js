@@ -6630,7 +6630,7 @@ var $;
                 message: 'Start',
                 command,
             });
-            const server = $node.child_process.spawn('node', [`./${path}/-/node.js`, ...args], {
+            const server = $node.child_process.spawn('node', ['--enable-source-maps', '--trace-uncaught', `./${path}/-/node.js`, ...args], {
                 stdio: ['pipe', 'inherit', 'inherit'],
             });
             return Object.assign(server, {
