@@ -24,12 +24,12 @@ namespace $.$$ {
 		
 		click( event?: Event ) {
 			const cb = $mol_wire_sync( this.$.$mol_dom_context.navigator.clipboard )
-
-			if( cb.writeText ) cb.writeText( this.text() )
-			if( cb.write ) cb.write( this.attachments() )
+			
+			cb.writeText?.( this.text() )
+			cb.write?.( this.attachments() )
 
 			if( cb.writeText === undefined && cb.write === undefined ) {
-				throw new Error( "Browser cannot support write functions" )
+				throw new Error( "doesn't support copy to clipoard" )
 			}
 		}
 
