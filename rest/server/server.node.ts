@@ -216,18 +216,18 @@ namespace $ {
 			
 			if( op !== 'txt' && op !== 'bin' ) return
 			
-			if( data.length !== 0 ) {
-				this.$.$mol_log3_rise({
-					place: this,
-					message: message.method(),
-					url: message.uri(),
-					frame: frame.toString(),
-				})
-			}
-		
 			try {
 				
-				await $mol_wire_async( this.root() ).REQUEST( message )
+				if( data.length !== 0 ) {
+					this.$.$mol_log3_rise({
+						place: this,
+						message: message.method(),
+						url: message.uri(),
+						frame: frame.toString(),
+					})
+					await $mol_wire_async( this.root() ).REQUEST( message )
+				}
+			
 				sock.resume()
 				
 			} catch( error: any ) {

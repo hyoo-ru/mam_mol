@@ -17,7 +17,7 @@ namespace $ {
 				case 'file': {
 					
 					return msg.reply( file.buffer(), {
-						type: $mol_rest_resource_fs_extensions[ file.ext().replace( /^.*\./, '' ) ],
+						type: $mol_file_extensions[ file.ext().replace( /^.*\./, '' ) ],
 					} )
 					
 				}
