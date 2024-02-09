@@ -81,6 +81,7 @@ namespace $ {
 		'rtf': 'application/rtf',
 		'sh': 'application/x-sh',
 		'tar': 'application/x-tar',
+		'tree': 'application/x-tree',
 		'vsd': 'application/vnd.visio',
 		'xhtml': 'application/xhtml+xml',
 		'xls': 'application/vnd.ms-excel',
