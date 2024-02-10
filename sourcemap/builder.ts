@@ -34,7 +34,7 @@ namespace $ {
 				version: this.version,
 				sources: this.sources,
 				names: this.names,
-				sourceRoot: this.sourceRoot || undefined,
+				// sourceRoot: this.sourceRoot || undefined,
 				mappings: sourcemap_codec.encode(this.segment_lines),
 				file: this.file,
 				sourcesContent: this.sourceContent,

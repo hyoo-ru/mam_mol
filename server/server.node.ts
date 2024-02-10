@@ -37,23 +37,14 @@ namespace $ {
 
 			const server = $node.http.createServer( this.express() )
 
-			$node['portastic'].find(
-				{
-					min : this.port() ,
-					max : this.port() + 1000 ,
-					retrieve : 1
-				}
-			).then(
-				( ports : number[] ) => {
-					server.listen( ports[ 0 ] )
-					this.$.$mol_log3_done({
-						place: `${ this }` ,
-						message: `Started` ,
-						network: `http://${ this.internal_ip() }:${ ports[ 0 ] }/`,
-						loopback: `http://localhost:${ ports[ 0 ] }/`,
-					})
-				}
-			)
+			server.listen( this.port() )
+			
+			this.$.$mol_log3_done({
+				place: `${ this }` ,
+				message: `Started` ,
+				network: `http://${ this.internal_ip() }:${ this.port() }/`,
+				loopback: `http://localhost:${ this.port() }/`,
+			})
 
 			return server
 

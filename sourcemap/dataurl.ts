@@ -1,7 +1,6 @@
 namespace $ {
 
-	const data_url_prefix = 'data:application/json,'
-	const prefix = $mol_sourcemap_url_prefix + data_url_prefix
+	const prefix = '# sourceMappingURL=data:application/json,'
 	const end_comment = ' */'
 
 	export function $mol_sourcemap_dataurl_decode(this: $, data: string) {
@@ -34,6 +33,6 @@ namespace $ {
 	export function $mol_sourcemap_dataurl_encode(this: $, map: $mol_sourcemap_raw, type = 'js' as 'js' | 'css') {
 		const str = JSON.stringify( { ...map, mappings: ';;' + map.mappings } )
 
-		return this.$mol_sourcemap_url(data_url_prefix + this.encodeURIComponent( str ), type)
+		return this.$mol_sourcemap_url('data:application/json,' + this.encodeURIComponent( str ), type)
 	}
 }

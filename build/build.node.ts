@@ -80,27 +80,28 @@ namespace $ {
 		@ $mol_mem_key
 		viewTreeTranspile( path : string ) {
 
-			const file = $mol_file.absolute( path )
-			const name = file.name()
-			const parent = file.parent()
-			const prefix = `-view.tree/${ name }`
+			const source = $mol_file.absolute( path )
+			const target = source.parent().resolve( `-view.tree` )
 
-			const text = file.text()
-			const tree = this.$.$mol_tree2_from_string( text , '../' + name )
+			const tree = this.$.$mol_tree2_from_string( source.text(), source.relate( this.root() ) )
 
-			const js_path = parent.resolve( prefix ).path()
+			const js = target.resolve( source.name() + '.js' )
+			const js_map = target.resolve( js.name() + '.map' )
+			const dts = target.resolve( source.name() + '.d.ts' )
+			const dts_map = target.resolve( dts.name() + '.map' )
 	
+			const js_text = this.$.$mol_tree2_js_to_text( this.$.$mol_view_tree2_to_js( tree ) )
+			js.text( this.$.$mol_tree2_text_to_string( js_text ) + '\n//# sourceMappingURL=' + js_map.relate( target ) )
+			js_map.text( JSON.stringify( this.$.$mol_tree2_text_to_sourcemap( js_text ), null, '\t' ) )
+
 			const dts_text = this.$.$mol_view_tree2_to_dts( tree )
-			const dts = this.$.$mol_tree2_text_to_file(dts_text, js_path + '.d.ts')
+			dts.text( this.$.$mol_tree2_text_to_string( dts_text ) + '\n//# sourceMappingURL=' + dts_map.relate( target ) )
+			dts_map.text( JSON.stringify( this.$.$mol_tree2_text_to_sourcemap( dts_text ), null, '\t' ) )
 
-			const js_text = this.$.$mol_tree2_js_to_text(this.$.$mol_view_tree2_to_js(tree))
-			const js = this.$.$mol_tree2_text_to_file(js_text, js_path + '.js')
+			const locale_file = target.resolve( source.name() + `.locale=en.json` )
+			locale_file.text( JSON.stringify( this.$.$mol_view_tree2_to_locale( tree ), null, '\t' ) )
 
-			const locale_file = parent.resolve( `${ prefix }.locale=en.json` )
-			const locales = this.$.$mol_view_tree2_to_locale(tree)
-			locale_file.text( JSON.stringify( locales , null , '\t' ) )
-
-			return [ js.src, js.map, dts.src, dts.map, locale_file ]
+			return [ js, js_map, dts, dts_map, locale_file ]
 		}
 
 		@ $mol_mem_key
@@ -297,8 +298,8 @@ namespace $ {
 			if( sources.length && bundle === 'node' ) {
 				const types = [] as string[]
 				
-				for( let dep of this.nodeDeps({ path , exclude }) ) {
-					types.push( '\t' + JSON.stringify( dep ) + ' : typeof import\( ' + JSON.stringify( dep ) + ' )' )
+				for( let [ dep, src ] of this.nodeDeps({ path , exclude }) ) {
+					types.push( '\t' + JSON.stringify( dep ) + ' : typeof import\( ' + JSON.stringify( dep ) + ' ) // ' + src )
 				}
 				
 				const node_types = $mol_file.absolute( path ).resolve( `-node/deps.d.ts` )
@@ -390,9 +391,10 @@ namespace $ {
 						this.js_error( diagnostic.file.getSourceFile().fileName , error )
 						
 					} else {
+						const text = diagnostic.messageText
 						this.$.$mol_log3_fail({
 							place : `${this}.tsService()` ,
-							message: String( diagnostic.messageText ) ,
+							message: typeof text === 'string' ? text : text.messageText ,
 						})
 					}
 					
@@ -1186,9 +1188,9 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		nodeDeps( { path , exclude } : { path : string , exclude : string[] } ) : string[] {
+		nodeDeps( { path , exclude } : { path : string , exclude : string[] } ) {
 			
-			var res = new Set<string>()
+			var res = new Map<string,string>()
 			var sources = this.sourcesAll( { path , exclude } )
 			
 			for( let src of sources ) {
@@ -1196,11 +1198,11 @@ namespace $ {
 				for( let dep in deps ) {
 					if( !/^\/node(?:_modules)?\//.test( dep ) ) continue
 					let mod = dep.replace( /^\/node(?:_modules)?\// , '' ).replace( /\/.*/g , '' )
-					res.add( mod )
+					res.set( mod, src.relate() )
 				}
 			}
 
-			return [ ... res ]
+			return res
 
 		}
 
@@ -1294,7 +1296,7 @@ namespace $ {
 
 			json.version = version.join( '.' )
 
-			for( let dep of this.nodeDeps({ path , exclude }) ) {
+			for( let dep of this.nodeDeps({ path , exclude }).keys() ) {
 				if( require('module').builtinModules.includes(dep) ) continue
 				json.dependencies[ dep ] = `*`
 			}
