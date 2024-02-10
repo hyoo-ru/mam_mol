@@ -77,6 +77,7 @@ namespace $ {
 			const foo = _foo.make({ $ })
 
 			$mol_assert_equal(
+				foo.d(),
 				foo.c(),
 				foo.b(),
 				foo.a(),
@@ -84,19 +85,43 @@ namespace $ {
 			)
 
 			$mol_assert_equal(
-				foo.c(1),
-				1
-			)
-			$mol_assert_equal(
+				foo.d(1),
+				foo.c(),
 				foo.b(),
 				foo.a(),
 				1
 			)
+			
 			$mol_assert_equal(
 				// @ts-ignore
 				foo.a(2),
-				foo.c()
+				// @ts-ignore
+				foo.b(2),
+				foo.c(),
+				foo.d(),
+				1
 			)
+			
+			$mol_assert_equal(
+				foo.c(2),
+				foo.b(),
+				foo.a(),
+				2
+			)
+			
+			$mol_assert_equal(
+				foo.d(1),
+				1,
+			)
+			
+			$mol_assert_equal(
+				foo.d(3),
+				foo.c(),
+				foo.b(),
+				foo.a(),
+				3
+			)
+			
 		},
 
 

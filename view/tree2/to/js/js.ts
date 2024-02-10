@@ -87,7 +87,7 @@ namespace $ {
 			] )
 		}
 		const op = prop.kids[0]
-		const is_delegate = op?.type === '<=' || op?.type === '<=>' || op?.type === '='
+		const is_delegate = op?.type === '<=>' || op?.type === '='
 		if( ! is_delegate && next ) addons.push( decorate() )
 		
 		const val = prop.hack<Context>({
