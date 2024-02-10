@@ -74,7 +74,7 @@ namespace $ {
 					Foo $mol_object
 						sub / <= Сlose_icon $mol_object
 				`)
-			}, '`Cyrillic symbol in Сlose_icon? `Required prop like some*? at `.view.tree#3:16/10`\n<=\n.view.tree#3:13/2\n/\n.view.tree#3:11/1 at .view.tree#3:7/3')
+			}, 'Required prop like some*? at `.view.tree#3:16/10`\n<=\n.view.tree#3:13/2\n/\n.view.tree#3:11/1 at .view.tree#3:7/3')
 		},
 
 		'simple empty legacy indexed channel throws error'( $ ) {
@@ -83,14 +83,14 @@ namespace $ {
 					Foo $mol_object
 						a!? null
 				`)
-			}, '`Cyrillic symbol in a!?? `Required prop like some*? at `.view.tree#3:7/3` at .view.tree#3:7/3' )
+			}, 'Required prop like some*? at `.view.tree#3:7/3` at .view.tree#3:7/3' )
 
 			$mol_assert_fail(() => {
 				$mol_view_tree2_to_js_test_run(`
 					Foo $mol_object
 						b! 1
 				`)
-			}, '`Cyrillic symbol in b!? `Required prop like some*? at `.view.tree#3:7/2` at .view.tree#3:7/2' )
+			}, 'Required prop like some*? at `.view.tree#3:7/2` at .view.tree#3:7/2' )
 		},
 
 		'simple two classes'( $ ) {
@@ -163,7 +163,7 @@ namespace $ {
 					Foo $mol_object
 						item_чount 50
 				`)
-			}, '`Cyrillic symbol in item_чount? `Required prop like some*? at `.view.tree#3:7/10` at .view.tree#3:7/10')
+			}, 'Required prop like some*? at `.view.tree#3:7/10` at .view.tree#3:7/10')
 		},
 	})
 	

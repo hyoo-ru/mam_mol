@@ -11,14 +11,27 @@ namespace $ {
 		const { key, next } = this.$mol_view_tree2_prop_parts(prop)
 
 		return prop.struct( '(,)', [
-			... key ? [ prop.struct( 'id' ) ] : [],
+			... key
+				? [ prop.struct( 'id' ) ]
+				: [],
 			... ( bidi && next ) ? [ prop.struct( 'next' ) ] : [],
 		] )
 		
 	}
 	
 	function args_of( this: $, prop: $mol_tree2, bidi = true ) {
-		return params_of.call(this, prop, bidi)
+		
+		const { key, next } = this.$mol_view_tree2_prop_parts(prop)
+
+		return prop.struct( '(,)', [
+			... key
+				? key.length > 1
+					? [ prop.data( key.slice(1) ) ]
+					: [ prop.struct( 'id' ) ]
+				: [],
+			... ( bidi && next ) ? [ prop.struct( 'next' ) ] : [],
+		] )
+		
 	}
 
 	function call_method_name(this: $, child: $mol_tree2) {
@@ -39,7 +52,7 @@ namespace $ {
 		for (const child of bind.kids) {
 			chain.push(
 				call_method_name.call(this, child),
-				params_of.call(this, child, bidi),
+				args_of.call(this, child, bidi),
 			)
 		}
 
@@ -122,9 +135,9 @@ namespace $ {
 			'=': bind => [ bind.struct( '()', [
 					bind.struct( 'this' ),
 					call_method_name.call(this, bind.kids[0]),
-					params_of.call(this, bind.kids[0]),
+					args_of.call(this, bind.kids[0]),
 					call_method_name.call(this, bind.kids[0].kids[0]),
-					params_of.call(this, bind.kids[0].kids[0]),
+					args_of.call(this, bind.kids[0].kids[0]),
 			] ) ],
 				
 			'': ( input, belt, context )=> {
@@ -173,7 +186,7 @@ namespace $ {
 						const over_name = name_of.call(this, over )
 
 						const body = bind.type === '@' ? [
-							params_of.call(this, over ),
+							args_of.call(this, over ),
 							... localized_string.hack({
 								'#key': key => [ bind.data( `${ klass.type }_${ name }_${ over_name }` ) ],
 							}),

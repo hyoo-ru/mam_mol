@@ -155,7 +155,7 @@ namespace $ {
 						a!? $mol_view
 							expanded <=> cell_test_expanded!? null
 				`)
-			}, '`Cyrillic symbol in a!?? `Required prop like some*? at `.view.tree#3:7/3` at .view.tree#3:7/3' )
+			}, 'Required prop like some*? at `.view.tree#3:7/3` at .view.tree#3:7/3' )
 		},
 
 		'Bidi bind with default object'( $ ) {

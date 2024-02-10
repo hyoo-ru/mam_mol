@@ -7,13 +7,13 @@ namespace $ {
 		'wrong order'($) {
 			$mol_assert_fail(() => {
 				get_parts('some_bla?*')
-			}, '`Cyrillic symbol in some_bla?*? `Required prop like some*? at `?#1:1/0`')
+			}, 'Required prop like some*? at `?#1:1/0`')
 		},
 
 		'empty'($) {
 			$mol_assert_fail(() => {
 				get_parts('')
-			}, '``Required prop like some*? at `?#1:1/0`')
+			}, 'Required prop like some*? at `?#1:1/0`')
 		},
 
 		'prop in upper case'($) {
@@ -40,14 +40,14 @@ namespace $ {
 		'legacy indexed'($) {
 			const parts = get_parts('Some*default')
 			$mol_assert_equal(parts.name, 'Some')
-			$mol_assert_equal(parts.key, '*')
+			$mol_assert_equal(parts.key, '*default')
 			$mol_assert_equal(parts.next, '')
 		},
 
 		'legacy indexed value'($) {
 			const parts = get_parts('Some*k?v')
 			$mol_assert_equal(parts.name, 'Some')
-			$mol_assert_equal(parts.key, '*')
+			$mol_assert_equal(parts.key, '*k')
 			$mol_assert_equal(parts.next, '?')
 		}
 	})
