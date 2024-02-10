@@ -1,5 +1,5 @@
 namespace $ {
-	const class_regex = /^[$A-Z][$\w<>]+$/
+	const class_regex = /^[$A-Z][$\w<>\[\]()"'?|]+$/
 
 	export function $mol_view_tree2_class_match(klass?: $mol_tree2) {
 		if (! klass?.type) return false
