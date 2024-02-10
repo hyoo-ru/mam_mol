@@ -37,6 +37,10 @@ namespace $ {
 				return $mol_dev_format_native( val )
 			}
 			
+			if( Symbol.toStringTag in val ) {
+				return $mol_dev_format_native( val )
+			}
+			
 			return null
 			
 		} ,
@@ -50,7 +54,8 @@ namespace $ {
 	export function $mol_dev_format_native( obj : any ) {
 		
 		if( typeof obj === 'undefined' ) return $mol_dev_format_shade( 'undefined' )
-		if( typeof obj !== 'object' && typeof obj !== 'function' ) return obj
+		
+		// if( ![ 'object', 'function', 'symbol' ].includes( typeof obj )  ) return obj
 
 		return [
 			'object' ,

@@ -298,7 +298,7 @@ namespace $ {
 				const types = [] as string[]
 				
 				for( let dep of this.nodeDeps({ path , exclude }) ) {
-					types.push( '\t' + JSON.stringify( dep ) + ' : typeof import( ' + JSON.stringify( dep ) + ' )' )
+					types.push( '\t' + JSON.stringify( dep ) + ' : typeof import\( ' + JSON.stringify( dep ) + ' )' )
 				}
 				
 				const node_types = $mol_file.absolute( path ).resolve( `-node/deps.d.ts` )
@@ -356,17 +356,21 @@ namespace $ {
 				
 				{
 					... $node.typescript.sys ,
-					watchDirectory: () => { 
+					watchDirectory: ( path, cb ) => {
+						// console.log('watchDirectory', path )
+						watchers.set( path , cb )
 						return { close(){} }
 					},
 					writeFile : (path , data )=> {
 						$mol_file.relative( path ).text( data, 'virt' )
 					},
 					setTimeout : ( cb : any )=> {
+						// console.log('setTimeout' )
 						run = cb
 					} ,
 					watchFile : (path:string, cb:(path:string,kind:number)=>any )=> {
-						// watchers.set( path , cb )
+						// console.log('watchFile', path )
+						watchers.set( path , cb )
 						return { close(){ } }
 					},
 				},
@@ -382,6 +386,7 @@ namespace $ {
 							getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
 							getNewLine : ()=> '\n' ,
 						})
+						// console.log('XXX', error )
 						this.js_error( diagnostic.file.getSourceFile().fileName , error )
 						
 					} else {
@@ -398,8 +403,8 @@ namespace $ {
 				[], // project refs
 				
 				{ // watch options
-					synchronousWatchDirectory: false,
-					watchFile: 4,
+					synchronousWatchDirectory: true,
+					watchFile: 5,
 					watchDirectory: 0,
 				},
 				
@@ -411,15 +416,15 @@ namespace $ {
 
 			return {
 				recheck: ()=> {
-					// for( const path of paths ) {
-					// 	const version = $node.fs.statSync( path ).mtime.valueOf()
-					// 	this.js_error( path, null )
-					// 	if( versions[ path ] && versions[ path ] !== version ) {
-					// 		const watcher = watchers.get( path )
-					// 		if( watcher ) watcher( path , 2 )
-					// 	}
-					// 	versions[ path ] = version
-					// }
+					for( const path of paths ) {
+						const version = $node.fs.statSync( path ).mtime.valueOf()
+						// this.js_error( path, null )
+						if( versions[ path ] && versions[ path ] !== version ) {
+							const watcher = watchers.get( path )
+							if( watcher ) watcher( path , 2 )
+						}
+						versions[ path ] = version
+					}
 					run()
 				},
 				destructor : ()=> service.close()
@@ -600,8 +605,15 @@ namespace $ {
 					if( mod.type() !== 'dir' ) return false
 					
 					const git_dir = mod.resolve( '.git' )
-					if( git_dir.exists() ) return false
-
+					if( git_dir.exists() ) {
+						
+						this.$.$mol_exec( mod.path() , 'git' , 'pull', '--deepen=1' )
+						// mod.reset()
+						// for ( const sub of mod.sub() ) sub.reset()
+						
+						return false
+					}
+					
 					for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).kids ) {
 						
 						this.$.$mol_exec( mod.path() , 'git' , 'init' )
@@ -909,7 +921,7 @@ namespace $ {
 			if( sources.length === 0 ) return []
 			
 			var concater = new $mol_sourcemap_builder( this.root().relate( targetJS.parent() ), ';')
-			concater.add( '"use strict"' )
+			concater.add( '#!/usr/bin/env node\n"use strict"' )
 
 			if( bundle === 'node' ) {
 				concater.add( 'var exports = void 0' )
@@ -947,7 +959,7 @@ namespace $ {
 					}
 				}
 			)
-			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
+			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ... errors ) )
 
 			var targetJSMap = pack.resolve( `-/${bundle}.js.map` )
 	
@@ -1002,7 +1014,9 @@ namespace $ {
 			this.logBundle( target , Date.now() - start )
 			
 			if( errors.length ) {
-				$mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ... errors ) )
+				const error = new $mol_error_mix( `Build fail ${path}`, ... errors )
+				target.text( `console.error(${ JSON.stringify( error ) })` )
+				$mol_fail_hidden( error )
 			}
 
 			target.text( `console.info( '%c ▫ $mol_build ▫ Audit passed', 'color:forestgreen; font-weight:bolder' )` )
@@ -1056,10 +1070,10 @@ namespace $ {
 			
 			this.logBundle( target , Date.now() - start )
 			
-			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
+			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ... errors ) )
 
 			if( bundle === 'node' ) {
-				this.$.$mol_exec( this.root().path() , 'node' , '--trace-uncaught', target.relate( this.root() ) )
+				this.$.$mol_exec( this.root().path() , 'node' , '--enable-source-maps', '--trace-uncaught', target.relate( this.root() ) )
 			}
 			
 			return [ target , targetMap ]
@@ -1589,7 +1603,7 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/require\(\s*['"](.*?)['"]\s*\)/ig , ( str , path )=> {
+					/\b(?:require|import)\(\s*['"]([^"'()]*?)['"]\s*\)/ig , ( str , path )=> {
 						path = path.replace( /(\/[^\/.]+)$/ , '$1.js' ).replace( /\/$/, '/index.js' )
 						if( path[0] === '.' ) path = '../' + path
 						$mol_build_depsMerge( depends , { [ path ] : priority } )
@@ -1627,11 +1641,12 @@ namespace $ {
 				
 				
 				line.replace(
-					/require\(\s*['"](.*?)['"]\s*\)/ig , ( str , path )=> {
+					/\b(?:require|import)\(\s*['"]([^"'()]*?)['"]\s*\)/ig , ( str , path )=> {
 						$mol_build_depsMerge( depends , { [ path ] : priority } )
 						return str
 					}
 				)
+				
 			}
 		)
 		

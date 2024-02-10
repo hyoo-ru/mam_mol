@@ -2,9 +2,9 @@
 
 Lazy computed lists with native Array interface. $mol_range2_array is mutable but all derived ranges are immutable.
 
-# Creating
+# Creation
 
-```
+```ts
 $mol_range2() // infinite number range from 0
 
 $mol_range2( index => `#${ index + 1 }` ) // infinite range of custom values
@@ -18,14 +18,14 @@ $mol_range2( index => index + 1 , ()=> 10 ) // same as above
 
 # Convertation
 
-```
-// from Array
+```ts
+// from native Array
 const array = [ 1 , 2 , 3 ]
-const range = new $mol_range2_array( ... array )
+const range = $mol_range2( array )
 ```
 
-```
-// to Array
+```ts
+// to native Array
 const range = $mol_range2().slice( 1 , 11 ) 
 const array = [ ... range ]
 ```
@@ -35,15 +35,15 @@ const array = [ ... range ]
 - concat
 - map
 - slice
+- filter
 - toReversed
 - some
 - every
 - entries
 - keys
 
-# Non lazy methods yet
+# Non lazy methods
 
-- filter
 - reduce
 - reduceRight
 
@@ -61,14 +61,14 @@ const array = [ ... range ]
 
 # Examples
 
-```
-// iterate from 1 to 10
-for( let i of $mol_range2().slice( 1 , 11 ) ) {
+```ts
+// iterate from 5 to 10
+for( let i of $mol_range2().slice( 5 , 11 ) ) {
 	/// ...
 }
 ```
 
-```
+```ts
 // infinite tasks
 const tasks = $mol_range2( i => `task #${ i + 1 }` )
 

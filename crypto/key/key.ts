@@ -8,7 +8,7 @@ namespace $ {
 	
 	export class $mol_crypto_key extends $mol_buffer {
 		
-		static from< This extends typeof $mol_crypto_key >( this: This, serial: string | ArrayBufferView ) {
+		static from< This extends typeof $mol_crypto_key >( this: This, serial: number | string | ArrayBufferView ) {
 			
 			if( typeof serial === 'string' ) {
 				serial = new Uint8Array([
@@ -18,7 +18,7 @@ namespace $ {
 				])
 			}
 			
-			return new this( serial.buffer, serial.byteOffset, serial.byteLength ) as InstanceType< This >
+			return super.from( serial ) as InstanceType< This >
 		}
 		
 		asArray() {

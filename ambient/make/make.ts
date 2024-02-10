@@ -6,7 +6,7 @@ namespace $ {
 		overrides : Partial< $ > ,
 	) {
 		const obj = new Obj
-		obj[ $mol_ambient_ref ] = this.$mol_ambient( overrides )
+		;( obj as any )[ $mol_ambient_ref ] = this.$mol_ambient( overrides )
 		return obj
 	}
 

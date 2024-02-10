@@ -68,6 +68,7 @@ namespace $.$$ {
 				
 			if( !symbol ) return
 			
+			event.preventDefault()
 			document.execCommand( 'insertText', false, symbol )
 			
 		}
@@ -96,9 +97,9 @@ namespace $.$$ {
 					default : return
 				}
 			
+				event.preventDefault()
+				
 			}
-			
-			event.preventDefault()
 
 		}
 		

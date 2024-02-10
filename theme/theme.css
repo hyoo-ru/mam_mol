@@ -49,9 +49,9 @@
 	--mol_theme_luma: 1;
 	--mol_theme_image: none;
 	
-	--mol_theme_back: hsl( var(--mol_theme_hue), 20%, 99% );
-	--mol_theme_card: hsl( var(--mol_theme_hue), 50%, 90%, .25 );
-	--mol_theme_field: hsl( var(--mol_theme_hue), 50%, 100%, .5 );
+	--mol_theme_back: hsl( var(--mol_theme_hue), 20%, 85% );
+	--mol_theme_card: hsl( var(--mol_theme_hue), 50%, 100%, .25 );
+	--mol_theme_field: hsl( var(--mol_theme_hue), 50%, 100%, .25 );
 	--mol_theme_hover: hsl( var(--mol_theme_hue), 0%, 50%, .1 );
 	
 	--mol_theme_text: hsl( var(--mol_theme_hue), 0%, 0% );

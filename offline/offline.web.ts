@@ -5,7 +5,7 @@ namespace $ {
 	])
 
 	/** Installs service worker proxy, which caches all requests and respond from cache on http errors. */
-	export function $mol_offline() {
+	export function $mol_offline_web() {
 		
 		if( typeof window === 'undefined' ) {
 			
@@ -43,24 +43,46 @@ namespace $ {
 					)
 				}
 				
-				if( request.method !== 'GET' || !/^https?:/.test( request.url ) ) {
-					return event.respondWith( fetch( request ) )
-				}
-				
-				const fresh = fetch( event.request ).then( response => {
+				if( request.method !== 'GET' ) return
+				if( !/^https?:/.test( request.url ) ) return
+				if( /\?/.test( request.url ) ) return
+				if (request.cache === 'no-store') return
 
+				const fresh = fetch( request ).then( response => {
+					if (response.status !== 200) return response
 					event.waitUntil(
 						caches.open( '$mol_offline' ).then(
-							cache => cache.put( event.request , response )
+							cache => cache.put( request , response )
 						)
 					)
 					
 					return response.clone()
 				} )
+
 				event.waitUntil( fresh )
 			
 				event.respondWith(
-					caches.match( event.request ).then( response => response || fresh )
+					caches.match( request ).then(
+						cached => request.cache === 'no-cache' || request.cache === 'reload'
+							? ( cached
+								? fresh
+									.then(actual => {
+										if (actual.status === cached.status) return actual
+										throw new Error(
+											`${actual.status}${actual.statusText ? ` ${actual.statusText}` : ''}`,
+											{ cause: actual }
+										)
+									})
+									.catch((err: Error) => {
+										const cloned = cached.clone()
+										const message = `${err.cause instanceof Response ? '' : '500 '}${err.message} $mol_offline fallback to cache`
+										cloned.headers.set('$mol_offline_remote_status', message)
+										return cloned
+									})
+								: fresh
+							)
+							: ( cached || fresh )
+					)
 				)
 				
 			})
@@ -79,5 +101,7 @@ namespace $ {
 		}
 
 	}
+
+	$.$mol_offline = $mol_offline_web
 
 }
