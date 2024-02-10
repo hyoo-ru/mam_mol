@@ -71,7 +71,7 @@ namespace $ {
 
 			if( !content ) return []
 
-			const script = file.parent().resolve( `-meta.tree/${ name }.js` )
+			const script = file.parent().resolve( `-meta.tree/${ name }.ts` )
 			script.text( content )
 			return [ script ]
 
