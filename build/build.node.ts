@@ -1122,6 +1122,7 @@ namespace $ {
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/${bundle}.d.ts` )
+			var targetMap = pack.resolve( `-/${bundle}.d.ts.map` )
 			
 			var sources = this.sourcesDTS( { path , exclude } )
 			if( sources.length === 0 ) return []
@@ -1135,11 +1136,12 @@ namespace $ {
 				}
 			)
 			
-			target.text( concater.content + '\nexport = $;' )
+			target.text( concater.content + '\nexport = $;\n//# sourceMappingURL=' + targetMap.relate( target.parent() ) + '\n' )
+			targetMap.text( concater.toString() )
 			
 			this.logBundle( target , Date.now() - start )
 			
-			return [ target ]
+			return [ target, targetMap ]
 		}
 		
 		@ $mol_mem_key
