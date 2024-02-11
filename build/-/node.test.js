@@ -10024,9 +10024,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_simple_nan_foo) = class $mol_view_tree2_to_js_test_ex_simple_nan_foo extends ($.$mol_object) {
 		a(){
 			return NaN;
@@ -10050,9 +10047,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_structural_foo) = class $mol_view_tree2_to_js_test_ex_structural_foo extends ($.$mol_object) {
 		bar(){
 			return {
@@ -10066,9 +10060,6 @@ var $;
 		}
 	};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_array_union_foo) = class $mol_view_tree2_to_js_test_ex_array_union_foo extends ($.$mol_object) {
@@ -10086,9 +10077,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_array_number_foo) = class $mol_view_tree2_to_js_test_ex_array_number_foo extends ($.$mol_object) {
 		bar(){
 			return [
@@ -10100,9 +10088,6 @@ var $;
 		}
 	};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_indexed_foo) = class $mol_view_tree2_to_js_test_ex_bidi_indexed_foo extends ($.$mol_object) {
@@ -10118,18 +10103,12 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_array_boolean_foo) = class $mol_view_tree2_to_js_test_ex_array_boolean_foo extends ($.$mol_object) {
 		bar(){
 			return [false, true];
 		}
 	};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_array_indexed_foo) = class $mol_view_tree2_to_js_test_ex_array_indexed_foo extends ($.$mol_object) {
@@ -10149,9 +10128,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_bidi_chaining_foo) = class $mol_view_tree2_to_js_test_ex_bidi_chaining_foo extends ($.$mol_object) {
 		a(next){
 			return (this.b(next));
@@ -10168,9 +10144,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_bidi_fallback_foo) = class $mol_view_tree2_to_js_test_ex_bidi_fallback_foo extends ($.$mol_object) {
 		bar1(next){
 			return (this.bar2(next));
@@ -10182,9 +10155,6 @@ var $;
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_fallback_foo.prototype), "bar2"));
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_left_chaining_foo) = class $mol_view_tree2_to_js_test_ex_left_chaining_foo extends ($.$mol_object) {
@@ -10208,9 +10178,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_right_indexed_foo) = class $mol_view_tree2_to_js_test_ex_right_indexed_foo extends ($.$mol_object) {
 		a(next){
 			if(next !== undefined) return next;
@@ -10231,9 +10198,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_simple_string_foo) = class $mol_view_tree2_to_js_test_ex_simple_string_foo extends ($.$mol_object) {
 		hardcoded(){
 			return "First\nSecond";
@@ -10243,9 +10207,6 @@ var $;
 		}
 	};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_left_read_only_foo) = class $mol_view_tree2_to_js_test_ex_left_read_only_foo extends ($.$mol_object) {
@@ -10259,9 +10220,6 @@ var $;
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_left_read_only_foo.prototype), "bar2"));
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_right_hierarchy_foo) = class $mol_view_tree2_to_js_test_ex_right_hierarchy_foo extends ($.$mol_object) {
@@ -10295,9 +10253,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_right_read_only_foo) = class $mol_view_tree2_to_js_test_ex_right_read_only_foo extends ($.$mol_object) {
 		a(id, next){
 			if(next !== undefined) return next;
@@ -10318,9 +10273,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_structural_dict_foo) = class $mol_view_tree2_to_js_test_ex_structural_dict_foo extends ($.$mol_object) {
 		bar(){
 			return {"alpha": 1, "beta": "a"};
@@ -10329,18 +10281,12 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_array_with_types_foo) = class $mol_view_tree2_to_js_test_ex_array_with_types_foo extends ($.$mol_object) {
 		arr(){
 			return [];
 		}
 	};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_array_inheritance_foo) = class $mol_view_tree2_to_js_test_ex_array_inheritance_foo extends ($.$mol_object) {
@@ -10360,9 +10306,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_bidi_legacy_value_foo) = class $mol_view_tree2_to_js_test_ex_bidi_legacy_value_foo extends ($.$mol_object) {
 		a(next){
 			return (this.b(next));
@@ -10376,18 +10319,12 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_simple_typed_null_foo) = class $mol_view_tree2_to_js_test_ex_simple_typed_null_foo extends ($.$mol_object) {
 		a(){
 			return null;
 		}
 	};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_in_dictionary_foo) = class $mol_view_tree2_to_js_test_ex_bidi_in_dictionary_foo extends ($.$mol_object) {
@@ -10401,9 +10338,6 @@ var $;
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_in_dictionary_foo.prototype), "run"));
 
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -11615,9 +11549,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_dom_listener extends $mol_object {
@@ -12037,6 +11968,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -12216,9 +12150,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_plugin extends $mol_view {
@@ -12231,6 +12162,9 @@ var $;
     }
     $.$mol_plugin = $mol_plugin;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -12374,14 +12308,8 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_simple_empty_class_foo) = class $mol_view_tree2_to_js_test_ex_simple_empty_class_foo extends ($.$mol_object) {};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_simple_two_classes_foo) = class $mol_view_tree2_to_js_test_ex_simple_two_classes_foo extends ($.$mol_object) {
@@ -12395,9 +12323,6 @@ var $;
 		}
 	};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_simple_factory_props_bar) = class $mol_view_tree2_to_js_test_ex_simple_factory_props_bar extends ($.$mol_object) {
@@ -12424,9 +12349,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_simple_default_indexed_foo) = class $mol_view_tree2_to_js_test_ex_simple_default_indexed_foo extends ($.$mol_object) {
 		a_b(id, next){
 			if(next !== undefined) return next;
@@ -12442,9 +12364,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_structural_complex_key_foo) = class $mol_view_tree2_to_js_test_ex_structural_complex_key_foo extends ($.$mol_object) {
 		dictionary(){
 			return {
@@ -12455,9 +12374,6 @@ var $;
 		}
 	};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo) = class $mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo extends ($.$mol_object) {
@@ -12475,9 +12391,6 @@ var $;
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo.prototype), "text_blob"));
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_left_second_level_index_bar) = class $mol_view_tree2_to_js_test_ex_left_second_level_index_bar extends ($.$mol_object) {
@@ -12505,18 +12418,12 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_structural_quoted_props_foo) = class $mol_view_tree2_to_js_test_ex_structural_quoted_props_foo extends ($.$mol_object) {
 		bar(){
 			return {"$a": 1, "b-t": {}};
 		}
 	};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_structural_spread_other_foo) = class $mol_view_tree2_to_js_test_ex_structural_spread_other_foo extends ($.$mol_object) {
@@ -12528,9 +12435,6 @@ var $;
 		}
 	};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_array_of_array_or_object_foo) = class $mol_view_tree2_to_js_test_ex_array_of_array_or_object_foo extends ($.$mol_object) {
@@ -12546,9 +12450,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_bidi_localized_in_object_foo) = class $mol_view_tree2_to_js_test_ex_bidi_localized_in_object_foo extends ($.$mol_object) {
 		obj(){
 			return {"loc": (next) => (this.outer(next))};
@@ -12560,9 +12461,6 @@ var $;
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_localized_in_object_foo.prototype), "outer"));
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_with_default_object_foo) = class $mol_view_tree2_to_js_test_ex_bidi_with_default_object_foo extends ($.$mol_object) {
@@ -12577,9 +12475,6 @@ var $;
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_with_default_object_foo.prototype), "owner"));
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_left_in_array_and_object_bar) = class $mol_view_tree2_to_js_test_ex_left_in_array_and_object_bar extends ($.$mol_object) {
@@ -12607,9 +12502,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar) = class $mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar extends ($.$mol_object) {
 		expanded(){
 			return "";
@@ -12632,9 +12524,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_array_spread_other_bar) = class $mol_view_tree2_to_js_test_ex_array_spread_other_bar extends ($.$mol_object) {
 		sup(){
 			return ["v1"];
@@ -12644,9 +12533,6 @@ var $;
 		}
 	};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_structural_with_inheritance_foo) = class $mol_view_tree2_to_js_test_ex_structural_with_inheritance_foo extends ($.$mol_object) {
@@ -12666,9 +12552,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_bidi_localized_default_value_foo) = class $mol_view_tree2_to_js_test_ex_bidi_localized_default_value_foo extends ($.$mol_object) {
 		a(next){
 			return (this.b(next));
@@ -12680,9 +12563,6 @@ var $;
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_localized_default_value_foo.prototype), "b"));
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_simple_mutable_and_read_only_foo) = class $mol_view_tree2_to_js_test_ex_simple_mutable_and_read_only_foo extends ($.$mol_object) {
@@ -12698,18 +12578,12 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_structural_localized_prop_value_foo) = class $mol_view_tree2_to_js_test_ex_structural_localized_prop_value_foo extends ($.$mol_object) {
 		bar(){
 			return {"loc": (this.$.$mol_locale.text("$mol_view_tree2_to_js_test_ex_structural_localized_prop_value_foo_bar_loc")), "baz": {"loc2": (this.$.$mol_locale.text("$mol_view_tree2_to_js_test_ex_structural_localized_prop_value_foo_bar_baz_loc2"))}};
 		}
 	};
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_bar) = class $mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_bar extends ($.$mol_object) {
@@ -12731,9 +12605,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_view_tree2_to_js_test_ex_bidi_with_separate_default_in_right_part_foo) = class $mol_view_tree2_to_js_test_ex_bidi_with_separate_default_in_right_part_foo extends ($.$mol_object) {
 		b(next){
 			if(next !== undefined) return next;
@@ -12745,9 +12616,6 @@ var $;
 	};
 	($mol_mem(($.$mol_view_tree2_to_js_test_ex_bidi_with_separate_default_in_right_part_foo.prototype), "b"));
 
-
-;
-"use strict";
 
 ;
 	($.$mol_view_tree2_to_js_test_ex_bidi_doubing_right_part_with_same_default_foo) = class $mol_view_tree2_to_js_test_ex_bidi_doubing_right_part_with_same_default_foo extends ($.$mol_object) {
@@ -12767,9 +12635,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_view_tree2_to_js_test_ex_klass_tuple extends $mol_object {
@@ -12783,6 +12648,102 @@ var $;
     }
     $.$mol_view_tree2_to_js_test_ex_klass_tuple = $mol_view_tree2_to_js_test_ex_klass_tuple;
 })($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -12815,6 +12776,45 @@ var $;
     ], $mol_view_tree2_to_js_test_ex_right_hierarchy_bar.prototype, "domain", null);
     $.$mol_view_tree2_to_js_test_ex_right_hierarchy_bar = $mol_view_tree2_to_js_test_ex_right_hierarchy_bar;
 })($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
 
 ;
 "use strict";
