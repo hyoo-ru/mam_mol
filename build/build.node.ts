@@ -62,7 +62,7 @@ namespace $ {
 			const tree = this.$.$mol_tree2_from_string( file.text() , file.path() )
 
 			let content = ''
-			for( const step of tree.select( 'build' , '' ).kids ) {
+			for( const step of tree.select( 'build' , null ).kids ) {
 
 				const res = this.$.$mol_exec( file.parent().path() , step.text() ).stdout.toString().trim()
 				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
