@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/select/demo/priority/priority.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_select_demo_priority $mol_example_small\n\ttitle \\Priority picker\n\tsub /\n\t\t<= Priority $mol_select\n\t\t\tFilter null\n\t\t\tvalue? <=> priority? \\Lowest\n\t\t\toptions /\n\t\t\t\t\\Highest \n\t\t\t\t\\High\n\t\t\t\t\\Medium\n\t\t\t\t\\Low\n\t\t\t\t\\Lowest\n\ttags /\n\t\t\\select\n\t\t\\priority\n\taspects /\n\t\t\\Widget/Control\n"
+	],
+	"mappings": "AAAA,AAAA,iEAA0B,+BAA1B;AAAA,AACC;AAAA,AAAA,UAAO,iBAAP;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,WAAH,CADG,CAAJ;AAAA;AAUA;AAAA,AAAA,UAAK,CACH,QADG,EAEH,UAFG,CAAL;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,gBADM,CAAR;AAAA;AAVa;AAAA,AAAA;AAAA,UAAW,QAAX;AAAA;AAFT;AAAA,AAAS,uCAAT;AACF,yBAAO,IAAP,CADE;AAEF,4BAAO,KAAI,eAAJ,CAAP,CAFE;AAGF,0BAAQ;AAAA,AACN,cADM;AAEN,UAFM;AAGN,YAHM;AAIN,SAJM;AAKN;AALM,CAAR,CAHE;AAAA,UAAS,GAAT;AAAA;AAHL,CAAA;AAKc,YALd,CAKc,mDALd;AAGK,YAHL,CAGK,mDAHL;"
+}

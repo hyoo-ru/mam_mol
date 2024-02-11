@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/structural_with_inheritance.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,2EAA8D,oBAA9D;AACC,AAAA,YAAM;AAAA,AACL,UAAI,MAAJ;AACA,UAAK,MAAL;AAFK;AADP;AAAA;AAKA,2EAA8D,sEAA9D;AACC,AAAA,YAAM;AAAA,AACL,UAAI,MAAJ;AAEA,UAAI,MAAJ;AAHK,GAEL,GAFD,YAD6D,6DAC7D;AADD;AALA;AAAA;",
+	"file": "structural_with_inheritance.view.tree.d.ts",
+	"sourceRoot": "../../../../../../../.."
+}

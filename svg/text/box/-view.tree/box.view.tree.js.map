@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/svg/text/box/box.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_svg_text_box $mol_svg_group\n\tfont_size 16\n\twidth 0\n\tsub /\n\t\t<= Back $mol_svg_rect\n\t\t\twidth <= box_width \\0.5rem\n\t\t\theight <= box_height \\1rem\n\t\t\tpos /\n\t\t\t\t<= box_pos_x <= pos_x\n\t\t\t\t<= box_pos_y \\0\n\t\t<= Text $mol_svg_text\n\t\t\tpos /\n\t\t\t\t<= pos_x \\0\n\t\t\t\t<= pos_y \\100%\n\t\t\talign <= align \\start\n\t\t\tsub /\n\t\t\t\t<= text \\\n"
+	],
+	"mappings": "AAAA,AAAA,iDAAkB,2BAAlB;AAAA,AACC;AAAA,AAAA,UAAU,EAAV;AAAA;AACA;AAAA,AAAA,UAAM,CAAN;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,EAOH,KAAG,OAAH,CAPG,CAAJ;AAAA;AAEW;AAAA,AAAA,UAAW,QAAX;AAAA;AACC;AAAA,AAAA,UAAY,MAAZ;AAAA;AAEN;AAAA,AAAA,UAAU,KAAG,QAAH,CAAV;AAAA;AACA;AAAA,AAAA,UAAW,GAAX;AAAA;AALF;AAAA,AAAK,yCAAL;AACF,wBAAM,KAAG,YAAH,CAAN,CADE;AAEF,yBAAO,KAAG,aAAH,CAAP,CAFE;AAGF,sBAAI,CACH,KAAG,YAAH,CADG,EAEH,KAAG,YAAH,CAFG,CAAJ,CAHE;AAAA,UAAK,GAAL;AAAA;AAQE;AAAA,AAAA,UAAO,GAAP;AAAA;AACA;AAAA,AAAA,UAAO,MAAP;AAAA;AACK;AAAA,AAAA,UAAO,OAAP;AAAA;AAEL;AAAA,AAAA,UAAM,EAAN;AAAA;AANF;AAAA,AAAK,yCAAL;AACF,sBAAI,CACH,KAAG,QAAH,CADG,EAEH,KAAG,QAAH,CAFG,CAAJ,CADE;AAIF,wBAAM,KAAG,QAAH,CAAN,CAJE;AAKF,sBAAI,CACH,KAAG,OAAH,CADG,CAAJ,CALE;AAAA,UAAK,GAAL;AAAA;AAVL,CAAA;AAIK,YAJL,CAIK,uCAJL;AAUK,YAVL,CAUK,uCAVL;"
+}

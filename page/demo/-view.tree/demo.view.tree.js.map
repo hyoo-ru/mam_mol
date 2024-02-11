@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/page/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_page_demo $mol_example_large\n\ttitle \\Page with header, body and footer\n\tsub /\n\t\t<= Page $mol_page\n\t\t\ttools /\n\t\t\t\t<= Button_tools $mol_button_minor\n\t\t\t\t\ttitle \\Toolbar Button\n\t\t\tbody /\n\t\t\t\t<= Text $mol_filler\n\t\t\tfoot /\n\t\t\t\t<= Button_foot $mol_button_minor\n\t\t\t\t\ttitle \\Footer Button\n\ttags /\n\t\t\\container\n\t\t\\header\n\t\t\\footer\n\t\t\\toolbar\n\t\t\\app\n\t\t\\bar\n\t\t\\bottom\n\t\t\\navigator\n\taspects /\n\t\t\\Widget/Layout\n"
+	],
+	"mappings": "AAAA,AAAA,2CAAe,+BAAf;AAAA,AACC;AAAA,AAAA,UAAO,mCAAP;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,CAAJ;AAAA;AAUA;AAAA,AAAA,UAAK;AAAA,AACH,eADG;AAEH,YAFG;AAGH,YAHG;AAIH,aAJG;AAKH,SALG;AAMH,SANG;AAOH,YAPG;AAQH;AARG,CAAL;AAAA;AASA;AAAA,AAAA,UAAQ,CACN,eADM,CAAR;AAAA;AAhBM;AAAA,AAAa,6CAAb;AACF,wBAAO,gBAAP,CADE;AAAA,UAAa,GAAb;AAAA;AAGA;AAAA,AAAK,uCAAL;AAAA,UAAK,GAAL;AAAA;AAEA;AAAA,AAAY,6CAAZ;AACF,wBAAO,eAAP,CADE;AAAA,UAAY,GAAZ;AAAA;AAPF;AAAA,AAAK,qCAAL;AACF,wBAAM,CACL,KAAG,eAAH,CADK,CAAN,CADE;AAIF,uBAAK,CACJ,KAAG,OAAH,CADI,CAAL,CAJE;AAMF,uBAAK,CACJ,KAAG,cAAH,CADI,CAAL,CANE;AAAA,UAAK,GAAL;AAAA;AAHL,CAAA;AAKO,YALP,CAKO,4CALP;AAQO,YARP,CAQO,oCARP;AAUO,YAVP,CAUO,2CAVP;AAGK,YAHL,CAGK,oCAHL;"
+}

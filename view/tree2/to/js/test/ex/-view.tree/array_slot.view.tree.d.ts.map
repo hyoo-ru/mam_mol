@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/array_slot.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AACM;AAAA,AAEJ;AAAA;AAFI;AAAA;AAAA;AAAA,AAGH;AAAA;AAHG;AAAA;AAAA;AAAA,AAIF,cALJ,4CAKI;AAAA;AAJE;AAAA;AADN,0DAA6C,oBAA7C;AACC,AAAA,WAAK;AAOA,AAAA,WAAM;AAEL,AAAA,eAAS;AADX,AAAA,cAAQ;AAEP,AAAA,WAAM;AANR,AAAA,aAAO;AAON,AAAA,YAAO;AAZZ;AAAA;AAAA;",
+	"file": "array_slot.view.tree.d.ts",
+	"sourceRoot": "../../../../../../../.."
+}

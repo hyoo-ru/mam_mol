@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/mutable/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_mutable_demo $mol_example_code\n\tcode? \\\n\t\t\\const articles_immutable = {\n\t\t\\\thello: {\n\t\t\\\t\ttitle: 'Hello, World',\n\t\t\\\t\ttags: [ 'javascript', 'immutablity' ],\n\t\t\\\t\tauthor: {\n\t\t\\\t\t\tname: 'Jin',\n\t\t\\\t\t},\n\t\t\\\t},\n\t\t\\}\n\t\t\\\n\t\t\\const articles_mutable = $mol_mutable( articles_immutable )\n\t\t\\\n\t\t\\articles_mutable.hello.title( prev => prev + '!' )\n\t\t\\articles_mutable.hello.tags( prev => [ ... prev, 'hello' ] )\n\t\t\\articles_mutable.hello.author.name( ()=> 'John' )\n\t\t\\articles_mutable.bye( ()=> ({\n\t\t\\\ttitle: 'Bye, World!',\n\t\t\\\ttags: [],\n\t\t\\\tauthor: null,\n\t\t\\}) )\n\t\t\\\n\t\t\\const articles_new = articles_mutable()\n\ttags /\n\t\t\\mutable\n\t\t\\immutable\n\taspects /\n\t\t\\Algorithm/Lens\n"
+	],
+	"mappings": "AAAA,AAAA,iDAAkB,8BAAlB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,mhBAAP;AAAA;AAuBA;AAAA,AAAA,UAAK,CACH,SADG,EAEH,WAFG,CAAL;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,gBADM,CAAR;AAAA;AA3BD,CAAA;AACC,YADD,CACC,uCADD;"
+}

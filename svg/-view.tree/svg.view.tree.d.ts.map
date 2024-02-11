@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/svg/svg.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,sBAAS,kBAAT;AACC,AAAA,eAAU;AACV,AAAA,qBAAgB;AAChB,AAAA,gBAAU;AACV,AAAA,kBAAa;AACb,AAAA,iBAAW;AALZ;AAAA;AAAA;",
+	"file": "svg.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

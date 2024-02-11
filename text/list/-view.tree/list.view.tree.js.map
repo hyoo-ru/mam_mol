@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/text/list/list.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_text_list $mol_text\n\tauto_scroll null\n\tattr *\n\t\t^\n\t\tmol_text_list_type <= type \\\n\tParagraph* $mol_text_list_item\n\t\tindex <= item_index*\n\t\tsub <= block_content*\n\n$mol_text_list_item $mol_paragraph\n\tattr *\n\t\t^\n\t\tmol_text_list_item_index <= index 0\n"
+	],
+	"mappings": "AAAA,AAAA,2CAAe,sBAAf;AAAA,AACC;AAAA,AAAA,UAAY,IAAZ;AAAA;AACA;AAAA,AAAA,UAAK,CACJ,iBADI,EAEJ,sBAAmB,KAAG,OAAH,CAFf,CAAL;AAAA;AAGA;AAAA,AAAW,+CAAX;AACC,wBAAM,KAAG,eAAH,CAAN,CADD;AAEC,sBAAI,KAAG,kBAAH,CAAJ,CAFD;AAAA,UAAW,GAAX;AAAA;AADuB;AAAA,AAAA,UAAM,EAAN;AAAA;AAJxB,CAAA;AAKC,gBALD,CAKC,yCALD;AASA,qDAAoB,2BAApB;AAAA,AACC;AAAA,AAAA,UAAK,CACJ,iBADI,EAEJ,4BAAyB,KAAG,QAAH,CAFrB,CAAL;AAAA;AAE6B;AAAA,AAAA,UAAM,CAAN;AAAA;AAH9B,CATA;"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/follower/follower.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_follower $mol_ghost\n\tAnchor $mol_view\n\toffset /\n\t\t0\n\t\t0\n\tstyle *\n\t\t^\n\t\ttransform <= transform \\\n"
+	],
+	"mappings": "AAAA,AAAA,yCAAc,uBAAd;AAAA,AACC;AAAA,AAAO,qCAAP;AAAA,UAAO,GAAP;AAAA;AACA;AAAA,AAAA,UAAO,CACN,CADM,EAEN,CAFM,CAAP;AAAA;AAGA;AAAA,AAAA,UAAM,CACL,kBADK,EAEL,aAAU,KAAG,YAAH,CAFL,CAAN;AAAA;AAEc;AAAA,AAAA,UAAW,EAAX;AAAA;AAPf,CAAA;AACC,YADD,CACC,qCADD;"
+}

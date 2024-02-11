@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/range/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_range_demo $mol_example_code\n\tcode? \\\n\t\t\\const Portion = $mol_data_range( 0, 1 )\n\t\t\\const portion = Portion( 0.5 ) // ✅\n\t\t\\\n\t\t\\Portion( 0 ) // ❌ 0 is out range (0,1)\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\t\t\\range\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Type/Number\n"
+	],
+	"mappings": "AAAA,AAAA,uDAAqB,8BAArB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,wHAAP;AAAA;AAKA;AAAA,AAAA,UAAK;AAAA,AACH,aADG;AAEH,gBAFG;AAGH;AAHG,CAAL;AAAA;AAIA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,aAFM,CAAR;AAAA;AAVD,CAAA;AACC,YADD,CACC,0CADD;"
+}

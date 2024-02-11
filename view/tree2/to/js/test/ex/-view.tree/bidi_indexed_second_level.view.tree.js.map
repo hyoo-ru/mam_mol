@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/bidi_indexed_second_level.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar $mol_object\n\texpanded \\\n$mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_foo $mol_object\n\tindexed*? $mol_view_tree2_to_js_test_ex_bidi_indexed_second_level_bar\n\t\texpanded <=> owner*? \\w\n"
+	],
+	"mappings": "AAAA,AAAA,qIAA4D,wBAA5D;AAAA,AACC;AAAA,AAAA,UAAU,EAAV;AAAA;AADD,CAAA;AAEA,qIAA4D,wBAA5D;AAAA,AACC;AAAA,AAAA;AAAU,uFAAV;AACC,2BAAS,KAAI,gBAAJ,CAAT,CADD;AAAA,UAAU,GAAV;AAAA;AACc;AAAA,AAAA;AAAA,UAAS,GAAT;AAAA;AAFf,CAFA;AAGC,gBADD,CACC,oFAHD;AAIe,gBAFf,CAEe,kFAJf;"
+}

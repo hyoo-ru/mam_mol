@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/time/duration/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,qCAAwB,0BAAxB;AACC,AAAA,YAAO;AACP,AAAA,eAAO,MAAP,IAAO;AAGP,AAAA,cAAQ;AALT;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/check/list/list.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_check_list $mol_view\n\tdictionary *\n\tOption* $mol_check\n\t\tchecked? <=> option_checked*? false\n\t\tlabel <= option_label* /\n\t\t\t<= option_title* \\\n\t\tenabled <= option_enabled* <= enabled true\n\t\thint <= option_hint* \\\n\t\tminimal_height 24\n\toptions *\n\tkeys /string\n\tsub <= items /$mol_check\n"
+	],
+	"mappings": "AAAA,AAAA,6CAAgB,sBAAhB;AAAA,AACC;AAAA,AAAA,UAAW,EAAX;AAAA;AACA;AAAA,AAAQ,sCAAR;AACC,8BAAS,KAAI,yBAAJ,CAAT,CADD;AAEC,wBAAM,KAAG,iBAAH,CAAN,CAFD;AAIC,0BAAQ,KAAG,mBAAH,CAAR,CAJD;AAKC,uBAAK,KAAG,gBAAH,CAAL,CALD;AAMC,iCAAe,EAAf,CAND;AAAA,UAAQ,GAAR;AAAA;AAOA;AAAA,AAAA,UAAQ,EAAR;AAAA;AACA;AAAA,AAAA,UAAK,EAAL;AAAA;AACA;AAAA,AAAA,UAAI,KAAG,QAAH,CAAJ;AAAA;AARc;AAAA,AAAA;AAAA,UAAiB,KAAjB;AAAA;AAET;AAAA,AAAA,UAAe,EAAf;AAAA;AADK;AAAA,AAAA,UAAc,CACtB,KAAG,iBAAH,CADsB,CAAd;AAAA;AAEqB;AAAA,AAAA,UAAQ,IAAR;AAAA;AAAnB;AAAA,AAAA,UAAgB,KAAG,UAAH,CAAhB;AAAA;AACH;AAAA,AAAA,UAAc,EAAd;AAAA;AAIF;AAAA,AAAA,UAAM,EAAN;AAAA;AAXR,CAAA;AAEC,gBAFD,CAEC,uCAFD;AAGe,gBAHf,CAGe,+CAHf;"
+}

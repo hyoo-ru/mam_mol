@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/app/quine/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,iCAAoB,2BAApB;AACC,AAAA,UAAI;AAEJ,AAAA,cAAQ;AADJ,AAAA,UAAI;AAFT;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

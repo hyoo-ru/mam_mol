@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/plot/ruler/hor/hor.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,iCAAoB,wBAApB;AACC,AAAA,kBAAa;AACb,AAAA,kBAAa;AACb,AAAA,kBAAa;AACb,AAAA,kBAAa;AACb,AAAA,yBAAgB,YALjB,mBAKiB;AAChB,AAAA,uBAAkB;AANnB;AAAA;AAAA;",
+	"file": "hor.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

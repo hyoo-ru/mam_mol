@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/hotkey/hotkey.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_hotkey $mol_plugin\n\tevent *\n\t\t^\n\t\tkeydown?event <=> keydown?event null\n\tkey *\n\tmod_ctrl false\n\tmod_alt false\n\tmod_shift false\n"
+	],
+	"mappings": "AAAA,AAAA,qCAAY,wBAAZ;AAAA,AACC;AAAA,AAAA,UAAM,CACL,kBADK,EAEL,qBAAc,KAAI,cAAJ,CAFT,CAAN;AAAA;AAGA;AAAA,AAAA,UAAI,EAAJ;AAAA;AACA;AAAA,AAAA,UAAS,KAAT;AAAA;AACA;AAAA,AAAA,UAAQ,KAAR;AAAA;AACA;AAAA,AAAA,UAAU,KAAV;AAAA;AAJmB;AAAA,AAAA;AAAA,UAAc,IAAd;AAAA;AAHpB,CAAA;AAGoB,YAHpB,CAGoB,oCAHpB;"
+}

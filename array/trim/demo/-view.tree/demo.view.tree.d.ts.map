@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/array/trim/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,kCAAqB,0BAArB;AACC,AAAA,eAAO,MAAP,IAAO;AAUP,AAAA,cAAQ;AAXT;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

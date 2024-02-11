@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/embed/youtube/youtube.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_embed_youtube $mol_check\n\turi \\\n\tvideo_preview \\\n\tvideo_id \\\n\tchecked? <=> active? false\n\tsub /\n\t\t<= Image $mol_image\n\t\t\ttitle <= title \\\n\t\t\turi <= video_preview \\\n\t\t<= Hint $mol_icon_youtube\n\t\t<= Frame $mol_frame\n\t\t\ttitle <= title \\\n\t\t\turi <= video_embed \\\n\n"
+	],
+	"mappings": "AAAA,AAAA,mDAAmB,uBAAnB;AAAA,AACC;AAAA,AAAA,UAAK,EAAL;AAAA;AACA;AAAA,AAAA,UAAe,EAAf;AAAA;AACA;AAAA,AAAA,UAAU,EAAV;AAAA;AACA;AAAA,AAAA,UAAS,KAAI,aAAJ,CAAT;AAAA;AACA;AAAA,AAAA,UAAI;AAAA,AACH,SAAG,QAAH,CADG;AAIH,SAAG,OAAH,CAJG;AAKH,SAAG,QAAH;AALG,CAAJ;AAAA;AADa;AAAA,AAAA;AAAA,UAAQ,KAAR;AAAA;AAOF;AAAA,AAAA,UAAO,EAAP;AAAA;AAHF;AAAA,AAAA,UAAe,EAAf;AAAA;AAFL;AAAA,AAAM,sCAAN;AACF,wBAAM,KAAG,QAAH,CAAN,CADE;AAEF,sBAAI,KAAG,gBAAH,CAAJ,CAFE;AAAA,UAAM,GAAN;AAAA;AAGA;AAAA,AAAK,6CAAL;AAAA,UAAK,GAAL;AAAA;AAGK;AAAA,AAAA,UAAa,EAAb;AAAA;AAFL;AAAA,AAAM,sCAAN;AACF,wBAAM,KAAG,QAAH,CAAN,CADE;AAEF,sBAAI,KAAG,cAAH,CAAJ,CAFE;AAAA,UAAM,GAAN;AAAA;AAVL,CAAA;AAIc,YAJd,CAIc,0CAJd;AAMK,YANL,CAMK,yCANL;AASK,YATL,CASK,wCATL;AAUK,YAVL,CAUK,yCAVL;"
+}

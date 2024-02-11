@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/simple_empty_class.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_simple_empty_class_foo $mol_object\n"
+	],
+	"mappings": "AAAA,AAAA,uHAAqD,wBAArD,EAAA;"
+}

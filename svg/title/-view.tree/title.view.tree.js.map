@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/svg/title/title.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_svg_title $mol_svg\n\tdom_name \\title\n\tsub /\n\t\t<= title\n"
+	],
+	"mappings": "AAAA,AAAA,2CAAe,qBAAf;AAAA,AACC;AAAA,AAAA,UAAU,OAAV;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,QAAH,CADG,CAAJ;AAAA;AAFD,CAAA;"
+}

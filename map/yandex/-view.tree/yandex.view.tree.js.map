@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/map/yandex/yandex.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_map_yandex $mol_view\n\tzoom? 2\n\tcenter? /\n\t\t0\n\t\t0\n\tobjects /$mol_map_yandex_mark\n"
+	],
+	"mappings": "AAAA,AAAA,6CAAgB,sBAAhB;AAAA,AACC;AAAA,AAAA;AAAA,UAAM,CAAN;AAAA;AACA;AAAA,AAAA;AAAA,UAAQ,CACP,CADO,EAEP,CAFO,CAAR;AAAA;AAGA;AAAA,AAAA,UAAQ,EAAR;AAAA;AALD,CAAA;AACC,YADD,CACC,qCADD;AAEC,YAFD,CAEC,uCAFD;"
+}

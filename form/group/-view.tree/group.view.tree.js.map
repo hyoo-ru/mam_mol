@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/form/group/group.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_form_group $mol_view\n"
+	],
+	"mappings": "AAAA,AAAA,6CAAgB,sBAAhB,EAAA;"
+}

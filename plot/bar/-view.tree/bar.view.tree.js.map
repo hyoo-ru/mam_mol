@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/plot/bar/bar.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_plot_bar $mol_plot_graph\n\tstyle *\n\t\t^\n\t\tstroke-width <= stroke_width \\1rem\n\tsub /\n\t\t<= Hint\n\t\t<= Curve $mol_svg_path\n\t\t\tgeometry <= curve \\\n\tSample $mol_plot_graph_sample\n\t\tcolor <= color\n"
+	],
+	"mappings": "AAAA,AAAA,yCAAc,4BAAd;AAAA,AACC;AAAA,AAAA,UAAM,CACL,kBADK,EAEL,gBAAa,KAAG,eAAH,CAFR,CAAN;AAAA;AAGA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,EAEH,KAAG,QAAH,CAFG,CAAJ;AAAA;AAIA;AAAA,AAAO,kDAAP;AACC,wBAAM,KAAG,QAAH,CAAN,CADD;AAAA,UAAO,GAAP;AAAA;AALiB;AAAA,AAAA,UAAc,MAAd;AAAA;AAIH;AAAA,AAAA,UAAO,EAAP;AAAA;AADV;AAAA,AAAM,yCAAN;AACF,2BAAS,KAAG,QAAH,CAAT,CADE;AAAA,UAAM,GAAN;AAAA;AANL,CAAA;AAQC,YARD,CAQC,qCARD;AAMK,YANL,CAMK,oCANL;"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/perf/uibench/tree/tree.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_perf_uibench_tree $mol_view\n\tstate null\n\tattr_static *\n\t\t^\n\t\tclass \\Tree\n\tsub /\n\t\t<= Root $mol_perf_uibench_tree_branch\n\t\t\tstate <= root_state null\n\n$mol_perf_uibench_tree_branch $mol_list\n\tstate null\n\tdom_name \\ul\n\tattr_static *\n\t\t^\n\t\tclass \\TreeNode\n\tBranch* $mol_perf_uibench_tree_branch\n\t\tstate <= branch_state* null\n\tLeaf* $mol_perf_uibench_tree_leaf\n\t\ttext <= leaf_state* null\n\n$mol_perf_uibench_tree_leaf $mol_view\n\tminimal_height 26\n\tdom_name \\li\n\tattr_static *\n\t\t^\n\t\tclass \\TreeLeaf\n\tsub /\n\t\t<= text \\\n"
+	],
+	"mappings": "AAAA,AAAA,2DAAuB,sBAAvB;AAAA,AACC;AAAA,AAAA,UAAM,IAAN;AAAA;AACA;AAAA,AAAA,UAAY,CACX,wBADW,EAEX,SAAO,MAFI,CAAZ;AAAA;AAGA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,CAAJ;AAAA;AAEW;AAAA,AAAA,UAAW,IAAX;AAAA;AADP;AAAA,AAAK,yDAAL;AACF,wBAAM,KAAG,aAAH,CAAN,CADE;AAAA,UAAK,GAAL;AAAA;AANL,CAAA;AAMK,YANL,CAMK,4CANL;AASA,yEAA8B,sBAA9B;AAAA,AACC;AAAA,AAAA,UAAM,IAAN;AAAA;AACA;AAAA,AAAA,UAAU,IAAV;AAAA;AACA;AAAA,AAAA,UAAY,CACX,wBADW,EAEX,SAAO,UAFI,CAAZ;AAAA;AAGA;AAAA,AAAQ,yDAAR;AACC,wBAAM,KAAG,iBAAH,CAAN,CADD;AAAA,UAAQ,GAAR;AAAA;AAEA;AAAA,AAAM,uDAAN;AACC,uBAAK,KAAG,eAAH,CAAL,CADD;AAAA,UAAM,GAAN;AAAA;AADU;AAAA,AAAA,UAAc,IAAd;AAAA;AAED;AAAA,AAAA,UAAY,IAAZ;AAAA;AATV,CATA;AAeC,gBAND,CAMC,qDAfD;AAiBC,gBARD,CAQC,mDAjBD;AAoBA,qEAA4B,sBAA5B;AAAA,AACC;AAAA,AAAA,UAAe,EAAf;AAAA;AACA;AAAA,AAAA,UAAU,IAAV;AAAA;AACA;AAAA,AAAA,UAAY,CACX,wBADW,EAEX,SAAO,UAFI,CAAZ;AAAA;AAGA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,CAAJ;AAAA;AACI;AAAA,AAAA,UAAM,EAAN;AAAA;AAPL,CApBA;"
+}

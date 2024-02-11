@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/variant/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_variant_demo $mol_example_code\n\tcode? \\\n\t\t\\const Phone = $mol_data_variant(\n\t\t\\\t$mol_data_number,\n\t\t\\\t$mol_data_string,\n\t\t\\)\n\t\t\\const phone1 = Phone( 1234567890 ) // ✅\n\t\t\\const phone2 = Phone( '+1(23)456-78-90' ) // ✅\n\t\t\\\n\t\t\\Phone( null )\n\t\t\\// ❌ null is not any of variants\n\t\t\\// ❌ null is not a number\n\t\t\\// ❌ null is not a string\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\t\t\\variant\n\t\t\\adt\n\taspects /\n\t\t\\Algorithm/Assert\n"
+	],
+	"mappings": "AAAA,AAAA,2DAAuB,8BAAvB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,iRAAP;AAAA;AAYA;AAAA,AAAA,UAAK;AAAA,AACH,aADG;AAEH,gBAFG;AAGH,aAHG;AAIH;AAJG,CAAL;AAAA;AAKA;AAAA,AAAA,UAAQ,CACN,kBADM,CAAR;AAAA;AAlBD,CAAA;AACC,YADD,CACC,4CADD;"
+}

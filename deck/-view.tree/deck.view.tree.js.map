@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/deck/deck.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_deck $mol_list\n\titems /$mol_view\n\trows /$mol_view\n\t\t<= Switch $mol_switch\n\t\t\tvalue? <=> current? \\0\n\t\t\toptions <= switch_options *\n\t\t<= Content $mol_view\n"
+	],
+	"mappings": "AAAA,AAAA,iCAAU,sBAAV;AAAA,AACC;AAAA,AAAA,UAAM,EAAN;AAAA;AACA;AAAA,AAAA,UAAK,CACJ,KAAG,SAAH,CADI,EAIJ,KAAG,UAAH,CAJI,CAAL;AAAA;AAEa;AAAA,AAAA;AAAA,UAAU,GAAV;AAAA;AACA;AAAA,AAAA,UAAe,EAAf;AAAA;AAFT;AAAA,AAAO,uCAAP;AACF,4BAAO,KAAI,cAAJ,CAAP,CADE;AAEF,0BAAQ,KAAG,iBAAH,CAAR,CAFE;AAAA,UAAO,GAAP;AAAA;AAGA;AAAA,AAAQ,qCAAR;AAAA,UAAQ,GAAR;AAAA;AANL,CAAA;AAIc,YAJd,CAIc,kCAJd;AAGK,YAHL,CAGK,iCAHL;AAMK,YANL,CAMK,kCANL;"
+}

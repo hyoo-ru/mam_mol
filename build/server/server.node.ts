@@ -314,7 +314,7 @@ namespace $ {
 				command ,
 			})
 	
-			const server = $node.child_process.spawn(
+			const server = $node['child_process'].spawn(
 				'node',
 				[ '--enable-source-maps', '--trace-uncaught', `./${path}/-/node.js`, ... args ],
 				{

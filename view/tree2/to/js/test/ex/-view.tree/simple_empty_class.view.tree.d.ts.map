@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/simple_empty_class.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,kEAAqD,oBAArD;AAAA;AAAA;AAAA;",
+	"file": "simple_empty_class.view.tree.d.ts",
+	"sourceRoot": "../../../../../../../.."
+}

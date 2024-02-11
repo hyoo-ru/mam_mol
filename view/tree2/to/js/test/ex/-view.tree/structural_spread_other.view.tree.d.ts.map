@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/structural_spread_other.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,uEAA0D,oBAA1D;AACC,AAAA,WAAK;AAAA,AACJ,UAAI,MAAJ;AADI;AAEL,AAAA,YAAM;AAAA,AACL,UAAI,MAAJ;AADK,GAEL,GAAE,YALJ,yDAKI;AALJ;AAAA;AAAA;",
+	"file": "structural_spread_other.view.tree.d.ts",
+	"sourceRoot": "../../../../../../../.."
+}

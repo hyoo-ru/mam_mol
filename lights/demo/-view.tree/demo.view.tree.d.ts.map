@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/lights/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAIG;AAAA,AAAQ;AAAA;AAAR,cADS,SACT;AAAA;AAEA;AAAA,AAAI;AAAA;AAAJ,cAHS,SAGT;AAAA;AANH,8BAAiB,2BAAjB;AACC,AAAA,YAAO;AACP,AAAA,UAAI;AAMJ,AAAA,WAAK;AAML,AAAA,cAAQ;AATF,AAAA,YAAM;AAEN,AAAA,cAAQ;AAJV,AAAA,aAAO;AAHZ;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

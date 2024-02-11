@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/drag/drag.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_drag $mol_ghost\n\tevent *\n\t\tdragstart?event <=> drag_start?event <=> start?event null\n\t\tdrag?event <=> drag_move?event <=> move?event null\n\t\tdragend?event <=> drag_end?event <=> end?event null\n\tattr *\n\t\tdraggable true\n\t\tmol_drag_status <= status? \\ready\n\ttransfer *\n\t\ttext/plain \\\n\t\ttext/html \\\n\t\ttext/uri-list \\\n\tallow_copy true\n\tallow_link true\n\tallow_move true\n\timage <= dom_node\n"
+	],
+	"mappings": "AAAA,AAAA,iCAAU,uBAAV;AAAA,AACC;AAAA,AAAA,UAAM;AAAA,AACL,2BAAgB,KAAI,iBAAJ,CADX;AAEL,sBAAW,KAAI,gBAAJ,CAFN;AAGL,yBAAc,KAAI,eAAJ;AAHT,CAAN;AAAA;AAIA;AAAA,AAAA,UAAK,CACJ,aAAU,IADN,EAEJ,mBAAgB,KAAG,SAAH,CAFZ,CAAL;AAAA;AAGA;AAAA,AAAA,UAAS;AAAA,AACR,kBAAY,EADJ;AAER,iBAAW,EAFH;AAGR,qBAAe;AAHP,CAAT;AAAA;AAIA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAM,KAAG,WAAH,CAAN;AAAA;AAb0C;AAAA,AAAA;AAAA,UAAY,IAAZ;AAAA;AAArB;AAAA,AAAA,UAAiB,KAAI,YAAJ,CAAjB;AAAA;AACe;AAAA,AAAA;AAAA,UAAW,IAAX;AAAA;AAApB;AAAA,AAAA,UAAgB,KAAI,WAAJ,CAAhB;AAAA;AACsB;AAAA,AAAA;AAAA,UAAU,IAAV;AAAA;AAAnB;AAAA,AAAA,UAAe,KAAI,UAAJ,CAAf;AAAA;AAGC;AAAA,AAAA;AAAA,UAAS,OAAT;AAAA;AAPrB,CAAA;AAE2C,YAF3C,CAE2C,gCAF3C;AAGqC,YAHrC,CAGqC,+BAHrC;AAIuC,YAJvC,CAIuC,8BAJvC;AAOqB,YAPrB,CAOqB,iCAPrB;"
+}

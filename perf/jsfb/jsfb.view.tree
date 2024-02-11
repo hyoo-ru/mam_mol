@@ -28,7 +28,7 @@ $mol_perf_jsfb $mol_scroll
 						dom_id \swaprows
 						title \Swap Rows
 						click? <=> swap? null
-			<= Rows $mol_list rows <= rows /
+			<= Rows $mol_list rows <= rows /$mol_view
 				<= Row*0 $mol_perf_jsfb_row
 					title? => row_title*?
 					selected? <=> row_selected*? false
@@ -45,7 +45,7 @@ $mol_perf_jsfb_row $mol_view
 		<= Id $mol_view sub / <= id \
 		<= Title $mol_check
 			checked? <=> selected? false
-			sub / <= title
+			sub / <= title? \
 		<= Drop $mol_button_minor
 			sub / <= Drop_icon $mol_icon_cross
 			click? <=> drop? null

@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/plot/fill/fill.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_plot_fill $mol_plot_line\n\tthreshold 4\n"
+	],
+	"mappings": "AAAA,AAAA,2CAAe,2BAAf;AAAA,AACC;AAAA,AAAA,UAAU,CAAV;AAAA;AADD,CAAA;"
+}

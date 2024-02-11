@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/bench/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAIG;AAAA,AAAc,cAJjB,eAIiB;AAAA;AAAd,cADO,UACP;AAAA;AACA;AAAA,AAAU,cALb,eAKa;AAAA;AAAV,cAFO,UAEP;AAAA;AALH,6BAAgB,2BAAhB;AACC,AAAA,YAAO;AACP,AAAA,UAAI;AAIJ,AAAA,WAAK;AAGL,AAAA,cAAQ;AALQ,AAAA,mBAAW,MAAX,IAAW;AACf,AAAA,aAAO;AAFf,AAAA,WAAK;AAHV;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

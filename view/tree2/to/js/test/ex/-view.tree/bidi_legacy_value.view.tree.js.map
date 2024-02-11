@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/bidi_legacy_value.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_bidi_legacy_value_foo $mol_object\n\ta?v <=> b?v 1\n"
+	],
+	"mappings": "AAAA,AAAA,qHAAoD,wBAApD;AAAA,AACC;AAAA,AAAA,UAAI,KAAI,QAAJ,CAAJ;AAAA;AAAQ;AAAA,AAAA;AAAA,UAAI,CAAJ;AAAA;AADT,CAAA;AACS,YADT,CACS,sEADT;"
+}

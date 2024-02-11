@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/avatar/avatar.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,yBAAY,kBAAZ;AACC,AAAA,eAAU;AACV,AAAA,SAAI;AACJ,AAAA,WAAM;AAHP;AAAA;AAAA;",
+	"file": "avatar.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

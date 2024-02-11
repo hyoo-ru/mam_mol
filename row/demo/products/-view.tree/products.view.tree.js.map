@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/row/demo/products/products.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_row_demo_products $mol_example\n\ttitle \\Product catalog\n\tcount 100\n\tProduct* $mol_card\n\t\tminimal_width 110\n\t\tminimal_height 100\n\t\ttitle <= product_title* \\\n\tsub /\n\t\t<= Products $mol_row\n\t\t\tsub <= products /\n\ttags /\n\t\t\\products\n\t\t\\grid\n\t\t\\scroll\n\taspects /\n\t\t\\Widget/Layout\n"
+	],
+	"mappings": "AAAA,AAAA,2DAAuB,yBAAvB;AAAA,AACC;AAAA,AAAA,UAAO,iBAAP;AAAA;AACA;AAAA,AAAA,UAAM,GAAN;AAAA;AACA;AAAA,AAAS,qCAAT;AACC,gCAAc,GAAd,CADD;AAEC,iCAAe,GAAf,CAFD;AAGC,wBAAM,KAAG,kBAAH,CAAN,CAHD;AAAA,UAAS,GAAT;AAAA;AAIA;AAAA,AAAA,UAAI,CACH,KAAG,WAAH,CADG,CAAJ;AAAA;AAGA;AAAA,AAAA,UAAK;AAAA,AACH,cADG;AAEH,UAFG;AAGH;AAHG,CAAL;AAAA;AAIA;AAAA,AAAA,UAAQ,CACN,eADM,CAAR;AAAA;AARU;AAAA,AAAA,UAAgB,EAAhB;AAAA;AAGD;AAAA,AAAA,UAAS,EAAT;AAAA;AADL;AAAA,AAAS,oCAAT;AACF,sBAAI,KAAG,WAAH,CAAJ,CADE;AAAA,UAAS,GAAT;AAAA;AARL,CAAA;AAGC,gBAHD,CAGC,+CAHD;AAQK,YARL,CAQK,gDARL;"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/record/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_record_demo $mol_example_code\n\tcode? \\\n\t\t\\const Person = $mol_data_record({\n\t\t\\\tname: $mol_data_string,\n\t\t\\\tage: $mol_data_integer,\n\t\t\\})\n\t\t\\const person = Person({ name: 'jin', age: 100 }) // ✅\n\t\t\\\n\t\t\\Person({ name: 'jin' }) // ❌ [\"age\"] undefined is not a number\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Type/Record\n"
+	],
+	"mappings": "AAAA,AAAA,yDAAsB,8BAAtB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,wNAAP;AAAA;AAQA;AAAA,AAAA,UAAK,CACH,SADG,EAEH,YAFG,CAAL;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,aAFM,CAAR;AAAA;AAZD,CAAA;AACC,YADD,CACC,2CADD;"
+}

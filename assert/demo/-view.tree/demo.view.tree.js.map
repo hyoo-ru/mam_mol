@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/assert/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_assert_demo $mol_example_code\n\tcode? \\\n\t\t\\$mol_assert_unique( [1], [2], [3] )\n\t\t\\$mol_assert_equal( [7] , [7], [7] )\n\t\t\\$mol_assert_fail( ()=> { throw Error( 'test' ) }, 'test' )\n\t\t\\$mol_assert_fail( ()=> { throw RangeError( 'test' ) }, RangeError )\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Testing\n"
+	],
+	"mappings": "AAAA,AAAA,+CAAiB,8BAAjB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,2MAAP;AAAA;AAKA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,SAFM,CAAR;AAAA;AAND,CAAA;AACC,YADD,CACC,sCADD;"
+}

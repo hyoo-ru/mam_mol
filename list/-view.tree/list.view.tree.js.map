@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/list/list.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_list $mol_view\n\trender_visible_only true\n\trender_over 0\n\tsub <= rows /$mol_view\n\tEmpty $mol_view\n\tGap_before $mol_view style * paddingTop <= gap_before 0\n\tGap_after $mol_view style * paddingTop <= gap_after 0\n\tview_window /\n\t\t0\n\t\t0\n"
+	],
+	"mappings": "AAAA,AAAA,iCAAU,sBAAV;AAAA,AACC;AAAA,AAAA,UAAoB,IAApB;AAAA;AACA;AAAA,AAAA,UAAY,CAAZ;AAAA;AACA;AAAA,AAAA,UAAI,KAAG,OAAH,CAAJ;AAAA;AACA;AAAA,AAAM,qCAAN;AAAA,UAAM,GAAN;AAAA;AACA;AAAA,AAAW,qCAAX;AAAqB,wBAAM,CAAE,cAAW,KAAG,aAAH,CAAb,CAAN,CAArB;AAAA,UAAW,GAAX;AAAA;AACA;AAAA,AAAU,qCAAV;AAAoB,wBAAM,CAAE,cAAW,KAAG,YAAH,CAAb,CAAN,CAApB;AAAA,UAAU,GAAV;AAAA;AACA;AAAA,AAAA,UAAY,CACX,CADW,EAEX,CAFW,CAAZ;AAAA;AAJO;AAAA,AAAA,UAAK,EAAL;AAAA;AAEoC;AAAA,AAAA,UAAW,CAAX;AAAA;AACD;AAAA,AAAA,UAAU,CAAV;AAAA;AAN3C,CAAA;AAIC,YAJD,CAIC,gCAJD;AAKC,YALD,CAKC,qCALD;AAMC,YAND,CAMC,oCAND;"
+}

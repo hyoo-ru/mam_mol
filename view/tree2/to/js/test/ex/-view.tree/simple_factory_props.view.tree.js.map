@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/simple_factory_props.view.tree",
+		"localized_string"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_simple_factory_props_bar $mol_object\n\tsub /number\n\tloc \\v2\n\tsome false\n\n$mol_view_tree2_to_js_test_ex_simple_factory_props_foo $mol_object\n\tbutton $mol_view_tree2_to_js_test_ex_simple_factory_props_bar\n\t\tsome true\n\t\tloc @ \\v1\n\t\tsub /\n\t\t\t1\n",
+		"\n\t\t()\n\t\t\tthis\n\t\t\t[] \\$\n\t\t\t[] \\$mol_locale\n\t\t\t[] \\text\n\t\t\t(,) #key\n\t"
+	],
+	"mappings": "AAAA,AAAA,2HAAuD,wBAAvD;AAAA,AACC;AAAA,AAAA,UAAI,EAAJ;AAAA;AACA;AAAA,AAAA,UAAK,IAAL;AAAA;AACA;AAAA,AAAA,UAAK,KAAL;AAAA;AAHD,CAAA;AAKA,2HAAuD,wBAAvD;AAAA,AACC;AAAA,AAAO,kFAAP;AACC,uBAAK,IAAL,CADD;AAEC,qBCPA,CACC,IACA,EACA,YACA,KACA,CDEG,mECFH,CALD,CDKD;AAGC,sBAAI,CACH,CADG,CAAJ,CAHD;AAAA,UAAO,GAAP;AAAA;AADD,CALA;AAMC,YADD,CACC,8EAND;"
+}

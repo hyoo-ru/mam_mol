@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/check/group/group.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,8BAAiB,uBAAjB;AACC,AAAA,aAAO;AACP,AAAA,WAAK;AAFN;AAAA;AAAA;",
+	"file": "group.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

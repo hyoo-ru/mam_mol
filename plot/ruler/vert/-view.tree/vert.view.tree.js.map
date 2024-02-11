@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/plot/ruler/vert/vert.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_plot_ruler_vert $mol_plot_ruler\n\ttitle_align \\end\n\tlabel_align \\end\n\ttitle_pos_y \\14\n\tlabel_pos_x* <= title_pos_x\n\tbackground_height \\100%\n\tbackground_width <= title_pos_x\n"
+	],
+	"mappings": "AAAA,AAAA,uDAAqB,4BAArB;AAAA,AACC;AAAA,AAAA,UAAa,KAAb;AAAA;AACA;AAAA,AAAA,UAAa,KAAb;AAAA;AACA;AAAA,AAAA,UAAa,IAAb;AAAA;AACA;AAAA,AAAA,UAAa,KAAG,cAAH,CAAb;AAAA;AACA;AAAA,AAAA,UAAmB,MAAnB;AAAA;AACA;AAAA,AAAA,UAAiB,KAAG,cAAH,CAAjB;AAAA;AAND,CAAA;"
+}

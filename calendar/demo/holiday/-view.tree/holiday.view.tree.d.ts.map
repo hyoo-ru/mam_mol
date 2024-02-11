@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/calendar/demo/holiday/holiday.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAmBG;AAAA,AAAgB,cAnBnB,0BAmBmB;AAAA;AAAhB,cADW,aACX;AAAA;AACA;AAAA,AAAgB,cApBnB,0BAoBmB;AAAA;AAAhB,cAFW,aAEX;AAAA;AApBH,wCAA2B,2BAA3B;AACC,AAAA,YAAO;AACP,AAAA,eAAS;AAeT,AAAA,UAAI;AAIJ,AAAA,WAAK;AAEL,AAAA,cAAQ;AAJU,AAAA,YAAO;AACP,AAAA,qBAAS;AAFvB,AAAA,eAAS;AAlBd;AAAA;AAAA;",
+	"file": "holiday.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

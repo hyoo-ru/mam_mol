@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/svg/text/text.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_svg_text $mol_svg\n\tdom_name \\text\n\tpos /\n\tattr *\n\t\t^\n\t\tx <= pos_x \\\n\t\ty <= pos_y \\\n\t\ttext-anchor <= align_hor <= align \\middle\n\t\talignment-baseline <= align_vert \\baseline\n\tsub /\n\t\t<= text \\\n"
+	],
+	"mappings": "AAAA,AAAA,yCAAc,qBAAd;AAAA,AACC;AAAA,AAAA,UAAU,MAAV;AAAA;AACA;AAAA,AAAA,UAAI,EAAJ;AAAA;AACA;AAAA,AAAA,UAAK;AAAA,AACJ,qBADI;AAEJ,SAAE,KAAG,QAAH,CAFE;AAGJ,SAAE,KAAG,QAAH,CAHE;AAIJ,mBAAY,KAAG,YAAH,CAJR;AAKJ,0BAAmB,KAAG,aAAH;AALf,CAAL;AAAA;AAMA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,CAAJ;AAAA;AAJM;AAAA,AAAA,UAAO,EAAP;AAAA;AACA;AAAA,AAAA,UAAO,EAAP;AAAA;AACuB;AAAA,AAAA,UAAO,QAAP;AAAA;AAAb;AAAA,AAAA,UAAU,KAAG,QAAH,CAAV;AAAA;AACO;AAAA,AAAA,UAAY,UAAZ;AAAA;AAEnB;AAAA,AAAA,UAAM,EAAN;AAAA;AAVL,CAAA;"
+}

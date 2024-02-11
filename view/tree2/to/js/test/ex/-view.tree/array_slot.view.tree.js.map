@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/array_slot.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_array_slot_foo $mol_object\n\tfoot /string|number|boolean\n\t\t1\n\t\ttrue\n\t\t\\foot1\n\t\t^ insert /\n\t\t\t2\n\t\t\t3\n\t\t\t<= ins1 \\ins1\n\t\t\t^ sub_ins /number\n\t\t\t\t<= sub_ins1 1\n\t\t\t<= ins2 \\ins2\n\t\t<= foot2 \\foot2\n\n"
+	],
+	"mappings": "AAAA,AAAA,uGAA6C,wBAA7C;AAAA,AACC;AAAA,AAAA,UAAK;AAAA,AACJ,KADI;AAEJ,QAFI;AAGH,WAHG;AAIJ,sBAJI;AAWJ,SAAG,QAAH;AAXI,CAAL;AAAA;AAOK;AAAA,AAAA,UAAM,MAAN;AAAA;AAEC;AAAA,AAAA,UAAS,CAAT;AAAA;AADF;AAAA,AAAA,UAAQ,CACT,KAAG,WAAH,CADS,CAAR;AAAA;AAEC;AAAA,AAAA,UAAM,MAAN;AAAA;AANF;AAAA,AAAA,UAAO;AAAA,AACR,KADQ;AAER,KAFQ;AAGR,SAAG,OAAH,CAHQ;AAIR,uBAJQ;AAMR,SAAG,OAAH;AANQ,CAAP;AAAA;AAOC;AAAA,AAAA,UAAO,OAAP;AAAA;AAZL,CAAA;"
+}

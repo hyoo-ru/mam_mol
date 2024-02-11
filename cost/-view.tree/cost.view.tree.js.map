@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/cost/cost.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_cost $mol_view\n\tvalue null\n\tsub /\n\t\t<= Prefix $mol_view\n\t\t\tsub /\n\t\t\t\t<= prefix \\\n\t\t<= Value $mol_view\n\t\t\tsub /\n\t\t\t\t<= value_view \\\n\t\t<= Postfix $mol_view\n\t\t\tsub /\n\t\t\t\t<= postfix \\\n"
+	],
+	"mappings": "AAAA,AAAA,iCAAU,sBAAV;AAAA,AACC;AAAA,AAAA,UAAM,IAAN;AAAA;AACA;AAAA,AAAA,UAAI;AAAA,AACH,SAAG,SAAH,CADG;AAIH,SAAG,QAAH,CAJG;AAOH,SAAG,UAAH;AAPG,CAAJ;AAAA;AAGM;AAAA,AAAA,UAAQ,EAAR;AAAA;AAFF;AAAA,AAAO,qCAAP;AACF,sBAAI,CACH,KAAG,SAAH,CADG,CAAJ,CADE;AAAA,UAAO,GAAP;AAAA;AAKE;AAAA,AAAA,UAAY,EAAZ;AAAA;AAFF;AAAA,AAAM,qCAAN;AACF,sBAAI,CACH,KAAG,aAAH,CADG,CAAJ,CADE;AAAA,UAAM,GAAN;AAAA;AAKE;AAAA,AAAA,UAAS,EAAT;AAAA;AAFF;AAAA,AAAQ,qCAAR;AACF,sBAAI,CACH,KAAG,UAAH,CADG,CAAJ,CADE;AAAA,UAAQ,GAAR;AAAA;AATL,CAAA;AAGK,YAHL,CAGK,iCAHL;AAMK,YANL,CAMK,gCANL;AASK,YATL,CASK,kCATL;"
+}

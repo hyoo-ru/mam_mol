@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/plot/mark/cross/cross.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_plot_mark_cross $mol_plot_graph\n\tlabels /string\n\ttitle_x_gap 4\n\ttitle_y_gap 22\n\tthreshold 16\n\tgraphs /$mol_plot_graph\n\tdimensions $mol_vector_2d<$mol_vector_range<number>> /\n\t\t<= dimensions_x $mol_vector_range<number> /\n\t\t\tInfinity\n\t\t\t-Infinity\n\t\t<= dimensions_y $mol_vector_range<number> /\n\t\t\tInfinity\n\t\t\t-Infinity\n\tsub /\n\t\t<= Curve $mol_svg_path\n\t\t\tgeometry <= curve \\\n\t\t<= Label_x $mol_svg_text_box\n\t\t\tpos_x <= title_x_pos_x \\0\n\t\t\tpos_y <= title_x_pos_y \\100%\n\t\t\ttext <= title_x \\\n\t\t<= Label_y $mol_svg_text_box\n\t\t\tpos_x <= title_y_pos_x \\0\n\t\t\tpos_y <= title_y_pos_y \\0\n\t\t\ttext <= title_y \\\n"
+	],
+	"mappings": "AAAA,AAAA,uDAAqB,4BAArB;AAAA,AACC;AAAA,AAAA,UAAO,EAAP;AAAA;AACA;AAAA,AAAA,UAAY,CAAZ;AAAA;AACA;AAAA,AAAA,UAAY,EAAZ;AAAA;AACA;AAAA,AAAA,UAAU,EAAV;AAAA;AACA;AAAA,AAAA,UAAO,EAAP;AAAA;AACA;AAAA,AAAW,yCACV,KAAG,eAAH,CADU,EAIV,KAAG,eAAH,CAJU,CAAX;AAAA,UAAW,GAAX;AAAA;AAOA;AAAA,AAAA,UAAI;AAAA,AACH,SAAG,QAAH,CADG;AAGH,SAAG,UAAH,CAHG;AAOH,SAAG,UAAH;AAPG,CAAJ;AAAA;AANI;AAAA,AAAa,4CACf,QADe,EAEf,SAFe,CAAb;AAAA,UAAa,GAAb;AAAA;AAGA;AAAA,AAAa,4CACf,QADe,EAEf,SAFe,CAAb;AAAA,UAAa,GAAb;AAAA;AAKU;AAAA,AAAA,UAAO,EAAP;AAAA;AADV;AAAA,AAAM,yCAAN;AACF,2BAAS,KAAG,QAAH,CAAT,CADE;AAAA,UAAM,GAAN;AAAA;AAGO;AAAA,AAAA,UAAe,GAAf;AAAA;AACA;AAAA,AAAA,UAAe,MAAf;AAAA;AACD;AAAA,AAAA,UAAS,EAAT;AAAA;AAHN;AAAA,AAAQ,6CAAR;AACF,wBAAM,KAAG,gBAAH,CAAN,CADE;AAEF,wBAAM,KAAG,gBAAH,CAAN,CAFE;AAGF,uBAAK,KAAG,UAAH,CAAL,CAHE;AAAA,UAAQ,GAAR;AAAA;AAKO;AAAA,AAAA,UAAe,GAAf;AAAA;AACA;AAAA,AAAA,UAAe,GAAf;AAAA;AACD;AAAA,AAAA,UAAS,EAAT;AAAA;AAHN;AAAA,AAAQ,6CAAR;AACF,wBAAM,KAAG,gBAAH,CAAN,CADE;AAEF,wBAAM,KAAG,gBAAH,CAAN,CAFE;AAGF,uBAAK,KAAG,UAAH,CAAL,CAHE;AAAA,UAAQ,GAAR;AAAA;AApBL,CAAA;AAMC,YAND,CAMC,gDAND;AAOK,YAPL,CAOK,kDAPL;AAUK,YAVL,CAUK,kDAVL;AAcK,YAdL,CAcK,2CAdL;AAgBK,YAhBL,CAgBK,6CAhBL;AAoBK,YApBL,CAoBK,6CApBL;"
+}

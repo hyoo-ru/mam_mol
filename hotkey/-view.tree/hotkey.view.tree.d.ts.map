@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/hotkey/hotkey.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,yBAAY,oBAAZ;AACC,AAAA,YAAM;AAAA,AAEL,mBAAkB,YAHpB,WAGoB,aAAlB,IAAkB,YAHpB,WAGoB,aAAlB;AAFK,GACL,GADD,YADW,WACX;AAGA,AAAA,UAAI;AACJ,AAAA,eAAS;AACT,AAAA,cAAQ;AACR,AAAA,gBAAU;AAJS,AAAA,kBAAc,GAAd,IAAc;AAHlC;AAAA;AAAA;",
+	"file": "hotkey.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

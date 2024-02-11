@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/text/code/token/token.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_text_code_token $mol_dimmer\n\tattr *\n\t\t^\n\t\tmol_text_code_token_type <= type \\\n\n$mol_text_code_token_link $mol_text_code_token\n\tdom_name \\a\n\ttype \\code-link\n\tattr *\n\t\t^\n\t\thref <= uri \\\n\t\ttarget \\_blank\n"
+	],
+	"mappings": "AAAA,AAAA,uDAAqB,wBAArB;AAAA,AACC;AAAA,AAAA,UAAK,CACJ,iBADI,EAEJ,4BAAyB,KAAG,OAAH,CAFrB,CAAL;AAAA;AAE6B;AAAA,AAAA,UAAM,EAAN;AAAA;AAH9B,CAAA;AAKA,iEAA0B,iCAA1B;AAAA,AACC;AAAA,AAAA,UAAU,GAAV;AAAA;AACA;AAAA,AAAA,UAAM,WAAN;AAAA;AACA;AAAA,AAAA,UAAK;AAAA,AACJ,qBADI;AAEJ,YAAK,KAAG,MAAH,CAFD;AAGJ,cAAQ;AAHJ,CAAL;AAAA;AAES;AAAA,AAAA,UAAK,EAAL;AAAA;AALV,CALA;"
+}

@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/simple_typed_null.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,iEAAoD,oBAApD;AACC,AAAA,QAAO,aAAL;AADH;AAAA;AAAA;",
+	"file": "simple_typed_null.view.tree.d.ts",
+	"sourceRoot": "../../../../../../../.."
+}

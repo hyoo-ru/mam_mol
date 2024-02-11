@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/array_constructor_tuple.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_array_constructor_tuple_foo $mol_object\n\tblobs /\n\t\t<= text_blob? $mol_view_tree2_to_js_test_ex_klass_tuple<string> /\n\t\t\t/string\n\t\t\t\t<= text \\123\n\t\t\t* type \\text/plain\n"
+	],
+	"mappings": "AAAA,AAAA,iIAA0D,wBAA1D;AAAA,AACC;AAAA,AAAA,UAAM,CACL,KAAG,YAAH,CADK,CAAN;AAAA;AAGM;AAAA,AAAA,UAAM,KAAN;AAAA;AAFF;AAAA,AAAA;AAAW,oEACb,CACC,KAAG,OAAH,CADD,CADa,EAGb,CAAE,QAAM,YAAR,CAHa,CAAX;AAAA,UAAW,GAAX;AAAA;AAFL,CAAA;AAEK,YAFL,CAEK,oFAFL;"
+}

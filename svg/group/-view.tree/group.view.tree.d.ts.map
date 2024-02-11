@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/svg/group/group.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,4BAAe,iBAAf;AACC,AAAA,eAAU;AADX;AAAA;AAAA;",
+	"file": "group.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

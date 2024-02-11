@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/button/minor/minor.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,+BAAkB,0BAAlB;AAAA;AAAA;AAAA;",
+	"file": "minor.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

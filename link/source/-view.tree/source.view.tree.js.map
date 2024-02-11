@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/link/source/source.view.tree",
+		"localized_string"
+	],
+	"sourcesContent": [
+		"$mol_link_source $mol_link\n\thint @ \\Source code\n\tsub /\n\t\t<= Icon $mol_icon_script_text\n",
+		"\n\t\t()\n\t\t\tthis\n\t\t\t[] \\$\n\t\t\t[] \\$mol_locale\n\t\t\t[] \\text\n\t\t\t(,) #key\n\t"
+	],
+	"mappings": "AAAA,AAAA,+CAAiB,sBAAjB;AAAA,AACC;AAAA,AAAA,UCAC,CACC,IACA,EACA,YACA,KACA,CDLG,uBCKH,CALD,CDAD;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,CAAJ;AAAA;AACI;AAAA,AAAK,iDAAL;AAAA,UAAK,GAAL;AAAA;AAHL,CAAA;AAGK,YAHL,CAGK,sCAHL;"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/row/row.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_row $mol_view\n"
+	],
+	"mappings": "AAAA,AAAA,+BAAS,sBAAT,EAAA;"
+}

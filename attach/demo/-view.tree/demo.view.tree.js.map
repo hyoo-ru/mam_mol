@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/attach/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_attach_demo $mol_example_small\n\ttitle \\Attach files an show them\n\tsub /\n\t\t<= Filled $mol_attach\n\t\t\titems? <=> filled_items? /\n\t\t\t\t\\https://picsum.photos/200\n\ttags /\n\t\t\\file\n\t\t\\image\n\t\t\\upload\n\taspects /\n\t\t\\Widget/Control\n\t\t\\Type/File\n"
+	],
+	"mappings": "AAAA,AAAA,+CAAiB,+BAAjB;AAAA,AACC;AAAA,AAAA,UAAO,2BAAP;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,SAAH,CADG,CAAJ;AAAA;AAIA;AAAA,AAAA,UAAK;AAAA,AACH,UADG;AAEH,WAFG;AAGH;AAHG,CAAL;AAAA;AAIA;AAAA,AAAA,UAAQ,CACN,gBADM,EAEN,WAFM,CAAR;AAAA;AANa;AAAA,AAAA;AAAA,UAAc,CACvB,2BADuB,CAAd;AAAA;AADT;AAAA,AAAO,uCAAP;AACF,4BAAO,KAAI,mBAAJ,CAAP,CADE;AAAA,UAAO,GAAP;AAAA;AAHL,CAAA;AAIc,YAJd,CAIc,8CAJd;AAGK,YAHL,CAGK,wCAHL;"
+}

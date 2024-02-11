@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/stack/stack.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,wBAAW,kBAAX;AAAA;AAAA;AAAA;",
+	"file": "stack.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

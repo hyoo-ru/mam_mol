@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/gallery/gallery.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_gallery $mol_view\n\tsub <= items /$mol_view\n\tSide* $mol_gallery\n\t\tstyle *\n\t\t\tflexGrow <= side_size* \\1\n\t\titems <= side_items* /$mol_view\n"
+	],
+	"mappings": "AAAA,AAAA,uCAAa,sBAAb;AAAA,AACC;AAAA,AAAA,UAAI,KAAG,QAAH,CAAJ;AAAA;AACA;AAAA,AAAM,wCAAN;AACC,wBAAM,CACL,YAAS,KAAG,cAAH,CADJ,CAAN,CADD;AAGC,wBAAM,KAAG,eAAH,CAAN,CAHD;AAAA,UAAM,GAAN;AAAA;AADO;AAAA,AAAA,UAAM,EAAN;AAAA;AAGO;AAAA,AAAA,UAAY,GAAZ;AAAA;AACJ;AAAA,AAAA,UAAY,EAAZ;AAAA;AALX,CAAA;AAEC,gBAFD,CAEC,kCAFD;"
+}

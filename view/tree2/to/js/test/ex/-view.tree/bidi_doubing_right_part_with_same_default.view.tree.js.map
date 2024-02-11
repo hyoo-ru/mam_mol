@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/bidi_doubing_right_part_with_same_default.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_bidi_doubing_right_part_with_same_default_foo $mol_object\n\ta? <=> b? false\n\tc? <=> b? false\n"
+	],
+	"mappings": "AAAA,AAAA,qKAA4E,wBAA5E;AAAA,AACC;AAAA,AAAA,UAAG,KAAI,QAAJ,CAAH;AAAA;AACA;AAAA,AAAA,UAAG,KAAI,QAAJ,CAAH;AAAA;AAAO;AAAA,AAAA;AAAA,UAAG,KAAH;AAAA;AAFR,CAAA;AAEQ,YAFR,CAEQ,8FAFR;"
+}

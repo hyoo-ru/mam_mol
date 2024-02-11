@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/structural_with_inheritance.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_structural_with_inheritance_foo $mol_object\n\tfield *\n\t\txxx 123\n\t\txxy \\test\n\n$mol_view_tree2_to_js_test_ex_structural_with_inheritance_bar $mol_view_tree2_to_js_test_ex_structural_with_inheritance_foo\n\tfield *\n\t\tyyy 234\n\t\t^\n\t\tzzz 345\n"
+	],
+	"mappings": "AAAA,AAAA,yIAA8D,wBAA9D;AAAA,AACC;AAAA,AAAA,UAAM,CACL,OAAI,GADC,EAEL,OAAK,MAFA,CAAN;AAAA;AADD,CAAA;AAKA,yIAA8D,0EAA9D;AAAA,AACC;AAAA,AAAA,UAAM;AAAA,AACL,WAAI,GADC;AAEL,sBAFK;AAGL,WAAI;AAHC,CAAN;AAAA;AADD,CALA;"
+}

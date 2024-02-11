@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/string/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_string_demo $mol_example_code\n\tcode? \\\n\t\t\\const Name = $mol_data_string\n\t\t\\const name = Name( 'Jin' ) // ✅\n\t\t\\\n\t\t\\Name( 7 ) // ❌ 7 is not a string\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Type/String\n"
+	],
+	"mappings": "AAAA,AAAA,yDAAsB,8BAAtB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,oGAAP;AAAA;AAKA;AAAA,AAAA,UAAK,CACH,SADG,EAEH,YAFG,CAAL;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,aAFM,CAAR;AAAA;AATD,CAAA;AACC,YADD,CACC,2CADD;"
+}

@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/chat/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAIG;AAAA,AAAM;AAAA;AAAN,cADO,SACP;AAAA;AAJH,4BAAe,2BAAf;AACC,AAAA,YAAO;AACP,AAAA,UAAI;AAMJ,AAAA,WAAK;AAEL,AAAA,cAAQ;AALG,AAAA,iBAAT,YAFE,YAHL,cAGK,UAEF;AAFE,AAAA,WAAK;AAHV;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

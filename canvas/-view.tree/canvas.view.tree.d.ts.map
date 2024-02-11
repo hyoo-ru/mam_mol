@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/canvas/canvas.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,yBAAY,kBAAZ;AACC,AAAA,eAAU;AACV,AAAA,cAAQ;AACR,AAAA,YAAM;AAAA,AAEL,YAAS,YALX,WAKW,WAAT;AACA,aAAU,YANZ,WAMY,YAAV;AAHK,GACL,GADD,YAHW,SAGX;AAIA,AAAA,YAAM;AAFI,AAAA,YAAM;AACL,AAAA,aAAO;AANnB;AAAA;AAAA;",
+	"file": "canvas.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

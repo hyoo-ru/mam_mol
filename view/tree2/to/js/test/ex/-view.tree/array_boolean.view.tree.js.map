@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/array_boolean.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_array_boolean_foo $mol_object\n\tbar /boolean\n\t\tfalse\n\t\ttrue\n"
+	],
+	"mappings": "AAAA,AAAA,6GAAgD,wBAAhD;AAAA,AACC;AAAA,AAAA,UAAI,CACH,KADG,EAEH,IAFG,CAAJ;AAAA;AADD,CAAA;"
+}

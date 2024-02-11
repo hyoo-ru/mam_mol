@@ -10,60 +10,60 @@ $mol_plot_pane $mol_svg_root
 	gap_right <= gap_hor
 	gap_top <= gap_vert
 	gap_bottom <= gap_vert
-	gap $mol_vector_2d /
-		<= gap_x $mol_vector_range /
+	gap $mol_vector_2d<$mol_vector_range<number>> /
+		<= gap_x $mol_vector_range<number> /
 			<= gap_left
 			<= gap_right
-		<= gap_y $mol_vector_range /
+		<= gap_y $mol_vector_range<number> /
 			<= gap_bottom
 			<= gap_top
 	-
-	shift_limit $mol_vector_2d /
-		<= shift_limit_x $mol_vector_range /
+	shift_limit $mol_vector_2d<$mol_vector_range<number>> /
+		<= shift_limit_x $mol_vector_range<number> /
 			0
 			0
-		<= shift_limit_y $mol_vector_range /
+		<= shift_limit_y $mol_vector_range<number> /
 			0
 			0
-	shift_default $mol_vector_2d /
+	shift_default $mol_vector_2d<number> /
 		0
 		0
-	shift? $mol_vector_2d /
+	shift? $mol_vector_2d<number> /
 		0
 		0
-	scale_limit $mol_vector_2d /
-		<= scale_limit_x $mol_vector_range /
+	scale_limit $mol_vector_2d<$mol_vector_range<number>> /
+		<= scale_limit_x $mol_vector_range<number> /
 			0
 			Infinity
-		<= scale_limit_y $mol_vector_range /
+		<= scale_limit_y $mol_vector_range<number> /
 			0
 			-Infinity
-	scale_default $mol_vector_2d /
+	scale_default $mol_vector_2d<number> /
 		0
 		0
-	scale? $mol_vector_2d /
+	scale? $mol_vector_2d<number> /
 		1
 		-1
 	scale_x? 1
 	scale_y? -1
-	size $mol_vector_2d /
+	size $mol_vector_2d<number> /
 		0
 		0
-	size_real $mol_vector_2d /
+	size_real $mol_vector_2d<number> /
 		1
 		1
-	dimensions $mol_vector_2d /
-		<= dimensions_x $mol_vector_range /
+	dimensions $mol_vector_2d<$mol_vector_range<number>> /
+		<= dimensions_x $mol_vector_range<number> /
 			Infinity
 			-Infinity
-		<= dimensions_y $mol_vector_range /
+		<= dimensions_y $mol_vector_range<number> /
 			Infinity
 			-Infinity
-	dimensions_viewport $mol_vector_2d /
-		<= dimensions_viewport_x $mol_vector_range /
+	dimensions_viewport $mol_vector_2d<$mol_vector_range<number>> /
+		<= dimensions_viewport_x $mol_vector_range<number> /
 			Infinity
 			-Infinity
-		<= dimensions_viewport_y $mol_vector_range /
+		<= dimensions_viewport_y $mol_vector_range<number> /
 			Infinity
 			-Infinity
 	-

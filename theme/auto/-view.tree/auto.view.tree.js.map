@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/theme/auto/auto.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_theme_auto $mol_plugin\n\tattr * mol_theme <= theme \\\n"
+	],
+	"mappings": "AAAA,AAAA,6CAAgB,wBAAhB;AAAA,AACC;AAAA,AAAA,UAAK,CAAE,aAAU,KAAG,QAAH,CAAZ,CAAL;AAAA;AAAoB;AAAA,AAAA,UAAO,EAAP;AAAA;AADrB,CAAA;"
+}

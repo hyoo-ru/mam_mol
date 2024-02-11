@@ -111,6 +111,7 @@
     "$mol_button",
     "$mol_speck",
     "$mol_layer",
+    "$mol_type_enforce",
     "$mol_keyboard_code",
     "$mol_keyboard",
     "$mol_button_typed",

@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/bar/bar.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_bar $mol_view\n"
+	],
+	"mappings": "AAAA,AAAA,+BAAS,sBAAT,EAAA;"
+}

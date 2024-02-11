@@ -1,0 +1,6 @@
+$mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_bar $mol_object
+	rows /
+$mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_foo $mol_object
+	content 123
+	Obj $mol_view_tree2_to_js_test_ex_left_with_separate_default_and_comment_bar
+		rows / <= content - 321

@@ -491,7 +491,7 @@ declare namespace $ {
     type $mol_style_unit_angle = 'deg' | 'rad' | 'grad' | 'turn';
     type $mol_style_unit_time = 's' | 'ms';
     type $mol_style_unit_any = $mol_style_unit_length | $mol_style_unit_angle | $mol_style_unit_time;
-    type $mol_style_unit_str<Quanity extends $mol_style_unit_any> = `${number}${Quanity}`;
+    type $mol_style_unit_str<Quanity extends $mol_style_unit_any = $mol_style_unit_any> = `${number}${Quanity}`;
     class $mol_style_unit<Literal extends $mol_style_unit_any> extends $mol_decor<number> {
         readonly literal: Literal;
         constructor(value: number, literal: Literal);
@@ -616,9 +616,9 @@ declare namespace $ {
         all?: Common;
         animation?: {
             composition?: Single_animation_composition | Single_animation_composition[][] | Common;
-            delay?: $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common;
+            delay?: $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common;
             direction?: Single_animation_direction | Single_animation_direction[][] | Common;
-            duration?: $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common;
+            duration?: $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common;
             fillMode?: Single_animation_fill_mode | Single_animation_fill_mode[][] | Common;
             iterationCount?: Single_animation_iteration_count | Single_animation_iteration_count[][] | Common;
             name?: 'none' | string & {} | ('none' | string & {})[][] | Common;
@@ -818,39 +818,85 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_perf_sierp extends $mol_view {
-        size_target(): number;
-        elapsed(next?: any): number;
-        style(): Record<string, any>;
-        sub(): readonly any[];
-        Dot(id: any): $$.$mol_perf_sierp_dot;
-        transform(): string;
-        dots(): readonly any[];
-        Dots(): $mol_view;
-        left(id: any): number;
-        top(id: any): number;
-        size(id: any): number;
-        text(): string;
-    }
-    class $mol_perf_sierp_dot extends $mol_view {
-        size(): number;
-        size_px(): string;
-        hover(next?: any): boolean;
-        sub(): readonly any[];
-        style(): Record<string, any>;
-        event(): Record<string, any>;
-        text(): string;
-        width(): number;
-        height(): number;
-        left(): number;
-        top(): number;
-        radius(): number;
-        color(): string;
-        enter(next?: any): any;
-        leave(next?: any): any;
-    }
+    type $mol_type_enforce<Actual extends Expected, Expected> = Actual;
 }
 
+declare namespace $ {
+
+	type $mol_perf_sierp_dot__left__P1OQ6ME3 = $mol_type_enforce<
+		ReturnType< $mol_perf_sierp['left'] >
+		,
+		ReturnType< $mol_perf_sierp_dot['left'] >
+	>
+	type $mol_perf_sierp_dot__top__YI3FUTF4 = $mol_type_enforce<
+		ReturnType< $mol_perf_sierp['top'] >
+		,
+		ReturnType< $mol_perf_sierp_dot['top'] >
+	>
+	type $mol_perf_sierp_dot__size__32EIN6Q9 = $mol_type_enforce<
+		ReturnType< $mol_perf_sierp['size'] >
+		,
+		ReturnType< $mol_perf_sierp_dot['size'] >
+	>
+	type $mol_perf_sierp_dot__text__RYKT690L = $mol_type_enforce<
+		ReturnType< $mol_perf_sierp['text'] >
+		,
+		ReturnType< $mol_perf_sierp_dot['text'] >
+	>
+	type $mol_view__sub__E751W43Q = $mol_type_enforce<
+		ReturnType< $mol_perf_sierp['dots'] >
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	export class $mol_perf_sierp extends $mol_view {
+		size_target( ): number
+		elapsed( next?: number ): number
+		style( ): ({ 
+			'transform': ReturnType< $mol_perf_sierp['transform'] >,
+		}) 
+		sub( ): readonly(any)[]
+		Dot( id: any): $mol_perf_sierp_dot
+		transform( ): string
+		dots( ): readonly(any)[]
+		Dots( ): $mol_view
+		left( id: any): number
+		top( id: any): number
+		size( id: any): number
+		text( ): string
+	}
+	
+	export class $mol_perf_sierp_dot extends $mol_view {
+		size( ): number
+		size_px( ): string
+		hover( next?: boolean ): boolean
+		sub( ): readonly(any)[]
+		style( ): ({ 
+			'width': ReturnType< $mol_perf_sierp_dot['width'] >,
+			'height': ReturnType< $mol_perf_sierp_dot['height'] >,
+			'left': ReturnType< $mol_perf_sierp_dot['left'] >,
+			'top': ReturnType< $mol_perf_sierp_dot['top'] >,
+			'borderRadius': ReturnType< $mol_perf_sierp_dot['radius'] >,
+			'lineHeight': ReturnType< $mol_perf_sierp_dot['size_px'] >,
+			'background': ReturnType< $mol_perf_sierp_dot['color'] >,
+		}) 
+		event( ): ({ 
+			mouseenter( next?: ReturnType< $mol_perf_sierp_dot['enter'] > ): ReturnType< $mol_perf_sierp_dot['enter'] >,
+			mouseleave( next?: ReturnType< $mol_perf_sierp_dot['leave'] > ): ReturnType< $mol_perf_sierp_dot['leave'] >,
+		})  & ReturnType< $mol_view['event'] >
+		text( ): string
+		width( ): ReturnType< $mol_perf_sierp_dot['size'] >
+		height( ): ReturnType< $mol_perf_sierp_dot['size'] >
+		left( ): number
+		top( ): number
+		radius( ): ReturnType< $mol_perf_sierp_dot['size'] >
+		color( ): string
+		enter( next?: any ): any
+		leave( next?: any ): any
+	}
+	
+}
+
+//# sourceMappingURL=serp.view.tree.d.ts.map
 declare namespace $ {
     class $mol_after_timeout extends $mol_object2 {
         delay: number;
@@ -870,7 +916,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_perf_sierp extends $.$mol_perf_sierp {
-        dots(): $mol_perf_sierp_dot[];
+        dots(): $.$mol_perf_sierp_dot[];
         data(): {
             left: number;
             top: number;
@@ -905,3 +951,4 @@ declare namespace $ {
 }
 
 export = $;
+//# sourceMappingURL=web.d.ts.map

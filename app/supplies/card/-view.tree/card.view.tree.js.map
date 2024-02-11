@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/app/supplies/card/card.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_app_supplies_card $mol_link\n\tsupply null\n\tminimal_height 125\n\tsub /\n\t\t<= Card $mol_card\n\t\t\tstatus <= status \\\n\t\t\tContent <= Group $mol_row\n\t\t\t\tsub <= items /\n\t\t\t\t\t<= Code_item $mol_labeler\n\t\t\t\t\t\ttitle <= code_title \\Code\n\t\t\t\t\t\tcontent / <= code \\\n\t\t\t\t\t<= Cost_item $mol_labeler\n\t\t\t\t\t\ttitle <= cost_title \\Cost\n\t\t\t\t\t\tcontent / <= Cost $mol_cost\n\t\t\t\t\t\t\tvalue <= cost $mol_unit_money\n\t\t\t\t\t\t\t\tvalueOf 0\n\t\t\t\t\t<= Provider_item $mol_labeler\n\t\t\t\t\t\ttitle <= provider_title \\Provider\n\t\t\t\t\t\tcontent / <= provider_name \\\n"
+	],
+	"mappings": "AAAA,AAAA,2DAAuB,sBAAvB;AAAA,AACC;AAAA,AAAA,UAAO,IAAP;AAAA;AACA;AAAA,AAAA,UAAe,GAAf;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,CAAJ;AAAA;AAEY;AAAA,AAAA,UAAQ,EAAR;AAAA;AAIE;AAAA,AAAA,UAAY,MAAZ;AAAA;AACI;AAAA,AAAA,UAAM,EAAN;AAAA;AAFX;AAAA,AAAU,wCAAV;AACF,wBAAM,KAAG,aAAH,CAAN,CADE;AAEF,0BAAQ,CAAE,KAAG,OAAH,CAAF,CAAR,CAFE;AAAA,UAAU,GAAV;AAAA;AAIO;AAAA,AAAA,UAAY,MAAZ;AAAA;AAEC;AAAA,AAAK,2CAAL;AACR,0BAAQ,CAAR,CADQ;AAAA,UAAK,GAAL;AAAA;AADG;AAAA,AAAK,qCAAL;AACZ,wBAAM,KAAG,OAAH,CAAN,CADY;AAAA,UAAK,GAAL;AAAA;AAFX;AAAA,AAAU,wCAAV;AACF,wBAAM,KAAG,aAAH,CAAN,CADE;AAEF,0BAAQ,CAAE,KAAG,OAAH,CAAF,CAAR,CAFE;AAAA,UAAU,GAAV;AAAA;AAMO;AAAA,AAAA,UAAgB,UAAhB;AAAA;AACI;AAAA,AAAA,UAAe,EAAf;AAAA;AAFX;AAAA,AAAc,wCAAd;AACF,wBAAM,KAAG,iBAAH,CAAN,CADE;AAEF,0BAAQ,CAAE,KAAG,gBAAH,CAAF,CAAR,CAFE;AAAA,UAAc,GAAd;AAAA;AATG;AAAA,AAAA,UAAM;AAAA,AACZ,SAAG,YAAH,CADY;AAIZ,SAAG,YAAH,CAJY;AASZ,SAAG,gBAAH;AATY,CAAN;AAAA;AADG;AAAA,AAAM,oCAAN;AACV,sBAAI,KAAG,QAAH,CAAJ,CADU;AAAA,UAAM,GAAN;AAAA;AAFT;AAAA,AAAK,qCAAL;AACF,yBAAO,KAAG,SAAH,CAAP,CADE;AAEF,0BAAQ,KAAG,QAAH,CAAR,CAFE;AAAA,UAAK,GAAL;AAAA;AAJL,CAAA;AAQQ,YARR,CAQQ,iDARR;AAcgB,YAdhB,CAcgB,4CAdhB;AAamB,YAbnB,CAamB,4CAbnB;AAWQ,YAXR,CAWQ,iDAXR;AAgBQ,YAhBR,CAgBQ,qDAhBR;AAMc,YANd,CAMc,6CANd;AAIK,YAJL,CAIK,4CAJL;"
+}

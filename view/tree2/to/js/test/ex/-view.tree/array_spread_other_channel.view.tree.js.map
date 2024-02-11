@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/array_spread_other_channel.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_array_spread_other_bar $mol_object\n\tsup /\n\t\t\\v1\n\tarr /\n\t\t\\v2\n\t\t^ sup\n"
+	],
+	"mappings": "AAAA,AAAA,uHAAqD,wBAArD;AAAA,AACC;AAAA,AAAA,UAAI,CACF,IADE,CAAJ;AAAA;AAEA;AAAA,AAAA,UAAI,CACF,IADE,EAEH,eAFG,CAAJ;AAAA;AAHD,CAAA;"
+}

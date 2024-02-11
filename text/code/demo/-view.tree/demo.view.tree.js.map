@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/text/code/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_text_code_demo $mol_example_small\n\ttitle \\Markdow visualization example\n\tsub /\n\t\t<= Text $mol_text_code\n\t\t\tsidebar_showed true\n\t\t\ttext <= source \\\n\t\t\tsyntax <= syntax null\n\t\t\turi_resolve* <= uri_resolve* \\\n\ttags /\n\t\t\\text\n\t\t\\code\n\t\t\\syntax highlighting\n\taspects /\n\t\t\\Widget/Text\n\t\t\\Type/String\n"
+	],
+	"mappings": "AAAA,AAAA,qDAAoB,+BAApB;AAAA,AACC;AAAA,AAAA,UAAO,+BAAP;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,CAAJ;AAAA;AAMA;AAAA,AAAA,UAAK;AAAA,AACH,UADG;AAEH,UAFG;AAGH;AAHG,CAAL;AAAA;AAIA;AAAA,AAAA,UAAQ,CACN,aADM,EAEN,aAFM,CAAR;AAAA;AAPU;AAAA,AAAA,UAAQ,EAAR;AAAA;AACE;AAAA,AAAA,UAAO,IAAP;AAAA;AACM;AAAA,AAAA,UAAc,EAAd;AAAA;AAJd;AAAA,AAAK,0CAAL;AACF,iCAAe,IAAf,CADE;AAEF,uBAAK,KAAG,SAAH,CAAL,CAFE;AAGF,yBAAO,KAAG,SAAH,CAAP,CAHE;AAIF,gCAAa,KAAG,gBAAH,CAAb,CAJE;AAAA,UAAK,GAAL;AAAA;AAHL,CAAA;AAGK,YAHL,CAGK,yCAHL;"
+}

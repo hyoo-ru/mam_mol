@@ -3,10 +3,10 @@ $mol_plot_ruler $mol_plot_graph
 	scale_axis 1
 	scale_step 1
 	shift_axis 1
-	dimensions_axis $mol_vector_range /
+	dimensions_axis $mol_vector_range<number> /
 		Infinity
 		-Infinity
-	viewport_axis $mol_vector_range /
+	viewport_axis $mol_vector_range<number> /
 		Infinity
 		-Infinity
 	axis_points /number

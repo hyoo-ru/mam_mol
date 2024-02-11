@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/array/lottery/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,qCAAwB,0BAAxB;AACC,AAAA,eAAO,MAAP,IAAO;AAGP,AAAA,cAAQ;AAJT;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

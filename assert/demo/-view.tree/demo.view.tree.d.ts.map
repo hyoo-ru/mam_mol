@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/assert/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,8BAAiB,0BAAjB;AACC,AAAA,eAAO,MAAP,IAAO;AAKP,AAAA,cAAQ;AANT;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

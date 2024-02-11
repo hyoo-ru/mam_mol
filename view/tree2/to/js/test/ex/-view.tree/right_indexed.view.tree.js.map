@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/right_indexed.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_right_indexed_foo $mol_object\n\ta? *\n\t\tsome 123\n$mol_view_tree2_to_js_test_ex_right_indexed_bar $mol_object\n\tCls* $mol_view_tree2_to_js_test_ex_right_indexed_foo\n\t\ta => b*\n"
+	],
+	"mappings": "AAAA,AAAA,6GAAgD,wBAAhD;AAAA,AACC;AAAA,AAAA;AAAA,UAAG,CACF,QAAK,GADH,CAAH;AAAA;AADD,CAAA;AACC,YADD,CACC,kEADD;AAGA,6GAAgD,wBAAhD;AAAA,AACC;AAAA,AAAK,2EAAL;AAAA,UAAK,GAAL;AAAA;AACM;AAAA,AAAA,eADN,QACC,IAAK;AAAA;AAFP,CAHA;AAIC,gBADD,CACC,oEAJD;"
+}

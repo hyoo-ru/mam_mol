@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/form/draft/draft.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_form_draft $mol_form\n\tmodel $mol_object2\n\tchanged false\n\tvalue_str*? \\\n\tvalue_bool*? false\n\tvalue_number*? 0\n\tdictionary_bool*? *\n\tlist_string*? /string\n\tvalue_changed* false\n\treset? null\n\n"
+	],
+	"mappings": "AAAA,AAAA,6CAAgB,sBAAhB;AAAA,AACC;AAAA,AAAM,wCAAN;AAAA,UAAM,GAAN;AAAA;AACA;AAAA,AAAA,UAAQ,KAAR;AAAA;AACA;AAAA,AAAA;AAAA,UAAa,EAAb;AAAA;AACA;AAAA,AAAA;AAAA,UAAa,KAAb;AAAA;AACA;AAAA,AAAA;AAAA,UAAe,CAAf;AAAA;AACA;AAAA,AAAA;AAAA,UAAkB,EAAlB;AAAA;AACA;AAAA,AAAA;AAAA,UAAc,EAAd;AAAA;AACA;AAAA,AAAA,UAAe,KAAf;AAAA;AACA;AAAA,AAAA;AAAA,UAAO,IAAP;AAAA;AATD,CAAA;AACC,YADD,CACC,sCADD;AAGC,gBAHD,CAGC,0CAHD;AAIC,gBAJD,CAIC,2CAJD;AAKC,gBALD,CAKC,6CALD;AAMC,gBAND,CAMC,gDAND;AAOC,gBAPD,CAOC,4CAPD;AASC,YATD,CASC,sCATD;"
+}

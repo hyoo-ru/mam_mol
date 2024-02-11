@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/app/questions/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_app_questions_demo $mol_example_large\n\ttitle \\New questions from StackOverflow\n\tsub /\n\t\t<= App $mol_app_questions\n\taspects /\n\t\t\\Application\n\t\t\\Network/HTTP\n\t\t\\Integration\n"
+	],
+	"mappings": "AAAA,AAAA,6DAAwB,+BAAxB;AAAA,AACC;AAAA,AAAA,UAAO,kCAAP;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,MAAH,CADG,CAAJ;AAAA;AAEA;AAAA,AAAA,UAAQ;AAAA,AACN,iBADM;AAEN,kBAFM;AAGN;AAHM,CAAR;AAAA;AADI;AAAA,AAAI,8CAAJ;AAAA,UAAI,GAAJ;AAAA;AAHL,CAAA;AAGK,YAHL,CAGK,4CAHL;"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/structural_quoted_props.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_structural_quoted_props_foo $mol_object\n\tbar *\n\t\t$a 1\n\t\tb-t *\n"
+	],
+	"mappings": "AAAA,AAAA,iIAA0D,wBAA1D;AAAA,AACC;AAAA,AAAA,UAAI,CACH,MAAG,CADA,EAEH,OAAI,EAFD,CAAJ;AAAA;AADD,CAAA;"
+}

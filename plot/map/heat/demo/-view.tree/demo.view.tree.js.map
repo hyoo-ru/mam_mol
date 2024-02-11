@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/plot/map/heat/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_plot_map_heat_demo $mol_example_large\n\ttitle \\Dynamic Heat Map Graphs\n\tcount_x 20\n\tcount_y 200\n\tcount_z 20\n\tsub /\n\t\t<= Plot $mol_plot_pane\n\t\t\tscale_y? => zoom?\n\t\t\tzoom? <=> zoom?\n\t\t\tgraphs /\n\t\t\t\t<= Terrain $mol_plot_map_heat\n\t\t\t\t\tseries_x <= terrain_x /number\n\t\t\t\t\tseries_y <= terrain_y /number\n\t\t\t\t\tseries_z <= terrain_z /number\n\ttags /\n\t\t\\$mol_plot_pane\n\t\t\\visualization\n\t\t\\heatmap\n\t\t\\graph\n\t\t\\dashboard\n\taspects /\n\t\t\\Widget/Draw/Chart/Heat\n"
+	],
+	"mappings": "AAAA,AAAA,6DAAwB,+BAAxB;AAAA,AACC;AAAA,AAAA,UAAO,yBAAP;AAAA;AACA;AAAA,AAAA,UAAQ,EAAR;AAAA;AACA;AAAA,AAAA,UAAQ,GAAR;AAAA;AACA;AAAA,AAAA,UAAQ,EAAR;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,OAAH,CADG,CAAJ;AAAA;AASA;AAAA,AAAA,UAAK;AAAA,AACH,oBADG;AAEH,mBAFG;AAGH,aAHG;AAIH,WAJG;AAKH;AALG,CAAL;AAAA;AAMA;AAAA,AAAA,UAAQ,CACN,wBADM,CAAR;AAAA;AAbc;AAAA,AAAA,eADV,OACF,cAAY;AAAA;AAIE;AAAA,AAAA,UAAU,EAAV;AAAA;AACA;AAAA,AAAA,UAAU,EAAV;AAAA;AACA;AAAA,AAAA,UAAU,EAAV;AAAA;AAHV;AAAA,AAAQ,8CAAR;AACF,2BAAS,KAAG,YAAH,CAAT,CADE;AAEF,2BAAS,KAAG,YAAH,CAAT,CAFE;AAGF,2BAAS,KAAG,YAAH,CAAT,CAHE;AAAA,UAAQ,GAAR;AAAA;AAJF;AAAA,AAAK,0CAAL;AAEF,2BAAM,KAAI,WAAJ,CAAN,CAFE;AAGF,yBAAO,CACN,KAAG,UAAH,CADM,CAAP,CAHE;AAAA,UAAK,GAAL;AAAA;AANL,CAAA;AAUO,YAVP,CAUO,gDAVP;AAMK,YANL,CAMK,6CANL;"
+}

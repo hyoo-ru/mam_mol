@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/tag/tree/tree.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_tag_tree $mol_list\n\tsieve $mol_tag_sieve\n\t\tids_tags <= ids_tags *\n\t\tseparator <= separator \\/\n\tlevels_expanded 0\n\tsort_items null\n\tsort_tags null\n\tsub /$mol_view\n\t\t^ tag_list /$mol_view\n\t\t^ item_list /$mol_view\n\ttag_name* \\\n\ttag_names *\n\ttag_list /$mol_view\n\titem_list /$mol_view\n\tItem* $mol_view\n\t\tsub /\n\t\t\t<= item_title* \\\n\tTag* $mol_expander\n\t\texpandable true\n\t\texpanded? <=> tag_expanded*? false\n\t\ttitle <= tag_name* \\\n\t\tcontent / <= Tag_tree* $mol_tag_tree\n\t\t\tsieve <= sieve_sub* $mol_tag_sieve\n\t\t\tItem* <= Item*\n\t\t\titem_title* <= item_title*\n\t\t\ttag_expanded*? <=> tag_expanded*?\n\t\t\ttag_name* <= tag_name*\n"
+	],
+	"mappings": "AAAA,AAAA,yCAAc,sBAAd;AAAA,AACC;AAAA,AAAM,0CAAN;AACC,2BAAS,KAAG,WAAH,CAAT,CADD;AAEC,4BAAU,KAAG,YAAH,CAAV,CAFD;AAAA,UAAM,GAAN;AAAA;AAGA;AAAA,AAAA,UAAgB,CAAhB;AAAA;AACA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAU,IAAV;AAAA;AACA;AAAA,AAAA,UAAI,CACH,oBADG,EAEH,qBAFG,CAAJ;AAAA;AAGA;AAAA,AAAA,UAAW,EAAX;AAAA;AACA;AAAA,AAAA,UAAU,EAAV;AAAA;AACA;AAAA,AAAA,UAAS,EAAT;AAAA;AACA;AAAA,AAAA,UAAU,EAAV;AAAA;AACA;AAAA,AAAM,qCAAN;AACC,sBAAI,CACH,KAAG,eAAH,CADG,CAAJ,CADD;AAAA,UAAM,GAAN;AAAA;AAGA;AAAA,AAAK,yCAAL;AACC,6BAAW,IAAX,CADD;AAEC,+BAAU,KAAI,uBAAJ,CAAV,CAFD;AAGC,wBAAM,KAAG,aAAH,CAAN,CAHD;AAIC,0BAAQ,CAAE,KAAG,aAAH,CAAF,CAAR,CAJD;AAAA,UAAK,GAAL;AAAA;AAfa;AAAA,AAAA,UAAS,EAAT;AAAA;AACC;AAAA,AAAA,UAAW,GAAX;AAAA;AAKX;AAAA,AAAA,UAAS,EAAT;AAAA;AACA;AAAA,AAAA,UAAU,EAAV;AAAA;AAOE;AAAA,AAAA,UAAa,EAAb;AAAA;AAGU;AAAA,AAAA;AAAA,UAAe,KAAf;AAAA;AACL;AAAA,AAAA,UAAW,EAAX;AAAA;AAEC;AAAA,AAAW,0CAAX;AAAA,UAAW,GAAX;AAAA;AADG;AAAA,AAAU,yCAAV;AACZ,wBAAM,KAAG,cAAH,CAAN,CADY;AAEZ,yBAAM,KAAG,SAAH,CAAN,CAFY;AAGZ,+BAAY,KAAG,eAAH,CAAZ,CAHY;AAIZ,uCAAe,KAAI,uBAAJ,CAAf,CAJY;AAKZ,6BAAU,KAAG,aAAH,CAAV,CALY;AAAA,UAAU,GAAV;AAAA;AArBf,CAAA;AACC,YADD,CACC,oCADD;AAcC,gBAdD,CAcC,mCAdD;AAiBC,gBAjBD,CAiBC,kCAjBD;AAmBgB,gBAnBhB,CAmBgB,2CAnBhB;AAsBY,gBAtBZ,CAsBY,wCAtBZ;AAqBe,gBArBf,CAqBe,uCArBf;"
+}

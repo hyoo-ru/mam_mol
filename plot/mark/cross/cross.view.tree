@@ -4,11 +4,11 @@ $mol_plot_mark_cross $mol_plot_graph
 	title_y_gap 22
 	threshold 16
 	graphs /$mol_plot_graph
-	dimensions $mol_vector_2d /
-		<= dimensions_x $mol_vector_range /
+	dimensions $mol_vector_2d<$mol_vector_range<number>> /
+		<= dimensions_x $mol_vector_range<number> /
 			Infinity
 			-Infinity
-		<= dimensions_y $mol_vector_range /
+		<= dimensions_y $mol_vector_range<number> /
 			Infinity
 			-Infinity
 	sub /

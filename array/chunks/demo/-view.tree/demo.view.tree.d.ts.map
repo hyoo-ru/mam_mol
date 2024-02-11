@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/array/chunks/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,oCAAuB,0BAAvB;AACC,AAAA,eAAO,MAAP,IAAO;AAKP,AAAA,cAAQ;AANT;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

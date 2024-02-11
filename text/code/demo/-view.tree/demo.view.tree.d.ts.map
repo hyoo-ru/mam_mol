@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/text/code/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAIG;AAAA,AAAe;AAAA;AAAf,cADO,cACP;AAAA;AACA;AAAA,AAAQ,cALX,mBAKW;AAAA;AAAR,cAFO,cAEP;AAAA;AACA;AAAA,AAAU,cANb,mBAMa;AAAA;AAAV,cAHO,cAGP;AAAA;AACA;AAAA,AAAgB,cAPnB,mBAOmB;AAAA;AAAhB,cAJO,cAIP;AAAA;AAPH,iCAAoB,2BAApB;AACC,AAAA,YAAO;AACP,AAAA,UAAI;AAMJ,AAAA,WAAK;AAIL,AAAA,cAAQ;AAPE,AAAA,aAAQ;AACN,AAAA,aAAO;AACD,AAAA,yBAAc;AAJ5B,AAAA,WAAK;AAHV;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

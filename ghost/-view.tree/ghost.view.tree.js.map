@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/ghost/ghost.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_ghost $mol_view\n\tSub $mol_view\n"
+	],
+	"mappings": "AAAA,AAAA,mCAAW,sBAAX;AAAA,AACC;AAAA,AAAI,qCAAJ;AAAA,UAAI,GAAJ;AAAA;AADD,CAAA;AACC,YADD,CACC,+BADD;"
+}

@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/code/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_code_demo $mol_example_small\n\ttitle \\Barcode scanner with various formats support\n\tsub /\n\t\t<= Qr $mol_code\n\t\t\tformat \\QR_CODE\n\t\t<= Matrix $mol_code\n\t\t\tformat \\DATA_MATRIX\n\t\t<= Upc_e $mol_code\n\t\t\tformat \\UPC_E\n\t\t<= Upc_a $mol_code\n\t\t\tformat \\UPC_A\n\t\t<= Ean_8 $mol_code\n\t\t\tformat \\EAN_8\n\t\t<= Ean_13 $mol_code\n\t\t\tformat \\EAN_13\n\t\t<= Code_128 $mol_code\n\t\t\tformat \\CODE_128\n\t\t<= Code_39 $mol_code\n\t\t\tformat \\CODE_39\n\t\t<= Itf $mol_code\n\t\t\tformat \\ITF\n\ttags /\n\t\t\\qrcode\n\t\t\\barcode\n\t\t\\scan\n\t\t\\cordova\n\taspects /\n\t\t\\Widget/Control\n"
+	],
+	"mappings": "AAAA,AAAA,2CAAe,+BAAf;AAAA,AACC;AAAA,AAAA,UAAO,8CAAP;AAAA;AACA;AAAA,AAAA,UAAI;AAAA,AACH,SAAG,KAAH,CADG;AAGH,SAAG,SAAH,CAHG;AAKH,SAAG,QAAH,CALG;AAOH,SAAG,QAAH,CAPG;AASH,SAAG,QAAH,CATG;AAWH,SAAG,SAAH,CAXG;AAaH,SAAG,WAAH,CAbG;AAeH,SAAG,UAAH,CAfG;AAiBH,SAAG,MAAH;AAjBG,CAAJ;AAAA;AAmBA;AAAA,AAAA,UAAK;AAAA,AACH,YADG;AAEH,aAFG;AAGH,UAHG;AAIH;AAJG,CAAL;AAAA;AAKA;AAAA,AAAA,UAAQ,CACN,gBADM,CAAR;AAAA;AAvBI;AAAA,AAAG,qCAAH;AACF,yBAAQ,SAAR,CADE;AAAA,UAAG,GAAH;AAAA;AAEA;AAAA,AAAO,qCAAP;AACF,yBAAQ,aAAR,CADE;AAAA,UAAO,GAAP;AAAA;AAEA;AAAA,AAAM,qCAAN;AACF,yBAAQ,OAAR,CADE;AAAA,UAAM,GAAN;AAAA;AAEA;AAAA,AAAM,qCAAN;AACF,yBAAQ,OAAR,CADE;AAAA,UAAM,GAAN;AAAA;AAEA;AAAA,AAAM,qCAAN;AACF,yBAAQ,OAAR,CADE;AAAA,UAAM,GAAN;AAAA;AAEA;AAAA,AAAO,qCAAP;AACF,yBAAQ,QAAR,CADE;AAAA,UAAO,GAAP;AAAA;AAEA;AAAA,AAAS,qCAAT;AACF,yBAAQ,UAAR,CADE;AAAA,UAAS,GAAT;AAAA;AAEA;AAAA,AAAQ,qCAAR;AACF,yBAAQ,SAAR,CADE;AAAA,UAAQ,GAAR;AAAA;AAEA;AAAA,AAAI,qCAAJ;AACF,yBAAQ,KAAR,CADE;AAAA,UAAI,GAAJ;AAAA;AAnBL,CAAA;AAGK,YAHL,CAGK,kCAHL;AAKK,YALL,CAKK,sCALL;AAOK,YAPL,CAOK,qCAPL;AASK,YATL,CASK,qCATL;AAWK,YAXL,CAWK,qCAXL;AAaK,YAbL,CAaK,sCAbL;AAeK,YAfL,CAeK,wCAfL;AAiBK,YAjBL,CAiBK,uCAjBL;AAmBK,YAnBL,CAmBK,mCAnBL;"
+}

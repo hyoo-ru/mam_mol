@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/bidi_indexed.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_bidi_indexed_foo $mol_object\n\tindexed*? <=> owner*? null\n"
+	],
+	"mappings": "AAAA,AAAA,2GAA+C,wBAA/C;AAAA,AACC;AAAA,AAAA,UAAU,KAAI,gBAAJ,CAAV;AAAA;AAAc;AAAA,AAAA;AAAA,UAAQ,IAAR;AAAA;AADf,CAAA;AACe,gBADf,CACe,qEADf;"
+}

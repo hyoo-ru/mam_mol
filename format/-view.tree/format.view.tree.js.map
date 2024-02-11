@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/format/format.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_format $mol_string\n\tallow \\0123456789\n\thint <= mask*0 \\\n\tkeyboard \\numeric\n"
+	],
+	"mappings": "AAAA,AAAA,qCAAY,wBAAZ;AAAA,AACC;AAAA,AAAA,UAAO,YAAP;AAAA;AACA;AAAA,AAAA,UAAK,KAAG,UAAH,CAAL;AAAA;AACA;AAAA,AAAA,UAAU,SAAV;AAAA;AADQ;AAAA,AAAA,UAAQ,EAAR;AAAA;AAFT,CAAA;"
+}

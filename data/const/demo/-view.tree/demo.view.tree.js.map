@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/const/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_const_demo $mol_example_code\n\tcode? \\\n\t\t\\const OK = $mol_data_const({ done: true })\n\t\t\\const ok = OK({ done: true }) // ✅\n\t\t\\\n\t\t\\OK({ done: false }) // ❌ {\"done\":false} is not {\"done\":true}\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\t\t\\equals\n\taspects /\n\t\t\\Algorithm/Assert\n"
+	],
+	"mappings": "AAAA,AAAA,uDAAqB,8BAArB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,oJAAP;AAAA;AAKA;AAAA,AAAA,UAAK;AAAA,AACH,aADG;AAEH,gBAFG;AAGH;AAHG,CAAL;AAAA;AAIA;AAAA,AAAA,UAAQ,CACN,kBADM,CAAR;AAAA;AAVD,CAAA;AACC,YADD,CACC,0CADD;"
+}

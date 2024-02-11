@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/bidi_localized_in_object.view.tree",
+		"localized_string"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_bidi_localized_in_object_foo $mol_object\n\tobj *\n\t\tloc? <=> outer? @ \\test1\n",
+		"\n\t\t()\n\t\t\tthis\n\t\t\t[] \\$\n\t\t\t[] \\$mol_locale\n\t\t\t[] \\text\n\t\t\t(,) #key\n\t"
+	],
+	"mappings": "AAAA,AAAA,mIAA2D,wBAA3D;AAAA,AACC;AAAA,AAAA,UAAI,CACH,iBAAK,KAAI,YAAJ,CADF,CAAJ;AAAA;AACU;AAAA,AAAA;AAAA,UCDT,CACC,IACA,EACA,YACA,KACA,CDJe,kECIf,CALD,CDCS;AAAA;AAFX,CAAA;AAEW,YAFX,CAEW,iFAFX;"
+}

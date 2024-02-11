@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/frame/frame.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_frame $mol_embed_native\n\tdom_name \\iframe\n\tattr *\n\t\t^\n\t\tdata null\n\t\ttype null\n\t\tsrc <= uri? \\about:config\n\t\tsrcdoc <= html null\n\t\tallow <= allow \\\n\t\t- allowfullscreen <=\n\tfullscreen true\n\taccelerometer true\n\tautoplay true\n\tencription true\n\tgyroscope true\n\tpip true\n\tclipboard_read true\n\tclipboard_write true\n"
+	],
+	"mappings": "AAAA,AAAA,mCAAW,8BAAX;AAAA,AACC;AAAA,AAAA,UAAU,QAAV;AAAA;AACA;AAAA,AAAA,UAAK;AAAA,AACJ,qBADI;AAEJ,YAAK,IAFD;AAGJ,YAAK,IAHD;AAIJ,WAAI,KAAG,MAAH,CAJA;AAKJ,cAAO,KAAG,OAAH,CALH;AAMJ,aAAM,KAAG,QAAH;AANF,CAAL;AAAA;AAQA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAc,IAAd;AAAA;AACA;AAAA,AAAA,UAAS,IAAT;AAAA;AACA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAU,IAAV;AAAA;AACA;AAAA,AAAA,UAAI,IAAJ;AAAA;AACA;AAAA,AAAA,UAAe,IAAf;AAAA;AACA;AAAA,AAAA,UAAgB,IAAhB;AAAA;AAXQ;AAAA,AAAA;AAAA,UAAM,cAAN;AAAA;AACG;AAAA,AAAA,UAAK,IAAL;AAAA;AACD;AAAA,AAAA,UAAO,EAAP;AAAA;AARX,CAAA;AAMS,YANT,CAMS,+BANT;"
+}

@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/left_second_level_index.view.tree",
+		"localized_string"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_left_second_level_index_bar $mol_object\n\tlocalized \\\n\n$mol_view_tree2_to_js_test_ex_left_second_level_index_foo $mol_object\n\tcls* <= owner*? $mol_view_tree2_to_js_test_ex_left_second_level_index_bar\n\t\tlocalized <= some*? @ \\v1\n",
+		"\n\t\t()\n\t\t\tthis\n\t\t\t[] \\$\n\t\t\t[] \\$mol_locale\n\t\t\t[] \\text\n\t\t\t(,) #key\n\t"
+	],
+	"mappings": "AAAA,AAAA,iIAA0D,wBAA1D;AAAA,AACC;AAAA,AAAA,UAAW,EAAX;AAAA;AADD,CAAA;AAGA,iIAA0D,wBAA1D;AAAA,AACC;AAAA,AAAA,UAAK,KAAG,UAAH,CAAL;AAAA;AACc;AAAA,AAAA;AAAA,UCJb,CACC,IACA,EACA,YACA,KACA,CDDmB,gECCnB,CALD,CDIa;AAAA;AADN;AAAA,AAAA;AAAQ,qFAAR;AACP,4BAAU,KAAG,SAAH,CAAV,CADO;AAAA,UAAQ,GAAR;AAAA;AADT,CAHA;AAKe,gBAFf,CAEe,+EALf;AAIS,gBADT,CACS,gFAJT;"
+}

@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/paragraph/paragraph.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,4BAAe,kBAAf;AACC,AAAA,kBAAY;AACZ,AAAA,mBAAa;AACb,AAAA,kBAAY;AACZ,AAAA,gBAAU;AACV,AAAA,UAAI;AALL;AAAA;AAAA;",
+	"file": "paragraph.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/simple_two_classes.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,kEAAqD,oBAArD;AACC,AAAA,UAAK;AADN;AAAA;AAEA,kEAAqD,6DAArD;AACC,AAAA,UAAK;AADN;AAFA;AAAA;",
+	"file": "simple_two_classes.view.tree.d.ts",
+	"sourceRoot": "../../../../../../../.."
+}

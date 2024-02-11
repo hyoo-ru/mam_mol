@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/map/yandex/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAMK;AAAA,AAAS,cANd,oBAMc;AAAA;AAAT,cADQ,oBACR;AAAA;AACA;AAAA,AAAW,cAPhB,oBAOgB;AAAA;AAAX,cAFQ,oBAER;AAAA;AACA;AAAA,AAAW,cARhB,oBAQgB;AAAA;AAAX,cAHQ,oBAGR;AAAA;AAJF;AAAA,AAAQ;AAAA;AAAR,cADM,eACN;AAAA;AAJH,kCAAqB,2BAArB;AACC,AAAA,YAAO;AACP,AAAA,UAAI;AAOJ,AAAA,cAAQ;AAHK,AAAA,kBAAa;AACX,AAAA,mBAAc;AACd,AAAA,oBAAe;AAHxB,AAAA,YAAM;AAFR,AAAA,UAAI;AAHT;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

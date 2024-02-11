@@ -13,5 +13,7 @@
 	pack icon git \https://github.com/nin-jin/mol_icon.git
 \/mol/view
 	include \/mol/view/tree/test
+\/mol/view/tree2/to/js
+	include \/mol/view/tree2/to/js/test
 \/mol/build
 	deploy \/mol/build/bin

@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/portion/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_portion_demo $mol_example_small\n\ttitle \\Progress bar in various states\n\tsub /\n\t\t<= Empty $mol_portion\n\t\t\tportion <= fist 0\n\t\t<= Partial $mol_portion\n\t\t\tportion <= second 0.5\n\t\t<= Full $mol_portion\n\t\t\tportion <= third 1\n\ttags /\n\t\t\\progress\n\t\t\\slider\n\taspects /\n\t\t\\Widget/Draw/Chart/Bar\n"
+	],
+	"mappings": "AAAA,AAAA,iDAAkB,+BAAlB;AAAA,AACC;AAAA,AAAA,UAAO,gCAAP;AAAA;AACA;AAAA,AAAA,UAAI;AAAA,AACH,SAAG,QAAH,CADG;AAGH,SAAG,UAAH,CAHG;AAKH,SAAG,OAAH;AALG,CAAJ;AAAA;AAOA;AAAA,AAAA,UAAK,CACH,UADG,EAEH,QAFG,CAAL;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,uBADM,CAAR;AAAA;AARa;AAAA,AAAA,UAAK,CAAL;AAAA;AADT;AAAA,AAAM,wCAAN;AACF,0BAAQ,KAAG,OAAH,CAAR,CADE;AAAA,UAAM,GAAN;AAAA;AAGS;AAAA,AAAA,UAAO,GAAP;AAAA;AADT;AAAA,AAAQ,wCAAR;AACF,0BAAQ,KAAG,SAAH,CAAR,CADE;AAAA,UAAQ,GAAR;AAAA;AAGS;AAAA,AAAA,UAAM,CAAN;AAAA;AADT;AAAA,AAAK,wCAAL;AACF,0BAAQ,KAAG,QAAH,CAAR,CADE;AAAA,UAAK,GAAL;AAAA;AAPL,CAAA;AAGK,YAHL,CAGK,wCAHL;AAKK,YALL,CAKK,0CALL;AAOK,YAPL,CAOK,uCAPL;"
+}

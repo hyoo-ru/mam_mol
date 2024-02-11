@@ -17,7 +17,7 @@ namespace $ {
 			const data = {} as { [ uri : string ] : Element }
 			
 			for( let response of responses ) {
-				const uri = this.resolve( response.querySelector( 'href' ).textContent ).uri()
+				const uri = this.resolve( response.querySelector( 'href' )?.textContent ?? '' ).uri()
 				
 				data[ uri ] = response
 			}
@@ -86,7 +86,7 @@ namespace $ {
 		}
 		
 		prop( prop: string ) {
-			return this.data_self()[ this.uri() ].querySelector( prop ).textContent
+			return this.data_self()[ this.uri() ]?.querySelector( prop )?.textContent
 		}
 	
 		type() {

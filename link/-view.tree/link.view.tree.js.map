@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/link/link.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_link $mol_view\n\turi \\\n\tdom_name \\a\n\turi_off \\\n\turi_native null\n\texternal false\n\tattr *\n\t\t^\n\t\thref <= uri_toggle \\\n\t\ttitle <= hint_safe <= hint \\\n\t\ttarget <= target \\_self\n\t\tdownload <= file_name \\\n\t\tmol_link_current <= current false\n\t\trel <= relation \\\n\tsub /$mol_view_content\n\t\t<= title\n\targ *\n\tevent *\n\t\t^\n\t\tclick?event <=> click?event <=> event_click?event null\n"
+	],
+	"mappings": "AAAA,AAAA,iCAAU,sBAAV;AAAA,AACC;AAAA,AAAA,UAAK,EAAL;AAAA;AACA;AAAA,AAAA,UAAU,GAAV;AAAA;AACA;AAAA,AAAA,UAAS,EAAT;AAAA;AACA;AAAA,AAAA,UAAW,IAAX;AAAA;AACA;AAAA,AAAA,UAAS,KAAT;AAAA;AACA;AAAA,AAAA,UAAK;AAAA,AACJ,qBADI;AAEJ,YAAK,KAAG,aAAH,CAFD;AAGJ,aAAM,KAAG,YAAH,CAHF;AAIJ,cAAO,KAAG,SAAH,CAJH;AAKJ,gBAAS,KAAG,YAAH,CALL;AAMJ,wBAAiB,KAAG,UAAH,CANb;AAOJ,WAAI,KAAG,WAAH;AAPA,CAAL;AAAA;AAQA;AAAA,AAAA,UAAI,CACH,KAAG,QAAH,CADG,CAAJ;AAAA;AAEA;AAAA,AAAA,UAAI,EAAJ;AAAA;AACA;AAAA,AAAA,UAAM,CACL,kBADK,EAEL,mBAAY,KAAI,YAAJ,CAFP,CAAN;AAAA;AATS;AAAA,AAAA,UAAY,EAAZ;AAAA;AACc;AAAA,AAAA,UAAM,EAAN;AAAA;AAAb;AAAA,AAAA,UAAU,KAAG,OAAH,CAAV;AAAA;AACC;AAAA,AAAA,UAAQ,OAAR;AAAA;AACE;AAAA,AAAA,UAAW,EAAX;AAAA;AACQ;AAAA,AAAA,UAAQ,KAAR;AAAA;AACb;AAAA,AAAA,UAAU,EAAV;AAAA;AAMyB;AAAA,AAAA;AAAA,UAAkB,IAAlB;AAAA;AAAhB;AAAA,AAAA,UAAY,KAAI,kBAAJ,CAAZ;AAAA;AAnBlB,CAAA;AAmBkC,YAnBlC,CAmBkC,sCAnBlC;"
+}

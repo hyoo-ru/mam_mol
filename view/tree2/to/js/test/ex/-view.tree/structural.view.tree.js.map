@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/structural.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_structural_foo $mol_object\n\tbar *\n\t\talpha 1\n\t\tbeta *\n\t\txxx <= lol 2\n"
+	],
+	"mappings": "AAAA,AAAA,uGAA6C,wBAA7C;AAAA,AACC;AAAA,AAAA,UAAI;AAAA,AACH,aAAM,CADH;AAEH,YAAK,EAFF;AAGH,WAAI,KAAG,MAAH;AAHD,CAAJ;AAAA;AAGQ;AAAA,AAAA,UAAI,CAAJ;AAAA;AAJT,CAAA;"
+}

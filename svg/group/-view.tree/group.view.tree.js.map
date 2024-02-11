@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/svg/group/group.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_svg_group $mol_svg\n\tdom_name \\g\n"
+	],
+	"mappings": "AAAA,AAAA,2CAAe,qBAAf;AAAA,AACC;AAAA,AAAA,UAAU,GAAV;AAAA;AADD,CAAA;"
+}

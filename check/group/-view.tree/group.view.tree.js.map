@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/check/group/group.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_check_group $mol_check_box\n\tchecks /$mol_check\n\tfull true\n"
+	],
+	"mappings": "AAAA,AAAA,+CAAiB,2BAAjB;AAAA,AACC;AAAA,AAAA,UAAO,EAAP;AAAA;AACA;AAAA,AAAA,UAAK,IAAL;AAAA;AAFD,CAAA;"
+}

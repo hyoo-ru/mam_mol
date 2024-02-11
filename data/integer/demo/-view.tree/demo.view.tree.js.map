@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/integer/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_integer_demo $mol_example_code\n\tcode? \\\n\t\t\\const Age = $mol_data_integer\n\t\t\\const age = Age( 18 ) // ✅\n\t\t\\\n\t\t\\Age( 18.5 ) // ❌ 18.5 is not an integer\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Type/Number/Integer\n"
+	],
+	"mappings": "AAAA,AAAA,2DAAuB,8BAAvB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,sGAAP;AAAA;AAKA;AAAA,AAAA,UAAK,CACH,SADG,EAEH,YAFG,CAAL;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,qBAFM,CAAR;AAAA;AATD,CAAA;AACC,YADD,CACC,4CADD;"
+}

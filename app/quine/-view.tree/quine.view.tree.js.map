@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/app/quine/quine.view.tree",
+		"localized_string"
+	],
+	"sourcesContent": [
+		"$mol_app_quine $mol_page\n\ttitle @ \\Quine - Application that prints self sources\n\tbody /\n\t\t<= Text $mol_text\n\t\t\ttext <= content \\\n\t-\n\tpaths /\n\t\t\\mol/app/quine/quine.view.tree\n\t\t\\mol/app/quine/quine.view.ts\n\t\t\\mol/app/quine/index.html\n\t\t\\mol/app/quine/quine.locale=ru.json\n",
+		"\n\t\t()\n\t\t\tthis\n\t\t\t[] \\$\n\t\t\t[] \\$mol_locale\n\t\t\t[] \\text\n\t\t\t(,) #key\n\t"
+	],
+	"mappings": "AAAA,AAAA,2CAAe,sBAAf;AAAA,AACC;AAAA,AAAA,UCAC,CACC,IACA,EACA,YACA,KACA,CDLI,sBCKJ,CALD,CDAD;AAAA;AACA;AAAA,AAAA,UAAK,CACJ,KAAG,OAAH,CADI,CAAL;AAAA;AAIA;AAAA,AAAA,UAAM;AAAA,AACJ,mCADI;AAEJ,iCAFI;AAGJ,8BAHI;AAIJ;AAJI,CAAN;AAAA;AAFU;AAAA,AAAA,UAAS,EAAT;AAAA;AADN;AAAA,AAAK,qCAAL;AACF,uBAAK,KAAG,UAAH,CAAL,CADE;AAAA,UAAK,GAAL;AAAA;AAHL,CAAA;AAGK,YAHL,CAGK,oCAHL;"
+}

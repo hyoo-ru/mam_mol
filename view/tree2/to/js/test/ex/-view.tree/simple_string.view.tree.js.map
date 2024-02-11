@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/simple_string.view.tree",
+		"localized_string"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_simple_string_foo $mol_object\n\thardcoded \\\n\t\t\\First\n\t\t\\Second\n\tlocalized @ \\bla\n",
+		"\n\t\t()\n\t\t\tthis\n\t\t\t[] \\$\n\t\t\t[] \\$mol_locale\n\t\t\t[] \\text\n\t\t\t(,) #key\n\t"
+	],
+	"mappings": "AAAA,AAAA,6GAAgD,wBAAhD;AAAA,AACC;AAAA,AAAA,UAAW,eAAX;AAAA;AAGA;AAAA,AAAA,UCHC,CACC,IACA,EACA,YACA,KACA,CDFQ,2DCER,CALD,CDGD;AAAA;AAJD,CAAA;"
+}

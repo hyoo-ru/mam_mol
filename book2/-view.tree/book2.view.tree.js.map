@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/book2/book2.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_book2 $mol_scroll\n\tmenu_title \\\n\tsub <= pages /$mol_view\n\tminimal_width 0\n\tPlaceholder $mol_view\n\tGap* $mol_view title \\\n"
+	],
+	"mappings": "AAAA,AAAA,mCAAW,wBAAX;AAAA,AACC;AAAA,AAAA,UAAY,EAAZ;AAAA;AACA;AAAA,AAAA,UAAI,KAAG,QAAH,CAAJ;AAAA;AACA;AAAA,AAAA,UAAc,CAAd;AAAA;AACA;AAAA,AAAY,qCAAZ;AAAA,UAAY,GAAZ;AAAA;AACA;AAAA,AAAK,qCAAL;AAAe,wBAAO,EAAP,CAAf;AAAA,UAAK,GAAL;AAAA;AAHO;AAAA,AAAA,UAAM,EAAN;AAAA;AAFR,CAAA;AAIC,YAJD,CAIC,uCAJD;AAKC,gBALD,CAKC,+BALD;"
+}

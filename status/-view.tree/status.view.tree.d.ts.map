@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/status/status.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,yBAAY,kBAAZ;AACC,AAAA,aAAU,YADX,WACW;AACV,AAAA,qBAAe;AACf,AAAA,oBAAc;AACd,AAAA,UAAI;AACA,AAAA,cAAS;AALd;AAAA;AAAA;",
+	"file": "status.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

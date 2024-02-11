@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/float/float.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_float $mol_view\n\tstyle *\n\t\t^\n\t\tminHeight \\auto\n"
+	],
+	"mappings": "AAAA,AAAA,mCAAW,sBAAX;AAAA,AACC;AAAA,AAAA,UAAM,CACL,kBADK,EAEL,aAAW,MAFN,CAAN;AAAA;AADD,CAAA;"
+}

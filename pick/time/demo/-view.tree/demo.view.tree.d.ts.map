@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/pick/time/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAG8C;AAAA,AAAA,IAAG,MAAH;AAAA;AAAjB;AAAiB;AAA3C;AAAA,AAAkB,cAHrB,mBAGqB;AAAA;AAAlB,cADS,cACT;AAAA;AAHH,iCAAoB,2BAApB;AACC,AAAA,UAAI;AAGJ,AAAA,WAAK;AAKL,AAAA,cAAQ;AANY,AAAA,iBAAQ,gBAAR,IAAQ;AADxB,AAAA,aAAO;AAFZ;AAAA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

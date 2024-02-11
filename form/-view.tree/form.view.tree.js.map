@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/form/form.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_form $mol_list\n\tsubmit_allowed true\n\tsubmit_blocked false\n\tevent *\n\t\t^\n\t\tkeydown?event <=> keydown?event null\n\tsubmit?event null\n\trows /\n\t\t<= Body $mol_list\n\t\t\tsub <= body <= form_fields /$mol_form_field\n\t\t<= Foot $mol_row\n\t\t\tsub <= foot <= buttons /$mol_view\n"
+	],
+	"mappings": "AAAA,AAAA,iCAAU,sBAAV;AAAA,AACC;AAAA,AAAA,UAAe,IAAf;AAAA;AACA;AAAA,AAAA,UAAe,KAAf;AAAA;AACA;AAAA,AAAA,UAAM,CACL,kBADK,EAEL,qBAAc,KAAI,cAAJ,CAFT,CAAN;AAAA;AAGA;AAAA,AAAA;AAAA,UAAa,IAAb;AAAA;AACA;AAAA,AAAA,UAAK,CACJ,KAAG,OAAH,CADI,EAGJ,KAAG,OAAH,CAHI,CAAL;AAAA;AAFmB;AAAA,AAAA;AAAA,UAAc,IAAd;AAAA;AAIF;AAAA,AAAA,UAAY,EAAZ;AAAA;AAAR;AAAA,AAAA,UAAK,KAAG,cAAH,CAAL;AAAA;AADL;AAAA,AAAK,qCAAL;AACF,sBAAI,KAAG,OAAH,CAAJ,CADE;AAAA,UAAK,GAAL;AAAA;AAGa;AAAA,AAAA,UAAQ,EAAR;AAAA;AAAR;AAAA,AAAA,UAAK,KAAG,UAAH,CAAL;AAAA;AADL;AAAA,AAAK,oCAAL;AACF,sBAAI,KAAG,OAAH,CAAJ,CADE;AAAA,UAAK,GAAL;AAAA;AAVL,CAAA;AAMC,YAND,CAMC,iCAND;AAKoB,YALpB,CAKoB,kCALpB;AAQK,YARL,CAQK,+BARL;AAUK,YAVL,CAUK,+BAVL;"
+}

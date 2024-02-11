@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/link/source/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_link_source_demo $mol_example_small\n\ttitle \\Link with icon\n\tsub /\n\t\t<= Blocks $mol_list\n\t\t\trows /\n\t\t\t\t<= Input $mol_string\n\t\t\t\t\tvalue? <=> uri? \\https://github.com/hyoo-ru/mam_mol/\n\t\t\t\t<= Output $mol_link_source\n\t\t\t\t\turi <= uri?\n\ttags /\n\t\t\\link\n\t\t\\icon\n\t\t\\source\n\t\t\\github\n\t\t\\url\n\taspects /\n\t\t\\Navigation\n\t\t\\Widget/Button\n"
+	],
+	"mappings": "AAAA,AAAA,yDAAsB,+BAAtB;AAAA,AACC;AAAA,AAAA,UAAO,gBAAP;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,SAAH,CADG,CAAJ;AAAA;AAOA;AAAA,AAAA,UAAK;AAAA,AACH,UADG;AAEH,UAFG;AAGH,YAHG;AAIH,YAJG;AAKH;AALG,CAAL;AAAA;AAMA;AAAA,AAAA,UAAQ,CACN,YADM,EAEN,eAFM,CAAR;AAAA;AATe;AAAA,AAAA;AAAA,UAAM,qCAAN;AAAA;AADT;AAAA,AAAM,uCAAN;AACF,4BAAO,KAAI,UAAJ,CAAP,CADE;AAAA,UAAM,GAAN;AAAA;AAEA;AAAA,AAAO,4CAAP;AACF,sBAAI,KAAG,MAAH,CAAJ,CADE;AAAA,UAAO,GAAP;AAAA;AAJF;AAAA,AAAO,qCAAP;AACF,uBAAK,CACJ,KAAG,QAAH,CADI,EAGJ,KAAG,SAAH,CAHI,CAAL,CADE;AAAA,UAAO,GAAP;AAAA;AAHL,CAAA;AAMgB,YANhB,CAMgB,0CANhB;AAKO,YALP,CAKO,4CALP;AAOO,YAPP,CAOO,6CAPP;AAGK,YAHL,CAGK,6CAHL;"
+}

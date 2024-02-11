@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/book2/book2.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAKgB;AAAA,AAAO;AAAA;AAAP,cAAV,SAAU;AAAA;AALhB,wBAAW,oBAAX;AACC,AAAA,iBAAY;AACZ,AAAA,UAAO,YAFR,UAEQ;AACP,AAAA,oBAAc;AACd,AAAA,kBAAY;AACZ,AAAA,iBAAK;AAHE,AAAA,YAAM;AAFd;AAAA;AAAA;",
+	"file": "book2.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

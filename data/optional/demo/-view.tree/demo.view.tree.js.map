@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/optional/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_optional_demo $mol_example_code\n\tcode? \\\n\t\t\\const Age = $mol_data_optional( $mol_data_integer )\n\t\t\\const age1 = Age( 18 ) // ✅\n\t\t\\const age2 = Age( undefined ) // ✅\n\t\t\\\n\t\t\\Age( 'xxx' ) // ❌ xxx is not a number\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\t\t\\optional\n\t\t\\maybe\n\taspects /\n\t\t\\Algorithm/Assert\n"
+	],
+	"mappings": "AAAA,AAAA,6DAAwB,8BAAxB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,+JAAP;AAAA;AAMA;AAAA,AAAA,UAAK;AAAA,AACH,aADG;AAEH,gBAFG;AAGH,cAHG;AAIH;AAJG,CAAL;AAAA;AAKA;AAAA,AAAA,UAAQ,CACN,kBADM,CAAR;AAAA;AAZD,CAAA;AACC,YADD,CACC,6CADD;"
+}

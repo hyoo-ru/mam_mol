@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/number/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_number_demo $mol_example_code\n\tcode? \\\n\t\t\\const Pos = $mol_data_number\n\t\t\\const pos = Pos( 1.25 ) // ✅\n\t\t\\\n\t\t\\Pos( 'xxx' ) // ❌ xxx is not a number\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Type/Number\n"
+	],
+	"mappings": "AAAA,AAAA,yDAAsB,8BAAtB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,qGAAP;AAAA;AAKA;AAAA,AAAA,UAAK,CACH,SADG,EAEH,YAFG,CAAL;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,aAFM,CAAR;AAAA;AATD,CAAA;AACC,YADD,CACC,2CADD;"
+}

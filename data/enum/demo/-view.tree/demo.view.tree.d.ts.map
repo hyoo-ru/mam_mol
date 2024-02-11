@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/enum/demo/demo.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,wCAA2B,0BAA3B;AACC,AAAA,eAAO,MAAP,IAAO;AAMP,AAAA,WAAK;AAIL,AAAA,cAAQ;AAXT;AAAA;AAeA,wCAA2B,0BAA3B;AACC,AAAA,eAAO,MAAP,IAAO;AAMP,AAAA,WAAK;AAIL,AAAA,cAAQ;AAXT;AAfA;AAAA;",
+	"file": "demo.view.tree.d.ts",
+	"sourceRoot": "../../../../.."
+}

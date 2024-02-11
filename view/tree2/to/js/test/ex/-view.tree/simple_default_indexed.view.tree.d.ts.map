@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/simple_default_indexed.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,sEAAyD,oBAAzD;AACC,AAAA,uBAAM,MAAN,IAAM;AACN,AAAA,0BAAW,MAAX,IAAW;AAFZ;AAAA;AAAA;",
+	"file": "simple_default_indexed.view.tree.d.ts",
+	"sourceRoot": "../../../../../../../.."
+}

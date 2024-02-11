@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/simple_factory_props.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,oEAAuD,oBAAvD;AACC,AAAA,UAAI;AACJ,AAAA,UAAK;AACL,AAAA,WAAK;AAHN;AAAA;AAOE;AAAA,AAAK;AAAA;AAAL,cADM,sDACN;AAAA;AACA;AAAA,AAAO;AAAA;AAAP,cAFM,sDAEN;AAAA;AACA;AAAA,AAAI;AAAA;AAAJ,cAHM,sDAGN;AAAA;AAJF,oEAAuD,oBAAvD;AACC,AAAA,aAAO;AADR;AALA;AAAA;",
+	"file": "simple_factory_props.view.tree.d.ts",
+	"sourceRoot": "../../../../../../../.."
+}

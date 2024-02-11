@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/map/yandex/yandex.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,6BAAgB,kBAAhB;AACC,AAAA,eAAM,MAAN,IAAM;AACN,AAAA,iBAAQ,eAAR,IAAQ;AAGR,AAAA,cAAQ;AALT;AAAA;AAAA;",
+	"file": "yandex.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

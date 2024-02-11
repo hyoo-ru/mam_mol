@@ -1,35 +1,62 @@
 namespace $ {
 
 	const err = $mol_view_tree2_error_str
-	
-	function prop_parts( prop: $mol_tree2 ) {
-		return [ ...prop.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
-	}
 
-	function name_of( prop: $mol_tree2 ) {
-		return prop_parts(prop).name
+	function name_of(this: $, prop: $mol_tree2 ) {
+		return this.$mol_view_tree2_prop_parts(prop).name
 	}
 	
-	function params_of( prop: $mol_tree2, bidi = true ) {
+	function params_of( this: $, prop: $mol_tree2, bidi = true ) {
 		
-		const { key, next } = prop_parts(prop)
+		const { key, next } = this.$mol_view_tree2_prop_parts(prop)
 
 		return prop.struct( '(,)', [
-			... key ? [ prop.struct( 'id' ) ] : [],
+			... key
+				? [ prop.struct( 'id' ) ]
+				: [],
 			... ( bidi && next ) ? [ prop.struct( 'next' ) ] : [],
 		] )
 		
 	}
 	
-	function args_of( prop: $mol_tree2, bidi = true ) {
+	function args_of( this: $, prop: $mol_tree2, bidi = true ) {
 		
-		const { key, next } = prop_parts(prop)
-		
+		const { key, next } = this.$mol_view_tree2_prop_parts(prop)
+
 		return prop.struct( '(,)', [
-			... key ? [ prop.struct( key.length > 1 ? key.slice(1) : 'id' ) ] : [],
+			... key
+				? key.length > 1
+					? [ prop.data( key.slice(1) ) ]
+					: [ prop.struct( 'id' ) ]
+				: [],
 			... ( bidi && next ) ? [ prop.struct( 'next' ) ] : [],
 		] )
 		
+	}
+
+	function call_method_name(this: $, child: $mol_tree2) {
+		return child.struct( '[]', [
+			child.data( name_of.call( this, child ) )
+		] )
+	}
+
+	function call_of(this: $, bind: $mol_tree2, bidi = true) {
+		if( bind.kids.length === 0 ) {
+			return this.$mol_fail(
+				err`Required one child at ${bind.span}`
+			)
+		}
+
+		const chain = [ bind.struct( 'this' ) ]
+
+		for (const child of bind.kids) {
+			chain.push(
+				call_method_name.call(this, child),
+				args_of.call(this, child, bidi),
+			)
+		}
+
+		return bind.struct( '()', chain )
 	}
 
 	type Context = { chain?: string[] }
@@ -53,7 +80,7 @@ namespace $ {
 		prop: $mol_tree2
 	) {
 		const { klass, members, addons } = acc
-		const { name, key, next } = prop_parts(prop)
+		const { name, key, next } = this.$mol_view_tree2_prop_parts(prop)
 
 		const decorate = ()=> {
 			return prop.struct( '()', [
@@ -72,8 +99,9 @@ namespace $ {
 				] ),
 			] )
 		}
-		
-		if( next ) addons.push( decorate() )
+		const op = prop.kids[0]
+		const is_delegate = op?.type === '<=>' || op?.type === '='
+		if( ! is_delegate && next ) addons.push( decorate() )
 		
 		const val = prop.hack<Context>({
 			
@@ -86,25 +114,9 @@ namespace $ {
 				})
 			},
 			
-			'<=': bind => [
-				bind.struct( '()', [
-					bind.kids[0].struct( 'this' ),
-					bind.kids[0].struct( '[]', [
-						bind.kids[0].data( name_of( bind.kids[0] ) ),
-					] ),
-					args_of( bind.kids[0], false ),
-				] ),
-			],
-			
-			'<=>': bind => [
-				bind.struct( '()', [
-					bind.kids[0].struct( 'this' ),
-					bind.kids[0].struct( '[]', [
-						bind.kids[0].data( name_of( bind.kids[0] ) ),
-					] ),
-					args_of( bind.kids[0], true ),
-				] ),
-			],
+			'<=': bind => [ call_of.call(this, bind, false) ],
+
+			'<=>': bind => [ call_of.call(this, bind, true) ],
 			
 			'=>': bind => [],
 			
@@ -113,116 +125,87 @@ namespace $ {
 					ref.struct( '()', [
 						ref.struct( ref.kids[0]?.type ? 'this' : 'super' ),
 						ref.struct( '[]', [
-							ref.data( ref.kids[0]?.type ?? name ),
+							ref.data( ref.kids[0]?.type ? name_of.call(this, ref.kids[0]) : name ),
 						] ),
 						ref.struct( '(,)' )
 					]),
 				] ),
 			],
-			
-			'*': ( obj, belt, context )=> [
+
+			'=': bind => [ bind.struct( '()', [
+					bind.struct( 'this' ),
+					call_method_name.call(this, bind.kids[0]),
+					args_of.call(this, bind.kids[0]),
+					call_method_name.call(this, bind.kids[0].kids[0]),
+					args_of.call(this, bind.kids[0].kids[0]),
+			] ) ],
 				
-				obj.struct('{,}',
-					obj.kids.map( field => {
-						
-						if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
-						const field_name = field.type.replace(/\?\w*$/, '')
-						return field.struct( ':', [
-							field.data( field_name ),
-							field.kids[0].type === '<=>'
-								? field.struct( '=>', [
-									params_of( field ),
-									... field.hack( belt ),
-								] )
-								: field.hack<Context>( belt, {... context, chain: [...context.chain ?? [], field_name] })[0],
-						] )
-						
-					} ).filter( this.$mol_guard_defined )
-				),
-				
-			],
-			
-			'': ( input, belt )=> {
+			'': ( input, belt, context )=> {
+
+				if( input.type[0] === '*' ) {
+					return [
+						input.struct('{,}',
+						input.kids.map( field => {
+							
+							if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
+							const field_name = (field.type || field.value).replace(/\?\w*$/, '')
+
+							return field.struct( ':', [
+								field.data( field_name ),
+								field.kids[0].type === '<=>'
+									? field.struct( '=>', [
+										params_of.call(this, field ),
+										... field.hack( belt ),
+									] )
+									: field.hack<Context>( belt, {... context, chain: [...context.chain ?? [], field_name] })[0],
+							] )
+							
+						} ).filter( this.$mol_guard_defined )
+						)
+					]
+				}
 				
 				if( input.type[0] === '/' ) return [
 					input.struct( '[,]', input.hack( belt ) ),
 				]
-				
-				if( /^[$A-Z]/.test( input.type ) ) {
-					
-					if( !next ) addons.push( decorate() )
+				if( input.type && $mol_view_tree2_value_number(input.type) ) return [
+					input
+				]
+
+				if( $mol_view_tree2_class_match( input ) ) {
+					if( ! next ) addons.push( decorate() )
 					
 					const overrides = [] as $mol_tree2[]
 					
 					for( const over of input.kids ) {
 						
-						if( over.type === '/' ) continue
-						
-						const oname = name_of( over )
+						if( over.type[0] === '/' ) continue
 						const bind = over.kids[0]
-						if( bind.type === '@' ) {
-							overrides.push(
-								over.struct( '=', [
-									over.struct( '()', [
-										over.struct( 'obj' ),
-										over.struct( '[]', [
-											over.data( oname ),
-										] ),
-									] ),
-									over.struct( '=>', [
-										params_of( over ),
-										... localized_string.hack({
-											'#key': key => [ bind.data( `${ klass.type }_${ name }_${ oname }` ) ],
-										}),
-									] ),
-								] ),
-							)
-							
-						} else if( bind.type === '=>' ) {
-							
-							const pr = bind.kids[0]
-							
-							members.push(
-								pr.struct( '.', [
-									pr.data( name_of( pr ) ),
-									params_of( pr ),
-									bind.struct( '{;}', [
-										over.struct( 'return', [
-											over.struct( '()', [
-												over.struct( 'this' ),
-												over.struct( '[]', [
-													over.data( name ),
-												] ),
-												args_of( prop ),
-												over.struct( '[]', [
-													over.data( oname ),
-												] ),
-												args_of( over ),
-											] ),
-										] )
+						if( bind.type === '=>' ) continue
+
+						const over_name = name_of.call(this, over )
+
+						const body = bind.type === '@' ? [
+							args_of.call(this, over ),
+							... localized_string.hack({
+								'#key': key => [ bind.data( `${ klass.type }_${ name }_${ over_name }` ) ],
+							}),
+						] : [
+							args_of.call(this, over ),
+							over.struct( '()', over.hack( belt )),
+						]
+
+						overrides.push(
+							over.struct( '=', [
+								over.struct( '()', [
+									over.struct( 'obj' ),
+									over.struct( '[]', [
+										over.data( over_name ),
 									] ),
 								] ),
-							)
-							
-						} else {
-							
-							overrides.push(
-								over.struct( '=', [
-									over.struct( '()', [
-										over.struct( 'obj' ),
-										over.struct( '[]', [
-											over.data( oname ),
-										] ),
-									] ),
-									over.struct( '=>', [
-										args_of( over ),
-										over.struct( '()', over.hack( belt )),
-									] ),
-								] ),
-							)
-							
-						}
-						
+								over.struct( '=>', body ),
+							] ),
+						)
 					}
 						
 					return [
@@ -234,7 +217,7 @@ namespace $ {
 									input.data( '$' ),
 								]),
 								input.struct('[]', [
-									input.data( input.type ),
+									input.data( input.type.replace(/<.+>/g, '') ),
 								]),
 								input.struct( '(,)', input.select( '/', null ).hack( belt ) ),
 							] ),
@@ -254,9 +237,9 @@ namespace $ {
 		members.push(
 			prop.struct( '.', [
 				prop.data( name ),
-				params_of( prop ),
+				params_of.call(this, prop ),
 				prop.struct( '{;}', [
-					... next ? [
+					... next && ! is_delegate ? [
 						prop.struct( 'if', [
 							prop.struct( '(!==)', [
 								prop.struct( 'next' ),

@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/structural.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,0DAA6C,oBAA7C;AACC,AAAA,UAAI;AAAA,AACH,YAAM,MAAN;AACA,WAAK,mBAAL;AACA,UAAO,YAJT,4CAIS,SAAP;AAHG;AAGI,AAAA,UAAI;AAJb;AAAA;AAAA;",
+	"file": "structural.view.tree.d.ts",
+	"sourceRoot": "../../../../../../../.."
+}

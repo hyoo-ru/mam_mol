@@ -11,7 +11,7 @@ var $;
 (function ($) {
 })($ || ($ = {}));
 module.exports = $;
-//mam.ts
+
 ;
 
 $node[ "../mam.ts" ] = $node[ "../mam.ts" ] = module.exports }.call( {} , {} )
@@ -51,7 +51,7 @@ var $;
     $.$mol_log3_area_lazy = $mol_log3_area_lazy;
     $.$mol_log3_stack = [];
 })($ || ($ = {}));
-//mol/log3/log3.ts
+
 ;
 "use strict";
 var $;
@@ -62,7 +62,7 @@ var $;
     }
     $.$mol_ambient = $mol_ambient;
 })($ || ($ = {}));
-//mol/ambient/ambient.ts
+
 ;
 "use strict";
 var $;
@@ -99,7 +99,7 @@ var $;
         value: (obj) => instances.has(obj),
     });
 })($ || ($ = {}));
-//mol/delegate/delegate.ts
+
 ;
 "use strict";
 var $;
@@ -155,7 +155,7 @@ var $;
     }
     $.$mol_owning_catch = $mol_owning_catch;
 })($ || ($ = {}));
-//mol/owning/owning.ts
+
 ;
 "use strict";
 var $;
@@ -165,7 +165,7 @@ var $;
     }
     $.$mol_fail = $mol_fail;
 })($ || ($ = {}));
-//mol/fail/fail.ts
+
 ;
 "use strict";
 var $;
@@ -175,10 +175,10 @@ var $;
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
-//mol/fail/hidden/hidden.ts
+
 ;
 "use strict";
-//mol/type/writable/writable.ts
+
 ;
 "use strict";
 var $;
@@ -210,7 +210,7 @@ var $;
     }
     $.$mol_func_name_from = $mol_func_name_from;
 })($ || ($ = {}));
-//mol/func/name/name.ts
+
 ;
 "use strict";
 var $;
@@ -253,7 +253,7 @@ var $;
     }
     $.$mol_object2 = $mol_object2;
 })($ || ($ = {}));
-//mol/object2/object2.ts
+
 ;
 "use strict";
 var $;
@@ -320,7 +320,7 @@ var $;
     }
     $.$mol_span = $mol_span;
 })($ || ($ = {}));
-//mol/span/span.ts
+
 ;
 "use strict";
 var $;
@@ -353,7 +353,7 @@ var $;
     }
     $.$mol_tree2_to_string = $mol_tree2_to_string;
 })($ || ($ = {}));
-//mol/tree2/to/string/string.ts
+
 ;
 "use strict";
 var $;
@@ -488,22 +488,23 @@ var $;
             });
             return this.clone(sub);
         }
+        hack_self(belt, context = {}) {
+            let handle = belt[this.type] || belt[''];
+            if (!handle || handle === Object.prototype[this.type]) {
+                handle = (input, belt, context) => [
+                    input.clone(input.hack(belt, context), context.span)
+                ];
+            }
+            try {
+                return handle(this, belt, context);
+            }
+            catch (error) {
+                error.message += `\n${this.clone([])}${this.span}`;
+                $mol_fail_hidden(error);
+            }
+        }
         hack(belt, context = {}) {
-            return [].concat(...this.kids.map(child => {
-                let handle = belt[child.type] || belt[''];
-                if (!handle || handle === Object.prototype[child.type]) {
-                    handle = (input, belt, context) => [
-                        input.clone(input.hack(belt, context), context.span)
-                    ];
-                }
-                try {
-                    return handle(child, belt, context);
-                }
-                catch (error) {
-                    error.message += `\n${child.clone([])}${child.span}`;
-                    $mol_fail_hidden(error);
-                }
-            }));
+            return [].concat(...this.kids.map(child => child.hack_self(belt, context)));
         }
         error(message, Class = Error) {
             return this.span.error(`${message}\n${this.clone([])}`, Class);
@@ -517,7 +518,7 @@ var $;
     }
     $.$mol_tree2_empty = $mol_tree2_empty;
 })($ || ($ = {}));
-//mol/tree2/tree2.ts
+
 ;
 "use strict";
 var $;
@@ -535,7 +536,7 @@ var $;
     }
     $.$mol_error_syntax = $mol_error_syntax;
 })($ || ($ = {}));
-//mol/error/syntax/syntax.ts
+
 ;
 "use strict";
 var $;
@@ -624,7 +625,7 @@ var $;
     }
     $.$mol_tree2_from_string = $mol_tree2_from_string;
 })($ || ($ = {}));
-//mol/tree2/from/string/string.ts
+
 ;
 "use strict";
 var $;
@@ -674,7 +675,7 @@ var $;
     }
     $.$mol_tree2_from_json = $mol_tree2_from_json;
 })($ || ($ = {}));
-//mol/tree2/from/json/json.ts
+
 ;
 "use strict";
 var $;
@@ -720,7 +721,7 @@ var $;
     }
     $.$mol_term_color = $mol_term_color;
 })($ || ($ = {}));
-//mol/term/color/color.ts
+
 ;
 "use strict";
 var $;
@@ -745,7 +746,7 @@ var $;
     $.$mol_log3_rise = $mol_log3_node_make('log', 'stdout', 'rise', $mol_term_color.magenta);
     $.$mol_log3_area = $mol_log3_node_make('log', 'stdout', 'area', $mol_term_color.cyan);
 })($ || ($ = {}));
-//mol/log3/log3.node.ts
+
 ;
 "use strict";
 var $;
@@ -758,7 +759,7 @@ var $;
         $mol_wire_cursor[$mol_wire_cursor["final"] = -4] = "final";
     })($mol_wire_cursor = $.$mol_wire_cursor || ($.$mol_wire_cursor = {}));
 })($ || ($ = {}));
-//mol/wire/cursor/cursor.ts
+
 ;
 "use strict";
 var $;
@@ -825,10 +826,10 @@ var $;
     }
     $.$mol_wire_pub = $mol_wire_pub;
 })($ || ($ = {}));
-//mol/wire/pub/pub.ts
+
 ;
 "use strict";
-//mol/wire/sub/sub.ts
+
 ;
 "use strict";
 var $;
@@ -840,7 +841,7 @@ var $;
     $.$mol_wire_auto = $mol_wire_auto;
     $.$mol_wire_affected = [];
 })($ || ($ = {}));
-//mol/wire/wire.ts
+
 ;
 "use strict";
 var $;
@@ -942,7 +943,7 @@ var $;
         'margin-left': '13px'
     });
 })($ || ($ = {}));
-//mol/dev/format/format.ts
+
 ;
 "use strict";
 var $;
@@ -1086,7 +1087,7 @@ var $;
     }
     $.$mol_wire_pub_sub = $mol_wire_pub_sub;
 })($ || ($ = {}));
-//mol/wire/pub/sub/sub.ts
+
 ;
 "use strict";
 var $;
@@ -1107,7 +1108,7 @@ var $;
     }
     $.$mol_after_timeout = $mol_after_timeout;
 })($ || ($ = {}));
-//mol/after/timeout/timeout.ts
+
 ;
 "use strict";
 var $;
@@ -1121,7 +1122,7 @@ var $;
     }
     $.$mol_after_frame = $mol_after_frame;
 })($ || ($ = {}));
-//mol/after/frame/frame.node.ts
+
 ;
 "use strict";
 var $;
@@ -1131,7 +1132,7 @@ var $;
     }
     $.$mol_promise_like = $mol_promise_like;
 })($ || ($ = {}));
-//mol/promise/like/like.ts
+
 ;
 "use strict";
 var $;
@@ -1354,7 +1355,7 @@ var $;
     }
     $.$mol_wire_fiber = $mol_wire_fiber;
 })($ || ($ = {}));
-//mol/wire/fiber/fiber.ts
+
 ;
 "use strict";
 var $;
@@ -1493,7 +1494,7 @@ var $;
         return Object.is(left[Symbol.toPrimitive]('default'), right[Symbol.toPrimitive]('default'));
     }
 })($ || ($ = {}));
-//mol/compare/deep/deep.ts
+
 ;
 "use strict";
 var $;
@@ -1554,7 +1555,7 @@ var $;
     }
     $.$mol_wire_task = $mol_wire_task;
 })($ || ($ = {}));
-//mol/wire/task/task.ts
+
 ;
 "use strict";
 var $;
@@ -1584,7 +1585,7 @@ var $;
     }
     $.$mol_wire_async = $mol_wire_async;
 })($ || ($ = {}));
-//mol/wire/async/async.ts
+
 ;
 "use strict";
 var $;
@@ -1604,7 +1605,7 @@ var $;
     }
     $_1.$mol_object = $mol_object;
 })($ || ($ = {}));
-//mol/object/object.ts
+
 ;
 "use strict";
 var $;
@@ -1619,7 +1620,7 @@ var $;
     }
     $.$mol_guid = $mol_guid;
 })($ || ($ = {}));
-//mol/guid/guid.ts
+
 ;
 "use strict";
 var $;
@@ -1666,7 +1667,7 @@ var $;
     }
     $.$mol_key = $mol_key;
 })($ || ($ = {}));
-//mol/key/key.ts
+
 ;
 "use strict";
 var $;
@@ -1692,13 +1693,13 @@ var $;
     }
     $.$mol_wire_method = $mol_wire_method;
 })($ || ($ = {}));
-//mol/wire/method/method.ts
+
 ;
 "use strict";
-//mol/type/tail/tail.ts
+
 ;
 "use strict";
-//mol/type/foot/foot.ts
+
 ;
 "use strict";
 var $;
@@ -1716,7 +1717,7 @@ var $;
     }
     $.$mol_fail_catch = $mol_fail_catch;
 })($ || ($ = {}));
-//mol/fail/catch/catch.ts
+
 ;
 "use strict";
 var $;
@@ -1731,7 +1732,7 @@ var $;
     }
     $.$mol_fail_log = $mol_fail_log;
 })($ || ($ = {}));
-//mol/fail/log/log.ts
+
 ;
 "use strict";
 var $;
@@ -1861,7 +1862,7 @@ var $;
     ], $mol_wire_atom.prototype, "once", null);
     $.$mol_wire_atom = $mol_wire_atom;
 })($ || ($ = {}));
-//mol/wire/atom/atom.ts
+
 ;
 "use strict";
 var $;
@@ -1899,7 +1900,7 @@ var $;
     }
     $.$mol_wire_solo = $mol_wire_solo;
 })($ || ($ = {}));
-//mol/wire/solo/solo.ts
+
 ;
 "use strict";
 var $;
@@ -1937,7 +1938,7 @@ var $;
     }
     $.$mol_wire_plex = $mol_wire_plex;
 })($ || ($ = {}));
-//mol/wire/plex/plex.ts
+
 ;
 "use strict";
 var $;
@@ -1945,10 +1946,10 @@ var $;
     $.$mol_mem = $mol_wire_solo;
     $.$mol_mem_key = $mol_wire_plex;
 })($ || ($ = {}));
-//mol/mem/mem.ts
+
 ;
 "use strict";
-//mol/charset/encoding/encoding.ts
+
 ;
 "use strict";
 var $;
@@ -1962,10 +1963,10 @@ var $;
     }
     $.$mol_charset_decode = $mol_charset_decode;
 })($ || ($ = {}));
-//mol/charset/decode/decode.ts
+
 ;
 "use strict";
-//node/node.ts
+
 ;
 "use strict";
 var $node = new Proxy({ require }, {
@@ -2012,7 +2013,7 @@ var $node = new Proxy({ require }, {
 require = (req => Object.assign(function require(name) {
     return $node[name];
 }, req))(require);
-//node/node.node.ts
+
 ;
 "use strict";
 var $;
@@ -2022,7 +2023,7 @@ var $;
     }
     $.$mol_env = $mol_env;
 })($ || ($ = {}));
-//mol/env/env.ts
+
 ;
 "use strict";
 var $;
@@ -2031,7 +2032,7 @@ var $;
         return this.process.env;
     };
 })($ || ($ = {}));
-//mol/env/env.node.ts
+
 ;
 "use strict";
 var $;
@@ -2058,7 +2059,7 @@ var $;
     }
     $.$mol_exec = $mol_exec;
 })($ || ($ = {}));
-//mol/exec/exec.node.ts
+
 ;
 "use strict";
 var $;
@@ -2070,7 +2071,7 @@ var $;
     }
     $.$mol_charset_encode = $mol_charset_encode;
 })($ || ($ = {}));
-//mol/charset/encode/encode.ts
+
 ;
 "use strict";
 var $;
@@ -2189,7 +2190,7 @@ var $;
     ], $mol_file, "absolute", null);
     $.$mol_file = $mol_file;
 })($ || ($ = {}));
-//mol/file/file.ts
+
 ;
 "use strict";
 var $;
@@ -2203,7 +2204,7 @@ var $;
     }
     $.$mol_const = $mol_const;
 })($ || ($ = {}));
-//mol/const/const.ts
+
 ;
 "use strict";
 var $;
@@ -2223,14 +2224,14 @@ var $;
     }
     $.$mol_wire_probe = $mol_wire_probe;
 })($ || ($ = {}));
-//mol/wire/probe/probe.ts
+
 ;
 "use strict";
 var $;
 (function ($) {
     $.$mol_mem_cached = $mol_wire_probe;
 })($ || ($ = {}));
-//mol/mem/cached/cached.ts
+
 ;
 "use strict";
 var $;
@@ -2249,7 +2250,7 @@ var $;
     }
     $.$mol_compare_array = $mol_compare_array;
 })($ || ($ = {}));
-//mol/compare/array/array.ts
+
 ;
 "use strict";
 var $;
@@ -2436,337 +2437,7 @@ var $;
     $.$mol_file_node = $mol_file_node;
     $.$mol_file = $mol_file_node;
 })($ || ($ = {}));
-//mol/file/file.node.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_tree_convert = Symbol('$mol_tree_convert');
-    class $mol_tree extends $mol_object2 {
-        type;
-        data;
-        sub;
-        baseUri;
-        row;
-        col;
-        length;
-        constructor(config = {}) {
-            super();
-            this.type = config.type || '';
-            if (config.value !== undefined) {
-                var sub = $mol_tree.values(config.value);
-                if (config.type || sub.length > 1) {
-                    this.sub = [...sub, ...(config.sub || [])];
-                    this.data = config.data || '';
-                }
-                else {
-                    this.data = sub[0].data;
-                    this.sub = config.sub || [];
-                }
-            }
-            else {
-                this.data = config.data || '';
-                this.sub = config.sub || [];
-            }
-            this.baseUri = config.baseUri || '';
-            this.row = config.row || 0;
-            this.col = config.col || 0;
-            this.length = config.length || 0;
-        }
-        static values(str, baseUri) {
-            return str.split('\n').map((data, index) => new $mol_tree({
-                data: data,
-                baseUri: baseUri,
-                row: index + 1,
-                length: data.length,
-            }));
-        }
-        clone(config = {}) {
-            return new $mol_tree({
-                type: ('type' in config) ? config.type : this.type,
-                data: ('data' in config) ? config.data : this.data,
-                sub: ('sub' in config) ? config.sub : this.sub,
-                baseUri: ('baseUri' in config) ? config.baseUri : this.baseUri,
-                row: ('row' in config) ? config.row : this.row,
-                col: ('col' in config) ? config.col : this.col,
-                length: ('length' in config) ? config.length : this.length,
-                value: config.value
-            });
-        }
-        make(config) {
-            return new $mol_tree({
-                baseUri: this.baseUri,
-                row: this.row,
-                col: this.col,
-                length: this.length,
-                ...config,
-            });
-        }
-        make_data(value, sub) {
-            return this.make({ value, sub });
-        }
-        make_struct(type, sub) {
-            return this.make({ type, sub });
-        }
-        static fromString(str, baseUri) {
-            var root = new $mol_tree({ baseUri: baseUri });
-            var stack = [root];
-            var row = 0;
-            var prefix = str.replace(/^\n?(\t*)[\s\S]*/, '$1');
-            var lines = str.replace(new RegExp('^\\t{0,' + prefix.length + '}', 'mg'), '').split('\n');
-            lines.forEach(line => {
-                ++row;
-                var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?(.*?)(?:$|\n)/m.exec(line);
-                if (!chunks || chunks[4])
-                    return this.$.$mol_fail(new Error(`Syntax error at ${baseUri}:${row}\n${line}`));
-                var indent = chunks[1];
-                var path = chunks[2];
-                var data = chunks[3];
-                var deep = indent.length;
-                var types = path ? path.replace(/ $/, '').split(/ +/) : [];
-                if (stack.length <= deep)
-                    return this.$.$mol_fail(new Error(`Too many tabs at ${baseUri}:${row}\n${line}`));
-                stack.length = deep + 1;
-                var parent = stack[deep];
-                let col = deep;
-                types.forEach(type => {
-                    if (!type)
-                        return this.$.$mol_fail(new Error(`Unexpected space symbol ${baseUri}:${row}\n${line}`));
-                    var next = new $mol_tree({ type, baseUri, row, col, length: type.length });
-                    const parent_sub = parent.sub;
-                    parent_sub.push(next);
-                    parent = next;
-                    col += type.length + 1;
-                });
-                if (data) {
-                    var next = new $mol_tree({ data: data.substring(1), baseUri, row, col, length: data.length });
-                    const parent_sub = parent.sub;
-                    parent_sub.push(next);
-                    parent = next;
-                }
-                stack.push(parent);
-            });
-            return root;
-        }
-        static fromJSON(json, baseUri = '') {
-            switch (true) {
-                case typeof json === 'boolean':
-                case typeof json === 'number':
-                case json === null:
-                    return new $mol_tree({
-                        type: String(json),
-                        baseUri: baseUri
-                    });
-                case typeof json === 'string':
-                    return new $mol_tree({
-                        value: json,
-                        baseUri: baseUri
-                    });
-                case Array.isArray(json):
-                    return new $mol_tree({
-                        type: "/",
-                        sub: json.map(json => $mol_tree.fromJSON(json, baseUri))
-                    });
-                case json instanceof Date:
-                    return new $mol_tree({
-                        value: json.toISOString(),
-                        baseUri: baseUri
-                    });
-                default:
-                    if (typeof json[$.$mol_tree_convert] === 'function') {
-                        return json[$.$mol_tree_convert]();
-                    }
-                    if (typeof json.toJSON === 'function') {
-                        return $mol_tree.fromJSON(json.toJSON());
-                    }
-                    if (json instanceof Error) {
-                        const { name, message, stack } = json;
-                        json = { ...json, name, message, stack };
-                    }
-                    var sub = [];
-                    for (var key in json) {
-                        if (json[key] === undefined)
-                            continue;
-                        const subsub = $mol_tree.fromJSON(json[key], baseUri);
-                        if (/^[^\n\t\\ ]+$/.test(key)) {
-                            var child = new $mol_tree({
-                                type: key,
-                                baseUri: baseUri,
-                                sub: [subsub],
-                            });
-                        }
-                        else {
-                            var child = new $mol_tree({
-                                value: key,
-                                baseUri: baseUri,
-                                sub: [subsub],
-                            });
-                        }
-                        sub.push(child);
-                    }
-                    return new $mol_tree({
-                        type: "*",
-                        sub: sub,
-                        baseUri: baseUri
-                    });
-            }
-        }
-        get uri() {
-            return this.baseUri + '#' + this.row + ':' + this.col;
-        }
-        toString(prefix = '') {
-            var output = '';
-            if (this.type.length) {
-                if (!prefix.length) {
-                    prefix = "\t";
-                }
-                output += this.type;
-                if (this.sub.length == 1) {
-                    return output + ' ' + this.sub[0].toString(prefix);
-                }
-                output += "\n";
-            }
-            else if (this.data.length || prefix.length) {
-                output += "\\" + this.data + "\n";
-            }
-            for (var child of this.sub) {
-                output += prefix;
-                output += child.toString(prefix + "\t");
-            }
-            return output;
-        }
-        toJSON() {
-            if (!this.type)
-                return this.value;
-            if (this.type === 'true')
-                return true;
-            if (this.type === 'false')
-                return false;
-            if (this.type === 'null')
-                return null;
-            if (this.type === '*') {
-                var obj = {};
-                for (var child of this.sub) {
-                    if (child.type === '-')
-                        continue;
-                    var key = child.type || child.clone({ sub: child.sub.slice(0, child.sub.length - 1) }).value;
-                    var val = child.sub[child.sub.length - 1].toJSON();
-                    if (val !== undefined)
-                        obj[key] = val;
-                }
-                return obj;
-            }
-            if (this.type === '/') {
-                var res = [];
-                this.sub.forEach(child => {
-                    if (child.type === '-')
-                        return;
-                    var val = child.toJSON();
-                    if (val !== undefined)
-                        res.push(val);
-                });
-                return res;
-            }
-            if (this.type === 'time') {
-                return new Date(this.value);
-            }
-            const numb = Number(this.type);
-            if (!Number.isNaN(numb) || this.type === 'NaN')
-                return numb;
-            throw new Error(`Unknown type (${this.type}) at ${this.uri}`);
-        }
-        get value() {
-            var values = [];
-            for (var child of this.sub) {
-                if (child.type)
-                    continue;
-                values.push(child.value);
-            }
-            return this.data + values.join("\n");
-        }
-        insert(value, ...path) {
-            if (path.length === 0)
-                return value;
-            const type = path[0];
-            if (typeof type === 'string') {
-                let replaced = false;
-                const sub = this.sub.map((item, index) => {
-                    if (item.type !== type)
-                        return item;
-                    replaced = true;
-                    return item.insert(value, ...path.slice(1));
-                });
-                if (!replaced)
-                    sub.push(new $mol_tree({ type }).insert(value, ...path.slice(1)));
-                return this.clone({ sub });
-            }
-            else if (typeof type === 'number') {
-                const sub = this.sub.slice();
-                sub[type] = (sub[type] || new $mol_tree).insert(value, ...path.slice(1));
-                return this.clone({ sub });
-            }
-            else {
-                return this.clone({ sub: ((this.sub.length === 0) ? [new $mol_tree()] : this.sub).map(item => item.insert(value, ...path.slice(1))) });
-            }
-        }
-        select(...path) {
-            var next = [this];
-            for (var type of path) {
-                if (!next.length)
-                    break;
-                var prev = next;
-                next = [];
-                for (var item of prev) {
-                    switch (typeof (type)) {
-                        case 'string':
-                            for (var child of item.sub) {
-                                if (!type || (child.type == type)) {
-                                    next.push(child);
-                                }
-                            }
-                            break;
-                        case 'number':
-                            if (type < item.sub.length)
-                                next.push(item.sub[type]);
-                            break;
-                        default: next.push(...item.sub);
-                    }
-                }
-            }
-            return new $mol_tree({ sub: next });
-        }
-        filter(path, value) {
-            var sub = this.sub.filter(function (item) {
-                var found = item.select(...path);
-                if (value == null) {
-                    return Boolean(found.sub.length);
-                }
-                else {
-                    return found.sub.some(child => child.value == value);
-                }
-            });
-            return new $mol_tree({ sub: sub });
-        }
-        transform(visit, stack = []) {
-            const sub_stack = [this, ...stack];
-            return visit(sub_stack, () => this.sub.map(node => node.transform(visit, sub_stack)).filter(n => n));
-        }
-        hack(context) {
-            const sub = [].concat(...this.sub.map(child => {
-                const handle = context[child.type] || context[''];
-                if (!handle)
-                    $mol_fail(child.error('Handler not defined'));
-                return handle(child, context);
-            }));
-            return this.clone({ sub });
-        }
-        error(message) {
-            return new Error(`${message}:\n${this} ${this.baseUri}:${this.row}:${this.col}`);
-        }
-    }
-    $.$mol_tree = $mol_tree;
-})($ || ($ = {}));
-//mol/tree/tree.ts
+
 ;
 "use strict";
 var $;
@@ -2826,7 +2497,7 @@ var $;
         return result;
     }
 })($ || ($ = {}));
-//mol/view/tree2/error.ts
+
 ;
 "use strict";
 var $;
@@ -2842,7 +2513,7 @@ var $;
     }
     $.$mol_view_tree2_child = $mol_view_tree2_child;
 })($ || ($ = {}));
-//mol/view/tree2/child.ts
+
 ;
 "use strict";
 var $;
@@ -2854,109 +2525,7 @@ var $;
     }
     $.$mol_view_tree2_classes = $mol_view_tree2_classes;
 })($ || ($ = {}));
-//mol/view/tree2/classes.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    class $mol_view_tree2_context extends $mol_object2 {
-        parents;
-        locales;
-        methods;
-        types;
-        added_nodes;
-        array;
-        constructor($, parents, locales, methods, types = true, added_nodes = new Map(), array) {
-            super();
-            this.parents = parents;
-            this.locales = locales;
-            this.methods = methods;
-            this.types = types;
-            this.added_nodes = added_nodes;
-            this.array = array;
-            this.$ = $;
-        }
-        clone(prefixes, array) {
-            return new this.$.$mol_view_tree2_context(this.$, prefixes, this.locales, this.methods, this.types, this.added_nodes, array);
-        }
-        parent(prefix) {
-            const parents = this.parents.slice();
-            parents.push(prefix);
-            return this.clone(parents, this.array);
-        }
-        root() {
-            return this.clone(this.parents.slice(0, 1));
-        }
-        locale_disable(array) {
-            if (this.array)
-                return this;
-            return this.clone(this.parents, array);
-        }
-        get_method({ name, src, key, next }) {
-            const prev = this.added_nodes.get(name.value);
-            if (!prev)
-                return;
-            if ((prev.key && !key) || (!prev.key && key) || (prev.next && !next) || (!prev.next && next))
-                return this.$.$mol_fail($mol_view_tree2_error_str `Method ${src.type} at ${src.span} is not same as ${prev.src.type} at ${prev.src.span}`);
-            const current_default = src.kids.length > 0 ? src.kids[0] : undefined;
-            const prev_default = prev.src.kids.length > 0 ? prev.src.kids[0] : undefined;
-            if (prev_default?.toString() !== current_default?.toString())
-                return this.$.$mol_fail($mol_view_tree2_error_str `Method ${name.value} at ${current_default?.span ?? name.span} already defined with another default value at ${prev_default?.span ?? prev.name.span}`);
-            return prev;
-        }
-        check_scope_vars({ name, key, next }) {
-            let finded_key;
-            let finded_next;
-            const parents = this.parents;
-            for (let i = 1; i < parents.length; i++) {
-                const parent = parents[i];
-                if (next && parent.next)
-                    finded_next = parent.next;
-            }
-            if (next && !finded_next)
-                return this.$.$mol_fail($mol_view_tree2_error_str `Next ${next.value} at ${next.span} not found at ${this.parents.map(parent => parent.src.span)}`);
-            const first_method = parents.length > 1 ? parents[1] : undefined;
-            if (name.value === first_method?.name.value)
-                return this.$.$mol_fail($mol_view_tree2_error_str `Method ${name.value} at ${name.span} already defined at ${first_method.name.span}`);
-        }
-        index(owner) {
-            this.added_nodes.set(owner.name.value, owner);
-            const index = this.methods.length;
-            return index;
-        }
-        method(index, method) {
-            this.methods.push(...method);
-        }
-        locale_nodes = new Map();
-        locale(operator) {
-            const parents = this.parents;
-            const val = operator.kids.length === 1 ? operator.kids[0] : undefined;
-            if (!val)
-                return this.$.$mol_fail($mol_view_tree2_error_str `Need a one child at ${operator.span}, use \`some @ \\localized value\``);
-            if (this.array)
-                return this.$.$mol_fail($mol_view_tree2_error_str `Can\'t use \`@\` at ${operator.span} inside array at ${this.array.span}`);
-            let key = '';
-            const body = [];
-            const last = parents.length > 0 ? parents[parents.length - 1] : undefined;
-            for (const parent of parents) {
-                body.push(parent.name);
-                key += parent.name.value;
-                if (parent === last)
-                    break;
-                body.push(parent.name.data('_'));
-                key += '_';
-            }
-            const prev = this.locale_nodes.get(key);
-            if (prev)
-                return this.$.$mol_fail($mol_view_tree2_error_str `Locale key \`${key}\` at ${operator.span} conflicts with same at ${prev.span}`);
-            this.locale_nodes.set(key, val);
-            this.locales[key] = val.text();
-            return operator.struct('line', body);
-        }
-    }
-    $_1.$mol_view_tree2_context = $mol_view_tree2_context;
-})($ || ($ = {}));
-//mol/view/tree2/context.ts
+
 ;
 "use strict";
 var $;
@@ -2968,26 +2537,40 @@ var $;
     }
     $.$mol_view_tree2_normalize = $mol_view_tree2_normalize;
 })($ || ($ = {}));
-//mol/view/tree2/normalize.ts
+
+;
+"use strict";
+var $;
+(function ($) {
+    const class_regex = /^[$A-Z][$\w<>\[\]()"'?|]+$/;
+    function $mol_view_tree2_class_match(klass) {
+        if (!klass?.type)
+            return false;
+        if (klass.type === 'NaN' || klass.type === 'Infinity')
+            return false;
+        return class_regex.test(klass.type);
+    }
+    $.$mol_view_tree2_class_match = $mol_view_tree2_class_match;
+})($ || ($ = {}));
+
 ;
 "use strict";
 var $;
 (function ($) {
     const err = $mol_view_tree2_error_str;
     function $mol_view_tree2_class_super(klass) {
-        if (!class_regex.test(klass.type))
+        if (!$mol_view_tree2_class_match(klass))
             return this.$mol_fail(err `Wrong class name at ${klass.span}`);
         const superclass = klass.kids.length === 1 ? klass.kids[0] : undefined;
         if (!superclass)
             return this.$mol_fail(err `No super class at ${klass.span}`);
-        if (!class_regex.test(superclass.type))
+        if (!$mol_view_tree2_class_match(superclass))
             return this.$mol_fail(err `Wrong super class name ${JSON.stringify(superclass.type).replace(/(^"|"$)/g, "")} at ${superclass.span}`);
         return superclass;
     }
     $.$mol_view_tree2_class_super = $mol_view_tree2_class_super;
-    const class_regex = /^[$A-Z]\w+$/;
 })($ || ($ = {}));
-//mol/view/tree2/class/super.ts
+
 ;
 "use strict";
 var $;
@@ -3003,43 +2586,352 @@ var $;
                 return [node.struct(normal, node.hack(belt))];
             }
         }));
-        const props_inner = [];
+        const props_inner = {};
+        const add_inner = (prop) => {
+            const prev = props_inner[prop.type];
+            if (prev && prev.kids[0]?.type !== prop.kids[0]?.type) {
+                this.$mol_fail(err `Different kids ${prev.span} vs ${prop.span}`);
+            }
+            props_inner[prop.type] = prop;
+        };
+        const upper = (operator, belt, context) => {
+            const prop = this.$mol_view_tree2_child(operator);
+            const defs = prop.hack(belt, { factory: prop });
+            if (defs.length)
+                add_inner(prop.clone(defs));
+            return [operator.clone([prop.clone([])])];
+        };
         const props_root = props.hack({
-            '<=': (operator, belt) => {
-                const prop = this.$mol_view_tree2_child(operator);
-                const defs = prop.hack(belt);
-                if (defs.length)
-                    props_inner.push(prop.clone(defs));
-                return [operator.clone([prop.clone([])])];
+            '<=': upper,
+            '<=>': upper,
+            '^': (operator, belt, context) => {
+                if (operator.kids.length === 0)
+                    return [operator];
+                return upper(operator, belt, context);
             },
-            '<=>': (operator, belt) => {
-                const prop = this.$mol_view_tree2_child(operator);
-                const defs = prop.hack(belt);
-                if (defs.length)
-                    props_inner.push(prop.clone(defs));
-                return [operator.clone([prop.clone([])])];
-            },
-        });
-        return [...props_root, ...props_inner];
+            '': (left, belt, context) => {
+                let right;
+                const operator = left.kids[0];
+                if (operator?.type === '=>' && context.factory) {
+                    right = operator.kids[0];
+                    if (!right)
+                        this.$mol_fail(err `Need a child ${operator.span}`);
+                    if (!context.factory)
+                        this.$mol_fail(err `Need a parent ${left.span}`);
+                    add_inner(right.clone([
+                        right.struct('=', [
+                            context.factory.clone([left.clone([])]),
+                        ]),
+                    ]));
+                }
+                if (right)
+                    context = { factory: right.clone([]) };
+                else if (operator && !context.factory && $mol_view_tree2_class_match(operator)) {
+                    context = { factory: left.clone([]) };
+                }
+                return [left.clone(left.hack(belt, context))];
+            }
+        }, { factory: undefined });
+        return [...props_root, ...Object.values(props_inner)];
     }
     $.$mol_view_tree2_class_props = $mol_view_tree2_class_props;
 })($ || ($ = {}));
-//mol/view/tree2/class/props.ts
+
 ;
 "use strict";
-//mol/type/equals/equals.ts
+var $;
+(function ($) {
+    const err = $mol_view_tree2_error_str;
+    function $mol_view_tree2_value_type(val) {
+        switch (val.type) {
+            case 'true': return 'bool';
+            case 'false': return 'bool';
+            case 'null': return 'null';
+            case '*': return 'dict';
+            case '@': return 'locale';
+            case '': return 'string';
+            case '<=': return 'get';
+            case '<=>': return 'bind';
+            case '=>': return 'put';
+        }
+        const first_char = val.type && val.type[0];
+        if (first_char === '/')
+            return 'list';
+        if (Number(val.type).toString() == val.type)
+            return 'number';
+        if (/^[$A-Z]/.test(first_char))
+            return 'object';
+        return this.$mol_fail(err `Unknown value type ${val.type} at ${val.span}`);
+    }
+    $.$mol_view_tree2_value_type = $mol_view_tree2_value_type;
+})($ || ($ = {}));
+
 ;
 "use strict";
-//mol/type/merge/merge.ts
+var $;
+(function ($) {
+    const err = $mol_view_tree2_error_str;
+    function $mol_view_tree2_value(value) {
+        const type = value.type;
+        const kids = value.kids;
+        if (type === '') {
+            if (kids.length === 0)
+                return value.data(JSON.stringify(value.value));
+            return value.data(JSON.stringify(kids.map(node => node.value).join('\n')));
+        }
+        if (kids.length !== 0)
+            return this.$mol_fail(err `Kids are not allowed at ${value.span}, use ${example}`);
+        if (type === 'false' || type === 'true')
+            return value.data(type);
+        if (type === 'null')
+            return value.data(type);
+        if (Number(type).toString() === type.replace(/^\+/, ''))
+            return value.data(type);
+        return this.$mol_fail(err `Value ${value.toString()} not allowed at ${value.span}, use ${example}`);
+    }
+    $.$mol_view_tree2_value = $mol_view_tree2_value;
+    const example = new $mol_view_tree2_error_suggestions([
+        'false',
+        'true',
+        '123',
+        'null',
+        '\\some'
+    ]);
+})($ || ($ = {}));
+
 ;
 "use strict";
-//mol/type/intersect/intersect.ts
+var $;
+(function ($) {
+    function $mol_view_tree2_value_number(type) {
+        return type.match(/[\+\-]*NaN/) || !Number.isNaN(Number(type));
+    }
+    $.$mol_view_tree2_value_number = $mol_view_tree2_value_number;
+})($ || ($ = {}));
+
 ;
 "use strict";
-//mol/type/override/override.ts
+var $;
+(function ($) {
+    function $mol_tree2_js_to_text(js) {
+        function sequence(open, separator, close) {
+            return (input, belt) => [
+                input.struct('line', [
+                    ...open ? [input.data(open)] : [],
+                    input.struct(separator && input.kids.length > 2 ? 'indent' : 'line', [].concat(...input.kids.map((kid, index) => [
+                        kid.struct('line', [
+                            ...kid.list([kid]).hack(belt),
+                            ...(separator && index < input.kids.length - 1) ? [input.data(separator)] : [],
+                        ]),
+                    ]))),
+                    ...close ? [input.data(close)] : [],
+                ]),
+            ];
+        }
+        function block(open, separator, close) {
+            return (input, belt) => [
+                ...open ? [input.data(open)] : [],
+                ...input.kids.length === 0 ? [] : [input.struct('indent', input.kids.map((kid, index) => kid.struct('line', [
+                        ...kid.list([kid]).hack(belt),
+                        ...(separator) ? [input.data(separator)] : [],
+                    ])))],
+                ...close ? [input.data(close)] : [],
+            ];
+        }
+        function duplet(open, separator, close) {
+            return (input, belt) => [
+                input.struct('line', [
+                    ...open ? [input.data(open)] : [],
+                    ...input.list(input.kids.slice(0, 1)).hack(belt),
+                    ...(separator && input.kids.length > 1) ? [input.data(separator)] : [],
+                    ...input.list(input.kids.slice(1, 2)).hack(belt),
+                    ...close ? [input.data(close)] : [],
+                ]),
+            ];
+        }
+        function triplet(open, separator12, separator23, close) {
+            return (input, belt) => [
+                input.struct('line', [
+                    ...open ? [input.data(open)] : [],
+                    ...input.list(input.kids.slice(0, 1)).hack(belt),
+                    ...(separator12 && input.kids.length > 1) ? [input.data(separator12)] : [],
+                    ...input.list(input.kids.slice(1, 2)).hack(belt),
+                    ...(separator23 && input.kids.length > 2) ? [input.data(separator23)] : [],
+                    ...input.list(input.kids.slice(2, 3)).hack(belt),
+                    ...close ? [input.data(close)] : [],
+                ]),
+            ];
+        }
+        return js.list(js.hack({
+            '+': sequence('+'),
+            '-': sequence('-'),
+            '!': sequence('!'),
+            '~': sequence('~'),
+            'return': sequence('return '),
+            'break': sequence('break '),
+            'continue': sequence('continue '),
+            'yield': sequence('yield '),
+            'yield*': sequence('yield* '),
+            'await': sequence('await '),
+            'void': sequence('void '),
+            'delete': sequence('delete '),
+            'typeof': sequence('typeof '),
+            'new': sequence('new '),
+            '...': sequence('...'),
+            '@++': sequence('', '', '++'),
+            '@--': sequence('', '', '--'),
+            '(in)': sequence('(', ' in ', ')'),
+            '(instanceof)': sequence('(', ' instanceof ', ')'),
+            '(+)': sequence('(', ' + ', ')'),
+            '(-)': sequence('(', ' - ', ')'),
+            '(*)': sequence('(', ' * ', ')'),
+            '(/)': sequence('(', ' / ', ')'),
+            '(%)': sequence('(', ' % ', ')'),
+            '(**)': sequence('(', ' ** ', ')'),
+            '(<)': sequence('(', ' < ', ')'),
+            '(<=)': sequence('(', ' <= ', ')'),
+            '(>)': sequence('(', ' > ', ')'),
+            '(>=)': sequence('(', ' >= ', ')'),
+            '(==)': sequence('(', ' == ', ')'),
+            '(!=)': sequence('(', ' != ', ')'),
+            '(===)': sequence('(', ' === ', ')'),
+            '(!==)': sequence('(', ' !== ', ')'),
+            '(<<)': sequence('(', ' << ', ')'),
+            '(>>)': sequence('(', ' >> ', ')'),
+            '(>>>)': sequence('(', ' >>> ', ')'),
+            '(&)': sequence('(', ' & ', ')'),
+            '(|)': sequence('(', ' | ', ')'),
+            '(^)': sequence('(', ' ^ ', ')'),
+            '(&&)': sequence('(', ' && ', ')'),
+            '(||)': sequence('(', ' || ', ')'),
+            '(,)': sequence('(', ', ', ')'),
+            '{;}': block('{', ';', '}'),
+            ';': block('', ';', ''),
+            '[,]': sequence('[', ', ', ']'),
+            '{,}': sequence('{', ', ', '}'),
+            '()': sequence('(', '', ')'),
+            '{}': block('{', '', '}'),
+            '[]': (input, belt) => {
+                const first = input.kids[0];
+                if (first.type)
+                    return sequence('[', '', ']')(input, belt);
+                else
+                    return [input.data('.' + first.text())];
+            },
+            ':': (input, belt) => {
+                const first = input.kids[0];
+                if (first.type)
+                    return duplet('[', ']: ')(input, belt);
+                else
+                    return duplet('', ': ')(input, belt);
+            },
+            'let': duplet('let ', ' = '),
+            'const': duplet('const ', ' = '),
+            'var': duplet('var ', ' = '),
+            '=': duplet('', ' = '),
+            '+=': duplet('', ' += '),
+            '-=': duplet('', ' -= '),
+            '*=': duplet('', ' *= '),
+            '/=': duplet('', ' /= '),
+            '%=': duplet('', ' %= '),
+            '**=': duplet('', ' **= '),
+            '<<=': duplet('', ' <<= '),
+            '>>=': duplet('', ' >>= '),
+            '>>>=': duplet('', ' >>>= '),
+            '&=': duplet('', ' &= '),
+            '|=': duplet('', ' |= '),
+            '^=': duplet('', ' ^= '),
+            '&&=': duplet('', ' &&= '),
+            '||=': duplet('', ' ||= '),
+            '=>': duplet('', ' => '),
+            'async=>': duplet('async ', ' => '),
+            'function': triplet('function '),
+            'function*': triplet('function* '),
+            'async': triplet('async function '),
+            'async*': triplet('async function* '),
+            'class': triplet('class ', ' '),
+            'extends': sequence('extends ', '', ' '),
+            'if': triplet('if', ' ', 'else'),
+            '?:': triplet('', ' ? ', ' : '),
+            '.': (input, belt) => {
+                const first = input.kids[0];
+                if (first.type)
+                    return triplet('[', ']')(input, belt);
+                else
+                    return [
+                        input.data(first.text()),
+                        ...input.list(input.kids.slice(1)).hack(belt),
+                    ];
+            },
+            'get': triplet('get [', ']'),
+            'set': triplet('set [', ']'),
+            'static': triplet('static [', ']'),
+            '/./': sequence(),
+            '.global': sequence('g'),
+            '.multiline': sequence('m'),
+            '.ignoreCase': sequence('i'),
+            '.source': (input, belt) => [
+                input.data('/'),
+                input.data(JSON.stringify(input.text()).slice(1, -1)),
+                input.data('/'),
+            ],
+            '``': (input, belt) => {
+                return [
+                    input.struct('line', [
+                        input.data('`'),
+                        ...[].concat(...input.kids.map(kid => {
+                            if (kid.type) {
+                                return [
+                                    kid.data('${'),
+                                    ...kid.list([kid]).hack(belt),
+                                    kid.data('}'),
+                                ];
+                            }
+                            else {
+                                return [
+                                    input.data(JSON.stringify(kid.text()).slice(1, -1)),
+                                ];
+                            }
+                        })),
+                        input.data('`'),
+                    ]),
+                ];
+            },
+            '': (input, belt) => {
+                if (!input.type)
+                    return [
+                        input.data(JSON.stringify(input.text())),
+                    ];
+                if (/^[\w$#][\w0-9$]*$/i.test(input.type))
+                    return [
+                        input.data(input.type),
+                    ];
+                if ($mol_view_tree2_value_number(input.type))
+                    return [
+                        input.data(input.type)
+                    ];
+                $mol_fail(new SyntaxError(`Wrong node type`));
+            },
+        }));
+    }
+    $.$mol_tree2_js_to_text = $mol_tree2_js_to_text;
+})($ || ($ = {}));
+
 ;
 "use strict";
-//mol/unicode/unicode.ts
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+
 ;
 "use strict";
 var $;
@@ -3314,68 +3206,39 @@ var $;
     }
     $.$mol_regexp = $mol_regexp;
 })($ || ($ = {}));
-//mol/regexp/regexp.ts
+
 ;
 "use strict";
 var $;
 (function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_prop_split(src) {
-        const prop_name = src.type;
-        if (!prop_name)
-            return { src, name: src.data(src.value) };
-        let key_pos = prop_name.indexOf('*');
-        let next_pos = prop_name.indexOf('?');
-        let next_pos_orig = next_pos;
-        if (next_pos === -1)
-            next_pos = prop_name.length;
-        const name_end = (key_pos === -1) ? next_pos : key_pos;
-        if (key_pos > next_pos)
-            return this.$mol_fail(err `Index argument must be before next argument at ${src.span}, use ${example1}`);
-        const name = prop_name.substring(0, name_end);
-        const key = key_pos < 0 ? '' : prop_name.substring(key_pos + 1, next_pos);
-        const next = prop_name.substring(next_pos + 1);
-        if ((key && !regular_regex.test(key))
-            || (next && !regular_regex.test(next)))
-            return this.$mol_fail(err `Only regular chars and digits allowed ${key} ${next} at ${src.span}, use ${example2}`);
+    const { begin, end, latin_only, or, optional, repeat_greedy } = $mol_regexp;
+    $.$mol_view_tree2_prop_signature = $mol_regexp.from([
+        begin,
+        { name: repeat_greedy(latin_only, 1) },
+        { key: optional(['*', repeat_greedy(latin_only, 0)]) },
+        { next: optional(['?', repeat_greedy(latin_only, 0)]) },
+        end,
+    ]);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_view_tree2_prop_parts(prop) {
+        const groups = [...prop.type.matchAll($mol_view_tree2_prop_signature)][0]?.groups;
+        if (!groups) {
+            this.$mol_fail($mol_view_tree2_error_str `Required prop like some*? at ${prop.span}`);
+        }
         return {
-            src,
-            name: $mol_tree2.data(name, [], src.span.slice(0, name.length)),
-            key: key_pos >= 0 ? $mol_tree2.data(key ? JSON.stringify(key) : 'id', [], src.span.slice(key_pos, key_pos + key.length)) : undefined,
-            next: next_pos_orig >= 0 ? $mol_tree2.data(next || 'next', [], src.span.slice(next_pos, next_pos + next.length)) : undefined
+            name: groups.name,
+            key: groups.key,
+            next: groups.next ? '?' : ''
         };
     }
-    $.$mol_view_tree2_prop_split = $mol_view_tree2_prop_split;
-    const regular_regex = /^\w+$/;
-    const example1 = new $mol_view_tree2_error_suggestions([
-        'having!key?next <= owner!key?next'
-    ]);
-    const example2 = new $mol_view_tree2_error_suggestions([
-        'having#',
-        'having#key',
-        'having#key?next',
-        'having',
-    ]);
+    $.$mol_view_tree2_prop_parts = $mol_view_tree2_prop_parts;
 })($ || ($ = {}));
-//mol/view/tree2/prop/split.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_prop_name(prop) {
-        return this.$mol_view_tree2_prop_split(prop).name.value;
-    }
-    $.$mol_view_tree2_prop_name = $mol_view_tree2_prop_name;
-    function $mol_view_tree2_prop_key(prop) {
-        return this.$mol_view_tree2_prop_split(prop).key?.value;
-    }
-    $.$mol_view_tree2_prop_key = $mol_view_tree2_prop_key;
-    function $mol_view_tree2_prop_next(prop) {
-        return this.$mol_view_tree2_prop_split(prop).next?.value;
-    }
-    $.$mol_view_tree2_prop_next = $mol_view_tree2_prop_next;
-})($ || ($ = {}));
-//mol/view/tree2/prop/prop.ts
+
 ;
 "use strict";
 var $;
@@ -3388,96 +3251,20 @@ var $;
     }
     $.$mol_view_tree2_prop_quote = $mol_view_tree2_prop_quote;
 })($ || ($ = {}));
-//mol/view/tree2/prop/quote.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const { begin, end, latin_only: letter, optional, repeat_greedy } = $mol_regexp;
-    $.$mol_view_tree2_prop_signature = $mol_regexp.from([
-        begin,
-        { name: repeat_greedy(letter, 1) },
-        { key: optional(['*', repeat_greedy(letter, 0)]) },
-        { next: optional(['?', repeat_greedy(letter, 0)]) },
-        end,
-    ]);
-})($ || ($ = {}));
-//mol/view/tree2/prop/signature.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_value_type(val) {
-        switch (val.type) {
-            case 'true': return 'bool';
-            case 'false': return 'bool';
-            case 'null': return 'null';
-            case '*': return 'dict';
-            case '@': return 'locale';
-            case '': return 'string';
-            case '<=': return 'get';
-            case '<=>': return 'bind';
-            case '=>': return 'put';
-        }
-        const first_char = val.type && val.type[0];
-        if (first_char === '/')
-            return 'list';
-        if (Number(val.type).toString() == val.type)
-            return 'number';
-        if (/^[$A-Z]/.test(first_char))
-            return 'object';
-        return this.$mol_fail(err `Unknown value type ${val.type} at ${val.span}`);
-    }
-    $.$mol_view_tree2_value_type = $mol_view_tree2_value_type;
-})($ || ($ = {}));
-//mol/view/tree2/value/type.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_value(value) {
-        const type = value.type;
-        const kids = value.kids;
-        if (type === '') {
-            if (kids.length === 0)
-                return value.data(JSON.stringify(value.value));
-            return value.data(JSON.stringify(kids.map(node => node.value).join('\n')));
-        }
-        if (kids.length !== 0)
-            return this.$mol_fail(err `Kids are not allowed at ${value.span}, use ${example}`);
-        if (type === 'false' || type === 'true')
-            return value.data(type);
-        if (type === 'null')
-            return value.data(type);
-        if (Number(type).toString() === type.replace(/^\+/, ''))
-            return value.data(type);
-        return this.$mol_fail(err `Value ${value.toString()} not allowed at ${value.span}, use ${example}`);
-    }
-    $.$mol_view_tree2_value = $mol_view_tree2_value;
-    const example = new $mol_view_tree2_error_suggestions([
-        'false',
-        'true',
-        '123',
-        'null',
-        '\\some'
-    ]);
-})($ || ($ = {}));
-//mol/view/tree2/value/value.ts
+
 ;
 "use strict";
 var $;
 (function ($) {
 })($ || ($ = {}));
-//mol/dom/context/context.ts
+
 ;
 "use strict";
 var $;
 (function ($) {
     $.$mol_dom_context = new $node.jsdom.JSDOM('', { url: 'https://localhost/' }).window;
 })($ || ($ = {}));
-//mol/dom/context/context.node.ts
+
 ;
 "use strict";
 var $;
@@ -3495,14 +3282,14 @@ var $;
     const nothing = () => { };
     const sub = new $mol_wire_pub_sub;
 })($ || ($ = {}));
-//mol/wire/solid/solid.ts
+
 ;
 "use strict";
 var $;
 (function ($) {
     $.$mol_mem_persist = $mol_wire_solid;
 })($ || ($ = {}));
-//mol/mem/persist/persist.ts
+
 ;
 "use strict";
 var $;
@@ -3528,7 +3315,7 @@ var $;
     }
     $.$mol_wire_sync = $mol_wire_sync;
 })($ || ($ = {}));
-//mol/wire/sync/sync.ts
+
 ;
 "use strict";
 var $;
@@ -3573,7 +3360,7 @@ var $;
     ], $mol_storage, "persisted", null);
     $.$mol_storage = $mol_storage;
 })($ || ($ = {}));
-//mol/storage/storage.ts
+
 ;
 "use strict";
 var $;
@@ -3633,7 +3420,7 @@ var $;
     ], $mol_state_local, "value", null);
     $.$mol_state_local = $mol_state_local;
 })($ || ($ = {}));
-//mol/state/local/local.ts
+
 ;
 "use strict";
 var $;
@@ -3699,7 +3486,265 @@ var $;
     ], $mol_locale, "warn", null);
     $.$mol_locale = $mol_locale;
 })($ || ($ = {}));
-//mol/locale/locale.ts
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_guard_defined(value) {
+        return value !== null && value !== undefined;
+    }
+    $.$mol_guard_defined = $mol_guard_defined;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const err = $mol_view_tree2_error_str;
+    function name_of(prop) {
+        return this.$mol_view_tree2_prop_parts(prop).name;
+    }
+    function params_of(prop, bidi = true) {
+        const { key, next } = this.$mol_view_tree2_prop_parts(prop);
+        return prop.struct('(,)', [
+            ...key
+                ? [prop.struct('id')]
+                : [],
+            ...(bidi && next) ? [prop.struct('next')] : [],
+        ]);
+    }
+    function args_of(prop, bidi = true) {
+        const { key, next } = this.$mol_view_tree2_prop_parts(prop);
+        return prop.struct('(,)', [
+            ...key
+                ? key.length > 1
+                    ? [prop.data(key.slice(1))]
+                    : [prop.struct('id')]
+                : [],
+            ...(bidi && next) ? [prop.struct('next')] : [],
+        ]);
+    }
+    function call_method_name(child) {
+        return child.struct('[]', [
+            child.data(name_of.call(this, child))
+        ]);
+    }
+    function call_of(bind, bidi = true) {
+        if (bind.kids.length === 0) {
+            return this.$mol_fail(err `Required one child at ${bind.span}`);
+        }
+        const chain = [bind.struct('this')];
+        for (const child of bind.kids) {
+            chain.push(call_method_name.call(this, child), args_of.call(this, child, bidi));
+        }
+        return bind.struct('()', chain);
+    }
+    const localized_string = $$.$mol_tree2_from_string(`
+		()
+			this
+			[] \\$
+			[] \\$mol_locale
+			[] \\text
+			(,) #key
+	`, 'localized_string');
+    function klass_body(acc, prop) {
+        const { klass, members, addons } = acc;
+        const { name, key, next } = this.$mol_view_tree2_prop_parts(prop);
+        const decorate = () => {
+            return prop.struct('()', [
+                prop.struct(key ? '$mol_mem_key' : '$mol_mem'),
+                prop.struct('(,)', [
+                    prop.struct('()', [
+                        klass.struct('$'),
+                        prop.struct('[]', [
+                            klass.data(klass.type),
+                        ]),
+                        prop.struct('[]', [
+                            prop.data('prototype'),
+                        ]),
+                    ]),
+                    prop.data(name),
+                ]),
+            ]);
+        };
+        const op = prop.kids[0];
+        const is_delegate = op?.type === '<=>' || op?.type === '=';
+        if (!is_delegate && next)
+            addons.push(decorate());
+        const val = prop.hack({
+            '@': (locale, belt, context) => {
+                const chain = context.chain?.join('_');
+                return localized_string.hack({
+                    '#key': key => [locale.data(`${klass.type}_${name}${chain ? `_${chain}` : ''}`)],
+                });
+            },
+            '<=': bind => [call_of.call(this, bind, false)],
+            '<=>': bind => [call_of.call(this, bind, true)],
+            '=>': bind => [],
+            '^': (ref) => [
+                ref.struct('...', [
+                    ref.struct('()', [
+                        ref.struct(ref.kids[0]?.type ? 'this' : 'super'),
+                        ref.struct('[]', [
+                            ref.data(ref.kids[0]?.type ? name_of.call(this, ref.kids[0]) : name),
+                        ]),
+                        ref.struct('(,)')
+                    ]),
+                ]),
+            ],
+            '=': bind => [bind.struct('()', [
+                    bind.struct('this'),
+                    call_method_name.call(this, bind.kids[0]),
+                    args_of.call(this, bind.kids[0]),
+                    call_method_name.call(this, bind.kids[0].kids[0]),
+                    args_of.call(this, bind.kids[0].kids[0]),
+                ])],
+            '': (input, belt, context) => {
+                if (input.type[0] === '*') {
+                    return [
+                        input.struct('{,}', input.kids.map(field => {
+                            if (field.type === '^')
+                                return field.list([field]).hack(belt)[0];
+                            const field_name = (field.type || field.value).replace(/\?\w*$/, '');
+                            return field.struct(':', [
+                                field.data(field_name),
+                                field.kids[0].type === '<=>'
+                                    ? field.struct('=>', [
+                                        params_of.call(this, field),
+                                        ...field.hack(belt),
+                                    ])
+                                    : field.hack(belt, { ...context, chain: [...context.chain ?? [], field_name] })[0],
+                            ]);
+                        }).filter(this.$mol_guard_defined))
+                    ];
+                }
+                if (input.type[0] === '/')
+                    return [
+                        input.struct('[,]', input.hack(belt)),
+                    ];
+                if (input.type && $mol_view_tree2_value_number(input.type))
+                    return [
+                        input
+                    ];
+                if ($mol_view_tree2_class_match(input)) {
+                    if (!next)
+                        addons.push(decorate());
+                    const overrides = [];
+                    for (const over of input.kids) {
+                        if (over.type[0] === '/')
+                            continue;
+                        const bind = over.kids[0];
+                        if (bind.type === '=>')
+                            continue;
+                        const over_name = name_of.call(this, over);
+                        const body = bind.type === '@' ? [
+                            args_of.call(this, over),
+                            ...localized_string.hack({
+                                '#key': key => [bind.data(`${klass.type}_${name}_${over_name}`)],
+                            }),
+                        ] : [
+                            args_of.call(this, over),
+                            over.struct('()', over.hack(belt)),
+                        ];
+                        overrides.push(over.struct('=', [
+                            over.struct('()', [
+                                over.struct('obj'),
+                                over.struct('[]', [
+                                    over.data(over_name),
+                                ]),
+                            ]),
+                            over.struct('=>', body),
+                        ]));
+                    }
+                    return [
+                        input.struct('const', [
+                            input.struct('obj'),
+                            input.struct('new', [
+                                input.struct('this'),
+                                input.struct('[]', [
+                                    input.data('$'),
+                                ]),
+                                input.struct('[]', [
+                                    input.data(input.type.replace(/<.+>/g, '')),
+                                ]),
+                                input.struct('(,)', input.select('/', null).hack(belt)),
+                            ]),
+                        ]),
+                        ...overrides,
+                        input.struct('obj'),
+                    ];
+                }
+                return [input];
+            },
+        });
+        members.push(prop.struct('.', [
+            prop.data(name),
+            params_of.call(this, prop),
+            prop.struct('{;}', [
+                ...next && !is_delegate ? [
+                    prop.struct('if', [
+                        prop.struct('(!==)', [
+                            prop.struct('next'),
+                            prop.struct('undefined'),
+                        ]),
+                        prop.struct('return', [
+                            prop.struct('next'),
+                        ]),
+                    ]),
+                ] : [],
+                ...val.slice(0, -1),
+                prop.struct('return', val.slice(-1)),
+            ]),
+        ]));
+        return acc;
+    }
+    function $mol_view_tree2_to_js(descr) {
+        descr = $mol_view_tree2_classes(descr);
+        const definitions = [];
+        for (const klass of descr.kids) {
+            const parent = klass.kids[0];
+            const props = this.$mol_view_tree2_class_props(klass);
+            const addons = [];
+            const members = [];
+            const acc = { klass, addons, members };
+            for (const prop of props) {
+                try {
+                    klass_body.call(this, acc, prop);
+                }
+                catch (e) {
+                    e.message += ` at ${prop.span}`;
+                    $mol_fail_hidden(e);
+                }
+            }
+            definitions.push(klass.struct('=', [
+                klass.struct('()', [
+                    klass.struct('$'),
+                    klass.struct('[]', [
+                        klass.data(klass.type),
+                    ]),
+                ]),
+                klass.struct('class', [
+                    klass.struct(klass.type),
+                    parent.struct('extends', [
+                        parent.struct('()', [
+                            parent.struct('$'),
+                            parent.struct('[]', [
+                                parent.data(parent.type),
+                            ]),
+                        ]),
+                    ]),
+                    klass.struct('{}', members),
+                ]),
+            ]), ...addons);
+        }
+        return descr.list([
+            descr.struct(';', definitions)
+        ]);
+    }
+    $.$mol_view_tree2_to_js = $mol_view_tree2_to_js;
+})($ || ($ = {}));
+
 ;
 "use strict";
 var $;
@@ -3740,526 +3785,442 @@ var $;
     }
     $.$mol_tree2_text_to_string = $mol_tree2_text_to_string;
 })($ || ($ = {}));
-//mol/tree2/text/to/string/string.ts
+
 ;
 "use strict";
 var $;
 (function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_bind_both_parts(operator) {
-        if (operator.type !== '<=>')
-            return this.$mol_fail(err `Need an \`<=>\` at ${operator.span}, use ${example}`);
-        const owner = operator.kids.length === 1 ? operator.kids[0] : undefined;
-        if (!owner)
-            return this.$mol_fail(err `Need an owner part at ${operator.span}, use ${example}`);
-        if (owner.kids.length > 1)
-            return this.$mol_fail(err `Only one sub allowed at ${owner.span}, use ${example}`);
-        const owner_parts = this.$mol_view_tree2_prop_split(owner);
-        if (!owner_parts.next)
-            return this.$mol_fail(err `Next argument required at ${owner.span}, use ${example}`);
-        const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined;
-        return {
-            owner_parts,
-            default_value
-        };
-    }
-    $.$mol_view_tree2_bind_both_parts = $mol_view_tree2_bind_both_parts;
-    const example = new $mol_view_tree2_error_suggestions([
-        'having?next <=> owner?next',
-        'having?next <=> owner?next \\default',
-        'having!key?next <=> owner!key?next',
-    ]);
-})($ || ($ = {}));
-//mol/view/tree2/bind/both_parts.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_bind_left_parts(operator, having_parts) {
-        if (operator.type !== '<=')
-            return this.$mol_fail(err `Need an \`<=\` at ${operator.span}`);
-        const owner = operator.kids.length === 1 ? operator.kids[0] : undefined;
-        if (!owner)
-            return this.$mol_fail(err `Need an owner part at ${operator.span}`);
-        if (owner.kids.length > 1)
-            return this.$mol_fail(err `Owner at ${owner.span} can't have more that 1 value, given ${owner.kids.map(node => node.span)}`);
-        const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined;
-        const owner_parts = this.$mol_view_tree2_prop_split(owner);
-        const owner_call_parts = owner_parts.next
-            ? { ...owner_parts, next: undefined }
-            : owner_parts;
-        return {
-            default_value,
-            owner_call_parts,
-            owner_parts
-        };
-    }
-    $.$mol_view_tree2_bind_left_parts = $mol_view_tree2_bind_left_parts;
-})($ || ($ = {}));
-//mol/view/tree2/bind/left_parts.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_bind_right_parts(operator, having_parts, factory) {
-        if (operator.type !== '=>')
-            return this.$mol_fail(err `Need an \`=>\` at ${operator.span}, use ${example}`);
-        const owner = operator.kids.length === 1 ? operator.kids[0] : undefined;
-        if (!owner)
-            return this.$mol_fail(err `Need an owner part at ${operator.span}, use ${example}`);
-        if (owner.kids.length !== 0)
-            return this.$mol_fail(err `Owner at ${owner.span} can\'t have values at ${owner.kids.map(node => node.span)}, use ${example}`);
-        const owner_parts = this.$mol_view_tree2_prop_split(owner);
-        const owner_key = owner_parts.key;
-        const having_key = having_parts.key;
-        if (owner_key && having_key && having_key.data !== owner_key.data)
-            return this.$mol_fail(err `Key ${owner_key.value} at ${owner_key.span} must be equal to key ${having_key.span} at ${having_key.span}, ${example}`);
-        if (!owner_key && having_key)
-            return this.$mol_fail(err `Name ${owner_parts.name.value} at ${owner_parts.name.span} need a key like ${having_key.value} at ${having_key.span}, ${example}`);
-        if (owner_key && (!having_key && !factory.key))
-            return this.$mol_fail(err `Can't use key ${owner_key.value} at ${owner_key.span} without key at ${having_parts.name.span} or at ${factory.src.span}, ${example}`);
-        const owner_next = owner_parts.next;
-        const having_next = having_parts.next;
-        if (owner_next && !having_next)
-            return this.$mol_fail(err `Can't use next ${owner_next.value} at ${owner_next.span} without next at ${having_parts.name.span}, ${example}`);
-        return {
-            owner_parts
-        };
-    }
-    $.$mol_view_tree2_bind_right_parts = $mol_view_tree2_bind_right_parts;
-    const example = new $mol_view_tree2_error_suggestions([
-        'having => owner',
-        'having?next => owner?next',
-        'having!key => owner!key',
-        'having!key?next => owner!key?next'
-    ]);
-})($ || ($ = {}));
-//mol/view/tree2/bind/right_parts.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_ts_bind_both(operator, context) {
-        const { owner_parts, default_value } = this.$mol_view_tree2_bind_both_parts(operator);
-        context.check_scope_vars(owner_parts);
-        if (default_value && !context.get_method(owner_parts)) {
-            this.$mol_view_tree2_ts_method_body(owner_parts, context.root());
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+    function $mol_vlq_encode(val) {
+        const sign = val < 0 ? 1 : 0;
+        if (sign)
+            val = -val;
+        let index = sign | ((val & 0b1111) << 1);
+        val >>>= 4;
+        let res = '';
+        while (val) {
+            index |= 1 << 5;
+            res += alphabet[index];
+            if (!val)
+                break;
+            index = val & 0b11111;
+            val >>>= 5;
         }
-        return [operator.struct('line', [
-                owner_parts.name.data('this.'),
-                this.$mol_view_tree2_ts_function_call(owner_parts),
-            ])];
+        res += alphabet[index];
+        return res;
     }
-    $.$mol_view_tree2_ts_bind_both = $mol_view_tree2_ts_bind_both;
-    const example = new $mol_view_tree2_error_suggestions([
-        'having?next <=> owner?next',
-        'having?next <=> owner?next \\default',
-        'having!key?next <=> owner!key?next',
-    ]);
+    $.$mol_vlq_encode = $mol_vlq_encode;
 })($ || ($ = {}));
-//mol/view/tree2/ts/bind/both.ts
+
+;
+"use strict";
+
 ;
 "use strict";
 var $;
 (function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_ts_bind_left(operator, context, having_parts) {
-        const { default_value, owner_parts, owner_call_parts } = this.$mol_view_tree2_bind_left_parts(operator, having_parts);
-        context.check_scope_vars(owner_call_parts);
-        if (default_value && !context.get_method(owner_parts)) {
-            this.$mol_view_tree2_ts_method_body(owner_parts, context.root());
+    function $mol_tree2_text_to_sourcemap(tree) {
+        let col = 1;
+        let prev_span;
+        let prev_index = 0;
+        let prev_col = 1;
+        let mappings = '';
+        let line = [];
+        const file_indexes = new Map();
+        const file_sources = new Map();
+        function span2index(span) {
+            if (file_indexes.has(span.uri))
+                return file_indexes.get(span.uri);
+            const index = file_indexes.size;
+            file_indexes.set(span.uri, index);
+            file_sources.set(span.uri, span.source);
+            return index;
         }
-        return [operator.struct('line', [
-                owner_parts.name.data('this.'),
-                this.$mol_view_tree2_ts_function_call(owner_call_parts),
-            ])];
+        function next_line() {
+            if (!line.length)
+                return;
+            mappings += line.join(',') + ';';
+            line = [];
+            col = 1;
+            prev_col = 1;
+        }
+        function visit(text, prefix, inline) {
+            function indent() {
+                col += prefix;
+            }
+            if (inline && text.type === 'indent')
+                next_line();
+            if (prev_span !== text.span || col === 1) {
+                const index = span2index(text.span);
+                line.push($mol_vlq_encode(col - prev_col) +
+                    $mol_vlq_encode(index - prev_index) +
+                    $mol_vlq_encode(text.span.row - (prev_span?.row ?? 1)) +
+                    $mol_vlq_encode(text.span.col - (prev_span?.col ?? 1)));
+                prev_col = col;
+                prev_span = text.span;
+                prev_index = index;
+            }
+            if (text.type === 'indent') {
+                for (let kid of text.kids) {
+                    visit(kid, prefix + 1, false);
+                }
+                if (inline)
+                    next_line();
+            }
+            else if (text.type === 'line') {
+                if (!inline)
+                    indent();
+                for (let kid of text.kids) {
+                    visit(kid, prefix, true);
+                }
+                if (!inline)
+                    next_line();
+            }
+            else {
+                if (!inline)
+                    indent();
+                col += text.text().length;
+                if (!inline)
+                    next_line();
+            }
+        }
+        for (let kid of tree.kids) {
+            visit(kid, 0, false);
+        }
+        next_line();
+        const map = {
+            version: 3,
+            sources: [...file_sources.keys()],
+            sourcesContent: [...file_sources.values()],
+            mappings,
+        };
+        return map;
     }
-    $.$mol_view_tree2_ts_bind_left = $mol_view_tree2_ts_bind_left;
+    $.$mol_tree2_text_to_sourcemap = $mol_tree2_text_to_sourcemap;
 })($ || ($ = {}));
-//mol/view/tree2/ts/bind/left.ts
+
+;
+"use strict";
+
 ;
 "use strict";
 var $;
 (function ($) {
     const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_ts_bind_right(operator, having_parts, factory, context) {
-        const { owner_parts } = this.$mol_view_tree2_bind_right_parts(operator, having_parts, factory);
-        const prev = context.get_method(owner_parts);
-        if (prev)
-            return this.$mol_fail(err `Method ${owner_parts.name.value} at ${owner_parts.name.span} already defined at ${prev.src.span}, ${example}`);
-        const index = context.index(owner_parts);
-        const body = operator.struct('indent', [
-            operator.struct('line', [
-                owner_parts.name.data('return this.'),
-                this.$mol_view_tree2_ts_function_call({ ...factory, key: factory.key?.data('id') }),
-                owner_parts.name.data('.'),
-                this.$mol_view_tree2_ts_function_call(having_parts),
-            ])
+    function name_of(prop) {
+        const name = prop.type
+            ? this.$mol_view_tree2_prop_parts(prop).name
+            : prop.value;
+        if (!name) {
+            this.$mol_fail(err `Required valid prop name at ${prop.span}`);
+        }
+        return prop.data(name);
+    }
+    function channel_signature(prop, ...val) {
+        const { name, key, next } = this.$mol_view_tree2_prop_parts(prop);
+        if (next && !val[0]?.value) {
+            this.$mol_fail(err `Type empty for next value at ${prop.span}`);
+        }
+        return prop.struct('line', [
+            prop.data(name),
+            prop.data('( '),
+            ...key ? [
+                prop.data('id'),
+                prop.data(': any' + (next ? ', ' : '')),
+            ] : [],
+            ...next ? [
+                prop.data('next'),
+                prop.data('?: '),
+                ...val,
+                prop.data(' '),
+            ] : [],
+            prop.data(')'),
         ]);
-        const method = [
-            ...this.$mol_view_tree2_ts_comment_doc(owner_parts.src),
-            operator.struct('line', [
-                owner_parts.name,
-                $mol_view_tree2_ts_function_declaration(owner_parts, context.types),
-                owner_parts.name.data(' {'),
-            ]),
-            body,
-            owner_parts.name.data('}'),
-        ];
-        context.method(index, method);
     }
-    $.$mol_view_tree2_ts_bind_right = $mol_view_tree2_ts_bind_right;
-    const example = new $mol_view_tree2_error_suggestions([
-        'having => owner',
-        'having?next => owner?next',
-        'having!key => owner!key',
-        'having!key?next => owner!key?next'
-    ]);
-})($ || ($ = {}));
-//mol/view/tree2/ts/bind/right.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_ts_class(klass, locales) {
-        const superclass = this.$mol_view_tree2_class_super(klass);
-        const body = [];
-        const class_parts = this.$mol_view_tree2_prop_split(klass);
-        const context = new $mol_view_tree2_context(this, [class_parts], locales, body);
-        const props = this.$mol_view_tree2_class_props(klass);
-        for (const having of props) {
-            const having_parts = this.$mol_view_tree2_prop_split(having);
-            if (context.get_method(having_parts))
-                continue;
-            this.$mol_view_tree2_ts_method_body(having_parts, context);
+    function return_type(klass, input) {
+        return [
+            input.data('ReturnType< '),
+            klass,
+            input.data('[\''),
+            name_of.call(this, input),
+            input.data('\'] >'),
+        ];
+    }
+    function parameters(klass, input, pick_index) {
+        const result = [
+            input.data('Parameters< '),
+            klass,
+            input.data('[\''),
+            name_of.call(this, input),
+            input.data(`'] >`),
+        ];
+        if (pick_index !== undefined) {
+            result.push(input.data(`[${pick_index}]`));
         }
-        return klass.struct('indent', [
-            klass.struct('line', [
+        return result;
+    }
+    function primitive_type(input) {
+        let type = 'string';
+        if (input.type && $mol_view_tree2_value_number(input.type))
+            type = 'number';
+        if (input.type === 'true' || input.type === 'false')
+            type = 'boolean';
+        return input.data(type);
+    }
+    function readonly_arr(input, infered) {
+        return [
+            input.data('readonly('),
+            infered.length === 1 ? infered[0] : input.struct('indent', infered),
+            input.data(')[]'),
+        ];
+    }
+    function type_enforce(name, a, b) {
+        return name.struct('line', [
+            name.data(`type ${name.value.replace(/<.*>/g, '')}__${this.$mol_guid()} = $mol_type_enforce<`),
+            name.struct('indent', [
+                a[0].struct('line', a),
+                a[0].data(','),
+                b[0].struct('line', b),
+            ]),
+            name.data('>'),
+        ]);
+    }
+    function $mol_view_tree2_to_dts(tree) {
+        const descr = $mol_view_tree2_classes(tree);
+        const types = [];
+        for (const klass of descr.kids) {
+            const parent = this.$mol_view_tree2_child(klass);
+            const props = this.$mol_view_tree2_class_props(klass);
+            const aliases = [];
+            const context = { objects: [] };
+            types.push(klass.struct('line', [
                 klass.data('export class '),
                 klass.data(klass.type),
-                klass.data(' extends '),
-                superclass.data(superclass.type),
+                parent.data(' extends '),
+                parent.data(parent.type),
                 klass.data(' {'),
-            ]),
-            klass.struct('indent', body),
-            klass.data('}'),
-            klass.data(''),
+            ]), ...props.map(prop => {
+                const val = prop.hack({
+                    'null': val => {
+                        const kid = val.kids[0];
+                        return kid?.type
+                            ? [kid.data(kid.type), val.data(' | null')]
+                            : [val.data('any')];
+                    },
+                    'true': val => [val.data('boolean')],
+                    'false': val => [val.data('boolean')],
+                    '@': (locale, belt) => locale.hack(belt),
+                    '<=>': (input) => return_type.call(this, klass.data(klass.type), this.$mol_view_tree2_child(input)),
+                    '<=': (input) => return_type.call(this, klass.data(klass.type), this.$mol_view_tree2_child(input)),
+                    '=>': () => [],
+                    '^': (input) => {
+                        const host = input.kids.length ? klass : parent;
+                        return return_type.call(this, host.data(host.type), input.kids.length ? input.kids[0] : prop);
+                    },
+                    '=': (input) => {
+                        const left = input.kids[0];
+                        const right = left.kids[0];
+                        const left_parts = this.$mol_view_tree2_prop_parts(left);
+                        const right_parts = this.$mol_view_tree2_prop_parts(right);
+                        let conflict;
+                        if (left_parts.next && right_parts.next)
+                            conflict = 'next';
+                        if (left_parts.key && right_parts.key)
+                            conflict = 'key';
+                        if (conflict) {
+                            this.$mol_fail(err `Only one "${conflict}" allowed: ${left_parts[conflict]} at ${left.span} or ${right_parts[conflict]} at ${right.span}`);
+                        }
+                        const main = klass.data(klass.type);
+                        const prop_parts = this.$mol_view_tree2_prop_parts(prop);
+                        const method = prop.data(`${klass.type}_${prop_parts.name}`);
+                        const second_main = left_parts.key || left_parts.next ? main : left.struct('line', return_type.call(this, main, left));
+                        const second_key = left_parts.next || left_parts.key ? left : right;
+                        if (prop_parts.key) {
+                            types.push(type_enforce.call(this, method, parameters.call(this, main, prop, 0), parameters.call(this, second_main, second_key, 0)));
+                        }
+                        if (prop_parts.next) {
+                            types.push(type_enforce.call(this, method, parameters.call(this, main, prop, prop_parts.key ? 1 : 0), parameters.call(this, second_main, second_key, (left_parts.next ? left_parts : right_parts).key ? 1 : 0)));
+                        }
+                        return return_type.call(this, left.struct('line', return_type.call(this, main, left)), name_of.call(this, right));
+                    },
+                    '': (input, belt, context) => {
+                        if (input.type[0] === '*') {
+                            let unions = [];
+                            const hacked = [].concat(...input.kids.map(kid => {
+                                if (kid.type[0] === '^') {
+                                    unions = unions.concat(kid.data(' & '), kid.hack_self(belt, context));
+                                    return [];
+                                }
+                                const child = this.$mol_view_tree2_child(kid);
+                                const ret = child.hack_self(belt);
+                                return kid.struct('line', kid.type.match(/(?:\*|\?)/)
+                                    ? [
+                                        channel_signature.call(this, kid, ...ret),
+                                        kid.data(': '),
+                                        ...ret,
+                                        kid.data(','),
+                                    ]
+                                    : [
+                                        kid.data('\''),
+                                        kid.data(kid.type || kid.value),
+                                        kid.data('\': '),
+                                        ...ret,
+                                        kid.data(','),
+                                    ]);
+                            }));
+                            if (input.type.length > 1 || !hacked.length) {
+                                return [
+                                    input.data('Record<string, '),
+                                    input.data(input.type.slice(1) || 'any'),
+                                    input.data('>'),
+                                    ...unions
+                                ];
+                            }
+                            return [
+                                input.data('({ '),
+                                input.struct('indent', hacked),
+                                input.data('}) '),
+                                ...unions
+                            ];
+                        }
+                        if (input.type[0] === '/') {
+                            const array_type = [
+                                input.type.length > 1
+                                    ? input.data(input.type.slice(1))
+                                    : input.data('any')
+                            ];
+                            if (array_type[0].value === 'any') {
+                                return readonly_arr(input, array_type);
+                            }
+                            for (const kid of input.kids) {
+                                let result = kid.hack_self(belt, context);
+                                const val = result[0].value;
+                                if (val === 'string') {
+                                    result = kid.value.includes('`')
+                                        ? [kid.data(JSON.stringify(kid.value))]
+                                        : [kid.data('`'), kid, kid.data('`')];
+                                }
+                                else if (val === 'boolean')
+                                    result = [kid.data(kid.type)];
+                                else if (kid.type[0] === '^') {
+                                    result.push((kid.kids[0] ?? prop).data('[number]'));
+                                }
+                                else
+                                    continue;
+                                types.push(type_enforce.call(this, input.data(`${klass.type}_${prop.type.replace(/[\?\*]*/g, '')}`), result, array_type));
+                            }
+                            return readonly_arr(input, array_type);
+                        }
+                        if ($mol_view_tree2_class_match(input)) {
+                            const first = input.kids[0];
+                            if (first?.type[0] === '/') {
+                                const args = first.kids.map((kid, index) => {
+                                    const result = kid.hack_self(belt, context);
+                                    if (index !== 0)
+                                        result.unshift(kid.data(', '));
+                                    return kid.struct('line', result);
+                                });
+                                types.push(type_enforce.call(this, first.data(input.type), [
+                                    first.data('[ '),
+                                    ...args,
+                                    first.data(' ]'),
+                                ], [
+                                    input.data(`ConstructorParameters< typeof `),
+                                    input.data(input.type),
+                                    input.data(` >`),
+                                ]));
+                            }
+                            else
+                                for (const over of input.kids) {
+                                    const name = name_of.call(this, over);
+                                    const bind = this.$mol_view_tree2_child(over);
+                                    if (bind.type === '=>')
+                                        continue;
+                                    types.push(type_enforce.call(this, over.data(`${input.type}__${name.value}`), over.hack(belt), return_type.call(this, input.data(input.type), over)));
+                                }
+                            return [
+                                input.data(input.type),
+                            ];
+                        }
+                        return [
+                            primitive_type(input)
+                        ];
+                    },
+                }, context);
+                return prop.struct('indent', [
+                    prop.struct('line', [
+                        channel_signature.call(this, prop, ...val),
+                        prop.data(': '),
+                        ...val,
+                    ])
+                ]);
+            }).filter($mol_guard_defined), ...aliases, klass.data('}'), descr.data(''));
+        }
+        return descr.list([
+            descr.data('declare namespace $ {'),
+            descr.data(''),
+            descr.struct('indent', types),
+            descr.data('}'),
         ]);
     }
-    $.$mol_view_tree2_ts_class = $mol_view_tree2_ts_class;
+    $.$mol_view_tree2_to_dts = $mol_view_tree2_to_dts;
 })($ || ($ = {}));
-//mol/view/tree2/ts/class.ts
+
 ;
 "use strict";
 var $;
 (function ($) {
-    function $mol_view_tree2_ts_value(src) {
-        const converted = this.$mol_view_tree2_value(src);
-        if (src.type === 'null')
-            return [converted.struct('line', [
-                    converted.data(converted.value),
-                    converted.data(' as any'),
-                ])];
-        return [converted];
-    }
-    $.$mol_view_tree2_ts_value = $mol_view_tree2_ts_value;
-})($ || ($ = {}));
-//mol/view/tree2/ts/value.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_ts_locale(operator, context) {
-        return [operator.struct('line', [
-                operator.data('this.$.$mol_locale.text( \''),
-                context.locale(operator),
-                operator.data('\' )'),
-            ])];
-    }
-    $.$mol_view_tree2_ts_locale = $mol_view_tree2_ts_locale;
-})($ || ($ = {}));
-//mol/view/tree2/ts/locale.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_ts_module(tree2_module, locales) {
-        tree2_module = $mol_view_tree2_classes(tree2_module);
-        const classes = [
-            tree2_module.data('namespace $ {')
-        ];
-        let has_data = false;
-        for (const item of tree2_module.kids) {
-            const class_node = this.$mol_view_tree2_ts_class(item, locales);
-            classes.push(class_node);
-            has_data = true;
-        }
-        classes.push(tree2_module.data('}'), tree2_module.data(''));
-        return tree2_module.list(has_data ? classes : []);
-    }
-    $.$mol_view_tree2_ts_module = $mol_view_tree2_ts_module;
-})($ || ($ = {}));
-//mol/view/tree2/ts/module.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_ts_function_declaration({ name, key, next }, types = false) {
-        const sub = [name.data('(')];
-        if (key)
-            sub.push(key.data('id'));
-        if (types && key)
-            sub.push(key.data(': any'));
-        if (key && next)
-            sub.push(name.data(', '));
-        if (next)
-            sub.push(next);
-        if (types && next)
-            sub.push(next.data('?: any'));
-        sub.push(name.data(')'));
-        return name.struct('line', sub);
-    }
-    $.$mol_view_tree2_ts_function_declaration = $mol_view_tree2_ts_function_declaration;
-    function $mol_view_tree2_ts_function_call({ name, key, next }) {
-        const sub = [
-            name,
-            name.data('('),
-        ];
-        if (key)
-            sub.push(key);
-        if (next && key)
-            sub.push(key.data(', '));
-        if (next)
-            sub.push(next);
-        sub.push(name.data(')'));
-        return name.struct('line', sub);
-    }
-    $.$mol_view_tree2_ts_function_call = $mol_view_tree2_ts_function_call;
-})($ || ($ = {}));
-//mol/view/tree2/ts/function.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_ts_spread(spread_prop) {
-        const spread_prop_parts = this.$mol_view_tree2_prop_split(spread_prop);
-        return spread_prop.struct('line', [
-            spread_prop.data('...this.'),
-            this.$mol_view_tree2_ts_function_call(spread_prop_parts)
-        ]);
-    }
-    $_1.$mol_view_tree2_ts_spread = $mol_view_tree2_ts_spread;
-    class $mol_view_tree2_ts_spread_factory extends $mol_object2 {
-        prop_parts;
-        super_spread = undefined;
-        constructor($, prop_parts) {
-            super();
-            this.prop_parts = prop_parts;
-            this.$ = $;
-        }
-        create(prop) {
-            const spread_prop = prop.kids.length === 1 ? prop.kids[0] : undefined;
-            if (spread_prop)
-                return this.$.$mol_view_tree2_ts_spread(spread_prop);
-            const super_spread = this.super_spread;
-            if (super_spread)
-                return this.$.$mol_fail(err `Only one \`^\` operator allowed at ${prop.span}, first was at ${super_spread.span}`);
-            if (!this.prop_parts)
-                return this.$.$mol_fail(err `Operator \`^\` not allowed at ${prop.span}`);
-            this.super_spread = prop.struct('line', [
-                prop.data('...super.'),
-                this.$.$mol_view_tree2_ts_function_call(this.prop_parts)
-            ]);
-            return this.super_spread;
-        }
-    }
-    $_1.$mol_view_tree2_ts_spread_factory = $mol_view_tree2_ts_spread_factory;
-})($ || ($ = {}));
-//mol/view/tree2/ts/spread.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_ts_comment(item) {
-        return item.kids.map(chunk => item.data('// ' + chunk.type));
-    }
-    $.$mol_view_tree2_ts_comment = $mol_view_tree2_ts_comment;
-    function $mol_view_tree2_ts_comment_doc(item) {
-        const chunks = item.toString().trim().split('\n');
-        return [
-            item.data(''),
-            item.data('/**'),
-            item.data(' * ```tree'),
-            ...chunks.map(chunk => item.data(' * ' + chunk)),
-            item.data(' * ```'),
-            item.data(' */'),
-        ];
-    }
-    $.$mol_view_tree2_ts_comment_doc = $mol_view_tree2_ts_comment_doc;
-})($ || ($ = {}));
-//mol/view/tree2/ts/comment.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_ts_compile(tree2_module) {
+    function $mol_view_tree2_to_locale(module) {
         const locales = {};
-        const ts_module = this.$mol_view_tree2_ts_module(tree2_module, locales);
-        const script = this.$mol_tree2_text_to_string(ts_module);
-        return { script, locales };
-    }
-    $.$mol_view_tree2_ts_compile = $mol_view_tree2_ts_compile;
-})($ || ($ = {}));
-//mol/view/tree2/ts/compile.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_ts_dictionary(dictionary, dictionary_context, super_method) {
-        if (dictionary.type !== '*')
-            return this.$mol_fail(err `Need a \`*\` operator at ${dictionary.span}`);
-        const sub = [];
-        const kids = dictionary.kids;
-        const last = kids.length > 0 ? kids[kids.length - 1] : undefined;
-        const spread_factory = new this.$mol_view_tree2_ts_spread_factory(this, super_method);
-        for (const opt of kids) {
-            let value;
-            const info = this.$mol_view_tree2_prop_split(opt);
-            if (opt.type === '^') {
-                const child_sub = [spread_factory.create(opt)];
-                if (opt !== last)
-                    child_sub.push(opt.data(','));
-                sub.push(opt.struct('line', child_sub));
-                continue;
+        const descr = $mol_view_tree2_classes(module);
+        for (const klass of descr.kids) {
+            const props = this.$mol_view_tree2_class_props(klass);
+            const acc = { chain: [] };
+            for (const prop of props) {
+                const { name } = this.$mol_view_tree2_prop_parts(prop);
+                prop.hack({
+                    '': (input, belt, context) => {
+                        if (input.type[0] === '@') {
+                            const chain = context.chain?.join('_');
+                            const path = `${klass.type}_${name}${chain.length ? `_${chain}` : ''}`;
+                            locales[path] = input.kids[0].value;
+                        }
+                        if (input.type[0] === '*') {
+                            for (const field of input.kids) {
+                                if (field.type === '^')
+                                    continue;
+                                const field_name = field.type.replace(/\?\w*$/, '');
+                                field.hack(belt, {
+                                    ...context,
+                                    chain: [
+                                        ...context.chain ?? [],
+                                        field_name
+                                    ]
+                                });
+                            }
+                        }
+                        if (/^[$A-Z]/.test(input.type)) {
+                            for (const over of input.kids) {
+                                if (over.type === '/')
+                                    continue;
+                                const oname = this.$mol_view_tree2_prop_parts(over).name;
+                                const bind = over.kids[0];
+                                if (bind.type === '@') {
+                                    const path = `${klass.type}_${name}_${oname}`;
+                                    locales[path] = bind.kids[0].value;
+                                }
+                            }
+                        }
+                        return [input];
+                    }
+                }, acc);
             }
-            const context = dictionary_context.parent(info);
-            const operator = opt.kids.length > 0 ? opt.kids[opt.kids.length - 1] : undefined;
-            if (!operator)
-                return this.$mol_fail(err `Need an operator at ${opt.span}`);
-            const type = operator.type;
-            if (type === '<=')
-                value = this.$mol_view_tree2_ts_bind_left(operator, context);
-            else if (type === '*')
-                value = this.$mol_view_tree2_ts_dictionary(operator, context);
-            else if (type[0] === '/')
-                value = this.$mol_view_tree2_ts_array(operator, context);
-            else if (type === '<=>')
-                value = this.$mol_view_tree2_ts_bind_both(operator, context);
-            else if (type === '@')
-                value = this.$mol_view_tree2_ts_locale(operator, context);
-            else
-                value = this.$mol_view_tree2_ts_value(operator);
-            const child_sub = [
-                $mol_view_tree2_prop_quote(info.name),
-                info.name.data(': '),
-            ];
-            if (info.next || info.key)
-                child_sub.push($mol_view_tree2_ts_function_declaration(info, context.types), opt.data(' => '));
-            child_sub.push(...value);
-            if (opt !== last)
-                child_sub.push(opt.data(','));
-            sub.push(opt.struct('line', child_sub));
         }
-        return [
-            dictionary.data('{'),
-            dictionary.struct('indent', sub),
-            dictionary.data('} as Record< string, any >'),
-        ];
+        return locales;
     }
-    $.$mol_view_tree2_ts_dictionary = $mol_view_tree2_ts_dictionary;
+    $.$mol_view_tree2_to_locale = $mol_view_tree2_to_locale;
 })($ || ($ = {}));
-//mol/view/tree2/ts/dictionary.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_ts_factory(klass, factory, factory_context) {
-        if (!/^[$A-Z]/.test(klass.type))
-            return this.$mol_fail(err `Need a valid class name at ${klass.span}, use ${example}`);
-        const obj_node = klass.data('obj');
-        const body = [];
-        let last_array;
-        let constructor_args;
-        for (const child of klass.kids) {
-            const child_parts = this.$mol_view_tree2_prop_split(child);
-            const context = factory_context.parent(child_parts);
-            if (child.type[0] === '/') {
-                if (last_array)
-                    return this.$mol_fail(err `Only one \`/\` operator allowed in factory at ${child.span}, prev at ${last_array.span}`);
-                last_array = child;
-                constructor_args = this.$mol_view_tree2_ts_array_body(child, context);
-                continue;
-            }
-            const operator = this.$mol_view_tree2_child(child);
-            const type = operator.type;
-            let value;
-            if (type === '<=')
-                value = this.$mol_view_tree2_ts_bind_left(operator, context, child_parts);
-            else if (type === '<=>')
-                value = this.$mol_view_tree2_ts_bind_both(operator, context);
-            else if (type === '=>') {
-                this.$mol_view_tree2_ts_bind_right(operator, child_parts, factory, factory_context);
-                continue;
-            }
-            else if (type === '@')
-                value = this.$mol_view_tree2_ts_locale(operator, context);
-            else if (type === '*')
-                value = [child.struct('line', [
-                        child.data('('),
-                        ...this.$mol_view_tree2_ts_dictionary(operator, context),
-                        child.data(')'),
-                    ])];
-            else if (type[0] === '/')
-                value = this.$mol_view_tree2_ts_array(operator, context);
-            else
-                value = this.$mol_view_tree2_ts_value(operator);
-            const call = child.struct('line', [
-                obj_node,
-                child.data('.'),
-                child_parts.name,
-                child_parts.name.data(' = '),
-                $mol_view_tree2_ts_function_declaration(child_parts, context.types),
-                child.data(' => '),
-                ...value,
-            ]);
-            body.push(call);
-        }
-        const init = [
-            klass.data('const '),
-            obj_node,
-            klass.data(' = new this.$.'),
-            klass.data(klass.type),
-        ];
-        if (constructor_args)
-            init.push(klass.data('('), constructor_args, klass.data(')'));
-        else
-            init.push(klass.data('()'));
-        const sub = [
-            klass.struct('line', init),
-            klass.data(''),
-        ];
-        if (body.length > 0)
-            sub.push(...body);
-        if (body.length > 0 && !constructor_args)
-            sub.push(klass.data(''));
-        sub.push(obj_node.struct('line', [
-            klass.data('return '),
-            obj_node
-        ]));
-        return klass.struct('indent', sub);
-    }
-    $.$mol_view_tree2_ts_factory = $mol_view_tree2_ts_factory;
-    const example = new $mol_view_tree2_error_suggestions([
-        'Factory_name!key?next $' + 'my_class'
-    ]);
-})($ || ($ = {}));
-//mol/view/tree2/ts/factory.ts
+
 ;
 "use strict";
 var $;
@@ -4411,7 +4372,115 @@ var $;
     }
     $.$mol_graph = $mol_graph;
 })($ || ($ = {}));
-//mol/graph/graph.ts
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_sourcemap_strip(data) {
+        return data.replace(/^(?:(?:\/\/)|(?:\/\*))\s*#\s*sourceMappingURL\s*=[^\n]*/mg, '') + '\n';
+    }
+    $.$mol_sourcemap_strip = $mol_sourcemap_strip;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_sourcemap_url(uri, type = 'js') {
+        if (type === 'css')
+            return `\n/*# sourceMappingURL=${uri}*/`;
+        return `\n//# sourceMappingURL=${uri}`;
+    }
+    $.$mol_sourcemap_url = $mol_sourcemap_url;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const prefix = '# sourceMappingURL=data:application/json,';
+    const end_comment = ' */';
+    function $mol_sourcemap_dataurl_decode(data) {
+        const index = data.lastIndexOf(prefix);
+        if (index === -1)
+            return undefined;
+        data = data.substring(index + prefix.length);
+        if (data.endsWith(end_comment))
+            data = data.substring(0, data.length - end_comment.length);
+        const decoded = this.decodeURIComponent(data);
+        try {
+            const map = JSON.parse(decoded);
+            if (!map)
+                return undefined;
+            if (typeof map.mappings === 'string' && map.mappings.startsWith(';;')) {
+                map.mappings = map.mappings.substring(2);
+            }
+            return map;
+        }
+        catch (e) {
+            if (e instanceof Error)
+                e.message += ', origin=' + decoded;
+            $mol_fail_hidden(e);
+        }
+    }
+    $.$mol_sourcemap_dataurl_decode = $mol_sourcemap_dataurl_decode;
+    function $mol_sourcemap_dataurl_encode(map, type = 'js') {
+        const str = JSON.stringify({ ...map, mappings: ';;' + map.mappings });
+        return this.$mol_sourcemap_url('data:application/json,' + this.encodeURIComponent(str), type);
+    }
+    $.$mol_sourcemap_dataurl_encode = $mol_sourcemap_dataurl_encode;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_sourcemap_from_file(src) {
+        const text = src.text();
+        let map = this.$mol_sourcemap_dataurl_decode(text);
+        if (map)
+            return map;
+        const map_file = src.parent().resolve(src.name() + '.map');
+        if (map_file.exists())
+            map = JSON.parse(map_file.text());
+        return map;
+    }
+    $.$mol_sourcemap_from_file = $mol_sourcemap_from_file;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_encode(src) {
+        throw new Error('Not implemented');
+    }
+    $.$mol_base64_encode = $mol_base64_encode;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_encode_node(str) {
+        if (!str)
+            return '';
+        if (Buffer.isBuffer(str))
+            return str.toString('base64');
+        return Buffer.from(str).toString('base64');
+    }
+    $.$mol_base64_encode_node = $mol_base64_encode_node;
+    $.$mol_base64_encode = $mol_base64_encode_node;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_action = $mol_wire_method;
+})($ || ($ = {}));
+
 ;
 "use strict";
 var $;
@@ -4535,14 +4604,16 @@ var $;
                         mergedSegment.push(segment[3]);
                     if (segment.length >= 5) {
                         const nameIndex = segment[4];
-                        const name = raw.names[nameIndex];
-                        let mergedNameIndex = name_indexes.get(name);
-                        if (mergedNameIndex === undefined) {
-                            mergedNameIndex = names.length;
-                            name_indexes.set(name, mergedNameIndex);
-                            names.push(name);
+                        const name = raw.names?.[nameIndex];
+                        if (name !== undefined) {
+                            let mergedNameIndex = name_indexes.get(name);
+                            if (mergedNameIndex === undefined) {
+                                mergedNameIndex = names.length;
+                                name_indexes.set(name, mergedNameIndex);
+                                names.push(name);
+                            }
+                            mergedSegment.push(mergedNameIndex);
                         }
-                        mergedSegment.push(mergedNameIndex);
                     }
                     mergedLine.push(mergedSegment);
                 }
@@ -4555,39 +4626,7 @@ var $;
     }
     $.$mol_sourcemap_builder = $mol_sourcemap_builder;
 })($ || ($ = {}));
-//mol/sourcemap/sourcemap.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_base64_encode(src) {
-        throw new Error('Not implemented');
-    }
-    $.$mol_base64_encode = $mol_base64_encode;
-})($ || ($ = {}));
-//mol/base64/encode/encode.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_base64_encode_node(str) {
-        if (!str)
-            return '';
-        if (Buffer.isBuffer(str))
-            return str.toString('base64');
-        return Buffer.from(str).toString('base64');
-    }
-    $.$mol_base64_encode_node = $mol_base64_encode_node;
-    $.$mol_base64_encode = $mol_base64_encode_node;
-})($ || ($ = {}));
-//mol/base64/encode/encode.node.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_action = $mol_wire_method;
-})($ || ($ = {}));
-//mol/action/action.ts
+
 ;
 "use strict";
 var $;
@@ -4603,7 +4642,7 @@ var $;
     }
     $.$mol_error_mix = $mol_error_mix;
 })($ || ($ = {}));
-//mol/error/mix/mix.ts
+
 ;
 "use strict";
 var $;
@@ -4619,7 +4658,7 @@ var $;
     }
     $.$mol_html_encode = $mol_html_encode;
 })($ || ($ = {}));
-//mol/html/encode/encode.ts
+
 ;
 "use strict";
 var $;
@@ -4703,167 +4742,7 @@ var $;
     }
     $.$mol_tree2_xml_to_text = $mol_tree2_xml_to_text;
 })($ || ($ = {}));
-//mol/tree2/xml/to/text/text.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_ts_array_body(operator, parent_context, super_method) {
-        if (operator.type[0] !== '/')
-            return this.$mol_fail(err `Need a \`/\` at ${operator.span}`);
-        const spread = new this.$mol_view_tree2_ts_spread_factory(this, super_method);
-        const context = parent_context.locale_disable(operator);
-        const kids = operator.kids;
-        const last = kids.length > 0 ? kids[kids.length - 1] : undefined;
-        const sub = [];
-        for (const opt of kids) {
-            const type = opt.type;
-            let value;
-            if (type === '^')
-                value = [spread.create(opt)];
-            else if (type === '<=')
-                value = this.$mol_view_tree2_ts_bind_left(opt, context);
-            else if (type === '*')
-                value = this.$mol_view_tree2_ts_dictionary(opt, context);
-            else if (type[0] === '/')
-                value = this.$mol_view_tree2_ts_array(opt, context);
-            else
-                value = this.$mol_view_tree2_ts_value(opt);
-            const child_sub = value;
-            if (opt !== last)
-                child_sub.push(operator.data(','));
-            sub.push(opt.struct('line', child_sub));
-        }
-        return operator.struct('indent', sub);
-    }
-    $.$mol_view_tree2_ts_array_body = $mol_view_tree2_ts_array_body;
-})($ || ($ = {}));
-//mol/view/tree2/ts/array/body.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_ts_array(operator, context, super_method) {
-        if (operator.type[0] !== '/')
-            return this.$mol_fail(err `Need a \`/\` at ${operator.span}`);
-        const type_str = operator.type.substring(1);
-        const type_body = [
-            operator.data('] as '),
-        ];
-        if (type_str === '') {
-            type_body.push(operator.data('readonly any[]'));
-        }
-        else if (type_str === 'const') {
-            type_body.push(operator.data('const'));
-        }
-        else {
-            const type = $mol_tree2.data(type_str, [], operator.span.slice(1, type_str.length));
-            const is_array = type.value.indexOf('[') !== -1;
-            type_body.push(operator.data('readonly '));
-            if (is_array)
-                type_body.push(operator.data('('));
-            type_body.push(type);
-            if (is_array)
-                type_body.push(operator.data(')'));
-            type_body.push(operator.data('[]'));
-        }
-        const body = this.$mol_view_tree2_ts_array_body(operator, context, super_method);
-        return [
-            operator.data('['),
-            body,
-            operator.struct('line', type_body)
-        ];
-    }
-    $.$mol_view_tree2_ts_array = $mol_view_tree2_ts_array;
-})($ || ($ = {}));
-//mol/view/tree2/ts/array/array.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const err = $mol_view_tree2_error_str;
-    function $mol_view_tree2_ts_method_body(having_parts, parent_context) {
-        const context = parent_context.parent(having_parts);
-        const having = having_parts.src;
-        const operator = having.kids.length === 1 ? having.kids[0] : undefined;
-        if (!operator)
-            return this.$mol_fail(err `Need an child part in a class body at ${having.span}`);
-        const type = operator.type;
-        const index = context.index(having_parts);
-        let body;
-        if (type === '<=')
-            body = add_return(operator, this.$mol_view_tree2_ts_bind_left(operator, context, having_parts));
-        else if (type === '<=>')
-            body = add_return(operator, this.$mol_view_tree2_ts_bind_both(operator, context));
-        else if (type === '@')
-            body = add_return(operator, this.$mol_view_tree2_ts_locale(operator, context));
-        else if (type === '*')
-            body = add_return(operator, this.$mol_view_tree2_ts_dictionary(operator, context, having_parts));
-        else if (type[0] === '/')
-            body = add_return(operator, this.$mol_view_tree2_ts_array(operator, context, having_parts));
-        else if (/^[$A-Z]/.test(type))
-            body = this.$mol_view_tree2_ts_factory(operator, having_parts, context);
-        else
-            body = add_return(operator, this.$mol_view_tree2_ts_value(operator));
-        const method = this.$mol_view_tree2_ts_method(having_parts, body, context.types);
-        context.method(index, method);
-    }
-    $.$mol_view_tree2_ts_method_body = $mol_view_tree2_ts_method_body;
-    function add_return(op, value) {
-        return op.struct('indent', [
-            op.struct('line', [
-                op.data('return '),
-                ...value
-            ])
-        ]);
-    }
-})($ || ($ = {}));
-//mol/view/tree2/ts/method/body.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_ts_method(owner_parts, body, types = false) {
-        const { name, key, next, src } = owner_parts;
-        const operator = src.kids.length === 1 ? src.kids[0] : undefined;
-        const type = operator?.type;
-        const is_class = type && /^[$A-Z]/.test(type);
-        const is_delegate = type === '<=' || type === '<=>';
-        let need_cache = false;
-        if (is_delegate)
-            need_cache = false;
-        else if (next !== undefined)
-            need_cache = true;
-        else if (is_class)
-            need_cache = true;
-        const sub = this.$mol_view_tree2_ts_comment_doc(src);
-        if (need_cache && key)
-            sub.push(name.data(`@ $${''}mol_mem_key`));
-        if (need_cache && !key)
-            sub.push(name.data(`@ $${''}mol_mem`));
-        sub.push(name.struct('line', [
-            name,
-            $mol_view_tree2_ts_function_declaration(owner_parts, types),
-            name.data(' {'),
-        ]));
-        if (next && need_cache)
-            sub.push(next.struct('indent', [
-                next.struct('line', [
-                    next.data('if ( '),
-                    next,
-                    next.data(' !== undefined ) return '),
-                    next,
-                    next.data(' as never'),
-                ])
-            ]));
-        sub.push(body, name.data('}'));
-        return sub;
-    }
-    $.$mol_view_tree2_ts_method = $mol_view_tree2_ts_method;
-})($ || ($ = {}));
-//mol/view/tree2/ts/method/method.ts
+
 ;
 "use strict";
 var $;
@@ -4913,10 +4792,10 @@ var $;
         metaTreeTranspile(path) {
             const file = $mol_file.absolute(path);
             const name = file.name();
-            const tree = $mol_tree.fromString(file.text(), file.path());
+            const tree = this.$.$mol_tree2_from_string(file.text(), file.path());
             let content = '';
-            for (const step of tree.select('build', '').sub) {
-                const res = this.$.$mol_exec(file.parent().path(), step.value).stdout.toString().trim();
+            for (const step of tree.select('build', '').kids) {
+                const res = this.$.$mol_exec(file.parent().path(), step.text()).stdout.toString().trim();
                 if (step.type)
                     content += `let ${step.type} = ${JSON.stringify(res)}`;
             }
@@ -4927,17 +4806,26 @@ var $;
             return [script];
         }
         viewTreeTranspile(path) {
-            const file = $mol_file.absolute(path);
-            const name = file.name();
-            const script = file.parent().resolve(`-view.tree/${name}.ts`);
-            const sourceMap = file.parent().resolve(`-view.tree/${name}.map`);
-            const locale = file.parent().resolve(`-view.tree/${name}.locale=en.json`);
-            const text = file.text();
-            const tree = this.$.$mol_tree2_from_string(text, file.path());
-            const res = this.$.$mol_view_tree2_ts_compile(tree);
-            script.text(res.script);
-            locale.text(JSON.stringify(res.locales, null, '\t'));
-            return [script, locale];
+            const source = $mol_file.absolute(path);
+            const target = source.parent().resolve(`-view.tree`);
+            const tree = this.$.$mol_tree2_from_string(source.text(), source.relate(this.root()));
+            const js = target.resolve(source.name() + '.js');
+            const js_map = target.resolve(js.name() + '.map');
+            const dts = target.resolve(source.name() + '.d.ts');
+            const dts_map = target.resolve(dts.name() + '.map');
+            const js_text = this.$.$mol_tree2_js_to_text(this.$.$mol_view_tree2_to_js(tree));
+            js.text(this.$.$mol_tree2_text_to_string(js_text) + '\n//# sourceMappingURL=' + js_map.relate(target));
+            js_map.text(JSON.stringify(this.$.$mol_tree2_text_to_sourcemap(js_text), null, '\t'));
+            const dts_text = this.$.$mol_view_tree2_to_dts(tree);
+            dts.text(this.$.$mol_tree2_text_to_string(dts_text) + '\n//# sourceMappingURL=' + dts_map.relate(target));
+            const dts_map_raw = this.$.$mol_tree2_text_to_sourcemap(dts_text);
+            delete dts_map_raw.sourcesContent;
+            dts_map_raw.file = dts.relate(target);
+            dts_map_raw.sourceRoot = this.root().relate(target);
+            dts_map.text(JSON.stringify(dts_map_raw, null, '\t'));
+            const locale_file = target.resolve(source.name() + `.locale=en.json`);
+            locale_file.text(JSON.stringify(this.$.$mol_view_tree2_to_locale(tree), null, '\t'));
+            return [js, js_map, dts, dts_map, locale_file];
         }
         cssTranspile(path) {
             const file = $mol_file.absolute(path);
@@ -5076,8 +4964,8 @@ var $;
             const sources = this.sourcesAll({ path, exclude }).filter(src => /tsx?$/.test(src.ext()));
             if (sources.length && bundle === 'node') {
                 const types = [];
-                for (let dep of this.nodeDeps({ path, exclude })) {
-                    types.push('\t' + JSON.stringify(dep) + ' : typeof import\( ' + JSON.stringify(dep) + ' )');
+                for (let [dep, src] of this.nodeDeps({ path, exclude })) {
+                    types.push('\t' + JSON.stringify(dep) + ' : typeof import\( ' + JSON.stringify(dep) + ' ) // ' + src);
                 }
                 const node_types = $mol_file.absolute(path).resolve(`-node/deps.d.ts`);
                 node_types.text('interface $node {\n ' + types.join('\n') + '\n}');
@@ -5134,9 +5022,10 @@ var $;
                     this.js_error(diagnostic.file.getSourceFile().fileName, error);
                 }
                 else {
+                    const text = diagnostic.messageText;
                     this.$.$mol_log3_fail({
                         place: `${this}.tsService()`,
-                        message: String(diagnostic.messageText),
+                        message: typeof text === 'string' ? text : text.messageText,
                     });
                 }
             }, () => { }, [], {
@@ -5181,15 +5070,14 @@ var $;
                 map.file = src.relate();
                 map.sources = [src.relate()];
                 return {
-                    text: res.outputText.replace(/^\/\/#\ssourceMappingURL=[^\n]*/mg, '//' + src.relate()) + '\n',
+                    text: this.$.$mol_sourcemap_strip(res.outputText),
                     map: map,
                 };
             }
             else {
-                const srcMap = src.parent().resolve(src.name() + '.map');
                 return {
-                    text: src.text().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n',
-                    map: srcMap.exists() ? JSON.parse(srcMap.text()) : undefined
+                    text: this.$.$mol_sourcemap_strip(src.text()),
+                    map: this.$.$mol_sourcemap_from_file(src)
                 };
             }
         }
@@ -5276,7 +5164,8 @@ var $;
             if (mod !== this.root())
                 this.modEnsure(parent.path());
             var mapping = mod === this.root()
-                ? $mol_tree.fromString(`pack ${mod.name()} git \\https://github.com/hyoo-ru/mam.git\n`)
+                ? this.$.$mol_tree2_from_string(`pack ${mod.name()} git \\https://github.com/hyoo-ru/mam.git
+`)
                 : this.modMeta(parent.path());
             if (mod.exists()) {
                 try {
@@ -5287,14 +5176,14 @@ var $;
                         this.$.$mol_exec(mod.path(), 'git', 'pull', '--deepen=1');
                         return false;
                     }
-                    for (let repo of mapping.select('pack', mod.name(), 'git').sub) {
+                    for (let repo of mapping.select('pack', mod.name(), 'git').kids) {
                         this.$.$mol_exec(mod.path(), 'git', 'init');
-                        const res = this.$.$mol_exec(mod.path(), 'git', 'remote', 'show', repo.value);
+                        const res = this.$.$mol_exec(mod.path(), 'git', 'remote', 'show', repo.text());
                         const matched = res.stdout.toString().match(/HEAD branch: (.*?)\n/);
                         const head_branch_name = res instanceof Error || matched === null || !matched[1]
                             ? 'master'
                             : matched[1];
-                        this.$.$mol_exec(mod.path(), 'git', 'remote', 'add', '--track', head_branch_name, 'origin', repo.value);
+                        this.$.$mol_exec(mod.path(), 'git', 'remote', 'add', '--track', head_branch_name, 'origin', repo.text());
                         this.$.$mol_exec(mod.path(), 'git', 'pull', '--deepen=1');
                         mod.reset();
                         for (const sub of mod.sub()) {
@@ -5312,8 +5201,8 @@ var $;
                 }
                 return false;
             }
-            for (let repo of mapping.select('pack', mod.name(), 'git').sub) {
-                this.$.$mol_exec(this.root().path(), 'git', 'clone', '--depth', '1', repo.value, mod.relate(this.root()));
+            for (let repo of mapping.select('pack', mod.name(), 'git').kids) {
+                this.$.$mol_exec(this.root().path(), 'git', 'clone', '--depth', '1', repo.text(), mod.relate(this.root()));
                 mod.reset();
                 return true;
             }
@@ -5336,9 +5225,9 @@ var $;
             for (const file of pack.sub()) {
                 if (!/\.meta\.tree$/.test(file.name()))
                     continue;
-                decls.push(...$mol_tree.fromString(file.text(), file.path()).sub);
+                decls.push(...this.$.$mol_tree2_from_string(file.text(), file.path()).kids);
             }
-            return new $mol_tree({ sub: decls });
+            return this.$.$mol_tree2.list(decls, decls[0]?.span);
         }
         graph({ path, exclude }) {
             let graph = new $mol_graph();
@@ -5660,6 +5549,7 @@ var $;
             const start = Date.now();
             var pack = $mol_file.absolute(path);
             var target = pack.resolve(`-/${bundle}.d.ts`);
+            var targetMap = pack.resolve(`-/${bundle}.d.ts.map`);
             var sources = this.sourcesDTS({ path, exclude });
             if (sources.length === 0)
                 return [];
@@ -5669,9 +5559,10 @@ var $;
                     return;
                 concater.add(src.text(), src.relate(target.parent()));
             });
-            target.text(concater.content + '\nexport = $;');
+            target.text(concater.content + '\nexport = $;\n//# sourceMappingURL=' + targetMap.relate(target.parent()) + '\n');
+            targetMap.text(concater.toString());
             this.logBundle(target, Date.now() - start);
-            return [target];
+            return [target, targetMap];
         }
         bundleViewTree({ path, exclude, bundle }) {
             const start = Date.now();
@@ -5693,18 +5584,18 @@ var $;
             const namedMetas = [];
             sortedPaths.forEach(path => {
                 const meta = this.modMeta(this.root().resolve(path).path());
-                if (meta.sub.length > 0) {
-                    namedMetas.push(meta.clone({ value: '/' + path }));
+                if (meta.kids.length > 0) {
+                    namedMetas.push(meta.data('/' + path, meta.kids));
                 }
             });
             if (namedMetas.length === 0)
                 return [];
-            target.text(new $mol_tree({ sub: namedMetas }).toString());
+            target.text(this.$.$mol_tree2.list(namedMetas, namedMetas[0]?.span).toString());
             this.logBundle(target, Date.now() - start);
             return [target];
         }
         nodeDeps({ path, exclude }) {
-            var res = new Set();
+            var res = new Map();
             var sources = this.sourcesAll({ path, exclude });
             for (let src of sources) {
                 let deps = this.srcDeps(src.path());
@@ -5712,10 +5603,10 @@ var $;
                     if (!/^\/node(?:_modules)?\//.test(dep))
                         continue;
                     let mod = dep.replace(/^\/node(?:_modules)?\//, '').replace(/\/.*/g, '');
-                    res.add(mod);
+                    res.set(mod, src.relate());
                 }
             }
-            return [...res];
+            return res;
         }
         bundleReadmeMd({ path, exclude }) {
             const start = Date.now();
@@ -5784,7 +5675,7 @@ var $;
             catch { }
             ++version[2];
             json.version = version.join('.');
-            for (let dep of this.nodeDeps({ path, exclude })) {
+            for (let dep of this.nodeDeps({ path, exclude }).keys()) {
                 if (require('module').builtinModules.includes(dep))
                     continue;
                 json.dependencies[dep] = `*`;
@@ -5826,7 +5717,7 @@ var $;
                 .filter(src => /meta.tree$/.test(src.ext()));
             const targets = [];
             sources.forEach(source => {
-                const tree = $mol_tree.fromString(source.text(), source.path());
+                const tree = this.$.$mol_tree2_from_string(source.text(), source.path());
                 const pushFile = (file) => {
                     const start = Date.now();
                     const target = pack.resolve(`-/${file.relate(root)}`);
@@ -5846,8 +5737,8 @@ var $;
                         pushFile(file);
                     }
                 };
-                tree.select('deploy').sub.forEach(deploy => {
-                    addFilesRecursive(root.resolve(deploy.value.replace(/^\//, '')));
+                tree.select('deploy').kids.forEach(deploy => {
+                    addFilesRecursive(root.resolve(deploy.text().replace(/^\//, '')));
                 });
             });
             return targets;
@@ -6163,7 +6054,7 @@ var $;
         });
         return depends;
     };
-    $mol_build.dependors['ts'] = $mol_build.dependors['tsx'] = $mol_build.dependors['jam.js'] = source => {
+    $mol_build.dependors['ts'] = $mol_build.dependors['tsx'] = $mol_build.dependors['jam.js'] = $mol_build.dependors['tree.js'] = source => {
         var depends = {};
         var lines = String(source.text())
             .replace(/\/\*(?!\*)[\s\S]*?\*\//g, '')
@@ -6247,22 +6138,23 @@ var $;
     };
     $mol_build.dependors['meta.tree'] = source => {
         const depends = {};
-        const tree = $mol_tree.fromString(source.text(), source.path());
-        tree.select('require').sub.forEach(leaf => {
-            depends[leaf.value] = 0;
+        const tree = $$.$mol_tree2_from_string(source.text(), source.path());
+        tree.select('require').kids.forEach(leaf => {
+            depends[leaf.text()] = 0;
         });
-        tree.select('include').sub.forEach(leaf => {
-            depends[leaf.value] = -9000;
+        tree.select('include').kids.forEach(leaf => {
+            depends[leaf.text()] = -9000;
         });
         return depends;
     };
     $mol_build.dependors['view.tree'] = source => {
         return {
-            [`/${source.parent().relate()}/-view.tree/${source.name()}.ts`]: 0,
+            [`/${source.parent().relate()}/-view.tree/${source.name()}.js`]: 0,
+            [`/${source.parent().relate()}/-view.tree/${source.name()}.d.ts`]: 0,
         };
     };
 })($ || ($ = {}));
-//mol/build/build.node.ts
+
 ;
 "use strict";
 var $;
@@ -6292,18 +6184,12 @@ var $;
         }
         http() {
             const server = $node.http.createServer(this.express());
-            $node['portastic'].find({
-                min: this.port(),
-                max: this.port() + 1000,
-                retrieve: 1
-            }).then((ports) => {
-                server.listen(ports[0]);
-                this.$.$mol_log3_done({
-                    place: `${this}`,
-                    message: `Started`,
-                    network: `http://${this.internal_ip()}:${ports[0]}/`,
-                    loopback: `http://localhost:${ports[0]}/`,
-                });
+            server.listen(this.port());
+            this.$.$mol_log3_done({
+                place: `${this}`,
+                message: `Started`,
+                network: `http://${this.internal_ip()}:${this.port()}/`,
+                loopback: `http://localhost:${this.port()}/`,
             });
             return server;
         }
@@ -6384,7 +6270,7 @@ var $;
     ], $mol_server.prototype, "socket", null);
     $.$mol_server = $mol_server;
 })($ || ($ = {}));
-//mol/server/server.node.ts
+
 ;
 "use strict";
 var $;
@@ -6412,7 +6298,7 @@ var $;
     }
     $.$mol_compare_text = $mol_compare_text;
 })($ || ($ = {}));
-//mol/compare/text/text.ts
+
 ;
 "use strict";
 var $;
@@ -6638,7 +6524,7 @@ var $;
                 message: 'Start',
                 command,
             });
-            const server = $node.child_process.spawn('node', ['--enable-source-maps', '--trace-uncaught', `./${path}/-/node.js`, ...args], {
+            const server = $node['child_process'].spawn('node', ['--enable-source-maps', '--trace-uncaught', `./${path}/-/node.js`, ...args], {
                 stdio: ['pipe', 'inherit', 'inherit'],
             });
             return Object.assign(server, {
@@ -6711,6 +6597,6 @@ var $;
     ], $mol_build_server.prototype, "repl", null);
     $.$mol_build_server = $mol_build_server;
 })($ || ($ = {}));
-//mol/build/server/server.node.ts
+
 
 //# sourceMappingURL=node.js.map

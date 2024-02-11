@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/array_inheritance.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,iEAAoD,oBAApD;AACC,AAAA,UAAI;AADL;AAAA;AAGA,iEAAoD,4DAApD;AACC,AAAA,UAAI;AADL;AAHA;AAAA;",
+	"file": "array_inheritance.view.tree.d.ts",
+	"sourceRoot": "../../../../../../../.."
+}

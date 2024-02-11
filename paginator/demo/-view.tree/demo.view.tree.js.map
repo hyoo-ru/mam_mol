@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/paginator/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_paginator_demo $mol_example_small\n\ttitle \\Page switcher\n\tsub /\n\t\t<= Pages $mol_paginator\n\t\t\tvalue? <=> page? 0\n\ttags /\n\t\t\\paginator\n\t\t\\navigation\n\taspects /\n\t\t\\Widget/Control\n\t\t\\Type/Number/Integer\n"
+	],
+	"mappings": "AAAA,AAAA,qDAAoB,+BAApB;AAAA,AACC;AAAA,AAAA,UAAO,eAAP;AAAA;AACA;AAAA,AAAA,UAAI,CACH,KAAG,QAAH,CADG,CAAJ;AAAA;AAGA;AAAA,AAAA,UAAK,CACH,WADG,EAEH,YAFG,CAAL;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,gBADM,EAEN,qBAFM,CAAR;AAAA;AAJa;AAAA,AAAA;AAAA,UAAM,CAAN;AAAA;AADT;AAAA,AAAM,0CAAN;AACF,4BAAO,KAAI,WAAJ,CAAP,CADE;AAAA,UAAM,GAAN;AAAA;AAHL,CAAA;AAIc,YAJd,CAIc,yCAJd;AAGK,YAHL,CAGK,0CAHL;"
+}

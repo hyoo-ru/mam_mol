@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/app/demo/menu/menu.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_app_demo_menu $mol_page\n\tnames /string\n\twidget_tags* /string\n\twidget_aspects* /string\n\twidget_title* \\\n\tsearch_start? null\n\tbody /\n\t\t<= Filter $mol_search\n\t\t\tquery? <=> filter? \\\n\t\t\t- suggests <= filter_suggests\n\t\t<= Tree $mol_tag_tree\n\t\t\tItem* <= Option*\n\t\t\tids_tags <= ids_tags *\n\t\t\tlevels_expanded <= levels_expanded <= levels_expanded_default 0\n\tOption* $mol_link\n\t\targ <= option_arg* *\n\t\tsub /\n\t\t\t<= Option_title* $mol_dimmer\n\t\t\t\thaystack <= option_title* \\\n\t\t\t\tneedle <= filter? \\\n"
+	],
+	"mappings": "AAAA,AAAA,mDAAmB,sBAAnB;AAAA,AACC;AAAA,AAAA,UAAM,EAAN;AAAA;AACA;AAAA,AAAA,UAAa,EAAb;AAAA;AACA;AAAA,AAAA,UAAgB,EAAhB;AAAA;AACA;AAAA,AAAA,UAAe,EAAf;AAAA;AACA;AAAA,AAAA;AAAA,UAAc,IAAd;AAAA;AACA;AAAA,AAAA,UAAK,CACJ,KAAG,SAAH,CADI,EAIJ,KAAG,OAAH,CAJI,CAAL;AAAA;AAQA;AAAA,AAAQ,qCAAR;AACC,sBAAI,KAAG,eAAH,CAAJ,CADD;AAEC,sBAAI,CACH,KAAG,iBAAH,CADG,CAAJ,CAFD;AAAA,UAAQ,GAAR;AAAA;AAKa;AAAA,AAAA;AAAA,UAAS,EAAT;AAAA;AAZT;AAAA,AAAO,uCAAP;AACF,4BAAO,KAAI,aAAJ,CAAP,CADE;AAAA,UAAO,GAAP;AAAA;AAKU;AAAA,AAAA,UAAS,EAAT;AAAA;AAC0B;AAAA,AAAA,UAAwB,CAAxB;AAAA;AAAnB;AAAA,AAAA,UAAgB,KAAG,0BAAH,CAAhB;AAAA;AAHjB;AAAA,AAAK,yCAAL;AACF,yBAAM,KAAG,WAAH,CAAN,CADE;AAEF,2BAAS,KAAG,WAAH,CAAT,CAFE;AAGF,kCAAgB,KAAG,kBAAH,CAAhB,CAHE;AAAA,UAAK,GAAL;AAAA;AAKI;AAAA,AAAA,UAAY,EAAZ;AAAA;AAGO;AAAA,AAAA,UAAe,EAAf;AAAA;AADV;AAAA,AAAc,uCAAd;AACF,2BAAS,KAAG,iBAAH,CAAT,CADE;AAEF,yBAAO,KAAG,SAAH,CAAP,CAFE;AAAA,UAAc,GAAd;AAAA;AAjBN,CAAA;AAKC,YALD,CAKC,gDALD;AAcC,gBAdD,CAcC,0CAdD;AAmBc,YAnBd,CAmBc,0CAnBd;AAOK,YAPL,CAOK,0CAPL;AAUK,YAVL,CAUK,wCAVL;AAiBM,gBAjBN,CAiBM,gDAjBN;"
+}

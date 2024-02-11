@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/data/array/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_data_array_demo $mol_example_code\n\tcode? \\\n\t\t\\const Samples = $mol_data_array( $mol_data_number )\n\t\t\\const samples = Samples( [ 1, 2, 3, 4, 5 ] ) // ✅\n\t\t\\\n\t\t\\Samples([ 1, 'foo' ]) // ❌ [1] foo is not a number\n\ttags /\n\t\t\\runtime\n\t\t\\validation\n\taspects /\n\t\t\\Algorithm/Assert\n\t\t\\Type/List\n"
+	],
+	"mappings": "AAAA,AAAA,uDAAqB,8BAArB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,8JAAP;AAAA;AAKA;AAAA,AAAA,UAAK,CACH,SADG,EAEH,YAFG,CAAL;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,kBADM,EAEN,WAFM,CAAR;AAAA;AATD,CAAA;AACC,YADD,CACC,0CADD;"
+}

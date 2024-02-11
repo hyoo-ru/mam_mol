@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/button/button.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_button $mol_view\n\tenabled true\n\tclick?event null\n\tevent_click?event null\n\tevent *\n\t\t^\n\t\tclick?event <=> event_activate?event null\n\t\tdblclick?event <=> clicks?event null\n\t\tkeydown?event <=> event_key_press?event null \n\tattr *\n\t\t^\n\t\tdisabled <= disabled false\n\t\trole \\button\n\t\ttabindex <= tab_index 0\n\t\ttitle <= hint_safe <= hint \\\n\tsub /$mol_view_content\n\t\t<= title\n\tSpeck $mol_speck\n\t\tvalue <= error \\\n"
+	],
+	"mappings": "AAAA,AAAA,qCAAY,sBAAZ;AAAA,AACC;AAAA,AAAA,UAAQ,IAAR;AAAA;AACA;AAAA,AAAA;AAAA,UAAY,IAAZ;AAAA;AACA;AAAA,AAAA;AAAA,UAAkB,IAAlB;AAAA;AACA;AAAA,AAAA,UAAM;AAAA,AACL,sBADK;AAEL,uBAAY,KAAI,qBAAJ,CAFP;AAGL,0BAAe,KAAI,aAAJ,CAHV;AAIL,yBAAc,KAAI,sBAAJ;AAJT,CAAN;AAAA;AAKA;AAAA,AAAA,UAAK;AAAA,AACJ,qBADI;AAEJ,gBAAS,KAAG,WAAH,CAFL;AAGJ,YAAM,QAHF;AAIJ,gBAAS,KAAG,YAAH,CAJL;AAKJ,aAAM,KAAG,YAAH;AALF,CAAL;AAAA;AAMA;AAAA,AAAA,UAAI,CACH,KAAG,QAAH,CADG,CAAJ;AAAA;AAEA;AAAA,AAAM,sCAAN;AACC,wBAAM,KAAG,QAAH,CAAN,CADD;AAAA,UAAM,GAAN;AAAA;AAXiB;AAAA,AAAA;AAAA,UAAqB,IAArB;AAAA;AACG;AAAA,AAAA;AAAA,UAAa,IAAb;AAAA;AACD;AAAA,AAAA;AAAA,UAAsB,IAAtB;AAAA;AAGN;AAAA,AAAA,UAAS,KAAT;AAAA;AAEA;AAAA,AAAA,UAAU,CAAV;AAAA;AACU;AAAA,AAAA,UAAM,EAAN;AAAA;AAAb;AAAA,AAAA,UAAU,KAAG,OAAH,CAAV;AAAA;AAIA;AAAA,AAAA,UAAO,EAAP;AAAA;AAlBX,CAAA;AAEC,YAFD,CAEC,kCAFD;AAGC,YAHD,CAGC,wCAHD;AAiBC,YAjBD,CAiBC,kCAjBD;AAMkB,YANlB,CAMkB,2CANlB;AAOqB,YAPrB,CAOqB,mCAPrB;AAQoB,YARpB,CAQoB,4CARpB;"
+}

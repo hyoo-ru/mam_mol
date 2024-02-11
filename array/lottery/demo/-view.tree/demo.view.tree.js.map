@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/array/lottery/demo/demo.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_array_lottery_demo $mol_example_code\n\tcode? \\\n\t\t\\const rates = [ 1, 2, 3, 4, 5 ]\n\t\t\\const vote = $mol_array_lottery( rates )\n\taspects /\n\t\t\\Type/List\n\t\t\\Algorithm/Random\n"
+	],
+	"mappings": "AAAA,AAAA,6DAAwB,8BAAxB;AAAA,AACC;AAAA,AAAA;AAAA,UAAO,2EAAP;AAAA;AAGA;AAAA,AAAA,UAAQ,CACN,WADM,EAEN,kBAFM,CAAR;AAAA;AAJD,CAAA;AACC,YADD,CACC,6CADD;"
+}

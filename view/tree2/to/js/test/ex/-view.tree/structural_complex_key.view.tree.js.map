@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/structural_complex_key.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_view_tree2_to_js_test_ex_structural_complex_key_foo $mol_object\n\tdictionary *\n\t\t\\raw data key\n\t\t\t\\1\n\t\t\\key2\n\t\t\t\\2\n\t\tkey3\n\t\t\t\\3\n"
+	],
+	"mappings": "AAAA,AAAA,+HAAyD,wBAAzD;AAAA,AACC;AAAA,AAAA,UAAW;AAAA,AACT,oBACC,GAFQ;AAGT,YACC,GAJQ;AAKV,YACE;AANQ,CAAX;AAAA;AADD,CAAA;"
+}

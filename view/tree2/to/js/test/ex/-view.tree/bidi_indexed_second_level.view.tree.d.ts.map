@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/bidi_indexed_second_level.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,yEAA4D,oBAA5D;AACC,AAAA,eAAU;AADX;AAAA;AAIE;AAAA,AAAa,cAFf,2DAEe;AAAA;AAAb,cADS,2DACT;AAAA;AAFF,yEAA4D,oBAA5D;AACC,AAAA,2BAAU,2DAAV,IAAU;AACI,AAAA,yBAAS,MAAT,IAAS;AAFxB;AAFA;AAAA;",
+	"file": "bidi_indexed_second_level.view.tree.d.ts",
+	"sourceRoot": "../../../../../../../.."
+}

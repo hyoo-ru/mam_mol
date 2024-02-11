@@ -116,6 +116,7 @@
     "$mol_style_pseudo",
     "$mol_type_error",
     "$mol_style_sheet",
+    "$mol_type_enforce",
     "$mol_locale",
     "$mol_state_local",
     "$mol_state",

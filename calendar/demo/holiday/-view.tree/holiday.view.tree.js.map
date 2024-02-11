@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/calendar/demo/holiday/holiday.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_calendar_demo_holiday $mol_example_small\n\ttitle \\Days of month 2018-01 with custom holidays\n\tholidays /\n\t\t\\2018-01-01\n\t\t\\2018-01-02\n\t\t\\2018-01-03\n\t\t\\2018-01-04\n\t\t\\2018-01-05\n\t\t\\2018-01-06\n\t\t\\2018-01-07\n\t\t\\2018-01-08\n\t\t\\2018-01-13\n\t\t\\2018-01-14\n\t\t\\2018-01-20\n\t\t\\2018-01-21\n\t\t\\2018-01-27\n\t\t\\2018-01-28\n\tsub /\n\t\t<= Calendar $mol_calendar\n\t\t\tmonth_string <= month \\2018-01\n\t\t\tday_holiday* <= holiday* false\n\ttags /\n\t\t\\month\n\taspects /\n\t\t\\Widget/Grid\n\t\t\\Type/Date\n"
+	],
+	"mappings": "AAAA,AAAA,mEAA2B,+BAA3B;AAAA,AACC;AAAA,AAAA,UAAO,4CAAP;AAAA;AACA;AAAA,AAAA,UAAS;AAAA,AACP,gBADO;AAEP,gBAFO;AAGP,gBAHO;AAIP,gBAJO;AAKP,gBALO;AAMP,gBANO;AAOP,gBAPO;AAQP,gBARO;AASP,gBATO;AAUP,gBAVO;AAWP,gBAXO;AAYP,gBAZO;AAaP,gBAbO;AAcP;AAdO,CAAT;AAAA;AAeA;AAAA,AAAA,UAAI,CACH,KAAG,WAAH,CADG,CAAJ;AAAA;AAIA;AAAA,AAAA,UAAK,CACH,OADG,CAAL;AAAA;AAEA;AAAA,AAAA,UAAQ,CACN,aADM,EAEN,WAFM,CAAR;AAAA;AAJkB;AAAA,AAAA,UAAO,SAAP;AAAA;AACA;AAAA,AAAA,UAAS,KAAT;AAAA;AAFd;AAAA,AAAS,yCAAT;AACF,+BAAa,KAAG,QAAH,CAAb,CADE;AAEF,gCAAa,KAAG,YAAH,CAAb,CAFE;AAAA,UAAS,GAAT;AAAA;AAlBL,CAAA;AAkBK,YAlBL,CAkBK,oDAlBL;"
+}

@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/format/format.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,yBAAY,oBAAZ;AACC,AAAA,YAAO;AACP,AAAA,WAAQ,YAFT,WAES;AACR,AAAA,eAAU;AADF,AAAA,kBAAQ;AAFjB;AAAA;AAAA;",
+	"file": "format.view.tree.d.ts",
+	"sourceRoot": "../../.."
+}

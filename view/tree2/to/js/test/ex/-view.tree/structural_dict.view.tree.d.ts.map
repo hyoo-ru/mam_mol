@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/view/tree2/to/js/test/ex/structural_dict.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,+DAAkD,oBAAlD;AACC,AAAA,UAAI;AAAA,AACH,YAAM,MAAN;AACA,WAAM,MAAN;AAFG;AADL;AAAA;AAAA;",
+	"file": "structural_dict.view.tree.d.ts",
+	"sourceRoot": "../../../../../../../.."
+}

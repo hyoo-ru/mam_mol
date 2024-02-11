@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/form/draft/draft.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,6BAAgB,kBAAhB;AACC,AAAA,YAAM;AACN,AAAA,cAAQ;AACR,AAAA,6BAAa,MAAb,IAAa;AACb,AAAA,8BAAa,OAAb,IAAa;AACb,AAAA,gCAAe,MAAf,IAAe;AACf,AAAA,mCAAkB,mBAAlB,IAAkB;AAClB,AAAA,+BAAc,kBAAd,IAAc;AACd,AAAA,2BAAe;AACf,AAAA,gBAAO,GAAP,IAAO;AATR;AAAA;AAAA;",
+	"file": "draft.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

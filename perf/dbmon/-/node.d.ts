@@ -327,6 +327,10 @@ declare namespace $ {
         insert(value: $mol_tree2 | null, ...path: $mol_tree2_path): $mol_tree2;
         select(...path: $mol_tree2_path): $mol_tree2;
         filter(path: string[], value?: string): $mol_tree2;
+        hack_self<Context extends {
+            span?: $mol_span;
+            [key: string]: unknown;
+        } = {}>(belt: $mol_tree2_belt<Context>, context?: Context): readonly $mol_tree2[];
         hack<Context extends {
             span?: $mol_span;
             [key: string]: unknown;
@@ -614,7 +618,7 @@ declare namespace $ {
     type $mol_style_unit_angle = 'deg' | 'rad' | 'grad' | 'turn';
     type $mol_style_unit_time = 's' | 'ms';
     type $mol_style_unit_any = $mol_style_unit_length | $mol_style_unit_angle | $mol_style_unit_time;
-    type $mol_style_unit_str<Quanity extends $mol_style_unit_any> = `${number}${Quanity}`;
+    type $mol_style_unit_str<Quanity extends $mol_style_unit_any = $mol_style_unit_any> = `${number}${Quanity}`;
     class $mol_style_unit<Literal extends $mol_style_unit_any> extends $mol_decor<number> {
         readonly literal: Literal;
         constructor(value: number, literal: Literal);
@@ -739,9 +743,9 @@ declare namespace $ {
         all?: Common;
         animation?: {
             composition?: Single_animation_composition | Single_animation_composition[][] | Common;
-            delay?: $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common;
+            delay?: $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common;
             direction?: Single_animation_direction | Single_animation_direction[][] | Common;
-            duration?: $mol_style_unit<$mol_style_unit_time> | $mol_style_unit<$mol_style_unit_time>[][] | Common;
+            duration?: $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common;
             fillMode?: Single_animation_fill_mode | Single_animation_fill_mode[][] | Common;
             iterationCount?: Single_animation_iteration_count | Single_animation_iteration_count[][] | Common;
             name?: 'none' | string & {} | ('none' | string & {})[][] | Common;
@@ -935,16 +939,23 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_scroll extends $mol_view {
-        scroll_top(next?: any): number;
-        scroll_left(next?: any): number;
-        field(): Record<string, any>;
-        event(): Record<string, any>;
-        tabindex(): number;
-        event_scroll(event?: any): any;
-    }
+
+	export class $mol_scroll extends $mol_view {
+		scroll_top( next?: number ): number
+		scroll_left( next?: number ): number
+		field( ): ({ 
+			'tabIndex': ReturnType< $mol_scroll['tabindex'] >,
+		})  & ReturnType< $mol_view['field'] >
+		event( ): ({ 
+			scroll( next?: ReturnType< $mol_scroll['event_scroll'] > ): ReturnType< $mol_scroll['event_scroll'] >,
+		})  & ReturnType< $mol_view['event'] >
+		tabindex( ): number
+		event_scroll( next?: any ): any
+	}
+	
 }
 
+//# sourceMappingURL=scroll.view.tree.d.ts.map
 declare namespace $ {
     class $mol_dom_listener extends $mol_object {
         _node: any;
@@ -1026,20 +1037,41 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_list extends $mol_view {
-        render_visible_only(): boolean;
-        render_over(): number;
-        sub(): readonly $mol_view[];
-        Empty(): $mol_view;
-        Gap_before(): $mol_view;
-        Gap_after(): $mol_view;
-        view_window(): readonly any[];
-        rows(): readonly $mol_view[];
-        gap_before(): number;
-        gap_after(): number;
-    }
+    type $mol_type_enforce<Actual extends Expected, Expected> = Actual;
 }
 
+declare namespace $ {
+
+	type $mol_view__style__HFUNCTD3 = $mol_type_enforce<
+		({ 
+			'paddingTop': ReturnType< $mol_list['gap_before'] >,
+		}) 
+		,
+		ReturnType< $mol_view['style'] >
+	>
+	type $mol_view__style__AUYI7EBO = $mol_type_enforce<
+		({ 
+			'paddingTop': ReturnType< $mol_list['gap_after'] >,
+		}) 
+		,
+		ReturnType< $mol_view['style'] >
+	>
+	export class $mol_list extends $mol_view {
+		render_visible_only( ): boolean
+		render_over( ): number
+		sub( ): ReturnType< $mol_list['rows'] >
+		Empty( ): $mol_view
+		Gap_before( ): $mol_view
+		Gap_after( ): $mol_view
+		view_window( ): readonly(any)[]
+		rows( ): readonly($mol_view)[]
+		gap_before( ): number
+		gap_after( ): number
+	}
+	
+}
+
+//# sourceMappingURL=list.view.tree.d.ts.map
 declare namespace $ {
     function $mol_support_css_overflow_anchor(this: $): boolean;
 }
@@ -1065,29 +1097,53 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_pop extends $mol_view {
-        showed(next?: any): boolean;
-        align_vert(): string;
-        align_hor(): string;
-        prefer(): string;
-        sub(): readonly any[];
-        sub_visible(): readonly any[];
-        Anchor(): any;
-        align(): string;
-        bubble_content(): readonly $mol_view_content[];
-        height_max(): number;
-        Bubble(): $mol_pop_bubble;
-    }
-    class $mol_pop_bubble extends $mol_view {
-        sub(): readonly $mol_view_content[];
-        style(): Record<string, any>;
-        attr(): Record<string, any>;
-        content(): readonly $mol_view_content[];
-        height_max(): number;
-        align(): string;
-    }
+
+	type $mol_pop_bubble__align__YNDUHRAW = $mol_type_enforce<
+		ReturnType< $mol_pop['align'] >
+		,
+		ReturnType< $mol_pop_bubble['align'] >
+	>
+	type $mol_pop_bubble__content__R070KXA6 = $mol_type_enforce<
+		ReturnType< $mol_pop['bubble_content'] >
+		,
+		ReturnType< $mol_pop_bubble['content'] >
+	>
+	type $mol_pop_bubble__height_max__MARZKOPG = $mol_type_enforce<
+		ReturnType< $mol_pop['height_max'] >
+		,
+		ReturnType< $mol_pop_bubble['height_max'] >
+	>
+	export class $mol_pop extends $mol_view {
+		showed( next?: boolean ): boolean
+		align_vert( ): string
+		align_hor( ): string
+		prefer( ): string
+		sub( ): readonly(any)[]
+		sub_visible( ): readonly(any)[]
+		Anchor( ): any
+		align( ): string
+		bubble_content( ): readonly($mol_view_content)[]
+		height_max( ): number
+		Bubble( ): $mol_pop_bubble
+	}
+	
+	export class $mol_pop_bubble extends $mol_view {
+		sub( ): ReturnType< $mol_pop_bubble['content'] >
+		style( ): ({ 
+			'maxHeight': ReturnType< $mol_pop_bubble['height_max'] >,
+		})  & ReturnType< $mol_view['style'] >
+		attr( ): ({ 
+			'mol_pop_align': ReturnType< $mol_pop_bubble['align'] >,
+			'tabindex': number,
+		})  & ReturnType< $mol_view['attr'] >
+		content( ): readonly($mol_view_content)[]
+		height_max( ): number
+		align( ): string
+	}
+	
 }
 
+//# sourceMappingURL=pop.view.tree.d.ts.map
 declare namespace $ {
     let $mol_layer: $mol_style_prop_result;
 }
@@ -1124,16 +1180,24 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_pop_over extends $mol_pop {
-        showed(): boolean;
-        attr(): Record<string, any>;
-        event(): Record<string, any>;
-        hovered(next?: any): boolean;
-        event_show(event?: any): any;
-        event_hide(event?: any): any;
-    }
+
+	export class $mol_pop_over extends $mol_pop {
+		showed( ): ReturnType< $mol_pop_over['hovered'] >
+		attr( ): ({ 
+			'tabindex': number,
+		})  & ReturnType< $mol_pop['attr'] >
+		event( ): ({ 
+			mouseenter( next?: ReturnType< $mol_pop_over['event_show'] > ): ReturnType< $mol_pop_over['event_show'] >,
+			mouseleave( next?: ReturnType< $mol_pop_over['event_hide'] > ): ReturnType< $mol_pop_over['event_hide'] >,
+		})  & ReturnType< $mol_pop['event'] >
+		hovered( next?: boolean ): boolean
+		event_show( next?: any ): any
+		event_hide( next?: any ): any
+	}
+	
 }
 
+//# sourceMappingURL=over.view.tree.d.ts.map
 declare namespace $.$$ {
     class $mol_pop_over extends $.$mol_pop_over {
         event_show(event?: MouseEvent): void;
@@ -1146,42 +1210,111 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_perf_dbmon extends $mol_scroll {
-        title(): string;
-        sub(): readonly any[];
-        Database(id: any): $mol_view;
-        Query(id: any): $mol_perf_dbmon_query;
-        databases(): readonly any[];
-        Databases(): $$.$mol_list;
-        name(id: any): string;
-        Name(id: any): $mol_view;
-        query_count_label_mod(id: any): string;
-        query_count(id: any): number;
-        Query_count(id: any): $mol_perf_dbmon_query_count;
-        top_queries(id: any): readonly any[];
-        database(id: any): readonly any[];
-        query_elapsed(id: any): string;
-        query_elapsed_mod(id: any): string;
-        query_value(id: any): string;
-    }
-    class $mol_perf_dbmon_query_count extends $mol_view {
-        sub(): readonly any[];
-        label_mod(): string;
-        count(): number;
-        Label(): $mol_view;
-    }
-    class $mol_perf_dbmon_query extends $mol_pop_over {
-        minimal_height(): number;
-        Anchor(): $mol_view;
-        bubble_content(): readonly any[];
-        align(): string;
-        elapsed_mod(): string;
-        elapsed(): string;
-        Elapsed(): $mol_view;
-        value(): string;
-    }
+
+	type $mol_view__sub__7JR2II2F = $mol_type_enforce<
+		ReturnType< $mol_perf_dbmon['database'] >
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_perf_dbmon_query__elapsed__L5FXWKRI = $mol_type_enforce<
+		ReturnType< $mol_perf_dbmon['query_elapsed'] >
+		,
+		ReturnType< $mol_perf_dbmon_query['elapsed'] >
+	>
+	type $mol_perf_dbmon_query__elapsed_mod__1KM5VZQ8 = $mol_type_enforce<
+		ReturnType< $mol_perf_dbmon['query_elapsed_mod'] >
+		,
+		ReturnType< $mol_perf_dbmon_query['elapsed_mod'] >
+	>
+	type $mol_perf_dbmon_query__value__350ZBNNN = $mol_type_enforce<
+		ReturnType< $mol_perf_dbmon['query_value'] >
+		,
+		ReturnType< $mol_perf_dbmon_query['value'] >
+	>
+	type $mol_list__rows__HWQFPBBA = $mol_type_enforce<
+		ReturnType< $mol_perf_dbmon['databases'] >
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	type $mol_view__sub__5LEXOB9Q = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_perf_dbmon_query_count__label_mod__KEM7D8JF = $mol_type_enforce<
+		ReturnType< $mol_perf_dbmon['query_count_label_mod'] >
+		,
+		ReturnType< $mol_perf_dbmon_query_count['label_mod'] >
+	>
+	type $mol_perf_dbmon_query_count__count__SPQY5LQQ = $mol_type_enforce<
+		ReturnType< $mol_perf_dbmon['query_count'] >
+		,
+		ReturnType< $mol_perf_dbmon_query_count['count'] >
+	>
+	export class $mol_perf_dbmon extends $mol_scroll {
+		title( ): string
+		sub( ): readonly(any)[]
+		Database( id: any): $mol_view
+		Query( id: any): $mol_perf_dbmon_query
+		databases( ): readonly(any)[]
+		Databases( ): $mol_list
+		name( id: any): string
+		Name( id: any): $mol_view
+		query_count_label_mod( id: any): string
+		query_count( id: any): number
+		Query_count( id: any): $mol_perf_dbmon_query_count
+		top_queries( id: any): readonly(any)[]
+		database( id: any): readonly(any)[]
+		query_elapsed( id: any): string
+		query_elapsed_mod( id: any): string
+		query_value( id: any): string
+	}
+	
+	type $mol_view__attr__KL2M7ISO = $mol_type_enforce<
+		({ 
+			'mol_perf_dbmon_query_count_label': ReturnType< $mol_perf_dbmon_query_count['label_mod'] >,
+		}) 
+		,
+		ReturnType< $mol_view['attr'] >
+	>
+	type $mol_view__sub__8E1460D0 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	export class $mol_perf_dbmon_query_count extends $mol_view {
+		sub( ): readonly(any)[]
+		label_mod( ): string
+		count( ): number
+		Label( ): $mol_view
+	}
+	
+	type $mol_view__attr__VRS4YCWV = $mol_type_enforce<
+		({ 
+			'mol_perf_dbmon_query_elapsed': ReturnType< $mol_perf_dbmon_query['elapsed_mod'] >,
+		}) 
+		,
+		ReturnType< $mol_view['attr'] >
+	>
+	type $mol_view__sub__LCXVUDOY = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	export class $mol_perf_dbmon_query extends $mol_pop_over {
+		minimal_height( ): number
+		Anchor( ): ReturnType< $mol_perf_dbmon_query['Elapsed'] >
+		bubble_content( ): readonly(any)[]
+		align( ): string
+		elapsed_mod( ): string
+		elapsed( ): string
+		Elapsed( ): $mol_view
+		value( ): string
+	}
+	
 }
 
+//# sourceMappingURL=dbmon.view.tree.d.ts.map
 declare namespace $ {
     class $mol_state_time extends $mol_object {
         static task(precision: number, reset?: null): $mol_after_timeout | $mol_after_frame;
@@ -1225,3 +1358,4 @@ declare namespace $ {
 }
 
 export = $;
+//# sourceMappingURL=node.d.ts.map

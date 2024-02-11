@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/search/jumper/jumper.view.tree"
+	],
+	"sourcesContent": [
+		"$mol_search_jumper $mol_search\n\tRoot $mol_view\n\tIndex $mol_paginator\n\t\tvalue? <=> index? 0\n\t\tforward?event => forward?event\n\t\tbackward?event => backward?event\n\tplugins /\n\t\t^\n\t\t<= Backward $mol_hotkey\n\t\t\tmod_shift true\n\t\t\tkey * enter?event <=> backward?event\n\t\t<= Forward $mol_hotkey\n\t\t\tkey *\n\t\t\t\tenter?event <=> forward?event\n\t\t\t\tescape? <=> escape? null\n"
+	],
+	"mappings": "AAAA,AAAA,mDAAmB,wBAAnB;AAAA,AACC;AAAA,AAAK,qCAAL;AAAA,UAAK,GAAL;AAAA;AACA;AAAA,AAAM,0CAAN;AACC,4BAAO,KAAI,YAAJ,CAAP,CADD;AAAA,UAAM,GAAN;AAAA;AAIA;AAAA,AAAA,UAAQ;AAAA,AACP,wBADO;AAEP,SAAG,WAAH,CAFO;AAKP,SAAG,UAAH;AALO,CAAR;AAAA;AAHY;AAAA,AAAA;AAAA,UAAO,CAAP;AAAA;AACM;AAAA,AAAA,eAFlB,QAEC,cAAiB;AAAA;AACC;AAAA,AAAA,eAHnB,QAGC,eAAkB;AAAA;AAGf;AAAA,AAAS,uCAAT;AACF,4BAAU,IAAV,CADE;AAEF,sBAAI,CAAE,mBAAY,KAAI,eAAJ,CAAd,CAAJ,CAFE;AAAA,UAAS,GAAT;AAAA;AAMW;AAAA,AAAA;AAAA,UAAQ,IAAR;AAAA;AAHX;AAAA,AAAQ,uCAAR;AACF,sBAAI,CACH,mBAAY,KAAI,cAAJ,CADT,EAEH,oBAAQ,KAAI,aAAJ,CAFL,CAAJ,CADE;AAAA,UAAQ,GAAR;AAAA;AAXL,CAAA;AACC,YADD,CACC,wCADD;AAEC,YAFD,CAEC,yCAFD;AAGa,YAHb,CAGa,yCAHb;AAQK,YARL,CAQK,4CARL;AAcgB,YAdhB,CAcgB,0CAdhB;AAWK,YAXL,CAWK,2CAXL;"
+}

@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/example/code/code.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAGG;AAAA,AAAU;AAAA;AAAV,cADU,aACV;AAAA;AACA;AAAA,AAAK;AAAA;AAAL,cAFU,aAEV;AAAA;AACA;AAAA,AAAS;AAAA;AAAT,cAHU,aAGV;AAAA;AACA;AAAA,AAAU,cANb,iBAMa;AAAA;AAAV,cAJU,aAIV;AAAA;AANH,+BAAkB,qBAAlB;AACC,AAAA,UAAI;AAMJ,AAAA,WAAK;AAKL,AAAA,cAAQ;AANI,AAAA,eAAO,MAAP,IAAO;AAJf,AAAA,cAAQ;AAFb;AAAA;AAAA;",
+	"file": "code.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

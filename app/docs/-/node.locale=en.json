@@ -36,15 +36,6 @@
 	"$mol_select_list_badge_hint": "Drop",
 	"$mol_select_list_pick_hint": "Add..",
 	"$mol_select_no_options_message": "No options",
-	"$mol_tag_tree_demo_Tree_tag_names_bad": "Bad",
-	"$mol_tag_tree_demo_Tree_tag_names_dc": "DC",
-	"$mol_tag_tree_demo_Tree_tag_names_female": "Female",
-	"$mol_tag_tree_demo_Tree_tag_names_good": "Good",
-	"$mol_tag_tree_demo_Tree_tag_names_male": "Male",
-	"$mol_tag_tree_demo_Tree_tag_names_marvel": "Marvel",
-	"$mol_tag_tree_demo_Tree_tag_names_sex": "Sex",
-	"$mol_tag_tree_demo_Tree_tag_names_side": "Side",
-	"$mol_tag_tree_demo_Tree_tag_names_universe": "Universe",
 	"$mol_text_code_Copy_hint": "Copy whole code",
 	"$mol_text_header_Link_hint": "Permalink to this section"
 }
