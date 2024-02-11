@@ -1,0 +1,27 @@
+$mol_locale_demo $mol_example_small
+	title \Example usages of $mol_locale component
+	sub /
+		<= All_languages_labeler $mol_labeler
+			title \All languages example
+			content /
+				<= All_languages $mol_locale_select
+		<= List_of_languages_labeler $mol_labeler
+			title \Or you can give user select from your list
+			content /
+				<= List_of_languages $mol_locale_select
+					dictionary *
+						ru \Russian
+						en \English
+		<= Usage_from_code_labeler $mol_labeler
+			title \Or from code usage
+			content /
+				<= Usage_from_code $mol_example_code
+					code? \
+						\$mol_locale.lang() //  get current lang
+						\$mol_locale.lang("en") // set lang
+						\// Sample language list - https://github.com/hyoo-ru/lingua.hyoo.ru/blob/master/langs/langs.ts
+	tags /
+		\language
+		\i18
+	aspects /
+		\Widget/Control
