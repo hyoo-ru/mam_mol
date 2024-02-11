@@ -189,7 +189,7 @@ namespace $ {
 			
 			chunk = Buffer.alloc( patial_size )
 			let offset = 0
-			for( const buf of this._ws_icome_partial.splice( 0 ) ) {
+			for( const buf of $mol_wire_sync( this._ws_icome_partial ).splice( 0 ) ) {
 				chunk.set( buf, offset )
 				offset += buf.byteLength
 			}
@@ -197,7 +197,7 @@ namespace $ {
 			
 			if( msg_size < chunk.byteLength ) {
 				const tail = new Uint8Array( chunk.buffer, chunk.byteOffset + msg_size )
-				$mol_wire_sync( sock ).unshift( tail )
+				$mol_wire_sync( this._ws_icome_partial ).push( tail )
 			}
 			
 			let data: string | Uint8Array = new Uint8Array( chunk.buffer, chunk.byteOffset + frame.size(), frame.data().size )
