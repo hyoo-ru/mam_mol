@@ -24,12 +24,12 @@ namespace $ {
 		} ) {
 			if( next ) {
 				
-				this.uint8( 0, Number( next.fin ) << 7 | $mol_websocket_frame_op[ next.op ] )
+				this.setUint8( 0, Number( next.fin ) << 7 | $mol_websocket_frame_op[ next.op ] )
 				return next
 				
 			} else {
 				
-				const state = this.uint8( 0 )
+				const state = this.getUint8( 0 )
 				const fin = state >> 7
 				
 				const op = $mol_websocket_frame_op[ state & 0b1111 ] as keyof typeof $mol_websocket_frame_op
