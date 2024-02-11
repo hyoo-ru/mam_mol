@@ -14,9 +14,7 @@ namespace $ {
 	
 	/**
 	 * WebSocket frame header.
-	 * Aren't supported:
-	 * - masks
-	 * - payload >= 2^32
+	 * Payload >= 2^32 isn't supported
 	 */
 	export class $mol_websocket_frame extends $mol_buffer {
 		
