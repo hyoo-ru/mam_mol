@@ -9,7 +9,7 @@ namespace $ {
 			'https://sokra.github.io/source-map-visualization/#base64',
 			btoa( code ),
 			btoa( JSON.stringify( map ) ),
-			... map.sourcesContent.map( btoa ),
+			... map.sourcesContent?.filter($mol_guard_defined).map( btoa ) ?? [],
 		].join( ',' )
 
 		return uri

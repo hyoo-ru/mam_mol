@@ -1,5 +1,0 @@
-$mol_view_tree2_ts_test_multiple_class_a $mol_view
-	str \some
-
-$mol_view_tree2_ts_test_multiple_class_b $mol_view_tree2_ts_test_multiple_class_a
-	str \some2

@@ -4,7 +4,7 @@ $mol_list_demo $mol_example_small
 			title \Items count
 			content /
 				<= Items_count $mol_number
-					value? <=> items_сount? 50
+					value? <=> items_count? 50
 					value_min 0
 					value_max 100000
 		<= Items $mol_list

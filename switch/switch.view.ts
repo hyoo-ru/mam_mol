@@ -6,7 +6,7 @@ namespace $.$$ {
 	 */
 	export class $mol_switch extends $.$mol_switch {
 
-		value( next? : any ) {
+		value( next? : string ) {
 			return $mol_state_session.value( `${ this }.value()` , next ) ?? ''
 		}
 		

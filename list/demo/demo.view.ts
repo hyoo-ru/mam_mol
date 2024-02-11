@@ -9,7 +9,7 @@ namespace $.$$ {
 		override list_items() {
 			const rows = []
 
-			for ( let key = 0 ; key < this.items_сount() ; key++ ) {
+			for ( let key = 0 ; key < this.items_count() ; key++ ) {
 				rows.push( this.Item( key ) )
 			}
 			

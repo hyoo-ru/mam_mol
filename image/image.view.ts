@@ -8,7 +8,7 @@ namespace $.$$ {
 			if( dom.naturalWidth ) return dom.naturalWidth
 			
 			const found = this.uri().match( /\bwidth=(\d+)/ )
-			return found ? Number( found[1] ) : null! 
+			return found ? Number( found[1] ) : null!
 			
 		}
 		
@@ -19,7 +19,7 @@ namespace $.$$ {
 			if( dom.naturalHeight ) return dom.naturalHeight
 			
 			const found = this.uri().match( /\bheight=(\d+)/ )
-			return found ? Number( found[1] ) : null! 
+			return found ? Number( found[1] ) : null!
 			
 		}
 		

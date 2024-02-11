@@ -57,7 +57,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
-		override value_number( field: string, next? : boolean | null ) {
+		override value_number( field: string, next? : number | null ) {
 			return norm_number( this.value( field, next ) )
 		}
 		

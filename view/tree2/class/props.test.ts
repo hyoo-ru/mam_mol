@@ -1,31 +1,57 @@
 namespace $.$$ {
+	const d = '$'
 	const src = `
-		$${''}my_test $${''}my_super
+		${d}my_test ${d}my_super
 			title @ \\title
+			sub2 /
+				<= Сlose_icon ${d}mol_icon_cross
 			sub /
-				<= Title $${''}mol_view
+				<= Title ${d}mol_view
 					sub /
 						<= title
-				<= Close $${''}mol_button
-					title \close
+				<= Close ${d}mol_button
+					title \\close
 					click?event <=> close?event null
+			Dog ${d}mol_view_tree2_class_test_dog
+				Mouth => Dog_mouth
+					animation => dog_animation
 			plugins /
-				<= Speech $${''}mol_speech
-					text => speech
+				<= Human* ${d}mol_view_tree2_class_test_human
+					Mouth => Human_mouth
+						animation => human_animation
+							text => human_text
 	`
-	
+	/*
+	class A {
+		a() {
+			return this.Speech().text()
+		}
+		c() {
+			return this.a().b()
+		}
+	}
+	*/
+
 	const dest = $$.$mol_tree2_from_string(`
 		title @ \\title
+		sub2 / <= Сlose_icon
 		sub /
 			<= Title
 			<= Close
-		plugins / <= Speech
-		Title $${''}mol_view sub / <= title
+		Dog $mol_view_tree2_class_test_dog Mouth => Dog_mouth animation => dog_animation
+		plugins / <= Human*
+		Сlose_icon ${d}mol_icon_cross
+		Title ${d}mol_view sub / <= title
 		close?event null
-		Close $${''}mol_button
-			title \close
+		Close ${d}mol_button
+			title \\close
 			click?event <=> close?event
-		Speech $${''}mol_speech text => speech
+		Dog_mouth = Dog Mouth
+		dog_animation = Dog_mouth animation
+		Human_mouth = Human* Mouth
+		human_animation = Human_mouth animation
+		human_text = human_animation text
+		Human* $mol_view_tree2_class_test_human Mouth => Human_mouth animation => human_animation text => human_text
 	`, 'reference')
 
 	$mol_test({

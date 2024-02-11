@@ -225,7 +225,7 @@ namespace $ {
 				]
 				
 				// number
-				if( input.type === 'NaN' || !Number.isNaN( Number( input.type ) ) ) return [
+				if( $mol_view_tree2_value_number(input.type) ) return [
 					input.data( input.type )
 				]
 

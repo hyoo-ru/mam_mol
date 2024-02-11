@@ -35,10 +35,10 @@ namespace $.$$ {
 							
 						}
 						
-					} else if( settings[ param ] !== null ) {
+					} else if( settings[ param as keyof typeof settings ] !== null ) {
 					
 						try {
-							track.applyConstraints({ [ param ]: settings[ param ] })
+							track.applyConstraints({ [ param ]: settings[ param as keyof typeof settings ] })
 						} catch( error ) {
 							$mol_fail_log( error )
 						}
