@@ -111,10 +111,10 @@
     "$mol_hotkey",
     "$mol_keyboard_code",
     "$mol_keyboard",
-    "$mol_type_enforce",
     "$mol_action",
     "$mol_dom_listener",
-    "$mol_layer"
+    "$mol_layer",
+    "$mol_type_enforce"
   ],
   "dependencies": {
     "jsdom": "*"

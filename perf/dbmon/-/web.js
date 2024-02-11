@@ -2611,9 +2611,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_dom_listener extends $mol_object {
@@ -2792,6 +2789,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -2929,12 +2929,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     let cache = null;
@@ -2951,6 +2945,12 @@ var $;
 (function ($) {
     $.$mol_mem_cached = $mol_wire_probe;
 })($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -3162,9 +3162,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $.$mol_layer = $mol_style_prop('mol_layer', [
@@ -3182,6 +3179,9 @@ var $;
 (function ($) {
     $mol_style_attach("mol/layer/layer.css", ":root {\n\t--mol_layer_hover: 1;\n\t--mol_layer_focus: 2;\n\t--mol_layer_speck: 3;\n\t--mol_layer_float: 4;\n\t--mol_layer_popup: 5;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -3471,9 +3471,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_after_timeout extends $mol_object2 {
@@ -3519,6 +3516,9 @@ var $;
     ], $mol_state_time, "now", null);
     $.$mol_state_time = $mol_state_time;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";

@@ -3216,12 +3216,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_state_time extends $mol_object {
@@ -3246,6 +3240,12 @@ var $;
     ], $mol_state_time, "now", null);
     $.$mol_state_time = $mol_state_time;
 })($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
 
 ;
 "use strict";

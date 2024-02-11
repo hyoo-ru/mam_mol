@@ -2712,9 +2712,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_dom_listener extends $mol_object {
@@ -2893,6 +2890,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -3015,16 +3015,16 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $.$mol_mem_cached = $mol_wire_probe;
 })($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -3096,20 +3096,17 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/example/example.view.css", "[mol_example] {\n\tmax-width: 100%;\n}\n");
 })($ || ($ = {}));
 
 ;
-	($.$mol_example_small) = class $mol_example_small extends ($.$mol_example) {};
-
+"use strict";
 
 ;
-"use strict";
+	($.$mol_example_small) = class $mol_example_small extends ($.$mol_example) {};
+
 
 ;
 "use strict";
@@ -3119,11 +3116,11 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_example_large) = class $mol_example_large extends ($.$mol_example) {};
-
+"use strict";
 
 ;
-"use strict";
+	($.$mol_example_large) = class $mol_example_large extends ($.$mol_example) {};
+
 
 ;
 "use strict";
@@ -3131,6 +3128,9 @@ var $;
 (function ($) {
     $mol_style_attach("mol/example/large/large.view.css", "[mol_example_large] {\n\tflex: 1 1 auto;\n\tflex-direction: column;\n\tbackground: var(--mol_theme_back);\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n\tborder-radius: var(--mol_gap_round);\n\tmax-width: 100%;\n\tmax-height: 100%;\n\toverflow: hidden;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_page) = class $mol_page extends ($.$mol_view) {
@@ -3403,9 +3403,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $.$mol_action = $mol_wire_method;
@@ -3542,6 +3539,9 @@ var $;
     }
     self.addEventListener('hashchange', $mol_state_arg_change);
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -3736,9 +3736,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $.$mol_layer = $mol_style_prop('mol_layer', [
@@ -3756,6 +3753,9 @@ var $;
 (function ($) {
     $mol_style_attach("mol/layer/layer.css", ":root {\n\t--mol_layer_hover: 1;\n\t--mol_layer_focus: 2;\n\t--mol_layer_speck: 3;\n\t--mol_layer_float: 4;\n\t--mol_layer_popup: 5;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -3878,13 +3878,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/speck/speck.view.css", "[mol_speck] {\n\tfont-size: .625rem;\n\tborder-radius: 1rem;\n\tmargin: -0.5rem -0.25rem;\n\talign-self: flex-start;\n\tmin-height: 1em;\n\tmin-width: .5em;\n\tvertical-align: sub;\n\tpadding: .25em .5em;\n\tposition: absolute;\n\tz-index: var(--mol_layer_speck);\n\ttext-align: center;\n\tline-height: 1;\n\tdisplay: inline-block;\n\twhite-space: nowrap;\n\ttext-overflow: ellipsis;\n\tuser-select: none;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_button) = class $mol_button extends ($.$mol_view) {
@@ -3959,9 +3959,6 @@ var $;
 	($mol_mem(($.$mol_button.prototype), "clicks"));
 	($mol_mem(($.$mol_button.prototype), "event_key_press"));
 
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -4074,6 +4071,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -4158,13 +4158,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/button/typed/typed.view.css", "[mol_button_typed] {\n\talign-content: center;\n\talign-items: center;\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tgap: var(--mol_gap_space);\n\tuser-select: none;\n\tcursor: pointer;\n}\n\n[mol_button_typed][disabled] {\n\tpointer-events: none;\n}\n\n[mol_button_typed]:hover ,\n[mol_button_typed]:focus-visible {\n\tbackground-color: var(--mol_theme_hover);\n}\n\n[mol_button_typed]:active {\n\tcolor: var(--mol_theme_focus);\n}\n\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_button_minor) = class $mol_button_minor extends ($.$mol_button_typed) {};
@@ -4172,13 +4172,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/button/minor/minor.view.css", "[mol_button_minor] {\n\tcolor: var(--mol_theme_control);\n}\n\n[mol_button_minor][disabled] {\n\tcolor: var(--mol_theme_shade);\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_hotkey) = class $mol_hotkey extends ($.$mol_plugin) {
@@ -5268,9 +5268,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_after_timeout extends $mol_object2 {
@@ -5316,6 +5313,9 @@ var $;
     ], $mol_state_time, "now", null);
     $.$mol_state_time = $mol_state_time;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -5374,13 +5374,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/svg/root/root.view.css", "[mol_svg_root] {\n\toverflow: hidden;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_svg_path) = class $mol_svg_path extends ($.$mol_svg) {
@@ -5427,13 +5427,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/icon/icon.view.css", "[mol_icon] {\n\tfill: currentColor;\n\tstroke: none;\n\twidth: 1em;\n\theight: 1.5em;\n\tflex: 0 0 auto;\n\tvertical-align: top;\n\tdisplay: inline-block;\n\tfilter: drop-shadow(0px 1px 1px var(--mol_theme_back));\n\ttransform-origin: center;\n}\n\n[mol_icon_path] {\n\ttransform-origin: center;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_icon_cross) = class $mol_icon_cross extends ($.$mol_icon) {
@@ -5491,9 +5491,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     let cache = null;
@@ -5503,6 +5500,9 @@ var $;
     }
     $.$mol_support_css_overflow_anchor = $mol_support_css_overflow_anchor;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -5752,9 +5752,6 @@ var $;
 	($mol_mem_key(($.$mol_dimmer.prototype), "Low"));
 	($mol_mem_key(($.$mol_dimmer.prototype), "High"));
 
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -6042,6 +6039,9 @@ var $;
     }
     $.$mol_regexp = $mol_regexp;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -6493,13 +6493,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/check/check.css", "[mol_check] {\n\tflex: 0 0 auto;\n\tjustify-content: flex-start;\n\talign-content: center;\n\t/* align-items: flex-start; */\n\tborder: none;\n\tfont-weight: inherit;\n\tbox-shadow: none;\n\ttext-align: left;\n\tdisplay: inline-flex;\n\tflex-wrap: nowrap;\n}\n\n[mol_check_title] {\n\tflex-shrink: 1;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -6774,9 +6774,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_compare_text(item = (item) => String(item)) {
@@ -6802,6 +6799,9 @@ var $;
     }
     $.$mol_compare_text = $mol_compare_text;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -6948,9 +6948,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_state_session extends $mol_object {
@@ -7000,6 +6997,9 @@ var $;
     ], $mol_state_session, "value", null);
     $.$mol_state_session = $mol_state_session;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -7163,13 +7163,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/check/icon/icon.view.css", "[mol_check_icon]:where([mol_check_checked]) {\n\tcolor: var(--mol_theme_current);\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_icon_forum) = class $mol_icon_forum extends ($.$mol_icon) {
@@ -7253,9 +7253,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_promise() {
@@ -7290,6 +7287,9 @@ var $;
     }
     $.$mol_wait_timeout = $mol_wait_timeout;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -7536,9 +7536,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     function parse(theme) {
@@ -7566,6 +7563,9 @@ var $;
     }
     $.$mol_lights = $mol_lights;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -7727,13 +7727,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/stack/stack.view.css", "[mol_stack] {\n\tdisplay: grid;\n\t/* width: max-content; */\n\t/* height: max-content; */\n\talign-items: flex-start;\n\tjustify-items: flex-start;\n}\n\n[mol_stack] > * {\n\tgrid-area: 1/1;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_text_code_token) = class $mol_text_code_token extends ($.$mol_dimmer) {
@@ -7886,9 +7886,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_syntax2 {
@@ -7986,6 +7983,9 @@ var $;
         'code-punctuation': /[\-\[\]\{\}\(\)<=>~!\?@#%&\*_\+\\\/\|;:\.,\^]+?/,
     });
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -8201,9 +8201,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     const mapping = {
@@ -8217,6 +8214,9 @@ var $;
     }
     $.$mol_html_encode = $mol_html_encode;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -8463,13 +8463,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/float/float.view.css", "[mol_float] {\n\tposition: sticky;\n\ttop: 0;\n\tleft: 0;\n\tz-index: var(--mol_layer_float);\n\topacity: 1;\n\ttransition: opacity .25s ease-in;\n\tdisplay: block;\n\tbackground: linear-gradient( var(--mol_theme_card), var(--mol_theme_card) ), var(--mol_theme_back);\n\tbox-shadow: 0 0 .5rem hsla(0,0%,0%,.25);\n}\n\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_grid) = class $mol_grid extends ($.$mol_view) {
@@ -9416,45 +9416,6 @@ var $;
 
 
 ;
-	($.$mol_text_list) = class $mol_text_list extends ($.$mol_text) {
-		auto_scroll(){
-			return null;
-		}
-		attr(){
-			return {...(super.attr()), "mol_text_list_type": (this.type())};
-		}
-		Paragraph(id){
-			const obj = new this.$.$mol_text_list_item();
-			(obj.index) = () => ((this.item_index(id)));
-			(obj.sub) = () => ((this.block_content(id)));
-			return obj;
-		}
-		type(){
-			return "";
-		}
-	};
-	($mol_mem_key(($.$mol_text_list.prototype), "Paragraph"));
-	($.$mol_text_list_item) = class $mol_text_list_item extends ($.$mol_paragraph) {
-		attr(){
-			return {...(super.attr()), "mol_text_list_item_index": (this.index())};
-		}
-		index(){
-			return 0;
-		}
-	};
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/text/list/list.view.css", "[mol_text_list] {\r\n\tpadding-left: 1.75rem;\r\n}\r\n\r\n[mol_text_list_item] {\r\n\tcontain: none;\r\n\tdisplay: list-item;\r\n}\r\n\r\n[mol_text_list_item]::before {\r\n\tcontent: attr( mol_text_list_item_index ) \".\";\r\n\twidth: 1.25rem;\r\n\tdisplay: inline-block;\r\n\tposition: absolute;\r\n\tmargin-left: -1.75rem;\r\n\ttext-align: end;\r\n}\r\n\r\n[mol_text_list_type=\"-\"] > [mol_text_list_item]::before,\r\n[mol_text_list_type=\"*\"] > [mol_text_list_item]::before {\r\n\tcontent: \"•\";\r\n}\r\n");
-})($ || ($ = {}));
-
-;
 "use strict";
 
 ;
@@ -9803,6 +9764,45 @@ var $;
 	};
 	($mol_mem(($.$mol_link_source.prototype), "Icon"));
 
+
+;
+"use strict";
+
+;
+	($.$mol_text_list) = class $mol_text_list extends ($.$mol_text) {
+		auto_scroll(){
+			return null;
+		}
+		attr(){
+			return {...(super.attr()), "mol_text_list_type": (this.type())};
+		}
+		Paragraph(id){
+			const obj = new this.$.$mol_text_list_item();
+			(obj.index) = () => ((this.item_index(id)));
+			(obj.sub) = () => ((this.block_content(id)));
+			return obj;
+		}
+		type(){
+			return "";
+		}
+	};
+	($mol_mem_key(($.$mol_text_list.prototype), "Paragraph"));
+	($.$mol_text_list_item) = class $mol_text_list_item extends ($.$mol_paragraph) {
+		attr(){
+			return {...(super.attr()), "mol_text_list_item_index": (this.index())};
+		}
+		index(){
+			return 0;
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/text/list/list.view.css", "[mol_text_list] {\r\n\tpadding-left: 1.75rem;\r\n}\r\n\r\n[mol_text_list_item] {\r\n\tcontain: none;\r\n\tdisplay: list-item;\r\n}\r\n\r\n[mol_text_list_item]::before {\r\n\tcontent: attr( mol_text_list_item_index ) \".\";\r\n\twidth: 1.25rem;\r\n\tdisplay: inline-block;\r\n\tposition: absolute;\r\n\tmargin-left: -1.75rem;\r\n\ttext-align: end;\r\n}\r\n\r\n[mol_text_list_type=\"-\"] > [mol_text_list_item]::before,\r\n[mol_text_list_type=\"*\"] > [mol_text_list_item]::before {\r\n\tcontent: \"•\";\r\n}\r\n");
+})($ || ($ = {}));
 
 ;
 "use strict";
@@ -10249,9 +10249,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_func_is_class(func) {
@@ -10693,6 +10690,9 @@ var $;
     }
     $.$mol_tree2_empty = $mol_tree2_empty;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -12685,13 +12685,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major][disabled] {\n\topacity: .5;\n\tfilter: grayscale();\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_textarea) = class $mol_textarea extends ($.$mol_stack) {
@@ -13159,9 +13159,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     var $$;
@@ -13281,6 +13278,9 @@ var $;
         $$.$hyoo_crowd_app_peer = $hyoo_crowd_app_peer;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -13597,9 +13597,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_html_decode(text) {
@@ -13618,6 +13615,9 @@ var $;
     }
     $.$mol_html_decode = $mol_html_decode;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -14043,9 +14043,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_match_text(query, values) {
@@ -14059,6 +14056,9 @@ var $;
     }
     $.$mol_match_text = $mol_match_text;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -14284,13 +14284,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/number/number.css", "[mol_number] {\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tposition: relative;\n\talign-items: stretch;\n\tmax-width: 100%;\n}\n\n[mol_number_string] {\n\tappearance: textfield;\n\tflex: 1 1 7rem;\n\twidth: 7rem;\n}\n\n[mol_number_string]::-webkit-inner-spin-button {\n\tdisplay: none;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -14999,40 +14999,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_dump_list) = class $mol_dump_list extends ($.$mol_view) {
-		values(){
-			return [];
-		}
-		sub(){
-			return [(this.Dump("0"))];
-		}
-		dump_value(id){
-			return null;
-		}
-		dump_expanded(id, next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		prototypes(){
-			return false;
-		}
-		preview_show(){
-			return true;
-		}
-		Dump(id){
-			const obj = new this.$.$mol_dump_value();
-			(obj.value) = () => ((this.dump_value(id)));
-			(obj.expanded) = (next) => ((this.dump_expanded(id, next)));
-			(obj.prototypes) = () => ((this.prototypes()));
-			(obj.preview_show) = () => ((this.preview_show()));
-			return obj;
-		}
-	};
-	($mol_mem_key(($.$mol_dump_list.prototype), "dump_expanded"));
-	($mol_mem_key(($.$mol_dump_list.prototype), "Dump"));
-
-
-;
 	($.$mol_dump_value) = class $mol_dump_value extends ($.$mol_view) {
 		value(next){
 			if(next !== undefined) return next;
@@ -15138,9 +15104,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     let error;
@@ -15165,6 +15128,9 @@ var $;
         error = event.error;
     }, true);
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -15330,6 +15296,40 @@ var $;
 (function ($) {
     $mol_style_attach("mol/dump/value/value.view.css", "[mol_dump_value] {\n\tmin-height: 2.5rem;\n\tmin-width: 2.5rem;\n}\n\n[mol_dump_value_simple] {\n\tpadding: 0;\n}\n\n[mol_dump_value_expand_content] {\n\tpadding-left: 1.5rem;\n\talign-items: flex-start;\n}\n\n[mol_dump_value_expand_title_rows],\n[mol_dump_value_simple_rows],\n[mol_dump_value_expand_head] {\n\tpadding: 0;\n\tgap: 0;\n}\n");
 })($ || ($ = {}));
+
+;
+	($.$mol_dump_list) = class $mol_dump_list extends ($.$mol_view) {
+		values(){
+			return [];
+		}
+		sub(){
+			return [(this.Dump("0"))];
+		}
+		dump_value(id){
+			return null;
+		}
+		dump_expanded(id, next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		prototypes(){
+			return false;
+		}
+		preview_show(){
+			return true;
+		}
+		Dump(id){
+			const obj = new this.$.$mol_dump_value();
+			(obj.value) = () => ((this.dump_value(id)));
+			(obj.expanded) = (next) => ((this.dump_expanded(id, next)));
+			(obj.prototypes) = () => ((this.prototypes()));
+			(obj.preview_show) = () => ((this.preview_show()));
+			return obj;
+		}
+	};
+	($mol_mem_key(($.$mol_dump_list.prototype), "dump_expanded"));
+	($mol_mem_key(($.$mol_dump_list.prototype), "Dump"));
+
 
 ;
 "use strict";
@@ -15614,62 +15614,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_import extends $mol_object2 {
-        static module(uri) {
-            $mol_wire_solid();
-            return $mol_wire_sync(this).module_async(uri);
-        }
-        static module_async(uri) {
-            return import(uri);
-        }
-        static script(uri) {
-            $mol_wire_solid();
-            return $mol_wire_sync(this).script_async(uri);
-        }
-        static script_async(uri) {
-            const doc = $mol_dom_context.document;
-            const script = doc.createElement('script');
-            script.src = uri;
-            doc.head.appendChild(script);
-            return new Promise((done, fail) => {
-                script.onload = () => done($mol_dom_context);
-                script.onerror = () => fail(new Error(`Can not import ${uri}`));
-            });
-        }
-        static style(uri) {
-            return $mol_wire_sync(this).style_async(uri);
-        }
-        static style_async(uri) {
-            const doc = $mol_dom_context.document;
-            const style = doc.createElement('link');
-            style.rel = 'stylesheet';
-            style.href = uri;
-            doc.head.appendChild(style);
-            return new Promise((done, fail) => {
-                style.onload = () => done(style.sheet);
-                style.onerror = () => fail(new Error(`Can not import ${uri}`));
-            });
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $mol_import, "module", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_import, "script", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_import, "style", null);
-    $.$mol_import = $mol_import;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_assert_ok(value) {
         if (value)
             return;
@@ -15749,6 +15693,59 @@ var $;
             return val;
         }
     };
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_import extends $mol_object2 {
+        static module(uri) {
+            $mol_wire_solid();
+            return $mol_wire_sync(this).module_async(uri);
+        }
+        static module_async(uri) {
+            return import(uri);
+        }
+        static script(uri) {
+            $mol_wire_solid();
+            return $mol_wire_sync(this).script_async(uri);
+        }
+        static script_async(uri) {
+            const doc = $mol_dom_context.document;
+            const script = doc.createElement('script');
+            script.src = uri;
+            doc.head.appendChild(script);
+            return new Promise((done, fail) => {
+                script.onload = () => done($mol_dom_context);
+                script.onerror = () => fail(new Error(`Can not import ${uri}`));
+            });
+        }
+        static style(uri) {
+            return $mol_wire_sync(this).style_async(uri);
+        }
+        static style_async(uri) {
+            const doc = $mol_dom_context.document;
+            const style = doc.createElement('link');
+            style.rel = 'stylesheet';
+            style.href = uri;
+            doc.head.appendChild(style);
+            return new Promise((done, fail) => {
+                style.onload = () => done(style.sheet);
+                style.onerror = () => fail(new Error(`Can not import ${uri}`));
+            });
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_import, "module", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_import, "script", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_import, "style", null);
+    $.$mol_import = $mol_import;
 })($ || ($ = {}));
 
 ;
@@ -16282,6 +16279,9 @@ var $;
 })($ || ($ = {}));
 
 ;
+"use strict";
+
+;
 	($.$mol_example_code) = class $mol_example_code extends ($.$mol_example) {
 		sub(){
 			return [(this.Sandbox())];
@@ -16316,13 +16316,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/example/code/code.view.css", "[mol_example_code] {\n\tflex: 1 1 auto;\n\tflex-direction: column;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n\tborder-radius: var(--mol_gap_round);\n\tmax-width: 100%;\n\tmax-height: 100%;\n\toverflow: hidden;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_array_chunks_demo) = class $mol_array_chunks_demo extends ($.$mol_example_code) {
@@ -16528,13 +16528,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: var(--mol_gap_block);\n\tgap: var(--mol_gap_block);\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmax-width: 100%;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_attach) = class $mol_attach extends ($.$mol_view) {
@@ -16975,13 +16975,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_label] {\n\tmin-height: 2rem;\n\tcolor: var(--mol_theme_shade);\n\tpadding: .5rem .75rem 0;\n\tgap: 0 var(--mol_gap_block);\n\tflex-wrap: wrap;\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n\tpadding: var(--mol_gap_text);\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_audio_demo_vibe) = class $mol_audio_demo_vibe extends ($.$mol_example_small) {
@@ -17155,9 +17155,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_hash_string(str, seed = 0) {
@@ -17174,6 +17171,9 @@ var $;
     }
     $.$mol_hash_string = $mol_hash_string;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -17290,13 +17290,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/bar/bar.view.css", "[mol_bar] {\n\tdisplay: flex;\n\t/* box-shadow: inset 0 0 0 1px var(--mol_theme_line); */\n\tborder-radius: var(--mol_gap_round);\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_icon_tick) = class $mol_icon_tick extends ($.$mol_icon) {
@@ -17321,13 +17321,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/check/box/box.view.css", "[mol_check_box_icon] {\n\tborder-radius: var(--mol_gap_round);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n\tcolor: var(--mol_theme_shade);\n\theight: 1rem;\n\talign-self: center;\n}\n\n[mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {\n\tfill: transparent;\n}\n\n[mol_check]:not([disabled]) > [mol_check_box_icon] {\n\tbackground: var(--mol_theme_field);\n\tcolor: var(--mol_theme_text);\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_bar_demo) = class $mol_bar_demo extends ($.$mol_example_small) {
@@ -17775,13 +17775,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/book2/demo/demo.view.css", "[mol_book2_demo_first],\n[mol_book2_demo_second],\n[mol_book2_demo_third],\n[mol_book2_demo_side] { \n\talign-items: center;\n\tjustify-content: center;\n\tfont-size: 2rem;\n\tdisplay: flex;\n}\n\n\n[mol_book2_demo_first] {\n\tflex: 1 0 20rem;\n\tbackground-color: hsla(90, 100%, 50%, .2);\n}\n\n[mol_book2_demo_second] {\n\tflex: 1 0 100%;\n\tbackground-color: hsla(180, 100%, 50%, .2);\n}\n\n[mol_book2_demo_third] {\n\tflex: 1 0 60rem;\n\tbackground-color: hsla(270, 100%, 50%, .2);\n}\n\n[mol_book2_demo_side] {\n\tflex: 0 0 20rem;\n\tbackground-color: hsla(0, 100%, 50%, .2);\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_book2_catalog) = class $mol_book2_catalog extends ($.$mol_book2) {
@@ -18148,13 +18148,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/filler/filler.view.css", "[mol_filler] {\n\ttext-align: left;\n\tpadding: var(--mol_gap_text);\n\tflex-shrink: 0;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -18551,9 +18551,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $.$mol_jsx_prefix = '';
@@ -18767,6 +18764,9 @@ var $;
         });
     }
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -19832,9 +19832,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_time_interval extends $mol_time_base {
@@ -19901,6 +19898,9 @@ var $;
     }
     $.$mol_time_interval = $mol_time_interval;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -21534,13 +21534,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/chart/chart.view.css", "[mol_chart] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-self: stretch;\n\tflex: 1 1 auto;\n}\n\n[mol_chart_plot] {\n\tflex: 1 0 50%;\n\tmargin: .5rem;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_plot_bar) = class $mol_plot_bar extends ($.$mol_plot_graph) {
@@ -21802,9 +21802,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     const mask = 0b11111_11111_11111;
@@ -21821,6 +21818,9 @@ var $;
     }
     $.$mol_coord_low = $mol_coord_low;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -22249,9 +22249,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_math_round_expand(val, gap = 1) {
@@ -22266,6 +22263,9 @@ var $;
     }
     $.$mol_math_round_expand = $mol_math_round_expand;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -22683,9 +22683,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     let canvas;
@@ -22708,6 +22705,9 @@ var $;
     }
     $.$mol_font_measure = $mol_font_measure;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -23552,13 +23552,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/chat/demo/demo.view.css", "[mol_chat_demo_pages] {\n\tflex: 1 1 auto;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_check_box_demo) = class $mol_check_box_demo extends ($.$mol_example_small) {
@@ -23896,9 +23896,6 @@ var $;
 
 
 ;
-"use strict";
-
-;
 	($.$mol_icon_check) = class $mol_icon_check extends ($.$mol_icon) {
 		path(){
 			return "M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z";
@@ -23916,6 +23913,9 @@ var $;
 		}
 	};
 
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -24115,13 +24115,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/check/group/demo/demo.view.css", "[mol_check_group_demo] {\n\talign-items: flex-start;\n}\n\n[mol_check_group_demo_all] {\n\tbox-shadow: 0 1px 0 0px var(--mol_theme_line);\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_icon_microphone) = class $mol_icon_microphone extends ($.$mol_icon) {
@@ -24248,9 +24248,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var cordova;
 var $;
 (function ($) {
@@ -24264,6 +24261,9 @@ var $;
     }
     $.$mol_cordova_camera = $mol_cordova_camera;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -25958,13 +25958,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/dimmer/demo/demo.view.css", "[mol_dimmer_demo_cases] > * {\n\tpadding: var(--mol_gap_text);\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_drag) = class $mol_drag extends ($.$mol_ghost) {
@@ -26326,9 +26326,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_range2(item = index => index, size = () => Number.POSITIVE_INFINITY) {
@@ -26451,6 +26448,9 @@ var $;
     }
     $.$mol_range2_array = $mol_range2_array;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -27021,13 +27021,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/form/group/group.view.css", "[mol_form_group] {\n\tflex-wrap: wrap;\n\tgap: var(--mol_gap_block);\n}\n\n[mol_form_group] > * {\n\tflex: 1 1 18rem;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_form_demo) = class $mol_form_demo extends ($.$mol_example) {
@@ -28991,9 +28991,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_unit extends $mol_object {
@@ -29147,6 +29144,9 @@ var $;
     }
     $.$mol_stub_message = $mol_stub_message;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -29401,9 +29401,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_layout_tree extends $mol_layout {
@@ -29604,6 +29601,9 @@ var $;
     }
     $.$mol_layout_wrap = $mol_layout_wrap;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -29930,13 +29930,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/link/iconed/demo/demo.view.css", "[mol_link_iconed_demo_blocks] {\n\tflex: 1;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_link_lazy) = class $mol_link_lazy extends ($.$mol_link) {
@@ -30381,9 +30381,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $.$mol_colors = {
@@ -30536,6 +30533,9 @@ var $;
         yellowgreen: "#9acd32",
     };
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -30783,6 +30783,95 @@ var $;
 
 
 ;
+"use strict";
+var $;
+(function ($) {
+    class $mol_mem_force extends Object {
+        constructor() { super(); }
+        $mol_mem_force = true;
+        static $mol_mem_force = true;
+        static toString() { return this.name; }
+    }
+    $.$mol_mem_force = $mol_mem_force;
+    class $mol_mem_force_cache extends $mol_mem_force {
+    }
+    $.$mol_mem_force_cache = $mol_mem_force_cache;
+    class $mol_mem_force_update extends $mol_mem_force {
+    }
+    $.$mol_mem_force_update = $mol_mem_force_update;
+    class $mol_mem_force_fail extends $mol_mem_force_cache {
+    }
+    $.$mol_mem_force_fail = $mol_mem_force_fail;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const Numb = $mol_data_pipe($mol_data_string, parseFloat);
+    const Response = $mol_data_array($mol_data_record({
+        boundingbox: $mol_data_array(Numb),
+        lat: Numb,
+        lon: Numb,
+    }));
+    $.$mol_geo_search_attribution = 'https://osm.org/copyright';
+    function $mol_geo_search({ query, count = 1 }) {
+        const url = new URL('https://nominatim.openstreetmap.org/search');
+        url.searchParams.set('q', query);
+        url.searchParams.set('limit', count.toString());
+        url.searchParams.set('format', 'jsonv2');
+        const json = $mol_fetch.json(url.toString());
+        return Response(json).map(({ lon, lat, boundingbox: box }) => {
+            return {
+                coord: new $mol_vector_2d(lon, lat),
+                box: new $mol_vector_2d(new $mol_vector_range(box[2], box[3]), new $mol_vector_range(box[0], box[1])),
+            };
+        });
+    }
+    $.$mol_geo_search = $mol_geo_search;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fiber_defer(calculate) {
+        const host = {};
+        const fiber = new $mol_wire_task(calculate.name, calculate, host, []);
+        fiber.plan();
+        return fiber;
+    }
+    $.$mol_fiber_defer = $mol_fiber_defer;
+    function $mol_fiber_root(calculate) {
+        const wrapper = function (...args) {
+            const fiber = new $mol_wire_task(this + '.' + calculate.name, calculate, this, args);
+            return fiber.async();
+        };
+        wrapper[Symbol.toStringTag] = calculate.name;
+        return wrapper;
+    }
+    $.$mol_fiber_root = $mol_fiber_root;
+    function $mol_fiber_sync(request) {
+        throw new Error('Use $mol_wire_sync instead');
+    }
+    $.$mol_fiber_sync = $mol_fiber_sync;
+    async function $mol_fiber_warp() {
+        $mol_wire_fiber.sync();
+    }
+    $.$mol_fiber_warp = $mol_fiber_warp;
+    class $mol_fiber_solid extends $mol_wrapper {
+        static func(task) {
+            return task;
+        }
+    }
+    $.$mol_fiber_solid = $mol_fiber_solid;
+    class $mol_fiber {
+        static method = $mol_action;
+    }
+    $.$mol_fiber = $mol_fiber;
+})($ || ($ = {}));
+
+;
 	($.$mol_map_yandex_mark) = class $mol_map_yandex_mark extends ($.$mol_object) {
 		pos(){
 			const obj = new this.$.$mol_vector_2d(0, 0);
@@ -30829,33 +30918,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const Numb = $mol_data_pipe($mol_data_string, parseFloat);
-    const Response = $mol_data_array($mol_data_record({
-        boundingbox: $mol_data_array(Numb),
-        lat: Numb,
-        lon: Numb,
-    }));
-    $.$mol_geo_search_attribution = 'https://osm.org/copyright';
-    function $mol_geo_search({ query, count = 1 }) {
-        const url = new URL('https://nominatim.openstreetmap.org/search');
-        url.searchParams.set('q', query);
-        url.searchParams.set('limit', count.toString());
-        url.searchParams.set('format', 'jsonv2');
-        const json = $mol_fetch.json(url.toString());
-        return Response(json).map(({ lon, lat, boundingbox: box }) => {
-            return {
-                coord: new $mol_vector_2d(lon, lat),
-                box: new $mol_vector_2d(new $mol_vector_range(box[2], box[3]), new $mol_vector_range(box[0], box[1])),
-            };
-        });
-    }
-    $.$mol_geo_search = $mol_geo_search;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     var $$;
     (function ($$) {
         class $mol_map_yandex_mark extends $.$mol_map_yandex_mark {
@@ -30894,68 +30956,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_mem_force extends Object {
-        constructor() { super(); }
-        $mol_mem_force = true;
-        static $mol_mem_force = true;
-        static toString() { return this.name; }
-    }
-    $.$mol_mem_force = $mol_mem_force;
-    class $mol_mem_force_cache extends $mol_mem_force {
-    }
-    $.$mol_mem_force_cache = $mol_mem_force_cache;
-    class $mol_mem_force_update extends $mol_mem_force {
-    }
-    $.$mol_mem_force_update = $mol_mem_force_update;
-    class $mol_mem_force_fail extends $mol_mem_force_cache {
-    }
-    $.$mol_mem_force_fail = $mol_mem_force_fail;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fiber_defer(calculate) {
-        const host = {};
-        const fiber = new $mol_wire_task(calculate.name, calculate, host, []);
-        fiber.plan();
-        return fiber;
-    }
-    $.$mol_fiber_defer = $mol_fiber_defer;
-    function $mol_fiber_root(calculate) {
-        const wrapper = function (...args) {
-            const fiber = new $mol_wire_task(this + '.' + calculate.name, calculate, this, args);
-            return fiber.async();
-        };
-        wrapper[Symbol.toStringTag] = calculate.name;
-        return wrapper;
-    }
-    $.$mol_fiber_root = $mol_fiber_root;
-    function $mol_fiber_sync(request) {
-        throw new Error('Use $mol_wire_sync instead');
-    }
-    $.$mol_fiber_sync = $mol_fiber_sync;
-    async function $mol_fiber_warp() {
-        $mol_wire_fiber.sync();
-    }
-    $.$mol_fiber_warp = $mol_fiber_warp;
-    class $mol_fiber_solid extends $mol_wrapper {
-        static func(task) {
-            return task;
-        }
-    }
-    $.$mol_fiber_solid = $mol_fiber_solid;
-    class $mol_fiber {
-        static method = $mol_action;
-    }
-    $.$mol_fiber = $mol_fiber;
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -31235,9 +31235,6 @@ var $;
 	($mol_mem(($.$hyoo_marked_app.prototype), "View"));
 	($mol_mem(($.$hyoo_marked_app.prototype), "Preview_close_icon"));
 
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -31610,6 +31607,9 @@ var $;
 })($ || ($ = {}));
 
 ;
+"use strict";
+
+;
 	($.$hyoo_marked_demo) = class $hyoo_marked_demo extends ($.$mol_example_large) {
 		title(){
 			return "CROWD Text Merge";
@@ -31713,9 +31713,6 @@ var $;
 	($mol_mem(($.$hyoo_harp_app.prototype), "Json"));
 	($mol_mem(($.$hyoo_harp_app.prototype), "Content"));
 
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -31886,6 +31883,9 @@ var $;
 (function ($) {
     $mol_style_attach("hyoo/harp/app/app.view.css", "[hyoo_harp_app_content] {\n\tpadding: var(--mol_gap_block);\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$hyoo_harp_demo) = class $hyoo_harp_demo extends ($.$mol_example_large) {
@@ -33522,13 +33522,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/pop/over/demo/over.view.css", "[mol_pop_over_demo_file_menu] ,\n[mol_pop_over_demo_help_menu] {\n\talign-items: stretch;\n\tdisplay: flex;\n\tflex-direction: column;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_portion_demo) = class $mol_portion_demo extends ($.$mol_example_small) {
@@ -33619,9 +33619,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     var $$;
@@ -33641,6 +33638,9 @@ var $;
         $$.$mol_button_download = $mol_button_download;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_pick_demo) = class $mol_pick_demo extends ($.$mol_example_small) {
@@ -35369,9 +35369,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_spell_ru extends $mol_spell {
@@ -35394,6 +35391,9 @@ var $;
     }
     $.$mol_spell_any = $mol_spell_any;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -35458,13 +35458,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/stack/demo/demo.view.css", "[mol_stack_demo_front] {\n\tmargin: auto;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_string_button) = class $mol_string_button extends ($.$mol_string) {};
@@ -35472,13 +35472,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/string/button/button.view.css", "[mol_string_button]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled) {\n\tcolor: var(--mol_theme_control);\n\tbackground: transparent;\n\tbox-shadow: none;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_string_demo) = class $mol_string_demo extends ($.$mol_example_small) {

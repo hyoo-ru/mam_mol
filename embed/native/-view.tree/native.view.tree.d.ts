@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_link__uri__OW650INI = $mol_type_enforce<
+	type $mol_link__uri__NX9B0MZZ = $mol_type_enforce<
 		ReturnType< $mol_embed_native['uri'] >
 		,
 		ReturnType< $mol_link['uri'] >
 	>
-	type $mol_link__sub__WVD5P2VD = $mol_type_enforce<
+	type $mol_link__sub__MS74GHZT = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_link['sub'] >

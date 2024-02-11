@@ -107,9 +107,9 @@
     "$mol_style_properties",
     "$mol_type_override",
     "$mol_gap",
-    "$mol_type_enforce",
     "$mol_state_time",
-    "$mol_state"
+    "$mol_state",
+    "$mol_type_enforce"
   ],
   "dependencies": {
     "jsdom": "*"

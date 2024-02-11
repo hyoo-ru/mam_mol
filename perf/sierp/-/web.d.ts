@@ -818,32 +818,49 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_after_timeout extends $mol_object2 {
+        delay: number;
+        task: () => void;
+        id: any;
+        constructor(delay: number, task: () => void);
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_state_time extends $mol_object {
+        static task(precision: number, reset?: null): $mol_after_timeout | $mol_after_frame;
+        static now(precision: number): number;
+    }
+}
+
+declare namespace $ {
     type $mol_type_enforce<Actual extends Expected, Expected> = Actual;
 }
 
 declare namespace $ {
 
-	type $mol_perf_sierp_dot__left__D7RVYUTB = $mol_type_enforce<
+	type $mol_perf_sierp_dot__left__Y9K544K7 = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['left'] >
 		,
 		ReturnType< $mol_perf_sierp_dot['left'] >
 	>
-	type $mol_perf_sierp_dot__top__6PJAMW5Q = $mol_type_enforce<
+	type $mol_perf_sierp_dot__top__L4YL2D9K = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['top'] >
 		,
 		ReturnType< $mol_perf_sierp_dot['top'] >
 	>
-	type $mol_perf_sierp_dot__size__M1Z962D8 = $mol_type_enforce<
+	type $mol_perf_sierp_dot__size__PRB8N5R3 = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['size'] >
 		,
 		ReturnType< $mol_perf_sierp_dot['size'] >
 	>
-	type $mol_perf_sierp_dot__text__02052HGT = $mol_type_enforce<
+	type $mol_perf_sierp_dot__text__9I8DQ8DO = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['text'] >
 		,
 		ReturnType< $mol_perf_sierp_dot['text'] >
 	>
-	type $mol_view__sub__OJ3ZB2GU = $mol_type_enforce<
+	type $mol_view__sub__FBEPQ8LB = $mol_type_enforce<
 		ReturnType< $mol_perf_sierp['dots'] >
 		,
 		ReturnType< $mol_view['sub'] >
@@ -897,23 +914,6 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=serp.view.tree.d.ts.map
-declare namespace $ {
-    class $mol_after_timeout extends $mol_object2 {
-        delay: number;
-        task: () => void;
-        id: any;
-        constructor(delay: number, task: () => void);
-        destructor(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_state_time extends $mol_object {
-        static task(precision: number, reset?: null): $mol_after_timeout | $mol_after_frame;
-        static now(precision: number): number;
-    }
-}
-
 declare namespace $.$$ {
     class $mol_perf_sierp extends $.$mol_perf_sierp {
         dots(): $.$mol_perf_sierp_dot[];

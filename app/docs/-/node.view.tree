@@ -662,20 +662,6 @@ $mol_embed_any $mol_view
 		title <= title \
 		uri <= uri \
 
-$mol_text_list $mol_text
-	auto_scroll null
-	attr *
-		^
-		mol_text_list_type <= type \
-	Paragraph* $mol_text_list_item
-		index <= item_index*
-		sub <= block_content*
-
-$mol_text_list_item $mol_paragraph
-	attr *
-		^
-		mol_text_list_item_index <= index 0
-
 $mol_text $mol_list
 	uri_base \
 	text \
@@ -777,6 +763,20 @@ $mol_link_source $mol_link
 	hint @ \Source code
 	sub /
 		<= Icon $mol_icon_script_text
+
+$mol_text_list $mol_text
+	auto_scroll null
+	attr *
+		^
+		mol_text_list_type <= type \
+	Paragraph* $mol_text_list_item
+		index <= item_index*
+		sub <= block_content*
+
+$mol_text_list_item $mol_paragraph
+	attr *
+		^
+		mol_text_list_item_index <= index 0
 
 $mol_app_demo_readme $mol_page
 	readme_link_template \https://raw.githubusercontent.com/{repo}/HEAD/{module}/readme.md
@@ -2189,6 +2189,21 @@ $mol_gallery $mol_view
 			flexGrow <= side_size* \1
 		items <= side_items* /$mol_view
 
+$mol_chart_legend $mol_scroll
+	graphs /$mol_plot_graph
+	graphs_front /$mol_plot_graph
+	sub /
+		<= Gallery $mol_gallery items <= graph_legends /$mol_view
+	-
+	Graph_legend* $mol_view
+		sub /
+			<= Graph_sample_box* $mol_view
+				sub /
+					<= Graph_sample* null
+			<= Graph_title* $mol_view
+				sub /
+					<= graph_title* \
+
 $mol_svg_group $mol_svg
 	dom_name \g
 
@@ -2267,21 +2282,6 @@ $mol_plot_graph_sample $mol_view
 	style *
 		^
 		color <= color \black
-
-$mol_chart_legend $mol_scroll
-	graphs /$mol_plot_graph
-	graphs_front /$mol_plot_graph
-	sub /
-		<= Gallery $mol_gallery items <= graph_legends /$mol_view
-	-
-	Graph_legend* $mol_view
-		sub /
-			<= Graph_sample_box* $mol_view
-				sub /
-					<= Graph_sample* null
-			<= Graph_title* $mol_view
-				sub /
-					<= graph_title* \
 
 $mol_touch $mol_plugin
 	start_zoom? 0
@@ -3581,14 +3581,6 @@ $mol_float_demo $mol_example_large
 	aspects /
 		\Widget/Float
 
-$mol_form_field $mol_labeler
-	bids /string
-	label /
-		<= name \
-		<= Bid $mol_view
-			sub / <= bid \
-	content / <= control null
-
 $mol_form $mol_list
 	submit_allowed true
 	submit_blocked false
@@ -3601,6 +3593,14 @@ $mol_form $mol_list
 			sub <= body <= form_fields /$mol_form_field
 		<= Foot $mol_row
 			sub <= foot <= buttons /$mol_view
+
+$mol_form_field $mol_labeler
+	bids /string
+	label /
+		<= name \
+		<= Bid $mol_view
+			sub / <= bid \
+	content / <= control null
 
 $mol_form_group $mol_view
 
@@ -4273,6 +4273,13 @@ $mol_list_demo_tree $mol_example_large
 	aspects /
 		\Widget/Layout
 
+$mol_map_yandex $mol_view
+	zoom? 2
+	center? /
+		0
+		0
+	objects /$mol_map_yandex_mark
+
 $mol_map_yandex_mark $mol_object
 	pos $mol_vector_2d<number> /
 		0
@@ -4288,13 +4295,6 @@ $mol_map_yandex_mark $mol_object
 	title <= address \
 	content \
 	object null
-
-$mol_map_yandex $mol_view
-	zoom? 2
-	center? /
-		0
-		0
-	objects /$mol_map_yandex_mark
 
 $mol_map_yandex_demo $mol_example_large
 	title \Simple Yandex Maps wrapper

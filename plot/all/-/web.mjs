@@ -2602,9 +2602,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_after_timeout extends $mol_object2 {
@@ -2650,6 +2647,9 @@ var $;
     ], $mol_state_time, "now", null);
     $.$mol_state_time = $mol_state_time;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -2708,13 +2708,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/svg/root/root.view.css", "[mol_svg_root] {\n\toverflow: hidden;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -3491,6 +3491,13 @@ var $;
 
 
 ;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_mem_cached = $mol_wire_probe;
+})($ || ($ = {}));
+
+;
 	($.$mol_svg_group) = class $mol_svg_group extends ($.$mol_svg) {
 		dom_name(){
 			return "g";
@@ -3749,13 +3756,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_mem_cached = $mol_wire_probe;
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -4213,9 +4213,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     const mask = 0b11111_11111_11111;
@@ -4232,6 +4229,9 @@ var $;
     }
     $.$mol_coord_low = $mol_coord_low;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -4860,9 +4860,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     function $mol_math_round_expand(val, gap = 1) {
@@ -4877,6 +4874,9 @@ var $;
     }
     $.$mol_math_round_expand = $mol_math_round_expand;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -5184,9 +5184,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     let canvas;
@@ -5209,6 +5206,9 @@ var $;
     }
     $.$mol_font_measure = $mol_font_measure;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";

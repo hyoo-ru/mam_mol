@@ -1,56 +1,56 @@
 declare namespace $ {
 
-	type $mol_view__dom_name__NBZP6M2N = $mol_type_enforce<
+	type $mol_view__dom_name__UKM9E8ZD = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__sub__GRSRXPBO = $mol_type_enforce<
+	type $mol_view__sub__BHQO2E1S = $mol_type_enforce<
 		ReturnType< $mol_page['title_content'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub__OJ5WUDJF = $mol_type_enforce<
+	type $mol_view__sub__WJB27XE9 = $mol_type_enforce<
 		ReturnType< $mol_page['tools'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__minimal_height__HL1SH3QF = $mol_type_enforce<
+	type $mol_view__minimal_height__O586LHXI = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_view['minimal_height'] >
 	>
-	type $mol_view__dom_name__LRJHDR3F = $mol_type_enforce<
+	type $mol_view__dom_name__BAKGIJ6F = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__sub__GUFYRNKZ = $mol_type_enforce<
+	type $mol_view__sub__7H6G8830 = $mol_type_enforce<
 		ReturnType< $mol_page['head'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_page_body_scroll_top__J9AZPC2U = $mol_type_enforce<
+	type $mol_page_body_scroll_top__U2VL7L0B = $mol_type_enforce<
 		Parameters< $mol_page['body_scroll_top'] >[0]
 		,
 		Parameters< ReturnType< $mol_page['Body'] >['scroll_top'] >[0]
 	>
-	type $mol_view__sub__XF9QGVWU = $mol_type_enforce<
+	type $mol_view__sub__62KV9HD9 = $mol_type_enforce<
 		ReturnType< $mol_page['body'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_scroll__sub__598OO3OJ = $mol_type_enforce<
+	type $mol_scroll__sub__FUWP0UPW = $mol_type_enforce<
 		ReturnType< $mol_page['body_content'] >
 		,
 		ReturnType< $mol_scroll['sub'] >
 	>
-	type $mol_view__dom_name__2KJ5FDTH = $mol_type_enforce<
+	type $mol_view__dom_name__BISKQ1VC = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__sub__O56QFRBL = $mol_type_enforce<
+	type $mol_view__sub__8YQLZBM1 = $mol_type_enforce<
 		ReturnType< $mol_page['foot'] >
 		,
 		ReturnType< $mol_view['sub'] >

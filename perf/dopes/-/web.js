@@ -2587,9 +2587,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $.$mol_layer = $mol_style_prop('mol_layer', [
@@ -2614,6 +2611,9 @@ var $;
 (function ($) {
     $mol_style_attach("mol/speck/speck.view.css", "[mol_speck] {\n\tfont-size: .625rem;\n\tborder-radius: 1rem;\n\tmargin: -0.5rem -0.25rem;\n\talign-self: flex-start;\n\tmin-height: 1em;\n\tmin-width: .5em;\n\tvertical-align: sub;\n\tpadding: .25em .5em;\n\tposition: absolute;\n\tz-index: var(--mol_layer_speck);\n\ttext-align: center;\n\tline-height: 1;\n\tdisplay: inline-block;\n\twhite-space: nowrap;\n\ttext-overflow: ellipsis;\n\tuser-select: none;\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_button) = class $mol_button extends ($.$mol_view) {
@@ -2688,12 +2688,6 @@ var $;
 	($mol_mem(($.$mol_button.prototype), "clicks"));
 	($mol_mem(($.$mol_button.prototype), "event_key_press"));
 
-
-;
-"use strict";
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -2806,6 +2800,12 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -2890,13 +2890,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/button/typed/typed.view.css", "[mol_button_typed] {\n\talign-content: center;\n\talign-items: center;\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tgap: var(--mol_gap_space);\n\tuser-select: none;\n\tcursor: pointer;\n}\n\n[mol_button_typed][disabled] {\n\tpointer-events: none;\n}\n\n[mol_button_typed]:hover ,\n[mol_button_typed]:focus-visible {\n\tbackground-color: var(--mol_theme_hover);\n}\n\n[mol_button_typed]:active {\n\tcolor: var(--mol_theme_focus);\n}\n\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_typed) {
@@ -2908,13 +2908,13 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major][disabled] {\n\topacity: .5;\n\tfilter: grayscale();\n}\n");
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -3001,9 +3001,6 @@ var $;
 	($mol_mem(($.$mol_perf_dopes.prototype), "Stop"));
 	($mol_mem(($.$mol_perf_dopes.prototype), "Labels"));
 
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -3112,6 +3109,9 @@ var $;
         console.error(error);
     }
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";

@@ -6150,7 +6150,6 @@ var $;
     $mol_build.dependors['view.tree'] = source => {
         return {
             [`/${source.parent().relate()}/-view.tree/${source.name()}.js`]: 0,
-            [`/${source.parent().relate()}/-view.tree/${source.name()}.d.ts`]: 0,
         };
     };
 })($ || ($ = {}));

@@ -69,85 +69,6 @@ $mol_touch $mol_plugin
 		pointerleave?event <=> event_leave?event null
 		wheel?event <=> event_wheel?event null
 
-$mol_svg_group $mol_svg
-	dom_name \g
-
-$mol_svg_title $mol_svg
-	dom_name \title
-	sub /
-		<= title
-
-$mol_plot_graph $mol_svg_group
-	series_x /number
-	series_y /number
-	-
-	attr *
-		^
-		mol_plot_graph_type <= type \solid
-	-
-	style *
-		^
-		color <= color \
-	-
-	viewport $mol_vector_2d<$mol_vector_range<number>> /
-		<= viewport_x $mol_vector_range<number> /
-			Infinity
-			-Infinity
-		<= viewport_y $mol_vector_range<number> /
-			Infinity
-			-Infinity
-	shift /number
-		0
-		0
-	scale /number
-		1
-		1
-	cursor_position $mol_vector_2d<number> /
-		NaN
-		NaN
-	dimensions_pane $mol_vector_2d<$mol_vector_range<number>> /
-		<= dimensions_pane_x $mol_vector_range<number> /
-			Infinity
-			-Infinity
-		<= dimensions_pane_y $mol_vector_range<number> /
-			Infinity
-			-Infinity
-	dimensions $mol_vector_2d<$mol_vector_range<number>> /
-		<= dimensions_x $mol_vector_range<number> /
-			Infinity
-			-Infinity
-		<= dimensions_y $mol_vector_range<number> /
-			Infinity
-			-Infinity
-	size_real $mol_vector_2d<number> /
-		0
-		0
-	gap $mol_vector_2d<$mol_vector_range<number>> /
-		<= gap_x $mol_vector_range<number> /
-			0
-			0
-		<= gap_y $mol_vector_range<number> /
-			0
-			0
-	repos_x* 0
-	repos_y* 0
-	indexes /number
-	points /readonly(number)[]
-	front /$mol_svg
-	back /$mol_svg
-	Hint $mol_svg_title
-		title <= hint <= title \
-	hue +NaN
-	Sample null
-
-$mol_plot_graph_sample $mol_view
-	attr *
-		^
-		mol_plot_graph_type <= type \solid
-	style *
-		^
-		color <= color \black
-
 $mol_plot_pane $mol_svg_root
 	aspect \none
 	-
@@ -237,6 +158,85 @@ $mol_plot_pane $mol_svg_root
 	- event *
 		^
 		dblclick?event <=> reset?event null
+
+$mol_svg_group $mol_svg
+	dom_name \g
+
+$mol_svg_title $mol_svg
+	dom_name \title
+	sub /
+		<= title
+
+$mol_plot_graph $mol_svg_group
+	series_x /number
+	series_y /number
+	-
+	attr *
+		^
+		mol_plot_graph_type <= type \solid
+	-
+	style *
+		^
+		color <= color \
+	-
+	viewport $mol_vector_2d<$mol_vector_range<number>> /
+		<= viewport_x $mol_vector_range<number> /
+			Infinity
+			-Infinity
+		<= viewport_y $mol_vector_range<number> /
+			Infinity
+			-Infinity
+	shift /number
+		0
+		0
+	scale /number
+		1
+		1
+	cursor_position $mol_vector_2d<number> /
+		NaN
+		NaN
+	dimensions_pane $mol_vector_2d<$mol_vector_range<number>> /
+		<= dimensions_pane_x $mol_vector_range<number> /
+			Infinity
+			-Infinity
+		<= dimensions_pane_y $mol_vector_range<number> /
+			Infinity
+			-Infinity
+	dimensions $mol_vector_2d<$mol_vector_range<number>> /
+		<= dimensions_x $mol_vector_range<number> /
+			Infinity
+			-Infinity
+		<= dimensions_y $mol_vector_range<number> /
+			Infinity
+			-Infinity
+	size_real $mol_vector_2d<number> /
+		0
+		0
+	gap $mol_vector_2d<$mol_vector_range<number>> /
+		<= gap_x $mol_vector_range<number> /
+			0
+			0
+		<= gap_y $mol_vector_range<number> /
+			0
+			0
+	repos_x* 0
+	repos_y* 0
+	indexes /number
+	points /readonly(number)[]
+	front /$mol_svg
+	back /$mol_svg
+	Hint $mol_svg_title
+		title <= hint <= title \
+	hue +NaN
+	Sample null
+
+$mol_plot_graph_sample $mol_view
+	attr *
+		^
+		mol_plot_graph_type <= type \solid
+	style *
+		^
+		color <= color \black
 
 $mol_plot_line $mol_plot_graph
 	threshold 1
