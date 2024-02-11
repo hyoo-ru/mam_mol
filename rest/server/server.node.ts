@@ -197,7 +197,7 @@ namespace $ {
 			
 			if( msg_size < chunk.byteLength ) {
 				const tail = new Uint8Array( chunk.buffer, chunk.byteOffset + msg_size )
-				$mol_wire_sync( sock ).unshift( tail )
+				this._ws_icome_partial.push( tail )
 			}
 			
 			let data: string | Uint8Array = new Uint8Array( chunk.buffer, chunk.byteOffset + frame.size(), frame.data().size )
