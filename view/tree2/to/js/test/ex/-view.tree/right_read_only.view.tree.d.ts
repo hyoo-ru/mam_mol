@@ -4,12 +4,12 @@ declare namespace $ {
 		a( id: any, next?: any ): any
 	}
 	
-	type $mol_view_tree2_to_js_test_ex_right_read_only_bar_b__G36ETXLJ = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_right_read_only_bar_b__8PMG743V = $mol_type_enforce<
 		Parameters< $mol_view_tree2_to_js_test_ex_right_read_only_bar['b'] >[0]
 		,
 		Parameters< ReturnType< $mol_view_tree2_to_js_test_ex_right_read_only_bar['Obj'] >['a'] >[0]
 	>
-	type $mol_view_tree2_to_js_test_ex_right_read_only_bar_b__UQ3O03A3 = $mol_type_enforce<
+	type $mol_view_tree2_to_js_test_ex_right_read_only_bar_b__N0XUKLFU = $mol_type_enforce<
 		Parameters< $mol_view_tree2_to_js_test_ex_right_read_only_bar['b'] >[1]
 		,
 		Parameters< ReturnType< $mol_view_tree2_to_js_test_ex_right_read_only_bar['Obj'] >['a'] >[1]
