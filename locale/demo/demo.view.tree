@@ -12,15 +12,6 @@ $mol_locale_demo $mol_example_small
 					dictionary *
 						ru \Russian
 						en \English
-		<= Usage_from_code_labeler $mol_labeler
-			title \Or from code usage
-			content /
-				<= Usage_from_code $mol_textarea
-					sidebar_showed true
-					value \
-						\$mol_locale.lang() //  get current lang
-						\$mol_locale.lang("en") // set lang
-						\// Sample language list - https://github.com/hyoo-ru/lingua.hyoo.ru/blob/master/langs/langs.ts
 	tags /
 		\language
 		\i18
