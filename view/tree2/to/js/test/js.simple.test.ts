@@ -127,6 +127,11 @@ namespace $ {
 				foo.button().loc(),
 				`$mol_view_tree2_to_js_test_ex_simple_factory_props_foo_button_loc`
 			)
+			
+			$mol_assert_equal(
+				foo.button().deep().loc,
+				`$mol_view_tree2_to_js_test_ex_simple_factory_props_foo_button_deep_loc`
+			)
 
 			$mol_assert_equal(
 				foo.button().sub()[0],
