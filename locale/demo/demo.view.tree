@@ -14,6 +14,6 @@ $mol_locale_demo $mol_example_small
 						en \English
 	tags /
 		\language
-		\i18
+		\l10n
 	aspects /
 		\Widget/Control
