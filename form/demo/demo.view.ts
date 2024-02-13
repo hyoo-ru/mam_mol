@@ -27,7 +27,6 @@ namespace $.$$ {
 			
 			const value = this.name_second()
 			
-			if( !value ) return this.message().required
 			if( value.indexOf( ' ' ) !== -1 ) return this.message().no_spaces
 			if( value.length < 3 ) return this.message().need_more_letters.replace( '{count}' , '3' )
 
