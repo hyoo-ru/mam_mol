@@ -21,16 +21,16 @@ namespace $ {
 			return this.errors.map( e => e.message )
 		}
 		
-		pick< Error extends typeof Error >( Error: Error ) {
+		pick< Class extends typeof Error >( Class: Class ): InstanceType< Class > | null {
 			
-			if( ( this as any ) instanceof Error ) return this
+			if( ( this as any ) instanceof Class ) return this as any
 			
 			for( const e of this.errors ) {
-				if( e instanceof Error ) return e
+				if( e instanceof Class ) return e as any
 			}
 			
 			for( const e of this.cause ) {
-				if( e && e instanceof Error ) return e
+				if( e && e instanceof Class ) return e as any
 			}
 			
 			return null
