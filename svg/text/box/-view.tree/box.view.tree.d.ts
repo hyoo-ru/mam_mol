@@ -1,31 +1,31 @@
 declare namespace $ {
 
-	type $mol_svg_rect__width__DZDL336L = $mol_type_enforce<
+	type $mol_svg_rect__width__SAQA6BS4 = $mol_type_enforce<
 		ReturnType< $mol_svg_text_box['box_width'] >
 		,
 		ReturnType< $mol_svg_rect['width'] >
 	>
-	type $mol_svg_rect__height__4PVNC83G = $mol_type_enforce<
+	type $mol_svg_rect__height__M19Q7576 = $mol_type_enforce<
 		ReturnType< $mol_svg_text_box['box_height'] >
 		,
 		ReturnType< $mol_svg_rect['height'] >
 	>
-	type $mol_svg_rect__pos__MQ5IW929 = $mol_type_enforce<
+	type $mol_svg_rect__pos__MS7MBITS = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_svg_rect['pos'] >
 	>
-	type $mol_svg_text__pos__OJXQB8ID = $mol_type_enforce<
+	type $mol_svg_text__pos__3N9KPEWZ = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_svg_text['pos'] >
 	>
-	type $mol_svg_text__align__ZPG0REMO = $mol_type_enforce<
+	type $mol_svg_text__align__RQCR0S7R = $mol_type_enforce<
 		ReturnType< $mol_svg_text_box['align'] >
 		,
 		ReturnType< $mol_svg_text['align'] >
 	>
-	type $mol_svg_text__sub__IU8DYK74 = $mol_type_enforce<
+	type $mol_svg_text__sub__R15CWGTG = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_svg_text['sub'] >

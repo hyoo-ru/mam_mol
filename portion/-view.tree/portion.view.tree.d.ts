@@ -7,7 +7,7 @@ declare namespace $ {
 		width_style( ): string
 	}
 	
-	type $mol_portion_indicator__width_style__8410RW71 = $mol_type_enforce<
+	type $mol_portion_indicator__width_style__D3AQ4KVW = $mol_type_enforce<
 		ReturnType< $mol_portion['indicator_width_style'] >
 		,
 		ReturnType< $mol_portion_indicator['width_style'] >
