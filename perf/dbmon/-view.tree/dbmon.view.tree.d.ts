@@ -1,41 +1,41 @@
 declare namespace $ {
 
-	type $mol_view__sub__4FOX0L6Y = $mol_type_enforce<
+	type $mol_view__sub__8TI13SXF = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['database'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_perf_dbmon_query__elapsed__UGOGOHAV = $mol_type_enforce<
+	type $mol_perf_dbmon_query__elapsed__HI3UZVH1 = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['query_elapsed'] >
 		,
 		ReturnType< $mol_perf_dbmon_query['elapsed'] >
 	>
-	type $mol_perf_dbmon_query__elapsed_mod__9JWA6QU1 = $mol_type_enforce<
+	type $mol_perf_dbmon_query__elapsed_mod__X50ADWAX = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['query_elapsed_mod'] >
 		,
 		ReturnType< $mol_perf_dbmon_query['elapsed_mod'] >
 	>
-	type $mol_perf_dbmon_query__value__54EUWS82 = $mol_type_enforce<
+	type $mol_perf_dbmon_query__value__XTDJYDEU = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['query_value'] >
 		,
 		ReturnType< $mol_perf_dbmon_query['value'] >
 	>
-	type $mol_list__rows__RUMW3VEB = $mol_type_enforce<
+	type $mol_list__rows__1IJN56YS = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['databases'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_view__sub__9SFP3HPK = $mol_type_enforce<
+	type $mol_view__sub__SK3VNIFA = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_perf_dbmon_query_count__label_mod__MSMQ5ZHP = $mol_type_enforce<
+	type $mol_perf_dbmon_query_count__label_mod__39IVK1B5 = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['query_count_label_mod'] >
 		,
 		ReturnType< $mol_perf_dbmon_query_count['label_mod'] >
 	>
-	type $mol_perf_dbmon_query_count__count__1ZLF196V = $mol_type_enforce<
+	type $mol_perf_dbmon_query_count__count__AZUW5FYL = $mol_type_enforce<
 		ReturnType< $mol_perf_dbmon['query_count'] >
 		,
 		ReturnType< $mol_perf_dbmon_query_count['count'] >
@@ -59,14 +59,14 @@ declare namespace $ {
 		query_value( id: any): string
 	}
 	
-	type $mol_view__attr__WL0CA389 = $mol_type_enforce<
+	type $mol_view__attr__Z3NL8V6I = $mol_type_enforce<
 		({ 
 			'mol_perf_dbmon_query_count_label': ReturnType< $mol_perf_dbmon_query_count['label_mod'] >,
 		}) 
 		,
 		ReturnType< $mol_view['attr'] >
 	>
-	type $mol_view__sub__KFM4K9XU = $mol_type_enforce<
+	type $mol_view__sub__92EI3TAW = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
@@ -78,14 +78,14 @@ declare namespace $ {
 		Label( ): $mol_view
 	}
 	
-	type $mol_view__attr__Z0BSYUMD = $mol_type_enforce<
+	type $mol_view__attr__LCBVXC7V = $mol_type_enforce<
 		({ 
 			'mol_perf_dbmon_query_elapsed': ReturnType< $mol_perf_dbmon_query['elapsed_mod'] >,
 		}) 
 		,
 		ReturnType< $mol_view['attr'] >
 	>
-	type $mol_view__sub__Q4U4T735 = $mol_type_enforce<
+	type $mol_view__sub__DEWTE4NM = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >

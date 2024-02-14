@@ -28,7 +28,7 @@
 		}
 		Today(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => (this.$.$mol_locale.text("$mol_date_Today_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_date_Today_hint")));
 			(obj.enabled) = () => ((this.enabled()));
 			(obj.click) = (next) => ((this.today_click(next)));
 			(obj.sub) = () => ([(this.Today_icon())]);
@@ -61,7 +61,7 @@
 		}
 		Clear(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => (this.$.$mol_locale.text("$mol_date_Clear_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_date_Clear_hint")));
 			(obj.enabled) = () => ((this.enabled()));
 			(obj.click) = (next) => ((this.clear(next)));
 			(obj.sub) = () => ([(this.Clear_icon())]);

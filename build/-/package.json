@@ -1,6 +1,6 @@
 {
   "name": "mam",
-  "version": "1.11.122",
+  "version": "1.11.126",
   "exports": {
     "node": {
       "import": "./node.mjs",
@@ -143,6 +143,7 @@
     "@types/cors": "*",
     "@types/body-parser": "*",
     "@types/serve-index": "*",
+    "@types/jsdom": "*",
     "@types/ws": "*",
     "chokidar": "*",
     "jsdom": "*",

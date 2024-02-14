@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"sources": [
+		"mol/locale/select/select.view.tree"
+	],
+	"mappings": "AAAA;AAAA;AAAA,AAAA,gCAAmB,oBAAnB;AAAA;AAAA;AAAA;",
+	"file": "select.view.tree.d.ts",
+	"sourceRoot": "../../../.."
+}

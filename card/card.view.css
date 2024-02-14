@@ -6,6 +6,7 @@
 	flex: 0 1 auto;
 	flex-direction: column;
 	position: relative;
+	box-shadow: 0 0 0.5rem 0rem hsla(0,0%,0%,.125);
 	/* overflow: hidden; */
 }
 

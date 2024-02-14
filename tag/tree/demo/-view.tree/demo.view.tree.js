@@ -24,15 +24,15 @@
 			(obj.Item) = (id) => ((this.Item(id)));
 			(obj.levels_expanded) = () => (0);
 			(obj.tag_names) = () => ({
-				"side": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_side")), 
-				"good": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_good")), 
-				"bad": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_bad")), 
-				"sex": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_sex")), 
-				"male": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_male")), 
-				"female": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_female")), 
-				"universe": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_universe")), 
-				"marvel": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_marvel")), 
-				"dc": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_dc"))
+				"side": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_side")), 
+				"good": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_good")), 
+				"bad": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_bad")), 
+				"sex": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_sex")), 
+				"male": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_male")), 
+				"female": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_female")), 
+				"universe": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_universe")), 
+				"marvel": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_marvel")), 
+				"dc": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_dc"))
 			});
 			(obj.ids_tags) = () => ({
 				"batman": [

@@ -3638,14 +3638,9 @@ var $;
                         if (bind.type === '=>')
                             continue;
                         const over_name = name_of.call(this, over);
-                        const body = bind.type === '@' ? [
+                        const body = [
                             args_of.call(this, over),
-                            ...localized_string.hack({
-                                '#key': key => [bind.data(`${klass.type}_${name}_${over_name}`)],
-                            }),
-                        ] : [
-                            args_of.call(this, over),
-                            over.struct('()', over.hack(belt)),
+                            over.struct('()', over.hack(belt, { chain: [over.type] })),
                         ];
                         overrides.push(over.struct('=', [
                             over.struct('()', [
@@ -4204,11 +4199,7 @@ var $;
                                 if (over.type === '/')
                                     continue;
                                 const oname = this.$mol_view_tree2_prop_parts(over).name;
-                                const bind = over.kids[0];
-                                if (bind.type === '@') {
-                                    const path = `${klass.type}_${name}_${oname}`;
-                                    locales[path] = bind.kids[0].value;
-                                }
+                                over.hack(belt, { ...context, chain: [oname] });
                             }
                         }
                         return [input];
@@ -4632,12 +4623,28 @@ var $;
 var $;
 (function ($) {
     class $mol_error_mix extends AggregateError {
-        name = '$mol_error_mix';
+        name = $$.$mol_func_name(this.constructor);
         constructor(message, ...errors) {
-            super(errors, [message, ...errors.map(e => '  ' + e.message)].join('\n'));
+            super(errors, [message, ...errors.map(e => e.message.replace(/^/gm, '  '))].join('\n'));
+        }
+        get cause() {
+            return [].concat(...this.errors.map(e => e.cause).filter(Boolean));
         }
         toJSON() {
-            return this.message;
+            return this.errors.map(e => e.message);
+        }
+        pick(Class) {
+            if (this instanceof Class)
+                return this;
+            for (const e of this.errors) {
+                if (e instanceof Class)
+                    return e;
+            }
+            for (const e of this.cause) {
+                if (e && e instanceof Class)
+                    return e;
+            }
+            return null;
         }
     }
     $.$mol_error_mix = $mol_error_mix;

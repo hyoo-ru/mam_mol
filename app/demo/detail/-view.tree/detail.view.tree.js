@@ -24,7 +24,7 @@
 		Readme(){
 			const obj = new this.$.$mol_check_icon();
 			(obj.checked) = (next) => ((this.readme(next)));
-			(obj.hint) = () => (this.$.$mol_locale.text("$mol_app_demo_detail_Readme_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_app_demo_detail_Readme_hint")));
 			(obj.Icon) = () => ((this.readme_icon()));
 			return obj;
 		}

@@ -5,6 +5,9 @@
 		loc(){
 			return "v2";
 		}
+		deep(){
+			return {"loc": (this.$.$mol_locale.text("$mol_view_tree2_to_js_test_ex_simple_factory_props_bar_deep_loc"))};
+		}
 		some(){
 			return false;
 		}
@@ -13,7 +16,8 @@
 		button(){
 			const obj = new this.$.$mol_view_tree2_to_js_test_ex_simple_factory_props_bar();
 			(obj.some) = () => (true);
-			(obj.loc) = () => (this.$.$mol_locale.text("$mol_view_tree2_to_js_test_ex_simple_factory_props_foo_button_loc"));
+			(obj.loc) = () => ((this.$.$mol_locale.text("$mol_view_tree2_to_js_test_ex_simple_factory_props_foo_button_loc")));
+			(obj.deep) = () => ({"loc": (this.$.$mol_locale.text("$mol_view_tree2_to_js_test_ex_simple_factory_props_foo_button_deep_loc"))});
 			(obj.sub) = () => ([1]);
 			return obj;
 		}

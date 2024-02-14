@@ -54,7 +54,7 @@
 		}
 		Close(){
 			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => (this.$.$mol_locale.text("$mol_app_demo_readme_Close_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_app_demo_readme_Close_hint")));
 			(obj.sub) = () => ([(this.Close_icon())]);
 			(obj.click) = (next) => ((this.close(next)));
 			return obj;

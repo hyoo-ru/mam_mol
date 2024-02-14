@@ -1,1 +1,11 @@
-{}
+{
+	"$mol_tag_tree_demo_Tree_tag_names_side": "Side",
+	"$mol_tag_tree_demo_Tree_tag_names_good": "Good",
+	"$mol_tag_tree_demo_Tree_tag_names_bad": "Bad",
+	"$mol_tag_tree_demo_Tree_tag_names_sex": "Sex",
+	"$mol_tag_tree_demo_Tree_tag_names_male": "Male",
+	"$mol_tag_tree_demo_Tree_tag_names_female": "Female",
+	"$mol_tag_tree_demo_Tree_tag_names_universe": "Universe",
+	"$mol_tag_tree_demo_Tree_tag_names_marvel": "Marvel",
+	"$mol_tag_tree_demo_Tree_tag_names_dc": "DC"
+}

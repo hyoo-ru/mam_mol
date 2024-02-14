@@ -109,8 +109,7 @@ namespace $ {
 				const chain = context.chain?.join('_')
 
 				return localized_string.hack({
-					'#key': key => [ locale.data( `${ klass.type }_${ name }${
-						chain ? `_${chain}` : ''}` ) ],
+					'#key': key => [ locale.data( `${ klass.type }_${ name }${ chain ? `_${chain}` : '' }` ) ],
 				})
 			},
 			
@@ -145,22 +144,22 @@ namespace $ {
 				if( input.type[0] === '*' ) {
 					return [
 						input.struct('{,}',
-						input.kids.map( field => {
-							
-							if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
-							const field_name = (field.type || field.value).replace(/\?\w*$/, '')
+							input.kids.map( field => {
+								
+								if( field.type === '^' ) return field.list([ field ]).hack( belt )[0]
+								const field_name = (field.type || field.value).replace(/\?\w*$/, '')
 
-							return field.struct( ':', [
-								field.data( field_name ),
-								field.kids[0].type === '<=>'
-									? field.struct( '=>', [
-										params_of.call(this, field ),
-										... field.hack( belt ),
-									] )
-									: field.hack<Context>( belt, {... context, chain: [...context.chain ?? [], field_name] })[0],
-							] )
-							
-						} ).filter( this.$mol_guard_defined )
+								return field.struct( ':', [
+									field.data( field_name ),
+									field.kids[0].type === '<=>'
+										? field.struct( '=>', [
+											params_of.call(this, field ),
+											... field.hack( belt ),
+										] )
+										: field.hack<Context>( belt, {... context, chain: [...context.chain ?? [], field_name] })[0],
+								] )
+								
+							} ).filter( this.$mol_guard_defined )
 						)
 					]
 				}
@@ -185,14 +184,9 @@ namespace $ {
 
 						const over_name = name_of.call(this, over )
 
-						const body = bind.type === '@' ? [
+						const body = [
 							args_of.call(this, over ),
-							... localized_string.hack({
-								'#key': key => [ bind.data( `${ klass.type }_${ name }_${ over_name }` ) ],
-							}),
-						] : [
-							args_of.call(this, over ),
-							over.struct( '()', over.hack( belt )),
+							over.struct( '()', over.hack( belt, { chain: [ over.type ] } )),
 						]
 
 						overrides.push(

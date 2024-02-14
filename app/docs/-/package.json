@@ -639,7 +639,11 @@
     "$mol_password_demo",
     "$mol_password",
     "$mol_icon_eye",
-    "$mol_lights_demo"
+    "$mol_lights_demo",
+    "$mol_locale_demo",
+    "$mol_locale_select",
+    "$hyoo_lingua_langs",
+    "$hyoo_lingua"
   ],
   "dependencies": {
     "jsdom": "*",

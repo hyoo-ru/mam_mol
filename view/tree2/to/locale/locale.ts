@@ -41,12 +41,7 @@ namespace $ {
 								if( over.type === '/' ) continue
 
 								const oname = this.$mol_view_tree2_prop_parts( over ).name
-								const bind = over.kids[0]
-
-								if( bind.type === '@' ) {
-									const path = `${ klass.type }_${ name }_${ oname }`
-									locales[path] = bind.kids[0].value
-								}
+								over.hack( belt, { ... context, chain: [ oname ] } )
 		
 							}
 						}

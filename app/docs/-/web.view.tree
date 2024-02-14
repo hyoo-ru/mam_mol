@@ -5928,3 +5928,25 @@ $mol_lights_demo $mol_example_small
 	aspects /
 		\Widget/Control/Button
 		\Theme
+
+$mol_locale_select $mol_select
+
+$mol_locale_demo $mol_example_small
+	title \Example usages of $mol_locale component
+	sub /
+		<= All_languages_labeler $mol_labeler
+			title \All languages example
+			content /
+				<= All_languages $mol_locale_select
+		<= List_of_languages_labeler $mol_labeler
+			title \Or you can give user select from your list
+			content /
+				<= List_of_languages $mol_locale_select
+					dictionary *
+						ru \Russian
+						en \English
+	tags /
+		\language
+		\l10n
+	aspects /
+		\Widget/Control
