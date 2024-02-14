@@ -614,7 +614,7 @@ namespace $ {
 					const git_dir = mod.resolve( '.git' )
 					if( git_dir.exists() ) {
 						
-						this.$.$mol_exec( mod.path() , 'git' , 'pull', '--deepen=1' )
+						this.$.$mol_exec( mod.path() , 'git' , 'pull', '--depth=1' )
 						// mod.reset()
 						// for ( const sub of mod.sub() ) sub.reset()
 						
