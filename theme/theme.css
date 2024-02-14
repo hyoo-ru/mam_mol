@@ -49,9 +49,9 @@
 	--mol_theme_luma: 1;
 	--mol_theme_image: none;
 	
-	--mol_theme_back: hsl( var(--mol_theme_hue), 20%, 85% );
-	--mol_theme_card: hsl( var(--mol_theme_hue), 50%, 100%, .25 );
-	--mol_theme_field: hsl( var(--mol_theme_hue), 50%, 100%, .25 );
+	--mol_theme_back: hsl( var(--mol_theme_hue), 20%, 92% );
+	--mol_theme_card: hsl( var(--mol_theme_hue), 50%, 100%, .5 );
+	--mol_theme_field: hsl( var(--mol_theme_hue), 50%, 100%, .75 );
 	--mol_theme_hover: hsl( var(--mol_theme_hue), 0%, 50%, .1 );
 	
 	--mol_theme_text: hsl( var(--mol_theme_hue), 0%, 0% );
@@ -112,8 +112,8 @@
 	--mol_theme_card: oklch( 35% .1 calc( var(--mol_theme_hue) - 60deg ) / .25 ); */
 }
 :where( [mol_theme="$mol_theme_light"] ) [mol_theme="$mol_theme_current"] {
-	--mol_theme_back: hsl( calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ), 50%, 80% );
-	--mol_theme_card: hsl( calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ), 80%, 95%, .25 );
+	--mol_theme_back: hsl( calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ), 50%, 92% );
+	--mol_theme_card: hsl( calc( var(--mol_theme_hue) - var(--mol_theme_hue_spread) ), 80%, 100%, .5 );
 	/* --mol_theme_back: oklch( 95% .02 calc( var(--mol_theme_hue) - 60deg ) );
 	--mol_theme_card: oklch( 80% .05 calc( var(--mol_theme_hue) - 60deg ) / .25 ); */
 }
@@ -125,8 +125,8 @@
 	--mol_theme_card: oklch( 35% .1 calc( var(--mol_theme_hue) + 60deg ) / .25 ); */
 }
 :where( [mol_theme="$mol_theme_light"] ) [mol_theme="$mol_theme_special"] {
-	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ), 50%, 80% );
-	--mol_theme_card: hsl( calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ), 80%, 95%, .25 );
+	--mol_theme_back: hsl( calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ), 50%, 92% );
+	--mol_theme_card: hsl( calc( var(--mol_theme_hue) + var(--mol_theme_hue_spread) ), 80%, 100%, .5 );
 	/* --mol_theme_back: oklch( 95% .02 calc( var(--mol_theme_hue) + 60deg ) );
 	--mol_theme_card: oklch( 80% .05 calc( var(--mol_theme_hue) + 60deg ) / .25 ); */
 }
