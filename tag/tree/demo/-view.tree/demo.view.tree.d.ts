@@ -1,21 +1,21 @@
 declare namespace $ {
 
-	type $mol_button_minor__title__93O2WORD = $mol_type_enforce<
+	type $mol_button_minor__title__QPBI4WHZ = $mol_type_enforce<
 		ReturnType< $mol_tag_tree_demo['item_title'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_tag_tree__Item__9U9V5ISX = $mol_type_enforce<
+	type $mol_tag_tree__Item__UVOADBJ8 = $mol_type_enforce<
 		ReturnType< $mol_tag_tree_demo['Item'] >
 		,
 		ReturnType< $mol_tag_tree['Item'] >
 	>
-	type $mol_tag_tree__levels_expanded__5E6Y31W2 = $mol_type_enforce<
+	type $mol_tag_tree__levels_expanded__H47LK39H = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_tag_tree['levels_expanded'] >
 	>
-	type $mol_tag_tree__tag_names__EQNVW7Q7 = $mol_type_enforce<
+	type $mol_tag_tree__tag_names__QU5SVYNY = $mol_type_enforce<
 		({ 
 			'side': string,
 			'good': string,
@@ -30,7 +30,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_tag_tree['tag_names'] >
 	>
-	type $mol_tag_tree__ids_tags__NFG5OA0S = $mol_type_enforce<
+	type $mol_tag_tree__ids_tags__GMK3V9O9 = $mol_type_enforce<
 		({ 
 			'batman': readonly(any)[],
 			'superman': readonly(any)[],
