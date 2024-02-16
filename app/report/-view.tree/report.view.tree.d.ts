@@ -1,56 +1,56 @@
 declare namespace $ {
 
-	type $mol_app_report_rower__cells__TRJNV2J1 = $mol_type_enforce<
+	type $mol_app_report_rower__cells__3Z252965 = $mol_type_enforce<
 		ReturnType< $mol_app_report['rowerCells'] >
 		,
 		ReturnType< $mol_app_report_rower['cells'] >
 	>
-	type $mol_app_report_cell__content__1644KU25 = $mol_type_enforce<
+	type $mol_app_report_cell__content__MSS037PQ = $mol_type_enforce<
 		ReturnType< $mol_app_report['cell_content'] >
 		,
 		ReturnType< $mol_app_report_cell['content'] >
 	>
-	type $mol_app_report_cell__rows__G88P4U1R = $mol_type_enforce<
+	type $mol_app_report_cell__rows__57I477HZ = $mol_type_enforce<
 		ReturnType< $mol_app_report['cellrows'] >
 		,
 		ReturnType< $mol_app_report_cell['rows'] >
 	>
-	type $mol_app_report_cell__cols__4DTCREUN = $mol_type_enforce<
+	type $mol_app_report_cell__cols__IID5NCXN = $mol_type_enforce<
 		ReturnType< $mol_app_report['cellCols'] >
 		,
 		ReturnType< $mol_app_report_cell['cols'] >
 	>
-	type $mol_view__sub__09TOG2HC = $mol_type_enforce<
+	type $mol_view__sub__AIQTT2DK = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_select__value__ERAZWZZH = $mol_type_enforce<
+	type $mol_select__value__QW2XD46G = $mol_type_enforce<
 		ReturnType< $mol_app_report['cell_value'] >
 		,
 		ReturnType< $mol_select['value'] >
 	>
-	type $mol_select__dictionary__TUDA6LRS = $mol_type_enforce<
+	type $mol_select__dictionary__IMK92HJ8 = $mol_type_enforce<
 		ReturnType< $mol_app_report['cell_options'] >
 		,
 		ReturnType< $mol_select['dictionary'] >
 	>
-	type $mol_number__value__Y922NNVJ = $mol_type_enforce<
+	type $mol_number__value__Q3HVE2JP = $mol_type_enforce<
 		ReturnType< $mol_app_report['cell_value'] >
 		,
 		ReturnType< $mol_number['value'] >
 	>
-	type $mol_view__sub__TIKXZXX5 = $mol_type_enforce<
+	type $mol_view__sub__NKBXCMDF = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_app_report_rower__cells__ONZE3M0W = $mol_type_enforce<
+	type $mol_app_report_rower__cells__YNQ2M5QW = $mol_type_enforce<
 		ReturnType< $mol_app_report['headCells'] >
 		,
 		ReturnType< $mol_app_report_rower['cells'] >
 	>
-	type $mol_app_report_tabler__rows__G2V95OW8 = $mol_type_enforce<
+	type $mol_app_report_tabler__rows__VWCJB9XG = $mol_type_enforce<
 		ReturnType< $mol_app_report['rows'] >
 		,
 		ReturnType< $mol_app_report_tabler['rows'] >
