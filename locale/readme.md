@@ -2,7 +2,7 @@
 
 Language selection component
 
-## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_locale)
+## [Online demo](https://mol.hyoo.ru/#!section=demos/readme/demo=mol_locale_demo)
 
 
 ## Usage example
