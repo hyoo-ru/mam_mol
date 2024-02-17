@@ -121,26 +121,11 @@ namespace $.$$ {
 		@ $mol_mem
 		names_filtered() {
 			const words = this.filter_words()
-			let names = this.names()
-
-			if( words.length !== 0 ) {
-
-				names = names.filter( name => {
-					const title = this.widget_title( name )
-
-					const component_keywords = [
-						...( title ? [ title.toLowerCase() ] : [] ),
-						...this.widget_tags( name )
-					]
-
-					return words.every(
-						word => component_keywords.some( kw => kw.includes( word ) )
-					)
-				} )
-
-			}
-
-			return names
+			return this.names().filter( $mol_match_text( this.filter(), name => [
+				name,
+				... this.widget_aspects( name ),
+				... this.widget_tags( name ),
+			] ) )
 		}
 
 	}

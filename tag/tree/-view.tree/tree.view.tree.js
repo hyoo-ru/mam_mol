@@ -1,27 +1,24 @@
 	($.$mol_tag_tree) = class $mol_tag_tree extends ($.$mol_list) {
-		sieve(){
-			const obj = new this.$.$mol_tag_sieve();
-			(obj.ids_tags) = () => ((this.ids_tags()));
-			(obj.separator) = () => ((this.separator()));
-			return obj;
+		path(){
+			return [];
+		}
+		ids_tags(){
+			return {};
+		}
+		ids(){
+			return [];
+		}
+		tags(){
+			return [];
 		}
 		levels_expanded(){
 			return 0;
-		}
-		sort_items(){
-			return null;
-		}
-		sort_tags(){
-			return null;
 		}
 		sub(){
 			return [...(this.tag_list()), ...(this.item_list())];
 		}
 		tag_name(id){
 			return "";
-		}
-		tag_names(){
-			return {};
 		}
 		tag_list(){
 			return [];
@@ -42,12 +39,6 @@
 			(obj.content) = () => ([(this.Tag_tree(id))]);
 			return obj;
 		}
-		ids_tags(){
-			return {};
-		}
-		separator(){
-			return "/";
-		}
 		tag_list(){
 			return [];
 		}
@@ -64,13 +55,13 @@
 		tag_name(id){
 			return "";
 		}
-		sieve_sub(id){
-			const obj = new this.$.$mol_tag_sieve();
-			return obj;
+		tag_path(id){
+			return [];
 		}
 		Tag_tree(id){
 			const obj = new this.$.$mol_tag_tree();
-			(obj.sieve) = () => ((this.sieve_sub(id)));
+			(obj.ids_tags) = () => ((this.ids_tags()));
+			(obj.path) = () => ((this.tag_path(id)));
 			(obj.Item) = (id) => ((this.Item(id)));
 			(obj.item_title) = (id) => ((this.item_title(id)));
 			(obj.tag_expanded) = (id, next) => ((this.tag_expanded(id, next)));
@@ -78,11 +69,9 @@
 			return obj;
 		}
 	};
-	($mol_mem(($.$mol_tag_tree.prototype), "sieve"));
 	($mol_mem_key(($.$mol_tag_tree.prototype), "Item"));
 	($mol_mem_key(($.$mol_tag_tree.prototype), "Tag"));
 	($mol_mem_key(($.$mol_tag_tree.prototype), "tag_expanded"));
-	($mol_mem_key(($.$mol_tag_tree.prototype), "sieve_sub"));
 	($mol_mem_key(($.$mol_tag_tree.prototype), "Tag_tree"));
 
 //# sourceMappingURL=tree.view.tree.js.map

@@ -23,92 +23,81 @@
 			const obj = new this.$.$mol_tag_tree();
 			(obj.Item) = (id) => ((this.Item(id)));
 			(obj.levels_expanded) = () => (0);
-			(obj.tag_names) = () => ({
-				"side": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_side")), 
-				"good": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_good")), 
-				"bad": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_bad")), 
-				"sex": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_sex")), 
-				"male": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_male")), 
-				"female": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_female")), 
-				"universe": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_universe")), 
-				"marvel": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_marvel")), 
-				"dc": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_dc"))
-			});
 			(obj.ids_tags) = () => ({
-				"batman": [
-					"side/good", 
-					"universe/dc", 
-					"sex/male"
+				"Batman": [
+					"Side/Good", 
+					"Universe/DC", 
+					"Sex/Male"
 				], 
-				"superman": [
-					"side/good", 
-					"universe/dc", 
-					"sex/male"
+				"Superman": [
+					"Side/Good", 
+					"Universe/DC", 
+					"Sex/Male"
 				], 
-				"aquaman": [
-					"side/good", 
-					"universe/dc", 
-					"sex/male"
+				"Aquaman": [
+					"Side/Good", 
+					"Universe/DC", 
+					"Sex/Male"
 				], 
-				"flash": [
-					"side/good", 
-					"universe/dc", 
-					"sex/male"
+				"Flash": [
+					"Side/Good", 
+					"Universe/DC", 
+					"Sex/Male"
 				], 
-				"jocker": [
-					"side/bad", 
-					"universe/dc", 
-					"sex/male"
+				"Jocker": [
+					"Side/Bad", 
+					"Universe/DC", 
+					"Sex/Male"
 				], 
-				"deadshot": [
-					"side/bad", 
-					"universe/dc", 
-					"sex/male"
+				"Deadshot": [
+					"Side/Bad", 
+					"Universe/DC", 
+					"Sex/Male"
 				], 
-				"ironman": [
-					"side/good", 
-					"universe/marvel", 
-					"sex/male"
+				"Ironman": [
+					"Side/Good", 
+					"Universe/Marvel", 
+					"Sex/Male"
 				], 
-				"hulk": [
-					"side/good", 
-					"universe/marvel", 
-					"sex/male"
+				"Hulk": [
+					"Side/Good", 
+					"Universe/Marvel", 
+					"Sex/Male"
 				], 
-				"thor": [
-					"side/good", 
-					"universe/marvel", 
-					"sex/male"
+				"Thor": [
+					"Side/Good", 
+					"Universe/Marvel", 
+					"Sex/Male"
 				], 
-				"spiderman": [
-					"side/good", 
-					"universe/marvel", 
-					"sex/male"
+				"Spiderman": [
+					"Side/Good", 
+					"Universe/Marvel", 
+					"Sex/Male"
 				], 
-				"thanos": [
-					"side/bad", 
-					"universe/marvel", 
-					"sex/male"
+				"Thanos": [
+					"Side/Bad", 
+					"Universe/Marvel", 
+					"Sex/Male"
 				], 
-				"locky": [
-					"side/bad", 
-					"universe/marvel", 
-					"sex/male"
+				"Locky": [
+					"Side/Bad", 
+					"Universe/Marvel", 
+					"Sex/Male"
 				], 
-				"harley": [
-					"side/bad", 
-					"universe/dc", 
-					"sex/female"
+				"Harley Quinn": [
+					"Side/Bad", 
+					"Universe/DC", 
+					"Sex/Female"
 				], 
-				"wonderwoman": [
-					"side/good", 
-					"universe/dc", 
-					"sex/female"
+				"Wonder Woman": [
+					"Side/Good", 
+					"Universe/DC", 
+					"Sex/Female"
 				], 
-				"hela": [
-					"side/bad", 
-					"universe/marvel", 
-					"sex/female"
+				"Hela": [
+					"Side/Bad", 
+					"Universe/Marvel", 
+					"Sex/Female"
 				]
 			});
 			return obj;

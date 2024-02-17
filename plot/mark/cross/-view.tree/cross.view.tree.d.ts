@@ -1,51 +1,51 @@
 declare namespace $ {
 
-	type $mol_vector_2d__CVLZEVIA = $mol_type_enforce<
+	type $mol_vector_2d__96UT1ST4 = $mol_type_enforce<
 		[ ReturnType< $mol_plot_mark_cross['dimensions_x'] >, ReturnType< $mol_plot_mark_cross['dimensions_y'] > ]
 		,
 		ConstructorParameters< typeof $mol_vector_2d<$mol_vector_range<number>> >
 	>
-	type $mol_vector_range__7AT6P74Q = $mol_type_enforce<
+	type $mol_vector_range__BV7VN0J4 = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_vector_range__0RQP8HTY = $mol_type_enforce<
+	type $mol_vector_range__6SEHOGIR = $mol_type_enforce<
 		[ number, number ]
 		,
 		ConstructorParameters< typeof $mol_vector_range<number> >
 	>
-	type $mol_svg_path__geometry__21AKKVIZ = $mol_type_enforce<
+	type $mol_svg_path__geometry__IOBUXSLJ = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['curve'] >
 		,
 		ReturnType< $mol_svg_path['geometry'] >
 	>
-	type $mol_svg_text_box__pos_x__B73YOVNU = $mol_type_enforce<
+	type $mol_svg_text_box__pos_x__M1H8VRGV = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['title_x_pos_x'] >
 		,
 		ReturnType< $mol_svg_text_box['pos_x'] >
 	>
-	type $mol_svg_text_box__pos_y__Y0P5WXSK = $mol_type_enforce<
+	type $mol_svg_text_box__pos_y__VANXMSYL = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['title_x_pos_y'] >
 		,
 		ReturnType< $mol_svg_text_box['pos_y'] >
 	>
-	type $mol_svg_text_box__text__ZK7BD0GS = $mol_type_enforce<
+	type $mol_svg_text_box__text__I5HSS7U0 = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['title_x'] >
 		,
 		ReturnType< $mol_svg_text_box['text'] >
 	>
-	type $mol_svg_text_box__pos_x__U845ATOH = $mol_type_enforce<
+	type $mol_svg_text_box__pos_x__MFXBPUIW = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['title_y_pos_x'] >
 		,
 		ReturnType< $mol_svg_text_box['pos_x'] >
 	>
-	type $mol_svg_text_box__pos_y__BJPS5OOW = $mol_type_enforce<
+	type $mol_svg_text_box__pos_y__IPY11O8T = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['title_y_pos_y'] >
 		,
 		ReturnType< $mol_svg_text_box['pos_y'] >
 	>
-	type $mol_svg_text_box__text__4AMWK1ON = $mol_type_enforce<
+	type $mol_svg_text_box__text__CO4LSA3X = $mol_type_enforce<
 		ReturnType< $mol_plot_mark_cross['title_y'] >
 		,
 		ReturnType< $mol_svg_text_box['text'] >

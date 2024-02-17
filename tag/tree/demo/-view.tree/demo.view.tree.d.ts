@@ -1,52 +1,37 @@
 declare namespace $ {
 
-	type $mol_button_minor__title__2NPN5IAM = $mol_type_enforce<
+	type $mol_button_minor__title__5Z3TVC07 = $mol_type_enforce<
 		ReturnType< $mol_tag_tree_demo['item_title'] >
 		,
 		ReturnType< $mol_button_minor['title'] >
 	>
-	type $mol_tag_tree__Item__0MGJI7XU = $mol_type_enforce<
+	type $mol_tag_tree__Item__3D9KL16L = $mol_type_enforce<
 		ReturnType< $mol_tag_tree_demo['Item'] >
 		,
 		ReturnType< $mol_tag_tree['Item'] >
 	>
-	type $mol_tag_tree__levels_expanded__3HZ4JXFF = $mol_type_enforce<
+	type $mol_tag_tree__levels_expanded__E7G3V6VI = $mol_type_enforce<
 		number
 		,
 		ReturnType< $mol_tag_tree['levels_expanded'] >
 	>
-	type $mol_tag_tree__tag_names__4DI8FN52 = $mol_type_enforce<
+	type $mol_tag_tree__ids_tags__WCCYHUU0 = $mol_type_enforce<
 		({ 
-			'side': string,
-			'good': string,
-			'bad': string,
-			'sex': string,
-			'male': string,
-			'female': string,
-			'universe': string,
-			'marvel': string,
-			'dc': string,
-		}) 
-		,
-		ReturnType< $mol_tag_tree['tag_names'] >
-	>
-	type $mol_tag_tree__ids_tags__9MUAFV28 = $mol_type_enforce<
-		({ 
-			'batman': readonly(any)[],
-			'superman': readonly(any)[],
-			'aquaman': readonly(any)[],
-			'flash': readonly(any)[],
-			'jocker': readonly(any)[],
-			'deadshot': readonly(any)[],
-			'ironman': readonly(any)[],
-			'hulk': readonly(any)[],
-			'thor': readonly(any)[],
-			'spiderman': readonly(any)[],
-			'thanos': readonly(any)[],
-			'locky': readonly(any)[],
-			'harley': readonly(any)[],
-			'wonderwoman': readonly(any)[],
-			'hela': readonly(any)[],
+			'Batman': readonly(any)[],
+			'Superman': readonly(any)[],
+			'Aquaman': readonly(any)[],
+			'Flash': readonly(any)[],
+			'Jocker': readonly(any)[],
+			'Deadshot': readonly(any)[],
+			'Ironman': readonly(any)[],
+			'Hulk': readonly(any)[],
+			'Thor': readonly(any)[],
+			'Spiderman': readonly(any)[],
+			'Thanos': readonly(any)[],
+			'Locky': readonly(any)[],
+			'Harley Quinn': readonly(any)[],
+			'Wonder Woman': readonly(any)[],
+			'Hela': readonly(any)[],
 		}) 
 		,
 		ReturnType< $mol_tag_tree['ids_tags'] >

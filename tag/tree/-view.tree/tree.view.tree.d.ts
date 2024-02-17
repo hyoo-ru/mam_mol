@@ -1,95 +1,88 @@
 declare namespace $ {
 
-	type $mol_tag_sieve__ids_tags__H3VT5ZGB = $mol_type_enforce<
-		ReturnType< $mol_tag_tree['ids_tags'] >
-		,
-		ReturnType< $mol_tag_sieve['ids_tags'] >
-	>
-	type $mol_tag_sieve__separator__UWTWLQ7H = $mol_type_enforce<
-		ReturnType< $mol_tag_tree['separator'] >
-		,
-		ReturnType< $mol_tag_sieve['separator'] >
-	>
-	type $mol_tag_tree_sub__A019937Y = $mol_type_enforce<
+	type $mol_tag_tree_sub__4BMTSC8S = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_list'] >[number]
 		,
 		$mol_view
 	>
-	type $mol_tag_tree_sub__M3JL2JRI = $mol_type_enforce<
+	type $mol_tag_tree_sub__S2LL4QRR = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['item_list'] >[number]
 		,
 		$mol_view
 	>
-	type $mol_view__sub__2NVYBGR5 = $mol_type_enforce<
+	type $mol_view__sub__JB741WJ9 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_expander__expandable__N1OM08O3 = $mol_type_enforce<
+	type $mol_expander__expandable__92LRM9IV = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_expander['expandable'] >
 	>
-	type $mol_expander__expanded__HT9VBWWV = $mol_type_enforce<
+	type $mol_expander__expanded__LYUGVB3I = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_expanded'] >
 		,
 		ReturnType< $mol_expander['expanded'] >
 	>
-	type $mol_expander__title__NQG5V3YG = $mol_type_enforce<
+	type $mol_expander__title__YJ9RR9F0 = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_name'] >
 		,
 		ReturnType< $mol_expander['title'] >
 	>
-	type $mol_expander__content__BX1CMZK4 = $mol_type_enforce<
+	type $mol_expander__content__XL493W5F = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_expander['content'] >
 	>
-	type $mol_tag_tree__sieve__W61KKBRS = $mol_type_enforce<
-		ReturnType< $mol_tag_tree['sieve_sub'] >
+	type $mol_tag_tree__ids_tags__H2AGLOZV = $mol_type_enforce<
+		ReturnType< $mol_tag_tree['ids_tags'] >
 		,
-		ReturnType< $mol_tag_tree['sieve'] >
+		ReturnType< $mol_tag_tree['ids_tags'] >
 	>
-	type $mol_tag_tree__Item__PVW3S1M3 = $mol_type_enforce<
+	type $mol_tag_tree__path__PCFCCHYH = $mol_type_enforce<
+		ReturnType< $mol_tag_tree['tag_path'] >
+		,
+		ReturnType< $mol_tag_tree['path'] >
+	>
+	type $mol_tag_tree__Item__92FF25EC = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['Item'] >
 		,
 		ReturnType< $mol_tag_tree['Item'] >
 	>
-	type $mol_tag_tree__item_title__7B0N5BDF = $mol_type_enforce<
+	type $mol_tag_tree__item_title__XQPO7A63 = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['item_title'] >
 		,
 		ReturnType< $mol_tag_tree['item_title'] >
 	>
-	type $mol_tag_tree__tag_expanded__RJRTRBLM = $mol_type_enforce<
+	type $mol_tag_tree__tag_expanded__DO7P8SXN = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_expanded'] >
 		,
 		ReturnType< $mol_tag_tree['tag_expanded'] >
 	>
-	type $mol_tag_tree__tag_name__N7INKF0G = $mol_type_enforce<
+	type $mol_tag_tree__tag_name__K46DCNG6 = $mol_type_enforce<
 		ReturnType< $mol_tag_tree['tag_name'] >
 		,
 		ReturnType< $mol_tag_tree['tag_name'] >
 	>
 	export class $mol_tag_tree extends $mol_list {
-		sieve( ): $mol_tag_sieve
+		path( ): readonly(string)[]
+		ids_tags( ): Record<string, any>
+		ids( ): readonly(any)[]
+		tags( ): readonly(string)[]
 		levels_expanded( ): number
-		sort_items( ): any
-		sort_tags( ): any
 		sub( ): readonly($mol_view)[]
 		tag_name( id: any): string
-		tag_names( ): Record<string, any>
 		tag_list( ): readonly($mol_view)[]
 		item_list( ): readonly($mol_view)[]
 		Item( id: any): $mol_view
 		Tag( id: any): $mol_expander
-		ids_tags( ): Record<string, any>
-		separator( ): string
 		tag_list( ): readonly($mol_view)[]
 		item_list( ): readonly($mol_view)[]
 		item_title( id: any): string
 		tag_expanded( id: any, next?: boolean ): boolean
 		tag_name( id: any): string
-		sieve_sub( id: any): $mol_tag_sieve
+		tag_path( id: any): readonly(string)[]
 		Tag_tree( id: any): $mol_tag_tree
 	}
 	

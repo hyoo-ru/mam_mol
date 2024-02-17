@@ -2767,7 +2767,7 @@ var $;
             }
         }
         dom_id() {
-            return this.toString().replace(/</g, '(').replace(/>/g, ')');
+            return this.toString().replace(/</g, '(').replace(/>/g, ')').replaceAll(/"/g, "'");
         }
         dom_node_external(next) {
             const node = next ?? $mol_dom_context.document.createElementNS(this.dom_name_space(), this.dom_name());
@@ -6655,116 +6655,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-"use strict";
-var $;
-(function ($) {
-    class $mol_tag_sieve extends $mol_object2 {
-        ids_tags() {
-            return {};
-        }
-        separator() {
-            return '/';
-        }
-        tags() {
-            return this.ids_tags_initial().tags;
-        }
-        ids() {
-            return this.ids_tags_initial().ids;
-        }
-        ids_tags_initial() {
-            return this.ids_tags_filtered('');
-        }
-        ids_tags_filtered(prefix) {
-            const ids = new Set();
-            const separator = this.separator();
-            let ids_tags_initial = prefix ? this.ids_tags_initial().ids_tags : this.ids_tags();
-            let tags_raw = [];
-            let tags_ids = {};
-            let ids_tags = {};
-            do {
-                tags_ids = {};
-                ids_tags = {};
-                for (const id of Object.keys(ids_tags_initial)) {
-                    const tags = ids_tags_initial[id];
-                    const unmatched_tags = [];
-                    const prefixed_tags = [];
-                    let prefix_matched = prefix === '';
-                    for (const tag of tags) {
-                        if (tag === prefix) {
-                            prefix_matched = true;
-                            continue;
-                        }
-                        let next = tag;
-                        if (prefix && tag.startsWith(prefix + separator)) {
-                            prefix_matched = true;
-                            next = tag.substring(prefix.length + separator.length);
-                            prefixed_tags.push(next);
-                        }
-                        unmatched_tags.push(next);
-                    }
-                    if (!prefix_matched)
-                        continue;
-                    ids_tags[id] = unmatched_tags;
-                    if (!unmatched_tags?.length) {
-                        ids.add(id);
-                        continue;
-                    }
-                    for (const tag of prefixed_tags.length ? prefixed_tags : unmatched_tags) {
-                        const sep_pos = tag.indexOf(separator);
-                        const first_segment = sep_pos === -1 ? tag : tag.substring(0, sep_pos);
-                        if (!first_segment) {
-                            ids.add(id);
-                            continue;
-                        }
-                        if (!tags_ids[first_segment])
-                            tags_ids[first_segment] = [];
-                        tags_ids[first_segment].push(id);
-                    }
-                }
-                tags_raw = Object.keys(tags_ids);
-                ids_tags_initial = ids_tags;
-                prefix = tags_raw[0];
-            } while (tags_raw.length === 1 && !ids.size);
-            const tags = [];
-            for (const tag of tags_raw) {
-                if (tags_ids[tag].length > 1)
-                    tags.push(tag);
-                else
-                    for (const id of tags_ids[tag])
-                        ids.add(id);
-            }
-            return {
-                ids_tags,
-                tags,
-                ids: Array.from(ids),
-            };
-        }
-        prefix() {
-            return [];
-        }
-        prefix_sub(id) {
-            return [...this.prefix(), id];
-        }
-        select(id) {
-            const bag = new $mol_tag_sieve;
-            bag.ids_tags_initial = () => this.ids_tags_filtered(id);
-            bag.prefix = () => this.prefix_sub(id);
-            return bag;
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $mol_tag_sieve.prototype, "ids_tags_filtered", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_tag_sieve.prototype, "prefix_sub", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_tag_sieve.prototype, "select", null);
-    $.$mol_tag_sieve = $mol_tag_sieve;
-})($ || ($ = {}));
-
-;
 	($.$mol_check) = class $mol_check extends ($.$mol_button_minor) {
 		attr(){
 			return {
@@ -7010,29 +6900,26 @@ var $;
 
 ;
 	($.$mol_tag_tree) = class $mol_tag_tree extends ($.$mol_list) {
-		sieve(){
-			const obj = new this.$.$mol_tag_sieve();
-			(obj.ids_tags) = () => ((this.ids_tags()));
-			(obj.separator) = () => ((this.separator()));
-			return obj;
+		path(){
+			return [];
+		}
+		ids_tags(){
+			return {};
+		}
+		ids(){
+			return [];
+		}
+		tags(){
+			return [];
 		}
 		levels_expanded(){
 			return 0;
-		}
-		sort_items(){
-			return null;
-		}
-		sort_tags(){
-			return null;
 		}
 		sub(){
 			return [...(this.tag_list()), ...(this.item_list())];
 		}
 		tag_name(id){
 			return "";
-		}
-		tag_names(){
-			return {};
 		}
 		tag_list(){
 			return [];
@@ -7053,12 +6940,6 @@ var $;
 			(obj.content) = () => ([(this.Tag_tree(id))]);
 			return obj;
 		}
-		ids_tags(){
-			return {};
-		}
-		separator(){
-			return "/";
-		}
 		tag_list(){
 			return [];
 		}
@@ -7075,13 +6956,13 @@ var $;
 		tag_name(id){
 			return "";
 		}
-		sieve_sub(id){
-			const obj = new this.$.$mol_tag_sieve();
-			return obj;
+		tag_path(id){
+			return [];
 		}
 		Tag_tree(id){
 			const obj = new this.$.$mol_tag_tree();
-			(obj.sieve) = () => ((this.sieve_sub(id)));
+			(obj.ids_tags) = () => ((this.ids_tags()));
+			(obj.path) = () => ((this.tag_path(id)));
 			(obj.Item) = (id) => ((this.Item(id)));
 			(obj.item_title) = (id) => ((this.item_title(id)));
 			(obj.tag_expanded) = (id, next) => ((this.tag_expanded(id, next)));
@@ -7089,11 +6970,9 @@ var $;
 			return obj;
 		}
 	};
-	($mol_mem(($.$mol_tag_tree.prototype), "sieve"));
 	($mol_mem_key(($.$mol_tag_tree.prototype), "Item"));
 	($mol_mem_key(($.$mol_tag_tree.prototype), "Tag"));
 	($mol_mem_key(($.$mol_tag_tree.prototype), "tag_expanded"));
-	($mol_mem_key(($.$mol_tag_tree.prototype), "sieve_sub"));
 	($mol_mem_key(($.$mol_tag_tree.prototype), "Tag_tree"));
 
 
@@ -7135,16 +7014,46 @@ var $;
     var $$;
     (function ($$) {
         class $mol_tag_tree extends $.$mol_tag_tree {
-            sieve_sub(path) {
-                return this.sieve().select(path.at(-1));
+            ids() {
+                const prefix = this.path().join('/');
+                const ids_tags = this.ids_tags();
+                return Object.keys(ids_tags).filter(id => ids_tags[id].some((tag) => tag.startsWith(prefix)));
             }
             item_list() {
-                const prefix = this.sieve().prefix();
-                return this.sieve().ids().sort(this.sort_items()).map(id => this.Item([...prefix, id]));
+                const path = this.path();
+                const grouped = new Set(this.tags().flatMap(tag => this.Tag_tree(tag).ids()));
+                return this.ids()
+                    .filter(id => !grouped.has(id))
+                    .sort($mol_compare_text())
+                    .map(id => this.Item([...path, id]));
+            }
+            tags() {
+                const stat = new Map();
+                const ids_tags = this.ids_tags();
+                const ids = this.ids();
+                const prefix = this.path().join('/');
+                for (let id of ids) {
+                    for (let tag of ids_tags[id]) {
+                        if (prefix && !tag.startsWith(prefix + '/'))
+                            continue;
+                        tag = tag.slice(prefix.length).replace(/^\//, '');
+                        stat.set(tag, (stat.get(tag) ?? 0) + 1);
+                    }
+                }
+                for (let [tag, count] of stat) {
+                    if (count < 2)
+                        stat.delete(tag);
+                    if (count > ids.length - 2)
+                        stat.delete(tag);
+                }
+                const prefixes = [...new Set([...stat.keys()].map(tag => tag.replace(/\/.*/, '')))].sort($mol_compare_text());
+                return prefixes;
             }
             tag_list() {
-                const prefix = this.sieve().prefix();
-                return this.sieve().tags().sort(this.sort_tags()).map(tag => this.Tag([...prefix, tag]));
+                return this.tags().map(tag => this.Tag([tag]));
+            }
+            tag_path(id) {
+                return [...this.path(), id];
             }
             tag_expanded(id, next) {
                 return next ?? this.tag_expanded_default(id);
@@ -7152,41 +7061,28 @@ var $;
             tag_expanded_default(id) {
                 return this.levels_expanded() >= id.length;
             }
-            sort_tags() {
-                return $mol_compare_text();
-            }
-            sort_items() {
-                return this.sort_tags();
-            }
-            tag_names() {
-                return {};
-            }
-            tag_name(path) {
-                const id = path.at(-1);
-                return this.tag_names()[id] ?? id;
+            tag_name(id) {
+                return id;
             }
             item_title(id) {
                 return id.at(-1);
             }
         }
         __decorate([
-            $mol_mem_key
-        ], $mol_tag_tree.prototype, "sieve_sub", null);
+            $mol_mem
+        ], $mol_tag_tree.prototype, "ids", null);
         __decorate([
             $mol_mem
         ], $mol_tag_tree.prototype, "item_list", null);
+        __decorate([
+            $mol_mem
+        ], $mol_tag_tree.prototype, "tags", null);
         __decorate([
             $mol_mem
         ], $mol_tag_tree.prototype, "tag_list", null);
         __decorate([
             $mol_mem_key
         ], $mol_tag_tree.prototype, "tag_expanded", null);
-        __decorate([
-            $mol_mem
-        ], $mol_tag_tree.prototype, "sort_tags", null);
-        __decorate([
-            $mol_mem
-        ], $mol_tag_tree.prototype, "sort_items", null);
         $$.$mol_tag_tree = $mol_tag_tree;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -7325,6 +7221,22 @@ var $;
 
 ;
 "use strict";
+var $;
+(function ($) {
+    function $mol_match_text(query, values) {
+        const tags = query.toLowerCase().trim().split(/\s+/).filter(tag => tag);
+        if (tags.length === 0)
+            return () => true;
+        return (variant) => {
+            const vals = values(variant);
+            return tags.every(tag => vals.some(val => val.toLowerCase().indexOf(tag) >= 0));
+        };
+    }
+    $.$mol_match_text = $mol_match_text;
+})($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -7414,18 +7326,11 @@ var $;
             }
             names_filtered() {
                 const words = this.filter_words();
-                let names = this.names();
-                if (words.length !== 0) {
-                    names = names.filter(name => {
-                        const title = this.widget_title(name);
-                        const component_keywords = [
-                            ...(title ? [title.toLowerCase()] : []),
-                            ...this.widget_tags(name)
-                        ];
-                        return words.every(word => component_keywords.some(kw => kw.includes(word)));
-                    });
-                }
-                return names;
+                return this.names().filter($mol_match_text(this.filter(), name => [
+                    name,
+                    ...this.widget_aspects(name),
+                    ...this.widget_tags(name),
+                ]));
             }
         }
         __decorate([
@@ -10851,7 +10756,7 @@ var $;
                 const tags = this.Widget(name).tags().map(tag => tag.toLowerCase());
                 if (tags.length === 0) {
                     console.warn(`Demo widget without tags: ${name}`);
-                    return ['untagged', component_name];
+                    return [component_name];
                 }
                 else {
                     return [...tags, component_name];
@@ -14170,22 +14075,6 @@ var $;
 	($mol_mem(($.$mol_select.prototype), "Bubble_pane"));
 	($mol_mem(($.$mol_select.prototype), "submit"));
 
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_match_text(query, values) {
-        const tags = query.toLowerCase().trim().split(/\s+/).filter(tag => tag);
-        if (tags.length === 0)
-            return () => true;
-        return (variant) => {
-            const vals = values(variant);
-            return tags.every(tag => vals.some(val => val.toLowerCase().indexOf(tag) >= 0));
-        };
-    }
-    $.$mol_match_text = $mol_match_text;
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -35807,92 +35696,81 @@ var $;
 			const obj = new this.$.$mol_tag_tree();
 			(obj.Item) = (id) => ((this.Item(id)));
 			(obj.levels_expanded) = () => (0);
-			(obj.tag_names) = () => ({
-				"side": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_side")), 
-				"good": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_good")), 
-				"bad": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_bad")), 
-				"sex": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_sex")), 
-				"male": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_male")), 
-				"female": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_female")), 
-				"universe": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_universe")), 
-				"marvel": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_marvel")), 
-				"dc": (this.$.$mol_locale.text("$mol_tag_tree_demo_Tree_tag_names_dc"))
-			});
 			(obj.ids_tags) = () => ({
-				"batman": [
-					"side/good", 
-					"universe/dc", 
-					"sex/male"
+				"Batman": [
+					"Side/Good", 
+					"Universe/DC", 
+					"Sex/Male"
 				], 
-				"superman": [
-					"side/good", 
-					"universe/dc", 
-					"sex/male"
+				"Superman": [
+					"Side/Good", 
+					"Universe/DC", 
+					"Sex/Male"
 				], 
-				"aquaman": [
-					"side/good", 
-					"universe/dc", 
-					"sex/male"
+				"Aquaman": [
+					"Side/Good", 
+					"Universe/DC", 
+					"Sex/Male"
 				], 
-				"flash": [
-					"side/good", 
-					"universe/dc", 
-					"sex/male"
+				"Flash": [
+					"Side/Good", 
+					"Universe/DC", 
+					"Sex/Male"
 				], 
-				"jocker": [
-					"side/bad", 
-					"universe/dc", 
-					"sex/male"
+				"Jocker": [
+					"Side/Bad", 
+					"Universe/DC", 
+					"Sex/Male"
 				], 
-				"deadshot": [
-					"side/bad", 
-					"universe/dc", 
-					"sex/male"
+				"Deadshot": [
+					"Side/Bad", 
+					"Universe/DC", 
+					"Sex/Male"
 				], 
-				"ironman": [
-					"side/good", 
-					"universe/marvel", 
-					"sex/male"
+				"Ironman": [
+					"Side/Good", 
+					"Universe/Marvel", 
+					"Sex/Male"
 				], 
-				"hulk": [
-					"side/good", 
-					"universe/marvel", 
-					"sex/male"
+				"Hulk": [
+					"Side/Good", 
+					"Universe/Marvel", 
+					"Sex/Male"
 				], 
-				"thor": [
-					"side/good", 
-					"universe/marvel", 
-					"sex/male"
+				"Thor": [
+					"Side/Good", 
+					"Universe/Marvel", 
+					"Sex/Male"
 				], 
-				"spiderman": [
-					"side/good", 
-					"universe/marvel", 
-					"sex/male"
+				"Spiderman": [
+					"Side/Good", 
+					"Universe/Marvel", 
+					"Sex/Male"
 				], 
-				"thanos": [
-					"side/bad", 
-					"universe/marvel", 
-					"sex/male"
+				"Thanos": [
+					"Side/Bad", 
+					"Universe/Marvel", 
+					"Sex/Male"
 				], 
-				"locky": [
-					"side/bad", 
-					"universe/marvel", 
-					"sex/male"
+				"Locky": [
+					"Side/Bad", 
+					"Universe/Marvel", 
+					"Sex/Male"
 				], 
-				"harley": [
-					"side/bad", 
-					"universe/dc", 
-					"sex/female"
+				"Harley Quinn": [
+					"Side/Bad", 
+					"Universe/DC", 
+					"Sex/Female"
 				], 
-				"wonderwoman": [
-					"side/good", 
-					"universe/dc", 
-					"sex/female"
+				"Wonder Woman": [
+					"Side/Good", 
+					"Universe/DC", 
+					"Sex/Female"
 				], 
-				"hela": [
-					"side/bad", 
-					"universe/marvel", 
-					"sex/female"
+				"Hela": [
+					"Side/Bad", 
+					"Universe/Marvel", 
+					"Sex/Female"
 				]
 			});
 			return obj;
@@ -38078,6 +37956,13 @@ var $;
         process.exit(0);
     }
     $.$mol_test_complete = $mol_test_complete;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => $.$mol_fail_log = () => false);
 })($ || ($ = {}));
 
 ;
@@ -40752,105 +40637,6 @@ var $;
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function create_sieve({ path = '', ids_tags }) {
-        let bag = new $mol_tag_sieve;
-        bag.ids_tags = () => ids_tags;
-        if (path) {
-            bag = path.split('/').reduce((bag, seg) => bag.select(seg), bag);
-        }
-        return bag;
-    }
-    function create_tests({ title, ids_tags, test_data }) {
-        return Object.keys(test_data).reduce((acc, path) => {
-            return {
-                ...acc,
-                [`${title} ${path}`]() {
-                    const bag = create_sieve({ path, ids_tags });
-                    $mol_assert_like(bag.tags(), test_data[path].tags);
-                    $mol_assert_like(bag.ids(), test_data[path].ids);
-                }
-            };
-        }, {});
-    }
-    $mol_test({
-        ...create_tests({
-            title: 'ony tag on level without ids',
-            ids_tags: {
-                button: ['widget'],
-                card: ['widget'],
-                some1: ['widget/layout'],
-                some2: ['widget/layout'],
-            },
-            test_data: {
-                '': {
-                    tags: ['layout'],
-                    ids: ['button', 'card'],
-                },
-                'layout': {
-                    tags: [],
-                    ids: ['some1', 'some2'],
-                }
-            }
-        }),
-        ...create_tests({
-            title: 'select heroes',
-            ids_tags: {
-                thanos: [
-                    'side/bad',
-                    'universe/marvel',
-                    'sex/male',
-                ],
-                locky: [
-                    'side/bad',
-                    'universe/marvel',
-                    'sex/male',
-                ],
-                harley: [
-                    'side/bad',
-                    'universe/dc',
-                    'sex/female',
-                ],
-                wonderwoman: [
-                    'side/good',
-                    'universe/dc',
-                    'sex/female',
-                ],
-                hela: [
-                    'side/bad',
-                    'universe/marvel',
-                    'sex/female',
-                ],
-            },
-            test_data: {
-                '': {
-                    tags: ['side', 'universe', 'sex',],
-                    ids: [],
-                },
-                'sex': {
-                    tags: ['male', 'female',],
-                    ids: [],
-                },
-                'sex/female': {
-                    tags: ['side', 'universe',],
-                    ids: [],
-                },
-                'sex/female/side': {
-                    tags: ['bad'],
-                    ids: ['wonderwoman'],
-                },
-                'sex/female/side/bad': {
-                    tags: [],
-                    ids: ['harley', 'hela'],
-                },
-            }
-        })
-    });
 })($ || ($ = {}));
 
 ;

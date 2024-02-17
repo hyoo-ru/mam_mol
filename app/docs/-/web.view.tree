@@ -329,17 +329,15 @@ $mol_expander $mol_list
 			rows <= content /
 
 $mol_tag_tree $mol_list
-	sieve $mol_tag_sieve
-		ids_tags <= ids_tags *
-		separator <= separator \/
+	path /string
+	ids_tags *
+	ids /
+	tags /string
 	levels_expanded 0
-	sort_items null
-	sort_tags null
 	sub /$mol_view
 		^ tag_list /$mol_view
 		^ item_list /$mol_view
 	tag_name* \
-	tag_names *
 	tag_list /$mol_view
 	item_list /$mol_view
 	Item* $mol_view
@@ -350,7 +348,8 @@ $mol_tag_tree $mol_list
 		expanded? <=> tag_expanded*? false
 		title <= tag_name* \
 		content / <= Tag_tree* $mol_tag_tree
-			sieve <= sieve_sub* $mol_tag_sieve
+			ids_tags <= ids_tags
+			path <= tag_path* /string
 			Item* <= Item*
 			item_title* <= item_title*
 			tag_expanded*? <=> tag_expanded*?
@@ -5387,77 +5386,69 @@ $mol_tag_tree_demo $mol_example
 			Item* <= Item* $mol_button_minor
 				title <= item_title* \
 			levels_expanded 0
-			tag_names *
-				side @ \Side
-				good @ \Good
-				bad @ \Bad
-				sex @ \Sex
-				male @ \Male
-				female @ \Female
-				universe @ \Universe
-				marvel @ \Marvel
-				dc @ \DC
 			ids_tags *
-				batman /
-					\side/good
-					\universe/dc
-					\sex/male
-				superman /
-					\side/good
-					\universe/dc
-					\sex/male
-				aquaman /
-					\side/good
-					\universe/dc
-					\sex/male
-				flash /
-					\side/good
-					\universe/dc
-					\sex/male
-				jocker /
-					\side/bad
-					\universe/dc
-					\sex/male
-				deadshot /
-					\side/bad
-					\universe/dc
-					\sex/male
-				ironman /
-					\side/good
-					\universe/marvel
-					\sex/male
-				hulk /
-					\side/good
-					\universe/marvel
-					\sex/male
-				thor /
-					\side/good
-					\universe/marvel
-					\sex/male
-				spiderman /
-					\side/good
-					\universe/marvel
-					\sex/male
-				thanos /
-					\side/bad
-					\universe/marvel
-					\sex/male
-				locky /
-					\side/bad
-					\universe/marvel
-					\sex/male
-				harley /
-					\side/bad
-					\universe/dc
-					\sex/female
-				wonderwoman /
-					\side/good
-					\universe/dc
-					\sex/female
-				hela /
-					\side/bad
-					\universe/marvel
-					\sex/female
+				Batman /
+					\Side/Good
+					\Universe/DC
+					\Sex/Male
+				Superman /
+					\Side/Good
+					\Universe/DC
+					\Sex/Male
+				Aquaman /
+					\Side/Good
+					\Universe/DC
+					\Sex/Male
+				Flash /
+					\Side/Good
+					\Universe/DC
+					\Sex/Male
+				Jocker /
+					\Side/Bad
+					\Universe/DC
+					\Sex/Male
+				Deadshot /
+					\Side/Bad
+					\Universe/DC
+					\Sex/Male
+				Ironman /
+					\Side/Good
+					\Universe/Marvel
+					\Sex/Male
+				Hulk /
+					\Side/Good
+					\Universe/Marvel
+					\Sex/Male
+				Thor /
+					\Side/Good
+					\Universe/Marvel
+					\Sex/Male
+				Spiderman /
+					\Side/Good
+					\Universe/Marvel
+					\Sex/Male
+				Thanos /
+					\Side/Bad
+					\Universe/Marvel
+					\Sex/Male
+				Locky /
+					\Side/Bad
+					\Universe/Marvel
+					\Sex/Male
+				\Harley Quinn
+					/
+						\Side/Bad
+						\Universe/DC
+						\Sex/Female
+				\Wonder Woman
+					/
+						\Side/Good
+						\Universe/DC
+						\Sex/Female
+				Hela /
+					\Side/Bad
+					\Universe/Marvel
+					\Sex/Female
 	tags /
 		\taxonomy
 		\menu

@@ -1128,6 +1128,13 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
+    $mol_test_mocks.push($ => $.$mol_fail_log = () => false);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
     $mol_test_mocks.push($ => {
         $.$mol_log3_come = () => { };
         $.$mol_log3_done = () => { };
