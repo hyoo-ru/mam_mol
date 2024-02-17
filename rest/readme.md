@@ -54,7 +54,7 @@ npm start my/crud
 
 ### Start release
 ```sh
-node my/crud/-/node.js $my_crud=9090
+node my/crud/-/node.js \$my_crud=9090
 ```
 
 ## HTTP Requests
