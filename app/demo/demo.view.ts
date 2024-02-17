@@ -48,7 +48,7 @@ namespace $.$$ {
 
 				console.warn( `Demo widget without tags: ${ name }` )
 
-				return [ 'untagged', component_name ]
+				return [ component_name ]
 
 			} else {
 

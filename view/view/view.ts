@@ -163,7 +163,7 @@ namespace $ {
 
 		@ $mol_memo.method
 		dom_id() {
-			return this.toString().replace( /</g, '(' ).replace( />/g, ')' )
+			return this.toString().replace( /</g, '(' ).replace( />/g, ')' ).replaceAll( /"/g, "'" )
 		}
 	
 		dom_node_external( next?: Element) {
