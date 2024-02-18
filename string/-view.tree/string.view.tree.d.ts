@@ -1,11 +1,11 @@
 declare namespace $ {
 
-	type $mol_hotkey__mod_ctrl__9CWT0LML = $mol_type_enforce<
+	type $mol_hotkey__mod_ctrl__R3OMGJON = $mol_type_enforce<
 		ReturnType< $mol_string['submit_with_ctrl'] >
 		,
 		ReturnType< $mol_hotkey['mod_ctrl'] >
 	>
-	type $mol_hotkey__key__P4CO798X = $mol_type_enforce<
+	type $mol_hotkey__key__YVY11JLK = $mol_type_enforce<
 		({ 
 			enter( next?: ReturnType< $mol_string['submit'] > ): ReturnType< $mol_string['submit'] >,
 		}) 

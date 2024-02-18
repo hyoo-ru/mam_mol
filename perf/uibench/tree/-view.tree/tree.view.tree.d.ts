@@ -1,6 +1,6 @@
 declare namespace $ {
 
-	type $mol_perf_uibench_tree_branch__state__DT833JT1 = $mol_type_enforce<
+	type $mol_perf_uibench_tree_branch__state__OZ1DTE3E = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_tree['root_state'] >
 		,
 		ReturnType< $mol_perf_uibench_tree_branch['state'] >
@@ -15,12 +15,12 @@ declare namespace $ {
 		Root( ): $mol_perf_uibench_tree_branch
 	}
 	
-	type $mol_perf_uibench_tree_branch__state__XV7QPYXK = $mol_type_enforce<
+	type $mol_perf_uibench_tree_branch__state__7Y0ZQEWW = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_tree_branch['branch_state'] >
 		,
 		ReturnType< $mol_perf_uibench_tree_branch['state'] >
 	>
-	type $mol_perf_uibench_tree_leaf__text__A61ETJPC = $mol_type_enforce<
+	type $mol_perf_uibench_tree_leaf__text__GFV150BI = $mol_type_enforce<
 		ReturnType< $mol_perf_uibench_tree_branch['leaf_state'] >
 		,
 		ReturnType< $mol_perf_uibench_tree_leaf['text'] >
