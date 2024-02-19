@@ -21,7 +21,7 @@ namespace $ {
 
 		const check_dupes = (prev: $mol_tree2 | undefined, next: $mol_tree2) => {
 			if (prev && prev.kids[0]?.toString() !== next.kids[0]?.toString()) {
-				this.$mol_fail(err`Different kids ${prev.span} vs ${next.span}`)
+				this.$mol_fail(err`Need an equal default values at ${prev.span} vs ${next.span}`)
 			}
 		}
 
