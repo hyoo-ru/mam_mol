@@ -74,6 +74,8 @@ namespace $ {
 
 		}, { factory: undefined } as Context)
 
+		for (const item of props_root) delete props_inner[item.type]
+
 		return [ ... props_root , ... Object.values(props_inner) ]
 	}
 
