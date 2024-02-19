@@ -2,6 +2,11 @@ namespace $.$$ {
 	const d = '$'
 	const src = `
 		${d}my_test ${d}my_super
+			query? \\
+			Query $mol_string
+				value? <=> query? \\
+			Suggest_label $mol_dimmer
+				needle <= query? \\
 			title @ \\title
 			sub2 /
 				<= Сlose_icon ${d}mol_icon_cross
@@ -33,6 +38,9 @@ namespace $.$$ {
 	*/
 
 	const dest = $$.$mol_tree2_from_string(`
+		query? \\
+		Query $mol_string value? <=> query?
+		Suggest_label $mol_dimmer needle <= query?
 		title @ \\title
 		sub2 / <= Сlose_icon
 		sub /
