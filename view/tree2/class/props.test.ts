@@ -43,30 +43,30 @@ namespace $.$$ {
 	const dest = $$.$mol_tree2_from_string(`
 		query? \\
 		Query $mol_string value? <=> query?
+		clear?event null
 		Suggest_label $mol_dimmer
 			needle <= query?
 			key * escape? <=> clear?
 		Clear $mol_button_minor click?event <=> clear?event
 		title @ \\title
-		sub2 / <= Close_icon
-		sub /
-			<= Title
-			<= Close
-		Dog $mol_view_tree2_class_test_dog Mouth => Dog_mouth animation => dog_animation
-		plugins / <= Human*
-		clear?event null
 		Close_icon ${d}mol_icon_cross
+		sub2 / <= Close_icon
 		Title ${d}mol_view sub / <= title
 		close?event null
 		Close ${d}mol_button
 			title \\close
 			click?event <=> close?event
+		sub /
+			<= Title
+			<= Close
 		Dog_mouth = Dog Mouth
 		dog_animation = Dog_mouth animation
+		Dog $mol_view_tree2_class_test_dog Mouth => Dog_mouth animation => dog_animation
 		Human_mouth = Human* Mouth
 		human_animation = Human_mouth animation
 		human_text = human_animation text
 		Human* $mol_view_tree2_class_test_human Mouth => Human_mouth animation => human_animation text => human_text
+		plugins / <= Human*
 	`, 'reference')
 
 	$mol_test({

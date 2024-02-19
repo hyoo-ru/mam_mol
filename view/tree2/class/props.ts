@@ -41,50 +41,50 @@ namespace $ {
 			return [ operator.clone([ prop.clone([]) ]) ]
 		}
 
-		const props_root = props.hack({
-			'<=': upper,
+		const context = { factory: undefined } as Context
 
-			'<=>': upper,
-
-			'^': ( operator, belt, context) => {
-				if (operator.kids.length === 0) return [ operator ]
-				return upper(operator, belt, context)
-			},
-
-			'': (left, belt, context) => {
-				let right
-				const operator = left.kids[0]
-
-				if (operator?.type === '=>' && context.factory) {
-					right = operator.kids[0]
-					if (! right) this.$mol_fail(err`Need a child ${operator.span}`)
-					if (! context.factory) this.$mol_fail(err`Need a parent ${left.span}`)
-
-					add_inner(right.clone([
-						right.struct('=', [
-							context.factory.clone([ left.clone([]) ]),
-						]),
-					]))
+		for (const kid of props.kids) {
+			const props = kid.hack_self({
+				'<=': upper,
+	
+				'<=>': upper,
+	
+				'^': ( operator, belt, context) => {
+					if (operator.kids.length === 0) return [ operator ]
+					return upper(operator, belt, context)
+				},
+	
+				'': (left, belt, context) => {
+					let right
+					const operator = left.kids[0]
+	
+					if (operator?.type === '=>' && context.factory) {
+						right = operator.kids[0]
+						if (! right) this.$mol_fail(err`Need a child ${operator.span}`)
+						if (! context.factory) this.$mol_fail(err`Need a parent ${left.span}`)
+	
+						add_inner(right.clone([
+							right.struct('=', [
+								context.factory.clone([ left.clone([]) ]),
+							]),
+						]))
+					}
+	
+					if (right) context = { factory: right.clone([]) }
+					else if( operator && ! context.factory && $mol_view_tree2_class_match( operator ) ) {
+						context = { factory: left.clone([]) }
+					}
+	
+					return [ left.clone( left.hack( belt, context ) ) ]
+	
 				}
+	
+			}, context)
 
-				if (right) context = { factory: right.clone([]) }
-				else if( operator && ! context.factory && $mol_view_tree2_class_match( operator ) ) {
-					context = { factory: left.clone([]) }
-				}
-
-				return [ left.clone( left.hack( belt, context ) ) ]
-
-			}
-
-		}, { factory: undefined } as Context)
-
-		for (const item of props_root) {
-			const { name } = this.$mol_view_tree2_prop_parts(item)
-			check_dupes(props_inner[name], item)
-			delete props_inner[name]
+			for (const prop of props ) add_inner(prop)
 		}
-
-		return [ ... props_root , ... Object.values(props_inner) ]
+		
+		return Object.values(props_inner)
 	}
 
 }
