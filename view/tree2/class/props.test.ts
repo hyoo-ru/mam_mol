@@ -5,11 +5,14 @@ namespace $.$$ {
 			query? \\
 			Query $mol_string
 				value? <=> query? \\
-			Suggest_label $mol_dimmer
+			Suggest_label ${d}mol_dimmer
 				needle <= query? \\
+				key * escape? <=> clear? null
+			Clear ${d}mol_button_minor
+				click?event <=> clear?event null
 			title @ \\title
 			sub2 /
-				<= Сlose_icon ${d}mol_icon_cross
+				<= Close_icon ${d}mol_icon_cross
 			sub /
 				<= Title ${d}mol_view
 					sub /
@@ -40,15 +43,19 @@ namespace $.$$ {
 	const dest = $$.$mol_tree2_from_string(`
 		query? \\
 		Query $mol_string value? <=> query?
-		Suggest_label $mol_dimmer needle <= query?
+		Suggest_label $mol_dimmer
+			needle <= query?
+			key * escape? <=> clear?
+		Clear $mol_button_minor click?event <=> clear?event
 		title @ \\title
-		sub2 / <= Сlose_icon
+		sub2 / <= Close_icon
 		sub /
 			<= Title
 			<= Close
 		Dog $mol_view_tree2_class_test_dog Mouth => Dog_mouth animation => dog_animation
 		plugins / <= Human*
-		Сlose_icon ${d}mol_icon_cross
+		clear?event null
+		Close_icon ${d}mol_icon_cross
 		Title ${d}mol_view sub / <= title
 		close?event null
 		Close ${d}mol_button

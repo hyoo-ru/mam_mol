@@ -72,7 +72,7 @@ namespace $ {
 			$mol_assert_fail(() => {
 				$mol_view_tree2_to_js_test_run(`
 					Foo $mol_object
-						sub / <= Сlose_icon $mol_object
+						sub / <= Close_icon $mol_object
 				`)
 			}, 'Required prop like some*? at `.view.tree#3:16/10`\n<=\n.view.tree#3:13/2\n/\n.view.tree#3:11/1 at .view.tree#3:7/3')
 		},
