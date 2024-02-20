@@ -19,16 +19,13 @@ namespace $ {
 			})
 		)
 
-		const check_dupes = (prev: $mol_tree2 | undefined, next: $mol_tree2) => {
-			if (prev && prev.kids[0]?.toString() !== next.kids[0]?.toString()) {
-				this.$mol_fail(err`Need an equal default values at ${prev.span} vs ${next.span}`)
-			}
-		}
-
 		const props_inner = {} as Record<string, $mol_tree2>
 
 		const add_inner = ( prop: $mol_tree2 ) => {
-			check_dupes(props_inner[prop.type], prop)
+			const prev = props_inner[prop.type]
+			if (prev && prev.kids[0]?.toString() !== prop.kids[0]?.toString()) {
+				this.$mol_fail(err`Need an equal default values at ${prev.span} vs ${prop.span}`)
+			}
 			const { name } = this.$mol_view_tree2_prop_parts(prop)
 			props_inner[name] = prop
 		}
