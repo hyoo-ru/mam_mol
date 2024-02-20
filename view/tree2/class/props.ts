@@ -22,11 +22,11 @@ namespace $ {
 		const props_inner = {} as Record<string, $mol_tree2>
 
 		const add_inner = ( prop: $mol_tree2 ) => {
-			const prev = props_inner[prop.type]
+			const { name } = this.$mol_view_tree2_prop_parts(prop)
+			const prev = props_inner[name]
 			if (prev && prev.kids[0]?.toString() !== prop.kids[0]?.toString()) {
 				this.$mol_fail(err`Need an equal default values at ${prev.span} vs ${prop.span}`)
 			}
-			const { name } = this.$mol_view_tree2_prop_parts(prop)
 			props_inner[name] = prop
 		}
 
@@ -38,48 +38,45 @@ namespace $ {
 			return [ operator.clone([ prop.clone([]) ]) ]
 		}
 
-		const context = { factory: undefined } as Context
+		const props_root = props.hack({
+			'<=': upper,
 
-		for (const kid of props.kids) {
-			const props = kid.hack_self({
-				'<=': upper,
-	
-				'<=>': upper,
-	
-				'^': ( operator, belt, context) => {
-					if (operator.kids.length === 0) return [ operator ]
-					return upper(operator, belt, context)
-				},
-	
-				'': (left, belt, context) => {
-					let right
-					const operator = left.kids[0]
-	
-					if (operator?.type === '=>' && context.factory) {
-						right = operator.kids[0]
-						if (! right) this.$mol_fail(err`Need a child ${operator.span}`)
-						if (! context.factory) this.$mol_fail(err`Need a parent ${left.span}`)
-	
-						add_inner(right.clone([
-							right.struct('=', [
-								context.factory.clone([ left.clone([]) ]),
-							]),
-						]))
-					}
-	
-					if (right) context = { factory: right.clone([]) }
-					else if( operator && ! context.factory && $mol_view_tree2_class_match( operator ) ) {
-						context = { factory: left.clone([]) }
-					}
-	
-					return [ left.clone( left.hack( belt, context ) ) ]
-	
+			'<=>': upper,
+
+			'^': ( operator, belt, context) => {
+				if (operator.kids.length === 0) return [ operator ]
+				return upper(operator, belt, context)
+			},
+
+			'': (left, belt, context) => {
+				let right
+				const operator = left.kids[0]
+
+				if (operator?.type === '=>' && context.factory) {
+					right = operator.kids[0]
+					if (! right) this.$mol_fail(err`Need a child ${operator.span}`)
+					if (! context.factory) this.$mol_fail(err`Need a parent ${left.span}`)
+
+					add_inner(right.clone([
+						right.struct('=', [
+							context.factory.clone([ left.clone([]) ]),
+						]),
+					]))
 				}
-	
-			}, context)
 
-			for (const prop of props ) add_inner(prop)
-		}
+				if (right) context = { factory: right.clone([]) }
+				else if( operator && ! context.factory && $mol_view_tree2_class_match( operator ) ) {
+					context = { factory: left.clone([]) }
+				}
+				
+				const hacked = left.clone( left.hack( belt, context ) )
+
+				return [ hacked ]
+			}
+
+		}, { factory: undefined } as Context)
+
+		for (const prop of props_root ) add_inner(prop)
 		
 		return Object.values(props_inner)
 	}
