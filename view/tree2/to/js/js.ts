@@ -126,7 +126,7 @@ namespace $ {
 						ref.struct( '[]', [
 							ref.data( ref.kids[0]?.type ? name_of.call(this, ref.kids[0]) : name ),
 						] ),
-						ref.struct( '(,)' )
+						ref.kids[0]?.type ? params_of.call(this, ref.kids[0]) : ref.struct( '(,)' )
 					]),
 				] ),
 			],
